@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry output="teeda-core/target/classes" kind="src" path="teeda-core/src/main/java"/>
+	<classpathentry output="teeda-core/target/test-classes" kind="src" path="teeda-core/src/test/resources"/>
+	<classpathentry output="teeda-core/target/classes" kind="src" path="teeda-core/src/main/resources"/>
+	<classpathentry output="teeda-core/target/test-classes" kind="src" path="teeda-core/src/test/java"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="teeda-core/target/classes"/>
+</classpath>
