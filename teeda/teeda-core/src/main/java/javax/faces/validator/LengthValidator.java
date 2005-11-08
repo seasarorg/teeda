@@ -1,0 +1,123 @@
+package javax.faces.validator;
+
+import javax.faces.FacesException;
+import javax.faces.component.StateHolder;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+
+import sun.misc.MessageUtils;
+
+
+public class LengthValidator implements Validator, StateHolder {
+
+	public static final String VALIDATOR_ID = "javax.faces.Length";
+	
+	public static final String MAXIMUM_MESSAGE_ID = "javax.faces.validator.LengthValidator.MAXIMUM";
+	
+	public static final String MINIMUM_MESSAGE_ID = "javax.faces.validator.LengthValidator.MINIMUM";
+	
+	private Integer maximum_ = null;
+	
+	private Integer minimum_ = null;
+	
+	private boolean transientValue_ = false;
+	
+	public LengthValidator(){
+		super();
+	}
+	
+	public LengthValidator(int maximum){
+		super();
+		maximum_ = new Integer(maximum);
+	}
+	
+	public LengthValidator(int maximum, int minimum){
+		super();
+		maximum_ = new Integer(maximum);
+		minimum_ = new Integer(minimum);
+	}
+	
+	public boolean equals(Object obj){
+		if(!(obj instanceof LengthValidator)){
+			return false;
+		}
+
+		LengthValidator v = (LengthValidator)obj;
+		if((maximum_ != null && v.maximum_ == null) && (maximum_ == null && v.maximum_ != null)){
+			return false;
+		}
+		
+		if((minimum_ != null && v.minimum_ == null) && (minimum_ == null && v.minimum_ != null)){
+			return false;
+		}		
+		
+		return (this.getMaximum() == v.getMaximum() && this.getMinimum() == v.getMinimum());
+		
+	}
+	
+	public int getMaximum(){
+		return (maximum_ != null) ? maximum_.intValue() : Integer.MAX_VALUE;
+	}
+	
+	public int getMinimum(){
+		return (minimum_ != null) ? minimum_.intValue() : Integer.MIN_VALUE;
+	}
+	
+	public boolean isTransient(){
+		return transientValue_;
+	}
+	
+	public void validate(FacesContext context, UIComponent component,
+			Object value) throws FacesException {
+		assertNotNull(context);
+		assertNotNull(component);
+		
+		if(value == null){
+			return;
+		}
+		
+		int length = getConvertedValueLength(value);
+		if(minimum_ != null && length < minimum_.intValue()){
+			Object[] args = {minimum_, component.getId()};
+			throw new ValidatorException(FacesMessageUtils_.getMessage(context, MINIMUM_MESSAGE_ID, args));
+		}
+		
+		if(maximum_ != null && length > maximum_.intValue()){
+			Object[] args = {maximum_, component.getId()};
+			throw new ValidatorException(FacesMessageUtils_.getMessage(context, MAXIMUM_MESSAGE_ID, args));
+		}
+	}
+
+	public void setTransient(boolean transientValue) {
+		transientValue_ = transientValue;
+	}
+
+	public Object saveState(FacesContext context) {
+		Object[] values = new Object[2];
+		values[0] = maximum_;
+		values[1] = minimum_;
+		return values;
+	}
+
+	public void restoreState(FacesContext context, Object state) {
+		Object[] values = (Object[])state;
+		maximum_ = (Integer)values[0];
+		minimum_ = (Integer)values[1];
+	}
+
+	private static void assertNotNull(Object obj){
+		if(obj == null){
+			throw new NullPointerException();
+		}
+	}
+	
+	private static int getConvertedValueLength(Object value){
+		int length = 0;
+		if(value instanceof String){
+			length = ((String)value).length();
+		}else{
+			length = value.toString().length();
+		}
+		return length;
+	}
+}
