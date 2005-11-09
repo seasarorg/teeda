@@ -1,29 +1,37 @@
+/*
+ * Copyright 2004-2005 the Seasar Foundation and the Others.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
 package javax.faces.component;
 
 import java.util.Iterator;
 import java.util.*;
 
-public class ComponentFacetAndChildrenIterator_ implements Iterator {
+/**
+ * @author Shinpei Ohtani
+ */
+class ComponentFacetAndChildrenIterator_ implements Iterator {
 
 	private Iterator facetItr_ = null;
 	private Iterator childrenItr_ = null;
-	private static final Iterator EMPTY_ITERATOR = new Iterator(){
-
-		public void remove() {
-			throw new UnsupportedOperationException();
-		}
-
-		public boolean hasNext() {
-			return false;
-		}
-
-		public Object next() {
-			return null;
-		}		
-	};
 	public ComponentFacetAndChildrenIterator_(Map facetMap, List childrenList){
-		facetItr_ = facetMap.entrySet().iterator();
-		childrenItr_ = childrenList.iterator();
+        if(facetMap != null){
+            facetItr_ = facetMap.entrySet().iterator();
+        }
+        if(childrenList != null){
+            childrenItr_ = childrenList.iterator();
+        }
 	}
 	
 	public void remove() {
@@ -35,16 +43,13 @@ public class ComponentFacetAndChildrenIterator_ implements Iterator {
 	}
 
 	public Object next() {
-		
 		if(facetHasNext()){
 			return facetItr_.next();
 		}
-		
 		if(childrenHasNext()){
 			return childrenItr_.next();
 		}
-		
-		return 	EMPTY_ITERATOR;
+		throw new NoSuchElementException();
 	}
 
 	private boolean facetHasNext(){

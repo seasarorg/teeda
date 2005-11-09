@@ -1,6 +1,7 @@
 package javax.faces.mock;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +20,8 @@ public class MockUIComponent extends UIComponent {
 	private FacesEvent event_;
     private String id_;
     private String clientId_ = "";
+    private Map facets_  = new HashMap();
+    
 	public Map getAttributes() {
 		return null;
 	}
@@ -89,11 +92,11 @@ public class MockUIComponent extends UIComponent {
 	}
 
 	public Map getFacets() {
-		return null;
+		return facets_;
 	}
 
 	public UIComponent getFacet(String s) {
-		return null;
+		return (UIComponent)facets_.get(s);
 	}
 
 	public Iterator getFacetsAndChildren() {

@@ -1,3 +1,18 @@
+/*
+ * Copyright 2004-2005 the Seasar Foundation and the Others.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
 package javax.faces.component;
 
 import java.io.Serializable;
@@ -7,14 +22,19 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-public class ComponentFacetMapWrapper_ implements Map, Serializable {
+/**
+ * @author Shinpei Ohtani
+ */
+class ComponentFacetMapWrapper_ implements Map, Serializable {
 
-	private UIComponent component_ = null;
+	private static final long serialVersionUID = 3977016266726585651L;
+
+    private UIComponent parent_ = null;
 
 	private Map map_ = new HashMap();
 
-	public ComponentFacetMapWrapper_(UIComponent component) {
-		component_ = component;
+	public ComponentFacetMapWrapper_(UIComponent parent) {
+		parent_ = parent;
 	}
 
 	public int size() {
@@ -54,7 +74,6 @@ public class ComponentFacetMapWrapper_ implements Map, Serializable {
 	}
 
 	public Object remove(Object key) {
-
 		UIComponent facet = (UIComponent) map_.remove(key);
 		if (facet != null) {
 			facet.setParent(null);
@@ -62,13 +81,12 @@ public class ComponentFacetMapWrapper_ implements Map, Serializable {
 		return facet;
 	}
 
-	public Object put(Object key, Object value) {
-		assertBothNotNull(key, value);
+	public Object put(Object key, Object facet) {
+		assertKeyValueNotNull(key, facet);
 		checkKeyClass(key);
-		checkValueClass(value);
-		setNewParent((String) key, (UIComponent) value);
-
-		return map_.put(key, value);
+		checkValueClass(facet);
+		setNewParent((String)key, (UIComponent)facet);
+		return map_.put(key, facet);
 	}
 
 	public void putAll(Map map) {
@@ -83,10 +101,10 @@ public class ComponentFacetMapWrapper_ implements Map, Serializable {
 		if (parent != null) {
 			parent.getFacets().remove(facetName);
 		}
-		facet.setParent(component_);
+		facet.setParent(parent_);
 	}
 
-	private static void assertBothNotNull(Object key, Object value) {
+	private static void assertKeyValueNotNull(Object key, Object value) {
 		if (key == null || value == null) {
 			throw new NullPointerException();
 		}
