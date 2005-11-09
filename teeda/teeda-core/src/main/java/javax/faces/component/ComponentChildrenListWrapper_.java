@@ -1,13 +1,32 @@
+/*
+ * Copyright 2004-2005 the Seasar Foundation and the Others.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
 package javax.faces.component;
 
 import java.io.Serializable;
 import java.util.AbstractList;
 import java.util.*;
 
+/**
+ * @author Shinpei Ohtani
+ */
 class ComponentChildrenListWrapper_ extends AbstractList implements
 		Serializable {
 
-	private List list_ = new ArrayList();
+	private static final long serialVersionUID = 3617294519188666163L;
+    private List list_ = new ArrayList();
 	private UIComponent component_ = null;
 	
 	public ComponentChildrenListWrapper_(UIComponent component){
@@ -19,7 +38,6 @@ class ComponentChildrenListWrapper_ extends AbstractList implements
 	}
 
 	public Object remove(int num) {
-		
 		UIComponent child = (UIComponent)list_.get(num);
 		if(child != null){
 			child.setParent(null);
@@ -32,31 +50,30 @@ class ComponentChildrenListWrapper_ extends AbstractList implements
 	}
 	
 	public void add(int num, Object obj) {
-		checkValue(obj);
+		assertUIComponent(obj);
 		setNewParent((UIComponent)obj);
 		list_.add(num, obj);
 	}
 
 	public boolean add(Object obj) {
-		checkValue(obj);
+		assertUIComponent(obj);
 		setNewParent((UIComponent)obj);
 		return list_.add(obj);
 	}
 
 	public boolean addAll(Collection collection) {
-		
 		boolean changed = false;
 		Object obj = null;
 		for(Iterator itr = collection.iterator();itr.hasNext();){
 			obj = itr.next();
-			checkValue(obj);
+			assertUIComponent(obj);
 			add((UIComponent)obj);
 			changed = true;
 		}
 		return changed;
 	}
 	
-	protected void setNewParent(UIComponent child){
+	private void setNewParent(UIComponent child){
 		UIComponent parent = child.getParent();
 		if(parent != null){		
 			removeFromParent(parent, child);
@@ -64,17 +81,15 @@ class ComponentChildrenListWrapper_ extends AbstractList implements
 		child.setParent(component_);
 	}
 	
-	protected void removeFromParent(UIComponent parent, UIComponent child){
-		//if should care about facet map, do this here.
+	private void removeFromParent(UIComponent parent, UIComponent child){
 		parent.getChildren().remove(child);
 	}
 	
-	protected static void checkValue(Object obj) {
+	private static void assertUIComponent(Object obj) {
 		if(obj == null){
 			throw new NullPointerException("value");
 		}
-		
-		if(obj instanceof UIComponent){
+		if(!(obj instanceof UIComponent)){
 			throw new ClassCastException("value");
 		}
 	}
