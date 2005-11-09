@@ -113,14 +113,14 @@ public class UIViewRoot extends UIComponentBase {
 		if (getValueBinding("locale") != null) {
 			Object obj = ComponentUtils_.getValueBindingValue(this, "locale");
 			if (obj == null) {
-				locale = ComponentUtils_.getLocaleFromViewHandler(context);
+				locale = ComponentUtils_.calculateLocale(context);
 			} else if (obj instanceof Locale) {
 				locale = (Locale) obj;
 			} else if (obj instanceof String) {
 				locale = getLocaleFromString((String) obj);
 			}
 		} else {
-			locale = ComponentUtils_.getLocaleFromViewHandler(context);
+			locale = ComponentUtils_.calculateLocale(context);
 		}
 		return locale;
 	}

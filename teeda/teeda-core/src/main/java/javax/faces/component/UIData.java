@@ -413,7 +413,7 @@ public class UIData extends UIComponentBase implements NamingContainer{
 		if(model_ != null){
 			return model_;
 		}
-		model_ = ComponentUtils_.getSuitableDataModel(getValue());
+		model_ = UIDataUtil_.getSuitableDataModel(getValue());
 		return model_;
 	}
 	

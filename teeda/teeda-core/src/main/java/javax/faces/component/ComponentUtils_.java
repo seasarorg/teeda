@@ -1,10 +1,7 @@
 package javax.faces.component;
 
 import java.lang.reflect.InvocationTargetException;
-import java.sql.ResultSet;
-import java.util.Collections;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Locale;
 
 import javax.faces.FacesException;
@@ -13,15 +10,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.el.ValueBinding;
 import javax.faces.event.PhaseId;
-import javax.faces.model.ArrayDataModel;
-import javax.faces.model.DataModel;
-import javax.faces.model.ListDataModel;
-import javax.faces.model.ResultDataModel;
-import javax.faces.model.ResultSetDataModel;
-import javax.faces.model.ScalarDataModel;
 import javax.faces.model.SelectItem;
 import javax.faces.model.SelectItemGroup;
-import javax.servlet.jsp.jstl.sql.Result;
 
 import org.apache.commons.beanutils.BeanUtils;
 
@@ -69,26 +59,6 @@ class ComponentUtils_ {
 		}
 	}
 	
-	public static DataModel getSuitableDataModel(Object obj){
-		DataModel model = null;
-        if (obj == null) {
-            model = new ListDataModel(Collections.EMPTY_LIST);
-        } else if (obj instanceof DataModel) {
-            model = (DataModel) obj;
-        } else if (obj instanceof List) {
-            model = new ListDataModel((List) obj);
-        } else if (Object[].class.isAssignableFrom(obj.getClass())) {
-            model = new ArrayDataModel((Object[]) obj);
-        } else if (obj instanceof ResultSet) {
-            model = new ResultSetDataModel((ResultSet) obj);
-        } else if (obj instanceof Result) {
-            model = new ResultDataModel((Result) obj);
-        } else {
-            model = new ScalarDataModel(obj);
-        }
-        return model;
-	}
-	
 	public static void processAppropriatePhaseAction(FacesContext context, UIComponent component, PhaseId phase){
 		if (phase == PhaseId.APPLY_REQUEST_VALUES) {
 			component.processDecodes(context);
@@ -131,11 +101,18 @@ class ComponentUtils_ {
 		}
 	}
 	
-	public static Locale getLocaleFromViewHandler(FacesContext context){
+	public static Locale calculateLocale(FacesContext context){
 		ViewHandler viewHandler = context.getApplication().getViewHandler();
 		return viewHandler.calculateLocale(context);
 	}
 	
+    public static Locale getLocale(FacesContext context){
+        if(context == null){
+            throw new NullPointerException();
+        }
+        return context.getViewRoot().getLocale();
+    }
+    
 	public static boolean isLocaleShort(String locale){
 		assertNotNull(locale);
 		if(locale.length() == LOCALE_LENGTH_SHORT){
