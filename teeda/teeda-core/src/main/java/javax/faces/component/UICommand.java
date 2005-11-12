@@ -121,12 +121,10 @@ public class UICommand extends UIComponentBase implements ActionSource{
 		super.broadcast(event);
         if (event instanceof ActionEvent) {
             FacesContext context = getFacesContext();
-
             MethodBinding mb = getActionListener();
             if (mb != null) {
                 mb.invoke(context, new Object[] { event });
             }
-
             ActionListener listener = context.getApplication().getActionListener();
             if (listener != null) {
                 listener.processAction((ActionEvent) event);

@@ -15,11 +15,12 @@
  */
 package javax.faces.application;
 
-import javax.faces.component.UIViewRoot;
-import javax.faces.context.FacesContext;
-
 import java.io.IOException;
 import java.util.Locale;
+
+import javax.faces.FacesException;
+import javax.faces.component.UIViewRoot;
+import javax.faces.context.FacesContext;
 
 /**
  * @author Shinpei Ohtani
@@ -36,7 +37,10 @@ public abstract class ViewHandler {
 
 	public abstract String getResourceURL(FacesContext context, String path);
 
-	public abstract void restoreView(FacesContext context, String viewId)
+    public abstract void renderView(FacesContext context, UIViewRoot viewToRender)
+            throws IOException, FacesException;
+    
+	public abstract UIViewRoot restoreView(FacesContext context, String viewId)
 			throws IOException;
 
 	public abstract void writeState(FacesContext context) throws IOException;
