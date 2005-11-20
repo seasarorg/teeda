@@ -27,6 +27,12 @@ import javax.faces.context.FacesContext;
  */
 public abstract class ViewHandler {
 
+    public static final String CHARACTER_ENCODING_KEY = "javax.faces.request.charset";
+    
+    public static final String DEFAULT_SUFFIX = ".jsp";
+    
+    public static final String DEFAULT_SUFFIX_PARAM_NAME = "javax.faces.DEFAULT_SUFFIX";
+    
 	public abstract Locale calculateLocale(FacesContext context);
 
 	public abstract String calculateRenderKitId(FacesContext context);
