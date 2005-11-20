@@ -8,11 +8,12 @@ import javax.faces.mock.MockExternalContext;
 import javax.faces.mock.MockFacesContext;
 import javax.servlet.ServletContext;
 
-import org.seasar.extension.unit.S2TestCase;
+import junit.framework.TestCase;
+
 import org.seasar.framework.aop.interceptors.MockInterceptor;
 
 
-public class TestStateManager extends S2TestCase {
+public class TestStateManager extends TestCase {
 
     public TestStateManager(String name) {
         super(name);
