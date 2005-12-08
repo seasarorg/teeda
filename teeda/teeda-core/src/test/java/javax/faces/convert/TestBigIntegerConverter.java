@@ -2,13 +2,11 @@ package javax.faces.convert;
 
 import java.math.BigInteger;
 
-import javax.faces.mock.MockFacesContext;
-import javax.faces.mock.MockUIComponent;
-
-import junit.framework.TestCase;
+import org.seasar.teeda.core.mock.MockUIComponent;
+import org.seasar.teeda.core.unit.TeedaTestCase;
 
 
-public class TestBigIntegerConverter extends TestCase {
+public class TestBigIntegerConverter extends TeedaTestCase {
 
 	public static void main(String[] args) {
 		junit.textui.TestRunner.run(TestBigIntegerConverter.class);
@@ -48,26 +46,26 @@ public class TestBigIntegerConverter extends TestCase {
 		}
 		
 		try{
-			converter.getAsObject(new MockFacesContext(), null, "");
+			converter.getAsObject(getFacesContext(), null, "");
 			fail();
 		}catch(NullPointerException e){
 			assertTrue(true);
 		}
 		
-		Object o = converter.getAsObject(new MockFacesContext(), new MockUIComponent(), null);
+		Object o = converter.getAsObject(getFacesContext(), new MockUIComponent(), null);
 		assertEquals(o, null);
 		
-		o = converter.getAsObject(new MockFacesContext(), new MockUIComponent(), "");
+		o = converter.getAsObject(getFacesContext(), new MockUIComponent(), "");
 		assertNull(o);
 		
-		o = converter.getAsObject(new MockFacesContext(), new MockUIComponent(), " ");
+		o = converter.getAsObject(getFacesContext(), new MockUIComponent(), " ");
 		assertNull(o);
 		
 		BigInteger b = new BigInteger("2").pow(32);
 		
 		String value = b.toString();
 		
-		o = converter.getAsObject(new MockFacesContext(), new MockUIComponent(), value);
+		o = converter.getAsObject(getFacesContext(), new MockUIComponent(), value);
 		assertTrue(o instanceof BigInteger);
 		
 		BigInteger result = (BigInteger)o;
@@ -77,7 +75,7 @@ public class TestBigIntegerConverter extends TestCase {
 		
 		value = "aaa";
 		try{
-			o = converter.getAsObject(new MockFacesContext(), new MockUIComponent(), value);
+			o = converter.getAsObject(getFacesContext(), new MockUIComponent(), value);
 			fail();
 		}catch(Exception e){
 			assertTrue(true);
@@ -96,26 +94,26 @@ public class TestBigIntegerConverter extends TestCase {
 		}
 		
 		try{
-			converter.getAsString(new MockFacesContext(), null, "");
+			converter.getAsString(getFacesContext(), null, "");
 			fail();
 		}catch(NullPointerException e){
 			assertTrue(true);
 		}
 		
-		String str = converter.getAsString(new MockFacesContext(), new MockUIComponent(), null);
+		String str = converter.getAsString(getFacesContext(), new MockUIComponent(), null);
 		assertEquals(str, "");
 		
-		str = converter.getAsString(new MockFacesContext(), new MockUIComponent(), "a");
+		str = converter.getAsString(getFacesContext(), new MockUIComponent(), "a");
 		
 		assertEquals("a", str);
 		
 		BigInteger b = new BigInteger("123");
-		str = converter.getAsString(new MockFacesContext(), new MockUIComponent(), b);
+		str = converter.getAsString(getFacesContext(), new MockUIComponent(), b);
 		assertEquals(b.toString(), str);
 		
 		Boolean bl = new Boolean(true);
 		try{
-			str = converter.getAsString(new MockFacesContext(), new MockUIComponent(), bl);
+			str = converter.getAsString(getFacesContext(), new MockUIComponent(), bl);
 			fail();
 		}catch(ConverterException e){
 			assertTrue(true);

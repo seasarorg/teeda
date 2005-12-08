@@ -1,6 +1,6 @@
 package javax.faces.component;
 
-import javax.faces.mock.MockUIComponent;
+import org.seasar.teeda.core.mock.MockUIComponent;
 
 import junit.framework.TestCase;
 

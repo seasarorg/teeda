@@ -3,13 +3,13 @@ package javax.faces.convert;
 import java.util.Locale;
 
 import javax.faces.component.UIViewRoot;
-import javax.faces.mock.MockFacesContext;
-import javax.faces.mock.MockUIComponent;
 
-import junit.framework.TestCase;
+import org.seasar.teeda.core.mock.MockFacesContext;
+import org.seasar.teeda.core.mock.MockUIComponent;
+import org.seasar.teeda.core.unit.TeedaTestCase;
 
 
-public class TestByteConverter extends TestCase {
+public class TestByteConverter extends TeedaTestCase {
 
 	public static void main(String[] args) {
 		junit.textui.TestRunner.run(TestByteConverter.class);
@@ -40,7 +40,7 @@ public class TestByteConverter extends TestCase {
 	public void testGetAsObject() {
 		
 		MockUIComponent component = new MockUIComponent();
-		MockFacesContext context = new MockFacesContext();
+		MockFacesContext context = getFacesContext();
 		
 		ByteConverter converter = new ByteConverter();
 		
@@ -92,7 +92,7 @@ public class TestByteConverter extends TestCase {
 	public void testGetAsString() {
 		
 		MockUIComponent component = new MockUIComponent();
-		MockFacesContext context = new MockFacesContext();
+		MockFacesContext context = getFacesContext();
 		
 		ByteConverter converter = new ByteConverter();
 		

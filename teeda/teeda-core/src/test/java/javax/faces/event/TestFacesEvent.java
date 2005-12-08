@@ -1,9 +1,10 @@
 package javax.faces.event;
 
 import javax.faces.component.UIComponent;
-import javax.faces.mock.MockUIComponent;
 
 import junit.framework.TestCase;
+
+import org.seasar.teeda.core.mock.MockUIComponent;
 
 
 public class TestFacesEvent extends TestCase {

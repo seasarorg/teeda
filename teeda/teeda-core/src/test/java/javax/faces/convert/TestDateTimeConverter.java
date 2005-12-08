@@ -8,13 +8,13 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 import javax.faces.component.UIViewRoot;
-import javax.faces.mock.MockFacesContext;
-import javax.faces.mock.MockUIComponent;
 
-import junit.framework.TestCase;
+import org.seasar.teeda.core.mock.MockFacesContext;
+import org.seasar.teeda.core.mock.MockUIComponent;
+import org.seasar.teeda.core.unit.TeedaTestCase;
 
 
-public class TestDateTimeConverter extends TestCase {
+public class TestDateTimeConverter extends TeedaTestCase {
 
 	public static void main(String[] args) {
 		junit.textui.TestRunner.run(TestDateTimeConverter.class);
@@ -44,7 +44,7 @@ public class TestDateTimeConverter extends TestCase {
 
 	public void testGetAsObject() {
 		
-		MockFacesContext context = new MockFacesContext();
+		MockFacesContext context = getFacesContext();
 		MockUIComponent component = new MockUIComponent();
 		
 		DateTimeConverter converter = new DateTimeConverter();
@@ -161,7 +161,7 @@ public class TestDateTimeConverter extends TestCase {
 	
 	public void testGetAsString() {
 		
-		MockFacesContext context = new MockFacesContext();
+		MockFacesContext context = getFacesContext();
 		MockUIComponent component = new MockUIComponent();
 		
 		DateTimeConverter converter = new DateTimeConverter();
@@ -222,7 +222,7 @@ public class TestDateTimeConverter extends TestCase {
 
 	public void testSaveState() {
 		DateTimeConverter converter = new DateTimeConverter();
-		MockFacesContext context = new MockFacesContext();
+		MockFacesContext context = getFacesContext();
 		
 		String dateStyle = DateTimeConverter.STYLE_FULL;
 		Locale locale = Locale.getDefault();
@@ -249,7 +249,7 @@ public class TestDateTimeConverter extends TestCase {
 
 	public void testRestoreState() {
 		DateTimeConverter converter = new DateTimeConverter();
-		MockFacesContext context = new MockFacesContext();
+		MockFacesContext context = getFacesContext();
 		
 		String dateStyle = DateTimeConverter.STYLE_FULL;
 		Locale locale = Locale.getDefault();

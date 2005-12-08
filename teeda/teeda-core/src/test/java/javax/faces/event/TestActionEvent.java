@@ -1,10 +1,9 @@
 package javax.faces.event;
 
-import javax.faces.mock.MockActionListener;
-import javax.faces.mock.MockNotActionListener;
-import javax.faces.mock.MockUIComponent;
-
 import junit.framework.TestCase;
+
+import org.seasar.teeda.core.mock.MockActionListener;
+import org.seasar.teeda.core.mock.MockUIComponent;
 
 public class TestActionEvent extends TestCase {
 
@@ -52,7 +51,13 @@ public class TestActionEvent extends TestCase {
 		ActionEvent event = new ActionEvent(new MockUIComponent());
 		assertTrue(event.isAppropriateListener(new MockActionListener()));
 
-		assertFalse(event.isAppropriateListener(new MockNotActionListener()));
+        FacesListener notActionListener = new FacesListener(){
+
+            public void processAction(ActionEvent actionEvent) throws AbortProcessingException {
+            }
+            
+        };
+		assertFalse(event.isAppropriateListener(notActionListener));
 	}
 
 	public void testProcessListener() throws Exception {

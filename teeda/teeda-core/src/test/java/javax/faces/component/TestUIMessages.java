@@ -1,12 +1,10 @@
 package javax.faces.component;
 
-import javax.faces.mock.MockFacesContext;
-import javax.faces.mock.MockValueBinding;
-
-import junit.framework.TestCase;
+import org.seasar.teeda.core.mock.MockValueBinding;
+import org.seasar.teeda.core.unit.TeedaTestCase;
 
 
-public class TestUIMessages extends TestCase {
+public class TestUIMessages extends TeedaTestCase {
 
 	public static void main(String[] args) {
 		junit.textui.TestRunner.run(TestUIMessages.class);
@@ -48,7 +46,7 @@ public class TestUIMessages extends TestCase {
 		UIMessages messages = new UIMessages();
 		Boolean value = Boolean.TRUE;
 		MockValueBinding vb = new MockValueBinding();
-		vb.setValue(new MockFacesContext(), value);
+		vb.setValue(getFacesContext(), value);
 		messages.setValueBinding("globalOnly", vb);
 		assertTrue(messages.isGlobalOnly());
 	}
@@ -63,7 +61,7 @@ public class TestUIMessages extends TestCase {
 		UIMessages messages = new UIMessages();
 		Boolean value = Boolean.TRUE;
 		MockValueBinding vb = new MockValueBinding();
-		vb.setValue(new MockFacesContext(), value);
+		vb.setValue(getFacesContext(), value);
 		messages.setValueBinding("showDetail", vb);
 		assertTrue(messages.isShowDetail());
 	}
@@ -78,7 +76,7 @@ public class TestUIMessages extends TestCase {
 		UIMessages messages = new UIMessages();
 		Boolean value = Boolean.TRUE;
 		MockValueBinding vb = new MockValueBinding();
-		vb.setValue(new MockFacesContext(), value);
+		vb.setValue(getFacesContext(), value);
 		messages.setValueBinding("showSummary", vb);
 		assertTrue(messages.isShowSummary());
 	}

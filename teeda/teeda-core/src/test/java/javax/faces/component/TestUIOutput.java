@@ -3,15 +3,14 @@ package javax.faces.component;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
-import javax.faces.mock.MockFacesContext;
-import javax.faces.mock.MockValueBinding;
 
-import junit.framework.TestCase;
+import org.seasar.teeda.core.mock.MockValueBinding;
+import org.seasar.teeda.core.unit.TeedaTestCase;
 
 /**
  * TODO test saveState, restoreState
  */
-public class TestUIOutput extends TestCase {
+public class TestUIOutput extends TeedaTestCase {
 
 	public static void main(String[] args) {
 		junit.textui.TestRunner.run(TestUIOutput.class);
@@ -82,7 +81,7 @@ public class TestUIOutput extends TestCase {
 			}
 		};
 		MockValueBinding vb = new MockValueBinding();
-		vb.setValue(new MockFacesContext(), converter);
+		vb.setValue(getFacesContext(), converter);
 		output.setValueBinding("converter", vb);
 		assertEquals("converter", output.getConverter().toString());
 	}
@@ -102,7 +101,7 @@ public class TestUIOutput extends TestCase {
 	public void testGetValue(){
 		UIOutput output = new UIOutput();
 		MockValueBinding vb = new MockValueBinding();
-		vb.setValue(new MockFacesContext(), "bbb");
+		vb.setValue(getFacesContext(), "bbb");
 		output.setValueBinding("value", vb);
 		assertEquals("bbb", output.getValue());
 	}

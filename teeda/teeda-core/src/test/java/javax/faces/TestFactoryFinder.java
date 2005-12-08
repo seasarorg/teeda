@@ -91,12 +91,12 @@ public class TestFactoryFinder extends TestCase {
 		FactoryFinder.releaseFactories();
 
 		FactoryFinder.setFactory(FactoryFinder.APPLICATION_FACTORY,
-				"javax.faces.mock.MockApplicationFactory");
+				"org.seasar.teeda.core.mock.MockApplicationFactory");
 
 		Object target = FactoryFinder
 				.getFactory(FactoryFinder.APPLICATION_FACTORY);
 
-		assertEquals("javax.faces.mock.MockApplicationFactory", target.getClass()
+		assertEquals("org.seasar.teeda.core.mock.MockApplicationFactory", target.getClass()
 				.getName());
 
 	}
@@ -105,15 +105,15 @@ public class TestFactoryFinder extends TestCase {
 		FactoryFinder.releaseFactories();
 
 		FactoryFinder.setFactory(FactoryFinder.APPLICATION_FACTORY,
-		"javax.faces.mock.MockApplicationFactory");
+		"org.seasar.teeda.core.mock.MockApplicationFactory");
 
 		FactoryFinder.setFactory(FactoryFinder.APPLICATION_FACTORY,
-		"javax.faces.mock.MockApplicationFactory2");
+		"org.seasar.teeda.core.mock.MockApplicationFactory2");
 
 		Object target = FactoryFinder
 				.getFactory(FactoryFinder.APPLICATION_FACTORY);
 
-		assertEquals("javax.faces.mock.MockApplicationFactory2", target.getClass()
+		assertEquals("org.seasar.teeda.core.mock.MockApplicationFactory2", target.getClass()
 				.getName());
 
 	}
@@ -126,7 +126,7 @@ public class TestFactoryFinder extends TestCase {
             assertTrue(true);
         }
         try{
-            FactoryFinder.setFactory(null,"javax.faces.mock.MockApplicationFactory");
+            FactoryFinder.setFactory(null,"org.seasar.teeda.core.mock.MockApplicationFactory");
             fail();
         }catch(NullPointerException e){
             assertTrue(true);
@@ -135,7 +135,7 @@ public class TestFactoryFinder extends TestCase {
     
     public void testNotSetFactory() throws Exception{        
         try{
-            FactoryFinder.getFactory("javax.faces.mock.MockApplicationFactory");
+            FactoryFinder.getFactory("org.seasar.teeda.core.mock.MockApplicationFactory");
             fail();
         }catch(IllegalStateException e){
             assertTrue(true);
@@ -144,7 +144,7 @@ public class TestFactoryFinder extends TestCase {
 
     public void testSetUnidentifyFatoryName() throws Exception{
         try{
-            FactoryFinder.setFactory(this.getClass().getName(), "javax.faces.mock.MockApplicationFactory");
+            FactoryFinder.setFactory(this.getClass().getName(), "org.seasar.teeda.core.mock.MockApplicationFactory");
             fail();
         }catch(IllegalArgumentException e){
             assertTrue(true);

@@ -1,29 +1,10 @@
 package javax.faces.component;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import org.seasar.teeda.core.mock.MockFacesContextImpl;
+import org.seasar.teeda.core.mock.MockValueBinding;
+import org.seasar.teeda.core.unit.TeedaTestCase;
 
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
-import javax.faces.convert.Converter;
-import javax.faces.convert.ConverterException;
-import javax.faces.el.EvaluationException;
-import javax.faces.el.MethodBinding;
-import javax.faces.event.AbortProcessingException;
-import javax.faces.event.FacesEvent;
-import javax.faces.event.ValueChangeEvent;
-import javax.faces.event.ValueChangeListener;
-import javax.faces.mock.MockFacesContext;
-import javax.faces.mock.MockValueBinding;
-import javax.faces.render.Renderer;
-import javax.faces.validator.Validator;
-import javax.faces.validator.ValidatorException;
-
-import junit.framework.TestCase;
-
-public class TestUIInput extends TestCase {
+public class TestUIInput extends TeedaTestCase {
 
 	public static void main(String[] args) {
 		junit.textui.TestRunner.run(TestUIInput.class);
@@ -87,7 +68,7 @@ public class TestUIInput extends TestCase {
 		UIInput input = new UIInput();
 		MockValueBinding vb = new MockValueBinding();
 		boolean value = true;
-		vb.setValue(new MockFacesContext(), new Boolean(value));
+		vb.setValue(new MockFacesContextImpl(), new Boolean(value));
 		input.setValueBinding("required", vb);
 		assertEquals(value, input.isRequired());
 
@@ -103,7 +84,7 @@ public class TestUIInput extends TestCase {
 		UIInput input = new UIInput();
 		MockValueBinding vb = new MockValueBinding();
 		boolean value = true;
-		vb.setValue(new MockFacesContext(), new Boolean(value));
+		vb.setValue(getFacesContext(), new Boolean(value));
 		input.setValueBinding("valid", vb);
 		assertEquals(value, input.isValid());
 	}
@@ -118,7 +99,7 @@ public class TestUIInput extends TestCase {
 		UIInput input = new UIInput();
 		MockValueBinding vb = new MockValueBinding();
 		boolean value = true;
-		vb.setValue(new MockFacesContext(), new Boolean(value));
+		vb.setValue(getFacesContext(), new Boolean(value));
 		input.setValueBinding("immediate", vb);
 		assertEquals(value, input.isImmediate());
 	}

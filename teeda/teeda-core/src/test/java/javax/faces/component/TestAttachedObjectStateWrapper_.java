@@ -3,7 +3,7 @@ package javax.faces.component;
 import java.io.Serializable;
 
 import javax.faces.context.FacesContext;
-import javax.faces.mock.MockFacesContext;
+import org.seasar.teeda.core.mock.MockFacesContextImpl;
 
 import junit.framework.TestCase;
 
@@ -37,14 +37,14 @@ public class TestAttachedObjectStateWrapper_ extends TestCase {
     }
 
     public void testRestoreSerializable() {
-        FacesContext context = new MockFacesContext();
+        FacesContext context = new MockFacesContextImpl();
         SerializableBean target = new SerializableBean(); 
         AttachedObjectStateWrapper_ wrapper = new AttachedObjectStateWrapper_(context, target);
         assertEquals(target, wrapper.restore(context));
     }
 
     public void testRestoreStateHolder(){
-        FacesContext context = new MockFacesContext();
+        FacesContext context = new MockFacesContextImpl();
         StateHolderBean target = new StateHolderBean();
         target.setStr("a");
         AttachedObjectStateWrapper_ wrapper = new AttachedObjectStateWrapper_(context, target);

@@ -1,23 +1,15 @@
 package javax.faces.component;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-
-import javax.faces.application.ViewHandler;
-import javax.faces.context.FacesContext;
-import javax.faces.event.AbortProcessingException;
-import javax.faces.event.FacesEvent;
 import javax.faces.event.PhaseId;
-import javax.faces.mock.MockFacesContext;
-import javax.faces.mock.MockFacesEvent;
-import javax.faces.mock.MockUIComponent;
-import javax.faces.mock.MockValueBinding;
 
-import junit.framework.TestCase;
+import org.seasar.teeda.core.mock.MockFacesContext;
+import org.seasar.teeda.core.mock.MockFacesContextImpl;
+import org.seasar.teeda.core.mock.MockFacesEvent;
+import org.seasar.teeda.core.mock.MockUIComponent;
+import org.seasar.teeda.core.mock.MockValueBinding;
+import org.seasar.teeda.core.unit.TeedaTestCase;
 
-public class TestUIViewRoot extends TestCase {
+public class TestUIViewRoot extends TeedaTestCase {
 
 	public static void main(String[] args) {
 		junit.textui.TestRunner.run(TestUIViewRoot.class);
@@ -54,7 +46,7 @@ public class TestUIViewRoot extends TestCase {
 	public void testGetRenderKitId() {
 		UIViewRoot root = new UIViewRoot();
 		MockValueBinding vb = new MockValueBinding();
-		vb.setValue(new MockFacesContext(), "aaa");
+		vb.setValue(new MockFacesContextImpl(), "aaa");
 		root.setValueBinding("renderKitId", vb);
 		assertEquals("aaa", root.getRenderKitId());
 	}
@@ -68,7 +60,7 @@ public class TestUIViewRoot extends TestCase {
 	public void testGetViewId() {
 		UIViewRoot root = new UIViewRoot();
 		MockValueBinding vb = new MockValueBinding();
-		vb.setValue(new MockFacesContext(), "bbb");
+		vb.setValue(new MockFacesContextImpl(), "bbb");
 		root.setValueBinding("viewId", vb);
 		assertEquals("bbb", root.getViewId());
 	}
@@ -94,7 +86,7 @@ public class TestUIViewRoot extends TestCase {
 		event.setPhaseId(PhaseId.ANY_PHASE);
 		root.queueEvent(event);
 		
-		MockFacesContext context = new MockFacesContext();
+		MockFacesContext context = getFacesContext();
 		root.processApplication(context);
 		
 	}	

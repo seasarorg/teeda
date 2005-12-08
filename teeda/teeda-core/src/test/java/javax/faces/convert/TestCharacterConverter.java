@@ -1,12 +1,11 @@
 package javax.faces.convert;
 
-import javax.faces.mock.MockFacesContext;
-import javax.faces.mock.MockUIComponent;
+import org.seasar.teeda.core.mock.MockFacesContext;
+import org.seasar.teeda.core.mock.MockUIComponent;
+import org.seasar.teeda.core.unit.TeedaTestCase;
 
-import junit.framework.TestCase;
 
-
-public class TestCharacterConverter extends TestCase {
+public class TestCharacterConverter extends TeedaTestCase {
 
 	public static void main(String[] args) {
 		junit.textui.TestRunner.run(TestCharacterConverter.class);
@@ -37,7 +36,7 @@ public class TestCharacterConverter extends TestCase {
 	public void testGetAsObject() {
 		
 		MockUIComponent component = new MockUIComponent();
-		MockFacesContext context = new MockFacesContext();
+		MockFacesContext context = getFacesContext();
 		
 		CharacterConverter converter = new CharacterConverter();
 		
@@ -76,7 +75,7 @@ public class TestCharacterConverter extends TestCase {
 	public void testGetAsString() {
 
 		MockUIComponent component = new MockUIComponent();
-		MockFacesContext context = new MockFacesContext();
+		MockFacesContext context = getFacesContext();
 		
 		CharacterConverter converter = new CharacterConverter();
 		

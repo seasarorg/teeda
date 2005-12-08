@@ -2,13 +2,11 @@ package javax.faces.convert;
 
 import java.math.BigDecimal;
 
-import javax.faces.mock.MockFacesContext;
-import javax.faces.mock.MockUIComponent;
-
-import junit.framework.TestCase;
+import org.seasar.teeda.core.mock.MockUIComponent;
+import org.seasar.teeda.core.unit.TeedaTestCase;
 
 
-public class TestBigDecimalConverter extends TestCase {
+public class TestBigDecimalConverter extends TeedaTestCase {
 
 	public static void main(String[] args) {
 		junit.textui.TestRunner.run(TestBigDecimalConverter.class);
@@ -48,23 +46,23 @@ public class TestBigDecimalConverter extends TestCase {
 		}
 		
 		try{
-			converter.getAsObject(new MockFacesContext(), null, "");
+			converter.getAsObject(getFacesContext(), null, "");
 			fail();
 		}catch(NullPointerException e){
 			assertTrue(true);
 		}
 		
-		Object o = converter.getAsObject(new MockFacesContext(), new MockUIComponent(), null);
+		Object o = converter.getAsObject(getFacesContext(), new MockUIComponent(), null);
 		assertEquals(o, null);
 		
-		o = converter.getAsObject(new MockFacesContext(), new MockUIComponent(), "");
+		o = converter.getAsObject(getFacesContext(), new MockUIComponent(), "");
 		assertNull(o);
 		
-		o = converter.getAsObject(new MockFacesContext(), new MockUIComponent(), " ");
+		o = converter.getAsObject(getFacesContext(), new MockUIComponent(), " ");
 		assertNull(o);
 		
 		String value = "123000000000";
-		o = converter.getAsObject(new MockFacesContext(), new MockUIComponent(), value);
+		o = converter.getAsObject(getFacesContext(), new MockUIComponent(), value);
 		assertTrue(o instanceof BigDecimal);
 		BigDecimal b = (BigDecimal)o;
 		
@@ -73,7 +71,7 @@ public class TestBigDecimalConverter extends TestCase {
 		
 		value = "aaa";
 		try{
-			o = converter.getAsObject(new MockFacesContext(), new MockUIComponent(), value);
+			o = converter.getAsObject(getFacesContext(), new MockUIComponent(), value);
 			fail();
 		}catch(Exception e){
 			assertTrue(true);
@@ -92,27 +90,27 @@ public class TestBigDecimalConverter extends TestCase {
 		}
 		
 		try{
-			converter.getAsString(new MockFacesContext(), null, "");
+			converter.getAsString(getFacesContext(), null, "");
 			fail();
 		}catch(NullPointerException e){
 			assertTrue(true);
 		}
 		
-		String str = converter.getAsString(new MockFacesContext(), new MockUIComponent(), null);
+		String str = converter.getAsString(getFacesContext(), new MockUIComponent(), null);
 		assertEquals(str, "");
 		
-		str = converter.getAsString(new MockFacesContext(), new MockUIComponent(), "a");
+		str = converter.getAsString(getFacesContext(), new MockUIComponent(), "a");
 		
 		assertEquals("a", str);
 		
 		BigDecimal b = new BigDecimal("123.456");
-		str = converter.getAsString(new MockFacesContext(), new MockUIComponent(), b);
+		str = converter.getAsString(getFacesContext(), new MockUIComponent(), b);
 		assertEquals(b.toString(), str);
 		
 		
 		Integer i = new Integer(1);
 		try{
-			str = converter.getAsString(new MockFacesContext(), new MockUIComponent(), i);
+			str = converter.getAsString(getFacesContext(), new MockUIComponent(), i);
 			fail();
 		}catch(ConverterException e){
 			assertTrue(true);

@@ -4,16 +4,12 @@ import java.io.IOException;
 
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
-import javax.faces.mock.MockExternalContext;
-import javax.faces.mock.MockFacesContext;
-import javax.servlet.ServletContext;
 
-import junit.framework.TestCase;
-
-import org.seasar.framework.aop.interceptors.MockInterceptor;
+import org.seasar.teeda.core.mock.MockFacesContext;
+import org.seasar.teeda.core.unit.TeedaTestCase;
 
 
-public class TestStateManager extends TestCase {
+public class TestStateManager extends TeedaTestCase {
 
     public TestStateManager(String name) {
         super(name);
@@ -29,12 +25,9 @@ public class TestStateManager extends TestCase {
             assertTrue(true);
         }
 
-        MockInterceptor mi = new MockInterceptor();
-        mi.setReturnValue("getInitParameter", StateManager.STATE_SAVING_METHOD_CLIENT);
-        ServletContext servletContext = (ServletContext)mi.createProxy(ServletContext.class);
-        MockExternalContext externalContext = new MockExternalContext(servletContext);
-        MockFacesContext context = new MockFacesContext(externalContext);
-        assertTrue(stateManager.isSavingStateClient(context));
+        getServletContext().setInitParameter(StateManager.STATE_SAVING_METHOD_PARAM_NAME, StateManager.STATE_SAVING_METHOD_CLIENT);
+        MockFacesContext facesContext = getFacesContext();
+        assertTrue(stateManager.isSavingStateClient(facesContext));
     }
 
     private static class StateManagerImpl extends StateManager{

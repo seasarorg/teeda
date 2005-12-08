@@ -1,12 +1,10 @@
 package javax.faces.component;
 
-import javax.faces.mock.MockFacesContext;
-import javax.faces.mock.MockValueBinding;
-
-import junit.framework.TestCase;
+import org.seasar.teeda.core.mock.MockValueBinding;
+import org.seasar.teeda.core.unit.TeedaTestCase;
 
 
-public class TestUISelectItem extends TestCase {
+public class TestUISelectItem extends TeedaTestCase {
 
 	public static void main(String[] args) {
 		junit.textui.TestRunner.run(TestUISelectItem.class);
@@ -50,7 +48,7 @@ public class TestUISelectItem extends TestCase {
 		UISelectItem item = new UISelectItem();
 		MockValueBinding vb = new MockValueBinding();
 		String value = "aaa";
-		vb.setValue(new MockFacesContext(), value);
+		vb.setValue(getFacesContext(), value);
 		item.setValueBinding("itemDescription", vb);
 		assertEquals(value, item.getItemDescription());
 	}
@@ -66,7 +64,7 @@ public class TestUISelectItem extends TestCase {
 		UISelectItem item = new UISelectItem();
 		MockValueBinding vb = new MockValueBinding();
 		boolean value = true;
-		vb.setValue(new MockFacesContext(), new Boolean(value));
+		vb.setValue(getFacesContext(), new Boolean(value));
 		item.setValueBinding("itemDisabled", vb);
 		assertEquals(value, item.isItemDisabled());
 	}
@@ -82,7 +80,7 @@ public class TestUISelectItem extends TestCase {
 		UISelectItem item = new UISelectItem();
 		MockValueBinding vb = new MockValueBinding();
 		String value = "bbb";
-		vb.setValue(new MockFacesContext(), value);
+		vb.setValue(getFacesContext(), value);
 		item.setValueBinding("itemLabel", vb);
 		assertEquals(value, item.getItemLabel());
 	}
@@ -98,7 +96,7 @@ public class TestUISelectItem extends TestCase {
 		UISelectItem item = new UISelectItem();
 		MockValueBinding vb = new MockValueBinding();
 		Integer value = new Integer(3);
-		vb.setValue(new MockFacesContext(), value);
+		vb.setValue(getFacesContext(), value);
 		item.setValueBinding("itemValue", vb);
 		assertEquals(value, item.getItemValue());
 	}
@@ -114,7 +112,7 @@ public class TestUISelectItem extends TestCase {
 		UISelectItem item = new UISelectItem();
 		MockValueBinding vb = new MockValueBinding();
 		String value = "a";
-		vb.setValue(new MockFacesContext(), value);
+		vb.setValue(getFacesContext(), value);
 		item.setValueBinding("value", vb);
 		assertEquals(value, item.getValue());
 	}	

@@ -21,8 +21,9 @@ import java.util.List;
 import java.util.Map;
 
 import javax.faces.application.ApplicationFactory;
-import javax.faces.mock.MockApplicationFactory;
-import javax.faces.mock.MockApplicationFactory2;
+
+import org.seasar.teeda.core.mock.MockApplicationFactory;
+import org.seasar.teeda.core.mock.MockApplicationFactory2;
 
 import junit.framework.TestCase;
 
@@ -81,12 +82,11 @@ public class TestFacesUtil_ extends TestCase {
 
     public void testCreateFactoryInstance() {
         List list = new ArrayList();
-        list.add("javax.faces.mock.MockApplicationFactory");
+        list.add("org.seasar.teeda.core.mock.MockApplicationFactory");
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
         Object o = FactoryFinderUtil_.createFactoryInstance(FactoryFinder.APPLICATION_FACTORY, list, loader);
         assertNotNull(o);
-        assertEquals("javax.faces.mock.MockApplicationFactory", o.getClass().getName());
-        
+        assertEquals("org.seasar.teeda.core.mock.MockApplicationFactory", o.getClass().getName());
         list = new ArrayList();
         list.add("javax.faces.TestFacesUtil_");
         try{
@@ -99,7 +99,6 @@ public class TestFacesUtil_ extends TestCase {
     }
 
     public void testGetCurrentInstanceByConstructor() {
-        
         MockApplicationFactory f = new MockApplicationFactory();
         Class implClass = MockApplicationFactory2.class;
         Class abstractClass = ApplicationFactory.class;
@@ -109,10 +108,8 @@ public class TestFacesUtil_ extends TestCase {
         }catch(Exception e){
             fail();
         }
-        
         assertNotNull(result);
         assertTrue(result instanceof ApplicationFactory);
-        
     }
 
     public void testIsAlreadySetFactory() {
