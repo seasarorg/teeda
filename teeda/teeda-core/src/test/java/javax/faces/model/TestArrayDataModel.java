@@ -1,9 +1,11 @@
 package javax.faces.model;
 
-import junit.framework.TestCase;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
-import javax.faces.mock.MockDataModelListener;
+import org.seasar.teeda.core.mock.MockDataModelListener;
+
+import junit.framework.TestCase;
 
 public class TestArrayDataModel extends TestCase {
 

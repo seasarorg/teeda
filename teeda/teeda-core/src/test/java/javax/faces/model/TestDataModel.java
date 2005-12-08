@@ -1,6 +1,6 @@
 package javax.faces.model;
 
-import javax.faces.mock.MockDataModelListener;
+import org.seasar.teeda.core.mock.MockDataModelListener;
 
 import junit.framework.TestCase;
 
