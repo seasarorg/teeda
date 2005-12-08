@@ -5,8 +5,6 @@ import javax.faces.component.StateHolder;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 
-import sun.misc.MessageUtils;
-
 
 public class LengthValidator implements Validator, StateHolder {
 
