@@ -1,6 +1,6 @@
 package org.seasar.teeda.core.mock;
 
-import java.util.Iterator;
+import java.util.*;
 
 import javax.faces.context.FacesContext;
 import javax.faces.render.RenderKit;
@@ -9,15 +9,20 @@ import javax.faces.render.RenderKitFactory;
 
 public class MockRenderKitFactory extends RenderKitFactory {
 
+    private Map renderKits_ = new HashMap();
+    public MockRenderKitFactory(){
+    }
+    
     public RenderKit getRenderKit(FacesContext context, String renderKitId) {
-        return null;
+        return (RenderKit)renderKits_.get(renderKitId);
     }
 
     public Iterator getRenderKitIds() {
-        return null;
+        return renderKits_.keySet().iterator();
     }
 
     public void addRenderKit(String renderKitID, RenderKit renderKit) {
+        renderKits_.put(renderKitID, renderKit);
     }
 
 }

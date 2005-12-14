@@ -35,4 +35,12 @@ public interface JsfConstants {
         APPLICATION_SCOPE, COOKIE, FACES_CONTEXT, HEADER, HEADER_VALUES, 
         INIT_PARAM, PARAM, PARAM_VALUES, REQUEST_SCOPE, SESSION_SCOPE, VIEW
     };
+    
+    public static final String SCOPE_NONE = "none";
+    
+    public static final String SCOPE_APPLICATION = "application";
+    
+    public static final String SCOPE_SESSION = "session";
+    
+    public static final String SCOPE_REQUEST = "request";
 }

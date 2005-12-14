@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+<!DOCTYPE components PUBLIC "-//SEASAR2.1//DTD S2Container//EN"
+	"http://www.seasar.org/dtd/components21.dtd">
+<components namespace="jsf" >
+
+	<component name="valueBindingContext" class="org.seasar.teeda.core.el.impl.ValueBindingContextImpl">
+		<property name="valueBindingName">"org.seasar.teeda.core.el.ValueBindingImpl"</property>
+	</component>
+
+	<component name="methodBindingContext" class="org.seasar.teeda.core.el.impl.MethodBindingContextImpl">
+		<property name="methodBindingName">"org.seasar.teeda.core.el.MethodBindingImpl"</property>
+		<initMethod name="setValueBindingContext">
+			<arg>valueBindingContext</arg>
+		</initMethod>
+	</component>
+
+	<component class="org.seasar.teeda.core.application.ApplicationImpl" autoBinding="none">
+		<initMethod name="setValueBindingContext">
+			<arg>valueBindingContext</arg>
+		</initMethod>
+		<initMethod name="setMethodBindingContext">
+			<arg>methodBindingContext</arg>
+		</initMethod>
+	</component>
+
+</components>

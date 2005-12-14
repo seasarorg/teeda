@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry output="teeda-core/target/classes" kind="src" path="teeda-core/src/main/java"/>
-	<classpathentry output="teeda-core/target/test-classes" kind="src" path="teeda-core/src/test/resources"/>
+	<classpathentry kind="src" path="teeda-core/src/main/java"/>
+	<classpathentry kind="src" path="teeda-core/src/test/resources"/>
 	<classpathentry output="teeda-core/target/classes" kind="src" path="teeda-core/src/main/resources"/>
-	<classpathentry output="teeda-core/target/test-classes" kind="src" path="teeda-core/src/test/java"/>
+	<classpathentry kind="src" path="teeda-core/src/test/java"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/aopalliance.jar"/>
 	<classpathentry kind="lib" path="lib/commons-beanutils.jar"/>
@@ -16,10 +16,11 @@
 	<classpathentry kind="lib" path="lib/log4j-1.2.8.jar"/>
 	<classpathentry kind="lib" path="lib/ognl-2.6.5.jar"/>
 	<classpathentry kind="lib" path="lib/poi-2.5.1-final-20040804.jar"/>
-	<classpathentry kind="lib" path="lib/s2-extension-2.3.0.jar"/>
-	<classpathentry kind="lib" path="lib/s2-framework-2.3.0.jar"/>
+	<classpathentry sourcepath="/seasar2/s2-extension" kind="lib" path="lib/s2-extension-2.3.0.jar"/>
+	<classpathentry sourcepath="/seasar2/s2-framework" kind="lib" path="lib/s2-framework-2.3.0.jar"/>
 	<classpathentry kind="lib" path="lib/servlet-api.jar"/>
 	<classpathentry kind="lib" path="lib/jsp-2.0.jar"/>
 	<classpathentry kind="lib" path="lib/servlet-2.3-jsp-1.2.jar"/>
+	<classpathentry kind="lib" path="lib/commons-el.jar"/>
 	<classpathentry kind="output" path="teeda-core/target/classes"/>
 </classpath>

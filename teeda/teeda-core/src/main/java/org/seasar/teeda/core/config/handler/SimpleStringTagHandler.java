@@ -1,0 +1,63 @@
+package org.seasar.teeda.core.config.handler;
+
+import java.lang.reflect.Method;
+
+import org.seasar.framework.log.Logger;
+import org.seasar.framework.util.StringUtil;
+import org.seasar.framework.xml.TagHandlerContext;
+import org.seasar.teeda.core.config.element.JsfConfig;
+import org.seasar.teeda.core.util.TagConvertUtil;
+
+
+public class SimpleStringTagHandler extends JsfTagHandler {
+
+    private Logger logger_ = Logger.getLogger(SimpleStringTagHandler.class);
+    
+    private static final long serialVersionUID = 3257284721212863026L;
+    
+    private static final int SINGLE_PARAMETER = 1;
+    
+    private String tagName_;
+    public SimpleStringTagHandler(String tagName){
+        tagName_ = tagName;
+    }
+    
+    public void end(TagHandlerContext context, String body) {
+        setAppropriateProperty((JsfConfig)context.peek(), body);
+    }
+
+    protected void setAppropriateProperty(JsfConfig tag, String context){
+        if(StringUtil.isEmpty(context)){
+            return;
+        }
+        String[] setters = TagConvertUtil.convertToSetter(tagName_);
+        Method[] methods = tag.getClass().getDeclaredMethods();
+        String setterName = null;
+        Method method = null;
+        for(int i = 0; i < setters.length; i++){
+            setterName = setters[i];
+            for(int j = 0; j < methods.length; j++){
+                method = methods[j];
+                boolean isSameSetter = isSameSetter(method, setterName);
+                boolean isSingleParameter = isSingleParameter(method); 
+                if(isSameSetter && isSingleParameter){
+                    try{
+                        method.invoke(tag, new Object[]{context});
+                    }catch(Exception ignore){
+                        logger_.log(ignore);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    
+    private static boolean isSameSetter(Method method, String setterName){
+        return setterName.equals(method.getName()); 
+    }
+    
+    private static boolean isSingleParameter(Method method){
+        return (method.getParameterTypes().length == SINGLE_PARAMETER);
+    }
+
+}

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+<!DOCTYPE components PUBLIC "-//SEASAR2.1//DTD S2Container//EN"
+	"http://www.seasar.org/dtd/components21.dtd">
+<components namespace="jsf" >
+
+	<component name="externalContext" class="org.seasar.teeda.core.context.servlet.ServletExternalContextImpl"/>
+
+	<component class="org.seasar.teeda.core.config.FacesConfigBuilderImpl">
+		<initMethod name="addFacesConfigurator">
+			<arg>coreConfigurator</arg>
+		</initMethod>
+		<initMethod name="addFacesConfigurator">
+			<arg>metaInfConfigurator</arg>
+		</initMethod>
+		<initMethod name="addFacesConfigurator">
+			<arg>configFilesConfigurator</arg>
+		</initMethod>
+		<initMethod name="addFacesConfigurator">
+			<arg>applicationConfigurator</arg>
+		</initMethod>
+	</component>
+
+	<component name="coreConfigurator" class="org.seasar.teeda.core.config.CoreFacesConfigurator"/>
+
+	<component name="metaInfConfigurator" class="org.seasar.teeda.core.config.MetaInfFacesConfigurator"/>
+	
+	<component name="configFilesConfigurator" class="org.seasar.teeda.core.config.ConfigFilesFacesConfigurator">
+		<arg>externalContext</arg>
+	</component>
+
+	<component name="applicationConfigurator" class="org.seasar.teeda.core.config.ApplicationFacesConfigurator">
+		<arg>externalContext</arg>
+	</component>
+
+	<component name="valueBindingContext" class="org.seasar.teeda.core.el.impl.ValueBindingContextImpl">
+		<property name="valueBindingName">"org.seasar.teeda.core.el.ValueBindingImpl"</property>
+	</component>
+
+	<component name="methodBindingContext" class="org.seasar.teeda.core.el.impl.MethodBindingContextImpl">
+		<property name="methodBindingName">"org.seasar.teeda.core.el.MethodBindingImpl"</property>
+		<initMethod name="setValueBindingContext">
+			<arg>valueBindingContext</arg>
+		</initMethod>
+	</component>
+
+	<component class="org.seasar.teeda.core.application.ApplicationImpl"></component>
+
+</components>
