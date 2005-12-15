@@ -12,7 +12,7 @@ public class IgnorerableExpressionReplacer implements Replacer {
     }
 
     public void replace(Object expression) {
-        processor_.processExpression(expression, expression.getClass());
+        //do nothing
     }
 
 }

@@ -1,12 +1,6 @@
 package org.seasar.teeda.core.unit;
 import javax.faces.FactoryFinder;
-import javax.faces.application.Application;
-import javax.faces.application.ApplicationFactory;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContextFactory;
-import javax.faces.lifecycle.Lifecycle;
 import javax.faces.lifecycle.LifecycleFactory;
-import javax.faces.render.RenderKit;
 import javax.faces.render.RenderKitFactory;
 
 import org.seasar.framework.unit.S2FrameworkTestCase;
@@ -96,10 +90,14 @@ public class TeedaTestCase extends S2FrameworkTestCase {
         FactoryFinder.releaseFactories();
     }
     /**
-     * all i want is this!
+     * all i want is this(nobody wants to write assertTrue(true), right?)
      */
     protected static void success(){
         assertTrue(true);
+    }
+    
+    protected static void notDoneYet(){
+        fail("This test is not done yet.");
     }
     
     public MockApplication getApplication() {

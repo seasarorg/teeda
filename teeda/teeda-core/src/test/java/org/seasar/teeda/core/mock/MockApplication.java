@@ -28,6 +28,11 @@ public class MockApplication extends Application {
     private ActionListener actionListener_;
     private Locale defaultLocale_;
     private Collection locales_;
+    private VariableResolver variableResolver_;
+    private PropertyResolver propertyResolver_;
+    private NavigationHandler navigationHandler_;
+    private ViewHandler viewHandler_;
+    private StateManager stateManager_;
     public MockApplication(){
     }
     
@@ -69,76 +74,45 @@ public class MockApplication extends Application {
     public void setSupportedLocales(Collection locales) {
         locales_ = locales;
     }
-
+    
     public NavigationHandler getNavigationHandler() {
-        return null;
+        return navigationHandler_;
     }
-
-    /**
-     *
-     */
 
     public void setNavigationHandler(NavigationHandler handler) {
+        navigationHandler_ = handler;
     }
-
-    /**
-     *
-     */
 
     public PropertyResolver getPropertyResolver() {
-        return null;
+        return propertyResolver_;
     }
-
-    /**
-     *
-     */
 
     public void setPropertyResolver(PropertyResolver resolver) {
+        propertyResolver_ = resolver;
     }
-
-    /**
-     *
-     */
 
     public VariableResolver getVariableResolver() {
-        return null;
+        return variableResolver_;
     }
-
-    /**
-     *
-     */
 
     public void setVariableResolver(VariableResolver resolver) {
+        variableResolver_ = resolver;
     }
-
-    /**
-     *
-     */
 
     public ViewHandler getViewHandler() {
-        return null;
+        return viewHandler_;
     }
-
-    /**
-     *
-     */
 
     public void setViewHandler(ViewHandler handler) {
+        viewHandler_ = handler;
     }
-
-    /**
-     *
-     */
 
     public StateManager getStateManager() {
-        return null;
+        return stateManager_;
     }
 
-    /**
-     *
-     */
-
     public void setStateManager(StateManager manager) {
+        stateManager_ = manager;
     }
 
     /**

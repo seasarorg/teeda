@@ -14,6 +14,9 @@ import javax.faces.el.ValueBinding;
 import javax.faces.el.VariableResolver;
 
 import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.core.managedbean.ManagedBeanFactory;
+import org.seasar.teeda.core.managedbean.Scope;
+import org.seasar.teeda.core.util.DIContainerUtil;
 import org.seasar.teeda.core.util.PropertyResolverUtil;
 import org.seasar.teeda.core.util.VariableResolverUtil;
 
@@ -96,10 +99,14 @@ public class ValueBindingImpl extends ValueBinding implements StateHolder{
         if(previous != null){
             scopeMap.put(name, processor.getCoercedObject(newValue, previous.getClass()));
         }
-        //TODO handle ManagedBean here
-        
-        
-        
+        ManagedBeanFactory managedBeanFactory = 
+            (ManagedBeanFactory)DIContainerUtil.getComponent(ManagedBeanFactory.class);
+        Scope scope = managedBeanFactory.getManagedBeanScope(name);
+        if(scope != null){
+            scopeMap = VariableResolverUtil.getDefaultScopeMap(context, resolver, scope.getScopeKey());
+            scopeMap.put(name, newValue);
+        }
+        //if no target, put to request.
         context.getExternalContext().getRequestMap().put(name, newValue);
     }
         
@@ -128,8 +135,12 @@ public class ValueBindingImpl extends ValueBinding implements StateHolder{
         }
         if(obj instanceof String){
             String name = (String)obj;
-            //TODO handle Managed bean here.
-            
+            ManagedBeanFactory managedBeanFactory = 
+                (ManagedBeanFactory)DIContainerUtil.getComponent(ManagedBeanFactory.class);
+            Object managedBean = managedBeanFactory.getManagedBean(name);
+            if(managedBean != null){
+                return managedBean.getClass();
+            }
             Object value = application_.getVariableResolver().resolveVariable(context, name);
             return (value != null) ? value.getClass() : Object.class;
         }else{

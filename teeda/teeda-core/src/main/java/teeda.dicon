@@ -45,4 +45,5 @@
 
 	<component class="org.seasar.teeda.core.application.ApplicationImpl"></component>
 
+	<component class="org.seasar.teeda.core.managedbean.ManagedBeanFactoryImpl"></component>
 </components>

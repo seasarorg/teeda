@@ -1,6 +1,7 @@
 package org.seasar.teeda.core.managedbean.impl;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import org.seasar.framework.container.ComponentDef;
@@ -23,11 +24,9 @@ public class ManagedBeanFactoryImpl implements ManagedBeanFactory {
 
 	private static final Map SCOPE_MAP = new HashMap();
 	static {
-		SCOPE_MAP.put(Scope.NONE, InstanceDefFactory.SINGLETON);
+		SCOPE_MAP.put(Scope.NONE, InstanceDefFactory.OUTER);
 		SCOPE_MAP.put(Scope.REQUEST, InstanceDefFactory.REQUEST);
 		SCOPE_MAP.put(Scope.SESSION, InstanceDefFactory.SESSION);
-
-		// this has to be changed to new scope, application
 		SCOPE_MAP.put(Scope.APPLICATION, InstanceDefFactory.SINGLETON);
 	}
 
@@ -59,6 +58,22 @@ public class ManagedBeanFactoryImpl implements ManagedBeanFactory {
 		container_.register(componentDef);
 	}
 
+    public Scope getManagedBeanScope(String name){
+        S2Container container = (S2Container) SingletonS2ContainerFactory.getContainer();
+        ComponentDef componentDef = container.getComponentDef(TEEDA_MANAGEDBEAN_NAMESPACE + "." + name);
+        if(componentDef != null){
+            InstanceDef instanceDef = componentDef.getInstanceDef();
+            for(Iterator itr = SCOPE_MAP.keySet().iterator();itr.hasNext();){
+                Map.Entry entry = (Map.Entry)itr.next();
+                Object value = entry.getValue();
+                if(instanceDef.equals(value)){
+                    return (Scope)entry.getKey();
+                }
+            }
+        }
+        return null;
+    }
+    
 	private void setInstanceType(ComponentDef componentDef, Scope scope){
 		InstanceDef instanceDef = (InstanceDef) SCOPE_MAP.get(scope);
 		componentDef.setInstanceDef(instanceDef);
