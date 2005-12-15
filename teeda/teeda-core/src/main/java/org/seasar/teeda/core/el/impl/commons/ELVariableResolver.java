@@ -4,6 +4,8 @@ import javax.faces.context.FacesContext;
 import javax.servlet.jsp.el.ELException;
 import javax.servlet.jsp.el.VariableResolver;
 
+import org.seasar.teeda.core.util.VariableResolverUtil;
+
 /**
  * @author Shinpei Ohtani
  * A bridge from javax.servlet.jsp.el.VariableResolver to JSF VariableResolver
@@ -16,7 +18,7 @@ public class ELVariableResolver implements VariableResolver {
     }
     
     public Object resolveVariable(String name) throws ELException {
-        return context_.getApplication().getVariableResolver().resolveVariable(context_, name);
+        return VariableResolverUtil.resolveVariable(context_, name);
     }
 
 }

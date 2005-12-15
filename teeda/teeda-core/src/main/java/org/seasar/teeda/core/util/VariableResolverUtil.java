@@ -16,6 +16,13 @@ public class VariableResolverUtil {
     private VariableResolverUtil(){
     }
     
+    public static Object resolveVariable(FacesContext context, String name){
+        if(context == null){
+            context = FacesContext.getCurrentInstance();
+        }
+        return context.getApplication().getVariableResolver().resolveVariable(context, name);
+    }
+    
     public static Map getDefaultScopeMap(FacesContext context, VariableResolver resolver, String key){
         for(int i = 0; i < SCOPES.length; i++){
             Map scopeMap = (Map)resolver.resolveVariable(context, SCOPES[i]);
