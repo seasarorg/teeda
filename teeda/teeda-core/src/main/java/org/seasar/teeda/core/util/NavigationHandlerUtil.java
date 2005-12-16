@@ -11,7 +11,7 @@ public class NavigationHandlerUtil {
     
     public static void handleNavigation(FacesContext context, String fromAction, String outCome){
         NavigationHandler handler = 
-            FacesContextUtil.getNavigationHandler(context);
+        	context.getApplication().getNavigationHandler();
         handler.handleNavigation(context, fromAction, outCome);
     }
 }

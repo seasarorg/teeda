@@ -1,6 +1,12 @@
 package org.seasar.teeda.core.el.impl.commons;
 
+import java.beans.PropertyEditor;
+import java.beans.PropertyEditorManager;
 import java.util.ArrayList;
+
+import javax.faces.el.EvaluationException;
+
+import org.omg.PortableInterceptor.SUCCESSFUL;
 
 import junit.framework.TestCase;
 
@@ -57,6 +63,10 @@ public class TestCoercionsUtil extends TestCase {
         assertNotNull(obj);
         assertTrue(obj instanceof B);
         assertEquals("b", ((A)obj).getString());
+        assertEquals("aaa", CoercionsUtil.coerce("aaa",String.class));
+        assertEquals(new Integer(1), CoercionsUtil.coerce("1",Integer.class));
+        assertEquals(new Character('a'), CoercionsUtil.coerce("a",Character.class));
+        assertNull(CoercionsUtil.coerce(null,A.class));
     }
     
     public static class A{
@@ -71,4 +81,5 @@ public class TestCoercionsUtil extends TestCase {
     
     public static class B extends A{
     }
+    
 }
