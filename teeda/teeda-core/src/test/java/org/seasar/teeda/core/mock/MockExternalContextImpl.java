@@ -13,16 +13,18 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.faces.FacesException;
-import javax.servlet.ServletContext;
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.seasar.framework.mock.servlet.MockHttpServletRequest;
+import org.seasar.framework.mock.servlet.MockHttpServletResponse;
+import org.seasar.framework.mock.servlet.MockServletContext;
+
 public class MockExternalContextImpl extends MockExternalContext {
 
-    private ServletContext context_;
-    private HttpServletRequest request_;
+    private MockServletContext context_;
+    private MockHttpServletRequest request_;
     private HttpServletResponse response_;
     private Map applicationMap_;
     private Map requestParameterMap_;
@@ -30,8 +32,8 @@ public class MockExternalContextImpl extends MockExternalContext {
     private Map sessionMap_;
     private Map requestMap_;
     
-    public MockExternalContextImpl(ServletContext context,
-            HttpServletRequest request, HttpServletResponse response) {
+    public MockExternalContextImpl(MockServletContext context,
+            MockHttpServletRequest request, MockHttpServletResponse response) {
         context_ = context;
         request_ = request;
         response_ = response;
