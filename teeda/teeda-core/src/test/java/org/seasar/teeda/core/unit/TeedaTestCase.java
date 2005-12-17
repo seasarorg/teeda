@@ -15,6 +15,7 @@ import org.seasar.teeda.core.mock.MockLifecycle;
 import org.seasar.teeda.core.mock.MockLifecycleFactory;
 import org.seasar.teeda.core.mock.MockNavigationHandler;
 import org.seasar.teeda.core.mock.MockPhaseListener;
+import org.seasar.teeda.core.mock.MockPropertyResolver;
 import org.seasar.teeda.core.mock.MockRenderKit;
 import org.seasar.teeda.core.mock.MockRenderKitFactory;
 
@@ -40,6 +41,8 @@ public class TeedaTestCase extends S2FrameworkTestCase {
     
     private MockNavigationHandler navigationHandler;
     
+    private MockPropertyResolver propertyResolver;
+    
     public TeedaTestCase(){
     }
     
@@ -53,6 +56,9 @@ public class TeedaTestCase extends S2FrameworkTestCase {
         application = new MockApplication();
         navigationHandler = new MockNavigationHandler();
         application.setNavigationHandler(navigationHandler);
+        propertyResolver = new MockPropertyResolver();
+        application.setPropertyResolver(propertyResolver);
+        
         facesContext = new MockFacesContextImpl(externalContext, application);
         renderKit = new MockRenderKit();
         lifecycle = new MockLifecycle();
@@ -77,15 +83,31 @@ public class TeedaTestCase extends S2FrameworkTestCase {
     }
 
     protected void setFactories(){
+        setApplicationFactory();
+        setFacesContextFactory();
+        setLifecycleFactory();
+        setRenderKitFactory();
+    }
+    
+    protected void setApplicationFactory(){
         MockApplicationFactory appFactory = 
             (MockApplicationFactory)FactoryFinder.getFactory(FactoryFinder.APPLICATION_FACTORY);
         appFactory.setApplication(application);
+    }
+    
+    protected void setFacesContextFactory(){
         MockFacesContextFactory facesContextFactory = 
             (MockFacesContextFactory)FactoryFinder.getFactory(FactoryFinder.FACES_CONTEXT_FACTORY);
         facesContextFactory.setFacesContext(facesContext);
+    }
+    
+    protected void setLifecycleFactory(){
         MockLifecycleFactory lifecycleFactory = 
             (MockLifecycleFactory)FactoryFinder.getFactory(FactoryFinder.LIFECYCLE_FACTORY);
         lifecycleFactory.addLifecycle(LifecycleFactory.DEFAULT_LIFECYCLE, lifecycle);
+    }
+    
+    protected void setRenderKitFactory(){
         MockRenderKitFactory renderKitFactory = 
             (MockRenderKitFactory)FactoryFinder.getFactory(FactoryFinder.RENDER_KIT_FACTORY);
         renderKitFactory.addRenderKit(RenderKitFactory.HTML_BASIC_RENDER_KIT, renderKit);
@@ -118,6 +140,7 @@ public class TeedaTestCase extends S2FrameworkTestCase {
     
     public void setApplication(MockApplication application) {
         this.application = application;
+        setApplicationFactory();
     }
     
     public MockExternalContext getExternalContext() {
@@ -134,6 +157,7 @@ public class TeedaTestCase extends S2FrameworkTestCase {
     
     public void setFacesContext(MockFacesContextImpl facesContext) {
         this.facesContext = facesContext;
+        setFacesContextFactory();
     }
     
     public MockLifecycle getLifecycle() {
@@ -142,6 +166,7 @@ public class TeedaTestCase extends S2FrameworkTestCase {
     
     public void setLifecycle(MockLifecycle lifecycle) {
         this.lifecycle = lifecycle;
+        setLifecycleFactory();
     }
     
     public MockRenderKit getRenderKit() {
@@ -150,5 +175,6 @@ public class TeedaTestCase extends S2FrameworkTestCase {
     
     public void setRenderKit(MockRenderKit renderKit) {
         this.renderKit = renderKit;
+        setRenderKitFactory();
     }
 }
