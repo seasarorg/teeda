@@ -36,7 +36,7 @@ public class TestPropertyResolverUtil extends TeedaTestCase {
     }
 
     public void testGetValue(){
-        getApplication().setPropertyResolver(new MockWrappedPropertyResolver());
+        setPropertyResolver(new MockWrappedPropertyResolver());
         Object o = PropertyResolverUtil.getValue(getApplication(), "hoge", "foo", null);
         assertNotNull(o);
         assertTrue(o instanceof MockWrappedPropertyResolver.ObjectValue);
@@ -53,7 +53,7 @@ public class TestPropertyResolverUtil extends TeedaTestCase {
     }
     
     public void testGetType(){
-        getApplication().setPropertyResolver(new MockWrappedPropertyResolver());
+        setPropertyResolver(new MockWrappedPropertyResolver());
         Class clazz = PropertyResolverUtil.getType(getApplication(), "a", "b", null);
         assertEquals(MockWrappedPropertyResolver.ObjectValue.class, clazz);
 
@@ -62,7 +62,7 @@ public class TestPropertyResolverUtil extends TeedaTestCase {
     }
     
     public void testIsReadOnly(){
-        getApplication().setPropertyResolver(new MockWrappedPropertyResolver());
+        setPropertyResolver(new MockWrappedPropertyResolver());
         assertFalse(PropertyResolverUtil.isReadOnly(getApplication(), "hoge", "foo", null));
         assertTrue(PropertyResolverUtil.isReadOnly(getApplication(), "hoge", "foo", new Integer(3)));
     }

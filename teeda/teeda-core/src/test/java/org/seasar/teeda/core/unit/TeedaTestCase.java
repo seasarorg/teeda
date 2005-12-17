@@ -18,6 +18,7 @@ import org.seasar.teeda.core.mock.MockPhaseListener;
 import org.seasar.teeda.core.mock.MockPropertyResolver;
 import org.seasar.teeda.core.mock.MockRenderKit;
 import org.seasar.teeda.core.mock.MockRenderKitFactory;
+import org.seasar.teeda.core.mock.MockVariableResolver;
 
 
 /**
@@ -43,6 +44,7 @@ public class TeedaTestCase extends S2FrameworkTestCase {
     
     private MockPropertyResolver propertyResolver;
     
+    private MockVariableResolver variableResolver;
     public TeedaTestCase(){
     }
     
@@ -58,6 +60,8 @@ public class TeedaTestCase extends S2FrameworkTestCase {
         application.setNavigationHandler(navigationHandler);
         propertyResolver = new MockPropertyResolver();
         application.setPropertyResolver(propertyResolver);
+        variableResolver = new MockVariableResolver();
+        application.setVariableResolver(variableResolver);
         
         facesContext = new MockFacesContextImpl(externalContext, application);
         renderKit = new MockRenderKit();
@@ -155,7 +159,7 @@ public class TeedaTestCase extends S2FrameworkTestCase {
         return facesContext;
     }
     
-    public void setFacesContext(MockFacesContextImpl facesContext) {
+    public void setFacesContext(MockFacesContext facesContext) {
         this.facesContext = facesContext;
         setFacesContextFactory();
     }
@@ -177,4 +181,24 @@ public class TeedaTestCase extends S2FrameworkTestCase {
         this.renderKit = renderKit;
         setRenderKitFactory();
     }
+
+	public MockPropertyResolver getPropertyResolver() {
+		return propertyResolver;
+	}
+
+	public void setPropertyResolver(MockPropertyResolver propertyResolver) {
+		this.propertyResolver = propertyResolver;
+		application.setPropertyResolver(propertyResolver);
+	}
+
+	public MockVariableResolver getVariableResolver() {
+		return variableResolver;
+	}
+
+	public void setVariableResolver(MockVariableResolver variableResolver) {
+		this.variableResolver = variableResolver;
+		application.setVariableResolver(variableResolver);
+	}
+    
+    
 }

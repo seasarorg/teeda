@@ -1,15 +1,10 @@
 package org.seasar.teeda.core.el.impl.commons;
 
 import java.io.StringReader;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.faces.context.FacesContext;
-import javax.faces.el.EvaluationException;
-import javax.faces.el.VariableResolver;
 
 import org.apache.commons.el.parser.ELParser;
 import org.seasar.teeda.core.mock.MockApplication;
+import org.seasar.teeda.core.mock.MockVariableResolver;
 import org.seasar.teeda.core.unit.TeedaTestCase;
 
 
@@ -66,11 +61,9 @@ public class TestCommonsExpressionProcessorImpl extends TeedaTestCase {
             processor.processExpression(expression, Object.class);
         }catch(Exception ignore){
         }
-        MockSimpleVariableResolver resolver = new MockSimpleVariableResolver();
+        MockVariableResolver resolver = getVariableResolver();
         A a = new A();
         resolver.putValue("a", a);
-        MockApplication app = getApplication();
-        app.setVariableResolver(resolver);
         Object o = processor.evaluate(getFacesContext(), expression);
         assertSame(a, o);
     }
@@ -84,8 +77,7 @@ public class TestCommonsExpressionProcessorImpl extends TeedaTestCase {
             processor.processExpression(expression, Object.class);
         }catch(Exception ignore){
         }
-        MockSimpleVariableResolver resolver = new MockSimpleVariableResolver();
-        A a = new A();
+        MockVariableResolver resolver = getVariableResolver();
         resolver.putValue("a", "A");
         MockApplication app = getApplication();
         app.setVariableResolver(resolver);
@@ -103,18 +95,6 @@ public class TestCommonsExpressionProcessorImpl extends TeedaTestCase {
     
     public void testGetCoercedObject(){
         notDoneYet();
-    }
-    
-    public static class MockSimpleVariableResolver extends VariableResolver{
-        private Map values_ = new HashMap();
-        public MockSimpleVariableResolver(){
-        }
-        public void putValue(String key, Object value){
-            values_.put(key, value);
-        }
-        public Object resolveVariable(FacesContext context, String name) throws EvaluationException {
-            return values_.get(name);
-        }
     }
     
     public static class A{
