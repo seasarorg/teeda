@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * TODO TEST
- */
 public class PhaseId {
 
 	public static final PhaseId ANY_PHASE;
@@ -66,7 +63,7 @@ public class PhaseId {
 		VALUES = Collections.unmodifiableList(list);
 	}
 
-	public PhaseId(String name, int ordinal) {
+	private PhaseId(String name, int ordinal) {
 		this.name_ = name;
 		this.ordinal_ = ordinal;
 	}
