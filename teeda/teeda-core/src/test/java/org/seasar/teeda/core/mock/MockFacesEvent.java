@@ -7,7 +7,9 @@ import javax.faces.event.FacesListener;
 
 public class MockFacesEvent extends FacesEvent {
 
-	public MockFacesEvent(UIComponent component) {
+	private static final long serialVersionUID = 1L;
+
+    public MockFacesEvent(UIComponent component) {
 		super(component);
 		
 	}

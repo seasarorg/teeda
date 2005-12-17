@@ -5,9 +5,9 @@ import java.util.EventListener;
 
 public interface PhaseListener extends EventListener, Serializable{
 
-    public void afterPhase(PhaseEvent phaseevent);
+    public void afterPhase(PhaseEvent event);
 
-    public void beforePhase(PhaseEvent phaseevent);
+    public void beforePhase(PhaseEvent event);
 
     public PhaseId getPhaseId();
 

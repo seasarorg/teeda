@@ -7,7 +7,6 @@ import javax.faces.validator.Validator;
 import org.seasar.teeda.core.exception.IllegalClassTypeException;
 import org.seasar.teeda.core.mock.MockConverter;
 import org.seasar.teeda.core.mock.MockFacesContext;
-import org.seasar.teeda.core.mock.MockFacesContextImpl;
 import org.seasar.teeda.core.mock.MockUIComponent;
 import org.seasar.teeda.core.mock.MockValueBinding;
 import org.seasar.teeda.core.mock.NullValidator;
