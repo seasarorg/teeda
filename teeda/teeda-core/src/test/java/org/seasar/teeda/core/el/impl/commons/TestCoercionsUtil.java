@@ -1,12 +1,6 @@
 package org.seasar.teeda.core.el.impl.commons;
 
-import java.beans.PropertyEditor;
-import java.beans.PropertyEditorManager;
 import java.util.ArrayList;
-
-import javax.faces.el.EvaluationException;
-
-import org.omg.PortableInterceptor.SUCCESSFUL;
 
 import junit.framework.TestCase;
 

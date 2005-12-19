@@ -45,6 +45,7 @@ import org.seasar.jsf.ViewTemplateFactory;
 import org.seasar.jsf.component.S2UIViewRoot;
 import org.seasar.jsf.processor.ViewProcessor;
 import org.seasar.jsf.util.ExternalContextUtil;
+import org.seasar.teeda.core.context.servlet.ServletExternalContextUtil;
 
 public class LifecycleImpl extends Lifecycle {
 

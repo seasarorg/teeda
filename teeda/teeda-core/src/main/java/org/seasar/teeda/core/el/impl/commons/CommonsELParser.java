@@ -12,10 +12,9 @@ import org.seasar.teeda.core.el.impl.JspELParserUtil;
 
 public class CommonsELParser implements org.seasar.teeda.core.el.ELParser{
 
-    private ExpressionProcessor processor_;
+    private ExpressionProcessor processor_ = new CommonsExpressionProcessorImpl();
     
     public CommonsELParser(){
-        processor_ = new CommonsExpressionProcessorImpl();
     }
     
     public Object parse(final String expression){

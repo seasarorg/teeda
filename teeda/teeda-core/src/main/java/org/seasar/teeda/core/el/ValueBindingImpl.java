@@ -98,6 +98,7 @@ public class ValueBindingImpl extends ValueBinding implements StateHolder{
         Object previous = scopeMap.get(name);
         if(previous != null){
             scopeMap.put(name, processor.getCoercedObject(newValue, previous.getClass()));
+            return;
         }
         ManagedBeanFactory managedBeanFactory = 
             (ManagedBeanFactory)DIContainerUtil.getComponent(ManagedBeanFactory.class);
@@ -105,6 +106,7 @@ public class ValueBindingImpl extends ValueBinding implements StateHolder{
         if(scope != null){
             scopeMap = VariableResolverUtil.getDefaultScopeMap(context, resolver, scope.getScopeKey());
             scopeMap.put(name, newValue);
+            return;
         }
         //if no target, put to request.
         context.getExternalContext().getRequestMap().put(name, newValue);

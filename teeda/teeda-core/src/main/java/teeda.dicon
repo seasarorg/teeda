@@ -3,7 +3,11 @@
 	"http://www.seasar.org/dtd/components21.dtd">
 <components namespace="jsf" >
 
-	<component name="externalContext" class="org.seasar.teeda.core.context.servlet.ServletExternalContextImpl"/>
+	<component name="externalContext" class="org.seasar.teeda.core.context.servlet.ServletExternalContextImpl">
+		<arg>servletContext</arg>
+		<arg>request</arg>
+		<arg>response</arg>
+	</component>
 
 	<component class="org.seasar.teeda.core.config.FacesConfigBuilderImpl">
 		<initMethod name="addFacesConfigurator">
@@ -20,7 +24,11 @@
 		</initMethod>
 	</component>
 
-	<component name="coreConfigurator" class="org.seasar.teeda.core.config.CoreFacesConfigurator"/>
+	<component class="org.seasar.framework.container.factory.ClassPathResourceResolver" />
+	
+	<component class="org.seasar.teeda.core.config.rule.FacesConfigTagHandlerRule" />
+	
+	<component name="coreConfigurator" class="org.seasar.teeda.core.config.CoreFacesConfigurator" />
 
 	<component name="metaInfConfigurator" class="org.seasar.teeda.core.config.MetaInfFacesConfigurator"/>
 	
@@ -29,9 +37,12 @@
 	</component>
 
 	<component name="applicationConfigurator" class="org.seasar.teeda.core.config.ApplicationFacesConfigurator">
-		<arg>externalContext</arg>
 	</component>
 
+	<component class="org.seasar.teeda.core.el.impl.commons.CommonsELParser" />
+	
+	<component class="org.seasar.teeda.core.el.impl.commons.CommonsExpressionProcessorImpl" />
+	
 	<component name="valueBindingContext" class="org.seasar.teeda.core.el.impl.ValueBindingContextImpl">
 		<property name="valueBindingName">"org.seasar.teeda.core.el.ValueBindingImpl"</property>
 	</component>
@@ -45,5 +56,8 @@
 
 	<component class="org.seasar.teeda.core.application.ApplicationImpl"></component>
 
-	<component class="org.seasar.teeda.core.managedbean.ManagedBeanFactoryImpl"></component>
+	<component class="org.seasar.teeda.core.managedbean.impl.ManagedBeanFactoryImpl"></component>
+	
+	<component class="org.seasar.teeda.core.lifecycle.LifecycleImpl" >
+	</component>
 </components>

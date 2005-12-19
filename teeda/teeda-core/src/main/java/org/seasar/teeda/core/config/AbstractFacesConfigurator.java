@@ -5,7 +5,6 @@ import java.io.InputStream;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
-import org.seasar.framework.container.factory.ClassPathResourceResolver;
 import org.seasar.framework.container.factory.ResourceResolver;
 import org.seasar.framework.util.InputStreamUtil;
 import org.seasar.framework.util.SAXParserFactoryUtil;
@@ -13,10 +12,9 @@ import org.seasar.framework.xml.SaxHandler;
 import org.seasar.framework.xml.SaxHandlerParser;
 import org.seasar.framework.xml.TagHandlerRule;
 import org.seasar.teeda.core.config.element.FacesConfig;
-import org.seasar.teeda.core.config.rule.FacesConfigTagHandlerRule;
 
 
-abstract class AbstractFacesConfigurator implements FacesConfigurator{
+public abstract class AbstractFacesConfigurator implements FacesConfigurator{
 
     private static final String FACES_CONFIG_1_1 = "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.1//EN";
     
@@ -31,8 +29,6 @@ abstract class AbstractFacesConfigurator implements FacesConfigurator{
     protected TagHandlerRule rule_;
 
     public AbstractFacesConfigurator(){
-        resourceResolver_ = new ClassPathResourceResolver();
-        rule_ = new FacesConfigTagHandlerRule();
     }
     
     public FacesConfig configure(){
@@ -66,8 +62,16 @@ abstract class AbstractFacesConfigurator implements FacesConfigurator{
         resourceResolver_ = resourceResolver;
     }
     
+    public ResourceResolver getResourceResolver(){
+    	return resourceResolver_;
+    }
+    
     public void setTagHandlerRule(TagHandlerRule rule){
         rule_ = rule;
+    }
+    
+    public TagHandlerRule getTagHandlerRule(){
+    	return rule_;
     }
     
     protected abstract String getPath();
