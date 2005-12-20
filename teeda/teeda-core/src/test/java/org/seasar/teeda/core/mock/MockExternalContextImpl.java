@@ -138,9 +138,10 @@ public class MockExternalContextImpl extends MockExternalContext {
     }
 
     public Map getRequestMap() {
-
+    	if(requestMap_ == null){
+    		requestMap_ = new HashMap();
+    	}
         return requestMap_;
-
     }
 
     public Map getRequestParameterMap() {

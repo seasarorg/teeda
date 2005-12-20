@@ -1,13 +1,9 @@
 package org.seasar.teeda.core.managedbean.impl;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-
 import org.seasar.framework.container.ComponentDef;
+import org.seasar.framework.container.ComponentNotFoundRuntimeException;
 import org.seasar.framework.container.InstanceDef;
 import org.seasar.framework.container.S2Container;
-import org.seasar.framework.container.deployer.InstanceDefFactory;
 import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
 import org.seasar.framework.container.impl.ComponentDefImpl;
 import org.seasar.framework.container.impl.DestroyMethodDefImpl;
@@ -15,6 +11,7 @@ import org.seasar.framework.container.impl.InitMethodDefImpl;
 import org.seasar.framework.container.impl.S2ContainerImpl;
 import org.seasar.teeda.core.managedbean.ManagedBeanFactory;
 import org.seasar.teeda.core.managedbean.Scope;
+import org.seasar.teeda.core.util.ScopeUtil;
 
 public class ManagedBeanFactoryImpl implements ManagedBeanFactory {
 
@@ -22,25 +19,21 @@ public class ManagedBeanFactoryImpl implements ManagedBeanFactory {
 
 	private static final String TEEDA_MANAGEDBEAN_NAMESPACE = "teeda-managedbean";
 
-	private static final Map SCOPE_MAP = new HashMap();
-	static {
-		SCOPE_MAP.put(Scope.NONE, InstanceDefFactory.OUTER);
-		SCOPE_MAP.put(Scope.REQUEST, InstanceDefFactory.REQUEST);
-		SCOPE_MAP.put(Scope.SESSION, InstanceDefFactory.SESSION);
-		SCOPE_MAP.put(Scope.APPLICATION, InstanceDefFactory.SINGLETON);
-	}
-
 	public ManagedBeanFactoryImpl() {
 		container_ = new S2ContainerImpl();
 		container_.setNamespace(TEEDA_MANAGEDBEAN_NAMESPACE);
-		S2Container root = (S2Container) SingletonS2ContainerFactory
-				.getContainer();
+		S2Container root = 
+			(S2Container) SingletonS2ContainerFactory.getContainer();
 		root.include(container_);
 	}
 
 	public Object getManagedBean(String name) {
 		S2Container container = (S2Container) SingletonS2ContainerFactory.getContainer();
-		return container.getComponent(TEEDA_MANAGEDBEAN_NAMESPACE + "." + name);
+		try{
+			return container.getComponent(TEEDA_MANAGEDBEAN_NAMESPACE + "." + name);
+		}catch(ComponentNotFoundRuntimeException e){
+			return null;
+		}
 	}
 
 	public void setManagedBean(String name, Class type, Scope scope) {
@@ -61,21 +54,16 @@ public class ManagedBeanFactoryImpl implements ManagedBeanFactory {
     public Scope getManagedBeanScope(String name){
         S2Container container = (S2Container) SingletonS2ContainerFactory.getContainer();
         ComponentDef componentDef = container.getComponentDef(TEEDA_MANAGEDBEAN_NAMESPACE + "." + name);
+        Scope scope = null;
         if(componentDef != null){
             InstanceDef instanceDef = componentDef.getInstanceDef();
-            for(Iterator itr = SCOPE_MAP.keySet().iterator();itr.hasNext();){
-                Map.Entry entry = (Map.Entry)itr.next();
-                Object value = entry.getValue();
-                if(instanceDef.equals(value)){
-                    return (Scope)entry.getKey();
-                }
-            }
+            scope = ScopeUtil.toScope(instanceDef);
         }
-        return null;
+        return scope;
     }
     
 	private void setInstanceType(ComponentDef componentDef, Scope scope){
-		InstanceDef instanceDef = (InstanceDef) SCOPE_MAP.get(scope);
+		InstanceDef instanceDef = ScopeUtil.toInstanceDef(scope);
 		componentDef.setInstanceDef(instanceDef);
 	}
 }

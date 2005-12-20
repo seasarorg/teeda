@@ -4,6 +4,8 @@ import javax.faces.lifecycle.LifecycleFactory;
 import javax.faces.render.RenderKitFactory;
 
 import org.seasar.framework.unit.S2FrameworkTestCase;
+import org.seasar.teeda.core.managedbean.ManagedBeanFactory;
+import org.seasar.teeda.core.managedbean.impl.ManagedBeanFactoryImpl;
 import org.seasar.teeda.core.mock.MockApplication;
 import org.seasar.teeda.core.mock.MockApplicationFactory;
 import org.seasar.teeda.core.mock.MockExternalContext;
@@ -91,6 +93,7 @@ public class TeedaTestCase extends S2FrameworkTestCase {
         setFacesContextFactory();
         setLifecycleFactory();
         setRenderKitFactory();
+        setManagedBeanFactory();
     }
     
     protected void setApplicationFactory(){
@@ -115,6 +118,14 @@ public class TeedaTestCase extends S2FrameworkTestCase {
         MockRenderKitFactory renderKitFactory = 
             (MockRenderKitFactory)FactoryFinder.getFactory(FactoryFinder.RENDER_KIT_FACTORY);
         renderKitFactory.addRenderKit(RenderKitFactory.HTML_BASIC_RENDER_KIT, renderKit);
+    }
+    
+    protected void setManagedBeanFactory(){
+    	getContainer().register(ManagedBeanFactoryImpl.class);
+    }
+    
+    protected ManagedBeanFactory getManagedBeanFactory(){
+    	return (ManagedBeanFactory)getContainer().getComponent(ManagedBeanFactory.class);
     }
     
     protected void tearDownContainer() throws Throwable {

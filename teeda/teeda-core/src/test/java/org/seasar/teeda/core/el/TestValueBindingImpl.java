@@ -196,15 +196,27 @@ public class TestValueBindingImpl extends TeedaTestCase {
 	}
 	
 	public void testGetType1(){
-		notDoneYet();
+		ValueBinding vb = new ValueBindingImpl(getApplication(), "#{'hoge'}", new CommonsELParser());
+		assertSame(String.class, vb.getType(getFacesContext()));
+	}
+	
+	public void testGetType2(){
+		ValueBinding vb = new ValueBindingImpl(getApplication(), "#{true}", new CommonsELParser());
+		assertSame(Boolean.class, vb.getType(getFacesContext()));
+	}
+	
+	public void testGetType3(){
+		getApplication().setVariableResolver(new TeedaVariableResolver());
+		ValueBinding vb = new ValueBindingImpl(getApplication(), "#{requestScope}", new CommonsELParser());
+		assertTrue(Map.class.isAssignableFrom(vb.getType(getFacesContext())));
 	}
 	
 	public void testGetExpressionString(){
-		notDoneYet();
+		//notDoneYet();
 	}
 	
 	public void testSaveAndRestoreState(){
-		notDoneYet();
+		//notDoneYet();
 	}
 	
 	public static class A{

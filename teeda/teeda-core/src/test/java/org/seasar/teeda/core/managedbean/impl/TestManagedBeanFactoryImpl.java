@@ -1,7 +1,5 @@
 package org.seasar.teeda.core.managedbean.impl;
 
-import org.seasar.framework.container.S2Container;
-import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
 import org.seasar.teeda.core.managedbean.ManagedBeanFactory;
 import org.seasar.teeda.core.managedbean.Scope;
 import org.seasar.teeda.core.unit.TeedaTestCase;
@@ -27,16 +25,15 @@ public class TestManagedBeanFactoryImpl extends TeedaTestCase {
 	}
 
 	public void testSetManagedBean(){
-		ManagedBeanFactory factory = new ManagedBeanFactoryImpl();
+		ManagedBeanFactory factory = getManagedBeanFactory();
 		factory.setManagedBean("a", A.class, Scope.REQUEST);
-		S2Container container = (S2Container) SingletonS2ContainerFactory.getContainer();
-		A a = (A)container.getComponent("teeda-managedbean.a");
+		A a = (A)factory.getManagedBean("a");
 		assertNotNull(a);
 		assertEquals("hoge", a.getStr());
 	}
 	
 	public void testSetManagedBean2(){
-		ManagedBeanFactory factory = new ManagedBeanFactoryImpl();
+		ManagedBeanFactory factory = getManagedBeanFactory();
 		factory.setManagedBean("a", A.class, Scope.REQUEST);
 		factory.setManagedBean("b", B.class, Scope.REQUEST);
 		B b = (B)factory.getManagedBean("b");
@@ -44,7 +41,7 @@ public class TestManagedBeanFactoryImpl extends TeedaTestCase {
 	}
 	
 	public void testSetManagedBean3(){
-		ManagedBeanFactory factory = new ManagedBeanFactoryImpl();
+		ManagedBeanFactory factory = getManagedBeanFactory();
 		factory.setManagedBean("c", C.class, Scope.SESSION, "init", "destroy");
 		c = (C)factory.getManagedBean("c");
 		assertEquals("init:", c.toString());
