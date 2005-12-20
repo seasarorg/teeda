@@ -34,6 +34,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.seasar.framework.log.Logger;
+import org.seasar.teeda.core.util.ServletExternalContextUtil;
 
 /**
  * @author Shinpei Ohtani(aka shot)

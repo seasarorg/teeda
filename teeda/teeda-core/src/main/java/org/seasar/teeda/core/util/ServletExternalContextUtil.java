@@ -13,7 +13,7 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.core.context.servlet;
+package org.seasar.teeda.core.util;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
@@ -22,6 +22,7 @@ import java.util.Iterator;
 
 import javax.faces.FacesException;
 import javax.faces.application.ViewHandler;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -33,7 +34,6 @@ import javax.servlet.http.HttpSession;
 
 import org.seasar.framework.log.Logger;
 import org.seasar.framework.util.MethodUtil;
-import org.seasar.teeda.core.util.EnumerationIterator;
 
 /**
  * @author Shinpei Ohtani
@@ -143,6 +143,13 @@ public class ServletExternalContextUtil {
             return null;
         }
     }
+    
+    public static HttpServletRequest getRequest(ExternalContext externalContext) {
+        return (HttpServletRequest) externalContext.getRequest();
+    }
+    
+    public static HttpServletResponse getResponse(ExternalContext externalContext) {
+        return (HttpServletResponse) externalContext.getResponse();
+    }
 
-        
 }

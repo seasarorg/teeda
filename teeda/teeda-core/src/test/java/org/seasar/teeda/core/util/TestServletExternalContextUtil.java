@@ -1,4 +1,4 @@
-package org.seasar.teeda.core.context.servlet;
+package org.seasar.teeda.core.util;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -26,8 +26,8 @@ import org.seasar.extension.unit.S2TestCase;
 import org.seasar.framework.mock.servlet.MockHttpServletRequest;
 import org.seasar.framework.mock.servlet.MockServletContext;
 import org.seasar.framework.mock.servlet.MockServletContextImpl;
-import org.seasar.teeda.core.context.servlet.ServletExternalContextUtil;
 import org.seasar.teeda.core.context.servlet.ServletInitParameterMap;
+import org.seasar.teeda.core.util.ServletExternalContextUtil;
 
 
 public class TestServletExternalContextUtil extends S2TestCase {
