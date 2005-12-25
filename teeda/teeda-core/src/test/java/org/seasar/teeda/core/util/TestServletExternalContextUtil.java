@@ -22,15 +22,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.seasar.extension.unit.S2TestCase;
 import org.seasar.framework.mock.servlet.MockHttpServletRequest;
-import org.seasar.framework.mock.servlet.MockServletContext;
-import org.seasar.framework.mock.servlet.MockServletContextImpl;
-import org.seasar.teeda.core.context.servlet.ServletInitParameterMap;
-import org.seasar.teeda.core.util.ServletExternalContextUtil;
+import org.seasar.teeda.core.unit.TeedaTestCase;
 
 
-public class TestServletExternalContextUtil extends S2TestCase {
+public class TestServletExternalContextUtil extends TeedaTestCase {
 
     public static void main(String[] args) {
         junit.textui.TestRunner.run(TestServletExternalContextUtil.class);
