@@ -56,7 +56,13 @@
 
 	<component class="org.seasar.teeda.core.application.ApplicationImpl"></component>
 
-	<component class="org.seasar.teeda.core.managedbean.impl.ManagedBeanFactoryImpl"></component>
+	<component class="org.seasar.teeda.core.managedbean.impl.ManagedBeanScopeSaverImpl" ></component>
+	
+	<component class="org.seasar.teeda.core.managedbean.impl.ManagedBeanFactoryImpl" />
+		
+	<component name="scopeManager" class="org.seasar.teeda.core.scope.impl.ScopeManagerImpl" />
+	
+	<component name="translator" class="org.seasar.teeda.core.scope.impl.S2ScopeTranslator" />
 	
 	<component class="org.seasar.teeda.core.lifecycle.LifecycleImpl" >
 	</component>

@@ -1,13 +1,17 @@
 package org.seasar.teeda.core.el;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.faces.el.ValueBinding;
 
 import org.seasar.teeda.core.el.impl.commons.CommonsELParser;
+import org.seasar.teeda.core.managedbean.ManagedBeanFactory;
 import org.seasar.teeda.core.mock.MockPropertyResolver;
 import org.seasar.teeda.core.mock.MockVariableResolver;
+import org.seasar.teeda.core.scope.Scope;
 import org.seasar.teeda.core.unit.TeedaTestCase;
 
 public class TestValueBindingImpl extends TeedaTestCase {
@@ -28,7 +32,7 @@ public class TestValueBindingImpl extends TeedaTestCase {
 		super.tearDown();
 	}
 
-	public void testValueBindingSimple1(){
+	public void testGetValueSimple1(){
 		A a = new A();
 		MockVariableResolver resolver = getVariableResolver();
 		resolver.putValue("a", a);
@@ -37,7 +41,7 @@ public class TestValueBindingImpl extends TeedaTestCase {
 		assertTrue(o == a);
 	}
 	
-	public void testValueBindingSimple2(){
+	public void testGetValueSimple2(){
 		A a = new A();
 		MockVariableResolver variableResolver = getVariableResolver();
 		variableResolver.putValue("a", a);
@@ -49,7 +53,7 @@ public class TestValueBindingImpl extends TeedaTestCase {
 		assertEquals("bbb", o);
 	}
 	
-	public void testValueBindingSimple3(){
+	public void testGetValueSimple3(){
 		A a = new A();
 		B b = new B();
 		b.setName("hoge");
@@ -63,7 +67,7 @@ public class TestValueBindingImpl extends TeedaTestCase {
 		assertEquals("hoge", o);
 	}
 	
-	public void testValueBindingSimple4(){
+	public void testGetValueSimple4(){
 		Hoge hoge = new Hoge();
 		MockVariableResolver variableResolver = getVariableResolver();
 		variableResolver.putValue("hoge",hoge);
@@ -74,7 +78,7 @@ public class TestValueBindingImpl extends TeedaTestCase {
 		assertEquals("aaa", o);
 	}
 	
-	public void testValueBindingSimple5(){
+	public void testGetValueSimple5(){
 		C c = new C();
 		c.setHoge(true);
 		MockVariableResolver variableResolver = getVariableResolver();
@@ -84,7 +88,7 @@ public class TestValueBindingImpl extends TeedaTestCase {
 		assertTrue(((Boolean)o).booleanValue());
 	}
 	
-	public void testValueBindingMap1(){
+	public void testGetMapValue1(){
 		Map map = new HashMap();
 		map.put("hoge","foo");
 		MockVariableResolver resolver = getVariableResolver();
@@ -96,7 +100,7 @@ public class TestValueBindingImpl extends TeedaTestCase {
 		assertEquals("foo", m.get("hoge"));
 	}
 	
-	public void testValueBindingMap2(){
+	public void testGetMapValue2(){
 		Map map = new HashMap();
 		map.put("hoge","foo");
 		MockVariableResolver resolver = getVariableResolver();
@@ -106,7 +110,7 @@ public class TestValueBindingImpl extends TeedaTestCase {
 		assertEquals("foo", o);
 	}
 	
-	public void testValueBindingMap3(){
+	public void testGetMapValue3(){
 		Map map = new HashMap();
 		map.put("a", new A());
 		MockVariableResolver resolver = getVariableResolver();
@@ -116,7 +120,25 @@ public class TestValueBindingImpl extends TeedaTestCase {
 		assertEquals("aaa", o);
 	}
 	
-	public void testValueBindingExpression1(){
+	public void testGetListValue1(){
+		List list = new ArrayList();
+		list.add("aaa");
+		MockVariableResolver resolver = getVariableResolver();
+		resolver.putValue("list", list);
+		ValueBinding vb = new ValueBindingImpl(getApplication(), "#{list[0] }", new CommonsELParser());
+		Object o = vb.getValue(getFacesContext());
+		assertEquals("aaa", o);
+		
+		list.add(0, "bbb");
+		o = vb.getValue(getFacesContext());
+		assertEquals("bbb", o);
+		
+		vb.setValue(getFacesContext(), "ccc");
+		o = vb.getValue(getFacesContext());
+		assertEquals("ccc", o);
+	}
+	
+	public void testGetExpressionalValue1(){
 		A a = new A();
 		B b = new B();
 		MockVariableResolver resolver = getVariableResolver();
@@ -127,7 +149,7 @@ public class TestValueBindingImpl extends TeedaTestCase {
 		assertSame(a, o);
 	}
 	
-	public void testValueBindingMixed1(){
+	public void testGetMixedValue1(){
 		A a = new A();
 		B b = new B();
 		a.setName("hoge");
@@ -211,9 +233,40 @@ public class TestValueBindingImpl extends TeedaTestCase {
 		assertTrue(Map.class.isAssignableFrom(vb.getType(getFacesContext())));
 	}
 	
-	public void testGetExpressionString(){
-		//notDoneYet();
+	public void testGetType4(){
+		MockVariableResolver resolver = getVariableResolver();
+		resolver.putValue("aaa", new A());
+		ValueBinding vb = new ValueBindingImpl(getApplication(), "#{aaa}", new CommonsELParser());
+		assertEquals(A.class, vb.getType(getFacesContext()));
 	}
+	
+	public void testGetExpressionString(){
+		A a = new A();
+		MockVariableResolver resolver = getVariableResolver();
+		resolver.putValue("a", a);
+		ValueBinding vb = new ValueBindingImpl(getApplication(), "#{a}", new CommonsELParser());
+		String str = vb.getExpressionString();
+		assertEquals("#{a}", str);
+	}
+	
+	public void testSetType1(){
+		A a = new A();
+		a.setName("hoge");
+		MockVariableResolver resolver = getVariableResolver();
+		resolver.putValue("a", a);
+		ValueBinding vb = new ValueBindingImpl(getApplication(), "#{a}", new CommonsELParser());
+		A anotherA = (A)vb.getValue(getFacesContext());
+		assertEquals("hoge", anotherA.getName());
+		
+		ManagedBeanFactory factory = getManagedBeanFactory();
+		factory.setManagedBean("a", A.class, Scope.REQUEST);
+		
+		anotherA.setName("foo");
+		vb.setValue(getFacesContext(), anotherA);
+		anotherA = (A)vb.getValue(getFacesContext());
+		assertEquals("foo", anotherA.getName());
+	}
+	
 	
 	public void testSaveAndRestoreState(){
 		//notDoneYet();
@@ -258,6 +311,16 @@ public class TestValueBindingImpl extends TeedaTestCase {
 		}
 		public boolean isHoge(){
 			return hoge_;
+		}
+	}
+	
+	public static class D{
+		List list_;
+		public D(List list){
+			list_ = list;
+		}
+		public List getList(){
+			return list_;
 		}
 	}
 	

@@ -38,15 +38,14 @@ public class TestCommonsELParser extends TeedaTestCase {
         getContainer().register(new Hoge(), "hoge");
     	CommonsELParser parser = new CommonsELParser();
     	Object o = parser.parse("#{hoge.name}");
-    	System.out.println(o);
     	MockApplication app = getApplication();
     	app.setVariableResolver(new TeedaVariableResolver());
     	Object obj = parser.getExpressionProcessor().evaluate(getFacesContext(), o);
-    	System.out.println(obj);
+    	assertEquals("foo", obj);
     }
     
     public static class Hoge{
-    	public String name = "hoge";
+    	public String name = "foo";
     	public String getName(){
     		return name;
     	}

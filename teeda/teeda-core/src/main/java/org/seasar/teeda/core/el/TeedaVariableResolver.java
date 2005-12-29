@@ -25,6 +25,17 @@ import javax.faces.el.VariableResolver;
 import org.seasar.framework.container.S2Container;
 import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
 import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.core.el.impl.ApplicationScopeResolver;
+import org.seasar.teeda.core.el.impl.CookieResolver;
+import org.seasar.teeda.core.el.impl.FacesContextResolver;
+import org.seasar.teeda.core.el.impl.HeaderResolver;
+import org.seasar.teeda.core.el.impl.HeaderValuesResolver;
+import org.seasar.teeda.core.el.impl.InitParamResolver;
+import org.seasar.teeda.core.el.impl.ParamResolver;
+import org.seasar.teeda.core.el.impl.ParamValuesResolver;
+import org.seasar.teeda.core.el.impl.RequestScopeResolver;
+import org.seasar.teeda.core.el.impl.SessionScopeResolver;
+import org.seasar.teeda.core.el.impl.ViewResolver;
 import org.seasar.teeda.core.util.BindingUtil;
 
 /**

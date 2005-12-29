@@ -15,7 +15,8 @@ import javax.faces.el.VariableResolver;
 
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.managedbean.ManagedBeanFactory;
-import org.seasar.teeda.core.managedbean.Scope;
+import org.seasar.teeda.core.managedbean.ManagedBeanScopeSaver;
+import org.seasar.teeda.core.scope.Scope;
 import org.seasar.teeda.core.util.DIContainerUtil;
 import org.seasar.teeda.core.util.PropertyResolverUtil;
 import org.seasar.teeda.core.util.VariableResolverUtil;
@@ -95,21 +96,23 @@ public class ValueBindingImpl extends ValueBinding implements StateHolder{
         VariableResolver resolver = application_.getVariableResolver();
         ExpressionProcessor processor = parser_.getExpressionProcessor();
         Map scopeMap = VariableResolverUtil.getDefaultScopeMap(context, resolver, name);
-        Object previous = scopeMap.get(name);
-        if(previous != null){
-            scopeMap.put(name, processor.getCoercedObject(newValue, previous.getClass()));
-            return;
+        if(scopeMap != null){
+            Object previous = scopeMap.get(name);
+            if(previous != null){
+                scopeMap.put(name, processor.getCoercedObject(newValue, previous.getClass()));
+                return;
+            }        	
         }
         ManagedBeanFactory managedBeanFactory = 
             (ManagedBeanFactory)DIContainerUtil.getComponent(ManagedBeanFactory.class);
         Scope scope = managedBeanFactory.getManagedBeanScope(name);
+        ManagedBeanScopeSaver saver = managedBeanFactory.getManagedBeanScopeSaver();
         if(scope != null){
-            scopeMap = VariableResolverUtil.getDefaultScopeMap(context, resolver, scope.getScopeKey());
-            scopeMap.put(name, newValue);
+        	saver.saveToScope(context, scope, name, newValue);
             return;
         }
         //if no target, put to request.
-        context.getExternalContext().getRequestMap().put(name, newValue);
+        saver.saveToScope(context, Scope.REQUEST, name, newValue);
     }
         
     public boolean isReadOnly(FacesContext context)

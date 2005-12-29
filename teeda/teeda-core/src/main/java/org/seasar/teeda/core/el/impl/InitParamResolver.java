@@ -13,21 +13,23 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.core.el;
+package org.seasar.teeda.core.el.impl;
 
 import javax.faces.context.FacesContext;
+
+import org.seasar.teeda.core.el.FacesResolver;
 
 /**
  * @author higa
  *
  */
-public class RequestScopeResolver implements FacesResolver {
+public class InitParamResolver implements FacesResolver {
 
 	/**
 	 * @see org.seasar.jsf.el.FacesResolver#resolveVariable(javax.faces.context.FacesContext)
 	 */
 	public Object resolveVariable(FacesContext context) {
-		return context.getExternalContext().getRequestMap();
+		return context.getExternalContext().getInitParameterMap();
 	}
 
 }

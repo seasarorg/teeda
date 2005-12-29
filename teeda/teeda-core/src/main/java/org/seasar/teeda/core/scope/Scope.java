@@ -1,4 +1,4 @@
-package org.seasar.teeda.core.managedbean;
+package org.seasar.teeda.core.scope;
 
 import org.seasar.teeda.core.JsfConstants;
 

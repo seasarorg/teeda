@@ -1,7 +1,7 @@
 package org.seasar.teeda.core.managedbean.impl;
 
 import org.seasar.teeda.core.managedbean.ManagedBeanFactory;
-import org.seasar.teeda.core.managedbean.Scope;
+import org.seasar.teeda.core.scope.Scope;
 import org.seasar.teeda.core.unit.TeedaTestCase;
 
 public class TestManagedBeanFactoryImpl extends TeedaTestCase {

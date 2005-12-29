@@ -13,9 +13,11 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.core.el;
+package org.seasar.teeda.core.el.impl;
 
 import javax.faces.context.FacesContext;
+
+import org.seasar.teeda.core.el.FacesResolver;
 
 /**
  * @author higa

@@ -6,6 +6,7 @@ import javax.faces.render.RenderKitFactory;
 import org.seasar.framework.unit.S2FrameworkTestCase;
 import org.seasar.teeda.core.managedbean.ManagedBeanFactory;
 import org.seasar.teeda.core.managedbean.impl.ManagedBeanFactoryImpl;
+import org.seasar.teeda.core.managedbean.impl.ManagedBeanScopeSaverImpl;
 import org.seasar.teeda.core.mock.MockApplication;
 import org.seasar.teeda.core.mock.MockApplicationFactory;
 import org.seasar.teeda.core.mock.MockExternalContext;
@@ -21,6 +22,8 @@ import org.seasar.teeda.core.mock.MockPropertyResolver;
 import org.seasar.teeda.core.mock.MockRenderKit;
 import org.seasar.teeda.core.mock.MockRenderKitFactory;
 import org.seasar.teeda.core.mock.MockVariableResolver;
+import org.seasar.teeda.core.scope.impl.S2ScopeTranslator;
+import org.seasar.teeda.core.scope.impl.ScopeManagerImpl;
 
 
 /**
@@ -122,6 +125,9 @@ public class TeedaTestCase extends S2FrameworkTestCase {
     
     protected void setManagedBeanFactory(){
     	getContainer().register(ManagedBeanFactoryImpl.class);
+    	getContainer().register(ManagedBeanScopeSaverImpl.class);
+    	getContainer().register(ScopeManagerImpl.class);
+    	getContainer().register(S2ScopeTranslator.class);
     }
     
     protected ManagedBeanFactory getManagedBeanFactory(){
