@@ -130,8 +130,8 @@ public class TeedaTestCase extends S2FrameworkTestCase {
     	getContainer().register(S2ScopeTranslator.class);
     }
     
-    protected ManagedBeanFactory getManagedBeanFactory(){
-    	return (ManagedBeanFactory)getContainer().getComponent(ManagedBeanFactory.class);
+    protected ManagedBeanFactoryImpl getManagedBeanFactory(){
+    	return (ManagedBeanFactoryImpl)getContainer().getComponent(ManagedBeanFactory.class);
     }
     
     protected void tearDownContainer() throws Throwable {
