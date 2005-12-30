@@ -267,6 +267,31 @@ public class TestValueBindingImpl extends TeedaTestCase {
 		assertEquals("foo", anotherA.getName());
 	}
 	
+	public void testSetType2(){
+		A a = new A();
+		a.setName("aaa");
+		MockVariableResolver resolver = getVariableResolver();
+		resolver.putValue("a", a);
+		ValueBinding vb = new ValueBindingImpl(getApplication(), "#{a.name}", new CommonsELParser());
+		String s = (String)vb.getValue(getFacesContext());
+		assertEquals("aaa", s);
+		
+		vb.setValue(getFacesContext(), "bbb");
+		assertEquals("bbb", (String)vb.getValue(getFacesContext()));
+	}
+	
+	public void testSetType3(){
+		MockVariableResolver resolver = getVariableResolver();
+		resolver.putValue("num", new Integer(123));
+		ValueBinding vb = new ValueBindingImpl(getApplication(), "#{num}", new CommonsELParser());
+		assertEquals(new Integer(123), vb.getValue(getFacesContext()));
+
+		resolver.putValue("num", new Integer(345));
+		vb.setValue(getFacesContext(), new Integer(345));
+		
+		Integer num = new Integer(345);
+		assertEquals(num, vb.getValue(getFacesContext()));
+	}
 	
 	public void testSaveAndRestoreState(){
 		//notDoneYet();
