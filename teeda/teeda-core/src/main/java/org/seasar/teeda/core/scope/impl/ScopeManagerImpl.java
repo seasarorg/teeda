@@ -12,7 +12,7 @@ import org.seasar.teeda.core.scope.ScopeTranslator;
 public class ScopeManagerImpl implements ScopeManager {
 
 	private ScopeTranslator translator_;
-	private static Map SCOPES = new HashMap();
+	private static final Map SCOPES = new HashMap();
 	private static final Map DEFAULT_SCOPES;
 
 	static{
@@ -42,7 +42,7 @@ public class ScopeManagerImpl implements ScopeManager {
 		if(SCOPES.containsKey(scopeKey)){
 			throw new ScopeAlreadyRegisteredException(new Object[]{scopeKey});
 		}
-		SCOPES.put(scope.getScopeKey(), scope);
+		SCOPES.put(scopeKey, scope);
 		if(translator_ != null){
 			translator_.addScope(scope, outerComponentScope);
 		}

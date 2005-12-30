@@ -40,7 +40,7 @@ public class S2ScopeTranslator implements ScopeTranslator{
 		if(scope == null || externalComponentScope == null){
 			throw new IllegalArgumentException();
 		}
-		if(SCOPE_TO_INSTANCEDEF_MAP.containsKey(scope) || SCOPE_TO_INSTANCEDEF_MAP.containsValue(externalComponentScope)){
+		if(SCOPE_TO_INSTANCEDEF_MAP.containsKey(scope)){
 			throw new ScopeAlreadyRegisteredException(new Object[]{scope.getScopeKey()});
 		}
 		SCOPE_TO_INSTANCEDEF_MAP.put(scope, externalComponentScope);
