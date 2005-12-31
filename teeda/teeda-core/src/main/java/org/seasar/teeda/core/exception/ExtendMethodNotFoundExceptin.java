@@ -20,6 +20,9 @@ import javax.faces.el.MethodNotFoundException;
 
 import org.seasar.teeda.core.util.MessageFormatterUtil;
 
+/**
+ * @author Shinpei Ohtani
+ */
 public class ExtendMethodNotFoundExceptin extends MethodNotFoundException {
 
     private static final long serialVersionUID = 3257852073575265329L;

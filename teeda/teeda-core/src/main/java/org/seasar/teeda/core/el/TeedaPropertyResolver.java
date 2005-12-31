@@ -30,6 +30,9 @@ import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.PropertyDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
 
+/**
+ * @author higa
+ */
 public class TeedaPropertyResolver extends PropertyResolver {
 
 	public Object getValue(Object base, Object property)
