@@ -41,10 +41,8 @@ public class WebappTagHandlerRule extends TagHandlerRule {
 
         // context-param
         addTagHandler("/web-app/context-param", new ContextParamTagHandler());
-        addTagHandler("/web-app/context-param/param-name",
-            new ContextParamTagHandler.ParamNameTagHandler());
-        addTagHandler("/web-app/context-param/param-value",
-            new ContextParamTagHandler.ParamValueTagHandler());
+        addTagHandler("param-name", new SimpleStringTagHandler("param-name"));
+        addTagHandler("param-value", new SimpleStringTagHandler("param-value"));
 
         // filter
         addTagHandler("/web-app/filter", new FilterTagHandler());
@@ -54,8 +52,6 @@ public class WebappTagHandlerRule extends TagHandlerRule {
             new SimpleStringTagHandler("filter-class"));
 
         addTagHandler("init-param", new InitParamTagHandler());
-        addTagHandler("param-name", new SimpleStringTagHandler("param-name"));
-        addTagHandler("param-value", new SimpleStringTagHandler("param-value"));
 
         // filter-mapping
         // listener

@@ -30,7 +30,7 @@ public class ContextParamTagHandler extends TagHandler {
     private static final long serialVersionUID = 1L;
 
     public void start(TagHandlerContext context, Attributes attributes) {
-        context.push(new ContextParamElementImpl());
+        context.push(createContextParamElement());
     }
 
     public void end(TagHandlerContext context, String body) {
@@ -39,22 +39,8 @@ public class ContextParamTagHandler extends TagHandler {
         webappConfig.addContextParamElement(contextParam);
     }
 
-    public static class ParamNameTagHandler extends TagHandler {
-        private static final long serialVersionUID = 1L;
-
-        public void end(TagHandlerContext context, String body) {
-            ContextParamElement contextParam = (ContextParamElement) context.peek();
-            contextParam.setParamName(body);
-        }
-    }
-
-    public static class ParamValueTagHandler extends TagHandler {
-        private static final long serialVersionUID = 1L;
-
-        public void end(TagHandlerContext context, String body) {
-            ContextParamElement contextParam = (ContextParamElement) context.peek();
-            contextParam.setParamValue(body);
-        }
+    protected ContextParamElement createContextParamElement() {
+        return new ContextParamElementImpl();
     }
 
 }
