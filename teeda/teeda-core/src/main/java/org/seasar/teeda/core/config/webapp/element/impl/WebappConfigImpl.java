@@ -40,7 +40,7 @@ public class WebappConfigImpl implements WebappConfig, Serializable {
     private Map servlets_ = new HashMap();
     private List taglibs_ = new ArrayList();
 
-    public List getContextParams() {
+    public List getContextParamElements() {
         return new ArrayList(contextParams_.values());
     }
 

@@ -22,7 +22,7 @@ import java.util.List;
  */
 public interface WebappConfig {
 
-    public List getContextParams();
+    public List getContextParamElements();
 
     public ContextParamElement getContextParamElementByParamName(
         String paramName);

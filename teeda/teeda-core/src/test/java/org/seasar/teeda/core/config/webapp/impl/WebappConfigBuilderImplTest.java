@@ -40,7 +40,7 @@ public class WebappConfigBuilderImplTest extends TestCase {
         WebappConfig webappConfig = buildWebappConfig("WebappConfigBuilderImplTest-ContextParam-web.xml");
 
         // ## Assert ##
-        List contextParams = webappConfig.getContextParams();
+        List contextParams = webappConfig.getContextParamElements();
         assertEquals(2, contextParams.size());
         assertEquals(true, contextParams.get(0) instanceof ContextParamElement);
 
@@ -102,7 +102,6 @@ public class WebappConfigBuilderImplTest extends TestCase {
         // ## Assert ##
         List taglibElements = webappConfig.getTaglibElements();
         assertEquals(2, taglibElements.size());
-        assertEquals(true, taglibElements.get(0) instanceof TaglibElement);
 
         TaglibElement taglib = (TaglibElement) taglibElements.get(0);
         assertEquals("http://www.seasar.org/jsf", taglib.getTaglibUri());

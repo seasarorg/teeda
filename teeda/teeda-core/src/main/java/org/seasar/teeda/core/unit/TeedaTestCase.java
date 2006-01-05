@@ -41,41 +41,42 @@ import org.seasar.teeda.core.mock.MockVariableResolver;
 import org.seasar.teeda.core.scope.impl.S2ScopeTranslator;
 import org.seasar.teeda.core.scope.impl.ScopeManagerImpl;
 
-
 /**
  * @author Shinpei Ohtani(aka shot)
  * 
  * Set up JSF env for easy-testing JSF Application and view.
  */
-public class TeedaTestCase extends S2FrameworkTestCase {
+public abstract class TeedaTestCase extends S2FrameworkTestCase {
 
     private MockExternalContext externalContext;
-    
+
     private MockApplication application;
-    
+
     private MockFacesContext facesContext;
-    
+
     private MockLifecycle lifecycle;
-    
+
     private MockRenderKit renderKit;
-    
+
     private MockPhaseListener phaseListener;
-    
+
     private MockNavigationHandler navigationHandler;
-    
+
     private MockPropertyResolver propertyResolver;
-    
+
     private MockVariableResolver variableResolver;
-    public TeedaTestCase(){
+
+    public TeedaTestCase() {
     }
-    
-    public TeedaTestCase(String name){
+
+    public TeedaTestCase(String name) {
         super(name);
     }
-    
+
     protected void setUpContainer() throws Throwable {
         super.setUpContainer();
-        externalContext = new MockExternalContextImpl(getServletContext(), getRequest(), getResponse());
+        externalContext = new MockExternalContextImpl(getServletContext(),
+            getRequest(), getResponse());
         application = new MockApplication();
         navigationHandler = new MockNavigationHandler();
         application.setNavigationHandler(navigationHandler);
@@ -83,7 +84,7 @@ public class TeedaTestCase extends S2FrameworkTestCase {
         application.setPropertyResolver(propertyResolver);
         variableResolver = new MockVariableResolver();
         application.setVariableResolver(variableResolver);
-        
+
         facesContext = new MockFacesContextImpl(externalContext, application);
         renderKit = new MockRenderKit();
         lifecycle = new MockLifecycle();
@@ -92,64 +93,67 @@ public class TeedaTestCase extends S2FrameworkTestCase {
         initFactories();
         setFactories();
     }
-        
-    protected void initFactories(){
+
+    protected void initFactories() {
         FactoryFinder.setFactory(FactoryFinder.APPLICATION_FACTORY,
-        "org.seasar.teeda.core.mock.MockApplicationFactory");
+            "org.seasar.teeda.core.mock.MockApplicationFactory");
 
-       FactoryFinder.setFactory(FactoryFinder.FACES_CONTEXT_FACTORY,
-       "org.seasar.teeda.core.mock.MockFacesContextFactory");
+        FactoryFinder.setFactory(FactoryFinder.FACES_CONTEXT_FACTORY,
+            "org.seasar.teeda.core.mock.MockFacesContextFactory");
 
-       FactoryFinder.setFactory(FactoryFinder.LIFECYCLE_FACTORY,
-       "org.seasar.teeda.core.mock.MockLifecycleFactory");
+        FactoryFinder.setFactory(FactoryFinder.LIFECYCLE_FACTORY,
+            "org.seasar.teeda.core.mock.MockLifecycleFactory");
 
-       FactoryFinder.setFactory(FactoryFinder.RENDER_KIT_FACTORY,
-       "org.seasar.teeda.core.mock.MockRenderKitFactory");
+        FactoryFinder.setFactory(FactoryFinder.RENDER_KIT_FACTORY,
+            "org.seasar.teeda.core.mock.MockRenderKitFactory");
     }
 
-    protected void setFactories(){
+    protected void setFactories() {
         setApplicationFactory();
         setFacesContextFactory();
         setLifecycleFactory();
         setRenderKitFactory();
         setManagedBeanFactory();
     }
-    
-    protected void setApplicationFactory(){
-        MockApplicationFactory appFactory = 
-            (MockApplicationFactory)FactoryFinder.getFactory(FactoryFinder.APPLICATION_FACTORY);
+
+    protected void setApplicationFactory() {
+        MockApplicationFactory appFactory = (MockApplicationFactory) FactoryFinder
+            .getFactory(FactoryFinder.APPLICATION_FACTORY);
         appFactory.setApplication(application);
     }
-    
-    protected void setFacesContextFactory(){
-        MockFacesContextFactory facesContextFactory = 
-            (MockFacesContextFactory)FactoryFinder.getFactory(FactoryFinder.FACES_CONTEXT_FACTORY);
+
+    protected void setFacesContextFactory() {
+        MockFacesContextFactory facesContextFactory = (MockFacesContextFactory) FactoryFinder
+            .getFactory(FactoryFinder.FACES_CONTEXT_FACTORY);
         facesContextFactory.setFacesContext(facesContext);
     }
-    
-    protected void setLifecycleFactory(){
-        MockLifecycleFactory lifecycleFactory = 
-            (MockLifecycleFactory)FactoryFinder.getFactory(FactoryFinder.LIFECYCLE_FACTORY);
-        lifecycleFactory.addLifecycle(LifecycleFactory.DEFAULT_LIFECYCLE, lifecycle);
+
+    protected void setLifecycleFactory() {
+        MockLifecycleFactory lifecycleFactory = (MockLifecycleFactory) FactoryFinder
+            .getFactory(FactoryFinder.LIFECYCLE_FACTORY);
+        lifecycleFactory.addLifecycle(LifecycleFactory.DEFAULT_LIFECYCLE,
+            lifecycle);
     }
-    
-    protected void setRenderKitFactory(){
-        MockRenderKitFactory renderKitFactory = 
-            (MockRenderKitFactory)FactoryFinder.getFactory(FactoryFinder.RENDER_KIT_FACTORY);
-        renderKitFactory.addRenderKit(RenderKitFactory.HTML_BASIC_RENDER_KIT, renderKit);
+
+    protected void setRenderKitFactory() {
+        MockRenderKitFactory renderKitFactory = (MockRenderKitFactory) FactoryFinder
+            .getFactory(FactoryFinder.RENDER_KIT_FACTORY);
+        renderKitFactory.addRenderKit(RenderKitFactory.HTML_BASIC_RENDER_KIT,
+            renderKit);
     }
-    
-    protected void setManagedBeanFactory(){
-    	getContainer().register(ManagedBeanFactoryImpl.class);
-    	getContainer().register(ManagedBeanScopeSaverImpl.class);
-    	getContainer().register(ScopeManagerImpl.class);
-    	getContainer().register(S2ScopeTranslator.class);
+
+    protected void setManagedBeanFactory() {
+        getContainer().register(ManagedBeanFactoryImpl.class);
+        getContainer().register(ManagedBeanScopeSaverImpl.class);
+        getContainer().register(ScopeManagerImpl.class);
+        getContainer().register(S2ScopeTranslator.class);
     }
-    
-    protected ManagedBeanFactoryImpl getManagedBeanFactory(){
-    	return (ManagedBeanFactoryImpl)getContainer().getComponent(ManagedBeanFactory.class);
+
+    protected ManagedBeanFactoryImpl getManagedBeanFactory() {
+        return (ManagedBeanFactoryImpl) getContainer().getComponent(
+            ManagedBeanFactory.class);
     }
-    
+
     protected void tearDownContainer() throws Throwable {
         super.tearDownContainer();
         externalContext = null;
@@ -160,78 +164,78 @@ public class TeedaTestCase extends S2FrameworkTestCase {
         navigationHandler = null;
         FactoryFinder.releaseFactories();
     }
+
     /**
      * all i want is this(nobody wants to write assertTrue(true), right?)
      */
-    protected static void success(){
+    protected static void success() {
         assertTrue(true);
     }
-    
-    protected static void notDoneYet(){
+
+    protected static void notDoneYet() {
         fail("This test is not done yet.");
     }
-    
+
     public MockApplication getApplication() {
         return application;
     }
-    
+
     public void setApplication(MockApplication application) {
         this.application = application;
         setApplicationFactory();
     }
-    
+
     public MockExternalContext getExternalContext() {
         return externalContext;
     }
-    
+
     public void setExternalContext(MockExternalContext externalContext) {
         this.externalContext = externalContext;
     }
-    
+
     public MockFacesContext getFacesContext() {
         return facesContext;
     }
-    
+
     public void setFacesContext(MockFacesContext facesContext) {
         this.facesContext = facesContext;
         setFacesContextFactory();
     }
-    
+
     public MockLifecycle getLifecycle() {
         return lifecycle;
     }
-    
+
     public void setLifecycle(MockLifecycle lifecycle) {
         this.lifecycle = lifecycle;
         setLifecycleFactory();
     }
-    
+
     public MockRenderKit getRenderKit() {
         return renderKit;
     }
-    
+
     public void setRenderKit(MockRenderKit renderKit) {
         this.renderKit = renderKit;
         setRenderKitFactory();
     }
 
-	public MockPropertyResolver getPropertyResolver() {
-		return propertyResolver;
-	}
+    public MockPropertyResolver getPropertyResolver() {
+        return propertyResolver;
+    }
 
-	public void setPropertyResolver(MockPropertyResolver propertyResolver) {
-		this.propertyResolver = propertyResolver;
-		application.setPropertyResolver(propertyResolver);
-	}
+    public void setPropertyResolver(MockPropertyResolver propertyResolver) {
+        this.propertyResolver = propertyResolver;
+        application.setPropertyResolver(propertyResolver);
+    }
 
-	public MockVariableResolver getVariableResolver() {
-		return variableResolver;
-	}
+    public MockVariableResolver getVariableResolver() {
+        return variableResolver;
+    }
 
-	public void setVariableResolver(MockVariableResolver variableResolver) {
-		this.variableResolver = variableResolver;
-		application.setVariableResolver(variableResolver);
-	}
-    
-    
+    public void setVariableResolver(MockVariableResolver variableResolver) {
+        this.variableResolver = variableResolver;
+        application.setVariableResolver(variableResolver);
+    }
+
 }
