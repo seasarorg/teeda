@@ -9,6 +9,19 @@
   <description></description>
   <url>http://teeda.seasar.org/</url>
   <inceptionYear>2005</inceptionYear>
+  <developers>
+    <developer>
+      <id>shot</id>
+      <name></name>
+      <email></email>
+      <url></url>
+      <organization></organization>
+      <organizationUrl></organizationUrl>
+      <roles></roles>
+      <timezone>+9</timezone>
+      <properties></properties>
+    </developer>
+  </developers>
   <licenses>
     <license>
       <name>The Apache Software License, Version 2.0</name>
@@ -25,6 +38,76 @@
     <name>The Seasar Foundation</name>
     <url>http://www.seasar.org/</url>
   </organization>
+  <build>
+    <defaultGoal>validate</defaultGoal>
+    <pluginManagement>
+      <plugins>
+        <!--
+        <plugin>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <configuration>
+            <encoding>UTF-8</encoding>
+          </configuration>
+        </plugin>
+        -->
+        <plugin>
+          <artifactId>maven-deploy-plugin</artifactId>
+          <configuration>
+            <updateReleaseInfo>true</updateReleaseInfo>
+          </configuration>
+        </plugin>
+        <!--
+        <plugin>
+          <artifactId>maven-site-plugin</artifactId>
+          <configuration>
+            <outputEncodinf>UTF-8</outputEncodinf>
+          </configuration>
+        </plugin>
+        -->
+      </plugins>
+    </pluginManagement>
+    <plugins>
+      <plugin>
+        <artifactId>maven-source-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>source-jar</id>
+            <phase>package</phase>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>javadoc-jar</id>
+            <phase>package</phase>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <charset>UTF-8</charset>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-jar-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>test-jar</id>
+            <phase>package</phase>
+            <goals>
+              <goal>test-jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
   <modules>
     <module>teeda-core</module>
   </modules>
