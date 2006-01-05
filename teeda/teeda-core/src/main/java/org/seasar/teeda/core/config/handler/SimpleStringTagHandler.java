@@ -5,7 +5,6 @@ import java.lang.reflect.Method;
 import org.seasar.framework.log.Logger;
 import org.seasar.framework.util.StringUtil;
 import org.seasar.framework.xml.TagHandlerContext;
-import org.seasar.teeda.core.config.element.JsfConfig;
 import org.seasar.teeda.core.util.TagConvertUtil;
 
 
@@ -23,10 +22,10 @@ public class SimpleStringTagHandler extends JsfTagHandler {
     }
     
     public void end(TagHandlerContext context, String body) {
-        setAppropriateProperty((JsfConfig)context.peek(), body);
+        setAppropriateProperty(context.peek(), body);
     }
 
-    protected void setAppropriateProperty(JsfConfig tag, String context){
+    protected void setAppropriateProperty(Object tag, String context){
         if(StringUtil.isEmpty(context)){
             return;
         }

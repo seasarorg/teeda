@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE web-app PUBLIC
+  "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+  "http://java.sun.com/dtd/web-app_2_3.dtd">
+<web-app>
+
+    <context-param>
+        <param-name>javax.faces.CONFIG_FILES</param-name>
+        <param-value>
+            /WEB-INF/faces-config.xml
+        </param-value>
+        <description>
+            Comma separated list of URIs of (additional) faces config files.
+            (e.g. /WEB-INF/my-config.xml)
+            See JSF 1.0 PRD2, 10.3.2
+        </description>
+    </context-param>
+
+    <context-param>
+        <param-name>javax.faces.DEFAULT_SUFFIX</param-name>
+        <param-value>.html</param-value>
+    </context-param>
+
+</web-app>
