@@ -119,7 +119,6 @@ public class TestApplicationImpl extends TeedaTestCase {
     public void testCreateCoverterForPrimitive(){
         app_ = new ApplicationImpl();
         app_.addConverter(Integer.class, "org.seasar.teeda.core.mock.MockConverter");
-        int i = 0;
         Converter c = app_.createConverter(Integer.TYPE);
         assertNotNull(c);
         assertTrue(c instanceof MockConverter);
