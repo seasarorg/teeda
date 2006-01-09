@@ -1,4 +1,4 @@
-package org.seasar.teeda.core.lifecycle;
+package org.seasar.teeda.core.lifecycle.impl;
 
 import javax.faces.application.Application;
 import javax.faces.application.ViewHandler;
@@ -7,6 +7,8 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseId;
 
+import org.seasar.teeda.core.lifecycle.AbstractPhase;
+import org.seasar.teeda.core.lifecycle.Postback;
 import org.seasar.teeda.core.util.ExternalContextUtil;
 
 

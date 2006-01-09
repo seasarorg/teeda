@@ -1,4 +1,4 @@
-package org.seasar.teeda.core.el;
+package org.seasar.teeda.core.el.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.faces.el.ValueBinding;
 
+import org.seasar.teeda.core.el.TeedaVariableResolver;
 import org.seasar.teeda.core.el.impl.commons.CommonsELParser;
 import org.seasar.teeda.core.managedbean.ManagedBeanFactory;
 import org.seasar.teeda.core.mock.MockPropertyResolver;
@@ -292,11 +293,7 @@ public class TestValueBindingImpl extends TeedaTestCase {
 		Integer num = new Integer(345);
 		assertEquals(num, vb.getValue(getFacesContext()));
 	}
-	
-	public void testSaveAndRestoreState(){
-		//notDoneYet();
-	}
-	
+		
 	public static class A{
 		private String name = "aaa";
 		private B b_;

@@ -13,43 +13,37 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.core.el;
+package org.seasar.teeda.core.el.impl;
 
-import java.util.Arrays;
 import java.util.Map;
 
 import javax.faces.application.Application;
-import javax.faces.component.StateHolder;
 import javax.faces.context.FacesContext;
 import javax.faces.el.EvaluationException;
 import javax.faces.el.PropertyNotFoundException;
 import javax.faces.el.PropertyResolver;
 import javax.faces.el.ReferenceSyntaxException;
-import javax.faces.el.ValueBinding;
 import javax.faces.el.VariableResolver;
 
-import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.core.el.ValueBindingBase;
+import org.seasar.teeda.core.el.ELParser;
+import org.seasar.teeda.core.el.ExpressionProcessor;
 import org.seasar.teeda.core.managedbean.ManagedBeanFactory;
 import org.seasar.teeda.core.managedbean.ManagedBeanScopeSaver;
 import org.seasar.teeda.core.scope.Scope;
-import org.seasar.teeda.core.util.DIContainerUtil;
 import org.seasar.teeda.core.util.PropertyResolverUtil;
 import org.seasar.teeda.core.util.VariableResolverUtil;
 
 /**
  * @author Shinpei Ohtani
  */
-public class ValueBindingImpl extends ValueBinding implements StateHolder{
+public class ValueBindingImpl extends ValueBindingBase{
 
     private Application application_;
     private String expressionString_;
     private ELParser parser_;
     private Object expression_;
     private boolean transientValue_ = false;
-    
-    static{
-      Arrays.sort(JsfConstants.JSF_IMPLICIT_OBJECTS);  
-    };
     
     public ValueBindingImpl(){
     }
@@ -107,7 +101,7 @@ public class ValueBindingImpl extends ValueBinding implements StateHolder{
         }
     }
 
-    private void setValueInScope(FacesContext context, String name, Object newValue){
+    protected void setValueInScope(FacesContext context, String name, Object newValue){
         VariableResolver resolver = application_.getVariableResolver();
         ExpressionProcessor processor = parser_.getExpressionProcessor();
         Map scopeMap = VariableResolverUtil.getDefaultScopeMap(context, resolver, name);
@@ -118,8 +112,7 @@ public class ValueBindingImpl extends ValueBinding implements StateHolder{
                 return;
             }        	
         }
-        ManagedBeanFactory managedBeanFactory = 
-            (ManagedBeanFactory)DIContainerUtil.getComponent(ManagedBeanFactory.class);
+        ManagedBeanFactory managedBeanFactory = getManagedBeanFactory();
         Scope scope = managedBeanFactory.getManagedBeanScope(name);
         ManagedBeanScopeSaver saver = managedBeanFactory.getManagedBeanScopeSaver();
         if(scope != null){
@@ -155,8 +148,7 @@ public class ValueBindingImpl extends ValueBinding implements StateHolder{
         }
         if(obj instanceof String){
             String name = (String)obj;
-            ManagedBeanFactory managedBeanFactory = 
-                (ManagedBeanFactory)DIContainerUtil.getComponent(ManagedBeanFactory.class);
+            ManagedBeanFactory managedBeanFactory = getManagedBeanFactory();
             Object managedBean = managedBeanFactory.getManagedBean(name);
             if(managedBean != null){
                 return managedBean.getClass();
@@ -176,6 +168,10 @@ public class ValueBindingImpl extends ValueBinding implements StateHolder{
         return expressionString_;
     }
 
+    public Object getExpression(){
+    	return expression_;
+    }
+    
     public boolean isTransient() {
         return transientValue_;
     }
@@ -193,10 +189,6 @@ public class ValueBindingImpl extends ValueBinding implements StateHolder{
         Object[] state = (Object[])obj;
         expressionString_ = (String)state[0];
         parser_ = (ELParser)state[1];
-    }
-
-    private static boolean isImplicitObject(String expressionString){
-        return (Arrays.binarySearch(JsfConstants.JSF_IMPLICIT_OBJECTS, expressionString) >= 0);
     }
     
 }

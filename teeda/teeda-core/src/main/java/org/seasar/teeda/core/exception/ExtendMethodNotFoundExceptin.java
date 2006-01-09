@@ -29,7 +29,7 @@ public class ExtendMethodNotFoundExceptin extends MethodNotFoundException {
 
     private static final String METHOD_NOT_FOUND_EXCEPTION_ID = "ETDA0002";
 
-    private String messageCode_ = METHOD_NOT_FOUND_EXCEPTION_ID;
+    private String messageCode_;
 
     private Object[] args_;
 
@@ -41,16 +41,25 @@ public class ExtendMethodNotFoundExceptin extends MethodNotFoundException {
 
     public ExtendMethodNotFoundExceptin(MethodNotFoundException cause,
             MethodBinding mb) {
-        super(cause);
-        args_ = new Object[] { mb.getClass().getName(), mb.getExpressionString()};
-        simpleMessage_ = 
-            MessageFormatterUtil.getSimpleMessage(messageCode_, args_);
-        MessageFormatterUtil.getSimpleMessage(messageCode_, args_);
-        message_ = 
-            MessageFormatterUtil.getFormattedMessage(messageCode_, simpleMessage_);
+    	this(cause, mb.getClass().getName(), mb.getExpressionString());
         methodBinding_ = mb;
     }
 
+    public ExtendMethodNotFoundExceptin(Exception cause, String className, String expressionString){
+    	this(cause, className, expressionString, METHOD_NOT_FOUND_EXCEPTION_ID);
+    }
+    
+    protected ExtendMethodNotFoundExceptin(Exception cause, String className, String expressionString, String messageCode){
+    	super(cause);
+        args_ = new Object[] { className, expressionString};
+        messageCode_ = messageCode;
+        simpleMessage_ = 
+            MessageFormatterUtil.getSimpleMessage(messageCode_, args_);
+        message_ = 
+            MessageFormatterUtil.getFormattedMessage(messageCode_, simpleMessage_);
+    	
+    }
+    
     public MethodBinding getMethodBinding() {
         return methodBinding_;
     }

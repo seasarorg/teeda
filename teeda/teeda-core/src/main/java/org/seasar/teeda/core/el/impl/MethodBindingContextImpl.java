@@ -25,8 +25,11 @@ import javax.faces.el.ValueBinding;
 
 import org.seasar.framework.exception.EmptyRuntimeException;
 import org.seasar.framework.util.ConstructorUtil;
+import org.seasar.teeda.core.el.ELParser;
+import org.seasar.teeda.core.el.ValueBindingBase;
 import org.seasar.teeda.core.el.MethodBindingContext;
 import org.seasar.teeda.core.el.ValueBindingContext;
+import org.seasar.teeda.core.exception.IllegalClassTypeException;
 import org.seasar.teeda.core.util.ClassUtil;
 
 /**
@@ -53,13 +56,17 @@ public class MethodBindingContextImpl implements MethodBindingContext{
             throw new EmptyRuntimeException("parameters");
         }
         ValueBinding vb = valueBindingContext_.createValueBinding(application, ref);
+        ELParser parser = valueBindingContext_.getELParser();
+        if(!(vb instanceof ValueBindingBase)){
+        	throw new IllegalClassTypeException(ValueBindingBase.class, ValueBinding.class);
+        }
         Class clazz = ClassUtil.forName(methodBindingName_);
-        Class[] argTypes = new Class[]{ValueBinding.class, Class[].class};
+        Class[] argTypes = new Class[]{ValueBindingBase.class, Class[].class, ELParser.class};
         Constructor c = null;
         Object o = null;
         try{
             c = clazz.getConstructor(argTypes);
-            o = ConstructorUtil.newInstance(c, new Object[]{vb, params});
+            o = ConstructorUtil.newInstance(c, new Object[]{vb, params, parser});
             return (MethodBinding)o;
         }catch (NoSuchMethodException e){
             o = ClassUtil.newInstance(clazz);

@@ -17,6 +17,7 @@ package org.seasar.teeda.core.exception;
 
 import javax.faces.el.EvaluationException;
 import javax.faces.el.MethodBinding;
+import javax.faces.el.MethodNotFoundException;
 
 import org.seasar.teeda.core.util.MessageFormatterUtil;
 
@@ -29,7 +30,7 @@ public class ExtendEvaluationException extends EvaluationException {
 
     private static final String EVALUATION_EXCEPTION_ID = "ETDA0003";
 
-    private String messageCode_ = EVALUATION_EXCEPTION_ID;
+    private String messageCode_;
 
     private Object[] args_;
 
@@ -41,13 +42,23 @@ public class ExtendEvaluationException extends EvaluationException {
 
     public ExtendEvaluationException(EvaluationException cause,
             MethodBinding mb) {
-        super(cause);
-        args_ = new Object[] { mb.getClass().getName(), mb.getExpressionString()};
+    	this(cause, mb.getClass().getName(), mb.getExpressionString());
+        methodBinding_ = mb;
+    }
+
+    public ExtendEvaluationException(Exception cause, String className, String expressionString){
+    	this(cause, className, expressionString, EVALUATION_EXCEPTION_ID);
+    }
+    
+    protected ExtendEvaluationException(Exception cause, String className, String expressionString, String messageCode){
+    	super(cause);
+        args_ = new Object[] { className, expressionString};
+        messageCode_ = messageCode;
         simpleMessage_ = 
             MessageFormatterUtil.getSimpleMessage(messageCode_, args_);
         message_ = 
             MessageFormatterUtil.getFormattedMessage(messageCode_, simpleMessage_);
-        methodBinding_ = mb;
+    	
     }
 
     public MethodBinding getMethodBinding() {

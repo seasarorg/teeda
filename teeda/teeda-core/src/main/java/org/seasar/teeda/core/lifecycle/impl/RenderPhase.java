@@ -1,4 +1,4 @@
-package org.seasar.teeda.core.lifecycle;
+package org.seasar.teeda.core.lifecycle.impl;
 
 import java.io.IOException;
 
@@ -7,8 +7,12 @@ import javax.faces.application.Application;
 import javax.faces.application.ViewHandler;
 import javax.faces.context.FacesContext;
 import javax.faces.el.EvaluationException;
+import javax.faces.event.PhaseId;
 
-public class RenderPhase {
+import org.seasar.teeda.core.lifecycle.AbstractPhase;
+
+public class RenderPhase extends AbstractPhase{
+	
 	public void executePhase(FacesContext context){
 		Application application = context.getApplication();
 		ViewHandler viewHandler = application.getViewHandler();
@@ -26,6 +30,13 @@ public class RenderPhase {
 				throw ex;
 			}
 		}
+	}
+
+	/* (non-Javadoc)
+	 * @see org.seasar.teeda.core.lifecycle.AbstractPhase#getCurrentPhaseId()
+	 */
+	protected PhaseId getCurrentPhaseId() {
+		return PhaseId.RENDER_RESPONSE;
 	}
 
 }

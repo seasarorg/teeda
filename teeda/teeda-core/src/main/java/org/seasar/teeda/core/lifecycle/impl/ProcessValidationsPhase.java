@@ -1,4 +1,4 @@
-package org.seasar.teeda.core.lifecycle;
+package org.seasar.teeda.core.lifecycle.impl;
 
 import javax.faces.context.FacesContext;
 
