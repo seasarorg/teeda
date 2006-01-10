@@ -124,6 +124,7 @@ public class CommonsExpressionProcessorImpl implements ExpressionProcessor{
         }
         ComplexValue complexValue = (ComplexValue)expression;
         Object base = evaluate(context, complexValue.getPrefix());
+        VariableResolver resolver = new ELVariableResolver(context);
         if(base == null){
             throw new PropertyNotFoundException("Base is null: " + complexValue.getPrefix().getExpressionString());
         }
@@ -132,7 +133,11 @@ public class CommonsExpressionProcessorImpl implements ExpressionProcessor{
         int max = suffixes.size() - 1;
         for (int i = 0; i < max; i++){
             ValueSuffix suffix = (ValueSuffix)suffixes.get(i);
-            base = evaluate(context, suffix);
+            try{
+                base = suffix.evaluate(base, resolver, mapper_, CommonsElLogger.getLogger());
+            }catch(ELException e){
+                throw new EvaluationException(e);
+            }
             if(base == null){
                 throw new PropertyNotFoundException("Base is null: " + suffix.getExpressionString());
             }
