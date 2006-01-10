@@ -62,11 +62,19 @@ public class LifecycleImpl extends Lifecycle {
 
     private PhaseListener[] phaseListeners = new PhaseListener[0];
 
+    private Phase restoreViewPhase_;
+    
+    private Phase applyRequestValuesPhase_;
+    
     public LifecycleImpl() {
     }
 
-    public void setRestoreViewPhase(Phase phase){
-        
+    public void setRestoreViewPhase(Phase restoreViewPhase){
+        restoreViewPhase_ = restoreViewPhase;
+    }
+    
+    public void setApplyRequestValuesPhase(Phase applyRequestValuesPhase){
+        applyRequestValuesPhase_ = applyRequestValuesPhase;
     }
     
     public void execute(FacesContext context) throws FacesException {

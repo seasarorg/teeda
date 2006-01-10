@@ -40,7 +40,7 @@ public abstract class AbstractPhase implements Phase{
         Lifecycle lifecycle = getLifecycle(context);
         PhaseListener[] phaseListeners = lifecycle.getPhaseListeners();
         if(phaseListeners != null){
-            for(int i = 0;i < phaseListeners.length;i++){
+            for(int i = phaseListeners.length;i >= 0 ;i--){
                 PhaseListener phaseListener = phaseListeners[i];
                 PhaseId phaseId = getCurrentPhaseId();
                 if(isTargetListener(phaseListener, phaseId)){

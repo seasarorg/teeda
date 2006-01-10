@@ -40,6 +40,7 @@ public interface TODO {
      *  - use Find bugs?
      *  - use Clover or cobertura?
      *  - Add copyright to all sources.
+     *  - AbstractPhase.initializeChildren should be modified to use EditableValueHolder
      * 
      */
 }
