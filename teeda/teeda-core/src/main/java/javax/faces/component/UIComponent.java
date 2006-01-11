@@ -14,82 +14,81 @@ import javax.faces.render.Renderer;
 
 public abstract class UIComponent implements StateHolder {
 
-	public UIComponent() {
-	}
+    public UIComponent() {
+    }
 
-	public abstract Map getAttributes();
+    public abstract Map getAttributes();
 
-	public abstract ValueBinding getValueBinding(String name);
-	
-	public abstract void setValueBinding(String s, ValueBinding valuebinding);
-	
-	public abstract String getClientId(FacesContext facescontext);
+    public abstract ValueBinding getValueBinding(String name);
 
-	public abstract String getFamily();
+    public abstract void setValueBinding(String s, ValueBinding valuebinding);
 
-	public abstract String getId();
+    public abstract String getClientId(FacesContext context);
 
-	public abstract void setId(String s);
+    public abstract String getFamily();
 
-	public abstract UIComponent getParent();
+    public abstract String getId();
 
-	public abstract void setParent(UIComponent uicomponent);
+    public abstract void setId(String id);
 
-	public abstract boolean isRendered();
+    public abstract UIComponent getParent();
 
-	public abstract void setRendered(boolean flag);
+    public abstract void setParent(UIComponent uicomponent);
 
-	public abstract String getRendererType();
+    public abstract boolean isRendered();
 
-	public abstract void setRendererType(String type);
+    public abstract void setRendered(boolean flag);
 
-	public abstract boolean getRendersChildren();
+    public abstract String getRendererType();
 
-	public abstract List getChildren();
+    public abstract void setRendererType(String type);
 
-	public abstract int getChildCount();
+    public abstract boolean getRendersChildren();
 
-	public abstract UIComponent findComponent(String expr);
+    public abstract List getChildren();
 
-	public abstract Map getFacets();
+    public abstract int getChildCount();
 
-	public abstract UIComponent getFacet(String s);
+    public abstract UIComponent findComponent(String expr);
 
-	public abstract Iterator getFacetsAndChildren();
+    public abstract Map getFacets();
 
-	public abstract void broadcast(FacesEvent event)
-			throws AbortProcessingException;
+    public abstract UIComponent getFacet(String name);
 
-	public abstract void decode(FacesContext context);
+    public abstract Iterator getFacetsAndChildren();
 
-	public abstract void encodeBegin(FacesContext context)
-			throws IOException;
+    public abstract void broadcast(FacesEvent event)
+        throws AbortProcessingException;
 
-	public abstract void encodeChildren(FacesContext context)
-			throws IOException;
+    public abstract void decode(FacesContext context);
 
-	public abstract void encodeEnd(FacesContext context)
-			throws IOException;
+    public abstract void encodeBegin(FacesContext context) throws IOException;
 
-	protected abstract void addFacesListener(FacesListener listener);
+    public abstract void encodeChildren(FacesContext context)
+        throws IOException;
 
-	protected abstract FacesListener[] getFacesListeners(Class clazz);
+    public abstract void encodeEnd(FacesContext context) throws IOException;
 
-	protected abstract void removeFacesListener(FacesListener listener);
+    protected abstract void addFacesListener(FacesListener listener);
 
-	public abstract void queueEvent(FacesEvent event);
+    protected abstract FacesListener[] getFacesListeners(Class clazz);
 
-	public abstract void processRestoreState(FacesContext context, Object state);
+    protected abstract void removeFacesListener(FacesListener listener);
 
-	public abstract void processDecodes(FacesContext context);
+    public abstract void queueEvent(FacesEvent event);
 
-	public abstract void processValidators(FacesContext context);
+    public abstract void processRestoreState(FacesContext context, Object state);
 
-	public abstract void processUpdates(FacesContext context);
+    public abstract void processDecodes(FacesContext context);
 
-	public abstract Object processSaveState(FacesContext context);
+    public abstract void processValidators(FacesContext context);
 
-	protected abstract FacesContext getFacesContext();
+    public abstract void processUpdates(FacesContext context);
 
-	protected abstract Renderer getRenderer(FacesContext context);
+    public abstract Object processSaveState(FacesContext context);
+
+    protected abstract FacesContext getFacesContext();
+
+    protected abstract Renderer getRenderer(FacesContext context);
+
 }

@@ -15,41 +15,25 @@
  */
 package org.seasar.teeda.core.mock;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
 import javax.faces.application.Application;
 import javax.faces.application.FacesMessage;
 import javax.faces.application.FacesMessage.Severity;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseStream;
 import javax.faces.context.ResponseWriter;
 import javax.faces.render.RenderKit;
 
-public class MockFacesContextImpl extends MockFacesContext {
-
-    private UIViewRoot root_ = null;
-    private ExternalContext context_;
-    private Application application_;
-    private Map messages_ = new HashMap();
-    private ResponseWriter responseWriter_;
-
-    public MockFacesContextImpl() {
-        setCurrentInstance(this);
-    }
-
-    public MockFacesContextImpl(ExternalContext context, Application application) {
-        context_ = context;
-        application_ = application;
-        setCurrentInstance(this);
-    }
+/**
+ * @author manhole
+ */
+public class NullFacesContext extends FacesContext {
 
     public Application getApplication() {
-        return application_;
+        return null;
     }
 
     public Iterator getClientIdsWithMessages() {
@@ -57,7 +41,7 @@ public class MockFacesContextImpl extends MockFacesContext {
     }
 
     public ExternalContext getExternalContext() {
-        return context_;
+        return null;
     }
 
     public Severity getMaximumSeverity() {
@@ -65,14 +49,11 @@ public class MockFacesContextImpl extends MockFacesContext {
     }
 
     public Iterator getMessages() {
-        return messages_.values().iterator();
+        return null;
     }
 
     public Iterator getMessages(String clientId) {
-        Object o = messages_.get(clientId);
-        List list = new ArrayList();
-        list.add(o);
-        return list.iterator();
+        return null;
     }
 
     public RenderKit getRenderKit() {
@@ -95,23 +76,20 @@ public class MockFacesContextImpl extends MockFacesContext {
     }
 
     public ResponseWriter getResponseWriter() {
-        return responseWriter_;
+        return null;
     }
 
     public void setResponseWriter(ResponseWriter responseWriter) {
-        responseWriter_ = responseWriter;
     }
 
     public UIViewRoot getViewRoot() {
-        return root_;
+        return null;
     }
 
     public void setViewRoot(UIViewRoot root) {
-        root_ = root;
     }
 
     public void addMessage(String clientId, FacesMessage message) {
-        messages_.put(clientId, message);
     }
 
     public void release() {
@@ -121,14 +99,6 @@ public class MockFacesContextImpl extends MockFacesContext {
     }
 
     public void responseComplete() {
-    }
-
-    public void setExternalContext(ExternalContext context) {
-        context_ = context;
-    }
-
-    public void setApplication(Application application) {
-        application_ = application;
     }
 
 }

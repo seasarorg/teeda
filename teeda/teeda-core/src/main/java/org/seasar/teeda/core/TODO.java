@@ -25,6 +25,7 @@ public interface TODO {
      *    -> separate phases to jsf spec
      *  - Make JSF init-code complete. 
      *  - StateManager 
+     *  - Renderers
      *  - Test, test, test
      *    -> JSF Specification part(UIComponent things!)
      *    -> Teeda original part

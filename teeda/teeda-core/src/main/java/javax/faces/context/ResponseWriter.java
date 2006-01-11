@@ -7,35 +7,38 @@ import javax.faces.component.UIComponent;
 
 public abstract class ResponseWriter extends Writer {
 
-	public ResponseWriter() {
-	}
+    public ResponseWriter() {
+    }
 
-	public abstract String getContentType();
+    public abstract String getContentType();
 
-	public abstract String getCharacterEncoding();
+    public abstract String getCharacterEncoding();
 
-	public abstract void flush() throws IOException;
+    public abstract void flush() throws IOException;
 
-	public abstract void startDocument() throws IOException;
+    public abstract void startDocument() throws IOException;
 
-	public abstract void endDocument() throws IOException;
+    public abstract void endDocument() throws IOException;
 
-	public abstract void startElement(String s, UIComponent uicomponent)
-			throws IOException;
+    public abstract void startElement(String name,
+        UIComponent componentForElement) throws IOException;
 
-	public abstract void endElement(String s) throws IOException;
+    public abstract void endElement(String name) throws IOException;
 
-	public abstract void writeAttribute(String s, Object obj, String s1)
-			throws IOException;
+    public abstract void writeAttribute(String name, Object value,
+        String componentPropertyName) throws IOException;
 
-	public abstract void writeURIAttribute(String s, Object obj, String s1)
-			throws IOException;
+    public abstract void writeURIAttribute(String name, Object value,
+        String componentPropertyName) throws IOException;
 
-	public abstract void writeComment(Object obj) throws IOException;
+    public abstract void writeComment(Object comment) throws IOException;
 
-	public abstract void writeText(Object obj, String s) throws IOException;
+    public abstract void writeText(Object text, String property)
+        throws IOException;
 
-	public abstract void writeText(char ac[], int i, int j) throws IOException;
+    public abstract void writeText(char text[], int off, int len)
+        throws IOException;
 
-	public abstract ResponseWriter cloneWithWriter(Writer writer);
+    public abstract ResponseWriter cloneWithWriter(Writer writer);
+
 }
