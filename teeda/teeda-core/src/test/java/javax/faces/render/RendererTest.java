@@ -131,6 +131,7 @@ public class RendererTest extends TestCase {
         try {
             renderer.getConvertedValue(new NullFacesContext(), null,
                 new Object());
+            fail();
         } catch (NullPointerException npe) {
         }
     }
