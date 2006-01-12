@@ -329,7 +329,7 @@ public abstract class UIComponentBase extends UIComponent {
 	protected FacesListener[] getFacesListeners(Class clazz) {
 		ComponentUtils_.assertNotNull(clazz, "class");
 		if(!FacesListener.class.isAssignableFrom(clazz)){
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException(clazz.getName() + " is not FacesListener");
 		}
 		
 		if(listeners_ == null){
@@ -361,7 +361,7 @@ public abstract class UIComponentBase extends UIComponent {
 		ComponentUtils_.assertNotNull(event, "event");		
 		UIComponent parent = getParent();
 		if(parent == null){
-			throw new IllegalStateException();
+			throw new IllegalStateException("parent not found");
 		}
 		parent.queueEvent(event);
 	}

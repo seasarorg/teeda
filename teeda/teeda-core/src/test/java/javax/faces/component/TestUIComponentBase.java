@@ -5,9 +5,8 @@ import javax.faces.event.FacesListener;
 
 import org.seasar.teeda.core.mock.MockUIComponent;
 import org.seasar.teeda.core.mock.MockValueBinding;
-import org.seasar.teeda.core.unit.TeedaTestCase;
 
-public class TestUIComponentBase extends TeedaTestCase {
+public class TestUIComponentBase extends AbstractUIComponentTest {
 
     public static void main(String[] args) {
         junit.textui.TestRunner.run(TestUIComponentBase.class);
@@ -32,29 +31,29 @@ public class TestUIComponentBase extends TeedaTestCase {
      * 
      * @param arg0
      */
-    public TestUIComponentBase(String arg0) {
-        super(arg0);
+    public TestUIComponentBase(String name) {
+        super(name);
     }
 
     public void testHandleValueBinding() {
         MockUIComponentBase base = new MockUIComponentBase();
         MockValueBinding vb = new MockValueBinding();
-        try{
+        try {
             base.setValueBinding(null, vb);
             fail();
-        }catch(NullPointerException e){
+        } catch (NullPointerException e) {
             success();
         }
-        try{
+        try {
             base.setValueBinding("id", vb);
             fail();
-        }catch(IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             success();
         }
-        try{
+        try {
             base.setValueBinding("parent", vb);
             fail();
-        }catch(IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             success();
         }
 
@@ -65,11 +64,11 @@ public class TestUIComponentBase extends TeedaTestCase {
     public void testGetClientId() {
         MockUIComponentBase component = new MockUIComponentBase();
         component.setId("a");
-        
+
         MockUIComponent parent = new MockUIComponentWithNamingContainer();
         parent.setClientId("b");
         component.setParent(parent);
-        
+
         String clientId = component.getClientId(getFacesContext());
         assertNotNull(clientId);
         assertEquals("b:a", clientId);
@@ -158,10 +157,10 @@ public class TestUIComponentBase extends TeedaTestCase {
     public void testHandleFacesListeners() {
 
         MockUIComponentBase base = new MockUIComponentBase();
-        try{
+        try {
             base.addFacesListener(null);
             fail();
-        }catch (NullPointerException e){
+        } catch (NullPointerException e) {
             success();
         }
 
@@ -201,11 +200,11 @@ public class TestUIComponentBase extends TeedaTestCase {
         base.addFacesListener(listener2);
 
         FacesListener[] listeners1 = base
-                .getFacesListeners(MockFacesListener1.class);
+            .getFacesListeners(MockFacesListener1.class);
         assertEquals(1, listeners1.length);
 
         FacesListener[] listeners2 = base
-                .getFacesListeners(MockFacesListener2.class);
+            .getFacesListeners(MockFacesListener2.class);
         assertEquals(1, listeners2.length);
 
     }
@@ -215,15 +214,15 @@ public class TestUIComponentBase extends TeedaTestCase {
         MockUIComponentBase target = new MockUIComponentBase();
         target.setParent(parent);
 
-        try{
+        try {
             target.queueEvent(null);
             fail();
-        }catch (NullPointerException e){
+        } catch (NullPointerException e) {
             success();
         }
 
         target.setParent(null);
-        try{
+        try {
             target.queueEvent(new FacesEvent(target) {
 
                 public boolean isAppropriateListener(FacesListener listener) {
@@ -235,7 +234,7 @@ public class TestUIComponentBase extends TeedaTestCase {
 
             });
             fail();
-        }catch (IllegalStateException e){
+        } catch (IllegalStateException e) {
             success();
         }
 
@@ -334,8 +333,13 @@ public class TestUIComponentBase extends TeedaTestCase {
         }
     }
 
-    private static class MockUIComponentWithNamingContainer 
-        extends MockUIComponent implements NamingContainer{
+    private static class MockUIComponentWithNamingContainer extends
+        MockUIComponent implements NamingContainer {
 
     }
+
+    protected UIComponent createUIComponent() {
+        return new MockUIComponentBase();
+    }
+
 }
