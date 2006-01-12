@@ -21,7 +21,7 @@ public abstract class UIComponent implements StateHolder {
 
     public abstract ValueBinding getValueBinding(String name);
 
-    public abstract void setValueBinding(String s, ValueBinding valuebinding);
+    public abstract void setValueBinding(String name, ValueBinding binding);
 
     public abstract String getClientId(FacesContext context);
 
@@ -33,15 +33,15 @@ public abstract class UIComponent implements StateHolder {
 
     public abstract UIComponent getParent();
 
-    public abstract void setParent(UIComponent uicomponent);
+    public abstract void setParent(UIComponent parent);
 
     public abstract boolean isRendered();
 
-    public abstract void setRendered(boolean flag);
+    public abstract void setRendered(boolean rendered);
 
     public abstract String getRendererType();
 
-    public abstract void setRendererType(String type);
+    public abstract void setRendererType(String rendererType);
 
     public abstract boolean getRendersChildren();
 
