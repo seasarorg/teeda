@@ -22,7 +22,7 @@ public class AssemblerFactory {
     }
     
     public static void assembleManagedBeans(FacesConfig facesConfig){
-        getProvider().assembleManagedBeans(facesConfig);
+        getProvider().assembleManagedBeans(facesConfig).assemble();
     }
     
     public static void assmbleNavigationRules(FacesConfig facesConfig){
@@ -99,6 +99,8 @@ public class AssemblerFactory {
         }
         
         public ManagedBeanAssembler assembleManagedBeans(FacesConfig facesConfig) {
+            Map managedBeans = facesConfig.getManagedBeanElements();
+            return new SimpleManagedBeanAssembler(managedBeans);
         }
 
         public NavigationRulesAssembler assembleNavigationRules(FacesConfig facesConfig) {

@@ -5,9 +5,8 @@ import java.util.List;
 import javax.faces.context.ExternalContext;
 import javax.faces.event.PhaseListener;
 
-import org.seasar.framework.container.S2Container;
-import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
 import org.seasar.teeda.core.util.ClassUtil;
+import org.seasar.teeda.core.util.DIContainerUtil;
 
 /**
  * @author Shinpei Ohtani(aka shot)
@@ -15,19 +14,21 @@ import org.seasar.teeda.core.util.ClassUtil;
 public class SimpleLifecycleAssembler extends LifecycleAssembler {
 
     private LifecycleChildAssembler child_;
-    
+
     public SimpleLifecycleAssembler(List lifecycles) {
         super(lifecycles);
     }
 
     protected void setupChildAssembler() {
-        child_ = new LifecycleChildAssembler(getLifecycles(), getExternalContext()){
+        child_ = new LifecycleChildAssembler(getLifecycles(),
+                getExternalContext()) {
 
             protected void doAssemble(String targetName) {
-                PhaseListener phaseListener = (PhaseListener)ClassUtil.newInstance(targetName);
+                PhaseListener phaseListener = (PhaseListener)ClassUtil
+                        .newInstance(targetName);
                 getLifecycle().addPhaseListener(phaseListener);
             }
-            
+
         };
     }
 
@@ -35,9 +36,9 @@ public class SimpleLifecycleAssembler extends LifecycleAssembler {
         child_.assemble();
     }
 
-    public ExternalContext getExternalContext(){
-        S2Container container = SingletonS2ContainerFactory.getContainer();
-        ExternalContext externalContext = (ExternalContext)container.getComponent(ExternalContext.class);
+    public ExternalContext getExternalContext() {
+        ExternalContext externalContext = (ExternalContext)DIContainerUtil
+                .getComponent(ExternalContext.class);
         return externalContext;
     }
 }

@@ -1,15 +1,21 @@
 package org.seasar.teeda.core.config.assembler;
 
-public class ManagedBeanAssembler extends AbstractJsfAssembler {
+import java.util.Collections;
+import java.util.Map;
 
-	protected void setupChildAssembler() {
-		// TODO 自動生成されたメソッド・スタブ
-		throw new UnsupportedOperationException();
-	}
+import org.seasar.teeda.core.config.element.ManagedBeanElement;
 
-	public void assemble() {
-		// TODO 自動生成されたメソッド・スタブ
-		throw new UnsupportedOperationException();
-	}
+public abstract class ManagedBeanAssembler extends AbstractJsfAssembler {
 
+    private Map managedBeans_ = Collections.EMPTY_MAP;
+    
+    public ManagedBeanAssembler(Map managedBeans){
+        isAllSuitableJsfElement(managedBeans.values(), ManagedBeanElement.class);
+        managedBeans_ = managedBeans;
+        setupChildAssembler();
+    }
+    
+    protected final Map getManagedBeans(){
+        return managedBeans_;
+    }
 }

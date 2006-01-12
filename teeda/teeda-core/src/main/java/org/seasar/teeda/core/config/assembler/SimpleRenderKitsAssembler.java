@@ -9,7 +9,7 @@ import org.seasar.teeda.core.config.element.RenderKitElement;
 import org.seasar.teeda.core.util.FactoryFinderUtil;
 import org.seasar.teeda.core.util.IteratorUtil;
 
-
+//TODO make it done.
 public class SimpleRenderKitsAssembler extends RenderKitsAssembler {
 
     public SimpleRenderKitsAssembler(Map renderKits) {
