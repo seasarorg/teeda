@@ -1,7 +1,6 @@
 package javax.faces.component;
 
 import java.io.Serializable;
-import java.util.Map;
 
 import javax.faces.event.FacesEvent;
 import javax.faces.event.FacesListener;

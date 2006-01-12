@@ -17,8 +17,6 @@ package javax.faces.component;
 
 import java.util.Map;
 
-import javax.faces.component.html.HtmlOutputText;
-
 import org.seasar.teeda.core.mock.MockValueBinding;
 import org.seasar.teeda.core.mock.NullFacesEvent;
 import org.seasar.teeda.core.mock.NullValueBinding;
