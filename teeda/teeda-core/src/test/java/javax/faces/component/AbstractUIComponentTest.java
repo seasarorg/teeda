@@ -283,6 +283,10 @@ public abstract class AbstractUIComponentTest extends TeedaTestCase {
         assertNotNull(message);
         assertTrue(message.trim().length() > 0);
     }
+    
+    // TODO
+    public void testGetAttributes() throws Exception {
+    }
 
     protected abstract UIComponent createUIComponent();
 

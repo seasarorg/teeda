@@ -1,39 +1,17 @@
 package javax.faces.component;
 
+import java.io.Serializable;
+
 import javax.faces.event.FacesEvent;
 import javax.faces.event.FacesListener;
+import javax.faces.render.RenderKitFactory;
 
+import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.mock.MockUIComponent;
 import org.seasar.teeda.core.mock.MockValueBinding;
+import org.seasar.teeda.core.mock.NullFacesContext;
 
 public class TestUIComponentBase extends AbstractUIComponentTest {
-
-    public static void main(String[] args) {
-        junit.textui.TestRunner.run(TestUIComponentBase.class);
-    }
-
-    /*
-     * @see TestCase#setUp()
-     */
-    protected void setUp() throws Exception {
-        super.setUp();
-    }
-
-    /*
-     * @see TestCase#tearDown()
-     */
-    protected void tearDown() throws Exception {
-        super.tearDown();
-    }
-
-    /**
-     * Constructor for TestUIComponentBase.
-     * 
-     * @param arg0
-     */
-    public TestUIComponentBase(String name) {
-        super(name);
-    }
 
     public void testHandleValueBinding() {
         MockUIComponentBase base = new MockUIComponentBase();
@@ -289,16 +267,52 @@ public class TestUIComponentBase extends AbstractUIComponentTest {
         // TODO setTransient() を実装します。
     }
 
-    public void testSaveState() {
-        // TODO saveState() を実装します。
+    public void testSaveAndRestoreState() throws Exception {
+        UIComponentBase component1 = (UIComponentBase) createUIComponent();
+        component1.setId("abc");
+        component1.setRendered(true);
+        component1.setRendererType("some renderer");
+
+        MockFacesContext context = getFacesContext();
+        UIViewRoot viewRoot = new UIViewRoot();
+        viewRoot.setRenderKitId(RenderKitFactory.HTML_BASIC_RENDER_KIT);
+        context.setViewRoot(viewRoot);
+        Object state = component1.saveState(context);
+        assertTrue(state instanceof Serializable);
+
+        UIComponentBase component2 = (UIComponentBase) createUIComponent();
+        component2.restoreState(context, state);
+
+        assertEquals(component1.getAttributes().size(), component2
+            .getAttributes().size());
+        assertEquals(component1.getChildCount(), component2.getChildCount());
+        assertEquals(component1.getClientId(context), component2
+            .getClientId(context));
+        assertEquals(component1.getFacets().size(), component2.getFacets().size());
+        //assertEquals(component1.getFacetsAndChildren(), component2
+        //    .getFacetsAndChildren());
+        assertEquals(component1.getId(), component2.getId());
+        assertEquals(component1.getParent(), component2.getParent());
+        assertEquals(component1.getRendererType(), component2.getRendererType());
+        assertEquals(component1.getRendersChildren(), component2
+            .getRendersChildren());
     }
 
-    public void testRestoreState() {
-        // TODO restoreState() を実装します。
+    public final void testSaveAndRestoreAttachedState_AttacedObjectIsNull() {
+        NullFacesContext context = new NullFacesContext();
+        Object stateObj = UIComponentBase.saveAttachedState(context, null);
+        UIComponentBase.restoreAttachedState(context, stateObj);
     }
 
-    public void testSaveAttachedState() {
-        // TODO saveAttachedState() を実装します。
+    public final void testSaveAttachedState_ContextIsNull() throws Exception {
+        try {
+            UIComponentBase.saveAttachedState(null, new Object());
+            fail();
+        } catch (NullPointerException npe) {
+            String message = npe.getMessage();
+            assertNotNull(message);
+            assertTrue(message.trim().length() > 0);
+        }
     }
 
     public void testRestoreAttachedState() {
