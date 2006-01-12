@@ -17,6 +17,7 @@ package org.seasar.teeda.core.context.html;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.net.URLEncoder;
 
 import javax.faces.context.ResponseWriter;
 
@@ -24,6 +25,7 @@ import junit.framework.TestCase;
 
 import org.seasar.framework.util.SPrintWriter;
 import org.seasar.teeda.core.mock.NullWriter;
+import org.seasar.teeda.core.unit.AssertUtil;
 
 /**
  * @author manhole
@@ -115,6 +117,18 @@ public class HtmlResponseWriterTest extends TestCase {
         assertEquals("<a", value);
     }
 
+    public final void testStartElement_NameIsNull() throws Exception {
+        HtmlResponseWriter responseWriter = new HtmlResponseWriter();
+        try {
+            responseWriter.startElement(null, null);
+            fail();
+        } catch (NullPointerException npe) {
+            String message = npe.getMessage();
+            assertNotNull(message);
+            assertTrue(message.trim().length() > 0);
+        }
+    }
+
     public void testEndElement() throws Exception {
         HtmlResponseWriter responseWriter = new HtmlResponseWriter();
         SPrintWriter writer = new SPrintWriter();
@@ -125,6 +139,18 @@ public class HtmlResponseWriterTest extends TestCase {
 
         String value = writer.toString();
         assertEquals("<span/>", value);
+    }
+
+    public final void testEndElement_NameIsNull() throws Exception {
+        HtmlResponseWriter responseWriter = new HtmlResponseWriter();
+        try {
+            responseWriter.endElement(null);
+            fail();
+        } catch (NullPointerException npe) {
+            String message = npe.getMessage();
+            assertNotNull(message);
+            assertTrue(message.trim().length() > 0);
+        }
     }
 
     public void testWrite() throws Exception {
@@ -232,6 +258,18 @@ public class HtmlResponseWriterTest extends TestCase {
         }
     }
 
+    public void testStartElementAndEndDocument() throws Exception {
+        HtmlResponseWriter responseWriter = new HtmlResponseWriter();
+        SPrintWriter writer = new SPrintWriter();
+        responseWriter.setWriter(writer);
+
+        responseWriter.startElement("span", null);
+        responseWriter.endDocument();
+
+        String value = writer.toString();
+        assertEquals("<span>", value);
+    }
+
     public void testStartElementAndStartElement() throws Exception {
         HtmlResponseWriter responseWriter = new HtmlResponseWriter();
         SPrintWriter writer = new SPrintWriter();
@@ -306,6 +344,73 @@ public class HtmlResponseWriterTest extends TestCase {
         responseWriter.setCharacterEncoding("some character encoding");
         assertEquals("some character encoding", responseWriter
             .getCharacterEncoding());
+    }
+
+    public void testWriteAttribute() throws Exception {
+        HtmlResponseWriter responseWriter = new HtmlResponseWriter();
+        SPrintWriter writer = new SPrintWriter();
+        responseWriter.setWriter(writer);
+
+        responseWriter.startElement("span", null);
+        responseWriter.writeAttribute("a", "<b>", null);
+
+        String value = writer.toString();
+        assertEquals("<span a=\"&lt;b&gt;\"", value);
+    }
+
+    public void testWriteAttribute_NameIsNull() throws Exception {
+        HtmlResponseWriter responseWriter = new HtmlResponseWriter();
+        try {
+            responseWriter.writeAttribute(null, "attrValue", null);
+            fail();
+        } catch (NullPointerException npe) {
+            AssertUtil.assertExceptionMessageExist(npe);
+        }
+    }
+
+    public void testWriteAttribute_NoOpenElement() throws Exception {
+        HtmlResponseWriter responseWriter = new HtmlResponseWriter();
+        try {
+            responseWriter.writeAttribute("attrName", "attrValue", null);
+            fail();
+        } catch (IllegalStateException ise) {
+            AssertUtil.assertExceptionMessageExist(ise);
+        }
+    }
+
+    public void testWriteURIAttribute() throws Exception {
+        HtmlResponseWriter responseWriter = new HtmlResponseWriter();
+        SPrintWriter writer = new SPrintWriter();
+        responseWriter.setWriter(writer);
+        responseWriter.setCharacterEncoding("UTF-8");
+
+        responseWriter.startElement("span", null);
+        responseWriter.writeURIAttribute("a", "‚ ", null);
+
+        String value = writer.toString();
+        assertEquals("<span a=\"" + "%E3%81%82" + "\"", value);
+        
+        System.out.println(URLEncoder.encode("/a/b.html", "UTF-8"));
+    }
+
+    public void testWriteURIAttribute_NameIsNull() throws Exception {
+        HtmlResponseWriter responseWriter = new HtmlResponseWriter();
+        try {
+            responseWriter.writeURIAttribute(null, "attrValue", null);
+            fail();
+        } catch (NullPointerException npe) {
+            AssertUtil.assertExceptionMessageExist(npe);
+        }
+    }
+
+    public void testWriteURIAttribute_NoOpenElement() throws Exception {
+        HtmlResponseWriter responseWriter = new HtmlResponseWriter();
+        try {
+            responseWriter.writeURIAttribute("attrName", "attrValue", null);
+            fail();
+        } catch (IllegalStateException ise) {
+            AssertUtil.assertExceptionMessageExist(ise);
+        }
     }
 
     private void assertContains(String expected, String value) {

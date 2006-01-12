@@ -20,6 +20,7 @@ import junit.framework.TestCase;
 import org.seasar.teeda.core.mock.NullFacesContext;
 import org.seasar.teeda.core.mock.NullRenderer;
 import org.seasar.teeda.core.mock.NullUIComponent;
+import org.seasar.teeda.core.unit.AssertUtil;
 
 /**
  * @author manhole
@@ -149,8 +150,7 @@ public class RendererTest extends TestCase {
     }
 
     private void assertExceptionMessage(Exception exception) {
-        String message = exception.getMessage();
-        assertNotNull(message);
-        assertTrue(message.trim().length() > 0);
+        AssertUtil.assertExceptionMessageExist(exception);
     }
+
 }

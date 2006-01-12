@@ -1,6 +1,7 @@
 package javax.faces.component;
 
 import java.io.Serializable;
+import java.util.Map;
 
 import javax.faces.event.FacesEvent;
 import javax.faces.event.FacesListener;
@@ -259,14 +260,6 @@ public class TestUIComponentBase extends AbstractUIComponentTest {
         // TODO getRenderer() Çé¿ëïÇµÇ‹Ç∑ÅB
     }
 
-    public void testIsTransient() {
-        // TODO isTransient() Çé¿ëïÇµÇ‹Ç∑ÅB
-    }
-
-    public void testSetTransient() {
-        // TODO setTransient() Çé¿ëïÇµÇ‹Ç∑ÅB
-    }
-
     public void testSaveAndRestoreState() throws Exception {
         UIComponentBase component1 = (UIComponentBase) createUIComponent();
         component1.setId("abc");
@@ -288,7 +281,8 @@ public class TestUIComponentBase extends AbstractUIComponentTest {
         assertEquals(component1.getChildCount(), component2.getChildCount());
         assertEquals(component1.getClientId(context), component2
             .getClientId(context));
-        assertEquals(component1.getFacets().size(), component2.getFacets().size());
+        assertEquals(component1.getFacets().size(), component2.getFacets()
+            .size());
         //assertEquals(component1.getFacetsAndChildren(), component2
         //    .getFacetsAndChildren());
         assertEquals(component1.getId(), component2.getId());

@@ -17,6 +17,7 @@ package org.seasar.teeda.core.context.html;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.net.URLEncoder;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.ResponseWriter;
@@ -33,6 +34,9 @@ public class HtmlResponseWriter extends ResponseWriter {
 
     public void startElement(String name, UIComponent componentForElement)
         throws IOException {
+        if (name == null) {
+            throw new NullPointerException("name");
+        }
         Writer writer = getWriter();
         closeOpeningStartTag(writer);
         writer.write("<");
@@ -49,6 +53,9 @@ public class HtmlResponseWriter extends ResponseWriter {
     }
 
     public void endElement(String name) throws IOException {
+        if (name == null) {
+            throw new NullPointerException("name");
+        }
         Writer writer = getWriter();
         if (startTagOpening_) {
             writer.write("/>");
@@ -58,14 +65,45 @@ public class HtmlResponseWriter extends ResponseWriter {
         }
     }
 
-    public void writeAttribute(String name, Object value,
-        String componentPropertyName) throws IOException {
-        // TODO
+    public void writeAttribute(String name, Object value, String property)
+        throws IOException {
+        if (name == null) {
+            throw new NullPointerException("name");
+        }
+        if (!startTagOpening_) {
+            throw new IllegalStateException(
+                "there is no currently open element");
+        }
+        Writer writer = getWriter();
+        writer.write(" ");
+        writer.write(name);
+        writer.write("=\"");
+        writer.write(escapeHtml(value.toString()));
+        writer.write("\"");
     }
 
-    public void writeURIAttribute(String name, Object value,
-        String componentPropertyName) throws IOException {
-        // TODO
+    public void writeURIAttribute(String name, Object value, String property)
+        throws IOException {
+        if (name == null) {
+            throw new NullPointerException("name");
+        }
+        if (!startTagOpening_) {
+            throw new IllegalStateException(
+                "there is no currently open element");
+        }
+        Writer writer = getWriter();
+        String encoding = getCharacterEncoding();
+        if (encoding == null) {
+            encoding = "UTF-8";
+        }
+        String strValue = value.toString();
+        strValue = URLEncoder.encode(strValue, encoding);
+        
+        writer.write(" ");
+        writer.write(name);
+        writer.write("=\"");
+        writer.write(strValue);
+        writer.write("\"");
     }
 
     public void writeComment(Object comment) throws IOException {
@@ -151,6 +189,7 @@ public class HtmlResponseWriter extends ResponseWriter {
     }
 
     public void endDocument() throws IOException {
+        closeOpeningStartTag(getWriter());
     }
 
     public String getContentType() {

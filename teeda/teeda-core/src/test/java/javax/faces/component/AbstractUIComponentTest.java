@@ -15,6 +15,11 @@
  */
 package javax.faces.component;
 
+import java.util.Map;
+
+import javax.faces.component.html.HtmlOutputText;
+
+import org.seasar.teeda.core.mock.MockValueBinding;
 import org.seasar.teeda.core.mock.NullFacesEvent;
 import org.seasar.teeda.core.mock.NullValueBinding;
 import org.seasar.teeda.core.unit.TeedaTestCase;
@@ -278,14 +283,43 @@ public abstract class AbstractUIComponentTest extends TeedaTestCase {
         }
     }
 
+    public void testGetAttributes() throws Exception {
+        UIComponent component = createUIComponent();
+        Map attributes = component.getAttributes();
+        attributes.put("id", "hoge");
+        assertEquals("hoge", component.getId());
+
+        component.setId("bar");
+        assertEquals("bar", attributes.get("id"));
+    }
+
+    public void testIsTransient() {
+        // TODO isTransient() ‚ðŽÀ‘•‚µ‚Ü‚·B
+    }
+
+    public void testSetTransient() {
+        // TODO setTransient() ‚ðŽÀ‘•‚µ‚Ü‚·B
+    }
+
+    public void testSetGetTransient() throws Exception {
+        UIComponent component = createUIComponent();
+        assertEquals(false, component.isTransient());
+        component.setTransient(true);
+        assertEquals(true, component.isTransient());
+    }
+
+    public void testSetGetTransient_ValueBinding() throws Exception {
+        UIComponent component = createUIComponent();
+        MockValueBinding vb = new MockValueBinding();
+        vb.setValue(getFacesContext(), Boolean.TRUE);
+        component.setValueBinding("transient", vb);
+        assertEquals(true, component.isTransient());
+    }
+
     private void assertExceptionMessage(Exception exception) {
         String message = exception.getMessage();
         assertNotNull(message);
         assertTrue(message.trim().length() > 0);
-    }
-    
-    // TODO
-    public void testGetAttributes() throws Exception {
     }
 
     protected abstract UIComponent createUIComponent();

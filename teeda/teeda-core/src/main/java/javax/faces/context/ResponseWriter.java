@@ -26,10 +26,10 @@ public abstract class ResponseWriter extends Writer {
     public abstract void endElement(String name) throws IOException;
 
     public abstract void writeAttribute(String name, Object value,
-        String componentPropertyName) throws IOException;
+        String property) throws IOException;
 
     public abstract void writeURIAttribute(String name, Object value,
-        String componentPropertyName) throws IOException;
+        String property) throws IOException;
 
     public abstract void writeComment(Object comment) throws IOException;
 
