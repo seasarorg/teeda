@@ -19,7 +19,7 @@ public class TestUIOutput extends TestUIComponentBase {
     }
 
     public void testSetConverter() {
-        UIOutput output = new UIOutput();
+        UIOutput output = createUIOutput();
         Converter converter = new Converter() {
 
             public Object getAsObject(FacesContext context,
@@ -42,7 +42,7 @@ public class TestUIOutput extends TestUIComponentBase {
     }
 
     public void testGetConverter() {
-        UIOutput output = new UIOutput();
+        UIOutput output = createUIOutput();
         Converter converter = new Converter() {
 
             public Object getAsObject(FacesContext context,
@@ -72,13 +72,13 @@ public class TestUIOutput extends TestUIComponentBase {
     }
 
     public void testSetValue() {
-        UIOutput output = new UIOutput();
+        UIOutput output = createUIOutput();
         output.setValue("aaa");
         assertEquals("aaa", output.getValue());
     }
 
     public void testGetValue() {
-        UIOutput output = new UIOutput();
+        UIOutput output = createUIOutput();
         MockValueBinding vb = new MockValueBinding();
         vb.setValue(getFacesContext(), "bbb");
         output.setValueBinding("value", vb);
@@ -88,17 +88,21 @@ public class TestUIOutput extends TestUIComponentBase {
     public void testSaveAndRestoreState() throws Exception {
         super.testSaveAndRestoreState();
 
-        UIOutput output1 = (UIOutput) createUIComponent();
+        UIOutput output1 = createUIOutput();
         output1.setConverter(new MockConverter());
         output1.setValue("foo value");
         MockFacesContext context = getFacesContext();
         Object state = output1.saveState(context);
 
-        UIOutput output2 = (UIOutput) createUIComponent();
+        UIOutput output2 = createUIOutput();
         output2.restoreState(context, state);
 
         assertEquals(true, output2.getConverter() instanceof MockConverter);
         assertEquals(output1.getValue(), output2.getValue());
+    }
+
+    private UIOutput createUIOutput() {
+        return (UIOutput) createUIComponent();
     }
 
     protected UIComponent createUIComponent() {
