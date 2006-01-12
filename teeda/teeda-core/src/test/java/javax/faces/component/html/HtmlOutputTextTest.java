@@ -75,7 +75,7 @@ public class HtmlOutputTextTest extends TestUIOutput {
 
     public void testSaveAndRestoreState() throws Exception {
         super.testSaveAndRestoreState();
-        HtmlOutputText htmlOutputText1 = (HtmlOutputText) createUIComponentt();
+        HtmlOutputText htmlOutputText1 = (HtmlOutputText) createUIComponent();
         htmlOutputText1.setEscape(false);
         htmlOutputText1.setTitle("foo title");
         htmlOutputText1.setStyle("foo style");
@@ -83,7 +83,7 @@ public class HtmlOutputTextTest extends TestUIOutput {
         MockFacesContext context = getFacesContext();
         Object state = htmlOutputText1.saveState(context);
 
-        HtmlOutputText htmlOutputText2 = (HtmlOutputText) createUIComponentt();
+        HtmlOutputText htmlOutputText2 = (HtmlOutputText) createUIComponent();
         htmlOutputText2.restoreState(context, state);
 
         assertEquals(htmlOutputText1.isEscape(), htmlOutputText2.isEscape());
@@ -93,7 +93,7 @@ public class HtmlOutputTextTest extends TestUIOutput {
             .getStyleClass());
     }
 
-    protected UIComponent createUIComponentt() {
+    protected UIComponent createUIComponent() {
         return new HtmlOutputText();
     }
 
