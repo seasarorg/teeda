@@ -83,7 +83,7 @@ public class FacesUtil_Test extends TestCase {
         assertEquals("org.seasar.teeda.core.mock.MockApplicationFactory", o
                 .getClass().getName());
         list = new ArrayList();
-        list.add("javax.faces.TestFacesUtil_");
+        list.add("javax.faces.FacesUtil_Test");
         try {
             o = FactoryFinderUtil_.createFactoryInstance(
                     FactoryFinder.APPLICATION_FACTORY, list, loader);
@@ -91,7 +91,6 @@ public class FacesUtil_Test extends TestCase {
         } catch (IllegalArgumentException e) {
             assertTrue(true);
         }
-
     }
 
     public void testGetCurrentInstanceByConstructor() {
