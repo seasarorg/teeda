@@ -13,32 +13,27 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.core.config.assembler;
+package org.seasar.teeda.core.config.assembler.impl;
 
 import javax.faces.application.Application;
 import javax.faces.application.ViewHandler;
 
-import org.seasar.teeda.core.util.ClassUtil;
+import org.seasar.teeda.core.config.assembler.ApplicationChildAssembler;
 
 /**
- * @author Shinpei Ohtani
+ * @author shot
  */
-public class ViewHandlerAssembler implements JsfAssembler {
-
-    private String handlerName_;
-    
-    private Application application_;
+public class ViewHandlerAssembler extends ApplicationChildAssembler {
     
     public ViewHandlerAssembler(String handlerName, Application application){
-        handlerName_ = handlerName;
-        application_ = application;
+        super(handlerName, application);
     }
     
     public void assemble() {
-        ViewHandler previous = application_.getViewHandler();
+        ViewHandler previous = getApplication().getViewHandler();
         ViewHandler handler = 
-            (ViewHandler)ClassUtil.createMarshalInstance(handlerName_, ViewHandler.class, previous);
-        application_.setViewHandler(handler);
+            (ViewHandler)createMarshalInstance(ViewHandler.class, previous);
+        getApplication().setViewHandler(handler);
     }
 
 }
