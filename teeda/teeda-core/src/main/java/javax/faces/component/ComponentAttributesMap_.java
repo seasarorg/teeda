@@ -18,6 +18,8 @@ import javax.faces.el.ValueBinding;
 
 class ComponentAttributesMap_ implements Map, Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     private UIComponent component_ = null;
 
     private Map attributes_ = null;
@@ -50,9 +52,9 @@ class ComponentAttributesMap_ implements Map, Serializable {
     }
 
     public boolean containsKey(Object key) {
-        if(getPropertyDescriptor((String)key) != null){
+        if (getPropertyDescriptor((String) key) != null) {
             return false;
-        }else{
+        } else {
             return attributes_.containsKey(key);
         }
     }
@@ -66,8 +68,8 @@ class ComponentAttributesMap_ implements Map, Serializable {
     }
 
     public void putAll(Map map) {
-        for (Iterator itr = map.keySet().iterator(); itr.hasNext();){
-            Map.Entry entry = (Map.Entry)itr.next();
+        for (Iterator itr = map.keySet().iterator(); itr.hasNext();) {
+            Map.Entry entry = (Map.Entry) itr.next();
             put(entry.getKey(), entry.getValue());
         }
     }
@@ -81,74 +83,72 @@ class ComponentAttributesMap_ implements Map, Serializable {
     }
 
     public Object get(Object key) {
-        PropertyDescriptor propertyDescriptor = getPropertyDescriptor((String)key);
-        if(propertyDescriptor != null){
+        PropertyDescriptor propertyDescriptor = getPropertyDescriptor((String) key);
+        if (propertyDescriptor != null) {
             Object value = getComponentProperty(propertyDescriptor);
-            if(value != null){
+            if (value != null) {
                 return value;
             }
-            ValueBinding vb = component_.getValueBinding((String)key);
+            ValueBinding vb = component_.getValueBinding((String) key);
             return (vb != null) ? vb
                     .getValue(FacesContext.getCurrentInstance()) : null;
-        }else{
-            return attributes_.get((String)key);
+        } else {
+            return attributes_.get((String) key);
         }
     }
 
     public Object remove(Object key) {
-
-        PropertyDescriptor propertyDescriptor = getPropertyDescriptor((String)key);
-        if(propertyDescriptor != null){
-            throw new IllegalArgumentException();
+        PropertyDescriptor propertyDescriptor = getPropertyDescriptor((String) key);
+        if (propertyDescriptor != null) {
+            throw new IllegalArgumentException(
+                    "can't remove component property");
         }
         return attributes_.remove(key);
     }
 
     public Object put(Object key, Object value) {
-        assertNotNull(key);
-        assertNotNull(value);
+        assertNotNull("key", key);
+        assertNotNull("value", value);
         checkKey(key);
 
-        PropertyDescriptor propertyDescriptor = getPropertyDescriptor((String)key);
-
+        PropertyDescriptor propertyDescriptor = getPropertyDescriptor((String) key);
         Object returnValue = null;
-        if(hasReadMethod(propertyDescriptor)){
-
-            returnValue = getComponentProperty(propertyDescriptor);
-            setComponentProperty(propertyDescriptor, value);
-
-        }else{
-
+        if (propertyDescriptor != null) {
+            if (hasReadMethod(propertyDescriptor)) {
+                returnValue = getComponentProperty(propertyDescriptor);
+                setComponentProperty(propertyDescriptor, value);
+            }
+        } else {
             returnValue = attributes_.put(key, value);
         }
         return returnValue;
     }
 
-    private static void assertNotNull(Object obj) {
-        if(obj == null){
-            throw new NullPointerException();
+    private static void assertNotNull(String message, Object actual) {
+        if (actual == null) {
+            throw new NullPointerException(message);
         }
     }
 
     private static void checkKey(Object key) {
-        if(!(key instanceof String)){
-            throw new ClassCastException();
+        if (!(key instanceof String)) {
+            throw new ClassCastException("key must be a String");
         }
     }
 
     private void setupPropertyDescriptor() {
         Class clazz = component_.getClass();
         BeanInfo beanInfo = null;
-        try{
+        try {
             beanInfo = Introspector.getBeanInfo(clazz);
-        }catch (IntrospectionException e){
+        } catch (IntrospectionException e) {
             throw new FacesException(e);
         }
         PropertyDescriptor[] propertyDescriptors = beanInfo
                 .getPropertyDescriptors();
-        for (int i = 0; i < propertyDescriptors.length; i++){
+        for (int i = 0; i < propertyDescriptors.length; i++) {
             PropertyDescriptor propertyDescriptor = propertyDescriptors[i];
-            if(hasReadMethod(propertyDescriptor)){
+            if (hasReadMethod(propertyDescriptor)) {
                 propertyDescriptorMap_.put(propertyDescriptor.getName(),
                         propertyDescriptor);
             }
@@ -156,19 +156,20 @@ class ComponentAttributesMap_ implements Map, Serializable {
     }
 
     private PropertyDescriptor getPropertyDescriptor(String key) {
-        return (PropertyDescriptor)propertyDescriptorMap_.get(key);
+        return (PropertyDescriptor) propertyDescriptorMap_.get(key);
     }
 
     private void setComponentProperty(PropertyDescriptor propertyDescriptor,
             Object value) {
 
         Method writeMethod = propertyDescriptor.getWriteMethod();
-        if(writeMethod == null){
-            throw new IllegalArgumentException();
+        if (writeMethod == null) {
+            throw new IllegalArgumentException("component property ["
+                    + propertyDescriptor.getName() + "] is not writeable");
         }
-        try{
+        try {
             writeMethod.invoke(component_, new Object[] { value });
-        }catch (Exception e){
+        } catch (Exception e) {
             new FacesException();
         }
     }
@@ -176,9 +177,9 @@ class ComponentAttributesMap_ implements Map, Serializable {
     private Object getComponentProperty(PropertyDescriptor propertyDescriptor) {
 
         Method readMethod = propertyDescriptor.getReadMethod();
-        try{
+        try {
             return readMethod.invoke(component_, EMPTY_ARGS);
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new FacesException();
         }
     }

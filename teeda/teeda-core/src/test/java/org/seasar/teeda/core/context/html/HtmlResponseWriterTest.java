@@ -17,7 +17,6 @@ package org.seasar.teeda.core.context.html;
 
 import java.io.IOException;
 import java.io.Writer;
-import java.net.URLEncoder;
 
 import javax.faces.context.ResponseWriter;
 
@@ -385,12 +384,10 @@ public class HtmlResponseWriterTest extends TestCase {
         responseWriter.setCharacterEncoding("UTF-8");
 
         responseWriter.startElement("span", null);
-        responseWriter.writeURIAttribute("a", "‚ ", null);
+        responseWriter.writeURIAttribute("a", "/a/b.html", null);
 
         String value = writer.toString();
-        assertEquals("<span a=\"" + "%E3%81%82" + "\"", value);
-        
-        System.out.println(URLEncoder.encode("/a/b.html", "UTF-8"));
+        assertEquals("<span a=\"" + "%2Fa%2Fb.html" + "\"", value);
     }
 
     public void testWriteURIAttribute_NameIsNull() throws Exception {
@@ -411,10 +408,6 @@ public class HtmlResponseWriterTest extends TestCase {
         } catch (IllegalStateException ise) {
             AssertUtil.assertExceptionMessageExist(ise);
         }
-    }
-
-    private void assertContains(String expected, String value) {
-        assertEquals(true, value.indexOf(expected) > -1);
     }
 
 }

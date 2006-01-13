@@ -15,142 +15,143 @@
  */
 package javax.faces.render;
 
-import junit.framework.TestCase;
-
 import org.seasar.teeda.core.mock.NullFacesContext;
 import org.seasar.teeda.core.mock.NullRenderer;
 import org.seasar.teeda.core.mock.NullUIComponent;
 import org.seasar.teeda.core.unit.AssertUtil;
+import org.seasar.teeda.core.unit.TeedaTestCase;
 
 /**
  * @author manhole
  */
-public class RendererTest extends TestCase {
+public class RendererTest extends TeedaTestCase {
 
-    public void testConvertClientId_FacesContextIsNull() throws Exception {
-        Renderer renderer = new NullRenderer();
+    public final void testConvertClientId_FacesContextIsNull() throws Exception {
+        Renderer renderer = createRenderer();
         try {
             renderer.convertClientId(null, "fooClientId");
             fail();
         } catch (NullPointerException npe) {
-            assertExceptionMessage(npe);
+            AssertUtil.assertExceptionMessageExist(npe);
         }
     }
 
-    public void testConvertClientId_ClientIdIsNull() throws Exception {
-        Renderer renderer = new NullRenderer();
+    public final void testConvertClientId_ClientIdIsNull() throws Exception {
+        Renderer renderer = createRenderer();
         try {
             renderer.convertClientId(new NullFacesContext(), null);
             fail();
         } catch (NullPointerException npe) {
-            assertExceptionMessage(npe);
+            AssertUtil.assertExceptionMessageExist(npe);
         }
     }
 
-    public void testDecode_FacesContextIsNull() throws Exception {
-        Renderer renderer = new NullRenderer();
+    public final void testDecode_FacesContextIsNull() throws Exception {
+        Renderer renderer = createRenderer();
         try {
             renderer.decode(null, new NullUIComponent());
             fail();
         } catch (NullPointerException npe) {
-            assertExceptionMessage(npe);
+            AssertUtil.assertExceptionMessageExist(npe);
         }
     }
 
-    public void testDecode_UIComponentIsNull() throws Exception {
-        Renderer renderer = new NullRenderer();
+    public final void testDecode_UIComponentIsNull() throws Exception {
+        Renderer renderer = createRenderer();
         try {
             renderer.decode(new NullFacesContext(), null);
             fail();
         } catch (NullPointerException npe) {
-            assertExceptionMessage(npe);
+            AssertUtil.assertExceptionMessageExist(npe);
         }
     }
 
-    public void testEncodeBegin_FacesContextIsNull() throws Exception {
-        Renderer renderer = new NullRenderer();
+    public final void testEncodeBegin_FacesContextIsNull() throws Exception {
+        Renderer renderer = createRenderer();
         try {
             renderer.encodeBegin(null, new NullUIComponent());
             fail();
         } catch (NullPointerException npe) {
-            assertExceptionMessage(npe);
+            AssertUtil.assertExceptionMessageExist(npe);
         }
     }
 
-    public void testEncodeBegin_UIComponentIsNull() throws Exception {
-        Renderer renderer = new NullRenderer();
+    public final void testEncodeBegin_UIComponentIsNull() throws Exception {
+        Renderer renderer = createRenderer();
         try {
             renderer.encodeBegin(new NullFacesContext(), null);
             fail();
         } catch (NullPointerException npe) {
-            assertExceptionMessage(npe);
+            AssertUtil.assertExceptionMessageExist(npe);
         }
     }
 
-    public void testEncodeChildren_FacesContextIsNull() throws Exception {
-        Renderer renderer = new NullRenderer();
+    public final void testEncodeChildren_FacesContextIsNull() throws Exception {
+        Renderer renderer = createRenderer();
         try {
             renderer.encodeChildren(null, new NullUIComponent());
             fail();
         } catch (NullPointerException npe) {
-            assertExceptionMessage(npe);
+            AssertUtil.assertExceptionMessageExist(npe);
         }
     }
 
-    public void testEncodeChildren_UIComponentIsNull() throws Exception {
-        Renderer renderer = new NullRenderer();
+    public final void testEncodeChildren_UIComponentIsNull() throws Exception {
+        Renderer renderer = createRenderer();
         try {
             renderer.encodeChildren(new NullFacesContext(), null);
             fail();
         } catch (NullPointerException npe) {
-            assertExceptionMessage(npe);
+            AssertUtil.assertExceptionMessageExist(npe);
         }
     }
 
-    public void testEncodeEnd_FacesContextIsNull() throws Exception {
-        Renderer renderer = new NullRenderer();
+    public final void testEncodeEnd_FacesContextIsNull() throws Exception {
+        Renderer renderer = createRenderer();
         try {
             renderer.encodeEnd(null, new NullUIComponent());
             fail();
         } catch (NullPointerException npe) {
-            assertExceptionMessage(npe);
+            AssertUtil.assertExceptionMessageExist(npe);
         }
     }
 
-    public void testEncodeEnd_UIComponentIsNull() throws Exception {
-        Renderer renderer = new NullRenderer();
+    public final void testEncodeEnd_UIComponentIsNull() throws Exception {
+        Renderer renderer = createRenderer();
         try {
             renderer.encodeEnd(new NullFacesContext(), null);
             fail();
         } catch (NullPointerException npe) {
-            assertExceptionMessage(npe);
+            AssertUtil.assertExceptionMessageExist(npe);
         }
     }
 
-    public void testGetConvertedValue_FacesContextIsNull() throws Exception {
-        Renderer renderer = new NullRenderer();
+    public final void testGetConvertedValue_FacesContextIsNull()
+        throws Exception {
+        Renderer renderer = createRenderer();
         try {
             renderer.getConvertedValue(null, new NullUIComponent(),
                 new Object());
             fail();
         } catch (NullPointerException npe) {
-            assertExceptionMessage(npe);
+            AssertUtil.assertExceptionMessageExist(npe);
         }
     }
 
-    public void testGetConvertedValue_UIComponentIsNull() throws Exception {
-        Renderer renderer = new NullRenderer();
+    public final void testGetConvertedValue_UIComponentIsNull()
+        throws Exception {
+        Renderer renderer = createRenderer();
         try {
             renderer.getConvertedValue(new NullFacesContext(), null,
                 new Object());
             fail();
         } catch (NullPointerException npe) {
-            assertExceptionMessage(npe);
+            AssertUtil.assertExceptionMessageExist(npe);
         }
     }
 
-    private void assertExceptionMessage(Exception exception) {
-        AssertUtil.assertExceptionMessageExist(exception);
+    protected Renderer createRenderer() {
+        return new NullRenderer();
     }
 
 }

@@ -11,7 +11,7 @@ import org.seasar.teeda.core.mock.MockUIComponent;
 import org.seasar.teeda.core.mock.MockValueBinding;
 import org.seasar.teeda.core.mock.NullFacesContext;
 
-public class TestUIComponentBase extends AbstractUIComponentTest {
+public class UIComponentBaseTest extends AbstractUIComponentTest {
 
     public void testHandleValueBinding() {
         MockUIComponentBase base = new MockUIComponentBase();
@@ -53,83 +53,83 @@ public class TestUIComponentBase extends AbstractUIComponentTest {
     }
 
     public void testGetId() {
-        // TODO getId() ‚ğÀ‘•‚µ‚Ü‚·B
+        // TODO getId() ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½B
     }
 
     public void testSetId() {
-        // TODO setId() ‚ğÀ‘•‚µ‚Ü‚·B
+        // TODO setId() ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½B
     }
 
     public void testGetParent() {
-        // TODO getParent() ‚ğÀ‘•‚µ‚Ü‚·B
+        // TODO getParent() ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½B
     }
 
     public void testSetParent() {
-        // TODO setParent() ‚ğÀ‘•‚µ‚Ü‚·B
+        // TODO setParent() ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½B
     }
 
     public void testIsRendered() {
-        // TODO isRendered() ‚ğÀ‘•‚µ‚Ü‚·B
+        // TODO isRendered() ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½B
     }
 
     public void testSetRendered() {
-        // TODO setRendered() ‚ğÀ‘•‚µ‚Ü‚·B
+        // TODO setRendered() ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½B
     }
 
     public void testGetRendererType() {
-        // TODO getRendererType() ‚ğÀ‘•‚µ‚Ü‚·B
+        // TODO getRendererType() ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½B
     }
 
     public void testSetRendererType() {
-        // TODO setRendererType() ‚ğÀ‘•‚µ‚Ü‚·B
+        // TODO setRendererType() ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½B
     }
 
     public void testGetRendersChildren() {
-        // TODO getRendersChildren() ‚ğÀ‘•‚µ‚Ü‚·B
+        // TODO getRendersChildren() ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½B
     }
 
     public void testGetChildren() {
-        // TODO getChildren() ‚ğÀ‘•‚µ‚Ü‚·B
+        // TODO getChildren() ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½B
     }
 
     public void testGetChildCount() {
-        // TODO getChildCount() ‚ğÀ‘•‚µ‚Ü‚·B
+        // TODO getChildCount() ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½B
     }
 
     public void testFindComponent() {
-        // TODO findComponent() ‚ğÀ‘•‚µ‚Ü‚·B
+        // TODO findComponent() ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½B
     }
 
     public void testGetFacets() {
-        // TODO getFacets() ‚ğÀ‘•‚µ‚Ü‚·B
+        // TODO getFacets() ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½B
     }
 
     public void testGetFacet() {
-        // TODO getFacet() ‚ğÀ‘•‚µ‚Ü‚·B
+        // TODO getFacet() ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½B
     }
 
     public void testGetFacetsAndChildren() {
-        // TODO getFacetsAndChildren() ‚ğÀ‘•‚µ‚Ü‚·B
+        // TODO getFacetsAndChildren() ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½B
     }
 
     public void testBroadcast() {
-        // TODO broadcast() ‚ğÀ‘•‚µ‚Ü‚·B
+        // TODO broadcast() ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½B
     }
 
     public void testDecode() {
-        // TODO decode() ‚ğÀ‘•‚µ‚Ü‚·B
+        // TODO decode() ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½B
     }
 
     public void testEncodeBegin() {
-        // TODO encodeBegin() ‚ğÀ‘•‚µ‚Ü‚·B
+        // TODO encodeBegin() ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½B
     }
 
     public void testEncodeChildren() {
-        // TODO encodeChildren() ‚ğÀ‘•‚µ‚Ü‚·B
+        // TODO encodeChildren() ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½B
     }
 
     public void testEncodeEnd() {
-        // TODO encodeEnd() ‚ğÀ‘•‚µ‚Ü‚·B
+        // TODO encodeEnd() ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½B
     }
 
     public void testHandleFacesListeners() {
@@ -178,11 +178,11 @@ public class TestUIComponentBase extends AbstractUIComponentTest {
         base.addFacesListener(listener2);
 
         FacesListener[] listeners1 = base
-            .getFacesListeners(MockFacesListener1.class);
+                .getFacesListeners(MockFacesListener1.class);
         assertEquals(1, listeners1.length);
 
         FacesListener[] listeners2 = base
-            .getFacesListeners(MockFacesListener2.class);
+                .getFacesListeners(MockFacesListener2.class);
         assertEquals(1, listeners2.length);
 
     }
@@ -232,31 +232,31 @@ public class TestUIComponentBase extends AbstractUIComponentTest {
     }
 
     public void testProcessRestoreState() {
-        // TODO processRestoreState() ‚ğÀ‘•‚µ‚Ü‚·B
+        // TODO processRestoreState() ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½B
     }
 
     public void testProcessDecodes() {
-        // TODO processDecodes() ‚ğÀ‘•‚µ‚Ü‚·B
+        // TODO processDecodes() ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½B
     }
 
     public void testProcessValidators() {
-        // TODO processValidators() ‚ğÀ‘•‚µ‚Ü‚·B
+        // TODO processValidators() ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½B
     }
 
     public void testProcessUpdates() {
-        // TODO processUpdates() ‚ğÀ‘•‚µ‚Ü‚·B
+        // TODO processUpdates() ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½B
     }
 
     public void testProcessSaveState() {
-        // TODO processSaveState() ‚ğÀ‘•‚µ‚Ü‚·B
+        // TODO processSaveState() ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½B
     }
 
     public void testGetFacesContext() {
-        // TODO getFacesContext() ‚ğÀ‘•‚µ‚Ü‚·B
+        // TODO getFacesContext() ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½B
     }
 
     public void testGetRenderer() {
-        // TODO getRenderer() ‚ğÀ‘•‚µ‚Ü‚·B
+        // TODO getRenderer() ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½B
     }
 
     public void testSaveAndRestoreState() throws Exception {
@@ -276,19 +276,19 @@ public class TestUIComponentBase extends AbstractUIComponentTest {
         component2.restoreState(context, state);
 
         assertEquals(component1.getAttributes().size(), component2
-            .getAttributes().size());
+                .getAttributes().size());
         assertEquals(component1.getChildCount(), component2.getChildCount());
         assertEquals(component1.getClientId(context), component2
-            .getClientId(context));
+                .getClientId(context));
         assertEquals(component1.getFacets().size(), component2.getFacets()
-            .size());
-        //assertEquals(component1.getFacetsAndChildren(), component2
-        //    .getFacetsAndChildren());
+                .size());
+        // assertEquals(component1.getFacetsAndChildren(), component2
+        // .getFacetsAndChildren());
         assertEquals(component1.getId(), component2.getId());
         assertEquals(component1.getParent(), component2.getParent());
         assertEquals(component1.getRendererType(), component2.getRendererType());
         assertEquals(component1.getRendersChildren(), component2
-            .getRendersChildren());
+                .getRendersChildren());
     }
 
     public final void testSaveAndRestoreAttachedState_AttacedObjectIsNull() {
@@ -309,15 +309,15 @@ public class TestUIComponentBase extends AbstractUIComponentTest {
     }
 
     public void testRestoreAttachedState() {
-        // TODO restoreAttachedState() ‚ğÀ‘•‚µ‚Ü‚·B
+        // TODO restoreAttachedState() ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½B
     }
 
     public void testUIComponent() {
-        // TODO UIComponent() ‚ğÀ‘•‚µ‚Ü‚·B
+        // TODO UIComponent() ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½B
     }
 
     public void testGetFamily() {
-        // TODO getFamily() ‚ğÀ‘•‚µ‚Ü‚·B
+        // TODO getFamily() ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½B
     }
 
     private static class MockUIComponentBase extends UIComponentBase {
@@ -341,7 +341,7 @@ public class TestUIComponentBase extends AbstractUIComponentTest {
     }
 
     private static class MockUIComponentWithNamingContainer extends
-        MockUIComponent implements NamingContainer {
+            MockUIComponent implements NamingContainer {
 
     }
 

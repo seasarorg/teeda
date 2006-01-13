@@ -15,6 +15,7 @@ public class HtmlOutputTextTest extends TestUIOutput {
 
     public void testSetGetEscape() throws Exception {
         HtmlOutputText htmlOutputText = createHtmlOutputText();
+        // default is true
         assertEquals(true, htmlOutputText.isEscape());
         htmlOutputText.setEscape(false);
         assertEquals(false, htmlOutputText.isEscape());

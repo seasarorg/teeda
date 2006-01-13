@@ -18,18 +18,42 @@ package org.seasar.teeda.core.render.html;
 import java.io.IOException;
 
 import javax.faces.component.UIComponent;
+import javax.faces.component.html.HtmlOutputText;
 import javax.faces.context.FacesContext;
+import javax.faces.context.ResponseWriter;
 import javax.faces.render.Renderer;
+
+import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.core.util.RendererUtil;
+import org.seasar.teeda.core.util.UIComponentUtil;
 
 /**
  * @author manhole
  */
 public class HtmlOutputTextRenderer extends Renderer {
 
+    // TODO
     public void encodeEnd(FacesContext context, UIComponent component)
-        throws IOException {
+            throws IOException {
         super.encodeEnd(context, component);
-        // TODO
+        HtmlOutputText htmlOutputText = (HtmlOutputText) component;
+        ResponseWriter writer = context.getResponseWriter();
+        boolean writeSpan = false;
+        if (UIComponentUtil.containsAttributes(component,
+                JsfConstants.COMMON_PASSTROUGH_ATTRIBUTES)) {
+            writer.startElement(JsfConstants.SPAN_ELEM, component);
+            writeSpan = true;
+        }
+        RendererUtil.renderAttributes(writer, component,
+                JsfConstants.COMMON_PASSTROUGH_ATTRIBUTES);
+        if (htmlOutputText.isEscape()) {
+            writer.writeText(htmlOutputText.getValue().toString(), null);
+        } else {
+            writer.write(htmlOutputText.getValue().toString());
+        }
+        if (writeSpan) {
+            writer.endElement(JsfConstants.SPAN_ELEM);
+        }
     }
 
 }

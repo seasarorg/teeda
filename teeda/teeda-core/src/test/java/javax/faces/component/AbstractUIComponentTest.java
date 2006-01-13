@@ -15,11 +15,13 @@
  */
 package javax.faces.component;
 
+import java.io.Serializable;
 import java.util.Map;
 
 import org.seasar.teeda.core.mock.MockValueBinding;
 import org.seasar.teeda.core.mock.NullFacesEvent;
 import org.seasar.teeda.core.mock.NullValueBinding;
+import org.seasar.teeda.core.unit.AssertUtil;
 import org.seasar.teeda.core.unit.TeedaTestCase;
 
 /**
@@ -40,7 +42,7 @@ public abstract class AbstractUIComponentTest extends TeedaTestCase {
             component.getValueBinding(null);
             fail();
         } catch (NullPointerException npe) {
-            assertExceptionMessage(npe);
+            AssertUtil.assertExceptionMessageExist(npe);
         }
     }
 
@@ -50,7 +52,7 @@ public abstract class AbstractUIComponentTest extends TeedaTestCase {
             component.setValueBinding(null, new NullValueBinding());
             fail();
         } catch (NullPointerException npe) {
-            assertExceptionMessage(npe);
+            AssertUtil.assertExceptionMessageExist(npe);
         }
     }
 
@@ -60,7 +62,7 @@ public abstract class AbstractUIComponentTest extends TeedaTestCase {
             component.getClientId(null);
             fail();
         } catch (NullPointerException npe) {
-            assertExceptionMessage(npe);
+            AssertUtil.assertExceptionMessageExist(npe);
         }
     }
 
@@ -71,7 +73,7 @@ public abstract class AbstractUIComponentTest extends TeedaTestCase {
             component.setId("");
             fail();
         } catch (IllegalArgumentException iae) {
-            assertExceptionMessage(iae);
+            AssertUtil.assertExceptionMessageExist(iae);
         }
     }
 
@@ -82,19 +84,19 @@ public abstract class AbstractUIComponentTest extends TeedaTestCase {
             component.setId("1");
             fail();
         } catch (IllegalArgumentException iae) {
-            assertExceptionMessage(iae);
+            AssertUtil.assertExceptionMessageExist(iae);
         }
     }
 
     public final void testSetId_IllegalArg3() throws Exception {
         UIComponent component = createUIComponent();
         try {
-            // Subsequent characters must be a letter, a digit, 
+            // Subsequent characters must be a letter, a digit,
             // an underscore ('_'), or a dash ('-').
             component.setId("_:");
             fail();
         } catch (IllegalArgumentException iae) {
-            assertExceptionMessage(iae);
+            AssertUtil.assertExceptionMessageExist(iae);
         }
     }
 
@@ -104,18 +106,20 @@ public abstract class AbstractUIComponentTest extends TeedaTestCase {
             component.findComponent(null);
             fail();
         } catch (NullPointerException npe) {
-            assertExceptionMessage(npe);
+            AssertUtil.assertExceptionMessageExist(npe);
         }
     }
 
-    // TODO java.lang.IllegalArgumentException - if an intermediate identifier in a search expression identifies a UIComponent that is not a NamingContainer 
+    // TODO java.lang.IllegalArgumentException - if an intermediate identifier
+    // in a search expression identifies a UIComponent that is not a
+    // NamingContainer
     public final void todo_testFindComponent_IllegalArgs() throws Exception {
         UIComponent component = createUIComponent();
         try {
             component.findComponent("");
             fail();
         } catch (NullPointerException npe) {
-            assertExceptionMessage(npe);
+            AssertUtil.assertExceptionMessageExist(npe);
         }
     }
 
@@ -125,7 +129,7 @@ public abstract class AbstractUIComponentTest extends TeedaTestCase {
             component.broadcast(null);
             fail();
         } catch (NullPointerException npe) {
-            assertExceptionMessage(npe);
+            AssertUtil.assertExceptionMessageExist(npe);
         }
     }
 
@@ -135,7 +139,7 @@ public abstract class AbstractUIComponentTest extends TeedaTestCase {
             component.decode(null);
             fail();
         } catch (NullPointerException npe) {
-            assertExceptionMessage(npe);
+            AssertUtil.assertExceptionMessageExist(npe);
         }
     }
 
@@ -145,7 +149,7 @@ public abstract class AbstractUIComponentTest extends TeedaTestCase {
             component.encodeBegin(null);
             fail();
         } catch (NullPointerException npe) {
-            assertExceptionMessage(npe);
+            AssertUtil.assertExceptionMessageExist(npe);
         }
     }
 
@@ -155,7 +159,7 @@ public abstract class AbstractUIComponentTest extends TeedaTestCase {
             component.encodeChildren(null);
             fail();
         } catch (NullPointerException npe) {
-            assertExceptionMessage(npe);
+            AssertUtil.assertExceptionMessageExist(npe);
         }
     }
 
@@ -165,7 +169,7 @@ public abstract class AbstractUIComponentTest extends TeedaTestCase {
             component.encodeEnd(null);
             fail();
         } catch (NullPointerException npe) {
-            assertExceptionMessage(npe);
+            AssertUtil.assertExceptionMessageExist(npe);
         }
     }
 
@@ -175,7 +179,7 @@ public abstract class AbstractUIComponentTest extends TeedaTestCase {
             component.addFacesListener(null);
             fail();
         } catch (NullPointerException npe) {
-            assertExceptionMessage(npe);
+            AssertUtil.assertExceptionMessageExist(npe);
         }
     }
 
@@ -185,7 +189,7 @@ public abstract class AbstractUIComponentTest extends TeedaTestCase {
             component.getFacesListeners(null);
             fail();
         } catch (NullPointerException npe) {
-            assertExceptionMessage(npe);
+            AssertUtil.assertExceptionMessageExist(npe);
         }
     }
 
@@ -196,7 +200,7 @@ public abstract class AbstractUIComponentTest extends TeedaTestCase {
             component.getFacesListeners(String.class);
             fail();
         } catch (IllegalArgumentException iae) {
-            assertExceptionMessage(iae);
+            AssertUtil.assertExceptionMessageExist(iae);
         }
     }
 
@@ -206,7 +210,7 @@ public abstract class AbstractUIComponentTest extends TeedaTestCase {
             component.removeFacesListener(null);
             fail();
         } catch (NullPointerException npe) {
-            assertExceptionMessage(npe);
+            AssertUtil.assertExceptionMessageExist(npe);
         }
     }
 
@@ -216,7 +220,7 @@ public abstract class AbstractUIComponentTest extends TeedaTestCase {
             component.queueEvent(null);
             fail();
         } catch (NullPointerException npe) {
-            assertExceptionMessage(npe);
+            AssertUtil.assertExceptionMessageExist(npe);
         }
     }
 
@@ -227,7 +231,7 @@ public abstract class AbstractUIComponentTest extends TeedaTestCase {
             component.queueEvent(new NullFacesEvent());
             fail();
         } catch (IllegalStateException ise) {
-            assertExceptionMessage(ise);
+            AssertUtil.assertExceptionMessageExist(ise);
         }
     }
 
@@ -237,7 +241,7 @@ public abstract class AbstractUIComponentTest extends TeedaTestCase {
             component.processRestoreState(null, new Object());
             fail();
         } catch (NullPointerException npe) {
-            assertExceptionMessage(npe);
+            AssertUtil.assertExceptionMessageExist(npe);
         }
     }
 
@@ -247,7 +251,7 @@ public abstract class AbstractUIComponentTest extends TeedaTestCase {
             component.processDecodes(null);
             fail();
         } catch (NullPointerException npe) {
-            assertExceptionMessage(npe);
+            AssertUtil.assertExceptionMessageExist(npe);
         }
     }
 
@@ -257,7 +261,7 @@ public abstract class AbstractUIComponentTest extends TeedaTestCase {
             component.processValidators(null);
             fail();
         } catch (NullPointerException npe) {
-            assertExceptionMessage(npe);
+            AssertUtil.assertExceptionMessageExist(npe);
         }
     }
 
@@ -267,7 +271,7 @@ public abstract class AbstractUIComponentTest extends TeedaTestCase {
             component.processUpdates(null);
             fail();
         } catch (NullPointerException npe) {
-            assertExceptionMessage(npe);
+            AssertUtil.assertExceptionMessageExist(npe);
         }
     }
 
@@ -277,8 +281,14 @@ public abstract class AbstractUIComponentTest extends TeedaTestCase {
             component.processSaveState(null);
             fail();
         } catch (NullPointerException npe) {
-            assertExceptionMessage(npe);
+            AssertUtil.assertExceptionMessageExist(npe);
         }
+    }
+
+    public final void testGetAttributes_ShouldBeSerializable() throws Exception {
+        UIComponent component = createUIComponent();
+        Map attributes = component.getAttributes();
+        assertEquals(true, attributes instanceof Serializable);
     }
 
     public void testGetAttributes() throws Exception {
@@ -291,33 +301,20 @@ public abstract class AbstractUIComponentTest extends TeedaTestCase {
         assertEquals("bar", attributes.get("id"));
     }
 
-    public void testIsTransient() {
-        // TODO isTransient() ‚ðŽÀ‘•‚µ‚Ü‚·B
-    }
-
-    public void testSetTransient() {
-        // TODO setTransient() ‚ðŽÀ‘•‚µ‚Ü‚·B
-    }
-
-    public void testSetGetTransient() throws Exception {
+    public final void testSetGetTransient() throws Exception {
         UIComponent component = createUIComponent();
         assertEquals(false, component.isTransient());
         component.setTransient(true);
         assertEquals(true, component.isTransient());
     }
 
-    public void testSetGetTransient_ValueBinding() throws Exception {
+    // "transient" property don't need ValueBinding
+    public void no_testSetGetTransient_ValueBinding() throws Exception {
         UIComponent component = createUIComponent();
         MockValueBinding vb = new MockValueBinding();
         vb.setValue(getFacesContext(), Boolean.TRUE);
         component.setValueBinding("transient", vb);
         assertEquals(true, component.isTransient());
-    }
-
-    private void assertExceptionMessage(Exception exception) {
-        String message = exception.getMessage();
-        assertNotNull(message);
-        assertTrue(message.trim().length() > 0);
     }
 
     protected abstract UIComponent createUIComponent();

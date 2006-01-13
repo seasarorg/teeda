@@ -15,42 +15,109 @@
  */
 package org.seasar.teeda.core.render.html;
 
-import javax.faces.component.html.HtmlOutputText;
+import java.io.IOException;
 
-import org.seasar.teeda.core.mock.MockFacesContext;
-import org.seasar.teeda.core.mock.NullFacesContext;
-import org.seasar.teeda.core.mock.NullUIComponent;
-import org.seasar.teeda.core.unit.TeedaTestCase;
+import javax.faces.component.html.HtmlOutputText;
+import javax.faces.render.Renderer;
+import javax.faces.render.RendererTest;
 
 /**
  * @author manhole
+ * 
+ * TODO
  */
-public class HtmlOutputTextRendererTest extends TeedaTestCase {
+public class HtmlOutputTextRendererTest extends RendererTest {
 
     public void testEncodeEnd() throws Exception {
-        HtmlOutputTextRenderer renderer = new HtmlOutputTextRenderer();
-        MockFacesContext context = getFacesContext();
-        // TODO
         HtmlOutputText htmlOutputText = new HtmlOutputText();
-        renderer.encodeEnd(context, htmlOutputText);
+        htmlOutputText.setValue("abc");
+        HtmlOutputTextRenderer renderer = createHtmlOutputTextRenderer();
+
+        renderer.encodeEnd(getFacesContext(), htmlOutputText);
+
+        assertEquals("abc", getResponseText());
     }
 
-    public void testEncodeEnd_null1() throws Exception {
-        HtmlOutputTextRenderer renderer = new HtmlOutputTextRenderer();
-        try {
-            renderer.encodeEnd(null, new NullUIComponent());
-            fail();
-        } catch (NullPointerException expected) {
-        }
+    public void testEncodeEnd_EscapeTrue() throws Exception {
+        HtmlOutputText htmlOutputText = new HtmlOutputText();
+        assertTrue("default is true", htmlOutputText.isEscape());
+        htmlOutputText.setValue("<a>");
+        HtmlOutputTextRenderer renderer = createHtmlOutputTextRenderer();
+
+        renderer.encodeEnd(getFacesContext(), htmlOutputText);
+
+        assertEquals("&lt;a&gt;", getResponseText());
     }
 
-    public void testEncodeEnd_null2() throws Exception {
-        HtmlOutputTextRenderer renderer = new HtmlOutputTextRenderer();
-        try {
-            renderer.encodeEnd(new NullFacesContext(), null);
-            fail();
-        } catch (NullPointerException expected) {
-        }
+    public void testEncodeEnd_EscapeFalse() throws Exception {
+        HtmlOutputText htmlOutputText = new HtmlOutputText();
+        htmlOutputText.setEscape(false);
+        htmlOutputText.setValue("<a>");
+        HtmlOutputTextRenderer renderer = createHtmlOutputTextRenderer();
+
+        renderer.encodeEnd(getFacesContext(), htmlOutputText);
+
+        assertEquals("<a>", getResponseText());
+    }
+
+    public void testEncodeEnd_WithStyle() throws Exception {
+        HtmlOutputText htmlOutputText = new HtmlOutputText();
+        htmlOutputText.setStyle("some style");
+        htmlOutputText.setValue("a");
+        HtmlOutputTextRenderer renderer = createHtmlOutputTextRenderer();
+
+        renderer.encodeEnd(getFacesContext(), htmlOutputText);
+
+        assertEquals("<span style=\"some style\">a</span>", getResponseText());
+    }
+
+    public void testEncodeEnd_WithStyleClass() throws Exception {
+        HtmlOutputText htmlOutputText = new HtmlOutputText();
+        htmlOutputText.setStyleClass("some styleClass");
+        htmlOutputText.setValue("a");
+        HtmlOutputTextRenderer renderer = createHtmlOutputTextRenderer();
+
+        renderer.encodeEnd(getFacesContext(), htmlOutputText);
+
+        assertEquals("styleClass -> class",
+                "<span class=\"some styleClass\">a</span>", getResponseText());
+    }
+
+    public void testEncodeEnd_WithTitle() throws Exception {
+        HtmlOutputText htmlOutputText = new HtmlOutputText();
+        htmlOutputText.setTitle("some title");
+        htmlOutputText.setValue("a");
+        HtmlOutputTextRenderer renderer = createHtmlOutputTextRenderer();
+
+        renderer.encodeEnd(getFacesContext(), htmlOutputText);
+
+        assertEquals("<span title=\"some title\">a</span>", getResponseText());
+    }
+
+    public void testEncodeEnd_CommonAttributtes() throws Exception {
+        HtmlOutputText htmlOutputText = new HtmlOutputText();
+        htmlOutputText.setTitle("someTitle");
+        htmlOutputText.getAttributes().put("onmouseout", "do something");
+        htmlOutputText.setValue("a");
+        HtmlOutputTextRenderer renderer = createHtmlOutputTextRenderer();
+
+        renderer.encodeEnd(getFacesContext(), htmlOutputText);
+
+        assertEquals(
+                "<span title=\"someTitle\" onmouseout=\"do something\">a</span>",
+                getResponseText());
+    }
+
+    private String getResponseText() throws IOException {
+        return getResponse().getWriter().toString();
+    }
+
+    private HtmlOutputTextRenderer createHtmlOutputTextRenderer() {
+        return (HtmlOutputTextRenderer) createRenderer();
+    }
+
+    protected Renderer createRenderer() {
+        return new HtmlOutputTextRenderer();
     }
 
 }

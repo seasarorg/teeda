@@ -11,7 +11,7 @@ import org.seasar.teeda.core.mock.MockValueBinding;
 /**
  * TODO test saveState, restoreState
  */
-public class TestUIOutput extends TestUIComponentBase {
+public class TestUIOutput extends UIComponentBaseTest {
 
     public void testGetFamily() {
         UIOutput output = new UIOutput();

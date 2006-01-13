@@ -1,10 +1,11 @@
 package javax.faces.component;
 
-import org.seasar.teeda.core.mock.MockUIComponent;
 import javax.faces.model.SelectItem;
 
 import junit.framework.TestCase;
 
+import org.seasar.teeda.core.mock.MockUIComponent;
+import org.seasar.teeda.core.mock.MockUIComponentBase;
 
 public class TestSelectItemsIterator_ extends TestCase {
 
@@ -28,6 +29,7 @@ public class TestSelectItemsIterator_ extends TestCase {
 
     /**
      * Constructor for TestSelectItemsIterator_.
+     * 
      * @param arg0
      */
     public TestSelectItemsIterator_(String arg0) {
@@ -35,13 +37,13 @@ public class TestSelectItemsIterator_ extends TestCase {
     }
 
     public void testHasNext() {
-    	MockUIComponentBase parent = new MockUIComponentBase();
-    	parent.setId("hoge");
-    	MockUIComponent child = new MockUIComponent();
-    	child.setId("child");
-    	parent.getChildren().add(child);
-    	SelectItemsIterator_ itr = new SelectItemsIterator_(parent);
-    	assertTrue(itr.hasNext());
+        MockUIComponentBase parent = new MockUIComponentBase();
+        parent.setId("hoge");
+        MockUIComponent child = new MockUIComponent();
+        child.setId("child");
+        parent.getChildren().add(child);
+        SelectItemsIterator_ itr = new SelectItemsIterator_(parent);
+        assertTrue(itr.hasNext());
     }
 
     public void testNext1() {
@@ -56,11 +58,11 @@ public class TestSelectItemsIterator_ extends TestCase {
         SelectItemsIterator_ itr = new SelectItemsIterator_(parent);
         Object o = itr.next();
         assertTrue(o instanceof SelectItem);
-        assertEquals("label", ((SelectItem)o).getLabel());
-        assertEquals("aaa", ((SelectItem)o).getValue());
+        assertEquals("label", ((SelectItem) o).getLabel());
+        assertEquals("aaa", ((SelectItem) o).getValue());
     }
 
-    public void testNext2(){
+    public void testNext2() {
         MockUIComponentBase parent = new MockUIComponentBase();
         parent.setId("hoge");
         UISelectItems items = new UISelectItems();
@@ -71,18 +73,7 @@ public class TestSelectItemsIterator_ extends TestCase {
         SelectItemsIterator_ itr = new SelectItemsIterator_(parent);
         Object o = itr.next();
         assertTrue(o instanceof SelectItem);
-        assertEquals("label", ((SelectItem)o).getLabel());
+        assertEquals("label", ((SelectItem) o).getLabel());
     }
-    
-    private static class MockUIComponentBase extends UIComponentBase{
 
-		/* (non-Javadoc)
-		 * @see javax.faces.component.UIComponent#getFamily()
-		 */
-		public String getFamily() {
-			return "mock";
-		}
-    	
-    }
-    
 }

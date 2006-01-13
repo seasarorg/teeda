@@ -16,161 +16,172 @@ import javax.faces.render.Renderer;
 
 public class MockUIComponent extends UIComponent {
 
-	private UIComponent parent_ = null;
-	private FacesEvent event_;
+    private UIComponent parent_ = null;
+
+    private FacesEvent event_;
+
     private String id_;
+
     private String clientId_ = "";
-    private Map facets_  = new HashMap();
-    
-	public Map getAttributes() {
-		return null;
-	}
 
-	public ValueBinding getValueBinding(String name) {
-		return null;
-	}
+    private Map facets_ = new HashMap();
 
-	public void setValueBinding(String s, ValueBinding valuebinding) {
-	}
+    private String family_;
 
-	public String getClientId(FacesContext context) {
-		return clientId_;
-	}
+    public Map getAttributes() {
+        return null;
+    }
 
-    public void setClientId(String clientId){
+    public ValueBinding getValueBinding(String name) {
+        return null;
+    }
+
+    public void setValueBinding(String s, ValueBinding valuebinding) {
+    }
+
+    public String getClientId(FacesContext context) {
+        return clientId_;
+    }
+
+    public void setClientId(String clientId) {
         clientId_ = clientId;
     }
-    
-	public String getFamily() {
-		return null;
-	}
 
-	public String getId() {
-		return id_;
-	}
+    public String getFamily() {
+        return family_;
+    }
 
-	public void setId(String id) {
+    public void setFamily(String family) {
+        family_ = family;
+    }
+
+    public String getId() {
+        return id_;
+    }
+
+    public void setId(String id) {
         id_ = id;
-	}
+    }
 
-	public UIComponent getParent() {
-		return parent_;
-	}
+    public UIComponent getParent() {
+        return parent_;
+    }
 
-	public void setParent(UIComponent parent) {
-		parent_ = parent;
-	}
+    public void setParent(UIComponent parent) {
+        parent_ = parent;
+    }
 
-	public boolean isRendered() {
-		return false;
-	}
+    public boolean isRendered() {
+        return false;
+    }
 
-	public void setRendered(boolean flag) {
-	}
+    public void setRendered(boolean flag) {
+    }
 
-	public String getRendererType() {
-		return null;
-	}
+    public String getRendererType() {
+        return null;
+    }
 
-	public void setRendererType(String type) {
-	}
+    public void setRendererType(String type) {
+    }
 
-	public boolean getRendersChildren() {
-		return false;
-	}
+    public boolean getRendersChildren() {
+        return false;
+    }
 
-	public List getChildren() {
-		return null;
-	}
+    public List getChildren() {
+        return null;
+    }
 
-	public int getChildCount() {
-		return 0;
-	}
+    public int getChildCount() {
+        return 0;
+    }
 
-	public UIComponent findComponent(String expr) {
-		return null;
-	}
+    public UIComponent findComponent(String expr) {
+        return null;
+    }
 
-	public Map getFacets() {
-		return facets_;
-	}
+    public Map getFacets() {
+        return facets_;
+    }
 
-	public UIComponent getFacet(String s) {
-		return (UIComponent)facets_.get(s);
-	}
+    public UIComponent getFacet(String s) {
+        return (UIComponent) facets_.get(s);
+    }
 
-	public Iterator getFacetsAndChildren() {
-		return null;
-	}
+    public Iterator getFacetsAndChildren() {
+        return null;
+    }
 
-	public void broadcast(FacesEvent event) throws AbortProcessingException {
-	}
+    public void broadcast(FacesEvent event) throws AbortProcessingException {
+    }
 
-	public void decode(FacesContext context) {
-	}
+    public void decode(FacesContext context) {
+    }
 
-	public void encodeBegin(FacesContext context) throws IOException {
-	}
+    public void encodeBegin(FacesContext context) throws IOException {
+    }
 
-	public void encodeChildren(FacesContext context) throws IOException {
-	}
+    public void encodeChildren(FacesContext context) throws IOException {
+    }
 
-	public void encodeEnd(FacesContext context) throws IOException {
-	}
+    public void encodeEnd(FacesContext context) throws IOException {
+    }
 
-	protected void addFacesListener(FacesListener listener) {
-	}
+    protected void addFacesListener(FacesListener listener) {
+    }
 
-	protected FacesListener[] getFacesListeners(Class clazz) {
-		return null;
-	}
+    protected FacesListener[] getFacesListeners(Class clazz) {
+        return null;
+    }
 
-	protected void removeFacesListener(FacesListener listener) {
-	}
+    protected void removeFacesListener(FacesListener listener) {
+    }
 
-	public void queueEvent(FacesEvent event) {
+    public void queueEvent(FacesEvent event) {
         event_ = event;
-	}
+    }
 
-	public void processRestoreState(FacesContext context, Object state) {
-	}
+    public void processRestoreState(FacesContext context, Object state) {
+    }
 
-	public void processDecodes(FacesContext context) {
-	}
+    public void processDecodes(FacesContext context) {
+    }
 
-	public void processValidators(FacesContext context) {
-	}
+    public void processValidators(FacesContext context) {
+    }
 
-	public void processUpdates(FacesContext context) {
-	}
+    public void processUpdates(FacesContext context) {
+    }
 
-	public Object processSaveState(FacesContext context) {
-		return null;
-	}
+    public Object processSaveState(FacesContext context) {
+        return null;
+    }
 
-	protected FacesContext getFacesContext() {
-		return null;
-	}
+    protected FacesContext getFacesContext() {
+        return null;
+    }
 
-	protected Renderer getRenderer(FacesContext context) {
-		return null;
-	}
+    protected Renderer getRenderer(FacesContext context) {
+        return null;
+    }
 
-	public boolean isTransient() {
-		return false;
-	}
+    public boolean isTransient() {
+        return false;
+    }
 
-	public void setTransient(boolean transientValue) {
-	}
+    public void setTransient(boolean transientValue) {
+    }
 
-	public Object saveState(FacesContext context) {
-		return null;
-	}
+    public Object saveState(FacesContext context) {
+        return null;
+    }
 
-	public void restoreState(FacesContext context, Object state) {
-	}
+    public void restoreState(FacesContext context, Object state) {
+    }
 
-    public FacesEvent getQueueEvent(){
+    public FacesEvent getQueueEvent() {
         return event_;
     }
+
 }

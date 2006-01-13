@@ -20,6 +20,7 @@ import javax.faces.lifecycle.LifecycleFactory;
 import javax.faces.render.RenderKitFactory;
 
 import org.seasar.framework.unit.S2FrameworkTestCase;
+import org.seasar.teeda.core.context.html.HtmlResponseWriter;
 import org.seasar.teeda.core.managedbean.ManagedBeanFactory;
 import org.seasar.teeda.core.managedbean.impl.ManagedBeanFactoryImpl;
 import org.seasar.teeda.core.managedbean.impl.ManagedBeanScopeSaverImpl;
@@ -86,6 +87,9 @@ public abstract class TeedaTestCase extends S2FrameworkTestCase {
         application.setVariableResolver(variableResolver);
 
         facesContext = new MockFacesContextImpl(externalContext, application);
+        HtmlResponseWriter responseWriter = new HtmlResponseWriter();
+        responseWriter.setWriter(getResponse().getWriter());
+        facesContext.setResponseWriter(responseWriter);
         renderKit = new MockRenderKit();
         lifecycle = new MockLifecycle();
         phaseListener = new MockPhaseListener();
