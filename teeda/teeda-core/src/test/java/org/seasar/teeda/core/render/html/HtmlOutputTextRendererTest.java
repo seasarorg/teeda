@@ -21,6 +21,8 @@ import javax.faces.component.html.HtmlOutputText;
 import javax.faces.render.Renderer;
 import javax.faces.render.RendererTest;
 
+import org.custommonkey.xmlunit.Diff;
+
 /**
  * @author manhole
  * 
@@ -103,9 +105,9 @@ public class HtmlOutputTextRendererTest extends RendererTest {
 
         renderer.encodeEnd(getFacesContext(), htmlOutputText);
 
-        assertEquals(
-                "<span title=\"someTitle\" onmouseout=\"do something\">a</span>",
+        Diff myDiff = new Diff("<span title=\"someTitle\" onmouseout=\"do something\">a</span>",
                 getResponseText());
+        assertEquals(myDiff.toString(), true, myDiff.identical());
     }
 
     private String getResponseText() throws IOException {

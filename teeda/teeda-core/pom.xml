@@ -56,5 +56,12 @@
       <version>1.0</version>
       <type>jar</type>
     </dependency>
+    <dependency>
+      <groupId>xmlunit</groupId>
+      <artifactId>xmlunit</artifactId>
+      <version>1.0</version>
+      <type>jar</type>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 </project>
