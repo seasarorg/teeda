@@ -9,7 +9,7 @@ import javax.faces.FactoryFinder;
 /**
  * @author Shinpei Ohtani(aka shot)
  */ 
-abstract class FactoryAssembler implements JsfAssembler {
+public abstract class FactoryAssembler implements JsfAssembler {
 
     private List factories_ = new LinkedList();
     
