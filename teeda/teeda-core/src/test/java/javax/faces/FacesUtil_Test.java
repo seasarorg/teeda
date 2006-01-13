@@ -30,40 +30,33 @@ import junit.framework.TestCase;
 /**
  * @author Shinpei Ohtani
  */
-public class TestFacesUtil_ extends TestCase {
+public class FacesUtil_Test extends TestCase {
 
-    public static void main(String[] args) {
-        junit.textui.TestRunner.run(TestFacesUtil_.class);
-    }
-
-    /*
-     * void assertNotNull のテスト中のクラス(Object)
-     */
     public void testAssertNotNullObject() {
-        try{
+        try {
             FactoryFinderUtil_.assertNotNull("a");
-        }catch(Exception e){
+        } catch (Exception e) {
             fail();
         }
-        try{
+        try {
             FactoryFinderUtil_.assertNotNull(null);
             fail();
-        }catch(NullPointerException e){
+        } catch (NullPointerException e) {
             assertTrue(true);
         }
     }
 
     public void testCheckValidFactoryNames() {
         String name = FactoryFinder.APPLICATION_FACTORY;
-        try{
+        try {
             FactoryFinderUtil_.checkValidFactoryNames(name);
-        }catch(Exception e){
+        } catch (Exception e) {
             fail();
         }
-        try{
+        try {
             FactoryFinderUtil_.checkValidFactoryNames("notFactoryname");
             fail();
-        }catch(IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             assertTrue(true);
         }
     }
@@ -73,8 +66,8 @@ public class TestFacesUtil_ extends TestCase {
     }
 
     public void testGetAbstractFactoryClass() {
-        Class clazz = 
-            FactoryFinderUtil_.getAbstractFactoryClass(FactoryFinder.FACES_CONTEXT_FACTORY);
+        Class clazz = FactoryFinderUtil_
+                .getAbstractFactoryClass(FactoryFinder.FACES_CONTEXT_FACTORY);
         assertEquals(FactoryFinder.FACES_CONTEXT_FACTORY, clazz.getName());
         clazz = FactoryFinderUtil_.getAbstractFactoryClass("aaa");
         assertNull(clazz);
@@ -84,18 +77,21 @@ public class TestFacesUtil_ extends TestCase {
         List list = new ArrayList();
         list.add("org.seasar.teeda.core.mock.MockApplicationFactory");
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
-        Object o = FactoryFinderUtil_.createFactoryInstance(FactoryFinder.APPLICATION_FACTORY, list, loader);
+        Object o = FactoryFinderUtil_.createFactoryInstance(
+                FactoryFinder.APPLICATION_FACTORY, list, loader);
         assertNotNull(o);
-        assertEquals("org.seasar.teeda.core.mock.MockApplicationFactory", o.getClass().getName());
+        assertEquals("org.seasar.teeda.core.mock.MockApplicationFactory", o
+                .getClass().getName());
         list = new ArrayList();
         list.add("javax.faces.TestFacesUtil_");
-        try{
-            o = FactoryFinderUtil_.createFactoryInstance(FactoryFinder.APPLICATION_FACTORY, list, loader);
+        try {
+            o = FactoryFinderUtil_.createFactoryInstance(
+                    FactoryFinder.APPLICATION_FACTORY, list, loader);
             fail();
-        }catch(IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             assertTrue(true);
         }
-        
+
     }
 
     public void testGetCurrentInstanceByConstructor() {
@@ -103,9 +99,10 @@ public class TestFacesUtil_ extends TestCase {
         Class implClass = MockApplicationFactory2.class;
         Class abstractClass = ApplicationFactory.class;
         Object result = null;
-        try{
-            result = FactoryFinderUtil_.getCurrentFactoryInstance(implClass, abstractClass, f);
-        }catch(Exception e){
+        try {
+            result = FactoryFinderUtil_.getCurrentFactoryInstance(implClass,
+                    abstractClass, f);
+        } catch (Exception e) {
             fail();
         }
         assertNotNull(result);
@@ -115,8 +112,8 @@ public class TestFacesUtil_ extends TestCase {
     public void testIsAlreadySetFactory() {
         Map map = new HashMap();
         assertFalse(FactoryFinderUtil_.isAlreadySetFactory(map, "aaa"));
-        
-        map.put("aaa","aaa");
+
+        map.put("aaa", "aaa");
         assertTrue(FactoryFinderUtil_.isAlreadySetFactory(map, "aaa"));
     }
 
