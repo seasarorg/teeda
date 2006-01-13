@@ -8,10 +8,10 @@ import org.seasar.teeda.core.config.element.FactoryElement;
 import org.seasar.teeda.core.config.element.impl.FacesConfigImpl;
 
 
-public class TestFactoryTagHandler extends TagHandlerTestCase {
+public class FactoryTagHandlerTest extends TagHandlerTestCase {
 
     public static void main(String[] args) {
-        junit.textui.TestRunner.run(TestFactoryTagHandler.class);
+        junit.textui.TestRunner.run(FactoryTagHandlerTest.class);
     }
 
     /*
@@ -27,7 +27,7 @@ public class TestFactoryTagHandler extends TagHandlerTestCase {
         super.tearDown();
     }
 
-    public TestFactoryTagHandler(String arg0) {
+    public FactoryTagHandlerTest(String arg0) {
         super(arg0);
     }
 

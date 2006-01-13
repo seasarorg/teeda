@@ -3,11 +3,7 @@ package org.seasar.teeda.core.application;
 import org.seasar.extension.unit.S2TestCase;
 
 
-public class TestApplicationFactoryImpl extends S2TestCase {
-
-    public static void main(String[] args) {
-        junit.textui.TestRunner.run(TestApplicationFactoryImpl.class);
-    }
+public class ApplicationFactoryImplTest extends S2TestCase {
 
     /*
      * @see TestCase#setUp()
@@ -27,7 +23,7 @@ public class TestApplicationFactoryImpl extends S2TestCase {
      * Constructor for TestApplicationFactoryImpl.
      * @param arg0
      */
-    public TestApplicationFactoryImpl(String arg0) {
+    public ApplicationFactoryImplTest(String arg0) {
         super(arg0);
     }
 

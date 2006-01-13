@@ -1,7 +1,9 @@
-package org.seasar.teeda.core.config.assembler;
+package org.seasar.teeda.core.config.assembler.impl;
 
 import java.util.Map;
 
+import org.seasar.teeda.core.config.assembler.ConverterChildAssembler;
+import org.seasar.teeda.core.config.assembler.ConvertersAssembler;
 import org.seasar.teeda.core.config.element.ConverterElement;
 import org.seasar.teeda.core.util.ClassUtil;
 

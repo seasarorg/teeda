@@ -28,11 +28,11 @@ public class FacesConfigWrapperImpl implements FacesConfig {
     private List factories_ = new LinkedList();
     private List lifecycles_ = new LinkedList();
     private List referencedBeans_ = new LinkedList();
+    private List navigationRules_ = new LinkedList();
     private Map components_ = new HashMap();
     private Map convertersByIds_ = new HashMap();
     private Map convertersByClasses_ = new HashMap();
     private Map managedBeans_ = new HashMap();
-    private Map navigationRules_ = new HashMap();
     private Map renderKits_ = new HashMap();
     private Map validators_ = new HashMap();
 
@@ -68,7 +68,7 @@ public class FacesConfigWrapperImpl implements FacesConfig {
     }
 
     public void addNavigationRuleElement(NavigationRuleElement navigationRule) {
-        navigationRules_.put(navigationRule.getFromViewId(), navigationRule);
+        navigationRules_.add(navigationRule);
     }
 
     public void addRenderKitElement(RenderKitElement renderKit) {
@@ -107,7 +107,7 @@ public class FacesConfigWrapperImpl implements FacesConfig {
         return managedBeans_;
     }
 
-    public Map getNavigationRuleElements() {
+    public List getNavigationRuleElements() {
         return navigationRules_;
     }
 
@@ -151,7 +151,7 @@ public class FacesConfigWrapperImpl implements FacesConfig {
         convertersByIds_.putAll(facesConfig.getConverterElementsById());
         convertersByClasses_.putAll(facesConfig.getConverterElementsByClass());
         managedBeans_.putAll(facesConfig.getManagedBeanElements());
-        navigationRules_.putAll(facesConfig.getNavigationRuleElements());
+        navigationRules_.addAll(facesConfig.getNavigationRuleElements());
         renderKits_.putAll(facesConfig.getRenderKitElements());
         validators_.putAll(facesConfig.getValidatorElements());
     }

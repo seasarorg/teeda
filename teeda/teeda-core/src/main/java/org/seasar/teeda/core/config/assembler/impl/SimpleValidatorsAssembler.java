@@ -1,10 +1,11 @@
-package org.seasar.teeda.core.config.assembler;
+package org.seasar.teeda.core.config.assembler.impl;
 
 import java.util.Iterator;
 import java.util.Map;
 
 import javax.faces.application.Application;
 
+import org.seasar.teeda.core.config.assembler.ValidatorsAssembler;
 import org.seasar.teeda.core.util.ApplicationUtil;
 import org.seasar.teeda.core.util.IteratorUtil;
 

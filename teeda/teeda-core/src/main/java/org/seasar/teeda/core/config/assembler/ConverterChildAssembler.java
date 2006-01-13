@@ -23,11 +23,11 @@ public abstract class ConverterChildAssembler implements JsfAssembler {
     public void assemble() {
         String converterKey = null;
         ConverterElement converterElement = null;
-        for(Iterator itr = IteratorUtil.getIterator(targetCovnerters_);itr.hasNext();){
-            Map.Entry entry = (Map.Entry)itr.next();
-            converterKey = (String)entry.getKey();
-            converterElement = (ConverterElement)entry.getValue();
-            if(converterElement != null){
+        for (Iterator itr = IteratorUtil.getIterator(targetCovnerters_); itr.hasNext();) {
+            Map.Entry entry = (Map.Entry) itr.next();
+            converterKey = (String) entry.getKey();
+            converterElement = (ConverterElement) entry.getValue();
+            if (converterElement != null) {
                 doAssemble(converterKey, converterElement);
             }
         }
@@ -37,5 +37,6 @@ public abstract class ConverterChildAssembler implements JsfAssembler {
         return application_;
     }
 
-    protected abstract void doAssemble(String converterKey, ConverterElement converterElement);
+    protected abstract void doAssemble(String converterKey,
+            ConverterElement converterElement);
 }

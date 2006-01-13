@@ -1,10 +1,11 @@
-package org.seasar.teeda.core.config.assembler;
+package org.seasar.teeda.core.config.assembler.impl;
 
 import java.util.Iterator;
 import java.util.Map;
 
 import javax.faces.render.RenderKitFactory;
 
+import org.seasar.teeda.core.config.assembler.RenderKitsAssembler;
 import org.seasar.teeda.core.config.element.RenderKitElement;
 import org.seasar.teeda.core.util.FactoryFinderUtil;
 import org.seasar.teeda.core.util.IteratorUtil;

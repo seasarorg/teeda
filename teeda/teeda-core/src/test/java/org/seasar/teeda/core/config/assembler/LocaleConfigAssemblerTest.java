@@ -3,15 +3,16 @@ package org.seasar.teeda.core.config.assembler;
 import java.util.Iterator;
 import java.util.Locale;
 
+import org.seasar.teeda.core.config.assembler.impl.LocaleConfigAssembler;
 import org.seasar.teeda.core.config.element.impl.LocaleConfigElementImpl;
 import org.seasar.teeda.core.mock.MockApplication;
 import org.seasar.teeda.core.unit.TeedaTestCase;
 
 
-public class TestLocaleConfigAssembler extends TeedaTestCase {
+public class LocaleConfigAssemblerTest extends TeedaTestCase {
 
     public static void main(String[] args) {
-        junit.textui.TestRunner.run(TestLocaleConfigAssembler.class);
+        junit.textui.TestRunner.run(LocaleConfigAssemblerTest.class);
     }
 
     /*
@@ -32,7 +33,7 @@ public class TestLocaleConfigAssembler extends TeedaTestCase {
      * Constructor for TestLocaleConfigAssembler.
      * @param arg0
      */
-    public TestLocaleConfigAssembler(String arg0) {
+    public LocaleConfigAssemblerTest(String arg0) {
         super(arg0);
     }
 

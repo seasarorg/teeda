@@ -1,8 +1,9 @@
-package org.seasar.teeda.core.config.assembler;
+package org.seasar.teeda.core.config.assembler.impl;
 
 import java.util.Iterator;
 import java.util.Map;
 
+import org.seasar.teeda.core.config.assembler.ManagedBeanAssembler;
 import org.seasar.teeda.core.config.element.ManagedBeanElement;
 import org.seasar.teeda.core.managedbean.ManagedBeanFactory;
 import org.seasar.teeda.core.scope.Scope;

@@ -1,4 +1,4 @@
-package org.seasar.teeda.core.config.assembler;
+package org.seasar.teeda.core.config.assembler.impl;
 
 import java.util.List;
 import java.util.Collections;
@@ -6,6 +6,10 @@ import java.util.Iterator;
 
 import javax.faces.application.Application;
 
+import org.seasar.teeda.core.config.assembler.ApplicationAssemblerHelper;
+import org.seasar.teeda.core.config.assembler.StateManagerAssembler;
+import org.seasar.teeda.core.config.assembler.VariableResolverAssembler;
+import org.seasar.teeda.core.config.assembler.ViewHandlerAssembler;
 import org.seasar.teeda.core.config.element.LocaleConfigElement;
 import org.seasar.teeda.core.util.IteratorUtil;
 

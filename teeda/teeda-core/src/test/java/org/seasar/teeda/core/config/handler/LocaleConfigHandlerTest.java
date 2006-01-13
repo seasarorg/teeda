@@ -2,12 +2,12 @@ package org.seasar.teeda.core.config.handler;
 
 import org.seasar.teeda.core.unit.TeedaTestCase;
 
-public class TestLocaleConfigHandler extends TeedaTestCase {
+public class LocaleConfigHandlerTest extends TeedaTestCase {
 
 	public static void main(String[] args) {
 	}
 
-	public TestLocaleConfigHandler(String arg0) {
+	public LocaleConfigHandlerTest(String arg0) {
 		super(arg0);
 	}
 

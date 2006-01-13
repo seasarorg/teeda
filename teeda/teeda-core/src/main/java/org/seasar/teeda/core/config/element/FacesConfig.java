@@ -43,7 +43,7 @@ public interface FacesConfig extends JsfConfig{
     
     public Map getManagedBeanElements();
     
-    public Map getNavigationRuleElements();
+    public List getNavigationRuleElements();
     
     public Map getRenderKitElements();
         

@@ -8,15 +8,16 @@ import javax.faces.application.ApplicationFactory;
 
 import junit.framework.TestCase;
 
+import org.seasar.teeda.core.config.assembler.impl.SimpleFactoriesAssembler;
 import org.seasar.teeda.core.config.element.FactoryElement;
 import org.seasar.teeda.core.config.element.impl.FactoryElementImpl;
 import org.seasar.teeda.core.mock.MockApplicationFactory;
 
 
-public class TestSimpleFactoriesAssembler extends TestCase {
+public class SimpleFactoriesAssemblerTest extends TestCase {
 
     public static void main(String[] args) {
-        junit.textui.TestRunner.run(TestSimpleFactoriesAssembler.class);
+        junit.textui.TestRunner.run(SimpleFactoriesAssemblerTest.class);
     }
 
     /*
@@ -37,7 +38,7 @@ public class TestSimpleFactoriesAssembler extends TestCase {
      * Constructor for TestSimpleFactoriesAssembler.
      * @param arg0
      */
-    public TestSimpleFactoriesAssembler(String arg0) {
+    public SimpleFactoriesAssemblerTest(String arg0) {
         super(arg0);
     }
 

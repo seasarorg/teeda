@@ -1,10 +1,12 @@
-package org.seasar.teeda.core.config.assembler;
+package org.seasar.teeda.core.config.assembler.impl;
 
 import java.util.List;
 
 import javax.faces.context.ExternalContext;
 import javax.faces.event.PhaseListener;
 
+import org.seasar.teeda.core.config.assembler.LifecycleAssembler;
+import org.seasar.teeda.core.config.assembler.LifecycleChildAssembler;
 import org.seasar.teeda.core.util.ClassUtil;
 import org.seasar.teeda.core.util.DIContainerUtil;
 

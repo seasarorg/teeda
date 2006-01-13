@@ -9,13 +9,13 @@ import org.seasar.teeda.core.config.element.FactoryElement;
 import org.seasar.teeda.core.config.element.impl.ConverterElementImpl;
 
 
-public class TestSimpleStringTagHandler extends TagHandlerTestCase {
+public class SimpleStringTagHandlerTest extends TagHandlerTestCase {
 
     private static final String PATH = 
         "org/seasar/teeda/core/config/handler/testSimpleStringTagHandler.xml";
 
     public static void main(String[] args) {
-        junit.textui.TestRunner.run(TestSimpleStringTagHandler.class);
+        junit.textui.TestRunner.run(SimpleStringTagHandlerTest.class);
     }
 
     /*
@@ -32,7 +32,7 @@ public class TestSimpleStringTagHandler extends TagHandlerTestCase {
         super.tearDown();
     }
 
-    public TestSimpleStringTagHandler(String arg0) {
+    public SimpleStringTagHandlerTest(String arg0) {
         super(arg0);
     }
 

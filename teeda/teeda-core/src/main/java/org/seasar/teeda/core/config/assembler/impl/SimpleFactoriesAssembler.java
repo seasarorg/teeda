@@ -1,10 +1,12 @@
-package org.seasar.teeda.core.config.assembler;
+package org.seasar.teeda.core.config.assembler.impl;
 
 import java.util.Iterator;
 import java.util.List;
 
 import javax.faces.FactoryFinder;
 
+import org.seasar.teeda.core.config.assembler.FactoriesAssembler;
+import org.seasar.teeda.core.config.assembler.FactoryAssembler;
 import org.seasar.teeda.core.config.element.FactoryElement;
 import org.seasar.teeda.core.util.IteratorUtil;
 

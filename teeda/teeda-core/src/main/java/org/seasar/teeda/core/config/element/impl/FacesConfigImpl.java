@@ -23,11 +23,11 @@ public class FacesConfigImpl implements FacesConfig {
     private List factories_ = new ArrayList();
     private List lifecycles_ = new ArrayList();
     private List referencedBeans_ = new ArrayList();
+    private List navigationRules_ = new ArrayList();
     private Map components_ = new HashMap();
     private Map convertersByIds_ = new HashMap();
     private Map convertersByClasses_ = new HashMap();
     private Map managedBeans_ = new HashMap();
-    private Map navigationRules_ = new HashMap();
     private Map renderKits_ = new HashMap();
     private Map validators_ = new HashMap();
     
@@ -60,7 +60,7 @@ public class FacesConfigImpl implements FacesConfig {
     }
 
     public void addNavigationRuleElement(NavigationRuleElement navigationRule) {
-        navigationRules_.put(navigationRule.getFromViewId(), navigationRule);
+        navigationRules_.add(navigationRule);
     }
 
     public void addRenderKitElement(RenderKitElement renderKit) {
@@ -99,7 +99,7 @@ public class FacesConfigImpl implements FacesConfig {
         return managedBeans_;
     }
 
-    public Map getNavigationRuleElements() {
+    public List getNavigationRuleElements() {
         return navigationRules_;
     }
 

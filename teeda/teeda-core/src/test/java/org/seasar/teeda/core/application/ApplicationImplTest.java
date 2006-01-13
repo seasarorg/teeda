@@ -13,12 +13,9 @@ import org.seasar.teeda.core.mock.NullValidator;
 import org.seasar.teeda.core.unit.TeedaTestCase;
 
 
-public class TestApplicationImpl extends TeedaTestCase {
+public class ApplicationImplTest extends TeedaTestCase {
 
     private ApplicationImpl app_;
-    public static void main(String[] args) {
-        junit.textui.TestRunner.run(TestApplicationImpl.class);
-    }
 
     /*
      * @see TestCase#setUp()
@@ -38,7 +35,7 @@ public class TestApplicationImpl extends TeedaTestCase {
      * Constructor for TestApplicationImpl.
      * @param arg0
      */
-    public TestApplicationImpl(String arg0) {
+    public ApplicationImplTest(String arg0) {
         super(arg0);
     }
 

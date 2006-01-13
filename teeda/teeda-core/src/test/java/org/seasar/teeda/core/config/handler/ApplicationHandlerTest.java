@@ -12,10 +12,10 @@ import org.seasar.teeda.core.config.element.impl.FacesConfigImpl;
 
 
 
-public class TestApplicationHandler extends TagHandlerTestCase {
+public class ApplicationHandlerTest extends TagHandlerTestCase {
 
     public static void main(String[] args) {
-        junit.textui.TestRunner.run(TestApplicationHandler.class);
+        junit.textui.TestRunner.run(ApplicationHandlerTest.class);
     }
 
     /*
@@ -36,7 +36,7 @@ public class TestApplicationHandler extends TagHandlerTestCase {
      * Constructor for TestApplicationHandler.
      * @param arg0
      */
-    public TestApplicationHandler(String arg0) {
+    public ApplicationHandlerTest(String arg0) {
         super(arg0);
     }
 

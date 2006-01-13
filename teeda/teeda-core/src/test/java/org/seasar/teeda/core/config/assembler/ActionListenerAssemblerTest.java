@@ -2,16 +2,17 @@ package org.seasar.teeda.core.config.assembler;
 
 import javax.faces.event.ActionListener;
 
+import org.seasar.teeda.core.config.assembler.impl.ActionListenerAssembler;
 import org.seasar.teeda.core.mock.MockActionListener;
 import org.seasar.teeda.core.mock.MockApplication;
 import org.seasar.teeda.core.mock.MockSingleConstructorActionListener;
 import org.seasar.teeda.core.unit.TeedaTestCase;
 
 
-public class TestActionListenerAssembler extends TeedaTestCase {
+public class ActionListenerAssemblerTest extends TeedaTestCase {
 
     public static void main(String[] args) {
-        junit.textui.TestRunner.run(TestActionListenerAssembler.class);
+        junit.textui.TestRunner.run(ActionListenerAssemblerTest.class);
     }
 
     /*
@@ -32,7 +33,7 @@ public class TestActionListenerAssembler extends TeedaTestCase {
      * Constructor for TestActionListenerAssembler.
      * @param arg0
      */
-    public TestActionListenerAssembler(String arg0) {
+    public ActionListenerAssemblerTest(String arg0) {
         super(arg0);
     }
 

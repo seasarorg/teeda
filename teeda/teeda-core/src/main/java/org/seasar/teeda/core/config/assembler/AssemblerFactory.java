@@ -3,6 +3,14 @@ package org.seasar.teeda.core.config.assembler;
 import java.util.List;
 import java.util.Map;
 
+import org.seasar.teeda.core.config.assembler.impl.SimpleApplicationAssembler;
+import org.seasar.teeda.core.config.assembler.impl.SimpleComponentsAssembler;
+import org.seasar.teeda.core.config.assembler.impl.SimpleConvertersAssembler;
+import org.seasar.teeda.core.config.assembler.impl.SimpleFactoriesAssembler;
+import org.seasar.teeda.core.config.assembler.impl.SimpleLifecycleAssembler;
+import org.seasar.teeda.core.config.assembler.impl.SimpleManagedBeanAssembler;
+import org.seasar.teeda.core.config.assembler.impl.SimpleRenderKitsAssembler;
+import org.seasar.teeda.core.config.assembler.impl.SimpleValidatorsAssembler;
 import org.seasar.teeda.core.config.element.FacesConfig;
 
 
@@ -104,6 +112,8 @@ public class AssemblerFactory {
         }
 
         public NavigationRulesAssembler assembleNavigationRules(FacesConfig facesConfig) {
+            List navigationRules = facesConfig.getNavigationRuleElements();
+            return new SimpleNavigationRulesAssembler(navigationRules);
         }
 
         public RenderKitsAssembler assembleRenderKits(FacesConfig facesConfig) {
