@@ -18,6 +18,9 @@ package javax.faces.component;
 import java.io.Serializable;
 import java.util.Map;
 
+import javax.faces.render.RenderKitFactory;
+
+import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.mock.MockValueBinding;
 import org.seasar.teeda.core.mock.NullFacesEvent;
 import org.seasar.teeda.core.mock.NullValueBinding;
@@ -28,13 +31,6 @@ import org.seasar.teeda.core.unit.TeedaTestCase;
  * @author manhole
  */
 public abstract class AbstractUIComponentTest extends TeedaTestCase {
-
-    public AbstractUIComponentTest() {
-    }
-
-    public AbstractUIComponentTest(String name) {
-        super(name);
-    }
 
     public final void testGetValueBinding_NullArg() throws Exception {
         UIComponent component = createUIComponent();
@@ -64,6 +60,48 @@ public abstract class AbstractUIComponentTest extends TeedaTestCase {
         } catch (NullPointerException npe) {
             AssertUtil.assertExceptionMessageExist(npe);
         }
+    }
+
+    public void testGetClientId_ConsecutiveCallsReturnSameValue()
+            throws Exception {
+        UIComponent component = createUIComponent();
+        MockFacesContext context = getFacesContext();
+        context.setViewRoot(new UIViewRoot());
+        String clientId1 = component.getClientId(context);
+        assertEquals(clientId1, component.getClientId(context));
+        assertEquals(clientId1, component.getClientId(context));
+    }
+
+    public void testGetClientId_IdIsChanged() throws Exception {
+        UIComponent component = createUIComponent();
+        MockFacesContext context = getFacesContext();
+        context.setViewRoot(new UIViewRoot());
+        component.setId("a");
+        String clientId1 = component.getClientId(context);
+        assertEquals(clientId1, component.getClientId(context));
+        component.setId("b");
+        AssertUtil.assertNotEquals(clientId1, component.getClientId(context));
+    }
+
+    public void testGetClientId_ParentNamingContainerIdIsChanged()
+            throws Exception {
+        // ## Arrange ##
+        UIComponent component = createUIComponent();
+        MockFacesContext context = getFacesContext();
+        UIViewRoot viewRoot = new UIViewRoot();
+        viewRoot.setRenderKitId(RenderKitFactory.HTML_BASIC_RENDER_KIT);
+        context.setViewRoot(viewRoot);
+        UIData namingContainer = new UIData();
+        assertEquals(true, namingContainer instanceof NamingContainer);
+        namingContainer.setId("a");
+        component.setParent(namingContainer);
+
+        // ## Act & Assert ##
+        final String clientId1 = component.getClientId(context);
+        assertEquals(clientId1, component.getClientId(context));
+        namingContainer.setId("b");
+        // FIXME is it OK?
+        AssertUtil.assertNotEquals(clientId1, component.getClientId(context));
     }
 
     public final void testSetIdNull() throws Exception {
@@ -129,7 +167,7 @@ public abstract class AbstractUIComponentTest extends TeedaTestCase {
         }
     }
 
-    public void testBroadcast_NullArg() throws Exception {
+    public final void testBroadcast_NullArg() throws Exception {
         UIComponent component = createUIComponent();
         try {
             component.broadcast(null);

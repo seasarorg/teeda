@@ -1,3 +1,18 @@
+/*
+ * Copyright 2004-2006 the Seasar Foundation and the Others.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
 package javax.faces.component;
 
 import java.io.IOException;
@@ -17,6 +32,10 @@ import javax.faces.event.FacesListener;
 import javax.faces.render.RenderKit;
 import javax.faces.render.Renderer;
 
+/**
+ * @author shot
+ * @author manhole
+ */
 public abstract class UIComponentBase extends UIComponent {
 
     private String id_;
@@ -86,7 +105,7 @@ public abstract class UIComponentBase extends UIComponent {
         while ((component = component.getParent()) != null) {
             if (component instanceof NamingContainer) {
                 parentId = component.getClientId(context)
-                    + NamingContainer.SEPARATOR_CHAR;
+                        + NamingContainer.SEPARATOR_CHAR;
                 break;
             }
         }
@@ -110,6 +129,7 @@ public abstract class UIComponentBase extends UIComponent {
     public void setId(String id) {
         validateId(id);
         id_ = id;
+        clientId_ = null;
     }
 
     public UIComponent getParent() {
@@ -186,7 +206,7 @@ public abstract class UIComponentBase extends UIComponent {
             expr.substring(1);
         } else {
             for (base = base.getParent(); base.getParent() != null; base = base
-                .getParent()) {
+                    .getParent()) {
                 if (base instanceof NamingContainer) {
                     break;
                 }
@@ -248,7 +268,7 @@ public abstract class UIComponentBase extends UIComponent {
     private static UIComponent getComponentRoot(UIComponent base) {
         UIComponent parent;
         for (parent = base.getParent(); parent.getParent() != null; parent = parent
-            .getParent())
+                .getParent())
             ;
         return parent;
     }
@@ -332,7 +352,7 @@ public abstract class UIComponentBase extends UIComponent {
         ComponentUtils_.assertNotNull("class", clazz);
         if (!FacesListener.class.isAssignableFrom(clazz)) {
             throw new IllegalArgumentException(clazz.getName()
-                + " is not FacesListener");
+                    + " is not FacesListener");
         }
 
         if (listeners_ == null) {
@@ -437,7 +457,7 @@ public abstract class UIComponentBase extends UIComponent {
         }
 
         return new SerializableStateHolder(saveState(context), facetMap,
-            children);
+                children);
     }
 
     public void processRestoreState(FacesContext context, Object state) {
@@ -524,7 +544,7 @@ public abstract class UIComponentBase extends UIComponent {
     }
 
     public static Object saveAttachedState(FacesContext context,
-        Object attachedObject) {
+            Object attachedObject) {
         ComponentUtils_.assertNotNull("context", context);
 
         if (attachedObject == null) {
@@ -547,7 +567,7 @@ public abstract class UIComponentBase extends UIComponent {
     }
 
     public static Object restoreAttachedState(FacesContext context,
-        Object stateObject) {
+            Object stateObject) {
         ComponentUtils_.assertNotNull("context", context);
 
         if (stateObject == null) {
@@ -562,7 +582,7 @@ public abstract class UIComponentBase extends UIComponent {
             for (Iterator itr = list.iterator(); itr.hasNext();) {
 
                 AttachedObjectStateWrapper_ wrapper = (AttachedObjectStateWrapper_) itr
-                    .next();
+                        .next();
                 resultList.add(wrapper.restore(context));
 
             }
@@ -579,7 +599,7 @@ public abstract class UIComponentBase extends UIComponent {
 
     private Object saveAttributesMap() {
         return (attributesMap_ != null) ? attributesMap_.getAttributesActual()
-            : null;
+                : null;
     }
 
     private void restoreAttributeMap(Object state) {
@@ -595,10 +615,10 @@ public abstract class UIComponentBase extends UIComponent {
         if (bindingMap_ != null) {
             states = new HashMap();
             for (Iterator itr = bindingMap_.entrySet().iterator(); itr
-                .hasNext();) {
+                    .hasNext();) {
                 Map.Entry entry = (Map.Entry) itr.next();
                 states.put(entry.getKey(), saveAttachedState(context, entry
-                    .getValue()));
+                        .getValue()));
             }
         }
         return states;
@@ -613,7 +633,7 @@ public abstract class UIComponentBase extends UIComponent {
             for (Iterator itr = stateMap.keySet().iterator(); itr.hasNext();) {
                 Map.Entry entry = (Map.Entry) itr.next();
                 bindingMap_.put(entry.getKey(), restoreAttachedState(context,
-                    entry.getValue()));
+                        entry.getValue()));
             }
         }
 
@@ -637,11 +657,11 @@ public abstract class UIComponentBase extends UIComponent {
             ch = id.charAt(i);
             if (i == 0 && !Character.isLetter(ch) && ch != '_') {
                 throw new IllegalArgumentException(
-                    "The first character is invalid");
+                        "The first character is invalid");
             } else if (!Character.isDigit(ch) && !Character.isLetter(ch)
-                && ch != '-' && ch != '_') {
+                    && ch != '-' && ch != '_') {
                 throw new IllegalArgumentException(
-                    "Subsequent character is invalid");
+                        "Subsequent character is invalid");
             }
         }
 
@@ -649,7 +669,9 @@ public abstract class UIComponentBase extends UIComponent {
 
     private class SerializableStateHolder implements Serializable {
         private Object state_ = null;
+
         private Map facetMap_ = null;
+
         private List children_ = null;
 
         public SerializableStateHolder(Object state, Map facetMap, List children) {

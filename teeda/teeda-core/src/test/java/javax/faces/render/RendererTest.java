@@ -15,6 +15,9 @@
  */
 package javax.faces.render;
 
+import javax.faces.component.UIViewRoot;
+import javax.faces.context.FacesContext;
+
 import org.seasar.teeda.core.mock.NullFacesContext;
 import org.seasar.teeda.core.mock.NullRenderer;
 import org.seasar.teeda.core.mock.NullUIComponent;
@@ -152,6 +155,12 @@ public class RendererTest extends TeedaTestCase {
 
     protected Renderer createRenderer() {
         return new NullRenderer();
+    }
+
+    protected void setupMockUIViewRoot(FacesContext context) {
+        UIViewRoot viewRoot = new UIViewRoot();
+        viewRoot.setRenderKitId(RenderKitFactory.HTML_BASIC_RENDER_KIT);
+        context.setViewRoot(viewRoot);
     }
 
 }

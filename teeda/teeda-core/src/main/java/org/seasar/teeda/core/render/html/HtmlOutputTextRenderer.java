@@ -54,7 +54,7 @@ public class HtmlOutputTextRenderer extends Renderer {
         }
         if (RendererUtil.shouldRenderIdAttribute(htmlOutputText)) {
             RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR,
-                    htmlOutputText.getId());
+                    htmlOutputText.getClientId(context));
         }
         RendererUtil.renderAttributes(writer, htmlOutputText,
                 JsfConstants.COMMON_PASSTROUGH_ATTRIBUTES);

@@ -23,6 +23,7 @@ import javax.faces.render.Renderer;
 import javax.faces.render.RendererTest;
 
 import org.custommonkey.xmlunit.Diff;
+import org.seasar.teeda.core.mock.MockFacesContext;
 
 /**
  * @author manhole
@@ -119,8 +120,11 @@ public class HtmlOutputTextRendererTest extends RendererTest {
         htmlOutputText.setValue("a");
         HtmlOutputTextRenderer renderer = createHtmlOutputTextRenderer();
 
+        MockFacesContext context = getFacesContext();
+        setupMockUIViewRoot(context);
+
         // ## Act ##
-        renderer.encodeEnd(getFacesContext(), htmlOutputText);
+        renderer.encodeEnd(context, htmlOutputText);
 
         // ## Assert ##
         assertEquals("<span id=\"someId\">a</span>", getResponseText());
@@ -141,6 +145,7 @@ public class HtmlOutputTextRendererTest extends RendererTest {
     }
 
     public void testEncodeEnd_IdAndCommonAttributtes() throws Exception {
+        // ## Arrange ##
         HtmlOutputText htmlOutputText = new HtmlOutputText();
         htmlOutputText.setId("fooId");
         htmlOutputText.setTitle("someTitle");
@@ -148,8 +153,13 @@ public class HtmlOutputTextRendererTest extends RendererTest {
         htmlOutputText.setValue("a");
         HtmlOutputTextRenderer renderer = createHtmlOutputTextRenderer();
 
-        renderer.encodeEnd(getFacesContext(), htmlOutputText);
+        MockFacesContext context = getFacesContext();
+        setupMockUIViewRoot(context);
 
+        // ## Act ##
+        renderer.encodeEnd(context, htmlOutputText);
+
+        // ## Assert ##
         Diff diff = new Diff(
                 "<span id=\"fooId\" title=\"someTitle\" onmouseout=\"do something\">a</span>",
                 getResponseText());
