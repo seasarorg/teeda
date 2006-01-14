@@ -28,7 +28,7 @@ public class UISelectOne extends UIInput {
 	}
 	
 	protected void validateValue(FacesContext context, Object value){
-		ComponentUtils_.assertNotNull(context, "context");
+		ComponentUtils_.assertNotNull("context", context);
 		super.validateValue(context, value);
 		if(!isValid() || value == null){
 			return;

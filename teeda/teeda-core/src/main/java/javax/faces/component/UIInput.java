@@ -145,7 +145,7 @@ public class UIInput extends UIOutput implements EditableValueHolder {
 	}
 
 	public void processDecodes(FacesContext context) {
-		ComponentUtils_.assertNotNull(context, "context");
+		ComponentUtils_.assertNotNull("context", context);
 		if (isRendered()) {
 			return;
 		}
@@ -156,7 +156,7 @@ public class UIInput extends UIOutput implements EditableValueHolder {
 	}
 
 	public void processValidators(FacesContext context) {
-		ComponentUtils_.assertNotNull(context, "context");
+		ComponentUtils_.assertNotNull("context", context);
 		if (isRendered()) {
 			return;
 		}
@@ -167,7 +167,7 @@ public class UIInput extends UIOutput implements EditableValueHolder {
 	}
 
 	public void processUpdates(FacesContext context) {
-		ComponentUtils_.assertNotNull(context, "context");
+		ComponentUtils_.assertNotNull("context", context);
 		if (isRendered()) {
 			return;
 		}
@@ -208,7 +208,7 @@ public class UIInput extends UIOutput implements EditableValueHolder {
 	}
 
 	public void updateModel(FacesContext context) {
-		ComponentUtils_.assertNotNull(context, "context");
+		ComponentUtils_.assertNotNull("context", context);
 		if (!isValid() || !isLocalValueSet()) {
 			return;
 		}
@@ -229,7 +229,7 @@ public class UIInput extends UIOutput implements EditableValueHolder {
 	}
 	
 	public void validate(FacesContext context) {
-		ComponentUtils_.assertNotNull(context, "context");
+		ComponentUtils_.assertNotNull("context", context);
 		Object submittedValue = getSubmittedValue();
 		if (submittedValue == null) {
 			return;
@@ -303,7 +303,7 @@ public class UIInput extends UIOutput implements EditableValueHolder {
 	}
 
 	public void addValidator(Validator validator) {
-		ComponentUtils_.assertNotNull(validator, "validator");
+		ComponentUtils_.assertNotNull("validator", validator);
 		if (validators_ == null) {
 			validators_ = new ArrayList();
 		}
@@ -324,7 +324,7 @@ public class UIInput extends UIOutput implements EditableValueHolder {
 	}
 
 	public void addValueChangeListener(ValueChangeListener listener) {
-		ComponentUtils_.assertNotNull(listener, "listener");
+		ComponentUtils_.assertNotNull("listener", listener);
 		addFacesListener(listener);
 	}
 

@@ -40,7 +40,7 @@ public class UIColumn extends UIComponentBase {
 	}
 
 	public void setFooter(UIComponent footer){
-		ComponentUtils_.assertNotNull(footer, "footer");
+		ComponentUtils_.assertNotNull("footer", footer);
 		getFacets().put(FOOTER_FACET_NAME, footer);
 	}
 	
@@ -49,7 +49,7 @@ public class UIColumn extends UIComponentBase {
 	}
 
 	public void setHeader(UIComponent header){
-		ComponentUtils_.assertNotNull(header, "header");
+		ComponentUtils_.assertNotNull("header", header);
 		getFacets().put(HEADER_FACET_NAME, header);
 	}
 

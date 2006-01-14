@@ -62,7 +62,7 @@ public class UIViewRoot extends UIComponentBase {
 	}
 
 	public void queueEvent(FacesEvent event) {
-		ComponentUtils_.assertNotNull(event, "event");
+		ComponentUtils_.assertNotNull("event", event);
 		if (events_ == null) {
 			int length = PhaseId.VALUES.size();
 			events_ = new List[length];
@@ -96,7 +96,7 @@ public class UIViewRoot extends UIComponentBase {
 	}
 
 	public void processApplication(FacesContext context) {
-		ComponentUtils_.assertNotNull(context, "context");
+		ComponentUtils_.assertNotNull("context", context);
 		broadcastEvents(context, PhaseId.INVOKE_APPLICATION);
 	}
 

@@ -109,7 +109,7 @@ class ComponentAttributesMap_ implements Map, Serializable {
     public Object put(Object key, Object value) {
         assertNotNull("key", key);
         assertNotNull("value", value);
-        checkKey(key);
+        verifyKeyIsString(key);
 
         PropertyDescriptor propertyDescriptor = getPropertyDescriptor((String) key);
         Object returnValue = null;
@@ -124,13 +124,11 @@ class ComponentAttributesMap_ implements Map, Serializable {
         return returnValue;
     }
 
-    private static void assertNotNull(String message, Object actual) {
-        if (actual == null) {
-            throw new NullPointerException(message);
-        }
+    private void assertNotNull(String message, Object actual) {
+        ComponentUtils_.assertNotNull(message, actual);
     }
 
-    private static void checkKey(Object key) {
+    private void verifyKeyIsString(Object key) {
         if (!(key instanceof String)) {
             throw new ClassCastException("key must be a String");
         }

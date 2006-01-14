@@ -36,18 +36,18 @@ public class UIForm extends UIComponentBase implements NamingContainer {
 	}
 	
 	public void processDecodes(FacesContext context) {
-		ComponentUtils_.assertNotNull(context, "context");
+		ComponentUtils_.assertNotNull("context", context);
 		decode(context);
 		processAppropriateAction(context, PhaseId.APPLY_REQUEST_VALUES);
 	}
 	
 	public void processUpdates(FacesContext context) {
-		ComponentUtils_.assertNotNull(context, "context");
+		ComponentUtils_.assertNotNull("context", context);
 		processAppropriateAction(context, PhaseId.UPDATE_MODEL_VALUES);
 	}
 	
 	public void processValidators(FacesContext context) {
-		ComponentUtils_.assertNotNull(context, "context");
+		ComponentUtils_.assertNotNull("context", context);
 		processAppropriateAction(context, PhaseId.PROCESS_VALIDATIONS);
 	}
 	

@@ -63,7 +63,7 @@ public class UIGraphic extends UIComponentBase {
 	}
 	
 	public void setValueBinding(String name, ValueBinding vb){
-		ComponentUtils_.assertNotNull(name, "name");
+		ComponentUtils_.assertNotNull("name", name);
 		if(URL_BINDING_NAME.equals(name)){
 			super.setValueBinding(VALUE_BINDING_NAME, vb);
 		}else{

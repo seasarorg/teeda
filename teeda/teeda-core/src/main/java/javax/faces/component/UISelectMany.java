@@ -128,7 +128,7 @@ public class UISelectMany extends UIInput {
 	}
 
 	private Object[] toObjectArray(Object obj) {
-		ComponentUtils_.assertNotNull(obj, "primitiveArray");
+		ComponentUtils_.assertNotNull("primitiveArray", obj);
 		if (ComponentUtils_.isObjectArray(obj)) {
 			return (Object[]) obj;
 		}else if(obj instanceof List) {

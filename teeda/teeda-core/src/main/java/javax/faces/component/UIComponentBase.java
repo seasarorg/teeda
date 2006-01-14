@@ -57,12 +57,12 @@ public abstract class UIComponentBase extends UIComponent {
     }
 
     public ValueBinding getValueBinding(String name) {
-        ComponentUtils_.assertNotNull(name, "name");
+        ComponentUtils_.assertNotNull("name", name);
         return (ValueBinding) bindingMap_.get(name);
     }
 
     public void setValueBinding(String name, ValueBinding valuebinding) {
-        ComponentUtils_.assertNotNull(name, "name");
+        ComponentUtils_.assertNotNull("name", name);
 
         if (name.equals("id") || name.equals("parent")) {
             throw new IllegalArgumentException();
@@ -76,7 +76,7 @@ public abstract class UIComponentBase extends UIComponent {
     }
 
     public String getClientId(FacesContext context) {
-        ComponentUtils_.assertNotNull(context, "context");
+        ComponentUtils_.assertNotNull("context", context);
         if (clientId_ != null) {
             return clientId_;
         }
@@ -179,7 +179,7 @@ public abstract class UIComponentBase extends UIComponent {
     }
 
     public UIComponent findComponent(String expr) {
-        ComponentUtils_.assertNotNull(expr, "expr");
+        ComponentUtils_.assertNotNull("expr", expr);
         UIComponent base = this;
         if (expr.charAt(0) == NamingContainer.SEPARATOR_CHAR) {
             getComponentRoot(base);
@@ -269,7 +269,7 @@ public abstract class UIComponentBase extends UIComponent {
     }
 
     public void broadcast(FacesEvent event) throws AbortProcessingException {
-        ComponentUtils_.assertNotNull(event, "event");
+        ComponentUtils_.assertNotNull("event", event);
         if (listeners_ != null) {
             for (Iterator itr = listeners_.iterator(); itr.hasNext();) {
                 FacesListener listener = (FacesListener) itr.next();
@@ -281,13 +281,13 @@ public abstract class UIComponentBase extends UIComponent {
     }
 
     public void decode(FacesContext context) {
-        ComponentUtils_.assertNotNull(context, "context");
+        ComponentUtils_.assertNotNull("context", context);
         Renderer renderer = getRendererForEncodeOrDecode(context);
         renderer.decode(context, this);
     }
 
     public void encodeBegin(FacesContext context) throws IOException {
-        ComponentUtils_.assertNotNull(context, "context");
+        ComponentUtils_.assertNotNull("context", context);
         if (!isRendered()) {
             return;
         }
@@ -297,7 +297,7 @@ public abstract class UIComponentBase extends UIComponent {
     }
 
     public void encodeChildren(FacesContext context) throws IOException {
-        ComponentUtils_.assertNotNull(context, "context");
+        ComponentUtils_.assertNotNull("context", context);
         if (!isRendered()) {
             return;
         }
@@ -306,7 +306,7 @@ public abstract class UIComponentBase extends UIComponent {
     }
 
     public void encodeEnd(FacesContext context) throws IOException {
-        ComponentUtils_.assertNotNull(context, "context");
+        ComponentUtils_.assertNotNull("context", context);
         if (!isRendered()) {
             return;
         }
@@ -321,7 +321,7 @@ public abstract class UIComponentBase extends UIComponent {
     }
 
     protected void addFacesListener(FacesListener listener) {
-        ComponentUtils_.assertNotNull(listener, "listener");
+        ComponentUtils_.assertNotNull("listener", listener);
         if (listeners_ == null) {
             listeners_ = new ArrayList();
         }
@@ -329,7 +329,7 @@ public abstract class UIComponentBase extends UIComponent {
     }
 
     protected FacesListener[] getFacesListeners(Class clazz) {
-        ComponentUtils_.assertNotNull(clazz, "class");
+        ComponentUtils_.assertNotNull("class", clazz);
         if (!FacesListener.class.isAssignableFrom(clazz)) {
             throw new IllegalArgumentException(clazz.getName()
                 + " is not FacesListener");
@@ -353,7 +353,7 @@ public abstract class UIComponentBase extends UIComponent {
     }
 
     protected void removeFacesListener(FacesListener listener) {
-        ComponentUtils_.assertNotNull(listener, "listener");
+        ComponentUtils_.assertNotNull("listener", listener);
 
         if (listeners_ != null) {
             listeners_.remove(listener);
@@ -361,7 +361,7 @@ public abstract class UIComponentBase extends UIComponent {
     }
 
     public void queueEvent(FacesEvent event) {
-        ComponentUtils_.assertNotNull(event, "event");
+        ComponentUtils_.assertNotNull("event", event);
         UIComponent parent = getParent();
         if (parent == null) {
             throw new IllegalStateException("parent not found");
@@ -370,7 +370,7 @@ public abstract class UIComponentBase extends UIComponent {
     }
 
     public void processDecodes(FacesContext context) {
-        ComponentUtils_.assertNotNull(context, "context");
+        ComponentUtils_.assertNotNull("context", context);
         if (!isRendered()) {
             return;
         }
@@ -388,7 +388,7 @@ public abstract class UIComponentBase extends UIComponent {
     }
 
     public void processValidators(FacesContext context) {
-        ComponentUtils_.assertNotNull(context, "context");
+        ComponentUtils_.assertNotNull("context", context);
         if (!isRendered()) {
             return;
         }
@@ -400,7 +400,7 @@ public abstract class UIComponentBase extends UIComponent {
     }
 
     public void processUpdates(FacesContext context) {
-        ComponentUtils_.assertNotNull(context, "context");
+        ComponentUtils_.assertNotNull("context", context);
         if (!isRendered()) {
             return;
         }
@@ -412,7 +412,7 @@ public abstract class UIComponentBase extends UIComponent {
     }
 
     public Object processSaveState(FacesContext context) {
-        ComponentUtils_.assertNotNull(context, "context");
+        ComponentUtils_.assertNotNull("context", context);
 
         if (isTransient()) {
             return null;
@@ -441,7 +441,7 @@ public abstract class UIComponentBase extends UIComponent {
     }
 
     public void processRestoreState(FacesContext context, Object state) {
-        ComponentUtils_.assertNotNull(context, "context");
+        ComponentUtils_.assertNotNull("context", context);
 
         if (state instanceof SerializableStateHolder) {
             throw new IllegalArgumentException();
@@ -525,7 +525,7 @@ public abstract class UIComponentBase extends UIComponent {
 
     public static Object saveAttachedState(FacesContext context,
         Object attachedObject) {
-        ComponentUtils_.assertNotNull(context, "context");
+        ComponentUtils_.assertNotNull("context", context);
 
         if (attachedObject == null) {
             return null;
@@ -548,7 +548,7 @@ public abstract class UIComponentBase extends UIComponent {
 
     public static Object restoreAttachedState(FacesContext context,
         Object stateObject) {
-        ComponentUtils_.assertNotNull(context, "context");
+        ComponentUtils_.assertNotNull("context", context);
 
         if (stateObject == null) {
             return null;
