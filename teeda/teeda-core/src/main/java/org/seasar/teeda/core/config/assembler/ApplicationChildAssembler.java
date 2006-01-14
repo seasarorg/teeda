@@ -38,7 +38,10 @@ public abstract class ApplicationChildAssembler implements JsfAssembler {
     }
 
     public ApplicationChildAssembler(Application application){
-        this(null, application);
+        if(application == null){
+            throw new IllegalArgumentException("application");
+        }
+        application_ = application;
     }
 
     protected Object createMarshalInstance(Class clazz, Object previous){
