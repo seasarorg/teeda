@@ -15,8 +15,6 @@
  */
 package org.seasar.teeda.core.render.html;
 
-import java.io.IOException;
-
 import javax.faces.component.UIViewRoot;
 import javax.faces.component.html.HtmlOutputText;
 import javax.faces.render.Renderer;
@@ -27,8 +25,6 @@ import org.seasar.teeda.core.mock.MockFacesContext;
 
 /**
  * @author manhole
- * 
- * TODO
  */
 public class HtmlOutputTextRendererTest extends RendererTest {
 
@@ -100,8 +96,8 @@ public class HtmlOutputTextRendererTest extends RendererTest {
 
     public void testEncodeEnd_CommonAttributtes() throws Exception {
         HtmlOutputText htmlOutputText = new HtmlOutputText();
-        htmlOutputText.setTitle("someTitle");
         htmlOutputText.getAttributes().put("onmouseout", "do something");
+        htmlOutputText.getAttributes().put("title", "someTitle");
         htmlOutputText.setValue("a");
         HtmlOutputTextRenderer renderer = createHtmlOutputTextRenderer();
 
@@ -164,10 +160,6 @@ public class HtmlOutputTextRendererTest extends RendererTest {
                 "<span id=\"fooId\" title=\"someTitle\" onmouseout=\"do something\">a</span>",
                 getResponseText());
         assertEquals(diff.toString(), true, diff.identical());
-    }
-
-    private String getResponseText() throws IOException {
-        return getResponse().getWriter().toString();
     }
 
     private HtmlOutputTextRenderer createHtmlOutputTextRenderer() {

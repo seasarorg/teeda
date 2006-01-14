@@ -15,6 +15,8 @@
  */
 package javax.faces.render;
 
+import java.io.IOException;
+
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 
@@ -161,6 +163,10 @@ public class RendererTest extends TeedaTestCase {
         UIViewRoot viewRoot = new UIViewRoot();
         viewRoot.setRenderKitId(RenderKitFactory.HTML_BASIC_RENDER_KIT);
         context.setViewRoot(viewRoot);
+    }
+
+    protected String getResponseText() throws IOException {
+        return getResponse().getWriter().toString();
     }
 
 }
