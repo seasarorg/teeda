@@ -1,4 +1,4 @@
-package org.seasar.teeda.core.config.assembler;
+package org.seasar.teeda.core.config.assembler.impl;
 
 import javax.faces.event.ActionListener;
 
