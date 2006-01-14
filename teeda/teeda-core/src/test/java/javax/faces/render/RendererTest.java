@@ -17,9 +17,6 @@ package javax.faces.render;
 
 import java.io.IOException;
 
-import javax.faces.component.UIViewRoot;
-import javax.faces.context.FacesContext;
-
 import org.seasar.teeda.core.mock.NullFacesContext;
 import org.seasar.teeda.core.mock.NullRenderer;
 import org.seasar.teeda.core.mock.NullUIComponent;
@@ -132,11 +129,11 @@ public class RendererTest extends TeedaTestCase {
     }
 
     public final void testGetConvertedValue_FacesContextIsNull()
-        throws Exception {
+            throws Exception {
         Renderer renderer = createRenderer();
         try {
             renderer.getConvertedValue(null, new NullUIComponent(),
-                new Object());
+                    new Object());
             fail();
         } catch (NullPointerException npe) {
             AssertUtil.assertExceptionMessageExist(npe);
@@ -144,11 +141,11 @@ public class RendererTest extends TeedaTestCase {
     }
 
     public final void testGetConvertedValue_UIComponentIsNull()
-        throws Exception {
+            throws Exception {
         Renderer renderer = createRenderer();
         try {
             renderer.getConvertedValue(new NullFacesContext(), null,
-                new Object());
+                    new Object());
             fail();
         } catch (NullPointerException npe) {
             AssertUtil.assertExceptionMessageExist(npe);
@@ -157,12 +154,6 @@ public class RendererTest extends TeedaTestCase {
 
     protected Renderer createRenderer() {
         return new NullRenderer();
-    }
-
-    protected void setupMockUIViewRoot(FacesContext context) {
-        UIViewRoot viewRoot = new UIViewRoot();
-        viewRoot.setRenderKitId(RenderKitFactory.HTML_BASIC_RENDER_KIT);
-        context.setViewRoot(viewRoot);
     }
 
     protected String getResponseText() throws IOException {

@@ -63,11 +63,27 @@ public interface JsfConstants {
 
     public String SCOPE_REQUEST = "request";
 
+    // -- element --
+
+    public String ANCHOR_ELEM = "a";
+
     public String SPAN_ELEM = "span";
+
+    // -- attribute --
+
+    public String ACCESSKEY_ATTR = "accesskey";
+
+    public String CHARSET_ATTR = "charset";
 
     public String CLASS_ATTR = "class";
 
+    public String COORDS_ATTR = "coords";
+
     public String DIR_ATTR = "dir";
+
+    public String HREF_ATTR = "href";
+
+    public String HREFLANG_ATTR = "hreflang";
 
     public String ID_ATTR = "id";
 
@@ -93,11 +109,23 @@ public interface JsfConstants {
 
     public String ONKEYUP_ATTR = "onkeyup";
 
+    public String REL_ATTR = "rel";
+
+    public String REV_ATTR = "rev";
+
+    public String SHAPE_ATTR = "shape";
+
     public String STYLE_ATTR = "style";
 
     public String STYLE_CLASS_ATTR = "styleClass";
 
+    public String TABINDEX_ATTR = "tabindex";
+
+    public String TARGET_ATTR = "target";
+
     public String TITLE_ATTR = "title";
+
+    public String TYPE_ATTR = "type";
 
     public String[] UNIVERSAL_ATTRIBUTES_WITHOUT_STYLE = { DIR_ATTR, LANG_ATTR,
             TITLE_ATTR, };
@@ -117,5 +145,34 @@ public interface JsfConstants {
 
     public String[] COMMON_PASSTROUGH_ATTRIBUTES = (String[]) ArrayUtil.add(
             EVENT_HANDLER_ATTRIBUTES, UNIVERSAL_ATTRIBUTES);
+
+    public String[] ANCHOR_ATTRIBUTES = { ACCESSKEY_ATTR, CHARSET_ATTR,
+            COORDS_ATTR, HREFLANG_ATTR, REL_ATTR, REV_ATTR, SHAPE_ATTR,
+            TABINDEX_ATTR, TARGET_ATTR, TYPE_ATTR };
+
+    public String[] ANCHOR_PASSTHROUGH_ATTRIBUTES = (String[]) ArrayUtil.add(
+            ANCHOR_ATTRIBUTES, COMMON_PASSTROUGH_ATTRIBUTES);
+
+    public String[] COMMON_PASSTROUGH_ATTRIBUTES_WITHOUT_STYLE = (String[]) ArrayUtil
+            .add(EVENT_HANDLER_ATTRIBUTES, UNIVERSAL_ATTRIBUTES_WITHOUT_STYLE);
+
+    public String[] ANCHOR_PASSTHROUGH_ATTRIBUTES_WITHOUT_STYLE = (String[]) ArrayUtil
+            .add(ANCHOR_ATTRIBUTES, COMMON_PASSTROUGH_ATTRIBUTES_WITHOUT_STYLE);
+
+    public String ONBLUR_ATTR = "onblur";
+
+    public String ONCHANGE_ATTR = "onchange";
+
+    public String ONFOCUS_ATTR = "onfocus";
+
+    public String ONSELECT_ATTR = "onselect";
+
+    public String[] ONBLUR_AND_ONFOCUS_ATTRIBUTES = { ONBLUR_ATTR, ONFOCUS_ATTR };
+
+    public String[] ANCHOR_PASSTHROUGH_AND_ONBLUR_AND_ONFOCUS_ATTRIBUTES = (String[]) ArrayUtil
+            .add(ANCHOR_PASSTHROUGH_ATTRIBUTES, ONBLUR_AND_ONFOCUS_ATTRIBUTES);
+
+    public String[] COMMON_FIELD_EVENT_ATTRIBUTES = { ONFOCUS_ATTR,
+            ONBLUR_ATTR, ONSELECT_ATTR, ONCHANGE_ATTR };
 
 }

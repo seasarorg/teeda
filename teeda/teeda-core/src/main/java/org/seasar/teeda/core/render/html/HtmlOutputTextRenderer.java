@@ -33,9 +33,9 @@ import org.seasar.teeda.core.util.UIComponentUtil;
  */
 public class HtmlOutputTextRenderer extends Renderer {
 
-    private static final String[] ID_AND_COMMON_PASSTROUGH_ATTRIBUTES = (String[]) ArrayUtil
-            .add(JsfConstants.COMMON_PASSTROUGH_ATTRIBUTES,
-                    JsfConstants.ID_ATTR);
+    private static final String[] ID_WITH_COMMON_PASSTROUGH_ATTRIBUTES = (String[]) ArrayUtil
+            .add(new String[] { JsfConstants.ID_ATTR },
+                    JsfConstants.COMMON_PASSTROUGH_ATTRIBUTES);
 
     public void encodeEnd(FacesContext context, UIComponent component)
             throws IOException {
@@ -48,14 +48,12 @@ public class HtmlOutputTextRenderer extends Renderer {
         ResponseWriter writer = context.getResponseWriter();
         boolean writeSpan = false;
         if (UIComponentUtil.containsAttributes(htmlOutputText,
-                ID_AND_COMMON_PASSTROUGH_ATTRIBUTES)) {
+                ID_WITH_COMMON_PASSTROUGH_ATTRIBUTES)) {
             writer.startElement(JsfConstants.SPAN_ELEM, htmlOutputText);
             writeSpan = true;
         }
-        if (RendererUtil.shouldRenderIdAttribute(htmlOutputText)) {
-            RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR,
-                    htmlOutputText.getClientId(context));
-        }
+        RendererUtil.renderIdAttributeIfNecessary(writer, htmlOutputText,
+                htmlOutputText.getId());
         RendererUtil.renderAttributes(writer, htmlOutputText,
                 JsfConstants.COMMON_PASSTROUGH_ATTRIBUTES);
         if (htmlOutputText.isEscape()) {

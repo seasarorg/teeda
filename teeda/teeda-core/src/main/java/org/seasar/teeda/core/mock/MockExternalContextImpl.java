@@ -24,14 +24,21 @@ import org.seasar.framework.mock.servlet.MockServletContext;
 public class MockExternalContextImpl extends MockExternalContext {
 
     private MockServletContext context_;
+
     private MockHttpServletRequest request_;
+
     private HttpServletResponse response_;
+
     private Map applicationMap_;
+
     private Map requestParameterMap_;
+
     private Map requestCookieMap_;
+
     private Map sessionMap_;
+
     private Map requestMap_;
-    
+
     public MockExternalContextImpl(MockServletContext context,
             MockHttpServletRequest request, MockHttpServletResponse response) {
         context_ = context;
@@ -56,8 +63,7 @@ public class MockExternalContextImpl extends MockExternalContext {
         requestParameterMap_ = map;
     }
 
-    public void dispatch(String requestURI) 
-        throws IOException, FacesException {
+    public void dispatch(String requestURI) throws IOException, FacesException {
         throw new UnsupportedOperationException();
     }
 
@@ -69,8 +75,8 @@ public class MockExternalContextImpl extends MockExternalContext {
         throw new UnsupportedOperationException();
     }
 
-    public String encodeResourceURL(String sb) {
-        throw new UnsupportedOperationException();
+    public String encodeResourceURL(String url) {
+        return response_.encodeURL(url);
     }
 
     public Map getApplicationMap() {
@@ -98,8 +104,8 @@ public class MockExternalContextImpl extends MockExternalContext {
     public Map getInitParameterMap() {
         Map parameterMap = new HashMap();
         Enumeration names = context_.getInitParameterNames();
-        while (names.hasMoreElements()){
-            String name = (String)names.nextElement();
+        while (names.hasMoreElements()) {
+            String name = (String) names.nextElement();
             parameterMap.put(name, context_.getInitParameter(name));
         }
         return Collections.unmodifiableMap(parameterMap);
@@ -138,9 +144,9 @@ public class MockExternalContextImpl extends MockExternalContext {
     }
 
     public Map getRequestMap() {
-    	if(requestMap_ == null){
-    		requestMap_ = new HashMap();
-    	}
+        if (requestMap_ == null) {
+            requestMap_ = new HashMap();
+        }
         return requestMap_;
     }
 
@@ -206,7 +212,7 @@ public class MockExternalContextImpl extends MockExternalContext {
 
     public Map getSessionMap() {
 
-        if(sessionMap_ == null){
+        if (sessionMap_ == null) {
             HttpSession session = request_.getSession(true);
             sessionMap_ = new MockSessionMap(session);
         }
@@ -233,15 +239,11 @@ public class MockExternalContextImpl extends MockExternalContext {
     }
 
     public void log(String message, Throwable throwable) {
-
         context_.log(message, throwable);
-
     }
 
     public void redirect(String requestURI) throws IOException {
-
         throw new UnsupportedOperationException();
-
     }
 
     private class LocalesIterator implements Iterator {

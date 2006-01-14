@@ -15,13 +15,30 @@
  */
 package org.seasar.teeda.core.util;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class ArrayUtil {
 
-    private ArrayUtil(){
+    private ArrayUtil() {
     }
-    
-    public static boolean isEmpty(Object[] arrays){
+
+    public static boolean isEmpty(Object[] arrays) {
         return (arrays == null || arrays.length == 0);
+    }
+
+    public static boolean equalsIgnoreSequence(Object[] array1, Object[] array2) {
+        if (array1.length != array2.length) {
+            return false;
+        }
+        List list = Arrays.asList(array2);
+        for (int i = 0; i < array1.length; i++) {
+            Object o1 = array1[i];
+            if (!list.contains(o1)) {
+                return false;
+            }
+        }
+        return true;
     }
 
 }

@@ -28,12 +28,17 @@ import javax.faces.context.ResponseWriter;
 public class HtmlResponseWriter extends ResponseWriter {
 
     private Writer writer_;
+
     private String contentType_;
+
     private String characterEncoding_;
+
     private boolean startTagOpening_;
 
+    private static final String DEFAULT_CHARACTER_ENCODING = "UTF-8";
+
     public void startElement(String name, UIComponent componentForElement)
-        throws IOException {
+            throws IOException {
         if (name == null) {
             throw new NullPointerException("name");
         }
@@ -66,13 +71,13 @@ public class HtmlResponseWriter extends ResponseWriter {
     }
 
     public void writeAttribute(String name, Object value, String property)
-        throws IOException {
+            throws IOException {
         if (name == null) {
             throw new NullPointerException("name");
         }
         if (!startTagOpening_) {
             throw new IllegalStateException(
-                "there is no currently open element");
+                    "there is no currently open element");
         }
         Writer writer = getWriter();
         writer.write(" ");
@@ -83,22 +88,18 @@ public class HtmlResponseWriter extends ResponseWriter {
     }
 
     public void writeURIAttribute(String name, Object value, String property)
-        throws IOException {
+            throws IOException {
         if (name == null) {
             throw new NullPointerException("name");
         }
         if (!startTagOpening_) {
             throw new IllegalStateException(
-                "there is no currently open element");
+                    "there is no currently open element");
         }
         Writer writer = getWriter();
-        String encoding = getCharacterEncoding();
-        if (encoding == null) {
-            encoding = "UTF-8";
-        }
         String strValue = value.toString();
-        strValue = URLEncoder.encode(strValue, encoding);
-        
+        strValue = URLEncoder.encode(strValue, getCharacterEncoding());
+
         writer.write(" ");
         writer.write(name);
         writer.write("=\"");
@@ -139,24 +140,24 @@ public class HtmlResponseWriter extends ResponseWriter {
         for (int i = 0; i < chars.length; i++) {
             char c = chars[i];
             switch (c) {
-                case '<':
-                    sb.append("&lt;");
-                    break;
-                case '>':
-                    sb.append("&gt;");
-                    break;
-                case '&':
-                    sb.append("&amp;");
-                    break;
-                case '"':
-                    sb.append("&quot;");
-                    break;
-                case '\'':
-                    sb.append("&#39;");
-                    break;
-                default:
-                    sb.append(c);
-                    break;
+            case '<':
+                sb.append("&lt;");
+                break;
+            case '>':
+                sb.append("&gt;");
+                break;
+            case '&':
+                sb.append("&amp;");
+                break;
+            case '"':
+                sb.append("&quot;");
+                break;
+            case '\'':
+                sb.append("&#39;");
+                break;
+            default:
+                sb.append(c);
+                break;
             }
         }
         return new String(sb);
@@ -201,6 +202,9 @@ public class HtmlResponseWriter extends ResponseWriter {
     }
 
     public String getCharacterEncoding() {
+        if (characterEncoding_ == null) {
+            return DEFAULT_CHARACTER_ENCODING;
+        }
         return characterEncoding_;
     }
 

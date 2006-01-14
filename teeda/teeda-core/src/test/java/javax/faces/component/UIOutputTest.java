@@ -8,10 +8,7 @@ import org.seasar.teeda.core.mock.MockConverter;
 import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.mock.MockValueBinding;
 
-/**
- * TODO test saveState, restoreState
- */
-public class TestUIOutput extends UIComponentBaseTest {
+public class UIOutputTest extends UIComponentBaseTest {
 
     public void testGetFamily() {
         UIOutput output = new UIOutput();
@@ -23,12 +20,14 @@ public class TestUIOutput extends UIComponentBaseTest {
         Converter converter = new Converter() {
 
             public Object getAsObject(FacesContext context,
-                UIComponent component, String value) throws ConverterException {
+                    UIComponent component, String value)
+                    throws ConverterException {
                 return null;
             }
 
             public String getAsString(FacesContext context,
-                UIComponent component, Object value) throws ConverterException {
+                    UIComponent component, Object value)
+                    throws ConverterException {
                 return null;
             }
 
@@ -46,12 +45,14 @@ public class TestUIOutput extends UIComponentBaseTest {
         Converter converter = new Converter() {
 
             public Object getAsObject(FacesContext context,
-                UIComponent component, String value) throws ConverterException {
+                    UIComponent component, String value)
+                    throws ConverterException {
                 return null;
             }
 
             public String getAsString(FacesContext context,
-                UIComponent component, Object value) throws ConverterException {
+                    UIComponent component, Object value)
+                    throws ConverterException {
                 return null;
             }
 

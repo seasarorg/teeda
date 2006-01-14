@@ -22,6 +22,7 @@ import javax.faces.render.RendererTest;
 
 import org.custommonkey.xmlunit.Diff;
 import org.seasar.teeda.core.mock.MockFacesContext;
+import org.seasar.teeda.core.util.TeedaTestUtil;
 
 /**
  * @author manhole
@@ -117,7 +118,7 @@ public class HtmlOutputTextRendererTest extends RendererTest {
         HtmlOutputTextRenderer renderer = createHtmlOutputTextRenderer();
 
         MockFacesContext context = getFacesContext();
-        setupMockUIViewRoot(context);
+        TeedaTestUtil.setupMockUIViewRoot(context);
 
         // ## Act ##
         renderer.encodeEnd(context, htmlOutputText);
@@ -150,7 +151,7 @@ public class HtmlOutputTextRendererTest extends RendererTest {
         HtmlOutputTextRenderer renderer = createHtmlOutputTextRenderer();
 
         MockFacesContext context = getFacesContext();
-        setupMockUIViewRoot(context);
+        TeedaTestUtil.setupMockUIViewRoot(context);
 
         // ## Act ##
         renderer.encodeEnd(context, htmlOutputText);

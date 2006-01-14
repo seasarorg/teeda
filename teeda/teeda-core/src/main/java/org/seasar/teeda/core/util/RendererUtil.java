@@ -78,4 +78,11 @@ public class RendererUtil {
         renderAttribute(writer, attributeName, value, attributeName);
     }
 
+    public static void renderIdAttributeIfNecessary(ResponseWriter writer,
+            UIComponent component, String idValue) throws IOException {
+        if (RendererUtil.shouldRenderIdAttribute(component)) {
+            RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR, idValue);
+        }
+    }
+
 }

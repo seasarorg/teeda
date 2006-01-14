@@ -11,4 +11,17 @@ public class ArrayUtilTest extends TestCase {
         assertFalse(ArrayUtil.isEmpty(new Object[] { "aaa" }));
     }
 
+    public void testEqualsIgnoreSequence() throws Exception {
+        assertEquals(true, ArrayUtil.equalsIgnoreSequence(new Object[] { "1" },
+                new Object[] { "1" }));
+        assertEquals(true, ArrayUtil.equalsIgnoreSequence(new Object[] { "1",
+                "2", "3" }, new Object[] { "2", "3", "1" }));
+        assertEquals(false, ArrayUtil.equalsIgnoreSequence(
+                new Object[] { "1" }, new Object[] { "2" }));
+        assertEquals(false, ArrayUtil.equalsIgnoreSequence(
+                new Object[] { "1" }, new Object[] {}));
+        assertEquals(false, ArrayUtil.equalsIgnoreSequence(
+                new Object[] { new Integer("1") }, new Object[] { "1" }));
+    }
+
 }

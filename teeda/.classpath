@@ -8,12 +8,12 @@
 	<classpathentry kind="lib" path="lib/aopalliance-1.0.jar"/>
 	<classpathentry kind="lib" path="lib/commons-beanutils-1.6.1.jar"/>
 	<classpathentry kind="lib" path="lib/commons-collections-2.1.jar"/>
-	<classpathentry kind="lib" path="lib/commons-el-1.0.jar"/>
-	<classpathentry kind="lib" path="lib/commons-logging-1.0.4.jar"/>
+	<classpathentry sourcepath="lib/sources/commons-el-1.0-sources.jar" kind="lib" path="lib/commons-el-1.0.jar"/>
+	<classpathentry sourcepath="lib/sources/commons-logging-1.0.4-sources.jar" kind="lib" path="lib/commons-logging-1.0.4.jar"/>
 	<classpathentry kind="lib" path="lib/javassist-3.0.jar"/>
 	<classpathentry kind="lib" path="lib/jstl-1.1.2.jar"/>
-	<classpathentry kind="lib" path="lib/junit-3.8.1.jar"/>
-	<classpathentry kind="lib" path="lib/log4j-1.2.8.jar"/>
+	<classpathentry sourcepath="lib/sources/junit-3.8.1-sources.jar" kind="lib" path="lib/junit-3.8.1.jar"/>
+	<classpathentry sourcepath="lib/sources/log4j-1.2.8-sources.jar" kind="lib" path="lib/log4j-1.2.8.jar"/>
 	<classpathentry kind="lib" path="lib/ognl-2.6.5.jar"/>
 	<classpathentry kind="lib" path="lib/poi-2.5.1-final-20040804.jar"/>
 	<classpathentry sourcepath="/seasar2/s2-extension" kind="lib" path="lib/s2-extension-2.3.0.jar"/>
@@ -21,5 +21,6 @@
 	<classpathentry kind="lib" path="lib/geronimo-spec-servlet-2.4-rc4.jar"/>
 	<classpathentry kind="lib" path="lib/geronimo-spec-jsp-2.0-rc4.jar"/>
 	<classpathentry kind="lib" path="lib/xmlunit-1.0.jar"/>
+	<classpathentry sourcepath="lib/sources/commons-lang-2.1-sources.jar" kind="lib" path="lib/commons-lang-2.1.jar"/>
 	<classpathentry kind="output" path="teeda-core/target/classes"/>
 </classpath>
