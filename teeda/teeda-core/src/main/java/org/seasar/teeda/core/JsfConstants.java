@@ -69,6 +69,8 @@ public interface JsfConstants {
 
     public String DIR_ATTR = "dir";
 
+    public String ID_ATTR = "id";
+
     public String LANG_ATTR = "lang";
 
     public String ONCLICK_ATTR = "onclick";

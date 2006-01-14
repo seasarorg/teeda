@@ -16,9 +16,9 @@
 package org.seasar.teeda.core.util;
 
 import java.io.IOException;
-import java.util.Map;
 
 import javax.faces.component.UIComponent;
+import javax.faces.component.UIViewRoot;
 import javax.faces.context.ResponseWriter;
 
 import org.seasar.teeda.core.JsfConstants;
@@ -63,6 +63,19 @@ public class RendererUtil {
         }
         writer.writeAttribute(attributeName, value, propertyName);
         return true;
+    }
+
+    public static boolean shouldRenderIdAttribute(UIComponent component) {
+        String id = component.getId();
+        if (id != null && !id.startsWith(UIViewRoot.UNIQUE_ID_PREFIX)) {
+            return true;
+        }
+        return false;
+    }
+
+    public static void renderAttribute(ResponseWriter writer,
+            String attributeName, Object value) throws IOException {
+        renderAttribute(writer, attributeName, value, attributeName);
     }
 
 }

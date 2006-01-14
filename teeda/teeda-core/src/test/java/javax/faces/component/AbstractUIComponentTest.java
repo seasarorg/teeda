@@ -66,6 +66,12 @@ public abstract class AbstractUIComponentTest extends TeedaTestCase {
         }
     }
 
+    public final void testSetIdNull() throws Exception {
+        UIComponent component = createUIComponent();
+        component.setId(null);
+        success();
+    }
+
     public final void testSetId_IllegalArg1() throws Exception {
         UIComponent component = createUIComponent();
         try {
@@ -93,7 +99,7 @@ public abstract class AbstractUIComponentTest extends TeedaTestCase {
         try {
             // Subsequent characters must be a letter, a digit,
             // an underscore ('_'), or a dash ('-').
-            component.setId("_:");
+            component.setId("a:");
             fail();
         } catch (IllegalArgumentException iae) {
             AssertUtil.assertExceptionMessageExist(iae);

@@ -32,6 +32,13 @@ public class UIComponentUtil {
         Map attributes = component.getAttributes();
         for (int i = 0, len = attributeNames.length; i < len; i++) {
             String attributeName = attributeNames[i];
+            /*
+             * don't use #containsKey method!
+             * 
+             * because when attributeName matches a property of this
+             * UIComponent, containsKey returns false. See
+             * UIComponent#getAttributes API document.
+             */
             Object value = attributes.get(attributeName);
             if (value != null) {
                 return true;

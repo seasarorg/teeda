@@ -66,6 +66,8 @@ import org.w3c.dom.Text;
  * <br />
  * Examples and more at <a
  * href="http://xmlunit.sourceforge.net"/>xmlunit.sourceforge.net</a>
+ * 
+ * @author manhole
  */
 public class XmlUnitLearningTest extends XMLTestCase {
     public void testForEquality() throws Exception {
@@ -74,23 +76,27 @@ public class XmlUnitLearningTest extends XMLTestCase {
         try {
             assertXMLEqual("comparing test xml to control xml", myControlXML,
                     myTestXML);
-            fail();
+            throw new RuntimeException();
         } catch (AssertionFailedError expected) {
         }
         assertXMLNotEqual("test xml not similar to control xml", myControlXML,
                 myTestXML);
     }
 
-    public void testIdentical() throws Exception {
+    public void testSimilarAndNotIdentical() throws Exception {
         String myControlXML = "<struct><int>3</int><boolean>false</boolean></struct>";
         String myTestXML = "<struct><boolean>false</boolean><int>3</int></struct>";
         Diff myDiff = new Diff(myControlXML, myTestXML);
-        assertTrue("pieces of XML are similar " + myDiff, myDiff.similar());
-        try {
-            assertTrue("but are they identical? " + myDiff, myDiff.identical());
-            fail();
-        } catch (AssertionFailedError expected) {
-        }
+        assertEquals(myDiff.toString(), true, myDiff.similar());
+        assertEquals(myDiff.toString(), false, myDiff.identical());
+    }
+
+    public void testIdentical_DifferentAttributeSequence() throws Exception {
+        String myControlXML = "<foo a=\"aa\" b=\"bb\"/>";
+        String myTestXML = "<foo b=\"bb\" a=\"aa\"/>";
+        Diff myDiff = new Diff(myControlXML, myTestXML);
+        assertEquals(myDiff.toString(), true, myDiff.similar());
+        assertEquals(myDiff.toString(), true, myDiff.identical());
     }
 
     public void testAllDifferences() throws Exception {

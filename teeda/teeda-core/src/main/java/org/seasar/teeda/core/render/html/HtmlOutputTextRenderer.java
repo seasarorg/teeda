@@ -23,6 +23,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.render.Renderer;
 
+import org.seasar.framework.util.ArrayUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.util.RendererUtil;
 import org.seasar.teeda.core.util.UIComponentUtil;
@@ -32,19 +33,30 @@ import org.seasar.teeda.core.util.UIComponentUtil;
  */
 public class HtmlOutputTextRenderer extends Renderer {
 
-    // TODO
+    private static final String[] ID_AND_COMMON_PASSTROUGH_ATTRIBUTES = (String[]) ArrayUtil
+            .add(JsfConstants.COMMON_PASSTROUGH_ATTRIBUTES,
+                    JsfConstants.ID_ATTR);
+
     public void encodeEnd(FacesContext context, UIComponent component)
             throws IOException {
         super.encodeEnd(context, component);
-        HtmlOutputText htmlOutputText = (HtmlOutputText) component;
+        renderHtmlOutputText(context, (HtmlOutputText) component);
+    }
+
+    protected void renderHtmlOutputText(FacesContext context,
+            HtmlOutputText htmlOutputText) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
         boolean writeSpan = false;
-        if (UIComponentUtil.containsAttributes(component,
-                JsfConstants.COMMON_PASSTROUGH_ATTRIBUTES)) {
-            writer.startElement(JsfConstants.SPAN_ELEM, component);
+        if (UIComponentUtil.containsAttributes(htmlOutputText,
+                ID_AND_COMMON_PASSTROUGH_ATTRIBUTES)) {
+            writer.startElement(JsfConstants.SPAN_ELEM, htmlOutputText);
             writeSpan = true;
         }
-        RendererUtil.renderAttributes(writer, component,
+        if (RendererUtil.shouldRenderIdAttribute(htmlOutputText)) {
+            RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR,
+                    htmlOutputText.getId());
+        }
+        RendererUtil.renderAttributes(writer, htmlOutputText,
                 JsfConstants.COMMON_PASSTROUGH_ATTRIBUTES);
         if (htmlOutputText.isEscape()) {
             writer.writeText(htmlOutputText.getValue().toString(), null);
