@@ -20,7 +20,7 @@ package org.seasar.teeda.core;
  */
 public interface TODO {
     /*
-     * É√(     v ﬂÉ÷ﬂ) TODO
+     * TODO
      *  - LifecycleImpl
      *    -> separate phases to jsf spec
      *  - Make JSF init-code complete. 
@@ -29,15 +29,13 @@ public interface TODO {
      *  - Test, test, test
      *    -> JSF Specification part(UIComponent things!)
      *    -> Teeda original part
-     * 
-     * É√(   v ﬂÉ÷ﬂ) TODO
+     *  - Make Assemblers done.
+     *  - Impl NavigationHandler
      *  - Selenium integration
      *  - Client side solution like commons-validator or aspect interceptor or what 
      *  - Make TeedaTestCase better, such as....
      *    -> separate JSF-specified part and Teeda part.
      *       (JSFTestCase and TeedaTestCase?)
-     *  
-     * É√( v ﬂÉ÷ﬂ) TODO
      *  - use Find bugs?
      *  - use Clover or cobertura?
      *  - Add copyright to all sources.

@@ -1,17 +1,21 @@
 package org.seasar.teeda.core.config.assembler;
 
-public class NavigationRulesAssembler extends AbstractJsfAssembler {
+import java.util.Collections;
+import java.util.List;
 
-	protected void setupChildAssembler() {
-		// TODO 自動生成されたメソッド・スタブ
-		throw new UnsupportedOperationException();
+import org.seasar.teeda.core.config.element.NavigationRuleElement;
 
-	}
+public abstract class NavigationRulesAssembler extends AbstractJsfAssembler {
 
-	public void assemble() {
-		// TODO 自動生成されたメソッド・スタブ
-		throw new UnsupportedOperationException();
-
-	}
-
+    private List navigationRules_ = Collections.EMPTY_LIST;
+    
+    public NavigationRulesAssembler(List navigationRules){
+        isAllSuitableJsfElement(navigationRules, NavigationRuleElement.class);
+        navigationRules_ = navigationRules;
+        setupChildAssembler();
+    }
+    
+    protected final List getNavigationRules(){
+        return navigationRules_;
+    }
 }

@@ -9,6 +9,7 @@ import org.seasar.teeda.core.config.assembler.impl.SimpleConvertersAssembler;
 import org.seasar.teeda.core.config.assembler.impl.SimpleFactoriesAssembler;
 import org.seasar.teeda.core.config.assembler.impl.SimpleLifecycleAssembler;
 import org.seasar.teeda.core.config.assembler.impl.SimpleManagedBeanAssembler;
+import org.seasar.teeda.core.config.assembler.impl.SimpleNavigationRulesAssembler;
 import org.seasar.teeda.core.config.assembler.impl.SimpleRenderKitsAssembler;
 import org.seasar.teeda.core.config.assembler.impl.SimpleValidatorsAssembler;
 import org.seasar.teeda.core.config.element.FacesConfig;

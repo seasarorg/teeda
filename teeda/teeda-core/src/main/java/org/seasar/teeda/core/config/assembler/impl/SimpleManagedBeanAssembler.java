@@ -23,10 +23,10 @@ public class SimpleManagedBeanAssembler extends ManagedBeanAssembler {
     }
 
     protected void setupChildAssembler() {
-        managedBeanFactory_ = (ManagedBeanFactory)DIContainerUtil
-                .getComponent(ManagedBeanFactory.class);
-        scopeManager_ = (ScopeManager)DIContainerUtil
-                .getComponent(ScopeManager.class);
+        managedBeanFactory_ = 
+            (ManagedBeanFactory)DIContainerUtil.getComponent(ManagedBeanFactory.class);
+        scopeManager_ = 
+            (ScopeManager)DIContainerUtil.getComponent(ScopeManager.class);
     }
 
     public void assemble() {
