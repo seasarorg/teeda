@@ -65,6 +65,8 @@ public class NavigationHandlerImpl extends NavigationHandler {
             } else {
                 render(context, viewHandler, newViewId);
             }
+        }else{
+            //Stay current ViewRoot.
         }
     }
 
@@ -93,6 +95,9 @@ public class NavigationHandlerImpl extends NavigationHandler {
     }
     
     protected NavigationCaseContext getNavigationCaseContext(NavigationContext navContext, String fromAction, String outcome){
+        if(navContext == null){
+            return null;
+        }
         List navCases = navContext.getNavigationCases();
         final NavigationCaseContext inCaseContext = new NavigationCaseContext(fromAction, outcome); 
         for(Iterator itr = IteratorUtil.getIterator(navCases); itr.hasNext();){
