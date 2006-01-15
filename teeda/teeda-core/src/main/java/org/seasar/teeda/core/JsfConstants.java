@@ -81,6 +81,8 @@ public interface JsfConstants {
 
     public String DIR_ATTR = "dir";
 
+    public String FOR_ATTR = "for";
+
     public String HREF_ATTR = "href";
 
     public String HREFLANG_ATTR = "hreflang";
@@ -91,9 +93,15 @@ public interface JsfConstants {
 
     public String LANG_ATTR = "lang";
 
+    public String ONBLUR_ATTR = "onblur";
+
+    public String ONCHANGE_ATTR = "onchange";
+
     public String ONCLICK_ATTR = "onclick";
 
     public String ONDBLCLICK_ATTR = "ondblclick";
+
+    public String ONFOCUS_ATTR = "onfocus";
 
     public String ONMOUSEDOWN_ATTR = "onmousedown";
 
@@ -110,6 +118,8 @@ public interface JsfConstants {
     public String ONKEYDOWN_ATTR = "onkeydown";
 
     public String ONKEYUP_ATTR = "onkeyup";
+
+    public String ONSELECT_ATTR = "onselect";
 
     public String REL_ATTR = "rel";
 
@@ -161,14 +171,6 @@ public interface JsfConstants {
     public String[] ANCHOR_PASSTHROUGH_ATTRIBUTES_WITHOUT_STYLE = (String[]) ArrayUtil
             .add(ANCHOR_ATTRIBUTES, COMMON_PASSTROUGH_ATTRIBUTES_WITHOUT_STYLE);
 
-    public String ONBLUR_ATTR = "onblur";
-
-    public String ONCHANGE_ATTR = "onchange";
-
-    public String ONFOCUS_ATTR = "onfocus";
-
-    public String ONSELECT_ATTR = "onselect";
-
     public String[] ONBLUR_AND_ONFOCUS_ATTRIBUTES = { ONBLUR_ATTR, ONFOCUS_ATTR };
 
     public String[] ANCHOR_PASSTHROUGH_AND_ONBLUR_AND_ONFOCUS_ATTRIBUTES = (String[]) ArrayUtil
@@ -176,5 +178,11 @@ public interface JsfConstants {
 
     public String[] COMMON_FIELD_EVENT_ATTRIBUTES = { ONFOCUS_ATTR,
             ONBLUR_ATTR, ONSELECT_ATTR, ONCHANGE_ATTR };
+
+    public String[] LABEL_ATTRIBUTES = { ACCESSKEY_ATTR, ONBLUR_ATTR,
+            ONFOCUS_ATTR, TABINDEX_ATTR };
+
+    public String[] LABEL_PASSTHROUGH_ATTRIBUTES = (String[]) ArrayUtil.add(
+            LABEL_ATTRIBUTES, COMMON_PASSTROUGH_ATTRIBUTES);
 
 }

@@ -24,6 +24,7 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.render.Renderer;
 
 import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.core.util.RendererUtil;
 import org.seasar.teeda.core.util.ValueHolderUtil;
 
 /**
@@ -41,6 +42,16 @@ public class HtmlOutputLabelRenderer extends Renderer {
             HtmlOutputLabel htmlOutputLabel) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
         writer.startElement(JsfConstants.LABEL_ATTR, htmlOutputLabel);
+        RendererUtil.renderIdAttributeIfNecessary(writer, htmlOutputLabel,
+                htmlOutputLabel.getId());
+        String forAttr = htmlOutputLabel.getFor();
+        if (forAttr != null) {
+            RendererUtil.renderAttribute(writer, JsfConstants.FOR_ATTR,
+                    forAttr, null);
+        }
+
+        RendererUtil.renderAttributes(writer, htmlOutputLabel,
+                JsfConstants.LABEL_PASSTHROUGH_ATTRIBUTES);
         String value = ValueHolderUtil.getValueForRender(context,
                 htmlOutputLabel);
         writer.writeText(value, null);
