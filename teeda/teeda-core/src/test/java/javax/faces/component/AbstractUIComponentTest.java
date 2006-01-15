@@ -53,6 +53,24 @@ public abstract class AbstractUIComponentTest extends TeedaTestCase {
         }
     }
 
+    public void testSetValueBinding_IllegalArgName1() throws Exception {
+        UIComponent component = createUIComponent();
+        try {
+            component.setValueBinding("id", new NullValueBinding());
+        } catch (IllegalArgumentException iae) {
+            AssertUtil.assertExceptionMessageExist(iae);
+        }
+    }
+
+    public void testSetValueBinding_IllegalArgName2() throws Exception {
+        UIComponent component = createUIComponent();
+        try {
+            component.setValueBinding("parent", new NullValueBinding());
+        } catch (IllegalArgumentException iae) {
+            AssertUtil.assertExceptionMessageExist(iae);
+        }
+    }
+
     public final void testGetClientId_NullArg() throws Exception {
         UIComponent component = createUIComponent();
         try {

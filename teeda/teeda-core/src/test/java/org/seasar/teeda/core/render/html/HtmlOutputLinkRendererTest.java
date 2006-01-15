@@ -93,7 +93,7 @@ public class HtmlOutputLinkRendererTest extends RendererTest {
         HtmlOutputLink htmlOutputLink = new HtmlOutputLink();
         // japanese "a"
         htmlOutputLink
-                .setValue("/" + Character.valueOf((char) 12354) + ".html");
+                .setValue("/" + new Character((char)12354) + ".html");
         HtmlOutputLinkRenderer renderer = createHtmlOutputLinkRenderer();
         renderer.encodeBegin(getFacesContext(), htmlOutputLink);
 
@@ -152,7 +152,7 @@ public class HtmlOutputLinkRendererTest extends RendererTest {
         htmlOutputLink.setValue("url");
         UIParameter param = new UIParameter();
         param.setName("a");
-        param.setValue(Character.valueOf((char) 12354)); // japanese "a"
+        param.setValue(new Character((char) 12354)); // japanese "a"
         htmlOutputLink.getChildren().add(param);
         HtmlOutputLinkRenderer renderer = createHtmlOutputLinkRenderer();
 

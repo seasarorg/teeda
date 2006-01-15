@@ -87,6 +87,8 @@ public interface JsfConstants {
 
     public String ID_ATTR = "id";
 
+    public String LABEL_ATTR = "label";
+
     public String LANG_ATTR = "lang";
 
     public String ONCLICK_ATTR = "onclick";

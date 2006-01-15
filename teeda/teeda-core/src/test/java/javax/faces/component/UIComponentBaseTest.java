@@ -10,37 +10,21 @@ import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.mock.MockUIComponent;
 import org.seasar.teeda.core.mock.MockValueBinding;
 import org.seasar.teeda.core.mock.NullFacesContext;
+import org.seasar.teeda.core.util.TeedaTestUtil;
 
 public class UIComponentBaseTest extends AbstractUIComponentTest {
 
-    public void testHandleValueBinding() {
-        MockUIComponentBase base = new MockUIComponentBase();
+    public void testSetGetValueBinding() {
+        UIComponentBase base = createUIComponentBase();
         MockValueBinding vb = new MockValueBinding();
-        try {
-            base.setValueBinding(null, vb);
-            fail();
-        } catch (NullPointerException e) {
-            success();
-        }
-        try {
-            base.setValueBinding("id", vb);
-            fail();
-        } catch (IllegalArgumentException e) {
-            success();
-        }
-        try {
-            base.setValueBinding("parent", vb);
-            fail();
-        } catch (IllegalArgumentException e) {
-            success();
-        }
-
         base.setValueBinding("hoge", vb);
         assertTrue(vb == base.getValueBinding("hoge"));
     }
 
     public void testGetClientId() {
-        MockUIComponentBase component = new MockUIComponentBase();
+        TeedaTestUtil.setupMockUIViewRoot(getFacesContext());
+
+        UIComponentBase component = createUIComponentBase();
         component.setId("a");
 
         MockUIComponent parent = new MockUIComponentWithNamingContainer();
@@ -52,28 +36,33 @@ public class UIComponentBaseTest extends AbstractUIComponentTest {
         assertEquals("b:a", clientId);
     }
 
-    public void testGetId() {
-        // TODO getId() ������܂��B
-    }
-
-    public void testSetId() {
-        // TODO setId() ������܂��B
+    public void testSetGetId() {
+        UIComponentBase component = createUIComponentBase();
+        assertEquals(null, component.getId());
+        component.setId("a12345");
+        assertEquals("a12345", component.getId());
     }
 
     public void testGetParent() {
-        // TODO getParent() ������܂��B
+        UIComponentBase component = createUIComponentBase();
+        assertEquals(null, component.getParent());
+        UIComponent parent = createUIComponent();
+        component.setParent(parent);
+        assertSame(parent, component.getParent());
     }
 
-    public void testSetParent() {
-        // TODO setParent() ������܂��B
+    public void testSetGetRendered() throws Exception {
+        UIComponentBase componentBase = createUIComponentBase();
+        componentBase.setRendered(false);
+        assertEquals(false, componentBase.isRendered());
     }
 
-    public void testIsRendered() {
-        // TODO isRendered() ������܂��B
-    }
-
-    public void testSetRendered() {
-        // TODO setRendered() ������܂��B
+    public void testSetGetRendered_ValueBinding() throws Exception {
+        UIComponentBase componentBase = createUIComponentBase();
+        MockValueBinding vb = new MockValueBinding();
+        vb.setValue(getFacesContext(), Boolean.FALSE);
+        componentBase.setValueBinding("rendered", vb);
+        assertEquals(false, componentBase.isRendered());
     }
 
     public void testGetRendererType() {
@@ -312,10 +301,6 @@ public class UIComponentBaseTest extends AbstractUIComponentTest {
         // TODO restoreAttachedState() ������܂��B
     }
 
-    public void testUIComponent() {
-        // TODO UIComponent() ������܂��B
-    }
-
     public void testGetFamily() {
         // TODO getFamily() ������܂��B
     }
@@ -342,7 +327,10 @@ public class UIComponentBaseTest extends AbstractUIComponentTest {
 
     private static class MockUIComponentWithNamingContainer extends
             MockUIComponent implements NamingContainer {
+    }
 
+    private UIComponentBase createUIComponentBase() {
+        return (UIComponentBase) createUIComponent();
     }
 
     protected UIComponent createUIComponent() {

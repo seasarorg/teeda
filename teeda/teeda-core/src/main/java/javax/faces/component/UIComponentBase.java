@@ -48,9 +48,7 @@ public abstract class UIComponentBase extends UIComponent {
 
     private String clientId_ = null;
 
-    private boolean isRendered_ = true;
-
-    private boolean renderSet_ = false;
+    private Boolean isRendered_;
 
     private String renderType_ = null;
 
@@ -82,11 +80,9 @@ public abstract class UIComponentBase extends UIComponent {
 
     public void setValueBinding(String name, ValueBinding valuebinding) {
         ComponentUtils_.assertNotNull("name", name);
-
         if (name.equals("id") || name.equals("parent")) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("invalid name is specified");
         }
-
         if (valuebinding != null) {
             bindingMap_.put(name, valuebinding);
         } else {
@@ -141,21 +137,19 @@ public abstract class UIComponentBase extends UIComponent {
     }
 
     public boolean isRendered() {
-        if (renderSet_) {
-            return renderSet_;
+        if (isRendered_ != null) {
+            return isRendered_.booleanValue();
         }
         ValueBinding vb = getValueBinding(RENDERED);
         if (vb != null) {
-            Boolean value = (Boolean) this.getValueFromBinding(vb);
-            renderSet_ = Boolean.TRUE.equals(value);
+            isRendered_ = ((Boolean) this.getValueFromBinding(vb));
         }
 
-        return renderSet_;
+        return isRendered_.booleanValue();
     }
 
     public void setRendered(boolean isRendered) {
-        isRendered_ = isRendered;
-        renderSet_ = true;
+        isRendered_ = Boolean.valueOf(isRendered);
     }
 
     public String getRendererType() {
@@ -517,10 +511,9 @@ public abstract class UIComponentBase extends UIComponent {
     }
 
     public Object saveState(FacesContext context) {
-
         Object[] values = new Object[7];
         values[0] = id_;
-        values[1] = ComponentUtils_.convertToBoolean(isRendered_);
+        values[1] = isRendered_;
         values[2] = renderType_;
         values[3] = clientId_;
         values[4] = saveAttributesMap();
@@ -531,16 +524,14 @@ public abstract class UIComponentBase extends UIComponent {
     }
 
     public void restoreState(FacesContext context, Object state) {
-
         Object[] values = (Object[]) state;
         id_ = (String) values[0];
-        isRendered_ = ((Boolean) values[1]).booleanValue();
+        isRendered_ = (Boolean) values[1];
         renderType_ = (String) values[2];
         clientId_ = (String) values[3];
         restoreAttributeMap(values[4]);
         listeners_ = (List) restoreAttachedState(context, values[5]);
         restoreValueBindingMap(context, values[6]);
-
     }
 
     public static Object saveAttachedState(FacesContext context,
@@ -644,11 +635,9 @@ public abstract class UIComponentBase extends UIComponent {
     }
 
     private void validateId(String id) {
-
         if (id == null) {
             return;
         }
-
         if (id.length() < 1) {
             throw new IllegalArgumentException("UIComponentBase");
         }
@@ -664,7 +653,6 @@ public abstract class UIComponentBase extends UIComponent {
                         "Subsequent character is invalid");
             }
         }
-
     }
 
     private class SerializableStateHolder implements Serializable {
