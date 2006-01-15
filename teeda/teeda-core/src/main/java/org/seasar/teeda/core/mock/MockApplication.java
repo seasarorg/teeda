@@ -2,8 +2,10 @@ package org.seasar.teeda.core.mock;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.faces.FacesException;
 import javax.faces.application.Application;
@@ -21,6 +23,9 @@ import javax.faces.el.VariableResolver;
 import javax.faces.event.ActionListener;
 import javax.faces.validator.Validator;
 
+import org.seasar.teeda.core.util.ClassUtil;
+import org.seasar.teeda.core.util.ValueBindingUtil;
+
 
 public class MockApplication extends Application {
 
@@ -34,6 +39,7 @@ public class MockApplication extends Application {
     private ViewHandler viewHandler_;
     private StateManager stateManager_;
     private String defaultRenderKitId_;
+    private Map componentClassMap_ = new HashMap();
     public MockApplication(){
     }
     
@@ -117,29 +123,29 @@ public class MockApplication extends Application {
         stateManager_ = manager;
     }
 
-    /**
-     *
-     */
-
     public void addComponent(String componentType, String componentClassName) {
+        Class clazz = ClassUtil.forName(componentClassName);
+        componentClassMap_.put(componentType, clazz);
     }
-
-    /**
-     *
-     */
 
     public UIComponent createComponent(String componentType)
             throws FacesException {
-        return null;
+        Class componentClass = (Class)componentClassMap_.get(componentType);
+        if(componentClass == null){
+            throw new FacesException();
+        }
+        return (UIComponent)ClassUtil.newInstance(componentClass);
     }
 
-    /**
-     *
-     */
-
-    public UIComponent createComponent(ValueBinding componentBinding,
-            FacesContext context, String componentType) throws FacesException {
-        return null;
+    public UIComponent createComponent(ValueBinding vb, FacesContext context, String componentType) throws FacesException {
+        Object obj = vb.getValue(context);
+        if(obj instanceof UIComponent){
+            return (UIComponent)obj;
+        }else{
+            UIComponent component = createComponent(componentType);
+            vb.setValue(context, component);
+            return component;
+        }
     }
 
     /**
