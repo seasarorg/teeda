@@ -17,6 +17,8 @@ package org.seasar.teeda.core.render.html;
 
 import java.util.Set;
 
+import org.apache.commons.lang.StringUtils;
+
 import junit.framework.TestCase;
 
 /**
@@ -120,6 +122,13 @@ public class UrlStringTest extends TestCase {
 
         // ## Act & Assert ##
         assertEquals(false, url1.isIdentical(url2));
+    }
+
+    public void testStringUtilsLearning() throws Exception {
+        String[] split = StringUtils.split("a=b=c=d", "=", 2);
+        assertEquals(2, split.length);
+        assertEquals("a", split[0]);
+        assertEquals("b=c=d", split[1]);
     }
 
 }

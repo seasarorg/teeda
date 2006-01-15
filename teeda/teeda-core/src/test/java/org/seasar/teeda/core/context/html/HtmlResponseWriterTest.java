@@ -17,6 +17,7 @@ package org.seasar.teeda.core.context.html;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.net.URLEncoder;
 
 import javax.faces.context.ResponseWriter;
 
@@ -339,10 +340,10 @@ public class HtmlResponseWriterTest extends TestCase {
 
     public void testSetGetCharacterEncoding() throws Exception {
         HtmlResponseWriter responseWriter = new HtmlResponseWriter();
-        assertNull(responseWriter.getCharacterEncoding());
+        // assertNull(responseWriter.getCharacterEncoding());
         responseWriter.setCharacterEncoding("some character encoding");
         assertEquals("some character encoding", responseWriter
-            .getCharacterEncoding());
+                .getCharacterEncoding());
     }
 
     public void testWriteAttribute() throws Exception {
@@ -377,19 +378,6 @@ public class HtmlResponseWriterTest extends TestCase {
         }
     }
 
-    public void testWriteURIAttribute() throws Exception {
-        HtmlResponseWriter responseWriter = new HtmlResponseWriter();
-        SPrintWriter writer = new SPrintWriter();
-        responseWriter.setWriter(writer);
-        responseWriter.setCharacterEncoding("UTF-8");
-
-        responseWriter.startElement("span", null);
-        responseWriter.writeURIAttribute("a", "/a/b.html", null);
-
-        String value = writer.toString();
-        assertEquals("<span a=\"" + "%2Fa%2Fb.html" + "\"", value);
-    }
-
     public void testWriteURIAttribute_NameIsNull() throws Exception {
         HtmlResponseWriter responseWriter = new HtmlResponseWriter();
         try {
@@ -408,6 +396,72 @@ public class HtmlResponseWriterTest extends TestCase {
         } catch (IllegalStateException ise) {
             AssertUtil.assertExceptionMessageExist(ise);
         }
+    }
+
+    public void testWriteURIAttribute() throws Exception {
+        assertEquals("url", writeURIAttributeTest("url"));
+        assertEquals("/a/b.html", writeURIAttributeTest("/a/b.html"));
+        assertEquals("url?a=b", writeURIAttributeTest("url?a=b"));
+        assertEquals("url?a=b%3Fc=d", writeURIAttributeTest("url?a=b?c=d"));
+        final Character japaneseA = Character.valueOf((char) 12354);
+        assertEquals("url?a=%E3%81%82", writeURIAttributeTest("url?a="
+                + japaneseA));
+        assertEquals("%E3%81%82?a=1", writeURIAttributeTest(japaneseA + "?a=1"));
+    }
+
+    private String writeURIAttributeTest(String input) throws IOException {
+        HtmlResponseWriter responseWriter = new HtmlResponseWriter();
+        SPrintWriter writer = new SPrintWriter();
+        responseWriter.setWriter(writer);
+        responseWriter.setCharacterEncoding("UTF-8");
+
+        responseWriter.startElement("span", null);
+        responseWriter.writeURIAttribute("a", input, null);
+
+        String value = writer.toString();
+        final String prefix = "<span a=\"";
+        final String suffix = "\"";
+        assertEquals(true, value.startsWith(prefix));
+        assertEquals(true, value.endsWith(suffix));
+        value = value.substring(prefix.length());
+        value = value.substring(0, value.length() - suffix.length());
+        return value;
+    }
+
+    public void testEncodeURIAttribute() throws Exception {
+        HtmlResponseWriter responseWriter = new HtmlResponseWriter();
+        assertEquals("a", responseWriter.encodeURIAttribute("a"));
+        assertEquals("url", responseWriter.encodeURIAttribute("url"));
+        assertEquals("/a/b.html", responseWriter
+                .encodeURIAttribute("/a/b.html"));
+        assertEquals("a?1=2", responseWriter.encodeURIAttribute("a?1=2"));
+        assertEquals("a?1=2&3=4", responseWriter
+                .encodeURIAttribute("a?1=2&3=4"));
+        assertEquals("a?1=2%3F3=4", responseWriter
+                .encodeURIAttribute("a?1=2?3=4"));
+    }
+
+    public void testLeaningUrlEncoder() throws Exception {
+        assertEquals("%2F", URLEncoder.encode("/", "UTF-8"));
+        assertEquals("+", URLEncoder.encode(" ", "UTF-8"));
+        assertEquals("%40", URLEncoder.encode("@", "UTF-8"));
+        assertEquals("%3F", URLEncoder.encode("?", "UTF-8"));
+
+        Character japaneseA = Character.valueOf((char) 12354);
+        assertEquals(12354, japaneseA.charValue());
+        assertEquals("3042", Integer.toHexString((int) japaneseA.charValue()));
+        assertEquals("%E3%81%82", URLEncoder.encode(japaneseA.toString(),
+                "UTF-8"));
+        assertEquals("%82%A0", URLEncoder.encode(japaneseA.toString(),
+                "Windows-31J"));
+    }
+
+    public void testLearningCharacter() throws Exception {
+        assertEquals(true, Character.isLetter('A'));
+        assertEquals(true, Character.isLetter((char) 12354)); // japanese "a"
+
+        assertEquals(false, Character.isLetter('0'));
+        assertEquals(false, Character.isLetter((char) 55893));
     }
 
 }

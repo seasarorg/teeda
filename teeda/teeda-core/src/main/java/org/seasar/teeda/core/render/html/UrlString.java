@@ -21,6 +21,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.lang.StringUtils;
 import org.seasar.framework.util.StringUtil;
 
 /**
@@ -38,24 +39,25 @@ public class UrlString {
 
     public void parse(String url) {
         url_ = url;
-        if (url.indexOf('?') > -1) {
-            path_ = url.substring(0, url.indexOf('?'));
-            queryString_ = url.substring(url.indexOf('?') + 1);
+        if (StringUtils.contains(url, '?')) {
+            int questionPos = url.indexOf('?');
+            path_ = url.substring(0, questionPos);
+            queryString_ = url.substring(questionPos + 1);
         } else {
             path_ = url;
         }
         String[] params = StringUtil.split(queryString_, "&");
         for (int i = 0; i < params.length; i++) {
-            String param = params[i];
-            if (param.indexOf('=') > -1) {
+            final String param = params[i];
+            if (StringUtils.contains(param, '=')) {
                 final String key = param.substring(0, param.indexOf('='));
-                UrlParameter parameter = (UrlParameter) parameters_.get(key);
-                if (parameter == null) {
-                    parameter = new UrlParameter();
-                    parameter.setKey(key);
-                    parameters_.put(parameter.getKey(), parameter);
+                UrlParameter urlParameter = (UrlParameter) parameters_.get(key);
+                if (urlParameter == null) {
+                    urlParameter = new UrlParameter();
+                    urlParameter.setKey(key);
+                    parameters_.put(urlParameter.getKey(), urlParameter);
                 }
-                parameter.addValue(param.substring(param.indexOf('=') + 1));
+                urlParameter.addValue(param.substring(param.indexOf('=') + 1));
             }
         }
     }

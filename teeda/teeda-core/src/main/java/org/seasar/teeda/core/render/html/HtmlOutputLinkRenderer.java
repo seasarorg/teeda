@@ -43,7 +43,6 @@ public class HtmlOutputLinkRenderer extends Renderer {
     protected void renderHtmlOutputLinkBegin(FacesContext context,
             HtmlOutputLink htmlOutputLink) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
-        writer.startElement(JsfConstants.ANCHOR_ELEM, htmlOutputLink);
 
         UrlBuilder urlBuilder = new UrlBuilder();
         urlBuilder.setBase(htmlOutputLink.getValue().toString());
@@ -62,6 +61,8 @@ public class HtmlOutputLinkRenderer extends Renderer {
         }
         String href = context.getExternalContext().encodeResourceURL(
                 urlBuilder.build());
+
+        writer.startElement(JsfConstants.ANCHOR_ELEM, htmlOutputLink);
         RendererUtil.renderIdAttributeIfNecessary(writer, htmlOutputLink,
                 htmlOutputLink.getId());
         writer.writeURIAttribute(JsfConstants.HREF_ATTR, href, null);

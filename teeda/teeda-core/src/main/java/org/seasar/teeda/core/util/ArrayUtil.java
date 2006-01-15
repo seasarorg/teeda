@@ -41,4 +41,24 @@ public class ArrayUtil {
         return true;
     }
 
+    public static String toString(Object[] array) {
+        if (array == null) {
+            return "null";
+        }
+        if (array.length == 0) {
+            return "[]";
+        }
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < array.length; i++) {
+            if (i == 0) {
+                sb.append('[');
+            } else {
+                sb.append(", ");
+            }
+            sb.append(String.valueOf(array[i]));
+        }
+        sb.append("]");
+        return sb.toString();
+    }
+
 }

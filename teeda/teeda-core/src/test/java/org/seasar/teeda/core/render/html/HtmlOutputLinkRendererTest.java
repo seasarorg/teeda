@@ -15,8 +15,6 @@
  */
 package org.seasar.teeda.core.render.html;
 
-import java.net.URLEncoder;
-
 import javax.faces.component.UIParameter;
 import javax.faces.component.html.HtmlOutputLink;
 import javax.faces.render.Renderer;
@@ -53,7 +51,7 @@ public class HtmlOutputLinkRendererTest extends RendererTest {
         renderer.encodeBegin(getFacesContext(), htmlOutputLink);
 
         assertEquals(true, calls_[0]);
-        assertEquals("<a href=\"%2Fabc.html\"", getResponseText());
+        assertEquals("<a href=\"/abc.html\"", getResponseText());
     }
 
     public void testEncodeBeginAndEnd() throws Exception {
@@ -64,7 +62,6 @@ public class HtmlOutputLinkRendererTest extends RendererTest {
         renderer.encodeBegin(getFacesContext(), htmlOutputLink);
         renderer.encodeEnd(getFacesContext(), htmlOutputLink);
 
-        assertEquals(true, calls_[0]);
         assertEquals("<a href=\"a\"></a>", getResponseText());
     }
 
@@ -76,7 +73,6 @@ public class HtmlOutputLinkRendererTest extends RendererTest {
 
         renderer.encodeBegin(getFacesContext(), htmlOutputLink);
 
-        assertEquals(true, calls_[0]);
         assertEquals("<a href=\"url\" accesskey=\"aa\"", getResponseText());
     }
 
@@ -89,19 +85,55 @@ public class HtmlOutputLinkRendererTest extends RendererTest {
 
         renderer.encodeBegin(getFacesContext(), htmlOutputLink);
 
-        assertEquals(true, calls_[0]);
         assertEquals("<a id=\"someId\" href=\"url\" accesskey=\"aa\"",
                 getResponseText());
     }
 
-    public void testA() throws Exception {
-        System.out.println((int) 'い');
-        System.out.println(URLEncoder.encode("あい", "UTF-8"));
+    public void testEncodeBegin_HrefIsJapanese() throws Exception {
+        HtmlOutputLink htmlOutputLink = new HtmlOutputLink();
+        // japanese "a"
+        htmlOutputLink
+                .setValue("/" + Character.valueOf((char) 12354) + ".html");
+        HtmlOutputLinkRenderer renderer = createHtmlOutputLinkRenderer();
+        renderer.encodeBegin(getFacesContext(), htmlOutputLink);
+
+        assertEquals(true, calls_[0]);
+        assertEquals("<a href=\"/%E3%81%82.html\"", getResponseText());
     }
 
-    public void testEncodeBegin_WithParam() throws Exception {
+    public void testEncodeBegin_WithParam1() throws Exception {
         HtmlOutputLink htmlOutputLink = new HtmlOutputLink();
         htmlOutputLink.setValue("url.html");
+
+        UIParameter param = new UIParameter();
+        param.setName("a");
+        param.setValue("b");
+        htmlOutputLink.getChildren().add(param);
+
+        HtmlOutputLinkRenderer renderer = createHtmlOutputLinkRenderer();
+        renderer.encodeBegin(getFacesContext(), htmlOutputLink);
+
+        assertEquals("<a href=\"url.html?a=b\"", getResponseText());
+    }
+
+    public void testEncodeBegin_WithParam2() throws Exception {
+        HtmlOutputLink htmlOutputLink = new HtmlOutputLink();
+        htmlOutputLink.setValue("/a/b/url.html");
+
+        UIParameter param = new UIParameter();
+        param.setName("a");
+        param.setValue("b/c");
+        htmlOutputLink.getChildren().add(param);
+
+        HtmlOutputLinkRenderer renderer = createHtmlOutputLinkRenderer();
+        renderer.encodeBegin(getFacesContext(), htmlOutputLink);
+
+        assertEquals("<a href=\"/a/b/url.html?a=b%2Fc\"", getResponseText());
+    }
+
+    public void testEncodeBegin_BaseHrefHasQueryString() throws Exception {
+        HtmlOutputLink htmlOutputLink = new HtmlOutputLink();
+        htmlOutputLink.setValue("url.html?1=2");
 
         UIParameter param = new UIParameter();
         param.setName("a");
@@ -112,8 +144,21 @@ public class HtmlOutputLinkRendererTest extends RendererTest {
 
         renderer.encodeBegin(getFacesContext(), htmlOutputLink);
 
-        assertEquals(true, calls_[0]);
-        assertEquals("<a href=\"url.html%3Fa%3Db", getResponseText());
+        assertEquals("<a href=\"url.html?1=2&a=b\"", getResponseText());
+    }
+
+    public void testEncodeBegin_WithJapaneseParamValue() throws Exception {
+        HtmlOutputLink htmlOutputLink = new HtmlOutputLink();
+        htmlOutputLink.setValue("url");
+        UIParameter param = new UIParameter();
+        param.setName("a");
+        param.setValue(Character.valueOf((char) 12354)); // japanese "a"
+        htmlOutputLink.getChildren().add(param);
+        HtmlOutputLinkRenderer renderer = createHtmlOutputLinkRenderer();
+
+        renderer.encodeBegin(getFacesContext(), htmlOutputLink);
+
+        assertEquals("<a href=\"url?a=%E3%81%82\"", getResponseText());
     }
 
     public void testEncodeBegin_WithParams() throws Exception {
@@ -122,22 +167,20 @@ public class HtmlOutputLinkRendererTest extends RendererTest {
         {
             UIParameter param = new UIParameter();
             param.setName("a");
-            param.setValue(Character.valueOf((char) 12354));
+            param.setValue("1");
             htmlOutputLink.getChildren().add(param);
         }
         {
             UIParameter param = new UIParameter();
-            param.setName("bb");
-            param.setValue("bar");
+            param.setName("b");
+            param.setValue("2");
             htmlOutputLink.getChildren().add(param);
         }
         HtmlOutputLinkRenderer renderer = createHtmlOutputLinkRenderer();
 
         renderer.encodeBegin(getFacesContext(), htmlOutputLink);
 
-        assertEquals(true, calls_[0]);
-        assertEquals("<a href=\"url?" + "a=%E3%81%82" + "&" + "bb=bar\"",
-                getResponseText());
+        assertEquals("<a href=\"url?a=1&b=2\"", getResponseText());
     }
 
     public void testEncodeBegin_WithAllAttributes() throws Exception {
@@ -197,4 +240,5 @@ public class HtmlOutputLinkRendererTest extends RendererTest {
     protected Renderer createRenderer() {
         return new HtmlOutputLinkRenderer();
     }
+
 }

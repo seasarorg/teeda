@@ -22,6 +22,8 @@ import java.net.URLEncoder;
 import javax.faces.component.UIComponent;
 import javax.faces.context.ResponseWriter;
 
+import org.apache.commons.lang.ArrayUtils;
+
 /**
  * @author manhole
  */
@@ -98,7 +100,7 @@ public class HtmlResponseWriter extends ResponseWriter {
         }
         Writer writer = getWriter();
         String strValue = value.toString();
-        strValue = URLEncoder.encode(strValue, getCharacterEncoding());
+        strValue = encodeURIAttribute(strValue);
 
         writer.write(" ");
         writer.write(name);
@@ -218,6 +220,112 @@ public class HtmlResponseWriter extends ResponseWriter {
 
     public void setWriter(Writer writer) {
         writer_ = writer;
+    }
+
+    private final char[] reserved_ = { ';', '/', '?', ':', '@', '&', '=', '+',
+            '$', ',' };
+
+    /*
+     * private final char[] lowalpha_ = { 'a', 'b', 'c', 'd', 'e', 'f', 'g',
+     * 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
+     * 'v', 'w', 'x', 'y', 'z' };
+     * 
+     * private final char[] upalpha_ = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',
+     * 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V',
+     * 'W', 'X', 'Y', 'Z' };
+     * 
+     * private static char[] digit_ = { '0', '1', '2', '3', '4', '5', '6', '7',
+     * '8', '9' };
+     * 
+     * private final char[] mark_ = { '-', '_', '.', '!', '~', '*', '\'', '(',
+     * ')' };
+     * 
+     * private final char[] alpha_ = addArray(lowalpha_, upalpha_);
+     * 
+     * private final char[] alphanum_ = addArray(alpha_, digit_);
+     * 
+     * private final char[] unreserved_ = addArray(alphanum_, mark_);
+     * 
+     * private final char[] delims_ = { '<', '>', '#', '%', '\"' };
+     * 
+     * private final char[] unwise_ = { '{', '}', '|', '\\', '^', '[', ']', '`' };
+     * char[] addArray(char[] c1, char[] c2) { char[] newArray = new
+     * char[c1.length + c2.length]; int counter = 0; for (int i = 0; i <
+     * c1.length; i++) { newArray[counter++] = c1[i]; } for (int i = 0; i <
+     * c2.length; i++) { newArray[counter++] = c2[i]; } return newArray; }
+     */
+
+    protected String encodeURIAttribute(String url) throws IOException {
+        char[] chars = url.toCharArray();
+        final StringBuffer sb = new StringBuffer(url.length() + 100);
+        final int length = chars.length;
+        forLoop: for (int i = 0; i < length; i++) {
+            final char c = chars[i];
+            if (ArrayUtils.contains(reserved_, c)) {
+                sb.append(c);
+                if ('?' == c) {
+                    if (i < length) {
+                        sb.append(encodeQueryString(url.substring(i + 1)));
+                    }
+                    break forLoop;
+                }
+            } else {
+                sb.append(URLEncoder.encode(String.valueOf(c),
+                        getCharacterEncoding()));
+            }
+        }
+        return new String(sb);
+    }
+
+    public String encodeQueryString(String s) throws IOException {
+        char[] chars = s.toCharArray();
+        StringBuffer sb = new StringBuffer();
+        final String encoding = getCharacterEncoding();
+        for (int i = 0; i < chars.length; i++) {
+            char c = chars[i];
+            switch (c) {
+            case ' ': // 32
+                sb.append("%20");
+                break;
+            case '!': // 33
+                sb.append("!");
+                break;
+            case '#': // 35
+                sb.append("#");
+                break;
+            case '%': // 37
+                sb.append("%");
+                break;
+            case '&': // 38
+                sb.append("&");
+                break;
+            case '\'': // 39
+                sb.append("'");
+                break;
+            case '(': // 40
+                sb.append("(");
+                break;
+            case ')': // 41
+                sb.append(")");
+                break;
+            case '+': // 43
+                sb.append("+");
+                break;
+            case '/': // 47
+                sb.append("/");
+                break;
+            case '=': // 61
+                sb.append("=");
+                break;
+            case '~': // 126
+                sb.append("~");
+                break;
+            default:
+                sb.append(URLEncoder.encode(String.valueOf(c), encoding));
+                break;
+            }
+        }
+        return new String(sb);
     }
 
 }
