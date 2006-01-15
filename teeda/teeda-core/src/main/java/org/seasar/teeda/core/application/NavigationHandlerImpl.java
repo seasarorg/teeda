@@ -53,31 +53,45 @@ public class NavigationHandlerImpl extends NavigationHandler {
             navigationCaseContext = getNavigationCaseContext(navigationContext, fromAction, outcome);
         }
         if(navigationCaseContext == null){
-            navigationContext = getWildCardNavigationCases(viewId, context);
+            navigationContext = getWildCardMatchNavigationCases(viewId, context);
             navigationCaseContext = getNavigationCaseContext(navigationContext, fromAction, outcome);
         }
         if(navigationCaseContext != null){
-            boolean isRedirect = navigationCaseContext.isRedirect();
             ViewHandler viewHandler = context.getApplication().getViewHandler();
             String newViewId = navigationCaseContext.getToViewId();
-            if(isRedirect) {
-                String redirectPath = viewHandler.getActionURL(context, newViewId);
-                try {
-                    externalContext.redirect(externalContext.encodeActionURL(redirectPath));
-                } catch (IOException e) {
-                    throw new FacesException(e.getMessage(), e);
-                }
-                context.responseComplete();
+            if(isRedirect(navigationCaseContext)) {
+                String redirectPath = getRedirectActionPath(context, viewHandler, newViewId);
+                redirect(context, externalContext, redirectPath, newViewId);
             } else {
-                // create new view
-                UIViewRoot viewRoot = viewHandler.createView(context, newViewId);
-                viewRoot.setViewId(newViewId);
-                context.setViewRoot(viewRoot);
-                context.renderResponse();
+                render(context, viewHandler, newViewId);
             }
         }
     }
 
+    protected String getRedirectActionPath(FacesContext context, ViewHandler viewHandler, String newViewId){
+        return viewHandler.getActionURL(context, newViewId);
+    }
+    
+    protected void redirect(FacesContext context, ExternalContext externalContext, String redirectPath, String newViewId) {
+        try {
+            externalContext.redirect(externalContext.encodeActionURL(redirectPath));
+        } catch (IOException e) {
+            throw new FacesException(e.getMessage(), e);
+        }
+        context.responseComplete();
+    }
+    
+    protected void render(FacesContext context, ViewHandler viewHandler, String newViewId) {
+        UIViewRoot viewRoot = viewHandler.createView(context, newViewId);
+        viewRoot.setViewId(newViewId);
+        context.setViewRoot(viewRoot);
+        context.renderResponse();
+    }
+
+    protected boolean isRedirect(NavigationCaseContext caseContext){
+        return caseContext.isRedirect();
+    }
+    
     protected NavigationCaseContext getNavigationCaseContext(NavigationContext navContext, String fromAction, String outcome){
         List navCases = navContext.getNavigationCases();
         final NavigationCaseContext inCaseContext = new NavigationCaseContext(fromAction, outcome); 
@@ -89,7 +103,7 @@ public class NavigationHandlerImpl extends NavigationHandler {
         }
         return null;
     }
-    
+
     protected NavigationContext getExactMatchNavigationCases(String viewId, FacesContext context) {
         Map map = NavigationContextFactory.getNavigationContexts(context);
         if(map != null){
@@ -98,11 +112,12 @@ public class NavigationHandlerImpl extends NavigationHandler {
         return null;
     }
     
-    protected NavigationContext getWildCardNavigationCases(String viewId, FacesContext context) {
+    protected NavigationContext getWildCardMatchNavigationCases(String viewId, FacesContext context) {
         Map map = NavigationContextFactory.getWildCardMatchNavigationContexts(context);
         if(map != null){
             return (NavigationContext)map.get(viewId);
         }
         return null;
     }
+    
 }
