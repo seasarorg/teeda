@@ -33,6 +33,7 @@ public class MockApplication extends Application {
     private NavigationHandler navigationHandler_;
     private ViewHandler viewHandler_;
     private StateManager stateManager_;
+    private String defaultRenderKitId_;
     public MockApplication(){
     }
     
@@ -53,10 +54,11 @@ public class MockApplication extends Application {
     }
 
     public String getDefaultRenderKitId() {
-        return null;
+        return defaultRenderKitId_;
     }
 
     public void setDefaultRenderKitId(String renderKitId) {
+        defaultRenderKitId_ = renderKitId;
     }
 
     public String getMessageBundle() {

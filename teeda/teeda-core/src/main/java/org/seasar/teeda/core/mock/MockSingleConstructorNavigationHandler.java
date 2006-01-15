@@ -13,15 +13,26 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package javax.faces.application;
+package org.seasar.teeda.core.mock;
 
+import javax.faces.application.NavigationHandler;
 import javax.faces.context.FacesContext;
 
 /**
  * @author shot
  */
-public abstract class NavigationHandler {
+public class MockSingleConstructorNavigationHandler extends NavigationHandler {
 
-	public abstract void handleNavigation(FacesContext context,
-			String fromAction, String outcome);
+    private NavigationHandler originalHandler_;
+    public MockSingleConstructorNavigationHandler(NavigationHandler handler){
+        originalHandler_ = handler;
+    }
+    public void handleNavigation(FacesContext context, String fromAction,
+            String outcome) {
+        originalHandler_.handleNavigation(context, fromAction, outcome);
+    }
+
+    public NavigationHandler getOriginal(){
+        return originalHandler_;
+    }
 }

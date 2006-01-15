@@ -10,6 +10,7 @@ public class MockNavigationHandler extends NavigationHandler {
     private String outCome_;
     public MockNavigationHandler(){
     }
+    
     public void handleNavigation(FacesContext context, String fromAction, String outCome) {
         fromAction_ = fromAction;
         outCome_ = outCome;

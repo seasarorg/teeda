@@ -23,4 +23,8 @@ public class MockSingleConstructorActionListener implements ActionListener {
 	public ActionEvent getEvent() {
 		return event_;
 	}
+    
+    public ActionListener getOriginal(){
+        return originalListener_;
+    }
 }

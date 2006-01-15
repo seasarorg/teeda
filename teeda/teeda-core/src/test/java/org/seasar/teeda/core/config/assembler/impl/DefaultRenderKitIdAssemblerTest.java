@@ -15,23 +15,27 @@
  */
 package org.seasar.teeda.core.config.assembler.impl;
 
-import java.util.List;
-
-import org.seasar.teeda.core.config.assembler.NavigationRulesAssembler;
+import org.seasar.teeda.core.mock.MockApplication;
+import org.seasar.teeda.core.unit.TeedaTestCase;
 
 /**
  * @author shot
  */
-public class SimpleNavigationRulesAssembler extends NavigationRulesAssembler {
+public class DefaultRenderKitIdAssemblerTest extends TeedaTestCase {
 
-    public SimpleNavigationRulesAssembler(List navigationRules){
-        super(navigationRules);
-    }
-    
-    //TODO
-    protected void setupChildAssembler() {
+    /**
+     * Constructor for DefaultRenderKitIdAssembler.
+     * @param name
+     */
+    public DefaultRenderKitIdAssemblerTest(String name) {
+        super(name);
     }
 
-    public void assemble() {
+    public void testAssemble() throws Exception {
+        DefaultRenderKitIdAssembler assembler = new DefaultRenderKitIdAssembler("hoge", getApplication());
+        assembler.assemble();
+        
+        MockApplication app = getApplication();
+        assertEquals("hoge", app.getDefaultRenderKitId());
     }
 }
