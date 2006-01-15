@@ -37,7 +37,9 @@ public class MockViewHandler extends ViewHandler {
     }
 
     public UIViewRoot createView(FacesContext context, String viewId) {
-        return null;
+        UIViewRoot root = new UIViewRoot();
+        root.setViewId(viewId);
+        return root;
     }
 
     public String getActionURL(FacesContext context, String viewId) {

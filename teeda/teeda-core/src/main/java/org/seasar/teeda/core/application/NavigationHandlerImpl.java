@@ -52,12 +52,10 @@ public class NavigationHandlerImpl extends NavigationHandler {
         if(navigationContext != null){
             navigationCaseContext = getNavigationCaseContext(navigationContext, fromAction, outcome);
         }
-
         if(navigationCaseContext == null){
             navigationContext = getWildCardNavigationCases(viewId, context);
             navigationCaseContext = getNavigationCaseContext(navigationContext, fromAction, outcome);
         }
-        
         if(navigationCaseContext != null){
             boolean isRedirect = navigationCaseContext.isRedirect();
             ViewHandler viewHandler = context.getApplication().getViewHandler();

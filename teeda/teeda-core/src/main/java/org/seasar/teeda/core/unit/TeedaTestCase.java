@@ -16,6 +16,7 @@
 package org.seasar.teeda.core.unit;
 
 import javax.faces.FactoryFinder;
+import javax.faces.application.ViewHandler;
 import javax.faces.lifecycle.LifecycleFactory;
 import javax.faces.render.RenderKitFactory;
 
@@ -39,6 +40,7 @@ import org.seasar.teeda.core.mock.MockPropertyResolver;
 import org.seasar.teeda.core.mock.MockRenderKit;
 import org.seasar.teeda.core.mock.MockRenderKitFactory;
 import org.seasar.teeda.core.mock.MockVariableResolver;
+import org.seasar.teeda.core.mock.MockViewHandler;
 import org.seasar.teeda.core.scope.impl.S2ScopeTranslator;
 import org.seasar.teeda.core.scope.impl.ScopeManagerImpl;
 
@@ -67,6 +69,8 @@ public abstract class TeedaTestCase extends S2FrameworkTestCase {
 
     private MockVariableResolver variableResolver;
 
+    private MockViewHandler viewHandler;
+    
     public TeedaTestCase() {
     }
 
@@ -85,6 +89,8 @@ public abstract class TeedaTestCase extends S2FrameworkTestCase {
         application.setPropertyResolver(propertyResolver);
         variableResolver = new MockVariableResolver();
         application.setVariableResolver(variableResolver);
+        viewHandler = new MockViewHandler();
+        application.setViewHandler(viewHandler);
 
         facesContext = new MockFacesContextImpl(externalContext, application);
         HtmlResponseWriter responseWriter = new HtmlResponseWriter();
@@ -242,4 +248,12 @@ public abstract class TeedaTestCase extends S2FrameworkTestCase {
         application.setVariableResolver(variableResolver);
     }
 
+    public MockViewHandler getViewHandler() {
+        return viewHandler;
+    }
+    
+    public void setViewHandler(MockViewHandler viewHandler) {
+        this.viewHandler = viewHandler;
+        application.setViewHandler(viewHandler);
+    }
 }
