@@ -15,8 +15,22 @@
  */
 package org.seasar.teeda.core.application;
 
+import java.io.IOException;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import javax.faces.FacesException;
 import javax.faces.application.NavigationHandler;
+import javax.faces.application.ViewHandler;
+import javax.faces.component.UIViewRoot;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+
+import org.seasar.teeda.core.application.navigation.NavigationCaseContext;
+import org.seasar.teeda.core.application.navigation.NavigationContext;
+import org.seasar.teeda.core.application.navigation.NavigationContextFactory;
+import org.seasar.teeda.core.util.IteratorUtil;
 
 /**
  * @author shot
@@ -24,12 +38,73 @@ import javax.faces.context.FacesContext;
 public class NavigationHandlerImpl extends NavigationHandler {
 
     public void handleNavigation(FacesContext context, String fromAction,
-            String outCome) {
-        if(context == null){
+            String outcome) {
+        if (context == null) {
             throw new NullPointerException("context");
         }
-        //TODO impl this!
-        throw new RuntimeException();
+        if (outcome == null) {
+            return;
+        }
+        ExternalContext externalContext = context.getExternalContext();
+        String viewId = context.getViewRoot().getViewId();
+        NavigationContext navigationContext = getExactMatchNavigationCases(viewId, context);
+        NavigationCaseContext navigationCaseContext = null;
+        if(navigationContext != null){
+            navigationCaseContext = getNavigationCaseContext(navigationContext, fromAction, outcome);
+        }
+
+        if(navigationCaseContext == null){
+            navigationContext = getWildCardNavigationCases(viewId, context);
+            navigationCaseContext = getNavigationCaseContext(navigationContext, fromAction, outcome);
+        }
+        
+        if(navigationCaseContext != null){
+            boolean isRedirect = navigationCaseContext.isRedirect();
+            ViewHandler viewHandler = context.getApplication().getViewHandler();
+            String newViewId = navigationCaseContext.getToViewId();
+            if(isRedirect) {
+                String redirectPath = viewHandler.getActionURL(context, newViewId);
+                try {
+                    externalContext.redirect(externalContext.encodeActionURL(redirectPath));
+                } catch (IOException e) {
+                    throw new FacesException(e.getMessage(), e);
+                }
+                context.responseComplete();
+            } else {
+                // create new view
+                UIViewRoot viewRoot = viewHandler.createView(context, newViewId);
+                viewRoot.setViewId(newViewId);
+                context.setViewRoot(viewRoot);
+                context.renderResponse();
+            }
+        }
     }
 
+    protected NavigationCaseContext getNavigationCaseContext(NavigationContext navContext, String fromAction, String outcome){
+        List navCases = navContext.getNavigationCases();
+        final NavigationCaseContext inCaseContext = new NavigationCaseContext(fromAction, outcome); 
+        for(Iterator itr = IteratorUtil.getIterator(navCases); itr.hasNext();){
+            NavigationCaseContext caseContext = (NavigationCaseContext)itr.next();
+            if(caseContext.equals(inCaseContext)){
+                return caseContext;
+            }
+        }
+        return null;
+    }
+    
+    protected NavigationContext getExactMatchNavigationCases(String viewId, FacesContext context) {
+        Map map = NavigationContextFactory.getNavigationContexts(context);
+        if(map != null){
+            return (NavigationContext)map.get(viewId);
+        }
+        return null;
+    }
+    
+    protected NavigationContext getWildCardNavigationCases(String viewId, FacesContext context) {
+        Map map = NavigationContextFactory.getWildCardMatchNavigationContexts(context);
+        if(map != null){
+            return (NavigationContext)map.get(viewId);
+        }
+        return null;
+    }
 }

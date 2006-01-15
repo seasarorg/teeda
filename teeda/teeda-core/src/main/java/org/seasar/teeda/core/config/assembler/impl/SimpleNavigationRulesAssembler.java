@@ -15,9 +15,16 @@
  */
 package org.seasar.teeda.core.config.assembler.impl;
 
+import java.util.Iterator;
 import java.util.List;
 
+import org.seasar.teeda.core.application.navigation.NavigationCaseContext;
+import org.seasar.teeda.core.application.navigation.NavigationContext;
+import org.seasar.teeda.core.application.navigation.NavigationContextFactory;
 import org.seasar.teeda.core.config.assembler.NavigationRulesAssembler;
+import org.seasar.teeda.core.config.element.NavigationCaseElement;
+import org.seasar.teeda.core.config.element.NavigationRuleElement;
+import org.seasar.teeda.core.util.IteratorUtil;
 
 /**
  * @author shot
@@ -28,10 +35,34 @@ public class SimpleNavigationRulesAssembler extends NavigationRulesAssembler {
         super(navigationRules);
     }
     
-    //TODO
     protected void setupChildAssembler() {
+        for(Iterator itr = IteratorUtil.getIterator(getNavigationRules()); itr.hasNext();){
+            NavigationRuleElement rule = (NavigationRuleElement)itr.next();
+            isAllSuitableJsfElement(rule.getNavigationCaseElements(), NavigationCaseElement.class);
+        }
     }
 
     public void assemble() {
+        for(Iterator itr = IteratorUtil.getIterator(getNavigationRules()); itr.hasNext();){
+            NavigationRuleElement rule = (NavigationRuleElement)itr.next();
+            NavigationContextWrapper wrapper = new NavigationContextWrapper(rule);
+            NavigationContextFactory.addNavigationContext(getExternalContext(), wrapper);
+        }
+    }
+    
+    public static class NavigationContextWrapper extends NavigationContext {
+        
+        public NavigationContextWrapper(NavigationRuleElement navigationRule){
+            String fromViewId = navigationRule.getFromViewId();
+            setFromViewId(fromViewId);
+            toNavigationCaseContext(navigationRule.getNavigationCaseElements());
+        }
+        
+        private void toNavigationCaseContext(List navigationCases){
+            for(Iterator itr = IteratorUtil.getIterator(navigationCases); itr.hasNext();){
+                NavigationCaseElement caseElement = (NavigationCaseElement)itr.next();
+                addNavigationCaseContext(new NavigationCaseContext(caseElement.getFromAction(), caseElement.getFromOutcome()));
+            }
+        }
     }
 }

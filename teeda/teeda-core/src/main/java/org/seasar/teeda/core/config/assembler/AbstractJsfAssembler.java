@@ -18,7 +18,10 @@ package org.seasar.teeda.core.config.assembler;
 import java.util.Collection;
 import java.util.Iterator;
 
+import javax.faces.context.ExternalContext;
+
 import org.seasar.teeda.core.util.ClassUtil;
+import org.seasar.teeda.core.util.DIContainerUtil;
 import org.seasar.teeda.core.util.IteratorUtil;
 
 /**
@@ -34,6 +37,12 @@ public abstract class AbstractJsfAssembler implements JsfAssembler{
                 throw new IllegalJsfConfigStateException(new Object[]{o, target});
             }
         }
+    }
+    
+    public ExternalContext getExternalContext() {
+        ExternalContext externalContext = (ExternalContext)DIContainerUtil
+                .getComponent(ExternalContext.class);
+        return externalContext;
     }
 
     protected abstract void setupChildAssembler();

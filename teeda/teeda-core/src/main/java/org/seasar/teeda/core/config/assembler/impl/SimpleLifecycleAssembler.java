@@ -38,9 +38,4 @@ public class SimpleLifecycleAssembler extends LifecycleAssembler {
         child_.assemble();
     }
 
-    public ExternalContext getExternalContext() {
-        ExternalContext externalContext = (ExternalContext)DIContainerUtil
-                .getComponent(ExternalContext.class);
-        return externalContext;
-    }
 }
