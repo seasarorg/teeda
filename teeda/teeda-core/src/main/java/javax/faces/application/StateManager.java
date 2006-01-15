@@ -22,7 +22,7 @@ import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 
 /**
- * @author Shinpei Ohtani
+ * @author shot
  */
 public abstract class StateManager {
 
@@ -41,15 +41,15 @@ public abstract class StateManager {
 
 	protected abstract Object getComponentStateToSave(FacesContext context);
 
-	public abstract UIViewRoot restoteView(FacesContext context, String viewId);
+	public abstract UIViewRoot restoreView(FacesContext context, String viewId, String renderKitId);
 
 	protected abstract UIViewRoot restoreTreeStructure(FacesContext context,
-			String viewId);
+			String viewId, String renderKitId);
 
 	protected abstract void restoreComponentState(FacesContext context,
-			UIViewRoot viewRoot);
+			UIViewRoot viewRoot, String renderKitId);
 
-	public boolean isSavingStateClient(FacesContext context) {
+	public boolean isSavingStateInClient(FacesContext context) {
 		String state = getSavingState(context);
 		if (STATE_SAVING_METHOD_CLIENT.equalsIgnoreCase(state)) {
 			return true;

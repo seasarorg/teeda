@@ -19,7 +19,7 @@ public class TestStateManager extends TeedaTestCase {
         
         StateManager stateManager = new StateManagerImpl();
         try{
-            stateManager.isSavingStateClient(null);
+            stateManager.isSavingStateInClient(null);
             fail();
         }catch(NullPointerException e){
             assertTrue(true);
@@ -27,7 +27,7 @@ public class TestStateManager extends TeedaTestCase {
 
         getServletContext().setInitParameter(StateManager.STATE_SAVING_METHOD_PARAM_NAME, StateManager.STATE_SAVING_METHOD_CLIENT);
         MockFacesContext facesContext = getFacesContext();
-        assertTrue(stateManager.isSavingStateClient(facesContext));
+        assertTrue(stateManager.isSavingStateInClient(facesContext));
     }
 
     private static class StateManagerImpl extends StateManager{
@@ -48,15 +48,15 @@ public class TestStateManager extends TeedaTestCase {
             throw new UnsupportedOperationException();
         }
 
-        public UIViewRoot restoteView(FacesContext context, String viewId) {
+        public UIViewRoot restoreView(FacesContext context, String viewId, String renderKitId) {
             throw new UnsupportedOperationException();
         }
 
-        protected UIViewRoot restoreTreeStructure(FacesContext context, String viewId) {
+        protected UIViewRoot restoreTreeStructure(FacesContext context, String viewId, String renderKitId) {
             throw new UnsupportedOperationException();
         }
 
-        protected void restoreComponentState(FacesContext context, UIViewRoot viewRoot) {
+        protected void restoreComponentState(FacesContext context, UIViewRoot viewRoot, String renderKitId) {
             throw new UnsupportedOperationException();
         }
         
