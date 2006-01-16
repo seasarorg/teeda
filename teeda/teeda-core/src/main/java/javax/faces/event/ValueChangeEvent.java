@@ -1,35 +1,54 @@
+/*
+ * Copyright 2004-2006 the Seasar Foundation and the Others.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
 package javax.faces.event;
 
 import javax.faces.component.UIComponent;
 
 /**
- * TODO TEST
+ * @author shot
  */
 public class ValueChangeEvent extends FacesEvent {
 
-	private Object oldValue_ = null;
-	private Object newValue_ = null;
-	
-	public ValueChangeEvent(UIComponent component, Object oldValue, Object newValue){
-		super(component);
-		oldValue_ = oldValue;
-		newValue_ = newValue;
-	}
-	
-	public Object getNewValue(){
-		return newValue_;
-	}
-	
-	public Object getOldValue(){
-		return oldValue_;
-	}
-	
-	public boolean isAppropriateListener(FacesListener listener) {
-		return (listener instanceof ValueChangeListener);
-	}
+    private static final long serialVersionUID = 1L;
 
-	public void processListener(FacesListener listener) {
-		((ValueChangeListener)listener).processValueChange(this);
-	}
+    private Object oldValue_ = null;
+
+    private Object newValue_ = null;
+
+    public ValueChangeEvent(UIComponent component, Object oldValue,
+            Object newValue) {
+        super(component);
+        oldValue_ = oldValue;
+        newValue_ = newValue;
+    }
+
+    public Object getNewValue() {
+        return newValue_;
+    }
+
+    public Object getOldValue() {
+        return oldValue_;
+    }
+
+    public boolean isAppropriateListener(FacesListener listener) {
+        return (listener instanceof ValueChangeListener);
+    }
+
+    public void processListener(FacesListener listener) {
+        ((ValueChangeListener) listener).processValueChange(this);
+    }
 
 }

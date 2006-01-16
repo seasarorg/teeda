@@ -303,7 +303,7 @@ public class UIComponentBaseTest extends AbstractUIComponentTest {
     }
 
     public void testHandleFacesListeners() {
-        MockUIComponentBase base = new MockUIComponentBase();
+        UIComponentBase base = createUIComponentBase();
         try {
             base.addFacesListener(null);
             fail();
@@ -334,7 +334,6 @@ public class UIComponentBaseTest extends AbstractUIComponentTest {
         listeners = base.getFacesListeners(FacesListener.class);
         assertEquals("Should be just one listener", 1, listeners.length);
         assertEquals("1", listeners[0].toString());
-
     }
 
     public void testHandleFacesListeners2() {

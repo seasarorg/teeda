@@ -13,13 +13,13 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package javax.faces.event;
+package org.seasar.teeda.core.mock;
 
-import java.util.EventListener;
+import javax.faces.event.FacesListener;
 
 /**
- * @author shot
+ * @author manhole
  */
-public interface FacesListener extends EventListener {
+public class NullFacesListener implements FacesListener {
 
 }

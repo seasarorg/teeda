@@ -13,13 +13,19 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package javax.faces.event;
+package org.seasar.teeda.core.mock;
 
-import java.util.EventListener;
+import javax.faces.event.AbortProcessingException;
+import javax.faces.event.ValueChangeEvent;
+import javax.faces.event.ValueChangeListener;
 
 /**
- * @author shot
+ * @author manhole
  */
-public interface FacesListener extends EventListener {
+public class NullValueChangeListener implements ValueChangeListener {
+
+    public void processValueChange(ValueChangeEvent event)
+            throws AbortProcessingException {
+    }
 
 }
