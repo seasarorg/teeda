@@ -403,6 +403,8 @@ public class HtmlResponseWriterTest extends TestCase {
         assertEquals("/a/b.html", writeURIAttributeTest("/a/b.html"));
         assertEquals("url?a=b", writeURIAttributeTest("url?a=b"));
         assertEquals("url?a=b%3Fc=d", writeURIAttributeTest("url?a=b?c=d"));
+        assertEquals("ur%25l?a=b", writeURIAttributeTest("ur%l?a=b"));
+
         final Character japaneseA = new Character((char) 12354);
         assertEquals("url?a=%E3%81%82", writeURIAttributeTest("url?a="
                 + japaneseA));
@@ -446,6 +448,7 @@ public class HtmlResponseWriterTest extends TestCase {
         assertEquals("+", URLEncoder.encode(" ", "UTF-8"));
         assertEquals("%40", URLEncoder.encode("@", "UTF-8"));
         assertEquals("%3F", URLEncoder.encode("?", "UTF-8"));
+        assertEquals("%25", URLEncoder.encode("%", "UTF-8"));
 
         Character japaneseA = new Character((char) 12354);
         assertEquals(12354, japaneseA.charValue());

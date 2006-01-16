@@ -79,8 +79,8 @@ public class ValueHolderUtilTest extends TestCase {
         // ## Act & Assert ##
         try {
             ValueHolderUtil.getValueForRender(context, notValueHolder);
-        } catch (ClassCastException cce) {
-            AssertUtil.assertExceptionMessageExist(cce);
+        } catch (IllegalArgumentException iae) {
+            AssertUtil.assertExceptionMessageExist(iae);
         }
     }
 

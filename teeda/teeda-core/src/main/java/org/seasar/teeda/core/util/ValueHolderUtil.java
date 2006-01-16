@@ -28,6 +28,9 @@ public class ValueHolderUtil {
 
     public static String getValueForRender(FacesContext context,
             UIComponent component) {
+        if (!(component instanceof ValueHolder)) {
+            throw new IllegalArgumentException("component must be ValueHolder");
+        }
         if (component instanceof EditableValueHolder) {
             EditableValueHolder evh = (EditableValueHolder) component;
             Object submittedValue = evh.getSubmittedValue();
