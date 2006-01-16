@@ -47,11 +47,11 @@ public class HtmlOutputTextRenderer extends Renderer {
     protected void renderHtmlOutputText(FacesContext context,
             HtmlOutputText htmlOutputText) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
-        boolean writeSpan = false;
+        boolean startSpan = false;
         if (UIComponentUtil.containsAttributes(htmlOutputText,
                 ID_WITH_COMMON_PASSTROUGH_ATTRIBUTES)) {
             writer.startElement(JsfConstants.SPAN_ELEM, htmlOutputText);
-            writeSpan = true;
+            startSpan = true;
         }
         RendererUtil.renderIdAttributeIfNecessary(writer, htmlOutputText,
                 htmlOutputText.getId());
@@ -61,9 +61,10 @@ public class HtmlOutputTextRenderer extends Renderer {
             writer.writeText(ValueHolderUtil.getValueForRender(context,
                     htmlOutputText), null);
         } else {
-            writer.write(htmlOutputText.getValue().toString());
+            writer.write(ValueHolderUtil.getValueForRender(context,
+                    htmlOutputText));
         }
-        if (writeSpan) {
+        if (startSpan) {
             writer.endElement(JsfConstants.SPAN_ELEM);
         }
     }

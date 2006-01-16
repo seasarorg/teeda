@@ -15,31 +15,73 @@
  */
 package org.seasar.teeda.core.util;
 
+import javax.faces.component.EditableValueHolder;
+import javax.faces.component.UIColumn;
 import javax.faces.component.UIInput;
+import javax.faces.component.UIOutput;
+import javax.faces.component.ValueHolder;
 import javax.faces.context.FacesContext;
 
 import junit.framework.TestCase;
+import junitx.framework.ObjectAssert;
 
 import org.seasar.teeda.core.mock.NullFacesContext;
+import org.seasar.teeda.core.unit.AssertUtil;
 
 /**
  * @author manhole
  */
 public class ValueHolderUtilTest extends TestCase {
 
-    public void testGetValueForRender() throws Exception {
+    public void testGetValueForRender_EditableValueHolder() throws Exception {
         // ## Arrange ##
-        UIInput component = new UIInput();
+        UIInput editableValueHolder = new UIInput();
+        ObjectAssert.assertInstanceOf(EditableValueHolder.class,
+                editableValueHolder);
+
         FacesContext context = new NullFacesContext();
 
         // ## Act & Assert ##
-        assertEquals("", ValueHolderUtil.getValueForRender(context, component));
-        component.setValue("asdf");
+        assertEquals("", ValueHolderUtil.getValueForRender(context,
+                editableValueHolder));
+        editableValueHolder.setValue("asdf");
         assertEquals("asdf", ValueHolderUtil.getValueForRender(context,
-                component));
-        component.setSubmittedValue("bbbb");
+                editableValueHolder));
+        editableValueHolder.setSubmittedValue("bbbb");
         assertEquals("bbbb", ValueHolderUtil.getValueForRender(context,
-                component));
+                editableValueHolder));
+    }
+
+    public void testGetValueForRender_ValueHolder() throws Exception {
+        // ## Arrange ##
+        UIOutput valueHolder = new UIOutput();
+        ObjectAssert
+                .assertNotInstanceOf(EditableValueHolder.class, valueHolder);
+        ObjectAssert.assertInstanceOf(ValueHolder.class, valueHolder);
+
+        FacesContext context = new NullFacesContext();
+
+        // ## Act & Assert ##
+        assertEquals("", ValueHolderUtil
+                .getValueForRender(context, valueHolder));
+        valueHolder.setValue("abc");
+        assertEquals("abc", ValueHolderUtil.getValueForRender(context,
+                valueHolder));
+    }
+
+    public void testGetValueForRender_NotValueHolder() throws Exception {
+        // ## Arrange ##
+        UIColumn notValueHolder = new UIColumn();
+        ObjectAssert.assertNotInstanceOf(ValueHolder.class, notValueHolder);
+
+        FacesContext context = new NullFacesContext();
+
+        // ## Act & Assert ##
+        try {
+            ValueHolderUtil.getValueForRender(context, notValueHolder);
+        } catch (ClassCastException cce) {
+            AssertUtil.assertExceptionMessageExist(cce);
+        }
     }
 
 }
