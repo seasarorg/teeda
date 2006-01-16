@@ -18,7 +18,7 @@ public abstract class ConvertersAssembler extends AbstractJsfAssembler {
         isAllSuitableJsfElement(convertersById.values(), TARGET_CLASS);
         convertersByClass_ = convertersByClass;
         convertersById_ = convertersById;
-        setupChildAssembler();
+        setupBeforeAssemble();
     }
     
     protected final Map getConvertersByClass(){

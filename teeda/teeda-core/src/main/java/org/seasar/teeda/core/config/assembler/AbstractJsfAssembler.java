@@ -48,6 +48,6 @@ public abstract class AbstractJsfAssembler implements JsfAssembler{
         return externalContext_;
     }
 
-    protected abstract void setupChildAssembler();
+    protected abstract void setupBeforeAssemble();
 
 }

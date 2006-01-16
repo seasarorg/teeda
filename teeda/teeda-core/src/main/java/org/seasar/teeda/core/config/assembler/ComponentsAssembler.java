@@ -13,7 +13,7 @@ public abstract class ComponentsAssembler extends AbstractJsfAssembler {
     public ComponentsAssembler(Map components){
         isAllSuitableJsfElement(components.values(), ComponentElement.class);
         components_ = components;
-        setupChildAssembler();
+        setupBeforeAssemble();
     }
     
     protected final Map getComponents(){

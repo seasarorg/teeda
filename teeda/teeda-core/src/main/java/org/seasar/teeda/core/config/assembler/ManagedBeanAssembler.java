@@ -12,7 +12,7 @@ public abstract class ManagedBeanAssembler extends AbstractJsfAssembler {
     public ManagedBeanAssembler(Map managedBeans){
         isAllSuitableJsfElement(managedBeans.values(), ManagedBeanElement.class);
         managedBeans_ = managedBeans;
-        setupChildAssembler();
+        setupBeforeAssemble();
     }
     
     protected final Map getManagedBeans(){

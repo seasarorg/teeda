@@ -29,7 +29,7 @@ public class SimpleApplicationAssembler extends ApplicationAssembler{
         }
     }
     
-    protected void setupChildAssembler(){
+    protected void setupBeforeAssemble(){
         ApplicationElement appElement = null;
         helper_ = createApplicationAssemblerHelper();
         for(Iterator itr = IteratorUtil.getIterator(getApplications());itr.hasNext();){

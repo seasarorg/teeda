@@ -12,7 +12,7 @@ public abstract class ValidatorsAssembler extends AbstractJsfAssembler {
     public ValidatorsAssembler(Map validators) {
         isAllSuitableJsfElement(validators.values(), ValidatorElement.class);
         validators_ = validators;
-        setupChildAssembler();
+        setupBeforeAssemble();
     }
 
     protected final Map getValidators() {

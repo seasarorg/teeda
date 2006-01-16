@@ -34,7 +34,7 @@ public class SimpleLifecycleAssembler extends LifecycleAssembler {
         super(lifecycles);
     }
 
-    protected void setupChildAssembler() {
+    protected void setupBeforeAssemble() {
         child_ = new LifecycleChildAssembler(getLifecycles(),
                 getExternalContext()) {
 

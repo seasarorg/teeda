@@ -30,7 +30,7 @@ public abstract class LifecycleAssembler extends AbstractJsfAssembler {
     public LifecycleAssembler(List lifecycles){
         isAllSuitableJsfElement(lifecycles, LifecycleElement.class);
         lifecycles_ = lifecycles;
-        setupChildAssembler();
+        setupBeforeAssemble();
     }
 
     protected final List getLifecycles(){

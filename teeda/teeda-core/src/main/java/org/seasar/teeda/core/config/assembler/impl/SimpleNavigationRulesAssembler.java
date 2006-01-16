@@ -35,7 +35,7 @@ public class SimpleNavigationRulesAssembler extends NavigationRulesAssembler {
         super(navigationRules);
     }
     
-    protected void setupChildAssembler() {
+    protected void setupBeforeAssemble() {
         for(Iterator itr = IteratorUtil.getIterator(getNavigationRules()); itr.hasNext();){
             NavigationRuleElement rule = (NavigationRuleElement)itr.next();
             isAllSuitableJsfElement(rule.getNavigationCaseElements(), NavigationCaseElement.class);

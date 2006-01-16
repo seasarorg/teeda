@@ -22,7 +22,7 @@ public class SimpleManagedBeanAssembler extends ManagedBeanAssembler {
         super(managedBeans);
     }
 
-    protected void setupChildAssembler() {
+    protected void setupBeforeAssemble() {
         managedBeanFactory_ = 
             (ManagedBeanFactory)DIContainerUtil.getComponent(ManagedBeanFactory.class);
         scopeManager_ = 

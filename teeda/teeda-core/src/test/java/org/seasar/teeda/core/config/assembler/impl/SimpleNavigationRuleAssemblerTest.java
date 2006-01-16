@@ -46,7 +46,7 @@ public class SimpleNavigationRuleAssemblerTest extends TeedaTestCase {
         NavigationRuleElement rule = new NavigationRuleElementImpl();
         list.add(rule);
         SimpleNavigationRulesAssembler assembler = new SimpleNavigationRulesAssembler(list);
-        assembler.setupChildAssembler();
+        assembler.setupBeforeAssemble();
     }
     
     public void testAssemble() throws Exception {

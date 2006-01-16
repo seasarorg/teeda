@@ -12,7 +12,7 @@ public abstract class NavigationRulesAssembler extends AbstractJsfAssembler {
     public NavigationRulesAssembler(List navigationRules){
         isAllSuitableJsfElement(navigationRules, NavigationRuleElement.class);
         navigationRules_ = navigationRules;
-        setupChildAssembler();
+        setupBeforeAssemble();
     }
     
     protected final List getNavigationRules(){

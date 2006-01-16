@@ -15,7 +15,7 @@ public class SimpleConvertersAssembler extends ConvertersAssembler {
         super(convertersByClass, convertersById);
     }
 
-    protected void setupChildAssembler() {
+    protected void setupBeforeAssemble() {
         converterIdAssembler_ = new ConverterChildAssembler(getConvertersById()){
             protected void doAssemble(String converterId, ConverterElement converterElement) {
                 String converterClass = converterElement.getConverterClass();

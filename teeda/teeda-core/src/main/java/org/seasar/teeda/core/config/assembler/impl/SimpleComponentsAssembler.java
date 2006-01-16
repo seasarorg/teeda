@@ -20,7 +20,7 @@ public class SimpleComponentsAssembler extends ComponentsAssembler {
         super(components);
     }
 
-    protected void setupChildAssembler() {
+    protected void setupBeforeAssemble() {
         application_ = ApplicationUtil.getApplicationFromFactory();
     }
 

@@ -27,7 +27,7 @@ public class SimpleFactoriesAssembler extends FactoriesAssembler {
         super(factories);
     }
 
-    protected void setupChildAssembler() {
+    protected void setupBeforeAssemble() {
         applicationFactory_ = new FactoryAssembler(){
             protected String getFactoryClassName() {
                 return FactoryFinder.APPLICATION_FACTORY;

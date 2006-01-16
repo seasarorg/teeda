@@ -15,7 +15,7 @@ public abstract class FactoriesAssembler extends AbstractJsfAssembler {
     public FactoriesAssembler(List factories){
         isAllSuitableJsfElement(factories, FactoryElement.class);
         factories_ = factories;
-        setupChildAssembler();
+        setupBeforeAssemble();
     }
 
     protected final List getFactories(){

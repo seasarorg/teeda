@@ -13,7 +13,7 @@ public abstract class ApplicationAssembler extends AbstractJsfAssembler {
     public ApplicationAssembler(List applications){
         isAllSuitableJsfElement(applications, ApplicationElement.class);
         applications_ = applications;
-        setupChildAssembler();
+        setupBeforeAssemble();
     }
      
     protected final List getApplications(){
