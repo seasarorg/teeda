@@ -11,7 +11,7 @@ public class NavigationCaseElementImpl implements NavigationCaseElement {
 
     private String fromOutcome_;
 
-    private String toViewId_ = DEFAULT_TO_VIEW_ID;
+    private String toViewId_;
 
     private boolean redirect_ = false;
 

@@ -69,7 +69,24 @@ public class NavigationHandlerImplTest extends TeedaTestCase {
         // ## Assert ##
         assertEquals("bbb", getFacesContext().getViewRoot().getViewId());
     }
-    
+
+    public void testHandleNavigation3() throws Exception {
+        // ## Arrange ##
+        MockFacesContext context = getFacesContext();
+        UIViewRoot root = new UIViewRoot();
+        root.setViewId("*");
+        context.setViewRoot(root);
+        NavigationContext navContext = createNavigationContext("*", "from", "outcome", "bbb", false);
+        NavigationContextFactory.addNavigationContext(getExternalContext(), navContext);
+        
+        // ## Act ##
+        NavigationHandlerImpl handler = new NavigationHandlerImpl();
+        handler.handleNavigation(getFacesContext(), "from", "outcome");
+        
+        // ## Assert ##
+        assertEquals("bbb", getFacesContext().getViewRoot().getViewId());
+    }
+
     public void testGetNavigationCaseContext1() throws Exception {
         // ## Arrange ##
         NavigationContext navContext = createNavigationContext("id", "action", "outcome", "to", false);
