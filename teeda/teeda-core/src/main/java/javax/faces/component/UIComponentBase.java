@@ -78,13 +78,13 @@ public abstract class UIComponentBase extends UIComponent {
         return (ValueBinding) bindingMap_.get(name);
     }
 
-    public void setValueBinding(String name, ValueBinding valuebinding) {
+    public void setValueBinding(String name, ValueBinding binding) {
         ComponentUtils_.assertNotNull("name", name);
         if (name.equals("id") || name.equals("parent")) {
             throw new IllegalArgumentException("invalid name is specified");
         }
-        if (valuebinding != null) {
-            bindingMap_.put(name, valuebinding);
+        if (binding != null) {
+            bindingMap_.put(name, binding);
         } else {
             bindingMap_.remove(name);
         }
@@ -144,8 +144,11 @@ public abstract class UIComponentBase extends UIComponent {
         if (vb != null) {
             isRendered_ = ((Boolean) this.getValueFromBinding(vb));
         }
-
-        return isRendered_.booleanValue();
+        if (isRendered_ != null) {
+            return isRendered_.booleanValue();
+        } else {
+            return true;
+        }
     }
 
     public void setRendered(boolean isRendered) {
@@ -329,8 +332,10 @@ public abstract class UIComponentBase extends UIComponent {
     }
 
     private Renderer getRendererForEncodeOrDecode(FacesContext context) {
-        Renderer renderer = new NullRenderer();
-        renderer = getRenderer(context);
+        Renderer renderer = getRenderer(context);
+        if (renderer == null) {
+            renderer = new NullRenderer();
+        }
         return renderer;
     }
 

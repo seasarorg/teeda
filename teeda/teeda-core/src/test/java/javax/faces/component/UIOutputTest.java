@@ -1,84 +1,59 @@
 package javax.faces.component;
 
-import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
-import javax.faces.convert.ConverterException;
 
+import junitx.framework.ObjectAssert;
+
+import org.seasar.teeda.core.convert.NullConverter;
 import org.seasar.teeda.core.mock.MockConverter;
 import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.mock.MockValueBinding;
 
+/**
+ * @author shot
+ * @author manhole
+ */
 public class UIOutputTest extends UIComponentBaseTest {
+
+    public void testDefaultRendererType() throws Exception {
+        UIOutput output = createUIOutput();
+        assertEquals("javax.faces.Text", output.getRendererType());
+    }
 
     public void testGetFamily() {
         UIOutput output = new UIOutput();
         assertEquals(UIOutput.COMPONENT_FAMILY, output.getFamily());
     }
 
-    public void testSetConverter() {
+    public void testSetGetConverter() {
         UIOutput output = createUIOutput();
-        Converter converter = new Converter() {
-
-            public Object getAsObject(FacesContext context,
-                    UIComponent component, String value)
-                    throws ConverterException {
-                return null;
-            }
-
-            public String getAsString(FacesContext context,
-                    UIComponent component, Object value)
-                    throws ConverterException {
-                return null;
-            }
-
-            public String toString() {
-                return "foo converter";
-            }
-        };
-
+        Converter converter = new NullConverter();
         output.setConverter(converter);
-        assertEquals(converter.toString(), output.getConverter().toString());
+        assertSame(converter, output.getConverter());
     }
 
-    public void testGetConverter() {
+    public void testSetGetConverter_ValueBinding() {
         UIOutput output = createUIOutput();
-        Converter converter = new Converter() {
-
-            public Object getAsObject(FacesContext context,
-                    UIComponent component, String value)
-                    throws ConverterException {
-                return null;
-            }
-
-            public String getAsString(FacesContext context,
-                    UIComponent component, Object value)
-                    throws ConverterException {
-                return null;
-            }
-
-            public String toString() {
-                return "some converter";
-            }
-        };
+        Converter converter = new NullConverter();
         MockValueBinding vb = new MockValueBinding();
         vb.setValue(getFacesContext(), converter);
         output.setValueBinding("converter", vb);
-        assertEquals("some converter", output.getConverter().toString());
+        assertSame(converter, output.getConverter());
     }
 
-    public void testGetLocalValue() {
-        UIOutput output = new UIOutput();
+    public final void testSetValueGetLocalValue() {
+        UIOutput output = createUIOutput();
         output.setValue("aaa");
         assertEquals("aaa", output.getLocalValue());
     }
 
-    public void testSetValue() {
+    public void testSetGetValue() {
         UIOutput output = createUIOutput();
         output.setValue("aaa");
         assertEquals("aaa", output.getValue());
     }
 
-    public void testGetValue() {
+    public void testSetGetValue_ValueBinding() {
         UIOutput output = createUIOutput();
         MockValueBinding vb = new MockValueBinding();
         vb.setValue(getFacesContext(), "bbb");
@@ -98,7 +73,8 @@ public class UIOutputTest extends UIComponentBaseTest {
         UIOutput output2 = createUIOutput();
         output2.restoreState(context, state);
 
-        assertEquals(true, output2.getConverter() instanceof MockConverter);
+        ObjectAssert.assertInstanceOf(MockConverter.class, output2
+                .getConverter());
         assertEquals(output1.getValue(), output2.getValue());
     }
 

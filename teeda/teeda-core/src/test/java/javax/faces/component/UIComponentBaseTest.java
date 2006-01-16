@@ -67,20 +67,23 @@ public class UIComponentBaseTest extends AbstractUIComponentTest {
         assertEquals(false, componentBase.isRendered());
     }
 
-    public void testGetRendererType() {
-        // TODO getRendererType() ������܂��B
+    public void testSetGetRendererType() throws Exception {
+        UIComponentBase componentBase = createUIComponentBase();
+        componentBase.setRendererType("foo rendererType");
+        assertEquals("foo rendererType", componentBase.getRendererType());
     }
 
-    public void testSetRendererType() {
-        // TODO setRendererType() ������܂��B
+    public void testSetGetRendererType_ValueBinding() throws Exception {
+        UIComponentBase componentBase = createUIComponentBase();
+        MockValueBinding vb = new MockValueBinding();
+        vb.setValue(getFacesContext(), "bar rendererType");
+        componentBase.setRendererType(null); // XXX
+        componentBase.setValueBinding("rendererType", vb);
+        assertEquals("bar rendererType", componentBase.getRendererType());
     }
 
     public void testGetRendersChildren() {
-        // TODO getRendersChildren() ������܂��B
-    }
-
-    public void testGetChildren() {
-        // TODO getChildren() ������܂��B
+        // TODO testing.
     }
 
     public void testGetChildCount() {
@@ -94,7 +97,23 @@ public class UIComponentBaseTest extends AbstractUIComponentTest {
         assertEquals(3, component.getChildCount());
     }
 
-    // TODO findComponent()
+    public void testGetChildren() {
+        // ## Arrange ##
+        UIComponent component = createUIComponent();
+        assertEquals(0, component.getChildCount());
+        UIComponent child1 = new MockUIComponent();
+        UIComponent child2 = new MockUIComponent();
+        UIComponent child3 = new MockUIComponent();
+        component.getChildren().add(child1);
+        component.getChildren().add(child2);
+        component.getChildren().add(child3);
+
+        // ## Act & Assert
+        assertSame(child1, component.getChildren().get(0));
+        assertSame(child2, component.getChildren().get(1));
+        assertSame(child3, component.getChildren().get(2));
+    }
+
     public void testFindComponent() {
         UIComponent component = createUIComponent();
         component.setId("aa");
@@ -255,35 +274,35 @@ public class UIComponentBaseTest extends AbstractUIComponentTest {
     }
 
     public void testGetFacets() {
-        // TODO getFacets() ������܂��B
+        // TODO testing.
     }
 
     public void testGetFacet() {
-        // TODO getFacet() ������܂��B
+        // TODO testing.
     }
 
     public void testGetFacetsAndChildren() {
-        // TODO getFacetsAndChildren() ������܂��B
+        // TODO testing.
     }
 
     public void testBroadcast() {
-        // TODO broadcast() ������܂��B
+        // TODO testing.
     }
 
     public void testDecode() {
-        // TODO decode() ������܂��B
+        // TODO testing.
     }
 
     public void testEncodeBegin() {
-        // TODO encodeBegin() ������܂��B
+        // TODO testing.
     }
 
     public void testEncodeChildren() {
-        // TODO encodeChildren() ������܂��B
+        // TODO testing.
     }
 
     public void testEncodeEnd() {
-        // TODO encodeEnd() ������܂��B
+        // TODO testing.
     }
 
     public void testHandleFacesListeners() {
@@ -384,31 +403,31 @@ public class UIComponentBaseTest extends AbstractUIComponentTest {
     }
 
     public void testProcessRestoreState() {
-        // TODO processRestoreState() ������܂��B
+        // TODO testing.
     }
 
-    public void testProcessDecodes() {
-        // TODO processDecodes() ������܂��B
+    public void testProcessDecodes() throws Exception {
+        // TODO testing.
     }
 
     public void testProcessValidators() {
-        // TODO processValidators() ������܂��B
+        // TODO testing.
     }
 
     public void testProcessUpdates() {
-        // TODO processUpdates() ������܂��B
+        // TODO testing.
     }
 
     public void testProcessSaveState() {
-        // TODO processSaveState() ������܂��B
+        // TODO testing.
     }
 
     public void testGetFacesContext() {
-        // TODO getFacesContext() ������܂��B
+        // TODO testing.
     }
 
     public void testGetRenderer() {
-        // TODO getRenderer() ������܂��B
+        // TODO testing.
     }
 
     public void testSaveAndRestoreState() throws Exception {
@@ -461,11 +480,7 @@ public class UIComponentBaseTest extends AbstractUIComponentTest {
     }
 
     public void testRestoreAttachedState() {
-        // TODO restoreAttachedState() ������܂��B
-    }
-
-    public void testGetFamily() {
-        // TODO getFamily() ������܂��B
+        // TODO testing.
     }
 
     private static class MockFacesListener1 implements FacesListener {

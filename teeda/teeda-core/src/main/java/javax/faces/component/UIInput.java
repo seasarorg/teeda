@@ -146,7 +146,7 @@ public class UIInput extends UIOutput implements EditableValueHolder {
 
 	public void processDecodes(FacesContext context) {
 		ComponentUtils_.assertNotNull("context", context);
-		if (isRendered()) {
+		if (!isRendered()) {
 			return;
 		}
 		super.processDecodes(context);

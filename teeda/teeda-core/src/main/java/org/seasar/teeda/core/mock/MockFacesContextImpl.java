@@ -30,13 +30,23 @@ import javax.faces.context.ResponseStream;
 import javax.faces.context.ResponseWriter;
 import javax.faces.render.RenderKit;
 
+/**
+ * @author shot
+ * @author manhole
+ */
 public class MockFacesContextImpl extends MockFacesContext {
 
     private UIViewRoot root_ = null;
+
     private ExternalContext context_;
+
     private Application application_;
+
     private Map messages_ = new HashMap();
+
     private ResponseWriter responseWriter_;
+
+    private boolean renderResponse_;
 
     public MockFacesContextImpl() {
         setCurrentInstance(this);
@@ -80,7 +90,7 @@ public class MockFacesContextImpl extends MockFacesContext {
     }
 
     public boolean getRenderResponse() {
-        return false;
+        return renderResponse_;
     }
 
     public boolean getResponseComplete() {
@@ -118,6 +128,7 @@ public class MockFacesContextImpl extends MockFacesContext {
     }
 
     public void renderResponse() {
+        renderResponse_ = true;
     }
 
     public void responseComplete() {

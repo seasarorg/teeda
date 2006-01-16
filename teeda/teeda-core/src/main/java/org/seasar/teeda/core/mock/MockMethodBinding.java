@@ -5,17 +5,19 @@ import javax.faces.el.EvaluationException;
 import javax.faces.el.MethodBinding;
 import javax.faces.el.MethodNotFoundException;
 
-
-public class MockMethodBinding extends MethodBinding{
+public class MockMethodBinding extends MethodBinding {
 
     private String expression_;
-    
-    public MockMethodBinding(String expression){
+
+    public MockMethodBinding() {
+    }
+
+    public MockMethodBinding(String expression) {
         expression_ = expression;
     }
-    
+
     public Object invoke(FacesContext context, Object[] params)
-        throws EvaluationException, MethodNotFoundException {
+            throws EvaluationException, MethodNotFoundException {
         return null;
     }
 
@@ -23,7 +25,12 @@ public class MockMethodBinding extends MethodBinding{
         return null;
     }
 
+    public void setExpressionString(String expression) {
+        expression_ = expression;
+    }
+
     public String getExpressionString() {
         return expression_;
     }
+
 }
