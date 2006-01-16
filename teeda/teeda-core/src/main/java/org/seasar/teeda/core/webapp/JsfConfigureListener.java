@@ -16,6 +16,7 @@
 package org.seasar.teeda.core.webapp;
 
 import javax.faces.FactoryFinder;
+import javax.faces.context.ExternalContext;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -51,15 +52,18 @@ public class JsfConfigureListener implements ServletContextListener {
             
             FacesConfig facesConfig = builder.createFacesConfigs(); 
 
+            ExternalContext externalContext = 
+                (ExternalContext)DIContainerUtil.getComponent(ExternalContext.class);
+            
             AssemblerFactory.assembleFactories(facesConfig);
             
             AssemblerFactory.assembleApplication(facesConfig);
             
             AssemblerFactory.assembleManagedBeans(facesConfig);
 
-            AssemblerFactory.assmbleNavigationRules(facesConfig);
+            AssemblerFactory.assmbleNavigationRules(facesConfig, externalContext);
 
-            AssemblerFactory.assembleLifecycle(facesConfig);
+            AssemblerFactory.assembleLifecycle(facesConfig, externalContext);
             
             AssemblerFactory.assembleRenderKits(facesConfig);
             

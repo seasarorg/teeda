@@ -15,17 +15,23 @@
  */
 package org.seasar.teeda.core.config.assembler.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import org.seasar.teeda.core.application.navigation.NavigationCaseContext;
+import org.seasar.teeda.core.application.navigation.NavigationContext;
+import org.seasar.teeda.core.application.navigation.NavigationContextFactory;
 import org.seasar.teeda.core.config.element.NavigationCaseElement;
 import org.seasar.teeda.core.config.element.NavigationRuleElement;
 import org.seasar.teeda.core.config.element.impl.NavigationCaseElementImpl;
 import org.seasar.teeda.core.config.element.impl.NavigationRuleElementImpl;
-
-import junit.framework.TestCase;
+import org.seasar.teeda.core.unit.TeedaTestCase;
 
 /**
  * @author shot
  */
-public class SimpleNavigationRuleAssemblerTest extends TestCase {
+public class SimpleNavigationRuleAssemblerTest extends TeedaTestCase {
 
     /**
      * Constructor for SimpleNavigationRuleAssemblerTest.
@@ -36,11 +42,44 @@ public class SimpleNavigationRuleAssemblerTest extends TestCase {
     }
 
     public void testSetupChildAssembler() throws Exception {
-        //TODO
+        List list = new ArrayList();
+        NavigationRuleElement rule = new NavigationRuleElementImpl();
+        list.add(rule);
+        SimpleNavigationRulesAssembler assembler = new SimpleNavigationRulesAssembler(list);
+        assembler.setupChildAssembler();
     }
     
     public void testAssemble() throws Exception {
-        //TODO
+        // ## Arrange ##
+        NavigationRuleElement rule = new NavigationRuleElementImpl();
+        rule.setFromViewId("aaa");
+        NavigationCaseElement caseElement = new NavigationCaseElementImpl();
+        caseElement.setFromAction("bbb");
+        caseElement.setFromOutcome("ccc");
+        caseElement.setRedirect("");
+        caseElement.setToViewId("ddd");
+        rule.addNavigationCase(caseElement);
+        List list = new ArrayList();
+        list.add(rule);
+        SimpleNavigationRulesAssembler assembler = new SimpleNavigationRulesAssembler(list);
+        assembler.setExternalContext(getExternalContext());
+        
+        // ## Act ##
+        assembler.assemble();
+        
+        // ## Assert ##
+        Map map = NavigationContextFactory.getNavigationContexts(getFacesContext());
+        assertTrue(map.containsKey("aaa"));
+        NavigationContext navContext = (NavigationContext)map.get("aaa");
+        assertEquals("aaa", navContext.getFromViewId());
+        assertFalse(navContext.isWildCardMatch());
+        List cases = navContext.getNavigationCases();
+        assertEquals(1, cases.size());
+        NavigationCaseContext caseContext = (NavigationCaseContext)cases.get(0);
+        assertEquals("bbb", caseContext.getFromAction());
+        assertEquals("ccc", caseContext.getFromOutcome());
+        assertEquals("ddd", caseContext.getToViewId());
+        assertTrue(caseContext.isRedirect());
     }
 
     public void testNavigationContextWrapper() throws Exception {

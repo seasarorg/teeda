@@ -3,6 +3,8 @@ package org.seasar.teeda.core.config.assembler;
 import java.util.List;
 import java.util.Map;
 
+import javax.faces.context.ExternalContext;
+
 import org.seasar.teeda.core.config.assembler.impl.SimpleApplicationAssembler;
 import org.seasar.teeda.core.config.assembler.impl.SimpleComponentsAssembler;
 import org.seasar.teeda.core.config.assembler.impl.SimpleConvertersAssembler;
@@ -14,7 +16,10 @@ import org.seasar.teeda.core.config.assembler.impl.SimpleRenderKitsAssembler;
 import org.seasar.teeda.core.config.assembler.impl.SimpleValidatorsAssembler;
 import org.seasar.teeda.core.config.element.FacesConfig;
 
-
+/**
+ * @author shot
+ * TODO need to refine.
+ */
 public class AssemblerFactory {
 
     private static Provider provider_ = new DefaultProvider();
@@ -34,16 +39,20 @@ public class AssemblerFactory {
         getProvider().assembleManagedBeans(facesConfig).assemble();
     }
     
-    public static void assmbleNavigationRules(FacesConfig facesConfig){
-        getProvider().assembleNavigationRules(facesConfig);
+    public static void assmbleNavigationRules(FacesConfig facesConfig, ExternalContext externalContext){
+        NavigationRulesAssembler assembler = getProvider().assembleNavigationRules(facesConfig);
+        assembler.setExternalContext(externalContext);
+        assembler.assemble();
     }
     
     public static void assembleRenderKits(FacesConfig facesConfig){
         getProvider().assembleRenderKits(facesConfig);
     }
     
-    public static void assembleLifecycle(FacesConfig facesConfig){
-        getProvider().assembleLifecycle(facesConfig);
+    public static void assembleLifecycle(FacesConfig facesConfig, ExternalContext externalContext){
+        LifecycleAssembler assembler = getProvider().assembleLifecycle(facesConfig);
+        assembler.setExternalContext(externalContext);
+        assembler.assemble();
     }
     
     public static void setProvider(Provider provider){

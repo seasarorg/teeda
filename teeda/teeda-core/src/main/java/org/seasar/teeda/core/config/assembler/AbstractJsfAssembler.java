@@ -21,7 +21,6 @@ import java.util.Iterator;
 import javax.faces.context.ExternalContext;
 
 import org.seasar.teeda.core.util.ClassUtil;
-import org.seasar.teeda.core.util.DIContainerUtil;
 import org.seasar.teeda.core.util.IteratorUtil;
 
 /**
@@ -29,6 +28,8 @@ import org.seasar.teeda.core.util.IteratorUtil;
  */
 public abstract class AbstractJsfAssembler implements JsfAssembler{
 
+    private ExternalContext externalContext_;
+    
     protected final void isAllSuitableJsfElement(Collection elements, Class target){
         Object o = null;
         for(Iterator itr = IteratorUtil.getIterator(elements);itr.hasNext();){
@@ -39,10 +40,12 @@ public abstract class AbstractJsfAssembler implements JsfAssembler{
         }
     }
     
+    public void setExternalContext(ExternalContext externalContext){
+        externalContext_ = externalContext;
+    }
+    
     public ExternalContext getExternalContext() {
-        ExternalContext externalContext = (ExternalContext)DIContainerUtil
-                .getComponent(ExternalContext.class);
-        return externalContext;
+        return externalContext_;
     }
 
     protected abstract void setupChildAssembler();
