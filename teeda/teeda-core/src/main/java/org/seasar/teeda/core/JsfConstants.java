@@ -185,4 +185,7 @@ public interface JsfConstants {
     public String[] LABEL_PASSTHROUGH_ATTRIBUTES = (String[]) ArrayUtil.add(
             LABEL_ATTRIBUTES, COMMON_PASSTROUGH_ATTRIBUTES);
 
+    public String[] ID_WITH_COMMON_PASSTROUGH_ATTRIBUTES = (String[]) ArrayUtil
+            .add(new String[] { ID_ATTR }, COMMON_PASSTROUGH_ATTRIBUTES);
+
 }

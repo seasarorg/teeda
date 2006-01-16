@@ -35,10 +35,10 @@ public class HtmlOutputLabelRenderer extends Renderer {
     public void encodeBegin(FacesContext context, UIComponent component)
             throws IOException {
         super.encodeBegin(context, component);
-        renderHtmlOutputLabelBegin(context, (HtmlOutputLabel) component);
+        encodeHtmlOutputLabelBegin(context, (HtmlOutputLabel) component);
     }
 
-    protected void renderHtmlOutputLabelBegin(FacesContext context,
+    protected void encodeHtmlOutputLabelBegin(FacesContext context,
             HtmlOutputLabel htmlOutputLabel) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
 
@@ -68,10 +68,10 @@ public class HtmlOutputLabelRenderer extends Renderer {
     public void encodeEnd(FacesContext context, UIComponent component)
             throws IOException {
         super.encodeEnd(context, component);
-        renderHtmlOutputLabelEnd(context, (HtmlOutputLabel) component);
+        encodeHtmlOutputLabelEnd(context, (HtmlOutputLabel) component);
     }
 
-    protected void renderHtmlOutputLabelEnd(FacesContext context,
+    protected void encodeHtmlOutputLabelEnd(FacesContext context,
             HtmlOutputLabel htmlOutputLabel) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
         writer.endElement(JsfConstants.LABEL_ATTR);

@@ -151,7 +151,7 @@ public class HtmlOutputTextRendererTest extends RendererTest {
         assertEquals("<span>a</span>", getResponseText());
     }
 
-    public void testEncodeEnd_IdAndCommonAttributtes() throws Exception {
+    public void testEncodeEnd_WithAllAttributes() throws Exception {
         // ## Arrange ##
         HtmlOutputText htmlOutputText = new HtmlOutputText();
         htmlOutputText.setId("fooId");

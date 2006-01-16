@@ -439,16 +439,34 @@ public class HtmlResponseWriterTest extends TestCase {
         assertEquals("a?1=2", responseWriter.encodeURIAttribute("a?1=2"));
         assertEquals("a?1=2&3=4", responseWriter
                 .encodeURIAttribute("a?1=2&3=4"));
+        assertEquals("a?1=+", responseWriter.encodeURIAttribute("a?1= "));
         assertEquals("a?1=2%3F3=4", responseWriter
                 .encodeURIAttribute("a?1=2?3=4"));
     }
 
-    public void testLeaningUrlEncoder() throws Exception {
+    public void testLeaningURLEncoder() throws Exception {
+        assertEquals("%3B", URLEncoder.encode(";", "UTF-8"));
         assertEquals("%2F", URLEncoder.encode("/", "UTF-8"));
-        assertEquals("+", URLEncoder.encode(" ", "UTF-8"));
-        assertEquals("%40", URLEncoder.encode("@", "UTF-8"));
         assertEquals("%3F", URLEncoder.encode("?", "UTF-8"));
+        assertEquals("%3A", URLEncoder.encode(":", "UTF-8"));
+        assertEquals("%40", URLEncoder.encode("@", "UTF-8"));
+        assertEquals("%26", URLEncoder.encode("&", "UTF-8"));
+        assertEquals("%3D", URLEncoder.encode("=", "UTF-8"));
+        assertEquals("%2B", URLEncoder.encode("+", "UTF-8"));
+        assertEquals("%24", URLEncoder.encode("$", "UTF-8"));
+        assertEquals("%2C", URLEncoder.encode(",", "UTF-8"));
+        assertEquals("-", URLEncoder.encode("-", "UTF-8"));
+        assertEquals("_", URLEncoder.encode("_", "UTF-8"));
+        assertEquals(".", URLEncoder.encode(".", "UTF-8"));
+        assertEquals("%21", URLEncoder.encode("!", "UTF-8"));
+        assertEquals("%7E", URLEncoder.encode("~", "UTF-8"));
+        assertEquals("*", URLEncoder.encode("*", "UTF-8"));
+        assertEquals("%27", URLEncoder.encode("'", "UTF-8"));
+        assertEquals("%28", URLEncoder.encode("(", "UTF-8"));
+        assertEquals("%29", URLEncoder.encode(")", "UTF-8"));
         assertEquals("%25", URLEncoder.encode("%", "UTF-8"));
+
+        assertEquals("+", URLEncoder.encode(" ", "UTF-8"));
 
         Character japaneseA = new Character((char) 12354);
         assertEquals(12354, japaneseA.charValue());

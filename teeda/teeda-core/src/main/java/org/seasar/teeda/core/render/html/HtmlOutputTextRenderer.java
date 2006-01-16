@@ -23,7 +23,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.render.Renderer;
 
-import org.seasar.framework.util.ArrayUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.util.RendererUtil;
 import org.seasar.teeda.core.util.UIComponentUtil;
@@ -34,22 +33,18 @@ import org.seasar.teeda.core.util.ValueHolderUtil;
  */
 public class HtmlOutputTextRenderer extends Renderer {
 
-    private static final String[] ID_WITH_COMMON_PASSTROUGH_ATTRIBUTES = (String[]) ArrayUtil
-            .add(new String[] { JsfConstants.ID_ATTR },
-                    JsfConstants.COMMON_PASSTROUGH_ATTRIBUTES);
-
     public void encodeEnd(FacesContext context, UIComponent component)
             throws IOException {
         super.encodeEnd(context, component);
-        renderHtmlOutputText(context, (HtmlOutputText) component);
+        encodeHtmlOutputText(context, (HtmlOutputText) component);
     }
 
-    protected void renderHtmlOutputText(FacesContext context,
+    protected void encodeHtmlOutputText(FacesContext context,
             HtmlOutputText htmlOutputText) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
         boolean startSpan = false;
         if (UIComponentUtil.containsAttributes(htmlOutputText,
-                ID_WITH_COMMON_PASSTROUGH_ATTRIBUTES)) {
+                JsfConstants.ID_WITH_COMMON_PASSTROUGH_ATTRIBUTES)) {
             writer.startElement(JsfConstants.SPAN_ELEM, htmlOutputText);
             startSpan = true;
         }
@@ -57,12 +52,12 @@ public class HtmlOutputTextRenderer extends Renderer {
                 htmlOutputText.getId());
         RendererUtil.renderAttributes(writer, htmlOutputText,
                 JsfConstants.COMMON_PASSTROUGH_ATTRIBUTES);
+        String value = ValueHolderUtil.getValueForRender(context,
+                htmlOutputText);
         if (htmlOutputText.isEscape()) {
-            writer.writeText(ValueHolderUtil.getValueForRender(context,
-                    htmlOutputText), null);
+            writer.writeText(value, null);
         } else {
-            writer.write(ValueHolderUtil.getValueForRender(context,
-                    htmlOutputText));
+            writer.write(value);
         }
         if (startSpan) {
             writer.endElement(JsfConstants.SPAN_ELEM);

@@ -38,10 +38,10 @@ public class HtmlOutputLinkRenderer extends Renderer {
     public void encodeBegin(FacesContext context, UIComponent component)
             throws IOException {
         super.encodeBegin(context, component);
-        renderHtmlOutputLinkBegin(context, (HtmlOutputLink) component);
+        encodeHtmlOutputLinkBegin(context, (HtmlOutputLink) component);
     }
 
-    protected void renderHtmlOutputLinkBegin(FacesContext context,
+    protected void encodeHtmlOutputLinkBegin(FacesContext context,
             HtmlOutputLink htmlOutputLink) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
 
@@ -78,10 +78,10 @@ public class HtmlOutputLinkRenderer extends Renderer {
     public void encodeEnd(FacesContext context, UIComponent component)
             throws IOException {
         super.encodeEnd(context, component);
-        renderHtmlOutputLinkEnd(context, (HtmlOutputLink) component);
+        encodeHtmlOutputLinkEnd(context, (HtmlOutputLink) component);
     }
 
-    protected void renderHtmlOutputLinkEnd(FacesContext context,
+    protected void encodeHtmlOutputLinkEnd(FacesContext context,
             HtmlOutputLink link) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
         writer.writeText("", null);
