@@ -6,6 +6,7 @@ import java.util.Iterator;
 import javax.faces.context.ExternalContext;
 import javax.faces.lifecycle.Lifecycle;
 
+import org.seasar.teeda.core.util.ClassUtil;
 import org.seasar.teeda.core.util.IteratorUtil;
 import org.seasar.teeda.core.util.LifecycleUtil;
 
