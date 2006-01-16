@@ -112,6 +112,7 @@ public class UIInputTest extends UIOutputTest {
 
     public void testProcessDecodes_CallValidateWhenImmediateIsTrue()
             throws Exception {
+        // ## Arrange ##
         MockFacesContext context = getFacesContext();
         final boolean[] calls = { false };
         UIInput input = new UIInput() {
@@ -120,13 +121,38 @@ public class UIInputTest extends UIOutputTest {
             }
         };
         input.setImmediate(true);
+
+        // ## Act ##
         input.processDecodes(context);
+
+        // ## Assert ##
         assertEquals(true, calls[0]);
+        assertEquals(false, context.getRenderResponse());
+    }
+
+    public void testProcessDecodes_NotCallValidateWhenImmediateIsFalse()
+            throws Exception {
+        // ## Arrange ##
+        MockFacesContext context = getFacesContext();
+        final boolean[] calls = { false };
+        UIInput input = new UIInput() {
+            public void validate(FacesContext context) {
+                calls[0] = true;
+            }
+        };
+        input.setImmediate(false);
+
+        // ## Act ##
+        input.processDecodes(context);
+
+        // ## Assert ##
+        assertEquals(false, calls[0]);
         assertEquals(false, context.getRenderResponse());
     }
 
     public void testProcessDecodes_RenderResponseIsCalledWhenComponentIsInvalid()
             throws Exception {
+        // ## Arrange ##
         MockFacesContext context = getFacesContext();
         final boolean[] calls = { false };
         final UIInput input = new UIInput() {
@@ -136,13 +162,146 @@ public class UIInputTest extends UIOutputTest {
             }
         };
         input.setImmediate(true);
+
+        // ## Act ##
         input.processDecodes(context);
+
+        // ## Assert ##
         assertEquals(true, calls[0]);
         assertEquals(true, context.getRenderResponse());
     }
 
-    // TODO test: processValidators
+    public void testProcessDecodes_RenderResponseIsCalledWhenRuntimeExceptionThrown()
+            throws Exception {
+
+        // ## Arrange ##
+        MockFacesContext context = getFacesContext();
+        final boolean[] calls = { false };
+        final UIInput input = new UIInput() {
+            public void validate(FacesContext context) {
+                calls[0] = true;
+                throw new RuntimeException("for test");
+            }
+        };
+        input.setImmediate(true);
+
+        // ## Act & Assert ##
+        try {
+            input.processDecodes(context);
+            fail();
+        } catch (RuntimeException expected) {
+            assertEquals("for test", expected.getMessage());
+        }
+        assertEquals(true, calls[0]);
+        assertEquals(true, context.getRenderResponse());
+    }
+
+    public void testProcessValidators_CallValidateWhenImmediateIsFalse()
+            throws Exception {
+        // ## Arrange ##
+        MockFacesContext context = getFacesContext();
+        final boolean[] calls = { false };
+        UIInput input = new UIInput() {
+            public void validate(FacesContext context) {
+                calls[0] = true;
+            }
+        };
+        input.setImmediate(false);
+
+        // ## Act ##
+        input.processValidators(context);
+
+        // ## Assert ##
+        assertEquals(true, calls[0]);
+        assertEquals(false, context.getRenderResponse());
+    }
+
+    public void testProcessValidators_NotCallValidateWhenImmediateIsTrue()
+            throws Exception {
+        // ## Arrange ##
+        MockFacesContext context = getFacesContext();
+        final boolean[] calls = { false };
+        UIInput input = new UIInput() {
+            public void validate(FacesContext context) {
+                calls[0] = true;
+            }
+        };
+        input.setImmediate(true);
+
+        // ## Act ##
+        input.processValidators(context);
+
+        // ## Assert ##
+        assertEquals(false, calls[0]);
+        assertEquals(false, context.getRenderResponse());
+    }
+
+    public void testProcessValidators_RenderResponseIsCalledWhenComponentIsInvalid()
+            throws Exception {
+        // ## Arrange ##
+        MockFacesContext context = getFacesContext();
+        final boolean[] calls = { false };
+        final UIInput input = new UIInput() {
+            public void validate(FacesContext context) {
+                calls[0] = true;
+                setValid(false);
+            }
+        };
+        input.setImmediate(false);
+
+        // ## Act ##
+        input.processValidators(context);
+
+        // ## Assert ##
+        assertEquals(true, calls[0]);
+        assertEquals(true, context.getRenderResponse());
+    }
+
+    public void testProcessValidators_RenderResponseIsCalledWhenRuntimeExceptionThrown()
+            throws Exception {
+
+        // ## Arrange ##
+        MockFacesContext context = getFacesContext();
+        final boolean[] calls = { false };
+        final UIInput input = new UIInput() {
+            public void validate(FacesContext context) {
+                calls[0] = true;
+                throw new RuntimeException("for test");
+            }
+        };
+        input.setImmediate(false);
+
+        // ## Act & Assert ##
+        try {
+            input.processValidators(context);
+            fail();
+        } catch (RuntimeException expected) {
+            assertEquals("for test", expected.getMessage());
+        }
+        assertEquals(true, calls[0]);
+        assertEquals(true, context.getRenderResponse());
+    }
+
     // TODO test: processUpdates
+    public void testProcessUpdates_CallUpdateModel()
+            throws Exception {
+        // ## Arrange ##
+        MockFacesContext context = getFacesContext();
+        final boolean[] calls = { false };
+        UIInput input = new UIInput() {
+            public void updateModel(FacesContext context) {
+                calls[0] = true;
+            }
+        };
+
+        // ## Act ##
+        input.processUpdates(context);
+
+        // ## Assert ##
+        assertEquals(true, calls[0]);
+        assertEquals(false, context.getRenderResponse());
+    }
+
     // TODO test: decode
     // TODO test: broadcast
     // TODO test: updateModel

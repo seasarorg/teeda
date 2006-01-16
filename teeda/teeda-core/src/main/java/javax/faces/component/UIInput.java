@@ -38,7 +38,7 @@ public class UIInput extends UIOutput implements EditableValueHolder {
 
 	private boolean requiredSet_ = false;
 
-	private boolean valid_ = false;
+	private boolean valid_ = true;
 
 	private boolean validSet_ = false;
 
@@ -157,7 +157,7 @@ public class UIInput extends UIOutput implements EditableValueHolder {
 
 	public void processValidators(FacesContext context) {
 		ComponentUtils_.assertNotNull("context", context);
-		if (isRendered()) {
+		if (!isRendered()) {
 			return;
 		}
 		super.processValidators(context);
@@ -168,7 +168,7 @@ public class UIInput extends UIOutput implements EditableValueHolder {
 
 	public void processUpdates(FacesContext context) {
 		ComponentUtils_.assertNotNull("context", context);
-		if (isRendered()) {
+		if (!isRendered()) {
 			return;
 		}
 		try {
