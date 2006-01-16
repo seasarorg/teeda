@@ -7,7 +7,6 @@ import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.mock.MockFacesContextImpl;
 import org.seasar.teeda.core.mock.MockMethodBinding;
 import org.seasar.teeda.core.mock.MockValueBinding;
-import org.seasar.teeda.core.util.TeedaTestUtil;
 
 /**
  * @author shot
@@ -114,7 +113,6 @@ public class UIInputTest extends UIOutputTest {
     public void testProcessDecodes_CallValidateWhenImmediateIsTrue()
             throws Exception {
         MockFacesContext context = getFacesContext();
-        TeedaTestUtil.setupMockUIViewRoot(context);
         final boolean[] calls = { false };
         UIInput input = new UIInput() {
             public void validate(FacesContext context) {
@@ -130,7 +128,6 @@ public class UIInputTest extends UIOutputTest {
     public void testProcessDecodes_RenderResponseIsCalledWhenComponentIsInvalid()
             throws Exception {
         MockFacesContext context = getFacesContext();
-        TeedaTestUtil.setupMockUIViewRoot(context);
         final boolean[] calls = { false };
         final UIInput input = new UIInput() {
             public void validate(FacesContext context) {

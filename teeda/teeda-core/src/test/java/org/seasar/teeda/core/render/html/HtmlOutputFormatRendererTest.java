@@ -24,17 +24,11 @@ import javax.faces.render.Renderer;
 import javax.faces.render.RendererTest;
 
 import org.custommonkey.xmlunit.Diff;
-import org.seasar.teeda.core.util.TeedaTestUtil;
 
 /**
  * @author manhole
  */
 public class HtmlOutputFormatRendererTest extends RendererTest {
-
-    protected void setUpAfterContainerInit() throws Throwable {
-        super.setUpAfterContainerInit();
-        TeedaTestUtil.setupMockUIViewRoot(getFacesContext());
-    }
 
     public void testEncodeEnd() throws Exception {
         HtmlOutputFormat htmlOutputFormat = new HtmlOutputFormat();

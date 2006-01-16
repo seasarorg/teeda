@@ -12,7 +12,6 @@ import org.seasar.teeda.core.mock.MockUIComponentBase;
 import org.seasar.teeda.core.mock.MockValueBinding;
 import org.seasar.teeda.core.mock.NullFacesContext;
 import org.seasar.teeda.core.unit.AssertUtil;
-import org.seasar.teeda.core.util.TeedaTestUtil;
 
 public class UIComponentBaseTest extends AbstractUIComponentTest {
 
@@ -24,8 +23,6 @@ public class UIComponentBaseTest extends AbstractUIComponentTest {
     }
 
     public void testGetClientId() {
-        TeedaTestUtil.setupMockUIViewRoot(getFacesContext());
-
         UIComponentBase component = createUIComponentBase();
         component.setId("a");
 

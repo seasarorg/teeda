@@ -16,7 +16,7 @@
 package org.seasar.teeda.core.unit;
 
 import javax.faces.FactoryFinder;
-import javax.faces.application.ViewHandler;
+import javax.faces.component.UIViewRoot;
 import javax.faces.lifecycle.LifecycleFactory;
 import javax.faces.render.RenderKitFactory;
 
@@ -70,7 +70,7 @@ public abstract class TeedaTestCase extends S2FrameworkTestCase {
     private MockVariableResolver variableResolver;
 
     private MockViewHandler viewHandler;
-    
+
     public TeedaTestCase() {
     }
 
@@ -81,7 +81,7 @@ public abstract class TeedaTestCase extends S2FrameworkTestCase {
     protected void setUpContainer() throws Throwable {
         super.setUpContainer();
         externalContext = new MockExternalContextImpl(getServletContext(),
-            getRequest(), getResponse());
+                getRequest(), getResponse());
         application = new MockApplication();
         navigationHandler = new MockNavigationHandler();
         application.setNavigationHandler(navigationHandler);
@@ -96,6 +96,9 @@ public abstract class TeedaTestCase extends S2FrameworkTestCase {
         HtmlResponseWriter responseWriter = new HtmlResponseWriter();
         responseWriter.setWriter(getResponse().getWriter());
         facesContext.setResponseWriter(responseWriter);
+        UIViewRoot viewRoot = new UIViewRoot();
+        viewRoot.setRenderKitId(RenderKitFactory.HTML_BASIC_RENDER_KIT);
+        facesContext.setViewRoot(viewRoot);
         renderKit = new MockRenderKit();
         lifecycle = new MockLifecycle();
         phaseListener = new MockPhaseListener();
@@ -106,16 +109,16 @@ public abstract class TeedaTestCase extends S2FrameworkTestCase {
 
     protected void initFactories() {
         FactoryFinder.setFactory(FactoryFinder.APPLICATION_FACTORY,
-            "org.seasar.teeda.core.mock.MockApplicationFactory");
+                "org.seasar.teeda.core.mock.MockApplicationFactory");
 
         FactoryFinder.setFactory(FactoryFinder.FACES_CONTEXT_FACTORY,
-            "org.seasar.teeda.core.mock.MockFacesContextFactory");
+                "org.seasar.teeda.core.mock.MockFacesContextFactory");
 
         FactoryFinder.setFactory(FactoryFinder.LIFECYCLE_FACTORY,
-            "org.seasar.teeda.core.mock.MockLifecycleFactory");
+                "org.seasar.teeda.core.mock.MockLifecycleFactory");
 
         FactoryFinder.setFactory(FactoryFinder.RENDER_KIT_FACTORY,
-            "org.seasar.teeda.core.mock.MockRenderKitFactory");
+                "org.seasar.teeda.core.mock.MockRenderKitFactory");
     }
 
     protected void setFactories() {
@@ -128,28 +131,28 @@ public abstract class TeedaTestCase extends S2FrameworkTestCase {
 
     protected void setApplicationFactory() {
         MockApplicationFactory appFactory = (MockApplicationFactory) FactoryFinder
-            .getFactory(FactoryFinder.APPLICATION_FACTORY);
+                .getFactory(FactoryFinder.APPLICATION_FACTORY);
         appFactory.setApplication(application);
     }
 
     protected void setFacesContextFactory() {
         MockFacesContextFactory facesContextFactory = (MockFacesContextFactory) FactoryFinder
-            .getFactory(FactoryFinder.FACES_CONTEXT_FACTORY);
+                .getFactory(FactoryFinder.FACES_CONTEXT_FACTORY);
         facesContextFactory.setFacesContext(facesContext);
     }
 
     protected void setLifecycleFactory() {
         MockLifecycleFactory lifecycleFactory = (MockLifecycleFactory) FactoryFinder
-            .getFactory(FactoryFinder.LIFECYCLE_FACTORY);
+                .getFactory(FactoryFinder.LIFECYCLE_FACTORY);
         lifecycleFactory.addLifecycle(LifecycleFactory.DEFAULT_LIFECYCLE,
-            lifecycle);
+                lifecycle);
     }
 
     protected void setRenderKitFactory() {
         MockRenderKitFactory renderKitFactory = (MockRenderKitFactory) FactoryFinder
-            .getFactory(FactoryFinder.RENDER_KIT_FACTORY);
+                .getFactory(FactoryFinder.RENDER_KIT_FACTORY);
         renderKitFactory.addRenderKit(RenderKitFactory.HTML_BASIC_RENDER_KIT,
-            renderKit);
+                renderKit);
     }
 
     protected void setManagedBeanFactory() {
@@ -161,7 +164,7 @@ public abstract class TeedaTestCase extends S2FrameworkTestCase {
 
     protected ManagedBeanFactoryImpl getManagedBeanFactory() {
         return (ManagedBeanFactoryImpl) getContainer().getComponent(
-            ManagedBeanFactory.class);
+                ManagedBeanFactory.class);
     }
 
     protected void tearDownContainer() throws Throwable {
@@ -251,9 +254,10 @@ public abstract class TeedaTestCase extends S2FrameworkTestCase {
     public MockViewHandler getViewHandler() {
         return viewHandler;
     }
-    
+
     public void setViewHandler(MockViewHandler viewHandler) {
         this.viewHandler = viewHandler;
         application.setViewHandler(viewHandler);
     }
+
 }

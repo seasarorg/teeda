@@ -21,8 +21,6 @@ import javax.faces.render.Renderer;
 import javax.faces.render.RendererTest;
 
 import org.custommonkey.xmlunit.Diff;
-import org.seasar.teeda.core.mock.MockFacesContext;
-import org.seasar.teeda.core.util.TeedaTestUtil;
 
 /**
  * @author manhole
@@ -127,11 +125,8 @@ public class HtmlOutputTextRendererTest extends RendererTest {
         htmlOutputText.setValue("a");
         HtmlOutputTextRenderer renderer = createHtmlOutputTextRenderer();
 
-        MockFacesContext context = getFacesContext();
-        TeedaTestUtil.setupMockUIViewRoot(context);
-
         // ## Act ##
-        renderer.encodeEnd(context, htmlOutputText);
+        renderer.encodeEnd(getFacesContext(), htmlOutputText);
 
         // ## Assert ##
         assertEquals("<span id=\"someId\">a</span>", getResponseText());
@@ -160,11 +155,8 @@ public class HtmlOutputTextRendererTest extends RendererTest {
         htmlOutputText.setValue("a");
         HtmlOutputTextRenderer renderer = createHtmlOutputTextRenderer();
 
-        MockFacesContext context = getFacesContext();
-        TeedaTestUtil.setupMockUIViewRoot(context);
-
         // ## Act ##
-        renderer.encodeEnd(context, htmlOutputText);
+        renderer.encodeEnd(getFacesContext(), htmlOutputText);
 
         // ## Assert ##
         Diff diff = new Diff("<span" + " id=\"fooId\"" + " title=\"someTitle\""

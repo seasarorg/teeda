@@ -26,7 +26,6 @@ import org.seasar.teeda.core.mock.NullFacesEvent;
 import org.seasar.teeda.core.mock.NullValueBinding;
 import org.seasar.teeda.core.unit.AssertUtil;
 import org.seasar.teeda.core.unit.TeedaTestCase;
-import org.seasar.teeda.core.util.TeedaTestUtil;
 
 /**
  * @author manhole
@@ -86,7 +85,6 @@ public abstract class AbstractUIComponentTest extends TeedaTestCase {
         // ## Arrange ##
         UIComponent component = createUIComponent();
         MockFacesContext context = getFacesContext();
-        TeedaTestUtil.setupMockUIViewRoot(context);
 
         // ## Act & Assert ##
         String clientId1 = component.getClientId(context);
@@ -99,7 +97,6 @@ public abstract class AbstractUIComponentTest extends TeedaTestCase {
         // ## Arrange ##
         UIComponent component = createUIComponent();
         MockFacesContext context = getFacesContext();
-        TeedaTestUtil.setupMockUIViewRoot(context);
         component.setId("a");
 
         // ## Act & Assert ##
