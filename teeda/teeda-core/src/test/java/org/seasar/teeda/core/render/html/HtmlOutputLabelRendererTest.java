@@ -15,11 +15,17 @@
  */
 package org.seasar.teeda.core.render.html;
 
+import javax.faces.component.UIComponent;
+import javax.faces.component.UIForm;
+import javax.faces.component.UIInput;
 import javax.faces.component.html.HtmlOutputLabel;
 import javax.faces.render.Renderer;
 import javax.faces.render.RendererTest;
 
 import org.custommonkey.xmlunit.Diff;
+import org.seasar.teeda.core.mock.MockUIComponentBase;
+import org.seasar.teeda.core.unit.AssertUtil;
+import org.seasar.teeda.core.util.TeedaTestUtil;
 
 /**
  * @author manhole
@@ -69,12 +75,38 @@ public class HtmlOutputLabelRendererTest extends RendererTest {
         htmlOutputLabel.setFor("bb");
         HtmlOutputLabelRenderer renderer = createHtmlOutputLabelRenderer();
 
+        try {
+            // if forComponent doesn't exist, we throw Exception.
+            renderer.encodeBegin(getFacesContext(), htmlOutputLabel);
+            fail();
+        } catch (IllegalStateException ise) {
+            AssertUtil.assertExceptionMessageExist(ise);
+        }
+    }
+
+    public void testEncodeBegin_WithForComponent() throws Exception {
+        TeedaTestUtil.setupMockUIViewRoot(getFacesContext());
+        HtmlOutputLabel htmlOutputLabel = new HtmlOutputLabel();
+        htmlOutputLabel.setFor("forComponentId");
+
+        UIInput forComponent = new UIInput();
+        forComponent.setId("forComponentId");
+
+        UIForm parent = new UIForm();
+        parent.setId("parentForm");
+        parent.getChildren().add(htmlOutputLabel);
+        parent.getChildren().add(forComponent);
+
+        HtmlOutputLabelRenderer renderer = createHtmlOutputLabelRenderer();
+
         renderer.encodeBegin(getFacesContext(), htmlOutputLabel);
 
-        assertEquals("<label for=\"bb\">", getResponseText());
+        assertEquals("<label for=\"parentForm:forComponentId\">",
+                getResponseText());
     }
 
     public void testEncodeBegin_WithAllAttributes() throws Exception {
+        // ## Arrange ##
         HtmlOutputLabel htmlOutputLabel = new HtmlOutputLabel();
         htmlOutputLabel.setAccesskey("a");
         htmlOutputLabel.setDir("b");
@@ -98,14 +130,21 @@ public class HtmlOutputLabelRendererTest extends RendererTest {
         htmlOutputLabel.setTitle("t");
 
         htmlOutputLabel.setValue("u");
+        htmlOutputLabel.setId("v");
+
+        UIComponent child = new MockUIComponentBase();
+        child.setId("c");
+        htmlOutputLabel.getChildren().add(child);
 
         HtmlOutputLabelRenderer renderer = createHtmlOutputLabelRenderer();
 
+        // ## Act ##
         renderer.encodeBegin(getFacesContext(), htmlOutputLabel);
         renderer.encodeEnd(getFacesContext(), htmlOutputLabel);
 
-        Diff diff = new Diff("<label" + " accesskey=\"a\"" + " dir=\"b\""
-                + " for=\"c\"" + " lang=\"d\"" + " onblur=\"e\""
+        // ## Assert ##
+        Diff diff = new Diff("<label" + " id=\"v\"" + " accesskey=\"a\""
+                + " dir=\"b\"" + " for=\"c\"" + " lang=\"d\"" + " onblur=\"e\""
                 + " onclick=\"f\"" + " ondblclick=\"g\"" + " onfocus=\"h\""
                 + " onkeydown=\"i\"" + " onkeypress=\"j\"" + " onkeyup=\"k\""
                 + " onmousedown=\"l\"" + " onmousemove=\"m\""
@@ -113,9 +152,7 @@ public class HtmlOutputLabelRendererTest extends RendererTest {
                 + " onmouseup=\"p\"" + " style=\"q\"" + " class=\"r\""
                 + " tabindex=\"s\"" + " title=\"t\">u</label>",
                 getResponseText());
-        System.out.println(getResponseText());
         assertEquals(diff.toString(), true, diff.identical());
-
     }
 
     private HtmlOutputLabelRenderer createHtmlOutputLabelRenderer() {

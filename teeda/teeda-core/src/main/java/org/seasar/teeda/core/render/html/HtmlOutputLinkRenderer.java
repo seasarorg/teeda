@@ -28,6 +28,7 @@ import javax.faces.render.Renderer;
 
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.util.RendererUtil;
+import org.seasar.teeda.core.util.ValueHolderUtil;
 
 /**
  * @author manhole
@@ -45,7 +46,8 @@ public class HtmlOutputLinkRenderer extends Renderer {
         ResponseWriter writer = context.getResponseWriter();
 
         UrlBuilder urlBuilder = new UrlBuilder();
-        urlBuilder.setBase(htmlOutputLink.getValue().toString());
+        urlBuilder.setBase(ValueHolderUtil.getValueForRender(context,
+                htmlOutputLink));
 
         final String encoding = writer.getCharacterEncoding();
         for (Iterator it = htmlOutputLink.getChildren().iterator(); it

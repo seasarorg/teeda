@@ -39,6 +39,16 @@ public class HtmlOutputTextRendererTest extends RendererTest {
         assertEquals("abc", getResponseText());
     }
 
+    public void testEncodeEnd_NullValue() throws Exception {
+        HtmlOutputText htmlOutputText = new HtmlOutputText();
+        htmlOutputText.setValue(null);
+        HtmlOutputTextRenderer renderer = createHtmlOutputTextRenderer();
+
+        renderer.encodeEnd(getFacesContext(), htmlOutputText);
+
+        assertEquals("", getResponseText());
+    }
+
     public void testEncodeEnd_EscapeTrue() throws Exception {
         HtmlOutputText htmlOutputText = new HtmlOutputText();
         assertTrue("default is true", htmlOutputText.isEscape());
@@ -157,9 +167,8 @@ public class HtmlOutputTextRendererTest extends RendererTest {
         renderer.encodeEnd(context, htmlOutputText);
 
         // ## Assert ##
-        Diff diff = new Diff(
-                "<span id=\"fooId\" title=\"someTitle\" onmouseout=\"do something\">a</span>",
-                getResponseText());
+        Diff diff = new Diff("<span" + " id=\"fooId\"" + " title=\"someTitle\""
+                + " onmouseout=\"do something\">a</span>", getResponseText());
         assertEquals(diff.toString(), true, diff.identical());
     }
 

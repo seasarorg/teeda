@@ -197,10 +197,9 @@ public abstract class UIComponentBase extends UIComponent {
         UIComponent base = this;
         if (expr.charAt(0) == NamingContainer.SEPARATOR_CHAR) {
             getComponentRoot(base);
-            expr.substring(1);
+            expr = expr.substring(1);
         } else {
-            for (base = base.getParent(); base.getParent() != null; base = base
-                    .getParent()) {
+            for (; base.getParent() != null; base = base.getParent()) {
                 if (base instanceof NamingContainer) {
                     break;
                 }
@@ -261,9 +260,10 @@ public abstract class UIComponentBase extends UIComponent {
 
     private static UIComponent getComponentRoot(UIComponent base) {
         UIComponent parent;
-        for (parent = base.getParent(); parent.getParent() != null; parent = parent
-                .getParent())
+        for (parent = base; parent.getParent() != null; parent = parent
+                .getParent()) {
             ;
+        }
         return parent;
     }
 

@@ -41,13 +41,21 @@ public class HtmlOutputLabelRenderer extends Renderer {
     protected void renderHtmlOutputLabelBegin(FacesContext context,
             HtmlOutputLabel htmlOutputLabel) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
+
         writer.startElement(JsfConstants.LABEL_ATTR, htmlOutputLabel);
         RendererUtil.renderIdAttributeIfNecessary(writer, htmlOutputLabel,
                 htmlOutputLabel.getId());
+
         String forAttr = htmlOutputLabel.getFor();
         if (forAttr != null) {
+            UIComponent forComponent = htmlOutputLabel.findComponent(forAttr);
+            if (forComponent == null) {
+                throw new IllegalStateException("for Component [" + forAttr
+                        + "] does not found");
+            }
+            String forClientId = forComponent.getClientId(context);
             RendererUtil.renderAttribute(writer, JsfConstants.FOR_ATTR,
-                    forAttr, null);
+                    forClientId, null);
         }
 
         RendererUtil.renderAttributes(writer, htmlOutputLabel,

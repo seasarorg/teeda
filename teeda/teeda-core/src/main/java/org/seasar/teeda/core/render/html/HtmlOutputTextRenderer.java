@@ -27,6 +27,7 @@ import org.seasar.framework.util.ArrayUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.util.RendererUtil;
 import org.seasar.teeda.core.util.UIComponentUtil;
+import org.seasar.teeda.core.util.ValueHolderUtil;
 
 /**
  * @author manhole
@@ -57,7 +58,8 @@ public class HtmlOutputTextRenderer extends Renderer {
         RendererUtil.renderAttributes(writer, htmlOutputText,
                 JsfConstants.COMMON_PASSTROUGH_ATTRIBUTES);
         if (htmlOutputText.isEscape()) {
-            writer.writeText(htmlOutputText.getValue().toString(), null);
+            writer.writeText(ValueHolderUtil.getValueForRender(context,
+                    htmlOutputText), null);
         } else {
             writer.write(htmlOutputText.getValue().toString());
         }
