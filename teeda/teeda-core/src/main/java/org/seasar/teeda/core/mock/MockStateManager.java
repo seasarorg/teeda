@@ -21,6 +21,8 @@ import javax.faces.application.StateManager;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 
+import org.apache.commons.lang.NotImplementedException;
+
 /**
  * @author shot
  */
@@ -53,6 +55,20 @@ public class MockStateManager extends StateManager {
 
     protected void restoreComponentState(FacesContext context,
             UIViewRoot viewRoot) {
+    }
+
+    public UIViewRoot restoreView(FacesContext context, String viewId, String renderKitId) {
+        // TODO Auto-generated method stub
+        throw new NotImplementedException();
+    }
+
+    protected UIViewRoot restoreTreeStructure(FacesContext context, String viewId, String renderKitId) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    protected void restoreComponentState(FacesContext context, UIViewRoot viewRoot, String renderKitId) {
+        // TODO Auto-generated method stub
     }
 
 }
