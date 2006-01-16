@@ -439,7 +439,7 @@ public class HtmlResponseWriterTest extends TestCase {
         assertEquals("a?1=2", responseWriter.encodeURIAttribute("a?1=2"));
         assertEquals("a?1=2&3=4", responseWriter
                 .encodeURIAttribute("a?1=2&3=4"));
-        assertEquals("a?1=+", responseWriter.encodeURIAttribute("a?1= "));
+        assertEquals("a?1=%20", responseWriter.encodeURIAttribute("a?1= "));
         assertEquals("a?1=2%3F3=4", responseWriter
                 .encodeURIAttribute("a?1=2?3=4"));
     }

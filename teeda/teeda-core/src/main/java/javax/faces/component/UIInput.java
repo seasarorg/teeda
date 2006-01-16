@@ -38,7 +38,7 @@ public class UIInput extends UIOutput implements EditableValueHolder {
 
 	private boolean requiredSet_ = false;
 
-	private boolean valid_ = true;
+	private boolean valid_ = false;
 
 	private boolean validSet_ = false;
 

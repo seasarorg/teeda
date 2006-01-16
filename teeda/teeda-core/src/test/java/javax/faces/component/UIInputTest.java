@@ -2,6 +2,7 @@ package javax.faces.component;
 
 import javax.faces.context.FacesContext;
 import javax.faces.el.MethodBinding;
+import javax.faces.event.FacesEvent;
 
 import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.mock.MockFacesContextImpl;
@@ -207,6 +208,7 @@ public class UIInputTest extends UIOutputTest {
             }
         };
         input.setImmediate(false);
+        input.setValid(true);
 
         // ## Act ##
         input.processValidators(context);
@@ -282,9 +284,7 @@ public class UIInputTest extends UIOutputTest {
         assertEquals(true, context.getRenderResponse());
     }
 
-    // TODO test: processUpdates
-    public void testProcessUpdates_CallUpdateModel()
-            throws Exception {
+    public void testProcessUpdates_CallUpdateModel() throws Exception {
         // ## Arrange ##
         MockFacesContext context = getFacesContext();
         final boolean[] calls = { false };
@@ -293,6 +293,7 @@ public class UIInputTest extends UIOutputTest {
                 calls[0] = true;
             }
         };
+        input.setValid(true);
 
         // ## Act ##
         input.processUpdates(context);
@@ -302,10 +303,92 @@ public class UIInputTest extends UIOutputTest {
         assertEquals(false, context.getRenderResponse());
     }
 
+    public void testProcessUpdates_RenderResponseIsCalledWhenComponentIsInvalid()
+            throws Exception {
+        // ## Arrange ##
+        MockFacesContext context = getFacesContext();
+        final boolean[] calls = { false };
+        UIInput input = new UIInput() {
+            public void updateModel(FacesContext context) {
+                calls[0] = true;
+                setValid(false);
+            }
+        };
+
+        // ## Act ##
+        input.processUpdates(context);
+
+        // ## Assert ##
+        assertEquals(true, calls[0]);
+        assertEquals(true, context.getRenderResponse());
+    }
+
+    public void testProcessUpdates_RenderResponseIsCalledWhenRuntimeExceptionThrown()
+            throws Exception {
+        // ## Arrange ##
+        MockFacesContext context = getFacesContext();
+        final boolean[] calls = { false };
+        UIInput input = new UIInput() {
+            public void updateModel(FacesContext context) {
+                calls[0] = true;
+                throw new RuntimeException("for test");
+            }
+        };
+
+        // ## Act ##
+        // ## Act & Assert ##
+        try {
+            input.processUpdates(context);
+            fail();
+        } catch (RuntimeException expected) {
+            assertEquals("for test", expected.getMessage());
+        }
+        assertEquals(true, calls[0]);
+        assertEquals(true, context.getRenderResponse());
+    }
+
     // TODO test: decode
     // TODO test: broadcast
     // TODO test: updateModel
+
     // TODO test: validate
+    public void testVaildate_QueueValueChangeEvent() throws Exception {
+        // ## Arrange ##
+        final FacesEvent[] facesEvent = new FacesEvent[1];
+        UIInput input = new UIInput() {
+            public void queueEvent(FacesEvent event) {
+                facesEvent[0] = event;
+            }
+        };
+        input.setSubmittedValue("a");
+        input.setValue("b");
+        input.setValid(true);
+
+        // ## Act ##
+        input.validate(getFacesContext());
+
+        // ## Assert ##
+        assertNotNull(facesEvent[0]);
+    }
+
+    public void testVaildate_NotQueueValueChangeEvent() throws Exception {
+        // ## Arrange ##
+        final FacesEvent[] facesEvent = new FacesEvent[1];
+        UIInput input = new UIInput() {
+            public void queueEvent(FacesEvent event) {
+                facesEvent[0] = event;
+            }
+        };
+        input.setSubmittedValue("a");
+        input.setValue("a");
+
+        // ## Act ##
+        input.validate(getFacesContext());
+
+        // ## Assert ##
+        assertNull(facesEvent[0]);
+    }
+
     // TODO test: getConvertedValue
     // TODO test: validateValue
     // TODO test: compareValues
