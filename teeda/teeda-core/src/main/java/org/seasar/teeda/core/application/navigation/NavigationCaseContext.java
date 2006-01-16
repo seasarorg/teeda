@@ -63,9 +63,8 @@ public class NavigationCaseContext {
         NavigationCaseContext navCase = (NavigationCaseContext) obj;
         String fromAction = navCase.getFromAction();
         String fromOutcome = navCase.getFromOutcome();
-        return (fromAction == null ? fromAction_ == null : fromAction
-                .equals(fromAction_))
-                && (fromOutcome == null ? fromOutcome_ == null : fromOutcome
-                        .equals(fromOutcome_));
+        
+        return (fromAction == null || fromAction.equals(fromAction_)) &&
+                (fromOutcome == null || fromOutcome.equals(fromOutcome_));
     }
 }
