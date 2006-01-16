@@ -40,6 +40,9 @@ public class NavigationCaseContext {
         this(fromAction, outcome, null, false);
     }
 
+    public NavigationCaseContext(){
+    }
+    
     public String getFromAction() {
         return fromAction_;
     }
@@ -56,6 +59,22 @@ public class NavigationCaseContext {
         return toViewId_;
     }
 
+    public void setFromAction(String fromAction) {
+        fromAction_ = fromAction;
+    }
+    
+    public void setFromOutcome(String fromOutcome) {
+        fromOutcome_ = fromOutcome;
+    }
+    
+    public void setRedirect(boolean redirect) {
+        redirect_ = redirect;
+    }
+    
+    public void setToViewId(String toViewId) {
+        toViewId_ = toViewId;
+    }
+    
     public boolean equals(Object obj) {
         if (!(obj instanceof NavigationCaseContext)) {
             return false;

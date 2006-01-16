@@ -55,14 +55,21 @@ public class SimpleNavigationRulesAssembler extends NavigationRulesAssembler {
         public NavigationContextWrapper(NavigationRuleElement navigationRule){
             String fromViewId = navigationRule.getFromViewId();
             setFromViewId(fromViewId);
-            toNavigationCaseContext(navigationRule.getNavigationCaseElements());
+            toNavigationCaseContext(navigationRule);
         }
         
-        private void toNavigationCaseContext(List navigationCases){
+        private void toNavigationCaseContext(NavigationRuleElement navigationRule){
+            List navigationCases = navigationRule.getNavigationCaseElements();
             for(Iterator itr = IteratorUtil.getIterator(navigationCases); itr.hasNext();){
                 NavigationCaseElement caseElement = (NavigationCaseElement)itr.next();
-                addNavigationCaseContext(new NavigationCaseContext(caseElement.getFromAction(), caseElement.getFromOutcome()));
+                addNavigationCaseContext(new NavigationCaseContextWrapper(caseElement));
             }
+        }
+    }
+    
+    public static class NavigationCaseContextWrapper extends NavigationCaseContext{
+        public NavigationCaseContextWrapper(NavigationCaseElement element){
+            super(element.getFromAction(), element.getFromOutcome(), element.getToViewId(), element.isRedirect());
         }
     }
 }
