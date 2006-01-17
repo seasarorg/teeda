@@ -1,9 +1,14 @@
 package javax.faces.component;
 
+import javax.faces.context.FacesContext;
+import javax.faces.el.EvaluationException;
 import javax.faces.el.MethodBinding;
+import javax.faces.el.MethodNotFoundException;
+import javax.faces.event.ValueChangeEvent;
 
 import org.seasar.teeda.core.mock.MockFacesContextImpl;
 import org.seasar.teeda.core.mock.MockMethodBinding;
+import org.seasar.teeda.core.mock.MockUIComponentBase;
 import org.seasar.teeda.core.mock.MockValueBinding;
 
 /**
@@ -11,16 +16,6 @@ import org.seasar.teeda.core.mock.MockValueBinding;
  * @author manhole
  */
 public class UIInputTest extends UIOutputTest {
-
-    public void testDefaultRendererType() throws Exception {
-        UIInput input = new UIInput();
-        assertEquals("javax.faces.Text", input.getRendererType());
-    }
-
-    public void testGetFamily() {
-        UIInput input = new UIInput();
-        assertEquals(UIInput.COMPONENT_FAMILY, input.getFamily());
-    }
 
     public void testSetGetSubmittedValue() {
         UIInput input = createUIInput();
@@ -108,9 +103,33 @@ public class UIInputTest extends UIOutputTest {
         assertEquals(methodBinding, input.getValueChangeListener());
     }
 
-    // TODO test: decode
-    // TODO test: broadcast
-    // TODO test: updateModel
+    // NOT_TODO test: decode -> renderer
+
+    public void testBroadcast_PassToListener() throws Exception {
+        // ## Arrange ##
+        final boolean[] calls = { false };
+        final Object[][] methodParams = { null };
+        UIInput input = createUIInput();
+        MethodBinding valueChangeMethod = new MockMethodBinding() {
+            public Object invoke(FacesContext context, Object[] params)
+                    throws EvaluationException, MethodNotFoundException {
+                calls[0] = true;
+                methodParams[0] = params;
+                return null;
+            }
+        };
+        input.setValueChangeListener(valueChangeMethod);
+        ValueChangeEvent event = new ValueChangeEvent(
+                new MockUIComponentBase(), "1", "2");
+
+        // ## Act ##
+        input.broadcast(event);
+
+        // ## Assert ##
+        assertEquals(true, calls[0]);
+        assertEquals(1, methodParams[0].length);
+        assertSame(event, methodParams[0][0]);
+    }
 
     // TODO test: getConvertedValue
     // TODO test: validateValue

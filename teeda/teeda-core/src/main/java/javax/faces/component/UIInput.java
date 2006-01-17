@@ -187,7 +187,7 @@ public class UIInput extends UIOutput implements EditableValueHolder {
 
 	public void broadcast(FacesEvent event) throws AbortProcessingException {
 		super.broadcast(event);
-		if (event instanceof ValueChangeEvent) {
+		if (!(event instanceof ValueChangeEvent)) {
 			throw new IllegalArgumentException("FacesEvent of class "
 					+ event.getClass().getName()
 					+ " not supported by UIInput");

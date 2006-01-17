@@ -16,24 +16,46 @@
 package javax.faces.component;
 
 import javax.faces.context.FacesContext;
+import javax.faces.el.EvaluationException;
+import javax.faces.el.PropertyNotFoundException;
 import javax.faces.event.FacesEvent;
+import javax.faces.render.Renderer;
+
+import junit.framework.TestCase;
+
+import org.seasar.teeda.core.mock.MockFacesContextImpl;
+import org.seasar.teeda.core.mock.MockValueBinding;
 
 /**
  * @author manhole
  */
-public class UIInputTeedaTest extends UIOutputTeedaTest {
+public class UIInputOnlyTest extends TestCase {
+
+    public void testDefaultRendererType() throws Exception {
+        UIInput input = new UIInput();
+        assertEquals("javax.faces.Text", input.getRendererType());
+    }
+
+    public void testGetFamily() {
+        UIInput input = new UIInput();
+        assertEquals(UIInput.COMPONENT_FAMILY, input.getFamily());
+    }
 
     public void testProcessDecodes_CallValidateWhenImmediateIsTrue()
             throws Exception {
         // ## Arrange ##
-        FacesContext context = getFacesContext();
         final boolean[] calls = { false };
         UIInput input = new UIInput() {
             public void validate(FacesContext context) {
                 calls[0] = true;
             }
+
+            protected Renderer getRenderer(FacesContext context) {
+                return null;
+            }
         };
         input.setImmediate(true);
+        FacesContext context = getFacesContext();
 
         // ## Act ##
         input.processDecodes(context);
@@ -51,6 +73,10 @@ public class UIInputTeedaTest extends UIOutputTeedaTest {
         UIInput input = new UIInput() {
             public void validate(FacesContext context) {
                 calls[0] = true;
+            }
+
+            protected Renderer getRenderer(FacesContext context) {
+                return null;
             }
         };
         input.setImmediate(false);
@@ -73,6 +99,10 @@ public class UIInputTeedaTest extends UIOutputTeedaTest {
                 calls[0] = true;
                 setValid(false);
             }
+
+            protected Renderer getRenderer(FacesContext context) {
+                return null;
+            }
         };
         input.setImmediate(true);
 
@@ -94,6 +124,10 @@ public class UIInputTeedaTest extends UIOutputTeedaTest {
             public void validate(FacesContext context) {
                 calls[0] = true;
                 throw new RuntimeException("for test");
+            }
+
+            protected Renderer getRenderer(FacesContext context) {
+                return null;
             }
         };
         input.setImmediate(true);
@@ -267,6 +301,10 @@ public class UIInputTeedaTest extends UIOutputTeedaTest {
             public void queueEvent(FacesEvent event) {
                 facesEvent[0] = event;
             }
+
+            protected Renderer getRenderer(FacesContext context) {
+                return null;
+            }
         };
         input.setSubmittedValue("a");
         input.setValue("b");
@@ -286,6 +324,10 @@ public class UIInputTeedaTest extends UIOutputTeedaTest {
             public void queueEvent(FacesEvent event) {
                 facesEvent[0] = event;
             }
+
+            protected Renderer getRenderer(FacesContext context) {
+                return null;
+            }
         };
         input.setSubmittedValue("a");
         input.setValue("a");
@@ -297,12 +339,78 @@ public class UIInputTeedaTest extends UIOutputTeedaTest {
         assertNull(facesEvent[0]);
     }
 
-    private UIInput createUIInput() {
-        return (UIInput) createUIComponent();
+    // TODO test: updateModel
+    public void testUpdateModel_DoNothingWhenNotValid() throws Exception {
+        // ## Arrange ##
+        UIInput input = new UIInput();
+        input.setValid(false);
+        input.setLocalValueSet(true);
+
+        // ## Act ##
+        input.updateModel(getFacesContext());
+
+        // ## Assert ##
+        assertTrue("take no further action", true);
     }
 
-    protected UIComponent createUIComponent() {
-        return new UIInput();
+    public void testUpdateModel_DoNothingWhenLocalValueNotSet()
+            throws Exception {
+        // ## Arrange ##
+        UIInput input = new UIInput();
+        input.setValid(true);
+        input.setLocalValueSet(false);
+
+        // ## Act ##
+        input.updateModel(getFacesContext());
+
+        // ## Assert ##
+        assertTrue("take no further action", true);
+    }
+
+    public void testUpdateModel_DoNothingWhenValueBindingForValueNotSet()
+            throws Exception {
+        // ## Arrange ##
+        UIInput input = new UIInput();
+        input.setValid(true);
+        input.setValueBinding("value", null);
+
+        // ## Act ##
+        input.updateModel(getFacesContext());
+
+        // ## Assert ##
+        assertTrue("take no further action", true);
+    }
+
+    public void testUpdateModel_CallValueBindingSetValue() throws Exception {
+        // ## Arrange ##
+        final boolean[] calls = { false };
+        final Object[] params = { null };
+        UIInput input = new UIInput();
+        input.setValue("a");
+        input.setValid(true);
+        MockValueBinding vb = new MockValueBinding() {
+            public void setValue(FacesContext context, Object obj)
+                    throws EvaluationException, PropertyNotFoundException {
+                calls[0] = true;
+                params[0] = obj;
+            }
+        };
+        FacesContext context = getFacesContext();
+        vb.setValue(context, "foo123");
+        input.setValueBinding("value", vb);
+
+        // ## Act ##
+        input.updateModel(context);
+
+        // ## Assert ##
+        assertEquals(true, calls[0]);
+        assertEquals("a", params[0]);
+        assertEquals(null, input.getLocalValue());
+        assertEquals(false, input.isLocalValueSet());
+    }
+
+    private FacesContext getFacesContext() {
+        return new MockFacesContextImpl();
     }
 
 }
