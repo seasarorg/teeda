@@ -21,7 +21,6 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.html.HtmlOutputLabel;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
-import javax.faces.render.Renderer;
 
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.util.RendererUtil;
@@ -30,7 +29,7 @@ import org.seasar.teeda.core.util.ValueHolderUtil;
 /**
  * @author manhole
  */
-public class HtmlOutputLabelRenderer extends Renderer {
+public class HtmlOutputLabelRenderer extends AbstractHtmlRenderer {
 
     public void encodeBegin(FacesContext context, UIComponent component)
             throws IOException {
@@ -44,7 +43,7 @@ public class HtmlOutputLabelRenderer extends Renderer {
 
         writer.startElement(JsfConstants.LABEL_ATTR, htmlOutputLabel);
         RendererUtil.renderIdAttributeIfNecessary(writer, htmlOutputLabel,
-                htmlOutputLabel.getId());
+                getIdForRender(context, htmlOutputLabel));
 
         String forAttr = htmlOutputLabel.getFor();
         if (forAttr != null) {

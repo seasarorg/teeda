@@ -54,8 +54,7 @@ public class RendererUtil {
     public static boolean renderAttribute(ResponseWriter writer,
             String attributeName, Object value, String propertyName)
             throws IOException {
-
-        if (value == null) {
+        if (isDefaultAttributeValue(value)) {
             return false;
         }
         if (attributeName.equalsIgnoreCase(JsfConstants.STYLE_CLASS_ATTR)) {
@@ -63,6 +62,20 @@ public class RendererUtil {
         }
         writer.writeAttribute(attributeName, value, propertyName);
         return true;
+    }
+
+    public static boolean isDefaultAttributeValue(Object value) {
+        if (value == null) {
+            return true;
+        }
+        if (value instanceof Boolean) {
+            return ((Boolean) value).booleanValue() == false;
+        }
+        if (value instanceof Integer) {
+            return ((Integer) value).intValue() == Integer.MIN_VALUE;
+        }
+
+        return false;
     }
 
     public static boolean shouldRenderIdAttribute(UIComponent component) {

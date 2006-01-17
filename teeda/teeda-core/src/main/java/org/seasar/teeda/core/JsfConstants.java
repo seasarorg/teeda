@@ -32,6 +32,8 @@ public interface JsfConstants {
     public String APPLICATION_SCOPE = "applicationScope";
 
     public String COOKIE = "cookie";
+    
+    public String DISABLED_ATTR = "disabled";
 
     public String FACES_CONTEXT = "facesContext";
 
@@ -63,9 +65,13 @@ public interface JsfConstants {
 
     public String SCOPE_REQUEST = "request";
 
+    public String TEXT_VALUE = "text";
+
     // -- element --
 
     public String ANCHOR_ELEM = "a";
+
+    public String INPUT_ELEM = "input";
 
     public String SPAN_ELEM = "span";
 
@@ -73,11 +79,23 @@ public interface JsfConstants {
 
     public String ACCESSKEY_ATTR = "accesskey";
 
+    public String ALIGN_ATTR = "align";
+
+    public String ALT_ATTR = "alt";
+
     public String CHARSET_ATTR = "charset";
+
+    public String CHECKED_ATTR = "checked";
 
     public String CLASS_ATTR = "class";
 
     public String COORDS_ATTR = "coords";
+
+    public String DATAFLD_ATTR = "datafld";
+
+    public String DATASRC_ATTR = "datasrc";
+
+    public String DATAFORMATAS_ATTR = "dataformatas";
 
     public String DIR_ATTR = "dir";
 
@@ -92,6 +110,10 @@ public interface JsfConstants {
     public String LABEL_ATTR = "label";
 
     public String LANG_ATTR = "lang";
+
+    public String MAXLENGTH_ATTR = "maxlength";
+
+    public String NAME_ATTR = "name";
 
     public String ONBLUR_ATTR = "onblur";
 
@@ -121,11 +143,15 @@ public interface JsfConstants {
 
     public String ONSELECT_ATTR = "onselect";
 
+    public String READONLY_ATTR = "readonly";
+
     public String REL_ATTR = "rel";
 
     public String REV_ATTR = "rev";
 
     public String SHAPE_ATTR = "shape";
+
+    public String SIZE_ATTR = "size";
 
     public String STYLE_ATTR = "style";
 
@@ -138,6 +164,8 @@ public interface JsfConstants {
     public String TITLE_ATTR = "title";
 
     public String TYPE_ATTR = "type";
+
+    public String VALUE_ATTR = "value";
 
     public String[] UNIVERSAL_ATTRIBUTES_WITHOUT_STYLE = { DIR_ATTR, LANG_ATTR,
             TITLE_ATTR, };
@@ -187,5 +215,21 @@ public interface JsfConstants {
 
     public String[] ID_WITH_COMMON_PASSTROUGH_ATTRIBUTES = (String[]) ArrayUtil
             .add(new String[] { ID_ATTR }, COMMON_PASSTROUGH_ATTRIBUTES);
+
+    public String[] INPUT_ATTRIBUTES = { ALIGN_ATTR, ALT_ATTR, CHECKED_ATTR,
+            DATAFLD_ATTR, DATASRC_ATTR, DATAFORMATAS_ATTR, MAXLENGTH_ATTR,
+            READONLY_ATTR, SIZE_ATTR, };
+
+    public String[] COMMON_FIELD_ATTRIBUTES_WITHOUT_DISABLED = {
+            ACCESSKEY_ATTR, TABINDEX_ATTR };
+
+    public String[] COMMON_FIELD_PASSTROUGH_ATTRIBUTES_WITHOUT_DISABLED = (String[]) ArrayUtil
+            .add(ArrayUtil.add(COMMON_PASSTROUGH_ATTRIBUTES,
+                    COMMON_FIELD_ATTRIBUTES_WITHOUT_DISABLED),
+                    COMMON_FIELD_EVENT_ATTRIBUTES);
+
+    public String[] INPUT_PASSTHROUGH_ATTRIBUTES_WITHOUT_DISABLED = (String[]) ArrayUtil
+            .add(INPUT_ATTRIBUTES,
+                    COMMON_FIELD_PASSTROUGH_ATTRIBUTES_WITHOUT_DISABLED);
 
 }

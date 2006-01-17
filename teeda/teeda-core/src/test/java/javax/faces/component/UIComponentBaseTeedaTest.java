@@ -20,15 +20,38 @@ import java.io.Serializable;
 import javax.faces.context.FacesContext;
 import javax.faces.render.RenderKitFactory;
 
+import junitx.framework.ObjectAssert;
+import junitx.framework.StringAssert;
+
+import org.apache.commons.lang.StringUtils;
 import org.seasar.teeda.core.mock.MockUIComponent;
 import org.seasar.teeda.core.mock.MockUIComponentBase;
+import org.seasar.teeda.core.mock.MockUIComponentWithNamingContainer;
 
 /**
  * @author manhole
  */
 public class UIComponentBaseTeedaTest extends AbstractUIComponentTeedaTest {
 
-    public void testGetClientId() {
+    public void testGetCliendId() throws Exception {
+        // ## Arrange ##
+        UIComponentBase component = createUIComponentBase();
+        component.setId("foo");
+
+        // ## Act & Assert ##
+        assertEquals("foo", component.getClientId(getFacesContext()));
+    }
+
+    public void testGetClientId_WhenIdIsNull() {
+        UIComponentBase component = createUIComponentBase();
+        component.setId(null);
+
+        String clientId = component.getClientId(getFacesContext());
+        assertEquals(false, StringUtils.isBlank(clientId));
+        StringAssert.assertStartsWith(UIViewRoot.UNIQUE_ID_PREFIX, clientId);
+    }
+
+    public void testGetClientId_WithParentNamingContainer() {
         UIComponentBase component = createUIComponentBase();
         component.setId("a");
 
@@ -41,8 +64,18 @@ public class UIComponentBaseTeedaTest extends AbstractUIComponentTeedaTest {
         assertEquals("b:a", clientId);
     }
 
-    private static class MockUIComponentWithNamingContainer extends
-            MockUIComponent implements NamingContainer {
+    public void testGetClientId_WithParentNotNamingContainer() {
+        UIComponentBase component = createUIComponentBase();
+        component.setId("a");
+
+        MockUIComponent parent = new MockUIComponent();
+        ObjectAssert.assertNotInstanceOf(NamingContainer.class, parent);
+        parent.setClientId("b");
+        component.setParent(parent);
+
+        String clientId = component.getClientId(getFacesContext());
+        assertNotNull(clientId);
+        assertEquals("a", clientId);
     }
 
     public void testSaveAndRestoreState() throws Exception {

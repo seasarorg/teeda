@@ -15,11 +15,49 @@
  */
 package org.seasar.teeda.core.render.html;
 
-import javax.faces.render.Renderer;
+import java.io.IOException;
+
+import javax.faces.component.UIComponent;
+import javax.faces.component.html.HtmlInputText;
+import javax.faces.context.FacesContext;
+import javax.faces.context.ResponseWriter;
+
+import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.core.util.RendererUtil;
+import org.seasar.teeda.core.util.ValueHolderUtil;
 
 /**
  * @author manhole
  */
-public class HtmlInputTextRenderer extends Renderer {
-// TODO
+public class HtmlInputTextRenderer extends AbstractHtmlRenderer {
+
+    public void encodeEnd(FacesContext context, UIComponent component)
+            throws IOException {
+        super.encodeEnd(context, component);
+        encodeHtmlInputTextEnd(context, (HtmlInputText) component);
+    }
+
+    protected void encodeHtmlInputTextEnd(FacesContext context,
+            HtmlInputText htmlInputText) throws IOException {
+        ResponseWriter writer = context.getResponseWriter();
+        writer.startElement(JsfConstants.INPUT_ELEM, htmlInputText);
+        RendererUtil.renderAttribute(writer, JsfConstants.TYPE_ATTR,
+                JsfConstants.TEXT_VALUE);
+        RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR,
+                getIdForRender(context, htmlInputText));
+        RendererUtil.renderAttribute(writer, JsfConstants.NAME_ATTR,
+                htmlInputText.getClientId(context));
+
+        String value = ValueHolderUtil
+                .getValueForRender(context, htmlInputText);
+        RendererUtil.renderAttribute(writer, JsfConstants.VALUE_ATTR, value);
+        if (htmlInputText.isDisabled()) {
+            RendererUtil.renderAttribute(writer, JsfConstants.DISABLED_ATTR,
+                    Boolean.TRUE);
+        }
+        RendererUtil.renderAttributes(writer, htmlInputText,
+                JsfConstants.INPUT_PASSTHROUGH_ATTRIBUTES_WITHOUT_DISABLED);
+        writer.endElement(JsfConstants.INPUT_ELEM);
+    }
+
 }

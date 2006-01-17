@@ -17,6 +17,7 @@ package org.seasar.teeda.core.render.html;
 
 import javax.faces.component.UIViewRoot;
 import javax.faces.component.html.HtmlOutputText;
+import javax.faces.context.FacesContext;
 import javax.faces.render.Renderer;
 import javax.faces.render.RendererTest;
 
@@ -28,9 +29,13 @@ import org.custommonkey.xmlunit.Diff;
 public class HtmlOutputTextRendererTest extends RendererTest {
 
     public void testEncodeEnd() throws Exception {
-        HtmlOutputText htmlOutputText = new HtmlOutputText();
+        final HtmlOutputTextRenderer renderer = createHtmlOutputTextRenderer();
+        HtmlOutputText htmlOutputText = new HtmlOutputText() {
+            protected Renderer getRenderer(FacesContext context) {
+                return renderer;
+            }
+        };
         htmlOutputText.setValue("abc");
-        HtmlOutputTextRenderer renderer = createHtmlOutputTextRenderer();
 
         renderer.encodeEnd(getFacesContext(), htmlOutputText);
 
@@ -38,9 +43,13 @@ public class HtmlOutputTextRendererTest extends RendererTest {
     }
 
     public void testEncodeEnd_NullValue() throws Exception {
-        HtmlOutputText htmlOutputText = new HtmlOutputText();
+        final HtmlOutputTextRenderer renderer = createHtmlOutputTextRenderer();
+        HtmlOutputText htmlOutputText = new HtmlOutputText() {
+            protected Renderer getRenderer(FacesContext context) {
+                return renderer;
+            }
+        };
         htmlOutputText.setValue(null);
-        HtmlOutputTextRenderer renderer = createHtmlOutputTextRenderer();
 
         renderer.encodeEnd(getFacesContext(), htmlOutputText);
 
@@ -48,10 +57,14 @@ public class HtmlOutputTextRendererTest extends RendererTest {
     }
 
     public void testEncodeEnd_EscapeTrue() throws Exception {
-        HtmlOutputText htmlOutputText = new HtmlOutputText();
+        final HtmlOutputTextRenderer renderer = createHtmlOutputTextRenderer();
+        HtmlOutputText htmlOutputText = new HtmlOutputText() {
+            protected Renderer getRenderer(FacesContext context) {
+                return renderer;
+            }
+        };
         assertTrue("default is true", htmlOutputText.isEscape());
         htmlOutputText.setValue("<a>");
-        HtmlOutputTextRenderer renderer = createHtmlOutputTextRenderer();
 
         renderer.encodeEnd(getFacesContext(), htmlOutputText);
 
@@ -59,10 +72,14 @@ public class HtmlOutputTextRendererTest extends RendererTest {
     }
 
     public void testEncodeEnd_EscapeFalse() throws Exception {
-        HtmlOutputText htmlOutputText = new HtmlOutputText();
+        final HtmlOutputTextRenderer renderer = createHtmlOutputTextRenderer();
+        HtmlOutputText htmlOutputText = new HtmlOutputText() {
+            protected Renderer getRenderer(FacesContext context) {
+                return renderer;
+            }
+        };
         htmlOutputText.setEscape(false);
         htmlOutputText.setValue("<a>");
-        HtmlOutputTextRenderer renderer = createHtmlOutputTextRenderer();
 
         renderer.encodeEnd(getFacesContext(), htmlOutputText);
 
@@ -70,10 +87,14 @@ public class HtmlOutputTextRendererTest extends RendererTest {
     }
 
     public void testEncodeEnd_WithStyle() throws Exception {
-        HtmlOutputText htmlOutputText = new HtmlOutputText();
+        final HtmlOutputTextRenderer renderer = createHtmlOutputTextRenderer();
+        HtmlOutputText htmlOutputText = new HtmlOutputText() {
+            protected Renderer getRenderer(FacesContext context) {
+                return renderer;
+            }
+        };
         htmlOutputText.setStyle("some style");
         htmlOutputText.setValue("a");
-        HtmlOutputTextRenderer renderer = createHtmlOutputTextRenderer();
 
         renderer.encodeEnd(getFacesContext(), htmlOutputText);
 
@@ -81,10 +102,14 @@ public class HtmlOutputTextRendererTest extends RendererTest {
     }
 
     public void testEncodeEnd_WithStyleClass() throws Exception {
-        HtmlOutputText htmlOutputText = new HtmlOutputText();
+        final HtmlOutputTextRenderer renderer = createHtmlOutputTextRenderer();
+        HtmlOutputText htmlOutputText = new HtmlOutputText() {
+            protected Renderer getRenderer(FacesContext context) {
+                return renderer;
+            }
+        };
         htmlOutputText.setStyleClass("some styleClass");
         htmlOutputText.setValue("a");
-        HtmlOutputTextRenderer renderer = createHtmlOutputTextRenderer();
 
         renderer.encodeEnd(getFacesContext(), htmlOutputText);
 
@@ -92,23 +117,16 @@ public class HtmlOutputTextRendererTest extends RendererTest {
                 "<span class=\"some styleClass\">a</span>", getResponseText());
     }
 
-    public void testEncodeEnd_WithTitle() throws Exception {
-        HtmlOutputText htmlOutputText = new HtmlOutputText();
-        htmlOutputText.setTitle("some title");
-        htmlOutputText.setValue("a");
-        HtmlOutputTextRenderer renderer = createHtmlOutputTextRenderer();
-
-        renderer.encodeEnd(getFacesContext(), htmlOutputText);
-
-        assertEquals("<span title=\"some title\">a</span>", getResponseText());
-    }
-
     public void testEncodeEnd_CommonAttributtes() throws Exception {
-        HtmlOutputText htmlOutputText = new HtmlOutputText();
+        final HtmlOutputTextRenderer renderer = createHtmlOutputTextRenderer();
+        HtmlOutputText htmlOutputText = new HtmlOutputText() {
+            protected Renderer getRenderer(FacesContext context) {
+                return renderer;
+            }
+        };
         htmlOutputText.getAttributes().put("onmouseout", "do something");
         htmlOutputText.getAttributes().put("title", "someTitle");
         htmlOutputText.setValue("a");
-        HtmlOutputTextRenderer renderer = createHtmlOutputTextRenderer();
 
         renderer.encodeEnd(getFacesContext(), htmlOutputText);
 

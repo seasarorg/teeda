@@ -27,7 +27,6 @@ import javax.faces.component.UIParameter;
 import javax.faces.component.html.HtmlOutputFormat;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
-import javax.faces.render.Renderer;
 
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.util.RendererUtil;
@@ -37,7 +36,7 @@ import org.seasar.teeda.core.util.ValueHolderUtil;
 /**
  * @author manhole
  */
-public class HtmlOutputFormatRenderer extends Renderer {
+public class HtmlOutputFormatRenderer extends AbstractHtmlRenderer {
 
     public void encodeEnd(FacesContext context, UIComponent component)
             throws IOException {
@@ -55,7 +54,7 @@ public class HtmlOutputFormatRenderer extends Renderer {
             startSpan = true;
         }
         RendererUtil.renderIdAttributeIfNecessary(writer, htmlOutputFormat,
-                htmlOutputFormat.getId());
+                getIdForRender(context, htmlOutputFormat));
         RendererUtil.renderAttributes(writer, htmlOutputFormat,
                 JsfConstants.COMMON_PASSTROUGH_ATTRIBUTES);
 

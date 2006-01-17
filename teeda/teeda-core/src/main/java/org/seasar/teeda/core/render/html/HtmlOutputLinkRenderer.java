@@ -24,7 +24,6 @@ import javax.faces.component.UIParameter;
 import javax.faces.component.html.HtmlOutputLink;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
-import javax.faces.render.Renderer;
 
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.util.RendererUtil;
@@ -33,7 +32,7 @@ import org.seasar.teeda.core.util.ValueHolderUtil;
 /**
  * @author manhole
  */
-public class HtmlOutputLinkRenderer extends Renderer {
+public class HtmlOutputLinkRenderer extends AbstractHtmlRenderer {
 
     public void encodeBegin(FacesContext context, UIComponent component)
             throws IOException {
@@ -66,7 +65,7 @@ public class HtmlOutputLinkRenderer extends Renderer {
 
         writer.startElement(JsfConstants.ANCHOR_ELEM, htmlOutputLink);
         RendererUtil.renderIdAttributeIfNecessary(writer, htmlOutputLink,
-                htmlOutputLink.getId());
+                getIdForRender(context, htmlOutputLink));
         writer.writeURIAttribute(JsfConstants.HREF_ATTR, href, null);
         RendererUtil
                 .renderAttributes(

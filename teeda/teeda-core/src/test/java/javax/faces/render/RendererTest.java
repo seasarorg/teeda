@@ -17,6 +17,8 @@ package javax.faces.render;
 
 import java.io.IOException;
 
+import javax.faces.component.UIViewRoot;
+
 import junit.framework.TestCase;
 
 import org.seasar.framework.util.SPrintWriter;
@@ -159,9 +161,11 @@ public class RendererTest extends TestCase {
 
     private HtmlResponseWriter responseWriter_ = new HtmlResponseWriter();
 
-    private MockFacesContextImpl context_ = new MockFacesContextImpl();
+    private MockFacesContext context_ = new MockFacesContextImpl();
     {
         context_.setResponseWriter(responseWriter_);
+        UIViewRoot root = new UIViewRoot();
+        context_.setViewRoot(root);
         responseWriter_.setWriter(new SPrintWriter());
     }
 

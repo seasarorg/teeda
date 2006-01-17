@@ -21,10 +21,26 @@ import javax.faces.component.html.HtmlOutputLabel;
 import javax.faces.render.Renderer;
 import javax.faces.render.RendererTeedaTest;
 
+import org.seasar.teeda.core.unit.AssertUtil;
+
 /**
  * @author manhole
  */
 public class HtmlOutputLabelRendererTeedaTest extends RendererTeedaTest {
+
+    public void testEncodeBegin_WithFor() throws Exception {
+        HtmlOutputLabel htmlOutputLabel = new HtmlOutputLabel();
+        htmlOutputLabel.setFor("bb");
+        HtmlOutputLabelRenderer renderer = createHtmlOutputLabelRenderer();
+
+        try {
+            // if forComponent doesn't exist, we throw Exception.
+            renderer.encodeBegin(getFacesContext(), htmlOutputLabel);
+            fail();
+        } catch (IllegalStateException ise) {
+            AssertUtil.assertExceptionMessageExist(ise);
+        }
+    }
 
     public void testEncodeBegin_WithForComponent() throws Exception {
         HtmlOutputLabel htmlOutputLabel = new HtmlOutputLabel();

@@ -17,6 +17,7 @@ package org.seasar.teeda.core.render.html;
 
 import javax.faces.component.UIParameter;
 import javax.faces.component.html.HtmlOutputLink;
+import javax.faces.context.FacesContext;
 import javax.faces.render.Renderer;
 import javax.faces.render.RendererTest;
 
@@ -51,9 +52,13 @@ public class HtmlOutputLinkRendererTest extends RendererTest {
     }
 
     public void testEncodeBegin() throws Exception {
-        HtmlOutputLink htmlOutputLink = new HtmlOutputLink();
+        final HtmlOutputLinkRenderer renderer = createHtmlOutputLinkRenderer();
+        HtmlOutputLink htmlOutputLink = new HtmlOutputLink() {
+            protected Renderer getRenderer(FacesContext context) {
+                return renderer;
+            }
+        };
         htmlOutputLink.setValue("/abc.html");
-        HtmlOutputLinkRenderer renderer = createHtmlOutputLinkRenderer();
 
         renderer.encodeBegin(getFacesContext(), htmlOutputLink);
 
@@ -62,9 +67,13 @@ public class HtmlOutputLinkRendererTest extends RendererTest {
     }
 
     public void testEncodeBeginAndEnd() throws Exception {
-        HtmlOutputLink htmlOutputLink = new HtmlOutputLink();
+        final HtmlOutputLinkRenderer renderer = createHtmlOutputLinkRenderer();
+        HtmlOutputLink htmlOutputLink = new HtmlOutputLink() {
+            protected Renderer getRenderer(FacesContext context) {
+                return renderer;
+            }
+        };
         htmlOutputLink.setValue("a");
-        HtmlOutputLinkRenderer renderer = createHtmlOutputLinkRenderer();
 
         renderer.encodeBegin(getFacesContext(), htmlOutputLink);
         renderer.encodeEnd(getFacesContext(), htmlOutputLink);
@@ -73,10 +82,14 @@ public class HtmlOutputLinkRendererTest extends RendererTest {
     }
 
     public void testEncodeBegin_WithAccesskey() throws Exception {
-        HtmlOutputLink htmlOutputLink = new HtmlOutputLink();
+        final HtmlOutputLinkRenderer renderer = createHtmlOutputLinkRenderer();
+        HtmlOutputLink htmlOutputLink = new HtmlOutputLink() {
+            protected Renderer getRenderer(FacesContext context) {
+                return renderer;
+            }
+        };
         htmlOutputLink.setValue("url");
         htmlOutputLink.setAccesskey("aa");
-        HtmlOutputLinkRenderer renderer = createHtmlOutputLinkRenderer();
 
         renderer.encodeBegin(getFacesContext(), htmlOutputLink);
 
@@ -84,11 +97,15 @@ public class HtmlOutputLinkRendererTest extends RendererTest {
     }
 
     public void testEncodeBegin_WithId() throws Exception {
-        HtmlOutputLink htmlOutputLink = new HtmlOutputLink();
+        final HtmlOutputLinkRenderer renderer = createHtmlOutputLinkRenderer();
+        HtmlOutputLink htmlOutputLink = new HtmlOutputLink() {
+            protected Renderer getRenderer(FacesContext context) {
+                return renderer;
+            }
+        };
         htmlOutputLink.setId("someId");
         htmlOutputLink.setValue("url");
         htmlOutputLink.setAccesskey("aa");
-        HtmlOutputLinkRenderer renderer = createHtmlOutputLinkRenderer();
 
         renderer.encodeBegin(getFacesContext(), htmlOutputLink);
 
@@ -97,10 +114,14 @@ public class HtmlOutputLinkRendererTest extends RendererTest {
     }
 
     public void testEncodeBegin_HrefIsJapanese() throws Exception {
-        HtmlOutputLink htmlOutputLink = new HtmlOutputLink();
+        final HtmlOutputLinkRenderer renderer = createHtmlOutputLinkRenderer();
+        HtmlOutputLink htmlOutputLink = new HtmlOutputLink() {
+            protected Renderer getRenderer(FacesContext context) {
+                return renderer;
+            }
+        };
         // japanese "a"
         htmlOutputLink.setValue("/" + new Character((char) 12354) + ".html");
-        HtmlOutputLinkRenderer renderer = createHtmlOutputLinkRenderer();
         renderer.encodeBegin(getFacesContext(), htmlOutputLink);
 
         assertEquals(true, calls_[0]);
@@ -108,7 +129,12 @@ public class HtmlOutputLinkRendererTest extends RendererTest {
     }
 
     public void testEncodeBegin_WithParam1() throws Exception {
-        HtmlOutputLink htmlOutputLink = new HtmlOutputLink();
+        final HtmlOutputLinkRenderer renderer = createHtmlOutputLinkRenderer();
+        HtmlOutputLink htmlOutputLink = new HtmlOutputLink() {
+            protected Renderer getRenderer(FacesContext context) {
+                return renderer;
+            }
+        };
         htmlOutputLink.setValue("url.html");
 
         UIParameter param = new UIParameter();
@@ -116,14 +142,18 @@ public class HtmlOutputLinkRendererTest extends RendererTest {
         param.setValue("b");
         htmlOutputLink.getChildren().add(param);
 
-        HtmlOutputLinkRenderer renderer = createHtmlOutputLinkRenderer();
         renderer.encodeBegin(getFacesContext(), htmlOutputLink);
 
         assertEquals("<a href=\"url.html?a=b\"", getResponseText());
     }
 
     public void testEncodeBegin_WithParam2() throws Exception {
-        HtmlOutputLink htmlOutputLink = new HtmlOutputLink();
+        final HtmlOutputLinkRenderer renderer = createHtmlOutputLinkRenderer();
+        HtmlOutputLink htmlOutputLink = new HtmlOutputLink() {
+            protected Renderer getRenderer(FacesContext context) {
+                return renderer;
+            }
+        };
         htmlOutputLink.setValue("/a/b/url.html");
 
         UIParameter param = new UIParameter();
@@ -131,14 +161,18 @@ public class HtmlOutputLinkRendererTest extends RendererTest {
         param.setValue("b/c");
         htmlOutputLink.getChildren().add(param);
 
-        HtmlOutputLinkRenderer renderer = createHtmlOutputLinkRenderer();
         renderer.encodeBegin(getFacesContext(), htmlOutputLink);
 
         assertEquals("<a href=\"/a/b/url.html?a=b%2Fc\"", getResponseText());
     }
 
     public void testEncodeBegin_BaseHrefHasQueryString() throws Exception {
-        HtmlOutputLink htmlOutputLink = new HtmlOutputLink();
+        final HtmlOutputLinkRenderer renderer = createHtmlOutputLinkRenderer();
+        HtmlOutputLink htmlOutputLink = new HtmlOutputLink() {
+            protected Renderer getRenderer(FacesContext context) {
+                return renderer;
+            }
+        };
         htmlOutputLink.setValue("url.html?1=2");
 
         UIParameter param = new UIParameter();
@@ -146,21 +180,23 @@ public class HtmlOutputLinkRendererTest extends RendererTest {
         param.setValue("b");
         htmlOutputLink.getChildren().add(param);
 
-        HtmlOutputLinkRenderer renderer = createHtmlOutputLinkRenderer();
-
         renderer.encodeBegin(getFacesContext(), htmlOutputLink);
 
         assertEquals("<a href=\"url.html?1=2&a=b\"", getResponseText());
     }
 
     public void testEncodeBegin_WithJapaneseParamValue() throws Exception {
-        HtmlOutputLink htmlOutputLink = new HtmlOutputLink();
+        final HtmlOutputLinkRenderer renderer = createHtmlOutputLinkRenderer();
+        HtmlOutputLink htmlOutputLink = new HtmlOutputLink() {
+            protected Renderer getRenderer(FacesContext context) {
+                return renderer;
+            }
+        };
         htmlOutputLink.setValue("url");
         UIParameter param = new UIParameter();
         param.setName("a");
         param.setValue(new Character((char) 12354)); // japanese "a"
         htmlOutputLink.getChildren().add(param);
-        HtmlOutputLinkRenderer renderer = createHtmlOutputLinkRenderer();
 
         renderer.encodeBegin(getFacesContext(), htmlOutputLink);
 
@@ -168,7 +204,12 @@ public class HtmlOutputLinkRendererTest extends RendererTest {
     }
 
     public void testEncodeBegin_WithParams() throws Exception {
-        HtmlOutputLink htmlOutputLink = new HtmlOutputLink();
+        final HtmlOutputLinkRenderer renderer = createHtmlOutputLinkRenderer();
+        HtmlOutputLink htmlOutputLink = new HtmlOutputLink() {
+            protected Renderer getRenderer(FacesContext context) {
+                return renderer;
+            }
+        };
         htmlOutputLink.setValue("url");
         {
             UIParameter param = new UIParameter();
@@ -182,7 +223,6 @@ public class HtmlOutputLinkRendererTest extends RendererTest {
             param.setValue("2");
             htmlOutputLink.getChildren().add(param);
         }
-        HtmlOutputLinkRenderer renderer = createHtmlOutputLinkRenderer();
 
         renderer.encodeBegin(getFacesContext(), htmlOutputLink);
 

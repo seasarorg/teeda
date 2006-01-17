@@ -27,11 +27,6 @@ import org.seasar.teeda.core.mock.MockValueBinding;
  */
 public class HtmlOutputLabelTest extends UIOutputTest {
 
-    public void testDefaultRendererType() throws Exception {
-        HtmlOutputLabel htmlOutputLabel = createHtmlOutputLabel();
-        assertEquals("javax.faces.Label", htmlOutputLabel.getRendererType());
-    }
-
     public void testSetGetAccesskey() throws Exception {
         HtmlOutputLabel component = createHtmlOutputLabel();
         component.setAccesskey("foo accesskey");

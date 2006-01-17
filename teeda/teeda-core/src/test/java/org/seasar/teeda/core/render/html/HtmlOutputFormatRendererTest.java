@@ -31,10 +31,15 @@ import org.seasar.teeda.core.mock.MockFacesContext;
  * @author manhole
  */
 public class HtmlOutputFormatRendererTest extends RendererTest {
+
     public void testEncodeEnd() throws Exception {
-        HtmlOutputFormat htmlOutputFormat = new HtmlOutputFormat();
+        final HtmlOutputFormatRenderer renderer = createHtmlOutputFormatRenderer();
+        HtmlOutputFormat htmlOutputFormat = new HtmlOutputFormat() {
+            protected Renderer getRenderer(FacesContext context) {
+                return renderer;
+            }
+        };
         htmlOutputFormat.setValue("abc");
-        HtmlOutputFormatRenderer renderer = createHtmlOutputFormatRenderer();
 
         renderer.encodeEnd(getFacesContext(), htmlOutputFormat);
 
@@ -42,9 +47,13 @@ public class HtmlOutputFormatRendererTest extends RendererTest {
     }
 
     public void testEncodeEnd_NullValue() throws Exception {
-        HtmlOutputFormat htmlOutputFormat = new HtmlOutputFormat();
+        final HtmlOutputFormatRenderer renderer = createHtmlOutputFormatRenderer();
+        HtmlOutputFormat htmlOutputFormat = new HtmlOutputFormat() {
+            protected Renderer getRenderer(FacesContext context) {
+                return renderer;
+            }
+        };
         htmlOutputFormat.setValue(null);
-        HtmlOutputFormatRenderer renderer = createHtmlOutputFormatRenderer();
 
         renderer.encodeEnd(getFacesContext(), htmlOutputFormat);
 
@@ -65,7 +74,12 @@ public class HtmlOutputFormatRendererTest extends RendererTest {
 
     public void testEncodeEnd_WithParams() throws Exception {
         // ## Arrange ##
-        HtmlOutputFormat htmlOutputFormat = new HtmlOutputFormat();
+        final HtmlOutputFormatRenderer renderer = createHtmlOutputFormatRenderer();
+        HtmlOutputFormat htmlOutputFormat = new HtmlOutputFormat() {
+            protected Renderer getRenderer(FacesContext context) {
+                return renderer;
+            }
+        };
         htmlOutputFormat.setValue("1{0}2{1}3");
 
         UIParameter param1 = new UIParameter();
@@ -75,7 +89,6 @@ public class HtmlOutputFormatRendererTest extends RendererTest {
         htmlOutputFormat.getChildren().add(param1);
         htmlOutputFormat.getChildren().add(param2);
 
-        HtmlOutputFormatRenderer renderer = createHtmlOutputFormatRenderer();
 
         // ## Act ##
         renderer.encodeEnd(getFacesContext(), htmlOutputFormat);
@@ -86,14 +99,18 @@ public class HtmlOutputFormatRendererTest extends RendererTest {
 
     public void testEncodeEnd_WithJapaneseParam() throws Exception {
         // ## Arrange ##
-        HtmlOutputFormat htmlOutputFormat = new HtmlOutputFormat();
+        final HtmlOutputFormatRenderer renderer = createHtmlOutputFormatRenderer();
+        HtmlOutputFormat htmlOutputFormat = new HtmlOutputFormat() {
+            protected Renderer getRenderer(FacesContext context) {
+                return renderer;
+            }
+        };
         htmlOutputFormat.setValue("1{0}2");
 
         UIParameter param2 = new UIParameter();
         param2.setValue(new Character((char) 12354));
         htmlOutputFormat.getChildren().add(param2);
 
-        HtmlOutputFormatRenderer renderer = createHtmlOutputFormatRenderer();
         // ## Act ##
         renderer.encodeEnd(getFacesContext(), htmlOutputFormat);
 
@@ -102,10 +119,14 @@ public class HtmlOutputFormatRendererTest extends RendererTest {
     }
 
     public void testEncodeEnd_EscapeTrue() throws Exception {
-        HtmlOutputFormat htmlOutputFormat = new HtmlOutputFormat();
+        final HtmlOutputFormatRenderer renderer = createHtmlOutputFormatRenderer();
+        HtmlOutputFormat htmlOutputFormat = new HtmlOutputFormat() {
+            protected Renderer getRenderer(FacesContext context) {
+                return renderer;
+            }
+        };
         htmlOutputFormat.setEscape(true);
         htmlOutputFormat.setValue("<a>");
-        HtmlOutputFormatRenderer renderer = createHtmlOutputFormatRenderer();
 
         renderer.encodeEnd(getFacesContext(), htmlOutputFormat);
 
@@ -113,10 +134,14 @@ public class HtmlOutputFormatRendererTest extends RendererTest {
     }
 
     public void testEncodeEnd_EscapeFalse() throws Exception {
-        HtmlOutputFormat htmlOutputFormat = new HtmlOutputFormat();
+        final HtmlOutputFormatRenderer renderer = createHtmlOutputFormatRenderer();
+        HtmlOutputFormat htmlOutputFormat = new HtmlOutputFormat() {
+            protected Renderer getRenderer(FacesContext context) {
+                return renderer;
+            }
+        };
         htmlOutputFormat.setEscape(false);
         htmlOutputFormat.setValue("<a>");
-        HtmlOutputFormatRenderer renderer = createHtmlOutputFormatRenderer();
 
         renderer.encodeEnd(getFacesContext(), htmlOutputFormat);
 

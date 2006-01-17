@@ -26,16 +26,6 @@ import org.seasar.teeda.core.mock.MockValueBinding;
  */
 public class UIOutputTest extends UIComponentBaseTest {
 
-    public void testDefaultRendererType() throws Exception {
-        UIOutput output = new UIOutput();
-        assertEquals("javax.faces.Text", output.getRendererType());
-    }
-
-    public void testGetFamily() {
-        UIOutput output = new UIOutput();
-        assertEquals(UIOutput.COMPONENT_FAMILY, output.getFamily());
-    }
-
     public void testSetGetConverter() {
         UIOutput output = createUIOutput();
         Converter converter = new NullConverter();

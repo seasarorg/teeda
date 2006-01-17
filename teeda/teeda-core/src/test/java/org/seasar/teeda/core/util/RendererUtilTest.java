@@ -54,6 +54,27 @@ public class RendererUtilTest extends TestCase {
         assertEquals(false, RendererUtil.shouldRenderIdAttribute(component));
     }
 
+    public void testIsDefaultValue() throws Exception {
+        assertEquals(true, RendererUtil.isDefaultAttributeValue(null));
+
+        assertEquals(true, RendererUtil.isDefaultAttributeValue(Boolean.FALSE));
+        assertEquals(true, RendererUtil.isDefaultAttributeValue(new Integer(
+                Integer.MIN_VALUE)));
+
+        assertEquals(false, RendererUtil.isDefaultAttributeValue(Boolean.TRUE));
+        assertEquals(false, RendererUtil
+                .isDefaultAttributeValue(new Integer(0)));
+        assertEquals(false, RendererUtil
+                .isDefaultAttributeValue(new Integer(-1)));
+        assertEquals(false, RendererUtil
+                .isDefaultAttributeValue(new Integer(1)));
+        assertEquals(false, RendererUtil.isDefaultAttributeValue(new Integer(
+                Integer.MAX_VALUE)));
+
+        assertEquals(false, RendererUtil.isDefaultAttributeValue(""));
+
+    }
+
     // TODO more tests
 
 }
