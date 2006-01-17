@@ -13,9 +13,9 @@
   <url>http://teeda.seasar.org/</url>
   <dependencies>
     <dependency>
-      <groupId>org.seasar.jsf</groupId>
-      <artifactId>s2-jsf</artifactId>
-      <version>1.0.12</version>
+      <groupId>org.seasar.container</groupId>
+      <artifactId>s2-extension</artifactId>
+      <version>2.3.5-SNAPSHOT</version>
       <type>jar</type>
     </dependency>
     <dependency>
