@@ -25,7 +25,7 @@ import org.seasar.teeda.core.unit.TeedaTestCase;
  */
 public abstract class AbstractUIComponentTeedaTest extends TeedaTestCase {
 
-    public void testGetClientId_ConsecutiveCallsReturnSameValue()
+    public final void testGetClientId_ConsecutiveCallsReturnSameValue()
             throws Exception {
         // ## Arrange ##
         UIComponent component = createUIComponent();
@@ -38,7 +38,7 @@ public abstract class AbstractUIComponentTeedaTest extends TeedaTestCase {
         assertEquals(clientId1, component.getClientId(context));
     }
 
-    public void testGetClientId_IdIsChanged() throws Exception {
+    public final void testGetClientId_IdIsChanged() throws Exception {
         // ## Arrange ##
         UIComponent component = createUIComponent();
         FacesContext context = getFacesContext();

@@ -307,8 +307,8 @@ public class UIComponentBaseTest extends AbstractUIComponentTest {
         try {
             base.addFacesListener(null);
             fail();
-        } catch (NullPointerException e) {
-            success();
+        } catch (NullPointerException npe) {
+            AssertUtil.assertExceptionMessageExist(npe);
         }
 
         FacesListener listener1 = new FacesListener() {
@@ -334,9 +334,6 @@ public class UIComponentBaseTest extends AbstractUIComponentTest {
         listeners = base.getFacesListeners(FacesListener.class);
         assertEquals("Should be just one listener", 1, listeners.length);
         assertEquals("1", listeners[0].toString());
-    }
-
-    private void success() {
     }
 
     public void testHandleFacesListeners2() {
@@ -365,8 +362,8 @@ public class UIComponentBaseTest extends AbstractUIComponentTest {
         try {
             target.queueEvent(null);
             fail();
-        } catch (NullPointerException e) {
-            success();
+        } catch (NullPointerException npe) {
+            AssertUtil.assertExceptionMessageExist(npe);
         }
 
         target.setParent(null);
@@ -382,8 +379,8 @@ public class UIComponentBaseTest extends AbstractUIComponentTest {
 
             });
             fail();
-        } catch (IllegalStateException e) {
-            success();
+        } catch (IllegalStateException ise) {
+            AssertUtil.assertExceptionMessageExist(ise);
         }
 
         target.setParent(parent);

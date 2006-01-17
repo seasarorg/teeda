@@ -15,16 +15,37 @@
  */
 package javax.faces.component;
 
+import java.math.BigInteger;
+import java.util.Iterator;
+import java.util.Locale;
+
+import javax.faces.FacesException;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.convert.Converter;
+import javax.faces.convert.ConverterException;
 import javax.faces.el.EvaluationException;
+import javax.faces.el.MethodBinding;
+import javax.faces.el.MethodNotFoundException;
 import javax.faces.el.PropertyNotFoundException;
 import javax.faces.event.FacesEvent;
+import javax.faces.event.ValueChangeEvent;
 import javax.faces.render.Renderer;
+import javax.faces.validator.ValidatorException;
 
+import junit.framework.AssertionFailedError;
 import junit.framework.TestCase;
+import junitx.framework.ObjectAssert;
 
+import org.seasar.teeda.core.mock.MockApplication;
+import org.seasar.teeda.core.mock.MockConverter;
+import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.mock.MockFacesContextImpl;
+import org.seasar.teeda.core.mock.MockMethodBinding;
 import org.seasar.teeda.core.mock.MockValueBinding;
+import org.seasar.teeda.core.mock.NullExternalContext;
+import org.seasar.teeda.core.mock.NullRenderer;
+import org.seasar.teeda.core.mock.NullValidator;
 
 /**
  * @author manhole
@@ -89,7 +110,7 @@ public class UIInputOnlyTest extends TestCase {
         assertEquals(false, context.getRenderResponse());
     }
 
-    public void testProcessDecodes_RenderResponseIsCalledWhenComponentIsInvalid()
+    public void testProcessDecodes_CallRenderResponseWhenNotValid()
             throws Exception {
         // ## Arrange ##
         FacesContext context = getFacesContext();
@@ -114,7 +135,7 @@ public class UIInputOnlyTest extends TestCase {
         assertEquals(true, context.getRenderResponse());
     }
 
-    public void testProcessDecodes_RenderResponseIsCalledWhenRuntimeExceptionThrown()
+    public void testProcessDecodes_CallRenderResponseWhenRuntimeExceptionThrown()
             throws Exception {
 
         // ## Arrange ##
@@ -184,7 +205,7 @@ public class UIInputOnlyTest extends TestCase {
         assertEquals(false, context.getRenderResponse());
     }
 
-    public void testProcessValidators_RenderResponseIsCalledWhenComponentIsInvalid()
+    public void testProcessValidators_RenderResponseIsCalledWhenNotValid()
             throws Exception {
         // ## Arrange ##
         FacesContext context = getFacesContext();
@@ -249,7 +270,7 @@ public class UIInputOnlyTest extends TestCase {
         assertEquals(false, context.getRenderResponse());
     }
 
-    public void testProcessUpdates_RenderResponseIsCalledWhenComponentIsInvalid()
+    public void testProcessUpdates_RenderResponseIsCalledWhenNotValid()
             throws Exception {
         // ## Arrange ##
         FacesContext context = getFacesContext();
@@ -293,53 +314,6 @@ public class UIInputOnlyTest extends TestCase {
         assertEquals(true, context.getRenderResponse());
     }
 
-    // TODO test: validate more tests
-    public void testVaildate_QueueValueChangeEvent() throws Exception {
-        // ## Arrange ##
-        final FacesEvent[] facesEvent = new FacesEvent[1];
-        UIInput input = new UIInput() {
-            public void queueEvent(FacesEvent event) {
-                facesEvent[0] = event;
-            }
-
-            protected Renderer getRenderer(FacesContext context) {
-                return null;
-            }
-        };
-        input.setSubmittedValue("a");
-        input.setValue("b");
-        input.setValid(true);
-
-        // ## Act ##
-        input.validate(getFacesContext());
-
-        // ## Assert ##
-        assertNotNull(facesEvent[0]);
-    }
-
-    public void testVaildate_NotQueueValueChangeEvent() throws Exception {
-        // ## Arrange ##
-        final FacesEvent[] facesEvent = new FacesEvent[1];
-        UIInput input = new UIInput() {
-            public void queueEvent(FacesEvent event) {
-                facesEvent[0] = event;
-            }
-
-            protected Renderer getRenderer(FacesContext context) {
-                return null;
-            }
-        };
-        input.setSubmittedValue("a");
-        input.setValue("a");
-
-        // ## Act ##
-        input.validate(getFacesContext());
-
-        // ## Assert ##
-        assertNull(facesEvent[0]);
-    }
-
-    // TODO test: updateModel
     public void testUpdateModel_DoNothingWhenNotValid() throws Exception {
         // ## Arrange ##
         UIInput input = new UIInput();
@@ -351,6 +325,8 @@ public class UIInputOnlyTest extends TestCase {
 
         // ## Assert ##
         assertTrue("take no further action", true);
+        assertEquals(false, input.isValid());
+        assertEquals(true, input.isLocalValueSet());
     }
 
     public void testUpdateModel_DoNothingWhenLocalValueNotSet()
@@ -365,6 +341,8 @@ public class UIInputOnlyTest extends TestCase {
 
         // ## Assert ##
         assertTrue("take no further action", true);
+        assertEquals(true, input.isValid());
+        assertEquals(false, input.isLocalValueSet());
     }
 
     public void testUpdateModel_DoNothingWhenValueBindingForValueNotSet()
@@ -379,6 +357,8 @@ public class UIInputOnlyTest extends TestCase {
 
         // ## Assert ##
         assertTrue("take no further action", true);
+        assertEquals(true, input.isValid());
+        assertEquals(false, input.isLocalValueSet());
     }
 
     public void testUpdateModel_CallValueBindingSetValue() throws Exception {
@@ -396,7 +376,6 @@ public class UIInputOnlyTest extends TestCase {
             }
         };
         FacesContext context = getFacesContext();
-        vb.setValue(context, "foo123");
         input.setValueBinding("value", vb);
 
         // ## Act ##
@@ -409,8 +388,485 @@ public class UIInputOnlyTest extends TestCase {
         assertEquals(false, input.isLocalValueSet());
     }
 
-    private FacesContext getFacesContext() {
-        return new MockFacesContextImpl();
+    public void testUpdateModel_ValueBindingSetValueFailed() throws Exception {
+        // ## Arrange ##
+        final boolean[] calls = { false };
+        UIInput input = new UIInput() {
+            protected Renderer getRenderer(FacesContext context) {
+                return null;
+            }
+        };
+        input.setValue("a");
+        input.setValid(true);
+        MockValueBinding vb = new MockValueBinding() {
+            public void setValue(FacesContext context, Object obj)
+                    throws EvaluationException, PropertyNotFoundException {
+                calls[0] = true;
+                throw new EvaluationException("forTest");
+            }
+        };
+        MockFacesContext context = getFacesContext();
+        UIViewRoot viewRoot = new UIViewRoot();
+        viewRoot.setLocale(Locale.getDefault());
+        context.setViewRoot(viewRoot);
+        context.setExternalContext(new NullExternalContext());
+        context.setApplication(new MockApplication());
+
+        input.setValueBinding("value", vb);
+        assertEquals(false, context.getMessages().hasNext());
+
+        // ## Act ##
+        input.updateModel(context);
+
+        // ## Assert ##
+        assertEquals(true, calls[0]);
+        Iterator messages = context.getMessages();
+        assertEquals(true, messages.hasNext());
+        messages.next();
+        assertEquals(false, messages.hasNext());
+        assertEquals(false, input.isValid());
+        assertEquals("a", input.getLocalValue());
+        assertEquals(true, input.isLocalValueSet());
+    }
+
+    public void testValidate_DoNothingWhenSubmittedValueIsNull()
+            throws Exception {
+        // ## Arrange ##
+        UIInput input = new UIInput() {
+            protected Object getConvertedValue(FacesContext context,
+                    Object submittedValue) throws ConverterException {
+                throw new AssertionFailedError("shouldn't be called");
+            }
+        };
+        input.setSubmittedValue(null);
+        input.setValid(true);
+
+        // ## Act ##
+        input.validate(getFacesContext());
+
+        // ## Assert ##
+        assertTrue("take no further action", true);
+        assertEquals(true, input.isValid());
+    }
+
+    public void testValidate_SetConvertedValue() throws Exception {
+        // ## Arrange ##
+        UIInput input = new UIInput() {
+            protected Object getConvertedValue(FacesContext context,
+                    Object submittedValue) throws ConverterException {
+                return submittedValue + "_" + "converted";
+            }
+        };
+        input.setSubmittedValue("a");
+        input.setValid(true);
+
+        // ## Act ##
+        input.validate(getFacesContext());
+
+        // ## Assert ##
+        assertEquals("a_converted", input.getValue());
+        assertEquals(null, input.getSubmittedValue());
+    }
+
+    public void testValidate_NotSetConvertedValueWhenNotValid()
+            throws Exception {
+        // ## Arrange ##
+        UIInput input = new UIInput() {
+            protected Object getConvertedValue(FacesContext context,
+                    Object submittedValue) throws ConverterException {
+                setValid(false);
+                return submittedValue + "_converted";
+            }
+        };
+        input.setSubmittedValue("a");
+        input.setValid(true);
+
+        // ## Act ##
+        input.validate(getFacesContext());
+
+        // ## Assert ##
+        assertEquals(null, input.getValue());
+        assertEquals("a", input.getSubmittedValue());
+    }
+
+    public void testVaildate_QueueValueChangeEvent() throws Exception {
+        // ## Arrange ##
+        final FacesEvent[] params = { null };
+        UIInput input = new UIInput() {
+            public void queueEvent(FacesEvent event) {
+                params[0] = event;
+            }
+
+            protected Object getConvertedValue(FacesContext context,
+                    Object submittedValue) throws ConverterException {
+                return submittedValue;
+            }
+        };
+        input.setSubmittedValue("a");
+        input.setValue("b");
+        input.setValid(true);
+
+        // ## Act ##
+        input.validate(getFacesContext());
+
+        // ## Assert ##
+        assertNotNull(params[0]);
+        ObjectAssert.assertInstanceOf(ValueChangeEvent.class, params[0]);
+    }
+
+    public void testVaildate_NotQueueValueChangeEvent() throws Exception {
+        // ## Arrange ##
+        final FacesEvent[] facesEvent = new FacesEvent[1];
+        UIInput input = new UIInput() {
+            public void queueEvent(FacesEvent event) {
+                facesEvent[0] = event;
+            }
+
+            protected Object getConvertedValue(FacesContext context,
+                    Object submittedValue) throws ConverterException {
+                return submittedValue;
+            }
+        };
+        input.setSubmittedValue("a");
+        input.setValue("a");
+        input.setValid(true);
+
+        // ## Act ##
+        input.validate(getFacesContext());
+
+        // ## Assert ##
+        assertNull(facesEvent[0]);
+    }
+
+    public void testGetConvertedValue_UsingRenderer() throws Exception {
+        // ## Arrange ##
+        UIInput input = new UIInput() {
+            protected Renderer getRenderer(FacesContext context) {
+                return new NullRenderer() {
+                    public Object getConvertedValue(FacesContext context,
+                            UIComponent component, Object submittedValue)
+                            throws ConverterException {
+                        return submittedValue + ":converted";
+                    }
+                };
+            }
+        };
+
+        // ## Act ##
+        Object convertedValue = input.getConvertedValue(getFacesContext(), "1");
+
+        // ## Assert ##
+        assertEquals("1:converted", convertedValue);
+    }
+
+    public void testGetConvertedValue_UsingConverter() throws Exception {
+        // ## Arrange ##
+        UIInput input = new UIInput() {
+            protected Renderer getRenderer(FacesContext context) {
+                return null;
+            }
+        };
+
+        input.setConverter(new MockConverter() {
+            public Object getAsObject(FacesContext context,
+                    UIComponent component, String value)
+                    throws ConverterException {
+                return value + "@";
+            }
+        });
+
+        // ## Act ##
+        Object convertedValue = input.getConvertedValue(getFacesContext(), "a");
+
+        // ## Assert ##
+        assertEquals("a@", convertedValue);
+    }
+
+    public void testGetConvertedValue_NoConversionWhenValueBindingGetTypeReturnsNull()
+            throws Exception {
+        // ## Arrange ##
+        final boolean[] calls = { false };
+        UIInput input = new UIInput() {
+            protected Renderer getRenderer(FacesContext context) {
+                return null;
+            }
+        };
+        input.setConverter(null);
+        MockValueBinding vb = new MockValueBinding() {
+            public Class getType(FacesContext context)
+                    throws EvaluationException, PropertyNotFoundException {
+                calls[0] = true;
+                return null;
+            }
+        };
+        input.setValueBinding("value", vb);
+
+        // ## Act ##
+        Object convertedValue = input.getConvertedValue(getFacesContext(), "a");
+
+        // ## Assert ##
+        assertEquals(true, calls[0]);
+        assertEquals("a", convertedValue);
+    }
+
+    public void testGetConvertedValue_CreateConverterFromValueBindingType()
+            throws Exception {
+        // ## Arrange ##
+        UIInput input = new UIInput() {
+            protected Renderer getRenderer(FacesContext context) {
+                return null;
+            }
+        };
+        input.setConverter(null);
+        MockValueBinding vb = new MockValueBinding() {
+            public Class getType(FacesContext context)
+                    throws EvaluationException, PropertyNotFoundException {
+                return BigInteger.class;
+            }
+        };
+        input.setValueBinding("value", vb);
+
+        final Object[] createConverterParams = { null };
+        MockFacesContext context = getFacesContext();
+        context.setApplication(new MockApplication() {
+            public Converter createConverter(Class targetClass) {
+                createConverterParams[0] = targetClass;
+                return new MockConverter() {
+                    public Object getAsObject(FacesContext context,
+                            UIComponent component, String value)
+                            throws ConverterException {
+                        return value + "aa";
+                    }
+                };
+            }
+        });
+
+        // ## Act ##
+        Object convertedValue = input.getConvertedValue(context, "22");
+
+        // ## Assert ##
+        assertEquals("22aa", convertedValue);
+        assertEquals(BigInteger.class, createConverterParams[0]);
+    }
+
+    public void testGetConvertedValue_WithoutAnyConversionWhenNoRendererAndNotStringSubmitted()
+            throws Exception {
+        // ## Arrange ##
+        UIInput input = new UIInput() {
+            protected Renderer getRenderer(FacesContext context) {
+                return null;
+            }
+
+            public Converter getConverter() {
+                throw new AssertionFailedError("shouldn't be called");
+            }
+        };
+        input.setValueBinding("value", null);
+
+        // ## Act ##
+        // not String
+        Object convertedValue = input.getConvertedValue(getFacesContext(),
+                new Integer(123));
+
+        // ## Assert ##
+        assertEquals(new Integer(123), convertedValue);
+    }
+
+    public void testGetConvertedValue_WithoutAnyConversion2() throws Exception {
+        // ## Arrange ##
+        UIInput input = new UIInput() {
+            protected Renderer getRenderer(FacesContext context) {
+                return null;
+            }
+        };
+        input.setConverter(null);
+        input.setValueBinding("value", null);
+
+        // ## Act ##
+        Object convertedValue = input.getConvertedValue(getFacesContext(), "a");
+
+        // ## Assert ##
+        assertEquals("a", convertedValue);
+    }
+
+    public void testValidateValue_DoNothingWhenNotValid() throws Exception {
+        // ## Arrange ##
+        UIInput input = new UIInput();
+        input.setValid(false);
+        input.setRequired(true);
+
+        // ## Act ##
+        input.validateValue(getFacesContext(), "b");
+
+        // ## Assert ##
+        assertTrue("take no further action", true);
+        assertEquals(false, input.isValid());
+        assertEquals(true, input.isRequired());
+    }
+
+    public void testValidateValue_DoNothingWhenNotRequired() throws Exception {
+        // ## Arrange ##
+        UIInput input = new UIInput();
+        input.setValid(true);
+        input.setRequired(false);
+
+        // ## Act ##
+        input.validateValue(getFacesContext(), "b");
+
+        // ## Assert ##
+        assertTrue("take no further action", true);
+        assertEquals(true, input.isValid());
+        assertEquals(false, input.isRequired());
+    }
+
+    public void testValidateValue_LocalValueIsEmpty() throws Exception {
+        // ## Arrange ##
+        UIInput input = new UIInput() {
+            protected Renderer getRenderer(FacesContext context) {
+                return null;
+            }
+        };
+        input.setValid(true);
+        input.setRequired(true);
+
+        MockFacesContext context = getFacesContext();
+        UIViewRoot viewRoot = new UIViewRoot();
+        viewRoot.setLocale(Locale.getDefault());
+        context.setViewRoot(viewRoot);
+        context.setExternalContext(new NullExternalContext());
+        context.setApplication(new MockApplication());
+
+        // ## Act ##
+        input.validateValue(context, "");
+
+        // ## Assert ##
+        Iterator messages = context.getMessages();
+        assertEquals(true, messages.hasNext());
+        messages.next();
+        assertEquals(false, messages.hasNext());
+
+        assertEquals(false, input.isValid());
+    }
+
+    public void testValidateValue_CallAddedValidators() throws Exception {
+        // ## Arrange ##
+        final boolean[] calls = new boolean[2];
+        UIInput input = new UIInput() {
+        };
+        input.setValid(true);
+        input.setRequired(true);
+        input.addValidator(new NullValidator() {
+            public void validate(FacesContext context, UIComponent component,
+                    Object value) throws FacesException {
+                calls[0] = true;
+            }
+        });
+        input.addValidator(new NullValidator() {
+            public void validate(FacesContext context, UIComponent component,
+                    Object value) throws FacesException {
+                calls[1] = true;
+            }
+        });
+
+        MockFacesContext context = getFacesContext();
+
+        // ## Act ##
+        input.validateValue(context, "123");
+
+        // ## Assert ##
+        assertEquals(true, calls[0]);
+        assertEquals(true, calls[1]);
+        assertEquals(true, input.isValid());
+    }
+
+    public void testValidateValue_CallSettedValidator() throws Exception {
+        // ## Arrange ##
+        final boolean[] calls = new boolean[1];
+        UIInput input = new UIInput() {
+            protected Renderer getRenderer(FacesContext context) {
+                return null;
+            }
+        };
+        input.setValid(true);
+        input.setRequired(true);
+
+        MethodBinding validatorBinding = new MockMethodBinding() {
+            public Object invoke(FacesContext context, Object[] params)
+                    throws EvaluationException, MethodNotFoundException {
+                calls[0] = true;
+                return null;
+            }
+        };
+        input.setValidator(validatorBinding);
+
+        MockFacesContext context = getFacesContext();
+
+        // ## Act ##
+        input.validateValue(context, "123");
+
+        // ## Assert ##
+        assertEquals(true, calls[0]);
+        assertEquals(true, input.isValid());
+    }
+
+    public void testValidateValue_CallValidatorsAndFailed() throws Exception {
+        // ## Arrange ##
+        final boolean[] calls = new boolean[4];
+        UIInput input = new UIInput() {
+            protected Renderer getRenderer(FacesContext context) {
+                return null;
+            }
+        };
+        input.setValid(true);
+        input.setRequired(true);
+        input.addValidator(new NullValidator() {
+            public void validate(FacesContext context, UIComponent component,
+                    Object value) throws FacesException {
+                calls[0] = true;
+                throw new ValidatorException(new FacesMessage("for test"));
+            }
+        });
+        input.addValidator(new NullValidator() {
+            public void validate(FacesContext context, UIComponent component,
+                    Object value) throws FacesException {
+                calls[1] = true;
+            }
+        });
+
+        MethodBinding validatorBinding = new MockMethodBinding() {
+            public Object invoke(FacesContext context, Object[] params)
+                    throws EvaluationException, MethodNotFoundException {
+                calls[2] = true;
+                return null;
+            }
+        };
+        input.setValidator(validatorBinding);
+
+        MockFacesContext context = getFacesContext();
+
+        // ## Act ##
+        input.validateValue(context, "123");
+
+        // ## Assert ##
+        assertEquals(true, calls[0]);
+        assertEquals(true, calls[1]);
+        assertEquals(true, calls[2]);
+        assertEquals(false, input.isValid());
+
+        Iterator messages = context.getMessages();
+        assertEquals(true, messages.hasNext());
+        messages.next();
+        assertEquals(false, messages.hasNext());
+    }
+
+    private MockFacesContext getFacesContext() {
+        MockFacesContext context = new MockFacesContextImpl();
+        UIViewRoot viewRoot = new UIViewRoot();
+        viewRoot.setLocale(Locale.getDefault());
+        context.setViewRoot(viewRoot);
+        context.setExternalContext(new NullExternalContext());
+        context.setApplication(new MockApplication());
+        return context;
     }
 
 }

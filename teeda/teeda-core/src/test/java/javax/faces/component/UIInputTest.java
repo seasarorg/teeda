@@ -5,11 +5,16 @@ import javax.faces.el.EvaluationException;
 import javax.faces.el.MethodBinding;
 import javax.faces.el.MethodNotFoundException;
 import javax.faces.event.ValueChangeEvent;
+import javax.faces.event.ValueChangeListener;
+import javax.faces.validator.Validator;
 
 import org.seasar.teeda.core.mock.MockFacesContextImpl;
 import org.seasar.teeda.core.mock.MockMethodBinding;
 import org.seasar.teeda.core.mock.MockUIComponentBase;
 import org.seasar.teeda.core.mock.MockValueBinding;
+import org.seasar.teeda.core.mock.NullValidator;
+import org.seasar.teeda.core.mock.NullValueChangeListener;
+import org.seasar.teeda.core.unit.AssertUtil;
 
 /**
  * @author shot
@@ -131,15 +136,104 @@ public class UIInputTest extends UIOutputTest {
         assertSame(event, methodParams[0][0]);
     }
 
-    // TODO test: getConvertedValue
-    // TODO test: validateValue
-    // TODO test: compareValues
-    // TODO test: addValidator
-    // TODO test: getValidators
-    // TODO test: removeValidator
+    public void testCompareValues() throws Exception {
+        // ## Arrange ##
+        UIInput input = createUIInput();
+
+        // ## Act & Assert ##
+        assertEquals(false, input.compareValues("1", "1"));
+        assertEquals(false, input.compareValues("1", new String("1")));
+        assertEquals(false, input.compareValues(new Integer(1234), new Integer(
+                1234)));
+        assertEquals(false, input.compareValues("", null));
+        assertEquals(false, input.compareValues(null, ""));
+
+        assertEquals(true, input.compareValues("1", "2"));
+        assertEquals(true, input.compareValues("2", "1"));
+        assertEquals(true, input.compareValues(new Integer(1234), new Integer(
+                1233)));
+    }
+
+    public final void testAddValidator_NullArg() throws Exception {
+        UIInput input = createUIInput();
+        try {
+            input.addValidator(null);
+            fail();
+        } catch (NullPointerException npe) {
+            AssertUtil.assertExceptionMessageExist(npe);
+        }
+    }
+
+    public final void testAddGetRemoveValidators() throws Exception {
+        UIInput input = createUIInput();
+        assertEquals(0, input.getValidators().length);
+        Validator v1 = new NullValidator();
+        Validator v2 = new NullValidator();
+        Validator v3 = new NullValidator();
+        input.addValidator(v1);
+        assertEquals(1, input.getValidators().length);
+        input.addValidator(v2);
+        assertEquals(2, input.getValidators().length);
+        input.addValidator(v3);
+        assertEquals(3, input.getValidators().length);
+
+        input.removeValidator(v2);
+        assertEquals(2, input.getValidators().length);
+        input.removeValidator(v2);
+        assertEquals(2, input.getValidators().length);
+    }
+
+    public void testRemoveValidator_NullArg() throws Exception {
+        // ## Arrange ##
+        UIInput input = createUIInput();
+
+        // ## Act ##
+        input.removeValidator(null);
+
+        // ## Assert ##
+        assertTrue(true);
+    }
+
     // TODO test: addValueChangeListener
-    // TODO test: getValueChangeListeners
-    // TODO test: removeValueChangeListener
+    public final void testAddValueChangeListener_NullArg() throws Exception {
+        UIInput input = createUIInput();
+        try {
+            input.addValueChangeListener(null);
+            fail();
+        } catch (NullPointerException npe) {
+            AssertUtil.assertExceptionMessageExist(npe);
+        }
+    }
+
+    public final void testAddGetRemoveValueChangeListeners() throws Exception {
+        UIInput input = createUIInput();
+        assertEquals(0, input.getValidators().length);
+        ValueChangeListener v1 = new NullValueChangeListener();
+        ValueChangeListener v2 = new NullValueChangeListener();
+        ValueChangeListener v3 = new NullValueChangeListener();
+        input.addValueChangeListener(v1);
+        assertEquals(1, input.getValueChangeListeners().length);
+        input.addValueChangeListener(v2);
+        assertEquals(2, input.getValueChangeListeners().length);
+        input.addValueChangeListener(v3);
+        assertEquals(3, input.getValueChangeListeners().length);
+
+        input.removeValueChangeListener(v2);
+        assertEquals(2, input.getValueChangeListeners().length);
+        input.removeValueChangeListener(v2);
+        assertEquals(2, input.getValueChangeListeners().length);
+    }
+
+    public final void testRemoveValueChangeListener_NullArg() throws Exception {
+        UIInput input = createUIInput();
+        try {
+            input.removeValueChangeListener(null);
+            fail();
+        } catch (NullPointerException npe) {
+            AssertUtil.assertExceptionMessageExist(npe);
+        }
+    }
+
     // TODO test: saveState
     // TODO test: restoreState
 
