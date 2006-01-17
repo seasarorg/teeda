@@ -1,10 +1,7 @@
 package javax.faces.component;
 
-import javax.faces.context.FacesContext;
 import javax.faces.el.MethodBinding;
-import javax.faces.event.FacesEvent;
 
-import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.mock.MockFacesContextImpl;
 import org.seasar.teeda.core.mock.MockMethodBinding;
 import org.seasar.teeda.core.mock.MockValueBinding;
@@ -26,7 +23,7 @@ public class UIInputTest extends UIOutputTest {
     }
 
     public void testSetGetSubmittedValue() {
-        UIInput input = new UIInput();
+        UIInput input = createUIInput();
         input.setSubmittedValue("aaa");
         assertEquals("aaa", input.getSubmittedValue());
     }
@@ -38,7 +35,7 @@ public class UIInputTest extends UIOutputTest {
     }
 
     public void testSetGetLocalValueSet() {
-        UIInput input = new UIInput();
+        UIInput input = createUIInput();
         input.setLocalValueSet(true);
         assertEquals(true, input.isLocalValueSet());
     }
@@ -111,283 +108,9 @@ public class UIInputTest extends UIOutputTest {
         assertEquals(methodBinding, input.getValueChangeListener());
     }
 
-    public void testProcessDecodes_CallValidateWhenImmediateIsTrue()
-            throws Exception {
-        // ## Arrange ##
-        MockFacesContext context = getFacesContext();
-        final boolean[] calls = { false };
-        UIInput input = new UIInput() {
-            public void validate(FacesContext context) {
-                calls[0] = true;
-            }
-        };
-        input.setImmediate(true);
-
-        // ## Act ##
-        input.processDecodes(context);
-
-        // ## Assert ##
-        assertEquals(true, calls[0]);
-        assertEquals(false, context.getRenderResponse());
-    }
-
-    public void testProcessDecodes_NotCallValidateWhenImmediateIsFalse()
-            throws Exception {
-        // ## Arrange ##
-        MockFacesContext context = getFacesContext();
-        final boolean[] calls = { false };
-        UIInput input = new UIInput() {
-            public void validate(FacesContext context) {
-                calls[0] = true;
-            }
-        };
-        input.setImmediate(false);
-
-        // ## Act ##
-        input.processDecodes(context);
-
-        // ## Assert ##
-        assertEquals(false, calls[0]);
-        assertEquals(false, context.getRenderResponse());
-    }
-
-    public void testProcessDecodes_RenderResponseIsCalledWhenComponentIsInvalid()
-            throws Exception {
-        // ## Arrange ##
-        MockFacesContext context = getFacesContext();
-        final boolean[] calls = { false };
-        final UIInput input = new UIInput() {
-            public void validate(FacesContext context) {
-                calls[0] = true;
-                setValid(false);
-            }
-        };
-        input.setImmediate(true);
-
-        // ## Act ##
-        input.processDecodes(context);
-
-        // ## Assert ##
-        assertEquals(true, calls[0]);
-        assertEquals(true, context.getRenderResponse());
-    }
-
-    public void testProcessDecodes_RenderResponseIsCalledWhenRuntimeExceptionThrown()
-            throws Exception {
-
-        // ## Arrange ##
-        MockFacesContext context = getFacesContext();
-        final boolean[] calls = { false };
-        final UIInput input = new UIInput() {
-            public void validate(FacesContext context) {
-                calls[0] = true;
-                throw new RuntimeException("for test");
-            }
-        };
-        input.setImmediate(true);
-
-        // ## Act & Assert ##
-        try {
-            input.processDecodes(context);
-            fail();
-        } catch (RuntimeException expected) {
-            assertEquals("for test", expected.getMessage());
-        }
-        assertEquals(true, calls[0]);
-        assertEquals(true, context.getRenderResponse());
-    }
-
-    public void testProcessValidators_CallValidateWhenImmediateIsFalse()
-            throws Exception {
-        // ## Arrange ##
-        MockFacesContext context = getFacesContext();
-        final boolean[] calls = { false };
-        UIInput input = new UIInput() {
-            public void validate(FacesContext context) {
-                calls[0] = true;
-            }
-        };
-        input.setImmediate(false);
-        input.setValid(true);
-
-        // ## Act ##
-        input.processValidators(context);
-
-        // ## Assert ##
-        assertEquals(true, calls[0]);
-        assertEquals(false, context.getRenderResponse());
-    }
-
-    public void testProcessValidators_NotCallValidateWhenImmediateIsTrue()
-            throws Exception {
-        // ## Arrange ##
-        MockFacesContext context = getFacesContext();
-        final boolean[] calls = { false };
-        UIInput input = new UIInput() {
-            public void validate(FacesContext context) {
-                calls[0] = true;
-            }
-        };
-        input.setImmediate(true);
-
-        // ## Act ##
-        input.processValidators(context);
-
-        // ## Assert ##
-        assertEquals(false, calls[0]);
-        assertEquals(false, context.getRenderResponse());
-    }
-
-    public void testProcessValidators_RenderResponseIsCalledWhenComponentIsInvalid()
-            throws Exception {
-        // ## Arrange ##
-        MockFacesContext context = getFacesContext();
-        final boolean[] calls = { false };
-        final UIInput input = new UIInput() {
-            public void validate(FacesContext context) {
-                calls[0] = true;
-                setValid(false);
-            }
-        };
-        input.setImmediate(false);
-
-        // ## Act ##
-        input.processValidators(context);
-
-        // ## Assert ##
-        assertEquals(true, calls[0]);
-        assertEquals(true, context.getRenderResponse());
-    }
-
-    public void testProcessValidators_RenderResponseIsCalledWhenRuntimeExceptionThrown()
-            throws Exception {
-
-        // ## Arrange ##
-        MockFacesContext context = getFacesContext();
-        final boolean[] calls = { false };
-        final UIInput input = new UIInput() {
-            public void validate(FacesContext context) {
-                calls[0] = true;
-                throw new RuntimeException("for test");
-            }
-        };
-        input.setImmediate(false);
-
-        // ## Act & Assert ##
-        try {
-            input.processValidators(context);
-            fail();
-        } catch (RuntimeException expected) {
-            assertEquals("for test", expected.getMessage());
-        }
-        assertEquals(true, calls[0]);
-        assertEquals(true, context.getRenderResponse());
-    }
-
-    public void testProcessUpdates_CallUpdateModel() throws Exception {
-        // ## Arrange ##
-        MockFacesContext context = getFacesContext();
-        final boolean[] calls = { false };
-        UIInput input = new UIInput() {
-            public void updateModel(FacesContext context) {
-                calls[0] = true;
-            }
-        };
-        input.setValid(true);
-
-        // ## Act ##
-        input.processUpdates(context);
-
-        // ## Assert ##
-        assertEquals(true, calls[0]);
-        assertEquals(false, context.getRenderResponse());
-    }
-
-    public void testProcessUpdates_RenderResponseIsCalledWhenComponentIsInvalid()
-            throws Exception {
-        // ## Arrange ##
-        MockFacesContext context = getFacesContext();
-        final boolean[] calls = { false };
-        UIInput input = new UIInput() {
-            public void updateModel(FacesContext context) {
-                calls[0] = true;
-                setValid(false);
-            }
-        };
-
-        // ## Act ##
-        input.processUpdates(context);
-
-        // ## Assert ##
-        assertEquals(true, calls[0]);
-        assertEquals(true, context.getRenderResponse());
-    }
-
-    public void testProcessUpdates_RenderResponseIsCalledWhenRuntimeExceptionThrown()
-            throws Exception {
-        // ## Arrange ##
-        MockFacesContext context = getFacesContext();
-        final boolean[] calls = { false };
-        UIInput input = new UIInput() {
-            public void updateModel(FacesContext context) {
-                calls[0] = true;
-                throw new RuntimeException("for test");
-            }
-        };
-
-        // ## Act ##
-        // ## Act & Assert ##
-        try {
-            input.processUpdates(context);
-            fail();
-        } catch (RuntimeException expected) {
-            assertEquals("for test", expected.getMessage());
-        }
-        assertEquals(true, calls[0]);
-        assertEquals(true, context.getRenderResponse());
-    }
-
     // TODO test: decode
     // TODO test: broadcast
     // TODO test: updateModel
-
-    // TODO test: validate more tests
-    public void testVaildate_QueueValueChangeEvent() throws Exception {
-        // ## Arrange ##
-        final FacesEvent[] facesEvent = new FacesEvent[1];
-        UIInput input = new UIInput() {
-            public void queueEvent(FacesEvent event) {
-                facesEvent[0] = event;
-            }
-        };
-        input.setSubmittedValue("a");
-        input.setValue("b");
-        input.setValid(true);
-
-        // ## Act ##
-        input.validate(getFacesContext());
-
-        // ## Assert ##
-        assertNotNull(facesEvent[0]);
-    }
-
-    public void testVaildate_NotQueueValueChangeEvent() throws Exception {
-        // ## Arrange ##
-        final FacesEvent[] facesEvent = new FacesEvent[1];
-        UIInput input = new UIInput() {
-            public void queueEvent(FacesEvent event) {
-                facesEvent[0] = event;
-            }
-        };
-        input.setSubmittedValue("a");
-        input.setValue("a");
-
-        // ## Act ##
-        input.validate(getFacesContext());
-
-        // ## Assert ##
-        assertNull(facesEvent[0]);
-    }
 
     // TODO test: getConvertedValue
     // TODO test: validateValue

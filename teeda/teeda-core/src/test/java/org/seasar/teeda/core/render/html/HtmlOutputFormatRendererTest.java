@@ -18,18 +18,19 @@ package org.seasar.teeda.core.render.html;
 import java.util.Locale;
 
 import javax.faces.component.UIParameter;
+import javax.faces.component.UIViewRoot;
 import javax.faces.component.html.HtmlOutputFormat;
 import javax.faces.context.FacesContext;
 import javax.faces.render.Renderer;
 import javax.faces.render.RendererTest;
 
 import org.custommonkey.xmlunit.Diff;
+import org.seasar.teeda.core.mock.MockFacesContext;
 
 /**
  * @author manhole
  */
 public class HtmlOutputFormatRendererTest extends RendererTest {
-
     public void testEncodeEnd() throws Exception {
         HtmlOutputFormat htmlOutputFormat = new HtmlOutputFormat();
         htmlOutputFormat.setValue("abc");
@@ -144,15 +145,24 @@ public class HtmlOutputFormatRendererTest extends RendererTest {
     public void testGetLocaleFromUIViewRoot() throws Exception {
         // ## Arrange ##
         FacesContext context = getFacesContext();
+        context.setViewRoot(new UIViewRoot());
         context.getViewRoot().setLocale(Locale.CANADA);
 
-        HtmlOutputFormatRenderer renderer = new HtmlOutputFormatRenderer();
+        HtmlOutputFormatRenderer renderer = createHtmlOutputFormatRenderer();
 
         // ## Act & Assert ##
         assertEquals(Locale.CANADA, renderer.getLocale(context));
 
         context.getViewRoot().setLocale(Locale.CHINESE);
         assertEquals(Locale.CHINESE, renderer.getLocale(context));
+    }
+
+    protected MockFacesContext getFacesContext() {
+        MockFacesContext context = super.getFacesContext();
+        UIViewRoot viewRoot = new UIViewRoot();
+        viewRoot.setLocale(Locale.getDefault());
+        context.setViewRoot(viewRoot);
+        return context;
     }
 
     private HtmlOutputFormatRenderer createHtmlOutputFormatRenderer() {

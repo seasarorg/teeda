@@ -1,12 +1,10 @@
 package javax.faces.component;
 
-import java.io.Serializable;
-
+import javax.faces.context.FacesContext;
 import javax.faces.event.FacesEvent;
 import javax.faces.event.FacesListener;
-import javax.faces.render.RenderKitFactory;
 
-import org.seasar.teeda.core.mock.MockFacesContext;
+import org.seasar.teeda.core.mock.MockFacesContextImpl;
 import org.seasar.teeda.core.mock.MockUIComponent;
 import org.seasar.teeda.core.mock.MockUIComponentBase;
 import org.seasar.teeda.core.mock.MockValueBinding;
@@ -20,19 +18,6 @@ public class UIComponentBaseTest extends AbstractUIComponentTest {
         MockValueBinding vb = new MockValueBinding();
         base.setValueBinding("hoge", vb);
         assertTrue(vb == base.getValueBinding("hoge"));
-    }
-
-    public void testGetClientId() {
-        UIComponentBase component = createUIComponentBase();
-        component.setId("a");
-
-        MockUIComponent parent = new MockUIComponentWithNamingContainer();
-        parent.setClientId("b");
-        component.setParent(parent);
-
-        String clientId = component.getClientId(getFacesContext());
-        assertNotNull(clientId);
-        assertEquals("b:a", clientId);
     }
 
     public void testSetGetId() {
@@ -336,6 +321,9 @@ public class UIComponentBaseTest extends AbstractUIComponentTest {
         assertEquals("1", listeners[0].toString());
     }
 
+    private void success() {
+    }
+
     public void testHandleFacesListeners2() {
         MockUIComponentBase base = new MockUIComponentBase();
         MockFacesListener1 listener1 = new MockFacesListener1();
@@ -426,38 +414,6 @@ public class UIComponentBaseTest extends AbstractUIComponentTest {
         // TODO testing.
     }
 
-    public void testSaveAndRestoreState() throws Exception {
-        UIComponentBase component1 = (UIComponentBase) createUIComponent();
-        component1.setId("abc");
-        component1.setRendered(true);
-        component1.setRendererType("some renderer");
-
-        MockFacesContext context = getFacesContext();
-        UIViewRoot viewRoot = new UIViewRoot();
-        viewRoot.setRenderKitId(RenderKitFactory.HTML_BASIC_RENDER_KIT);
-        context.setViewRoot(viewRoot);
-        Object state = component1.saveState(context);
-        assertTrue(state instanceof Serializable);
-
-        UIComponentBase component2 = (UIComponentBase) createUIComponent();
-        component2.restoreState(context, state);
-
-        assertEquals(component1.getAttributes().size(), component2
-                .getAttributes().size());
-        assertEquals(component1.getChildCount(), component2.getChildCount());
-        assertEquals(component1.getClientId(context), component2
-                .getClientId(context));
-        assertEquals(component1.getFacets().size(), component2.getFacets()
-                .size());
-        // assertEquals(component1.getFacetsAndChildren(), component2
-        // .getFacetsAndChildren());
-        assertEquals(component1.getId(), component2.getId());
-        assertEquals(component1.getParent(), component2.getParent());
-        assertEquals(component1.getRendererType(), component2.getRendererType());
-        assertEquals(component1.getRendersChildren(), component2
-                .getRendersChildren());
-    }
-
     public final void testSaveAndRestoreAttachedState_AttacedObjectIsNull() {
         NullFacesContext context = new NullFacesContext();
         Object stateObj = UIComponentBase.saveAttachedState(context, null);
@@ -491,16 +447,17 @@ public class UIComponentBaseTest extends AbstractUIComponentTest {
         }
     }
 
-    private static class MockUIComponentWithNamingContainer extends
-            MockUIComponent implements NamingContainer {
-    }
-
     private UIComponentBase createUIComponentBase() {
         return (UIComponentBase) createUIComponent();
     }
 
     protected UIComponent createUIComponent() {
         return new MockUIComponentBase();
+    }
+
+    protected FacesContext getFacesContext() {
+        MockFacesContextImpl context = new MockFacesContextImpl();
+        return context;
     }
 
 }

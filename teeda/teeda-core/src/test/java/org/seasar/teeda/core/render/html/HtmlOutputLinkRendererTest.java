@@ -21,6 +21,7 @@ import javax.faces.render.Renderer;
 import javax.faces.render.RendererTest;
 
 import org.custommonkey.xmlunit.Diff;
+import org.seasar.teeda.core.mock.MockExternalContext;
 import org.seasar.teeda.core.mock.MockExternalContextWrapper;
 import org.seasar.teeda.core.mock.MockFacesContext;
 
@@ -31,16 +32,22 @@ public class HtmlOutputLinkRendererTest extends RendererTest {
 
     private final boolean[] calls_ = { false };
 
-    protected void setUpAfterContainerInit() throws Throwable {
-        super.setUpAfterContainerInit();
-        MockFacesContext context = getFacesContext();
-        context.setExternalContext(new MockExternalContextWrapper(
-                getExternalContext()) {
+    private MockFacesContext context_;
+    {
+        context_ = super.getFacesContext();
+        MockExternalContext externalContext = (MockExternalContext) context_
+                .getExternalContext();
+        context_.setExternalContext(new MockExternalContextWrapper(
+                externalContext) {
             public String encodeResourceURL(String url) {
                 calls_[0] = true;
                 return url;
             }
         });
+    }
+
+    protected MockFacesContext getFacesContext() {
+        return context_;
     }
 
     public void testEncodeBegin() throws Exception {
@@ -92,8 +99,7 @@ public class HtmlOutputLinkRendererTest extends RendererTest {
     public void testEncodeBegin_HrefIsJapanese() throws Exception {
         HtmlOutputLink htmlOutputLink = new HtmlOutputLink();
         // japanese "a"
-        htmlOutputLink
-                .setValue("/" + new Character((char)12354) + ".html");
+        htmlOutputLink.setValue("/" + new Character((char) 12354) + ".html");
         HtmlOutputLinkRenderer renderer = createHtmlOutputLinkRenderer();
         renderer.encodeBegin(getFacesContext(), htmlOutputLink);
 

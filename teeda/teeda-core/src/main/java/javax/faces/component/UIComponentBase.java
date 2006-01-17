@@ -501,7 +501,7 @@ public abstract class UIComponentBase extends UIComponent {
         Renderer renderer = null;
         String rendererType = getRendererType();
         if (rendererType != null) {
-            RenderKit renderKit = RenderKitUtil.getRenderKit(context);
+            RenderKit renderKit = RenderKitUtil_.getRenderKit(context);
             renderer = renderKit.getRenderer(getFamily(), rendererType);
         }
         return renderer;

@@ -17,16 +17,21 @@ package javax.faces.render;
 
 import java.io.IOException;
 
+import junit.framework.TestCase;
+
+import org.seasar.framework.util.SPrintWriter;
+import org.seasar.teeda.core.context.html.HtmlResponseWriter;
+import org.seasar.teeda.core.mock.MockFacesContext;
+import org.seasar.teeda.core.mock.MockFacesContextImpl;
 import org.seasar.teeda.core.mock.NullFacesContext;
 import org.seasar.teeda.core.mock.NullRenderer;
 import org.seasar.teeda.core.mock.NullUIComponent;
 import org.seasar.teeda.core.unit.AssertUtil;
-import org.seasar.teeda.core.unit.TeedaTestCase;
 
 /**
  * @author manhole
  */
-public class RendererTest extends TeedaTestCase {
+public class RendererTest extends TestCase {
 
     public final void testConvertClientId_FacesContextIsNull() throws Exception {
         Renderer renderer = createRenderer();
@@ -152,12 +157,24 @@ public class RendererTest extends TeedaTestCase {
         }
     }
 
-    protected Renderer createRenderer() {
-        return new NullRenderer();
+    private HtmlResponseWriter responseWriter_ = new HtmlResponseWriter();
+
+    private MockFacesContextImpl context_ = new MockFacesContextImpl();
+    {
+        context_.setResponseWriter(responseWriter_);
+        responseWriter_.setWriter(new SPrintWriter());
+    }
+
+    protected MockFacesContext getFacesContext() {
+        return context_;
     }
 
     protected String getResponseText() throws IOException {
-        return getResponse().getWriter().toString();
+        return responseWriter_.getWriter().toString();
+    }
+
+    protected Renderer createRenderer() {
+        return new NullRenderer();
     }
 
 }

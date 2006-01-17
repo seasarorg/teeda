@@ -15,10 +15,9 @@
  */
 package javax.faces.component.html;
 
-import javax.faces.component.UIOutputTest;
 import javax.faces.component.UIComponent;
+import javax.faces.component.UIOutputTest;
 
-import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.mock.MockValueBinding;
 
 /**
@@ -92,25 +91,6 @@ public class HtmlOutputTextTest extends UIOutputTest {
         assertEquals("bar title", htmlOutputText.getTitle());
     }
 
-    public void testSaveAndRestoreState() throws Exception {
-        super.testSaveAndRestoreState();
-        HtmlOutputText htmlOutputText1 = createHtmlOutputText();
-        htmlOutputText1.setEscape(false);
-        htmlOutputText1.setTitle("foo title");
-        htmlOutputText1.setStyle("foo style");
-        htmlOutputText1.setStyleClass("foo styleClass");
-        MockFacesContext context = getFacesContext();
-        Object state = htmlOutputText1.saveState(context);
-    
-        HtmlOutputText htmlOutputText2 = createHtmlOutputText();
-        htmlOutputText2.restoreState(context, state);
-    
-        assertEquals(htmlOutputText1.isEscape(), htmlOutputText2.isEscape());
-        assertEquals(htmlOutputText1.getTitle(), htmlOutputText2.getTitle());
-        assertEquals(htmlOutputText1.getStyle(), htmlOutputText2.getStyle());
-        assertEquals(htmlOutputText1.getStyleClass(), htmlOutputText2
-            .getStyleClass());
-    }
 
     private HtmlOutputText createHtmlOutputText() {
         return (HtmlOutputText) createUIComponent();

@@ -45,7 +45,6 @@ public class UrlBuilderTest extends TestCase {
 
         // ## Assert ##
         UrlDiff urlDiff = new UrlDiff("a?1=2&3=4", actual);
-        System.out.println(actual);
         assertEquals(actual, true, urlDiff.isIdentical());
     }
 

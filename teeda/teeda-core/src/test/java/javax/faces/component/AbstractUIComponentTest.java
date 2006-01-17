@@ -18,19 +18,21 @@ package javax.faces.component;
 import java.io.Serializable;
 import java.util.Map;
 
+import javax.faces.context.FacesContext;
 import javax.faces.render.RenderKitFactory;
 
-import org.seasar.teeda.core.mock.MockFacesContext;
+import junit.framework.TestCase;
+
 import org.seasar.teeda.core.mock.MockValueBinding;
+import org.seasar.teeda.core.mock.NullFacesContext;
 import org.seasar.teeda.core.mock.NullFacesEvent;
 import org.seasar.teeda.core.mock.NullValueBinding;
 import org.seasar.teeda.core.unit.AssertUtil;
-import org.seasar.teeda.core.unit.TeedaTestCase;
 
 /**
  * @author manhole
  */
-public abstract class AbstractUIComponentTest extends TeedaTestCase {
+public abstract class AbstractUIComponentTest extends TestCase {
 
     public final void testGetValueBinding_NullArg() throws Exception {
         UIComponent component = createUIComponent();
@@ -80,30 +82,8 @@ public abstract class AbstractUIComponentTest extends TeedaTestCase {
         }
     }
 
-    public void testGetClientId_ConsecutiveCallsReturnSameValue()
-            throws Exception {
-        // ## Arrange ##
-        UIComponent component = createUIComponent();
-        MockFacesContext context = getFacesContext();
-
-        // ## Act & Assert ##
-        String clientId1 = component.getClientId(context);
-
-        assertEquals(clientId1, component.getClientId(context));
-        assertEquals(clientId1, component.getClientId(context));
-    }
-
-    public void testGetClientId_IdIsChanged() throws Exception {
-        // ## Arrange ##
-        UIComponent component = createUIComponent();
-        MockFacesContext context = getFacesContext();
-        component.setId("a");
-
-        // ## Act & Assert ##
-        String clientId1 = component.getClientId(context);
-        assertEquals(clientId1, component.getClientId(context));
-        component.setId("b");
-        AssertUtil.assertNotEquals(clientId1, component.getClientId(context));
+    private FacesContext getFacesContext() {
+        return new NullFacesContext();
     }
 
     // FIXME is it OK?
@@ -111,7 +91,7 @@ public abstract class AbstractUIComponentTest extends TeedaTestCase {
             throws Exception {
         // ## Arrange ##
         UIComponent component = createUIComponent();
-        MockFacesContext context = getFacesContext();
+        FacesContext context = getFacesContext();
         UIViewRoot viewRoot = new UIViewRoot();
         viewRoot.setRenderKitId(RenderKitFactory.HTML_BASIC_RENDER_KIT);
         context.setViewRoot(viewRoot);
@@ -132,6 +112,9 @@ public abstract class AbstractUIComponentTest extends TeedaTestCase {
         UIComponent component = createUIComponent();
         component.setId(null);
         success();
+    }
+
+    private void success() {
     }
 
     public final void testSetId_IllegalArg1() throws Exception {

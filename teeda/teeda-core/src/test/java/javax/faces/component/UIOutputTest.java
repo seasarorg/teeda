@@ -61,23 +61,6 @@ public class UIOutputTest extends UIComponentBaseTest {
         assertEquals("bbb", output.getValue());
     }
 
-    public void testSaveAndRestoreState() throws Exception {
-        super.testSaveAndRestoreState();
-
-        UIOutput output1 = createUIOutput();
-        output1.setConverter(new MockConverter());
-        output1.setValue("foo value");
-        MockFacesContext context = getFacesContext();
-        Object state = output1.saveState(context);
-
-        UIOutput output2 = createUIOutput();
-        output2.restoreState(context, state);
-
-        ObjectAssert.assertInstanceOf(MockConverter.class, output2
-                .getConverter());
-        assertEquals(output1.getValue(), output2.getValue());
-    }
-
     private UIOutput createUIOutput() {
         return (UIOutput) createUIComponent();
     }
