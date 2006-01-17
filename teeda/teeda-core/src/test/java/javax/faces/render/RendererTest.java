@@ -16,6 +16,7 @@
 package javax.faces.render;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import javax.faces.component.UIViewRoot;
 
@@ -23,6 +24,8 @@ import junit.framework.TestCase;
 
 import org.seasar.framework.util.SPrintWriter;
 import org.seasar.teeda.core.context.html.HtmlResponseWriter;
+import org.seasar.teeda.core.mock.MockExternalContext;
+import org.seasar.teeda.core.mock.MockExternalContextImpl;
 import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.mock.MockFacesContextImpl;
 import org.seasar.teeda.core.mock.NullFacesContext;
@@ -159,18 +162,34 @@ public class RendererTest extends TestCase {
         }
     }
 
-    private HtmlResponseWriter responseWriter_ = new HtmlResponseWriter();
+    private HtmlResponseWriter responseWriter_;
 
-    private MockFacesContext context_ = new MockFacesContextImpl();
-    {
-        context_.setResponseWriter(responseWriter_);
-        UIViewRoot root = new UIViewRoot();
-        context_.setViewRoot(root);
+    private MockFacesContext facesContext_;
+
+    private MockExternalContextImpl externalContext_;
+
+    protected void setUp() throws Exception {
+        super.setUp();
+        facesContext_ = new MockFacesContextImpl();
+
+        externalContext_ = new MockExternalContextImpl();
+        externalContext_.setRequestParameterMap(new HashMap());
+        facesContext_.setExternalContext(externalContext_);
+
+        responseWriter_ = new HtmlResponseWriter();
         responseWriter_.setWriter(new SPrintWriter());
+        facesContext_.setResponseWriter(responseWriter_);
+
+        UIViewRoot viewRoot = new UIViewRoot();
+        facesContext_.setViewRoot(viewRoot);
+    }
+
+    protected MockExternalContext getExternalContext() {
+        return externalContext_;
     }
 
     protected MockFacesContext getFacesContext() {
-        return context_;
+        return facesContext_;
     }
 
     protected String getResponseText() throws IOException {

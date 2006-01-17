@@ -24,6 +24,7 @@ import javax.faces.render.Renderer;
  */
 public class AbstractHtmlRenderer extends Renderer {
 
+    // TODO to change pluggable
     protected String getIdForRender(FacesContext context, UIComponent component) {
         String id = component.getId();
         if (id != null) {

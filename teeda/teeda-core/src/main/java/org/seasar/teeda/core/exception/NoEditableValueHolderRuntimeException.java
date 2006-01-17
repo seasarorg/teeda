@@ -1,5 +1,5 @@
 /*
- * Copyright 2004-2006 the Seasar Foundation and the Others.
+ * Copyright 2004-2005 the Seasar Foundation and the Others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,31 +13,27 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.core.mock;
+package org.seasar.teeda.core.exception;
 
-import javax.faces.component.UIComponentBase;
-import javax.faces.context.FacesContext;
+import org.seasar.framework.exception.SRuntimeException;
 
 /**
+ * @author higa
  * @author manhole
  */
-public class MockUIComponentBase extends UIComponentBase {
+public class NoEditableValueHolderRuntimeException extends SRuntimeException {
 
-    private String clientId_;
+    private static final long serialVersionUID = 1L;
 
-    public String getClientId(FacesContext context) {
-        if (clientId_ != null) {
-            return clientId_;
-        }
-        return super.getClientId(context);
+    private Class componentClass;
+
+    public NoEditableValueHolderRuntimeException(Class componentClass) {
+        super("ETDA0016", new Object[] { componentClass.getName() });
+        this.componentClass = componentClass;
     }
 
-    public void setClientId(String clientId) {
-        clientId_ = clientId;
-    }
-
-    public String getFamily() {
-        return "mock";
+    public Class getComponentClass() {
+        return componentClass;
     }
 
 }

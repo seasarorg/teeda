@@ -39,6 +39,9 @@ public class MockExternalContextImpl extends MockExternalContext {
 
     private Map requestMap_;
 
+    public MockExternalContextImpl() {
+    }
+
     public MockExternalContextImpl(MockServletContext context,
             MockHttpServletRequest request, MockHttpServletResponse response) {
         context_ = context;
@@ -84,21 +87,15 @@ public class MockExternalContextImpl extends MockExternalContext {
     }
 
     public String getAuthType() {
-
         return request_.getAuthType();
-
     }
 
     public Object getContext() {
-
         return context_;
-
     }
 
     public String getInitParameter(String name) {
-
         return context_.getInitParameter(name);
-
     }
 
     public Map getInitParameterMap() {
@@ -151,91 +148,63 @@ public class MockExternalContextImpl extends MockExternalContext {
     }
 
     public Map getRequestParameterMap() {
-
         return requestParameterMap_;
-
     }
 
     public Iterator getRequestParameterNames() {
-
         throw new UnsupportedOperationException();
-
     }
 
     public Map getRequestParameterValuesMap() {
-
         throw new UnsupportedOperationException();
-
     }
 
     public String getRequestPathInfo() {
-
         return request_.getPathInfo();
-
     }
 
     public String getRequestServletPath() {
-
         return request_.getServletPath();
-
     }
 
     public URL getResource(String path) throws MalformedURLException {
-
         return context_.getResource(path);
-
     }
 
     public InputStream getResourceAsStream(String path) {
-
         return context_.getResourceAsStream(path);
-
     }
 
     public Set getResourcePaths(String path) {
-
         throw new UnsupportedOperationException();
-
     }
 
     public Object getResponse() {
-
         return response_;
-
     }
 
     public Object getSession(boolean create) {
-
         return request_.getSession(create);
-
     }
 
     public Map getSessionMap() {
-
         if (sessionMap_ == null) {
             HttpSession session = request_.getSession(true);
             sessionMap_ = new MockSessionMap(session);
         }
         return sessionMap_;
-
     }
 
     public java.security.Principal getUserPrincipal() {
-
         return request_.getUserPrincipal();
-
     }
 
     public boolean isUserInRole(String role) {
-
         return request_.isUserInRole(role);
-
     }
 
     public void log(String message) {
-
         context_.log(message);
-
     }
 
     public void log(String message, Throwable throwable) {

@@ -23,6 +23,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
 import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.core.util.DecodeUtil;
 import org.seasar.teeda.core.util.RendererUtil;
 import org.seasar.teeda.core.util.ValueHolderUtil;
 
@@ -58,6 +59,16 @@ public class HtmlInputTextRenderer extends AbstractHtmlRenderer {
         RendererUtil.renderAttributes(writer, htmlInputText,
                 JsfConstants.INPUT_PASSTHROUGH_ATTRIBUTES_WITHOUT_DISABLED);
         writer.endElement(JsfConstants.INPUT_ELEM);
+    }
+
+    public void decode(FacesContext context, UIComponent component) {
+        super.decode(context, component);
+        decodeHtmlInputText(context, (HtmlInputText) component);
+    }
+
+    protected void decodeHtmlInputText(FacesContext context,
+            HtmlInputText htmlInputText) {
+        DecodeUtil.decode(context, htmlInputText);
     }
 
 }

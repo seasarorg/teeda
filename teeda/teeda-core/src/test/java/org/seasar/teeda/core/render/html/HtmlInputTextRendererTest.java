@@ -17,8 +17,9 @@ package org.seasar.teeda.core.render.html;
 
 import javax.faces.component.UIComponent;
 import javax.faces.component.html.HtmlInputText;
+import javax.faces.context.FacesContext;
 import javax.faces.render.Renderer;
-import javax.faces.render.RendererTeedaTest;
+import javax.faces.render.RendererTest;
 
 import org.custommonkey.xmlunit.Diff;
 import org.seasar.teeda.core.mock.MockFacesContext;
@@ -27,13 +28,14 @@ import org.seasar.teeda.core.mock.MockUIComponentBaseWithNamingContainer;
 /**
  * @author manhole
  */
-// TODO
-public class HtmlInputTextRendererTeedaTest extends RendererTeedaTest {
+public class HtmlInputTextRendererTest extends RendererTest {
 
     public void testEncodeEnd_WithNoValue() throws Exception {
         // ## Arrange ##
-        HtmlInputText htmlInputText = new HtmlInputText();
         HtmlInputTextRenderer renderer = createHtmlInputTextRenderer();
+        MockHtmlInputText htmlInputText = new MockHtmlInputText();
+        htmlInputText.setRenderer(renderer);
+
         MockFacesContext context = getFacesContext();
 
         // ## Act ##
@@ -47,9 +49,10 @@ public class HtmlInputTextRendererTeedaTest extends RendererTeedaTest {
 
     public void testEncodeEnd_WithValue() throws Exception {
         // ## Arrange ##
-        HtmlInputText htmlInputText = new HtmlInputText();
-        htmlInputText.setValue("abc");
         HtmlInputTextRenderer renderer = createHtmlInputTextRenderer();
+        MockHtmlInputText htmlInputText = new MockHtmlInputText();
+        htmlInputText.setRenderer(renderer);
+        htmlInputText.setValue("abc");
         MockFacesContext context = getFacesContext();
 
         // ## Act ##
@@ -62,9 +65,10 @@ public class HtmlInputTextRendererTeedaTest extends RendererTeedaTest {
     }
 
     public void testEncodeEnd_WithId() throws Exception {
-        HtmlInputText htmlInputText = new HtmlInputText();
-        htmlInputText.setId("a");
         HtmlInputTextRenderer renderer = createHtmlInputTextRenderer();
+        MockHtmlInputText htmlInputText = new MockHtmlInputText();
+        htmlInputText.setRenderer(renderer);
+        htmlInputText.setId("a");
 
         UIComponent parent = new MockUIComponentBaseWithNamingContainer();
         parent.setId("b");
@@ -77,7 +81,10 @@ public class HtmlInputTextRendererTeedaTest extends RendererTeedaTest {
     }
 
     public void testEncodeBegin_WithAllAttributes() throws Exception {
-        HtmlInputText htmlInputText = new HtmlInputText();
+        HtmlInputTextRenderer renderer = createHtmlInputTextRenderer();
+        MockHtmlInputText htmlInputText = new MockHtmlInputText();
+        htmlInputText.setRenderer(renderer);
+
         htmlInputText.setAccesskey("a");
         htmlInputText.setAlt("b");
         htmlInputText.setDir("c");
@@ -108,10 +115,9 @@ public class HtmlInputTextRendererTeedaTest extends RendererTeedaTest {
         htmlInputText.setId("A");
         htmlInputText.setValue("B");
 
-        HtmlInputTextRenderer renderer = createHtmlInputTextRenderer();
-
-        renderer.encodeBegin(getFacesContext(), htmlInputText);
-        renderer.encodeEnd(getFacesContext(), htmlInputText);
+        MockFacesContext context = getFacesContext();
+        renderer.encodeBegin(context, htmlInputText);
+        renderer.encodeEnd(context, htmlInputText);
 
         Diff diff = new Diff(
                 "<input type=\"text\" id=\"A\" name=\"A\" value=\"B\""
@@ -131,13 +137,37 @@ public class HtmlInputTextRendererTeedaTest extends RendererTeedaTest {
         assertEquals(diff.toString(), true, diff.identical());
     }
 
-    public void testDecode() throws Exception {
+    public void testDecode_None() throws Exception {
         // ## Arrange ##
+        HtmlInputTextRenderer renderer = createHtmlInputTextRenderer();
+        MockHtmlInputText htmlInputText = new MockHtmlInputText();
+        htmlInputText.setRenderer(renderer);
+        htmlInputText.setClientId("key");
+
+        MockFacesContext context = getFacesContext();
 
         // ## Act ##
+        renderer.decode(context, htmlInputText);
 
         // ## Assert ##
+        assertEquals(null, htmlInputText.getSubmittedValue());
+    }
 
+    public void testDecode_Success() throws Exception {
+        // ## Arrange ##
+        HtmlInputTextRenderer renderer = createHtmlInputTextRenderer();
+        MockHtmlInputText htmlInputText = new MockHtmlInputText();
+        htmlInputText.setRenderer(renderer);
+        htmlInputText.setClientId("key");
+
+        MockFacesContext context = getFacesContext();
+        getExternalContext().getRequestParameterMap().put("key", "12345");
+
+        // ## Act ##
+        renderer.decode(context, htmlInputText);
+
+        // ## Assert ##
+        assertEquals("12345", htmlInputText.getSubmittedValue());
     }
 
     private HtmlInputTextRenderer createHtmlInputTextRenderer() {
@@ -146,6 +176,34 @@ public class HtmlInputTextRendererTeedaTest extends RendererTeedaTest {
 
     protected Renderer createRenderer() {
         return new HtmlInputTextRenderer();
+    }
+
+    private static class MockHtmlInputText extends HtmlInputText {
+        private Renderer renderer_;
+
+        private String clientId_;
+
+        public void setRenderer(Renderer renderer) {
+            renderer_ = renderer;
+        }
+
+        protected Renderer getRenderer(FacesContext context) {
+            if (renderer_ != null) {
+                return renderer_;
+            }
+            return super.getRenderer(context);
+        }
+
+        public String getClientId(FacesContext context) {
+            if (clientId_ != null) {
+                return clientId_;
+            }
+            return super.getClientId(context);
+        }
+
+        public void setClientId(String clientId) {
+            clientId_ = clientId;
+        }
     }
 
 }
