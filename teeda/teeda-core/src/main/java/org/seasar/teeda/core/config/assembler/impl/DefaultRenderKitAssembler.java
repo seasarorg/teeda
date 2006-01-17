@@ -22,22 +22,33 @@ import javax.faces.render.RenderKit;
 import javax.faces.render.RenderKitFactory;
 import javax.faces.render.Renderer;
 
-import org.seasar.teeda.core.config.assembler.RenderKitsAssembler;
+import org.seasar.framework.log.Logger;
+import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.core.config.assembler.RenderKitAssembler;
 import org.seasar.teeda.core.config.element.RenderKitElement;
 import org.seasar.teeda.core.config.element.RendererElement;
-import org.seasar.teeda.core.render.html.HtmlRenderKitImpl;
 import org.seasar.teeda.core.util.ClassUtil;
 import org.seasar.teeda.core.util.FactoryFinderUtil;
 import org.seasar.teeda.core.util.IteratorUtil;
 
-//TODO make it done.
-public class SimpleRenderKitsAssembler extends RenderKitsAssembler {
+/**
+ * @author shot
+ */
+public class DefaultRenderKitAssembler extends RenderKitAssembler {
 
-    public SimpleRenderKitsAssembler(Map renderKits) {
+    private static Logger logger_ = Logger.getLogger(DefaultRenderKitAssembler.class);
+    public DefaultRenderKitAssembler(Map renderKits) {
         super(renderKits);
     }
 
     protected void setupBeforeAssemble() {
+        for (Iterator itr = IteratorUtil.getIterator(getRenderKits()); itr.hasNext();) {
+            Map.Entry entry = (Map.Entry) itr.next();
+            String renderKitId = (String) entry.getKey();
+            RenderKitElement renderKitElement = (RenderKitElement) entry
+                    .getValue();
+            isAllSuitableJsfElement(renderKitElement.getRendererElements(), RendererElement.class);
+        }
     }
 
     public void assemble() {
@@ -48,27 +59,45 @@ public class SimpleRenderKitsAssembler extends RenderKitsAssembler {
             String renderKitId = (String) entry.getKey();
             RenderKitElement renderKitElement = (RenderKitElement) entry
                     .getValue();
-            String className = renderKitElement.getRenderKitClass();
-            if(className == null) {
-                className = HtmlRenderKitImpl.class.getName();
-            }
-            RenderKit renderKit = (RenderKit) ClassUtil.newInstance(className);
+            String className = getRenderKitClassName(renderKitElement);
+            RenderKit renderKit = createRenderKit(className);
 
             for (Iterator i = renderKitElement.getRendererElements().iterator(); i
                     .hasNext();) {
                 RendererElement rendererElement = (RendererElement) i.next();
                 String rendererClass = rendererElement.getRendererClass();
-                Renderer renderer = null;
-                try {
-                    renderer = (Renderer) ClassUtil.newInstance(rendererClass);
-                } catch (Exception e) {
-                    // ignore
-                    continue;
+                Renderer renderer = createRenderer(rendererClass);
+                if(renderer != null){
+                    renderKit.addRenderer(rendererElement.getComponentFamily(), rendererElement.getRendererType(), renderer);
                 }
-                renderKit.addRenderer(rendererElement.getComponentFamily(), rendererElement.getRendererType(), renderer);
             }
             renderKitFactory.addRenderKit(renderKitElement.getRenderKitId(), renderKit);
         }
     }
 
+    protected String getRenderKitClassName(RenderKitElement renderKitElement){
+        String className = renderKitElement.getRenderKitClass();
+        if(className == null) {
+            className = JsfConstants.DEFAULT_RENDERKIT_CLASS;
+        }
+        return className;
+    }
+    
+    protected RenderKit createRenderKit(String className){
+        return (RenderKit) newInstance(className);
+    }
+    
+    protected Renderer createRenderer(String className){
+        Renderer renderer = null;
+        try {
+            renderer = (Renderer) newInstance(className);
+        } catch (Exception e) {
+            logger_.warn("Exception "+ e + "occured when trying to create Renderer.");
+        }
+        return renderer;
+    }
+    
+    private Object newInstance(String className){
+        return ClassUtil.newInstance(className);
+    }
 }

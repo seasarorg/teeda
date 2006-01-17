@@ -20,15 +20,15 @@ import java.util.Map;
 
 import javax.faces.context.ExternalContext;
 
-import org.seasar.teeda.core.config.assembler.impl.SimpleApplicationAssembler;
-import org.seasar.teeda.core.config.assembler.impl.SimpleComponentsAssembler;
-import org.seasar.teeda.core.config.assembler.impl.SimpleConvertersAssembler;
-import org.seasar.teeda.core.config.assembler.impl.SimpleFactoriesAssembler;
-import org.seasar.teeda.core.config.assembler.impl.SimpleLifecycleAssembler;
-import org.seasar.teeda.core.config.assembler.impl.SimpleManagedBeanAssembler;
-import org.seasar.teeda.core.config.assembler.impl.SimpleNavigationRulesAssembler;
-import org.seasar.teeda.core.config.assembler.impl.SimpleRenderKitsAssembler;
-import org.seasar.teeda.core.config.assembler.impl.SimpleValidatorsAssembler;
+import org.seasar.teeda.core.config.assembler.impl.DefaultApplicationAssembler;
+import org.seasar.teeda.core.config.assembler.impl.DefaultComponentAssembler;
+import org.seasar.teeda.core.config.assembler.impl.DefaultConverterAssembler;
+import org.seasar.teeda.core.config.assembler.impl.DefaultFactoriesAssembler;
+import org.seasar.teeda.core.config.assembler.impl.DefaultLifecycleAssembler;
+import org.seasar.teeda.core.config.assembler.impl.DefaultManagedBeanAssembler;
+import org.seasar.teeda.core.config.assembler.impl.DefaultNavigationRuleAssembler;
+import org.seasar.teeda.core.config.assembler.impl.DefaultRenderKitAssembler;
+import org.seasar.teeda.core.config.assembler.impl.DefaultValidatorAssembler;
 import org.seasar.teeda.core.config.element.FacesConfig;
 
 /**
@@ -55,7 +55,7 @@ public class AssemblerFactory {
     }
     
     public static void assmbleNavigationRules(FacesConfig facesConfig, ExternalContext externalContext){
-        NavigationRulesAssembler assembler = getProvider().assembleNavigationRules(facesConfig);
+        NavigationRuleAssembler assembler = getProvider().assembleNavigationRules(facesConfig);
         assembler.setExternalContext(externalContext);
         assembler.assemble();
     }
@@ -84,17 +84,17 @@ public class AssemblerFactory {
 
         public ApplicationAssembler assembleApplication(FacesConfig facesConfig);
         
-        public ComponentsAssembler assembleComponent(FacesConfig facesConfig);
+        public ComponentAssembler assembleComponent(FacesConfig facesConfig);
         
-        public ConvertersAssembler assembleConverter(FacesConfig facesConfig);
+        public ConverterAssembler assembleConverter(FacesConfig facesConfig);
         
-        public ValidatorsAssembler assembleValidator(FacesConfig facesConfig);
+        public ValidatorAssembler assembleValidator(FacesConfig facesConfig);
         
         public ManagedBeanAssembler assembleManagedBeans(FacesConfig facesConfig);
 
-        public NavigationRulesAssembler assembleNavigationRules(FacesConfig facesConfig);
+        public NavigationRuleAssembler assembleNavigationRules(FacesConfig facesConfig);
 
-        public RenderKitsAssembler assembleRenderKits(FacesConfig facesConfig);
+        public RenderKitAssembler assembleRenderKits(FacesConfig facesConfig);
 
         public LifecycleAssembler assembleLifecycle(FacesConfig facesConfig);
 
@@ -107,48 +107,48 @@ public class AssemblerFactory {
         
         public FactoriesAssembler assembleFactories(FacesConfig facesConfig) {
             List factories = facesConfig.getFactoryElements();
-            return new SimpleFactoriesAssembler(factories);
+            return new DefaultFactoriesAssembler(factories);
         }
 
         public ApplicationAssembler assembleApplication(FacesConfig facesConfig) {
             List applications = facesConfig.getApplicationElements();
-            return new SimpleApplicationAssembler(applications);
+            return new DefaultApplicationAssembler(applications);
         }
 
-        public ComponentsAssembler assembleComponent(FacesConfig facesConfig) {
+        public ComponentAssembler assembleComponent(FacesConfig facesConfig) {
             Map components = facesConfig.getComponentElements();
-            return new SimpleComponentsAssembler(components);
+            return new DefaultComponentAssembler(components);
         }
 
-        public ConvertersAssembler assembleConverter(FacesConfig facesConfig){
+        public ConverterAssembler assembleConverter(FacesConfig facesConfig){
             Map convertersByClass = facesConfig.getConverterElementsByClass();
             Map convertersById = facesConfig.getConverterElementsById();
-            return new SimpleConvertersAssembler(convertersByClass, convertersById);
+            return new DefaultConverterAssembler(convertersByClass, convertersById);
         }
         
-        public ValidatorsAssembler assembleValidator(FacesConfig facesConfig){
+        public ValidatorAssembler assembleValidator(FacesConfig facesConfig){
             Map validators = facesConfig.getValidatorElements();
-            return new SimpleValidatorsAssembler(validators);
+            return new DefaultValidatorAssembler(validators);
         }
         
         public ManagedBeanAssembler assembleManagedBeans(FacesConfig facesConfig) {
             Map managedBeans = facesConfig.getManagedBeanElements();
-            return new SimpleManagedBeanAssembler(managedBeans);
+            return new DefaultManagedBeanAssembler(managedBeans);
         }
 
-        public NavigationRulesAssembler assembleNavigationRules(FacesConfig facesConfig) {
+        public NavigationRuleAssembler assembleNavigationRules(FacesConfig facesConfig) {
             List navigationRules = facesConfig.getNavigationRuleElements();
-            return new SimpleNavigationRulesAssembler(navigationRules);
+            return new DefaultNavigationRuleAssembler(navigationRules);
         }
 
-        public RenderKitsAssembler assembleRenderKits(FacesConfig facesConfig) {
+        public RenderKitAssembler assembleRenderKits(FacesConfig facesConfig) {
             Map renderKits = facesConfig.getRenderKitElements();
-            return new SimpleRenderKitsAssembler(renderKits);
+            return new DefaultRenderKitAssembler(renderKits);
         }
 
         public LifecycleAssembler assembleLifecycle(FacesConfig facesConfig) {
             List lifecycles = facesConfig.getLifecycleElements();
-            return new SimpleLifecycleAssembler(lifecycles);
+            return new DefaultLifecycleAssembler(lifecycles);
         }
     }
 }

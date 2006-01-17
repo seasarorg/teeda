@@ -39,6 +39,7 @@ import org.seasar.framework.util.ClassUtil;
 /**
  * @author higa
  *
+ * need to re-define.
  */
 public class TeedaStateManager extends StateManager implements Serializable {
 

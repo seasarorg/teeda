@@ -35,13 +35,13 @@ import org.seasar.teeda.core.unit.TeedaTestCase;
 /**
  * @author shot
  */
-public class SimpleApplicationAssemblerTest extends TeedaTestCase {
+public class DefaultApplicationAssemblerTest extends TeedaTestCase {
 
     /**
      * Constructor for SimpleApplicationAssemblerTest.
      * @param name
      */
-    public SimpleApplicationAssemblerTest(String name) {
+    public DefaultApplicationAssemblerTest(String name) {
         super(name);
     }
 
@@ -63,7 +63,7 @@ public class SimpleApplicationAssemblerTest extends TeedaTestCase {
         element.addViewHandler("org.seasar.teeda.core.mock.MockViewHandler");
         List list = new ArrayList();
         list.add(element);
-        SimpleApplicationAssembler assembler = new SimpleApplicationAssembler(list);
+        DefaultApplicationAssembler assembler = new DefaultApplicationAssembler(list);
         
         // ## Act ##
         assembler.assemble();

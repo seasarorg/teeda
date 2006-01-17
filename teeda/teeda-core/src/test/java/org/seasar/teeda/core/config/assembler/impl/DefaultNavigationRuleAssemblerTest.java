@@ -31,13 +31,13 @@ import org.seasar.teeda.core.unit.TeedaTestCase;
 /**
  * @author shot
  */
-public class SimpleNavigationRuleAssemblerTest extends TeedaTestCase {
+public class DefaultNavigationRuleAssemblerTest extends TeedaTestCase {
 
     /**
      * Constructor for SimpleNavigationRuleAssemblerTest.
      * @param name
      */
-    public SimpleNavigationRuleAssemblerTest(String name) {
+    public DefaultNavigationRuleAssemblerTest(String name) {
         super(name);
     }
 
@@ -45,7 +45,7 @@ public class SimpleNavigationRuleAssemblerTest extends TeedaTestCase {
         List list = new ArrayList();
         NavigationRuleElement rule = new NavigationRuleElementImpl();
         list.add(rule);
-        SimpleNavigationRulesAssembler assembler = new SimpleNavigationRulesAssembler(list);
+        DefaultNavigationRuleAssembler assembler = new DefaultNavigationRuleAssembler(list);
         assembler.setupBeforeAssemble();
     }
     
@@ -61,7 +61,7 @@ public class SimpleNavigationRuleAssemblerTest extends TeedaTestCase {
         rule.addNavigationCase(caseElement);
         List list = new ArrayList();
         list.add(rule);
-        SimpleNavigationRulesAssembler assembler = new SimpleNavigationRulesAssembler(list);
+        DefaultNavigationRuleAssembler assembler = new DefaultNavigationRuleAssembler(list);
         assembler.setExternalContext(getExternalContext());
         
         // ## Act ##
@@ -91,8 +91,8 @@ public class SimpleNavigationRuleAssemblerTest extends TeedaTestCase {
         rule.addNavigationCase(element);
         
         // ## Act ##
-        SimpleNavigationRulesAssembler.NavigationContextWrapper wrapper = 
-            new SimpleNavigationRulesAssembler.NavigationContextWrapper(rule);
+        DefaultNavigationRuleAssembler.NavigationContextWrapper wrapper = 
+            new DefaultNavigationRuleAssembler.NavigationContextWrapper(rule);
         
         // ## Assert ##
         assertEquals("aaa*", wrapper.getFromViewId());
@@ -107,8 +107,8 @@ public class SimpleNavigationRuleAssemblerTest extends TeedaTestCase {
         element.setFromOutcome("outcome");
 
         // ## Act ##
-        SimpleNavigationRulesAssembler.NavigationCaseContextWrapper wrapper = 
-            new SimpleNavigationRulesAssembler.NavigationCaseContextWrapper(element);
+        DefaultNavigationRuleAssembler.NavigationCaseContextWrapper wrapper = 
+            new DefaultNavigationRuleAssembler.NavigationCaseContextWrapper(element);
 
         // ## Assert ##
         assertEquals("action", wrapper.getFromAction());

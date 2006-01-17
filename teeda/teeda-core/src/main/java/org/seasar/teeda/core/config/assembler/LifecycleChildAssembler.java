@@ -1,12 +1,11 @@
 package org.seasar.teeda.core.config.assembler;
 
-import java.util.List;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.faces.context.ExternalContext;
 import javax.faces.lifecycle.Lifecycle;
 
-import org.seasar.teeda.core.util.ClassUtil;
 import org.seasar.teeda.core.util.IteratorUtil;
 import org.seasar.teeda.core.util.LifecycleUtil;
 

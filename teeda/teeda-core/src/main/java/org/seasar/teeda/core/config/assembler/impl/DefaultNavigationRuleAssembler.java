@@ -21,7 +21,7 @@ import java.util.List;
 import org.seasar.teeda.core.application.navigation.NavigationCaseContext;
 import org.seasar.teeda.core.application.navigation.NavigationContext;
 import org.seasar.teeda.core.application.navigation.NavigationContextFactory;
-import org.seasar.teeda.core.config.assembler.NavigationRulesAssembler;
+import org.seasar.teeda.core.config.assembler.NavigationRuleAssembler;
 import org.seasar.teeda.core.config.element.NavigationCaseElement;
 import org.seasar.teeda.core.config.element.NavigationRuleElement;
 import org.seasar.teeda.core.util.IteratorUtil;
@@ -29,9 +29,9 @@ import org.seasar.teeda.core.util.IteratorUtil;
 /**
  * @author shot
  */
-public class SimpleNavigationRulesAssembler extends NavigationRulesAssembler {
+public class DefaultNavigationRuleAssembler extends NavigationRuleAssembler {
 
-    public SimpleNavigationRulesAssembler(List navigationRules){
+    public DefaultNavigationRuleAssembler(List navigationRules){
         super(navigationRules);
     }
     

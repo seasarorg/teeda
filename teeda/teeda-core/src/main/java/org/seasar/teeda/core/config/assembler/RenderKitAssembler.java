@@ -23,11 +23,11 @@ import org.seasar.teeda.core.config.element.RenderKitElement;
 /**
  * @author shot
  */
-public abstract class RenderKitsAssembler extends AbstractJsfAssembler {
+public abstract class RenderKitAssembler extends AbstractJsfAssembler {
 
     private Map renderKits_ = Collections.EMPTY_MAP;
     
-    public RenderKitsAssembler(Map renderKits){
+    public RenderKitAssembler(Map renderKits){
         isAllSuitableJsfElement(renderKits.values(), RenderKitElement.class);
         renderKits_ = renderKits;
         setupBeforeAssemble();

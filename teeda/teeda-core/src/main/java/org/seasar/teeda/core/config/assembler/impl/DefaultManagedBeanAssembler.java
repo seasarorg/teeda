@@ -12,13 +12,13 @@ import org.seasar.teeda.core.util.ClassUtil;
 import org.seasar.teeda.core.util.DIContainerUtil;
 import org.seasar.teeda.core.util.IteratorUtil;
 
-public class SimpleManagedBeanAssembler extends ManagedBeanAssembler {
+public class DefaultManagedBeanAssembler extends ManagedBeanAssembler {
 
     private ManagedBeanFactory managedBeanFactory_;
 
     private ScopeManager scopeManager_;
 
-    public SimpleManagedBeanAssembler(Map managedBeans) {
+    public DefaultManagedBeanAssembler(Map managedBeans) {
         super(managedBeans);
     }
 

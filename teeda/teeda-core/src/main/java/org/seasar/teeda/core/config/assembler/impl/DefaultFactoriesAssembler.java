@@ -13,7 +13,7 @@ import org.seasar.teeda.core.util.IteratorUtil;
 /**
  * @author Shinpei Ohtani(aka shot)
  */
-public class SimpleFactoriesAssembler extends FactoriesAssembler {
+public class DefaultFactoriesAssembler extends FactoriesAssembler {
 
     private FactoryAssembler applicationFactory_;
     
@@ -23,7 +23,7 @@ public class SimpleFactoriesAssembler extends FactoriesAssembler {
     
     private FactoryAssembler renderKitFactory_;
     
-    public SimpleFactoriesAssembler(List factories) {
+    public DefaultFactoriesAssembler(List factories) {
         super(factories);
     }
 
@@ -52,9 +52,8 @@ public class SimpleFactoriesAssembler extends FactoriesAssembler {
             }
         };
         
-        FactoryElement factory = null;
         for(Iterator itr = IteratorUtil.getIterator(getFactories());itr.hasNext();){
-            factory = (FactoryElement)itr.next();
+            FactoryElement factory = (FactoryElement)itr.next();
             applicationFactory_.setTargetFactories(factory.getApplicationFactories());
             facesContextFactory_.setTargetFactories(factory.getFacesContextFactories());
             lifecycleFactory_.setTargetFactories(factory.getLifecycleFactories());

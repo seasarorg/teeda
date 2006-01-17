@@ -3,15 +3,15 @@ package org.seasar.teeda.core.config.assembler.impl;
 import java.util.Map;
 
 import org.seasar.teeda.core.config.assembler.ConverterChildAssembler;
-import org.seasar.teeda.core.config.assembler.ConvertersAssembler;
+import org.seasar.teeda.core.config.assembler.ConverterAssembler;
 import org.seasar.teeda.core.config.element.ConverterElement;
 import org.seasar.teeda.core.util.ClassUtil;
 
-public class SimpleConvertersAssembler extends ConvertersAssembler {
+public class DefaultConverterAssembler extends ConverterAssembler {
 
     private ConverterChildAssembler converterIdAssembler_;
     private ConverterChildAssembler conveterClassAssembler_;
-    public SimpleConvertersAssembler(Map convertersByClass, Map convertersById) {
+    public DefaultConverterAssembler(Map convertersByClass, Map convertersById) {
         super(convertersByClass, convertersById);
     }
 

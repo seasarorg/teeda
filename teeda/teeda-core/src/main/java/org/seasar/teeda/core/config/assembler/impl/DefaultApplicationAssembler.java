@@ -13,11 +13,11 @@ import org.seasar.teeda.core.config.element.ApplicationElement;
 import org.seasar.teeda.core.util.ApplicationUtil;
 import org.seasar.teeda.core.util.IteratorUtil;
 
-public class SimpleApplicationAssembler extends ApplicationAssembler{
+public class DefaultApplicationAssembler extends ApplicationAssembler{
     
     private ApplicationAssemblerHelper helper_;
 
-    public SimpleApplicationAssembler(List applications){
+    public DefaultApplicationAssembler(List applications){
         super(applications);
     }
 

@@ -5,7 +5,7 @@ import java.util.Map;
 
 import javax.faces.application.Application;
 
-import org.seasar.teeda.core.config.assembler.ComponentsAssembler;
+import org.seasar.teeda.core.config.assembler.ComponentAssembler;
 import org.seasar.teeda.core.config.element.ComponentElement;
 import org.seasar.teeda.core.util.ApplicationUtil;
 import org.seasar.teeda.core.util.IteratorUtil;
@@ -13,10 +13,10 @@ import org.seasar.teeda.core.util.IteratorUtil;
 /**
  * @author Shinpei Ohtani(aka shot)
  */
-public class SimpleComponentsAssembler extends ComponentsAssembler {
+public class DefaultComponentAssembler extends ComponentAssembler {
 
     private Application application_;
-    public SimpleComponentsAssembler(Map components) {
+    public DefaultComponentAssembler(Map components) {
         super(components);
     }
 

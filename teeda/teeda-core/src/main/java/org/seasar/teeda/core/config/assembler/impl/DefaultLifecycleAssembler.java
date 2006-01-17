@@ -26,11 +26,11 @@ import org.seasar.teeda.core.util.ClassUtil;
 /**
  * @author shot
  */
-public class SimpleLifecycleAssembler extends LifecycleAssembler {
+public class DefaultLifecycleAssembler extends LifecycleAssembler {
 
     private LifecycleChildAssembler child_;
 
-    public SimpleLifecycleAssembler(List lifecycles) {
+    public DefaultLifecycleAssembler(List lifecycles) {
         super(lifecycles);
     }
 

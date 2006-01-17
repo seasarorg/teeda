@@ -5,11 +5,11 @@ import java.util.List;
 
 import org.seasar.teeda.core.config.element.NavigationRuleElement;
 
-public abstract class NavigationRulesAssembler extends AbstractJsfAssembler {
+public abstract class NavigationRuleAssembler extends AbstractJsfAssembler {
 
     private List navigationRules_ = Collections.EMPTY_LIST;
     
-    public NavigationRulesAssembler(List navigationRules){
+    public NavigationRuleAssembler(List navigationRules){
         isAllSuitableJsfElement(navigationRules, NavigationRuleElement.class);
         navigationRules_ = navigationRules;
         setupBeforeAssemble();

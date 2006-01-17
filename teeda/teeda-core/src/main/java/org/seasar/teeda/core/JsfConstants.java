@@ -16,6 +16,7 @@
 package org.seasar.teeda.core;
 
 import org.seasar.framework.util.ArrayUtil;
+import org.seasar.teeda.core.render.html.HtmlRenderKitImpl;
 
 /**
  * @author Shinpei Ohtani
@@ -232,4 +233,5 @@ public interface JsfConstants {
             .add(INPUT_ATTRIBUTES,
                     COMMON_FIELD_PASSTROUGH_ATTRIBUTES_WITHOUT_DISABLED);
 
+    public String DEFAULT_RENDERKIT_CLASS = HtmlRenderKitImpl.class.getName();
 }

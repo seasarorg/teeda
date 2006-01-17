@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.seasar.teeda.core.config.element.ConverterElement;
 
-public abstract class ConvertersAssembler extends AbstractJsfAssembler {
+public abstract class ConverterAssembler extends AbstractJsfAssembler {
 
     private Map convertersByClass_ = Collections.EMPTY_MAP;
     
@@ -13,7 +13,7 @@ public abstract class ConvertersAssembler extends AbstractJsfAssembler {
     
     private static final Class TARGET_CLASS = ConverterElement.class;
     
-    public ConvertersAssembler(Map convertersByClass, Map convertersById){
+    public ConverterAssembler(Map convertersByClass, Map convertersById){
         isAllSuitableJsfElement(convertersByClass.values(), TARGET_CLASS);
         isAllSuitableJsfElement(convertersById.values(), TARGET_CLASS);
         convertersByClass_ = convertersByClass;

@@ -20,18 +20,18 @@ import java.util.Map;
 
 import javax.faces.application.Application;
 
-import org.seasar.teeda.core.config.assembler.ValidatorsAssembler;
+import org.seasar.teeda.core.config.assembler.ValidatorAssembler;
 import org.seasar.teeda.core.util.ApplicationUtil;
 import org.seasar.teeda.core.util.IteratorUtil;
 
 /**
  * @author shot
  */
-public class SimpleValidatorsAssembler extends ValidatorsAssembler {
+public class DefaultValidatorAssembler extends ValidatorAssembler {
 
     private Application application_;
     
-    public SimpleValidatorsAssembler(Map validators) {
+    public DefaultValidatorAssembler(Map validators) {
         super(validators);
     }
 

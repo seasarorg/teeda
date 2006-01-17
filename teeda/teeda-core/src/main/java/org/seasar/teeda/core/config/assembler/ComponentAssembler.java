@@ -6,11 +6,11 @@ import java.util.Map;
 import org.seasar.teeda.core.config.element.ComponentElement;
 
 
-public abstract class ComponentsAssembler extends AbstractJsfAssembler {
+public abstract class ComponentAssembler extends AbstractJsfAssembler {
 
     private Map components_ = Collections.EMPTY_MAP;
     
-    public ComponentsAssembler(Map components){
+    public ComponentAssembler(Map components){
         isAllSuitableJsfElement(components.values(), ComponentElement.class);
         components_ = components;
         setupBeforeAssemble();
