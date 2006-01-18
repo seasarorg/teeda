@@ -85,6 +85,7 @@ public class HtmlOutputTextRendererTest extends RendererTest {
 
         htmlOutputText.setStyle("some style");
         htmlOutputText.setValue("a");
+        htmlOutputText.setEscape(false);
 
         renderer.encodeEnd(getFacesContext(), htmlOutputText);
 

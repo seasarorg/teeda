@@ -177,15 +177,45 @@ public class HtmlResponseWriter extends ResponseWriter {
     }
 
     public void write(char[] cbuf, int off, int len) throws IOException {
-        getWriter().write(cbuf, off, len);
+        Writer writer = getWriter();
+        closeOpeningStartTag(writer);
+        writer.write(cbuf, off, len);
+    }
+
+    public void write(char[] cbuf) throws IOException {
+        Writer writer = getWriter();
+        closeOpeningStartTag(writer);
+        writer.write(cbuf);
+    }
+
+    public void write(int c) throws IOException {
+        Writer writer = getWriter();
+        closeOpeningStartTag(writer);
+        writer.write(c);
+    }
+
+    public void write(String str) throws IOException {
+        Writer writer = getWriter();
+        closeOpeningStartTag(writer);
+        writer.write(str);
+    }
+
+    public void write(String str, int off, int len) throws IOException {
+        Writer writer = getWriter();
+        closeOpeningStartTag(writer);
+        writer.write(str, off, len);
     }
 
     public void flush() throws IOException {
-        getWriter().flush();
+        Writer writer = getWriter();
+        closeOpeningStartTag(writer);
+        writer.flush();
     }
 
     public void close() throws IOException {
-        getWriter().close();
+        Writer writer = getWriter();
+        closeOpeningStartTag(writer);
+        writer.close();
     }
 
     public void startDocument() throws IOException {

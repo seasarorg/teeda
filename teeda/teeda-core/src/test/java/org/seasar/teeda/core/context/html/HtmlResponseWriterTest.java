@@ -153,37 +153,72 @@ public class HtmlResponseWriterTest extends TestCase {
         }
     }
 
-    public void testWrite() throws Exception {
+    public void testWrite_Chars() throws Exception {
+        HtmlResponseWriter responseWriter = new HtmlResponseWriter();
+        SPrintWriter writer = new SPrintWriter();
+        responseWriter.setWriter(writer);
+
+        responseWriter.write("1234<a>".toCharArray());
+        String value = writer.toString();
+        assertEquals("write raw characters", "1234<a>", value);
+    }
+
+    public void testWrite_CharsAndIndex() throws Exception {
         HtmlResponseWriter responseWriter = new HtmlResponseWriter();
         SPrintWriter writer = new SPrintWriter();
         responseWriter.setWriter(writer);
 
         responseWriter.write("abcdefg".toCharArray(), 3, 2);
+
         String value = writer.toString();
         assertEquals("de", value);
     }
 
-    public void testWrite_NoEncoding() throws Exception {
+    public void testWrite_CharsAndIndex_NoEncoding() throws Exception {
         HtmlResponseWriter responseWriter = new HtmlResponseWriter();
         SPrintWriter writer = new SPrintWriter();
         responseWriter.setWriter(writer);
 
         responseWriter.write("1234<a>".toCharArray(), 3, 4);
+
         String value = writer.toString();
-        assertEquals("4<a>", value);
+        assertEquals("write raw characters", "4<a>", value);
     }
 
-    public void testWriteComment() throws Exception {
+    public void testWrite_Int() throws Exception {
         HtmlResponseWriter responseWriter = new HtmlResponseWriter();
         SPrintWriter writer = new SPrintWriter();
         responseWriter.setWriter(writer);
 
-        responseWriter.writeComment("abc");
+        responseWriter.write((int) '<');
+
         String value = writer.toString();
-        assertEquals("<!--abc-->", value);
+        assertEquals("write raw characters", "<", value);
     }
 
-    public void testWriteTextA() throws Exception {
+    public void testWrite_String() throws Exception {
+        HtmlResponseWriter responseWriter = new HtmlResponseWriter();
+        SPrintWriter writer = new SPrintWriter();
+        responseWriter.setWriter(writer);
+
+        responseWriter.write("aa>");
+
+        String value = writer.toString();
+        assertEquals("write raw characters", "aa>", value);
+    }
+
+    public void testWrite_StringAndIndex() throws Exception {
+        HtmlResponseWriter responseWriter = new HtmlResponseWriter();
+        SPrintWriter writer = new SPrintWriter();
+        responseWriter.setWriter(writer);
+
+        responseWriter.write("ab><d", 1, 3);
+
+        String value = writer.toString();
+        assertEquals("write raw characters", "b><", value);
+    }
+
+    public void testWriteText_Object() throws Exception {
         HtmlResponseWriter responseWriter = new HtmlResponseWriter();
         SPrintWriter writer = new SPrintWriter();
         responseWriter.setWriter(writer);
@@ -193,7 +228,7 @@ public class HtmlResponseWriterTest extends TestCase {
         assertEquals("abc", value);
     }
 
-    public void testWriteTextA_WithNull() throws Exception {
+    public void testWriteText_Object_WithNull() throws Exception {
         HtmlResponseWriter responseWriter = new HtmlResponseWriter();
         try {
             responseWriter.writeText(null, null);
@@ -204,7 +239,7 @@ public class HtmlResponseWriterTest extends TestCase {
         }
     }
 
-    public void testWriteTextA_Encoding() throws Exception {
+    public void testWriteText_Object_Encoding() throws Exception {
         HtmlResponseWriter responseWriter = new HtmlResponseWriter();
         SPrintWriter writer = new SPrintWriter();
         responseWriter.setWriter(writer);
@@ -214,7 +249,7 @@ public class HtmlResponseWriterTest extends TestCase {
         assertEquals("&lt;" + "a" + "&gt;", value);
     }
 
-    public void testWriteTextB() throws Exception {
+    public void testWriteText_Chars() throws Exception {
         HtmlResponseWriter responseWriter = new HtmlResponseWriter();
         SPrintWriter writer = new SPrintWriter();
         responseWriter.setWriter(writer);
@@ -224,7 +259,7 @@ public class HtmlResponseWriterTest extends TestCase {
         assertEquals("de", value);
     }
 
-    public void testWriteTextB_WithNull() throws Exception {
+    public void testWriteText_Chars_WithNull() throws Exception {
         HtmlResponseWriter responseWriter = new HtmlResponseWriter();
         try {
             responseWriter.writeText((char[]) null, 0, 0);
@@ -235,7 +270,7 @@ public class HtmlResponseWriterTest extends TestCase {
         }
     }
 
-    public void testWriteTextB_Encoding() throws Exception {
+    public void testWriteText_Chars_Encoding() throws Exception {
         HtmlResponseWriter responseWriter = new HtmlResponseWriter();
         SPrintWriter writer = new SPrintWriter();
         responseWriter.setWriter(writer);
@@ -243,6 +278,16 @@ public class HtmlResponseWriterTest extends TestCase {
         responseWriter.writeText("ab\"efgh".toCharArray(), 2, 4);
         String value = writer.toString();
         assertEquals("&quot;" + "efg", value);
+    }
+
+    public void testWriteComment() throws Exception {
+        HtmlResponseWriter responseWriter = new HtmlResponseWriter();
+        SPrintWriter writer = new SPrintWriter();
+        responseWriter.setWriter(writer);
+
+        responseWriter.writeComment("abc");
+        String value = writer.toString();
+        assertEquals("<!--abc-->", value);
     }
 
     public void testWriteCommentWithNull() throws Exception {
@@ -258,31 +303,21 @@ public class HtmlResponseWriterTest extends TestCase {
         }
     }
 
-    public void testStartElementAndEndDocument() throws Exception {
+    public void testStartElementShouldBeClosed_ByStartElement()
+            throws Exception {
         HtmlResponseWriter responseWriter = new HtmlResponseWriter();
         SPrintWriter writer = new SPrintWriter();
         responseWriter.setWriter(writer);
 
-        responseWriter.startElement("span", null);
-        responseWriter.endDocument();
-
-        String value = writer.toString();
-        assertEquals("<span>", value);
-    }
-
-    public void testStartElementAndStartElement() throws Exception {
-        HtmlResponseWriter responseWriter = new HtmlResponseWriter();
-        SPrintWriter writer = new SPrintWriter();
-        responseWriter.setWriter(writer);
-
-        responseWriter.startElement("span", null);
+        responseWriter.startElement("x", null);
         responseWriter.startElement("a", null);
 
         String value = writer.toString();
-        assertEquals("<span><a", value);
+        assertEquals("<x><a", value);
     }
 
-    public void testStartElementAndWriteComment() throws Exception {
+    public void testStartElementShouldBeClosed_ByWriteComment()
+            throws Exception {
         HtmlResponseWriter responseWriter = new HtmlResponseWriter();
         SPrintWriter writer = new SPrintWriter();
         responseWriter.setWriter(writer);
@@ -294,19 +329,8 @@ public class HtmlResponseWriterTest extends TestCase {
         assertEquals("<span><!--foo-->", value);
     }
 
-    public void testStartElementAndWriteTextA() throws Exception {
-        HtmlResponseWriter responseWriter = new HtmlResponseWriter();
-        SPrintWriter writer = new SPrintWriter();
-        responseWriter.setWriter(writer);
-
-        responseWriter.startElement("span", null);
-        responseWriter.writeText("foo", null);
-
-        String value = writer.toString();
-        assertEquals("<span>foo", value);
-    }
-
-    public void testStartElementAndWriteTextB() throws Exception {
+    public void testStartElementShouldBeClosed_ByWriteTextCharsAndIndex()
+            throws Exception {
         HtmlResponseWriter responseWriter = new HtmlResponseWriter();
         SPrintWriter writer = new SPrintWriter();
         responseWriter.setWriter(writer);
@@ -316,6 +340,120 @@ public class HtmlResponseWriterTest extends TestCase {
 
         String value = writer.toString();
         assertEquals("<span>xcv", value);
+    }
+
+    public void testStartElementShouldBeClosed_ByEndDocument() throws Exception {
+        HtmlResponseWriter responseWriter = new HtmlResponseWriter();
+        SPrintWriter writer = new SPrintWriter();
+        responseWriter.setWriter(writer);
+
+        responseWriter.startElement("span", null);
+        responseWriter.endDocument();
+
+        String value = writer.toString();
+        assertEquals("<span>", value);
+    }
+
+    public void testStartElementShouldBeClosed_ByClose() throws Exception {
+        HtmlResponseWriter responseWriter = new HtmlResponseWriter();
+        SPrintWriter writer = new SPrintWriter() {
+            public void close() {
+            }
+        };
+        responseWriter.setWriter(writer);
+
+        responseWriter.startElement("v", null);
+        responseWriter.close();
+
+        String value = writer.toString();
+        assertEquals("<v>", value);
+    }
+
+    public void testStartElementShouldBeClosed_ByFlush() throws Exception {
+        HtmlResponseWriter responseWriter = new HtmlResponseWriter();
+        SPrintWriter writer = new SPrintWriter();
+        responseWriter.setWriter(writer);
+
+        responseWriter.startElement("r", null);
+        responseWriter.flush();
+
+        String value = writer.toString();
+        assertEquals("<r>", value);
+    }
+
+    public void testStartElementShouldBeClosed_ByWriteChars() throws Exception {
+        HtmlResponseWriter responseWriter = new HtmlResponseWriter();
+        SPrintWriter writer = new SPrintWriter();
+        responseWriter.setWriter(writer);
+
+        responseWriter.startElement("x", null);
+        responseWriter.write("aa".toCharArray());
+
+        String value = writer.toString();
+        assertEquals("<x>aa", value);
+    }
+
+    public void testStartElementShouldBeClosed_ByWriteCharsAndIndex()
+            throws Exception {
+        HtmlResponseWriter responseWriter = new HtmlResponseWriter();
+        SPrintWriter writer = new SPrintWriter();
+        responseWriter.setWriter(writer);
+
+        responseWriter.startElement("x", null);
+        responseWriter.write("aa123".toCharArray(), 0, 2);
+
+        String value = writer.toString();
+        assertEquals("<x>aa", value);
+    }
+
+    public void testStartElementShouldBeClosed_ByWriteInt() throws Exception {
+        HtmlResponseWriter responseWriter = new HtmlResponseWriter();
+        SPrintWriter writer = new SPrintWriter();
+        responseWriter.setWriter(writer);
+
+        responseWriter.startElement("x", null);
+        responseWriter.write((int) 'b');
+
+        String value = writer.toString();
+        assertEquals("<x>b", value);
+    }
+
+    public void testStartElementShouldBeClosed_ByWriteString() throws Exception {
+        HtmlResponseWriter responseWriter = new HtmlResponseWriter();
+        SPrintWriter writer = new SPrintWriter();
+        responseWriter.setWriter(writer);
+
+        responseWriter.startElement("x", null);
+        responseWriter.write("aa");
+
+        String value = writer.toString();
+        assertEquals("<x>aa", value);
+    }
+
+    public void testStartElementShouldBeClosed_ByWriteStringAndIndex()
+            throws Exception {
+        HtmlResponseWriter responseWriter = new HtmlResponseWriter();
+        SPrintWriter writer = new SPrintWriter();
+        responseWriter.setWriter(writer);
+
+        responseWriter.startElement("x", null);
+        responseWriter.write("aa123", 0, 2);
+
+        String value = writer.toString();
+        assertEquals("<x>aa", value);
+    }
+
+    public void testStartElementShouldBeClosed_ByWriteTextObject()
+            throws Exception {
+        HtmlResponseWriter responseWriter = new HtmlResponseWriter();
+        SPrintWriter writer = new SPrintWriter();
+        responseWriter.setWriter(writer);
+
+        responseWriter.startElement("x", null);
+        responseWriter.writeText("aa", null);
+
+        String value = writer.toString();
+        assertEquals("<x>aa", value);
     }
 
     public void testStartElementAndWriteTextAndEndElement() throws Exception {

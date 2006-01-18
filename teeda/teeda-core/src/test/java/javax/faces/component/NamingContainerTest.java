@@ -15,27 +15,15 @@
  */
 package javax.faces.component;
 
+import junit.framework.TestCase;
+
 /**
  * @author shot
  */
-public class UINamingContainer extends UIComponentBase implements
-        NamingContainer {
+public class NamingContainerTest extends TestCase {
 
-    public static final String COMPONENT_FAMILY = "javax.faces.NamingContainer";
-
-    public static final String COMPONENT_TYPE = "javax.faces.NamingContainer";
-
-    public UINamingContainer() {
-        super();
-    }
-
-    public String getFamily() {
-        return COMPONENT_FAMILY;
-    }
-
-    public void setId(String id) {
-        super.setId(id);
-        NamingContainerUtil_.refreshDescendantComponentClientId(this);
+    public void testConstants() throws Exception {
+        assertEquals((char) 58, NamingContainer.SEPARATOR_CHAR);
     }
 
 }

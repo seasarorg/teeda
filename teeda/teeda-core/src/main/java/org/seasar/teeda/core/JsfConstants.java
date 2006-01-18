@@ -75,6 +75,8 @@ public interface JsfConstants {
     public String INPUT_ELEM = "input";
 
     public String SPAN_ELEM = "span";
+    
+    public String TEXTAREA_ELEM = "textarea";
 
     // -- attribute --
 
