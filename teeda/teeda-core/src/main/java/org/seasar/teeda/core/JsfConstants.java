@@ -66,7 +66,11 @@ public interface JsfConstants {
 
     public String SCOPE_REQUEST = "request";
 
+    // -- value --
+
     public String TEXT_VALUE = "text";
+
+    public String HIDDEN_VALUE = "hidden";
 
     // -- element --
 

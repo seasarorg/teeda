@@ -42,7 +42,7 @@ public class HtmlOutputLabelRendererTest extends RendererTest {
         assertEquals("<label>", getResponseText());
     }
 
-    public void testEncodeBeginAndEnd() throws Exception {
+    public void testEncodeBeginToEnd() throws Exception {
         HtmlOutputLabelRenderer renderer = createHtmlOutputLabelRenderer();
         MockHtmlOutputLabel htmlOutputLabel = new MockHtmlOutputLabel();
         htmlOutputLabel.setRenderer(renderer);

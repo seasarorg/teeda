@@ -80,7 +80,7 @@ public class HtmlInputTextRendererTest extends RendererTest {
                 getResponseText());
     }
 
-    public void testEncodeBegin_WithAllAttributes() throws Exception {
+    public void testEncodeEnd_WithAllAttributes() throws Exception {
         HtmlInputTextRenderer renderer = createHtmlInputTextRenderer();
         MockHtmlInputText htmlInputText = new MockHtmlInputText();
         htmlInputText.setRenderer(renderer);
@@ -132,7 +132,7 @@ public class HtmlInputTextRendererTest extends RendererTest {
                         + " onmouseover=\"r\"" + " onmouseup=\"s\""
                         + " onselect=\"t\"" + " readonly=\"true\""
                         + " size=\"2\"" + " style=\"w\"" + " class=\"u\""
-                        + " tabindex=\"x\"" + " title=\"y\"/>",
+                        + " tabindex=\"x\"" + " title=\"y\"" + "/>",
                 getResponseText());
         assertEquals(diff.toString(), true, diff.identical());
     }
