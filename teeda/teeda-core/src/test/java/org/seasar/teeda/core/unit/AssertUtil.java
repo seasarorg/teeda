@@ -39,15 +39,16 @@ public class AssertUtil {
         Assert.assertEquals(true, value.indexOf(shouldBeContained) > -1);
     }
 
-    public static void assertNotEquals(Object o1, Object o2) {
+    static void assertNotEquals(Object expected, Object actual) {
         AssertionFailedError afe = null;
         try {
-            Assert.assertEquals(o1, o2);
-        } catch (AssertionFailedError expected) {
-            afe = expected;
+            Assert.assertEquals(expected, actual);
+        } catch (AssertionFailedError e) {
+            afe = e;
         }
         if (afe == null) {
-            Assert.fail("expected not equals");
+            Assert.fail("should not be equals. expected:<" + expected
+                    + "> actual:<" + actual + ">");
         }
     }
 

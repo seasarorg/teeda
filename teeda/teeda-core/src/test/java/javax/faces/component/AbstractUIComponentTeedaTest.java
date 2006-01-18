@@ -17,7 +17,8 @@ package javax.faces.component;
 
 import javax.faces.context.FacesContext;
 
-import org.seasar.teeda.core.unit.AssertUtil;
+import junitx.framework.Assert;
+
 import org.seasar.teeda.core.unit.TeedaTestCase;
 
 /**
@@ -48,7 +49,7 @@ public abstract class AbstractUIComponentTeedaTest extends TeedaTestCase {
         String clientId1 = component.getClientId(context);
         assertEquals(clientId1, component.getClientId(context));
         component.setId("b");
-        AssertUtil.assertNotEquals(clientId1, component.getClientId(context));
+        Assert.assertNotEquals(clientId1, component.getClientId(context));
     }
 
     protected abstract UIComponent createUIComponent();

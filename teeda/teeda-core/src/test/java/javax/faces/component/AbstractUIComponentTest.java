@@ -86,28 +86,6 @@ public abstract class AbstractUIComponentTest extends TestCase {
         return new NullFacesContext();
     }
 
-    // FIXME is it OK?
-    public void pending_testGetClientId_ParentNamingContainerIdIsChanged()
-            throws Exception {
-        // ## Arrange ##
-        UIComponent component = createUIComponent();
-        FacesContext context = getFacesContext();
-        UIViewRoot viewRoot = new UIViewRoot();
-        viewRoot.setRenderKitId(RenderKitFactory.HTML_BASIC_RENDER_KIT);
-        context.setViewRoot(viewRoot);
-        UIData namingContainer = new UIData();
-        assertEquals(true, namingContainer instanceof NamingContainer);
-        namingContainer.setId("a");
-        component.setParent(namingContainer);
-
-        // ## Act & Assert ##
-        final String clientId1 = component.getClientId(context);
-        assertEquals(clientId1, component.getClientId(context));
-        namingContainer.setId("b");
-
-        AssertUtil.assertNotEquals(clientId1, component.getClientId(context));
-    }
-
     public final void testSetIdNull() throws Exception {
         UIComponent component = createUIComponent();
         component.setId(null);

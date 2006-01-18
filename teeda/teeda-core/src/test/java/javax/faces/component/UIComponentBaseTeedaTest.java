@@ -20,6 +20,7 @@ import java.io.Serializable;
 import javax.faces.context.FacesContext;
 import javax.faces.render.RenderKitFactory;
 
+import junitx.framework.Assert;
 import junitx.framework.ObjectAssert;
 import junitx.framework.StringAssert;
 
@@ -27,6 +28,7 @@ import org.apache.commons.lang.StringUtils;
 import org.seasar.teeda.core.mock.MockUIComponent;
 import org.seasar.teeda.core.mock.MockUIComponentBase;
 import org.seasar.teeda.core.mock.MockUIComponentWithNamingContainer;
+import org.seasar.teeda.core.unit.AssertUtil;
 
 /**
  * @author manhole
@@ -76,6 +78,25 @@ public class UIComponentBaseTeedaTest extends AbstractUIComponentTeedaTest {
         String clientId = component.getClientId(getFacesContext());
         assertNotNull(clientId);
         assertEquals("a", clientId);
+    }
+
+    // FIXME is it OK?
+    public void testGetClientId_ParentNamingContainerIdIsChanged()
+            throws Exception {
+        // ## Arrange ##
+        UIComponent component = createUIComponent();
+        FacesContext context = getFacesContext();
+        UIData namingContainer = new UIData();
+        ObjectAssert.assertInstanceOf(NamingContainer.class, namingContainer);
+        namingContainer.setId("a");
+        component.setParent(namingContainer);
+
+        // ## Act & Assert ##
+        final String clientId1 = component.getClientId(context);
+        assertEquals(clientId1, component.getClientId(context));
+        namingContainer.setId("b");
+
+        Assert.assertNotEquals(clientId1, component.getClientId(context));
     }
 
     public void testSaveAndRestoreState() throws Exception {
