@@ -24,6 +24,10 @@ import junit.framework.TestCase;
  */
 public class HtmlInputTextOnlyTest extends TestCase {
 
+    public void testConstants() throws Exception {
+        assertEquals("javax.faces.HtmlInputText", HtmlInputText.COMPONENT_TYPE);
+    }
+
     public void testDefaultRendererType() throws Exception {
         HtmlInputText input = new HtmlInputText();
         assertEquals("javax.faces.Text", input.getRendererType());

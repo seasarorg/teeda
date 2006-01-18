@@ -46,11 +46,17 @@ public class HtmlInputTextareaRenderer extends AbstractHtmlRenderer {
                 getIdForRender(context, htmlInputTextarea));
         RendererUtil.renderAttribute(writer, JsfConstants.NAME_ATTR,
                 htmlInputTextarea.getClientId(context));
+        RendererUtil.renderAttributes(writer, htmlInputTextarea,
+                JsfConstants.TEXTAREA_PASSTHROUGH_ATTRIBUTES_WITHOUT_DISABLED);
+        if (htmlInputTextarea.isDisabled()) {
+            RendererUtil.renderAttribute(writer, JsfConstants.DISABLED_ATTR,
+                    Boolean.TRUE);
+        }
 
         String value = ValueHolderUtil.getValueForRender(context,
                 htmlInputTextarea);
-
         writer.write(value);
+
         writer.endElement(JsfConstants.TEXTAREA_ELEM);
     }
 

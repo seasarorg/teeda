@@ -33,7 +33,7 @@ public interface JsfConstants {
     public String APPLICATION_SCOPE = "applicationScope";
 
     public String COOKIE = "cookie";
-    
+
     public String DISABLED_ATTR = "disabled";
 
     public String FACES_CONTEXT = "facesContext";
@@ -75,7 +75,7 @@ public interface JsfConstants {
     public String INPUT_ELEM = "input";
 
     public String SPAN_ELEM = "span";
-    
+
     public String TEXTAREA_ELEM = "textarea";
 
     // -- attribute --
@@ -91,6 +91,8 @@ public interface JsfConstants {
     public String CHECKED_ATTR = "checked";
 
     public String CLASS_ATTR = "class";
+
+    public String COLS_ATTR = "cols";
 
     public String COORDS_ATTR = "coords";
 
@@ -151,6 +153,8 @@ public interface JsfConstants {
     public String REL_ATTR = "rel";
 
     public String REV_ATTR = "rev";
+
+    public String ROWS_ATTR = "rows";
 
     public String SHAPE_ATTR = "shape";
 
@@ -235,5 +239,13 @@ public interface JsfConstants {
             .add(INPUT_ATTRIBUTES,
                     COMMON_FIELD_PASSTROUGH_ATTRIBUTES_WITHOUT_DISABLED);
 
+    public String[] TEXTAREA_ATTRIBUTES = { COLS_ATTR, DATAFLD_ATTR,
+            DATASRC_ATTR, DATAFORMATAS_ATTR, READONLY_ATTR, ROWS_ATTR, };
+
+    public String[] TEXTAREA_PASSTHROUGH_ATTRIBUTES_WITHOUT_DISABLED = (String[]) ArrayUtil
+            .add(TEXTAREA_ATTRIBUTES,
+                    COMMON_FIELD_PASSTROUGH_ATTRIBUTES_WITHOUT_DISABLED);
+
     public String DEFAULT_RENDERKIT_CLASS = HtmlRenderKitImpl.class.getName();
+
 }

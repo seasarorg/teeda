@@ -19,6 +19,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.UIForm;
 import javax.faces.component.UIInput;
 import javax.faces.component.html.HtmlOutputLabel;
+import javax.faces.context.FacesContext;
 import javax.faces.render.Renderer;
 import javax.faces.render.RendererTest;
 
@@ -32,16 +33,19 @@ import org.seasar.teeda.core.unit.AssertUtil;
 public class HtmlOutputLabelRendererTest extends RendererTest {
 
     public void testEncodeBegin() throws Exception {
-        HtmlOutputLabel label = new HtmlOutputLabel();
         HtmlOutputLabelRenderer renderer = createHtmlOutputLabelRenderer();
-        renderer.encodeBegin(getFacesContext(), label);
+        MockHtmlOutputLabel htmlOutputLabel = new MockHtmlOutputLabel();
+        htmlOutputLabel.setRenderer(renderer);
+
+        renderer.encodeBegin(getFacesContext(), htmlOutputLabel);
 
         assertEquals("<label>", getResponseText());
     }
 
     public void testEncodeBeginAndEnd() throws Exception {
-        HtmlOutputLabel htmlOutputLabel = new HtmlOutputLabel();
         HtmlOutputLabelRenderer renderer = createHtmlOutputLabelRenderer();
+        MockHtmlOutputLabel htmlOutputLabel = new MockHtmlOutputLabel();
+        htmlOutputLabel.setRenderer(renderer);
 
         renderer.encodeBegin(getFacesContext(), htmlOutputLabel);
         renderer.encodeEnd(getFacesContext(), htmlOutputLabel);
@@ -50,9 +54,11 @@ public class HtmlOutputLabelRendererTest extends RendererTest {
     }
 
     public void testEncodeBegin_WithValue() throws Exception {
-        HtmlOutputLabel htmlOutputLabel = new HtmlOutputLabel();
-        htmlOutputLabel.setValue("aaa");
         HtmlOutputLabelRenderer renderer = createHtmlOutputLabelRenderer();
+        MockHtmlOutputLabel htmlOutputLabel = new MockHtmlOutputLabel();
+        htmlOutputLabel.setRenderer(renderer);
+
+        htmlOutputLabel.setValue("aaa");
 
         renderer.encodeBegin(getFacesContext(), htmlOutputLabel);
 
@@ -60,9 +66,11 @@ public class HtmlOutputLabelRendererTest extends RendererTest {
     }
 
     public void testEncodeBegin_WithId() throws Exception {
-        HtmlOutputLabel htmlOutputLabel = new HtmlOutputLabel();
-        htmlOutputLabel.setId("someId");
         HtmlOutputLabelRenderer renderer = createHtmlOutputLabelRenderer();
+        MockHtmlOutputLabel htmlOutputLabel = new MockHtmlOutputLabel();
+        htmlOutputLabel.setRenderer(renderer);
+
+        htmlOutputLabel.setId("someId");
 
         renderer.encodeBegin(getFacesContext(), htmlOutputLabel);
 
@@ -70,9 +78,11 @@ public class HtmlOutputLabelRendererTest extends RendererTest {
     }
 
     public void testEncodeBegin_WithFor() throws Exception {
-        HtmlOutputLabel htmlOutputLabel = new HtmlOutputLabel();
-        htmlOutputLabel.setFor("bb");
         HtmlOutputLabelRenderer renderer = createHtmlOutputLabelRenderer();
+        MockHtmlOutputLabel htmlOutputLabel = new MockHtmlOutputLabel();
+        htmlOutputLabel.setRenderer(renderer);
+
+        htmlOutputLabel.setFor("bb");
 
         try {
             // if forComponent doesn't exist, we throw Exception.
@@ -84,18 +94,27 @@ public class HtmlOutputLabelRendererTest extends RendererTest {
     }
 
     public void testEncodeBegin_WithForComponent() throws Exception {
-        HtmlOutputLabel htmlOutputLabel = new HtmlOutputLabel();
+        HtmlOutputLabelRenderer renderer = createHtmlOutputLabelRenderer();
+        MockHtmlOutputLabel htmlOutputLabel = new MockHtmlOutputLabel();
+        htmlOutputLabel.setRenderer(renderer);
+
         htmlOutputLabel.setFor("forComponentId");
 
-        UIInput forComponent = new UIInput();
+        UIInput forComponent = new UIInput() {
+            protected Renderer getRenderer(FacesContext context) {
+                return null;
+            }
+        };
         forComponent.setId("forComponentId");
 
-        UIForm parent = new UIForm();
+        UIForm parent = new UIForm() {
+            protected Renderer getRenderer(FacesContext context) {
+                return null;
+            }
+        };
         parent.setId("parentForm");
         parent.getChildren().add(htmlOutputLabel);
         parent.getChildren().add(forComponent);
-
-        HtmlOutputLabelRenderer renderer = createHtmlOutputLabelRenderer();
 
         renderer.encodeBegin(getFacesContext(), htmlOutputLabel);
 
@@ -105,7 +124,10 @@ public class HtmlOutputLabelRendererTest extends RendererTest {
 
     public void testEncodeBegin_WithAllAttributes() throws Exception {
         // ## Arrange ##
-        HtmlOutputLabel htmlOutputLabel = new HtmlOutputLabel();
+        HtmlOutputLabelRenderer renderer = createHtmlOutputLabelRenderer();
+        MockHtmlOutputLabel htmlOutputLabel = new MockHtmlOutputLabel();
+        htmlOutputLabel.setRenderer(renderer);
+
         htmlOutputLabel.setAccesskey("a");
         htmlOutputLabel.setDir("b");
         htmlOutputLabel.setFor("c");
@@ -134,8 +156,6 @@ public class HtmlOutputLabelRendererTest extends RendererTest {
         child.setId("c");
         htmlOutputLabel.getChildren().add(child);
 
-        HtmlOutputLabelRenderer renderer = createHtmlOutputLabelRenderer();
-
         // ## Act ##
         renderer.encodeBegin(getFacesContext(), htmlOutputLabel);
         renderer.encodeEnd(getFacesContext(), htmlOutputLabel);
@@ -159,6 +179,22 @@ public class HtmlOutputLabelRendererTest extends RendererTest {
 
     protected Renderer createRenderer() {
         return new HtmlOutputLabelRenderer();
+    }
+
+    private static class MockHtmlOutputLabel extends HtmlOutputLabel {
+
+        private Renderer renderer_ = null;
+
+        public void setRenderer(Renderer renderer) {
+            renderer_ = renderer;
+        }
+
+        protected Renderer getRenderer(FacesContext context) {
+            if (renderer_ != null) {
+                return renderer_;
+            }
+            return super.getRenderer(context);
+        }
     }
 
 }

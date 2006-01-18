@@ -15,12 +15,15 @@
  */
 package org.seasar.teeda.core.render.html;
 
+import javax.faces.component.UIComponent;
 import javax.faces.component.html.HtmlInputTextarea;
 import javax.faces.context.FacesContext;
 import javax.faces.render.Renderer;
 import javax.faces.render.RendererTest;
 
+import org.custommonkey.xmlunit.Diff;
 import org.seasar.teeda.core.mock.MockFacesContext;
+import org.seasar.teeda.core.mock.MockUIComponentBaseWithNamingContainer;
 
 /**
  * @author manhole
@@ -40,6 +43,38 @@ public class HtmlInputTextareaRendererTest extends RendererTest {
 
         // ## Assert ##
         assertEquals("<textarea id=\"_id0\" name=\"_id0\"></textarea>",
+                getResponseText());
+    }
+
+    public void testEncodeEnd_WithValue() throws Exception {
+        // ## Arrange ##
+        HtmlInputTextareaRenderer renderer = createHtmlInputTextareaRenderer();
+        MockHtmlInputTextarea htmlInputTextarea = new MockHtmlInputTextarea();
+        htmlInputTextarea.setRenderer(renderer);
+        htmlInputTextarea.setValue("abc");
+        MockFacesContext context = getFacesContext();
+
+        // ## Act ##
+        renderer.encodeEnd(context, htmlInputTextarea);
+
+        // ## Assert ##
+        assertEquals("<textarea id=\"_id0\" name=\"_id0\">abc</textarea>",
+                getResponseText());
+    }
+
+    public void testEncodeEnd_WithId() throws Exception {
+        HtmlInputTextareaRenderer renderer = createHtmlInputTextareaRenderer();
+        MockHtmlInputTextarea htmlInputTextarea = new MockHtmlInputTextarea();
+        htmlInputTextarea.setRenderer(renderer);
+        htmlInputTextarea.setId("a");
+
+        UIComponent parent = new MockUIComponentBaseWithNamingContainer();
+        parent.setId("b");
+        parent.getChildren().add(htmlInputTextarea);
+
+        renderer.encodeEnd(getFacesContext(), htmlInputTextarea);
+
+        assertEquals("<textarea id=\"a\" name=\"b:a\"></textarea>",
                 getResponseText());
     }
 
@@ -74,6 +109,58 @@ public class HtmlInputTextareaRendererTest extends RendererTest {
 
         // ## Assert ##
         assertEquals("aabb", htmlInputText.getSubmittedValue());
+    }
+
+    public void testEncodeBegin_WithAllAttributes() throws Exception {
+        HtmlInputTextareaRenderer renderer = createHtmlInputTextareaRenderer();
+        MockHtmlInputTextarea htmlInputText = new MockHtmlInputTextarea();
+        htmlInputText.setRenderer(renderer);
+
+        htmlInputText.setAccesskey("a");
+        htmlInputText.setCols(10);
+        htmlInputText.setDir("c");
+        htmlInputText.setDisabled(true);
+        htmlInputText.setLang("e");
+        htmlInputText.setOnblur("g");
+        htmlInputText.setOnchange("h");
+        htmlInputText.setOnclick("i");
+        htmlInputText.setOndblclick("j");
+        htmlInputText.setOnfocus("k");
+        htmlInputText.setOnkeydown("l");
+        htmlInputText.setOnkeypress("m");
+        htmlInputText.setOnkeyup("n");
+        htmlInputText.setOnmousedown("o");
+        htmlInputText.setOnmousemove("p");
+        htmlInputText.setOnmouseout("q");
+        htmlInputText.setOnmouseover("r");
+        htmlInputText.setOnmouseup("s");
+        htmlInputText.setOnselect("t");
+        htmlInputText.setReadonly(true);
+        htmlInputText.setRows(20);
+        htmlInputText.setStyle("w");
+        htmlInputText.setStyleClass("u");
+        htmlInputText.setTabindex("x");
+        htmlInputText.setTitle("y");
+
+        htmlInputText.setId("A");
+        htmlInputText.setValue("B");
+
+        MockFacesContext context = getFacesContext();
+        renderer.encodeBegin(context, htmlInputText);
+        renderer.encodeEnd(context, htmlInputText);
+
+        Diff diff = new Diff("<textarea" + " id=\"A\" name=\"A\""
+                + " accesskey=\"a\"" + " cols=\"10\"" + " dir=\"c\""
+                + " disabled=\"true\"" + " lang=\"e\"" + " onblur=\"g\""
+                + " onchange=\"h\"" + " onclick=\"i\"" + " ondblclick=\"j\""
+                + " onfocus=\"k\"" + " onkeydown=\"l\"" + " onkeypress=\"m\""
+                + " onkeyup=\"n\"" + " onmousedown=\"o\""
+                + " onmousemove=\"p\"" + " onmouseout=\"q\""
+                + " onmouseover=\"r\"" + " onmouseup=\"s\"" + " onselect=\"t\""
+                + " readonly=\"true\"" + " rows=\"20\"" + " style=\"w\""
+                + " class=\"u\"" + " tabindex=\"x\""
+                + " title=\"y\">B</textarea>", getResponseText());
+        assertEquals(diff.toString(), true, diff.identical());
     }
 
     private HtmlInputTextareaRenderer createHtmlInputTextareaRenderer() {
