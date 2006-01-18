@@ -79,23 +79,28 @@ public class UIComponentBaseTeedaTest extends AbstractUIComponentTeedaTest {
         assertEquals("a", clientId);
     }
 
-    // FIXME is it OK?
     public void testGetClientId_ParentNamingContainerIdIsChanged()
             throws Exception {
         // ## Arrange ##
-        UIComponent child = createUIComponent();
+        UIComponent parent = createUIComponent();
+
         FacesContext context = getFacesContext();
-        UIData namingContainer = new UIData();
-        ObjectAssert.assertInstanceOf(NamingContainer.class, namingContainer);
-        namingContainer.setId("a");
-        namingContainer.getChildren().add(child);
+        UIComponent child = new MockUIComponentBase();
+        parent.setId("a");
+        parent.getChildren().add(child);
 
         // ## Act & Assert ##
         final String clientId1 = child.getClientId(context);
         assertEquals(clientId1, child.getClientId(context));
-        namingContainer.setId("b");
+        parent.setId("b");
 
-        Assert.assertNotEquals(clientId1, child.getClientId(context));
+        if (parent instanceof NamingContainer) {
+            Assert.assertNotEquals(clientId1, child.getClientId(context));
+        } else {
+            System.out.println(parent.getClass().getName()
+                    + " is not NamingContainer");
+            Assert.assertEquals(clientId1, child.getClientId(context));
+        }
     }
 
     public void testSaveAndRestoreState() throws Exception {
