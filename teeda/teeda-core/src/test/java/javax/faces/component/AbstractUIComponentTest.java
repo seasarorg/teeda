@@ -19,7 +19,6 @@ import java.io.Serializable;
 import java.util.Map;
 
 import javax.faces.context.FacesContext;
-import javax.faces.render.RenderKitFactory;
 
 import junit.framework.TestCase;
 

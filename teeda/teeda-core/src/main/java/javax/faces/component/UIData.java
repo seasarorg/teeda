@@ -29,6 +29,7 @@ import javax.faces.event.FacesListener;
 import javax.faces.event.PhaseId;
 import javax.faces.model.DataModel;
 
+
 /**
  * @author shot
  * @author manhole
@@ -82,10 +83,7 @@ public class UIData extends UIComponentBase implements NamingContainer {
 
     public void setId(String id) {
         super.setId(id);
-        for (Iterator it = getChildren().iterator(); it.hasNext();) {
-            UIComponent child = (UIComponent) it.next();
-            child.setId(child.getId());
-        }
+        NamingContainerUtil_.refreshDescendantComponentClientId(this);
     }
 
     public int getFirst() {
@@ -241,6 +239,7 @@ public class UIData extends UIComponentBase implements NamingContainer {
     }
 
     public void queueEvent(FacesEvent event) {
+        ComponentUtils_.assertNotNull("event", event);
         super.queueEvent(new FacesEventWrapper(event, getRowIndex(), this));
     }
 

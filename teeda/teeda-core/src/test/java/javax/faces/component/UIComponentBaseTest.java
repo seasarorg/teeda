@@ -161,19 +161,23 @@ public class UIComponentBaseTest extends AbstractUIComponentTest {
         UIComponentBase component = createUIComponentBase();
         component.setId("foo");
 
-        UIComponent target = new MockUIComponent();
+        UIComponent target = new MockUIComponentBase();
         target.setId("bb");
 
-        UIComponent notNamingContainer = new MockUIComponentBase();
-        notNamingContainer.setId("aa");
-        notNamingContainer.getChildren().add(target);
-        notNamingContainer.getChildren().add(component);
+        UIComponent noNamingContainerParent = new MockUIComponentBase();
+        noNamingContainerParent.setId("aa");
+        noNamingContainerParent.getChildren().add(target);
+        noNamingContainerParent.getChildren().add(component);
 
         // ## Act ##
         UIComponent found = component.findComponent("bb");
 
         // ## Assert ##
-        assertEquals(target, found);
+        if (component instanceof NamingContainer) {
+            assertEquals(null, found);
+        } else {
+            assertEquals(target, found);
+        }
     }
 
     public void testFindComponent_SearchFromDescendantNamingContainer() {
@@ -205,17 +209,20 @@ public class UIComponentBaseTest extends AbstractUIComponentTest {
         UIComponent target = new MockUIComponent();
         target.setId("bb");
 
-        UIForm namingContainer = new UIForm();
-        namingContainer.setId("aa");
-        namingContainer.getChildren().add(target);
-
-        namingContainer.getChildren().add(component);
+        UIForm namingContainerParent = new UIForm();
+        namingContainerParent.setId("aa");
+        namingContainerParent.getChildren().add(target);
+        namingContainerParent.getChildren().add(component);
 
         // ## Act ##
         UIComponent found = component.findComponent("aa:bb");
 
         // ## Assert ##
-        assertSame(target, found);
+        if (component instanceof NamingContainer) {
+            assertEquals(null, found);
+        } else {
+            assertSame(target, found);
+        }
     }
 
     public void testFindComponent_NestedNamingContainer() {
@@ -240,7 +247,11 @@ public class UIComponentBaseTest extends AbstractUIComponentTest {
         UIComponent found = component.findComponent("a:b:z");
 
         // ## Assert ##
-        assertSame(target, found);
+        if (component instanceof NamingContainer) {
+            assertEquals(null, found);
+        } else {
+            assertSame(target, found);
+        }
     }
 
     public void testFindComponent_IntermediateUIComponentIsNotNamingContainer() {
@@ -256,15 +267,19 @@ public class UIComponentBaseTest extends AbstractUIComponentTest {
 
         namingContainer.getChildren().add(component);
 
-        UIComponent notNamingContainer = new MockUIComponentBase();
-        notNamingContainer.setId("b");
-        namingContainer.getChildren().add(notNamingContainer);
-        notNamingContainer.getChildren().add(target);
+        UIComponent noNamingContainer = new MockUIComponentBase();
+        noNamingContainer.setId("b");
+        namingContainer.getChildren().add(noNamingContainer);
+        noNamingContainer.getChildren().add(target);
 
         // ## Act & Assert ##
         try {
             component.findComponent("a:b:z");
-            fail();
+            if (component instanceof NamingContainer) {
+                // OK
+            } else {
+                fail();
+            }
         } catch (IllegalArgumentException iae) {
             AssertUtil.assertExceptionMessageExist(iae);
         }

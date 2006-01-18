@@ -25,14 +25,22 @@ import junitx.framework.ObjectAssert;
 import junitx.framework.StringAssert;
 
 import org.apache.commons.lang.StringUtils;
-import org.seasar.teeda.core.mock.MockUIComponent;
 import org.seasar.teeda.core.mock.MockUIComponentBase;
-import org.seasar.teeda.core.mock.MockUIComponentWithNamingContainer;
+import org.seasar.teeda.core.mock.MockUIComponentBaseWithNamingContainer;
 
 /**
  * @author manhole
  */
 public class UIComponentBaseTeedaTest extends AbstractUIComponentTeedaTest {
+
+    public void testGetClientId_NullId() {
+        UIComponentBase component = createUIComponentBase();
+        component.setId(null);
+
+        String clientId = component.getClientId(getFacesContext());
+        assertEquals(false, StringUtils.isBlank(clientId));
+        StringAssert.assertStartsWith(UIViewRoot.UNIQUE_ID_PREFIX, clientId);
+    }
 
     public void testGetCliendId() throws Exception {
         // ## Arrange ##
@@ -43,22 +51,13 @@ public class UIComponentBaseTeedaTest extends AbstractUIComponentTeedaTest {
         assertEquals("foo", component.getClientId(getFacesContext()));
     }
 
-    public void testGetClientId_WhenIdIsNull() {
-        UIComponentBase component = createUIComponentBase();
-        component.setId(null);
-
-        String clientId = component.getClientId(getFacesContext());
-        assertEquals(false, StringUtils.isBlank(clientId));
-        StringAssert.assertStartsWith(UIViewRoot.UNIQUE_ID_PREFIX, clientId);
-    }
-
     public void testGetClientId_WithParentNamingContainer() {
         UIComponentBase component = createUIComponentBase();
         component.setId("a");
 
-        MockUIComponent parent = new MockUIComponentWithNamingContainer();
+        MockUIComponentBase parent = new MockUIComponentBaseWithNamingContainer();
         parent.setClientId("b");
-        component.setParent(parent);
+        parent.getChildren().add(component);
 
         String clientId = component.getClientId(getFacesContext());
         assertNotNull(clientId);
@@ -69,10 +68,10 @@ public class UIComponentBaseTeedaTest extends AbstractUIComponentTeedaTest {
         UIComponentBase component = createUIComponentBase();
         component.setId("a");
 
-        MockUIComponent parent = new MockUIComponent();
+        MockUIComponentBase parent = new MockUIComponentBase();
         ObjectAssert.assertNotInstanceOf(NamingContainer.class, parent);
         parent.setClientId("b");
-        component.setParent(parent);
+        parent.getChildren().add(component);
 
         String clientId = component.getClientId(getFacesContext());
         assertNotNull(clientId);
