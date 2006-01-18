@@ -26,6 +26,8 @@ import org.apache.commons.lang.ArrayUtils;
 
 /**
  * @author manhole
+ * 
+ * TODO handle "javascript: xxxx" attribute (really necessary?)
  */
 public class HtmlResponseWriter extends ResponseWriter {
 
