@@ -28,7 +28,6 @@ import org.apache.commons.lang.StringUtils;
 import org.seasar.teeda.core.mock.MockUIComponent;
 import org.seasar.teeda.core.mock.MockUIComponentBase;
 import org.seasar.teeda.core.mock.MockUIComponentWithNamingContainer;
-import org.seasar.teeda.core.unit.AssertUtil;
 
 /**
  * @author manhole
@@ -84,19 +83,19 @@ public class UIComponentBaseTeedaTest extends AbstractUIComponentTeedaTest {
     public void testGetClientId_ParentNamingContainerIdIsChanged()
             throws Exception {
         // ## Arrange ##
-        UIComponent component = createUIComponent();
+        UIComponent child = createUIComponent();
         FacesContext context = getFacesContext();
         UIData namingContainer = new UIData();
         ObjectAssert.assertInstanceOf(NamingContainer.class, namingContainer);
         namingContainer.setId("a");
-        component.setParent(namingContainer);
+        namingContainer.getChildren().add(child);
 
         // ## Act & Assert ##
-        final String clientId1 = component.getClientId(context);
-        assertEquals(clientId1, component.getClientId(context));
+        final String clientId1 = child.getClientId(context);
+        assertEquals(clientId1, child.getClientId(context));
         namingContainer.setId("b");
 
-        Assert.assertNotEquals(clientId1, component.getClientId(context));
+        Assert.assertNotEquals(clientId1, child.getClientId(context));
     }
 
     public void testSaveAndRestoreState() throws Exception {

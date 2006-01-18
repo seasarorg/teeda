@@ -25,6 +25,11 @@ public class MockUIComponentBase extends UIComponentBase {
 
     private String clientId_;
 
+    public void setId(String id) {
+        super.setId(id);
+        clientId_ = null;
+    }
+
     public String getClientId(FacesContext context) {
         if (clientId_ != null) {
             return clientId_;
