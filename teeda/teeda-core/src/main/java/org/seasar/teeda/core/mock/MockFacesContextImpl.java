@@ -125,6 +125,7 @@ public class MockFacesContextImpl extends MockFacesContext {
     }
 
     public void release() {
+        setCurrentInstance(null);
     }
 
     public void renderResponse() {

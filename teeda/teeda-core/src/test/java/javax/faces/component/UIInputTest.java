@@ -22,38 +22,40 @@ import org.seasar.teeda.core.unit.AssertUtil;
  */
 public class UIInputTest extends UIOutputTest {
 
-    public void testSetGetSubmittedValue() {
+    public final void testSetGetSubmittedValue() {
         UIInput input = createUIInput();
         input.setSubmittedValue("aaa");
         assertEquals("aaa", input.getSubmittedValue());
     }
 
-    public void testSetValue() {
+    public final void testSetGetSubmittedValue_ValueBindingNotWork() {
         UIInput input = createUIInput();
-        input.setValue("bbb");
-        assertEquals("bbb", input.getValue());
+        MockValueBinding vb = new MockValueBinding();
+        vb.setValue(new MockFacesContextImpl(), "b");
+        input.setValueBinding("submittedValue", vb);
+        assertEquals(null, input.getSubmittedValue());
     }
 
-    public void testSetGetLocalValueSet() {
+    public final void testSetGetLocalValueSet() {
         UIInput input = createUIInput();
         input.setLocalValueSet(true);
         assertEquals(true, input.isLocalValueSet());
     }
 
-    public void testSetValueToIsLocalValueSet() throws Exception {
+    public final void testSetValueToIsLocalValueSet() throws Exception {
         UIInput input = createUIInput();
         assertEquals(false, input.isLocalValueSet());
         input.setValue("aaaa");
         assertEquals(true, input.isLocalValueSet());
     }
 
-    public void testSetGetRequired() {
+    public final void testSetGetRequired() {
         UIInput input = createUIInput();
         input.setRequired(true);
         assertEquals(true, input.isRequired());
     }
 
-    public void testSetGetRequired_ValueBinding() {
+    public final void testSetGetRequired_ValueBinding() {
         UIInput input = createUIInput();
         MockValueBinding vb = new MockValueBinding();
         vb.setValue(new MockFacesContextImpl(), Boolean.TRUE);
@@ -61,13 +63,13 @@ public class UIInputTest extends UIOutputTest {
         assertEquals(true, input.isRequired());
     }
 
-    public void testSetGetValid() {
+    public final void testSetGetValid() {
         UIInput input = createUIInput();
         input.setValid(true);
         assertEquals(true, input.isValid());
     }
 
-    public void testSetGetValid_ValueBinding() {
+    public final void testSetGetValid_ValueBinding() {
         UIInput input = createUIInput();
         MockValueBinding vb = new MockValueBinding();
         vb.setValue(new MockFacesContextImpl(), Boolean.TRUE);
@@ -75,13 +77,13 @@ public class UIInputTest extends UIOutputTest {
         assertEquals(true, input.isValid());
     }
 
-    public void testSetGetImmediate() {
+    public final void testSetGetImmediate() {
         UIInput input = createUIInput();
         input.setImmediate(true);
         assertEquals(true, input.isImmediate());
     }
 
-    public void testSetGetImmediate_ValueBinding() {
+    public final void testSetGetImmediate_ValueBinding() {
         UIInput input = createUIInput();
         MockValueBinding vb = new MockValueBinding();
         vb.setValue(getFacesContext(), new Boolean(true));
@@ -89,7 +91,7 @@ public class UIInputTest extends UIOutputTest {
         assertEquals(true, input.isImmediate());
     }
 
-    public void testSetGetValidator() {
+    public final void testSetGetValidator() {
         UIInput input = createUIInput();
         MethodBinding methodBinding = new MockMethodBinding();
 
@@ -98,7 +100,7 @@ public class UIInputTest extends UIOutputTest {
         assertEquals(methodBinding, input.getValidator());
     }
 
-    public void testSetGetValueChangeListener() throws Exception {
+    public final void testSetGetValueChangeListener() throws Exception {
         // ## Arrange ##
         UIInput input = createUIInput();
         MethodBinding methodBinding = new MockMethodBinding();
@@ -108,21 +110,10 @@ public class UIInputTest extends UIOutputTest {
         assertEquals(methodBinding, input.getValueChangeListener());
     }
 
-    // NOT_TODO test: decode -> renderer
-
-    public void testBroadcast_PassToListener() throws Exception {
+    public final void testBroadcast_PassToListener() throws Exception {
         // ## Arrange ##
-        final boolean[] calls = { false };
-        final Object[][] methodParams = { null };
         UIInput input = createUIInput();
-        MethodBinding valueChangeMethod = new MockMethodBinding() {
-            public Object invoke(FacesContext context, Object[] params)
-                    throws EvaluationException, MethodNotFoundException {
-                calls[0] = true;
-                methodParams[0] = params;
-                return null;
-            }
-        };
+        MockMethodBinding valueChangeMethod = new MockMethodBinding();
         input.setValueChangeListener(valueChangeMethod);
         ValueChangeEvent event = new ValueChangeEvent(
                 new MockUIComponentBase(), "1", "2");
@@ -131,12 +122,12 @@ public class UIInputTest extends UIOutputTest {
         input.broadcast(event);
 
         // ## Assert ##
-        assertEquals(true, calls[0]);
-        assertEquals(1, methodParams[0].length);
-        assertSame(event, methodParams[0][0]);
+        assertEquals(true, valueChangeMethod.isInvokeCalled());
+        assertEquals(1, valueChangeMethod.getInvokeParams().length);
+        assertSame(event, valueChangeMethod.getInvokeParams()[0]);
     }
 
-    public void testCompareValues() throws Exception {
+    public final void testCompareValues() throws Exception {
         // ## Arrange ##
         UIInput input = createUIInput();
 
@@ -183,7 +174,7 @@ public class UIInputTest extends UIOutputTest {
         assertEquals(2, input.getValidators().length);
     }
 
-    public void testRemoveValidator_NullArg() throws Exception {
+    public final void testRemoveValidator_NullArg() throws Exception {
         // ## Arrange ##
         UIInput input = createUIInput();
 
@@ -207,7 +198,7 @@ public class UIInputTest extends UIOutputTest {
 
     public final void testAddGetRemoveValueChangeListeners() throws Exception {
         UIInput input = createUIInput();
-        assertEquals(0, input.getValidators().length);
+        assertEquals(0, input.getValueChangeListeners().length);
         ValueChangeListener v1 = new NullValueChangeListener();
         ValueChangeListener v2 = new NullValueChangeListener();
         ValueChangeListener v3 = new NullValueChangeListener();

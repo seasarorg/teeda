@@ -53,7 +53,7 @@ public abstract class AbstractUIComponentTest extends TestCase {
         }
     }
 
-    public void testSetValueBinding_IllegalArgName1() throws Exception {
+    public final void testSetValueBinding_IllegalArgName1() throws Exception {
         UIComponent component = createUIComponent();
         try {
             component.setValueBinding("id", new NullValueBinding());
@@ -62,7 +62,7 @@ public abstract class AbstractUIComponentTest extends TestCase {
         }
     }
 
-    public void testSetValueBinding_IllegalArgName2() throws Exception {
+    public final void testSetValueBinding_IllegalArgName2() throws Exception {
         UIComponent component = createUIComponent();
         try {
             component.setValueBinding("parent", new NullValueBinding());
@@ -81,17 +81,10 @@ public abstract class AbstractUIComponentTest extends TestCase {
         }
     }
 
-    private FacesContext getFacesContext() {
-        return new NullFacesContext();
-    }
-
     public final void testSetIdNull() throws Exception {
         UIComponent component = createUIComponent();
         component.setId(null);
-        success();
-    }
-
-    private void success() {
+        assertTrue(true);
     }
 
     public final void testSetId_IllegalArg1() throws Exception {
@@ -252,7 +245,7 @@ public abstract class AbstractUIComponentTest extends TestCase {
         }
     }
 
-    public final void testQueueEvent_IllegalState() throws Exception {
+    public final void testQueueEvent_NoParent() throws Exception {
         UIComponent component = createUIComponent();
         try {
             // this component is not a descendant of a UIViewRoot
@@ -319,7 +312,7 @@ public abstract class AbstractUIComponentTest extends TestCase {
         assertEquals(true, attributes instanceof Serializable);
     }
 
-    public void testGetAttributes() throws Exception {
+    public final void testGetAttributes() throws Exception {
         UIComponent component = createUIComponent();
         Map attributes = component.getAttributes();
         attributes.put("id", "hoge");
@@ -337,12 +330,12 @@ public abstract class AbstractUIComponentTest extends TestCase {
     }
 
     // "transient" property don't need ValueBinding
-    public void no_testSetGetTransient_ValueBinding() throws Exception {
+    public void testSetGetTransient_ValueBindingNotWork() throws Exception {
         UIComponent component = createUIComponent();
         MockValueBinding vb = new MockValueBinding();
-        vb.setValue(getFacesContext(), Boolean.TRUE);
+        vb.setValue((FacesContext) new NullFacesContext(), Boolean.TRUE);
         component.setValueBinding("transient", vb);
-        assertEquals(true, component.isTransient());
+        assertEquals(false, component.isTransient());
     }
 
     protected abstract UIComponent createUIComponent();

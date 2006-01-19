@@ -26,14 +26,14 @@ import org.seasar.teeda.core.mock.MockValueBinding;
  */
 public class UIOutputTest extends UIComponentBaseTest {
 
-    public void testSetGetConverter() {
+    public final void testSetGetConverter() {
         UIOutput output = createUIOutput();
         Converter converter = new NullConverter();
         output.setConverter(converter);
         assertSame(converter, output.getConverter());
     }
 
-    public void testSetGetConverter_ValueBinding() {
+    public final void testSetGetConverter_ValueBinding() {
         UIOutput output = createUIOutput();
         Converter converter = new NullConverter();
         MockValueBinding vb = new MockValueBinding();
@@ -48,13 +48,13 @@ public class UIOutputTest extends UIComponentBaseTest {
         assertEquals("aaa", output.getLocalValue());
     }
 
-    public void testSetGetValue() {
+    public final void testSetGetValue() {
         UIOutput output = createUIOutput();
         output.setValue("aaa");
         assertEquals("aaa", output.getValue());
     }
 
-    public void testSetGetValue_ValueBinding() {
+    public final void testSetGetValue_ValueBinding() {
         UIOutput output = createUIOutput();
         MockValueBinding vb = new MockValueBinding();
         vb.setValue(getFacesContext(), "bbb");

@@ -25,8 +25,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 import javax.faces.el.EvaluationException;
-import javax.faces.el.MethodBinding;
-import javax.faces.el.MethodNotFoundException;
 import javax.faces.el.PropertyNotFoundException;
 import javax.faces.event.FacesEvent;
 import javax.faces.event.ValueChangeEvent;
@@ -51,6 +49,15 @@ import org.seasar.teeda.core.mock.NullValidator;
  * @author manhole
  */
 public class UIInputOnlyTest extends TestCase {
+
+    public void testConstants() throws Exception {
+        assertEquals("javax.faces.Input", UIInput.COMPONENT_FAMILY);
+        assertEquals("javax.faces.Input", UIInput.COMPONENT_TYPE);
+        assertEquals("javax.faces.component.UIInput.CONVERSION",
+                UIInput.CONVERSION_MESSAGE_ID);
+        assertEquals("javax.faces.component.UIInput.REQUIRED",
+                UIInput.REQUIRED_MESSAGE_ID);
+    }
 
     public void testDefaultRendererType() throws Exception {
         UIInput input = new UIInput();
@@ -781,7 +788,6 @@ public class UIInputOnlyTest extends TestCase {
 
     public void testValidateValue_CallSettedValidator() throws Exception {
         // ## Arrange ##
-        final boolean[] calls = new boolean[1];
         UIInput input = new UIInput() {
             protected Renderer getRenderer(FacesContext context) {
                 return null;
@@ -790,13 +796,7 @@ public class UIInputOnlyTest extends TestCase {
         input.setValid(true);
         input.setRequired(true);
 
-        MethodBinding validatorBinding = new MockMethodBinding() {
-            public Object invoke(FacesContext context, Object[] params)
-                    throws EvaluationException, MethodNotFoundException {
-                calls[0] = true;
-                return null;
-            }
-        };
+        MockMethodBinding validatorBinding = new MockMethodBinding();
         input.setValidator(validatorBinding);
 
         MockFacesContext context = getFacesContext();
@@ -805,13 +805,13 @@ public class UIInputOnlyTest extends TestCase {
         input.validateValue(context, "123");
 
         // ## Assert ##
-        assertEquals(true, calls[0]);
+        assertEquals(true, validatorBinding.isInvokeCalled());
         assertEquals(true, input.isValid());
     }
 
     public void testValidateValue_CallValidatorsAndFailed() throws Exception {
         // ## Arrange ##
-        final boolean[] calls = new boolean[4];
+        final boolean[] calls = { false, false };
         UIInput input = new UIInput() {
             protected Renderer getRenderer(FacesContext context) {
                 return null;
@@ -833,13 +833,7 @@ public class UIInputOnlyTest extends TestCase {
             }
         });
 
-        MethodBinding validatorBinding = new MockMethodBinding() {
-            public Object invoke(FacesContext context, Object[] params)
-                    throws EvaluationException, MethodNotFoundException {
-                calls[2] = true;
-                return null;
-            }
-        };
+        MockMethodBinding validatorBinding = new MockMethodBinding();
         input.setValidator(validatorBinding);
 
         MockFacesContext context = getFacesContext();
@@ -850,7 +844,7 @@ public class UIInputOnlyTest extends TestCase {
         // ## Assert ##
         assertEquals(true, calls[0]);
         assertEquals(true, calls[1]);
-        assertEquals(true, calls[2]);
+        assertEquals(true, validatorBinding.isInvokeCalled());
         assertEquals(false, input.isValid());
 
         Iterator messages = context.getMessages();

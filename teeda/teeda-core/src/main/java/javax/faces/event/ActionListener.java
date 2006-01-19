@@ -1,6 +1,11 @@
 package javax.faces.event;
 
+/**
+ * @author shot
+ */
 public interface ActionListener extends FacesListener {
 
-	void processAction(ActionEvent actionEvent) throws AbortProcessingException;
+    public void processAction(ActionEvent actionEvent)
+            throws AbortProcessingException;
+
 }

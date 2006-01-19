@@ -177,6 +177,7 @@ public abstract class TeedaTestCase extends S2FrameworkTestCase {
         super.tearDownContainer();
         externalContext = null;
         application = null;
+        facesContext.release();
         facesContext = null;
         renderKit = null;
         phaseListener = null;

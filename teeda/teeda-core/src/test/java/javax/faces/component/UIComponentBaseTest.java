@@ -15,15 +15,21 @@
  */
 package javax.faces.component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.faces.context.FacesContext;
-import javax.faces.event.FacesEvent;
 import javax.faces.event.FacesListener;
 
+import org.seasar.teeda.core.mock.MockApplication;
+import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.mock.MockFacesContextImpl;
 import org.seasar.teeda.core.mock.MockUIComponent;
 import org.seasar.teeda.core.mock.MockUIComponentBase;
 import org.seasar.teeda.core.mock.MockValueBinding;
 import org.seasar.teeda.core.mock.NullFacesContext;
+import org.seasar.teeda.core.mock.NullFacesEvent;
+import org.seasar.teeda.core.mock.NullFacesListener;
 import org.seasar.teeda.core.unit.AssertUtil;
 
 public class UIComponentBaseTest extends AbstractUIComponentTest {
@@ -297,8 +303,37 @@ public class UIComponentBaseTest extends AbstractUIComponentTest {
         // TODO testing.
     }
 
-    public void testBroadcast() {
-        // TODO testing.
+    public final void testBroadcast() throws Exception {
+        // ## Arrange ##
+        UIComponentBase component = createUIComponentBase();
+        FacesListener facesListener1 = new NullFacesListener();
+        component.addFacesListener(facesListener1);
+        FacesListener facesListener2 = new NullFacesListener();
+        component.addFacesListener(facesListener2);
+
+        final List args = new ArrayList();
+        NullFacesEvent facesEvent = new NullFacesEvent() {
+            private static final long serialVersionUID = 1L;
+
+            public boolean isAppropriateListener(FacesListener listener) {
+                args.add(listener);
+                return true;
+            }
+
+            public void processListener(FacesListener listener) {
+                args.add(listener);
+            }
+        };
+
+        // ## Act ##
+        component.broadcast(facesEvent);
+
+        // ## Assert ##
+        assertEquals(4, args.size());
+        assertSame(facesListener1, args.get(0));
+        assertSame(facesListener1, args.get(1));
+        assertSame(facesListener2, args.get(2));
+        assertSame(facesListener2, args.get(3));
     }
 
     public void testDecode() {
@@ -369,48 +404,19 @@ public class UIComponentBaseTest extends AbstractUIComponentTest {
 
     }
 
-    public void testQueueEvent() {
+    public final void testQueueEvent_WithParent() {
+        // ## Arrange ##
         MockUIComponent parent = new MockUIComponent();
-        MockUIComponentBase target = new MockUIComponentBase();
-        target.setParent(parent);
+        MockUIComponentBase component = new MockUIComponentBase();
 
-        try {
-            target.queueEvent(null);
-            fail();
-        } catch (NullPointerException npe) {
-            AssertUtil.assertExceptionMessageExist(npe);
-        }
+        component.setParent(parent);
+        NullFacesEvent event = new NullFacesEvent();
 
-        target.setParent(null);
-        try {
-            target.queueEvent(new FacesEvent(target) {
+        // ## Act ##
+        component.queueEvent(event);
 
-                public boolean isAppropriateListener(FacesListener listener) {
-                    return false;
-                }
-
-                public void processListener(FacesListener listener) {
-                }
-
-            });
-            fail();
-        } catch (IllegalStateException ise) {
-            AssertUtil.assertExceptionMessageExist(ise);
-        }
-
-        target.setParent(parent);
-        target.queueEvent(new FacesEvent(target) {
-
-            public boolean isAppropriateListener(FacesListener listener) {
-                return false;
-            }
-
-            public void processListener(FacesListener listener) {
-            }
-
-        });
-
-        assertNotNull(parent.getQueueEvent());
+        // ## Assert ##
+        assertSame(event, parent.getQueueEvent());
     }
 
     public void testProcessRestoreState() {
@@ -482,9 +488,24 @@ public class UIComponentBaseTest extends AbstractUIComponentTest {
         return new MockUIComponentBase();
     }
 
-    protected FacesContext getFacesContext() {
-        MockFacesContextImpl context = new MockFacesContextImpl();
-        return context;
+    private MockFacesContext context_;
+
+    private MockApplication application_;
+
+    protected void setUp() throws Exception {
+        super.setUp();
+        context_ = new MockFacesContextImpl();
+        application_ = new MockApplication();
+        context_.setApplication(application_);
+    }
+
+    protected void tearDown() throws Exception {
+        context_.release();
+        super.tearDown();
+    }
+
+    protected MockFacesContext getFacesContext() {
+        return context_;
     }
 
 }
