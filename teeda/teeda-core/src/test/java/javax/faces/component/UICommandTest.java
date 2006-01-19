@@ -97,9 +97,6 @@ public class UICommandTest extends UIComponentBaseTest {
         assertEquals(2, command.getActionListeners().length);
     }
 
-    // TODO saveState
-    // TODO restoreState
-
     public final void testBroadcast_ToDefaultActionListener() throws Exception {
         // ## Arrange ##
         UICommand command = createUICommand();

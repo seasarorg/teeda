@@ -15,24 +15,24 @@
  */
 package javax.faces.component.html;
 
+import javax.faces.component.UICommandTeedaTest;
 import javax.faces.component.UIComponent;
-import javax.faces.component.UIInputTest;
 
 import org.seasar.teeda.core.mock.MockValueBinding;
 
 /**
  * @author manhole
  */
-public class HtmlInputTextTest extends UIInputTest {
+public class HtmlCommandButtonTest extends UICommandTeedaTest {
 
     public void testSetGetAccesskey() throws Exception {
-        HtmlInputText component = createHtmlInputText();
+        HtmlCommandButton component = createHtmlCommandButton();
         component.setAccesskey("foo accesskey");
         assertEquals("foo accesskey", component.getAccesskey());
     }
 
     public void testSetGetAccesskey_ValueBinding() throws Exception {
-        HtmlInputText component = createHtmlInputText();
+        HtmlCommandButton component = createHtmlCommandButton();
         MockValueBinding vb = new MockValueBinding();
         vb.setValue(getFacesContext(), "bar accesskey");
         component.setValueBinding("accesskey", vb);
@@ -40,13 +40,13 @@ public class HtmlInputTextTest extends UIInputTest {
     }
 
     public void testSetGetAlt() throws Exception {
-        HtmlInputText component = createHtmlInputText();
+        HtmlCommandButton component = createHtmlCommandButton();
         component.setAlt("foo alt");
         assertEquals("foo alt", component.getAlt());
     }
 
     public void testSetGetAlt_ValueBinding() throws Exception {
-        HtmlInputText component = createHtmlInputText();
+        HtmlCommandButton component = createHtmlCommandButton();
         MockValueBinding vb = new MockValueBinding();
         vb.setValue(getFacesContext(), "bar alt");
         component.setValueBinding("alt", vb);
@@ -54,13 +54,13 @@ public class HtmlInputTextTest extends UIInputTest {
     }
 
     public void testSetGetDir() throws Exception {
-        HtmlInputText component = createHtmlInputText();
+        HtmlCommandButton component = createHtmlCommandButton();
         component.setDir("foo dir");
         assertEquals("foo dir", component.getDir());
     }
 
     public void testSetGetDir_ValueBinding() throws Exception {
-        HtmlInputText component = createHtmlInputText();
+        HtmlCommandButton component = createHtmlCommandButton();
         MockValueBinding vb = new MockValueBinding();
         vb.setValue(getFacesContext(), "bar dir");
         component.setValueBinding("dir", vb);
@@ -68,55 +68,55 @@ public class HtmlInputTextTest extends UIInputTest {
     }
 
     public void testSetGetDisabled() throws Exception {
-        HtmlInputText component = createHtmlInputText();
+        HtmlCommandButton component = createHtmlCommandButton();
         component.setDisabled(true);
         assertEquals(true, component.isDisabled());
     }
 
     public void testSetGetDisabled_ValueBinding() throws Exception {
-        HtmlInputText component = createHtmlInputText();
+        HtmlCommandButton component = createHtmlCommandButton();
         MockValueBinding vb = new MockValueBinding();
         vb.setValue(getFacesContext(), Boolean.TRUE);
         component.setValueBinding("disabled", vb);
         assertEquals(true, component.isDisabled());
     }
 
+    public void testSetGetImage() throws Exception {
+        HtmlCommandButton component = createHtmlCommandButton();
+        component.setImage("foo image");
+        assertEquals("foo image", component.getImage());
+    }
+
+    public void testSetGetImage_ValueBinding() throws Exception {
+        HtmlCommandButton component = createHtmlCommandButton();
+        MockValueBinding vb = new MockValueBinding();
+        vb.setValue(getFacesContext(), "bar image");
+        component.setValueBinding("image", vb);
+        assertEquals("bar image", component.getImage());
+    }
+
     public void testSetGetLang() throws Exception {
-        HtmlInputText component = createHtmlInputText();
+        HtmlCommandButton component = createHtmlCommandButton();
         component.setLang("foo lang");
         assertEquals("foo lang", component.getLang());
     }
 
     public void testSetGetLang_ValueBinding() throws Exception {
-        HtmlInputText component = createHtmlInputText();
+        HtmlCommandButton component = createHtmlCommandButton();
         MockValueBinding vb = new MockValueBinding();
         vb.setValue(getFacesContext(), "bar lang");
         component.setValueBinding("lang", vb);
         assertEquals("bar lang", component.getLang());
     }
 
-    public void testSetGetMaxlength() throws Exception {
-        HtmlInputText component = createHtmlInputText();
-        component.setMaxlength(222);
-        assertEquals(222, component.getMaxlength());
-    }
-
-    public void testSetGetMaxlength_ValueBinding() throws Exception {
-        HtmlInputText component = createHtmlInputText();
-        MockValueBinding vb = new MockValueBinding();
-        vb.setValue(getFacesContext(), new Integer(111));
-        component.setValueBinding("maxlength", vb);
-        assertEquals(111, component.getMaxlength());
-    }
-
     public void testSetGetOnblur() throws Exception {
-        HtmlInputText component = createHtmlInputText();
+        HtmlCommandButton component = createHtmlCommandButton();
         component.setOnblur("foo onblur");
         assertEquals("foo onblur", component.getOnblur());
     }
 
     public void testSetGetOnblur_ValueBinding() throws Exception {
-        HtmlInputText component = createHtmlInputText();
+        HtmlCommandButton component = createHtmlCommandButton();
         MockValueBinding vb = new MockValueBinding();
         vb.setValue(getFacesContext(), "bar onblur");
         component.setValueBinding("onblur", vb);
@@ -124,13 +124,13 @@ public class HtmlInputTextTest extends UIInputTest {
     }
 
     public void testSetGetOnchange() throws Exception {
-        HtmlInputText component = createHtmlInputText();
+        HtmlCommandButton component = createHtmlCommandButton();
         component.setOnchange("foo onchange");
         assertEquals("foo onchange", component.getOnchange());
     }
 
     public void testSetGetOnchange_ValueBinding() throws Exception {
-        HtmlInputText component = createHtmlInputText();
+        HtmlCommandButton component = createHtmlCommandButton();
         MockValueBinding vb = new MockValueBinding();
         vb.setValue(getFacesContext(), "bar onchange");
         component.setValueBinding("onchange", vb);
@@ -138,13 +138,13 @@ public class HtmlInputTextTest extends UIInputTest {
     }
 
     public void testSetGetOnclick() throws Exception {
-        HtmlInputText component = createHtmlInputText();
+        HtmlCommandButton component = createHtmlCommandButton();
         component.setOnclick("foo onclick");
         assertEquals("foo onclick", component.getOnclick());
     }
 
     public void testSetGetOnclick_ValueBinding() throws Exception {
-        HtmlInputText component = createHtmlInputText();
+        HtmlCommandButton component = createHtmlCommandButton();
         MockValueBinding vb = new MockValueBinding();
         vb.setValue(getFacesContext(), "bar onclick");
         component.setValueBinding("onclick", vb);
@@ -152,13 +152,13 @@ public class HtmlInputTextTest extends UIInputTest {
     }
 
     public void testSetGetOndblclick() throws Exception {
-        HtmlInputText component = createHtmlInputText();
+        HtmlCommandButton component = createHtmlCommandButton();
         component.setOndblclick("foo ondblclick");
         assertEquals("foo ondblclick", component.getOndblclick());
     }
 
     public void testSetGetOndblclick_ValueBinding() throws Exception {
-        HtmlInputText component = createHtmlInputText();
+        HtmlCommandButton component = createHtmlCommandButton();
         MockValueBinding vb = new MockValueBinding();
         vb.setValue(getFacesContext(), "bar ondblclick");
         component.setValueBinding("ondblclick", vb);
@@ -166,13 +166,13 @@ public class HtmlInputTextTest extends UIInputTest {
     }
 
     public void testSetGetOnfocus() throws Exception {
-        HtmlInputText component = createHtmlInputText();
+        HtmlCommandButton component = createHtmlCommandButton();
         component.setOnfocus("foo onfocus");
         assertEquals("foo onfocus", component.getOnfocus());
     }
 
     public void testSetGetOnfocus_ValueBinding() throws Exception {
-        HtmlInputText component = createHtmlInputText();
+        HtmlCommandButton component = createHtmlCommandButton();
         MockValueBinding vb = new MockValueBinding();
         vb.setValue(getFacesContext(), "bar onfocus");
         component.setValueBinding("onfocus", vb);
@@ -180,13 +180,13 @@ public class HtmlInputTextTest extends UIInputTest {
     }
 
     public void testSetGetOnkeydown() throws Exception {
-        HtmlInputText component = createHtmlInputText();
+        HtmlCommandButton component = createHtmlCommandButton();
         component.setOnkeydown("foo onkeydown");
         assertEquals("foo onkeydown", component.getOnkeydown());
     }
 
     public void testSetGetOnkeydown_ValueBinding() throws Exception {
-        HtmlInputText component = createHtmlInputText();
+        HtmlCommandButton component = createHtmlCommandButton();
         MockValueBinding vb = new MockValueBinding();
         vb.setValue(getFacesContext(), "bar onkeydown");
         component.setValueBinding("onkeydown", vb);
@@ -194,13 +194,13 @@ public class HtmlInputTextTest extends UIInputTest {
     }
 
     public void testSetGetOnkeypress() throws Exception {
-        HtmlInputText component = createHtmlInputText();
+        HtmlCommandButton component = createHtmlCommandButton();
         component.setOnkeypress("foo onkeypress");
         assertEquals("foo onkeypress", component.getOnkeypress());
     }
 
     public void testSetGetOnkeypress_ValueBinding() throws Exception {
-        HtmlInputText component = createHtmlInputText();
+        HtmlCommandButton component = createHtmlCommandButton();
         MockValueBinding vb = new MockValueBinding();
         vb.setValue(getFacesContext(), "bar onkeypress");
         component.setValueBinding("onkeypress", vb);
@@ -208,13 +208,13 @@ public class HtmlInputTextTest extends UIInputTest {
     }
 
     public void testSetGetOnkeyup() throws Exception {
-        HtmlInputText component = createHtmlInputText();
+        HtmlCommandButton component = createHtmlCommandButton();
         component.setOnkeyup("foo onkeyup");
         assertEquals("foo onkeyup", component.getOnkeyup());
     }
 
     public void testSetGetOnkeyup_ValueBinding() throws Exception {
-        HtmlInputText component = createHtmlInputText();
+        HtmlCommandButton component = createHtmlCommandButton();
         MockValueBinding vb = new MockValueBinding();
         vb.setValue(getFacesContext(), "bar onkeyup");
         component.setValueBinding("onkeyup", vb);
@@ -222,13 +222,13 @@ public class HtmlInputTextTest extends UIInputTest {
     }
 
     public void testSetGetOnmousedown() throws Exception {
-        HtmlInputText component = createHtmlInputText();
+        HtmlCommandButton component = createHtmlCommandButton();
         component.setOnmousedown("foo onmousedown");
         assertEquals("foo onmousedown", component.getOnmousedown());
     }
 
     public void testSetGetOnmousedown_ValueBinding() throws Exception {
-        HtmlInputText component = createHtmlInputText();
+        HtmlCommandButton component = createHtmlCommandButton();
         MockValueBinding vb = new MockValueBinding();
         vb.setValue(getFacesContext(), "bar onmousedown");
         component.setValueBinding("onmousedown", vb);
@@ -236,13 +236,13 @@ public class HtmlInputTextTest extends UIInputTest {
     }
 
     public void testSetGetOnmousemove() throws Exception {
-        HtmlInputText component = createHtmlInputText();
+        HtmlCommandButton component = createHtmlCommandButton();
         component.setOnmousemove("foo onmousemove");
         assertEquals("foo onmousemove", component.getOnmousemove());
     }
 
     public void testSetGetOnmousemove_ValueBinding() throws Exception {
-        HtmlInputText component = createHtmlInputText();
+        HtmlCommandButton component = createHtmlCommandButton();
         MockValueBinding vb = new MockValueBinding();
         vb.setValue(getFacesContext(), "bar onmousemove");
         component.setValueBinding("onmousemove", vb);
@@ -250,13 +250,13 @@ public class HtmlInputTextTest extends UIInputTest {
     }
 
     public void testSetGetOnmouseout() throws Exception {
-        HtmlInputText component = createHtmlInputText();
+        HtmlCommandButton component = createHtmlCommandButton();
         component.setOnmouseout("foo onmouseout");
         assertEquals("foo onmouseout", component.getOnmouseout());
     }
 
     public void testSetGetOnmouseout_ValueBinding() throws Exception {
-        HtmlInputText component = createHtmlInputText();
+        HtmlCommandButton component = createHtmlCommandButton();
         MockValueBinding vb = new MockValueBinding();
         vb.setValue(getFacesContext(), "bar onmouseout");
         component.setValueBinding("onmouseout", vb);
@@ -264,13 +264,13 @@ public class HtmlInputTextTest extends UIInputTest {
     }
 
     public void testSetGetOnmouseover() throws Exception {
-        HtmlInputText component = createHtmlInputText();
+        HtmlCommandButton component = createHtmlCommandButton();
         component.setOnmouseover("foo onmouseover");
         assertEquals("foo onmouseover", component.getOnmouseover());
     }
 
     public void testSetGetOnmouseover_ValueBinding() throws Exception {
-        HtmlInputText component = createHtmlInputText();
+        HtmlCommandButton component = createHtmlCommandButton();
         MockValueBinding vb = new MockValueBinding();
         vb.setValue(getFacesContext(), "bar onmouseover");
         component.setValueBinding("onmouseover", vb);
@@ -278,13 +278,13 @@ public class HtmlInputTextTest extends UIInputTest {
     }
 
     public void testSetGetOnmouseup() throws Exception {
-        HtmlInputText component = createHtmlInputText();
+        HtmlCommandButton component = createHtmlCommandButton();
         component.setOnmouseup("foo onmouseup");
         assertEquals("foo onmouseup", component.getOnmouseup());
     }
 
     public void testSetGetOnmouseup_ValueBinding() throws Exception {
-        HtmlInputText component = createHtmlInputText();
+        HtmlCommandButton component = createHtmlCommandButton();
         MockValueBinding vb = new MockValueBinding();
         vb.setValue(getFacesContext(), "bar onmouseup");
         component.setValueBinding("onmouseup", vb);
@@ -292,13 +292,13 @@ public class HtmlInputTextTest extends UIInputTest {
     }
 
     public void testSetGetOnselect() throws Exception {
-        HtmlInputText component = createHtmlInputText();
+        HtmlCommandButton component = createHtmlCommandButton();
         component.setOnselect("foo onselect");
         assertEquals("foo onselect", component.getOnselect());
     }
 
     public void testSetGetOnselect_ValueBinding() throws Exception {
-        HtmlInputText component = createHtmlInputText();
+        HtmlCommandButton component = createHtmlCommandButton();
         MockValueBinding vb = new MockValueBinding();
         vb.setValue(getFacesContext(), "bar onselect");
         component.setValueBinding("onselect", vb);
@@ -306,41 +306,27 @@ public class HtmlInputTextTest extends UIInputTest {
     }
 
     public void testSetGetReadonly() throws Exception {
-        HtmlInputText component = createHtmlInputText();
+        HtmlCommandButton component = createHtmlCommandButton();
         component.setReadonly(true);
         assertEquals(true, component.isReadonly());
     }
 
     public void testSetGetReadonly_ValueBinding() throws Exception {
-        HtmlInputText component = createHtmlInputText();
+        HtmlCommandButton component = createHtmlCommandButton();
         MockValueBinding vb = new MockValueBinding();
         vb.setValue(getFacesContext(), Boolean.TRUE);
         component.setValueBinding("readonly", vb);
         assertEquals(true, component.isReadonly());
     }
 
-    public void testSetGetSize() throws Exception {
-        HtmlInputText component = createHtmlInputText();
-        component.setSize(222);
-        assertEquals(222, component.getSize());
-    }
-
-    public void testSetGetSize_ValueBinding() throws Exception {
-        HtmlInputText component = createHtmlInputText();
-        MockValueBinding vb = new MockValueBinding();
-        vb.setValue(getFacesContext(), new Integer(111));
-        component.setValueBinding("size", vb);
-        assertEquals(111, component.getSize());
-    }
-
     public void testSetGetStyle() throws Exception {
-        HtmlInputText component = createHtmlInputText();
+        HtmlCommandButton component = createHtmlCommandButton();
         component.setStyle("foo style");
         assertEquals("foo style", component.getStyle());
     }
 
     public void testSetGetStyle_ValueBinding() throws Exception {
-        HtmlInputText component = createHtmlInputText();
+        HtmlCommandButton component = createHtmlCommandButton();
         MockValueBinding vb = new MockValueBinding();
         vb.setValue(getFacesContext(), "bar style");
         component.setValueBinding("style", vb);
@@ -348,13 +334,13 @@ public class HtmlInputTextTest extends UIInputTest {
     }
 
     public void testSetGetStyleClass() throws Exception {
-        HtmlInputText component = createHtmlInputText();
+        HtmlCommandButton component = createHtmlCommandButton();
         component.setStyleClass("foo styleClass");
         assertEquals("foo styleClass", component.getStyleClass());
     }
 
     public void testSetGetStyleClass_ValueBinding() throws Exception {
-        HtmlInputText component = createHtmlInputText();
+        HtmlCommandButton component = createHtmlCommandButton();
         MockValueBinding vb = new MockValueBinding();
         vb.setValue(getFacesContext(), "bar styleClass");
         component.setValueBinding("styleClass", vb);
@@ -362,13 +348,13 @@ public class HtmlInputTextTest extends UIInputTest {
     }
 
     public void testSetGetTabindex() throws Exception {
-        HtmlInputText component = createHtmlInputText();
+        HtmlCommandButton component = createHtmlCommandButton();
         component.setTabindex("foo tabindex");
         assertEquals("foo tabindex", component.getTabindex());
     }
 
     public void testSetGetTabindex_ValueBinding() throws Exception {
-        HtmlInputText component = createHtmlInputText();
+        HtmlCommandButton component = createHtmlCommandButton();
         MockValueBinding vb = new MockValueBinding();
         vb.setValue(getFacesContext(), "bar tabindex");
         component.setValueBinding("tabindex", vb);
@@ -376,25 +362,39 @@ public class HtmlInputTextTest extends UIInputTest {
     }
 
     public void testSetGetTitle() throws Exception {
-        HtmlInputText component = createHtmlInputText();
+        HtmlCommandButton component = createHtmlCommandButton();
         component.setTitle("foo title");
         assertEquals("foo title", component.getTitle());
     }
 
     public void testSetGetTitle_ValueBinding() throws Exception {
-        HtmlInputText component = createHtmlInputText();
+        HtmlCommandButton component = createHtmlCommandButton();
         MockValueBinding vb = new MockValueBinding();
         vb.setValue(getFacesContext(), "bar title");
         component.setValueBinding("title", vb);
         assertEquals("bar title", component.getTitle());
     }
 
-    private HtmlInputText createHtmlInputText() {
-        return (HtmlInputText) createUIComponent();
+    public void testSetGetType() throws Exception {
+        HtmlCommandButton component = createHtmlCommandButton();
+        component.setType("foo type");
+        assertEquals("foo type", component.getType());
+    }
+
+    public void testSetGetType_ValueBinding() throws Exception {
+        HtmlCommandButton component = createHtmlCommandButton();
+        MockValueBinding vb = new MockValueBinding();
+        vb.setValue(getFacesContext(), "bar type");
+        component.setValueBinding("type", vb);
+        assertEquals("bar type", component.getType());
+    }
+
+    private HtmlCommandButton createHtmlCommandButton() {
+        return (HtmlCommandButton) createUIComponent();
     }
 
     protected UIComponent createUIComponent() {
-        return new HtmlInputText();
+        return new HtmlCommandButton();
     }
 
 }

@@ -15,28 +15,28 @@
  */
 package javax.faces.component.html;
 
-import javax.faces.component.UIInput;
+import javax.faces.component.UICommand;
 
 import junit.framework.TestCase;
 
 /**
  * @author manhole
  */
-public class HtmlInputHiddenOnlyTest extends TestCase {
+public class HtmlCommandButtonOnlyTest extends TestCase {
 
     public void testConstants() throws Exception {
-        assertEquals("javax.faces.HtmlInputHidden",
-                HtmlInputHidden.COMPONENT_TYPE);
+        assertEquals("javax.faces.HtmlCommandButton",
+                HtmlCommandButton.COMPONENT_TYPE);
     }
 
     public void testDefaultRendererType() throws Exception {
-        HtmlInputHidden htmlInputHidden = new HtmlInputHidden();
-        assertEquals("javax.faces.Hidden", htmlInputHidden.getRendererType());
+        HtmlCommandButton htmlCommandButton = new HtmlCommandButton();
+        assertEquals("javax.faces.Button", htmlCommandButton.getRendererType());
     }
 
     public void testGetFamily() {
-        HtmlInputHidden htmlInputHidden = new HtmlInputHidden();
-        assertEquals(UIInput.COMPONENT_FAMILY, htmlInputHidden.getFamily());
+        HtmlCommandButton htmlCommandButton = new HtmlCommandButton();
+        assertEquals(UICommand.COMPONENT_FAMILY, htmlCommandButton.getFamily());
     }
 
 }
