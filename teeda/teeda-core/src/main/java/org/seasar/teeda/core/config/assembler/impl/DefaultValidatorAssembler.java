@@ -42,7 +42,7 @@ public class DefaultValidatorAssembler extends ValidatorAssembler {
     public void assemble() {
         String validatorId = null;
         String validatorClass = null;
-        for(Iterator itr = IteratorUtil.getIterator(getValidators());itr.hasNext();){
+        for(Iterator itr = IteratorUtil.getEntryIterator(getValidators());itr.hasNext();){
             Map.Entry entry = (Map.Entry)itr.next();
             validatorId = (String)entry.getKey();
             validatorClass = (String)entry.getValue();

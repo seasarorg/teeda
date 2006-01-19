@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+<!DOCTYPE faces-config PUBLIC
+  "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.0//EN"
+  "http://java.sun.com/dtd/web-facesconfig_1_0.dtd">
+<faces-config>
+	<!-- org.seasar.teeda.core.mock.Mock -->
+	<factory>
+		<application-factory>org.seasar.teeda.core.mock.MockApplicationFactory</application-factory>
+		<faces-context-factory>org.seasar.teeda.core.mock.MockFacesContextFactory</faces-context-factory>
+		<lifecycle-factory>org.seasar.teeda.core.mock.MockLifecycleFactory</lifecycle-factory>
+		<render-kit-factory>org.seasar.teeda.core.mock.MockRenderKitFactory</render-kit-factory>
+	</factory>
+	<application>
+		<action-listener>org.seasar.teeda.core.mock.MockActionListener</action-listener>
+		<default-render-kit-id>hoge</default-render-kit-id>
+		<locale-config>
+			<default-locale>ja</default-locale>
+			<supported-locale>en</supported-locale>
+		</locale-config>
+		<message-bundle>message</message-bundle>
+		<navigation-handler>org.seasar.teeda.core.mock.MockNavigationHandler</navigation-handler>
+		<property-resolver>org.seasar.teeda.core.mock.MockPropertyResolver</property-resolver>
+		<state-manager>org.seasar.teeda.core.mock.MockStateManager</state-manager>
+		<variable-resolver>org.seasar.teeda.core.mock.MockVariableResolver</variable-resolver>
+		<view-handler>org.seasar.teeda.core.mock.MockViewHandler</view-handler>
+	</application>
+	<component>
+		<component-type>mock</component-type>
+		<component-class>org.seasar.teeda.core.mock.MockUIComponent</component-class>
+	</component>
+	<converter>
+		<converter-id>converter.id</converter-id>
+		<converter-class>org.seasar.teeda.core.mock.MockConverter</converter-class>
+	</converter>
+	<converter>
+		<converter-for-class>org.seasar.teeda.core.config.impl.Hoge</converter-for-class>
+		<converter-class>org.seasar.teeda.core.mock.MockConverter</converter-class>
+	</converter>
+	<lifecycle>
+		<phase-listener>org.seasar.teeda.core.mock.MockPhaseListener</phase-listener>
+	</lifecycle>
+	<managed-bean>
+		<managed-bean-name>hogeBean</managed-bean-name>
+		<managed-bean-class>org.seasar.teeda.core.config.impl.Hoge</managed-bean-class>
+		<managed-bean-scope>application</managed-bean-scope>
+	</managed-bean>
+	<navigation-rule>
+		<from-view-id>from</from-view-id>
+		<navigation-case>
+			<from-action>action</from-action>
+			<from-outcome>outcome</from-outcome>
+			<to-view-id>to</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<render-kit>
+		<render-kit-id>renderkitid</render-kit-id>
+		<render-kit-class>org.seasar.teeda.core.mock.MockRenderKit</render-kit-class>
+		<renderer>
+			<component-family>family</component-family>
+			<renderer-type>type</renderer-type>
+			<renderer-class>org.seasar.teeda.core.mock.MockRenderer</renderer-class>
+		</renderer>
+	</render-kit>
+</faces-config>

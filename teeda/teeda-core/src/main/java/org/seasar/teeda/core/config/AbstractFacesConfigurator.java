@@ -93,4 +93,5 @@ public abstract class AbstractFacesConfigurator implements FacesConfigurator{
     }
     
     protected abstract String getPath();
+    
 }

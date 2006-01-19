@@ -37,9 +37,9 @@ public class IteratorUtil {
         }
     }
     
-    public static Iterator getIterator(Map map){
+    public static Iterator getEntryIterator(Map map){
         if(map != null && !map.isEmpty()){
-            return map.keySet().iterator();
+            return map.entrySet().iterator();
         }else{
             return EMPTY_ITERATOR;
         }

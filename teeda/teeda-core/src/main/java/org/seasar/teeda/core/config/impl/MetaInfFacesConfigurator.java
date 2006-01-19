@@ -41,7 +41,7 @@ public class MetaInfFacesConfigurator extends AbstractFacesConfigurator {
         setResourceResolver(new WebAppJarResourceResolver(externalContext_));
     }
         
-    protected String getPath() {
+    public String getPath() {
         return WEB_INF_LIB;
     }
 

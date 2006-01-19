@@ -39,12 +39,12 @@ public class TestIteratorUtil extends TestCase {
 	public void testGetIterator2(){
 		Map map = new HashMap();
 		map.put("a","A");
-		for(Iterator itr = IteratorUtil.getIterator(map);itr.hasNext();){
+		for(Iterator itr = IteratorUtil.getEntryIterator(map);itr.hasNext();){
 			assertNotNull(itr);
 			assertNotNull(itr.next());
 		}
 		map = null;
-		Iterator itr = IteratorUtil.getIterator(map);
+		Iterator itr = IteratorUtil.getEntryIterator(map);
 		assertNotNull(itr);
 		for(;itr.hasNext();){
 			fail();

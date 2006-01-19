@@ -21,7 +21,9 @@ import java.util.List;
 import org.seasar.teeda.core.config.element.FacesConfig;
 import org.seasar.teeda.core.config.element.impl.FacesConfigWrapperImpl;
 
-
+/**
+ * @author shot
+ */
 public class FacesConfigUtil {
 
     private FacesConfigUtil(){

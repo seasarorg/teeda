@@ -15,15 +15,12 @@
  */
 package org.seasar.teeda.core.config.impl;
 
-import org.seasar.teeda.core.config.AbstractFacesConfigurator;
+/**
+ * @author shot
+ */
+public class Hoge {
 
-public class ApplicationFacesConfigurator extends AbstractFacesConfigurator {
-
-    public ApplicationFacesConfigurator() {
+    public String getName() {
+        return "hoge";
     }
-
-    public String getPath() {
-        return "WEB-INF/faces-config.xml";
-    }
-
 }

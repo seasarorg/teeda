@@ -32,7 +32,7 @@ public class DefaultManagedBeanAssembler extends ManagedBeanAssembler {
     public void assemble() {
         String managedBeanName = null;
         ManagedBeanElement element = null;
-        for (Iterator itr = IteratorUtil.getIterator(getManagedBeans()); itr
+        for (Iterator itr = IteratorUtil.getEntryIterator(getManagedBeans()); itr
                 .hasNext();){
             Map.Entry entry = (Map.Entry)itr.next();
             managedBeanName = (String)entry.getKey();

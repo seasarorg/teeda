@@ -57,7 +57,7 @@ public class ConfigFilesFacesConfigurator extends AbstractFacesConfigurator {
         return FacesConfigUtil.collectAllFacesConfig(configs);
     }
     
-    protected String getPath() {
+    public String getPath() {
         String paths = context_.getInitParameter(FacesServlet.CONFIG_FILES_ATTR);
         return paths;
     }

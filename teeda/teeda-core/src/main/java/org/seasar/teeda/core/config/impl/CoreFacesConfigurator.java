@@ -19,19 +19,24 @@ import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.config.AbstractFacesConfigurator;
 
 /**
- * @author Shinpei Ohtani(aka shot)
+ * @author shot
  */
 public class CoreFacesConfigurator extends AbstractFacesConfigurator {
 
-    private static final String BASE_FACES_CONFIG = "/core-faces-config.xml"; 
-        
+    private static final String BASE_FACES_CONFIG = "core-faces-config.xml"; 
+
+    private String path_ = JsfConstants.CORE_PACKAGE_ROOT.replace('.', '/') + "/" + BASE_FACES_CONFIG;
+    
     public CoreFacesConfigurator(){
         super();
     }
 
     protected String getPath() {
-        return JsfConstants.CORE_PACKAGE_ROOT.replace('.', '/') + BASE_FACES_CONFIG;
+        return path_;
     }
     
+    protected void setPath(String path){
+        path_ = path;
+    }
     
 }

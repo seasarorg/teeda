@@ -13,17 +13,17 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.core.config.impl;
+package org.seasar.teeda.core.config.webapp.impl;
 
-import org.seasar.teeda.core.config.AbstractFacesConfigurator;
+import javax.faces.context.ExternalContext;
 
-public class ApplicationFacesConfigurator extends AbstractFacesConfigurator {
+/**
+ * @author shot
+ */
+public class ExternalContextWebappConfigBuilderImpl extends
+        WebappConfigBuilderImpl {
 
-    public ApplicationFacesConfigurator() {
+    public ExternalContextWebappConfigBuilderImpl(ExternalContext externalContext, String path) {
+//        super(externalContext.getResourceAsStream(path));
     }
-
-    public String getPath() {
-        return "WEB-INF/faces-config.xml";
-    }
-
 }
