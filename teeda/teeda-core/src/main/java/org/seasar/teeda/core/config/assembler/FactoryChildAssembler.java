@@ -9,11 +9,11 @@ import javax.faces.FactoryFinder;
 /**
  * @author Shinpei Ohtani(aka shot)
  */ 
-public abstract class FactoryAssembler implements JsfAssembler {
+public abstract class FactoryChildAssembler implements JsfAssembler {
 
     private List factories_ = new LinkedList();
     
-    public FactoryAssembler() {
+    public FactoryChildAssembler() {
     }
 
     public void setTargetFactories(List factories){
