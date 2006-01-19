@@ -8,11 +8,11 @@ import org.seasar.teeda.core.config.element.FactoryElement;
 /**
  * @author Shinpei Ohtani(aka shot)
  */
-public abstract class FactoriesAssembler extends AbstractJsfAssembler {
+public abstract class FactoryAssembler extends AbstractJsfAssembler {
 
     private List factories_ = Collections.EMPTY_LIST;
     
-    public FactoriesAssembler(List factories){
+    public FactoryAssembler(List factories){
         isAllSuitableJsfElement(factories, FactoryElement.class);
         factories_ = factories;
         setupBeforeAssemble();

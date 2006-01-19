@@ -18,7 +18,7 @@ package org.seasar.teeda.core.config;
 import org.seasar.teeda.core.config.element.FacesConfig;
 
 /**
- * @author Shinpei Ohtani
+ * @author shot
  */
 public interface FacesConfigurator {
 

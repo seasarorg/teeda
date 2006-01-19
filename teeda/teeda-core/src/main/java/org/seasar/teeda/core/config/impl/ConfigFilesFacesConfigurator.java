@@ -13,7 +13,7 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.core.config;
+package org.seasar.teeda.core.config.impl;
 
 import java.io.InputStream;
 import java.util.LinkedList;
@@ -25,6 +25,7 @@ import javax.faces.webapp.FacesServlet;
 import org.seasar.framework.util.InputStreamUtil;
 import org.seasar.framework.util.StringUtil;
 import org.seasar.framework.xml.SaxHandlerParser;
+import org.seasar.teeda.core.config.AbstractFacesConfigurator;
 import org.seasar.teeda.core.config.element.FacesConfig;
 
 

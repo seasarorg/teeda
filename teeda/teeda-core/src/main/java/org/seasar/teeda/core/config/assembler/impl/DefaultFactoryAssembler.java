@@ -5,48 +5,48 @@ import java.util.List;
 
 import javax.faces.FactoryFinder;
 
-import org.seasar.teeda.core.config.assembler.FactoriesAssembler;
 import org.seasar.teeda.core.config.assembler.FactoryAssembler;
+import org.seasar.teeda.core.config.assembler.FactoryChildAssembler;
 import org.seasar.teeda.core.config.element.FactoryElement;
 import org.seasar.teeda.core.util.IteratorUtil;
 
 /**
  * @author Shinpei Ohtani(aka shot)
  */
-public class DefaultFactoriesAssembler extends FactoriesAssembler {
+public class DefaultFactoryAssembler extends FactoryAssembler {
 
-    private FactoryAssembler applicationFactory_;
+    private FactoryChildAssembler applicationFactory_;
     
-    private FactoryAssembler facesContextFactory_;
+    private FactoryChildAssembler facesContextFactory_;
     
-    private FactoryAssembler lifecycleFactory_;
+    private FactoryChildAssembler lifecycleFactory_;
     
-    private FactoryAssembler renderKitFactory_;
+    private FactoryChildAssembler renderKitFactory_;
     
-    public DefaultFactoriesAssembler(List factories) {
+    public DefaultFactoryAssembler(List factories) {
         super(factories);
     }
 
     protected void setupBeforeAssemble() {
-        applicationFactory_ = new FactoryAssembler(){
+        applicationFactory_ = new FactoryChildAssembler(){
             protected String getFactoryClassName() {
                 return FactoryFinder.APPLICATION_FACTORY;
             }
         };
         
-        facesContextFactory_ = new FactoryAssembler(){
+        facesContextFactory_ = new FactoryChildAssembler(){
             protected String getFactoryClassName() {
                 return FactoryFinder.FACES_CONTEXT_FACTORY;
             }
         };
         
-        lifecycleFactory_ = new FactoryAssembler(){
+        lifecycleFactory_ = new FactoryChildAssembler(){
             protected String getFactoryClassName() {
                 return FactoryFinder.LIFECYCLE_FACTORY;
             }
         };
         
-        renderKitFactory_ = new FactoryAssembler(){
+        renderKitFactory_ = new FactoryChildAssembler(){
             protected String getFactoryClassName() {
                 return FactoryFinder.RENDER_KIT_FACTORY;
             }

@@ -1,5 +1,7 @@
 package org.seasar.teeda.core.application;
 
+import javax.faces.application.Application;
+
 import org.seasar.extension.unit.S2TestCase;
 
 
@@ -30,6 +32,7 @@ public class ApplicationFactoryImplTest extends S2TestCase {
     public void testApplicationFactoryImpl(){
         super.include("applicationTest.dicon");
         ApplicationFactoryImpl factory = new ApplicationFactoryImpl();
-        assertNotNull(factory.getApplication());
+        Application app = factory.getApplication();
+        assertNotNull(app);
     }
 }

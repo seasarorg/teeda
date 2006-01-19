@@ -16,14 +16,17 @@
   <developers>
     <developer>
       <id>shot</id>
-      <name></name>
-      <email></email>
-      <url></url>
-      <organization></organization>
-      <organizationUrl></organizationUrl>
-      <roles></roles>
+      <name>Shinpei Ohtani</name>
+      <email>shinpei.ohtani@gmail.com</email>
+      <url>http://d.hatena.ne.jp/shot6/</url>
       <timezone>+9</timezone>
-      <properties></properties>
+    </developer>
+    <developer>
+      <id>manhole</id>
+      <name>HONMA Hirotaka</name>
+      <email>manholex@gmail.com</email>
+      <url>http://popo.dyndns.info/~manhole/diary/</url>
+      <timezone>+9</timezone>
     </developer>
   </developers>
   <licenses>

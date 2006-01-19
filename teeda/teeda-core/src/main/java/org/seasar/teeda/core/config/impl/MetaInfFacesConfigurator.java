@@ -13,7 +13,7 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.core.config;
+package org.seasar.teeda.core.config.impl;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,6 +27,7 @@ import javax.faces.context.ExternalContext;
 import org.seasar.framework.container.factory.ResourceResolver;
 import org.seasar.framework.util.InputStreamUtil;
 import org.seasar.framework.util.JarFileUtil;
+import org.seasar.teeda.core.config.AbstractFacesConfigurator;
 
 public class MetaInfFacesConfigurator extends AbstractFacesConfigurator {
 

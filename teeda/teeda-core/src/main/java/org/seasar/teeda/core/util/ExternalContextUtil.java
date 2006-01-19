@@ -20,7 +20,7 @@ import javax.faces.context.ExternalContext;
 
 /**
  * @author higa
- *  
+ * 
  */
 public class ExternalContextUtil {
 

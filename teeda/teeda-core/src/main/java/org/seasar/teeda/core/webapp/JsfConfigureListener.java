@@ -22,17 +22,23 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
 import org.seasar.teeda.core.config.FacesConfigBuilder;
-import org.seasar.teeda.core.config.assembler.AssemblerFactory;
+import org.seasar.teeda.core.config.assembler.AssemblerAssembler;
 import org.seasar.teeda.core.config.element.FacesConfig;
+import org.seasar.teeda.core.config.webapp.WebappConfigBuilder;
+import org.seasar.teeda.core.config.webapp.element.WebappConfig;
 import org.seasar.teeda.core.util.DIContainerUtil;
 
 /**
- * @author Shinpei Ohtani(aka shot)
+ * @author shot
  */
 public class JsfConfigureListener implements ServletContextListener {
 
-    static final String FACES_INIT_DONE = JsfConfigureListener.class.getName() + ".FACES_INIT_DONE";  
-    
+    private static final String FACES_INIT_DONE = JsfConfigureListener.class
+            .getName()
+            + ".FACES_INIT_DONE";
+
+    private static final String WEB_XML_PATH = "/WEB-INF/web.xml";
+
     public void contextInitialized(ServletContextEvent event) {
         initializeFaces(event.getServletContext());
     }
@@ -41,41 +47,47 @@ public class JsfConfigureListener implements ServletContextListener {
         FactoryFinder.releaseFactories();
     }
 
-    private void initializeFaces(ServletContext context){
-        
-        Boolean b = (Boolean)context.getAttribute(FACES_INIT_DONE);
-        boolean isAlreadyInitialized = ( b != null) ? b.booleanValue() : false;
-        if(!isAlreadyInitialized){
-            
-            FacesConfigBuilder builder = 
-                (FacesConfigBuilder)DIContainerUtil.getComponent(FacesConfigBuilder.class); 
-            
-            FacesConfig facesConfig = builder.createFacesConfigs(); 
+    private void initializeFaces(ServletContext context) {
 
-            ExternalContext externalContext = 
-                (ExternalContext)DIContainerUtil.getComponent(ExternalContext.class);
-            
-            AssemblerFactory.assembleFactories(facesConfig);
-            
-            AssemblerFactory.assembleApplication(facesConfig);
-            
-            AssemblerFactory.assembleManagedBeans(facesConfig);
+        Boolean b = (Boolean) context.getAttribute(FACES_INIT_DONE);
+        boolean isAlreadyInitialized = (b != null) ? b.booleanValue() : false;
+        if (!isAlreadyInitialized) {
 
-            AssemblerFactory.assmbleNavigationRules(facesConfig, externalContext);
+            FacesConfigBuilder facesConfigBuilder = (FacesConfigBuilder) DIContainerUtil
+                    .getComponent(FacesConfigBuilder.class);
 
-            AssemblerFactory.assembleLifecycle(facesConfig, externalContext);
-            
-            AssemblerFactory.assembleRenderKits(facesConfig);
-            
-            
-            
-            //init web.xml
-            
+            FacesConfig facesConfig = facesConfigBuilder.createFacesConfigs();
+
+            AssemblerAssembler assembler = (AssemblerAssembler) DIContainerUtil
+                    .getComponent(AssemblerAssembler.class);
+
+            assembler.assembleFactories(facesConfig);
+
+            assembler.assembleApplication(facesConfig);
+
+            assembler.assembleManagedBeans(facesConfig);
+
+            assembler.assmbleNavigationRules(facesConfig);
+
+            assembler.assembleLifecycle(facesConfig);
+
+            assembler.assembleRenderKits(facesConfig);
+
+            WebappConfigBuilder webAppConfigBuilder = (WebappConfigBuilder) DIContainerUtil
+                    .getComponent(WebappConfigBuilder.class);
+
+            ExternalContext externalContext = (ExternalContext) DIContainerUtil
+                    .getComponent(ExternalContext.class);
+
+            WebappConfig webappConfig = webAppConfigBuilder
+                    .build(externalContext.getResourceAsStream(WEB_XML_PATH));
+
+            externalContext.getApplicationMap().put(webappConfig.getClass().getName(), webappConfig);
             
             context.setAttribute(FACES_INIT_DONE, Boolean.TRUE);
-            
+
         }
-        
+
     }
-    
+
 }

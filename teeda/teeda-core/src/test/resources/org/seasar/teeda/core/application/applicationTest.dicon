@@ -4,11 +4,11 @@
 <components namespace="jsf" >
 
 	<component name="valueBindingContext" class="org.seasar.teeda.core.el.impl.ValueBindingContextImpl">
-		<property name="valueBindingName">"org.seasar.teeda.core.el.ValueBindingImpl"</property>
+		<property name="valueBindingName">"org.seasar.teeda.core.el.impl.ValueBindingImpl"</property>
 	</component>
 
 	<component name="methodBindingContext" class="org.seasar.teeda.core.el.impl.MethodBindingContextImpl">
-		<property name="methodBindingName">"org.seasar.teeda.core.el.MethodBindingImpl"</property>
+		<property name="methodBindingName">"org.seasar.teeda.core.el.impl.MethodBindingImpl"</property>
 		<initMethod name="setValueBindingContext">
 			<arg>valueBindingContext</arg>
 		</initMethod>

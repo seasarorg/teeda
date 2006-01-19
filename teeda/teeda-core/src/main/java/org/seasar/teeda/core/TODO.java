@@ -16,7 +16,7 @@
 package org.seasar.teeda.core;
 
 /**
- * @author Shinpei Ohtani
+ * @author shot
  */
 public interface TODO {
     /*

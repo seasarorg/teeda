@@ -28,7 +28,9 @@ import org.seasar.framework.xml.SaxHandlerParser;
 import org.seasar.framework.xml.TagHandlerRule;
 import org.seasar.teeda.core.config.element.FacesConfig;
 
-
+/**
+ * @author shot
+ */
 public abstract class AbstractFacesConfigurator implements FacesConfigurator{
 
     private static final String FACES_CONFIG_1_1 = "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.1//EN";
@@ -47,8 +49,9 @@ public abstract class AbstractFacesConfigurator implements FacesConfigurator{
     }
     
     public FacesConfig configure(){
+        String path = getPath();
         SaxHandlerParser parser = createSaxHandlerParser();
-        InputStream is = resourceResolver_.getInputStream(getPath());
+        InputStream is = resourceResolver_.getInputStream(path);
         if(is == null){
             return null;
         }

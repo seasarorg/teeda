@@ -13,29 +13,34 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.core.config;
+package org.seasar.teeda.core.config.impl;
 
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.seasar.teeda.core.config.FacesConfigBuilder;
+import org.seasar.teeda.core.config.FacesConfigurator;
 import org.seasar.teeda.core.config.element.FacesConfig;
 
-public class FacesConfigBuilderImpl implements FacesConfigBuilder{
+/**
+ * @author shot
+ */
+public class FacesConfigBuilderImpl implements FacesConfigBuilder {
 
-    private List configurators_ = Collections.synchronizedList(new LinkedList());
-    
-	public FacesConfigBuilderImpl(){
-	}
-	
-    public FacesConfig createFacesConfigs(){
+    private List configurators_ = Collections
+            .synchronizedList(new LinkedList());
+
+    public FacesConfigBuilderImpl() {
+    }
+
+    public FacesConfig createFacesConfigs() {
         List configs = new LinkedList();
-        FacesConfigurator configurator = null;
-        for(Iterator itr = configurators_.iterator();itr.hasNext();){
-            configurator = (FacesConfigurator)itr.next();
+        for (Iterator itr = configurators_.iterator(); itr.hasNext();) {
+            FacesConfigurator configurator = (FacesConfigurator) itr.next();
             FacesConfig config = configurator.configure();
-            if(config != null){
+            if (config != null) {
                 configs.add(config);
             }
         }

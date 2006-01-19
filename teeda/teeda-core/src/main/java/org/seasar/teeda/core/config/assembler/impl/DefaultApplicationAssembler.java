@@ -1,14 +1,14 @@
 package org.seasar.teeda.core.config.assembler.impl;
 
-import java.util.List;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 
 import javax.faces.application.Application;
 
 import org.seasar.teeda.core.config.assembler.ApplicationAssembler;
 import org.seasar.teeda.core.config.assembler.ApplicationAssemblerHelper;
-import org.seasar.teeda.core.config.assembler.JsfAssembler;
+import org.seasar.teeda.core.config.assembler.ApplicationChildAssembler;
 import org.seasar.teeda.core.config.element.ApplicationElement;
 import org.seasar.teeda.core.util.ApplicationUtil;
 import org.seasar.teeda.core.util.IteratorUtil;
@@ -24,7 +24,7 @@ public class DefaultApplicationAssembler extends ApplicationAssembler{
     public void assemble() {
         List assemblers = helper_.getCollectedAssemblers();
         for(Iterator itr = IteratorUtil.getIterator(assemblers);itr.hasNext();){
-            JsfAssembler assembler = (JsfAssembler)itr.next();
+            ApplicationChildAssembler assembler = (ApplicationChildAssembler)itr.next();
             assembler.assemble();
         }
     }
