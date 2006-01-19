@@ -16,6 +16,10 @@ import javax.faces.render.Renderer;
 
 public class MockUIComponent extends UIComponent {
 
+    public static final String COMPONENT_FAMILY = "javax.faces.mock";
+    
+    public static final String COMPONENT_TYPE = "javax.faces.mock";
+    
     private UIComponent parent_ = null;
 
     private FacesEvent event_;
@@ -26,7 +30,9 @@ public class MockUIComponent extends UIComponent {
 
     private Map facets_ = new HashMap();
 
-    private String family_;
+    private String family_ = COMPONENT_FAMILY;
+    
+    private String type_ = COMPONENT_TYPE;
 
     public Map getAttributes() {
         return null;
@@ -79,10 +85,11 @@ public class MockUIComponent extends UIComponent {
     }
 
     public String getRendererType() {
-        return null;
+        return type_;
     }
 
     public void setRendererType(String type) {
+        type_ = type;
     }
 
     public boolean getRendersChildren() {

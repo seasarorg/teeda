@@ -31,7 +31,7 @@ import javax.faces.el.MethodBinding;
 import javax.faces.convert.Converter;
 
 /**
- * @author Shinpei Ohtani
+ * @author shot
  */
 public abstract class Application {
 	public abstract javax.faces.event.ActionListener getActionListener();

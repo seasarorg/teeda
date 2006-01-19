@@ -39,13 +39,15 @@ import org.seasar.teeda.core.mock.MockPhaseListener;
 import org.seasar.teeda.core.mock.MockPropertyResolver;
 import org.seasar.teeda.core.mock.MockRenderKit;
 import org.seasar.teeda.core.mock.MockRenderKitFactory;
+import org.seasar.teeda.core.mock.MockRenderer;
+import org.seasar.teeda.core.mock.MockUIComponent;
 import org.seasar.teeda.core.mock.MockVariableResolver;
 import org.seasar.teeda.core.mock.MockViewHandler;
 import org.seasar.teeda.core.scope.impl.S2ScopeTranslator;
 import org.seasar.teeda.core.scope.impl.ScopeManagerImpl;
 
 /**
- * @author Shinpei Ohtani(aka shot)
+ * @author shot
  * 
  * Set up JSF env for easy-testing JSF Application and view.
  */
@@ -91,7 +93,6 @@ public abstract class TeedaTestCase extends S2FrameworkTestCase {
         application.setVariableResolver(variableResolver);
         viewHandler = new MockViewHandler();
         application.setViewHandler(viewHandler);
-
         facesContext = new MockFacesContextImpl(externalContext, application);
         HtmlResponseWriter responseWriter = new HtmlResponseWriter();
         responseWriter.setWriter(getResponse().getWriter());
@@ -100,13 +101,18 @@ public abstract class TeedaTestCase extends S2FrameworkTestCase {
         viewRoot.setRenderKitId(RenderKitFactory.HTML_BASIC_RENDER_KIT);
         facesContext.setViewRoot(viewRoot);
         renderKit = new MockRenderKit();
+        
+        //default setting 
+        MockRenderer renderer = new MockRenderer();
+        renderKit.addRenderer(MockUIComponent.COMPONENT_FAMILY, MockUIComponent.COMPONENT_TYPE, renderer);
+        
         lifecycle = new MockLifecycle();
         phaseListener = new MockPhaseListener();
         lifecycle.addPhaseListener(phaseListener);
         initFactories();
         setFactories();
     }
-
+    
     protected void initFactories() {
         FactoryFinder.setFactory(FactoryFinder.APPLICATION_FACTORY,
                 "org.seasar.teeda.core.mock.MockApplicationFactory");

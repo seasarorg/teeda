@@ -13,32 +13,13 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package javax.faces;
+package org.seasar.teeda.core.mock;
+
+import javax.faces.render.Renderer;
 
 /**
  * @author shot
  */
-public class FacesException extends RuntimeException {
+public class MockRenderer extends Renderer {
 
-	private static final long serialVersionUID = 3906091139550491188L;
-
-    public FacesException() {
-		super();
-	}
-
-	public FacesException(String message) {
-		super(message);
-	}
-
-	public FacesException(String message, Throwable cause) {
-		super(message, cause);
-	}
-
-	public FacesException(Throwable cause) {
-		super(cause);
-	}
-
-	public Throwable getCause(){
-		return super.getCause();
-	}
 }

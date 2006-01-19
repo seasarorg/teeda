@@ -29,7 +29,7 @@ import javax.faces.lifecycle.LifecycleFactory;
 import javax.faces.render.RenderKitFactory;
 
 /**
- * @author Shinpei Ohtani
+ * @author shot
  */
 class FactoryFinderUtil_ {
 

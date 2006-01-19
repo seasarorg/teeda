@@ -19,7 +19,7 @@ import org.seasar.framework.util.ArrayUtil;
 import org.seasar.teeda.core.render.html.HtmlRenderKitImpl;
 
 /**
- * @author Shinpei Ohtani
+ * @author shot
  * @author manhole
  */
 public interface JsfConstants {

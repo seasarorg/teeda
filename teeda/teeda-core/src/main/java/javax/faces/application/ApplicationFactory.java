@@ -16,7 +16,7 @@
 package javax.faces.application;
 
 /**
- * @author Shinpei Ohtani
+ * @author shot
  */
 public abstract class ApplicationFactory {
 

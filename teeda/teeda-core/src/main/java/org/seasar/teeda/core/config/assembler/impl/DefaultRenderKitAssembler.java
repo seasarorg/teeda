@@ -27,7 +27,6 @@ import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.config.assembler.RenderKitAssembler;
 import org.seasar.teeda.core.config.element.RenderKitElement;
 import org.seasar.teeda.core.config.element.RendererElement;
-import org.seasar.teeda.core.util.ClassUtil;
 import org.seasar.teeda.core.util.FactoryFinderUtil;
 import org.seasar.teeda.core.util.IteratorUtil;
 
@@ -37,16 +36,15 @@ import org.seasar.teeda.core.util.IteratorUtil;
 public class DefaultRenderKitAssembler extends RenderKitAssembler {
 
     private static Logger logger_ = Logger.getLogger(DefaultRenderKitAssembler.class);
+    
     public DefaultRenderKitAssembler(Map renderKits) {
         super(renderKits);
     }
 
     protected void setupBeforeAssemble() {
         for (Iterator itr = IteratorUtil.getIterator(getRenderKits()); itr.hasNext();) {
-            Map.Entry entry = (Map.Entry) itr.next();
-            String renderKitId = (String) entry.getKey();
-            RenderKitElement renderKitElement = (RenderKitElement) entry
-                    .getValue();
+            String renderKitId = (String) itr.next();
+            RenderKitElement renderKitElement = (RenderKitElement)getRenderKits().get(renderKitId);
             isAllSuitableJsfElement(renderKitElement.getRendererElements(), RendererElement.class);
         }
     }
@@ -55,10 +53,8 @@ public class DefaultRenderKitAssembler extends RenderKitAssembler {
         RenderKitFactory renderKitFactory = FactoryFinderUtil
                 .getRenderKitFactory();
         for (Iterator itr = IteratorUtil.getIterator(getRenderKits()); itr.hasNext();) {
-            Map.Entry entry = (Map.Entry) itr.next();
-            String renderKitId = (String) entry.getKey();
-            RenderKitElement renderKitElement = (RenderKitElement) entry
-                    .getValue();
+            String renderKitId = (String) itr.next();
+            RenderKitElement renderKitElement = (RenderKitElement)getRenderKits().get(renderKitId);
             String className = getRenderKitClassName(renderKitElement);
             RenderKit renderKit = createRenderKit(className);
 
@@ -67,9 +63,7 @@ public class DefaultRenderKitAssembler extends RenderKitAssembler {
                 RendererElement rendererElement = (RendererElement) i.next();
                 String rendererClass = rendererElement.getRendererClass();
                 Renderer renderer = createRenderer(rendererClass);
-                if(renderer != null){
-                    renderKit.addRenderer(rendererElement.getComponentFamily(), rendererElement.getRendererType(), renderer);
-                }
+                renderKit.addRenderer(rendererElement.getComponentFamily(), rendererElement.getRendererType(), renderer);
             }
             renderKitFactory.addRenderKit(renderKitElement.getRenderKitId(), renderKit);
         }
@@ -96,8 +90,5 @@ public class DefaultRenderKitAssembler extends RenderKitAssembler {
         }
         return renderer;
     }
-    
-    private Object newInstance(String className){
-        return ClassUtil.newInstance(className);
-    }
+
 }

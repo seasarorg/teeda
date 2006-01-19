@@ -23,7 +23,7 @@ import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 
 /**
- * @author Shinpei Ohtani
+ * @author shot
  */
 public abstract class ViewHandler {
 

@@ -19,6 +19,7 @@ import java.util.Collections;
 import java.util.Map;
 
 import org.seasar.teeda.core.config.element.RenderKitElement;
+import org.seasar.teeda.core.util.ClassUtil;
 
 /**
  * @author shot
@@ -36,5 +37,9 @@ public abstract class RenderKitAssembler extends AbstractJsfAssembler {
     protected final Map getRenderKits(){
         return renderKits_;
     }
-        
+    
+    protected Object newInstance(String className){
+        return ClassUtil.newInstance(className);
+    }
+
 }
