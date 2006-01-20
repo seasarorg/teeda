@@ -47,7 +47,13 @@ public class ManagedBeanFactoryImplTest extends TeedaTestCase {
 		assertEquals("init:destroy", c.toString());
 	}
 	
-	
+	public void testSetManagedBean4() throws Exception {
+        ManagedBeanFactoryImpl factory = getManagedBeanFactory();
+        factory.setManagedBean("a", A.class, Scope.REQUEST);
+        factory.setManagedBean("b", A.class, Scope.REQUEST);
+        A a = (A)factory.getManagedBean("b");
+        assertEquals("hoge", a.getStr());
+    }
 	
 	//scope matter
 	//

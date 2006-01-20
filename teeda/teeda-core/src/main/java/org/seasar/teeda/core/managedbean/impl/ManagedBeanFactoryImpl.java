@@ -30,7 +30,7 @@ import org.seasar.teeda.core.scope.Scope;
 import org.seasar.teeda.core.scope.ScopeManager;
 
 /**
- * @author Shinpei Ohtani
+ * @author shot
  */
 public class ManagedBeanFactoryImpl implements ManagedBeanFactory {
 

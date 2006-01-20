@@ -19,30 +19,32 @@ import org.seasar.teeda.core.scope.Scope;
 import org.seasar.teeda.core.scope.ScopeManager;
 
 /**
- * @author Shinpei Ohtani
+ * @author shot
  */
 public interface ManagedBeanFactory {
 
     public Object getManagedBean(String name);
-    
+
     public Scope getManagedBeanScope(String name);
-    
+
     /**
-     * normal managed bean setting 
+     * normal managed bean setting
      */
     public void setManagedBean(String name, Class type, Scope scope);
-    
+
     /**
-     * extend managed bean setting(init and destroy method called) 
+     * extend managed bean setting(init and destroy method called)
      */
-    public void setManagedBean(String name, Class type, Scope scope, String initMethodName, String destroyMethodName);
-    
+    public void setManagedBean(String name, Class type, Scope scope,
+            String initMethodName, String destroyMethodName);
+
     public void setScopeManager(ScopeManager ScopeManager);
-    
+
     public ScopeManager getScopeManager();
-    
-	public void setManagedBeanScopeSaver(ManagedBeanScopeSaver managedBeanScopeSaver);
-	
-	public ManagedBeanScopeSaver getManagedBeanScopeSaver();
+
+    public void setManagedBeanScopeSaver(
+            ManagedBeanScopeSaver managedBeanScopeSaver);
+
+    public ManagedBeanScopeSaver getManagedBeanScopeSaver();
 
 }

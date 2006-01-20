@@ -16,21 +16,22 @@
 package org.seasar.teeda.core.scope;
 
 /**
- * @author Shinpei Ohtani
+ * @author shot
  * 
- * Manage default scopes, user-custom scopes, 
- * and scope translation to JSF external scope specs. 
+ * Manage default scopes, user-custom scopes, and scope translation from JSF to
+ * external frameworks of JSF.
  */
 public interface ScopeManager {
 
-	public Scope getScope(String scopeKey);
-	
-	public void addScope(Scope scope, Object outerComponentScope) throws ScopeAlreadyRegisteredException;
-	
-	public boolean isDefaultScope(Scope scope);
-	
-	public void setScopeTranslator(ScopeTranslator translator);
-	
-	public ScopeTranslator getScopeTranslator();
-	
+    public Scope getScope(String scopeKey);
+
+    public void addScope(Scope scope, Object outerComponentScope)
+            throws ScopeAlreadyRegisteredException;
+
+    public boolean isDefaultScope(Scope scope);
+
+    public void setScopeTranslator(ScopeTranslator translator);
+
+    public ScopeTranslator getScopeTranslator();
+
 }

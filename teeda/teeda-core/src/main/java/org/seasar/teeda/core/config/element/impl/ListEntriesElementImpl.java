@@ -35,6 +35,7 @@ public class ListEntriesElementImpl implements ListEntriesElement {
 
 	public void setNullValue(boolean nullValue) {
         nullValue_ = nullValue;
+        values_.add(null);
 	}
 
 	public boolean isNullValue() {
