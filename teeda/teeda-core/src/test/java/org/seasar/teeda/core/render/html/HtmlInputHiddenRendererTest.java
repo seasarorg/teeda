@@ -131,6 +131,11 @@ public class HtmlInputHiddenRendererTest extends RendererTest {
         // ## Assert ##
         assertEquals("12345", htmlInputHidden.getSubmittedValue());
     }
+    
+    public void testGetRendersChildren() throws Exception {
+        HtmlInputHiddenRenderer renderer = new HtmlInputHiddenRenderer();
+        assertEquals(false, renderer.getRendersChildren());
+    }
 
     private HtmlInputHiddenRenderer createHtmlInputHiddenRenderer() {
         return (HtmlInputHiddenRenderer) createRenderer();

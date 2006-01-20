@@ -172,6 +172,11 @@ public class HtmlOutputFormatRendererTest extends RendererTest {
         assertEquals(Locale.CHINESE, renderer.getLocale(context));
     }
 
+    public void testGetRendersChildren() throws Exception {
+        HtmlOutputFormatRenderer renderer = new HtmlOutputFormatRenderer();
+        assertEquals(false, renderer.getRendersChildren());
+    }
+
     protected MockFacesContext getFacesContext() {
         MockFacesContext context = super.getFacesContext();
         UIViewRoot viewRoot = new UIViewRoot();

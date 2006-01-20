@@ -375,18 +375,32 @@ public class HtmlCommandButtonTest extends UICommandTeedaTest {
         assertEquals("bar title", component.getTitle());
     }
 
-    public void testSetGetType() throws Exception {
+    // ----
+
+    public void testSetGetType_SubmitIfNull() throws Exception {
         HtmlCommandButton component = createHtmlCommandButton();
-        component.setType("foo type");
-        assertEquals("foo type", component.getType());
+        component.setType(null);
+        assertEquals("submit", component.getType());
+    }
+
+    public void testSetGetType_SubmitIfInvalid() throws Exception {
+        HtmlCommandButton component = createHtmlCommandButton();
+        component.setType("aaa");
+        assertEquals("submit", component.getType());
+    }
+
+    public void testSetGetType_Reset() throws Exception {
+        HtmlCommandButton component = createHtmlCommandButton();
+        component.setType("reset");
+        assertEquals("reset", component.getType());
     }
 
     public void testSetGetType_ValueBinding() throws Exception {
         HtmlCommandButton component = createHtmlCommandButton();
         MockValueBinding vb = new MockValueBinding();
-        vb.setValue(getFacesContext(), "bar type");
+        vb.setValue(getFacesContext(), "reset");
         component.setValueBinding("type", vb);
-        assertEquals("bar type", component.getType());
+        assertEquals("reset", component.getType());
     }
 
     private HtmlCommandButton createHtmlCommandButton() {

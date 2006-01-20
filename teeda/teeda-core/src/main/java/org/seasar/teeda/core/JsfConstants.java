@@ -250,6 +250,13 @@ public interface JsfConstants {
             .add(TEXTAREA_ATTRIBUTES,
                     COMMON_FIELD_PASSTROUGH_ATTRIBUTES_WITHOUT_DISABLED);
 
+    public static final String[] BUTTON_ATTRIBUTES = { ALIGN_ATTR, ALT_ATTR,
+            DATAFLD_ATTR, DATASRC_ATTR, DATAFORMATAS_ATTR, };
+
+    public static final String[] BUTTON_PASSTHROUGH_ATTRIBUTES_WITHOUT_DISABLED = (String[]) ArrayUtil
+            .add(BUTTON_ATTRIBUTES,
+                    COMMON_FIELD_PASSTROUGH_ATTRIBUTES_WITHOUT_DISABLED);
+
     public String DEFAULT_RENDERKIT_CLASS = HtmlRenderKitImpl.class.getName();
 
 }

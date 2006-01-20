@@ -263,6 +263,11 @@ public class HtmlOutputLinkRendererTest extends RendererTest {
         assertEquals(diff.toString(), true, diff.identical());
     }
 
+    public void testGetRendersChildren() throws Exception {
+        HtmlOutputLinkRenderer renderer = new HtmlOutputLinkRenderer();
+        assertEquals(false, renderer.getRendersChildren());
+    }
+
     private HtmlOutputLinkRenderer createHtmlOutputLinkRenderer() {
         return (HtmlOutputLinkRenderer) createRenderer();
     }

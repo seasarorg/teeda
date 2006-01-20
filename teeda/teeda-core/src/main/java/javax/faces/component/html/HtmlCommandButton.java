@@ -21,6 +21,7 @@ import javax.faces.el.ValueBinding;
 
 /**
  * @author shot
+ * @author manhole
  */
 public class HtmlCommandButton extends UICommand {
 
@@ -32,7 +33,11 @@ public class HtmlCommandButton extends UICommand {
 
     private static final boolean DEFAULT_READONLY = false;
 
-    private static final String DEFAULT_TYPE = "submit";
+    private static final String SUBMIT = "submit";
+
+    private static final String RESET = "reset";
+
+    private static final String DEFAULT_TYPE = SUBMIT;
 
     private String accesskey_ = null;
 
@@ -396,6 +401,14 @@ public class HtmlCommandButton extends UICommand {
     }
 
     public String getType() {
+        String type = getType0();
+        if (RESET.equalsIgnoreCase(type)) {
+            return RESET;
+        }
+        return DEFAULT_TYPE;
+    }
+
+    private String getType0() {
         if (type_ != null) {
             return type_;
         }

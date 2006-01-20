@@ -175,6 +175,11 @@ public class HtmlOutputTextRendererTest extends RendererTest {
         assertEquals(diff.toString(), true, diff.identical());
     }
 
+    public void testGetRendersChildren() throws Exception {
+        HtmlOutputTextRenderer renderer = new HtmlOutputTextRenderer();
+        assertEquals(false, renderer.getRendersChildren());
+    }
+
     private HtmlOutputTextRenderer createHtmlOutputTextRenderer() {
         return (HtmlOutputTextRenderer) createRenderer();
     }

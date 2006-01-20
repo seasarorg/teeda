@@ -163,6 +163,11 @@ public class HtmlInputTextareaRendererTest extends RendererTest {
         assertEquals(diff.toString(), true, diff.identical());
     }
 
+    public void testGetRendersChildren() throws Exception {
+        HtmlInputTextareaRenderer renderer = new HtmlInputTextareaRenderer();
+        assertEquals(false, renderer.getRendersChildren());
+    }
+
     private HtmlInputTextareaRenderer createHtmlInputTextareaRenderer() {
         return (HtmlInputTextareaRenderer) createRenderer();
     }

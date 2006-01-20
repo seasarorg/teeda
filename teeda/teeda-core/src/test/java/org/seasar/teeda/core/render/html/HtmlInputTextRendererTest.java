@@ -52,6 +52,7 @@ public class HtmlInputTextRendererTest extends RendererTest {
         HtmlInputTextRenderer renderer = createHtmlInputTextRenderer();
         MockHtmlInputText htmlInputText = new MockHtmlInputText();
         htmlInputText.setRenderer(renderer);
+
         htmlInputText.setValue("abc");
         MockFacesContext context = getFacesContext();
 
@@ -68,6 +69,7 @@ public class HtmlInputTextRendererTest extends RendererTest {
         HtmlInputTextRenderer renderer = createHtmlInputTextRenderer();
         MockHtmlInputText htmlInputText = new MockHtmlInputText();
         htmlInputText.setRenderer(renderer);
+
         htmlInputText.setId("a");
 
         UIComponent parent = new MockUIComponentBaseWithNamingContainer();
@@ -142,6 +144,7 @@ public class HtmlInputTextRendererTest extends RendererTest {
         HtmlInputTextRenderer renderer = createHtmlInputTextRenderer();
         MockHtmlInputText htmlInputText = new MockHtmlInputText();
         htmlInputText.setRenderer(renderer);
+
         htmlInputText.setClientId("key");
 
         MockFacesContext context = getFacesContext();
@@ -158,6 +161,7 @@ public class HtmlInputTextRendererTest extends RendererTest {
         HtmlInputTextRenderer renderer = createHtmlInputTextRenderer();
         MockHtmlInputText htmlInputText = new MockHtmlInputText();
         htmlInputText.setRenderer(renderer);
+
         htmlInputText.setClientId("key");
 
         MockFacesContext context = getFacesContext();
@@ -168,6 +172,11 @@ public class HtmlInputTextRendererTest extends RendererTest {
 
         // ## Assert ##
         assertEquals("12345", htmlInputText.getSubmittedValue());
+    }
+
+    public void testGetRendersChildren() throws Exception {
+        HtmlInputTextRenderer renderer = new HtmlInputTextRenderer();
+        assertEquals(false, renderer.getRendersChildren());
     }
 
     private HtmlInputTextRenderer createHtmlInputTextRenderer() {

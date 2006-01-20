@@ -173,6 +173,11 @@ public class HtmlOutputLabelRendererTest extends RendererTest {
         assertEquals(diff.toString(), true, diff.identical());
     }
 
+    public void testGetRendersChildren() throws Exception {
+        HtmlOutputLabelRenderer renderer = new HtmlOutputLabelRenderer();
+        assertEquals(false, renderer.getRendersChildren());
+    }
+
     private HtmlOutputLabelRenderer createHtmlOutputLabelRenderer() {
         return (HtmlOutputLabelRenderer) createRenderer();
     }
