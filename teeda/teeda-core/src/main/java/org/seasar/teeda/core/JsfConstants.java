@@ -258,5 +258,7 @@ public interface JsfConstants {
                     COMMON_FIELD_PASSTROUGH_ATTRIBUTES_WITHOUT_DISABLED);
 
     public String DEFAULT_RENDERKIT_CLASS = HtmlRenderKitImpl.class.getName();
+    
+    public String WEB_XML_PATH = "/WEB-INF/web.xml";
 
 }

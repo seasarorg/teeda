@@ -71,6 +71,8 @@ public class MockApplication extends Application {
 
     private Map convertersByClass_ = new HashMap();
 
+    private Map validators_ = new HashMap();
+    
     public MockApplication() {
     }
 
@@ -213,6 +215,19 @@ public class MockApplication extends Application {
         return converter;
     }
 
+    public void addValidator(String validatorId, String validatorClass) {
+        validators_.put(validatorId, validatorClass);
+    }
+
+    public Validator createValidator(String validatorId) throws FacesException {
+        String validatorClass = (String) validators_.get(validatorId);
+        Validator v = null;
+        if(validatorClass != null){
+            v = (Validator) ClassUtil.newInstance(validatorClass);
+        }
+        return v;
+    }
+
     public Iterator getComponentTypes() {
         return null;
     }
@@ -239,21 +254,6 @@ public class MockApplication extends Application {
 
     public MethodBinding createMethodBinding(String ref, Class[] params)
             throws ReferenceSyntaxException {
-        return null;
-    }
-
-    /**
-     * 
-     */
-
-    public void addValidator(String validatorId, String validatorClass) {
-    }
-
-    /**
-     * 
-     */
-
-    public Validator createValidator(String validatorId) throws FacesException {
         return null;
     }
 

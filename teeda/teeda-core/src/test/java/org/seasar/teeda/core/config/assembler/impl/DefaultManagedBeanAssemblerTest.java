@@ -57,6 +57,7 @@ public class DefaultManagedBeanAssemblerTest extends TeedaTestCase {
         assertEquals("default", a.getName());
     }
 
+    //need to fix.
     public void testComplexAssemble() throws Exception {
         /*
          * <context-param> <param-name>defaultName </param-name>

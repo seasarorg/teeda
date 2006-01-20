@@ -21,6 +21,7 @@ import java.util.Map;
 import javax.faces.application.Application;
 
 import org.seasar.teeda.core.config.assembler.ValidatorAssembler;
+import org.seasar.teeda.core.config.element.ValidatorElement;
 import org.seasar.teeda.core.util.ApplicationUtil;
 import org.seasar.teeda.core.util.IteratorUtil;
 
@@ -30,7 +31,7 @@ import org.seasar.teeda.core.util.IteratorUtil;
 public class DefaultValidatorAssembler extends ValidatorAssembler {
 
     private Application application_;
-    
+
     public DefaultValidatorAssembler(Map validators) {
         super(validators);
     }
@@ -40,12 +41,12 @@ public class DefaultValidatorAssembler extends ValidatorAssembler {
     }
 
     public void assemble() {
-        String validatorId = null;
-        String validatorClass = null;
-        for(Iterator itr = IteratorUtil.getEntryIterator(getValidators());itr.hasNext();){
-            Map.Entry entry = (Map.Entry)itr.next();
-            validatorId = (String)entry.getKey();
-            validatorClass = (String)entry.getValue();
+        for (Iterator itr = IteratorUtil.getEntryIterator(getValidators()); itr
+                .hasNext();) {
+            Map.Entry entry = (Map.Entry) itr.next();
+            String validatorId = (String) entry.getKey();
+            ValidatorElement validatorElement = (ValidatorElement) entry.getValue();
+            String validatorClass = validatorElement.getValidatorClass();
             application_.addValidator(validatorId, validatorClass);
         }
     }

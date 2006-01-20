@@ -21,6 +21,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
+import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.config.FacesConfigBuilder;
 import org.seasar.teeda.core.config.assembler.AssemblerAssembler;
 import org.seasar.teeda.core.config.element.FacesConfig;
@@ -36,8 +37,6 @@ public class JsfConfigureListener implements ServletContextListener {
     private static final String FACES_INIT_DONE = JsfConfigureListener.class
             .getName()
             + ".FACES_INIT_DONE";
-
-    private static final String WEB_XML_PATH = "/WEB-INF/web.xml";
 
     public void contextInitialized(ServletContextEvent event) {
         initializeFaces(event.getServletContext());
@@ -80,7 +79,7 @@ public class JsfConfigureListener implements ServletContextListener {
                     .getComponent(ExternalContext.class);
 
             WebappConfig webappConfig = webAppConfigBuilder
-                    .build(externalContext.getResourceAsStream(WEB_XML_PATH));
+                    .build(externalContext.getResourceAsStream(JsfConstants.WEB_XML_PATH));
 
             externalContext.getApplicationMap().put(webappConfig.getClass().getName(), webappConfig);
             
