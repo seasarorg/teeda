@@ -34,6 +34,7 @@ import org.seasar.teeda.core.mock.MockFacesContextFactory;
 import org.seasar.teeda.core.mock.MockFacesContextImpl;
 import org.seasar.teeda.core.mock.MockLifecycle;
 import org.seasar.teeda.core.mock.MockLifecycleFactory;
+import org.seasar.teeda.core.mock.MockLifecycleImpl;
 import org.seasar.teeda.core.mock.MockNavigationHandler;
 import org.seasar.teeda.core.mock.MockPhaseListener;
 import org.seasar.teeda.core.mock.MockPropertyResolver;
@@ -106,7 +107,7 @@ public abstract class TeedaTestCase extends S2FrameworkTestCase {
         MockRenderer renderer = new MockRenderer();
         renderKit.addRenderer(MockUIComponent.COMPONENT_FAMILY, MockUIComponent.COMPONENT_TYPE, renderer);
         
-        lifecycle = new MockLifecycle();
+        lifecycle = new MockLifecycleImpl();
         phaseListener = new MockPhaseListener();
         lifecycle.addPhaseListener(phaseListener);
         initFactories();

@@ -13,7 +13,7 @@ public class MockLifecycleFactory extends LifecycleFactory {
     private Map lifecycles_ = new HashMap();
     
     public MockLifecycleFactory(){
-        addLifecycle(LifecycleFactory.DEFAULT_LIFECYCLE, new MockLifecycle());
+        addLifecycle(LifecycleFactory.DEFAULT_LIFECYCLE, new MockLifecycleImpl());
     }
     
     public void addLifecycle(String lifecycleId, Lifecycle lifecycle) {

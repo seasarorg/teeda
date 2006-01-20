@@ -15,13 +15,14 @@
  */
 package org.seasar.teeda.core.config.assembler.impl;
 
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
-
-import javax.faces.event.PhaseListener;
 
 import org.seasar.teeda.core.config.assembler.LifecycleAssembler;
 import org.seasar.teeda.core.config.assembler.LifecycleChildAssembler;
-import org.seasar.teeda.core.util.ClassUtil;
+import org.seasar.teeda.core.config.element.LifecycleElement;
+import org.seasar.teeda.core.util.IteratorUtil;
 
 /**
  * @author shot
@@ -35,16 +36,13 @@ public class DefaultLifecycleAssembler extends LifecycleAssembler {
     }
 
     protected void setupBeforeAssemble() {
-        child_ = new LifecycleChildAssembler(getLifecycles(),
-                getExternalContext()) {
-
-            protected void doAssemble(String targetName) {
-                PhaseListener phaseListener = (PhaseListener)ClassUtil
-                        .newInstance(targetName);
-                getLifecycle().addPhaseListener(phaseListener);
-            }
-
-        };
+        List targets = new LinkedList();
+        for (Iterator itr = IteratorUtil.getIterator(getLifecycles()); itr
+                .hasNext();) {
+            LifecycleElement element = (LifecycleElement) itr.next();
+            targets.addAll(element.getPhaseListeners());
+        }
+        child_ = new PhaseListenerAssembler(targets, getExternalContext());
     }
 
     public void assemble() {

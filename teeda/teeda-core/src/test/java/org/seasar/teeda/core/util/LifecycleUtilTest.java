@@ -4,17 +4,13 @@ import javax.faces.lifecycle.Lifecycle;
 import javax.faces.lifecycle.LifecycleFactory;
 import javax.faces.webapp.FacesServlet;
 
-import org.seasar.teeda.core.mock.MockLifecycle;
+import org.seasar.teeda.core.mock.MockLifecycleImpl;
 import org.seasar.teeda.core.mock.MockPhaseListener;
 import org.seasar.teeda.core.unit.TeedaTestCase;
 
-public class TestLifecycleUtil extends TeedaTestCase {
+public class LifecycleUtilTest extends TeedaTestCase {
 
-	public static void main(String[] args) {
-		junit.textui.TestRunner.run(TestLifecycleUtil.class);
-	}
-
-	public TestLifecycleUtil(String arg0) {
+	public LifecycleUtilTest(String arg0) {
 		super(arg0);
 	}
 
@@ -29,10 +25,10 @@ public class TestLifecycleUtil extends TeedaTestCase {
 	public void testGetLifecycle(){
         Lifecycle lifecycle = LifecycleUtil.getLifecycle(getExternalContext());
         assertNotNull(lifecycle);
-        assertTrue(lifecycle instanceof MockLifecycle);
+        assertTrue(lifecycle instanceof MockLifecycleImpl);
         
         LifecycleFactory factory = FactoryFinderUtil.getLifecycleFactory();
-        MockLifecycle mock = new MockLifecycle();
+        MockLifecycleImpl mock = new MockLifecycleImpl();
         MockPhaseListener listener = new MockPhaseListener("mock");
         mock.addPhaseListener(listener);
         factory.addLifecycle("hoge", mock);
@@ -40,7 +36,7 @@ public class TestLifecycleUtil extends TeedaTestCase {
         getServletContext().setInitParameter(FacesServlet.LIFECYCLE_ID_ATTR, "hoge");
         lifecycle = LifecycleUtil.getLifecycle(getExternalContext());
         assertNotNull(lifecycle);
-        assertTrue(lifecycle instanceof MockLifecycle);
+        assertTrue(lifecycle instanceof MockLifecycleImpl);
         assertEquals("mock", (lifecycle.getPhaseListeners()[0].toString()));
 	}
 	
