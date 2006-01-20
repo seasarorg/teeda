@@ -72,7 +72,7 @@ public class DefaultAssembleProvider implements AssembleProvider {
 
     public NavigationRuleAssembler assembleNavigationRules(FacesConfig facesConfig) {
         List navigationRules = facesConfig.getNavigationRuleElements();
-        return new DefaultNavigationRuleAssembler(navigationRules);
+        return new DefaultNavigationRuleAssembler(navigationRules, externalContext_);
     }
 
     public RenderKitAssembler assembleRenderKits(FacesConfig facesConfig) {

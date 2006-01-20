@@ -17,21 +17,24 @@ package org.seasar.teeda.core.config.impl;
 
 import javax.faces.FactoryFinder;
 import javax.faces.application.ApplicationFactory;
+import javax.faces.context.ExternalContext;
 
 import junitx.framework.ObjectAssert;
 
-import org.seasar.extension.unit.S2TestCase;
 import org.seasar.framework.container.factory.ClassPathResourceResolver;
 import org.seasar.teeda.core.config.assembler.AssemblerAssembler;
 import org.seasar.teeda.core.config.assembler.impl.DefaultAssembleProvider;
 import org.seasar.teeda.core.config.element.FacesConfig;
 import org.seasar.teeda.core.config.rule.FacesConfigTagHandlerRule;
+import org.seasar.teeda.core.mock.MockActionListener;
 import org.seasar.teeda.core.mock.MockApplicationFactory;
+import org.seasar.teeda.core.mock.MockExternalContextImpl;
+import org.seasar.teeda.core.unit.TeedaTestCase;
 
 /**
  * @author shot
  */
-public class CoreFacesConfiguratorTest extends S2TestCase {
+public class CoreFacesConfiguratorTest extends TeedaTestCase {
 
     private static ClassPathResourceResolver resolver = new ClassPathResourceResolver();
 
@@ -63,14 +66,19 @@ public class CoreFacesConfiguratorTest extends S2TestCase {
         assertNotNull(facesConfig);
         AssemblerAssembler assembler = new AssemblerAssembler();
         DefaultAssembleProvider provider = new DefaultAssembleProvider();
+        ExternalContext externalContext = new MockExternalContextImpl(
+                getServletContext(), getRequest(), getResponse());
+        provider.setExternalContext(externalContext);
         assembler.setAssembleProvider(provider);
 
         assembler.assembleFactories(facesConfig);
         ApplicationFactory appFactory = (ApplicationFactory) FactoryFinder
                 .getFactory(FactoryFinder.APPLICATION_FACTORY);
         ObjectAssert.assertInstanceOf(MockApplicationFactory.class, appFactory);
-        
+
         assembler.assembleApplication(facesConfig);
+        ObjectAssert.assertInstanceOf(MockActionListener.class,
+                getApplication().getActionListener());
 
         assembler.assembleLifecycle(facesConfig);
 
