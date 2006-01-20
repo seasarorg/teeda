@@ -14,6 +14,9 @@ public abstract class ConverterAssembler extends AbstractJsfAssembler {
     private static final Class TARGET_CLASS = ConverterElement.class;
     
     public ConverterAssembler(Map convertersByClass, Map convertersById){
+        if(convertersByClass == null || convertersById == null){
+            throw new IllegalArgumentException("converter maps");
+        }
         isAllSuitableJsfElement(convertersByClass.values(), TARGET_CLASS);
         isAllSuitableJsfElement(convertersById.values(), TARGET_CLASS);
         convertersByClass_ = convertersByClass;

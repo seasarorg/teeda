@@ -24,7 +24,7 @@ import org.seasar.teeda.core.util.ClassUtil;
 import org.seasar.teeda.core.util.IteratorUtil;
 
 /**
- * @author Shinpei Ohtani
+ * @author shot
  */
 public abstract class AbstractJsfAssembler implements JsfAssembler{
 

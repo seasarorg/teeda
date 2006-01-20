@@ -29,6 +29,9 @@ public abstract class RenderKitAssembler extends AbstractJsfAssembler {
     private Map renderKits_ = Collections.EMPTY_MAP;
     
     public RenderKitAssembler(Map renderKits){
+        if(renderKits == null){
+            throw new IllegalArgumentException("renderKits");
+        }
         isAllSuitableJsfElement(renderKits.values(), RenderKitElement.class);
         renderKits_ = renderKits;
         setupBeforeAssemble();

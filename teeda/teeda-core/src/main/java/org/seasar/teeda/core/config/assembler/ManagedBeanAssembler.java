@@ -10,6 +10,9 @@ public abstract class ManagedBeanAssembler extends AbstractJsfAssembler {
     private Map managedBeans_ = Collections.EMPTY_MAP;
     
     public ManagedBeanAssembler(Map managedBeans){
+        if(managedBeans == null){
+            throw new IllegalArgumentException("managed bean");
+        }
         isAllSuitableJsfElement(managedBeans.values(), ManagedBeanElement.class);
         managedBeans_ = managedBeans;
         setupBeforeAssemble();
