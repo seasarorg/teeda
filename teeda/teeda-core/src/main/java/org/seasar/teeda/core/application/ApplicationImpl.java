@@ -49,7 +49,7 @@ import org.seasar.teeda.core.util.ClassUtil;
 import org.seasar.teeda.core.util.ValueBindingUtil;
 
 /**
- * @author Shinpei Ohtani
+ * @author shot
  */
 public class ApplicationImpl extends Application {
 

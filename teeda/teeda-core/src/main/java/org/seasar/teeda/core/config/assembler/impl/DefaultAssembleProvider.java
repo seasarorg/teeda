@@ -82,7 +82,7 @@ public class DefaultAssembleProvider implements AssembleProvider {
 
     public LifecycleAssembler assembleLifecycle(FacesConfig facesConfig) {
         List lifecycles = facesConfig.getLifecycleElements();
-        return new DefaultLifecycleAssembler(lifecycles);
+        return new DefaultLifecycleAssembler(lifecycles, externalContext_);
     }
 
     public void setExternalContext(ExternalContext externalContext) {

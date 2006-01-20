@@ -75,4 +75,6 @@ public class DefaultConverterAssemblerTest extends TeedaTestCase {
         assertNotNull(converter);
         assertTrue(converter instanceof MockConverter);
     }
+    
+    //TODO if need to support property for Converter, do more tests.
 }
