@@ -33,8 +33,20 @@ public class MockLifecycleImpl extends MockLifecycle {
     public void render(FacesContext context) throws FacesException {
     }
 
-    public void removeAllPhaseListener() {
+    public PhaseListener[] clearAllPhaseListener() {
+        try {
+            return phaseListeners_;
+        } finally {
+            setupDefaultPhaseListener();
+        }
+    }
+
+    public void setupDefaultPhaseListener() {
         phaseListeners_ = new PhaseListener[0];
+    }
+
+    public void setupDefaultPhaseListener(PhaseListener[] listeners) {
+        phaseListeners_ = listeners;
     }
 
 }

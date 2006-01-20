@@ -15,6 +15,7 @@
  */
 package org.seasar.teeda.core.mock;
 
+import javax.faces.event.PhaseListener;
 import javax.faces.lifecycle.Lifecycle;
 
 /**
@@ -22,5 +23,9 @@ import javax.faces.lifecycle.Lifecycle;
  */
 public abstract class MockLifecycle extends Lifecycle{
 
-    public abstract void removeAllPhaseListener();
+    public abstract PhaseListener[] clearAllPhaseListener();
+    
+    public abstract void setupDefaultPhaseListener();
+    
+    public abstract void setupDefaultPhaseListener(PhaseListener[] listeners);
 }
