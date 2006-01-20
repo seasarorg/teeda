@@ -1,3 +1,18 @@
+/*
+ * Copyright 2004-2005 the Seasar Foundation and the Others.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
 package org.seasar.teeda.core.mock;
 
 import java.util.Collection;
@@ -24,25 +39,41 @@ import javax.faces.event.ActionListener;
 import javax.faces.validator.Validator;
 
 import org.seasar.teeda.core.util.ClassUtil;
-import org.seasar.teeda.core.util.ValueBindingUtil;
 
-
+/**
+ * @author shot
+ */
 public class MockApplication extends Application {
 
     private String bundle_;
+
     private ActionListener actionListener_;
+
     private Locale defaultLocale_;
+
     private Collection locales_;
+
     private VariableResolver variableResolver_;
+
     private PropertyResolver propertyResolver_;
+
     private NavigationHandler navigationHandler_;
+
     private ViewHandler viewHandler_;
+
     private StateManager stateManager_;
+
     private String defaultRenderKitId_;
+
     private Map componentClassMap_ = new HashMap();
-    public MockApplication(){
+
+    private Map convertersById_ = new HashMap();
+
+    private Map convertersByClass_ = new HashMap();
+
+    public MockApplication() {
     }
-    
+
     public ActionListener getActionListener() {
         return actionListener_;
     }
@@ -76,13 +107,14 @@ public class MockApplication extends Application {
     }
 
     public Iterator getSupportedLocales() {
-        return (locales_ != null) ? locales_.iterator() : Collections.EMPTY_LIST.iterator();
+        return (locales_ != null) ? locales_.iterator()
+                : Collections.EMPTY_LIST.iterator();
     }
 
     public void setSupportedLocales(Collection locales) {
         locales_ = locales;
     }
-    
+
     public NavigationHandler getNavigationHandler() {
         return navigationHandler_;
     }
@@ -130,64 +162,63 @@ public class MockApplication extends Application {
 
     public UIComponent createComponent(String componentType)
             throws FacesException {
-        Class componentClass = (Class)componentClassMap_.get(componentType);
-        if(componentClass == null){
+        Class componentClass = (Class) componentClassMap_.get(componentType);
+        if (componentClass == null) {
             throw new FacesException();
         }
-        return (UIComponent)ClassUtil.newInstance(componentClass);
+        return (UIComponent) ClassUtil.newInstance(componentClass);
     }
 
-    public UIComponent createComponent(ValueBinding vb, FacesContext context, String componentType) throws FacesException {
+    public UIComponent createComponent(ValueBinding vb, FacesContext context,
+            String componentType) throws FacesException {
         Object obj = vb.getValue(context);
-        if(obj instanceof UIComponent){
-            return (UIComponent)obj;
-        }else{
+        if (obj instanceof UIComponent) {
+            return (UIComponent) obj;
+        } else {
             UIComponent component = createComponent(componentType);
             vb.setValue(context, component);
             return component;
         }
     }
 
-    /**
-     *
-     */
+    public void addConverter(String converterId, String converterClass) {
+        if (converterId == null || converterClass == null) {
+            throw new IllegalArgumentException();
+        }
+        convertersById_.put(converterId, converterClass);
+    }
+
+    public void addConverter(Class targetClass, String converterClass) {
+        if (targetClass == null || converterClass == null) {
+            throw new IllegalArgumentException();
+        }
+        convertersByClass_.put(targetClass, converterClass);
+    }
+
+    public Converter createConverter(String converterId) {
+        Converter converter = null;
+        if(convertersById_.containsKey(converterId)){
+            String className = (String) convertersById_.get(converterId);
+            converter = (Converter) ClassUtil.newInstance(className);
+        }
+        return converter;
+    }
+
+    public Converter createConverter(Class targetClass) {
+        Converter converter = null;
+        if(convertersByClass_.containsKey(targetClass)){
+            String className = (String) convertersByClass_.get(targetClass);
+            converter = (Converter) ClassUtil.newInstance(className);
+        }
+        return converter;
+    }
 
     public Iterator getComponentTypes() {
         return null;
     }
 
     /**
-     *
-     */
-
-    public void addConverter(String converterId, String converterClass) {
-    }
-
-    /**
-     *
-     */
-
-    public void addConverter(Class targetClass, String converterClass) {
-    }
-
-    /**
-     *
-     */
-
-    public Converter createConverter(String converterId) {
-        return null;
-    }
-
-    /**
-     *
-     */
-
-    public Converter createConverter(Class targetClass) {
-        return null;
-    }
-
-    /**
-     *
+     * 
      */
 
     public Iterator getConverterIds() {
@@ -195,7 +226,7 @@ public class MockApplication extends Application {
     }
 
     /**
-     *
+     * 
      */
 
     public Iterator getConverterTypes() {
@@ -203,7 +234,7 @@ public class MockApplication extends Application {
     }
 
     /**
-     *
+     * 
      */
 
     public MethodBinding createMethodBinding(String ref, Class[] params)
@@ -212,14 +243,14 @@ public class MockApplication extends Application {
     }
 
     /**
-     *
+     * 
      */
 
     public void addValidator(String validatorId, String validatorClass) {
     }
 
     /**
-     *
+     * 
      */
 
     public Validator createValidator(String validatorId) throws FacesException {
@@ -227,7 +258,7 @@ public class MockApplication extends Application {
     }
 
     /**
-     *
+     * 
      */
 
     public Iterator getValidatorIds() {
@@ -235,7 +266,7 @@ public class MockApplication extends Application {
     }
 
     /**
-     *
+     * 
      */
 
     public ValueBinding createValueBinding(String ref)

@@ -3,15 +3,11 @@ package org.seasar.teeda.core.managedbean.impl;
 import org.seasar.teeda.core.scope.Scope;
 import org.seasar.teeda.core.unit.TeedaTestCase;
 
-public class TestManagedBeanFactoryImpl extends TeedaTestCase {
+public class ManagedBeanFactoryImplTest extends TeedaTestCase {
 
 	private C c;
 
-	public static void main(String[] args) {
-		junit.textui.TestRunner.run(TestManagedBeanFactoryImpl.class);
-	}
-
-	public TestManagedBeanFactoryImpl(String arg0) {
+	public ManagedBeanFactoryImplTest(String arg0) {
 		super(arg0);
 	}
 

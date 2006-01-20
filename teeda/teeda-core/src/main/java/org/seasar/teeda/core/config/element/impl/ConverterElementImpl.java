@@ -27,7 +27,7 @@ public class ConverterElementImpl implements ConverterElement {
     }
     
     public void setConverterForClass(String converterForClass){
-        converterClass_ = converterForClass;
+        converterForClass_ = converterForClass;
     }
     
     public void setConverterClass(String converterClass){
