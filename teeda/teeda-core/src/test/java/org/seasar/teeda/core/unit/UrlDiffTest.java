@@ -38,7 +38,6 @@ public class UrlDiffTest extends TestCase {
         assertEquals(false, diff.isIdentical());
     }
 
-    // FIXME
     public void testIdentical3() throws Exception {
         // ## Arrange ##
         UrlDiff diff = new UrlDiff("a?1=2&3=4", "a?3=4&1=2");

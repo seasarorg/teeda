@@ -35,7 +35,7 @@ public class AssertUtil {
         }
     }
 
-    public static void assertContains(String shouldBeContained, String value) {
+    static void assertContains(String shouldBeContained, String value) {
         Assert.assertEquals(true, value.indexOf(shouldBeContained) > -1);
     }
 
