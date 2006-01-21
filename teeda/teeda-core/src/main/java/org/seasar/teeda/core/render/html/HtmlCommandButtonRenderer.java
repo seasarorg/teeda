@@ -16,12 +16,15 @@
 package org.seasar.teeda.core.render.html;
 
 import java.io.IOException;
+import java.util.Map;
 
 import javax.faces.component.UIComponent;
 import javax.faces.component.html.HtmlCommandButton;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+import javax.faces.event.ActionEvent;
 
+import org.apache.commons.lang.StringUtils;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.util.RendererUtil;
 
@@ -40,15 +43,29 @@ public class HtmlCommandButtonRenderer extends AbstractHtmlRenderer {
             HtmlCommandButton htmlCommandButton) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
         writer.startElement(JsfConstants.INPUT_ELEM, htmlCommandButton);
-        RendererUtil.renderAttribute(writer, JsfConstants.TYPE_ATTR,
-                htmlCommandButton.getType());
+        final String image = htmlCommandButton.getImage();
+        final boolean isImageType = StringUtils.isNotBlank(image);
+        String type;
+        if (isImageType) {
+            type = JsfConstants.IMAGE_VALUE;
+        } else {
+            type = htmlCommandButton.getType();
+        }
+        RendererUtil.renderAttribute(writer, JsfConstants.TYPE_ATTR, type);
+
         RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR,
                 getIdForRender(context, htmlCommandButton));
         RendererUtil.renderAttribute(writer, JsfConstants.NAME_ATTR,
                 htmlCommandButton.getClientId(context));
 
-        RendererUtil.renderAttribute(writer, JsfConstants.VALUE_ATTR,
-                htmlCommandButton.getValue());
+        if (isImageType) {
+            RendererUtil.renderAttribute(writer, JsfConstants.SRC_ATTR, image,
+                    JsfConstants.IMAGE_ATTR);
+        } else {
+            RendererUtil.renderAttribute(writer, JsfConstants.VALUE_ATTR,
+                    htmlCommandButton.getValue());
+        }
+
         if (htmlCommandButton.isDisabled()) {
             RendererUtil.renderAttribute(writer, JsfConstants.DISABLED_ATTR,
                     Boolean.TRUE);
@@ -58,4 +75,24 @@ public class HtmlCommandButtonRenderer extends AbstractHtmlRenderer {
         writer.endElement(JsfConstants.INPUT_ELEM);
     }
 
+    public void decode(FacesContext context, UIComponent component) {
+        super.decode(context, component);
+        decodeHtmlCommandButton(context, (HtmlCommandButton) component);
+    }
+
+    protected void decodeHtmlCommandButton(FacesContext context,
+            HtmlCommandButton htmlCommandButton) {
+        Map paramMap = context.getExternalContext().getRequestParameterMap();
+        String clientId = htmlCommandButton.getClientId(context);
+        if (paramMap.containsKey(clientId)
+                || paramMap.containsKey(clientId + ".x")
+                || paramMap.containsKey(clientId + ".y")) {
+            if (JsfConstants.RESET_VALUE.equalsIgnoreCase(htmlCommandButton
+                    .getType())) {
+            } else {
+                htmlCommandButton
+                        .queueEvent(new ActionEvent(htmlCommandButton));
+            }
+        }
+    }
 }

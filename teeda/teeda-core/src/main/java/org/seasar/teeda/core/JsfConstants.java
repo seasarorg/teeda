@@ -68,9 +68,13 @@ public interface JsfConstants {
 
     // -- value --
 
-    public String TEXT_VALUE = "text";
-
     public String HIDDEN_VALUE = "hidden";
+
+    public String IMAGE_VALUE = "image";
+
+    public String RESET_VALUE = "reset";
+
+    public String TEXT_VALUE = "text";
 
     // -- element --
 
@@ -115,6 +119,8 @@ public interface JsfConstants {
     public String HREFLANG_ATTR = "hreflang";
 
     public String ID_ATTR = "id";
+
+    public String IMAGE_ATTR = "image";
 
     public String LABEL_ATTR = "label";
 
@@ -163,6 +169,8 @@ public interface JsfConstants {
     public String SHAPE_ATTR = "shape";
 
     public String SIZE_ATTR = "size";
+
+    public String SRC_ATTR = "src";
 
     public String STYLE_ATTR = "style";
 
@@ -258,7 +266,7 @@ public interface JsfConstants {
                     COMMON_FIELD_PASSTROUGH_ATTRIBUTES_WITHOUT_DISABLED);
 
     public String DEFAULT_RENDERKIT_CLASS = HtmlRenderKitImpl.class.getName();
-    
+
     public String WEB_XML_PATH = "/WEB-INF/web.xml";
 
 }

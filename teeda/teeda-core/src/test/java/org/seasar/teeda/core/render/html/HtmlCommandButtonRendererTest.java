@@ -18,8 +18,12 @@ package org.seasar.teeda.core.render.html;
 import javax.faces.component.UIComponent;
 import javax.faces.component.html.HtmlCommandButton;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
+import javax.faces.event.FacesEvent;
 import javax.faces.render.Renderer;
 import javax.faces.render.RendererTest;
+
+import junitx.framework.ObjectAssert;
 
 import org.custommonkey.xmlunit.Diff;
 import org.seasar.teeda.core.mock.MockFacesContext;
@@ -81,7 +85,24 @@ public class HtmlCommandButtonRendererTest extends RendererTest {
                 getResponseText());
     }
 
-    // FIXME now testing!
+    public void testEncode_image() throws Exception {
+        // ## Arrange ##
+        HtmlCommandButtonRenderer renderer = createHtmlCommandButtonRenderer();
+        MockHtmlCommandButton htmlCommandButton = new MockHtmlCommandButton();
+        htmlCommandButton.setRenderer(renderer);
+
+        htmlCommandButton.setId("a");
+        htmlCommandButton.setImage("bb");
+        htmlCommandButton.setValue("c"); // should be ignored
+
+        // ## Act ##
+        renderer.encodeEnd(getFacesContext(), htmlCommandButton);
+
+        // ## Assert ##
+        assertEquals("<input type=\"image\" id=\"a\" name=\"a\" src=\"bb\"/>",
+                getResponseText());
+    }
+
     public void testEncode_WithAllAttributes() throws Exception {
         HtmlCommandButtonRenderer renderer = createHtmlCommandButtonRenderer();
         MockHtmlCommandButton htmlCommandButton = new MockHtmlCommandButton();
@@ -91,7 +112,7 @@ public class HtmlCommandButtonRendererTest extends RendererTest {
         htmlCommandButton.setAlt("b");
         htmlCommandButton.setDir("c");
         htmlCommandButton.setDisabled(true);
-        htmlCommandButton.setImage("e");
+        // htmlCommandButton.setImage("e");
         htmlCommandButton.setLang("f");
         htmlCommandButton.setOnblur("g");
         htmlCommandButton.setOnchange("h");
@@ -124,7 +145,7 @@ public class HtmlCommandButtonRendererTest extends RendererTest {
         Diff diff = new Diff(
                 "<input type=\"reset\" id=\"A\" name=\"A\" value=\"B\""
                         + " accesskey=\"a\"" + " alt=\"b\"" + " dir=\"c\""
-                        + " disabled=\"true\"" + " image=\"e\"" + " lang=\"f\""
+                        + " disabled=\"true\"" + " lang=\"f\""
                         + " onblur=\"g\"" + " onchange=\"h\""
                         + " onclick=\"i\"" + " ondblclick=\"j\""
                         + " onfocus=\"k\"" + " onkeydown=\"l\""
@@ -132,11 +153,92 @@ public class HtmlCommandButtonRendererTest extends RendererTest {
                         + " onmousedown=\"o\"" + " onmousemove=\"p\""
                         + " onmouseout=\"q\"" + " onmouseover=\"r\""
                         + " onmouseup=\"s\"" + " onselect=\"t\""
-                        + " readonly=\"true\"" + " size=\"2\"" + " style=\"w\""
+                        + " readonly=\"true\"" + " style=\"w\""
                         + " class=\"u\"" + " tabindex=\"x\"" + " title=\"y\""
                         + "/>", getResponseText());
-        System.out.println(getResponseText());
         assertEquals(diff.toString(), true, diff.identical());
+    }
+
+    public void testDecode_None() throws Exception {
+        // ## Arrange ##
+        HtmlCommandButtonRenderer renderer = createHtmlCommandButtonRenderer();
+        final FacesEvent[] args = { null };
+        MockHtmlCommandButton htmlCommandButton = new MockHtmlCommandButton() {
+            public void queueEvent(FacesEvent event) {
+                args[0] = event;
+                super.queueEvent(event);
+            }
+        };
+        htmlCommandButton.setRenderer(renderer);
+        htmlCommandButton.setClientId("key");
+
+        MockFacesContext context = getFacesContext();
+
+        // ## Act ##
+        renderer.decode(context, htmlCommandButton);
+
+        // ## Assert ##
+        assertEquals(null, args[0]);
+    }
+
+    public void testDecode_NoneReset() throws Exception {
+        // ## Arrange ##
+        HtmlCommandButtonRenderer renderer = createHtmlCommandButtonRenderer();
+        final FacesEvent[] args = { null };
+        MockHtmlCommandButton htmlCommandButton = new MockHtmlCommandButton() {
+            public void queueEvent(FacesEvent event) {
+                args[0] = event;
+                super.queueEvent(event);
+            }
+        };
+        htmlCommandButton.setRenderer(renderer);
+        htmlCommandButton.setType("reset");
+        htmlCommandButton.setClientId("key");
+
+        MockFacesContext context = getFacesContext();
+        getExternalContext().getRequestParameterMap().put("key", "12345");
+
+        // ## Act ##
+        renderer.decode(context, htmlCommandButton);
+
+        // ## Assert ##
+        assertEquals(null, args[0]);
+    }
+
+    public void testDecode_SubmitSuccess() throws Exception {
+        submitSuccessTest("key:aa");
+    }
+
+    public void testDecode_SubmitSuccessX() throws Exception {
+        submitSuccessTest("key:aa.x");
+    }
+
+    public void testDecode_SubmitSuccessY() throws Exception {
+        submitSuccessTest("key:aa.y");
+    }
+
+    private void submitSuccessTest(final String requestKey) {
+        // ## Arrange ##
+        HtmlCommandButtonRenderer renderer = createHtmlCommandButtonRenderer();
+        final FacesEvent[] args = { null };
+        MockHtmlCommandButton htmlCommandButton = new MockHtmlCommandButton() {
+            public void queueEvent(FacesEvent event) {
+                args[0] = event;
+            }
+        };
+        htmlCommandButton.setRenderer(renderer);
+        htmlCommandButton.setClientId("key:aa");
+
+        MockFacesContext context = getFacesContext();
+        getExternalContext().getRequestParameterMap().put(requestKey, "12345");
+
+        // ## Act ##
+        renderer.decode(context, htmlCommandButton);
+
+        // ## Assert ##
+        assertNotNull(requestKey, args[0]);
+        ObjectAssert.assertInstanceOf(requestKey, ActionEvent.class, args[0]);
+        assertSame(requestKey, htmlCommandButton, args[0].getSource());
     }
 
     public void testGetRendersChildren() throws Exception {
@@ -178,6 +280,7 @@ public class HtmlCommandButtonRendererTest extends RendererTest {
         public void setClientId(String clientId) {
             clientId_ = clientId;
         }
+
     }
 
 }
