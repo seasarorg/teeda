@@ -81,6 +81,20 @@ public class HtmlOutputLinkTest extends UIOutputTest {
         assertEquals("bar dir", component.getDir());
     }
 
+    public void testSetGetHreflang() throws Exception {
+        HtmlOutputLink component = createHtmlOutputLink();
+        component.setHreflang("foo hreflang");
+        assertEquals("foo hreflang", component.getHreflang());
+    }
+
+    public void testSetGetHreflang_ValueBinding() throws Exception {
+        HtmlOutputLink component = createHtmlOutputLink();
+        MockValueBinding vb = new MockValueBinding();
+        vb.setValue(getFacesContext(), "bar hreflang");
+        component.setValueBinding("hreflang", vb);
+        assertEquals("bar hreflang", component.getHreflang());
+    }
+
     public void testSetGetLang() throws Exception {
         HtmlOutputLink component = createHtmlOutputLink();
         component.setLang("foo lang");
