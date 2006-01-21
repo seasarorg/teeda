@@ -15,8 +15,6 @@
  */
 package javax.faces.component.html;
 
-import javax.faces.component.UIOutput;
-
 import junit.framework.TestCase;
 
 /**
@@ -24,14 +22,19 @@ import junit.framework.TestCase;
  */
 public class HtmlOutputLabelOnlyTest extends TestCase {
 
+    public void testConstants() throws Exception {
+        assertEquals("javax.faces.HtmlOutputLabel",
+                HtmlOutputLabel.COMPONENT_TYPE);
+    }
+
+    public void testGetComponentFamily() {
+        HtmlOutputLabel htmlOutputLabel = new HtmlOutputLabel();
+        assertEquals("javax.faces.Output", htmlOutputLabel.getFamily());
+    }
+
     public void testDefaultRendererType() throws Exception {
         HtmlOutputLabel htmlOutputLabel = new HtmlOutputLabel();
         assertEquals("javax.faces.Label", htmlOutputLabel.getRendererType());
-    }
-
-    public void testGetFamily() {
-        HtmlOutputLabel htmlOutputLabel = new HtmlOutputLabel();
-        assertEquals(UIOutput.COMPONENT_FAMILY, htmlOutputLabel.getFamily());
     }
 
 }

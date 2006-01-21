@@ -22,23 +22,25 @@ import org.seasar.teeda.core.mock.MockFacesContext;
 
 /**
  * @author manhole
- * 
  */
 public class HtmlOutputTextTeedaTest extends UIOutputTeedaTest {
 
     public void testSaveAndRestoreState() throws Exception {
         super.testSaveAndRestoreState();
+        // ## Arrange ##
         HtmlOutputText htmlOutputText1 = createHtmlOutputText();
         htmlOutputText1.setEscape(false);
         htmlOutputText1.setTitle("foo title");
         htmlOutputText1.setStyle("foo style");
         htmlOutputText1.setStyleClass("foo styleClass");
         MockFacesContext context = getFacesContext();
-        Object state = htmlOutputText1.saveState(context);
 
+        // ## Act ##
+        Object state = htmlOutputText1.saveState(context);
         HtmlOutputText htmlOutputText2 = createHtmlOutputText();
         htmlOutputText2.restoreState(context, state);
 
+        // ## Assert ##
         assertEquals(htmlOutputText1.isEscape(), htmlOutputText2.isEscape());
         assertEquals(htmlOutputText1.getTitle(), htmlOutputText2.getTitle());
         assertEquals(htmlOutputText1.getStyle(), htmlOutputText2.getStyle());

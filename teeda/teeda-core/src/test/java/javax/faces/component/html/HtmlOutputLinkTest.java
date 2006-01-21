@@ -22,15 +22,8 @@ import org.seasar.teeda.core.mock.MockValueBinding;
 
 /**
  * @author manhole
- * 
- * TODO test: save, restoreState
  */
 public class HtmlOutputLinkTest extends UIOutputTest {
-
-    public void testDefaultRendererType() throws Exception {
-        HtmlOutputLink htmlOutputLink = createHtmlOutputLink();
-        assertEquals("javax.faces.Link", htmlOutputLink.getRendererType());
-    }
 
     public void testSetGetAccesskey() throws Exception {
         HtmlOutputLink component = createHtmlOutputLink();

@@ -15,13 +15,18 @@
  */
 package javax.faces.component.html;
 
-import javax.faces.component.UICommandTest;
+import javax.faces.component.UICommandTeedaTest;
 import javax.faces.component.UIComponent;
 
 /**
  * @author manhole
  */
-public class HtmlCommandButtonTeedaTest extends UICommandTest {
+public class HtmlCommandButtonTeedaTest extends UICommandTeedaTest {
+
+    public void testSaveAndRestoreState() throws Exception {
+        super.testSaveAndRestoreState();
+        // TODO test
+    }
 
     private HtmlCommandButton createHtmlCommandButton() {
         return (HtmlCommandButton) createUIComponent();

@@ -15,27 +15,20 @@
  */
 package javax.faces.component.html;
 
-import junit.framework.TestCase;
+import javax.faces.component.UICommandTest;
+import javax.faces.component.UIComponent;
 
 /**
  * @author manhole
  */
-public class HtmlInputTextareaOnlyTest extends TestCase {
+public class HtmlCommandLinkTest extends UICommandTest {
 
-    public void testConstants() throws Exception {
-        assertEquals("javax.faces.HtmlInputTextarea",
-                HtmlInputTextarea.COMPONENT_TYPE);
+    private HtmlCommandLink createHtmlCommandLink() {
+        return (HtmlCommandLink) createUIComponent();
     }
 
-    public void testGetComponentFamily() {
-        HtmlInputTextarea htmlInputTextarea = new HtmlInputTextarea();
-        assertEquals("javax.faces.Input", htmlInputTextarea.getFamily());
-    }
-
-    public void testDefaultRendererType() throws Exception {
-        HtmlInputTextarea htmlInputTextarea = new HtmlInputTextarea();
-        assertEquals("javax.faces.Textarea", htmlInputTextarea
-                .getRendererType());
+    protected UIComponent createUIComponent() {
+        return new HtmlCommandLink();
     }
 
 }

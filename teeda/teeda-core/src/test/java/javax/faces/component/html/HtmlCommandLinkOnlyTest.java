@@ -20,22 +20,21 @@ import junit.framework.TestCase;
 /**
  * @author manhole
  */
-public class HtmlInputTextareaOnlyTest extends TestCase {
+public class HtmlCommandLinkOnlyTest extends TestCase {
 
     public void testConstants() throws Exception {
-        assertEquals("javax.faces.HtmlInputTextarea",
-                HtmlInputTextarea.COMPONENT_TYPE);
+        assertEquals("javax.faces.HtmlCommandLink",
+                HtmlCommandLink.COMPONENT_TYPE);
     }
 
     public void testGetComponentFamily() {
-        HtmlInputTextarea htmlInputTextarea = new HtmlInputTextarea();
-        assertEquals("javax.faces.Input", htmlInputTextarea.getFamily());
+        HtmlCommandLink htmlCommandLink = new HtmlCommandLink();
+        assertEquals("javax.faces.Command", htmlCommandLink.getFamily());
     }
 
     public void testDefaultRendererType() throws Exception {
-        HtmlInputTextarea htmlInputTextarea = new HtmlInputTextarea();
-        assertEquals("javax.faces.Textarea", htmlInputTextarea
-                .getRendererType());
+        HtmlCommandLink htmlCommandLink = new HtmlCommandLink();
+        assertEquals("javax.faces.Link", htmlCommandLink.getRendererType());
     }
 
 }

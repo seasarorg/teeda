@@ -15,8 +15,6 @@
  */
 package javax.faces.component.html;
 
-import javax.faces.component.UIInput;
-
 import junit.framework.TestCase;
 
 /**
@@ -28,14 +26,14 @@ public class HtmlInputTextOnlyTest extends TestCase {
         assertEquals("javax.faces.HtmlInputText", HtmlInputText.COMPONENT_TYPE);
     }
 
-    public void testDefaultRendererType() throws Exception {
-        HtmlInputText input = new HtmlInputText();
-        assertEquals("javax.faces.Text", input.getRendererType());
+    public void testGetComponentFamily() {
+        HtmlInputText htmlInputText = new HtmlInputText();
+        assertEquals("javax.faces.Input", htmlInputText.getFamily());
     }
 
-    public void testGetFamily() {
-        HtmlInputText input = new HtmlInputText();
-        assertEquals(UIInput.COMPONENT_FAMILY, input.getFamily());
+    public void testDefaultRendererType() throws Exception {
+        HtmlInputText htmlInputText = new HtmlInputText();
+        assertEquals("javax.faces.Text", htmlInputText.getRendererType());
     }
 
 }

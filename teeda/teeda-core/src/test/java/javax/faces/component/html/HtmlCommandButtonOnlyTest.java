@@ -15,8 +15,6 @@
  */
 package javax.faces.component.html;
 
-import javax.faces.component.UICommand;
-
 import junit.framework.TestCase;
 
 /**
@@ -29,14 +27,14 @@ public class HtmlCommandButtonOnlyTest extends TestCase {
                 HtmlCommandButton.COMPONENT_TYPE);
     }
 
+    public void testGetComponentFamily() {
+        HtmlCommandButton htmlCommandButton = new HtmlCommandButton();
+        assertEquals("javax.faces.Command", htmlCommandButton.getFamily());
+    }
+
     public void testDefaultRendererType() throws Exception {
         HtmlCommandButton htmlCommandButton = new HtmlCommandButton();
         assertEquals("javax.faces.Button", htmlCommandButton.getRendererType());
-    }
-
-    public void testGetFamily() {
-        HtmlCommandButton htmlCommandButton = new HtmlCommandButton();
-        assertEquals(UICommand.COMPONENT_FAMILY, htmlCommandButton.getFamily());
     }
 
 }

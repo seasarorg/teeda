@@ -22,15 +22,8 @@ import org.seasar.teeda.core.mock.MockValueBinding;
 
 /**
  * @author manhole
- * 
- * TODO test: save, restoreState
  */
 public class HtmlOutputFormatTest extends UIOutputTest {
-
-    public void testDefaultRendererType() throws Exception {
-        HtmlOutputFormat htmlOutputFormat = createHtmlOutputFormat();
-        assertEquals("javax.faces.Format", htmlOutputFormat.getRendererType());
-    }
 
     public void testSetGetEscape() throws Exception {
         HtmlOutputFormat htmlOutputFormat = createHtmlOutputFormat();
@@ -97,4 +90,5 @@ public class HtmlOutputFormatTest extends UIOutputTest {
     protected UIComponent createUIComponent() {
         return new HtmlOutputFormat();
     }
+
 }

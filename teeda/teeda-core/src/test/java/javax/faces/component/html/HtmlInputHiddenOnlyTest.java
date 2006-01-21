@@ -15,8 +15,6 @@
  */
 package javax.faces.component.html;
 
-import javax.faces.component.UIInput;
-
 import junit.framework.TestCase;
 
 /**
@@ -29,14 +27,14 @@ public class HtmlInputHiddenOnlyTest extends TestCase {
                 HtmlInputHidden.COMPONENT_TYPE);
     }
 
+    public void testGetComponentFamily() {
+        HtmlInputHidden htmlInputHidden = new HtmlInputHidden();
+        assertEquals("javax.faces.Input", htmlInputHidden.getFamily());
+    }
+
     public void testDefaultRendererType() throws Exception {
         HtmlInputHidden htmlInputHidden = new HtmlInputHidden();
         assertEquals("javax.faces.Hidden", htmlInputHidden.getRendererType());
-    }
-
-    public void testGetFamily() {
-        HtmlInputHidden htmlInputHidden = new HtmlInputHidden();
-        assertEquals(UIInput.COMPONENT_FAMILY, htmlInputHidden.getFamily());
     }
 
 }

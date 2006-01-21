@@ -22,8 +22,6 @@ import org.seasar.teeda.core.mock.MockValueBinding;
 
 /**
  * @author manhole
- * 
- * TODO test: save, restoreState
  */
 public class HtmlOutputLabelTest extends UIOutputTest {
 

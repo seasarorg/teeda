@@ -25,11 +25,6 @@ import org.seasar.teeda.core.mock.MockValueBinding;
  */
 public class HtmlOutputTextTest extends UIOutputTest {
 
-    public void testDefaultRendererType() throws Exception {
-        HtmlOutputText htmlOutputText = createHtmlOutputText();
-        assertEquals("javax.faces.Text", htmlOutputText.getRendererType());
-    }
-
     public void testSetGetEscape() throws Exception {
         HtmlOutputText htmlOutputText = createHtmlOutputText();
         // default is true
