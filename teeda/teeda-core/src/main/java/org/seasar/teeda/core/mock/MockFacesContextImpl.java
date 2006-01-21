@@ -30,6 +30,8 @@ import javax.faces.context.ResponseStream;
 import javax.faces.context.ResponseWriter;
 import javax.faces.render.RenderKit;
 
+import org.seasar.teeda.core.util.FactoryFinderUtil;
+
 /**
  * @author shot
  * @author manhole
@@ -52,6 +54,12 @@ public class MockFacesContextImpl extends MockFacesContext {
         setCurrentInstance(this);
     }
 
+    public MockFacesContextImpl(ExternalContext context) {
+        context_ = context;
+        application_ = FactoryFinderUtil.getApplicationFactory().getApplication();
+        setCurrentInstance(this);
+    }
+    
     public MockFacesContextImpl(ExternalContext context, Application application) {
         context_ = context;
         application_ = application;

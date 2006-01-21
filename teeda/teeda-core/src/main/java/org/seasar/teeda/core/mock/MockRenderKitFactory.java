@@ -21,8 +21,8 @@ public class MockRenderKitFactory extends RenderKitFactory {
         return renderKits_.keySet().iterator();
     }
 
-    public void addRenderKit(String renderKitID, RenderKit renderKit) {
-        renderKits_.put(renderKitID, renderKit);
+    public void addRenderKit(String renderKitId, RenderKit renderKit) {
+        renderKits_.put(renderKitId, renderKit);
     }
 
 }

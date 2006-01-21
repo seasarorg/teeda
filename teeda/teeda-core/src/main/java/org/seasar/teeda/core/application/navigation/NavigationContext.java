@@ -20,6 +20,8 @@ import java.util.List;
 
 /**
  * @author shot
+ * 
+ * TODO : provide easy way to get NavigationCaseContext(generate key and cache to map)
  */
 public class NavigationContext {
 
@@ -29,15 +31,16 @@ public class NavigationContext {
 
     private List navigationCases_ = new ArrayList();
 
-    public NavigationContext(){
+    public NavigationContext() {
     }
 
     public void setFromViewId(String fromViewId) {
         fromViewId_ = fromViewId;
     }
-    
-    public void addNavigationCaseContext(NavigationCaseContext navigationCaseContext) {
-        if(navigationCaseContext != null){
+
+    public void addNavigationCaseContext(
+            NavigationCaseContext navigationCaseContext) {
+        if (navigationCaseContext != null) {
             navigationCases_.add(navigationCaseContext);
         }
         isWildCardMatch_ = fromViewId_.endsWith("*");

@@ -45,7 +45,7 @@ public class AssemblerAssembler {
     }
     
     public void assembleRenderKits(FacesConfig facesConfig){
-        getProvider().assembleRenderKits(facesConfig);
+        getProvider().assembleRenderKits(facesConfig).assemble();
     }
     
     public void assembleLifecycle(FacesConfig facesConfig){
