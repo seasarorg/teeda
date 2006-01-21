@@ -85,7 +85,21 @@ public class HtmlCommandButtonRendererTest extends RendererTest {
                 getResponseText());
     }
 
-    public void testEncode_image() throws Exception {
+    public void testEncode_Reset() throws Exception {
+        HtmlCommandButtonRenderer renderer = createHtmlCommandButtonRenderer();
+        MockHtmlCommandButton htmlCommandButton = new MockHtmlCommandButton();
+        htmlCommandButton.setRenderer(renderer);
+
+        htmlCommandButton.setId("a");
+        htmlCommandButton.setType("reset");
+
+        renderer.encodeEnd(getFacesContext(), htmlCommandButton);
+
+        assertEquals("<input type=\"reset\" id=\"a\" name=\"a\"/>",
+                getResponseText());
+    }
+
+    public void testEncode_Image() throws Exception {
         // ## Arrange ##
         HtmlCommandButtonRenderer renderer = createHtmlCommandButtonRenderer();
         MockHtmlCommandButton htmlCommandButton = new MockHtmlCommandButton();
@@ -94,6 +108,24 @@ public class HtmlCommandButtonRendererTest extends RendererTest {
         htmlCommandButton.setId("a");
         htmlCommandButton.setImage("bb");
         htmlCommandButton.setValue("c"); // should be ignored
+
+        // ## Act ##
+        renderer.encodeEnd(getFacesContext(), htmlCommandButton);
+
+        // ## Assert ##
+        assertEquals("<input type=\"image\" id=\"a\" name=\"a\" src=\"bb\"/>",
+                getResponseText());
+    }
+
+    public void testEncode_ImageIfTypeIsReset() throws Exception {
+        // ## Arrange ##
+        HtmlCommandButtonRenderer renderer = createHtmlCommandButtonRenderer();
+        MockHtmlCommandButton htmlCommandButton = new MockHtmlCommandButton();
+        htmlCommandButton.setRenderer(renderer);
+
+        htmlCommandButton.setId("a");
+        htmlCommandButton.setType("reset"); // should be ignored
+        htmlCommandButton.setImage("bb");
 
         // ## Act ##
         renderer.encodeEnd(getFacesContext(), htmlCommandButton);

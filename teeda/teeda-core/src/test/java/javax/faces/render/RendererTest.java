@@ -183,6 +183,11 @@ public class RendererTest extends TestCase {
         UIViewRoot viewRoot = new UIViewRoot();
         facesContext_.setViewRoot(viewRoot);
     }
+    
+    protected void tearDown() throws Exception {
+        facesContext_.release();
+        super.tearDown();
+    }
 
     protected MockExternalContext getExternalContext() {
         return externalContext_;
