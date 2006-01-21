@@ -176,7 +176,7 @@ public class MockExternalContextImpl extends MockExternalContext {
     }
 
     public Set getResourcePaths(String path) {
-        throw new UnsupportedOperationException();
+        return context_.getResourcePaths(path);
     }
 
     public Object getResponse() {

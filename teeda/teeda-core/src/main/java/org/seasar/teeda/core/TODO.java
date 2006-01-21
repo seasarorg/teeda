@@ -44,9 +44,9 @@ public interface TODO {
      *  - Impl LifecycleImpl
      *  - Use UIComponent's label attribute (if exist) for Conversion, Validation Error Message.
      *  - Support list-entries, map-entries to ManagedBean.
-     *  (Need to modify ManagedBeanFactoryImpl, and ManagedBeanAssembler) 
+     *    (Need to modify ManagedBeanFactoryImpl, and ManagedBeanAssembler) 
      *  - Configure core-faces-config.xml for default setting.
-     *  -
+     *  - MetaInfFacesConfigurator -> Support multiple jar file.
      *  -
      *  
      * 

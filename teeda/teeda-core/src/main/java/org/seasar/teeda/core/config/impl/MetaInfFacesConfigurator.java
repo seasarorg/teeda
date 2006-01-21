@@ -15,20 +15,23 @@
  */
 package org.seasar.teeda.core.config.impl;
 
-import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Set;
-import java.util.jar.JarEntry;
-import java.util.jar.JarFile;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.faces.context.ExternalContext;
 
 import org.seasar.framework.container.factory.ResourceResolver;
 import org.seasar.framework.util.InputStreamUtil;
-import org.seasar.framework.util.JarFileUtil;
+import org.seasar.framework.util.URLUtil;
+import org.seasar.framework.xml.SaxHandlerParser;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.config.AbstractFacesConfigurator;
+import org.seasar.teeda.core.config.element.FacesConfig;
+import org.seasar.teeda.core.util.ClassLoaderUtil;
 
 public class MetaInfFacesConfigurator extends AbstractFacesConfigurator {
 
@@ -38,7 +41,26 @@ public class MetaInfFacesConfigurator extends AbstractFacesConfigurator {
 
     public MetaInfFacesConfigurator(ExternalContext externalContext) {
         externalContext_ = externalContext;
-        setResourceResolver(new WebAppJarResourceResolver(externalContext_));
+        setResourceResolver(new MetaInfResourceResolver(externalContext_));
+    }
+
+    public FacesConfig configure() {
+        String path = getPath();
+        SaxHandlerParser parser = createSaxHandlerParser();
+        List list = new ArrayList();
+        for (;;) {
+            InputStream is = resourceResolver_.getInputStream(path);
+            if (is == null) {
+                break;
+            }
+            try {
+                FacesConfig config = (FacesConfig) parser.parse(is);
+                list.add(config);
+            } finally {
+                InputStreamUtil.close(is);
+            }
+        }
+        return FacesConfigUtil.collectAllFacesConfig(list);
     }
 
     public String getPath() {
@@ -49,51 +71,46 @@ public class MetaInfFacesConfigurator extends AbstractFacesConfigurator {
         path_ = path;
     }
 
-    protected static class WebAppJarResourceResolver implements
-            ResourceResolver {
+    protected static class MetaInfResourceResolver implements ResourceResolver {
 
         private ExternalContext context_;
 
-        public WebAppJarResourceResolver(ExternalContext context) {
+        private Iterator resources_;
+
+        private boolean inited_ = false;
+
+        public MetaInfResourceResolver(ExternalContext context) {
             context_ = context;
         }
 
         public InputStream getInputStream(String path) {
-
-            Set resourcePaths = context_.getResourcePaths(path);
-            if (resourcePaths == null) {
-                return null;
+            if (!inited_) {
+                initialize(path);
+                inited_ = true;
             }
-            String jarPath = null;
-            InputStream is = null;
-            try {
-                for (Iterator itr = resourcePaths.iterator(); itr.hasNext();) {
-                    jarPath = (String) itr.next();
-                    if (isJarFile(jarPath)) {
-                        JarFile jar = createJarInstance(jarPath);
-                        JarEntry jarEntry = jar
-                                .getJarEntry(JsfConstants.FACES_CONFIG_RESOURCES);
-                        if (jarEntry != null) {
-                            is = JarFileUtil.getInputStream(jar, jarEntry);
-                        }
-                    }
-                }
-                return is;
-            } finally {
-                InputStreamUtil.close(is);
-            }
-        }
-
-        public static boolean isJarFile(String path) {
-            return (path != null) && path.endsWith(JsfConstants.JAR_POSTFIX);
-        }
-
-        protected static JarFile createJarInstance(String path) {
-            try {
-                return new JarFile(path);
-            } catch (IOException e) {
+            if (hasNext()) {
+                URL url = (URL) resources_.next();
+                return URLUtil.openStream(url);
+            } else {
                 return null;
             }
         }
+
+        private boolean hasNext() {
+            return resources_ != null && resources_.hasNext();
+        }
+
+        private void initialize(String path) {
+            ClassLoader loader = ClassLoaderUtil.getClassLoader(this);
+            List list = new LinkedList();
+            for (Iterator itr = ClassLoaderUtil.getResources(loader,
+                    JsfConstants.FACES_CONFIG_RESOURCES); itr.hasNext();) {
+                Object o = itr.next();
+                System.out.println(o);
+                list.add(0, o);
+            }
+            resources_ = list.iterator();
+        }
+
     }
 }
