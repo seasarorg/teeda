@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+<!DOCTYPE faces-config PUBLIC
+  "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.0//EN"
+  "http://java.sun.com/dtd/web-facesconfig_1_0.dtd">
+<faces-config>
+	<application>
+		<action-listener>org.seasar.teeda.core.mock.MockActionListener</action-listener>
+		<default-render-kit-id>hoge</default-render-kit-id>
+		<locale-config>
+			<default-locale>ja</default-locale>
+			<supported-locale>en</supported-locale>
+		</locale-config>
+		<message-bundle>message</message-bundle>
+		<navigation-handler>org.seasar.teeda.core.mock.MockNavigationHandler</navigation-handler>
+		<property-resolver>org.seasar.teeda.core.mock.MockPropertyResolver</property-resolver>
+		<state-manager>org.seasar.teeda.core.mock.MockStateManager</state-manager>
+		<variable-resolver>org.seasar.teeda.core.mock.MockVariableResolver</variable-resolver>
+		<view-handler>org.seasar.teeda.core.mock.MockViewHandler</view-handler>
+	</application>
+</faces-config>

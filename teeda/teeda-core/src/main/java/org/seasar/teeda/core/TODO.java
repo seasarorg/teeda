@@ -45,7 +45,7 @@ public interface TODO {
      *  - Use UIComponent's label attribute (if exist) for Conversion, Validation Error Message.
      *  - Support list-entries, map-entries to ManagedBean.
      *  (Need to modify ManagedBeanFactoryImpl, and ManagedBeanAssembler) 
-     *  -
+     *  - Configure core-faces-config.xml for default setting.
      *  -
      *  -
      *  

@@ -47,7 +47,7 @@ public class ConfigFilesFacesConfigurator extends AbstractFacesConfigurator {
         
         for(int i = 0;i < paths.length;i++){
             SaxHandlerParser parser = createSaxHandlerParser();
-            InputStream is = resourceResolver_.getInputStream(paths[i]);
+            InputStream is = resourceResolver_.getInputStream(paths[i].trim());
             try {
                 configs.add(parser.parse(is));
             }finally {

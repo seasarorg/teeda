@@ -25,10 +25,6 @@
 			<arg>applicationConfigurator</arg>
 		</initMethod>
 	</component>
-
-	<component class="org.seasar.framework.container.factory.ClassPathResourceResolver" />
-	
-	<component class="org.seasar.teeda.core.config.rule.FacesConfigTagHandlerRule" />
 	
 	<component name="coreConfigurator" class="org.seasar.teeda.core.config.CoreFacesConfigurator" />
 

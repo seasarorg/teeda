@@ -15,93 +15,75 @@
  */
 package org.seasar.teeda.core.config.impl;
 
-import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import javax.faces.application.Application;
 import javax.faces.application.ApplicationFactory;
 import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
 import javax.faces.context.FacesContextFactory;
-import javax.faces.event.PhaseListener;
-import javax.faces.lifecycle.Lifecycle;
 import javax.faces.lifecycle.LifecycleFactory;
-import javax.faces.render.RenderKit;
 import javax.faces.render.RenderKitFactory;
-import javax.faces.render.Renderer;
+import javax.faces.webapp.FacesServlet;
 
 import junitx.framework.ObjectAssert;
 
 import org.seasar.extension.unit.S2TestCase;
-import org.seasar.framework.container.factory.ClassPathResourceResolver;
-import org.seasar.teeda.core.application.navigation.NavigationCaseContext;
-import org.seasar.teeda.core.application.navigation.NavigationContext;
-import org.seasar.teeda.core.application.navigation.NavigationContextFactory;
 import org.seasar.teeda.core.config.assembler.AssemblerAssembler;
 import org.seasar.teeda.core.config.assembler.impl.DefaultAssembleProvider;
 import org.seasar.teeda.core.config.element.FacesConfig;
-import org.seasar.teeda.core.config.rule.FacesConfigTagHandlerRule;
-import org.seasar.teeda.core.managedbean.ManagedBeanFactory;
-import org.seasar.teeda.core.managedbean.impl.ManagedBeanFactoryImpl;
-import org.seasar.teeda.core.managedbean.impl.ManagedBeanScopeSaverImpl;
 import org.seasar.teeda.core.mock.MockActionListener;
 import org.seasar.teeda.core.mock.MockApplication;
 import org.seasar.teeda.core.mock.MockApplicationFactory;
 import org.seasar.teeda.core.mock.MockExternalContextImpl;
 import org.seasar.teeda.core.mock.MockFacesContextFactory;
-import org.seasar.teeda.core.mock.MockLifecycle;
 import org.seasar.teeda.core.mock.MockLifecycleFactory;
 import org.seasar.teeda.core.mock.MockNavigationHandler;
-import org.seasar.teeda.core.mock.MockPhaseListener;
 import org.seasar.teeda.core.mock.MockPropertyResolver;
-import org.seasar.teeda.core.mock.MockRenderKit;
 import org.seasar.teeda.core.mock.MockRenderKitFactory;
-import org.seasar.teeda.core.mock.MockRenderer;
 import org.seasar.teeda.core.mock.MockStateManager;
 import org.seasar.teeda.core.mock.MockVariableResolver;
 import org.seasar.teeda.core.mock.MockViewHandler;
-import org.seasar.teeda.core.scope.Scope;
-import org.seasar.teeda.core.scope.impl.S2ScopeTranslator;
-import org.seasar.teeda.core.scope.impl.ScopeManagerImpl;
 import org.seasar.teeda.core.util.FactoryFinderUtil;
 
 /**
  * @author shot
  */
-public class CoreFacesConfiguratorTest extends S2TestCase {
-
-    private static ClassPathResourceResolver resolver = new ClassPathResourceResolver();
-
-    private static FacesConfigTagHandlerRule rule = new FacesConfigTagHandlerRule();
+public class ConfigFilesFacesConfiguratorTest extends S2TestCase {
 
     /**
-     * Constructor for CoreFacesConfiguratorTest.
+     * Constructor for ConfigFilesFacesConfigurator.
      * 
      * @param name
      */
-    public CoreFacesConfiguratorTest(String name) {
+    public ConfigFilesFacesConfiguratorTest(String name) {
         super(name);
     }
 
     public void testConfigure1() throws Exception {
         // ## Arrange ##
-        CoreFacesConfigurator configurator = new CoreFacesConfigurator();
-        configurator.setPath(getClass().getPackage().getName()
-                .replace('.', '/')
-                + "/CoreFacesConfiguratorTest-testConfigure1.xml");
+        String path1 = getClass().getPackage().getName().replace('.', '/')
+                + "/ConfigFilesFacesConfiguratorTest-testConfigure1_1.xml";
+
+        String path2 = getClass().getPackage().getName().replace('.', '/')
+                + "/ConfigFilesFacesConfiguratorTest-testConfigure1_2.xml";
+
+        getServletContext().setInitParameter(FacesServlet.CONFIG_FILES_ATTR,
+                path1 + ", " + path2);
+        ExternalContext externalContext = new MockExternalContextImpl(
+                getServletContext(), getRequest(), getResponse());
+
+        ConfigFilesFacesConfigurator configurator = new ConfigFilesFacesConfigurator(
+                externalContext);
 
         // ## Act ##
         FacesConfig facesConfig = configurator.configure();
-
+        
         // ## Assert ##
         assertNotNull(facesConfig);
-
+        
         // do actually initialize.
         AssemblerAssembler assembler = new AssemblerAssembler();
         DefaultAssembleProvider provider = new DefaultAssembleProvider();
-        ExternalContext externalContext = new MockExternalContextImpl(
-                getServletContext(), getRequest(), getResponse());
         provider.setExternalContext(externalContext);
         assembler.setAssembleProvider(provider);
 
@@ -154,65 +136,5 @@ public class CoreFacesConfiguratorTest extends S2TestCase {
         assertEquals("hoge", app.getDefaultRenderKitId());
         assertEquals("message", app.getMessageBundle());
 
-        // ## Act ##
-        assembler.assembleLifecycle(facesConfig);
-
-        Lifecycle lifecycle = lifecycleFactory
-                .getLifecycle(LifecycleFactory.DEFAULT_LIFECYCLE);
-        assertNotNull(lifecycle);
-        ObjectAssert.assertInstanceOf(MockLifecycle.class, lifecycle);
-
-        PhaseListener[] listeners = lifecycle.getPhaseListeners();
-        assertEquals(1, listeners.length);
-        ObjectAssert.assertInstanceOf(MockPhaseListener.class, listeners[0]);
-
-        // ## Arrange ##
-        getContainer().register(ManagedBeanFactoryImpl.class);
-        getContainer().register(ManagedBeanScopeSaverImpl.class);
-        getContainer().register(ScopeManagerImpl.class);
-        getContainer().register(S2ScopeTranslator.class);
-
-        // ## Act ##
-        assembler.assembleManagedBeans(facesConfig);
-
-        // # Assert #
-        ManagedBeanFactory mbFactory = (ManagedBeanFactory) getContainer()
-                .getComponent(ManagedBeanFactory.class);
-        Object o = mbFactory.getManagedBean("hogeBean");
-        assertNotNull(o);
-        ObjectAssert.assertInstanceOf(Hoge.class, o);
-        Scope scope = mbFactory.getManagedBeanScope("hogeBean");
-        assertEquals(Scope.APPLICATION, scope);
-
-        // ## Act ##
-        assembler.assembleRenderKits(facesConfig);
-
-        // # Assert #
-        FacesContext context = contextFactory.getFacesContext(
-                getServletContext(), getRequest(), getResponse(), lifecycle);
-        RenderKit renderKit = renderKitFactory.getRenderKit(context,
-                "renderkitid");
-        assertNotNull(renderKit);
-        ObjectAssert.assertInstanceOf(MockRenderKit.class, renderKit);
-
-        Renderer renderer = renderKit.getRenderer("family", "type");
-        assertNotNull(renderer);
-        ObjectAssert.assertInstanceOf(MockRenderer.class, renderer);
-
-        // ## Act ##
-        assembler.assmbleNavigationRules(facesConfig);
-
-        // # Assert #
-        Map map = NavigationContextFactory.getNavigationContexts(context);
-        NavigationContext navContext = (NavigationContext) map.get("from");
-        assertEquals("from", navContext.getFromViewId());
-        List cases = navContext.getNavigationCases();
-        assertNotNull(cases);
-        assertEquals(1, cases.size());
-        NavigationCaseContext caseContext = (NavigationCaseContext) cases.get(0);
-        assertEquals("action", caseContext.getFromAction());
-        assertEquals("outcome", caseContext.getFromOutcome());
-        assertEquals("to", caseContext.getToViewId());
     }
-
 }

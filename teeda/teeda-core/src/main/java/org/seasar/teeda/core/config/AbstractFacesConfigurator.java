@@ -20,6 +20,7 @@ import java.io.InputStream;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import org.seasar.framework.container.factory.ClassPathResourceResolver;
 import org.seasar.framework.container.factory.ResourceResolver;
 import org.seasar.framework.util.InputStreamUtil;
 import org.seasar.framework.util.SAXParserFactoryUtil;
@@ -27,6 +28,7 @@ import org.seasar.framework.xml.SaxHandler;
 import org.seasar.framework.xml.SaxHandlerParser;
 import org.seasar.framework.xml.TagHandlerRule;
 import org.seasar.teeda.core.config.element.FacesConfig;
+import org.seasar.teeda.core.config.rule.FacesConfigTagHandlerRule;
 
 /**
  * @author shot
@@ -41,9 +43,9 @@ public abstract class AbstractFacesConfigurator implements FacesConfigurator{
     
     private static final String FACES_1_0_DTD_PATH = "org/seasar/teeda/core/resource/web-facesconfig_1_0.dtd";
 
-    protected ResourceResolver resourceResolver_;
+    protected ResourceResolver resourceResolver_ = new ClassPathResourceResolver();
 
-    protected TagHandlerRule rule_;
+    protected TagHandlerRule rule_ = new FacesConfigTagHandlerRule();
 
     public AbstractFacesConfigurator(){
     }
