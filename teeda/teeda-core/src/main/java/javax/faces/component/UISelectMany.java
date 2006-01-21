@@ -2,10 +2,8 @@ package javax.faces.component;
 
 import java.lang.reflect.Array;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
 

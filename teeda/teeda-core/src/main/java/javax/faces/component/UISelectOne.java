@@ -1,11 +1,6 @@
 package javax.faces.component;
 
-import java.util.Iterator;
-
-import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.faces.model.SelectItem;
-import javax.faces.model.SelectItemGroup;
 
 
 public class UISelectOne extends UIInput {
