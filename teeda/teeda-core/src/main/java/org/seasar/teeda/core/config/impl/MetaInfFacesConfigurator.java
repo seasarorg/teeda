@@ -27,64 +27,71 @@ import javax.faces.context.ExternalContext;
 import org.seasar.framework.container.factory.ResourceResolver;
 import org.seasar.framework.util.InputStreamUtil;
 import org.seasar.framework.util.JarFileUtil;
+import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.config.AbstractFacesConfigurator;
 
 public class MetaInfFacesConfigurator extends AbstractFacesConfigurator {
 
-    private static final String WEB_INF_LIB = "/WEB-INF/lib/";
-    
-    private static final String JAR_POSTFIX = ".jar";
-    
     private ExternalContext externalContext_;
+
+    private String path_ = JsfConstants.WEB_INF_LIB;
+
     public MetaInfFacesConfigurator(ExternalContext externalContext) {
         externalContext_ = externalContext;
         setResourceResolver(new WebAppJarResourceResolver(externalContext_));
     }
-        
+
     public String getPath() {
-        return WEB_INF_LIB;
+        return path_;
     }
 
-    protected static class WebAppJarResourceResolver implements ResourceResolver{
+    public void setPath(String path) {
+        path_ = path;
+    }
+
+    protected static class WebAppJarResourceResolver implements
+            ResourceResolver {
 
         private ExternalContext context_;
-        public WebAppJarResourceResolver(ExternalContext context){
+
+        public WebAppJarResourceResolver(ExternalContext context) {
             context_ = context;
         }
-        
+
         public InputStream getInputStream(String path) {
-            
+
             Set resourcePaths = context_.getResourcePaths(path);
-            if(resourcePaths == null){
+            if (resourcePaths == null) {
                 return null;
             }
             String jarPath = null;
             InputStream is = null;
-            try{
-                for(Iterator itr = resourcePaths.iterator();itr.hasNext();){
-                    jarPath = (String)itr.next();
-                    if(isJarFile(jarPath)){
+            try {
+                for (Iterator itr = resourcePaths.iterator(); itr.hasNext();) {
+                    jarPath = (String) itr.next();
+                    if (isJarFile(jarPath)) {
                         JarFile jar = createJarInstance(jarPath);
-                        JarEntry jarEntry = jar.getJarEntry("META-INF/faces-config.xml");
-                        if(jarEntry != null){
+                        JarEntry jarEntry = jar
+                                .getJarEntry(JsfConstants.FACES_CONFIG_RESOURCES);
+                        if (jarEntry != null) {
                             is = JarFileUtil.getInputStream(jar, jarEntry);
                         }
                     }
                 }
                 return is;
-            }finally{
+            } finally {
                 InputStreamUtil.close(is);
             }
         }
-        
-        public static boolean isJarFile(String path){
-            return (path != null) && path.endsWith(JAR_POSTFIX);
+
+        public static boolean isJarFile(String path) {
+            return (path != null) && path.endsWith(JsfConstants.JAR_POSTFIX);
         }
-        
-        protected static JarFile createJarInstance(String path){
-            try{
+
+        protected static JarFile createJarInstance(String path) {
+            try {
                 return new JarFile(path);
-            }catch (IOException e){
+            } catch (IOException e) {
                 return null;
             }
         }
