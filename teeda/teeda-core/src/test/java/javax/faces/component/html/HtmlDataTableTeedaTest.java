@@ -23,8 +23,11 @@ import javax.faces.component.UIDataTeedaTest;
  */
 public class HtmlDataTableTeedaTest extends UIDataTeedaTest {
 
-    // TODO test
-    
+    public void testSaveAndRestoreState() throws Exception {
+        super.testSaveAndRestoreState();
+        // TODO test
+    }
+
     private HtmlDataTable createHtmlDataTable() {
         return (HtmlDataTable) createUIComponent();
     }
