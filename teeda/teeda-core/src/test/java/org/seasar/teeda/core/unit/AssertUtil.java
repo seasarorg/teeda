@@ -35,6 +35,26 @@ public class AssertUtil {
         }
     }
 
+    public static void assertThrows(Class expected, ExceptionalClosure closure) {
+        Assert.assertNotNull("expected", expected);
+        Assert.assertNotNull("closure", closure);
+        boolean thrown = false;
+        try {
+            closure.execute();
+        } catch (Throwable th) {
+            thrown = true;
+            if (expected.isAssignableFrom(th.getClass())) {
+                // ok
+                assertExceptionMessageExist(th);
+            } else {
+                Assert.fail("Expected <" + expected.getName() + "> is not thrown. But was <" + th + ">");
+            }
+        }
+        if (!thrown) {
+            Assert.fail("Expected <" + expected.getName() + "> is not thrown.");
+        }
+    }
+
     static void assertContains(String shouldBeContained, String value) {
         Assert.assertEquals(true, value.indexOf(shouldBeContained) > -1);
     }

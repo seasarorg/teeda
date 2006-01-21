@@ -15,7 +15,6 @@
  */
 package org.seasar.teeda.core.unit;
 
-import junit.framework.Assert;
 import junit.framework.AssertionFailedError;
 import junit.framework.TestCase;
 
@@ -24,17 +23,43 @@ import junit.framework.TestCase;
  */
 public class AssertUtilTest extends TestCase {
 
+    public void testAssertThrows_FailNoThrown() throws Exception {
+        try {
+            AssertUtil.assertThrows(NullPointerException.class,
+                    new ExceptionalClosure() {
+                        public void execute() throws Throwable {
+                        }
+                    });
+            fail();
+        } catch (AssertionFailedError afe) {
+        }
+    }
+
+    public void testAssertThrows_FailAnotherThrown() throws Exception {
+        try {
+            AssertUtil.assertThrows(NullPointerException.class,
+                    new ExceptionalClosure() {
+                        public void execute() throws Throwable {
+                            throw new IllegalStateException("for test");
+                        }
+                    });
+            fail();
+        } catch (AssertionFailedError afe) {
+        }
+    }
+
     public void testAssertExceptionMessageExist_Success() throws Exception {
         AssertUtil.assertExceptionMessageExist(new NullPointerException("c"));
     }
 
     public void testAssertExceptionMessageExist_Fail() throws Exception {
-        new AssertionFailedErrorExpectation(new Closure() {
-            public void execute() {
-                AssertUtil
-                        .assertExceptionMessageExist(new NullPointerException());
-            }
-        });
+        AssertUtil.assertThrows(AssertionFailedError.class,
+                new ExceptionalClosure() {
+                    public void execute() {
+                        AssertUtil
+                                .assertExceptionMessageExist(new NullPointerException());
+                    }
+                });
     }
 
     public void testAssertNotEquals_Success() throws Exception {
@@ -44,34 +69,18 @@ public class AssertUtilTest extends TestCase {
     }
 
     public void testAssertNotEquals_Fail() throws Exception {
-        new AssertionFailedErrorExpectation(new Closure() {
-            public void execute() {
-                AssertUtil.assertNotEquals("a", "a");
-            }
-        });
-        new AssertionFailedErrorExpectation(new Closure() {
-            public void execute() {
-                AssertUtil.assertNotEquals(null, null);
-            }
-        });
-    }
-
-    private static interface Closure {
-        public void execute();
-    }
-
-    private static class AssertionFailedErrorExpectation {
-        AssertionFailedErrorExpectation(Closure closure) {
-            AssertionFailedError afe = null;
-            try {
-                closure.execute();
-            } catch (AssertionFailedError expected) {
-                afe = expected;
-            }
-            if (afe == null) {
-                Assert.fail("AssertionFailedError is not thrown");
-            }
-        }
+        AssertUtil.assertThrows(AssertionFailedError.class,
+                new ExceptionalClosure() {
+                    public void execute() {
+                        AssertUtil.assertNotEquals("a", "a");
+                    }
+                });
+        AssertUtil.assertThrows(AssertionFailedError.class,
+                new ExceptionalClosure() {
+                    public void execute() {
+                        AssertUtil.assertNotEquals(null, null);
+                    }
+                });
     }
 
 }

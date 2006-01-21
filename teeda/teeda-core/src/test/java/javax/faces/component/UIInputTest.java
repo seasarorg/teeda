@@ -31,7 +31,7 @@ public class UIInputTest extends UIOutputTest {
     public final void testSetGetSubmittedValue_ValueBindingNotWork() {
         UIInput input = createUIInput();
         MockValueBinding vb = new MockValueBinding();
-        vb.setValue(new MockFacesContextImpl(), "b");
+        vb.setValue(getFacesContext(), "b");
         input.setValueBinding("submittedValue", vb);
         assertEquals(null, input.getSubmittedValue());
     }
@@ -58,7 +58,7 @@ public class UIInputTest extends UIOutputTest {
     public final void testSetGetRequired_ValueBinding() {
         UIInput input = createUIInput();
         MockValueBinding vb = new MockValueBinding();
-        vb.setValue(new MockFacesContextImpl(), Boolean.TRUE);
+        vb.setValue(getFacesContext(), Boolean.TRUE);
         input.setValueBinding("required", vb);
         assertEquals(true, input.isRequired());
     }
@@ -72,7 +72,7 @@ public class UIInputTest extends UIOutputTest {
     public final void testSetGetValid_ValueBinding() {
         UIInput input = createUIInput();
         MockValueBinding vb = new MockValueBinding();
-        vb.setValue(new MockFacesContextImpl(), Boolean.TRUE);
+        vb.setValue(getFacesContext(), Boolean.TRUE);
         input.setValueBinding("valid", vb);
         assertEquals(true, input.isValid());
     }

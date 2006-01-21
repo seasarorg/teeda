@@ -46,7 +46,7 @@ public class TestUIViewRoot extends TeedaTestCase {
 	public void testGetRenderKitId() {
 		UIViewRoot root = new UIViewRoot();
 		MockValueBinding vb = new MockValueBinding();
-		vb.setValue(new MockFacesContextImpl(), "aaa");
+		vb.setValue(getFacesContext(), "aaa");
 		root.setValueBinding("renderKitId", vb);
 		assertEquals("aaa", root.getRenderKitId());
 	}
