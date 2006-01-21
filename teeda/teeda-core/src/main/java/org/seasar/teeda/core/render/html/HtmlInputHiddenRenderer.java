@@ -35,6 +35,9 @@ public class HtmlInputHiddenRenderer extends AbstractHtmlRenderer {
     public void encodeEnd(FacesContext context, UIComponent component)
             throws IOException {
         super.encodeEnd(context, component);
+        if (!component.isRendered()) {
+            return;
+        }
         encodeHtmlInputHiddenEnd(context, (HtmlInputHidden) component);
     }
 

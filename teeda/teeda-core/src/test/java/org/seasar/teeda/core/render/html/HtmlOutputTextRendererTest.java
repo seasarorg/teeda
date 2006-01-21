@@ -28,94 +28,92 @@ import org.custommonkey.xmlunit.Diff;
  */
 public class HtmlOutputTextRendererTest extends RendererTest {
 
+    private HtmlOutputTextRenderer renderer_;
+
+    private MockHtmlOutputText htmlOutputText_;
+
+    protected void setUp() throws Exception {
+        super.setUp();
+        renderer_ = createHtmlOutputTextRenderer();
+        htmlOutputText_ = new MockHtmlOutputText();
+        htmlOutputText_.setRenderer(renderer_);
+    }
+
     public void testEncodeEnd() throws Exception {
-        HtmlOutputTextRenderer renderer = createHtmlOutputTextRenderer();
-        MockHtmlOutputText htmlOutputText = new MockHtmlOutputText();
-        htmlOutputText.setRenderer(renderer);
+        htmlOutputText_.setValue("abc");
 
-        htmlOutputText.setValue("abc");
-
-        renderer.encodeEnd(getFacesContext(), htmlOutputText);
+        renderer_.encodeEnd(getFacesContext(), htmlOutputText_);
 
         assertEquals("abc", getResponseText());
     }
 
+    public void testEncodeEnd_RenderFalse() throws Exception {
+        // ## Arrange ##
+        htmlOutputText_.setRendered(false);
+        htmlOutputText_.setValue("abc");
+
+        // ## Act ##
+        renderer_.encodeEnd(getFacesContext(), htmlOutputText_);
+
+        // ## Assert ##
+        assertEquals("", getResponseText());
+    }
+
     public void testEncodeEnd_NullValue() throws Exception {
-        HtmlOutputTextRenderer renderer = createHtmlOutputTextRenderer();
-        MockHtmlOutputText htmlOutputText = new MockHtmlOutputText();
-        htmlOutputText.setRenderer(renderer);
 
-        htmlOutputText.setValue(null);
+        htmlOutputText_.setValue(null);
 
-        renderer.encodeEnd(getFacesContext(), htmlOutputText);
+        renderer_.encodeEnd(getFacesContext(), htmlOutputText_);
 
         assertEquals("", getResponseText());
     }
 
     public void testEncodeEnd_EscapeTrue() throws Exception {
-        HtmlOutputTextRenderer renderer = createHtmlOutputTextRenderer();
-        MockHtmlOutputText htmlOutputText = new MockHtmlOutputText();
-        htmlOutputText.setRenderer(renderer);
 
-        assertTrue("default is true", htmlOutputText.isEscape());
-        htmlOutputText.setValue("<a>");
+        assertTrue("default is true", htmlOutputText_.isEscape());
+        htmlOutputText_.setValue("<a>");
 
-        renderer.encodeEnd(getFacesContext(), htmlOutputText);
+        renderer_.encodeEnd(getFacesContext(), htmlOutputText_);
 
         assertEquals("&lt;a&gt;", getResponseText());
     }
 
     public void testEncodeEnd_EscapeFalse() throws Exception {
-        HtmlOutputTextRenderer renderer = createHtmlOutputTextRenderer();
-        MockHtmlOutputText htmlOutputText = new MockHtmlOutputText();
-        htmlOutputText.setRenderer(renderer);
 
-        htmlOutputText.setEscape(false);
-        htmlOutputText.setValue("<a>");
+        htmlOutputText_.setEscape(false);
+        htmlOutputText_.setValue("<a>");
 
-        renderer.encodeEnd(getFacesContext(), htmlOutputText);
+        renderer_.encodeEnd(getFacesContext(), htmlOutputText_);
 
         assertEquals("<a>", getResponseText());
     }
 
     public void testEncodeEnd_WithStyle() throws Exception {
-        HtmlOutputTextRenderer renderer = createHtmlOutputTextRenderer();
-        MockHtmlOutputText htmlOutputText = new MockHtmlOutputText();
-        htmlOutputText.setRenderer(renderer);
+        htmlOutputText_.setStyle("some style");
+        htmlOutputText_.setValue("a");
+        htmlOutputText_.setEscape(false);
 
-        htmlOutputText.setStyle("some style");
-        htmlOutputText.setValue("a");
-        htmlOutputText.setEscape(false);
-
-        renderer.encodeEnd(getFacesContext(), htmlOutputText);
+        renderer_.encodeEnd(getFacesContext(), htmlOutputText_);
 
         assertEquals("<span style=\"some style\">a</span>", getResponseText());
     }
 
     public void testEncodeEnd_WithStyleClass() throws Exception {
-        HtmlOutputTextRenderer renderer = createHtmlOutputTextRenderer();
-        MockHtmlOutputText htmlOutputText = new MockHtmlOutputText();
-        htmlOutputText.setRenderer(renderer);
+        htmlOutputText_.setStyleClass("some styleClass");
+        htmlOutputText_.setValue("a");
 
-        htmlOutputText.setStyleClass("some styleClass");
-        htmlOutputText.setValue("a");
-
-        renderer.encodeEnd(getFacesContext(), htmlOutputText);
+        renderer_.encodeEnd(getFacesContext(), htmlOutputText_);
 
         assertEquals("styleClass -> class",
                 "<span class=\"some styleClass\">a</span>", getResponseText());
     }
 
     public void testEncodeEnd_CommonAttributtes() throws Exception {
-        HtmlOutputTextRenderer renderer = createHtmlOutputTextRenderer();
-        MockHtmlOutputText htmlOutputText = new MockHtmlOutputText();
-        htmlOutputText.setRenderer(renderer);
+        htmlOutputText_.getAttributes().put("onmouseout", "do something");
+        htmlOutputText_.getAttributes().put("title", "someTitle");
+        htmlOutputText_.setValue("a");
 
-        htmlOutputText.getAttributes().put("onmouseout", "do something");
-        htmlOutputText.getAttributes().put("title", "someTitle");
-        htmlOutputText.setValue("a");
-
-        renderer.encodeEnd(getFacesContext(), htmlOutputText);
+        renderer_.encodeEnd(getFacesContext(), htmlOutputText_);
 
         Diff diff = new Diff(
                 "<span title=\"someTitle\" onmouseout=\"do something\">a</span>",
@@ -125,15 +123,11 @@ public class HtmlOutputTextRendererTest extends RendererTest {
 
     public void testEncodeEnd_Id() throws Exception {
         // ## Arrange ##
-        HtmlOutputTextRenderer renderer = createHtmlOutputTextRenderer();
-        MockHtmlOutputText htmlOutputText = new MockHtmlOutputText();
-        htmlOutputText.setRenderer(renderer);
-
-        htmlOutputText.setId("someId");
-        htmlOutputText.setValue("a");
+        htmlOutputText_.setId("someId");
+        htmlOutputText_.setValue("a");
 
         // ## Act ##
-        renderer.encodeEnd(getFacesContext(), htmlOutputText);
+        renderer_.encodeEnd(getFacesContext(), htmlOutputText_);
 
         // ## Assert ##
         assertEquals("<span id=\"someId\">a</span>", getResponseText());
@@ -141,15 +135,11 @@ public class HtmlOutputTextRendererTest extends RendererTest {
 
     public void testEncodeEnd_NotWriteId() throws Exception {
         // ## Arrange ##
-        HtmlOutputTextRenderer renderer = createHtmlOutputTextRenderer();
-        MockHtmlOutputText htmlOutputText = new MockHtmlOutputText();
-        htmlOutputText.setRenderer(renderer);
-
-        htmlOutputText.setId(UIViewRoot.UNIQUE_ID_PREFIX + "someId");
-        htmlOutputText.setValue("a");
+        htmlOutputText_.setId(UIViewRoot.UNIQUE_ID_PREFIX + "someId");
+        htmlOutputText_.setValue("a");
 
         // ## Act ##
-        renderer.encodeEnd(getFacesContext(), htmlOutputText);
+        renderer_.encodeEnd(getFacesContext(), htmlOutputText_);
 
         // ## Assert ##
         assertEquals("<span>a</span>", getResponseText());
@@ -157,17 +147,13 @@ public class HtmlOutputTextRendererTest extends RendererTest {
 
     public void testEncodeEnd_WithAllAttributes() throws Exception {
         // ## Arrange ##
-        HtmlOutputTextRenderer renderer = createHtmlOutputTextRenderer();
-        MockHtmlOutputText htmlOutputText = new MockHtmlOutputText();
-        htmlOutputText.setRenderer(renderer);
-
-        htmlOutputText.setId("fooId");
-        htmlOutputText.setTitle("someTitle");
-        htmlOutputText.getAttributes().put("onmouseout", "do something");
-        htmlOutputText.setValue("a");
+        htmlOutputText_.setId("fooId");
+        htmlOutputText_.setTitle("someTitle");
+        htmlOutputText_.getAttributes().put("onmouseout", "do something");
+        htmlOutputText_.setValue("a");
 
         // ## Act ##
-        renderer.encodeEnd(getFacesContext(), htmlOutputText);
+        renderer_.encodeEnd(getFacesContext(), htmlOutputText_);
 
         // ## Assert ##
         Diff diff = new Diff("<span" + " id=\"fooId\"" + " title=\"someTitle\""
@@ -176,8 +162,7 @@ public class HtmlOutputTextRendererTest extends RendererTest {
     }
 
     public void testGetRendersChildren() throws Exception {
-        HtmlOutputTextRenderer renderer = new HtmlOutputTextRenderer();
-        assertEquals(false, renderer.getRendersChildren());
+        assertEquals(false, renderer_.getRendersChildren());
     }
 
     private HtmlOutputTextRenderer createHtmlOutputTextRenderer() {

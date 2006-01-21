@@ -34,6 +34,9 @@ public class HtmlOutputLabelRenderer extends AbstractHtmlRenderer {
     public void encodeBegin(FacesContext context, UIComponent component)
             throws IOException {
         super.encodeBegin(context, component);
+        if (!component.isRendered()) {
+            return;
+        }
         encodeHtmlOutputLabelBegin(context, (HtmlOutputLabel) component);
     }
 
@@ -67,6 +70,9 @@ public class HtmlOutputLabelRenderer extends AbstractHtmlRenderer {
     public void encodeEnd(FacesContext context, UIComponent component)
             throws IOException {
         super.encodeEnd(context, component);
+        if (!component.isRendered()) {
+            return;
+        }
         encodeHtmlOutputLabelEnd(context, (HtmlOutputLabel) component);
     }
 

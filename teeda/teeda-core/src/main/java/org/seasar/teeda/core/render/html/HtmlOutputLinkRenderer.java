@@ -37,6 +37,9 @@ public class HtmlOutputLinkRenderer extends AbstractHtmlRenderer {
     public void encodeBegin(FacesContext context, UIComponent component)
             throws IOException {
         super.encodeBegin(context, component);
+        if (!component.isRendered()) {
+            return;
+        }
         encodeHtmlOutputLinkBegin(context, (HtmlOutputLink) component);
     }
 
@@ -77,6 +80,9 @@ public class HtmlOutputLinkRenderer extends AbstractHtmlRenderer {
     public void encodeEnd(FacesContext context, UIComponent component)
             throws IOException {
         super.encodeEnd(context, component);
+        if (!component.isRendered()) {
+            return;
+        }
         encodeHtmlOutputLinkEnd(context, (HtmlOutputLink) component);
     }
 

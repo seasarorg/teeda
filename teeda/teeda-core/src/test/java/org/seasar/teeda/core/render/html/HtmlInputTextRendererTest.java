@@ -30,16 +30,22 @@ import org.seasar.teeda.core.mock.MockUIComponentBaseWithNamingContainer;
  */
 public class HtmlInputTextRendererTest extends RendererTest {
 
-    public void testEncodeEnd_WithNoValue() throws Exception {
-        // ## Arrange ##
-        HtmlInputTextRenderer renderer = createHtmlInputTextRenderer();
-        MockHtmlInputText htmlInputText = new MockHtmlInputText();
-        htmlInputText.setRenderer(renderer);
+    private HtmlInputTextRenderer renderer_;
 
+    private MockHtmlInputText htmlInputText_;
+
+    protected void setUp() throws Exception {
+        super.setUp();
+        renderer_ = createHtmlInputTextRenderer();
+        htmlInputText_ = new MockHtmlInputText();
+        htmlInputText_.setRenderer(renderer_);
+    }
+
+    public void testEncodeEnd_WithNoValue() throws Exception {
         MockFacesContext context = getFacesContext();
 
         // ## Act ##
-        renderer.encodeEnd(context, htmlInputText);
+        renderer_.encodeEnd(context, htmlInputText_);
 
         // ## Assert ##
         assertEquals(
@@ -47,17 +53,26 @@ public class HtmlInputTextRendererTest extends RendererTest {
                 getResponseText());
     }
 
-    public void testEncodeEnd_WithValue() throws Exception {
+    public void testEncodeEnd_RenderFalse() throws Exception {
         // ## Arrange ##
-        HtmlInputTextRenderer renderer = createHtmlInputTextRenderer();
-        MockHtmlInputText htmlInputText = new MockHtmlInputText();
-        htmlInputText.setRenderer(renderer);
-
-        htmlInputText.setValue("abc");
+        htmlInputText_.setRendered(false);
         MockFacesContext context = getFacesContext();
 
         // ## Act ##
-        renderer.encodeEnd(context, htmlInputText);
+        renderer_.encodeBegin(context, htmlInputText_);
+        renderer_.encodeEnd(context, htmlInputText_);
+
+        // ## Assert ##
+        assertEquals("", getResponseText());
+    }
+
+    public void testEncodeEnd_WithValue() throws Exception {
+        // ## Arrange ##
+        htmlInputText_.setValue("abc");
+        MockFacesContext context = getFacesContext();
+
+        // ## Act ##
+        renderer_.encodeEnd(context, htmlInputText_);
 
         // ## Assert ##
         assertEquals(
@@ -66,60 +81,52 @@ public class HtmlInputTextRendererTest extends RendererTest {
     }
 
     public void testEncodeEnd_WithId() throws Exception {
-        HtmlInputTextRenderer renderer = createHtmlInputTextRenderer();
-        MockHtmlInputText htmlInputText = new MockHtmlInputText();
-        htmlInputText.setRenderer(renderer);
-
-        htmlInputText.setId("a");
+        htmlInputText_.setId("a");
 
         UIComponent parent = new MockUIComponentBaseWithNamingContainer();
         parent.setId("b");
-        parent.getChildren().add(htmlInputText);
+        parent.getChildren().add(htmlInputText_);
 
-        renderer.encodeEnd(getFacesContext(), htmlInputText);
+        renderer_.encodeEnd(getFacesContext(), htmlInputText_);
 
         assertEquals("<input type=\"text\" id=\"a\" name=\"b:a\" value=\"\"/>",
                 getResponseText());
     }
 
     public void testEncodeEnd_WithAllAttributes() throws Exception {
-        HtmlInputTextRenderer renderer = createHtmlInputTextRenderer();
-        MockHtmlInputText htmlInputText = new MockHtmlInputText();
-        htmlInputText.setRenderer(renderer);
+        htmlInputText_.setAccesskey("a");
+        htmlInputText_.setAlt("b");
+        htmlInputText_.setDir("c");
+        htmlInputText_.setDisabled(true);
+        htmlInputText_.setLang("e");
+        htmlInputText_.setMaxlength(5);
+        htmlInputText_.setOnblur("g");
+        htmlInputText_.setOnchange("h");
+        htmlInputText_.setOnclick("i");
+        htmlInputText_.setOndblclick("j");
+        htmlInputText_.setOnfocus("k");
+        htmlInputText_.setOnkeydown("l");
+        htmlInputText_.setOnkeypress("m");
+        htmlInputText_.setOnkeyup("n");
+        htmlInputText_.setOnmousedown("o");
+        htmlInputText_.setOnmousemove("p");
+        htmlInputText_.setOnmouseout("q");
+        htmlInputText_.setOnmouseover("r");
+        htmlInputText_.setOnmouseup("s");
+        htmlInputText_.setOnselect("t");
+        htmlInputText_.setReadonly(true);
+        htmlInputText_.setSize(2);
+        htmlInputText_.setStyle("w");
+        htmlInputText_.setStyleClass("u");
+        htmlInputText_.setTabindex("x");
+        htmlInputText_.setTitle("y");
 
-        htmlInputText.setAccesskey("a");
-        htmlInputText.setAlt("b");
-        htmlInputText.setDir("c");
-        htmlInputText.setDisabled(true);
-        htmlInputText.setLang("e");
-        htmlInputText.setMaxlength(5);
-        htmlInputText.setOnblur("g");
-        htmlInputText.setOnchange("h");
-        htmlInputText.setOnclick("i");
-        htmlInputText.setOndblclick("j");
-        htmlInputText.setOnfocus("k");
-        htmlInputText.setOnkeydown("l");
-        htmlInputText.setOnkeypress("m");
-        htmlInputText.setOnkeyup("n");
-        htmlInputText.setOnmousedown("o");
-        htmlInputText.setOnmousemove("p");
-        htmlInputText.setOnmouseout("q");
-        htmlInputText.setOnmouseover("r");
-        htmlInputText.setOnmouseup("s");
-        htmlInputText.setOnselect("t");
-        htmlInputText.setReadonly(true);
-        htmlInputText.setSize(2);
-        htmlInputText.setStyle("w");
-        htmlInputText.setStyleClass("u");
-        htmlInputText.setTabindex("x");
-        htmlInputText.setTitle("y");
-
-        htmlInputText.setId("A");
-        htmlInputText.setValue("B");
+        htmlInputText_.setId("A");
+        htmlInputText_.setValue("B");
 
         MockFacesContext context = getFacesContext();
-        renderer.encodeBegin(context, htmlInputText);
-        renderer.encodeEnd(context, htmlInputText);
+        renderer_.encodeBegin(context, htmlInputText_);
+        renderer_.encodeEnd(context, htmlInputText_);
 
         Diff diff = new Diff(
                 "<input type=\"text\" id=\"A\" name=\"A\" value=\"B\""
@@ -141,42 +148,34 @@ public class HtmlInputTextRendererTest extends RendererTest {
 
     public void testDecode_None() throws Exception {
         // ## Arrange ##
-        HtmlInputTextRenderer renderer = createHtmlInputTextRenderer();
-        MockHtmlInputText htmlInputText = new MockHtmlInputText();
-        htmlInputText.setRenderer(renderer);
-
-        htmlInputText.setClientId("key");
+        htmlInputText_.setClientId("key");
 
         MockFacesContext context = getFacesContext();
 
         // ## Act ##
-        renderer.decode(context, htmlInputText);
+        renderer_.decode(context, htmlInputText_);
 
         // ## Assert ##
-        assertEquals(null, htmlInputText.getSubmittedValue());
+        assertEquals(null, htmlInputText_.getSubmittedValue());
     }
 
     public void testDecode_Success() throws Exception {
         // ## Arrange ##
-        HtmlInputTextRenderer renderer = createHtmlInputTextRenderer();
-        MockHtmlInputText htmlInputText = new MockHtmlInputText();
-        htmlInputText.setRenderer(renderer);
-
-        htmlInputText.setClientId("key");
+        htmlInputText_.setClientId("key");
 
         MockFacesContext context = getFacesContext();
         getExternalContext().getRequestParameterMap().put("key", "12345");
 
         // ## Act ##
-        renderer.decode(context, htmlInputText);
+        renderer_.decode(context, htmlInputText_);
 
         // ## Assert ##
-        assertEquals("12345", htmlInputText.getSubmittedValue());
+        assertEquals("12345", htmlInputText_.getSubmittedValue());
     }
 
     public void testGetRendersChildren() throws Exception {
         HtmlInputTextRenderer renderer = new HtmlInputTextRenderer();
-        assertEquals(false, renderer.getRendersChildren());
+        assertEquals(false, renderer_.getRendersChildren());
     }
 
     private HtmlInputTextRenderer createHtmlInputTextRenderer() {

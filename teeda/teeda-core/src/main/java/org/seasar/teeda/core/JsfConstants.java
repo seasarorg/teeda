@@ -84,7 +84,11 @@ public interface JsfConstants {
 
     public String SPAN_ELEM = "span";
 
+    public String TABLE_ELEM = "table";
+
     public String TEXTAREA_ELEM = "textarea";
+
+    public String THEAD_ELEM = "thead";
 
     // -- attribute --
 
@@ -93,6 +97,14 @@ public interface JsfConstants {
     public String ALIGN_ATTR = "align";
 
     public String ALT_ATTR = "alt";
+
+    public String BGCOLOR_ATTR = "bgcolor";
+
+    public String BORDER_ATTR = "border";
+
+    public String CELLPADDING_ATTR = "cellpadding";
+
+    public String CELLSPACING_ATTR = "cellspacing";
 
     public String CHARSET_ATTR = "charset";
 
@@ -113,6 +125,8 @@ public interface JsfConstants {
     public String DIR_ATTR = "dir";
 
     public String FOR_ATTR = "for";
+
+    public String FRAME_ATTR = "frame";
 
     public String HREF_ATTR = "href";
 
@@ -166,6 +180,8 @@ public interface JsfConstants {
 
     public String ROWS_ATTR = "rows";
 
+    public String RULES_ATTR = "rules";
+
     public String SHAPE_ATTR = "shape";
 
     public String SIZE_ATTR = "size";
@@ -176,6 +192,8 @@ public interface JsfConstants {
 
     public String STYLE_CLASS_ATTR = "styleClass";
 
+    public String SUMMARY_ATTR = "summary";
+
     public String TABINDEX_ATTR = "tabindex";
 
     public String TARGET_ATTR = "target";
@@ -185,6 +203,8 @@ public interface JsfConstants {
     public String TYPE_ATTR = "type";
 
     public String VALUE_ATTR = "value";
+
+    public String WIDTH_ATTR = "width";
 
     public String[] UNIVERSAL_ATTRIBUTES_WITHOUT_STYLE = { DIR_ATTR, LANG_ATTR,
             TITLE_ATTR, };
@@ -258,12 +278,19 @@ public interface JsfConstants {
             .add(TEXTAREA_ATTRIBUTES,
                     COMMON_FIELD_PASSTROUGH_ATTRIBUTES_WITHOUT_DISABLED);
 
-    public static final String[] BUTTON_ATTRIBUTES = { ALIGN_ATTR, ALT_ATTR,
-            DATAFLD_ATTR, DATASRC_ATTR, DATAFORMATAS_ATTR, };
+    public String[] BUTTON_ATTRIBUTES = { ALIGN_ATTR, ALT_ATTR, DATAFLD_ATTR,
+            DATASRC_ATTR, DATAFORMATAS_ATTR, };
 
-    public static final String[] BUTTON_PASSTHROUGH_ATTRIBUTES_WITHOUT_DISABLED = (String[]) ArrayUtil
+    public String[] BUTTON_PASSTHROUGH_ATTRIBUTES_WITHOUT_DISABLED = (String[]) ArrayUtil
             .add(BUTTON_ATTRIBUTES,
                     COMMON_FIELD_PASSTROUGH_ATTRIBUTES_WITHOUT_DISABLED);
+
+    public String[] TABLE_ATTRIBUTES = { ALIGN_ATTR, BGCOLOR_ATTR, BORDER_ATTR,
+            CELLPADDING_ATTR, CELLSPACING_ATTR, DATAFLD_ATTR, DATASRC_ATTR,
+            DATAFORMATAS_ATTR, FRAME_ATTR, RULES_ATTR, SUMMARY_ATTR, WIDTH_ATTR };
+
+    public String[] TABLE_PASSTHROUGH_ATTRIBUTES = (String[]) ArrayUtil.add(
+            TABLE_ATTRIBUTES, COMMON_PASSTROUGH_ATTRIBUTES);
 
     public String DEFAULT_RENDERKIT_CLASS = HtmlRenderKitImpl.class.getName();
 
@@ -272,7 +299,7 @@ public interface JsfConstants {
     public String WEB_INF_LIB = "/WEB-INF/lib/";
 
     public String JAR_POSTFIX = ".jar";
-    
+
     public String FACES_CONFIG_RESOURCES = "META-INF/faces-config.xml";
 
 }

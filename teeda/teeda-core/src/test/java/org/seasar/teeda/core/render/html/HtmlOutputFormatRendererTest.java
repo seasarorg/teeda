@@ -32,61 +32,67 @@ import org.seasar.teeda.core.mock.MockFacesContext;
  */
 public class HtmlOutputFormatRendererTest extends RendererTest {
 
+    private HtmlOutputFormatRenderer renderer_;
+
+    private MockHtmlOutputFormat htmlOutputFormat_;
+
+    protected void setUp() throws Exception {
+        super.setUp();
+        renderer_ = createHtmlOutputFormatRenderer();
+        htmlOutputFormat_ = new MockHtmlOutputFormat();
+        htmlOutputFormat_.setRenderer(renderer_);
+    }
+
     public void testEncodeEnd() throws Exception {
-        HtmlOutputFormatRenderer renderer = createHtmlOutputFormatRenderer();
-        MockHtmlOutputFormat htmlOutputFormat = new MockHtmlOutputFormat();
-        htmlOutputFormat.setRenderer(renderer);
+        htmlOutputFormat_.setValue("abc");
 
-        htmlOutputFormat.setValue("abc");
-
-        renderer.encodeEnd(getFacesContext(), htmlOutputFormat);
+        renderer_.encodeEnd(getFacesContext(), htmlOutputFormat_);
 
         assertEquals("abc", getResponseText());
     }
 
     public void testEncodeEnd_NullValue() throws Exception {
-        HtmlOutputFormatRenderer renderer = createHtmlOutputFormatRenderer();
-        MockHtmlOutputFormat htmlOutputFormat = new MockHtmlOutputFormat();
-        htmlOutputFormat.setRenderer(renderer);
+        htmlOutputFormat_.setValue(null);
 
-        htmlOutputFormat.setValue(null);
-
-        renderer.encodeEnd(getFacesContext(), htmlOutputFormat);
+        renderer_.encodeEnd(getFacesContext(), htmlOutputFormat_);
 
         assertEquals("", getResponseText());
     }
 
-    public void testEncodeBeginAndEnd() throws Exception {
-        HtmlOutputFormatRenderer renderer = createHtmlOutputFormatRenderer();
-        MockHtmlOutputFormat htmlOutputFormat = new MockHtmlOutputFormat();
-        htmlOutputFormat.setRenderer(renderer);
+    public void testEncodeBeginToEnd() throws Exception {
+        htmlOutputFormat_.setId("a");
+        htmlOutputFormat_.setValue("b");
 
-        htmlOutputFormat.setId("a");
-        htmlOutputFormat.setValue("b");
-
-        renderer.encodeBegin(getFacesContext(), htmlOutputFormat);
-        renderer.encodeEnd(getFacesContext(), htmlOutputFormat);
+        renderer_.encodeBegin(getFacesContext(), htmlOutputFormat_);
+        renderer_.encodeEnd(getFacesContext(), htmlOutputFormat_);
 
         assertEquals("<span id=\"a\">b</span>", getResponseText());
     }
 
+    public void testEncodeBeginToEnd_RenderFalse() throws Exception {
+        htmlOutputFormat_.setRendered(false);
+        htmlOutputFormat_.setId("a");
+        htmlOutputFormat_.setValue("b");
+        
+        renderer_.encodeBegin(getFacesContext(), htmlOutputFormat_);
+        renderer_.encodeEnd(getFacesContext(), htmlOutputFormat_);
+        
+        assertEquals("", getResponseText());
+    }
+    
     public void testEncodeEnd_WithParams() throws Exception {
         // ## Arrange ##
-        HtmlOutputFormatRenderer renderer = createHtmlOutputFormatRenderer();
-        MockHtmlOutputFormat htmlOutputFormat = new MockHtmlOutputFormat();
-        htmlOutputFormat.setRenderer(renderer);
-
-        htmlOutputFormat.setValue("1{0}2{1}3");
+        htmlOutputFormat_.setValue("1{0}2{1}3");
 
         UIParameter param1 = new UIParameter();
         param1.setValue("a");
         UIParameter param2 = new UIParameter();
         param2.setValue("b");
-        htmlOutputFormat.getChildren().add(param1);
-        htmlOutputFormat.getChildren().add(param2);
+        htmlOutputFormat_.getChildren().add(param1);
+        htmlOutputFormat_.getChildren().add(param2);
 
         // ## Act ##
-        renderer.encodeEnd(getFacesContext(), htmlOutputFormat);
+        renderer_.encodeEnd(getFacesContext(), htmlOutputFormat_);
 
         // ## Assert ##
         assertEquals("1a2b3", getResponseText());
@@ -94,62 +100,46 @@ public class HtmlOutputFormatRendererTest extends RendererTest {
 
     public void testEncodeEnd_WithJapaneseParam() throws Exception {
         // ## Arrange ##
-        HtmlOutputFormatRenderer renderer = createHtmlOutputFormatRenderer();
-        MockHtmlOutputFormat htmlOutputFormat = new MockHtmlOutputFormat();
-        htmlOutputFormat.setRenderer(renderer);
-
-        htmlOutputFormat.setValue("1{0}2");
+        htmlOutputFormat_.setValue("1{0}2");
 
         UIParameter param2 = new UIParameter();
         param2.setValue(new Character((char) 12354));
-        htmlOutputFormat.getChildren().add(param2);
+        htmlOutputFormat_.getChildren().add(param2);
 
         // ## Act ##
-        renderer.encodeEnd(getFacesContext(), htmlOutputFormat);
+        renderer_.encodeEnd(getFacesContext(), htmlOutputFormat_);
 
         // ## Assert ##
         assertEquals("1" + new Character((char) 12354) + "2", getResponseText());
     }
 
     public void testEncodeEnd_EscapeTrue() throws Exception {
-        HtmlOutputFormatRenderer renderer = createHtmlOutputFormatRenderer();
-        MockHtmlOutputFormat htmlOutputFormat = new MockHtmlOutputFormat();
-        htmlOutputFormat.setRenderer(renderer);
+        htmlOutputFormat_.setEscape(true);
+        htmlOutputFormat_.setValue("<a>");
 
-        htmlOutputFormat.setEscape(true);
-        htmlOutputFormat.setValue("<a>");
-
-        renderer.encodeEnd(getFacesContext(), htmlOutputFormat);
+        renderer_.encodeEnd(getFacesContext(), htmlOutputFormat_);
 
         assertEquals("&lt;a&gt;", getResponseText());
     }
 
     public void testEncodeEnd_EscapeFalse() throws Exception {
-        HtmlOutputFormatRenderer renderer = createHtmlOutputFormatRenderer();
-        MockHtmlOutputFormat htmlOutputFormat = new MockHtmlOutputFormat();
-        htmlOutputFormat.setRenderer(renderer);
+        htmlOutputFormat_.setEscape(false);
+        htmlOutputFormat_.setValue("<a>");
 
-        htmlOutputFormat.setEscape(false);
-        htmlOutputFormat.setValue("<a>");
-
-        renderer.encodeEnd(getFacesContext(), htmlOutputFormat);
+        renderer_.encodeEnd(getFacesContext(), htmlOutputFormat_);
 
         assertEquals("<a>", getResponseText());
     }
 
     public void testEncodeBeginToEnd_WithAllAttributes() throws Exception {
-        HtmlOutputFormatRenderer renderer = createHtmlOutputFormatRenderer();
-        MockHtmlOutputFormat htmlOutputFormat = new MockHtmlOutputFormat();
-        htmlOutputFormat.setRenderer(renderer);
+        htmlOutputFormat_.setId("a");
+        htmlOutputFormat_.setValue("b");
+        htmlOutputFormat_.setStyle("c");
+        htmlOutputFormat_.setStyleClass("d");
+        htmlOutputFormat_.setTitle("e");
 
-        htmlOutputFormat.setId("a");
-        htmlOutputFormat.setValue("b");
-        htmlOutputFormat.setStyle("c");
-        htmlOutputFormat.setStyleClass("d");
-        htmlOutputFormat.setTitle("e");
-
-        renderer.encodeBegin(getFacesContext(), htmlOutputFormat);
-        renderer.encodeEnd(getFacesContext(), htmlOutputFormat);
+        renderer_.encodeBegin(getFacesContext(), htmlOutputFormat_);
+        renderer_.encodeEnd(getFacesContext(), htmlOutputFormat_);
 
         Diff diff = new Diff("<span" + " id=\"a\"" + " style=\"c\""
                 + " class=\"d\"" + " title=\"e\"" + ">b</span>",
@@ -163,18 +153,15 @@ public class HtmlOutputFormatRendererTest extends RendererTest {
         context.setViewRoot(new UIViewRoot());
         context.getViewRoot().setLocale(Locale.CANADA);
 
-        HtmlOutputFormatRenderer renderer = createHtmlOutputFormatRenderer();
-
         // ## Act & Assert ##
-        assertEquals(Locale.CANADA, renderer.getLocale(context));
+        assertEquals(Locale.CANADA, renderer_.getLocale(context));
 
         context.getViewRoot().setLocale(Locale.CHINESE);
-        assertEquals(Locale.CHINESE, renderer.getLocale(context));
+        assertEquals(Locale.CHINESE, renderer_.getLocale(context));
     }
 
     public void testGetRendersChildren() throws Exception {
-        HtmlOutputFormatRenderer renderer = new HtmlOutputFormatRenderer();
-        assertEquals(false, renderer.getRendersChildren());
+        assertEquals(false, renderer_.getRendersChildren());
     }
 
     protected MockFacesContext getFacesContext() {

@@ -30,32 +30,49 @@ import org.seasar.teeda.core.mock.MockUIComponentBaseWithNamingContainer;
  */
 public class HtmlInputTextareaRendererTest extends RendererTest {
 
+    private HtmlInputTextareaRenderer renderer_;
+
+    private MockHtmlInputTextarea htmlInputTextarea_;
+
+    protected void setUp() throws Exception {
+        super.setUp();
+        renderer_ = createHtmlInputTextareaRenderer();
+        htmlInputTextarea_ = new MockHtmlInputTextarea();
+        htmlInputTextarea_.setRenderer(renderer_);
+    }
+
     public void testEncodeEnd_WithNoValue() throws Exception {
         // ## Arrange ##
-        HtmlInputTextareaRenderer renderer = createHtmlInputTextareaRenderer();
-        MockHtmlInputTextarea htmlInputTextarea = new MockHtmlInputTextarea();
-        htmlInputTextarea.setRenderer(renderer);
-
         MockFacesContext context = getFacesContext();
 
         // ## Act ##
-        renderer.encodeEnd(context, htmlInputTextarea);
+        renderer_.encodeEnd(context, htmlInputTextarea_);
 
         // ## Assert ##
         assertEquals("<textarea id=\"_id0\" name=\"_id0\"></textarea>",
                 getResponseText());
     }
 
-    public void testEncodeEnd_WithValue() throws Exception {
+    public void testEncodeBeginToEnd_RenderFalse() throws Exception {
         // ## Arrange ##
-        HtmlInputTextareaRenderer renderer = createHtmlInputTextareaRenderer();
-        MockHtmlInputTextarea htmlInputTextarea = new MockHtmlInputTextarea();
-        htmlInputTextarea.setRenderer(renderer);
-        htmlInputTextarea.setValue("abc");
+        htmlInputTextarea_.setRendered(false);
         MockFacesContext context = getFacesContext();
 
         // ## Act ##
-        renderer.encodeEnd(context, htmlInputTextarea);
+        renderer_.encodeBegin(context, htmlInputTextarea_);
+        renderer_.encodeEnd(context, htmlInputTextarea_);
+
+        // ## Assert ##
+        assertEquals("", getResponseText());
+    }
+
+    public void testEncodeEnd_WithValue() throws Exception {
+        // ## Arrange ##
+        htmlInputTextarea_.setValue("abc");
+        MockFacesContext context = getFacesContext();
+
+        // ## Act ##
+        renderer_.encodeEnd(context, htmlInputTextarea_);
 
         // ## Assert ##
         assertEquals("<textarea id=\"_id0\" name=\"_id0\">abc</textarea>",
@@ -63,16 +80,13 @@ public class HtmlInputTextareaRendererTest extends RendererTest {
     }
 
     public void testEncodeEnd_WithId() throws Exception {
-        HtmlInputTextareaRenderer renderer = createHtmlInputTextareaRenderer();
-        MockHtmlInputTextarea htmlInputTextarea = new MockHtmlInputTextarea();
-        htmlInputTextarea.setRenderer(renderer);
-        htmlInputTextarea.setId("a");
+        htmlInputTextarea_.setId("a");
 
         UIComponent parent = new MockUIComponentBaseWithNamingContainer();
         parent.setId("b");
-        parent.getChildren().add(htmlInputTextarea);
+        parent.getChildren().add(htmlInputTextarea_);
 
-        renderer.encodeEnd(getFacesContext(), htmlInputTextarea);
+        renderer_.encodeEnd(getFacesContext(), htmlInputTextarea_);
 
         assertEquals("<textarea id=\"a\" name=\"b:a\"></textarea>",
                 getResponseText());
@@ -80,74 +94,64 @@ public class HtmlInputTextareaRendererTest extends RendererTest {
 
     public void testDecode_None() throws Exception {
         // ## Arrange ##
-        HtmlInputTextareaRenderer renderer = createHtmlInputTextareaRenderer();
-        MockHtmlInputTextarea htmlInputTextarea = new MockHtmlInputTextarea();
-        htmlInputTextarea.setRenderer(renderer);
-        htmlInputTextarea.setClientId("key1");
+        htmlInputTextarea_.setClientId("key1");
 
         MockFacesContext context = getFacesContext();
 
         // ## Act ##
-        renderer.decode(context, htmlInputTextarea);
+        renderer_.decode(context, htmlInputTextarea_);
 
         // ## Assert ##
-        assertEquals(null, htmlInputTextarea.getSubmittedValue());
+        assertEquals(null, htmlInputTextarea_.getSubmittedValue());
     }
 
     public void testDecode_Success() throws Exception {
         // ## Arrange ##
-        HtmlInputTextareaRenderer renderer = createHtmlInputTextareaRenderer();
-        MockHtmlInputTextarea htmlInputText = new MockHtmlInputTextarea();
-        htmlInputText.setRenderer(renderer);
-        htmlInputText.setClientId("key1");
+        htmlInputTextarea_.setClientId("key1");
 
         MockFacesContext context = getFacesContext();
         getExternalContext().getRequestParameterMap().put("key1", "aabb");
 
         // ## Act ##
-        renderer.decode(context, htmlInputText);
+        renderer_.decode(context, htmlInputTextarea_);
 
         // ## Assert ##
-        assertEquals("aabb", htmlInputText.getSubmittedValue());
+        assertEquals("aabb", htmlInputTextarea_.getSubmittedValue());
     }
 
     public void testEncodeBegin_WithAllAttributes() throws Exception {
-        HtmlInputTextareaRenderer renderer = createHtmlInputTextareaRenderer();
-        MockHtmlInputTextarea htmlInputText = new MockHtmlInputTextarea();
-        htmlInputText.setRenderer(renderer);
+        htmlInputTextarea_.setAccesskey("a");
+        htmlInputTextarea_.setCols(10);
+        htmlInputTextarea_.setDir("c");
+        htmlInputTextarea_.setDisabled(true);
+        htmlInputTextarea_.setLang("e");
+        htmlInputTextarea_.setOnblur("g");
+        htmlInputTextarea_.setOnchange("h");
+        htmlInputTextarea_.setOnclick("i");
+        htmlInputTextarea_.setOndblclick("j");
+        htmlInputTextarea_.setOnfocus("k");
+        htmlInputTextarea_.setOnkeydown("l");
+        htmlInputTextarea_.setOnkeypress("m");
+        htmlInputTextarea_.setOnkeyup("n");
+        htmlInputTextarea_.setOnmousedown("o");
+        htmlInputTextarea_.setOnmousemove("p");
+        htmlInputTextarea_.setOnmouseout("q");
+        htmlInputTextarea_.setOnmouseover("r");
+        htmlInputTextarea_.setOnmouseup("s");
+        htmlInputTextarea_.setOnselect("t");
+        htmlInputTextarea_.setReadonly(true);
+        htmlInputTextarea_.setRows(20);
+        htmlInputTextarea_.setStyle("w");
+        htmlInputTextarea_.setStyleClass("u");
+        htmlInputTextarea_.setTabindex("x");
+        htmlInputTextarea_.setTitle("y");
 
-        htmlInputText.setAccesskey("a");
-        htmlInputText.setCols(10);
-        htmlInputText.setDir("c");
-        htmlInputText.setDisabled(true);
-        htmlInputText.setLang("e");
-        htmlInputText.setOnblur("g");
-        htmlInputText.setOnchange("h");
-        htmlInputText.setOnclick("i");
-        htmlInputText.setOndblclick("j");
-        htmlInputText.setOnfocus("k");
-        htmlInputText.setOnkeydown("l");
-        htmlInputText.setOnkeypress("m");
-        htmlInputText.setOnkeyup("n");
-        htmlInputText.setOnmousedown("o");
-        htmlInputText.setOnmousemove("p");
-        htmlInputText.setOnmouseout("q");
-        htmlInputText.setOnmouseover("r");
-        htmlInputText.setOnmouseup("s");
-        htmlInputText.setOnselect("t");
-        htmlInputText.setReadonly(true);
-        htmlInputText.setRows(20);
-        htmlInputText.setStyle("w");
-        htmlInputText.setStyleClass("u");
-        htmlInputText.setTabindex("x");
-        htmlInputText.setTitle("y");
-
-        htmlInputText.setId("A");
-        htmlInputText.setValue("B");
+        htmlInputTextarea_.setId("A");
+        htmlInputTextarea_.setValue("B");
 
         MockFacesContext context = getFacesContext();
-        renderer.encodeBegin(context, htmlInputText);
-        renderer.encodeEnd(context, htmlInputText);
+        renderer_.encodeBegin(context, htmlInputTextarea_);
+        renderer_.encodeEnd(context, htmlInputTextarea_);
 
         Diff diff = new Diff("<textarea" + " id=\"A\" name=\"A\""
                 + " accesskey=\"a\"" + " cols=\"10\"" + " dir=\"c\""
@@ -164,8 +168,7 @@ public class HtmlInputTextareaRendererTest extends RendererTest {
     }
 
     public void testGetRendersChildren() throws Exception {
-        HtmlInputTextareaRenderer renderer = new HtmlInputTextareaRenderer();
-        assertEquals(false, renderer.getRendersChildren());
+        assertEquals(false, renderer_.getRendersChildren());
     }
 
     private HtmlInputTextareaRenderer createHtmlInputTextareaRenderer() {

@@ -36,6 +36,9 @@ public class HtmlCommandButtonRenderer extends AbstractHtmlRenderer {
     public void encodeEnd(FacesContext context, UIComponent component)
             throws IOException {
         super.encodeEnd(context, component);
+        if (!component.isRendered()) {
+            return;
+        }
         encodeHtmlCommandButtonEnd(context, (HtmlCommandButton) component);
     }
 
