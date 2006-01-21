@@ -11,13 +11,14 @@ import javax.faces.event.FacesEvent;
 import javax.faces.event.PhaseId;
 
 /**
- * TODO test.....it's kind oh hard though......
+ * @author shot
+ * TODO test
  */
 public class UIViewRoot extends UIComponentBase {
 
-	public static final String COMPONENT_FAMILY = "javax.faces.UIViewRoot";
+	public static final String COMPONENT_FAMILY = "javax.faces.ViewRoot";
 
-	public static final String COMPONENT_TYPE = "javax.faces.UIViewRoot";
+	public static final String COMPONENT_TYPE = "javax.faces.ViewRoot";
 
 	public static final String UNIQUE_ID_PREFIX = "_id";
 
