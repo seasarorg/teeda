@@ -269,4 +269,10 @@ public interface JsfConstants {
 
     public String WEB_XML_PATH = "/WEB-INF/web.xml";
 
+    public String WEB_INF_LIB = "/WEB-INF/lib/";
+
+    public String JAR_POSTFIX = ".jar";
+    
+    public String FACES_CONFIG_RESOURCES = "META-INF/faces-config.xml";
+
 }
