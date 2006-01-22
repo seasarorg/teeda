@@ -105,8 +105,10 @@ public class MetaInfFacesConfigurator extends AbstractFacesConfigurator {
             List list = new LinkedList();
             for (Iterator itr = ClassLoaderUtil.getResources(loader,
                     JsfConstants.FACES_CONFIG_RESOURCES); itr.hasNext();) {
-                Object o = itr.next();
-                list.add(0, o);
+                URL url = (URL)itr.next();
+                if(url.toExternalForm().indexOf(path) != -1){
+                    list.add(0, url);
+                }
             }
             resources_ = list.iterator();
         }

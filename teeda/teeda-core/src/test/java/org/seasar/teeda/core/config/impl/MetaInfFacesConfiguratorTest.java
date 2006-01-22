@@ -78,8 +78,7 @@ public class MetaInfFacesConfiguratorTest extends S2TestCase {
             
             // ## Arrange ##
             String path = getClass().getPackage().getName().replace('.', '/');
-            // + "/test.jar";
-
+            
             ExternalContext externalContext = new MockExternalContextImpl(
                     getServletContext(), getRequest(), getResponse());
 
