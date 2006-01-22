@@ -15,14 +15,10 @@ import org.seasar.teeda.core.context.AbstractExternalContextMap;
 import junit.framework.TestCase;
 
 
-public class TestAbstractExternalContextMap extends TestCase {
+public class AbstractExternalContextMapTest extends TestCase {
 
     private MockServletContext context_;
     
-    public static void main(String[] args) {
-        junit.textui.TestRunner.run(TestAbstractExternalContextMap.class);
-    }
-
     /*
      * @see TestCase#setUp()
      */
@@ -41,7 +37,7 @@ public class TestAbstractExternalContextMap extends TestCase {
      * Constructor for TestAbstractExternalContextMap.
      * @param arg0
      */
-    public TestAbstractExternalContextMap(String arg0) {
+    public AbstractExternalContextMapTest(String arg0) {
         super(arg0);
     }
 

@@ -24,14 +24,17 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
+import org.seasar.teeda.core.context.servlet.ServletExternalContextImpl;
 import org.seasar.teeda.core.context.servlet.ServletFacesContextImpl;
 import org.seasar.teeda.core.exception.FacesContextNotFoundRuntimeException;
-import org.seasar.teeda.core.util.DIContainerUtil;
 
 /**
  * @author shot
  */
 public class FacesContextFactoryImpl extends FacesContextFactory {
+
+    public FacesContextFactoryImpl() {
+    }
 
     public FacesContext getFacesContext(Object context, Object request,
             Object response, Lifecycle lifecycle) throws FacesException {
@@ -43,8 +46,9 @@ public class FacesContextFactoryImpl extends FacesContextFactory {
                             + response + ", lifecycle = " + lifecycle);
         }
         if (isServletEnvironment(context, request, response)) {
-            ExternalContext externalContext = (ExternalContext) DIContainerUtil
-                    .getComponent(ExternalContext.class);
+            ExternalContext externalContext = new ServletExternalContextImpl(
+                    (ServletContext) context, (ServletRequest) request,
+                    (ServletResponse) response);
             return new ServletFacesContextImpl(externalContext);
         }
         throw new FacesContextNotFoundRuntimeException();
