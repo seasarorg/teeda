@@ -88,7 +88,17 @@ public interface JsfConstants {
 
     public String TEXTAREA_ELEM = "textarea";
 
+    public String TBODY_ELEM = "tbody";
+
+    public String TD_ELEM = "td";
+
+    public String TFOOT_ELEM = "tfoot";
+
+    public String TH_ELEM = "th";
+
     public String THEAD_ELEM = "thead";
+
+    public String TR_ELEM = "tr";
 
     // -- attribute --
 
@@ -113,6 +123,8 @@ public interface JsfConstants {
     public String CLASS_ATTR = "class";
 
     public String COLS_ATTR = "cols";
+
+    public String COLSPAN_ATTR = "colspan";
 
     public String COORDS_ATTR = "coords";
 

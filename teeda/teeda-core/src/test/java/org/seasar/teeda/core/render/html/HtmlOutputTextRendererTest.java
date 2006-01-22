@@ -16,8 +16,6 @@
 package org.seasar.teeda.core.render.html;
 
 import javax.faces.component.UIViewRoot;
-import javax.faces.component.html.HtmlOutputText;
-import javax.faces.context.FacesContext;
 import javax.faces.render.Renderer;
 import javax.faces.render.RendererTest;
 
@@ -171,22 +169,6 @@ public class HtmlOutputTextRendererTest extends RendererTest {
 
     protected Renderer createRenderer() {
         return new HtmlOutputTextRenderer();
-    }
-
-    private static class MockHtmlOutputText extends HtmlOutputText {
-
-        private Renderer renderer_ = null;
-
-        public void setRenderer(Renderer renderer) {
-            renderer_ = renderer;
-        }
-
-        protected Renderer getRenderer(FacesContext context) {
-            if (renderer_ != null) {
-                return renderer_;
-            }
-            return super.getRenderer(context);
-        }
     }
 
 }

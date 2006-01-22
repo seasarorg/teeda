@@ -16,7 +16,11 @@
 package org.seasar.teeda.core.render.html;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
+import javax.faces.component.UIColumn;
 import javax.faces.component.UIComponent;
 import javax.faces.component.html.HtmlDataTable;
 import javax.faces.context.FacesContext;
@@ -48,7 +52,46 @@ public class HtmlDataTableRenderer extends AbstractHtmlRenderer {
         UIComponent header = htmlDataTable.getHeader();
         if (header != null) {
             writer.startElement(JsfConstants.THEAD_ELEM, header);
+            writer.startElement(JsfConstants.TR_ELEM, header);
+            writer.startElement(JsfConstants.TH_ELEM, header);
+            List childColumns = new ArrayList();
+            for (Iterator it = htmlDataTable.getChildren().iterator(); it
+                    .hasNext();) {
+                UIComponent child = (UIComponent) it.next();
+                if (child instanceof UIColumn) {
+                    childColumns.add(child);
+                }
+            }
+            if (!childColumns.isEmpty()) {
+                RendererUtil.renderAttribute(writer, JsfConstants.COLSPAN_ATTR,
+                        new Integer(childColumns.size()));
+            }
+
+            renderComponent(context, header);
+
+            writer.endElement(JsfConstants.TH_ELEM);
+            writer.endElement(JsfConstants.TR_ELEM);
+
+            if (!childColumns.isEmpty()) {
+                writer.startElement(JsfConstants.TR_ELEM, header);
+                for (Iterator it = childColumns.iterator(); it.hasNext();) {
+                    writer.startElement(JsfConstants.TH_ELEM, header);
+                    UIColumn column = (UIColumn) it.next();
+                    renderComponent(context, column.getHeader());
+                    writer.endElement(JsfConstants.TH_ELEM);
+                }
+                writer.endElement(JsfConstants.TR_ELEM);
+            }
+
+            writer.endElement(JsfConstants.THEAD_ELEM);
         }
+    }
+
+    private void renderComponent(FacesContext context, UIComponent header)
+            throws IOException {
+        header.encodeBegin(context);
+        header.encodeChildren(context);
+        header.encodeEnd(context);
     }
 
     public void encodeEnd(FacesContext context, UIComponent component)

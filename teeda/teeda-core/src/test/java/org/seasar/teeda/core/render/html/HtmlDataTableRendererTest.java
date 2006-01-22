@@ -15,13 +15,13 @@
  */
 package org.seasar.teeda.core.render.html;
 
+import javax.faces.component.UIColumn;
 import javax.faces.component.html.HtmlDataTable;
 import javax.faces.context.FacesContext;
 import javax.faces.render.Renderer;
 import javax.faces.render.RendererTest;
 
 import org.seasar.teeda.core.mock.MockFacesContext;
-import org.seasar.teeda.core.mock.MockUIComponentBase;
 
 /**
  * @author manhole
@@ -90,18 +90,58 @@ public class HtmlDataTableRendererTest extends RendererTest {
         assertEquals("<table></table>", getResponseText());
     }
 
-    public void testEncodeBegin_Facet() throws Exception {
+    public void testEncodeBegin_HeaderFacet() throws Exception {
         // ## Arrange ##
-        htmlDataTable_.setHeader(new MockUIComponentBase());
+        MockHtmlOutputText facet = new MockHtmlOutputText();
+        facet.setRenderer(new HtmlOutputTextRenderer());
+        facet.setValue("a");
+        htmlDataTable_.setHeader(facet);
         MockFacesContext context = getFacesContext();
 
         // ## Act ##
         renderer_.encodeBegin(context, htmlDataTable_);
 
         // ## Assert ##
-        assertEquals("<table><thead", getResponseText());
+        assertEquals("<table><thead><tr><th>a</th></tr></thead>",
+                getResponseText());
     }
-    
+
+    public void testEncodeBegin_HeaderFacetAndColumns() throws Exception {
+        // ## Arrange ##
+        HtmlOutputTextRenderer htmlOutputTextRenderer = new HtmlOutputTextRenderer();
+        MockHtmlOutputText tableHeaderFacet = new MockHtmlOutputText();
+        tableHeaderFacet.setRenderer(htmlOutputTextRenderer);
+        tableHeaderFacet.setValue("a");
+        htmlDataTable_.setHeader(tableHeaderFacet);
+
+        {
+            UIColumn col = new UIColumn();
+            MockHtmlOutputText colHeaderFacet = new MockHtmlOutputText();
+            colHeaderFacet.setValue("c1");
+            colHeaderFacet.setRenderer(htmlOutputTextRenderer);
+            col.setHeader(colHeaderFacet);
+            htmlDataTable_.getChildren().add(col);
+        }
+        {
+            UIColumn col = new UIColumn();
+            MockHtmlOutputText colHeaderFacet = new MockHtmlOutputText();
+            colHeaderFacet.setValue("c2");
+            colHeaderFacet.setRenderer(htmlOutputTextRenderer);
+            col.setHeader(colHeaderFacet);
+            htmlDataTable_.getChildren().add(col);
+        }
+
+        MockFacesContext context = getFacesContext();
+
+        // ## Act ##
+        renderer_.encodeBegin(context, htmlDataTable_);
+
+        // ## Assert ##
+        assertEquals("<table><thead>" + "<tr><th colspan=\"2\">a</th></tr>"
+                + "<tr><th>c1</th><th>c2</th></tr>" + "</thead>",
+                getResponseText());
+    }
+
     // TODO test
 
     public void testGetRendersChildren() throws Exception {
