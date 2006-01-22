@@ -15,7 +15,7 @@
  */
 package org.seasar.teeda.core.application;
 
-import javax.faces.component.ActionSource;
+import javax.faces.component.UICommand;
 import javax.faces.context.FacesContext;
 import javax.faces.el.EvaluationException;
 import javax.faces.el.MethodBinding;
@@ -38,23 +38,22 @@ public class ActionListenerImpl implements ActionListener {
     public void processAction(ActionEvent actionEvent)
             throws AbortProcessingException {
         FacesContext context = FacesContext.getCurrentInstance();
-        ActionSource source = (ActionSource)actionEvent.getComponent();
-        UIParameterUtil.saveParametersToRequest(source, context);
-        MethodBinding methodBinding = source.getActionListener();
+        UICommand command = (UICommand) actionEvent.getComponent();
+        UIParameterUtil.saveParametersToRequest(command, context);
+        MethodBinding methodBinding = command.getAction();
         String fromAction = null;
         String outCome = null;
-        if(methodBinding != null){
+        if (methodBinding != null) {
             fromAction = methodBinding.getExpressionString();
-            try{
+            try {
                 outCome = MethodBindingUtil.invoke(methodBinding, context);
-            }catch(MethodNotFoundException e){
+            } catch (MethodNotFoundException e) {
                 throw new ExtendMethodNotFoundExceptin(e, methodBinding);
-            }catch(EvaluationException e){
+            } catch (EvaluationException e) {
                 throw new ExtendEvaluationException(e, methodBinding);
             }
         }
         NavigationHandlerUtil.handleNavigation(context, fromAction, outCome);
-        
         context.renderResponse();
     }
 
