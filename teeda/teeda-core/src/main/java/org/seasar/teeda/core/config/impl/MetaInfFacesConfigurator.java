@@ -106,7 +106,6 @@ public class MetaInfFacesConfigurator extends AbstractFacesConfigurator {
             for (Iterator itr = ClassLoaderUtil.getResources(loader,
                     JsfConstants.FACES_CONFIG_RESOURCES); itr.hasNext();) {
                 Object o = itr.next();
-                System.out.println(o);
                 list.add(0, o);
             }
             resources_ = list.iterator();
