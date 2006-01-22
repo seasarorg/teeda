@@ -26,6 +26,8 @@ import org.seasar.framework.log.Logger;
  */
 public class PhaseChangeTracer implements PhaseListener {
 
+    private static final long serialVersionUID = 1L;
+
     private static final Logger _log = Logger
             .getLogger(PhaseChangeTracer.class);
 
