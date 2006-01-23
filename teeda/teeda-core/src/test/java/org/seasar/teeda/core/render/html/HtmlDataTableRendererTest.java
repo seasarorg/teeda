@@ -90,7 +90,7 @@ public class HtmlDataTableRendererTest extends RendererTest {
         assertEquals("<table></table>", getResponseText());
     }
 
-    public void testEncodeBegin_HeaderFacet() throws Exception {
+    public void testEncodeBegin_TableHeaderFacet() throws Exception {
         // ## Arrange ##
         MockHtmlOutputText facet = new MockHtmlOutputText();
         facet.setRenderer(new HtmlOutputTextRenderer());
@@ -106,20 +106,49 @@ public class HtmlDataTableRendererTest extends RendererTest {
                 getResponseText());
     }
 
-    public void testEncodeBegin_HeaderFacetAndColumns() throws Exception {
+    public void testEncodeBegin_ColumnHeaderFacet() throws Exception {
         // ## Arrange ##
         HtmlOutputTextRenderer htmlOutputTextRenderer = new HtmlOutputTextRenderer();
-        MockHtmlOutputText tableHeaderFacet = new MockHtmlOutputText();
-        tableHeaderFacet.setRenderer(htmlOutputTextRenderer);
-        tableHeaderFacet.setValue("a");
-        htmlDataTable_.setHeader(tableHeaderFacet);
+        {
+            UIColumn col = new UIColumn();
+            MockHtmlOutputText colFacet = new MockHtmlOutputText();
+            colFacet.setValue("c1");
+            colFacet.setRenderer(htmlOutputTextRenderer);
+            col.setHeader(colFacet);
+            htmlDataTable_.getChildren().add(col);
+        }
+        {
+            UIColumn col = new UIColumn();
+            MockHtmlOutputText colFacet = new MockHtmlOutputText();
+            colFacet.setValue("c2");
+            colFacet.setRenderer(htmlOutputTextRenderer);
+            col.setHeader(colFacet);
+            htmlDataTable_.getChildren().add(col);
+        }
+        MockFacesContext context = getFacesContext();
+
+        // ## Act ##
+        renderer_.encodeBegin(context, htmlDataTable_);
+
+        // ## Assert ##
+        assertEquals("<table><thead><tr><th>c1</th><th>c2</th></tr></thead>",
+                getResponseText());
+    }
+
+    public void testEncodeBegin_HeaderAndColumnsFacet() throws Exception {
+        // ## Arrange ##
+        HtmlOutputTextRenderer htmlOutputTextRenderer = new HtmlOutputTextRenderer();
+        MockHtmlOutputText tableFacet = new MockHtmlOutputText();
+        tableFacet.setRenderer(htmlOutputTextRenderer);
+        tableFacet.setValue("a");
+        htmlDataTable_.setHeader(tableFacet);
 
         {
             UIColumn col = new UIColumn();
-            MockHtmlOutputText colHeaderFacet = new MockHtmlOutputText();
-            colHeaderFacet.setValue("c1");
-            colHeaderFacet.setRenderer(htmlOutputTextRenderer);
-            col.setHeader(colHeaderFacet);
+            MockHtmlOutputText colFacet = new MockHtmlOutputText();
+            colFacet.setValue("c1");
+            colFacet.setRenderer(htmlOutputTextRenderer);
+            col.setHeader(colFacet);
             htmlDataTable_.getChildren().add(col);
         }
         {
@@ -138,7 +167,88 @@ public class HtmlDataTableRendererTest extends RendererTest {
 
         // ## Assert ##
         assertEquals("<table><thead>" + "<tr><th colspan=\"2\">a</th></tr>"
-                + "<tr><th>c1</th><th>c2</th></tr>" + "</thead>",
+                + "<tr><th>c1</th>" + "<th>c2</th></tr>" + "</thead>",
+                getResponseText());
+    }
+
+    public void testEncodeBegin_TableFooterFacet() throws Exception {
+        // ## Arrange ##
+        MockHtmlOutputText facet = new MockHtmlOutputText();
+        facet.setRenderer(new HtmlOutputTextRenderer());
+        facet.setValue("a");
+        htmlDataTable_.setFooter(facet);
+        MockFacesContext context = getFacesContext();
+
+        // ## Act ##
+        renderer_.encodeBegin(context, htmlDataTable_);
+
+        // ## Assert ##
+        assertEquals("<table><tfoot><tr><td>a</td></tr></tfoot>",
+                getResponseText());
+    }
+
+    public void testEncodeBegin_ColumnFooterFacet() throws Exception {
+        // ## Arrange ##
+        HtmlOutputTextRenderer htmlOutputTextRenderer = new HtmlOutputTextRenderer();
+        {
+            UIColumn col = new UIColumn();
+            MockHtmlOutputText colFacet = new MockHtmlOutputText();
+            colFacet.setValue("c1");
+            colFacet.setRenderer(htmlOutputTextRenderer);
+            col.setFooter(colFacet);
+            htmlDataTable_.getChildren().add(col);
+        }
+        {
+            UIColumn col = new UIColumn();
+            MockHtmlOutputText colFacet = new MockHtmlOutputText();
+            colFacet.setValue("c2");
+            colFacet.setRenderer(htmlOutputTextRenderer);
+            col.setFooter(colFacet);
+            htmlDataTable_.getChildren().add(col);
+        }
+        MockFacesContext context = getFacesContext();
+
+        // ## Act ##
+        renderer_.encodeBegin(context, htmlDataTable_);
+
+        // ## Assert ##
+        assertEquals("<table><tfoot><tr><td>c1</td><td>c2</td></tr></tfoot>",
+                getResponseText());
+    }
+
+    public void testEncodeBegin_FooterAndColumnsFacet() throws Exception {
+        // ## Arrange ##
+        HtmlOutputTextRenderer htmlOutputTextRenderer = new HtmlOutputTextRenderer();
+        MockHtmlOutputText tableHeaderFacet = new MockHtmlOutputText();
+        tableHeaderFacet.setRenderer(htmlOutputTextRenderer);
+        tableHeaderFacet.setValue("a");
+        htmlDataTable_.setFooter(tableHeaderFacet);
+
+        {
+            UIColumn col = new UIColumn();
+            MockHtmlOutputText colFacet = new MockHtmlOutputText();
+            colFacet.setValue("col1");
+            colFacet.setRenderer(htmlOutputTextRenderer);
+            col.setFooter(colFacet);
+            htmlDataTable_.getChildren().add(col);
+        }
+        {
+            UIColumn col = new UIColumn();
+            MockHtmlOutputText colFacet = new MockHtmlOutputText();
+            colFacet.setValue("col2");
+            colFacet.setRenderer(htmlOutputTextRenderer);
+            col.setFooter(colFacet);
+            htmlDataTable_.getChildren().add(col);
+        }
+
+        MockFacesContext context = getFacesContext();
+
+        // ## Act ##
+        renderer_.encodeBegin(context, htmlDataTable_);
+
+        // ## Assert ##
+        assertEquals("<table><tfoot>" + "<tr><td colspan=\"2\">a</td></tr>"
+                + "<tr><td>col1</td>" + "<td>col2</td></tr>" + "</tfoot>",
                 getResponseText());
     }
 

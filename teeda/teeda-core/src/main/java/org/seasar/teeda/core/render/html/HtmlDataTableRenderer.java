@@ -49,49 +49,107 @@ public class HtmlDataTableRenderer extends AbstractHtmlRenderer {
         writer.startElement(JsfConstants.TABLE_ELEM, htmlDataTable);
         RendererUtil.renderIdAttributeIfNecessary(writer, htmlDataTable,
                 getIdForRender(context, htmlDataTable));
-        UIComponent header = htmlDataTable.getHeader();
-        if (header != null) {
-            writer.startElement(JsfConstants.THEAD_ELEM, header);
-            writer.startElement(JsfConstants.TR_ELEM, header);
-            writer.startElement(JsfConstants.TH_ELEM, header);
-            List childColumns = new ArrayList();
+
+        final List columns = new ArrayList();
+        final List columnHeaders = new ArrayList();
+        final List columnFooters = new ArrayList();
+        {
             for (Iterator it = htmlDataTable.getChildren().iterator(); it
                     .hasNext();) {
                 UIComponent child = (UIComponent) it.next();
                 if (child instanceof UIColumn) {
-                    childColumns.add(child);
+                    UIColumn column = (UIColumn) child;
+                    columns.add(column);
+                    UIComponent columnHeader = column.getHeader();
+                    if (columnHeader != null) {
+                        columnHeaders.add(columnHeader);
+                    }
+                    UIComponent columnFooter = column.getFooter();
+                    if (columnFooter != null) {
+                        columnFooters.add(columnFooter);
+                    }
                 }
             }
-            if (!childColumns.isEmpty()) {
-                RendererUtil.renderAttribute(writer, JsfConstants.COLSPAN_ATTR,
-                        new Integer(childColumns.size()));
-            }
+        }
+        // thead
+        {
+            UIComponent tableHeader = htmlDataTable.getHeader();
+            if (tableHeader != null || !columnHeaders.isEmpty()) {
+                writer.startElement(JsfConstants.THEAD_ELEM, tableHeader);
 
-            renderComponent(context, header);
+                if (tableHeader != null) {
+                    writer.startElement(JsfConstants.TR_ELEM, tableHeader);
+                    writer.startElement(JsfConstants.TH_ELEM, tableHeader);
 
-            writer.endElement(JsfConstants.TH_ELEM);
-            writer.endElement(JsfConstants.TR_ELEM);
+                    if (!columns.isEmpty()) {
+                        RendererUtil.renderAttribute(writer,
+                                JsfConstants.COLSPAN_ATTR, new Integer(columns
+                                        .size()));
+                    }
 
-            if (!childColumns.isEmpty()) {
-                writer.startElement(JsfConstants.TR_ELEM, header);
-                for (Iterator it = childColumns.iterator(); it.hasNext();) {
-                    writer.startElement(JsfConstants.TH_ELEM, header);
-                    UIColumn column = (UIColumn) it.next();
-                    renderComponent(context, column.getHeader());
+                    encodeComponent(context, tableHeader);
+
                     writer.endElement(JsfConstants.TH_ELEM);
+                    writer.endElement(JsfConstants.TR_ELEM);
                 }
-                writer.endElement(JsfConstants.TR_ELEM);
-            }
 
-            writer.endElement(JsfConstants.THEAD_ELEM);
+                if (!columnHeaders.isEmpty()) {
+                    writer.startElement(JsfConstants.TR_ELEM, tableHeader);
+                    for (Iterator it = columnHeaders.iterator(); it.hasNext();) {
+                        writer.startElement(JsfConstants.TH_ELEM, tableHeader);
+                        UIComponent columnHeader = (UIComponent) it.next();
+                        encodeComponent(context, columnHeader);
+                        writer.endElement(JsfConstants.TH_ELEM);
+                    }
+                    writer.endElement(JsfConstants.TR_ELEM);
+                }
+
+                writer.endElement(JsfConstants.THEAD_ELEM);
+            }
+        }
+        // tfoot
+        {
+            UIComponent tableFooter = htmlDataTable.getFooter();
+            if (tableFooter != null || !columnFooters.isEmpty()) {
+                writer.startElement(JsfConstants.TFOOT_ELEM, tableFooter);
+
+                if (tableFooter != null) {
+                    writer.startElement(JsfConstants.TR_ELEM, tableFooter);
+                    writer.startElement(JsfConstants.TD_ELEM, tableFooter);
+
+                    if (!columns.isEmpty()) {
+                        RendererUtil.renderAttribute(writer,
+                                JsfConstants.COLSPAN_ATTR, new Integer(columns
+                                        .size()));
+                    }
+
+                    encodeComponent(context, tableFooter);
+
+                    writer.endElement(JsfConstants.TD_ELEM);
+                    writer.endElement(JsfConstants.TR_ELEM);
+                }
+
+                if (!columnFooters.isEmpty()) {
+                    writer.startElement(JsfConstants.TR_ELEM, tableFooter);
+                    for (Iterator it = columnFooters.iterator(); it.hasNext();) {
+                        writer.startElement(JsfConstants.TD_ELEM, tableFooter);
+                        UIComponent columnFooter = (UIComponent) it.next();
+                        encodeComponent(context, columnFooter);
+                        writer.endElement(JsfConstants.TD_ELEM);
+                    }
+                    writer.endElement(JsfConstants.TR_ELEM);
+                }
+
+                writer.endElement(JsfConstants.TFOOT_ELEM);
+            }
         }
     }
 
-    private void renderComponent(FacesContext context, UIComponent header)
+    protected void encodeComponent(FacesContext context, UIComponent component)
             throws IOException {
-        header.encodeBegin(context);
-        header.encodeChildren(context);
-        header.encodeEnd(context);
+        component.encodeBegin(context);
+        component.encodeChildren(context);
+        component.encodeEnd(context);
     }
 
     public void encodeEnd(FacesContext context, UIComponent component)
