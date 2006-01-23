@@ -106,6 +106,22 @@ public class HtmlDataTableRendererTest extends RendererTest {
                 getResponseText());
     }
 
+    public void testEncodeBegin_TableHeaderFacetRenderFalse() throws Exception {
+        // ## Arrange ##
+        MockHtmlOutputText facet = new MockHtmlOutputText();
+        facet.setRenderer(new HtmlOutputTextRenderer());
+        facet.setValue("a");
+        facet.setRendered(false);
+        htmlDataTable_.setHeader(facet);
+        MockFacesContext context = getFacesContext();
+
+        // ## Act ##
+        renderer_.encodeBegin(context, htmlDataTable_);
+
+        // ## Assert ##
+        assertEquals("<table", getResponseText());
+    }
+
     public void testEncodeBegin_ColumnHeaderFacet() throws Exception {
         // ## Arrange ##
         HtmlOutputTextRenderer htmlOutputTextRenderer = new HtmlOutputTextRenderer();

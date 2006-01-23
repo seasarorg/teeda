@@ -74,6 +74,9 @@ public class HtmlDataTableRenderer extends AbstractHtmlRenderer {
         // thead
         {
             UIComponent tableHeader = htmlDataTable.getHeader();
+            if (tableHeader != null && !tableHeader.isRendered()) {
+                tableHeader = null;
+            }
             if (tableHeader != null || !columnHeaders.isEmpty()) {
                 writer.startElement(JsfConstants.THEAD_ELEM, tableHeader);
 
