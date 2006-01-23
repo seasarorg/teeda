@@ -51,57 +51,59 @@ public class HtmlDataTableRenderer extends AbstractHtmlRenderer {
                 getIdForRender(context, htmlDataTable));
 
         final List columns = new ArrayList();
-        final List columnHeaders = new ArrayList();
-        final List columnFooters = new ArrayList();
+        boolean isColumnHeaderExist = false;
+        boolean isColumnFooterExist = false;
         {
             for (Iterator it = htmlDataTable.getChildren().iterator(); it
                     .hasNext();) {
                 UIComponent child = (UIComponent) it.next();
                 if (child instanceof UIColumn) {
                     UIColumn column = (UIColumn) child;
-                    columns.add(column);
-                    UIComponent columnHeader = column.getHeader();
-                    if (columnHeader != null) {
-                        columnHeaders.add(columnHeader);
+                    if (!column.isRendered()) {
+                        continue;
                     }
-                    UIComponent columnFooter = column.getFooter();
-                    if (columnFooter != null) {
-                        columnFooters.add(columnFooter);
+                    columns.add(column);
+                    if (!isColumnHeaderExist) {
+                        UIComponent columnHeader = column.getHeader();
+                        if (columnHeader != null && columnHeader.isRendered()) {
+                            isColumnHeaderExist = true;
+                        }
+                    }
+                    if (!isColumnFooterExist) {
+                        UIComponent columnFooter = column.getFooter();
+                        if (columnFooter != null && columnFooter.isRendered()) {
+                            isColumnFooterExist = true;
+                        }
                     }
                 }
             }
         }
         // thead
         {
-            UIComponent tableHeader = htmlDataTable.getHeader();
-            if (tableHeader != null && !tableHeader.isRendered()) {
-                tableHeader = null;
-            }
-            if (tableHeader != null || !columnHeaders.isEmpty()) {
+            UIComponent tableHeader = toNullIfNotRendered(htmlDataTable
+                    .getHeader());
+            if (tableHeader != null || isColumnHeaderExist) {
                 writer.startElement(JsfConstants.THEAD_ELEM, tableHeader);
 
                 if (tableHeader != null) {
                     writer.startElement(JsfConstants.TR_ELEM, tableHeader);
                     writer.startElement(JsfConstants.TH_ELEM, tableHeader);
-
-                    if (!columns.isEmpty()) {
-                        RendererUtil.renderAttribute(writer,
-                                JsfConstants.COLSPAN_ATTR, new Integer(columns
-                                        .size()));
-                    }
-
+                    writeColspanAttribute(writer, columns);
                     encodeComponent(context, tableHeader);
-
                     writer.endElement(JsfConstants.TH_ELEM);
                     writer.endElement(JsfConstants.TR_ELEM);
                 }
 
-                if (!columnHeaders.isEmpty()) {
+                if (isColumnHeaderExist) {
                     writer.startElement(JsfConstants.TR_ELEM, tableHeader);
-                    for (Iterator it = columnHeaders.iterator(); it.hasNext();) {
+                    for (Iterator it = columns.iterator(); it.hasNext();) {
                         writer.startElement(JsfConstants.TH_ELEM, tableHeader);
-                        UIComponent columnHeader = (UIComponent) it.next();
-                        encodeComponent(context, columnHeader);
+                        UIColumn column = (UIColumn) it.next();
+                        UIComponent columnHeader = column.getHeader();
+                        if (columnHeader != null) {
+                            encodeComponent(context, columnHeader);
+                        }
+                        writer.writeText("", null);
                         writer.endElement(JsfConstants.TH_ELEM);
                     }
                     writer.endElement(JsfConstants.TR_ELEM);
@@ -112,32 +114,30 @@ public class HtmlDataTableRenderer extends AbstractHtmlRenderer {
         }
         // tfoot
         {
-            UIComponent tableFooter = htmlDataTable.getFooter();
-            if (tableFooter != null || !columnFooters.isEmpty()) {
+            UIComponent tableFooter = toNullIfNotRendered(htmlDataTable
+                    .getFooter());
+            if (tableFooter != null || isColumnFooterExist) {
                 writer.startElement(JsfConstants.TFOOT_ELEM, tableFooter);
 
                 if (tableFooter != null) {
                     writer.startElement(JsfConstants.TR_ELEM, tableFooter);
                     writer.startElement(JsfConstants.TD_ELEM, tableFooter);
-
-                    if (!columns.isEmpty()) {
-                        RendererUtil.renderAttribute(writer,
-                                JsfConstants.COLSPAN_ATTR, new Integer(columns
-                                        .size()));
-                    }
-
+                    writeColspanAttribute(writer, columns);
                     encodeComponent(context, tableFooter);
-
                     writer.endElement(JsfConstants.TD_ELEM);
                     writer.endElement(JsfConstants.TR_ELEM);
                 }
 
-                if (!columnFooters.isEmpty()) {
+                if (isColumnFooterExist) {
                     writer.startElement(JsfConstants.TR_ELEM, tableFooter);
-                    for (Iterator it = columnFooters.iterator(); it.hasNext();) {
+                    for (Iterator it = columns.iterator(); it.hasNext();) {
                         writer.startElement(JsfConstants.TD_ELEM, tableFooter);
-                        UIComponent columnFooter = (UIComponent) it.next();
-                        encodeComponent(context, columnFooter);
+                        UIColumn column = (UIColumn) it.next();
+                        UIComponent columnFooter = column.getFooter();
+                        if (columnFooter != null) {
+                            encodeComponent(context, columnFooter);
+                        }
+                        writer.writeText("", null);
                         writer.endElement(JsfConstants.TD_ELEM);
                     }
                     writer.endElement(JsfConstants.TR_ELEM);
@@ -145,6 +145,9 @@ public class HtmlDataTableRenderer extends AbstractHtmlRenderer {
 
                 writer.endElement(JsfConstants.TFOOT_ELEM);
             }
+        }
+        // tbody
+        {
         }
     }
 
@@ -174,6 +177,21 @@ public class HtmlDataTableRenderer extends AbstractHtmlRenderer {
 
     public boolean getRendersChildren() {
         return true;
+    }
+
+    private UIComponent toNullIfNotRendered(UIComponent tableHeader) {
+        if (tableHeader != null && !tableHeader.isRendered()) {
+            tableHeader = null;
+        }
+        return tableHeader;
+    }
+
+    private void writeColspanAttribute(ResponseWriter writer, final List columns)
+            throws IOException {
+        if (2 <= columns.size()) {
+            RendererUtil.renderAttribute(writer, JsfConstants.COLSPAN_ATTR,
+                    new Integer(columns.size()));
+        }
     }
 
 }
