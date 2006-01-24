@@ -91,7 +91,7 @@ public class UIComponentBaseTest extends AbstractUIComponentTest {
     }
 
     public void testGetChildCount() {
-        UIComponent component = createUIComponent();
+        UIComponent component = createUIComponentBase();
         assertEquals(0, component.getChildCount());
         component.getChildren().add(new MockUIComponent());
         assertEquals(1, component.getChildCount());
@@ -103,7 +103,7 @@ public class UIComponentBaseTest extends AbstractUIComponentTest {
 
     public void testGetChildren() {
         // ## Arrange ##
-        UIComponent component = createUIComponent();
+        UIComponent component = createUIComponentBase();
         assertEquals(0, component.getChildCount());
         UIComponent child1 = new MockUIComponent();
         UIComponent child2 = new MockUIComponent();
@@ -119,7 +119,7 @@ public class UIComponentBaseTest extends AbstractUIComponentTest {
     }
 
     public void testFindComponent() {
-        UIComponent component = createUIComponent();
+        UIComponent component = createUIComponentBase();
         component.setId("aa");
         // base will be the root UIComponent
         UIComponent found = component.findComponent("aa");
@@ -388,7 +388,7 @@ public class UIComponentBaseTest extends AbstractUIComponentTest {
     }
 
     public void testHandleFacesListeners2() {
-        MockUIComponentBase base = new MockUIComponentBase();
+        UIComponentBase base = createUIComponentBase();
         MockFacesListener1 listener1 = new MockFacesListener1();
         MockFacesListener2 listener2 = new MockFacesListener2();
 
@@ -405,10 +405,10 @@ public class UIComponentBaseTest extends AbstractUIComponentTest {
 
     }
 
-    public final void testQueueEvent_WithParent() {
+    public void testQueueEvent_WithParent() throws Exception {
         // ## Arrange ##
+        UIComponentBase component = createUIComponentBase();
         MockUIComponent parent = new MockUIComponent();
-        MockUIComponentBase component = new MockUIComponentBase();
 
         component.setParent(parent);
         NullFacesEvent event = new NullFacesEvent();
@@ -417,6 +417,7 @@ public class UIComponentBaseTest extends AbstractUIComponentTest {
         component.queueEvent(event);
 
         // ## Assert ##
+        assertNotNull(parent.getQueueEvent());
         assertSame(event, parent.getQueueEvent());
     }
 

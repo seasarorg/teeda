@@ -136,7 +136,7 @@ public class UIData extends UIComponentBase implements NamingContainer {
 
     public void setRowIndex(int rowIndex) {
         saveDescendantState();
-        int previous = rowIndex_;
+        //int previous = rowIndex_;
         rowIndex_ = rowIndex;
         DataModel model = getDataModel();
         model.setRowIndex(rowIndex_);
@@ -470,7 +470,9 @@ public class UIData extends UIComponentBase implements NamingContainer {
         component.setId(id);
     }
 
-    class FacesEventWrapper extends FacesEvent {
+    static class FacesEventWrapper extends FacesEvent {
+
+        private static final long serialVersionUID = 1L;
 
         private FacesEvent event_ = null;
 

@@ -17,12 +17,19 @@ package javax.faces.component;
 
 import java.util.Map;
 
+import javax.faces.component.UIData.FacesEventWrapper;
 import javax.faces.context.FacesContext;
+import javax.faces.event.AbortProcessingException;
+import javax.faces.event.FacesEvent;
+
+import junitx.framework.ObjectAssert;
 
 import org.seasar.teeda.core.mock.MockDataModel;
+import org.seasar.teeda.core.mock.MockFacesEvent;
 import org.seasar.teeda.core.mock.MockUIComponent;
 import org.seasar.teeda.core.mock.MockValueBinding;
 import org.seasar.teeda.core.mock.MockVariableResolver;
+import org.seasar.teeda.core.mock.NullFacesEvent;
 import org.seasar.teeda.core.mock.NullUIComponent;
 import org.seasar.teeda.core.unit.AssertUtil;
 
@@ -261,7 +268,6 @@ public class UIDataTest extends UIComponentBaseTest {
         assertEquals("some value", data.getValue());
     }
 
-    // TODO test setValueBinding
     public final void testSetValueBinding_IllegalArgId() {
         UIData data = createUIData();
         MockValueBinding vb = new MockValueBinding();
@@ -298,8 +304,44 @@ public class UIDataTest extends UIComponentBaseTest {
         }
     }
 
-    // TODO test queueEvent
-    // TODO test broadcast
+    public void testQueueEvent_WithParent() throws Exception {
+        // ## Arrange ##
+        UIData data = createUIData();
+        MockUIComponent parent = new MockUIComponent();
+
+        data.setParent(parent);
+        NullFacesEvent event = new NullFacesEvent();
+
+        // ## Act ##
+        data.queueEvent(event);
+
+        // ## Assert ##
+        FacesEvent queued = parent.getQueueEvent();
+        ObjectAssert.assertInstanceOf(UIData.FacesEventWrapper.class, queued);
+        UIData.FacesEventWrapper wrapper = (FacesEventWrapper) queued;
+        FacesEvent originalEvent = wrapper.getFacesEvent();
+        assertSame(event, originalEvent);
+    }
+
+    public void testBroadcast_WrappedEvent() throws Exception {
+        // ## Arrange ##
+        UIData data = createUIData();
+        final boolean[] calls = new boolean[1];
+
+        // ## Act ##
+        UIComponent source = new MockUIComponent() {
+            public void broadcast(FacesEvent event)
+                    throws AbortProcessingException {
+                calls[0] = true;
+            }
+        };
+        FacesEvent originalEvent = new MockFacesEvent(source);
+        data.broadcast(new UIData.FacesEventWrapper(originalEvent, 4,
+                new NullUIComponent()));
+
+        // ## Assert ##
+        assertEquals(true, calls[0]);
+    }
 
     public void testProcessDecodes() throws Exception {
         // ## Arrange ##
@@ -451,7 +493,6 @@ public class UIDataTest extends UIComponentBaseTest {
         assertEquals(0, data.getRowIndex());
     }
 
-    // TODO test processUpdates
     public void testProcessUpdates() throws Exception {
         // ## Arrange ##
         final int[] calls = { 0, 0, 0 };
