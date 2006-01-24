@@ -17,6 +17,7 @@ package org.seasar.teeda.core.render.html;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -54,14 +55,11 @@ public class HtmlDataTableRenderer extends AbstractHtmlRenderer {
         boolean isColumnHeaderExist = false;
         boolean isColumnFooterExist = false;
         {
-            for (Iterator it = htmlDataTable.getChildren().iterator(); it
-                    .hasNext();) {
+            for (Iterator it = new RenderedComponentIterator(htmlDataTable
+                    .getChildren()); it.hasNext();) {
                 UIComponent child = (UIComponent) it.next();
                 if (child instanceof UIColumn) {
                     UIColumn column = (UIColumn) child;
-                    if (!column.isRendered()) {
-                        continue;
-                    }
                     columns.add(column);
                     if (!isColumnHeaderExist) {
                         UIComponent columnHeader = column.getHeader();
@@ -107,7 +105,6 @@ public class HtmlDataTableRenderer extends AbstractHtmlRenderer {
                                     JsfConstants.COL_VALUE, null);
                             encodeComponent(context, columnHeader);
                         }
-                        writer.writeText("", null);
                         writer.endElement(JsfConstants.TH_ELEM);
                     }
                     writer.endElement(JsfConstants.TR_ELEM);
@@ -141,7 +138,6 @@ public class HtmlDataTableRenderer extends AbstractHtmlRenderer {
                         if (columnFooter != null) {
                             encodeComponent(context, columnFooter);
                         }
-                        writer.writeText("", null);
                         writer.endElement(JsfConstants.TD_ELEM);
                     }
                     writer.endElement(JsfConstants.TR_ELEM);
@@ -162,6 +158,67 @@ public class HtmlDataTableRenderer extends AbstractHtmlRenderer {
         component.encodeEnd(context);
     }
 
+    public void encodeChildren(FacesContext context, UIComponent component)
+            throws IOException {
+        super.encodeChildren(context, component);
+        if (!component.isRendered()) {
+            return;
+        }
+        encodeHtmlDataTableChildren(context, (HtmlDataTable) component);
+    }
+
+    protected void encodeHtmlDataTableChildren(FacesContext context,
+            HtmlDataTable htmlDataTable) throws IOException {
+        ResponseWriter writer = context.getResponseWriter();
+        // TODO rows
+        // TODO rowIndex
+
+        writer.startElement(JsfConstants.TBODY_ELEM, htmlDataTable);
+        int start = 0; // TODO start index
+        htmlDataTable.setRowIndex(start);
+        for (int i = start; htmlDataTable.isRowAvailable(); htmlDataTable
+                .setRowIndex(++i)) {
+            encodeBodyRow(context, htmlDataTable, writer);
+        }
+        writer.endElement(JsfConstants.TBODY_ELEM);
+    }
+
+    private void encodeBodyRow(FacesContext context,
+            HtmlDataTable htmlDataTable, ResponseWriter writer)
+            throws IOException {
+        writer.startElement(JsfConstants.TR_ELEM, htmlDataTable);
+        for (Iterator itColumn = new RenderedComponentIterator(htmlDataTable
+                .getChildren()); itColumn.hasNext();) {
+            UIComponent col = (UIComponent) itColumn.next();
+            if (col instanceof UIColumn) {
+                UIColumn column = (UIColumn) col;
+                encodeBodyColumn(context, column, writer);
+            }
+        }
+        writer.endElement(JsfConstants.TR_ELEM);
+    }
+
+    private void encodeBodyColumn(FacesContext context, UIColumn column,
+            ResponseWriter writer) throws IOException {
+        writer.startElement(JsfConstants.TD_ELEM, column);
+        for (Iterator itChild = new RenderedComponentIterator(column
+                .getChildren()); itChild.hasNext();) {
+            UIComponent component = (UIComponent) itChild.next();
+            encodeComponentAndChildren(context, component);
+        }
+        writer.endElement(JsfConstants.TD_ELEM);
+    }
+
+    protected void encodeComponentAndChildren(FacesContext context,
+            UIComponent component) throws IOException {
+        encodeComponent(context, component);
+        for (Iterator it = new RenderedComponentIterator(component
+                .getChildren()); it.hasNext();) {
+            UIComponent child = (UIComponent) it.next();
+            encodeComponentAndChildren(context, child);
+        }
+    }
+
     public void encodeEnd(FacesContext context, UIComponent component)
             throws IOException {
         super.encodeEnd(context, component);
@@ -174,8 +231,6 @@ public class HtmlDataTableRenderer extends AbstractHtmlRenderer {
     protected void encodeHtmlDataTableEnd(FacesContext context,
             HtmlDataTable htmlDataTable) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
-
-        writer.writeText("", null);
         writer.endElement(JsfConstants.TABLE_ELEM);
     }
 
@@ -196,6 +251,50 @@ public class HtmlDataTableRenderer extends AbstractHtmlRenderer {
             RendererUtil.renderAttribute(writer, JsfConstants.COLSPAN_ATTR,
                     new Integer(columns.size()));
         }
+    }
+
+    protected static class RenderedComponentIterator implements Iterator {
+
+        private Iterator iterator_;
+
+        RenderedComponentIterator(Collection c) {
+            iterator_ = c.iterator();
+        }
+
+        private UIComponent component_;
+
+        public boolean hasNext() {
+            if (component_ != null) {
+                return true;
+            }
+            while (iterator_.hasNext()) {
+                UIComponent component = (UIComponent) iterator_.next();
+                if (component.isRendered()) {
+                    component_ = component;
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public Object next() {
+            if (component_ != null) {
+                UIComponent component = component_;
+                component_ = null;
+                return component;
+            }
+            while (true) {
+                UIComponent component = (UIComponent) iterator_.next();
+                if (component.isRendered()) {
+                    return component;
+                }
+            }
+        }
+
+        public void remove() {
+            throw new UnsupportedOperationException("remove");
+        }
+
     }
 
 }

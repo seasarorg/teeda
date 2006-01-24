@@ -18,6 +18,8 @@ package org.seasar.teeda.core.context.html;
 import java.io.IOException;
 import java.io.Writer;
 import java.net.URLEncoder;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.ResponseWriter;
@@ -30,6 +32,10 @@ import org.apache.commons.lang.ArrayUtils;
  * TODO handle "javascript: xxxx" attribute (really necessary?)
  */
 public class HtmlResponseWriter extends ResponseWriter {
+
+    private static List EMPTY_ELEMENTS = Arrays
+            .asList(new String[] { "area", "br", "base", "col", "hr", "img",
+                    "input", "link", "meta", "param" });
 
     private Writer writer_;
 
@@ -67,7 +73,12 @@ public class HtmlResponseWriter extends ResponseWriter {
         }
         Writer writer = getWriter();
         if (startTagOpening_) {
-            writer.write("/>");
+            if (EMPTY_ELEMENTS.contains(name)) {
+                writer.write("/>");
+            } else {
+                writer.write(">");
+                writer.write("</" + name + ">");
+            }
             startTagOpening_ = false;
         } else {
             writer.write("</" + name + ">");

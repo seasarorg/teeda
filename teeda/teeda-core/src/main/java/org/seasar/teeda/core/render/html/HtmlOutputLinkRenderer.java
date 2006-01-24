@@ -89,7 +89,6 @@ public class HtmlOutputLinkRenderer extends AbstractHtmlRenderer {
     protected void encodeHtmlOutputLinkEnd(FacesContext context,
             HtmlOutputLink link) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
-        writer.writeText("", null);
         writer.endElement(JsfConstants.ANCHOR_ELEM);
     }
 

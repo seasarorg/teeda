@@ -138,7 +138,7 @@ public class HtmlResponseWriterTest extends TestCase {
         responseWriter.endElement("span");
 
         String value = writer.toString();
-        assertEquals("<span/>", value);
+        assertEquals("<span></span>", value);
     }
 
     public final void testEndElement_NameIsNull() throws Exception {

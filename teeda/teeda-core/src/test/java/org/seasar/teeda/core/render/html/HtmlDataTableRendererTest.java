@@ -16,8 +16,6 @@
 package org.seasar.teeda.core.render.html;
 
 import javax.faces.component.UIColumn;
-import javax.faces.component.html.HtmlDataTable;
-import javax.faces.context.FacesContext;
 import javax.faces.render.Renderer;
 import javax.faces.render.RendererTest;
 
@@ -27,6 +25,8 @@ import org.seasar.teeda.core.mock.MockFacesContext;
  * @author manhole
  */
 public class HtmlDataTableRendererTest extends RendererTest {
+
+    // TODO allAttributes
 
     private HtmlDataTableRenderer renderer_;
 
@@ -87,7 +87,7 @@ public class HtmlDataTableRendererTest extends RendererTest {
         renderer_.encodeEnd(context, htmlDataTable_);
 
         // ## Assert ##
-        assertEquals("<table></table>", getResponseText());
+        assertEquals("<table><tbody></tbody></table>", getResponseText());
     }
 
     public void testEncodeBegin_TableHeaderFacet() throws Exception {
@@ -467,16 +467,6 @@ public class HtmlDataTableRendererTest extends RendererTest {
         assertEquals("<table><tfoot>" + "<tr><td>a</td></tr>"
                 + "<tr><td>col1</td></tr>" + "</tfoot>", getResponseText());
     }
-    
-    // TODO
-    public void testEncodeChildren1() throws Exception {
-        // ## Arrange ##
-
-        // ## Act ##
-
-        // ## Assert ##
-        
-    }
 
     // TODO test
 
@@ -491,35 +481,6 @@ public class HtmlDataTableRendererTest extends RendererTest {
 
     protected Renderer createRenderer() {
         return new HtmlDataTableRenderer();
-    }
-
-    private static class MockHtmlDataTable extends HtmlDataTable {
-        private Renderer renderer_;
-
-        private String clientId_;
-
-        public void setRenderer(Renderer renderer) {
-            renderer_ = renderer;
-        }
-
-        protected Renderer getRenderer(FacesContext context) {
-            if (renderer_ != null) {
-                return renderer_;
-            }
-            return super.getRenderer(context);
-        }
-
-        public String getClientId(FacesContext context) {
-            if (clientId_ != null) {
-                return clientId_;
-            }
-            return super.getClientId(context);
-        }
-
-        public void setClientId(String clientId) {
-            clientId_ = clientId;
-        }
-
     }
 
 }
