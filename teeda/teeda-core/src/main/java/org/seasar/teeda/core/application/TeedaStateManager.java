@@ -232,11 +232,6 @@ public class TeedaStateManager extends StateManager implements Serializable {
 		if (viewRoot != null) {
 			viewRoot.setViewId(viewId);
 			restoreComponentState(context, viewRoot, renderKitId);
-			/*
-			 * if (!isSavingStateInClient(context)) {
-			 * removeSerializedViewFromSession(context.getExternalContext(),
-			 * viewId); }
-			 */
 		}
 		return viewRoot;
 	}

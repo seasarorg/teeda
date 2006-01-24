@@ -32,15 +32,35 @@ public class PropertyUtilTest extends TestCase {
     }
 
     public void testGetProperty() throws Exception {
-        assertEquals(String.class, PropertyUtil.getProperty(new A().getClass(), "name"));
-        assertEquals(int.class, PropertyUtil.getProperty(new A().getClass(), "num"));
+        assertEquals(String.class, PropertyUtil.getProperty(new A().getClass(),
+                "name"));
+        assertEquals(int.class, PropertyUtil.getProperty(new A().getClass(),
+                "num"));
     }
 
+    public void testSetValue() throws Exception {
+        A a = new A();
+        PropertyUtil.setValue(a, "name", "hoge");
+        PropertyUtil.setValue(a, "num", "5");
+        assertEquals("hoge", a.getName());
+        assertEquals(5, a.getNum());
+    }
+    
     public static class A {
         private String name = "a";
+
         private int num = 0;
+
         public String getName() {
             return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public void setNum(int num) {
+            this.num = num;
         }
 
         public int getNum() {

@@ -23,7 +23,6 @@ import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
 import org.seasar.framework.container.impl.ComponentDefImpl;
 import org.seasar.framework.container.impl.DestroyMethodDefImpl;
 import org.seasar.framework.container.impl.InitMethodDefImpl;
-import org.seasar.framework.container.impl.S2ContainerImpl;
 import org.seasar.teeda.core.managedbean.ManagedBeanFactory;
 import org.seasar.teeda.core.managedbean.ManagedBeanScopeSaver;
 import org.seasar.teeda.core.scope.Scope;
@@ -36,49 +35,42 @@ public class ManagedBeanFactoryImpl implements ManagedBeanFactory {
 
 	private ManagedBeanScopeSaver managedBeanScopeSaver_;
 
-	private S2Container container_;
-
 	private ScopeManager scopeManager_;
-	
-	private static final String TEEDA_MANAGEDBEAN_NAMESPACE = "teeda-managedbean";
 
 	public ManagedBeanFactoryImpl() {
-		container_ = new S2ContainerImpl();
-		container_.setNamespace(TEEDA_MANAGEDBEAN_NAMESPACE);
-		S2Container root = 
-			(S2Container) SingletonS2ContainerFactory.getContainer();
-		root.include(container_);
 	}
 
 	public Object getManagedBean(String name) {
 		S2Container container = (S2Container) SingletonS2ContainerFactory.getContainer();
 		try{
-			return container.getComponent(TEEDA_MANAGEDBEAN_NAMESPACE + "." + name);
+			return container.getComponent(name);
 		}catch(ComponentNotFoundRuntimeException e){
 			return null;
 		}
 	}
 
 	public void setManagedBean(String name, Class type, Scope scope) {
+        S2Container container = (S2Container) SingletonS2ContainerFactory.getContainer();
 		ComponentDef componentDef = new ComponentDefImpl(type, name);
 		setInstanceType(componentDef, scope);
-		container_.register(componentDef);
+		container.register(componentDef);
 	}
 
 	public void setManagedBean(String name, Class type, Scope scope,
 			String initMethodName, String destroyMethodName) {
+        S2Container container = (S2Container) SingletonS2ContainerFactory.getContainer();
 		ComponentDef componentDef = new ComponentDefImpl(type, name);
 		setInstanceType(componentDef, scope);
 		componentDef.addInitMethodDef(new InitMethodDefImpl(initMethodName));
 		componentDef.addDestroyMethodDef(new DestroyMethodDefImpl(destroyMethodName));
-		container_.register(componentDef);
+		container.register(componentDef);
 	}
 
     public Scope getManagedBeanScope(String name){
         S2Container container = (S2Container) SingletonS2ContainerFactory.getContainer();
         ComponentDef componentDef = null;
         try{
-        	componentDef = container.getComponentDef(TEEDA_MANAGEDBEAN_NAMESPACE + "." + name);
+        	componentDef = container.getComponentDef(name);
         }catch(ComponentNotFoundRuntimeException e){
         	return null;
         }

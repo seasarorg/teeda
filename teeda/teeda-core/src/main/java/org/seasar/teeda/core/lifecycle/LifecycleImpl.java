@@ -15,36 +15,18 @@
  */
 package org.seasar.teeda.core.lifecycle;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 import javax.faces.FacesException;
-import javax.faces.application.Application;
-import javax.faces.application.ViewHandler;
-import javax.faces.component.UIComponent;
-import javax.faces.component.UIInput;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.el.EvaluationException;
-import javax.faces.event.PhaseEvent;
-import javax.faces.event.PhaseId;
 import javax.faces.event.PhaseListener;
 import javax.faces.lifecycle.Lifecycle;
-import javax.servlet.ServletRequest;
-import javax.servlet.http.HttpServletRequest;
 
-import org.seasar.framework.container.S2Container;
-import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
 import org.seasar.framework.util.ArrayUtil;
-import org.seasar.jsf.JsfConfig;
-import org.seasar.jsf.ViewTemplate;
-import org.seasar.jsf.ViewTemplateFactory;
-import org.seasar.jsf.component.S2UIViewRoot;
-import org.seasar.jsf.processor.ViewProcessor;
-import org.seasar.jsf.util.ExternalContextUtil;
+import org.seasar.teeda.core.util.ExternalContextUtil;
 
 public class LifecycleImpl extends Lifecycle {
 
@@ -62,25 +44,28 @@ public class LifecycleImpl extends Lifecycle {
 
     private PhaseListener[] phaseListeners = new PhaseListener[0];
 
-    private Phase restoreViewPhase_;
+    private AbstractPhase restoreViewPhase_;
     
-    private Phase applyRequestValuesPhase_;
+    private AbstractPhase applyRequestValuesPhase_;
+    
+    private AbstractPhase invokeApplicationPhase_;
+    
+    private AbstractPhase renderPhase_;
+    
+    private AbstractPhase processValidationPhase_;
+    
+    private AbstractPhase updateModelValuesPhase_;
     
     public LifecycleImpl() {
-    }
-
-    public void setRestoreViewPhase(Phase restoreViewPhase){
-        restoreViewPhase_ = restoreViewPhase;
-    }
-    
-    public void setApplyRequestValuesPhase(Phase applyRequestValuesPhase){
-        applyRequestValuesPhase_ = applyRequestValuesPhase;
     }
     
     public void execute(FacesContext context) throws FacesException {
         try {
-            setupParams(context);
-            boolean postback = restoreView(context);
+            restoreViewPhase_.doPhase(context);
+            Postback postback = null;
+            if(restoreViewPhase_ instanceof Postback){
+                postback = (Postback) restoreViewPhase_;
+            }
             if (isFinished(context)) {
                 return;
             }
@@ -100,22 +85,22 @@ public class LifecycleImpl extends Lifecycle {
                 return;
             }
             requestMap.put(EXECUTED_ATTR, null);
-            applyRequestValues(context);
+            applyRequestValuesPhase_.doPhase(context);
             if (isFinished(context)) {
-                initializeChildren(context, context.getViewRoot());
+                applyRequestValuesPhase_.initializeChildren(context, context.getViewRoot());
                 return;
             }
-            if (postback || hasEvent(context)) {
-                processValidations(context);
+            if (postback != null && postback.isPostBack() || hasEvent(context)) {
+                processValidationPhase_.doPhase(context);
                 if (isFinished(context)) {
                     return;
                 }
             }
-            updateModelValues(context);
+            updateModelValuesPhase_.doPhase(context);
             if (isFinished(context)) {
                 return;
             }
-            invokeApplication(context);
+            invokeApplicationPhase_.doPhase(context);
             if (isGetRedirect(context)) {
                 sessionMap.put(REDIRECTED_TIME_ATTR, new Long(System
                         .currentTimeMillis()));
@@ -132,109 +117,19 @@ public class LifecycleImpl extends Lifecycle {
         }
     }
     
-    protected void setupParams(FacesContext context) {
-        ExternalContext externalContext = context.getExternalContext();
-        String viewId = ExternalContextUtil.getViewId(externalContext);
-        S2Container container = SingletonS2ContainerFactory.getContainer();
-        ServletRequest request = container.getRequest();
-        JsfConfig jsfConfig = (JsfConfig) container.getComponent(JsfConfig.class);
-        ViewTemplateFactory viewTemplateFactory = (ViewTemplateFactory) container.getComponent(ViewTemplateFactory.class);
-        ViewTemplate viewTemplate = viewTemplateFactory.getViewTemplate(viewId);
-        ViewProcessor viewProcessor = (ViewProcessor) viewTemplate.getRootTagProcessor();
-        Map params = new HashMap();
-        viewProcessor.setupParams(jsfConfig, params);
-        for (Iterator i = params.keySet().iterator(); i.hasNext(); ) {
-            String key = (String) i.next();
-            Object value = params.get(key);
-            request.setAttribute(key, value);
-        }
-    }
-
-    protected boolean restoreView(FacesContext context) throws FacesException {
-        beforePhase(context, PhaseId.RESTORE_VIEW);
-        ExternalContext externalContext = context.getExternalContext();
-        String viewId = ExternalContextUtil.getViewId(externalContext);
-        Application application = context.getApplication();
-        ViewHandler viewHandler = application.getViewHandler();
-        UIViewRoot viewRoot = viewHandler.restoreView(context, viewId);
-        if (viewRoot == null) {
-            viewRoot = viewHandler.createView(context, viewId);
-            //context.renderResponse();
-        }
-        String previousViewId = getViewIdFromSession(externalContext);
-        context.setViewRoot(viewRoot);
-        saveViewIdToSession(externalContext, viewId);
-        initializeChildren(context, viewRoot);
-        if (externalContext.getRequestParameterMap().isEmpty()) {
-            context.renderResponse();
-        }
-        afterPhase(context, PhaseId.RESTORE_VIEW);
-        return viewId.equals(previousViewId);
-    }
-
-    protected void applyRequestValues(FacesContext context)
-            throws FacesException {
-
-        beforePhase(context, PhaseId.APPLY_REQUEST_VALUES);
-        context.getViewRoot().processDecodes(context);
-        afterPhase(context, PhaseId.APPLY_REQUEST_VALUES);
-    }
-
-    protected void processValidations(FacesContext context)
-            throws FacesException {
-
-        beforePhase(context, PhaseId.PROCESS_VALIDATIONS);
-        context.getViewRoot().processValidators(context);
-        afterPhase(context, PhaseId.PROCESS_VALIDATIONS);
-    }
-
-    protected void updateModelValues(FacesContext context)
-            throws FacesException {
-
-        beforePhase(context, PhaseId.UPDATE_MODEL_VALUES);
-        context.getViewRoot().processUpdates(context);
-        afterPhase(context, PhaseId.UPDATE_MODEL_VALUES);
-    }
-
-    protected void invokeApplication(FacesContext context)
-            throws FacesException {
-
-        beforePhase(context, PhaseId.INVOKE_APPLICATION);
-        context.getViewRoot().processApplication(context);
-        afterPhase(context, PhaseId.INVOKE_APPLICATION);
-    }
-    
     protected boolean isGetRedirect(FacesContext context) {
         if (!context.getResponseComplete()) {
             return false;
         }
         ExternalContext extContext = context.getExternalContext();
-        HttpServletRequest request = ExternalContextUtil.getRequest(extContext);
-        return request.getMethod().equals("GET");
+        return ExternalContextUtil.isGetRedirect(extContext);
     }
 
     public void render(FacesContext context) throws FacesException {
         if (context.getResponseComplete()) {
             return;
         }
-        beforePhase(context, PhaseId.RENDER_RESPONSE);
-        Application application = context.getApplication();
-        ViewHandler viewHandler = application.getViewHandler();
-        try {
-            viewHandler.renderView(context, context.getViewRoot());
-        } catch (IOException e) {
-            throw new FacesException(e.getMessage(), e);
-        } catch (EvaluationException ex) {
-            Throwable cause = ex.getCause();
-            if (cause instanceof RuntimeException) {
-                throw (RuntimeException) cause;
-            } else if (cause instanceof Error) {
-                throw (Error) cause;
-            } else {
-                throw ex;
-            }
-        }
-        afterPhase(context, PhaseId.RENDER_RESPONSE);
+        renderPhase_.doPhase(context);
     }
 
     protected String getViewIdFromSession(ExternalContext externalContext) {
@@ -246,20 +141,6 @@ public class LifecycleImpl extends Lifecycle {
             String viewId) {
 
         externalContext.getSessionMap().put(VIEW_ID_ATTR, viewId);
-    }
-
-    protected void initializeChildren(FacesContext context, UIComponent component) {
-        for (Iterator i = component.getFacetsAndChildren(); i.hasNext();) {
-            UIComponent child = (UIComponent) i.next();
-            if (child instanceof UIInput) {
-                UIInput input = (UIInput) child;
-                input.setValid(true);
-                input.setSubmittedValue(null);
-                input.setValue(null);
-                input.setLocalValueSet(false);
-            }
-            initializeChildren(context, child);
-        }
     }
 
     protected boolean isFinished(FacesContext context) throws FacesException {
@@ -280,32 +161,57 @@ public class LifecycleImpl extends Lifecycle {
         return phaseListeners;
     }
 
-    protected void beforePhase(FacesContext context, PhaseId phaseId) {
-        for (int i = 0; i < phaseListeners.length; i++) {
-            PhaseListener listener = phaseListeners[i];
-            if (isTargetListener(listener, phaseId)) {
-                listener.beforePhase(new PhaseEvent(context, phaseId, this));
-            }
-        }
-    }
-
-    protected void afterPhase(FacesContext context, PhaseId phaseId) {
-        for (int i = 0; i < phaseListeners.length; i++) {
-            PhaseListener listener = phaseListeners[i];
-            if (isTargetListener(listener, phaseId)) {
-                listener.afterPhase(new PhaseEvent(context, phaseId, this));
-            }
-        }
-    }
-
-    protected boolean isTargetListener(PhaseListener listener, PhaseId phaseId) {
-        int listenerOrdinal = listener.getPhaseId().getOrdinal();
-        return listenerOrdinal == PhaseId.ANY_PHASE.getOrdinal()
-                || listenerOrdinal == phaseId.getOrdinal();
-    }
-
     protected boolean hasEvent(FacesContext context) {
-        S2UIViewRoot viewRoot = (S2UIViewRoot) context.getViewRoot();
+        UIViewRoot viewRoot = context.getViewRoot();
         return viewRoot.getEventSize() > 0;
     }
+    
+    public void setRestoreViewPhase(AbstractPhase restoreViewPhase){
+        restoreViewPhase_ = restoreViewPhase;
+    }
+    
+    public void setApplyRequestValuesPhase(AbstractPhase applyRequestValuesPhase){
+        applyRequestValuesPhase_ = applyRequestValuesPhase;
+    }
+    
+    public void setInvokeApplicationPhase(AbstractPhase invokeApplicationPhase){
+        invokeApplicationPhase_ = invokeApplicationPhase;
+    }
+
+    public void setRenderPhase(AbstractPhase renderPhase){
+        renderPhase_ = renderPhase;
+    }
+    
+    public void setProcessValidationsPhase(AbstractPhase processValidationPhase){
+        processValidationPhase_ = processValidationPhase;
+    }
+    
+    public void setUpdateModelValuesPhase(AbstractPhase updateModelValuesPhase){
+        updateModelValuesPhase_ = updateModelValuesPhase;
+    }
+    
+    public Phase getApplyRequestValuesPhase() {
+        return applyRequestValuesPhase_;
+    }
+    
+    public Phase getInvokeApplicationPhase() {
+        return invokeApplicationPhase_;
+    }
+    
+    public Phase getProcessValidationPhase() {
+        return processValidationPhase_;
+    }
+    
+    public Phase getRenderPhase() {
+        return renderPhase_;
+    }
+    
+    public Phase getRestoreViewPhase() {
+        return restoreViewPhase_;
+    }
+    
+    public Phase getUpdateModelValuesPhase() {
+        return updateModelValuesPhase_;
+    }
+
 }

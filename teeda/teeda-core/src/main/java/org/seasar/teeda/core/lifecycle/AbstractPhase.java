@@ -2,8 +2,8 @@ package org.seasar.teeda.core.lifecycle;
 
 import java.util.Iterator;
 
+import javax.faces.component.EditableValueHolder;
 import javax.faces.component.UIComponent;
-import javax.faces.component.UIInput;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseEvent;
@@ -53,13 +53,13 @@ public abstract class AbstractPhase implements Phase{
     protected void initializeChildren(FacesContext context, UIComponent component) {
         for (Iterator i = component.getFacetsAndChildren(); i.hasNext();) {
             UIComponent child = (UIComponent) i.next();
-            if (child instanceof UIInput) {
-                UIInput input = (UIInput) child;
-                input.setValid(true);
-                input.setSubmittedValue(null);
-                input.setValue(null);
-                input.setLocalValueSet(false);
-            }
+            if (child instanceof EditableValueHolder) {
+                EditableValueHolder editableValueHolder = (EditableValueHolder) child;
+                editableValueHolder.setValid(true);
+                editableValueHolder.setSubmittedValue(null);
+                editableValueHolder.setValue(null);
+                editableValueHolder.setLocalValueSet(false);
+            }//For each
             initializeChildren(context, child);
         }
     }

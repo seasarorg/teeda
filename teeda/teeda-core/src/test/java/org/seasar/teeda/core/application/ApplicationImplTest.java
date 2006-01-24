@@ -1,7 +1,9 @@
 package org.seasar.teeda.core.application;
 
 import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
+import javax.faces.convert.ConverterException;
 import javax.faces.validator.Validator;
 
 import org.seasar.teeda.core.exception.IllegalClassTypeException;
@@ -134,6 +136,60 @@ public class ApplicationImplTest extends TeedaTestCase {
             assertTrue(true);
         }
         
+    }
+    
+    public void testCreateConverter_withProperties1() throws Exception {
+        app_ = new ApplicationImpl();
+        ConverterConfiguration config = new ConverterConfiguration("pattern", "String", "yyyy/MM/dd HH:mm:ss");
+        app_.addConverterConfiguration(this.getClass().getName() + "$HogeConverter", config);
+        app_.addConverter("id", this.getClass().getName() + "$HogeConverter");
+        
+        Converter c = app_.createConverter("id");
+        
+        assertNotNull(c);
+        assertTrue(c instanceof HogeConverter);
+        assertEquals("yyyy/MM/dd HH:mm:ss", ((HogeConverter)c).getPattern());
+    }
+
+    public void testCreateConverter_withProperties2() throws Exception {
+        app_ = new ApplicationImpl();
+        ConverterConfiguration config = new ConverterConfiguration("num", "int", "3");
+        app_.addConverterConfiguration(this.getClass().getName() + "$HogeConverter", config);
+        app_.addConverter("id", this.getClass().getName() + "$HogeConverter");
+        
+        Converter c = app_.createConverter("id");
+        
+        assertNotNull(c);
+        assertTrue(c instanceof HogeConverter);
+        assertEquals(3, ((HogeConverter)c).getNum());
+    }
+
+    public static class HogeConverter implements Converter {
+
+        private String pattern_;
+        private int num_;
+        public Object getAsObject(FacesContext context, UIComponent component, String value) throws ConverterException {
+            return null;
+        }
+
+        public String getAsString(FacesContext context, UIComponent component, Object value) throws ConverterException {
+            return null;
+        }
+
+        public void setPattern(String pattern) {
+            pattern_ = pattern;
+        }
+        
+        public String getPattern(){
+            return pattern_;
+        }
+        
+        public int getNum() {
+            return num_;
+        }
+        public void setNum(int num) {
+            num_ = num;
+        }
     }
     
     private static class Hoge{

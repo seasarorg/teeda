@@ -17,8 +17,9 @@ package org.seasar.teeda.core.config.assembler.impl;
 
 import java.util.Map;
 
-import org.seasar.teeda.core.config.assembler.ConverterChildAssembler;
+import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.config.assembler.ConverterAssembler;
+import org.seasar.teeda.core.config.assembler.ConverterChildAssembler;
 import org.seasar.teeda.core.config.element.ConverterElement;
 import org.seasar.teeda.core.util.ClassUtil;
 
@@ -28,26 +29,31 @@ import org.seasar.teeda.core.util.ClassUtil;
 public class DefaultConverterAssembler extends ConverterAssembler {
 
     private ConverterChildAssembler converterIdAssembler_;
+
     private ConverterChildAssembler conveterClassAssembler_;
+
     public DefaultConverterAssembler(Map convertersByClass, Map convertersById) {
         super(convertersByClass, convertersById);
     }
 
     protected void setupBeforeAssemble() {
-        converterIdAssembler_ = new ConverterChildAssembler(getConvertersById()){
-            protected void doAssemble(String converterId, ConverterElement converterElement) {
+        converterIdAssembler_ = new ConverterChildAssembler(getConvertersById()) {
+            protected void doAssemble(String converterId,
+                    ConverterElement converterElement) {
                 String converterClass = converterElement.getConverterClass();
-                if(converterClass != null){
+                if (!StringUtil.isEmpty(converterClass)) {
                     getApplication().addConverter(converterId, converterClass);
                 }
             }
         };
-        conveterClassAssembler_ = new ConverterChildAssembler(getConvertersByClass()){
-            protected void doAssemble(String converterForClass, ConverterElement converterElement) {
-                Class targetClazz = ClassUtil.forName(converterForClass);
-                String converterClassName = converterElement.getConverterClass();
-                if(converterClassName != null){
-                    getApplication().addConverter(targetClazz, converterClassName);
+        conveterClassAssembler_ = new ConverterChildAssembler(
+                getConvertersByClass()) {
+            protected void doAssemble(String converterForClass,
+                    ConverterElement converterElement) {
+                String converterClass = converterElement.getConverterClass();
+                if (!StringUtil.isEmpty(converterClass)) {
+                    Class targetClazz = ClassUtil.forName(converterForClass);
+                    getApplication().addConverter(targetClazz, converterClass);
                 }
             }
         };

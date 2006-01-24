@@ -47,7 +47,7 @@ public interface TODO {
      *    (Need to modify ManagedBeanFactoryImpl, and ManagedBeanAssembler) 
      *  - Configure core-faces-config.xml for default setting.
      *  - MetaInfFacesConfigurator -> Support multiple jar file.
-     *  -
+     *  - Add DI Support for Converter, Validator, UIComponent, Renderer
      *  
      * 
      */

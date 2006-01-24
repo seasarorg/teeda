@@ -6,7 +6,7 @@ import org.seasar.teeda.core.config.element.AttributeHolder;
 import org.seasar.teeda.core.config.element.PropertyElement;
 import org.seasar.teeda.core.config.element.PropertyHolder;
 import org.seasar.teeda.core.config.element.impl.AttributeElementImpl;
-import org.seasar.teeda.core.config.element.impl.PropertyTagImpl;
+import org.seasar.teeda.core.config.element.impl.PropertyElementImpl;
 import org.xml.sax.Attributes;
 
 
@@ -27,7 +27,7 @@ public class PropertyTagHandler extends JsfTagHandler {
     }
     
     protected PropertyElement createPropertyTag() {
-        return new PropertyTagImpl();
+        return new PropertyElementImpl();
     }
 
 }

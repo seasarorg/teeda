@@ -30,4 +30,9 @@ public class PropertyUtil {
         return propDesc.getPropertyType();
     }
 
+    public static void setValue(Object target, String propertyName, String value) {
+        BeanDesc beanDesc = BeanDescFactory.getBeanDesc(target.getClass());
+        PropertyDesc propertyDesc = beanDesc.getPropertyDesc(propertyName);
+        propertyDesc.setValue(target, value);
+    }
 }
