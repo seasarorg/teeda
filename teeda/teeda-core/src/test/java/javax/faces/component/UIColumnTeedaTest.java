@@ -15,26 +15,23 @@
  */
 package javax.faces.component;
 
-import junit.framework.TestCase;
-
 /**
  * @author manhole
  */
-public class UIOutputOnlyTest extends TestCase {
-    
-    public void testConstants() throws Exception {
-        assertEquals("javax.faces.Output", UIOutput.COMPONENT_FAMILY);
-        assertEquals("javax.faces.Output", UIOutput.COMPONENT_TYPE);
-    }
-    
-    public void testDefaultRendererType() throws Exception {
-        UIOutput output = new UIOutput();
-        assertEquals("javax.faces.Text", output.getRendererType());
+public class UIColumnTeedaTest extends UIComponentBaseTeedaTest {
+
+    public void testSaveAndRestoreState() throws Exception {
+        super.testSaveAndRestoreState();
+
+        // TODO test
     }
 
-    public void testGetFamily() {
-        UIOutput output = new UIOutput();
-        assertEquals(UIOutput.COMPONENT_FAMILY, output.getFamily());
+    private UIColumn createUIColumn() {
+        return (UIColumn) createUIComponent();
+    }
+
+    protected UIComponent createUIComponent() {
+        return new UIColumn();
     }
 
 }

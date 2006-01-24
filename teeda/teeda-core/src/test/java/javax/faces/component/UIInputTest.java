@@ -1,14 +1,10 @@
 package javax.faces.component;
 
-import javax.faces.context.FacesContext;
-import javax.faces.el.EvaluationException;
 import javax.faces.el.MethodBinding;
-import javax.faces.el.MethodNotFoundException;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.event.ValueChangeListener;
 import javax.faces.validator.Validator;
 
-import org.seasar.teeda.core.mock.MockFacesContextImpl;
 import org.seasar.teeda.core.mock.MockMethodBinding;
 import org.seasar.teeda.core.mock.MockUIComponentBase;
 import org.seasar.teeda.core.mock.MockValueBinding;
@@ -224,9 +220,6 @@ public class UIInputTest extends UIOutputTest {
             AssertUtil.assertExceptionMessageExist(npe);
         }
     }
-
-    // TODO test: saveState
-    // TODO test: restoreState
 
     private UIInput createUIInput() {
         return (UIInput) createUIComponent();

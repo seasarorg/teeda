@@ -20,21 +20,21 @@ import junit.framework.TestCase;
 /**
  * @author manhole
  */
-public class UIOutputOnlyTest extends TestCase {
-    
+public class UIColumnOnlyTest extends TestCase {
+
     public void testConstants() throws Exception {
-        assertEquals("javax.faces.Output", UIOutput.COMPONENT_FAMILY);
-        assertEquals("javax.faces.Output", UIOutput.COMPONENT_TYPE);
+        assertEquals("javax.faces.Column", UIColumn.COMPONENT_FAMILY);
+        assertEquals("javax.faces.Column", UIColumn.COMPONENT_TYPE);
     }
-    
+
     public void testDefaultRendererType() throws Exception {
-        UIOutput output = new UIOutput();
-        assertEquals("javax.faces.Text", output.getRendererType());
+        UIColumn column = new UIColumn();
+        assertEquals(null, column.getRendererType());
     }
 
     public void testGetFamily() {
-        UIOutput output = new UIOutput();
-        assertEquals(UIOutput.COMPONENT_FAMILY, output.getFamily());
+        UIColumn column = new UIColumn();
+        assertEquals("javax.faces.Column", column.getFamily());
     }
 
 }

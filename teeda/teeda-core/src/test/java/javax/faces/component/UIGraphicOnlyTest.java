@@ -20,21 +20,21 @@ import junit.framework.TestCase;
 /**
  * @author manhole
  */
-public class UIOutputOnlyTest extends TestCase {
-    
+public class UIGraphicOnlyTest extends TestCase {
+
     public void testConstants() throws Exception {
-        assertEquals("javax.faces.Output", UIOutput.COMPONENT_FAMILY);
-        assertEquals("javax.faces.Output", UIOutput.COMPONENT_TYPE);
+        assertEquals("javax.faces.Graphic", UIGraphic.COMPONENT_FAMILY);
+        assertEquals("javax.faces.Graphic", UIGraphic.COMPONENT_TYPE);
     }
-    
+
     public void testDefaultRendererType() throws Exception {
-        UIOutput output = new UIOutput();
-        assertEquals("javax.faces.Text", output.getRendererType());
+        UIGraphic graphic = new UIGraphic();
+        assertEquals("javax.faces.Image", graphic.getRendererType());
     }
 
     public void testGetFamily() {
-        UIOutput output = new UIOutput();
-        assertEquals(UIOutput.COMPONENT_FAMILY, output.getFamily());
+        UIGraphic graphic = new UIGraphic();
+        assertEquals("javax.faces.Graphic", graphic.getFamily());
     }
 
 }
