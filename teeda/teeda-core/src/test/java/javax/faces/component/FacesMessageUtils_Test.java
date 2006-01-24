@@ -1,3 +1,18 @@
+/*
+ * Copyright 2004-2006 the Seasar Foundation and the Others.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
 package javax.faces.component;
 
 import java.util.Iterator;
@@ -9,34 +24,10 @@ import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.mock.MockUIComponent;
 import org.seasar.teeda.core.unit.TeedaTestCase;
 
-
-public class TestFacesMessageUtils_ extends TeedaTestCase {
-
-    public static void main(String[] args) {
-        junit.textui.TestRunner.run(TestFacesMessageUtils_.class);
-    }
-
-    /*
-     * @see TestCase#setUp()
-     */
-    protected void setUp() throws Exception {
-        super.setUp();
-    }
-
-    /*
-     * @see TestCase#tearDown()
-     */
-    protected void tearDown() throws Exception {
-        super.tearDown();
-    }
-
-    /**
-     * Constructor for TestFacesMessageUtils_.
-     * @param arg0
-     */
-    public TestFacesMessageUtils_(String arg0) {
-        super(arg0);
-    }
+/**
+ * @author shot
+ */
+public class FacesMessageUtils_Test extends TeedaTestCase {
 
     public void testGetSimpleErrorMessage() {
         getApplication().setMessageBundle("javax.faces.component.TestMessages");
@@ -49,11 +40,11 @@ public class TestFacesMessageUtils_ extends TeedaTestCase {
         FacesMessageUtils_.addErrorMessage(context, component, "aaa");
         assertNotNull(context.getMessages("a"));
         Iterator itr = context.getMessages();
-        FacesMessage message = (FacesMessage)itr.next();
+        FacesMessage message = (FacesMessage) itr.next();
         assertEquals("AAA", message.getSummary());
     }
 
-    public void testGetParameterizedMessage(){
+    public void testGetParameterizedMessage() {
         getApplication().setMessageBundle("javax.faces.component.TestMessages");
         MockFacesContext context = getFacesContext();
         MockUIComponent component = new MockUIComponent();
@@ -61,16 +52,18 @@ public class TestFacesMessageUtils_ extends TeedaTestCase {
         UIViewRoot root = new UIViewRoot();
         root.setLocale(Locale.ENGLISH);
         context.setViewRoot(root);
-        FacesMessageUtils_.addErrorMessage(context, component, "bbb", new Object[]{"B1","B2"});
+        FacesMessageUtils_.addErrorMessage(context, component, "bbb",
+                new Object[] { "B1", "B2" });
         assertNotNull(context.getMessages("b"));
         Iterator itr = context.getMessages();
-        FacesMessage message = (FacesMessage)itr.next();
+        FacesMessage message = (FacesMessage) itr.next();
         assertEquals("B1,B2", message.getSummary());
         assertEquals("B1,B2 detail", message.getDetail());
     }
 
-    public void testApplicationResourceBundleMissing(){
-        getApplication().setMessageBundle("javax.faces.component.NoFoundMessages");
+    public void testApplicationResourceBundleMissing() {
+        getApplication().setMessageBundle(
+                "javax.faces.component.NoFoundMessages");
         MockFacesContext context = getFacesContext();
         MockUIComponent component = new MockUIComponent();
         component.setClientId("c");
@@ -80,8 +73,8 @@ public class TestFacesMessageUtils_ extends TeedaTestCase {
         FacesMessageUtils_.addErrorMessage(context, component, "ccc");
         assertNotNull(context.getMessages("c"));
         Iterator itr = context.getMessages();
-        FacesMessage message = (FacesMessage)itr.next();
+        FacesMessage message = (FacesMessage) itr.next();
         assertEquals("CCC", message.getSummary());
     }
-    
+
 }
