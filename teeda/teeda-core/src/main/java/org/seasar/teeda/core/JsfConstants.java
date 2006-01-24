@@ -132,6 +132,8 @@ public interface JsfConstants {
 
     public String COLSPAN_ATTR = "colspan";
 
+    public String COLUMN_CLASSES_ATTR = "columnClasses";
+
     public String COORDS_ATTR = "coords";
 
     public String DATAFLD_ATTR = "datafld";
@@ -142,9 +144,13 @@ public interface JsfConstants {
 
     public String DIR_ATTR = "dir";
 
+    public String FOOTER_CLASS_ATTR = "footerClass";
+
     public String FOR_ATTR = "for";
 
     public String FRAME_ATTR = "frame";
+
+    public String HEADER_CLASS_ATTR = "headerClass";
 
     public String HREF_ATTR = "href";
 
@@ -195,6 +201,8 @@ public interface JsfConstants {
     public String REL_ATTR = "rel";
 
     public String REV_ATTR = "rev";
+
+    public String ROW_CLASSES_ATTR = "rowClasses";
 
     public String ROWS_ATTR = "rows";
 

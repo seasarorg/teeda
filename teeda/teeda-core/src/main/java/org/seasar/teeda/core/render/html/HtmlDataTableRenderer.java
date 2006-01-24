@@ -27,6 +27,7 @@ import javax.faces.component.html.HtmlDataTable;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
+import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.util.RendererUtil;
 
@@ -50,6 +51,8 @@ public class HtmlDataTableRenderer extends AbstractHtmlRenderer {
         writer.startElement(JsfConstants.TABLE_ELEM, htmlDataTable);
         RendererUtil.renderIdAttributeIfNecessary(writer, htmlDataTable,
                 getIdForRender(context, htmlDataTable));
+        RendererUtil.renderAttributes(writer, htmlDataTable,
+                JsfConstants.TABLE_PASSTHROUGH_ATTRIBUTES);
 
         final List columns = new ArrayList();
         boolean isColumnHeaderExist = false;
@@ -89,6 +92,10 @@ public class HtmlDataTableRenderer extends AbstractHtmlRenderer {
                     writeColspanAttribute(writer, columns);
                     writer.writeAttribute(JsfConstants.SCOPE_ATTR,
                             JsfConstants.COLGROUP_VALUE, null);
+                    RendererUtil.renderAttribute(writer,
+                            JsfConstants.CLASS_ATTR, htmlDataTable
+                                    .getHeaderClass(),
+                            JsfConstants.HEADER_CLASS_ATTR);
                     encodeComponent(context, tableHeader);
                     writer.endElement(JsfConstants.TH_ELEM);
                     writer.endElement(JsfConstants.TR_ELEM);
@@ -98,11 +105,15 @@ public class HtmlDataTableRenderer extends AbstractHtmlRenderer {
                     writer.startElement(JsfConstants.TR_ELEM, tableHeader);
                     for (Iterator it = columns.iterator(); it.hasNext();) {
                         writer.startElement(JsfConstants.TH_ELEM, tableHeader);
+                        writer.writeAttribute(JsfConstants.COLGROUP_ATTR,
+                                JsfConstants.COL_VALUE, null);
+                        RendererUtil.renderAttribute(writer,
+                                JsfConstants.CLASS_ATTR, htmlDataTable
+                                        .getHeaderClass(),
+                                JsfConstants.HEADER_CLASS_ATTR);
                         UIColumn column = (UIColumn) it.next();
                         UIComponent columnHeader = column.getHeader();
                         if (columnHeader != null) {
-                            writer.writeAttribute(JsfConstants.COLGROUP_ATTR,
-                                    JsfConstants.COL_VALUE, null);
                             encodeComponent(context, columnHeader);
                         }
                         writer.endElement(JsfConstants.TH_ELEM);
@@ -124,6 +135,10 @@ public class HtmlDataTableRenderer extends AbstractHtmlRenderer {
                     writer.startElement(JsfConstants.TR_ELEM, tableFooter);
                     writer.startElement(JsfConstants.TD_ELEM, tableFooter);
                     writeColspanAttribute(writer, columns);
+                    RendererUtil.renderAttribute(writer,
+                            JsfConstants.CLASS_ATTR, htmlDataTable
+                                    .getFooterClass(),
+                            JsfConstants.FOOTER_CLASS_ATTR);
                     encodeComponent(context, tableFooter);
                     writer.endElement(JsfConstants.TD_ELEM);
                     writer.endElement(JsfConstants.TR_ELEM);
@@ -133,6 +148,10 @@ public class HtmlDataTableRenderer extends AbstractHtmlRenderer {
                     writer.startElement(JsfConstants.TR_ELEM, tableFooter);
                     for (Iterator it = columns.iterator(); it.hasNext();) {
                         writer.startElement(JsfConstants.TD_ELEM, tableFooter);
+                        RendererUtil.renderAttribute(writer,
+                                JsfConstants.CLASS_ATTR, htmlDataTable
+                                        .getFooterClass(),
+                                JsfConstants.FOOTER_CLASS_ATTR);
                         UIColumn column = (UIColumn) it.next();
                         UIComponent columnFooter = column.getFooter();
                         if (columnFooter != null) {
@@ -170,37 +189,60 @@ public class HtmlDataTableRenderer extends AbstractHtmlRenderer {
     protected void encodeHtmlDataTableChildren(FacesContext context,
             HtmlDataTable htmlDataTable) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
-        // TODO rows
-        // TODO rowIndex
 
         writer.startElement(JsfConstants.TBODY_ELEM, htmlDataTable);
-        int start = 0; // TODO start index
+
+        LoopList rowClasses = toLoopList(splitByComma(htmlDataTable
+                .getRowClasses()));
+        LoopList columnClasses = toLoopList(splitByComma(htmlDataTable
+                .getColumnClasses()));
+
+        int start = htmlDataTable.getFirst();
+        int rows = htmlDataTable.getRows();
+        boolean allRow = true;
+        if (0 < rows) {
+            allRow = false;
+        }
         htmlDataTable.setRowIndex(start);
-        for (int i = start; htmlDataTable.isRowAvailable(); htmlDataTable
-                .setRowIndex(++i)) {
-            encodeBodyRow(context, htmlDataTable, writer);
+        rowClasses.moveFirst();
+        for (int rowIndex = start; ((allRow || 0 < rows) && htmlDataTable
+                .isRowAvailable());) {
+            encodeBodyRow(context, htmlDataTable, writer, rowClasses,
+                    columnClasses);
+            rowIndex++;
+            rows--;
+            htmlDataTable.setRowIndex(rowIndex);
         }
         writer.endElement(JsfConstants.TBODY_ELEM);
     }
 
     private void encodeBodyRow(FacesContext context,
-            HtmlDataTable htmlDataTable, ResponseWriter writer)
-            throws IOException {
+            HtmlDataTable htmlDataTable, ResponseWriter writer,
+            LoopList rowClasses, LoopList columnClasses) throws IOException {
         writer.startElement(JsfConstants.TR_ELEM, htmlDataTable);
+        if (rowClasses.isNotEmpty()) {
+            RendererUtil.renderAttribute(writer, JsfConstants.CLASS_ATTR,
+                    rowClasses.next(), JsfConstants.ROW_CLASSES_ATTR);
+        }
+        columnClasses.moveFirst();
         for (Iterator itColumn = new RenderedComponentIterator(htmlDataTable
                 .getChildren()); itColumn.hasNext();) {
             UIComponent col = (UIComponent) itColumn.next();
             if (col instanceof UIColumn) {
                 UIColumn column = (UIColumn) col;
-                encodeBodyColumn(context, column, writer);
+                encodeBodyColumn(context, column, writer, columnClasses);
             }
         }
         writer.endElement(JsfConstants.TR_ELEM);
     }
 
     private void encodeBodyColumn(FacesContext context, UIColumn column,
-            ResponseWriter writer) throws IOException {
+            ResponseWriter writer, LoopList columnClasses) throws IOException {
         writer.startElement(JsfConstants.TD_ELEM, column);
+        if (columnClasses.isNotEmpty()) {
+            RendererUtil.renderAttribute(writer, JsfConstants.CLASS_ATTR,
+                    columnClasses.next(), JsfConstants.COLUMN_CLASSES_ATTR);
+        }
         for (Iterator itChild = new RenderedComponentIterator(column
                 .getChildren()); itChild.hasNext();) {
             UIComponent component = (UIComponent) itChild.next();
@@ -295,6 +337,53 @@ public class HtmlDataTableRenderer extends AbstractHtmlRenderer {
             throw new UnsupportedOperationException("remove");
         }
 
+    }
+
+    protected String[] splitByComma(String s) {
+        String[] split = StringUtil.split(s, " ,");
+        return split;
+    }
+
+    protected LoopList toLoopList(String[] s) {
+        LoopList loopList = new LoopList();
+        for (int i = 0; i < s.length; i++) {
+            loopList.add(s[i]);
+        }
+        return loopList;
+    }
+
+    protected static class LoopList {
+
+        List l_ = new ArrayList();
+
+        int pos_ = -1;
+
+        public void add(String s) {
+            l_.add(s);
+        }
+
+        public String next() {
+            if (l_.isEmpty()) {
+                return null;
+            }
+            pos_++;
+            if (!(pos_ < l_.size())) {
+                pos_ = 0;
+            }
+            return (String) l_.get(pos_);
+        }
+
+        public boolean isEmpty() {
+            return l_.isEmpty();
+        }
+
+        public boolean isNotEmpty() {
+            return !(isEmpty());
+        }
+
+        public void moveFirst() {
+            pos_ = -1;
+        }
     }
 
 }
