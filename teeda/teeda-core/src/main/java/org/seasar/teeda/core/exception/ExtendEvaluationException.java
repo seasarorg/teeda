@@ -17,7 +17,6 @@ package org.seasar.teeda.core.exception;
 
 import javax.faces.el.EvaluationException;
 import javax.faces.el.MethodBinding;
-import javax.faces.el.MethodNotFoundException;
 
 import org.seasar.teeda.core.util.MessageFormatterUtil;
 

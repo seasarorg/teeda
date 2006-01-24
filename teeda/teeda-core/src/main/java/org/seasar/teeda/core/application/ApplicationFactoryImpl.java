@@ -26,12 +26,13 @@ import org.seasar.teeda.core.util.DIContainerUtil;
 public class ApplicationFactoryImpl extends ApplicationFactory {
 
     private Application application_ = null;
-    
-    public ApplicationFactoryImpl(){
+
+    public ApplicationFactoryImpl() {
         super();
-        application_ = (Application)DIContainerUtil.getComponent(Application.class);
+        application_ = (Application) DIContainerUtil
+                .getComponentNoException(Application.class);
     }
-    
+
     public Application getApplication() {
         return application_;
     }

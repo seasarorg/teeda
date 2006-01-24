@@ -21,8 +21,6 @@ package org.seasar.teeda.core;
 public interface TODO {
     /*
      * TODO
-     *  - LifecycleImpl
-     *    -> separate phases to jsf spec
      *  - Make JSF init-code complete. 
      *  - StateManager 
      *  - Renderers
@@ -41,14 +39,28 @@ public interface TODO {
      *  - Add copyright to all sources.
      *  - AbstractPhase.initializeChildren should be modified to use EditableValueHolder
      *  - Impl ViewHandler
-     *  - Impl LifecycleImpl
+     *  - Test LifecycleImpl and Phase
      *  - Use UIComponent's label attribute (if exist) for Conversion, Validation Error Message.
      *  - Support list-entries, map-entries to ManagedBean.
      *    (Need to modify ManagedBeanFactoryImpl, and ManagedBeanAssembler) 
      *  - Configure core-faces-config.xml for default setting.
      *  - MetaInfFacesConfigurator -> Support multiple jar file.
      *  - Add DI Support for Converter, Validator, UIComponent, Renderer
+     *  - impl StateManager
+     *  - impl ViewHandler
+     *  - impl ResponseStateManager
+     *  - impl RenderKitFactoryImpl
+     *  - impl HtmlRenderKitImpl
+     *  - impl taglib core
+     *  - impl taglib html
+     *  - 
      *  
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
      * 
      */
 }

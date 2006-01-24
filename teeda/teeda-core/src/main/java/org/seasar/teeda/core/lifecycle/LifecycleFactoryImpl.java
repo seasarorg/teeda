@@ -30,14 +30,14 @@ import org.seasar.teeda.core.util.DIContainerUtil;
 
 /**
  * @author higa
- * @author Shinpei Ohtani(aka shot)
+ * @author shot
  */
 public class LifecycleFactoryImpl extends LifecycleFactory {
 
 	private Map lifecycles = Collections.synchronizedMap(new HashMap());
 
 	public LifecycleFactoryImpl() {
-		Lifecycle lifecycle = (Lifecycle)DIContainerUtil.getComponent(Lifecycle.class);
+		Lifecycle lifecycle = (Lifecycle)DIContainerUtil.getComponentNoException(Lifecycle.class);
 		addLifecycle(LifecycleFactory.DEFAULT_LIFECYCLE, lifecycle);
 	}
 

@@ -61,10 +61,24 @@
 	<component name="scopeManager" class="org.seasar.teeda.core.scope.impl.ScopeManagerImpl" />
 	
 	<component name="translator" class="org.seasar.teeda.core.scope.impl.S2ScopeTranslator" />
-	
-	<component class="org.seasar.teeda.core.lifecycle.LifecycleImpl" />
-	
+
 	<component class="org.seasar.teeda.core.config.assembler.impl.DefaultAssembleProvider"/>
 	
 	<component class="org.seasar.teeda.core.config.assembler.AssemblerAssembler" />
+	
+	<component class="org.seasar.teeda.core.lifecycle.LifecycleImpl" >
+		<initMethod name="setRestoreViewPhase">restoreViewPhase</initMethod>
+		<initMethod name="setApplyRequestValuesPhase">applyRequestValuesPhase</initMethod>
+		<initMethod name="setInvokeApplicationPhase">invokeApplicationPhase</initMethod>
+		<initMethod name="setRenderPhase">renderPhase</initMethod>
+		<initMethod name="setProcessValidationsPhase">processValidationsPhase</initMethod>
+		<initMethod name="setUpdateModelValuesPhase">updateModelValuesPhase</initMethod>
+	</component>
+
+	<component name="restoreViewPhase" class="org.seasar.teeda.core.lifecycle.RestoreViewPhase"/>
+	<component name="applyRequestValuesPhase" class="org.seasar.teeda.core.lifecycle.ApplyRequestValuesPhase"/>
+	<component name="invokeApplicationPhase" class="org.seasar.teeda.core.lifecycle.InvokeApplicationPhase"/>
+	<component name="renderPhase" class="org.seasar.teeda.core.lifecycle.RenderPhase"/>
+	<component name="processValidationsPhase" class="org.seasar.teeda.core.lifecycle.ProcessValidationsPhase"/>
+	<component name="updateModelValuesPhase" class="org.seasar.teeda.core.lifecycle.UpdateModelValuesPhase"/>
 </components>
