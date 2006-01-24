@@ -49,7 +49,7 @@ public class HtmlInputTextRendererTest extends RendererTest {
 
         // ## Assert ##
         assertEquals(
-                "<input type=\"text\" id=\"_id0\" name=\"_id0\" value=\"\"/>",
+                "<input type=\"text\" id=\"_id0\" name=\"_id0\" value=\"\" />",
                 getResponseText());
     }
 
@@ -76,7 +76,7 @@ public class HtmlInputTextRendererTest extends RendererTest {
 
         // ## Assert ##
         assertEquals(
-                "<input type=\"text\" id=\"_id0\" name=\"_id0\" value=\"abc\"/>",
+                "<input type=\"text\" id=\"_id0\" name=\"_id0\" value=\"abc\" />",
                 getResponseText());
     }
 
@@ -89,7 +89,7 @@ public class HtmlInputTextRendererTest extends RendererTest {
 
         renderer_.encodeEnd(getFacesContext(), htmlInputText_);
 
-        assertEquals("<input type=\"text\" id=\"a\" name=\"b:a\" value=\"\"/>",
+        assertEquals("<input type=\"text\" id=\"a\" name=\"b:a\" value=\"\" />",
                 getResponseText());
     }
 

@@ -52,7 +52,7 @@ public class HtmlCommandButtonRendererTest extends RendererTest {
         renderer_.encodeEnd(context, htmlCommandButton_);
 
         // ## Assert ##
-        assertEquals("<input type=\"submit\" id=\"_id0\" name=\"_id0\"/>",
+        assertEquals("<input type=\"submit\" id=\"_id0\" name=\"_id0\" />",
                 getResponseText());
     }
 
@@ -66,7 +66,7 @@ public class HtmlCommandButtonRendererTest extends RendererTest {
 
         // ## Assert ##
         assertEquals(
-                "<input type=\"submit\" id=\"_id0\" name=\"_id0\" value=\"abc\"/>",
+                "<input type=\"submit\" id=\"_id0\" name=\"_id0\" value=\"abc\" />",
                 getResponseText());
     }
 
@@ -93,7 +93,7 @@ public class HtmlCommandButtonRendererTest extends RendererTest {
 
         renderer_.encodeEnd(getFacesContext(), htmlCommandButton_);
 
-        assertEquals("<input type=\"submit\" id=\"a\" name=\"b:a\"/>",
+        assertEquals("<input type=\"submit\" id=\"a\" name=\"b:a\" />",
                 getResponseText());
     }
 
@@ -103,7 +103,7 @@ public class HtmlCommandButtonRendererTest extends RendererTest {
 
         renderer_.encodeEnd(getFacesContext(), htmlCommandButton_);
 
-        assertEquals("<input type=\"reset\" id=\"a\" name=\"a\"/>",
+        assertEquals("<input type=\"reset\" id=\"a\" name=\"a\" />",
                 getResponseText());
     }
 
@@ -117,7 +117,7 @@ public class HtmlCommandButtonRendererTest extends RendererTest {
         renderer_.encodeEnd(getFacesContext(), htmlCommandButton_);
 
         // ## Assert ##
-        assertEquals("<input type=\"image\" id=\"a\" name=\"a\" src=\"bb\"/>",
+        assertEquals("<input type=\"image\" id=\"a\" name=\"a\" src=\"bb\" />",
                 getResponseText());
     }
 
@@ -131,7 +131,7 @@ public class HtmlCommandButtonRendererTest extends RendererTest {
         renderer_.encodeEnd(getFacesContext(), htmlCommandButton_);
 
         // ## Assert ##
-        assertEquals("<input type=\"image\" id=\"a\" name=\"a\" src=\"bb\"/>",
+        assertEquals("<input type=\"image\" id=\"a\" name=\"a\" src=\"bb\" />",
                 getResponseText());
     }
 

@@ -50,7 +50,7 @@ public class HtmlInputHiddenRendererTest extends RendererTest {
 
         // ## Assert ##
         assertEquals(
-                "<input type=\"hidden\" id=\"_id0\" name=\"_id0\" value=\"\"/>",
+                "<input type=\"hidden\" id=\"_id0\" name=\"_id0\" value=\"\" />",
                 getResponseText());
     }
 
@@ -77,7 +77,7 @@ public class HtmlInputHiddenRendererTest extends RendererTest {
 
         // ## Assert ##
         assertEquals(
-                "<input type=\"hidden\" id=\"_id0\" name=\"_id0\" value=\"abc\"/>",
+                "<input type=\"hidden\" id=\"_id0\" name=\"_id0\" value=\"abc\" />",
                 getResponseText());
     }
 
@@ -91,7 +91,7 @@ public class HtmlInputHiddenRendererTest extends RendererTest {
         renderer_.encodeEnd(getFacesContext(), htmlInputHidden_);
 
         assertEquals(
-                "<input type=\"hidden\" id=\"a\" name=\"b:a\" value=\"\"/>",
+                "<input type=\"hidden\" id=\"a\" name=\"b:a\" value=\"\" />",
                 getResponseText());
     }
 
@@ -104,7 +104,7 @@ public class HtmlInputHiddenRendererTest extends RendererTest {
         renderer_.encodeEnd(context, htmlInputHidden_);
 
         Diff diff = new Diff(
-                "<input type=\"hidden\" id=\"A\" name=\"A\" value=\"B\"" + "/>",
+                "<input type=\"hidden\" id=\"A\" name=\"A\" value=\"B\"" + " />",
                 getResponseText());
         assertEquals(diff.toString(), true, diff.identical());
     }

@@ -74,7 +74,7 @@ public class HtmlResponseWriter extends ResponseWriter {
         Writer writer = getWriter();
         if (startTagOpening_) {
             if (EMPTY_ELEMENTS.contains(name)) {
-                writer.write("/>");
+                writer.write(" />");
             } else {
                 writer.write(">");
                 writer.write("</" + name + ">");
