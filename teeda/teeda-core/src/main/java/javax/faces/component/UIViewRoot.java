@@ -1,3 +1,18 @@
+/*
+ * Copyright 2004-2006 the Seasar Foundation and the Others.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
 package javax.faces.component;
 
 import java.io.IOException;
@@ -13,7 +28,6 @@ import javax.faces.event.PhaseId;
 
 /**
  * @author shot
- * TODO test 
  */
 public class UIViewRoot extends UIComponentBase {
 
@@ -53,10 +67,7 @@ public class UIViewRoot extends UIComponentBase {
     }
 
     public String getViewId() {
-        if (viewId_ != null) {
-            return viewId_;
-        }
-        return (String) ComponentUtils_.getValueBindingValue(this, "viewId");
+        return viewId_;
     }
 
     public void setViewId(String viewId) {
@@ -79,6 +90,7 @@ public class UIViewRoot extends UIComponentBase {
 
     public void encodeBegin(FacesContext context) throws IOException {
         lastId_ = 0;
+        clearEvents();
         super.encodeBegin(context);
     }
 
@@ -91,11 +103,13 @@ public class UIViewRoot extends UIComponentBase {
     public void processUpdates(FacesContext context) {
         super.processUpdates(context);
         broadcastEvents(context, PhaseId.UPDATE_MODEL_VALUES);
+        clearEventsIfResponseRendered(context);
     }
 
     public void processApplication(FacesContext context) {
         ComponentUtils_.assertNotNull("context", context);
         broadcastEvents(context, PhaseId.INVOKE_APPLICATION);
+        clearEventsIfResponseRendered(context);
     }
 
     public String createUniqueId() {
@@ -144,10 +158,6 @@ public class UIViewRoot extends UIComponentBase {
         return values;
     }
 
-    public int getEventSize() {
-        return (events_ != null) ? events_.size() : 0;
-    }
-
     private Locale getLocaleFromString(String localeStr) {
         Locale locale = Locale.getDefault();
         if (ComponentUtils_.isLocaleShort(localeStr)) {
@@ -185,20 +195,6 @@ public class UIViewRoot extends UIComponentBase {
         }
     }
 
-    private void broadcastEventsReally(List events) {
-        if (events != null) {
-            for (int cursor = 0; cursor < events.size();) {
-                FacesEvent facesEvent = (FacesEvent) events.get(cursor);
-                UIComponent source = facesEvent.getComponent();
-                try {
-                    source.broadcast(facesEvent);
-                } catch (AbortProcessingException ignore) {
-                }
-                events.remove(cursor);
-            }
-        }
-    }
-
     private boolean hasMorePhaseEvents(List events) {
         return (events != null && events.size() > 0);
     }
@@ -209,102 +205,12 @@ public class UIViewRoot extends UIComponentBase {
         }
     }
 
-    protected void clearEvents() {
+    private void clearEvents() {
         events_ = null;
-    }
-}
-/*
-
-    public void processDecodes(FacesContext context) {
-        if (context == null) {
-            throw new NullPointerException("context");
-        }
-        super.processDecodes(context);
-        broadcastForPhase(PhaseId.APPLY_REQUEST_VALUES);
-        if (context.getRenderResponse() || context.getResponseComplete()) {
-            clearEvents();
-        }
-    }
-
-    public void processValidators(FacesContext context) {
-        if (context == null) {
-            throw new NullPointerException("context");
-        }
-        super.processValidators(context);
-        broadcastForPhase(PhaseId.PROCESS_VALIDATIONS);
-        if (context.getRenderResponse() || context.getResponseComplete()) {
-            clearEvents();
-        }
-    }
-
-    public void processUpdates(FacesContext context) {
-        if (context == null) {
-            throw new NullPointerException("context");
-        }
-        super.processUpdates(context);
-        broadcastForPhase(PhaseId.UPDATE_MODEL_VALUES);
-        if (context.getRenderResponse() || context.getResponseComplete()) {
-            clearEvents();
-        }
-    }
-
-    public void processApplication(FacesContext context) {
-        if (context == null) {
-            throw new NullPointerException("context");
-        }
-        broadcastForPhase(PhaseId.INVOKE_APPLICATION);
-        if (context.getRenderResponse() || context.getResponseComplete()) {
-            clearEvents();
-        }
-    }
-
-    public void encodeBegin(FacesContext context) throws IOException {
-        uniqueIdCounter = 0;
-        clearEvents();
-        super.encodeBegin(context);
-    }
-
-    public String createUniqueId() {
-        return UNIQUE_ID_PREFIX + uniqueIdCounter++;
-    }
-
-    protected void broadcastForPhase(PhaseId phaseId) {
-        if (events == null) {
-            return;
-        }
-        int phaseIdOrdinal = phaseId.getOrdinal();
-        for (Iterator i = events.iterator(); i.hasNext();) {
-            FacesEvent event = (FacesEvent) i.next();
-            int ordinal = event.getPhaseId().getOrdinal();
-            if (ordinal == PhaseId.ANY_PHASE.getOrdinal()
-                    || ordinal == phaseIdOrdinal) {
-                UIComponent source = event.getComponent();
-                try {
-                    try {
-                        source.broadcast(event);
-                    } finally {
-                        i.remove();
-                    }
-                } catch (AbortProcessingException e) {
-                    clearEvents();
-                    break;
-                }
-            }
-        }
-    }
-
-    protected void clearEvents() {
-        events = null;
     }
 
     public int getEventSize() {
-        if (events != null) {
-            return events.size();
-        }
-        return 0;
+        return (events_ != null) ? events_.size() : 0;
     }
 
-
-
-
-*/
+}

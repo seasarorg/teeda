@@ -4,5 +4,5 @@ import javax.faces.context.FacesContext;
 
 public interface Phase {
 
-    public void doPhase(FacesContext context);
+    public void execute(FacesContext context);
 }

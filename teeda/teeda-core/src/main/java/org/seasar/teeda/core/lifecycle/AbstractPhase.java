@@ -30,7 +30,7 @@ public abstract class AbstractPhase implements Phase{
         }
     }
 
-    public void doPhase(FacesContext context){
+    public void execute(FacesContext context){
         prePhase(context);
         executePhase(context);
         postPhase(context);
