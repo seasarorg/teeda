@@ -17,7 +17,6 @@ public class ArrayDataModelTest extends TestCase {
 
         model.setRowIndex(-1);
         assertFalse(model.isRowAvailable());
-
     }
 
     public void testGetRowCount() throws Exception {

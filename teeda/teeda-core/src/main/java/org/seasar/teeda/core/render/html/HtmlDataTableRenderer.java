@@ -89,6 +89,8 @@ public class HtmlDataTableRenderer extends AbstractHtmlRenderer {
                     writer.startElement(JsfConstants.TR_ELEM, tableHeader);
                     writer.startElement(JsfConstants.TH_ELEM, tableHeader);
                     writeColspanAttribute(writer, columns);
+                    writer.writeAttribute(JsfConstants.SCOPE_ATTR,
+                            JsfConstants.COLGROUP_VALUE, null);
                     encodeComponent(context, tableHeader);
                     writer.endElement(JsfConstants.TH_ELEM);
                     writer.endElement(JsfConstants.TR_ELEM);
@@ -101,6 +103,8 @@ public class HtmlDataTableRenderer extends AbstractHtmlRenderer {
                         UIColumn column = (UIColumn) it.next();
                         UIComponent columnHeader = column.getHeader();
                         if (columnHeader != null) {
+                            writer.writeAttribute(JsfConstants.COLGROUP_ATTR,
+                                    JsfConstants.COL_VALUE, null);
                             encodeComponent(context, columnHeader);
                         }
                         writer.writeText("", null);
@@ -179,11 +183,11 @@ public class HtmlDataTableRenderer extends AbstractHtmlRenderer {
         return true;
     }
 
-    private UIComponent toNullIfNotRendered(UIComponent tableHeader) {
-        if (tableHeader != null && !tableHeader.isRendered()) {
-            tableHeader = null;
+    private UIComponent toNullIfNotRendered(UIComponent component) {
+        if (component != null && !component.isRendered()) {
+            component = null;
         }
-        return tableHeader;
+        return component;
     }
 
     private void writeColspanAttribute(ResponseWriter writer, final List columns)

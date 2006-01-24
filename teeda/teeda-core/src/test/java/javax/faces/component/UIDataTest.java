@@ -15,7 +15,14 @@
  */
 package javax.faces.component;
 
+import java.util.Map;
+
+import javax.faces.context.FacesContext;
+
+import org.seasar.teeda.core.mock.MockDataModel;
+import org.seasar.teeda.core.mock.MockUIComponent;
 import org.seasar.teeda.core.mock.MockValueBinding;
+import org.seasar.teeda.core.mock.MockVariableResolver;
 import org.seasar.teeda.core.mock.NullUIComponent;
 import org.seasar.teeda.core.unit.AssertUtil;
 
@@ -132,110 +139,391 @@ public class UIDataTest extends UIComponentBaseTest {
         }
     }
 
-    // TODO test
     public void testIsRowAvailable() throws Exception {
         // ## Arrange ##
         UIData data = createUIData();
+        MockDataModel mockDataModel = new MockDataModel();
+        data.setValue(mockDataModel);
+        mockDataModel.setRowAvailable(true);
 
-        // ## Act ##
-        data.isRowAvailable();
+        // ## Act & Assert ##
+        assertEquals(true, data.isRowAvailable());
 
-        // ## Assert ##
-
+        mockDataModel.setRowAvailable(false);
+        assertEquals(false, data.isRowAvailable());
     }
 
-    // TODO test
     public void testGetRowCount() throws Exception {
         // ## Arrange ##
+        UIData data = createUIData();
+        MockDataModel mockDataModel = new MockDataModel();
+        mockDataModel.setRowCount(101);
+        data.setValue(mockDataModel);
 
-        // ## Act ##
-
-        // ## Assert ##
-
+        // ## Act & Assert ##
+        assertEquals(101, data.getRowCount());
     }
 
-    // TODO test
     public void testGetRowData() throws Exception {
         // ## Arrange ##
+        UIData data = createUIData();
+        MockDataModel mockDataModel = new MockDataModel();
+        mockDataModel.setRowData("abcd");
+        data.setValue(mockDataModel);
 
-        // ## Act ##
-
-        // ## Assert ##
-
+        // ## Act & Assert ##
+        assertEquals("abcd", data.getRowData());
     }
 
-    // TODO test
-    public void testGetRowIndex() throws Exception {
+    public void testSetGetRowIndex() throws Exception {
         // ## Arrange ##
+        UIData data = createUIData();
+        MockDataModel dataModel = new MockDataModel();
+        data.setValue(dataModel);
 
-        // ## Act ##
+        // ## Act & Assert ##
+        data.setRowIndex(19);
+        assertEquals(19, data.getRowIndex());
 
-        // ## Assert ##
-
+        data.setRowIndex(1);
+        assertEquals(1, data.getRowIndex());
     }
 
-    // TODO test
-    public void testSetRowIndex() throws Exception {
+    // FIXME in case setFirst(2)
+
+    public void testSetGetRowIndex_MinusOne() throws Exception {
         // ## Arrange ##
+        UIData data = createUIData();
+        MockDataModel mockDataModel = new MockDataModel();
+        data.setValue(mockDataModel);
+        data.setVar("varName");
+        Map requestMap = getFacesContext().getExternalContext().getRequestMap();
+        requestMap.put("varName", "fooo");
 
         // ## Act ##
+        data.setRowIndex(-1);
 
         // ## Assert ##
-
+        assertEquals(null, requestMap.get("varName"));
     }
 
-    // TODO test
-    public void testGetRows() throws Exception {
+    public void testSetGetRowIndex_UnderMinusOne() throws Exception {
         // ## Arrange ##
+        UIData data = createUIData();
+        MockDataModel mockDataModel = new MockDataModel();
+        data.setValue(mockDataModel);
 
         // ## Act ##
-
         // ## Assert ##
-
+        try {
+            data.setRowIndex(-2);
+        } catch (IllegalArgumentException iae) {
+            AssertUtil.assertExceptionMessageExist(iae);
+        }
     }
 
-    // TODO test
-    public void testSetRows() throws Exception {
-        // ## Arrange ##
-
-        // ## Act ##
-
-        // ## Assert ##
-
+    public void testSetGetRows() throws Exception {
+        UIData data = createUIData();
+        assertEquals(0, data.getRows());
+        data.setRows(2);
+        assertEquals(2, data.getRows());
+        data.setRows(0);
+        assertEquals(0, data.getRows());
     }
 
-    // TODO test
-    public void testGetVar() throws Exception {
-        // ## Arrange ##
-
-        // ## Act ##
-
-        // ## Assert ##
-
+    public void testSetGetRows_Negative() throws Exception {
+        UIData data = createUIData();
+        try {
+            data.setRows(-1);
+            fail();
+        } catch (IllegalArgumentException iae) {
+            AssertUtil.assertExceptionMessageExist(iae);
+        }
     }
 
-    // TODO test
-    public void testSetVar() throws Exception {
-        // ## Arrange ##
-
-        // ## Act ##
-
-        // ## Assert ##
-
+    public final void testSetGetVar() {
+        UIData data = createUIData();
+        data.setVar("aaa");
+        assertEquals("aaa", data.getVar());
     }
 
-    // TODO test saveState
-    // TODO test restoreState
-    // TODO test getValue
-    // TODO test setValue
+    public final void testSetGetValue() {
+        UIData data = createUIData();
+        data.setValue("abc");
+        assertEquals("abc", data.getValue());
+    }
+
+    public final void testSetGetValue_ValueBinding() {
+        UIData data = createUIData();
+        MockValueBinding vb = new MockValueBinding();
+        vb.setValue(getFacesContext(), "some value");
+        data.setValueBinding("value", vb);
+        assertEquals("some value", data.getValue());
+    }
+
     // TODO test setValueBinding
-    // TODO test getClientId
+    public final void testSetValueBinding_IllegalArgId() {
+        UIData data = createUIData();
+        MockValueBinding vb = new MockValueBinding();
+        vb.setValue(getFacesContext(), "a");
+        try {
+            data.setValueBinding("id", vb);
+            fail();
+        } catch (IllegalArgumentException iae) {
+            AssertUtil.assertExceptionMessageExist(iae);
+        }
+    }
+
+    public final void testSetValueBinding_IllegalArgVar() {
+        UIData data = createUIData();
+        MockValueBinding vb = new MockValueBinding();
+        vb.setValue(getFacesContext(), "a");
+        try {
+            data.setValueBinding("var", vb);
+            fail();
+        } catch (IllegalArgumentException iae) {
+            AssertUtil.assertExceptionMessageExist(iae);
+        }
+    }
+
+    public final void testSetValueBinding_IllegalArgRowIndex() {
+        UIData data = createUIData();
+        MockValueBinding vb = new MockValueBinding();
+        vb.setValue(getFacesContext(), "a");
+        try {
+            data.setValueBinding("rowIndex", vb);
+            fail();
+        } catch (IllegalArgumentException iae) {
+            AssertUtil.assertExceptionMessageExist(iae);
+        }
+    }
+
     // TODO test queueEvent
     // TODO test broadcast
-    // TODO test encodeBegin
-    // TODO test processDecodes
-    // TODO test processValidators
+
+    public void testProcessDecodes() throws Exception {
+        // ## Arrange ##
+        final int[] calls = { 0, 0, 0 };
+        final UIData data = createUIData();
+        data.setValue(new String[] { "A", "B", "C" });
+        data.getFacets().put("f1", new MockUIComponent() {
+            public void processDecodes(FacesContext context) {
+                calls[0]++;
+            }
+        });
+        {
+            UIColumn column = new UIColumn();
+            column.getFacets().put("col1_f1", new MockUIComponent() {
+                public void processDecodes(FacesContext context) {
+                    calls[1]++;
+                }
+            });
+            column.getChildren().add(new MockUIComponent() {
+                public void processDecodes(FacesContext context) {
+                    assertEquals(calls[2], data.getRowIndex());
+                    calls[2]++;
+                }
+            });
+            data.getChildren().add(column);
+        }
+        data.setRendererType(null);
+        assertEquals(0, data.getRowIndex());
+
+        // ## Act ##
+        data.processDecodes(getFacesContext());
+
+        // ## Assert ##
+        assertEquals(1, calls[0]);
+        assertEquals(1, calls[1]);
+        assertEquals(3, calls[2]);
+        assertEquals(-1, data.getRowIndex());
+    }
+
+    public void testProcessDecodes_RenderFalse() throws Exception {
+        // ## Arrange ##
+        final int[] calls = { 0, 0, 0 };
+        final UIData data = createUIData();
+        data.setRendered(false);
+        data.setValue(new String[] { "A", "B", "C" });
+        data.getFacets().put("f1", new MockUIComponent() {
+            public void processDecodes(FacesContext context) {
+                calls[0]++;
+            }
+        });
+        {
+            UIColumn column = new UIColumn();
+            column.getFacets().put("col1_f1", new MockUIComponent() {
+                public void processDecodes(FacesContext context) {
+                    calls[1]++;
+                }
+            });
+            column.getChildren().add(new MockUIComponent() {
+                public void processDecodes(FacesContext context) {
+                    calls[2]++;
+                }
+            });
+            data.getChildren().add(column);
+        }
+        data.setRendererType(null);
+        assertEquals(0, data.getRowIndex());
+
+        // ## Act ##
+        data.processDecodes(getFacesContext());
+
+        // ## Assert ##
+        assertEquals(0, calls[0]);
+        assertEquals(0, calls[1]);
+        assertEquals(0, calls[2]);
+        assertEquals(0, data.getRowIndex());
+    }
+
+    public void testProcessValidators() throws Exception {
+        // ## Arrange ##
+        final int[] calls = { 0, 0, 0 };
+        final UIData data = createUIData();
+        data.setValue(new String[] { "A", "B", "C" });
+        data.getFacets().put("f1", new MockUIComponent() {
+            public void processValidators(FacesContext context) {
+                calls[0]++;
+            }
+        });
+        {
+            UIColumn column = new UIColumn();
+            column.getFacets().put("col1_f1", new MockUIComponent() {
+                public void processValidators(FacesContext context) {
+                    calls[1]++;
+                }
+            });
+            column.getChildren().add(new MockUIComponent() {
+                public void processValidators(FacesContext context) {
+                    assertEquals(calls[2], data.getRowIndex());
+                    calls[2]++;
+                }
+            });
+            data.getChildren().add(column);
+        }
+        assertEquals(0, data.getRowIndex());
+
+        // ## Act ##
+        data.processValidators(getFacesContext());
+
+        // ## Assert ##
+        assertEquals(1, calls[0]);
+        assertEquals(1, calls[1]);
+        assertEquals(3, calls[2]);
+        assertEquals(-1, data.getRowIndex());
+    }
+
+    public void testProcessValidators_RenderFalse() throws Exception {
+        // ## Arrange ##
+        final int[] calls = { 0, 0, 0 };
+        final UIData data = createUIData();
+        data.setRendered(false);
+        data.setValue(new String[] { "A", "B", "C" });
+        data.getFacets().put("f1", new MockUIComponent() {
+            public void processValidators(FacesContext context) {
+                calls[0]++;
+            }
+        });
+        {
+            UIColumn column = new UIColumn();
+            column.getFacets().put("col1_f1", new MockUIComponent() {
+                public void processValidators(FacesContext context) {
+                    calls[1]++;
+                }
+            });
+            column.getChildren().add(new MockUIComponent() {
+                public void processValidators(FacesContext context) {
+                    calls[2]++;
+                }
+            });
+            data.getChildren().add(column);
+        }
+        assertEquals(0, data.getRowIndex());
+
+        // ## Act ##
+        data.processValidators(getFacesContext());
+
+        // ## Assert ##
+        assertEquals(0, calls[0]);
+        assertEquals(0, calls[1]);
+        assertEquals(0, calls[2]);
+        assertEquals(0, data.getRowIndex());
+    }
+
     // TODO test processUpdates
+    public void testProcessUpdates() throws Exception {
+        // ## Arrange ##
+        final int[] calls = { 0, 0, 0 };
+        final UIData data = createUIData();
+        data.setValue(new String[] { "A", "B", "C" });
+        data.getFacets().put("f1", new MockUIComponent() {
+            public void processUpdates(FacesContext context) {
+                calls[0]++;
+            }
+        });
+        {
+            UIColumn column = new UIColumn();
+            column.getFacets().put("col1_f1", new MockUIComponent() {
+                public void processUpdates(FacesContext context) {
+                    calls[1]++;
+                }
+            });
+            column.getChildren().add(new MockUIComponent() {
+                public void processUpdates(FacesContext context) {
+                    assertEquals(calls[2], data.getRowIndex());
+                    calls[2]++;
+                }
+            });
+            data.getChildren().add(column);
+        }
+        assertEquals(0, data.getRowIndex());
+
+        // ## Act ##
+        data.processUpdates(getFacesContext());
+
+        // ## Assert ##
+        assertEquals(1, calls[0]);
+        assertEquals(1, calls[1]);
+        assertEquals(3, calls[2]);
+        assertEquals(-1, data.getRowIndex());
+    }
+
+    public void testProcessUpdates_RenderFalse() throws Exception {
+        // ## Arrange ##
+        final int[] callCount = { 0, 0, 0 };
+        final UIData data = createUIData();
+        data.setRendered(false);
+        data.setValue(new String[] { "A", "B", "C" });
+        data.getFacets().put("f1", new MockUIComponent() {
+            public void processUpdates(FacesContext context) {
+                callCount[0]++;
+            }
+        });
+        {
+            UIColumn column = new UIColumn();
+            column.getFacets().put("col1_f1", new MockUIComponent() {
+                public void processUpdates(FacesContext context) {
+                    callCount[1]++;
+                }
+            });
+            column.getChildren().add(new MockUIComponent() {
+                public void processUpdates(FacesContext context) {
+                    callCount[2]++;
+                }
+            });
+            data.getChildren().add(column);
+        }
+
+        // ## Act ##
+        data.processUpdates(getFacesContext());
+
+        // ## Assert ##
+        assertEquals(0, callCount[0]);
+        assertEquals(0, callCount[1]);
+        assertEquals(0, callCount[2]);
+        assertEquals(0, data.getRowIndex());
+    }
 
     private UIData createUIData() {
         return (UIData) createUIComponent();
@@ -243,6 +531,13 @@ public class UIDataTest extends UIComponentBaseTest {
 
     protected UIComponent createUIComponent() {
         return new UIData();
+    }
+
+    protected void setUp() throws Exception {
+        super.setUp();
+        MockVariableResolver variableResolver = new MockVariableResolver();
+        getFacesContext().getApplication()
+                .setVariableResolver(variableResolver);
     }
 
 }

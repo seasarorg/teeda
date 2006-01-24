@@ -15,10 +15,19 @@
  */
 package javax.faces.component;
 
+import java.util.Map;
+
+import javax.faces.component.html.HtmlInputText;
+import javax.faces.el.ValueBinding;
+
 import junitx.framework.ObjectAssert;
 
+import org.seasar.teeda.core.el.impl.ValueBindingImpl;
+import org.seasar.teeda.core.el.impl.commons.CommonsELParser;
+import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.mock.MockUIComponentBase;
 import org.seasar.teeda.core.mock.MockUIComponentBaseWithNamingContainer;
+import org.seasar.teeda.core.mock.MockVariableResolver;
 
 /**
  * @author manhole
@@ -60,6 +69,108 @@ public class UIDataTeedaTest extends UIComponentBaseTeedaTest {
         String clientId = component.getClientId(getFacesContext());
         assertNotNull(clientId);
         assertEquals("a:0", clientId);
+    }
+
+    public void testSetGetRowIndexAndSaveRestoreState() throws Exception {
+        // ## Arrange ##
+        UIData data = createUIData();
+        data.setVar("foo");
+        data.setValue(new String[] { "a", "b", "c", "d" });
+        UIColumn col = new UIColumn();
+        MockFacesContext facesContext = getFacesContext();
+        ValueBinding vb = new ValueBindingImpl(facesContext.getApplication(),
+                "#{foo}", new CommonsELParser());
+        HtmlInputText editableValueHolder = new HtmlInputText();
+        // inputText.setId("input");
+        editableValueHolder.setValueBinding("value", vb);
+        assertEquals(null, editableValueHolder.getValue());
+
+        col.getChildren().add(editableValueHolder);
+        data.getChildren().add(col);
+
+        // ## Act & Assert ##
+        data.setRowIndex(123);
+        assertEquals(123, data.getRowIndex());
+        assertEquals(false, data.isRowAvailable());
+
+        data.setRowIndex(1);
+        assertEquals(1, data.getRowIndex());
+        assertEquals(true, data.isRowAvailable());
+
+        Map req = facesContext.getExternalContext().getRequestMap();
+
+        assertEquals("b", req.get("foo"));
+        MockVariableResolver vr = getVariableResolver();
+        assertEquals("b", vr.resolveVariable(facesContext, "foo"));
+        assertEquals("b", editableValueHolder.getValue());
+        editableValueHolder.setValue("b2");
+        assertEquals("b2", editableValueHolder.getValue());
+        assertEquals("b", req.get("foo"));
+        assertEquals("b", getVariableResolver().resolveVariable(facesContext,
+                "foo"));
+
+        data.setRowIndex(2);
+        assertEquals(2, data.getRowIndex());
+        assertEquals(true, data.isRowAvailable());
+        assertEquals("c", req.get("foo"));
+        assertEquals("c", vr.resolveVariable(facesContext, "foo"));
+        assertEquals("c", editableValueHolder.getValue());
+
+        data.setRowIndex(1);
+        assertEquals(true, data.isRowAvailable());
+        assertEquals("restore state of EditableValueHolder's", "b2",
+                editableValueHolder.getValue());
+        assertEquals("b", req.get("foo"));
+        assertEquals("b", vr.resolveVariable(facesContext, "foo"));
+
+        data.setRowIndex(-1);
+        assertEquals(false, data.isRowAvailable());
+        assertEquals(null, req.get("foo"));
+        assertEquals(null, vr.resolveVariable(facesContext, "foo"));
+        assertEquals(null, editableValueHolder.getValue());
+    }
+
+    public void testEncodeBegin_resetSavedState() throws Exception {
+        // ## Arrange ##
+        UIData data = createUIData();
+        data.setVar("foo");
+        data.setValue(new String[] { "a", "original" });
+        UIColumn col = new UIColumn();
+        MockFacesContext facesContext = getFacesContext();
+        ValueBinding vb = new ValueBindingImpl(facesContext.getApplication(),
+                "#{foo}", new CommonsELParser());
+        HtmlInputText editableValueHolder = new HtmlInputText();
+        // inputText.setId("input");
+        editableValueHolder.setValueBinding("value", vb);
+        assertEquals(null, editableValueHolder.getValue());
+
+        col.getChildren().add(editableValueHolder);
+        data.getChildren().add(col);
+
+        data.setRowIndex(1);
+        EditableValueHolder holder = (EditableValueHolder) ((UIColumn) data
+                .getChildren().get(0)).getChildren().get(0);
+        assertEquals("original", holder.getValue());
+        holder.setValue("changed");
+
+        data.setRowIndex(0);
+        data.setRowIndex(1);
+        assertEquals("changed", holder.getValue());
+
+        // ## Act ##
+        data.setRowIndex(0);
+        data.encodeBegin(facesContext);
+
+        // ## Assert ##
+        assertEquals("a", holder.getValue());
+        data.setRowIndex(1);
+        assertEquals("original", holder.getValue());
+    }
+
+    public void testSaveAndRestoreState() throws Exception {
+        super.testSaveAndRestoreState();
+
+        // TODO test
     }
 
     private UIData createUIData() {

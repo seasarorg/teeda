@@ -29,7 +29,6 @@ import javax.faces.event.FacesListener;
 import javax.faces.event.PhaseId;
 import javax.faces.model.DataModel;
 
-
 /**
  * @author shot
  * @author manhole
@@ -407,7 +406,10 @@ public class UIData extends UIComponentBase implements NamingContainer {
                 state = new SavedState_();
                 savedMap_.put(clientId, state);
             }
-            ComponentUtils_.copyProperties(state, state);
+            state.setLocalValue(holder.getLocalValue());
+            state.setValid(holder.isValid());
+            state.setSubmittedValue(holder.getSubmittedValue());
+            state.setLocalValueSet(holder.isLocalValueSet());
         }
         for (Iterator children = component.getChildren().iterator(); children
                 .hasNext();) {
@@ -431,16 +433,16 @@ public class UIData extends UIComponentBase implements NamingContainer {
         forceComponentIdClear(component);
 
         if (component instanceof EditableValueHolder) {
-            EditableValueHolder input = (EditableValueHolder) component;
+            EditableValueHolder holder = (EditableValueHolder) component;
             String clientId = component.getClientId(context);
             SavedState_ state = (SavedState_) savedMap_.get(clientId);
             if (state == null) {
                 state = new SavedState_();
             }
-            input.setValue(state.getLocalValue());
-            input.setValid(state.isValid());
-            input.setSubmittedValue(state.getSubmittedValue());
-            input.setLocalValueSet(state.isLocaleValueSet());
+            holder.setValue(state.getLocalValue());
+            holder.setValid(state.isValid());
+            holder.setSubmittedValue(state.getSubmittedValue());
+            holder.setLocalValueSet(state.isLocalValueSet());
         }
         for (Iterator children = component.getChildren().iterator(); children
                 .hasNext();) {

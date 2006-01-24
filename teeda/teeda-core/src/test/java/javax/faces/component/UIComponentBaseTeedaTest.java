@@ -33,13 +33,14 @@ import org.seasar.teeda.core.mock.MockUIComponentBaseWithNamingContainer;
  */
 public class UIComponentBaseTeedaTest extends AbstractUIComponentTeedaTest {
 
-    public void testGetClientId_NullId() {
+    public final void testGetClientId_NullId() {
         UIComponentBase component = createUIComponentBase();
         component.setId(null);
 
         String clientId = component.getClientId(getFacesContext());
-        assertEquals(false, StringUtils.isBlank(clientId));
+        assertEquals(true, StringUtils.isNotBlank(clientId));
         StringAssert.assertStartsWith(UIViewRoot.UNIQUE_ID_PREFIX, clientId);
+        assertEquals(null, component.getId());
     }
 
     public void testGetCliendId() throws Exception {

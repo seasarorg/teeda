@@ -1,6 +1,7 @@
 package org.seasar.teeda.core.mock;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -17,9 +18,9 @@ import javax.faces.render.Renderer;
 public class MockUIComponent extends UIComponent {
 
     public static final String COMPONENT_FAMILY = "javax.faces.mock";
-    
+
     public static final String COMPONENT_TYPE = "javax.faces.mock";
-    
+
     private UIComponent parent_ = null;
 
     private FacesEvent event_;
@@ -31,8 +32,10 @@ public class MockUIComponent extends UIComponent {
     private Map facets_ = new HashMap();
 
     private String family_ = COMPONENT_FAMILY;
-    
+
     private String type_ = COMPONENT_TYPE;
+
+    private boolean rendered_ = true;
 
     public Map getAttributes() {
         return null;
@@ -78,10 +81,11 @@ public class MockUIComponent extends UIComponent {
     }
 
     public boolean isRendered() {
-        return false;
+        return rendered_;
     }
 
     public void setRendered(boolean flag) {
+        rendered_ = flag;
     }
 
     public String getRendererType() {
@@ -97,11 +101,11 @@ public class MockUIComponent extends UIComponent {
     }
 
     public List getChildren() {
-        return null;
+        return Collections.EMPTY_LIST;
     }
 
     public int getChildCount() {
-        return 0;
+        return getChildren().size();
     }
 
     public UIComponent findComponent(String expr) {

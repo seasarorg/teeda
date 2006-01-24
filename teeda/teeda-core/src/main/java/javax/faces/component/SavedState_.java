@@ -1,5 +1,5 @@
 /*
- * Copyright 2004-2005 the Seasar Foundation and the Others.
+ * Copyright 2004-2006 the Seasar Foundation and the Others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,45 +19,53 @@ import java.io.Serializable;
 
 /**
  * @author Shinpei Ohtani
+ * @author manhole
  */
-class SavedState_ implements Serializable{
+class SavedState_ implements Serializable {
 
-	private static final long serialVersionUID = 3688791349478568242L;
+    private static final long serialVersionUID = 3688791349478568242L;
 
-    private Object localeValue_ = null;
-	
-	private Object submittedValue_ = null;
-	
-	private boolean valid_ = true;
-	
-	private boolean localeValueSet_ = false;
-	
-	public SavedState_(){
-	}
-	
-	public Object getLocalValue() {
-		return localeValue_;
-	}
-	public void setLocaleValue(Object localeValue) {
-		localeValue_ = localeValue;
-	}
-	public boolean isLocaleValueSet() {
-		return localeValueSet_;
-	}
-    
-	public void setLocaleValueSet(boolean localeValueSet) {
-		localeValueSet_ = localeValueSet;
-	}
-	public Object getSubmittedValue() {
-		return submittedValue_;
-	}
-	public void setSubmittedValue(Object submittedValue) {
-		submittedValue_ = submittedValue;
-	}
-	public boolean isValid() {
-		return valid_;
-	}
-	public void setValid(boolean valid) {
-		valid_ = valid;
-	}
+    private Object localValue_ = null;
+
+    private Object submittedValue_ = null;
+
+    private boolean valid_ = true;
+
+    private boolean localValueSet_ = false;
+
+    public SavedState_() {
+    }
+
+    public Object getLocalValue() {
+        return localValue_;
+    }
+
+    public void setLocalValue(Object localValue) {
+        localValue_ = localValue;
+    }
+
+    public boolean isLocalValueSet() {
+        return localValueSet_;
+    }
+
+    public void setLocalValueSet(boolean localValueSet) {
+        localValueSet_ = localValueSet;
+    }
+
+    public Object getSubmittedValue() {
+        return submittedValue_;
+    }
+
+    public void setSubmittedValue(Object submittedValue) {
+        submittedValue_ = submittedValue;
+    }
+
+    public boolean isValid() {
+        return valid_;
+    }
+
+    public void setValid(boolean valid) {
+        valid_ = valid;
+    }
+
 }

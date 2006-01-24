@@ -16,12 +16,13 @@
 package javax.faces.component;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
-import javax.faces.context.FacesContext;
 import javax.faces.event.FacesListener;
 
 import org.seasar.teeda.core.mock.MockApplication;
+import org.seasar.teeda.core.mock.MockExternalContextImpl;
 import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.mock.MockFacesContextImpl;
 import org.seasar.teeda.core.mock.MockUIComponent;
@@ -336,23 +337,23 @@ public class UIComponentBaseTest extends AbstractUIComponentTest {
         assertSame(facesListener2, args.get(3));
     }
 
-    public void testDecode() {
+    public void testDecode() throws Exception {
         // TODO testing.
     }
 
-    public void testEncodeBegin() {
+    public void testEncodeBegin() throws Exception {
         // TODO testing.
     }
 
-    public void testEncodeChildren() {
+    public void testEncodeChildren() throws Exception {
         // TODO testing.
     }
 
-    public void testEncodeEnd() {
+    public void testEncodeEnd() throws Exception {
         // TODO testing.
     }
 
-    public void testHandleFacesListeners() {
+    public void testHandleFacesListeners() throws Exception {
         UIComponentBase base = createUIComponentBase();
         try {
             base.addFacesListener(null);
@@ -419,7 +420,7 @@ public class UIComponentBaseTest extends AbstractUIComponentTest {
         assertSame(event, parent.getQueueEvent());
     }
 
-    public void testProcessRestoreState() {
+    public void testProcessRestoreState() throws Exception {
         // TODO testing.
     }
 
@@ -427,23 +428,23 @@ public class UIComponentBaseTest extends AbstractUIComponentTest {
         // TODO testing.
     }
 
-    public void testProcessValidators() {
+    public void testProcessValidators() throws Exception {
         // TODO testing.
     }
 
-    public void testProcessUpdates() {
+    public void testProcessUpdates() throws Exception {
         // TODO testing.
     }
 
-    public void testProcessSaveState() {
+    public void testProcessSaveState() throws Exception {
         // TODO testing.
     }
 
-    public void testGetFacesContext() {
+    public void testGetFacesContext() throws Exception {
         // TODO testing.
     }
 
-    public void testGetRenderer() {
+    public void testGetRenderer() throws Exception {
         // TODO testing.
     }
 
@@ -488,24 +489,31 @@ public class UIComponentBaseTest extends AbstractUIComponentTest {
         return new MockUIComponentBase();
     }
 
-    private MockFacesContext context_;
+    private MockFacesContext facesContext_;
 
     private MockApplication application_;
 
+    private MockExternalContextImpl externalContext_;
+
     protected void setUp() throws Exception {
         super.setUp();
-        context_ = new MockFacesContextImpl();
+        facesContext_ = new MockFacesContextImpl();
+
+        externalContext_ = new MockExternalContextImpl();
+        externalContext_.setRequestParameterMap(new HashMap());
+        facesContext_.setExternalContext(externalContext_);
+
         application_ = new MockApplication();
-        context_.setApplication(application_);
+        facesContext_.setApplication(application_);
     }
 
     protected void tearDown() throws Exception {
-        context_.release();
+        facesContext_.release();
         super.tearDown();
     }
 
     protected MockFacesContext getFacesContext() {
-        return context_;
+        return facesContext_;
     }
 
 }

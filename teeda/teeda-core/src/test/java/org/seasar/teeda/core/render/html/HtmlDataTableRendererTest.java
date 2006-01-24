@@ -102,7 +102,8 @@ public class HtmlDataTableRendererTest extends RendererTest {
         renderer_.encodeBegin(context, htmlDataTable_);
 
         // ## Assert ##
-        assertEquals("<table><thead><tr><th>a</th></tr></thead>",
+        assertEquals(
+                "<table><thead><tr><th scope=\"colgroup\">a</th></tr></thead>",
                 getResponseText());
     }
 
@@ -147,7 +148,8 @@ public class HtmlDataTableRendererTest extends RendererTest {
         renderer_.encodeBegin(context, htmlDataTable_);
 
         // ## Assert ##
-        assertEquals("<table><thead><tr><th>c1</th><th>c2</th></tr></thead>",
+        assertEquals("<table><thead><tr>" + "<th colgroup=\"col\">c1</th>"
+                + "<th colgroup=\"col\">c2</th>" + "</tr></thead>",
                 getResponseText());
     }
 
@@ -177,7 +179,8 @@ public class HtmlDataTableRendererTest extends RendererTest {
         renderer_.encodeBegin(context, htmlDataTable_);
 
         // ## Assert ##
-        assertEquals("<table><thead><tr><th>c2</th></tr></thead>",
+        assertEquals(
+                "<table><thead><tr><th colgroup=\"col\">c2</th></tr></thead>",
                 getResponseText());
     }
 
@@ -207,7 +210,8 @@ public class HtmlDataTableRendererTest extends RendererTest {
         renderer_.encodeBegin(context, htmlDataTable_);
 
         // ## Assert ##
-        assertEquals("<table><thead><tr><th></th><th>c2</th></tr></thead>",
+        assertEquals("<table><thead><tr>" + "<th colgroup=\"col\"></th>"
+                + "<th colgroup=\"col\">c2</th>" + "</tr></thead>",
                 getResponseText());
     }
 
@@ -242,8 +246,10 @@ public class HtmlDataTableRendererTest extends RendererTest {
         renderer_.encodeBegin(context, htmlDataTable_);
 
         // ## Assert ##
-        assertEquals("<table><thead>" + "<tr><th colspan=\"2\">a</th></tr>"
-                + "<tr><th>c1</th>" + "<th>c2</th></tr>" + "</thead>",
+        assertEquals("<table><thead>"
+                + "<tr><th colspan=\"2\" scope=\"colgroup\">a</th></tr>"
+                + "<tr>" + "<th colgroup=\"col\">c1</th>"
+                + "<th colgroup=\"col\">c2</th></tr>" + "</thead>",
                 getResponseText());
     }
 
@@ -271,8 +277,10 @@ public class HtmlDataTableRendererTest extends RendererTest {
         renderer_.encodeBegin(context, htmlDataTable_);
 
         // ## Assert ##
-        assertEquals("<table><thead>" + "<tr><th>a</th></tr>"
-                + "<tr><th>col1</th></tr>" + "</thead>", getResponseText());
+        assertEquals("<table><thead>"
+                + "<tr><th scope=\"colgroup\">a</th></tr>"
+                + "<tr><th colgroup=\"col\">col1</th></tr>" + "</thead>",
+                getResponseText());
     }
 
     public void testEncodeBegin_TableFooterFacet() throws Exception {
@@ -458,6 +466,16 @@ public class HtmlDataTableRendererTest extends RendererTest {
         // ## Assert ##
         assertEquals("<table><tfoot>" + "<tr><td>a</td></tr>"
                 + "<tr><td>col1</td></tr>" + "</tfoot>", getResponseText());
+    }
+    
+    // TODO
+    public void testEncodeChildren1() throws Exception {
+        // ## Arrange ##
+
+        // ## Act ##
+
+        // ## Assert ##
+        
     }
 
     // TODO test

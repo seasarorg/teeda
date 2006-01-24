@@ -106,7 +106,7 @@ public abstract class UIComponentBase extends UIComponent {
             }
         }
 
-        clientId_ = parentId + ((id_ != null) ? id_ : createUniqueId(context));
+        clientId_ = parentId + ((id_ != null) ? id_ : getUniqueId(context));
         Renderer renderer = getRenderer(context);
         if (renderer != null) {
             clientId_ = renderer.convertClientId(context, clientId_);
@@ -114,8 +114,13 @@ public abstract class UIComponentBase extends UIComponent {
         return clientId_;
     }
 
-    private static String createUniqueId(FacesContext context) {
-        return context.getViewRoot().createUniqueId();
+    private String uniqueId_;
+
+    private String getUniqueId(FacesContext context) {
+        if (uniqueId_ == null) {
+            uniqueId_ = context.getViewRoot().createUniqueId();
+        }
+        return uniqueId_;
     }
 
     public String getId() {

@@ -68,6 +68,10 @@ public interface JsfConstants {
 
     // -- value --
 
+    public String COLGROUP_VALUE = "colgroup";
+
+    public String COL_VALUE = "col";
+
     public String HIDDEN_VALUE = "hidden";
 
     public String IMAGE_VALUE = "image";
@@ -121,6 +125,8 @@ public interface JsfConstants {
     public String CHECKED_ATTR = "checked";
 
     public String CLASS_ATTR = "class";
+
+    public String COLGROUP_ATTR = "colgroup";
 
     public String COLS_ATTR = "cols";
 
@@ -193,6 +199,8 @@ public interface JsfConstants {
     public String ROWS_ATTR = "rows";
 
     public String RULES_ATTR = "rules";
+
+    public String SCOPE_ATTR = "scope";
 
     public String SHAPE_ATTR = "shape";
 
