@@ -375,4 +375,14 @@ public interface JsfConstants {
 
     public String FACES_CONFIG_RESOURCES = "META-INF/faces-config.xml";
 
+    public String HTML_CONTENT_TYPE = "text/html";
+
+    public String ANY_CONTENT_TYPE = "*/*";
+
+    public String XHTML_CONTENT_TYPE = "application/xhtml+xml";
+
+    public String APPLICATION_XML_CONTENT_TYPE = "application/xml";
+
+    public String TEXT_XML_CONTENT_TYPE = "text/xml";
+
 }
