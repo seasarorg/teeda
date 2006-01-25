@@ -64,9 +64,7 @@ public class UIViewRootOnlyTest extends TeedaTestCase {
 
 	public void testGetViewId() {
 		UIViewRoot root = new UIViewRoot();
-		MockValueBinding vb = new MockValueBinding();
-		vb.setValue(new MockFacesContextImpl(), "bbb");
-		root.setValueBinding("viewId", vb);
+		root.setViewId("bbb");
 		assertEquals("bbb", root.getViewId());
 	}
 
