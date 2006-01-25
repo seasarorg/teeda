@@ -34,15 +34,15 @@ public class UIGraphicTest extends UIComponentBaseTest {
         MockValueBinding vb = new MockValueBinding();
         vb.setValue(getFacesContext(), "bbbbb");
         graphic.setValueBinding("value", vb);
-        assertEquals("bbbbb", graphic.getUrl());
         assertEquals("bbbbb", graphic.getValue());
+        assertEquals("bbbbb", graphic.getUrl());
     }
 
-    public void testSetGetUrl() throws Exception {
+    public final void testSetGetUrl() throws Exception {
         UIGraphic graphic = createUIGraphic();
         graphic.setUrl("abc");
-        assertEquals("abc", graphic.getValue());
         assertEquals("abc", graphic.getUrl());
+        assertEquals("abc", graphic.getValue());
     }
 
     public final void testSetGetUrl_ValueBinding() {

@@ -20,8 +20,6 @@ import javax.faces.el.ValueBinding;
 
 /**
  * @author shot
- * 
- * TODO TEST
  */
 public class UIGraphic extends UIComponentBase {
 
