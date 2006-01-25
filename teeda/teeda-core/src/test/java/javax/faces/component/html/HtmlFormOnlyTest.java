@@ -13,30 +13,32 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package javax.faces.component;
+package javax.faces.component.html;
 
 import junit.framework.TestCase;
 
 /**
  * @author manhole
  */
-public class UINamingContainerOnlyTest extends TestCase {
+public class HtmlFormOnlyTest extends TestCase {
 
     public void testConstants() throws Exception {
-        assertEquals("javax.faces.NamingContainer",
-                UINamingContainer.COMPONENT_FAMILY);
-        assertEquals("javax.faces.NamingContainer",
-                UINamingContainer.COMPONENT_TYPE);
+        assertEquals("javax.faces.HtmlForm", HtmlForm.COMPONENT_TYPE);
     }
 
-    public void testGetFamily() {
-        UINamingContainer namingContainer = new UINamingContainer();
-        assertEquals("javax.faces.NamingContainer", namingContainer.getFamily());
+    public void testGetComponentFamily() {
+        HtmlForm htmlForm = new HtmlForm();
+        assertEquals("javax.faces.Form", htmlForm.getFamily());
     }
 
     public void testDefaultRendererType() throws Exception {
-        UINamingContainer namingContainer = new UINamingContainer();
-        assertEquals(null, namingContainer.getRendererType());
+        HtmlForm htmlForm = new HtmlForm();
+        assertEquals("javax.faces.Form", htmlForm.getRendererType());
+    }
+
+    public void testDefaultEnctype() throws Exception {
+        HtmlForm htmlForm = new HtmlForm();
+        assertEquals("application/x-www-form-urlencoded", htmlForm.getEnctype());
     }
 
 }

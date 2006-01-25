@@ -5,9 +5,8 @@ import java.util.Iterator;
 import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseId;
 
-
 /**
- * TODO TEST
+ * @author shot
  */
 public class UIForm extends UIComponentBase implements NamingContainer {
 
@@ -20,7 +19,6 @@ public class UIForm extends UIComponentBase implements NamingContainer {
     private transient boolean submitted_ = false;
 
     public UIForm() {
-        super();
         setRendererType(DEFAULT_RENDER_TYPE);
     }
 
@@ -59,6 +57,9 @@ public class UIForm extends UIComponentBase implements NamingContainer {
 
     protected void processAppropriateAction(FacesContext context, PhaseId phase) {
         if (!isRendered()) {
+            return;
+        }
+        if (!isSubmitted()) {
             return;
         }
         for (Iterator children = getFacetsAndChildren(); children.hasNext();) {

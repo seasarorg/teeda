@@ -29,6 +29,8 @@ import org.seasar.teeda.core.mock.MockUIComponentBaseWithNamingContainer;
  * @author manhole
  */
 public class HtmlGraphicImageRendererTest extends RendererTest {
+    
+    // FIXME image URL should be encoded!
 
     private HtmlGraphicImageRenderer renderer_;
 

@@ -44,11 +44,16 @@ public class RendererUtil {
         return somethingDone;
     }
 
-    public static boolean renderAttribute(ResponseWriter writer,
+    static boolean renderAttribute(ResponseWriter writer,
             UIComponent component, String attributeName) throws IOException {
 
         Object value = component.getAttributes().get(attributeName);
         return renderAttribute(writer, attributeName, value, attributeName);
+    }
+
+    public static void renderAttribute(ResponseWriter writer,
+            String attributeName, Object value) throws IOException {
+        renderAttribute(writer, attributeName, value, attributeName);
     }
 
     public static boolean renderAttribute(ResponseWriter writer,
@@ -57,11 +62,20 @@ public class RendererUtil {
         if (isDefaultAttributeValue(value)) {
             return false;
         }
-        if (attributeName.equalsIgnoreCase(JsfConstants.STYLE_CLASS_ATTR)) {
-            attributeName = JsfConstants.CLASS_ATTR;
-        }
+        attributeName = toHtmlAttributeName(attributeName);
         writer.writeAttribute(attributeName, value, propertyName);
         return true;
+    }
+
+    private static String toHtmlAttributeName(String attributeName) {
+        if (attributeName.equalsIgnoreCase(JsfConstants.STYLE_CLASS_ATTR)) {
+            return JsfConstants.CLASS_ATTR;
+        } else if (attributeName
+                .equalsIgnoreCase(JsfConstants.ACCEPTCHARSET_ATTR)) {
+            return JsfConstants.ACCEPT_CHARSET_ATTR;
+        } else {
+            return attributeName;
+        }
     }
 
     public static boolean isDefaultAttributeValue(Object value) {
@@ -84,11 +98,6 @@ public class RendererUtil {
             return true;
         }
         return false;
-    }
-
-    public static void renderAttribute(ResponseWriter writer,
-            String attributeName, Object value) throws IOException {
-        renderAttribute(writer, attributeName, value, attributeName);
     }
 
     public static void renderIdAttributeIfNecessary(ResponseWriter writer,

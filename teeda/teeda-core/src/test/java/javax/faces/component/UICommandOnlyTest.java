@@ -27,6 +27,11 @@ public class UICommandOnlyTest extends TestCase {
         assertEquals("javax.faces.Command", UICommand.COMPONENT_TYPE);
     }
 
+    public void testGetFamily() {
+        UICommand command = new UICommand();
+        assertEquals("javax.faces.Command", command.getFamily());
+    }
+
     public void testDefaultRendererType() throws Exception {
         UICommand command = new UICommand();
         assertEquals("javax.faces.Button", command.getRendererType());

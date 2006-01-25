@@ -13,28 +13,27 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package javax.faces.component;
+package javax.faces.component.html;
 
-import junit.framework.TestCase;
+import javax.faces.component.UIComponent;
+import javax.faces.component.UIComponentBaseTeedaTest;
 
 /**
  * @author manhole
  */
-public class UIOutputOnlyTest extends TestCase {
+public class HtmlFormTestTeedaTest extends UIComponentBaseTeedaTest {
 
-    public void testConstants() throws Exception {
-        assertEquals("javax.faces.Output", UIOutput.COMPONENT_FAMILY);
-        assertEquals("javax.faces.Output", UIOutput.COMPONENT_TYPE);
+    public void testSaveAndRestoreState() throws Exception {
+        super.testSaveAndRestoreState();
+        // TODO test
     }
 
-    public void testGetFamily() {
-        UIOutput output = new UIOutput();
-        assertEquals("javax.faces.Output", output.getFamily());
+    private HtmlForm createHtmlForm() {
+        return (HtmlForm) createUIComponent();
     }
 
-    public void testDefaultRendererType() throws Exception {
-        UIOutput output = new UIOutput();
-        assertEquals("javax.faces.Text", output.getRendererType());
+    protected UIComponent createUIComponent() {
+        return new HtmlForm();
     }
 
 }

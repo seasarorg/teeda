@@ -62,7 +62,7 @@ public class UIDataTest extends UIComponentBaseTest {
         }
     }
 
-    // FIXME this test should be success?
+    // XXX this test should be success?
     public final void fixme_testSetGetFirst_ValueBinding_Negative() {
         UIData data = createUIData();
         MockValueBinding vb = new MockValueBinding();

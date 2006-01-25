@@ -76,6 +76,8 @@ public interface JsfConstants {
 
     public String IMAGE_VALUE = "image";
 
+    public String POST_VALUE = "post";
+
     public String RESET_VALUE = "reset";
 
     public String TEXT_VALUE = "text";
@@ -83,6 +85,8 @@ public interface JsfConstants {
     // -- element --
 
     public String ANCHOR_ELEM = "a";
+
+    public String FORM_ELEM = "form";
 
     public String IMG_ELEM = "img";
 
@@ -107,6 +111,12 @@ public interface JsfConstants {
     public String TR_ELEM = "tr";
 
     // -- attribute --
+
+    public String ACCEPT_ATTR = "accept";
+
+    public String ACCEPTCHARSET_ATTR = "acceptcharset";
+
+    public String ACCEPT_CHARSET_ATTR = "accept-charset";
 
     public String ACCESSKEY_ATTR = "accesskey";
 
@@ -146,6 +156,8 @@ public interface JsfConstants {
 
     public String DIR_ATTR = "dir";
 
+    public String ENCTYPE_ATTR = "enctype";
+
     public String FOOTER_CLASS_ATTR = "footerClass";
 
     public String FOR_ATTR = "for";
@@ -176,6 +188,8 @@ public interface JsfConstants {
 
     public String MAXLENGTH_ATTR = "maxlength";
 
+    public String METHOD_ATTR = "method";
+
     public String NAME_ATTR = "name";
 
     public String ONBLUR_ATTR = "onblur";
@@ -204,7 +218,11 @@ public interface JsfConstants {
 
     public String ONKEYUP_ATTR = "onkeyup";
 
+    public String ONRESET_ATTR = "onreset";
+
     public String ONSELECT_ATTR = "onselect";
+
+    public String ONSUMBIT_ATTR = "onsubmit";
 
     public String READONLY_ATTR = "readonly";
 
@@ -249,7 +267,7 @@ public interface JsfConstants {
     public String WIDTH_ATTR = "width";
 
     public String[] UNIVERSAL_ATTRIBUTES_WITHOUT_STYLE = { DIR_ATTR, LANG_ATTR,
-            TITLE_ATTR, };
+            TITLE_ATTR };
 
     public String[] UNIVERSAL_ATTRIBUTES = (String[]) ArrayUtil.add(
             UNIVERSAL_ATTRIBUTES_WITHOUT_STYLE, new String[] { STYLE_ATTR,
@@ -299,7 +317,7 @@ public interface JsfConstants {
 
     public String[] INPUT_ATTRIBUTES = { ALIGN_ATTR, ALT_ATTR, CHECKED_ATTR,
             DATAFLD_ATTR, DATASRC_ATTR, DATAFORMATAS_ATTR, MAXLENGTH_ATTR,
-            READONLY_ATTR, SIZE_ATTR, };
+            READONLY_ATTR, SIZE_ATTR };
 
     public String[] COMMON_FIELD_ATTRIBUTES_WITHOUT_DISABLED = {
             ACCESSKEY_ATTR, TABINDEX_ATTR };
@@ -314,14 +332,14 @@ public interface JsfConstants {
                     COMMON_FIELD_PASSTROUGH_ATTRIBUTES_WITHOUT_DISABLED);
 
     public String[] TEXTAREA_ATTRIBUTES = { COLS_ATTR, DATAFLD_ATTR,
-            DATASRC_ATTR, DATAFORMATAS_ATTR, READONLY_ATTR, ROWS_ATTR, };
+            DATASRC_ATTR, DATAFORMATAS_ATTR, READONLY_ATTR, ROWS_ATTR };
 
     public String[] TEXTAREA_PASSTHROUGH_ATTRIBUTES_WITHOUT_DISABLED = (String[]) ArrayUtil
             .add(TEXTAREA_ATTRIBUTES,
                     COMMON_FIELD_PASSTROUGH_ATTRIBUTES_WITHOUT_DISABLED);
 
     public String[] BUTTON_ATTRIBUTES = { ALIGN_ATTR, ALT_ATTR, DATAFLD_ATTR,
-            DATASRC_ATTR, DATAFORMATAS_ATTR, };
+            DATASRC_ATTR, DATAFORMATAS_ATTR };
 
     public String[] BUTTON_PASSTHROUGH_ATTRIBUTES_WITHOUT_DISABLED = (String[]) ArrayUtil
             .add(BUTTON_ATTRIBUTES,
@@ -340,6 +358,12 @@ public interface JsfConstants {
 
     public String[] IMG_PASSTHROUGH_ATTRIBUTES = (String[]) ArrayUtil.add(
             IMG_ATTRIBUTES, COMMON_PASSTROUGH_ATTRIBUTES);
+
+    public String[] FORM_ATTRIBUTES = { ACCEPT_ATTR, ACCEPTCHARSET_ATTR,
+            ENCTYPE_ATTR, ONRESET_ATTR, ONSUMBIT_ATTR, TARGET_ATTR };
+
+    public String[] FORM_PASSTHROUGH_ATTRIBUTES = (String[]) ArrayUtil.add(
+            FORM_ATTRIBUTES, COMMON_PASSTROUGH_ATTRIBUTES);
 
     public String DEFAULT_RENDERKIT_CLASS = HtmlRenderKitImpl.class.getName();
 

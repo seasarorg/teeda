@@ -34,7 +34,6 @@ import org.seasar.teeda.core.mock.MockVariableResolver;
  */
 public class UIDataTeedaTest extends UIComponentBaseTeedaTest {
 
-    // TODO test
     public void testGetCliendId() throws Exception {
         // ## Arrange ##
         UIData component = createUIData();

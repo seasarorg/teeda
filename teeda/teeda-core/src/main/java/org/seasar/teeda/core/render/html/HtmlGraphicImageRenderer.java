@@ -43,30 +43,17 @@ public class HtmlGraphicImageRenderer extends AbstractHtmlRenderer {
             HtmlGraphicImage htmlGraphicImage) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
         writer.startElement(JsfConstants.IMG_ELEM, htmlGraphicImage);
-        RendererUtil.renderIdAttributeIfNecessary(writer, htmlGraphicImage, getIdForRender(context, htmlGraphicImage));
+        RendererUtil.renderIdAttributeIfNecessary(writer, htmlGraphicImage,
+                getIdForRender(context, htmlGraphicImage));
 
         String url = htmlGraphicImage.getUrl();
         if (url == null) {
             url = "";
         }
         RendererUtil.renderAttribute(writer, JsfConstants.SRC_ATTR, url);
-        // if (htmlGraphicImage.isDisabled()) {
-        // RendererUtil.renderAttribute(writer, JsfConstants.DISABLED_ATTR,
-        // Boolean.TRUE);
-        // }
         RendererUtil.renderAttributes(writer, htmlGraphicImage,
                 JsfConstants.IMG_PASSTHROUGH_ATTRIBUTES);
         writer.endElement(JsfConstants.IMG_ELEM);
     }
-
-    // public void decode(FacesContext context, UIComponent component) {
-    // super.decode(context, component);
-    // decodeHtmlGraphicImage(context, (HtmlGraphicImage) component);
-    // }
-    //
-    // protected void decodeHtmlGraphicImage(FacesContext context,
-    // HtmlGraphicImage htmlGraphicImage) {
-    // DecodeUtil.decode(context, htmlGraphicImage);
-    // }
 
 }

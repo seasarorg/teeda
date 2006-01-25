@@ -27,14 +27,14 @@ public class UIColumnOnlyTest extends TestCase {
         assertEquals("javax.faces.Column", UIColumn.COMPONENT_TYPE);
     }
 
-    public void testDefaultRendererType() throws Exception {
-        UIColumn column = new UIColumn();
-        assertEquals(null, column.getRendererType());
-    }
-
     public void testGetFamily() {
         UIColumn column = new UIColumn();
         assertEquals("javax.faces.Column", column.getFamily());
+    }
+
+    public void testDefaultRendererType() throws Exception {
+        UIColumn column = new UIColumn();
+        assertEquals(null, column.getRendererType());
     }
 
 }

@@ -15,12 +15,109 @@
  */
 package javax.faces.component;
 
+import javax.faces.context.FacesContext;
+
+import org.seasar.teeda.core.mock.MockFacesContext;
+import org.seasar.teeda.core.mock.MockUIComponentBase;
+
 /**
  * @author manhole
  */
 public class UIFormTest extends UIComponentBaseTest {
-    
-    // TODO test
+
+    public void testSetGetSubmitted() throws Exception {
+        // ## Arrange ##
+        UIForm form = createUIForm();
+
+        // ## Act & Assert ##
+        assertEquals("default is false", false, form.isSubmitted());
+        form.setSubmitted(true);
+        assertEquals(true, form.isSubmitted());
+    }
+
+    public void testProcessValidators_SubmittedTrue() throws Exception {
+        // ## Arrange ##
+        final boolean[] calls = { false };
+        UIForm form = createUIForm();
+        form.setSubmitted(true);
+        UIComponentBase child = new MockUIComponentBase() {
+            public void processValidators(FacesContext context) {
+                calls[0] = true;
+            }
+        };
+        form.getChildren().add(child);
+
+        MockFacesContext context = getFacesContext();
+
+        // ## Act ##
+        form.processValidators(context);
+
+        // ## Assert ##
+        assertEquals(true, calls[0]);
+    }
+
+    public void testProcessValidators_SubmittedFalse() throws Exception {
+        // ## Arrange ##
+        final boolean[] calls = { false };
+        UIForm form = createUIForm();
+        form.setSubmitted(false);
+        UIComponentBase child = new MockUIComponentBase() {
+            public void processValidators(FacesContext context) {
+                calls[0] = true;
+            }
+        };
+        form.getChildren().add(child);
+
+        MockFacesContext context = getFacesContext();
+
+        // ## Act ##
+        form.processValidators(context);
+
+        // ## Assert ##
+        assertEquals(false, calls[0]);
+    }
+
+    public void testProcessUpdates_SubmittedTrue() throws Exception {
+        // ## Arrange ##
+        final boolean[] calls = { false };
+        UIForm form = createUIForm();
+        form.setSubmitted(true);
+        UIComponentBase child = new MockUIComponentBase() {
+            public void processUpdates(FacesContext context) {
+                calls[0] = true;
+            }
+        };
+        form.getChildren().add(child);
+
+        MockFacesContext context = getFacesContext();
+
+        // ## Act ##
+        form.processUpdates(context);
+
+        // ## Assert ##
+        assertEquals(true, calls[0]);
+    }
+
+    public void testProcessUpdates_SubmittedFalse() throws Exception {
+        // ## Arrange ##
+        final boolean[] calls = { false };
+        UIForm form = createUIForm();
+        form.setSubmitted(false);
+        UIComponentBase child = new MockUIComponentBase() {
+            public void processUpdates(FacesContext context) {
+                calls[0] = true;
+            }
+        };
+        form.getChildren().add(child);
+
+        MockFacesContext context = getFacesContext();
+
+        // ## Act ##
+        form.processUpdates(context);
+
+        // ## Assert ##
+        assertEquals(false, calls[0]);
+    }
 
     private UIForm createUIForm() {
         return (UIForm) createUIComponent();

@@ -21,6 +21,13 @@ package javax.faces.component;
 public class UIFormTeedaTest extends UIComponentBaseTeedaTest {
 
     // TODO test
+    public void testSaveAndRestoreState() throws Exception {
+        super.testSaveAndRestoreState();
+
+        // "setSubmitted" should not be saved.
+
+        // TODO test
+    }
 
     private UIForm createUIForm() {
         return (UIForm) createUIComponent();
