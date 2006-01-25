@@ -25,7 +25,7 @@ import javax.faces.render.RendererTest;
 
 import org.custommonkey.xmlunit.Diff;
 import org.seasar.teeda.core.mock.MockUIComponentBase;
-import org.seasar.teeda.core.unit.AssertUtil;
+import org.seasar.teeda.core.unit.ExceptionAssert;
 
 /**
  * @author manhole
@@ -88,7 +88,7 @@ public class HtmlOutputLabelRendererTest extends RendererTest {
             renderer_.encodeBegin(getFacesContext(), htmlOutputLabel_);
             fail();
         } catch (IllegalStateException ise) {
-            AssertUtil.assertExceptionMessageExist(ise);
+            ExceptionAssert.assertMessageExist(ise);
         }
     }
 

@@ -25,7 +25,7 @@ public class AssertUtilTest extends TestCase {
 
     public void testAssertThrows_FailNoThrown() throws Exception {
         try {
-            AssertUtil.assertThrows(NullPointerException.class,
+            ExceptionAssert.assertThrows(NullPointerException.class,
                     new ExceptionalClosure() {
                         public void execute() throws Throwable {
                         }
@@ -37,7 +37,7 @@ public class AssertUtilTest extends TestCase {
 
     public void testAssertThrows_FailAnotherThrown() throws Exception {
         try {
-            AssertUtil.assertThrows(NullPointerException.class,
+            ExceptionAssert.assertThrows(NullPointerException.class,
                     new ExceptionalClosure() {
                         public void execute() throws Throwable {
                             throw new IllegalStateException("for test");
@@ -49,36 +49,36 @@ public class AssertUtilTest extends TestCase {
     }
 
     public void testAssertExceptionMessageExist_Success() throws Exception {
-        AssertUtil.assertExceptionMessageExist(new NullPointerException("c"));
+        ExceptionAssert.assertMessageExist(new NullPointerException("c"));
     }
 
     public void testAssertExceptionMessageExist_Fail() throws Exception {
-        AssertUtil.assertThrows(AssertionFailedError.class,
+        ExceptionAssert.assertThrows(AssertionFailedError.class,
                 new ExceptionalClosure() {
                     public void execute() {
-                        AssertUtil
-                                .assertExceptionMessageExist(new NullPointerException());
+                        ExceptionAssert
+                                .assertMessageExist(new NullPointerException());
                     }
                 });
     }
 
     public void testAssertNotEquals_Success() throws Exception {
-        AssertUtil.assertNotEquals("a", "b");
-        AssertUtil.assertNotEquals(null, "b");
-        AssertUtil.assertNotEquals("a", null);
+        ExceptionAssert.assertNotEquals("a", "b");
+        ExceptionAssert.assertNotEquals(null, "b");
+        ExceptionAssert.assertNotEquals("a", null);
     }
 
     public void testAssertNotEquals_Fail() throws Exception {
-        AssertUtil.assertThrows(AssertionFailedError.class,
+        ExceptionAssert.assertThrows(AssertionFailedError.class,
                 new ExceptionalClosure() {
                     public void execute() {
-                        AssertUtil.assertNotEquals("a", "a");
+                        ExceptionAssert.assertNotEquals("a", "a");
                     }
                 });
-        AssertUtil.assertThrows(AssertionFailedError.class,
+        ExceptionAssert.assertThrows(AssertionFailedError.class,
                 new ExceptionalClosure() {
                     public void execute() {
-                        AssertUtil.assertNotEquals(null, null);
+                        ExceptionAssert.assertNotEquals(null, null);
                     }
                 });
     }

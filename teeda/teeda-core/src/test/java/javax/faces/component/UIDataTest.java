@@ -31,7 +31,7 @@ import org.seasar.teeda.core.mock.MockValueBinding;
 import org.seasar.teeda.core.mock.MockVariableResolver;
 import org.seasar.teeda.core.mock.NullFacesEvent;
 import org.seasar.teeda.core.mock.NullUIComponent;
-import org.seasar.teeda.core.unit.AssertUtil;
+import org.seasar.teeda.core.unit.ExceptionAssert;
 
 /**
  * @author manhole
@@ -58,7 +58,7 @@ public class UIDataTest extends UIComponentBaseTest {
             data.setFirst(-1);
             fail();
         } catch (IllegalArgumentException iae) {
-            AssertUtil.assertExceptionMessageExist(iae);
+            ExceptionAssert.assertMessageExist(iae);
         }
     }
 
@@ -72,7 +72,7 @@ public class UIDataTest extends UIComponentBaseTest {
             System.out.println(data.getFirst());
             fail();
         } catch (IllegalArgumentException iae) {
-            AssertUtil.assertExceptionMessageExist(iae);
+            ExceptionAssert.assertMessageExist(iae);
         }
     }
 
@@ -107,7 +107,7 @@ public class UIDataTest extends UIComponentBaseTest {
             data.setFooter(null);
             fail();
         } catch (NullPointerException npe) {
-            AssertUtil.assertExceptionMessageExist(npe);
+            ExceptionAssert.assertMessageExist(npe);
         }
     }
 
@@ -142,7 +142,7 @@ public class UIDataTest extends UIComponentBaseTest {
             data.setHeader(null);
             fail();
         } catch (NullPointerException npe) {
-            AssertUtil.assertExceptionMessageExist(npe);
+            ExceptionAssert.assertMessageExist(npe);
         }
     }
 
@@ -225,7 +225,7 @@ public class UIDataTest extends UIComponentBaseTest {
         try {
             data.setRowIndex(-2);
         } catch (IllegalArgumentException iae) {
-            AssertUtil.assertExceptionMessageExist(iae);
+            ExceptionAssert.assertMessageExist(iae);
         }
     }
 
@@ -244,7 +244,7 @@ public class UIDataTest extends UIComponentBaseTest {
             data.setRows(-1);
             fail();
         } catch (IllegalArgumentException iae) {
-            AssertUtil.assertExceptionMessageExist(iae);
+            ExceptionAssert.assertMessageExist(iae);
         }
     }
 
@@ -276,7 +276,7 @@ public class UIDataTest extends UIComponentBaseTest {
             data.setValueBinding("id", vb);
             fail();
         } catch (IllegalArgumentException iae) {
-            AssertUtil.assertExceptionMessageExist(iae);
+            ExceptionAssert.assertMessageExist(iae);
         }
     }
 
@@ -288,7 +288,7 @@ public class UIDataTest extends UIComponentBaseTest {
             data.setValueBinding("var", vb);
             fail();
         } catch (IllegalArgumentException iae) {
-            AssertUtil.assertExceptionMessageExist(iae);
+            ExceptionAssert.assertMessageExist(iae);
         }
     }
 
@@ -300,7 +300,7 @@ public class UIDataTest extends UIComponentBaseTest {
             data.setValueBinding("rowIndex", vb);
             fail();
         } catch (IllegalArgumentException iae) {
-            AssertUtil.assertExceptionMessageExist(iae);
+            ExceptionAssert.assertMessageExist(iae);
         }
     }
 

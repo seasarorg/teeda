@@ -20,7 +20,7 @@ import junit.framework.TestCase;
 import org.seasar.teeda.core.mock.NullFacesListener;
 import org.seasar.teeda.core.mock.NullUIComponent;
 import org.seasar.teeda.core.mock.NullValueChangeListener;
-import org.seasar.teeda.core.unit.AssertUtil;
+import org.seasar.teeda.core.unit.ExceptionAssert;
 
 /**
  * @author manhole
@@ -32,7 +32,7 @@ public class ValueChangeEventTest extends TestCase {
             new ValueChangeEvent(null, "0", "1");
             fail();
         } catch (IllegalArgumentException iae) {
-            AssertUtil.assertExceptionMessageExist(iae);
+            ExceptionAssert.assertMessageExist(iae);
         }
     }
 

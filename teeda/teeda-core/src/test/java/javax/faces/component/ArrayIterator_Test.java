@@ -15,7 +15,7 @@
  */
 package javax.faces.component;
 
-import org.seasar.teeda.core.unit.AssertUtil;
+import org.seasar.teeda.core.unit.ExceptionAssert;
 
 import junit.framework.TestCase;
 
@@ -43,7 +43,7 @@ public class ArrayIterator_Test extends TestCase {
             it.remove();
             fail();
         } catch (UnsupportedOperationException uoe) {
-            AssertUtil.assertExceptionMessageExist(uoe);
+            ExceptionAssert.assertMessageExist(uoe);
         }
 
     }

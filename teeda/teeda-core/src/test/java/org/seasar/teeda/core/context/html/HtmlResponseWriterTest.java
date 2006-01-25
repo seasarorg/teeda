@@ -25,7 +25,7 @@ import junit.framework.TestCase;
 
 import org.seasar.framework.util.SPrintWriter;
 import org.seasar.teeda.core.mock.NullWriter;
-import org.seasar.teeda.core.unit.AssertUtil;
+import org.seasar.teeda.core.unit.ExceptionAssert;
 
 /**
  * @author manhole
@@ -502,7 +502,7 @@ public class HtmlResponseWriterTest extends TestCase {
             responseWriter.writeAttribute(null, "attrValue", null);
             fail();
         } catch (NullPointerException npe) {
-            AssertUtil.assertExceptionMessageExist(npe);
+            ExceptionAssert.assertMessageExist(npe);
         }
     }
 
@@ -512,7 +512,7 @@ public class HtmlResponseWriterTest extends TestCase {
             responseWriter.writeAttribute("attrName", "attrValue", null);
             fail();
         } catch (IllegalStateException ise) {
-            AssertUtil.assertExceptionMessageExist(ise);
+            ExceptionAssert.assertMessageExist(ise);
         }
     }
 
@@ -522,7 +522,7 @@ public class HtmlResponseWriterTest extends TestCase {
             responseWriter.writeURIAttribute(null, "attrValue", null);
             fail();
         } catch (NullPointerException npe) {
-            AssertUtil.assertExceptionMessageExist(npe);
+            ExceptionAssert.assertMessageExist(npe);
         }
     }
 
@@ -532,7 +532,7 @@ public class HtmlResponseWriterTest extends TestCase {
             responseWriter.writeURIAttribute("attrName", "attrValue", null);
             fail();
         } catch (IllegalStateException ise) {
-            AssertUtil.assertExceptionMessageExist(ise);
+            ExceptionAssert.assertMessageExist(ise);
         }
     }
 

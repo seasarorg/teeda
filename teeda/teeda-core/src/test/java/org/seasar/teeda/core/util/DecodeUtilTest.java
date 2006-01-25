@@ -30,7 +30,7 @@ import org.seasar.teeda.core.mock.MockUIComponentBaseWithEditableValueHolder;
 import org.seasar.teeda.core.mock.NullExternalContext;
 import org.seasar.teeda.core.mock.NullFacesContext;
 import org.seasar.teeda.core.mock.NullUIComponent;
-import org.seasar.teeda.core.unit.AssertUtil;
+import org.seasar.teeda.core.unit.ExceptionAssert;
 
 /**
  * @author manhole
@@ -92,8 +92,9 @@ public class DecodeUtilTest extends TestCase {
     public void testDecode_WithNoEditableValueHolder() throws Exception {
         try {
             DecodeUtil.decode(new NullFacesContext(), new NullUIComponent());
+            fail();
         } catch (NoEditableValueHolderRuntimeException expected) {
-            AssertUtil.assertExceptionMessageExist(expected);
+            ExceptionAssert.assertMessageExist(expected);
         }
     }
 

@@ -26,7 +26,7 @@ import junit.framework.TestCase;
 import junitx.framework.ObjectAssert;
 
 import org.seasar.teeda.core.mock.NullFacesContext;
-import org.seasar.teeda.core.unit.AssertUtil;
+import org.seasar.teeda.core.unit.ExceptionAssert;
 
 /**
  * @author manhole
@@ -80,7 +80,7 @@ public class ValueHolderUtilTest extends TestCase {
         try {
             ValueHolderUtil.getValueForRender(context, notValueHolder);
         } catch (IllegalArgumentException iae) {
-            AssertUtil.assertExceptionMessageExist(iae);
+            ExceptionAssert.assertMessageExist(iae);
         }
     }
 

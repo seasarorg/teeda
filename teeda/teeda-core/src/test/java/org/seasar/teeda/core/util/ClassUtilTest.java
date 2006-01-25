@@ -22,22 +22,13 @@ import junit.framework.TestCase;
  */
 public class ClassUtilTest extends TestCase {
 
-    /**
-     * Constructor for ClassUtilTest.
-     * 
-     * @param name
-     */
-    public ClassUtilTest(String name) {
-        super(name);
-    }
-
     public void testGetWrapperClassByTypeName() throws Exception {
         assertEquals(Character.TYPE, ClassUtil
                 .getWrapperClassByTypeName(Character.TYPE.getName()));
         assertEquals(Byte.TYPE, ClassUtil.getWrapperClassByTypeName(Byte.TYPE
                 .getName()));
-        assertEquals(Short.TYPE, ClassUtil
-                .getWrapperClassByTypeName(Short.TYPE.getName()));
+        assertEquals(Short.TYPE, ClassUtil.getWrapperClassByTypeName(Short.TYPE
+                .getName()));
         assertEquals(Integer.TYPE, ClassUtil
                 .getWrapperClassByTypeName(Integer.TYPE.getName()));
         assertEquals(Long.TYPE, ClassUtil.getWrapperClassByTypeName(Long.TYPE
@@ -46,8 +37,8 @@ public class ClassUtilTest extends TestCase {
                 .getWrapperClassByTypeName(Integer.TYPE.getName()));
         assertEquals(Double.TYPE, ClassUtil
                 .getWrapperClassByTypeName(Double.TYPE.getName()));
-        assertEquals(Float.TYPE, ClassUtil
-                .getWrapperClassByTypeName(Float.TYPE.getName()));
+        assertEquals(Float.TYPE, ClassUtil.getWrapperClassByTypeName(Float.TYPE
+                .getName()));
         assertEquals(Boolean.TYPE, ClassUtil
                 .getWrapperClassByTypeName(Boolean.TYPE.getName()));
         assertNull(ClassUtil.getWrapperClassByTypeName(String.class.getName()));

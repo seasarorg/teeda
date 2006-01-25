@@ -25,72 +25,55 @@ import javax.servlet.http.HttpSession;
 import org.seasar.framework.mock.servlet.MockHttpServletRequest;
 import org.seasar.teeda.core.unit.TeedaTestCase;
 
-
-public class TestServletExternalContextUtil extends TeedaTestCase {
-
-    public static void main(String[] args) {
-        junit.textui.TestRunner.run(TestServletExternalContextUtil.class);
-    }
-
-    /*
-     * @see TestCase#setUp()
-     */
-    protected void setUp() throws Exception {
-        super.setUp();
-    }
-
-    /*
-     * @see TestCase#tearDown()
-     */
-    protected void tearDown() throws Exception {
-        super.tearDown();
-    }
-
-    /**
-     * Constructor for TestExternalContextUtil.
-     * @param arg0
-     */
-    public TestServletExternalContextUtil(String arg0) {
-        super(arg0);
-    }
+public class ServletExternalContextUtilTest extends TeedaTestCase {
 
     public void testSetCharacterEncoding() {
         MockHttpServletRequest request = getRequest();
         request.addHeader("Content-Type", "text/html; charset=Windows-31J");
         ServletExternalContextUtil.setCharacterEncoding(request);
         assertEquals("Windows-31J", request.getCharacterEncoding());
-        MockServletRequest request2 = new MockServletRequestImpl(getServletContext(), "/");
+        MockServletRequest request2 = new MockServletRequestImpl(
+                getServletContext(), "/");
         ServletExternalContextUtil.setCharacterEncoding(request2);
-        assertEquals(MockServletRequest.DEFAULT_CHARACTER_ENCODING, request2.getCharacterEncoding());
+        assertEquals(MockServletRequest.DEFAULT_CHARACTER_ENCODING, request2
+                .getCharacterEncoding());
     }
 
     public void testIsHttpServletRequest() {
-        assertTrue(ServletExternalContextUtil.isHttpServletRequest(new EmptyHttpServletRequest()));
-        assertFalse(ServletExternalContextUtil.isHttpServletRequest(new EmptyServletRequest()));
+        assertTrue(ServletExternalContextUtil
+                .isHttpServletRequest(new EmptyHttpServletRequest()));
+        assertFalse(ServletExternalContextUtil
+                .isHttpServletRequest(new EmptyServletRequest()));
         assertFalse(ServletExternalContextUtil.isHttpServletRequest(null));
     }
 
-    public void testIsHttpServeltResponse(){
-        assertTrue(ServletExternalContextUtil.isHttpServletResponse(new EmptyHttpServletResponse()));
-        assertFalse(ServletExternalContextUtil.isHttpServletResponse(new EmptyServletResponse()));
+    public void testIsHttpServeltResponse() {
+        assertTrue(ServletExternalContextUtil
+                .isHttpServletResponse(new EmptyHttpServletResponse()));
+        assertFalse(ServletExternalContextUtil
+                .isHttpServletResponse(new EmptyServletResponse()));
         assertFalse(ServletExternalContextUtil.isHttpServletResponse(null));
     }
-    
+
     public void testGetEncodingFromContentType() {
-        assertEquals("Windows-31J", ServletExternalContextUtil.getEncodingFromContentType("text/html; charset=Windows-31J"));
-        assertEquals("Windows-31J", ServletExternalContextUtil.getEncodingFromContentType("text/html;charset=Windows-31J"));
-        assertNull(ServletExternalContextUtil.getEncodingFromContentType("text/html;"));
+        assertEquals("Windows-31J", ServletExternalContextUtil
+                .getEncodingFromContentType("text/html; charset=Windows-31J"));
+        assertEquals("Windows-31J", ServletExternalContextUtil
+                .getEncodingFromContentType("text/html;charset=Windows-31J"));
+        assertNull(ServletExternalContextUtil
+                .getEncodingFromContentType("text/html;"));
     }
 
-    public void testGetEncodingFromSession(){
+    public void testGetEncodingFromSession() {
         MockHttpServletRequest request = getRequest();
-        HttpSession session = request.getSession(true);        
+        HttpSession session = request.getSession(true);
         session.setAttribute(ViewHandler.CHARACTER_ENCODING_KEY, "Windows-31J");
-        String encoding = ServletExternalContextUtil.getEncodingFromSession(request);
+        String encoding = ServletExternalContextUtil
+                .getEncodingFromSession(request);
         assertEquals("Windows-31J", encoding);
     }
-        
-    private static class EmptyHttpServletRequest implements HttpServletRequest{
+
+    private static class EmptyHttpServletRequest implements HttpServletRequest {
 
         public String getAuthType() {
             return null;
@@ -204,7 +187,8 @@ public class TestServletExternalContextUtil extends TeedaTestCase {
             return null;
         }
 
-        public void setCharacterEncoding(String arg0) throws UnsupportedEncodingException {
+        public void setCharacterEncoding(String arg0)
+                throws UnsupportedEncodingException {
         }
 
         public int getContentLength() {
@@ -304,10 +288,10 @@ public class TestServletExternalContextUtil extends TeedaTestCase {
         public int getLocalPort() {
             return 0;
         }
-        
+
     }
 
-    private static class EmptyServletRequest implements ServletRequest{
+    private static class EmptyServletRequest implements ServletRequest {
 
         public Object getAttribute(String arg0) {
             return null;
@@ -321,7 +305,8 @@ public class TestServletExternalContextUtil extends TeedaTestCase {
             return null;
         }
 
-        public void setCharacterEncoding(String arg0) throws UnsupportedEncodingException {
+        public void setCharacterEncoding(String arg0)
+                throws UnsupportedEncodingException {
         }
 
         public int getContentLength() {
@@ -421,10 +406,11 @@ public class TestServletExternalContextUtil extends TeedaTestCase {
         public int getLocalPort() {
             return 0;
         }
-        
+
     }
 
-    private static class EmptyHttpServletResponse implements HttpServletResponse{
+    private static class EmptyHttpServletResponse implements
+            HttpServletResponse {
 
         public void addCookie(Cookie arg0) {
         }
@@ -533,10 +519,10 @@ public class TestServletExternalContextUtil extends TeedaTestCase {
         public Locale getLocale() {
             return null;
         }
-        
+
     }
 
-    private static class EmptyServletResponse implements ServletResponse{
+    private static class EmptyServletResponse implements ServletResponse {
 
         public String getCharacterEncoding() {
             return null;
@@ -589,7 +575,7 @@ public class TestServletExternalContextUtil extends TeedaTestCase {
         public Locale getLocale() {
             return null;
         }
-        
+
     }
 
 }

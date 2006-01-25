@@ -10,7 +10,7 @@ import org.seasar.teeda.core.mock.MockUIComponentBase;
 import org.seasar.teeda.core.mock.MockValueBinding;
 import org.seasar.teeda.core.mock.NullValidator;
 import org.seasar.teeda.core.mock.NullValueChangeListener;
-import org.seasar.teeda.core.unit.AssertUtil;
+import org.seasar.teeda.core.unit.ExceptionAssert;
 
 /**
  * @author shot
@@ -147,7 +147,7 @@ public class UIInputTest extends UIOutputTest {
             input.addValidator(null);
             fail();
         } catch (NullPointerException npe) {
-            AssertUtil.assertExceptionMessageExist(npe);
+            ExceptionAssert.assertMessageExist(npe);
         }
     }
 
@@ -188,7 +188,7 @@ public class UIInputTest extends UIOutputTest {
             input.addValueChangeListener(null);
             fail();
         } catch (NullPointerException npe) {
-            AssertUtil.assertExceptionMessageExist(npe);
+            ExceptionAssert.assertMessageExist(npe);
         }
     }
 
@@ -217,7 +217,7 @@ public class UIInputTest extends UIOutputTest {
             input.removeValueChangeListener(null);
             fail();
         } catch (NullPointerException npe) {
-            AssertUtil.assertExceptionMessageExist(npe);
+            ExceptionAssert.assertMessageExist(npe);
         }
     }
 

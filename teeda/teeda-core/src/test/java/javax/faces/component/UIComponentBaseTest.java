@@ -31,7 +31,7 @@ import org.seasar.teeda.core.mock.MockValueBinding;
 import org.seasar.teeda.core.mock.NullFacesContext;
 import org.seasar.teeda.core.mock.NullFacesEvent;
 import org.seasar.teeda.core.mock.NullFacesListener;
-import org.seasar.teeda.core.unit.AssertUtil;
+import org.seasar.teeda.core.unit.ExceptionAssert;
 
 public class UIComponentBaseTest extends AbstractUIComponentTest {
 
@@ -288,7 +288,7 @@ public class UIComponentBaseTest extends AbstractUIComponentTest {
                 fail();
             }
         } catch (IllegalArgumentException iae) {
-            AssertUtil.assertExceptionMessageExist(iae);
+            ExceptionAssert.assertMessageExist(iae);
         }
     }
 
@@ -359,7 +359,7 @@ public class UIComponentBaseTest extends AbstractUIComponentTest {
             base.addFacesListener(null);
             fail();
         } catch (NullPointerException npe) {
-            AssertUtil.assertExceptionMessageExist(npe);
+            ExceptionAssert.assertMessageExist(npe);
         }
 
         FacesListener listener1 = new FacesListener() {

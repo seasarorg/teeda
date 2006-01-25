@@ -18,7 +18,7 @@ package javax.faces.component;
 import junit.framework.TestCase;
 
 import org.seasar.teeda.core.mock.MockUIComponent;
-import org.seasar.teeda.core.unit.AssertUtil;
+import org.seasar.teeda.core.unit.ExceptionAssert;
 
 /**
  * @author shot
@@ -54,7 +54,7 @@ public class ComponentAttributesMap_Test extends TestCase {
             map.remove("family");
             fail();
         } catch (IllegalArgumentException iae) {
-            AssertUtil.assertExceptionMessageExist(iae);
+            ExceptionAssert.assertMessageExist(iae);
         }
     }
 
@@ -88,7 +88,7 @@ public class ComponentAttributesMap_Test extends TestCase {
             fail();
         } catch (IllegalArgumentException iae) {
             System.out.println(iae.getMessage());
-            AssertUtil.assertExceptionMessageExist(iae);
+            ExceptionAssert.assertMessageExist(iae);
         }
     }
 
@@ -100,7 +100,7 @@ public class ComponentAttributesMap_Test extends TestCase {
             fail();
         } catch (IllegalArgumentException iae) {
             System.out.println(iae.getMessage());
-            AssertUtil.assertExceptionMessageExist(iae);
+            ExceptionAssert.assertMessageExist(iae);
         }
     }
 
@@ -134,7 +134,7 @@ public class ComponentAttributesMap_Test extends TestCase {
             map.put(null, new Object());
             fail();
         } catch (NullPointerException npe) {
-            AssertUtil.assertExceptionMessageExist(npe);
+            ExceptionAssert.assertMessageExist(npe);
         }
     }
 
@@ -145,7 +145,7 @@ public class ComponentAttributesMap_Test extends TestCase {
             map.put("hoge", null);
             fail();
         } catch (NullPointerException npe) {
-            AssertUtil.assertExceptionMessageExist(npe);
+            ExceptionAssert.assertMessageExist(npe);
         }
     }
 
@@ -156,7 +156,7 @@ public class ComponentAttributesMap_Test extends TestCase {
             map.put(new Integer(1), "value");
             fail();
         } catch (ClassCastException cce) {
-            AssertUtil.assertExceptionMessageExist(cce);
+            ExceptionAssert.assertMessageExist(cce);
         }
     }
 

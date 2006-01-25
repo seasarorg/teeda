@@ -21,9 +21,9 @@ import junit.framework.AssertionFailedError;
 /**
  * @author manhole
  */
-public class AssertUtil {
+public class ExceptionAssert {
 
-    public static void assertExceptionMessageExist(Throwable th) {
+    public static void assertMessageExist(Throwable th) {
         String message = th.getMessage();
         try {
             Assert.assertNotNull("Throwable should have message", message);
@@ -45,7 +45,7 @@ public class AssertUtil {
             thrown = true;
             if (expected.isAssignableFrom(th.getClass())) {
                 // ok
-                assertExceptionMessageExist(th);
+                assertMessageExist(th);
             } else {
                 Assert.fail("Expected <" + expected.getName() + "> is not thrown. But was <" + th + ">");
             }

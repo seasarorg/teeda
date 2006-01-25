@@ -17,7 +17,7 @@ package javax.faces.component;
 
 import org.seasar.teeda.core.mock.MockValueBinding;
 import org.seasar.teeda.core.mock.NullUIComponent;
-import org.seasar.teeda.core.unit.AssertUtil;
+import org.seasar.teeda.core.unit.ExceptionAssert;
 
 /**
  * @author shot
@@ -56,7 +56,7 @@ public class UIColumnTest extends UIComponentBaseTest {
             column.setFooter(null);
             fail();
         } catch (NullPointerException npe) {
-            AssertUtil.assertExceptionMessageExist(npe);
+            ExceptionAssert.assertMessageExist(npe);
         }
     }
 
@@ -91,7 +91,7 @@ public class UIColumnTest extends UIComponentBaseTest {
             column.setHeader(null);
             fail();
         } catch (NullPointerException npe) {
-            AssertUtil.assertExceptionMessageExist(npe);
+            ExceptionAssert.assertMessageExist(npe);
         }
     }
 

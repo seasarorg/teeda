@@ -24,15 +24,16 @@ import java.util.Iterator;
 public class EnumerationIterator implements Iterator {
 
     private Enumeration e_ = null;
-    public EnumerationIterator(final Enumeration e){
-        if(e == null){
+
+    public EnumerationIterator(final Enumeration e) {
+        if (e == null) {
             throw new NullPointerException();
         }
         e_ = e;
     }
-    
+
     public void remove() {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("remove");
     }
 
     public boolean hasNext() {

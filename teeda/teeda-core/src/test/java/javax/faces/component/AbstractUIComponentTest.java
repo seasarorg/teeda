@@ -26,7 +26,7 @@ import org.seasar.teeda.core.mock.MockValueBinding;
 import org.seasar.teeda.core.mock.NullFacesContext;
 import org.seasar.teeda.core.mock.NullFacesEvent;
 import org.seasar.teeda.core.mock.NullValueBinding;
-import org.seasar.teeda.core.unit.AssertUtil;
+import org.seasar.teeda.core.unit.ExceptionAssert;
 
 /**
  * @author manhole
@@ -39,7 +39,7 @@ public abstract class AbstractUIComponentTest extends TestCase {
             component.getValueBinding(null);
             fail();
         } catch (NullPointerException npe) {
-            AssertUtil.assertExceptionMessageExist(npe);
+            ExceptionAssert.assertMessageExist(npe);
         }
     }
 
@@ -49,7 +49,7 @@ public abstract class AbstractUIComponentTest extends TestCase {
             component.setValueBinding(null, new NullValueBinding());
             fail();
         } catch (NullPointerException npe) {
-            AssertUtil.assertExceptionMessageExist(npe);
+            ExceptionAssert.assertMessageExist(npe);
         }
     }
 
@@ -58,7 +58,7 @@ public abstract class AbstractUIComponentTest extends TestCase {
         try {
             component.setValueBinding("id", new NullValueBinding());
         } catch (IllegalArgumentException iae) {
-            AssertUtil.assertExceptionMessageExist(iae);
+            ExceptionAssert.assertMessageExist(iae);
         }
     }
 
@@ -67,7 +67,7 @@ public abstract class AbstractUIComponentTest extends TestCase {
         try {
             component.setValueBinding("parent", new NullValueBinding());
         } catch (IllegalArgumentException iae) {
-            AssertUtil.assertExceptionMessageExist(iae);
+            ExceptionAssert.assertMessageExist(iae);
         }
     }
 
@@ -77,7 +77,7 @@ public abstract class AbstractUIComponentTest extends TestCase {
             component.getClientId(null);
             fail();
         } catch (NullPointerException npe) {
-            AssertUtil.assertExceptionMessageExist(npe);
+            ExceptionAssert.assertMessageExist(npe);
         }
     }
 
@@ -94,7 +94,7 @@ public abstract class AbstractUIComponentTest extends TestCase {
             component.setId("");
             fail();
         } catch (IllegalArgumentException iae) {
-            AssertUtil.assertExceptionMessageExist(iae);
+            ExceptionAssert.assertMessageExist(iae);
         }
     }
 
@@ -105,7 +105,7 @@ public abstract class AbstractUIComponentTest extends TestCase {
             component.setId("1");
             fail();
         } catch (IllegalArgumentException iae) {
-            AssertUtil.assertExceptionMessageExist(iae);
+            ExceptionAssert.assertMessageExist(iae);
         }
     }
 
@@ -117,7 +117,7 @@ public abstract class AbstractUIComponentTest extends TestCase {
             component.setId("a:");
             fail();
         } catch (IllegalArgumentException iae) {
-            AssertUtil.assertExceptionMessageExist(iae);
+            ExceptionAssert.assertMessageExist(iae);
         }
     }
 
@@ -127,7 +127,7 @@ public abstract class AbstractUIComponentTest extends TestCase {
             component.findComponent(null);
             fail();
         } catch (NullPointerException npe) {
-            AssertUtil.assertExceptionMessageExist(npe);
+            ExceptionAssert.assertMessageExist(npe);
         }
     }
 
@@ -140,7 +140,7 @@ public abstract class AbstractUIComponentTest extends TestCase {
             component.findComponent("");
             fail();
         } catch (NullPointerException npe) {
-            AssertUtil.assertExceptionMessageExist(npe);
+            ExceptionAssert.assertMessageExist(npe);
         }
     }
 
@@ -150,7 +150,7 @@ public abstract class AbstractUIComponentTest extends TestCase {
             component.broadcast(null);
             fail();
         } catch (NullPointerException npe) {
-            AssertUtil.assertExceptionMessageExist(npe);
+            ExceptionAssert.assertMessageExist(npe);
         }
     }
 
@@ -160,7 +160,7 @@ public abstract class AbstractUIComponentTest extends TestCase {
             component.decode(null);
             fail();
         } catch (NullPointerException npe) {
-            AssertUtil.assertExceptionMessageExist(npe);
+            ExceptionAssert.assertMessageExist(npe);
         }
     }
 
@@ -170,7 +170,7 @@ public abstract class AbstractUIComponentTest extends TestCase {
             component.encodeBegin(null);
             fail();
         } catch (NullPointerException npe) {
-            AssertUtil.assertExceptionMessageExist(npe);
+            ExceptionAssert.assertMessageExist(npe);
         }
     }
 
@@ -180,7 +180,7 @@ public abstract class AbstractUIComponentTest extends TestCase {
             component.encodeChildren(null);
             fail();
         } catch (NullPointerException npe) {
-            AssertUtil.assertExceptionMessageExist(npe);
+            ExceptionAssert.assertMessageExist(npe);
         }
     }
 
@@ -190,7 +190,7 @@ public abstract class AbstractUIComponentTest extends TestCase {
             component.encodeEnd(null);
             fail();
         } catch (NullPointerException npe) {
-            AssertUtil.assertExceptionMessageExist(npe);
+            ExceptionAssert.assertMessageExist(npe);
         }
     }
 
@@ -200,7 +200,7 @@ public abstract class AbstractUIComponentTest extends TestCase {
             component.addFacesListener(null);
             fail();
         } catch (NullPointerException npe) {
-            AssertUtil.assertExceptionMessageExist(npe);
+            ExceptionAssert.assertMessageExist(npe);
         }
     }
 
@@ -210,7 +210,7 @@ public abstract class AbstractUIComponentTest extends TestCase {
             component.getFacesListeners(null);
             fail();
         } catch (NullPointerException npe) {
-            AssertUtil.assertExceptionMessageExist(npe);
+            ExceptionAssert.assertMessageExist(npe);
         }
     }
 
@@ -221,7 +221,7 @@ public abstract class AbstractUIComponentTest extends TestCase {
             component.getFacesListeners(String.class);
             fail();
         } catch (IllegalArgumentException iae) {
-            AssertUtil.assertExceptionMessageExist(iae);
+            ExceptionAssert.assertMessageExist(iae);
         }
     }
 
@@ -231,7 +231,7 @@ public abstract class AbstractUIComponentTest extends TestCase {
             component.removeFacesListener(null);
             fail();
         } catch (NullPointerException npe) {
-            AssertUtil.assertExceptionMessageExist(npe);
+            ExceptionAssert.assertMessageExist(npe);
         }
     }
 
@@ -241,7 +241,7 @@ public abstract class AbstractUIComponentTest extends TestCase {
             component.queueEvent(null);
             fail();
         } catch (NullPointerException npe) {
-            AssertUtil.assertExceptionMessageExist(npe);
+            ExceptionAssert.assertMessageExist(npe);
         }
     }
 
@@ -252,7 +252,7 @@ public abstract class AbstractUIComponentTest extends TestCase {
             component.queueEvent(new NullFacesEvent());
             fail();
         } catch (IllegalStateException ise) {
-            AssertUtil.assertExceptionMessageExist(ise);
+            ExceptionAssert.assertMessageExist(ise);
         }
     }
 
@@ -262,7 +262,7 @@ public abstract class AbstractUIComponentTest extends TestCase {
             component.processRestoreState(null, new Object());
             fail();
         } catch (NullPointerException npe) {
-            AssertUtil.assertExceptionMessageExist(npe);
+            ExceptionAssert.assertMessageExist(npe);
         }
     }
 
@@ -272,7 +272,7 @@ public abstract class AbstractUIComponentTest extends TestCase {
             component.processDecodes(null);
             fail();
         } catch (NullPointerException npe) {
-            AssertUtil.assertExceptionMessageExist(npe);
+            ExceptionAssert.assertMessageExist(npe);
         }
     }
 
@@ -282,7 +282,7 @@ public abstract class AbstractUIComponentTest extends TestCase {
             component.processValidators(null);
             fail();
         } catch (NullPointerException npe) {
-            AssertUtil.assertExceptionMessageExist(npe);
+            ExceptionAssert.assertMessageExist(npe);
         }
     }
 
@@ -292,7 +292,7 @@ public abstract class AbstractUIComponentTest extends TestCase {
             component.processUpdates(null);
             fail();
         } catch (NullPointerException npe) {
-            AssertUtil.assertExceptionMessageExist(npe);
+            ExceptionAssert.assertMessageExist(npe);
         }
     }
 
@@ -302,7 +302,7 @@ public abstract class AbstractUIComponentTest extends TestCase {
             component.processSaveState(null);
             fail();
         } catch (NullPointerException npe) {
-            AssertUtil.assertExceptionMessageExist(npe);
+            ExceptionAssert.assertMessageExist(npe);
         }
     }
 
@@ -329,13 +329,13 @@ public abstract class AbstractUIComponentTest extends TestCase {
         assertEquals(true, component.isTransient());
     }
 
-    // "transient" property don't need ValueBinding
     public void testSetGetTransient_ValueBindingNotWork() throws Exception {
         UIComponent component = createUIComponent();
         MockValueBinding vb = new MockValueBinding();
         vb.setValue((FacesContext) new NullFacesContext(), Boolean.TRUE);
         component.setValueBinding("transient", vb);
-        assertEquals(false, component.isTransient());
+        assertEquals("[transient] property don't need ValueBinding", false,
+                component.isTransient());
     }
 
     protected abstract UIComponent createUIComponent();

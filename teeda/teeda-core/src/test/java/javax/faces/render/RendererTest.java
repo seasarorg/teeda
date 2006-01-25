@@ -31,7 +31,7 @@ import org.seasar.teeda.core.mock.MockFacesContextImpl;
 import org.seasar.teeda.core.mock.NullFacesContext;
 import org.seasar.teeda.core.mock.NullRenderer;
 import org.seasar.teeda.core.mock.NullUIComponent;
-import org.seasar.teeda.core.unit.AssertUtil;
+import org.seasar.teeda.core.unit.ExceptionAssert;
 
 /**
  * @author manhole
@@ -44,7 +44,7 @@ public class RendererTest extends TestCase {
             renderer.convertClientId(null, "fooClientId");
             fail();
         } catch (NullPointerException npe) {
-            AssertUtil.assertExceptionMessageExist(npe);
+            ExceptionAssert.assertMessageExist(npe);
         }
     }
 
@@ -54,7 +54,7 @@ public class RendererTest extends TestCase {
             renderer.convertClientId(new NullFacesContext(), null);
             fail();
         } catch (NullPointerException npe) {
-            AssertUtil.assertExceptionMessageExist(npe);
+            ExceptionAssert.assertMessageExist(npe);
         }
     }
 
@@ -64,7 +64,7 @@ public class RendererTest extends TestCase {
             renderer.decode(null, new NullUIComponent());
             fail();
         } catch (NullPointerException npe) {
-            AssertUtil.assertExceptionMessageExist(npe);
+            ExceptionAssert.assertMessageExist(npe);
         }
     }
 
@@ -74,7 +74,7 @@ public class RendererTest extends TestCase {
             renderer.decode(new NullFacesContext(), null);
             fail();
         } catch (NullPointerException npe) {
-            AssertUtil.assertExceptionMessageExist(npe);
+            ExceptionAssert.assertMessageExist(npe);
         }
     }
 
@@ -84,7 +84,7 @@ public class RendererTest extends TestCase {
             renderer.encodeBegin(null, new NullUIComponent());
             fail();
         } catch (NullPointerException npe) {
-            AssertUtil.assertExceptionMessageExist(npe);
+            ExceptionAssert.assertMessageExist(npe);
         }
     }
 
@@ -94,7 +94,7 @@ public class RendererTest extends TestCase {
             renderer.encodeBegin(new NullFacesContext(), null);
             fail();
         } catch (NullPointerException npe) {
-            AssertUtil.assertExceptionMessageExist(npe);
+            ExceptionAssert.assertMessageExist(npe);
         }
     }
 
@@ -104,7 +104,7 @@ public class RendererTest extends TestCase {
             renderer.encodeChildren(null, new NullUIComponent());
             fail();
         } catch (NullPointerException npe) {
-            AssertUtil.assertExceptionMessageExist(npe);
+            ExceptionAssert.assertMessageExist(npe);
         }
     }
 
@@ -114,7 +114,7 @@ public class RendererTest extends TestCase {
             renderer.encodeChildren(new NullFacesContext(), null);
             fail();
         } catch (NullPointerException npe) {
-            AssertUtil.assertExceptionMessageExist(npe);
+            ExceptionAssert.assertMessageExist(npe);
         }
     }
 
@@ -124,7 +124,7 @@ public class RendererTest extends TestCase {
             renderer.encodeEnd(null, new NullUIComponent());
             fail();
         } catch (NullPointerException npe) {
-            AssertUtil.assertExceptionMessageExist(npe);
+            ExceptionAssert.assertMessageExist(npe);
         }
     }
 
@@ -134,7 +134,7 @@ public class RendererTest extends TestCase {
             renderer.encodeEnd(new NullFacesContext(), null);
             fail();
         } catch (NullPointerException npe) {
-            AssertUtil.assertExceptionMessageExist(npe);
+            ExceptionAssert.assertMessageExist(npe);
         }
     }
 
@@ -146,7 +146,7 @@ public class RendererTest extends TestCase {
                     new Object());
             fail();
         } catch (NullPointerException npe) {
-            AssertUtil.assertExceptionMessageExist(npe);
+            ExceptionAssert.assertMessageExist(npe);
         }
     }
 
@@ -158,7 +158,7 @@ public class RendererTest extends TestCase {
                     new Object());
             fail();
         } catch (NullPointerException npe) {
-            AssertUtil.assertExceptionMessageExist(npe);
+            ExceptionAssert.assertMessageExist(npe);
         }
     }
 
