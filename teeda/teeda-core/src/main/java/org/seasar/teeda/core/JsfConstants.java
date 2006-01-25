@@ -84,6 +84,8 @@ public interface JsfConstants {
 
     public String ANCHOR_ELEM = "a";
 
+    public String IMG_ELEM = "img";
+
     public String INPUT_ELEM = "input";
 
     public String SPAN_ELEM = "span";
@@ -156,13 +158,21 @@ public interface JsfConstants {
 
     public String HREFLANG_ATTR = "hreflang";
 
+    public String HEIGHT_ATTR = "height";
+
+    public String HSPACE_ATTR = "hspace";
+
     public String ID_ATTR = "id";
 
     public String IMAGE_ATTR = "image";
 
+    public String ISMAP_ATTR = "ismap";
+
     public String LABEL_ATTR = "label";
 
     public String LANG_ATTR = "lang";
+
+    public String LONGDESC_ATTR = "longdesc";
 
     public String MAXLENGTH_ATTR = "maxlength";
 
@@ -230,7 +240,11 @@ public interface JsfConstants {
 
     public String TYPE_ATTR = "type";
 
+    public String USEMAP_ATTR = "usemap";
+
     public String VALUE_ATTR = "value";
+
+    public String VSPACE_ATTR = "vspace";
 
     public String WIDTH_ATTR = "width";
 
@@ -319,6 +333,13 @@ public interface JsfConstants {
 
     public String[] TABLE_PASSTHROUGH_ATTRIBUTES = (String[]) ArrayUtil.add(
             TABLE_ATTRIBUTES, COMMON_PASSTROUGH_ATTRIBUTES);
+
+    public String[] IMG_ATTRIBUTES = { ALIGN_ATTR, ALT_ATTR, BORDER_ATTR,
+            HEIGHT_ATTR, HSPACE_ATTR, ISMAP_ATTR, LONGDESC_ATTR, USEMAP_ATTR,
+            VSPACE_ATTR, WIDTH_ATTR };
+
+    public String[] IMG_PASSTHROUGH_ATTRIBUTES = (String[]) ArrayUtil.add(
+            IMG_ATTRIBUTES, COMMON_PASSTROUGH_ATTRIBUTES);
 
     public String DEFAULT_RENDERKIT_CLASS = HtmlRenderKitImpl.class.getName();
 

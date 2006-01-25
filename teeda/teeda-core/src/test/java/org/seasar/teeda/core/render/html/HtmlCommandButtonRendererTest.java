@@ -267,8 +267,7 @@ public class HtmlCommandButtonRendererTest extends RendererTest {
     }
 
     public void testGetRendersChildren() throws Exception {
-        HtmlCommandButtonRenderer renderer = new HtmlCommandButtonRenderer();
-        assertEquals(false, renderer.getRendersChildren());
+        assertEquals(false, renderer_.getRendersChildren());
     }
 
     private HtmlCommandButtonRenderer createHtmlCommandButtonRenderer() {

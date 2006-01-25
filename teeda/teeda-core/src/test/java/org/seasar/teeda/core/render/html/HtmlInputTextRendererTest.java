@@ -174,7 +174,6 @@ public class HtmlInputTextRendererTest extends RendererTest {
     }
 
     public void testGetRendersChildren() throws Exception {
-        HtmlInputTextRenderer renderer = new HtmlInputTextRenderer();
         assertEquals(false, renderer_.getRendersChildren());
     }
 

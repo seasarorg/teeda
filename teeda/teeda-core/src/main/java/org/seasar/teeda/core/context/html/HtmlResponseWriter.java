@@ -33,6 +33,8 @@ import org.apache.commons.lang.ArrayUtils;
  */
 public class HtmlResponseWriter extends ResponseWriter {
 
+    private static final String DEFAULT_CHARACTER_ENCODING = "UTF-8";
+
     private static List EMPTY_ELEMENTS = Arrays
             .asList(new String[] { "area", "br", "base", "col", "hr", "img",
                     "input", "link", "meta", "param" });
@@ -44,8 +46,6 @@ public class HtmlResponseWriter extends ResponseWriter {
     private String characterEncoding_;
 
     private boolean startTagOpening_;
-
-    private static final String DEFAULT_CHARACTER_ENCODING = "UTF-8";
 
     public void startElement(String name, UIComponent componentForElement)
             throws IOException {

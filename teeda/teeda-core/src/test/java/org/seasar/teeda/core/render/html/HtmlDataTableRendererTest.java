@@ -621,8 +621,7 @@ public class HtmlDataTableRendererTest extends RendererTest {
     // TODO test
 
     public void testGetRendersChildren() throws Exception {
-        HtmlDataTableRenderer renderer = new HtmlDataTableRenderer();
-        assertEquals(true, renderer.getRendersChildren());
+        assertEquals(true, renderer_.getRendersChildren());
     }
 
     private HtmlDataTableRenderer createHtmlDataTableRenderer() {
