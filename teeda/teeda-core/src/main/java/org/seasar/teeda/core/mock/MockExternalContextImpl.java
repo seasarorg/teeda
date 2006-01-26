@@ -18,8 +18,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.seasar.framework.mock.servlet.MockHttpServletRequest;
+import org.seasar.framework.mock.servlet.MockHttpServletRequestImpl;
 import org.seasar.framework.mock.servlet.MockHttpServletResponse;
+import org.seasar.framework.mock.servlet.MockHttpServletResponseImpl;
 import org.seasar.framework.mock.servlet.MockServletContext;
+import org.seasar.framework.mock.servlet.MockServletContextImpl;
 
 public class MockExternalContextImpl extends MockExternalContext {
 
@@ -79,7 +82,7 @@ public class MockExternalContextImpl extends MockExternalContext {
     }
 
     public String encodeResourceURL(String url) {
-        return response_.encodeURL(url);
+        return getHttpServletResponse().encodeURL(url);
     }
 
     public Map getApplicationMap() {
@@ -91,6 +94,13 @@ public class MockExternalContextImpl extends MockExternalContext {
     }
 
     public Object getContext() {
+        return getServletContext();
+    }
+
+    MockServletContext getServletContext() {
+        if (context_ == null) {
+            context_ = new MockServletContextImpl("/mock-context");
+        }
         return context_;
     }
 
@@ -113,6 +123,14 @@ public class MockExternalContextImpl extends MockExternalContext {
     }
 
     public Object getRequest() {
+        return getHttpServletRequest();
+    }
+
+    MockHttpServletRequest getHttpServletRequest() {
+        if (request_ == null) {
+            request_ = new MockHttpServletRequestImpl(getServletContext(),
+                    "/mock-path.html");
+        }
         return request_;
     }
 
@@ -183,6 +201,13 @@ public class MockExternalContextImpl extends MockExternalContext {
     }
 
     public Object getResponse() {
+        return getHttpServletResponse();
+    }
+
+    HttpServletResponse getHttpServletResponse() {
+        if (response_ == null) {
+            response_ = new MockHttpServletResponseImpl(getHttpServletRequest());
+        }
         return response_;
     }
 

@@ -72,7 +72,7 @@ public class MockApplication extends Application {
     private Map convertersByClass_ = new HashMap();
 
     private Map validators_ = new HashMap();
-    
+
     public MockApplication() {
     }
 
@@ -142,6 +142,9 @@ public class MockApplication extends Application {
     }
 
     public ViewHandler getViewHandler() {
+        if (viewHandler_ == null) {
+            viewHandler_ = new MockViewHandler();
+        }
         return viewHandler_;
     }
 
@@ -199,7 +202,7 @@ public class MockApplication extends Application {
 
     public Converter createConverter(String converterId) {
         Converter converter = null;
-        if(convertersById_.containsKey(converterId)){
+        if (convertersById_.containsKey(converterId)) {
             String className = (String) convertersById_.get(converterId);
             converter = (Converter) ClassUtil.newInstance(className);
         }
@@ -208,7 +211,7 @@ public class MockApplication extends Application {
 
     public Converter createConverter(Class targetClass) {
         Converter converter = null;
-        if(convertersByClass_.containsKey(targetClass)){
+        if (convertersByClass_.containsKey(targetClass)) {
             String className = (String) convertersByClass_.get(targetClass);
             converter = (Converter) ClassUtil.newInstance(className);
         }
@@ -222,7 +225,7 @@ public class MockApplication extends Application {
     public Validator createValidator(String validatorId) throws FacesException {
         String validatorClass = (String) validators_.get(validatorId);
         Validator v = null;
-        if(validatorClass != null){
+        if (validatorClass != null) {
             v = (Validator) ClassUtil.newInstance(validatorClass);
         }
         return v;

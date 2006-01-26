@@ -24,6 +24,7 @@ import junit.framework.TestCase;
 
 import org.seasar.framework.util.SPrintWriter;
 import org.seasar.teeda.core.context.html.HtmlResponseWriter;
+import org.seasar.teeda.core.mock.MockApplication;
 import org.seasar.teeda.core.mock.MockExternalContext;
 import org.seasar.teeda.core.mock.MockExternalContextImpl;
 import org.seasar.teeda.core.mock.MockFacesContext;
@@ -183,7 +184,7 @@ public class RendererTest extends TestCase {
         UIViewRoot viewRoot = new UIViewRoot();
         facesContext_.setViewRoot(viewRoot);
     }
-    
+
     protected void tearDown() throws Exception {
         facesContext_.release();
         super.tearDown();

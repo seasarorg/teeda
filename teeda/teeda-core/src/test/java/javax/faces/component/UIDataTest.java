@@ -196,8 +196,6 @@ public class UIDataTest extends UIComponentBaseTest {
         assertEquals(1, data.getRowIndex());
     }
 
-    // FIXME in case setFirst(2)
-
     public void testSetGetRowIndex_MinusOne() throws Exception {
         // ## Arrange ##
         UIData data = createUIData();

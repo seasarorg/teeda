@@ -15,22 +15,25 @@
  */
 package org.seasar.teeda.core.render.html;
 
+import javax.faces.application.ViewHandler;
 import javax.faces.component.UIComponent;
 import javax.faces.component.html.HtmlGraphicImage;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.render.Renderer;
 import javax.faces.render.RendererTest;
 
 import org.custommonkey.xmlunit.Diff;
+import org.seasar.teeda.core.mock.MockApplication;
 import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.mock.MockUIComponentBaseWithNamingContainer;
+import org.seasar.teeda.core.mock.MockViewHandler;
+import org.seasar.teeda.core.mock.NullExternalContext;
 
 /**
  * @author manhole
  */
 public class HtmlGraphicImageRendererTest extends RendererTest {
-    
-    // FIXME image URL should be encoded!
 
     private HtmlGraphicImageRenderer renderer_;
 
@@ -90,7 +93,43 @@ public class HtmlGraphicImageRendererTest extends RendererTest {
         assertEquals("<img id=\"a\" src=\"\" />", getResponseText());
     }
 
+    public void testEncodeEnd_UrlEncode() throws Exception {
+        // ## Arrange ##
+        final ExternalContext externalContext = new NullExternalContext() {
+            public String encodeResourceURL(String url) {
+                return url + "_2";
+            }
+        };
+
+        final MockApplication application = new MockApplication() {
+            public ViewHandler getViewHandler() {
+                return new MockViewHandler() {
+                    public String getResourceURL(FacesContext context,
+                            String path) {
+                        return path + "_1";
+                    }
+                };
+            }
+        };
+        MockFacesContext context = getFacesContext();
+        context.setApplication(application);
+        context.setExternalContext(externalContext);
+
+        htmlGraphicImage_.setValue("abc");
+
+        // ## Act ##
+        renderer_.encodeEnd(context, htmlGraphicImage_);
+
+        // ## Assert ##
+        assertEquals("<img src=\"abc_1_2\" />", getResponseText());
+    }
+
     public void testEncodeEnd_WithAllAttributes() throws Exception {
+        MockApplication application = new MockApplication();
+        application.setViewHandler(new MockViewHandler());
+        MockFacesContext context = getFacesContext();
+        context.setApplication(application);
+
         htmlGraphicImage_.setAlt("a");
         htmlGraphicImage_.setDir("b");
         htmlGraphicImage_.setHeight("c");
@@ -116,7 +155,6 @@ public class HtmlGraphicImageRendererTest extends RendererTest {
         htmlGraphicImage_.setId("A");
         htmlGraphicImage_.setValue("B");
 
-        MockFacesContext context = getFacesContext();
         renderer_.encodeBegin(context, htmlGraphicImage_);
         renderer_.encodeEnd(context, htmlGraphicImage_);
 

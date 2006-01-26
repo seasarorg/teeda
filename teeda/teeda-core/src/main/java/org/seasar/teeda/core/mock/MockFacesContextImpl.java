@@ -56,10 +56,11 @@ public class MockFacesContextImpl extends MockFacesContext {
 
     public MockFacesContextImpl(ExternalContext context) {
         context_ = context;
-        application_ = FactoryFinderUtil.getApplicationFactory().getApplication();
+        application_ = FactoryFinderUtil.getApplicationFactory()
+                .getApplication();
         setCurrentInstance(this);
     }
-    
+
     public MockFacesContextImpl(ExternalContext context, Application application) {
         context_ = context;
         application_ = application;
@@ -67,6 +68,9 @@ public class MockFacesContextImpl extends MockFacesContext {
     }
 
     public Application getApplication() {
+        if (application_ == null) {
+            application_ = new MockApplication();
+        }
         return application_;
     }
 
@@ -75,6 +79,9 @@ public class MockFacesContextImpl extends MockFacesContext {
     }
 
     public ExternalContext getExternalContext() {
+        if (context_ == null) {
+            context_ = new MockExternalContextImpl();
+        }
         return context_;
     }
 
