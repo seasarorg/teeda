@@ -22,6 +22,7 @@ import java.util.List;
 import javax.xml.transform.stream.StreamSource;
 
 import junit.framework.AssertionFailedError;
+import junit.framework.TestCase;
 
 import org.custommonkey.xmlunit.AbstractNodeTester;
 import org.custommonkey.xmlunit.CountingNodeTester;
@@ -37,7 +38,7 @@ import org.custommonkey.xmlunit.NodeTestException;
 import org.custommonkey.xmlunit.TolerantSaxDocumentBuilder;
 import org.custommonkey.xmlunit.Transform;
 import org.custommonkey.xmlunit.Validator;
-import org.custommonkey.xmlunit.XMLTestCase;
+import org.custommonkey.xmlunit.XMLAssert;
 import org.custommonkey.xmlunit.XMLUnit;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -69,18 +70,19 @@ import org.w3c.dom.Text;
  * 
  * @author manhole
  */
-public class XmlUnitLearningTest extends XMLTestCase {
+public class XmlUnitLearningTest extends /* XMLTestCase */TestCase {
+
     public void testForEquality() throws Exception {
         String myControlXML = "<msg><uuid>0x00435A8C</uuid></msg>";
         String myTestXML = "<msg><localId>2376</localId></msg>";
         try {
-            assertXMLEqual("comparing test xml to control xml", myControlXML,
-                    myTestXML);
+            XMLAssert.assertXMLEqual("comparing test xml to control xml",
+                    myControlXML, myTestXML);
             throw new RuntimeException();
         } catch (AssertionFailedError expected) {
         }
-        assertXMLNotEqual("test xml not similar to control xml", myControlXML,
-                myTestXML);
+        XMLAssert.assertXMLNotEqual("test xml not similar to control xml",
+                myControlXML, myTestXML);
     }
 
     public void testSimilarAndNotIdentical() throws Exception {
@@ -104,7 +106,7 @@ public class XmlUnitLearningTest extends XMLTestCase {
                 + "<item id=\"2\">Plague</item><item id=\"3\">Famine</item></news>";
         String myTestXML = "<news><item id=\"1\">Peace</item>"
                 + "<item id=\"2\">Health</item><item id=\"3\">Plenty</item></news>";
-        DetailedDiff myDiff = new DetailedDiff(compareXML(myControlXML,
+        DetailedDiff myDiff = new DetailedDiff(XMLUnit.compareXML(myControlXML,
                 myTestXML));
         List allDifferences = myDiff.getAllDifferences();
         System.out.println(myDiff.toString());
@@ -126,15 +128,17 @@ public class XmlUnitLearningTest extends XMLTestCase {
         String myControlXML = "<suite><test status=\"pass\">FirstTestCase</test><test status=\"pass\">SecondTestCase</test></suite>";
         String myTestXML = "<suite><test status=\"pass\">SecondTestCase</test><test status=\"pass\">FirstTestCase</test></suite>";
 
-        assertXMLNotEqual(
-                "Repeated child elements in different sequence order are not equal by default",
-                myControlXML, myTestXML);
+        XMLAssert
+                .assertXMLNotEqual(
+                        "Repeated child elements in different sequence order are not equal by default",
+                        myControlXML, myTestXML);
 
         Diff myDiff = new Diff(myControlXML, myTestXML);
         myDiff.overrideElementQualifier(new ElementNameAndTextQualifier());
-        assertXMLEqual(
-                "But they are equal when an ElementQualifier controls which test element is compared with each control element",
-                myDiff, true);
+        XMLAssert
+                .assertXMLEqual(
+                        "But they are equal when an ElementQualifier controls which test element is compared with each control element",
+                        myDiff, true);
     }
 
     public void pending_testXSLTransformation() throws Exception {
@@ -173,38 +177,47 @@ public class XmlUnitLearningTest extends XMLTestCase {
     }
 
     public void testXPaths() throws Exception {
-        String mySolarSystemXML = "<solar-system><planet name='Earth' position='3' supportsLife='yes'/>"
-                + "<planet name='Venus' position='4'/></solar-system>";
-        assertXpathExists("//planet[@name='Earth']", mySolarSystemXML);
-        assertXpathNotExists("//star[@name='alpha centauri']", mySolarSystemXML);
-        assertXpathsEqual("//planet[@name='Earth']", "//planet[@position='3']",
+        String mySolarSystemXML = "<solar-system>"
+                + "<planet name='Earth' position='3' supportsLife='yes'/>"
+                + "<planet name='Venus' position='4'/>" + "</solar-system>";
+
+        XMLAssert
+                .assertXpathExists("//planet[@name='Earth']", mySolarSystemXML);
+        XMLAssert.assertXpathNotExists("//star[@name='alpha centauri']",
                 mySolarSystemXML);
-        assertXpathsNotEqual("//planet[@name='Venus']",
+        XMLAssert.assertXpathsEqual("//planet[@name='Earth']",
+                "//planet[@position='3']", mySolarSystemXML);
+        XMLAssert.assertXpathsNotEqual("//planet[@name='Venus']",
                 "//planet[@supportsLife='yes']", mySolarSystemXML);
     }
 
     public void testXPathValues() throws Exception {
-        String myJavaFlavours = "<java-flavours><jvm current='some platforms'>1.1.x</jvm>"
+        String myJavaFlavours = "<java-flavours>"
+                + "<jvm current='some platforms'>1.1.x</jvm>"
                 + "<jvm current='no'>1.2.x</jvm><jvm current='yes'>1.3.x</jvm>"
-                + "<jvm current='yes' latest='yes'>1.4.x</jvm></java-flavours>";
-        assertXpathEvaluatesTo("1.4.x", "//jvm[@latest='yes']", myJavaFlavours);
-        assertXpathEvaluatesTo("2", "count(//jvm[@current='yes'])",
+                + "<jvm current='yes' latest='yes'>1.4.x</jvm>"
+                + "</java-flavours>";
+
+        XMLAssert.assertXpathEvaluatesTo("1.4.x", "//jvm[@latest='yes']",
                 myJavaFlavours);
-        assertXpathValuesEqual("//jvm[4]/@latest", "//jvm[4]/@current",
+        XMLAssert.assertXpathEvaluatesTo("2", "count(//jvm[@current='yes'])",
                 myJavaFlavours);
-        assertXpathValuesNotEqual("//jvm[2]/@current", "//jvm[3]/@current",
-                myJavaFlavours);
+        XMLAssert.assertXpathValuesEqual("//jvm[4]/@latest",
+                "//jvm[4]/@current", myJavaFlavours);
+        XMLAssert.assertXpathValuesNotEqual("//jvm[2]/@current",
+                "//jvm[3]/@current", myJavaFlavours);
     }
 
     public void testXpathsInHTML() throws Exception {
         String someBadlyFormedHTML = "<html><title>Ugh</title><body><h1>Heading<ul><li id='1'>Item One<li id='2'>Item Two";
+
         TolerantSaxDocumentBuilder tolerantSaxDocumentBuilder = new TolerantSaxDocumentBuilder(
                 XMLUnit.getTestParser());
         HTMLDocumentBuilder htmlDocumentBuilder = new HTMLDocumentBuilder(
                 tolerantSaxDocumentBuilder);
         Document wellFormedDocument = htmlDocumentBuilder
                 .parse(someBadlyFormedHTML);
-        assertXpathEvaluatesTo("Item One", "/html/body//li[@id='1']",
+        XMLAssert.assertXpathEvaluatesTo("Item One", "/html/body//li[@id='1']",
                 wellFormedDocument);
     }
 
@@ -212,15 +225,16 @@ public class XmlUnitLearningTest extends XMLTestCase {
         String testXML = "<fibonacci><val>1</val><val>2</val><val>3</val>"
                 + "<val>5</val><val>9</val></fibonacci>";
         CountingNodeTester countingNodeTester = new CountingNodeTester(5);
-        assertNodeTestPasses(testXML, countingNodeTester, Node.TEXT_NODE);
+        XMLAssert.assertNodeTestPasses(testXML, countingNodeTester,
+                Node.TEXT_NODE);
     }
 
     public void testCustomNodeTester() throws Exception {
         String testXML = "<fibonacci><val>1</val><val>2</val><val>3</val>"
                 + "<val>5</val><val>8</val></fibonacci>";
         NodeTest nodeTest = new NodeTest(testXML);
-        assertNodeTestPasses(nodeTest, new FibonacciNodeTester(), new short[] {
-                Node.TEXT_NODE, Node.ELEMENT_NODE }, true);
+        XMLAssert.assertNodeTestPasses(nodeTest, new FibonacciNodeTester(),
+                new short[] { Node.TEXT_NODE, Node.ELEMENT_NODE }, true);
     }
 
     private class FibonacciNodeTester extends AbstractNodeTester {
@@ -246,4 +260,5 @@ public class XmlUnitLearningTest extends XMLTestCase {
         public void noMoreNodes(NodeTest nodeTest) throws NodeTestException {
         }
     }
+
 }
