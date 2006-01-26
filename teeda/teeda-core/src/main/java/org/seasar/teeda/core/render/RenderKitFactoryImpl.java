@@ -56,7 +56,7 @@ public class RenderKitFactoryImpl extends RenderKitFactory {
         }
         RenderKit renderKit = (RenderKit) renderKits_.get(renderKitId);
         if (renderKit == null) {
-            logger_.warn("RenderKit for " + renderKitId + " is null.");
+            logger_.warn("RenderKit " + renderKitId + " is null.");
         }
         return renderKit;
     }
@@ -65,7 +65,7 @@ public class RenderKitFactoryImpl extends RenderKitFactory {
         return renderKits_.keySet().iterator();
     }
 
-    private void initialize() {
+    protected void initialize() {
         RenderKit renderKit = (RenderKit) DIContainerUtil
                 .getComponentNoException(RenderKit.class);
         if (renderKit != null) {

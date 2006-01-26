@@ -30,6 +30,8 @@ import org.seasar.teeda.core.scope.ScopeManager;
 
 /**
  * @author shot
+ * 
+ * TODO need support ValueBinding for list-entries, map-entries, and managed-property
  */
 public class ManagedBeanFactoryImpl implements ManagedBeanFactory {
 
