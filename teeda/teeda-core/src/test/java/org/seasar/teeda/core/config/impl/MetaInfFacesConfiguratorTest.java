@@ -44,15 +44,6 @@ import org.seasar.teeda.core.util.FactoryFinderUtil;
  */
 public class MetaInfFacesConfiguratorTest extends S2TestCase {
 
-    /**
-     * Constructor for MetaInfFacesConfiguratorTest.
-     * 
-     * @param name
-     */
-    public MetaInfFacesConfiguratorTest(String name) {
-        super(name);
-    }
-
     public void testConfigure1() throws Exception {
         ClassLoader orgCl = Thread.currentThread().getContextClassLoader();
         File projectRoot = new File(".").getCanonicalFile();
@@ -72,13 +63,13 @@ public class MetaInfFacesConfiguratorTest extends S2TestCase {
             System.out.println(jars[i].toURL());
             jarUrls[i] = jars[i].toURL();
         }
-        URLClassLoader cl = new URLClassLoader(jarUrls);
+        URLClassLoader cl = new URLClassLoader(jarUrls, orgCl);
         try {
             Thread.currentThread().setContextClassLoader(cl);
-            
+
             // ## Arrange ##
             String path = getClass().getPackage().getName().replace('.', '/');
-            
+
             ExternalContext externalContext = new MockExternalContextImpl(
                     getServletContext(), getRequest(), getResponse());
 
@@ -104,7 +95,8 @@ public class MetaInfFacesConfiguratorTest extends S2TestCase {
             // ## Assert ##
             ApplicationFactory appFactory = FactoryFinderUtil
                     .getApplicationFactory();
-            ObjectAssert.assertInstanceOf(MockApplicationFactory.class, appFactory);
+            ObjectAssert.assertInstanceOf(MockApplicationFactory.class,
+                    appFactory);
 
             LifecycleFactory lifecycleFactory = FactoryFinderUtil
                     .getLifecycleFactory();
@@ -120,10 +112,10 @@ public class MetaInfFacesConfiguratorTest extends S2TestCase {
                     .getRenderKitFactory();
             ObjectAssert.assertInstanceOf(MockRenderKitFactory.class,
                     renderKitFactory);
-            
+
         } finally {
             Thread.currentThread().setContextClassLoader(orgCl);
         }
     }
-}
 
+}
