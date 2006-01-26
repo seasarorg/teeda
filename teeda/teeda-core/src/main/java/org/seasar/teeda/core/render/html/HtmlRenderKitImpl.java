@@ -15,45 +15,113 @@
  */
 package org.seasar.teeda.core.render.html;
 
+import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Writer;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.faces.context.ResponseStream;
 import javax.faces.context.ResponseWriter;
-import javax.faces.render.RenderKit;
 import javax.faces.render.Renderer;
 import javax.faces.render.ResponseStateManager;
+
+import org.seasar.teeda.core.context.html.HtmlResponseWriter;
+import org.seasar.teeda.core.render.AbstractRenderKit;
+import org.seasar.teeda.core.util.HtmlRenderKitUtil;
 
 /**
  * @author shot
  */
-public class HtmlRenderKitImpl extends RenderKit {
+public class HtmlRenderKitImpl extends AbstractRenderKit {
 
-    //TODO impl this
+    private Map renderers_ = new HashMap();
+
+    private ResponseStateManager responseStateManager_;
+
+    private ResponseWriter responseWriter_;
+
+    public HtmlRenderKitImpl() {
+        responseStateManager_ = new HtmlResponseStateManager();
+    }
+
     public void addRenderer(String family, String renderType, Renderer renderer) {
-        // TODO Auto-generated method stub
+        assertNotNull("family", family);
+        assertNotNull("renderType", renderType);
+        assertNotNull("renderer", renderer);
+        String key = getGeneratedKey(family, renderType);
+        renderers_.put(key, renderer);
+    }
 
+    public Renderer getRenderer(String family, String renderType) {
+        assertNotNull("family", family);
+        assertNotNull("renderType", renderType);
+        String key = getGeneratedKey(family, renderType);
+        return (Renderer) renderers_.get(key);
+    }
+
+    public ResponseStream createResponseStream(final OutputStream out) {
+        return new ResponseStream() {
+
+            public void write(int b) throws IOException {
+                out.write(b);
+            }
+
+            public void close() throws IOException {
+                out.close();
+            }
+
+            public void flush() throws IOException {
+                out.flush();
+            }
+
+            public void write(byte[] bytes) throws IOException {
+                out.write(bytes, 0, bytes.length);
+            }
+
+            public void write(byte[] bytes, int off, int len)
+                    throws IOException {
+                out.write(bytes, off, len);
+            }
+
+        };
     }
 
     public ResponseWriter createResponseWriter(Writer writer,
             String contentTypeList, String characterEncoding) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    public ResponseStream createResponseStream(OutputStream outputstream) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    public Renderer getRenderer(String family, String renderType) {
-        // TODO Auto-generated method stub
-        return null;
+        HtmlResponseWriter htmlResponseWriter = null;
+        if(responseWriter_ != null && responseWriter_ instanceof HtmlResponseWriter) {
+            htmlResponseWriter = (HtmlResponseWriter) responseWriter_;
+        } else {
+            htmlResponseWriter = new HtmlResponseWriter();
+        }
+        htmlResponseWriter.setWriter(writer);
+        String contentType = HtmlRenderKitUtil.getContentType(contentTypeList);
+        htmlResponseWriter.setContentType(contentType);
+        htmlResponseWriter.setCharacterEncoding(characterEncoding);
+        return htmlResponseWriter;
     }
 
     public ResponseStateManager getResponseStateManager() {
-        // TODO Auto-generated method stub
-        return null;
+        return responseStateManager_;
     }
 
+    protected void setResponseWriter(ResponseWriter responseWriter) {
+        responseWriter_ = responseWriter;
+    }
+
+    protected String getGeneratedKey(String family, String renderType) {
+        return family + "." + renderType;
+    }
+
+    protected void setResponseStateManager(
+            ResponseStateManager responseStateManager) {
+        responseStateManager_ = responseStateManager;
+    }
+
+    private void assertNotNull(String message, Object target) {
+        if (target == null) {
+            throw new NullPointerException(message);
+        }
+    }
 }
