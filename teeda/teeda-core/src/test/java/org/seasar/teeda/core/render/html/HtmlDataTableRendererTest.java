@@ -20,7 +20,6 @@ import javax.faces.render.Renderer;
 import javax.faces.render.RendererTest;
 
 import org.seasar.teeda.core.mock.MockFacesContext;
-import org.seasar.teeda.core.render.html.HtmlDataTableRenderer.LoopList;
 
 /**
  * @author manhole
@@ -576,33 +575,6 @@ public class HtmlDataTableRendererTest extends RendererTest {
         // ## Assert ##
         assertEquals("<table><tfoot>" + "<tr><td>a</td></tr>"
                 + "<tr><td>col1</td></tr>" + "</tfoot>", getResponseText());
-    }
-
-    public void testLoopList() throws Exception {
-        LoopList loopList = new LoopList();
-        assertEquals(null, loopList.next());
-        assertEquals(true, loopList.isEmpty());
-        assertEquals(false, loopList.isNotEmpty());
-        loopList.add("a");
-        assertEquals(false, loopList.isEmpty());
-        assertEquals(true, loopList.isNotEmpty());
-        loopList.add("bb");
-        loopList.add("ccc");
-
-        assertEquals(false, loopList.isEmpty());
-        assertEquals(true, loopList.isNotEmpty());
-        assertEquals("a", loopList.next());
-        assertEquals("bb", loopList.next());
-        assertEquals("ccc", loopList.next());
-        assertEquals("a", loopList.next());
-        assertEquals("bb", loopList.next());
-        assertEquals("ccc", loopList.next());
-        assertEquals("a", loopList.next());
-        assertEquals("bb", loopList.next());
-        loopList.moveFirst();
-        assertEquals("a", loopList.next());
-        assertEquals("bb", loopList.next());
-        assertEquals("ccc", loopList.next());
     }
 
     public void testSplitByComma() throws Exception {

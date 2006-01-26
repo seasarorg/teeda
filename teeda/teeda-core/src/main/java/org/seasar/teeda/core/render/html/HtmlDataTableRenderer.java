@@ -29,6 +29,7 @@ import javax.faces.context.ResponseWriter;
 
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.core.util.LoopIterator;
 import org.seasar.teeda.core.util.RendererUtil;
 
 /**
@@ -192,10 +193,9 @@ public class HtmlDataTableRenderer extends AbstractHtmlRenderer {
 
         writer.startElement(JsfConstants.TBODY_ELEM, htmlDataTable);
 
-        LoopList rowClasses = toLoopList(splitByComma(htmlDataTable
-                .getRowClasses()));
-        LoopList columnClasses = toLoopList(splitByComma(htmlDataTable
-                .getColumnClasses()));
+        LoopIterator rowClasses = toLoopIterator(htmlDataTable.getRowClasses());
+        LoopIterator columnClasses = toLoopIterator(htmlDataTable
+                .getColumnClasses());
 
         int start = htmlDataTable.getFirst();
         int rows = htmlDataTable.getRows();
@@ -204,7 +204,7 @@ public class HtmlDataTableRenderer extends AbstractHtmlRenderer {
             allRow = false;
         }
         htmlDataTable.setRowIndex(start);
-        rowClasses.moveFirst();
+        rowClasses.reset();
         for (int rowIndex = start; ((allRow || 0 < rows) && htmlDataTable
                 .isRowAvailable());) {
             encodeBodyRow(context, htmlDataTable, writer, rowClasses,
@@ -218,13 +218,14 @@ public class HtmlDataTableRenderer extends AbstractHtmlRenderer {
 
     private void encodeBodyRow(FacesContext context,
             HtmlDataTable htmlDataTable, ResponseWriter writer,
-            LoopList rowClasses, LoopList columnClasses) throws IOException {
+            LoopIterator rowClasses, LoopIterator columnClasses)
+            throws IOException {
         writer.startElement(JsfConstants.TR_ELEM, htmlDataTable);
-        if (rowClasses.isNotEmpty()) {
+        if (rowClasses.hasNext()) {
             RendererUtil.renderAttribute(writer, JsfConstants.CLASS_ATTR,
                     rowClasses.next(), JsfConstants.ROW_CLASSES_ATTR);
         }
-        columnClasses.moveFirst();
+        columnClasses.reset();
         for (Iterator itColumn = new RenderedComponentIterator(htmlDataTable
                 .getChildren()); itColumn.hasNext();) {
             UIComponent col = (UIComponent) itColumn.next();
@@ -237,9 +238,10 @@ public class HtmlDataTableRenderer extends AbstractHtmlRenderer {
     }
 
     private void encodeBodyColumn(FacesContext context, UIColumn column,
-            ResponseWriter writer, LoopList columnClasses) throws IOException {
+            ResponseWriter writer, LoopIterator columnClasses)
+            throws IOException {
         writer.startElement(JsfConstants.TD_ELEM, column);
-        if (columnClasses.isNotEmpty()) {
+        if (columnClasses.hasNext()) {
             RendererUtil.renderAttribute(writer, JsfConstants.CLASS_ATTR,
                     columnClasses.next(), JsfConstants.COLUMN_CLASSES_ATTR);
         }
@@ -344,46 +346,8 @@ public class HtmlDataTableRenderer extends AbstractHtmlRenderer {
         return split;
     }
 
-    protected LoopList toLoopList(String[] s) {
-        LoopList loopList = new LoopList();
-        for (int i = 0; i < s.length; i++) {
-            loopList.add(s[i]);
-        }
-        return loopList;
-    }
-
-    protected static class LoopList {
-
-        List l_ = new ArrayList();
-
-        int pos_ = -1;
-
-        public void add(String s) {
-            l_.add(s);
-        }
-
-        public String next() {
-            if (l_.isEmpty()) {
-                return null;
-            }
-            pos_++;
-            if (!(pos_ < l_.size())) {
-                pos_ = 0;
-            }
-            return (String) l_.get(pos_);
-        }
-
-        public boolean isEmpty() {
-            return l_.isEmpty();
-        }
-
-        public boolean isNotEmpty() {
-            return !(isEmpty());
-        }
-
-        public void moveFirst() {
-            pos_ = -1;
-        }
+    LoopIterator toLoopIterator(String s) {
+        return new LoopIterator(splitByComma(s));
     }
 
 }
