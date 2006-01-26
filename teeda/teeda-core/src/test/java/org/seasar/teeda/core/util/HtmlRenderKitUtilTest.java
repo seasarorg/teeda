@@ -20,24 +20,26 @@ import org.seasar.teeda.core.unit.TeedaTestCase;
 /**
  * @author shot
  */
-public class HtmlRenderKitUtilTest extends TeedaTestCase{
+public class HtmlRenderKitUtilTest extends TeedaTestCase {
 
     public void testRemoveSemiColon_singleValues() throws Exception {
-        String[] strs = HtmlRenderKitUtil.removeSemiColon(new String[]{"aaa;"});
+        String[] strs = HtmlRenderKitUtil
+                .removeSemiColon(new String[] { "aaa;" });
         assertEquals("aaa", strs[0]);
     }
 
     public void testRemoveSemiColon_multipleValues() throws Exception {
-        String[] strs = HtmlRenderKitUtil.removeSemiColon(new String[]{"aaa", "bbb;"});
+        String[] strs = HtmlRenderKitUtil.removeSemiColon(new String[] { "aaa",
+                "bbb;" });
         assertEquals("aaa", strs[0]);
         assertEquals("bbb", strs[1]);
     }
-    
+
     public void testGetContentTypeFromFacesContext() throws Exception {
         getExternalContext().getRequestMap().put("Accept", "hoge");
         assertEquals("hoge", getExternalContext().getRequestMap().get("Accept"));
     }
-    
+
     public void testIsHtmlContentType() throws Exception {
         assertFalse(HtmlRenderKitUtil.isHtmlContentType("hoge"));
         assertTrue(HtmlRenderKitUtil.isHtmlContentType("text/html"));
@@ -52,4 +54,9 @@ public class HtmlRenderKitUtilTest extends TeedaTestCase{
         assertTrue(HtmlRenderKitUtil.isXmlContentType("text/xml"));
     }
 
+    public void testGetContentType() throws Exception {
+        assertNull(HtmlRenderKitUtil.getContentType("hoge"));
+        assertEquals("text/html", HtmlRenderKitUtil
+                .getContentType("hoge, text/html, foo"));
+    }
 }
