@@ -222,7 +222,7 @@ public class HtmlCommandButtonRendererTest extends RendererTest {
         htmlCommandButton.setClientId("key");
 
         MockFacesContext context = getFacesContext();
-        getExternalContext().getRequestParameterMap().put("key", "12345");
+        context.getExternalContext().getRequestParameterMap().put("key", "12345");
 
         // ## Act ##
         renderer_.decode(context, htmlCommandButton);
@@ -255,7 +255,7 @@ public class HtmlCommandButtonRendererTest extends RendererTest {
         htmlCommandButton.setClientId("key:aa");
 
         MockFacesContext context = getFacesContext();
-        getExternalContext().getRequestParameterMap().put(requestKey, "12345");
+        context.getExternalContext().getRequestParameterMap().put(requestKey, "12345");
 
         // ## Act ##
         renderer_.decode(context, htmlCommandButton);

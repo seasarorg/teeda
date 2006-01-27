@@ -89,7 +89,8 @@ public class HtmlInputTextRendererTest extends RendererTest {
 
         renderer_.encodeEnd(getFacesContext(), htmlInputText_);
 
-        assertEquals("<input type=\"text\" id=\"a\" name=\"b:a\" value=\"\" />",
+        assertEquals(
+                "<input type=\"text\" id=\"a\" name=\"b:a\" value=\"\" />",
                 getResponseText());
     }
 
@@ -164,7 +165,8 @@ public class HtmlInputTextRendererTest extends RendererTest {
         htmlInputText_.setClientId("key");
 
         MockFacesContext context = getFacesContext();
-        getExternalContext().getRequestParameterMap().put("key", "12345");
+        context.getExternalContext().getRequestParameterMap().put("key",
+                "12345");
 
         // ## Act ##
         renderer_.decode(context, htmlInputText_);

@@ -127,7 +127,7 @@ public class HtmlInputHiddenRendererTest extends RendererTest {
         htmlInputHidden_.setClientId("key:aa");
 
         MockFacesContext context = getFacesContext();
-        getExternalContext().getRequestParameterMap().put("key:aa", "12345");
+        context.getExternalContext().getRequestParameterMap().put("key:aa", "12345");
 
         // ## Act ##
         renderer_.decode(context, htmlInputHidden_);

@@ -90,7 +90,7 @@ public class MockExternalContextImpl extends MockExternalContext {
     }
 
     public String getAuthType() {
-        return request_.getAuthType();
+        return getHttpServletRequest().getAuthType();
     }
 
     public Object getContext() {
@@ -119,7 +119,7 @@ public class MockExternalContextImpl extends MockExternalContext {
     }
 
     public String getRemoteUser() {
-        return request_.getRemoteUser();
+        return getHttpServletRequest().getRemoteUser();
     }
 
     public Object getRequest() {
@@ -135,7 +135,7 @@ public class MockExternalContextImpl extends MockExternalContext {
     }
 
     public String getRequestContextPath() {
-        return request_.getContextPath();
+        return getHttpServletRequest().getContextPath();
     }
 
     public Map getRequestCookieMap() {
@@ -151,11 +151,11 @@ public class MockExternalContextImpl extends MockExternalContext {
     }
 
     public Locale getRequestLocale() {
-        return request_.getLocale();
+        return getHttpServletRequest().getLocale();
     }
 
     public Iterator getRequestLocales() {
-        return new LocalesIterator(request_.getLocales());
+        return new LocalesIterator(getHttpServletRequest().getLocales());
     }
 
     public Map getRequestMap() {
@@ -181,11 +181,11 @@ public class MockExternalContextImpl extends MockExternalContext {
     }
 
     public String getRequestPathInfo() {
-        return request_.getPathInfo();
+        return getHttpServletRequest().getPathInfo();
     }
 
     public String getRequestServletPath() {
-        return request_.getServletPath();
+        return getHttpServletRequest().getServletPath();
     }
 
     public URL getResource(String path) throws MalformedURLException {
@@ -212,23 +212,23 @@ public class MockExternalContextImpl extends MockExternalContext {
     }
 
     public Object getSession(boolean create) {
-        return request_.getSession(create);
+        return getHttpServletRequest().getSession(create);
     }
 
     public Map getSessionMap() {
         if (sessionMap_ == null) {
-            HttpSession session = request_.getSession(true);
+            HttpSession session = getHttpServletRequest().getSession(true);
             sessionMap_ = new MockSessionMap(session);
         }
         return sessionMap_;
     }
 
     public java.security.Principal getUserPrincipal() {
-        return request_.getUserPrincipal();
+        return getHttpServletRequest().getUserPrincipal();
     }
 
     public boolean isUserInRole(String role) {
-        return request_.isUserInRole(role);
+        return getHttpServletRequest().isUserInRole(role);
     }
 
     public void log(String message) {

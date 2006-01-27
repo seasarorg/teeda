@@ -16,7 +16,6 @@
 package javax.faces.render;
 
 import java.io.IOException;
-import java.util.HashMap;
 
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIViewRoot;
@@ -26,7 +25,6 @@ import junit.framework.TestCase;
 
 import org.seasar.framework.util.SPrintWriter;
 import org.seasar.teeda.core.context.html.HtmlResponseWriter;
-import org.seasar.teeda.core.mock.MockExternalContext;
 import org.seasar.teeda.core.mock.MockExternalContextImpl;
 import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.mock.MockFacesContextImpl;
@@ -168,15 +166,9 @@ public class RendererTest extends TestCase {
 
     private MockFacesContext facesContext_;
 
-    private MockExternalContextImpl externalContext_;
-
     protected void setUp() throws Exception {
         super.setUp();
         facesContext_ = new MockFacesContextImpl();
-
-        externalContext_ = new MockExternalContextImpl();
-        externalContext_.setRequestParameterMap(new HashMap());
-        facesContext_.setExternalContext(externalContext_);
 
         responseWriter_ = new HtmlResponseWriter();
         responseWriter_.setWriter(new SPrintWriter());
@@ -189,10 +181,6 @@ public class RendererTest extends TestCase {
     protected void tearDown() throws Exception {
         facesContext_.release();
         super.tearDown();
-    }
-
-    protected MockExternalContext getExternalContext() {
-        return externalContext_;
     }
 
     protected MockFacesContext getFacesContext() {

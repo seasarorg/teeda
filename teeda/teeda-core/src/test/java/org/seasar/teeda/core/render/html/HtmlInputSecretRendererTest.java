@@ -181,7 +181,7 @@ public class HtmlInputSecretRendererTest extends RendererTest {
         htmlInputSecret_.setClientId("key");
 
         MockFacesContext context = getFacesContext();
-        getExternalContext().getRequestParameterMap().put("key", "12345");
+        context.getExternalContext().getRequestParameterMap().put("key", "12345");
 
         // ## Act ##
         renderer_.decode(context, htmlInputSecret_);

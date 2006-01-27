@@ -151,7 +151,7 @@ public class HtmlFormRendererTest extends RendererTest {
         htmlForm_.setClientId("key1");
 
         MockFacesContext context = getFacesContext();
-        getExternalContext().getRequestParameterMap().put("key1", "12345");
+        context.getExternalContext().getRequestParameterMap().put("key1", "12345");
 
         // ## Act ##
         renderer_.decode(context, htmlForm_);

@@ -110,7 +110,7 @@ public class HtmlInputTextareaRendererTest extends RendererTest {
         htmlInputTextarea_.setClientId("key1");
 
         MockFacesContext context = getFacesContext();
-        getExternalContext().getRequestParameterMap().put("key1", "aabb");
+        context.getExternalContext().getRequestParameterMap().put("key1", "aabb");
 
         // ## Act ##
         renderer_.decode(context, htmlInputTextarea_);

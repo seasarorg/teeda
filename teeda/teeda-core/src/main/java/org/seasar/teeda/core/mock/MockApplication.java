@@ -126,6 +126,9 @@ public class MockApplication extends Application {
     }
 
     public PropertyResolver getPropertyResolver() {
+        if (propertyResolver_ == null) {
+            propertyResolver_ = new MockPropertyResolver();
+        }
         return propertyResolver_;
     }
 
@@ -134,6 +137,9 @@ public class MockApplication extends Application {
     }
 
     public VariableResolver getVariableResolver() {
+        if (variableResolver_ == null) {
+            variableResolver_ = new MockVariableResolver();
+        }
         return variableResolver_;
     }
 
