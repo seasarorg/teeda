@@ -53,14 +53,14 @@ public class HtmlResponseWriter extends ResponseWriter {
             throw new NullPointerException("name");
         }
         Writer writer = getWriter();
-        closeOpeningStartTag(writer);
+        closeStartTagIfOpening(writer);
         writer.write("<");
         writer.write(name);
 
         startTagOpening_ = true;
     }
 
-    protected void closeOpeningStartTag(Writer writer) throws IOException {
+    protected void closeStartTagIfOpening(Writer writer) throws IOException {
         if (startTagOpening_) {
             writer.write(">");
             startTagOpening_ = false;
@@ -73,7 +73,7 @@ public class HtmlResponseWriter extends ResponseWriter {
         }
         Writer writer = getWriter();
         if (startTagOpening_) {
-            if (EMPTY_ELEMENTS.contains(name)) {
+            if (isEmptyElement(name)) {
                 writer.write(" />");
             } else {
                 writer.write(">");
@@ -83,6 +83,10 @@ public class HtmlResponseWriter extends ResponseWriter {
         } else {
             writer.write("</" + name + ">");
         }
+    }
+
+    protected boolean isEmptyElement(String name) {
+        return EMPTY_ELEMENTS.contains(name);
     }
 
     public void writeAttribute(String name, Object value, String property)
@@ -127,7 +131,7 @@ public class HtmlResponseWriter extends ResponseWriter {
             throw new NullPointerException("comment");
         }
         Writer writer = getWriter();
-        closeOpeningStartTag(writer);
+        closeStartTagIfOpening(writer);
         writer.write("<!--");
         writer.write(comment.toString());
         writer.write("-->");
@@ -138,7 +142,7 @@ public class HtmlResponseWriter extends ResponseWriter {
             throw new NullPointerException("text");
         }
         Writer writer = getWriter();
-        closeOpeningStartTag(writer);
+        closeStartTagIfOpening(writer);
         writer.write(escapeHtml(text.toString()));
     }
 
@@ -191,43 +195,43 @@ public class HtmlResponseWriter extends ResponseWriter {
 
     public void write(char[] cbuf, int off, int len) throws IOException {
         Writer writer = getWriter();
-        closeOpeningStartTag(writer);
+        closeStartTagIfOpening(writer);
         writer.write(cbuf, off, len);
     }
 
     public void write(char[] cbuf) throws IOException {
         Writer writer = getWriter();
-        closeOpeningStartTag(writer);
+        closeStartTagIfOpening(writer);
         writer.write(cbuf);
     }
 
     public void write(int c) throws IOException {
         Writer writer = getWriter();
-        closeOpeningStartTag(writer);
+        closeStartTagIfOpening(writer);
         writer.write(c);
     }
 
     public void write(String str) throws IOException {
         Writer writer = getWriter();
-        closeOpeningStartTag(writer);
+        closeStartTagIfOpening(writer);
         writer.write(str);
     }
 
     public void write(String str, int off, int len) throws IOException {
         Writer writer = getWriter();
-        closeOpeningStartTag(writer);
+        closeStartTagIfOpening(writer);
         writer.write(str, off, len);
     }
 
     public void flush() throws IOException {
         Writer writer = getWriter();
-        closeOpeningStartTag(writer);
+        closeStartTagIfOpening(writer);
         writer.flush();
     }
 
     public void close() throws IOException {
         Writer writer = getWriter();
-        closeOpeningStartTag(writer);
+        closeStartTagIfOpening(writer);
         writer.close();
     }
 
@@ -235,7 +239,7 @@ public class HtmlResponseWriter extends ResponseWriter {
     }
 
     public void endDocument() throws IOException {
-        closeOpeningStartTag(getWriter());
+        closeStartTagIfOpening(getWriter());
     }
 
     public String getContentType() {

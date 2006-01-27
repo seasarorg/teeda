@@ -36,7 +36,7 @@ public class HtmlOutputLinkRenderer extends AbstractHtmlRenderer {
 
     public void encodeBegin(FacesContext context, UIComponent component)
             throws IOException {
-        super.encodeBegin(context, component);
+        assertNotNull(context, component);
         if (!component.isRendered()) {
             return;
         }
@@ -79,7 +79,7 @@ public class HtmlOutputLinkRenderer extends AbstractHtmlRenderer {
 
     public void encodeEnd(FacesContext context, UIComponent component)
             throws IOException {
-        super.encodeEnd(context, component);
+        assertNotNull(context, component);
         if (!component.isRendered()) {
             return;
         }
@@ -90,6 +90,10 @@ public class HtmlOutputLinkRenderer extends AbstractHtmlRenderer {
             HtmlOutputLink link) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
         writer.endElement(JsfConstants.ANCHOR_ELEM);
+    }
+
+    public boolean getRendersChildren() {
+        return true;
     }
 
 }

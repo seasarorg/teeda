@@ -33,7 +33,7 @@ public class HtmlOutputLabelRenderer extends AbstractHtmlRenderer {
 
     public void encodeBegin(FacesContext context, UIComponent component)
             throws IOException {
-        super.encodeBegin(context, component);
+        assertNotNull(context, component);
         if (!component.isRendered()) {
             return;
         }
@@ -69,7 +69,7 @@ public class HtmlOutputLabelRenderer extends AbstractHtmlRenderer {
 
     public void encodeEnd(FacesContext context, UIComponent component)
             throws IOException {
-        super.encodeEnd(context, component);
+        assertNotNull(context, component);
         if (!component.isRendered()) {
             return;
         }

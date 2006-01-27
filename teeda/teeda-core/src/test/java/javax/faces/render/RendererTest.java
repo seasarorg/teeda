@@ -18,7 +18,9 @@ package javax.faces.render;
 import java.io.IOException;
 import java.util.HashMap;
 
+import javax.faces.component.UIComponent;
 import javax.faces.component.UIViewRoot;
+import javax.faces.context.FacesContext;
 
 import junit.framework.TestCase;
 
@@ -203,6 +205,15 @@ public class RendererTest extends TestCase {
 
     protected Renderer createRenderer() {
         return new NullRenderer();
+    }
+
+    protected void encodeByRenderer(Renderer renderer, FacesContext context,
+            UIComponent component) throws IOException {
+        renderer.encodeBegin(context, component);
+        if (renderer.getRendersChildren()) {
+            renderer.encodeChildren(context, component);
+        }
+        renderer.encodeEnd(context, component);
     }
 
 }

@@ -15,9 +15,16 @@
  */
 package org.seasar.teeda.core.render.html;
 
+import java.io.IOException;
+import java.util.Collection;
+import java.util.Iterator;
+
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.render.Renderer;
+
+import org.seasar.framework.util.StringUtil;
+import org.seasar.teeda.core.util.LoopIterator;
 
 /**
  * @author manhole
@@ -31,6 +38,103 @@ public class AbstractHtmlRenderer extends Renderer {
             return id;
         }
         return component.getClientId(context);
+    }
+
+    protected UIComponent toNullIfNotRendered(UIComponent component) {
+        if (component != null && !component.isRendered()) {
+            component = null;
+        }
+        return component;
+    }
+
+    protected void encodeComponent(FacesContext context, UIComponent component)
+            throws IOException {
+        component.encodeBegin(context);
+        if (component.getRendersChildren()) {
+            component.encodeChildren(context);
+        }
+        component.encodeEnd(context);
+    }
+
+    protected void encodeComponentAndChildren(FacesContext context,
+            UIComponent component) throws IOException {
+        encodeComponent(context, component);
+        for (Iterator it = new RenderedComponentIterator(component
+                .getChildren()); it.hasNext();) {
+            UIComponent child = (UIComponent) it.next();
+            encodeComponentAndChildren(context, child);
+        }
+    }
+
+    protected void encodeDescendantComponent(FacesContext context,
+            UIComponent component) throws IOException {
+        for (Iterator it = new RenderedComponentIterator(component
+                .getChildren()); it.hasNext();) {
+            UIComponent child = (UIComponent) it.next();
+            encodeComponentAndChildren(context, child);
+        }
+    }
+
+    protected void assertNotNull(FacesContext context, UIComponent component) {
+        if (context == null) {
+            throw new NullPointerException("context");
+        }
+        if (component == null) {
+            throw new NullPointerException("component");
+        }
+    }
+
+    protected String[] splitByComma(String s) {
+        String[] split = StringUtil.split(s, " ,");
+        return split;
+    }
+
+    protected LoopIterator toLoopIteratorSplittedByComma(String s) {
+        return new LoopIterator(splitByComma(s));
+    }
+
+    protected static class RenderedComponentIterator implements Iterator {
+
+        private Iterator iterator_;
+
+        public RenderedComponentIterator(Collection c) {
+            iterator_ = c.iterator();
+        }
+
+        private UIComponent component_;
+
+        public boolean hasNext() {
+            if (component_ != null) {
+                return true;
+            }
+            while (iterator_.hasNext()) {
+                UIComponent component = (UIComponent) iterator_.next();
+                if (component.isRendered()) {
+                    component_ = component;
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public Object next() {
+            if (component_ != null) {
+                UIComponent component = component_;
+                component_ = null;
+                return component;
+            }
+            while (true) {
+                UIComponent component = (UIComponent) iterator_.next();
+                if (component.isRendered()) {
+                    return component;
+                }
+            }
+        }
+
+        public void remove() {
+            throw new UnsupportedOperationException("remove");
+        }
+
     }
 
 }

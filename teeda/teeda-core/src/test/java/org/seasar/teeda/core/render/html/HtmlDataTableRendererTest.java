@@ -48,6 +48,18 @@ public class HtmlDataTableRendererTest extends RendererTest {
         assertEquals("<table", getResponseText());
     }
 
+    public void testEncodeBeginToChildrenToEnd_RenderFalse() throws Exception {
+        // ## Arrange ##
+        htmlDataTable_.setRendered(false);
+        MockFacesContext context = getFacesContext();
+
+        // ## Act ##
+        encodeByRenderer(renderer_, context, htmlDataTable_);
+
+        // ## Assert ##
+        assertEquals("", getResponseText());
+    }
+
     public void testEncodeBegin_TableStyle() throws Exception {
         // ## Arrange ##
         htmlDataTable_.setStyle("s");
@@ -59,20 +71,6 @@ public class HtmlDataTableRendererTest extends RendererTest {
 
         // ## Assert ##
         assertEquals("<table style=\"s\" class=\"t\"", getResponseText());
-    }
-
-    public void testEncodeBeginToChildrenToEnd_RenderFalse() throws Exception {
-        // ## Arrange ##
-        htmlDataTable_.setRendered(false);
-        MockFacesContext context = getFacesContext();
-
-        // ## Act ##
-        renderer_.encodeBegin(context, htmlDataTable_);
-        renderer_.encodeChildren(context, htmlDataTable_);
-        renderer_.encodeEnd(context, htmlDataTable_);
-
-        // ## Assert ##
-        assertEquals("", getResponseText());
     }
 
     public void testEncodeBegin_Id() throws Exception {
@@ -93,9 +91,7 @@ public class HtmlDataTableRendererTest extends RendererTest {
         MockFacesContext context = getFacesContext();
 
         // ## Act ##
-        renderer_.encodeBegin(context, htmlDataTable_);
-        renderer_.encodeChildren(context, htmlDataTable_);
-        renderer_.encodeEnd(context, htmlDataTable_);
+        encodeByRenderer(renderer_, context, htmlDataTable_);
 
         // ## Assert ##
         assertEquals("<table><tbody></tbody></table>", getResponseText());
@@ -589,8 +585,6 @@ public class HtmlDataTableRendererTest extends RendererTest {
         assertEquals("c", result[2]);
         assertEquals("d", result[3]);
     }
-
-    // TODO test
 
     public void testGetRendersChildren() throws Exception {
         assertEquals(true, renderer_.getRendersChildren());

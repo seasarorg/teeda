@@ -34,7 +34,7 @@ public class HtmlInputSecretRenderer extends AbstractHtmlRenderer {
 
     public void encodeEnd(FacesContext context, UIComponent component)
             throws IOException {
-        super.encodeEnd(context, component);
+        assertNotNull(context, component);
         if (!component.isRendered()) {
             return;
         }
@@ -68,7 +68,7 @@ public class HtmlInputSecretRenderer extends AbstractHtmlRenderer {
     }
 
     public void decode(FacesContext context, UIComponent component) {
-        super.decode(context, component);
+        assertNotNull(context, component);
         decodeHtmlInputSecret(context, (HtmlInputSecret) component);
     }
 

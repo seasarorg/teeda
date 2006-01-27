@@ -17,7 +17,6 @@ package org.seasar.teeda.core.render.html;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -27,7 +26,6 @@ import javax.faces.component.html.HtmlDataTable;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
-import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.util.LoopIterator;
 import org.seasar.teeda.core.util.RendererUtil;
@@ -39,7 +37,7 @@ public class HtmlDataTableRenderer extends AbstractHtmlRenderer {
 
     public void encodeBegin(FacesContext context, UIComponent component)
             throws IOException {
-        super.encodeBegin(context, component);
+        assertNotNull(context, component);
         if (!component.isRendered()) {
             return;
         }
@@ -90,7 +88,9 @@ public class HtmlDataTableRenderer extends AbstractHtmlRenderer {
                 if (tableHeader != null) {
                     writer.startElement(JsfConstants.TR_ELEM, tableHeader);
                     writer.startElement(JsfConstants.TH_ELEM, tableHeader);
-                    writeColspanAttribute(writer, columns);
+                    RendererUtil.renderAttribute(writer,
+                            JsfConstants.COLSPAN_ATTR, new Integer(columns
+                                    .size()));
                     writer.writeAttribute(JsfConstants.SCOPE_ATTR,
                             JsfConstants.COLGROUP_VALUE, null);
                     RendererUtil.renderAttribute(writer,
@@ -135,7 +135,9 @@ public class HtmlDataTableRenderer extends AbstractHtmlRenderer {
                 if (tableFooter != null) {
                     writer.startElement(JsfConstants.TR_ELEM, tableFooter);
                     writer.startElement(JsfConstants.TD_ELEM, tableFooter);
-                    writeColspanAttribute(writer, columns);
+                    RendererUtil.renderAttribute(writer,
+                            JsfConstants.COLSPAN_ATTR, new Integer(columns
+                                    .size()));
                     RendererUtil.renderAttribute(writer,
                             JsfConstants.CLASS_ATTR, htmlDataTable
                                     .getFooterClass(),
@@ -166,21 +168,11 @@ public class HtmlDataTableRenderer extends AbstractHtmlRenderer {
                 writer.endElement(JsfConstants.TFOOT_ELEM);
             }
         }
-        // tbody
-        {
-        }
-    }
-
-    protected void encodeComponent(FacesContext context, UIComponent component)
-            throws IOException {
-        component.encodeBegin(context);
-        component.encodeChildren(context);
-        component.encodeEnd(context);
     }
 
     public void encodeChildren(FacesContext context, UIComponent component)
             throws IOException {
-        super.encodeChildren(context, component);
+        assertNotNull(context, component);
         if (!component.isRendered()) {
             return;
         }
@@ -193,8 +185,9 @@ public class HtmlDataTableRenderer extends AbstractHtmlRenderer {
 
         writer.startElement(JsfConstants.TBODY_ELEM, htmlDataTable);
 
-        LoopIterator rowClasses = toLoopIterator(htmlDataTable.getRowClasses());
-        LoopIterator columnClasses = toLoopIterator(htmlDataTable
+        LoopIterator rowClasses = toLoopIteratorSplittedByComma(htmlDataTable
+                .getRowClasses());
+        LoopIterator columnClasses = toLoopIteratorSplittedByComma(htmlDataTable
                 .getColumnClasses());
 
         int start = htmlDataTable.getFirst();
@@ -204,7 +197,6 @@ public class HtmlDataTableRenderer extends AbstractHtmlRenderer {
             allRow = false;
         }
         htmlDataTable.setRowIndex(start);
-        rowClasses.reset();
         for (int rowIndex = start; ((allRow || 0 < rows) && htmlDataTable
                 .isRowAvailable());) {
             encodeBodyRow(context, htmlDataTable, writer, rowClasses,
@@ -230,40 +222,26 @@ public class HtmlDataTableRenderer extends AbstractHtmlRenderer {
             UIComponent col = (UIComponent) itColumn.next();
             if (col instanceof UIColumn) {
                 UIColumn column = (UIColumn) col;
-                encodeBodyColumn(context, column, writer, columnClasses);
+                encodeBodyRowColumn(context, column, writer, columnClasses);
             }
         }
         writer.endElement(JsfConstants.TR_ELEM);
     }
 
-    private void encodeBodyColumn(FacesContext context, UIColumn column,
+    private void encodeBodyRowColumn(FacesContext context, UIColumn column,
             ResponseWriter writer, Iterator columnClasses) throws IOException {
         writer.startElement(JsfConstants.TD_ELEM, column);
         if (columnClasses.hasNext()) {
             RendererUtil.renderAttribute(writer, JsfConstants.CLASS_ATTR,
                     columnClasses.next(), JsfConstants.COLUMN_CLASSES_ATTR);
         }
-        for (Iterator itChild = new RenderedComponentIterator(column
-                .getChildren()); itChild.hasNext();) {
-            UIComponent component = (UIComponent) itChild.next();
-            encodeComponentAndChildren(context, component);
-        }
+        encodeDescendantComponent(context, column);
         writer.endElement(JsfConstants.TD_ELEM);
-    }
-
-    protected void encodeComponentAndChildren(FacesContext context,
-            UIComponent component) throws IOException {
-        encodeComponent(context, component);
-        for (Iterator it = new RenderedComponentIterator(component
-                .getChildren()); it.hasNext();) {
-            UIComponent child = (UIComponent) it.next();
-            encodeComponentAndChildren(context, child);
-        }
     }
 
     public void encodeEnd(FacesContext context, UIComponent component)
             throws IOException {
-        super.encodeEnd(context, component);
+        assertNotNull(context, component);
         if (!component.isRendered()) {
             return;
         }
@@ -278,74 +256,6 @@ public class HtmlDataTableRenderer extends AbstractHtmlRenderer {
 
     public boolean getRendersChildren() {
         return true;
-    }
-
-    private UIComponent toNullIfNotRendered(UIComponent component) {
-        if (component != null && !component.isRendered()) {
-            component = null;
-        }
-        return component;
-    }
-
-    private void writeColspanAttribute(ResponseWriter writer, final List columns)
-            throws IOException {
-        if (2 <= columns.size()) {
-            RendererUtil.renderAttribute(writer, JsfConstants.COLSPAN_ATTR,
-                    new Integer(columns.size()));
-        }
-    }
-
-    protected static class RenderedComponentIterator implements Iterator {
-
-        private Iterator iterator_;
-
-        RenderedComponentIterator(Collection c) {
-            iterator_ = c.iterator();
-        }
-
-        private UIComponent component_;
-
-        public boolean hasNext() {
-            if (component_ != null) {
-                return true;
-            }
-            while (iterator_.hasNext()) {
-                UIComponent component = (UIComponent) iterator_.next();
-                if (component.isRendered()) {
-                    component_ = component;
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        public Object next() {
-            if (component_ != null) {
-                UIComponent component = component_;
-                component_ = null;
-                return component;
-            }
-            while (true) {
-                UIComponent component = (UIComponent) iterator_.next();
-                if (component.isRendered()) {
-                    return component;
-                }
-            }
-        }
-
-        public void remove() {
-            throw new UnsupportedOperationException("remove");
-        }
-
-    }
-
-    protected String[] splitByComma(String s) {
-        String[] split = StringUtil.split(s, " ,");
-        return split;
-    }
-
-    LoopIterator toLoopIterator(String s) {
-        return new LoopIterator(splitByComma(s));
     }
 
 }

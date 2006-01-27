@@ -21,6 +21,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.ResponseWriter;
 
+import org.seasar.framework.util.IntegerConversionUtil;
 import org.seasar.teeda.core.JsfConstants;
 
 /**
@@ -59,7 +60,7 @@ public class RendererUtil {
     public static boolean renderAttribute(ResponseWriter writer,
             String attributeName, Object value, String propertyName)
             throws IOException {
-        if (isDefaultAttributeValue(value)) {
+        if (!shouldRenderAttribute(attributeName, value)) {
             return false;
         }
         attributeName = toHtmlAttributeName(attributeName);
@@ -76,6 +77,22 @@ public class RendererUtil {
         } else {
             return attributeName;
         }
+    }
+
+    static boolean shouldRenderAttribute(String attributeName, Object value) {
+        if (isDefaultAttributeValue(value)) {
+            return false;
+        }
+        if (JsfConstants.COLSPAN_ATTR.equals(attributeName)) {
+            Integer integerValue = IntegerConversionUtil.toInteger(value);
+            if (integerValue == null) {
+                return false;
+            }
+            if (integerValue.intValue() <= 1) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public static boolean isDefaultAttributeValue(Object value) {

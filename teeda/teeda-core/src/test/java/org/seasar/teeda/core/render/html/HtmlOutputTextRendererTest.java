@@ -15,6 +15,7 @@
  */
 package org.seasar.teeda.core.render.html;
 
+
 import javax.faces.component.UIViewRoot;
 import javax.faces.render.Renderer;
 import javax.faces.render.RendererTest;
@@ -45,13 +46,13 @@ public class HtmlOutputTextRendererTest extends RendererTest {
         assertEquals("abc", getResponseText());
     }
 
-    public void testEncodeEnd_RenderFalse() throws Exception {
+    public void testEncodeBeginToChildrenToEnd_RenderFalse() throws Exception {
         // ## Arrange ##
         htmlOutputText_.setRendered(false);
         htmlOutputText_.setValue("abc");
 
         // ## Act ##
-        renderer_.encodeEnd(getFacesContext(), htmlOutputText_);
+        encodeByRenderer(renderer_, getFacesContext(), htmlOutputText_);
 
         // ## Assert ##
         assertEquals("", getResponseText());
@@ -157,6 +158,23 @@ public class HtmlOutputTextRendererTest extends RendererTest {
         Diff diff = new Diff("<span" + " id=\"fooId\"" + " title=\"someTitle\""
                 + " onmouseout=\"do something\">a</span>", getResponseText());
         assertEquals(diff.toString(), true, diff.identical());
+    }
+
+    public void testEncodeBeginToChildrenToEnd_NotRenderChild()
+            throws Exception {
+        // ## Arrange ##
+        htmlOutputText_.setValue("abc");
+
+        MockHtmlOutputText child = new MockHtmlOutputText();
+        child.setRenderer(renderer_);
+        child.setValue("d");
+        htmlOutputText_.getChildren().add(child);
+
+        // ## Act ##
+        encodeByRenderer(renderer_, getFacesContext(), htmlOutputText_);
+
+        // ## Assert ##
+        assertEquals("abc", getResponseText());
     }
 
     public void testGetRendersChildren() throws Exception {
