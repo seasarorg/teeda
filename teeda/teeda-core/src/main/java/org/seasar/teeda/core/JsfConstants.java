@@ -76,6 +76,8 @@ public interface JsfConstants {
 
     public String IMAGE_VALUE = "image";
 
+    public String PASSWORD_VALUE = "password";
+
     public String POST_VALUE = "post";
 
     public String RESET_VALUE = "reset";

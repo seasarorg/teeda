@@ -89,6 +89,25 @@ public class DecodeUtilTest extends TestCase {
                 .getSubmittedValue());
     }
 
+    public void testDecode_WithNullContext() throws Exception {
+        try {
+            DecodeUtil.decode(null,
+                    new MockUIComponentBaseWithEditableValueHolder());
+            fail();
+        } catch (NullPointerException npe) {
+            ExceptionAssert.assertMessageExist(npe);
+        }
+    }
+
+    public void testDecode_WithNullComponent() throws Exception {
+        try {
+            DecodeUtil.decode(new NullFacesContext(), null);
+            fail();
+        } catch (NullPointerException npe) {
+            ExceptionAssert.assertMessageExist(npe);
+        }
+    }
+
     public void testDecode_WithNoEditableValueHolder() throws Exception {
         try {
             DecodeUtil.decode(new NullFacesContext(), new NullUIComponent());

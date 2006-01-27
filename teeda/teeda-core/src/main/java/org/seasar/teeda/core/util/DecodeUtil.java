@@ -33,6 +33,12 @@ public class DecodeUtil {
     }
 
     public static void decode(FacesContext context, UIComponent component) {
+        if (context == null) {
+            throw new NullPointerException("context");
+        }
+        if (component == null) {
+            throw new NullPointerException("component");
+        }
         if (!(component instanceof EditableValueHolder)) {
             throw new NoEditableValueHolderRuntimeException(component
                     .getClass());

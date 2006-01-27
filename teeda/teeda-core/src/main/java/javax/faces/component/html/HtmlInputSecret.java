@@ -19,6 +19,9 @@ import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
 
+/**
+ * @author shot
+ */
 public class HtmlInputSecret extends UIInput {
 
 	public static final String COMPONENT_TYPE = "javax.faces.HtmlInputSecret";

@@ -218,8 +218,7 @@ public class HtmlDataTableRenderer extends AbstractHtmlRenderer {
 
     private void encodeBodyRow(FacesContext context,
             HtmlDataTable htmlDataTable, ResponseWriter writer,
-            LoopIterator rowClasses, LoopIterator columnClasses)
-            throws IOException {
+            Iterator rowClasses, LoopIterator columnClasses) throws IOException {
         writer.startElement(JsfConstants.TR_ELEM, htmlDataTable);
         if (rowClasses.hasNext()) {
             RendererUtil.renderAttribute(writer, JsfConstants.CLASS_ATTR,
@@ -238,8 +237,7 @@ public class HtmlDataTableRenderer extends AbstractHtmlRenderer {
     }
 
     private void encodeBodyColumn(FacesContext context, UIColumn column,
-            ResponseWriter writer, LoopIterator columnClasses)
-            throws IOException {
+            ResponseWriter writer, Iterator columnClasses) throws IOException {
         writer.startElement(JsfConstants.TD_ELEM, column);
         if (columnClasses.hasNext()) {
             RendererUtil.renderAttribute(writer, JsfConstants.CLASS_ATTR,
