@@ -249,7 +249,7 @@ public class HtmlPanelGridRendererTest extends RendererTest {
     public void testEncodeChildren_RowAndColumnStyle() throws Exception {
         HtmlOutputTextRenderer htmlOutputTextRenderer = new HtmlOutputTextRenderer();
         htmlPanelGrid_.setColumnClasses("c1, c2, c3");
-        htmlPanelGrid_.setRowClasses("r1, r2");
+        htmlPanelGrid_.setRowClasses("r1a r1b, r2");
         htmlPanelGrid_.setColumns(7);
 
         for (int i = 0; i < 15; i++) {
@@ -268,7 +268,7 @@ public class HtmlPanelGridRendererTest extends RendererTest {
         // ## Assert ##
         assertEquals(
                 "<tbody>"
-                        + "<tr class=\"r1\">"
+                        + "<tr class=\"r1a r1b\">"
                         + "<td class=\"c1\">A</td><td class=\"c2\">B</td><td class=\"c3\">C</td>"
                         + "<td class=\"c1\">D</td><td class=\"c2\">E</td><td class=\"c3\">F</td>"
                         + "<td class=\"c1\">G</td>"
@@ -279,7 +279,7 @@ public class HtmlPanelGridRendererTest extends RendererTest {
                         + "<td class=\"c1\">K</td><td class=\"c2\">L</td><td class=\"c3\">M</td>"
                         + "<td class=\"c1\">N</td>" + "</tr>"
 
-                        + "<tr class=\"r1\">" + "<td class=\"c1\">O</td>"
+                        + "<tr class=\"r1a r1b\">" + "<td class=\"c1\">O</td>"
                         + "</tr>"
 
                         + "</tbody>", getResponseText());

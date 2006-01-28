@@ -56,25 +56,32 @@ public class AbstractHtmlRenderer extends Renderer {
         component.encodeEnd(context);
     }
 
-    protected void encodeComponentAndChildren(FacesContext context,
+    protected void encodeComponentAndDescendant(FacesContext context,
             UIComponent component) throws IOException {
         encodeComponent(context, component);
-        for (Iterator it = new RenderedComponentIterator(component
-                .getChildren()); it.hasNext();) {
+        for (Iterator it = getRenderedChildrenIterator(component); it.hasNext();) {
             UIComponent child = (UIComponent) it.next();
-            encodeComponentAndChildren(context, child);
+            encodeComponentAndDescendant(context, child);
         }
     }
 
     protected void encodeDescendantComponent(FacesContext context,
             UIComponent component) throws IOException {
-        for (Iterator it = new RenderedComponentIterator(component
-                .getChildren()); it.hasNext();) {
+        for (Iterator it = getRenderedChildrenIterator(component); it.hasNext();) {
             UIComponent child = (UIComponent) it.next();
-            encodeComponentAndChildren(context, child);
+            encodeComponentAndDescendant(context, child);
         }
     }
 
+    protected void encodeChildrenComponent(FacesContext context,
+            UIComponent component) throws IOException {
+        for (Iterator it = getRenderedChildrenIterator(component); it.hasNext();) {
+            UIComponent child = (UIComponent) it.next();
+            encodeComponent(context, child);
+        }
+    }
+
+    // for parameter check.
     protected void assertNotNull(FacesContext context, UIComponent component) {
         if (context == null) {
             throw new NullPointerException("context");
@@ -85,12 +92,19 @@ public class AbstractHtmlRenderer extends Renderer {
     }
 
     protected String[] splitByComma(String s) {
-        String[] split = StringUtil.split(s, " ,");
+        String[] split = StringUtil.split(s, ",");
+        for (int i = 0; i < split.length; i++) {
+            split[i] = split[i].trim();
+        }
         return split;
     }
 
-    protected LoopIterator toLoopIteratorSplittedByComma(String s) {
+    protected LoopIterator toStyleLoopIterator(String s) {
         return new LoopIterator(splitByComma(s));
+    }
+
+    protected Iterator getRenderedChildrenIterator(UIComponent component) {
+        return new RenderedComponentIterator(component.getChildren());
     }
 
     protected static class RenderedComponentIterator implements Iterator {

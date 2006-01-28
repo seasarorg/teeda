@@ -38,10 +38,10 @@ public class HtmlOutputTextRenderer extends AbstractHtmlRenderer {
         if (!component.isRendered()) {
             return;
         }
-        encodeHtmlOutputText(context, (HtmlOutputText) component);
+        encodeHtmlOutputTextEnd(context, (HtmlOutputText) component);
     }
 
-    protected void encodeHtmlOutputText(FacesContext context,
+    protected void encodeHtmlOutputTextEnd(FacesContext context,
             HtmlOutputText htmlOutputText) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
         boolean startSpan = false;
@@ -49,11 +49,11 @@ public class HtmlOutputTextRenderer extends AbstractHtmlRenderer {
                 JsfConstants.ID_WITH_COMMON_PASSTROUGH_ATTRIBUTES)) {
             writer.startElement(JsfConstants.SPAN_ELEM, htmlOutputText);
             startSpan = true;
+            RendererUtil.renderIdAttributeIfNecessary(writer, htmlOutputText,
+                    getIdForRender(context, htmlOutputText));
+            RendererUtil.renderAttributes(writer, htmlOutputText,
+                    JsfConstants.COMMON_PASSTROUGH_ATTRIBUTES);
         }
-        RendererUtil.renderIdAttributeIfNecessary(writer, htmlOutputText,
-                getIdForRender(context, htmlOutputText));
-        RendererUtil.renderAttributes(writer, htmlOutputText,
-                JsfConstants.COMMON_PASSTROUGH_ATTRIBUTES);
         String value = ValueHolderUtil.getValueForRender(context,
                 htmlOutputText);
         if (htmlOutputText.isEscape()) {

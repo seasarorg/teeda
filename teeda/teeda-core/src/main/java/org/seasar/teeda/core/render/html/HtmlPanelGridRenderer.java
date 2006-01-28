@@ -110,17 +110,17 @@ public class HtmlPanelGridRenderer extends AbstractHtmlRenderer {
         ResponseWriter writer = context.getResponseWriter();
         writer.startElement(JsfConstants.TBODY_ELEM, htmlPanelGrid);
 
-        LoopIterator rowClasses = toLoopIteratorSplittedByComma(htmlPanelGrid
+        LoopIterator rowClasses = toStyleLoopIterator(htmlPanelGrid
                 .getRowClasses());
-        LoopIterator columnClasses = toLoopIteratorSplittedByComma(htmlPanelGrid
+        LoopIterator columnClasses = toStyleLoopIterator(htmlPanelGrid
                 .getColumnClasses());
 
         final int maxColumns = getColumns(htmlPanelGrid);
         final int initialPosition = 0;
         int position = initialPosition;
         boolean trTagOpening = false;
-        for (Iterator itChild = new RenderedComponentIterator(htmlPanelGrid
-                .getChildren()); itChild.hasNext();) {
+        for (Iterator itChild = getRenderedChildrenIterator(htmlPanelGrid); itChild
+                .hasNext();) {
             UIComponent child = (UIComponent) itChild.next();
             if (position == initialPosition) {
                 openTr(writer, htmlPanelGrid, rowClasses, columnClasses);
@@ -165,7 +165,7 @@ public class HtmlPanelGridRenderer extends AbstractHtmlRenderer {
             RendererUtil.renderAttribute(writer, JsfConstants.CLASS_ATTR,
                     columnClasses.next(), JsfConstants.COLUMN_CLASSES_ATTR);
         }
-        encodeComponentAndChildren(context, component);
+        encodeComponentAndDescendant(context, component);
         writer.endElement(JsfConstants.TD_ELEM);
     }
 

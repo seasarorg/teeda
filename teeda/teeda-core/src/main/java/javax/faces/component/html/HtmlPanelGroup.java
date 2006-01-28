@@ -19,6 +19,9 @@ import javax.faces.component.UIPanel;
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
 
+/**
+ * @author shot
+ */
 public class HtmlPanelGroup extends UIPanel {
 
 	public static final String COMPONENT_TYPE = "javax.faces.HtmlPanelGroup";

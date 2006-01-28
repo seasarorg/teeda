@@ -57,8 +57,8 @@ public class HtmlDataTableRenderer extends AbstractHtmlRenderer {
         boolean isColumnHeaderExist = false;
         boolean isColumnFooterExist = false;
         {
-            for (Iterator it = new RenderedComponentIterator(htmlDataTable
-                    .getChildren()); it.hasNext();) {
+            for (Iterator it = getRenderedChildrenIterator(htmlDataTable); it
+                    .hasNext();) {
                 UIComponent child = (UIComponent) it.next();
                 if (child instanceof UIColumn) {
                     UIColumn column = (UIColumn) child;
@@ -185,9 +185,9 @@ public class HtmlDataTableRenderer extends AbstractHtmlRenderer {
 
         writer.startElement(JsfConstants.TBODY_ELEM, htmlDataTable);
 
-        LoopIterator rowClasses = toLoopIteratorSplittedByComma(htmlDataTable
+        LoopIterator rowClasses = toStyleLoopIterator(htmlDataTable
                 .getRowClasses());
-        LoopIterator columnClasses = toLoopIteratorSplittedByComma(htmlDataTable
+        LoopIterator columnClasses = toStyleLoopIterator(htmlDataTable
                 .getColumnClasses());
 
         int start = htmlDataTable.getFirst();
@@ -217,8 +217,8 @@ public class HtmlDataTableRenderer extends AbstractHtmlRenderer {
                     rowClasses.next(), JsfConstants.ROW_CLASSES_ATTR);
         }
         columnClasses.reset();
-        for (Iterator itColumn = new RenderedComponentIterator(htmlDataTable
-                .getChildren()); itColumn.hasNext();) {
+        for (Iterator itColumn = getRenderedChildrenIterator(htmlDataTable); itColumn
+                .hasNext();) {
             UIComponent col = (UIComponent) itColumn.next();
             if (col instanceof UIColumn) {
                 UIColumn column = (UIColumn) col;
