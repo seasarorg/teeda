@@ -9,8 +9,6 @@ import org.xml.sax.Attributes;
 
 public class AttributeTagHandler extends JsfTagHandler {
 
-    private static final long serialVersionUID = 3978421403999482928L;
-
     public AttributeTagHandler(){
     }
     
