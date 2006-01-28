@@ -44,13 +44,12 @@ public class HtmlFormRendererTest extends RendererTest {
         htmlForm_.setEnctype(null);
     }
 
-    public void testEncode_WithNoValue() throws Exception {
+    public void testEncode_NoValue() throws Exception {
         MockFacesContext context = getFacesContext();
 
         // ## Act ##
-        renderer_.encodeBegin(context, htmlForm_);
-        renderer_.encodeEnd(context, htmlForm_);
-
+        encodeByRenderer(renderer_, context, htmlForm_);
+        
         // ## Assert ##
         assertEquals(
                 "<form id=\"_id0\" name=\"_id0\" method=\"post\" enctype=\"application/x-www-form-urlencoded\">"
@@ -58,28 +57,25 @@ public class HtmlFormRendererTest extends RendererTest {
                         + "</form>", getResponseText());
     }
 
-    public void testEncodeEnd_RenderFalse() throws Exception {
+    public void testEncode_RenderFalse() throws Exception {
         // ## Arrange ##
         htmlForm_.setRendered(false);
         MockFacesContext context = getFacesContext();
 
         // ## Act ##
-        renderer_.encodeBegin(context, htmlForm_);
-        renderer_.encodeChildren(context, htmlForm_);
-        renderer_.encodeEnd(context, htmlForm_);
+        encodeByRenderer(renderer_, context, htmlForm_);
 
         // ## Assert ##
         assertEquals("", getResponseText());
     }
 
-    public void testEncodeBegin_WithId() throws Exception {
+    public void testEncode_WithId() throws Exception {
         // ## Arrange ##
         htmlForm_.setId("a");
         MockFacesContext context = getFacesContext();
 
         // ## Act ##
-        renderer_.encodeBegin(context, htmlForm_);
-        renderer_.encodeEnd(context, htmlForm_);
+        encodeByRenderer(renderer_, context, htmlForm_);
 
         // ## Assert ##
         assertEquals(
@@ -88,7 +84,7 @@ public class HtmlFormRendererTest extends RendererTest {
                         + "</form>", getResponseText());
     }
 
-    public void testEncodeEnd_WithAllAttributes() throws Exception {
+    public void testEncode_WithAllAttributes() throws Exception {
         htmlForm_.setAccept("a");
         htmlForm_.setAcceptcharset("b");
         htmlForm_.setDir("c");
@@ -114,8 +110,7 @@ public class HtmlFormRendererTest extends RendererTest {
         htmlForm_.setId("AA");
 
         MockFacesContext context = getFacesContext();
-        renderer_.encodeBegin(context, htmlForm_);
-        renderer_.encodeEnd(context, htmlForm_);
+        encodeByRenderer(renderer_, context, htmlForm_);
 
         System.out.println(getResponseText());
         Diff diff = new Diff("<form id=\"AA\" name=\"AA\" method=\"post\""

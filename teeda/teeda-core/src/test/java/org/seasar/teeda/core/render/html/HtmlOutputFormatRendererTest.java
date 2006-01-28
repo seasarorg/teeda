@@ -43,44 +43,46 @@ public class HtmlOutputFormatRendererTest extends RendererTest {
         htmlOutputFormat_.setRenderer(renderer_);
     }
 
-    public void testEncodeEnd() throws Exception {
+    public void testEncode_WithValue() throws Exception {
         htmlOutputFormat_.setValue("abc");
 
-        renderer_.encodeEnd(getFacesContext(), htmlOutputFormat_);
+        MockFacesContext context = getFacesContext();
+        encodeByRenderer(renderer_, context, htmlOutputFormat_);
 
         assertEquals("abc", getResponseText());
     }
 
-    public void testEncodeEnd_NullValue() throws Exception {
+    public void testEncode_NullValue() throws Exception {
         htmlOutputFormat_.setValue(null);
 
-        renderer_.encodeEnd(getFacesContext(), htmlOutputFormat_);
+        MockFacesContext context = getFacesContext();
+        encodeByRenderer(renderer_, context, htmlOutputFormat_);
 
         assertEquals("", getResponseText());
     }
 
-    public void testEncodeBeginToEnd() throws Exception {
+    public void testEncode_WithId() throws Exception {
         htmlOutputFormat_.setId("a");
         htmlOutputFormat_.setValue("b");
 
-        renderer_.encodeBegin(getFacesContext(), htmlOutputFormat_);
-        renderer_.encodeEnd(getFacesContext(), htmlOutputFormat_);
+        MockFacesContext context = getFacesContext();
+        encodeByRenderer(renderer_, context, htmlOutputFormat_);
 
         assertEquals("<span id=\"a\">b</span>", getResponseText());
     }
 
-    public void testEncodeBeginToEnd_RenderFalse() throws Exception {
+    public void testEncode_RenderFalse() throws Exception {
         htmlOutputFormat_.setRendered(false);
         htmlOutputFormat_.setId("a");
         htmlOutputFormat_.setValue("b");
-        
-        renderer_.encodeBegin(getFacesContext(), htmlOutputFormat_);
-        renderer_.encodeEnd(getFacesContext(), htmlOutputFormat_);
-        
+
+        MockFacesContext context = getFacesContext();
+        encodeByRenderer(renderer_, context, htmlOutputFormat_);
+
         assertEquals("", getResponseText());
     }
-    
-    public void testEncodeEnd_WithParams() throws Exception {
+
+    public void testEncode_WithParams() throws Exception {
         // ## Arrange ##
         htmlOutputFormat_.setValue("1{0}2{1}3");
 
@@ -91,14 +93,16 @@ public class HtmlOutputFormatRendererTest extends RendererTest {
         htmlOutputFormat_.getChildren().add(param1);
         htmlOutputFormat_.getChildren().add(param2);
 
+        MockFacesContext context = getFacesContext();
+
         // ## Act ##
-        renderer_.encodeEnd(getFacesContext(), htmlOutputFormat_);
+        encodeByRenderer(renderer_, context, htmlOutputFormat_);
 
         // ## Assert ##
         assertEquals("1a2b3", getResponseText());
     }
 
-    public void testEncodeEnd_WithJapaneseParam() throws Exception {
+    public void testEncode_WithJapaneseParam() throws Exception {
         // ## Arrange ##
         htmlOutputFormat_.setValue("1{0}2");
 
@@ -106,40 +110,44 @@ public class HtmlOutputFormatRendererTest extends RendererTest {
         param2.setValue(new Character((char) 12354));
         htmlOutputFormat_.getChildren().add(param2);
 
+        MockFacesContext context = getFacesContext();
+
         // ## Act ##
-        renderer_.encodeEnd(getFacesContext(), htmlOutputFormat_);
+        encodeByRenderer(renderer_, context, htmlOutputFormat_);
 
         // ## Assert ##
         assertEquals("1" + new Character((char) 12354) + "2", getResponseText());
     }
 
-    public void testEncodeEnd_EscapeTrue() throws Exception {
+    public void testEncode_EscapeTrue() throws Exception {
         htmlOutputFormat_.setEscape(true);
         htmlOutputFormat_.setValue("<a>");
 
-        renderer_.encodeEnd(getFacesContext(), htmlOutputFormat_);
+        MockFacesContext context = getFacesContext();
+        encodeByRenderer(renderer_, context, htmlOutputFormat_);
 
         assertEquals("&lt;a&gt;", getResponseText());
     }
 
-    public void testEncodeEnd_EscapeFalse() throws Exception {
+    public void testEncode_EscapeFalse() throws Exception {
         htmlOutputFormat_.setEscape(false);
         htmlOutputFormat_.setValue("<a>");
 
-        renderer_.encodeEnd(getFacesContext(), htmlOutputFormat_);
+        MockFacesContext context = getFacesContext();
+        encodeByRenderer(renderer_, context, htmlOutputFormat_);
 
         assertEquals("<a>", getResponseText());
     }
 
-    public void testEncodeBeginToEnd_WithAllAttributes() throws Exception {
+    public void testEncode_WithAllAttributes() throws Exception {
         htmlOutputFormat_.setId("a");
         htmlOutputFormat_.setValue("b");
         htmlOutputFormat_.setStyle("c");
         htmlOutputFormat_.setStyleClass("d");
         htmlOutputFormat_.setTitle("e");
 
-        renderer_.encodeBegin(getFacesContext(), htmlOutputFormat_);
-        renderer_.encodeEnd(getFacesContext(), htmlOutputFormat_);
+        MockFacesContext context = getFacesContext();
+        encodeByRenderer(renderer_, context, htmlOutputFormat_);
 
         Diff diff = new Diff("<span" + " id=\"a\"" + " style=\"c\""
                 + " class=\"d\"" + " title=\"e\"" + ">b</span>",

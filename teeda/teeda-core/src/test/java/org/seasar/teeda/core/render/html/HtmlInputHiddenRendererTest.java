@@ -41,12 +41,12 @@ public class HtmlInputHiddenRendererTest extends RendererTest {
         htmlInputHidden_.setRenderer(renderer_);
     }
 
-    public void testEncodeEnd_WithNoValue() throws Exception {
+    public void testEncode_WithNoValue() throws Exception {
         // ## Arrange ##
         MockFacesContext context = getFacesContext();
 
         // ## Act ##
-        renderer_.encodeEnd(context, htmlInputHidden_);
+        encodeByRenderer(renderer_, context, htmlInputHidden_);
 
         // ## Assert ##
         assertEquals(
@@ -54,26 +54,25 @@ public class HtmlInputHiddenRendererTest extends RendererTest {
                 getResponseText());
     }
 
-    public void testEncodeEnd_RenderFalse() throws Exception {
+    public void testEncode_RenderFalse() throws Exception {
         // ## Arrange ##
         htmlInputHidden_.setRendered(false);
         MockFacesContext context = getFacesContext();
 
         // ## Act ##
-        renderer_.encodeBegin(context, htmlInputHidden_);
-        renderer_.encodeEnd(context, htmlInputHidden_);
+        encodeByRenderer(renderer_, context, htmlInputHidden_);
 
         // ## Assert ##
         assertEquals("", getResponseText());
     }
 
-    public void testEncodeEnd_WithValue() throws Exception {
+    public void testEncode_WithValue() throws Exception {
         // ## Arrange ##
         htmlInputHidden_.setValue("abc");
         MockFacesContext context = getFacesContext();
 
         // ## Act ##
-        renderer_.encodeEnd(context, htmlInputHidden_);
+        encodeByRenderer(renderer_, context, htmlInputHidden_);
 
         // ## Assert ##
         assertEquals(
@@ -81,27 +80,26 @@ public class HtmlInputHiddenRendererTest extends RendererTest {
                 getResponseText());
     }
 
-    public void testEncodeEnd_WithId() throws Exception {
+    public void testEncode_WithId() throws Exception {
         htmlInputHidden_.setId("a");
 
         UIComponent parent = new MockUIComponentBaseWithNamingContainer();
         parent.setId("b");
         parent.getChildren().add(htmlInputHidden_);
 
-        renderer_.encodeEnd(getFacesContext(), htmlInputHidden_);
+        encodeByRenderer(renderer_, getFacesContext(), htmlInputHidden_);
 
         assertEquals(
                 "<input type=\"hidden\" id=\"a\" name=\"b:a\" value=\"\" />",
                 getResponseText());
     }
 
-    public void testEncodeEnd_WithAllAttributes() throws Exception {
+    public void testEncode_WithAllAttributes() throws Exception {
         htmlInputHidden_.setId("A");
         htmlInputHidden_.setValue("B");
 
         MockFacesContext context = getFacesContext();
-        renderer_.encodeBegin(context, htmlInputHidden_);
-        renderer_.encodeEnd(context, htmlInputHidden_);
+        encodeByRenderer(renderer_, context, htmlInputHidden_);
 
         Diff diff = new Diff(
                 "<input type=\"hidden\" id=\"A\" name=\"A\" value=\"B\"" + " />",

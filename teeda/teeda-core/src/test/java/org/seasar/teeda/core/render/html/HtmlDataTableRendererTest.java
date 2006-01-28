@@ -55,7 +55,7 @@ public class HtmlDataTableRendererTest extends RendererTest {
         assertEquals("<table", getResponseText());
     }
 
-    public void testEncodeBeginToChildrenToEnd_RenderFalse() throws Exception {
+    public void testEncode_RenderFalse() throws Exception {
         // ## Arrange ##
         htmlDataTable_.setRendered(false);
         MockFacesContext context = getFacesContext();
@@ -93,7 +93,7 @@ public class HtmlDataTableRendererTest extends RendererTest {
         assertEquals("<table id=\"aa\"", getResponseText());
     }
 
-    public void testEncodeBeginToChildrenToEnd() throws Exception {
+    public void testEncodeB_NoValue() throws Exception {
         // ## Arrange ##
         MockFacesContext context = getFacesContext();
 
@@ -764,7 +764,7 @@ public class HtmlDataTableRendererTest extends RendererTest {
                         + "</tr>" + "</tbody>", getResponseText());
     }
 
-    public void testEncodeBegin_WithAllAttributes() throws Exception {
+    public void testEncode_WithAllAttributes() throws Exception {
         // attributes
         {
             htmlDataTable_.setBgcolor("a");
@@ -891,9 +891,7 @@ public class HtmlDataTableRendererTest extends RendererTest {
         }
 
         MockFacesContext context = getFacesContext();
-        renderer_.encodeBegin(context, htmlDataTable_);
-        renderer_.encodeChildren(context, htmlDataTable_);
-        renderer_.encodeEnd(context, htmlDataTable_);
+        encodeByRenderer(renderer_, context, htmlDataTable_);
 
         Diff diff = new Diff(
                 "<table"

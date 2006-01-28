@@ -83,19 +83,20 @@ public class HtmlOutputLinkRendererTest extends RendererTest {
         assertEquals("<a href=\"a\"></a>", getResponseText());
     }
 
-    public void testEncodeBeginToEnd_RenderFalse() throws Exception {
+    public void testEncode_RenderFalse() throws Exception {
         // ## Arrange ##
         htmlOutputLink_.setRendered(false);
         htmlOutputLink_.setValue("abc");
 
         // ## Act ##
-        encodeByRenderer(renderer_, getFacesContext(), htmlOutputLink_);
+        MockFacesContext context = getFacesContext();
+        encodeByRenderer(renderer_, context, htmlOutputLink_);
 
         // ## Assert ##
         assertEquals("", getResponseText());
     }
 
-    public void testEncodeBeginToEnd_WithChild() throws Exception {
+    public void testEncode_WithChild() throws Exception {
         // ## Arrange ##
         HtmlOutputTextRenderer htmlOutputTextRenderer = new HtmlOutputTextRenderer();
         MockHtmlOutputText child = new MockHtmlOutputText();
@@ -106,7 +107,8 @@ public class HtmlOutputLinkRendererTest extends RendererTest {
         htmlOutputLink_.setValue("a");
 
         // ## Act ##
-        encodeByRenderer(renderer_, getFacesContext(), htmlOutputLink_);
+        MockFacesContext context = getFacesContext();
+        encodeByRenderer(renderer_, context, htmlOutputLink_);
 
         // ## Assert ##
         assertEquals("<a href=\"a\">Y</a>", getResponseText());
@@ -212,7 +214,7 @@ public class HtmlOutputLinkRendererTest extends RendererTest {
         assertEquals("<a href=\"url?a=1&b=2\"", getResponseText());
     }
 
-    public void testEncodeBegin_WithAllAttributes() throws Exception {
+    public void testEncode_WithAllAttributes() throws Exception {
         htmlOutputLink_.setId("a");
         htmlOutputLink_.setValue("b");
         htmlOutputLink_.setAccesskey("c");
@@ -243,7 +245,8 @@ public class HtmlOutputLinkRendererTest extends RendererTest {
         htmlOutputLink_.setTitle("A");
         htmlOutputLink_.setType("B");
 
-        encodeByRenderer(renderer_, getFacesContext(), htmlOutputLink_);
+        MockFacesContext context = getFacesContext();
+        encodeByRenderer(renderer_, context, htmlOutputLink_);
 
         Diff diff = new Diff("<a" + " id=\"a\"" + " href=\"b\""
                 + " accesskey=\"c\"" + " charset=\"d\"" + " coords=\"e\""

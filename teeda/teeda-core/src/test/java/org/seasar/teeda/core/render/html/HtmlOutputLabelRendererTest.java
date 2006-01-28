@@ -24,6 +24,7 @@ import javax.faces.render.Renderer;
 import javax.faces.render.RendererTest;
 
 import org.custommonkey.xmlunit.Diff;
+import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.mock.MockUIComponentBase;
 import org.seasar.teeda.core.unit.ExceptionAssert;
 
@@ -49,17 +50,17 @@ public class HtmlOutputLabelRendererTest extends RendererTest {
         assertEquals("<label>", getResponseText());
     }
 
-    public void testEncodeBeginToEnd() throws Exception {
-        renderer_.encodeBegin(getFacesContext(), htmlOutputLabel_);
-        renderer_.encodeEnd(getFacesContext(), htmlOutputLabel_);
+    public void testEncode_NoValue() throws Exception {
+        MockFacesContext context = getFacesContext();
+        encodeByRenderer(renderer_, context, htmlOutputLabel_);
 
         assertEquals("<label></label>", getResponseText());
     }
 
-    public void testEncodeBeginToEnd_RenderFalse() throws Exception {
+    public void testEncode_RenderFalse() throws Exception {
         htmlOutputLabel_.setRendered(false);
-        renderer_.encodeBegin(getFacesContext(), htmlOutputLabel_);
-        renderer_.encodeEnd(getFacesContext(), htmlOutputLabel_);
+        MockFacesContext context = getFacesContext();
+        encodeByRenderer(renderer_, context, htmlOutputLabel_);
 
         assertEquals("", getResponseText());
     }
@@ -117,7 +118,7 @@ public class HtmlOutputLabelRendererTest extends RendererTest {
                 getResponseText());
     }
 
-    public void testEncodeBegin_WithAllAttributes() throws Exception {
+    public void testEncode_WithAllAttributes() throws Exception {
         // ## Arrange ##
         htmlOutputLabel_.setAccesskey("a");
         htmlOutputLabel_.setDir("b");
@@ -148,8 +149,8 @@ public class HtmlOutputLabelRendererTest extends RendererTest {
         htmlOutputLabel_.getChildren().add(child);
 
         // ## Act ##
-        renderer_.encodeBegin(getFacesContext(), htmlOutputLabel_);
-        renderer_.encodeEnd(getFacesContext(), htmlOutputLabel_);
+        MockFacesContext context = getFacesContext();
+        encodeByRenderer(renderer_, context, htmlOutputLabel_);
 
         // ## Assert ##
         Diff diff = new Diff("<label" + " id=\"v\"" + " accesskey=\"a\""

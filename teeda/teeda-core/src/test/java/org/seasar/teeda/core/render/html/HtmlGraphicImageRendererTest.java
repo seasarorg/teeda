@@ -46,54 +46,53 @@ public class HtmlGraphicImageRendererTest extends RendererTest {
         htmlGraphicImage_.setRenderer(renderer_);
     }
 
-    public void testEncodeEnd_WithNoValue() throws Exception {
+    public void testEncode_WithNoValue() throws Exception {
         MockFacesContext context = getFacesContext();
 
         // ## Act ##
-        renderer_.encodeEnd(context, htmlGraphicImage_);
+        encodeByRenderer(renderer_, context, htmlGraphicImage_);
 
         // ## Assert ##
         assertEquals("<img src=\"\" />", getResponseText());
     }
 
-    public void testEncodeEnd_RenderFalse() throws Exception {
+    public void testEncode_RenderFalse() throws Exception {
         // ## Arrange ##
         htmlGraphicImage_.setRendered(false);
         MockFacesContext context = getFacesContext();
 
         // ## Act ##
-        renderer_.encodeBegin(context, htmlGraphicImage_);
-        renderer_.encodeEnd(context, htmlGraphicImage_);
+        encodeByRenderer(renderer_, context, htmlGraphicImage_);
 
         // ## Assert ##
         assertEquals("", getResponseText());
     }
 
-    public void testEncodeEnd_WithValue() throws Exception {
+    public void testEncode_WithValue() throws Exception {
         // ## Arrange ##
         htmlGraphicImage_.setValue("abc");
         MockFacesContext context = getFacesContext();
 
         // ## Act ##
-        renderer_.encodeEnd(context, htmlGraphicImage_);
+        encodeByRenderer(renderer_, context, htmlGraphicImage_);
 
         // ## Assert ##
         assertEquals("<img src=\"abc\" />", getResponseText());
     }
 
-    public void testEncodeEnd_WithId() throws Exception {
+    public void testEncode_WithId() throws Exception {
         htmlGraphicImage_.setId("a");
 
         UIComponent parent = new MockUIComponentBaseWithNamingContainer();
         parent.setId("b");
         parent.getChildren().add(htmlGraphicImage_);
 
-        renderer_.encodeEnd(getFacesContext(), htmlGraphicImage_);
+        encodeByRenderer(renderer_, getFacesContext(), htmlGraphicImage_);
 
         assertEquals("<img id=\"a\" src=\"\" />", getResponseText());
     }
 
-    public void testEncodeEnd_UrlEncode() throws Exception {
+    public void testEncode_UrlEncode() throws Exception {
         // ## Arrange ##
         final ExternalContext externalContext = new NullExternalContext() {
             public String encodeResourceURL(String url) {
@@ -118,13 +117,13 @@ public class HtmlGraphicImageRendererTest extends RendererTest {
         htmlGraphicImage_.setValue("abc");
 
         // ## Act ##
-        renderer_.encodeEnd(context, htmlGraphicImage_);
+        encodeByRenderer(renderer_, context, htmlGraphicImage_);
 
         // ## Assert ##
         assertEquals("<img src=\"abc_1_2\" />", getResponseText());
     }
 
-    public void testEncodeEnd_WithAllAttributes() throws Exception {
+    public void testEncode_WithAllAttributes() throws Exception {
         MockApplication application = new MockApplication();
         application.setViewHandler(new MockViewHandler());
         MockFacesContext context = getFacesContext();
@@ -155,8 +154,7 @@ public class HtmlGraphicImageRendererTest extends RendererTest {
         htmlGraphicImage_.setId("A");
         htmlGraphicImage_.setValue("B");
 
-        renderer_.encodeBegin(context, htmlGraphicImage_);
-        renderer_.encodeEnd(context, htmlGraphicImage_);
+        encodeByRenderer(renderer_, context, htmlGraphicImage_);
 
         Diff diff = new Diff("<img id=\"A\" src=\"B\"" + " alt=\"a\""
                 + " dir=\"b\"" + " height=\"c\"" + " ismap=\"true\""

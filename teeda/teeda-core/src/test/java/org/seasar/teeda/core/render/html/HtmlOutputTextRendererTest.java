@@ -15,12 +15,12 @@
  */
 package org.seasar.teeda.core.render.html;
 
-
 import javax.faces.component.UIViewRoot;
 import javax.faces.render.Renderer;
 import javax.faces.render.RendererTest;
 
 import org.custommonkey.xmlunit.Diff;
+import org.seasar.teeda.core.mock.MockFacesContext;
 
 /**
  * @author manhole
@@ -38,81 +38,86 @@ public class HtmlOutputTextRendererTest extends RendererTest {
         htmlOutputText_.setRenderer(renderer_);
     }
 
-    public void testEncodeEnd() throws Exception {
+    public void testEncode_WithValue() throws Exception {
         htmlOutputText_.setValue("abc");
 
-        renderer_.encodeEnd(getFacesContext(), htmlOutputText_);
+        MockFacesContext context = getFacesContext();
+        encodeByRenderer(renderer_, context, htmlOutputText_);
 
         assertEquals("abc", getResponseText());
     }
 
-    public void testEncodeBeginToChildrenToEnd_RenderFalse() throws Exception {
+    public void testEncode_RenderFalse() throws Exception {
         // ## Arrange ##
         htmlOutputText_.setRendered(false);
         htmlOutputText_.setValue("abc");
 
         // ## Act ##
-        encodeByRenderer(renderer_, getFacesContext(), htmlOutputText_);
+        MockFacesContext context = getFacesContext();
+        encodeByRenderer(renderer_, context, htmlOutputText_);
 
         // ## Assert ##
         assertEquals("", getResponseText());
     }
 
-    public void testEncodeEnd_NullValue() throws Exception {
-
+    public void testEncode_NullValue() throws Exception {
         htmlOutputText_.setValue(null);
 
-        renderer_.encodeEnd(getFacesContext(), htmlOutputText_);
+        MockFacesContext context = getFacesContext();
+        encodeByRenderer(renderer_, context, htmlOutputText_);
 
         assertEquals("", getResponseText());
     }
 
-    public void testEncodeEnd_EscapeTrue() throws Exception {
-
+    public void testEncode_EscapeTrue() throws Exception {
         assertTrue("default is true", htmlOutputText_.isEscape());
         htmlOutputText_.setValue("<a>");
 
-        renderer_.encodeEnd(getFacesContext(), htmlOutputText_);
+        MockFacesContext context = getFacesContext();
+        encodeByRenderer(renderer_, context, htmlOutputText_);
 
         assertEquals("&lt;a&gt;", getResponseText());
     }
 
-    public void testEncodeEnd_EscapeFalse() throws Exception {
-
+    public void testEncode_EscapeFalse() throws Exception {
         htmlOutputText_.setEscape(false);
         htmlOutputText_.setValue("<a>");
 
-        renderer_.encodeEnd(getFacesContext(), htmlOutputText_);
+        MockFacesContext context = getFacesContext();
+        encodeByRenderer(renderer_, context, htmlOutputText_);
 
         assertEquals("<a>", getResponseText());
     }
 
-    public void testEncodeEnd_WithStyle() throws Exception {
+    public void testEncode_WithStyle() throws Exception {
         htmlOutputText_.setStyle("some style");
         htmlOutputText_.setValue("a");
         htmlOutputText_.setEscape(false);
 
-        renderer_.encodeEnd(getFacesContext(), htmlOutputText_);
+        MockFacesContext context = getFacesContext();
+        encodeByRenderer(renderer_, context, htmlOutputText_);
 
         assertEquals("<span style=\"some style\">a</span>", getResponseText());
     }
 
-    public void testEncodeEnd_WithStyleClass() throws Exception {
+    public void testEncode_WithStyleClass() throws Exception {
         htmlOutputText_.setStyleClass("some styleClass");
         htmlOutputText_.setValue("a");
 
-        renderer_.encodeEnd(getFacesContext(), htmlOutputText_);
+        MockFacesContext context = getFacesContext();
+        encodeByRenderer(renderer_, context, htmlOutputText_);
 
         assertEquals("styleClass -> class",
                 "<span class=\"some styleClass\">a</span>", getResponseText());
     }
 
-    public void testEncodeEnd_CommonAttributtes() throws Exception {
+    public void testEncode_CommonAttributtes() throws Exception {
         htmlOutputText_.getAttributes().put("onmouseout", "do something");
         htmlOutputText_.getAttributes().put("title", "someTitle");
         htmlOutputText_.setValue("a");
 
-        renderer_.encodeEnd(getFacesContext(), htmlOutputText_);
+        MockFacesContext context = getFacesContext();
+        encodeByRenderer(renderer_, context, htmlOutputText_);
 
         Diff diff = new Diff(
                 "<span title=\"someTitle\" onmouseout=\"do something\">a</span>",
@@ -120,31 +125,33 @@ public class HtmlOutputTextRendererTest extends RendererTest {
         assertEquals(diff.toString(), true, diff.identical());
     }
 
-    public void testEncodeEnd_Id() throws Exception {
+    public void testEncode_Id() throws Exception {
         // ## Arrange ##
         htmlOutputText_.setId("someId");
         htmlOutputText_.setValue("a");
 
         // ## Act ##
-        renderer_.encodeEnd(getFacesContext(), htmlOutputText_);
+        MockFacesContext context = getFacesContext();
+        encodeByRenderer(renderer_, context, htmlOutputText_);
 
         // ## Assert ##
         assertEquals("<span id=\"someId\">a</span>", getResponseText());
     }
 
-    public void testEncodeEnd_NotWriteId() throws Exception {
+    public void testEncode_NotWriteId() throws Exception {
         // ## Arrange ##
         htmlOutputText_.setId(UIViewRoot.UNIQUE_ID_PREFIX + "someId");
         htmlOutputText_.setValue("a");
 
         // ## Act ##
-        renderer_.encodeEnd(getFacesContext(), htmlOutputText_);
+        MockFacesContext context = getFacesContext();
+        encodeByRenderer(renderer_, context, htmlOutputText_);
 
         // ## Assert ##
         assertEquals("<span>a</span>", getResponseText());
     }
 
-    public void testEncodeEnd_WithAllAttributes() throws Exception {
+    public void testEncode_WithAllAttributes() throws Exception {
         // ## Arrange ##
         htmlOutputText_.setId("fooId");
         htmlOutputText_.setTitle("someTitle");
@@ -152,7 +159,8 @@ public class HtmlOutputTextRendererTest extends RendererTest {
         htmlOutputText_.setValue("a");
 
         // ## Act ##
-        renderer_.encodeEnd(getFacesContext(), htmlOutputText_);
+        MockFacesContext context = getFacesContext();
+        encodeByRenderer(renderer_, context, htmlOutputText_);
 
         // ## Assert ##
         Diff diff = new Diff("<span" + " id=\"fooId\"" + " title=\"someTitle\""
@@ -160,8 +168,7 @@ public class HtmlOutputTextRendererTest extends RendererTest {
         assertEquals(diff.toString(), true, diff.identical());
     }
 
-    public void testEncodeBeginToChildrenToEnd_NotRenderChild()
-            throws Exception {
+    public void testEncode_NotRenderChild() throws Exception {
         // ## Arrange ##
         htmlOutputText_.setValue("abc");
 
@@ -171,7 +178,8 @@ public class HtmlOutputTextRendererTest extends RendererTest {
         htmlOutputText_.getChildren().add(child);
 
         // ## Act ##
-        encodeByRenderer(renderer_, getFacesContext(), htmlOutputText_);
+        MockFacesContext context = getFacesContext();
+        encodeByRenderer(renderer_, context, htmlOutputText_);
 
         // ## Assert ##
         assertEquals("abc", getResponseText());

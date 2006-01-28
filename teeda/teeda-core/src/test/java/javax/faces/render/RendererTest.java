@@ -25,7 +25,6 @@ import junit.framework.TestCase;
 
 import org.seasar.framework.util.SPrintWriter;
 import org.seasar.teeda.core.context.html.HtmlResponseWriter;
-import org.seasar.teeda.core.mock.MockExternalContextImpl;
 import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.mock.MockFacesContextImpl;
 import org.seasar.teeda.core.mock.NullFacesContext;

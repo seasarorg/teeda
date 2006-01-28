@@ -41,52 +41,51 @@ public class HtmlInputTextareaRendererTest extends RendererTest {
         htmlInputTextarea_.setRenderer(renderer_);
     }
 
-    public void testEncodeEnd_WithNoValue() throws Exception {
+    public void testEncode_WithNoValue() throws Exception {
         // ## Arrange ##
         MockFacesContext context = getFacesContext();
 
         // ## Act ##
-        renderer_.encodeEnd(context, htmlInputTextarea_);
+        encodeByRenderer(renderer_, context, htmlInputTextarea_);
 
         // ## Assert ##
         assertEquals("<textarea id=\"_id0\" name=\"_id0\"></textarea>",
                 getResponseText());
     }
 
-    public void testEncodeBeginToEnd_RenderFalse() throws Exception {
+    public void testEncode_RenderFalse() throws Exception {
         // ## Arrange ##
         htmlInputTextarea_.setRendered(false);
         MockFacesContext context = getFacesContext();
 
         // ## Act ##
-        renderer_.encodeBegin(context, htmlInputTextarea_);
-        renderer_.encodeEnd(context, htmlInputTextarea_);
+        encodeByRenderer(renderer_, context, htmlInputTextarea_);
 
         // ## Assert ##
         assertEquals("", getResponseText());
     }
 
-    public void testEncodeEnd_WithValue() throws Exception {
+    public void testEncode_WithValue() throws Exception {
         // ## Arrange ##
         htmlInputTextarea_.setValue("abc");
         MockFacesContext context = getFacesContext();
 
         // ## Act ##
-        renderer_.encodeEnd(context, htmlInputTextarea_);
+        encodeByRenderer(renderer_, context, htmlInputTextarea_);
 
         // ## Assert ##
         assertEquals("<textarea id=\"_id0\" name=\"_id0\">abc</textarea>",
                 getResponseText());
     }
 
-    public void testEncodeEnd_WithId() throws Exception {
+    public void testEncode_WithId() throws Exception {
         htmlInputTextarea_.setId("a");
 
         UIComponent parent = new MockUIComponentBaseWithNamingContainer();
         parent.setId("b");
         parent.getChildren().add(htmlInputTextarea_);
 
-        renderer_.encodeEnd(getFacesContext(), htmlInputTextarea_);
+        encodeByRenderer(renderer_, getFacesContext(), htmlInputTextarea_);
 
         assertEquals("<textarea id=\"a\" name=\"b:a\"></textarea>",
                 getResponseText());
@@ -110,7 +109,8 @@ public class HtmlInputTextareaRendererTest extends RendererTest {
         htmlInputTextarea_.setClientId("key1");
 
         MockFacesContext context = getFacesContext();
-        context.getExternalContext().getRequestParameterMap().put("key1", "aabb");
+        context.getExternalContext().getRequestParameterMap().put("key1",
+                "aabb");
 
         // ## Act ##
         renderer_.decode(context, htmlInputTextarea_);

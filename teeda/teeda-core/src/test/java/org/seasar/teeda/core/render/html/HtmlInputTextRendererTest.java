@@ -41,11 +41,11 @@ public class HtmlInputTextRendererTest extends RendererTest {
         htmlInputText_.setRenderer(renderer_);
     }
 
-    public void testEncodeEnd_WithNoValue() throws Exception {
+    public void testEncode_NoValue() throws Exception {
         MockFacesContext context = getFacesContext();
 
         // ## Act ##
-        renderer_.encodeEnd(context, htmlInputText_);
+        encodeByRenderer(renderer_, context, htmlInputText_);
 
         // ## Assert ##
         assertEquals(
@@ -53,26 +53,25 @@ public class HtmlInputTextRendererTest extends RendererTest {
                 getResponseText());
     }
 
-    public void testEncodeEnd_RenderFalse() throws Exception {
+    public void testEncode_RenderFalse() throws Exception {
         // ## Arrange ##
         htmlInputText_.setRendered(false);
         MockFacesContext context = getFacesContext();
 
         // ## Act ##
-        renderer_.encodeBegin(context, htmlInputText_);
-        renderer_.encodeEnd(context, htmlInputText_);
+        encodeByRenderer(renderer_, context, htmlInputText_);
 
         // ## Assert ##
         assertEquals("", getResponseText());
     }
 
-    public void testEncodeEnd_WithValue() throws Exception {
+    public void testEncode_WithValue() throws Exception {
         // ## Arrange ##
         htmlInputText_.setValue("abc");
         MockFacesContext context = getFacesContext();
 
         // ## Act ##
-        renderer_.encodeEnd(context, htmlInputText_);
+        encodeByRenderer(renderer_, context, htmlInputText_);
 
         // ## Assert ##
         assertEquals(
@@ -80,21 +79,22 @@ public class HtmlInputTextRendererTest extends RendererTest {
                 getResponseText());
     }
 
-    public void testEncodeEnd_WithId() throws Exception {
+    public void testEncode_WithId() throws Exception {
         htmlInputText_.setId("a");
 
         UIComponent parent = new MockUIComponentBaseWithNamingContainer();
         parent.setId("b");
         parent.getChildren().add(htmlInputText_);
 
-        renderer_.encodeEnd(getFacesContext(), htmlInputText_);
+        MockFacesContext context = getFacesContext();
+        encodeByRenderer(renderer_, context, htmlInputText_);
 
         assertEquals(
                 "<input type=\"text\" id=\"a\" name=\"b:a\" value=\"\" />",
                 getResponseText());
     }
 
-    public void testEncodeEnd_WithAllAttributes() throws Exception {
+    public void testEncode_WithAllAttributes() throws Exception {
         htmlInputText_.setAccesskey("a");
         htmlInputText_.setAlt("b");
         htmlInputText_.setDir("c");
@@ -126,8 +126,7 @@ public class HtmlInputTextRendererTest extends RendererTest {
         htmlInputText_.setValue("B");
 
         MockFacesContext context = getFacesContext();
-        renderer_.encodeBegin(context, htmlInputText_);
-        renderer_.encodeEnd(context, htmlInputText_);
+        encodeByRenderer(renderer_, context, htmlInputText_);
 
         Diff diff = new Diff(
                 "<input type=\"text\" id=\"A\" name=\"A\" value=\"B\""

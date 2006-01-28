@@ -45,11 +45,11 @@ public class HtmlCommandButtonRendererTest extends RendererTest {
         htmlCommandButton_.setRenderer(renderer_);
     }
 
-    public void testEncode_WithNoValue() throws Exception {
+    public void testEncode_NoValue() throws Exception {
         MockFacesContext context = getFacesContext();
 
         // ## Act ##
-        renderer_.encodeEnd(context, htmlCommandButton_);
+        encodeByRenderer(renderer_, context, htmlCommandButton_);
 
         // ## Assert ##
         assertEquals("<input type=\"submit\" id=\"_id0\" name=\"_id0\" />",
@@ -62,7 +62,7 @@ public class HtmlCommandButtonRendererTest extends RendererTest {
         MockFacesContext context = getFacesContext();
 
         // ## Act ##
-        renderer_.encodeEnd(context, htmlCommandButton_);
+        encodeByRenderer(renderer_, context, htmlCommandButton_);
 
         // ## Assert ##
         assertEquals(
@@ -77,8 +77,7 @@ public class HtmlCommandButtonRendererTest extends RendererTest {
         MockFacesContext context = getFacesContext();
 
         // ## Act ##
-        renderer_.encodeBegin(context, htmlCommandButton_);
-        renderer_.encodeEnd(context, htmlCommandButton_);
+        encodeByRenderer(renderer_, context, htmlCommandButton_);
 
         // ## Assert ##
         assertEquals("", getResponseText());
@@ -90,8 +89,9 @@ public class HtmlCommandButtonRendererTest extends RendererTest {
         UIComponent parent = new MockUIComponentBaseWithNamingContainer();
         parent.setId("b");
         parent.getChildren().add(htmlCommandButton_);
+        MockFacesContext context = getFacesContext();
 
-        renderer_.encodeEnd(getFacesContext(), htmlCommandButton_);
+        encodeByRenderer(renderer_, context, htmlCommandButton_);
 
         assertEquals("<input type=\"submit\" id=\"a\" name=\"b:a\" />",
                 getResponseText());
@@ -101,7 +101,8 @@ public class HtmlCommandButtonRendererTest extends RendererTest {
         htmlCommandButton_.setId("a");
         htmlCommandButton_.setType("reset");
 
-        renderer_.encodeEnd(getFacesContext(), htmlCommandButton_);
+        MockFacesContext context = getFacesContext();
+        encodeByRenderer(renderer_, context, htmlCommandButton_);
 
         assertEquals("<input type=\"reset\" id=\"a\" name=\"a\" />",
                 getResponseText());
@@ -114,7 +115,7 @@ public class HtmlCommandButtonRendererTest extends RendererTest {
         htmlCommandButton_.setValue("c"); // should be ignored
 
         // ## Act ##
-        renderer_.encodeEnd(getFacesContext(), htmlCommandButton_);
+        encodeByRenderer(renderer_, getFacesContext(), htmlCommandButton_);
 
         // ## Assert ##
         assertEquals("<input type=\"image\" id=\"a\" name=\"a\" src=\"bb\" />",
@@ -128,7 +129,7 @@ public class HtmlCommandButtonRendererTest extends RendererTest {
         htmlCommandButton_.setImage("bb");
 
         // ## Act ##
-        renderer_.encodeEnd(getFacesContext(), htmlCommandButton_);
+        encodeByRenderer(renderer_, getFacesContext(), htmlCommandButton_);
 
         // ## Assert ##
         assertEquals("<input type=\"image\" id=\"a\" name=\"a\" src=\"bb\" />",
@@ -167,8 +168,7 @@ public class HtmlCommandButtonRendererTest extends RendererTest {
         htmlCommandButton_.setValue("B");
 
         MockFacesContext context = getFacesContext();
-        renderer_.encodeBegin(context, htmlCommandButton_);
-        renderer_.encodeEnd(context, htmlCommandButton_);
+        encodeByRenderer(renderer_, context, htmlCommandButton_);
 
         Diff diff = new Diff(
                 "<input type=\"reset\" id=\"A\" name=\"A\" value=\"B\""
@@ -222,7 +222,8 @@ public class HtmlCommandButtonRendererTest extends RendererTest {
         htmlCommandButton.setClientId("key");
 
         MockFacesContext context = getFacesContext();
-        context.getExternalContext().getRequestParameterMap().put("key", "12345");
+        context.getExternalContext().getRequestParameterMap().put("key",
+                "12345");
 
         // ## Act ##
         renderer_.decode(context, htmlCommandButton);
@@ -255,7 +256,8 @@ public class HtmlCommandButtonRendererTest extends RendererTest {
         htmlCommandButton.setClientId("key:aa");
 
         MockFacesContext context = getFacesContext();
-        context.getExternalContext().getRequestParameterMap().put(requestKey, "12345");
+        context.getExternalContext().getRequestParameterMap().put(requestKey,
+                "12345");
 
         // ## Act ##
         renderer_.decode(context, htmlCommandButton);
