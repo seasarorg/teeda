@@ -15,21 +15,9 @@
  */
 package org.seasar.teeda.core.config.handler;
 
-import org.seasar.framework.xml.TagHandlerContext;
-import org.seasar.teeda.core.config.element.SuggestedValueHolder;
-
 /**
  * @author shot
  */
-public class SuggestedValueTagHandler extends JsfTagHandler {
+public class Bean1 {
 
-    private static final long serialVersionUID = 1L;
-
-    public SuggestedValueTagHandler(){
-    }
-    
-    public void end(TagHandlerContext context, String body) {
-        SuggestedValueHolder holder = (SuggestedValueHolder)context.peek();
-        holder.setSuggestedValue(body);
-    }
 }

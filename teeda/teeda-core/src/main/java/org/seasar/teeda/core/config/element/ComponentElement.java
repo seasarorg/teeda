@@ -2,7 +2,7 @@ package org.seasar.teeda.core.config.element;
 
 
 /**
- * @author Shinpei Ohtani(aka shot)
+ * @author shot
  */
 public interface ComponentElement 
     extends JsfConfig, FacetHolder, AttributeHolder, PropertyHolder {

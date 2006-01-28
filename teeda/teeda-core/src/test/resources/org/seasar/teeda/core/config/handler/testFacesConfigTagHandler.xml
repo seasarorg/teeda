@@ -4,10 +4,4 @@
   "http://java.sun.com/dtd/web-facesconfig_1_1.dtd" [ 
 ]>
 <faces-config>
-	<factory>
-		<application-factory>a</application-factory>
-		<faces-context-factory>b</faces-context-factory>
-		<lifecycle-factory>c</lifecycle-factory>
-		<render-kit-factory>d</render-kit-factory>
-	</factory>
 </faces-config>

@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE faces-config PUBLIC
+  "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.1//EN"
+  "http://java.sun.com/dtd/web-facesconfig_1_1.dtd" [ 
+]>
+<faces-config>
+	<converter>
+		<converter-id>javax.faces.mock</converter-id>
+		<converter-class>org.seasar.teeda.core.mock.MockConverter</converter-class>
+		<attribute>
+			<attribute-name>attr</attribute-name>
+			<attribute-class>A</attribute-class>
+		</attribute>
+	</converter>
+	<converter>
+		<converter-for-class>java.lang.Double</converter-for-class>
+		<converter-class>org.seasar.teeda.core.mock.MockConverter</converter-class>
+		<property>
+			<property-name>b</property-name>
+			<property-class>B</property-class>
+		</property>
+	</converter>
+</faces-config>

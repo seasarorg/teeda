@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE faces-config PUBLIC
+  "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.1//EN"
+  "http://java.sun.com/dtd/web-facesconfig_1_1.dtd" [ 
+]>
+<faces-config>
+	<component>
+		<component-type>hoge</component-type>
+		<component-class>org.seasar.teeda.core.mock.MockUIComponent</component-class>
+		<facet>
+			<facet-name>facet</facet-name>
+		</facet>
+		<attribute>
+			<attribute-name>attr</attribute-name>
+			<attribute-class>org.seasar.teeda.core.config.handler.Bean1</attribute-class>
+		</attribute>
+		<property>
+			<property-name>id</property-name>
+			<property-class>String</property-class>
+			<default-value>hoge</default-value>
+		</property>
+	</component>
+</faces-config>

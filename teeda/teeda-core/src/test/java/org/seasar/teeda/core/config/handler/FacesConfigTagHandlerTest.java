@@ -15,21 +15,28 @@
  */
 package org.seasar.teeda.core.config.handler;
 
-import org.seasar.framework.xml.TagHandlerContext;
-import org.seasar.teeda.core.config.element.SuggestedValueHolder;
+import org.seasar.teeda.core.config.element.FacesConfig;
 
 /**
  * @author shot
  */
-public class SuggestedValueTagHandler extends JsfTagHandler {
+public class FacesConfigTagHandlerTest extends TagHandlerTestCase {
 
-    private static final long serialVersionUID = 1L;
+    /**
+     * Constructor for FacesConfigTagHandlerTest.
+     * 
+     * @param name
+     */
+    public FacesConfigTagHandlerTest(String name) {
+        super(name);
+    }
 
-    public SuggestedValueTagHandler(){
+    public void testFacesConfigTagHandlerByXMLParse() throws Exception {
+        // # Arrange & Act#
+        FacesConfig facesConfig = parse("testFacesConfigTagHandler.xml");
+
+        // # Assert #
+        assertNotNull(facesConfig);
     }
-    
-    public void end(TagHandlerContext context, String body) {
-        SuggestedValueHolder holder = (SuggestedValueHolder)context.peek();
-        holder.setSuggestedValue(body);
-    }
+
 }

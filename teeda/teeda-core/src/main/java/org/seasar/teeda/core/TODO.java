@@ -53,7 +53,8 @@ public interface TODO {
      *  - impl HtmlRenderKitImpl
      *  - impl taglib core
      *  - impl taglib html
-     *  - 
+     *  - make it easy to get elements from FacesConfig by key(such as component, converter,
+     *    validator, renderkit, and managed-bean)
      *  
      * 
      * 

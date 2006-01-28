@@ -1,3 +1,18 @@
+/*
+ * Copyright 2004-2006 the Seasar Foundation and the Others.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
 package org.seasar.teeda.core.config.handler;
 
 import org.seasar.framework.log.Logger;
@@ -5,25 +20,30 @@ import org.seasar.framework.xml.TagHandler;
 import org.seasar.framework.xml.TagHandlerContext;
 import org.xml.sax.Attributes;
 
-
+/**
+ * @author shot
+ */
 public class JsfTagHandler extends TagHandler {
 
     private Logger logger_ = Logger.getLogger(JsfTagHandler.class);
     
-    private static final long serialVersionUID = 3258415027739703344L;
+    private static final long serialVersionUID = 1L;
 
     public JsfTagHandler(){
     }
 
     public void start(TagHandlerContext context, Attributes attributes) {
         super.start(context, attributes);
-        logger_.info(context);
-        logger_.info(attributes);
+        if(logger_.isDebugEnabled()){
+            logger_.debug(context.getDetailPath());
+        }
     }
 
     public void end(TagHandlerContext context, String body) {
         super.end(context, body);
-        logger_.info(context);
-        logger_.info(body);
+        if(logger_.isDebugEnabled()){
+            logger_.debug(context.getDetailPath());
+            logger_.debug(body);
+        }
     }
 }
