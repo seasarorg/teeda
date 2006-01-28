@@ -43,9 +43,8 @@ public class ConverterTagHandlerTest extends TagHandlerTestCase {
 
     public void testConverterTagHandler_withConverterId() throws Exception {
         // # Arrange #
-        TagHandlerContext context = new TagHandlerContext();
         FacesConfig facesConfig = new FacesConfigImpl();
-        context.push(facesConfig);
+        getContext().push(facesConfig);
 
         // # Act #
         ConverterTagHandler handler = new ConverterTagHandler(){
@@ -55,8 +54,8 @@ public class ConverterTagHandlerTest extends TagHandlerTestCase {
                 return c;
             }
         };
-        handler.start(context, new NullAttributes());
-        handler.end(context, "a");
+        handler.start(getContext(), new NullAttributes());
+        handler.end(getContext(), "a");
 
         // # Assert #
         Map converters = facesConfig.getConverterElementsById();
@@ -68,9 +67,8 @@ public class ConverterTagHandlerTest extends TagHandlerTestCase {
 
     public void testConverterTagHandler_withConverterForClass() throws Exception {
         // # Arrange #
-        TagHandlerContext context = new TagHandlerContext();
         FacesConfig facesConfig = new FacesConfigImpl();
-        context.push(facesConfig);
+        getContext().push(facesConfig);
 
         // # Act #
         ConverterTagHandler handler = new ConverterTagHandler(){
@@ -80,8 +78,8 @@ public class ConverterTagHandlerTest extends TagHandlerTestCase {
                 return c;
             }
         };
-        handler.start(context, new NullAttributes());
-        handler.end(context, "a");
+        handler.start(getContext(), new NullAttributes());
+        handler.end(getContext(), "a");
 
         // # Assert #
         Map converters = facesConfig.getConverterElementsByClass();

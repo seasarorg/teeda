@@ -43,14 +43,14 @@ public class ComponentTagHandlerTest extends TagHandlerTestCase {
 
     public void testComponentTagHandler() throws Exception {
         // # Arrange #
-        TagHandlerContext context = new TagHandlerContext();
+//        TagHandlerContext context = new TagHandlerContext();
         FacesConfig facesConfig = new FacesConfigImpl();
-        context.push(facesConfig);
+        getContext().push(facesConfig);
 
         // # Act #
         ComponentTagHandler handler = new ComponentTagHandler();
-        handler.start(context, new NullAttributes());
-        handler.end(context, "a");
+        handler.start(getContext(), new NullAttributes());
+        handler.end(getContext(), "a");
 
         // # Assert #
         Map components = facesConfig.getComponentElements();

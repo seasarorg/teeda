@@ -39,13 +39,12 @@ public class AttributeTagHandlerTest extends TagHandlerTestCase {
     public void testAttributeTagHandler() throws Exception {
         // # Arrange #
         AttributeTagHandler handler = new AttributeTagHandler();
-        TagHandlerContext context = new TagHandlerContext();
         AttributeHolder holder = new ComponentElementImpl();
-        context.push(holder);
+        getContext().push(holder);
 
         // # Act #
-        handler.start(context, new NullAttributes());
-        handler.end(context, "body");
+        handler.start(getContext(), new NullAttributes());
+        handler.end(getContext(), "body");
 
         // # Assert #
         assertNotNull(holder.getAttributeElements());

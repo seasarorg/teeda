@@ -38,12 +38,11 @@ public class ApplicationTagHandlerTest extends TagHandlerTestCase {
 
     public void testApplicationTagHandler(){
         ApplicationTagHandler handler = new ApplicationTagHandler();
-        TagHandlerContext context = new TagHandlerContext();
-        context.push(new FacesConfigImpl());
+        getContext().push(new FacesConfigImpl());
         ApplicationElement appElement = new ApplicationElementImpl();
-        context.push(appElement);
-        handler.end(context, null);
-        FacesConfig facesConfig = (FacesConfig)context.pop();
+        getContext().push(appElement);
+        handler.end(getContext(), null);
+        FacesConfig facesConfig = (FacesConfig)getContext().pop();
         List appElements = facesConfig.getApplicationElements();
         assertNotNull(appElements);
         ApplicationElement target = (ApplicationElement)appElements.get(0);

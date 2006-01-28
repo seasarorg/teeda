@@ -37,13 +37,12 @@ public class DefaultValueTagHandlerTest extends TagHandlerTestCase {
 
     public void testDefaultValueTagHandler_withPropertyElement() throws Exception {
         // # Arrange #
-        TagHandlerContext context = new TagHandlerContext();
         PropertyElement element = new PropertyElementImpl();
-        context.push(element);
+        getContext().push(element);
 
         // # Act #
         DefaultValueTagHandler handler = new DefaultValueTagHandler();
-        handler.end(context, "a");
+        handler.end(getContext(), "a");
 
         // # Assert #
         assertEquals("a", element.getDefaultValue());

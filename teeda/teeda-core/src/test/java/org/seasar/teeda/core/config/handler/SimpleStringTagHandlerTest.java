@@ -38,12 +38,11 @@ public class SimpleStringTagHandlerTest extends TagHandlerTestCase {
 
     public void testEndTagHandlerContextString() {
         ConverterElement tag = new ConverterElementImpl();
-        TagHandlerContext context = new TagHandlerContext();
-        context.push(tag);
+        getContext().push(tag);
         SimpleStringTagHandler handler = 
             new SimpleStringTagHandler("converter-id");
-        handler.end(context, "id");
-        ConverterElement result = (ConverterElement)context.pop();
+        handler.end(getContext(), "id");
+        ConverterElement result = (ConverterElement)getContext().pop();
         assertEquals("id", result.getConverterId());
     }
 

@@ -33,8 +33,7 @@ public class FactoryTagHandlerTest extends TagHandlerTestCase {
 
     public void testFactoryTagHandler() throws Exception{
         FacesConfig config = new FacesConfigImpl();
-        TagHandlerContext context = new TagHandlerContext();
-        context.push(config);
+        getContext().push(config);
         FactoryTagHandler handler = new FactoryTagHandler();
         FactoryElement element  = new FactoryElement(){
 
@@ -67,9 +66,9 @@ public class FactoryTagHandlerTest extends TagHandlerTestCase {
             }
 
         };
-        context.push(element);
-        handler.end(context, null);
-        FacesConfig c = (FacesConfig)context.pop();
+        getContext().push(element);
+        handler.end(getContext(), null);
+        FacesConfig c = (FacesConfig)getContext().pop();
         List list = (List)c.getFactoryElements();
         assertTrue(list != null);
         assertEquals(1, list.size());
