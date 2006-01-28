@@ -15,16 +15,36 @@
  */
 package org.seasar.teeda.core.render.html;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.Map;
 
 import javax.faces.application.StateManager.SerializedView;
 import javax.faces.context.FacesContext;
 import javax.faces.render.ResponseStateManager;
 
+import org.seasar.framework.util.Base64Util;
+import org.seasar.teeda.core.util.ObjectInputStreamUtil;
+
 /**
  * @author shot
  */
 public class HtmlResponseStateManager extends ResponseStateManager {
+
+    private static final String VIEW_ID = "org.seasar.teeda.core.JSF_VIEW_ID";
+
+    private static final String TREE_PARAMETER = "org.seasar.teeda.core.TREE_PARAMETER";
+
+    private static final String STATE_PARAMETER = "org.seasar.teeda.core.STATE_PARAMETER";
+
+    private static final String BASE64_TREE_PARAMETER = "org.seasar.teeda.core.BASE64_TREE_PARAMETER";
+
+    private static final String BASE64_STATE_PARAMETER = "org.seasar.teeda.core.BASE64_STATE_PARAMETER";
+
+    private static final String DEFAULT_ENCODING = "ISO-8859-1";
+
+    public HtmlResponseStateManager() {
+    }
 
     public void writeState(FacesContext context, SerializedView state)
             throws IOException {
@@ -33,12 +53,38 @@ public class HtmlResponseStateManager extends ResponseStateManager {
     }
 
     public Object getTreeStructureToRestore(FacesContext context, String viewId) {
-        // TODO Auto-generated method stub
+        Map paramMap = context.getExternalContext().getRequestParameterMap();
+        Object state = paramMap.get(VIEW_ID);
+        if (state == null || !state.equals(viewId)) {
+            return null;
+        }
+        state = paramMap.get(TREE_PARAMETER);
+        if (state != null) {
+            return state;
+        }
+        state = paramMap.get(BASE64_TREE_PARAMETER);
+        if (state != null) {
+            String s = (String) state;
+            byte[] bytes = Base64Util.decode(s);
+            ByteArrayInputStream decodedStream = new ByteArrayInputStream(bytes);
+            return ObjectInputStreamUtil.getObject(decodedStream);
+        }
         return null;
     }
 
     public Object getComponentStateToRestore(FacesContext context) {
-        // TODO Auto-generated method stub
+        Map paramMap = context.getExternalContext().getRequestParameterMap();
+        Object state = paramMap.get(STATE_PARAMETER);
+        if (state != null) {
+            return state;
+        }
+        state = paramMap.get(BASE64_STATE_PARAMETER);
+        if (state != null) {
+            String s = (String) state;
+            byte[] bytes = Base64Util.decode(s);
+            ByteArrayInputStream decodedStream = new ByteArrayInputStream(bytes);
+            return ObjectInputStreamUtil.getObject(decodedStream);
+        }
         return null;
     }
 
