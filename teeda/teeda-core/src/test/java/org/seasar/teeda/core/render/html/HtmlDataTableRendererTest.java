@@ -628,6 +628,52 @@ public class HtmlDataTableRendererTest extends RendererTest {
                 getResponseText());
     }
 
+    public void testEncodeChildren_WithNestedChildren() throws Exception {
+        HtmlOutputTextRenderer htmlOutputTextRenderer = new HtmlOutputTextRenderer();
+        HtmlPanelGroupRenderer htmlPanelGroupRenderer = new HtmlPanelGroupRenderer();
+        htmlDataTable_.setValue(new String[] { "a", "b", "c" });
+        htmlDataTable_.setVar("fooVar");
+        {
+            UIColumn col = new UIColumn();
+            {
+                MockHtmlOutputText htmlOutputText = new MockHtmlOutputText();
+                htmlOutputText.setRenderer(htmlOutputTextRenderer);
+                ValueBinding vb = new ValueBindingImpl(getFacesContext()
+                        .getApplication(), "#{fooVar}", new CommonsELParser());
+                htmlOutputText.setValueBinding("value", vb);
+                col.getChildren().add(htmlOutputText);
+            }
+            {
+                MockHtmlPanelGroup group = new MockHtmlPanelGroup();
+                group.setRenderer(htmlPanelGroupRenderer);
+                {
+                    MockHtmlOutputText htmlOutputText = new MockHtmlOutputText();
+                    htmlOutputText.setRenderer(htmlOutputTextRenderer);
+                    htmlOutputText.setValue("y");
+                    group.getChildren().add(htmlOutputText);
+                }
+                {
+                    MockHtmlOutputText htmlOutputText = new MockHtmlOutputText();
+                    htmlOutputText.setRenderer(htmlOutputTextRenderer);
+                    htmlOutputText.setValue("z");
+                    group.getChildren().add(htmlOutputText);
+                }
+                col.getChildren().add(group);
+            }
+            htmlDataTable_.getChildren().add(col);
+        }
+
+        MockFacesContext context = getFacesContext();
+
+        // ## Act ##
+        renderer_.encodeChildren(context, htmlDataTable_);
+
+        // ## Assert ##
+        assertEquals("<tbody>" + "<tr><td>ayz</td></tr>"
+                + "<tr><td>byz</td></tr>" + "<tr><td>cyz</td></tr>"
+                + "</tbody>", getResponseText());
+    }
+
     public void testEncodeChildren_SetFirst() throws Exception {
         HtmlOutputTextRenderer htmlOutputTextRenderer = new HtmlOutputTextRenderer();
         htmlDataTable_.setValue(new String[] { "a", "b", "c" });

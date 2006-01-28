@@ -165,7 +165,7 @@ public class HtmlPanelGridRenderer extends AbstractHtmlRenderer {
             RendererUtil.renderAttribute(writer, JsfConstants.CLASS_ATTR,
                     columnClasses.next(), JsfConstants.COLUMN_CLASSES_ATTR);
         }
-        encodeComponentAndDescendant(context, component);
+        encodeComponent(context, component);
         writer.endElement(JsfConstants.TD_ELEM);
     }
 

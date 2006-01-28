@@ -52,28 +52,13 @@ public class AbstractHtmlRenderer extends Renderer {
         component.encodeBegin(context);
         if (component.getRendersChildren()) {
             component.encodeChildren(context);
+        } else {
+            encodeDescendantComponent(context, component);
         }
         component.encodeEnd(context);
     }
 
-    protected void encodeComponentAndDescendant(FacesContext context,
-            UIComponent component) throws IOException {
-        encodeComponent(context, component);
-        for (Iterator it = getRenderedChildrenIterator(component); it.hasNext();) {
-            UIComponent child = (UIComponent) it.next();
-            encodeComponentAndDescendant(context, child);
-        }
-    }
-
     protected void encodeDescendantComponent(FacesContext context,
-            UIComponent component) throws IOException {
-        for (Iterator it = getRenderedChildrenIterator(component); it.hasNext();) {
-            UIComponent child = (UIComponent) it.next();
-            encodeComponentAndDescendant(context, child);
-        }
-    }
-
-    protected void encodeChildrenComponent(FacesContext context,
             UIComponent component) throws IOException {
         for (Iterator it = getRenderedChildrenIterator(component); it.hasNext();) {
             UIComponent child = (UIComponent) it.next();
