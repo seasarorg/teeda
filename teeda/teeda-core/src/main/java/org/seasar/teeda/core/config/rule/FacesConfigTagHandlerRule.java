@@ -94,6 +94,7 @@ public class FacesConfigTagHandlerRule extends JsfBaseTagHandlerRule {
         addTagHandler("attribute-class");
         addTagHandler("attribute-extension");
 
+        
         addTagHandler("property", new PropertyTagHandler());
         addTagHandler("property-name");
         addTagHandler("property-class");
