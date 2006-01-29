@@ -15,12 +15,48 @@
  */
 package org.seasar.teeda.core.config.handler;
 
-import org.seasar.teeda.core.unit.TeedaTestCase;
+import java.util.List;
+import java.util.Locale;
 
-public class LocaleConfigTagHandlerTest extends TeedaTestCase {
+import org.seasar.teeda.core.config.element.ApplicationElement;
+import org.seasar.teeda.core.config.element.FacesConfig;
+import org.seasar.teeda.core.config.element.LocaleConfigElement;
+import org.seasar.teeda.core.config.element.impl.ApplicationElementImpl;
+
+public class LocaleConfigTagHandlerTest extends TagHandlerTestCase {
 
     public void testLocaleConfigHandler() {
-        // TODO notDoneYet();
+        ApplicationElement app = new ApplicationElementImpl();
+        getContext().push(app);
+        LocaleConfigTagHandler handler = new LocaleConfigTagHandler();
+
+        handler.start(getContext(), new NullAttributes());
+        assertTrue(getContext().peek() instanceof LocaleConfigElement);
+
+        handler.end(getContext(), "a");
+
+        ApplicationElement app2 = (ApplicationElement) getContext().pop();
+        assertEquals(app, app2);
+        List locales = app2.getLocaleConfigs();
+        assertEquals(1, locales.size());
+        assertTrue(locales.get(0) instanceof LocaleConfigElement);
+    }
+
+    public void testLocaleConfigHandlerByXMLParse() {
+        FacesConfig config = parse("testLocaleConfigTagHandler.xml");
+        List apps = config.getApplicationElements();
+        assertNotNull(apps.get(0));
+
+        ApplicationElement appElement = (ApplicationElement) apps.get(0);
+        List localeConfigs = appElement.getLocaleConfigs();
+        assertNotNull(localeConfigs.get(0));
+
+        LocaleConfigElement localeConfig = (LocaleConfigElement) localeConfigs
+                .get(0);
+        assertEquals(Locale.JAPANESE, localeConfig.getDefaultLocale());
+        List supportedLocale = localeConfig.getSupportedLocales();
+        assertEquals(Locale.ENGLISH, supportedLocale.get(0));
+        assertEquals(Locale.FRENCH, supportedLocale.get(1));
     }
 
 }
