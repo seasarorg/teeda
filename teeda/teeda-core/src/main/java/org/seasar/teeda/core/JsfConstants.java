@@ -386,5 +386,7 @@ public interface JsfConstants {
     public String APPLICATION_XML_CONTENT_TYPE = "application/xml";
 
     public String TEXT_XML_CONTENT_TYPE = "text/xml";
+    
+    public String COMPRESS_STATE_ATTR = "javax.faces.COMPRESS_STATE";
 
 }

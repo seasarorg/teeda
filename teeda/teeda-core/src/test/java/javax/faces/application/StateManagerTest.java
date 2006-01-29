@@ -24,9 +24,9 @@ import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.unit.TeedaTestCase;
 
 
-public class TestStateManager extends TeedaTestCase {
+public class StateManagerTest extends TeedaTestCase {
 
-    public TestStateManager(String name) {
+    public StateManagerTest(String name) {
         super(name);
     }
 

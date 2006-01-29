@@ -15,21 +15,18 @@
  */
 package org.seasar.teeda.core.render.html;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.Map;
 
 import javax.faces.application.StateManager.SerializedView;
 import javax.faces.context.FacesContext;
-import javax.faces.render.ResponseStateManager;
 
-import org.seasar.framework.util.Base64Util;
-import org.seasar.teeda.core.util.ObjectInputStreamUtil;
+import org.seasar.teeda.core.render.AbstractResponseStateManager;
 
 /**
  * @author shot
  */
-public class HtmlResponseStateManager extends ResponseStateManager {
+public class HtmlResponseStateManager extends AbstractResponseStateManager {
 
     private static final String VIEW_ID = "org.seasar.teeda.core.JSF_VIEW_ID";
 
@@ -65,9 +62,7 @@ public class HtmlResponseStateManager extends ResponseStateManager {
         state = paramMap.get(BASE64_TREE_PARAMETER);
         if (state != null) {
             String s = (String) state;
-            byte[] bytes = Base64Util.decode(s);
-            ByteArrayInputStream decodedStream = new ByteArrayInputStream(bytes);
-            return ObjectInputStreamUtil.getObject(decodedStream);
+            return getDecoder().decode(s);
         }
         return null;
     }
@@ -81,9 +76,7 @@ public class HtmlResponseStateManager extends ResponseStateManager {
         state = paramMap.get(BASE64_STATE_PARAMETER);
         if (state != null) {
             String s = (String) state;
-            byte[] bytes = Base64Util.decode(s);
-            ByteArrayInputStream decodedStream = new ByteArrayInputStream(bytes);
-            return ObjectInputStreamUtil.getObject(decodedStream);
+            return getDecoder().decode(s);
         }
         return null;
     }

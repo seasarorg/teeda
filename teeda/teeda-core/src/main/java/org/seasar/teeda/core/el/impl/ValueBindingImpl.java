@@ -189,6 +189,7 @@ public class ValueBindingImpl extends ValueBindingBase{
         Object[] state = (Object[])obj;
         expressionString_ = (String)state[0];
         parser_ = (ELParser)state[1];
+        expression_ = parser_.parse(expressionString_);
     }
     
 }
