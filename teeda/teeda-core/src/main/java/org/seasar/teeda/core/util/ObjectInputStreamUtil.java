@@ -22,6 +22,7 @@ import java.io.ObjectInputStream;
 import org.seasar.framework.exception.ClassNotFoundRuntimeException;
 import org.seasar.framework.exception.IORuntimeException;
 import org.seasar.framework.util.InputStreamUtil;
+import org.seasar.teeda.core.render.TeedaObjectInputStream;
 
 /**
  * @author shot
@@ -34,7 +35,7 @@ public class ObjectInputStreamUtil {
     public static Object getObject(InputStream is) {
         ObjectInputStream ois = null;
         try {
-            ois = new ObjectInputStream(is);
+            ois = new TeedaObjectInputStream(is);
             return ois.readObject();
         } catch (IOException e) {
             throw new IORuntimeException(e);
