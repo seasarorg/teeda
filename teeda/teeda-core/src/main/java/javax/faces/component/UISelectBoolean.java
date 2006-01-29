@@ -29,7 +29,6 @@ public class UISelectBoolean extends UIInput {
     private static final String DEFAULT_RENDERER_TYPE = "javax.faces.Checkbox";
 
     public UISelectBoolean() {
-        super();
         setRendererType(DEFAULT_RENDERER_TYPE);
     }
 
