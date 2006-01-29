@@ -16,31 +16,34 @@
 package javax.faces.model;
 
 /**
- * TODO TEST
+ * @author shot
+ * @author manhole
  */
-
 public class SelectItemGroup extends SelectItem {
 
-	private SelectItem[] selectItems_ = null;
-	
-	public SelectItemGroup(){
-		super();
-	}
-	
-	public SelectItemGroup(String label){
-		super("", label);
-	}
-	
-	public SelectItemGroup(String label, String description, 
-			boolean disabled, SelectItem[] selectItems){
-		super("", label, description, disabled);
-		selectItems_ = selectItems;
-	}
-	
-	public SelectItem[] getSelectItems() {
-		return selectItems_;
-	}
-	public void setSelectItems(SelectItem[] selectItems) {
-		this.selectItems_ = selectItems;
-	}
+    private static final long serialVersionUID = 1L;
+
+    private SelectItem[] selectItems_ = null;
+
+    public SelectItemGroup() {
+    }
+
+    public SelectItemGroup(String label) {
+        super("", label);
+    }
+
+    public SelectItemGroup(String label, String description, boolean disabled,
+            SelectItem[] selectItems) {
+        super("", label, description, disabled);
+        setSelectItems(selectItems);
+    }
+
+    public SelectItem[] getSelectItems() {
+        return selectItems_;
+    }
+
+    public void setSelectItems(SelectItem[] selectItems) {
+        assertNotNull("selectItems", selectItems);
+        selectItems_ = selectItems;
+    }
 }
