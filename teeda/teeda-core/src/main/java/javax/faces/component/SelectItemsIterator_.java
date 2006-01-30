@@ -25,35 +25,39 @@ import javax.faces.model.SelectItem;
 /**
  * @author Shinpei Ohtani
  */
-class SelectItemsIterator_ implements Iterator {
+public class SelectItemsIterator_ implements Iterator {
 
-	private UIComponent parent_ = null;
-	
-	private Iterator children_ = null;
-	
-	private Iterator items_ = null;
-	
-	public SelectItemsIterator_(UIComponent parent){
-		parent_ = parent;
-		children_ = parent_.getChildren().iterator();
-	}
-	
-	public void remove() {
-		throw new UnsupportedOperationException();
-	}
+    private UIComponent parent_ = null;
 
-	public boolean hasNext() {
-		return (items_ != null) ? items_.hasNext() : children_.hasNext();
-	}
+    private Iterator children_ = null;
 
-	public Object next() {
+    private Iterator items_ = null;
+
+    public SelectItemsIterator_(UIComponent parent) {
+        parent_ = parent;
+        children_ = parent_.getChildren().iterator();
+    }
+
+    public void remove() {
+        throw new UnsupportedOperationException();
+    }
+
+    public boolean hasNext() {
+        if (items_ != null) {
+            return items_.hasNext();
+        } else {
+            return children_.hasNext();
+        }
+    }
+
+    public Object next() {
         if (!hasNext()) {
             throw new NoSuchElementException();
         }
         if (items_ != null) {
             return items_.next();
         }
-        UIComponent child = (UIComponent)children_.next();
+        UIComponent child = (UIComponent) children_.next();
         if (child instanceof UISelectItem) {
             return createSelectItem(child);
         } else if (child instanceof UISelectItems) {
@@ -62,10 +66,10 @@ class SelectItemsIterator_ implements Iterator {
             if (value instanceof SelectItem) {
                 return value;
             } else if (value instanceof SelectItem[]) {
-                items_ = Arrays.asList((Object[])value).iterator();
+                items_ = Arrays.asList((Object[]) value).iterator();
                 return next();
             } else if (value instanceof List) {
-            	List list = (List)value;
+                List list = (List) value;
                 items_ = list.iterator();
                 return next();
             } else {
@@ -74,16 +78,14 @@ class SelectItemsIterator_ implements Iterator {
         } else {
             throw new IllegalArgumentException();
         }
-	}
+    }
 
-    private SelectItem createSelectItem(UIComponent component){
+    private SelectItem createSelectItem(UIComponent component) {
         UISelectItem ui = (UISelectItem) component;
         SelectItem item = (SelectItem) ui.getValue();
         if (item == null) {
-            item = new SelectItem(ui.getItemValue(),
-                                  ui.getItemLabel(),
-                                  ui.getItemDescription(),
-                                  ui.isItemDisabled());
+            item = new SelectItem(ui.getItemValue(), ui.getItemLabel(), ui
+                    .getItemDescription(), ui.isItemDisabled());
         }
         return item;
     }

@@ -15,6 +15,8 @@
  */
 package javax.faces.component;
 
+import java.util.Iterator;
+
 import javax.faces.model.SelectItem;
 
 import junit.framework.TestCase;
@@ -27,30 +29,38 @@ import org.seasar.teeda.core.mock.MockUIComponentBase;
  */
 public class SelectItemsIterator_Test extends TestCase {
 
-    public void testHasNext() {
+    // TODO
+    public void todo_testHasNext() {
         MockUIComponentBase parent = new MockUIComponentBase();
         parent.setId("hoge");
         MockUIComponent child = new MockUIComponent();
         child.setId("child");
         parent.getChildren().add(child);
+
         SelectItemsIterator_ itr = new SelectItemsIterator_(parent);
+
         assertTrue(itr.hasNext());
+        Object value = itr.next();
+        System.out.println(value);
     }
 
     public void testNext1() {
-        String str = "aaa";
         MockUIComponentBase parent = new MockUIComponentBase();
         parent.setId("hoge");
         UISelectItem child = new UISelectItem();
         child.setId("child");
         child.setItemLabel("label");
-        child.setItemValue(str);
+        child.setItemValue("aaa");
         parent.getChildren().add(child);
+
         SelectItemsIterator_ itr = new SelectItemsIterator_(parent);
+        assertEquals(true, itr.hasNext());
         Object o = itr.next();
         assertTrue(o instanceof SelectItem);
-        assertEquals("label", ((SelectItem) o).getLabel());
-        assertEquals("aaa", ((SelectItem) o).getValue());
+        SelectItem selectItem = (SelectItem) o;
+        assertEquals("label", selectItem.getLabel());
+        assertEquals("aaa", selectItem.getValue());
+        assertEquals(false, itr.hasNext());
     }
 
     public void testNext2() {
@@ -65,6 +75,41 @@ public class SelectItemsIterator_Test extends TestCase {
         Object o = itr.next();
         assertTrue(o instanceof SelectItem);
         assertEquals("label", ((SelectItem) o).getLabel());
+    }
+
+    public void testItemCounts() throws Exception {
+        // ## Arrange ##
+        MockUIComponentBase component = new MockUIComponentBase();
+        {
+            UISelectItem uiSelectItem = new UISelectItem();
+            uiSelectItem.setItemValue("a1");
+            uiSelectItem.setItemLabel("b1");
+            uiSelectItem.setItemDescription("c1");
+            component.getChildren().add(uiSelectItem);
+        }
+        {
+            UISelectItem uiSelectItem = new UISelectItem();
+            uiSelectItem.setItemValue("a2");
+            uiSelectItem.setItemLabel("b2");
+            uiSelectItem.setItemDescription("c2");
+            component.getChildren().add(uiSelectItem);
+        }
+
+        // ## Act ##
+        Iterator it = new SelectItemsIterator_(component);
+
+        // ## Assert ##
+        assertEquals(true, it.hasNext());
+        {
+            SelectItem selectItem = (SelectItem) it.next();
+            assertEquals("a1", selectItem.getValue());
+        }
+        assertEquals(true, it.hasNext());
+        {
+            SelectItem selectItem = (SelectItem) it.next();
+            assertEquals("a2", selectItem.getValue());
+        }
+        assertEquals(false, it.hasNext());
     }
 
 }

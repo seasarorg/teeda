@@ -18,38 +18,43 @@ package javax.faces.convert;
 import javax.faces.FacesException;
 import javax.faces.application.FacesMessage;
 
-
+/**
+ * @author shot
+ */
 public class ConverterException extends FacesException {
 
-	private FacesMessage facesMessage_ = null;
-	public ConverterException() {
-		super();
-	}
-	
-	public ConverterException(String message) {
-		super(message);
-	}
+    private static final long serialVersionUID = 1L;
 
-	public ConverterException(Throwable cause) {
-		super(cause);
-	}
+    private FacesMessage facesMessage_ = null;
 
-	public ConverterException(String message, Throwable cause) {
-		super(message, cause);
-	}
+    public ConverterException() {
+        super();
+    }
 
-	public ConverterException(FacesMessage facesMessage){
-		super(facesMessage.getDetail());
-		facesMessage_ = facesMessage;		
-	}
-	
-	public ConverterException(FacesMessage facesMessage, Throwable cause){
-		super(facesMessage.getDetail(), cause);
-		facesMessage_ = facesMessage;
-	}
-	
-	public FacesMessage getFacesMessage(){
-		return facesMessage_;
-	}
+    public ConverterException(String message) {
+        super(message);
+    }
+
+    public ConverterException(Throwable cause) {
+        super(cause);
+    }
+
+    public ConverterException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    public ConverterException(FacesMessage facesMessage) {
+        super(facesMessage.getDetail());
+        facesMessage_ = facesMessage;
+    }
+
+    public ConverterException(FacesMessage facesMessage, Throwable cause) {
+        super(facesMessage.getDetail(), cause);
+        facesMessage_ = facesMessage;
+    }
+
+    public FacesMessage getFacesMessage() {
+        return facesMessage_;
+    }
 
 }

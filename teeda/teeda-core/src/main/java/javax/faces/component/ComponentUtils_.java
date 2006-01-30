@@ -151,10 +151,9 @@ class ComponentUtils_ {
         return false;
     }
 
-    public static boolean valueMatches(Object value, Iterator itr) {
-        SelectItem item = null;
-        for (Iterator items = itr; items.hasNext();) {
-            item = (SelectItem) items.next();
+    public static boolean valueMatches(Object value, Iterator selectItems) {
+        while (selectItems.hasNext()) {
+            SelectItem item = (SelectItem) selectItems.next();
             if (item instanceof SelectItemGroup) {
                 SelectItem[] subitems = ((SelectItemGroup) item)
                         .getSelectItems();
@@ -166,11 +165,17 @@ class ComponentUtils_ {
             } else {
                 Object itemValue = item.getValue();
                 if (value == null) {
-                    return (itemValue == null);
+                    if (itemValue == null) {
+                        return true;
+                    }
                 } else if (itemValue == null) {
-                    return (value == null);
+                    if (value == null) {
+                        return true;
+                    }
                 } else {
-                    return value.equals(itemValue);
+                    if (value.equals(itemValue)) {
+                        return true;
+                    }
                 }
             }
         }

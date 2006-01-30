@@ -31,7 +31,6 @@ public class UISelectOne extends UIInput {
     private static final String DEFAULT_RENDER_TYPE = "javax.faces.Menu";
 
     public UISelectOne() {
-        super();
         setRendererType(DEFAULT_RENDER_TYPE);
     }
 
@@ -46,7 +45,7 @@ public class UISelectOne extends UIInput {
             return;
         }
 
-        if (ComponentUtils_.valueMatches(value, new SelectItemsIterator_(this))) {
+        if (!ComponentUtils_.valueMatches(value, new SelectItemsIterator_(this))) {
             Object[] args = { getId() };
             FacesMessageUtils_.addErrorMessage(context, this,
                     INVALID_MESSAGE_ID, args);

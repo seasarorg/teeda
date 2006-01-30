@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.faces.application.Application;
@@ -38,7 +39,7 @@ import org.seasar.teeda.core.util.FactoryFinderUtil;
  */
 public class MockFacesContextImpl extends MockFacesContext {
 
-    private UIViewRoot root_ = null;
+    private UIViewRoot viewRoot_ = null;
 
     private ExternalContext context_;
 
@@ -128,11 +129,15 @@ public class MockFacesContextImpl extends MockFacesContext {
     }
 
     public UIViewRoot getViewRoot() {
-        return root_;
+        if (viewRoot_ == null) {
+            viewRoot_ = new UIViewRoot();
+            viewRoot_.setLocale(Locale.getDefault());
+        }
+        return viewRoot_;
     }
 
     public void setViewRoot(UIViewRoot root) {
-        root_ = root;
+        viewRoot_ = root;
     }
 
     public void addMessage(String clientId, FacesMessage message) {

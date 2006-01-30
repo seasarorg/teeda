@@ -75,7 +75,6 @@ public class UIInput extends UIOutput implements EditableValueHolder {
     private static final Validator[] EMPTY_VALIDATOR_ARRAY = new Validator[0];
 
     public UIInput() {
-        super();
         setRendererType(DEFAULT_RENDER_TYPE);
     }
 

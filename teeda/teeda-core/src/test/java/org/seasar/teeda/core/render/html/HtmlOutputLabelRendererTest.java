@@ -26,6 +26,7 @@ import javax.faces.render.RendererTest;
 import org.custommonkey.xmlunit.Diff;
 import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.mock.MockUIComponentBase;
+import org.seasar.teeda.core.mock.MockUIInput;
 import org.seasar.teeda.core.unit.ExceptionAssert;
 
 /**
@@ -96,7 +97,7 @@ public class HtmlOutputLabelRendererTest extends RendererTest {
     public void testEncodeBegin_WithForComponent() throws Exception {
         htmlOutputLabel_.setFor("forComponentId");
 
-        UIInput forComponent = new UIInput() {
+        UIInput forComponent = new MockUIInput() {
             protected Renderer getRenderer(FacesContext context) {
                 return null;
             }

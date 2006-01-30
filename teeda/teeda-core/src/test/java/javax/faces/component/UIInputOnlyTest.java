@@ -40,6 +40,7 @@ import org.seasar.teeda.core.mock.MockConverter;
 import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.mock.MockFacesContextImpl;
 import org.seasar.teeda.core.mock.MockMethodBinding;
+import org.seasar.teeda.core.mock.MockUIInput;
 import org.seasar.teeda.core.mock.MockValueBinding;
 import org.seasar.teeda.core.mock.NullExternalContext;
 import org.seasar.teeda.core.mock.NullRenderer;
@@ -73,7 +74,7 @@ public class UIInputOnlyTest extends TestCase {
             throws Exception {
         // ## Arrange ##
         final boolean[] calls = { false };
-        UIInput input = new UIInput() {
+        UIInput input = new MockUIInput() {
             public void validate(FacesContext context) {
                 calls[0] = true;
             }
@@ -98,7 +99,7 @@ public class UIInputOnlyTest extends TestCase {
         // ## Arrange ##
         FacesContext context = getFacesContext();
         final boolean[] calls = { false };
-        UIInput input = new UIInput() {
+        UIInput input = new MockUIInput() {
             public void validate(FacesContext context) {
                 calls[0] = true;
             }
@@ -122,7 +123,7 @@ public class UIInputOnlyTest extends TestCase {
         // ## Arrange ##
         FacesContext context = getFacesContext();
         final boolean[] calls = { false };
-        final UIInput input = new UIInput() {
+        final UIInput input = new MockUIInput() {
             public void validate(FacesContext context) {
                 calls[0] = true;
                 setValid(false);
@@ -148,7 +149,7 @@ public class UIInputOnlyTest extends TestCase {
         // ## Arrange ##
         FacesContext context = getFacesContext();
         final boolean[] calls = { false };
-        final UIInput input = new UIInput() {
+        final UIInput input = new MockUIInput() {
             public void validate(FacesContext context) {
                 calls[0] = true;
                 throw new RuntimeException("for test");
@@ -176,7 +177,7 @@ public class UIInputOnlyTest extends TestCase {
         // ## Arrange ##
         FacesContext context = getFacesContext();
         final boolean[] calls = { false };
-        UIInput input = new UIInput() {
+        UIInput input = new MockUIInput() {
             public void validate(FacesContext context) {
                 calls[0] = true;
             }
@@ -197,7 +198,7 @@ public class UIInputOnlyTest extends TestCase {
         // ## Arrange ##
         FacesContext context = getFacesContext();
         final boolean[] calls = { false };
-        UIInput input = new UIInput() {
+        UIInput input = new MockUIInput() {
             public void validate(FacesContext context) {
                 calls[0] = true;
             }
@@ -217,7 +218,7 @@ public class UIInputOnlyTest extends TestCase {
         // ## Arrange ##
         FacesContext context = getFacesContext();
         final boolean[] calls = { false };
-        final UIInput input = new UIInput() {
+        final UIInput input = new MockUIInput() {
             public void validate(FacesContext context) {
                 calls[0] = true;
                 setValid(false);
@@ -239,7 +240,7 @@ public class UIInputOnlyTest extends TestCase {
         // ## Arrange ##
         FacesContext context = getFacesContext();
         final boolean[] calls = { false };
-        final UIInput input = new UIInput() {
+        final UIInput input = new MockUIInput() {
             public void validate(FacesContext context) {
                 calls[0] = true;
                 throw new RuntimeException("for test");
@@ -262,7 +263,7 @@ public class UIInputOnlyTest extends TestCase {
         // ## Arrange ##
         FacesContext context = getFacesContext();
         final boolean[] calls = { false };
-        UIInput input = new UIInput() {
+        UIInput input = new MockUIInput() {
             public void updateModel(FacesContext context) {
                 calls[0] = true;
             }
@@ -282,7 +283,7 @@ public class UIInputOnlyTest extends TestCase {
         // ## Arrange ##
         FacesContext context = getFacesContext();
         final boolean[] calls = { false };
-        UIInput input = new UIInput() {
+        UIInput input = new MockUIInput() {
             public void updateModel(FacesContext context) {
                 calls[0] = true;
                 setValid(false);
@@ -302,7 +303,7 @@ public class UIInputOnlyTest extends TestCase {
         // ## Arrange ##
         FacesContext context = getFacesContext();
         final boolean[] calls = { false };
-        UIInput input = new UIInput() {
+        UIInput input = new MockUIInput() {
             public void updateModel(FacesContext context) {
                 calls[0] = true;
                 throw new RuntimeException("for test");
@@ -398,7 +399,7 @@ public class UIInputOnlyTest extends TestCase {
     public void testUpdateModel_ValueBindingSetValueFailed() throws Exception {
         // ## Arrange ##
         final boolean[] calls = { false };
-        UIInput input = new UIInput() {
+        UIInput input = new MockUIInput() {
             protected Renderer getRenderer(FacesContext context) {
                 return null;
             }
@@ -439,7 +440,7 @@ public class UIInputOnlyTest extends TestCase {
     public void testValidate_DoNothingWhenSubmittedValueIsNull()
             throws Exception {
         // ## Arrange ##
-        UIInput input = new UIInput() {
+        UIInput input = new MockUIInput() {
             protected Object getConvertedValue(FacesContext context,
                     Object submittedValue) throws ConverterException {
                 throw new AssertionFailedError("shouldn't be called");
@@ -458,7 +459,7 @@ public class UIInputOnlyTest extends TestCase {
 
     public void testValidate_SetConvertedValue() throws Exception {
         // ## Arrange ##
-        UIInput input = new UIInput() {
+        UIInput input = new MockUIInput() {
             protected Object getConvertedValue(FacesContext context,
                     Object submittedValue) throws ConverterException {
                 return submittedValue + "_" + "converted";
@@ -478,7 +479,7 @@ public class UIInputOnlyTest extends TestCase {
     public void testValidate_NotSetConvertedValueWhenNotValid()
             throws Exception {
         // ## Arrange ##
-        UIInput input = new UIInput() {
+        UIInput input = new MockUIInput() {
             protected Object getConvertedValue(FacesContext context,
                     Object submittedValue) throws ConverterException {
                 setValid(false);
@@ -499,7 +500,7 @@ public class UIInputOnlyTest extends TestCase {
     public void testVaildate_QueueValueChangeEvent() throws Exception {
         // ## Arrange ##
         final FacesEvent[] params = { null };
-        UIInput input = new UIInput() {
+        UIInput input = new MockUIInput() {
             public void queueEvent(FacesEvent event) {
                 params[0] = event;
             }
@@ -524,7 +525,7 @@ public class UIInputOnlyTest extends TestCase {
     public void testVaildate_NotQueueValueChangeEvent() throws Exception {
         // ## Arrange ##
         final FacesEvent[] facesEvent = new FacesEvent[1];
-        UIInput input = new UIInput() {
+        UIInput input = new MockUIInput() {
             public void queueEvent(FacesEvent event) {
                 facesEvent[0] = event;
             }
@@ -547,7 +548,7 @@ public class UIInputOnlyTest extends TestCase {
 
     public void testGetConvertedValue_UsingRenderer() throws Exception {
         // ## Arrange ##
-        UIInput input = new UIInput() {
+        UIInput input = new MockUIInput() {
             protected Renderer getRenderer(FacesContext context) {
                 return new NullRenderer() {
                     public Object getConvertedValue(FacesContext context,
@@ -568,7 +569,7 @@ public class UIInputOnlyTest extends TestCase {
 
     public void testGetConvertedValue_UsingConverter() throws Exception {
         // ## Arrange ##
-        UIInput input = new UIInput() {
+        UIInput input = new MockUIInput() {
             protected Renderer getRenderer(FacesContext context) {
                 return null;
             }
@@ -593,7 +594,7 @@ public class UIInputOnlyTest extends TestCase {
             throws Exception {
         // ## Arrange ##
         final boolean[] calls = { false };
-        UIInput input = new UIInput() {
+        UIInput input = new MockUIInput() {
             protected Renderer getRenderer(FacesContext context) {
                 return null;
             }
@@ -619,7 +620,7 @@ public class UIInputOnlyTest extends TestCase {
     public void testGetConvertedValue_CreateConverterFromValueBindingType()
             throws Exception {
         // ## Arrange ##
-        UIInput input = new UIInput() {
+        UIInput input = new MockUIInput() {
             protected Renderer getRenderer(FacesContext context) {
                 return null;
             }
@@ -659,7 +660,7 @@ public class UIInputOnlyTest extends TestCase {
     public void testGetConvertedValue_WithoutAnyConversionWhenNoRendererAndNotStringSubmitted()
             throws Exception {
         // ## Arrange ##
-        UIInput input = new UIInput() {
+        UIInput input = new MockUIInput() {
             protected Renderer getRenderer(FacesContext context) {
                 return null;
             }
@@ -681,7 +682,7 @@ public class UIInputOnlyTest extends TestCase {
 
     public void testGetConvertedValue_WithoutAnyConversion2() throws Exception {
         // ## Arrange ##
-        UIInput input = new UIInput() {
+        UIInput input = new MockUIInput() {
             protected Renderer getRenderer(FacesContext context) {
                 return null;
             }
@@ -728,7 +729,7 @@ public class UIInputOnlyTest extends TestCase {
 
     public void testValidateValue_LocalValueIsEmpty() throws Exception {
         // ## Arrange ##
-        UIInput input = new UIInput() {
+        UIInput input = new MockUIInput() {
             protected Renderer getRenderer(FacesContext context) {
                 return null;
             }
@@ -758,8 +759,7 @@ public class UIInputOnlyTest extends TestCase {
     public void testValidateValue_CallAddedValidators() throws Exception {
         // ## Arrange ##
         final boolean[] calls = new boolean[2];
-        UIInput input = new UIInput() {
-        };
+        UIInput input = new MockUIInput();
         input.setValid(true);
         input.setRequired(true);
         input.addValidator(new NullValidator() {
@@ -788,7 +788,7 @@ public class UIInputOnlyTest extends TestCase {
 
     public void testValidateValue_CallSettedValidator() throws Exception {
         // ## Arrange ##
-        UIInput input = new UIInput() {
+        UIInput input = new MockUIInput() {
             protected Renderer getRenderer(FacesContext context) {
                 return null;
             }
@@ -812,7 +812,7 @@ public class UIInputOnlyTest extends TestCase {
     public void testValidateValue_CallValidatorsAndFailed() throws Exception {
         // ## Arrange ##
         final boolean[] calls = { false, false };
-        UIInput input = new UIInput() {
+        UIInput input = new MockUIInput() {
             protected Renderer getRenderer(FacesContext context) {
                 return null;
             }

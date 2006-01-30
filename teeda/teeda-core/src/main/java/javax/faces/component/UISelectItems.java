@@ -31,7 +31,6 @@ public class UISelectItems extends UIComponentBase {
     private static final String VALUE_BINDING_NAME = "value";
 
     public UISelectItems() {
-        super();
     }
 
     public String getFamily() {

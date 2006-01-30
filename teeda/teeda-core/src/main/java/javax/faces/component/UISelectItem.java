@@ -49,7 +49,6 @@ public class UISelectItem extends UIComponentBase {
     private boolean itemDisabledSet_ = false;
 
     public UISelectItem() {
-        super();
     }
 
     public String getFamily() {
@@ -137,4 +136,5 @@ public class UISelectItem extends UIComponentBase {
         values[5] = itemValue_;
         return values;
     }
+
 }
