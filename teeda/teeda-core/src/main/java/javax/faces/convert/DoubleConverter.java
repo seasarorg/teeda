@@ -20,49 +20,49 @@ import javax.faces.context.FacesContext;
 import javax.faces.internal.ConvertUtils;
 
 /**
- * TODO test
+ * @author shot
  */
 public class DoubleConverter implements Converter {
 
-	public static final String CONVERTER_ID = "javax.faces.DoubleTime";
+    public static final String CONVERTER_ID = "javax.faces.DoubleTime";
 
-	public DoubleConverter() {
-	}
+    public DoubleConverter() {
+    }
 
-	public Object getAsObject(FacesContext context, UIComponent component,
-			String value) throws ConverterException {
-		ConvertUtils.assertNotNull(context, "FacesContext");
-		ConvertUtils.assertNotNull(component, "UIComponent");
+    public Object getAsObject(FacesContext context, UIComponent component,
+            String value) throws ConverterException {
+        ConvertUtils.assertNotNull(context, "FacesContext");
+        ConvertUtils.assertNotNull(component, "UIComponent");
 
-		if (value == null) {
-			return null;
-		}
+        if (value == null) {
+            return null;
+        }
 
-		value = value.trim();
-		if (value.length() < 1) {
-			return null;
-		}
-		
-		try {
-			return Double.valueOf(value);
-		} catch (Exception e) {
-			Object[] args = ConvertUtils.createExceptionMessageArgs(component,
-					value);
-			throw ConvertUtils.wrappedByConverterException(this, context,
-					args, e);
-		}
-	}
+        value = value.trim();
+        if (value.length() < 1) {
+            return null;
+        }
 
-	public String getAsString(FacesContext context, UIComponent component,
-			Object value) throws ConverterException {
-		ConvertUtils.assertNotNull(context, "FacesContext");
-		ConvertUtils.assertNotNull(component, "UIComponent");
+        try {
+            return Double.valueOf(value);
+        } catch (Exception e) {
+            Object[] args = ConvertUtils.createExceptionMessageArgs(component,
+                    value);
+            throw ConvertUtils.wrappedByConverterException(this, context, args,
+                    e);
+        }
+    }
 
-		try {
-			return (value instanceof String) ? (String) value : (Double
-					.toString(((Double) value).doubleValue()));
-		} catch (Exception e) {
-			throw ConvertUtils.wrappedByConverterException(e);
-		}
-	}
+    public String getAsString(FacesContext context, UIComponent component,
+            Object value) throws ConverterException {
+        ConvertUtils.assertNotNull(context, "FacesContext");
+        ConvertUtils.assertNotNull(component, "UIComponent");
+
+        try {
+            return (value instanceof String) ? (String) value : (Double
+                    .toString(((Double) value).doubleValue()));
+        } catch (Exception e) {
+            throw ConvertUtils.wrappedByConverterException(e);
+        }
+    }
 }
