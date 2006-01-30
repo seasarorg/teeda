@@ -23,6 +23,10 @@ public abstract class MockFacesContext extends FacesContext {
 
     public abstract void setExternalContext(ExternalContext context);
 
+    public abstract void setMockExternalContext(MockExternalContext context);
+
+    public abstract MockExternalContext getMockExternalContext();
+
     public abstract void setApplication(Application application);
 
 }

@@ -25,10 +25,11 @@ import javax.faces.render.RendererTest;
 
 import org.custommonkey.xmlunit.Diff;
 import org.seasar.teeda.core.mock.MockApplication;
+import org.seasar.teeda.core.mock.MockExternalContext;
+import org.seasar.teeda.core.mock.MockExternalContextWrapper;
 import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.mock.MockUIComponentBaseWithNamingContainer;
 import org.seasar.teeda.core.mock.MockViewHandler;
-import org.seasar.teeda.core.mock.NullExternalContext;
 
 /**
  * @author manhole
@@ -94,7 +95,9 @@ public class HtmlGraphicImageRendererTest extends RendererTest {
 
     public void testEncode_UrlEncode() throws Exception {
         // ## Arrange ##
-        final ExternalContext externalContext = new NullExternalContext() {
+        MockFacesContext context = getFacesContext();
+        final ExternalContext externalContext = new MockExternalContextWrapper(
+                (MockExternalContext) context.getExternalContext()) {
             public String encodeResourceURL(String url) {
                 return url + "_2";
             }
@@ -110,7 +113,6 @@ public class HtmlGraphicImageRendererTest extends RendererTest {
                 };
             }
         };
-        MockFacesContext context = getFacesContext();
         context.setApplication(application);
         context.setExternalContext(externalContext);
 

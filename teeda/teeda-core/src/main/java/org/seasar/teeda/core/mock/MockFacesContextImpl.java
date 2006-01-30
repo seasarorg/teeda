@@ -15,6 +15,7 @@
  */
 package org.seasar.teeda.core.mock;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -30,7 +31,10 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.ResponseStream;
 import javax.faces.context.ResponseWriter;
 import javax.faces.render.RenderKit;
+import javax.servlet.ServletResponse;
 
+import org.seasar.framework.exception.IORuntimeException;
+import org.seasar.teeda.core.context.html.HtmlResponseWriter;
 import org.seasar.teeda.core.util.FactoryFinderUtil;
 
 /**
@@ -41,7 +45,7 @@ public class MockFacesContextImpl extends MockFacesContext {
 
     private UIViewRoot viewRoot_ = null;
 
-    private ExternalContext context_;
+    private MockExternalContext externalContext_;
 
     private Application application_;
 
@@ -55,15 +59,16 @@ public class MockFacesContextImpl extends MockFacesContext {
         setCurrentInstance(this);
     }
 
-    public MockFacesContextImpl(ExternalContext context) {
-        context_ = context;
+    public MockFacesContextImpl(MockExternalContext externalContext) {
+        externalContext_ = externalContext;
         application_ = FactoryFinderUtil.getApplicationFactory()
                 .getApplication();
         setCurrentInstance(this);
     }
 
-    public MockFacesContextImpl(ExternalContext context, Application application) {
-        context_ = context;
+    public MockFacesContextImpl(MockExternalContext context,
+            Application application) {
+        externalContext_ = context;
         application_ = application;
         setCurrentInstance(this);
     }
@@ -80,10 +85,10 @@ public class MockFacesContextImpl extends MockFacesContext {
     }
 
     public ExternalContext getExternalContext() {
-        if (context_ == null) {
-            context_ = new MockExternalContextImpl();
+        if (externalContext_ == null) {
+            externalContext_ = new MockExternalContextImpl();
         }
-        return context_;
+        return externalContext_;
     }
 
     public Severity getMaximumSeverity() {
@@ -121,6 +126,17 @@ public class MockFacesContextImpl extends MockFacesContext {
     }
 
     public ResponseWriter getResponseWriter() {
+        if (responseWriter_ == null) {
+            HtmlResponseWriter responseWriter = new HtmlResponseWriter();
+            ServletResponse response = (ServletResponse) getExternalContext()
+                    .getResponse();
+            try {
+                responseWriter.setWriter(response.getWriter());
+                responseWriter_ = responseWriter;
+            } catch (IOException e) {
+                throw new IORuntimeException(e);
+            }
+        }
         return responseWriter_;
     }
 
@@ -156,11 +172,20 @@ public class MockFacesContextImpl extends MockFacesContext {
     }
 
     public void setExternalContext(ExternalContext context) {
-        context_ = context;
+        setMockExternalContext((MockExternalContext) context);
     }
+
+    public void setMockExternalContext(MockExternalContext context) {
+        externalContext_ = context;
+    }
+    
 
     public void setApplication(Application application) {
         application_ = application;
+    }
+
+    public MockExternalContext getMockExternalContext() {
+        return externalContext_;
     }
 
 }
