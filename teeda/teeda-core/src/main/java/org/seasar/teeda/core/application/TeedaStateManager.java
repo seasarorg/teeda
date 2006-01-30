@@ -39,7 +39,7 @@ import org.seasar.framework.util.ClassUtil;
 /**
  * @author higa
  *
- * need to re-define.
+ * TODO need to re-define.
  */
 public class TeedaStateManager extends StateManager implements Serializable {
 
@@ -55,7 +55,7 @@ public class TeedaStateManager extends StateManager implements Serializable {
 
 	private transient RenderKitFactory renderKitFactory;
 
-	private transient ViewTemplateFactory viewTemplateFactory;
+//	private transient ViewTemplateFactory viewTemplateFactory;
 
 	public TeedaStateManager() {
 	}
@@ -109,22 +109,23 @@ public class TeedaStateManager extends StateManager implements Serializable {
 	}
 
 	protected long getLastModifiedFromFile(String viewId) {
-		ViewTemplateFactory vtf = getViewTemplateFactory();
-		ViewTemplate vt = vtf.getViewTemplate(viewId);
-		long lastModified = vt.getLastModified();
-		if (lastModified == 0) {
-			return lastModified;
-		}
-		ViewProcessor vp = (ViewProcessor) vt.getRootTagProcessor();
-		String[] includes = vp.getIncludes();
-		for (int i = 0; i < includes.length; ++i) {
-			vt = vtf.getViewTemplate(includes[i]);
-			long lm = vt.getLastModified();
-			if (lm > lastModified) {
-				lastModified = lm;
-			}
-		}
-		return lastModified;
+//		ViewTemplateFactory vtf = getViewTemplateFactory();
+//		ViewTemplate vt = vtf.getViewTemplate(viewId);
+//		long lastModified = vt.getLastModified();
+//		if (lastModified == 0) {
+//			return lastModified;
+//		}
+//		ViewProcessor vp = (ViewProcessor) vt.getRootTagProcessor();
+//		String[] includes = vp.getIncludes();
+//		for (int i = 0; i < includes.length; ++i) {
+//			vt = vtf.getViewTemplate(includes[i]);
+//			long lm = vt.getLastModified();
+//			if (lm > lastModified) {
+//				lastModified = lm;
+//			}
+//		}
+//		return lastModified;
+        return 0;
 	}
 
 	protected SerializedView getSerializedViewFromSession(
@@ -350,13 +351,13 @@ public class TeedaStateManager extends StateManager implements Serializable {
 		return renderKitFactory;
 	}
 
-	protected ViewTemplateFactory getViewTemplateFactory() {
-		if (viewTemplateFactory == null) {
-			S2Container container = SingletonS2ContainerFactory.getContainer();
-			viewTemplateFactory = (ViewTemplateFactory) container
-					.getComponent(ViewTemplateFactory.class);
-		}
-		return viewTemplateFactory;
-	}
+//	protected ViewTemplateFactory getViewTemplateFactory() {
+//		if (viewTemplateFactory == null) {
+//			S2Container container = SingletonS2ContainerFactory.getContainer();
+//			viewTemplateFactory = (ViewTemplateFactory) container
+//					.getComponent(ViewTemplateFactory.class);
+//		}
+//		return viewTemplateFactory;
+//	}
 
 }
