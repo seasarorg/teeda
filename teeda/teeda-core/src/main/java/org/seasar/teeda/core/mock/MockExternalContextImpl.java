@@ -128,7 +128,8 @@ public class MockExternalContextImpl extends MockExternalContext {
         Enumeration names = getMockServletContext().getInitParameterNames();
         while (names.hasMoreElements()) {
             String name = (String) names.nextElement();
-            parameterMap.put(name, getMockServletContext().getInitParameter(name));
+            parameterMap.put(name, getMockServletContext().getInitParameter(
+                    name));
         }
         return Collections.unmodifiableMap(parameterMap);
     }
@@ -143,8 +144,8 @@ public class MockExternalContextImpl extends MockExternalContext {
 
     MockHttpServletRequest getHttpServletRequest() {
         if (mockHttpServletRequest_ == null) {
-            mockHttpServletRequest_ = new MockHttpServletRequestImpl(getMockServletContext(),
-                    "/mock-path.html");
+            mockHttpServletRequest_ = new MockHttpServletRequestImpl(
+                    getMockServletContext(), "/mock-path.html");
         }
         return mockHttpServletRequest_;
     }
@@ -221,7 +222,8 @@ public class MockExternalContextImpl extends MockExternalContext {
 
     HttpServletResponse getHttpServletResponse() {
         if (httpServletResponse_ == null) {
-            httpServletResponse_ = new MockHttpServletResponseImpl(getHttpServletRequest());
+            httpServletResponse_ = new MockHttpServletResponseImpl(
+                    getHttpServletRequest());
         }
         return httpServletResponse_;
     }
