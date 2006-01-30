@@ -15,6 +15,8 @@
  */
 package javax.faces.component;
 
+import javax.faces.internal.NamingContainerUtil_;
+
 /**
  * @author shot
  */

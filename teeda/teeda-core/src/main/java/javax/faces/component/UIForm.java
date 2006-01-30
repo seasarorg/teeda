@@ -19,6 +19,7 @@ import java.util.Iterator;
 
 import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseId;
+import javax.faces.internal.NamingContainerUtil_;
 
 /**
  * @author shot

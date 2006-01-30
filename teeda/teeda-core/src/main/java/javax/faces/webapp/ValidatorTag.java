@@ -17,6 +17,7 @@ package javax.faces.webapp;
 
 import javax.faces.component.EditableValueHolder;
 import javax.faces.component.UIComponent;
+import javax.faces.internal.WebAppUtils_;
 import javax.faces.validator.Validator;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;

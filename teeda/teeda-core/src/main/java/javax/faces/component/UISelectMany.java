@@ -21,6 +21,8 @@ import java.util.List;
 
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
+import javax.faces.internal.FacesMessageUtils_;
+import javax.faces.internal.SelectItemsIterator_;
 
 /**
  * @author shot

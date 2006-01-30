@@ -16,6 +16,8 @@
 package javax.faces.component;
 
 import javax.faces.context.FacesContext;
+import javax.faces.internal.FacesMessageUtils_;
+import javax.faces.internal.SelectItemsIterator_;
 
 /**
  * @author shot

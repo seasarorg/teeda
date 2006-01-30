@@ -27,6 +27,9 @@ import javax.faces.event.AbortProcessingException;
 import javax.faces.event.FacesEvent;
 import javax.faces.event.FacesListener;
 import javax.faces.event.PhaseId;
+import javax.faces.internal.NamingContainerUtil_;
+import javax.faces.internal.SavedState_;
+import javax.faces.internal.UIDataUtil_;
 import javax.faces.model.DataModel;
 
 /**

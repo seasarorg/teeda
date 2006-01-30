@@ -25,6 +25,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.el.ValueBinding;
 import javax.faces.event.PhaseId;
+import javax.faces.internal.ArrayIterator_;
 import javax.faces.model.SelectItem;
 import javax.faces.model.SelectItemGroup;
 
@@ -35,7 +36,7 @@ import org.apache.commons.beanutils.BeanUtils;
  * 
  * TODO TEST
  */
-class ComponentUtils_ {
+public class ComponentUtils_ {
 
     private static final int LOCALE_LENGTH_SHORT = 2;
 

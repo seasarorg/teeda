@@ -17,6 +17,7 @@ package javax.faces.convert;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.internal.ConvertUtils_;
 
 public class CharacterConverter implements Converter {
 

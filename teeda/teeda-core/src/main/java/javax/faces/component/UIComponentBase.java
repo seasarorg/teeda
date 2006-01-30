@@ -29,6 +29,12 @@ import javax.faces.el.ValueBinding;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.FacesEvent;
 import javax.faces.event.FacesListener;
+import javax.faces.internal.AttachedObjectStateWrapper_;
+import javax.faces.internal.ComponentAttributesMap_;
+import javax.faces.internal.ComponentChildrenListWrapper_;
+import javax.faces.internal.ComponentFacetAndChildrenIterator_;
+import javax.faces.internal.ComponentFacetMapWrapper_;
+import javax.faces.internal.RenderKitUtil_;
 import javax.faces.render.RenderKit;
 import javax.faces.render.Renderer;
 

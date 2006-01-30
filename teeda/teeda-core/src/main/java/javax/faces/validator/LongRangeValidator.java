@@ -19,6 +19,7 @@ import javax.faces.FacesException;
 import javax.faces.component.StateHolder;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.internal.FacesMessageUtils_;
 
 
 public class LongRangeValidator implements Validator, StateHolder {

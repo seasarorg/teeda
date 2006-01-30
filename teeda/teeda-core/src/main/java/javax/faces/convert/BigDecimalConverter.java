@@ -19,6 +19,7 @@ import java.math.BigDecimal;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.internal.ConvertUtils_;
 
 public class BigDecimalConverter implements Converter {
 

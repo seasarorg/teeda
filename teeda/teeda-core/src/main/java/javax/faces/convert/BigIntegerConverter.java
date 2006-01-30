@@ -19,6 +19,7 @@ import java.math.BigInteger;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.internal.ConvertUtils_;
 
 public class BigIntegerConverter implements Converter {
 
