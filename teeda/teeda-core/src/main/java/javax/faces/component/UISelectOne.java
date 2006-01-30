@@ -16,8 +16,8 @@
 package javax.faces.component;
 
 import javax.faces.context.FacesContext;
-import javax.faces.internal.FacesMessageUtils_;
-import javax.faces.internal.SelectItemsIterator_;
+import javax.faces.internal.FacesMessageUtils;
+import javax.faces.internal.SelectItemsIterator;
 
 /**
  * @author shot
@@ -47,9 +47,9 @@ public class UISelectOne extends UIInput {
             return;
         }
 
-        if (!ComponentUtils_.valueMatches(value, new SelectItemsIterator_(this))) {
+        if (!ComponentUtils_.valueMatches(value, new SelectItemsIterator(this))) {
             Object[] args = { getId() };
-            FacesMessageUtils_.addErrorMessage(context, this,
+            FacesMessageUtils.addErrorMessage(context, this,
                     INVALID_MESSAGE_ID, args);
             setValid(false);
         }

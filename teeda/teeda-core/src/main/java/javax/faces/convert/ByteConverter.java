@@ -17,7 +17,7 @@ package javax.faces.convert;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.internal.ConvertUtils_;
+import javax.faces.internal.ConvertUtils;
 
 public class ByteConverter implements Converter {
 
@@ -28,8 +28,8 @@ public class ByteConverter implements Converter {
 
 	public Object getAsObject(FacesContext context, UIComponent component,
 			String value) throws ConverterException {
-		ConvertUtils_.assertNotNull(context, "FacesContext");
-		ConvertUtils_.assertNotNull(component, "UIComponent");
+		ConvertUtils.assertNotNull(context, "FacesContext");
+		ConvertUtils.assertNotNull(component, "UIComponent");
 
 		if (value == null) {
 			return null;
@@ -42,17 +42,17 @@ public class ByteConverter implements Converter {
 		try {
 			return Byte.valueOf(value);
 		} catch (Exception e) {
-			Object[] args = ConvertUtils_.createExceptionMessageArgs(component,
+			Object[] args = ConvertUtils.createExceptionMessageArgs(component,
 					value);
-			throw ConvertUtils_.wrappedByConverterException(this, context,
+			throw ConvertUtils.wrappedByConverterException(this, context,
 					args, e);
 		}
 	}
 
 	public String getAsString(FacesContext context, UIComponent component,
 			Object value) throws ConverterException {
-		ConvertUtils_.assertNotNull(context, "FacesContext");
-		ConvertUtils_.assertNotNull(component, "UIComponent");
+		ConvertUtils.assertNotNull(context, "FacesContext");
+		ConvertUtils.assertNotNull(component, "UIComponent");
 
 		if (value == null) {
 			return "";
@@ -62,7 +62,7 @@ public class ByteConverter implements Converter {
 			return (value instanceof String) ? (String) value : Byte
 					.toString(((Byte) value).byteValue());
 		} catch (Exception e) {
-			throw ConvertUtils_.wrappedByConverterException(e);
+			throw ConvertUtils.wrappedByConverterException(e);
 
 		}
 	}

@@ -17,7 +17,7 @@ package javax.faces.webapp;
 
 import javax.faces.component.EditableValueHolder;
 import javax.faces.component.UIComponent;
-import javax.faces.internal.WebAppUtils_;
+import javax.faces.internal.WebAppUtils;
 import javax.faces.validator.Validator;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
@@ -62,10 +62,10 @@ public class ValidatorTag extends TagSupport {
         try{
             String validatorId = validatorId_;
             if(UIComponentTag.isValueReference(validatorId_)){
-                validatorId = (String)WebAppUtils_
+                validatorId = (String)WebAppUtils
                         .getValueFromCreatedValueBinding(validatorId_);
             }
-            return WebAppUtils_.createValidator(validatorId);
+            return WebAppUtils.createValidator(validatorId);
         }catch (Exception e){
             throw new JspException(e);
         }

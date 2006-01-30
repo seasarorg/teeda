@@ -29,12 +29,12 @@ import javax.faces.el.ValueBinding;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.FacesEvent;
 import javax.faces.event.FacesListener;
-import javax.faces.internal.AttachedObjectStateWrapper_;
-import javax.faces.internal.ComponentAttributesMap_;
-import javax.faces.internal.ComponentChildrenListWrapper_;
-import javax.faces.internal.ComponentFacetAndChildrenIterator_;
-import javax.faces.internal.ComponentFacetMapWrapper_;
-import javax.faces.internal.RenderKitUtil_;
+import javax.faces.internal.AttachedObjectStateWrapper;
+import javax.faces.internal.ComponentAttributesMap;
+import javax.faces.internal.ComponentChildrenListWrapper;
+import javax.faces.internal.ComponentFacetAndChildrenIterator;
+import javax.faces.internal.ComponentFacetMapWrapper;
+import javax.faces.internal.RenderKitUtil;
 import javax.faces.render.RenderKit;
 import javax.faces.render.Renderer;
 
@@ -46,7 +46,7 @@ public abstract class UIComponentBase extends UIComponent {
 
     private String id_;
 
-    private ComponentAttributesMap_ attributesMap_ = null;
+    private ComponentAttributesMap attributesMap_ = null;
 
     private Map bindingMap_ = new HashMap();
 
@@ -74,7 +74,7 @@ public abstract class UIComponentBase extends UIComponent {
 
     public Map getAttributes() {
         if (attributesMap_ == null) {
-            attributesMap_ = new ComponentAttributesMap_(this);
+            attributesMap_ = new ComponentAttributesMap(this);
         }
         return attributesMap_;
     }
@@ -197,7 +197,7 @@ public abstract class UIComponentBase extends UIComponent {
 
     public List getChildren() {
         if (childrenList_ == null) {
-            childrenList_ = new ComponentChildrenListWrapper_(this);
+            childrenList_ = new ComponentChildrenListWrapper(this);
         }
         return childrenList_;
     }
@@ -283,7 +283,7 @@ public abstract class UIComponentBase extends UIComponent {
 
     public Map getFacets() {
         if (facetMap_ == null) {
-            facetMap_ = new ComponentFacetMapWrapper_(this);
+            facetMap_ = new ComponentFacetMapWrapper(this);
         }
         return facetMap_;
     }
@@ -293,7 +293,7 @@ public abstract class UIComponentBase extends UIComponent {
     }
 
     public Iterator getFacetsAndChildren() {
-        return new ComponentFacetAndChildrenIterator_(facetMap_, childrenList_);
+        return new ComponentFacetAndChildrenIterator(facetMap_, childrenList_);
     }
 
     public void broadcast(FacesEvent event) throws AbortProcessingException {
@@ -512,7 +512,7 @@ public abstract class UIComponentBase extends UIComponent {
         Renderer renderer = null;
         String rendererType = getRendererType();
         if (rendererType != null) {
-            RenderKit renderKit = RenderKitUtil_.getRenderKit(context);
+            RenderKit renderKit = RenderKitUtil.getRenderKit(context);
             renderer = renderKit.getRenderer(getFamily(), rendererType);
         }
         return renderer;
@@ -564,11 +564,11 @@ public abstract class UIComponentBase extends UIComponent {
             List resultList = new ArrayList(attachedList.size());
             for (Iterator itr = attachedList.iterator(); itr.hasNext();) {
                 obj = itr.next();
-                resultList.add(new AttachedObjectStateWrapper_(context, obj));
+                resultList.add(new AttachedObjectStateWrapper(context, obj));
             }
             result = resultList;
         } else {
-            result = new AttachedObjectStateWrapper_(context, obj);
+            result = new AttachedObjectStateWrapper(context, obj);
         }
         return result;
     }
@@ -588,14 +588,14 @@ public abstract class UIComponentBase extends UIComponent {
             List resultList = new ArrayList(list.size());
             for (Iterator itr = list.iterator(); itr.hasNext();) {
 
-                AttachedObjectStateWrapper_ wrapper = (AttachedObjectStateWrapper_) itr
+                AttachedObjectStateWrapper wrapper = (AttachedObjectStateWrapper) itr
                         .next();
                 resultList.add(wrapper.restore(context));
 
             }
             result = resultList;
-        } else if (stateObject instanceof AttachedObjectStateWrapper_) {
-            AttachedObjectStateWrapper_ wrapper = (AttachedObjectStateWrapper_) stateObject;
+        } else if (stateObject instanceof AttachedObjectStateWrapper) {
+            AttachedObjectStateWrapper wrapper = (AttachedObjectStateWrapper) stateObject;
             result = wrapper.restore(context);
         } else {
             throw new IllegalStateException();
@@ -611,7 +611,7 @@ public abstract class UIComponentBase extends UIComponent {
 
     private void restoreAttributeMap(Object state) {
         if (state != null) {
-            attributesMap_ = new ComponentAttributesMap_(this, (Map) state);
+            attributesMap_ = new ComponentAttributesMap(this, (Map) state);
         } else {
             clearAttributeMap();
         }

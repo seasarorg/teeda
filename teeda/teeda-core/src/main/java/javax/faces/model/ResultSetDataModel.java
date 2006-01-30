@@ -27,9 +27,9 @@ import java.util.Set;
 import java.util.TreeMap;
 
 import javax.faces.FacesException;
-import javax.faces.internal.ResultSetEntries_;
-import javax.faces.internal.ResultSetKeys_;
-import javax.faces.internal.ResultSetValues_;
+import javax.faces.internal.ResultSetEntries;
+import javax.faces.internal.ResultSetKeys;
+import javax.faces.internal.ResultSetValues;
 
 /**
  * TODO TEST
@@ -210,7 +210,7 @@ public class ResultSetDataModel extends DataModel {
         }
 
         public Set entrySet() {
-            return new ResultSetEntries_(this);
+            return new ResultSetEntries(this);
         }
 
         public Object get(Object key) {
@@ -227,7 +227,7 @@ public class ResultSetDataModel extends DataModel {
         }
 
         public Set keySet() {
-            return new ResultSetKeys_(this);
+            return new ResultSetKeys(this);
         }
 
         public Object put(Object key, Object value) {
@@ -247,7 +247,7 @@ public class ResultSetDataModel extends DataModel {
         }
 
         public Collection values() {
-            return new ResultSetValues_(this);
+            return new ResultSetValues(this);
         }
 
         public void clear() {

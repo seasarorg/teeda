@@ -18,7 +18,7 @@ package javax.faces.validator;
 import javax.faces.component.StateHolder;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.internal.FacesMessageUtils_;
+import javax.faces.internal.FacesMessageUtils;
 
 
 public class DoubleRangeValidator implements Validator, StateHolder {
@@ -128,7 +128,7 @@ public class DoubleRangeValidator implements Validator, StateHolder {
 				
 				if(doubleValue < minValue || doubleValue > maxValue){
 					Object[] args = {minimum_, maximum_, component.getId()};
-					throw new ValidatorException(FacesMessageUtils_.getMessage(context, NOT_IN_RANGE_MESSAGE_ID, args));
+					throw new ValidatorException(FacesMessageUtils.getMessage(context, NOT_IN_RANGE_MESSAGE_ID, args));
 				}
 				
 			}else if(minimum_ != null){
@@ -136,7 +136,7 @@ public class DoubleRangeValidator implements Validator, StateHolder {
 				double minValue = minimum_.doubleValue();
 				if(doubleValue < minValue){
 					Object[] args = {minimum_, component.getId()};
-					throw new ValidatorException(FacesMessageUtils_.getMessage(context, MINIMUM_MESSAGE_ID, args));
+					throw new ValidatorException(FacesMessageUtils.getMessage(context, MINIMUM_MESSAGE_ID, args));
 				}
 				
 			}else if(maximum_ != null){
@@ -144,13 +144,13 @@ public class DoubleRangeValidator implements Validator, StateHolder {
 				double maxValue = maximum_.doubleValue();
 				if(doubleValue > maxValue){
 					Object[] args = {maximum_, component.getId()};
-					throw new ValidatorException(FacesMessageUtils_.getMessage(context, MAXIMUM_MESSAGE_ID, args));
+					throw new ValidatorException(FacesMessageUtils.getMessage(context, MAXIMUM_MESSAGE_ID, args));
 				}
 			}
 			
 		}catch(NumberFormatException e){
 			throw new ValidatorException(
-					FacesMessageUtils_.getMessage(context, TYPE_MESSAGE_ID, new Object[]{component.getId()})
+					FacesMessageUtils.getMessage(context, TYPE_MESSAGE_ID, new Object[]{component.getId()})
 				);
 		}
 		

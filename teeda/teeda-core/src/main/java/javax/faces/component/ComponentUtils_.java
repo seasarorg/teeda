@@ -25,7 +25,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.el.ValueBinding;
 import javax.faces.event.PhaseId;
-import javax.faces.internal.ArrayIterator_;
+import javax.faces.internal.ArrayIterator;
 import javax.faces.model.SelectItem;
 import javax.faces.model.SelectItemGroup;
 
@@ -159,7 +159,7 @@ public class ComponentUtils_ {
                 SelectItem[] subitems = ((SelectItemGroup) item)
                         .getSelectItems();
                 if ((subitems != null) && (subitems.length > 0)) {
-                    if (valueMatches(value, new ArrayIterator_(subitems))) {
+                    if (valueMatches(value, new ArrayIterator(subitems))) {
                         return true;
                     }
                 }

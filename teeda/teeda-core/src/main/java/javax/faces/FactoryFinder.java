@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.faces.internal.FactoryFinderUtil_;
+import javax.faces.internal.FactoryFinderUtil;
 
 /**
  * @author shot
@@ -41,8 +41,8 @@ public final class FactoryFinder {
 	private static final Map factories_ = new HashMap();
 
 	public static Object getFactory(String factoryName) throws FacesException {
-		FactoryFinderUtil_.assertNotNull(factoryName, "factoryName");
-		ClassLoader classLoader = FactoryFinderUtil_.getClassLoader();
+		FactoryFinderUtil.assertNotNull(factoryName, "factoryName");
+		ClassLoader classLoader = FactoryFinderUtil.getClassLoader();
 		Map factoryClassNames = (Map)registeredFactoryNamesMap_.get(classLoader);
 		if (factoryClassNames == null) {
 			throw new IllegalStateException("No factories configured.");
@@ -58,7 +58,7 @@ public final class FactoryFinder {
 		Object factory = factoryMap.get(factoryName);
 		if (factory == null) {
 			List classNames = (List)factoryClassNames.get(factoryName);
-			factory = FactoryFinderUtil_.createFactoryInstance(factoryName, classNames, classLoader);
+			factory = FactoryFinderUtil.createFactoryInstance(factoryName, classNames, classLoader);
 			factoryMap.put(factoryName, factory);
 			return factory;
 		} else {
@@ -67,11 +67,11 @@ public final class FactoryFinder {
 	}
 
 	public static void setFactory(String factoryName, String implName) {
-        FactoryFinderUtil_.assertNotNull(factoryName, "factoryName");
-		FactoryFinderUtil_.checkValidFactoryNames(factoryName);
-		ClassLoader classLoader = FactoryFinderUtil_.getClassLoader();
+        FactoryFinderUtil.assertNotNull(factoryName, "factoryName");
+		FactoryFinderUtil.checkValidFactoryNames(factoryName);
+		ClassLoader classLoader = FactoryFinderUtil.getClassLoader();
 		Map factoryMap = (Map)factories_.get(classLoader);
-		if(FactoryFinderUtil_.isAlreadySetFactory(factoryMap, factoryName)){
+		if(FactoryFinderUtil.isAlreadySetFactory(factoryMap, factoryName)){
 			return;
 		}
         Map factoryClassNames = (Map)registeredFactoryNamesMap_.get(classLoader);
@@ -88,7 +88,7 @@ public final class FactoryFinder {
 	}
 
 	public static void releaseFactories() throws FacesException {
-		ClassLoader classLoader = FactoryFinderUtil_.getClassLoader();
+		ClassLoader classLoader = FactoryFinderUtil.getClassLoader();
 		factories_.remove(classLoader);
 	}
 

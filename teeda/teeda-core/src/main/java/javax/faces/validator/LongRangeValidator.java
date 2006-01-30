@@ -19,7 +19,7 @@ import javax.faces.FacesException;
 import javax.faces.component.StateHolder;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.internal.FacesMessageUtils_;
+import javax.faces.internal.FacesMessageUtils;
 
 
 public class LongRangeValidator implements Validator, StateHolder {
@@ -75,7 +75,7 @@ public class LongRangeValidator implements Validator, StateHolder {
 				
 				if(longValue < minValue || longValue > maxValue){
 					Object[] args = {minimum_, maximum_, component.getId()};
-					throw new ValidatorException(FacesMessageUtils_.getMessage(context, NOT_IN_RANGE_MESSAGE_ID, args));
+					throw new ValidatorException(FacesMessageUtils.getMessage(context, NOT_IN_RANGE_MESSAGE_ID, args));
 				}
 				
 			}else if(minimum_ != null){
@@ -83,7 +83,7 @@ public class LongRangeValidator implements Validator, StateHolder {
 				double minValue = minimum_.longValue();
 				if(longValue < minValue){
 					Object[] args = {minimum_, component.getId()};
-					throw new ValidatorException(FacesMessageUtils_.getMessage(context, MINIMUM_MESSAGE_ID, args));
+					throw new ValidatorException(FacesMessageUtils.getMessage(context, MINIMUM_MESSAGE_ID, args));
 				}
 				
 			}else if(maximum_ != null){
@@ -91,13 +91,13 @@ public class LongRangeValidator implements Validator, StateHolder {
 				double maxValue = maximum_.longValue();
 				if(longValue > maxValue){
 					Object[] args = {maximum_, component.getId()};
-					throw new ValidatorException(FacesMessageUtils_.getMessage(context, MAXIMUM_MESSAGE_ID, args));
+					throw new ValidatorException(FacesMessageUtils.getMessage(context, MAXIMUM_MESSAGE_ID, args));
 				}
 			}
 			
 		}catch(NumberFormatException e){
 			throw new ValidatorException(
-					FacesMessageUtils_.getMessage(context, TYPE_MESSAGE_ID, new Object[]{component.getId()})
+					FacesMessageUtils.getMessage(context, TYPE_MESSAGE_ID, new Object[]{component.getId()})
 				);
 		}
 

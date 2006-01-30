@@ -21,8 +21,8 @@ import java.util.List;
 
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
-import javax.faces.internal.FacesMessageUtils_;
-import javax.faces.internal.SelectItemsIterator_;
+import javax.faces.internal.FacesMessageUtils;
+import javax.faces.internal.SelectItemsIterator;
 
 /**
  * @author shot
@@ -120,12 +120,12 @@ public class UISelectMany extends UIInput {
         boolean isList = (value instanceof List);
         int length = (isList) ? ((List) value).size() : Array.getLength(value);
         for (int i = 0; i < length; i++) {
-            Iterator items = new SelectItemsIterator_(this);
+            Iterator items = new SelectItemsIterator(this);
             Object indexValue = (isList) ? ((List) value).get(i) : Array.get(
                     value, i);
             if (!ComponentUtils_.valueMatches(indexValue, items)) {
                 Object[] args = { getId() };
-                FacesMessageUtils_.addErrorMessage(context, this,
+                FacesMessageUtils.addErrorMessage(context, this,
                         INVALID_MESSAGE_ID, args);
                 setValid(false);
                 break;

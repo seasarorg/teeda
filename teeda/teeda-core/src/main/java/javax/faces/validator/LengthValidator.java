@@ -19,7 +19,7 @@ import javax.faces.FacesException;
 import javax.faces.component.StateHolder;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.internal.FacesMessageUtils_;
+import javax.faces.internal.FacesMessageUtils;
 
 
 public class LengthValidator implements Validator, StateHolder {
@@ -93,12 +93,12 @@ public class LengthValidator implements Validator, StateHolder {
 		int length = getConvertedValueLength(value);
 		if(minimum_ != null && length < minimum_.intValue()){
 			Object[] args = {minimum_, component.getId()};
-			throw new ValidatorException(FacesMessageUtils_.getMessage(context, MINIMUM_MESSAGE_ID, args));
+			throw new ValidatorException(FacesMessageUtils.getMessage(context, MINIMUM_MESSAGE_ID, args));
 		}
 		
 		if(maximum_ != null && length > maximum_.intValue()){
 			Object[] args = {maximum_, component.getId()};
-			throw new ValidatorException(FacesMessageUtils_.getMessage(context, MAXIMUM_MESSAGE_ID, args));
+			throw new ValidatorException(FacesMessageUtils.getMessage(context, MAXIMUM_MESSAGE_ID, args));
 		}
 	}
 

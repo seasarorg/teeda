@@ -30,7 +30,7 @@ import javax.faces.event.AbortProcessingException;
 import javax.faces.event.FacesEvent;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.event.ValueChangeListener;
-import javax.faces.internal.FacesMessageUtils_;
+import javax.faces.internal.FacesMessageUtils;
 import javax.faces.render.Renderer;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
@@ -239,7 +239,7 @@ public class UIInput extends UIOutput implements EditableValueHolder {
         } catch (RuntimeException e) {
             Object[] args = { getId() };
             context.getExternalContext().log(e.getMessage(), e);
-            FacesMessageUtils_.addErrorMessage(context, this,
+            FacesMessageUtils.addErrorMessage(context, this,
                     CONVERSION_MESSAGE_ID, args);
             setValid(false);
         }
@@ -287,7 +287,7 @@ public class UIInput extends UIOutput implements EditableValueHolder {
             if (facesMessage != null) {
                 context.addMessage(getClientId(context), facesMessage);
             } else {
-                FacesMessageUtils_.addErrorMessage(context, this,
+                FacesMessageUtils.addErrorMessage(context, this,
                         CONVERSION_MESSAGE_ID, new Object[] { getId() });
             }
             setValid(false);
@@ -297,7 +297,7 @@ public class UIInput extends UIOutput implements EditableValueHolder {
 
     protected void validateValue(FacesContext context, Object newValue) {
         if (isValid() && isRequired() && isEmpty(newValue)) {
-            FacesMessageUtils_.addErrorMessage(context, this,
+            FacesMessageUtils.addErrorMessage(context, this,
                     CONVERSION_MESSAGE_ID, new Object[] { getId() });
             setValid(false);
         }

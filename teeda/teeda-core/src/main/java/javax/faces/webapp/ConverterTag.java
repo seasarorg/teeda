@@ -21,7 +21,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 import javax.faces.el.ValueBinding;
-import javax.faces.internal.WebAppUtils_;
+import javax.faces.internal.WebAppUtils;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
@@ -62,7 +62,7 @@ public class ConverterTag extends TagSupport {
         if (localValue instanceof String) {
             try {
                 String str = (String)localValue;
-                FacesContext context = WebAppUtils_.getFacesContext();
+                FacesContext context = WebAppUtils.getFacesContext();
                 localValue = converter.getAsObject(context, component, str);
                 valueHolder.setValue(localValue);
             }catch (ConverterException e) {
@@ -82,9 +82,9 @@ public class ConverterTag extends TagSupport {
             String converterId = converterId_;
             if (UIComponentTag.isValueReference(converterId_)) {
                 converterId = 
-                    (String)WebAppUtils_.getValueFromCreatedValueBinding(converterId_);
+                    (String)WebAppUtils.getValueFromCreatedValueBinding(converterId_);
             }
-            return WebAppUtils_.createConverter(converterId);
+            return WebAppUtils.createConverter(converterId);
         } catch (Exception e) {
             throw new JspException(e);
         }

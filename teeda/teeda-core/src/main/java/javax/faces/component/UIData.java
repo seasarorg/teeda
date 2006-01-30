@@ -27,9 +27,9 @@ import javax.faces.event.AbortProcessingException;
 import javax.faces.event.FacesEvent;
 import javax.faces.event.FacesListener;
 import javax.faces.event.PhaseId;
-import javax.faces.internal.NamingContainerUtil_;
-import javax.faces.internal.SavedState_;
-import javax.faces.internal.UIDataUtil_;
+import javax.faces.internal.NamingContainerUtil;
+import javax.faces.internal.SavedState;
+import javax.faces.internal.UIDataUtil;
 import javax.faces.model.DataModel;
 
 /**
@@ -85,7 +85,7 @@ public class UIData extends UIComponentBase implements NamingContainer {
 
     public void setId(String id) {
         super.setId(id);
-        NamingContainerUtil_.refreshDescendantComponentClientId(this);
+        NamingContainerUtil.refreshDescendantComponentClientId(this);
     }
 
     public int getFirst() {
@@ -404,9 +404,9 @@ public class UIData extends UIComponentBase implements NamingContainer {
         if (component instanceof EditableValueHolder) {
             String clientId = component.getClientId(context);
             EditableValueHolder holder = (EditableValueHolder) component;
-            SavedState_ state = (SavedState_) savedMap_.get(clientId);
+            SavedState state = (SavedState) savedMap_.get(clientId);
             if (state == null) {
-                state = new SavedState_();
+                state = new SavedState();
                 savedMap_.put(clientId, state);
             }
             state.setLocalValue(holder.getLocalValue());
@@ -438,9 +438,9 @@ public class UIData extends UIComponentBase implements NamingContainer {
         if (component instanceof EditableValueHolder) {
             EditableValueHolder holder = (EditableValueHolder) component;
             String clientId = component.getClientId(context);
-            SavedState_ state = (SavedState_) savedMap_.get(clientId);
+            SavedState state = (SavedState) savedMap_.get(clientId);
             if (state == null) {
-                state = new SavedState_();
+                state = new SavedState();
             }
             holder.setValue(state.getLocalValue());
             holder.setValid(state.isValid());
@@ -457,7 +457,7 @@ public class UIData extends UIComponentBase implements NamingContainer {
         if (model_ != null) {
             return model_;
         }
-        model_ = UIDataUtil_.getSuitableDataModel(getValue());
+        model_ = UIDataUtil.getSuitableDataModel(getValue());
         return model_;
     }
 

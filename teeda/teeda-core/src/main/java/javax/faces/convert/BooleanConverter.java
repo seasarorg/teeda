@@ -17,7 +17,7 @@ package javax.faces.convert;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.internal.ConvertUtils_;
+import javax.faces.internal.ConvertUtils;
 
 public class BooleanConverter implements Converter {
 
@@ -28,8 +28,8 @@ public class BooleanConverter implements Converter {
 
 	public Object getAsObject(FacesContext context, UIComponent component,
 			String value) throws ConverterException {
-		ConvertUtils_.assertNotNull(context, "FacesContext");
-		ConvertUtils_.assertNotNull(component, "UIComponent");
+		ConvertUtils.assertNotNull(context, "FacesContext");
+		ConvertUtils.assertNotNull(component, "UIComponent");
 
 		if (value == null) {
 			return null;
@@ -43,15 +43,15 @@ public class BooleanConverter implements Converter {
 		try {
 			return Boolean.valueOf(value);
 		} catch (Exception e) {
-			Object[] args = ConvertUtils_.createExceptionMessageArgs(component, value);
-			throw ConvertUtils_.wrappedByConverterException(this, context, args, e);
+			Object[] args = ConvertUtils.createExceptionMessageArgs(component, value);
+			throw ConvertUtils.wrappedByConverterException(this, context, args, e);
 		}
 	}
 
 	public String getAsString(FacesContext context, UIComponent component,
 			Object value) throws ConverterException {
-		ConvertUtils_.assertNotNull(context, "FacesContext");
-		ConvertUtils_.assertNotNull(component, "UIComponent");
+		ConvertUtils.assertNotNull(context, "FacesContext");
+		ConvertUtils.assertNotNull(component, "UIComponent");
 
 		if (value == null) {
 			return "";
@@ -61,7 +61,7 @@ public class BooleanConverter implements Converter {
 			return (value instanceof String) ? (String) value
 					: ((Boolean) value).toString();
 		} catch (Exception e) {
-			throw ConvertUtils_.wrappedByConverterException(e);
+			throw ConvertUtils.wrappedByConverterException(e);
 		}
 	}
 }

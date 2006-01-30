@@ -23,7 +23,7 @@ import javax.faces.application.Application;
 import javax.faces.application.ApplicationFactory;
 import javax.faces.context.FacesContext;
 import javax.faces.context.FacesContextFactory;
-import javax.faces.internal.WebAppUtils_;
+import javax.faces.internal.WebAppUtils;
 import javax.faces.lifecycle.Lifecycle;
 import javax.faces.lifecycle.LifecycleFactory;
 import javax.servlet.Servlet;
@@ -64,16 +64,16 @@ public class FacesServlet implements Servlet {
 
     public void init(ServletConfig config) throws ServletException {
         config_ = config;
-        facesContextFactory_ = (FacesContextFactory)WebAppUtils_
+        facesContextFactory_ = (FacesContextFactory)WebAppUtils
                 .getFactory(FactoryFinder.FACES_CONTEXT_FACTORY);
 
         ApplicationFactory applicationFactory = 
-            (ApplicationFactory)WebAppUtils_.getFactory(FactoryFinder.APPLICATION_FACTORY);
+            (ApplicationFactory)WebAppUtils.getFactory(FactoryFinder.APPLICATION_FACTORY);
         application_ = applicationFactory.getApplication();
 
         LifecycleFactory lifecycleFactory = 
-            (LifecycleFactory)WebAppUtils_.getFactory(FactoryFinder.LIFECYCLE_FACTORY);
-        String lifecycleId = WebAppUtils_.getLifecycleId(config_);
+            (LifecycleFactory)WebAppUtils.getFactory(FactoryFinder.LIFECYCLE_FACTORY);
+        String lifecycleId = WebAppUtils.getLifecycleId(config_);
         lifecycle_ = lifecycleFactory.getLifecycle(lifecycleId);
     }
 

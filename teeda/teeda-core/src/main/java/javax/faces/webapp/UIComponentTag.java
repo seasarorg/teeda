@@ -26,9 +26,9 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
-import javax.faces.internal.PageContextUtil_;
-import javax.faces.internal.WebAppConstants_;
-import javax.faces.internal.WebAppUtils_;
+import javax.faces.internal.PageContextUtil;
+import javax.faces.internal.WebAppConstants;
+import javax.faces.internal.WebAppUtils;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.Tag;
@@ -84,7 +84,7 @@ public abstract class UIComponentTag implements Tag {
     }
 
     public static UIComponentTag getParentUIComponentTag(PageContext context) {
-        List list = PageContextUtil_.getComponentTagStackAttribute(context);
+        List list = PageContextUtil.getComponentTagStackAttribute(context);
         if(list != null){
             return ((UIComponentTag)list.get(list.size() - 1));
         }else{
@@ -118,13 +118,13 @@ public abstract class UIComponentTag implements Tag {
     }
 
     public int doStartTag() throws JspException {
-        context_ = PageContextUtil_.getCurrentFacesContextAttribute(pageContext);
+        context_ = PageContextUtil.getCurrentFacesContextAttribute(pageContext);
         if(context_ == null){
             context_ = FacesContext.getCurrentInstance();
             if(context_ == null){
                 throw new JspException("Cannot find FacesContext");
             }
-            PageContextUtil_.setCurrentFacesContextAttribute(pageContext, context_);
+            PageContextUtil.setCurrentFacesContextAttribute(pageContext, context_);
         }
         setupResponseWriter();
         UIComponentTag parentTag = getParentUIComponentTag(pageContext);
@@ -132,9 +132,9 @@ public abstract class UIComponentTag implements Tag {
         Map componentIds = null;
         if(parentTag == null){
             componentIds = new HashMap();
-            requestMap.put(WebAppConstants_.GLOBAL_ID_VIEW, componentIds);
+            requestMap.put(WebAppConstants.GLOBAL_ID_VIEW, componentIds);
         }else{
-            componentIds = (Map)requestMap.get(WebAppConstants_.GLOBAL_ID_VIEW);
+            componentIds = (Map)requestMap.get(WebAppConstants.GLOBAL_ID_VIEW);
         }
         component_ = findComponent(context_);
 
@@ -253,16 +253,16 @@ public abstract class UIComponentTag implements Tag {
     }
 
     private UIComponent findComponentSpecially(FacesContext context){
-        UIComponent parentComponent = PageContextUtil_.getCurrentViewRootAttribute(pageContext);
+        UIComponent parentComponent = PageContextUtil.getCurrentViewRootAttribute(pageContext);
         if(parentComponent == null){
             parentComponent = context.getViewRoot();
-            PageContextUtil_.setCurrentViewRootAttribute(pageContext, parentComponent);
-            if(parentComponent.getAttributes().get(WebAppConstants_.CURRENT_VIEW_ROOT) == null){
+            PageContextUtil.setCurrentViewRootAttribute(pageContext, parentComponent);
+            if(parentComponent.getAttributes().get(WebAppConstants.CURRENT_VIEW_ROOT) == null){
                 setProperties(parentComponent);
                 if(id_ != null){
                     parentComponent.setId(id_);
                 }
-                parentComponent.getAttributes().put(WebAppConstants_.CURRENT_VIEW_ROOT, WebAppConstants_.CURRENT_VIEW_ROOT);
+                parentComponent.getAttributes().put(WebAppConstants.CURRENT_VIEW_ROOT, WebAppConstants.CURRENT_VIEW_ROOT);
             }else if(binding_ == null){
                 setProperties(parentComponent);
             }
@@ -313,7 +313,7 @@ public abstract class UIComponentTag implements Tag {
     protected void setProperties(UIComponent component) {
         if(rendered_ != null){
             if(isValueReference(rendered_)){
-                component.setValueBinding("rendered", WebAppUtils_.createValueBindingByApplication(component, context_, rendered_));
+                component.setValueBinding("rendered", WebAppUtils.createValueBindingByApplication(component, context_, rendered_));
             }else{
                 component.setRendered(Boolean.valueOf(rendered_).booleanValue());
             }
@@ -326,7 +326,7 @@ public abstract class UIComponentTag implements Tag {
     protected void setupResponseWriter() {
         ResponseWriter writer = context_.getResponseWriter();
         if(writer == null){
-            writer = WebAppUtils_.buildResponseWriter(context_, pageContext);
+            writer = WebAppUtils.buildResponseWriter(context_, pageContext);
             context_.setResponseWriter(writer);
         }
     }
@@ -346,7 +346,7 @@ public abstract class UIComponentTag implements Tag {
     }
 
     private UIComponent createComponent(FacesContext context, String newId) {
-        UIComponent component = WebAppUtils_.createComponent(context_, binding_, getComponentType());
+        UIComponent component = WebAppUtils.createComponent(context_, binding_, getComponentType());
         component.setId(newId);
         setProperties(component);
         return component;
@@ -382,26 +382,26 @@ public abstract class UIComponentTag implements Tag {
     }
 
     private void popUIComponentTag() {
-        List list = PageContextUtil_.getComponentTagStackAttribute(pageContext);
+        List list = PageContextUtil.getComponentTagStackAttribute(pageContext);
         if(list != null){
             list.remove(list.size() - 1);
             if(list.size() < 1){
-                PageContextUtil_.removeComponentStackAttribute(pageContext);
+                PageContextUtil.removeComponentStackAttribute(pageContext);
             }
         }
     }
 
     private void pushUIComponentTag() {
-        List list = PageContextUtil_.getComponentTagStackAttribute(pageContext);
+        List list = PageContextUtil.getComponentTagStackAttribute(pageContext);
         if(list == null){
             list = new ArrayList();
-            PageContextUtil_.setComponentStackAttribute(pageContext, list);
+            PageContextUtil.setComponentStackAttribute(pageContext, list);
         }
         list.add(this);
     }
 
     private void removeOldChildren() {
-        List oldList = WebAppUtils_.getCreatedComponentIds(component_);
+        List oldList = WebAppUtils.getCreatedComponentIds(component_);
         if(oldList == null){
             saveChildrenComponentAttribute();
             return;
@@ -422,7 +422,7 @@ public abstract class UIComponentTag implements Tag {
     }
     
     private void removeOldFacets() {
-        List oldList = WebAppUtils_.getCreatedFacetNames(component_);
+        List oldList = WebAppUtils.getCreatedFacetNames(component_);
         if(oldList == null){
             saveFacesComponentAttribute();
             return;
@@ -440,25 +440,25 @@ public abstract class UIComponentTag implements Tag {
 
     private void saveChildrenComponentAttribute(){
         if(createdComponents_ != null){
-            WebAppUtils_.setCreatedComponentIds(component_, createdComponents_);
+            WebAppUtils.setCreatedComponentIds(component_, createdComponents_);
         }else{
-            WebAppUtils_.removeCreatedComponentIds(component_);
+            WebAppUtils.removeCreatedComponentIds(component_);
         }
         createdComponents_ = null;
     }
 
     private void saveFacesComponentAttribute(){
         if(createdFacets_ != null){
-            WebAppUtils_.setCreatedFacetNames(component_, createdComponents_);
+            WebAppUtils.setCreatedFacetNames(component_, createdComponents_);
         }else{
-            WebAppUtils_.removeCreatedFacetNames(component_);
+            WebAppUtils.removeCreatedFacetNames(component_);
         }
         createdFacets_ = null;
     }
     
     private String createNewId(){
         if(id_ == null){
-            FacesContext context = PageContextUtil_.getCurrentFacesContextAttribute(pageContext);
+            FacesContext context = PageContextUtil.getCurrentFacesContextAttribute(pageContext);
             return context.getViewRoot().createUniqueId();
         }else{
             return id_;

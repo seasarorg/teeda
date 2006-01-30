@@ -17,7 +17,7 @@ package javax.faces.convert;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.internal.ConvertUtils_;
+import javax.faces.internal.ConvertUtils;
 
 /**
  * TODO test
@@ -31,8 +31,8 @@ public class LongConverter implements Converter {
 
 	public Object getAsObject(FacesContext context, UIComponent component,
 			String value) throws ConverterException {
-		ConvertUtils_.assertNotNull(context, "FacesContext");
-		ConvertUtils_.assertNotNull(component, "UIComponent");
+		ConvertUtils.assertNotNull(context, "FacesContext");
+		ConvertUtils.assertNotNull(component, "UIComponent");
 
 		if (value == null) {
 			return null;
@@ -46,23 +46,23 @@ public class LongConverter implements Converter {
 		try {
 			return Long.valueOf(value);
 		} catch (Exception e) {
-			Object[] args = ConvertUtils_.createExceptionMessageArgs(component,
+			Object[] args = ConvertUtils.createExceptionMessageArgs(component,
 					value);
-			throw ConvertUtils_.wrappedByConverterException(this, context,
+			throw ConvertUtils.wrappedByConverterException(this, context,
 					args, e);
 		}
 	}
 
 	public String getAsString(FacesContext context, UIComponent component,
 			Object value) throws ConverterException {
-		ConvertUtils_.assertNotNull(context, "FacesContext");
-		ConvertUtils_.assertNotNull(component, "UIComponent");
+		ConvertUtils.assertNotNull(context, "FacesContext");
+		ConvertUtils.assertNotNull(component, "UIComponent");
 
 		try {
 			return (value instanceof String) ? (String) value : (Long
 					.toString(((Long) value).longValue()));
 		} catch (Exception e) {
-			throw ConvertUtils_.wrappedByConverterException(e);
+			throw ConvertUtils.wrappedByConverterException(e);
 		}
 	}
 }

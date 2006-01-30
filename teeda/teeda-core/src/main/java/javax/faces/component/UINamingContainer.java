@@ -15,7 +15,7 @@
  */
 package javax.faces.component;
 
-import javax.faces.internal.NamingContainerUtil_;
+import javax.faces.internal.NamingContainerUtil;
 
 /**
  * @author shot
@@ -37,7 +37,7 @@ public class UINamingContainer extends UIComponentBase implements
 
     public void setId(String id) {
         super.setId(id);
-        NamingContainerUtil_.refreshDescendantComponentClientId(this);
+        NamingContainerUtil.refreshDescendantComponentClientId(this);
     }
 
 }

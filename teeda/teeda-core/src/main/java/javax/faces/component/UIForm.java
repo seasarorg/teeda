@@ -19,7 +19,7 @@ import java.util.Iterator;
 
 import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseId;
-import javax.faces.internal.NamingContainerUtil_;
+import javax.faces.internal.NamingContainerUtil;
 
 /**
  * @author shot
@@ -44,7 +44,7 @@ public class UIForm extends UIComponentBase implements NamingContainer {
 
     public void setId(String id) {
         super.setId(id);
-        NamingContainerUtil_.refreshDescendantComponentClientId(this);
+        NamingContainerUtil.refreshDescendantComponentClientId(this);
     }
 
     public boolean isSubmitted() {
