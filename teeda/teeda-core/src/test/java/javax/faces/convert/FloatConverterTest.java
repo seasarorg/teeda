@@ -23,10 +23,10 @@ import org.seasar.teeda.core.unit.TeedaTestCase;
 /**
  * @author shot
  */
-public class DoubleConverterTest extends TeedaTestCase {
+public class FloatConverterTest extends TeedaTestCase {
 
     public void testGetAsObject() throws Exception {
-        DoubleConverter converter = new DoubleConverter();
+        FloatConverter converter = new FloatConverter();
         try {
             converter.getAsObject(null, new MockUIComponent(), "a");
             fail();
@@ -43,17 +43,16 @@ public class DoubleConverterTest extends TeedaTestCase {
                 new MockUIComponent(), null));
         assertNull(converter.getAsObject(getFacesContext(),
                 new MockUIComponent(), ""));
-
         Object target = converter.getAsObject(getFacesContext(),
-                new MockUIComponent(), "2.834");
+                new MockUIComponent(), "1.2F");
         assertNotNull(target);
-        assertTrue(target instanceof Double);
-        Double d = (Double) target;
-        assertTrue(d.doubleValue() == 2.834);
+        assertTrue(target instanceof Float);
+        Float f = (Float) target;
+        assertTrue(f.floatValue() == 1.2F);
     }
 
     public void testGetAsObject_throwConverterException() throws Exception {
-        DoubleConverter converter = new DoubleConverter();
+        FloatConverter converter = new FloatConverter();
         try {
             converter.getAsObject(getFacesContext(), new MockUIComponent(),
                     "hoge");
@@ -64,7 +63,7 @@ public class DoubleConverterTest extends TeedaTestCase {
     }
 
     public void testGetAsString() throws Exception {
-        DoubleConverter converter = new DoubleConverter();
+        FloatConverter converter = new FloatConverter();
         try {
             converter.getAsString(null, new MockUIComponent(), "a");
             fail();
@@ -78,16 +77,16 @@ public class DoubleConverterTest extends TeedaTestCase {
             success();
         }
         String s = converter.getAsString(getFacesContext(),
-                new MockUIComponent(), new Double(1.234));
-        assertEquals("1.234", s);
-        
-        s = converter.getAsString(getFacesContext(),
-                new MockUIComponent(), "aaa");
-        assertEquals("aaa", s);
+                new MockUIComponent(), new Float(2.3F));
+        assertEquals("2.3", s);
+
+        s = converter.getAsString(getFacesContext(), new MockUIComponent(),
+                "bbb");
+        assertEquals("bbb", s);
     }
-    
+
     public void testGetAsString_throwConverterException() throws Exception {
-        DoubleConverter converter = new DoubleConverter();
+        FloatConverter converter = new FloatConverter();
         try {
             converter.getAsString(getFacesContext(), new MockUIComponent(),
                     new ArrayList());
@@ -96,5 +95,4 @@ public class DoubleConverterTest extends TeedaTestCase {
             success();
         }
     }
-
 }

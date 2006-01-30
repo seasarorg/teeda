@@ -20,7 +20,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.internal.ConvertUtils;
 
 /**
- * TODO test
+ * @author shot
  */
 public class FloatConverter implements Converter {
 
