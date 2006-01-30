@@ -17,7 +17,6 @@ package javax.faces.component;
 
 import java.math.BigInteger;
 import java.util.Iterator;
-import java.util.Locale;
 
 import javax.faces.FacesException;
 import javax.faces.application.FacesMessage;
@@ -42,7 +41,6 @@ import org.seasar.teeda.core.mock.MockFacesContextImpl;
 import org.seasar.teeda.core.mock.MockMethodBinding;
 import org.seasar.teeda.core.mock.MockUIInput;
 import org.seasar.teeda.core.mock.MockValueBinding;
-import org.seasar.teeda.core.mock.NullExternalContext;
 import org.seasar.teeda.core.mock.NullRenderer;
 import org.seasar.teeda.core.mock.NullValidator;
 
@@ -414,11 +412,6 @@ public class UIInputOnlyTest extends TestCase {
             }
         };
         MockFacesContext context = getFacesContext();
-        UIViewRoot viewRoot = new UIViewRoot();
-        viewRoot.setLocale(Locale.getDefault());
-        context.setViewRoot(viewRoot);
-        context.setExternalContext(new NullExternalContext());
-        context.setApplication(new MockApplication());
 
         input.setValueBinding("value", vb);
         assertEquals(false, context.getMessages().hasNext());
@@ -738,11 +731,6 @@ public class UIInputOnlyTest extends TestCase {
         input.setRequired(true);
 
         MockFacesContext context = getFacesContext();
-        UIViewRoot viewRoot = new UIViewRoot();
-        viewRoot.setLocale(Locale.getDefault());
-        context.setViewRoot(viewRoot);
-        context.setExternalContext(new NullExternalContext());
-        context.setApplication(new MockApplication());
 
         // ## Act ##
         input.validateValue(context, "");
@@ -855,11 +843,6 @@ public class UIInputOnlyTest extends TestCase {
 
     private MockFacesContext getFacesContext() {
         MockFacesContext context = new MockFacesContextImpl();
-        UIViewRoot viewRoot = new UIViewRoot();
-        viewRoot.setLocale(Locale.getDefault());
-        context.setViewRoot(viewRoot);
-        context.setExternalContext(new NullExternalContext());
-        context.setApplication(new MockApplication());
         return context;
     }
 

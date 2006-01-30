@@ -41,11 +41,11 @@ import org.seasar.framework.mock.servlet.MockServletContextImpl;
 
 public class MockExternalContextImpl extends MockExternalContext {
 
-    private MockServletContext context_;
+    private MockServletContext mockServletContext_;
 
-    private MockHttpServletRequest request_;
+    private MockHttpServletRequest mockHttpServletRequest_;
 
-    private HttpServletResponse response_;
+    private HttpServletResponse httpServletResponse_;
 
     private Map applicationMap_;
 
@@ -62,10 +62,10 @@ public class MockExternalContextImpl extends MockExternalContext {
 
     public MockExternalContextImpl(MockServletContext context,
             MockHttpServletRequest request, MockHttpServletResponse response) {
-        context_ = context;
-        request_ = request;
-        response_ = response;
-        applicationMap_ = new MockApplicationMap(context_);
+        mockServletContext_ = context;
+        mockHttpServletRequest_ = request;
+        httpServletResponse_ = response;
+        applicationMap_ = new MockApplicationMap(mockServletContext_);
     }
 
     public void addRequestCookieMap(Cookie cookie) {
@@ -109,26 +109,26 @@ public class MockExternalContextImpl extends MockExternalContext {
     }
 
     public Object getContext() {
-        return getServletContext();
+        return getMockServletContext();
     }
 
-    MockServletContext getServletContext() {
-        if (context_ == null) {
-            context_ = new MockServletContextImpl("/mock-context");
+    MockServletContext getMockServletContext() {
+        if (mockServletContext_ == null) {
+            mockServletContext_ = new MockServletContextImpl("/mock-context");
         }
-        return context_;
+        return mockServletContext_;
     }
 
     public String getInitParameter(String name) {
-        return context_.getInitParameter(name);
+        return getMockServletContext().getInitParameter(name);
     }
 
     public Map getInitParameterMap() {
         Map parameterMap = new HashMap();
-        Enumeration names = context_.getInitParameterNames();
+        Enumeration names = getMockServletContext().getInitParameterNames();
         while (names.hasMoreElements()) {
             String name = (String) names.nextElement();
-            parameterMap.put(name, context_.getInitParameter(name));
+            parameterMap.put(name, getMockServletContext().getInitParameter(name));
         }
         return Collections.unmodifiableMap(parameterMap);
     }
@@ -142,11 +142,11 @@ public class MockExternalContextImpl extends MockExternalContext {
     }
 
     MockHttpServletRequest getHttpServletRequest() {
-        if (request_ == null) {
-            request_ = new MockHttpServletRequestImpl(getServletContext(),
+        if (mockHttpServletRequest_ == null) {
+            mockHttpServletRequest_ = new MockHttpServletRequestImpl(getMockServletContext(),
                     "/mock-path.html");
         }
-        return request_;
+        return mockHttpServletRequest_;
     }
 
     public String getRequestContextPath() {
@@ -204,15 +204,15 @@ public class MockExternalContextImpl extends MockExternalContext {
     }
 
     public URL getResource(String path) throws MalformedURLException {
-        return context_.getResource(path);
+        return getMockServletContext().getResource(path);
     }
 
     public InputStream getResourceAsStream(String path) {
-        return context_.getResourceAsStream(path);
+        return getMockServletContext().getResourceAsStream(path);
     }
 
     public Set getResourcePaths(String path) {
-        return context_.getResourcePaths(path);
+        return getMockServletContext().getResourcePaths(path);
     }
 
     public Object getResponse() {
@@ -220,10 +220,10 @@ public class MockExternalContextImpl extends MockExternalContext {
     }
 
     HttpServletResponse getHttpServletResponse() {
-        if (response_ == null) {
-            response_ = new MockHttpServletResponseImpl(getHttpServletRequest());
+        if (httpServletResponse_ == null) {
+            httpServletResponse_ = new MockHttpServletResponseImpl(getHttpServletRequest());
         }
-        return response_;
+        return httpServletResponse_;
     }
 
     public Object getSession(boolean create) {
@@ -247,11 +247,11 @@ public class MockExternalContextImpl extends MockExternalContext {
     }
 
     public void log(String message) {
-        context_.log(message);
+        getMockServletContext().log(message);
     }
 
     public void log(String message, Throwable throwable) {
-        context_.log(message, throwable);
+        getMockServletContext().log(message, throwable);
     }
 
     public void redirect(String requestURI) throws IOException {
