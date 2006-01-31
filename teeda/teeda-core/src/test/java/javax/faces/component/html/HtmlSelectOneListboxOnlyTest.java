@@ -20,21 +20,22 @@ import junit.framework.TestCase;
 /**
  * @author manhole
  */
-public class HtmlSelectOneRadioOnlyTest extends TestCase {
+public class HtmlSelectOneListboxOnlyTest extends TestCase {
 
     public void testConstants() throws Exception {
-        assertEquals("javax.faces.HtmlSelectOneRadio",
-                HtmlSelectOneRadio.COMPONENT_TYPE);
+        assertEquals("javax.faces.HtmlSelectOneListbox",
+                HtmlSelectOneListbox.COMPONENT_TYPE);
     }
 
     public void testGetComponentFamily() {
-        HtmlSelectOneRadio htmlSelectOneRadio = new HtmlSelectOneRadio();
-        assertEquals("javax.faces.SelectOne", htmlSelectOneRadio.getFamily());
+        HtmlSelectOneListbox htmlSelectOneListbox = new HtmlSelectOneListbox();
+        assertEquals("javax.faces.SelectOne", htmlSelectOneListbox.getFamily());
     }
 
     public void testDefaultRendererType() throws Exception {
-        HtmlSelectOneRadio htmlSelectOneRadio = new HtmlSelectOneRadio();
-        assertEquals("javax.faces.Radio", htmlSelectOneRadio.getRendererType());
+        HtmlSelectOneListbox htmlSelectOneListbox = new HtmlSelectOneListbox();
+        assertEquals("javax.faces.Listbox", htmlSelectOneListbox
+                .getRendererType());
     }
 
 }

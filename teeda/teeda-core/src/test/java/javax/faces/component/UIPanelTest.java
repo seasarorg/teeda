@@ -20,16 +20,6 @@ package javax.faces.component;
  */
 public class UIPanelTest extends UIComponentBaseTeedaTest {
 
-    public void testSaveAndRestoreState() throws Exception {
-        super.testSaveAndRestoreState();
-        UIPanel panel = createUIPanel();
-        // TODO
-    }
-
-    private UIPanel createUIPanel() {
-        return (UIPanel) createUIComponent();
-    }
-
     protected UIComponent createUIComponent() {
         return new UIPanel();
     }

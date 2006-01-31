@@ -34,7 +34,6 @@ public class UIOutput extends UIComponentBase implements ValueHolder {
     private static final String DEFAULT_RENDER_TYPE = "javax.faces.Text";
 
     public UIOutput() {
-        super();
         setRendererType(DEFAULT_RENDER_TYPE);
     }
 

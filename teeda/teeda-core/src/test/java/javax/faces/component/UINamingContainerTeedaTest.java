@@ -20,10 +20,6 @@ package javax.faces.component;
  */
 public class UINamingContainerTeedaTest extends UIComponentBaseTeedaTest {
 
-    private UINamingContainer createUINamingContainer() {
-        return (UINamingContainer) createUIComponent();
-    }
-
     protected UIComponent createUIComponent() {
         return new UINamingContainer();
     }

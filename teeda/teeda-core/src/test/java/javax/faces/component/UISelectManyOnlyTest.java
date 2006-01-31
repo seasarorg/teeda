@@ -13,28 +13,30 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package javax.faces.component.html;
+package javax.faces.component;
 
 import junit.framework.TestCase;
 
 /**
  * @author manhole
  */
-public class HtmlSelectOneRadioOnlyTest extends TestCase {
+public class UISelectManyOnlyTest extends TestCase {
 
     public void testConstants() throws Exception {
-        assertEquals("javax.faces.HtmlSelectOneRadio",
-                HtmlSelectOneRadio.COMPONENT_TYPE);
+        assertEquals("javax.faces.SelectMany", UISelectMany.COMPONENT_FAMILY);
+        assertEquals("javax.faces.SelectMany", UISelectMany.COMPONENT_TYPE);
+        assertEquals("javax.faces.component.UISelectMany.INVALID",
+                UISelectMany.INVALID_MESSAGE_ID);
     }
 
-    public void testGetComponentFamily() {
-        HtmlSelectOneRadio htmlSelectOneRadio = new HtmlSelectOneRadio();
-        assertEquals("javax.faces.SelectOne", htmlSelectOneRadio.getFamily());
+    public void testGetFamily() {
+        UISelectMany selectBoolean = new UISelectMany();
+        assertEquals("javax.faces.SelectMany", selectBoolean.getFamily());
     }
 
     public void testDefaultRendererType() throws Exception {
-        HtmlSelectOneRadio htmlSelectOneRadio = new HtmlSelectOneRadio();
-        assertEquals("javax.faces.Radio", htmlSelectOneRadio.getRendererType());
+        UISelectMany selectBoolean = new UISelectMany();
+        assertEquals("javax.faces.Listbox", selectBoolean.getRendererType());
     }
 
 }

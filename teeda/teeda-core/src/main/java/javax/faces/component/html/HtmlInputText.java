@@ -19,6 +19,9 @@ import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
 
+/**
+ * @author shot
+ */
 public class HtmlInputText extends UIInput {
 
     public static final String COMPONENT_TYPE = "javax.faces.HtmlInputText";
@@ -94,8 +97,9 @@ public class HtmlInputText extends UIInput {
     }
 
     public String getAccesskey() {
-        if (accesskey_ != null)
+        if (accesskey_ != null) {
             return accesskey_;
+        }
         ValueBinding vb = getValueBinding("accesskey");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
@@ -105,8 +109,9 @@ public class HtmlInputText extends UIInput {
     }
 
     public String getAlt() {
-        if (alt_ != null)
+        if (alt_ != null) {
             return alt_;
+        }
         ValueBinding vb = getValueBinding("alt");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
@@ -116,8 +121,9 @@ public class HtmlInputText extends UIInput {
     }
 
     public String getDir() {
-        if (dir_ != null)
+        if (dir_ != null) {
             return dir_;
+        }
         ValueBinding vb = getValueBinding("dir");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
@@ -127,8 +133,9 @@ public class HtmlInputText extends UIInput {
     }
 
     public boolean isDisabled() {
-        if (disabled_ != null)
+        if (disabled_ != null) {
             return disabled_.booleanValue();
+        }
         ValueBinding vb = getValueBinding("disabled");
         Boolean v = vb != null ? (Boolean) vb.getValue(getFacesContext())
                 : null;
@@ -140,8 +147,9 @@ public class HtmlInputText extends UIInput {
     }
 
     public String getLang() {
-        if (lang_ != null)
+        if (lang_ != null) {
             return lang_;
+        }
         ValueBinding vb = getValueBinding("lang");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
@@ -151,8 +159,9 @@ public class HtmlInputText extends UIInput {
     }
 
     public int getMaxlength() {
-        if (maxlength_ != null)
+        if (maxlength_ != null) {
             return maxlength_.intValue();
+        }
         ValueBinding vb = getValueBinding("maxlength");
         Integer v = vb != null ? (Integer) vb.getValue(getFacesContext())
                 : null;
@@ -164,8 +173,9 @@ public class HtmlInputText extends UIInput {
     }
 
     public String getOnblur() {
-        if (onblur_ != null)
+        if (onblur_ != null) {
             return onblur_;
+        }
         ValueBinding vb = getValueBinding("onblur");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
@@ -175,8 +185,9 @@ public class HtmlInputText extends UIInput {
     }
 
     public String getOnchange() {
-        if (onchange_ != null)
+        if (onchange_ != null) {
             return onchange_;
+        }
         ValueBinding vb = getValueBinding("onchange");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
@@ -186,8 +197,9 @@ public class HtmlInputText extends UIInput {
     }
 
     public String getOnclick() {
-        if (onclick_ != null)
+        if (onclick_ != null) {
             return onclick_;
+        }
         ValueBinding vb = getValueBinding("onclick");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
@@ -197,8 +209,9 @@ public class HtmlInputText extends UIInput {
     }
 
     public String getOndblclick() {
-        if (ondblclick_ != null)
+        if (ondblclick_ != null) {
             return ondblclick_;
+        }
         ValueBinding vb = getValueBinding("ondblclick");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
@@ -208,8 +221,9 @@ public class HtmlInputText extends UIInput {
     }
 
     public String getOnfocus() {
-        if (onfocus_ != null)
+        if (onfocus_ != null) {
             return onfocus_;
+        }
         ValueBinding vb = getValueBinding("onfocus");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
@@ -219,8 +233,9 @@ public class HtmlInputText extends UIInput {
     }
 
     public String getOnkeydown() {
-        if (onkeydown_ != null)
+        if (onkeydown_ != null) {
             return onkeydown_;
+        }
         ValueBinding vb = getValueBinding("onkeydown");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
@@ -230,8 +245,9 @@ public class HtmlInputText extends UIInput {
     }
 
     public String getOnkeypress() {
-        if (onkeypress_ != null)
+        if (onkeypress_ != null) {
             return onkeypress_;
+        }
         ValueBinding vb = getValueBinding("onkeypress");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
@@ -241,8 +257,9 @@ public class HtmlInputText extends UIInput {
     }
 
     public String getOnkeyup() {
-        if (onkeyup_ != null)
+        if (onkeyup_ != null) {
             return onkeyup_;
+        }
         ValueBinding vb = getValueBinding("onkeyup");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
@@ -252,8 +269,9 @@ public class HtmlInputText extends UIInput {
     }
 
     public String getOnmousedown() {
-        if (onmousedown_ != null)
+        if (onmousedown_ != null) {
             return onmousedown_;
+        }
         ValueBinding vb = getValueBinding("onmousedown");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
@@ -263,8 +281,9 @@ public class HtmlInputText extends UIInput {
     }
 
     public String getOnmousemove() {
-        if (onmousemove_ != null)
+        if (onmousemove_ != null) {
             return onmousemove_;
+        }
         ValueBinding vb = getValueBinding("onmousemove");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
@@ -274,8 +293,9 @@ public class HtmlInputText extends UIInput {
     }
 
     public String getOnmouseout() {
-        if (onmouseout_ != null)
+        if (onmouseout_ != null) {
             return onmouseout_;
+        }
         ValueBinding vb = getValueBinding("onmouseout");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
@@ -285,8 +305,9 @@ public class HtmlInputText extends UIInput {
     }
 
     public String getOnmouseover() {
-        if (onmouseover_ != null)
+        if (onmouseover_ != null) {
             return onmouseover_;
+        }
         ValueBinding vb = getValueBinding("onmouseover");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
@@ -296,8 +317,9 @@ public class HtmlInputText extends UIInput {
     }
 
     public String getOnmouseup() {
-        if (onmouseup_ != null)
+        if (onmouseup_ != null) {
             return onmouseup_;
+        }
         ValueBinding vb = getValueBinding("onmouseup");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
@@ -307,8 +329,9 @@ public class HtmlInputText extends UIInput {
     }
 
     public String getOnselect() {
-        if (onselect_ != null)
+        if (onselect_ != null) {
             return onselect_;
+        }
         ValueBinding vb = getValueBinding("onselect");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
@@ -318,8 +341,9 @@ public class HtmlInputText extends UIInput {
     }
 
     public boolean isReadonly() {
-        if (readonly_ != null)
+        if (readonly_ != null) {
             return readonly_.booleanValue();
+        }
         ValueBinding vb = getValueBinding("readonly");
         Boolean v = vb != null ? (Boolean) vb.getValue(getFacesContext())
                 : null;
@@ -331,8 +355,9 @@ public class HtmlInputText extends UIInput {
     }
 
     public int getSize() {
-        if (size_ != null)
+        if (size_ != null) {
             return size_.intValue();
+        }
         ValueBinding vb = getValueBinding("size");
         Integer v = vb != null ? (Integer) vb.getValue(getFacesContext())
                 : null;
@@ -344,8 +369,9 @@ public class HtmlInputText extends UIInput {
     }
 
     public String getStyle() {
-        if (style_ != null)
+        if (style_ != null) {
             return style_;
+        }
         ValueBinding vb = getValueBinding("style");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
@@ -355,8 +381,9 @@ public class HtmlInputText extends UIInput {
     }
 
     public String getStyleClass() {
-        if (styleClass_ != null)
+        if (styleClass_ != null) {
             return styleClass_;
+        }
         ValueBinding vb = getValueBinding("styleClass");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
@@ -366,8 +393,9 @@ public class HtmlInputText extends UIInput {
     }
 
     public String getTabindex() {
-        if (tabindex_ != null)
+        if (tabindex_ != null) {
             return tabindex_;
+        }
         ValueBinding vb = getValueBinding("tabindex");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
@@ -377,8 +405,9 @@ public class HtmlInputText extends UIInput {
     }
 
     public String getTitle() {
-        if (title_ != null)
+        if (title_ != null) {
             return title_;
+        }
         ValueBinding vb = getValueBinding("title");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }

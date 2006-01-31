@@ -24,16 +24,16 @@ import org.seasar.teeda.core.mock.MockValueBinding;
 /**
  * @author manhole
  */
-public class HtmlSelectOneRadioTest extends UISelectOneTest {
+public class HtmlSelectOneMenuTest extends UISelectOneTest {
 
     public void testSetGetAccesskey() throws Exception {
-        HtmlSelectOneRadio component = createHtmlSelectOneRadio();
+        HtmlSelectOneMenu component = createHtmlSelectOneMenu();
         component.setAccesskey("foo accesskey");
         assertEquals("foo accesskey", component.getAccesskey());
     }
 
     public void testSetGetAccesskey_ValueBinding() throws Exception {
-        HtmlSelectOneRadio component = createHtmlSelectOneRadio();
+        HtmlSelectOneMenu component = createHtmlSelectOneMenu();
         MockValueBinding vb = new MockValueBinding();
         FacesContext context = getFacesContext();
         vb.setValue(context, "bar accesskey");
@@ -43,31 +43,14 @@ public class HtmlSelectOneRadioTest extends UISelectOneTest {
                 .getValue(context));
     }
 
-    public void testSetGetBorder() throws Exception {
-        HtmlSelectOneRadio component = createHtmlSelectOneRadio();
-        component.setBorder(123);
-        assertEquals(123, component.getBorder());
-    }
-
-    public void testSetGetBorder_ValueBinding() throws Exception {
-        HtmlSelectOneRadio component = createHtmlSelectOneRadio();
-        MockValueBinding vb = new MockValueBinding();
-        FacesContext context = getFacesContext();
-        vb.setValue(context, new Integer(234));
-        component.setValueBinding("border", vb);
-        assertEquals(234, component.getBorder());
-        assertEquals(new Integer(234), component.getValueBinding("border")
-                .getValue(context));
-    }
-
     public void testSetGetDir() throws Exception {
-        HtmlSelectOneRadio component = createHtmlSelectOneRadio();
+        HtmlSelectOneMenu component = createHtmlSelectOneMenu();
         component.setDir("foo dir");
         assertEquals("foo dir", component.getDir());
     }
 
     public void testSetGetDir_ValueBinding() throws Exception {
-        HtmlSelectOneRadio component = createHtmlSelectOneRadio();
+        HtmlSelectOneMenu component = createHtmlSelectOneMenu();
         MockValueBinding vb = new MockValueBinding();
         FacesContext context = getFacesContext();
         vb.setValue(context, "bar dir");
@@ -78,13 +61,13 @@ public class HtmlSelectOneRadioTest extends UISelectOneTest {
     }
 
     public void testSetGetDisabled() throws Exception {
-        HtmlSelectOneRadio component = createHtmlSelectOneRadio();
+        HtmlSelectOneMenu component = createHtmlSelectOneMenu();
         component.setDisabled(true);
         assertEquals(true, component.isDisabled());
     }
 
     public void testSetGetDisabled_ValueBinding() throws Exception {
-        HtmlSelectOneRadio component = createHtmlSelectOneRadio();
+        HtmlSelectOneMenu component = createHtmlSelectOneMenu();
         MockValueBinding vb = new MockValueBinding();
         FacesContext context = getFacesContext();
         vb.setValue(context, Boolean.TRUE);
@@ -95,13 +78,13 @@ public class HtmlSelectOneRadioTest extends UISelectOneTest {
     }
 
     public void testSetGetDisabledClass() throws Exception {
-        HtmlSelectOneRadio component = createHtmlSelectOneRadio();
+        HtmlSelectOneMenu component = createHtmlSelectOneMenu();
         component.setDisabledClass("foo disabledClass");
         assertEquals("foo disabledClass", component.getDisabledClass());
     }
 
     public void testSetGetDisabledClass_ValueBinding() throws Exception {
-        HtmlSelectOneRadio component = createHtmlSelectOneRadio();
+        HtmlSelectOneMenu component = createHtmlSelectOneMenu();
         MockValueBinding vb = new MockValueBinding();
         FacesContext context = getFacesContext();
         vb.setValue(context, "bar disabledClass");
@@ -112,13 +95,13 @@ public class HtmlSelectOneRadioTest extends UISelectOneTest {
     }
 
     public void testSetGetEnabledClass() throws Exception {
-        HtmlSelectOneRadio component = createHtmlSelectOneRadio();
+        HtmlSelectOneMenu component = createHtmlSelectOneMenu();
         component.setEnabledClass("foo enabledClass");
         assertEquals("foo enabledClass", component.getEnabledClass());
     }
 
     public void testSetGetEnabledClass_ValueBinding() throws Exception {
-        HtmlSelectOneRadio component = createHtmlSelectOneRadio();
+        HtmlSelectOneMenu component = createHtmlSelectOneMenu();
         MockValueBinding vb = new MockValueBinding();
         FacesContext context = getFacesContext();
         vb.setValue(context, "bar enabledClass");
@@ -129,13 +112,13 @@ public class HtmlSelectOneRadioTest extends UISelectOneTest {
     }
 
     public void testSetGetLang() throws Exception {
-        HtmlSelectOneRadio component = createHtmlSelectOneRadio();
+        HtmlSelectOneMenu component = createHtmlSelectOneMenu();
         component.setLang("foo lang");
         assertEquals("foo lang", component.getLang());
     }
 
     public void testSetGetLang_ValueBinding() throws Exception {
-        HtmlSelectOneRadio component = createHtmlSelectOneRadio();
+        HtmlSelectOneMenu component = createHtmlSelectOneMenu();
         MockValueBinding vb = new MockValueBinding();
         FacesContext context = getFacesContext();
         vb.setValue(context, "bar lang");
@@ -145,31 +128,14 @@ public class HtmlSelectOneRadioTest extends UISelectOneTest {
                 context));
     }
 
-    public void testSetGetLayout() throws Exception {
-        HtmlSelectOneRadio component = createHtmlSelectOneRadio();
-        component.setLayout("foo layout");
-        assertEquals("foo layout", component.getLayout());
-    }
-
-    public void testSetGetLayout_ValueBinding() throws Exception {
-        HtmlSelectOneRadio component = createHtmlSelectOneRadio();
-        MockValueBinding vb = new MockValueBinding();
-        FacesContext context = getFacesContext();
-        vb.setValue(context, "bar layout");
-        component.setValueBinding("layout", vb);
-        assertEquals("bar layout", component.getLayout());
-        assertEquals("bar layout", component.getValueBinding("layout")
-                .getValue(context));
-    }
-
     public void testSetGetOnblur() throws Exception {
-        HtmlSelectOneRadio component = createHtmlSelectOneRadio();
+        HtmlSelectOneMenu component = createHtmlSelectOneMenu();
         component.setOnblur("foo onblur");
         assertEquals("foo onblur", component.getOnblur());
     }
 
     public void testSetGetOnblur_ValueBinding() throws Exception {
-        HtmlSelectOneRadio component = createHtmlSelectOneRadio();
+        HtmlSelectOneMenu component = createHtmlSelectOneMenu();
         MockValueBinding vb = new MockValueBinding();
         FacesContext context = getFacesContext();
         vb.setValue(context, "bar onblur");
@@ -180,13 +146,13 @@ public class HtmlSelectOneRadioTest extends UISelectOneTest {
     }
 
     public void testSetGetOnchange() throws Exception {
-        HtmlSelectOneRadio component = createHtmlSelectOneRadio();
+        HtmlSelectOneMenu component = createHtmlSelectOneMenu();
         component.setOnchange("foo onchange");
         assertEquals("foo onchange", component.getOnchange());
     }
 
     public void testSetGetOnchange_ValueBinding() throws Exception {
-        HtmlSelectOneRadio component = createHtmlSelectOneRadio();
+        HtmlSelectOneMenu component = createHtmlSelectOneMenu();
         MockValueBinding vb = new MockValueBinding();
         FacesContext context = getFacesContext();
         vb.setValue(context, "bar onchange");
@@ -197,13 +163,13 @@ public class HtmlSelectOneRadioTest extends UISelectOneTest {
     }
 
     public void testSetGetOnclick() throws Exception {
-        HtmlSelectOneRadio component = createHtmlSelectOneRadio();
+        HtmlSelectOneMenu component = createHtmlSelectOneMenu();
         component.setOnclick("foo onclick");
         assertEquals("foo onclick", component.getOnclick());
     }
 
     public void testSetGetOnclick_ValueBinding() throws Exception {
-        HtmlSelectOneRadio component = createHtmlSelectOneRadio();
+        HtmlSelectOneMenu component = createHtmlSelectOneMenu();
         MockValueBinding vb = new MockValueBinding();
         FacesContext context = getFacesContext();
         vb.setValue(context, "bar onclick");
@@ -214,13 +180,13 @@ public class HtmlSelectOneRadioTest extends UISelectOneTest {
     }
 
     public void testSetGetOndblclick() throws Exception {
-        HtmlSelectOneRadio component = createHtmlSelectOneRadio();
+        HtmlSelectOneMenu component = createHtmlSelectOneMenu();
         component.setOndblclick("foo ondblclick");
         assertEquals("foo ondblclick", component.getOndblclick());
     }
 
     public void testSetGetOndblclick_ValueBinding() throws Exception {
-        HtmlSelectOneRadio component = createHtmlSelectOneRadio();
+        HtmlSelectOneMenu component = createHtmlSelectOneMenu();
         MockValueBinding vb = new MockValueBinding();
         FacesContext context = getFacesContext();
         vb.setValue(context, "bar ondblclick");
@@ -231,13 +197,13 @@ public class HtmlSelectOneRadioTest extends UISelectOneTest {
     }
 
     public void testSetGetOnfocus() throws Exception {
-        HtmlSelectOneRadio component = createHtmlSelectOneRadio();
+        HtmlSelectOneMenu component = createHtmlSelectOneMenu();
         component.setOnfocus("foo onfocus");
         assertEquals("foo onfocus", component.getOnfocus());
     }
 
     public void testSetGetOnfocus_ValueBinding() throws Exception {
-        HtmlSelectOneRadio component = createHtmlSelectOneRadio();
+        HtmlSelectOneMenu component = createHtmlSelectOneMenu();
         MockValueBinding vb = new MockValueBinding();
         FacesContext context = getFacesContext();
         vb.setValue(context, "bar onfocus");
@@ -248,13 +214,13 @@ public class HtmlSelectOneRadioTest extends UISelectOneTest {
     }
 
     public void testSetGetOnkeydown() throws Exception {
-        HtmlSelectOneRadio component = createHtmlSelectOneRadio();
+        HtmlSelectOneMenu component = createHtmlSelectOneMenu();
         component.setOnkeydown("foo onkeydown");
         assertEquals("foo onkeydown", component.getOnkeydown());
     }
 
     public void testSetGetOnkeydown_ValueBinding() throws Exception {
-        HtmlSelectOneRadio component = createHtmlSelectOneRadio();
+        HtmlSelectOneMenu component = createHtmlSelectOneMenu();
         MockValueBinding vb = new MockValueBinding();
         FacesContext context = getFacesContext();
         vb.setValue(context, "bar onkeydown");
@@ -265,13 +231,13 @@ public class HtmlSelectOneRadioTest extends UISelectOneTest {
     }
 
     public void testSetGetOnkeypress() throws Exception {
-        HtmlSelectOneRadio component = createHtmlSelectOneRadio();
+        HtmlSelectOneMenu component = createHtmlSelectOneMenu();
         component.setOnkeypress("foo onkeypress");
         assertEquals("foo onkeypress", component.getOnkeypress());
     }
 
     public void testSetGetOnkeypress_ValueBinding() throws Exception {
-        HtmlSelectOneRadio component = createHtmlSelectOneRadio();
+        HtmlSelectOneMenu component = createHtmlSelectOneMenu();
         MockValueBinding vb = new MockValueBinding();
         FacesContext context = getFacesContext();
         vb.setValue(context, "bar onkeypress");
@@ -282,13 +248,13 @@ public class HtmlSelectOneRadioTest extends UISelectOneTest {
     }
 
     public void testSetGetOnkeyup() throws Exception {
-        HtmlSelectOneRadio component = createHtmlSelectOneRadio();
+        HtmlSelectOneMenu component = createHtmlSelectOneMenu();
         component.setOnkeyup("foo onkeyup");
         assertEquals("foo onkeyup", component.getOnkeyup());
     }
 
     public void testSetGetOnkeyup_ValueBinding() throws Exception {
-        HtmlSelectOneRadio component = createHtmlSelectOneRadio();
+        HtmlSelectOneMenu component = createHtmlSelectOneMenu();
         MockValueBinding vb = new MockValueBinding();
         FacesContext context = getFacesContext();
         vb.setValue(context, "bar onkeyup");
@@ -299,13 +265,13 @@ public class HtmlSelectOneRadioTest extends UISelectOneTest {
     }
 
     public void testSetGetOnmousedown() throws Exception {
-        HtmlSelectOneRadio component = createHtmlSelectOneRadio();
+        HtmlSelectOneMenu component = createHtmlSelectOneMenu();
         component.setOnmousedown("foo onmousedown");
         assertEquals("foo onmousedown", component.getOnmousedown());
     }
 
     public void testSetGetOnmousedown_ValueBinding() throws Exception {
-        HtmlSelectOneRadio component = createHtmlSelectOneRadio();
+        HtmlSelectOneMenu component = createHtmlSelectOneMenu();
         MockValueBinding vb = new MockValueBinding();
         FacesContext context = getFacesContext();
         vb.setValue(context, "bar onmousedown");
@@ -316,13 +282,13 @@ public class HtmlSelectOneRadioTest extends UISelectOneTest {
     }
 
     public void testSetGetOnmousemove() throws Exception {
-        HtmlSelectOneRadio component = createHtmlSelectOneRadio();
+        HtmlSelectOneMenu component = createHtmlSelectOneMenu();
         component.setOnmousemove("foo onmousemove");
         assertEquals("foo onmousemove", component.getOnmousemove());
     }
 
     public void testSetGetOnmousemove_ValueBinding() throws Exception {
-        HtmlSelectOneRadio component = createHtmlSelectOneRadio();
+        HtmlSelectOneMenu component = createHtmlSelectOneMenu();
         MockValueBinding vb = new MockValueBinding();
         FacesContext context = getFacesContext();
         vb.setValue(context, "bar onmousemove");
@@ -333,13 +299,13 @@ public class HtmlSelectOneRadioTest extends UISelectOneTest {
     }
 
     public void testSetGetOnmouseout() throws Exception {
-        HtmlSelectOneRadio component = createHtmlSelectOneRadio();
+        HtmlSelectOneMenu component = createHtmlSelectOneMenu();
         component.setOnmouseout("foo onmouseout");
         assertEquals("foo onmouseout", component.getOnmouseout());
     }
 
     public void testSetGetOnmouseout_ValueBinding() throws Exception {
-        HtmlSelectOneRadio component = createHtmlSelectOneRadio();
+        HtmlSelectOneMenu component = createHtmlSelectOneMenu();
         MockValueBinding vb = new MockValueBinding();
         FacesContext context = getFacesContext();
         vb.setValue(context, "bar onmouseout");
@@ -350,13 +316,13 @@ public class HtmlSelectOneRadioTest extends UISelectOneTest {
     }
 
     public void testSetGetOnmouseover() throws Exception {
-        HtmlSelectOneRadio component = createHtmlSelectOneRadio();
+        HtmlSelectOneMenu component = createHtmlSelectOneMenu();
         component.setOnmouseover("foo onmouseover");
         assertEquals("foo onmouseover", component.getOnmouseover());
     }
 
     public void testSetGetOnmouseover_ValueBinding() throws Exception {
-        HtmlSelectOneRadio component = createHtmlSelectOneRadio();
+        HtmlSelectOneMenu component = createHtmlSelectOneMenu();
         MockValueBinding vb = new MockValueBinding();
         FacesContext context = getFacesContext();
         vb.setValue(context, "bar onmouseover");
@@ -367,13 +333,13 @@ public class HtmlSelectOneRadioTest extends UISelectOneTest {
     }
 
     public void testSetGetOnmouseup() throws Exception {
-        HtmlSelectOneRadio component = createHtmlSelectOneRadio();
+        HtmlSelectOneMenu component = createHtmlSelectOneMenu();
         component.setOnmouseup("foo onmouseup");
         assertEquals("foo onmouseup", component.getOnmouseup());
     }
 
     public void testSetGetOnmouseup_ValueBinding() throws Exception {
-        HtmlSelectOneRadio component = createHtmlSelectOneRadio();
+        HtmlSelectOneMenu component = createHtmlSelectOneMenu();
         MockValueBinding vb = new MockValueBinding();
         FacesContext context = getFacesContext();
         vb.setValue(context, "bar onmouseup");
@@ -384,13 +350,13 @@ public class HtmlSelectOneRadioTest extends UISelectOneTest {
     }
 
     public void testSetGetOnselect() throws Exception {
-        HtmlSelectOneRadio component = createHtmlSelectOneRadio();
+        HtmlSelectOneMenu component = createHtmlSelectOneMenu();
         component.setOnselect("foo onselect");
         assertEquals("foo onselect", component.getOnselect());
     }
 
     public void testSetGetOnselect_ValueBinding() throws Exception {
-        HtmlSelectOneRadio component = createHtmlSelectOneRadio();
+        HtmlSelectOneMenu component = createHtmlSelectOneMenu();
         MockValueBinding vb = new MockValueBinding();
         FacesContext context = getFacesContext();
         vb.setValue(context, "bar onselect");
@@ -401,13 +367,13 @@ public class HtmlSelectOneRadioTest extends UISelectOneTest {
     }
 
     public void testSetGetReadonly() throws Exception {
-        HtmlSelectOneRadio component = createHtmlSelectOneRadio();
+        HtmlSelectOneMenu component = createHtmlSelectOneMenu();
         component.setReadonly(true);
         assertEquals(true, component.isReadonly());
     }
 
     public void testSetGetReadonly_ValueBinding() throws Exception {
-        HtmlSelectOneRadio component = createHtmlSelectOneRadio();
+        HtmlSelectOneMenu component = createHtmlSelectOneMenu();
         MockValueBinding vb = new MockValueBinding();
         FacesContext context = getFacesContext();
         vb.setValue(context, Boolean.TRUE);
@@ -418,13 +384,13 @@ public class HtmlSelectOneRadioTest extends UISelectOneTest {
     }
 
     public void testSetGetStyle() throws Exception {
-        HtmlSelectOneRadio component = createHtmlSelectOneRadio();
+        HtmlSelectOneMenu component = createHtmlSelectOneMenu();
         component.setStyle("foo style");
         assertEquals("foo style", component.getStyle());
     }
 
     public void testSetGetStyle_ValueBinding() throws Exception {
-        HtmlSelectOneRadio component = createHtmlSelectOneRadio();
+        HtmlSelectOneMenu component = createHtmlSelectOneMenu();
         MockValueBinding vb = new MockValueBinding();
         FacesContext context = getFacesContext();
         vb.setValue(context, "bar style");
@@ -435,13 +401,13 @@ public class HtmlSelectOneRadioTest extends UISelectOneTest {
     }
 
     public void testSetGetStyleClass() throws Exception {
-        HtmlSelectOneRadio component = createHtmlSelectOneRadio();
+        HtmlSelectOneMenu component = createHtmlSelectOneMenu();
         component.setStyleClass("foo styleClass");
         assertEquals("foo styleClass", component.getStyleClass());
     }
 
     public void testSetGetStyleClass_ValueBinding() throws Exception {
-        HtmlSelectOneRadio component = createHtmlSelectOneRadio();
+        HtmlSelectOneMenu component = createHtmlSelectOneMenu();
         MockValueBinding vb = new MockValueBinding();
         FacesContext context = getFacesContext();
         vb.setValue(context, "bar styleClass");
@@ -452,13 +418,13 @@ public class HtmlSelectOneRadioTest extends UISelectOneTest {
     }
 
     public void testSetGetTabindex() throws Exception {
-        HtmlSelectOneRadio component = createHtmlSelectOneRadio();
+        HtmlSelectOneMenu component = createHtmlSelectOneMenu();
         component.setTabindex("foo tabindex");
         assertEquals("foo tabindex", component.getTabindex());
     }
 
     public void testSetGetTabindex_ValueBinding() throws Exception {
-        HtmlSelectOneRadio component = createHtmlSelectOneRadio();
+        HtmlSelectOneMenu component = createHtmlSelectOneMenu();
         MockValueBinding vb = new MockValueBinding();
         FacesContext context = getFacesContext();
         vb.setValue(context, "bar tabindex");
@@ -469,13 +435,13 @@ public class HtmlSelectOneRadioTest extends UISelectOneTest {
     }
 
     public void testSetGetTitle() throws Exception {
-        HtmlSelectOneRadio component = createHtmlSelectOneRadio();
+        HtmlSelectOneMenu component = createHtmlSelectOneMenu();
         component.setTitle("foo title");
         assertEquals("foo title", component.getTitle());
     }
 
     public void testSetGetTitle_ValueBinding() throws Exception {
-        HtmlSelectOneRadio component = createHtmlSelectOneRadio();
+        HtmlSelectOneMenu component = createHtmlSelectOneMenu();
         MockValueBinding vb = new MockValueBinding();
         FacesContext context = getFacesContext();
         vb.setValue(context, "bar title");
@@ -485,12 +451,12 @@ public class HtmlSelectOneRadioTest extends UISelectOneTest {
                 context));
     }
 
-    private HtmlSelectOneRadio createHtmlSelectOneRadio() {
-        return (HtmlSelectOneRadio) createUIComponent();
+    private HtmlSelectOneMenu createHtmlSelectOneMenu() {
+        return (HtmlSelectOneMenu) createUIComponent();
     }
 
     protected UIComponent createUIComponent() {
-        return new HtmlSelectOneRadio();
+        return new HtmlSelectOneMenu();
     }
 
 }

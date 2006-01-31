@@ -458,6 +458,8 @@ public class UIInputOnlyTest extends TestCase {
                 return submittedValue + "_" + "converted";
             }
         };
+        // for No ValueChangeEvent
+        input.setValue("a_converted");
         input.setSubmittedValue("a");
         input.setValid(true);
 

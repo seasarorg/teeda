@@ -18,6 +18,7 @@ package javax.faces.component;
 import javax.faces.convert.Converter;
 
 import org.seasar.teeda.core.convert.NullConverter;
+import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.mock.MockValueBinding;
 
 /**
@@ -57,9 +58,11 @@ public class UIOutputTest extends UIComponentBaseTest {
     public final void testSetGetValue_ValueBinding() {
         UIOutput output = createUIOutput();
         MockValueBinding vb = new MockValueBinding();
-        vb.setValue(getFacesContext(), "bbb");
+        final MockFacesContext context = getFacesContext();
+        vb.setValue(context, "bbb");
         output.setValueBinding("value", vb);
         assertEquals("bbb", output.getValue());
+        assertEquals("bbb", output.getValueBinding("value").getValue(context));
     }
 
     private UIOutput createUIOutput() {

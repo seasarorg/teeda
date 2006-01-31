@@ -15,6 +15,7 @@
  */
 package javax.faces.component;
 
+import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.mock.MockValueBinding;
 
 /**
@@ -32,10 +33,14 @@ public class UIGraphicTest extends UIComponentBaseTest {
     public final void testSetGetValue_ValueBinding() {
         UIGraphic graphic = createUIGraphic();
         MockValueBinding vb = new MockValueBinding();
-        vb.setValue(getFacesContext(), "bbbbb");
+        MockFacesContext context = getFacesContext();
+        vb.setValue(context, "bbbbb");
         graphic.setValueBinding("value", vb);
         assertEquals("bbbbb", graphic.getValue());
         assertEquals("bbbbb", graphic.getUrl());
+        assertEquals("bbbbb", graphic.getValueBinding("value")
+                .getValue(context));
+        assertEquals("bbbbb", graphic.getValueBinding("url").getValue(context));
     }
 
     public final void testSetGetUrl() throws Exception {
@@ -48,10 +53,13 @@ public class UIGraphicTest extends UIComponentBaseTest {
     public final void testSetGetUrl_ValueBinding() {
         UIGraphic graphic = createUIGraphic();
         MockValueBinding vb = new MockValueBinding();
-        vb.setValue(getFacesContext(), "b");
+        MockFacesContext context = getFacesContext();
+        vb.setValue(context, "b");
         graphic.setValueBinding("url", vb);
         assertEquals("b", graphic.getUrl());
         assertEquals("b", graphic.getValue());
+        assertEquals("b", graphic.getValueBinding("value").getValue(context));
+        assertEquals("b", graphic.getValueBinding("url").getValue(context));
     }
 
     private UIGraphic createUIGraphic() {

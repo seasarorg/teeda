@@ -15,26 +15,26 @@
  */
 package javax.faces.component.html;
 
-import junit.framework.TestCase;
+import javax.faces.component.UIComponent;
+import javax.faces.component.UISelectOneTeedaTest;
 
 /**
  * @author manhole
  */
-public class HtmlSelectOneRadioOnlyTest extends TestCase {
+public class HtmlSelectOneListboxTeedaTest extends UISelectOneTeedaTest {
 
-    public void testConstants() throws Exception {
-        assertEquals("javax.faces.HtmlSelectOneRadio",
-                HtmlSelectOneRadio.COMPONENT_TYPE);
+    public void testSaveAndRestoreState() throws Exception {
+        super.testSaveAndRestoreState();
+        createHtmlSelectOneListbox();
+        // TODO test
     }
 
-    public void testGetComponentFamily() {
-        HtmlSelectOneRadio htmlSelectOneRadio = new HtmlSelectOneRadio();
-        assertEquals("javax.faces.SelectOne", htmlSelectOneRadio.getFamily());
+    private HtmlSelectOneListbox createHtmlSelectOneListbox() {
+        return (HtmlSelectOneListbox) createUIComponent();
     }
 
-    public void testDefaultRendererType() throws Exception {
-        HtmlSelectOneRadio htmlSelectOneRadio = new HtmlSelectOneRadio();
-        assertEquals("javax.faces.Radio", htmlSelectOneRadio.getRendererType());
+    protected UIComponent createUIComponent() {
+        return new HtmlSelectOneListbox();
     }
 
 }

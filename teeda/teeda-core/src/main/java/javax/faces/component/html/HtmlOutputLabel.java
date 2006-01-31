@@ -19,6 +19,9 @@ import javax.faces.component.UIOutput;
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
 
+/**
+ * @author shot
+ */
 public class HtmlOutputLabel extends UIOutput {
 
     public static final String COMPONENT_TYPE = "javax.faces.HtmlOutputLabel";
@@ -74,11 +77,11 @@ public class HtmlOutputLabel extends UIOutput {
     }
 
     public String getAccesskey() {
-        if(accesskey_ != null){
+        if (accesskey_ != null) {
             return accesskey_;
         }
         ValueBinding vb = getValueBinding("accesskey");
-        return vb != null ? (String)vb.getValue(getFacesContext()) : null;
+        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setDir(String dir) {
@@ -86,11 +89,11 @@ public class HtmlOutputLabel extends UIOutput {
     }
 
     public String getDir() {
-        if(dir_ != null){
+        if (dir_ != null) {
             return dir_;
         }
         ValueBinding vb = getValueBinding("dir");
-        return vb != null ? (String)vb.getValue(getFacesContext()) : null;
+        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setFor(String forValue) {
@@ -98,10 +101,11 @@ public class HtmlOutputLabel extends UIOutput {
     }
 
     public String getFor() {
-        if(for_ != null)
+        if (for_ != null) {
             return for_;
+        }
         ValueBinding vb = getValueBinding("for");
-        return vb != null ? (String)vb.getValue(getFacesContext()) : null;
+        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setLang(String lang) {
@@ -109,10 +113,11 @@ public class HtmlOutputLabel extends UIOutput {
     }
 
     public String getLang() {
-        if(lang_ != null)
+        if (lang_ != null) {
             return lang_;
+        }
         ValueBinding vb = getValueBinding("lang");
-        return vb != null ? (String)vb.getValue(getFacesContext()) : null;
+        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setOnblur(String onblur) {
@@ -120,10 +125,11 @@ public class HtmlOutputLabel extends UIOutput {
     }
 
     public String getOnblur() {
-        if(onblur_ != null)
+        if (onblur_ != null) {
             return onblur_;
+        }
         ValueBinding vb = getValueBinding("onblur");
-        return vb != null ? (String)vb.getValue(getFacesContext()) : null;
+        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setOnclick(String onclick) {
@@ -131,10 +137,11 @@ public class HtmlOutputLabel extends UIOutput {
     }
 
     public String getOnclick() {
-        if(onclick_ != null)
+        if (onclick_ != null) {
             return onclick_;
+        }
         ValueBinding vb = getValueBinding("onclick");
-        return vb != null ? (String)vb.getValue(getFacesContext()) : null;
+        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setOndblclick(String ondblclick) {
@@ -142,10 +149,11 @@ public class HtmlOutputLabel extends UIOutput {
     }
 
     public String getOndblclick() {
-        if(ondblclick_ != null)
+        if (ondblclick_ != null) {
             return ondblclick_;
+        }
         ValueBinding vb = getValueBinding("ondblclick");
-        return vb != null ? (String)vb.getValue(getFacesContext()) : null;
+        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setOnfocus(String onfocus) {
@@ -153,10 +161,11 @@ public class HtmlOutputLabel extends UIOutput {
     }
 
     public String getOnfocus() {
-        if(onfocus_ != null)
+        if (onfocus_ != null) {
             return onfocus_;
+        }
         ValueBinding vb = getValueBinding("onfocus");
-        return vb != null ? (String)vb.getValue(getFacesContext()) : null;
+        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setOnkeydown(String onkeydown) {
@@ -164,10 +173,11 @@ public class HtmlOutputLabel extends UIOutput {
     }
 
     public String getOnkeydown() {
-        if(onkeydown_ != null)
+        if (onkeydown_ != null) {
             return onkeydown_;
+        }
         ValueBinding vb = getValueBinding("onkeydown");
-        return vb != null ? (String)vb.getValue(getFacesContext()) : null;
+        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setOnkeypress(String onkeypress) {
@@ -175,10 +185,11 @@ public class HtmlOutputLabel extends UIOutput {
     }
 
     public String getOnkeypress() {
-        if(onkeypress_ != null)
+        if (onkeypress_ != null) {
             return onkeypress_;
+        }
         ValueBinding vb = getValueBinding("onkeypress");
-        return vb != null ? (String)vb.getValue(getFacesContext()) : null;
+        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setOnkeyup(String onkeyup) {
@@ -186,10 +197,11 @@ public class HtmlOutputLabel extends UIOutput {
     }
 
     public String getOnkeyup() {
-        if(onkeyup_ != null)
+        if (onkeyup_ != null) {
             return onkeyup_;
+        }
         ValueBinding vb = getValueBinding("onkeyup");
-        return vb != null ? (String)vb.getValue(getFacesContext()) : null;
+        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setOnmousedown(String onmousedown) {
@@ -197,10 +209,11 @@ public class HtmlOutputLabel extends UIOutput {
     }
 
     public String getOnmousedown() {
-        if(onmousedown_ != null)
+        if (onmousedown_ != null) {
             return onmousedown_;
+        }
         ValueBinding vb = getValueBinding("onmousedown");
-        return vb != null ? (String)vb.getValue(getFacesContext()) : null;
+        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setOnmousemove(String onmousemove) {
@@ -208,10 +221,11 @@ public class HtmlOutputLabel extends UIOutput {
     }
 
     public String getOnmousemove() {
-        if(onmousemove_ != null)
+        if (onmousemove_ != null) {
             return onmousemove_;
+        }
         ValueBinding vb = getValueBinding("onmousemove");
-        return vb != null ? (String)vb.getValue(getFacesContext()) : null;
+        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setOnmouseout(String onmouseout) {
@@ -219,10 +233,11 @@ public class HtmlOutputLabel extends UIOutput {
     }
 
     public String getOnmouseout() {
-        if(onmouseout_ != null)
+        if (onmouseout_ != null) {
             return onmouseout_;
+        }
         ValueBinding vb = getValueBinding("onmouseout");
-        return vb != null ? (String)vb.getValue(getFacesContext()) : null;
+        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setOnmouseover(String onmouseover) {
@@ -230,10 +245,11 @@ public class HtmlOutputLabel extends UIOutput {
     }
 
     public String getOnmouseover() {
-        if(onmouseover_ != null)
+        if (onmouseover_ != null) {
             return onmouseover_;
+        }
         ValueBinding vb = getValueBinding("onmouseover");
-        return vb != null ? (String)vb.getValue(getFacesContext()) : null;
+        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setOnmouseup(String onmouseup) {
@@ -241,10 +257,11 @@ public class HtmlOutputLabel extends UIOutput {
     }
 
     public String getOnmouseup() {
-        if(onmouseup_ != null)
+        if (onmouseup_ != null) {
             return onmouseup_;
+        }
         ValueBinding vb = getValueBinding("onmouseup");
-        return vb != null ? (String)vb.getValue(getFacesContext()) : null;
+        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setStyle(String style) {
@@ -252,10 +269,11 @@ public class HtmlOutputLabel extends UIOutput {
     }
 
     public String getStyle() {
-        if(style_ != null)
+        if (style_ != null) {
             return style_;
+        }
         ValueBinding vb = getValueBinding("style");
-        return vb != null ? (String)vb.getValue(getFacesContext()) : null;
+        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setStyleClass(String styleClass) {
@@ -263,10 +281,11 @@ public class HtmlOutputLabel extends UIOutput {
     }
 
     public String getStyleClass() {
-        if(styleClass_ != null)
+        if (styleClass_ != null) {
             return styleClass_;
+        }
         ValueBinding vb = getValueBinding("styleClass");
-        return vb != null ? (String)vb.getValue(getFacesContext()) : null;
+        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setTabindex(String tabindex) {
@@ -274,10 +293,11 @@ public class HtmlOutputLabel extends UIOutput {
     }
 
     public String getTabindex() {
-        if(tabindex_ != null)
+        if (tabindex_ != null) {
             return tabindex_;
+        }
         ValueBinding vb = getValueBinding("tabindex");
-        return vb != null ? (String)vb.getValue(getFacesContext()) : null;
+        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setTitle(String title) {
@@ -285,10 +305,11 @@ public class HtmlOutputLabel extends UIOutput {
     }
 
     public String getTitle() {
-        if(title_ != null)
+        if (title_ != null) {
             return title_;
+        }
         ValueBinding vb = getValueBinding("title");
-        return vb != null ? (String)vb.getValue(getFacesContext()) : null;
+        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public Object saveState(FacesContext context) {
@@ -314,31 +335,31 @@ public class HtmlOutputLabel extends UIOutput {
         values[18] = styleClass_;
         values[19] = tabindex_;
         values[20] = title_;
-        return ((Object)(values));
+        return ((Object) (values));
     }
 
     public void restoreState(FacesContext context, Object state) {
-        Object values[] = (Object[])state;
+        Object values[] = (Object[]) state;
         super.restoreState(context, values[0]);
-        accesskey_ = (String)values[1];
-        dir_ = (String)values[2];
-        for_ = (String)values[3];
-        lang_ = (String)values[4];
-        onblur_ = (String)values[5];
-        onclick_ = (String)values[6];
-        ondblclick_ = (String)values[7];
-        onfocus_ = (String)values[8];
-        onkeydown_ = (String)values[9];
-        onkeypress_ = (String)values[10];
-        onkeyup_ = (String)values[11];
-        onmousedown_ = (String)values[12];
-        onmousemove_ = (String)values[13];
-        onmouseout_ = (String)values[14];
-        onmouseover_ = (String)values[15];
-        onmouseup_ = (String)values[16];
-        style_ = (String)values[17];
-        styleClass_ = (String)values[18];
-        tabindex_ = (String)values[19];
-        title_ = (String)values[20];
+        accesskey_ = (String) values[1];
+        dir_ = (String) values[2];
+        for_ = (String) values[3];
+        lang_ = (String) values[4];
+        onblur_ = (String) values[5];
+        onclick_ = (String) values[6];
+        ondblclick_ = (String) values[7];
+        onfocus_ = (String) values[8];
+        onkeydown_ = (String) values[9];
+        onkeypress_ = (String) values[10];
+        onkeyup_ = (String) values[11];
+        onmousedown_ = (String) values[12];
+        onmousemove_ = (String) values[13];
+        onmouseout_ = (String) values[14];
+        onmouseover_ = (String) values[15];
+        onmouseup_ = (String) values[16];
+        style_ = (String) values[17];
+        styleClass_ = (String) values[18];
+        tabindex_ = (String) values[19];
+        title_ = (String) values[20];
     }
 }

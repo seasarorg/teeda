@@ -92,6 +92,9 @@ public class UIInput extends UIOutput implements EditableValueHolder {
     }
 
     public void setValue(Object value) {
+        if ("".equals(value)) {
+            value = null;
+        }
         super.setValue(value);
         setLocalValueSet(true);
     }
@@ -308,15 +311,13 @@ public class UIInput extends UIOutput implements EditableValueHolder {
     }
 
     protected boolean compareValues(Object previous, Object value) {
-        if (previous != null && value != null) {
-            return (!(previous.equals(value)));
-        } else if (previous == null || value != null) {
+        if (previous == null && value == null) {
             return false;
-        } else if (previous != null || value == null) {
-            return false;
-        } else {
+        }
+        if (previous == null || value == null) {
             return true;
         }
+        return !previous.equals(value);
     }
 
     public void addValidator(Validator validator) {

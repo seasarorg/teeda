@@ -147,9 +147,15 @@ public class UIInputTest extends UIOutputTest {
         assertEquals(false, input.compareValues("1", new String("1")));
         assertEquals(false, input.compareValues(new Integer(1234), new Integer(
                 1234)));
-        assertEquals(false, input.compareValues("", null));
-        assertEquals(false, input.compareValues(null, ""));
 
+        assertEquals(false, input.compareValues("", ""));
+        assertEquals(false, input.compareValues(null, null));
+
+        assertEquals(true, input.compareValues("", null));
+        assertEquals(true, input.compareValues(null, ""));
+
+        assertEquals(true, input.compareValues("1", null));
+        assertEquals(true, input.compareValues(null, "1"));
         assertEquals(true, input.compareValues("1", "2"));
         assertEquals(true, input.compareValues("2", "1"));
         assertEquals(true, input.compareValues(new Integer(1234), new Integer(
@@ -234,6 +240,17 @@ public class UIInputTest extends UIOutputTest {
         } catch (NullPointerException npe) {
             ExceptionAssert.assertMessageExist(npe);
         }
+    }
+
+    public final void testSetValue_ConvertBlankToNull() throws Exception {
+        // ## Arrange ##
+        UIInput input = createUIInput();
+
+        // ## Act ##
+        input.setValue("");
+
+        // ## Assert ##
+        assertEquals(null, input.getValue());
     }
 
     private UIInput createUIInput() {

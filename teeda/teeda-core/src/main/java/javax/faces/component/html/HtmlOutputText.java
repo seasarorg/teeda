@@ -53,7 +53,7 @@ public class HtmlOutputText extends UIOutput {
         }
         ValueBinding vb = getValueBinding("escape");
         Boolean v = vb != null ? (Boolean) vb.getValue(getFacesContext())
-            : null;
+                : null;
         return v != null ? v.booleanValue() : DEFAULT_ESCAPE;
     }
 

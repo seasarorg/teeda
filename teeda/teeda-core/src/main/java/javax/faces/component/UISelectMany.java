@@ -38,7 +38,6 @@ public class UISelectMany extends UIInput {
     private static final String DEFAULT_RENDER_TYPE = "javax.faces.Listbox";
 
     public UISelectMany() {
-        super();
         setRendererType(DEFAULT_RENDER_TYPE);
     }
 
@@ -71,12 +70,14 @@ public class UISelectMany extends UIInput {
     }
 
     protected boolean compareValues(Object previous, Object value) {
-        if (previous == null && value != null) {
+        if (previous == null && value == null) {
+            return false;
+        }
+        if (previous == null || value == null) {
             return true;
-        } else if (previous != null && value == null) {
-            return true;
-        } else if (previous == null && value == null) {
-            return true;
+        }
+        if (isNotArray(previous) && isNotArray(value)) {
+            return !previous.equals(value);
         }
 
         boolean valueChanged = false;
@@ -112,6 +113,10 @@ public class UISelectMany extends UIInput {
         return valueChanged;
     }
 
+    private boolean isNotArray(Object previous) {
+        return !previous.getClass().isArray();
+    }
+
     protected void validateValue(FacesContext context, Object value) {
         super.validateValue(context, value);
         if (!isValid() || (value == null)) {
@@ -137,10 +142,11 @@ public class UISelectMany extends UIInput {
         int count = 0;
         for (int i = 0; i < array.length; ++i) {
             Object arrayElement = array[i];
-            if (arrayElement != null && element != null) {
-                if (arrayElement.equals(element)) {
-                    count++;
-                }
+            if (arrayElement == null && element == null) {
+                count++;
+            } else if (arrayElement != null && element != null
+                    && arrayElement.equals(element)) {
+                count++;
             }
         }
         return count;
@@ -152,7 +158,7 @@ public class UISelectMany extends UIInput {
             return (Object[]) obj;
         } else if (obj instanceof List) {
             return ((List) obj).toArray();
-        } else if (!obj.getClass().isArray()) {
+        } else if (isNotArray(obj)) {
             return null;
         }
         int length = Array.getLength(obj);

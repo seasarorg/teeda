@@ -28,13 +28,13 @@ public class HtmlPanelGroupOnlyTest extends TestCase {
     }
 
     public void testGetComponentFamily() {
-        HtmlPanelGroup htmlOutputText = new HtmlPanelGroup();
-        assertEquals("javax.faces.Panel", htmlOutputText.getFamily());
+        HtmlPanelGroup htmlPanelGroup = new HtmlPanelGroup();
+        assertEquals("javax.faces.Panel", htmlPanelGroup.getFamily());
     }
 
     public void testDefaultRendererType() throws Exception {
-        HtmlPanelGroup htmlOutputText = new HtmlPanelGroup();
-        assertEquals("javax.faces.Group", htmlOutputText.getRendererType());
+        HtmlPanelGroup htmlPanelGroup = new HtmlPanelGroup();
+        assertEquals("javax.faces.Group", htmlPanelGroup.getRendererType());
     }
 
 }

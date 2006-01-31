@@ -98,8 +98,9 @@ public class HtmlPanelGrid extends UIPanel {
     }
 
     public String getBgcolor() {
-        if (bgcolor_ != null)
+        if (bgcolor_ != null) {
             return bgcolor_;
+        }
         ValueBinding vb = getValueBinding("bgcolor");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
@@ -109,8 +110,9 @@ public class HtmlPanelGrid extends UIPanel {
     }
 
     public int getBorder() {
-        if (border_ != null)
+        if (border_ != null) {
             return border_.intValue();
+        }
         ValueBinding vb = getValueBinding("border");
         Integer v = vb != null ? (Integer) vb.getValue(getFacesContext())
                 : null;
@@ -122,8 +124,9 @@ public class HtmlPanelGrid extends UIPanel {
     }
 
     public String getCellpadding() {
-        if (cellpadding_ != null)
+        if (cellpadding_ != null) {
             return cellpadding_;
+        }
         ValueBinding vb = getValueBinding("cellpadding");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
@@ -133,8 +136,9 @@ public class HtmlPanelGrid extends UIPanel {
     }
 
     public String getCellspacing() {
-        if (cellspacing_ != null)
+        if (cellspacing_ != null) {
             return cellspacing_;
+        }
         ValueBinding vb = getValueBinding("cellspacing");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
@@ -144,8 +148,9 @@ public class HtmlPanelGrid extends UIPanel {
     }
 
     public String getColumnClasses() {
-        if (columnClasses_ != null)
+        if (columnClasses_ != null) {
             return columnClasses_;
+        }
         ValueBinding vb = getValueBinding("columnClasses");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
@@ -155,8 +160,9 @@ public class HtmlPanelGrid extends UIPanel {
     }
 
     public int getColumns() {
-        if (columns_ != null)
+        if (columns_ != null) {
             return columns_.intValue();
+        }
         ValueBinding vb = getValueBinding("columns");
         Integer v = vb != null ? (Integer) vb.getValue(getFacesContext())
                 : null;
@@ -168,8 +174,9 @@ public class HtmlPanelGrid extends UIPanel {
     }
 
     public String getDir() {
-        if (dir_ != null)
+        if (dir_ != null) {
             return dir_;
+        }
         ValueBinding vb = getValueBinding("dir");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
@@ -179,8 +186,9 @@ public class HtmlPanelGrid extends UIPanel {
     }
 
     public String getFooterClass() {
-        if (footerClass_ != null)
+        if (footerClass_ != null) {
             return footerClass_;
+        }
         ValueBinding vb = getValueBinding("footerClass");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
@@ -190,8 +198,9 @@ public class HtmlPanelGrid extends UIPanel {
     }
 
     public String getFrame() {
-        if (frame_ != null)
+        if (frame_ != null) {
             return frame_;
+        }
         ValueBinding vb = getValueBinding("frame");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
@@ -201,8 +210,9 @@ public class HtmlPanelGrid extends UIPanel {
     }
 
     public String getHeaderClass() {
-        if (headerClass_ != null)
+        if (headerClass_ != null) {
             return headerClass_;
+        }
         ValueBinding vb = getValueBinding("headerClass");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
@@ -212,8 +222,9 @@ public class HtmlPanelGrid extends UIPanel {
     }
 
     public String getLang() {
-        if (lang_ != null)
+        if (lang_ != null) {
             return lang_;
+        }
         ValueBinding vb = getValueBinding("lang");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
@@ -223,8 +234,9 @@ public class HtmlPanelGrid extends UIPanel {
     }
 
     public String getOnclick() {
-        if (onclick_ != null)
+        if (onclick_ != null) {
             return onclick_;
+        }
         ValueBinding vb = getValueBinding("onclick");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
@@ -234,8 +246,9 @@ public class HtmlPanelGrid extends UIPanel {
     }
 
     public String getOndblclick() {
-        if (ondblclick_ != null)
+        if (ondblclick_ != null) {
             return ondblclick_;
+        }
         ValueBinding vb = getValueBinding("ondblclick");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
@@ -245,8 +258,9 @@ public class HtmlPanelGrid extends UIPanel {
     }
 
     public String getOnkeydown() {
-        if (onkeydown_ != null)
+        if (onkeydown_ != null) {
             return onkeydown_;
+        }
         ValueBinding vb = getValueBinding("onkeydown");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
@@ -256,8 +270,9 @@ public class HtmlPanelGrid extends UIPanel {
     }
 
     public String getOnkeypress() {
-        if (onkeypress_ != null)
+        if (onkeypress_ != null) {
             return onkeypress_;
+        }
         ValueBinding vb = getValueBinding("onkeypress");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
@@ -267,8 +282,9 @@ public class HtmlPanelGrid extends UIPanel {
     }
 
     public String getOnkeyup() {
-        if (onkeyup_ != null)
+        if (onkeyup_ != null) {
             return onkeyup_;
+        }
         ValueBinding vb = getValueBinding("onkeyup");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
@@ -278,8 +294,9 @@ public class HtmlPanelGrid extends UIPanel {
     }
 
     public String getOnmousedown() {
-        if (onmousedown_ != null)
+        if (onmousedown_ != null) {
             return onmousedown_;
+        }
         ValueBinding vb = getValueBinding("onmousedown");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
@@ -289,8 +306,9 @@ public class HtmlPanelGrid extends UIPanel {
     }
 
     public String getOnmousemove() {
-        if (onmousemove_ != null)
+        if (onmousemove_ != null) {
             return onmousemove_;
+        }
         ValueBinding vb = getValueBinding("onmousemove");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
@@ -300,8 +318,9 @@ public class HtmlPanelGrid extends UIPanel {
     }
 
     public String getOnmouseout() {
-        if (onmouseout_ != null)
+        if (onmouseout_ != null) {
             return onmouseout_;
+        }
         ValueBinding vb = getValueBinding("onmouseout");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
@@ -311,8 +330,9 @@ public class HtmlPanelGrid extends UIPanel {
     }
 
     public String getOnmouseover() {
-        if (onmouseover_ != null)
+        if (onmouseover_ != null) {
             return onmouseover_;
+        }
         ValueBinding vb = getValueBinding("onmouseover");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
@@ -322,8 +342,9 @@ public class HtmlPanelGrid extends UIPanel {
     }
 
     public String getOnmouseup() {
-        if (onmouseup_ != null)
+        if (onmouseup_ != null) {
             return onmouseup_;
+        }
         ValueBinding vb = getValueBinding("onmouseup");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
@@ -333,8 +354,9 @@ public class HtmlPanelGrid extends UIPanel {
     }
 
     public String getRowClasses() {
-        if (rowClasses_ != null)
+        if (rowClasses_ != null) {
             return rowClasses_;
+        }
         ValueBinding vb = getValueBinding("rowClasses");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
@@ -344,8 +366,9 @@ public class HtmlPanelGrid extends UIPanel {
     }
 
     public String getRules() {
-        if (rules_ != null)
+        if (rules_ != null) {
             return rules_;
+        }
         ValueBinding vb = getValueBinding("rules");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
@@ -355,8 +378,9 @@ public class HtmlPanelGrid extends UIPanel {
     }
 
     public String getStyle() {
-        if (style_ != null)
+        if (style_ != null) {
             return style_;
+        }
         ValueBinding vb = getValueBinding("style");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
@@ -366,8 +390,9 @@ public class HtmlPanelGrid extends UIPanel {
     }
 
     public String getStyleClass() {
-        if (styleClass_ != null)
+        if (styleClass_ != null) {
             return styleClass_;
+        }
         ValueBinding vb = getValueBinding("styleClass");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
@@ -377,8 +402,9 @@ public class HtmlPanelGrid extends UIPanel {
     }
 
     public String getSummary() {
-        if (summary_ != null)
+        if (summary_ != null) {
             return summary_;
+        }
         ValueBinding vb = getValueBinding("summary");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
@@ -388,8 +414,9 @@ public class HtmlPanelGrid extends UIPanel {
     }
 
     public String getTitle() {
-        if (title_ != null)
+        if (title_ != null) {
             return title_;
+        }
         ValueBinding vb = getValueBinding("title");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
@@ -399,8 +426,9 @@ public class HtmlPanelGrid extends UIPanel {
     }
 
     public String getWidth() {
-        if (width_ != null)
+        if (width_ != null) {
             return width_;
+        }
         ValueBinding vb = getValueBinding("width");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }

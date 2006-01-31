@@ -13,27 +13,15 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package javax.faces.component.html;
-
-import junit.framework.TestCase;
+package javax.faces.component;
 
 /**
  * @author manhole
  */
-public class HtmlPanelGridOnlyTest extends TestCase {
+public class UISelectManyTeedaTest extends UIInputTeedaTest {
 
-    public void testConstants() throws Exception {
-        assertEquals("javax.faces.HtmlPanelGrid", HtmlPanelGrid.COMPONENT_TYPE);
-    }
-
-    public void testGetComponentFamily() {
-        HtmlPanelGrid htmlPanelGrid = new HtmlPanelGrid();
-        assertEquals("javax.faces.Panel", htmlPanelGrid.getFamily());
-    }
-
-    public void testDefaultRendererType() throws Exception {
-        HtmlPanelGrid htmlPanelGrid = new HtmlPanelGrid();
-        assertEquals("javax.faces.Grid", htmlPanelGrid.getRendererType());
+    protected UIComponent createUIComponent() {
+        return new UISelectMany();
     }
 
 }
