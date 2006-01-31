@@ -21,6 +21,7 @@ import javax.faces.internal.SelectItemsIterator;
 
 /**
  * @author shot
+ * @author manhole
  */
 public class UISelectOne extends UIInput {
 

@@ -13,15 +13,28 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package javax.faces.component;
+package javax.faces.component.html;
+
+import javax.faces.component.UIComponent;
+import javax.faces.component.UISelectOneTeedaTest;
 
 /**
  * @author manhole
  */
-public class UISelectOneTeedaTest extends UIInputTeedaTest {
+public class HtmlSelectOneRadioTeedaTest extends UISelectOneTeedaTest {
+
+    public void testSaveAndRestoreState() throws Exception {
+        super.testSaveAndRestoreState();
+        createHtmlSelectOneRadio();
+        // TODO test
+    }
+
+    private HtmlSelectOneRadio createHtmlSelectOneRadio() {
+        return (HtmlSelectOneRadio) createUIComponent();
+    }
 
     protected UIComponent createUIComponent() {
-        return new UISelectOne();
+        return new HtmlSelectOneRadio();
     }
 
 }

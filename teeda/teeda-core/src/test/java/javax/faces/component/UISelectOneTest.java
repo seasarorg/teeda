@@ -26,20 +26,7 @@ public class UISelectOneTest extends UIInputTest {
 
     public void testValidateValue_Available() throws Exception {
         // ## Arrange ##
-        UISelectOne selectOne = createUISelectOne();
-        selectOne.setValid(true);
-        {
-            UISelectItem selectItem = new UISelectItem();
-            selectItem.setItemValue("av");
-            selectItem.setItemLabel("al");
-            selectOne.getChildren().add(selectItem);
-        }
-        {
-            UISelectItem selectItem = new UISelectItem();
-            selectItem.setItemValue("bv");
-            selectItem.setItemLabel("bl");
-            selectOne.getChildren().add(selectItem);
-        }
+        UISelectOne selectOne = arrangeForValidateTest();
         MockFacesContext context = getFacesContext();
 
         // ## Act ##
@@ -51,8 +38,7 @@ public class UISelectOneTest extends UIInputTest {
         assertEquals(false, messages.hasNext());
     }
 
-    public void testValidateValue_NotAvailable() throws Exception {
-        // ## Arrange ##
+    private UISelectOne arrangeForValidateTest() {
         UISelectOne selectOne = createUISelectOne();
         selectOne.setRendererType(null);
         selectOne.setValid(true);
@@ -68,6 +54,12 @@ public class UISelectOneTest extends UIInputTest {
             selectItem.setItemLabel("bl");
             selectOne.getChildren().add(selectItem);
         }
+        return selectOne;
+    }
+
+    public void testValidateValue_NotAvailable() throws Exception {
+        // ## Arrange ##
+        UISelectOne selectOne = arrangeForValidateTest();
         MockFacesContext context = getFacesContext();
 
         // ## Act ##
