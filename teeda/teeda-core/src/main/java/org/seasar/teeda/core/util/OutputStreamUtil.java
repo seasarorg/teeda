@@ -16,35 +16,20 @@
 package org.seasar.teeda.core.util;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
+import java.io.OutputStream;
 
-import org.seasar.framework.exception.ClassNotFoundRuntimeException;
 import org.seasar.framework.exception.IORuntimeException;
-import org.seasar.framework.util.InputStreamUtil;
-import org.seasar.teeda.core.render.TeedaObjectInputStream;
 
 /**
  * @author shot
  */
-public class ObjectInputStreamUtil {
+public class OutputStreamUtil {
 
-    private ObjectInputStreamUtil() {
-    }
-
-    public static Object readObject(InputStream is) {
-        ObjectInputStream ois = null;
+    public static void close(OutputStream out) {
         try {
-            ois = new TeedaObjectInputStream(is);
-            return ois.readObject();
+            out.close();
         } catch (IOException e) {
             throw new IORuntimeException(e);
-        } catch (ClassNotFoundException e) {
-            throw new ClassNotFoundRuntimeException(e);
-        } finally {
-            if (ois != null) {
-                InputStreamUtil.close(ois);
-            }
         }
     }
 

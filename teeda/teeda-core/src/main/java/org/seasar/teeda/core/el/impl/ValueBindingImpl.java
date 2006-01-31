@@ -69,9 +69,6 @@ public class ValueBindingImpl extends ValueBindingBase{
     public void setValue(FacesContext context, Object newValue)
             throws EvaluationException, PropertyNotFoundException {
         try{
-            if(newValue == null){
-                throw new NullPointerException();
-            }
             ExpressionProcessor processor = parser_.getExpressionProcessor(); 
             Object obj = processor.resolveBase(context, expression_);
             if(obj == null){

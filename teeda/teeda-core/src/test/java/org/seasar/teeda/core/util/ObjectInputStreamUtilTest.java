@@ -40,14 +40,14 @@ public class ObjectInputStreamUtilTest extends TeedaTestCase {
     public void testGetObject_Deserialize() throws Exception {
         String path = convertPath("testObjectInputStreamUtil.ser");
         InputStream is = ResourceUtil.getResourceAsStream(path);
-        Object o = ObjectInputStreamUtil.getObject(is);
+        Object o = ObjectInputStreamUtil.readObject(is);
         assertNotNull(o);
     }
 
     public void testGetObject_IO_fail() throws Exception {
         InputStream is = new IOExceptionOccurInputStream();
         try {
-            Object o = ObjectInputStreamUtil.getObject(is);
+            Object o = ObjectInputStreamUtil.readObject(is);
             fail();
         } catch (IORuntimeException e) {
             success();

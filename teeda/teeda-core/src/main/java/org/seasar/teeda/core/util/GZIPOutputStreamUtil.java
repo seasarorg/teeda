@@ -13,12 +13,29 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.core.render;
+package org.seasar.teeda.core.util;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.zip.GZIPOutputStream;
+
+import org.seasar.framework.exception.IORuntimeException;
 
 /**
  * @author shot
  */
-public interface Decoder {
+public class GZIPOutputStreamUtil {
 
-    public Object decode(String state);
+    /**
+     * @param out
+     * @return
+     */
+    public static OutputStream getOutputStream(OutputStream out) {
+        try{
+            return new GZIPOutputStream(out);
+        }catch(IOException e){
+            throw new IORuntimeException(e);
+        }
+    }
+
 }
