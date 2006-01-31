@@ -28,7 +28,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.internal.ConvertUtils;
 
 /**
- * TODO test
+ * @author shot
+ * TODO testing
  */
 public class NumberConverter implements Converter, StateHolder {
 

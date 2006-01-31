@@ -20,7 +20,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.internal.ConvertUtils;
 
 /**
- * TODO test
+ * @author shot
+ * TODO testing
  */
 public class LongConverter implements Converter {
 
