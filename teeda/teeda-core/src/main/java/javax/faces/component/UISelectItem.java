@@ -22,9 +22,9 @@ import javax.faces.context.FacesContext;
  */
 public class UISelectItem extends UIComponentBase {
 
-    public static final String COMPORNENT_FAMILY = "javax.faces.SelectItem";
+    public static final String COMPONENT_FAMILY = "javax.faces.SelectItem";
 
-    public static final String COMPORNENT_TYPE = "javax.faces.SelectItem";
+    public static final String COMPONENT_TYPE = "javax.faces.SelectItem";
 
     private static final String ITEM_DESCRIPTION_BINDING_NAME = "itemDescription";
 
@@ -52,7 +52,7 @@ public class UISelectItem extends UIComponentBase {
     }
 
     public String getFamily() {
-        return COMPORNENT_FAMILY;
+        return COMPONENT_FAMILY;
     }
 
     public String getItemDescription() {

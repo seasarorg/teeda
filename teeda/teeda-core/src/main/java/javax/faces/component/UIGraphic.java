@@ -66,20 +66,18 @@ public class UIGraphic extends UIComponentBase {
     }
 
     public ValueBinding getValueBinding(String name) {
-        if (URL_BINDING_NAME.equals(name)) {
-            return super.getValueBinding(VALUE_BINDING_NAME);
-        } else {
-            return super.getValueBinding(name);
-        }
+        return super.getValueBinding(convertAlias(name));
     }
 
     public void setValueBinding(String name, ValueBinding vb) {
-        ComponentUtils_.assertNotNull("name", name);
+        super.setValueBinding(convertAlias(name), vb);
+    }
+
+    private String convertAlias(String name) {
         if (URL_BINDING_NAME.equals(name)) {
-            super.setValueBinding(VALUE_BINDING_NAME, vb);
-        } else {
-            super.setValueBinding(name, vb);
+            return VALUE_BINDING_NAME;
         }
+        return name;
     }
 
     public void restoreState(FacesContext context, Object state) {

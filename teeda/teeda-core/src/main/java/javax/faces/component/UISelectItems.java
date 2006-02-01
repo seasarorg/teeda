@@ -22,9 +22,9 @@ import javax.faces.context.FacesContext;
  */
 public class UISelectItems extends UIComponentBase {
 
-    public static final String COMPONETN_FAMILY = "javax.faces.SelectItems";
+    public static final String COMPONENT_FAMILY = "javax.faces.SelectItems";
 
-    public static final String COMPONETN_TYPE = "javax.faces.SelectItems";
+    public static final String  COMPONENT_TYPE = "javax.faces.SelectItems";
 
     private Object value_ = null;
 
@@ -34,7 +34,7 @@ public class UISelectItems extends UIComponentBase {
     }
 
     public String getFamily() {
-        return COMPONETN_FAMILY;
+        return COMPONENT_FAMILY;
     }
 
     public Object getValue() {
@@ -59,6 +59,6 @@ public class UISelectItems extends UIComponentBase {
         values[0] = super.saveState(context);
         values[1] = value_;
         return values;
-
     }
+
 }

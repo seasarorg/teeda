@@ -20,7 +20,6 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.NoSuchElementException;
-import java.util.Map.Entry;
 
 import javax.faces.component.UIComponent;
 import javax.faces.component.UISelectItem;
@@ -40,7 +39,7 @@ public class SelectItemsIterator implements Iterator {
 
     private Iterator items_ = null;
 
-    private Object nextItem_;
+    private Object nextValue_;
 
     public SelectItemsIterator(UIComponent component) {
         children_ = component.getChildren().iterator();
@@ -51,17 +50,17 @@ public class SelectItemsIterator implements Iterator {
     }
 
     public boolean hasNext() {
-        if (nextItem_ != null) {
+        if (nextValue_ != null) {
             return true;
         }
-        nextItem_ = readAhead();
-        if (nextItem_ != null) {
+        nextValue_ = getNext();
+        if (nextValue_ != null) {
             return true;
         }
         return false;
     }
 
-    private Object readAhead() {
+    private Object getNext() {
         if (items_ != null) {
             if (items_.hasNext()) {
                 return items_.next();
@@ -69,76 +68,82 @@ public class SelectItemsIterator implements Iterator {
                 items_ = null;
             }
         }
-        if (children_.hasNext()) {
-            UIComponent child = (UIComponent) children_.next();
-            if (child instanceof UISelectItem) {
-                Object o = createSelectItem((UISelectItem) child);
-                return o;
-            } else if (child instanceof UISelectItems) {
-                UISelectItems items = (UISelectItems) child;
-                Object value = items.getValue();
-                if (value instanceof SelectItem) {
-                    return value;
-                } else if (value instanceof SelectItem[]) {
-                    items_ = Arrays.asList((Object[]) value).iterator();
-                    return readAhead();
-                } else if (value instanceof Collection) {
-                    Collection c = (Collection) value;
-                    items_ = c.iterator();
-                    return readAhead();
-                } else if (value instanceof Map) {
-                    items_ = new SelectItemsMapIterator((Map) value);
-                    return readAhead();
-                } else {
-                    // throw new IllegalArgumentException();
-                }
+        if (!children_.hasNext()) {
+            return null;
+        }
+        UIComponent child = (UIComponent) children_.next();
+        if (child instanceof UISelectItem) {
+            Object o = createSelectItem((UISelectItem) child);
+            return o;
+        } else if (child instanceof UISelectItems) {
+            UISelectItems items = (UISelectItems) child;
+            Object value = items.getValue();
+            if (value instanceof SelectItem) {
+                return value;
+            } else if (value instanceof SelectItem[]) {
+                items_ = Arrays.asList((SelectItem[]) value).iterator();
+                return getNext();
+            } else if (value instanceof Collection) {
+                Collection c = (Collection) value;
+                items_ = c.iterator();
+                return getNext();
+            } else if (value instanceof Map) {
+                items_ = new SelectItemsMapIterator((Map) value);
+                return getNext();
             } else {
                 // throw new IllegalArgumentException();
+                return getNext();
             }
+        } else {
+            // throw new IllegalArgumentException();
+            return getNext();
         }
-        return null;
     }
 
     public Object next() {
         if (!hasNext()) {
             throw new NoSuchElementException();
         }
-        if (nextItem_ != null) {
-            Object o = nextItem_;
-            nextItem_ = null;
+        if (nextValue_ != null) {
+            Object o = nextValue_;
+            nextValue_ = null;
             return o;
         }
         throw new NoSuchElementException();
     }
 
     private SelectItem createSelectItem(UISelectItem ui) {
-        // TODO why doing getValue?
-        // SelectItem item = (SelectItem) ui.getValue();
-        // if (item == null) {
-        // item = new SelectItem(ui.getItemValue(), ui.getItemLabel(), ui
-        // .getItemDescription(), ui.isItemDisabled());
-        // }
-        // return item;
+        SelectItem item = (SelectItem) ui.getValue();
+        if (item != null) {
+            return item;
+        }
         return new SelectItem(ui.getItemValue(), ui.getItemLabel(), ui
                 .getItemDescription(), ui.isItemDisabled());
     }
 
     private static class SelectItemsMapIterator implements Iterator {
 
-        private Iterator entries_;
+        private Map map_;
 
-        public SelectItemsMapIterator(Map m) {
-            entries_ = m.entrySet().iterator();
+        private Iterator keys_;
+
+        public SelectItemsMapIterator(Map map) {
+            map_ = map;
+            /*
+             * use key iterator.
+             * see: API document of UISelectItems.
+             */
+            keys_ = map.keySet().iterator();
         }
 
         public boolean hasNext() {
-            return entries_.hasNext();
+            return keys_.hasNext();
         }
 
         public Object next() {
-            Map.Entry entry = (Entry) entries_.next();
-            return new SelectItem(entry.getValue().toString(), entry.getKey()
-                    .toString());
+            Object key = keys_.next();
+            Object value = map_.get(key);
+            return new SelectItem(value.toString(), key.toString());
         }
 
         public void remove() {

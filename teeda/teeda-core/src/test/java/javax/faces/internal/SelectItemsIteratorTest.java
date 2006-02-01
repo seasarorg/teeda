@@ -91,6 +91,31 @@ public class SelectItemsIteratorTest extends TestCase {
         assertEquals(false, it.hasNext());
     }
 
+    public void testUISelectItem_SelectItem() throws Exception {
+        // ## Arrange ##
+        UISelectMany component = new UISelectMany();
+        {
+            SelectItem selectItem = new SelectItem();
+            selectItem.setValue("val");
+            selectItem.setLabel("lab");
+            selectItem.setDescription("desc");
+            UISelectItem ui = new UISelectItem();
+            ui.setValue(selectItem);
+            component.getChildren().add(ui);
+        }
+
+        // ## Act ##
+        SelectItemsIterator it = new SelectItemsIterator(component);
+
+        // ## Assert ##
+        assertEquals(true, it.hasNext());
+        SelectItem item = (SelectItem) it.next();
+        assertEquals("val", item.getValue());
+        assertEquals("lab", item.getLabel());
+        assertEquals("desc", item.getDescription());
+        assertEquals(false, it.hasNext());
+    }
+
     public void testUISelectItems_SelectItem() throws Exception {
         // ## Arrange ##
         UISelectMany component = new UISelectMany();
@@ -237,6 +262,32 @@ public class SelectItemsIteratorTest extends TestCase {
         // ## Assert ##
         assertEquals("only valid children are UISelectItem or UISelectItems",
                 false, it.hasNext());
+    }
+
+    public void testIgnoreInvalidChildren() throws Exception {
+        // ## Arrange ##
+        UISelectMany component = new UISelectMany();
+        UIComponent invalidChild = new MockUIComponent();
+        ObjectAssert.assertNotInstanceOf(UISelectItem.class, invalidChild);
+        ObjectAssert.assertNotInstanceOf(UISelectItems.class, invalidChild);
+        component.getChildren().add(invalidChild);
+        {
+            UISelectItems ui = new UISelectItems();
+            SelectItem item1 = new SelectItem("v1", "l1", "d1");
+            SelectItem item2 = new SelectItem("v2", "l2", "d2");
+            ui.setValue(new SelectItem[] { item1, item2 });
+            component.getChildren().add(ui);
+        }
+
+        // ## Act ##
+        SelectItemsIterator it = new SelectItemsIterator(component);
+
+        // ## Assert ##
+        assertEquals(true, it.hasNext());
+        it.next();
+        assertEquals(true, it.hasNext());
+        it.next();
+        assertEquals(false, it.hasNext());
     }
 
     public void testRemove() throws Exception {

@@ -55,19 +55,18 @@ public class UISelectMany extends UIInput {
     }
 
     public ValueBinding getValueBinding(String name) {
-        if ("selectedValues".equals(name)) {
-            return super.getValueBinding("value");
-        } else {
-            return super.getValueBinding(name);
-        }
+        return super.getValueBinding(convertAlias(name));
     }
 
     public void setValueBinding(String name, ValueBinding binding) {
+        super.setValueBinding(convertAlias(name), binding);
+    }
+
+    private String convertAlias(String name) {
         if ("selectedValues".equals(name)) {
-            super.setValueBinding("value", binding);
-        } else {
-            super.setValueBinding(name, binding);
+            return "value";
         }
+        return name;
     }
 
     protected boolean compareValues(Object previous, Object value) {
@@ -142,7 +141,7 @@ public class UISelectMany extends UIInput {
         return count;
     }
 
-    Object[] toObjectArray(Object obj) {
+    private Object[] toObjectArray(Object obj) {
         ComponentUtils_.assertNotNull("primitiveArray", obj);
         if (ComponentUtils_.isObjectArray(obj)) {
             return (Object[]) obj;

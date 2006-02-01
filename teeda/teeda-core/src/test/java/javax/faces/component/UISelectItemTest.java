@@ -15,6 +15,8 @@
  */
 package javax.faces.component;
 
+import javax.faces.context.FacesContext;
+
 import org.seasar.teeda.core.mock.MockValueBinding;
 
 /**
@@ -23,88 +25,87 @@ import org.seasar.teeda.core.mock.MockValueBinding;
  */
 public class UISelectItemTest extends UIComponentBaseTest {
 
-    public void testGetFamily() {
-        UISelectItem item = createUISelectItem();
-        assertEquals(item.getFamily(), UISelectItem.COMPORNENT_FAMILY);
-    }
-
-    public void testSetItemDescription() {
+    public void testSetGetItemDescription() {
         UISelectItem item = createUISelectItem();
         item.setItemDescription("aaa");
         assertEquals(item.getItemDescription(), "aaa");
     }
 
-    public void testGetItemDescription() {
+    public void testSetGetItemDescription_ValueBinding() {
         UISelectItem item = createUISelectItem();
         MockValueBinding vb = new MockValueBinding();
-        String value = "aaa";
-        vb.setValue(getFacesContext(), value);
+        FacesContext context = getFacesContext();
+        vb.setValue(context, "aaa");
         item.setValueBinding("itemDescription", vb);
-        assertEquals(value, item.getItemDescription());
+        assertEquals("aaa", item.getItemDescription());
+        assertEquals("aaa", item.getValueBinding("itemDescription").getValue(
+                context));
     }
 
-    public void testSetItemDisabled() {
+    public void testSetGetItemDisabled() {
         UISelectItem item = createUISelectItem();
-        boolean value = true;
-        item.setItemDisabled(value);
-        assertEquals(item.isItemDisabled(), value);
+        item.setItemDisabled(true);
+        assertEquals(true, item.isItemDisabled());
     }
 
-    public void testGetItemDisabled() {
+    public void testSetGetItemDisabled_ValueBinding() {
         UISelectItem item = createUISelectItem();
         MockValueBinding vb = new MockValueBinding();
-        boolean value = true;
-        vb.setValue(getFacesContext(), new Boolean(value));
+        FacesContext context = getFacesContext();
+        vb.setValue(context, new Boolean(true));
         item.setValueBinding("itemDisabled", vb);
-        assertEquals(value, item.isItemDisabled());
+        assertEquals(true, item.isItemDisabled());
+        assertEquals(Boolean.TRUE, item.getValueBinding("itemDisabled")
+                .getValue(context));
     }
 
-    public void testSetItemLabel() {
+    public void testSetGetItemLabel() {
         UISelectItem item = createUISelectItem();
-        String str = "bbb";
-        item.setItemLabel(str);
-        assertEquals(item.getItemLabel(), str);
+        item.setItemLabel("bbb");
+        assertEquals("bbb", item.getItemLabel());
     }
 
-    public void testGetItemLabel() {
+    public void testSetGetItemLabel_ValueBinding() {
         UISelectItem item = createUISelectItem();
         MockValueBinding vb = new MockValueBinding();
-        String value = "bbb";
-        vb.setValue(getFacesContext(), value);
+        FacesContext context = getFacesContext();
+        vb.setValue(context, "bbb");
         item.setValueBinding("itemLabel", vb);
-        assertEquals(value, item.getItemLabel());
+        assertEquals("bbb", item.getItemLabel());
+        assertEquals("bbb", item.getValueBinding("itemLabel").getValue(context));
     }
 
-    public void testSetItemValue() {
+    public void testSetGetItemValue() {
         UISelectItem item = createUISelectItem();
-        Integer num = new Integer(3);
-        item.setItemValue(num);
-        assertEquals(item.getItemValue(), num);
+        item.setItemValue(new Integer(3));
+        assertEquals(new Integer(3), item.getItemValue());
     }
 
-    public void testGetItemValue() {
+    public void testSetGetItemValue_ValueBinding() {
         UISelectItem item = createUISelectItem();
         MockValueBinding vb = new MockValueBinding();
-        Integer value = new Integer(3);
-        vb.setValue(getFacesContext(), value);
+        FacesContext context = getFacesContext();
+        vb.setValue(context, new Integer(3));
         item.setValueBinding("itemValue", vb);
-        assertEquals(value, item.getItemValue());
+        assertEquals(new Integer(3), item.getItemValue());
+        assertEquals(new Integer(3), item.getValueBinding("itemValue")
+                .getValue(context));
     }
 
-    public void testSetValue() {
+    public void testSetGetValue() {
         UISelectItem item = createUISelectItem();
-        String str = "a";
-        item.setValue(str);
-        assertEquals(item.getValue(), str);
+        item.setValue("a");
+        assertEquals("a", item.getValue());
     }
 
-    public void testGetValue() {
+    public void testSetGetValue_ValueBinding() {
         UISelectItem item = createUISelectItem();
         MockValueBinding vb = new MockValueBinding();
-        String value = "a";
-        vb.setValue(getFacesContext(), value);
+        FacesContext context = getFacesContext();
+        vb.setValue(context, "a");
         item.setValueBinding("value", vb);
-        assertEquals(value, item.getValue());
+        assertEquals("a", item.getValue());
+        assertEquals("a", item.getValueBinding("value").getValue(context));
     }
 
     private UISelectItem createUISelectItem() {
