@@ -40,6 +40,10 @@ public class HtmlSelectManyListbox extends UISelectMany {
 
     private Boolean disabled_ = null;
 
+    private String disabledClass_ = null;
+
+    private String enabledClass_ = null;
+
     private String lang_ = null;
 
     private String onblur_ = null;
@@ -122,6 +126,30 @@ public class HtmlSelectManyListbox extends UISelectMany {
         Boolean v = vb != null ? (Boolean) vb.getValue(getFacesContext())
                 : null;
         return v != null ? v.booleanValue() : DEFAULT_DISABLED;
+    }
+
+    public void setDisabledClass(String disabledClass) {
+        disabledClass_ = disabledClass;
+    }
+
+    public String getDisabledClass() {
+        if (disabledClass_ != null) {
+            return disabledClass_;
+        }
+        ValueBinding vb = getValueBinding("disabledClass");
+        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+    }
+
+    public void setEnabledClass(String enabledClass) {
+        enabledClass_ = enabledClass;
+    }
+
+    public String getEnabledClass() {
+        if (enabledClass_ != null) {
+            return enabledClass_;
+        }
+        ValueBinding vb = getValueBinding("enabledClass");
+        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setLang(String lang) {
@@ -381,7 +409,7 @@ public class HtmlSelectManyListbox extends UISelectMany {
     }
 
     public Object saveState(FacesContext context) {
-        Object values[] = new Object[25];
+        Object values[] = new Object[27];
         values[0] = super.saveState(context);
         values[1] = accesskey_;
         values[2] = dir_;
@@ -407,6 +435,9 @@ public class HtmlSelectManyListbox extends UISelectMany {
         values[22] = styleClass_;
         values[23] = tabindex_;
         values[24] = title_;
+        // XXX
+        values[25] = disabledClass_;
+        values[26] = enabledClass_;
         return ((Object) (values));
     }
 
@@ -437,5 +468,8 @@ public class HtmlSelectManyListbox extends UISelectMany {
         styleClass_ = (String) values[22];
         tabindex_ = (String) values[23];
         title_ = (String) values[24];
+        // XXX
+        disabledClass_ = (String) values[25];
+        enabledClass_ = (String) values[26];
     }
 }

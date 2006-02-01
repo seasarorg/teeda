@@ -36,7 +36,6 @@ public interface TODO {
      *       (JSFTestCase and TeedaTestCase?)
      *  - use Find bugs?
      *  - use Clover or cobertura?
-     *  - Add copyright to all sources.
      *  - AbstractPhase.initializeChildren should be modified to use EditableValueHolder
      *  - Impl ViewHandler
      *  - Test LifecycleImpl and Phase
@@ -56,7 +55,8 @@ public interface TODO {
      *  - make it easy to get elements from FacesConfig by key(such as component, converter,
      *    validator, renderkit, and managed-bean)
      *  
-     * 
+     * DONE
+     *  - Add copyright to all sources.
      * 
      * 
      * 

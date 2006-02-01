@@ -25,7 +25,9 @@
       <id>manhole</id>
       <name>HONMA Hirotaka</name>
       <email>manholex@gmail.com</email>
-      <url>http://popo.dyndns.info/~manhole/diary/</url>
+      <url></url>
+      <organization>ARK Systems Co., Ltd.</organization>
+      <organizationUrl>http://www.arksystems.co.jp/</organizationUrl>
       <timezone>+9</timezone>
     </developer>
   </developers>
@@ -49,14 +51,12 @@
     <defaultGoal>validate</defaultGoal>
     <pluginManagement>
       <plugins>
-        <!--
         <plugin>
           <artifactId>maven-compiler-plugin</artifactId>
           <configuration>
             <encoding>UTF-8</encoding>
           </configuration>
         </plugin>
-        -->
         <plugin>
           <artifactId>maven-deploy-plugin</artifactId>
           <configuration>
