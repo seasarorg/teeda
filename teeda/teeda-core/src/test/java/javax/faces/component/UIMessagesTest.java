@@ -18,9 +18,8 @@ package javax.faces.component;
 import javax.faces.context.FacesContext;
 
 import org.seasar.teeda.core.mock.MockValueBinding;
-import org.seasar.teeda.core.unit.TeedaTestCase;
 
-public class UIMessagesTest extends TeedaTestCase {
+public class UIMessagesTest extends UIComponentBaseTest {
 
     public void testSetGetGlobalOnly() {
         UIMessages messages = new UIMessages();
