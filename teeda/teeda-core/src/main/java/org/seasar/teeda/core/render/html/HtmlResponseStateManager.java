@@ -91,8 +91,4 @@ public class HtmlResponseStateManager extends AbstractResponseStateManager {
         writer.endElement(JsfConstants.INPUT_ELEM);
     }
 
-    private boolean isInitialRequest(Object state, String viewId) {
-        return state == null || !state.equals(viewId);
-    }
-
 }

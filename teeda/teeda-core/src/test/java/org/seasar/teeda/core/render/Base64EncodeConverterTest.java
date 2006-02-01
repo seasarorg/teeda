@@ -16,6 +16,7 @@
 package org.seasar.teeda.core.render;
 
 import java.io.Serializable;
+import java.util.Map;
 
 import javax.faces.application.StateManager;
 import javax.faces.application.StateManager.SerializedView;
@@ -39,7 +40,7 @@ public class Base64EncodeConverterTest extends TeedaTestCase {
         assertEquals("aaa", aaa.getName());
     }
 
-    //EOFException?
+    // EOFException?
     public void fixme_testEncodeAndDecode_compressed() throws Exception {
         getServletContext().setInitParameter(JsfConstants.COMPRESS_STATE_ATTR,
                 "true");
@@ -62,6 +63,15 @@ public class Base64EncodeConverterTest extends TeedaTestCase {
         getServletContext().setInitParameter(JsfConstants.COMPRESS_STATE_ATTR,
                 "false");
         assertFalse(converter.isCompressRequested());
+    }
+
+    public void testStoreViewState() throws Exception {
+        Base64EncodeConverter converter = new Base64EncodeConverter();
+        converter.storeViewState("hoge");
+
+        Map reqMap = getFacesContext().getExternalContext().getRequestMap();
+        Object o = reqMap.get(AbstractResponseStateManager.FACES_VIEW_STATE);
+        assertEquals("hoge", o);
     }
 
     public static class AAA implements Serializable {

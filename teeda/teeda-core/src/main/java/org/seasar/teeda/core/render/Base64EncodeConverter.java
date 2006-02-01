@@ -17,7 +17,6 @@ package org.seasar.teeda.core.render;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -26,8 +25,6 @@ import java.io.OutputStream;
 import javax.faces.application.StateManager.SerializedView;
 import javax.faces.context.FacesContext;
 
-import org.seasar.framework.exception.ClassNotFoundRuntimeException;
-import org.seasar.framework.exception.IORuntimeException;
 import org.seasar.framework.util.Base64Util;
 import org.seasar.framework.util.InputStreamUtil;
 import org.seasar.teeda.core.JsfConstants;
