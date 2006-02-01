@@ -28,7 +28,7 @@ public class GZIPInputStreamUtil {
 
     private GZIPInputStreamUtil() {
     }
-    
+
     public static InputStream getInputStream(InputStream is) {
         try {
             return new GZIPInputStream(is);
@@ -36,4 +36,5 @@ public class GZIPInputStreamUtil {
             throw new IORuntimeException(e);
         }
     }
+
 }
