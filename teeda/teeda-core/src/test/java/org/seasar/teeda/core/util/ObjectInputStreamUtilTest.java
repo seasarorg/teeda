@@ -29,15 +29,6 @@ import org.seasar.teeda.core.unit.TeedaTestCase;
  */
 public class ObjectInputStreamUtilTest extends TeedaTestCase {
 
-    /**
-     * Constructor for ObjectInputStreamUtilTest.
-     * 
-     * @param name
-     */
-    public ObjectInputStreamUtilTest(String name) {
-        super(name);
-    }
-
     public void testGetObject_Deserialize() throws Exception {
         String path = convertPath("testObjectInputStreamUtil.ser");
         InputStream is = ResourceUtil.getResourceAsStream(path);
@@ -51,7 +42,7 @@ public class ObjectInputStreamUtilTest extends TeedaTestCase {
     public void testGetObject_IO_fail() throws Exception {
         InputStream is = new IOExceptionOccurInputStream();
         try {
-            Object o = ObjectInputStreamUtil.getInputStream(is);
+            ObjectInputStreamUtil.getInputStream(is);
             fail();
         } catch (IORuntimeException e) {
             success();
@@ -62,6 +53,8 @@ public class ObjectInputStreamUtilTest extends TeedaTestCase {
 
     // Serialized object
     public static class Hoge implements Serializable {
+        private static final long serialVersionUID = -4246979749871499855L;
+
         private String name_;
 
         public void setName(String name) {

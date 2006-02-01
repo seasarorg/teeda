@@ -42,9 +42,8 @@ public class GZIPOutputStreamUtilTest extends TeedaTestCase {
 
     public void testGetOutputStream_throwIOException() throws Exception {
         OutputStream out = new IOExceptionOccurOutputStream();
-        OutputStream o = null;
         try {
-            o = GZIPOutputStreamUtil.getOutputStream(out);
+            GZIPOutputStreamUtil.getOutputStream(out);
             fail();
         } catch (IORuntimeException e) {
             success();

@@ -55,16 +55,16 @@ public class Base64EncodeConverter implements EncodeConverter {
             }
             if (target instanceof SerializedView) {
                 SerializedView view = (SerializedView) target;
-                oos.writeObject(view.getStructure());
-                oos.writeObject(view.getState());
+                ObjectOutputStreamUtil.writeObject(oos, view.getStructure());
+                ObjectOutputStreamUtil.writeObject(oos, view.getState());
             } else {
-                oos.writeObject(target);
+                ObjectOutputStreamUtil.writeObject(oos, target);
             }
             return Base64Util.encode(bos.toByteArray());
-        } catch (IOException e) {
-            throw new IORuntimeException(e);
         } finally {
-            OutputStreamUtil.close(oos);
+            if (oos != null) {
+                OutputStreamUtil.close(oos);
+            }
             if (out != null) {
                 OutputStreamUtil.close(out);
             }
@@ -85,18 +85,16 @@ public class Base64EncodeConverter implements EncodeConverter {
                 is = GZIPInputStreamUtil.getInputStream(bis);
                 ois = ObjectInputStreamUtil.getInputStream(is);
             } else {
-                ois = ObjectInputStreamUtil.getInputStream(is);
+                ois = ObjectInputStreamUtil.getInputStream(bis);
             }
-            structure = ois.readObject();
-            viewState = ois.readObject();
+            structure = ObjectInputStreamUtil.readObject(ois);
+            viewState = ObjectInputStreamUtil.readObject(ois);
             storeViewState(viewState);
             return structure;
-        } catch (IOException e) {
-            throw new IORuntimeException(e);
-        } catch (ClassNotFoundException e) {
-            throw new ClassNotFoundRuntimeException(e);
         } finally {
-            InputStreamUtil.close(ois);
+            if (ois != null) {
+                InputStreamUtil.close(ois);
+            }
             if (is != null) {
                 InputStreamUtil.close(is);
             }

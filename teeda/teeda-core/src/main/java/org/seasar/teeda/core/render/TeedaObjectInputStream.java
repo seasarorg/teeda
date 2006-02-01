@@ -20,8 +20,6 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectStreamClass;
 
-import org.seasar.teeda.core.util.ClassUtil;
-
 /**
  * @author shot
  */
@@ -34,6 +32,10 @@ public class TeedaObjectInputStream extends ObjectInputStream {
     protected Class resolveClass(ObjectStreamClass clazz) throws IOException,
             ClassNotFoundException {
         String clazzName = clazz.getName();
-        return ClassUtil.forName(clazzName);
+        try{
+            return Class.forName(clazzName);
+        }catch(ClassNotFoundException e){
+            return super.resolveClass(clazz);
+        }
     }
 }

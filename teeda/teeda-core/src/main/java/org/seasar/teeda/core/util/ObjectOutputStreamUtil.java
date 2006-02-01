@@ -36,5 +36,13 @@ public class ObjectOutputStreamUtil {
             throw new IORuntimeException(e);
         }
     }
+    
+    public static void writeObject(ObjectOutputStream out, Object target) {
+        try {
+            out.writeObject(target);
+        } catch (IOException e) {
+            throw new IORuntimeException(e);
+        }        
+    }
 
 }
