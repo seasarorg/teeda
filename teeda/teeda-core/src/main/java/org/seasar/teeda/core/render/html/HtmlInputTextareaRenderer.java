@@ -45,7 +45,7 @@ public class HtmlInputTextareaRenderer extends AbstractHtmlRenderer {
             HtmlInputTextarea htmlInputTextarea) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
         writer.startElement(JsfConstants.TEXTAREA_ELEM, htmlInputTextarea);
-        RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR,
+        RendererUtil.renderIdAttributeIfNecessary(writer, htmlInputTextarea,
                 getIdForRender(context, htmlInputTextarea));
         RendererUtil.renderAttribute(writer, JsfConstants.NAME_ATTR,
                 htmlInputTextarea.getClientId(context));

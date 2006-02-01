@@ -47,7 +47,7 @@ public class HtmlInputHiddenRenderer extends AbstractHtmlRenderer {
         writer.startElement(JsfConstants.INPUT_ELEM, htmlInputHidden);
         RendererUtil.renderAttribute(writer, JsfConstants.TYPE_ATTR,
                 JsfConstants.HIDDEN_VALUE);
-        RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR,
+        RendererUtil.renderIdAttributeIfNecessary(writer, htmlInputHidden,
                 getIdForRender(context, htmlInputHidden));
         RendererUtil.renderAttribute(writer, JsfConstants.NAME_ATTR,
                 htmlInputHidden.getClientId(context));

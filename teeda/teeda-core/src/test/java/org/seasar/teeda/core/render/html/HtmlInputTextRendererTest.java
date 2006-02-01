@@ -48,8 +48,7 @@ public class HtmlInputTextRendererTest extends RendererTest {
         encodeByRenderer(renderer_, context, htmlInputText_);
 
         // ## Assert ##
-        assertEquals(
-                "<input type=\"text\" id=\"_id0\" name=\"_id0\" value=\"\" />",
+        assertEquals("<input type=\"text\" name=\"_id0\" value=\"\" />",
                 getResponseText());
     }
 
@@ -74,8 +73,7 @@ public class HtmlInputTextRendererTest extends RendererTest {
         encodeByRenderer(renderer_, context, htmlInputText_);
 
         // ## Assert ##
-        assertEquals(
-                "<input type=\"text\" id=\"_id0\" name=\"_id0\" value=\"abc\" />",
+        assertEquals("<input type=\"text\" name=\"_id0\" value=\"abc\" />",
                 getResponseText());
     }
 

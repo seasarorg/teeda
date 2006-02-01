@@ -47,7 +47,7 @@ public class HtmlInputTextRenderer extends AbstractHtmlRenderer {
         writer.startElement(JsfConstants.INPUT_ELEM, htmlInputText);
         RendererUtil.renderAttribute(writer, JsfConstants.TYPE_ATTR,
                 JsfConstants.TEXT_VALUE);
-        RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR,
+        RendererUtil.renderIdAttributeIfNecessary(writer, htmlInputText,
                 getIdForRender(context, htmlInputText));
         RendererUtil.renderAttribute(writer, JsfConstants.NAME_ATTR,
                 htmlInputText.getClientId(context));

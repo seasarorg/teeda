@@ -56,7 +56,7 @@ public class HtmlCommandButtonRenderer extends AbstractHtmlRenderer {
         }
         RendererUtil.renderAttribute(writer, JsfConstants.TYPE_ATTR, type);
 
-        RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR,
+        RendererUtil.renderIdAttributeIfNecessary(writer, htmlCommandButton,
                 getIdForRender(context, htmlCommandButton));
         RendererUtil.renderAttribute(writer, JsfConstants.NAME_ATTR,
                 htmlCommandButton.getClientId(context));

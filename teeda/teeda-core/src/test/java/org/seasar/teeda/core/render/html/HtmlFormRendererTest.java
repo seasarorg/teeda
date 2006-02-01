@@ -49,10 +49,10 @@ public class HtmlFormRendererTest extends RendererTest {
 
         // ## Act ##
         encodeByRenderer(renderer_, context, htmlForm_);
-        
+
         // ## Assert ##
         assertEquals(
-                "<form id=\"_id0\" name=\"_id0\" method=\"post\" enctype=\"application/x-www-form-urlencoded\">"
+                "<form name=\"_id0\" method=\"post\" enctype=\"application/x-www-form-urlencoded\">"
                         + "<input type=\"hidden\" name=\"_id0\" value=\"_id0\" />"
                         + "</form>", getResponseText());
     }
@@ -146,7 +146,8 @@ public class HtmlFormRendererTest extends RendererTest {
         htmlForm_.setClientId("key1");
 
         MockFacesContext context = getFacesContext();
-        context.getExternalContext().getRequestParameterMap().put("key1", "12345");
+        context.getExternalContext().getRequestParameterMap().put("key1",
+                "12345");
 
         // ## Act ##
         renderer_.decode(context, htmlForm_);

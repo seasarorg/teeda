@@ -48,8 +48,7 @@ public class HtmlInputSecretRendererTest extends RendererTest {
         encodeByRenderer(renderer_, context, htmlInputSecret_);
 
         // ## Assert ##
-        assertEquals(
-                "<input type=\"password\" id=\"_id0\" name=\"_id0\" value=\"\" />",
+        assertEquals("<input type=\"password\" name=\"_id0\" value=\"\" />",
                 getResponseText());
     }
 
@@ -75,8 +74,7 @@ public class HtmlInputSecretRendererTest extends RendererTest {
         encodeByRenderer(renderer_, context, htmlInputSecret_);
 
         // ## Assert ##
-        assertEquals(
-                "<input type=\"password\" id=\"_id0\" name=\"_id0\" value=\"\" />",
+        assertEquals("<input type=\"password\" name=\"_id0\" value=\"\" />",
                 getResponseText());
     }
 
@@ -90,8 +88,7 @@ public class HtmlInputSecretRendererTest extends RendererTest {
         encodeByRenderer(renderer_, context, htmlInputSecret_);
 
         // ## Assert ##
-        assertEquals(
-                "<input type=\"password\" id=\"_id0\" name=\"_id0\" value=\"abc\" />",
+        assertEquals("<input type=\"password\" name=\"_id0\" value=\"abc\" />",
                 getResponseText());
     }
 

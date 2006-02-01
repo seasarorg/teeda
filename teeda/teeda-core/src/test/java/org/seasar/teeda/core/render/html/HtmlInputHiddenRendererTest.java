@@ -49,8 +49,7 @@ public class HtmlInputHiddenRendererTest extends RendererTest {
         encodeByRenderer(renderer_, context, htmlInputHidden_);
 
         // ## Assert ##
-        assertEquals(
-                "<input type=\"hidden\" id=\"_id0\" name=\"_id0\" value=\"\" />",
+        assertEquals("<input type=\"hidden\" name=\"_id0\" value=\"\" />",
                 getResponseText());
     }
 
@@ -75,8 +74,7 @@ public class HtmlInputHiddenRendererTest extends RendererTest {
         encodeByRenderer(renderer_, context, htmlInputHidden_);
 
         // ## Assert ##
-        assertEquals(
-                "<input type=\"hidden\" id=\"_id0\" name=\"_id0\" value=\"abc\" />",
+        assertEquals("<input type=\"hidden\" name=\"_id0\" value=\"abc\" />",
                 getResponseText());
     }
 
@@ -102,8 +100,8 @@ public class HtmlInputHiddenRendererTest extends RendererTest {
         encodeByRenderer(renderer_, context, htmlInputHidden_);
 
         Diff diff = new Diff(
-                "<input type=\"hidden\" id=\"A\" name=\"A\" value=\"B\"" + " />",
-                getResponseText());
+                "<input type=\"hidden\" id=\"A\" name=\"A\" value=\"B\""
+                        + " />", getResponseText());
         assertEquals(diff.toString(), true, diff.identical());
     }
 
@@ -125,7 +123,8 @@ public class HtmlInputHiddenRendererTest extends RendererTest {
         htmlInputHidden_.setClientId("key:aa");
 
         MockFacesContext context = getFacesContext();
-        context.getExternalContext().getRequestParameterMap().put("key:aa", "12345");
+        context.getExternalContext().getRequestParameterMap().put("key:aa",
+                "12345");
 
         // ## Act ##
         renderer_.decode(context, htmlInputHidden_);

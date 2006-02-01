@@ -49,8 +49,7 @@ public class HtmlInputTextareaRendererTest extends RendererTest {
         encodeByRenderer(renderer_, context, htmlInputTextarea_);
 
         // ## Assert ##
-        assertEquals("<textarea id=\"_id0\" name=\"_id0\"></textarea>",
-                getResponseText());
+        assertEquals("<textarea name=\"_id0\"></textarea>", getResponseText());
     }
 
     public void testEncode_RenderFalse() throws Exception {
@@ -74,7 +73,7 @@ public class HtmlInputTextareaRendererTest extends RendererTest {
         encodeByRenderer(renderer_, context, htmlInputTextarea_);
 
         // ## Assert ##
-        assertEquals("<textarea id=\"_id0\" name=\"_id0\">abc</textarea>",
+        assertEquals("<textarea name=\"_id0\">abc</textarea>",
                 getResponseText());
     }
 

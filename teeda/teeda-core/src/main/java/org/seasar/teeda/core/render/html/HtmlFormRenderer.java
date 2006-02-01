@@ -44,7 +44,7 @@ public class HtmlFormRenderer extends AbstractHtmlRenderer {
             throws IOException {
         ResponseWriter writer = context.getResponseWriter();
         writer.startElement(JsfConstants.FORM_ELEM, htmlForm);
-        RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR,
+        RendererUtil.renderIdAttributeIfNecessary(writer, htmlForm,
                 getIdForRender(context, htmlForm));
         RendererUtil.renderAttribute(writer, JsfConstants.NAME_ATTR, htmlForm
                 .getClientId(context));
@@ -87,9 +87,9 @@ public class HtmlFormRenderer extends AbstractHtmlRenderer {
     }
 
     protected void decodeHtmlForm(FacesContext context, HtmlForm htmlForm) {
-        Map req = context.getExternalContext().getRequestParameterMap();
+        Map reqParam = context.getExternalContext().getRequestParameterMap();
         String clientId = htmlForm.getClientId(context);
-        if (req.containsKey(clientId)) {
+        if (reqParam.containsKey(clientId)) {
             htmlForm.setSubmitted(true);
         } else {
             htmlForm.setSubmitted(false);

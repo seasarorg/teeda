@@ -52,7 +52,7 @@ public class HtmlCommandButtonRendererTest extends RendererTest {
         encodeByRenderer(renderer_, context, htmlCommandButton_);
 
         // ## Assert ##
-        assertEquals("<input type=\"submit\" id=\"_id0\" name=\"_id0\" />",
+        assertEquals("<input type=\"submit\" name=\"_id0\" />",
                 getResponseText());
     }
 
@@ -65,8 +65,7 @@ public class HtmlCommandButtonRendererTest extends RendererTest {
         encodeByRenderer(renderer_, context, htmlCommandButton_);
 
         // ## Assert ##
-        assertEquals(
-                "<input type=\"submit\" id=\"_id0\" name=\"_id0\" value=\"abc\" />",
+        assertEquals("<input type=\"submit\" name=\"_id0\" value=\"abc\" />",
                 getResponseText());
     }
 

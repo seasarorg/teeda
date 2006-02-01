@@ -47,7 +47,7 @@ public class HtmlInputSecretRenderer extends AbstractHtmlRenderer {
         writer.startElement(JsfConstants.INPUT_ELEM, htmlInputSecret);
         RendererUtil.renderAttribute(writer, JsfConstants.TYPE_ATTR,
                 JsfConstants.PASSWORD_VALUE);
-        RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR,
+        RendererUtil.renderIdAttributeIfNecessary(writer, htmlInputSecret,
                 getIdForRender(context, htmlInputSecret));
         RendererUtil.renderAttribute(writer, JsfConstants.NAME_ATTR,
                 htmlInputSecret.getClientId(context));
