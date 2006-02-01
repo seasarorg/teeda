@@ -26,6 +26,7 @@ import javax.faces.internal.SelectItemsIterator;
 
 /**
  * @author shot
+ * @author manhole
  */
 public class UISelectMany extends UIInput {
 
@@ -76,45 +77,34 @@ public class UISelectMany extends UIInput {
         if (previous == null || value == null) {
             return true;
         }
-        if (isNotArray(previous) && isNotArray(value)) {
+        if ((previous instanceof List) && value instanceof List) {
+            previous = ((List) previous).toArray();
+            value = ((List) value).toArray();
+        }
+        if (!isArray(previous) && !isArray(value)) {
             return !previous.equals(value);
         }
-
-        boolean valueChanged = false;
-        Object oldarray[] = null;
-        Object newarray[] = null;
-
-        if (!ComponentUtils_.isObjectArray(previous)) {
-            previous = toObjectArray(previous);
+        if (!isArray(previous) || !isArray(value)) {
+            return true;
         }
-
-        if (!ComponentUtils_.isObjectArray(value)) {
-            value = toObjectArray(value);
-        }
-
-        if (!ComponentUtils_.isObjectArray(previous)
-                || !ComponentUtils_.isObjectArray(value)) {
-            return false;
-        }
-        oldarray = (Object[]) previous;
-        newarray = (Object[]) value;
-        if (oldarray.length != newarray.length) {
+        Object oldArray[] = toObjectArray(previous);
+        Object newArray[] = toObjectArray(value);
+        if (oldArray.length != newArray.length) {
             return true;
         }
 
-        for (int oldCounts = 0, newCounts = 0, i = 0; i < oldarray.length; ++i) {
-            oldCounts = countElementOccurrence(oldarray[i], oldarray);
-            newCounts = countElementOccurrence(oldarray[i], newarray);
+        for (int oldCounts = 0, newCounts = 0, i = 0; i < oldArray.length; ++i) {
+            oldCounts = countElementOccurrence(oldArray[i], oldArray);
+            newCounts = countElementOccurrence(oldArray[i], newArray);
             if (oldCounts != newCounts) {
-                valueChanged = true;
-                break;
+                return true;
             }
         }
-        return valueChanged;
+        return false;
     }
 
-    private boolean isNotArray(Object previous) {
-        return !previous.getClass().isArray();
+    private boolean isArray(Object o) {
+        return o.getClass().isArray();
     }
 
     protected void validateValue(FacesContext context, Object value) {
@@ -152,14 +142,14 @@ public class UISelectMany extends UIInput {
         return count;
     }
 
-    private Object[] toObjectArray(Object obj) {
+    Object[] toObjectArray(Object obj) {
         ComponentUtils_.assertNotNull("primitiveArray", obj);
         if (ComponentUtils_.isObjectArray(obj)) {
             return (Object[]) obj;
         } else if (obj instanceof List) {
             return ((List) obj).toArray();
-        } else if (isNotArray(obj)) {
-            return null;
+            // } else if (!isArray(obj)) {
+            // return null;
         }
         int length = Array.getLength(obj);
         Object[] array = new Object[length];

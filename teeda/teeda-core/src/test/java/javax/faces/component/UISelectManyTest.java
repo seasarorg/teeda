@@ -15,6 +15,7 @@
  */
 package javax.faces.component;
 
+import java.util.Arrays;
 import java.util.Iterator;
 
 import javax.faces.el.ValueBinding;
@@ -100,27 +101,59 @@ public class UISelectManyTest extends UIInputTest {
 
     public void testCompareValues_UISelectMany() throws Exception {
         // ## Arrange ##
-        UISelectMany component = createUISelectMany();
+        UISelectMany selectMany = createUISelectMany();
 
         // ## Act ##
         // ## Assert ##
-        assertEquals(false, component.compareValues(new String[] { "1", "2" },
+        // String Array
+        assertEquals(false, selectMany.compareValues(new String[] { "1", "2" },
                 new String[] { "2", "1" }));
-        assertEquals(false, component.compareValues(new String[] { "1", "2",
+        assertEquals(false, selectMany.compareValues(new String[] { "1", "2",
                 "34" }, new String[] { "2", "34", "1" }));
-        assertEquals(true, component.compareValues(new String[] { "1", "2",
+        assertEquals(true, selectMany.compareValues(new String[] { "1", "2",
                 "34" }, new String[] { "2", "34" }));
 
-        assertEquals(false, component.compareValues(new String[] {},
+        // List
+        assertEquals(false, selectMany.compareValues(Arrays.asList(new String[] {
+                "1", "2" }), Arrays.asList(new String[] { "1", "2" })));
+        assertEquals(false, selectMany.compareValues(Arrays.asList(new String[] {
+                "1", "2" }), Arrays.asList(new String[] { "2", "1" })));
+        assertEquals(true, selectMany
+                .compareValues(Arrays.asList(new String[] { "1", "2", "4" }),
+                        Arrays.asList(new String[] { "1", "2", "3" })));
+
+        // Array != List
+        assertEquals(true, selectMany.compareValues(Arrays.asList(new String[] {
+                "1", "2" }), new String[] { "1", "2" }));
+
+        // Primitive Array
+        assertEquals(false, selectMany.compareValues(new int[] { 1, 2 },
+                new int[] { 2, 1 }));
+        assertEquals(false, selectMany.compareValues(new int[] { 1, 2, 34 },
+                new int[] { 2, 34, 1 }));
+        assertEquals(true, selectMany.compareValues(new int[] { 1, 2, 34 },
+                new int[] { 2, 34 }));
+
+        assertEquals(false, selectMany.compareValues(new String[] {},
                 new String[] {}));
-        assertEquals(false, component.compareValues(new String[] { "1" },
+        assertEquals(false, selectMany.compareValues(new String[] { "1" },
                 new String[] { "1" }));
-        assertEquals(false, component.compareValues(new String[] { null },
+        assertEquals(false, selectMany.compareValues(new String[] { null },
                 new String[] { null }));
 
-        assertEquals(true, component.compareValues(new String[] { "" },
+        // primitive - wrapper
+        assertEquals(false, selectMany.compareValues(new int[] { 1, 2 },
+                new Integer[] { new Integer(2), new Integer(1) }));
+
+        assertEquals(true, selectMany.compareValues(new int[] { 1 },
+                new String[] { "1" }));
+
+        assertEquals(true, selectMany.compareValues(new String[] { "1" }, "1"));
+        assertEquals(true, selectMany.compareValues(new String[] { "1" }, "2"));
+        assertEquals(true, selectMany.compareValues(new String[] { "2" }, "1"));
+        assertEquals(true, selectMany.compareValues(new String[] { "" },
                 new String[] { null }));
-        assertEquals(true, component.compareValues(new String[] { null },
+        assertEquals(true, selectMany.compareValues(new String[] { null },
                 new String[] { "" }));
     }
 
