@@ -18,9 +18,12 @@ package org.seasar.teeda.core.render.html;
 import java.io.IOException;
 import java.util.Map;
 
+import javax.faces.application.StateManager;
 import javax.faces.application.StateManager.SerializedView;
 import javax.faces.context.FacesContext;
+import javax.faces.context.ResponseWriter;
 
+import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.AbstractResponseStateManager;
 
 /**
@@ -28,57 +31,68 @@ import org.seasar.teeda.core.render.AbstractResponseStateManager;
  */
 public class HtmlResponseStateManager extends AbstractResponseStateManager {
 
-    private static final String VIEW_ID = "org.seasar.teeda.core.JSF_VIEW_ID";
-
-    private static final String TREE_PARAMETER = "org.seasar.teeda.core.TREE_PARAMETER";
-
-    private static final String STATE_PARAMETER = "org.seasar.teeda.core.STATE_PARAMETER";
-
-    private static final String BASE64_TREE_PARAMETER = "org.seasar.teeda.core.BASE64_TREE_PARAMETER";
-
-    private static final String BASE64_STATE_PARAMETER = "org.seasar.teeda.core.BASE64_STATE_PARAMETER";
-
-    private static final String DEFAULT_ENCODING = "ISO-8859-1";
-
     public HtmlResponseStateManager() {
     }
 
-    public void writeState(FacesContext context, SerializedView state)
+    public void writeState(FacesContext context, SerializedView serializedView)
             throws IOException {
-        // TODO Auto-generated method stub
+        ResponseWriter writer = context.getResponseWriter();
+        writer.startElement(JsfConstants.INPUT_ELEM, null);
+        writer.writeAttribute(JsfConstants.TYPE_ATTR,
+                JsfConstants.HIDDEN_VALUE, null);
+        writer.writeAttribute(JsfConstants.NAME_ATTR, VIEW_STATE_PARAM, null);
+        writer.writeAttribute(JsfConstants.ID_ATTR, VIEW_STATE_PARAM, null);
 
+        StateManager stateManager = context.getApplication().getStateManager();
+        Object value = null;
+        if (stateManager.isSavingStateInClient(context)) {
+            value = getEncodeConverter().getAsEncodeString(serializedView);
+        } else {
+            value = serializedView.getStructure();
+        }
+        writer.writeAttribute(JsfConstants.VALUE_ATTR, value, null);
+        writer.endElement(JsfConstants.INPUT_ELEM);
+
+        writeViewId(writer, context);
     }
 
     public Object getTreeStructureToRestore(FacesContext context, String viewId) {
-        Map paramMap = context.getExternalContext().getRequestParameterMap();
-        Object state = paramMap.get(VIEW_ID);
-        if (state == null || !state.equals(viewId)) {
-            return null;
-        }
-        state = paramMap.get(TREE_PARAMETER);
-        if (state != null) {
-            return state;
-        }
-        state = paramMap.get(BASE64_TREE_PARAMETER);
-        if (state != null) {
-            String s = (String) state;
-            return getDecoder().decode(s);
-        }
-        return null;
+        Map requestMap = context.getExternalContext().getRequestMap();
+        Object state = requestMap.get(FACES_VIEW_STATE);
+        requestMap.remove(FACES_VIEW_STATE);
+        return state;
     }
 
     public Object getComponentStateToRestore(FacesContext context) {
         Map paramMap = context.getExternalContext().getRequestParameterMap();
-        Object state = paramMap.get(STATE_PARAMETER);
-        if (state != null) {
-            return state;
+        String viewState = (String) paramMap.get(VIEW_STATE_PARAM);
+        if (viewState == null) {
+            return null;
         }
-        state = paramMap.get(BASE64_STATE_PARAMETER);
-        if (state != null) {
-            String s = (String) state;
-            return getDecoder().decode(s);
+        Object structure = null;
+        StateManager stateManager = context.getApplication().getStateManager();
+        if (stateManager.isSavingStateInClient(context)) {
+            structure = getEncodeConverter().getAsDecodeObject(viewState);
+        } else {
+            structure = viewState;
         }
-        return null;
+        return structure;
+    }
+
+    protected void writeViewId(ResponseWriter writer, FacesContext context)
+            throws IOException {
+        writer.startElement(JsfConstants.INPUT_ELEM, null);
+        writer.writeAttribute(JsfConstants.TYPE_ATTR,
+                JsfConstants.HIDDEN_VALUE, null);
+        writer.writeAttribute(JsfConstants.NAME_ATTR, VIEW_STATE_PARAM, null);
+        writer.writeAttribute(JsfConstants.ID_ATTR, VIEW_STATE_PARAM, null);
+        writer.writeAttribute(JsfConstants.VALUE_ATTR, context.getViewRoot()
+                .getViewId(), null);
+        writer.endElement(JsfConstants.INPUT_ELEM);
+    }
+
+    private boolean isInitialRequest(Object state, String viewId) {
+        return state == null || !state.equals(viewId);
     }
 
 }

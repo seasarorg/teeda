@@ -22,16 +22,22 @@ import javax.faces.render.ResponseStateManager;
  */
 public abstract class AbstractResponseStateManager extends ResponseStateManager {
 
+    public static final String RENDER_KIT_ID_PARAM = "javax.faces.RenderKitId";
+
     public static final String VIEW_STATE_PARAM = "javax.faces.ViewState";
 
-    private Decoder decoder_ = new Base64Decoder();
-    
-    public void setDecoder(Decoder decoder){
-        decoder_ = decoder;
+    public static final String FACES_VIEW_STATE = AbstractResponseStateManager.class
+            .getPackage()
+            + ".FACES_VIEW_STATE";
+
+    private EncodeConverter encodeConverter_ = new Base64EncodeConverter();
+
+    public void setEncodeConverter(EncodeConverter decoder) {
+        encodeConverter_ = decoder;
     }
-    
-    public Decoder getDecoder(){
-        return decoder_;
+
+    public EncodeConverter getEncodeConverter() {
+        return encodeConverter_;
     }
-    
+
 }

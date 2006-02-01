@@ -13,29 +13,14 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.core.util;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-
-import org.seasar.framework.exception.IORuntimeException;
-import org.seasar.teeda.core.render.TeedaObjectInputStream;
+package org.seasar.teeda.core.render;
 
 /**
  * @author shot
  */
-public class ObjectInputStreamUtil {
+public interface EncodeConverter {
 
-    private ObjectInputStreamUtil() {
-    }
-
-    public static ObjectInputStream getInputStream(InputStream is) {
-        try {
-            return new TeedaObjectInputStream(is);
-        } catch (IOException e) {
-            throw new IORuntimeException(e);
-        }
-    }
-
+    public String getAsEncodeString(Object target);
+    
+    public Object getAsDecodeObject(String state);
 }

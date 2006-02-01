@@ -13,29 +13,28 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.core.util;
+package javax.faces.component;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-
-import org.seasar.framework.exception.IORuntimeException;
-import org.seasar.teeda.core.render.TeedaObjectInputStream;
+import junit.framework.TestCase;
 
 /**
- * @author shot
+ * @author manhole
  */
-public class ObjectInputStreamUtil {
+public class UIMessageOnlyTest extends TestCase {
 
-    private ObjectInputStreamUtil() {
+    public void testConstants() throws Exception {
+        assertEquals("javax.faces.Message", UIMessage.COMPONENT_FAMILY);
+        assertEquals("javax.faces.Message", UIMessage.COMPONENT_TYPE);
     }
 
-    public static ObjectInputStream getInputStream(InputStream is) {
-        try {
-            return new TeedaObjectInputStream(is);
-        } catch (IOException e) {
-            throw new IORuntimeException(e);
-        }
+    public void testGetFamily() {
+        UIMessage message = new UIMessage();
+        assertEquals("javax.faces.Message", message.getFamily());
+    }
+
+    public void testDefaultRendererType() throws Exception {
+        UIMessage message = new UIMessage();
+        assertEquals("javax.faces.Message", message.getRendererType());
     }
 
 }

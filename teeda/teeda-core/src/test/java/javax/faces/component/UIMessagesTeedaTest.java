@@ -13,29 +13,25 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.core.util;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-
-import org.seasar.framework.exception.IORuntimeException;
-import org.seasar.teeda.core.render.TeedaObjectInputStream;
+package javax.faces.component;
 
 /**
- * @author shot
+ * @author manhole
  */
-public class ObjectInputStreamUtil {
+public class UIMessagesTeedaTest extends UIComponentBaseTeedaTest {
 
-    private ObjectInputStreamUtil() {
+    public void testSaveAndRestoreState() throws Exception {
+        super.testSaveAndRestoreState();
+        createUIMessages();
+        // TODO test
     }
 
-    public static ObjectInputStream getInputStream(InputStream is) {
-        try {
-            return new TeedaObjectInputStream(is);
-        } catch (IOException e) {
-            throw new IORuntimeException(e);
-        }
+    private UIMessages createUIMessages() {
+        return (UIMessages) createUIComponent();
+    }
+
+    protected UIComponent createUIComponent() {
+        return new UIMessages();
     }
 
 }

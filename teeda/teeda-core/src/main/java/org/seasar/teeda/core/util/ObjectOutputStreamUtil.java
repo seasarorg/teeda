@@ -26,20 +26,14 @@ import org.seasar.framework.exception.IORuntimeException;
  */
 public class ObjectOutputStreamUtil {
 
-    private ObjectOutputStreamUtil(){
+    private ObjectOutputStreamUtil() {
     }
-    
-    public static void writeObject(OutputStream out, Object target) {
-        ObjectOutputStream oos = null;
+
+    public static ObjectOutputStream getOutputStream(OutputStream out) {
         try {
-            oos = new ObjectOutputStream(out);
-            oos.writeObject(target);
+            return new ObjectOutputStream(out);
         } catch (IOException e) {
             throw new IORuntimeException(e);
-        } finally {
-            if (oos != null) {
-                OutputStreamUtil.close(oos);
-            }
         }
     }
 

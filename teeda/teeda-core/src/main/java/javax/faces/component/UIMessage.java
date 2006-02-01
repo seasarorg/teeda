@@ -19,6 +19,7 @@ import javax.faces.context.FacesContext;
 
 /**
  * @author shot
+ * @author manhole
  */
 public class UIMessage extends UIComponentBase {
 
@@ -30,7 +31,7 @@ public class UIMessage extends UIComponentBase {
 
     private String for_ = null;
 
-    private boolean showDetail_ = false;
+    private boolean showDetail_ = true;
 
     private boolean showDetailSet_ = false;
 
@@ -39,7 +40,6 @@ public class UIMessage extends UIComponentBase {
     private boolean showSummarySet_ = false;
 
     public UIMessage() {
-        super();
         setRendererType(DEFAULT_RENDER_TYPE);
     }
 
@@ -105,4 +105,5 @@ public class UIMessage extends UIComponentBase {
         values[5] = ComponentUtils_.convertToBoolean(showSummarySet_);
         return values;
     }
+
 }

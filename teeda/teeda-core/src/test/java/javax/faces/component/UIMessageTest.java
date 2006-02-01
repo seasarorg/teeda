@@ -15,64 +15,73 @@
  */
 package javax.faces.component;
 
+import javax.faces.context.FacesContext;
+
 import org.seasar.teeda.core.mock.MockValueBinding;
-import org.seasar.teeda.core.unit.TeedaTestCase;
 
+public class UIMessageTest extends UIComponentBaseTest {
 
-public class UIMessageTest extends TeedaTestCase {
+    public void testSeGettFor() {
+        UIMessage message = createUIMessage();
+        message.setFor("FOR");
+        assertEquals("FOR", message.getFor());
+    }
 
-	public void testUIMessage(){
-		UIMessage message = new UIMessage();
-		assertEquals(message.getRendererType(), "javax.faces.Message");
-	}
+    public void testSetGetFor_ValueBinding() {
+        UIMessage message = createUIMessage();
+        FacesContext context = getFacesContext();
+        assertEquals(null, message.getValueBinding("for"));
+        MockValueBinding vb = new MockValueBinding();
+        vb.setValue(context, "aaa");
+        message.setValueBinding("for", vb);
+        assertEquals("aaa", message.getFor());
+        assertEquals("aaa", message.getValueBinding("for").getValue(context));
+    }
 
-	public void testGetFamily(){
-		UIMessage message = new UIMessage();
-		assertEquals(UIMessage.COMPONENT_FAMILY, message.getFamily());
-	}
+    public void testSetGetShowDetail() {
+        UIMessage message = createUIMessage();
+        assertEquals(true, message.isShowDetail());
+        message.setShowDetail(false);
+        assertEquals(false, message.isShowDetail());
+    }
 
-	public void testGetFor(){
-		UIMessage message = new UIMessage();
-		MockValueBinding vb = new MockValueBinding();
-		vb.setValue(getFacesContext(), "aaa");
-		message.setValueBinding("for", vb);
-		assertEquals("aaa", message.getFor());
-	}
-	
-	public void testSetFor(){
-		UIMessage message = new UIMessage();
-		message.setFor("FOR");
-		assertEquals("FOR", message.getFor());
-	}
-	
-	public void testIsShowDetail(){
-		UIMessage message = new UIMessage();
-		Boolean value = Boolean.TRUE;
-		MockValueBinding vb = new MockValueBinding();
-		vb.setValue(getFacesContext(), value);
-		message.setValueBinding("showDetail", vb);
-		assertTrue(message.isShowDetail());
-	}
-	
-	public void testSetShowDetail(){
-		UIMessage message = new UIMessage();
-		message.setShowDetail(true);
-		assertTrue(message.isShowDetail());
-	}
+    public void testSetGetShowDetail_ValueBinding() {
+        UIMessage message = createUIMessage();
+        FacesContext context = getFacesContext();
+        assertEquals(null, message.getValueBinding("showDetail"));
+        MockValueBinding vb = new MockValueBinding();
+        vb.setValue(context, Boolean.TRUE);
+        message.setValueBinding("showDetail", vb);
+        assertEquals(true, message.isShowDetail());
+        assertEquals(Boolean.TRUE, message.getValueBinding("showDetail")
+                .getValue(context));
+    }
 
-	public void testIsShowSummary(){
-		UIMessage message = new UIMessage();
-		Boolean value = Boolean.TRUE;
-		MockValueBinding vb = new MockValueBinding();
-		vb.setValue(getFacesContext(), value);
-		message.setValueBinding("showSummary", vb);
-		assertTrue(message.isShowSummary());
-	}
-	
-	public void testSetShowSummary(){
-		UIMessage message = new UIMessage();
-		message.setShowSummary(true);
-		assertTrue(message.isShowSummary());
-	}
+    public void testSetGetShowSummary() {
+        UIMessage message = createUIMessage();
+        assertEquals(false, message.isShowSummary());
+        message.setShowSummary(true);
+        assertEquals(true, message.isShowSummary());
+    }
+
+    public void testSetGetShowSummary_ValueBinding() {
+        UIMessage message = createUIMessage();
+        FacesContext context = getFacesContext();
+        assertEquals(null, message.getValueBinding("showSummary"));
+        MockValueBinding vb = new MockValueBinding();
+        vb.setValue(context, Boolean.TRUE);
+        message.setValueBinding("showSummary", vb);
+        assertEquals(true, message.isShowSummary());
+        assertEquals(Boolean.TRUE, message.getValueBinding("showSummary")
+                .getValue(context));
+    }
+
+    private UIMessage createUIMessage() {
+        return (UIMessage) createUIComponent();
+    }
+
+    protected UIComponent createUIComponent() {
+        return new UIMessage();
+    }
 
 }

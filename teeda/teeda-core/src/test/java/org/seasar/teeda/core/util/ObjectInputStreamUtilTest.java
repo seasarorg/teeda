@@ -17,6 +17,7 @@ package org.seasar.teeda.core.util;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectInputStream;
 import java.io.Serializable;
 
 import org.seasar.framework.exception.IORuntimeException;
@@ -40,17 +41,22 @@ public class ObjectInputStreamUtilTest extends TeedaTestCase {
     public void testGetObject_Deserialize() throws Exception {
         String path = convertPath("testObjectInputStreamUtil.ser");
         InputStream is = ResourceUtil.getResourceAsStream(path);
-        Object o = ObjectInputStreamUtil.readObject(is);
+        ObjectInputStream i = ObjectInputStreamUtil.getInputStream(is);
+        Object o = i.readObject();
         assertNotNull(o);
+        i.close();
+        is.close();
     }
 
     public void testGetObject_IO_fail() throws Exception {
         InputStream is = new IOExceptionOccurInputStream();
         try {
-            Object o = ObjectInputStreamUtil.readObject(is);
+            Object o = ObjectInputStreamUtil.getInputStream(is);
             fail();
         } catch (IORuntimeException e) {
             success();
+        } finally {
+            is.close();
         }
     }
 

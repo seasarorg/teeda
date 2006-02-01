@@ -15,65 +15,68 @@
  */
 package javax.faces.component;
 
+import javax.faces.context.FacesContext;
+
 import org.seasar.teeda.core.mock.MockValueBinding;
 import org.seasar.teeda.core.unit.TeedaTestCase;
 
-
 public class UIMessagesTest extends TeedaTestCase {
 
-	public void testUIMessages(){
-		UIMessages messages = new UIMessages();
-		assertEquals(messages.getRendererType(), "javax.faces.Messages");
-	}
+    public void testSetGetGlobalOnly() {
+        UIMessages messages = new UIMessages();
+        assertEquals(false, messages.isGlobalOnly());
+        messages.setGlobalOnly(true);
+        assertEquals(true, messages.isGlobalOnly());
+    }
 
-	public void testGetFamily(){
-		UIMessages messages = new UIMessages();
-		assertEquals(messages.getFamily(), UIMessages.COMPONENT_FAMILY);
-	}
-	
-	public void testIsGlobalOnly(){
-		UIMessages messages = new UIMessages();
-		Boolean value = Boolean.TRUE;
-		MockValueBinding vb = new MockValueBinding();
-		vb.setValue(getFacesContext(), value);
-		messages.setValueBinding("globalOnly", vb);
-		assertTrue(messages.isGlobalOnly());
-	}
-	
-	public void testSetGlobalOnly(){
-		UIMessages messages = new UIMessages();
-		messages.setGlobalOnly(true);
-		assertTrue(messages.isGlobalOnly());
-	}
+    public void testSetGetGlobalOnly_ValueBinding() {
+        UIMessages messages = new UIMessages();
+        assertEquals(null, messages.getValueBinding("globalOnly"));
+        FacesContext context = getFacesContext();
+        MockValueBinding vb = new MockValueBinding();
+        vb.setValue(context, Boolean.TRUE);
+        messages.setValueBinding("globalOnly", vb);
+        assertEquals(true, messages.isGlobalOnly());
+        assertEquals(Boolean.TRUE, messages.getValueBinding("globalOnly")
+                .getValue(context));
+    }
 
-	public void testIsShowDetail(){
-		UIMessages messages = new UIMessages();
-		Boolean value = Boolean.TRUE;
-		MockValueBinding vb = new MockValueBinding();
-		vb.setValue(getFacesContext(), value);
-		messages.setValueBinding("showDetail", vb);
-		assertTrue(messages.isShowDetail());
-	}
-	
-	public void testSetShowDetail(){
-		UIMessages messages = new UIMessages();
-		messages.setShowDetail(true);
-		assertTrue(messages.isShowDetail());
-	}
+    public void testSetGetShowDetail() {
+        UIMessages messages = new UIMessages();
+        assertEquals(false, messages.isShowDetail());
+        messages.setShowDetail(true);
+        assertEquals(true, messages.isShowDetail());
+    }
 
-	public void testIsShowSummary(){
-		UIMessages messages = new UIMessages();
-		Boolean value = Boolean.TRUE;
-		MockValueBinding vb = new MockValueBinding();
-		vb.setValue(getFacesContext(), value);
-		messages.setValueBinding("showSummary", vb);
-		assertTrue(messages.isShowSummary());
-	}
-	
-	public void testSetShowSummary(){
-		UIMessages messages = new UIMessages();
-		messages.setShowSummary(true);
-		assertTrue(messages.isShowSummary());
-	}
+    public void testSetGetShowDetail_ValueBinding() {
+        UIMessages messages = new UIMessages();
+        assertEquals(null, messages.getValueBinding("showDetail"));
+        FacesContext context = getFacesContext();
+        MockValueBinding vb = new MockValueBinding();
+        vb.setValue(context, Boolean.TRUE);
+        messages.setValueBinding("showDetail", vb);
+        assertEquals(true, messages.isShowDetail());
+        assertEquals(Boolean.TRUE, messages.getValueBinding("showDetail")
+                .getValue(context));
+    }
+
+    public void testSetGetShowSummary() {
+        UIMessages messages = new UIMessages();
+        assertEquals(true, messages.isShowSummary());
+        messages.setShowSummary(false);
+        assertEquals(false, messages.isShowSummary());
+    }
+
+    public void testSetGetShowSummary_ValueBinding() {
+        UIMessages messages = new UIMessages();
+        assertEquals(null, messages.getValueBinding("showSummary"));
+        FacesContext context = getFacesContext();
+        MockValueBinding vb = new MockValueBinding();
+        vb.setValue(context, Boolean.TRUE);
+        messages.setValueBinding("showSummary", vb);
+        assertEquals(true, messages.isShowSummary());
+        assertEquals(Boolean.TRUE, messages.getValueBinding("showSummary")
+                .getValue(context));
+    }
 
 }

@@ -36,12 +36,11 @@ public class UIMessages extends UIComponentBase {
 
     private boolean showDetailSet_ = false;
 
-    private boolean showSummary_ = false;
+    private boolean showSummary_ = true;
 
     private boolean showSummarySet_ = false;
 
     public UIMessages() {
-        super();
         setRendererType(DEFAULT_RENDER_TYPE);
     }
 
@@ -111,4 +110,5 @@ public class UIMessages extends UIComponentBase {
         values[6] = ComponentUtils_.convertToBoolean(showSummarySet_);
         return values;
     }
+
 }
