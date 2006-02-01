@@ -30,7 +30,7 @@ public class Base64EncodeConverterTest extends TeedaTestCase {
 
     public void testEncodeAndDecode() throws Exception {
         AAA target1 = new AAA("aaa");
-        AAA target2 = new AAA("aaa");
+        AAA target2 = new AAA("bbb");
         StateManager s = getApplication().getStateManager();
         SerializedView sView = s.new SerializedView(target1, target2);
         Base64EncodeConverter converter = new Base64EncodeConverter();
@@ -39,11 +39,12 @@ public class Base64EncodeConverterTest extends TeedaTestCase {
         assertEquals("aaa", aaa.getName());
     }
 
+    //EOFException?
     public void fixme_testEncodeAndDecode_compressed() throws Exception {
         getServletContext().setInitParameter(JsfConstants.COMPRESS_STATE_ATTR,
                 "true");
         AAA target1 = new AAA("aaa");
-        AAA target2 = new AAA("aaa");
+        AAA target2 = new AAA("bbb");
         StateManager s = getApplication().getStateManager();
         SerializedView sView = s.new SerializedView(target1, target2);
         Base64EncodeConverter converter = new Base64EncodeConverter();
