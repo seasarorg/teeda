@@ -21,7 +21,6 @@ import java.util.List;
 
 import javax.faces.event.FacesListener;
 
-import org.seasar.teeda.core.mock.MockApplication;
 import org.seasar.teeda.core.mock.MockExternalContextImpl;
 import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.mock.MockFacesContextImpl;
@@ -492,8 +491,6 @@ public class UIComponentBaseTest extends AbstractUIComponentTest {
 
     private MockFacesContext facesContext_;
 
-    private MockApplication application_;
-
     private MockExternalContextImpl externalContext_;
 
     protected void setUp() throws Exception {
@@ -503,9 +500,6 @@ public class UIComponentBaseTest extends AbstractUIComponentTest {
         externalContext_ = new MockExternalContextImpl();
         externalContext_.setRequestParameterMap(new HashMap());
         facesContext_.setExternalContext(externalContext_);
-
-        application_ = new MockApplication();
-        facesContext_.setApplication(application_);
     }
 
     protected void tearDown() throws Exception {

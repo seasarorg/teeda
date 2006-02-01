@@ -23,8 +23,7 @@ import javax.faces.component.UIDataTest;
 public class HtmlDataTableOnlyTest extends UIDataTest {
 
     public void testConstants() throws Exception {
-        assertEquals("javax.faces.HtmlDataTable",
-                HtmlDataTable.COMPONENT_TYPE);
+        assertEquals("javax.faces.HtmlDataTable", HtmlDataTable.COMPONENT_TYPE);
     }
 
     public void testGetComponentFamily() {
@@ -36,5 +35,5 @@ public class HtmlDataTableOnlyTest extends UIDataTest {
         HtmlDataTable htmlDataTable = new HtmlDataTable();
         assertEquals("javax.faces.Table", htmlDataTable.getRendererType());
     }
-    
+
 }

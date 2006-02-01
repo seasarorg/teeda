@@ -17,6 +17,7 @@ package javax.faces.component.html;
 
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIPanelTest;
+import javax.faces.context.FacesContext;
 
 import org.seasar.teeda.core.mock.MockValueBinding;
 
@@ -34,9 +35,12 @@ public class HtmlPanelGroupTest extends UIPanelTest {
     public void testSetGetStyle_ValueBinding() throws Exception {
         HtmlPanelGroup component = createHtmlPanelGroup();
         MockValueBinding vb = new MockValueBinding();
-        vb.setValue(getFacesContext(), "bar style");
+        FacesContext context = getFacesContext();
+        vb.setValue(context, "bar style");
         component.setValueBinding("style", vb);
         assertEquals("bar style", component.getStyle());
+        assertEquals("bar style", component.getValueBinding("style").getValue(
+                context));
     }
 
     public void testSetGetStyleClass() throws Exception {
@@ -48,9 +52,12 @@ public class HtmlPanelGroupTest extends UIPanelTest {
     public void testSetGetStyleClass_ValueBinding() throws Exception {
         HtmlPanelGroup component = createHtmlPanelGroup();
         MockValueBinding vb = new MockValueBinding();
-        vb.setValue(getFacesContext(), "bar styleClass");
+        FacesContext context = getFacesContext();
+        vb.setValue(context, "bar styleClass");
         component.setValueBinding("styleClass", vb);
         assertEquals("bar styleClass", component.getStyleClass());
+        assertEquals("bar styleClass", component.getValueBinding("styleClass")
+                .getValue(context));
     }
 
     private HtmlPanelGroup createHtmlPanelGroup() {

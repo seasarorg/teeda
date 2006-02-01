@@ -21,7 +21,7 @@ import javax.faces.component.UIComponentBaseTeedaTest;
 /**
  * @author manhole
  */
-public class HtmlFormTestTeedaTest extends UIComponentBaseTeedaTest {
+public class HtmlFormTeedaTest extends UIComponentBaseTeedaTest {
 
     public void testSaveAndRestoreState() throws Exception {
         super.testSaveAndRestoreState();

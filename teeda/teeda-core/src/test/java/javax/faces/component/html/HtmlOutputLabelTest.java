@@ -17,6 +17,7 @@ package javax.faces.component.html;
 
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIOutputTest;
+import javax.faces.context.FacesContext;
 
 import org.seasar.teeda.core.mock.MockValueBinding;
 
@@ -34,9 +35,12 @@ public class HtmlOutputLabelTest extends UIOutputTest {
     public void testSetGetAccesskey_ValueBinding() throws Exception {
         HtmlOutputLabel component = createHtmlOutputLabel();
         MockValueBinding vb = new MockValueBinding();
-        vb.setValue(getFacesContext(), "bar accesskey");
+        FacesContext context = getFacesContext();
+        vb.setValue(context, "bar accesskey");
         component.setValueBinding("accesskey", vb);
         assertEquals("bar accesskey", component.getAccesskey());
+        assertEquals("bar accesskey", component.getValueBinding("accesskey")
+                .getValue(context));
     }
 
     public void testSetGetDir() throws Exception {
@@ -48,9 +52,12 @@ public class HtmlOutputLabelTest extends UIOutputTest {
     public void testSetGetDir_ValueBinding() throws Exception {
         HtmlOutputLabel component = createHtmlOutputLabel();
         MockValueBinding vb = new MockValueBinding();
-        vb.setValue(getFacesContext(), "bar dir");
+        FacesContext context = getFacesContext();
+        vb.setValue(context, "bar dir");
         component.setValueBinding("dir", vb);
         assertEquals("bar dir", component.getDir());
+        assertEquals("bar dir", component.getValueBinding("dir").getValue(
+                context));
     }
 
     public void testSetGetFor() throws Exception {
@@ -62,9 +69,12 @@ public class HtmlOutputLabelTest extends UIOutputTest {
     public void testSetGetFor_ValueBinding() throws Exception {
         HtmlOutputLabel component = createHtmlOutputLabel();
         MockValueBinding vb = new MockValueBinding();
-        vb.setValue(getFacesContext(), "bar for");
+        FacesContext context = getFacesContext();
+        vb.setValue(context, "bar for");
         component.setValueBinding("for", vb);
         assertEquals("bar for", component.getFor());
+        assertEquals("bar for", component.getValueBinding("for").getValue(
+                context));
     }
 
     public void testSetGetLang() throws Exception {
@@ -76,9 +86,12 @@ public class HtmlOutputLabelTest extends UIOutputTest {
     public void testSetGetLang_ValueBinding() throws Exception {
         HtmlOutputLabel component = createHtmlOutputLabel();
         MockValueBinding vb = new MockValueBinding();
-        vb.setValue(getFacesContext(), "bar lang");
+        FacesContext context = getFacesContext();
+        vb.setValue(context, "bar lang");
         component.setValueBinding("lang", vb);
         assertEquals("bar lang", component.getLang());
+        assertEquals("bar lang", component.getValueBinding("lang").getValue(
+                context));
     }
 
     public void testSetGetOnblur() throws Exception {
@@ -90,9 +103,12 @@ public class HtmlOutputLabelTest extends UIOutputTest {
     public void testSetGetOnblur_ValueBinding() throws Exception {
         HtmlOutputLabel component = createHtmlOutputLabel();
         MockValueBinding vb = new MockValueBinding();
-        vb.setValue(getFacesContext(), "bar onblur");
+        FacesContext context = getFacesContext();
+        vb.setValue(context, "bar onblur");
         component.setValueBinding("onblur", vb);
         assertEquals("bar onblur", component.getOnblur());
+        assertEquals("bar onblur", component.getValueBinding("onblur")
+                .getValue(context));
     }
 
     public void testSetGetOnclick() throws Exception {
@@ -104,9 +120,12 @@ public class HtmlOutputLabelTest extends UIOutputTest {
     public void testSetGetOnclick_ValueBinding() throws Exception {
         HtmlOutputLabel component = createHtmlOutputLabel();
         MockValueBinding vb = new MockValueBinding();
-        vb.setValue(getFacesContext(), "bar onclick");
+        FacesContext context = getFacesContext();
+        vb.setValue(context, "bar onclick");
         component.setValueBinding("onclick", vb);
         assertEquals("bar onclick", component.getOnclick());
+        assertEquals("bar onclick", component.getValueBinding("onclick")
+                .getValue(context));
     }
 
     public void testSetGetOndblclick() throws Exception {
@@ -118,9 +137,12 @@ public class HtmlOutputLabelTest extends UIOutputTest {
     public void testSetGetOndblclick_ValueBinding() throws Exception {
         HtmlOutputLabel component = createHtmlOutputLabel();
         MockValueBinding vb = new MockValueBinding();
-        vb.setValue(getFacesContext(), "bar ondblclick");
+        FacesContext context = getFacesContext();
+        vb.setValue(context, "bar ondblclick");
         component.setValueBinding("ondblclick", vb);
         assertEquals("bar ondblclick", component.getOndblclick());
+        assertEquals("bar ondblclick", component.getValueBinding("ondblclick")
+                .getValue(context));
     }
 
     public void testSetGetOnfocus() throws Exception {
@@ -132,9 +154,12 @@ public class HtmlOutputLabelTest extends UIOutputTest {
     public void testSetGetOnfocus_ValueBinding() throws Exception {
         HtmlOutputLabel component = createHtmlOutputLabel();
         MockValueBinding vb = new MockValueBinding();
-        vb.setValue(getFacesContext(), "bar onfocus");
+        FacesContext context = getFacesContext();
+        vb.setValue(context, "bar onfocus");
         component.setValueBinding("onfocus", vb);
         assertEquals("bar onfocus", component.getOnfocus());
+        assertEquals("bar onfocus", component.getValueBinding("onfocus")
+                .getValue(context));
     }
 
     public void testSetGetOnkeydown() throws Exception {
@@ -146,9 +171,12 @@ public class HtmlOutputLabelTest extends UIOutputTest {
     public void testSetGetOnkeydown_ValueBinding() throws Exception {
         HtmlOutputLabel component = createHtmlOutputLabel();
         MockValueBinding vb = new MockValueBinding();
-        vb.setValue(getFacesContext(), "bar onkeydown");
+        FacesContext context = getFacesContext();
+        vb.setValue(context, "bar onkeydown");
         component.setValueBinding("onkeydown", vb);
         assertEquals("bar onkeydown", component.getOnkeydown());
+        assertEquals("bar onkeydown", component.getValueBinding("onkeydown")
+                .getValue(context));
     }
 
     public void testSetGetOnkeypress() throws Exception {
@@ -160,9 +188,12 @@ public class HtmlOutputLabelTest extends UIOutputTest {
     public void testSetGetOnkeypress_ValueBinding() throws Exception {
         HtmlOutputLabel component = createHtmlOutputLabel();
         MockValueBinding vb = new MockValueBinding();
-        vb.setValue(getFacesContext(), "bar onkeypress");
+        FacesContext context = getFacesContext();
+        vb.setValue(context, "bar onkeypress");
         component.setValueBinding("onkeypress", vb);
         assertEquals("bar onkeypress", component.getOnkeypress());
+        assertEquals("bar onkeypress", component.getValueBinding("onkeypress")
+                .getValue(context));
     }
 
     public void testSetGetOnkeyup() throws Exception {
@@ -174,9 +205,12 @@ public class HtmlOutputLabelTest extends UIOutputTest {
     public void testSetGetOnkeyup_ValueBinding() throws Exception {
         HtmlOutputLabel component = createHtmlOutputLabel();
         MockValueBinding vb = new MockValueBinding();
-        vb.setValue(getFacesContext(), "bar onkeyup");
+        FacesContext context = getFacesContext();
+        vb.setValue(context, "bar onkeyup");
         component.setValueBinding("onkeyup", vb);
         assertEquals("bar onkeyup", component.getOnkeyup());
+        assertEquals("bar onkeyup", component.getValueBinding("onkeyup")
+                .getValue(context));
     }
 
     public void testSetGetOnmousedown() throws Exception {
@@ -188,9 +222,12 @@ public class HtmlOutputLabelTest extends UIOutputTest {
     public void testSetGetOnmousedown_ValueBinding() throws Exception {
         HtmlOutputLabel component = createHtmlOutputLabel();
         MockValueBinding vb = new MockValueBinding();
-        vb.setValue(getFacesContext(), "bar onmousedown");
+        FacesContext context = getFacesContext();
+        vb.setValue(context, "bar onmousedown");
         component.setValueBinding("onmousedown", vb);
         assertEquals("bar onmousedown", component.getOnmousedown());
+        assertEquals("bar onmousedown", component
+                .getValueBinding("onmousedown").getValue(context));
     }
 
     public void testSetGetOnmousemove() throws Exception {
@@ -202,9 +239,12 @@ public class HtmlOutputLabelTest extends UIOutputTest {
     public void testSetGetOnmousemove_ValueBinding() throws Exception {
         HtmlOutputLabel component = createHtmlOutputLabel();
         MockValueBinding vb = new MockValueBinding();
-        vb.setValue(getFacesContext(), "bar onmousemove");
+        FacesContext context = getFacesContext();
+        vb.setValue(context, "bar onmousemove");
         component.setValueBinding("onmousemove", vb);
         assertEquals("bar onmousemove", component.getOnmousemove());
+        assertEquals("bar onmousemove", component
+                .getValueBinding("onmousemove").getValue(context));
     }
 
     public void testSetGetOnmouseout() throws Exception {
@@ -216,9 +256,12 @@ public class HtmlOutputLabelTest extends UIOutputTest {
     public void testSetGetOnmouseout_ValueBinding() throws Exception {
         HtmlOutputLabel component = createHtmlOutputLabel();
         MockValueBinding vb = new MockValueBinding();
-        vb.setValue(getFacesContext(), "bar onmouseout");
+        FacesContext context = getFacesContext();
+        vb.setValue(context, "bar onmouseout");
         component.setValueBinding("onmouseout", vb);
         assertEquals("bar onmouseout", component.getOnmouseout());
+        assertEquals("bar onmouseout", component.getValueBinding("onmouseout")
+                .getValue(context));
     }
 
     public void testSetGetOnmouseover() throws Exception {
@@ -230,9 +273,12 @@ public class HtmlOutputLabelTest extends UIOutputTest {
     public void testSetGetOnmouseover_ValueBinding() throws Exception {
         HtmlOutputLabel component = createHtmlOutputLabel();
         MockValueBinding vb = new MockValueBinding();
-        vb.setValue(getFacesContext(), "bar onmouseover");
+        FacesContext context = getFacesContext();
+        vb.setValue(context, "bar onmouseover");
         component.setValueBinding("onmouseover", vb);
         assertEquals("bar onmouseover", component.getOnmouseover());
+        assertEquals("bar onmouseover", component
+                .getValueBinding("onmouseover").getValue(context));
     }
 
     public void testSetGetOnmouseup() throws Exception {
@@ -244,9 +290,12 @@ public class HtmlOutputLabelTest extends UIOutputTest {
     public void testSetGetOnmouseup_ValueBinding() throws Exception {
         HtmlOutputLabel component = createHtmlOutputLabel();
         MockValueBinding vb = new MockValueBinding();
-        vb.setValue(getFacesContext(), "bar onmouseup");
+        FacesContext context = getFacesContext();
+        vb.setValue(context, "bar onmouseup");
         component.setValueBinding("onmouseup", vb);
         assertEquals("bar onmouseup", component.getOnmouseup());
+        assertEquals("bar onmouseup", component.getValueBinding("onmouseup")
+                .getValue(context));
     }
 
     public void testSetGetStyle() throws Exception {
@@ -258,9 +307,12 @@ public class HtmlOutputLabelTest extends UIOutputTest {
     public void testSetGetStyle_ValueBinding() throws Exception {
         HtmlOutputLabel component = createHtmlOutputLabel();
         MockValueBinding vb = new MockValueBinding();
-        vb.setValue(getFacesContext(), "bar style");
+        FacesContext context = getFacesContext();
+        vb.setValue(context, "bar style");
         component.setValueBinding("style", vb);
         assertEquals("bar style", component.getStyle());
+        assertEquals("bar style", component.getValueBinding("style").getValue(
+                context));
     }
 
     public void testSetGetStyleClass() throws Exception {
@@ -272,9 +324,12 @@ public class HtmlOutputLabelTest extends UIOutputTest {
     public void testSetGetStyleClass_ValueBinding() throws Exception {
         HtmlOutputLabel component = createHtmlOutputLabel();
         MockValueBinding vb = new MockValueBinding();
-        vb.setValue(getFacesContext(), "bar styleClass");
+        FacesContext context = getFacesContext();
+        vb.setValue(context, "bar styleClass");
         component.setValueBinding("styleClass", vb);
         assertEquals("bar styleClass", component.getStyleClass());
+        assertEquals("bar styleClass", component.getValueBinding("styleClass")
+                .getValue(context));
     }
 
     public void testSetGetTabindex() throws Exception {
@@ -286,9 +341,12 @@ public class HtmlOutputLabelTest extends UIOutputTest {
     public void testSetGetTabindex_ValueBinding() throws Exception {
         HtmlOutputLabel component = createHtmlOutputLabel();
         MockValueBinding vb = new MockValueBinding();
-        vb.setValue(getFacesContext(), "bar tabindex");
+        FacesContext context = getFacesContext();
+        vb.setValue(context, "bar tabindex");
         component.setValueBinding("tabindex", vb);
         assertEquals("bar tabindex", component.getTabindex());
+        assertEquals("bar tabindex", component.getValueBinding("tabindex")
+                .getValue(context));
     }
 
     public void testSetGetTitle() throws Exception {
@@ -300,9 +358,12 @@ public class HtmlOutputLabelTest extends UIOutputTest {
     public void testSetGetTitle_ValueBinding() throws Exception {
         HtmlOutputLabel component = createHtmlOutputLabel();
         MockValueBinding vb = new MockValueBinding();
-        vb.setValue(getFacesContext(), "bar title");
+        FacesContext context = getFacesContext();
+        vb.setValue(context, "bar title");
         component.setValueBinding("title", vb);
         assertEquals("bar title", component.getTitle());
+        assertEquals("bar title", component.getValueBinding("title").getValue(
+                context));
     }
 
     private HtmlOutputLabel createHtmlOutputLabel() {

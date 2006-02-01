@@ -23,7 +23,8 @@ import junit.framework.TestCase;
 public class HtmlInputSecretOnlyTest extends TestCase {
 
     public void testConstants() throws Exception {
-        assertEquals("javax.faces.HtmlInputSecret", HtmlInputSecret.COMPONENT_TYPE);
+        assertEquals("javax.faces.HtmlInputSecret",
+                HtmlInputSecret.COMPONENT_TYPE);
     }
 
     public void testGetComponentFamily() {

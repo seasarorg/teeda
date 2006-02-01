@@ -17,6 +17,7 @@ package javax.faces.component.html;
 
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIDataTest;
+import javax.faces.context.FacesContext;
 
 import org.seasar.teeda.core.mock.MockValueBinding;
 
@@ -34,9 +35,12 @@ public class HtmlDataTableTest extends UIDataTest {
     public void testSetGetBgcolor_ValueBinding() throws Exception {
         HtmlDataTable component = createHtmlDataTable();
         MockValueBinding vb = new MockValueBinding();
-        vb.setValue(getFacesContext(), "bar bgcolor");
+        FacesContext context = getFacesContext();
+        vb.setValue(context, "bar bgcolor");
         component.setValueBinding("bgcolor", vb);
         assertEquals("bar bgcolor", component.getBgcolor());
+        assertEquals("bar bgcolor", component.getValueBinding("bgcolor")
+                .getValue(context));
     }
 
     public void testSetGetBorder() throws Exception {
@@ -48,9 +52,12 @@ public class HtmlDataTableTest extends UIDataTest {
     public void testSetGetBorder_ValueBinding() throws Exception {
         HtmlDataTable component = createHtmlDataTable();
         MockValueBinding vb = new MockValueBinding();
-        vb.setValue(getFacesContext(), new Integer(234));
+        FacesContext context = getFacesContext();
+        vb.setValue(context, new Integer(234));
         component.setValueBinding("border", vb);
         assertEquals(234, component.getBorder());
+        assertEquals(new Integer(234), component.getValueBinding("border")
+                .getValue(context));
     }
 
     public void testSetGetCellpadding() throws Exception {
@@ -62,9 +69,12 @@ public class HtmlDataTableTest extends UIDataTest {
     public void testSetGetCellpadding_ValueBinding() throws Exception {
         HtmlDataTable component = createHtmlDataTable();
         MockValueBinding vb = new MockValueBinding();
-        vb.setValue(getFacesContext(), "bar cellpadding");
+        FacesContext context = getFacesContext();
+        vb.setValue(context, "bar cellpadding");
         component.setValueBinding("cellpadding", vb);
         assertEquals("bar cellpadding", component.getCellpadding());
+        assertEquals("bar cellpadding", component
+                .getValueBinding("cellpadding").getValue(context));
     }
 
     public void testSetGetCellspacing() throws Exception {
@@ -76,9 +86,12 @@ public class HtmlDataTableTest extends UIDataTest {
     public void testSetGetCellspacing_ValueBinding() throws Exception {
         HtmlDataTable component = createHtmlDataTable();
         MockValueBinding vb = new MockValueBinding();
-        vb.setValue(getFacesContext(), "bar cellspacing");
+        FacesContext context = getFacesContext();
+        vb.setValue(context, "bar cellspacing");
         component.setValueBinding("cellspacing", vb);
         assertEquals("bar cellspacing", component.getCellspacing());
+        assertEquals("bar cellspacing", component
+                .getValueBinding("cellspacing").getValue(context));
     }
 
     public void testSetGetColumnClasses() throws Exception {
@@ -90,9 +103,12 @@ public class HtmlDataTableTest extends UIDataTest {
     public void testSetGetColumnClasses_ValueBinding() throws Exception {
         HtmlDataTable component = createHtmlDataTable();
         MockValueBinding vb = new MockValueBinding();
-        vb.setValue(getFacesContext(), "bar columnClasses");
+        FacesContext context = getFacesContext();
+        vb.setValue(context, "bar columnClasses");
         component.setValueBinding("columnClasses", vb);
         assertEquals("bar columnClasses", component.getColumnClasses());
+        assertEquals("bar columnClasses", component.getValueBinding(
+                "columnClasses").getValue(context));
     }
 
     public void testSetGetDir() throws Exception {
@@ -104,9 +120,12 @@ public class HtmlDataTableTest extends UIDataTest {
     public void testSetGetDir_ValueBinding() throws Exception {
         HtmlDataTable component = createHtmlDataTable();
         MockValueBinding vb = new MockValueBinding();
-        vb.setValue(getFacesContext(), "bar dir");
+        FacesContext context = getFacesContext();
+        vb.setValue(context, "bar dir");
         component.setValueBinding("dir", vb);
         assertEquals("bar dir", component.getDir());
+        assertEquals("bar dir", component.getValueBinding("dir").getValue(
+                context));
     }
 
     public void testSetGetFooterClass() throws Exception {
@@ -118,9 +137,12 @@ public class HtmlDataTableTest extends UIDataTest {
     public void testSetGetFooterClass_ValueBinding() throws Exception {
         HtmlDataTable component = createHtmlDataTable();
         MockValueBinding vb = new MockValueBinding();
-        vb.setValue(getFacesContext(), "bar footerClass");
+        FacesContext context = getFacesContext();
+        vb.setValue(context, "bar footerClass");
         component.setValueBinding("footerClass", vb);
         assertEquals("bar footerClass", component.getFooterClass());
+        assertEquals("bar footerClass", component
+                .getValueBinding("footerClass").getValue(context));
     }
 
     public void testSetGetFrame() throws Exception {
@@ -132,9 +154,12 @@ public class HtmlDataTableTest extends UIDataTest {
     public void testSetGetFrame_ValueBinding() throws Exception {
         HtmlDataTable component = createHtmlDataTable();
         MockValueBinding vb = new MockValueBinding();
-        vb.setValue(getFacesContext(), "bar frame");
+        FacesContext context = getFacesContext();
+        vb.setValue(context, "bar frame");
         component.setValueBinding("frame", vb);
         assertEquals("bar frame", component.getFrame());
+        assertEquals("bar frame", component.getValueBinding("frame").getValue(
+                context));
     }
 
     public void testSetGetHeaderClass() throws Exception {
@@ -146,9 +171,12 @@ public class HtmlDataTableTest extends UIDataTest {
     public void testSetGetHeaderClass_ValueBinding() throws Exception {
         HtmlDataTable component = createHtmlDataTable();
         MockValueBinding vb = new MockValueBinding();
-        vb.setValue(getFacesContext(), "bar headerClass");
+        FacesContext context = getFacesContext();
+        vb.setValue(context, "bar headerClass");
         component.setValueBinding("headerClass", vb);
         assertEquals("bar headerClass", component.getHeaderClass());
+        assertEquals("bar headerClass", component
+                .getValueBinding("headerClass").getValue(context));
     }
 
     public void testSetGetLang() throws Exception {
@@ -160,9 +188,12 @@ public class HtmlDataTableTest extends UIDataTest {
     public void testSetGetLang_ValueBinding() throws Exception {
         HtmlDataTable component = createHtmlDataTable();
         MockValueBinding vb = new MockValueBinding();
-        vb.setValue(getFacesContext(), "bar lang");
+        FacesContext context = getFacesContext();
+        vb.setValue(context, "bar lang");
         component.setValueBinding("lang", vb);
         assertEquals("bar lang", component.getLang());
+        assertEquals("bar lang", component.getValueBinding("lang").getValue(
+                context));
     }
 
     public void testSetGetOnclick() throws Exception {
@@ -174,9 +205,12 @@ public class HtmlDataTableTest extends UIDataTest {
     public void testSetGetOnclick_ValueBinding() throws Exception {
         HtmlDataTable component = createHtmlDataTable();
         MockValueBinding vb = new MockValueBinding();
-        vb.setValue(getFacesContext(), "bar onclick");
+        FacesContext context = getFacesContext();
+        vb.setValue(context, "bar onclick");
         component.setValueBinding("onclick", vb);
         assertEquals("bar onclick", component.getOnclick());
+        assertEquals("bar onclick", component.getValueBinding("onclick")
+                .getValue(context));
     }
 
     public void testSetGetOndblclick() throws Exception {
@@ -188,9 +222,12 @@ public class HtmlDataTableTest extends UIDataTest {
     public void testSetGetOndblclick_ValueBinding() throws Exception {
         HtmlDataTable component = createHtmlDataTable();
         MockValueBinding vb = new MockValueBinding();
-        vb.setValue(getFacesContext(), "bar ondblclick");
+        FacesContext context = getFacesContext();
+        vb.setValue(context, "bar ondblclick");
         component.setValueBinding("ondblclick", vb);
         assertEquals("bar ondblclick", component.getOndblclick());
+        assertEquals("bar ondblclick", component.getValueBinding("ondblclick")
+                .getValue(context));
     }
 
     public void testSetGetOnkeydown() throws Exception {
@@ -202,9 +239,12 @@ public class HtmlDataTableTest extends UIDataTest {
     public void testSetGetOnkeydown_ValueBinding() throws Exception {
         HtmlDataTable component = createHtmlDataTable();
         MockValueBinding vb = new MockValueBinding();
-        vb.setValue(getFacesContext(), "bar onkeydown");
+        FacesContext context = getFacesContext();
+        vb.setValue(context, "bar onkeydown");
         component.setValueBinding("onkeydown", vb);
         assertEquals("bar onkeydown", component.getOnkeydown());
+        assertEquals("bar onkeydown", component.getValueBinding("onkeydown")
+                .getValue(context));
     }
 
     public void testSetGetOnkeypress() throws Exception {
@@ -216,9 +256,12 @@ public class HtmlDataTableTest extends UIDataTest {
     public void testSetGetOnkeypress_ValueBinding() throws Exception {
         HtmlDataTable component = createHtmlDataTable();
         MockValueBinding vb = new MockValueBinding();
-        vb.setValue(getFacesContext(), "bar onkeypress");
+        FacesContext context = getFacesContext();
+        vb.setValue(context, "bar onkeypress");
         component.setValueBinding("onkeypress", vb);
         assertEquals("bar onkeypress", component.getOnkeypress());
+        assertEquals("bar onkeypress", component.getValueBinding("onkeypress")
+                .getValue(context));
     }
 
     public void testSetGetOnkeyup() throws Exception {
@@ -230,9 +273,12 @@ public class HtmlDataTableTest extends UIDataTest {
     public void testSetGetOnkeyup_ValueBinding() throws Exception {
         HtmlDataTable component = createHtmlDataTable();
         MockValueBinding vb = new MockValueBinding();
-        vb.setValue(getFacesContext(), "bar onkeyup");
+        FacesContext context = getFacesContext();
+        vb.setValue(context, "bar onkeyup");
         component.setValueBinding("onkeyup", vb);
         assertEquals("bar onkeyup", component.getOnkeyup());
+        assertEquals("bar onkeyup", component.getValueBinding("onkeyup")
+                .getValue(context));
     }
 
     public void testSetGetOnmousedown() throws Exception {
@@ -244,9 +290,12 @@ public class HtmlDataTableTest extends UIDataTest {
     public void testSetGetOnmousedown_ValueBinding() throws Exception {
         HtmlDataTable component = createHtmlDataTable();
         MockValueBinding vb = new MockValueBinding();
-        vb.setValue(getFacesContext(), "bar onmousedown");
+        FacesContext context = getFacesContext();
+        vb.setValue(context, "bar onmousedown");
         component.setValueBinding("onmousedown", vb);
         assertEquals("bar onmousedown", component.getOnmousedown());
+        assertEquals("bar onmousedown", component
+                .getValueBinding("onmousedown").getValue(context));
     }
 
     public void testSetGetOnmousemove() throws Exception {
@@ -258,9 +307,12 @@ public class HtmlDataTableTest extends UIDataTest {
     public void testSetGetOnmousemove_ValueBinding() throws Exception {
         HtmlDataTable component = createHtmlDataTable();
         MockValueBinding vb = new MockValueBinding();
-        vb.setValue(getFacesContext(), "bar onmousemove");
+        FacesContext context = getFacesContext();
+        vb.setValue(context, "bar onmousemove");
         component.setValueBinding("onmousemove", vb);
         assertEquals("bar onmousemove", component.getOnmousemove());
+        assertEquals("bar onmousemove", component
+                .getValueBinding("onmousemove").getValue(context));
     }
 
     public void testSetGetOnmouseout() throws Exception {
@@ -272,9 +324,12 @@ public class HtmlDataTableTest extends UIDataTest {
     public void testSetGetOnmouseout_ValueBinding() throws Exception {
         HtmlDataTable component = createHtmlDataTable();
         MockValueBinding vb = new MockValueBinding();
-        vb.setValue(getFacesContext(), "bar onmouseout");
+        FacesContext context = getFacesContext();
+        vb.setValue(context, "bar onmouseout");
         component.setValueBinding("onmouseout", vb);
         assertEquals("bar onmouseout", component.getOnmouseout());
+        assertEquals("bar onmouseout", component.getValueBinding("onmouseout")
+                .getValue(context));
     }
 
     public void testSetGetOnmouseover() throws Exception {
@@ -286,9 +341,12 @@ public class HtmlDataTableTest extends UIDataTest {
     public void testSetGetOnmouseover_ValueBinding() throws Exception {
         HtmlDataTable component = createHtmlDataTable();
         MockValueBinding vb = new MockValueBinding();
-        vb.setValue(getFacesContext(), "bar onmouseover");
+        FacesContext context = getFacesContext();
+        vb.setValue(context, "bar onmouseover");
         component.setValueBinding("onmouseover", vb);
         assertEquals("bar onmouseover", component.getOnmouseover());
+        assertEquals("bar onmouseover", component
+                .getValueBinding("onmouseover").getValue(context));
     }
 
     public void testSetGetOnmouseup() throws Exception {
@@ -300,9 +358,12 @@ public class HtmlDataTableTest extends UIDataTest {
     public void testSetGetOnmouseup_ValueBinding() throws Exception {
         HtmlDataTable component = createHtmlDataTable();
         MockValueBinding vb = new MockValueBinding();
-        vb.setValue(getFacesContext(), "bar onmouseup");
+        FacesContext context = getFacesContext();
+        vb.setValue(context, "bar onmouseup");
         component.setValueBinding("onmouseup", vb);
         assertEquals("bar onmouseup", component.getOnmouseup());
+        assertEquals("bar onmouseup", component.getValueBinding("onmouseup")
+                .getValue(context));
     }
 
     public void testSetGetRowClasses() throws Exception {
@@ -314,9 +375,12 @@ public class HtmlDataTableTest extends UIDataTest {
     public void testSetGetRowClasses_ValueBinding() throws Exception {
         HtmlDataTable component = createHtmlDataTable();
         MockValueBinding vb = new MockValueBinding();
-        vb.setValue(getFacesContext(), "bar rowClasses");
+        FacesContext context = getFacesContext();
+        vb.setValue(context, "bar rowClasses");
         component.setValueBinding("rowClasses", vb);
         assertEquals("bar rowClasses", component.getRowClasses());
+        assertEquals("bar rowClasses", component.getValueBinding("rowClasses")
+                .getValue(context));
     }
 
     public void testSetGetRules() throws Exception {
@@ -328,9 +392,12 @@ public class HtmlDataTableTest extends UIDataTest {
     public void testSetGetRules_ValueBinding() throws Exception {
         HtmlDataTable component = createHtmlDataTable();
         MockValueBinding vb = new MockValueBinding();
-        vb.setValue(getFacesContext(), "bar rules");
+        FacesContext context = getFacesContext();
+        vb.setValue(context, "bar rules");
         component.setValueBinding("rules", vb);
         assertEquals("bar rules", component.getRules());
+        assertEquals("bar rules", component.getValueBinding("rules").getValue(
+                context));
     }
 
     public void testSetGetStyle() throws Exception {
@@ -342,9 +409,12 @@ public class HtmlDataTableTest extends UIDataTest {
     public void testSetGetStyle_ValueBinding() throws Exception {
         HtmlDataTable component = createHtmlDataTable();
         MockValueBinding vb = new MockValueBinding();
-        vb.setValue(getFacesContext(), "bar style");
+        FacesContext context = getFacesContext();
+        vb.setValue(context, "bar style");
         component.setValueBinding("style", vb);
         assertEquals("bar style", component.getStyle());
+        assertEquals("bar style", component.getValueBinding("style").getValue(
+                context));
     }
 
     public void testSetGetStyleClass() throws Exception {
@@ -356,9 +426,12 @@ public class HtmlDataTableTest extends UIDataTest {
     public void testSetGetStyleClass_ValueBinding() throws Exception {
         HtmlDataTable component = createHtmlDataTable();
         MockValueBinding vb = new MockValueBinding();
-        vb.setValue(getFacesContext(), "bar styleClass");
+        FacesContext context = getFacesContext();
+        vb.setValue(context, "bar styleClass");
         component.setValueBinding("styleClass", vb);
         assertEquals("bar styleClass", component.getStyleClass());
+        assertEquals("bar styleClass", component.getValueBinding("styleClass")
+                .getValue(context));
     }
 
     public void testSetGetSummary() throws Exception {
@@ -370,9 +443,12 @@ public class HtmlDataTableTest extends UIDataTest {
     public void testSetGetSummary_ValueBinding() throws Exception {
         HtmlDataTable component = createHtmlDataTable();
         MockValueBinding vb = new MockValueBinding();
-        vb.setValue(getFacesContext(), "bar summary");
+        FacesContext context = getFacesContext();
+        vb.setValue(context, "bar summary");
         component.setValueBinding("summary", vb);
         assertEquals("bar summary", component.getSummary());
+        assertEquals("bar summary", component.getValueBinding("summary")
+                .getValue(context));
     }
 
     public void testSetGetTitle() throws Exception {
@@ -384,9 +460,12 @@ public class HtmlDataTableTest extends UIDataTest {
     public void testSetGetTitle_ValueBinding() throws Exception {
         HtmlDataTable component = createHtmlDataTable();
         MockValueBinding vb = new MockValueBinding();
-        vb.setValue(getFacesContext(), "bar title");
+        FacesContext context = getFacesContext();
+        vb.setValue(context, "bar title");
         component.setValueBinding("title", vb);
         assertEquals("bar title", component.getTitle());
+        assertEquals("bar title", component.getValueBinding("title").getValue(
+                context));
     }
 
     public void testSetGetWidth() throws Exception {
@@ -398,9 +477,12 @@ public class HtmlDataTableTest extends UIDataTest {
     public void testSetGetWidth_ValueBinding() throws Exception {
         HtmlDataTable component = createHtmlDataTable();
         MockValueBinding vb = new MockValueBinding();
-        vb.setValue(getFacesContext(), "bar width");
+        FacesContext context = getFacesContext();
+        vb.setValue(context, "bar width");
         component.setValueBinding("width", vb);
         assertEquals("bar width", component.getWidth());
+        assertEquals("bar width", component.getValueBinding("width").getValue(
+                context));
     }
 
     private HtmlDataTable createHtmlDataTable() {

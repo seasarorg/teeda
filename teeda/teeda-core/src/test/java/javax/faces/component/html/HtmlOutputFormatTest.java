@@ -17,6 +17,7 @@ package javax.faces.component.html;
 
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIOutputTest;
+import javax.faces.context.FacesContext;
 
 import org.seasar.teeda.core.mock.MockValueBinding;
 
@@ -26,19 +27,22 @@ import org.seasar.teeda.core.mock.MockValueBinding;
 public class HtmlOutputFormatTest extends UIOutputTest {
 
     public void testSetGetEscape() throws Exception {
-        HtmlOutputFormat htmlOutputFormat = createHtmlOutputFormat();
+        HtmlOutputFormat component = createHtmlOutputFormat();
         // default is true
-        assertEquals(true, htmlOutputFormat.isEscape());
-        htmlOutputFormat.setEscape(false);
-        assertEquals(false, htmlOutputFormat.isEscape());
+        assertEquals(true, component.isEscape());
+        component.setEscape(false);
+        assertEquals(false, component.isEscape());
     }
 
     public void testSetGetEscape_ValueBinding() throws Exception {
-        HtmlOutputFormat htmlOutputFormat = createHtmlOutputFormat();
+        HtmlOutputFormat component = createHtmlOutputFormat();
         MockValueBinding vb = new MockValueBinding();
-        vb.setValue(getFacesContext(), Boolean.FALSE);
-        htmlOutputFormat.setValueBinding("escape", vb);
-        assertEquals(false, htmlOutputFormat.isEscape());
+        FacesContext context = getFacesContext();
+        vb.setValue(context, Boolean.FALSE);
+        component.setValueBinding("escape", vb);
+        assertEquals(false, component.isEscape());
+        assertEquals(Boolean.FALSE, component.getValueBinding("escape")
+                .getValue(context));
     }
 
     public void testSetGetStyle() throws Exception {
@@ -50,9 +54,12 @@ public class HtmlOutputFormatTest extends UIOutputTest {
     public void testSetGetStyle_ValueBinding() throws Exception {
         HtmlOutputFormat component = createHtmlOutputFormat();
         MockValueBinding vb = new MockValueBinding();
-        vb.setValue(getFacesContext(), "bar style");
+        FacesContext context = getFacesContext();
+        vb.setValue(context, "bar style");
         component.setValueBinding("style", vb);
         assertEquals("bar style", component.getStyle());
+        assertEquals("bar style", component.getValueBinding("style").getValue(
+                context));
     }
 
     public void testSetGetStyleClass() throws Exception {
@@ -64,9 +71,12 @@ public class HtmlOutputFormatTest extends UIOutputTest {
     public void testSetGetStyleClass_ValueBinding() throws Exception {
         HtmlOutputFormat component = createHtmlOutputFormat();
         MockValueBinding vb = new MockValueBinding();
-        vb.setValue(getFacesContext(), "bar styleClass");
+        FacesContext context = getFacesContext();
+        vb.setValue(context, "bar styleClass");
         component.setValueBinding("styleClass", vb);
         assertEquals("bar styleClass", component.getStyleClass());
+        assertEquals("bar styleClass", component.getValueBinding("styleClass")
+                .getValue(context));
     }
 
     public void testSetGetTitle() throws Exception {
@@ -78,9 +88,12 @@ public class HtmlOutputFormatTest extends UIOutputTest {
     public void testSetGetTitle_ValueBinding() throws Exception {
         HtmlOutputFormat component = createHtmlOutputFormat();
         MockValueBinding vb = new MockValueBinding();
-        vb.setValue(getFacesContext(), "bar title");
+        FacesContext context = getFacesContext();
+        vb.setValue(context, "bar title");
         component.setValueBinding("title", vb);
         assertEquals("bar title", component.getTitle());
+        assertEquals("bar title", component.getValueBinding("title").getValue(
+                context));
     }
 
     private HtmlOutputFormat createHtmlOutputFormat() {

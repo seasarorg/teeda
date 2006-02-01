@@ -17,6 +17,7 @@ package javax.faces.component.html;
 
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIOutputTest;
+import javax.faces.context.FacesContext;
 
 import org.seasar.teeda.core.mock.MockValueBinding;
 
@@ -26,66 +27,77 @@ import org.seasar.teeda.core.mock.MockValueBinding;
 public class HtmlOutputTextTest extends UIOutputTest {
 
     public void testSetGetEscape() throws Exception {
-        HtmlOutputText htmlOutputText = createHtmlOutputText();
+        HtmlOutputText component = createHtmlOutputText();
         // default is true
-        assertEquals(true, htmlOutputText.isEscape());
-        htmlOutputText.setEscape(false);
-        assertEquals(false, htmlOutputText.isEscape());
+        assertEquals(true, component.isEscape());
+        component.setEscape(false);
+        assertEquals(false, component.isEscape());
     }
 
     public void testSetGetEscape_ValueBinding() throws Exception {
-        HtmlOutputText htmlOutputText = createHtmlOutputText();
+        HtmlOutputText component = createHtmlOutputText();
         MockValueBinding vb = new MockValueBinding();
-        vb.setValue(getFacesContext(), Boolean.FALSE);
-        htmlOutputText.setValueBinding("escape", vb);
-        assertEquals(false, htmlOutputText.isEscape());
+        FacesContext context = getFacesContext();
+        vb.setValue(context, Boolean.FALSE);
+        component.setValueBinding("escape", vb);
+        assertEquals(false, component.isEscape());
+        assertEquals(Boolean.FALSE, component.getValueBinding("escape")
+                .getValue(context));
     }
 
     public void testSetGetStyle() throws Exception {
-        HtmlOutputText htmlOutputText = createHtmlOutputText();
-        assertEquals(null, htmlOutputText.getStyle());
-        htmlOutputText.setStyle("foo style");
-        assertEquals("foo style", htmlOutputText.getStyle());
+        HtmlOutputText component = createHtmlOutputText();
+        assertEquals(null, component.getStyle());
+        component.setStyle("foo style");
+        assertEquals("foo style", component.getStyle());
     }
 
     public void testSetGetStyle_ValueBinding() throws Exception {
-        HtmlOutputText htmlOutputText = createHtmlOutputText();
+        HtmlOutputText component = createHtmlOutputText();
         MockValueBinding vb = new MockValueBinding();
-        vb.setValue(getFacesContext(), "bar style");
-        htmlOutputText.setValueBinding("style", vb);
-        assertEquals("bar style", htmlOutputText.getStyle());
+        FacesContext context = getFacesContext();
+        vb.setValue(context, "bar style");
+        component.setValueBinding("style", vb);
+        assertEquals("bar style", component.getStyle());
+        assertEquals("bar style", component.getValueBinding("style").getValue(
+                context));
     }
 
     public void testSetGetStyleClass() throws Exception {
-        HtmlOutputText htmlOutputText = createHtmlOutputText();
-        assertEquals(null, htmlOutputText.getStyleClass());
-        htmlOutputText.setStyleClass("foo class");
-        assertEquals("foo class", htmlOutputText.getStyleClass());
+        HtmlOutputText component = createHtmlOutputText();
+        assertEquals(null, component.getStyleClass());
+        component.setStyleClass("foo class");
+        assertEquals("foo class", component.getStyleClass());
     }
 
     public void testSetGetStyleClass_ValueBinding() throws Exception {
-        HtmlOutputText htmlOutputText = createHtmlOutputText();
+        HtmlOutputText component = createHtmlOutputText();
         MockValueBinding vb = new MockValueBinding();
-        vb.setValue(getFacesContext(), "bar class");
-        htmlOutputText.setValueBinding("styleClass", vb);
-        assertEquals("bar class", htmlOutputText.getStyleClass());
+        FacesContext context = getFacesContext();
+        vb.setValue(context, "bar class");
+        component.setValueBinding("styleClass", vb);
+        assertEquals("bar class", component.getStyleClass());
+        assertEquals("bar class", component.getValueBinding("styleClass")
+                .getValue(context));
     }
 
     public void testSetGetTitle() throws Exception {
-        HtmlOutputText htmlOutputText = createHtmlOutputText();
-        assertEquals(null, htmlOutputText.getTitle());
-        htmlOutputText.setTitle("foo title");
-        assertEquals("foo title", htmlOutputText.getTitle());
+        HtmlOutputText component = createHtmlOutputText();
+        assertEquals(null, component.getTitle());
+        component.setTitle("foo title");
+        assertEquals("foo title", component.getTitle());
     }
 
     public void testSetGetTitle_ValueBinding() throws Exception {
-        HtmlOutputText htmlOutputText = createHtmlOutputText();
+        HtmlOutputText component = createHtmlOutputText();
         MockValueBinding vb = new MockValueBinding();
-        vb.setValue(getFacesContext(), "bar title");
-        htmlOutputText.setValueBinding("title", vb);
-        assertEquals("bar title", htmlOutputText.getTitle());
+        FacesContext context = getFacesContext();
+        vb.setValue(context, "bar title");
+        component.setValueBinding("title", vb);
+        assertEquals("bar title", component.getTitle());
+        assertEquals("bar title", component.getValueBinding("title").getValue(
+                context));
     }
-
 
     private HtmlOutputText createHtmlOutputText() {
         return (HtmlOutputText) createUIComponent();

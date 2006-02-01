@@ -23,10 +23,6 @@ import javax.faces.component.UIInputTest;
  */
 public class HtmlInputHiddenTest extends UIInputTest {
 
-    private HtmlInputHidden createHtmlInputHidden() {
-        return (HtmlInputHidden) createUIComponent();
-    }
-
     protected UIComponent createUIComponent() {
         return new HtmlInputHidden();
     }
