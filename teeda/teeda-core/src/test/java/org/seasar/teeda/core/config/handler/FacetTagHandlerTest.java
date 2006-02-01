@@ -18,7 +18,6 @@ package org.seasar.teeda.core.config.handler;
 import java.util.List;
 import java.util.Map;
 
-import org.seasar.framework.xml.TagHandlerContext;
 import org.seasar.teeda.core.config.element.ComponentElement;
 import org.seasar.teeda.core.config.element.FacesConfig;
 import org.seasar.teeda.core.config.element.FacetElement;
@@ -29,15 +28,6 @@ import org.seasar.teeda.core.config.element.impl.ComponentElementImpl;
  * @author shot
  */
 public class FacetTagHandlerTest extends TagHandlerTestCase {
-
-    /**
-     * Constructor for FacetTagHandlerTest.
-     * 
-     * @param name
-     */
-    public FacetTagHandlerTest(String name) {
-        super(name);
-    }
 
     public void testFacetTagHandler() throws Exception {
         FacetHolder holder = new ComponentElementImpl();

@@ -35,15 +35,28 @@ public abstract class TagHandlerTestCase extends TeedaTestCase {
     public TagHandlerTestCase(String name) {
         super(name);
     }
-    
+
     protected void tearDown() throws Exception {
         super.tearDown();
         context_ = null;
     }
-    
+
+    private static final String FACES_CONFIG_1_1 = "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.1//EN";
+
+    // private static final String FACES_CONFIG_1_0 = "-//Sun Microsystems,
+    // Inc.//DTD JavaServer Faces Config 1.0//EN";
+
+    private static final String FACES_1_1_DTD_PATH = "org/seasar/teeda/core/resource/web-facesconfig_1_1.dtd";
+
+    // private static final String FACES_1_0_DTD_PATH =
+    // "org/seasar/teeda/core/resource/web-facesconfig_1_0.dtd";
+
     public FacesConfig parse(String path) {
         TagHandlerRule rule = new FacesConfigTagHandlerRule();
         SaxHandler handler = new SaxHandler(rule);
+        handler.registerDtdPath(FACES_CONFIG_1_1, FACES_1_1_DTD_PATH);
+        // handler.registerDtdPath(FACES_CONFIG_1_0, FACES_1_0_DTD_PATH);
+
         SaxHandlerParser parser = new SaxHandlerParser(handler);
         Object o = parser.parse(convertPath(path));
         return (FacesConfig) o;
