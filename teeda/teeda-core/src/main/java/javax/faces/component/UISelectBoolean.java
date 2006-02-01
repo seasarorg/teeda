@@ -54,19 +54,18 @@ public class UISelectBoolean extends UIInput {
     }
 
     public ValueBinding getValueBinding(String name) {
-        if ("selected".equals(name)) {
-            return super.getValueBinding("value");
-        } else {
-            return super.getValueBinding(name);
-        }
+        return super.getValueBinding(convertAlias(name));
     }
 
-    public void setValueBinding(String name, ValueBinding binding) {
+    public void setValueBinding(String name, ValueBinding vb) {
+        super.setValueBinding(convertAlias(name), vb);
+    }
+
+    private String convertAlias(String name) {
         if ("selected".equals(name)) {
-            super.setValueBinding("value", binding);
-        } else {
-            super.setValueBinding(name, binding);
+            return "value";
         }
+        return name;
     }
 
 }
