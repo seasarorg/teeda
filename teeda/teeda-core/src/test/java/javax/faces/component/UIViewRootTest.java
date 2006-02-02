@@ -534,7 +534,6 @@ public class UIViewRootTest extends UIComponentBaseTest {
         }
     }
 
-    // TODO getLocalte
     public void testSetGetLocale() throws Exception {
         // ## Arrange ##
         UIViewRoot viewRoot = createUIViewRoot();
