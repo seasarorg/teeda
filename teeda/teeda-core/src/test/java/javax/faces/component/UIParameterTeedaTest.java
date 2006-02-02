@@ -15,24 +15,23 @@
  */
 package javax.faces.component;
 
-import junit.framework.TestCase;
-
 /**
  * @author manhole
  */
-public class UISelectItemsOnlyTest extends TestCase {
+public class UIParameterTeedaTest extends UIComponentBaseTeedaTest {
 
-    public void testConstants() throws Exception {
-        assertEquals("javax.faces.SelectItems", UISelectItems.COMPONENT_FAMILY);
-        assertEquals("javax.faces.SelectItems", UISelectItems.COMPONENT_TYPE);
+    public void testSaveAndRestoreState() throws Exception {
+        super.testSaveAndRestoreState();
+        createUIParameter();
+        // TODO
     }
 
-    public void testGetFamily() {
-        assertEquals("javax.faces.SelectItems", new UISelectItems().getFamily());
+    private UIParameter createUIParameter() {
+        return (UIParameter) createUIComponent();
     }
 
-    public void testDefaultRendererType() throws Exception {
-        assertEquals(null, new UISelectItems().getRendererType());
+    protected UIComponent createUIComponent() {
+        return new UIParameter();
     }
 
 }

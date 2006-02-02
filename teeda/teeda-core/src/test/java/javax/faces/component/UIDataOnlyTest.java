@@ -27,9 +27,12 @@ public class UIDataOnlyTest extends TestCase {
         assertEquals("javax.faces.Data", UIData.COMPONENT_TYPE);
     }
 
+    public void testGetFamily() {
+        assertEquals("javax.faces.Data", new UIData().getFamily());
+    }
+
     public void testDefaultRendererType() throws Exception {
-        UIData data = new UIData();
-        assertEquals("javax.faces.Table", data.getRendererType());
+        assertEquals("javax.faces.Table", new UIData().getRendererType());
     }
 
 }

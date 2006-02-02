@@ -279,15 +279,15 @@ public class UIComponentBaseTest extends AbstractUIComponentTest {
         noNamingContainer.getChildren().add(target);
 
         // ## Act & Assert ##
-        try {
+        if (component instanceof NamingContainer) {
             component.findComponent("a:b:z");
-            if (component instanceof NamingContainer) {
-                // OK
-            } else {
+        } else {
+            try {
+                component.findComponent("a:b:z");
                 fail();
+            } catch (IllegalArgumentException iae) {
+                ExceptionAssert.assertMessageExist(iae);
             }
-        } catch (IllegalArgumentException iae) {
-            ExceptionAssert.assertMessageExist(iae);
         }
     }
 

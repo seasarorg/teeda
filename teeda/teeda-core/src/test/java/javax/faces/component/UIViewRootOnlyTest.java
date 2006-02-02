@@ -15,85 +15,32 @@
  */
 package javax.faces.component;
 
-import org.seasar.teeda.core.mock.MockFacesContextImpl;
-import org.seasar.teeda.core.mock.MockValueBinding;
-import org.seasar.teeda.core.unit.TeedaTestCase;
+import junit.framework.TestCase;
 
-public class UIViewRootOnlyTest extends TeedaTestCase {
+/**
+ * @author shot
+ * @author manhole
+ */
+public class UIViewRootOnlyTest extends TestCase {
 
-	public static void main(String[] args) {
-		junit.textui.TestRunner.run(UIViewRootOnlyTest.class);
-	}
-
-	/*
-	 * @see TestCase#setUp()
-	 */
-	protected void setUp() throws Exception {
-		super.setUp();
-	}
-
-	/*
-	 * @see TestCase#tearDown()
-	 */
-	protected void tearDown() throws Exception {
-		super.tearDown();
-	}
-
-	/**
-	 * Constructor for UIViewRootOnlyTest.
-	 * 
-	 * @param arg0
-	 */
-	public UIViewRootOnlyTest(String arg0) {
-		super(arg0);
-	}
-
-	public void testGetRenderKitId() {
-		UIViewRoot root = new UIViewRoot();
-		MockValueBinding vb = new MockValueBinding();
-		vb.setValue(getFacesContext(), "aaa");
-		root.setValueBinding("renderKitId", vb);
-		assertEquals("aaa", root.getRenderKitId());
-	}
-
-	public void testSetRenderKitId() {
-		UIViewRoot root = new UIViewRoot();
-		root.setRenderKitId("RENDER");
-		assertEquals("RENDER", root.getRenderKitId());
-	}
-
-	public void testGetViewId() {
-		UIViewRoot root = new UIViewRoot();
-		root.setViewId("bbb");
-		assertEquals("bbb", root.getViewId());
-	}
-
-	public void testSetViewId() {
-		UIViewRoot root = new UIViewRoot();
-		root.setRenderKitId("VIEW_ID");
-		assertEquals("VIEW_ID", root.getRenderKitId());
-	}
-
-    public void testGetFamily() {
-        assertEquals("javax.faces.ViewRoot", createUIViewRoot().getFamily());
+    public void testConstants() throws Exception {
+        assertEquals("javax.faces.ViewRoot", UIViewRoot.COMPONENT_FAMILY);
+        assertEquals("javax.faces.ViewRoot", UIViewRoot.COMPONENT_TYPE);
+        assertEquals("_id", UIViewRoot.UNIQUE_ID_PREFIX);
     }
 
-    public void testGetComponentType() {
-        assertEquals("javax.faces.ViewRoot", createUIViewRoot().getFamily());
+    public void testGetFamily() {
+        assertEquals("javax.faces.ViewRoot", new UIViewRoot().getFamily());
+    }
+
+    public void testDefaultRendererType() throws Exception {
+        assertEquals(null, new UIViewRoot().getRendererType());
     }
 
     public void testCreateUniqueId() {
-        UIViewRoot root = createUIViewRoot();
+        UIViewRoot root = new UIViewRoot();
         assertEquals(UIViewRoot.UNIQUE_ID_PREFIX + "0", root.createUniqueId());
         assertEquals(UIViewRoot.UNIQUE_ID_PREFIX + "1", root.createUniqueId());
-    }
-
-    private UIViewRoot createUIViewRoot() {
-        return (UIViewRoot) createUIComponent();
-    }
-
-    protected UIComponent createUIComponent() {
-        return new UIViewRoot();
     }
 
 }

@@ -30,13 +30,11 @@ public class UISelectOneOnlyTest extends TestCase {
     }
 
     public void testGetFamily() {
-        UISelectOne selectBoolean = new UISelectOne();
-        assertEquals("javax.faces.SelectOne", selectBoolean.getFamily());
+        assertEquals("javax.faces.SelectOne", new UISelectOne().getFamily());
     }
 
     public void testDefaultRendererType() throws Exception {
-        UISelectOne selectBoolean = new UISelectOne();
-        assertEquals("javax.faces.Menu", selectBoolean.getRendererType());
+        assertEquals("javax.faces.Menu", new UISelectOne().getRendererType());
     }
 
 }

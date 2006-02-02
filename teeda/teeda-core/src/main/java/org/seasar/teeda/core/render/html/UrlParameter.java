@@ -19,9 +19,9 @@ import org.seasar.framework.util.ArrayUtil;
 
 public class UrlParameter {
 
-    String key_;
+    private String key_;
 
-    String[] values_ = {};
+    private String[] values_ = {};
 
     public String getKey() {
         return key_;
@@ -32,7 +32,7 @@ public class UrlParameter {
     }
 
     public String getValue() {
-        if (org.seasar.teeda.core.util.ArrayUtil.isEmpty(values_)) {
+        if (ArrayUtil.isEmpty(values_)) {
             return "";
         }
         return values_[0];

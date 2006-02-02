@@ -20,19 +20,19 @@ import junit.framework.TestCase;
 /**
  * @author manhole
  */
-public class UISelectItemsOnlyTest extends TestCase {
+public class UIParameterOnlyTest extends TestCase {
 
     public void testConstants() throws Exception {
-        assertEquals("javax.faces.SelectItems", UISelectItems.COMPONENT_FAMILY);
-        assertEquals("javax.faces.SelectItems", UISelectItems.COMPONENT_TYPE);
+        assertEquals("javax.faces.Parameter", UIParameter.COMPONENT_FAMILY);
+        assertEquals("javax.faces.Parameter", UIParameter.COMPONENT_TYPE);
     }
 
     public void testGetFamily() {
-        assertEquals("javax.faces.SelectItems", new UISelectItems().getFamily());
+        assertEquals("javax.faces.Parameter", new UIParameter().getFamily());
     }
 
     public void testDefaultRendererType() throws Exception {
-        assertEquals(null, new UISelectItems().getRendererType());
+        assertEquals(null, new UIParameter().getRendererType());
     }
 
 }

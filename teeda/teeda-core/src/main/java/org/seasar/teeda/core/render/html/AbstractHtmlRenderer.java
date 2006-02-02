@@ -16,7 +16,6 @@
 package org.seasar.teeda.core.render.html;
 
 import java.io.IOException;
-import java.util.Collection;
 import java.util.Iterator;
 
 import javax.faces.component.UIComponent;
@@ -25,6 +24,7 @@ import javax.faces.render.Renderer;
 
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.util.LoopIterator;
+import org.seasar.teeda.core.util.RenderedComponentIterator;
 
 /**
  * @author manhole
@@ -90,50 +90,6 @@ public class AbstractHtmlRenderer extends Renderer {
 
     protected Iterator getRenderedChildrenIterator(UIComponent component) {
         return new RenderedComponentIterator(component.getChildren());
-    }
-
-    protected static class RenderedComponentIterator implements Iterator {
-
-        private Iterator iterator_;
-
-        public RenderedComponentIterator(Collection c) {
-            iterator_ = c.iterator();
-        }
-
-        private UIComponent component_;
-
-        public boolean hasNext() {
-            if (component_ != null) {
-                return true;
-            }
-            while (iterator_.hasNext()) {
-                UIComponent component = (UIComponent) iterator_.next();
-                if (component.isRendered()) {
-                    component_ = component;
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        public Object next() {
-            if (component_ != null) {
-                UIComponent component = component_;
-                component_ = null;
-                return component;
-            }
-            while (true) {
-                UIComponent component = (UIComponent) iterator_.next();
-                if (component.isRendered()) {
-                    return component;
-                }
-            }
-        }
-
-        public void remove() {
-            throw new UnsupportedOperationException("remove");
-        }
-
     }
 
 }

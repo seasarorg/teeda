@@ -28,13 +28,11 @@ public class UIGraphicOnlyTest extends TestCase {
     }
 
     public void testGetFamily() {
-        UIGraphic graphic = new UIGraphic();
-        assertEquals("javax.faces.Graphic", graphic.getFamily());
+        assertEquals("javax.faces.Graphic", new UIGraphic().getFamily());
     }
 
     public void testDefaultRendererType() throws Exception {
-        UIGraphic graphic = new UIGraphic();
-        assertEquals("javax.faces.Image", graphic.getRendererType());
+        assertEquals("javax.faces.Image", new UIGraphic().getRendererType());
     }
 
 }

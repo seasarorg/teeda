@@ -28,8 +28,7 @@ public class UIMessageOnlyTest extends TestCase {
     }
 
     public void testGetFamily() {
-        UIMessage message = new UIMessage();
-        assertEquals("javax.faces.Message", message.getFamily());
+        assertEquals("javax.faces.Message", new UIMessage().getFamily());
     }
 
     public void testDefaultRendererType() throws Exception {

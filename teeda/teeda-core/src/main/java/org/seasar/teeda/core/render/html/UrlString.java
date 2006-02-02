@@ -31,14 +31,14 @@ public class UrlString {
 
     private Map parameters_ = new LinkedHashMap();
 
-    private String url_;
+    // private String url_;
 
     private String path_;
 
     private String queryString_;
 
     public void parse(String url) {
-        url_ = url;
+        // url_ = url;
         if (StringUtils.contains(url, '?')) {
             int questionPos = url.indexOf('?');
             path_ = url.substring(0, questionPos);

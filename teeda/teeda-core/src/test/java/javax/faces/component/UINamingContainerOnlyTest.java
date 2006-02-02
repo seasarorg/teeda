@@ -30,13 +30,12 @@ public class UINamingContainerOnlyTest extends TestCase {
     }
 
     public void testGetFamily() {
-        UINamingContainer namingContainer = new UINamingContainer();
-        assertEquals("javax.faces.NamingContainer", namingContainer.getFamily());
+        assertEquals("javax.faces.NamingContainer", new UINamingContainer()
+                .getFamily());
     }
 
     public void testDefaultRendererType() throws Exception {
-        UINamingContainer namingContainer = new UINamingContainer();
-        assertEquals(null, namingContainer.getRendererType());
+        assertEquals(null, new UINamingContainer().getRendererType());
     }
 
 }

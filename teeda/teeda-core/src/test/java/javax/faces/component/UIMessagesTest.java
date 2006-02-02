@@ -19,6 +19,9 @@ import javax.faces.context.FacesContext;
 
 import org.seasar.teeda.core.mock.MockValueBinding;
 
+/**
+ * @author manhole
+ */
 public class UIMessagesTest extends UIComponentBaseTest {
 
     public void testSetGetGlobalOnly() {

@@ -59,13 +59,11 @@ public class UIInputOnlyTest extends TestCase {
     }
 
     public void testGetFamily() {
-        UIInput input = new UIInput();
-        assertEquals("javax.faces.Input", input.getFamily());
+        assertEquals("javax.faces.Input", new UIInput().getFamily());
     }
 
     public void testDefaultRendererType() throws Exception {
-        UIInput input = new UIInput();
-        assertEquals("javax.faces.Text", input.getRendererType());
+        assertEquals("javax.faces.Text", new UIInput().getRendererType());
     }
 
     public void testProcessDecodes_CallValidateWhenImmediateIsTrue()

@@ -15,6 +15,8 @@
  */
 package javax.faces.component;
 
+import javax.faces.context.FacesContext;
+
 import org.seasar.teeda.core.mock.MockValueBinding;
 import org.seasar.teeda.core.mock.NullUIComponent;
 import org.seasar.teeda.core.unit.ExceptionAssert;
@@ -37,7 +39,8 @@ public class UIColumnTest extends UIComponentBaseTest {
         UIColumn column = createUIColumn();
         MockValueBinding vb = new MockValueBinding();
         UIComponent component = new NullUIComponent();
-        vb.setValue(getFacesContext(), component);
+        FacesContext context = getFacesContext();
+        vb.setValue(context, component);
         column.setValueBinding("footer", vb);
         assertEquals(null, column.getFooter());
     }
@@ -72,7 +75,8 @@ public class UIColumnTest extends UIComponentBaseTest {
         UIColumn column = createUIColumn();
         MockValueBinding vb = new MockValueBinding();
         UIComponent component = new NullUIComponent();
-        vb.setValue(getFacesContext(), component);
+        FacesContext context = getFacesContext();
+        vb.setValue(context, component);
         column.setValueBinding("header", vb);
         assertEquals(null, column.getHeader());
     }

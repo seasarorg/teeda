@@ -28,13 +28,11 @@ public class UISelectItemOnlyTest extends TestCase {
     }
 
     public void testGetFamily() {
-        UISelectItem selectItem = new UISelectItem();
-        assertEquals("javax.faces.SelectItem", selectItem.getFamily());
+        assertEquals("javax.faces.SelectItem", new UISelectItem().getFamily());
     }
 
     public void testDefaultRendererType() throws Exception {
-        UISelectItem selectItem = new UISelectItem();
-        assertEquals(null, selectItem.getRendererType());
+        assertEquals(null, new UISelectItem().getRendererType());
     }
 
 }

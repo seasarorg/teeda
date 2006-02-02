@@ -22,6 +22,7 @@ public class UIInputTeedaTest extends UIOutputTeedaTest {
 
     public void testSaveAndRestoreState() throws Exception {
         super.testSaveAndRestoreState();
+        createUIInput();
         // TODO test
     }
 

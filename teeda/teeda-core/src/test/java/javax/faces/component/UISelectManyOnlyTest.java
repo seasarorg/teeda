@@ -30,13 +30,11 @@ public class UISelectManyOnlyTest extends TestCase {
     }
 
     public void testGetFamily() {
-        UISelectMany selectBoolean = new UISelectMany();
-        assertEquals("javax.faces.SelectMany", selectBoolean.getFamily());
+        assertEquals("javax.faces.SelectMany", new UISelectMany().getFamily());
     }
 
     public void testDefaultRendererType() throws Exception {
-        UISelectMany selectBoolean = new UISelectMany();
-        assertEquals("javax.faces.Listbox", selectBoolean.getRendererType());
+        assertEquals("javax.faces.Listbox", new UISelectMany().getRendererType());
     }
 
 }

@@ -28,13 +28,11 @@ public class UIPanelOnlyTest extends TestCase {
     }
 
     public void testGetFamily() {
-        UIPanel output = new UIPanel();
-        assertEquals("javax.faces.Panel", output.getFamily());
+        assertEquals("javax.faces.Panel", new UIPanel().getFamily());
     }
 
     public void testDefaultRendererType() throws Exception {
-        UIPanel output = new UIPanel();
-        assertEquals(null, output.getRendererType());
+        assertEquals(null, new UIPanel().getRendererType());
     }
 
 }

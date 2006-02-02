@@ -22,7 +22,6 @@ import javax.faces.event.FacesEvent;
 import javax.faces.event.PhaseId;
 
 import org.seasar.teeda.core.mock.MockFacesEvent;
-import org.seasar.teeda.core.mock.MockValueBinding;
 import org.seasar.teeda.core.mock.NullUIComponent;
 
 /**
@@ -30,42 +29,16 @@ import org.seasar.teeda.core.mock.NullUIComponent;
  */
 public class UIViewRootTeedaTest extends UIComponentBaseTeedaTest {
 
-    public void testSetRenderKitId() throws Exception {
-        UIViewRoot root = createUIViewRoot();
-        root.setRenderKitId("id");
-        assertEquals("id", root.getRenderKitId());
-    }
-
-    public void testGetRenderKitId_withNoValueBinding() throws Exception {
-        UIViewRoot root = createUIViewRoot();
-        root.setValueBinding("renderKitId", null);
-        assertNull(root.getRenderKitId());
-    }
-
-    public void testGetRenderKitId_withValueBinding() throws Exception {
-        UIViewRoot root = createUIViewRoot();
-        MockValueBinding mvb = new MockValueBinding();
-        mvb.setValue(getFacesContext(), "hoge");
-        root.setValueBinding("renderKitId", mvb);
-        assertEquals("hoge", root.getRenderKitId());
-    }
-
-    public void testSetViewId() throws Exception {
-        UIViewRoot root = createUIViewRoot();
-        root.setViewId("a");
-        assertEquals("a", root.getViewId());
-    }
-
     public void testQueueEvent_withAnyPhase() throws Exception {
         UIViewRoot root = createUIViewRoot();
         BroadcastStackUIComponent component = new BroadcastStackUIComponent();
         MockFacesEvent event = new MockFacesEvent(component);
-        //do work any phase 
+        // do work any phase
         event.setPhaseId(PhaseId.ANY_PHASE);
         root.queueEvent(event);
-        
+
         root.broadcastEvents(getFacesContext(), PhaseId.APPLY_REQUEST_VALUES);
-        
+
         Object o = component.getBroadcastedFacesEvent().pop();
         assertNotNull(o);
         assertTrue(o instanceof MockFacesEvent);
@@ -78,15 +51,15 @@ public class UIViewRootTeedaTest extends UIComponentBaseTeedaTest {
         MockFacesEvent event = new MockFacesEvent(component);
         event.setPhaseId(PhaseId.PROCESS_VALIDATIONS);
         root.queueEvent(event);
-        
+
         root.broadcastEvents(getFacesContext(), PhaseId.PROCESS_VALIDATIONS);
-        
+
         Object o = component.getBroadcastedFacesEvent().pop();
         assertNotNull(o);
         assertTrue(o instanceof MockFacesEvent);
         assertEquals(event, o);
     }
-    
+
     public void testQueueEvent_abort() throws Exception {
         UIViewRoot root = createUIViewRoot();
         AbortUIComponent component1 = new AbortUIComponent();
@@ -97,18 +70,18 @@ public class UIViewRootTeedaTest extends UIComponentBaseTeedaTest {
         event1.setPhaseId(PhaseId.PROCESS_VALIDATIONS);
         root.queueEvent(event1);
         root.queueEvent(event2);
-        
+
         root.broadcastEvents(getFacesContext(), PhaseId.PROCESS_VALIDATIONS);
-        
+
         assertEquals(0, root.getEventSize());
     }
-    
-    
-    //TODO getLocalte
-    //TODO processValidators
-    //TODO processUpdates
-    //TODO processApplication
-    
+
+    public void testSaveAndRestoreState() throws Exception {
+        super.testSaveAndRestoreState();
+        createUIViewRoot();
+        // TODO test
+    }
+
     private UIViewRoot createUIViewRoot() {
         return (UIViewRoot) createUIComponent();
     }
@@ -119,18 +92,20 @@ public class UIViewRootTeedaTest extends UIComponentBaseTeedaTest {
 
     private static class BroadcastStackUIComponent extends NullUIComponent {
         Stack stack = new Stack();
+
         public void broadcast(FacesEvent event) throws AbortProcessingException {
             stack.push(event);
         }
-        
+
         public Stack getBroadcastedFacesEvent() {
             return stack;
         }
     }
-    
+
     private static class AbortUIComponent extends NullUIComponent {
         public void broadcast(FacesEvent event) throws AbortProcessingException {
             throw new AbortProcessingException();
         }
     }
+
 }

@@ -36,13 +36,11 @@ public class UIFormOnlyTest extends TestCase {
     }
 
     public void testGetFamily() {
-        UIForm form = new UIForm();
-        assertEquals("javax.faces.Form", form.getFamily());
+        assertEquals("javax.faces.Form", new UIForm().getFamily());
     }
 
     public void testDefaultRendererType() throws Exception {
-        UIForm form = new UIForm();
-        assertEquals("javax.faces.Form", form.getRendererType());
+        assertEquals("javax.faces.Form", new UIForm().getRendererType());
     }
 
     public void testProcessDecodes() throws Exception {

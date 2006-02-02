@@ -28,13 +28,11 @@ public class UIColumnOnlyTest extends TestCase {
     }
 
     public void testGetFamily() {
-        UIColumn column = new UIColumn();
-        assertEquals("javax.faces.Column", column.getFamily());
+        assertEquals("javax.faces.Column", new UIColumn().getFamily());
     }
 
     public void testDefaultRendererType() throws Exception {
-        UIColumn column = new UIColumn();
-        assertEquals(null, column.getRendererType());
+        assertEquals(null, new UIColumn().getRendererType());
     }
 
 }

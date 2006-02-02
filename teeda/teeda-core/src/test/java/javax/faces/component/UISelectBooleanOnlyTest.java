@@ -30,13 +30,13 @@ public class UISelectBooleanOnlyTest extends TestCase {
     }
 
     public void testGetFamily() {
-        UISelectBoolean selectBoolean = new UISelectBoolean();
-        assertEquals("javax.faces.SelectBoolean", selectBoolean.getFamily());
+        assertEquals("javax.faces.SelectBoolean", new UISelectBoolean()
+                .getFamily());
     }
 
     public void testDefaultRendererType() throws Exception {
-        UISelectBoolean selectBoolean = new UISelectBoolean();
-        assertEquals("javax.faces.Checkbox", selectBoolean.getRendererType());
+        assertEquals("javax.faces.Checkbox", new UISelectBoolean()
+                .getRendererType());
     }
 
 }

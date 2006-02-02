@@ -28,13 +28,11 @@ public class UIOutputOnlyTest extends TestCase {
     }
 
     public void testGetFamily() {
-        UIOutput output = new UIOutput();
-        assertEquals("javax.faces.Output", output.getFamily());
+        assertEquals("javax.faces.Output", new UIOutput().getFamily());
     }
 
     public void testDefaultRendererType() throws Exception {
-        UIOutput output = new UIOutput();
-        assertEquals("javax.faces.Text", output.getRendererType());
+        assertEquals("javax.faces.Text", new UIOutput().getRendererType());
     }
 
 }

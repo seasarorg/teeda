@@ -247,12 +247,15 @@ public abstract class AbstractUIComponentTest extends TestCase {
 
     public final void testQueueEvent_NoParent() throws Exception {
         UIComponent component = createUIComponent();
-        try {
-            // this component is not a descendant of a UIViewRoot
+        if (component instanceof UIViewRoot) {
             component.queueEvent(new NullFacesEvent());
-            fail();
-        } catch (IllegalStateException ise) {
-            ExceptionAssert.assertMessageExist(ise);
+        } else {
+            try {
+                component.queueEvent(new NullFacesEvent());
+                fail();
+            } catch (IllegalStateException ise) {
+                ExceptionAssert.assertMessageExist(ise);
+            }
         }
     }
 
@@ -329,7 +332,8 @@ public abstract class AbstractUIComponentTest extends TestCase {
         assertEquals(true, component.isTransient());
     }
 
-    public void testSetGetTransient_ValueBindingNotWork() throws Exception {
+    public final void testSetGetTransient_ValueBindingNotWork()
+            throws Exception {
         UIComponent component = createUIComponent();
         MockValueBinding vb = new MockValueBinding();
         vb.setValue((FacesContext) new NullFacesContext(), Boolean.TRUE);
