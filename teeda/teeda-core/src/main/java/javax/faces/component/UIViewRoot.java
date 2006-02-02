@@ -76,10 +76,14 @@ public class UIViewRoot extends UIComponentBase {
 
     public void queueEvent(FacesEvent event) {
         ComponentUtils_.assertNotNull("event", event);
+        getEvents().add(event);
+    }
+
+    private List getEvents() {
         if (events_ == null) {
             events_ = new ArrayList();
         }
-        events_.add(event);
+        return events_;
     }
 
     public void processDecodes(FacesContext context) {
@@ -171,7 +175,7 @@ public class UIViewRoot extends UIComponentBase {
     }
 
     protected void broadcastEvents(FacesContext context, PhaseId phaseId) {
-        if (events_ == null) {
+        if (getEvents().isEmpty()) {
             return;
         }
         int phaseIdOrdinal = phaseId.getOrdinal();
@@ -210,7 +214,7 @@ public class UIViewRoot extends UIComponentBase {
     }
 
     public int getEventSize() {
-        return (events_ != null) ? events_.size() : 0;
+        return getEvents().size();
     }
 
 }

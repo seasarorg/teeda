@@ -16,7 +16,6 @@
 package javax.faces.component;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,6 +34,7 @@ import javax.faces.internal.ComponentChildrenListWrapper;
 import javax.faces.internal.ComponentFacetAndChildrenIterator;
 import javax.faces.internal.ComponentFacetMapWrapper;
 import javax.faces.internal.RenderKitUtil;
+import javax.faces.internal.SerializableStateHolder;
 import javax.faces.render.RenderKit;
 import javax.faces.render.Renderer;
 
@@ -449,7 +449,7 @@ public abstract class UIComponentBase extends UIComponent {
         }
 
         Map facetMap = new HashMap();
-        for (Iterator itr = getFacets().keySet().iterator(); itr.hasNext();) {
+        for (Iterator itr = getFacets().entrySet().iterator(); itr.hasNext();) {
             Map.Entry entry = (Map.Entry) itr.next();
             String key = (String) entry.getKey();
             UIComponent component = (UIComponent) entry.getValue();
@@ -459,7 +459,7 @@ public abstract class UIComponentBase extends UIComponent {
         }
 
         List children = new ArrayList();
-        for (Iterator itr = childrenList_.iterator(); itr.hasNext();) {
+        for (Iterator itr = getChildren().iterator(); itr.hasNext();) {
             UIComponent component = (UIComponent) itr.next();
             if (!component.isTransient()) {
                 children.add(component.processSaveState(context));
@@ -472,8 +472,7 @@ public abstract class UIComponentBase extends UIComponent {
 
     public void processRestoreState(FacesContext context, Object state) {
         ComponentUtils_.assertNotNull("context", context);
-
-        if (state instanceof SerializableStateHolder) {
+        if (!(state instanceof SerializableStateHolder)) {
             throw new IllegalArgumentException();
         }
 
@@ -483,7 +482,7 @@ public abstract class UIComponentBase extends UIComponent {
         Map facetMap = holder.getFacetMap();
         List children = holder.getChildren();
 
-        for (Iterator itr = getFacets().keySet().iterator(); itr.hasNext();) {
+        for (Iterator itr = getFacets().entrySet().iterator(); itr.hasNext();) {
             Map.Entry entry = (Map.Entry) itr.next();
             Object facetState = facetMap.get(entry.getKey());
             if (facetState != null) {
@@ -557,20 +556,18 @@ public abstract class UIComponentBase extends UIComponent {
         if (attachedObject == null) {
             return null;
         }
-        Object obj = null;
-        Object result = null;
+
         if (attachedObject instanceof List) {
             List attachedList = (List) attachedObject;
             List resultList = new ArrayList(attachedList.size());
             for (Iterator itr = attachedList.iterator(); itr.hasNext();) {
-                obj = itr.next();
+                Object obj = itr.next();
                 resultList.add(new AttachedObjectStateWrapper(context, obj));
             }
-            result = resultList;
+            return resultList;
         } else {
-            result = new AttachedObjectStateWrapper(context, obj);
+            return new AttachedObjectStateWrapper(context, attachedObject);
         }
-        return result;
     }
 
     public static Object restoreAttachedState(FacesContext context,
@@ -581,27 +578,21 @@ public abstract class UIComponentBase extends UIComponent {
             return null;
         }
 
-        Object result = null;
         if (stateObject instanceof List) {
             List list = (List) stateObject;
-
-            List resultList = new ArrayList(list.size());
+            List restoredList = new ArrayList(list.size());
             for (Iterator itr = list.iterator(); itr.hasNext();) {
-
                 AttachedObjectStateWrapper wrapper = (AttachedObjectStateWrapper) itr
                         .next();
-                resultList.add(wrapper.restore(context));
-
+                restoredList.add(wrapper.restore(context));
             }
-            result = resultList;
+            return restoredList;
         } else if (stateObject instanceof AttachedObjectStateWrapper) {
             AttachedObjectStateWrapper wrapper = (AttachedObjectStateWrapper) stateObject;
-            result = wrapper.restore(context);
+            return wrapper.restore(context);
         } else {
-            throw new IllegalStateException();
+            throw new IllegalStateException("Unsupported:" + stateObject);
         }
-
-        return result;
     }
 
     private Object saveAttributesMap() {
@@ -671,34 +662,9 @@ public abstract class UIComponentBase extends UIComponent {
         }
     }
 
-    private class SerializableStateHolder implements Serializable {
-        private Object state_ = null;
-
-        private Map facetMap_ = null;
-
-        private List children_ = null;
-
-        public SerializableStateHolder(Object state, Map facetMap, List children) {
-            state_ = state;
-            facetMap_ = facetMap;
-            children_ = children;
-        }
-
-        public List getChildren() {
-            return children_;
-        }
-
-        public Map getFacetMap() {
-            return facetMap_;
-        }
-
-        public Object getState() {
-            return state_;
-        }
-    }
-
     private static class NullRenderer extends Renderer {
         public NullRenderer() {
         }
     }
+
 }

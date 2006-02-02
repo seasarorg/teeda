@@ -15,13 +15,19 @@
  */
 package javax.faces.component;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
+import javax.faces.context.FacesContext;
 import javax.faces.event.FacesListener;
+import javax.faces.internal.SerializableStateHolder;
 
-import org.seasar.teeda.core.mock.MockExternalContextImpl;
+import junitx.framework.ObjectAssert;
+
 import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.mock.MockFacesContextImpl;
 import org.seasar.teeda.core.mock.MockUIComponent;
@@ -30,15 +36,16 @@ import org.seasar.teeda.core.mock.MockValueBinding;
 import org.seasar.teeda.core.mock.NullFacesContext;
 import org.seasar.teeda.core.mock.NullFacesEvent;
 import org.seasar.teeda.core.mock.NullFacesListener;
+import org.seasar.teeda.core.mock.NullUIComponent;
 import org.seasar.teeda.core.unit.ExceptionAssert;
 
 public class UIComponentBaseTest extends AbstractUIComponentTest {
 
     public void testSetGetValueBinding() {
-        UIComponentBase base = createUIComponentBase();
+        UIComponentBase component = createUIComponentBase();
         MockValueBinding vb = new MockValueBinding();
-        base.setValueBinding("hoge", vb);
-        assertTrue(vb == base.getValueBinding("hoge"));
+        component.setValueBinding("hoge", vb);
+        assertTrue(vb == component.getValueBinding("hoge"));
     }
 
     public void testSetGetId() {
@@ -80,13 +87,9 @@ public class UIComponentBaseTest extends AbstractUIComponentTest {
         UIComponentBase componentBase = createUIComponentBase();
         MockValueBinding vb = new MockValueBinding();
         vb.setValue(getFacesContext(), "bar rendererType");
-        componentBase.setRendererType(null); // XXX
+        componentBase.setRendererType(null);
         componentBase.setValueBinding("rendererType", vb);
         assertEquals("bar rendererType", componentBase.getRendererType());
-    }
-
-    public void testGetRendersChildren() {
-        // TODO testing.
     }
 
     public void testGetChildCount() {
@@ -291,16 +294,69 @@ public class UIComponentBaseTest extends AbstractUIComponentTest {
         }
     }
 
-    public void testGetFacets() {
-        // TODO testing.
-    }
+    public void testGetFacetsAndFacet() {
+        UIComponentBase component = createUIComponentBase();
 
-    public void testGetFacet() {
-        // TODO testing.
+        NullUIComponent facet1 = new NullUIComponent();
+        component.getFacets().put("a", facet1);
+        assertSame(facet1, component.getFacets().get("a"));
+        assertEquals(null, component.getFacets().get("b"));
+
+        assertSame(facet1, component.getFacet("a"));
+        assertEquals(null, component.getFacet("b"));
     }
 
     public void testGetFacetsAndChildren() {
-        // TODO testing.
+        // ## Arrange ##
+        UIComponent component = createUIComponentBase();
+        assertEquals(0, component.getChildCount());
+        UIComponent child1 = new MockUIComponent();
+        UIComponent child2 = new MockUIComponent();
+        UIComponent child3 = new MockUIComponent();
+        UIComponent facet1 = new MockUIComponent();
+        UIComponent facet2 = new MockUIComponent();
+        component.getChildren().add(child1);
+        component.getFacets().put("facet1", facet1);
+        component.getChildren().add(child2);
+        component.getFacets().put("facet2", facet2);
+        component.getChildren().add(child3);
+
+        // ## Act & Assert
+        Iterator it = component.getFacetsAndChildren();
+        // Facets are undefined order
+        assertSame(facet1, (UIComponent) it.next());
+        assertSame(facet2, (UIComponent) it.next());
+        assertSame(child1, (UIComponent) it.next());
+        assertSame(child2, (UIComponent) it.next());
+        assertSame(child3, (UIComponent) it.next());
+
+    }
+
+    public void testGetFacetsAndChildren_EmptyIterator() throws Exception {
+        // ## Arrange ##
+        UIComponent component = createUIComponentBase();
+
+        // ## Act ##
+        Iterator it = component.getFacetsAndChildren();
+
+        // ## Assert ##
+        assertEquals(false, it.hasNext());
+    }
+
+    public void testGetFacetsAndChildren_IteratorNotSupportRemove()
+            throws Exception {
+        // ## Arrange ##
+        UIComponent component = createUIComponentBase();
+
+        // ## Act ##
+        Iterator it = component.getFacetsAndChildren();
+
+        // ## Assert ##
+        try {
+            it.remove();
+        } catch (UnsupportedOperationException uoe) {
+            ExceptionAssert.assertMessageExist(uoe);
+        }
     }
 
     public final void testBroadcast() throws Exception {
@@ -336,26 +392,10 @@ public class UIComponentBaseTest extends AbstractUIComponentTest {
         assertSame(facesListener2, args.get(3));
     }
 
-    public void testDecode() throws Exception {
-        // TODO testing.
-    }
-
-    public void testEncodeBegin() throws Exception {
-        // TODO testing.
-    }
-
-    public void testEncodeChildren() throws Exception {
-        // TODO testing.
-    }
-
-    public void testEncodeEnd() throws Exception {
-        // TODO testing.
-    }
-
     public void testHandleFacesListeners() throws Exception {
-        UIComponentBase base = createUIComponentBase();
+        UIComponentBase component = createUIComponentBase();
         try {
-            base.addFacesListener(null);
+            component.addFacesListener(null);
             fail();
         } catch (NullPointerException npe) {
             ExceptionAssert.assertMessageExist(npe);
@@ -373,32 +413,33 @@ public class UIComponentBaseTest extends AbstractUIComponentTest {
             }
         };
 
-        base.addFacesListener(listener1);
-        base.addFacesListener(listener2);
+        component.addFacesListener(listener1);
+        component.addFacesListener(listener2);
 
-        FacesListener[] listeners = base.getFacesListeners(FacesListener.class);
+        FacesListener[] listeners = component
+                .getFacesListeners(FacesListener.class);
         assertEquals("Assert all FacesListner", 2, listeners.length);
 
-        base.removeFacesListener(listener2);
+        component.removeFacesListener(listener2);
 
-        listeners = base.getFacesListeners(FacesListener.class);
+        listeners = component.getFacesListeners(FacesListener.class);
         assertEquals("Should be just one listener", 1, listeners.length);
         assertEquals("1", listeners[0].toString());
     }
 
     public void testHandleFacesListeners2() {
-        UIComponentBase base = createUIComponentBase();
+        UIComponentBase component = createUIComponentBase();
         MockFacesListener1 listener1 = new MockFacesListener1();
         MockFacesListener2 listener2 = new MockFacesListener2();
 
-        base.addFacesListener(listener1);
-        base.addFacesListener(listener2);
+        component.addFacesListener(listener1);
+        component.addFacesListener(listener2);
 
-        FacesListener[] listeners1 = base
+        FacesListener[] listeners1 = component
                 .getFacesListeners(MockFacesListener1.class);
         assertEquals(1, listeners1.length);
 
-        FacesListener[] listeners2 = base
+        FacesListener[] listeners2 = component
                 .getFacesListeners(MockFacesListener2.class);
         assertEquals(1, listeners2.length);
 
@@ -420,53 +461,104 @@ public class UIComponentBaseTest extends AbstractUIComponentTest {
         assertSame(event, parent.getQueueEvent());
     }
 
-    public void testProcessRestoreState() throws Exception {
-        // TODO testing.
-    }
-
-    public void testProcessDecodes() throws Exception {
-        // TODO testing.
-    }
-
-    public void testProcessValidators() throws Exception {
-        // TODO testing.
-    }
-
-    public void testProcessUpdates() throws Exception {
-        // TODO testing.
+    public void testProcessSaveState_TransientTrue() throws Exception {
+        UIComponentBase component = createUIComponentBase();
+        component.setTransient(true);
+        Object state = component.processSaveState(getFacesContext());
+        assertEquals(null, state);
     }
 
     public void testProcessSaveState() throws Exception {
-        // TODO testing.
+        // ## Arrange ##
+        final List callSeq = new ArrayList();
+        UIComponentBase component = createUIComponentBase();
+        {
+            component.getChildren().add(new NullUIComponent() {
+                public Object processSaveState(FacesContext context) {
+                    callSeq.add("1");
+                    return "1";
+                }
+            });
+            component.getChildren().add(new NullUIComponent() {
+                public Object processSaveState(FacesContext context) {
+                    callSeq.add("2");
+                    return "1";
+                }
+            });
+            component.getFacets().put("A", new NullUIComponent() {
+                public Object processSaveState(FacesContext context) {
+                    callSeq.add("3");
+                    return "1";
+                }
+            });
+            component.getFacets().put("B", new NullUIComponent() {
+                public Object processSaveState(FacesContext context) {
+                    callSeq.add("4");
+                    return "1";
+                }
+            });
+        }
+
+        // ## Act ##
+        Object state = component.processSaveState(getFacesContext());
+
+        // ## Assert ##
+        assertEquals(4, callSeq.size());
+        ObjectAssert.assertInstanceOf(Serializable.class, state);
     }
 
-    public void testGetFacesContext() throws Exception {
-        // TODO testing.
-    }
+    public void testProcessRestoreState() throws Exception {
+        // ## Arrange ##
+        final List callSeq = new ArrayList();
+        UIComponentBase component = new MockUIComponentBase() {
+            public void restoreState(FacesContext context, Object state) {
+                callSeq.add("5");
+            }
+        };
+        {
+            component.getChildren().add(new NullUIComponent() {
+                public void processRestoreState(FacesContext context,
+                        Object state) {
+                    callSeq.add("1");
+                }
+            });
+            component.getChildren().add(new NullUIComponent() {
+                public void processRestoreState(FacesContext context,
+                        Object state) {
+                    callSeq.add("2");
+                }
+            });
+            component.getFacets().put("A", new NullUIComponent() {
+                public void processRestoreState(FacesContext context,
+                        Object state) {
+                    callSeq.add("3");
+                }
+            });
+            component.getFacets().put("B", new NullUIComponent() {
+                public void processRestoreState(FacesContext context,
+                        Object state) {
+                    callSeq.add("4");
+                }
+            });
+        }
+        HashMap m = new HashMap();
+        m.put("A", "a");
+        m.put("B", "b");
 
-    public void testGetRenderer() throws Exception {
-        // TODO testing.
+        // ## Act ##
+        component.processRestoreState(getFacesContext(),
+                new SerializableStateHolder(null, m, Arrays
+                        .asList(new Object[] { "", "" })));
+
+        // ## Assert ##
+        assertEquals(5, callSeq.size());
+        assertEquals(callSeq.toString(), "5", callSeq.get(4));
     }
 
     public final void testSaveAndRestoreAttachedState_AttacedObjectIsNull() {
         NullFacesContext context = new NullFacesContext();
         Object stateObj = UIComponentBase.saveAttachedState(context, null);
         UIComponentBase.restoreAttachedState(context, stateObj);
-    }
-
-    public final void testSaveAttachedState_ContextIsNull() throws Exception {
-        try {
-            UIComponentBase.saveAttachedState(null, new Object());
-            fail();
-        } catch (NullPointerException npe) {
-            String message = npe.getMessage();
-            assertNotNull(message);
-            assertTrue(message.trim().length() > 0);
-        }
-    }
-
-    public void testRestoreAttachedState() {
-        // TODO testing.
     }
 
     private static class MockFacesListener1 implements FacesListener {
@@ -491,15 +583,9 @@ public class UIComponentBaseTest extends AbstractUIComponentTest {
 
     private MockFacesContext facesContext_;
 
-    private MockExternalContextImpl externalContext_;
-
     protected void setUp() throws Exception {
         super.setUp();
         facesContext_ = new MockFacesContextImpl();
-
-        externalContext_ = new MockExternalContextImpl();
-        externalContext_.setRequestParameterMap(new HashMap());
-        facesContext_.setExternalContext(externalContext_);
     }
 
     protected void tearDown() throws Exception {

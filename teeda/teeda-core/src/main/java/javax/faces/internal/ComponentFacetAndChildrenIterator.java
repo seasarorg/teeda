@@ -34,7 +34,7 @@ public class ComponentFacetAndChildrenIterator implements Iterator {
 
     public ComponentFacetAndChildrenIterator(Map facetMap, List childrenList) {
         if (facetMap != null) {
-            facetItr_ = facetMap.entrySet().iterator();
+            facetItr_ = facetMap.values().iterator();
         }
         if (childrenList != null) {
             childrenItr_ = childrenList.iterator();
@@ -42,7 +42,7 @@ public class ComponentFacetAndChildrenIterator implements Iterator {
     }
 
     public void remove() {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("remove");
     }
 
     public boolean hasNext() {

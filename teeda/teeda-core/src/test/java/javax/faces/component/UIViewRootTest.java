@@ -23,6 +23,7 @@ import javax.faces.context.FacesContext;
 import junitx.framework.StringAssert;
 
 import org.seasar.teeda.core.mock.MockValueBinding;
+import org.seasar.teeda.core.mock.NullFacesEvent;
 
 /**
  * @author manhole
@@ -30,56 +31,60 @@ import org.seasar.teeda.core.mock.MockValueBinding;
 public class UIViewRootTest extends UIComponentBaseTest {
 
     public void testSetGetRenderKitId() {
-        UIViewRoot root = new UIViewRoot();
-        assertEquals(null, root.getRenderKitId());
-        root.setRenderKitId("RENDER");
-        assertEquals("RENDER", root.getRenderKitId());
+        UIViewRoot viewRoot = createUIViewRoot();
+        assertEquals(null, viewRoot.getRenderKitId());
+        viewRoot.setRenderKitId("RENDER");
+        assertEquals("RENDER", viewRoot.getRenderKitId());
     }
 
     public void testSetGetRenderKitId_ValueBinding() {
-        UIViewRoot root = new UIViewRoot();
-        assertEquals(null, root.getValueBinding("renderKitId"));
+        UIViewRoot viewRoot = createUIViewRoot();
+        assertEquals(null, viewRoot.getValueBinding("renderKitId"));
         MockValueBinding vb = new MockValueBinding();
         FacesContext context = getFacesContext();
         vb.setValue(context, "aaa");
-        root.setValueBinding("renderKitId", vb);
-        assertEquals("aaa", root.getRenderKitId());
-        assertEquals("aaa", root.getValueBinding("renderKitId").getValue(
+        viewRoot.setValueBinding("renderKitId", vb);
+        assertEquals("aaa", viewRoot.getRenderKitId());
+        assertEquals("aaa", viewRoot.getValueBinding("renderKitId").getValue(
                 context));
     }
 
     public void testGetRenderKitId_withNoValueBinding() throws Exception {
-        UIViewRoot root = createUIViewRoot();
-        root.setValueBinding("renderKitId", null);
-        assertEquals(null, root.getRenderKitId());
+        UIViewRoot viewRoot = createUIViewRoot();
+        viewRoot.setValueBinding("renderKitId", null);
+        assertEquals(null, viewRoot.getRenderKitId());
     }
 
     public void testSetGetViewId() {
-        UIViewRoot root = new UIViewRoot();
-        assertEquals(null, root.getViewId());
-        root.setViewId("bbb");
-        assertEquals("bbb", root.getViewId());
+        UIViewRoot viewRoot = createUIViewRoot();
+        assertEquals(null, viewRoot.getViewId());
+        viewRoot.setViewId("bbb");
+        assertEquals("bbb", viewRoot.getViewId());
     }
 
     public void testSetGetViewId_ValueBindingNotWork() {
-        UIViewRoot root = new UIViewRoot();
-        assertEquals(null, root.getValueBinding("viewId"));
+        UIViewRoot viewRoot = createUIViewRoot();
+        assertEquals(null, viewRoot.getValueBinding("viewId"));
         MockValueBinding vb = new MockValueBinding();
         FacesContext context = getFacesContext();
         vb.setValue(context, "aaa");
-        root.setValueBinding("viewId", vb);
-        assertEquals(null, root.getRenderKitId());
-        assertEquals("aaa", root.getValueBinding("viewId").getValue(context));
+        viewRoot.setValueBinding("viewId", vb);
+        assertEquals(null, viewRoot.getRenderKitId());
+        assertEquals("aaa", viewRoot.getValueBinding("viewId")
+                .getValue(context));
     }
 
     public void testQueueEvent() throws Exception {
         // TODO
         // ## Arrange ##
+        UIViewRoot viewRoot = createUIViewRoot();
+        assertEquals(0, viewRoot.getEventSize());
 
         // ## Act ##
+        viewRoot.queueEvent(new NullFacesEvent());
 
         // ## Assert ##
-
+        assertEquals(1, viewRoot.getEventSize());
     }
 
     public void testQueueEvent_WithParent() throws Exception {
@@ -87,16 +92,25 @@ public class UIViewRootTest extends UIComponentBaseTest {
     }
 
     // TODO processDecodes
+    public void testProcessDecodes() throws Exception {
+        // ## Arrange ##
+
+        // ## Act ##
+
+        // ## Assert ##
+        
+    }
+    
     // TODO encodeBegin
     // TODO processValidators
     // TODO processUpdates
     // TODO processApplication
 
     public void testCreateUniqueId() {
-        UIViewRoot root = createUIViewRoot();
+        UIViewRoot viewRoot = createUIViewRoot();
         List l = new ArrayList();
         for (int i = 0; i < 10; i++) {
-            String id = root.createUniqueId();
+            String id = viewRoot.createUniqueId();
             StringAssert.assertStartsWith(UIViewRoot.UNIQUE_ID_PREFIX, id);
             assertEquals("should be unique:" + id, false, l.contains(id));
             l.add(id);

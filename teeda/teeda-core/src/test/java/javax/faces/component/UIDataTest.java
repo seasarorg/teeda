@@ -454,6 +454,18 @@ public class UIDataTest extends UIComponentBaseTest {
         assertEquals(-1, data.getRowIndex());
     }
 
+    public void testProcessDecodes_CallFacetsAndChildren() throws Exception {
+        // override superclass behavior
+    }
+
+    public void testProcessValidators_CallFacetsAndChildren() throws Exception {
+        // override superclass behavior
+    }
+
+    public void testProcessUpdates_CallFacetsAndChildren() throws Exception {
+        // override superclass behavior
+    }
+
     public void testProcessValidators_RenderFalse() throws Exception {
         // ## Arrange ##
         final int[] calls = { 0, 0, 0 };
