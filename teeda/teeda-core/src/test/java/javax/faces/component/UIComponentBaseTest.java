@@ -593,7 +593,7 @@ public class UIComponentBaseTest extends AbstractUIComponentTest {
         super.tearDown();
     }
 
-    protected MockFacesContext getFacesContext() {
+    public MockFacesContext getFacesContext() {
         return facesContext_;
     }
 
