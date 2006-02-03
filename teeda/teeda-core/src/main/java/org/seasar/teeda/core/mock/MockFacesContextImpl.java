@@ -96,14 +96,16 @@ public class MockFacesContextImpl extends MockFacesContext {
     }
 
     public Iterator getMessages() {
-        return messages_.values().iterator();
+        List all = new ArrayList();
+        for (Iterator it = messages_.values().iterator(); it.hasNext();) {
+            List messages = (List) it.next();
+            all.addAll(messages);
+        }
+        return all.iterator();
     }
 
     public Iterator getMessages(String clientId) {
-        Object o = messages_.get(clientId);
-        List list = new ArrayList();
-        list.add(o);
-        return list.iterator();
+        return getMessagesList(clientId).iterator();
     }
 
     public RenderKit getRenderKit() {
@@ -157,7 +159,17 @@ public class MockFacesContextImpl extends MockFacesContext {
     }
 
     public void addMessage(String clientId, FacesMessage message) {
-        messages_.put(clientId, message);
+        List l = getMessagesList(clientId);
+        l.add(message);
+    }
+
+    private List getMessagesList(String clientId) {
+        List l = (List) messages_.get(clientId);
+        if (l == null) {
+            l = new ArrayList();
+            messages_.put(clientId, l);
+        }
+        return l;
     }
 
     public void release() {
@@ -178,7 +190,6 @@ public class MockFacesContextImpl extends MockFacesContext {
     public void setMockExternalContext(MockExternalContext context) {
         externalContext_ = context;
     }
-    
 
     public void setApplication(Application application) {
         application_ = application;

@@ -144,7 +144,11 @@ public class UIComponentBaseTest extends AbstractUIComponentTest {
         target.getChildren().add(component);
 
         UIComponent found = component.findComponent("bb");
-        assertSame(target, found);
+        if (component instanceof NamingContainer) {
+            assertEquals(null, found);
+        } else {
+            assertSame(target, found);
+        }
     }
 
     public void testFindComponent_FromParent() {
