@@ -15,15 +15,28 @@
  */
 package javax.faces.component;
 
+import org.seasar.teeda.core.mock.MockFacesContext;
+
 /**
  * @author manhole
+ * @author shot
  */
 public class UIParameterTeedaTest extends UIComponentBaseTeedaTest {
 
     public void testSaveAndRestoreState() throws Exception {
         super.testSaveAndRestoreState();
         createUIParameter();
-        // TODO
+        UIParameter param1 = createUIParameter();
+        param1.setName("name");
+        param1.setValue("value");
+        MockFacesContext context = getFacesContext();
+        Object state = param1.saveState(context);
+
+        UIParameter param2 = createUIParameter();
+        param2.restoreState(context, state);
+
+        assertEquals(param1.getName(), param2.getName());
+        assertEquals(param1.getValue(), param2.getValue());
     }
 
     private UIParameter createUIParameter() {

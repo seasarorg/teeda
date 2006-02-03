@@ -15,7 +15,16 @@
  */
 package javax.faces.event;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
 import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.el.ValueBinding;
+import javax.faces.render.Renderer;
 
 import junit.framework.TestCase;
 
@@ -31,7 +40,7 @@ public class FacesEventTest extends TestCase {
         FacesEvent event = new TargetFacesEvent(component);
         assertNotNull(event);
         try {
-            FacesEvent event2 = new TargetFacesEvent(null);
+            new TargetFacesEvent(null);
             fail();
         } catch (IllegalArgumentException e) {
             assertTrue(true);
@@ -58,15 +67,19 @@ public class FacesEventTest extends TestCase {
         assertEquals(PhaseId.APPLY_REQUEST_VALUES, event.getPhaseId());
     }
 
-    // TODO : need to test correctly. In now, no idea for this.
     public void testQueue() {
-        MockUIComponent component = new MockUIComponent();
+        MockUINotifyComponent component = new MockUINotifyComponent();
         FacesEvent event = new TargetFacesEvent(component);
-
         event.queue();
+        List notify = component.getNotify();
+        assertNotNull(notify);
+        assertTrue(notify.size() == 1);
+        assertTrue(notify.get(0) instanceof TargetFacesEvent);
     }
 
-    private class TargetFacesEvent extends FacesEvent {
+    private static class TargetFacesEvent extends FacesEvent {
+
+        private static final long serialVersionUID = 1L;
 
         public TargetFacesEvent(UIComponent component) {
             super(component);
@@ -82,4 +95,154 @@ public class FacesEventTest extends TestCase {
 
     }
 
+    private static class MockUINotifyComponent extends UIComponent {
+
+        private List list_ = new ArrayList();
+
+        public Map getAttributes() {
+            return null;
+        }
+
+        public ValueBinding getValueBinding(String name) {
+            return null;
+        }
+
+        public void setValueBinding(String name, ValueBinding binding) {
+        }
+
+        public String getClientId(FacesContext context) {
+            return null;
+        }
+
+        public String getFamily() {
+            return null;
+        }
+
+        public String getId() {
+            return null;
+        }
+
+        public void setId(String id) {
+        }
+
+        public UIComponent getParent() {
+            return null;
+        }
+
+        public void setParent(UIComponent parent) {
+        }
+
+        public boolean isRendered() {
+            return false;
+        }
+
+        public void setRendered(boolean rendered) {
+        }
+
+        public String getRendererType() {
+            return null;
+        }
+
+        public void setRendererType(String rendererType) {
+        }
+
+        public boolean getRendersChildren() {
+            return false;
+        }
+
+        public List getChildren() {
+            return null;
+        }
+
+        public int getChildCount() {
+            return 0;
+        }
+
+        public UIComponent findComponent(String expr) {
+            return null;
+        }
+
+        public Map getFacets() {
+            return null;
+        }
+
+        public UIComponent getFacet(String name) {
+            return null;
+        }
+
+        public Iterator getFacetsAndChildren() {
+            return null;
+        }
+
+        public void broadcast(FacesEvent event) throws AbortProcessingException {
+        }
+
+        public void decode(FacesContext context) {
+        }
+
+        public void encodeBegin(FacesContext context) throws IOException {
+        }
+
+        public void encodeChildren(FacesContext context) throws IOException {
+        }
+
+        public void encodeEnd(FacesContext context) throws IOException {
+        }
+
+        protected void addFacesListener(FacesListener listener) {
+        }
+
+        protected FacesListener[] getFacesListeners(Class clazz) {
+            return null;
+        }
+
+        protected void removeFacesListener(FacesListener listener) {
+        }
+
+        public void queueEvent(FacesEvent event) {
+            list_.add(event);
+        }
+
+        public void processRestoreState(FacesContext context, Object state) {
+        }
+
+        public void processDecodes(FacesContext context) {
+        }
+
+        public void processValidators(FacesContext context) {
+        }
+
+        public void processUpdates(FacesContext context) {
+        }
+
+        public Object processSaveState(FacesContext context) {
+            return null;
+        }
+
+        protected FacesContext getFacesContext() {
+            return null;
+        }
+
+        protected Renderer getRenderer(FacesContext context) {
+            return null;
+        }
+
+        public boolean isTransient() {
+            return false;
+        }
+
+        public void setTransient(boolean transientValue) {
+        }
+
+        public Object saveState(FacesContext context) {
+            return null;
+        }
+
+        public void restoreState(FacesContext context, Object state) {
+        }
+
+        public List getNotify(){
+            return list_;
+        }
+    }
 }

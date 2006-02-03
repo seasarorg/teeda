@@ -24,8 +24,6 @@ public class MockValidator implements Validator {
 
     public void validate(FacesContext context, UIComponent component,
             Object value) throws FacesException {
-        // TODO Auto-generated method stub
-
     }
 
 }

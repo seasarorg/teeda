@@ -58,17 +58,14 @@ public class MockStateManager extends StateManager {
     }
 
     public UIViewRoot restoreView(FacesContext context, String viewId, String renderKitId) {
-        // TODO Auto-generated method stub
         throw new NotImplementedException();
     }
 
     protected UIViewRoot restoreTreeStructure(FacesContext context, String viewId, String renderKitId) {
-        // TODO Auto-generated method stub
         return null;
     }
 
     protected void restoreComponentState(FacesContext context, UIViewRoot viewRoot, String renderKitId) {
-        // TODO Auto-generated method stub
     }
 
 }

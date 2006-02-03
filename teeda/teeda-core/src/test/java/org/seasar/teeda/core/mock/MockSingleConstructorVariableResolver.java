@@ -32,7 +32,6 @@ public class MockSingleConstructorVariableResolver extends VariableResolver {
     
     public Object resolveVariable(FacesContext context, String name)
             throws EvaluationException {
-        // TODO Auto-generated method stub
         return null;
     }
 
