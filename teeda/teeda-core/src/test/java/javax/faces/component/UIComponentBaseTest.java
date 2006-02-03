@@ -136,11 +136,25 @@ public class UIComponentBaseTest extends AbstractUIComponentTest {
         assertSame(component, found);
     }
 
-    public void testFindComponent_Ance() {
+    public void testFindComponent_Parent() {
         UIComponentBase component = createUIComponentBase();
         component.setId("aa");
-        // base will be the root UIComponent
-        UIComponent found = component.findComponent(":aa");
+        UIComponent target = new MockUIComponentBase();
+        target.setId("bb");
+        target.getChildren().add(component);
+
+        UIComponent found = component.findComponent("bb");
+        assertSame(target, found);
+    }
+
+    public void testFindComponent_FromParent() {
+        UIComponentBase component = createUIComponentBase();
+        component.setId("aa");
+        UIComponent target = new MockUIComponentBase();
+        target.setId("bb");
+        target.getChildren().add(component);
+
+        UIComponent found = component.findComponent("aa");
         assertSame(component, found);
     }
 
