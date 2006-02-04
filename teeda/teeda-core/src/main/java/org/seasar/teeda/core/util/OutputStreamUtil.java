@@ -33,4 +33,11 @@ public class OutputStreamUtil {
         }
     }
 
+    public static void flush(OutputStream out) {
+        try {
+            out.flush();
+        } catch (IOException e) {
+            throw new IORuntimeException(e);
+        }
+    }
 }

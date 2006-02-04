@@ -60,6 +60,7 @@ public class Base64EncodeConverter implements EncodeConverter {
             return Base64Util.encode(bos.toByteArray());
         } finally {
             if (oos != null) {
+                ObjectOutputStreamUtil.reset(oos);
                 OutputStreamUtil.close(oos);
             }
             if (out != null) {
