@@ -73,7 +73,7 @@ public class ResultDataModelTest extends TestCase {
 
         Object[] target = new Object[] { "A" };
         MockResult result3 = new MockResult(target);
-        ResultDataModel model3 = new ResultDataModel(result);
+        ResultDataModel model3 = new ResultDataModel(result3);
 
         model3.setRowIndex(target.length + 1);
         try {

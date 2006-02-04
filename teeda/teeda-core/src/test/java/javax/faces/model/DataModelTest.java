@@ -59,7 +59,6 @@ public class DataModelTest extends TestCase {
 
         model.removeDataModelListener(listener);
 
-        TargetDataModel model2 = new TargetDataModel();
         try {
             model.removeDataModelListener(null);
             fail();

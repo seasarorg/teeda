@@ -18,7 +18,6 @@ package org.seasar.teeda.core.config.handler;
 import java.util.List;
 import java.util.Map;
 
-import org.seasar.framework.xml.TagHandlerContext;
 import org.seasar.teeda.core.config.element.AttributeElement;
 import org.seasar.teeda.core.config.element.ConverterElement;
 import org.seasar.teeda.core.config.element.FacesConfig;

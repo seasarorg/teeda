@@ -57,7 +57,6 @@ public class PhaseListenerAssemblerTest extends TeedaTestCase {
         // # Arrange #
         PhaseListener[] orgListeners = getLifecycle().clearAllPhaseListener();
         try {
-            MockPhaseListener2 a = new MockPhaseListener2();
             List list = new ArrayList();
             list.add(getClass().getName() + "$" + "MockPhaseListener2");
             PhaseListenerAssembler assembler = new PhaseListenerAssembler(list,

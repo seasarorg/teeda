@@ -17,7 +17,6 @@ package org.seasar.teeda.core.config.handler;
 
 import java.util.List;
 
-import org.seasar.framework.xml.TagHandlerContext;
 import org.seasar.teeda.core.config.element.FacesConfig;
 import org.seasar.teeda.core.config.element.LifecycleElement;
 import org.seasar.teeda.core.config.element.impl.FacesConfigImpl;
