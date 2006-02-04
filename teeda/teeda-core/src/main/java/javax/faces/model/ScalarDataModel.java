@@ -39,6 +39,9 @@ public class ScalarDataModel extends DataModel {
     }
 
     public Object getRowData() {
+        if(scalar_ == null) {
+            return null;
+        }
         if (!isRowAvailable()) {
             throw new IllegalArgumentException();
         }
