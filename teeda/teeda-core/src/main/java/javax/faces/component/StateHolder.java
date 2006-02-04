@@ -22,12 +22,12 @@ import javax.faces.context.FacesContext;
  */
 public interface StateHolder {
 
-	public boolean isTransient();
+    public boolean isTransient();
 
-	public void setTransient(boolean transientValue);
+    public void setTransient(boolean transientValue);
 
-	public Object saveState(FacesContext context);
+    public Object saveState(FacesContext context);
 
-	public void restoreState(FacesContext context, Object state);
+    public void restoreState(FacesContext context, Object state);
 
 }

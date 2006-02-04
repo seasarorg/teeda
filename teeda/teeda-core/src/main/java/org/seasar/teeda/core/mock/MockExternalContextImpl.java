@@ -260,7 +260,7 @@ public class MockExternalContextImpl extends MockExternalContext {
         throw new UnsupportedOperationException();
     }
 
-    private class LocalesIterator implements Iterator {
+    private static class LocalesIterator implements Iterator {
         public LocalesIterator(Enumeration locales) {
             this.locales = locales;
         }

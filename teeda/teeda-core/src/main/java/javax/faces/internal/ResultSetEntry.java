@@ -53,7 +53,6 @@ public class ResultSetEntry implements Entry {
         if (obj == null) {
             return false;
         }
-
         if (!(obj instanceof Map.Entry)) {
             return false;
         }
@@ -70,4 +69,9 @@ public class ResultSetEntry implements Entry {
         }
         return true;
     }
+
+    public int hashCode() {
+        return ((map_ != null) ? map_.hashCode() : 0) * 17;
+    }
+
 }

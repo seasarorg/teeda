@@ -16,11 +16,8 @@
 package org.seasar.teeda.core.config.handler;
 
 import org.seasar.framework.xml.TagHandlerContext;
-import org.seasar.teeda.core.config.element.AttributeElement;
-import org.seasar.teeda.core.config.element.AttributeHolder;
 import org.seasar.teeda.core.config.element.PropertyElement;
 import org.seasar.teeda.core.config.element.PropertyHolder;
-import org.seasar.teeda.core.config.element.impl.AttributeElementImpl;
 import org.seasar.teeda.core.config.element.impl.PropertyElementImpl;
 import org.xml.sax.Attributes;
 

@@ -199,10 +199,6 @@ public class UIViewRoot extends UIComponentBase {
         }
     }
 
-    private boolean hasMorePhaseEvents(List events) {
-        return (events != null && events.size() > 0);
-    }
-
     private void clearEventsIfResponseRendered(FacesContext context) {
         if (context.getRenderResponse() || context.getResponseComplete()) {
             clearEvents();

@@ -52,7 +52,7 @@ public class LengthValidator implements Validator, StateHolder {
 	}
 	
 	public boolean equals(Object obj){
-		if(!(obj instanceof LengthValidator)){
+		if (!(obj instanceof LengthValidator)) {
 			return false;
 		}
 
@@ -68,7 +68,13 @@ public class LengthValidator implements Validator, StateHolder {
 		return (this.getMaximum() == v.getMaximum() && this.getMinimum() == v.getMinimum());
 		
 	}
-	
+
+    public int hashCode() {
+        Integer max = maximum_ != null ? maximum_ : new Integer(1);
+        Integer min = minimum_ != null ? minimum_ : new Integer(1);
+        return max.hashCode() * min.hashCode() * 17;
+    }
+
 	public int getMaximum(){
 		return (maximum_ != null) ? maximum_.intValue() : Integer.MAX_VALUE;
 	}

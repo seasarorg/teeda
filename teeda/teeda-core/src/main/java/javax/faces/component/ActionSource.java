@@ -23,21 +23,21 @@ import javax.faces.event.ActionListener;
  */
 public interface ActionSource {
 
-	public MethodBinding getAction();
+    public MethodBinding getAction();
 
-	public void setAction(MethodBinding action);
+    public void setAction(MethodBinding action);
 
-	public MethodBinding getActionListener();
+    public MethodBinding getActionListener();
 
-	public void setActionListener(MethodBinding actionListener);
+    public void setActionListener(MethodBinding actionListener);
 
-	public boolean isImmediate();
+    public boolean isImmediate();
 
-	public void setImmediate(boolean immediate);
+    public void setImmediate(boolean immediate);
 
-	public void addActionListener(ActionListener listener);
+    public void addActionListener(ActionListener listener);
 
-	public ActionListener[] getActionListeners();
+    public ActionListener[] getActionListeners();
 
-	public void removeActionListener(ActionListener listener);
+    public void removeActionListener(ActionListener listener);
 }

@@ -17,18 +17,17 @@ package javax.faces.internal;
 
 import java.util.Iterator;
 
-import javax.faces.model.ResultSetDataModel;
 import javax.faces.model.ResultSetDataModel.ResultSetMap;
 
 /**
  * @author shot
- * TODO testing
  * 
  * This class might be changed without a previous notice. Please do not use it
  * excluding the JSF specification part.
  */
 public class ResultSetValues extends ResultSetBaseCollection {
 
+    // TODO testing
     public ResultSetValues(ResultSetMap map) {
         super(map);
     }

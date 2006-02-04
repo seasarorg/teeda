@@ -24,43 +24,43 @@ import javax.faces.validator.Validator;
  */
 public interface EditableValueHolder extends ValueHolder {
 
-	public Object getSubmittedValue();
+    public Object getSubmittedValue();
 
-	public void setSubmittedValue(Object submittedValue);
+    public void setSubmittedValue(Object submittedValue);
 
-	public boolean isLocalValueSet();
+    public boolean isLocalValueSet();
 
-	public void setLocalValueSet(boolean localValueSet);
+    public void setLocalValueSet(boolean localValueSet);
 
-	public boolean isValid();
+    public boolean isValid();
 
-	public void setValid(boolean valid);
+    public void setValid(boolean valid);
 
-	public boolean isRequired();
+    public boolean isRequired();
 
-	public void setRequired(boolean required);
+    public void setRequired(boolean required);
 
-	public boolean isImmediate();
+    public boolean isImmediate();
 
-	public void setImmediate(boolean immediate);
+    public void setImmediate(boolean immediate);
 
-	public MethodBinding getValidator();
+    public MethodBinding getValidator();
 
-	public void setValidator(MethodBinding validatorBinding);
+    public void setValidator(MethodBinding validatorBinding);
 
-	public MethodBinding getValueChangeListener();
+    public MethodBinding getValueChangeListener();
 
-	public void setValueChangeListener(MethodBinding valueChangeMethod);
+    public void setValueChangeListener(MethodBinding valueChangeMethod);
 
-	public void addValidator(Validator validator);
+    public void addValidator(Validator validator);
 
-	public Validator[] getValidators();
+    public Validator[] getValidators();
 
-	public void removeValidator(Validator validator);
+    public void removeValidator(Validator validator);
 
-	public void addValueChangeListener(ValueChangeListener listener);
+    public void addValueChangeListener(ValueChangeListener listener);
 
-	public ValueChangeListener[] getValueChangeListeners();
+    public ValueChangeListener[] getValueChangeListeners();
 
-	public void removeValueChangeListener(ValueChangeListener listener);
+    public void removeValueChangeListener(ValueChangeListener listener);
 }

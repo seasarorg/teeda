@@ -23,6 +23,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Map.Entry;
 
 import javax.servlet.ServletContext;
 
@@ -103,10 +104,11 @@ public class MockApplicationMap implements Map {
     }
 
     public void putAll(Map map) {
-        Iterator keys = map.keySet().iterator();
-        while (keys.hasNext()){
-            String key = (String)keys.next();
-            context_.setAttribute(key, map.get(key));
+        for(Iterator itr = map.entrySet().iterator(); itr.hasNext();){
+            Map.Entry entry = (Entry) itr.next();
+            String key = (String) entry.getKey();
+            Object value = entry.getValue();
+            context_.setAttribute(key, value);
         }
     }
 

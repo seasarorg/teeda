@@ -19,8 +19,6 @@ import java.io.IOException;
 
 import javax.faces.FacesException;
 import javax.faces.FactoryFinder;
-import javax.faces.application.Application;
-import javax.faces.application.ApplicationFactory;
 import javax.faces.context.FacesContext;
 import javax.faces.context.FacesContextFactory;
 import javax.faces.internal.WebAppUtils;
@@ -43,14 +41,11 @@ public class FacesServlet implements Servlet {
 
     private FacesContextFactory facesContextFactory_ = null;
 
-    private Application application_ = null;
-
     private Lifecycle lifecycle_ = null;
 
     public void destroy() {
         config_ = null;
         facesContextFactory_ = null;
-        application_ = null;
         lifecycle_ = null;
     }
 
@@ -59,18 +54,13 @@ public class FacesServlet implements Servlet {
     }
 
     public String getServletInfo() {
-        return this.getClass().getName();
+        return "Teeda - A JSF implementation with DI x AOP by Seasar Foundation -";
     }
 
     public void init(ServletConfig config) throws ServletException {
         config_ = config;
         facesContextFactory_ = (FacesContextFactory)WebAppUtils
                 .getFactory(FactoryFinder.FACES_CONTEXT_FACTORY);
-
-        ApplicationFactory applicationFactory = 
-            (ApplicationFactory)WebAppUtils.getFactory(FactoryFinder.APPLICATION_FACTORY);
-        application_ = applicationFactory.getApplication();
-
         LifecycleFactory lifecycleFactory = 
             (LifecycleFactory)WebAppUtils.getFactory(FactoryFinder.LIFECYCLE_FACTORY);
         String lifecycleId = WebAppUtils.getLifecycleId(config_);

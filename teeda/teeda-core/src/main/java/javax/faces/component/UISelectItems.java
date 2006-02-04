@@ -24,7 +24,7 @@ public class UISelectItems extends UIComponentBase {
 
     public static final String COMPONENT_FAMILY = "javax.faces.SelectItems";
 
-    public static final String  COMPONENT_TYPE = "javax.faces.SelectItems";
+    public static final String COMPONENT_TYPE = "javax.faces.SelectItems";
 
     private Object value_ = null;
 

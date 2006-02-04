@@ -47,9 +47,6 @@ public interface TODO {
      *  - Add DI Support for Converter, Validator, UIComponent, Renderer
      *  - impl StateManager
      *  - impl ViewHandler
-     *  - impl ResponseStateManager
-     *  - impl RenderKitFactoryImpl
-     *  - impl HtmlRenderKitImpl
      *  - impl taglib core
      *  - impl taglib html
      *  - make it easy to get elements from FacesConfig by key(such as component, converter,
@@ -57,6 +54,9 @@ public interface TODO {
      *  
      * DONE
      *  - Add copyright to all sources.
+     *  - impl ResponseStateManager
+     *  - impl RenderKitFactoryImpl
+     *  - impl HtmlRenderKitImpl
      * 
      * 
      * 

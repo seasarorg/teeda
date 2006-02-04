@@ -139,7 +139,7 @@ public class UIData extends UIComponentBase implements NamingContainer {
 
     public void setRowIndex(int rowIndex) {
         saveDescendantState();
-        //int previous = rowIndex_;
+        // int previous = rowIndex_;
         rowIndex_ = rowIndex;
         DataModel model = getDataModel();
         model.setRowIndex(rowIndex_);

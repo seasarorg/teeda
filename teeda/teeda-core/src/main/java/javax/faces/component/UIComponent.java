@@ -76,14 +76,14 @@ public abstract class UIComponent implements StateHolder {
     public abstract Iterator getFacetsAndChildren();
 
     public abstract void broadcast(FacesEvent event)
-        throws AbortProcessingException;
+            throws AbortProcessingException;
 
     public abstract void decode(FacesContext context);
 
     public abstract void encodeBegin(FacesContext context) throws IOException;
 
     public abstract void encodeChildren(FacesContext context)
-        throws IOException;
+            throws IOException;
 
     public abstract void encodeEnd(FacesContext context) throws IOException;
 

@@ -23,20 +23,22 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Map.Entry;
 
 import javax.servlet.http.HttpSession;
 
 public class MockSessionMap implements Map {
 
     private HttpSession session_ = null;
+
     public MockSessionMap(HttpSession session) {
         session_ = session;
     }
-    
+
     public void clear() {
         Iterator keys = keySet().iterator();
-        while (keys.hasNext()){
-            session_.removeAttribute((String)keys.next());
+        while (keys.hasNext()) {
+            session_.removeAttribute((String) keys.next());
         }
     }
 
@@ -45,13 +47,13 @@ public class MockSessionMap implements Map {
     }
 
     public boolean containsValue(Object value) {
-        if(value == null){
+        if (value == null) {
             return false;
         }
         Enumeration keys = session_.getAttributeNames();
-        while (keys.hasMoreElements()){
-            Object next = session_.getAttribute((String)keys.nextElement());
-            if(next == value){
+        while (keys.hasMoreElements()) {
+            Object next = session_.getAttribute((String) keys.nextElement());
+            if (next == value) {
                 return true;
             }
         }
@@ -61,8 +63,8 @@ public class MockSessionMap implements Map {
     public Set entrySet() {
         Set set = new HashSet();
         Enumeration keys = session_.getAttributeNames();
-        while (keys.hasMoreElements()){
-            set.add(session_.getAttribute((String)keys.nextElement()));
+        while (keys.hasMoreElements()) {
+            set.add(session_.getAttribute((String) keys.nextElement()));
         }
         return set;
     }
@@ -86,14 +88,14 @@ public class MockSessionMap implements Map {
     public Set keySet() {
         Set set = new HashSet();
         Enumeration keys = session_.getAttributeNames();
-        while (keys.hasMoreElements()){
+        while (keys.hasMoreElements()) {
             set.add(keys.nextElement());
         }
         return set;
     }
 
     public Object put(Object key, Object value) {
-        if(value == null){
+        if (value == null) {
             return remove(key);
         }
         String skey = key(key);
@@ -103,10 +105,11 @@ public class MockSessionMap implements Map {
     }
 
     public void putAll(Map map) {
-        Iterator keys = map.keySet().iterator();
-        while (keys.hasNext()){
-            String key = (String)keys.next();
-            session_.setAttribute(key, map.get(key));
+        for (Iterator itr = map.entrySet().iterator(); itr.hasNext();) {
+            Map.Entry entry = (Entry) itr.next();
+            String key = (String) entry.getKey();
+            Object value = (Object) entry.getValue();
+            session_.setAttribute(key, value);
         }
     }
 
@@ -120,7 +123,7 @@ public class MockSessionMap implements Map {
     public int size() {
         int n = 0;
         Enumeration keys = session_.getAttributeNames();
-        while (keys.hasMoreElements()){
+        while (keys.hasMoreElements()) {
             keys.nextElement();
             n++;
         }
@@ -130,19 +133,19 @@ public class MockSessionMap implements Map {
     public Collection values() {
         List list = new ArrayList();
         Enumeration keys = session_.getAttributeNames();
-        while (keys.hasMoreElements()){
-            list.add(session_.getAttribute((String)keys.nextElement()));
+        while (keys.hasMoreElements()) {
+            list.add(session_.getAttribute((String) keys.nextElement()));
         }
         return (list);
 
     }
 
     private String key(Object key) {
-        if(key == null){
+        if (key == null) {
             throw new IllegalArgumentException();
-        }else if(key instanceof String){
-            return ((String)key);
-        }else{
+        } else if (key instanceof String) {
+            return ((String) key);
+        } else {
             return (key.toString());
         }
 
