@@ -20,7 +20,6 @@ package javax.faces.model;
  */
 public class ScalarDataModel extends DataModel {
 
-    // TODO testing
     private Object scalar_ = null;
 
     private int index_ = -1;
@@ -39,7 +38,7 @@ public class ScalarDataModel extends DataModel {
     }
 
     public Object getRowData() {
-        if(scalar_ == null) {
+        if (scalar_ == null) {
             return null;
         }
         if (!isRowAvailable()) {
