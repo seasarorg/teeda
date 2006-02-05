@@ -41,12 +41,14 @@ public abstract class AbstractPhase implements Phase{
                 PhaseListener phaseListener = phaseListeners[i];
                 PhaseId phaseId = getCurrentPhaseId();
                 if(isTargetListener(phaseListener, phaseId)){
-                    phaseListener.beforePhase(new PhaseEvent(context, phaseId, lifecycle));
+                    PhaseEvent event = createPhaseEvent(context, phaseId, lifecycle);
+                    phaseListener.beforePhase(event);
                 }
             }
         }
     }
 
+    //If need pre-prePhase or post-prePhase(and also postPhase) action, add method.
     public void execute(FacesContext context){
         prePhase(context);
         executePhase(context);
@@ -57,16 +59,21 @@ public abstract class AbstractPhase implements Phase{
         Lifecycle lifecycle = getLifecycle(context);
         PhaseListener[] phaseListeners = lifecycle.getPhaseListeners();
         if(phaseListeners != null){
-            for(int i = phaseListeners.length;i >= 0 ;i--){
+            for(int i = phaseListeners.length - 1;i >= 0 ;i--){
                 PhaseListener phaseListener = phaseListeners[i];
                 PhaseId phaseId = getCurrentPhaseId();
                 if(isTargetListener(phaseListener, phaseId)){
-                    phaseListener.afterPhase(new PhaseEvent(context, phaseId, lifecycle));
+                    PhaseEvent event = createPhaseEvent(context, phaseId, lifecycle);
+                    phaseListener.afterPhase(event);
                 }
             }
         }
     }
 
+    protected PhaseEvent createPhaseEvent(FacesContext context, PhaseId phaseId, Lifecycle lifecycle) {
+        return new PhaseEvent(context, phaseId, lifecycle);
+    }
+    
     protected void initializeChildren(FacesContext context, UIComponent component) {
         for (Iterator i = component.getFacetsAndChildren(); i.hasNext();) {
             UIComponent child = (UIComponent) i.next();

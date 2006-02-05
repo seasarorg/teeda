@@ -17,6 +17,7 @@ package javax.faces.convert;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.internal.AssertionUtil;
 import javax.faces.internal.ConvertUtils;
 
 /**
@@ -32,9 +33,8 @@ public class IntegerConverter implements Converter {
 
 	public Object getAsObject(FacesContext context, UIComponent component,
 			String value) throws ConverterException {
-		ConvertUtils.assertNotNull(context, "FacesContext");
-		ConvertUtils.assertNotNull(component, "UIComponent");
-
+        AssertionUtil.assertNotNull("FacesContext", context);
+        AssertionUtil.assertNotNull("UIComponent", component);
 		if (value == null) {
 			return null;
 		}
@@ -56,9 +56,8 @@ public class IntegerConverter implements Converter {
 
 	public String getAsString(FacesContext context, UIComponent component,
 			Object value) throws ConverterException {
-		ConvertUtils.assertNotNull(context, "FacesContext");
-		ConvertUtils.assertNotNull(component, "UIComponent");
-
+        AssertionUtil.assertNotNull("FacesContext", context);
+        AssertionUtil.assertNotNull("UIComponent", component);
 		try {
 			return (value instanceof String) ? (String) value : (Integer
 					.toString(((Integer) value).intValue()));

@@ -29,8 +29,18 @@ public class MockUIComponentBaseWithEditableValueHolder extends
 
     private Object submittedValue_;
 
+    private boolean localValueSet_ = false;
+    
+    private boolean valid_ = false;
+    
+    private boolean required_ = false;
+    
+    private boolean immediate_ = false;
+    
+    private Object value_ = null;
+    
     public String getFamily() {
-        return null;
+        return "javax.faces.mock";
     }
 
     public Object getSubmittedValue() {
@@ -42,31 +52,35 @@ public class MockUIComponentBaseWithEditableValueHolder extends
     }
 
     public boolean isLocalValueSet() {
-        return false;
+        return localValueSet_;
     }
 
     public void setLocalValueSet(boolean localValueSet) {
+        localValueSet_ = localValueSet;
     }
 
     public boolean isValid() {
-        return false;
+        return valid_;
     }
 
     public void setValid(boolean valid) {
+        valid_ = valid;
     }
 
     public boolean isRequired() {
-        return false;
+        return required_;
     }
 
     public void setRequired(boolean required) {
+        required_ = required;
     }
 
     public boolean isImmediate() {
-        return false;
+        return immediate_;
     }
 
     public void setImmediate(boolean immediate) {
+        immediate_ = immediate;
     }
 
     public MethodBinding getValidator() {
@@ -108,10 +122,11 @@ public class MockUIComponentBaseWithEditableValueHolder extends
     }
 
     public Object getValue() {
-        return null;
+        return value_;
     }
 
     public void setValue(Object value) {
+        value_ = value;
     }
 
     public Converter getConverter() {

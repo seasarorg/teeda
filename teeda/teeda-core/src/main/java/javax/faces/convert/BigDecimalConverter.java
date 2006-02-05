@@ -19,51 +19,49 @@ import java.math.BigDecimal;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.internal.AssertionUtil;
 import javax.faces.internal.ConvertUtils;
 
 public class BigDecimalConverter implements Converter {
 
-	public static final String CONVERTER_ID = "javax.faces.BigDecimal";
+    public static final String CONVERTER_ID = "javax.faces.BigDecimal";
 
-	public BigDecimalConverter() {
-	}
+    public BigDecimalConverter() {
+    }
 
-	public Object getAsObject(FacesContext context, UIComponent component,
-			String value) throws ConverterException {
-		ConvertUtils.assertNotNull(context, "FacesContext");
-		ConvertUtils.assertNotNull(component, "UIComponent");
+    public Object getAsObject(FacesContext context, UIComponent component,
+            String value) throws ConverterException {
+        AssertionUtil.assertNotNull("FacesContext", context);
+        AssertionUtil.assertNotNull("UIComponent", component);
+        if (value == null) {
+            return null;
+        }
+        value = value.trim();
+        if (value.length() < 1) {
+            return null;
+        }
+        try {
+            return new BigDecimal(value);
+        } catch (NumberFormatException e) {
+            Object[] args = ConvertUtils.createExceptionMessageArgs(component,
+                    value);
+            throw ConvertUtils.wrappedByConverterException(this, context, args,
+                    e);
+        }
+    }
 
-		if (value == null) {
-			return null;
-		}
-
-		value = value.trim();		
-		if(value.length() < 1){
-			return null;
-		}
-		
-		try {
-			return new BigDecimal(value);
-		} catch (NumberFormatException e) {
-			Object[] args = ConvertUtils.createExceptionMessageArgs(component, value); 
-			throw ConvertUtils.wrappedByConverterException(this, context, args, e);
-		}
-	}
-
-	public String getAsString(FacesContext context, UIComponent component,
-			Object value) throws ConverterException {
-		ConvertUtils.assertNotNull(context, "FacesContext");
-		ConvertUtils.assertNotNull(component, "UIComponent");
-
-		if (value == null) {
-			return "";
-		}
-
-		try {
-			return (value instanceof String) ? 
-					(String) value : ((BigDecimal) value).toString();
-		} catch (Exception e) {
-			throw ConvertUtils.wrappedByConverterException(e);
-		}
-	}
+    public String getAsString(FacesContext context, UIComponent component,
+            Object value) throws ConverterException {
+        AssertionUtil.assertNotNull("FacesContext", context);
+        AssertionUtil.assertNotNull("UIComponent", component);
+        if (value == null) {
+            return "";
+        }
+        try {
+            return (value instanceof String) ? (String) value
+                    : ((BigDecimal) value).toString();
+        } catch (Exception e) {
+            throw ConvertUtils.wrappedByConverterException(e);
+        }
+    }
 }

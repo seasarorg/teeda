@@ -29,16 +29,6 @@ import javax.faces.convert.ConverterException;
  */
 public class ConvertUtils {
 
-    public static void assertNotNull(Object obj) {
-        assertNotNull(obj, null);
-    }
-
-    public static void assertNotNull(Object obj, String message) {
-        if (obj == null) {
-            throw new NullPointerException(message);
-        }
-    }
-
     public static ConverterException wrappedByConverterException() {
         return new ConverterException();
     }

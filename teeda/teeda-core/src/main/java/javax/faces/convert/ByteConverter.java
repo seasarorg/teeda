@@ -17,6 +17,7 @@ package javax.faces.convert;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.internal.AssertionUtil;
 import javax.faces.internal.ConvertUtils;
 
 public class ByteConverter implements Converter {
@@ -28,13 +29,11 @@ public class ByteConverter implements Converter {
 
 	public Object getAsObject(FacesContext context, UIComponent component,
 			String value) throws ConverterException {
-		ConvertUtils.assertNotNull(context, "FacesContext");
-		ConvertUtils.assertNotNull(component, "UIComponent");
-
+        AssertionUtil.assertNotNull("FacesContext", context);
+        AssertionUtil.assertNotNull("UIComponent", component);
 		if (value == null) {
 			return null;
 		}
-
 		value = value.trim();
 		if (value.length() < 1) {
 			return null;
@@ -51,13 +50,11 @@ public class ByteConverter implements Converter {
 
 	public String getAsString(FacesContext context, UIComponent component,
 			Object value) throws ConverterException {
-		ConvertUtils.assertNotNull(context, "FacesContext");
-		ConvertUtils.assertNotNull(component, "UIComponent");
-
+        AssertionUtil.assertNotNull("FacesContext", context);
+        AssertionUtil.assertNotNull("UIComponent", component);
 		if (value == null) {
 			return "";
 		}
-
 		try {
 			return (value instanceof String) ? (String) value : Byte
 					.toString(((Byte) value).byteValue());

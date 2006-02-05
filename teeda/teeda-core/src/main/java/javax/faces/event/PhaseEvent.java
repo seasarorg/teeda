@@ -18,6 +18,7 @@ package javax.faces.event;
 import java.util.EventObject;
 
 import javax.faces.context.FacesContext;
+import javax.faces.internal.AssertionUtil;
 import javax.faces.lifecycle.Lifecycle;
 
 /**
@@ -25,16 +26,15 @@ import javax.faces.lifecycle.Lifecycle;
  */
 public class PhaseEvent extends EventObject {
 
-    //TODO testing
     private FacesContext facesContext_;
 
     private PhaseId phaseId_;
 
     public PhaseEvent(FacesContext context, PhaseId phaseId, Lifecycle lifecycle) {
         super(lifecycle);
-        assertNotNull(context);
-        assertNotNull(phaseId);
-        assertNotNull(lifecycle);
+        AssertionUtil.assertNotNull("FacesContext", context);
+        AssertionUtil.assertNotNull("PhaseId", phaseId);
+        AssertionUtil.assertNotNull("Lifecycle", lifecycle);
         facesContext_ = context;
         phaseId_ = phaseId;
     }
@@ -45,11 +45,5 @@ public class PhaseEvent extends EventObject {
 
     public PhaseId getPhaseId() {
         return phaseId_;
-    }
-
-    private static void assertNotNull(Object obj) {
-        if (obj == null) {
-            throw new NullPointerException();
-        }
     }
 }
