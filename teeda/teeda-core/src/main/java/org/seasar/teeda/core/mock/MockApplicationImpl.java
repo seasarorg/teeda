@@ -43,7 +43,7 @@ import org.seasar.teeda.core.util.ClassUtil;
 /**
  * @author shot
  */
-public class MockApplication extends Application {
+public class MockApplicationImpl extends Application {
 
     private String bundle_;
 
@@ -73,7 +73,7 @@ public class MockApplication extends Application {
 
     private Map validators_ = new HashMap();
 
-    public MockApplication() {
+    public MockApplicationImpl() {
     }
 
     public ActionListener getActionListener() {
