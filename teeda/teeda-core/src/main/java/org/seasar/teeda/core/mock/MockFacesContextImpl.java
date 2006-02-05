@@ -75,7 +75,7 @@ public class MockFacesContextImpl extends MockFacesContext {
 
     public Application getApplication() {
         if (application_ == null) {
-            application_ = new MockApplication();
+            application_ = new MockApplicationImpl();
         }
         return application_;
     }

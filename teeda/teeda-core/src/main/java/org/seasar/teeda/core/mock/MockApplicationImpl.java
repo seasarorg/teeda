@@ -15,6 +15,7 @@
  */
 package org.seasar.teeda.core.mock;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -23,7 +24,6 @@ import java.util.Locale;
 import java.util.Map;
 
 import javax.faces.FacesException;
-import javax.faces.application.Application;
 import javax.faces.application.NavigationHandler;
 import javax.faces.application.StateManager;
 import javax.faces.application.ViewHandler;
@@ -43,7 +43,7 @@ import org.seasar.teeda.core.util.ClassUtil;
 /**
  * @author shot
  */
-public class MockApplicationImpl extends Application {
+public class MockApplicationImpl extends MockApplication {
 
     private String bundle_;
 
@@ -281,6 +281,15 @@ public class MockApplicationImpl extends Application {
     public ValueBinding createValueBinding(String ref)
             throws ReferenceSyntaxException {
         return null;
+    }
+
+    public void addSupportedLocale(Locale locale) {
+        if (locales_ != null) {
+            locales_.add(locale);
+        } else {
+            locales_ = new ArrayList();
+            locales_.add(locale);
+        }
     }
 
 }

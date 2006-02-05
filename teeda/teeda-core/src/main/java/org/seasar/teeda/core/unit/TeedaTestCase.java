@@ -27,6 +27,7 @@ import org.seasar.teeda.core.managedbean.impl.ManagedBeanFactoryImpl;
 import org.seasar.teeda.core.managedbean.impl.ManagedBeanScopeSaverImpl;
 import org.seasar.teeda.core.mock.MockApplication;
 import org.seasar.teeda.core.mock.MockApplicationFactory;
+import org.seasar.teeda.core.mock.MockApplicationImpl;
 import org.seasar.teeda.core.mock.MockExternalContext;
 import org.seasar.teeda.core.mock.MockExternalContextImpl;
 import org.seasar.teeda.core.mock.MockFacesContext;
@@ -76,7 +77,7 @@ public abstract class TeedaTestCase extends S2FrameworkTestCase {
     private MockViewHandler viewHandler;
 
     private MockStateManager stateManager;
-    
+
     public TeedaTestCase() {
     }
 
@@ -88,7 +89,7 @@ public abstract class TeedaTestCase extends S2FrameworkTestCase {
         super.setUpContainer();
         externalContext = new MockExternalContextImpl(getServletContext(),
                 getRequest(), getResponse());
-        application = new MockApplication();
+        application = new MockApplicationImpl();
         navigationHandler = new MockNavigationHandler();
         application.setNavigationHandler(navigationHandler);
         propertyResolver = new MockPropertyResolver();
@@ -99,7 +100,7 @@ public abstract class TeedaTestCase extends S2FrameworkTestCase {
         application.setViewHandler(viewHandler);
         stateManager = new MockStateManager();
         application.setStateManager(stateManager);
-        
+
         facesContext = new MockFacesContextImpl(externalContext, application);
         HtmlResponseWriter responseWriter = new HtmlResponseWriter();
         responseWriter.setWriter(getResponse().getWriter());
@@ -108,18 +109,19 @@ public abstract class TeedaTestCase extends S2FrameworkTestCase {
         viewRoot.setRenderKitId(RenderKitFactory.HTML_BASIC_RENDER_KIT);
         facesContext.setViewRoot(viewRoot);
         renderKit = new MockRenderKit();
-        
-        //default setting 
+
+        // default setting
         MockRenderer renderer = new MockRenderer();
-        renderKit.addRenderer(MockUIComponent.COMPONENT_FAMILY, MockUIComponent.COMPONENT_TYPE, renderer);
-        
+        renderKit.addRenderer(MockUIComponent.COMPONENT_FAMILY,
+                MockUIComponent.COMPONENT_TYPE, renderer);
+
         lifecycle = new MockLifecycleImpl();
         phaseListener = new MockPhaseListener();
         lifecycle.addPhaseListener(phaseListener);
         initFactories();
         setFactories();
     }
-    
+
     protected void initFactories() {
         FactoryFinder.setFactory(FactoryFinder.APPLICATION_FACTORY,
                 "org.seasar.teeda.core.mock.MockApplicationFactory");

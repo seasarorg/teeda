@@ -34,7 +34,7 @@ import junit.framework.AssertionFailedError;
 import junit.framework.TestCase;
 import junitx.framework.ObjectAssert;
 
-import org.seasar.teeda.core.mock.MockApplication;
+import org.seasar.teeda.core.mock.MockApplicationImpl;
 import org.seasar.teeda.core.mock.MockConverter;
 import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.mock.MockFacesContextImpl;
@@ -629,7 +629,7 @@ public class UIInputOnlyTest extends TestCase {
 
         final Object[] createConverterParams = { null };
         MockFacesContext context = getFacesContext();
-        context.setApplication(new MockApplication() {
+        context.setApplication(new MockApplicationImpl() {
             public Converter createConverter(Class targetClass) {
                 createConverterParams[0] = targetClass;
                 return new MockConverter() {

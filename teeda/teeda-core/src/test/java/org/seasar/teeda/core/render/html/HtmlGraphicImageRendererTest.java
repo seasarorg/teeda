@@ -25,6 +25,7 @@ import javax.faces.render.RendererTest;
 
 import org.custommonkey.xmlunit.Diff;
 import org.seasar.teeda.core.mock.MockApplication;
+import org.seasar.teeda.core.mock.MockApplicationImpl;
 import org.seasar.teeda.core.mock.MockExternalContext;
 import org.seasar.teeda.core.mock.MockExternalContextWrapper;
 import org.seasar.teeda.core.mock.MockFacesContext;
@@ -103,7 +104,7 @@ public class HtmlGraphicImageRendererTest extends RendererTest {
             }
         };
 
-        final MockApplication application = new MockApplication() {
+        final MockApplication application = new MockApplicationImpl() {
             public ViewHandler getViewHandler() {
                 return new MockViewHandler() {
                     public String getResourceURL(FacesContext context,
@@ -126,7 +127,7 @@ public class HtmlGraphicImageRendererTest extends RendererTest {
     }
 
     public void testEncode_WithAllAttributes() throws Exception {
-        MockApplication application = new MockApplication();
+        MockApplication application = new MockApplicationImpl();
         application.setViewHandler(new MockViewHandler());
         MockFacesContext context = getFacesContext();
         context.setApplication(application);
