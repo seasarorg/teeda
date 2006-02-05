@@ -7,13 +7,12 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseEvent;
 import javax.faces.event.PhaseId;
 import javax.faces.event.PhaseListener;
-import javax.faces.lifecycle.Lifecycle;
 
-import org.seasar.teeda.core.mock.MockLifecycle;
 import org.seasar.teeda.core.unit.TeedaTestCase;
 
 public class AbstractPhaseTest extends TeedaTestCase {
 
+    //TODO testing
     private PhaseListener[] listeners_;
     protected void setUp() throws Exception {
         listeners_ = getLifecycle().clearAllPhaseListener();
@@ -40,6 +39,18 @@ public class AbstractPhaseTest extends TeedaTestCase {
         PhaseEvent event = (PhaseEvent) list.get(0);
         assertEquals(PhaseId.APPLY_REQUEST_VALUES, event.getPhaseId());
         assertEquals(getLifecycle(), event.getSource());
+    }
+
+    public void testPostPhase() {
+    }
+    
+    public void testInitializeChildren() {
+    }
+
+    public void testIsTargetListener() {
+    }
+
+    public void testGetLifecycle() {
     }
 
     private static class TargetPhase extends AbstractPhase {
