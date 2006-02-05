@@ -25,6 +25,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.FacesEvent;
 import javax.faces.event.PhaseId;
+import javax.faces.internal.AssertionUtil;
 
 /**
  * @author shot
@@ -75,7 +76,7 @@ public class UIViewRoot extends UIComponentBase {
     }
 
     public void queueEvent(FacesEvent event) {
-        ComponentUtils_.assertNotNull("event", event);
+        AssertionUtil.assertNotNull("event", event);
         getEvents().add(event);
     }
 
@@ -111,7 +112,7 @@ public class UIViewRoot extends UIComponentBase {
     }
 
     public void processApplication(FacesContext context) {
-        ComponentUtils_.assertNotNull("context", context);
+        AssertionUtil.assertNotNull("context", context);
         broadcastEvents(context, PhaseId.INVOKE_APPLICATION);
         clearEventsIfResponseRendered(context);
     }

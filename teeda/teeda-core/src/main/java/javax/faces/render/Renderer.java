@@ -21,6 +21,7 @@ import java.util.Iterator;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.ConverterException;
+import javax.faces.internal.AssertionUtil;
 
 /**
  * @author shot
@@ -29,21 +30,20 @@ import javax.faces.convert.ConverterException;
 public abstract class Renderer {
 
     public void decode(FacesContext context, UIComponent component) {
-        assertNotNull("context", context);
-        assertNotNull("component", component);
+        AssertionUtil.assertNotNull("context", context);
+        AssertionUtil.assertNotNull("component", component);
     }
 
     public void encodeBegin(FacesContext context, UIComponent component)
             throws IOException {
-        assertNotNull("context", context);
-        assertNotNull("component", component);
+        AssertionUtil.assertNotNull("context", context);
+        AssertionUtil.assertNotNull("component", component);
     }
 
     public void encodeChildren(FacesContext context, UIComponent component)
             throws IOException {
-        assertNotNull("context", context);
-        assertNotNull("component", component);
-
+        AssertionUtil.assertNotNull("context", context);
+        AssertionUtil.assertNotNull("component", component);
         UIComponent child = null;
         for (Iterator itr = component.getChildren().iterator(); itr.hasNext();) {
             child = (UIComponent) itr.next();
@@ -57,13 +57,13 @@ public abstract class Renderer {
 
     public void encodeEnd(FacesContext context, UIComponent component)
             throws IOException {
-        assertNotNull("context", context);
-        assertNotNull("component", component);
+        AssertionUtil.assertNotNull("context", context);
+        AssertionUtil.assertNotNull("component", component);
     }
 
     public String convertClientId(FacesContext context, String clientId) {
-        assertNotNull("context", context);
-        assertNotNull("clientId", clientId);
+        AssertionUtil.assertNotNull("context", context);
+        AssertionUtil.assertNotNull("clientId", clientId);
         return clientId;
     }
 
@@ -74,15 +74,9 @@ public abstract class Renderer {
     public Object getConvertedValue(FacesContext context,
             UIComponent component, Object submittedValue)
             throws ConverterException {
-        assertNotNull("context", context);
-        assertNotNull("component", component);
+        AssertionUtil.assertNotNull("context", context);
+        AssertionUtil.assertNotNull("component", component);
         return submittedValue;
-    }
-
-    private void assertNotNull(String message, Object actual) {
-        if (actual == null) {
-            throw new NullPointerException(message);
-        }
     }
 
 }

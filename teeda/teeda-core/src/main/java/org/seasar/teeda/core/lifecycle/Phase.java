@@ -15,9 +15,13 @@
  */
 package org.seasar.teeda.core.lifecycle;
 
+import javax.faces.FacesException;
 import javax.faces.context.FacesContext;
 
+/**
+ * @author shot
+ */
 public interface Phase {
 
-    public void execute(FacesContext context);
+    public void execute(FacesContext context) throws FacesException;
 }

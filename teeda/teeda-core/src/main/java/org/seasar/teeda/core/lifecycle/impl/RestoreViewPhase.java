@@ -15,6 +15,7 @@
  */
 package org.seasar.teeda.core.lifecycle.impl;
 
+import javax.faces.FacesException;
 import javax.faces.application.Application;
 import javax.faces.application.ViewHandler;
 import javax.faces.component.UIViewRoot;
@@ -26,19 +27,23 @@ import org.seasar.teeda.core.lifecycle.AbstractPhase;
 import org.seasar.teeda.core.lifecycle.Postback;
 import org.seasar.teeda.core.util.ExternalContextUtil;
 
+/**
+ * @author shot
+ */
+public class RestoreViewPhase extends AbstractPhase implements Postback {
 
-public class RestoreViewPhase extends AbstractPhase implements Postback{
+    private static final String VIEW_ID_ATTR = RestoreViewPhase.class.getName()
+            + ".VIEW_ID";
 
-    private static final String VIEW_ID_ATTR = RestoreViewPhase.class.getName() + ".VIEW_ID";
     private boolean postback_;
-    public RestoreViewPhase(){
+
+    public RestoreViewPhase() {
     }
-    
-    protected void executePhase(FacesContext context) {
+
+    protected void executePhase(FacesContext context) throws FacesException {
         ExternalContext externalContext = context.getExternalContext();
         String viewId = ExternalContextUtil.getViewId(externalContext);
-        Application application = context.getApplication();
-        ViewHandler viewHandler = application.getViewHandler();
+        ViewHandler viewHandler = context.getApplication().getViewHandler();
         UIViewRoot viewRoot = viewHandler.restoreView(context, viewId);
         if (viewRoot == null) {
             viewRoot = viewHandler.createView(context, viewId);
@@ -52,12 +57,13 @@ public class RestoreViewPhase extends AbstractPhase implements Postback{
         }
         setPostback(viewId.equals(previousViewId));
     }
-    
+
     protected String getViewIdFromSession(ExternalContext externalContext) {
         return (String) externalContext.getSessionMap().get(VIEW_ID_ATTR);
     }
 
-    protected void saveViewIdToSession(ExternalContext externalContext, String viewId) {
+    protected void saveViewIdToSession(ExternalContext externalContext,
+            String viewId) {
         externalContext.getSessionMap().put(VIEW_ID_ATTR, viewId);
     }
 
@@ -65,13 +71,12 @@ public class RestoreViewPhase extends AbstractPhase implements Postback{
         return PhaseId.RESTORE_VIEW;
     }
 
-    protected void setPostback(boolean postback){
+    protected void setPostback(boolean postback) {
         postback_ = postback;
     }
-    
+
     public boolean isPostBack() {
         return postback_;
     }
-    
-}
 
+}

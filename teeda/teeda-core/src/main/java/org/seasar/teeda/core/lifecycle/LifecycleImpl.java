@@ -54,7 +54,7 @@ public class LifecycleImpl extends Lifecycle {
 
     private AbstractPhase invokeApplicationPhase_;
 
-    private AbstractPhase renderPhase_;
+    private AbstractPhase renderResponsePhase_;
 
     private AbstractPhase processValidationPhase_;
 
@@ -88,7 +88,7 @@ public class LifecycleImpl extends Lifecycle {
                 context.renderResponse();
                 return;
             }
-            requestMap.put(EXECUTED_ATTR, null);
+            requestMap.put(EXECUTED_ATTR, EXECUTED_ATTR);
             applyRequestValuesPhase_.execute(context);
             if (isFinished(context)) {
                 applyRequestValuesPhase_.initializeChildren(context, context
@@ -134,7 +134,7 @@ public class LifecycleImpl extends Lifecycle {
         if (context.getResponseComplete()) {
             return;
         }
-        renderPhase_.execute(context);
+        renderResponsePhase_.execute(context);
     }
 
     protected String getViewIdFromSession(ExternalContext externalContext) {
@@ -183,8 +183,8 @@ public class LifecycleImpl extends Lifecycle {
         invokeApplicationPhase_ = invokeApplicationPhase;
     }
 
-    public void setRenderPhase(AbstractPhase renderPhase) {
-        renderPhase_ = renderPhase;
+    public void setRenderResponsePhase(AbstractPhase renderPhase) {
+        renderResponsePhase_ = renderPhase;
     }
 
     public void setProcessValidationsPhase(AbstractPhase processValidationPhase) {
@@ -207,8 +207,8 @@ public class LifecycleImpl extends Lifecycle {
         return processValidationPhase_;
     }
 
-    public Phase getRenderPhase() {
-        return renderPhase_;
+    public Phase getRenderResponsePhase() {
+        return renderResponsePhase_;
     }
 
     public Phase getRestoreViewPhase() {
