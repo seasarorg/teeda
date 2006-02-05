@@ -28,6 +28,10 @@ import javax.faces.lifecycle.Lifecycle;
 import org.seasar.framework.util.ArrayUtil;
 import org.seasar.teeda.core.util.ExternalContextUtil;
 
+/**
+ * @author higa
+ * @author shot
+ */
 public class LifecycleImpl extends Lifecycle {
 
     private static final String VIEW_ID_ATTR = LifecycleImpl.class.getName()
