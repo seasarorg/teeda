@@ -15,11 +15,17 @@
  */
 package org.seasar.teeda.core.application;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.Enumeration;
 import java.util.Locale;
+import java.util.Vector;
 
+import javax.faces.render.RenderKitFactory;
+import javax.servlet.ServletContext;
+
+import org.seasar.framework.mock.servlet.MockHttpServletRequest;
+import org.seasar.framework.mock.servlet.MockHttpServletRequestImpl;
+import org.seasar.teeda.core.mock.MockApplication;
+import org.seasar.teeda.core.mock.MockApplicationImpl;
 import org.seasar.teeda.core.unit.TeedaTestCase;
 
 /**
@@ -27,22 +33,17 @@ import org.seasar.teeda.core.unit.TeedaTestCase;
  */
 public class ViewHandlerImplTest extends TeedaTestCase {
 
-    private Locale orgDefaultLocale_;
+    private MockApplication orgApp_;
 
-    private Iterator orgSupportedLocales_;
-
+    private MockHttpServletRequest orgReq_;
     protected void setUp() throws Exception {
-        orgDefaultLocale_ = getApplication().getDefaultLocale();
-        orgSupportedLocales_ = getApplication().getSupportedLocales();
+        orgApp_ = getApplication();
+        orgReq_ = getExternalContext().getMockHttpServletRequest();
     }
 
     protected void tearDown() throws Exception {
-        getApplication().setDefaultLocale(orgDefaultLocale_);
-        List list = new ArrayList();
-        for (; orgSupportedLocales_.hasNext();) {
-            list.add(orgSupportedLocales_.next());
-        }
-        getApplication().setSupportedLocales(list);
+        setApplication(orgApp_);
+        getExternalContext().setMockHttpServletRequest(orgReq_);
     }
 
     public void testCalculateLocale_facesContextIsNull() throws Exception {
@@ -55,8 +56,68 @@ public class ViewHandlerImplTest extends TeedaTestCase {
         }
     }
 
-    public void fixme_testGetLocaleFromSupportedLocales() throws Exception {
+    public void testGetLocaleFromSupportedLocales() throws Exception {
+        MockApplication mockApp = new MockApplicationImpl();
+        mockApp.addSupportedLocale(Locale.ENGLISH);
+        getFacesContext().setApplication(mockApp);
+        MockHttpServletRequest req = new MockTeedaHttpServletRequestImpl(getServletContext());
+        req.setLocale(Locale.ENGLISH);
+        getExternalContext().setMockHttpServletRequest(req);
         ViewHandlerImpl handler = new ViewHandlerImpl();
-        // handler.getLocaleFromSupportedLocales(null);
+
+        Locale l = handler.getLocaleFromSupportedLocales(getFacesContext());
+        assertEquals(Locale.ENGLISH, l);
     }
+
+    public void testCalculateRenderKitId_fromApplication() throws Exception {
+        MockApplication app = new MockApplicationImpl();
+        app.setDefaultRenderKitId("hoge");
+        getFacesContext().setApplication(app);
+        ViewHandlerImpl handler = new ViewHandlerImpl();
+
+        String renderKitId = handler.calculateRenderKitId(getFacesContext());
+
+        assertEquals("hoge", renderKitId);
+    }
+
+    public void testCalculateRenderKitId_fromRenderKitFactory()
+            throws Exception {
+        MockApplication app = new MockApplicationImpl();
+        getFacesContext().setApplication(app);
+        ViewHandlerImpl handler = new ViewHandlerImpl();
+
+        String renderKitId = handler.calculateRenderKitId(getFacesContext());
+
+        assertEquals(RenderKitFactory.HTML_BASIC_RENDER_KIT, renderKitId);
+    }
+
+    public void testCalculateRenderKitId_facesContextIsNull() throws Exception {
+        ViewHandlerImpl handler = new ViewHandlerImpl();
+        try {
+            handler.calculateRenderKitId(null);
+            fail();
+        } catch (NullPointerException expected) {
+            success();
+        }
+    }
+
+    private static class MockTeedaHttpServletRequestImpl extends MockHttpServletRequestImpl {
+
+        private Vector locales = new Vector(); 
+        public MockTeedaHttpServletRequestImpl(ServletContext context) {
+            super(context, "/hello.html");
+        }
+        
+        public void setLocale(Locale locale) {
+            super.setLocale(locale);
+            locales.add(locale);
+        }
+
+        public Enumeration getLocales() {
+            return locales.elements();
+        }
+        
+        
+    }
+    
 }

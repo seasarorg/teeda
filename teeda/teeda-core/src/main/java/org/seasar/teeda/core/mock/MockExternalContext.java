@@ -20,8 +20,14 @@ import java.util.Map;
 import javax.faces.context.ExternalContext;
 import javax.servlet.http.Cookie;
 
+import org.seasar.framework.mock.servlet.MockHttpServletRequest;
+import org.seasar.framework.mock.servlet.MockHttpServletResponse;
+import org.seasar.framework.mock.servlet.MockServletContext;
 
-public abstract class MockExternalContext extends ExternalContext{
+/**
+ * @author shot
+ */
+public abstract class MockExternalContext extends ExternalContext {
 
     public abstract void addRequestCookieMap(Cookie cookie);
 
@@ -31,4 +37,18 @@ public abstract class MockExternalContext extends ExternalContext{
 
     public abstract void setRequestParameterMap(Map map);
 
+    public abstract void setMockServletContext(
+            MockServletContext mockServletContext);
+
+    public abstract MockServletContext getMockServletContext();
+
+    public abstract void setMockHttpServletRequest(
+            MockHttpServletRequest mockHttpServletRequest);
+
+    public abstract MockHttpServletRequest getMockHttpServletRequest();
+
+    public abstract void setMockHttpServletResponse(
+            MockHttpServletResponse mockHttpServletResponse);
+
+    public abstract MockHttpServletResponse getMockHttpServletResponse();
 }

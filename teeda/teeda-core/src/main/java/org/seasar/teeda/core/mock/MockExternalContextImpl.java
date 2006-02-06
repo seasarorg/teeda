@@ -29,7 +29,6 @@ import java.util.Set;
 
 import javax.faces.FacesException;
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.seasar.framework.mock.servlet.MockHttpServletRequest;
@@ -45,7 +44,7 @@ public class MockExternalContextImpl extends MockExternalContext {
 
     private MockHttpServletRequest mockHttpServletRequest_;
 
-    private HttpServletResponse httpServletResponse_;
+    private MockHttpServletResponse mockHttpServletResponse_;
 
     private Map applicationMap_;
 
@@ -64,7 +63,7 @@ public class MockExternalContextImpl extends MockExternalContext {
             MockHttpServletRequest request, MockHttpServletResponse response) {
         mockServletContext_ = context;
         mockHttpServletRequest_ = request;
-        httpServletResponse_ = response;
+        mockHttpServletResponse_ = response;
         applicationMap_ = new MockApplicationMap(mockServletContext_);
     }
 
@@ -97,7 +96,7 @@ public class MockExternalContextImpl extends MockExternalContext {
     }
 
     public String encodeResourceURL(String url) {
-        return getHttpServletResponse().encodeURL(url);
+        return getMockHttpServletResponse().encodeURL(url);
     }
 
     public Map getApplicationMap() {
@@ -105,18 +104,22 @@ public class MockExternalContextImpl extends MockExternalContext {
     }
 
     public String getAuthType() {
-        return getHttpServletRequest().getAuthType();
+        return getMockHttpServletRequest().getAuthType();
     }
 
     public Object getContext() {
         return getMockServletContext();
     }
 
-    MockServletContext getMockServletContext() {
+    public MockServletContext getMockServletContext() {
         if (mockServletContext_ == null) {
             mockServletContext_ = new MockServletContextImpl("/mock-context");
         }
         return mockServletContext_;
+    }
+
+    public void setMockServletContext(MockServletContext mockServletContext) {
+        mockServletContext_ = mockServletContext;
     }
 
     public String getInitParameter(String name) {
@@ -135,14 +138,14 @@ public class MockExternalContextImpl extends MockExternalContext {
     }
 
     public String getRemoteUser() {
-        return getHttpServletRequest().getRemoteUser();
+        return getMockHttpServletRequest().getRemoteUser();
     }
 
     public Object getRequest() {
-        return getHttpServletRequest();
+        return getMockHttpServletRequest();
     }
 
-    MockHttpServletRequest getHttpServletRequest() {
+    public MockHttpServletRequest getMockHttpServletRequest() {
         if (mockHttpServletRequest_ == null) {
             mockHttpServletRequest_ = new MockHttpServletRequestImpl(
                     getMockServletContext(), "/mock-path.html");
@@ -150,8 +153,13 @@ public class MockExternalContextImpl extends MockExternalContext {
         return mockHttpServletRequest_;
     }
 
+    public void setMockHttpServletRequest(
+            MockHttpServletRequest mockHttpServletRequest) {
+        mockHttpServletRequest_ = mockHttpServletRequest;
+    }
+
     public String getRequestContextPath() {
-        return getHttpServletRequest().getContextPath();
+        return getMockHttpServletRequest().getContextPath();
     }
 
     public Map getRequestCookieMap() {
@@ -167,11 +175,11 @@ public class MockExternalContextImpl extends MockExternalContext {
     }
 
     public Locale getRequestLocale() {
-        return getHttpServletRequest().getLocale();
+        return getMockHttpServletRequest().getLocale();
     }
 
     public Iterator getRequestLocales() {
-        return new LocalesIterator(getHttpServletRequest().getLocales());
+        return new LocalesIterator(getMockHttpServletRequest().getLocales());
     }
 
     public Map getRequestMap() {
@@ -197,11 +205,11 @@ public class MockExternalContextImpl extends MockExternalContext {
     }
 
     public String getRequestPathInfo() {
-        return getHttpServletRequest().getPathInfo();
+        return getMockHttpServletRequest().getPathInfo();
     }
 
     public String getRequestServletPath() {
-        return getHttpServletRequest().getServletPath();
+        return getMockHttpServletRequest().getServletPath();
     }
 
     public URL getResource(String path) throws MalformedURLException {
@@ -217,35 +225,40 @@ public class MockExternalContextImpl extends MockExternalContext {
     }
 
     public Object getResponse() {
-        return getHttpServletResponse();
+        return getMockHttpServletResponse();
     }
 
-    HttpServletResponse getHttpServletResponse() {
-        if (httpServletResponse_ == null) {
-            httpServletResponse_ = new MockHttpServletResponseImpl(
-                    getHttpServletRequest());
+    public MockHttpServletResponse getMockHttpServletResponse() {
+        if (mockHttpServletResponse_ == null) {
+            mockHttpServletResponse_ = new MockHttpServletResponseImpl(
+                    getMockHttpServletRequest());
         }
-        return httpServletResponse_;
+        return mockHttpServletResponse_;
+    }
+
+    public void setMockHttpServletResponse(
+            MockHttpServletResponse mockHttpServletResponse) {
+        mockHttpServletResponse_ = mockHttpServletResponse;
     }
 
     public Object getSession(boolean create) {
-        return getHttpServletRequest().getSession(create);
+        return getMockHttpServletRequest().getSession(create);
     }
 
     public Map getSessionMap() {
         if (sessionMap_ == null) {
-            HttpSession session = getHttpServletRequest().getSession(true);
+            HttpSession session = getMockHttpServletRequest().getSession(true);
             sessionMap_ = new MockSessionMap(session);
         }
         return sessionMap_;
     }
 
     public java.security.Principal getUserPrincipal() {
-        return getHttpServletRequest().getUserPrincipal();
+        return getMockHttpServletRequest().getUserPrincipal();
     }
 
     public boolean isUserInRole(String role) {
-        return getHttpServletRequest().isUserInRole(role);
+        return getMockHttpServletRequest().isUserInRole(role);
     }
 
     public void log(String message) {

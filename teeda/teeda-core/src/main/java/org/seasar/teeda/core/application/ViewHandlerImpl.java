@@ -21,6 +21,7 @@ import java.util.Locale;
 
 import javax.faces.FacesException;
 import javax.faces.application.Application;
+import javax.faces.application.StateManager;
 import javax.faces.application.ViewHandler;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
@@ -121,8 +122,13 @@ public class ViewHandlerImpl extends ViewHandler {
     }
 
     public UIViewRoot restoreView(FacesContext context, String viewId) {
-        // TODO Auto-generated method stub
-        return null;
+        if (context == null) {
+            throw new NullPointerException("context");
+        }
+        Application app = context.getApplication();
+        String renderKitId = calculateRenderKitId(context);
+        StateManager stateManager = app.getStateManager(); 
+        return stateManager.restoreView(context, viewId, renderKitId);
     }
 
     public void writeState(FacesContext context) throws IOException {

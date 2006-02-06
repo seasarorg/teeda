@@ -27,6 +27,10 @@ import java.util.Set;
 
 import javax.servlet.http.Cookie;
 
+import org.seasar.framework.mock.servlet.MockHttpServletRequest;
+import org.seasar.framework.mock.servlet.MockHttpServletResponse;
+import org.seasar.framework.mock.servlet.MockServletContext;
+
 /**
  * @author manhole
  */
@@ -200,6 +204,33 @@ public class MockExternalContextWrapper extends MockExternalContext {
 
     public String toString() {
         return mockExternalContext_.toString();
+    }
+
+    public void setMockServletContext(MockServletContext mockServletContext) {
+        mockExternalContext_.setMockServletContext(mockServletContext);
+    }
+
+    public MockServletContext getMockServletContext() {
+        return mockExternalContext_.getMockServletContext();
+    }
+
+    public void setMockHttpServletRequest(
+            MockHttpServletRequest mockHttpServletRequest) {
+        mockExternalContext_.setMockHttpServletRequest(mockHttpServletRequest);
+    }
+
+    public MockHttpServletRequest getMockHttpServletRequest() {
+        return mockExternalContext_.getMockHttpServletRequest();
+    }
+
+    public void setMockHttpServletResponse(
+            MockHttpServletResponse mockHttpServletResponse) {
+        mockExternalContext_
+                .setMockHttpServletResponse(mockHttpServletResponse);
+    }
+
+    public MockHttpServletResponse getMockHttpServletResponse() {
+        return mockExternalContext_.getMockHttpServletResponse();
     }
 
 }
