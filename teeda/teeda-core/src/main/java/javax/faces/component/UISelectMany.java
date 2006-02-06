@@ -21,6 +21,7 @@ import java.util.List;
 
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
+import javax.faces.internal.AssertionUtil;
 import javax.faces.internal.FacesMessageUtils;
 import javax.faces.internal.SelectItemsIterator;
 
@@ -142,7 +143,7 @@ public class UISelectMany extends UIInput {
     }
 
     private Object[] toObjectArray(Object obj) {
-        ComponentUtils_.assertNotNull("primitiveArray", obj);
+        AssertionUtil.assertNotNull("primitiveArray", obj);
         if (ComponentUtils_.isObjectArray(obj)) {
             return (Object[]) obj;
         } else if (obj instanceof List) {

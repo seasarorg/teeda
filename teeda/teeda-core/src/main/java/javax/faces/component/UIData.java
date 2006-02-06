@@ -27,6 +27,7 @@ import javax.faces.event.AbortProcessingException;
 import javax.faces.event.FacesEvent;
 import javax.faces.event.FacesListener;
 import javax.faces.event.PhaseId;
+import javax.faces.internal.AssertionUtil;
 import javax.faces.internal.NamingContainerUtil;
 import javax.faces.internal.SavedState;
 import javax.faces.internal.UIDataUtil;
@@ -108,7 +109,7 @@ public class UIData extends UIComponentBase implements NamingContainer {
     }
 
     public void setFooter(UIComponent footer) {
-        ComponentUtils_.assertNotNull("footer", footer);
+        AssertionUtil.assertNotNull("footer", footer);
         getFacets().put(FOOTER_FACET_NAME, footer);
     }
 
@@ -117,7 +118,7 @@ public class UIData extends UIComponentBase implements NamingContainer {
     }
 
     public void setHeader(UIComponent header) {
-        ComponentUtils_.assertNotNull("header", header);
+        AssertionUtil.assertNotNull("header", header);
         getFacets().put(HEADER_FACET_NAME, header);
     }
 
@@ -222,7 +223,7 @@ public class UIData extends UIComponentBase implements NamingContainer {
     }
 
     public void setValueBinding(String name, ValueBinding vb) {
-        ComponentUtils_.assertNotNull("name", name);
+        AssertionUtil.assertNotNull("name", name);
         if (name.equals("var") || name.equals("rowIndex")) {
             throw new IllegalArgumentException("setValueBinding");
         } else if (name.equals(VALUE_BINDING_NAME)) {
@@ -232,7 +233,7 @@ public class UIData extends UIComponentBase implements NamingContainer {
     }
 
     public String getClientId(FacesContext context) {
-        ComponentUtils_.assertNotNull("context", context);
+        AssertionUtil.assertNotNull("context", context);
         String clientId = super.getClientId(context);
         if (rowIndex_ >= 0) {
             clientId = clientId + NamingContainer.SEPARATOR_CHAR + rowIndex_;
@@ -241,12 +242,12 @@ public class UIData extends UIComponentBase implements NamingContainer {
     }
 
     public void queueEvent(FacesEvent event) {
-        ComponentUtils_.assertNotNull("event", event);
+        AssertionUtil.assertNotNull("event", event);
         super.queueEvent(new FacesEventWrapper(event, getRowIndex(), this));
     }
 
     public void broadcast(FacesEvent event) throws AbortProcessingException {
-        ComponentUtils_.assertNotNull("event", event);
+        AssertionUtil.assertNotNull("event", event);
         if (!(event instanceof FacesEventWrapper)) {
             super.broadcast(event);
             return;
@@ -261,13 +262,13 @@ public class UIData extends UIComponentBase implements NamingContainer {
     }
 
     public void encodeBegin(FacesContext context) throws IOException {
-        ComponentUtils_.assertNotNull("context", context);
+        AssertionUtil.assertNotNull("context", context);
         resetModelAndSavedState();
         super.encodeBegin(context);
     }
 
     public void processDecodes(FacesContext context) {
-        ComponentUtils_.assertNotNull("context", context);
+        AssertionUtil.assertNotNull("context", context);
         if (!isRendered()) {
             return;
         }
@@ -282,7 +283,7 @@ public class UIData extends UIComponentBase implements NamingContainer {
     }
 
     public void processUpdates(FacesContext context) {
-        ComponentUtils_.assertNotNull("context", context);
+        AssertionUtil.assertNotNull("context", context);
         if (!isRendered()) {
             return;
         }
@@ -291,7 +292,7 @@ public class UIData extends UIComponentBase implements NamingContainer {
     }
 
     public void processValidators(FacesContext context) {
-        ComponentUtils_.assertNotNull("context", context);
+        AssertionUtil.assertNotNull("context", context);
         if (!isRendered()) {
             return;
         }

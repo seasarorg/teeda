@@ -16,6 +16,7 @@
 package javax.faces.component;
 
 import javax.faces.context.FacesContext;
+import javax.faces.internal.AssertionUtil;
 import javax.faces.internal.FacesMessageUtils;
 import javax.faces.internal.SelectItemsIterator;
 
@@ -42,7 +43,7 @@ public class UISelectOne extends UIInput {
     }
 
     protected void validateValue(FacesContext context, Object value) {
-        ComponentUtils_.assertNotNull("context", context);
+        AssertionUtil.assertNotNull("context", context);
         super.validateValue(context, value);
         if (!isValid() || value == null) {
             return;

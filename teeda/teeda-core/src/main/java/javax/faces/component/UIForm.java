@@ -19,6 +19,7 @@ import java.util.Iterator;
 
 import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseId;
+import javax.faces.internal.AssertionUtil;
 import javax.faces.internal.NamingContainerUtil;
 
 /**
@@ -56,18 +57,18 @@ public class UIForm extends UIComponentBase implements NamingContainer {
     }
 
     public void processDecodes(FacesContext context) {
-        ComponentUtils_.assertNotNull("context", context);
+        AssertionUtil.assertNotNull("context", context);
         decode(context);
         processAppropriateAction(context, PhaseId.APPLY_REQUEST_VALUES);
     }
 
     public void processUpdates(FacesContext context) {
-        ComponentUtils_.assertNotNull("context", context);
+        AssertionUtil.assertNotNull("context", context);
         processAppropriateAction(context, PhaseId.UPDATE_MODEL_VALUES);
     }
 
     public void processValidators(FacesContext context) {
-        ComponentUtils_.assertNotNull("context", context);
+        AssertionUtil.assertNotNull("context", context);
         processAppropriateAction(context, PhaseId.PROCESS_VALIDATIONS);
     }
 

@@ -20,6 +20,7 @@ import java.util.Iterator;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.internal.AssertionUtil;
 import javax.faces.render.Renderer;
 
 import org.seasar.framework.util.StringUtil;
@@ -68,14 +69,11 @@ public class AbstractHtmlRenderer extends Renderer {
 
     // for parameter check.
     protected void assertNotNull(FacesContext context, UIComponent component) {
-        if (context == null) {
-            throw new NullPointerException("context");
-        }
-        if (component == null) {
-            throw new NullPointerException("component");
-        }
+        AssertionUtil.assertNotNull("context", context);
+        AssertionUtil.assertNotNull("component", component);
     }
 
+    // for styles
     protected String[] splitByComma(String s) {
         String[] split = StringUtil.split(s, ",");
         for (int i = 0; i < split.length; i++) {

@@ -26,6 +26,7 @@ import javax.faces.convert.Converter;
 import javax.faces.el.ValueBinding;
 import javax.faces.event.PhaseId;
 import javax.faces.internal.ArrayIterator;
+import javax.faces.internal.AssertionUtil;
 import javax.faces.model.SelectItem;
 import javax.faces.model.SelectItemGroup;
 
@@ -43,16 +44,6 @@ public class ComponentUtils_ {
     private static final int LOCALE_LENGTH_LONG = 5;
 
     private ComponentUtils_() {
-    }
-
-    public static void assertNotNull(Object obj) {
-        assertNotNull(null, obj);
-    }
-
-    public static void assertNotNull(String message, Object obj) {
-        if (obj == null) {
-            throw new NullPointerException(message);
-        }
     }
 
     public static void assertIntegerNotNegative(int num) {
@@ -135,7 +126,7 @@ public class ComponentUtils_ {
     }
 
     public static boolean isLocaleShort(String locale) {
-        assertNotNull(locale);
+        AssertionUtil.assertNotNull(null, locale);
         if (locale.length() == LOCALE_LENGTH_SHORT) {
             if (locale.indexOf("-") == -1 || locale.indexOf("_") == -1) {
                 return true;
@@ -145,7 +136,7 @@ public class ComponentUtils_ {
     }
 
     public static boolean isLocaleLong(String locale) {
-        assertNotNull(locale);
+        AssertionUtil.assertNotNull(null, locale);
         if (locale.length() == LOCALE_LENGTH_LONG) {
             return true;
         }

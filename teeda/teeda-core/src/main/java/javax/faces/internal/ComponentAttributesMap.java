@@ -28,7 +28,6 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.faces.FacesException;
-import javax.faces.component.ComponentUtils_;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
@@ -130,8 +129,8 @@ public class ComponentAttributesMap implements Map, Serializable {
     }
 
     public Object put(Object key, Object value) {
-        assertNotNull("key", key);
-        assertNotNull("value", value);
+        AssertionUtil.assertNotNull("key", key);
+        AssertionUtil.assertNotNull("value", value);
         verifyKeyIsString(key);
 
         PropertyDescriptor propertyDescriptor = getPropertyDescriptor((String) key);
@@ -145,10 +144,6 @@ public class ComponentAttributesMap implements Map, Serializable {
             returnValue = attributes_.put(key, value);
         }
         return returnValue;
-    }
-
-    private void assertNotNull(String message, Object actual) {
-        ComponentUtils_.assertNotNull(message, actual);
     }
 
     private void verifyKeyIsString(Object key) {

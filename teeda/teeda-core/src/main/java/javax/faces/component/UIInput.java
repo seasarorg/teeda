@@ -30,6 +30,7 @@ import javax.faces.event.AbortProcessingException;
 import javax.faces.event.FacesEvent;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.event.ValueChangeListener;
+import javax.faces.internal.AssertionUtil;
 import javax.faces.internal.FacesMessageUtils;
 import javax.faces.render.Renderer;
 import javax.faces.validator.Validator;
@@ -166,7 +167,7 @@ public class UIInput extends UIOutput implements EditableValueHolder {
     }
 
     public void processDecodes(FacesContext context) {
-        ComponentUtils_.assertNotNull("context", context);
+        AssertionUtil.assertNotNull("context", context);
         if (!isRendered()) {
             return;
         }
@@ -177,7 +178,7 @@ public class UIInput extends UIOutput implements EditableValueHolder {
     }
 
     public void processValidators(FacesContext context) {
-        ComponentUtils_.assertNotNull("context", context);
+        AssertionUtil.assertNotNull("context", context);
         if (!isRendered()) {
             return;
         }
@@ -188,7 +189,7 @@ public class UIInput extends UIOutput implements EditableValueHolder {
     }
 
     public void processUpdates(FacesContext context) {
-        ComponentUtils_.assertNotNull("context", context);
+        AssertionUtil.assertNotNull("context", context);
         if (!isRendered()) {
             return;
         }
@@ -228,7 +229,7 @@ public class UIInput extends UIOutput implements EditableValueHolder {
     }
 
     public void updateModel(FacesContext context) {
-        ComponentUtils_.assertNotNull("context", context);
+        AssertionUtil.assertNotNull("context", context);
         if (!isValid() || !isLocalValueSet()) {
             return;
         }
@@ -249,7 +250,7 @@ public class UIInput extends UIOutput implements EditableValueHolder {
     }
 
     public void validate(FacesContext context) {
-        ComponentUtils_.assertNotNull("context", context);
+        AssertionUtil.assertNotNull("context", context);
         Object submittedValue = getSubmittedValue();
         if (submittedValue == null) {
             return;
@@ -321,7 +322,7 @@ public class UIInput extends UIOutput implements EditableValueHolder {
     }
 
     public void addValidator(Validator validator) {
-        ComponentUtils_.assertNotNull("validator", validator);
+        AssertionUtil.assertNotNull("validator", validator);
         if (validators_ == null) {
             validators_ = new ArrayList();
         }
@@ -343,7 +344,7 @@ public class UIInput extends UIOutput implements EditableValueHolder {
     }
 
     public void addValueChangeListener(ValueChangeListener listener) {
-        ComponentUtils_.assertNotNull("listener", listener);
+        AssertionUtil.assertNotNull("listener", listener);
         addFacesListener(listener);
     }
 
