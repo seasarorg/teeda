@@ -64,7 +64,7 @@ public abstract class StateManager {
 
 	public class SerializedView implements Serializable{
 
-		private static final long serialVersionUID = 3256443616359823160L;
+		private static final long serialVersionUID = 1L;
 
         private Object structure_ = null;
 

@@ -67,7 +67,7 @@ public class DataModelTest extends TestCase {
         }
     }
 
-    private class TargetDataModel extends DataModel {
+    private static class TargetDataModel extends DataModel {
 
         public TargetDataModel() {
             super();

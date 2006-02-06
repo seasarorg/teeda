@@ -18,12 +18,7 @@ package org.seasar.teeda.core.exception;
 import junit.framework.TestCase;
 
 
-public class TestInstantiateConverterFailureException extends TestCase {
-
-    public static void main(String[] args) {
-        junit.textui.TestRunner
-                .run(TestInstantiateConverterFailureException.class);
-    }
+public class InstantiateConverterFailureExceptionTest extends TestCase {
 
     /*
      * @see TestCase#setUp()
@@ -40,10 +35,10 @@ public class TestInstantiateConverterFailureException extends TestCase {
     }
 
     /**
-     * Constructor for TestInstantiateConverterFailureException.
+     * Constructor for InstantiateConverterFailureExceptionTest.
      * @param arg0
      */
-    public TestInstantiateConverterFailureException(String arg0) {
+    public InstantiateConverterFailureExceptionTest(String arg0) {
         super(arg0);
     }
     
