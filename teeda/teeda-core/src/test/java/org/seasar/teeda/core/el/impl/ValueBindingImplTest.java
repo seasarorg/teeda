@@ -28,10 +28,12 @@ import org.seasar.teeda.core.managedbean.ManagedBeanFactory;
 import org.seasar.teeda.core.mock.MockPropertyResolver;
 import org.seasar.teeda.core.mock.MockVariableResolver;
 import org.seasar.teeda.core.scope.Scope;
+import org.seasar.teeda.core.unit.ExceptionAssert;
 import org.seasar.teeda.core.unit.TeedaTestCase;
 
 /**
  * @author shot
+ * @author manhole
  */
 public class ValueBindingImplTest extends TeedaTestCase {
 
@@ -328,6 +330,21 @@ public class ValueBindingImplTest extends TeedaTestCase {
         assertEquals(num, vb.getValue(getFacesContext()));
     }
 
+    public void testSetValue_FacesContextIsNull() throws Exception {
+        // ## Arrange ##
+        ValueBindingImpl vb = new ValueBindingImpl(getApplication(), "#{a}",
+                new CommonsELParser());
+
+        // ## Act ##
+        // ## Assert ##
+        try {
+            vb.setValue(null, "val");
+            fail();
+        } catch (NullPointerException npe) {
+            ExceptionAssert.assertMessageExist(npe);
+        }
+    }
+
     public static class A {
         private String name = "aaa";
 
@@ -407,4 +424,5 @@ public class ValueBindingImplTest extends TeedaTestCase {
             return 0;
         }
     }
+
 }
