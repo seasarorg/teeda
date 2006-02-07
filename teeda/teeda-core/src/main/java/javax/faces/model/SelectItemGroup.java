@@ -15,6 +15,8 @@
  */
 package javax.faces.model;
 
+import javax.faces.internal.AssertionUtil;
+
 /**
  * @author shot
  * @author manhole
@@ -43,7 +45,7 @@ public class SelectItemGroup extends SelectItem {
     }
 
     public void setSelectItems(SelectItem[] selectItems) {
-        assertNotNull("selectItems", selectItems);
+        AssertionUtil.assertNotNull("selectItems", selectItems);
         selectItems_ = selectItems;
     }
 }

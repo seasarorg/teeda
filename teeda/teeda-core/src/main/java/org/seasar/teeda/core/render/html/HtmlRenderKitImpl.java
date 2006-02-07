@@ -23,6 +23,7 @@ import java.util.Map;
 
 import javax.faces.context.ResponseStream;
 import javax.faces.context.ResponseWriter;
+import javax.faces.internal.AssertionUtil;
 import javax.faces.render.Renderer;
 import javax.faces.render.ResponseStateManager;
 
@@ -47,16 +48,16 @@ public class HtmlRenderKitImpl extends AbstractRenderKit {
     }
 
     public void addRenderer(String family, String renderType, Renderer renderer) {
-        assertNotNull("family", family);
-        assertNotNull("renderType", renderType);
-        assertNotNull("renderer", renderer);
+        AssertionUtil.assertNotNull("family", family);
+        AssertionUtil.assertNotNull("renderType", renderType);
+        AssertionUtil.assertNotNull("renderer", renderer);
         String key = getGeneratedKey(family, renderType);
         renderers_.put(key, renderer);
     }
 
     public Renderer getRenderer(String family, String renderType) {
-        assertNotNull("family", family);
-        assertNotNull("renderType", renderType);
+        AssertionUtil.assertNotNull("family", family);
+        AssertionUtil.assertNotNull("renderType", renderType);
         String key = getGeneratedKey(family, renderType);
         return (Renderer) renderers_.get(key);
     }
@@ -124,9 +125,4 @@ public class HtmlRenderKitImpl extends AbstractRenderKit {
         responseStateManager_ = responseStateManager;
     }
 
-    private void assertNotNull(String message, Object target) {
-        if (target == null) {
-            throw new NullPointerException(message);
-        }
-    }
 }

@@ -38,7 +38,7 @@ import javax.faces.render.RenderKitFactory;
  */
 public class FactoryFinderUtil {
 
-	private static final List VALID_FACTORY_NAMES = new ArrayList();
+    private static final List VALID_FACTORY_NAMES = new ArrayList();
 
     private static final Map ABSTRACT_FACTORY_CLASSES = new HashMap();
 
@@ -47,125 +47,128 @@ public class FactoryFinderUtil {
         VALID_FACTORY_NAMES.add(FactoryFinder.FACES_CONTEXT_FACTORY);
         VALID_FACTORY_NAMES.add(FactoryFinder.LIFECYCLE_FACTORY);
         VALID_FACTORY_NAMES.add(FactoryFinder.RENDER_KIT_FACTORY);
-        ABSTRACT_FACTORY_CLASSES.put(FactoryFinder.APPLICATION_FACTORY, ApplicationFactory.class);
-        ABSTRACT_FACTORY_CLASSES.put(FactoryFinder.FACES_CONTEXT_FACTORY, FacesContextFactory.class);
-        ABSTRACT_FACTORY_CLASSES.put(FactoryFinder.LIFECYCLE_FACTORY, LifecycleFactory.class);
-        ABSTRACT_FACTORY_CLASSES.put(FactoryFinder.RENDER_KIT_FACTORY, RenderKitFactory.class);
+        ABSTRACT_FACTORY_CLASSES.put(FactoryFinder.APPLICATION_FACTORY,
+                ApplicationFactory.class);
+        ABSTRACT_FACTORY_CLASSES.put(FactoryFinder.FACES_CONTEXT_FACTORY,
+                FacesContextFactory.class);
+        ABSTRACT_FACTORY_CLASSES.put(FactoryFinder.LIFECYCLE_FACTORY,
+                LifecycleFactory.class);
+        ABSTRACT_FACTORY_CLASSES.put(FactoryFinder.RENDER_KIT_FACTORY,
+                RenderKitFactory.class);
     }
 
-	private FactoryFinderUtil(){
-	}
-	
-	public static void assertNotNull(Object obj){
-		assertNotNull(obj, null);
-	}
+    private FactoryFinderUtil() {
+    }
 
-	public static void assertNotNull(Object obj, String message){
-		if(obj == null){
-			throw new NullPointerException(message);
-		}
-	}
+    public static void checkValidFactoryNames(String factoryName) {
+        if (!VALID_FACTORY_NAMES.contains(factoryName)) {
+            throw new IllegalArgumentException(
+                    "Factory name can not be identified.");
+        }
+    }
 
-	public static void checkValidFactoryNames(String factoryName){
-		if(!VALID_FACTORY_NAMES.contains(factoryName)){
-			throw new IllegalArgumentException("Factory name can not be identified.");
-		}
-	}
-
-	public static ClassLoader getClassLoader() throws FacesException {
-		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        if(classLoader == null){
+    public static ClassLoader getClassLoader() throws FacesException {
+        ClassLoader classLoader = Thread.currentThread()
+                .getContextClassLoader();
+        if (classLoader == null) {
             classLoader = FactoryFinderUtil.class.getClassLoader();
         }
-		if (classLoader == null) {
-			throw new FacesException();
-		}
-		return classLoader;
-	}
+        if (classLoader == null) {
+            throw new FacesException();
+        }
+        return classLoader;
+    }
 
-	public static Class getAbstractFactoryClass(String factoryName) {
-		return (Class)ABSTRACT_FACTORY_CLASSES.get(factoryName);
-	}	
+    public static Class getAbstractFactoryClass(String factoryName) {
+        return (Class) ABSTRACT_FACTORY_CLASSES.get(factoryName);
+    }
 
-	public static Object createFactoryInstance(String factoryName, List classNames, ClassLoader classLoader) {
-		Class abstractFactoryClass = getAbstractFactoryClass(factoryName);
-		Object current = null;
+    public static Object createFactoryInstance(String factoryName,
+            List classNames, ClassLoader classLoader) {
+        Class abstractFactoryClass = getAbstractFactoryClass(factoryName);
+        Object current = null;
         Class implClass = null;
-		for(Iterator classNamesIterator = classNames.iterator();classNamesIterator.hasNext();){
-			String implClassName = (String) classNamesIterator.next();
-            try{
+        for (Iterator classNamesIterator = classNames.iterator(); classNamesIterator
+                .hasNext();) {
+            String implClassName = (String) classNamesIterator.next();
+            try {
                 implClass = classLoader.loadClass(implClassName);
-            }catch(ClassNotFoundException e){
+            } catch (ClassNotFoundException e) {
                 throw new FacesException(e);
             }
-			if (!abstractFactoryClass.isAssignableFrom(implClass)) {
-				throw new IllegalArgumentException("Class " + implClassName
-						+ " is no " + abstractFactoryClass.getName());
-			}
-			current = getCurrentFactoryInstance(implClass, abstractFactoryClass, current);
-		}
-		return current;
-	}
+            if (!abstractFactoryClass.isAssignableFrom(implClass)) {
+                throw new IllegalArgumentException("Class " + implClassName
+                        + " is no " + abstractFactoryClass.getName());
+            }
+            current = getCurrentFactoryInstance(implClass,
+                    abstractFactoryClass, current);
+        }
+        return current;
+    }
 
-	public static Object getCurrentFactoryInstance(Class implClass, Class abstractFactoryClass, Object current){
-        if(implClass == null){
-            if(current == null){
+    public static Object getCurrentFactoryInstance(Class implClass,
+            Class abstractFactoryClass, Object current) {
+        if (implClass == null) {
+            if (current == null) {
                 throw new IllegalArgumentException();
-            }else{
+            } else {
                 return current;
             }
         }
-		Constructor constructor = getConstructor(implClass, new Class[]{abstractFactoryClass});
-        if(constructor != null){
-            current = newInstanceByConstructor(constructor, new Object[]{current});
-        }else{
+        Constructor constructor = getConstructor(implClass,
+                new Class[] { abstractFactoryClass });
+        if (constructor != null) {
+            current = newInstanceByConstructor(constructor,
+                    new Object[] { current });
+        } else {
             current = newInstance(implClass);
         }
-		return current;
-	}
+        return current;
+    }
 
-    public static Constructor getConstructor(Class clazz, Class[] argTypes){
-        if(clazz == null || argTypes == null){
+    public static Constructor getConstructor(Class clazz, Class[] argTypes) {
+        if (clazz == null || argTypes == null) {
             throw new IllegalArgumentException();
         }
-        try{
+        try {
             return clazz.getConstructor(argTypes);
-        }catch(NoSuchMethodException e){
+        } catch (NoSuchMethodException e) {
             return null;
         }
     }
-    
-    public static Object newInstance(Class clazz){
-        if(clazz == null){
+
+    public static Object newInstance(Class clazz) {
+        if (clazz == null) {
             throw new IllegalArgumentException();
         }
-        try{
+        try {
             return clazz.newInstance();
-        }catch (InstantiationException e) {
+        } catch (InstantiationException e) {
             throw new FacesException(e);
         } catch (IllegalAccessException e) {
             throw new FacesException(e);
         }
     }
 
-    public static Object newInstanceByConstructor(Constructor constructor, Object[] args){
-        if(constructor == null || args == null){
+    public static Object newInstanceByConstructor(Constructor constructor,
+            Object[] args) {
+        if (constructor == null || args == null) {
             throw new IllegalArgumentException();
         }
-        try{
+        try {
             return constructor.newInstance(args);
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             throw new FacesException(e);
-        }catch (InstantiationException e){
+        } catch (InstantiationException e) {
             throw new FacesException(e);
-        }catch (IllegalAccessException e){
+        } catch (IllegalAccessException e) {
             throw new FacesException(e);
-        }catch (InvocationTargetException e){
+        } catch (InvocationTargetException e) {
             throw new FacesException(e);
         }
     }
-    
-	public static boolean isAlreadySetFactory(Map factoryMap, String factoryName) {
-		return (factoryMap != null && factoryMap.containsKey(factoryName));
-	}
+
+    public static boolean isAlreadySetFactory(Map factoryMap, String factoryName) {
+        return (factoryMap != null && factoryMap.containsKey(factoryName));
+    }
 }

@@ -17,6 +17,8 @@ package javax.faces.model;
 
 import java.io.Serializable;
 
+import javax.faces.internal.AssertionUtil;
+
 /**
  * @author shot
  * @author manhole
@@ -37,7 +39,7 @@ public class SelectItem implements Serializable {
     }
 
     public SelectItem(Object value) {
-        assertNotNull("value", value);
+        AssertionUtil.assertNotNull("value", value);
         value_ = value;
     }
 
@@ -51,8 +53,8 @@ public class SelectItem implements Serializable {
 
     public SelectItem(Object value, String label, String description,
             boolean disabled) {
-        assertNotNull("value", value);
-        assertNotNull("label", label);
+        AssertionUtil.assertNotNull("value", value);
+        AssertionUtil.assertNotNull("label", label);
         value_ = value;
         label_ = label;
         description_ = description;
@@ -80,7 +82,7 @@ public class SelectItem implements Serializable {
     }
 
     public void setLabel(String label) {
-        assertNotNull("label", label);
+        AssertionUtil.assertNotNull("label", label);
         label_ = label;
     }
 
@@ -89,14 +91,8 @@ public class SelectItem implements Serializable {
     }
 
     public void setValue(Object value) {
-        assertNotNull("value", value);
+        AssertionUtil.assertNotNull("value", value);
         value_ = value;
-    }
-
-    void assertNotNull(String message, Object obj) {
-        if (obj == null) {
-            throw new NullPointerException(message);
-        }
     }
 
 }

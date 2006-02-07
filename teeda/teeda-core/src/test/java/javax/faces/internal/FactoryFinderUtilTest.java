@@ -33,20 +33,6 @@ import org.seasar.teeda.core.mock.MockApplicationFactory2;
  */
 public class FactoryFinderUtilTest extends TestCase {
 
-    public void testAssertNotNullObject() {
-        try {
-            FactoryFinderUtil.assertNotNull("a");
-        } catch (Exception e) {
-            fail();
-        }
-        try {
-            FactoryFinderUtil.assertNotNull(null);
-            fail();
-        } catch (NullPointerException e) {
-            assertTrue(true);
-        }
-    }
-
     public void testCheckValidFactoryNames() {
         String name = FactoryFinder.APPLICATION_FACTORY;
         try {

@@ -28,6 +28,7 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseStream;
 import javax.faces.context.ResponseWriter;
+import javax.faces.internal.AssertionUtil;
 import javax.faces.render.RenderKit;
 
 import org.seasar.teeda.core.util.ApplicationUtil;
@@ -151,7 +152,7 @@ public class ServletFacesContextImpl extends FacesContext {
 
     public void setResponseStream(ResponseStream responseStream) {
         assertNotReleased();
-        assertNotNull("responseStream", responseStream);
+        AssertionUtil.assertNotNull("responseStream", responseStream);
         responseStream_ = responseStream;
     }
 
@@ -162,7 +163,7 @@ public class ServletFacesContextImpl extends FacesContext {
 
     public void setResponseWriter(ResponseWriter responseWriter) {
         assertNotReleased();
-        assertNotNull("responseWriter", responseWriter);
+        AssertionUtil.assertNotNull("responseWriter", responseWriter);
         responseWriter_ = responseWriter;
     }
 
@@ -173,13 +174,13 @@ public class ServletFacesContextImpl extends FacesContext {
 
     public void setViewRoot(UIViewRoot root) {
         assertNotReleased();
-        assertNotNull("root", root);
+        AssertionUtil.assertNotNull("root", root);
         root_ = root;
     }
 
     public void addMessage(String clientId, FacesMessage message) {
         assertNotReleased();
-        assertNotNull("message", message);
+        AssertionUtil.assertNotNull("message", message);
         if (messages_ == null) {
             messages_ = new ArrayList();
             messageClientIds_ = new ArrayList();
@@ -221,9 +222,4 @@ public class ServletFacesContextImpl extends FacesContext {
         }
     }
 
-    private void assertNotNull(String message, Object o) {
-        if (o == null) {
-            throw new NullPointerException(message);
-        }
-    }
 }

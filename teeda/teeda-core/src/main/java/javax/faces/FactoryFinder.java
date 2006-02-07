@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.faces.internal.AssertionUtil;
 import javax.faces.internal.FactoryFinderUtil;
 
 /**
@@ -41,7 +42,7 @@ public final class FactoryFinder {
 	private static final Map factories_ = new HashMap();
 
 	public static Object getFactory(String factoryName) throws FacesException {
-		FactoryFinderUtil.assertNotNull(factoryName, "factoryName");
+		AssertionUtil.assertNotNull("factoryName", factoryName);
 		ClassLoader classLoader = FactoryFinderUtil.getClassLoader();
 		Map factoryClassNames = (Map)registeredFactoryNamesMap_.get(classLoader);
 		if (factoryClassNames == null) {
@@ -67,7 +68,7 @@ public final class FactoryFinder {
 	}
 
 	public static void setFactory(String factoryName, String implName) {
-        FactoryFinderUtil.assertNotNull(factoryName, "factoryName");
+        AssertionUtil.assertNotNull("factoryName", factoryName);
 		FactoryFinderUtil.checkValidFactoryNames(factoryName);
 		ClassLoader classLoader = FactoryFinderUtil.getClassLoader();
 		Map factoryMap = (Map)factories_.get(classLoader);
