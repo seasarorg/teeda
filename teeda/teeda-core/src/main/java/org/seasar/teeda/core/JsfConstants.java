@@ -96,6 +96,8 @@ public interface JsfConstants {
 
     public String INPUT_ELEM = "input";
 
+    public String LI_ELEM = "li";
+
     public String SPAN_ELEM = "span";
 
     public String TABLE_ELEM = "table";
@@ -113,6 +115,8 @@ public interface JsfConstants {
     public String THEAD_ELEM = "thead";
 
     public String TR_ELEM = "tr";
+
+    public String UL_ELEM = "ul";
 
     // -- attribute --
 

@@ -52,7 +52,7 @@ public class HtmlMessageRendererTest extends RendererTest {
         assertEquals("", getResponseText());
     }
 
-    public void testEncode_NoValue() throws Exception {
+    public void testEncode_NoMessageValue() throws Exception {
         FacesContext context = getFacesContext();
         arrangeForComponent("fooFor");
         htmlMessage_.setFor("fooFor");

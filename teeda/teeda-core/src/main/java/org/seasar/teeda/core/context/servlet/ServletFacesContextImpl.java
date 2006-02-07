@@ -31,7 +31,6 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.render.RenderKit;
 
 import org.seasar.teeda.core.util.ApplicationUtil;
-import org.seasar.teeda.core.util.ArrayUtil;
 import org.seasar.teeda.core.util.FactoryFinderUtil;
 
 /**
@@ -74,7 +73,7 @@ public class ServletFacesContextImpl extends FacesContext {
 
     public Iterator getClientIdsWithMessages() {
         assertNotReleased();
-        if (ArrayUtil.isEmpty(messages_.toArray())) {
+        if (messages_ == null) {
             return Collections.EMPTY_LIST.iterator();
         }
         return messageClientIds_.iterator();
@@ -101,19 +100,24 @@ public class ServletFacesContextImpl extends FacesContext {
         if (messages_ == null) {
             return Collections.EMPTY_LIST.iterator();
         }
-        List list = new ArrayList();
         if (messages_.size() != messageClientIds_.size()) {
             throw new IllegalStateException();
         }
+        List list = new ArrayList();
         for (int i = 0; i < messages_.size(); i++) {
             String savedClientId = (String) messageClientIds_.get(i);
-            if (clientId == null && savedClientId == null) {
-                list.add(messages_.get(i));
-            } else if (clientId != null && clientId.equals(savedClientId)) {
+            if (stringEquals(clientId, savedClientId)) {
                 list.add(messages_.get(i));
             }
         }
         return list.iterator();
+    }
+
+    private boolean stringEquals(String a, String b) {
+        if (a == null) {
+            return b == null;
+        }
+        return a.equals(b);
     }
 
     public RenderKit getRenderKit() {
@@ -213,7 +217,7 @@ public class ServletFacesContextImpl extends FacesContext {
 
     private void assertNotReleased() {
         if (released_) {
-            throw new IllegalStateException();
+            throw new IllegalStateException("already released");
         }
     }
 

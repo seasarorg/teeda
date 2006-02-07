@@ -24,15 +24,13 @@ import javax.faces.application.FacesMessage.Severity;
 import javax.faces.component.UIComponent;
 import javax.faces.component.html.HtmlMessage;
 import javax.faces.context.FacesContext;
-import javax.faces.context.ResponseWriter;
 
-import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.util.RendererUtil;
 
 /**
  * @author manhole
  */
-public class HtmlMessageRenderer extends AbstractHtmlRenderer {
+public class HtmlMessageRenderer extends AbstractHtmlMessagesRenderer {
 
     public void encodeEnd(FacesContext context, UIComponent component)
             throws IOException {
@@ -61,54 +59,35 @@ public class HtmlMessageRenderer extends AbstractHtmlRenderer {
             return;
         }
         FacesMessage facesMassage = (FacesMessage) it.next();
-
-        Severity severity = facesMassage.getSeverity();
-        final String style = getStyle(htmlMessage, severity);
-        final String styleClass = getStyleClass(htmlMessage, severity);
-        String title = htmlMessage.getTitle();
-
-        String summary = getSummary(facesMassage);
-        String detail = getDetail(facesMassage);
-        boolean isWriteSummary = htmlMessage.isShowSummary() && summary != null;
-        boolean isWriteDetail = htmlMessage.isShowDetail() && detail != null;
-        if (htmlMessage.isTooltip() && isWriteSummary && isWriteDetail) {
-            isWriteSummary = false;
-            title = summary;
+        String idForRender = null;
+        if (RendererUtil.shouldRenderIdAttribute(htmlMessage)) {
+            idForRender = getIdForRender(context, htmlMessage);
         }
-
-        ResponseWriter writer = context.getResponseWriter();
-        boolean startSpan = false;
-        if (RendererUtil.shouldRenderIdAttribute(htmlMessage) || style != null
-                || styleClass != null || title != null) {
-            startSpan = true;
-            writer.startElement(JsfConstants.SPAN_ELEM, htmlMessage);
-            RendererUtil.renderIdAttributeIfNecessary(writer, htmlMessage,
-                    getIdForRender(context, htmlMessage));
-            RendererUtil
-                    .renderAttribute(writer, JsfConstants.TITLE_ATTR, title);
-            RendererUtil
-                    .renderAttribute(writer, JsfConstants.STYLE_ATTR, style);
-            RendererUtil.renderAttribute(writer, JsfConstants.STYLE_CLASS_ATTR,
-                    styleClass);
-        }
-
-        // TODO not escape HTML tags
-        if (isWriteSummary) {
-            writer.writeText(summary, null);
-        }
-        if (isWriteDetail) {
-            if (isWriteSummary) {
-                writer.writeText(" ", detail);
-            }
-            writer.writeText(detail, null);
-        }
-
-        if (startSpan) {
-            writer.endElement(JsfConstants.SPAN_ELEM);
-        }
+        renderOneMessage(context, htmlMessage, facesMassage, idForRender);
     }
 
-    private String getStyleClass(HtmlMessage htmlMessage, Severity severity) {
+    protected boolean isTooltip(UIComponent component) {
+        HtmlMessage htmlMessage = (HtmlMessage) component;
+        return htmlMessage.isTooltip();
+    }
+
+    protected boolean isShowDetail(UIComponent component) {
+        HtmlMessage htmlMessage = (HtmlMessage) component;
+        return htmlMessage.isShowDetail();
+    }
+
+    protected boolean isShowSummary(UIComponent component) {
+        HtmlMessage htmlMessage = (HtmlMessage) component;
+        return htmlMessage.isShowSummary();
+    }
+
+    protected String getTitle(UIComponent component) {
+        HtmlMessage htmlMessage = (HtmlMessage) component;
+        return htmlMessage.getTitle();
+    }
+
+    protected String getStyleClass(UIComponent component, Severity severity) {
+        HtmlMessage htmlMessage = (HtmlMessage) component;
         String styleClass = null;
         if (severity == FacesMessage.SEVERITY_INFO) {
             styleClass = htmlMessage.getInfoClass();
@@ -125,7 +104,8 @@ public class HtmlMessageRenderer extends AbstractHtmlRenderer {
         return styleClass;
     }
 
-    private String getStyle(HtmlMessage htmlMessage, Severity severity) {
+    protected String getStyle(UIComponent component, Severity severity) {
+        HtmlMessage htmlMessage = (HtmlMessage) component;
         String style = null;
         if (severity == FacesMessage.SEVERITY_INFO) {
             style = htmlMessage.getInfoStyle();
@@ -140,16 +120,6 @@ public class HtmlMessageRenderer extends AbstractHtmlRenderer {
             style = htmlMessage.getStyle();
         }
         return style;
-    }
-
-    private String getDetail(FacesMessage facesMassage) {
-        String detail = facesMassage.getDetail();
-        return detail;
-    }
-
-    private String getSummary(FacesMessage facesMassage) {
-        String summary = facesMassage.getSummary();
-        return summary;
     }
 
 }
