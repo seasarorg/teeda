@@ -55,7 +55,7 @@ public class HtmlMessagesRenderer extends AbstractHtmlMessagesRenderer {
             return;
         }
         final boolean tableLayout;
-        if ("table".equals(htmlMessages.getLayout())) {
+        if (JsfConstants.TABLE_VALUE.equals(htmlMessages.getLayout())) {
             tableLayout = true;
         } else {
             tableLayout = false;

@@ -101,7 +101,6 @@ public class ComponentAttributesMapTest extends TestCase {
             map.put("fooProperty", "some value");
             fail();
         } catch (IllegalArgumentException iae) {
-            System.out.println(iae.getMessage());
             ExceptionAssert.assertMessageExist(iae);
         }
     }
@@ -162,6 +161,6 @@ public class ComponentAttributesMapTest extends TestCase {
         }
     }
 
-    // TODO more test
+    // TODO more tests
 
 }

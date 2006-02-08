@@ -34,15 +34,6 @@ import org.seasar.framework.unit.S2FrameworkTestCase;
  */
 public class S2Test extends S2FrameworkTestCase {
 
-    /**
-     * Constructor for S2Test.
-     * 
-     * @param name
-     */
-    public S2Test(String name) {
-        super(name);
-    }
-
     public void test1() {
         ComponentDef cDef = new ComponentDefImpl(A.class, "a");
         cDef.setInstanceDef(InstanceDefFactory.SINGLETON);
@@ -68,12 +59,12 @@ public class S2Test extends S2FrameworkTestCase {
         list.add("aaa");
         ComponentDef cDef = new ComponentDefImpl(list.getClass(), "a");
         cDef.setInstanceDef(InstanceDefFactory.SINGLETON);
-        
+
         InitMethodDef mDef = new InitMethodDefImpl("add");
         ArgDef aDef = new ArgDefImpl("aaa");
         mDef.addArgDef(aDef);
         cDef.addInitMethodDef(mDef);
-        
+
         getContainer().register(cDef);
 
         List l = (List) getContainer().getComponent("a");
@@ -84,14 +75,14 @@ public class S2Test extends S2FrameworkTestCase {
         Map map = new HashMap();
         ComponentDef cDef = new ComponentDefImpl(map.getClass(), "a");
         cDef.setInstanceDef(InstanceDefFactory.SINGLETON);
-        
+
         InitMethodDef mDef = new InitMethodDefImpl("put");
         ArgDef aDef1 = new ArgDefImpl("a");
         ArgDef aDef2 = new ArgDefImpl("A");
         mDef.addArgDef(aDef1);
         mDef.addArgDef(aDef2);
         cDef.addInitMethodDef(mDef);
-        
+
         getContainer().register(cDef);
 
         Map m = (Map) getContainer().getComponent("a");

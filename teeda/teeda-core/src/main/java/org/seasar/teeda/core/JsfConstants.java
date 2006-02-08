@@ -84,6 +84,8 @@ public interface JsfConstants {
 
     public String RESET_VALUE = "reset";
 
+    public String TABLE_VALUE = "table";
+
     public String TEXT_VALUE = "text";
 
     // -- element --

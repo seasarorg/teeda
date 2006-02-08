@@ -51,9 +51,9 @@ public class UrlBuilder {
     public String build() {
         StringBuffer sb = new StringBuffer(100);
         sb.append(base_);
-        boolean isFirst = true;
+        boolean questionAppeared = false;
         if (StringUtils.contains(base_, '?')) {
-            isFirst = false;
+            questionAppeared = true;
         }
         for (Iterator it = urlParameters_.entrySet().iterator(); it.hasNext();) {
             Map.Entry entry = (Map.Entry) it.next();
@@ -62,11 +62,11 @@ public class UrlBuilder {
             String[] values = parameter.getValues();
             for (int i = 0; i < values.length; i++) {
                 String value = values[i];
-                if (isFirst) {
-                    sb.append('?');
-                    isFirst = false;
-                } else {
+                if (questionAppeared) {
                     sb.append('&');
+                } else {
+                    sb.append('?');
+                    questionAppeared = true;
                 }
                 sb.append(key);
                 sb.append('=');
