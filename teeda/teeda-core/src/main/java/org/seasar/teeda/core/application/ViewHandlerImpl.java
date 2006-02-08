@@ -103,9 +103,7 @@ public class ViewHandlerImpl extends ViewHandler {
     }
 
     public String calculateRenderKitId(FacesContext context) {
-        if (context == null) {
-            throw new NullPointerException("context");
-        }
+        AssertionUtil.assertNotNull("context", context);
         String renderKitId = context.getApplication().getDefaultRenderKitId();
         if (renderKitId == null) {
             renderKitId = RenderKitFactory.HTML_BASIC_RENDER_KIT;
@@ -158,7 +156,8 @@ public class ViewHandlerImpl extends ViewHandler {
             throws IOException, FacesException {
         ExternalContext externalContext = context.getExternalContext();
         String path = ExternalContextUtil.getViewId(externalContext);
-        if (path.equals(viewRoot.getViewId())) {
+        String viewId = viewRoot.getViewId();
+        if (path.equals(viewId)) {
             HttpServletRequest request = ServletExternalContextUtil
                     .getRequest(externalContext);
             HttpServletResponse response = ServletExternalContextUtil
@@ -236,16 +235,19 @@ public class ViewHandlerImpl extends ViewHandler {
             ServletMappingElement servletMapping = (ServletMappingElement) itr
                     .next();
             String urlPattern = servletMapping.getUrlPattern();
-            String extension = urlPattern.substring(1, urlPattern.length());
-            if (pathInfo == null) {
-                if (servletPath.endsWith(extension)
-                        || servletPath.equals(urlPattern)) {
-                    return urlPattern;
-                }
-            } else {
-                urlPattern = urlPattern.substring(0, urlPattern.length() - 2);
-                if (servletPath.equals(urlPattern)) {
-                    return urlPattern;
+            if ((isExtensionMapping(urlPattern) && pathInfo == null)
+                    || (!isExtensionMapping(urlPattern) && pathInfo != null)) {
+                if(isExtensionMapping(urlPattern)) {
+                    String extension = urlPattern.substring(1, urlPattern.length());
+                    if (servletPath.endsWith(extension)
+                            || servletPath.equals(urlPattern)) {
+                        return urlPattern;
+                    }
+                } else {
+                    urlPattern = urlPattern.substring(0, urlPattern.length() - 2);
+                    if (servletPath.equals(urlPattern)) {
+                        return urlPattern;
+                    }
                 }
             }
         }
@@ -254,5 +256,9 @@ public class ViewHandlerImpl extends ViewHandler {
 
     protected WebappConfig getWebappConfig(FacesContext context) {
         return WebappConfigUtil.getWebappConfig(context);
+    }
+
+    private static boolean isExtensionMapping(String urlPattern) {
+        return (urlPattern != null) && (urlPattern.startsWith("*."));
     }
 }

@@ -34,7 +34,6 @@ public interface TODO {
      *  - Make TeedaTestCase better, such as....
      *    -> separate JSF-specified part and Teeda part.
      *       (JSFTestCase and TeedaTestCase?)
-     *  - use Find bugs?
      *  - use Clover or cobertura?
      *  - AbstractPhase.initializeChildren should be modified to use EditableValueHolder
      *  - Impl ViewHandler
@@ -57,6 +56,7 @@ public interface TODO {
      *  - impl ResponseStateManager
      *  - impl RenderKitFactoryImpl
      *  - impl HtmlRenderKitImpl
+     *  - use Find bugs
      * 
      * 
      * 

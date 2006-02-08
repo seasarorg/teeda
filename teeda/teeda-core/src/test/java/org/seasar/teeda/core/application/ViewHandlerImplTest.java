@@ -15,15 +15,23 @@
  */
 package org.seasar.teeda.core.application;
 
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Enumeration;
 import java.util.Locale;
+import java.util.Set;
 import java.util.Vector;
 
 import javax.faces.render.RenderKitFactory;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.Servlet;
 import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 
 import org.seasar.framework.mock.servlet.MockHttpServletRequest;
 import org.seasar.framework.mock.servlet.MockHttpServletRequestImpl;
+import org.seasar.framework.mock.servlet.MockServletContext;
 import org.seasar.teeda.core.config.webapp.element.ServletMappingElement;
 import org.seasar.teeda.core.config.webapp.element.WebappConfig;
 import org.seasar.teeda.core.config.webapp.element.impl.ServletMappingElementImpl;
@@ -37,7 +45,7 @@ import org.seasar.teeda.core.unit.TeedaTestCase;
  */
 public class ViewHandlerImplTest extends TeedaTestCase {
 
-    //TODO testing
+    // TODO testing
     private MockApplication orgApp_;
 
     private MockHttpServletRequest orgReq_;
@@ -165,7 +173,7 @@ public class ViewHandlerImplTest extends TeedaTestCase {
         }
     }
 
-    public void testGetUrlPattern_matchExtenstion() throws Exception {
+    public void testGetUrlPattern_notMatchExtenstion() throws Exception {
         MockHttpServletRequest req = new MockTeedaHttpServletRequestImpl(
                 getServletContext(), "/teeda");
         req.setPathInfo(null);
@@ -177,7 +185,7 @@ public class ViewHandlerImplTest extends TeedaTestCase {
         webappConfig.addServletMappingElement(servletMapping);
         ViewHandlerImpl handler = new ViewHandlerImpl();
         String url = handler.getUrlPattern(webappConfig, getFacesContext());
-        assertEquals("/teeda", url);
+        assertNull(url);
     }
 
     public void testGetUrlPattern_pathInfo() throws Exception {
@@ -195,38 +203,83 @@ public class ViewHandlerImplTest extends TeedaTestCase {
         assertEquals("/teeda", url);
     }
 
-    public void testGetViewIdPath_getUrlPattern() throws Exception {
-        MockHttpServletRequest req = new MockTeedaHttpServletRequestImpl(
-                getServletContext(), "/teeda");
-        req.setPathInfo(null);
-        getExternalContext().setMockHttpServletRequest(req);
-        WebappConfig webappConfig = new WebappConfigImpl();
-        ServletMappingElement servletMapping = new ServletMappingElementImpl();
-        servletMapping.setServletName("hoge");
-        servletMapping.setUrlPattern("/teeda");
-        webappConfig.addServletMappingElement(servletMapping);
-        getExternalContext().getApplicationMap().put(
-                WebappConfig.class.getName(), webappConfig);
+    public void testGetViewIdPath_getSimply() throws Exception {
+        String servletPath = "/teeda";
+        String pathInfo = "/test";
+        String viewId = "/hoge.jsp";
+        String urlPattern = "/teeda/*";
+        String expected = "/teeda/hoge.jsp";
+
+        settingUpExternalContextForViewHandler(servletPath, pathInfo,
+                urlPattern);
         ViewHandlerImpl handler = new ViewHandlerImpl();
-        String url = handler.getViewIdPath(getFacesContext(), "/hoge.jsp");
-        assertEquals("/teeda/hoge.jsp", url);
+        String url = handler.getViewIdPath(getFacesContext(), viewId);
+        assertEquals(expected, url);
     }
 
-    public void testGetViewIdPath_urlPatternNotFound() throws Exception {
-        MockHttpServletRequest req = new MockTeedaHttpServletRequestImpl(
-                getServletContext(), "/");
-        req.setPathInfo("/path");
-        getExternalContext().setMockHttpServletRequest(req);
-        WebappConfig webappConfig = new WebappConfigImpl();
-        ServletMappingElement servletMapping = new ServletMappingElementImpl();
-        servletMapping.setServletName("hoge");
-        servletMapping.setUrlPattern("/teeda");
-        webappConfig.addServletMappingElement(servletMapping);
-        getExternalContext().getApplicationMap().put(
-                WebappConfig.class.getName(), webappConfig);
+    public void testGetViewIdPath_getWithoutServletPath() throws Exception {
+        String servletPath = "/";
+        String pathInfo = "/test.jsf";
+        String viewId = "/hoge.jsp";
+        String urlPattern = "*.jsf";
+        String expected = "/hoge.jsp";
+
+        settingUpExternalContextForViewHandler(servletPath, pathInfo,
+                urlPattern);
         ViewHandlerImpl handler = new ViewHandlerImpl();
-        String url = handler.getViewIdPath(getFacesContext(), "/hoge.jsp");
-        assertEquals("/hoge.jsp", url);
+        String url = handler.getViewIdPath(getFacesContext(), viewId);
+        assertEquals(expected, url);
+    }
+
+    public void testGetViewIdPath_getWithJsfExtensionAndJsp() throws Exception {
+        String servletPath = "/ext/a.jsf";
+        String pathInfo = null;
+        String viewId = "/teeda/hoge.jsp";
+        String urlPattern = "*.jsf";
+        String expected = "/teeda/hoge.jsf";
+
+        settingUpExternalContextForViewHandler(servletPath, pathInfo,
+                urlPattern);
+        ViewHandlerImpl handler = new ViewHandlerImpl();
+        String url = handler.getViewIdPath(getFacesContext(), viewId);
+        assertEquals(expected, url);
+    }
+
+    public void testGetViewIdPath_getWithJsfExtension() throws Exception {
+        String servletPath = "/ext/a.jsf";
+        String pathInfo = null;
+        String viewId = "/teeda/bbb";
+        String urlPattern = "*.jsf";
+        String expected = "/teeda/bbb.jsf";
+
+        settingUpExternalContextForViewHandler(servletPath, pathInfo,
+                urlPattern);
+        ViewHandlerImpl handler = new ViewHandlerImpl();
+        String url = handler.getViewIdPath(getFacesContext(), viewId);
+        assertEquals(expected, url);
+    }
+
+    public void testGetActionUrl() throws Exception {
+        String servletPath = "/teeda";
+        String pathInfo = "/test";
+        String viewId = "/hoge.jsp";
+        String urlPattern = "/teeda/*";
+        String expected = "/teeda/hoge.jsp";
+
+        settingUpExternalContextForViewHandler(servletPath, pathInfo,
+                urlPattern);
+        MockServletContext orgServletContext = getServletContext();
+        MockServletContext mock = new MockTeedaServletContextImpl("");
+        MockHttpServletRequest req = new MockTeedaHttpServletRequestImpl(mock,
+                servletPath);
+        req.setPathInfo(pathInfo);
+        getExternalContext().setMockHttpServletRequest(req);
+
+        ViewHandlerImpl handler = new ViewHandlerImpl();
+        String url = handler.getActionURL(getFacesContext(), viewId);
+        assertEquals(expected, url);
+
+        setServletContext(orgServletContext);
     }
 
     // need getLocales() return Enumeration.
@@ -253,6 +306,133 @@ public class ViewHandlerImplTest extends TeedaTestCase {
             return locales.elements();
         }
 
+    }
+
+    private static class MockTeedaServletContextImpl implements
+            MockServletContext {
+
+        private String path_;
+
+        public MockTeedaServletContextImpl(String path) {
+            path_ = path;
+        }
+
+        public void addMimeType(String file, String type) {
+        }
+
+        public void setInitParameter(String name, String value) {
+        }
+
+        public MockHttpServletRequestImpl createRequest(String path) {
+            return null;
+        }
+
+        public ServletContext getContext(String arg0) {
+            return null;
+        }
+
+        public int getMajorVersion() {
+            return 0;
+        }
+
+        public int getMinorVersion() {
+            return 0;
+        }
+
+        public String getMimeType(String arg0) {
+            return null;
+        }
+
+        public Set getResourcePaths(String arg0) {
+            return null;
+        }
+
+        public URL getResource(String arg0) throws MalformedURLException {
+            return null;
+        }
+
+        public InputStream getResourceAsStream(String arg0) {
+            return null;
+        }
+
+        public RequestDispatcher getRequestDispatcher(String arg0) {
+            return null;
+        }
+
+        public RequestDispatcher getNamedDispatcher(String arg0) {
+            return null;
+        }
+
+        public Servlet getServlet(String arg0) throws ServletException {
+            return null;
+        }
+
+        public Enumeration getServlets() {
+            return null;
+        }
+
+        public Enumeration getServletNames() {
+            return null;
+        }
+
+        public void log(String arg0) {
+        }
+
+        public void log(Exception arg0, String arg1) {
+        }
+
+        public void log(String arg0, Throwable arg1) {
+        }
+
+        public String getRealPath(String arg0) {
+            return null;
+        }
+
+        public String getServerInfo() {
+            return null;
+        }
+
+        public String getInitParameter(String arg0) {
+            return null;
+        }
+
+        public Enumeration getInitParameterNames() {
+            return null;
+        }
+
+        public Object getAttribute(String arg0) {
+            return null;
+        }
+
+        public Enumeration getAttributeNames() {
+            return null;
+        }
+
+        public void setAttribute(String arg0, Object arg1) {
+        }
+
+        public void removeAttribute(String arg0) {
+        }
+
+        public String getServletContextName() {
+            return path_;
+        }
+
+    }
+
+    protected void settingUpExternalContextForViewHandler(String servletPath,
+            String pathInfo, String urlPattern) {
+        MockHttpServletRequest req = new MockTeedaHttpServletRequestImpl(
+                getServletContext(), servletPath);
+        req.setPathInfo(pathInfo);
+        getExternalContext().setMockHttpServletRequest(req);
+        WebappConfig webappConfig = new WebappConfigImpl();
+        ServletMappingElement servletMapping = new ServletMappingElementImpl();
+        servletMapping.setServletName("hoge");
+        servletMapping.setUrlPattern(urlPattern);
+        webappConfig.addServletMappingElement(servletMapping);
+        getExternalContext().getApplicationMap().put(
+                WebappConfig.class.getName(), webappConfig);
     }
 
 }
