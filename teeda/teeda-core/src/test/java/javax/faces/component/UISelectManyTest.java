@@ -41,7 +41,8 @@ public class UISelectManyTest extends UIInputTest {
         assertEquals("a", actual[0]);
         assertEquals("b", actual[1]);
         assertEquals("c", actual[2]);
-        assertEquals(selectMany.getValue(), selectMany.getSelectedValues());
+        assertEquals("typesafe alias for getValue", selectMany.getValue(),
+                selectMany.getSelectedValues());
     }
 
     public void testSetSelectedValues() throws Exception {
@@ -56,7 +57,8 @@ public class UISelectManyTest extends UIInputTest {
         assertEquals(2, actual.length);
         assertEquals("A", actual[0]);
         assertEquals("B", actual[1]);
-        assertEquals(selectMany.getValue(), selectMany.getSelectedValues());
+        assertEquals("typesafe alias for setValue", selectMany.getValue(),
+                selectMany.getSelectedValues());
     }
 
     public void testSetSelectedValuesToValue_ValueBinding() throws Exception {
@@ -114,10 +116,12 @@ public class UISelectManyTest extends UIInputTest {
                 "34" }, new String[] { "2", "34" }));
 
         // List
-        assertEquals(false, selectMany.compareValues(Arrays.asList(new String[] {
-                "1", "2" }), Arrays.asList(new String[] { "1", "2" })));
-        assertEquals(false, selectMany.compareValues(Arrays.asList(new String[] {
-                "1", "2" }), Arrays.asList(new String[] { "2", "1" })));
+        assertEquals(false, selectMany.compareValues(Arrays
+                .asList(new String[] { "1", "2" }), Arrays.asList(new String[] {
+                "1", "2" })));
+        assertEquals(false, selectMany.compareValues(Arrays
+                .asList(new String[] { "1", "2" }), Arrays.asList(new String[] {
+                "2", "1" })));
         assertEquals(true, selectMany
                 .compareValues(Arrays.asList(new String[] { "1", "2", "4" }),
                         Arrays.asList(new String[] { "1", "2", "3" })));

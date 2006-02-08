@@ -37,6 +37,7 @@ import org.seasar.framework.mock.servlet.MockHttpServletResponse;
 import org.seasar.framework.mock.servlet.MockHttpServletResponseImpl;
 import org.seasar.framework.mock.servlet.MockServletContext;
 import org.seasar.framework.mock.servlet.MockServletContextImpl;
+import org.seasar.teeda.core.context.servlet.ServletRequestParameterValuesMap;
 
 public class MockExternalContextImpl extends MockExternalContext {
 
@@ -55,6 +56,8 @@ public class MockExternalContextImpl extends MockExternalContext {
     private Map sessionMap_;
 
     private Map requestMap_;
+
+    private Map requestParameterValuesMap_;
 
     public MockExternalContextImpl() {
     }
@@ -201,7 +204,11 @@ public class MockExternalContextImpl extends MockExternalContext {
     }
 
     public Map getRequestParameterValuesMap() {
-        throw new UnsupportedOperationException();
+        if (requestParameterValuesMap_ == null) {
+            requestParameterValuesMap_ = new ServletRequestParameterValuesMap(
+                    getMockHttpServletRequest());
+        }
+        return requestParameterValuesMap_;
     }
 
     public String getRequestPathInfo() {

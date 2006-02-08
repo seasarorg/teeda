@@ -39,7 +39,7 @@ public class SelectItemsIterator implements Iterator {
 
     private Iterator items_ = null;
 
-    private Object nextValue_;
+    private SelectItem nextValue_;
 
     public SelectItemsIterator(UIComponent component) {
         children_ = component.getChildren().iterator();
@@ -53,17 +53,17 @@ public class SelectItemsIterator implements Iterator {
         if (nextValue_ != null) {
             return true;
         }
-        nextValue_ = getNext();
+        nextValue_ = getNextSelectItem();
         if (nextValue_ != null) {
             return true;
         }
         return false;
     }
 
-    private Object getNext() {
+    protected SelectItem getNextSelectItem() {
         if (items_ != null) {
             if (items_.hasNext()) {
-                return items_.next();
+                return (SelectItem) items_.next();
             } else {
                 items_ = null;
             }
@@ -73,30 +73,33 @@ public class SelectItemsIterator implements Iterator {
         }
         UIComponent child = (UIComponent) children_.next();
         if (child instanceof UISelectItem) {
-            Object o = createSelectItem((UISelectItem) child);
-            return o;
+            return createSelectItem((UISelectItem) child);
         } else if (child instanceof UISelectItems) {
             UISelectItems items = (UISelectItems) child;
-            Object value = items.getValue();
-            if (value instanceof SelectItem) {
-                return value;
-            } else if (value instanceof SelectItem[]) {
-                items_ = Arrays.asList((SelectItem[]) value).iterator();
-                return getNext();
-            } else if (value instanceof Collection) {
-                Collection c = (Collection) value;
-                items_ = c.iterator();
-                return getNext();
-            } else if (value instanceof Map) {
-                items_ = new SelectItemsMapIterator((Map) value);
-                return getNext();
-            } else {
-                // throw new IllegalArgumentException();
-                return getNext();
-            }
+            return getNextFromUISelectItems(items);
         } else {
             // throw new IllegalArgumentException();
-            return getNext();
+            return getNextSelectItem();
+        }
+    }
+
+    protected SelectItem getNextFromUISelectItems(UISelectItems items) {
+        Object value = items.getValue();
+        if (value instanceof SelectItem) {
+            return (SelectItem) value;
+        } else if (value instanceof SelectItem[]) {
+            items_ = Arrays.asList((SelectItem[]) value).iterator();
+            return getNextSelectItem();
+        } else if (value instanceof Collection) {
+            Collection c = (Collection) value;
+            items_ = c.iterator();
+            return getNextSelectItem();
+        } else if (value instanceof Map) {
+            items_ = new SelectItemsMapIterator((Map) value);
+            return getNextSelectItem();
+        } else {
+            // throw new IllegalArgumentException();
+            return getNextSelectItem();
         }
     }
 
@@ -112,7 +115,7 @@ public class SelectItemsIterator implements Iterator {
         throw new NoSuchElementException();
     }
 
-    private SelectItem createSelectItem(UISelectItem ui) {
+    protected SelectItem createSelectItem(UISelectItem ui) {
         SelectItem item = (SelectItem) ui.getValue();
         if (item != null) {
             return item;
@@ -121,7 +124,7 @@ public class SelectItemsIterator implements Iterator {
                 .getItemDescription(), ui.isItemDisabled());
     }
 
-    private static class SelectItemsMapIterator implements Iterator {
+    protected static class SelectItemsMapIterator implements Iterator {
 
         private Map map_;
 
@@ -130,8 +133,7 @@ public class SelectItemsIterator implements Iterator {
         public SelectItemsMapIterator(Map map) {
             map_ = map;
             /*
-             * use key iterator.
-             * see: API document of UISelectItems.
+             * use key iterator. see: API document of UISelectItems.
              */
             keys_ = map.keySet().iterator();
         }

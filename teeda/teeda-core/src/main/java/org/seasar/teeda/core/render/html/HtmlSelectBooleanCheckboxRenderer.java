@@ -60,12 +60,10 @@ public class HtmlSelectBooleanCheckboxRenderer extends AbstractHtmlRenderer {
         String value = ValueHolderUtil.getValueForRender(context,
                 htmlSelectBooleanCheckbox);
         if ("true".equalsIgnoreCase(value)) {
-            RendererUtil.renderAttribute(writer, JsfConstants.CHECKED_ATTR,
-                    Boolean.TRUE, JsfConstants.VALUE_ATTR);
+            RendererUtil.renderCheckedAttribute(writer);
         }
         if (htmlSelectBooleanCheckbox.isDisabled()) {
-            RendererUtil.renderAttribute(writer, JsfConstants.DISABLED_ATTR,
-                    Boolean.TRUE);
+            RendererUtil.renderDisabledAttribute(writer);
         }
         RendererUtil.renderAttributes(writer, htmlSelectBooleanCheckbox,
                 JsfConstants.INPUT_PASSTHROUGH_ATTRIBUTES_WITHOUT_DISABLED);

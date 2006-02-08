@@ -77,7 +77,22 @@ public class HtmlSelectBooleanCheckboxRendererTest extends RendererTest {
                 getResponseText());
     }
 
-    public void testEncode_WithValueChecked() throws Exception {
+    public void testEncode_Disabled() throws Exception {
+        // ## Arrange ##
+        htmlSelectBooleanCheckbox_.setValue("abc");
+        htmlSelectBooleanCheckbox_.setDisabled(true);
+        MockFacesContext context = getFacesContext();
+
+        // ## Act ##
+        encodeByRenderer(renderer_, context, htmlSelectBooleanCheckbox_);
+
+        // ## Assert ##
+        assertEquals(
+                "<input type=\"checkbox\" name=\"_id0\" value=\"true\" disabled=\"disabled\" />",
+                getResponseText());
+    }
+
+    public void testEncode_Checked() throws Exception {
         // ## Arrange ##
         htmlSelectBooleanCheckbox_.setValue("true");
         MockFacesContext context = getFacesContext();
@@ -87,7 +102,7 @@ public class HtmlSelectBooleanCheckboxRendererTest extends RendererTest {
 
         // ## Assert ##
         assertEquals(
-                "<input type=\"checkbox\" name=\"_id0\" value=\"true\" checked=\"true\" />",
+                "<input type=\"checkbox\" name=\"_id0\" value=\"true\" checked=\"checked\" />",
                 getResponseText());
     }
 
@@ -123,15 +138,16 @@ public class HtmlSelectBooleanCheckboxRendererTest extends RendererTest {
         encodeByRenderer(renderer_, context, htmlSelectBooleanCheckbox_);
 
         Diff diff = new Diff("<input type=\"checkbox\" id=\"A\" name=\"A\""
-                + " value=\"true\"" + " checked=\"true\"" + " accesskey=\"a\""
-                + " dir=\"c\"" + " disabled=\"true\"" + " lang=\"e\""
-                + " onblur=\"g\"" + " onchange=\"h\"" + " onclick=\"i\""
-                + " ondblclick=\"j\"" + " onfocus=\"k\"" + " onkeydown=\"l\""
-                + " onkeypress=\"m\"" + " onkeyup=\"n\"" + " onmousedown=\"o\""
-                + " onmousemove=\"p\"" + " onmouseout=\"q\""
-                + " onmouseover=\"r\"" + " onmouseup=\"s\"" + " onselect=\"t\""
-                + " readonly=\"true\"" + " style=\"w\"" + " class=\"u\""
-                + " tabindex=\"x\"" + " title=\"y\"" + "/>", getResponseText());
+                + " value=\"true\"" + " checked=\"checked\""
+                + " accesskey=\"a\"" + " dir=\"c\"" + " disabled=\"disabled\""
+                + " lang=\"e\"" + " onblur=\"g\"" + " onchange=\"h\""
+                + " onclick=\"i\"" + " ondblclick=\"j\"" + " onfocus=\"k\""
+                + " onkeydown=\"l\"" + " onkeypress=\"m\"" + " onkeyup=\"n\""
+                + " onmousedown=\"o\"" + " onmousemove=\"p\""
+                + " onmouseout=\"q\"" + " onmouseover=\"r\""
+                + " onmouseup=\"s\"" + " onselect=\"t\"" + " readonly=\"true\""
+                + " style=\"w\"" + " class=\"u\"" + " tabindex=\"x\""
+                + " title=\"y\"" + "/>", getResponseText());
         assertEquals(diff.toString(), true, diff.identical());
     }
 
@@ -181,7 +197,8 @@ public class HtmlSelectBooleanCheckboxRendererTest extends RendererTest {
         htmlSelectBooleanCheckbox_.setClientId("keyA");
 
         MockFacesContext context = getFacesContext();
-        context.getExternalContext().getRequestParameterMap().put("keyA", input);
+        context.getExternalContext().getRequestParameterMap()
+                .put("keyA", input);
 
         // ## Act ##
         renderer_.decode(context, htmlSelectBooleanCheckbox_);

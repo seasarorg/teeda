@@ -124,4 +124,16 @@ public class RendererUtil {
         }
     }
 
+    public static void renderCheckedAttribute(ResponseWriter writer)
+            throws IOException {
+        renderAttribute(writer, JsfConstants.CHECKED_ATTR,
+                JsfConstants.CHECKED_VALUE);
+    }
+
+    public static void renderDisabledAttribute(ResponseWriter writer)
+            throws IOException {
+        renderAttribute(writer, JsfConstants.DISABLED_ATTR,
+                JsfConstants.DISABLED_VALUE);
+    }
+
 }

@@ -15,10 +15,14 @@
  */
 package org.seasar.teeda.core.context.servlet;
 
+import java.util.Map;
+
 import javax.faces.context.ExternalContext;
 import javax.faces.mock.servlet.MockServletRequestImpl;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+
+import junitx.framework.ArrayAssert;
 
 import org.seasar.extension.unit.S2TestCase;
 import org.seasar.framework.mock.servlet.MockHttpServletRequest;
@@ -58,4 +62,68 @@ public class ServletExternalContextImplTest extends S2TestCase {
         assertNull(context2.getRequestPathInfo());
     }
 
+    public void testGetRequestMap() throws Exception {
+        // ## Arrange ##
+        MockHttpServletRequest request = getRequest();
+        request.setAttribute("a", "A");
+        request.setAttribute("b", "B");
+
+        ServletExternalContextImpl externalContext = new ServletExternalContextImpl(
+                getServletContext(), request, getResponse());
+
+        // ## Act ##
+        Map requestMap = externalContext.getRequestMap();
+
+        // ## Assert ##
+        assertEquals("A", requestMap.get("a"));
+        assertEquals("B", requestMap.get("b"));
+        assertEquals(null, requestMap.get("A"));
+    }
+
+    public void testGetRequestParameterMap() throws Exception {
+        // ## Arrange ##
+        MockHttpServletRequest request = getRequest();
+        request.setParameter("a", "A");
+        request.setParameter("b", "B");
+
+        ServletExternalContextImpl externalContext = new ServletExternalContextImpl(
+                getServletContext(), request, getResponse());
+
+        // ## Act ##
+        Map requestParameterMap = externalContext.getRequestParameterMap();
+
+        // ## Assert ##
+        assertEquals("A", requestParameterMap.get("a"));
+        assertEquals("B", requestParameterMap.get("b"));
+        assertEquals(null, requestParameterMap.get("A"));
+    }
+
+    public void testGetRequestParameterValuesMap() throws Exception {
+        // ## Arrange ##
+        MockHttpServletRequest request = getRequest();
+        request.addParameter("a", "A1");
+        request.addParameter("b", "B1");
+        request.addParameter("a", "A2");
+        request.addParameter("a", "A3");
+
+        ServletExternalContextImpl externalContext = new ServletExternalContextImpl(
+                getServletContext(), request, getResponse());
+
+        // ## Act ##
+        Map requestParameterValuesMap = externalContext
+                .getRequestParameterValuesMap();
+
+        // ## Assert ##
+        String[] a = (String[]) requestParameterValuesMap.get("a");
+        assertEquals(3, a.length);
+        ArrayAssert.assertEquivalenceArrays(new String[] { "A1", "A2", "A3" },
+                a);
+
+        String[] b = (String[]) requestParameterValuesMap.get("b");
+        assertEquals(1, b.length);
+        assertEquals("B1", b[0]);
+
+        String[] c = (String[]) requestParameterValuesMap.get("c");
+        assertEquals(null, c);
+    }
 }

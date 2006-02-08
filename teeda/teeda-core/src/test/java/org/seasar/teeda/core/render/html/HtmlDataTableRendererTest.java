@@ -93,7 +93,7 @@ public class HtmlDataTableRendererTest extends RendererTest {
         assertEquals("<table id=\"aa\"", getResponseText());
     }
 
-    public void testEncodeB_NoValue() throws Exception {
+    public void testEncode_NoValue() throws Exception {
         // ## Arrange ##
         MockFacesContext context = getFacesContext();
 

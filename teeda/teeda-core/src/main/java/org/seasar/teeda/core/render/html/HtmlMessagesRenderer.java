@@ -54,12 +54,7 @@ public class HtmlMessagesRenderer extends AbstractHtmlMessagesRenderer {
         if (!it.hasNext()) {
             return;
         }
-        final boolean tableLayout;
-        if (JsfConstants.TABLE_VALUE.equals(htmlMessages.getLayout())) {
-            tableLayout = true;
-        } else {
-            tableLayout = false;
-        }
+        final boolean tableLayout = isTableLayout(htmlMessages);
 
         if (tableLayout) {
             writer.startElement(JsfConstants.TABLE_ELEM, htmlMessages);
@@ -89,6 +84,10 @@ public class HtmlMessagesRenderer extends AbstractHtmlMessagesRenderer {
         } else {
             writer.endElement(JsfConstants.UL_ELEM);
         }
+    }
+
+    private boolean isTableLayout(HtmlMessages htmlMessages) {
+        return JsfConstants.TABLE_VALUE.equals(htmlMessages.getLayout());
     }
 
     protected boolean isTooltip(UIComponent component) {

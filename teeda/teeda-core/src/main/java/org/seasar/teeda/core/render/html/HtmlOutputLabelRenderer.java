@@ -44,7 +44,7 @@ public class HtmlOutputLabelRenderer extends AbstractHtmlRenderer {
             HtmlOutputLabel htmlOutputLabel) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
 
-        writer.startElement(JsfConstants.LABEL_ATTR, htmlOutputLabel);
+        writer.startElement(JsfConstants.LABEL_ELEM, htmlOutputLabel);
         RendererUtil.renderIdAttributeIfNecessary(writer, htmlOutputLabel,
                 getIdForRender(context, htmlOutputLabel));
 
@@ -79,7 +79,7 @@ public class HtmlOutputLabelRenderer extends AbstractHtmlRenderer {
     protected void encodeHtmlOutputLabelEnd(FacesContext context,
             HtmlOutputLabel htmlOutputLabel) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
-        writer.endElement(JsfConstants.LABEL_ATTR);
+        writer.endElement(JsfConstants.LABEL_ELEM);
     }
 
 }

@@ -86,10 +86,7 @@ public class MockFacesContextImpl extends MockFacesContext {
     }
 
     public ExternalContext getExternalContext() {
-        if (externalContext_ == null) {
-            externalContext_ = new MockExternalContextImpl();
-        }
-        return externalContext_;
+        return getMockExternalContext();
     }
 
     public Severity getMaximumSeverity() {
@@ -197,6 +194,9 @@ public class MockFacesContextImpl extends MockFacesContext {
     }
 
     public MockExternalContext getMockExternalContext() {
+        if (externalContext_ == null) {
+            externalContext_ = new MockExternalContextImpl();
+        }
         return externalContext_;
     }
 

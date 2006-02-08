@@ -34,8 +34,6 @@ public interface JsfConstants {
 
     public String COOKIE = "cookie";
 
-    public String DISABLED_ATTR = "disabled";
-
     public String FACES_CONTEXT = "facesContext";
 
     public String HEADER = "header";
@@ -70,9 +68,13 @@ public interface JsfConstants {
 
     public String CHECKBOX_VALUE = "checkbox";
 
+    public String CHECKED_VALUE = "checked";
+
     public String COLGROUP_VALUE = "colgroup";
 
     public String COL_VALUE = "col";
+
+    public String DISABLED_VALUE = "disabled";
 
     public String HIDDEN_VALUE = "hidden";
 
@@ -97,6 +99,8 @@ public interface JsfConstants {
     public String IMG_ELEM = "img";
 
     public String INPUT_ELEM = "input";
+
+    public String LABEL_ELEM = "label";
 
     public String LI_ELEM = "li";
 
@@ -166,6 +170,8 @@ public interface JsfConstants {
 
     public String DIR_ATTR = "dir";
 
+    public String DISABLED_ATTR = "disabled";
+
     public String ENCTYPE_ATTR = "enctype";
 
     public String FOOTER_CLASS_ATTR = "footerClass";
@@ -189,8 +195,6 @@ public interface JsfConstants {
     public String IMAGE_ATTR = "image";
 
     public String ISMAP_ATTR = "ismap";
-
-    public String LABEL_ATTR = "label";
 
     public String LANG_ATTR = "lang";
 
@@ -233,6 +237,8 @@ public interface JsfConstants {
     public String ONSELECT_ATTR = "onselect";
 
     public String ONSUMBIT_ATTR = "onsubmit";
+
+    public String PAGE_DIRECTION_ATTR = "pageDirection";
 
     public String READONLY_ATTR = "readonly";
 
@@ -374,6 +380,19 @@ public interface JsfConstants {
 
     public String[] FORM_PASSTHROUGH_ATTRIBUTES = (String[]) ArrayUtil.add(
             FORM_ATTRIBUTES, COMMON_PASSTROUGH_ATTRIBUTES);
+
+    public String[] COMMON_FIELD_PASSTROUGH_ATTRIBUTES_WITHOUT_DISABLED_AND_STYLE = (String[]) ArrayUtil
+            .add(COMMON_PASSTROUGH_ATTRIBUTES_WITHOUT_STYLE,
+                    (String[]) ArrayUtil.add(
+                            COMMON_FIELD_ATTRIBUTES_WITHOUT_DISABLED,
+                            COMMON_FIELD_EVENT_ATTRIBUTES));
+
+    public String[] INPUT_PASSTHROUGH_ATTRIBUTES_WITHOUT_DISABLED_AND_STYLE = (String[]) ArrayUtil
+            .add(INPUT_ATTRIBUTES,
+                    COMMON_FIELD_PASSTROUGH_ATTRIBUTES_WITHOUT_DISABLED_AND_STYLE);
+
+    public String[] SELECT_TABLE_PASSTHROUGH_ATTRIBUTES = new String[] {
+            STYLE_ATTR, STYLE_CLASS_ATTR, BORDER_ATTR };
 
     public String DEFAULT_RENDERKIT_CLASS = HtmlRenderKitImpl.class.getName();
 
