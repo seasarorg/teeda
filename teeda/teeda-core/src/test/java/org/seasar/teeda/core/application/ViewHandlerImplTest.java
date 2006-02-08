@@ -259,7 +259,7 @@ public class ViewHandlerImplTest extends TeedaTestCase {
         assertEquals(expected, url);
     }
 
-    public void testGetActionUrl() throws Exception {
+    public void testGetActionUrl_succeed() throws Exception {
         String servletPath = "/teeda";
         String pathInfo = "/test";
         String viewId = "/hoge.jsp";
@@ -281,6 +281,64 @@ public class ViewHandlerImplTest extends TeedaTestCase {
 
         setServletContext(orgServletContext);
     }
+
+    public void testGetActionUrl_facesContextIsNull() throws Exception {
+        try {
+            new ViewHandlerImpl().getActionURL(null, "a");
+            fail();
+        } catch (NullPointerException expected) {
+            success();
+        }
+    }
+
+    public void testGetActionUrl_viewIdIsNull() throws Exception {
+        try {
+            new ViewHandlerImpl().getActionURL(getFacesContext(), null);
+            fail();
+        } catch (NullPointerException expected) {
+            success();
+        }
+    }
+    
+    public void testGetResourceURL_facesContextIsNull() throws Exception {
+        try {
+            new ViewHandlerImpl().getResourceURL(null, "a");
+            fail();
+        } catch (NullPointerException expected) {
+            success();
+        }
+    }
+
+    public void testGetResourceURL_pathIsNull() throws Exception {
+        try {
+            new ViewHandlerImpl().getResourceURL(getFacesContext(), null);
+            fail();
+        } catch (NullPointerException expected) {
+            success();
+        }
+    }
+
+    public void testGetResourceURL_pathNotStartWithSlash() throws Exception {
+        String resourceUrl = new ViewHandlerImpl().getResourceURL(
+                getFacesContext(), "hoge");
+        assertEquals("hoge", resourceUrl);
+    }
+    
+    public void testGetResourceURL_pathStartWithSlash() throws Exception {
+        MockServletContext orgServletContext = getServletContext();
+        MockServletContext mock = new MockTeedaServletContextImpl("/aaa");
+        MockHttpServletRequest req = new MockTeedaHttpServletRequestImpl(mock,
+                "/");
+        getExternalContext().setMockHttpServletRequest(req);
+
+        String resourceUrl = new ViewHandlerImpl().getResourceURL(
+                getFacesContext(), "/hoge");
+        assertEquals("/aaa/hoge", resourceUrl);
+        setServletContext(orgServletContext);
+    }
+
+    //TODO test createView, renderView, restoreView
+
 
     // need getLocales() return Enumeration.
     private static class MockTeedaHttpServletRequestImpl extends
