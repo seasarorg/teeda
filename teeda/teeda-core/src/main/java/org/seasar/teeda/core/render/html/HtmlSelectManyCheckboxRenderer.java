@@ -17,7 +17,6 @@ package org.seasar.teeda.core.render.html;
 
 import java.io.IOException;
 import java.util.Iterator;
-import java.util.Map;
 
 import javax.faces.component.UIComponent;
 import javax.faces.component.html.HtmlSelectManyCheckbox;
@@ -30,6 +29,7 @@ import javax.faces.model.SelectItemGroup;
 
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.core.util.DecodeUtil;
 import org.seasar.teeda.core.util.RendererUtil;
 
 /**
@@ -169,8 +169,12 @@ public class HtmlSelectManyCheckboxRenderer extends AbstractHtmlRenderer {
 
     private boolean isChecked(Object[] selectedValues, final Object value) {
         for (int i = 0; i < selectedValues.length; i++) {
-            Object object = selectedValues[i];
-            if (value.equals(object)) {
+            Object o = selectedValues[i];
+            if (value == null) {
+                if (o == null) {
+                    return true;
+                }
+            } else if (value.equals(o)) {
                 return true;
             }
         }
@@ -194,18 +198,7 @@ public class HtmlSelectManyCheckboxRenderer extends AbstractHtmlRenderer {
 
     protected void decodeHtmlSelectManyCheckbox(FacesContext context,
             HtmlSelectManyCheckbox htmlSelectManyCheckbox) {
-        Map reqParam = context.getExternalContext()
-                .getRequestParameterValuesMap();
-        String clientId = htmlSelectManyCheckbox.getClientId(context);
-        String[] value = null;
-        if (reqParam.containsKey(clientId)) {
-            value = (String[]) reqParam.get(clientId);
-        }
-        if (value != null) {
-            htmlSelectManyCheckbox.setSubmittedValue(value);
-        } else {
-            htmlSelectManyCheckbox.setSubmittedValue(new String[0]);
-        }
+        DecodeUtil.decodeMany(context, htmlSelectManyCheckbox);
     }
 
 }

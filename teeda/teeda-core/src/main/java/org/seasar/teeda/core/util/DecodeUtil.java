@@ -56,12 +56,18 @@ public class DecodeUtil {
             throw new NoEditableValueHolderRuntimeException(component
                     .getClass());
         }
-        Map paramMap = context.getExternalContext()
+        EditableValueHolder evh = (EditableValueHolder) component;
+        Map reqParam = context.getExternalContext()
                 .getRequestParameterValuesMap();
         String clientId = component.getClientId(context);
-        if (paramMap.containsKey(clientId)) {
-            Object submittedValue = paramMap.get(clientId);
-            ((EditableValueHolder) component).setSubmittedValue(submittedValue);
+        String[] value = null;
+        if (reqParam.containsKey(clientId)) {
+            value = (String[]) reqParam.get(clientId);
+        }
+        if (value != null) {
+            evh.setSubmittedValue(value);
+        } else {
+            evh.setSubmittedValue(new String[0]);
         }
     }
 
