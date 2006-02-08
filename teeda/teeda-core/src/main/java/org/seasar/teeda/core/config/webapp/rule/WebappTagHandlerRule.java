@@ -20,6 +20,7 @@ import org.seasar.teeda.core.config.handler.SimpleStringTagHandler;
 import org.seasar.teeda.core.config.webapp.handler.ContextParamTagHandler;
 import org.seasar.teeda.core.config.webapp.handler.FilterTagHandler;
 import org.seasar.teeda.core.config.webapp.handler.InitParamTagHandler;
+import org.seasar.teeda.core.config.webapp.handler.ServletMappingTagHandler;
 import org.seasar.teeda.core.config.webapp.handler.ServletTagHandler;
 import org.seasar.teeda.core.config.webapp.handler.TaglibTagHandler;
 import org.seasar.teeda.core.config.webapp.handler.WebappTagHandler;
@@ -66,6 +67,13 @@ public class WebappTagHandlerRule extends TagHandlerRule {
             new SimpleStringTagHandler("load-on-startup"));
 
         // servlet-mapping
+        addTagHandler("/web-app/servlet-mapping", new ServletMappingTagHandler());
+        addTagHandler("/web-app/servlet-mapping/servlet-name",
+            new SimpleStringTagHandler("servlet-name"));
+        addTagHandler("/web-app/servlet-mapping/url-pattern",
+                new SimpleStringTagHandler("url-pattern"));
+        
+        
         // session-config
         // mime-mapping
         // welcome-file-list

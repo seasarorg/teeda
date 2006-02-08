@@ -26,7 +26,7 @@ import javax.faces.event.PhaseListener;
 import javax.faces.lifecycle.Lifecycle;
 
 import org.seasar.framework.util.ArrayUtil;
-import org.seasar.teeda.core.util.ExternalContextUtil;
+import org.seasar.teeda.core.util.ServletExternalContextUtil;
 
 /**
  * @author higa
@@ -127,7 +127,7 @@ public class LifecycleImpl extends Lifecycle {
             return false;
         }
         ExternalContext extContext = context.getExternalContext();
-        return ExternalContextUtil.isGetRedirect(extContext);
+        return ServletExternalContextUtil.isGetRedirect(extContext);
     }
 
     public void render(FacesContext context) throws FacesException {

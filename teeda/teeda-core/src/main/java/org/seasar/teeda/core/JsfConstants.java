@@ -416,4 +416,6 @@ public interface JsfConstants {
 
     public String COMPRESS_STATE_ATTR = "javax.faces.COMPRESS_STATE";
 
+    public String STATE_MARKER = CORE_PACKAGE_ROOT + ".STATE_MARKER";
+
 }

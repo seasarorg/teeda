@@ -19,13 +19,14 @@ import java.util.List;
 
 /**
  * @author manhole
+ * @author shot
  */
 public interface WebappConfig {
 
     public List getContextParamElements();
 
     public ContextParamElement getContextParamElementByParamName(
-        String paramName);
+            String paramName);
 
     public void addContextParamElement(ContextParamElement contextParamElement);
 
@@ -44,5 +45,13 @@ public interface WebappConfig {
     public List getTaglibElements();
 
     public void addTaglibElement(TaglibElement taglibElement);
+
+    public List getServletMappingElement();
+
+    public ServletMappingElement getServetMappingElementByServletName(
+            String servletName);
+
+    public void addServletMappingElement(
+            ServletMappingElement servletMappingElement);
 
 }

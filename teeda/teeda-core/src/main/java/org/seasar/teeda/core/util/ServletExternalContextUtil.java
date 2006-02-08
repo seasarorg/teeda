@@ -152,4 +152,8 @@ public class ServletExternalContextUtil {
         return (HttpServletResponse) externalContext.getResponse();
     }
 
+    public static boolean isGetRedirect(ExternalContext externalContext) {
+        return getRequest(externalContext).getMethod().equals("GET");
+    }
+
 }

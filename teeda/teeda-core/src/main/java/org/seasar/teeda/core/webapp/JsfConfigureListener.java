@@ -81,7 +81,7 @@ public class JsfConfigureListener implements ServletContextListener {
             WebappConfig webappConfig = webAppConfigBuilder
                     .build(externalContext.getResourceAsStream(JsfConstants.WEB_XML_PATH));
 
-            externalContext.getApplicationMap().put(webappConfig.getClass().getName(), webappConfig);
+            externalContext.getApplicationMap().put(WebappConfig.class.getName(), webappConfig);
             
             context.setAttribute(FACES_INIT_DONE, Boolean.TRUE);
 

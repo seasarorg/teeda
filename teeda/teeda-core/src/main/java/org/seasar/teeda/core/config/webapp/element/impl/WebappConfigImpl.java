@@ -25,20 +25,27 @@ import java.util.Map;
 import org.seasar.teeda.core.config.webapp.element.ContextParamElement;
 import org.seasar.teeda.core.config.webapp.element.FilterElement;
 import org.seasar.teeda.core.config.webapp.element.ServletElement;
+import org.seasar.teeda.core.config.webapp.element.ServletMappingElement;
 import org.seasar.teeda.core.config.webapp.element.TaglibElement;
 import org.seasar.teeda.core.config.webapp.element.WebappConfig;
 
 /**
  * @author manhole
+ * @author shot
  */
 public class WebappConfigImpl implements WebappConfig, Serializable {
 
     private static final long serialVersionUID = 1L;
 
     private Map contextParams_ = new HashMap();
+
     private Map filters_ = new HashMap();
+
     private Map servlets_ = new HashMap();
+
     private List taglibs_ = new ArrayList();
+
+    private Map servletMappings_ = new HashMap();
 
     public List getContextParamElements() {
         return new ArrayList(contextParams_.values());
@@ -82,6 +89,21 @@ public class WebappConfigImpl implements WebappConfig, Serializable {
 
     public void addTaglibElement(TaglibElement taglibElement) {
         taglibs_.add(taglibElement);
+    }
+
+    public List getServletMappingElement() {
+        return new ArrayList(servletMappings_.values());
+    }
+
+    public ServletMappingElement getServetMappingElementByServletName(
+            String servletName) {
+        return (ServletMappingElement) servletMappings_.get(servletName);
+    }
+
+    public void addServletMappingElement(
+            ServletMappingElement servletMappingElement) {
+        servletMappings_.put(servletMappingElement.getServletName(),
+                servletMappingElement);
     }
 
 }

@@ -17,7 +17,6 @@ package org.seasar.teeda.core.util;
 
 import javax.faces.application.ViewHandler;
 import javax.faces.context.ExternalContext;
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author higa
@@ -44,11 +43,4 @@ public class ExternalContextUtil {
         return viewId;
     }
     
-    public static HttpServletRequest getRequest(ExternalContext externalContext) {
-        return (HttpServletRequest)externalContext.getRequest();
-    }
-    
-    public static boolean isGetRedirect(ExternalContext externalContext) {
-        return getRequest(externalContext).getMethod().equals("GET");
-    }
 }
