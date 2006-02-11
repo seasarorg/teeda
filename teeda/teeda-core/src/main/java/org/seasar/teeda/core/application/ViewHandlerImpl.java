@@ -49,7 +49,6 @@ public class ViewHandlerImpl extends ViewHandler {
 
     private ViewRenderer viewRenderer_;
 
-    // TODO testing
     public ViewHandlerImpl() {
     }
 

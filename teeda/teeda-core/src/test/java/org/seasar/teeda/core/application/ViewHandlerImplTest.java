@@ -45,7 +45,6 @@ import org.seasar.teeda.core.unit.TeedaTestCase;
  */
 public class ViewHandlerImplTest extends TeedaTestCase {
 
-    // TODO testing
     private MockApplication orgApp_;
 
     private MockHttpServletRequest orgReq_;
@@ -337,6 +336,10 @@ public class ViewHandlerImplTest extends TeedaTestCase {
         setServletContext(orgServletContext);
     }
 
+    public void testCreateView() throws Exception {
+        
+    }
+    
     //TODO test createView, renderView, restoreView
 
 
