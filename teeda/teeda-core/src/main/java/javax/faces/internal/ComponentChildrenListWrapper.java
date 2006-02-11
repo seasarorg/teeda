@@ -96,9 +96,7 @@ public class ComponentChildrenListWrapper extends AbstractList implements
     }
 
     private static void assertUIComponent(Object obj) {
-        if (obj == null) {
-            throw new NullPointerException("value");
-        }
+        AssertionUtil.assertNotNull("value", obj);
         if (!(obj instanceof UIComponent)) {
             throw new ClassCastException("value");
         }

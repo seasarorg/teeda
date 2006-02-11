@@ -26,6 +26,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+import javax.faces.internal.AssertionUtil;
 import javax.faces.internal.PageContextUtil;
 import javax.faces.internal.WebAppConstants;
 import javax.faces.internal.WebAppUtils;
@@ -95,9 +96,7 @@ public abstract class UIComponentTag implements Tag {
     public abstract String getRendererType();
 
     public static boolean isValueReference(String value) {
-        if(value == null){
-            throw new NullPointerException();
-        }
+        AssertionUtil.assertNotNull("value", value);
         if((value.indexOf("#{") != -1)
                 && (value.indexOf("#{") < value.indexOf('}'))){
             return true;

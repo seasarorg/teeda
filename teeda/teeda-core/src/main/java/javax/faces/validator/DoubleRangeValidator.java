@@ -18,6 +18,7 @@ package javax.faces.validator;
 import javax.faces.component.StateHolder;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.internal.AssertionUtil;
 import javax.faces.internal.FacesMessageUtils;
 
 public class DoubleRangeValidator implements Validator, StateHolder {
@@ -117,9 +118,8 @@ public class DoubleRangeValidator implements Validator, StateHolder {
 
     public void validate(FacesContext context, UIComponent component,
             Object value) throws ValidatorException {
-
-        assertNotNull(context);
-        assertNotNull(component);
+        AssertionUtil.assertNotNull("context", context);
+        AssertionUtil.assertNotNull("component", component);
 
         if (value == null) {
             return;
@@ -164,12 +164,6 @@ public class DoubleRangeValidator implements Validator, StateHolder {
                     TYPE_MESSAGE_ID, new Object[] { component.getId() }));
         }
 
-    }
-
-    private static void assertNotNull(Object obj) {
-        if (obj == null) {
-            throw new NullPointerException();
-        }
     }
 
     private static double parseDoubleValue(Object obj)

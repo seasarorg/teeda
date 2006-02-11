@@ -87,7 +87,8 @@ public class ComponentFacetMapWrapper implements Map, Serializable {
     }
 
     public Object put(Object key, Object facet) {
-        assertKeyValueNotNull(key, facet);
+        AssertionUtil.assertNotNull("key", key);
+        AssertionUtil.assertNotNull("facet", facet);
         checkKeyClass(key);
         checkValueClass(facet);
         setNewParent((String) key, (UIComponent) facet);
@@ -107,12 +108,6 @@ public class ComponentFacetMapWrapper implements Map, Serializable {
             parent.getFacets().remove(facetName);
         }
         facet.setParent(parent_);
-    }
-
-    private static void assertKeyValueNotNull(Object key, Object value) {
-        if (key == null || value == null) {
-            throw new NullPointerException();
-        }
     }
 
     private static void checkKeyClass(Object key) {

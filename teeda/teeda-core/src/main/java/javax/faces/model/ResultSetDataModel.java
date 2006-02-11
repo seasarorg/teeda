@@ -18,25 +18,24 @@ package javax.faces.model;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 import java.util.TreeMap;
 
 import javax.faces.FacesException;
+import javax.faces.internal.AssertionUtil;
 import javax.faces.internal.ResultSetEntries;
 import javax.faces.internal.ResultSetKeys;
 import javax.faces.internal.ResultSetValues;
 
 /**
- * TODO TEST
+ * @author shot
  */
-
 public class ResultSetDataModel extends DataModel {
 
+    //TODO testing
     private ResultSet resultSet_ = null;
 
     private int index_ = -1;
@@ -49,8 +48,7 @@ public class ResultSetDataModel extends DataModel {
 
     public ResultSetDataModel(ResultSet resultSet) {
         super();
-
-        assertNotNull(resultSet);
+        AssertionUtil.assertNotNull("resultSet", resultSet);
         assertUpdatable(resultSet);
         assertScrollable(resultSet);
 
@@ -145,12 +143,6 @@ public class ResultSetDataModel extends DataModel {
             }
         } catch (SQLException e) {
             throw new FacesException();
-        }
-    }
-
-    private static void assertNotNull(Object obj) {
-        if (obj == null) {
-            throw new NullPointerException();
         }
     }
 

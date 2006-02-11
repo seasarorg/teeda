@@ -15,56 +15,57 @@
  */
 package javax.faces.model;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.faces.internal.AssertionUtil;
+
+/**
+ * @author shot
+ */
 public abstract class DataModel {
 
-	private List listeners_ = null;
+    private List listeners_ = null;
 
-	public DataModel() {
-		listeners_ = new ArrayList();
-	}
+    public DataModel() {
+        listeners_ = new ArrayList();
+    }
 
-	public abstract int getRowCount();
-	
-	public abstract Object getRowData();
-	
-	public abstract int getRowIndex();
-	
-	public abstract Object getWrappedData();
-	
-	public abstract boolean isRowAvailable();
+    public abstract int getRowCount();
 
-	public abstract void setRowIndex(int rowIndex);
-	
-	public abstract void setWrappedData(Object data);
-	
-	public void addDataModelListener(DataModelListener listener) {
-		assertNotNull(listener);
-		listeners_.add(listener);
-	}
+    public abstract Object getRowData();
 
-	public DataModelListener[] getDataModelListeners() {
+    public abstract int getRowIndex();
 
-		DataModelListener[] listeners = null;
-		if (listeners_ == null) {
-			listeners = new DataModelListener[0];
-		} else {
-			listeners = (DataModelListener[]) listeners_.toArray(new DataModelListener[listeners_.size()]);
-		}
-		return listeners;
-	}
+    public abstract Object getWrappedData();
 
-	public void removeDataModelListener(DataModelListener listener){
-		assertNotNull(listener);
-		if(listeners_ != null){
-			listeners_.remove(listener);
-		}
-	}
-		
-	private static void assertNotNull(Object obj) {
-		if (obj == null) {
-			throw new NullPointerException();
-		}
-	}
+    public abstract boolean isRowAvailable();
+
+    public abstract void setRowIndex(int rowIndex);
+
+    public abstract void setWrappedData(Object data);
+
+    public void addDataModelListener(DataModelListener listener) {
+        AssertionUtil.assertNotNull("listener", listener);
+        listeners_.add(listener);
+    }
+
+    public DataModelListener[] getDataModelListeners() {
+        DataModelListener[] listeners = null;
+        if (listeners_ == null) {
+            listeners = new DataModelListener[0];
+        } else {
+            listeners = (DataModelListener[]) listeners_
+                    .toArray(new DataModelListener[listeners_.size()]);
+        }
+        return listeners;
+    }
+
+    public void removeDataModelListener(DataModelListener listener) {
+        AssertionUtil.assertNotNull("listener", listener);
+        if (listeners_ != null) {
+            listeners_.remove(listener);
+        }
+    }
+
 }
