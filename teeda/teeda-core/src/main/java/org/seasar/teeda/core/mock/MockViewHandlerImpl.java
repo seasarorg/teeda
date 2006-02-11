@@ -26,7 +26,7 @@ import javax.faces.context.FacesContext;
 /**
  * @author shot
  */
-public class MockViewHandler extends ViewHandler {
+public class MockViewHandlerImpl extends ViewHandler {
 
     public Locale calculateLocale(FacesContext context) {
         return null;
