@@ -15,16 +15,21 @@
  */
 package javax.faces.component;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.event.PhaseId;
+import javax.faces.model.SelectItem;
+import javax.faces.model.SelectItemGroup;
 
 import org.seasar.teeda.core.mock.MockConverter;
 import org.seasar.teeda.core.mock.MockUIComponent;
 import org.seasar.teeda.core.mock.MockValueBinding;
+import org.seasar.teeda.core.mock.MockViewHandler;
 import org.seasar.teeda.core.unit.TeedaTestCase;
 
 /**
@@ -128,11 +133,87 @@ public class ComponentUtils_Test extends TeedaTestCase {
         assertTrue(ComponentUtils_.isPerformNoConversion(null));
         assertTrue(ComponentUtils_.isPerformNoConversion(String.class));
         assertTrue(ComponentUtils_.isPerformNoConversion(Object.class));
-        assertFalse(ComponentUtils_.isPerformNoConversion(MockUIComponent.class));
+        assertFalse(ComponentUtils_
+                .isPerformNoConversion(MockUIComponent.class));
+    }
+
+    public void testCalculateLocale() throws Exception {
+        MockViewHandler handler = getViewHandler();
+        Locale org = handler.calculateLocale(getFacesContext());
+        handler.setLocale(Locale.JAPANESE);
+        setViewHandler(handler);
+        Locale l = ComponentUtils_.calculateLocale(getFacesContext());
+        assertEquals(Locale.JAPANESE, l);
+        getViewHandler().setLocale(org);
+    }
+
+    public void testGetLocale() throws Exception {
+        getFacesContext().getViewRoot().setLocale(Locale.CANADA);
+        assertEquals(Locale.CANADA, ComponentUtils_
+                .getLocale(getFacesContext()));
+    }
+
+    public void testIsLocaleShort_null() throws Exception {
+        try {
+            ComponentUtils_.isLocaleShort(null);
+            fail();
+        } catch (NullPointerException expected) {
+            success();
+        }
+    }
+
+    public void testIsLocaleShort_short() throws Exception {
+        assertTrue(ComponentUtils_.isLocaleShort("en"));
+        assertTrue(ComponentUtils_.isLocaleShort("ja"));
     }
     
-    public void testCalculateLocale() throws Exception {
-        getApplication().getViewHandler();
+    public void testIsLocaleShort_longName() throws Exception {
+        assertFalse(ComponentUtils_.isLocaleShort(Locale.US.toString()));
+        assertFalse(ComponentUtils_.isLocaleShort(Locale.JAPAN.toString()));
+    }
+    
+    public void testIsLocaleLong_null() throws Exception {
+        try {
+            ComponentUtils_.isLocaleLong(null);
+            fail();
+        } catch (NullPointerException expected) {
+            success();
+        }
+    }
+    
+    public void testIsLocaleLong_long() throws Exception {
+        assertTrue(ComponentUtils_.isLocaleLong(Locale.US.toString()));
+        assertTrue(ComponentUtils_.isLocaleLong(Locale.JAPAN.toString()));
+    }
+    
+    public void testValueMatches_allValuesAreNull() throws Exception {
+        SelectItem item = new SelectItem();
+        List list = new ArrayList();
+        list.add(item);
+        assertTrue(ComponentUtils_.valueMatches(null, list.iterator()));
+    }
+    
+    public void testValueMatches_allValuesAreNotNull() throws Exception {
+        SelectItem item = new SelectItem();
+        item.setValue("hoge");
+        List list = new ArrayList();
+        list.add(item);
+        assertTrue(ComponentUtils_.valueMatches("hoge", list.iterator()));        
+    }
+    
+    public void testValueMatches_hasSelectItemGroup() throws Exception {
+        SelectItemGroup group = new SelectItemGroup();
+        SelectItem item = new SelectItem();
+        item.setValue("aaa");
+        group.setSelectItems(new SelectItem[]{item});
+        List list = new ArrayList();
+        list.add(group);
+        assertTrue(ComponentUtils_.valueMatches("aaa", list.iterator()));        
+    }
+    
+    public void testIsObjectArray() throws Exception {
+        assertTrue(ComponentUtils_.isObjectArray(new Object[]{}));
+        assertFalse(ComponentUtils_.isObjectArray("hoge"));
     }
     
     private static class MockNotifyUIComponent extends MockUIComponent {
