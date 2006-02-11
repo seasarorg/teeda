@@ -31,6 +31,7 @@ import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.mock.MockFacesEvent;
 import org.seasar.teeda.core.mock.MockUIComponentBase;
 import org.seasar.teeda.core.mock.MockValueBinding;
+import org.seasar.teeda.core.mock.MockViewHandler;
 import org.seasar.teeda.core.mock.MockViewHandlerImpl;
 import org.seasar.teeda.core.mock.NullFacesEvent;
 import org.seasar.teeda.core.mock.NullUIComponent;
@@ -570,11 +571,9 @@ public class UIViewRootTest extends UIComponentBaseTest {
         // ## Arrange ##
         UIViewRoot viewRoot = createUIViewRoot();
         MockFacesContext context = getFacesContext();
-        context.getApplication().setViewHandler(new MockViewHandlerImpl() {
-            public Locale calculateLocale(FacesContext context) {
-                return Locale.FRENCH;
-            }
-        });
+        MockViewHandler handler = new MockViewHandlerImpl();
+        handler.setLocale(Locale.FRENCH);
+        context.getApplication().setViewHandler(handler);
         // ## Act & Assert ##
         assertEquals(Locale.FRENCH, viewRoot.getLocale());
     }

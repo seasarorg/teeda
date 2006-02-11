@@ -19,17 +19,18 @@ import java.io.IOException;
 import java.util.Locale;
 
 import javax.faces.FacesException;
-import javax.faces.application.ViewHandler;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 
 /**
  * @author shot
  */
-public class MockViewHandlerImpl extends ViewHandler {
+public class MockViewHandlerImpl extends MockViewHandler {
 
+    private Locale locale_;
+    
     public Locale calculateLocale(FacesContext context) {
-        return null;
+        return locale_;
     }
 
     public String calculateRenderKitId(FacesContext context) {
@@ -59,6 +60,10 @@ public class MockViewHandlerImpl extends ViewHandler {
     }
 
     public void writeState(FacesContext context) throws IOException {
+    }
+
+    public void setLocale(Locale locale) {
+        locale_ = locale;
     }
 
 }

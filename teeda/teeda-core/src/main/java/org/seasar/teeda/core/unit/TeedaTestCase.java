@@ -45,6 +45,7 @@ import org.seasar.teeda.core.mock.MockRenderer;
 import org.seasar.teeda.core.mock.MockStateManager;
 import org.seasar.teeda.core.mock.MockUIComponent;
 import org.seasar.teeda.core.mock.MockVariableResolver;
+import org.seasar.teeda.core.mock.MockViewHandler;
 import org.seasar.teeda.core.mock.MockViewHandlerImpl;
 import org.seasar.teeda.core.scope.impl.S2ScopeTranslator;
 import org.seasar.teeda.core.scope.impl.ScopeManagerImpl;
@@ -74,7 +75,7 @@ public abstract class TeedaTestCase extends S2FrameworkTestCase {
 
     private MockVariableResolver variableResolver;
 
-    private MockViewHandlerImpl viewHandler;
+    private MockViewHandler viewHandler;
 
     private MockStateManager stateManager;
 
@@ -267,11 +268,11 @@ public abstract class TeedaTestCase extends S2FrameworkTestCase {
         application.setVariableResolver(variableResolver);
     }
 
-    public MockViewHandlerImpl getViewHandler() {
+    public MockViewHandler getViewHandler() {
         return viewHandler;
     }
 
-    public void setViewHandler(MockViewHandlerImpl viewHandler) {
+    public void setViewHandler(MockViewHandler viewHandler) {
         this.viewHandler = viewHandler;
         application.setViewHandler(viewHandler);
     }
