@@ -23,6 +23,8 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.Vector;
 
+import javax.faces.application.ViewHandler;
+import javax.faces.component.UIViewRoot;
 import javax.faces.render.RenderKitFactory;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.Servlet;
@@ -38,6 +40,9 @@ import org.seasar.teeda.core.config.webapp.element.impl.ServletMappingElementImp
 import org.seasar.teeda.core.config.webapp.element.impl.WebappConfigImpl;
 import org.seasar.teeda.core.mock.MockApplication;
 import org.seasar.teeda.core.mock.MockApplicationImpl;
+import org.seasar.teeda.core.mock.MockExternalContext;
+import org.seasar.teeda.core.mock.MockFacesContext;
+import org.seasar.teeda.core.mock.MockFacesContextImpl;
 import org.seasar.teeda.core.unit.TeedaTestCase;
 
 /**
@@ -298,7 +303,7 @@ public class ViewHandlerImplTest extends TeedaTestCase {
             success();
         }
     }
-    
+
     public void testGetResourceURL_facesContextIsNull() throws Exception {
         try {
             new ViewHandlerImpl().getResourceURL(null, "a");
@@ -322,7 +327,7 @@ public class ViewHandlerImplTest extends TeedaTestCase {
                 getFacesContext(), "hoge");
         assertEquals("hoge", resourceUrl);
     }
-    
+
     public void testGetResourceURL_pathStartWithSlash() throws Exception {
         MockServletContext orgServletContext = getServletContext();
         MockServletContext mock = new MockTeedaServletContextImpl("/aaa");
@@ -336,12 +341,70 @@ public class ViewHandlerImplTest extends TeedaTestCase {
         setServletContext(orgServletContext);
     }
 
-    public void testCreateView() throws Exception {
-        
-    }
-    
-    //TODO test createView, renderView, restoreView
+    public void testCreateView_viewRootAlreadyExist() throws Exception {
+        getApplication().addComponent(UIViewRoot.COMPONENT_TYPE,
+                MockUIViewRoot.class.getName());
+        getFacesContext().getViewRoot().setLocale(Locale.FRENCH);
+        getFacesContext().getViewRoot().setRenderKitId("id");
+        ViewHandler handler = new ViewHandlerImpl();
 
+        UIViewRoot viewRoot = handler.createView(getFacesContext(), "viewId");
+
+        assertNotNull(viewRoot);
+        assertTrue(viewRoot instanceof MockUIViewRoot);
+        assertEquals(Locale.FRENCH, viewRoot.getLocale());
+        assertEquals("id", viewRoot.getRenderKitId());
+        assertEquals("viewId", viewRoot.getViewId());
+    }
+
+    public void testCreateView_viewRootCreate() throws Exception {
+        MockFacesContext orgFacesContext = getFacesContext();
+        try {
+            MockFacesContext context = new MockFacesContextImpl() {
+                public UIViewRoot getViewRoot() {
+                    return null;
+                }
+            };
+            setFacesContext(context);
+            MockApplication mockApp = new MockApplicationImpl();
+            mockApp.setDefaultLocale(Locale.ENGLISH);
+            mockApp.setDefaultRenderKitId("hoge");
+            mockApp.addComponent(UIViewRoot.COMPONENT_TYPE,
+                    MockUIViewRoot.class.getName());
+            getFacesContext().setApplication(mockApp);
+            getFacesContext().setApplication(mockApp);
+            MockHttpServletRequest req = new MockTeedaHttpServletRequestImpl(
+                    getServletContext());
+            req.setLocale(Locale.ENGLISH);
+            MockExternalContext extContext = getExternalContext();
+            extContext.setMockHttpServletRequest(req);
+            context.setExternalContext(extContext);
+            ViewHandler handler = new ViewHandlerImpl();
+
+            UIViewRoot viewRoot = handler.createView(getFacesContext(),
+                    "viewId");
+
+            assertNotNull(viewRoot);
+            assertTrue(viewRoot instanceof MockUIViewRoot);
+            assertEquals(Locale.ENGLISH, viewRoot.getLocale());
+            assertEquals("hoge", viewRoot.getRenderKitId());
+            assertEquals("viewId", viewRoot.getViewId());
+        } finally {
+            setFacesContext(orgFacesContext);
+        }
+        assertEquals(orgFacesContext, getFacesContext());
+    }
+
+    public void testCreateView_facesContextIsNull() throws Exception {
+        try {
+            new ViewHandlerImpl().createView(null, "a");
+            fail();
+        } catch (NullPointerException expected) {
+            success();
+        }
+    }
+
+    // TODO test renderView, restoreView, writeState
 
     // need getLocales() return Enumeration.
     private static class MockTeedaHttpServletRequestImpl extends
@@ -494,6 +557,9 @@ public class ViewHandlerImplTest extends TeedaTestCase {
         webappConfig.addServletMappingElement(servletMapping);
         getExternalContext().getApplicationMap().put(
                 WebappConfig.class.getName(), webappConfig);
+    }
+
+    public static class MockUIViewRoot extends UIViewRoot {
     }
 
 }
