@@ -42,7 +42,7 @@ public class MockUIComponent extends UIComponent {
 
     private String id_;
 
-    private String clientId_ = "";
+    private String clientId_ = null;
 
     private Map facets_ = new HashMap();
 
@@ -52,15 +52,20 @@ public class MockUIComponent extends UIComponent {
 
     private boolean rendered_ = true;
 
+    private FacesContext context_ = null;
+
+    private Map valueBindingMap_ = new HashMap();
+    
     public Map getAttributes() {
         return null;
     }
 
     public ValueBinding getValueBinding(String name) {
-        return null;
+        return (ValueBinding) valueBindingMap_.get(name);
     }
 
-    public void setValueBinding(String s, ValueBinding valuebinding) {
+    public void setValueBinding(String s, ValueBinding valueBinding) {
+        valueBindingMap_.put(s, valueBinding);
     }
 
     public String getClientId(FacesContext context) {
@@ -185,7 +190,10 @@ public class MockUIComponent extends UIComponent {
     }
 
     protected FacesContext getFacesContext() {
-        return null;
+        if (context_ == null) {
+            context_ = FacesContext.getCurrentInstance();
+        }
+        return context_;
     }
 
     protected Renderer getRenderer(FacesContext context) {
@@ -208,6 +216,10 @@ public class MockUIComponent extends UIComponent {
 
     public FacesEvent getQueueEvent() {
         return event_;
+    }
+
+    public void setFacesContext(FacesContext context) {
+        context_ = context;
     }
 
 }

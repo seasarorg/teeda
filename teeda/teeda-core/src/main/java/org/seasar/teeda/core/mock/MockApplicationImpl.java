@@ -149,7 +149,7 @@ public class MockApplicationImpl extends MockApplication {
 
     public ViewHandler getViewHandler() {
         if (viewHandler_ == null) {
-            viewHandler_ = new MockViewHandler();
+            viewHandler_ = new MockViewHandlerImpl();
         }
         return viewHandler_;
     }

@@ -15,11 +15,9 @@
  */
 package javax.faces.component;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.Iterator;
 import java.util.Locale;
 
-import javax.faces.FacesException;
 import javax.faces.application.ViewHandler;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -30,12 +28,8 @@ import javax.faces.internal.AssertionUtil;
 import javax.faces.model.SelectItem;
 import javax.faces.model.SelectItemGroup;
 
-import org.apache.commons.beanutils.BeanUtils;
-
 /**
  * @author shot
- * 
- * TODO TEST
  */
 public class ComponentUtils_ {
 
@@ -44,28 +38,6 @@ public class ComponentUtils_ {
     private static final int LOCALE_LENGTH_LONG = 5;
 
     private ComponentUtils_() {
-    }
-
-    public static void assertIntegerNotNegative(int num) {
-        assertIntegerNotNegative(num, null);
-    }
-
-    public static void assertIntegerNotNegative(int num, String message) {
-        if (num < 0) {
-            throw new IllegalArgumentException(message);
-        }
-    }
-
-    public static void copyProperties(Object to, Object from) {
-        try {
-            BeanUtils.copyProperties(to, from);
-
-            // should be more understandable exception
-        } catch (IllegalAccessException e) {
-            throw new FacesException(e);
-        } catch (InvocationTargetException e) {
-            throw new FacesException(e);
-        }
     }
 
     public static void processAppropriatePhaseAction(FacesContext context,
@@ -119,14 +91,12 @@ public class ComponentUtils_ {
     }
 
     public static Locale getLocale(FacesContext context) {
-        if (context == null) {
-            throw new NullPointerException();
-        }
+        AssertionUtil.assertNotNull("context", context);
         return context.getViewRoot().getLocale();
     }
 
     public static boolean isLocaleShort(String locale) {
-        AssertionUtil.assertNotNull(null, locale);
+        AssertionUtil.assertNotNull("locale", locale);
         if (locale.length() == LOCALE_LENGTH_SHORT) {
             if (locale.indexOf("-") == -1 || locale.indexOf("_") == -1) {
                 return true;
@@ -136,7 +106,7 @@ public class ComponentUtils_ {
     }
 
     public static boolean isLocaleLong(String locale) {
-        AssertionUtil.assertNotNull(null, locale);
+        AssertionUtil.assertNotNull("locale", locale);
         if (locale.length() == LOCALE_LENGTH_LONG) {
             return true;
         }

@@ -18,7 +18,7 @@ package org.seasar.teeda.core.config.assembler.impl;
 import javax.faces.application.ViewHandler;
 
 import org.seasar.teeda.core.mock.MockSingleConstructorViewHandler;
-import org.seasar.teeda.core.mock.MockViewHandler;
+import org.seasar.teeda.core.mock.MockViewHandlerImpl;
 import org.seasar.teeda.core.unit.TeedaTestCase;
 
 /**
@@ -37,7 +37,7 @@ public class ViewHandlerAssemblerTest extends TeedaTestCase {
 
     public void testSimpleAssembleVariableResolver() throws Exception {
         // ## Arrange ##
-        String resolverName = "org.seasar.teeda.core.mock.MockViewHandler";
+        String resolverName = "org.seasar.teeda.core.mock.MockViewHandlerImpl";
         ViewHandlerAssembler assembler = new ViewHandlerAssembler(resolverName,
                 getApplication());
 
@@ -47,12 +47,12 @@ public class ViewHandlerAssemblerTest extends TeedaTestCase {
         // ## Assert ##
         ViewHandler handler = getApplication().getViewHandler();
         assertNotNull(handler);
-        assertTrue(handler instanceof MockViewHandler);
+        assertTrue(handler instanceof MockViewHandlerImpl);
     }
 
     public void testMarshalAssembleVariableResolver() throws Exception {
         // ## Arrange ##
-        getApplication().setViewHandler(new MockViewHandler());
+        getApplication().setViewHandler(new MockViewHandlerImpl());
         String handlerName = "org.seasar.teeda.core.mock.MockSingleConstructorViewHandler";
         ViewHandlerAssembler assembler = new ViewHandlerAssembler(handlerName,
                 getApplication());
@@ -65,7 +65,7 @@ public class ViewHandlerAssemblerTest extends TeedaTestCase {
         assertNotNull(handler);
         assertTrue(handler instanceof MockSingleConstructorViewHandler);
         MockSingleConstructorViewHandler h = (MockSingleConstructorViewHandler) handler;
-        assertTrue(h.getOriginal() instanceof MockViewHandler);
+        assertTrue(h.getOriginal() instanceof MockViewHandlerImpl);
     }
 
 }

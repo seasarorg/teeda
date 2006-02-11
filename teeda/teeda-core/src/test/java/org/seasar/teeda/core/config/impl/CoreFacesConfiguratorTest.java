@@ -60,7 +60,7 @@ import org.seasar.teeda.core.mock.MockRenderKitFactory;
 import org.seasar.teeda.core.mock.MockRenderer;
 import org.seasar.teeda.core.mock.MockStateManager;
 import org.seasar.teeda.core.mock.MockVariableResolver;
-import org.seasar.teeda.core.mock.MockViewHandler;
+import org.seasar.teeda.core.mock.MockViewHandlerImpl;
 import org.seasar.teeda.core.scope.Scope;
 import org.seasar.teeda.core.scope.impl.S2ScopeTranslator;
 import org.seasar.teeda.core.scope.impl.ScopeManagerImpl;
@@ -146,7 +146,7 @@ public class CoreFacesConfiguratorTest extends S2TestCase {
                 .getPropertyResolver());
         ObjectAssert.assertInstanceOf(MockVariableResolver.class, app
                 .getVariableResolver());
-        ObjectAssert.assertInstanceOf(MockViewHandler.class, app
+        ObjectAssert.assertInstanceOf(MockViewHandlerImpl.class, app
                 .getViewHandler());
 
         assertEquals(Locale.JAPANESE, app.getDefaultLocale());

@@ -20,6 +20,9 @@ import java.io.Writer;
 
 import javax.faces.component.UIComponent;
 
+/**
+ * @author shot
+ */
 public abstract class ResponseWriter extends Writer {
 
     public ResponseWriter() {
@@ -36,23 +39,23 @@ public abstract class ResponseWriter extends Writer {
     public abstract void endDocument() throws IOException;
 
     public abstract void startElement(String name,
-        UIComponent componentForElement) throws IOException;
+            UIComponent componentForElement) throws IOException;
 
     public abstract void endElement(String name) throws IOException;
 
     public abstract void writeAttribute(String name, Object value,
-        String property) throws IOException;
+            String property) throws IOException;
 
     public abstract void writeURIAttribute(String name, Object value,
-        String property) throws IOException;
+            String property) throws IOException;
 
     public abstract void writeComment(Object comment) throws IOException;
 
     public abstract void writeText(Object text, String property)
-        throws IOException;
+            throws IOException;
 
     public abstract void writeText(char text[], int off, int len)
-        throws IOException;
+            throws IOException;
 
     public abstract ResponseWriter cloneWithWriter(Writer writer);
 

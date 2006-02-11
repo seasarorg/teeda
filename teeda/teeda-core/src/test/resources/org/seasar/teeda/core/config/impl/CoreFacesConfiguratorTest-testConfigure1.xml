@@ -22,7 +22,7 @@
 		<property-resolver>org.seasar.teeda.core.mock.MockPropertyResolver</property-resolver>
 		<state-manager>org.seasar.teeda.core.mock.MockStateManager</state-manager>
 		<variable-resolver>org.seasar.teeda.core.mock.MockVariableResolver</variable-resolver>
-		<view-handler>org.seasar.teeda.core.mock.MockViewHandler</view-handler>
+		<view-handler>org.seasar.teeda.core.mock.MockViewHandlerImpl</view-handler>
 	</application>
 	<component>
 		<component-type>mock</component-type>

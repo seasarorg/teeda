@@ -23,20 +23,14 @@ public interface TODO {
      * TODO
      *  - Make JSF init-code complete. 
      *  - StateManager 
-     *  - Renderers
+     *  - Renderers(9 more?)
      *  - Test, test, test
      *    -> JSF Specification part(UIComponent things!)
      *    -> Teeda original part
-     *  - Make Assemblers done.
-     *  - Impl NavigationHandler
-     *  - Selenium integration
-     *  - Client side solution like commons-validator or aspect interceptor or what 
      *  - Make TeedaTestCase better, such as....
      *    -> separate JSF-specified part and Teeda part.
      *       (JSFTestCase and TeedaTestCase?)
-     *  - use Clover or cobertura?
      *  - AbstractPhase.initializeChildren should be modified to use EditableValueHolder
-     *  - Impl ViewHandler
      *  - Test LifecycleImpl and Phase
      *  - Use UIComponent's label attribute (if exist) for Conversion, Validation Error Message.
      *  - Support list-entries, map-entries to ManagedBean.
@@ -45,11 +39,8 @@ public interface TODO {
      *  - MetaInfFacesConfigurator -> Support multiple jar file.
      *  - Add DI Support for Converter, Validator, UIComponent, Renderer
      *  - impl StateManager
-     *  - impl ViewHandler
      *  - impl taglib core
      *  - impl taglib html
-     *  - make it easy to get elements from FacesConfig by key(such as component, converter,
-     *    validator, renderkit, and managed-bean)
      *  
      * DONE
      *  - Add copyright to all sources.
@@ -57,8 +48,16 @@ public interface TODO {
      *  - impl RenderKitFactoryImpl
      *  - impl HtmlRenderKitImpl
      *  - use Find bugs
+     *  - Impl NavigationHandler
+     *  - Impl ViewHandler
+     *  - Make Assemblers done.
      * 
-     * 
+     * PEND
+     *  - Selenium integration
+     *  - use Clover or cobertura?
+     *  - make it easy to get elements from FacesConfig by key(such as component, converter,
+     *    validator, renderkit, and managed-bean)
+     *  - Client side solution like commons-validator or aspect interceptor or what 
      * 
      * 
      * 

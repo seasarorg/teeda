@@ -42,7 +42,7 @@ import org.seasar.teeda.core.mock.MockPropertyResolver;
 import org.seasar.teeda.core.mock.MockRenderKitFactory;
 import org.seasar.teeda.core.mock.MockStateManager;
 import org.seasar.teeda.core.mock.MockVariableResolver;
-import org.seasar.teeda.core.mock.MockViewHandler;
+import org.seasar.teeda.core.mock.MockViewHandlerImpl;
 import org.seasar.teeda.core.util.FactoryFinderUtil;
 
 /**
@@ -128,7 +128,7 @@ public class ConfigFilesFacesConfiguratorTest extends S2TestCase {
                 .getPropertyResolver());
         ObjectAssert.assertInstanceOf(MockVariableResolver.class, app
                 .getVariableResolver());
-        ObjectAssert.assertInstanceOf(MockViewHandler.class, app
+        ObjectAssert.assertInstanceOf(MockViewHandlerImpl.class, app
                 .getViewHandler());
 
         assertEquals(Locale.JAPANESE, app.getDefaultLocale());

@@ -30,7 +30,7 @@ import org.seasar.teeda.core.mock.MockExternalContext;
 import org.seasar.teeda.core.mock.MockExternalContextWrapper;
 import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.mock.MockUIComponentBaseWithNamingContainer;
-import org.seasar.teeda.core.mock.MockViewHandler;
+import org.seasar.teeda.core.mock.MockViewHandlerImpl;
 
 /**
  * @author manhole
@@ -106,7 +106,7 @@ public class HtmlGraphicImageRendererTest extends RendererTest {
 
         final MockApplication application = new MockApplicationImpl() {
             public ViewHandler getViewHandler() {
-                return new MockViewHandler() {
+                return new MockViewHandlerImpl() {
                     public String getResourceURL(FacesContext context,
                             String path) {
                         return path + "_1";
@@ -128,7 +128,7 @@ public class HtmlGraphicImageRendererTest extends RendererTest {
 
     public void testEncode_WithAllAttributes() throws Exception {
         MockApplication application = new MockApplicationImpl();
-        application.setViewHandler(new MockViewHandler());
+        application.setViewHandler(new MockViewHandlerImpl());
         MockFacesContext context = getFacesContext();
         context.setApplication(application);
 

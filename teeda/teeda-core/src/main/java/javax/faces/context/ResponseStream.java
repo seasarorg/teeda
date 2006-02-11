@@ -17,6 +17,9 @@ package javax.faces.context;
 
 import java.io.OutputStream;
 
+/**
+ * @author shot
+ */
 public abstract class ResponseStream extends OutputStream {
 
 }

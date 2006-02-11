@@ -29,7 +29,7 @@ import org.seasar.teeda.core.mock.MockNavigationHandler;
 import org.seasar.teeda.core.mock.MockPropertyResolver;
 import org.seasar.teeda.core.mock.MockStateManager;
 import org.seasar.teeda.core.mock.MockVariableResolver;
-import org.seasar.teeda.core.mock.MockViewHandler;
+import org.seasar.teeda.core.mock.MockViewHandlerImpl;
 import org.seasar.teeda.core.unit.TeedaTestCase;
 
 /**
@@ -60,7 +60,7 @@ public class DefaultApplicationAssemblerTest extends TeedaTestCase {
         element.addPropertyResolver("org.seasar.teeda.core.mock.MockPropertyResolver");
         element.addStateManager("org.seasar.teeda.core.mock.MockStateManager");
         element.addVariableResolver("org.seasar.teeda.core.mock.MockVariableResolver");
-        element.addViewHandler("org.seasar.teeda.core.mock.MockViewHandler");
+        element.addViewHandler("org.seasar.teeda.core.mock.MockViewHandlerImpl");
         List list = new ArrayList();
         list.add(element);
         DefaultApplicationAssembler assembler = new DefaultApplicationAssembler(list);
@@ -78,7 +78,7 @@ public class DefaultApplicationAssemblerTest extends TeedaTestCase {
         assertTrue(app.getPropertyResolver() instanceof MockPropertyResolver);
         assertTrue(app.getStateManager() instanceof MockStateManager);
         assertTrue(app.getVariableResolver() instanceof MockVariableResolver);
-        assertTrue(app.getViewHandler() instanceof MockViewHandler);
+        assertTrue(app.getViewHandler() instanceof MockViewHandlerImpl);
         
     }
 }

@@ -18,7 +18,7 @@ package javax.faces.el;
 import javax.faces.context.FacesContext;
 
 /**
- * @author Shinpei Ohtani
+ * @author shot
  */
 public abstract class MethodBinding {
 

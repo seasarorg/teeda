@@ -20,7 +20,12 @@ import javax.faces.internal.WebAppUtils;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
+/**
+ * @author shot
+ */
 public class AttributeTag extends TagSupport {
+
+    private static final long serialVersionUID = 1L;
 
     private String name_ = null;
 
@@ -38,12 +43,12 @@ public class AttributeTag extends TagSupport {
     }
 
     public int doStartTag() throws JspException {
-        UIComponentTag tag = UIComponentTag
+        UIComponentTag componentTag = UIComponentTag
                 .getParentUIComponentTag(pageContext);
-        if (tag == null) {
+        if (componentTag == null) {
             throw new JspException("Not nested in a UIComponentTag");
         }
-        UIComponent component = tag.getComponentInstance();
+        UIComponent component = componentTag.getComponentInstance();
         if (component == null) {
             throw new JspException(
                     "No component associated with UIComponentTag");

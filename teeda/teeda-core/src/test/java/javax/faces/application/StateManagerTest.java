@@ -23,35 +23,44 @@ import javax.faces.context.FacesContext;
 import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.unit.TeedaTestCase;
 
-
 public class StateManagerTest extends TeedaTestCase {
 
     public StateManagerTest(String name) {
         super(name);
     }
 
+    public void testContants() throws Exception {
+        assertEquals("client", StateManager.STATE_SAVING_METHOD_CLIENT);
+        assertEquals("javax.faces.STATE_SAVING_METHOD",
+                StateManager.STATE_SAVING_METHOD_PARAM_NAME);
+        assertEquals("server", StateManager.STATE_SAVING_METHOD_SERVER);
+    }
+
     public void testIsSavingStateClient() {
-        
+
         StateManager stateManager = new StateManagerImpl();
-        try{
+        try {
             stateManager.isSavingStateInClient(null);
             fail();
-        }catch(NullPointerException e){
+        } catch (NullPointerException e) {
             assertTrue(true);
         }
 
-        getServletContext().setInitParameter(StateManager.STATE_SAVING_METHOD_PARAM_NAME, StateManager.STATE_SAVING_METHOD_CLIENT);
+        getServletContext().setInitParameter(
+                StateManager.STATE_SAVING_METHOD_PARAM_NAME,
+                StateManager.STATE_SAVING_METHOD_CLIENT);
         MockFacesContext facesContext = getFacesContext();
         assertTrue(stateManager.isSavingStateInClient(facesContext));
     }
 
-    private static class StateManagerImpl extends StateManager{
+    private static class StateManagerImpl extends StateManager {
 
         public SerializedView saveSerializedView(FacesContext context) {
             throw new UnsupportedOperationException();
         }
 
-        public void writeState(FacesContext context, SerializedView state) throws IOException {
+        public void writeState(FacesContext context, SerializedView state)
+                throws IOException {
             throw new UnsupportedOperationException();
         }
 
@@ -63,18 +72,21 @@ public class StateManagerTest extends TeedaTestCase {
             throw new UnsupportedOperationException();
         }
 
-        public UIViewRoot restoreView(FacesContext context, String viewId, String renderKitId) {
+        public UIViewRoot restoreView(FacesContext context, String viewId,
+                String renderKitId) {
             throw new UnsupportedOperationException();
         }
 
-        protected UIViewRoot restoreTreeStructure(FacesContext context, String viewId, String renderKitId) {
+        protected UIViewRoot restoreTreeStructure(FacesContext context,
+                String viewId, String renderKitId) {
             throw new UnsupportedOperationException();
         }
 
-        protected void restoreComponentState(FacesContext context, UIViewRoot viewRoot, String renderKitId) {
+        protected void restoreComponentState(FacesContext context,
+                UIViewRoot viewRoot, String renderKitId) {
             throw new UnsupportedOperationException();
         }
-        
+
     }
 
 }

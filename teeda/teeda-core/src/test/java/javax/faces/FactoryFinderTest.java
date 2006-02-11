@@ -18,7 +18,7 @@ package javax.faces;
 import junit.framework.TestCase;
 
 /**
- * @author Shinpei Ohtani
+ * @author shot
  */
 public class FactoryFinderTest extends TestCase {
 
