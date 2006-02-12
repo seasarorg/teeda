@@ -57,7 +57,8 @@ public interface TODO {
      *  - use Clover or cobertura?
      *  - make it easy to get elements from FacesConfig by key(such as component, converter,
      *    validator, renderkit, and managed-bean)
-     *  - Client side solution like commons-validator or aspect interceptor or what 
+     *  - Client side solution like commons-validator or aspect interceptor or what
+     *  - Portlet support(need for specification)
      * 
      * 
      * 
