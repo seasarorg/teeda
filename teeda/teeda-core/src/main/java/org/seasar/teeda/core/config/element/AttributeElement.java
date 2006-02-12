@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * @author Shinpei Ohtani(aka shot)
  */
-public interface AttributeElement extends JsfConfig, DefaultValueHolder, SuggestedValueHolder {
+public interface AttributeElement extends JsfConfigElement, DefaultValueHolder, SuggestedValueHolder {
 
     public void setAttributeName(String attributeName);
     

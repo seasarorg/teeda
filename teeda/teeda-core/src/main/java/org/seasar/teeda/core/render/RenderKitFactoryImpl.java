@@ -34,7 +34,7 @@ public class RenderKitFactoryImpl extends RenderKitFactory {
 
     private Map renderKits_ = Collections.synchronizedMap(new HashMap());
 
-    private Logger logger_ = Logger.getLogger(RenderKitFactoryImpl.class);
+    private static Logger logger_ = Logger.getLogger(RenderKitFactoryImpl.class);
 
     public RenderKitFactoryImpl() {
         initialize();

@@ -17,8 +17,12 @@ package javax.faces.event;
 
 import javax.faces.FacesException;
 
-
+/**
+ * @author shot
+ */
 public class AbortProcessingException extends FacesException {
+
+    private static final long serialVersionUID = 1L;
 
     public AbortProcessingException() {
         super();

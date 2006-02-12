@@ -18,7 +18,7 @@ package org.seasar.teeda.core.config.element;
 /**
  * @author Shinpei Ohtani(aka shot)
  */
-public interface RendererElement extends JsfConfig {
+public interface RendererElement extends JsfConfigElement {
 
     public void setComponentFamily(String family);
     

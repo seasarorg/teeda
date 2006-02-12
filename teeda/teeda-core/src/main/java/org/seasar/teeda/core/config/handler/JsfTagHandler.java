@@ -25,7 +25,7 @@ import org.xml.sax.Attributes;
  */
 public class JsfTagHandler extends TagHandler {
 
-    private Logger logger_ = Logger.getLogger(JsfTagHandler.class);
+    private static Logger logger_ = Logger.getLogger(JsfTagHandler.class);
     
     private static final long serialVersionUID = 1L;
 

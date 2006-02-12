@@ -18,7 +18,12 @@ package javax.faces.validator;
 import javax.faces.FacesException;
 import javax.faces.application.FacesMessage;
 
+/**
+ * @author shot
+ */
 public class ValidatorException extends FacesException {
+
+    private static final long serialVersionUID = 1L;
 
     private FacesMessage facesMessage_ = null;
 

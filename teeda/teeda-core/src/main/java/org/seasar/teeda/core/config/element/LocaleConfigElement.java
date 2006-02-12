@@ -21,7 +21,7 @@ import java.util.Locale;
 /**
  * @author Shinpei Ohtani(aka shot)
  */
-public interface LocaleConfigElement extends JsfConfig {
+public interface LocaleConfigElement extends JsfConfigElement {
 
     public void setDefaultLocale(String defaultLocaleName);
 

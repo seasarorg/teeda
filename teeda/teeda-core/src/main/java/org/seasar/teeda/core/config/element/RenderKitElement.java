@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * @author Shinpei Ohtani(aka shot)
  */
-public interface RenderKitElement extends JsfConfig {
+public interface RenderKitElement extends JsfConfigElement {
 
     public void setRenderKitId(String renderKitId);
     

@@ -38,19 +38,29 @@ import org.seasar.teeda.core.config.element.ValidatorElement;
 public class FacesConfigImpl implements FacesConfig {
 
     private List applications_ = new ArrayList();
+
     private List factories_ = new ArrayList();
+
     private List lifecycles_ = new ArrayList();
+
     private List referencedBeans_ = new ArrayList();
+
     private List navigationRules_ = new ArrayList();
+
     private Map components_ = new HashMap();
+
     private Map convertersByIds_ = new HashMap();
+
     private Map convertersByClasses_ = new HashMap();
+
     private Map managedBeans_ = new HashMap();
+
     private Map renderKits_ = new HashMap();
+
     private Map validators_ = new HashMap();
-    
-    public FacesConfigImpl(){
-        
+
+    public FacesConfigImpl() {
+
     }
 
     public void addApplicationElement(ApplicationElement application) {
@@ -66,10 +76,11 @@ public class FacesConfigImpl implements FacesConfig {
     }
 
     public void addConverterElement(ConverterElement converter) {
-        if(converter.getConverterId() != null){
+        if (converter.getConverterId() != null) {
             convertersByIds_.put(converter.getConverterId(), converter);
-        }else if(converter.getConverterForClass() != null){
-            convertersByClasses_.put(converter.getConverterForClass(), converter);
+        } else if (converter.getConverterForClass() != null) {
+            convertersByClasses_.put(converter.getConverterForClass(),
+                    converter);
         }
     }
 

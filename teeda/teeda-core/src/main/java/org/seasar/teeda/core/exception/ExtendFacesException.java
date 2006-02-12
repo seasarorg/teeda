@@ -20,7 +20,7 @@ import javax.faces.FacesException;
 import org.seasar.teeda.core.util.MessageFormatterUtil;
 
 /**
- * @author Shinpei Ohtani
+ * @author shot
  */
 public class ExtendFacesException extends FacesException {
 

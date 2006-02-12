@@ -20,7 +20,7 @@ package org.seasar.teeda.core.config.element;
  * 
  */
 public interface ManagedPropertyElement 
-    extends JsfConfig, NullValueHolder, ListEntriesHolder, MapEntriesHolder {
+    extends JsfConfigElement, NullValueHolder, ListEntriesHolder, MapEntriesHolder {
 
     public void setPropertyName(String propertyName);
     

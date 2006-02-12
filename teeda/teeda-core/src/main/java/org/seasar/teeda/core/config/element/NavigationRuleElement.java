@@ -18,7 +18,7 @@ package org.seasar.teeda.core.config.element;
 import java.util.List;
 
 
-public interface NavigationRuleElement extends JsfConfig {
+public interface NavigationRuleElement extends JsfConfigElement {
 
     public static final String DEFAULT_FROM_VIEW_ID = "*";
 

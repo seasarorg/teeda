@@ -15,7 +15,7 @@
  */
 package org.seasar.teeda.core.config.element;
 
-public interface ConverterElement extends JsfConfig, AttributeHolder, PropertyHolder{
+public interface ConverterElement extends JsfConfigElement, AttributeHolder, PropertyHolder{
     
     public void setConverterId(String converterId);
 

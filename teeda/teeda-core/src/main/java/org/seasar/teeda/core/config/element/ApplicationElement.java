@@ -17,7 +17,7 @@ package org.seasar.teeda.core.config.element;
 
 import java.util.List;
 
-public interface ApplicationElement extends JsfConfig{
+public interface ApplicationElement extends JsfConfigElement{
     
     public void addActionListener(String actionListener);
 

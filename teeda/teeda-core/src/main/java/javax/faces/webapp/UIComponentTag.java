@@ -34,8 +34,12 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.Tag;
 
+/**
+ * @author shot
+ */
 public abstract class UIComponentTag implements Tag {
 
+    //TODO need to re-think for tag problem with jsp
     private UIComponent component_ = null;
 
     private FacesContext context_ = null;

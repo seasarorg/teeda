@@ -43,6 +43,7 @@ import org.seasar.teeda.core.util.WebappConfigUtil;
 import org.seasar.teeda.core.view.ViewRenderer;
 
 /**
+ * @author higa
  * @author shot
  */
 public class ViewHandlerImpl extends ViewHandler {

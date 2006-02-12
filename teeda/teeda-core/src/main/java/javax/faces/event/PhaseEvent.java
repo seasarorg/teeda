@@ -26,6 +26,8 @@ import javax.faces.lifecycle.Lifecycle;
  */
 public class PhaseEvent extends EventObject {
 
+    private static final long serialVersionUID = 1L;
+
     private FacesContext facesContext_;
 
     private PhaseId phaseId_;

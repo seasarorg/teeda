@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * @author Shinpei Ohtani(aka shot)
  */
-public interface FacetElement extends JsfConfig{
+public interface FacetElement extends JsfConfigElement{
     
     public void setFacetName(String facetName);
     

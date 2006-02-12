@@ -19,7 +19,7 @@ package org.seasar.teeda.core.config.element;
 /**
  * @author Shinpei Ohtani(aka shot)
  */
-public interface MapEntryElement extends JsfConfig, NullValueHolder {
+public interface MapEntryElement extends JsfConfigElement, NullValueHolder {
 
     public void setKey(String key);
     

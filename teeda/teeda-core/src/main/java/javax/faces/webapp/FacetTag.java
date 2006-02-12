@@ -18,28 +18,32 @@ package javax.faces.webapp;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
-
+/**
+ * @author shot
+ */
 public class FacetTag extends TagSupport {
 
+    private static final long serialVersionUID = 1L;
+
     private String name_ = null;
-    
-    public FacetTag(){
+
+    public FacetTag() {
     }
 
     public String getName() {
         return name_;
     }
 
-    public void setName(String name){
+    public void setName(String name) {
         name_ = name;
     }
-    
+
     public void release() {
         super.release();
         name_ = null;
     }
 
-    public int doStartTag() throws JspException{
+    public int doStartTag() throws JspException {
         return EVAL_BODY_INCLUDE;
     }
 }

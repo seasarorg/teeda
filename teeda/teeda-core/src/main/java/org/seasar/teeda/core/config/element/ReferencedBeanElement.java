@@ -18,7 +18,7 @@ package org.seasar.teeda.core.config.element;
 /**
  * @author Shinpei Ohtani(aka shot)
  */
-public interface ReferencedBeanElement extends JsfConfig {
+public interface ReferencedBeanElement extends JsfConfigElement {
     
     public void setReferencedBeanName(String referencedBeanName);
     

@@ -21,7 +21,7 @@ import javax.faces.el.MethodBinding;
 import org.seasar.teeda.core.util.MessageFormatterUtil;
 
 /**
- * @author Shinpei Ohtani
+ * @author shot
  */
 public class ExtendEvaluationException extends EvaluationException {
 

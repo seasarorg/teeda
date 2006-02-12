@@ -20,6 +20,9 @@ import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.BodyContent;
 import javax.servlet.jsp.tagext.BodyTag;
 
+/**
+ * @author shot
+ */
 public abstract class UIComponentBodyTag extends UIComponentTag 
     implements BodyTag {
 

@@ -19,46 +19,46 @@ import java.io.Serializable;
 
 /**
  * @author higa
- * 
+ * @author shot
  */
 public class TreeStructure implements Serializable {
-	
-	static final long serialVersionUID = 0L;
-	
-	private String componentClassName;
 
-	private String componentId;
+    private static final long serialVersionUID = 0L;
 
-	private TreeStructure[] children;
+    private String componentClassName_;
 
-	private Object[] facets;
+    private String componentId_;
 
-	public TreeStructure(String componentClassName, String componentId) {
-		this.componentClassName = componentClassName;
-		this.componentId = componentId;
-	}
+    private TreeStructure[] children_;
 
-	public String getComponentClassName() {
-		return componentClassName;
-	}
+    private Object[] facets_;
 
-	public String getComponentId() {
-		return componentId;
-	}
+    public TreeStructure(String componentClassName, String componentId) {
+        componentClassName_ = componentClassName;
+        componentId_ = componentId;
+    }
 
-	public TreeStructure[] getChildren() {
-		return children;
-	}
-	
-	public void setChildren(TreeStructure[] children) {
-		this.children = children;
-	}
+    public String getComponentClassName() {
+        return componentClassName_;
+    }
 
-	public Object[] getFacets() {
-		return facets;
-	}
+    public String getComponentId() {
+        return componentId_;
+    }
 
-	public void setFacets(Object[] facets) {
-		this.facets = facets;
-	}
+    public TreeStructure[] getChildren() {
+        return (children_ != null) ? children_ : new TreeStructure[0];
+    }
+
+    public void setChildren(TreeStructure[] children) {
+        children_ = children;
+    }
+
+    public Object[] getFacets() {
+        return (facets_ != null) ? facets_ : new Object[0];
+    }
+
+    public void setFacets(Object[] facets) {
+        facets_ = facets;
+    }
 }

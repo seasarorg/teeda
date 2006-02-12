@@ -29,10 +29,11 @@ public class MockApplicationFactory2 extends ApplicationFactory {
     }
 
     public Application getApplication() {
-		return null;
+		return applicationFactory_.getApplication();
 	}
 
 	public void setApplication(Application application) {
+        applicationFactory_.setApplication(application);
 	}
 
 }

@@ -24,7 +24,12 @@ import javax.faces.internal.WebAppUtils;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
+/**
+ * @author shot
+ */
 public class ConverterTag extends TagSupport {
+
+    private static final long serialVersionUID = 1L;
 
     private String converterId_ = null;
 

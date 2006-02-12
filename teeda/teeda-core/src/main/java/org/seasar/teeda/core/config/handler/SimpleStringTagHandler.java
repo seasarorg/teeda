@@ -27,7 +27,7 @@ import org.seasar.teeda.core.util.TagConvertUtil;
  */
 public class SimpleStringTagHandler extends JsfTagHandler {
 
-    private Logger logger_ = Logger.getLogger(SimpleStringTagHandler.class);
+    private static Logger logger_ = Logger.getLogger(SimpleStringTagHandler.class);
     
     private static final long serialVersionUID = 3257284721212863026L;
     

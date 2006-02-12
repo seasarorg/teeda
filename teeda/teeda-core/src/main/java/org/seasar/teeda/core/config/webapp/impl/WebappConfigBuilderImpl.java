@@ -19,6 +19,7 @@ import java.io.InputStream;
 
 import javax.xml.parsers.SAXParser;
 
+import org.seasar.framework.util.InputStreamUtil;
 import org.seasar.framework.util.SAXParserFactoryUtil;
 import org.seasar.framework.xml.SaxHandler;
 import org.seasar.framework.xml.SaxHandlerParser;
@@ -33,12 +34,18 @@ import org.seasar.teeda.core.config.webapp.rule.WebappTagHandlerRule;
 public class WebappConfigBuilderImpl implements WebappConfigBuilder {
 
     private static TagHandlerRule rule_ = new WebappTagHandlerRule();
+
     private static final String DTD_PATH = "javax/servlet/resources/web-app_2_3.dtd";
+
     private static final String PUBLIC_ID = "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN";
 
     public WebappConfig build(InputStream is) {
-        SaxHandlerParser parser = createSaxHandlerParser();
-        return (WebappConfig) parser.parse(is);
+        try {
+            SaxHandlerParser parser = createSaxHandlerParser();
+            return (WebappConfig) parser.parse(is);
+        } finally {
+            InputStreamUtil.close(is);
+        }
     }
 
     private SaxHandlerParser createSaxHandlerParser() {

@@ -22,7 +22,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import javax.faces.FactoryFinder;
 import javax.faces.application.StateManager;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIViewRoot;
@@ -32,10 +31,16 @@ import javax.faces.render.RenderKit;
 import javax.faces.render.RenderKitFactory;
 import javax.faces.render.ResponseStateManager;
 
+import org.seasar.framework.container.S2Container;
+import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
 import org.seasar.framework.util.ClassUtil;
+import org.seasar.teeda.core.util.FactoryFinderUtil;
+import org.seasar.teeda.core.view.ViewTemplate;
+import org.seasar.teeda.core.view.ViewTemplateFactory;
 
 /**
  * @author higa
+ * @author shot
  * 
  * TODO need to re-define.
  */
@@ -53,7 +58,7 @@ public class TeedaStateManager extends StateManager implements Serializable {
 
     private transient RenderKitFactory renderKitFactory;
 
-    // private transient ViewTemplateFactory viewTemplateFactory;
+    private transient ViewTemplateFactory viewTemplateFactory;
 
     public TeedaStateManager() {
     }
@@ -107,23 +112,22 @@ public class TeedaStateManager extends StateManager implements Serializable {
     }
 
     protected long getLastModifiedFromFile(String viewId) {
-        // ViewTemplateFactory vtf = getViewTemplateFactory();
-        // ViewTemplate vt = vtf.getViewTemplate(viewId);
-        // long lastModified = vt.getLastModified();
-        // if (lastModified == 0) {
-        // return lastModified;
-        // }
-        // ViewProcessor vp = (ViewProcessor) vt.getRootTagProcessor();
-        // String[] includes = vp.getIncludes();
-        // for (int i = 0; i < includes.length; ++i) {
-        // vt = vtf.getViewTemplate(includes[i]);
-        // long lm = vt.getLastModified();
-        // if (lm > lastModified) {
-        // lastModified = lm;
-        // }
-        // }
-        // return lastModified;
-        return 0;
+        ViewTemplateFactory vtf = getViewTemplateFactory();
+        ViewTemplate vt = vtf.getViewTemplate(viewId);
+        long lastModified = vt.getLastModified();
+        if (lastModified == 0) {
+            return lastModified;
+        }
+        ViewProcessor vp = (ViewProcessor) vt.getRootTagProcessor();
+        String[] includes = vp.getIncludes();
+        for (int i = 0; i < includes.length; ++i) {
+            vt = vtf.getViewTemplate(includes[i]);
+            long lm = vt.getLastModified();
+            if (lm > lastModified) {
+                lastModified = lm;
+            }
+        }
+        return lastModified;
     }
 
     protected SerializedView getSerializedViewFromServer(
@@ -140,7 +144,7 @@ public class TeedaStateManager extends StateManager implements Serializable {
                 SERIALIZED_VIEW_ATTR + "-" + viewId, serializedView);
     }
 
-    protected void removeSerializedViewFromSession(
+    protected void removeSerializedViewFromServer(
             ExternalContext externalContext, String viewId) {
 
         externalContext.getSessionMap().remove(
@@ -164,8 +168,7 @@ public class TeedaStateManager extends StateManager implements Serializable {
     }
 
     protected TreeStructure buildTreeStructure(UIComponent component) {
-        TreeStructure struct = new TreeStructure(
-                component.getClass().getName(), component.getId());
+        TreeStructure struct = new UIComponentTreeStructure(component);
         struct.setChildren(buildChildrenTreeStructure(component));
         struct.setFacets(buildFacetsTreeStructure(component));
         return struct;
@@ -208,7 +211,6 @@ public class TeedaStateManager extends StateManager implements Serializable {
 
     public void writeState(FacesContext context, SerializedView serializedView)
             throws IOException {
-
         UIViewRoot viewRoot = context.getViewRoot();
         RenderKit renderKit = getRenderKit(context, viewRoot.getRenderKitId());
         renderKit.getResponseStateManager().writeState(context, serializedView);
@@ -223,7 +225,7 @@ public class TeedaStateManager extends StateManager implements Serializable {
         ExternalContext extContext = context.getExternalContext();
         if (!isSavingStateInClient(context)
                 && isViewModified(extContext, viewId)) {
-            removeSerializedViewFromSession(extContext, viewId);
+            removeSerializedViewFromServer(extContext, viewId);
             removeLastModifiedFromServer(extContext, viewId);
             return null;
         }
@@ -282,30 +284,25 @@ public class TeedaStateManager extends StateManager implements Serializable {
 
     protected void restoreChildrenTreeStructure(UIComponent component,
             TreeStructure[] structs) {
-        if (structs != null) {
-            for (int i = 0; i < structs.length; ++i) {
-                UIComponent child = restoreTreeStructure(structs[i]);
-                component.getChildren().add(child);
-            }
+        for (int i = 0; i < structs.length; ++i) {
+            UIComponent child = restoreTreeStructure(structs[i]);
+            component.getChildren().add(child);
         }
     }
 
     protected void restoreFacetsTreeStructure(UIComponent component,
             Object[] facets) {
-        if (facets != null) {
-            for (int i = 0, len = facets.length; i < len; i++) {
-                Object[] array = (Object[]) facets[i];
-                String facetName = (String) array[0];
-                TreeStructure struct = (TreeStructure) array[1];
-                UIComponent child = restoreTreeStructure(struct);
-                component.getFacets().put(facetName, child);
-            }
+        for (int i = 0, len = facets.length; i < len; i++) {
+            Object[] array = (Object[]) facets[i];
+            String facetName = (String) array[0];
+            TreeStructure struct = (TreeStructure) array[1];
+            UIComponent child = restoreTreeStructure(struct);
+            component.getFacets().put(facetName, child);
         }
     }
 
     protected void restoreComponentState(FacesContext context,
             UIViewRoot viewRoot, String renderKitId) {
-
         if (viewRoot.getRenderKitId() == null) {
             viewRoot.setRenderKitId(renderKitId);
         }
@@ -328,7 +325,6 @@ public class TeedaStateManager extends StateManager implements Serializable {
 
     protected void restoreComponentStateFromServer(FacesContext context,
             UIViewRoot viewRoot) {
-
         SerializedView serializedView = getSerializedViewFromServer(context
                 .getExternalContext(), viewRoot.getViewId());
         if (serializedView == null) {
@@ -343,19 +339,27 @@ public class TeedaStateManager extends StateManager implements Serializable {
 
     protected RenderKitFactory getRenderKitFactory() {
         if (renderKitFactory == null) {
-            renderKitFactory = (RenderKitFactory) FactoryFinder
-                    .getFactory(FactoryFinder.RENDER_KIT_FACTORY);
+            renderKitFactory = FactoryFinderUtil.getRenderKitFactory();
         }
         return renderKitFactory;
     }
 
-    // protected ViewTemplateFactory getViewTemplateFactory() {
-    // if (viewTemplateFactory == null) {
-    // S2Container container = SingletonS2ContainerFactory.getContainer();
-    // viewTemplateFactory = (ViewTemplateFactory) container
-    // .getComponent(ViewTemplateFactory.class);
-    // }
-    // return viewTemplateFactory;
-    // }
+    protected ViewTemplateFactory getViewTemplateFactory() {
+        if (viewTemplateFactory == null) {
+            S2Container container = SingletonS2ContainerFactory.getContainer();
+            viewTemplateFactory = (ViewTemplateFactory) container
+                    .getComponent(ViewTemplateFactory.class);
+        }
+        return viewTemplateFactory;
+    }
+
+    private static class UIComponentTreeStructure extends TreeStructure {
+
+        private static final long serialVersionUID = 1L;
+
+        public UIComponentTreeStructure(UIComponent component) {
+            super(component.getClass().getName(), component.getId());
+        }
+    }
 
 }

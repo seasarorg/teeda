@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * @author Shinpei Ohtani(aka shot)
  */
-public interface ManagedBeanElement extends JsfConfig, ListEntriesHolder, MapEntriesHolder{
+public interface ManagedBeanElement extends JsfConfigElement, ListEntriesHolder, MapEntriesHolder{
 
     public void setManagedBeanName(String managedBeanName);
 

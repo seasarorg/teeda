@@ -30,6 +30,8 @@ public interface JsfConstants {
 
     public String CORE_PACKAGE_ROOT = "org.seasar.teeda.core";
 
+    public String RESOURCE_PACKAGE_ROOT = CORE_PACKAGE_ROOT + "." + "resource";
+    
     public String APPLICATION_SCOPE = "applicationScope";
 
     public String COOKIE = "cookie";
@@ -93,6 +95,8 @@ public interface JsfConstants {
     // -- element --
 
     public String ANCHOR_ELEM = "a";
+
+    public String BR_ELEM = "br";
 
     public String FORM_ELEM = "form";
 
@@ -417,5 +421,19 @@ public interface JsfConstants {
     public String COMPRESS_STATE_ATTR = "javax.faces.COMPRESS_STATE";
 
     public String STATE_MARKER = CORE_PACKAGE_ROOT + ".STATE_MARKER";
+
+    public String JSP_EXCEPTION = "javax.servlet.jsp.jspException";
+
+    public String SERVLET_ERROR_EXCEPTION = "javax.servlet.error.exception";
+
+    public String SERVLET_ERROR_EXCEPTION_TYPE = "javax.servlet.error.exception_type";
+
+    public String SERVLET_ERROR_EXCEPTION_MESSAGE = "javax.servlet.error.message";
+
+    public String ERROR_EXCEPTION = "seasar.jsf.error.exception";
+
+    public String ERROR_EXCEPTION_TYPE = "seasar.jsf.error.exception_type";
+
+    public String ERROR_MESSAGE = "seasar.jsf.error.message";
 
 }

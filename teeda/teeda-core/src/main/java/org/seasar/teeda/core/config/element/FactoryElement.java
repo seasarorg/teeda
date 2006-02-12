@@ -17,7 +17,7 @@ package org.seasar.teeda.core.config.element;
 
 import java.util.List;
 
-public interface FactoryElement extends JsfConfig {
+public interface FactoryElement extends JsfConfigElement {
 
     public void addApplicationFactory(String applicationFactory);
 

@@ -22,7 +22,7 @@ import java.util.List;
  * @author Shinpei Ohtani(aka shot)
  * 
  */
-public interface MapEntriesElement extends JsfConfig {
+public interface MapEntriesElement extends JsfConfigElement {
 
     public void setKeyClass(String keyClassName);
 

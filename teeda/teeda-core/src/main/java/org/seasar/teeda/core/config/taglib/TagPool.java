@@ -13,8 +13,17 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.core.config.element;
+package org.seasar.teeda.core.config.taglib;
 
-public interface JsfConfig {
+import javax.servlet.jsp.tagext.Tag;
 
+/**
+ * @author higa
+ *
+ */
+public interface TagPool {
+
+	public Tag request(Class tagClass);
+	
+	public void release(Tag tag);
 }

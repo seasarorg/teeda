@@ -17,7 +17,7 @@ package org.seasar.teeda.core.config.element;
 
 import java.util.List;
 
-public interface LifecycleElement extends JsfConfig {
+public interface LifecycleElement extends JsfConfigElement {
 
     public void addPhaseListener(String phaseListener);
 

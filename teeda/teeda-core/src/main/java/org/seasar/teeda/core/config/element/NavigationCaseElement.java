@@ -18,7 +18,7 @@ package org.seasar.teeda.core.config.element;
 /**
  * @author Shinpei Ohtani(aka shot)
  */
-public interface NavigationCaseElement extends JsfConfig {
+public interface NavigationCaseElement extends JsfConfigElement {
     
     public void setFromAction(String fromAction);
     

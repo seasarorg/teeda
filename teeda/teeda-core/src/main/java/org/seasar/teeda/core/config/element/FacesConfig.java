@@ -21,7 +21,7 @@ import java.util.Map;
 /**
  * @author shot
  */
-public interface FacesConfig extends JsfConfig{
+public interface FacesConfig extends JsfConfigElement{
 
     public void addApplicationElement(ApplicationElement application);
 
