@@ -136,7 +136,7 @@ public class JavassistLearningTest extends TestCase {
     public void testEnhanceClass() throws Exception {
         // ## Arrange ##
         final Class targetClass = MockUIComponentBase.class;
-        ClassPool cp = ClassPoolUtil.getClassPool(targetClass);
+        ClassPool cp = ClassPoolUtil.getClassPool();
         CtClass cc = cp.get(targetClass.getName());
         final String enhancedClassName = targetClass.getName() + "__E1__";
         CtClass enhancedCtClass = cp.makeClass(enhancedClassName, cc);
@@ -165,7 +165,7 @@ public class JavassistLearningTest extends TestCase {
     public void testEnhanceClassAndWeaveInterceptor() throws Exception {
         // ## Arrange ##
         final Class targetClass = MockUIComponentBase.class;
-        ClassPool cp = ClassPoolUtil.getClassPool(targetClass);
+        ClassPool cp = ClassPoolUtil.getClassPool();
         CtClass cc = cp.get(targetClass.getName());
         final String enhancedClassName = targetClass.getName() + "__E2__";
         CtClass enhancedCtClass = cp.makeClass(enhancedClassName, cc);
