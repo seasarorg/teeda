@@ -15,12 +15,15 @@
  */
 package org.seasar.teeda.core.webapp;
 
+import java.io.InputStream;
+
 import javax.faces.FactoryFinder;
 import javax.faces.context.ExternalContext;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
+import org.seasar.framework.util.InputStreamUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.config.FacesConfigBuilder;
 import org.seasar.teeda.core.config.assembler.AssemblerAssembler;
@@ -78,11 +81,19 @@ public class JsfConfigureListener implements ServletContextListener {
             ExternalContext externalContext = (ExternalContext) DIContainerUtil
                     .getComponent(ExternalContext.class);
 
-            WebappConfig webappConfig = webAppConfigBuilder
-                    .build(externalContext.getResourceAsStream(JsfConstants.WEB_XML_PATH));
+            InputStream is = null;
+            WebappConfig webappConfig = null;
+            try {
+                is = externalContext
+                        .getResourceAsStream(JsfConstants.WEB_XML_PATH);
+                webappConfig = webAppConfigBuilder.build(is);
+            } finally {
+                InputStreamUtil.close(is);
+            }
 
-            externalContext.getApplicationMap().put(WebappConfig.class.getName(), webappConfig);
-            
+            externalContext.getApplicationMap().put(
+                    WebappConfig.class.getName(), webappConfig);
+
             context.setAttribute(FACES_INIT_DONE, Boolean.TRUE);
 
         }
