@@ -19,7 +19,6 @@ import java.io.InputStream;
 
 import javax.xml.parsers.SAXParser;
 
-import org.seasar.framework.util.InputStreamUtil;
 import org.seasar.framework.util.SAXParserFactoryUtil;
 import org.seasar.framework.xml.SaxHandler;
 import org.seasar.framework.xml.SaxHandlerParser;
@@ -40,12 +39,8 @@ public class WebappConfigBuilderImpl implements WebappConfigBuilder {
     private static final String PUBLIC_ID = "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN";
 
     public WebappConfig build(InputStream is) {
-        try {
-            SaxHandlerParser parser = createSaxHandlerParser();
-            return (WebappConfig) parser.parse(is);
-        } finally {
-            InputStreamUtil.close(is);
-        }
+        SaxHandlerParser parser = createSaxHandlerParser();
+        return (WebappConfig) parser.parse(is);
     }
 
     private SaxHandlerParser createSaxHandlerParser() {
