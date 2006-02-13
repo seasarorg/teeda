@@ -88,7 +88,9 @@ public class JsfConfigureListener implements ServletContextListener {
                         .getResourceAsStream(JsfConstants.WEB_XML_PATH);
                 webappConfig = webAppConfigBuilder.build(is);
             } finally {
-                InputStreamUtil.close(is);
+                if (is != null) {
+                    InputStreamUtil.close(is);
+                }
             }
 
             externalContext.getApplicationMap().put(
