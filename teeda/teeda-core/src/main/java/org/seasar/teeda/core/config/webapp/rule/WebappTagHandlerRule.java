@@ -16,7 +16,7 @@
 package org.seasar.teeda.core.config.webapp.rule;
 
 import org.seasar.framework.xml.TagHandlerRule;
-import org.seasar.teeda.core.config.handler.SimpleStringTagHandler;
+import org.seasar.teeda.core.config.faces.handler.SimpleStringTagHandler;
 import org.seasar.teeda.core.config.webapp.handler.ContextParamTagHandler;
 import org.seasar.teeda.core.config.webapp.handler.FilterTagHandler;
 import org.seasar.teeda.core.config.webapp.handler.InitParamTagHandler;

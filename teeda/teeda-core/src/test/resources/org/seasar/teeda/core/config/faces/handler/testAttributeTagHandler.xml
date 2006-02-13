@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE faces-config PUBLIC
+  "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.1//EN"
+  "http://java.sun.com/dtd/web-facesconfig_1_1.dtd" [ 
+]>
+<faces-config>
+	<component>
+		<component-type>type</component-type>
+		<component-class>org.seasar.teeda.core.mock.MockUIComponent</component-class>
+		<attribute>
+			<attribute-name>hoge</attribute-name>
+			<attribute-class>org.seasar.teeda.core.config.faces.handler.AttributeTagHandlerTest$Hoge</attribute-class>
+		</attribute>
+	</component>
+	<converter>
+		<converter-id>converter-id</converter-id>
+		<converter-class>org.seasar.teeda.core.mock.MockConverter</converter-class>
+		<attribute>
+			<attribute-name>foo</attribute-name>
+			<attribute-class>org.seasar.teeda.core.config.faces.handler.AttributeTagHandlerTest$Foo</attribute-class>
+		</attribute>
+	</converter>
+	<validator>
+		<validator-id>validator-id</validator-id>
+		<validator-class>org.seasar.teeda.core.mock.MockValidator</validator-class>
+		<attribute>
+			<attribute-name>bar</attribute-name>
+			<attribute-class>org.seasar.teeda.core.config.faces.handler.AttributeTagHandlerTest$Bar</attribute-class>
+		</attribute>
+	</validator>
+</faces-config>

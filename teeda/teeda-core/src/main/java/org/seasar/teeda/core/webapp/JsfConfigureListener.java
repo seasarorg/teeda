@@ -25,9 +25,9 @@ import javax.servlet.ServletContextListener;
 
 import org.seasar.framework.util.InputStreamUtil;
 import org.seasar.teeda.core.JsfConstants;
-import org.seasar.teeda.core.config.FacesConfigBuilder;
-import org.seasar.teeda.core.config.assembler.AssemblerAssembler;
-import org.seasar.teeda.core.config.element.FacesConfig;
+import org.seasar.teeda.core.config.faces.FacesConfigBuilder;
+import org.seasar.teeda.core.config.faces.assembler.AssemblerAssembler;
+import org.seasar.teeda.core.config.faces.element.FacesConfig;
 import org.seasar.teeda.core.config.webapp.WebappConfigBuilder;
 import org.seasar.teeda.core.config.webapp.element.WebappConfig;
 import org.seasar.teeda.core.util.DIContainerUtil;
