@@ -485,4 +485,10 @@ public interface JsfConstants {
 
     public String ERROR_MESSAGE = "seasar.jsf.error.message";
 
+    public String DEFAULT_CONVERTDATETIME_DATE_STYLE = "default";
+
+    public String DEFAULT_CONVERTDATETIME_TIME_STYLE = "default";
+
+    public String DEFAULT_CONVERTDATETIME_TYPE = "default";
+
 }

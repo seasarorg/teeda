@@ -18,6 +18,7 @@ package org.seasar.teeda.core.mock;
 import java.util.Locale;
 
 import javax.faces.application.Application;
+import javax.faces.el.ValueBinding;
 
 /**
  * @author shot
@@ -26,4 +27,6 @@ import javax.faces.application.Application;
 public abstract class MockApplication extends Application {
 
     public abstract void addSupportedLocale(Locale locale);
+    
+    public abstract void setValueBinding(ValueBinding vb);
 }

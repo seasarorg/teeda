@@ -66,7 +66,7 @@ public class TeedaStateManager extends StateManager implements Serializable {
 
         UIViewRoot viewRoot = context.getViewRoot();
         ExternalContext externalContext = context.getExternalContext();
-        saveLastModifiedToServer(externalContext, viewRoot.getViewId());
+//        saveLastModifiedToServer(externalContext, viewRoot.getViewId());
         Object struct = getTreeStructureToSave(context);
         Object state = getComponentStateToSave(context);
         SerializedView serializedView = new SerializedView(struct, state);
@@ -78,38 +78,38 @@ public class TeedaStateManager extends StateManager implements Serializable {
         return null;
     }
 
-    protected void saveLastModifiedToServer(ExternalContext externalContext,
-            String viewId) {
-        Long lm = new Long(getLastModifiedFromFile(viewId));
-        externalContext.getSessionMap().put(LAST_MODIFIED_ATTR + "-" + viewId,
-                lm);
-    }
+//    protected void saveLastModifiedToServer(ExternalContext externalContext,
+//            String viewId) {
+//        Long lm = new Long(getLastModifiedFromFile(viewId));
+//        externalContext.getSessionMap().put(LAST_MODIFIED_ATTR + "-" + viewId,
+//                lm);
+//    }
 
-    protected long getLastModifiedFromServer(ExternalContext externalContext,
-            String viewId) {
-        Long lm = (Long) externalContext.getSessionMap().get(
-                LAST_MODIFIED_ATTR + "-" + viewId);
-        if (lm != null) {
-            return lm.longValue();
-        }
-        return 0;
-    }
+//    protected long getLastModifiedFromServer(ExternalContext externalContext,
+//            String viewId) {
+//        Long lm = (Long) externalContext.getSessionMap().get(
+//                LAST_MODIFIED_ATTR + "-" + viewId);
+//        if (lm != null) {
+//            return lm.longValue();
+//        }
+//        return 0;
+//    }
+//
+//    protected void removeLastModifiedFromServer(
+//            ExternalContext externalContext, String viewId) {
+//        externalContext.getSessionMap().remove(
+//                LAST_MODIFIED_ATTR + "-" + viewId);
+//    }
 
-    protected void removeLastModifiedFromServer(
-            ExternalContext externalContext, String viewId) {
-        externalContext.getSessionMap().remove(
-                LAST_MODIFIED_ATTR + "-" + viewId);
-    }
+//    protected boolean isViewModified(ExternalContext externalContext,
+//            String viewId) {
+//        long lastModifiedFromServer = getLastModifiedFromServer(
+//                externalContext, viewId);
+//        long lastModifiedFromFile = getLastModifiedFromFile(viewId);
+//        return lastModifiedFromFile > lastModifiedFromServer;
+//    }
 
-    protected boolean isViewModified(ExternalContext externalContext,
-            String viewId) {
-        long lastModifiedFromServer = getLastModifiedFromServer(
-                externalContext, viewId);
-        long lastModifiedFromFile = getLastModifiedFromFile(viewId);
-        return lastModifiedFromFile > lastModifiedFromServer;
-    }
-
-    protected long getLastModifiedFromFile(String viewId) {
+//    protected long getLastModifiedFromFile(String viewId) {
 //        ViewTemplateFactory vtf = getViewTemplateFactory();
 //        ViewTemplate vt = vtf.getViewTemplate(viewId);
 //        long lastModified = vt.getLastModified();
@@ -126,26 +126,23 @@ public class TeedaStateManager extends StateManager implements Serializable {
 //            }
 //        }
 //        return lastModified;
-        return 0;
-    }
+//        return 0;
+//    }
 
     protected SerializedView getSerializedViewFromServer(
             ExternalContext externalContext, String viewId) {
-
         return (SerializedView) externalContext.getSessionMap().get(
                 SERIALIZED_VIEW_ATTR + "-" + viewId);
     }
 
     protected void saveSerializedViewToServer(ExternalContext externalContext,
             String viewId, SerializedView serializedView) {
-
         externalContext.getSessionMap().put(
                 SERIALIZED_VIEW_ATTR + "-" + viewId, serializedView);
     }
 
     protected void removeSerializedViewFromServer(
             ExternalContext externalContext, String viewId) {
-
         externalContext.getSessionMap().remove(
                 SERIALIZED_VIEW_ATTR + "-" + viewId);
     }
@@ -175,10 +172,9 @@ public class TeedaStateManager extends StateManager implements Serializable {
 
     protected TreeStructure[] buildChildrenTreeStructure(UIComponent component) {
         if (component.getChildCount() > 0) {
-            List children = component.getChildren();
             List structs = new ArrayList();
-            for (int i = 0; i < children.size(); ++i) {
-                UIComponent child = (UIComponent) children.get(i);
+            for (Iterator itr = component.getChildren().iterator(); itr.hasNext();) {
+                UIComponent child = (UIComponent) itr.next();
                 if (!child.isTransient()) {
                     TreeStructure childStruct = buildTreeStructure(child);
                     structs.add(childStruct);
@@ -219,15 +215,22 @@ public class TeedaStateManager extends StateManager implements Serializable {
         return getRenderKitFactory().getRenderKit(context, renderKitId);
     }
 
+    protected RenderKitFactory getRenderKitFactory() {
+        if (renderKitFactory == null) {
+            renderKitFactory = FactoryFinderUtil.getRenderKitFactory();
+        }
+        return renderKitFactory;
+    }
+
     public UIViewRoot restoreView(FacesContext context, String viewId,
             String renderKitId) {
-        ExternalContext extContext = context.getExternalContext();
-        if (!isSavingStateInClient(context)
-                && isViewModified(extContext, viewId)) {
-            removeSerializedViewFromServer(extContext, viewId);
-            removeLastModifiedFromServer(extContext, viewId);
-            return null;
-        }
+//        ExternalContext extContext = context.getExternalContext();
+//        if (!isSavingStateInClient(context)
+//                && isViewModified(extContext, viewId)) {
+//            removeSerializedViewFromServer(extContext, viewId);
+//            removeLastModifiedFromServer(extContext, viewId);
+//            return null;
+//        }
         UIViewRoot viewRoot = restoreTreeStructure(context, viewId, renderKitId);
         if (viewRoot != null) {
             viewRoot.setViewId(viewId);
@@ -238,7 +241,6 @@ public class TeedaStateManager extends StateManager implements Serializable {
 
     protected UIViewRoot restoreTreeStructure(FacesContext context,
             String viewId, String renderKitId) {
-
         if (isSavingStateInClient(context)) {
             return restoreTreeStructureFromClient(context, viewId, renderKitId);
         }
@@ -247,7 +249,6 @@ public class TeedaStateManager extends StateManager implements Serializable {
 
     protected UIViewRoot restoreTreeStructureFromClient(FacesContext context,
             String viewId, String renderKitId) {
-
         RenderKit renderKit = getRenderKit(context, renderKitId);
         ResponseStateManager responseStateManager = renderKit
                 .getResponseStateManager();
@@ -334,13 +335,6 @@ public class TeedaStateManager extends StateManager implements Serializable {
             return;
         }
         viewRoot.processRestoreState(context, state);
-    }
-
-    protected RenderKitFactory getRenderKitFactory() {
-        if (renderKitFactory == null) {
-            renderKitFactory = FactoryFinderUtil.getRenderKitFactory();
-        }
-        return renderKitFactory;
     }
 
 //    protected ViewTemplateFactory getViewTemplateFactory() {

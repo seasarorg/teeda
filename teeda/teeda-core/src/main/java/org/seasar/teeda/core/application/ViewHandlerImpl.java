@@ -154,18 +154,20 @@ public class ViewHandlerImpl extends ViewHandler {
 
     public void renderView(FacesContext context, UIViewRoot viewRoot)
             throws IOException, FacesException {
+        AssertionUtil.assertNotNull("context", context);
+        AssertionUtil.assertNotNull("viewRoot", viewRoot);
         ExternalContext externalContext = context.getExternalContext();
-        String path = ExternalContextUtil.getViewId(externalContext);
-        String viewId = viewRoot.getViewId();
-        if (path.equals(viewId)) {
-            HttpServletRequest request = ServletExternalContextUtil
-                    .getRequest(externalContext);
-            HttpServletResponse response = ServletExternalContextUtil
-                    .getResponse(externalContext);
-            getViewRenderer().renderView(path, request, response);
-        } else {
+//        String path = ExternalContextUtil.getViewId(externalContext);
+//        String viewId = viewRoot.getViewId();
+//        if (path.equals(viewId)) {
+//            HttpServletRequest request = ServletExternalContextUtil
+//                    .getRequest(externalContext);
+//            HttpServletResponse response = ServletExternalContextUtil
+//                    .getResponse(externalContext);
+//            getViewRenderer().renderView(path, request, response);
+//        } else {
             externalContext.dispatch(viewRoot.getViewId());
-        }
+//        }
     }
 
     public UIViewRoot restoreView(FacesContext context, String viewId) {

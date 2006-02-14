@@ -213,6 +213,7 @@ public abstract class TeedaTestCase extends S2FrameworkTestCase {
     public void setApplication(MockApplication application) {
         this.application = application;
         setApplicationFactory();
+        facesContext.setApplication(this.application);
     }
 
     public MockExternalContext getExternalContext() {

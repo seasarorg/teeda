@@ -217,12 +217,12 @@ public class ApplicationImpl extends Application implements
 
     public UIComponent createComponent(ValueBinding vb, FacesContext context,
             String componentType) throws FacesException {
-        Object obj = ValueBindingUtil.getValue(vb, context);
+        Object obj = vb.getValue(context);
         if (obj instanceof UIComponent) {
             return (UIComponent) obj;
         } else {
             UIComponent component = createComponent(componentType);
-            ValueBindingUtil.setValue(vb, context, component);
+            vb.setValue(context, component);
             return component;
         }
     }

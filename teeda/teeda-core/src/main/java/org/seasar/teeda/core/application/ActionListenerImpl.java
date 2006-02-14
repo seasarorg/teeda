@@ -38,6 +38,7 @@ import org.seasar.teeda.core.util.UIParameterUtil;
  */
 public class ActionListenerImpl implements ActionListener {
 
+    //TODO testing
     private static Logger logger = Logger.getLogger(ActionListenerImpl.class);
 
     private ErrorPageManager errorPageManager_ = new NullErrorPageManagerImpl();

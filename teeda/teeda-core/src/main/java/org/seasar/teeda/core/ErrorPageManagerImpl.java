@@ -31,6 +31,7 @@ import org.seasar.teeda.core.util.ServletExternalContextUtil;
  */
 public class ErrorPageManagerImpl implements ErrorPageManager {
 
+    //TODO testing
     private Map locations = new HashMap();
 
     public void addErrorPage(Class exceptionType, String location) {

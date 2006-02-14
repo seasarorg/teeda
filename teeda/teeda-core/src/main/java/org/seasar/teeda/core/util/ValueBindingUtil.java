@@ -17,18 +17,22 @@ package org.seasar.teeda.core.util;
 
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
+import javax.faces.webapp.UIComponentTag;
 
-
+/**
+ * @author shot
+ */
 public class ValueBindingUtil {
 
     private ValueBindingUtil(){
     }
     
-    public static Object getValue(ValueBinding vb, FacesContext context){
-        return vb.getValue(context);
+    public static Object getValue(FacesContext context, String value){
+        if(value != null && UIComponentTag.isValueReference(value)) {
+            ValueBinding vb = context.getApplication().createValueBinding(value);
+            return vb.getValue(context);
+        }
+        return null;
     }
     
-    public static void setValue(ValueBinding vb, FacesContext context, Object value){
-        vb.setValue(context, value);
-    }
 }

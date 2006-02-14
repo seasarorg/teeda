@@ -72,6 +72,8 @@ public class MockApplicationImpl extends MockApplication {
     private Map convertersByClass_ = new HashMap();
 
     private Map validators_ = new HashMap();
+    
+    private ValueBinding vb_;
 
     public MockApplicationImpl() {
     }
@@ -280,7 +282,11 @@ public class MockApplicationImpl extends MockApplication {
 
     public ValueBinding createValueBinding(String ref)
             throws ReferenceSyntaxException {
-        return null;
+        if(vb_ != null) {
+            return vb_;
+        }
+        //think bout it....
+        return new MockValueBinding(ref);
     }
 
     public void addSupportedLocale(Locale locale) {
@@ -290,6 +296,10 @@ public class MockApplicationImpl extends MockApplication {
             locales_ = new ArrayList();
             locales_.add(locale);
         }
+    }
+
+    public void setValueBinding(ValueBinding vb) {
+        vb_ = vb;
     }
 
 }
