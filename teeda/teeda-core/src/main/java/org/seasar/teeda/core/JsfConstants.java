@@ -186,6 +186,10 @@ public interface JsfConstants {
 
     public String DISABLED_ATTR = "disabled";
 
+    public String DISABLED_CLASS_ATTR = "disabledClass";
+
+    public String ENABLED_CLASS_ATTR = "enabledClass";
+
     public String ENCTYPE_ATTR = "enctype";
 
     public String FOOTER_CLASS_ATTR = "footerClass";

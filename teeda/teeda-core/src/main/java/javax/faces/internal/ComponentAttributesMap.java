@@ -20,6 +20,7 @@ import java.beans.IntrospectionException;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.io.Serializable;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.HashMap;
@@ -34,6 +35,7 @@ import javax.faces.el.ValueBinding;
 
 /**
  * @author shot
+ * @author manhole
  * 
  * This class might be changed without a previous notice. Please do not use it
  * excluding the JSF specification part.
@@ -185,18 +187,21 @@ public class ComponentAttributesMap implements Map, Serializable {
         }
         try {
             writeMethod.invoke(component_, new Object[] { value });
-        } catch (Exception e) {
-            new FacesException();
+        } catch (IllegalAccessException e) {
+            throw new FacesException(e);
+        } catch (InvocationTargetException e) {
+            throw new FacesException(e.getTargetException());
         }
     }
 
     private Object getComponentProperty(PropertyDescriptor propertyDescriptor) {
-
         Method readMethod = propertyDescriptor.getReadMethod();
         try {
             return readMethod.invoke(component_, EMPTY_ARGS);
-        } catch (Exception e) {
-            throw new FacesException();
+        } catch (IllegalAccessException e) {
+            throw new FacesException(e);
+        } catch (InvocationTargetException e) {
+            throw new FacesException(e.getTargetException());
         }
     }
 

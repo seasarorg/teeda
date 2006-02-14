@@ -16,15 +16,10 @@
 package org.seasar.teeda.core.render.html;
 
 import java.io.IOException;
-import java.util.Iterator;
 
 import javax.faces.component.UIComponent;
-import javax.faces.component.html.HtmlSelectManyListbox;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
-import javax.faces.internal.SelectItemsIterator;
-import javax.faces.model.SelectItem;
-import javax.faces.model.SelectItemGroup;
 
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.util.RendererUtil;
@@ -32,32 +27,12 @@ import org.seasar.teeda.core.util.RendererUtil;
 /**
  * @author manhole
  */
-public class HtmlSelectManyListboxRenderer extends
+public class HtmlSelectManyMenuRenderer extends
         AbstractHtmlSelectManyListboxRenderer {
 
     protected void renderSize(FacesContext context, UIComponent component,
             ResponseWriter writer) throws IOException {
-        final int size = getSize((HtmlSelectManyListbox) component);
-        RendererUtil.renderAttribute(writer, JsfConstants.SIZE_ATTR,
-                new Integer(size));
-    }
-
-    private int getSize(HtmlSelectManyListbox htmlSelectManyListbox) {
-        int size = htmlSelectManyListbox.getSize();
-        if (0 < size) {
-            return size;
-        }
-        size = 0;
-        for (Iterator it = new SelectItemsIterator(htmlSelectManyListbox); it
-                .hasNext();) {
-            SelectItem item = (SelectItem) it.next();
-            if (item instanceof SelectItemGroup) {
-                SelectItemGroup itemGroup = (SelectItemGroup) item;
-                size += itemGroup.getSelectItems().length;
-            }
-            size++;
-        }
-        return size;
+        RendererUtil.renderAttribute(writer, JsfConstants.SIZE_ATTR, "1");
     }
 
 }

@@ -41,7 +41,6 @@ public class ComponentAttributesMapTest extends TestCase {
         ComponentAttributesMap map = new ComponentAttributesMap(component);
         assertEquals("mock", map.get("family"));
         component.setFamily("mock2");
-        map.put("family", component);
         assertEquals("mock2", map.get("family"));
     }
 

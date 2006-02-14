@@ -19,6 +19,8 @@ import java.util.Map;
 
 import javax.faces.component.UIComponent;
 
+import org.seasar.teeda.core.JsfConstants;
+
 /**
  * @author manhole
  */
@@ -45,6 +47,24 @@ public class UIComponentUtil {
             }
         }
         return false;
+    }
+
+    public static boolean isDisabled(UIComponent component) {
+        return getPrimitiveBooleanAttribute(component,
+                JsfConstants.DISABLED_ATTR);
+    }
+
+    public static String getStringAttribute(UIComponent component, String name) {
+        return (String) component.getAttributes().get(name);
+    }
+
+    public static boolean getPrimitiveBooleanAttribute(UIComponent component,
+            String name) {
+        Object value = component.getAttributes().get(name);
+        if (value == null) {
+            return false;
+        }
+        return ((Boolean) value).booleanValue();
     }
 
 }
