@@ -26,13 +26,13 @@ import org.seasar.teeda.core.unit.TeedaTestCase;
 /**
  * @author yone
  */
-public class LoadBundleTest extends TeedaTestCase {
+public class LoadBundleTagTest extends TeedaTestCase {
     
     /**
      * Constructor for LoadBundleTest.
      * @param name
      */
-    public LoadBundleTest(String name) {
+    public LoadBundleTagTest(String name) {
         super(name);
     }
 
