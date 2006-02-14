@@ -25,24 +25,12 @@ import javax.faces.context.ResponseWriter;
 
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.util.RendererUtil;
+import org.seasar.teeda.core.util.UIComponentUtil;
 
 /**
  * @author manhole
  */
 public abstract class AbstractHtmlMessagesRenderer extends AbstractHtmlRenderer {
-
-    protected abstract boolean isTooltip(UIComponent component);
-
-    protected abstract boolean isShowDetail(UIComponent component);
-
-    protected abstract boolean isShowSummary(UIComponent component);
-
-    protected abstract String getTitle(UIComponent component);
-
-    protected abstract String getStyleClass(UIComponent component,
-            Severity severity);
-
-    protected abstract String getStyle(UIComponent component, Severity severity);
 
     protected void renderOneMessage(FacesContext context,
             UIComponent component, FacesMessage facesMassage,
@@ -92,6 +80,70 @@ public abstract class AbstractHtmlMessagesRenderer extends AbstractHtmlRenderer 
         if (startSpan) {
             writer.endElement(JsfConstants.SPAN_ELEM);
         }
+    }
+
+    protected boolean isTooltip(UIComponent component) {
+        return UIComponentUtil.getPrimitiveBooleanAttribute(component,
+                JsfConstants.TOOLTIP_ATTR);
+    }
+
+    protected boolean isShowDetail(UIComponent component) {
+        return UIComponentUtil.getPrimitiveBooleanAttribute(component,
+                JsfConstants.SHOW_DETAIL_ATTR);
+    }
+
+    protected boolean isShowSummary(UIComponent component) {
+        return UIComponentUtil.getPrimitiveBooleanAttribute(component,
+                JsfConstants.SHOW_SUMMARY_ATTR);
+    }
+
+    protected String getTitle(UIComponent component) {
+        return UIComponentUtil.getStringAttribute(component,
+                JsfConstants.TITLE_ATTR);
+    }
+
+    protected String getStyleClass(UIComponent component, Severity severity) {
+        String styleClass = null;
+        if (severity == FacesMessage.SEVERITY_INFO) {
+            styleClass = UIComponentUtil.getStringAttribute(component,
+                    JsfConstants.INFO_CLASS_ATTR);
+        } else if (severity == FacesMessage.SEVERITY_WARN) {
+            styleClass = UIComponentUtil.getStringAttribute(component,
+                    JsfConstants.WARN_CLASS_ATTR);
+        } else if (severity == FacesMessage.SEVERITY_ERROR) {
+            styleClass = UIComponentUtil.getStringAttribute(component,
+                    JsfConstants.ERROR_CLASS_ATTR);
+        } else if (severity == FacesMessage.SEVERITY_FATAL) {
+            styleClass = UIComponentUtil.getStringAttribute(component,
+                    JsfConstants.FATAL_CLASS_ATTR);
+        }
+        if (styleClass == null) {
+            styleClass = UIComponentUtil.getStringAttribute(component,
+                    JsfConstants.STYLE_CLASS_ATTR);
+        }
+        return styleClass;
+    }
+
+    protected String getStyle(UIComponent component, Severity severity) {
+        String style = null;
+        if (severity == FacesMessage.SEVERITY_INFO) {
+            style = UIComponentUtil.getStringAttribute(component,
+                    JsfConstants.INFO_STYLE_ATTR);
+        } else if (severity == FacesMessage.SEVERITY_WARN) {
+            style = UIComponentUtil.getStringAttribute(component,
+                    JsfConstants.WARN_STYLE_ATTR);
+        } else if (severity == FacesMessage.SEVERITY_ERROR) {
+            style = UIComponentUtil.getStringAttribute(component,
+                    JsfConstants.ERROR_STYLE_ATTR);
+        } else if (severity == FacesMessage.SEVERITY_FATAL) {
+            style = UIComponentUtil.getStringAttribute(component,
+                    JsfConstants.FATAL_STYLE_ATTR);
+        }
+        if (style == null) {
+            style = UIComponentUtil.getStringAttribute(component,
+                    JsfConstants.STYLE_ATTR);
+        }
+        return style;
     }
 
 }

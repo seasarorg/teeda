@@ -192,6 +192,14 @@ public interface JsfConstants {
 
     public String ENCTYPE_ATTR = "enctype";
 
+    public String ERROR_CLASS_ATTR = "errorClass";
+
+    public String ERROR_STYLE_ATTR = "errorStyle";
+
+    public String FATAL_CLASS_ATTR = "fatalClass";
+
+    public String FATAL_STYLE_ATTR = "fatalStyle";
+
     public String FOOTER_CLASS_ATTR = "footerClass";
 
     public String FOR_ATTR = "for";
@@ -211,6 +219,10 @@ public interface JsfConstants {
     public String ID_ATTR = "id";
 
     public String IMAGE_ATTR = "image";
+
+    public String INFO_CLASS_ATTR = "infoClass";
+
+    public String INFO_STYLE_ATTR = "infoStyle";
 
     public String ISMAP_ATTR = "ismap";
 
@@ -280,6 +292,10 @@ public interface JsfConstants {
 
     public String SHAPE_ATTR = "shape";
 
+    public String SHOW_SUMMARY_ATTR = "showSummary";
+
+    public String SHOW_DETAIL_ATTR = "showDetail";
+
     public String SIZE_ATTR = "size";
 
     public String SRC_ATTR = "src";
@@ -296,6 +312,8 @@ public interface JsfConstants {
 
     public String TITLE_ATTR = "title";
 
+    public String TOOLTIP_ATTR = "tooltip";
+
     public String TYPE_ATTR = "type";
 
     public String USEMAP_ATTR = "usemap";
@@ -303,6 +321,10 @@ public interface JsfConstants {
     public String VALUE_ATTR = "value";
 
     public String VSPACE_ATTR = "vspace";
+
+    public String WARN_CLASS_ATTR = "warnClass";
+
+    public String WARN_STYLE_ATTR = "warnStyle";
 
     public String WIDTH_ATTR = "width";
 

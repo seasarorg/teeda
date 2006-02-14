@@ -20,7 +20,6 @@ import java.util.Iterator;
 
 import javax.faces.FacesException;
 import javax.faces.application.FacesMessage;
-import javax.faces.application.FacesMessage.Severity;
 import javax.faces.component.UIComponent;
 import javax.faces.component.html.HtmlMessage;
 import javax.faces.context.FacesContext;
@@ -53,73 +52,22 @@ public class HtmlMessageRenderer extends AbstractHtmlMessagesRenderer {
         }
 
         final String clientId = forComponent.getClientId(context);
-
         Iterator it = context.getMessages(clientId);
         if (!it.hasNext()) {
             return;
         }
+
         FacesMessage facesMassage = (FacesMessage) it.next();
-        String idForRender = null;
-        if (RendererUtil.shouldRenderIdAttribute(htmlMessage)) {
-            idForRender = getIdForRender(context, htmlMessage);
-        }
+        String idForRender = getIdForRenderOrNull(context, htmlMessage);
         renderOneMessage(context, htmlMessage, facesMassage, idForRender);
     }
 
-    protected boolean isTooltip(UIComponent component) {
-        HtmlMessage htmlMessage = (HtmlMessage) component;
-        return htmlMessage.isTooltip();
-    }
-
-    protected boolean isShowDetail(UIComponent component) {
-        HtmlMessage htmlMessage = (HtmlMessage) component;
-        return htmlMessage.isShowDetail();
-    }
-
-    protected boolean isShowSummary(UIComponent component) {
-        HtmlMessage htmlMessage = (HtmlMessage) component;
-        return htmlMessage.isShowSummary();
-    }
-
-    protected String getTitle(UIComponent component) {
-        HtmlMessage htmlMessage = (HtmlMessage) component;
-        return htmlMessage.getTitle();
-    }
-
-    protected String getStyleClass(UIComponent component, Severity severity) {
-        HtmlMessage htmlMessage = (HtmlMessage) component;
-        String styleClass = null;
-        if (severity == FacesMessage.SEVERITY_INFO) {
-            styleClass = htmlMessage.getInfoClass();
-        } else if (severity == FacesMessage.SEVERITY_WARN) {
-            styleClass = htmlMessage.getWarnClass();
-        } else if (severity == FacesMessage.SEVERITY_ERROR) {
-            styleClass = htmlMessage.getErrorClass();
-        } else if (severity == FacesMessage.SEVERITY_FATAL) {
-            styleClass = htmlMessage.getFatalClass();
+    private String getIdForRenderOrNull(FacesContext context,
+            HtmlMessage htmlMessage) {
+        if (RendererUtil.shouldRenderIdAttribute(htmlMessage)) {
+            return getIdForRender(context, htmlMessage);
         }
-        if (styleClass == null) {
-            styleClass = htmlMessage.getStyleClass();
-        }
-        return styleClass;
-    }
-
-    protected String getStyle(UIComponent component, Severity severity) {
-        HtmlMessage htmlMessage = (HtmlMessage) component;
-        String style = null;
-        if (severity == FacesMessage.SEVERITY_INFO) {
-            style = htmlMessage.getInfoStyle();
-        } else if (severity == FacesMessage.SEVERITY_WARN) {
-            style = htmlMessage.getWarnStyle();
-        } else if (severity == FacesMessage.SEVERITY_ERROR) {
-            style = htmlMessage.getErrorStyle();
-        } else if (severity == FacesMessage.SEVERITY_FATAL) {
-            style = htmlMessage.getFatalStyle();
-        }
-        if (style == null) {
-            style = htmlMessage.getStyle();
-        }
-        return style;
+        return null;
     }
 
 }

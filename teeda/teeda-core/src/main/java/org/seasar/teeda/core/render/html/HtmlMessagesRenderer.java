@@ -19,7 +19,6 @@ import java.io.IOException;
 import java.util.Iterator;
 
 import javax.faces.application.FacesMessage;
-import javax.faces.application.FacesMessage.Severity;
 import javax.faces.component.UIComponent;
 import javax.faces.component.html.HtmlMessages;
 import javax.faces.context.FacesContext;
@@ -88,62 +87,6 @@ public class HtmlMessagesRenderer extends AbstractHtmlMessagesRenderer {
 
     private boolean isTableLayout(HtmlMessages htmlMessages) {
         return JsfConstants.TABLE_VALUE.equals(htmlMessages.getLayout());
-    }
-
-    protected boolean isTooltip(UIComponent component) {
-        HtmlMessages htmlMessages = (HtmlMessages) component;
-        return htmlMessages.isTooltip();
-    }
-
-    protected boolean isShowDetail(UIComponent component) {
-        HtmlMessages htmlMessages = (HtmlMessages) component;
-        return htmlMessages.isShowDetail();
-    }
-
-    protected boolean isShowSummary(UIComponent component) {
-        HtmlMessages htmlMessages = (HtmlMessages) component;
-        return htmlMessages.isShowSummary();
-    }
-
-    protected String getTitle(UIComponent component) {
-        HtmlMessages htmlMessages = (HtmlMessages) component;
-        return htmlMessages.getTitle();
-    }
-
-    protected String getStyleClass(UIComponent component, Severity severity) {
-        HtmlMessages htmlMessages = (HtmlMessages) component;
-        String styleClass = null;
-        if (severity == FacesMessage.SEVERITY_INFO) {
-            styleClass = htmlMessages.getInfoClass();
-        } else if (severity == FacesMessage.SEVERITY_WARN) {
-            styleClass = htmlMessages.getWarnClass();
-        } else if (severity == FacesMessage.SEVERITY_ERROR) {
-            styleClass = htmlMessages.getErrorClass();
-        } else if (severity == FacesMessage.SEVERITY_FATAL) {
-            styleClass = htmlMessages.getFatalClass();
-        }
-        if (styleClass == null) {
-            styleClass = htmlMessages.getStyleClass();
-        }
-        return styleClass;
-    }
-
-    protected String getStyle(UIComponent component, Severity severity) {
-        HtmlMessages htmlMessages = (HtmlMessages) component;
-        String style = null;
-        if (severity == FacesMessage.SEVERITY_INFO) {
-            style = htmlMessages.getInfoStyle();
-        } else if (severity == FacesMessage.SEVERITY_WARN) {
-            style = htmlMessages.getWarnStyle();
-        } else if (severity == FacesMessage.SEVERITY_ERROR) {
-            style = htmlMessages.getErrorStyle();
-        } else if (severity == FacesMessage.SEVERITY_FATAL) {
-            style = htmlMessages.getFatalStyle();
-        }
-        if (style == null) {
-            style = htmlMessages.getStyle();
-        }
-        return style;
     }
 
 }
