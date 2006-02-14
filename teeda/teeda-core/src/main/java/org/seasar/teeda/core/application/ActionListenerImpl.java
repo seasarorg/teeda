@@ -15,18 +15,21 @@
  */
 package org.seasar.teeda.core.application;
 
+import java.io.IOException;
+
 import javax.faces.component.UICommand;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.el.EvaluationException;
 import javax.faces.el.MethodBinding;
-import javax.faces.el.MethodNotFoundException;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ActionListener;
 
-import org.seasar.teeda.core.exception.ExtendEvaluationException;
-import org.seasar.teeda.core.exception.ExtendMethodNotFoundExceptin;
-import org.seasar.teeda.core.util.MethodBindingUtil;
+import org.seasar.framework.log.Logger;
+import org.seasar.teeda.core.ErrorPageManager;
+import org.seasar.teeda.core.NullErrorPageManagerImpl;
+import org.seasar.teeda.core.util.InvokeUtil;
 import org.seasar.teeda.core.util.NavigationHandlerUtil;
 import org.seasar.teeda.core.util.UIParameterUtil;
 
@@ -35,26 +38,48 @@ import org.seasar.teeda.core.util.UIParameterUtil;
  */
 public class ActionListenerImpl implements ActionListener {
 
+    private static Logger logger = Logger.getLogger(ActionListenerImpl.class);
+
+    private ErrorPageManager errorPageManager_ = new NullErrorPageManagerImpl();
+
     public void processAction(ActionEvent actionEvent)
             throws AbortProcessingException {
         FacesContext context = FacesContext.getCurrentInstance();
         UICommand command = (UICommand) actionEvent.getComponent();
         UIParameterUtil.saveParametersToRequest(command, context);
-        MethodBinding methodBinding = command.getAction();
+        MethodBinding mb = command.getAction();
         String fromAction = null;
-        String outCome = null;
-        if (methodBinding != null) {
-            fromAction = methodBinding.getExpressionString();
+        String outcome = null;
+        if (mb != null) {
+            fromAction = mb.getExpressionString();
             try {
-                outCome = MethodBindingUtil.invoke(methodBinding, context);
-            } catch (MethodNotFoundException e) {
-                throw new ExtendMethodNotFoundExceptin(e, methodBinding);
-            } catch (EvaluationException e) {
-                throw new ExtendEvaluationException(e, methodBinding);
+                outcome = InvokeUtil.invoke(mb, context);
+            } catch (EvaluationException ex) {
+                Throwable cause = ex.getCause();
+                ErrorPageManager manager = getErrorPageManager();
+                try {
+                    ExternalContext extContext = context.getExternalContext();
+                    if (manager.handleException(cause, extContext)) {
+                        context.responseComplete();
+                    } else {
+                        throw ex;
+                    }
+                } catch (IOException ioe) {
+                    logger.log(ioe);
+                    throw ex;
+                }
             }
         }
-        NavigationHandlerUtil.handleNavigation(context, fromAction, outCome);
+        NavigationHandlerUtil.handleNavigation(context, fromAction, outcome);
         context.renderResponse();
+    }
+
+    public ErrorPageManager getErrorPageManager() {
+        return errorPageManager_;
+    }
+
+    public void setErrorPageManager(ErrorPageManager errorPageManager) {
+        errorPageManager_ = errorPageManager;
     }
 
 }

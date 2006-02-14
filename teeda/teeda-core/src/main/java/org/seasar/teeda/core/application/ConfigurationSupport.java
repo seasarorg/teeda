@@ -20,5 +20,7 @@ package org.seasar.teeda.core.application;
  */
 public interface ConfigurationSupport {
 
-    public void addConverterConfiguration(String converterClassName, ConverterConfiguration converterConfig);
+    //TODO add Converter and Component DI support 
+    public void addConverterConfiguration(String converterClassName,
+            ConverterConfiguration converterConfig);
 }
