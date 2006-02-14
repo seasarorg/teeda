@@ -20,6 +20,7 @@ import java.util.Iterator;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.convert.ConverterException;
 import javax.faces.internal.AssertionUtil;
 import javax.faces.render.Renderer;
 
@@ -32,6 +33,13 @@ import org.seasar.teeda.core.util.RenderedComponentIterator;
  */
 public class AbstractHtmlRenderer extends Renderer {
 
+    public Object getConvertedValue(FacesContext context,
+            UIComponent component, Object submittedValue)
+            throws ConverterException {
+        // TODO use converter
+        return super.getConvertedValue(context, component, submittedValue);
+    }
+
     // TODO to change pluggable
     protected String getIdForRender(FacesContext context, UIComponent component) {
         String id = component.getId();
@@ -43,7 +51,7 @@ public class AbstractHtmlRenderer extends Renderer {
 
     protected UIComponent toNullIfNotRendered(UIComponent component) {
         if (component != null && !component.isRendered()) {
-            component = null;
+            return null;
         }
         return component;
     }

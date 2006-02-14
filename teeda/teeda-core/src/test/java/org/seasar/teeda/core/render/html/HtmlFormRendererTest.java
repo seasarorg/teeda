@@ -112,7 +112,6 @@ public class HtmlFormRendererTest extends RendererTest {
         MockFacesContext context = getFacesContext();
         encodeByRenderer(renderer_, context, htmlForm_);
 
-        System.out.println(getResponseText());
         Diff diff = new Diff("<form id=\"AA\" name=\"AA\" method=\"post\""
                 + " accept=\"a\"" + " accept-charset=\"b\"" + " dir=\"c\""
                 + " enctype=\"d\"" + " lang=\"e\"" + " onclick=\"f\""

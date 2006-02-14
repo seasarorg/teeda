@@ -23,14 +23,16 @@ import javax.faces.component.html.HtmlSelectManyCheckbox;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.internal.ArrayIterator;
-import javax.faces.internal.SelectItemGroupsIterator;
+import javax.faces.internal.SelectItemsIterator;
 import javax.faces.model.SelectItem;
 import javax.faces.model.SelectItemGroup;
 
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.core.util.ArrayUtil;
 import org.seasar.teeda.core.util.DecodeUtil;
 import org.seasar.teeda.core.util.RendererUtil;
+import org.seasar.teeda.core.util.ValueHolderUtil;
 
 /**
  * @author manhole
@@ -49,7 +51,7 @@ public class HtmlSelectManyCheckboxRenderer extends AbstractHtmlRenderer {
 
     protected void encodeHtmlSelectManyCheckboxEnd(FacesContext context,
             HtmlSelectManyCheckbox htmlSelectManyCheckbox) throws IOException {
-        Iterator it = new SelectItemGroupsIterator(htmlSelectManyCheckbox);
+        Iterator it = new SelectItemsIterator(htmlSelectManyCheckbox);
         if (!it.hasNext()) {
             return;
         }
@@ -61,7 +63,8 @@ public class HtmlSelectManyCheckboxRenderer extends AbstractHtmlRenderer {
         RendererUtil.renderAttributes(writer, htmlSelectManyCheckbox,
                 JsfConstants.SELECT_TABLE_PASSTHROUGH_ATTRIBUTES);
 
-        Object[] selectedValues = getSelectedValues(htmlSelectManyCheckbox);
+        String[] selectedValues = ValueHolderUtil.getValuesForRender(context,
+                htmlSelectManyCheckbox);
 
         final boolean pageDirectionLayout = isPageDirectionLayout(htmlSelectManyCheckbox);
         if (!pageDirectionLayout) {
@@ -77,7 +80,7 @@ public class HtmlSelectManyCheckboxRenderer extends AbstractHtmlRenderer {
 
     protected void renderSelectItems(FacesContext context,
             HtmlSelectManyCheckbox htmlSelectManyCheckbox,
-            ResponseWriter writer, Iterator it, Object[] selectedValues,
+            ResponseWriter writer, Iterator it, String[] selectedValues,
             final boolean pageDirectionLayout) throws IOException {
 
         while (it.hasNext()) {
@@ -167,27 +170,8 @@ public class HtmlSelectManyCheckboxRenderer extends AbstractHtmlRenderer {
                 .getLayout());
     }
 
-    private boolean isChecked(Object[] selectedValues, final Object value) {
-        for (int i = 0; i < selectedValues.length; i++) {
-            Object o = selectedValues[i];
-            if (value == null) {
-                if (o == null) {
-                    return true;
-                }
-            } else if (value.equals(o)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private Object[] getSelectedValues(
-            HtmlSelectManyCheckbox htmlSelectManyCheckbox) {
-        Object[] v = htmlSelectManyCheckbox.getSelectedValues();
-        if (v == null) {
-            return new Object[0];
-        }
-        return v;
+    private boolean isChecked(String[] selectedValues, final Object value) {
+        return ArrayUtil.contains(selectedValues, value);
     }
 
     public void decode(FacesContext context, UIComponent component) {

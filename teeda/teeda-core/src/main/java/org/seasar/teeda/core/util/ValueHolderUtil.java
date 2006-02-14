@@ -15,6 +15,8 @@
  */
 package org.seasar.teeda.core.util;
 
+import java.lang.reflect.Array;
+
 import javax.faces.component.EditableValueHolder;
 import javax.faces.component.UIComponent;
 import javax.faces.component.ValueHolder;
@@ -46,5 +48,32 @@ public class ValueHolderUtil {
         Converter converter = vh.getConverter();
         return UIValueUtil.getValueAsString(context, component, value,
                 converter);
+    }
+
+    public static String[] getValuesForRender(FacesContext context,
+            UIComponent component) {
+        if (!(component instanceof ValueHolder)) {
+            throw new IllegalArgumentException("component must be ValueHolder");
+        }
+        if (component instanceof EditableValueHolder) {
+            EditableValueHolder evh = (EditableValueHolder) component;
+            Object submittedValue = evh.getSubmittedValue();
+            if (submittedValue instanceof String[]) {
+                return (String[]) submittedValue;
+            }
+        }
+        ValueHolder vh = (ValueHolder) component;
+        Object value = vh.getValue();
+        if (value == null) {
+            return new String[0];
+        }
+        Converter converter = vh.getConverter();
+        final int length = Array.getLength(value);
+        String[] values = new String[length];
+        for (int i = 0; i < length; ++i) {
+            values[i] = UIValueUtil.getValueAsString(context, component, Array
+                    .get(value, i), converter);
+        }
+        return values;
     }
 }

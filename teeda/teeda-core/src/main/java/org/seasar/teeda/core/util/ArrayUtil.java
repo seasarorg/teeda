@@ -61,4 +61,8 @@ public class ArrayUtil {
         return sb.toString();
     }
 
+    public static boolean contains(Object[] array, Object obj) {
+        return -1 < org.seasar.framework.util.ArrayUtil.indexOf(array, obj);
+    }
+
 }

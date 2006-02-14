@@ -31,7 +31,7 @@ public interface JsfConstants {
     public String CORE_PACKAGE_ROOT = "org.seasar.teeda.core";
 
     public String RESOURCE_PACKAGE_ROOT = CORE_PACKAGE_ROOT + "." + "resource";
-    
+
     public String APPLICATION_SCOPE = "applicationScope";
 
     public String COOKIE = "cookie";
@@ -82,11 +82,15 @@ public interface JsfConstants {
 
     public String IMAGE_VALUE = "image";
 
+    public String MULTIPLE_VALUE = "multiple";
+
     public String PASSWORD_VALUE = "password";
 
     public String POST_VALUE = "post";
 
     public String RESET_VALUE = "reset";
+
+    public String SELECTED_VALUE = "selected";
 
     public String TABLE_VALUE = "table";
 
@@ -107,6 +111,12 @@ public interface JsfConstants {
     public String LABEL_ELEM = "label";
 
     public String LI_ELEM = "li";
+
+    public String OPTGROUP_ELEM = "optgroup";
+
+    public String OPTION_ELEM = "option";
+
+    public String SELECT_ELEM = "select";
 
     public String SPAN_ELEM = "span";
 
@@ -200,6 +210,8 @@ public interface JsfConstants {
 
     public String ISMAP_ATTR = "ismap";
 
+    public String LABEL_ATTR = "label";
+
     public String LANG_ATTR = "lang";
 
     public String LONGDESC_ATTR = "longdesc";
@@ -207,6 +219,8 @@ public interface JsfConstants {
     public String MAXLENGTH_ATTR = "maxlength";
 
     public String METHOD_ATTR = "method";
+
+    public String MULTIPLE_ATTR = "multiple";
 
     public String NAME_ATTR = "name";
 
@@ -257,6 +271,8 @@ public interface JsfConstants {
     public String RULES_ATTR = "rules";
 
     public String SCOPE_ATTR = "scope";
+
+    public String SELECTED_ATTR = "selected";
 
     public String SHAPE_ATTR = "shape";
 
@@ -397,6 +413,13 @@ public interface JsfConstants {
 
     public String[] SELECT_TABLE_PASSTHROUGH_ATTRIBUTES = new String[] {
             STYLE_ATTR, STYLE_CLASS_ATTR, BORDER_ATTR };
+
+    public String[] SELECT_ATTRIBUTES = { DATAFLD_ATTR, DATASRC_ATTR,
+            DATAFORMATAS_ATTR, READONLY_ATTR };
+
+    public String[] SELECT_PASSTHROUGH_ATTRIBUTES_WITHOUT_DISABLED = (String[]) ArrayUtil
+            .add(SELECT_ATTRIBUTES,
+                    COMMON_FIELD_PASSTROUGH_ATTRIBUTES_WITHOUT_DISABLED);
 
     public String DEFAULT_RENDERKIT_CLASS = HtmlRenderKitImpl.class.getName();
 

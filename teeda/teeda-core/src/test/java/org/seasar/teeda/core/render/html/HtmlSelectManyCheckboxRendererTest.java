@@ -20,6 +20,7 @@ import javax.faces.component.UISelectItems;
 import javax.faces.component.html.HtmlSelectManyCheckbox;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
+import javax.faces.model.SelectItemGroup;
 import javax.faces.render.Renderer;
 import javax.faces.render.RendererTest;
 
@@ -233,6 +234,39 @@ public class HtmlSelectManyCheckboxRendererTest extends RendererTest {
                 getResponseText());
     }
 
+    public void testEncode_Disabled() throws Exception {
+        // ## Arrange ##
+        htmlSelectManyCheckbox_.setDisabled(true);
+        MockFacesContext context = getFacesContext();
+        {
+            UISelectItem selectItem = new UISelectItem();
+            selectItem.setItemValue("v1");
+            selectItem.setItemLabel("l1");
+            htmlSelectManyCheckbox_.getChildren().add(selectItem);
+        }
+        {
+            UISelectItem selectItem = new UISelectItem();
+            selectItem.setItemValue("v2");
+            selectItem.setItemLabel("l2");
+            htmlSelectManyCheckbox_.getChildren().add(selectItem);
+        }
+
+        // ## Act ##
+        encodeByRenderer(renderer_, context, htmlSelectManyCheckbox_);
+
+        // ## Assert ##
+        assertEquals(
+                "<table>"
+                        + "<tr><td>"
+                        + "<label>"
+                        + "<input type=\"checkbox\" name=\"_id0\" value=\"v1\" disabled=\"disabled\" />"
+                        + "l1</label></td>"
+                        + "<td><label>"
+                        + "<input type=\"checkbox\" name=\"_id0\" value=\"v2\" disabled=\"disabled\" />"
+                        + "l2</label>" + "</td></tr>" + "</table>",
+                getResponseText());
+    }
+
     public void testEncode_LabelClass() throws Exception {
         // ## Arrange ##
         htmlSelectManyCheckbox_.setEnabledClass("ec");
@@ -268,39 +302,6 @@ public class HtmlSelectManyCheckboxRendererTest extends RendererTest {
                 getResponseText());
     }
 
-    public void testEncode_Disabled() throws Exception {
-        // ## Arrange ##
-        htmlSelectManyCheckbox_.setDisabled(true);
-        MockFacesContext context = getFacesContext();
-        {
-            UISelectItem selectItem = new UISelectItem();
-            selectItem.setItemValue("v1");
-            selectItem.setItemLabel("l1");
-            htmlSelectManyCheckbox_.getChildren().add(selectItem);
-        }
-        {
-            UISelectItem selectItem = new UISelectItem();
-            selectItem.setItemValue("v2");
-            selectItem.setItemLabel("l2");
-            htmlSelectManyCheckbox_.getChildren().add(selectItem);
-        }
-
-        // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectManyCheckbox_);
-
-        // ## Assert ##
-        assertEquals(
-                "<table>"
-                        + "<tr><td>"
-                        + "<label>"
-                        + "<input type=\"checkbox\" name=\"_id0\" value=\"v1\" disabled=\"disabled\" />"
-                        + "l1</label></td>"
-                        + "<td><label>"
-                        + "<input type=\"checkbox\" name=\"_id0\" value=\"v2\" disabled=\"disabled\" />"
-                        + "l2</label>" + "</td></tr>" + "</table>",
-                getResponseText());
-    }
-
     public void testEncode_GroupChildren() throws Exception {
         // ## Arrange ##
         MockFacesContext context = getFacesContext();
@@ -310,6 +311,30 @@ public class HtmlSelectManyCheckboxRendererTest extends RendererTest {
             SelectItem item2 = new SelectItem("v2", "l2");
             selectItems.setValue(new SelectItem[] { item1, item2 });
             htmlSelectManyCheckbox_.getChildren().add(selectItems);
+        }
+
+        // ## Act ##
+        encodeByRenderer(renderer_, context, htmlSelectManyCheckbox_);
+
+        // ## Assert ##
+        assertEquals("<table><tr><td>" + "<label>"
+                + "<input type=\"checkbox\" name=\"_id0\" value=\"v1\" />"
+                + "l1</label></td>" + "<td><label>"
+                + "<input type=\"checkbox\" name=\"_id0\" value=\"v2\" />"
+                + "l2</label>" + "</td></tr></table>", getResponseText());
+    }
+
+    public void testEncode_NestedChildren() throws Exception {
+        // ## Arrange ##
+        MockFacesContext context = getFacesContext();
+        {
+            SelectItem item1 = new SelectItem("v1", "l1");
+            SelectItem item2 = new SelectItem("v2", "l2");
+            SelectItemGroup group = new SelectItemGroup("gl");
+            group.setSelectItems(new SelectItem[] { item1, item2 });
+            UISelectItem selectItem = new UISelectItem();
+            selectItem.setValue(group);
+            htmlSelectManyCheckbox_.getChildren().add(selectItem);
         }
 
         // ## Act ##
@@ -376,7 +401,6 @@ public class HtmlSelectManyCheckboxRendererTest extends RendererTest {
                 + " readonly=\"true\"" + " tabindex=\"x\"" + " title=\"y\""
                 + "/>lab</label>" + "</td></tr>" + "</table>",
                 getResponseText());
-        System.out.println(getResponseText());
         assertEquals(diff.toString(), true, diff.identical());
     }
 
