@@ -29,42 +29,43 @@ import org.seasar.framework.xml.SaxHandlerParser;
 import org.seasar.framework.xml.TagHandlerRule;
 import org.seasar.teeda.core.config.faces.element.FacesConfig;
 import org.seasar.teeda.core.config.faces.rule.FacesConfigTagHandlerRule;
+import org.seasar.teeda.core.util.TeedaInputStreamUtil;
 
 /**
  * @author shot
  */
-public abstract class AbstractFacesConfigurator implements FacesConfigurator{
+public abstract class AbstractFacesConfigurator implements FacesConfigurator {
 
     private static final String FACES_CONFIG_1_1 = "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.1//EN";
-    
+
     private static final String FACES_CONFIG_1_0 = "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.0//EN";
-    
+
     private static final String FACES_1_1_DTD_PATH = "org/seasar/teeda/core/resource/web-facesconfig_1_1.dtd";
-    
+
     private static final String FACES_1_0_DTD_PATH = "org/seasar/teeda/core/resource/web-facesconfig_1_0.dtd";
 
     protected ResourceResolver resourceResolver_ = new ClassPathResourceResolver();
 
     protected TagHandlerRule rule_ = new FacesConfigTagHandlerRule();
 
-    public AbstractFacesConfigurator(){
+    public AbstractFacesConfigurator() {
     }
-    
-    public FacesConfig configure(){
+
+    public FacesConfig configure() {
         String path = getPath();
         SaxHandlerParser parser = createSaxHandlerParser();
         InputStream is = resourceResolver_.getInputStream(path);
-        if(is == null){
+        if (is == null) {
             return null;
         }
         try {
             return (FacesConfig) parser.parse(is);
-        }finally {
-            InputStreamUtil.close(is);
+        } finally {
+            TeedaInputStreamUtil.close(is);
         }
     }
-    
-    protected final SaxHandlerParser createSaxHandlerParser(){
+
+    protected final SaxHandlerParser createSaxHandlerParser() {
         final SAXParserFactory factory = SAXParserFactoryUtil.newInstance();
         factory.setValidating(true);
 
@@ -73,27 +74,27 @@ public abstract class AbstractFacesConfigurator implements FacesConfigurator{
         final SaxHandler handler = new SaxHandler(rule_);
         handler.registerDtdPath(FACES_CONFIG_1_1, FACES_1_1_DTD_PATH);
         handler.registerDtdPath(FACES_CONFIG_1_0, FACES_1_0_DTD_PATH);
-        
+
         SaxHandlerParser parser = new SaxHandlerParser(handler, saxParser);
         return parser;
     }
-    
-    public void setResourceResolver(ResourceResolver resourceResolver){
+
+    public void setResourceResolver(ResourceResolver resourceResolver) {
         resourceResolver_ = resourceResolver;
     }
-    
-    public ResourceResolver getResourceResolver(){
-    	return resourceResolver_;
+
+    public ResourceResolver getResourceResolver() {
+        return resourceResolver_;
     }
-    
-    public void setTagHandlerRule(TagHandlerRule rule){
+
+    public void setTagHandlerRule(TagHandlerRule rule) {
         rule_ = rule;
     }
-    
-    public TagHandlerRule getTagHandlerRule(){
-    	return rule_;
+
+    public TagHandlerRule getTagHandlerRule() {
+        return rule_;
     }
-    
+
     protected abstract String getPath();
-    
+
 }

@@ -29,6 +29,7 @@ import org.seasar.teeda.core.config.webapp.element.InitParamElement;
 import org.seasar.teeda.core.config.webapp.element.ServletElement;
 import org.seasar.teeda.core.config.webapp.element.TaglibElement;
 import org.seasar.teeda.core.config.webapp.element.WebappConfig;
+import org.seasar.teeda.core.util.TeedaInputStreamUtil;
 
 /**
  * @author manhole
@@ -45,14 +46,14 @@ public class WebappConfigBuilderImplTest extends TestCase {
         assertEquals(true, contextParams.get(0) instanceof ContextParamElement);
 
         ContextParamElement contextParam = webappConfig
-            .getContextParamElementByParamName("javax.faces.CONFIG_FILES");
+                .getContextParamElementByParamName("javax.faces.CONFIG_FILES");
         assertNotNull(contextParam);
 
         assertEquals("/WEB-INF/faces-config.xml", contextParam.getParamValue());
         assertEquals("javax.faces.CONFIG_FILES", contextParam.getParamName());
 
         assertEquals(".html", webappConfig.getContextParamElementByParamName(
-            "javax.faces.DEFAULT_SUFFIX").getParamValue());
+                "javax.faces.DEFAULT_SUFFIX").getParamValue());
     }
 
     public void testFilter() throws Exception {
@@ -65,13 +66,13 @@ public class WebappConfigBuilderImplTest extends TestCase {
         assertEquals(true, filterElements.get(0) instanceof FilterElement);
 
         FilterElement filter = webappConfig
-            .getFilterElementByFilterName("encodingfilter");
+                .getFilterElementByFilterName("encodingfilter");
         assertNotNull(filter);
         assertEquals("encodingfilter", filter.getFilterName());
         assertEquals("org.seasar.extension.filter.EncodingFilter", filter
-            .getFilterClass());
+                .getFilterClass());
         InitParamElement initParam = filter
-            .getInitParamElementByParamName("encoding");
+                .getInitParamElementByParamName("encoding");
         assertNotNull(initParam);
         assertEquals("encoding", initParam.getParamName());
         assertEquals("UTF-8", initParam.getParamValue());
@@ -87,9 +88,9 @@ public class WebappConfigBuilderImplTest extends TestCase {
         assertEquals(true, servletElements.get(0) instanceof ServletElement);
 
         ServletElement servlet = webappConfig
-            .getServletElementByServletName("s2servlet");
+                .getServletElementByServletName("s2servlet");
         InitParamElement initParam = servlet
-            .getInitParamElementByParamName("debug");
+                .getInitParamElementByParamName("debug");
         assertNotNull(initParam);
         assertEquals("debug", initParam.getParamName());
         assertEquals("true", initParam.getParamValue());
@@ -112,15 +113,17 @@ public class WebappConfigBuilderImplTest extends TestCase {
         // ## Arrange ##
         WebappConfigBuilder builder = new WebappConfigBuilderImpl();
         InputStream is = ResourceUtil.getResourceAsStream(getClass()
-            .getPackage().getName().replace('.', '/')
-            + "/" + webXml);
+                .getPackage().getName().replace('.', '/')
+                + "/" + webXml);
 
         // ## Act ##
-        WebappConfig webappConfig = builder.build(is);
-        is.close();
-
-        assertNotNull(webappConfig);
-        return webappConfig;
+        try {
+            WebappConfig webappConfig = builder.build(is);
+            assertNotNull(webappConfig);
+            return webappConfig;
+        } finally {
+            TeedaInputStreamUtil.close(is);
+        }
     }
 
 }
