@@ -25,7 +25,7 @@ import org.seasar.teeda.core.exception.NoEditableValueHolderRuntimeException;
 
 /**
  * @author higa
- * 
+ * @author manhole
  */
 public class DecodeUtil {
 
@@ -43,26 +43,33 @@ public class DecodeUtil {
             throw new NoEditableValueHolderRuntimeException(component
                     .getClass());
         }
+        EditableValueHolder evh = (EditableValueHolder) component;
         Map paramMap = context.getExternalContext().getRequestParameterMap();
         String clientId = component.getClientId(context);
         if (paramMap.containsKey(clientId)) {
             Object submittedValue = paramMap.get(clientId);
-            ((EditableValueHolder) component).setSubmittedValue(submittedValue);
+            evh.setSubmittedValue(submittedValue);
         }
     }
 
     public static void decodeMany(FacesContext context, UIComponent component) {
+        if (context == null) {
+            throw new NullPointerException("context");
+        }
+        if (component == null) {
+            throw new NullPointerException("component");
+        }
         if (!(component instanceof EditableValueHolder)) {
             throw new NoEditableValueHolderRuntimeException(component
                     .getClass());
         }
         EditableValueHolder evh = (EditableValueHolder) component;
-        Map reqParam = context.getExternalContext()
+        Map paramValuesMap = context.getExternalContext()
                 .getRequestParameterValuesMap();
         String clientId = component.getClientId(context);
         String[] value = null;
-        if (reqParam.containsKey(clientId)) {
-            value = (String[]) reqParam.get(clientId);
+        if (paramValuesMap.containsKey(clientId)) {
+            value = (String[]) paramValuesMap.get(clientId);
         }
         if (value != null) {
             evh.setSubmittedValue(value);

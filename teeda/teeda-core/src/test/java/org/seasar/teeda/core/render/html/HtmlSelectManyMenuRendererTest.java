@@ -27,7 +27,6 @@ import javax.faces.render.RendererTest;
 import junitx.framework.ArrayAssert;
 
 import org.custommonkey.xmlunit.Diff;
-import org.seasar.framework.mock.servlet.MockHttpServletRequest;
 import org.seasar.teeda.core.mock.MockFacesContext;
 
 /**
@@ -373,10 +372,8 @@ public class HtmlSelectManyMenuRendererTest extends RendererTest {
         htmlSelectManyMenu_.setClientId("keyA");
 
         MockFacesContext context = getFacesContext();
-        MockHttpServletRequest mockHttpServletRequest = context
-                .getMockExternalContext().getMockHttpServletRequest();
-        mockHttpServletRequest.addParameter("keyA", new String[] { "a", "b",
-                "c" });
+        context.getExternalContext().getRequestParameterValuesMap().put("keyA",
+                new String[] { "a", "b", "c" });
 
         // ## Act ##
         renderer_.decode(context, htmlSelectManyMenu_);

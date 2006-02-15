@@ -17,6 +17,7 @@ package org.seasar.teeda.core.util;
 
 import javax.faces.component.UIComponent;
 import javax.faces.component.html.HtmlInputText;
+import javax.faces.internal.UIDefaultAttribute;
 
 import junit.framework.TestCase;
 
@@ -72,8 +73,17 @@ public class UIComponentUtilTest extends TestCase {
     public void testGetPrimitiveBooleanAttribute() throws Exception {
         HtmlInputText component = new HtmlInputText();
         component.getAttributes().put("readonly", Boolean.TRUE);
-        assertEquals(true, UIComponentUtil.getPrimitiveBooleanAttribute(component,
-                "readonly"));
+        assertEquals(true, UIComponentUtil.getPrimitiveBooleanAttribute(
+                component, "readonly"));
+    }
+
+    public void testGetPrimitiveIntAttribute() throws Exception {
+        HtmlInputText component = new HtmlInputText();
+        assertEquals(UIDefaultAttribute.DEFAULT_INT, UIComponentUtil
+                .getPrimitiveIntAttribute(component, "size"));
+        component.setSize(321);
+        assertEquals(321, UIComponentUtil.getPrimitiveIntAttribute(component,
+                "size"));
     }
 
 }

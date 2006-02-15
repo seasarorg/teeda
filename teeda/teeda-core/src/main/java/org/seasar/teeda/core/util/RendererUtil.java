@@ -20,6 +20,7 @@ import java.io.IOException;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.ResponseWriter;
+import javax.faces.internal.UIDefaultAttribute;
 
 import org.seasar.framework.util.IntegerConversionUtil;
 import org.seasar.teeda.core.JsfConstants;
@@ -100,10 +101,12 @@ public class RendererUtil {
             return true;
         }
         if (value instanceof Boolean) {
-            return ((Boolean) value).booleanValue() == false;
+            return UIDefaultAttribute.isDefaultBoolean(((Boolean) value)
+                    .booleanValue());
         }
         if (value instanceof Integer) {
-            return ((Integer) value).intValue() == Integer.MIN_VALUE;
+            return UIDefaultAttribute
+                    .isDefaultInt(((Integer) value).intValue());
         }
 
         return false;
@@ -135,7 +138,7 @@ public class RendererUtil {
         renderAttribute(writer, JsfConstants.DISABLED_ATTR,
                 JsfConstants.DISABLED_VALUE);
     }
-    
+
     // TODO selected selected="true"
 
 }

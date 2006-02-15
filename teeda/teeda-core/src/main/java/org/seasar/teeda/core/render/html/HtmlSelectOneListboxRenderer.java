@@ -21,17 +21,30 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
-import org.seasar.teeda.core.JsfConstants;
-import org.seasar.teeda.core.util.RendererUtil;
+import org.seasar.teeda.core.util.DecodeUtil;
+import org.seasar.teeda.core.util.ValueHolderUtil;
 
 /**
  * @author manhole
  */
-public class HtmlSelectManyMenuRenderer extends HtmlSelectManyListboxRenderer {
+public class HtmlSelectOneListboxRenderer extends HtmlSelectManyListboxRenderer {
 
-    protected void renderSize(FacesContext context, UIComponent component,
+    protected void renderMultiple(FacesContext context, UIComponent component,
             ResponseWriter writer) throws IOException {
-        RendererUtil.renderAttribute(writer, JsfConstants.SIZE_ATTR, "1");
+    }
+
+    protected String[] getValuesForRender(FacesContext context,
+            UIComponent component) {
+        String value = ValueHolderUtil.getValueForRender(context, component);
+        if (value == null) {
+            return new String[] {};
+        }
+        return new String[] { value };
+    }
+
+    public void decode(FacesContext context, UIComponent component) {
+        assertNotNull(context, component);
+        DecodeUtil.decode(context, component);
     }
 
 }

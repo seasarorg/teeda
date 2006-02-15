@@ -13,25 +13,25 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.core.render.html;
+package javax.faces.internal;
 
-import java.io.IOException;
-
-import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
-import javax.faces.context.ResponseWriter;
-
-import org.seasar.teeda.core.JsfConstants;
-import org.seasar.teeda.core.util.RendererUtil;
+import junit.framework.TestCase;
 
 /**
  * @author manhole
  */
-public class HtmlSelectManyMenuRenderer extends HtmlSelectManyListboxRenderer {
+public class UIDefaultAttributeTest extends TestCase {
 
-    protected void renderSize(FacesContext context, UIComponent component,
-            ResponseWriter writer) throws IOException {
-        RendererUtil.renderAttribute(writer, JsfConstants.SIZE_ATTR, "1");
+    public void testIsDefaultInt() throws Exception {
+        assertEquals(true, UIDefaultAttribute.isDefaultInt(Integer.MIN_VALUE));
+        assertEquals(false, UIDefaultAttribute
+                .isDefaultInt(Integer.MIN_VALUE + 1));
+        assertEquals(false, UIDefaultAttribute.isDefaultInt(0));
+    }
+
+    public void testIsDefaultBoolean() throws Exception {
+        assertEquals(true, UIDefaultAttribute.isDefaultBoolean(false));
+        assertEquals(false, UIDefaultAttribute.isDefaultBoolean(true));
     }
 
 }

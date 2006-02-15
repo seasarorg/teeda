@@ -67,4 +67,13 @@ public class UIComponentUtil {
         return ((Boolean) value).booleanValue();
     }
 
+    public static int getPrimitiveIntAttribute(UIComponent component,
+            String name) {
+        Object value = component.getAttributes().get(name);
+        if (value == null) {
+            return 0;
+        }
+        return ((Integer) value).intValue();
+    }
+
 }

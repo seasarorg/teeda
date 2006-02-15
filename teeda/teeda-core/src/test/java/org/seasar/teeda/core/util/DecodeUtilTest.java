@@ -117,4 +117,33 @@ public class DecodeUtilTest extends TestCase {
         }
     }
 
+    public void testDecodeMany_WithNullContext() throws Exception {
+        try {
+            DecodeUtil.decodeMany(null,
+                    new MockUIComponentBaseWithEditableValueHolder());
+            fail();
+        } catch (NullPointerException npe) {
+            ExceptionAssert.assertMessageExist(npe);
+        }
+    }
+
+    public void testDecodeMany_WithNullComponent() throws Exception {
+        try {
+            DecodeUtil.decodeMany(new NullFacesContext(), null);
+            fail();
+        } catch (NullPointerException npe) {
+            ExceptionAssert.assertMessageExist(npe);
+        }
+    }
+
+    public void testDecodeMany_WithNoEditableValueHolder() throws Exception {
+        try {
+            DecodeUtil
+                    .decodeMany(new NullFacesContext(), new NullUIComponent());
+            fail();
+        } catch (NoEditableValueHolderRuntimeException expected) {
+            ExceptionAssert.assertMessageExist(expected);
+        }
+    }
+
 }

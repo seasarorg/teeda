@@ -18,6 +18,7 @@ package javax.faces.component.html;
 import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
+import javax.faces.internal.UIDefaultAttribute;
 
 /**
  * @author shot
@@ -28,13 +29,13 @@ public class HtmlInputText extends UIInput {
 
     private static final String DEFAULT_RENDERER_TYPE = "javax.faces.Text";
 
-    private static final boolean DEFAULT_DISABLED = false;
+    private static final boolean DEFAULT_DISABLED = UIDefaultAttribute.DEFAULT_BOOLEAN;
 
-    private static final int DEFAULT_MAXLENGTH = Integer.MIN_VALUE;
+    private static final int DEFAULT_MAXLENGTH = UIDefaultAttribute.DEFAULT_INT;
 
-    private static final boolean DEFAULT_READONLY = false;
+    private static final boolean DEFAULT_READONLY = UIDefaultAttribute.DEFAULT_BOOLEAN;
 
-    private static final int DEFAULT_SIZE = Integer.MIN_VALUE;
+    private static final int DEFAULT_SIZE = UIDefaultAttribute.DEFAULT_INT;
 
     private String accesskey_ = null;
 

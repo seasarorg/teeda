@@ -83,7 +83,7 @@ public class RuntimeClassUtil {
     private static long counter_;
 
     static Object createInstance(final Class targetClass) {
-        final ClassPool cp = ClassPoolUtil.getClassPool();
+        final ClassPool cp = ClassPoolUtil.getClassPool(targetClass);
         try {
             final CtClass cc = cp.get(targetClass.getName());
             final String enhancedClassName = targetClass.getName()
