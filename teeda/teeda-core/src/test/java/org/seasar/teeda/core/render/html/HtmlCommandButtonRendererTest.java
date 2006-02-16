@@ -172,7 +172,7 @@ public class HtmlCommandButtonRendererTest extends RendererTest {
         Diff diff = new Diff(
                 "<input type=\"reset\" id=\"A\" name=\"A\" value=\"B\""
                         + " accesskey=\"a\"" + " alt=\"b\"" + " dir=\"c\""
-                        + " disabled=\"true\"" + " lang=\"f\""
+                        + " disabled=\"disabled\"" + " lang=\"f\""
                         + " onblur=\"g\"" + " onchange=\"h\""
                         + " onclick=\"i\"" + " ondblclick=\"j\""
                         + " onfocus=\"k\"" + " onkeydown=\"l\""

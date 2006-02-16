@@ -142,11 +142,8 @@ public class HtmlSelectManyListboxRenderer extends AbstractHtmlRenderer {
                     RendererUtil.renderAttribute(writer,
                             JsfConstants.CLASS_ATTR, labelClass);
                 }
-
-                if (ArrayUtil.contains(values, value)) {
-                    RendererUtil.renderAttribute(writer,
-                            JsfConstants.SELECTED_ATTR,
-                            JsfConstants.SELECTED_VALUE);
+                if (isSelected(values, value)) {
+                    RendererUtil.renderSelectedAttribute(writer);
                 }
                 if (selectItem.isDisabled()) {
                     RendererUtil.renderDisabledAttribute(writer);
@@ -157,14 +154,8 @@ public class HtmlSelectManyListboxRenderer extends AbstractHtmlRenderer {
         }
     }
 
-    protected String getLabelStyleClass(UIComponent component, boolean disabled) {
-        if (disabled) {
-            return UIComponentUtil.getStringAttribute(component,
-                    JsfConstants.DISABLED_CLASS_ATTR);
-        } else {
-            return UIComponentUtil.getStringAttribute(component,
-                    JsfConstants.ENABLED_CLASS_ATTR);
-        }
+    private boolean isSelected(String[] values, final Object value) {
+        return ArrayUtil.contains(values, value);
     }
 
     public void decode(FacesContext context, UIComponent component) {

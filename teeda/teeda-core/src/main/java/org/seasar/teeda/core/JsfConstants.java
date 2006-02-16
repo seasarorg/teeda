@@ -70,13 +70,9 @@ public interface JsfConstants {
 
     public String CHECKBOX_VALUE = "checkbox";
 
-    public String CHECKED_VALUE = "checked";
-
     public String COLGROUP_VALUE = "colgroup";
 
     public String COL_VALUE = "col";
-
-    public String DISABLED_VALUE = "disabled";
 
     public String HIDDEN_VALUE = "hidden";
 
@@ -88,9 +84,9 @@ public interface JsfConstants {
 
     public String POST_VALUE = "post";
 
-    public String RESET_VALUE = "reset";
+    public String RADIO_VALUE = "radio";
 
-    public String SELECTED_VALUE = "selected";
+    public String RESET_VALUE = "reset";
 
     public String TABLE_VALUE = "table";
 
@@ -227,6 +223,8 @@ public interface JsfConstants {
     public String ISMAP_ATTR = "ismap";
 
     public String LABEL_ATTR = "label";
+
+    public String LAYOUT_ATTR = "layout";
 
     public String LANG_ATTR = "lang";
 

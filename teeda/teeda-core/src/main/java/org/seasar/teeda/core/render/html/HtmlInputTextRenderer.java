@@ -56,8 +56,7 @@ public class HtmlInputTextRenderer extends AbstractHtmlRenderer {
                 .getValueForRender(context, htmlInputText);
         RendererUtil.renderAttribute(writer, JsfConstants.VALUE_ATTR, value);
         if (htmlInputText.isDisabled()) {
-            RendererUtil.renderAttribute(writer, JsfConstants.DISABLED_ATTR,
-                    Boolean.TRUE);
+            RendererUtil.renderDisabledAttribute(writer);
         }
         RendererUtil.renderAttributes(writer, htmlInputText,
                 JsfConstants.INPUT_PASSTHROUGH_ATTRIBUTES_WITHOUT_DISABLED);

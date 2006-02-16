@@ -32,6 +32,7 @@ import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.util.DecodeUtil;
 import org.seasar.teeda.core.util.RendererUtil;
+import org.seasar.teeda.core.util.UIComponentUtil;
 import org.seasar.teeda.core.util.ValueHolderUtil;
 
 /**
@@ -45,12 +46,12 @@ public class HtmlSelectManyCheckboxRenderer extends AbstractHtmlRenderer {
         if (!component.isRendered()) {
             return;
         }
-        encodeHtmlSelectManyCheckboxEnd(context,
-                (HtmlSelectManyCheckbox) component);
+        encodeHtmlSelectManyCheckboxEnd(context, component);
     }
 
     protected void encodeHtmlSelectManyCheckboxEnd(FacesContext context,
-            HtmlSelectManyCheckbox htmlSelectManyCheckbox) throws IOException {
+            UIComponent htmlSelectManyCheckbox) throws IOException {
+
         Iterator it = new SelectItemsIterator(htmlSelectManyCheckbox);
         if (!it.hasNext()) {
             return;
@@ -63,7 +64,7 @@ public class HtmlSelectManyCheckboxRenderer extends AbstractHtmlRenderer {
         RendererUtil.renderAttributes(writer, htmlSelectManyCheckbox,
                 JsfConstants.SELECT_TABLE_PASSTHROUGH_ATTRIBUTES);
 
-        String[] selectedValues = ValueHolderUtil.getValuesForRender(context,
+        String[] selectedValues = getValuesForRender(context,
                 htmlSelectManyCheckbox);
 
         final boolean pageDirectionLayout = isPageDirectionLayout(htmlSelectManyCheckbox);
@@ -78,9 +79,15 @@ public class HtmlSelectManyCheckboxRenderer extends AbstractHtmlRenderer {
         writer.endElement(JsfConstants.TABLE_ELEM);
     }
 
+    protected String[] getValuesForRender(FacesContext context,
+            UIComponent htmlSelectManyCheckbox) {
+        return ValueHolderUtil.getValuesForRender(context,
+                htmlSelectManyCheckbox);
+    }
+
     protected void renderSelectItems(FacesContext context,
-            HtmlSelectManyCheckbox htmlSelectManyCheckbox,
-            ResponseWriter writer, Iterator it, String[] selectedValues,
+            UIComponent htmlSelectManyCheckbox, ResponseWriter writer,
+            Iterator it, String[] selectedValues,
             final boolean pageDirectionLayout) throws IOException {
 
         while (it.hasNext()) {
@@ -108,45 +115,8 @@ public class HtmlSelectManyCheckboxRenderer extends AbstractHtmlRenderer {
                 }
                 writer.endElement(JsfConstants.TABLE_ELEM);
             } else {
-                writer.startElement(JsfConstants.LABEL_ELEM,
-                        htmlSelectManyCheckbox);
-                final boolean disabled = htmlSelectManyCheckbox.isDisabled()
-                        || selectItem.isDisabled();
-                final String labelClass = getLabelStyleClass(
-                        htmlSelectManyCheckbox, disabled);
-                if (labelClass != null) {
-                    RendererUtil.renderAttribute(writer,
-                            JsfConstants.CLASS_ATTR, labelClass);
-                }
-
-                writer.startElement(JsfConstants.INPUT_ELEM,
-                        htmlSelectManyCheckbox);
-                RendererUtil.renderAttribute(writer, JsfConstants.TYPE_ATTR,
-                        JsfConstants.CHECKBOX_VALUE);
-                RendererUtil.renderAttribute(writer, JsfConstants.NAME_ATTR,
-                        htmlSelectManyCheckbox.getClientId(context));
-                final Object value = selectItem.getValue();
-                RendererUtil.renderAttribute(writer, JsfConstants.VALUE_ATTR,
-                        value);
-                RendererUtil
-                        .renderAttributes(
-                                writer,
-                                htmlSelectManyCheckbox,
-                                JsfConstants.INPUT_PASSTHROUGH_ATTRIBUTES_WITHOUT_DISABLED_AND_STYLE);
-
-                if (isChecked(selectedValues, value)) {
-                    RendererUtil.renderCheckedAttribute(writer);
-                }
-                if (disabled) {
-                    RendererUtil.renderDisabledAttribute(writer);
-                }
-                writer.endElement(JsfConstants.INPUT_ELEM);
-
-                final String label = selectItem.getLabel();
-                if (!StringUtil.isEmpty(label)) {
-                    writer.writeText(label, null);
-                }
-                writer.endElement(JsfConstants.LABEL_ELEM);
+                renderSelectItem(context, htmlSelectManyCheckbox, writer,
+                        selectedValues, selectItem);
             }
             writer.endElement(JsfConstants.TD_ELEM);
             if (pageDirectionLayout) {
@@ -155,34 +125,71 @@ public class HtmlSelectManyCheckboxRenderer extends AbstractHtmlRenderer {
         }
     }
 
-    private String getLabelStyleClass(
-            HtmlSelectManyCheckbox htmlSelectManyCheckbox, boolean disabled) {
-        if (disabled) {
-            return htmlSelectManyCheckbox.getDisabledClass();
-        } else {
-            return htmlSelectManyCheckbox.getEnabledClass();
+    protected void renderSelectItem(FacesContext context,
+            UIComponent htmlSelectManyCheckbox, ResponseWriter writer,
+            String[] selectedValues, final SelectItem selectItem)
+            throws IOException {
+
+        writer.startElement(JsfConstants.LABEL_ELEM, htmlSelectManyCheckbox);
+        final boolean disabled = UIComponentUtil
+                .isDisabled(htmlSelectManyCheckbox)
+                || selectItem.isDisabled();
+        final String labelClass = getLabelStyleClass(htmlSelectManyCheckbox,
+                disabled);
+        if (labelClass != null) {
+            RendererUtil.renderAttribute(writer, JsfConstants.CLASS_ATTR,
+                    labelClass);
         }
+
+        renderInputElement(context, htmlSelectManyCheckbox, writer,
+                selectedValues, selectItem, disabled);
+
+        final String label = selectItem.getLabel();
+        if (!StringUtil.isEmpty(label)) {
+            writer.writeText(label, null);
+        }
+        writer.endElement(JsfConstants.LABEL_ELEM);
     }
 
-    private boolean isPageDirectionLayout(
-            HtmlSelectManyCheckbox htmlSelectManyCheckbox) {
-        return JsfConstants.PAGE_DIRECTION_ATTR.equals(htmlSelectManyCheckbox
-                .getLayout());
+    protected void renderInputElement(FacesContext context,
+            UIComponent htmlSelectManyCheckbox, ResponseWriter writer,
+            String[] selectedValues, final SelectItem selectItem,
+            final boolean disabled) throws IOException {
+
+        writer.startElement(JsfConstants.INPUT_ELEM, htmlSelectManyCheckbox);
+        RendererUtil.renderAttribute(writer, JsfConstants.TYPE_ATTR,
+                JsfConstants.CHECKBOX_VALUE);
+        RendererUtil.renderAttribute(writer, JsfConstants.NAME_ATTR,
+                htmlSelectManyCheckbox.getClientId(context));
+        final Object value = selectItem.getValue();
+        RendererUtil.renderAttribute(writer, JsfConstants.VALUE_ATTR, value);
+        RendererUtil
+                .renderAttributes(
+                        writer,
+                        htmlSelectManyCheckbox,
+                        JsfConstants.INPUT_PASSTHROUGH_ATTRIBUTES_WITHOUT_DISABLED_AND_STYLE);
+        if (isChecked(selectedValues, value)) {
+            RendererUtil.renderCheckedAttribute(writer);
+        }
+        if (disabled) {
+            RendererUtil.renderDisabledAttribute(writer);
+        }
+        writer.endElement(JsfConstants.INPUT_ELEM);
     }
 
-    private boolean isChecked(String[] selectedValues, final Object value) {
+    protected boolean isPageDirectionLayout(UIComponent htmlSelectManyCheckbox) {
+        return JsfConstants.PAGE_DIRECTION_ATTR.equals(UIComponentUtil
+                .getStringAttribute(htmlSelectManyCheckbox,
+                        JsfConstants.LAYOUT_ATTR));
+    }
+
+    protected boolean isChecked(String[] selectedValues, final Object value) {
         return ArrayUtil.contains(selectedValues, value);
     }
 
     public void decode(FacesContext context, UIComponent component) {
         assertNotNull(context, component);
-        decodeHtmlSelectManyCheckbox(context,
-                (HtmlSelectManyCheckbox) component);
-    }
-
-    protected void decodeHtmlSelectManyCheckbox(FacesContext context,
-            HtmlSelectManyCheckbox htmlSelectManyCheckbox) {
-        DecodeUtil.decodeMany(context, htmlSelectManyCheckbox);
+        DecodeUtil.decodeMany(context, ((HtmlSelectManyCheckbox) component));
     }
 
 }

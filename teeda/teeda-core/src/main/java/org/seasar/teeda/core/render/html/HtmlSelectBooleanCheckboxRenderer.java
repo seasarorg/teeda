@@ -59,7 +59,7 @@ public class HtmlSelectBooleanCheckboxRenderer extends AbstractHtmlRenderer {
                 Boolean.TRUE);
         String value = ValueHolderUtil.getValueForRender(context,
                 htmlSelectBooleanCheckbox);
-        if ("true".equalsIgnoreCase(value)) {
+        if (isChecked(value)) {
             RendererUtil.renderCheckedAttribute(writer);
         }
         if (htmlSelectBooleanCheckbox.isDisabled()) {
@@ -70,6 +70,10 @@ public class HtmlSelectBooleanCheckboxRenderer extends AbstractHtmlRenderer {
         writer.endElement(JsfConstants.INPUT_ELEM);
     }
 
+    private boolean isChecked(String value) {
+        return "true".equalsIgnoreCase(value);
+    }
+
     public void decode(FacesContext context, UIComponent component) {
         assertNotNull(context, component);
         decodeHtmlSelectBooleanCheckbox(context,
@@ -78,18 +82,24 @@ public class HtmlSelectBooleanCheckboxRenderer extends AbstractHtmlRenderer {
 
     protected void decodeHtmlSelectBooleanCheckbox(FacesContext context,
             HtmlSelectBooleanCheckbox htmlSelectBooleanCheckbox) {
+        if (isChecked(context, htmlSelectBooleanCheckbox)) {
+            htmlSelectBooleanCheckbox
+                    .setSubmittedValue(Boolean.TRUE.toString());
+        } else {
+            htmlSelectBooleanCheckbox.setSubmittedValue(Boolean.FALSE
+                    .toString());
+        }
+    }
+
+    private boolean isChecked(FacesContext context, UIComponent component) {
         Map reqParam = context.getExternalContext().getRequestParameterMap();
-        String clientId = htmlSelectBooleanCheckbox.getClientId(context);
+        String clientId = component.getClientId(context);
         if (reqParam.containsKey(clientId)) {
             String value = (String) reqParam.get(clientId);
-            if ("on".equalsIgnoreCase(value) || "yes".equalsIgnoreCase(value)
-                    || "true".equalsIgnoreCase(value)) {
-                htmlSelectBooleanCheckbox.setSubmittedValue(Boolean.TRUE
-                        .toString());
-                return;
-            }
+            return "on".equalsIgnoreCase(value)
+                    || "yes".equalsIgnoreCase(value) || isChecked(value);
         }
-        htmlSelectBooleanCheckbox.setSubmittedValue(Boolean.FALSE.toString());
+        return false;
     }
 
 }

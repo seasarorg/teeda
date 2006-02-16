@@ -144,7 +144,7 @@ public class HtmlInputSecretRendererTest extends RendererTest {
         Diff diff = new Diff(
                 "<input type=\"password\" id=\"Aa\" name=\"Aa\" value=\"\""
                         + " accesskey=\"a\"" + " alt=\"b\"" + " dir=\"c\""
-                        + " disabled=\"true\"" + " lang=\"e\""
+                        + " disabled=\"disabled\"" + " lang=\"e\""
                         + " maxlength=\"5\"" + " onblur=\"g\""
                         + " onchange=\"h\"" + " onclick=\"i\""
                         + " ondblclick=\"j\"" + " onfocus=\"k\""

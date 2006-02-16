@@ -127,18 +127,24 @@ public class RendererUtil {
         }
     }
 
+    // checkbox, radio
     public static void renderCheckedAttribute(ResponseWriter writer)
             throws IOException {
         renderAttribute(writer, JsfConstants.CHECKED_ATTR,
-                JsfConstants.CHECKED_VALUE);
+                JsfConstants.CHECKED_ATTR);
     }
 
     public static void renderDisabledAttribute(ResponseWriter writer)
             throws IOException {
         renderAttribute(writer, JsfConstants.DISABLED_ATTR,
-                JsfConstants.DISABLED_VALUE);
+                JsfConstants.DISABLED_ATTR);
     }
 
-    // TODO selected selected="true"
+    // select/option
+    public static void renderSelectedAttribute(ResponseWriter writer)
+            throws IOException {
+        renderAttribute(writer, JsfConstants.SELECTED_ATTR,
+                JsfConstants.SELECTED_ATTR);
+    }
 
 }

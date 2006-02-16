@@ -52,8 +52,7 @@ public class HtmlInputTextareaRenderer extends AbstractHtmlRenderer {
         RendererUtil.renderAttributes(writer, htmlInputTextarea,
                 JsfConstants.TEXTAREA_PASSTHROUGH_ATTRIBUTES_WITHOUT_DISABLED);
         if (htmlInputTextarea.isDisabled()) {
-            RendererUtil.renderAttribute(writer, JsfConstants.DISABLED_ATTR,
-                    Boolean.TRUE);
+            RendererUtil.renderDisabledAttribute(writer);
         }
 
         String value = ValueHolderUtil.getValueForRender(context,

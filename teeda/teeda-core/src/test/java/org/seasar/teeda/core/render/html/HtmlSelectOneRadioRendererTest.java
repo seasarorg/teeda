@@ -17,39 +17,38 @@ package org.seasar.teeda.core.render.html;
 
 import javax.faces.component.UISelectItem;
 import javax.faces.component.UISelectItems;
-import javax.faces.component.html.HtmlSelectManyCheckbox;
+import javax.faces.component.html.HtmlSelectOneRadio;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.faces.model.SelectItemGroup;
 import javax.faces.render.Renderer;
 import javax.faces.render.RendererTest;
 
-import junitx.framework.ArrayAssert;
-
 import org.custommonkey.xmlunit.Diff;
+import org.seasar.framework.mock.servlet.MockHttpServletRequest;
 import org.seasar.teeda.core.mock.MockFacesContext;
 
 /**
  * @author manhole
  */
-public class HtmlSelectManyCheckboxRendererTest extends RendererTest {
+public class HtmlSelectOneRadioRendererTest extends RendererTest {
 
-    private HtmlSelectManyCheckboxRenderer renderer_;
+    private HtmlSelectOneRadioRenderer renderer_;
 
-    private MockHtmlSelectManyCheckbox htmlSelectManyCheckbox_;
+    private MockHtmlSelectOneRadio htmlSelectOneRadio_;
 
     protected void setUp() throws Exception {
         super.setUp();
-        renderer_ = createHtmlSelectManyCheckboxRenderer();
-        htmlSelectManyCheckbox_ = new MockHtmlSelectManyCheckbox();
-        htmlSelectManyCheckbox_.setRenderer(renderer_);
+        renderer_ = createHtmlSelectOneRadioRenderer();
+        htmlSelectOneRadio_ = new MockHtmlSelectOneRadio();
+        htmlSelectOneRadio_.setRenderer(renderer_);
     }
 
     public void testEncode_NoChild() throws Exception {
         FacesContext context = getFacesContext();
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectManyCheckbox_);
+        encodeByRenderer(renderer_, context, htmlSelectOneRadio_);
 
         // ## Assert ##
         assertEquals("", getResponseText());
@@ -57,17 +56,17 @@ public class HtmlSelectManyCheckboxRendererTest extends RendererTest {
 
     public void testEncode_RenderFalse() throws Exception {
         // ## Arrange ##
-        htmlSelectManyCheckbox_.setRendered(false);
+        htmlSelectOneRadio_.setRendered(false);
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("val");
             selectItem.setItemLabel("lab");
-            htmlSelectManyCheckbox_.getChildren().add(selectItem);
+            htmlSelectOneRadio_.getChildren().add(selectItem);
         }
         FacesContext context = getFacesContext();
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectManyCheckbox_);
+        encodeByRenderer(renderer_, context, htmlSelectOneRadio_);
 
         // ## Assert ##
         assertEquals("", getResponseText());
@@ -80,15 +79,15 @@ public class HtmlSelectManyCheckboxRendererTest extends RendererTest {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("val");
             selectItem.setItemLabel("lab");
-            htmlSelectManyCheckbox_.getChildren().add(selectItem);
+            htmlSelectOneRadio_.getChildren().add(selectItem);
         }
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectManyCheckbox_);
+        encodeByRenderer(renderer_, context, htmlSelectOneRadio_);
 
         // ## Assert ##
         assertEquals("<table><tr><td>" + "<label>"
-                + "<input type=\"checkbox\" name=\"_id0\" value=\"val\" />"
+                + "<input type=\"radio\" name=\"_id0\" value=\"val\" />"
                 + "lab</label>" + "</td></tr></table>", getResponseText());
     }
 
@@ -99,16 +98,16 @@ public class HtmlSelectManyCheckboxRendererTest extends RendererTest {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("val");
             selectItem.setItemLabel("lab");
-            htmlSelectManyCheckbox_.getChildren().add(selectItem);
+            htmlSelectOneRadio_.getChildren().add(selectItem);
         }
-        htmlSelectManyCheckbox_.setId("a");
+        htmlSelectOneRadio_.setId("a");
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectManyCheckbox_);
+        encodeByRenderer(renderer_, context, htmlSelectOneRadio_);
 
         // ## Assert ##
         assertEquals("<table id=\"a\"><tr><td>" + "<label>"
-                + "<input type=\"checkbox\" name=\"a\" value=\"val\" />"
+                + "<input type=\"radio\" name=\"a\" value=\"val\" />"
                 + "lab</label>" + "</td></tr></table>", getResponseText());
     }
 
@@ -119,23 +118,23 @@ public class HtmlSelectManyCheckboxRendererTest extends RendererTest {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("v1");
             selectItem.setItemLabel("l1");
-            htmlSelectManyCheckbox_.getChildren().add(selectItem);
+            htmlSelectOneRadio_.getChildren().add(selectItem);
         }
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("v2");
             selectItem.setItemLabel("l2");
-            htmlSelectManyCheckbox_.getChildren().add(selectItem);
+            htmlSelectOneRadio_.getChildren().add(selectItem);
         }
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectManyCheckbox_);
+        encodeByRenderer(renderer_, context, htmlSelectOneRadio_);
 
         // ## Assert ##
         assertEquals("<table><tr><td>" + "<label>"
-                + "<input type=\"checkbox\" name=\"_id0\" value=\"v1\" />"
+                + "<input type=\"radio\" name=\"_id0\" value=\"v1\" />"
                 + "l1</label></td>" + "<td><label>"
-                + "<input type=\"checkbox\" name=\"_id0\" value=\"v2\" />"
+                + "<input type=\"radio\" name=\"_id0\" value=\"v2\" />"
                 + "l2</label>" + "</td></tr></table>", getResponseText());
     }
 
@@ -146,56 +145,56 @@ public class HtmlSelectManyCheckboxRendererTest extends RendererTest {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("v1");
             selectItem.setItemLabel("l1");
-            htmlSelectManyCheckbox_.getChildren().add(selectItem);
+            htmlSelectOneRadio_.getChildren().add(selectItem);
         }
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("v2");
             selectItem.setItemLabel("l2");
-            htmlSelectManyCheckbox_.getChildren().add(selectItem);
+            htmlSelectOneRadio_.getChildren().add(selectItem);
         }
-        htmlSelectManyCheckbox_.setLayout("pageDirection");
+        htmlSelectOneRadio_.setLayout("pageDirection");
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectManyCheckbox_);
+        encodeByRenderer(renderer_, context, htmlSelectOneRadio_);
 
         // ## Assert ##
         assertEquals("<table>" + "<tr><td>" + "<label>"
-                + "<input type=\"checkbox\" name=\"_id0\" value=\"v1\" />"
+                + "<input type=\"radio\" name=\"_id0\" value=\"v1\" />"
                 + "l1</label>" + "</td></tr>" + "<tr><td>" + "<label>"
-                + "<input type=\"checkbox\" name=\"_id0\" value=\"v2\" />"
+                + "<input type=\"radio\" name=\"_id0\" value=\"v2\" />"
                 + "l2</label>" + "</td></tr>" + "</table>", getResponseText());
     }
 
     public void testEncode_Checked() throws Exception {
         // ## Arrange ##
-        htmlSelectManyCheckbox_.setSelectedValues(new String[] { "val" });
+        htmlSelectOneRadio_.setValue("v2");
         MockFacesContext context = getFacesContext();
         {
             UISelectItem selectItem = new UISelectItem();
-            selectItem.setItemValue("val");
-            selectItem.setItemLabel("lab");
-            htmlSelectManyCheckbox_.getChildren().add(selectItem);
+            selectItem.setItemValue("v1");
+            selectItem.setItemLabel("l1");
+            htmlSelectOneRadio_.getChildren().add(selectItem);
         }
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("v2");
             selectItem.setItemLabel("l2");
-            htmlSelectManyCheckbox_.getChildren().add(selectItem);
+            htmlSelectOneRadio_.getChildren().add(selectItem);
         }
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectManyCheckbox_);
+        encodeByRenderer(renderer_, context, htmlSelectOneRadio_);
 
         // ## Assert ##
         assertEquals(
                 "<table>"
                         + "<tr><td>"
                         + "<label>"
-                        + "<input type=\"checkbox\" name=\"_id0\" value=\"val\" checked=\"checked\" />"
-                        + "lab</label></td>"
+                        + "<input type=\"radio\" name=\"_id0\" value=\"v1\" />"
+                        + "l1</label></td>"
                         + "<td><label>"
-                        + "<input type=\"checkbox\" name=\"_id0\" value=\"v2\" />"
+                        + "<input type=\"radio\" name=\"_id0\" value=\"v2\" checked=\"checked\" />"
                         + "l2</label>" + "</td></tr>" + "</table>",
                 getResponseText());
     }
@@ -208,95 +207,94 @@ public class HtmlSelectManyCheckboxRendererTest extends RendererTest {
             selectItem.setItemValue("v1");
             selectItem.setItemLabel("l1");
             selectItem.setItemDisabled(true);
-            htmlSelectManyCheckbox_.getChildren().add(selectItem);
+            htmlSelectOneRadio_.getChildren().add(selectItem);
         }
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("v2");
             selectItem.setItemLabel("l2");
-            htmlSelectManyCheckbox_.getChildren().add(selectItem);
+            htmlSelectOneRadio_.getChildren().add(selectItem);
         }
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectManyCheckbox_);
+        encodeByRenderer(renderer_, context, htmlSelectOneRadio_);
 
         // ## Assert ##
         assertEquals(
                 "<table>"
                         + "<tr><td>"
                         + "<label>"
-                        + "<input type=\"checkbox\" name=\"_id0\" value=\"v1\" disabled=\"disabled\" />"
-                        + "l1</label></td>"
-                        + "<td><label>"
-                        + "<input type=\"checkbox\" name=\"_id0\" value=\"v2\" />"
+                        + "<input type=\"radio\" name=\"_id0\" value=\"v1\" disabled=\"disabled\" />"
+                        + "l1</label></td>" + "<td><label>"
+                        + "<input type=\"radio\" name=\"_id0\" value=\"v2\" />"
                         + "l2</label>" + "</td></tr>" + "</table>",
                 getResponseText());
     }
 
     public void testEncode_Disabled() throws Exception {
         // ## Arrange ##
-        htmlSelectManyCheckbox_.setDisabled(true);
+        htmlSelectOneRadio_.setDisabled(true);
         MockFacesContext context = getFacesContext();
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("v1");
             selectItem.setItemLabel("l1");
-            htmlSelectManyCheckbox_.getChildren().add(selectItem);
+            selectItem.setItemDisabled(true);
+            htmlSelectOneRadio_.getChildren().add(selectItem);
         }
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("v2");
             selectItem.setItemLabel("l2");
-            htmlSelectManyCheckbox_.getChildren().add(selectItem);
+            htmlSelectOneRadio_.getChildren().add(selectItem);
         }
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectManyCheckbox_);
+        encodeByRenderer(renderer_, context, htmlSelectOneRadio_);
 
         // ## Assert ##
         assertEquals(
-                "<table>"
-                        + "<tr><td>"
-                        + "<label>"
-                        + "<input type=\"checkbox\" name=\"_id0\" value=\"v1\" disabled=\"disabled\" />"
+                "<table><tr>"
+                        + "<td><label>"
+                        + "<input type=\"radio\" name=\"_id0\" value=\"v1\" disabled=\"disabled\" />"
                         + "l1</label></td>"
                         + "<td><label>"
-                        + "<input type=\"checkbox\" name=\"_id0\" value=\"v2\" disabled=\"disabled\" />"
-                        + "l2</label>" + "</td></tr>" + "</table>",
+                        + "<input type=\"radio\" name=\"_id0\" value=\"v2\" disabled=\"disabled\" />"
+                        + "l2</label></td>" + "</tr></table>",
                 getResponseText());
     }
 
     public void testEncode_LabelClass() throws Exception {
         // ## Arrange ##
-        htmlSelectManyCheckbox_.setEnabledClass("ec");
-        htmlSelectManyCheckbox_.setDisabledClass("dc");
+        htmlSelectOneRadio_.setEnabledClass("ec");
+        htmlSelectOneRadio_.setDisabledClass("dc");
         MockFacesContext context = getFacesContext();
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("v1");
             selectItem.setItemLabel("l1");
-            htmlSelectManyCheckbox_.getChildren().add(selectItem);
+            htmlSelectOneRadio_.getChildren().add(selectItem);
         }
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("v2");
             selectItem.setItemLabel("l2");
             selectItem.setItemDisabled(true);
-            htmlSelectManyCheckbox_.getChildren().add(selectItem);
+            htmlSelectOneRadio_.getChildren().add(selectItem);
         }
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectManyCheckbox_);
+        encodeByRenderer(renderer_, context, htmlSelectOneRadio_);
 
         // ## Assert ##
         assertEquals(
                 "<table>"
                         + "<tr><td>"
                         + "<label class=\"ec\">"
-                        + "<input type=\"checkbox\" name=\"_id0\" value=\"v1\" />"
+                        + "<input type=\"radio\" name=\"_id0\" value=\"v1\" />"
                         + "l1</label></td>"
                         + "<td><label class=\"dc\">"
-                        + "<input type=\"checkbox\" name=\"_id0\" value=\"v2\" disabled=\"disabled\" />"
+                        + "<input type=\"radio\" name=\"_id0\" value=\"v2\" disabled=\"disabled\" />"
                         + "l2</label>" + "</td></tr>" + "</table>",
                 getResponseText());
     }
@@ -309,25 +307,25 @@ public class HtmlSelectManyCheckboxRendererTest extends RendererTest {
             SelectItem item1 = new SelectItem("v1", "l1");
             SelectItem item2 = new SelectItem("v2", "l2", null, true);
             selectItems.setValue(new SelectItem[] { item1, item2 });
-            htmlSelectManyCheckbox_.getChildren().add(selectItems);
+            htmlSelectOneRadio_.getChildren().add(selectItems);
         }
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectManyCheckbox_);
+        encodeByRenderer(renderer_, context, htmlSelectOneRadio_);
 
         // ## Assert ##
         assertEquals(
                 "<table><tr><td>"
                         + "<label>"
-                        + "<input type=\"checkbox\" name=\"_id0\" value=\"v1\" />"
+                        + "<input type=\"radio\" name=\"_id0\" value=\"v1\" />"
                         + "l1</label></td>"
                         + "<td><label>"
-                        + "<input type=\"checkbox\" name=\"_id0\" value=\"v2\" disabled=\"disabled\" />"
+                        + "<input type=\"radio\" name=\"_id0\" value=\"v2\" disabled=\"disabled\" />"
                         + "l2</label>" + "</td></tr></table>",
                 getResponseText());
     }
 
-    public void testEncode_NestedChildren() throws Exception {
+    public void testEncode_Optgroup() throws Exception {
         // ## Arrange ##
         MockFacesContext context = getFacesContext();
         {
@@ -337,67 +335,67 @@ public class HtmlSelectManyCheckboxRendererTest extends RendererTest {
             group.setSelectItems(new SelectItem[] { item1, item2 });
             UISelectItem selectItem = new UISelectItem();
             selectItem.setValue(group);
-            htmlSelectManyCheckbox_.getChildren().add(selectItem);
+            htmlSelectOneRadio_.getChildren().add(selectItem);
         }
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectManyCheckbox_);
+        encodeByRenderer(renderer_, context, htmlSelectOneRadio_);
 
         // ## Assert ##
         assertEquals(
                 "<table><tr><td>"
                         + "<table><tr><td>"
                         + "<label>"
-                        + "<input type=\"checkbox\" name=\"_id0\" value=\"v1\" />"
+                        + "<input type=\"radio\" name=\"_id0\" value=\"v1\" />"
                         + "l1</label></td>"
                         + "<td><label>"
-                        + "<input type=\"checkbox\" name=\"_id0\" value=\"v2\" disabled=\"disabled\" />"
+                        + "<input type=\"radio\" name=\"_id0\" value=\"v2\" disabled=\"disabled\" />"
                         + "l2</label>" + "</td></tr></table>"
                         + "</td></tr></table>", getResponseText());
     }
 
     public void testEncode_WithAllAttributes() throws Exception {
-        htmlSelectManyCheckbox_.setAccesskey("a");
-        htmlSelectManyCheckbox_.setBorder(3);
-        htmlSelectManyCheckbox_.setDir("b");
-        htmlSelectManyCheckbox_.setDisabled(true);
-        htmlSelectManyCheckbox_.setDisabledClass("d");
-        htmlSelectManyCheckbox_.setEnabledClass("e");
-        htmlSelectManyCheckbox_.setLang("f");
-        htmlSelectManyCheckbox_.setOnblur("g");
-        htmlSelectManyCheckbox_.setOnchange("h");
-        htmlSelectManyCheckbox_.setOnclick("i");
-        htmlSelectManyCheckbox_.setOndblclick("j");
-        htmlSelectManyCheckbox_.setOnfocus("k");
-        htmlSelectManyCheckbox_.setOnkeydown("l");
-        htmlSelectManyCheckbox_.setOnkeypress("m");
-        htmlSelectManyCheckbox_.setOnkeyup("n");
-        htmlSelectManyCheckbox_.setOnmousedown("o");
-        htmlSelectManyCheckbox_.setOnmousemove("p");
-        htmlSelectManyCheckbox_.setOnmouseout("q");
-        htmlSelectManyCheckbox_.setOnmouseover("r");
-        htmlSelectManyCheckbox_.setOnmouseup("s");
-        htmlSelectManyCheckbox_.setOnselect("t");
-        htmlSelectManyCheckbox_.setReadonly(true);
-        htmlSelectManyCheckbox_.setStyle("w");
-        htmlSelectManyCheckbox_.setStyleClass("u");
-        htmlSelectManyCheckbox_.setTabindex("x");
-        htmlSelectManyCheckbox_.setTitle("y");
+        htmlSelectOneRadio_.setAccesskey("a");
+        htmlSelectOneRadio_.setBorder(3);
+        htmlSelectOneRadio_.setDir("b");
+        htmlSelectOneRadio_.setDisabled(true);
+        htmlSelectOneRadio_.setDisabledClass("d");
+        htmlSelectOneRadio_.setEnabledClass("e");
+        htmlSelectOneRadio_.setLang("f");
+        htmlSelectOneRadio_.setOnblur("g");
+        htmlSelectOneRadio_.setOnchange("h");
+        htmlSelectOneRadio_.setOnclick("i");
+        htmlSelectOneRadio_.setOndblclick("j");
+        htmlSelectOneRadio_.setOnfocus("k");
+        htmlSelectOneRadio_.setOnkeydown("l");
+        htmlSelectOneRadio_.setOnkeypress("m");
+        htmlSelectOneRadio_.setOnkeyup("n");
+        htmlSelectOneRadio_.setOnmousedown("o");
+        htmlSelectOneRadio_.setOnmousemove("p");
+        htmlSelectOneRadio_.setOnmouseout("q");
+        htmlSelectOneRadio_.setOnmouseover("r");
+        htmlSelectOneRadio_.setOnmouseup("s");
+        htmlSelectOneRadio_.setOnselect("t");
+        htmlSelectOneRadio_.setReadonly(true);
+        htmlSelectOneRadio_.setStyle("w");
+        htmlSelectOneRadio_.setStyleClass("u");
+        htmlSelectOneRadio_.setTabindex("x");
+        htmlSelectOneRadio_.setTitle("y");
 
-        htmlSelectManyCheckbox_.setId("A");
-        htmlSelectManyCheckbox_.setValue(new String[] { "val" });
+        htmlSelectOneRadio_.setId("A");
+        htmlSelectOneRadio_.setValue("val");
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("val");
             selectItem.setItemLabel("lab");
-            htmlSelectManyCheckbox_.getChildren().add(selectItem);
+            htmlSelectOneRadio_.getChildren().add(selectItem);
         }
         MockFacesContext context = getFacesContext();
-        encodeByRenderer(renderer_, context, htmlSelectManyCheckbox_);
+        encodeByRenderer(renderer_, context, htmlSelectOneRadio_);
 
         Diff diff = new Diff("<table id=\"A\" border=\"3\" style=\"w\""
                 + " class=\"u\"" + ">" + "<tr><td>" + "<label class=\"d\">"
-                + "<input type=\"checkbox\" name=\"A\" value=\"val\""
+                + "<input type=\"radio\" name=\"A\" value=\"val\""
                 + " checked=\"checked\"" + " accesskey=\"a\"" + " dir=\"b\""
                 + " disabled=\"disabled\"" + " lang=\"f\"" + " onblur=\"g\""
                 + " onchange=\"h\"" + " onclick=\"i\"" + " ondblclick=\"j\""
@@ -413,50 +411,48 @@ public class HtmlSelectManyCheckboxRendererTest extends RendererTest {
 
     public void testDecode_RequestParameterNotExist() throws Exception {
         // ## Arrange ##
-        htmlSelectManyCheckbox_.setClientId("key");
+        htmlSelectOneRadio_.setClientId("key");
 
         MockFacesContext context = getFacesContext();
 
         // ## Act ##
-        renderer_.decode(context, htmlSelectManyCheckbox_);
+        renderer_.decode(context, htmlSelectOneRadio_);
 
         // ## Assert ##
-        assertEquals(1, htmlSelectManyCheckbox_.getSetSubmittedValueCalls());
-        String[] submittedValue = (String[]) htmlSelectManyCheckbox_.getSubmittedValue();
-        assertEquals(0, submittedValue.length);
+        assertEquals(0, htmlSelectOneRadio_.getSetSubmittedValueCalls());
+        assertEquals(null, htmlSelectOneRadio_.getSubmittedValue());
     }
 
     public void testDecodeSuccess() throws Exception {
         // ## Arrange ##
-        htmlSelectManyCheckbox_.setClientId("keyA");
+        htmlSelectOneRadio_.setClientId("keyA");
 
         MockFacesContext context = getFacesContext();
-        context.getExternalContext().getRequestParameterValuesMap().put("keyA",
-                new String[] { "a", "b", "c" });
+        MockHttpServletRequest mockHttpServletRequest = context
+                .getMockExternalContext().getMockHttpServletRequest();
+        mockHttpServletRequest.addParameter("keyA", "a");
 
         // ## Act ##
-        renderer_.decode(context, htmlSelectManyCheckbox_);
+        renderer_.decode(context, htmlSelectOneRadio_);
 
         // ## Assert ##
-        assertEquals(1, htmlSelectManyCheckbox_.getSetSubmittedValueCalls());
-        ArrayAssert.assertEquivalenceArrays(new String[] { "a", "b", "c" },
-                (Object[]) htmlSelectManyCheckbox_.getSubmittedValue());
+        assertEquals(1, htmlSelectOneRadio_.getSetSubmittedValueCalls());
+        assertEquals("a", htmlSelectOneRadio_.getSubmittedValue());
     }
 
     public void testGetRendersChildren() throws Exception {
         assertEquals(false, renderer_.getRendersChildren());
     }
 
-    private HtmlSelectManyCheckboxRenderer createHtmlSelectManyCheckboxRenderer() {
-        return (HtmlSelectManyCheckboxRenderer) createRenderer();
+    private HtmlSelectOneRadioRenderer createHtmlSelectOneRadioRenderer() {
+        return (HtmlSelectOneRadioRenderer) createRenderer();
     }
 
     protected Renderer createRenderer() {
-        return new HtmlSelectManyCheckboxRenderer();
+        return new HtmlSelectOneRadioRenderer();
     }
 
-    private static class MockHtmlSelectManyCheckbox extends
-            HtmlSelectManyCheckbox {
+    private static class MockHtmlSelectOneRadio extends HtmlSelectOneRadio {
         private Renderer renderer_;
 
         private String clientId_;

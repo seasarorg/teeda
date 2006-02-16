@@ -154,7 +154,7 @@ public class HtmlInputTextareaRendererTest extends RendererTest {
 
         Diff diff = new Diff("<textarea" + " id=\"A\" name=\"A\""
                 + " accesskey=\"a\"" + " cols=\"10\"" + " dir=\"c\""
-                + " disabled=\"true\"" + " lang=\"e\"" + " onblur=\"g\""
+                + " disabled=\"disabled\"" + " lang=\"e\"" + " onblur=\"g\""
                 + " onchange=\"h\"" + " onclick=\"i\"" + " ondblclick=\"j\""
                 + " onfocus=\"k\"" + " onkeydown=\"l\"" + " onkeypress=\"m\""
                 + " onkeyup=\"n\"" + " onmousedown=\"o\""

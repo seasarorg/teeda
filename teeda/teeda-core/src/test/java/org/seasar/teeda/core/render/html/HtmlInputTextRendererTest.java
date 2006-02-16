@@ -129,7 +129,7 @@ public class HtmlInputTextRendererTest extends RendererTest {
         Diff diff = new Diff(
                 "<input type=\"text\" id=\"A\" name=\"A\" value=\"B\""
                         + " accesskey=\"a\"" + " alt=\"b\"" + " dir=\"c\""
-                        + " disabled=\"true\"" + " lang=\"e\""
+                        + " disabled=\"disabled\"" + " lang=\"e\""
                         + " maxlength=\"5\"" + " onblur=\"g\""
                         + " onchange=\"h\"" + " onclick=\"i\""
                         + " ondblclick=\"j\"" + " onfocus=\"k\""

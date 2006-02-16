@@ -59,8 +59,7 @@ public class HtmlInputSecretRenderer extends AbstractHtmlRenderer {
         }
         RendererUtil.renderAttribute(writer, JsfConstants.VALUE_ATTR, value);
         if (htmlInputSecret.isDisabled()) {
-            RendererUtil.renderAttribute(writer, JsfConstants.DISABLED_ATTR,
-                    Boolean.TRUE);
+            RendererUtil.renderDisabledAttribute(writer);
         }
         RendererUtil.renderAttributes(writer, htmlInputSecret,
                 JsfConstants.INPUT_PASSTHROUGH_ATTRIBUTES_WITHOUT_DISABLED);

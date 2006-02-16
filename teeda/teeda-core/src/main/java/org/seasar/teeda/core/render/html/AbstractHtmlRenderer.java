@@ -25,8 +25,10 @@ import javax.faces.internal.AssertionUtil;
 import javax.faces.render.Renderer;
 
 import org.seasar.framework.util.StringUtil;
+import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.util.LoopIterator;
 import org.seasar.teeda.core.util.RenderedComponentIterator;
+import org.seasar.teeda.core.util.UIComponentUtil;
 
 /**
  * @author manhole
@@ -96,6 +98,16 @@ public class AbstractHtmlRenderer extends Renderer {
 
     protected Iterator getRenderedChildrenIterator(UIComponent component) {
         return new RenderedComponentIterator(component.getChildren());
+    }
+
+    protected String getLabelStyleClass(UIComponent component, boolean disabled) {
+        if (disabled) {
+            return UIComponentUtil.getStringAttribute(component,
+                    JsfConstants.DISABLED_CLASS_ATTR);
+        } else {
+            return UIComponentUtil.getStringAttribute(component,
+                    JsfConstants.ENABLED_CLASS_ATTR);
+        }
     }
 
 }
