@@ -30,12 +30,10 @@ public class ArrayUtilTest extends TestCase {
                 new Object[] { "1" }, new Object[] {}));
         assertEquals(false, ArrayUtil.equalsIgnoreSequence(
                 new Object[] { new Integer("1") }, new Object[] { "1" }));
-    }
 
-    public void testContains() throws Exception {
-        assertEquals(true, ArrayUtil.contains(new Object[] { "1" }, "1"));
-        assertEquals(false, ArrayUtil.contains(new Object[] { "1" }, "2"));
-        assertEquals(true, ArrayUtil.contains(new Object[] { "2", "1" }, "1"));
+        assertEquals(true, ArrayUtil.equalsIgnoreSequence(null, null));
+        assertEquals(false, ArrayUtil.equalsIgnoreSequence(null,
+                new Object[] {}));
     }
 
 }

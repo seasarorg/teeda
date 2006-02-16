@@ -28,6 +28,11 @@ public class ArrayUtil {
     }
 
     public static boolean equalsIgnoreSequence(Object[] array1, Object[] array2) {
+        if (array1 == null && array2 == null) {
+            return true;
+        } else if (array1 == null || array2 == null) {
+            return false;
+        }
         if (array1.length != array2.length) {
             return false;
         }
@@ -59,10 +64,6 @@ public class ArrayUtil {
         }
         sb.append("]");
         return sb.toString();
-    }
-
-    public static boolean contains(Object[] array, Object obj) {
-        return -1 < org.seasar.framework.util.ArrayUtil.indexOf(array, obj);
     }
 
 }
