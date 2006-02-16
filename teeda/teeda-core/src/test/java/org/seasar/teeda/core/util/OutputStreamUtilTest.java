@@ -31,7 +31,12 @@ public class OutputStreamUtilTest extends TeedaTestCase {
         OutputStreamUtil.close(out);
         assertEquals("closed", out.getNotify());
     }
-    
+
+    public void testCloseNull() throws Exception {
+        OutputStreamUtil.close((OutputStream) null);
+        success();
+    }
+
     public void testClose_throwIOException() throws Exception {
         OutputStream out = new IOExceptionOccurOutputStream();
         try {
@@ -41,20 +46,23 @@ public class OutputStreamUtilTest extends TeedaTestCase {
             success();
         }
     }
-    
+
     private static class NotifyOutputStream extends OutputStream {
         private String notify_;
+
         public void write(int arg0) throws IOException {
         }
+
         public void close() throws IOException {
             super.close();
             notify_ = "closed";
         }
-        public String getNotify(){
+
+        public String getNotify() {
             return notify_;
         }
     }
-    
+
     private static class IOExceptionOccurOutputStream extends OutputStream {
 
         public void write(int arg0) throws IOException {
@@ -63,7 +71,6 @@ public class OutputStreamUtilTest extends TeedaTestCase {
         public void close() throws IOException {
             throw new IOException();
         }
-        
 
     }
 }

@@ -33,7 +33,6 @@ import org.seasar.teeda.core.util.GZIPOutputStreamUtil;
 import org.seasar.teeda.core.util.ObjectInputStreamUtil;
 import org.seasar.teeda.core.util.ObjectOutputStreamUtil;
 import org.seasar.teeda.core.util.OutputStreamUtil;
-import org.seasar.teeda.core.util.TeedaInputStreamUtil;
 
 /**
  * @author shot
@@ -64,9 +63,7 @@ public class Base64EncodeConverter implements EncodeConverter {
                 ObjectOutputStreamUtil.reset(oos);
                 OutputStreamUtil.close(oos);
             }
-            if (out != null) {
-                OutputStreamUtil.close(out);
-            }
+            OutputStreamUtil.close(out);
             OutputStreamUtil.close(bos);
         }
     }
@@ -91,9 +88,9 @@ public class Base64EncodeConverter implements EncodeConverter {
             storeViewState(viewState);
             return structure;
         } finally {
-            TeedaInputStreamUtil.close(ois);
-            TeedaInputStreamUtil.close(is);
-            TeedaInputStreamUtil.close(bis);
+            InputStreamUtil.close(ois);
+            InputStreamUtil.close(is);
+            InputStreamUtil.close(bis);
         }
     }
 

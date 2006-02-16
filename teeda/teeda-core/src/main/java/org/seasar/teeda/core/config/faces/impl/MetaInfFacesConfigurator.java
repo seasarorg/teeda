@@ -25,13 +25,13 @@ import java.util.List;
 import javax.faces.context.ExternalContext;
 
 import org.seasar.framework.container.factory.ResourceResolver;
+import org.seasar.framework.util.InputStreamUtil;
 import org.seasar.framework.util.URLUtil;
 import org.seasar.framework.xml.SaxHandlerParser;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.config.faces.AbstractFacesConfigurator;
 import org.seasar.teeda.core.config.faces.element.FacesConfig;
 import org.seasar.teeda.core.util.ClassLoaderUtil;
-import org.seasar.teeda.core.util.TeedaInputStreamUtil;
 
 public class MetaInfFacesConfigurator extends AbstractFacesConfigurator {
 
@@ -57,7 +57,7 @@ public class MetaInfFacesConfigurator extends AbstractFacesConfigurator {
                 FacesConfig config = (FacesConfig) parser.parse(is);
                 list.add(config);
             } finally {
-                TeedaInputStreamUtil.close(is);
+                InputStreamUtil.close(is);
             }
         }
         return FacesConfigUtil.collectAllFacesConfig(list);

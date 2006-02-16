@@ -27,7 +27,6 @@ import org.seasar.framework.util.StringUtil;
 import org.seasar.framework.xml.SaxHandlerParser;
 import org.seasar.teeda.core.config.faces.AbstractFacesConfigurator;
 import org.seasar.teeda.core.config.faces.element.FacesConfig;
-import org.seasar.teeda.core.util.TeedaInputStreamUtil;
 
 public class ConfigFilesFacesConfigurator extends AbstractFacesConfigurator {
 
@@ -53,7 +52,7 @@ public class ConfigFilesFacesConfigurator extends AbstractFacesConfigurator {
             try {
                 configs.add(parser.parse(is));
             } finally {
-                TeedaInputStreamUtil.close(is);
+                InputStreamUtil.close(is);
             }
         }
         return FacesConfigUtil.collectAllFacesConfig(configs);

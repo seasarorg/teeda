@@ -26,6 +26,9 @@ import org.seasar.framework.exception.IORuntimeException;
 public class OutputStreamUtil {
 
     public static void close(OutputStream out) {
+        if (out == null) {
+            return;
+        }
         try {
             out.close();
         } catch (IOException e) {

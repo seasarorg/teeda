@@ -21,6 +21,7 @@ import java.util.List;
 
 import junit.framework.TestCase;
 
+import org.seasar.framework.util.InputStreamUtil;
 import org.seasar.framework.util.ResourceUtil;
 import org.seasar.teeda.core.config.webapp.WebappConfigBuilder;
 import org.seasar.teeda.core.config.webapp.element.ContextParamElement;
@@ -29,7 +30,6 @@ import org.seasar.teeda.core.config.webapp.element.InitParamElement;
 import org.seasar.teeda.core.config.webapp.element.ServletElement;
 import org.seasar.teeda.core.config.webapp.element.TaglibElement;
 import org.seasar.teeda.core.config.webapp.element.WebappConfig;
-import org.seasar.teeda.core.util.TeedaInputStreamUtil;
 
 /**
  * @author manhole
@@ -122,7 +122,7 @@ public class WebappConfigBuilderImplTest extends TestCase {
             assertNotNull(webappConfig);
             return webappConfig;
         } finally {
-            TeedaInputStreamUtil.close(is);
+            InputStreamUtil.close(is);
         }
     }
 

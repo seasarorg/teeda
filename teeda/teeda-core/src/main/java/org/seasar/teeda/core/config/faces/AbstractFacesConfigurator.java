@@ -29,7 +29,6 @@ import org.seasar.framework.xml.SaxHandlerParser;
 import org.seasar.framework.xml.TagHandlerRule;
 import org.seasar.teeda.core.config.faces.element.FacesConfig;
 import org.seasar.teeda.core.config.faces.rule.FacesConfigTagHandlerRule;
-import org.seasar.teeda.core.util.TeedaInputStreamUtil;
 
 /**
  * @author shot
@@ -61,7 +60,7 @@ public abstract class AbstractFacesConfigurator implements FacesConfigurator {
         try {
             return (FacesConfig) parser.parse(is);
         } finally {
-            TeedaInputStreamUtil.close(is);
+            InputStreamUtil.close(is);
         }
     }
 
