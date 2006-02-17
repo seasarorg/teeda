@@ -43,7 +43,10 @@ import org.seasar.framework.log.Logger;
 public class LoadBundleTag extends TagSupport {
     private static Logger logger_ = Logger.getLogger(LoadBundleTag.class);
     
+    private static final long serialVersionUID = 1L;
+    
     private String basename_;
+    
     private String var_;
     
     public void setBasename(String basename) {
