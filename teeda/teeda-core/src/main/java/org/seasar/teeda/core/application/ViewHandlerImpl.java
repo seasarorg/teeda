@@ -29,15 +29,11 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.internal.AssertionUtil;
 import javax.faces.render.RenderKitFactory;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.config.webapp.element.ServletMappingElement;
 import org.seasar.teeda.core.config.webapp.element.WebappConfig;
-import org.seasar.teeda.core.util.ExternalContextUtil;
-import org.seasar.teeda.core.util.ServletExternalContextUtil;
 import org.seasar.teeda.core.util.StateManagerUtil;
 import org.seasar.teeda.core.util.WebappConfigUtil;
 import org.seasar.teeda.core.view.ViewRenderer;

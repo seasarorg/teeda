@@ -15,6 +15,12 @@
  */
 package org.seasar.teeda.core.util;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.faces.component.NamingContainer;
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 
 public class StateManagerUtil {
@@ -25,4 +31,25 @@ public class StateManagerUtil {
     public static boolean isSavingStateClient(FacesContext context) {
         return context.getApplication().getStateManager().isSavingStateInClient(context);
     }
+    
+    public static void assertComponentNoDuplicateId(UIComponent component) {
+        assertComponentNoDuplicateIdInternal(component, new ArrayList());
+    }
+    
+    private static void assertComponentNoDuplicateIdInternal(UIComponent component, List idList) {
+        String id = component.getId();
+        if(id != null && idList.contains(id)) {
+            throw new IllegalStateException("Component id:" + id + "has same id in view tree.");
+        }
+        idList.add(id);
+        for(Iterator itr = component.getFacetsAndChildren(); itr.hasNext();) {
+            UIComponent child = (UIComponent) itr.next();
+            if(component instanceof NamingContainer) {
+                assertComponentNoDuplicateId(child);
+            } else {
+                assertComponentNoDuplicateIdInternal(child, idList);
+            }
+        }
+    }
+
 }

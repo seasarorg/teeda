@@ -89,6 +89,23 @@ public class S2Test extends S2FrameworkTestCase {
         assertEquals("A", m.get("a"));
     }
 
+    public void test5() {
+        C c = new C();
+        ComponentDef cDef = new ComponentDefImpl(c.getClass(), "c");
+        cDef.setInstanceDef(InstanceDefFactory.SINGLETON);
+
+        InitMethodDef mDef = new InitMethodDefImpl("setStr");
+        ArgDef aDef = new ArgDefImpl("aaa");
+        mDef.addArgDef(aDef);
+        cDef.addInitMethodDef(mDef);
+
+        getContainer().register(cDef);
+
+        C c_ = (C) getContainer().getComponent("c");
+        assertEquals("aaa", c_.getStr());
+        
+    }
+    
     public static class A {
         private B b_;
 
@@ -108,6 +125,18 @@ public class S2Test extends S2FrameworkTestCase {
     public static class B {
         public String getName() {
             return "bbb";
+        }
+    }
+
+    public static class C {
+        private String str_;
+
+        public void setStr(String str) {
+            str_ = str;
+        }
+
+        protected String getStr() {
+            return str_;
         }
     }
 }
