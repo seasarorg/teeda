@@ -488,5 +488,10 @@ public interface JsfConstants {
     public String DEFAULT_CONVERTDATETIME_TIME_STYLE = "default";
 
     public String DEFAULT_CONVERTDATETIME_TYPE = "default";
+    
+    public String DEFAULT_CONVERTNUMBER_GROUPING_USED = "true";
+    
+    public String DEFAULT_CONVERTNUMBER_INTEGER_ONLY = "false";
 
+    public String DEFAULT_CONVERTNUMBER_TYPE = "number";
 }
