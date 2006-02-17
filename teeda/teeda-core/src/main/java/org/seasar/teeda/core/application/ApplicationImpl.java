@@ -50,7 +50,6 @@ import org.seasar.teeda.core.util.ApplicationUtil;
 import org.seasar.teeda.core.util.ClassUtil;
 import org.seasar.teeda.core.util.IteratorUtil;
 import org.seasar.teeda.core.util.PropertyUtil;
-import org.seasar.teeda.core.util.ValueBindingUtil;
 
 /**
  * @author shot
