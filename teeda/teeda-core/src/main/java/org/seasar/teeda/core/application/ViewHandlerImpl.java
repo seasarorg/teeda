@@ -36,15 +36,12 @@ import org.seasar.teeda.core.config.webapp.element.ServletMappingElement;
 import org.seasar.teeda.core.config.webapp.element.WebappConfig;
 import org.seasar.teeda.core.util.StateManagerUtil;
 import org.seasar.teeda.core.util.WebappConfigUtil;
-import org.seasar.teeda.core.view.ViewRenderer;
 
 /**
  * @author higa
  * @author shot
  */
 public class ViewHandlerImpl extends ViewHandler {
-
-    private ViewRenderer viewRenderer_;
 
     public ViewHandlerImpl() {
     }
@@ -180,14 +177,6 @@ public class ViewHandlerImpl extends ViewHandler {
             context.getResponseWriter().writeText(JsfConstants.STATE_MARKER,
                     null);
         }
-    }
-
-    public ViewRenderer getViewRenderer() {
-        return viewRenderer_;
-    }
-
-    public void setViewRenderer(ViewRenderer viewRenderer) {
-        viewRenderer_ = viewRenderer;
     }
 
     protected String getViewIdPath(FacesContext context, String viewId) {
