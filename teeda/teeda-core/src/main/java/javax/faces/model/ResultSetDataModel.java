@@ -41,15 +41,12 @@ public class ResultSetDataModel extends DataModel {
     private boolean isUpdated_ = false;
 
     public ResultSetDataModel() {
-        this(null);
+        setWrappedData(null);
     }
 
     public ResultSetDataModel(ResultSet resultSet) {
         super();
-        if (resultSet != null) {
-            assertUpdatable(resultSet);
-            assertScrollable(resultSet);
-        }
+        assertScrollable(resultSet);
         setWrappedData(resultSet);
     }
 
@@ -97,7 +94,7 @@ public class ResultSetDataModel extends DataModel {
 
     public void setRowIndex(int rowIndex) {
 
-        if (rowIndex < 1) {
+        if (rowIndex < -1) {
             throw new IllegalArgumentException();
         }
 
@@ -141,17 +138,6 @@ public class ResultSetDataModel extends DataModel {
             }
         } catch (SQLException e) {
             throw new FacesException();
-        }
-    }
-
-    private static void assertUpdatable(ResultSet rs) {
-        try {
-            int concurrency = rs.getConcurrency();
-            if (concurrency != ResultSet.CONCUR_UPDATABLE) {
-                throw new IllegalArgumentException();
-            }
-        } catch (SQLException e) {
-            throw new IllegalArgumentException();
         }
     }
 
