@@ -20,12 +20,12 @@ import javax.faces.context.FacesContext;
 import org.seasar.teeda.core.scope.ScopeSaver;
 
 /**
- * @author Shinpei Ohtani
+ * @author shot
  */
 public class NoneScopeSaver implements ScopeSaver {
 
-	public void saveToScope(FacesContext context, String key, Object value) {
-		//do nothing.
-	}
+    public void saveToScope(FacesContext context, String key, Object value) {
+        // do nothing.
+    }
 
 }

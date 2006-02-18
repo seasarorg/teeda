@@ -22,7 +22,7 @@ import javax.faces.context.FacesContext;
 import org.seasar.teeda.core.scope.ScopeSaver;
 
 /**
- * @author Shinpei Ohtani
+ * @author shot
  */
 public class RequestScopeSaver implements ScopeSaver {
 

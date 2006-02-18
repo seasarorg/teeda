@@ -16,14 +16,14 @@
 package org.seasar.teeda.core.scope;
 
 /**
- * @author Shinpei Ohtani
+ * @author shot
  * 
- * Translate between external scope spec and JSF managed bean scope. 
+ * Translate between external scope spec and JSF managed bean scope.
  */
-public interface ScopeTranslator{
-	public Scope toScope(Object obj);
-	
-	public Object toExternalComponentScope(Scope scope);
-	
-	public void addScope(Scope scope, Object externalComponentScope);
+public interface ScopeTranslator {
+    public Scope toScope(Object obj);
+
+    public Object toExternalComponentScope(Scope scope);
+
+    public void addScope(Scope scope, Object externalComponentScope);
 }

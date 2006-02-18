@@ -18,13 +18,13 @@ package org.seasar.teeda.core.scope;
 import org.seasar.teeda.core.exception.ExtendFacesException;
 
 /**
- * @author Shinpei Ohtani
+ * @author shot
  */
 public class ScopeAlreadyRegisteredException extends ExtendFacesException {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public ScopeAlreadyRegisteredException(Object[] args){
-		super("ETDA0010", args);
-	}
+    public ScopeAlreadyRegisteredException(Object[] args) {
+        super("ETDA0010", args);
+    }
 }

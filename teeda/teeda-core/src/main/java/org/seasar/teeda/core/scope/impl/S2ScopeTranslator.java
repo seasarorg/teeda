@@ -25,7 +25,7 @@ import org.seasar.teeda.core.scope.ScopeAlreadyRegisteredException;
 import org.seasar.teeda.core.scope.ScopeTranslator;
 
 /**
- * @author Shinpei Ohtani
+ * @author shot
  * 
  * Scope translation between Teeda and S2.
  */
@@ -37,12 +37,12 @@ public class S2ScopeTranslator implements ScopeTranslator{
 		SCOPE_TO_INSTANCEDEF_MAP.put(Scope.NONE, InstanceDefFactory.OUTER);
 		SCOPE_TO_INSTANCEDEF_MAP.put(Scope.REQUEST, InstanceDefFactory.REQUEST);
 		SCOPE_TO_INSTANCEDEF_MAP.put(Scope.SESSION, InstanceDefFactory.SESSION);
-		SCOPE_TO_INSTANCEDEF_MAP.put(Scope.APPLICATION, InstanceDefFactory.SINGLETON);
+		SCOPE_TO_INSTANCEDEF_MAP.put(Scope.APPLICATION, InstanceDefFactory.APPLICATION);
 		
 		INSTANCEDEF_TO_SCOPE_MAP.put(InstanceDefFactory.OUTER, Scope.NONE);
 		INSTANCEDEF_TO_SCOPE_MAP.put(InstanceDefFactory.REQUEST, Scope.REQUEST);
 		INSTANCEDEF_TO_SCOPE_MAP.put(InstanceDefFactory.SESSION, Scope.SESSION);
-		INSTANCEDEF_TO_SCOPE_MAP.put(InstanceDefFactory.SINGLETON, Scope.APPLICATION);
+		INSTANCEDEF_TO_SCOPE_MAP.put(InstanceDefFactory.APPLICATION, Scope.APPLICATION);
 
 	}
 	public Scope toScope(Object obj){

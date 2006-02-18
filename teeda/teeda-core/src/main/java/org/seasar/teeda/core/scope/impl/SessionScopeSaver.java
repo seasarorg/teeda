@@ -22,13 +22,13 @@ import javax.faces.context.FacesContext;
 import org.seasar.teeda.core.scope.ScopeSaver;
 
 /**
- * @author Shinpei Ohtani
+ * @author shot
  */
 public class SessionScopeSaver implements ScopeSaver {
 
-	public void saveToScope(FacesContext context, String key, Object value) {
-		Map sessionMap = context.getExternalContext().getSessionMap();
-		sessionMap.put(key, value);
-	}
+    public void saveToScope(FacesContext context, String key, Object value) {
+        Map sessionMap = context.getExternalContext().getSessionMap();
+        sessionMap.put(key, value);
+    }
 
 }

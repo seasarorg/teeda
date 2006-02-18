@@ -18,7 +18,7 @@ package org.seasar.teeda.core.scope;
 import javax.faces.context.FacesContext;
 
 /**
- * @author Shinpei Ohtani
+ * @author shot
  * 
  * Provide how to save values to each scope(ie.application, session, request).
  */

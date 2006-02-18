@@ -18,31 +18,31 @@ package org.seasar.teeda.core.scope;
 import org.seasar.teeda.core.JsfConstants;
 
 /**
- * @author Shinpei Ohtani
+ * @author shot
  * 
  * Default managed bean scopes.
  */
 public interface Scope {
 
-    public Scope NONE = new Scope(){
+    public Scope NONE = new Scope() {
         public String getScopeKey() {
             return JsfConstants.SCOPE_NONE;
         }
     };
-    
-    public Scope APPLICATION = new Scope(){
+
+    public Scope APPLICATION = new Scope() {
         public String getScopeKey() {
             return JsfConstants.SCOPE_APPLICATION;
         }
     };
 
-    public Scope SESSION = new Scope(){
+    public Scope SESSION = new Scope() {
         public String getScopeKey() {
             return JsfConstants.SCOPE_SESSION;
         }
     };
 
-    public Scope REQUEST = new Scope(){
+    public Scope REQUEST = new Scope() {
         public String getScopeKey() {
             return JsfConstants.SCOPE_REQUEST;
         }

@@ -51,6 +51,7 @@ public interface TODO {
      *  - Impl NavigationHandler
      *  - Impl ViewHandler
      *  - Make Assemblers done.
+     *  - change S2ScopeTranslator for Application scope.
      * 
      * PEND
      *  - Selenium integration

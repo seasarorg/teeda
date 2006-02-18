@@ -42,7 +42,7 @@ public class TreeStructureManagerImplTest extends TestCase {
         assertEquals("child", struct.getComponentId());
     }
     
-    public void testBuildFacetsTreeStructure() throws Exception {
+    public void testBuildFacetsTreeStructure_simple() throws Exception {
         // # Arrange #
         TreeStructureManagerImpl manager = new TreeStructureManagerImpl();
         MockUIComponent parent = new MockUIComponent();
