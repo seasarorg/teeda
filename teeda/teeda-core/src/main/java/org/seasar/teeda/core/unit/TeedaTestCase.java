@@ -178,8 +178,8 @@ public abstract class TeedaTestCase extends S2FrameworkTestCase {
         getContainer().register(S2ScopeTranslator.class);
     }
 
-    protected ManagedBeanFactoryImpl getManagedBeanFactory() {
-        return (ManagedBeanFactoryImpl) getContainer().getComponent(
+    protected ManagedBeanFactory getManagedBeanFactory() {
+        return (ManagedBeanFactory) getContainer().getComponent(
                 ManagedBeanFactory.class);
     }
 
