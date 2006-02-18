@@ -41,4 +41,26 @@ public class TreeStructureManagerImplTest extends TestCase {
         assertEquals(child.getClass().getName(), struct.getComponentClassName());
         assertEquals("child", struct.getComponentId());
     }
+    
+    public void testBuildFacetsTreeStructure() throws Exception {
+        // # Arrange #
+        TreeStructureManagerImpl manager = new TreeStructureManagerImpl();
+        MockUIComponent parent = new MockUIComponent();
+        parent.setId("parent");
+        MockUIComponent child = new MockUIComponent();
+        child.setId("child");
+        parent.getFacets().put("hoge", child);
+
+        // # Act #
+        Object[] array = manager.buildFacetsTreeStructure(parent);
+
+        // # Assert #
+        assertNotNull(array);
+        assertTrue(array.length == 1);
+        Object[] objs = (Object[])array[0];
+        assertEquals("hoge", objs[0].toString());
+        TreeStructure struct = (TreeStructure) objs[1];
+        assertEquals(child.getClass().getName(), struct.getComponentClassName());
+        assertEquals("child", struct.getComponentId());
+    }
 }
