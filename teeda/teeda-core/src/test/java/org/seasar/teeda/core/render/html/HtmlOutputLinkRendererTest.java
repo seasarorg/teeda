@@ -22,8 +22,7 @@ import javax.faces.render.Renderer;
 import javax.faces.render.RendererTest;
 
 import org.custommonkey.xmlunit.Diff;
-import org.seasar.teeda.core.mock.MockExternalContext;
-import org.seasar.teeda.core.mock.MockExternalContextWrapper;
+import org.seasar.teeda.core.mock.MockExternalContextImpl;
 import org.seasar.teeda.core.mock.MockFacesContext;
 
 /**
@@ -31,48 +30,18 @@ import org.seasar.teeda.core.mock.MockFacesContext;
  */
 public class HtmlOutputLinkRendererTest extends RendererTest {
 
-    private final boolean[] calls_ = { false };
-
-    private MockFacesContext context_;
-
     private HtmlOutputLinkRenderer renderer_;
 
     private MockHtmlOutputLink htmlOutputLink_;
 
     protected void setUp() throws Exception {
         super.setUp();
-        context_ = super.getFacesContext();
-        MockExternalContext externalContext = (MockExternalContext) context_
-                .getExternalContext();
-        externalContext = new MockExternalContextWrapper(externalContext) {
-            public String encodeResourceURL(String url) {
-                calls_[0] = true;
-                return url;
-            }
-        };
-        context_.setExternalContext(externalContext);
         renderer_ = createHtmlOutputLinkRenderer();
         htmlOutputLink_ = new MockHtmlOutputLink();
         htmlOutputLink_.setRenderer(renderer_);
     }
 
-    protected MockFacesContext getFacesContext() {
-        return context_;
-    }
-
-    public void testEncodeBegin() throws Exception {
-        // ## Arrange ##
-        htmlOutputLink_.setValue("/abc.html");
-
-        // ## Act ##
-        renderer_.encodeBegin(getFacesContext(), htmlOutputLink_);
-
-        // ## Assert ##
-        assertEquals(true, calls_[0]);
-        assertEquals("<a href=\"/abc.html\"", getResponseText());
-    }
-
-    public void testEncodeBeginToEnd() throws Exception {
+    public void testEncode() throws Exception {
         // ## Arrange ##
         htmlOutputLink_.setValue("a");
 
@@ -81,6 +50,27 @@ public class HtmlOutputLinkRendererTest extends RendererTest {
 
         // ## Assert ##
         assertEquals("<a href=\"a\"></a>", getResponseText());
+    }
+
+    public void testEncode_CallsEncodeResourceUrl() throws Exception {
+        // ## Arrange ##
+        htmlOutputLink_.setValue("/abc.html");
+
+        final String[] param = { null };
+        MockFacesContext context = getFacesContext();
+        context.setExternalContext(new MockExternalContextImpl() {
+            public String encodeResourceURL(String url) {
+                param[0] = url;
+                return url;
+            }
+        });
+
+        // ## Act ##
+        encodeByRenderer(renderer_, context, htmlOutputLink_);
+
+        // ## Assert ##
+        assertEquals("/abc.html", param[0]);
+        assertEquals("<a href=\"/abc.html\"></a>", getResponseText());
     }
 
     public void testEncode_RenderFalse() throws Exception {
@@ -114,36 +104,36 @@ public class HtmlOutputLinkRendererTest extends RendererTest {
         assertEquals("<a href=\"a\">Y</a>", getResponseText());
     }
 
-    public void testEncodeBegin_WithAccesskey() throws Exception {
+    public void testEncode_WithAccesskey() throws Exception {
         htmlOutputLink_.setValue("url");
         htmlOutputLink_.setAccesskey("aa");
 
-        renderer_.encodeBegin(getFacesContext(), htmlOutputLink_);
+        encodeByRenderer(renderer_, getFacesContext(), htmlOutputLink_);
 
-        assertEquals("<a href=\"url\" accesskey=\"aa\"", getResponseText());
+        assertEquals("<a href=\"url\" accesskey=\"aa\"></a>", getResponseText());
     }
 
-    public void testEncodeBegin_WithId() throws Exception {
+    public void testEncode_WithId() throws Exception {
         htmlOutputLink_.setId("someId");
         htmlOutputLink_.setValue("url");
         htmlOutputLink_.setAccesskey("aa");
 
-        renderer_.encodeBegin(getFacesContext(), htmlOutputLink_);
+        encodeByRenderer(renderer_, getFacesContext(), htmlOutputLink_);
 
-        assertEquals("<a id=\"someId\" href=\"url\" accesskey=\"aa\"",
+        assertEquals("<a id=\"someId\" href=\"url\" accesskey=\"aa\"></a>",
                 getResponseText());
     }
 
-    public void testEncodeBegin_HrefIsJapanese() throws Exception {
+    public void testEncode_HrefIsJapanese() throws Exception {
         // japanese "a"
         htmlOutputLink_.setValue("/" + new Character((char) 12354) + ".html");
-        renderer_.encodeBegin(getFacesContext(), htmlOutputLink_);
 
-        assertEquals(true, calls_[0]);
-        assertEquals("<a href=\"/%E3%81%82.html\"", getResponseText());
+        encodeByRenderer(renderer_, getFacesContext(), htmlOutputLink_);
+
+        assertEquals("<a href=\"/%E3%81%82.html\"></a>", getResponseText());
     }
 
-    public void testEncodeBegin_WithParam1() throws Exception {
+    public void testEncode_WithParam1() throws Exception {
         htmlOutputLink_.setValue("url.html");
 
         UIParameter param = new UIParameter();
@@ -151,12 +141,12 @@ public class HtmlOutputLinkRendererTest extends RendererTest {
         param.setValue("b");
         htmlOutputLink_.getChildren().add(param);
 
-        renderer_.encodeBegin(getFacesContext(), htmlOutputLink_);
+        encodeByRenderer(renderer_, getFacesContext(), htmlOutputLink_);
 
-        assertEquals("<a href=\"url.html?a=b\"", getResponseText());
+        assertEquals("<a href=\"url.html?a=b\"></a>", getResponseText());
     }
 
-    public void testEncodeBegin_WithParam2() throws Exception {
+    public void testEncode_WithParam2() throws Exception {
         htmlOutputLink_.setValue("/a/b/url.html");
 
         UIParameter param = new UIParameter();
@@ -164,9 +154,10 @@ public class HtmlOutputLinkRendererTest extends RendererTest {
         param.setValue("b/c");
         htmlOutputLink_.getChildren().add(param);
 
-        renderer_.encodeBegin(getFacesContext(), htmlOutputLink_);
+        encodeByRenderer(renderer_, getFacesContext(), htmlOutputLink_);
 
-        assertEquals("<a href=\"/a/b/url.html?a=b%2Fc\"", getResponseText());
+        assertEquals("<a href=\"/a/b/url.html?a=b%2Fc\"></a>",
+                getResponseText());
     }
 
     public void testEncodeBegin_BaseHrefHasQueryString() throws Exception {
@@ -177,24 +168,24 @@ public class HtmlOutputLinkRendererTest extends RendererTest {
         param.setValue("b");
         htmlOutputLink_.getChildren().add(param);
 
-        renderer_.encodeBegin(getFacesContext(), htmlOutputLink_);
+        encodeByRenderer(renderer_, getFacesContext(), htmlOutputLink_);
 
-        assertEquals("<a href=\"url.html?1=2&a=b\"", getResponseText());
+        assertEquals("<a href=\"url.html?1=2&a=b\"></a>", getResponseText());
     }
 
-    public void testEncodeBegin_WithJapaneseParamValue() throws Exception {
+    public void testEncode_WithJapaneseParamValue() throws Exception {
         htmlOutputLink_.setValue("url");
         UIParameter param = new UIParameter();
         param.setName("a");
         param.setValue(new Character((char) 12354)); // japanese "a"
         htmlOutputLink_.getChildren().add(param);
 
-        renderer_.encodeBegin(getFacesContext(), htmlOutputLink_);
+        encodeByRenderer(renderer_, getFacesContext(), htmlOutputLink_);
 
-        assertEquals("<a href=\"url?a=%E3%81%82\"", getResponseText());
+        assertEquals("<a href=\"url?a=%E3%81%82\"></a>", getResponseText());
     }
 
-    public void testEncodeBegin_WithParams() throws Exception {
+    public void testEncode_WithParams() throws Exception {
         htmlOutputLink_.setValue("url");
         {
             UIParameter param = new UIParameter();
@@ -209,9 +200,9 @@ public class HtmlOutputLinkRendererTest extends RendererTest {
             htmlOutputLink_.getChildren().add(param);
         }
 
-        renderer_.encodeBegin(getFacesContext(), htmlOutputLink_);
+        encodeByRenderer(renderer_, getFacesContext(), htmlOutputLink_);
 
-        assertEquals("<a href=\"url?a=1&b=2\"", getResponseText());
+        assertEquals("<a href=\"url?a=1&b=2\"></a>", getResponseText());
     }
 
     public void testEncode_WithAllAttributes() throws Exception {

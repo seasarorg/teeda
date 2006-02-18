@@ -22,11 +22,11 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.html.HtmlSelectManyCheckbox;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
-import javax.faces.internal.ArrayIterator;
 import javax.faces.internal.SelectItemsIterator;
 import javax.faces.model.SelectItem;
 import javax.faces.model.SelectItemGroup;
 
+import org.seasar.framework.util.ArrayIterator;
 import org.seasar.framework.util.ArrayUtil;
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;

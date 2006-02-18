@@ -23,10 +23,11 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.el.ValueBinding;
 import javax.faces.event.PhaseId;
-import javax.faces.internal.ArrayIterator;
 import javax.faces.internal.AssertionUtil;
 import javax.faces.model.SelectItem;
 import javax.faces.model.SelectItemGroup;
+
+import org.seasar.framework.util.ArrayIterator;
 
 /**
  * @author shot

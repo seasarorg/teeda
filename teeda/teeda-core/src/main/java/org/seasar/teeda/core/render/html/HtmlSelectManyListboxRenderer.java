@@ -21,11 +21,11 @@ import java.util.Iterator;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
-import javax.faces.internal.ArrayIterator;
 import javax.faces.internal.SelectItemsIterator;
 import javax.faces.model.SelectItem;
 import javax.faces.model.SelectItemGroup;
 
+import org.seasar.framework.util.ArrayIterator;
 import org.seasar.framework.util.ArrayUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.util.DecodeUtil;
