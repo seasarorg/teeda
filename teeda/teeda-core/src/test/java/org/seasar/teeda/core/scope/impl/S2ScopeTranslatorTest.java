@@ -23,7 +23,7 @@ import junit.framework.TestCase;
 /**
  * @author shot
  */
-public class TestS2ScopeTranslator extends TestCase {
+public class S2ScopeTranslatorTest extends TestCase {
 
     public void testToScope() {
         S2ScopeTranslator translator = new S2ScopeTranslator();
@@ -33,7 +33,7 @@ public class TestS2ScopeTranslator extends TestCase {
         assertEquals(Scope.SESSION, translator
                 .toScope(InstanceDefFactory.SESSION));
         assertEquals(Scope.APPLICATION, translator
-                .toScope(InstanceDefFactory.SINGLETON));
+                .toScope(InstanceDefFactory.APPLICATION));
     }
 
     public void testToExternalComponentScope() {
@@ -44,7 +44,7 @@ public class TestS2ScopeTranslator extends TestCase {
                 .toExternalComponentScope(Scope.REQUEST));
         assertEquals(InstanceDefFactory.SESSION, translator
                 .toExternalComponentScope(Scope.SESSION));
-        assertEquals(InstanceDefFactory.SINGLETON, translator
+        assertEquals(InstanceDefFactory.APPLICATION, translator
                 .toExternalComponentScope(Scope.APPLICATION));
     }
 }

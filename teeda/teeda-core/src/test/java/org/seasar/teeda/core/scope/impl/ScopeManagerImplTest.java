@@ -21,7 +21,7 @@ import org.seasar.teeda.core.unit.TeedaTestCase;
 /**
  * @author shot
  */
-public class TestScopeManagerImpl extends TeedaTestCase {
+public class ScopeManagerImplTest extends TeedaTestCase {
 
     public void testGetScope() {
         ScopeManagerImpl manager = new ScopeManagerImpl();
