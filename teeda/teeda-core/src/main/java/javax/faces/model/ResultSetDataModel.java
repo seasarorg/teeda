@@ -146,6 +146,8 @@ public class ResultSetDataModel extends DataModel {
 
     public class ResultSetMap extends TreeMap {
 
+        private static final long serialVersionUID = 1L;
+
         private int mapIndex_ = 0;
 
         private ResultSetMetaData metaData_ = null;

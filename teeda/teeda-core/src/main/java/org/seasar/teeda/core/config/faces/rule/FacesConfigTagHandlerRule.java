@@ -47,6 +47,8 @@ import org.seasar.teeda.core.config.faces.handler.ValidatorTagHandler;
  */
 public class FacesConfigTagHandlerRule extends JsfBaseTagHandlerRule {
 
+    private static final long serialVersionUID = 1L;
+
     public FacesConfigTagHandlerRule() {
         addTagHandler("/faces-config", new FacesConfigTagHandler());
 
