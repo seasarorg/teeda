@@ -29,11 +29,17 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.internal.AssertionUtil;
 import javax.faces.render.RenderKitFactory;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.servlet.jsp.jstl.core.Config;
 
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.config.webapp.element.ServletMappingElement;
 import org.seasar.teeda.core.config.webapp.element.WebappConfig;
+import org.seasar.teeda.core.util.ServletExternalContextUtil;
 import org.seasar.teeda.core.util.StateManagerUtil;
 import org.seasar.teeda.core.util.WebappConfigUtil;
 
@@ -43,6 +49,7 @@ import org.seasar.teeda.core.util.WebappConfigUtil;
  */
 public class ViewHandlerImpl extends ViewHandler {
 
+    //TODO testing
     public ViewHandlerImpl() {
     }
 
@@ -150,19 +157,20 @@ public class ViewHandlerImpl extends ViewHandler {
         AssertionUtil.assertNotNull("context", context);
         AssertionUtil.assertNotNull("viewRoot", viewRoot);
         ExternalContext externalContext = context.getExternalContext();
-//        String path = ExternalContextUtil.getViewId(externalContext);
-//        String viewId = viewRoot.getViewId();
-//        if (path.equals(viewId)) {
-//            HttpServletRequest request = ServletExternalContextUtil
-//                    .getRequest(externalContext);
-//            HttpServletResponse response = ServletExternalContextUtil
-//                    .getResponse(externalContext);
-//            getViewRenderer().renderView(path, request, response);
-//        } else {
-            externalContext.dispatch(viewRoot.getViewId());
-//        }
+
+        // really need this? 2.5.2.2 on JSF 1.1 and 7.5.2 on JSF(confused....)
+        ensureResponseLocaleSet(externalContext, viewRoot);
+        ensureRequestLocaleSet(externalContext, viewRoot);
+        try {
+            String viewId = convertViewIdIfNeed(context);
+            context.getViewRoot().setViewId(viewId);
+            externalContext.dispatch(viewId);
+        } finally {
+            storeResponseCharacterEncoding(externalContext);
+        }
     }
 
+    //TODO redirect need when viewId could not be identified?
     public UIViewRoot restoreView(FacesContext context, String viewId) {
         AssertionUtil.assertNotNull("context", context);
         Application app = context.getApplication();
@@ -224,14 +232,16 @@ public class ViewHandlerImpl extends ViewHandler {
             String urlPattern = servletMapping.getUrlPattern();
             if ((isExtensionMapping(urlPattern) && pathInfo == null)
                     || (!isExtensionMapping(urlPattern) && pathInfo != null)) {
-                if(isExtensionMapping(urlPattern)) {
-                    String extension = urlPattern.substring(1, urlPattern.length());
+                if (isExtensionMapping(urlPattern)) {
+                    String extension = urlPattern.substring(1, urlPattern
+                            .length());
                     if (servletPath.endsWith(extension)
                             || servletPath.equals(urlPattern)) {
                         return urlPattern;
                     }
                 } else {
-                    urlPattern = urlPattern.substring(0, urlPattern.length() - 2);
+                    urlPattern = urlPattern.substring(0,
+                            urlPattern.length() - 2);
                     if (servletPath.equals(urlPattern)) {
                         return urlPattern;
                     }
@@ -241,8 +251,59 @@ public class ViewHandlerImpl extends ViewHandler {
         return null;
     }
 
+    protected String convertViewIdIfNeed(FacesContext context) {
+        WebappConfig webappConfig = getWebappConfig(context);
+        ExternalContext externalContext = context.getExternalContext();
+        String urlPattern = getUrlPattern(webappConfig, context);
+        String viewId = context.getViewRoot().getViewId();
+        if (urlPattern != null && isExtensionMapping(urlPattern)) {
+            String defaultSuffix = externalContext
+                    .getInitParameter(ViewHandler.DEFAULT_SUFFIX_PARAM_NAME);
+            String suffix = defaultSuffix != null ? defaultSuffix
+                    : ViewHandler.DEFAULT_SUFFIX;
+            if (!viewId.endsWith(suffix)) {
+                int dot = viewId.lastIndexOf('.');
+                if (dot == -1) {
+                    viewId = viewId + suffix;
+                } else {
+                    viewId = viewId.substring(0, dot) + suffix;
+                }
+            }
+        }
+        return viewId;
+    }
+
     protected WebappConfig getWebappConfig(FacesContext context) {
         return WebappConfigUtil.getWebappConfig(context);
+    }
+
+    protected void ensureResponseLocaleSet(ExternalContext externalContext,
+            UIViewRoot viewRoot) {
+        ServletResponse res = (ServletResponse) externalContext.getResponse();
+        res.setLocale(viewRoot.getLocale());
+    }
+
+    protected void ensureRequestLocaleSet(ExternalContext externalContext,
+            UIViewRoot viewRoot) {
+        if (externalContext.getRequest() instanceof ServletRequest) {
+            Config.set((ServletRequest) externalContext.getRequest(),
+                    Config.FMT_LOCALE, viewRoot.getLocale());
+        }
+    }
+
+    protected void storeResponseCharacterEncoding(
+            ExternalContext externalContext) {
+        ServletRequest req = (ServletRequest) externalContext.getRequest();
+        if (ServletExternalContextUtil.isHttpServletRequest(req)) {
+            HttpServletResponse httpRes = ServletExternalContextUtil
+                    .getResponse(externalContext);
+            HttpSession session = (HttpSession) externalContext
+                    .getSession(false);
+            if (session != null) {
+                session.setAttribute(ViewHandler.CHARACTER_ENCODING_KEY,
+                        httpRes.getCharacterEncoding());
+            }
+        }
     }
 
     private static boolean isExtensionMapping(String urlPattern) {
