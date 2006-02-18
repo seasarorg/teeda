@@ -46,8 +46,10 @@ public class ResultSetDataModel extends DataModel {
 
     public ResultSetDataModel(ResultSet resultSet) {
         super();
-        assertUpdatable(resultSet);
-        assertScrollable(resultSet);
+        if (resultSet != null) {
+            assertUpdatable(resultSet);
+            assertScrollable(resultSet);
+        }
         setWrappedData(resultSet);
     }
 
