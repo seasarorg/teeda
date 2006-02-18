@@ -25,7 +25,6 @@ import java.util.Set;
 import java.util.TreeMap;
 
 import javax.faces.FacesException;
-import javax.faces.internal.AssertionUtil;
 import javax.faces.internal.ResultSetEntries;
 import javax.faces.internal.ResultSetKeys;
 import javax.faces.internal.ResultSetValues;
@@ -35,7 +34,6 @@ import javax.faces.internal.ResultSetValues;
  */
 public class ResultSetDataModel extends DataModel {
 
-    //TODO testing
     private ResultSet resultSet_ = null;
 
     private int index_ = -1;
@@ -48,10 +46,8 @@ public class ResultSetDataModel extends DataModel {
 
     public ResultSetDataModel(ResultSet resultSet) {
         super();
-        AssertionUtil.assertNotNull("resultSet", resultSet);
         assertUpdatable(resultSet);
         assertScrollable(resultSet);
-
         setWrappedData(resultSet);
     }
 
@@ -149,11 +145,9 @@ public class ResultSetDataModel extends DataModel {
     private static void assertUpdatable(ResultSet rs) {
         try {
             int concurrency = rs.getConcurrency();
-
             if (concurrency != ResultSet.CONCUR_UPDATABLE) {
                 throw new IllegalArgumentException();
             }
-
         } catch (SQLException e) {
             throw new IllegalArgumentException();
         }
@@ -162,7 +156,6 @@ public class ResultSetDataModel extends DataModel {
     private static void assertScrollable(ResultSet rs) {
         try {
             int type = rs.getType();
-
             if (type != ResultSet.TYPE_SCROLL_SENSITIVE) {
                 throw new IllegalArgumentException();
             }
