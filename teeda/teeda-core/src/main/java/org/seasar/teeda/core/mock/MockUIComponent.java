@@ -16,6 +16,7 @@
 package org.seasar.teeda.core.mock;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -55,6 +56,8 @@ public class MockUIComponent extends UIComponent {
     private FacesContext context_ = null;
 
     private Map valueBindingMap_ = new HashMap();
+    
+    private List children_ = new ArrayList();
     
     public Map getAttributes() {
         return null;
@@ -121,7 +124,7 @@ public class MockUIComponent extends UIComponent {
     }
 
     public List getChildren() {
-        return Collections.EMPTY_LIST;
+        return children_;
     }
 
     public int getChildCount() {

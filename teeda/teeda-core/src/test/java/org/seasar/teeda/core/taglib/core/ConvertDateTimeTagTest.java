@@ -155,8 +155,10 @@ public class ConvertDateTimeTagTest extends TeedaTestCase {
         tag.setTimeZone("America/Los_Angeles");
         tag.setType("type");
         
+        // # Act #
         Converter c = tag.createConverter();
         
+        // # Assert #
         assertNotNull(c);
         assertTrue(c instanceof DateTimeConverter);
         DateTimeConverter dc = (DateTimeConverter)c;
