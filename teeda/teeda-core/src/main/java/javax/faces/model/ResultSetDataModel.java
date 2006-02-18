@@ -55,7 +55,6 @@ public class ResultSetDataModel extends DataModel {
     }
 
     public Object getRowData() {
-
         if (resultSet_ == null) {
             return null;
         }
@@ -80,11 +79,9 @@ public class ResultSetDataModel extends DataModel {
     }
 
     public boolean isRowAvailable() {
-
         if (resultSet_ == null || index_ < 0) {
             return false;
         }
-
         try {
             return resultSet_.absolute(index_ + 1);
         } catch (SQLException e) {
@@ -93,25 +90,20 @@ public class ResultSetDataModel extends DataModel {
     }
 
     public void setRowIndex(int rowIndex) {
-
         if (rowIndex < -1) {
             throw new IllegalArgumentException();
         }
-
         if (isUpdated_) {
             updateResultSetIfNeeded();
         }
-
         int oldIndex = index_;
         index_ = rowIndex;
-
         DataModelListener[] listeners = getDataModelListeners();
         if ((oldIndex != index_) && (listeners != null)) {
             Object rowData = null;
             if (isRowAvailable()) {
                 rowData = getRowData();
             }
-
             DataModelEvent event = new DataModelEvent(this, index_, rowData);
             for (int i = 0; i < listeners.length; i++) {
                 listeners[i].rowSelected(event);
@@ -120,14 +112,12 @@ public class ResultSetDataModel extends DataModel {
     }
 
     public void setWrappedData(Object data) {
-
         if (data == null) {
             setRowIndex(-1);
         } else {
             resultSet_ = (ResultSet) data;
             setRowIndex(0);
         }
-
     }
 
     private void updateResultSetIfNeeded() {
@@ -190,7 +180,6 @@ public class ResultSetDataModel extends DataModel {
             if (!containsKey(key)) {
                 return null;
             }
-
             try {
                 resultSet_.absolute(index_ + 1);
                 return resultSet_.getObject((String) realKey(key));
@@ -207,7 +196,6 @@ public class ResultSetDataModel extends DataModel {
             if ((!containsKey(key))) {
                 throw new IllegalArgumentException();
             }
-
             try {
                 resultSet_.absolute(index_ + 1);
                 String realKey = (String) realKey(key);
@@ -240,7 +228,6 @@ public class ResultSetDataModel extends DataModel {
         }
 
         private ResultSetMetaData getMetaData() {
-
             try {
                 if (metaData_ == null) {
                     metaData_ = resultSet_.getMetaData();
