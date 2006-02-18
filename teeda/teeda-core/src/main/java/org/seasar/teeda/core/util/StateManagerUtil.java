@@ -23,6 +23,9 @@ import javax.faces.component.NamingContainer;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 
+/**
+ * @author shot
+ */
 public class StateManagerUtil {
 
     private StateManagerUtil(){
@@ -39,7 +42,7 @@ public class StateManagerUtil {
     private static void assertComponentNoDuplicateIdInternal(UIComponent component, List idList) {
         String id = component.getId();
         if(id != null && idList.contains(id)) {
-            throw new IllegalStateException("Component id:" + id + "has same id in view tree.");
+            throw new IllegalStateException("Component id:" + id + " has same id in view tree.");
         }
         idList.add(id);
         for(Iterator itr = component.getFacetsAndChildren(); itr.hasNext();) {
