@@ -169,14 +169,18 @@ public interface JsfConstants {
     public String COLSPAN_ATTR = "colspan";
 
     public String COLUMN_CLASSES_ATTR = "columnClasses";
+    
+    public String CONVERTER_ATTR = "converter";
 
     public String COORDS_ATTR = "coords";
 
     public String DATAFLD_ATTR = "datafld";
 
     public String DATASRC_ATTR = "datasrc";
-
+    
     public String DATAFORMATAS_ATTR = "dataformatas";
+    
+    public String DATE_STYLE_ATTR = "dateStyle";
 
     public String DIR_ATTR = "dir";
 
@@ -199,6 +203,8 @@ public interface JsfConstants {
     public String FOOTER_CLASS_ATTR = "footerClass";
 
     public String FOR_ATTR = "for";
+    
+    public String FORMAT_PATTERN_ATTR = "formatPattern";
 
     public String FRAME_ATTR = "frame";
 
@@ -309,6 +315,10 @@ public interface JsfConstants {
     public String TARGET_ATTR = "target";
 
     public String TITLE_ATTR = "title";
+    
+    public String TIME_STYLE_ATTR = "timeStyle";
+    
+    public String TIMEZONE_ATTR = "timezone";
 
     public String TOOLTIP_ATTR = "tooltip";
 
