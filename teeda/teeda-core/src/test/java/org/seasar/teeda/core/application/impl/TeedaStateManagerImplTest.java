@@ -20,7 +20,37 @@ public class TeedaStateManagerImplTest extends TeedaTestCase {
     public void testRestoreView() throws Exception {
     }
 
-    public void testRestoreComponentStateFromServer() throws Exception {
+    public void testRestoreComponentStateFromClient_serializedViewIsNull()
+            throws Exception {
+        // # Arrange #
+        TeedaStateManagerImpl manager = new TeedaStateManagerImpl();
+
+        // # Act #
+        try {
+            manager.restoreComponentState(getFacesContext(), new UIViewRoot(), null);
+            fail();
+        } catch (IllegalArgumentException expected) {
+            success();
+        }
+    }
+
+    public void testRestoreComponentStateFromClient() throws Exception {
+        // # Arrange #
+        TeedaStateManagerImpl manager = new TeedaStateManagerImpl();
+        NotifyViewRoot component = new NotifyViewRoot();
+        MockResponseStateManager responseStateManager = new MockResponseStateManagerImpl();
+        responseStateManager.setComponentStateToRestore("state");
+        getRenderKit().setResponseStateManager(responseStateManager);
+
+        // # Act #
+        manager.restoreComponentStateFromClient(getFacesContext(), component,
+                RenderKitFactory.HTML_BASIC_RENDER_KIT);
+
+        // # Assert #
+        assertEquals(1, component.getNotifyCount());
+    }
+
+    public void testRestoreComponentStateFromServer_succeed() throws Exception {
         // # Arrange #
         TeedaStateManagerImpl manager = new TeedaStateManagerImpl();
         NotifyViewRoot component = new NotifyViewRoot();
@@ -32,12 +62,13 @@ public class TeedaStateManagerImplTest extends TeedaTestCase {
 
         // # Act #
         manager.restoreComponentStateFromServer(getFacesContext(), component);
-        
+
         // # Assert #
         assertEquals(1, component.getNotifyCount());
     }
-    
-    public void testRestoreComponentStateFromServer_stateIsNull() throws Exception {
+
+    public void testRestoreComponentStateFromServer_stateIsNull()
+            throws Exception {
         // # Arrange #
         NotifyViewRoot component = new NotifyViewRoot();
         TeedaStateManagerImpl manager = new TeedaStateManagerImpl();
@@ -49,23 +80,24 @@ public class TeedaStateManagerImplTest extends TeedaTestCase {
 
         // # Act #
         manager.restoreComponentStateFromServer(getFacesContext(), component);
-        
+
         // # Assert #
         assertEquals(0, component.getNotifyCount());
     }
-    
-    public void testRestoreComponenentStateFromServer_serializedViewIsNull() throws Exception {
+
+    public void testRestoreComponenentStateFromServer_serializedViewIsNull()
+            throws Exception {
         // # Arrange #
         TeedaStateManagerImpl manager = new TeedaStateManagerImpl();
         NotifyViewRoot root = new NotifyViewRoot();
-        
+
         // # Act #
         manager.restoreComponentStateFromServer(getFacesContext(), root);
-        
+
         // # Assert #
         assertEquals(0, root.getNotifyCount());
     }
-    
+
     public void testRestoreTreeStructure_renderKitIdNull() throws Exception {
         // # Arrange #
         TeedaStateManagerImpl manager = new TeedaStateManagerImpl();
@@ -152,17 +184,18 @@ public class TeedaStateManagerImplTest extends TeedaTestCase {
     private static class NotifyViewRoot extends UIViewRoot {
 
         private int count = 0;
+
         public NotifyViewRoot() {
         }
-        
+
         public void processRestoreState(FacesContext context, Object state) {
             count++;
         }
-        
+
         public void reset() {
             count = 0;
         }
-        
+
         public int getNotifyCount() {
             return count;
         }
