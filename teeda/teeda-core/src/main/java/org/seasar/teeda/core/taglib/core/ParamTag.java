@@ -15,13 +15,31 @@
  */
 package org.seasar.teeda.core.taglib.core;
 
-import javax.servlet.jsp.tagext.TagSupport;
+import javax.faces.component.UIComponent;
+
+import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.core.taglib.UIComponentTagBase;
 
 /**
  * @author shot
- * 
+ * @author yone
  */
-public class ParamTag extends TagSupport {
+public class ParamTag extends UIComponentTagBase {
 
-    //need impl
+    private static final long serialVersionUID = 1L;
+
+    public String getComponentType() {
+        return "javax.faces.Parameter";
+    }
+
+    public String getRendererType() {
+        return null;
+    }
+
+    protected void setProperties(UIComponent component) {
+        super.setProperties(component);
+        
+        setComponentProperty(component, JsfConstants.NAME_ATTR, name_);
+        setComponentProperty(component, JsfConstants.VALUE_ATTR, value_);
+    }
 }
