@@ -25,6 +25,7 @@ import javax.faces.context.ResponseWriter;
 
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.AbstractResponseStateManager;
+import org.seasar.teeda.core.util.StateManagerUtil;
 
 /**
  * @author shot
@@ -43,9 +44,8 @@ public class HtmlResponseStateManager extends AbstractResponseStateManager {
         writer.writeAttribute(JsfConstants.NAME_ATTR, VIEW_STATE_PARAM, null);
         writer.writeAttribute(JsfConstants.ID_ATTR, VIEW_STATE_PARAM, null);
 
-        StateManager stateManager = context.getApplication().getStateManager();
         Object value = null;
-        if (stateManager.isSavingStateInClient(context)) {
+        if (StateManagerUtil.isSavingStateInClient(context)) {
             value = getEncodeConverter().getAsEncodeString(serializedView);
         } else {
             value = serializedView.getStructure();
@@ -56,22 +56,21 @@ public class HtmlResponseStateManager extends AbstractResponseStateManager {
         writeViewId(writer, context);
     }
 
-    public Object getTreeStructureToRestore(FacesContext context, String viewId) {
+    public Object getComponentStateToRestore(FacesContext context) {
         Map requestMap = context.getExternalContext().getRequestMap();
         Object state = requestMap.get(FACES_VIEW_STATE);
         requestMap.remove(FACES_VIEW_STATE);
         return state;
     }
 
-    public Object getComponentStateToRestore(FacesContext context) {
+    public Object getTreeStructureToRestore(FacesContext context, String viewId) {
         Map paramMap = context.getExternalContext().getRequestParameterMap();
         String viewState = (String) paramMap.get(VIEW_STATE_PARAM);
         if (viewState == null) {
             return null;
         }
         Object structure = null;
-        StateManager stateManager = context.getApplication().getStateManager();
-        if (stateManager.isSavingStateInClient(context)) {
+        if (StateManagerUtil.isSavingStateInClient(context)) {
             structure = getEncodeConverter().getAsDecodeObject(viewState);
         } else {
             structure = viewState;

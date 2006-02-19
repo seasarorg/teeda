@@ -31,7 +31,7 @@ public class StateManagerUtil {
     private StateManagerUtil(){
     }
     
-    public static boolean isSavingStateClient(FacesContext context) {
+    public static boolean isSavingStateInClient(FacesContext context) {
         return context.getApplication().getStateManager().isSavingStateInClient(context);
     }
     

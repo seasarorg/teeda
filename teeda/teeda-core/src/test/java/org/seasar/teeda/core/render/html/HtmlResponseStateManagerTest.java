@@ -85,28 +85,28 @@ public class HtmlResponseStateManagerTest extends TeedaTestCase {
                 getResponseText());
     }
 
-    public void testGetTreeStructureToRestore1() throws Exception {
+    public void testComponentStateToRestore1() throws Exception {
         getExternalContext().getRequestMap().put(
                 AbstractResponseStateManager.FACES_VIEW_STATE, "hoge");
         HtmlResponseStateManager manager = new HtmlResponseStateManager();
-        Object o = manager.getTreeStructureToRestore(getFacesContext(), "aaa");
+        Object o = manager.getComponentStateToRestore(getFacesContext());
         assertEquals("hoge", o);
         assertNull(getExternalContext().getRequestMap().get(
                 AbstractResponseStateManager.FACES_VIEW_STATE));
     }
 
-    public void testGetTreeStructureToRestore2() throws Exception {
+    public void testGetComponentStateToRestore2() throws Exception {
         HtmlResponseStateManager manager = new HtmlResponseStateManager();
-        Object o = manager.getTreeStructureToRestore(getFacesContext(), "aaa");
+        Object o = manager.getComponentStateToRestore(getFacesContext());
         assertNull(o);
     }
 
-    public void testGetComponentStateToRestore_emptyValue() throws Exception {
+    public void testGetTreeStructureToRestore_emptyValue() throws Exception {
         HtmlResponseStateManager manager = new HtmlResponseStateManager();
-        assertNull(manager.getComponentStateToRestore(getFacesContext()));
+        assertNull(manager.getTreeStructureToRestore(getFacesContext(), "a"));
     }
 
-    public void testGetComponentStateToRestore_getDecodedInClient()
+    public void testGetTreeStructureToRestore_getDecodedInClient()
             throws Exception {
         // # Arrange #
         getServletContext().setInitParameter(
@@ -121,14 +121,14 @@ public class HtmlResponseStateManagerTest extends TeedaTestCase {
         manager.setEncodeConverter(converter);
 
         // # Act #
-        Object o = manager.getComponentStateToRestore(getFacesContext());
+        Object o = manager.getTreeStructureToRestore(getFacesContext(), "hoge");
 
         // # Assert #
         assertNotNull(o);
         assertEquals("a", o);
     }
 
-    public void testGetComponentStateToRestore_getDecodedInServer()
+    public void testGetTreeStructureToRestore_getDecodedInServer()
             throws Exception {
         // # Arrange #
         getServletContext().setInitParameter(
@@ -143,7 +143,7 @@ public class HtmlResponseStateManagerTest extends TeedaTestCase {
         manager.setEncodeConverter(converter);
 
         // # Act #
-        Object o = manager.getComponentStateToRestore(getFacesContext());
+        Object o = manager.getTreeStructureToRestore(getFacesContext(), "hoge");
 
         // # Assert #
         assertNotNull(o);

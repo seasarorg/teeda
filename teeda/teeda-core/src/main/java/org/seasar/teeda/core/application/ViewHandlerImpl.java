@@ -181,7 +181,7 @@ public class ViewHandlerImpl extends ViewHandler {
 
     public void writeState(FacesContext context) throws IOException {
         AssertionUtil.assertNotNull("context", context);
-        if (StateManagerUtil.isSavingStateClient(context)) {
+        if (StateManagerUtil.isSavingStateInClient(context)) {
             context.getResponseWriter().writeText(JsfConstants.STATE_MARKER,
                     null);
         }

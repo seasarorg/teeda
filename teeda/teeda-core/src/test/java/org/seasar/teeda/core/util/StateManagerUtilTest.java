@@ -25,7 +25,7 @@ import org.seasar.teeda.core.unit.TeedaTestCase;
 public class StateManagerUtilTest extends TeedaTestCase {
 
     public void testIsSavingStateClient() throws Exception {
-        assertFalse(StateManagerUtil.isSavingStateClient(getFacesContext()));
+        assertFalse(StateManagerUtil.isSavingStateInClient(getFacesContext()));
     }
 
     public void testAssertComponentNoDuplicateId_success() throws Exception {
