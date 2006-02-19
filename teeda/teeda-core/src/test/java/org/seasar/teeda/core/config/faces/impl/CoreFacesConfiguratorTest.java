@@ -56,7 +56,7 @@ import org.seasar.teeda.core.mock.MockLifecycleFactory;
 import org.seasar.teeda.core.mock.MockNavigationHandler;
 import org.seasar.teeda.core.mock.MockPhaseListener;
 import org.seasar.teeda.core.mock.MockPropertyResolver;
-import org.seasar.teeda.core.mock.MockRenderKit;
+import org.seasar.teeda.core.mock.MockRenderKitImpl;
 import org.seasar.teeda.core.mock.MockRenderKitFactory;
 import org.seasar.teeda.core.mock.MockRenderer;
 import org.seasar.teeda.core.mock.MockStateManager;
@@ -194,7 +194,7 @@ public class CoreFacesConfiguratorTest extends S2TestCase {
         RenderKit renderKit = renderKitFactory.getRenderKit(context,
                 "renderkitid");
         assertNotNull(renderKit);
-        ObjectAssert.assertInstanceOf(MockRenderKit.class, renderKit);
+        ObjectAssert.assertInstanceOf(MockRenderKitImpl.class, renderKit);
 
         Renderer renderer = renderKit.getRenderer("family", "type");
         assertNotNull(renderer);

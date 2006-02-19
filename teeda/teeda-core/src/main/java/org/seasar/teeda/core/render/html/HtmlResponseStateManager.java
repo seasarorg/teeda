@@ -18,7 +18,6 @@ package org.seasar.teeda.core.render.html;
 import java.io.IOException;
 import java.util.Map;
 
-import javax.faces.application.StateManager;
 import javax.faces.application.StateManager.SerializedView;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;

@@ -54,7 +54,7 @@
 	</navigation-rule>
 	<render-kit>
 		<render-kit-id>renderkitid</render-kit-id>
-		<render-kit-class>org.seasar.teeda.core.mock.MockRenderKit</render-kit-class>
+		<render-kit-class>org.seasar.teeda.core.mock.MockRenderKitImpl</render-kit-class>
 		<renderer>
 			<component-family>family</component-family>
 			<renderer-type>type</renderer-type>

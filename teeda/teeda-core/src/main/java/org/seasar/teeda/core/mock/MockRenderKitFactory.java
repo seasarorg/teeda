@@ -15,7 +15,9 @@
  */
 package org.seasar.teeda.core.mock;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 import javax.faces.context.FacesContext;
 import javax.faces.render.RenderKit;

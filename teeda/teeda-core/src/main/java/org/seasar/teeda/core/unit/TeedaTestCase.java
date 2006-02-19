@@ -41,6 +41,7 @@ import org.seasar.teeda.core.mock.MockPhaseListener;
 import org.seasar.teeda.core.mock.MockPropertyResolver;
 import org.seasar.teeda.core.mock.MockRenderKit;
 import org.seasar.teeda.core.mock.MockRenderKitFactory;
+import org.seasar.teeda.core.mock.MockRenderKitImpl;
 import org.seasar.teeda.core.mock.MockRenderer;
 import org.seasar.teeda.core.mock.MockStateManager;
 import org.seasar.teeda.core.mock.MockUIComponent;
@@ -109,7 +110,7 @@ public abstract class TeedaTestCase extends S2FrameworkTestCase {
         UIViewRoot viewRoot = new UIViewRoot();
         viewRoot.setRenderKitId(RenderKitFactory.HTML_BASIC_RENDER_KIT);
         facesContext.setViewRoot(viewRoot);
-        renderKit = new MockRenderKit();
+        renderKit = new MockRenderKitImpl();
 
         // default setting
         MockRenderer renderer = new MockRenderer();

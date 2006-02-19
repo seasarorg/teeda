@@ -24,7 +24,6 @@ import javax.faces.render.Renderer;
 
 import org.seasar.framework.exception.ClassNotFoundRuntimeException;
 import org.seasar.teeda.core.JsfConstants;
-import org.seasar.teeda.core.config.faces.assembler.impl.DefaultRenderKitAssembler;
 import org.seasar.teeda.core.config.faces.element.RenderKitElement;
 import org.seasar.teeda.core.config.faces.element.RendererElement;
 import org.seasar.teeda.core.config.faces.element.impl.RenderKitElementImpl;
@@ -53,7 +52,7 @@ public class DefaultRenderKitAssemblerTest extends TeedaTestCase {
         String id = "id";
         RenderKitElement renderKitElement = new RenderKitElementImpl();
         renderKitElement.setRenderKitId(id);
-        renderKitElement.setRenderKitClass("org.seasar.teeda.core.mock.MockRenderKit");
+        renderKitElement.setRenderKitClass("org.seasar.teeda.core.mock.MockRenderKitImpl");
         RendererElement rendererElement = new RendererElementImpl();
         rendererElement.setComponentFamily("family");
         rendererElement.setRendererClass("org.seasar.teeda.core.mock.MockRenderer");
@@ -121,7 +120,7 @@ public class DefaultRenderKitAssemblerTest extends TeedaTestCase {
 
         // ## Act ##
         RenderKit renderKit = assembler
-                .createRenderKit("org.seasar.teeda.core.mock.MockRenderKit");
+                .createRenderKit("org.seasar.teeda.core.mock.MockRenderKitImpl");
 
         // ## Assert ##
         assertTrue(renderKit instanceof MockRenderKit);

@@ -43,6 +43,7 @@ import org.seasar.teeda.core.mock.MockApplicationImpl;
 import org.seasar.teeda.core.mock.MockExternalContext;
 import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.mock.MockFacesContextImpl;
+import org.seasar.teeda.core.mock.MockUIViewRoot;
 import org.seasar.teeda.core.unit.TeedaTestCase;
 
 /**
@@ -557,9 +558,6 @@ public class ViewHandlerImplTest extends TeedaTestCase {
         webappConfig.addServletMappingElement(servletMapping);
         getExternalContext().getApplicationMap().put(
                 WebappConfig.class.getName(), webappConfig);
-    }
-
-    public static class MockUIViewRoot extends UIViewRoot {
     }
 
 }
