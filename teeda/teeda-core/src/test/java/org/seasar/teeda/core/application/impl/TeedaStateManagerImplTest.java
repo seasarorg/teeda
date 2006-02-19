@@ -2,6 +2,7 @@ package org.seasar.teeda.core.application.impl;
 
 import javax.faces.application.StateManager.SerializedView;
 import javax.faces.component.UIViewRoot;
+import javax.faces.context.FacesContext;
 import javax.faces.render.RenderKitFactory;
 
 import org.seasar.teeda.core.application.TreeStructure;
@@ -19,6 +20,52 @@ public class TeedaStateManagerImplTest extends TeedaTestCase {
     public void testRestoreView() throws Exception {
     }
 
+    public void testRestoreComponentStateFromServer() throws Exception {
+        // # Arrange #
+        TeedaStateManagerImpl manager = new TeedaStateManagerImpl();
+        NotifyViewRoot component = new NotifyViewRoot();
+        component.setViewId("id");
+        TreeStructure struct = new TreeStructure(
+                component.getClass().getName(), component.getId());
+        SerializedView view = manager.new SerializedView(struct, "id");
+        manager.saveSerializedViewToServer(getExternalContext(), "id", view);
+
+        // # Act #
+        manager.restoreComponentStateFromServer(getFacesContext(), component);
+        
+        // # Assert #
+        assertEquals(1, component.getNotifyCount());
+    }
+    
+    public void testRestoreComponentStateFromServer_stateIsNull() throws Exception {
+        // # Arrange #
+        NotifyViewRoot component = new NotifyViewRoot();
+        TeedaStateManagerImpl manager = new TeedaStateManagerImpl();
+        component.setId("id");
+        TreeStructure struct = new TreeStructure(
+                component.getClass().getName(), component.getId());
+        SerializedView view = manager.new SerializedView(struct, null);
+        manager.saveSerializedViewToServer(getExternalContext(), "id", view);
+
+        // # Act #
+        manager.restoreComponentStateFromServer(getFacesContext(), component);
+        
+        // # Assert #
+        assertEquals(0, component.getNotifyCount());
+    }
+    
+    public void testRestoreComponenentStateFromServer_serializedViewIsNull() throws Exception {
+        // # Arrange #
+        TeedaStateManagerImpl manager = new TeedaStateManagerImpl();
+        NotifyViewRoot root = new NotifyViewRoot();
+        
+        // # Act #
+        manager.restoreComponentStateFromServer(getFacesContext(), root);
+        
+        // # Assert #
+        assertEquals(0, root.getNotifyCount());
+    }
+    
     public void testRestoreTreeStructure_renderKitIdNull() throws Exception {
         // # Arrange #
         TeedaStateManagerImpl manager = new TeedaStateManagerImpl();
@@ -102,4 +149,22 @@ public class TeedaStateManagerImplTest extends TeedaTestCase {
         assertEquals("root", root.getId());
     }
 
+    private static class NotifyViewRoot extends UIViewRoot {
+
+        private int count = 0;
+        public NotifyViewRoot() {
+        }
+        
+        public void processRestoreState(FacesContext context, Object state) {
+            count++;
+        }
+        
+        public void reset() {
+            count = 0;
+        }
+        
+        public int getNotifyCount() {
+            return count;
+        }
+    }
 }
