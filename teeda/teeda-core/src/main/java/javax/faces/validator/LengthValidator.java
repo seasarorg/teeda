@@ -83,6 +83,14 @@ public class LengthValidator implements Validator, StateHolder {
 		return (minimum_ != null) ? minimum_.intValue() : Integer.MIN_VALUE;
 	}
 	
+    public void setMaximum(int maximum) {
+        maximum_ = new Integer(maximum);
+    }
+    
+    public void setMinimum(int minimum) {
+        minimum_ = new Integer(minimum);
+    }
+    
 	public boolean isTransient(){
 		return transientValue_;
 	}

@@ -24,13 +24,13 @@ import javax.faces.internal.FacesMessageUtils;
 
 public class LongRangeValidator implements Validator, StateHolder {
 
-    public static final String VALIDATOR_ID = "javax.faces.DoubleRange";
+    public static final String VALIDATOR_ID = "javax.faces.LongRange";
 
-    public static final String TYPE_MESSAGE_ID = "javax.faces.validator.DoubleRangeValidator.TYPE";
+    public static final String TYPE_MESSAGE_ID = "javax.faces.validator.LongRangeValidator.TYPE";
 
-    public static final String MAXIMUM_MESSAGE_ID = "javax.faces.validator.DoubleRangeValidator.MAXIMUM";
+    public static final String MAXIMUM_MESSAGE_ID = "javax.faces.validator.LongRangeValidator.MAXIMUM";
 
-    public static final String MINIMUM_MESSAGE_ID = "javax.faces.validator.DoubleRangeValidator.MINIMUM";
+    public static final String MINIMUM_MESSAGE_ID = "javax.faces.validator.LongRangeValidator.MINIMUM";
 
     private Long maximum_ = null;
 

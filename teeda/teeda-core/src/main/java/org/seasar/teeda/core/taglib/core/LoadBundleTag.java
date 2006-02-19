@@ -29,6 +29,7 @@ import java.util.Set;
 
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
+import javax.faces.internal.AssertionUtil;
 import javax.faces.webapp.UIComponentTag;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.Tag;
@@ -59,14 +60,10 @@ public class LoadBundleTag extends TagSupport {
     
     public int doStartTag() throws JspException {
         FacesContext context = FacesContext.getCurrentInstance();
-        if (context == null) {
-            throw new JspException("no faces context");
-        }
-        
+        AssertionUtil.assertNotNull("FacesContext", context);
+
         UIViewRoot viewRoot = context.getViewRoot();
-        if (viewRoot == null) {
-            throw new JspException("no view root");
-        }
+        AssertionUtil.assertNotNull("ViewRoot", viewRoot);
 
         Locale locale = viewRoot.getLocale();
         if (locale == null) {

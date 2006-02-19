@@ -15,34 +15,30 @@
  */
 package org.seasar.teeda.core.taglib.core;
 
-import javax.faces.component.UIComponent;
-import javax.faces.component.UIParameter;
+import javax.faces.component.UISelectItems;
 
-import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.taglib.UIComponentTagBase;
 
 /**
- * @author shot
  * @author yone
  */
-public class ParamTag extends UIComponentTagBase {
+public class SelectItemsTag extends UIComponentTagBase {
 
-    private static final long serialVersionUID = 1L;
+
+    public SelectItemsTag() {
+        super();
+    }
 
     public String getComponentType() {
-        return "javax.faces.Parameter";
+        return UISelectItems.COMPONENT_TYPE;
     }
 
     public String getRendererType() {
         return null;
     }
 
-    protected void setProperties(UIComponent component) {
-        super.setProperties(component);
-        
-        if(component instanceof UIParameter) {
-            UIParameter parameter = (UIParameter)component;
-            setComponentProperty(parameter, JsfConstants.NAME_ATTR, name_);
-        }
+    public void release() {
+        super.release();
     }
+
 }

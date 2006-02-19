@@ -228,6 +228,14 @@ public interface JsfConstants {
 
     public String ISMAP_ATTR = "ismap";
 
+    public String ITEM_DISABLED_ATTR = "itemDisabled";
+
+    public String ITEM_DESCRIPTION_ATTR = "itemDescription";
+
+    public String ITEM_VALUE_ATTR = "itemValue";
+
+    public String ITEM_LABEL_ATTR = "itemLabel";    
+
     public String LABEL_ATTR = "label";
 
     public String LAYOUT_ATTR = "layout";

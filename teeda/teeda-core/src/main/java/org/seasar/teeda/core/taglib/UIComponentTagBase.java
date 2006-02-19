@@ -494,6 +494,7 @@ public abstract class UIComponentTagBase extends UIComponentTag {
         if (component instanceof ValueHolder) {
             setConverterProperty(component, converter_);
         }
+        setComponentProperty(component, JsfConstants.VALUE_ATTR, value_);
         setComponentProperty(component, JsfConstants.FORMAT_PATTERN_ATTR, formatPattern_);      
         setComponentProperty(component, JsfConstants.DATE_STYLE_ATTR, dateStyle_);
         setComponentProperty(component, JsfConstants.TIME_STYLE_ATTR, timeStyle_);

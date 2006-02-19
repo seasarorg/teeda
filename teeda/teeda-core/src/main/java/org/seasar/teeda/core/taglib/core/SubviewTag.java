@@ -15,34 +15,25 @@
  */
 package org.seasar.teeda.core.taglib.core;
 
-import javax.faces.component.UIComponent;
-import javax.faces.component.UIParameter;
-
-import org.seasar.teeda.core.JsfConstants;
-import org.seasar.teeda.core.taglib.UIComponentTagBase;
+import javax.faces.component.UINamingContainer;
+import javax.faces.webapp.UIComponentTag;
 
 /**
- * @author shot
  * @author yone
  */
-public class ParamTag extends UIComponentTagBase {
+public class SubviewTag extends UIComponentTag {
 
-    private static final long serialVersionUID = 1L;
+    public SubviewTag() {
+        super();
+    }
 
     public String getComponentType() {
-        return "javax.faces.Parameter";
+        return UINamingContainer.COMPONENT_TYPE;
     }
 
     public String getRendererType() {
         return null;
     }
 
-    protected void setProperties(UIComponent component) {
-        super.setProperties(component);
-        
-        if(component instanceof UIParameter) {
-            UIParameter parameter = (UIParameter)component;
-            setComponentProperty(parameter, JsfConstants.NAME_ATTR, name_);
-        }
-    }
+
 }
