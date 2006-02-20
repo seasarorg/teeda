@@ -37,7 +37,6 @@ public class TeedaStateManagerImpl extends TeedaStateManager implements
 
     static final long serialVersionUID = 0L;
 
-    // TODO testing
     public TeedaStateManagerImpl() {
     }
 

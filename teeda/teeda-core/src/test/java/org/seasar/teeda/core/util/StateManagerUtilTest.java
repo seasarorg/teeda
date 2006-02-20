@@ -80,7 +80,6 @@ public class StateManagerUtilTest extends TeedaTestCase {
             StateManagerUtil.assertComponentNoDuplicateId(parent);
             fail();
         } catch (IllegalStateException expected) {
-            System.out.println(expected.getMessage());
             success();
         }
     }
