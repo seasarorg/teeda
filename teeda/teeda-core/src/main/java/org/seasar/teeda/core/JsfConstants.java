@@ -195,6 +195,8 @@ public interface JsfConstants {
     public String ERROR_CLASS_ATTR = "errorClass";
 
     public String ERROR_STYLE_ATTR = "errorStyle";
+    
+    public String ESCAPE_ATTR = "escape";
 
     public String FATAL_CLASS_ATTR = "fatalClass";
 

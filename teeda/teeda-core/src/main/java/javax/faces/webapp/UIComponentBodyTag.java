@@ -34,7 +34,10 @@ public abstract class UIComponentBodyTag extends UIComponentTag
     public int doAfterBody() throws JspException {
         return getDoAfterBodyValue();
     }
-
+    
+    public void doInitBody() throws JspException {
+    }
+    
     public void release() {
         bodyContent = null;
         super.release();
