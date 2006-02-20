@@ -18,7 +18,6 @@ package org.seasar.teeda.core.taglib.core;
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
 import javax.faces.internal.AssertionUtil;
-import javax.faces.validator.DoubleRangeValidator;
 import javax.faces.validator.LongRangeValidator;
 import javax.faces.validator.Validator;
 import javax.servlet.jsp.JspException;
