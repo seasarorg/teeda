@@ -3,4 +3,10 @@
   "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.0//EN"
   "http://java.sun.com/dtd/web-facesconfig_1_0.dtd">
 <faces-config>
+	<factory>
+		<application-factory>org.seasar.teeda.core.application.ApplicationFactoryImpl</application-factory>
+		<faces-context-factory>org.seasar.teeda.core.context.FacesContextFactoryImpl</faces-context-factory>
+		<lifecycle-factory>org.seasar.teeda.core.lifecycle.LifecycleFactoryImpl</lifecycle-factory>
+		<render-kit-factory>org.seasar.teeda.core.render.RenderKitFactoryImpl</render-kit-factory>
+	</factory>
 </faces-config>

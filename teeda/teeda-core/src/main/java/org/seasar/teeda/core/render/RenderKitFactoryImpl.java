@@ -21,6 +21,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import javax.faces.context.FacesContext;
+import javax.faces.internal.AssertionUtil;
 import javax.faces.render.RenderKit;
 import javax.faces.render.RenderKitFactory;
 
@@ -41,19 +42,13 @@ public class RenderKitFactoryImpl extends RenderKitFactory {
     }
 
     public void addRenderKit(String renderKitId, RenderKit renderKit) {
-        if (renderKitId == null) {
-            throw new NullPointerException("renderKitId");
-        }
-        if (renderKit == null) {
-            throw new NullPointerException("renderKit");
-        }
+        AssertionUtil.assertNotNull("renderKitId", renderKitId);
+        AssertionUtil.assertNotNull("renderKit", renderKit);
         renderKits_.put(renderKitId, renderKit);
     }
 
     public RenderKit getRenderKit(FacesContext context, String renderKitId) {
-        if (renderKitId == null) {
-            throw new NullPointerException("renderKitId");
-        }
+        AssertionUtil.assertNotNull("renderKitId", renderKitId);
         RenderKit renderKit = (RenderKit) renderKits_.get(renderKitId);
         if (renderKit == null) {
             logger_.warn("RenderKit " + renderKitId + " is null.");
