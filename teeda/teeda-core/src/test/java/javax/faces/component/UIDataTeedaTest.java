@@ -18,6 +18,7 @@ package javax.faces.component;
 import java.util.Map;
 
 import javax.faces.component.html.HtmlInputText;
+import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
 
 import junitx.framework.ObjectAssert;
@@ -169,7 +170,28 @@ public class UIDataTeedaTest extends UIComponentBaseTeedaTest {
     public void testSaveAndRestoreState() throws Exception {
         super.testSaveAndRestoreState();
 
-        // TODO test
+        // ## Arrange ##
+        UIData data1 = createUIData();
+        data1.setFirst(10);
+        data1.setValue(new String[] { "A", "B", "C" });
+
+        // ## Act ##
+        FacesContext context = getFacesContext();
+        Object state = data1.saveState(context);
+
+        UIData data2 = createUIData();
+        data2.restoreState(context, state);
+
+        // ## Assert ##
+        assertEquals(data1.getFirst(), data2.getFirst());
+        assertEquals(data1.getRowCount(), data2.getRowCount());
+        assertEquals(data1.getRowData(), data2.getRowData());
+        assertEquals(data1.getRowIndex(), data2.getRowIndex());
+        assertEquals(data1.getRows(), data2.getRows());
+        assertEquals(data1.getValue(), data2.getValue());
+        assertEquals(data1.getVar(), data2.getVar());
+        assertEquals(data1.isRowAvailable(), data2.isRowAvailable());
+
     }
 
     private UIData createUIData() {

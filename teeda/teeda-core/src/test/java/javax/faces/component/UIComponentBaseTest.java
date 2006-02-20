@@ -479,7 +479,7 @@ public class UIComponentBaseTest extends AbstractUIComponentTest {
         assertSame(event, parent.getQueueEvent());
     }
 
-    public void testProcessSaveState_TransientTrue() throws Exception {
+    public final void testProcessSaveState_TransientTrue() throws Exception {
         UIComponentBase component = createUIComponentBase();
         component.setTransient(true);
         Object state = component.processSaveState(getFacesContext());

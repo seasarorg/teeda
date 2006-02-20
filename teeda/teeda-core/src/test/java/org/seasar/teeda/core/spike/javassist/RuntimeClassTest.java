@@ -45,11 +45,18 @@ public class RuntimeClassTest extends TestCase {
 
     public static class A {
         public void foo() {
-            bar();
+            bar("a");
         }
 
-        public void bar() {
+        public void bar(String s) {
         }
+
+        protected String aaa() {
+            return "aaa";
+        }
+    }
+
+    public static class B extends A {
     }
 
     public void testFooByExecute() throws Exception {
@@ -59,7 +66,7 @@ public class RuntimeClassTest extends TestCase {
         final boolean[] calls = { false };
         RuntimeClass rt = (RuntimeClass) instance;
         rt.defineMethod(new Object() {
-            public void execute() {
+            public void execute(String s) {
                 calls[0] = true;
             }
         }, "bar");
@@ -77,13 +84,48 @@ public class RuntimeClassTest extends TestCase {
         final boolean[] calls = { false };
         RuntimeClass rt = (RuntimeClass) instance;
         rt.defineMethod(new Object() {
-            public void bar() {
+            public void bar(String s) {
                 calls[0] = true;
             }
         }, "bar");
 
         A a = (A) instance;
         a.foo();
+
+        assertEquals(true, calls[0]);
+    }
+
+    // XXX
+    public void pend_testProtected() throws Exception {
+        Object instance = RuntimeClassUtil.createInstance(A.class);
+
+        RuntimeClass rt = (RuntimeClass) instance;
+        rt.defineMethod(new Object() {
+            public String aaa() {
+                return "abc";
+            }
+        }, "aaa");
+
+        A a = (A) instance;
+        String result = a.aaa();
+
+        assertEquals("abc", result);
+    }
+
+    public void testFooByExecuteExtends() throws Exception {
+        Object instance = RuntimeClassUtil.createInstance(B.class);
+        assertNotNull(instance);
+
+        final boolean[] calls = { false };
+        RuntimeClass rt = (RuntimeClass) instance;
+        rt.defineMethod(new Object() {
+            public void execute(String s) {
+                calls[0] = true;
+            }
+        }, "bar");
+
+        B b = (B) instance;
+        b.foo();
 
         assertEquals(true, calls[0]);
     }

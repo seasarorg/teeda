@@ -30,9 +30,13 @@ public class NamingContainerUtil {
     public static void refreshDescendantComponentClientId(UIComponent component) {
         for (Iterator it = component.getChildren().iterator(); it.hasNext();) {
             UIComponent child = (UIComponent) it.next();
-            child.setId(child.getId());
+            refreshClientId(child);
             refreshDescendantComponentClientId(child);
         }
+    }
+
+    public static void refreshClientId(UIComponent child) {
+        child.setId(child.getId());
     }
 
 }

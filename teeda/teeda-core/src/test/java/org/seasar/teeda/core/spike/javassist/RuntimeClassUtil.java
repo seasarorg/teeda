@@ -20,7 +20,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javassist.CannotCompileException;
 import javassist.ClassPool;
@@ -65,9 +67,10 @@ public class RuntimeClassUtil {
     public static Object defineClass(final Class targetClass,
             final String enhancedClassName, final byte[] bytes) {
         try {
-            final Object o = defineClassMethod.invoke(getClassLoader(targetClass), new Object[] {
-                    enhancedClassName, bytes, new Integer(0),
-                    new Integer(bytes.length) });
+            final Object o = defineClassMethod.invoke(
+                    getClassLoader(targetClass), new Object[] {
+                            enhancedClassName, bytes, new Integer(0),
+                            new Integer(bytes.length) });
             return o;
         } catch (InvocationTargetException e) {
             throw new InvocationTargetRuntimeException(targetClass, e);
@@ -82,7 +85,14 @@ public class RuntimeClassUtil {
 
     private static long counter_;
 
-    static Object createInstance(final Class targetClass) {
+    private static Map aopProxyCache_ = new HashMap();
+
+    public static Object createInstance(final Class targetClass) {
+        AopProxy p = (AopProxy) aopProxyCache_.get(targetClass);
+        if (p != null) {
+            return p.create();
+        }
+
         final ClassPool cp = ClassPoolUtil.getClassPool(targetClass);
         try {
             final CtClass cc = cp.get(targetClass.getName());
@@ -102,6 +112,7 @@ public class RuntimeClassUtil {
                     pointcut);
             AopProxy aopProxy = new AopProxy(enhancedClass,
                     new Aspect[] { aspect });
+            aopProxyCache_.put(targetClass, aopProxy);
             Object instance = aopProxy.create();
             enhancedCtClass.detach();
             return instance;
@@ -115,17 +126,27 @@ public class RuntimeClassUtil {
     }
 
     static String[] getPointcutMethodNames(Class enhancedClass) {
+        System.out.println("RuntimeClassUtil.getPointcutMethodNames()"
+                + enhancedClass);
         List enhanceMethodNames = new ArrayList();
         enhanceMethodNames.add("defineMethod");
-        final Method[] methods = enhancedClass.getMethods();
-        for (int i = 0; i < methods.length; i++) {
-            Method method = methods[i];
-            final int modifiers = method.getModifiers();
-            // cannot override "final" or "static" methods.
-            if (!Modifier.isFinal(modifiers) && !Modifier.isStatic(modifiers)) {
-                enhanceMethodNames.add(method.getName());
+
+        for (Class clazz = enhancedClass; clazz != Object.class; clazz = clazz
+                .getSuperclass()) {
+
+            final Method[] methods = clazz.getDeclaredMethods();
+            for (int i = 0; i < methods.length; i++) {
+                Method method = methods[i];
+                System.out.println("RuntimeClassUtil.getPointcutMethodNames()"
+                        + method);
+                final int modifiers = method.getModifiers();
+                // cannot override "final" or "static" methods.
+                if (!Modifier.isFinal(modifiers) && !Modifier.isStatic(modifiers)) {
+                    enhanceMethodNames.add(method.getName());
+                }
             }
         }
+        System.out.println("RuntimeClassUtil.getPointcutMethodNames()"+enhanceMethodNames);
         if (enhanceMethodNames.isEmpty()) {
             return new String[] { ".*" };
         } else {

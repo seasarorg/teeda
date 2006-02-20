@@ -469,9 +469,8 @@ public class UIData extends UIComponentBase implements NamingContainer {
         }
     }
 
-    private static void forceComponentIdClear(UIComponent component) {
-        String id = component.getId();
-        component.setId(id);
+    private void forceComponentIdClear(UIComponent component) {
+        NamingContainerUtil.refreshClientId(component);
     }
 
     static class FacesEventWrapper extends FacesEvent {

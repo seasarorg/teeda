@@ -49,6 +49,7 @@ class RuntimeClassInterceptor extends AbstractInterceptor {
             try {
                 final Method synthesisMethod = o.getClass().getMethod(
                         methodName, parameterTypes);
+                synthesisMethod.setAccessible(true);
                 return synthesisMethod.invoke(o, arguments);
             } catch (NoSuchMethodException e) {
             }

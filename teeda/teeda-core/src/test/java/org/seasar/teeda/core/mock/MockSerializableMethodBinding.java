@@ -13,15 +13,16 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package javax.faces.component;
+package org.seasar.teeda.core.mock;
+
+import java.io.Serializable;
 
 /**
  * @author manhole
  */
-public class UIColumnTeedaTest extends UIComponentBaseTeedaTest {
+public class MockSerializableMethodBinding extends MockMethodBinding implements
+        Serializable {
 
-    protected UIComponent createUIComponent() {
-        return new UIColumn();
-    }
+    private static final long serialVersionUID = 1L;
 
 }

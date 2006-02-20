@@ -108,6 +108,8 @@ public class UIComponentBaseTeedaTest extends AbstractUIComponentTeedaTest {
         component1.setId("abc");
         component1.setRendered(true);
         component1.setRendererType("some renderer");
+        component1.setTransient(true);
+        component1.getAttributes().put("at", "vvv");
 
         FacesContext context = getFacesContext();
         UIViewRoot viewRoot = new UIViewRoot();
@@ -133,6 +135,28 @@ public class UIComponentBaseTeedaTest extends AbstractUIComponentTeedaTest {
         assertEquals(component1.getRendererType(), component2.getRendererType());
         assertEquals(component1.getRendersChildren(), component2
                 .getRendersChildren());
+        assertEquals(false, component2.isTransient());
+    }
+
+    public void testSaveState_NotSaveChildren() throws Exception {
+        // ## Arrange ##
+        UIComponentBase component1 = (UIComponentBase) createUIComponent();
+        component1.getChildren().add(new UIParameter());
+        component1.getFacets().put("a", new UIOutput());
+        assertEquals(1, component1.getChildCount());
+        assertEquals(1, component1.getFacets().size());
+
+        // ## Act ##
+        FacesContext context = getFacesContext();
+        Object state = component1.saveState(context);
+        assertTrue(state instanceof Serializable);
+
+        UIComponentBase component2 = createUIComponentBase();
+        component2.restoreState(context, state);
+
+        // ## Assert ##
+        assertEquals(0, component2.getChildCount());
+        assertEquals(0, component2.getFacets().size());
     }
 
     private UIComponentBase createUIComponentBase() {
