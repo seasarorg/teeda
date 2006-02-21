@@ -43,12 +43,7 @@ public class ConverterUtil {
         if (value instanceof Boolean) {
             return ((Boolean)value).booleanValue();
         } else if (value instanceof String) {
-            try {
-                return new Boolean((String)value).booleanValue();
-            } catch (Exception e) {
-                throw new IllegalArgumentException("Cannot convert " 
-                        + value.toString() + " to boolean");
-            }
+            return new Boolean((String)value).booleanValue();
         } else {
             throw new IllegalArgumentException("Cannot convert " 
                     + value.toString() + " to boolean");
