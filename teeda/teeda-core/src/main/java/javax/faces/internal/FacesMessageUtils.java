@@ -73,7 +73,7 @@ public class FacesMessageUtils {
         ResourceBundle bundle = getResourceBundle(context, locale);
         String summary = getBundleString(bundle, messageId);
         String detail = getBundleString(bundle, messageId + DETAIL_SUFFIX);
-        if (args != null && args.length > 1) {
+        if (args != null && args.length >= 1) {
             if (summary != null) {
                 summary = getFormattedMessage(summary, locale, args);
             }

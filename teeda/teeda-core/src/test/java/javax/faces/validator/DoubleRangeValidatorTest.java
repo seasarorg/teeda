@@ -15,12 +15,10 @@
  */
 package javax.faces.validator;
 
-import java.util.Iterator;
 import java.util.Locale;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.component.UIViewRoot;
-import javax.faces.internal.FacesMessageUtils;
+import javax.faces.context.FacesContext;
 
 import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.mock.MockFacesContextImpl;
@@ -46,35 +44,35 @@ public class DoubleRangeValidatorTest extends TeedaTestCase {
     public void testInstanciation_withMax() throws Exception {
         double d = 2d;
         DoubleRangeValidator validator = new DoubleRangeValidator(d);
-        assertEquals(2d, validator.getMaximum());
+        assertTrue(2d == validator.getMaximum());
     }
 
     public void testInstanciation_withMaxAndMin() throws Exception {
         double max = 2000d;
         double min = 3d;
         DoubleRangeValidator validator = new DoubleRangeValidator(max, min);
-        assertEquals(2000d, validator.getMaximum());
-        assertEquals(3d, validator.getMinimum());
+        assertTrue(2000d == validator.getMaximum());
+        assertTrue(3d == validator.getMinimum());
     }
 
     public void testGetMaximum_setMax() throws Exception {
         DoubleRangeValidator validator = new DoubleRangeValidator(5d);
-        assertEquals(5d, validator.getMaximum());
+        assertTrue(5d == validator.getMaximum());
     }
 
     public void testGetMaximum_notSetMax() throws Exception {
         DoubleRangeValidator validator = new DoubleRangeValidator();
-        assertEquals(Double.MAX_VALUE, validator.getMaximum());
+        assertTrue(Double.MAX_VALUE == validator.getMaximum());
     }
 
     public void testGetMinimum_setMin() throws Exception {
         DoubleRangeValidator validator = new DoubleRangeValidator(8d, 7d);
-        assertEquals(7d, validator.getMinimum());
+        assertTrue(7d == validator.getMinimum());
     }
 
     public void testGetMinimum_notSetMin() throws Exception {
         DoubleRangeValidator validator = new DoubleRangeValidator();
-        assertEquals(Double.MIN_VALUE, validator.getMinimum());
+        assertTrue(Double.MIN_VALUE == validator.getMinimum());
     }
 
     public void testValidate_facesContextIsNull() throws Exception {
@@ -83,7 +81,7 @@ public class DoubleRangeValidatorTest extends TeedaTestCase {
             validator.validate(null, new MockUIComponent(), "");
             fail();
         } catch (NullPointerException expected) {
-            assertTrue(true);
+            success();
         }
     }
 
@@ -93,7 +91,7 @@ public class DoubleRangeValidatorTest extends TeedaTestCase {
             validator.validate(new MockFacesContextImpl(), null, "");
             fail();
         } catch (NullPointerException expected) {
-            assertTrue(true);
+            success();
         }
     }
 
@@ -102,23 +100,77 @@ public class DoubleRangeValidatorTest extends TeedaTestCase {
         validator.validate(new MockFacesContextImpl(), new MockUIComponent(), null);
         
         //assume nothing happen
-        assertTrue(true);
+        success();
     }
 
     public void testValidate_lessThanMinWhenBothMaxMinNotNull() throws Exception {
-        getApplication().setMessageBundle("javax.faces.component.TestMessages");
-        MockFacesContext context = getFacesContext();
-        UIViewRoot root = new UIViewRoot();
-        root.setId("a");
-        root.setLocale(Locale.ENGLISH);
-        context.setViewRoot(root);
+        FacesContext context = getFacesContextWithSetMessageBundle("a", Locale.ENGLISH);
         DoubleRangeValidator validator = new DoubleRangeValidator(2d, 1d);
         try {
-            validator.validate(getFacesContext(), root, new Integer(0));
+            validator.validate(context, context.getViewRoot(), new Integer(0));
             fail();
         }catch(ValidatorException expected){
             assertEquals("not in range(1,2,a)", expected.getMessage());
-            assertTrue(true);
+            success();
         }
+    }
+    
+    public void testValidate_moreThanMaxWhenBothMaxMinNotNull() throws Exception {
+        FacesContext context = getFacesContextWithSetMessageBundle("b", Locale.ENGLISH);
+        DoubleRangeValidator validator = new DoubleRangeValidator(2d, 1d);
+        try {
+            validator.validate(context, context.getViewRoot(), new Integer(3));
+            fail();
+        }catch(ValidatorException expected){
+            assertEquals("not in range(1,2,b)", expected.getMessage());
+            success();
+        }
+    }
+    
+    public void testValidate_lessThanMinWhenMinNotNull() throws Exception {
+        FacesContext context = getFacesContextWithSetMessageBundle("a", Locale.ENGLISH);
+        DoubleRangeValidator validator = new DoubleRangeValidator();
+        validator.setMinimum(1);
+        try {
+            validator.validate(context, context.getViewRoot(), new Integer(0));
+            fail();
+        }catch(ValidatorException expected){
+            assertEquals("less than min(1,a)", expected.getMessage());
+            success();
+        }
+    }
+
+    public void testValidate_moreThanMaxWhenMaxNotNull() throws Exception {
+        FacesContext context = getFacesContextWithSetMessageBundle("a", Locale.ENGLISH);
+        DoubleRangeValidator validator = new DoubleRangeValidator(10);
+        try {
+            validator.validate(context, context.getViewRoot(), new Float(11));
+            fail();
+        }catch(ValidatorException expected){
+            assertEquals("more than max(10,a)", expected.getMessage());
+            success();
+        }
+    }
+    
+    public void testValidate_valueIsNotNumber() throws Exception {
+        FacesContext context = getFacesContextWithSetMessageBundle("hoge", Locale.ENGLISH);
+        DoubleRangeValidator validator = new DoubleRangeValidator(10);
+        try {
+            validator.validate(context, context.getViewRoot(), "aaa");
+            fail();
+        }catch(ValidatorException expected){
+            assertEquals("type(hoge) is not double", expected.getMessage());
+            success();
+        }
+    }
+    
+    protected FacesContext getFacesContextWithSetMessageBundle(String viewRootId, Locale locale) {
+        getApplication().setMessageBundle("javax.faces.component.TestMessages");
+        MockFacesContext context = getFacesContext();
+        UIViewRoot root = new UIViewRoot();
+        root.setId(viewRootId);
+        root.setLocale(locale);
+        context.setViewRoot(root);
+        return context;
     }
 }
