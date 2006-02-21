@@ -15,6 +15,7 @@
  */
 package org.seasar.teeda.core.render.html;
 
+import javax.faces.FacesException;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.component.html.HtmlMessage;
@@ -23,6 +24,7 @@ import javax.faces.render.Renderer;
 import javax.faces.render.RendererTest;
 
 import org.seasar.teeda.core.mock.MockUIComponentBase;
+import org.seasar.teeda.core.unit.ExceptionAssert;
 
 /**
  * @author manhole
@@ -38,6 +40,34 @@ public class HtmlMessageRendererTest extends RendererTest {
         renderer_ = createHtmlMessageRenderer();
         htmlMessage_ = new MockHtmlMessage();
         htmlMessage_.setRenderer(renderer_);
+    }
+
+    public void testEncode_NullForAttribute() throws Exception {
+        FacesContext context = getFacesContext();
+        arrangeForComponent("fooFor");
+        htmlMessage_.setFor(null);
+
+        // ## Act ##
+        // ## Assert ##
+        try {
+            encodeByRenderer(renderer_, context, htmlMessage_);
+        } catch (FacesException fe) {
+            ExceptionAssert.assertMessageExist(fe);
+        }
+    }
+
+    public void testEncode_NoForComponent() throws Exception {
+        FacesContext context = getFacesContext();
+        arrangeForComponent("fooFor");
+        htmlMessage_.setFor("barFor");
+
+        // ## Act ##
+        // ## Assert ##
+        try {
+            encodeByRenderer(renderer_, context, htmlMessage_);
+        } catch (FacesException fe) {
+            ExceptionAssert.assertMessageExist(fe);
+        }
     }
 
     public void testEncode_NoMessage() throws Exception {

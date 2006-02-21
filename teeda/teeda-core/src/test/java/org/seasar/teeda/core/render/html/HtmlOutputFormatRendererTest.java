@@ -168,6 +168,25 @@ public class HtmlOutputFormatRendererTest extends RendererTest {
         assertEquals(Locale.CHINESE, renderer_.getLocale(context));
     }
 
+    public void testGetLocaleFromDefault() throws Exception {
+        // ## Arrange ##
+        FacesContext context = getFacesContext();
+        context.setViewRoot(new UIViewRoot());
+        context.getViewRoot().setLocale(null);
+        final Locale defaultLocale = Locale.getDefault();
+        try {
+            Locale.setDefault(Locale.GERMANY);
+
+            // ## Act & Assert ##
+            assertEquals(Locale.GERMANY, renderer_.getLocale(context));
+
+            context.getViewRoot().setLocale(Locale.CHINESE);
+            assertEquals(Locale.CHINESE, renderer_.getLocale(context));
+        } finally {
+            Locale.setDefault(defaultLocale);
+        }
+    }
+
     public void testGetRendersChildren() throws Exception {
         assertEquals(false, renderer_.getRendersChildren());
     }

@@ -63,4 +63,19 @@ public class UrlBuilderTest extends TestCase {
         assertEquals("a?b=c&1=2&3=4", actual);
     }
 
+    public void testBuildWithParams_SameKey() throws Exception {
+        // ## Arrange ##
+        UrlBuilder urlBuilder = new UrlBuilder();
+        urlBuilder.setBase("a");
+
+        // ## Act ##
+        urlBuilder.add("1", "2");
+        urlBuilder.add("1", "4");
+        String actual = urlBuilder.build();
+
+        // ## Assert ##
+        UrlDiff urlDiff = new UrlDiff("a?1=2&1=4", actual);
+        assertEquals(actual, true, urlDiff.isIdentical());
+    }
+
 }

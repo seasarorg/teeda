@@ -20,10 +20,10 @@ package org.seasar.teeda.core;
  */
 public interface TODO {
     /*
-     * TODO
+     * TODO for 1.0
      *  - Make JSF init-code complete. 
      *  - StateManager 
-     *  - Renderers(9 more?)
+     *  - Renderers(Last 1! CommandLink)
      *  - Test, test, test
      *    -> JSF Specification part(UIComponent things!)
      *    -> Teeda original part
@@ -41,7 +41,16 @@ public interface TODO {
      *  - impl StateManager
      *  - impl taglib core
      *  - impl taglib html
+     *  - [Seasar-user:3230]
+     *  - [#7682] http://sourceforge.jp/tracker/index.php?func=detail&aid=7682&group_id=689&atid=6584
+     *  - [#7975] [Seasar-user:3127] http://sourceforge.jp/tracker/index.php?func=detail&aid=7975&group_id=689&atid=6584
+     *  - [#7974] [Seasar-user:3080] http://sourceforge.jp/tracker/index.php?func=detail&aid=7974&group_id=689&atid=6584
+     *  - [#7840] [Seasar-user:3083] http://sourceforge.jp/tracker/index.php?func=detail&aid=7840&group_id=689&atid=6584
      *  
+     *  
+     * TODO for 1.1
+     *  - 
+     * 
      * DONE
      *  - Add copyright to all sources.
      *  - impl ResponseStateManager
@@ -52,10 +61,10 @@ public interface TODO {
      *  - Impl ViewHandler
      *  - Make Assemblers done.
      *  - change S2ScopeTranslator for Application scope.
+     *  - use Clover or cobertura?
      * 
      * PEND
      *  - Selenium integration
-     *  - use Clover or cobertura?
      *  - make it easy to get elements from FacesConfig by key(such as component, converter,
      *    validator, renderkit, and managed-bean)
      *  - Client side solution like commons-validator or aspect interceptor or what

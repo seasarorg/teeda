@@ -36,9 +36,7 @@ public class HtmlSelectOneListboxRenderer extends HtmlSelectManyListboxRenderer 
     protected String[] getValuesForRender(FacesContext context,
             UIComponent component) {
         String value = ValueHolderUtil.getValueForRender(context, component);
-        if (value == null) {
-            return new String[] {};
-        }
+        // value is not null
         return new String[] { value };
     }
 

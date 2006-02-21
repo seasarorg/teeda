@@ -24,7 +24,6 @@ import org.seasar.framework.log.Logger;
 
 /**
  * @author manhole
- * 
  */
 public class UIValueUtil {
 

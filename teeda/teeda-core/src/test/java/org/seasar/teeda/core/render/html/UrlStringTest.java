@@ -37,6 +37,7 @@ public class UrlStringTest extends TestCase {
         assertEquals("aaa", url.getPath());
         assertEquals("2", url.getParameter("1"));
         assertEquals("4", url.getParameter("3"));
+        assertEquals(null, url.getParameter("2"));
     }
 
     public void testGetParameterNames() throws Exception {
@@ -51,6 +52,7 @@ public class UrlStringTest extends TestCase {
         assertEquals(2, parameterNames.size());
         assertEquals(true, parameterNames.contains("1"));
         assertEquals(true, parameterNames.contains("2"));
+        assertEquals(false, parameterNames.contains("3"));
     }
 
     public void testParseAndGetParameters() throws Exception {
@@ -67,6 +69,7 @@ public class UrlStringTest extends TestCase {
         assertEquals(2, values.length);
         assertEquals("2", values[0]);
         assertEquals("3", values[1]);
+        assertEquals(null, url.getParameters("4"));
     }
 
     public void testIsIdentical_True1() throws Exception {
@@ -119,6 +122,17 @@ public class UrlStringTest extends TestCase {
         url1.parse("aa?1=1&1=2&1=4");
         UrlString url2 = new UrlString();
         url2.parse("aa?1=1&1=3&1=4");
+
+        // ## Act & Assert ##
+        assertEquals(false, url1.isIdentical(url2));
+    }
+
+    public void testIsIdentical_False4() throws Exception {
+        // ## Arrange ##
+        UrlString url1 = new UrlString();
+        url1.parse("aa?1=1&1=2&1=3");
+        UrlString url2 = new UrlString();
+        url2.parse("aa?1=1&1=2&1=3&1=4");
 
         // ## Act & Assert ##
         assertEquals(false, url1.isIdentical(url2));
