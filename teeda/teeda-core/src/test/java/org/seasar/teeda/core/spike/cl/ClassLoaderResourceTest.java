@@ -26,15 +26,20 @@ import java.util.Iterator;
 import junit.framework.TestCase;
 import junitx.framework.StringAssert;
 
+import org.seasar.framework.util.EclipseUtil;
 import org.seasar.teeda.core.util.EnumerationIterator;
 
 public class ClassLoaderResourceTest extends TestCase {
 
     public void testGetResourceFromClassLoader() throws Exception {
         // ## Arrange ##
-        File projectRoot = new File(".").getCanonicalFile();
+        // File projectRoot = new File(".").getCanonicalFile();
+        // File jarDir = new File(projectRoot,
+        // "teeda-core/target/test-classes/org/seasar/teeda/core/spike/cl");
+        File projectRoot = EclipseUtil.getProjectRoot("teeda-core")
+                .getCanonicalFile();
         File jarDir = new File(projectRoot,
-                "teeda-core/target/test-classes/org/seasar/teeda/core/spike/cl");
+                "target/test-classes/org/seasar/teeda/core/spike/cl");
         File[] jars = jarDir.listFiles(new FilenameFilter() {
             public boolean accept(File dir, String name) {
                 if (name.endsWith(".jar")) {

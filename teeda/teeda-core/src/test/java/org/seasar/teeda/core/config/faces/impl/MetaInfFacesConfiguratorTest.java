@@ -29,10 +29,10 @@ import javax.faces.render.RenderKitFactory;
 import junitx.framework.ObjectAssert;
 
 import org.seasar.extension.unit.S2TestCase;
+import org.seasar.framework.util.EclipseUtil;
 import org.seasar.teeda.core.config.faces.assembler.AssemblerAssembler;
 import org.seasar.teeda.core.config.faces.assembler.impl.DefaultAssembleProvider;
 import org.seasar.teeda.core.config.faces.element.FacesConfig;
-import org.seasar.teeda.core.config.faces.impl.MetaInfFacesConfigurator;
 import org.seasar.teeda.core.mock.MockApplicationFactory;
 import org.seasar.teeda.core.mock.MockExternalContextImpl;
 import org.seasar.teeda.core.mock.MockFacesContextFactory;
@@ -46,10 +46,10 @@ import org.seasar.teeda.core.util.FactoryFinderUtil;
 public class MetaInfFacesConfiguratorTest extends S2TestCase {
 
     public void testConfigure1() throws Exception {
-        ClassLoader orgCl = Thread.currentThread().getContextClassLoader();
-        File projectRoot = new File(".").getCanonicalFile();
+        File projectRoot = EclipseUtil.getProjectRoot("teeda-core")
+                .getCanonicalFile();
         File jarDir = new File(projectRoot,
-                "teeda-core/target/test-classes/org/seasar/teeda/core/config/faces/impl");
+                "target/test-classes/org/seasar/teeda/core/config/faces/impl");
         File[] jars = jarDir.listFiles(new FilenameFilter() {
             public boolean accept(File dir, String name) {
                 if (name.endsWith(".jar")) {
@@ -64,6 +64,7 @@ public class MetaInfFacesConfiguratorTest extends S2TestCase {
             System.out.println(jars[i].toURL());
             jarUrls[i] = jars[i].toURL();
         }
+        ClassLoader orgCl = Thread.currentThread().getContextClassLoader();
         URLClassLoader cl = new URLClassLoader(jarUrls, orgCl);
         try {
             Thread.currentThread().setContextClassLoader(cl);
