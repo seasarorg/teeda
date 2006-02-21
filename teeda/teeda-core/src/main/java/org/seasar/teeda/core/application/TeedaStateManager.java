@@ -19,19 +19,17 @@ import javax.faces.application.StateManager;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 
-import org.seasar.teeda.core.application.impl.TeedaStateManagerImplTest;
-
 /**
  * @author shot
  */
 public abstract class TeedaStateManager extends StateManager {
-    
-    protected static final String SERIALIZED_VIEW_ATTR = TeedaStateManagerImplTest.class
+
+    protected static final String SERIALIZED_VIEW_ATTR = TeedaStateManager.class
             .getName()
             + ".SERIALIZED_VIEW";
 
     private TreeStructureManager treeStructureManager_;
-    
+
     protected abstract void restoreComponentStateFromClient(
             FacesContext context, UIViewRoot viewRoot, String renderKitId);
 
@@ -47,8 +45,10 @@ public abstract class TeedaStateManager extends StateManager {
     public TreeStructureManager getTreeStructureManager() {
         return treeStructureManager_;
     }
-    
-    public void setTreeStructureManager(TreeStructureManager treeStructureManager) {
+
+    public void setTreeStructureManager(
+            TreeStructureManager treeStructureManager) {
         treeStructureManager_ = treeStructureManager;
     }
+
 }

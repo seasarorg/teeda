@@ -126,8 +126,6 @@ public class RuntimeClassUtil {
     }
 
     static String[] getPointcutMethodNames(Class enhancedClass) {
-        System.out.println("RuntimeClassUtil.getPointcutMethodNames()"
-                + enhancedClass);
         List enhanceMethodNames = new ArrayList();
         enhanceMethodNames.add("defineMethod");
 
@@ -137,16 +135,14 @@ public class RuntimeClassUtil {
             final Method[] methods = clazz.getDeclaredMethods();
             for (int i = 0; i < methods.length; i++) {
                 Method method = methods[i];
-                System.out.println("RuntimeClassUtil.getPointcutMethodNames()"
-                        + method);
                 final int modifiers = method.getModifiers();
                 // cannot override "final" or "static" methods.
-                if (!Modifier.isFinal(modifiers) && !Modifier.isStatic(modifiers)) {
+                if (!Modifier.isFinal(modifiers)
+                        && !Modifier.isStatic(modifiers)) {
                     enhanceMethodNames.add(method.getName());
                 }
             }
         }
-        System.out.println("RuntimeClassUtil.getPointcutMethodNames()"+enhanceMethodNames);
         if (enhanceMethodNames.isEmpty()) {
             return new String[] { ".*" };
         } else {
