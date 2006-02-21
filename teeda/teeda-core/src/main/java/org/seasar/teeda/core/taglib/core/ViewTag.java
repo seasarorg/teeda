@@ -19,22 +19,21 @@ import java.io.IOException;
 import java.util.Locale;
 
 import javax.faces.application.StateManager;
+import javax.faces.application.ViewHandler;
 import javax.faces.application.StateManager.SerializedView;
 import javax.faces.component.UIComponent;
-import javax.faces.component.UIOutput;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.internal.AssertionUtil;
 import javax.faces.webapp.UIComponentBodyTag;
+import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.jstl.core.Config;
 import javax.servlet.jsp.tagext.BodyContent;
 
 import org.seasar.framework.util.LocaleUtil;
 import org.seasar.teeda.core.JsfConstants;
-import org.seasar.teeda.core.util.BindingUtil;
-import org.seasar.teeda.core.util.ConverterUtil;
 import org.seasar.teeda.core.util.ValueBindingUtil;
 
 /**
@@ -42,7 +41,7 @@ import org.seasar.teeda.core.util.ValueBindingUtil;
  */
 public class ViewTag extends UIComponentBodyTag {
 
-    //private static final String COMPONENT_TYPE = UIViewRoot.COMPONENT_TYPE;
+    private static final String COMPONENT_TYPE = UIViewRoot.COMPONENT_TYPE;
     
     protected String locale_ = null;
     
@@ -50,13 +49,13 @@ public class ViewTag extends UIComponentBodyTag {
         super();
     }
     
-    public void setLocale(String local) {
-        locale_ = local;
+    public void setLocale(String locale) {
+        locale_ = locale;
     }
 
     public String getComponentType() {
-        //return COMPONENT_TYPE;
-        throw new IllegalStateException();
+        return COMPONENT_TYPE;
+        //throw new IllegalStateException();
     }
 
     public String getRendererType() {
@@ -82,8 +81,80 @@ public class ViewTag extends UIComponentBodyTag {
     }
     
     public int doAfterBody() throws JspException {
-        // TODO implements
-        return 0;
+        BodyContent bodyContent = null;
+        String content = null;
+        FacesContext context = FacesContext.getCurrentInstance();
+        AssertionUtil.assertNotNull("FacesContext", context);
+        ResponseWriter responseWriter = context.getResponseWriter();
+        StateManager stateManager = context.getApplication().getStateManager();
+        SerializedView view = null;
+        int beginIndex = 0;
+        int markerIndex = 0;
+        int markerLen = JsfConstants.STATE_MARKER.length();
+        int contentLen = 0;
+        
+        responseWriter = responseWriter.cloneWithWriter(getPreviousOut());
+ 
+        context.setResponseWriter(responseWriter);
+        bodyContent = getBodyContent();
+        if (bodyContent == null) {
+            throw new JspException("BodyContent is null for tag with handler class:"
+                    + this.getClass().getName());
+        }
+        content = bodyContent.getString();
+        
+        try {
+            view = stateManager.saveSerializedView(context);
+        } catch (IllegalStateException ise) {
+            throw new JspException(ise);
+        } catch (Exception e) {
+            throw new JspException("Error while saving state in session:"
+                    + e.getMessage(), e);
+        }
+        try {
+            if (view == null) {
+                getPreviousOut().write(content);
+            } else {
+                contentLen = content.length();
+                // see ViewHandlerImpl#writeState
+                do {
+                    markerIndex = content.indexOf(JsfConstants.STATE_MARKER,
+                            beginIndex);
+                    if (markerIndex == -1) {
+                        responseWriter.write(content.substring(beginIndex));
+                    } else {
+                        responseWriter.write(content.substring(beginIndex,
+                                markerIndex));
+                        stateManager.writeState(context, view);
+                        beginIndex = markerIndex + markerLen;
+                    }
+                } while (-1 != markerIndex && beginIndex < contentLen);
+            }
+        } catch (IOException ioe) {
+            throw new JspException("Error while saving state in client:"
+                    + ioe.getMessage(), ioe);
+        }
+        return EVAL_PAGE;
+    }
+    
+    public int doEndTag() throws JspException {
+        int rc = super.doEndTag();
+        FacesContext context = FacesContext.getCurrentInstance();
+        AssertionUtil.assertNotNull("FacesContext", context);
+        ResponseWriter writer = context.getResponseWriter();
+        AssertionUtil.assertNotNull("ResponseWriter", writer);
+        try {
+            writer.endDocument();
+        } catch (IOException e) {
+            throw new JspException(e.getMessage());
+        }
+        
+        HttpSession session = null;
+        if((session = pageContext.getSession()) != null) {
+            session.setAttribute(ViewHandler.CHARACTER_ENCODING_KEY,
+                    pageContext.getResponse().getCharacterEncoding());
+        }
+        return rc;
     }
  
     protected void setProperties(UIComponent component) {
@@ -97,4 +168,5 @@ public class ViewTag extends UIComponentBodyTag {
         ((UIViewRoot)component).setLocale(locale);
         Config.set(pageContext.getRequest(),Config.FMT_LOCALE, locale);
     }
+    
 }
