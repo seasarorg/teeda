@@ -34,7 +34,9 @@
       <id>yone</id>
       <name>Masaaki Yonebayashi</name>
       <email>yone098@gmail.com</email>
-      <url>http://www.abby.co.jp</url>
+      <url></url>
+      <organization>Abby Co., Ltd.</organization>
+      <organizationUrl>http://www.abby.co.jp/</organizationUrl>
       <timezone>+9</timezone>
     </developer>
   </developers>
