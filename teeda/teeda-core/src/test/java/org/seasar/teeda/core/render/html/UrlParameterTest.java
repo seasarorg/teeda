@@ -15,46 +15,31 @@
  */
 package org.seasar.teeda.core.render.html;
 
-import org.seasar.framework.util.ArrayUtil;
+import junit.framework.TestCase;
 
 /**
  * @author manhole
  */
-public class UrlParameter {
+public class UrlParameterTest extends TestCase {
 
-    private String key_;
-
-    private String[] values_ = {};
-
-    public String getKey() {
-        return key_;
+    public void testGetValue() throws Exception {
+        UrlParameter p = new UrlParameter();
+        assertEquals("", p.getValue());
+        assertEquals(0, p.getValues().length);
     }
 
-    public void setKey(String key) {
-        key_ = key;
+    public void testSetGetValue() throws Exception {
+        UrlParameter p = new UrlParameter();
+        p.setValue("aa");
+        assertEquals("aa", p.getValue());
+        assertEquals(1, p.getValues().length);
     }
 
-    public String getValue() {
-        if (ArrayUtil.isEmpty(values_)) {
-            return "";
-        }
-        return values_[0];
-    }
-
-    public void setValue(String value) {
-        values_ = new String[] { value };
-    }
-
-    public void addValue(String value) {
-        values_ = (String[]) ArrayUtil.add(values_, value);
-    }
-
-    public String[] getValues() {
-        return values_;
-    }
-
-    public void setValues(String[] values) {
-        values_ = values;
+    public void testSetValues() throws Exception {
+        UrlParameter p = new UrlParameter();
+        p.setValues(new String[] { "a", "b", "c" });
+        assertEquals("a", p.getValue());
+        assertEquals(3, p.getValues().length);
     }
 
 }

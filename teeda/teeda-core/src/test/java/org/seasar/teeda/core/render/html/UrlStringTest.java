@@ -130,9 +130,9 @@ public class UrlStringTest extends TestCase {
     public void testIsIdentical_False4() throws Exception {
         // ## Arrange ##
         UrlString url1 = new UrlString();
-        url1.parse("aa?1=1&1=2&1=3");
+        url1.parse("aa?1=1");
         UrlString url2 = new UrlString();
-        url2.parse("aa?1=1&1=2&1=3&1=4");
+        url2.parse("aa?1=1&2=2");
 
         // ## Act & Assert ##
         assertEquals(false, url1.isIdentical(url2));
