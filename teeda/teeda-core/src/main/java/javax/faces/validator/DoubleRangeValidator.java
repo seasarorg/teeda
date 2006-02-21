@@ -21,6 +21,9 @@ import javax.faces.context.FacesContext;
 import javax.faces.internal.AssertionUtil;
 import javax.faces.internal.FacesMessageUtils;
 
+/**
+ * @author shot
+ */
 public class DoubleRangeValidator implements Validator, StateHolder {
 
     public static final String VALIDATOR_ID = "javax.faces.DoubleRange";
