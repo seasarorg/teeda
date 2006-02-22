@@ -204,7 +204,10 @@ public class ValueBindingImpl extends ValueBindingBase {
     }
 
     public Object saveState(FacesContext context) {
-        return expressionString_;
+        Object[] state = new Object[2];
+        state[0] = expressionString_;
+        state[1] = parser_;
+        return state;
     }
 
     public void restoreState(FacesContext context, Object obj) {

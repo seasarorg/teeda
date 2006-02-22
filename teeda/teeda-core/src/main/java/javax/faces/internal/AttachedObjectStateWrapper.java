@@ -22,13 +22,13 @@ import javax.faces.context.FacesContext;
 
 /**
  * @author shot
+ * @author manhole
  * 
  * A Helper class for UIComponentBase.saveAttachedState
  * 
  * This class might be changed without a previous notice. Please do not use it
  * excluding the JSF specification part.
  */
-
 public class AttachedObjectStateWrapper implements Serializable {
 
     private static final long serialVersionUID = 3256726169255885111L;
@@ -76,7 +76,7 @@ public class AttachedObjectStateWrapper implements Serializable {
             } catch (IllegalAccessException e) {
                 throw new IllegalStateException(e.getMessage());
             }
-            if (result != null && result instanceof StateHolder) {
+            if (result instanceof StateHolder) {
                 ((StateHolder) result).restoreState(context, savedState_);
             }
         }

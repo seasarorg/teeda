@@ -92,8 +92,7 @@ public class HtmlRenderKitImpl extends AbstractRenderKit {
     public ResponseWriter createResponseWriter(Writer writer,
             String contentTypeList, String characterEncoding) {
         HtmlResponseWriter htmlResponseWriter = null;
-        if (responseWriter_ != null
-                && responseWriter_ instanceof HtmlResponseWriter) {
+        if (responseWriter_ instanceof HtmlResponseWriter) {
             htmlResponseWriter = (HtmlResponseWriter) responseWriter_;
         } else {
             htmlResponseWriter = new HtmlResponseWriter();

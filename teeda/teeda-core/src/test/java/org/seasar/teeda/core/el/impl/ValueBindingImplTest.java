@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
 
 import org.seasar.teeda.core.el.TeedaVariableResolver;
@@ -27,6 +28,7 @@ import org.seasar.teeda.core.el.impl.commons.CommonsELParser;
 import org.seasar.teeda.core.managedbean.ManagedBeanFactory;
 import org.seasar.teeda.core.mock.MockPropertyResolver;
 import org.seasar.teeda.core.mock.MockVariableResolver;
+import org.seasar.teeda.core.mock.NullELParser;
 import org.seasar.teeda.core.scope.Scope;
 import org.seasar.teeda.core.unit.ExceptionAssert;
 import org.seasar.teeda.core.unit.TeedaTestCase;
@@ -343,6 +345,27 @@ public class ValueBindingImplTest extends TeedaTestCase {
         } catch (NullPointerException npe) {
             ExceptionAssert.assertMessageExist(npe);
         }
+    }
+
+    public void testSaveAndRestoreState() throws Exception {
+        // ## Arrange ##
+        FacesContext context = getFacesContext();
+        ValueBindingImpl vb1 = new ValueBindingImpl(context.getApplication(),
+                "ab", new NullELParser() {
+                    public Object parse(String expression) {
+                        return expression + expression;
+                    }
+                });
+
+        // ## Act ##
+        Object state = vb1.saveState(context);
+
+        ValueBindingImpl vb2 = new ValueBindingImpl();
+        vb2.restoreState(context, state);
+
+        // ## Assert ##
+        assertEquals("ab", vb2.getExpressionString());
+        assertEquals("abab", vb2.getExpression());
     }
 
     public static class A {

@@ -18,9 +18,12 @@ package javax.faces.component;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.faces.context.FacesContext;
+import javax.faces.internal.SerializableStateHolder;
 import javax.faces.render.Renderer;
 
 import junit.framework.TestCase;
@@ -69,29 +72,6 @@ public class UIComponentBaseOnlyTest extends TestCase {
         // ## Act ##
         // ## Assert ##
         assertEquals(false, component.getRendersChildren());
-    }
-
-    public final void testProcessDecodes_CallDecode() throws Exception {
-        // ## Arrange ##
-        final List callSeq = new ArrayList();
-        UIComponentBase component = new MockUIComponentBase() {
-            public void decode(FacesContext context) {
-                callSeq.add("2");
-            }
-        };
-        component.getChildren().add(new NullUIComponent() {
-            public void processDecodes(FacesContext context) {
-                callSeq.add("1");
-            }
-        });
-
-        // ## Act ##
-        component.processDecodes(new NullFacesContext());
-
-        // ## Assert ##
-        assertEquals(2, callSeq.size());
-        assertEquals("1", callSeq.get(0));
-        assertEquals("2", callSeq.get(1));
     }
 
     public void testEncodeBegin() throws Exception {
@@ -353,6 +333,43 @@ public class UIComponentBaseOnlyTest extends TestCase {
         assertEquals(0, callSeq.size());
     }
 
+    public final void testProcessDecodes_DecodeThrowsException_RenderResponseCalled()
+            throws Exception {
+        // ## Arrange ##
+        final boolean[] calls = { false };
+        final RuntimeException runtimeException = new RuntimeException(
+                "for test");
+        UIComponentBase component = new MockUIComponentBase() {
+            public void decode(FacesContext context) {
+                throw runtimeException;
+            }
+        };
+        FacesContext context = new NullFacesContext() {
+            public void renderResponse() {
+                calls[0] = true;
+            }
+        };
+
+        // ## Act ##
+        // ## Assert ##
+        try {
+            component.processDecodes(context);
+            fail();
+        } catch (RuntimeException e) {
+            assertSame(runtimeException, e);
+        }
+        assertEquals(true, calls[0]);
+    }
+
+    public void testProcessDecodes_CallDecode() throws Exception {
+        // ## Arrange ##
+
+        // ## Act ##
+
+        // ## Assert ##
+
+    }
+
     public void testProcessValidators_CallFacetsAndChildren() throws Exception {
         // ## Arrange ##
         final List callSeq = new ArrayList();
@@ -469,6 +486,56 @@ public class UIComponentBaseOnlyTest extends TestCase {
 
         // ## Assert ##
         assertEquals(0, callSeq.size());
+    }
+
+    public void testProcessRestoreState() throws Exception {
+        // ## Arrange ##
+        final List callSeq = new ArrayList();
+        UIComponentBase component = new MockUIComponentBase() {
+            public void restoreState(FacesContext context, Object state) {
+                callSeq.add("5");
+            }
+        };
+        {
+            component.getChildren().add(new NullUIComponent() {
+                public void processRestoreState(FacesContext context,
+                        Object state) {
+                    callSeq.add("1");
+                }
+            });
+            component.getChildren().add(new NullUIComponent() {
+                public void processRestoreState(FacesContext context,
+                        Object state) {
+                    callSeq.add("2");
+                }
+            });
+            component.getFacets().put("A", new NullUIComponent() {
+                public void processRestoreState(FacesContext context,
+                        Object state) {
+                    callSeq.add("3");
+                }
+            });
+            component.getFacets().put("B", new NullUIComponent() {
+                public void processRestoreState(FacesContext context,
+                        Object state) {
+                    callSeq.add("4");
+                }
+            });
+        }
+        HashMap m = new HashMap();
+        m.put("A", "a");
+        m.put("B", "b");
+
+        // ## Act ##
+        component.processRestoreState(new NullFacesContext(),
+                new SerializableStateHolder(null, m, Arrays
+                        .asList(new Object[] { "", "" })));
+
+        // ## Assert ##
+        assertEquals(5, callSeq.size());
+        assertEquals(
+                "last time, call self restoreState. " + callSeq.toString(),
+                "5", callSeq.get(4));
     }
 
 }

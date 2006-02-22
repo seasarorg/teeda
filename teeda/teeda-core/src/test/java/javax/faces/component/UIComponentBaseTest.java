@@ -17,14 +17,11 @@ package javax.faces.component;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.faces.context.FacesContext;
 import javax.faces.event.FacesListener;
-import javax.faces.internal.SerializableStateHolder;
 
 import junitx.framework.ObjectAssert;
 
@@ -525,52 +522,18 @@ public class UIComponentBaseTest extends AbstractUIComponentTest {
         ObjectAssert.assertInstanceOf(Serializable.class, state);
     }
 
-    public void testProcessRestoreState() throws Exception {
+    public void testProcessRestoreState_NoSerializableStateHolder()
+            throws Exception {
         // ## Arrange ##
-        final List callSeq = new ArrayList();
-        UIComponentBase component = new MockUIComponentBase() {
-            public void restoreState(FacesContext context, Object state) {
-                callSeq.add("5");
-            }
-        };
-        {
-            component.getChildren().add(new NullUIComponent() {
-                public void processRestoreState(FacesContext context,
-                        Object state) {
-                    callSeq.add("1");
-                }
-            });
-            component.getChildren().add(new NullUIComponent() {
-                public void processRestoreState(FacesContext context,
-                        Object state) {
-                    callSeq.add("2");
-                }
-            });
-            component.getFacets().put("A", new NullUIComponent() {
-                public void processRestoreState(FacesContext context,
-                        Object state) {
-                    callSeq.add("3");
-                }
-            });
-            component.getFacets().put("B", new NullUIComponent() {
-                public void processRestoreState(FacesContext context,
-                        Object state) {
-                    callSeq.add("4");
-                }
-            });
-        }
-        HashMap m = new HashMap();
-        m.put("A", "a");
-        m.put("B", "b");
+        UIComponentBase component = createUIComponentBase();
 
         // ## Act ##
-        component.processRestoreState(getFacesContext(),
-                new SerializableStateHolder(null, m, Arrays
-                        .asList(new Object[] { "", "" })));
-
         // ## Assert ##
-        assertEquals(5, callSeq.size());
-        assertEquals(callSeq.toString(), "5", callSeq.get(4));
+        try {
+            component.processRestoreState(getFacesContext(), new ArrayList());
+            fail();
+        } catch (IllegalArgumentException e) {
+        }
     }
 
     public final void testSaveAndRestoreAttachedState_AttacedObjectIsNull() {

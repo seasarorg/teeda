@@ -624,18 +624,16 @@ public abstract class UIComponentBase extends UIComponent {
     }
 
     private void restoreValueBindingMap(FacesContext context, Object state) {
-
         bindingMap_ = null;
         if (state != null) {
             Map stateMap = (Map) state;
             bindingMap_ = new HashMap();
-            for (Iterator itr = stateMap.keySet().iterator(); itr.hasNext();) {
+            for (Iterator itr = stateMap.entrySet().iterator(); itr.hasNext();) {
                 Map.Entry entry = (Map.Entry) itr.next();
                 bindingMap_.put(entry.getKey(), restoreAttachedState(context,
                         entry.getValue()));
             }
         }
-
     }
 
     private void clearAttributeMap() {

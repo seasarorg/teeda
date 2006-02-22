@@ -25,8 +25,11 @@ import junitx.framework.ObjectAssert;
 import junitx.framework.StringAssert;
 
 import org.apache.commons.lang.StringUtils;
+import org.seasar.teeda.core.el.impl.ValueBindingImpl;
 import org.seasar.teeda.core.mock.MockUIComponentBase;
 import org.seasar.teeda.core.mock.MockUIComponentBaseWithNamingContainer;
+import org.seasar.teeda.core.mock.NullApplication;
+import org.seasar.teeda.core.mock.NullELParser;
 
 /**
  * @author manhole
@@ -110,6 +113,8 @@ public class UIComponentBaseTeedaTest extends AbstractUIComponentTeedaTest {
         component1.setRendererType("some renderer");
         component1.setTransient(true);
         component1.getAttributes().put("at", "vvv");
+        component1.setValueBinding("vbb", new ValueBindingImpl(
+                new NullApplication(), "abc", new NullELParser()));
 
         FacesContext context = getFacesContext();
         UIViewRoot viewRoot = new UIViewRoot();
@@ -135,6 +140,8 @@ public class UIComponentBaseTeedaTest extends AbstractUIComponentTeedaTest {
         assertEquals(component1.getRendererType(), component2.getRendererType());
         assertEquals(component1.getRendersChildren(), component2
                 .getRendersChildren());
+        assertEquals(component1.getValueBinding("vbb").getExpressionString(),
+                component2.getValueBinding("vbb").getExpressionString());
         assertEquals(false, component2.isTransient());
     }
 
