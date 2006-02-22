@@ -15,18 +15,30 @@
  */
 package javax.faces.component;
 
+import javax.faces.context.FacesContext;
+
 /**
  * @author manhole
  */
 public class UIFormTeedaTest extends UIComponentBaseTeedaTest {
 
-    // TODO test
     public void testSaveAndRestoreState() throws Exception {
         super.testSaveAndRestoreState();
 
-        // "setSubmitted" should not be saved.
+        // ## Arrange ##
+        UIForm form1 = createUIForm();
+        form1.setSubmitted(true);
 
-        // TODO test
+        // ## Act ##
+        FacesContext context = getFacesContext();
+        Object state = form1.saveState(context);
+
+        UIForm form2 = createUIForm();
+        form2.restoreState(context, state);
+
+        // ## Assert ##
+        assertEquals("'setSubmitted' should not be saved.", false, form2
+                .isSubmitted());
     }
 
     private UIForm createUIForm() {
