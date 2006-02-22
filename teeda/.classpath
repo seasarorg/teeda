@@ -22,5 +22,7 @@
 	<classpathentry sourcepath="lib/sources/commons-lang-2.1-sources.jar" kind="lib" path="lib/commons-lang-2.1.jar"/>
 	<classpathentry kind="lib" path="lib/junit-addons-1.4.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/seasar2"/>
+	<classpathentry sourcepath="lib/sources/xercesImpl-2.6.2-sources.jar" kind="lib" path="lib/xercesImpl-2.6.2.jar"/>
+	<classpathentry kind="lib" path="lib/xmlParserAPIs-2.6.2.jar"/>
 	<classpathentry kind="output" path="teeda-core/target/classes"/>
 </classpath>
