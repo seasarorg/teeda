@@ -32,8 +32,7 @@ public class ValidateDoubleRangeTag extends MaxMinValidatorTag {
 
     private static final long serialVersionUID = 1L;
     
-    private static final String VALIDATOR_ID = 
-        DoubleRangeValidator.VALIDATOR_ID;
+    private static final String VALIDATOR_ID = DoubleRangeValidator.VALIDATOR_ID;
 
     public ValidateDoubleRangeTag() {
         super();
@@ -44,7 +43,7 @@ public class ValidateDoubleRangeTag extends MaxMinValidatorTag {
         super.setValidatorId(VALIDATOR_ID);
         
         DoubleRangeValidator validator = null;
-        validator = (DoubleRangeValidator)createValidator();
+        validator = (DoubleRangeValidator)super.createValidator();
         AssertionUtil.assertNotNull("DoubleRangeValidator", validator);
                 
         if (minimum_ != null) {

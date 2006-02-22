@@ -26,6 +26,8 @@ import org.seasar.teeda.core.taglib.UIComponentTagBase;
  */
 public class SelectItemTag extends UIComponentTagBase {
 
+    private static final String COMPONENT_TYPE = UISelectItem.COMPONENT_TYPE;
+    
     protected String itemDescription_;
 
     protected String itemDisabled_;
@@ -55,7 +57,7 @@ public class SelectItemTag extends UIComponentTagBase {
     }
 
     public String getComponentType() {
-        return UISelectItem.COMPONENT_TYPE;
+        return COMPONENT_TYPE;
     }
 
     public String getRendererType() {

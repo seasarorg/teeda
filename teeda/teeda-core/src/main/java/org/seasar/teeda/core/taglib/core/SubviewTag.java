@@ -23,12 +23,14 @@ import javax.faces.webapp.UIComponentTag;
  */
 public class SubviewTag extends UIComponentTag {
 
+    private static final String COMPONENT_TYPE = UINamingContainer.COMPONENT_TYPE;
+    
     public SubviewTag() {
         super();
     }
 
     public String getComponentType() {
-        return UINamingContainer.COMPONENT_TYPE;
+        return COMPONENT_TYPE;
     }
 
     public String getRendererType() {

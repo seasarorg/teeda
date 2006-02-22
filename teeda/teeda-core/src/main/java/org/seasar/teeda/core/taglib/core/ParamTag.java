@@ -28,9 +28,11 @@ import org.seasar.teeda.core.taglib.UIComponentTagBase;
 public class ParamTag extends UIComponentTagBase {
 
     private static final long serialVersionUID = 1L;
-
+    
+    private static final String COMPONENT_TYPE = UIParameter.COMPONENT_TYPE;
+    
     public String getComponentType() {
-        return "javax.faces.Parameter";
+        return COMPONENT_TYPE;
     }
 
     public String getRendererType() {

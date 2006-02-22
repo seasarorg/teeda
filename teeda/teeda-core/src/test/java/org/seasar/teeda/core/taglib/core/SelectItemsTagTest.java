@@ -15,31 +15,27 @@
  */
 package org.seasar.teeda.core.taglib.core;
 
-import javax.faces.component.UISelectItems;
-
-import org.seasar.teeda.core.taglib.UIComponentTagBase;
+import junit.framework.TestCase;
 
 /**
  * @author yone
  */
-public class SelectItemsTag extends UIComponentTagBase {
-
-    private static final String COMPONENT_TYPE = UISelectItems.COMPONENT_TYPE;
+public class SelectItemsTagTest extends TestCase {
+    
+    public void testGetComponentType() throws Exception {
+        // # Arrange #
+        SelectItemsTag tag = new SelectItemsTag();
         
-    public SelectItemsTag() {
-        super();
+        // # Act & Assert #
+        assertEquals("javax.faces.SelectItems", tag.getComponentType());
     }
-
-    public String getComponentType() {
-        return COMPONENT_TYPE;
+    
+    public void testGetRenderType() throws Exception {
+        // # Arrange #
+        SelectItemsTag tag = new SelectItemsTag();
+        
+        // # Act & Assert #
+        assertEquals(null, tag.getRendererType());        
     }
-
-    public String getRendererType() {
-        return null;
-    }
-
-    public void release() {
-        super.release();
-    }
-
+        
 }
