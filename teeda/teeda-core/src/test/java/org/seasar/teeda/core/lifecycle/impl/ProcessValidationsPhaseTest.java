@@ -15,6 +15,8 @@
  */
 package org.seasar.teeda.core.lifecycle.impl;
 
+import javax.faces.FacesException;
+import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseId;
 
 import org.seasar.teeda.core.unit.TeedaTestCase;
@@ -24,6 +26,10 @@ import org.seasar.teeda.core.unit.TeedaTestCase;
  */
 public class ProcessValidationsPhaseTest extends TeedaTestCase {
 
+    public void testExecutePhase() throws Exception {
+        
+    }
+    
     public void testGetCurrentPhaseId() throws Exception {
         assertEquals(PhaseId.PROCESS_VALIDATIONS,
                 new ProcessValidationsPhase().getCurrentPhaseId());

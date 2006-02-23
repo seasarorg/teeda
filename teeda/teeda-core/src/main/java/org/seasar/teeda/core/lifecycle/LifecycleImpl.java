@@ -34,9 +34,6 @@ import org.seasar.teeda.core.util.ServletExternalContextUtil;
  */
 public class LifecycleImpl extends Lifecycle {
 
-    private static final String VIEW_ID_ATTR = LifecycleImpl.class.getName()
-            + ".VIEW_ID";
-
     private static final String EXECUTED_ATTR = LifecycleImpl.class.getName()
             + ".EXECUTED";
 
@@ -66,7 +63,7 @@ public class LifecycleImpl extends Lifecycle {
     public void execute(FacesContext context) throws FacesException {
         try {
             restoreViewPhase_.execute(context);
-            Postback postback = null;
+            Postback postback = NullPostback.getCurrentInstance();
             if (restoreViewPhase_ instanceof Postback) {
                 postback = (Postback) restoreViewPhase_;
             }
@@ -95,7 +92,7 @@ public class LifecycleImpl extends Lifecycle {
                         .getViewRoot());
                 return;
             }
-            if (postback != null && postback.isPostBack() || hasEvent(context)) {
+            if (postback.isPostBack() || hasEvent(context)) {
                 processValidationPhase_.execute(context);
                 if (isFinished(context)) {
                     return;
@@ -135,17 +132,6 @@ public class LifecycleImpl extends Lifecycle {
             return;
         }
         renderResponsePhase_.execute(context);
-    }
-
-    protected String getViewIdFromSession(ExternalContext externalContext) {
-
-        return (String) externalContext.getSessionMap().get(VIEW_ID_ATTR);
-    }
-
-    protected void saveViewIdToSession(ExternalContext externalContext,
-            String viewId) {
-
-        externalContext.getSessionMap().put(VIEW_ID_ATTR, viewId);
     }
 
     protected boolean isFinished(FacesContext context) throws FacesException {
@@ -219,4 +205,17 @@ public class LifecycleImpl extends Lifecycle {
         return updateModelValuesPhase_;
     }
 
+    private static final class NullPostback implements Postback {
+
+        private static final NullPostback instance_ = new NullPostback();
+        
+        public static NullPostback getCurrentInstance() {
+            return instance_;
+        }
+        
+        public boolean isPostBack() {
+            return false;
+        }
+        
+    }
 }
