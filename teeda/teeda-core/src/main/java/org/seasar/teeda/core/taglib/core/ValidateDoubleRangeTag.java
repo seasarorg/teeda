@@ -42,12 +42,8 @@ public class ValidateDoubleRangeTag extends MaxMinValidatorTag {
         super();
     }
 
-    public int doStartTag() throws JspException {
-        super.setValidatorId(VALIDATOR_ID);
-        return super.doStartTag();
-    }
-    
     protected Validator createValidator() throws JspException {
+        super.setValidatorId(VALIDATOR_ID);
         DoubleRangeValidator validator = null;
         validator = (DoubleRangeValidator)super.createValidator();
         AssertionUtil.assertNotNull("DoubleRangeValidator", validator);

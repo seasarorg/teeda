@@ -41,12 +41,8 @@ public class ValidateLengthTag extends MaxMinValidatorTag {
         super();
     }
 
-    public int doStartTag() throws JspException {
-        super.setValidatorId(VALIDATOR_ID);
-        return super.doStartTag();
-    }
-    
     protected Validator createValidator() throws JspException {
+        super.setValidatorId(VALIDATOR_ID);
         LengthValidator validator = (LengthValidator)super.createValidator();
         AssertionUtil.assertNotNull("LengthValidator", validator);
 

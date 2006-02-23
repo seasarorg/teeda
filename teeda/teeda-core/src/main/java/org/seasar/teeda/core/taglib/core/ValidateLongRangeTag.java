@@ -42,12 +42,8 @@ public class ValidateLongRangeTag extends MaxMinValidatorTag {
         super();
     }
 
-    public int doStartTag() throws JspException {
-        super.setValidatorId(VALIDATOR_ID);
-        return super.doStartTag();
-    }
-    
     protected Validator createValidator() throws JspException {
+        super.setValidatorId(VALIDATOR_ID);
         LongRangeValidator validator = null;
         validator = (LongRangeValidator)super.createValidator();
         AssertionUtil.assertNotNull("LongRangeValidator", validator);
