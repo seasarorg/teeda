@@ -46,8 +46,10 @@ public interface TODO {
      *  - [#7975] [Seasar-user:3127] http://sourceforge.jp/tracker/index.php?func=detail&aid=7975&group_id=689&atid=6584
      *  - [#7974] [Seasar-user:3080] http://sourceforge.jp/tracker/index.php?func=detail&aid=7974&group_id=689&atid=6584
      *  - [#7840] [Seasar-user:3083] http://sourceforge.jp/tracker/index.php?func=detail&aid=7840&group_id=689&atid=6584
+     *  - [Seasar-user:3253]
+     *  - Continuum
      *  
-     *  
+     * 
      * TODO for 1.1
      *  - 
      * 
