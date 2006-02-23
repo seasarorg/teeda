@@ -32,40 +32,52 @@ public class ValidateLengthTag extends MaxMinValidatorTag {
 
     private static final long serialVersionUID = 1L;
 
-    private static final String VALIDATOR_ID = "javax.faces.Length";
+    private static final String VALIDATOR_ID = LengthValidator.VALIDATOR_ID;
+    
+    protected int minimum = 0;
+    protected int maximum = 0;
 
     public ValidateLengthTag() {
         super();
     }
+
+    public int doStartTag() throws JspException {
+        super.setValidatorId(VALIDATOR_ID);
+        return super.doStartTag();
+    }
     
     protected Validator createValidator() throws JspException {
-        FacesContext context = FacesContext.getCurrentInstance();
-        super.setValidatorId(VALIDATOR_ID);
-        
         LengthValidator validator = (LengthValidator)super.createValidator();
         AssertionUtil.assertNotNull("LengthValidator", validator);
-        
+
+        evaluateExpressions();
+        if (minimumSet) {
+            validator.setMinimum(minimum);
+        }
+        if (maximumSet) {
+            validator.setMaximum(maximum);
+        }
+        return validator;
+    }
+
+    private void evaluateExpressions() throws JspException {
+        FacesContext context = FacesContext.getCurrentInstance();
         if (minimum_ != null) {
-            int minimum = 0;
             if (BindingUtil.isValueReference(minimum_)) {
                 ValueBinding vb = context.getApplication().createValueBinding(minimum_);
                 minimum = ConverterUtil.convertToInt(vb.getValue(context));                  
             } else {
                 minimum = ConverterUtil.convertToInt(minimum_);
             }
-            validator.setMinimum(minimum);
         }
         if (maximum_ != null) {
-            int maximum = 0;
             if (BindingUtil.isValueReference(maximum_)) {
                 ValueBinding vb = context.getApplication().createValueBinding(maximum_);
                 maximum = ConverterUtil.convertToInt(vb.getValue(context)); 
             } else {
                 maximum = ConverterUtil.convertToInt(maximum_);
             }
-            validator.setMaximum(maximum);
         }
-        return validator;
     }
-    
+
 }

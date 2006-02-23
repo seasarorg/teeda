@@ -34,39 +34,52 @@ public class ValidateDoubleRangeTag extends MaxMinValidatorTag {
     
     private static final String VALIDATOR_ID = DoubleRangeValidator.VALIDATOR_ID;
 
+    protected double minimum = 0;
+    
+    protected double maximum = 0;
+    
     public ValidateDoubleRangeTag() {
         super();
     }
 
-    protected Validator createValidator() throws JspException {
-        FacesContext context = FacesContext.getCurrentInstance();
+    public int doStartTag() throws JspException {
         super.setValidatorId(VALIDATOR_ID);
-        
+        return super.doStartTag();
+    }
+    
+    protected Validator createValidator() throws JspException {
         DoubleRangeValidator validator = null;
         validator = (DoubleRangeValidator)super.createValidator();
         AssertionUtil.assertNotNull("DoubleRangeValidator", validator);
-                
+
+        evaluateExpressions();
+        if (minimumSet) {
+            validator.setMinimum(minimum);
+        }
+        if (maximumSet) {
+            validator.setMaximum(maximum);
+        }
+        return validator;
+    }
+
+    private void evaluateExpressions() throws JspException {
+        FacesContext context = FacesContext.getCurrentInstance();
         if (minimum_ != null) {
-            double minimum = 0;
             if (BindingUtil.isValueReference(minimum_)) {
                 ValueBinding vb = context.getApplication().createValueBinding(minimum_);
                 minimum = ConverterUtil.convertToDouble(vb.getValue(context));
             } else {
                 minimum = ConverterUtil.convertToDouble(minimum_);
             }
-            validator.setMinimum(minimum);
         }
         if (maximum_ != null) {
-            double maximum = 0;
             if (BindingUtil.isValueReference(maximum_)) {
                 ValueBinding vb = context.getApplication().createValueBinding(maximum_);
                 maximum = ConverterUtil.convertToDouble(vb.getValue(context));
             } else {
                 maximum = ConverterUtil.convertToDouble(maximum_);
             }
-            validator.setMaximum(maximum);
         }
-        return validator;
     }
-
+    
 }

@@ -47,7 +47,7 @@ public class ActionListenerTag extends TagSupport {
         UIComponentTag componentTag = UIComponentTag
                 .getParentUIComponentTag(pageContext);
         if (componentTag == null) {
-            throw new JspException("type must be set.");
+            throw new JspException("Not nested in a UIComponentTag");
         }
         if (!componentTag.getCreated()) {
             return Tag.SKIP_BODY;

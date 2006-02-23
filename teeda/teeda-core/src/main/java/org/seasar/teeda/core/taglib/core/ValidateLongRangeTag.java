@@ -32,42 +32,54 @@ public class ValidateLongRangeTag extends MaxMinValidatorTag {
 
     private static final long serialVersionUID = 1L;
     
-    private static final String VALIDATOR_ID = 
-        LongRangeValidator.VALIDATOR_ID;
+    private static final String VALIDATOR_ID = LongRangeValidator.VALIDATOR_ID;
+    
+    protected long minimum = 0;
+    
+    protected long maximum = 0;
 
     public ValidateLongRangeTag() {
         super();
     }
 
-    protected Validator createValidator() throws JspException {
-        FacesContext context = FacesContext.getCurrentInstance();
+    public int doStartTag() throws JspException {
         super.setValidatorId(VALIDATOR_ID);
-        
+        return super.doStartTag();
+    }
+    
+    protected Validator createValidator() throws JspException {
         LongRangeValidator validator = null;
-        validator = (LongRangeValidator)createValidator();
+        validator = (LongRangeValidator)super.createValidator();
         AssertionUtil.assertNotNull("LongRangeValidator", validator);
                 
+        evaluateExpressions();
+        if (minimumSet) {
+            validator.setMinimum(minimum);
+        }
+        if (maximumSet) {
+            validator.setMaximum(maximum);
+        }
+        return validator;
+    }
+
+    private void evaluateExpressions() throws JspException {
+        FacesContext context = FacesContext.getCurrentInstance();
         if (minimum_ != null) {
-            long minimum = 0;
             if (BindingUtil.isValueReference(minimum_)) {
                 ValueBinding vb = context.getApplication().createValueBinding(minimum_);
                 minimum = ConverterUtil.convertToLong(vb.getValue(context));
             } else {
                 minimum = ConverterUtil.convertToLong(minimum_);
             }
-            validator.setMinimum(minimum);
         }
         if (maximum_ != null) {
-            long maximum = 0;
             if (BindingUtil.isValueReference(maximum_)) {
                 ValueBinding vb = context.getApplication().createValueBinding(maximum_);
                 maximum = ConverterUtil.convertToLong(vb.getValue(context));
             } else {
                 maximum = ConverterUtil.convertToLong(maximum_);
             }
-            validator.setMaximum(maximum);
         }
-        return validator;
     }
 
 }
