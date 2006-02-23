@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.seasar.teeda.core.util.EnumerationIterator;
+import org.seasar.framework.util.EnumerationIterator;
 
 /**
  * @author Shinpei Ohtani

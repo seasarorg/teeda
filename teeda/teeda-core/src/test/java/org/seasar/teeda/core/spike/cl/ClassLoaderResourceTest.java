@@ -27,7 +27,7 @@ import junit.framework.TestCase;
 import junitx.framework.StringAssert;
 
 import org.seasar.framework.util.EclipseUtil;
-import org.seasar.teeda.core.util.EnumerationIterator;
+import org.seasar.framework.util.EnumerationIterator;
 
 public class ClassLoaderResourceTest extends TestCase {
 

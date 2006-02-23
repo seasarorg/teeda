@@ -33,6 +33,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.seasar.framework.log.Logger;
+import org.seasar.framework.util.EnumerationIterator;
 import org.seasar.framework.util.MethodUtil;
 
 /**
