@@ -12,6 +12,19 @@
   <version>0.1-SNAPSHOT</version>
   <description></description>
   <url>http://teeda.seasar.org/</url>
+  <ciManagement>
+    <system>continuum</system>
+    <!--
+    <notifiers>
+      <notifier>
+        <type>mail</type>
+        <configuration>
+          <address>me@example.com</address>
+        </configuration>
+      </notifier>
+    </notifiers>
+    -->
+  </ciManagement>
   <inceptionYear>2005</inceptionYear>
   <developers>
     <developer>
