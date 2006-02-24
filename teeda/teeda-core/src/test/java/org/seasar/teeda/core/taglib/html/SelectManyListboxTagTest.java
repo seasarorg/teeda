@@ -22,5 +22,7 @@ import junit.framework.TestCase;
  */
 public class SelectManyListboxTagTest extends TestCase {
     // TODO test
-
+    public void testA() throws Exception {
+        
+    }
 }

@@ -22,5 +22,7 @@ import junit.framework.TestCase;
  */
 public class MessagesTagTest extends TestCase {
     // TODO test
-
+    public void testA() throws Exception {
+        
+    }
 }

@@ -22,5 +22,7 @@ import junit.framework.TestCase;
  */
 public class HtmlComponentTagBaseTest extends TestCase {
     // TODO test
-
+    public void testA() throws Exception {
+        
+    }
 }

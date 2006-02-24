@@ -22,5 +22,8 @@ import junit.framework.TestCase;
  */
 public class ColumnTagTest extends TestCase {
     // TODO test
+    public void testA() throws Exception {
+        
+    }
 
 }
