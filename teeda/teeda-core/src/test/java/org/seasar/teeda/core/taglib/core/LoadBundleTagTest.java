@@ -19,6 +19,8 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.servlet.jsp.tagext.Tag;
+
 import org.seasar.teeda.core.mock.MockApplication;
 import org.seasar.teeda.core.mock.MockApplicationImpl;
 import org.seasar.teeda.core.unit.TeedaTestCase;
@@ -55,6 +57,15 @@ public class LoadBundleTagTest extends TeedaTestCase {
                 .get("messages")).get("xxx"), "???xxx???");
     }
     
+    public void testLoadBndle_setBadBaseName() throws Exception {
+        MockApplication mockApp = new MockApplicationImpl();
+        mockApp.setDefaultLocale(Locale.JAPAN);
+        getFacesContext().setApplication(mockApp);
+        LoadBundleTag tag = new LoadBundleTag();
+        tag.setBasename("hogehoge");
+        assertEquals(Tag.SKIP_BODY, tag.doStartTag());
+    }
+    
     public void testLoadBundleMap() throws Exception {
         boolean gotException = false;
         Object key = "aaa";
@@ -76,6 +87,7 @@ public class LoadBundleTagTest extends TeedaTestCase {
                             .getRequestMap().get("messages");
         try {
             testMap.clear();
+            fail();
         } catch (UnsupportedOperationException e) {
             gotException = true;
         }
@@ -91,6 +103,7 @@ public class LoadBundleTagTest extends TeedaTestCase {
         assertTrue(testMap.keySet().contains(key));
         try {
             testMap.put(key, value);
+            fail();
         } catch (UnsupportedOperationException e) {
             gotException = true;
         }
@@ -99,6 +112,7 @@ public class LoadBundleTagTest extends TeedaTestCase {
         gotException = false;
         try {
             testMap.putAll(new HashMap());
+            fail();
         } catch (UnsupportedOperationException e) {
             gotException = true;
         }
@@ -107,6 +121,7 @@ public class LoadBundleTagTest extends TeedaTestCase {
         gotException = false;
         try {
             testMap.remove(key);
+            fail();
         } catch (UnsupportedOperationException e) {
             gotException = true;
         }
