@@ -16,8 +16,6 @@
 package org.seasar.teeda.core.application;
 
 import java.io.IOException;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import javax.faces.FacesException;
@@ -30,7 +28,6 @@ import javax.faces.context.FacesContext;
 import org.seasar.teeda.core.application.navigation.NavigationCaseContext;
 import org.seasar.teeda.core.application.navigation.NavigationContext;
 import org.seasar.teeda.core.application.navigation.NavigationContextFactory;
-import org.seasar.teeda.core.util.IteratorUtil;
 
 /**
  * @author shot
@@ -98,15 +95,7 @@ public class NavigationHandlerImpl extends NavigationHandler {
         if(navContext == null){
             return null;
         }
-        List navCases = navContext.getNavigationCases();
-        final NavigationCaseContext inCaseContext = new NavigationCaseContext(fromAction, outcome); 
-        for(Iterator itr = IteratorUtil.getIterator(navCases); itr.hasNext();){
-            NavigationCaseContext caseContext = (NavigationCaseContext)itr.next();
-            if(caseContext.equals(inCaseContext)){
-                return caseContext;
-            }
-        }
-        return null;
+        return navContext.getNavigationCase(fromAction, outcome);
     }
 
     protected NavigationContext getExactMatchNavigationCases(String viewId, FacesContext context) {

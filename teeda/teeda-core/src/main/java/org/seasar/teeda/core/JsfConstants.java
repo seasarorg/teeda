@@ -21,7 +21,7 @@ import org.seasar.teeda.core.render.html.HtmlRenderKitImpl;
 /**
  * @author shot
  * @author manhole
- * @atthor yone
+ * @author yone
  */
 public interface JsfConstants {
 

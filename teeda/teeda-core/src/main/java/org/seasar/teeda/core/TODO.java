@@ -48,6 +48,7 @@ public interface TODO {
      *  - [#7840] [Seasar-user:3083] http://sourceforge.jp/tracker/index.php?func=detail&aid=7840&group_id=689&atid=6584
      *  - [Seasar-user:3253]
      *  - Continuum
+     *  - To know navigation (from and outcome, and go to where), provide interceptor 
      *  
      * 
      * TODO for 1.1

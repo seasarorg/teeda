@@ -75,15 +75,4 @@ public class NavigationCaseContext {
         toViewId_ = toViewId;
     }
     
-    public boolean equals(Object obj) {
-        if (!(obj instanceof NavigationCaseContext)) {
-            return false;
-        }
-        NavigationCaseContext navCase = (NavigationCaseContext) obj;
-        String fromAction = navCase.getFromAction();
-        String fromOutcome = navCase.getFromOutcome();
-        
-        return (fromAction == null || fromAction.equals(fromAction_)) &&
-                (fromOutcome == null || fromOutcome.equals(fromOutcome_));
-    }
 }
