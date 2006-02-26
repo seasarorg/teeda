@@ -34,8 +34,7 @@ public class ConfigFilesFacesConfigurator extends AbstractFacesConfigurator {
 
     private ExternalContext context_;
 
-    public ConfigFilesFacesConfigurator(ExternalContext context) {
-        context_ = context;
+    public ConfigFilesFacesConfigurator() {
     }
 
     public FacesConfig configure() {
@@ -62,6 +61,14 @@ public class ConfigFilesFacesConfigurator extends AbstractFacesConfigurator {
         String paths = context_
                 .getInitParameter(FacesServlet.CONFIG_FILES_ATTR);
         return paths;
+    }
+
+    public ExternalContext getExternalContext() {
+        return context_;
+    }
+
+    public void setExternalContext(ExternalContext context) {
+        context_ = context;
     }
 
 }

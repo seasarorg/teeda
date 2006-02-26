@@ -73,8 +73,8 @@ public class ConfigFilesFacesConfiguratorTest extends S2TestCase {
         ExternalContext externalContext = new MockExternalContextImpl(
                 getServletContext(), getRequest(), getResponse());
 
-        ConfigFilesFacesConfigurator configurator = new ConfigFilesFacesConfigurator(
-                externalContext);
+        ConfigFilesFacesConfigurator configurator = new ConfigFilesFacesConfigurator();
+        configurator.setExternalContext(externalContext);
 
         // ## Act ##
         FacesConfig facesConfig = configurator.configure();
