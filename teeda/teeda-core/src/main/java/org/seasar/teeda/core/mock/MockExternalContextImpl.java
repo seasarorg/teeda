@@ -31,6 +31,7 @@ import javax.faces.FacesException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpSession;
 
+import org.seasar.framework.log.Logger;
 import org.seasar.framework.mock.servlet.MockHttpServletRequest;
 import org.seasar.framework.mock.servlet.MockHttpServletRequestImpl;
 import org.seasar.framework.mock.servlet.MockHttpServletResponse;
@@ -39,6 +40,9 @@ import org.seasar.framework.mock.servlet.MockServletContext;
 import org.seasar.framework.mock.servlet.MockServletContextImpl;
 
 public class MockExternalContextImpl extends MockExternalContext {
+
+    private static final Logger logger_ = Logger
+            .getLogger(MockExternalContextImpl.class);
 
     private MockServletContext mockServletContext_;
 
@@ -86,7 +90,9 @@ public class MockExternalContextImpl extends MockExternalContext {
     }
 
     public void dispatch(String requestURI) throws IOException, FacesException {
-        throw new UnsupportedOperationException();
+        if (logger_.isDebugEnabled()) {
+            logger_.debug("dispatch called.");
+        }
     }
 
     public String encodeActionURL(String sb) {
