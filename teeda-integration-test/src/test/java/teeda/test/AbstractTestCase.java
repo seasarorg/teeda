@@ -1,6 +1,7 @@
 package teeda.test;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -9,6 +10,9 @@ import junit.framework.TestSuite;
 
 import org.seasar.jsf.selenium.MavenUtil;
 import org.seasar.jsf.selenium.WebApplicationTestSetup;
+
+import com.gargoylesoftware.htmlunit.WebResponse;
+import com.gargoylesoftware.htmlunit.html.HtmlPage;
 
 public abstract class AbstractTestCase extends TestCase {
 
@@ -33,6 +37,11 @@ public abstract class AbstractTestCase extends TestCase {
 
     protected URL getUrl(String path) throws MalformedURLException {
         return new URL(baseUrl_ + path);
+    }
+
+    protected String getBody(HtmlPage page) throws UnsupportedEncodingException {
+        WebResponse webResponse = page.getWebResponse();
+        return new String(webResponse.getResponseBody(), page.getPageEncoding());
     }
 
 }

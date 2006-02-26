@@ -21,6 +21,7 @@ public class FirstTest extends AbstractTestCase {
 
         // ## Act ##
         HtmlPage page1 = (HtmlPage) webClient.getPage(url);
+        System.out.println(getBody(page1));
 
         // ## Assert ##
         assertEquals("this is a.html", page1.getTitleText());

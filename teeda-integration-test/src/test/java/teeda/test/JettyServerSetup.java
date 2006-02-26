@@ -56,8 +56,12 @@ public class JettyServerSetup extends TestSetup {
     }
 
     protected void tearDown() throws Exception {
-        server_.stop();
+        stopJetty();
         super.tearDown();
+    }
+
+    private void stopJetty() throws InterruptedException {
+        server_.stop();
     }
 
     public File getWebapp() {

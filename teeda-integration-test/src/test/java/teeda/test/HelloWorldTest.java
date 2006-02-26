@@ -5,7 +5,6 @@ import java.net.URL;
 import junit.framework.Test;
 
 import com.gargoylesoftware.htmlunit.WebClient;
-import com.gargoylesoftware.htmlunit.WebResponse;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.gargoylesoftware.htmlunit.html.HtmlSpan;
 
@@ -25,18 +24,16 @@ public class HelloWorldTest extends AbstractTestCase {
         HtmlPage page = (HtmlPage) webClient.getPage(url);
 
         // ## Assert ##
-        WebResponse webResponse = page.getWebResponse();
-        final String body = new String(webResponse.getResponseBody(), page
-            .getPageEncoding()).trim();
+        final String body = getBody(page).trim();
         System.out.println(body);
         assertEquals(true, -1 < body.indexOf("Hello World!"));
 
         HtmlSpan span = (HtmlSpan) page.getHtmlElementById("hello");
         System.out.println(span);
         assertEquals("Hello World!", span.asText());
-        
+
         // TODO
-        //assertEquals("this is a.html", page.getTitleText());
+        //assertEquals("this is helloWorld.jsp", page.getTitleText());
     }
 
 }
