@@ -3,10 +3,13 @@
   "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
   "http://java.sun.com/dtd/web-app_2_3.dtd">
 <web-app>
+
+	<!--
 	<context-param>
 		<param-name>javax.faces.DEFAULT_SUFFIX</param-name>
-		<param-value>.jsf</param-value>
+		<param-value>.jsp</param-value>
 	</context-param>
+	-->
 
 	<filter>
 		<filter-name>s2filter</filter-name>
@@ -31,7 +34,7 @@
 
 	<servlet-mapping>
 		<servlet-name>Faces Servlet</servlet-name>
-		<url-pattern>*.jsf</url-pattern>
+		<url-pattern>/faces/*</url-pattern>
 	</servlet-mapping>
 
 </web-app>

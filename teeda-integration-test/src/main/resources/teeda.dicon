@@ -3,20 +3,22 @@
 	"http://www.seasar.org/dtd/components24.dtd">
 <components namespace="teeda">
 
+	<include path="aop.dicon" />
+
 	<!-- Error page include -->
 	<include path="teedaErrorPage.dicon" />
 	
 	<!-- ExternalContext -->
 	<component name="externalContext" class="org.seasar.teeda.core.context.servlet.ServletExternalContextImpl">
-		<arg>servletContext</arg>
+		<arg>application</arg>
 		<arg>request</arg>
 		<arg>response</arg>
 	</component>
-
+<!--
 	<component name="servletContext">
 		@org.seasar.framework.container.factory.SingletonS2ContainerFactory@getServletContext()
 	</component>
-
+-->
 	<!-- FacesConfig configurator -->
 	<component class="org.seasar.teeda.core.config.faces.impl.FacesConfigBuilderImpl">
 		<initMethod name="addFacesConfigurator">
@@ -96,6 +98,7 @@
 		<property name="updateModelValuesPhase">updateModelValuesPhase</property>
 		<property name="invokeApplicationPhase">invokeApplicationPhase</property>
 		<property name="renderResponsePhase">renderResponsePhase</property>
+		<aspect>aop.traceInterceptor</aspect>
 	</component>
 
 	<component name="restoreViewPhase" class="org.seasar.teeda.core.lifecycle.impl.RestoreViewPhase"/>
