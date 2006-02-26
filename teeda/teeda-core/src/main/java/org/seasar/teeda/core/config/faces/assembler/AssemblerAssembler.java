@@ -19,7 +19,6 @@ import org.seasar.teeda.core.config.faces.element.FacesConfig;
 
 /**
  * @author shot
- * TODO need to refine.
  */
 public class AssemblerAssembler {
 

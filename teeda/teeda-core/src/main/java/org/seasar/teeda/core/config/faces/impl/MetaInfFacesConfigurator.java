@@ -22,8 +22,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.faces.context.ExternalContext;
-
 import org.seasar.framework.container.factory.ResourceResolver;
 import org.seasar.framework.util.InputStreamUtil;
 import org.seasar.framework.util.URLUtil;
@@ -35,13 +33,10 @@ import org.seasar.teeda.core.util.ClassLoaderUtil;
 
 public class MetaInfFacesConfigurator extends AbstractFacesConfigurator {
 
-    private ExternalContext externalContext_;
-
     private String path_ = JsfConstants.WEB_INF_LIB;
 
-    public MetaInfFacesConfigurator(ExternalContext externalContext) {
-        externalContext_ = externalContext;
-        setResourceResolver(new MetaInfResourceResolver(externalContext_));
+    public MetaInfFacesConfigurator() {
+        setResourceResolver(new MetaInfResourceResolver());
     }
 
     public FacesConfig configure() {
@@ -73,14 +68,11 @@ public class MetaInfFacesConfigurator extends AbstractFacesConfigurator {
 
     protected static class MetaInfResourceResolver implements ResourceResolver {
 
-        private ExternalContext context_;
-
         private Iterator resources_;
 
         private boolean inited_ = false;
 
-        public MetaInfResourceResolver(ExternalContext context) {
-            context_ = context;
+        public MetaInfResourceResolver() {
         }
 
         public InputStream getInputStream(String path) {

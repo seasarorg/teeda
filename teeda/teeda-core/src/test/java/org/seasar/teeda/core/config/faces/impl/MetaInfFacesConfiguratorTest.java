@@ -75,8 +75,7 @@ public class MetaInfFacesConfiguratorTest extends S2TestCase {
             ExternalContext externalContext = new MockExternalContextImpl(
                     getServletContext(), getRequest(), getResponse());
 
-            MetaInfFacesConfigurator configurator = new MetaInfFacesConfigurator(
-                    externalContext);
+            MetaInfFacesConfigurator configurator = new MetaInfFacesConfigurator();
             configurator.setPath(path);
 
             // ## Act ##
