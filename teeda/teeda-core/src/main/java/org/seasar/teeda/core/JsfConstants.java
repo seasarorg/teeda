@@ -497,11 +497,11 @@ public interface JsfConstants {
 
     public String SERVLET_ERROR_EXCEPTION_MESSAGE = "javax.servlet.error.message";
 
-    public String ERROR_EXCEPTION = "seasar.jsf.error.exception";
+    public String ERROR_EXCEPTION = "teeda.jsf.error.exception";
 
-    public String ERROR_EXCEPTION_TYPE = "seasar.jsf.error.exception_type";
+    public String ERROR_EXCEPTION_TYPE = "teeda.jsf.error.exception_type";
 
-    public String ERROR_MESSAGE = "seasar.jsf.error.message";
+    public String ERROR_MESSAGE = "teeda.jsf.error.message";
 
     public String DEFAULT_CONVERTDATETIME_DATE_STYLE = "default";
 
