@@ -1,12 +1,237 @@
 package javax.faces.validator;
 
-import junit.framework.TestCase;
+import java.util.Locale;
 
-public class LongRangeValidatorTest extends TestCase {
+import javax.faces.component.UIViewRoot;
+import javax.faces.context.FacesContext;
 
-    //testing
+import org.seasar.teeda.core.mock.MockFacesContext;
+import org.seasar.teeda.core.mock.MockFacesContextImpl;
+import org.seasar.teeda.core.mock.MockUIComponent;
+import org.seasar.teeda.core.unit.TeedaTestCase;
+
+public class LongRangeValidatorTest extends TeedaTestCase {
+
     public void testConstants() throws Exception {
-        
+        assertEquals("javax.faces.validator.LongRangeValidator.MAXIMUM", LongRangeValidator.MAXIMUM_MESSAGE_ID);
+        assertEquals("javax.faces.validator.LongRangeValidator.MINIMUM", LongRangeValidator.MINIMUM_MESSAGE_ID);
+        assertEquals("javax.faces.validator.LongRangeValidator.TYPE", LongRangeValidator.TYPE_MESSAGE_ID);
+        assertEquals("javax.faces.LongRange", LongRangeValidator.VALIDATOR_ID);
     }
+    
+    public void testInstanciation_withMax() throws Exception {
+        long l = 123456L;
+        LongRangeValidator validator = new LongRangeValidator(l);
+        assertTrue(123456d == validator.getMaximum());
+    }
+
+    public void testInstanciation_withMaxAndMin() throws Exception {
+        long max = 2000L;
+        long min = 3L;
+        LongRangeValidator validator = new LongRangeValidator(max, min);
+        assertTrue(2000L == validator.getMaximum());
+        assertTrue(3L == validator.getMinimum());
+    }
+
+    public void testGetMaximum_setMax() throws Exception {
+        LongRangeValidator validator = new LongRangeValidator(12345678L);
+        assertTrue(12345678L == validator.getMaximum());
+    }
+
+    public void testGetMaximum_notSetMax() throws Exception {
+        LongRangeValidator validator = new LongRangeValidator();
+        assertTrue(Long.MAX_VALUE == validator.getMaximum());
+    }
+
+    public void testGetMinimum_setMin() throws Exception {
+        LongRangeValidator validator = new LongRangeValidator(8L, 7L);
+        assertTrue(7L == validator.getMinimum());
+    }
+
+    public void testGetMinimum_notSetMin() throws Exception {
+        LongRangeValidator validator = new LongRangeValidator();
+        assertTrue(Long.MIN_VALUE == validator.getMinimum());
+    }
+
+    public void testValidate_facesContextIsNull() throws Exception {
+        LongRangeValidator validator = new LongRangeValidator();
+        try {
+            validator.validate(null, new MockUIComponent(), "");
+            fail();
+        } catch (NullPointerException expected) {
+            success();
+        }
+    }
+
+    public void testValidate_componentIsNull() throws Exception {
+        LongRangeValidator validator = new LongRangeValidator();
+        try {
+            validator.validate(new MockFacesContextImpl(), null, "");
+            fail();
+        } catch (NullPointerException expected) {
+            success();
+        }
+    }
+
+    public void testValidate_valueIsNull() throws Exception {
+        LongRangeValidator validator = new LongRangeValidator();
+        validator.validate(new MockFacesContextImpl(), new MockUIComponent(),
+                null);
+
+        // assume nothing happen
+        success();
+    }
+
+    public void testValidate_lessThanMinWhenBothMaxMinNotNull()
+            throws Exception {
+        FacesContext context = getFacesContextWithSetMessageBundle("a",
+                Locale.ENGLISH);
+        LongRangeValidator validator = new LongRangeValidator(2L, 1L);
+        try {
+            validator.validate(context, context.getViewRoot(), new Integer(0));
+            fail();
+        } catch (ValidatorException expected) {
+            assertEquals("not in range(1,2,a)", expected.getMessage());
+            success();
+        }
+    }
+
+    public void testValidate_moreThanMaxWhenBothMaxMinNotNull()
+            throws Exception {
+        FacesContext context = getFacesContextWithSetMessageBundle("b",
+                Locale.ENGLISH);
+        LongRangeValidator validator = new LongRangeValidator(2L, 1L);
+        try {
+            validator.validate(context, context.getViewRoot(), new Integer(3));
+            fail();
+        } catch (ValidatorException expected) {
+            assertEquals("not in range(1,2,b)", expected.getMessage());
+            success();
+        }
+    }
+
+    public void testValidate_lessThanMinWhenMinNotNull() throws Exception {
+        FacesContext context = getFacesContextWithSetMessageBundle("a",
+                Locale.ENGLISH);
+        LongRangeValidator validator = new LongRangeValidator();
+        validator.setMinimum(1);
+        try {
+            validator.validate(context, context.getViewRoot(), new Integer(0));
+            fail();
+        } catch (ValidatorException expected) {
+            assertEquals("less than min(1,a)", expected.getMessage());
+            success();
+        }
+    }
+
+    public void testValidate_moreThanMaxWhenMaxNotNull() throws Exception {
+        FacesContext context = getFacesContextWithSetMessageBundle("a",
+                Locale.ENGLISH);
+        LongRangeValidator validator = new LongRangeValidator(10);
+        try {
+            validator.validate(context, context.getViewRoot(), new Float(11));
+            fail();
+        } catch (ValidatorException expected) {
+            assertEquals("more than max(10,a)", expected.getMessage());
+            success();
+        }
+    }
+
+    public void testValidate_valueIsNotNumber() throws Exception {
+        FacesContext context = getFacesContextWithSetMessageBundle("hoge",
+                Locale.ENGLISH);
+        LongRangeValidator validator = new LongRangeValidator(10);
+        try {
+            validator.validate(context, context.getViewRoot(), "aaa");
+            fail();
+        } catch (ValidatorException expected) {
+            assertEquals("type(hoge) is not double", expected.getMessage());
+            success();
+        }
+    }
+
+    public void testEquals1() throws Exception {
+        LongRangeValidator v1 = new LongRangeValidator(2, 1);
+        LongRangeValidator v2 = new LongRangeValidator(2, 1);
+        assertTrue(v1.equals(v2));
+    }
+
+    public void testEquals2() throws Exception {
+        LongRangeValidator v1 = new LongRangeValidator(1);
+        LongRangeValidator v2 = new LongRangeValidator(1);
+        assertTrue(v1.equals(v2));
+    }
+
+    public void testEquals3() throws Exception {
+        LongRangeValidator v1 = new LongRangeValidator();
+        LongRangeValidator v2 = new LongRangeValidator();
+        assertTrue(v1.equals(v2));
+    }
+
+    public void testEquals4() throws Exception {
+        LongRangeValidator v1 = new LongRangeValidator();
+        v1.setMinimum(3);
+        LongRangeValidator v2 = new LongRangeValidator();
+        v2.setMinimum(3);
+        assertTrue(v1.equals(v2));
+    }
+
+    public void testEquals5() throws Exception {
+        LongRangeValidator v1 = new LongRangeValidator(4);
+        LongRangeValidator v2 = new LongRangeValidator();
+        assertFalse(v1.equals(v2));
+    }
+
+    public void testEquals6() throws Exception {
+        LongRangeValidator v1 = new LongRangeValidator();
+        LongRangeValidator v2 = new LongRangeValidator(6);
+        assertFalse(v1.equals(v2));
+    }
+
+    public void testEquals7() throws Exception {
+        LongRangeValidator v1 = new LongRangeValidator(7);
+        LongRangeValidator v2 = new LongRangeValidator(8);
+        assertFalse(v1.equals(v2));
+    }
+
+    public void testEquals8() throws Exception {
+        LongRangeValidator v1 = new LongRangeValidator();
+        v1.setMinimum(3);
+        LongRangeValidator v2 = new LongRangeValidator();
+        assertFalse(v1.equals(v2));
+    }
+
+    public void testEquals9() throws Exception {
+        LongRangeValidator v1 = new LongRangeValidator();
+        LongRangeValidator v2 = new LongRangeValidator();
+        v2.setMinimum(9);
+        assertFalse(v1.equals(v2));
+    }
+
+    public void testEquals10() throws Exception {
+        LongRangeValidator v1 = new LongRangeValidator(2);
+        v1.setMinimum(8);
+        LongRangeValidator v2 = new LongRangeValidator(2);
+        v2.setMinimum(9);
+        assertFalse(v1.equals(v2));
+    }
+
+    public void testEquals12() throws Exception {
+        LongRangeValidator v1 = new LongRangeValidator();
+        DoubleRangeValidator v2 = new DoubleRangeValidator();
+        assertFalse(v1.equals(v2));
+    }
+    
+    protected FacesContext getFacesContextWithSetMessageBundle(
+            String viewRootId, Locale locale) {
+        getApplication().setMessageBundle("javax.faces.component.TestMessages");
+        MockFacesContext context = getFacesContext();
+        UIViewRoot root = new UIViewRoot();
+        root.setId(viewRootId);
+        root.setLocale(locale);
+        context.setViewRoot(root);
+        return context;
+    }
+
 
 }

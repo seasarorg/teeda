@@ -139,6 +139,33 @@ public class LongRangeValidator implements Validator, StateHolder {
         minimum_ = new Long(minimum);
     }
 
+    public boolean equals(Object obj) {
+        if (!(obj instanceof LongRangeValidator)) {
+            return false;
+        }
+
+        LongRangeValidator v = (LongRangeValidator) obj;
+
+        if ((maximum_ != null && v.maximum_ == null)
+                && (maximum_ == null && v.maximum_ != null)) {
+            return false;
+        }
+
+        if ((minimum_ != null && v.minimum_ == null)
+                && (minimum_ == null && v.minimum_ != null)) {
+            return false;
+        }
+
+        return (this.getMaximum() == v.getMaximum() && this.getMinimum() == v
+                .getMinimum());
+    }
+
+    public int hashCode() {
+        Long max = maximum_ != null ? maximum_ : new Long(1);
+        Long min = minimum_ != null ? minimum_ : new Long(1);
+        return max.hashCode() * min.hashCode() * 17;
+    }
+
     private static long parseLongValue(Object obj) throws NumberFormatException {
 
         long value;

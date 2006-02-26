@@ -238,6 +238,12 @@ public class DoubleRangeValidatorTest extends TeedaTestCase {
         assertFalse(v1.equals(v2));
     }
 
+    public void testEquals12() throws Exception {
+        DoubleRangeValidator v1 = new DoubleRangeValidator();
+        LongRangeValidator v2 = new LongRangeValidator();
+        assertFalse(v1.equals(v2));
+    }
+
     protected FacesContext getFacesContextWithSetMessageBundle(
             String viewRootId, Locale locale) {
         getApplication().setMessageBundle("javax.faces.component.TestMessages");
