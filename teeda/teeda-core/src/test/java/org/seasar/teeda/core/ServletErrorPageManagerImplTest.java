@@ -15,6 +15,8 @@
  */
 package org.seasar.teeda.core;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.seasar.teeda.core.unit.TeedaTestCase;
 
 /**
@@ -60,49 +62,52 @@ public class ServletErrorPageManagerImplTest extends TeedaTestCase {
     public void testHandleException() throws Exception {
         // # Arrange #
         ServletErrorPageManagerImpl manager = new ServletErrorPageManagerImpl();
+        FooException e = new FooException();
+        e.setMessage("aaa");
+        manager.addErrorPage(e.getClass(), "a.jsp");
         
-        // # Act #
-        manager.addErrorPage(FooException.class, "a.jsp");
+        // # Act & Assert #
+        assertTrue(manager.handleException(e, getExternalContext()));
+        assertEquals(e, getRequest().getAttribute(JsfConstants.ERROR_EXCEPTION));
+        assertEquals(e.getClass(), getRequest().getAttribute(JsfConstants.ERROR_EXCEPTION_TYPE));
+        assertEquals("aaa", getRequest().getAttribute(JsfConstants.ERROR_MESSAGE));
+    }
+    
+    public void testHandleException2() throws Exception {
+        // # Arrange #
+        FooException e = new FooException();
+        e.setMessage("aaa");
+        getRequest().setAttribute(JsfConstants.ERROR_EXCEPTION, e);
+        getRequest().setAttribute(JsfConstants.ERROR_EXCEPTION_TYPE, e.getClass());
+        getRequest().setAttribute(JsfConstants.ERROR_MESSAGE, e.getMessage());
+        ServletErrorPageManagerImpl manager = new ServletErrorPageManagerImpl();
+        manager.addErrorPage(e.getClass(), "a.jsp");
         
-        // # Assert #
-        assertTrue(manager.handleException(new FooException(), getExternalContext()));
+        // # Act & Assert #
+        assertTrue(manager.handleException(e, getExternalContext()));
+        assertEquals(e, getRequest().getAttribute(JsfConstants.SERVLET_ERROR_EXCEPTION));
+        assertEquals(e.getClass(), getRequest().getAttribute(JsfConstants.SERVLET_ERROR_EXCEPTION_TYPE));
+        assertEquals("aaa", getRequest().getAttribute(JsfConstants.SERVLET_ERROR_EXCEPTION_MESSAGE));
+        assertEquals(HttpServletResponse.SC_BAD_REQUEST, getResponse().getStatus());
     }
     
     private static class HogeException extends Exception {
+
+        private static final long serialVersionUID = 1L;
     }
 
     private static class FooException extends HogeException {
+        
+        private static final long serialVersionUID = 1L;
+        
+        private String message_;
+        
+        public void setMessage(String message) {
+            message_ = message;
+        }
+        
+        public String getMessage() {
+            return message_;
+        }
     }
 }
-
-/*
-
-    public boolean handleException(Throwable exception,
-            ExternalContext extContext) throws IOException {
-        String location = getLocation(exception.getClass());
-        if (location == null) {
-            return false;
-        }
-        ServletRequest request = ServletExternalContextUtil
-                .getRequest(extContext);
-        if (request.getAttribute(JsfConstants.ERROR_EXCEPTION) != null) {
-            setErrorPageAttributesToServletError(request);
-            HttpServletResponse response = ServletExternalContextUtil
-                    .getResponse(extContext);
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            return true;
-        }
-        request.setAttribute(JsfConstants.ERROR_EXCEPTION, exception);
-        request.setAttribute(JsfConstants.ERROR_EXCEPTION_TYPE, exception
-                .getClass());
-        request
-                .setAttribute(JsfConstants.ERROR_MESSAGE, exception
-                        .getMessage());
-        extContext.dispatch(location);
-        return true;
-    }
-
-
-
-*/
-
