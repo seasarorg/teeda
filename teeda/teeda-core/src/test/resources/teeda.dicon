@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="Shift_JIS"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE components PUBLIC "-//SEASAR2.1//DTD S2Container//EN"
 	"http://www.seasar.org/dtd/components24.dtd">
 <components namespace="teeda" >
 
 	<!-- Error page include -->
-	<include path="teedaErrorPage" />
-	
+	<include path="teedaErrorPage.dicon" />
+
 	<!-- ExternalContext -->
 	<component name="externalContext" class="org.seasar.teeda.core.context.servlet.ServletExternalContextImpl">
 		<arg>servletContext</arg>
