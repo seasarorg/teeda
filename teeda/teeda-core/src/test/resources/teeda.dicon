@@ -8,15 +8,11 @@
 
 	<!-- ExternalContext -->
 	<component name="externalContext" class="org.seasar.teeda.core.context.servlet.ServletExternalContextImpl">
-		<arg>servletContext</arg>
+		<arg>application</arg>
 		<arg>request</arg>
 		<arg>response</arg>
 	</component>
 	
-	<component name="servletContext">
-		@org.seasar.framework.container.factory.SingletonS2ContainerFactory@getServletContext()
-	</component>
-
 	<!-- FacesConfig configurator -->
 	<component class="org.seasar.teeda.core.config.faces.impl.FacesConfigBuilderImpl">
 		<initMethod name="addFacesConfigurator">
