@@ -21,6 +21,7 @@ import org.seasar.teeda.core.render.html.HtmlRenderKitImpl;
 /**
  * @author shot
  * @author manhole
+ * @atthor yone
  */
 public interface JsfConstants {
 
@@ -143,6 +144,10 @@ public interface JsfConstants {
     public String ACCEPT_CHARSET_ATTR = "accept-charset";
 
     public String ACCESSKEY_ATTR = "accesskey";
+    
+    public String ACTION_ATTR = "action";
+    
+    public String ACTION_LISTENER_ATTR = "actionListener";
 
     public String ALIGN_ATTR = "align";
 
@@ -223,6 +228,8 @@ public interface JsfConstants {
     public String ID_ATTR = "id";
 
     public String IMAGE_ATTR = "image";
+    
+    public String IMMEDIATE_ATTR = "immediate";
 
     public String INFO_CLASS_ATTR = "infoClass";
 
