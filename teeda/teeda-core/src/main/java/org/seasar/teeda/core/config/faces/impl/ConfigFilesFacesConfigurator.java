@@ -32,7 +32,7 @@ public class ConfigFilesFacesConfigurator extends AbstractFacesConfigurator {
 
     private static final String FACES_CONFIG_DELIMETER = ",";
 
-    private ExternalContext context_;
+    private ExternalContext externalContext_;
 
     public ConfigFilesFacesConfigurator() {
     }
@@ -58,17 +58,17 @@ public class ConfigFilesFacesConfigurator extends AbstractFacesConfigurator {
     }
 
     public String getPath() {
-        String paths = context_
-                .getInitParameter(FacesServlet.CONFIG_FILES_ATTR);
+        String paths = getExternalContext().getInitParameter(
+                FacesServlet.CONFIG_FILES_ATTR);
         return paths;
     }
 
     public ExternalContext getExternalContext() {
-        return context_;
+        return externalContext_;
     }
 
-    public void setExternalContext(ExternalContext context) {
-        context_ = context;
+    public void setExternalContext(ExternalContext externalContext) {
+        externalContext_ = externalContext;
     }
 
 }

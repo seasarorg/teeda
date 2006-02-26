@@ -40,24 +40,34 @@ import org.seasar.teeda.core.config.faces.element.ValidatorElement;
 public class FacesConfigWrapperImpl implements FacesConfig {
 
     private List applications_ = new LinkedList();
+
     private List factories_ = new LinkedList();
+
     private List lifecycles_ = new LinkedList();
+
     private List referencedBeans_ = new LinkedList();
+
     private List navigationRules_ = new LinkedList();
+
     private Map components_ = new HashMap();
+
     private Map convertersByIds_ = new HashMap();
+
     private Map convertersByClasses_ = new HashMap();
+
     private Map managedBeans_ = new HashMap();
+
     private Map renderKits_ = new HashMap();
+
     private Map validators_ = new HashMap();
 
-    public FacesConfigWrapperImpl(List facesConfig){
-        if(facesConfig == null || facesConfig.size() == 0){
-            throw new EmptyRuntimeException("FacesConfigWrapperImpl");
+    public FacesConfigWrapperImpl(List facesConfig) {
+        if (facesConfig == null) {
+            throw new NullPointerException("facesConfig");
         }
         deployAllFacesConfig(facesConfig);
     }
-    
+
     public void addApplicationElement(ApplicationElement application) {
         applications_.add(application);
     }
@@ -71,10 +81,11 @@ public class FacesConfigWrapperImpl implements FacesConfig {
     }
 
     public void addConverterElement(ConverterElement converter) {
-        if(converter.getConverterId() != null){
+        if (converter.getConverterId() != null) {
             convertersByIds_.put(converter.getConverterId(), converter);
-        }else if(converter.getConverterForClass() != null){
-            convertersByClasses_.put(converter.getConverterForClass(), converter);
+        } else if (converter.getConverterForClass() != null) {
+            convertersByClasses_.put(converter.getConverterForClass(),
+                    converter);
         }
     }
 
@@ -146,18 +157,18 @@ public class FacesConfigWrapperImpl implements FacesConfig {
         return referencedBeans_;
     }
 
-    private void deployAllFacesConfig(List facesConfig){
+    private void deployAllFacesConfig(List facesConfig) {
         FacesConfig config = null;
-        for(Iterator itr = facesConfig.iterator();itr.hasNext();){
+        for (Iterator itr = facesConfig.iterator(); itr.hasNext();) {
             Object o = itr.next();
-            if(o instanceof FacesConfig){
-                config = (FacesConfig)o;
+            if (o instanceof FacesConfig) {
+                config = (FacesConfig) o;
                 deployFacesConfig(config);
             }
         }
     }
-    
-    private void deployFacesConfig(FacesConfig facesConfig){
+
+    private void deployFacesConfig(FacesConfig facesConfig) {
         factories_.addAll(facesConfig.getFactoryElements());
         applications_.addAll(facesConfig.getApplicationElements());
         lifecycles_.addAll(facesConfig.getLifecycleElements());

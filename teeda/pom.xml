@@ -126,6 +126,7 @@
           </execution>
         </executions>
       </plugin>
+      <!--
       <plugin>
         <artifactId>maven-javadoc-plugin</artifactId>
         <executions>
@@ -141,6 +142,7 @@
           <charset>UTF-8</charset>
         </configuration>
       </plugin>
+      -->
       <plugin>
         <artifactId>maven-jar-plugin</artifactId>
         <executions>

@@ -146,6 +146,12 @@ public class ViewHandlerImplTest extends TeedaTestCase {
         assertFalse(handler.isMatchLocale(Locale.ENGLISH, Locale.JAPAN));
     }
 
+    public void testIsMatchLocale_null() throws Exception {
+        ViewHandlerImpl handler = new ViewHandlerImpl();
+        assertEquals(false, handler.isMatchLocale(Locale.ENGLISH, null));
+        assertEquals(true, handler.isMatchLocale(null, null));
+    }
+
     public void testCalculateRenderKitId_fromApplication() throws Exception {
         MockApplication app = new MockApplicationImpl();
         app.setDefaultRenderKitId("hoge");

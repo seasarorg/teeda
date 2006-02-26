@@ -49,7 +49,7 @@ import org.seasar.teeda.core.util.WebappConfigUtil;
  */
 public class ViewHandlerImpl extends ViewHandler {
 
-    //TODO testing
+    // TODO testing
     public ViewHandlerImpl() {
     }
 
@@ -95,6 +95,11 @@ public class ViewHandlerImpl extends ViewHandler {
     }
 
     protected boolean isMatchLocale(Locale reqLocale, Locale jsfLocale) {
+        if (reqLocale == null && jsfLocale == null) {
+            return true;
+        } else if (reqLocale == null || jsfLocale == null) {
+            return false;
+        }
         if (reqLocale.equals(jsfLocale)) {
             return true;
         }
@@ -170,7 +175,7 @@ public class ViewHandlerImpl extends ViewHandler {
         }
     }
 
-    //TODO redirect need when viewId could not be identified?
+    // TODO redirect need when viewId could not be identified?
     public UIViewRoot restoreView(FacesContext context, String viewId) {
         AssertionUtil.assertNotNull("context", context);
         Application app = context.getApplication();

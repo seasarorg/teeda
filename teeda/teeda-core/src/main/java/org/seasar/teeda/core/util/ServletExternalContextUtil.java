@@ -37,84 +37,92 @@ import org.seasar.framework.util.EnumerationIterator;
 import org.seasar.framework.util.MethodUtil;
 
 /**
- * @author Shinpei Ohtani
+ * @author shot
+ * @author manhole
  */
 public class ServletExternalContextUtil {
 
-    private static Logger logger_ = Logger.getLogger(ServletExternalContextUtil.class);
-    
+    private static Logger logger_ = Logger
+            .getLogger(ServletExternalContextUtil.class);
+
     private static final String CONTENT_TYPE = "Content-Type";
-    
+
     private static final String CHARSET_HEADER = "charset=";
-    
+
     private static final int CHARSET_HEADER_LENGTH = CHARSET_HEADER.length();
-    
-    private ServletExternalContextUtil(){
+
+    private ServletExternalContextUtil() {
     }
-    
-    public static void setCharacterEncoding(ServletRequest request){
+
+    public static void setCharacterEncoding(ServletRequest request) {
         Method characterEncodingMethod = getCharacterEncodingMethod();
-        if(characterEncodingMethod == null){
+        if (characterEncodingMethod == null) {
             return;
         }
-        if(!isHttpServletRequest(request)){
-            //No getHeader(), no getSession() if it is not HttpServletRequest.
-            //So, do nothing.
+        if (!isHttpServletRequest(request)) {
+            // No getHeader(), no getSession() if it is not HttpServletRequest.
+            // So, do nothing.
             return;
         }
-        HttpServletRequest httpServletRequest = (HttpServletRequest)request;
+        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         String contentType = httpServletRequest.getHeader(CONTENT_TYPE);
         String encoding = getEncodingFromContentType(contentType);
-        if(encoding == null){
+        if (encoding == null) {
             encoding = getEncodingFromSession(httpServletRequest);
         }
-        MethodUtil.invoke(characterEncodingMethod, httpServletRequest, new Object[]{encoding});
+        if (encoding == null) {
+            return;
+        }
+        MethodUtil.invoke(characterEncodingMethod, httpServletRequest,
+                new Object[] { encoding });
     }
-    
-    public static boolean isHttpServletRequest(ServletRequest request){
+
+    public static boolean isHttpServletRequest(ServletRequest request) {
         return (request != null) && (request instanceof HttpServletRequest);
     }
-    
-    public static boolean isHttpServletResponse(ServletResponse response){
+
+    public static boolean isHttpServletResponse(ServletResponse response) {
         return (response != null) && (response instanceof HttpServletResponse);
     }
-    
-    public static String getEncodingFromContentType(String contentType){
-        if(contentType == null){
+
+    public static String getEncodingFromContentType(String contentType) {
+        if (contentType == null) {
             return null;
         }
         String encoding = null;
         int found = contentType.indexOf(CHARSET_HEADER);
-        if(found == 0){
+        if (found == 0) {
             encoding = contentType.substring(CHARSET_HEADER_LENGTH);
-        }else if(found >= 1){
+        } else if (found >= 1) {
             char charBefore = contentType.charAt(found - 1);
-            if (charBefore == ';' || Character.isWhitespace(charBefore)){
+            if (charBefore == ';' || Character.isWhitespace(charBefore)) {
                 encoding = contentType.substring(found + CHARSET_HEADER_LENGTH);
             }
         }
         return encoding;
     }
-    
-    public static String getEncodingFromSession(HttpServletRequest servletRequest){
+
+    public static String getEncodingFromSession(
+            HttpServletRequest servletRequest) {
         String encoding = null;
         HttpSession session = servletRequest.getSession(false);
         if (session != null) {
-            encoding = (String)session.getAttribute(ViewHandler.CHARACTER_ENCODING_KEY);
+            encoding = (String) session
+                    .getAttribute(ViewHandler.CHARACTER_ENCODING_KEY);
         }
         return encoding;
     }
 
-    public static void dispatch(String path, ServletRequest request, ServletResponse response) 
-        throws IOException{
-        if(path == null){
+    public static void dispatch(String path, ServletRequest request,
+            ServletResponse response) throws IOException {
+        if (path == null) {
             throw new NullPointerException();
         }
         RequestDispatcher dispatcher = request.getRequestDispatcher(path);
-        try{
+        try {
             dispatcher.forward(request, response);
-        }catch (ServletException e){
-            if(e.getMessage() != null){
+        } catch (ServletException e) {
+            if (e.getMessage() != null) {
                 throw new FacesException(e.getMessage(), e);
             }
             throw new FacesException(e);
@@ -129,27 +137,30 @@ public class ServletExternalContextUtil {
         return new EnumerationIterator(paramNames);
     }
 
-    public static void redirect(String url, ServletResponse response) throws IOException {
-        HttpServletResponse httpResponse = (HttpServletResponse)response;
+    public static void redirect(String url, ServletResponse response)
+            throws IOException {
+        HttpServletResponse httpResponse = (HttpServletResponse) response;
         httpResponse.sendRedirect(url);
         FacesContext.getCurrentInstance().responseComplete();
     }
 
-    private static Method getCharacterEncodingMethod(){
-        try{
-            Class clazz = ServletRequest.class; 
-            return clazz.getMethod("setCharacterEncoding", new Class[]{String.class});
-        }catch (Exception e){
+    private static Method getCharacterEncodingMethod() {
+        try {
+            Class clazz = ServletRequest.class;
+            return clazz.getMethod("setCharacterEncoding",
+                    new Class[] { String.class });
+        } catch (Exception e) {
             logger_.log(e);
             return null;
         }
     }
-    
+
     public static HttpServletRequest getRequest(ExternalContext externalContext) {
         return (HttpServletRequest) externalContext.getRequest();
     }
-    
-    public static HttpServletResponse getResponse(ExternalContext externalContext) {
+
+    public static HttpServletResponse getResponse(
+            ExternalContext externalContext) {
         return (HttpServletResponse) externalContext.getResponse();
     }
 

@@ -23,6 +23,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
+import org.seasar.framework.log.Logger;
 import org.seasar.framework.util.InputStreamUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.config.faces.FacesConfigBuilder;
@@ -34,6 +35,7 @@ import org.seasar.teeda.core.util.DIContainerUtil;
 
 /**
  * @author shot
+ * @author manhole
  */
 public class JsfConfigureListener implements ServletContextListener {
 
@@ -41,8 +43,17 @@ public class JsfConfigureListener implements ServletContextListener {
             .getName()
             + ".FACES_INIT_DONE";
 
+    private static Logger logger = Logger.getLogger(JsfConfigureListener.class);
+
     public void contextInitialized(ServletContextEvent event) {
-        initializeFaces(event.getServletContext());
+        logger.debug("JSF initialize start");
+        try {
+            initializeFaces(event.getServletContext());
+        } catch (RuntimeException e) {
+            logger.log(e);
+            throw e;
+        }
+        logger.debug("JSF initialize end");
     }
 
     public void contextDestroyed(ServletContextEvent event) {
@@ -50,7 +61,6 @@ public class JsfConfigureListener implements ServletContextListener {
     }
 
     private void initializeFaces(ServletContext context) {
-
         Boolean b = (Boolean) context.getAttribute(FACES_INIT_DONE);
         boolean isAlreadyInitialized = (b != null) ? b.booleanValue() : false;
         if (!isAlreadyInitialized) {
@@ -64,20 +74,14 @@ public class JsfConfigureListener implements ServletContextListener {
                     .getComponent(AssemblerAssembler.class);
 
             assembler.assembleFactories(facesConfig);
-
             assembler.assembleApplication(facesConfig);
-
             assembler.assembleManagedBeans(facesConfig);
-
             assembler.assmbleNavigationRules(facesConfig);
-
             assembler.assembleLifecycle(facesConfig);
-
             assembler.assembleRenderKits(facesConfig);
 
             WebappConfigBuilder webAppConfigBuilder = (WebappConfigBuilder) DIContainerUtil
                     .getComponent(WebappConfigBuilder.class);
-
             ExternalContext externalContext = (ExternalContext) DIContainerUtil
                     .getComponent(ExternalContext.class);
 
@@ -95,7 +99,6 @@ public class JsfConfigureListener implements ServletContextListener {
                     WebappConfig.class.getName(), webappConfig);
 
             context.setAttribute(FACES_INIT_DONE, Boolean.TRUE);
-
         }
 
     }

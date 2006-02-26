@@ -13,6 +13,10 @@
 		<arg>response</arg>
 	</component>
 	
+	<component name="servletContext">
+		@org.seasar.framework.container.factory.SingletonS2ContainerFactory@getServletContext()
+	</component>
+
 	<!-- FacesConfig configurator -->
 	<component class="org.seasar.teeda.core.config.faces.impl.FacesConfigBuilderImpl">
 		<initMethod name="addFacesConfigurator">
@@ -66,11 +70,11 @@
 
 	<component class="org.seasar.teeda.core.application.NavigationHandlerImpl" />
 
-	<component class="org.seasar.teeda.core.application.ViewHandlerImpl" />
+	<component name="viewHandler" class="org.seasar.teeda.core.application.ViewHandlerImpl" />
 
 	<component class="org.seasar.teeda.core.el.TeedaPropertyResolver" />
 
-	<component class="org.seasar.teeda.core.application.impl.TeedaStateManagerImpl" />
+	<component name="stateManager" class="org.seasar.teeda.core.application.impl.TeedaStateManagerImpl" />
 
 	<component class="org.seasar.teeda.core.application.impl.TreeStructureManagerImpl" />
 
@@ -85,18 +89,22 @@
 	<component name="translator" class="org.seasar.teeda.core.scope.impl.S2ScopeTranslator" />
 	
 	<!-- Lifecycle -->
-	<component class="org.seasar.teeda.core.lifecycle.LifecycleImpl" />
+	<component class="org.seasar.teeda.core.lifecycle.LifecycleImpl">
+		<property name="restoreViewPhase">restoreViewPhase</property>
+		<property name="applyRequestValuesPhase">applyRequestValuesPhase</property>
+		<property name="processValidationsPhase">processValidationsPhase</property>
+		<property name="updateModelValuesPhase">updateModelValuesPhase</property>
+		<property name="invokeApplicationPhase">invokeApplicationPhase</property>
+		<property name="renderResponsePhase">renderResponsePhase</property>
+	</component>
 
 	<component name="restoreViewPhase" class="org.seasar.teeda.core.lifecycle.impl.RestoreViewPhase"/>
-	
 	<component name="applyRequestValuesPhase" class="org.seasar.teeda.core.lifecycle.impl.ApplyRequestValuesPhase"/>
-	
-	<component name="invokeApplicationPhase" class="org.seasar.teeda.core.lifecycle.impl.InvokeApplicationPhase"/>
-	
-	<component name="renderPhase" class="org.seasar.teeda.core.lifecycle.impl.RenderResponsePhase"/>
-	
 	<component name="processValidationsPhase" class="org.seasar.teeda.core.lifecycle.impl.ProcessValidationsPhase"/>
-	
 	<component name="updateModelValuesPhase" class="org.seasar.teeda.core.lifecycle.impl.UpdateModelValuesPhase"/>
+	<component name="invokeApplicationPhase" class="org.seasar.teeda.core.lifecycle.impl.InvokeApplicationPhase"/>
+	<component name="renderResponsePhase" class="org.seasar.teeda.core.lifecycle.impl.RenderResponsePhase"/>
+	
+	<component name="webappConfigBuilder" class="org.seasar.teeda.core.config.webapp.impl.WebappConfigBuilderImpl"/>
 	
 </components>

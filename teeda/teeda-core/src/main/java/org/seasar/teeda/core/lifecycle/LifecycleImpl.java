@@ -45,17 +45,17 @@ public class LifecycleImpl extends Lifecycle {
 
     private PhaseListener[] phaseListeners = new PhaseListener[0];
 
-    private AbstractPhase restoreViewPhase_;
+    private Phase restoreViewPhase_;
 
     private AbstractPhase applyRequestValuesPhase_;
 
-    private AbstractPhase invokeApplicationPhase_;
+    private Phase invokeApplicationPhase_;
 
-    private AbstractPhase renderResponsePhase_;
+    private Phase renderResponsePhase_;
 
-    private AbstractPhase processValidationPhase_;
+    private Phase processValidationPhase_;
 
-    private AbstractPhase updateModelValuesPhase_;
+    private Phase updateModelValuesPhase_;
 
     public LifecycleImpl() {
     }
@@ -157,7 +157,7 @@ public class LifecycleImpl extends Lifecycle {
         return viewRoot.getEventSize() > 0;
     }
 
-    public void setRestoreViewPhase(AbstractPhase restoreViewPhase) {
+    public void setRestoreViewPhase(Phase restoreViewPhase) {
         restoreViewPhase_ = restoreViewPhase;
     }
 
@@ -165,23 +165,23 @@ public class LifecycleImpl extends Lifecycle {
         applyRequestValuesPhase_ = applyRequestValuesPhase;
     }
 
-    public void setInvokeApplicationPhase(AbstractPhase invokeApplicationPhase) {
+    public void setInvokeApplicationPhase(Phase invokeApplicationPhase) {
         invokeApplicationPhase_ = invokeApplicationPhase;
     }
 
-    public void setRenderResponsePhase(AbstractPhase renderPhase) {
+    public void setRenderResponsePhase(Phase renderPhase) {
         renderResponsePhase_ = renderPhase;
     }
 
-    public void setProcessValidationsPhase(AbstractPhase processValidationPhase) {
+    public void setProcessValidationsPhase(Phase processValidationPhase) {
         processValidationPhase_ = processValidationPhase;
     }
 
-    public void setUpdateModelValuesPhase(AbstractPhase updateModelValuesPhase) {
+    public void setUpdateModelValuesPhase(Phase updateModelValuesPhase) {
         updateModelValuesPhase_ = updateModelValuesPhase;
     }
 
-    public Phase getApplyRequestValuesPhase() {
+    public AbstractPhase getApplyRequestValuesPhase() {
         return applyRequestValuesPhase_;
     }
 
@@ -208,14 +208,14 @@ public class LifecycleImpl extends Lifecycle {
     private static final class NullPostback implements Postback {
 
         private static final NullPostback instance_ = new NullPostback();
-        
+
         public static NullPostback getCurrentInstance() {
             return instance_;
         }
-        
+
         public boolean isPostBack() {
             return false;
         }
-        
+
     }
 }
