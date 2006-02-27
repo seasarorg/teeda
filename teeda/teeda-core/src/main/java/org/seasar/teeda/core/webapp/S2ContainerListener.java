@@ -37,7 +37,7 @@ public class S2ContainerListener implements ServletContextListener {
         if (!StringUtil.isEmpty(configPath)) {
             SingletonS2ContainerFactory.setConfigPath(configPath);
         }
-        SingletonS2ContainerFactory.setServletContext(servletContext);
+        SingletonS2ContainerFactory.getExternalContext().setApplication(servletContext);
         SingletonS2ContainerFactory.init();
     }
 

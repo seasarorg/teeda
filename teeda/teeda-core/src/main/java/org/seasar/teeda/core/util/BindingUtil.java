@@ -46,7 +46,7 @@ public class BindingUtil {
     }
 	
 	public static Object getValue(S2Container container, String name) {
-		HttpServletRequest request = container.getRequest();
+		HttpServletRequest request = (HttpServletRequest) container.getExternalContext().getRequest();
 		Object var = getValue(request, name);
 		if (var != null) {
 			return var;
@@ -80,10 +80,6 @@ public class BindingUtil {
 		return null;
 	}
 	
-    public static void setValue(FacesContext context, String name, Object newValue){
-        
-    }
-    
     public static Object resolveBinding(String value) {
         FacesContext context = FacesContext.getCurrentInstance();
         Application app = context.getApplication();

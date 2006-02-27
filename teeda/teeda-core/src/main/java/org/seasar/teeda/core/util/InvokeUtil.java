@@ -21,6 +21,9 @@ import javax.faces.context.FacesContext;
 import javax.faces.el.EvaluationException;
 import javax.faces.el.MethodBinding;
 import javax.faces.event.AbortProcessingException;
+import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.PropertyDesc;
@@ -135,8 +138,9 @@ public class InvokeUtil {
                 if (container.hasComponentDef(varName)) {
                     continue;
                 }
-                Object var = BindingUtil.getValue(container.getRequest(),
-                        varName);
+                HttpServletRequest request = (HttpServletRequest) container
+                        .getExternalContext().getRequest();
+                Object var = BindingUtil.getValue(request, varName);
                 if ("".equals(var)) {
                     pd.setValue(component, null);
                 } else if (var != null) {
@@ -169,11 +173,13 @@ public class InvokeUtil {
                                 .getInstanceDef());
                     }
                     if (useSession) {
-                        container.getSession().setAttribute(
-                                pd.getPropertyName(), var);
+                        HttpSession session = (HttpSession) container
+                                .getExternalContext().getSession();
+                        session.setAttribute(pd.getPropertyName(), var);
                     } else {
-                        container.getRequest().setAttribute(
-                                pd.getPropertyName(), var);
+                        ServletRequest request = (ServletRequest) container
+                                .getExternalContext().getRequest();
+                        request.setAttribute(pd.getPropertyName(), var);
                     }
                 }
             }
