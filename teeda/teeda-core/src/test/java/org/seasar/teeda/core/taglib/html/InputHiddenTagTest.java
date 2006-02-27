@@ -15,14 +15,74 @@
  */
 package org.seasar.teeda.core.taglib.html;
 
-import junit.framework.TestCase;
+import javax.faces.component.UIComponent;
+import javax.faces.component.html.HtmlInputHidden;
+
+import org.seasar.teeda.core.mock.MockApplication;
+import org.seasar.teeda.core.mock.MockApplicationImpl;
+import org.seasar.teeda.core.mock.MockConverter;
+import org.seasar.teeda.core.mock.MockMethodBinding;
+import org.seasar.teeda.core.unit.TeedaTestCase;
 
 /**
  * @author yone
  */
-public class InputHiddenTagTest extends TestCase {
-    // TODO test
-    public void testA() throws Exception {
+public class InputHiddenTagTest extends TeedaTestCase {
+    public void testGetComponentType() throws Exception {
+        // # Arrange #
+        InputHiddenTag tag = new InputHiddenTag();
         
+        // # Act & Assert #
+        assertEquals("javax.faces.HtmlInputHidden", tag.getComponentType());
     }
+    
+    public void testGetRenderType() throws Exception {
+        // # Arrange #
+        InputHiddenTag tag = new InputHiddenTag();
+        
+        // # Act & Assert #
+        assertEquals("javax.faces.Hidden", tag.getRendererType());        
+    }    
+    
+    public void testSetProperties_All() throws Exception {
+        // # Arrange #
+        HtmlInputHidden component = createHtmlInputHidden();
+        InputHiddenTag tag = new InputHiddenTag();
+        MockApplication app = new MockApplicationImpl();
+        app.addConverter("mock.converter",
+                "org.seasar.teeda.core.mock.MockConverter");
+        setApplication(app);
+        app.addValidator("mock.validator",
+                "org.seasar.teeda.core.mock.MockValidator");
+        
+        tag.setConverter("mock.converter");
+        tag.setImmediate("true");
+        tag.setRequired("true");
+        tag.setValidator("#{mock.validator}");
+        tag.setValue("value");
+        tag.setValueChangeListener("#{mock.listener}");
+        
+        // # Act #
+        tag.setProperties(component);
+        
+        assertTrue(component.getConverter() instanceof MockConverter);
+        assertTrue(component.isImmediate());
+        assertTrue(component.isRequired());
+        assertTrue(component.getValidator() instanceof MockMethodBinding);
+        assertEquals("#{mock.validator}", component.getValidator()
+                .getExpressionString());
+        assertEquals("value", component.getValue());
+        assertTrue(component.getValueChangeListener() instanceof MockMethodBinding);
+        assertEquals("#{mock.listener}", component.getValueChangeListener()
+                .getExpressionString());
+    }    
+
+    private HtmlInputHidden createHtmlInputHidden() {
+        return (HtmlInputHidden) createUIComponent();
+    }
+
+    protected UIComponent createUIComponent() {
+        return new HtmlInputHidden();
+    }
+
 }

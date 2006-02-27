@@ -265,7 +265,7 @@ public class MockApplicationImpl extends MockApplication {
 
     public MethodBinding createMethodBinding(String ref, Class[] params)
             throws ReferenceSyntaxException {
-        return null;
+        return new MockMethodBinding(ref);
     }
 
     /**

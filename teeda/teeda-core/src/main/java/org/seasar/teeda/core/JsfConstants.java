@@ -145,10 +145,6 @@ public interface JsfConstants {
 
     public String ACCESSKEY_ATTR = "accesskey";
     
-    public String ACTION_ATTR = "action";
-    
-    public String ACTION_LISTENER_ATTR = "actionListener";
-
     public String ALIGN_ATTR = "align";
 
     public String ALT_ATTR = "alt";
@@ -291,13 +287,17 @@ public interface JsfConstants {
 
     public String ONSELECT_ATTR = "onselect";
 
-    public String ONSUMBIT_ATTR = "onsubmit";
+    public String ONSUBMIT_ATTR = "onsubmit";
 
     public String PAGE_DIRECTION_ATTR = "pageDirection";
 
     public String READONLY_ATTR = "readonly";
+    
+    public String REDISPLAY_ATTR = "redisplay";
 
     public String REL_ATTR = "rel";
+    
+    public String REQUIRED_ATTR = "required";
 
     public String REV_ATTR = "rev";
 
@@ -447,7 +447,7 @@ public interface JsfConstants {
             IMG_ATTRIBUTES, COMMON_PASSTROUGH_ATTRIBUTES);
 
     public String[] FORM_ATTRIBUTES = { ACCEPT_ATTR, ACCEPTCHARSET_ATTR,
-            ENCTYPE_ATTR, ONRESET_ATTR, ONSUMBIT_ATTR, TARGET_ATTR };
+            ENCTYPE_ATTR, ONRESET_ATTR, ONSUBMIT_ATTR, TARGET_ATTR };
 
     public String[] FORM_PASSTHROUGH_ATTRIBUTES = (String[]) ArrayUtil.add(
             FORM_ATTRIBUTES, COMMON_PASSTROUGH_ATTRIBUTES);

@@ -15,24 +15,20 @@
  */
 package org.seasar.teeda.core.taglib.html;
 
-import javax.faces.webapp.UIComponentTag;
+import javax.faces.component.html.HtmlInputHidden;
 
 
 /**
  * @author yone
  */
-public class InputHiddenTag extends UIComponentTag {
+public class InputHiddenTag extends InputTagBase {
 
-    private static final String RENDERER_TYPE = "";
-    
     public String getComponentType() {
-        return null;
+        return HtmlInputHidden.COMPONENT_TYPE;
     }
 
     public String getRendererType() {
-        return RENDERER_TYPE;
+        return "javax.faces.Hidden";
     }
     
-    // TODO implements
-
 }

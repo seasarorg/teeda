@@ -19,17 +19,17 @@ import javax.faces.application.Application;
 import javax.faces.component.EditableValueHolder;
 import javax.faces.component.UICommand;
 import javax.faces.component.UIComponent;
-import javax.faces.webapp.UIComponentTag;
-
 import javax.faces.component.ValueHolder;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.el.MethodBinding;
+import javax.faces.event.ActionEvent;
+import javax.faces.event.ValueChangeEvent;
+import javax.faces.webapp.UIComponentTag;
 
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.PropertyDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
-
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.el.SimpleMethodBinding;
 import org.seasar.teeda.core.exception.NoEditableValueHolderRuntimeException;
@@ -45,6 +45,11 @@ public abstract class UIComponentTagBase extends UIComponentTag {
    
     private static final Class[] VALIDATOR_ARGTYPES = { FacesContext.class,
         UIComponent.class, Object.class };
+    
+    private static final Class[] ACTION_LISTENER_ARGS = { ActionEvent.class };
+    
+    private static final Class[] VALUE_LISTENER_ARGS = { ValueChangeEvent.class };
+
     
     protected String styleClass_ = null;
     
@@ -585,17 +590,49 @@ public abstract class UIComponentTagBase extends UIComponentTag {
         if (!(component instanceof UICommand)) {
             throw new NoUICommandRuntimeException(component.getClass());
         }
-        MethodBinding binding = null;
+        MethodBinding mb = null;
         if (isValueReference(value)) {
-            binding = createMethodBinding(value, null);
+            mb = createMethodBinding(value, null);
         } else {
-            binding = new SimpleMethodBinding(value);
+            mb = new SimpleMethodBinding(value);
         }
-        ((UICommand) component).setAction(binding);
+        ((UICommand) component).setAction(mb);
+    }
+    
+    protected void setActionListenerProperty(UIComponent component,
+            String value) {
+        if (value == null) {
+            return;
+        }
+        if (!(component instanceof UICommand)) {
+            throw new NoUICommandRuntimeException(component.getClass());
+        }
+        MethodBinding mb = null;
+        if (!isValueReference(value)) {
+            throw new NoValueReferenceRuntimeException(value);
+        }
+        mb = createMethodBinding(value, ACTION_LISTENER_ARGS);
+        ((UICommand) component).setActionListener(mb);
     }
 
+    protected void setValueChangeListenerProperty(UIComponent component,
+            String value) {
+        if (value == null) {
+            return;
+        }
+        if (!(component instanceof EditableValueHolder)) {
+            throw new NoEditableValueHolderRuntimeException(component.getClass());
+        }
+        if (!isValueReference(value)) {
+            throw new NoValueReferenceRuntimeException(value);
+        }
+        MethodBinding mb = createMethodBinding(value, VALUE_LISTENER_ARGS);
+        ((EditableValueHolder) component).setValueChangeListener(mb);
+        
+    }
+    
     protected Application getApplication() {
-        return getFacesContext().getApplication();
+        return FacesContext.getCurrentInstance().getApplication();
     }
 
     protected Converter createConverter(String value) {

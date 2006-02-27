@@ -15,24 +15,33 @@
  */
 package org.seasar.teeda.core.taglib.html;
 
-import javax.faces.webapp.UIComponentTag;
+import javax.faces.component.UIComponent;
+import javax.faces.component.html.HtmlForm;
+
+import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.core.taglib.UIComponentTagBase;
 
 
 /**
  * @author yone
  */
-public class FormTag extends UIComponentTag {
+public class FormTag extends UIComponentTagBase {
 
-    private static final String RENDERER_TYPE = "";
-    
     public String getComponentType() {
-        return null;
+        return HtmlForm.COMPONENT_TYPE;
     }
 
     public String getRendererType() {
-        return RENDERER_TYPE;
+        return "javax.faces.Form";
     }
     
-    // TODO implements
-
+    protected void setProperties(UIComponent component) {
+        super.setProperties(component);
+        
+        setComponentProperty(component, JsfConstants.ACCEPT_ATTR, accept_);
+        setComponentProperty(component, JsfConstants.ACCEPTCHARSET_ATTR, acceptcharset_);
+        setComponentProperty(component, JsfConstants.ONRESET_ATTR, onreset_);
+        setComponentProperty(component, JsfConstants.ONSUBMIT_ATTR, onsubmit_);
+    }
+    
 }

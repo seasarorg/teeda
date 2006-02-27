@@ -21,9 +21,21 @@ import junit.framework.TestCase;
  * @author yone
  */
 public class ColumnTagTest extends TestCase {
-    // TODO test
-    public void testA() throws Exception {
+    
+    public void testGetComponentType() throws Exception {
+        // # Arrange #
+        ColumnTag tag = new ColumnTag();
         
+        // # Act & Assert #
+        assertEquals("javax.faces.Column", tag.getComponentType());
+    }
+    
+    public void testGetRenderType() throws Exception {
+        // # Arrange #
+        ColumnTag tag = new ColumnTag();
+        
+        // # Act & Assert #
+        assertEquals(null, tag.getRendererType());        
     }
 
 }

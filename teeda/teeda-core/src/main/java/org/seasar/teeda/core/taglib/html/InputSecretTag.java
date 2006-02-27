@@ -15,24 +15,44 @@
  */
 package org.seasar.teeda.core.taglib.html;
 
-import javax.faces.webapp.UIComponentTag;
+import javax.faces.component.UIComponent;
+import javax.faces.component.html.HtmlInputSecret;
+
+import org.seasar.teeda.core.JsfConstants;
 
 
 /**
  * @author yone
  */
-public class InputSecretTag extends UIComponentTag {
+public class InputSecretTag extends InputTagBase {
 
-    private static final String RENDERER_TYPE = "";
+    private String redisplay_;
     
     public String getComponentType() {
-        return null;
+        return HtmlInputSecret.COMPONENT_TYPE;
     }
 
     public String getRendererType() {
-        return RENDERER_TYPE;
+        return "javax.faces.Secret";
     }
     
-    // TODO implements
+    protected void setProperties(UIComponent component) {
+        super.setProperties(component);
 
+        setComponentProperty(component, JsfConstants.ALT_ATTR, alt_);
+        setComponentProperty(component, JsfConstants.REDISPLAY_ATTR, redisplay_);
+        setComponentProperty(component, JsfConstants.ONCHANGE_ATTR, onchange_);
+        setComponentProperty(component, JsfConstants.ONSELECT_ATTR, onselect_);
+        setComponentProperty(component, JsfConstants.SIZE_ATTR, size_);
+    }
+    
+    public void release() {
+        super.release();
+        redisplay_ = null;
+    }
+
+    public void setRedisplay(String redisplay) {
+        redisplay_ = redisplay;
+    }
+    
 }

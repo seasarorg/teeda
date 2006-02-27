@@ -15,24 +15,37 @@
  */
 package org.seasar.teeda.core.taglib.html;
 
-import javax.faces.webapp.UIComponentTag;
+import javax.faces.component.UIComponent;
+import javax.faces.component.html.HtmlInputText;
+
+import org.seasar.teeda.core.JsfConstants;
 
 
 /**
  * @author yone
  */
-public class InputTextTag extends UIComponentTag {
+public class InputTextTag extends InputTagBase {
 
-    private static final String RENDERER_TYPE = "";
-    
     public String getComponentType() {
-        return null;
+        return HtmlInputText.COMPONENT_TYPE;
     }
 
     public String getRendererType() {
-        return RENDERER_TYPE;
+        return "javax.faces.Text";
     }
     
-    // TODO implements
+    protected void setProperties(UIComponent component) {
+        super.setProperties(component);
 
+        setComponentProperty(component, JsfConstants.ALT_ATTR, alt_);
+        setComponentProperty(component, JsfConstants.MAXLENGTH_ATTR, maxlength_);
+        setComponentProperty(component, JsfConstants.ONCHANGE_ATTR, onchange_);
+        setComponentProperty(component, JsfConstants.ONSELECT_ATTR, onselect_);
+        setComponentProperty(component, JsfConstants.SIZE_ATTR, size_);
+    }
+    
+    public void release() {
+        super.release();
+    }
+   
 }

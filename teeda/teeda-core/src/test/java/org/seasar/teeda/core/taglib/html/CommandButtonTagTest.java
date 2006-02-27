@@ -15,14 +15,156 @@
  */
 package org.seasar.teeda.core.taglib.html;
 
-import junit.framework.TestCase;
+import javax.faces.component.UIComponent;
+import javax.faces.component.html.HtmlCommandButton;
+
+import org.seasar.teeda.core.el.SimpleMethodBinding;
+import org.seasar.teeda.core.exception.NoValueReferenceRuntimeException;
+import org.seasar.teeda.core.mock.MockMethodBinding;
+import org.seasar.teeda.core.unit.TeedaTestCase;
 
 /**
  * @author yone
  */
-public class CommandButtonTagTest extends TestCase {
-    // TODO test
-    public void testA() throws Exception {
+public class CommandButtonTagTest extends TeedaTestCase {
+    
+    public void testGetComponentType() throws Exception {
+        // # Arrange #
+        CommandButtonTag tag = new CommandButtonTag();
         
+        // # Act & Assert #
+        assertEquals("javax.faces.HtmlCommandButton", tag.getComponentType());
+    }
+    
+    public void testGetRenderType() throws Exception {
+        // # Arrange #
+        CommandButtonTag tag = new CommandButtonTag();
+        
+        // # Act & Assert #
+        assertEquals("javax.faces.Button", tag.getRendererType());        
+    }
+    
+    public void testSetProperties_All() throws Exception {
+        // # Arrange #
+        HtmlCommandButton command = createHtmlCommandButton();
+        CommandButtonTag tag = new CommandButtonTag();
+
+        tag.setImmediate("false");
+        tag.setImage("image");
+        tag.setValue("value 1");
+        tag.setAccesskey("access key");
+        tag.setAlt("alt");
+        tag.setDir("dir");
+        tag.setDisabled("false");
+        tag.setLang("lang");
+        tag.setOnblur("onblur");
+        tag.setOnchange("onchange");
+        tag.setOnclick("onclick");
+        tag.setOndblclick("ondblclick");
+        tag.setOnfocus("onfocus");
+        tag.setOnkeydown("onkeydown");
+        tag.setOnkeypress("onkeypress");
+        tag.setOnkeyup("onkeyup");
+        tag.setOnmousedown("onmousedown");
+        tag.setOnmousemove("onmousemove");
+        tag.setOnmouseup("onmouseup");
+        tag.setOnselect("onselect");
+        tag.setReadonly("false");
+        tag.setStyle("style");
+        tag.setStyleClass("styleclass");
+        tag.setTabindex("5");
+        tag.setTitle("title");
+        
+        // # Act #
+        tag.setProperties(command);
+        
+        // # Assert #
+        assertFalse(command.isImmediate());
+        assertEquals("image", command.getImage());
+        assertEquals("value 1", command.getValue());
+        assertEquals("access key", command.getAccesskey());
+        assertEquals("alt", command.getAlt());
+        assertEquals("dir", command.getDir());
+        assertFalse(command.isDisabled());
+        assertEquals("lang", command.getLang());
+        assertEquals("onblur", command.getOnblur());
+        assertEquals("onchange", command.getOnchange());
+        assertEquals("onclick", command.getOnclick());
+        assertEquals("ondblclick", command.getOndblclick());
+        assertEquals("onfocus", command.getOnfocus());
+        assertEquals("onkeydown", command.getOnkeydown());
+        assertEquals("onkeypress", command.getOnkeypress());
+        assertEquals("onkeyup", command.getOnkeyup());
+        assertEquals("onmousedown", command.getOnmousedown());
+        assertEquals("onmousemove", command.getOnmousemove());
+        assertEquals("onmouseup", command.getOnmouseup());
+        assertEquals("onselect", command.getOnselect());
+        assertFalse(command.isReadonly());
+        assertEquals("style", command.getStyle());
+        assertEquals("styleclass", command.getStyleClass());
+        assertEquals("5", command.getTabindex());
+        assertEquals("title", command.getTitle());
+    }
+    
+    public void testSetAction_constantValue() throws Exception {
+        // # Arrange #
+        HtmlCommandButton command = createHtmlCommandButton();
+        CommandButtonTag tag = new CommandButtonTag();
+        
+        // # Act #
+        tag.setAction("testAction");
+        tag.setProperties(command);
+
+        // # Asert #
+        assertTrue(command.getAction() instanceof SimpleMethodBinding);
+    }
+
+    public void testSetAction_bindingValue() throws Exception {
+        // # Arrange #
+        HtmlCommandButton command = createHtmlCommandButton();
+        CommandButtonTag tag = new CommandButtonTag();
+        //MockMethodBinding mb = new MockMethodBinding("#{hoge.test}");
+        
+        // # Act #
+        tag.setAction("#{hoge.test}");
+        tag.setProperties(command);
+
+        // # Asert #
+        assertTrue(command.getAction() instanceof MockMethodBinding);
+    }
+
+    public void testSetActionListener_noValue() throws Exception {
+        // # Arrange #
+        HtmlCommandButton command = createHtmlCommandButton();
+        CommandButtonTag tag = new CommandButtonTag();
+        
+        // # Act & Assert#
+        tag.setActionListener("testActionListener");
+        try {
+            tag.setProperties(command);
+            fail();
+        } catch (NoValueReferenceRuntimeException e ){
+            success();
+        }
+    }
+
+    public void testSetActionListener_bindingValue() throws Exception {
+        // # Arrange #
+        HtmlCommandButton command = createHtmlCommandButton();
+        CommandButtonTag tag = new CommandButtonTag();
+        
+        // # Act & Assert#
+        tag.setActionListener("#{hoge.do}");
+        tag.setProperties(command);
+        
+        assertTrue(command.getActionListener() instanceof MockMethodBinding);
+    }
+    
+    private HtmlCommandButton createHtmlCommandButton() {
+        return (HtmlCommandButton) createUIComponent();
+    }
+
+    protected UIComponent createUIComponent() {
+        return new HtmlCommandButton();
     }
 }

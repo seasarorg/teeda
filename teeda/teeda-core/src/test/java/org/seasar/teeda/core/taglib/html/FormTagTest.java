@@ -15,14 +15,89 @@
  */
 package org.seasar.teeda.core.taglib.html;
 
-import junit.framework.TestCase;
+import javax.faces.component.UIComponent;
+import javax.faces.component.html.HtmlForm;
+
+import org.seasar.teeda.core.unit.TeedaTestCase;
 
 /**
  * @author yone
  */
-public class FormTagTest extends TestCase {
-    // TODO test
-    public void testA() throws Exception {
+public class FormTagTest extends TeedaTestCase {
+    
+    public void testGetComponentType() throws Exception {
+        // # Arrange #
+        FormTag tag = new FormTag();
         
+        // # Act & Assert #
+        assertEquals("javax.faces.HtmlForm", tag.getComponentType());
     }
+    
+    public void testGetRenderType() throws Exception {
+        // # Arrange #
+        FormTag tag = new FormTag();
+        
+        // # Act & Assert #
+        assertEquals("javax.faces.Form", tag.getRendererType());        
+    }
+    
+    public void testSetProperties_All() throws Exception {
+        // # Arrange #
+        HtmlForm component = createHtmlForm();
+        FormTag tag = new FormTag();
+        tag.setAccept("accept");
+        tag.setAcceptcharset("acceptcharset");
+        tag.setDir("dir");
+        tag.setEnctype("enctype");
+        tag.setLang("lang");
+        tag.setOnclick("onclick");
+        tag.setOndblclick("ondblclick");
+        tag.setOnkeydown("onkeydown");
+        tag.setOnkeypress("onkeypress");
+        tag.setOnkeyup("onkeyup");
+        tag.setOnmousedown("onmousedown");
+        tag.setOnmousemove("onmousemove");
+        tag.setOnmouseout("onmouseout");
+        tag.setOnmouseover("onmouseover");
+        tag.setOnmouseup("onmouseup");
+        tag.setOnreset("onreset");
+        tag.setOnsubmit("onsubmit");
+        tag.setStyle("style");
+        tag.setStyleClass("styleclass");
+        tag.setTitle("title");
+        
+        // # Act #
+        tag.setProperties(component);
+        
+        // # Assert #
+        assertEquals("accept", component.getAccept());
+        assertEquals("acceptcharset", component.getAcceptcharset());
+        assertEquals("dir", component.getDir());
+        assertEquals("application/x-www-form-urlencoded", component.getEnctype());
+        assertEquals("lang", component.getLang());
+        assertEquals("onclick", component.getOnclick());
+        assertEquals("ondblclick", component.getOndblclick());
+        assertEquals("onkeydown", component.getOnkeydown());
+        assertEquals("onkeypress", component.getOnkeypress());
+        assertEquals("onkeyup", component.getOnkeyup());
+        assertEquals("onmousedown", component.getOnmousedown());
+        assertEquals("onmousemove", component.getOnmousemove());
+        assertEquals("onmouseout", component.getOnmouseout());
+        assertEquals("onmouseover", component.getOnmouseover());
+        assertEquals("onmouseup", component.getOnmouseup());
+        assertEquals("onreset", component.getOnreset());
+        assertEquals("onsubmit", component.getOnsubmit());
+        assertEquals("style", component.getStyle());
+        assertEquals("styleclass", component.getStyleClass());
+        assertEquals("title", component.getTitle());
+    }
+    
+    private HtmlForm createHtmlForm() {
+        return (HtmlForm) createUIComponent();
+    }
+
+    protected UIComponent createUIComponent() {
+        return new HtmlForm();
+    }
+
 }

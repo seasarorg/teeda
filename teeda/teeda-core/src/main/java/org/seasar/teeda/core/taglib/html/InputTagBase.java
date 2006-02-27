@@ -16,7 +16,6 @@
 package org.seasar.teeda.core.taglib.html;
 
 import javax.faces.component.UIComponent;
-import javax.faces.component.html.HtmlCommandButton;
 
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.taglib.UIComponentTagBase;
@@ -24,55 +23,55 @@ import org.seasar.teeda.core.taglib.UIComponentTagBase;
 /**
  * @author yone
  */
-public class CommandButtonTag extends UIComponentTagBase {
-    
+public abstract class InputTagBase extends UIComponentTagBase {
+
     private String immediate_;
     
-    private String actionListener_;
+    private String required_;
     
-    private String image_;
+    private String validator_;
+    
+    private String valueChangeListener_;
+    
+    private String readonly_;
 
-    
-    public String getComponentType() {
-        return HtmlCommandButton.COMPONENT_TYPE;
-    }
-
-    public String getRendererType() {
-        return "javax.faces.Button";
-    }
-    
     protected void setProperties(UIComponent component) {
         super.setProperties(component);
-        
-        setComponentProperty(component, JsfConstants.ALT_ATTR, alt_);
-        setComponentProperty(component, JsfConstants.ONCHANGE_ATTR, onchange_);
-        setComponentProperty(component, JsfConstants.ONSELECT_ATTR, onselect_);
-        
-        setComponentProperty(component, JsfConstants.IMMEDIATE_ATTR, immediate_);
-        setComponentProperty(component, JsfConstants.IMAGE_ATTR, image_);        
-        setActionProperty(component, action_);
-        setActionListenerProperty(component, actionListener_);
-    }
 
+        setComponentProperty(component, JsfConstants.IMMEDIATE_ATTR, immediate_);
+        setComponentProperty(component, JsfConstants.REQUIRED_ATTR, required_);
+        setValidatorProperty(component, validator_);
+        setValueChangeListenerProperty(component, valueChangeListener_);
+        setComponentProperty(component, JsfConstants.READONLY_ATTR, readonly_);
+    }
+    
     public void release() {
         super.release();
-        
-        action_ = null;
         immediate_ = null;
-        actionListener_ = null;
-        image_ = null;
+        required_ = null;
+        validator_ = null;
+        valueChangeListener_ = null;
     }
-
-    public void setActionListener(String actionListener) {
-        actionListener_ = actionListener;
-    }
-
-    public void setImage(String image) {
-        image_ = image;
-    }
-
+    
+    
     public void setImmediate(String immediate) {
         immediate_ = immediate;
     }
-   
+
+    public void setReadonly(String readonly) {
+        readonly_ = readonly;
+    }
+
+    public void setRequired(String required) {
+        required_ = required;
+    }
+
+    public void setValidator(String validator) {
+        validator_ = validator;
+    }
+
+    public void setValueChangeListener(String valueChangeListener) {
+        valueChangeListener_ = valueChangeListener;
+    }
+    
 }

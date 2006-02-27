@@ -15,14 +15,128 @@
  */
 package org.seasar.teeda.core.taglib.html;
 
-import junit.framework.TestCase;
+import javax.faces.component.UIComponent;
+import javax.faces.component.html.HtmlInputText;
+
+import org.seasar.teeda.core.mock.MockApplication;
+import org.seasar.teeda.core.mock.MockApplicationImpl;
+import org.seasar.teeda.core.mock.MockConverter;
+import org.seasar.teeda.core.mock.MockMethodBinding;
+import org.seasar.teeda.core.unit.TeedaTestCase;
 
 /**
  * @author yone
  */
-public class InputTextTagTest extends TestCase {
-    // TODO test
-    public void testA() throws Exception {
+public class InputTextTagTest extends TeedaTestCase {
+    
+    public void testGetComponentType() throws Exception {
+        // # Arrange #
+        InputTextTag tag = new InputTextTag();
         
+        // # Act & Assert #
+        assertEquals("javax.faces.HtmlInputText", tag.getComponentType());
+    }
+    
+    public void testGetRenderType() throws Exception {
+        // # Arrange #
+        InputTextTag tag = new InputTextTag();
+        
+        // # Act & Assert #
+        assertEquals("javax.faces.Text", tag.getRendererType());        
+    }
+    
+    public void testSetProperties_All() throws Exception {
+        // # Arrange #
+        HtmlInputText component = createHtmlInputText();
+        InputTextTag tag = new InputTextTag();
+        MockApplication app = new MockApplicationImpl();
+        app.addConverter("mock.converter",
+                "org.seasar.teeda.core.mock.MockConverter");
+        setApplication(app);
+        app.addValidator("mock.validator",
+                "org.seasar.teeda.core.mock.MockValidator");
+        
+        tag.setConverter("mock.converter");
+        tag.setImmediate("false");
+        tag.setRequired("true");
+        tag.setValidator("#{mock.validator}");
+        tag.setValue("value");
+        tag.setValueChangeListener("#{mock.listener}");
+        tag.setAccesskey("accesskey");
+        tag.setAlt("alt");
+        tag.setDir("dir");
+        tag.setDisabled("false");
+        tag.setLang("lang");
+        tag.setMaxlength("15");
+        tag.setOnblur("onblur");
+        tag.setOnchange("onchange");
+        tag.setOnclick("onclick");
+        tag.setOndblclick("ondblclick");
+        tag.setOnfocus("onfocus");
+        tag.setOnkeydown("onkeydown");
+        tag.setOnkeypress("onkeypress");
+        tag.setOnkeyup("onkeyup");
+        tag.setOnmousedown("onmousedown");
+        tag.setOnmousemove("onmousemove");
+        tag.setOnmouseout("onmouseout");
+        tag.setOnmouseover("onmouseover");
+        tag.setOnmouseup("onmouseup");
+        tag.setOnselect("onselect");
+        tag.setReadonly("true");
+        tag.setSize("33");
+        tag.setStyle("style");
+        tag.setStyleClass("styleclass");
+        tag.setTabindex("13");
+        tag.setTitle("title");
+        
+        // # Act #
+        tag.setProperties(component);
+        
+        // # Assert #
+        assertTrue(component.getConverter() instanceof MockConverter);
+        assertFalse(component.isImmediate());
+        assertTrue(component.isRequired());
+        assertTrue(component.getValidator() instanceof MockMethodBinding);
+        assertEquals("#{mock.validator}", component.getValidator()
+                .getExpressionString());
+        assertEquals("value", component.getValue());
+        assertTrue(component.getValueChangeListener() instanceof MockMethodBinding);
+        assertEquals("#{mock.listener}", component.getValueChangeListener()
+                .getExpressionString());
+        assertEquals("accesskey", component.getAccesskey());
+        assertEquals("alt", component.getAlt());
+        assertEquals("dir", component.getDir());
+        assertFalse(component.isDisabled());
+        assertEquals("lang", component.getLang());
+        assertEquals(15, component.getMaxlength());
+
+        assertEquals("onblur", component.getOnblur());
+        assertEquals("onchange", component.getOnchange());
+        assertEquals("onclick", component.getOnclick());
+        assertEquals("ondblclick", component.getOndblclick());
+        assertEquals("onfocus", component.getOnfocus());
+        assertEquals("onkeydown", component.getOnkeydown());
+        assertEquals("onkeypress", component.getOnkeypress());
+        assertEquals("onkeyup", component.getOnkeyup());
+        assertEquals("onmousedown", component.getOnmousedown());
+        assertEquals("onmousemove", component.getOnmousemove());
+        assertEquals("onmouseout", component.getOnmouseout());
+        assertEquals("onmouseover", component.getOnmouseover());
+        assertEquals("onmouseup", component.getOnmouseup());
+        assertEquals("onselect", component.getOnselect());
+        assertTrue(component.isReadonly());
+        assertEquals(33, component.getSize());
+        assertEquals("style", component.getStyle());
+        assertEquals("styleclass", component.getStyleClass());
+        assertEquals("13", component.getTabindex());
+        assertEquals("title", component.getTitle());
+    }    
+    
+    private HtmlInputText createHtmlInputText() {
+        return (HtmlInputText) createUIComponent();
+    }
+
+    protected UIComponent createUIComponent() {
+        return new HtmlInputText();
     }
 }
