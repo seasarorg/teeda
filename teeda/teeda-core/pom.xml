@@ -45,7 +45,7 @@
     <dependency>
       <groupId>commons-beanutils</groupId>
       <artifactId>commons-beanutils</artifactId>
-      <version>1.6.1</version>
+      <version>1.7.0</version>
       <type>jar</type>
     </dependency>
     <dependency>
@@ -73,12 +73,14 @@
       <artifactId>commons-el</artifactId>
       <version>1.0</version>
       <type>jar</type>
+      <!--
       <exclusions>
         <exclusion>
           <artifactId>commons-logging</artifactId>
           <groupId>commons-logging</groupId>
         </exclusion>
       </exclusions>
+      -->
     </dependency>
     <dependency>
       <groupId>junit-addons</groupId>
