@@ -59,7 +59,9 @@ public abstract class AbstractTestCase extends TestCase {
 
     protected String getBody(HtmlPage page) throws UnsupportedEncodingException {
         WebResponse webResponse = page.getWebResponse();
-        return new String(webResponse.getResponseBody(), page.getPageEncoding());
+        String body = new String(webResponse.getResponseBody(), page
+            .getPageEncoding());
+        return body;
     }
 
 }

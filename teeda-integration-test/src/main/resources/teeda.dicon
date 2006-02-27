@@ -101,12 +101,24 @@
 		<aspect>aop.traceInterceptor</aspect>
 	</component>
 
-	<component name="restoreViewPhase" class="org.seasar.teeda.core.lifecycle.impl.RestoreViewPhase"/>
-	<component name="applyRequestValuesPhase" class="org.seasar.teeda.core.lifecycle.impl.ApplyRequestValuesPhase"/>
-	<component name="processValidationsPhase" class="org.seasar.teeda.core.lifecycle.impl.ProcessValidationsPhase"/>
-	<component name="updateModelValuesPhase" class="org.seasar.teeda.core.lifecycle.impl.UpdateModelValuesPhase"/>
-	<component name="invokeApplicationPhase" class="org.seasar.teeda.core.lifecycle.impl.InvokeApplicationPhase"/>
-	<component name="renderResponsePhase" class="org.seasar.teeda.core.lifecycle.impl.RenderResponsePhase"/>
+	<component name="restoreViewPhase" class="org.seasar.teeda.core.lifecycle.impl.RestoreViewPhase">
+		<aspect>aop.traceInterceptor</aspect>
+	</component>
+	<component name="applyRequestValuesPhase" class="org.seasar.teeda.core.lifecycle.impl.ApplyRequestValuesPhase">
+		<aspect>aop.traceInterceptor</aspect>
+	</component>
+	<component name="processValidationsPhase" class="org.seasar.teeda.core.lifecycle.impl.ProcessValidationsPhase">
+		<aspect>aop.traceInterceptor</aspect>
+	</component>
+	<component name="updateModelValuesPhase" class="org.seasar.teeda.core.lifecycle.impl.UpdateModelValuesPhase">
+		<aspect>aop.traceInterceptor</aspect>
+	</component>
+	<component name="invokeApplicationPhase" class="org.seasar.teeda.core.lifecycle.impl.InvokeApplicationPhase">
+		<aspect>aop.traceInterceptor</aspect>
+	</component>
+	<component name="renderResponsePhase" class="org.seasar.teeda.core.lifecycle.impl.RenderResponsePhase">
+		<aspect>aop.traceInterceptor</aspect>
+	</component>
 
 	<component name="webappConfigBuilder" class="org.seasar.teeda.core.config.webapp.impl.WebappConfigBuilderImpl"/>
 	
