@@ -15,14 +15,112 @@
  */
 package org.seasar.teeda.core.taglib.html;
 
+import javax.faces.component.UIComponent;
+import javax.faces.component.html.HtmlDataTable;
+
 import junit.framework.TestCase;
 
 /**
  * @author yone
  */
 public class DataTableTagTest extends TestCase {
-    // TODO test
-    public void testA() throws Exception {
+    
+    public void testGetComponentType() throws Exception {
+        // # Arrange #
+        DataTableTag tag = new DataTableTag();
         
+        // # Act & Assert #
+        assertEquals("javax.faces.HtmlDataTable",
+                tag.getComponentType());
+    }
+    
+    public void testGetRenderType() throws Exception {
+        // # Arrange #
+        DataTableTag tag = new DataTableTag();
+        
+        // # Act & Assert #
+        assertEquals("javax.faces.Table", tag.getRendererType());        
+    }
+    
+    public void testSetProperties_All() throws Exception {
+        // # Arrange #
+        HtmlDataTable table = createHtmlDataTable();
+        DataTableTag tag = new DataTableTag();
+        
+        tag.setFirst("2");
+        tag.setRows("33");
+        tag.setValue("value");
+        tag.setVar("varHoge");
+        tag.setBgcolor("bgcolorRed");
+        tag.setBorder("5");
+        tag.setCellpadding("3");
+        tag.setCellspacing("2");
+        tag.setColumnClasses("columnClasses");
+        tag.setDir("dir");
+        tag.setFooterClass("footerClass");
+        tag.setFrame("frame1");
+        tag.setHeaderClass("headerClass2");
+        tag.setLang("lang");
+        tag.setOnclick("onclick");
+        tag.setOndblclick("ondblclick");
+        tag.setOnkeydown("onkeydown");
+        tag.setOnkeypress("onkeypress");
+        tag.setOnkeyup("onkeyup");
+        tag.setOnmousedown("onmousedown");
+        tag.setOnmousemove("onmousemove");
+        tag.setOnmouseout("onmouseout");
+        tag.setOnmouseover("onmouseover");
+        tag.setOnmouseup("onmouseup");
+        tag.setRowClasses("rowClasses");
+        tag.setRules("all");
+        tag.setStyle("style");
+        tag.setStyleClass("styleclass");
+        tag.setSummary("summary");
+        tag.setTitle("title");
+        tag.setWidth("600");
+        
+        // # Act #
+        tag.setProperties(table);
+                
+        // # Assert #
+        assertEquals(2, table.getFirst());
+        assertEquals(33, table.getRows());
+        assertEquals("value", table.getValue());
+        assertEquals("varHoge", table.getVar());
+        assertEquals("bgcolorRed", table.getBgcolor());
+        assertEquals(5, table.getBorder());
+        assertEquals("3", table.getCellpadding());
+        assertEquals("2", table.getCellspacing());
+        assertEquals("columnClasses", table.getColumnClasses());
+        assertEquals("dir", table.getDir());
+        assertEquals("footerClass", table.getFooterClass());
+        assertEquals("frame1", table.getFrame());
+        assertEquals("headerClass2", table.getHeaderClass());
+        assertEquals("lang", table.getLang());
+        assertEquals("onclick", table.getOnclick());
+        assertEquals("ondblclick", table.getOndblclick());
+        assertEquals("onkeydown", table.getOnkeydown());
+        assertEquals("onkeypress", table.getOnkeypress());
+        assertEquals("onkeyup", table.getOnkeyup());
+        assertEquals("onmousedown", table.getOnmousedown());
+        assertEquals("onmousemove", table.getOnmousemove());
+        assertEquals("onmouseout", table.getOnmouseout());
+        assertEquals("onmouseover", table.getOnmouseover());
+        assertEquals("onmouseup", table.getOnmouseup());
+        assertEquals("rowClasses", table.getRowClasses());
+        assertEquals("all", table.getRules());
+        assertEquals("style", table.getStyle());
+        assertEquals("styleclass", table.getStyleClass());        
+        assertEquals("summary", table.getSummary());
+        assertEquals("title", table.getTitle());
+        assertEquals("600", table.getWidth());
+    }
+
+    private HtmlDataTable createHtmlDataTable() {
+        return (HtmlDataTable) createUIComponent();
+    }
+
+    protected UIComponent createUIComponent() {
+        return new HtmlDataTable();
     }
 }

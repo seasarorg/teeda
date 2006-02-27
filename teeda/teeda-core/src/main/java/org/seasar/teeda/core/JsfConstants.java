@@ -202,6 +202,8 @@ public interface JsfConstants {
     public String FATAL_CLASS_ATTR = "fatalClass";
 
     public String FATAL_STYLE_ATTR = "fatalStyle";
+    
+    public String FIRST_ATTR = "first";
 
     public String FOOTER_CLASS_ATTR = "footerClass";
 
@@ -342,8 +344,10 @@ public interface JsfConstants {
     public String TYPE_ATTR = "type";
 
     public String USEMAP_ATTR = "usemap";
-
+    
     public String VALUE_ATTR = "value";
+    
+    public String VAR_ATTR = "var";
 
     public String VSPACE_ATTR = "vspace";
 
