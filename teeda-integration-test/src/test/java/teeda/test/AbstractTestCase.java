@@ -34,13 +34,18 @@ import com.gargoylesoftware.htmlunit.html.HtmlPage;
  */
 public abstract class AbstractTestCase extends TestCase {
 
+    private String baseUrl_ = "http://localhost:" + port_ + "/";
+    private static int port_;
+
     protected static WebApplicationTestSetup setUpTestSuite(
         final Class testClass) {
         if (testClass == null) {
             throw new NullPointerException("testClass");
         }
+        port_ = SocketUtil.findFreePort();
         JettyServerSetup jettySetup = new JettyServerSetup(new TestSuite(
             testClass));
+        jettySetup.setPort(port_);
         File project = MavenUtil.getProjectPomFile(testClass).getParentFile();
         File webapp = new File(project, "target/teeda-integration-test");
         jettySetup.setWebapp(webapp);
@@ -50,8 +55,6 @@ public abstract class AbstractTestCase extends TestCase {
         webApplicationTestSetup.setTestClass(testClass);
         return webApplicationTestSetup;
     }
-
-    private String baseUrl_ = "http://localhost:8080/";
 
     protected URL getUrl(String path) throws MalformedURLException {
         return new URL(baseUrl_ + path);
