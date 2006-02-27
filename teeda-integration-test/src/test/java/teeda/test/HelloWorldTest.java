@@ -50,9 +50,7 @@ public class HelloWorldTest extends AbstractTestCase {
         HtmlSpan span = (HtmlSpan) page.getHtmlElementById("hello");
         System.out.println(span);
         assertEquals("Hello World!", span.asText());
-
-        // TODO
-        //assertEquals("this is helloWorld.jsp", page.getTitleText());
+        assertEquals("this is helloWorld.jsp", page.getTitleText());
     }
 
     public void testHelloWorldJa() throws Exception {
@@ -73,6 +71,7 @@ public class HelloWorldTest extends AbstractTestCase {
         HtmlSpan span = (HtmlSpan) page.getHtmlElementById("hello");
         System.out.println(span);
         assertEquals("こんにちは 世界!", span.asText());
+        assertEquals("これはhelloWorldJa.jspです", page.getTitleText());
     }
 
 }
