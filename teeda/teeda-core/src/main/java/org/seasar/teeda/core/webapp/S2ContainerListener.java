@@ -20,6 +20,8 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
 import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
+import org.seasar.framework.container.impl.HttpServletExternalContext;
+import org.seasar.framework.container.impl.HttpServletExternalContextComponentDefRegister;
 import org.seasar.framework.log.Logger;
 import org.seasar.framework.util.StringUtil;
 
@@ -37,7 +39,11 @@ public class S2ContainerListener implements ServletContextListener {
         if (!StringUtil.isEmpty(configPath)) {
             SingletonS2ContainerFactory.setConfigPath(configPath);
         }
-        SingletonS2ContainerFactory.getExternalContext().setApplication(servletContext);
+        HttpServletExternalContext extCtx = new HttpServletExternalContext();
+        extCtx.setApplication(servletContext);
+        SingletonS2ContainerFactory.setExternalContext(extCtx);
+        SingletonS2ContainerFactory
+                .setExternalContextComponentDefRegister(new HttpServletExternalContextComponentDefRegister());
         SingletonS2ContainerFactory.init();
     }
 
