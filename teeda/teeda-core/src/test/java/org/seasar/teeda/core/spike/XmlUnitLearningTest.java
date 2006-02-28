@@ -122,7 +122,7 @@ public class XmlUnitLearningTest extends /* XMLTestCase */TestCase {
         assertEquals(myDiff.toString(), false, myDiff.identical());
     }
 
-    private static class BodyTrimmingDifferenceListener implements
+    private static class TextTrimmingDifferenceListener implements
             DifferenceListener {
 
         public int differenceFound(Difference difference) {
@@ -168,21 +168,21 @@ public class XmlUnitLearningTest extends /* XMLTestCase */TestCase {
 
     public void testIgnoreSpace1() throws Exception {
         Diff myDiff = new Diff("<a> 1</a>", "<a> 1 </a>");
-        myDiff.overrideDifferenceListener(new BodyTrimmingDifferenceListener());
+        myDiff.overrideDifferenceListener(new TextTrimmingDifferenceListener());
         assertEquals(myDiff.toString(), true, myDiff.similar());
         assertEquals(myDiff.toString(), false, myDiff.identical());
     }
 
     public void testIgnoreSpace2() throws Exception {
         Diff myDiff = new Diff("<a> </a>", "<a>  </a>");
-        myDiff.overrideDifferenceListener(new BodyTrimmingDifferenceListener());
+        myDiff.overrideDifferenceListener(new TextTrimmingDifferenceListener());
         assertEquals(myDiff.toString(), true, myDiff.similar());
         assertEquals(myDiff.toString(), false, myDiff.identical());
     }
 
     public void testIgnoreSpace3() throws Exception {
         Diff myDiff = new Diff("<a></a>", "<a> </a>");
-        myDiff.overrideDifferenceListener(new BodyTrimmingDifferenceListener());
+        myDiff.overrideDifferenceListener(new TextTrimmingDifferenceListener());
         assertEquals(myDiff.toString(), true, myDiff.similar());
         assertEquals(myDiff.toString(), false, myDiff.identical());
     }
