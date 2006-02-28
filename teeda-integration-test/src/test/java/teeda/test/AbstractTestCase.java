@@ -20,11 +20,12 @@ import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.seasar.teeda.core.unit.WebApplicationTestSetup;
+import org.seasar.teeda.core.util.MavenUtil;
+import org.seasar.teeda.core.util.SocketUtil;
+
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
-import org.seasar.jsf.selenium.MavenUtil;
-import org.seasar.jsf.selenium.WebApplicationTestSetup;
 
 import com.gargoylesoftware.htmlunit.WebResponse;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;

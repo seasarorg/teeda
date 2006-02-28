@@ -14,11 +14,7 @@
 		<arg>request</arg>
 		<arg>response</arg>
 	</component>
-<!--
-	<component name="servletContext">
-		@org.seasar.framework.container.factory.SingletonS2ContainerFactory@getServletContext()
-	</component>
--->
+
 	<!-- FacesConfig configurator -->
 	<component class="org.seasar.teeda.core.config.faces.impl.FacesConfigBuilderImpl">
 		<initMethod name="addFacesConfigurator">
@@ -36,27 +32,20 @@
 	</component>
 	
 	<component name="coreConfigurator" class="org.seasar.teeda.core.config.faces.impl.CoreFacesConfigurator" autoBinding="none" />
-
 	<component name="metaInfConfigurator" class="org.seasar.teeda.core.config.faces.impl.MetaInfFacesConfigurator" autoBinding="none" />
-	
 	<component name="configFilesConfigurator" class="org.seasar.teeda.core.config.faces.impl.ConfigFilesFacesConfigurator" />
-
 	<component name="applicationConfigurator" class="org.seasar.teeda.core.config.faces.impl.ApplicationFacesConfigurator" autoBinding="none" />
 
 	<!-- FacesConfig Assembler -->
 	<component class="org.seasar.teeda.core.config.faces.assembler.impl.DefaultAssembleProvider"/>
-	
 	<component class="org.seasar.teeda.core.config.faces.assembler.AssemblerAssembler" />
 
 	<!-- ValueBinding relates -->
 	<component class="org.seasar.teeda.core.el.impl.commons.CommonsELParser" />
-	
 	<component class="org.seasar.teeda.core.el.impl.commons.CommonsExpressionProcessorImpl" />
-	
 	<component name="valueBindingContext" class="org.seasar.teeda.core.el.impl.ValueBindingContextImpl">
 		<property name="valueBindingName">"org.seasar.teeda.core.el.ValueBindingImpl"</property>
 	</component>
-
 	<component name="methodBindingContext" class="org.seasar.teeda.core.el.impl.MethodBindingContextImpl">
 		<property name="methodBindingName">"org.seasar.teeda.core.el.MethodBindingImpl"</property>
 		<initMethod name="setValueBindingContext">
@@ -67,27 +56,17 @@
 	<!-- Applications -->
 	<!-- TODO need DI support for Converter, Validator, Component -->	
 	<component class="org.seasar.teeda.core.application.ApplicationImpl" />
-
 	<component class="org.seasar.teeda.core.application.ActionListenerImpl" />
-
 	<component class="org.seasar.teeda.core.application.NavigationHandlerImpl" />
-
 	<component name="viewHandler" class="org.seasar.teeda.core.application.ViewHandlerImpl" />
-
 	<component class="org.seasar.teeda.core.el.TeedaPropertyResolver" />
-
 	<component name="stateManager" class="org.seasar.teeda.core.application.impl.TeedaStateManagerImpl" />
-
 	<component class="org.seasar.teeda.core.application.impl.TreeStructureManagerImpl" />
-
 	
 	<!-- ManagedBean -->	
 	<component class="org.seasar.teeda.core.managedbean.impl.ManagedBeanFactoryImpl" />
-	
 	<component class="org.seasar.teeda.core.managedbean.impl.ManagedBeanScopeSaverImpl" ></component>
-		
 	<component name="scopeManager" class="org.seasar.teeda.core.scope.impl.ScopeManagerImpl" />
-	
 	<component name="translator" class="org.seasar.teeda.core.scope.impl.S2ScopeTranslator" />
 	
 	<!-- Lifecycle -->

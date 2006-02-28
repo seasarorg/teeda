@@ -1,4 +1,4 @@
-package teeda.test;
+package org.seasar.teeda.core.util;
 
 import java.io.IOException;
 import java.net.ServerSocket;
