@@ -15,24 +15,42 @@
  */
 package org.seasar.teeda.core.taglib.html;
 
-import javax.faces.webapp.UIComponentTag;
+import javax.faces.component.UIComponent;
+import javax.faces.component.html.HtmlOutputLabel;
+
+import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.core.taglib.UIComponentTagBase;
 
 
 /**
  * @author yone
  */
-public class OutputLabelTag extends UIComponentTag {
+public class OutputLabelTag extends UIComponentTagBase {
 
-    private static final String RENDERER_TYPE = "";
+    private String for_;
     
     public String getComponentType() {
-        return null;
+        return HtmlOutputLabel.COMPONENT_TYPE;
     }
 
     public String getRendererType() {
-        return RENDERER_TYPE;
+        return "javax.faces.Label";
+    }
+
+    protected void setProperties(UIComponent component) {
+        super.setProperties(component);
+
+        setComponentProperty(component, JsfConstants.FOR_ATTR, for_);        
     }
     
-    // TODO implements
+    public void release() {
+        super.release();
+        for_ = null;
+    }
 
+    public void setFor(String for1) {
+        for_ = for1;
+    }
+
+    
 }

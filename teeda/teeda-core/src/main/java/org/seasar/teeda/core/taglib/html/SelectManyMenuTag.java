@@ -15,24 +15,32 @@
  */
 package org.seasar.teeda.core.taglib.html;
 
-import javax.faces.webapp.UIComponentTag;
+import javax.faces.component.UIComponent;
+import javax.faces.component.html.HtmlSelectManyMenu;
+
+import org.seasar.teeda.core.JsfConstants;
 
 
 /**
  * @author yone
  */
-public class SelectManyMenuTag extends UIComponentTag {
+public class SelectManyMenuTag extends InputTagBase {
 
-    private static final String RENDERER_TYPE = "";
-    
     public String getComponentType() {
-        return null;
+        return HtmlSelectManyMenu.COMPONENT_TYPE;
     }
 
     public String getRendererType() {
-        return RENDERER_TYPE;
+        return "javax.faces.Menu";
     }
     
-    // TODO implements
+    protected void setProperties(UIComponent component) {
+        super.setProperties(component);
+        
+        setComponentProperty(component, JsfConstants.ONCHANGE_ATTR, onchange_);
+        setComponentProperty(component, JsfConstants.ONSELECT_ATTR, onselect_);
+        setComponentProperty(component, JsfConstants.DISABLED_CLASS_ATTR, disabledClass_);
+        setComponentProperty(component, JsfConstants.ENABLED_CLASS_ATTR, enabledClass_);
+    }
 
 }

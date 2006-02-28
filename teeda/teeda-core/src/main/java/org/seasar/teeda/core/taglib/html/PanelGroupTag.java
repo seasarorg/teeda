@@ -15,24 +15,27 @@
  */
 package org.seasar.teeda.core.taglib.html;
 
-import javax.faces.webapp.UIComponentTag;
+import javax.faces.component.UIComponent;
+import javax.faces.component.html.HtmlPanelGroup;
+
+import org.seasar.teeda.core.taglib.UIComponentTagBase;
 
 
 /**
  * @author yone
  */
-public class PanelGroupTag extends UIComponentTag {
+public class PanelGroupTag extends UIComponentTagBase {
 
-    private static final String RENDERER_TYPE = "";
-    
     public String getComponentType() {
-        return null;
+        return HtmlPanelGroup.COMPONENT_TYPE;
     }
 
     public String getRendererType() {
-        return RENDERER_TYPE;
+        return "javax.faces.Group";
     }
-    
-    // TODO implements
+
+    protected void setProperties(UIComponent component) {
+        super.setProperties(component);
+    }
 
 }

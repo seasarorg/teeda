@@ -15,24 +15,34 @@
  */
 package org.seasar.teeda.core.taglib.html;
 
-import javax.faces.webapp.UIComponentTag;
+import javax.faces.component.UIComponent;
+import javax.faces.component.html.HtmlSelectBooleanCheckbox;
+
+import org.seasar.teeda.core.JsfConstants;
 
 
 /**
  * @author yone
  */
-public class SelectBooleanCheckboxTag extends UIComponentTag {
+public class SelectBooleanCheckboxTag extends InputTagBase {
 
-    private static final String RENDERER_TYPE = "";
-    
     public String getComponentType() {
-        return null;
+        return HtmlSelectBooleanCheckbox.COMPONENT_TYPE;
     }
 
     public String getRendererType() {
-        return RENDERER_TYPE;
+        return "javax.faces.Checkbox";
     }
     
-    // TODO implements
-
+    protected void setProperties(UIComponent component) {
+        super.setProperties(component);
+        
+        setComponentProperty(component, JsfConstants.ONCHANGE_ATTR, onchange_);
+        setComponentProperty(component, JsfConstants.ONSELECT_ATTR, onselect_);
+    }
+    
+    public void release() {
+        super.release();
+    }
+    
 }

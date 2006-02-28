@@ -15,24 +15,41 @@
  */
 package org.seasar.teeda.core.taglib.html;
 
-import javax.faces.webapp.UIComponentTag;
+import javax.faces.component.UIComponent;
+import javax.faces.component.html.HtmlOutputFormat;
+
+import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.core.taglib.UIComponentTagBase;
 
 
 /**
  * @author yone
  */
-public class OutputFormatTag extends UIComponentTag {
+public class OutputFormatTag extends UIComponentTagBase {
 
-    private static final String RENDERER_TYPE = "";
-    
+    private String escape_;
+
     public String getComponentType() {
-        return null;
+        return HtmlOutputFormat.COMPONENT_TYPE;
     }
 
     public String getRendererType() {
-        return RENDERER_TYPE;
+        return "javax.faces.Format";
     }
     
-    // TODO implements
+    protected void setProperties(UIComponent component) {
+        super.setProperties(component);
 
+        setComponentProperty(component, JsfConstants.ESCAPE_ATTR, escape_);        
+    }
+    
+    public void release() {
+        super.release();
+        escape_ = null;
+    }
+    
+    public void setEscape(String escape) {
+        escape_ = escape;
+    }
+    
 }

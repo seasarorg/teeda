@@ -15,14 +15,68 @@
  */
 package org.seasar.teeda.core.taglib.html;
 
-import junit.framework.TestCase;
+import javax.faces.component.UIComponent;
+import javax.faces.component.html.HtmlOutputFormat;
+
+import org.seasar.teeda.core.mock.MockApplication;
+import org.seasar.teeda.core.mock.MockApplicationImpl;
+import org.seasar.teeda.core.mock.MockConverter;
+import org.seasar.teeda.core.unit.TeedaTestCase;
 
 /**
  * @author yone
  */
-public class OutputFormatTagTest extends TestCase {
-    // TODO test
-    public void testA() throws Exception {
+public class OutputFormatTagTest extends TeedaTestCase {
+    
+    public void testGetComponentType() throws Exception {
+        // # Arrange #
+        OutputFormatTag tag = new OutputFormatTag();
         
+        // # Act & Assert #
+        assertEquals("javax.faces.HtmlOutputFormat", tag.getComponentType());
+    }
+    
+    public void testGetRenderType() throws Exception {
+        // # Arrange #
+        OutputFormatTag tag = new OutputFormatTag();
+        
+        // # Act & Assert #
+        assertEquals("javax.faces.Format", tag.getRendererType());        
+    }
+
+    public void testSetProperties_All() throws Exception {
+        // # Arrange #
+        HtmlOutputFormat component = createHtmlOutputFormat();
+        OutputFormatTag tag = new OutputFormatTag();
+        MockApplication app = new MockApplicationImpl();
+        app.addConverter("mock.converter",
+                "org.seasar.teeda.core.mock.MockConverter");
+        setApplication(app);
+        
+        tag.setConverter("mock.converter");
+        tag.setEscape("true");
+        tag.setValue("value");
+        tag.setStyle("style");
+        tag.setStyleClass("styleclass");
+        tag.setTitle("title");
+        
+        // # Act #
+        tag.setProperties(component);
+        
+        // # Assert #
+        assertTrue(component.getConverter() instanceof MockConverter);
+        assertTrue(component.isEscape());
+        assertEquals("value", component.getValue());
+        assertEquals("style", component.getStyle());
+        assertEquals("styleclass", component.getStyleClass());
+        assertEquals("title", component.getTitle());
+    }
+
+    private HtmlOutputFormat createHtmlOutputFormat() {
+        return (HtmlOutputFormat) createUIComponent();
+    }
+
+    protected UIComponent createUIComponent() {
+        return new HtmlOutputFormat();
     }
 }

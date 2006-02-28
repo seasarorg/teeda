@@ -15,24 +15,47 @@
  */
 package org.seasar.teeda.core.taglib.html;
 
-import javax.faces.webapp.UIComponentTag;
+import javax.faces.component.UIComponent;
+import javax.faces.component.html.HtmlGraphicImage;
+
+import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.core.taglib.UIComponentTagBase;
 
 
 /**
  * @author yone
  */
-public class GraphicImageTag extends UIComponentTag {
+public class GraphicImageTag extends UIComponentTagBase {
 
-    private static final String RENDERER_TYPE = "";
+    private String url_;
     
     public String getComponentType() {
-        return null;
+        return HtmlGraphicImage.COMPONENT_TYPE;
     }
 
     public String getRendererType() {
-        return RENDERER_TYPE;
+        return "javax.faces.Image";
     }
     
-    // TODO implements
+    protected void setProperties(UIComponent component) {
+        super.setProperties(component);
+        
+        setComponentProperty(component, JsfConstants.URL_ATTR, url_);
+        setComponentProperty(component, JsfConstants.ALT_ATTR, alt_);
+        setComponentProperty(component, JsfConstants.HEIGHT_ATTR, height_);
+        setComponentProperty(component, JsfConstants.ISMAP_ATTR, ismap_);
+        setComponentProperty(component, JsfConstants.LONGDESC_ATTR, longdesc_);
+        setComponentProperty(component, JsfConstants.USEMAP_ATTR, usemap_);
+    }
+    
+    public void release() {
+        super.release();
+        url_ = null;
+    }
+    
+    public void setUrl(String url) {
+        url_ = url;
+    }
 
+    
 }

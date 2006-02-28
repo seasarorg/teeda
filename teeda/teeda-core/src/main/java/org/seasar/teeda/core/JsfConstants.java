@@ -171,6 +171,8 @@ public interface JsfConstants {
 
     public String COLUMN_CLASSES_ATTR = "columnClasses";
     
+    public String COLUMNS_ATTR = "columns";
+    
     public String CONVERTER_ATTR = "converter";
 
     public String COORDS_ATTR = "coords";
@@ -210,6 +212,8 @@ public interface JsfConstants {
     public String FOR_ATTR = "for";
     
     public String FORMAT_PATTERN_ATTR = "formatPattern";
+    
+    public String GLOBAL_ONLY_ATTR = "globalOnly";
 
     public String FRAME_ATTR = "frame";
 
@@ -342,6 +346,8 @@ public interface JsfConstants {
     public String TOOLTIP_ATTR = "tooltip";
 
     public String TYPE_ATTR = "type";
+    
+    public String URL_ATTR = "url";
 
     public String USEMAP_ATTR = "usemap";
     

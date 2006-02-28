@@ -15,24 +15,37 @@
  */
 package org.seasar.teeda.core.taglib.html;
 
-import javax.faces.webapp.UIComponentBodyTag;
+import javax.faces.component.UIComponent;
+import javax.faces.component.html.HtmlOutputLink;
+
+import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.core.taglib.UIComponentTagBase;
 
 
 /**
  * @author yone
  */
-public class OutputLinkTag extends UIComponentBodyTag {
+public class OutputLinkTag extends UIComponentTagBase {
 
-    private static final String RENDERER_TYPE = "";
-    
     public String getComponentType() {
-        return null;
+        return HtmlOutputLink.COMPONENT_TYPE;
     }
 
     public String getRendererType() {
-        return RENDERER_TYPE;
+        return "javax.faces.Link";
     }
     
-    // TODO implements
+    protected void setProperties(UIComponent component) {
+        super.setProperties(component);
+        
+        setComponentProperty(component, JsfConstants.CHARSET_ATTR, charset_);        
+        setComponentProperty(component, JsfConstants.COORDS_ATTR, coords_);        
+        setComponentProperty(component, JsfConstants.HREFLANG_ATTR, hreflang_);
+        setComponentProperty(component, JsfConstants.REL_ATTR, rel_);
+        setComponentProperty(component, JsfConstants.REV_ATTR, rev_);
+        setComponentProperty(component, JsfConstants.SHAPE_ATTR, shape_);
+        setComponentProperty(component, JsfConstants.TARGET_ATTR, target_);
+        setComponentProperty(component, JsfConstants.TYPE_ATTR, type_);
+    }
 
 }

@@ -15,24 +15,81 @@
  */
 package org.seasar.teeda.core.taglib.html;
 
-import javax.faces.webapp.UIComponentTag;
+import javax.faces.component.UIComponent;
+import javax.faces.component.html.HtmlPanelGrid;
+
+import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.core.taglib.UIComponentTagBase;
 
 
 /**
  * @author yone
  */
-public class PanelGridTag extends UIComponentTag {
+public class PanelGridTag extends UIComponentTagBase {
 
-    private static final String RENDERER_TYPE = "";
+    private String columnClasses_;
     
+    private String columns_;
+
+    private String footerClass_;
+
+    private String headerClass_;
+
+    private String rowClasses_;
+
     public String getComponentType() {
-        return null;
+        return HtmlPanelGrid.COMPONENT_TYPE;
     }
 
     public String getRendererType() {
-        return RENDERER_TYPE;
+        return "javax.faces.Grid";
+    }
+
+    protected void setProperties(UIComponent component) {
+        super.setProperties(component);
+
+        setComponentProperty(component, JsfConstants.BORDER_ATTR, border_);
+        setComponentProperty(component, JsfConstants.BGCOLOR_ATTR, bgcolor_);
+        setComponentProperty(component, JsfConstants.CELLPADDING_ATTR, cellpadding_);
+        setComponentProperty(component, JsfConstants.CELLSPACING_ATTR, cellspacing_);
+        setComponentProperty(component, JsfConstants.COLUMN_CLASSES_ATTR, columnClasses_);
+        setComponentProperty(component, JsfConstants.COLUMNS_ATTR, columns_);
+        setComponentProperty(component, JsfConstants.FOOTER_CLASS_ATTR, footerClass_);
+        setComponentProperty(component, JsfConstants.FRAME_ATTR, frame_);
+        setComponentProperty(component, JsfConstants.HEADER_CLASS_ATTR, headerClass_);
+        setComponentProperty(component, JsfConstants.ROW_CLASSES_ATTR, rowClasses_);
+        setComponentProperty(component, JsfConstants.RULES_ATTR, rules_);
+        setComponentProperty(component, JsfConstants.SUMMARY_ATTR, summary_);
+        setComponentProperty(component, JsfConstants.WIDTH_ATTR, width_);
     }
     
-    // TODO implements
+    public void release() {
+        super.release();
+        columnClasses_ = null;
+        columns_ = null;
+        footerClass_ = null;
+        headerClass_ = null;
+        rowClasses_ = null;
+    }
+    
+    public void setColumnClasses(String columnClasses) {
+        columnClasses_ = columnClasses;
+    }
+
+    public void setColumns(String columns) {
+        columns_ = columns;
+    }
+
+    public void setFooterClass(String footerClass) {
+        footerClass_ = footerClass;
+    }
+
+    public void setHeaderClass(String headerClass) {
+        headerClass_ = headerClass;
+    }
+
+    public void setRowClasses(String rowClasses) {
+        rowClasses_ = rowClasses;
+    }
 
 }

@@ -15,14 +15,54 @@
  */
 package org.seasar.teeda.core.taglib.html;
 
+import javax.faces.component.UIComponent;
+import javax.faces.component.html.HtmlPanelGroup;
+
 import junit.framework.TestCase;
 
 /**
  * @author yone
  */
 public class PanelGroupTagTest extends TestCase {
-    // TODO test
-    public void testA() throws Exception {
+    
+    public void testGetComponentType() throws Exception {
+        // # Arrange #
+        PanelGroupTag tag = new PanelGroupTag();
         
+        // # Act & Assert #
+        assertEquals("javax.faces.HtmlPanelGroup", tag.getComponentType());
     }
+    
+    public void testGetRenderType() throws Exception {
+        // # Arrange #
+        PanelGroupTag tag = new PanelGroupTag();
+        
+        // # Act & Assert #
+        assertEquals("javax.faces.Group", tag.getRendererType());        
+    }
+
+    public void testSetProperties_All() throws Exception {
+        // # Arrange #
+        HtmlPanelGroup component = createHtmlPanelGroup();
+        PanelGroupTag tag = new PanelGroupTag();
+        
+        tag.setStyle("style");
+        tag.setStyleClass("styleclass");
+        
+        // # Act #
+        tag.setProperties(component);
+        
+        // # Assert #
+        assertEquals("style", component.getStyle());
+        assertEquals("styleclass", component.getStyleClass());
+    }
+
+    private HtmlPanelGroup createHtmlPanelGroup() {
+        return (HtmlPanelGroup) createUIComponent();
+    }
+
+    protected UIComponent createUIComponent() {
+        return new HtmlPanelGroup();
+    }
+
 }

@@ -100,7 +100,5 @@ public class DataTableTag extends UIComponentTagBase {
     public void setRowClasses(String rowClasses) {
         rowClasses_ = rowClasses;
     }
-    
-    
 
 }

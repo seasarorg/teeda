@@ -15,14 +15,96 @@
  */
 package org.seasar.teeda.core.taglib.html;
 
+import javax.faces.component.UIComponent;
+import javax.faces.component.html.HtmlGraphicImage;
+
 import junit.framework.TestCase;
 
 /**
  * @author yone
  */
 public class GraphicImageTagTest extends TestCase {
-    // TODO test
-    public void testA() throws Exception {
+    
+    public void testGetComponentType() throws Exception {
+        // # Arrange #
+        GraphicImageTag tag = new GraphicImageTag();
         
+        // # Act & Assert #
+        assertEquals("javax.faces.HtmlGraphicImage",
+                tag.getComponentType());
     }
+    
+    public void GraphicImageTag() throws Exception {
+        // # Arrange #
+        GraphicImageTag tag = new GraphicImageTag();
+        
+        // # Act & Assert #
+        assertEquals("javax.faces.Image", tag.getRendererType());        
+    }
+    
+    public void testSetProperties_All() throws Exception {
+        // # Arrange #
+        HtmlGraphicImage component = createHtmlGraphicImage();
+        GraphicImageTag tag = new GraphicImageTag();
+        
+        tag.setUrl("url");
+        tag.setValue("value");
+        tag.setAlt("alt");
+        tag.setDir("dir");
+        tag.setHeight("130");
+        tag.setIsmap("true");
+        tag.setLang("lang");
+        tag.setLongdesc("descURI");
+        tag.setOnclick("onclick");
+        tag.setOndblclick("ondblclick");
+        tag.setOnkeydown("onkeydown");
+        tag.setOnkeypress("onkeypress");
+        tag.setOnkeyup("onkeyup");
+        tag.setOnmousedown("onmousedown");
+        tag.setOnmousemove("onmousemove");
+        tag.setOnmouseout("onmouseout");
+        tag.setOnmouseover("onmouseover");
+        tag.setOnmouseup("onmouseup");
+        tag.setStyle("style");
+        tag.setStyleClass("styleclass");
+        tag.setTitle("title");
+        tag.setUsemap("mapName");
+        
+        // # Act #
+        tag.setProperties(component);
+        
+        // # Assert #
+        assertEquals("url", component.getUrl());
+        // see UIGraphic
+        assertEquals("url", component.getValue());
+        assertEquals("alt", component.getAlt());
+        assertEquals("dir", component.getDir());
+        assertEquals("130", component.getHeight());
+        assertTrue(component.isIsmap());
+        assertEquals("lang", component.getLang());
+        assertEquals("descURI", component.getLongdesc());
+        assertEquals("onclick", component.getOnclick());
+        assertEquals("ondblclick", component.getOndblclick());
+        assertEquals("onkeydown", component.getOnkeydown());
+        assertEquals("onkeypress", component.getOnkeypress());
+        assertEquals("onkeyup", component.getOnkeyup());
+        assertEquals("onmousedown", component.getOnmousedown());
+        assertEquals("onmousemove", component.getOnmousemove());
+        assertEquals("onmouseout", component.getOnmouseout());
+        assertEquals("onmouseover", component.getOnmouseover());
+        assertEquals("onmouseup", component.getOnmouseup());
+        assertEquals("style", component.getStyle());
+        assertEquals("styleclass", component.getStyleClass());
+        assertEquals("title", component.getTitle());
+        assertEquals("mapName", component.getUsemap());
+    }    
+
+    private HtmlGraphicImage createHtmlGraphicImage() {
+        return (HtmlGraphicImage) createUIComponent();
+    }
+
+    protected UIComponent createUIComponent() {
+        return new HtmlGraphicImage();
+    }
+
 }
