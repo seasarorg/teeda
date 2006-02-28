@@ -29,10 +29,12 @@ import org.custommonkey.xmlunit.CountingNodeTester;
 import org.custommonkey.xmlunit.DetailedDiff;
 import org.custommonkey.xmlunit.Diff;
 import org.custommonkey.xmlunit.Difference;
+import org.custommonkey.xmlunit.DifferenceConstants;
 import org.custommonkey.xmlunit.DifferenceListener;
 import org.custommonkey.xmlunit.ElementNameAndTextQualifier;
 import org.custommonkey.xmlunit.HTMLDocumentBuilder;
 import org.custommonkey.xmlunit.IgnoreTextAndAttributeValuesDifferenceListener;
+import org.custommonkey.xmlunit.NodeDetail;
 import org.custommonkey.xmlunit.NodeTest;
 import org.custommonkey.xmlunit.NodeTestException;
 import org.custommonkey.xmlunit.TolerantSaxDocumentBuilder;
@@ -43,6 +45,7 @@ import org.custommonkey.xmlunit.XMLUnit;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 
 /**
@@ -101,6 +104,89 @@ public class XmlUnitLearningTest extends /* XMLTestCase */TestCase {
         assertEquals(myDiff.toString(), true, myDiff.identical());
     }
 
+    public void testEmptyTag() throws Exception {
+        Diff myDiff = new Diff("<foo></foo>", "<foo />");
+        assertEquals(myDiff.toString(), true, myDiff.similar());
+        assertEquals(myDiff.toString(), true, myDiff.identical());
+    }
+
+    public void testSpace() throws Exception {
+        Diff myDiff = new Diff("<a></a>", "<a> </a>");
+        assertEquals(myDiff.toString(), false, myDiff.similar());
+        assertEquals(myDiff.toString(), false, myDiff.identical());
+    }
+
+    public void testSpace2() throws Exception {
+        Diff myDiff = new Diff("<a> </a>", "<a>  </a>");
+        assertEquals(myDiff.toString(), false, myDiff.similar());
+        assertEquals(myDiff.toString(), false, myDiff.identical());
+    }
+
+    private static class BodyTrimmingDifferenceListener implements
+            DifferenceListener {
+
+        public int differenceFound(Difference difference) {
+            if (DifferenceConstants.TEXT_VALUE.getId() == difference.getId()) {
+                String controlNodeValue = difference.getControlNodeDetail()
+                        .getValue();
+                String testNodeValue = difference.getTestNodeDetail()
+                        .getValue();
+                if (controlNodeValue.trim().equals(testNodeValue.trim())) {
+                    return DifferenceListener.RETURN_IGNORE_DIFFERENCE_NODES_SIMILAR;
+                }
+            } else if (DifferenceConstants.HAS_CHILD_NODES.getId() == difference
+                    .getId()) {
+                NodeDetail cNode = difference.getControlNodeDetail();
+                NodeDetail tNode = difference.getTestNodeDetail();
+                NodeList cChildNodes = cNode.getNode().getChildNodes();
+                NodeList tChildNodes = tNode.getNode().getChildNodes();
+
+                NodeList containChildrenNode;
+                if (cChildNodes.getLength() == 0) {
+                    containChildrenNode = tChildNodes;
+                } else {
+                    containChildrenNode = cChildNodes;
+                }
+                for (int i = 0; i < containChildrenNode.getLength(); i++) {
+                    Node item = containChildrenNode.item(i);
+                    if (Node.TEXT_NODE != item.getNodeType()) {
+                        return DifferenceListener.RETURN_ACCEPT_DIFFERENCE;
+                    }
+                    if (!"".equals(item.getNodeValue().trim())) {
+                        return DifferenceListener.RETURN_ACCEPT_DIFFERENCE;
+                    }
+                }
+                return DifferenceListener.RETURN_IGNORE_DIFFERENCE_NODES_SIMILAR;
+            }
+            return DifferenceListener.RETURN_ACCEPT_DIFFERENCE;
+        }
+
+        public void skippedComparison(Node node1, Node node2) {
+            System.out.println("XmlUnitLearningTest.testIgnoreSpace()");
+        }
+    }
+
+    public void testIgnoreSpace1() throws Exception {
+        Diff myDiff = new Diff("<a> 1</a>", "<a> 1 </a>");
+        myDiff.overrideDifferenceListener(new BodyTrimmingDifferenceListener());
+        assertEquals(myDiff.toString(), true, myDiff.similar());
+        assertEquals(myDiff.toString(), false, myDiff.identical());
+    }
+
+    public void testIgnoreSpace2() throws Exception {
+        Diff myDiff = new Diff("<a> </a>", "<a>  </a>");
+        myDiff.overrideDifferenceListener(new BodyTrimmingDifferenceListener());
+        assertEquals(myDiff.toString(), true, myDiff.similar());
+        assertEquals(myDiff.toString(), false, myDiff.identical());
+    }
+
+    public void testIgnoreSpace3() throws Exception {
+        Diff myDiff = new Diff("<a></a>", "<a> </a>");
+        myDiff.overrideDifferenceListener(new BodyTrimmingDifferenceListener());
+        assertEquals(myDiff.toString(), true, myDiff.similar());
+        assertEquals(myDiff.toString(), false, myDiff.identical());
+    }
+
     public void testAllDifferences() throws Exception {
         String myControlXML = "<news><item id=\"1\">War</item>"
                 + "<item id=\"2\">Plague</item><item id=\"3\">Famine</item></news>";
@@ -115,8 +201,10 @@ public class XmlUnitLearningTest extends /* XMLTestCase */TestCase {
     }
 
     public void testCompareToSkeletonXML() throws Exception {
-        String myControlXML = "<location><street-address>22 any street</street-address><postcode>XY00 99Z</postcode></location>";
-        String myTestXML = "<location><street-address>20 east cheap</street-address><postcode>EC3M 1EB</postcode></location>";
+        String myControlXML = "<location><street-address>22 any street</street-address>"
+                + "<postcode>XY00 99Z</postcode></location>";
+        String myTestXML = "<location><street-address>20 east cheap</street-address>"
+                + "<postcode>EC3M 1EB</postcode></location>";
         DifferenceListener myDifferenceListener = new IgnoreTextAndAttributeValuesDifferenceListener();
         Diff myDiff = new Diff(myControlXML, myTestXML);
         myDiff.overrideDifferenceListener(myDifferenceListener);
