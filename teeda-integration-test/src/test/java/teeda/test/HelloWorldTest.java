@@ -15,9 +15,15 @@
  */
 package teeda.test;
 
+import java.io.File;
 import java.net.URL;
 
 import junit.framework.Test;
+
+import org.custommonkey.xmlunit.Diff;
+import org.seasar.framework.util.ResourceUtil;
+import org.seasar.framework.util.TextUtil;
+import org.seasar.teeda.core.unit.xmlunit.TextTrimmingDifferenceListener;
 
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
@@ -51,6 +57,11 @@ public class HelloWorldTest extends AbstractTestCase {
         System.out.println(span);
         assertEquals("Hello World!", span.asText());
         assertEquals("this is helloWorld.jsp", page.getTitleText());
+
+        final String expected = readText("testHelloWorldJa.html");
+        Diff diff = new Diff(expected, body);
+        diff.overrideDifferenceListener(new TextTrimmingDifferenceListener());
+        assertEquals(diff.toString(), true, diff.similar());
     }
 
     public void testHelloWorldJa() throws Exception {
@@ -72,6 +83,17 @@ public class HelloWorldTest extends AbstractTestCase {
         System.out.println(span);
         assertEquals("こんにちは 世界!", span.asText());
         assertEquals("これはhelloWorldJa.jspです", page.getTitleText());
+    }
+
+    private String readText(String s) {
+        return TextUtil.readText(getClass().getName().replace('.', '/') + "_"
+            + s);
+    }
+
+    private File getFileAsUrl(String s) {
+        return ResourceUtil.getResourceAsFile(getClass().getName().replace('.',
+            '/')
+            + "_" + s);
     }
 
 }

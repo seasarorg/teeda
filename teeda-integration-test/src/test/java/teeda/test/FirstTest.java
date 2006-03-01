@@ -15,7 +15,10 @@
  */
 package teeda.test;
 
+import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
+
+import org.apache.xerces.xni.XNIException;
 
 import junit.framework.Test;
 
@@ -38,11 +41,29 @@ public class FirstTest extends AbstractTestCase {
         WebClient webClient = new WebClient();
 
         // ## Act ##
-        HtmlPage page1 = (HtmlPage) webClient.getPage(url);
-        System.out.println(getBody(page1));
+        try {
+            HtmlPage page1 = (HtmlPage) webClient.getPage(url);
+            System.out.println(getBody(page1));
 
-        // ## Assert ##
-        assertEquals("this is a.html", page1.getTitleText());
+            // ## Assert ##
+            assertEquals("this is a.html", page1.getTitleText());
+        } catch (XNIException e) {
+            printXNIException(e);
+            fail();
+        }
+    }
+
+    private void printXNIException(XNIException e) {
+        e.printStackTrace();
+        Exception cause = e.getException();
+        if (cause instanceof InvocationTargetException) {
+            Throwable targetException = ((InvocationTargetException) cause)
+                .getTargetException();
+            targetException.printStackTrace();
+            if (targetException instanceof XNIException) {
+                printXNIException((XNIException) targetException);
+            }
+        }
     }
 
 }
