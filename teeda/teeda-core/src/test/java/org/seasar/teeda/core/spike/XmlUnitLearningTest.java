@@ -29,12 +29,10 @@ import org.custommonkey.xmlunit.CountingNodeTester;
 import org.custommonkey.xmlunit.DetailedDiff;
 import org.custommonkey.xmlunit.Diff;
 import org.custommonkey.xmlunit.Difference;
-import org.custommonkey.xmlunit.DifferenceConstants;
 import org.custommonkey.xmlunit.DifferenceListener;
 import org.custommonkey.xmlunit.ElementNameAndTextQualifier;
 import org.custommonkey.xmlunit.HTMLDocumentBuilder;
 import org.custommonkey.xmlunit.IgnoreTextAndAttributeValuesDifferenceListener;
-import org.custommonkey.xmlunit.NodeDetail;
 import org.custommonkey.xmlunit.NodeTest;
 import org.custommonkey.xmlunit.NodeTestException;
 import org.custommonkey.xmlunit.TolerantSaxDocumentBuilder;
@@ -45,7 +43,6 @@ import org.custommonkey.xmlunit.XMLUnit;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 
 /**
@@ -120,50 +117,6 @@ public class XmlUnitLearningTest extends /* XMLTestCase */TestCase {
         Diff myDiff = new Diff("<a> </a>", "<a>  </a>");
         assertEquals(myDiff.toString(), false, myDiff.similar());
         assertEquals(myDiff.toString(), false, myDiff.identical());
-    }
-
-    private static class TextTrimmingDifferenceListener implements
-            DifferenceListener {
-
-        public int differenceFound(Difference difference) {
-            if (DifferenceConstants.TEXT_VALUE.getId() == difference.getId()) {
-                String controlNodeValue = difference.getControlNodeDetail()
-                        .getValue();
-                String testNodeValue = difference.getTestNodeDetail()
-                        .getValue();
-                if (controlNodeValue.trim().equals(testNodeValue.trim())) {
-                    return DifferenceListener.RETURN_IGNORE_DIFFERENCE_NODES_SIMILAR;
-                }
-            } else if (DifferenceConstants.HAS_CHILD_NODES.getId() == difference
-                    .getId()) {
-                NodeDetail cNode = difference.getControlNodeDetail();
-                NodeDetail tNode = difference.getTestNodeDetail();
-                NodeList cChildNodes = cNode.getNode().getChildNodes();
-                NodeList tChildNodes = tNode.getNode().getChildNodes();
-
-                NodeList containChildrenNode;
-                if (cChildNodes.getLength() == 0) {
-                    containChildrenNode = tChildNodes;
-                } else {
-                    containChildrenNode = cChildNodes;
-                }
-                for (int i = 0; i < containChildrenNode.getLength(); i++) {
-                    Node item = containChildrenNode.item(i);
-                    if (Node.TEXT_NODE != item.getNodeType()) {
-                        return DifferenceListener.RETURN_ACCEPT_DIFFERENCE;
-                    }
-                    if (!"".equals(item.getNodeValue().trim())) {
-                        return DifferenceListener.RETURN_ACCEPT_DIFFERENCE;
-                    }
-                }
-                return DifferenceListener.RETURN_IGNORE_DIFFERENCE_NODES_SIMILAR;
-            }
-            return DifferenceListener.RETURN_ACCEPT_DIFFERENCE;
-        }
-
-        public void skippedComparison(Node node1, Node node2) {
-            System.out.println("XmlUnitLearningTest.testIgnoreSpace()");
-        }
     }
 
     public void testIgnoreSpace1() throws Exception {
