@@ -19,6 +19,7 @@ import java.io.File;
 import java.net.URL;
 
 import junit.framework.Test;
+import junitx.framework.StringAssert;
 
 import org.custommonkey.xmlunit.Diff;
 import org.seasar.framework.util.ResourceUtil;
@@ -32,15 +33,15 @@ import com.gargoylesoftware.htmlunit.html.HtmlSpan;
 /**
  * @author manhole
  */
-public class HelloWorldTest extends AbstractTestCase {
+public class HelloTeedaTest extends AbstractTestCase {
 
     public static Test suite() throws Exception {
-        return setUpTestSuite(HelloWorldTest.class);
+        return setUpTestSuite(HelloTeedaTest.class);
     }
 
     public void testHelloWorld() throws Exception {
         // ## Arrange ##
-        URL url = getUrl("faces/helloWorld.jsp");
+        URL url = getUrl("faces/helloTeeda.jsp");
         System.out.println(url);
 
         WebClient webClient = new WebClient();
@@ -51,14 +52,14 @@ public class HelloWorldTest extends AbstractTestCase {
         // ## Assert ##
         final String body = getBody(page).trim();
         System.out.println(body);
-        assertEquals(true, -1 < body.indexOf("Hello World!"));
+        StringAssert.assertContains("Hello Teeda!", body);
 
         HtmlSpan span = (HtmlSpan) page.getHtmlElementById("hello");
         System.out.println(span);
-        assertEquals("Hello World!", span.asText());
-        assertEquals("this is helloWorld.jsp", page.getTitleText());
+        assertEquals("Hello Teeda!", span.asText());
+        assertEquals("this is helloTeeda.jsp", page.getTitleText());
 
-        final String expected = readText("testHelloWorldJa.html");
+        final String expected = readText("testHelloTeedaJa.html");
         Diff diff = new Diff(expected, body);
         diff.overrideDifferenceListener(new TextTrimmingDifferenceListener());
         assertEquals(diff.toString(), true, diff.similar());
@@ -66,7 +67,7 @@ public class HelloWorldTest extends AbstractTestCase {
 
     public void testHelloWorldJa() throws Exception {
         // ## Arrange ##
-        URL url = getUrl("faces/helloWorldJa.jsp");
+        URL url = getUrl("faces/helloTeedaJa.jsp");
         System.out.println(url);
 
         WebClient webClient = new WebClient();
@@ -77,12 +78,12 @@ public class HelloWorldTest extends AbstractTestCase {
         // ## Assert ##
         final String body = getBody(page).trim();
         System.out.println(body);
-        assertEquals(true, -1 < body.indexOf("こんにちは 世界!"));
+        StringAssert.assertContains("こんにちは、てぃーだ!", body);
 
         HtmlSpan span = (HtmlSpan) page.getHtmlElementById("hello");
         System.out.println(span);
-        assertEquals("こんにちは 世界!", span.asText());
-        assertEquals("これはhelloWorldJa.jspです", page.getTitleText());
+        assertEquals("こんにちは、てぃーだ!", span.asText());
+        assertEquals("これはhelloTeedaJa.jspです", page.getTitleText());
     }
 
     private String readText(String s) {
