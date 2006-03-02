@@ -15,8 +15,6 @@
  */
 package org.seasar.teeda.core.render.html;
 
-import javax.faces.component.html.HtmlForm;
-import javax.faces.context.FacesContext;
 import javax.faces.render.Renderer;
 import javax.faces.render.RendererTest;
 
@@ -166,46 +164,6 @@ public class HtmlFormRendererTest extends RendererTest {
 
     protected Renderer createRenderer() {
         return new HtmlFormRenderer();
-    }
-
-    private static class MockHtmlForm extends HtmlForm {
-        private Renderer renderer_;
-
-        private String clientId_;
-
-        private int setSubmittedCalls_;
-
-        public void setRenderer(Renderer renderer) {
-            renderer_ = renderer;
-        }
-
-        protected Renderer getRenderer(FacesContext context) {
-            if (renderer_ != null) {
-                return renderer_;
-            }
-            return super.getRenderer(context);
-        }
-
-        public String getClientId(FacesContext context) {
-            if (clientId_ != null) {
-                return clientId_;
-            }
-            return super.getClientId(context);
-        }
-
-        public void setClientId(String clientId) {
-            clientId_ = clientId;
-        }
-
-        public void setSubmitted(boolean submitted) {
-            setSubmittedCalls_++;
-            super.setSubmitted(submitted);
-        }
-
-        public int getSetSubmittedCalls() {
-            return setSubmittedCalls_;
-        }
-
     }
 
 }

@@ -102,7 +102,7 @@ public class HtmlResponseWriter extends ResponseWriter {
         writer.write(" ");
         writer.write(name);
         writer.write("=\"");
-        writer.write(escapeHtml(value.toString()));
+        writer.write(escapeAttribute(value.toString()));
         writer.write("\"");
     }
 
@@ -143,7 +143,7 @@ public class HtmlResponseWriter extends ResponseWriter {
         }
         Writer writer = getWriter();
         closeStartTagIfOpening(writer);
-        writer.write(escapeHtml(text.toString()));
+        writer.write(htmlSpecialChars(text.toString()));
     }
 
     public void writeText(char text[], int off, int len) throws IOException {
@@ -153,33 +153,35 @@ public class HtmlResponseWriter extends ResponseWriter {
         writeText(new String(text, off, len), null);
     }
 
-    protected String escapeHtml(String s) {
+    protected String htmlSpecialChars(String s) {
+        return htmlSpecialChars(s, true);
+    }
+
+    private String htmlSpecialChars(String s, boolean quote) {
         char[] chars = s.toCharArray();
         StringBuffer sb = new StringBuffer();
         for (int i = 0; i < chars.length; i++) {
             char c = chars[i];
-            switch (c) {
-            case '<':
+            if (c == '<') {
                 sb.append("&lt;");
-                break;
-            case '>':
+            } else if (c == '>') {
                 sb.append("&gt;");
-                break;
-            case '&':
+            } else if (c == '&') {
                 sb.append("&amp;");
-                break;
-            case '"':
+            } else if (c == '"') {
                 sb.append("&quot;");
-                break;
-            case '\'':
+            } else if (quote && c == '\'') {
                 sb.append("&#39;");
                 break;
-            default:
+            } else {
                 sb.append(c);
-                break;
             }
         }
         return new String(sb);
+    }
+
+    protected String escapeAttribute(String s) {
+        return htmlSpecialChars(s, false);
     }
 
     public ResponseWriter cloneWithWriter(Writer writer) {

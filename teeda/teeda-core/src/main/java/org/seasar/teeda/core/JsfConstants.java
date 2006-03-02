@@ -144,7 +144,7 @@ public interface JsfConstants {
     public String ACCEPT_CHARSET_ATTR = "accept-charset";
 
     public String ACCESSKEY_ATTR = "accesskey";
-    
+
     public String ALIGN_ATTR = "align";
 
     public String ALT_ATTR = "alt";
@@ -170,9 +170,9 @@ public interface JsfConstants {
     public String COLSPAN_ATTR = "colspan";
 
     public String COLUMN_CLASSES_ATTR = "columnClasses";
-    
+
     public String COLUMNS_ATTR = "columns";
-    
+
     public String CONVERTER_ATTR = "converter";
 
     public String COORDS_ATTR = "coords";
@@ -180,9 +180,9 @@ public interface JsfConstants {
     public String DATAFLD_ATTR = "datafld";
 
     public String DATASRC_ATTR = "datasrc";
-    
+
     public String DATAFORMATAS_ATTR = "dataformatas";
-    
+
     public String DATE_STYLE_ATTR = "dateStyle";
 
     public String DIR_ATTR = "dir";
@@ -198,21 +198,21 @@ public interface JsfConstants {
     public String ERROR_CLASS_ATTR = "errorClass";
 
     public String ERROR_STYLE_ATTR = "errorStyle";
-    
+
     public String ESCAPE_ATTR = "escape";
 
     public String FATAL_CLASS_ATTR = "fatalClass";
 
     public String FATAL_STYLE_ATTR = "fatalStyle";
-    
+
     public String FIRST_ATTR = "first";
 
     public String FOOTER_CLASS_ATTR = "footerClass";
 
     public String FOR_ATTR = "for";
-    
+
     public String FORMAT_PATTERN_ATTR = "formatPattern";
-    
+
     public String GLOBAL_ONLY_ATTR = "globalOnly";
 
     public String FRAME_ATTR = "frame";
@@ -230,7 +230,7 @@ public interface JsfConstants {
     public String ID_ATTR = "id";
 
     public String IMAGE_ATTR = "image";
-    
+
     public String IMMEDIATE_ATTR = "immediate";
 
     public String INFO_CLASS_ATTR = "infoClass";
@@ -245,7 +245,7 @@ public interface JsfConstants {
 
     public String ITEM_VALUE_ATTR = "itemValue";
 
-    public String ITEM_LABEL_ATTR = "itemLabel";    
+    public String ITEM_LABEL_ATTR = "itemLabel";
 
     public String LABEL_ATTR = "label";
 
@@ -298,11 +298,11 @@ public interface JsfConstants {
     public String PAGE_DIRECTION_ATTR = "pageDirection";
 
     public String READONLY_ATTR = "readonly";
-    
+
     public String REDISPLAY_ATTR = "redisplay";
 
     public String REL_ATTR = "rel";
-    
+
     public String REQUIRED_ATTR = "required";
 
     public String REV_ATTR = "rev";
@@ -338,21 +338,21 @@ public interface JsfConstants {
     public String TARGET_ATTR = "target";
 
     public String TITLE_ATTR = "title";
-    
+
     public String TIME_STYLE_ATTR = "timeStyle";
-    
+
     public String TIMEZONE_ATTR = "timezone";
 
     public String TOOLTIP_ATTR = "tooltip";
 
     public String TYPE_ATTR = "type";
-    
+
     public String URL_ATTR = "url";
 
     public String USEMAP_ATTR = "usemap";
-    
+
     public String VALUE_ATTR = "value";
-    
+
     public String VAR_ATTR = "var";
 
     public String VSPACE_ATTR = "vspace";
@@ -382,23 +382,29 @@ public interface JsfConstants {
     public String[] COMMON_PASSTROUGH_ATTRIBUTES = (String[]) ArrayUtil.add(
             EVENT_HANDLER_ATTRIBUTES, UNIVERSAL_ATTRIBUTES);
 
+    public String[] COMMON_PASSTROUGH_ATTRIBUTES_WITHOUT_STYLE = (String[]) ArrayUtil
+            .add(EVENT_HANDLER_ATTRIBUTES, UNIVERSAL_ATTRIBUTES_WITHOUT_STYLE);
+
     public String[] ANCHOR_ATTRIBUTES = { ACCESSKEY_ATTR, CHARSET_ATTR,
             COORDS_ATTR, HREFLANG_ATTR, REL_ATTR, REV_ATTR, SHAPE_ATTR,
             TABINDEX_ATTR, TARGET_ATTR, TYPE_ATTR };
 
-    public String[] ANCHOR_PASSTHROUGH_ATTRIBUTES = (String[]) ArrayUtil.add(
-            ANCHOR_ATTRIBUTES, COMMON_PASSTROUGH_ATTRIBUTES);
+    public String[] ONBLUR_AND_ONFOCUS_ATTRIBUTES = { ONBLUR_ATTR, ONFOCUS_ATTR };
 
-    public String[] COMMON_PASSTROUGH_ATTRIBUTES_WITHOUT_STYLE = (String[]) ArrayUtil
-            .add(EVENT_HANDLER_ATTRIBUTES, UNIVERSAL_ATTRIBUTES_WITHOUT_STYLE);
+    public String[] ANCHOR_PASSTHROUGH_ATTRIBUTES = (String[]) ArrayUtil.add(
+            ArrayUtil.add(ANCHOR_ATTRIBUTES, COMMON_PASSTROUGH_ATTRIBUTES),
+            ONBLUR_AND_ONFOCUS_ATTRIBUTES);
 
     public String[] ANCHOR_PASSTHROUGH_ATTRIBUTES_WITHOUT_STYLE = (String[]) ArrayUtil
             .add(ANCHOR_ATTRIBUTES, COMMON_PASSTROUGH_ATTRIBUTES_WITHOUT_STYLE);
 
-    public String[] ONBLUR_AND_ONFOCUS_ATTRIBUTES = { ONBLUR_ATTR, ONFOCUS_ATTR };
+    public String[] COMMON_PASSTROUGH_ATTRIBUTES_WITHOUT_ONCLICK = (String[]) ArrayUtil
+            .add(EVENT_HANDLER_ATTRIBUTES_WITHOUT_ONCLICK, UNIVERSAL_ATTRIBUTES);
 
-    public String[] ANCHOR_PASSTHROUGH_AND_ONBLUR_AND_ONFOCUS_ATTRIBUTES = (String[]) ArrayUtil
-            .add(ANCHOR_PASSTHROUGH_ATTRIBUTES, ONBLUR_AND_ONFOCUS_ATTRIBUTES);
+    public String[] ANCHOR_PASSTHROUGH_ATTRIBUTES_WITHOUT_ONCLICK = (String[]) ArrayUtil
+            .add(ArrayUtil.add(ANCHOR_ATTRIBUTES,
+                    COMMON_PASSTROUGH_ATTRIBUTES_WITHOUT_ONCLICK),
+                    ONBLUR_AND_ONFOCUS_ATTRIBUTES);
 
     public String[] COMMON_FIELD_EVENT_ATTRIBUTES = { ONFOCUS_ATTR,
             ONBLUR_ATTR, ONSELECT_ATTR, ONCHANGE_ATTR };
@@ -525,9 +531,9 @@ public interface JsfConstants {
     public String DEFAULT_CONVERTDATETIME_TIME_STYLE = "default";
 
     public String DEFAULT_CONVERTDATETIME_TYPE = "default";
-    
+
     public String DEFAULT_CONVERTNUMBER_GROUPING_USED = "true";
-    
+
     public String DEFAULT_CONVERTNUMBER_INTEGER_ONLY = "false";
 
     public String DEFAULT_CONVERTNUMBER_TYPE = "number";

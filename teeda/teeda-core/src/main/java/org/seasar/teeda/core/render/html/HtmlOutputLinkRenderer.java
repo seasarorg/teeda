@@ -74,7 +74,7 @@ public class HtmlOutputLinkRenderer extends AbstractHtmlRenderer {
                 .renderAttributes(
                         writer,
                         htmlOutputLink,
-                        JsfConstants.ANCHOR_PASSTHROUGH_AND_ONBLUR_AND_ONFOCUS_ATTRIBUTES);
+                        JsfConstants.ANCHOR_PASSTHROUGH_ATTRIBUTES);
     }
 
     public void encodeEnd(FacesContext context, UIComponent component)

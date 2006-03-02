@@ -484,7 +484,7 @@ public class HtmlResponseWriterTest extends TestCase {
                 .getCharacterEncoding());
     }
 
-    public void testWriteAttribute() throws Exception {
+    public void testWriteAttribute1() throws Exception {
         HtmlResponseWriter responseWriter = new HtmlResponseWriter();
         SPrintWriter writer = new SPrintWriter();
         responseWriter.setWriter(writer);
@@ -494,6 +494,18 @@ public class HtmlResponseWriterTest extends TestCase {
 
         String value = writer.toString();
         assertEquals("<span a=\"&lt;b&gt;\"", value);
+    }
+
+    public void testWriteAttribute2() throws Exception {
+        HtmlResponseWriter responseWriter = new HtmlResponseWriter();
+        SPrintWriter writer = new SPrintWriter();
+        responseWriter.setWriter(writer);
+
+        responseWriter.startElement("span", null);
+        responseWriter.writeAttribute("a", "b.c['d'] = 'e';", null);
+
+        String value = writer.toString();
+        assertEquals("<span a=\"b.c['d'] = 'e';\"", value);
     }
 
     public void testWriteAttribute_NameIsNull() throws Exception {

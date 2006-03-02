@@ -192,7 +192,6 @@ public class HtmlCommandButtonRendererTest extends RendererTest {
         MockHtmlCommandButton htmlCommandButton = new MockHtmlCommandButton() {
             public void queueEvent(FacesEvent event) {
                 args[0] = event;
-                super.queueEvent(event);
             }
         };
         htmlCommandButton.setRenderer(renderer_);
@@ -207,13 +206,12 @@ public class HtmlCommandButtonRendererTest extends RendererTest {
         assertEquals(null, args[0]);
     }
 
-    public void testDecode_NoneReset() throws Exception {
+    public void testDecode_None_ResetType() throws Exception {
         // ## Arrange ##
         final FacesEvent[] args = { null };
         MockHtmlCommandButton htmlCommandButton = new MockHtmlCommandButton() {
             public void queueEvent(FacesEvent event) {
                 args[0] = event;
-                super.queueEvent(event);
             }
         };
         htmlCommandButton.setRenderer(renderer_);
