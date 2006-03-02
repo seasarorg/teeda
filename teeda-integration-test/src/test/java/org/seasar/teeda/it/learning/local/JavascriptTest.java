@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.seasar.teeda.it.AbstractTestCase;
 import org.seasar.teeda.it.MyWebClient;
 
 import com.gargoylesoftware.htmlunit.CollectingAlertHandler;
@@ -13,7 +14,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlAnchor;
 import com.gargoylesoftware.htmlunit.html.HtmlInput;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 
-public class JavascriptTest extends AbstractLocalTestCase {
+public class JavascriptTest extends AbstractTestCase {
 
     public void testOnloadAlert() throws Exception {
         // ## Arrange ##

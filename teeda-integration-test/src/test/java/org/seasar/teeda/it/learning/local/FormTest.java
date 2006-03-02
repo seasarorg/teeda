@@ -2,12 +2,14 @@ package org.seasar.teeda.it.learning.local;
 
 import java.net.URL;
 
+import org.seasar.teeda.it.AbstractTestCase;
+
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlForm;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.gargoylesoftware.htmlunit.html.HtmlSubmitInput;
 
-public class FormTest extends AbstractLocalTestCase {
+public class FormTest extends AbstractTestCase {
 
     public void testFormSubmit() throws Exception {
         // ## Arrange ##

@@ -16,18 +16,23 @@
 package org.seasar.teeda.it;
 
 import java.io.File;
+import java.io.InputStream;
+import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import org.seasar.framework.util.InputStreamReaderUtil;
+import org.seasar.framework.util.ReaderUtil;
+import org.seasar.framework.util.ResourceNotFoundRuntimeException;
+import org.seasar.framework.util.ResourceUtil;
 import org.seasar.teeda.core.unit.JettyServerSetup;
 import org.seasar.teeda.core.unit.WebApplicationTestSetup;
 import org.seasar.teeda.core.util.MavenUtil;
 import org.seasar.teeda.core.util.SocketUtil;
-
-
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 
 import com.gargoylesoftware.htmlunit.WebResponse;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
@@ -37,8 +42,9 @@ import com.gargoylesoftware.htmlunit.html.HtmlPage;
  */
 public abstract class AbstractTestCase extends TestCase {
 
+    private static int port_ = 8080;
+
     private String baseUrl_ = "http://localhost:" + port_ + "/";
-    private static int port_;
 
     protected static WebApplicationTestSetup setUpTestSuite(
         final Class testClass) {
@@ -70,4 +76,23 @@ public abstract class AbstractTestCase extends TestCase {
         return body;
     }
 
+    protected String readText(String s) {
+        String path = getClass().getName().replace('.', '/') + "_" + s;
+        InputStream is = ResourceUtil.getResourceAsStream(path);
+        Reader reader = InputStreamReaderUtil.create(is, "UTF-8");
+        return ReaderUtil.readText(reader);
+    }
+
+    protected URL getFileAsUrl(String s) {
+        String fileNameByClass = getClass().getName().replace('.', '/') + "_"
+            + s;
+        try {
+            return ResourceUtil.getResource(fileNameByClass);
+        } catch (ResourceNotFoundRuntimeException e) {
+            String fileNameByPackage = getClass().getPackage().getName()
+                .replace('.', '/')
+                + "/" + s;
+            return ResourceUtil.getResource(fileNameByPackage);
+        }
+    }
 }
