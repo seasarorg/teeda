@@ -40,6 +40,7 @@ import org.custommonkey.xmlunit.Transform;
 import org.custommonkey.xmlunit.Validator;
 import org.custommonkey.xmlunit.XMLAssert;
 import org.custommonkey.xmlunit.XMLUnit;
+import org.seasar.teeda.core.unit.xmlunit.TextTrimmingDifferenceListener;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;

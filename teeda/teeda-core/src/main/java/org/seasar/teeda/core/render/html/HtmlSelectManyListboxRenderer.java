@@ -125,6 +125,7 @@ public class HtmlSelectManyListboxRenderer extends AbstractHtmlRenderer {
                 writer.startElement(JsfConstants.OPTGROUP_ELEM, component);
                 RendererUtil.renderAttribute(writer, JsfConstants.LABEL_ATTR,
                         selectItemGroup.getLabel());
+                // TODO case: optgroup is disabled
                 renderSelectItems(context, component, writer, selectItemsIt,
                         values);
                 writer.endElement(JsfConstants.OPTGROUP_ELEM);
