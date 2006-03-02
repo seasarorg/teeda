@@ -48,11 +48,11 @@
 	<component class="org.seasar.teeda.core.el.impl.commons.CommonsExpressionProcessorImpl" />
 	
 	<component name="valueBindingContext" class="org.seasar.teeda.core.el.impl.ValueBindingContextImpl">
-		<property name="valueBindingName">"org.seasar.teeda.core.el.ValueBindingImpl"</property>
+		<property name="valueBindingName">"org.seasar.teeda.core.el.impl.ValueBindingImpl"</property>
 	</component>
 
 	<component name="methodBindingContext" class="org.seasar.teeda.core.el.impl.MethodBindingContextImpl">
-		<property name="methodBindingName">"org.seasar.teeda.core.el.MethodBindingImpl"</property>
+		<property name="methodBindingName">"org.seasar.teeda.core.el.impl.MethodBindingImpl"</property>
 		<initMethod name="setValueBindingContext">
 			<arg>valueBindingContext</arg>
 		</initMethod>
@@ -74,6 +74,11 @@
 
 	<component class="org.seasar.teeda.core.application.impl.TreeStructureManagerImpl" />
 
+	<component class="org.seasar.teeda.core.render.html.HtmlRenderKitImpl" />
+	
+	<component class="org.seasar.teeda.core.render.html.HtmlResponseStateManager" />
+	
+	<component class="org.seasar.teeda.core.context.html.HtmlResponseWriter" />
 	
 	<!-- ManagedBean -->	
 	<component class="org.seasar.teeda.core.managedbean.impl.ManagedBeanFactoryImpl" />
