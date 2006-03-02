@@ -15,6 +15,7 @@
  */
 package org.seasar.teeda.core.render.html;
 
+import javax.faces.component.UIParameter;
 import javax.faces.render.AbstractRendererTest;
 
 import org.seasar.teeda.core.mock.MockFacesContext;
@@ -74,6 +75,59 @@ public class HtmlFormAndCommandLinkRendererTest extends AbstractRendererTest {
                         + "\"></a>"
                         + "<input type=\"hidden\" name=\"fooForm\" value=\"fooForm\" />"
                         + "<input type=\"hidden\" name=\"fooForm:__link_clicked__\" />"
+                        + "</form>", getResponseText());
+    }
+
+    public void testWithUIParameters() throws Exception {
+        // ## Arrange ##
+        MockHtmlCommandLink htmlCommandLink = new MockHtmlCommandLink();
+        htmlCommandLink.setRenderer(commandLinkRenderer_);
+        htmlCommandLink.setId("fooLink");
+
+        htmlForm_.setId("fooForm");
+        htmlForm_.getChildren().add(htmlCommandLink);
+        {
+            UIParameter param = new UIParameter();
+            param.setName("x");
+            param.setValue("1");
+            htmlCommandLink.getChildren().add(param);
+        }
+        {
+            UIParameter param = new UIParameter();
+            param.setName("y");
+            param.setValue("2");
+            htmlCommandLink.getChildren().add(param);
+        }
+
+        MockFacesContext context = getFacesContext();
+
+        // <input type="hidden" name="fooForm:__link_clicked__" />
+
+        // ## Act ##
+        formRenderer_.encodeBegin(context, htmlForm_);
+        formRenderer_.encodeChildren(context, htmlForm_);
+        formRenderer_.encodeEnd(context, htmlForm_);
+
+        // ## Assert ##
+        assertEquals(
+                "<form id=\"fooForm\" name=\"fooForm\" method=\"post\""
+                        + " enctype=\"application/x-www-form-urlencoded\">"
+                        + "<a"
+                        + " id=\"fooLink\""
+                        + " href=\"#\""
+                        + " onclick=\""
+                        + "var f = document.forms['fooForm'];"
+                        + " f['fooForm:__link_clicked__'].value = 'fooForm:fooLink';"
+                        + " f['x'].value = '1';"
+                        + " f['y'].value = '2';"
+                        + " if (f.onsubmit) { f.onsubmit(); }"
+                        + " f.submit();"
+                        + " return false;"
+                        + "\"></a>"
+                        + "<input type=\"hidden\" name=\"fooForm\" value=\"fooForm\" />"
+                        + "<input type=\"hidden\" name=\"fooForm:__link_clicked__\" />"
+                        + "<input type=\"hidden\" name=\"x\" />"
+                        + "<input type=\"hidden\" name=\"y\" />"
                         + "</form>", getResponseText());
     }
 

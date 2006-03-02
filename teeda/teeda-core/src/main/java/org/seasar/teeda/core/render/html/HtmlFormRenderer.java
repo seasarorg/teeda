@@ -16,8 +16,8 @@
 package org.seasar.teeda.core.render.html;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -110,7 +110,7 @@ public class HtmlFormRenderer extends AbstractHtmlRenderer {
         Map attributes = form.getAttributes();
         Map map = (Map) attributes.get(HIDDEN_PARAMETER_KEY);
         if (map == null) {
-            map = new HashMap();
+            map = new LinkedHashMap();
             attributes.put(HIDDEN_PARAMETER_KEY, map);
         }
         return map;

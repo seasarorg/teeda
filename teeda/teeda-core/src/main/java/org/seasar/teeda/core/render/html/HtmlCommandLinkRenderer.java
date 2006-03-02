@@ -73,6 +73,8 @@ public class HtmlCommandLinkRenderer extends AbstractHtmlRenderer {
         sb.append(commandLink.getClientId(context));
         sb.append("';");
 
+        HtmlFormRenderer.setHiddenParameter(parentForm, hiddenFieldName, null);
+
         for (Iterator it = commandLink.getChildren().iterator(); it.hasNext();) {
             UIComponent child = (UIComponent) it.next();
             if (child instanceof UIParameter) {
@@ -80,6 +82,7 @@ public class HtmlCommandLinkRenderer extends AbstractHtmlRenderer {
                 String name = p.getName();
                 Object value = p.getValue();
                 sb.append(" f['" + name + "'].value = '" + value + "';");
+                HtmlFormRenderer.setHiddenParameter(parentForm, name, null);
             }
         }
 
@@ -97,8 +100,6 @@ public class HtmlCommandLinkRenderer extends AbstractHtmlRenderer {
         if (value != null) {
             writer.writeText(value.toString(), JsfConstants.VALUE_ATTR);
         }
-
-        HtmlFormRenderer.setHiddenParameter(parentForm, hiddenFieldName, null);
     }
 
     private String getHiddenFieldName(final String formId) {
