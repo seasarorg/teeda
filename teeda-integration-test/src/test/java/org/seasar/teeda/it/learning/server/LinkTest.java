@@ -1,7 +1,8 @@
-package teeda.test.learning.server;
+package org.seasar.teeda.it.learning.server;
+
+import org.seasar.teeda.it.AbstractTestCase;
 
 import junit.framework.Test;
-import teeda.test.AbstractTestCase;
 
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlAnchor;

@@ -1,4 +1,4 @@
-package teeda.test.learning.local;
+package org.seasar.teeda.it.learning.local;
 
 import java.net.URL;
 import java.util.Iterator;

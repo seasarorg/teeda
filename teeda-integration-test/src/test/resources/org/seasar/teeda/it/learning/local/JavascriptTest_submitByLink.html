@@ -1,0 +1,29 @@
+<html>
+<head>
+<title>link submit sample</title>
+</head>
+<body>
+
+<form id="fooForm" name="foo" action="./end.html" method="post" onsubmit="alert('abc')">
+	<a href="#" id="link1" name="fooForm:link1" 
+		onclick="submitFormByLink('fooForm', 'fooForm:link1');">aaa</a>
+	<input type="hidden" name="fooForm:__link_clicked__" />
+</form>
+<script>
+<!--
+// linkのidとhiddenのvalueは同じにする
+
+function submitFormByLink(formId, linkId) {
+	var formObj = document.forms[formId];
+	formObj[formId + ':__link_clicked__'].value = linkId;
+	if (formObj.onsubmit) {
+		formObj.onsubmit();
+	}
+	formObj.submit();
+	return false;
+}
+//-->
+</script>
+
+</body>
+</html>

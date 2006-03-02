@@ -1,27 +1,19 @@
-package teeda.test.learning.local;
+package org.seasar.teeda.it.learning.local;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
-import junit.framework.TestCase;
-
-import org.seasar.framework.util.ResourceUtil;
+import org.seasar.teeda.it.MyWebClient;
 
 import com.gargoylesoftware.htmlunit.CollectingAlertHandler;
-import com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException;
 import com.gargoylesoftware.htmlunit.KeyValuePair;
-import com.gargoylesoftware.htmlunit.Page;
 import com.gargoylesoftware.htmlunit.WebClient;
-import com.gargoylesoftware.htmlunit.WebRequestSettings;
-import com.gargoylesoftware.htmlunit.WebWindow;
 import com.gargoylesoftware.htmlunit.html.HtmlAnchor;
 import com.gargoylesoftware.htmlunit.html.HtmlInput;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 
-public class JavascriptTest extends TestCase {
+public class JavascriptTest extends AbstractLocalTestCase {
 
     public void testOnloadAlert() throws Exception {
         // ## Arrange ##
@@ -79,33 +71,7 @@ public class JavascriptTest extends TestCase {
 
         // ## Assert ##
         assertEquals("end", page2.getTitleText());
-        assertEquals(getFileAsUrlByPackageName("end.html"), page2
-            .getWebResponse().getUrl());
-    }
-
-    private static class MyWebClient extends WebClient {
-        private WebRequestSettings webRequestSettings_;
-
-        public Page getPage(WebWindow webWindow, WebRequestSettings parameters)
-            throws IOException, FailingHttpStatusCodeException {
-            webRequestSettings_ = parameters;
-            return super.getPage(webWindow, parameters);
-        }
-
-        public WebRequestSettings getWebRequestSettings() {
-            return webRequestSettings_;
-        }
-
-        public KeyValuePair getRequestParameter(String key) {
-            for (Iterator it = webRequestSettings_.getRequestParameters()
-                .iterator(); it.hasNext();) {
-                KeyValuePair pair = (KeyValuePair) it.next();
-                if (key.equals(pair.getKey())) {
-                    return pair;
-                }
-            }
-            return null;
-        }
+        assertEquals(getFileAsUrl("end.html"), page2.getWebResponse().getUrl());
     }
 
     public void testSubmitByLink() throws Exception {
@@ -127,8 +93,7 @@ public class JavascriptTest extends TestCase {
         // ## Assert ##
         assertEquals(1, collectedAlerts.size());
         assertEquals("end", page2.getTitleText());
-        assertEquals(getFileAsUrlByPackageName("end.html"), page2
-            .getWebResponse().getUrl());
+        assertEquals(getFileAsUrl("end.html"), page2.getWebResponse().getUrl());
 
         KeyValuePair linkMarker = webClient
             .getRequestParameter("fooForm:__link_clicked__");
@@ -136,15 +101,31 @@ public class JavascriptTest extends TestCase {
         assertEquals("fooForm:link1", linkMarker.getValue());
     }
 
-    private URL getFileAsUrl(String s) {
-        return ResourceUtil.getResource(getClass().getName().replace('.', '/')
-            + "_" + s);
-    }
+    public void testSubmitByLink2() throws Exception {
+        // ## Arrange ##
+        URL url = getFileAsUrl("submitByLink2.html");
+        System.out.println(url);
 
-    private URL getFileAsUrlByPackageName(String s) {
-        return ResourceUtil.getResource(getClass().getPackage().getName()
-            .replace('.', '/')
-            + "/" + s);
+        MyWebClient webClient = new MyWebClient();
+        List collectedAlerts = new ArrayList();
+        webClient.setAlertHandler(new CollectingAlertHandler(collectedAlerts));
+
+        // ## Act ##
+        HtmlPage page = (HtmlPage) webClient.getPage(url);
+        HtmlAnchor link = (HtmlAnchor) page.getHtmlElementById("link1");
+
+        assertEquals(0, collectedAlerts.size());
+        HtmlPage page2 = (HtmlPage) link.click();
+
+        // ## Assert ##
+        assertEquals(1, collectedAlerts.size());
+        assertEquals("end", page2.getTitleText());
+        assertEquals(getFileAsUrl("end.html"), page2.getWebResponse().getUrl());
+
+        KeyValuePair linkMarker = webClient
+            .getRequestParameter("fooForm:__link_clicked__");
+        assertNotNull(linkMarker);
+        assertEquals("fooForm:link1", linkMarker.getValue());
     }
 
 }
