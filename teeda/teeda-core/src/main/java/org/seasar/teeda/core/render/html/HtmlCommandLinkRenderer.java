@@ -67,7 +67,8 @@ public class HtmlCommandLinkRenderer extends AbstractHtmlRenderer {
         sb.append("'];");
 
         sb.append(" f['");
-        sb.append(getHiddenFieldName(formId));
+        final String hiddenFieldName = getHiddenFieldName(formId);
+        sb.append(hiddenFieldName);
         sb.append("'].value = '");
         sb.append(commandLink.getClientId(context));
         sb.append("';");
@@ -96,6 +97,8 @@ public class HtmlCommandLinkRenderer extends AbstractHtmlRenderer {
         if (value != null) {
             writer.writeText(value.toString(), JsfConstants.VALUE_ATTR);
         }
+
+        HtmlFormRenderer.setHiddenParameter(parentForm, hiddenFieldName, null);
     }
 
     private String getHiddenFieldName(final String formId) {

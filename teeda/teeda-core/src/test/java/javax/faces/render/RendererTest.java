@@ -15,16 +15,6 @@
  */
 package javax.faces.render;
 
-import java.io.IOException;
-
-import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
-
-import junit.framework.TestCase;
-
-import org.seasar.teeda.core.context.html.HtmlResponseWriter;
-import org.seasar.teeda.core.mock.MockFacesContext;
-import org.seasar.teeda.core.mock.MockFacesContextImpl;
 import org.seasar.teeda.core.mock.NullFacesContext;
 import org.seasar.teeda.core.mock.NullRenderer;
 import org.seasar.teeda.core.mock.NullUIComponent;
@@ -33,7 +23,7 @@ import org.seasar.teeda.core.unit.ExceptionAssert;
 /**
  * @author manhole
  */
-public class RendererTest extends TestCase {
+public class RendererTest extends AbstractRendererTest {
 
     public final void testConvertClientId_FacesContextIsNull() throws Exception {
         Renderer renderer = createRenderer();
@@ -159,39 +149,8 @@ public class RendererTest extends TestCase {
         }
     }
 
-    private MockFacesContext mockFacesContext_;
-
-    protected void setUp() throws Exception {
-        super.setUp();
-        mockFacesContext_ = new MockFacesContextImpl();
-    }
-
-    protected void tearDown() throws Exception {
-        mockFacesContext_.release();
-        super.tearDown();
-    }
-
-    protected MockFacesContext getFacesContext() {
-        return mockFacesContext_;
-    }
-
-    protected String getResponseText() throws IOException {
-        HtmlResponseWriter htmlResponseWriter = ((HtmlResponseWriter) mockFacesContext_
-                .getResponseWriter());
-        return htmlResponseWriter.getWriter().toString();
-    }
-
     protected Renderer createRenderer() {
         return new NullRenderer();
-    }
-
-    protected void encodeByRenderer(Renderer renderer, FacesContext context,
-            UIComponent component) throws IOException {
-        renderer.encodeBegin(context, component);
-        if (renderer.getRendersChildren()) {
-            renderer.encodeChildren(context, component);
-        }
-        renderer.encodeEnd(context, component);
     }
 
 }

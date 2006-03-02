@@ -16,8 +16,6 @@
 package org.seasar.teeda.core.render.html;
 
 import javax.faces.component.UIParameter;
-import javax.faces.component.html.HtmlCommandLink;
-import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.FacesEvent;
 import javax.faces.render.Renderer;
@@ -385,35 +383,6 @@ public class HtmlCommandLinkRendererTest extends RendererTest {
 
     protected Renderer createRenderer() {
         return new HtmlCommandLinkRenderer();
-    }
-
-    private static class MockHtmlCommandLink extends HtmlCommandLink {
-        private Renderer renderer_;
-
-        private String clientId_;
-
-        public void setRenderer(Renderer renderer) {
-            renderer_ = renderer;
-        }
-
-        protected Renderer getRenderer(FacesContext context) {
-            if (renderer_ != null) {
-                return renderer_;
-            }
-            return super.getRenderer(context);
-        }
-
-        public String getClientId(FacesContext context) {
-            if (clientId_ != null) {
-                return clientId_;
-            }
-            return super.getClientId(context);
-        }
-
-        public void setClientId(String clientId) {
-            clientId_ = clientId;
-        }
-
     }
 
 }

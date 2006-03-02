@@ -16,9 +16,13 @@
 package org.seasar.teeda.core.render.html;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.faces.component.UIComponent;
+import javax.faces.component.UIForm;
 import javax.faces.component.html.HtmlForm;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
@@ -30,6 +34,10 @@ import org.seasar.teeda.core.util.RendererUtil;
  * @author manhole
  */
 public class HtmlFormRenderer extends AbstractHtmlRenderer {
+
+    private static final String HIDDEN_PARAMETER_KEY = HtmlFormRenderer.class
+            .getName()
+            + ".HIDDEN_PARAMETER_KEY";
 
     public void encodeBegin(FacesContext context, UIComponent component)
             throws IOException {
@@ -66,19 +74,55 @@ public class HtmlFormRenderer extends AbstractHtmlRenderer {
     protected void encodeHtmlFormEnd(FacesContext context, HtmlForm htmlForm)
             throws IOException {
         ResponseWriter writer = context.getResponseWriter();
-        encodeFormSubmitMarker(context, htmlForm, writer);
+        renderFormSubmitMarker(context, htmlForm, writer);
+        renderForCommandLink(context, htmlForm, writer);
         writer.endElement(JsfConstants.FORM_ELEM);
     }
 
-    private void encodeFormSubmitMarker(FacesContext context,
+    protected void renderForCommandLink(FacesContext context,
             HtmlForm htmlForm, ResponseWriter writer) throws IOException {
+        for (Iterator it = getHiddenParameters(htmlForm).entrySet().iterator(); it
+                .hasNext();) {
+            Map.Entry entry = (Entry) it.next();
+            String name = (String) entry.getKey();
+            Object value = entry.getValue();
+            renderHidden(htmlForm, writer, name, value);
+        }
+        htmlForm.getAttributes().remove(HIDDEN_PARAMETER_KEY);
+    }
+
+    private void renderHidden(HtmlForm htmlForm, ResponseWriter writer,
+            String name, Object value) throws IOException {
         writer.startElement(JsfConstants.INPUT_ELEM, htmlForm);
         RendererUtil.renderAttribute(writer, JsfConstants.TYPE_ATTR,
                 JsfConstants.HIDDEN_VALUE);
-        String clientId = htmlForm.getClientId(context);
-        RendererUtil.renderAttribute(writer, JsfConstants.NAME_ATTR, clientId);
-        RendererUtil.renderAttribute(writer, JsfConstants.VALUE_ATTR, clientId);
+        RendererUtil.renderAttribute(writer, JsfConstants.NAME_ATTR, name);
+        RendererUtil.renderAttribute(writer, JsfConstants.VALUE_ATTR, value);
         writer.endElement(JsfConstants.INPUT_ELEM);
+    }
+
+    public static void setHiddenParameter(UIForm form, String name, Object value) {
+        Map map = getHiddenParameters(form);
+        map.put(name, value);
+    }
+
+    private static Map getHiddenParameters(UIForm form) {
+        Map attributes = form.getAttributes();
+        Map map = (Map) attributes.get(HIDDEN_PARAMETER_KEY);
+        if (map == null) {
+            map = new HashMap();
+            attributes.put(HIDDEN_PARAMETER_KEY, map);
+        }
+        return map;
+    }
+
+    private void renderFormSubmitMarker(FacesContext context,
+            HtmlForm htmlForm, ResponseWriter writer) throws IOException {
+        String clientId = htmlForm.getClientId(context);
+        // TODO concat viewId
+        String name = clientId;
+        String value = clientId;
+        renderHidden(htmlForm, writer, name, value);
     }
 
     public void decode(FacesContext context, UIComponent component) {
