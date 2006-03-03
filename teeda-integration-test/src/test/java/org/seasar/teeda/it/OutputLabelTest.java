@@ -26,15 +26,15 @@ import com.gargoylesoftware.htmlunit.html.HtmlSpan;
 /**
  * @author manhole
  */
-public class OutputTextTest extends AbstractTestCase {
+public class OutputLabelTest extends AbstractTestCase {
 
     public static Test suite() throws Exception {
-        return setUpTestSuite(OutputTextTest.class);
+        return setUpTestSuite(OutputLabelTest.class);
     }
 
     public void testOutputLink() throws Exception {
         // ## Arrange ##
-        URL url = getUrl("faces/outputText.jsp");
+        URL url = getUrl("faces/outputLabel.jsp");
         System.out.println(url);
 
         WebClient webClient = new WebClient();
@@ -43,12 +43,11 @@ public class OutputTextTest extends AbstractTestCase {
         HtmlPage page = (HtmlPage) webClient.getPage(url);
 
         // ## Assert ##
-        assertEquals("this is outputText.jsp", page.getTitleText());
         final String body = getBody(page).trim();
         System.out.println(body);
 
         HtmlSpan span = (HtmlSpan) page.getHtmlElementById("hello");
-        assertEquals("Hello OutputText", span.asText());
+        assertEquals("Hello OutputLabel", span.asText());
     }
 
 }
