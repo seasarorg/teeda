@@ -37,7 +37,7 @@ import org.seasar.teeda.core.util.RendererUtil;
  */
 public class HtmlCommandLinkRenderer extends AbstractHtmlRenderer {
 
-    // TODO implements
+    private static final String HIDDEN_FIELD_NAME_SUFFIX = "__link_clicked__";
 
     public void encodeBegin(FacesContext context, UIComponent component)
             throws IOException {
@@ -81,7 +81,9 @@ public class HtmlCommandLinkRenderer extends AbstractHtmlRenderer {
                 UIParameter p = ((UIParameter) child);
                 String name = p.getName();
                 Object value = p.getValue();
-                sb.append(" f['" + name + "'].value = '" + value + "';");
+                sb.append(" f['" + name + "'].value = '");
+                sb.append(value);
+                sb.append("';");
                 HtmlFormRenderer.setHiddenParameter(parentForm, name, null);
             }
         }
@@ -103,7 +105,8 @@ public class HtmlCommandLinkRenderer extends AbstractHtmlRenderer {
     }
 
     private String getHiddenFieldName(final String formId) {
-        return formId + NamingContainer.SEPARATOR_CHAR + "__link_clicked__";
+        return formId + NamingContainer.SEPARATOR_CHAR
+                + HIDDEN_FIELD_NAME_SUFFIX;
     }
 
     public void encodeEnd(FacesContext context, UIComponent component)
