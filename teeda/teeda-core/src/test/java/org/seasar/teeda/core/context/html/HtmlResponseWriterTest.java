@@ -587,7 +587,7 @@ public class HtmlResponseWriterTest extends TestCase {
         assertEquals("/a/b.html", responseWriter
                 .encodeURIAttribute("/a/b.html"));
         assertEquals("a?1=2", responseWriter.encodeURIAttribute("a?1=2"));
-        assertEquals("a?1=2&3=4", responseWriter
+        assertEquals("a?1=2&amp;3=4", responseWriter
                 .encodeURIAttribute("a?1=2&3=4"));
         assertEquals("a?1=%20", responseWriter.encodeURIAttribute("a?1= "));
         assertEquals("a?1=2%3F3=4", responseWriter
@@ -615,6 +615,10 @@ public class HtmlResponseWriterTest extends TestCase {
         assertEquals("%28", URLEncoder.encode("(", "UTF-8"));
         assertEquals("%29", URLEncoder.encode(")", "UTF-8"));
         assertEquals("%25", URLEncoder.encode("%", "UTF-8"));
+        assertEquals("%3C", URLEncoder.encode("<", "UTF-8"));
+        assertEquals("%3E", URLEncoder.encode(">", "UTF-8"));
+        assertEquals("%22", URLEncoder.encode("\"", "UTF-8"));
+        assertEquals("%27", URLEncoder.encode("\'", "UTF-8"));
 
         assertEquals("+", URLEncoder.encode(" ", "UTF-8"));
 

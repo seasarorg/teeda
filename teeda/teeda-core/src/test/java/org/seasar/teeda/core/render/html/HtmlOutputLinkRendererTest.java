@@ -170,7 +170,7 @@ public class HtmlOutputLinkRendererTest extends RendererTest {
 
         encodeByRenderer(renderer_, getFacesContext(), htmlOutputLink_);
 
-        assertEquals("<a href=\"url.html?1=2&a=b\"></a>", getResponseText());
+        assertEquals("<a href=\"url.html?1=2&amp;a=b\"></a>", getResponseText());
     }
 
     public void testEncode_WithJapaneseParamValue() throws Exception {
@@ -202,7 +202,7 @@ public class HtmlOutputLinkRendererTest extends RendererTest {
 
         encodeByRenderer(renderer_, getFacesContext(), htmlOutputLink_);
 
-        assertEquals("<a href=\"url?a=1&b=2\"></a>", getResponseText());
+        assertEquals("<a href=\"url?a=1&amp;b=2\"></a>", getResponseText());
     }
 
     public void testEncode_WithAllAttributes() throws Exception {

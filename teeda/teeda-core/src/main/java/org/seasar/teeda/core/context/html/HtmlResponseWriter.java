@@ -23,6 +23,7 @@ import java.util.List;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.ResponseWriter;
+import javax.faces.internal.AssertionUtil;
 
 import org.apache.commons.lang.ArrayUtils;
 
@@ -49,9 +50,7 @@ public class HtmlResponseWriter extends ResponseWriter {
 
     public void startElement(String name, UIComponent componentForElement)
             throws IOException {
-        if (name == null) {
-            throw new NullPointerException("name");
-        }
+        AssertionUtil.assertNotNull("name", name);
         Writer writer = getWriter();
         closeStartTagIfOpening(writer);
         writer.write("<");
@@ -68,9 +67,7 @@ public class HtmlResponseWriter extends ResponseWriter {
     }
 
     public void endElement(String name) throws IOException {
-        if (name == null) {
-            throw new NullPointerException("name");
-        }
+        AssertionUtil.assertNotNull("name", name);
         Writer writer = getWriter();
         if (startTagOpening_) {
             if (isEmptyElement(name)) {
@@ -91,9 +88,7 @@ public class HtmlResponseWriter extends ResponseWriter {
 
     public void writeAttribute(String name, Object value, String property)
             throws IOException {
-        if (name == null) {
-            throw new NullPointerException("name");
-        }
+        AssertionUtil.assertNotNull("name", name);
         if (!startTagOpening_) {
             throw new IllegalStateException(
                     "there is no currently open element");
@@ -108,16 +103,13 @@ public class HtmlResponseWriter extends ResponseWriter {
 
     public void writeURIAttribute(String name, Object value, String property)
             throws IOException {
-        if (name == null) {
-            throw new NullPointerException("name");
-        }
+        AssertionUtil.assertNotNull("name", name);
         if (!startTagOpening_) {
             throw new IllegalStateException(
                     "there is no currently open element");
         }
         Writer writer = getWriter();
-        String strValue = value.toString();
-        strValue = encodeURIAttribute(strValue);
+        String strValue = encodeURIAttribute(value.toString());
 
         writer.write(" ");
         writer.write(name);
@@ -127,9 +119,7 @@ public class HtmlResponseWriter extends ResponseWriter {
     }
 
     public void writeComment(Object comment) throws IOException {
-        if (comment == null) {
-            throw new NullPointerException("comment");
-        }
+        AssertionUtil.assertNotNull("comment", comment);
         Writer writer = getWriter();
         closeStartTagIfOpening(writer);
         writer.write("<!--");
@@ -138,18 +128,14 @@ public class HtmlResponseWriter extends ResponseWriter {
     }
 
     public void writeText(Object text, String property) throws IOException {
-        if (text == null) {
-            throw new NullPointerException("text");
-        }
+        AssertionUtil.assertNotNull("text", text);
         Writer writer = getWriter();
         closeStartTagIfOpening(writer);
         writer.write(htmlSpecialChars(text.toString()));
     }
 
     public void writeText(char text[], int off, int len) throws IOException {
-        if (text == null) {
-            throw new NullPointerException("text");
-        }
+        AssertionUtil.assertNotNull("text", text);
         writeText(new String(text, off, len), null);
     }
 
@@ -185,9 +171,7 @@ public class HtmlResponseWriter extends ResponseWriter {
     }
 
     public ResponseWriter cloneWithWriter(Writer writer) {
-        if (writer == null) {
-            throw new NullPointerException("writer");
-        }
+        AssertionUtil.assertNotNull("writer", writer);
         HtmlResponseWriter newResponseWriter = new HtmlResponseWriter();
         newResponseWriter.setWriter(writer);
         newResponseWriter.setContentType(getContentType());
@@ -346,7 +330,8 @@ public class HtmlResponseWriter extends ResponseWriter {
                 sb.append("%");
                 break;
             case '&': // 38
-                sb.append("&");
+                //sb.append("&");
+                sb.append("&amp;");
                 break;
             case '\'': // 39
                 sb.append("'");
