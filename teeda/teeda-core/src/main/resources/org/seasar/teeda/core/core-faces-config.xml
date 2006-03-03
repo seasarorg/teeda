@@ -475,7 +475,7 @@
 		</renderer>
 		
 		<renderer>
-			<component-family>javax.faces.Command</component-family>
+			<component-family>javax.faces.Output</component-family>
 			<renderer-type>javax.faces.Link</renderer-type>
 			<renderer-class>
 				org.seasar.teeda.core.render.html.HtmlOutputLinkRenderer</renderer-class>
