@@ -113,7 +113,7 @@ public class JavascriptTest extends AbstractTestCase {
 
         // ## Act ##
         HtmlPage page = (HtmlPage) webClient.getPage(url);
-        HtmlAnchor link = (HtmlAnchor) page.getHtmlElementById("link1");
+        HtmlAnchor link = (HtmlAnchor) page.getHtmlElementById("fooForm:link1");
 
         assertEquals(0, collectedAlerts.size());
         HtmlPage page2 = (HtmlPage) link.click();
@@ -127,6 +127,9 @@ public class JavascriptTest extends AbstractTestCase {
             .getRequestParameter("fooForm:__link_clicked__");
         assertNotNull(linkMarker);
         assertEquals("fooForm:link1", linkMarker.getValue());
+
+        KeyValuePair paramA = webClient.getRequestParameter("a");
+        assertEquals("1", paramA.getValue());
     }
 
 }
