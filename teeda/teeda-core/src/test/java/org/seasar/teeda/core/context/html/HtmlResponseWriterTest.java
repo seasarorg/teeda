@@ -92,7 +92,7 @@ public class HtmlResponseWriterTest extends TestCase {
         responseWriter.flush();
 
         // ## Assert ##
-        assertTrue(calls[0]);
+        assertFalse(calls[0]);
     }
 
     public void testCloneWithWriterWithNull() throws Exception {

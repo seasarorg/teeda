@@ -212,7 +212,7 @@ public class HtmlResponseWriter extends ResponseWriter {
     public void flush() throws IOException {
         Writer writer = getWriter();
         closeStartTagIfOpening(writer);
-        writer.flush();
+        //writer.flush();
     }
 
     public void close() throws IOException {
