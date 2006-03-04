@@ -4,7 +4,6 @@ import org.seasar.framework.container.S2Container;
 import org.seasar.framework.unit.S2FrameworkTestCase;
 import org.seasar.teeda.core.application.ApplicationImpl;
 import org.seasar.teeda.core.application.impl.TeedaStateManagerImpl;
-import org.seasar.teeda.core.config.faces.impl.ConfigFilesFacesConfigurator;
 import org.seasar.teeda.core.el.ValueBindingContext;
 import org.seasar.teeda.core.lifecycle.LifecycleImpl;
 import org.seasar.teeda.core.managedbean.ManagedBeanFactory;
@@ -36,7 +35,10 @@ public class TeedaDiconTest extends S2FrameworkTestCase {
         assertNotNull(app.getStateManager());
         assertNotNull(app.getVariableResolver());
         assertNotNull(app.getViewHandler());
-
+        assertNotNull(app.getValueBindingContext());
+        assertNotNull(app.getMethodBindingContext());
+        
+        
         TeedaStateManagerImpl stateManager = (TeedaStateManagerImpl) app
                 .getStateManager();
         assertNotNull(stateManager.getTreeStructureManager());
