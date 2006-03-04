@@ -70,6 +70,8 @@
 
 	<component class="org.seasar.teeda.core.el.TeedaPropertyResolver" />
 
+	<component class="org.seasar.teeda.core.el.TeedaVariableResolver" />
+
 	<component name="stateManager" class="org.seasar.teeda.core.application.impl.TeedaStateManagerImpl" />
 
 	<component class="org.seasar.teeda.core.application.impl.TreeStructureManagerImpl" />
@@ -77,6 +79,8 @@
 	<component class="org.seasar.teeda.core.render.html.HtmlRenderKitImpl" />
 	
 	<component class="org.seasar.teeda.core.render.html.HtmlResponseStateManager" />
+	
+	<component class="org.seasar.teeda.core.render.Base64EncodeConverter" />
 	
 	<component class="org.seasar.teeda.core.context.html.HtmlResponseWriter" />
 	
