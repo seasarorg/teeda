@@ -30,7 +30,7 @@ public abstract class AbstractResponseStateManager extends ResponseStateManager 
             .getPackage()
             + ".FACES_VIEW_STATE";
 
-    private EncodeConverter encodeConverter_ = new Base64EncodeConverter();
+    private EncodeConverter encodeConverter_;
 
     public void setEncodeConverter(EncodeConverter decoder) {
         encodeConverter_ = decoder;

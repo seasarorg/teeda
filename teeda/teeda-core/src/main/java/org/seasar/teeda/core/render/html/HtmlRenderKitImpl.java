@@ -44,7 +44,6 @@ public class HtmlRenderKitImpl extends AbstractRenderKit {
     private ResponseWriter responseWriter_;
 
     public HtmlRenderKitImpl() {
-        responseStateManager_ = new HtmlResponseStateManager();
     }
 
     public void addRenderer(String family, String renderType, Renderer renderer) {
