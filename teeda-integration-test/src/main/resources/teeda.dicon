@@ -66,6 +66,10 @@
 	<component class="org.seasar.teeda.core.application.impl.TreeStructureManagerImpl" />
 	<component name="variableResolver" class="org.seasar.teeda.core.el.TeedaVariableResolver" />
 	<component name="propertyResolver" class="org.seasar.teeda.core.el.TeedaPropertyResolver" />
+	<component class="org.seasar.teeda.core.render.html.HtmlRenderKitImpl" />
+	<component class="org.seasar.teeda.core.render.html.HtmlResponseStateManager" />
+	<component class="org.seasar.teeda.core.render.Base64EncodeConverter" />
+	<component class="org.seasar.teeda.core.context.html.HtmlResponseWriter" />
 	
 	<!-- ManagedBean -->	
 	<component class="org.seasar.teeda.core.managedbean.impl.ManagedBeanFactoryImpl" />
