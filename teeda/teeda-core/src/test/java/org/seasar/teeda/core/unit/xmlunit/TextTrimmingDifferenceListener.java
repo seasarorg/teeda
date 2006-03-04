@@ -15,6 +15,10 @@
  */
 package org.seasar.teeda.core.unit.xmlunit;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.lang.StringUtils;
 import org.custommonkey.xmlunit.Difference;
 import org.custommonkey.xmlunit.DifferenceConstants;
 import org.custommonkey.xmlunit.DifferenceListener;
@@ -28,42 +32,123 @@ import org.w3c.dom.NodeList;
 public class TextTrimmingDifferenceListener implements DifferenceListener {
 
     public int differenceFound(Difference difference) {
+        NodeDetail cNodeDetail = difference.getControlNodeDetail();
+        NodeDetail tNodeDetail = difference.getTestNodeDetail();
+        Node cNode = cNodeDetail.getNode();
+        Node tNode = tNodeDetail.getNode();
         if (DifferenceConstants.TEXT_VALUE.getId() == difference.getId()) {
-            String controlNodeValue = difference.getControlNodeDetail()
-                    .getValue();
-            String testNodeValue = difference.getTestNodeDetail().getValue();
-            if (controlNodeValue.trim().equals(testNodeValue.trim())) {
-                return DifferenceListener.RETURN_IGNORE_DIFFERENCE_NODES_SIMILAR;
+            // 14
+            String cNodeDetailValue = cNodeDetail.getValue();
+            String tNodeDetailValue = tNodeDetail.getValue();
+            if (cNodeDetailValue.trim().equals(tNodeDetailValue.trim())) {
+                System.out.println("recover:TEXT_VALUE");
+                return DifferenceListener.RETURN_IGNORE_DIFFERENCE_NODES_IDENTICAL;
+            }
+        } else if (DifferenceConstants.NODE_TYPE.getId() == difference.getId()) {
+            // 17
+            String cNodeValue = cNode.getNodeValue();
+            String tNodeValue = tNode.getNodeValue();
+            if (StringUtils.isBlank(cNodeValue)
+                    && StringUtils.isBlank(tNodeValue)) {
+                System.out.println("recover:NODE_TYPE");
+                return DifferenceListener.RETURN_IGNORE_DIFFERENCE_NODES_IDENTICAL;
             }
         } else if (DifferenceConstants.HAS_CHILD_NODES.getId() == difference
                 .getId()) {
-            NodeDetail cNode = difference.getControlNodeDetail();
-            NodeDetail tNode = difference.getTestNodeDetail();
-            NodeList cChildNodes = cNode.getNode().getChildNodes();
-            NodeList tChildNodes = tNode.getNode().getChildNodes();
+            // 18
+            NodeList cChildNodes = cNode.getChildNodes();
+            NodeList tChildNodes = tNode.getChildNodes();
 
+            // System.out.println("cNodeDetail=" + cNodeDetail);
+            // System.out.println("tNodeDetail=" + tNodeDetail);
+            // System.out.println("cNodeDetail getXpathLocation="
+            // + cNodeDetail.getXpathLocation());
+            // System.out.println("tNodeDetail getXpathLocation="
+            // + tNodeDetail.getXpathLocation());
+            // System.out.println("cNode=" + cNode);
+            // System.out.println("tNode=" + tNode);
+            // System.out.println("cChildNodes=" + cChildNodes);
+            // System.out.println("tChildNodes=" + tChildNodes);
             NodeList containChildrenNode;
             if (cChildNodes.getLength() == 0) {
                 containChildrenNode = tChildNodes;
             } else {
                 containChildrenNode = cChildNodes;
             }
-            for (int i = 0; i < containChildrenNode.getLength(); i++) {
-                Node item = containChildrenNode.item(i);
-                if (Node.TEXT_NODE != item.getNodeType()) {
-                    return DifferenceListener.RETURN_ACCEPT_DIFFERENCE;
+            List nodes = minusEmptyTextNode(containChildrenNode);
+            if (nodes.isEmpty()) {
+                System.out.println("recover:HAS_CHILD_NODES");
+                return DifferenceListener.RETURN_IGNORE_DIFFERENCE_NODES_IDENTICAL;
+            }
+            if (Node.TEXT_NODE == cNode.getNodeType()
+                    || Node.TEXT_NODE == tNode.getNodeType()) {
+                System.out
+                        .println("recover:HAS_CHILD_NODES (one is TEXT_NODE)");
+                return DifferenceListener.RETURN_IGNORE_DIFFERENCE_NODES_IDENTICAL;
+            }
+        } else if (DifferenceConstants.CHILD_NODELIST_LENGTH.getId() == difference
+                .getId()) {
+            // 19
+            NodeList cChildNodes = cNode.getChildNodes();
+            NodeList tChildNodes = tNode.getChildNodes();
+            List cNodeList = minusEmptyTextNode(cChildNodes);
+            List tNodeList = minusEmptyTextNode(tChildNodes);
+            if (cNodeList.size() == tNodeList.size()) {
+                boolean equal = true;
+                for (int i = 0; i < cNodeList.size(); i++) {
+                    Node node1 = (Node) cNodeList.get(i);
+                    Node node2 = (Node) tNodeList.get(i);
+                    if (node1.getNodeType() != node2.getNodeType()) {
+                        equal = false;
+                    }
+                    if (!node1.getNodeName().equals(node2.getNodeName())) {
+                        equal = false;
+                    }
+                    if (!StringUtils.equals(node1.getNodeValue(), node2
+                            .getNodeValue())) {
+                        equal = false;
+                    }
                 }
-                if (!"".equals(item.getNodeValue().trim())) {
-                    return DifferenceListener.RETURN_ACCEPT_DIFFERENCE;
+                if (equal) {
+                    System.out.println("recover:CHILD_NODELIST_LENGTH");
+                    return DifferenceListener.RETURN_IGNORE_DIFFERENCE_NODES_IDENTICAL;
                 }
             }
-            return DifferenceListener.RETURN_IGNORE_DIFFERENCE_NODES_SIMILAR;
+        } else if (DifferenceConstants.CHILD_NODELIST_SEQUENCE.getId() == difference
+                .getId()) {
+            // 20
+
+            // System.out.println(cNodeDetail.getValue());
+            // System.out.println(tNodeDetail.getValue());
+            // System.out.println(cNode.getNodeName());
+            // System.out.println(tNode.getNodeName());
+            //
+            // System.out.println(cNode.getChildNodes());
+            // System.out.println(tNode.getChildNodes());
+
+            System.out.println("recover:CHILD_NODELIST_SEQUENCE");
+            return DifferenceListener.RETURN_IGNORE_DIFFERENCE_NODES_IDENTICAL;
         }
+        System.out.println("id=" + difference.getId() + "," + difference);
         return DifferenceListener.RETURN_ACCEPT_DIFFERENCE;
     }
 
+    private List minusEmptyTextNode(NodeList containChildrenNode) {
+        List l = new ArrayList();
+        for (int i = 0; i < containChildrenNode.getLength(); i++) {
+            Node item = containChildrenNode.item(i);
+            String nodeValue = item.getNodeValue();
+            // TEXT_NODE=3
+            if (Node.TEXT_NODE != item.getNodeType()) {
+                l.add(item);
+            } else if (nodeValue != null && !"".equals(nodeValue.trim())) {
+                l.add(item);
+            }
+        }
+        return l;
+    }
+
     public void skippedComparison(Node node1, Node node2) {
-        System.out.println("XmlUnitLearningTest.testIgnoreSpace()");
     }
 
 }

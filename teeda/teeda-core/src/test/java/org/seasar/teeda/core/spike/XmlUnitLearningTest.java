@@ -40,7 +40,6 @@ import org.custommonkey.xmlunit.Transform;
 import org.custommonkey.xmlunit.Validator;
 import org.custommonkey.xmlunit.XMLAssert;
 import org.custommonkey.xmlunit.XMLUnit;
-import org.seasar.teeda.core.unit.xmlunit.TextTrimmingDifferenceListener;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -117,27 +116,6 @@ public class XmlUnitLearningTest extends /* XMLTestCase */TestCase {
     public void testSpace2() throws Exception {
         Diff myDiff = new Diff("<a> </a>", "<a>  </a>");
         assertEquals(myDiff.toString(), false, myDiff.similar());
-        assertEquals(myDiff.toString(), false, myDiff.identical());
-    }
-
-    public void testIgnoreSpace1() throws Exception {
-        Diff myDiff = new Diff("<a> 1</a>", "<a> 1 </a>");
-        myDiff.overrideDifferenceListener(new TextTrimmingDifferenceListener());
-        assertEquals(myDiff.toString(), true, myDiff.similar());
-        assertEquals(myDiff.toString(), false, myDiff.identical());
-    }
-
-    public void testIgnoreSpace2() throws Exception {
-        Diff myDiff = new Diff("<a> </a>", "<a>  </a>");
-        myDiff.overrideDifferenceListener(new TextTrimmingDifferenceListener());
-        assertEquals(myDiff.toString(), true, myDiff.similar());
-        assertEquals(myDiff.toString(), false, myDiff.identical());
-    }
-
-    public void testIgnoreSpace3() throws Exception {
-        Diff myDiff = new Diff("<a></a>", "<a> </a>");
-        myDiff.overrideDifferenceListener(new TextTrimmingDifferenceListener());
-        assertEquals(myDiff.toString(), true, myDiff.similar());
         assertEquals(myDiff.toString(), false, myDiff.identical());
     }
 
