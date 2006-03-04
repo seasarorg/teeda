@@ -44,10 +44,10 @@
 	<component class="org.seasar.teeda.core.el.impl.commons.CommonsELParser" />
 	<component class="org.seasar.teeda.core.el.impl.commons.CommonsExpressionProcessorImpl" />
 	<component name="valueBindingContext" class="org.seasar.teeda.core.el.impl.ValueBindingContextImpl">
-		<property name="valueBindingName">"org.seasar.teeda.core.el.ValueBindingImpl"</property>
+		<property name="valueBindingName">"org.seasar.teeda.core.el.impl.ValueBindingImpl"</property>
 	</component>
 	<component name="methodBindingContext" class="org.seasar.teeda.core.el.impl.MethodBindingContextImpl">
-		<property name="methodBindingName">"org.seasar.teeda.core.el.MethodBindingImpl"</property>
+		<property name="methodBindingName">"org.seasar.teeda.core.el.impl.MethodBindingImpl"</property>
 		<initMethod name="setValueBindingContext">
 			<arg>valueBindingContext</arg>
 		</initMethod>
@@ -55,13 +55,17 @@
 
 	<!-- Applications -->
 	<!-- TODO need DI support for Converter, Validator, Component -->	
-	<component class="org.seasar.teeda.core.application.ApplicationImpl" />
+	<component class="org.seasar.teeda.core.application.ApplicationImpl" >
+		<property name="variableResolver">variableResolver</property>
+		<property name="propertyResolver">propertyResolver</property>
+	</component>
 	<component class="org.seasar.teeda.core.application.ActionListenerImpl" />
 	<component class="org.seasar.teeda.core.application.NavigationHandlerImpl" />
 	<component name="viewHandler" class="org.seasar.teeda.core.application.ViewHandlerImpl" />
-	<component class="org.seasar.teeda.core.el.TeedaPropertyResolver" />
 	<component name="stateManager" class="org.seasar.teeda.core.application.impl.TeedaStateManagerImpl" />
 	<component class="org.seasar.teeda.core.application.impl.TreeStructureManagerImpl" />
+	<component name="variableResolver" class="org.seasar.teeda.core.el.TeedaVariableResolver" />
+	<component name="propertyResolver" class="org.seasar.teeda.core.el.TeedaPropertyResolver" />
 	
 	<!-- ManagedBean -->	
 	<component class="org.seasar.teeda.core.managedbean.impl.ManagedBeanFactoryImpl" />
