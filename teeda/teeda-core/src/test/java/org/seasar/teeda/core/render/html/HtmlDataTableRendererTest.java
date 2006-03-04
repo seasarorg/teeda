@@ -24,8 +24,10 @@ import javax.faces.render.Renderer;
 import javax.faces.render.RendererTest;
 
 import org.custommonkey.xmlunit.Diff;
+import org.seasar.teeda.core.el.ELParser;
 import org.seasar.teeda.core.el.impl.ValueBindingImpl;
 import org.seasar.teeda.core.el.impl.commons.CommonsELParser;
+import org.seasar.teeda.core.el.impl.commons.CommonsExpressionProcessorImpl;
 import org.seasar.teeda.core.mock.MockFacesContext;
 
 /**
@@ -609,8 +611,10 @@ public class HtmlDataTableRendererTest extends RendererTest {
             UIColumn col = new UIColumn();
             MockHtmlOutputText htmlOutputText = new MockHtmlOutputText();
             htmlOutputText.setRenderer(htmlOutputTextRenderer);
+            ELParser parser = new CommonsELParser();
+            parser.setExpressionProcessor(new CommonsExpressionProcessorImpl());
             ValueBinding vb = new ValueBindingImpl(getFacesContext()
-                    .getApplication(), "#{fooVar}", new CommonsELParser());
+                    .getApplication(), "#{fooVar}", parser);
             htmlOutputText.setValueBinding("value", vb);
             col.getChildren().add(htmlOutputText);
             htmlDataTable_.getChildren().add(col);
@@ -638,8 +642,10 @@ public class HtmlDataTableRendererTest extends RendererTest {
             {
                 MockHtmlOutputText htmlOutputText = new MockHtmlOutputText();
                 htmlOutputText.setRenderer(htmlOutputTextRenderer);
+                ELParser parser = new CommonsELParser();
+                parser.setExpressionProcessor(new CommonsExpressionProcessorImpl());
                 ValueBinding vb = new ValueBindingImpl(getFacesContext()
-                        .getApplication(), "#{fooVar}", new CommonsELParser());
+                        .getApplication(), "#{fooVar}", parser);
                 htmlOutputText.setValueBinding("value", vb);
                 col.getChildren().add(htmlOutputText);
             }
@@ -692,8 +698,10 @@ public class HtmlDataTableRendererTest extends RendererTest {
             UIColumn col = new UIColumn();
             MockHtmlOutputText htmlOutputText = new MockHtmlOutputText();
             htmlOutputText.setRenderer(htmlOutputTextRenderer);
+            ELParser parser = new CommonsELParser();
+            parser.setExpressionProcessor(new CommonsExpressionProcessorImpl());
             ValueBinding vb = new ValueBindingImpl(getFacesContext()
-                    .getApplication(), "#{fooVar}", new CommonsELParser());
+                    .getApplication(), "#{fooVar}", parser);
             htmlOutputText.setValueBinding("value", vb);
             col.getChildren().add(htmlOutputText);
             htmlDataTable_.getChildren().add(col);
@@ -727,8 +735,10 @@ public class HtmlDataTableRendererTest extends RendererTest {
             UIColumn col = new UIColumn();
             MockHtmlOutputText htmlOutputText = new MockHtmlOutputText();
             htmlOutputText.setRenderer(htmlOutputTextRenderer);
+            ELParser parser = new CommonsELParser();
+            parser.setExpressionProcessor(new CommonsExpressionProcessorImpl());
             ValueBinding vb = new ValueBindingImpl(getFacesContext()
-                    .getApplication(), "#{fooVar}", new CommonsELParser());
+                    .getApplication(), "#{fooVar}", parser);
             htmlOutputText.setValueBinding("value", vb);
             col.getChildren().add(htmlOutputText);
             htmlDataTable_.getChildren().add(col);
@@ -778,8 +788,10 @@ public class HtmlDataTableRendererTest extends RendererTest {
             UIColumn col = new UIColumn();
             MockHtmlOutputText htmlOutputText = new MockHtmlOutputText();
             htmlOutputText.setRenderer(htmlOutputTextRenderer);
+            ELParser parser = new CommonsELParser();
+            parser.setExpressionProcessor(new CommonsExpressionProcessorImpl());
             ValueBinding vb = new ValueBindingImpl(getFacesContext()
-                    .getApplication(), "#{fooVar}", new CommonsELParser());
+                    .getApplication(), "#{fooVar}", parser);
             htmlOutputText.setValueBinding("value", vb);
             col.getChildren().add(htmlOutputText);
             htmlDataTable_.getChildren().add(col);
@@ -897,8 +909,10 @@ public class HtmlDataTableRendererTest extends RendererTest {
             UIColumn col = new UIColumn();
             MockHtmlOutputText htmlOutputText = new MockHtmlOutputText();
             htmlOutputText.setRenderer(htmlOutputTextRenderer);
+            ELParser parser = new CommonsELParser();
+            parser.setExpressionProcessor(new CommonsExpressionProcessorImpl());
             ValueBinding vb = new ValueBindingImpl(getFacesContext()
-                    .getApplication(), "#{barVar.k1}", new CommonsELParser());
+                    .getApplication(), "#{barVar.k1}", parser);
             htmlOutputText.setValueBinding("value", vb);
             col.getChildren().add(htmlOutputText);
 
@@ -918,8 +932,10 @@ public class HtmlDataTableRendererTest extends RendererTest {
             UIColumn col = new UIColumn();
             MockHtmlOutputText htmlOutputText = new MockHtmlOutputText();
             htmlOutputText.setRenderer(htmlOutputTextRenderer);
+            ELParser parser = new CommonsELParser();
+            parser.setExpressionProcessor(new CommonsExpressionProcessorImpl());
             ValueBinding vb = new ValueBindingImpl(getFacesContext()
-                    .getApplication(), "#{barVar.k2}", new CommonsELParser());
+                    .getApplication(), "#{barVar.k2}", parser);
             htmlOutputText.setValueBinding("value", vb);
             col.getChildren().add(htmlOutputText);
 

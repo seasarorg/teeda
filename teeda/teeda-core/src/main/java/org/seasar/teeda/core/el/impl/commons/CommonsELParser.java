@@ -29,7 +29,7 @@ import org.seasar.teeda.core.el.impl.JspELParserUtil;
  */
 public class CommonsELParser implements org.seasar.teeda.core.el.ELParser{
 
-    private ExpressionProcessor processor_ = new CommonsExpressionProcessorImpl();
+    private ExpressionProcessor processor_;
     
     public CommonsELParser(){
     }

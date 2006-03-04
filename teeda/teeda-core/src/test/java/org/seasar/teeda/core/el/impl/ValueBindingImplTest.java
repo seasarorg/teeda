@@ -23,8 +23,10 @@ import java.util.Map;
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
 
+import org.seasar.teeda.core.el.ELParser;
 import org.seasar.teeda.core.el.TeedaVariableResolver;
 import org.seasar.teeda.core.el.impl.commons.CommonsELParser;
+import org.seasar.teeda.core.el.impl.commons.CommonsExpressionProcessorImpl;
 import org.seasar.teeda.core.managedbean.ManagedBeanFactory;
 import org.seasar.teeda.core.mock.MockPropertyResolver;
 import org.seasar.teeda.core.mock.MockVariableResolver;
@@ -44,7 +46,7 @@ public class ValueBindingImplTest extends TeedaTestCase {
         MockVariableResolver resolver = getVariableResolver();
         resolver.putValue("a", a);
         ValueBinding vb = new ValueBindingImpl(getApplication(), "#{a}",
-                new CommonsELParser());
+                createELParser());
         Object o = vb.getValue(getFacesContext());
         assertTrue(o == a);
     }
@@ -54,7 +56,7 @@ public class ValueBindingImplTest extends TeedaTestCase {
         MockVariableResolver variableResolver = getVariableResolver();
         variableResolver.putValue("a", a);
         ValueBinding vb = new ValueBindingImpl(getApplication(), "#{a.name}",
-                new CommonsELParser());
+                createELParser());
         Object o = vb.getValue(getFacesContext());
         assertEquals("aaa", o);
         getApplication().getPropertyResolver().setValue(a, "name", "bbb");
@@ -72,7 +74,7 @@ public class ValueBindingImplTest extends TeedaTestCase {
         propertyResolver.setValue(a, "b", b);
         getApplication().setPropertyResolver(propertyResolver);
         ValueBinding vb = new ValueBindingImpl(getApplication(), "#{a.b.name}",
-                new CommonsELParser());
+                createELParser());
         Object o = vb.getValue(getFacesContext());
         assertEquals("hoge", o);
     }
@@ -84,7 +86,7 @@ public class ValueBindingImplTest extends TeedaTestCase {
         MockPropertyResolver propertyResolver = getPropertyResolver();
         getApplication().setPropertyResolver(propertyResolver);
         ValueBinding vb = new ValueBindingImpl(getApplication(),
-                "#{hoge.a.name}", new CommonsELParser());
+                "#{hoge.a.name}", createELParser());
         Object o = vb.getValue(getFacesContext());
         assertEquals("aaa", o);
     }
@@ -95,7 +97,7 @@ public class ValueBindingImplTest extends TeedaTestCase {
         MockVariableResolver variableResolver = getVariableResolver();
         variableResolver.putValue("c_", c);
         ValueBinding vb = new ValueBindingImpl(getApplication(), "#{c_.hoge}",
-                new CommonsELParser());
+                createELParser());
         Object o = vb.getValue(getFacesContext());
         assertTrue(((Boolean) o).booleanValue());
     }
@@ -106,7 +108,7 @@ public class ValueBindingImplTest extends TeedaTestCase {
         MockVariableResolver resolver = getVariableResolver();
         resolver.putValue("hogemap", map);
         ValueBinding vb = new ValueBindingImpl(getApplication(), "#{hogemap}",
-                new CommonsELParser());
+                createELParser());
         Object o = vb.getValue(getFacesContext());
         assertSame(map, o);
         Map m = (Map) o;
@@ -119,7 +121,7 @@ public class ValueBindingImplTest extends TeedaTestCase {
         MockVariableResolver resolver = getVariableResolver();
         resolver.putValue("hogemap", map);
         ValueBinding vb = new ValueBindingImpl(getApplication(),
-                "#{hogemap.hoge}", new CommonsELParser());
+                "#{hogemap.hoge}", createELParser());
         Object o = vb.getValue(getFacesContext());
         assertEquals("foo", o);
     }
@@ -130,7 +132,7 @@ public class ValueBindingImplTest extends TeedaTestCase {
         MockVariableResolver resolver = getVariableResolver();
         resolver.putValue("hogemap", map);
         ValueBinding vb = new ValueBindingImpl(getApplication(),
-                "#{hogemap[\"a\"]['name'] }", new CommonsELParser());
+                "#{hogemap[\"a\"]['name'] }", createELParser());
         Object o = vb.getValue(getFacesContext());
         assertEquals("aaa", o);
     }
@@ -141,7 +143,7 @@ public class ValueBindingImplTest extends TeedaTestCase {
         MockVariableResolver resolver = getVariableResolver();
         resolver.putValue("list", list);
         ValueBinding vb = new ValueBindingImpl(getApplication(), "#{list[0] }",
-                new CommonsELParser());
+                createELParser());
         Object o = vb.getValue(getFacesContext());
         assertEquals("aaa", o);
 
@@ -161,7 +163,7 @@ public class ValueBindingImplTest extends TeedaTestCase {
         resolver.putValue("a", a);
         resolver.putValue("b", b);
         ValueBinding vb = new ValueBindingImpl(getApplication(),
-                "#{true ? a : b}", new CommonsELParser());
+                "#{true ? a : b}", createELParser());
         Object o = vb.getValue(getFacesContext());
         assertSame(a, o);
     }
@@ -175,14 +177,14 @@ public class ValueBindingImplTest extends TeedaTestCase {
         resolver.putValue("a", a);
         resolver.putValue("b", b);
         ValueBinding vb = new ValueBindingImpl(getApplication(),
-                "#{a.name} and #{b.name}", new CommonsELParser());
+                "#{a.name} and #{b.name}", createELParser());
         Object o = vb.getValue(getFacesContext());
         assertEquals("hoge and bar", o);
     }
 
     public void testIsReadOnly1() {
         ValueBinding vb = new ValueBindingImpl(getApplication(), "#{'baz'}",
-                new CommonsELParser());
+                createELParser());
         MockVariableResolver resolver = getVariableResolver();
         resolver.putValue("'baz'", "'baz'");
         assertTrue(vb.isReadOnly(getFacesContext()));
@@ -193,7 +195,7 @@ public class ValueBindingImplTest extends TeedaTestCase {
         MockVariableResolver resolver = getVariableResolver();
         resolver.putValue("a", a);
         ValueBinding vb = new ValueBindingImpl(getApplication(), "#{a.name}",
-                new CommonsELParser());
+                createELParser());
         assertFalse(vb.isReadOnly(getFacesContext()));
     }
 
@@ -202,68 +204,60 @@ public class ValueBindingImplTest extends TeedaTestCase {
         MockVariableResolver resolver = getVariableResolver();
         resolver.putValue("foo", foo);
         ValueBinding vb = new ValueBindingImpl(getApplication(), "#{foo.num}",
-                new CommonsELParser());
+                createELParser());
         assertTrue(vb.isReadOnly(getFacesContext()));
     }
 
     public void testIsReadOnlyImplicit() {
         ValueBinding vb = new ValueBindingImpl(getApplication(), "#{cookie}",
-                new CommonsELParser());
+                createELParser());
         assertTrue(vb.isReadOnly(getFacesContext()));
 
         vb = new ValueBindingImpl(getApplication(), "#{applicationScope}",
-                new CommonsELParser());
+                createELParser());
         assertTrue(vb.isReadOnly(getFacesContext()));
 
-        vb = new ValueBindingImpl(getApplication(), "#{facesContext}",
-                new CommonsELParser());
+        vb = new ValueBindingImpl(getApplication(), "#{facesContext}", createELParser());
         assertTrue(vb.isReadOnly(getFacesContext()));
 
-        vb = new ValueBindingImpl(getApplication(), "#{header}",
-                new CommonsELParser());
+        vb = new ValueBindingImpl(getApplication(), "#{header}", createELParser());
         assertTrue(vb.isReadOnly(getFacesContext()));
 
-        vb = new ValueBindingImpl(getApplication(), "#{headerValues}",
-                new CommonsELParser());
+        vb = new ValueBindingImpl(getApplication(), "#{headerValues}", createELParser());
         assertTrue(vb.isReadOnly(getFacesContext()));
 
-        vb = new ValueBindingImpl(getApplication(), "#{initParam}",
-                new CommonsELParser());
+        vb = new ValueBindingImpl(getApplication(), "#{initParam}", createELParser());
         assertTrue(vb.isReadOnly(getFacesContext()));
 
-        vb = new ValueBindingImpl(getApplication(), "#{param}",
-                new CommonsELParser());
+        vb = new ValueBindingImpl(getApplication(), "#{param}", createELParser());
         assertTrue(vb.isReadOnly(getFacesContext()));
 
-        vb = new ValueBindingImpl(getApplication(), "#{paramValues}",
-                new CommonsELParser());
+        vb = new ValueBindingImpl(getApplication(), "#{paramValues}", createELParser());
         assertTrue(vb.isReadOnly(getFacesContext()));
 
-        vb = new ValueBindingImpl(getApplication(), "#{requestScope}",
-                new CommonsELParser());
+        vb = new ValueBindingImpl(getApplication(), "#{requestScope}", createELParser());
         assertTrue(vb.isReadOnly(getFacesContext()));
 
-        vb = new ValueBindingImpl(getApplication(), "#{sessionScope}",
-                new CommonsELParser());
+        vb = new ValueBindingImpl(getApplication(), "#{sessionScope}", createELParser());
         assertTrue(vb.isReadOnly(getFacesContext()));
     }
 
     public void testGetType1() {
         ValueBinding vb = new ValueBindingImpl(getApplication(), "#{'hoge'}",
-                new CommonsELParser());
+                createELParser());
         assertSame(String.class, vb.getType(getFacesContext()));
     }
 
     public void testGetType2() {
         ValueBinding vb = new ValueBindingImpl(getApplication(), "#{true}",
-                new CommonsELParser());
+                createELParser());
         assertSame(Boolean.class, vb.getType(getFacesContext()));
     }
 
     public void testGetType3() {
         getApplication().setVariableResolver(new TeedaVariableResolver());
         ValueBinding vb = new ValueBindingImpl(getApplication(),
-                "#{requestScope}", new CommonsELParser());
+                "#{requestScope}", createELParser());
         assertTrue(Map.class.isAssignableFrom(vb.getType(getFacesContext())));
     }
 
@@ -271,7 +265,7 @@ public class ValueBindingImplTest extends TeedaTestCase {
         MockVariableResolver resolver = getVariableResolver();
         resolver.putValue("aaa", new A());
         ValueBinding vb = new ValueBindingImpl(getApplication(), "#{aaa}",
-                new CommonsELParser());
+                createELParser());
         assertEquals(A.class, vb.getType(getFacesContext()));
     }
 
@@ -279,8 +273,7 @@ public class ValueBindingImplTest extends TeedaTestCase {
         A a = new A();
         MockVariableResolver resolver = getVariableResolver();
         resolver.putValue("a", a);
-        ValueBinding vb = new ValueBindingImpl(getApplication(), "#{a}",
-                new CommonsELParser());
+        ValueBinding vb = new ValueBindingImpl(getApplication(), "#{a}", createELParser());
         String str = vb.getExpressionString();
         assertEquals("#{a}", str);
     }
@@ -290,8 +283,7 @@ public class ValueBindingImplTest extends TeedaTestCase {
         a.setName("hoge");
         MockVariableResolver resolver = getVariableResolver();
         resolver.putValue("a", a);
-        ValueBinding vb = new ValueBindingImpl(getApplication(), "#{a}",
-                new CommonsELParser());
+        ValueBinding vb = new ValueBindingImpl(getApplication(), "#{a}", createELParser());
         A anotherA = (A) vb.getValue(getFacesContext());
         assertEquals("hoge", anotherA.getName());
 
@@ -310,7 +302,7 @@ public class ValueBindingImplTest extends TeedaTestCase {
         MockVariableResolver resolver = getVariableResolver();
         resolver.putValue("a", a);
         ValueBinding vb = new ValueBindingImpl(getApplication(), "#{a.name}",
-                new CommonsELParser());
+                createELParser());
         String s = (String) vb.getValue(getFacesContext());
         assertEquals("aaa", s);
 
@@ -322,7 +314,7 @@ public class ValueBindingImplTest extends TeedaTestCase {
         MockVariableResolver resolver = getVariableResolver();
         resolver.putValue("num", new Integer(123));
         ValueBinding vb = new ValueBindingImpl(getApplication(), "#{num}",
-                new CommonsELParser());
+                createELParser());
         assertEquals(new Integer(123), vb.getValue(getFacesContext()));
 
         resolver.putValue("num", new Integer(345));
@@ -335,7 +327,7 @@ public class ValueBindingImplTest extends TeedaTestCase {
     public void testSetValue_FacesContextIsNull() throws Exception {
         // ## Arrange ##
         ValueBindingImpl vb = new ValueBindingImpl(getApplication(), "#{a}",
-                new CommonsELParser());
+                createELParser());
 
         // ## Act ##
         // ## Assert ##
@@ -407,6 +399,12 @@ public class ValueBindingImplTest extends TeedaTestCase {
         public String getName() {
             return name_;
         }
+    }
+
+    protected ELParser createELParser() {
+        ELParser parser = new CommonsELParser();
+        parser.setExpressionProcessor(new CommonsExpressionProcessorImpl());
+        return parser;
     }
 
     public static class C {

@@ -110,17 +110,21 @@ public class HtmlRenderKitImpl extends AbstractRenderKit {
         return responseStateManager_;
     }
 
-    protected void setResponseWriter(ResponseWriter responseWriter) {
+    public void setResponseStateManager(
+            ResponseStateManager responseStateManager) {
+        responseStateManager_ = responseStateManager;
+    }
+
+    public void setResponseWriter(ResponseWriter responseWriter) {
         responseWriter_ = responseWriter;
     }
 
+    public ResponseWriter getResponseWriter() {
+        return responseWriter_;
+    }
+    
     protected String getGeneratedKey(String family, String renderType) {
         return family + "." + renderType;
-    }
-
-    protected void setResponseStateManager(
-            ResponseStateManager responseStateManager) {
-        responseStateManager_ = responseStateManager;
     }
 
 }

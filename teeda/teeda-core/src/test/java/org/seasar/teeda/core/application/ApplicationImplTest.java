@@ -22,9 +22,11 @@ import javax.faces.convert.ConverterException;
 import javax.faces.el.ValueBinding;
 import javax.faces.validator.Validator;
 
+import org.seasar.teeda.core.el.ELParser;
 import org.seasar.teeda.core.el.ValueBindingContext;
 import org.seasar.teeda.core.el.impl.ValueBindingContextImpl;
 import org.seasar.teeda.core.el.impl.commons.CommonsELParser;
+import org.seasar.teeda.core.el.impl.commons.CommonsExpressionProcessorImpl;
 import org.seasar.teeda.core.exception.IllegalClassTypeException;
 import org.seasar.teeda.core.mock.MockConverter;
 import org.seasar.teeda.core.mock.MockFacesContext;
@@ -197,7 +199,9 @@ public class ApplicationImplTest extends TeedaTestCase {
 
     public void testCreateValueBinding() throws Exception {
         ValueBindingContext ctx = new ValueBindingContextImpl();
-        ctx.setELParser(new CommonsELParser());
+        ELParser parser = new CommonsELParser();
+        parser.setExpressionProcessor(new CommonsExpressionProcessorImpl());
+        ctx.setELParser(parser);
         ctx
                 .setValueBindingName("org.seasar.teeda.core.el.impl.ValueBindingImpl");
         app_ = new ApplicationImpl();

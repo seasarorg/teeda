@@ -15,9 +15,9 @@
  */
 package org.seasar.teeda.core.el.impl.commons;
 
+import org.seasar.teeda.core.el.ELParser;
 import org.seasar.teeda.core.el.TeedaVariableResolver;
 import org.seasar.teeda.core.mock.MockApplication;
-import org.seasar.teeda.core.mock.MockVariableResolver;
 import org.seasar.teeda.core.unit.TeedaTestCase;
 
 
@@ -51,7 +51,8 @@ public class TestCommonsELParser extends TeedaTestCase {
 
     public void testParse(){
         getContainer().register(new Hoge(), "hoge");
-    	CommonsELParser parser = new CommonsELParser();
+        ELParser parser = new CommonsELParser();
+        parser.setExpressionProcessor(new CommonsExpressionProcessorImpl());
     	Object o = parser.parse("#{hoge.name}");
     	MockApplication app = getApplication();
     	app.setVariableResolver(new TeedaVariableResolver());

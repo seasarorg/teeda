@@ -20,8 +20,10 @@ import java.util.Map;
 
 import javax.faces.el.MethodBinding;
 
+import org.seasar.teeda.core.el.ELParser;
 import org.seasar.teeda.core.el.ValueBindingBase;
 import org.seasar.teeda.core.el.impl.commons.CommonsELParser;
+import org.seasar.teeda.core.el.impl.commons.CommonsExpressionProcessorImpl;
 import org.seasar.teeda.core.mock.MockVariableResolver;
 import org.seasar.teeda.core.unit.TeedaTestCase;
 
@@ -34,10 +36,12 @@ public class MethodBindingImplTest extends TeedaTestCase {
         A a = new A();
         MockVariableResolver resolver = getVariableResolver();
         resolver.putValue("a", a);
+        ELParser parser = new CommonsELParser();
+        parser.setExpressionProcessor(new CommonsExpressionProcessorImpl());
         ValueBindingBase vb = new ValueBindingImpl(getApplication(),
-                "#{a.getName}", new CommonsELParser());
+                "#{a.getName}", parser);
         MethodBinding mb = new MethodBindingImpl(vb, new Class[] {},
-                new CommonsELParser());
+                parser);
         assertSame(String.class, mb.getType(getFacesContext()));
     }
 
@@ -45,10 +49,12 @@ public class MethodBindingImplTest extends TeedaTestCase {
         A a = new A();
         MockVariableResolver resolver = getVariableResolver();
         resolver.putValue("a", a);
+        ELParser parser = new CommonsELParser();
+        parser.setExpressionProcessor(new CommonsExpressionProcessorImpl());
         ValueBindingBase vb = new ValueBindingImpl(getApplication(),
-                "#{a.getNum}", new CommonsELParser());
+                "#{a.getNum}", parser);
         MethodBinding mb = new MethodBindingImpl(vb, new Class[] {},
-                new CommonsELParser());
+                parser);
         assertSame(int.class, mb.getType(getFacesContext()));
     }
 
@@ -58,10 +64,12 @@ public class MethodBindingImplTest extends TeedaTestCase {
         MockVariableResolver resolver = getVariableResolver();
         resolver.putValue("m", map);
         resolver.putValue("a", new A());
+        ELParser parser = new CommonsELParser();
+        parser.setExpressionProcessor(new CommonsExpressionProcessorImpl());
         ValueBindingBase vb = new ValueBindingImpl(getApplication(),
-                "#{m[\"a\"].toString}", new CommonsELParser());
+                "#{m[\"a\"].toString}", parser);
         MethodBinding mb = new MethodBindingImpl(vb, new Class[] {},
-                new CommonsELParser());
+                parser);
         assertSame(String.class, mb.getType(getFacesContext()));
     }
 
@@ -69,10 +77,12 @@ public class MethodBindingImplTest extends TeedaTestCase {
         A a = new A();
         MockVariableResolver resolver = getVariableResolver();
         resolver.putValue("a", a);
+        ELParser parser = new CommonsELParser();
+        parser.setExpressionProcessor(new CommonsExpressionProcessorImpl());
         ValueBindingBase vb = new ValueBindingImpl(getApplication(),
-                "#{a.getName}", new CommonsELParser());
+                "#{a.getName}", parser);
         MethodBinding mb = new MethodBindingImpl(vb, new Class[] {},
-                new CommonsELParser());
+                parser);
         assertEquals(a.getName(), mb.invoke(getFacesContext(), null));
     }
 

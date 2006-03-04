@@ -26,7 +26,9 @@ public abstract class AbstractRenderKit extends RenderKit {
 
     protected abstract String getGeneratedKey(String family, String renderType);
     
-    protected abstract void setResponseStateManager(ResponseStateManager responseStateManager);
+    public abstract void setResponseStateManager(ResponseStateManager responseStateManager);
     
-    protected abstract void setResponseWriter(ResponseWriter responseWriter);
+    public abstract void setResponseWriter(ResponseWriter responseWriter);
+    
+    public abstract ResponseWriter getResponseWriter();
 }

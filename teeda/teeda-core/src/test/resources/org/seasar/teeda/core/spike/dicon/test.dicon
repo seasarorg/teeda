@@ -96,10 +96,11 @@
 	
 	<component class="org.seasar.teeda.core.render.Base64EncodeConverter" />
 	
+	
 	<!-- ManagedBean -->	
 	<component class="org.seasar.teeda.core.managedbean.impl.ManagedBeanFactoryImpl" />
 	
-	<component class="org.seasar.teeda.core.managedbean.impl.ManagedBeanScopeSaverImpl" ></component>
+	<component class="org.seasar.teeda.core.managedbean.impl.ManagedBeanScopeSaverImpl" />
 		
 	<component name="scopeManager" class="org.seasar.teeda.core.scope.impl.ScopeManagerImpl" />
 	

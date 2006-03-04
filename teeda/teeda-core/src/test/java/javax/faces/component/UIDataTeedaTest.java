@@ -23,8 +23,10 @@ import javax.faces.el.ValueBinding;
 
 import junitx.framework.ObjectAssert;
 
+import org.seasar.teeda.core.el.ELParser;
 import org.seasar.teeda.core.el.impl.ValueBindingImpl;
 import org.seasar.teeda.core.el.impl.commons.CommonsELParser;
+import org.seasar.teeda.core.el.impl.commons.CommonsExpressionProcessorImpl;
 import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.mock.MockUIComponentBase;
 import org.seasar.teeda.core.mock.MockUIComponentBaseWithNamingContainer;
@@ -78,8 +80,10 @@ public class UIDataTeedaTest extends UIComponentBaseTeedaTest {
         data.setValue(new String[] { "a", "b", "c", "d" });
         UIColumn col = new UIColumn();
         MockFacesContext facesContext = getFacesContext();
+        ELParser parser = new CommonsELParser();
+        parser.setExpressionProcessor(new CommonsExpressionProcessorImpl());
         ValueBinding vb = new ValueBindingImpl(facesContext.getApplication(),
-                "#{foo}", new CommonsELParser());
+                "#{foo}", parser);
         HtmlInputText editableValueHolder = new HtmlInputText();
         // inputText.setId("input");
         editableValueHolder.setValueBinding("value", vb);
@@ -137,8 +141,10 @@ public class UIDataTeedaTest extends UIComponentBaseTeedaTest {
         data.setValue(new String[] { "a", "original" });
         UIColumn col = new UIColumn();
         MockFacesContext facesContext = getFacesContext();
+        ELParser parser = new CommonsELParser();
+        parser.setExpressionProcessor(new CommonsExpressionProcessorImpl());
         ValueBinding vb = new ValueBindingImpl(facesContext.getApplication(),
-                "#{foo}", new CommonsELParser());
+                "#{foo}", parser);
         HtmlInputText editableValueHolder = new HtmlInputText();
         // inputText.setId("input");
         editableValueHolder.setValueBinding("value", vb);
