@@ -32,7 +32,7 @@ public class OutputTextTest extends AbstractTestCase {
         return setUpTestSuite(OutputTextTest.class);
     }
 
-    public void testOutputLink() throws Exception {
+    public void testOutputText() throws Exception {
         // ## Arrange ##
         URL url = getUrl("faces/outputText.jsp");
         System.out.println(url);
@@ -43,12 +43,31 @@ public class OutputTextTest extends AbstractTestCase {
         HtmlPage page = (HtmlPage) webClient.getPage(url);
 
         // ## Assert ##
-        assertEquals("this is outputText.jsp", page.getTitleText());
         final String body = getBody(page).trim();
         System.out.println(body);
+        assertEquals("this is outputText.jsp", page.getTitleText());
 
         HtmlSpan span = (HtmlSpan) page.getHtmlElementById("hello");
         assertEquals("Hello OutputText", span.asText());
+    }
+
+    public void testOutputTextJa() throws Exception {
+        // ## Arrange ##
+        URL url = getUrl("faces/outputTextJa.jsp");
+        System.out.println(url);
+
+        WebClient webClient = new WebClient();
+
+        // ## Act ##
+        HtmlPage page = (HtmlPage) webClient.getPage(url);
+
+        // ## Assert ##
+        final String body = getBody(page).trim();
+        System.out.println(body);
+        assertEquals("outputTextJa.jspです", page.getTitleText());
+
+        HtmlSpan span = (HtmlSpan) page.getHtmlElementById("hello");
+        assertEquals("こんにちはOutputText", span.asText());
     }
 
 }
