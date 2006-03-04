@@ -446,4 +446,12 @@ public class ApplicationImpl extends Application implements
         mbContext_ = mbContext;
     }
 
+    public ValueBindingContext getValueBindingContext() {
+        return vbContext_;
+    }
+
+    public MethodBindingContext getMethodBindingContext() {
+        return mbContext_;
+    }
+
 }
