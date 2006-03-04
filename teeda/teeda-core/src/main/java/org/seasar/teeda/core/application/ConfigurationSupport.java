@@ -15,12 +15,23 @@
  */
 package org.seasar.teeda.core.application;
 
+import org.seasar.teeda.core.el.MethodBindingContext;
+import org.seasar.teeda.core.el.ValueBindingContext;
+
 /**
  * @author shot
  */
 public interface ConfigurationSupport {
 
-    //TODO add Converter and Component DI support 
+    // TODO add Converter and Component DI support
     public void addConverterConfiguration(String converterClassName,
             ConverterConfiguration converterConfig);
+
+    public void setValueBindingContext(ValueBindingContext vbContext);
+
+    public ValueBindingContext getValueBindingContext();
+
+    public void setMethodBindingContext(MethodBindingContext mbContext);
+
+    public MethodBindingContext getMethodBindingContext();
 }
