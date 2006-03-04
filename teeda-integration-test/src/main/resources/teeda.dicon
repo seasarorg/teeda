@@ -33,7 +33,9 @@
 	
 	<component name="coreConfigurator" class="org.seasar.teeda.core.config.faces.impl.CoreFacesConfigurator" autoBinding="none" />
 	<component name="metaInfConfigurator" class="org.seasar.teeda.core.config.faces.impl.MetaInfFacesConfigurator" autoBinding="none" />
-	<component name="configFilesConfigurator" class="org.seasar.teeda.core.config.faces.impl.ConfigFilesFacesConfigurator" />
+	<component name="configFilesConfigurator" class="org.seasar.teeda.core.config.faces.impl.ConfigFilesFacesConfigurator" autoBinding="none">
+		<property name="externalContext">externalContext</property>
+	</component>
 	<component name="applicationConfigurator" class="org.seasar.teeda.core.config.faces.impl.ApplicationFacesConfigurator" autoBinding="none" />
 
 	<!-- FacesConfig Assembler -->
@@ -55,21 +57,28 @@
 
 	<!-- Applications -->
 	<!-- TODO need DI support for Converter, Validator, Component -->	
-	<component class="org.seasar.teeda.core.application.ApplicationImpl" >
-		<property name="variableResolver">variableResolver</property>
+	<component class="org.seasar.teeda.core.application.ApplicationImpl">
+		<property name="actionListener">actionListener</property>
+		<property name="navigationHandler">navigationHandler</property>
+		<property name="viewHandler">viewHandler</property>
 		<property name="propertyResolver">propertyResolver</property>
+		<property name="variableResolver">variableResolver</property>
+		<property name="stateManager">stateManager</property>
 	</component>
-	<component class="org.seasar.teeda.core.application.ActionListenerImpl" />
-	<component class="org.seasar.teeda.core.application.NavigationHandlerImpl" />
+	<component name="actionListener" class="org.seasar.teeda.core.application.ActionListenerImpl" />
+	<component name="navigationHandler" class="org.seasar.teeda.core.application.NavigationHandlerImpl" />
 	<component name="viewHandler" class="org.seasar.teeda.core.application.ViewHandlerImpl" />
+	<component name="propertyResolver" class="org.seasar.teeda.core.el.TeedaPropertyResolver" />
+	<component name="variableResolver" class="org.seasar.teeda.core.el.TeedaVariableResolver" />
 	<component name="stateManager" class="org.seasar.teeda.core.application.impl.TeedaStateManagerImpl" />
 	<component class="org.seasar.teeda.core.application.impl.TreeStructureManagerImpl" />
-	<component name="variableResolver" class="org.seasar.teeda.core.el.TeedaVariableResolver" />
-	<component name="propertyResolver" class="org.seasar.teeda.core.el.TeedaPropertyResolver" />
-	<component class="org.seasar.teeda.core.render.html.HtmlRenderKitImpl" />
-	<component class="org.seasar.teeda.core.render.html.HtmlResponseStateManager" />
+	<component class="org.seasar.teeda.core.render.html.HtmlRenderKitImpl">
+		<property name="responseStateManager">responseStateManager</property>
+		<property name="responseWriter">responseWriter</property>
+	</component>
+	<component name="responseStateManager" class="org.seasar.teeda.core.render.html.HtmlResponseStateManager" />
+	<component name="responseWriter" class="org.seasar.teeda.core.context.html.HtmlResponseWriter" />
 	<component class="org.seasar.teeda.core.render.Base64EncodeConverter" />
-	<component class="org.seasar.teeda.core.context.html.HtmlResponseWriter" />
 	
 	<!-- ManagedBean -->	
 	<component class="org.seasar.teeda.core.managedbean.impl.ManagedBeanFactoryImpl" />
