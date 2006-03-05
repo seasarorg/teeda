@@ -35,7 +35,8 @@ public class RenderKitFactoryImpl extends RenderKitFactory {
 
     private Map renderKits_ = Collections.synchronizedMap(new HashMap());
 
-    private static Logger logger_ = Logger.getLogger(RenderKitFactoryImpl.class);
+    private static Logger logger_ = Logger
+            .getLogger(RenderKitFactoryImpl.class);
 
     public RenderKitFactoryImpl() {
         initialize();
@@ -51,7 +52,7 @@ public class RenderKitFactoryImpl extends RenderKitFactory {
         AssertionUtil.assertNotNull("renderKitId", renderKitId);
         RenderKit renderKit = (RenderKit) renderKits_.get(renderKitId);
         if (renderKit == null) {
-            logger_.warn("RenderKit " + renderKitId + " is null.");
+            logger_.warn("RenderKit [" + renderKitId + "] is null.");
         }
         return renderKit;
     }
@@ -67,4 +68,5 @@ public class RenderKitFactoryImpl extends RenderKitFactory {
             addRenderKit(HTML_BASIC_RENDER_KIT, renderKit);
         }
     }
+
 }
