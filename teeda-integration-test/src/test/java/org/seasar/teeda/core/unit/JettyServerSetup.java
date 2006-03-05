@@ -65,6 +65,7 @@ public class JettyServerSetup extends TestSetup {
         server.addContext(context);
 
         try {
+            System.out.println("### Jetty start ###");
             server.start();
         } catch (MultiException e) {
             e.printStackTrace();
@@ -79,7 +80,9 @@ public class JettyServerSetup extends TestSetup {
     }
 
     private void stopJetty() throws InterruptedException {
+        System.out.println("### Jetty stop ###");
         server_.stop();
+        System.out.println("stopped.");
     }
 
     public File getWebapp() {
