@@ -67,7 +67,9 @@
 	</component>
 	<component name="actionListener" class="org.seasar.teeda.core.application.ActionListenerImpl" />
 	<component name="navigationHandler" class="org.seasar.teeda.core.application.NavigationHandlerImpl" />
-	<component name="viewHandler" class="org.seasar.teeda.core.application.ViewHandlerImpl" />
+	<component name="viewHandler" class="org.seasar.teeda.core.application.ViewHandlerImpl">
+		<aspect pointcut="renderView">aop.dumpComponentTreeInterceptor</aspect>
+	</component>
 	<component name="propertyResolver" class="org.seasar.teeda.core.el.TeedaPropertyResolver" />
 	<component name="variableResolver" class="org.seasar.teeda.core.el.TeedaVariableResolver" />
 	<component name="stateManager" class="org.seasar.teeda.core.application.impl.TeedaStateManagerImpl" />

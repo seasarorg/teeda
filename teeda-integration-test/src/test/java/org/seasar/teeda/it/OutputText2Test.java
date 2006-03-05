@@ -24,7 +24,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.gargoylesoftware.htmlunit.html.HtmlSpan;
 
 /**
- * @author manhole
+ * @author shot
  */
 public class OutputText2Test extends AbstractTestCase {
 
@@ -43,9 +43,9 @@ public class OutputText2Test extends AbstractTestCase {
         HtmlPage page = (HtmlPage) webClient.getPage(url);
 
         // ## Assert ##
-        assertEquals("this is outputText2.jsp", page.getTitleText());
         final String body = getBody(page).trim();
         System.out.println(body);
+        assertEquals("this is outputText2.jsp", page.getTitleText());
 
         HtmlSpan span = (HtmlSpan) page.getHtmlElementById("hello");
         assertEquals("Hello OutputText2", span.asText());
