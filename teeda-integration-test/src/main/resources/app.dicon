@@ -3,4 +3,5 @@
 	"http://www.seasar.org/dtd/components21.dtd">
 <components>
 	<include path="teeda.dicon"/>
+	<include path="org/seasar/teeda/dicon/test.dicon"/>
 </components>
