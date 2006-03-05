@@ -15,15 +15,18 @@
  */
 package org.seasar.teeda.core.config.faces.impl;
 
+import org.seasar.framework.container.factory.WebResourceResolver;
 import org.seasar.teeda.core.config.faces.AbstractFacesConfigurator;
 
 public class ApplicationFacesConfigurator extends AbstractFacesConfigurator {
 
     public ApplicationFacesConfigurator() {
+        super();
+        setResourceResolver(new WebResourceResolver());
     }
 
     public String getPath() {
-        return "WEB-INF/faces-config.xml";
+        return "/faces-config.xml";
     }
 
 }

@@ -53,6 +53,7 @@ public class ApplicationFacesConfiguratorTest extends TestCase {
 
         private String path_;
         public TargetApplicationFacesConfigurator(String path) {
+            super();
             path_ = path;
         }
         
