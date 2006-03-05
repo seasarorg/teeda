@@ -19,6 +19,8 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
+import org.seasar.framework.container.deployer.ComponentDeployerFactory;
+import org.seasar.framework.container.deployer.HttpServletComponentDeployerProvider;
 import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
 import org.seasar.framework.container.impl.HttpServletExternalContext;
 import org.seasar.framework.container.impl.HttpServletExternalContextComponentDefRegister;
@@ -44,6 +46,7 @@ public class S2ContainerListener implements ServletContextListener {
         SingletonS2ContainerFactory.setExternalContext(extCtx);
         SingletonS2ContainerFactory
                 .setExternalContextComponentDefRegister(new HttpServletExternalContextComponentDefRegister());
+        ComponentDeployerFactory.setProvider(new HttpServletComponentDeployerProvider());
         SingletonS2ContainerFactory.init();
     }
 
