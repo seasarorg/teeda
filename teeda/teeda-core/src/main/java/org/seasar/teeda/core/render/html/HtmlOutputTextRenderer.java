@@ -24,7 +24,6 @@ import javax.faces.context.ResponseWriter;
 
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.util.RendererUtil;
-import org.seasar.teeda.core.util.UIComponentUtil;
 import org.seasar.teeda.core.util.ValueHolderUtil;
 
 /**
@@ -45,7 +44,7 @@ public class HtmlOutputTextRenderer extends AbstractHtmlRenderer {
             HtmlOutputText htmlOutputText) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
         boolean startSpan = false;
-        if (UIComponentUtil.containsAttributes(htmlOutputText,
+        if (RendererUtil.containsAttributesForRender(htmlOutputText,
                 JsfConstants.ID_WITH_COMMON_PASSTROUGH_ATTRIBUTES)) {
             writer.startElement(JsfConstants.SPAN_ELEM, htmlOutputText);
             startSpan = true;

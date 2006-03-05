@@ -148,7 +148,7 @@ public class HtmlOutputTextRendererTest extends RendererTest {
         encodeByRenderer(renderer_, context, htmlOutputText_);
 
         // ## Assert ##
-        assertEquals("<span>a</span>", getResponseText());
+        assertEquals("a", getResponseText());
     }
 
     public void testEncode_WithAllAttributes() throws Exception {

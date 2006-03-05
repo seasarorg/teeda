@@ -24,7 +24,6 @@ import javax.faces.context.ResponseWriter;
 
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.util.RendererUtil;
-import org.seasar.teeda.core.util.UIComponentUtil;
 
 /**
  * @author manhole
@@ -53,7 +52,7 @@ public class HtmlPanelGroupRenderer extends AbstractHtmlRenderer {
     }
 
     private boolean isWriteSpan(HtmlPanelGroup htmlPanelGroup) {
-        return UIComponentUtil.containsAttributes(htmlPanelGroup,
+        return RendererUtil.containsAttributesForRender(htmlPanelGroup,
                 JsfConstants.ID_WITH_COMMON_PASSTROUGH_ATTRIBUTES);
     }
 

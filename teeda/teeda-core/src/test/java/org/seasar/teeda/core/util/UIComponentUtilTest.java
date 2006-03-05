@@ -28,19 +28,6 @@ import org.seasar.teeda.core.mock.MockUIComponentBase;
  */
 public class UIComponentUtilTest extends TestCase {
 
-    public void testContainsAttributes_false() throws Exception {
-        UIComponent component = new MockUIComponentBase();
-        assertEquals(false, UIComponentUtil.containsAttributes(component,
-                new String[] { "foo" }));
-    }
-
-    public void testContainsAttributes_true() throws Exception {
-        UIComponent component = new MockUIComponentBase();
-        component.getAttributes().put("foo", "something");
-        assertEquals(true, UIComponentUtil.containsAttributes(component,
-                new String[] { "foo" }));
-    }
-
     public void testIsDisabled() throws Exception {
         {
             UIComponent component = new MockUIComponentBase();

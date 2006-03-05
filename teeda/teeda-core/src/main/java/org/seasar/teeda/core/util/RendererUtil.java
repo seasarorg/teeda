@@ -16,6 +16,7 @@
 package org.seasar.teeda.core.util;
 
 import java.io.IOException;
+import java.util.Map;
 
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIViewRoot;
@@ -31,6 +32,26 @@ import org.seasar.teeda.core.JsfConstants;
 public class RendererUtil {
 
     private RendererUtil() {
+    }
+
+    public static boolean containsAttributesForRender(UIComponent component,
+            String[] attributeNames) {
+        Map attributes = component.getAttributes();
+        for (int i = 0, len = attributeNames.length; i < len; i++) {
+            String attributeName = attributeNames[i];
+            /*
+             * don't use UIComponent#containsKey method.
+             * 
+             * because when attributeName matches a property of this
+             * UIComponent, containsKey returns false. See
+             * UIComponent#getAttributes API document.
+             */
+            Object value = attributes.get(attributeName);
+            if (shouldRenderAttribute(attributeName, value)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public static boolean renderAttributes(ResponseWriter writer,
@@ -93,6 +114,9 @@ public class RendererUtil {
                 return false;
             }
         }
+        if (JsfConstants.ID_ATTR.equals(attributeName)) {
+            return shouldRenderIdAttribute(value.toString());
+        }
         return true;
     }
 
@@ -114,6 +138,10 @@ public class RendererUtil {
 
     public static boolean shouldRenderIdAttribute(UIComponent component) {
         String id = component.getId();
+        return shouldRenderIdAttribute(id);
+    }
+
+    private static boolean shouldRenderIdAttribute(String id) {
         if (id != null && !id.startsWith(UIViewRoot.UNIQUE_ID_PREFIX)) {
             return true;
         }

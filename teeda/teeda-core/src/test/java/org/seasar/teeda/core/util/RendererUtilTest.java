@@ -21,6 +21,7 @@ import javax.faces.component.UIViewRoot;
 import junit.framework.TestCase;
 
 import org.seasar.teeda.core.mock.MockUIComponent;
+import org.seasar.teeda.core.mock.MockUIComponentBase;
 
 /**
  * @author manhole
@@ -72,7 +73,26 @@ public class RendererUtilTest extends TestCase {
                 Integer.MAX_VALUE)));
 
         assertEquals(false, RendererUtil.isDefaultAttributeValue(""));
+    }
 
+    public void testContainsAttributes_false() throws Exception {
+        UIComponent component = new MockUIComponentBase();
+        assertEquals(false, RendererUtil.containsAttributesForRender(component,
+                new String[] { "foo" }));
+    }
+
+    public void testContainsAttributes_true() throws Exception {
+        UIComponent component = new MockUIComponentBase();
+        component.getAttributes().put("foo", "something");
+        assertEquals(true, RendererUtil.containsAttributesForRender(component,
+                new String[] { "foo" }));
+    }
+
+    public void testContainsAttributes_falseWhenDefaultValue() throws Exception {
+        UIComponent component = new MockUIComponentBase();
+        component.getAttributes().put("rendered", Boolean.FALSE);
+        assertEquals(false, RendererUtil.containsAttributesForRender(component,
+                new String[] { "rendered" }));
     }
 
     // TODO more tests
