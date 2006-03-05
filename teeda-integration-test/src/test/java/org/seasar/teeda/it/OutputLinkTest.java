@@ -20,9 +20,9 @@ import java.net.URL;
 import junit.framework.Test;
 
 import org.custommonkey.xmlunit.Diff;
-import org.seasar.teeda.core.unit.xmlunit.TextTrimmingDifferenceListener;
 
 import com.gargoylesoftware.htmlunit.WebClient;
+import com.gargoylesoftware.htmlunit.html.HtmlAnchor;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 
 /**
@@ -34,7 +34,7 @@ public class OutputLinkTest extends AbstractTestCase {
         return setUpTestSuite(OutputLinkTest.class);
     }
 
-    public void testOutputLink() throws Exception {
+    public void testRender() throws Exception {
         // ## Arrange ##
         URL url = getUrl("faces/outputLink1.jsp");
         System.out.println(url);
@@ -47,22 +47,30 @@ public class OutputLinkTest extends AbstractTestCase {
         // ## Assert ##
         final String body = getBody(page).trim();
         System.out.println(body);
-        assertEquals("this is outputLink1.jsp", page.getTitleText());
+        assertEquals("outputLink1.jsp", page.getTitleText());
 
         final String expected = readText("testOutputLink.html");
         Diff diff = diff(expected, body);
         assertEquals(diff.toString(), true, diff.similar());
     }
 
-    public void testDiff1() throws Exception {
-        Diff diff = diff("<a> <b></b> </a>", "<a><b></b></a>");
-        assertEquals(diff.toString(), true, diff.similar());
-    }
+    public void testLinkClink() throws Exception {
+        // ## Arrange ##
+        URL url = getUrl("faces/outputLink1.jsp");
+        System.out.println(url);
 
-    public void testDiff2() throws Exception {
-        Diff diff = diff("<a> <b></b> </a>", "<a><b></b></a>");
-        diff.overrideDifferenceListener(new TextTrimmingDifferenceListener());
-        assertEquals(diff.toString(), true, diff.similar());
+        WebClient webClient = new WebClient();
+        HtmlPage page1 = (HtmlPage) webClient.getPage(url);
+
+        HtmlAnchor link = (HtmlAnchor) page1.getHtmlElementById("link1");
+
+        // ## Act ##
+        HtmlPage page2 = (HtmlPage) link.click();
+
+        // ## Assert ##
+        final String body = getBody(page2).trim();
+        System.out.println(body);
+        assertEquals("outputLink2.jsp", page2.getTitleText());
     }
 
 }
