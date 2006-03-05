@@ -15,18 +15,12 @@
  */
 package org.seasar.teeda.it;
 
-import java.io.IOException;
 import java.net.URL;
-
-import javax.xml.parsers.ParserConfigurationException;
 
 import junit.framework.Test;
 
 import org.custommonkey.xmlunit.Diff;
-import org.seasar.teeda.core.unit.DifferenceListenerChain;
-import org.seasar.teeda.core.unit.IgnoreJsessionidDifferenceListener;
 import org.seasar.teeda.core.unit.xmlunit.TextTrimmingDifferenceListener;
-import org.xml.sax.SAXException;
 
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
@@ -58,16 +52,6 @@ public class OutputLinkTest extends AbstractTestCase {
         final String expected = readText("testOutputLink.html");
         Diff diff = diff(expected, body);
         assertEquals(diff.toString(), true, diff.similar());
-    }
-
-    private Diff diff(final String expected, final String body)
-        throws SAXException, IOException, ParserConfigurationException {
-        Diff diff = new Diff(expected, body);
-        DifferenceListenerChain chain = new DifferenceListenerChain();
-        chain.addDifferenceListener(new TextTrimmingDifferenceListener());
-        chain.addDifferenceListener(new IgnoreJsessionidDifferenceListener());
-        diff.overrideDifferenceListener(chain);
-        return diff;
     }
 
     public void testDiff1() throws Exception {

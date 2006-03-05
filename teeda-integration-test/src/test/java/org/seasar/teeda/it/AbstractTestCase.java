@@ -16,23 +16,31 @@
 package org.seasar.teeda.it;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import javax.xml.parsers.ParserConfigurationException;
+
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.custommonkey.xmlunit.Diff;
 import org.seasar.framework.util.InputStreamReaderUtil;
 import org.seasar.framework.util.ReaderUtil;
 import org.seasar.framework.util.ResourceNotFoundRuntimeException;
 import org.seasar.framework.util.ResourceUtil;
+import org.seasar.teeda.core.unit.DifferenceListenerChain;
 import org.seasar.teeda.core.unit.JettyServerSetup;
 import org.seasar.teeda.core.unit.WebApplicationTestSetup;
+import org.seasar.teeda.core.unit.xmlunit.IgnoreJsessionidDifferenceListener;
+import org.seasar.teeda.core.unit.xmlunit.TextTrimmingDifferenceListener;
 import org.seasar.teeda.core.util.MavenUtil;
 import org.seasar.teeda.core.util.SocketUtil;
+import org.xml.sax.SAXException;
 
 import com.gargoylesoftware.htmlunit.WebResponse;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
@@ -95,4 +103,15 @@ public abstract class AbstractTestCase extends TestCase {
             return ResourceUtil.getResource(fileNameByPackage);
         }
     }
+
+    protected Diff diff(final String expected, final String body)
+        throws SAXException, IOException, ParserConfigurationException {
+        Diff diff = new Diff(expected, body);
+        DifferenceListenerChain chain = new DifferenceListenerChain();
+        chain.addDifferenceListener(new TextTrimmingDifferenceListener());
+        chain.addDifferenceListener(new IgnoreJsessionidDifferenceListener());
+        diff.overrideDifferenceListener(chain);
+        return diff;
+    }
+
 }
