@@ -22,6 +22,7 @@ import javax.xml.parsers.SAXParserFactory;
 
 import org.seasar.framework.container.factory.ClassPathResourceResolver;
 import org.seasar.framework.container.factory.ResourceResolver;
+import org.seasar.framework.log.Logger;
 import org.seasar.framework.util.InputStreamUtil;
 import org.seasar.framework.util.SAXParserFactoryUtil;
 import org.seasar.framework.xml.SaxHandler;
@@ -35,6 +36,8 @@ import org.seasar.teeda.core.config.faces.rule.FacesConfigTagHandlerRule;
  */
 public abstract class AbstractFacesConfigurator implements FacesConfigurator {
 
+    private static final Logger logger_ = Logger.getLogger(AbstractFacesConfigurator.class);
+    
     private static final String FACES_CONFIG_1_1 = "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.1//EN";
 
     private static final String FACES_CONFIG_1_0 = "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.0//EN";
@@ -52,6 +55,9 @@ public abstract class AbstractFacesConfigurator implements FacesConfigurator {
 
     public FacesConfig configure() {
         String path = getPath();
+        if(logger_.isDebugEnabled()) {
+            logger_.debug("target file path = " + path);
+        }
         SaxHandlerParser parser = createSaxHandlerParser();
         InputStream is = resourceResolver_.getInputStream(path);
         if (is == null) {

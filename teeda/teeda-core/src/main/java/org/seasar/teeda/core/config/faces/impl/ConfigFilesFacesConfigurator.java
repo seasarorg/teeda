@@ -22,14 +22,20 @@ import java.util.List;
 import javax.faces.context.ExternalContext;
 import javax.faces.webapp.FacesServlet;
 
+import org.seasar.framework.log.Logger;
 import org.seasar.framework.util.InputStreamUtil;
 import org.seasar.framework.util.StringUtil;
 import org.seasar.framework.xml.SaxHandlerParser;
 import org.seasar.teeda.core.config.faces.AbstractFacesConfigurator;
 import org.seasar.teeda.core.config.faces.element.FacesConfig;
 
+/**
+ * @author shot
+ */
 public class ConfigFilesFacesConfigurator extends AbstractFacesConfigurator {
 
+    private static final Logger logger_ = Logger.getLogger(ConfigFilesFacesConfigurator.class);
+    
     private static final String FACES_CONFIG_DELIMETER = ",";
 
     private ExternalContext externalContext_;
@@ -40,14 +46,18 @@ public class ConfigFilesFacesConfigurator extends AbstractFacesConfigurator {
     public FacesConfig configure() {
         List configs = new LinkedList();
         String path = getPath();
+        if(logger_.isDebugEnabled()) {
+            logger_.debug("target file path = " + path);
+        }
         if (path == null) {
             return null;
         }
         String[] paths = StringUtil.split(path, FACES_CONFIG_DELIMETER);
 
         for (int i = 0; i < paths.length; i++) {
+            String targetPath = paths[i];
             SaxHandlerParser parser = createSaxHandlerParser();
-            InputStream is = resourceResolver_.getInputStream(paths[i].trim());
+            InputStream is = resourceResolver_.getInputStream(targetPath.trim());
             try {
                 configs.add(parser.parse(is));
             } finally {

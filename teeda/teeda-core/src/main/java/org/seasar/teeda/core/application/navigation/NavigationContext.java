@@ -72,4 +72,16 @@ public class NavigationContext {
         return isWildCardMatch_;
     }
 
+    public String toString() {
+        StringBuffer buf = new StringBuffer(100);
+        buf.append("navigation-rule = ");
+        buf.append("[");
+        buf.append("from-view-id = " + fromViewId_);
+        buf.append(" ");
+        for(Iterator itr = navigationCases_.iterator(); itr.hasNext();) {
+            buf.append(itr.next());
+        }
+        buf.append("]");
+        return buf.toString();
+    }
 }

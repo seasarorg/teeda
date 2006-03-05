@@ -20,6 +20,7 @@ import java.util.Map;
 
 import org.seasar.teeda.core.config.faces.assembler.ManagedBeanAssembler;
 import org.seasar.teeda.core.config.faces.element.ManagedBeanElement;
+import org.seasar.teeda.core.exception.ManagedBeanDuplicateRegisterException;
 import org.seasar.teeda.core.managedbean.ManagedBeanFactory;
 import org.seasar.teeda.core.scope.Scope;
 import org.seasar.teeda.core.scope.ScopeManager;
@@ -27,6 +28,9 @@ import org.seasar.teeda.core.util.ClassUtil;
 import org.seasar.teeda.core.util.DIContainerUtil;
 import org.seasar.teeda.core.util.IteratorUtil;
 
+/**
+ * @author shot
+ */
 public class DefaultManagedBeanAssembler extends ManagedBeanAssembler {
 
     private ManagedBeanFactory managedBeanFactory_;
@@ -38,24 +42,34 @@ public class DefaultManagedBeanAssembler extends ManagedBeanAssembler {
     }
 
     protected void setupBeforeAssemble() {
-        managedBeanFactory_ = 
-            (ManagedBeanFactory)DIContainerUtil.getComponent(ManagedBeanFactory.class);
-        scopeManager_ = 
-            (ScopeManager)DIContainerUtil.getComponent(ScopeManager.class);
+        managedBeanFactory_ = (ManagedBeanFactory) DIContainerUtil
+                .getComponent(ManagedBeanFactory.class);
+        scopeManager_ = (ScopeManager) DIContainerUtil
+                .getComponent(ScopeManager.class);
     }
 
     public void assemble() {
-        String managedBeanName = null;
-        ManagedBeanElement element = null;
         for (Iterator itr = IteratorUtil.getEntryIterator(getManagedBeans()); itr
-                .hasNext();){
-            Map.Entry entry = (Map.Entry)itr.next();
-            managedBeanName = (String)entry.getKey();
-            element = (ManagedBeanElement)entry.getValue();
-            Class mbClass = ClassUtil.forName(element.getManagedBeanClass());
-            Scope scope = scopeManager_.getScope(element.getManagedBeanScope());
-            managedBeanFactory_.setManagedBean(managedBeanName, mbClass, scope);
+                .hasNext();) {
+            Map.Entry entry = (Map.Entry) itr.next();
+            ManagedBeanElement element = (ManagedBeanElement) entry.getValue();
+            String mbName = (String) entry.getKey();
+            String mbClassName = element.getManagedBeanClass();
+            String mbScope = element.getManagedBeanScope();
+
+            assertNotRegisteredYet(mbName);
+
+            Scope scope = scopeManager_.getScope(mbScope);
+            managedBeanFactory_.setManagedBean(mbName, ClassUtil
+                    .forName(mbClassName), scope);
         }
     }
 
+    private void assertNotRegisteredYet(String managedBeanName) {
+        Object managedBean = managedBeanFactory_
+                .getManagedBean(managedBeanName);
+        if (managedBean != null) {
+            throw new ManagedBeanDuplicateRegisterException(managedBeanName);
+        }
+    }
 }

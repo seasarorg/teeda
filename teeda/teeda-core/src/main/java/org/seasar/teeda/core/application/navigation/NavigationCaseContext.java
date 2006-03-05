@@ -28,8 +28,8 @@ public class NavigationCaseContext {
 
     private boolean redirect_ = false;
 
-    public NavigationCaseContext(String fromAction, String outcome, String toViewId,
-            boolean redirect) {
+    public NavigationCaseContext(String fromAction, String outcome,
+            String toViewId, boolean redirect) {
         fromAction_ = fromAction;
         fromOutcome_ = outcome;
         toViewId_ = toViewId;
@@ -40,9 +40,9 @@ public class NavigationCaseContext {
         this(fromAction, outcome, null, false);
     }
 
-    public NavigationCaseContext(){
+    public NavigationCaseContext() {
     }
-    
+
     public String getFromAction() {
         return fromAction_;
     }
@@ -62,17 +62,29 @@ public class NavigationCaseContext {
     public void setFromAction(String fromAction) {
         fromAction_ = fromAction;
     }
-    
+
     public void setFromOutcome(String fromOutcome) {
         fromOutcome_ = fromOutcome;
     }
-    
+
     public void setRedirect(boolean redirect) {
         redirect_ = redirect;
     }
-    
+
     public void setToViewId(String toViewId) {
         toViewId_ = toViewId;
     }
-    
+
+    public String toString() {
+        StringBuffer buf = new StringBuffer(50);
+        buf.append("navigation-case = ");
+        buf.append("[");
+        buf.append("from-action = " + fromAction_);
+        buf.append("from-outcome = " + fromOutcome_);
+        buf.append("to-view-id = " + toViewId_);
+        buf.append("redirect = " + redirect_);
+        buf.append("]");
+        return buf.toString();
+    }
+
 }

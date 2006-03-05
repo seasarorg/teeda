@@ -21,7 +21,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import org.seasar.framework.exception.EmptyRuntimeException;
 import org.seasar.teeda.core.config.faces.element.ApplicationElement;
 import org.seasar.teeda.core.config.faces.element.ComponentElement;
 import org.seasar.teeda.core.config.faces.element.ConverterElement;
@@ -35,7 +34,7 @@ import org.seasar.teeda.core.config.faces.element.RenderKitElement;
 import org.seasar.teeda.core.config.faces.element.ValidatorElement;
 
 /**
- * @author Shinpei Ohtani(aka shot)
+ * @author shot
  */
 public class FacesConfigWrapperImpl implements FacesConfig {
 

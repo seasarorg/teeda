@@ -23,6 +23,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.seasar.framework.container.factory.ResourceResolver;
+import org.seasar.framework.log.Logger;
 import org.seasar.framework.util.InputStreamUtil;
 import org.seasar.framework.util.URLUtil;
 import org.seasar.framework.xml.SaxHandlerParser;
@@ -31,7 +32,12 @@ import org.seasar.teeda.core.config.faces.AbstractFacesConfigurator;
 import org.seasar.teeda.core.config.faces.element.FacesConfig;
 import org.seasar.teeda.core.util.ClassLoaderUtil;
 
+/**
+ * @author shot
+ */
 public class MetaInfFacesConfigurator extends AbstractFacesConfigurator {
+
+    private static final Logger logger_ = Logger.getLogger(MetaInfFacesConfigurator.class);
 
     private String path_ = JsfConstants.WEB_INF_LIB;
 
@@ -41,6 +47,9 @@ public class MetaInfFacesConfigurator extends AbstractFacesConfigurator {
 
     public FacesConfig configure() {
         String path = getPath();
+        if(logger_.isDebugEnabled()) {
+            logger_.debug("target file path = " + path);
+        }
         SaxHandlerParser parser = createSaxHandlerParser();
         List list = new ArrayList();
         for (;;) {

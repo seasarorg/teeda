@@ -31,6 +31,7 @@ import org.seasar.teeda.core.util.IteratorUtil;
 public class DefaultComponentAssembler extends ComponentAssembler {
 
     private Application application_;
+
     public DefaultComponentAssembler(Map components) {
         super(components);
     }
@@ -43,10 +44,11 @@ public class DefaultComponentAssembler extends ComponentAssembler {
         String componentType = null;
         String componentClassName = null;
         ComponentElement component = null;
-        for(Iterator itr = IteratorUtil.getEntryIterator(getComponents());itr.hasNext();){
-            Map.Entry entry = (Map.Entry)itr.next();
-            componentType = (String)entry.getKey();
-            component = (ComponentElement)entry.getValue();
+        for (Iterator itr = IteratorUtil.getEntryIterator(getComponents()); itr
+                .hasNext();) {
+            Map.Entry entry = (Map.Entry) itr.next();
+            componentType = (String) entry.getKey();
+            component = (ComponentElement) entry.getValue();
             componentClassName = component.getComponentClass();
             application_.addComponent(componentType, componentClassName);
         }

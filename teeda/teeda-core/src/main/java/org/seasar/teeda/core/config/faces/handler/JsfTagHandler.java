@@ -15,7 +15,6 @@
  */
 package org.seasar.teeda.core.config.faces.handler;
 
-import org.seasar.framework.log.Logger;
 import org.seasar.framework.xml.TagHandler;
 import org.seasar.framework.xml.TagHandlerContext;
 import org.xml.sax.Attributes;
@@ -25,25 +24,16 @@ import org.xml.sax.Attributes;
  */
 public class JsfTagHandler extends TagHandler {
 
-    private static Logger logger_ = Logger.getLogger(JsfTagHandler.class);
-    
     private static final long serialVersionUID = 1L;
 
-    public JsfTagHandler(){
+    public JsfTagHandler() {
     }
 
     public void start(TagHandlerContext context, Attributes attributes) {
         super.start(context, attributes);
-        if(logger_.isDebugEnabled()){
-            logger_.debug(context.getDetailPath());
-        }
     }
 
     public void end(TagHandlerContext context, String body) {
         super.end(context, body);
-        if(logger_.isDebugEnabled()){
-            logger_.debug(context.getDetailPath());
-            logger_.debug(body);
-        }
     }
 }

@@ -20,20 +20,23 @@ import java.util.Map;
 
 import org.seasar.teeda.core.config.faces.element.ManagedBeanElement;
 
+/**
+ * @author shot
+ */
 public abstract class ManagedBeanAssembler extends AbstractJsfAssembler {
 
     private Map managedBeans_ = Collections.EMPTY_MAP;
-    
-    public ManagedBeanAssembler(Map managedBeans){
-        if(managedBeans == null){
-            throw new IllegalArgumentException("managed bean");
+
+    public ManagedBeanAssembler(Map managedBeans) {
+        if (managedBeans == null) {
+            throw new IllegalArgumentException("managed-bean");
         }
         isAllSuitableJsfElement(managedBeans.values(), ManagedBeanElement.class);
         managedBeans_ = managedBeans;
         setupBeforeAssemble();
     }
-    
-    protected final Map getManagedBeans(){
+
+    protected final Map getManagedBeans() {
         return managedBeans_;
     }
 }
