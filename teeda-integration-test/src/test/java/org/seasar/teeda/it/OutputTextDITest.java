@@ -20,21 +20,21 @@ import java.net.URL;
 import junit.framework.Test;
 
 import com.gargoylesoftware.htmlunit.WebClient;
-import com.gargoylesoftware.htmlunit.html.HtmlLabel;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import com.gargoylesoftware.htmlunit.html.HtmlSpan;
 
 /**
  * @author yone
  */
-public class OutputLabelInGridTest extends AbstractTestCase {
+public class OutputTextDITest extends AbstractTestCase {
 
     public static Test suite() throws Exception {
-        return setUpTestSuite(OutputLabelInGridTest.class);
+        return setUpTestSuite(OutputTextDITest.class);
     }
 
-    public void testOutputLabelInGrid() throws Exception {
+    public void testOutputText() throws Exception {
         // ## Arrange ##
-        URL url = getUrl("faces/outputLabelInGrid.jsp");
+        URL url = getUrl("faces/outputTextDI.jsp");
         System.out.println(url);
 
         WebClient webClient = new WebClient();
@@ -45,28 +45,10 @@ public class OutputLabelInGridTest extends AbstractTestCase {
         // ## Assert ##
         final String body = getBody(page).trim();
         System.out.println(body);
-        
-        HtmlLabel label1 = (HtmlLabel)page.getHtmlElementById("lbl1");
-        assertEquals("label", label1.getTagName());
-        assertEquals("helloLabel1Hello OutputText1", label1.asText());
-        assertEquals("foo", label1.getForAttribute());
+        assertEquals("this is outputTextDI.jsp", page.getTitleText());
 
-        HtmlLabel label2 = (HtmlLabel)page.getHtmlElementById("lbl2");
-        assertEquals("label", label2.getTagName());
-        assertEquals("helloLabel2Hello OutputText2", label2.asText());
-        assertEquals("bar", label2.getForAttribute());
-        
-        // for debug
-        /*
-        Iterator elements = page.getAllHtmlChildElements();
-        while(elements.hasNext()) {
-        	HtmlElement element = (HtmlElement)elements.next();
-        	if(element instanceof HtmlLabel) {
-        		HtmlLabel lbl = (HtmlLabel)element;
-        		System.out.println("Label for["+lbl.getForAttribute()+"]");
-        	}
-        }
-        */
+        HtmlSpan span = (HtmlSpan) page.getHtmlElementById("helloDI");
+        assertEquals("Hello DI", span.asText());
     }
 
 }
