@@ -3,6 +3,6 @@
 	"http://www.seasar.org/dtd/components24.dtd">
 <components namespace="test">
 
-	<component name="helloBean" class="examples.teeda.dto.HelloBean"/>
+	<component name="helloBeanDI" class="examples.teeda.dto.HelloBean"/>
 	
 </components>
