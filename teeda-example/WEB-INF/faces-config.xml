@@ -17,4 +17,20 @@
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	
+	<managed-bean>
+		<managed-bean-name>commandLinkBean</managed-bean-name>
+		<managed-bean-class>examples.teeda.action.CommandLinkBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	
+	<!--
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>back</from-outcome>
+			<to-view-id>/index.html</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	-->
 </faces-config>
