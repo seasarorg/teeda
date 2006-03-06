@@ -34,6 +34,8 @@ import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.jsp.PageContext;
 
+import org.seasar.teeda.core.JsfConstants;
+
 /**
  * @author shot
  * 
@@ -105,9 +107,21 @@ public class WebAppUtils {
 
         PageContextOutWriter writer = new PageContextOutWriter(pageContext);
         String encoding = pageContext.getRequest().getCharacterEncoding();
-        
-        //need to acquire content-type from accept header, so set null to contentType
-        return renderKit.createResponseWriter(writer, null, encoding);
+
+        // need to acquire content-type from accept header, so set null to
+        // contentType
+        FacesContext context = FacesContext.getCurrentInstance();
+        String contentTypeList = getContentType(context);
+        if (contentTypeList == null) {
+            contentTypeList = JsfConstants.HTML_CONTENT_TYPE;
+        }
+        return renderKit
+                .createResponseWriter(writer, contentTypeList, encoding);
+    }
+
+    private static String getContentType(FacesContext context) {
+        return (String) context.getExternalContext().getRequestHeaderMap().get(
+                "Accept");
     }
 
     public static Object getValueFromCreatedValueBinding(String buindName) {

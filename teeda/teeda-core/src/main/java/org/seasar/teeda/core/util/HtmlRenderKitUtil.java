@@ -38,14 +38,6 @@ public class HtmlRenderKitUtil {
     }
 
     public static String getContentType(String contentTypeList) {
-        if (contentTypeList == null) {
-            FacesContext context = FacesContext.getCurrentInstance();
-            contentTypeList = getContentType(context);
-            if (contentTypeList == null) {
-                return JsfConstants.HTML_CONTENT_TYPE;
-            }
-        }
-
         String[] strs = StringUtil.split(contentTypeList, ",");
         String[] contentTypes = removeSemiColon(strs);
 
@@ -58,12 +50,6 @@ public class HtmlRenderKitUtil {
             }
         }
         return null;
-    }
-
-    public static String getContentType(FacesContext context) {
-        return (String) context.getExternalContext().getRequestHeaderMap().get(
-                "Accept");
-
     }
 
     public static boolean isHtmlContentType(String type) {
