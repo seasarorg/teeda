@@ -50,4 +50,10 @@ public class AbstractTestCaseTest extends AbstractTestCase {
         assertEquals(diff.toString(), true, diff.similar());
     }
 
+    public void testDiff6() throws Exception {
+        Diff diff = diff("<a href=\"a.jsp.*\">a</a>",
+            "<a href=\"a.jsp?1234=5555\">a</a>");
+        assertEquals(diff.toString(), true, diff.similar());
+    }
+
 }

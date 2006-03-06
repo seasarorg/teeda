@@ -19,8 +19,12 @@ import java.net.URL;
 
 import junit.framework.Test;
 
+import org.custommonkey.xmlunit.Diff;
+
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import com.gargoylesoftware.htmlunit.html.HtmlSubmitInput;
+import com.gargoylesoftware.htmlunit.html.HtmlTextInput;
 
 /**
  * @author manhole
@@ -39,16 +43,30 @@ public class CommandButtonTest extends AbstractTestCase {
         WebClient webClient = new WebClient();
 
         // ## Act ##
-        HtmlPage page = (HtmlPage) webClient.getPage(url);
+        HtmlPage page1 = (HtmlPage) webClient.getPage(url);
 
         // ## Assert ##
-        final String body = getBody(page).trim();
+        final String body = getBody(page1).trim();
         System.out.println(body);
-        assertEquals("commandButton.jsp", page.getTitleText());
+        assertEquals("commandButton.jsp", page1.getTitleText());
 
-        //        final String expected = readText("testOutputLink.html");
-        //        Diff diff = diff(expected, body);
-        //        assertEquals(diff.toString(), true, diff.similar());
+        HtmlTextInput input1 = (HtmlTextInput) page1
+            .getHtmlElementById("text1");
+        assertEquals("123", input1.getValueAttribute());
+
+        final String expected = readText("testRender.html");
+        Diff diff = diff(expected, body);
+        assertEquals(diff.toString(), true, diff.similar());
+
+        HtmlSubmitInput submit = (HtmlSubmitInput) page1
+            .getHtmlElementById("link1");
+
+        HtmlPage page2 = (HtmlPage) submit.click();
+        System.out.println(getBody(page2).trim());
+
+        HtmlTextInput input2 = (HtmlTextInput) page2
+            .getHtmlElementById("text1");
+        assertEquals("123 + 1", "124", input2.getValueAttribute());
     }
 
 }

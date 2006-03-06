@@ -17,12 +17,12 @@ package org.seasar.teeda.it;
 
 import java.net.URL;
 
+import org.custommonkey.xmlunit.Diff;
+
 import junit.framework.Test;
 
-import com.gargoylesoftware.htmlunit.Page;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlAnchor;
-import com.gargoylesoftware.htmlunit.html.HtmlElement;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.gargoylesoftware.htmlunit.html.HtmlTextInput;
 
@@ -45,25 +45,26 @@ public class CommandLinkTest extends AbstractTestCase {
         // ## Act ##
         // ## Assert ##
         HtmlPage page1 = (HtmlPage) webClient.getPage(url);
-        System.out.println(getBody(page1).trim());
+        final String body = getBody(page1).trim();
+        System.out.println(body);
         assertEquals("commandLink.jsp", page1.getTitleText());
 
         HtmlTextInput input1 = (HtmlTextInput) page1
             .getHtmlElementById("text1");
         assertEquals("123", input1.getValueAttribute());
 
-        //        final String expected = readText("testOutputLink.html");
-        //        Diff diff = diff(expected, body);
-        //        assertEquals(diff.toString(), true, diff.similar());
+        final String expected = readText("testRender.html");
+        Diff diff = diff(expected, body);
+        assertEquals(diff.toString(), true, diff.similar());
 
         HtmlAnchor link = (HtmlAnchor) page1.getHtmlElementById("link1");
 
         HtmlPage page2 = (HtmlPage) link.click();
         System.out.println(getBody(page2).trim());
 
-        HtmlTextInput input2 = (HtmlTextInput) page1
+        HtmlTextInput input2 = (HtmlTextInput) page2
             .getHtmlElementById("text1");
-        assertEquals("124", input2.getValueAttribute());
+        assertEquals("123 + 1", "124", input2.getValueAttribute());
     }
 
 }

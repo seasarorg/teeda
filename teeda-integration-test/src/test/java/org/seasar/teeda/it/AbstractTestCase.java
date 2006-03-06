@@ -37,6 +37,7 @@ import org.seasar.teeda.core.unit.JettyServerSetup;
 import org.seasar.teeda.core.unit.WebApplicationTestSetup;
 import org.seasar.teeda.core.unit.xmlunit.DifferenceListenerChain;
 import org.seasar.teeda.core.unit.xmlunit.IgnoreJsessionidDifferenceListener;
+import org.seasar.teeda.core.unit.xmlunit.RegexpDifferenceListener;
 import org.seasar.teeda.core.unit.xmlunit.TextTrimmingDifferenceListener;
 import org.seasar.teeda.core.util.MavenUtil;
 import org.seasar.teeda.core.util.SocketUtil;
@@ -118,6 +119,7 @@ public abstract class AbstractTestCase extends TestCase {
         DifferenceListenerChain chain = new DifferenceListenerChain();
         chain.addDifferenceListener(new TextTrimmingDifferenceListener());
         chain.addDifferenceListener(new IgnoreJsessionidDifferenceListener());
+        chain.addDifferenceListener(new RegexpDifferenceListener());
         diff.overrideDifferenceListener(chain);
         return diff;
     }
