@@ -73,4 +73,50 @@ public class OutputLinkTest extends AbstractTestCase {
         assertEquals("outputLink2.jsp", page2.getTitleText());
     }
 
+    public void testParam1() throws Exception {
+        // ## Arrange ##
+        URL url = getUrl("faces/outputLinkParam.jsp");
+        System.out.println(url);
+
+        MyWebClient webClient = new MyWebClient();
+
+        // ## Act ##
+        HtmlPage page = (HtmlPage) webClient.getPage(url);
+
+        // ## Assert ##
+        final String body = getBody(page).trim();
+        System.out.println(body);
+        assertEquals("outputLinkParam.jsp", page.getTitleText());
+
+        HtmlAnchor link = (HtmlAnchor) page.getHtmlElementById("link1");
+        assertEquals("xyz", link.asText());
+
+        final String expected = readText("testParam.html");
+        Diff diff = diff(expected, body);
+        assertEquals(diff.toString(), true, diff.similar());
+    }
+
+    public void testParamJa() throws Exception {
+        // ## Arrange ##
+        URL url = getUrl("faces/outputLinkParamJa.jsp");
+        System.out.println(url);
+
+        MyWebClient webClient = new MyWebClient();
+
+        // ## Act ##
+        HtmlPage page = (HtmlPage) webClient.getPage(url);
+
+        // ## Assert ##
+        final String body = getBody(page).trim();
+        System.out.println(body);
+        assertEquals("outputLinkParamJa.jsp", page.getTitleText());
+
+        HtmlAnchor link = (HtmlAnchor) page.getHtmlElementById("link1");
+        assertEquals("わをん", link.asText());
+
+        final String expected = readText("testParamJa.html");
+        Diff diff = diff(expected, body);
+        assertEquals(diff.toString(), true, diff.similar());
+    }
+
 }

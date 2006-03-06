@@ -16,7 +16,6 @@
 package org.seasar.teeda.it;
 
 import org.custommonkey.xmlunit.Diff;
-import org.seasar.teeda.core.unit.xmlunit.TextTrimmingDifferenceListener;
 
 /**
  * @author manhole
@@ -30,7 +29,24 @@ public class AbstractTestCaseTest extends AbstractTestCase {
 
     public void testDiff2() throws Exception {
         Diff diff = diff("<a> <b></b> </a>", "<a><b></b></a>");
-        diff.overrideDifferenceListener(new TextTrimmingDifferenceListener());
+        assertEquals(diff.toString(), true, diff.similar());
+    }
+
+    public void testDiff3() throws Exception {
+        Diff diff = diff("<a href=\"a.jsp\">a</a>",
+            "<a href=\"a.jsp;jsessionid=aaaa\">a</a>");
+        assertEquals(diff.toString(), true, diff.similar());
+    }
+
+    public void testDiff4() throws Exception {
+        Diff diff = diff("<a href=\"a.jsp?1=2\">a</a>",
+            "<a href=\"a.jsp;jsessionid=aaaa?1=2\">a</a>");
+        assertEquals(diff.toString(), true, diff.similar());
+    }
+
+    public void testDiff5() throws Exception {
+        Diff diff = diff("<a href=\"a.jsp?1=2\">a</a>",
+            "<a href=\"a.jsp?1=2;jsessionid=aaaa\">a</a>");
         assertEquals(diff.toString(), true, diff.similar());
     }
 

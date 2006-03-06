@@ -85,8 +85,16 @@ public abstract class AbstractTestCase extends TestCase {
     }
 
     protected String readText(String s) {
-        String path = getClass().getName().replace('.', '/') + "_" + s;
-        InputStream is = ResourceUtil.getResourceAsStream(path);
+        String pathByClass = getClass().getName().replace('.', '/') + "_" + s;
+        InputStream is = null;
+        try {
+            is = ResourceUtil.getResourceAsStream(pathByClass);
+        } catch (ResourceNotFoundRuntimeException e) {
+            String pathByPackage = getClass().getPackage().getName().replace(
+                '.', '/')
+                + "/" + s;
+            is = ResourceUtil.getResourceAsStream(pathByPackage);
+        }
         Reader reader = InputStreamReaderUtil.create(is, "UTF-8");
         return ReaderUtil.readText(reader);
     }
