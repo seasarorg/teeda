@@ -72,11 +72,11 @@ public class FacesMessageUtilsTest extends TeedaTestCase {
         UIViewRoot root = new UIViewRoot();
         root.setLocale(Locale.ENGLISH);
         context.setViewRoot(root);
-        FacesMessageUtils.addErrorMessage(context, component, "ccc");
+        FacesMessageUtils.addErrorMessage(context, component, "javax.faces.component.UIInput.CONVERSION");
         assertNotNull(context.getMessages("c"));
         Iterator itr = context.getMessages();
         FacesMessage message = (FacesMessage) itr.next();
-        assertEquals("CCC", message.getSummary());
+        assertEquals("Conversion error occurred.", message.getSummary());
     }
 
 }
