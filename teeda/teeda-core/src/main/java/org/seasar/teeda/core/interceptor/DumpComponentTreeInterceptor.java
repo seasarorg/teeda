@@ -15,6 +15,7 @@
  */
 package org.seasar.teeda.core.interceptor;
 
+import java.io.PrintWriter;
 import java.util.Iterator;
 
 import javax.faces.component.UIComponent;
@@ -23,45 +24,60 @@ import javax.faces.context.FacesContext;
 
 import org.aopalliance.intercept.MethodInvocation;
 import org.seasar.framework.aop.interceptors.AbstractInterceptor;
+import org.seasar.framework.log.Logger;
+import org.seasar.framework.util.SPrintWriter;
 
 /**
  * @author manhole
  */
 public class DumpComponentTreeInterceptor extends AbstractInterceptor {
 
+    private static final Logger logger_ = Logger
+            .getLogger(DumpComponentTreeInterceptor.class);
+
     private static final long serialVersionUID = 1L;
 
     public Object invoke(MethodInvocation invocation) throws Throwable {
-        System.out.println("DumpComponentTreeInterceptor.invoke() before");
-        dumpTree();
+        FacesContext context = FacesContext.getCurrentInstance();
+        printBefore(context);
         try {
-            Object result = invocation.proceed();
-            return result;
+            return invocation.proceed();
         } finally {
-            System.out.println("DumpComponentTreeInterceptor.invoke() after");
-            dumpTree();
+            printAfter(context);
         }
     }
 
-    private void dumpTree() {
-        FacesContext context = FacesContext.getCurrentInstance();
-        UIViewRoot viewRoot = context.getViewRoot();
-        System.out.println("viewRoot=" + viewRoot + " ,viewId="
-            + viewRoot.getViewId());
-        System.out.println("[tree] " + viewRoot);
-        dumpTree(viewRoot, 1);
+    private void printAfter(FacesContext context) {
+        SPrintWriter writer = new SPrintWriter();
+        writer.println(getClass().getName() + " after");
+        dumpTree(writer, context);
+        logger_.debug(writer.toString());
     }
 
-    private void dumpTree(UIComponent component, int level) {
+    private void printBefore(FacesContext context) {
+        SPrintWriter writer = new SPrintWriter();
+        writer.println(getClass().getName() + " before");
+        dumpTree(writer, context);
+        logger_.debug(writer.toString());
+    }
+
+    void dumpTree(PrintWriter writer, FacesContext context) {
+        UIViewRoot viewRoot = context.getViewRoot();
+        writer.println("viewId=" + viewRoot.getViewId());
+        writer.println("[tree] " + viewRoot);
+        dumpTree(writer, viewRoot, 1);
+    }
+
+    void dumpTree(PrintWriter writer, UIComponent component, int depth) {
         for (Iterator it = component.getFacetsAndChildren(); it.hasNext();) {
             UIComponent child = (UIComponent) it.next();
-            System.out.print("[tree] ");
-            for (int i = 0; i < level; i++) {
-                System.out.print("  ");
+            writer.print("[tree] ");
+            for (int i = 0; i < depth; i++) {
+                writer.print("  ");
             }
-            System.out.print(child);
-            System.out.println("");
-            dumpTree(child, level + 1);
+            writer.print(child);
+            writer.println("");
+            dumpTree(writer, child, depth + 1);
         }
     }
 
