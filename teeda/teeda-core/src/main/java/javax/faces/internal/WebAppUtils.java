@@ -104,9 +104,10 @@ public class WebAppUtils {
                 .getViewRoot().getRenderKitId());
 
         PageContextOutWriter writer = new PageContextOutWriter(pageContext);
-        String contentType = pageContext.getRequest().getContentType();
         String encoding = pageContext.getRequest().getCharacterEncoding();
-        return renderKit.createResponseWriter(writer, contentType, encoding);
+        
+        //need to acquire content-type from accept header, so set null to contentType
+        return renderKit.createResponseWriter(writer, null, encoding);
     }
 
     public static Object getValueFromCreatedValueBinding(String buindName) {
