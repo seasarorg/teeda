@@ -11,7 +11,6 @@
 	<classpathentry kind="lib" path="WEB-INF/lib/commons-el-1.0.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/commons-lang-2.1.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/commons-logging-1.0.4.jar"/>
-	<classpathentry kind="lib" path="WEB-INF/lib/jasper-runtime-4.0.6.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/javassist-3.0.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/jstl-1.1.2.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/junit-3.8.1.jar"/>
