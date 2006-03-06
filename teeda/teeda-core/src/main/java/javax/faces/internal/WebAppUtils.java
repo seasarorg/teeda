@@ -108,8 +108,6 @@ public class WebAppUtils {
         PageContextOutWriter writer = new PageContextOutWriter(pageContext);
         String encoding = pageContext.getRequest().getCharacterEncoding();
 
-        // need to acquire content-type from accept header, so set null to
-        // contentType
         FacesContext context = FacesContext.getCurrentInstance();
         String contentTypeList = getContentType(context);
         if (contentTypeList == null) {
