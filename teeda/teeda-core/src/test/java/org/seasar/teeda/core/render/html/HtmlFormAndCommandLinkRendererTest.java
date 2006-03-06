@@ -51,6 +51,7 @@ public class HtmlFormAndCommandLinkRendererTest extends AbstractRendererTest {
         htmlForm_.getChildren().add(htmlCommandLink);
 
         MockFacesContext context = getFacesContext();
+        context.getViewRoot().setViewId("/aa");
 
         // <input type="hidden" name="fooForm:__link_clicked__" />
 
@@ -73,7 +74,7 @@ public class HtmlFormAndCommandLinkRendererTest extends AbstractRendererTest {
                         + " f.submit();"
                         + " return false;"
                         + "\"></a>"
-                        + "<input type=\"hidden\" name=\"fooForm\" value=\"fooForm\" />"
+                        + "<input type=\"hidden\" name=\"fooForm/aa\" value=\"fooForm\" />"
                         + "<input type=\"hidden\" name=\"fooForm:__link_clicked__\" />"
                         + "</form>", getResponseText());
     }
@@ -100,6 +101,7 @@ public class HtmlFormAndCommandLinkRendererTest extends AbstractRendererTest {
         }
 
         MockFacesContext context = getFacesContext();
+        context.getViewRoot().setViewId("/abc");
 
         // <input type="hidden" name="fooForm:__link_clicked__" />
 
@@ -124,11 +126,11 @@ public class HtmlFormAndCommandLinkRendererTest extends AbstractRendererTest {
                         + " f.submit();"
                         + " return false;"
                         + "\"></a>"
-                        + "<input type=\"hidden\" name=\"fooForm\" value=\"fooForm\" />"
+                        + "<input type=\"hidden\" name=\"fooForm/abc\" value=\"fooForm\" />"
                         + "<input type=\"hidden\" name=\"fooForm:__link_clicked__\" />"
                         + "<input type=\"hidden\" name=\"x\" />"
-                        + "<input type=\"hidden\" name=\"y\" />"
-                        + "</form>", getResponseText());
+                        + "<input type=\"hidden\" name=\"y\" />" + "</form>",
+                getResponseText());
     }
 
 }

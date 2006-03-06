@@ -99,7 +99,9 @@ public class HtmlRenderKitImpl extends AbstractRenderKit {
         htmlResponseWriter.setWriter(writer);
         String contentType = HtmlRenderKitUtil.getContentType(contentTypeList);
         if (contentType == null) {
-            throw new IllegalArgumentException("contentType");
+            throw new IllegalArgumentException(
+                    "No suitable contentType. contentTypeList=["
+                            + contentTypeList + "]");
         }
         htmlResponseWriter.setContentType(contentType);
         htmlResponseWriter.setCharacterEncoding(characterEncoding);
@@ -122,7 +124,7 @@ public class HtmlRenderKitImpl extends AbstractRenderKit {
     public ResponseWriter getResponseWriter() {
         return responseWriter_;
     }
-    
+
     protected String getGeneratedKey(String family, String renderType) {
         return family + "." + renderType;
     }

@@ -44,6 +44,7 @@ public class HtmlFormRendererTest extends RendererTest {
 
     public void testEncode_NoValue() throws Exception {
         MockFacesContext context = getFacesContext();
+        context.getViewRoot().setViewId("/aa");
 
         // ## Act ##
         encodeByRenderer(renderer_, context, htmlForm_);
@@ -51,7 +52,7 @@ public class HtmlFormRendererTest extends RendererTest {
         // ## Assert ##
         assertEquals(
                 "<form name=\"_id0\" method=\"post\" enctype=\"application/x-www-form-urlencoded\">"
-                        + "<input type=\"hidden\" name=\"_id0\" value=\"_id0\" />"
+                        + "<input type=\"hidden\" name=\"_id0/aa\" value=\"_id0\" />"
                         + "</form>", getResponseText());
     }
 
@@ -69,8 +70,9 @@ public class HtmlFormRendererTest extends RendererTest {
 
     public void testEncode_WithId() throws Exception {
         // ## Arrange ##
-        htmlForm_.setId("a");
         MockFacesContext context = getFacesContext();
+        context.getViewRoot().setViewId("/abc");
+        htmlForm_.setId("a");
 
         // ## Act ##
         encodeByRenderer(renderer_, context, htmlForm_);
@@ -78,7 +80,7 @@ public class HtmlFormRendererTest extends RendererTest {
         // ## Assert ##
         assertEquals(
                 "<form id=\"a\" name=\"a\" method=\"post\" enctype=\"application/x-www-form-urlencoded\">"
-                        + "<input type=\"hidden\" name=\"a\" value=\"a\" />"
+                        + "<input type=\"hidden\" name=\"a/abc\" value=\"a\" />"
                         + "</form>", getResponseText());
     }
 
@@ -108,6 +110,7 @@ public class HtmlFormRendererTest extends RendererTest {
         htmlForm_.setId("AA");
 
         MockFacesContext context = getFacesContext();
+        context.getViewRoot().setViewId("/xyz");
         encodeByRenderer(renderer_, context, htmlForm_);
 
         Diff diff = new Diff("<form id=\"AA\" name=\"AA\" method=\"post\""
@@ -119,7 +122,7 @@ public class HtmlFormRendererTest extends RendererTest {
                 + " onmouseover=\"n\"" + " onmouseup=\"o\"" + " onreset=\"p\""
                 + " onsubmit=\"q\"" + " style=\"r\"" + " class=\"s\""
                 + " target=\"t\"" + " title=\"u\"" + ">"
-                + "<input type=\"hidden\" name=\"AA\" value=\"AA\" />"
+                + "<input type=\"hidden\" name=\"AA/xyz\" value=\"AA\" />"
                 + "</form>", getResponseText());
         assertEquals(diff.toString(), true, diff.identical());
     }
@@ -143,7 +146,8 @@ public class HtmlFormRendererTest extends RendererTest {
         htmlForm_.setClientId("key1");
 
         MockFacesContext context = getFacesContext();
-        context.getExternalContext().getRequestParameterMap().put("key1",
+        context.getViewRoot().setViewId("/xyz");
+        context.getExternalContext().getRequestParameterMap().put("key1/xyz",
                 "12345");
 
         // ## Act ##

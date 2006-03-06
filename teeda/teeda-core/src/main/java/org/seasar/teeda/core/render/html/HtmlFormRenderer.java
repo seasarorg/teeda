@@ -23,6 +23,7 @@ import java.util.Map.Entry;
 
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIForm;
+import javax.faces.component.UIViewRoot;
 import javax.faces.component.html.HtmlForm;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
@@ -119,10 +120,9 @@ public class HtmlFormRenderer extends AbstractHtmlRenderer {
     private void renderFormSubmitMarker(FacesContext context,
             HtmlForm htmlForm, ResponseWriter writer) throws IOException {
         String clientId = htmlForm.getClientId(context);
-        // TODO concat viewId
-        String name = clientId;
+        String key = getFormSubmitKey(context, htmlForm);
         String value = clientId;
-        renderHidden(htmlForm, writer, name, value);
+        renderHidden(htmlForm, writer, key, value);
     }
 
     public void decode(FacesContext context, UIComponent component) {
@@ -132,12 +132,18 @@ public class HtmlFormRenderer extends AbstractHtmlRenderer {
 
     protected void decodeHtmlForm(FacesContext context, HtmlForm htmlForm) {
         Map reqParam = context.getExternalContext().getRequestParameterMap();
-        String clientId = htmlForm.getClientId(context);
-        if (reqParam.containsKey(clientId)) {
+        String key = getFormSubmitKey(context, htmlForm);
+        if (reqParam.containsKey(key)) {
             htmlForm.setSubmitted(true);
         } else {
             htmlForm.setSubmitted(false);
         }
+    }
+
+    protected String getFormSubmitKey(FacesContext context, HtmlForm htmlForm) {
+        UIViewRoot viewRoot = context.getViewRoot();
+        String viewId = viewRoot.getViewId();
+        return htmlForm.getClientId(context) + viewId;
     }
 
 }
