@@ -27,11 +27,11 @@ public class IgnoreJsessionidDifferenceListenerTest extends TestCase {
     public void testJsessionid1() throws Exception {
         // ## Arrange ##
         Diff diff = new Diff("<a href=\"bbb\"></a>",
-            "<a href=\"bbb;jsessionid=2kn98btcu73r6\"></a>");
+                "<a href=\"bbb;jsessionid=2kn98btcu73r6\"></a>");
 
         // ## Act ##
         diff
-            .overrideDifferenceListener(new IgnoreJsessionidDifferenceListener());
+                .overrideDifferenceListener(new IgnoreJsessionidDifferenceListener());
 
         // ## Assert ##
         assertEquals(diff.toString(), true, diff.similar());
@@ -41,14 +41,28 @@ public class IgnoreJsessionidDifferenceListenerTest extends TestCase {
     public void testJsessionid2() throws Exception {
         // ## Arrange ##
         Diff diff = new Diff("<a href=\"bbb\" style=\"c\"></a>",
-            "<a href=\"bbb;jsessionid=2kn98btcu73r6\" style=\"d\"></a>");
+                "<a href=\"bbb;jsessionid=2kn98btcu73r6\" style=\"d\"></a>");
 
         // ## Act ##
         diff
-            .overrideDifferenceListener(new IgnoreJsessionidDifferenceListener());
+                .overrideDifferenceListener(new IgnoreJsessionidDifferenceListener());
 
         // ## Assert ##
         assertEquals(diff.toString(), false, diff.similar());
+        assertEquals(diff.toString(), false, diff.identical());
+    }
+
+    public void testJsessionid3() throws Exception {
+        // ## Arrange ##
+        Diff diff = new Diff("<a href=\"bbb?a=1\"></a>",
+                "<a href=\"bbb;jsessionid=g8fpaqxqoql3?a=1\"></a>");
+
+        // ## Act ##
+        diff
+                .overrideDifferenceListener(new IgnoreJsessionidDifferenceListener());
+
+        // ## Assert ##
+        assertEquals(diff.toString(), true, diff.similar());
         assertEquals(diff.toString(), false, diff.identical());
     }
 

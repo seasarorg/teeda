@@ -37,19 +37,20 @@ public class DifferenceListenerChain implements DifferenceListener {
     public int differenceFound(Difference difference) {
         for (Iterator it = listeners_.iterator(); it.hasNext();) {
             DifferenceListener differenceListener = (DifferenceListener) it
-                .next();
-            int result = differenceListener.differenceFound(difference);
+                    .next();
+            final int result = differenceListener.differenceFound(difference);
             if (result != DifferenceListener.RETURN_ACCEPT_DIFFERENCE) {
                 return result;
             }
         }
+        System.out.println("id=" + difference.getId() + "," + difference);
         return DifferenceListener.RETURN_ACCEPT_DIFFERENCE;
     }
 
     public void skippedComparison(Node node1, Node node2) {
         for (Iterator it = listeners_.iterator(); it.hasNext();) {
             DifferenceListener differenceListener = (DifferenceListener) it
-                .next();
+                    .next();
             differenceListener.skippedComparison(node1, node2);
         }
     }

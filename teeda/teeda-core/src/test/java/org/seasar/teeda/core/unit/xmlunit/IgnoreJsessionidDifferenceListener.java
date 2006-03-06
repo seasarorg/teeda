@@ -28,24 +28,35 @@ public class IgnoreJsessionidDifferenceListener implements DifferenceListener {
     public int differenceFound(Difference difference) {
         if (DifferenceConstants.ATTR_VALUE.getId() == difference.getId()) {
             String nodeName = difference.getControlNodeDetail().getNode()
-                .getNodeName();
+                    .getNodeName();
             if ("href".equalsIgnoreCase(nodeName)) {
                 String controlNodeValue = difference.getControlNodeDetail()
-                    .getValue();
+                        .getValue();
                 String testNodeValue = difference.getTestNodeDetail()
-                    .getValue();
-                int pos = testNodeValue.indexOf(";jsessionid=");
-                if (-1 < pos) {
-                    testNodeValue = testNodeValue.substring(0, pos);
-                    if (controlNodeValue.equals(testNodeValue)) {
-                        System.out.println("recover: jsessionid");
-                        return DifferenceListener.RETURN_IGNORE_DIFFERENCE_NODES_SIMILAR;
-                    }
+                        .getValue();
+                if (controlNodeValue.equals(removeJsessionid(testNodeValue))) {
+                    System.out.println("recover: jsessionid");
+                    return DifferenceListener.RETURN_IGNORE_DIFFERENCE_NODES_SIMILAR;
                 }
             }
         }
-
         return DifferenceListener.RETURN_ACCEPT_DIFFERENCE;
+    }
+
+    private String removeJsessionid(final String s) {
+        int leftPos = s.indexOf(";jsessionid=");
+        if (-1 == leftPos) {
+            return s;
+        }
+        String removed = s.substring(0, leftPos);
+        int rightPos = s.indexOf("&", leftPos);
+        if (rightPos == -1) {
+            rightPos = s.indexOf("?", leftPos);
+        }
+        if (-1 < rightPos) {
+            removed = removed + s.substring(rightPos);
+        }
+        return removed;
     }
 
     public void skippedComparison(Node node1, Node node2) {

@@ -129,7 +129,6 @@ public class TextTrimmingDifferenceListener implements DifferenceListener {
             System.out.println("recover:CHILD_NODELIST_SEQUENCE");
             return DifferenceListener.RETURN_IGNORE_DIFFERENCE_NODES_IDENTICAL;
         }
-        System.out.println("id=" + difference.getId() + "," + difference);
         return DifferenceListener.RETURN_ACCEPT_DIFFERENCE;
     }
 
