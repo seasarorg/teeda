@@ -13,7 +13,7 @@
 
 	<managed-bean>
 		<managed-bean-name>helloBean</managed-bean-name>
-		<managed-bean-class>org.seasar.teeda.it.HelloBean</managed-bean-class>
+		<managed-bean-class>examples.teeda.dto.HelloBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	
