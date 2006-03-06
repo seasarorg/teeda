@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE components PUBLIC "-//SEASAR2.1//DTD S2Container//EN"
+	"http://www.seasar.org/dtd/components24.dtd">
+<components namespace="teeda">
+
+	<include path="aop.dicon" />
+
+	<!-- Error page include -->
+	<include path="teedaErrorPage.dicon" />
+	
+	<!-- ExternalContext -->
+	<component name="externalContext" class="org.seasar.teeda.core.context.servlet.ServletExternalContextImpl">
+		<arg>application</arg>
+		<arg>request</arg>
+		<arg>response</arg>
+	</component>
+
+	<!-- FacesConfig configurator -->
+	<component class="org.seasar.teeda.core.config.faces.impl.FacesConfigBuilderImpl">
+		<initMethod name="addFacesConfigurator">
+			<arg>coreConfigurator</arg>
+		</initMethod>
+		<initMethod name="addFacesConfigurator">
+			<arg>metaInfConfigurator</arg>
+		</initMethod>
+		<initMethod name="addFacesConfigurator">
+			<arg>configFilesConfigurator</arg>
+		</initMethod>
+		<initMethod name="addFacesConfigurator">
+			<arg>applicationConfigurator</arg>
+		</initMethod>
+		<aspect>aop.traceInterceptor</aspect>
+	</component>
+	
+	<component name="coreConfigurator" class="org.seasar.teeda.core.config.faces.impl.CoreFacesConfigurator" autoBinding="none">
+		<aspect>aop.traceInterceptor</aspect>
+	</component>
+	
+	<component name="metaInfConfigurator" class="org.seasar.teeda.core.config.faces.impl.MetaInfFacesConfigurator" autoBinding="none">
+			<aspect>aop.traceInterceptor</aspect>
+	</component>
+	
+	<component name="configFilesConfigurator" class="org.seasar.teeda.core.config.faces.impl.ConfigFilesFacesConfigurator" autoBinding="none">
+		<property name="externalContext">externalContext</property>
+		<aspect>aop.traceInterceptor</aspect>
+	</component>
+	
+	<component name="applicationConfigurator" class="org.seasar.teeda.core.config.faces.impl.ApplicationFacesConfigurator" autoBinding="none">
+			<aspect>aop.traceInterceptor</aspect>
+	</component>
+	
+
+	<!-- FacesConfig Assembler -->
+	<component class="org.seasar.teeda.core.config.faces.assembler.impl.DefaultAssembleProvider">
+		<aspect>aop.traceInterceptor</aspect>
+	</component>
+	<component class="org.seasar.teeda.core.config.faces.assembler.AssemblerAssembler">
+		<aspect>aop.traceInterceptor</aspect>
+	</component>
+
+	<!-- ValueBinding relates -->
+	<component class="org.seasar.teeda.core.el.impl.commons.CommonsELParser" />
+	<component class="org.seasar.teeda.core.el.impl.commons.CommonsExpressionProcessorImpl" />
+	<component name="valueBindingContext" class="org.seasar.teeda.core.el.impl.ValueBindingContextImpl">
+		<property name="valueBindingName">"org.seasar.teeda.core.el.impl.ValueBindingImpl"</property>
+	</component>
+	<component name="methodBindingContext" class="org.seasar.teeda.core.el.impl.MethodBindingContextImpl">
+		<property name="methodBindingName">"org.seasar.teeda.core.el.impl.MethodBindingImpl"</property>
+		<initMethod name="setValueBindingContext">
+			<arg>valueBindingContext</arg>
+		</initMethod>
+	</component>
+
+	<!-- Applications -->
+	<!-- TODO need DI support for Converter, Validator, Component -->	
+	<component class="org.seasar.teeda.core.application.ApplicationImpl">
+		<property name="actionListener">actionListener</property>
+		<property name="navigationHandler">navigationHandler</property>
+		<property name="viewHandler">viewHandler</property>
+		<property name="propertyResolver">propertyResolver</property>
+		<property name="variableResolver">variableResolver</property>
+		<property name="stateManager">stateManager</property>
+	</component>
+	<component name="actionListener" class="org.seasar.teeda.core.application.ActionListenerImpl" />
+	<component name="navigationHandler" class="org.seasar.teeda.core.application.NavigationHandlerImpl" />
+	<component name="viewHandler" class="org.seasar.teeda.core.application.ViewHandlerImpl">
+<!--		<aspect pointcut="renderView">aop.dumpComponentTreeInterceptor</aspect> -->
+	</component>
+	<component name="propertyResolver" class="org.seasar.teeda.core.el.TeedaPropertyResolver" />
+	<component name="variableResolver" class="org.seasar.teeda.core.el.TeedaVariableResolver" />
+	<component name="stateManager" class="org.seasar.teeda.core.application.impl.TeedaStateManagerImpl" />
+	<component class="org.seasar.teeda.core.application.impl.TreeStructureManagerImpl" />
+	<component class="org.seasar.teeda.core.render.html.HtmlRenderKitImpl">
+		<property name="responseStateManager">responseStateManager</property>
+		<property name="responseWriter">responseWriter</property>
+	</component>
+	<component name="responseStateManager" class="org.seasar.teeda.core.render.html.HtmlResponseStateManager" />
+	<component name="responseWriter" class="org.seasar.teeda.core.context.html.HtmlResponseWriter" />
+	<component class="org.seasar.teeda.core.render.Base64EncodeConverter" />
+	
+	<!-- ManagedBean -->	
+	<component class="org.seasar.teeda.core.managedbean.impl.ManagedBeanFactoryImpl">
+			<aspect>aop.traceInterceptor</aspect>
+	</component>
+	
+	<component class="org.seasar.teeda.core.managedbean.impl.ManagedBeanScopeSaverImpl" >
+			<aspect>aop.traceInterceptor</aspect>
+	</component>
+	
+	<component name="scopeManager" class="org.seasar.teeda.core.scope.impl.ScopeManagerImpl">
+			<aspect>aop.traceInterceptor</aspect>
+	</component>
+	
+	<component name="translator" class="org.seasar.teeda.core.scope.impl.S2ScopeTranslator">
+			<aspect>aop.traceInterceptor</aspect>
+	</component>
+	
+	
+	<!-- Lifecycle -->
+	<component class="org.seasar.teeda.core.lifecycle.LifecycleImpl">
+		<property name="restoreViewPhase">restoreViewPhase</property>
+		<property name="applyRequestValuesPhase">applyRequestValuesPhase</property>
+		<property name="processValidationsPhase">processValidationsPhase</property>
+		<property name="updateModelValuesPhase">updateModelValuesPhase</property>
+		<property name="invokeApplicationPhase">invokeApplicationPhase</property>
+		<property name="renderResponsePhase">renderResponsePhase</property>
+		<aspect>aop.traceInterceptor</aspect>
+	</component>
+
+	<component name="restoreViewPhase" class="org.seasar.teeda.core.lifecycle.impl.RestoreViewPhase">
+		<aspect>aop.traceInterceptor</aspect>
+	</component>
+	<component name="applyRequestValuesPhase" class="org.seasar.teeda.core.lifecycle.impl.ApplyRequestValuesPhase">
+		<aspect>aop.traceInterceptor</aspect>
+	</component>
+	<component name="processValidationsPhase" class="org.seasar.teeda.core.lifecycle.impl.ProcessValidationsPhase">
+		<aspect>aop.traceInterceptor</aspect>
+	</component>
+	<component name="updateModelValuesPhase" class="org.seasar.teeda.core.lifecycle.impl.UpdateModelValuesPhase">
+		<aspect>aop.traceInterceptor</aspect>
+	</component>
+	<component name="invokeApplicationPhase" class="org.seasar.teeda.core.lifecycle.impl.InvokeApplicationPhase">
+		<aspect>aop.traceInterceptor</aspect>
+	</component>
+	<component name="renderResponsePhase" class="org.seasar.teeda.core.lifecycle.impl.RenderResponsePhase">
+		<aspect>aop.traceInterceptor</aspect>
+	</component>
+
+	<component name="webappConfigBuilder" class="org.seasar.teeda.core.config.webapp.impl.WebappConfigBuilderImpl"/>
+	
+</components>
