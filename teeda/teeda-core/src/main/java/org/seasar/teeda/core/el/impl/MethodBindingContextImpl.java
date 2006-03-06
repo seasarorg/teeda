@@ -52,9 +52,11 @@ public class MethodBindingContextImpl implements MethodBindingContext{
     }
 
     public MethodBinding createMethodBinding(Application application, String ref, Class[] params) {
+        /*
         if(params == null){
             throw new EmptyRuntimeException("parameters");
         }
+        */
         ValueBinding vb = valueBindingContext_.createValueBinding(application, ref);
         ELParser parser = valueBindingContext_.getELParser();
         if(!(vb instanceof ValueBindingBase)){
