@@ -302,7 +302,7 @@ public class UIInput extends UIOutput implements EditableValueHolder {
     protected void validateValue(FacesContext context, Object newValue) {
         if (isValid() && isRequired() && isEmpty(newValue)) {
             FacesMessageUtils.addErrorMessage(context, this,
-                    CONVERSION_MESSAGE_ID, new Object[] { getId() });
+                    REQUIRED_MESSAGE_ID, new Object[] { getId() });
             setValid(false);
         }
         if (isValid() && !isEmpty(newValue)) {
