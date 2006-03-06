@@ -19,8 +19,12 @@ import java.net.URL;
 
 import junit.framework.Test;
 
+import com.gargoylesoftware.htmlunit.Page;
 import com.gargoylesoftware.htmlunit.WebClient;
+import com.gargoylesoftware.htmlunit.html.HtmlAnchor;
+import com.gargoylesoftware.htmlunit.html.HtmlElement;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import com.gargoylesoftware.htmlunit.html.HtmlTextInput;
 
 /**
  * @author manhole
@@ -39,16 +43,27 @@ public class CommandLinkTest extends AbstractTestCase {
         WebClient webClient = new WebClient();
 
         // ## Act ##
-        HtmlPage page = (HtmlPage) webClient.getPage(url);
-
         // ## Assert ##
-        final String body = getBody(page).trim();
-        System.out.println(body);
-        assertEquals("commandLink.jsp", page.getTitleText());
+        HtmlPage page1 = (HtmlPage) webClient.getPage(url);
+        System.out.println(getBody(page1).trim());
+        assertEquals("commandLink.jsp", page1.getTitleText());
+
+        HtmlTextInput input1 = (HtmlTextInput) page1
+            .getHtmlElementById("text1");
+        assertEquals("123", input1.getValueAttribute());
 
         //        final String expected = readText("testOutputLink.html");
         //        Diff diff = diff(expected, body);
         //        assertEquals(diff.toString(), true, diff.similar());
+
+        HtmlAnchor link = (HtmlAnchor) page1.getHtmlElementById("link1");
+
+        HtmlPage page2 = (HtmlPage) link.click();
+        System.out.println(getBody(page2).trim());
+
+        HtmlTextInput input2 = (HtmlTextInput) page1
+            .getHtmlElementById("text1");
+        assertEquals("124", input2.getValueAttribute());
     }
 
 }

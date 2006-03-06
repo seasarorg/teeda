@@ -1,0 +1,14 @@
+<html>
+<head>
+<title>commandLink.jsp</title>
+</head>
+<body>
+	<form id="commandLinkForm">
+		<input type="text" id="commandLinkForm:text1" value="123" />
+		
+		<h:commandLink id="link1" action="#{commandLinkBean.countUp}">
+			<h:outputText value="foo"/>
+		</h:commandLink>
+	</form>
+</body>
+</html>
