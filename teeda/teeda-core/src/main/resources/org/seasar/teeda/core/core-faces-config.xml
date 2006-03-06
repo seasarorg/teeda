@@ -388,14 +388,12 @@
 			<renderer-class>
 				org.seasar.teeda.core.render.html.HtmlCommandButtonRenderer</renderer-class>
 		</renderer>
-		<!--
 		<renderer>
-			<component-family>javax.faces.Output</component-family>
+			<component-family>javax.faces.Command</component-family>
 			<renderer-type>javax.faces.Link</renderer-type>
 			<renderer-class>
-				org.seasar.teeda.core.render.html.HtmlLinkCommandRenderer</renderer-class>
+				org.seasar.teeda.core.render.html.HtmlCommandLinkRenderer</renderer-class>
 		</renderer>
-		-->
 		
 		<renderer>
 			<component-family>javax.faces.Data</component-family>
