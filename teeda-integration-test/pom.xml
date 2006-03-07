@@ -16,6 +16,11 @@
   <name>Teeda Integration Test</name>
   <description></description>
   <url>http://teeda.seasar.org/</url>
+  <scm>
+    <connection>scm:svn:https://www.seasar.org/svn/teeda/trunk/teeda-integration-test/</connection>
+    <developerConnection>scm:svn:https://www.seasar.org/svn/teeda/trunk/teeda-integration-test/</developerConnection>
+    <url>http://www.seasar.org/websvn/listing.php?repname=teeda</url>
+  </scm>
   <build>
     <finalName>teeda-integration-test</finalName>
     <pluginManagement>
@@ -33,11 +38,6 @@
       </plugins>
     </pluginManagement>
   </build>
-  <scm>
-    <connection>scm:svn:https://www.seasar.org/svn/teeda/trunk/teeda-integration-test/</connection>
-    <developerConnection>scm:svn:https://www.seasar.org/svn/teeda/trunk/teeda-integration-test/</developerConnection>
-    <url>http://www.seasar.org/websvn/listing.php?repname=teeda</url>
-  </scm>
   <dependencies>
     <dependency>
       <groupId>org.seasar.container</groupId>
