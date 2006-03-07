@@ -26,16 +26,16 @@ public abstract class ValueBinding {
     }
 
     public abstract Object getValue(FacesContext context)
-        throws EvaluationException, PropertyNotFoundException;
+            throws EvaluationException, PropertyNotFoundException;
 
     public abstract void setValue(FacesContext context, Object value)
-        throws EvaluationException, PropertyNotFoundException;
+            throws EvaluationException, PropertyNotFoundException;
 
     public abstract boolean isReadOnly(FacesContext context)
-        throws EvaluationException, PropertyNotFoundException;
+            throws EvaluationException, PropertyNotFoundException;
 
     public abstract Class getType(FacesContext context)
-        throws EvaluationException, PropertyNotFoundException;
+            throws EvaluationException, PropertyNotFoundException;
 
     public String getExpressionString() {
         return null;

@@ -30,7 +30,7 @@ public class MockValueBinding extends ValueBinding implements StateHolder {
     private Class type_;
 
     private String ref_;
-    
+
     public MockValueBinding() {
     }
 

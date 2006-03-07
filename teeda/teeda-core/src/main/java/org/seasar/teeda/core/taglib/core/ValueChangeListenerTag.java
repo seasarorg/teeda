@@ -31,15 +31,15 @@ import org.seasar.teeda.core.util.ClassUtil;
  * @author yone
  */
 public class ValueChangeListenerTag extends TagSupport {
-    
+
     private static final long serialVersionUID = 1L;
-    
+
     private String type_ = null;
-    
+
     public void setType(String type) {
         type_ = type;
     }
-    
+
     public int doStartTag() throws JspException {
         if (type_ == null) {
             throw new JspException("type attribute not set");
@@ -52,7 +52,7 @@ public class ValueChangeListenerTag extends TagSupport {
         if (!tag.getCreated()) {
             return SKIP_BODY;
         }
-        
+
         UIComponent component = tag.getComponentInstance();
         if (component == null) {
             throw new JspException(
@@ -62,22 +62,24 @@ public class ValueChangeListenerTag extends TagSupport {
             String className = null;
             if (UIComponentTag.isValueReference(type_)) {
                 FacesContext context = FacesContext.getCurrentInstance();
-                ValueBinding vb = context.getApplication().createValueBinding(type_);
-                className = (String)vb.getValue(context);
+                ValueBinding vb = context.getApplication().createValueBinding(
+                        type_);
+                className = (String) vb.getValue(context);
             } else {
                 className = type_;
             }
-            ValueChangeListener listener = (ValueChangeListener)ClassUtil
+            ValueChangeListener listener = (ValueChangeListener) ClassUtil
                     .newInstance(className);
-            ((EditableValueHolder)component).addValueChangeListener(listener);
+            ((EditableValueHolder) component).addValueChangeListener(listener);
         } else {
-            throw new NoEditableValueHolderRuntimeException(component.getClass());
+            throw new NoEditableValueHolderRuntimeException(component
+                    .getClass());
         }
         return SKIP_BODY;
     }
-    
+
     public void release() {
         type_ = null;
     }
-    
+
 }

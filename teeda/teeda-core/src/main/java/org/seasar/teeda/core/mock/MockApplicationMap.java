@@ -29,14 +29,15 @@ import javax.servlet.ServletContext;
 public class MockApplicationMap implements Map {
 
     private ServletContext context_ = null;
+
     public MockApplicationMap(ServletContext context) {
         context_ = context;
     }
-    
+
     public void clear() {
         Iterator keys = keySet().iterator();
-        while (keys.hasNext()){
-            context_.removeAttribute((String)keys.next());
+        while (keys.hasNext()) {
+            context_.removeAttribute((String) keys.next());
         }
     }
 
@@ -45,13 +46,13 @@ public class MockApplicationMap implements Map {
     }
 
     public boolean containsValue(Object value) {
-        if(value == null){
+        if (value == null) {
             return false;
         }
         Enumeration keys = context_.getAttributeNames();
-        while (keys.hasMoreElements()){
-            Object next = context_.getAttribute((String)keys.nextElement());
-            if(next == value){
+        while (keys.hasMoreElements()) {
+            Object next = context_.getAttribute((String) keys.nextElement());
+            if (next == value) {
                 return true;
             }
         }
@@ -61,8 +62,8 @@ public class MockApplicationMap implements Map {
     public Set entrySet() {
         Set set = new HashSet();
         Enumeration keys = context_.getAttributeNames();
-        while (keys.hasMoreElements()){
-            set.add(context_.getAttribute((String)keys.nextElement()));
+        while (keys.hasMoreElements()) {
+            set.add(context_.getAttribute((String) keys.nextElement()));
         }
         return set;
     }
@@ -86,14 +87,14 @@ public class MockApplicationMap implements Map {
     public Set keySet() {
         Set set = new HashSet();
         Enumeration keys = context_.getAttributeNames();
-        while (keys.hasMoreElements()){
+        while (keys.hasMoreElements()) {
             set.add(keys.nextElement());
         }
         return set;
     }
 
     public Object put(Object key, Object value) {
-        if(value == null){
+        if (value == null) {
             return remove(key);
         }
         String skey = key(key);
@@ -103,7 +104,7 @@ public class MockApplicationMap implements Map {
     }
 
     public void putAll(Map map) {
-        for(Iterator itr = map.entrySet().iterator(); itr.hasNext();){
+        for (Iterator itr = map.entrySet().iterator(); itr.hasNext();) {
             Map.Entry entry = (Entry) itr.next();
             String key = (String) entry.getKey();
             Object value = entry.getValue();
@@ -121,7 +122,7 @@ public class MockApplicationMap implements Map {
     public int size() {
         int n = 0;
         Enumeration keys = context_.getAttributeNames();
-        while (keys.hasMoreElements()){
+        while (keys.hasMoreElements()) {
             keys.nextElement();
             n++;
         }
@@ -131,18 +132,18 @@ public class MockApplicationMap implements Map {
     public Collection values() {
         List list = new ArrayList();
         Enumeration keys = context_.getAttributeNames();
-        while (keys.hasMoreElements()){
-            list.add(context_.getAttribute((String)keys.nextElement()));
+        while (keys.hasMoreElements()) {
+            list.add(context_.getAttribute((String) keys.nextElement()));
         }
         return list;
     }
 
     private String key(Object key) {
-        if(key == null){
+        if (key == null) {
             throw new IllegalArgumentException();
-        }else if(key instanceof String){
-            return (String)key;
-        }else{
+        } else if (key instanceof String) {
+            return (String) key;
+        } else {
             return key.toString();
         }
     }

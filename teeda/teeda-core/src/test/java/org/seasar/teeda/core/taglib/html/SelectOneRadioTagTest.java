@@ -32,20 +32,19 @@ public class SelectOneRadioTagTest extends TeedaTestCase {
     public void testGetComponentType() throws Exception {
         // # Arrange #
         SelectOneRadioTag tag = new SelectOneRadioTag();
-        
+
         // # Act & Assert #
-        assertEquals("javax.faces.HtmlSelectOneRadio",
-                tag.getComponentType());
+        assertEquals("javax.faces.HtmlSelectOneRadio", tag.getComponentType());
     }
-    
+
     public void testGetRenderType() throws Exception {
         // # Arrange #
         SelectOneRadioTag tag = new SelectOneRadioTag();
-        
+
         // # Act & Assert #
-        assertEquals("javax.faces.Radio", tag.getRendererType());        
+        assertEquals("javax.faces.Radio", tag.getRendererType());
     }
-    
+
     public void testSetProperties_All() throws Exception {
         // # Arrange #
         HtmlSelectOneRadio component = createHtmlSelectOneRadio();
@@ -56,7 +55,7 @@ public class SelectOneRadioTagTest extends TeedaTestCase {
         setApplication(app);
         app.addValidator("mock.validator",
                 "org.seasar.teeda.core.mock.MockValidator");
-        
+
         tag.setConverter("mock.converter");
         tag.setImmediate("true");
         tag.setRequired("true");
@@ -90,10 +89,10 @@ public class SelectOneRadioTagTest extends TeedaTestCase {
         tag.setStyleClass("styleclass");
         tag.setTabindex("13");
         tag.setTitle("title");
-        
+
         // # Act #
         tag.setProperties(component);
-        
+
         // # Assert #
         assertTrue(component.getConverter() instanceof MockConverter);
         assertTrue(component.isImmediate());
@@ -132,8 +131,8 @@ public class SelectOneRadioTagTest extends TeedaTestCase {
         assertEquals("styleclass", component.getStyleClass());
         assertEquals("13", component.getTabindex());
         assertEquals("title", component.getTitle());
-    }    
-    
+    }
+
     private HtmlSelectOneRadio createHtmlSelectOneRadio() {
         return (HtmlSelectOneRadio) createUIComponent();
     }

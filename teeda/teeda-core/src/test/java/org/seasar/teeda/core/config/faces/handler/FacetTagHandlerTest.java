@@ -23,7 +23,6 @@ import org.seasar.teeda.core.config.faces.element.FacesConfig;
 import org.seasar.teeda.core.config.faces.element.FacetElement;
 import org.seasar.teeda.core.config.faces.element.FacetHolder;
 import org.seasar.teeda.core.config.faces.element.impl.ComponentElementImpl;
-import org.seasar.teeda.core.config.faces.handler.FacetTagHandler;
 
 /**
  * @author shot

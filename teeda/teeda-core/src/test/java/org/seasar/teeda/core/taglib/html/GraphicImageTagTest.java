@@ -24,29 +24,28 @@ import junit.framework.TestCase;
  * @author yone
  */
 public class GraphicImageTagTest extends TestCase {
-    
+
     public void testGetComponentType() throws Exception {
         // # Arrange #
         GraphicImageTag tag = new GraphicImageTag();
-        
+
         // # Act & Assert #
-        assertEquals("javax.faces.HtmlGraphicImage",
-                tag.getComponentType());
+        assertEquals("javax.faces.HtmlGraphicImage", tag.getComponentType());
     }
-    
+
     public void GraphicImageTag() throws Exception {
         // # Arrange #
         GraphicImageTag tag = new GraphicImageTag();
-        
+
         // # Act & Assert #
-        assertEquals("javax.faces.Image", tag.getRendererType());        
+        assertEquals("javax.faces.Image", tag.getRendererType());
     }
-    
+
     public void testSetProperties_All() throws Exception {
         // # Arrange #
         HtmlGraphicImage component = createHtmlGraphicImage();
         GraphicImageTag tag = new GraphicImageTag();
-        
+
         tag.setUrl("url");
         tag.setValue("value");
         tag.setAlt("alt");
@@ -69,10 +68,10 @@ public class GraphicImageTagTest extends TestCase {
         tag.setStyleClass("styleclass");
         tag.setTitle("title");
         tag.setUsemap("mapName");
-        
+
         // # Act #
         tag.setProperties(component);
-        
+
         // # Assert #
         assertEquals("url", component.getUrl());
         // see UIGraphic
@@ -97,7 +96,7 @@ public class GraphicImageTagTest extends TestCase {
         assertEquals("styleclass", component.getStyleClass());
         assertEquals("title", component.getTitle());
         assertEquals("mapName", component.getUsemap());
-    }    
+    }
 
     private HtmlGraphicImage createHtmlGraphicImage() {
         return (HtmlGraphicImage) createUIComponent();

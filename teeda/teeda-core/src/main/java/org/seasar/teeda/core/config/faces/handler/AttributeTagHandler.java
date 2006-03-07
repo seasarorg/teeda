@@ -28,20 +28,20 @@ public class AttributeTagHandler extends JsfTagHandler {
 
     private static final long serialVersionUID = 1L;
 
-    public AttributeTagHandler(){
+    public AttributeTagHandler() {
     }
-    
+
     public void start(TagHandlerContext context, Attributes attributes) {
         AttributeElement attribute = createAttributeElement();
         context.push(attribute);
     }
-    
+
     public void end(TagHandlerContext context, String body) {
-        AttributeElement attribute = (AttributeElement)context.pop();
-        AttributeHolder holder = (AttributeHolder)context.peek();
+        AttributeElement attribute = (AttributeElement) context.pop();
+        AttributeHolder holder = (AttributeHolder) context.peek();
         holder.addAttributeElement(attribute);
     }
-    
+
     protected AttributeElement createAttributeElement() {
         return new AttributeElementImpl();
     }

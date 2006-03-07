@@ -29,7 +29,7 @@ import org.seasar.teeda.core.unit.TeedaTestCase;
  * @author yone
  */
 public class LoadBundleTagTest extends TeedaTestCase {
-    
+
     /**
      * Constructor for LoadBundleTest.
      * @param name
@@ -46,17 +46,14 @@ public class LoadBundleTagTest extends TeedaTestCase {
         tag.setBasename("org.seasar.teeda.core.taglib.core.TestMessages");
         tag.setVar("messages");
         tag.doStartTag();
-        assertEquals(((Map)getFacesContext().getExternalContext()
-                .getRequestMap()
-                .get("messages")).get("aaa"), "AAA");
-        assertEquals(((Map)getFacesContext().getExternalContext()
-                .getRequestMap()
-                .get("messages")).get("bbb"), "BBB");
-        assertEquals(((Map)getFacesContext().getExternalContext()
-                .getRequestMap()
-                .get("messages")).get("xxx"), "???xxx???");
+        assertEquals(((Map) getFacesContext().getExternalContext()
+                .getRequestMap().get("messages")).get("aaa"), "AAA");
+        assertEquals(((Map) getFacesContext().getExternalContext()
+                .getRequestMap().get("messages")).get("bbb"), "BBB");
+        assertEquals(((Map) getFacesContext().getExternalContext()
+                .getRequestMap().get("messages")).get("xxx"), "???xxx???");
     }
-    
+
     public void testLoadBndle_setBadBaseName() throws Exception {
         MockApplication mockApp = new MockApplicationImpl();
         mockApp.setDefaultLocale(Locale.JAPAN);
@@ -65,7 +62,7 @@ public class LoadBundleTagTest extends TeedaTestCase {
         tag.setBasename("hogehoge");
         assertEquals(Tag.SKIP_BODY, tag.doStartTag());
     }
-    
+
     public void testLoadBundleMap() throws Exception {
         boolean gotException = false;
         Object key = "aaa";
@@ -77,14 +74,14 @@ public class LoadBundleTagTest extends TeedaTestCase {
         tag.setBasename("org.seasar.teeda.core.taglib.core.TestMessages");
         tag.setVar("messages");
         tag.doStartTag();
-        Map testMap = (Map)getFacesContext().getExternalContext()
-                            .getRequestMap().get("messages");
+        Map testMap = (Map) getFacesContext().getExternalContext()
+                .getRequestMap().get("messages");
         LoadBundleTag tag2 = new LoadBundleTag();
         tag2.setBasename("org.seasar.teeda.core.taglib.core.TestMessages");
         tag2.setVar("messages");
         tag2.doStartTag();
-        Map testMap2 = (Map)getFacesContext().getExternalContext()
-                            .getRequestMap().get("messages");
+        Map testMap2 = (Map) getFacesContext().getExternalContext()
+                .getRequestMap().get("messages");
         try {
             testMap.clear();
             fail();
@@ -92,7 +89,7 @@ public class LoadBundleTagTest extends TeedaTestCase {
             gotException = true;
         }
         assertTrue(gotException);
-        
+
         assertTrue(testMap.containsKey(key));
         assertTrue(testMap.containsValue(value));
         assertTrue(testMap.entrySet().equals(testMap2.entrySet()));
@@ -108,7 +105,7 @@ public class LoadBundleTagTest extends TeedaTestCase {
             gotException = true;
         }
         assertTrue(gotException);
-        
+
         gotException = false;
         try {
             testMap.putAll(new HashMap());
@@ -117,7 +114,7 @@ public class LoadBundleTagTest extends TeedaTestCase {
             gotException = true;
         }
         assertTrue(gotException);
-        
+
         gotException = false;
         try {
             testMap.remove(key);
@@ -126,9 +123,9 @@ public class LoadBundleTagTest extends TeedaTestCase {
             gotException = true;
         }
         assertTrue(gotException);
-        
+
         assertTrue(testMap.size() == 2);
         assertTrue(testMap.values().contains(value));
     }
-    
+
 }

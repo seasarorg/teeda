@@ -30,8 +30,8 @@ public class UIParameterUtil {
 
     public static void saveParametersToRequest(UICommand command,
             FacesContext context) {
-        ServletRequest request = (ServletRequest) context
-                .getExternalContext().getRequest();
+        ServletRequest request = (ServletRequest) context.getExternalContext()
+                .getRequest();
         List children = command.getChildren();
         for (int i = 0; i < children.size(); ++i) {
             UIComponent child = (UIComponent) children.get(i);

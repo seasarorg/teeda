@@ -42,13 +42,13 @@ import org.seasar.teeda.core.util.ValueBindingUtil;
 public class ViewTag extends UIComponentBodyTag {
 
     private static final String COMPONENT_TYPE = UIViewRoot.COMPONENT_TYPE;
-    
+
     protected String locale_ = null;
-    
+
     public ViewTag() {
         super();
     }
-    
+
     public void setLocale(String locale) {
         locale_ = locale;
     }
@@ -67,9 +67,9 @@ public class ViewTag extends UIComponentBodyTag {
         rc = super.doStartTag();
         FacesContext context = FacesContext.getCurrentInstance();
         AssertionUtil.assertNotNull("FacesContext", context);
-        
+
         pageContext.getResponse().setLocale(context.getViewRoot().getLocale());
-        
+
         ResponseWriter writer = context.getResponseWriter();
         AssertionUtil.assertNotNull("ResponseWriter", writer);
         try {
@@ -77,9 +77,9 @@ public class ViewTag extends UIComponentBodyTag {
         } catch (IOException e) {
             throw new JspException(e.getMessage());
         }
-        return rc;        
+        return rc;
     }
-    
+
     public int doAfterBody() throws JspException {
         BodyContent bodyContent = null;
         String content = null;
@@ -92,17 +92,18 @@ public class ViewTag extends UIComponentBodyTag {
         int markerIndex = 0;
         int markerLen = JsfConstants.STATE_MARKER.length();
         int contentLen = 0;
-        
+
         responseWriter = responseWriter.cloneWithWriter(getPreviousOut());
- 
+
         context.setResponseWriter(responseWriter);
         bodyContent = getBodyContent();
         if (bodyContent == null) {
-            throw new JspException("BodyContent is null for tag with handler class:"
-                    + this.getClass().getName());
+            throw new JspException(
+                    "BodyContent is null for tag with handler class:"
+                            + this.getClass().getName());
         }
         content = bodyContent.getString();
-        
+
         try {
             view = stateManager.saveSerializedView(context);
         } catch (IllegalStateException ise) {
@@ -136,7 +137,7 @@ public class ViewTag extends UIComponentBodyTag {
         }
         return EVAL_PAGE;
     }
-    
+
     public int doEndTag() throws JspException {
         int rc = super.doEndTag();
         FacesContext context = FacesContext.getCurrentInstance();
@@ -148,25 +149,25 @@ public class ViewTag extends UIComponentBodyTag {
         } catch (IOException e) {
             throw new JspException(e.getMessage());
         }
-        
+
         HttpSession session = null;
-        if((session = pageContext.getSession()) != null) {
+        if ((session = pageContext.getSession()) != null) {
             session.setAttribute(ViewHandler.CHARACTER_ENCODING_KEY,
                     pageContext.getResponse().getCharacterEncoding());
         }
         return rc;
     }
- 
+
     protected void setProperties(UIComponent component) {
         super.setProperties(component);
-        
+
         FacesContext context = FacesContext.getCurrentInstance();
         Locale locale = (Locale) ValueBindingUtil.getValue(context, locale_);
         if (locale == null) {
             locale = LocaleUtil.getLocale(locale_);
         }
-        ((UIViewRoot)component).setLocale(locale);
-        Config.set(pageContext.getRequest(),Config.FMT_LOCALE, locale);
+        ((UIViewRoot) component).setLocale(locale);
+        Config.set(pageContext.getRequest(), Config.FMT_LOCALE, locale);
     }
-    
+
 }

@@ -26,43 +26,43 @@ import javax.faces.internal.ConvertUtils;
  */
 public class LongConverter implements Converter {
 
-	public static final String CONVERTER_ID = "javax.faces.Long";
+    public static final String CONVERTER_ID = "javax.faces.Long";
 
-	public LongConverter() {
-	}
+    public LongConverter() {
+    }
 
-	public Object getAsObject(FacesContext context, UIComponent component,
-			String value) throws ConverterException {
+    public Object getAsObject(FacesContext context, UIComponent component,
+            String value) throws ConverterException {
         AssertionUtil.assertNotNull("FacesContext", context);
         AssertionUtil.assertNotNull("UIComponent", component);
-		if (value == null) {
-			return null;
-		}
+        if (value == null) {
+            return null;
+        }
 
-		value = value.trim();
-		if (value.length() < 1) {
-			return null;
-		}
-		
-		try {
-			return Long.valueOf(value);
-		} catch (Exception e) {
-			Object[] args = ConvertUtils.createExceptionMessageArgs(component,
-					value);
-			throw ConvertUtils.wrappedByConverterException(this, context,
-					args, e);
-		}
-	}
+        value = value.trim();
+        if (value.length() < 1) {
+            return null;
+        }
 
-	public String getAsString(FacesContext context, UIComponent component,
-			Object value) throws ConverterException {
+        try {
+            return Long.valueOf(value);
+        } catch (Exception e) {
+            Object[] args = ConvertUtils.createExceptionMessageArgs(component,
+                    value);
+            throw ConvertUtils.wrappedByConverterException(this, context, args,
+                    e);
+        }
+    }
+
+    public String getAsString(FacesContext context, UIComponent component,
+            Object value) throws ConverterException {
         AssertionUtil.assertNotNull("FacesContext", context);
         AssertionUtil.assertNotNull("UIComponent", component);
-		try {
-			return (value instanceof String) ? (String) value : (Long
-					.toString(((Long) value).longValue()));
-		} catch (Exception e) {
-			throw ConvertUtils.wrappedByConverterException(e);
-		}
-	}
+        try {
+            return (value instanceof String) ? (String) value : (Long
+                    .toString(((Long) value).longValue()));
+        } catch (Exception e) {
+            throw ConvertUtils.wrappedByConverterException(e);
+        }
+    }
 }

@@ -22,7 +22,8 @@ import org.seasar.teeda.core.config.webapp.element.ServletMappingElement;
 /**
  * @author shot
  */
-public class ServletMappingElementImpl implements ServletMappingElement, Serializable {
+public class ServletMappingElementImpl implements ServletMappingElement,
+        Serializable {
 
     private static final long serialVersionUID = 1L;
 

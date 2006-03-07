@@ -75,19 +75,19 @@ public class MockServletRequestImpl implements MockServletRequest {
     private String contentType_;
 
     private Map parameters_ = new HashMap();
-    
+
     private String remoteAddr_;
-    
+
     private String remoteHost_;
-    
+
     private int remotePort_;
-    
+
     private String localAddr_;
-    
+
     private String localName_;
-    
+
     private int localPort_;
-    
+
     private Locale locale_;
 
     public MockServletRequestImpl(ServletContext servletContext,
@@ -220,7 +220,7 @@ public class MockServletRequestImpl implements MockServletRequest {
             parameters_.put(name, newArray);
         }
     }
-    
+
     public void addParameter(String name, String[] values) {
         if (values == null) {
             setParameter(name, (String) null);
@@ -240,7 +240,7 @@ public class MockServletRequestImpl implements MockServletRequest {
     public void setParameter(String name, String value) {
         parameters_.put(name, new String[] { value });
     }
-    
+
     public void setParameter(String name, String[] values) {
         parameters_.put(name, values);
     }
@@ -304,7 +304,7 @@ public class MockServletRequestImpl implements MockServletRequest {
     public String getRemoteAddr() {
         return remoteAddr_;
     }
-    
+
     public void setRemoteAddr(String remoteAddr) {
         remoteAddr_ = remoteAddr;
     }
@@ -316,18 +316,18 @@ public class MockServletRequestImpl implements MockServletRequest {
     public String getRemoteHost() {
         return remoteHost_;
     }
-    
+
     public void setRemoteHost(String remoteHost) {
         remoteHost_ = remoteHost;
     }
-    
+
     /**
      * @see javax.servlet.ServletRequest#getLocalAddr()
      */
     public String getLocalAddr() {
         return localAddr_;
     }
-    
+
     public void setLocalAddr(String localAddr) {
         localAddr_ = localAddr;
     }
@@ -338,7 +338,7 @@ public class MockServletRequestImpl implements MockServletRequest {
     public String getLocalName() {
         return localName_;
     }
-    
+
     public void setLocalName(String localName) {
         localName_ = localName;
     }
@@ -349,7 +349,7 @@ public class MockServletRequestImpl implements MockServletRequest {
     public int getLocalPort() {
         return localPort_;
     }
-    
+
     public void setLocalPort(int localPort) {
         localPort_ = localPort;
     }
@@ -360,7 +360,7 @@ public class MockServletRequestImpl implements MockServletRequest {
     public int getRemotePort() {
         return remotePort_;
     }
-    
+
     public void setRemotePort(int remotePort) {
         remotePort_ = remotePort;
     }
@@ -372,7 +372,7 @@ public class MockServletRequestImpl implements MockServletRequest {
     public Locale getLocale() {
         return locale_;
     }
-    
+
     public void setLocale(Locale locale) {
         locale_ = locale;
     }

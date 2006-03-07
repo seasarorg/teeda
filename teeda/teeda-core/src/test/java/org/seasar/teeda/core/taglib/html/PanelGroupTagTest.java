@@ -24,34 +24,34 @@ import junit.framework.TestCase;
  * @author yone
  */
 public class PanelGroupTagTest extends TestCase {
-    
+
     public void testGetComponentType() throws Exception {
         // # Arrange #
         PanelGroupTag tag = new PanelGroupTag();
-        
+
         // # Act & Assert #
         assertEquals("javax.faces.HtmlPanelGroup", tag.getComponentType());
     }
-    
+
     public void testGetRenderType() throws Exception {
         // # Arrange #
         PanelGroupTag tag = new PanelGroupTag();
-        
+
         // # Act & Assert #
-        assertEquals("javax.faces.Group", tag.getRendererType());        
+        assertEquals("javax.faces.Group", tag.getRendererType());
     }
 
     public void testSetProperties_All() throws Exception {
         // # Arrange #
         HtmlPanelGroup component = createHtmlPanelGroup();
         PanelGroupTag tag = new PanelGroupTag();
-        
+
         tag.setStyle("style");
         tag.setStyleClass("styleclass");
-        
+
         // # Act #
         tag.setProperties(component);
-        
+
         // # Assert #
         assertEquals("style", component.getStyle());
         assertEquals("styleclass", component.getStyleClass());

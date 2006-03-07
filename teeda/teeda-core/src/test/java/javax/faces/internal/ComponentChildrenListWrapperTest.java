@@ -16,7 +16,6 @@
 package javax.faces.internal;
 
 import javax.faces.component.UIComponent;
-import javax.faces.internal.ComponentChildrenListWrapper;
 
 import junit.framework.TestCase;
 

@@ -23,14 +23,14 @@ import junit.framework.TestCase;
  * @author yone
  */
 public class ConverterUtilTest extends TestCase {
-    
+
     public void testConvertToInt() throws Exception {
         assertEquals(20, ConverterUtil.convertToInt(new Integer(20)));
         assertEquals(10, ConverterUtil.convertToInt("10"));
         boolean goException = false;
         try {
             ConverterUtil.convertToInt("hoge");
-        } catch(IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             goException = true;
             System.out.println(e.getMessage());
         }
@@ -38,33 +38,34 @@ public class ConverterUtilTest extends TestCase {
         goException = false;
         try {
             ConverterUtil.convertToInt(new Boolean(false));
-        } catch(IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             goException = true;
             System.out.println(e.getMessage());
         }
         assertTrue(goException);
     }
-    
+
     public void testConvertToBoolean() throws Exception {
         assertTrue(ConverterUtil.convertToBoolean(new Boolean(true)));
         assertFalse(ConverterUtil.convertToBoolean("false"));
         boolean goException = false;
         try {
             ConverterUtil.convertToBoolean(new Date());
-        } catch(IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             goException = true;
             System.out.println(e.getMessage());
         }
         assertTrue(goException);
     }
-    
+
     public void testConvertToLong() throws Exception {
-        assertEquals(8888888888L, ConverterUtil.convertToLong(new Long(8888888888L)));
+        assertEquals(8888888888L, ConverterUtil.convertToLong(new Long(
+                8888888888L)));
         assertEquals(9999999999L, ConverterUtil.convertToLong("9999999999"));
         boolean goException = false;
         try {
             ConverterUtil.convertToLong("hoge");
-        } catch(IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             goException = true;
             System.out.println(e.getMessage());
         }
@@ -72,20 +73,20 @@ public class ConverterUtilTest extends TestCase {
         goException = false;
         try {
             ConverterUtil.convertToLong(new Boolean(false));
-        } catch(IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             goException = true;
             System.out.println(e.getMessage());
         }
-        assertTrue(goException);       
+        assertTrue(goException);
     }
-    
+
     public void testConvertToDouble() throws Exception {
         assertTrue(1d == ConverterUtil.convertToDouble(new Double(1d)));
         assertTrue(2d == ConverterUtil.convertToDouble("2"));
         boolean goException = false;
         try {
             ConverterUtil.convertToDouble("hoge");
-        } catch(IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             goException = true;
             System.out.println(e.getMessage());
         }
@@ -93,10 +94,10 @@ public class ConverterUtilTest extends TestCase {
         goException = false;
         try {
             ConverterUtil.convertToDouble(new Boolean(false));
-        } catch(IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             goException = true;
             System.out.println(e.getMessage());
         }
-        assertTrue(goException);       
+        assertTrue(goException);
     }
 }

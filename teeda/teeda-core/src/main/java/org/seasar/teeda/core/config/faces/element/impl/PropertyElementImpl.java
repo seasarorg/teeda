@@ -26,13 +26,18 @@ import org.seasar.teeda.core.config.faces.element.PropertyElement;
 public class PropertyElementImpl implements PropertyElement {
 
     private String propertyName_;
+
     private String propertyClass_;
+
     private String defaultValue_;
+
     private String suggestedValue_;
+
     private List propertyExtensions_ = new ArrayList();
-    public PropertyElementImpl(){
+
+    public PropertyElementImpl() {
     }
-    
+
     public void setPropertyName(String propertyName) {
         propertyName_ = propertyName;
     }

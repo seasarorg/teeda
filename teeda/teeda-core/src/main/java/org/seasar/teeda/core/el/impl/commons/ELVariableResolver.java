@@ -28,10 +28,11 @@ import org.seasar.teeda.core.util.VariableResolverUtil;
 public class ELVariableResolver implements VariableResolver {
 
     private FacesContext context_;
-    public ELVariableResolver(FacesContext context){
+
+    public ELVariableResolver(FacesContext context) {
         context_ = context;
     }
-    
+
     public Object resolveVariable(String name) throws ELException {
         return VariableResolverUtil.resolveVariable(context_, name);
     }

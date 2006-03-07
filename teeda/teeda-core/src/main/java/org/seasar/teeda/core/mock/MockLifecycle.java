@@ -21,11 +21,11 @@ import javax.faces.lifecycle.Lifecycle;
 /**
  * @author shot
  */
-public abstract class MockLifecycle extends Lifecycle{
+public abstract class MockLifecycle extends Lifecycle {
 
     public abstract PhaseListener[] clearAllPhaseListener();
-    
+
     public abstract void setupDefaultPhaseListener();
-    
+
     public abstract void setupDefaultPhaseListener(PhaseListener[] listeners);
 }

@@ -28,7 +28,8 @@ public class ServletRequestParameterValuesMap extends
         AbstractUnmodifiableExternalContextMap {
 
     private final ServletRequest request_;
-    public ServletRequestParameterValuesMap(final ServletRequest request){
+
+    public ServletRequestParameterValuesMap(final ServletRequest request) {
         request_ = request;
     }
 

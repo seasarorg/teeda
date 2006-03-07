@@ -28,7 +28,7 @@ public abstract class ValidatorAssembler extends AbstractJsfAssembler {
     private Map validators_ = Collections.EMPTY_MAP;
 
     public ValidatorAssembler(Map validators) {
-        if(validators == null){
+        if (validators == null) {
             throw new IllegalArgumentException("validators");
         }
         isAllSuitableJsfElement(validators.values(), ValidatorElement.class);

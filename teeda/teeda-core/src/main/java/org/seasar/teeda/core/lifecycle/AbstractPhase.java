@@ -31,17 +31,18 @@ import org.seasar.teeda.core.util.LifecycleUtil;
 /**
  * @author shot
  */
-public abstract class AbstractPhase implements Phase{
-    
-    public final void prePhase(FacesContext context){
+public abstract class AbstractPhase implements Phase {
+
+    public final void prePhase(FacesContext context) {
         Lifecycle lifecycle = getLifecycle(context);
         PhaseListener[] phaseListeners = lifecycle.getPhaseListeners();
-        if(phaseListeners != null){
-            for(int i = 0;i < phaseListeners.length;i++){
+        if (phaseListeners != null) {
+            for (int i = 0; i < phaseListeners.length; i++) {
                 PhaseListener phaseListener = phaseListeners[i];
                 PhaseId phaseId = getCurrentPhaseId();
-                if(isTargetListener(phaseListener, phaseId)){
-                    PhaseEvent event = createPhaseEvent(context, phaseId, lifecycle);
+                if (isTargetListener(phaseListener, phaseId)) {
+                    PhaseEvent event = createPhaseEvent(context, phaseId,
+                            lifecycle);
                     phaseListener.beforePhase(event);
                 }
             }
@@ -49,32 +50,35 @@ public abstract class AbstractPhase implements Phase{
     }
 
     //If need pre-prePhase or post-prePhase(and also postPhase) action, add method.
-    public void execute(FacesContext context){
+    public void execute(FacesContext context) {
         prePhase(context);
         executePhase(context);
         postPhase(context);
     }
-    
-    public final void postPhase(FacesContext context){
+
+    public final void postPhase(FacesContext context) {
         Lifecycle lifecycle = getLifecycle(context);
         PhaseListener[] phaseListeners = lifecycle.getPhaseListeners();
-        if(phaseListeners != null){
-            for(int i = phaseListeners.length - 1;i >= 0 ;i--){
+        if (phaseListeners != null) {
+            for (int i = phaseListeners.length - 1; i >= 0; i--) {
                 PhaseListener phaseListener = phaseListeners[i];
                 PhaseId phaseId = getCurrentPhaseId();
-                if(isTargetListener(phaseListener, phaseId)){
-                    PhaseEvent event = createPhaseEvent(context, phaseId, lifecycle);
+                if (isTargetListener(phaseListener, phaseId)) {
+                    PhaseEvent event = createPhaseEvent(context, phaseId,
+                            lifecycle);
                     phaseListener.afterPhase(event);
                 }
             }
         }
     }
 
-    protected PhaseEvent createPhaseEvent(FacesContext context, PhaseId phaseId, Lifecycle lifecycle) {
+    protected PhaseEvent createPhaseEvent(FacesContext context,
+            PhaseId phaseId, Lifecycle lifecycle) {
         return new PhaseEvent(context, phaseId, lifecycle);
     }
-    
-    protected void initializeChildren(FacesContext context, UIComponent component) {
+
+    protected void initializeChildren(FacesContext context,
+            UIComponent component) {
         for (Iterator i = component.getFacetsAndChildren(); i.hasNext();) {
             UIComponent child = (UIComponent) i.next();
             if (child instanceof EditableValueHolder) {
@@ -94,13 +98,13 @@ public abstract class AbstractPhase implements Phase{
                 || listenerOrdinal == phaseId.getOrdinal();
     }
 
-    protected final Lifecycle getLifecycle(FacesContext context){
+    protected final Lifecycle getLifecycle(FacesContext context) {
         ExternalContext externalContext = context.getExternalContext();
         Lifecycle lifecycle = LifecycleUtil.getLifecycle(externalContext);
         return lifecycle;
     }
-    
+
     protected abstract void executePhase(FacesContext context);
-    
+
     protected abstract PhaseId getCurrentPhaseId();
 }

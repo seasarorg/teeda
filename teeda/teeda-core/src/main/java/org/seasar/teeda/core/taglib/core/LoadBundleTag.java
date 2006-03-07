@@ -43,21 +43,21 @@ import org.seasar.framework.log.Logger;
  */
 public class LoadBundleTag extends TagSupport {
     private static Logger logger_ = Logger.getLogger(LoadBundleTag.class);
-    
+
     private static final long serialVersionUID = 1L;
-    
+
     private String basename_;
-    
+
     private String var_;
-    
+
     public void setBasename(String basename) {
         basename_ = basename;
     }
-    
+
     public void setVar(String var) {
         var_ = var;
     }
-    
+
     public int doStartTag() throws JspException {
         FacesContext context = FacesContext.getCurrentInstance();
         AssertionUtil.assertNotNull("FacesContext", context);
@@ -72,39 +72,41 @@ public class LoadBundleTag extends TagSupport {
         String basename = null;
         if (basename_ != null) {
             if (UIComponentTag.isValueReference(basename_)) {
-                basename = (String)context.getApplication()
-                                .createValueBinding(basename_).getValue(context);
+                basename = (String) context.getApplication()
+                        .createValueBinding(basename_).getValue(context);
             } else {
                 basename = basename_;
             }
         }
         final ResourceBundle bundle;
         try {
-            bundle = ResourceBundle.getBundle(basename,
-                                              locale,
-                                              Thread.currentThread().getContextClassLoader());
+            bundle = ResourceBundle.getBundle(basename, locale, Thread
+                    .currentThread().getContextClassLoader());
         } catch (MissingResourceException e) {
-            logger_.error("Resource bundle '" + basename + "' could not be found");
+            logger_.error("Resource bundle '" + basename
+                    + "' could not be found");
             return Tag.SKIP_BODY;
         }
-        
-        context.getExternalContext().getRequestMap().put(var_, new BundleMap(bundle));
+
+        context.getExternalContext().getRequestMap().put(var_,
+                new BundleMap(bundle));
 
         return Tag.SKIP_BODY;
     }
 
     private static class BundleMap implements Map {
         private ResourceBundle bundle_;
+
         private List values_;
-        
+
         public BundleMap(ResourceBundle bundle) {
             bundle_ = bundle;
         }
-        
+
         public void clear() {
             throw new UnsupportedOperationException();
         }
-        
+
         public boolean containsKey(Object key) {
             boolean result = false;
             if (key != null) {
@@ -112,11 +114,11 @@ public class LoadBundleTag extends TagSupport {
             }
             return result;
         }
-        
+
         public int hashCode() {
             return bundle_.hashCode();
         }
-        
+
         public boolean isEmpty() {
             boolean result = true;
             Enumeration keys = bundle_.getKeys();
@@ -129,7 +131,7 @@ public class LoadBundleTag extends TagSupport {
                 values_ = new ArrayList();
                 Enumeration keys = bundle_.getKeys();
                 while (keys.hasMoreElements()) {
-                    values_.add(bundle_.getString((String)keys.nextElement()));
+                    values_.add(bundle_.getString((String) keys.nextElement()));
                 }
             }
             return values_;
@@ -148,22 +150,22 @@ public class LoadBundleTag extends TagSupport {
             Enumeration keys = bundle_.getKeys();
             while (keys.hasMoreElements()) {
                 Object key = keys.nextElement();
-                Object value = bundle_.getObject((String)key);
+                Object value = bundle_.getObject((String) key);
                 mappings.put(key, value);
             }
             return mappings.entrySet();
         }
-        
+
         public boolean equals(Object obj) {
             if ((obj == null) || !(obj instanceof Map)) {
                 return false;
             }
-            if (entrySet().equals(((Map)obj).entrySet())) {
+            if (entrySet().equals(((Map) obj).entrySet())) {
                 return true;
             }
             return false;
         }
-        
+
         public Object get(Object key) {
             if (key == null) {
                 return null;
@@ -179,7 +181,8 @@ public class LoadBundleTag extends TagSupport {
 
         public Set keySet() {
             Set set = new HashSet();
-            for (Enumeration enumer = bundle_.getKeys(); enumer.hasMoreElements(); ) {
+            for (Enumeration enumer = bundle_.getKeys(); enumer
+                    .hasMoreElements();) {
                 set.add(enumer.nextElement());
             }
             return set;
@@ -197,7 +200,7 @@ public class LoadBundleTag extends TagSupport {
             throw new UnsupportedOperationException();
         }
     }
- 
+
     public void release() {
         basename_ = null;
         var_ = null;

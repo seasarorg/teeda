@@ -26,43 +26,43 @@ import javax.faces.internal.ConvertUtils;
  */
 public class IntegerConverter implements Converter {
 
-	public static final String CONVERTER_ID = "javax.faces.Integer";
+    public static final String CONVERTER_ID = "javax.faces.Integer";
 
-	public IntegerConverter() {
-	}
+    public IntegerConverter() {
+    }
 
-	public Object getAsObject(FacesContext context, UIComponent component,
-			String value) throws ConverterException {
+    public Object getAsObject(FacesContext context, UIComponent component,
+            String value) throws ConverterException {
         AssertionUtil.assertNotNull("FacesContext", context);
         AssertionUtil.assertNotNull("UIComponent", component);
-		if (value == null) {
-			return null;
-		}
+        if (value == null) {
+            return null;
+        }
 
-		value = value.trim();
-		if (value.length() < 1) {
-			return null;
-		}
-		
-		try {
-			return Integer.valueOf(value);
-		} catch (Exception e) {
-			Object[] args = ConvertUtils.createExceptionMessageArgs(component,
-					value);
-			throw ConvertUtils.wrappedByConverterException(this, context,
-					args, e);
-		}
-	}
+        value = value.trim();
+        if (value.length() < 1) {
+            return null;
+        }
 
-	public String getAsString(FacesContext context, UIComponent component,
-			Object value) throws ConverterException {
+        try {
+            return Integer.valueOf(value);
+        } catch (Exception e) {
+            Object[] args = ConvertUtils.createExceptionMessageArgs(component,
+                    value);
+            throw ConvertUtils.wrappedByConverterException(this, context, args,
+                    e);
+        }
+    }
+
+    public String getAsString(FacesContext context, UIComponent component,
+            Object value) throws ConverterException {
         AssertionUtil.assertNotNull("FacesContext", context);
         AssertionUtil.assertNotNull("UIComponent", component);
-		try {
-			return (value instanceof String) ? (String) value : (Integer
-					.toString(((Integer) value).intValue()));
-		} catch (Exception e) {
-			throw ConvertUtils.wrappedByConverterException(e);
-		}
-	}
+        try {
+            return (value instanceof String) ? (String) value : (Integer
+                    .toString(((Integer) value).intValue()));
+        } catch (Exception e) {
+            throw ConvertUtils.wrappedByConverterException(e);
+        }
+    }
 }

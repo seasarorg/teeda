@@ -42,157 +42,156 @@ import org.seasar.teeda.core.util.BindingUtil;
  * @author yone
  */
 public abstract class UIComponentTagBase extends UIComponentTag {
-   
+
     private static final Class[] VALIDATOR_ARGTYPES = { FacesContext.class,
-        UIComponent.class, Object.class };
-    
+            UIComponent.class, Object.class };
+
     private static final Class[] ACTION_LISTENER_ARGS = { ActionEvent.class };
-    
+
     private static final Class[] VALUE_LISTENER_ARGS = { ValueChangeEvent.class };
 
-    
     protected String styleClass_ = null;
-    
+
     protected String title_ = null;
-    
+
     protected String enabledClass_ = null;
-    
+
     protected String disabledClass_ = null;
 
     protected String onclick_ = null;
-    
+
     protected String ondblclick_ = null;
-    
+
     protected String onmousedown_ = null;
-    
+
     protected String onmouseover_ = null;
-    
+
     protected String onmousemove_ = null;
-    
+
     protected String onmouseout_ = null;
-    
+
     protected String onkeypress_ = null;
-    
+
     protected String onkeydown_ = null;
-    
+
     protected String onkeyup_ = null;
 
     protected String lang_ = null;
-    
+
     protected String dir_ = null;
-    
+
     protected String height_ = null;
-    
+
     protected String width_ = null;
-    
+
     protected String cellspacing_ = null;
-    
+
     protected String cellpadding_ = null;
 
     protected String disabled_ = null;
-    
+
     protected String size_ = null;
-    
+
     protected String tabindex_ = null;
-    
+
     protected String checked_ = null;
-    
+
     protected String border_ = null;
-    
+
     protected String readonly_ = null;
-    
+
     protected String ismap_ = null;
-    
+
     protected String maxlength_ = null;
-    
+
     protected String rows_ = null;
-    
+
     protected String cols_ = null;
-    
+
     protected String formatStyle_ = null;
-    
+
     protected String dateStyle_ = null;
-    
+
     protected String timeStyle_ = null;
-    
+
     protected String timezone_ = null;
-    
+
     protected String formatPattern_ = null;
 
     protected String accept_ = null;
-    
+
     protected String acceptcharset_ = null;
-    
+
     protected String accesskey_ = null;
-    
+
     protected String action_ = null;
-    
+
     protected String alt_ = null;
-    
+
     protected String charset_ = null;
-    
+
     protected String coords_ = null;
-    
+
     protected String enctype_ = null;
-    
+
     protected String htmlFor_ = null;
-    
+
     protected String href_ = null;
-    
+
     protected String hreflang_ = null;
-    
+
     protected String hspace_ = null;
 
     protected String label_ = null;
-    
+
     protected String longdesc_ = null;
-    
+
     protected String method_ = null;
-    
+
     protected String multiple_ = null;
-    
+
     protected String name_ = null;
-    
+
     protected String onblur_ = null;
-    
+
     protected String onchange_ = null;
-    
+
     protected String onfocus_ = null;
-    
+
     protected String onmouseup_ = null;
-    
+
     protected String onreset_ = null;
-    
+
     protected String onselect_ = null;
-    
+
     protected String onsubmit_ = null;
-    
+
     protected String rel_ = null;
-    
+
     protected String rev_ = null;
-    
+
     protected String selected_ = null;
-    
+
     protected String shape_ = null;
-    
+
     protected String src_ = null;
-    
+
     protected String style_ = null;
-    
+
     protected String target_ = null;
-    
+
     protected String type_ = null;
-    
+
     protected String usemap_ = null;
-    
+
     protected String value_ = null;
 
     protected String summary_ = null;
-    
+
     protected String bgcolor_ = null;
-    
+
     protected String frame_ = null;
-    
+
     protected String rules_ = null;
 
     protected String converter_ = null;
@@ -200,7 +199,7 @@ public abstract class UIComponentTagBase extends UIComponentTag {
     public UIComponentTagBase() {
         super();
     }
-    
+
     public void setAccept(String accept) {
         accept_ = accept;
     }
@@ -495,24 +494,33 @@ public abstract class UIComponentTagBase extends UIComponentTag {
 
     protected void setProperties(UIComponent component) {
         super.setProperties(component);
-        
+
         if (component instanceof ValueHolder) {
             setConverterProperty(component, converter_);
         }
         setComponentProperty(component, JsfConstants.VALUE_ATTR, value_);
-        setComponentProperty(component, JsfConstants.FORMAT_PATTERN_ATTR, formatPattern_);      
-        setComponentProperty(component, JsfConstants.DATE_STYLE_ATTR, dateStyle_);
-        setComponentProperty(component, JsfConstants.TIME_STYLE_ATTR, timeStyle_);
+        setComponentProperty(component, JsfConstants.FORMAT_PATTERN_ATTR,
+                formatPattern_);
+        setComponentProperty(component, JsfConstants.DATE_STYLE_ATTR,
+                dateStyle_);
+        setComponentProperty(component, JsfConstants.TIME_STYLE_ATTR,
+                timeStyle_);
         setComponentProperty(component, JsfConstants.TIMEZONE_ATTR, timezone_);
-        setComponentProperty(component, JsfConstants.ONCLICK_ATTR, onclick_);  
-        setComponentProperty(component, JsfConstants.ONDBLCLICK_ATTR, ondblclick_);
+        setComponentProperty(component, JsfConstants.ONCLICK_ATTR, onclick_);
+        setComponentProperty(component, JsfConstants.ONDBLCLICK_ATTR,
+                ondblclick_);
         setComponentProperty(component, JsfConstants.ONKEYDOWN_ATTR, onkeydown_);
-        setComponentProperty(component, JsfConstants.ONKEYPRESS_ATTR, onkeypress_);
+        setComponentProperty(component, JsfConstants.ONKEYPRESS_ATTR,
+                onkeypress_);
         setComponentProperty(component, JsfConstants.ONKEYUP_ATTR, onkeyup_);
-        setComponentProperty(component, JsfConstants.ONMOUSEDOWN_ATTR, onmousedown_);
-        setComponentProperty(component, JsfConstants.ONMOUSEMOVE_ATTR, onmousemove_);
-        setComponentProperty(component, JsfConstants.ONMOUSEOUT_ATTR, onmouseout_);
-        setComponentProperty(component, JsfConstants.ONMOUSEOVER_ATTR, onmouseover_);
+        setComponentProperty(component, JsfConstants.ONMOUSEDOWN_ATTR,
+                onmousedown_);
+        setComponentProperty(component, JsfConstants.ONMOUSEMOVE_ATTR,
+                onmousemove_);
+        setComponentProperty(component, JsfConstants.ONMOUSEOUT_ATTR,
+                onmouseout_);
+        setComponentProperty(component, JsfConstants.ONMOUSEOVER_ATTR,
+                onmouseover_);
         setComponentProperty(component, JsfConstants.ONMOUSEUP_ATTR, onmouseup_);
         setComponentProperty(component, JsfConstants.ONFOCUS_ATTR, onfocus_);
         setComponentProperty(component, JsfConstants.ONBLUR_ATTR, onblur_);
@@ -523,7 +531,8 @@ public abstract class UIComponentTagBase extends UIComponentTag {
         setComponentProperty(component, JsfConstants.LANG_ATTR, lang_);
         setComponentProperty(component, JsfConstants.DIR_ATTR, dir_);
         setComponentProperty(component, JsfConstants.STYLE_ATTR, style_);
-        setComponentProperty(component, JsfConstants.STYLE_CLASS_ATTR, styleClass_);
+        setComponentProperty(component, JsfConstants.STYLE_CLASS_ATTR,
+                styleClass_);
     }
 
     protected void setComponentProperty(UIComponent component,
@@ -537,12 +546,11 @@ public abstract class UIComponentTagBase extends UIComponentTag {
             setBeanProperty(component, propertyName, value);
         }
     }
-    
-    protected void setBeanProperty(UIComponent component,
-            String propertyName, String value) {
-        
-        BeanDesc beanDesc = BeanDescFactory.getBeanDesc(component
-                .getClass());
+
+    protected void setBeanProperty(UIComponent component, String propertyName,
+            String value) {
+
+        BeanDesc beanDesc = BeanDescFactory.getBeanDesc(component.getClass());
         if (beanDesc.hasPropertyDesc(propertyName)) {
             PropertyDesc pd = beanDesc.getPropertyDesc(propertyName);
             if (pd.hasWriteMethod()) {
@@ -574,7 +582,8 @@ public abstract class UIComponentTagBase extends UIComponentTag {
             return;
         }
         if (!(component instanceof EditableValueHolder)) {
-            throw new NoEditableValueHolderRuntimeException(component.getClass());
+            throw new NoEditableValueHolderRuntimeException(component
+                    .getClass());
         }
         if (!isValueReference(value)) {
             throw new NoValueReferenceRuntimeException(value);
@@ -598,9 +607,8 @@ public abstract class UIComponentTagBase extends UIComponentTag {
         }
         ((UICommand) component).setAction(mb);
     }
-    
-    protected void setActionListenerProperty(UIComponent component,
-            String value) {
+
+    protected void setActionListenerProperty(UIComponent component, String value) {
         if (value == null) {
             return;
         }
@@ -621,16 +629,17 @@ public abstract class UIComponentTagBase extends UIComponentTag {
             return;
         }
         if (!(component instanceof EditableValueHolder)) {
-            throw new NoEditableValueHolderRuntimeException(component.getClass());
+            throw new NoEditableValueHolderRuntimeException(component
+                    .getClass());
         }
         if (!isValueReference(value)) {
             throw new NoValueReferenceRuntimeException(value);
         }
         MethodBinding mb = createMethodBinding(value, VALUE_LISTENER_ARGS);
         ((EditableValueHolder) component).setValueChangeListener(mb);
-        
+
     }
-    
+
     protected Application getApplication() {
         return FacesContext.getCurrentInstance().getApplication();
     }
@@ -642,5 +651,5 @@ public abstract class UIComponentTagBase extends UIComponentTag {
     protected MethodBinding createMethodBinding(String value, Class[] argTypes) {
         return getApplication().createMethodBinding(value, argTypes);
     }
-    
+
 }

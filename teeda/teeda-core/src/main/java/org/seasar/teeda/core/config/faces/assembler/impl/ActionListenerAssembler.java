@@ -25,13 +25,15 @@ import org.seasar.teeda.core.config.faces.assembler.ApplicationChildAssembler;
  */
 public class ActionListenerAssembler extends ApplicationChildAssembler {
 
-    public ActionListenerAssembler(String actionListenerName, Application application) {
+    public ActionListenerAssembler(String actionListenerName,
+            Application application) {
         super(actionListenerName, application);
     }
 
     public void assemble() {
         ActionListener previous = getApplication().getActionListener();
-        ActionListener listener = (ActionListener)createMarshalInstance(ActionListener.class, previous);
+        ActionListener listener = (ActionListener) createMarshalInstance(
+                ActionListener.class, previous);
         getApplication().setActionListener(listener);
     }
 }

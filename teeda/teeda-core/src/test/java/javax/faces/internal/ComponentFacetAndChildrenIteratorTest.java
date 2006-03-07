@@ -21,8 +21,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
-import javax.faces.internal.ComponentFacetAndChildrenIterator;
-
 import junit.framework.TestCase;
 
 /**

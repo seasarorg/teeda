@@ -47,7 +47,8 @@ public class ExceptionAssert {
                 // ok
                 assertMessageExist(th);
             } else {
-                Assert.fail("Expected <" + expected.getName() + "> is not thrown. But was <" + th + ">");
+                Assert.fail("Expected <" + expected.getName()
+                        + "> is not thrown. But was <" + th + ">");
             }
         }
         if (!thrown) {

@@ -27,23 +27,23 @@ import org.seasar.teeda.core.unit.TeedaTestCase;
  * @author yone
  */
 public class OutputLinkTagTest extends TeedaTestCase {
-    
+
     public void testGetComponentType() throws Exception {
         // # Arrange #
         OutputLinkTag tag = new OutputLinkTag();
-        
+
         // # Act & Assert #
         assertEquals("javax.faces.HtmlOutputLink", tag.getComponentType());
     }
-    
+
     public void testGetRenderType() throws Exception {
         // # Arrange #
         OutputLinkTag tag = new OutputLinkTag();
-        
+
         // # Act & Assert #
-        assertEquals("javax.faces.Link", tag.getRendererType());        
+        assertEquals("javax.faces.Link", tag.getRendererType());
     }
-    
+
     public void testSetProperties_All() throws Exception {
         // # Arrange #
         HtmlOutputLink component = createHtmlOutputLink();
@@ -52,7 +52,7 @@ public class OutputLinkTagTest extends TeedaTestCase {
         app.addConverter("mock.converter",
                 "org.seasar.teeda.core.mock.MockConverter");
         setApplication(app);
-        
+
         tag.setConverter("mock.converter");
         tag.setValue("value");
         tag.setAccesskey("accessKey");
@@ -82,10 +82,10 @@ public class OutputLinkTagTest extends TeedaTestCase {
         tag.setTarget("_blank");
         tag.setTitle("title");
         tag.setType("contentType");
-        
+
         // # Act #
         tag.setProperties(component);
-        
+
         // # Assert #
         assertTrue(component.getConverter() instanceof MockConverter);
         assertEquals("value", component.getValue());

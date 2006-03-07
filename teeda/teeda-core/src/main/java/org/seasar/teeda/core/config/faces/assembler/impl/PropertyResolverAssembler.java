@@ -25,14 +25,15 @@ import org.seasar.teeda.core.config.faces.assembler.ApplicationChildAssembler;
  */
 public class PropertyResolverAssembler extends ApplicationChildAssembler {
 
-    public PropertyResolverAssembler(String resolverName, Application application){
+    public PropertyResolverAssembler(String resolverName,
+            Application application) {
         super(resolverName, application);
     }
-    
+
     public void assemble() {
         PropertyResolver previous = getApplication().getPropertyResolver();
-        PropertyResolver resolver = 
-            (PropertyResolver)createMarshalInstance(PropertyResolver.class, previous);
+        PropertyResolver resolver = (PropertyResolver) createMarshalInstance(
+                PropertyResolver.class, previous);
         getApplication().setPropertyResolver(resolver);
     }
 

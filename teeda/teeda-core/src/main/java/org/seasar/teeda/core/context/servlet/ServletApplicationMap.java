@@ -27,8 +27,9 @@ import org.seasar.teeda.core.context.AbstractExternalContextMap;
 public class ServletApplicationMap extends AbstractExternalContextMap {
 
     private ServletContext context_;
-    public ServletApplicationMap(ServletContext context){
-        if(context == null){
+
+    public ServletApplicationMap(ServletContext context) {
+        if (context == null) {
             throw new NullPointerException();
         }
         context_ = context;

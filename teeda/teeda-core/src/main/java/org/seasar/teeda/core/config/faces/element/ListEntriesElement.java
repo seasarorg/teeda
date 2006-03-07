@@ -20,14 +20,14 @@ import java.util.List;
 /**
  * @author Shinpei Ohtani(aka shot)
  */
-public interface ListEntriesElement extends JsfConfigElement, NullValueHolder{
+public interface ListEntriesElement extends JsfConfigElement, NullValueHolder {
 
     public void setValueClass(String valueClassName);
-    
+
     public void addValue(String value);
-        
+
     public String getValueClass();
-    
+
     public List getValues();
-        
+
 }

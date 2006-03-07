@@ -31,9 +31,9 @@ public class GZIPOutputStreamUtil {
      * @return
      */
     public static OutputStream getOutputStream(OutputStream out) {
-        try{
+        try {
             return new GZIPOutputStream(out);
-        }catch(IOException e){
+        } catch (IOException e) {
             throw new IORuntimeException(e);
         }
     }

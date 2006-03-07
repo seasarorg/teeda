@@ -25,9 +25,9 @@ import javax.faces.model.ResultSetDataModel;
  * This class might be changed without a previous notice. Please do not use it
  * excluding the JSF specification part.
  */
-public class ResultSetBaseSet extends ResultSetBaseCollection implements Set{
+public class ResultSetBaseSet extends ResultSetBaseCollection implements Set {
 
-	public ResultSetBaseSet(ResultSetDataModel.ResultSetMap map){
-		super(map);
-	}
+    public ResultSetBaseSet(ResultSetDataModel.ResultSetMap map) {
+        super(map);
+    }
 }

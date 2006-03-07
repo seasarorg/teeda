@@ -24,27 +24,27 @@ import junit.framework.TestCase;
  * @author yone
  */
 public class SelectItemTagTest extends TestCase {
-    
+
     public void testGetComponentType() throws Exception {
         // # Arrange #
         SelectItemTag tag = new SelectItemTag();
-        
+
         // # Act & Assert #
         assertEquals("javax.faces.SelectItem", tag.getComponentType());
     }
-    
+
     public void testGetRenderType() throws Exception {
         // # Arrange #
         SelectItemTag tag = new SelectItemTag();
-        
+
         // # Act & Assert #
-        assertEquals(null, tag.getRendererType());        
+        assertEquals(null, tag.getRendererType());
     }
-    
+
     public void testSetProperties() throws Exception {
         // # Arrange #
         UISelectItem item = createUISelectItem();
-        
+
         SelectItemTag tag = new SelectItemTag();
         tag.setItemDescription("item description");
         tag.setItemDisabled("true");
@@ -58,13 +58,13 @@ public class SelectItemTagTest extends TestCase {
         assertTrue(item.isItemDisabled());
         assertEquals("item label", item.getItemLabel());
         assertEquals("item value", item.getItemValue());
-    }        
-    
+    }
+
     private UISelectItem createUISelectItem() {
         return (UISelectItem) createUIComponent();
     }
 
     protected UIComponent createUIComponent() {
         return new UISelectItem();
-    }    
+    }
 }

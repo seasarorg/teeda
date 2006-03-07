@@ -24,7 +24,6 @@ import org.seasar.teeda.core.config.faces.element.FacesConfig;
 import org.seasar.teeda.core.config.faces.element.FacetElement;
 import org.seasar.teeda.core.config.faces.element.PropertyElement;
 import org.seasar.teeda.core.config.faces.element.impl.FacesConfigImpl;
-import org.seasar.teeda.core.config.faces.handler.ComponentTagHandler;
 import org.seasar.teeda.core.mock.MockUIComponent;
 
 /**
@@ -43,7 +42,7 @@ public class ComponentTagHandlerTest extends TagHandlerTestCase {
 
     public void testComponentTagHandler() throws Exception {
         // # Arrange #
-//        TagHandlerContext context = new TagHandlerContext();
+        //        TagHandlerContext context = new TagHandlerContext();
         FacesConfig facesConfig = new FacesConfigImpl();
         getContext().push(facesConfig);
 

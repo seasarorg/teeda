@@ -45,7 +45,7 @@ public class PropertyUtilTest extends TestCase {
         assertEquals("hoge", a.getName());
         assertEquals(5, a.getNum());
     }
-    
+
     public static class A {
         private String name = "a";
 

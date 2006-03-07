@@ -20,7 +20,6 @@ import javax.faces.component.html.HtmlPanelGroup;
 
 import org.seasar.teeda.core.taglib.UIComponentTagBase;
 
-
 /**
  * @author yone
  */

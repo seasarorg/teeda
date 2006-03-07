@@ -28,20 +28,20 @@ public class ListEntriesTagHandler extends JsfTagHandler {
 
     private static final long serialVersionUID = 1L;
 
-    public ListEntriesTagHandler(){
+    public ListEntriesTagHandler() {
     }
-    
+
     public void start(TagHandlerContext context, Attributes attributes) {
-    	ListEntriesElement listEntries = createListEntriesElement();
+        ListEntriesElement listEntries = createListEntriesElement();
         context.push(listEntries);
     }
-    
+
     public void end(TagHandlerContext context, String body) {
-    	ListEntriesElement listEntries = (ListEntriesElement)context.pop();
-        ListEntriesHolder holder = (ListEntriesHolder)context.peek();
+        ListEntriesElement listEntries = (ListEntriesElement) context.pop();
+        ListEntriesHolder holder = (ListEntriesHolder) context.peek();
         holder.setListEntries(listEntries);
     }
-    
+
     protected ListEntriesElement createListEntriesElement() {
         return new ListEntriesElementImpl();
     }

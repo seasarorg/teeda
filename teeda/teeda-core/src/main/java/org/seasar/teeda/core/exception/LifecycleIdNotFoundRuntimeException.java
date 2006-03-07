@@ -15,7 +15,6 @@
  */
 package org.seasar.teeda.core.exception;
 
-
 /**
  * @author higa
  * @author Shinpei Ohtani
@@ -23,15 +22,16 @@ package org.seasar.teeda.core.exception;
  */
 public class LifecycleIdNotFoundRuntimeException extends ExtendFacesException {
 
-	private static final long serialVersionUID = 3616453380059181618L;
+    private static final long serialVersionUID = 3616453380059181618L;
+
     private String lifecycleId_;
 
-	public LifecycleIdNotFoundRuntimeException(String lifecycleId) {
-		super("ETDA0014", new Object[] { lifecycleId });
-		this.lifecycleId_ = lifecycleId;
-	}
+    public LifecycleIdNotFoundRuntimeException(String lifecycleId) {
+        super("ETDA0014", new Object[] { lifecycleId });
+        this.lifecycleId_ = lifecycleId;
+    }
 
-	public String getLifecycleId() {
-		return lifecycleId_;
-	}
+    public String getLifecycleId() {
+        return lifecycleId_;
+    }
 }

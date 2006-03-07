@@ -22,10 +22,10 @@ import javax.servlet.ServletRequest;
 /**
  * @author Shinpei Ohtani
  */
-public interface MockServletRequest extends ServletRequest{
-    
+public interface MockServletRequest extends ServletRequest {
+
     public String DEFAULT_CHARACTER_ENCODING = "ISO-8859-1";
-    
+
     public void setContentLength(int contentLength);
 
     public void setContentType(String contentType);

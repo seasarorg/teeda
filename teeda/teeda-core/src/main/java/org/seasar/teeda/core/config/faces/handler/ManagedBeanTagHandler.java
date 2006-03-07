@@ -28,21 +28,21 @@ public class ManagedBeanTagHandler extends JsfTagHandler {
 
     private static final long serialVersionUID = 1L;
 
-    public ManagedBeanTagHandler(){
+    public ManagedBeanTagHandler() {
     }
-    
+
     public void start(TagHandlerContext context, Attributes attributes) {
         ManagedBeanElement managedBean = createManagedBeanElement();
         context.push(managedBean);
     }
 
     public void end(TagHandlerContext context, String body) {
-        ManagedBeanElement managedBean = (ManagedBeanElement)context.pop();
-        FacesConfig facesConfig = (FacesConfig)context.peek();
+        ManagedBeanElement managedBean = (ManagedBeanElement) context.pop();
+        FacesConfig facesConfig = (FacesConfig) context.peek();
         facesConfig.addManagedBeanElement(managedBean);
     }
-    
-    protected ManagedBeanElement createManagedBeanElement(){
+
+    protected ManagedBeanElement createManagedBeanElement() {
         return new ManagedBeanElementImpl();
     }
 }

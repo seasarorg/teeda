@@ -23,15 +23,16 @@ import org.seasar.framework.exception.SRuntimeException;
  */
 public class TagNotFoundRuntimeException extends SRuntimeException {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
+
     private String tagName;
 
-	public TagNotFoundRuntimeException(String tagName) {
-		super("EJSF0004", new Object[]{tagName});
-		this.tagName = tagName;
-	}
-	
-	public String getTagName() {
-		return tagName;
-	}
+    public TagNotFoundRuntimeException(String tagName) {
+        super("EJSF0004", new Object[] { tagName });
+        this.tagName = tagName;
+    }
+
+    public String getTagName() {
+        return tagName;
+    }
 }

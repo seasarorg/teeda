@@ -25,11 +25,11 @@ import org.seasar.teeda.core.el.FacesResolver;
  */
 public class ApplicationScopeResolver implements FacesResolver {
 
-	/**
-	 * @see org.seasar.jsf.el.FacesResolver#resolveVariable(javax.faces.context.FacesContext)
-	 */
-	public Object resolveVariable(FacesContext context) {
-		return context.getExternalContext().getApplicationMap();
-	}
+    /**
+     * @see org.seasar.jsf.el.FacesResolver#resolveVariable(javax.faces.context.FacesContext)
+     */
+    public Object resolveVariable(FacesContext context) {
+        return context.getExternalContext().getApplicationMap();
+    }
 
 }

@@ -30,15 +30,15 @@ public class MockUIComponentBaseWithEditableValueHolder extends
     private Object submittedValue_;
 
     private boolean localValueSet_ = false;
-    
+
     private boolean valid_ = false;
-    
+
     private boolean required_ = false;
-    
+
     private boolean immediate_ = false;
-    
+
     private Object value_ = null;
-    
+
     public String getFamily() {
         return "javax.faces.mock";
     }

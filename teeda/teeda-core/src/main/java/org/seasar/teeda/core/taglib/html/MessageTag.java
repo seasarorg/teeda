@@ -21,36 +21,35 @@ import javax.faces.component.html.HtmlMessage;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.taglib.UIComponentTagBase;
 
-
 /**
  * @author yone
  */
 public class MessageTag extends UIComponentTagBase {
 
     private String for_;
-    
+
     private String showDetail_;
-    
+
     private String showSummary_;
-    
+
     private String errorClass_;
-    
+
     private String errorStyle_;
-    
+
     private String fatalClass_;
-    
+
     private String fatalStyle_;
 
     private String infoClass_;
-    
+
     private String infoStyle_;
-    
+
     private String layout_;
-    
+
     private String tooltip_;
-    
+
     private String warnClass_;
-    
+
     private String warnStyle_;
 
     public String getComponentType() {
@@ -60,25 +59,35 @@ public class MessageTag extends UIComponentTagBase {
     public String getRendererType() {
         return "javax.faces.Message";
     }
-    
+
     protected void setProperties(UIComponent component) {
         super.setProperties(component);
 
         setComponentProperty(component, JsfConstants.FOR_ATTR, for_);
-        setComponentProperty(component, JsfConstants.SHOW_DETAIL_ATTR, showDetail_);
-        setComponentProperty(component, JsfConstants.SHOW_SUMMARY_ATTR, showSummary_);
-        setComponentProperty(component, JsfConstants.ERROR_CLASS_ATTR, errorClass_);
-        setComponentProperty(component, JsfConstants.ERROR_STYLE_ATTR, errorStyle_);
-        setComponentProperty(component, JsfConstants.FATAL_CLASS_ATTR, fatalClass_);
-        setComponentProperty(component, JsfConstants.FATAL_STYLE_ATTR, fatalStyle_);
-        setComponentProperty(component, JsfConstants.INFO_CLASS_ATTR, infoClass_);
-        setComponentProperty(component, JsfConstants.INFO_STYLE_ATTR, infoStyle_);
+        setComponentProperty(component, JsfConstants.SHOW_DETAIL_ATTR,
+                showDetail_);
+        setComponentProperty(component, JsfConstants.SHOW_SUMMARY_ATTR,
+                showSummary_);
+        setComponentProperty(component, JsfConstants.ERROR_CLASS_ATTR,
+                errorClass_);
+        setComponentProperty(component, JsfConstants.ERROR_STYLE_ATTR,
+                errorStyle_);
+        setComponentProperty(component, JsfConstants.FATAL_CLASS_ATTR,
+                fatalClass_);
+        setComponentProperty(component, JsfConstants.FATAL_STYLE_ATTR,
+                fatalStyle_);
+        setComponentProperty(component, JsfConstants.INFO_CLASS_ATTR,
+                infoClass_);
+        setComponentProperty(component, JsfConstants.INFO_STYLE_ATTR,
+                infoStyle_);
         setComponentProperty(component, JsfConstants.LAYOUT_ATTR, layout_);
         setComponentProperty(component, JsfConstants.TOOLTIP_ATTR, tooltip_);
-        setComponentProperty(component, JsfConstants.WARN_CLASS_ATTR, warnClass_);
-        setComponentProperty(component, JsfConstants.WARN_STYLE_ATTR, warnStyle_);
+        setComponentProperty(component, JsfConstants.WARN_CLASS_ATTR,
+                warnClass_);
+        setComponentProperty(component, JsfConstants.WARN_STYLE_ATTR,
+                warnStyle_);
     }
-    
+
     public void release() {
         super.release();
         for_ = null;

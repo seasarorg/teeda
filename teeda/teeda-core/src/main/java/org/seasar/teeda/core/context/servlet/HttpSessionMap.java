@@ -29,11 +29,13 @@ import org.seasar.teeda.core.context.AbstractExternalContextMap;
 public class HttpSessionMap extends AbstractExternalContextMap {
 
     private static final Enumeration EMPTY_ENUMERATION = new EmptyEnumeration();
+
     private HttpServletRequest request_;
-    public HttpSessionMap(HttpServletRequest request){
+
+    public HttpSessionMap(HttpServletRequest request) {
         request_ = request;
     }
-    
+
     protected Object getAttribute(String key) {
         HttpSession session = getSession();
         return (session != null) ? session.getAttribute(key) : null;
@@ -45,19 +47,19 @@ public class HttpSessionMap extends AbstractExternalContextMap {
 
     protected Enumeration getAttributeNames() {
         HttpSession session = getSession();
-        return (session != null) ? 
-                session.getAttributeNames() : EMPTY_ENUMERATION;
+        return (session != null) ? session.getAttributeNames()
+                : EMPTY_ENUMERATION;
     }
 
     protected void removeAttribute(String key) {
         HttpSession session = getSession();
-        if(session != null){
+        if (session != null) {
             session.removeAttribute(key);
         }
     }
 
-    private HttpSession getSession(){
+    private HttpSession getSession() {
         return request_.getSession(false);
     }
-    
+
 }

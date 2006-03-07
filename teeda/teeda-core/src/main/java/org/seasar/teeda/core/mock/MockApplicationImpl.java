@@ -72,7 +72,7 @@ public class MockApplicationImpl extends MockApplication {
     private Map convertersByClass_ = new HashMap();
 
     private Map validators_ = new HashMap();
-    
+
     private ValueBinding vb_;
 
     public MockApplicationImpl() {
@@ -282,7 +282,7 @@ public class MockApplicationImpl extends MockApplication {
 
     public ValueBinding createValueBinding(String ref)
             throws ReferenceSyntaxException {
-        if(vb_ != null) {
+        if (vb_ != null) {
             return vb_;
         }
         //think bout it....

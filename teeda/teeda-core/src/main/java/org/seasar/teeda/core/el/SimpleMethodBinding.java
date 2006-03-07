@@ -28,39 +28,40 @@ import javax.faces.el.MethodNotFoundException;
 
 public class SimpleMethodBinding extends MethodBinding implements StateHolder {
 
-	private String outcome_;
-	private boolean transient_ = false;
+    private String outcome_;
 
-	public SimpleMethodBinding() {
-	}
-	
-	public SimpleMethodBinding(String outcome) {
-		outcome_ = outcome;
-	}
+    private boolean transient_ = false;
 
-	public Object invoke(FacesContext context, Object args[])
-			throws EvaluationException, MethodNotFoundException {
+    public SimpleMethodBinding() {
+    }
 
-		return outcome_;
-	}
+    public SimpleMethodBinding(String outcome) {
+        outcome_ = outcome;
+    }
 
-	public Class getType(FacesContext context) throws MethodNotFoundException {
-		return String.class;
-	}
+    public Object invoke(FacesContext context, Object args[])
+            throws EvaluationException, MethodNotFoundException {
 
-	public Object saveState(FacesContext context) {
-		return outcome_;
-	}
+        return outcome_;
+    }
 
-	public void restoreState(FacesContext context, Object obj) {
-		outcome_ = (String) obj;
-	}
+    public Class getType(FacesContext context) throws MethodNotFoundException {
+        return String.class;
+    }
 
-	public boolean isTransient() {
-		return transient_;
-	}
+    public Object saveState(FacesContext context) {
+        return outcome_;
+    }
 
-	public void setTransient(boolean b) {
-		transient_ = b;
-	}
+    public void restoreState(FacesContext context, Object obj) {
+        outcome_ = (String) obj;
+    }
+
+    public boolean isTransient() {
+        return transient_;
+    }
+
+    public void setTransient(boolean b) {
+        transient_ = b;
+    }
 }

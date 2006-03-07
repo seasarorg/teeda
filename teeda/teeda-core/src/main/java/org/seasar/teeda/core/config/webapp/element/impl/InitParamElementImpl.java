@@ -25,7 +25,9 @@ import org.seasar.teeda.core.config.webapp.element.InitParamElement;
 public class InitParamElementImpl implements InitParamElement, Serializable {
 
     private static final long serialVersionUID = 1L;
+
     private String paramName_;
+
     private String paramValue_;
 
     public String getParamName() {

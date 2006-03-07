@@ -27,7 +27,6 @@ import org.seasar.teeda.core.mock.MockUIComponent;
 import org.seasar.teeda.core.mock.MockVariableResolver;
 import org.seasar.teeda.core.unit.TeedaTestCase;
 
-
 public class TestCommonsExpressionProcessorImpl extends TeedaTestCase {
 
     public static void main(String[] args) {
@@ -56,30 +55,30 @@ public class TestCommonsExpressionProcessorImpl extends TeedaTestCase {
         super(arg0);
     }
 
-    public void testProcessExpression(){
+    public void testProcessExpression() {
         CommonsExpressionProcessorImpl processor = new CommonsExpressionProcessorImpl();
         ELParser parser = new ELParser(new StringReader("${a.b}"));
-        try{
+        try {
             Object obj = parser.ExpressionString();
             processor.processExpression(obj, Object.class);
-        }catch(Exception ignore){
+        } catch (Exception ignore) {
         }
-        try{
+        try {
             processor.processExpression(new Object(), Object.class);
             fail();
-        }catch(IllegalStateException e){
+        } catch (IllegalStateException e) {
             success();
         }
     }
-    
-    public void testEvaluate(){
+
+    public void testEvaluate() {
         CommonsExpressionProcessorImpl processor = new CommonsExpressionProcessorImpl();
         ELParser parser = new ELParser(new StringReader("${a}"));
         Object expression = null;
-        try{
+        try {
             expression = parser.ExpressionString();
             processor.processExpression(expression, Object.class);
-        }catch(Exception ignore){
+        } catch (Exception ignore) {
         }
         MockVariableResolver resolver = getVariableResolver();
         A a = new A();
@@ -88,14 +87,14 @@ public class TestCommonsExpressionProcessorImpl extends TeedaTestCase {
         assertSame(a, o);
     }
 
-    public void testEvaluate2(){
+    public void testEvaluate2() {
         CommonsExpressionProcessorImpl processor = new CommonsExpressionProcessorImpl();
         ELParser parser = new ELParser(new StringReader("b${a}"));
         Object expression = null;
-        try{
+        try {
             expression = parser.ExpressionString();
             processor.processExpression(expression, Object.class);
-        }catch(Exception ignore){
+        } catch (Exception ignore) {
         }
         MockVariableResolver resolver = getVariableResolver();
         resolver.putValue("a", "A");
@@ -105,49 +104,49 @@ public class TestCommonsExpressionProcessorImpl extends TeedaTestCase {
         assertEquals("bA", o);
     }
 
-    public void testToIndex(){
-    	List previous = new ArrayList();
+    public void testToIndex() {
+        List previous = new ArrayList();
         CommonsExpressionProcessorImpl processor = new CommonsExpressionProcessorImpl();
         Integer indexValue = processor.toIndex(previous, "1");
         assertEquals(new Integer(1), indexValue);
-        
-        indexValue = processor.toIndex(new String[]{"2"}, "2");
+
+        indexValue = processor.toIndex(new String[] { "2" }, "2");
         assertEquals(new Integer(2), indexValue);
-        
-        try{
-        	indexValue = processor.toIndex(previous, List.class);
-        	fail();
-        }catch(ReferenceSyntaxException expected){
-        	success();
+
+        try {
+            indexValue = processor.toIndex(previous, List.class);
+            fail();
+        } catch (ReferenceSyntaxException expected) {
+            success();
         }
-        
+
         indexValue = processor.toIndex(new MockUIComponent(), "3");
         assertEquals(new Integer(3), indexValue);
     }
-    
-    public void testResolveBase1(){
+
+    public void testResolveBase1() {
         CommonsExpressionProcessorImpl processor = new CommonsExpressionProcessorImpl();
         ELParser parser = new ELParser(new StringReader("${a}"));
         Object expression = null;
-        try{
+        try {
             expression = parser.ExpressionString();
             processor.processExpression(expression, Object.class);
-        }catch(Exception ignore){
+        } catch (Exception ignore) {
         }
         Object o = processor.resolveBase(getFacesContext(), expression);
         assertNotNull(o);
         assertTrue(o instanceof String);
-        assertEquals("a", (String)o);
+        assertEquals("a", (String) o);
     }
-    
-    public void testResolveBase2(){
+
+    public void testResolveBase2() {
         CommonsExpressionProcessorImpl processor = new CommonsExpressionProcessorImpl();
         ELParser parser = new ELParser(new StringReader("${a.name}"));
         Object expression = null;
-        try{
+        try {
             expression = parser.ExpressionString();
             processor.processExpression(expression, Object.class);
-        }catch(Exception ignore){
+        } catch (Exception ignore) {
         }
         MockVariableResolver resolver = getVariableResolver();
         A a = new A();
@@ -155,27 +154,29 @@ public class TestCommonsExpressionProcessorImpl extends TeedaTestCase {
         Object o = processor.resolveBase(getFacesContext(), expression);
         assertNotNull(o);
         assertTrue(o instanceof Object[]);
-        Object[] objs = (Object[])o;
+        Object[] objs = (Object[]) o;
         assertSame(a, objs[0]);
         assertEquals("name", objs[1]);
     }
-    
-    public void testGetCoercedObject(){
-    	CommonsExpressionProcessorImpl processor = new CommonsExpressionProcessorImpl();
-    	ArrayList list = new ArrayList();
-    	list.add("a");
-    	Object o = processor.getCoercedObject(list, List.class);
-    	assertNotNull(o);
-    	assertTrue(o instanceof List);
-    	List l = (List)o;
-    	assertEquals("a", l.get(0));
+
+    public void testGetCoercedObject() {
+        CommonsExpressionProcessorImpl processor = new CommonsExpressionProcessorImpl();
+        ArrayList list = new ArrayList();
+        list.add("a");
+        Object o = processor.getCoercedObject(list, List.class);
+        assertNotNull(o);
+        assertTrue(o instanceof List);
+        List l = (List) o;
+        assertEquals("a", l.get(0));
     }
-    
-    public static class A{
+
+    public static class A {
         private String name_ = "aaa";
-        public A(){
+
+        public A() {
         }
-        public String getName(){
+
+        public String getName() {
             return name_;
         }
     }

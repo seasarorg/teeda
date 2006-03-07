@@ -20,9 +20,10 @@ package org.seasar.teeda.core.exception;
  */
 public class MethodNotAccessibleException extends ExtendMethodNotFoundExceptin {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-    public MethodNotAccessibleException(Exception cause, String className, String expressionString){
-		super(cause, className, expressionString, "ETDA0016");
-	}
+    public MethodNotAccessibleException(Exception cause, String className,
+            String expressionString) {
+        super(cause, className, expressionString, "ETDA0016");
+    }
 }

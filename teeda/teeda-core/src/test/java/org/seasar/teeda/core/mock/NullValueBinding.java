@@ -26,21 +26,21 @@ import javax.faces.el.ValueBinding;
 public class NullValueBinding extends ValueBinding {
 
     public Object getValue(FacesContext context) throws EvaluationException,
-        PropertyNotFoundException {
+            PropertyNotFoundException {
         return null;
     }
 
     public void setValue(FacesContext context, Object value)
-        throws EvaluationException, PropertyNotFoundException {
+            throws EvaluationException, PropertyNotFoundException {
     }
 
     public boolean isReadOnly(FacesContext context) throws EvaluationException,
-        PropertyNotFoundException {
+            PropertyNotFoundException {
         return false;
     }
 
     public Class getType(FacesContext context) throws EvaluationException,
-        PropertyNotFoundException {
+            PropertyNotFoundException {
         return null;
     }
 

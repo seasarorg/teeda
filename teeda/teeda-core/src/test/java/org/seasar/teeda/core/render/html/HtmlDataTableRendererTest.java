@@ -643,7 +643,8 @@ public class HtmlDataTableRendererTest extends RendererTest {
                 MockHtmlOutputText htmlOutputText = new MockHtmlOutputText();
                 htmlOutputText.setRenderer(htmlOutputTextRenderer);
                 ELParser parser = new CommonsELParser();
-                parser.setExpressionProcessor(new CommonsExpressionProcessorImpl());
+                parser
+                        .setExpressionProcessor(new CommonsExpressionProcessorImpl());
                 ValueBinding vb = new ValueBindingImpl(getFacesContext()
                         .getApplication(), "#{fooVar}", parser);
                 htmlOutputText.setValueBinding("value", vb);

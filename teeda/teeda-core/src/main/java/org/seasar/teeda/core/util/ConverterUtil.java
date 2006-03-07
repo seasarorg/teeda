@@ -19,65 +19,65 @@ package org.seasar.teeda.core.util;
  * @author yone
  */
 public class ConverterUtil {
-    
+
     private ConverterUtil() {
     }
-    
+
     public static int convertToInt(Object value) {
         if (value instanceof Number) {
-            return ((Number)value).intValue();
+            return ((Number) value).intValue();
         } else if (value instanceof String) {
             try {
-                return Integer.parseInt((String)value);
+                return Integer.parseInt((String) value);
             } catch (NumberFormatException e) {
-                throw new IllegalArgumentException("Cannot convert " 
+                throw new IllegalArgumentException("Cannot convert "
                         + value.toString() + " to int");
             }
         } else {
-            throw new IllegalArgumentException("Cannot convert " 
+            throw new IllegalArgumentException("Cannot convert "
                     + value.toString() + " to int");
         }
     }
 
     public static boolean convertToBoolean(Object value) {
         if (value instanceof Boolean) {
-            return ((Boolean)value).booleanValue();
+            return ((Boolean) value).booleanValue();
         } else if (value instanceof String) {
-            return new Boolean((String)value).booleanValue();
+            return new Boolean((String) value).booleanValue();
         } else {
-            throw new IllegalArgumentException("Cannot convert " 
+            throw new IllegalArgumentException("Cannot convert "
                     + value.toString() + " to boolean");
         }
-    }   
+    }
 
     public static long convertToLong(Object value) {
         if (value instanceof Number) {
-            return ((Number)value).longValue();
+            return ((Number) value).longValue();
         } else if (value instanceof String) {
             try {
-                return Long.parseLong((String)value);
+                return Long.parseLong((String) value);
             } catch (NumberFormatException e) {
-                throw new IllegalArgumentException("Cannot convert " 
+                throw new IllegalArgumentException("Cannot convert "
                         + value.toString() + " to long");
             }
         } else {
-            throw new IllegalArgumentException("Cannot convert " 
+            throw new IllegalArgumentException("Cannot convert "
                     + value.toString() + " to long");
         }
     }
 
     public static double convertToDouble(Object value) {
         if (value instanceof Number) {
-            return ((Number)value).doubleValue();
+            return ((Number) value).doubleValue();
         } else if (value instanceof String) {
-            try { 
-                return Double.parseDouble((String)value);
+            try {
+                return Double.parseDouble((String) value);
             } catch (NumberFormatException e) {
-                throw new IllegalArgumentException("Cannot convert " 
+                throw new IllegalArgumentException("Cannot convert "
                         + value.toString() + " to double");
             }
         } else {
-            throw new IllegalArgumentException("Cannot convert " 
+            throw new IllegalArgumentException("Cannot convert "
                     + value.toString() + " to double");
         }
     }

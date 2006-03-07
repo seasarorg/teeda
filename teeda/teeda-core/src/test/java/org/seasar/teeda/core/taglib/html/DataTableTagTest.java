@@ -24,29 +24,28 @@ import junit.framework.TestCase;
  * @author yone
  */
 public class DataTableTagTest extends TestCase {
-    
+
     public void testGetComponentType() throws Exception {
         // # Arrange #
         DataTableTag tag = new DataTableTag();
-        
+
         // # Act & Assert #
-        assertEquals("javax.faces.HtmlDataTable",
-                tag.getComponentType());
+        assertEquals("javax.faces.HtmlDataTable", tag.getComponentType());
     }
-    
+
     public void testGetRenderType() throws Exception {
         // # Arrange #
         DataTableTag tag = new DataTableTag();
-        
+
         // # Act & Assert #
-        assertEquals("javax.faces.Table", tag.getRendererType());        
+        assertEquals("javax.faces.Table", tag.getRendererType());
     }
-    
+
     public void testSetProperties_All() throws Exception {
         // # Arrange #
         HtmlDataTable table = createHtmlDataTable();
         DataTableTag tag = new DataTableTag();
-        
+
         tag.setFirst("2");
         tag.setRows("33");
         tag.setValue("value");
@@ -78,10 +77,10 @@ public class DataTableTagTest extends TestCase {
         tag.setSummary("summary");
         tag.setTitle("title");
         tag.setWidth("600");
-        
+
         // # Act #
         tag.setProperties(table);
-                
+
         // # Assert #
         assertEquals(2, table.getFirst());
         assertEquals(33, table.getRows());
@@ -110,7 +109,7 @@ public class DataTableTagTest extends TestCase {
         assertEquals("rowClasses", table.getRowClasses());
         assertEquals("all", table.getRules());
         assertEquals("style", table.getStyle());
-        assertEquals("styleclass", table.getStyleClass());        
+        assertEquals("styleclass", table.getStyleClass());
         assertEquals("summary", table.getSummary());
         assertEquals("title", table.getTitle());
         assertEquals("600", table.getWidth());

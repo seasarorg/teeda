@@ -163,7 +163,7 @@ public class DoubleRangeValidator implements Validator, StateHolder {
             }
 
         } catch (NumberFormatException e) {
-            Object[] args = {component.getId()};
+            Object[] args = { component.getId() };
             throw new ValidatorException(FacesMessageUtils.getMessage(context,
                     TYPE_MESSAGE_ID, args));
         }

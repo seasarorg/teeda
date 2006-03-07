@@ -44,36 +44,42 @@ import org.seasar.teeda.core.util.BindingUtil;
  */
 public class TeedaVariableResolver extends VariableResolver {
 
-	private static Map facesResolvers = new HashMap();
+    private static Map facesResolvers = new HashMap();
 
-	static {
-		facesResolvers.put(JsfConstants.APPLICATION_SCOPE, new ApplicationScopeResolver());
-		facesResolvers.put(JsfConstants.COOKIE, new CookieResolver());
-		facesResolvers.put(JsfConstants.FACES_CONTEXT, new FacesContextResolver());
-		facesResolvers.put(JsfConstants.HEADER, new HeaderResolver());
-		facesResolvers.put(JsfConstants.HEADER_VALUES, new HeaderValuesResolver());
-		facesResolvers.put(JsfConstants.INIT_PARAM, new InitParamResolver());
-		facesResolvers.put(JsfConstants.PARAM, new ParamResolver());
-		facesResolvers.put(JsfConstants.PARAM_VALUES, new ParamValuesResolver());
-		facesResolvers.put(JsfConstants.REQUEST_SCOPE, new RequestScopeResolver());
-		facesResolvers.put(JsfConstants.SESSION_SCOPE, new SessionScopeResolver());
-		facesResolvers.put(JsfConstants.VIEW, new ViewResolver());
-	}
+    static {
+        facesResolvers.put(JsfConstants.APPLICATION_SCOPE,
+                new ApplicationScopeResolver());
+        facesResolvers.put(JsfConstants.COOKIE, new CookieResolver());
+        facesResolvers.put(JsfConstants.FACES_CONTEXT,
+                new FacesContextResolver());
+        facesResolvers.put(JsfConstants.HEADER, new HeaderResolver());
+        facesResolvers.put(JsfConstants.HEADER_VALUES,
+                new HeaderValuesResolver());
+        facesResolvers.put(JsfConstants.INIT_PARAM, new InitParamResolver());
+        facesResolvers.put(JsfConstants.PARAM, new ParamResolver());
+        facesResolvers
+                .put(JsfConstants.PARAM_VALUES, new ParamValuesResolver());
+        facesResolvers.put(JsfConstants.REQUEST_SCOPE,
+                new RequestScopeResolver());
+        facesResolvers.put(JsfConstants.SESSION_SCOPE,
+                new SessionScopeResolver());
+        facesResolvers.put(JsfConstants.VIEW, new ViewResolver());
+    }
 
-	public TeedaVariableResolver() {
-	}
+    public TeedaVariableResolver() {
+    }
 
-	/**
-	 * @see javax.faces.el.VariableResolver#resolveVariable(javax.faces.context.FacesContext,
-	 *      java.lang.String)
-	 */
-	public Object resolveVariable(FacesContext context, String name)
-			throws EvaluationException {
-		FacesResolver resolver = (FacesResolver) facesResolvers.get(name);
-		if (resolver != null) {
-			return resolver.resolveVariable(context);
-		}
-		S2Container container = SingletonS2ContainerFactory.getContainer();
-		return BindingUtil.getValue(container, name);
-	}
+    /**
+     * @see javax.faces.el.VariableResolver#resolveVariable(javax.faces.context.FacesContext,
+     *      java.lang.String)
+     */
+    public Object resolveVariable(FacesContext context, String name)
+            throws EvaluationException {
+        FacesResolver resolver = (FacesResolver) facesResolvers.get(name);
+        if (resolver != null) {
+            return resolver.resolveVariable(context);
+        }
+        S2Container container = SingletonS2ContainerFactory.getContainer();
+        return BindingUtil.getValue(container, name);
+    }
 }

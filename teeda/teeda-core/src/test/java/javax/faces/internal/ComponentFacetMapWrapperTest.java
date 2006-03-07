@@ -28,8 +28,7 @@ public class ComponentFacetMapWrapperTest extends TestCase {
     public void testPutChildFacet() {
         MockUIComponent parent = new MockUIComponent();
         parent.setId("a");
-        ComponentFacetMapWrapper wrapper = new ComponentFacetMapWrapper(
-                parent);
+        ComponentFacetMapWrapper wrapper = new ComponentFacetMapWrapper(parent);
         MockUIComponent child = new MockUIComponent();
         child.setId("b");
         wrapper.put("c", child);

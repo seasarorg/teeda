@@ -46,7 +46,8 @@ public class S2ContainerListener implements ServletContextListener {
         SingletonS2ContainerFactory.setExternalContext(extCtx);
         SingletonS2ContainerFactory
                 .setExternalContextComponentDefRegister(new HttpServletExternalContextComponentDefRegister());
-        ComponentDeployerFactory.setProvider(new HttpServletComponentDeployerProvider());
+        ComponentDeployerFactory
+                .setProvider(new HttpServletComponentDeployerProvider());
         SingletonS2ContainerFactory.init();
     }
 

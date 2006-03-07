@@ -15,7 +15,6 @@
  */
 package org.seasar.teeda.core.config.faces.assembler.impl;
 
-import org.seasar.teeda.core.config.faces.assembler.impl.StateManagerAssembler;
 import org.seasar.teeda.core.mock.MockStateManager;
 import org.seasar.teeda.core.unit.TeedaTestCase;
 

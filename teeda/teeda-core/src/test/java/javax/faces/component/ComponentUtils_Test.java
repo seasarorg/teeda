@@ -166,12 +166,12 @@ public class ComponentUtils_Test extends TeedaTestCase {
         assertTrue(ComponentUtils_.isLocaleShort("en"));
         assertTrue(ComponentUtils_.isLocaleShort("ja"));
     }
-    
+
     public void testIsLocaleShort_longName() throws Exception {
         assertFalse(ComponentUtils_.isLocaleShort(Locale.US.toString()));
         assertFalse(ComponentUtils_.isLocaleShort(Locale.JAPAN.toString()));
     }
-    
+
     public void testIsLocaleLong_null() throws Exception {
         try {
             ComponentUtils_.isLocaleLong(null);
@@ -180,42 +180,42 @@ public class ComponentUtils_Test extends TeedaTestCase {
             success();
         }
     }
-    
+
     public void testIsLocaleLong_long() throws Exception {
         assertTrue(ComponentUtils_.isLocaleLong(Locale.US.toString()));
         assertTrue(ComponentUtils_.isLocaleLong(Locale.JAPAN.toString()));
     }
-    
+
     public void testValueMatches_allValuesAreNull() throws Exception {
         SelectItem item = new SelectItem();
         List list = new ArrayList();
         list.add(item);
         assertTrue(ComponentUtils_.valueMatches(null, list.iterator()));
     }
-    
+
     public void testValueMatches_allValuesAreNotNull() throws Exception {
         SelectItem item = new SelectItem();
         item.setValue("hoge");
         List list = new ArrayList();
         list.add(item);
-        assertTrue(ComponentUtils_.valueMatches("hoge", list.iterator()));        
+        assertTrue(ComponentUtils_.valueMatches("hoge", list.iterator()));
     }
-    
+
     public void testValueMatches_hasSelectItemGroup() throws Exception {
         SelectItemGroup group = new SelectItemGroup();
         SelectItem item = new SelectItem();
         item.setValue("aaa");
-        group.setSelectItems(new SelectItem[]{item});
+        group.setSelectItems(new SelectItem[] { item });
         List list = new ArrayList();
         list.add(group);
-        assertTrue(ComponentUtils_.valueMatches("aaa", list.iterator()));        
+        assertTrue(ComponentUtils_.valueMatches("aaa", list.iterator()));
     }
-    
+
     public void testIsObjectArray() throws Exception {
-        assertTrue(ComponentUtils_.isObjectArray(new Object[]{}));
+        assertTrue(ComponentUtils_.isObjectArray(new Object[] {}));
         assertFalse(ComponentUtils_.isObjectArray("hoge"));
     }
-    
+
     private static class MockNotifyUIComponent extends MockUIComponent {
 
         private List notify_;

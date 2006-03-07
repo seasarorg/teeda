@@ -23,11 +23,14 @@ import org.seasar.teeda.core.config.faces.element.RendererElement;
 public class RendererElementImpl implements RendererElement {
 
     private String family_;
+
     private String rendererType_;
+
     private String rendererClass_;
-    public RendererElementImpl(){
+
+    public RendererElementImpl() {
     }
-    
+
     public void setComponentFamily(String family) {
         family_ = family;
     }

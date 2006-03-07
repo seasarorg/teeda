@@ -19,7 +19,6 @@ import javax.faces.application.Application;
 
 import org.seasar.extension.unit.S2TestCase;
 
-
 public class ApplicationFactoryImplTest extends S2TestCase {
 
     /*
@@ -44,7 +43,7 @@ public class ApplicationFactoryImplTest extends S2TestCase {
         super(arg0);
     }
 
-    public void testApplicationFactoryImpl(){
+    public void testApplicationFactoryImpl() {
         super.include("applicationTest.dicon");
         ApplicationFactoryImpl factory = new ApplicationFactoryImpl();
         Application app = factory.getApplication();

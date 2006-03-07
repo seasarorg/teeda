@@ -15,8 +15,9 @@
  */
 package org.seasar.teeda.core.config.faces.element;
 
-public interface ValidatorElement extends JsfConfigElement, AttributeHolder, PropertyHolder{
-    
+public interface ValidatorElement extends JsfConfigElement, AttributeHolder,
+        PropertyHolder {
+
     public void setValidatorId(String validatorId);
 
     public void setValidatorClass(String validatorClass);

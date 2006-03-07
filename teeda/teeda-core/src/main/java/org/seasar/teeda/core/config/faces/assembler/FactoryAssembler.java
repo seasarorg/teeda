@@ -15,8 +15,8 @@
  */
 package org.seasar.teeda.core.config.faces.assembler;
 
-import java.util.List;
 import java.util.Collections;
+import java.util.List;
 
 import org.seasar.teeda.core.config.faces.element.FactoryElement;
 
@@ -26,17 +26,17 @@ import org.seasar.teeda.core.config.faces.element.FactoryElement;
 public abstract class FactoryAssembler extends AbstractJsfAssembler {
 
     private List factories_ = Collections.EMPTY_LIST;
-    
-    public FactoryAssembler(List factories){
+
+    public FactoryAssembler(List factories) {
         isAllSuitableJsfElement(factories, FactoryElement.class);
         factories_ = factories;
         setupBeforeAssemble();
     }
 
-    protected final List getFactories(){
+    protected final List getFactories() {
         return factories_;
     }
-    
+
     public void assemble() {
         assembleApplicationFactory();
         assembleFacesContextFactory();

@@ -27,16 +27,17 @@ public interface AssembleProvider {
     public FactoryAssembler assembleFactories(FacesConfig facesConfig);
 
     public ApplicationAssembler assembleApplication(FacesConfig facesConfig);
-    
+
     public ComponentAssembler assembleComponent(FacesConfig facesConfig);
-    
+
     public ConverterAssembler assembleConverter(FacesConfig facesConfig);
-    
+
     public ValidatorAssembler assembleValidator(FacesConfig facesConfig);
-    
+
     public ManagedBeanAssembler assembleManagedBeans(FacesConfig facesConfig);
 
-    public NavigationRuleAssembler assembleNavigationRules(FacesConfig facesConfig);
+    public NavigationRuleAssembler assembleNavigationRules(
+            FacesConfig facesConfig);
 
     public RenderKitAssembler assembleRenderKits(FacesConfig facesConfig);
 

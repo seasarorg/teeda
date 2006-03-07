@@ -21,13 +21,10 @@ import org.seasar.teeda.core.config.faces.element.ConverterElement;
 import org.seasar.teeda.core.config.faces.element.FacesConfig;
 import org.seasar.teeda.core.config.faces.element.FactoryElement;
 import org.seasar.teeda.core.config.faces.element.impl.ConverterElementImpl;
-import org.seasar.teeda.core.config.faces.handler.SimpleStringTagHandler;
-
 
 public class SimpleStringTagHandlerTest extends TagHandlerTestCase {
 
-    private static final String PATH = 
-        "org/seasar/teeda/core/config/handler/testSimpleStringTagHandler.xml";
+    private static final String PATH = "org/seasar/teeda/core/config/handler/testSimpleStringTagHandler.xml";
 
     public static void main(String[] args) {
         junit.textui.TestRunner.run(SimpleStringTagHandlerTest.class);
@@ -54,20 +51,22 @@ public class SimpleStringTagHandlerTest extends TagHandlerTestCase {
     public void testEndTagHandlerContextString() {
         ConverterElement tag = new ConverterElementImpl();
         getContext().push(tag);
-        SimpleStringTagHandler handler = 
-            new SimpleStringTagHandler("converter-id");
+        SimpleStringTagHandler handler = new SimpleStringTagHandler(
+                "converter-id");
         handler.end(getContext(), "id");
-        ConverterElement result = (ConverterElement)getContext().pop();
+        ConverterElement result = (ConverterElement) getContext().pop();
         assertEquals("id", result.getConverterId());
     }
 
-    public void testSimpleStringTagHandlerByXMLParse() throws Exception{
+    public void testSimpleStringTagHandlerByXMLParse() throws Exception {
         FacesConfig facesConfig = parse("testSimpleStringTagHandler.xml");
         assertEquals(1, facesConfig.getFactoryElements().size());
-        FactoryElement factory = (FactoryElement)facesConfig.getFactoryElements().get(0);
+        FactoryElement factory = (FactoryElement) facesConfig
+                .getFactoryElements().get(0);
         List list = factory.getApplicationFactories();
-        String target = (String)list.get(0);
-        assertEquals("org.seasar.teeda.core.mock.MockApplicationFactory", target);
+        String target = (String) list.get(0);
+        assertEquals("org.seasar.teeda.core.mock.MockApplicationFactory",
+                target);
     }
 
 }

@@ -38,22 +38,27 @@ public class NavigationContextFactory {
     private NavigationContextFactory() {
     }
 
-    public static void addNavigationContext(ExternalContext externalContext, NavigationContext navigationContext) {
+    public static void addNavigationContext(ExternalContext externalContext,
+            NavigationContext navigationContext) {
         if (externalContext == null || navigationContext == null) {
             throw new IllegalArgumentException();
         }
         Map applicationMap = externalContext.getApplicationMap();
         String fromViewId = navigationContext.getFromViewId();
         if (navigationContext.isWildCardMatch()) {
-            Map wildCardMatchContexts = (Map)applicationMap.get(WILDCARD_NAVIGATION_CONTEXTS);
-            if(wildCardMatchContexts == null){
-                wildCardMatchContexts = Collections.synchronizedMap(new HashMap());
-                applicationMap.put(WILDCARD_NAVIGATION_CONTEXTS, wildCardMatchContexts);
+            Map wildCardMatchContexts = (Map) applicationMap
+                    .get(WILDCARD_NAVIGATION_CONTEXTS);
+            if (wildCardMatchContexts == null) {
+                wildCardMatchContexts = Collections
+                        .synchronizedMap(new HashMap());
+                applicationMap.put(WILDCARD_NAVIGATION_CONTEXTS,
+                        wildCardMatchContexts);
             }
             wildCardMatchContexts.put(fromViewId, navigationContext);
         } else {
-            Map navigationContexts = (Map)applicationMap.get(NAVIGATON_CONTEXTS);
-            if(navigationContexts == null){
+            Map navigationContexts = (Map) applicationMap
+                    .get(NAVIGATON_CONTEXTS);
+            if (navigationContexts == null) {
                 navigationContexts = Collections.synchronizedMap(new HashMap());
                 applicationMap.put(NAVIGATON_CONTEXTS, navigationContexts);
             }
@@ -63,12 +68,12 @@ public class NavigationContextFactory {
 
     public static Map getNavigationContexts(FacesContext context) {
         Map appMap = context.getExternalContext().getApplicationMap();
-        return (Map)appMap.get(NAVIGATON_CONTEXTS);
+        return (Map) appMap.get(NAVIGATON_CONTEXTS);
     }
 
     public static Map getWildCardMatchNavigationContexts(FacesContext context) {
         Map appMap = context.getExternalContext().getApplicationMap();
-        return (Map)appMap.get(WILDCARD_NAVIGATION_CONTEXTS);
+        return (Map) appMap.get(WILDCARD_NAVIGATION_CONTEXTS);
     }
 
 }

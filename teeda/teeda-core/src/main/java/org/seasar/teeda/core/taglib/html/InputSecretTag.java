@@ -20,14 +20,13 @@ import javax.faces.component.html.HtmlInputSecret;
 
 import org.seasar.teeda.core.JsfConstants;
 
-
 /**
  * @author yone
  */
 public class InputSecretTag extends InputTagBase {
 
     private String redisplay_;
-    
+
     public String getComponentType() {
         return HtmlInputSecret.COMPONENT_TYPE;
     }
@@ -35,7 +34,7 @@ public class InputSecretTag extends InputTagBase {
     public String getRendererType() {
         return "javax.faces.Secret";
     }
-    
+
     protected void setProperties(UIComponent component) {
         super.setProperties(component);
 
@@ -45,7 +44,7 @@ public class InputSecretTag extends InputTagBase {
         setComponentProperty(component, JsfConstants.ONSELECT_ATTR, onselect_);
         setComponentProperty(component, JsfConstants.SIZE_ATTR, size_);
     }
-    
+
     public void release() {
         super.release();
         redisplay_ = null;
@@ -54,5 +53,5 @@ public class InputSecretTag extends InputTagBase {
     public void setRedisplay(String redisplay) {
         redisplay_ = redisplay;
     }
-    
+
 }

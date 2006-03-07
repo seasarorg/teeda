@@ -16,9 +16,10 @@
 package org.seasar.teeda.core.exception;
 
 import javax.faces.el.EvaluationException;
-import org.seasar.teeda.core.mock.MockMethodBinding;
+
 import junit.framework.TestCase;
 
+import org.seasar.teeda.core.mock.MockMethodBinding;
 
 public class TestExtendEvaluationException extends TestCase {
 
@@ -47,11 +48,11 @@ public class TestExtendEvaluationException extends TestCase {
     public TestExtendEvaluationException(String arg0) {
         super(arg0);
     }
-    
-    public void testExtendedMethodNotFoundException(){
+
+    public void testExtendedMethodNotFoundException() {
         MockMethodBinding mb = new MockMethodBinding("#{aaa}");
-        ExtendEvaluationException e = 
-            new ExtendEvaluationException(new EvaluationException(), mb);
+        ExtendEvaluationException e = new ExtendEvaluationException(
+                new EvaluationException(), mb);
         assertNotNull(e.getArgs());
         assertNotNull(e.getMessage());
         assertNotNull(e.getMessageCode());

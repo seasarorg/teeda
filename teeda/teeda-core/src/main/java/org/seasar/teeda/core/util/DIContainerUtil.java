@@ -22,7 +22,8 @@ import org.seasar.framework.log.Logger;
 
 public class DIContainerUtil {
 
-    private static final Logger logger_ = Logger.getLogger(DIContainerUtil.class);
+    private static final Logger logger_ = Logger
+            .getLogger(DIContainerUtil.class);
 
     private DIContainerUtil() {
     }
@@ -37,7 +38,8 @@ public class DIContainerUtil {
         try {
             return container.getComponent(clazz);
         } catch (ComponentNotFoundRuntimeException e) {
-            logger_.warn("Component: " + clazz + " is not found at DIContainer.");
+            logger_.warn("Component: " + clazz
+                    + " is not found at DIContainer.");
             return null;
         }
     }

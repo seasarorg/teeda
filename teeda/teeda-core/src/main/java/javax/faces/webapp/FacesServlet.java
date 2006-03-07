@@ -59,10 +59,10 @@ public class FacesServlet implements Servlet {
 
     public void init(ServletConfig config) throws ServletException {
         config_ = config;
-        facesContextFactory_ = (FacesContextFactory)WebAppUtils
+        facesContextFactory_ = (FacesContextFactory) WebAppUtils
                 .getFactory(FactoryFinder.FACES_CONTEXT_FACTORY);
-        LifecycleFactory lifecycleFactory = 
-            (LifecycleFactory)WebAppUtils.getFactory(FactoryFinder.LIFECYCLE_FACTORY);
+        LifecycleFactory lifecycleFactory = (LifecycleFactory) WebAppUtils
+                .getFactory(FactoryFinder.LIFECYCLE_FACTORY);
         String lifecycleId = WebAppUtils.getLifecycleId(config_);
         lifecycle_ = lifecycleFactory.getLifecycle(lifecycleId);
     }
@@ -70,25 +70,25 @@ public class FacesServlet implements Servlet {
     public void service(ServletRequest request, ServletResponse response)
             throws ServletException, IOException {
         ServletContext servletContext = config_.getServletContext();
-        FacesContext context = 
-            facesContextFactory_.getFacesContext(servletContext, request, response, lifecycle_);
-        try{
+        FacesContext context = facesContextFactory_.getFacesContext(
+                servletContext, request, response, lifecycle_);
+        try {
             lifecycle_.execute(context);
             lifecycle_.render(context);
-        }catch (FacesException e){
+        } catch (FacesException e) {
             Throwable t = e.getCause();
-            if(t == null){
+            if (t == null) {
                 throw new ServletException(e.getMessage(), e);
-            }else{
-                if(t instanceof ServletException){
-                    throw ((ServletException)t);
-                }else if(t instanceof IOException){
-                    throw ((IOException)t);
-                }else{
+            } else {
+                if (t instanceof ServletException) {
+                    throw ((ServletException) t);
+                } else if (t instanceof IOException) {
+                    throw ((IOException) t);
+                } else {
                     throw new ServletException(t.getMessage(), t);
                 }
             }
-        }finally{
+        } finally {
             context.release();
         }
     }

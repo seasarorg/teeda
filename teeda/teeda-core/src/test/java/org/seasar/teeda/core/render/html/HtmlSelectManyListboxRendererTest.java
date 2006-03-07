@@ -395,7 +395,7 @@ public class HtmlSelectManyListboxRendererTest extends RendererTest {
         MockFacesContext context = getFacesContext();
         context.getExternalContext().getRequestParameterValuesMap().put("keyA",
                 new String[] { "a", "b", "c" });
-        
+
         // ## Act ##
         renderer_.decode(context, htmlSelectManyListbox_);
 

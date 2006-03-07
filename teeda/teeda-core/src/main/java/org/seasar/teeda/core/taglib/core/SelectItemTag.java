@@ -27,7 +27,7 @@ import org.seasar.teeda.core.taglib.UIComponentTagBase;
 public class SelectItemTag extends UIComponentTagBase {
 
     private static final String COMPONENT_TYPE = UISelectItem.COMPONENT_TYPE;
-    
+
     protected String itemDescription_;
 
     protected String itemDisabled_;
@@ -39,7 +39,7 @@ public class SelectItemTag extends UIComponentTagBase {
     public SelectItemTag() {
         super();
     }
-    
+
     public void setItemDescription(String itemDescription) {
         itemDescription_ = itemDescription;
     }
@@ -70,10 +70,12 @@ public class SelectItemTag extends UIComponentTagBase {
                 itemDescription_);
         setComponentProperty(component, JsfConstants.ITEM_DISABLED_ATTR,
                 itemDisabled_);
-        setComponentProperty(component, JsfConstants.ITEM_LABEL_ATTR, itemLabel_);
-        setComponentProperty(component, JsfConstants.ITEM_VALUE_ATTR, itemValue_);
+        setComponentProperty(component, JsfConstants.ITEM_LABEL_ATTR,
+                itemLabel_);
+        setComponentProperty(component, JsfConstants.ITEM_VALUE_ATTR,
+                itemValue_);
     }
-    
+
     public void release() {
         super.release();
         itemDescription_ = null;

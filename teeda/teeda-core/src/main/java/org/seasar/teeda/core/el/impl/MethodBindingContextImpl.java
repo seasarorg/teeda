@@ -23,11 +23,10 @@ import javax.faces.context.FacesContext;
 import javax.faces.el.MethodBinding;
 import javax.faces.el.ValueBinding;
 
-import org.seasar.framework.exception.EmptyRuntimeException;
 import org.seasar.framework.util.ConstructorUtil;
 import org.seasar.teeda.core.el.ELParser;
-import org.seasar.teeda.core.el.ValueBindingBase;
 import org.seasar.teeda.core.el.MethodBindingContext;
+import org.seasar.teeda.core.el.ValueBindingBase;
 import org.seasar.teeda.core.el.ValueBindingContext;
 import org.seasar.teeda.core.exception.IllegalClassTypeException;
 import org.seasar.teeda.core.util.ClassUtil;
@@ -35,10 +34,12 @@ import org.seasar.teeda.core.util.ClassUtil;
 /**
  * @author Shinpei Ohtani
  */
-public class MethodBindingContextImpl implements MethodBindingContext{
+public class MethodBindingContextImpl implements MethodBindingContext {
 
     private String methodBindingName_;
+
     private ValueBindingContext valueBindingContext_;
+
     public void setMethodBindingName(String methodBindingName) {
         methodBindingName_ = methodBindingName;
     }
@@ -51,38 +52,45 @@ public class MethodBindingContextImpl implements MethodBindingContext{
         valueBindingContext_ = valueBindingContext;
     }
 
-    public MethodBinding createMethodBinding(Application application, String ref, Class[] params) {
+    public MethodBinding createMethodBinding(Application application,
+            String ref, Class[] params) {
         /*
-        if(params == null){
-            throw new EmptyRuntimeException("parameters");
-        }
-        */
-        ValueBinding vb = valueBindingContext_.createValueBinding(application, ref);
+         if(params == null){
+         throw new EmptyRuntimeException("parameters");
+         }
+         */
+        ValueBinding vb = valueBindingContext_.createValueBinding(application,
+                ref);
         ELParser parser = valueBindingContext_.getELParser();
-        if(!(vb instanceof ValueBindingBase)){
-        	throw new IllegalClassTypeException(ValueBindingBase.class, ValueBinding.class);
+        if (!(vb instanceof ValueBindingBase)) {
+            throw new IllegalClassTypeException(ValueBindingBase.class,
+                    ValueBinding.class);
         }
         Class clazz = ClassUtil.forName(methodBindingName_);
-        Class[] argTypes = new Class[]{ValueBindingBase.class, Class[].class, ELParser.class};
+        Class[] argTypes = new Class[] { ValueBindingBase.class, Class[].class,
+                ELParser.class };
         Constructor c = null;
         Object o = null;
-        try{
+        try {
             c = clazz.getConstructor(argTypes);
-            o = ConstructorUtil.newInstance(c, new Object[]{vb, params, parser});
-            return (MethodBinding)o;
-        }catch (NoSuchMethodException e){
+            o = ConstructorUtil.newInstance(c, new Object[] { vb, params,
+                    parser });
+            return (MethodBinding) o;
+        } catch (NoSuchMethodException e) {
             o = ClassUtil.newInstance(clazz);
-            if(o instanceof StateHolder && o instanceof MethodBinding){
-                return getRestoredMethodBinding((StateHolder)o, ref, params);
+            if (o instanceof StateHolder && o instanceof MethodBinding) {
+                return getRestoredMethodBinding((StateHolder) o, ref, params);
             }
         }
         return null;
     }
 
-    private MethodBinding getRestoredMethodBinding(StateHolder holder, String ref, Class[] params){
+    private MethodBinding getRestoredMethodBinding(StateHolder holder,
+            String ref, Class[] params) {
         FacesContext context = FacesContext.getCurrentInstance();
-        holder.restoreState(context, new Object[]{valueBindingContext_, ref, params});
-        return (MethodBinding)holder;
+        holder.restoreState(context, new Object[] { valueBindingContext_, ref,
+                params });
+        return (MethodBinding) holder;
 
     }
 }

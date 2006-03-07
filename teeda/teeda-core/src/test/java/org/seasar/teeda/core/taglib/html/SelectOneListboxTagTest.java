@@ -32,18 +32,17 @@ public class SelectOneListboxTagTest extends TeedaTestCase {
     public void testGetComponentType() throws Exception {
         // # Arrange #
         SelectOneListboxTag tag = new SelectOneListboxTag();
-        
+
         // # Act & Assert #
-        assertEquals("javax.faces.HtmlSelectOneListbox",
-                tag.getComponentType());
+        assertEquals("javax.faces.HtmlSelectOneListbox", tag.getComponentType());
     }
-    
+
     public void testGetRenderType() throws Exception {
         // # Arrange #
         SelectOneListboxTag tag = new SelectOneListboxTag();
-        
+
         // # Act & Assert #
-        assertEquals("javax.faces.Listbox", tag.getRendererType());        
+        assertEquals("javax.faces.Listbox", tag.getRendererType());
     }
 
     public void testSetProperties_All() throws Exception {
@@ -56,7 +55,7 @@ public class SelectOneListboxTagTest extends TeedaTestCase {
         setApplication(app);
         app.addValidator("mock.validator",
                 "org.seasar.teeda.core.mock.MockValidator");
-        
+
         tag.setConverter("mock.converter");
         tag.setImmediate("true");
         tag.setRequired("true");
@@ -89,10 +88,10 @@ public class SelectOneListboxTagTest extends TeedaTestCase {
         tag.setStyleClass("styleclass");
         tag.setTabindex("13");
         tag.setTitle("title");
-        
+
         // # Act #
         tag.setProperties(component);
-        
+
         // # Assert #
         assertTrue(component.getConverter() instanceof MockConverter);
         assertTrue(component.isImmediate());
@@ -130,7 +129,7 @@ public class SelectOneListboxTagTest extends TeedaTestCase {
         assertEquals("styleclass", component.getStyleClass());
         assertEquals("13", component.getTabindex());
         assertEquals("title", component.getTitle());
-    }    
+    }
 
     private HtmlSelectOneListbox createHtmlSelectOneListbox() {
         return (HtmlSelectOneListbox) createUIComponent();
@@ -139,5 +138,5 @@ public class SelectOneListboxTagTest extends TeedaTestCase {
     protected UIComponent createUIComponent() {
         return new HtmlSelectOneListbox();
     }
-    
+
 }

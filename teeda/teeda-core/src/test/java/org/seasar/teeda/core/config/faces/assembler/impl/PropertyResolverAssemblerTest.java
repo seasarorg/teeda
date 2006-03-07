@@ -17,7 +17,6 @@ package org.seasar.teeda.core.config.faces.assembler.impl;
 
 import javax.faces.el.PropertyResolver;
 
-import org.seasar.teeda.core.config.faces.assembler.impl.PropertyResolverAssembler;
 import org.seasar.teeda.core.mock.MockPropertyResolver;
 import org.seasar.teeda.core.mock.MockSingleConstructorPropertyResolver;
 import org.seasar.teeda.core.unit.TeedaTestCase;
@@ -38,31 +37,33 @@ public class PropertyResolverAssemblerTest extends TeedaTestCase {
     public void testSimpleAssemblePropertyResolver() throws Exception {
         // ## Arrange ##
         String resolverName = "org.seasar.teeda.core.mock.MockPropertyResolver";
-        PropertyResolverAssembler assembler = new PropertyResolverAssembler(resolverName, getApplication());
-        
+        PropertyResolverAssembler assembler = new PropertyResolverAssembler(
+                resolverName, getApplication());
+
         // ## Act ##
         assembler.assemble();
-        
+
         // ## Assert ##
         PropertyResolver resolver = getApplication().getPropertyResolver();
         assertNotNull(resolver);
         assertTrue(resolver instanceof MockPropertyResolver);
     }
-    
-    public void testMarshalAssemblePropertyResolver1() throws Exception{
+
+    public void testMarshalAssemblePropertyResolver1() throws Exception {
         // ## Arrange ##
         getApplication().setPropertyResolver(new MockPropertyResolver());
         String resolverName = "org.seasar.teeda.core.mock.MockSingleConstructorPropertyResolver";
-        PropertyResolverAssembler assembler = new PropertyResolverAssembler(resolverName, getApplication());
-        
+        PropertyResolverAssembler assembler = new PropertyResolverAssembler(
+                resolverName, getApplication());
+
         // ## Act ##
         assembler.assemble();
-        
+
         // ## Assert ##
         PropertyResolver resolver = getApplication().getPropertyResolver();
         assertNotNull(resolver);
         assertTrue(resolver instanceof MockSingleConstructorPropertyResolver);
-        MockSingleConstructorPropertyResolver r = (MockSingleConstructorPropertyResolver)resolver;
+        MockSingleConstructorPropertyResolver r = (MockSingleConstructorPropertyResolver) resolver;
         assertTrue(r.getOriginal() instanceof MockPropertyResolver);
     }
 }

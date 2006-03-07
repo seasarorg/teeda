@@ -27,19 +27,19 @@ public class FacesConfigTagHandler extends JsfTagHandler {
 
     private static final long serialVersionUID = 1L;
 
-    public FacesConfigTagHandler(){
+    public FacesConfigTagHandler() {
     }
-    
+
     public void start(TagHandlerContext context, Attributes attributes) {
         FacesConfig facesConfig = createFacesConfig();
         context.push(facesConfig);
     }
-    
+
     public void end(TagHandlerContext context, String body) {
         context.pop();
     }
-    
-    protected FacesConfig createFacesConfig(){
+
+    protected FacesConfig createFacesConfig() {
         return new FacesConfigImpl();
     }
 }

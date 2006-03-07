@@ -31,19 +31,19 @@ public class InputHiddenTagTest extends TeedaTestCase {
     public void testGetComponentType() throws Exception {
         // # Arrange #
         InputHiddenTag tag = new InputHiddenTag();
-        
+
         // # Act & Assert #
         assertEquals("javax.faces.HtmlInputHidden", tag.getComponentType());
     }
-    
+
     public void testGetRenderType() throws Exception {
         // # Arrange #
         InputHiddenTag tag = new InputHiddenTag();
-        
+
         // # Act & Assert #
-        assertEquals("javax.faces.Hidden", tag.getRendererType());        
-    }    
-    
+        assertEquals("javax.faces.Hidden", tag.getRendererType());
+    }
+
     public void testSetProperties_All() throws Exception {
         // # Arrange #
         HtmlInputHidden component = createHtmlInputHidden();
@@ -54,17 +54,17 @@ public class InputHiddenTagTest extends TeedaTestCase {
         setApplication(app);
         app.addValidator("mock.validator",
                 "org.seasar.teeda.core.mock.MockValidator");
-        
+
         tag.setConverter("mock.converter");
         tag.setImmediate("true");
         tag.setRequired("true");
         tag.setValidator("#{mock.validator}");
         tag.setValue("value");
         tag.setValueChangeListener("#{mock.listener}");
-        
+
         // # Act #
         tag.setProperties(component);
-        
+
         assertTrue(component.getConverter() instanceof MockConverter);
         assertTrue(component.isImmediate());
         assertTrue(component.isRequired());
@@ -75,7 +75,7 @@ public class InputHiddenTagTest extends TeedaTestCase {
         assertTrue(component.getValueChangeListener() instanceof MockMethodBinding);
         assertEquals("#{mock.listener}", component.getValueChangeListener()
                 .getExpressionString());
-    }    
+    }
 
     private HtmlInputHidden createHtmlInputHidden() {
         return (HtmlInputHidden) createUIComponent();

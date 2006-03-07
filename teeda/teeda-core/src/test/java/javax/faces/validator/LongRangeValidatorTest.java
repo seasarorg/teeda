@@ -13,12 +13,15 @@ import org.seasar.teeda.core.unit.TeedaTestCase;
 public class LongRangeValidatorTest extends TeedaTestCase {
 
     public void testConstants() throws Exception {
-        assertEquals("javax.faces.validator.LongRangeValidator.MAXIMUM", LongRangeValidator.MAXIMUM_MESSAGE_ID);
-        assertEquals("javax.faces.validator.LongRangeValidator.MINIMUM", LongRangeValidator.MINIMUM_MESSAGE_ID);
-        assertEquals("javax.faces.validator.LongRangeValidator.TYPE", LongRangeValidator.TYPE_MESSAGE_ID);
+        assertEquals("javax.faces.validator.LongRangeValidator.MAXIMUM",
+                LongRangeValidator.MAXIMUM_MESSAGE_ID);
+        assertEquals("javax.faces.validator.LongRangeValidator.MINIMUM",
+                LongRangeValidator.MINIMUM_MESSAGE_ID);
+        assertEquals("javax.faces.validator.LongRangeValidator.TYPE",
+                LongRangeValidator.TYPE_MESSAGE_ID);
         assertEquals("javax.faces.LongRange", LongRangeValidator.VALIDATOR_ID);
     }
-    
+
     public void testInstanciation_withMax() throws Exception {
         long l = 123456L;
         LongRangeValidator validator = new LongRangeValidator(l);
@@ -221,7 +224,7 @@ public class LongRangeValidatorTest extends TeedaTestCase {
         DoubleRangeValidator v2 = new DoubleRangeValidator();
         assertFalse(v1.equals(v2));
     }
-    
+
     protected FacesContext getFacesContextWithSetMessageBundle(
             String viewRootId, Locale locale) {
         getApplication().setMessageBundle("javax.faces.component.TestMessages");
@@ -232,6 +235,5 @@ public class LongRangeValidatorTest extends TeedaTestCase {
         context.setViewRoot(root);
         return context;
     }
-
 
 }

@@ -17,7 +17,6 @@ package javax.faces.model;
 
 import java.io.Serializable;
 import java.util.EventObject;
-import javax.faces.model.DataModel;
 
 /**
  * @author shot

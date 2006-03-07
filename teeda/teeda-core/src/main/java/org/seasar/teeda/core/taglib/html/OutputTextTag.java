@@ -21,14 +21,13 @@ import javax.faces.component.html.HtmlOutputText;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.taglib.UIComponentTagBase;
 
-
 /**
  * @author yone
  */
 public class OutputTextTag extends UIComponentTagBase {
 
     private String escape_;
-    
+
     public String getComponentType() {
         return HtmlOutputText.COMPONENT_TYPE;
     }
@@ -36,17 +35,17 @@ public class OutputTextTag extends UIComponentTagBase {
     public String getRendererType() {
         return "javax.faces.Text";
     }
-    
+
     protected void setProperties(UIComponent component) {
         super.setProperties(component);
-        
-        setComponentProperty(component, JsfConstants.ESCAPE_ATTR, escape_);        
+
+        setComponentProperty(component, JsfConstants.ESCAPE_ATTR, escape_);
     }
-    
+
     public void setEscape(String escape) {
         escape_ = escape;
     }
-    
+
     public void release() {
         super.release();
         escape_ = null;

@@ -21,6 +21,6 @@ package org.seasar.teeda.core.render;
 public interface EncodeConverter {
 
     public String getAsEncodeString(Object target);
-    
+
     public Object getAsDecodeObject(String state);
 }

@@ -34,183 +34,189 @@ import org.seasar.framework.util.EnumerationIterator;
 public abstract class AbstractExternalContextMap extends AbstractMap {
 
     private Set entrySet_;
+
     private Set keySet_;
+
     private Collection values_;
-    
-    public AbstractExternalContextMap(){
+
+    public AbstractExternalContextMap() {
     }
-    
-    public void clear(){
+
+    public void clear() {
         //avoid ConcurrentModificationException
         List list = new ArrayList();
-        for(Enumeration e = getAttributeNames();e.hasMoreElements();){
-            String key = (String)e.nextElement();
+        for (Enumeration e = getAttributeNames(); e.hasMoreElements();) {
+            String key = (String) e.nextElement();
             list.add(key);
         }
         clearReally(list);
     }
-    
-    private void clearReally(List keys){
-        for(Iterator itr = keys.iterator();itr.hasNext();){
-            String key = (String)itr.next();
+
+    private void clearReally(List keys) {
+        for (Iterator itr = keys.iterator(); itr.hasNext();) {
+            String key = (String) itr.next();
             removeAttribute(key);
         }
     }
-    
+
     public boolean containsKey(Object key) {
-        return (getAttribute((String)key) != null);
+        return (getAttribute((String) key) != null);
     }
-    
+
     public boolean containsValue(Object value) {
-        if(value != null){
-            for(Enumeration e = getAttributeNames();e.hasMoreElements();){
-                String key = (String)e.nextElement();
+        if (value != null) {
+            for (Enumeration e = getAttributeNames(); e.hasMoreElements();) {
+                String key = (String) e.nextElement();
                 Object attributeValue = getAttribute(key);
-                if(value.equals(attributeValue)){
+                if (value.equals(attributeValue)) {
                     return true;
                 }
             }
         }
         return false;
     }
-    
+
     public Set entrySet() {
-        if(entrySet_ == null){
+        if (entrySet_ == null) {
             entrySet_ = new EntrySet(this);
         }
         return entrySet_;
     }
 
     public Object get(Object key) {
-        return getAttribute((String)key);
+        return getAttribute((String) key);
     }
-        
+
     public Object put(Object key, Object value) {
-        String keyStr = (String)key;
+        String keyStr = (String) key;
         Object o = getAttribute(keyStr);
         setAttribute(keyStr, value);
         return o;
     }
-    
+
     public void putAll(Map map) {
-        for(Iterator itr = map.entrySet().iterator();itr.hasNext();){
-            Map.Entry entry = (Map.Entry)itr.next();
-            String key = (String)entry.getKey();
+        for (Iterator itr = map.entrySet().iterator(); itr.hasNext();) {
+            Map.Entry entry = (Map.Entry) itr.next();
+            String key = (String) entry.getKey();
             setAttribute(key, entry.getValue());
         }
     }
-    
+
     public boolean isEmpty() {
         return !getAttributeNames().hasMoreElements();
     }
-    
+
     public Set keySet() {
-        if(keySet_ == null){
+        if (keySet_ == null) {
             keySet_ = new KeySet(this);
         }
         return keySet_;
     }
-    
+
     public Object remove(Object key) {
-        String keyStr = (String)key;
+        String keyStr = (String) key;
         Object o = getAttribute(keyStr);
         removeAttribute(keyStr);
         return o;
     }
-    
+
     public Collection values() {
-        if(values_ == null){
+        if (values_ == null) {
             values_ = new ValuesCollection(this);
         }
         return values_;
     }
 
     protected abstract Object getAttribute(String key);
-    
+
     protected abstract void setAttribute(String key, Object value);
-    
+
     protected abstract Enumeration getAttributeNames();
-    
+
     protected abstract void removeAttribute(String key);
-            
-    abstract class AbstractExternalContextSet extends AbstractSet{
+
+    abstract class AbstractExternalContextSet extends AbstractSet {
 
         /* (non-Javadoc)
          * @see java.util.AbstractCollection#size()
          */
         public int size() {
             int size = 0;
-            for(Iterator itr = iterator();itr.hasNext();size++){
+            for (Iterator itr = iterator(); itr.hasNext(); size++) {
                 itr.next();
             }
             return size;
         }
-        
+
     }
-    
-    class EntrySet extends AbstractExternalContextSet{
+
+    class EntrySet extends AbstractExternalContextSet {
 
         private AbstractExternalContextMap contextMap_;
-        public EntrySet(AbstractExternalContextMap contextMap){
+
+        public EntrySet(AbstractExternalContextMap contextMap) {
             contextMap_ = contextMap;
         }
-        
+
         /* (non-Javadoc)
          * @see java.util.AbstractCollection#iterator()
          */
         public Iterator iterator() {
             return new EntryIterator(contextMap_);
         }
-        
+
         /* (non-Javadoc)
          * @see java.util.AbstractCollection#remove(java.lang.Object)
          */
         public boolean remove(Object o) {
-            if(!(o instanceof Map.Entry)){
+            if (!(o instanceof Map.Entry)) {
                 return false;
             }
-            Map.Entry entry = (Map.Entry)o;
+            Map.Entry entry = (Map.Entry) o;
             Object returnObj = contextMap_.remove(entry.getKey());
             return (returnObj != null);
         }
     }
-    
-    class KeySet extends AbstractExternalContextSet{
+
+    class KeySet extends AbstractExternalContextSet {
 
         private AbstractExternalContextMap contextMap_;
-        public KeySet(AbstractExternalContextMap contextMap){
+
+        public KeySet(AbstractExternalContextMap contextMap) {
             contextMap_ = contextMap;
         }
+
         /* (non-Javadoc)
          * @see java.util.AbstractCollection#iterator()
          */
         public Iterator iterator() {
             return new KeyIterator(contextMap_);
         }
-        
+
         /* (non-Javadoc)
          * @see java.util.AbstractCollection#remove(java.lang.Object)
          */
         public boolean remove(Object o) {
-            if(!(o instanceof String)){
+            if (!(o instanceof String)) {
                 return false;
             }
-            String s = (String)o;
+            String s = (String) o;
             Object returnObj = contextMap_.remove(s);
             return (returnObj != null);
         }
     }
-    
-    class ValuesCollection extends AbstractCollection{
+
+    class ValuesCollection extends AbstractCollection {
 
         private AbstractExternalContextMap contextMap_;
-        public ValuesCollection(AbstractExternalContextMap contextMap){
+
+        public ValuesCollection(AbstractExternalContextMap contextMap) {
             contextMap_ = contextMap;
         }
-        
+
         public int size() {
             int size = 0;
-            for(Iterator itr = iterator();itr.hasNext();size++){
+            for (Iterator itr = iterator(); itr.hasNext(); size++) {
                 itr.next();
             }
             return size;
@@ -219,54 +225,58 @@ public abstract class AbstractExternalContextMap extends AbstractMap {
         public Iterator iterator() {
             return new ValuesIterator(contextMap_);
         }
-        
+
     }
-    
-    abstract class AbstractExternalContextIterator extends EnumerationIterator{
+
+    abstract class AbstractExternalContextIterator extends EnumerationIterator {
 
         private final AbstractExternalContextMap contextMap_;
+
         private String currentKey_;
+
         private boolean removeCalled_ = false;
-        public AbstractExternalContextIterator(final AbstractExternalContextMap contextMap) {
+
+        public AbstractExternalContextIterator(
+                final AbstractExternalContextMap contextMap) {
             super(contextMap.getAttributeNames());
             contextMap_ = contextMap;
         }
 
         public Object next() {
-            currentKey_ = (String)super.next();
-            try{
+            currentKey_ = (String) super.next();
+            try {
                 return doNext();
-            }finally{
+            } finally {
                 removeCalled_ = false;
             }
         }
-        
+
         public void remove() {
-            if(currentKey_ != null && !removeCalled_){
+            if (currentKey_ != null && !removeCalled_) {
                 doRemove();
                 removeCalled_ = true;
-            }else{
+            } else {
                 throw new IllegalStateException();
             }
         }
-        
-        protected String getCurrentKey(){
+
+        protected String getCurrentKey() {
             return currentKey_;
         }
-        
-        protected Object getValueFromMap(String key){
+
+        protected Object getValueFromMap(String key) {
             return contextMap_.get(key);
         }
-        
-        protected void removeKeyFromMap(String key){
+
+        protected void removeKeyFromMap(String key) {
             contextMap_.remove(key);
         }
-        
-        protected void removeValueFromMap(Object value){
+
+        protected void removeValueFromMap(Object value) {
             if (containsValue(value)) {
-                for (Iterator itr = entrySet().iterator(); itr.hasNext(); ) {
-                    Map.Entry e = (Map.Entry)itr.next();
-                    if (value.equals(e.getValue())) {                    
+                for (Iterator itr = entrySet().iterator(); itr.hasNext();) {
+                    Map.Entry e = (Map.Entry) itr.next();
+                    if (value.equals(e.getValue())) {
                         contextMap_.remove(e.getKey());
                     }
                 }
@@ -275,11 +285,11 @@ public abstract class AbstractExternalContextMap extends AbstractMap {
         }
 
         protected abstract Object doNext();
-        
+
         protected abstract void doRemove();
     }
-    
-    class EntryIterator extends AbstractExternalContextIterator{
+
+    class EntryIterator extends AbstractExternalContextIterator {
 
         public EntryIterator(AbstractExternalContextMap contextMap) {
             super(contextMap);
@@ -294,10 +304,10 @@ public abstract class AbstractExternalContextMap extends AbstractMap {
             String key = getCurrentKey();
             removeKeyFromMap(key);
         }
-        
+
     }
-    
-    class KeyIterator extends AbstractExternalContextIterator{
+
+    class KeyIterator extends AbstractExternalContextIterator {
 
         public KeyIterator(AbstractExternalContextMap contextMap) {
             super(contextMap);
@@ -312,7 +322,7 @@ public abstract class AbstractExternalContextMap extends AbstractMap {
         }
     }
 
-    class ValuesIterator extends AbstractExternalContextIterator{
+    class ValuesIterator extends AbstractExternalContextIterator {
 
         public ValuesIterator(AbstractExternalContextMap contextMap) {
             super(contextMap);
@@ -328,19 +338,20 @@ public abstract class AbstractExternalContextMap extends AbstractMap {
             Object value = getValueFromMap(key);
             removeValueFromMap(value);
         }
-        
+
     }
-    
-    protected static class ImmutableEntry implements Map.Entry{
+
+    protected static class ImmutableEntry implements Map.Entry {
 
         private final Object key_;
+
         private final Object value_;
-        
-        public ImmutableEntry(Object key, Object value){
+
+        public ImmutableEntry(Object key, Object value) {
             key_ = key;
             value_ = value;
         }
-        
+
         public Object getKey() {
             return key_;
         }
@@ -352,21 +363,23 @@ public abstract class AbstractExternalContextMap extends AbstractMap {
         public Object setValue(Object arg0) {
             throw new UnsupportedOperationException("Immutable entry.");
         }
-        
+
         public boolean equals(Object obj) {
-            if(obj == null || !(obj instanceof ImmutableEntry)){
+            if (obj == null || !(obj instanceof ImmutableEntry)) {
                 return false;
             }
-            ImmutableEntry entry = (ImmutableEntry)obj;
+            ImmutableEntry entry = (ImmutableEntry) obj;
             Object key = entry.getKey();
             Object value = entry.getValue();
-            
-            return (key == key_ || (key != null && key.equals(key_))) &&
-                (value == value_ || (value != null && value.equals(value_)));
+
+            return (key == key_ || (key != null && key.equals(key_)))
+                    && (value == value_ || (value != null && value
+                            .equals(value_)));
         }
+
         public int hashCode() {
-            return ((key_ != null) ? key_.hashCode() : 0) ^ 
-                ((value_ != null) ? value_.hashCode() : 0); 
+            return ((key_ != null) ? key_.hashCode() : 0)
+                    ^ ((value_ != null) ? value_.hashCode() : 0);
         }
     }
 

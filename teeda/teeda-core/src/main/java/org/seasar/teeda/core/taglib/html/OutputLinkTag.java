@@ -21,7 +21,6 @@ import javax.faces.component.html.HtmlOutputLink;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.taglib.UIComponentTagBase;
 
-
 /**
  * @author yone
  */
@@ -34,12 +33,12 @@ public class OutputLinkTag extends UIComponentTagBase {
     public String getRendererType() {
         return "javax.faces.Link";
     }
-    
+
     protected void setProperties(UIComponent component) {
         super.setProperties(component);
-        
-        setComponentProperty(component, JsfConstants.CHARSET_ATTR, charset_);        
-        setComponentProperty(component, JsfConstants.COORDS_ATTR, coords_);        
+
+        setComponentProperty(component, JsfConstants.CHARSET_ATTR, charset_);
+        setComponentProperty(component, JsfConstants.COORDS_ATTR, coords_);
         setComponentProperty(component, JsfConstants.HREFLANG_ATTR, hreflang_);
         setComponentProperty(component, JsfConstants.REL_ATTR, rel_);
         setComponentProperty(component, JsfConstants.REV_ATTR, rev_);

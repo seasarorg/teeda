@@ -17,9 +17,10 @@ public class TreeStructureManagerImplTest extends TestCase {
 
         // # Act #
         TreeStructure struct = manager.buildTreeStructure(component);
-        
+
         // # Assert #
-        assertEquals(component.getClass().getName(), struct.getComponentClassName());
+        assertEquals(component.getClass().getName(), struct
+                .getComponentClassName());
         assertEquals("id", struct.getComponentId());
     }
 
@@ -37,9 +38,10 @@ public class TreeStructureManagerImplTest extends TestCase {
 
         // # Act #
         TreeStructure struct = manager.buildTreeStructure(parent);
-        
+
         // # Assert #
-        assertEquals(parent.getClass().getName(), struct.getComponentClassName());
+        assertEquals(parent.getClass().getName(), struct
+                .getComponentClassName());
         assertEquals("parent", struct.getComponentId());
         TreeStructure[] children = struct.getChildren();
         assertEquals(1, children.length);
@@ -49,7 +51,8 @@ public class TreeStructureManagerImplTest extends TestCase {
         assertEquals(1, facets.length);
         Object[] childFacets = (Object[]) facets[0];
         assertEquals("hoge", childFacets[0]);
-        assertEquals("child2", ((TreeStructure)childFacets[1]).getComponentId());
+        assertEquals("child2", ((TreeStructure) childFacets[1])
+                .getComponentId());
     }
 
     public void testBuildChildrenTreeStructure_simple() throws Exception {
@@ -84,7 +87,7 @@ public class TreeStructureManagerImplTest extends TestCase {
         // # Assert #
         assertNull(structs);
     }
-    
+
     public void testBuildFacetsTreeStructure_simple() throws Exception {
         // # Arrange #
         TreeStructureManagerImpl manager = new TreeStructureManagerImpl();
@@ -100,13 +103,13 @@ public class TreeStructureManagerImplTest extends TestCase {
         // # Assert #
         assertNotNull(array);
         assertTrue(array.length == 1);
-        Object[] objs = (Object[])array[0];
+        Object[] objs = (Object[]) array[0];
         assertEquals("hoge", objs[0].toString());
         TreeStructure struct = (TreeStructure) objs[1];
         assertEquals(child.getClass().getName(), struct.getComponentClassName());
         assertEquals("child", struct.getComponentId());
     }
-    
+
     public void testBuildFacetsTreeStructure_null() throws Exception {
         // # Arrange #
         TreeStructureManagerImpl manager = new TreeStructureManagerImpl();
@@ -123,48 +126,16 @@ public class TreeStructureManagerImplTest extends TestCase {
     public void testRestoreTreeStructure_simple() throws Exception {
         // # Arrange #
         TreeStructureManagerImpl manager = new TreeStructureManagerImpl();
-        TreeStructure struct = new TreeStructure(MockUIComponent.class.getName(), "id");
+        TreeStructure struct = new TreeStructure(MockUIComponent.class
+                .getName(), "id");
 
         // # Act #
         UIComponent component = manager.restoreTreeStructure(struct);
-        
+
         // # Assert #
         assertNotNull(component);
         assertTrue(component instanceof MockUIComponent);
         assertEquals("id", component.getId());
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
 }

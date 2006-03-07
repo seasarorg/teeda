@@ -28,8 +28,11 @@ import org.seasar.teeda.core.config.webapp.element.InitParamElement;
 public class FilterElementImpl implements FilterElement, Serializable {
 
     private static final long serialVersionUID = 1L;
+
     private String filterName_;
+
     private String filterClass_;
+
     private Map initParams_ = new HashMap();
 
     public String getFilterClass() {

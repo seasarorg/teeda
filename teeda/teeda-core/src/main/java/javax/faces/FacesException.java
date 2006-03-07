@@ -20,25 +20,25 @@ package javax.faces;
  */
 public class FacesException extends RuntimeException {
 
-	private static final long serialVersionUID = 3906091139550491188L;
+    private static final long serialVersionUID = 3906091139550491188L;
 
     public FacesException() {
-		super();
-	}
+        super();
+    }
 
-	public FacesException(String message) {
-		super(message);
-	}
+    public FacesException(String message) {
+        super(message);
+    }
 
-	public FacesException(String message, Throwable cause) {
-		super(message, cause);
-	}
+    public FacesException(String message, Throwable cause) {
+        super(message, cause);
+    }
 
-	public FacesException(Throwable cause) {
-		super(cause);
-	}
+    public FacesException(Throwable cause) {
+        super(cause);
+    }
 
-	public Throwable getCause(){
-		return super.getCause();
-	}
+    public Throwable getCause() {
+        return super.getCause();
+    }
 }

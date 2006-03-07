@@ -17,7 +17,6 @@ package org.seasar.teeda.core.exception;
 
 import junit.framework.TestCase;
 
-
 public class TestExtendFacesException extends TestCase {
 
     public static void main(String[] args) {
@@ -46,7 +45,7 @@ public class TestExtendFacesException extends TestCase {
         super(arg0);
     }
 
-    public void testGetMessage(){
+    public void testGetMessage() {
         ExtendFacesException e = new ExtendFacesException();
         assertNotNull(e.getMessageCode());
         assertNotNull(e.getMessage());

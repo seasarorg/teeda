@@ -17,7 +17,6 @@ package org.seasar.teeda.core.exception;
 
 import junit.framework.TestCase;
 
-
 public class InstantiateConverterFailureExceptionTest extends TestCase {
 
     /*
@@ -41,11 +40,11 @@ public class InstantiateConverterFailureExceptionTest extends TestCase {
     public InstantiateConverterFailureExceptionTest(String arg0) {
         super(arg0);
     }
-    
-    public void testInstantiateConverterFailureException(){
-        Object[] args = {"hoge", "foo"};
-        InstantiateConverterFailureException e = 
-            new InstantiateConverterFailureException(args, new Exception());
+
+    public void testInstantiateConverterFailureException() {
+        Object[] args = { "hoge", "foo" };
+        InstantiateConverterFailureException e = new InstantiateConverterFailureException(
+                args, new Exception());
         assertEquals("ETDA0005", e.getMessageCode());
         assertEquals("foo", e.getArgs()[1]);
     }

@@ -28,20 +28,20 @@ public class PropertyTagHandler extends JsfTagHandler {
 
     private static final long serialVersionUID = 1L;
 
-    public PropertyTagHandler(){
+    public PropertyTagHandler() {
     }
-    
+
     public void start(TagHandlerContext context, Attributes attributes) {
         PropertyElement propertyTag = createPropertyTag();
         context.push(propertyTag);
     }
-    
+
     public void end(TagHandlerContext context, String body) {
-        PropertyElement propertyTag = (PropertyElement)context.pop();
-        PropertyHolder holder = (PropertyHolder)context.peek();
+        PropertyElement propertyTag = (PropertyElement) context.pop();
+        PropertyHolder holder = (PropertyHolder) context.peek();
         holder.addPropertyElement(propertyTag);
     }
-    
+
     protected PropertyElement createPropertyTag() {
         return new PropertyElementImpl();
     }

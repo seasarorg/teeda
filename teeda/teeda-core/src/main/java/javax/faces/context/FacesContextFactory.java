@@ -20,10 +20,10 @@ import javax.faces.lifecycle.Lifecycle;
 
 public abstract class FacesContextFactory {
 
-	public FacesContextFactory() {
-	}
+    public FacesContextFactory() {
+    }
 
-	public abstract FacesContext getFacesContext(Object context,
-			Object request, Object response, Lifecycle lifecycle)
-			throws FacesException;
+    public abstract FacesContext getFacesContext(Object context,
+            Object request, Object response, Lifecycle lifecycle)
+            throws FacesException;
 }

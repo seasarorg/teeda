@@ -34,7 +34,8 @@ public class UISelectManyOnlyTest extends TestCase {
     }
 
     public void testDefaultRendererType() throws Exception {
-        assertEquals("javax.faces.Listbox", new UISelectMany().getRendererType());
+        assertEquals("javax.faces.Listbox", new UISelectMany()
+                .getRendererType());
     }
 
 }

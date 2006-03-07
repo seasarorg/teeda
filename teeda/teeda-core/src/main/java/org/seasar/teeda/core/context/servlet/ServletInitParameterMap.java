@@ -28,10 +28,11 @@ public class ServletInitParameterMap extends
         AbstractUnmodifiableExternalContextMap {
 
     private final ServletContext context_;
-    public ServletInitParameterMap(final ServletContext context){
+
+    public ServletInitParameterMap(final ServletContext context) {
         context_ = context;
     }
-    
+
     protected Object getAttribute(String key) {
         return context_.getInitParameter(key);
     }

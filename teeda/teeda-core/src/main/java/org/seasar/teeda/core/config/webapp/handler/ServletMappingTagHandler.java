@@ -34,7 +34,8 @@ public class ServletMappingTagHandler extends TagHandler {
     }
 
     public void end(TagHandlerContext context, String body) {
-        ServletMappingElement servletMapping = (ServletMappingElement) context.pop();
+        ServletMappingElement servletMapping = (ServletMappingElement) context
+                .pop();
         WebappConfig webappConfig = (WebappConfig) context.peek();
         webappConfig.addServletMappingElement(servletMapping);
     }

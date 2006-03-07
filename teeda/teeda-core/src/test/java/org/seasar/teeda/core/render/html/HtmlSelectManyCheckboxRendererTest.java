@@ -422,7 +422,8 @@ public class HtmlSelectManyCheckboxRendererTest extends RendererTest {
 
         // ## Assert ##
         assertEquals(1, htmlSelectManyCheckbox_.getSetSubmittedValueCalls());
-        String[] submittedValue = (String[]) htmlSelectManyCheckbox_.getSubmittedValue();
+        String[] submittedValue = (String[]) htmlSelectManyCheckbox_
+                .getSubmittedValue();
         assertEquals(0, submittedValue.length);
     }
 

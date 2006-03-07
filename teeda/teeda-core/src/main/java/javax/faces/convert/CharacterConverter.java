@@ -22,46 +22,46 @@ import javax.faces.internal.ConvertUtils;
 
 public class CharacterConverter implements Converter {
 
-	public static final String CONVERTER_ID = "javax.faces.Character";
+    public static final String CONVERTER_ID = "javax.faces.Character";
 
-	public CharacterConverter() {
-	}
+    public CharacterConverter() {
+    }
 
-	public Object getAsObject(FacesContext context, UIComponent component,
-			String value) throws ConverterException {
+    public Object getAsObject(FacesContext context, UIComponent component,
+            String value) throws ConverterException {
         AssertionUtil.assertNotNull("FacesContext", context);
         AssertionUtil.assertNotNull("UIComponent", component);
-		if (value == null) {
-			return null;
-		}
+        if (value == null) {
+            return null;
+        }
 
-		value = value.trim();
-		if (value.length() < 1) {
-			return null;
-		}
-		try {
-			return new Character(value.charAt(0));
-		} catch (Exception e) {
-			Object[] args = ConvertUtils.createExceptionMessageArgs(component,
-					value);
-			throw ConvertUtils.wrappedByConverterException(this, context,
-					args, e);
-		}
-	}
+        value = value.trim();
+        if (value.length() < 1) {
+            return null;
+        }
+        try {
+            return new Character(value.charAt(0));
+        } catch (Exception e) {
+            Object[] args = ConvertUtils.createExceptionMessageArgs(component,
+                    value);
+            throw ConvertUtils.wrappedByConverterException(this, context, args,
+                    e);
+        }
+    }
 
-	public String getAsString(FacesContext context, UIComponent component,
-			Object value) throws ConverterException {
+    public String getAsString(FacesContext context, UIComponent component,
+            Object value) throws ConverterException {
         AssertionUtil.assertNotNull("FacesContext", context);
         AssertionUtil.assertNotNull("UIComponent", component);
-		if (value == null) {
-			return "";
-		}
+        if (value == null) {
+            return "";
+        }
 
-		try {
-			return (value instanceof String) ? (String) value
-					: ((Character) value).toString();
-		} catch (Exception e) {
-			throw ConvertUtils.wrappedByConverterException(e);
-		}
-	}
+        try {
+            return (value instanceof String) ? (String) value
+                    : ((Character) value).toString();
+        } catch (Exception e) {
+            throw ConvertUtils.wrappedByConverterException(e);
+        }
+    }
 }

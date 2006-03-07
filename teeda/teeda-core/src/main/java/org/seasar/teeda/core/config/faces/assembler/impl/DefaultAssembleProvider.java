@@ -38,7 +38,7 @@ import org.seasar.teeda.core.config.faces.element.FacesConfig;
 public class DefaultAssembleProvider implements AssembleProvider {
 
     private ExternalContext externalContext_;
-    
+
     public FactoryAssembler assembleFactories(FacesConfig facesConfig) {
         List factories = facesConfig.getFactoryElements();
         return new DefaultFactoryAssembler(factories);
@@ -54,25 +54,27 @@ public class DefaultAssembleProvider implements AssembleProvider {
         return new DefaultComponentAssembler(components);
     }
 
-    public ConverterAssembler assembleConverter(FacesConfig facesConfig){
+    public ConverterAssembler assembleConverter(FacesConfig facesConfig) {
         Map convertersByClass = facesConfig.getConverterElementsByClass();
         Map convertersById = facesConfig.getConverterElementsById();
         return new DefaultConverterAssembler(convertersByClass, convertersById);
     }
-    
-    public ValidatorAssembler assembleValidator(FacesConfig facesConfig){
+
+    public ValidatorAssembler assembleValidator(FacesConfig facesConfig) {
         Map validators = facesConfig.getValidatorElements();
         return new DefaultValidatorAssembler(validators);
     }
-    
+
     public ManagedBeanAssembler assembleManagedBeans(FacesConfig facesConfig) {
         Map managedBeans = facesConfig.getManagedBeanElements();
         return new DefaultManagedBeanAssembler(managedBeans);
     }
 
-    public NavigationRuleAssembler assembleNavigationRules(FacesConfig facesConfig) {
+    public NavigationRuleAssembler assembleNavigationRules(
+            FacesConfig facesConfig) {
         List navigationRules = facesConfig.getNavigationRuleElements();
-        return new DefaultNavigationRuleAssembler(navigationRules, externalContext_);
+        return new DefaultNavigationRuleAssembler(navigationRules,
+                externalContext_);
     }
 
     public RenderKitAssembler assembleRenderKits(FacesConfig facesConfig) {

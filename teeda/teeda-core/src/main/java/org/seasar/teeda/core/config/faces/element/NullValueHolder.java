@@ -15,7 +15,6 @@
  */
 package org.seasar.teeda.core.config.faces.element;
 
-
 public interface NullValueHolder {
 
     public void setNullValue(boolean nullValue);

@@ -25,11 +25,11 @@ public class SuggestedValueTagHandler extends JsfTagHandler {
 
     private static final long serialVersionUID = 1L;
 
-    public SuggestedValueTagHandler(){
+    public SuggestedValueTagHandler() {
     }
-    
+
     public void end(TagHandlerContext context, String body) {
-        SuggestedValueHolder holder = (SuggestedValueHolder)context.peek();
+        SuggestedValueHolder holder = (SuggestedValueHolder) context.peek();
         holder.setSuggestedValue(body);
     }
 }

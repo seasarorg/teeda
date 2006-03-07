@@ -23,16 +23,18 @@ import org.seasar.teeda.core.el.Replacer;
 /**
  * @author Shinpei Ohtani
  */
-public class BinaryOperatorExpressionReplacer implements Replacer{
+public class BinaryOperatorExpressionReplacer implements Replacer {
 
     private ExpressionProcessor processor_;
-    public BinaryOperatorExpressionReplacer(ExpressionProcessor processor){
+
+    public BinaryOperatorExpressionReplacer(ExpressionProcessor processor) {
         processor_ = processor;
     }
 
     public void replace(Object expression) {
-        Expression next = ((BinaryOperatorExpression)expression).getExpression();
+        Expression next = ((BinaryOperatorExpression) expression)
+                .getExpression();
         processor_.processExpression(next, next.getClass());
     }
-    
+
 }

@@ -47,13 +47,13 @@ public class UIParameterUtilTest extends TeedaTestCase {
         parameter2.setName("bbb");
         parameter2.setValue("BBB");
         childrenList.add(parameter2);
-        
+
         // # Act #
         UIParameterUtil.saveParametersToRequest(command, getFacesContext());
-        
+
         // # Assert #
         assertEquals("AAA", getRequest().getAttribute("aaa"));
         assertEquals("BBB", getRequest().getAttribute("bbb"));
     }
-    
+
 }

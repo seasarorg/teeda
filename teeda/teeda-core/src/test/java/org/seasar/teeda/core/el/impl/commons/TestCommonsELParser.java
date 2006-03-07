@@ -20,7 +20,6 @@ import org.seasar.teeda.core.el.TeedaVariableResolver;
 import org.seasar.teeda.core.mock.MockApplication;
 import org.seasar.teeda.core.unit.TeedaTestCase;
 
-
 public class TestCommonsELParser extends TeedaTestCase {
 
     public static void main(String[] args) {
@@ -49,21 +48,23 @@ public class TestCommonsELParser extends TeedaTestCase {
         super(arg0);
     }
 
-    public void testParse(){
+    public void testParse() {
         getContainer().register(new Hoge(), "hoge");
         ELParser parser = new CommonsELParser();
         parser.setExpressionProcessor(new CommonsExpressionProcessorImpl());
-    	Object o = parser.parse("#{hoge.name}");
-    	MockApplication app = getApplication();
-    	app.setVariableResolver(new TeedaVariableResolver());
-    	Object obj = parser.getExpressionProcessor().evaluate(getFacesContext(), o);
-    	assertEquals("foo", obj);
+        Object o = parser.parse("#{hoge.name}");
+        MockApplication app = getApplication();
+        app.setVariableResolver(new TeedaVariableResolver());
+        Object obj = parser.getExpressionProcessor().evaluate(
+                getFacesContext(), o);
+        assertEquals("foo", obj);
     }
-    
-    public static class Hoge{
-    	public String name = "foo";
-    	public String getName(){
-    		return name;
-    	}
+
+    public static class Hoge {
+        public String name = "foo";
+
+        public String getName() {
+            return name;
+        }
     }
 }

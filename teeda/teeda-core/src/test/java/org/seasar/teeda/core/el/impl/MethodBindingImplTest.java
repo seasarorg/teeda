@@ -40,8 +40,7 @@ public class MethodBindingImplTest extends TeedaTestCase {
         parser.setExpressionProcessor(new CommonsExpressionProcessorImpl());
         ValueBindingBase vb = new ValueBindingImpl(getApplication(),
                 "#{a.getName}", parser);
-        MethodBinding mb = new MethodBindingImpl(vb, new Class[] {},
-                parser);
+        MethodBinding mb = new MethodBindingImpl(vb, new Class[] {}, parser);
         assertSame(String.class, mb.getType(getFacesContext()));
     }
 
@@ -53,8 +52,7 @@ public class MethodBindingImplTest extends TeedaTestCase {
         parser.setExpressionProcessor(new CommonsExpressionProcessorImpl());
         ValueBindingBase vb = new ValueBindingImpl(getApplication(),
                 "#{a.getNum}", parser);
-        MethodBinding mb = new MethodBindingImpl(vb, new Class[] {},
-                parser);
+        MethodBinding mb = new MethodBindingImpl(vb, new Class[] {}, parser);
         assertSame(int.class, mb.getType(getFacesContext()));
     }
 
@@ -68,8 +66,7 @@ public class MethodBindingImplTest extends TeedaTestCase {
         parser.setExpressionProcessor(new CommonsExpressionProcessorImpl());
         ValueBindingBase vb = new ValueBindingImpl(getApplication(),
                 "#{m[\"a\"].toString}", parser);
-        MethodBinding mb = new MethodBindingImpl(vb, new Class[] {},
-                parser);
+        MethodBinding mb = new MethodBindingImpl(vb, new Class[] {}, parser);
         assertSame(String.class, mb.getType(getFacesContext()));
     }
 
@@ -81,8 +78,7 @@ public class MethodBindingImplTest extends TeedaTestCase {
         parser.setExpressionProcessor(new CommonsExpressionProcessorImpl());
         ValueBindingBase vb = new ValueBindingImpl(getApplication(),
                 "#{a.getName}", parser);
-        MethodBinding mb = new MethodBindingImpl(vb, new Class[] {},
-                parser);
+        MethodBinding mb = new MethodBindingImpl(vb, new Class[] {}, parser);
         assertEquals(a.getName(), mb.invoke(getFacesContext(), null));
     }
 

@@ -25,11 +25,11 @@ import javax.faces.el.VariableResolver;
 public class MockSingleConstructorVariableResolver extends VariableResolver {
 
     private VariableResolver resolver_;
-    
+
     public MockSingleConstructorVariableResolver(VariableResolver resolver) {
         resolver_ = resolver;
     }
-    
+
     public Object resolveVariable(FacesContext context, String name)
             throws EvaluationException {
         return null;

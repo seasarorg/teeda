@@ -25,14 +25,15 @@ import org.seasar.teeda.core.config.faces.assembler.ApplicationChildAssembler;
  */
 public class StateManagerAssembler extends ApplicationChildAssembler {
 
-    public StateManagerAssembler(String stateManagerName, Application application){
+    public StateManagerAssembler(String stateManagerName,
+            Application application) {
         super(stateManagerName, application);
     }
-    
+
     public void assemble() {
         StateManager previous = getApplication().getStateManager();
-        StateManager stateManager = 
-            (StateManager)createMarshalInstance(StateManager.class, previous);
+        StateManager stateManager = (StateManager) createMarshalInstance(
+                StateManager.class, previous);
         getApplication().setStateManager(stateManager);
     }
 }

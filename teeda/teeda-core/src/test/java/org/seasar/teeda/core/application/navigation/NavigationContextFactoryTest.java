@@ -4,7 +4,7 @@ import junit.framework.TestCase;
 
 public class NavigationContextFactoryTest extends TestCase {
 
-    public void testAddNavigationContext() throws Exception{
+    public void testAddNavigationContext() throws Exception {
         //TODO
     }
 }

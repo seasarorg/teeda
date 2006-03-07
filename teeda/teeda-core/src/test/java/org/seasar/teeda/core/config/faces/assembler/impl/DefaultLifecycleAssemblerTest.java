@@ -21,7 +21,6 @@ import java.util.List;
 import javax.faces.context.ExternalContext;
 import javax.faces.event.PhaseListener;
 
-import org.seasar.teeda.core.config.faces.assembler.impl.DefaultLifecycleAssembler;
 import org.seasar.teeda.core.config.faces.element.LifecycleElement;
 import org.seasar.teeda.core.config.faces.element.impl.LifecycleElementImpl;
 import org.seasar.teeda.core.mock.MockPhaseListener;

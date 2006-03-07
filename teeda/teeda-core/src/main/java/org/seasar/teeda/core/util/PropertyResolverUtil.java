@@ -23,22 +23,28 @@ import javax.faces.el.PropertyResolver;
  */
 public class PropertyResolverUtil {
 
-    private PropertyResolverUtil(){
-    }
-    
-    public static Object getValue(Application application, Object base, Object property, Integer index){
-        PropertyResolver resolver = application.getPropertyResolver();
-        return (index == null) ? resolver.getValue(base, property) : resolver.getValue(base, index.intValue());
+    private PropertyResolverUtil() {
     }
 
-    public static boolean isReadOnly(Application application, Object base, Object property, Integer index) {
+    public static Object getValue(Application application, Object base,
+            Object property, Integer index) {
         PropertyResolver resolver = application.getPropertyResolver();
-        return (index == null) ? resolver.isReadOnly(base, property) : resolver.isReadOnly(base, index.intValue());
+        return (index == null) ? resolver.getValue(base, property) : resolver
+                .getValue(base, index.intValue());
     }
 
-    public static Class getType(Application application, Object base, Object property, Integer index) {
+    public static boolean isReadOnly(Application application, Object base,
+            Object property, Integer index) {
         PropertyResolver resolver = application.getPropertyResolver();
-        return (index == null) ? resolver.getType(base, property) : resolver.getType(base, index.intValue());
+        return (index == null) ? resolver.isReadOnly(base, property) : resolver
+                .isReadOnly(base, index.intValue());
+    }
+
+    public static Class getType(Application application, Object base,
+            Object property, Integer index) {
+        PropertyResolver resolver = application.getPropertyResolver();
+        return (index == null) ? resolver.getType(base, property) : resolver
+                .getType(base, index.intValue());
     }
 
 }

@@ -23,8 +23,8 @@ import javax.servlet.jsp.tagext.BodyTag;
 /**
  * @author shot
  */
-public abstract class UIComponentBodyTag extends UIComponentTag 
-    implements BodyTag {
+public abstract class UIComponentBodyTag extends UIComponentTag implements
+        BodyTag {
 
     protected BodyContent bodyContent = null;
 
@@ -34,10 +34,10 @@ public abstract class UIComponentBodyTag extends UIComponentTag
     public int doAfterBody() throws JspException {
         return getDoAfterBodyValue();
     }
-    
+
     public void doInitBody() throws JspException {
     }
-    
+
     public void release() {
         bodyContent = null;
         super.release();

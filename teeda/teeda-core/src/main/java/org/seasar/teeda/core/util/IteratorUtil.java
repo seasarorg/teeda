@@ -21,26 +21,25 @@ import java.util.Map;
 
 import org.seasar.framework.util.EmptyIterator;
 
-
 public class IteratorUtil {
 
     private static final EmptyIterator EMPTY_ITERATOR = new EmptyIterator();
 
-    private IteratorUtil(){
+    private IteratorUtil() {
     }
-    
-    public static Iterator getIterator(Collection collection){
-        if(collection != null && !collection.isEmpty()){
+
+    public static Iterator getIterator(Collection collection) {
+        if (collection != null && !collection.isEmpty()) {
             return collection.iterator();
-        }else{
+        } else {
             return EMPTY_ITERATOR;
         }
     }
-    
-    public static Iterator getEntryIterator(Map map){
-        if(map != null && !map.isEmpty()){
+
+    public static Iterator getEntryIterator(Map map) {
+        if (map != null && !map.isEmpty()) {
             return map.entrySet().iterator();
-        }else{
+        } else {
             return EMPTY_ITERATOR;
         }
     }

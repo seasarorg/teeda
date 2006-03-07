@@ -20,13 +20,13 @@ import java.util.List;
 
 import org.seasar.teeda.core.config.faces.element.FacetElement;
 
-
 public class FacetElementImpl implements FacetElement {
 
     private String facetName_;
+
     private List facetExtensions_ = new ArrayList();
-    
-    public FacetElementImpl(){
+
+    public FacetElementImpl() {
     }
 
     public void setFacetName(String facetName) {

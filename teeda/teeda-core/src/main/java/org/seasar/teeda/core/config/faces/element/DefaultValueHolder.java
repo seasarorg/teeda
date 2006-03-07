@@ -15,7 +15,6 @@
  */
 package org.seasar.teeda.core.config.faces.element;
 
-
 public interface DefaultValueHolder {
 
     public void setDefaultValue(String defaultValue);

@@ -28,7 +28,8 @@ public class ServletRequestHeaderMap extends
         AbstractUnmodifiableExternalContextMap {
 
     private final HttpServletRequest request_;
-    public ServletRequestHeaderMap(final HttpServletRequest request){
+
+    public ServletRequestHeaderMap(final HttpServletRequest request) {
         request_ = request;
     }
 

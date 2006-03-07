@@ -55,19 +55,21 @@ public class NavigationContext {
         return navigationCases_;
     }
 
-    public NavigationCaseContext getNavigationCase(String fromAction, String outCome) {
-        for(Iterator itr = getNavigationCases().iterator(); itr.hasNext(); ) {
-            NavigationCaseContext caseContext = (NavigationCaseContext) itr.next();
+    public NavigationCaseContext getNavigationCase(String fromAction,
+            String outCome) {
+        for (Iterator itr = getNavigationCases().iterator(); itr.hasNext();) {
+            NavigationCaseContext caseContext = (NavigationCaseContext) itr
+                    .next();
             String from = caseContext.getFromAction();
             String out = caseContext.getFromOutcome();
-            if((fromAction == null || fromAction.equals(from)) &&
-                (outCome == null || outCome.equals(out))) {
+            if ((fromAction == null || fromAction.equals(from))
+                    && (outCome == null || outCome.equals(out))) {
                 return caseContext;
             }
         }
         return null;
     }
-    
+
     public boolean isWildCardMatch() {
         return isWildCardMatch_;
     }
@@ -78,7 +80,7 @@ public class NavigationContext {
         buf.append("[");
         buf.append("from-view-id = " + fromViewId_);
         buf.append(" ");
-        for(Iterator itr = navigationCases_.iterator(); itr.hasNext();) {
+        for (Iterator itr = navigationCases_.iterator(); itr.hasNext();) {
             buf.append(itr.next());
         }
         buf.append("]");

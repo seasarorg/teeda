@@ -30,22 +30,26 @@ import org.seasar.teeda.core.util.DIContainerUtil;
  * @author shot
  *
  */
-public abstract class ValueBindingBase extends ValueBinding implements StateHolder {
+public abstract class ValueBindingBase extends ValueBinding implements
+        StateHolder {
 
-    static{
-        Arrays.sort(JsfConstants.JSF_IMPLICIT_OBJECTS);  
-      };
+    static {
+        Arrays.sort(JsfConstants.JSF_IMPLICIT_OBJECTS);
+    };
 
-	protected abstract void setValueInScope(FacesContext context, String name, Object newValue);
-	
-	public abstract Object getExpression();
-	
-	protected final ManagedBeanFactory getManagedBeanFactory(){
-		return (ManagedBeanFactory)DIContainerUtil.getComponent(ManagedBeanFactory.class);
-	}
-	
-    public static boolean isImplicitObject(String expressionString){
-        return (Arrays.binarySearch(JsfConstants.JSF_IMPLICIT_OBJECTS, expressionString) >= 0);
+    protected abstract void setValueInScope(FacesContext context, String name,
+            Object newValue);
+
+    public abstract Object getExpression();
+
+    protected final ManagedBeanFactory getManagedBeanFactory() {
+        return (ManagedBeanFactory) DIContainerUtil
+                .getComponent(ManagedBeanFactory.class);
+    }
+
+    public static boolean isImplicitObject(String expressionString) {
+        return (Arrays.binarySearch(JsfConstants.JSF_IMPLICIT_OBJECTS,
+                expressionString) >= 0);
     }
 
 }

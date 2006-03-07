@@ -28,21 +28,21 @@ public class ApplicationTagHandler extends JsfTagHandler {
 
     private static final long serialVersionUID = 1L;
 
-    public ApplicationTagHandler(){
+    public ApplicationTagHandler() {
     }
-    
+
     public void start(TagHandlerContext context, Attributes attributes) {
         ApplicationElement application = createApplicationElement();
         context.push(application);
     }
-    
+
     public void end(TagHandlerContext context, String body) {
-        ApplicationElement application = (ApplicationElement)context.pop();
-        FacesConfig facesConfig = (FacesConfig)context.peek();
+        ApplicationElement application = (ApplicationElement) context.pop();
+        FacesConfig facesConfig = (FacesConfig) context.peek();
         facesConfig.addApplicationElement(application);
     }
-    
-    protected ApplicationElement createApplicationElement(){
+
+    protected ApplicationElement createApplicationElement() {
         return new ApplicationElementImpl();
     }
 }

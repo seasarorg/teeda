@@ -26,7 +26,7 @@ import org.seasar.teeda.core.application.TreeStructure;
 public abstract class MockResponseStateManager extends ResponseStateManager {
 
     public abstract void setTreeStructureToRestore(TreeStructure struct);
-    
+
     public abstract void setComponentStateToRestore(Object state);
-    
+
 }

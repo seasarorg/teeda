@@ -306,7 +306,8 @@ public class ApplicationImpl extends Application implements
             ConverterConfiguration config = (ConverterConfiguration) itr.next();
             if (config != null) {
                 String propertyName = config.getPropertyName();
-                PropertyUtil.setValue(converter, propertyName, config.getDefaultValue());
+                PropertyUtil.setValue(converter, propertyName, config
+                        .getDefaultValue());
             }
         }
         return converter;

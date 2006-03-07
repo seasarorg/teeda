@@ -18,7 +18,6 @@ package org.seasar.teeda.core.config.faces.assembler.impl;
 import java.util.Iterator;
 import java.util.Locale;
 
-import org.seasar.teeda.core.config.faces.assembler.impl.LocaleConfigAssembler;
 import org.seasar.teeda.core.config.faces.element.impl.LocaleConfigElementImpl;
 import org.seasar.teeda.core.mock.MockApplication;
 import org.seasar.teeda.core.unit.TeedaTestCase;

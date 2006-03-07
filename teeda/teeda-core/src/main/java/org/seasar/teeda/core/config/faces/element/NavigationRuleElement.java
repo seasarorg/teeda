@@ -17,16 +17,15 @@ package org.seasar.teeda.core.config.faces.element;
 
 import java.util.List;
 
-
 public interface NavigationRuleElement extends JsfConfigElement {
 
     public static final String DEFAULT_FROM_VIEW_ID = "*";
 
     public void setFromViewId(String fromViewId);
-    
+
     public String getFromViewId();
-    
+
     public void addNavigationCase(NavigationCaseElement navigationCase);
-    
+
     public List getNavigationCaseElements();
 }

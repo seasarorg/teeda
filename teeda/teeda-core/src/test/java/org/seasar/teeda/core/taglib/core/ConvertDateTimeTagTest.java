@@ -48,10 +48,10 @@ public class ConvertDateTimeTagTest extends TeedaTestCase {
         setApplication(app);
         ConvertDateTimeTag tag = new ConvertDateTimeTag();
         tag.setPageContext(new NullPageContext());
-        
+
         // # Act #
         Converter c = tag.createConverter();
-        
+
         // # Assert #
         assertNotNull(c);
         assertTrue(c instanceof DateTimeConverter);
@@ -66,9 +66,10 @@ public class ConvertDateTimeTagTest extends TeedaTestCase {
         DateTimeConverter c = new DateTimeConverter();
         ConvertDateTimeTag tag = new ConvertDateTimeTag();
         tag.setConverterDateStyle(getFacesContext(), c);
-        
+
         // # Act & Assert #
-        assertEquals(JsfConstants.DEFAULT_CONVERTDATETIME_DATE_STYLE, c.getDateStyle());
+        assertEquals(JsfConstants.DEFAULT_CONVERTDATETIME_DATE_STYLE, c
+                .getDateStyle());
     }
 
     public void testSetConverterDateStyle_bindingValue() throws Exception {
@@ -80,7 +81,7 @@ public class ConvertDateTimeTagTest extends TeedaTestCase {
         ConvertDateTimeTag tag = new ConvertDateTimeTag();
         tag.setDateStyle("#{hoge.medium}");
         tag.setConverterDateStyle(getFacesContext(), c);
-        
+
         // # Act & Assert #
         assertEquals("medium", c.getDateStyle());
     }
@@ -91,7 +92,7 @@ public class ConvertDateTimeTagTest extends TeedaTestCase {
         ConvertDateTimeTag tag = new ConvertDateTimeTag();
         tag.setLocale(Locale.FRENCH.toString());
         tag.setConverterLocale(getFacesContext(), c);
-        
+
         // # Act & Assert #
         assertEquals(Locale.FRENCH, c.getLocale());
     }
@@ -105,7 +106,7 @@ public class ConvertDateTimeTagTest extends TeedaTestCase {
         ConvertDateTimeTag tag = new ConvertDateTimeTag();
         tag.setLocale("#{locale.getmany}");
         tag.setConverterLocale(getFacesContext(), c);
-        
+
         // # Act & Assert #
         assertEquals(Locale.GERMANY, c.getLocale());
     }
@@ -116,9 +117,10 @@ public class ConvertDateTimeTagTest extends TeedaTestCase {
         ConvertDateTimeTag tag = new ConvertDateTimeTag();
         tag.setTimeZone("America/Los_Angeles");
         tag.setConverterTimeZone(getFacesContext(), c);
-        
+
         // # Act & Assert #
-        assertEquals(TimeZone.getTimeZone("America/Los_Angeles"), c.getTimeZone());
+        assertEquals(TimeZone.getTimeZone("America/Los_Angeles"), c
+                .getTimeZone());
     }
 
     public void testSetConverterTimeZone_bindingValue() throws Exception {
@@ -130,7 +132,7 @@ public class ConvertDateTimeTagTest extends TeedaTestCase {
         ConvertDateTimeTag tag = new ConvertDateTimeTag();
         tag.setTimeZone("#{timeZone.a}");
         tag.setConverterTimeZone(getFacesContext(), c);
-        
+
         // # Act & Assert #
         assertEquals(TimeZone.getTimeZone("Brazil/West"), c.getTimeZone());
     }
@@ -138,7 +140,7 @@ public class ConvertDateTimeTagTest extends TeedaTestCase {
     public void setupCreateConverter() {
         orgApp_ = getApplication();
     }
-    
+
     public void testCreateConverter() throws Exception {
         // # Arrange #
         String converterId = DateTimeConverter.CONVERTER_ID;
@@ -154,19 +156,20 @@ public class ConvertDateTimeTagTest extends TeedaTestCase {
         tag.setTimeStyle("style");
         tag.setTimeZone("America/Los_Angeles");
         tag.setType("type");
-        
+
         // # Act #
         Converter c = tag.createConverter();
-        
+
         // # Assert #
         assertNotNull(c);
         assertTrue(c instanceof DateTimeConverter);
-        DateTimeConverter dc = (DateTimeConverter)c;
+        DateTimeConverter dc = (DateTimeConverter) c;
         assertEquals("medium", dc.getDateStyle());
         assertEquals(Locale.JAPANESE, dc.getLocale());
         assertEquals("pattern", dc.getPattern());
         assertEquals("style", dc.getTimeStyle());
-        assertEquals(TimeZone.getTimeZone("America/Los_Angeles"), dc.getTimeZone());
+        assertEquals(TimeZone.getTimeZone("America/Los_Angeles"), dc
+                .getTimeZone());
         assertEquals("type", dc.getType());
     }
 

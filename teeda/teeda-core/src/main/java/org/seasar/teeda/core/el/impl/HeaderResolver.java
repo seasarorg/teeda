@@ -25,11 +25,11 @@ import org.seasar.teeda.core.el.FacesResolver;
  */
 public class HeaderResolver implements FacesResolver {
 
-	/**
-	 * @see org.seasar.jsf.el.FacesResolver#resolveVariable(javax.faces.context.FacesContext)
-	 */
-	public Object resolveVariable(FacesContext context) {
-		return context.getExternalContext().getRequestHeaderMap();
-	}
+    /**
+     * @see org.seasar.jsf.el.FacesResolver#resolveVariable(javax.faces.context.FacesContext)
+     */
+    public Object resolveVariable(FacesContext context) {
+        return context.getExternalContext().getRequestHeaderMap();
+    }
 
 }

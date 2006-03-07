@@ -25,7 +25,9 @@ import org.seasar.teeda.core.config.webapp.element.TaglibElement;
 public class TaglibElementImpl implements TaglibElement, Serializable {
 
     private static final long serialVersionUID = 1L;
+
     private String taglibUri_;
+
     private String taglibLocation_;
 
     public String getTaglibLocation() {

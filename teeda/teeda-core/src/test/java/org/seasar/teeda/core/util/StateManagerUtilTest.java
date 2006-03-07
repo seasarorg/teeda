@@ -60,13 +60,14 @@ public class StateManagerUtilTest extends TeedaTestCase {
         }
     }
 
-    public void testAssertComponentNoDuplicateId_idDuplicateWithNamingContainer() throws Exception {
+    public void testAssertComponentNoDuplicateId_idDuplicateWithNamingContainer()
+            throws Exception {
         MockUIComponentBase parent = new MockUIComponentBase();
         parent.setId("id0");
         MockUIComponentBase child1 = new MockUIComponentBase();
         child1.setId("child1");
         parent.getChildren().add(child1);
-        
+
         MockUIComponentBaseWithNamingContainer child2 = new MockUIComponentBaseWithNamingContainer();
         child2.setId("child2");
         MockUIComponentBase grandChild1 = new MockUIComponentBase();
@@ -84,5 +85,4 @@ public class StateManagerUtilTest extends TeedaTestCase {
         }
     }
 
-    
 }

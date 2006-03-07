@@ -24,15 +24,17 @@ import javax.faces.context.FacesContext;
 public class MockSingleConstructorNavigationHandler extends NavigationHandler {
 
     private NavigationHandler originalHandler_;
-    public MockSingleConstructorNavigationHandler(NavigationHandler handler){
+
+    public MockSingleConstructorNavigationHandler(NavigationHandler handler) {
         originalHandler_ = handler;
     }
+
     public void handleNavigation(FacesContext context, String fromAction,
             String outcome) {
         originalHandler_.handleNavigation(context, fromAction, outcome);
     }
 
-    public NavigationHandler getOriginal(){
+    public NavigationHandler getOriginal() {
         return originalHandler_;
     }
 }

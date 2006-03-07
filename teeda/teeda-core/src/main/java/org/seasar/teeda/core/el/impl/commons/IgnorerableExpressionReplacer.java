@@ -24,7 +24,8 @@ import org.seasar.teeda.core.el.Replacer;
 public class IgnorerableExpressionReplacer implements Replacer {
 
     private ExpressionProcessor processor_;
-    public IgnorerableExpressionReplacer(ExpressionProcessor processor){
+
+    public IgnorerableExpressionReplacer(ExpressionProcessor processor) {
         processor_ = processor;
     }
 

@@ -31,13 +31,13 @@ import org.seasar.teeda.core.util.ConverterUtil;
 public class ValidateDoubleRangeTag extends MaxMinValidatorTag {
 
     private static final long serialVersionUID = 1L;
-    
+
     private static final String VALIDATOR_ID = DoubleRangeValidator.VALIDATOR_ID;
 
     protected double minimum = 0;
-    
+
     protected double maximum = 0;
-    
+
     public ValidateDoubleRangeTag() {
         super();
     }
@@ -45,7 +45,7 @@ public class ValidateDoubleRangeTag extends MaxMinValidatorTag {
     protected Validator createValidator() throws JspException {
         super.setValidatorId(VALIDATOR_ID);
         DoubleRangeValidator validator = null;
-        validator = (DoubleRangeValidator)super.createValidator();
+        validator = (DoubleRangeValidator) super.createValidator();
         AssertionUtil.assertNotNull("DoubleRangeValidator", validator);
 
         evaluateExpressions();
@@ -62,7 +62,8 @@ public class ValidateDoubleRangeTag extends MaxMinValidatorTag {
         FacesContext context = FacesContext.getCurrentInstance();
         if (minimum_ != null) {
             if (BindingUtil.isValueReference(minimum_)) {
-                ValueBinding vb = context.getApplication().createValueBinding(minimum_);
+                ValueBinding vb = context.getApplication().createValueBinding(
+                        minimum_);
                 minimum = ConverterUtil.convertToDouble(vb.getValue(context));
             } else {
                 minimum = ConverterUtil.convertToDouble(minimum_);
@@ -70,12 +71,13 @@ public class ValidateDoubleRangeTag extends MaxMinValidatorTag {
         }
         if (maximum_ != null) {
             if (BindingUtil.isValueReference(maximum_)) {
-                ValueBinding vb = context.getApplication().createValueBinding(maximum_);
+                ValueBinding vb = context.getApplication().createValueBinding(
+                        maximum_);
                 maximum = ConverterUtil.convertToDouble(vb.getValue(context));
             } else {
                 maximum = ConverterUtil.convertToDouble(maximum_);
             }
         }
     }
-    
+
 }

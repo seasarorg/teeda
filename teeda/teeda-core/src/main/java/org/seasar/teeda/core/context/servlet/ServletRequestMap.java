@@ -27,10 +27,11 @@ import org.seasar.teeda.core.context.AbstractExternalContextMap;
 public class ServletRequestMap extends AbstractExternalContextMap {
 
     private ServletRequest request_;
-    public ServletRequestMap(ServletRequest request){
+
+    public ServletRequestMap(ServletRequest request) {
         request_ = request;
     }
-    
+
     protected Object getAttribute(String key) {
         return request_.getAttribute(key);
     }

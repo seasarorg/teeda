@@ -15,10 +15,10 @@
  */
 package org.seasar.teeda.core.scope.impl;
 
+import junit.framework.TestCase;
+
 import org.seasar.framework.container.deployer.InstanceDefFactory;
 import org.seasar.teeda.core.scope.Scope;
-
-import junit.framework.TestCase;
 
 /**
  * @author shot

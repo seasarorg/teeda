@@ -25,14 +25,13 @@ import org.seasar.teeda.core.taglib.UIComponentTagBase;
  * @author yone
  */
 public class CommandButtonTag extends UIComponentTagBase {
-    
+
     private String immediate_;
-    
+
     private String actionListener_;
-    
+
     private String image_;
 
-    
     public String getComponentType() {
         return HtmlCommandButton.COMPONENT_TYPE;
     }
@@ -40,23 +39,23 @@ public class CommandButtonTag extends UIComponentTagBase {
     public String getRendererType() {
         return "javax.faces.Button";
     }
-    
+
     protected void setProperties(UIComponent component) {
         super.setProperties(component);
-        
+
         setComponentProperty(component, JsfConstants.ALT_ATTR, alt_);
         setComponentProperty(component, JsfConstants.ONCHANGE_ATTR, onchange_);
         setComponentProperty(component, JsfConstants.ONSELECT_ATTR, onselect_);
-        
+
         setComponentProperty(component, JsfConstants.IMMEDIATE_ATTR, immediate_);
-        setComponentProperty(component, JsfConstants.IMAGE_ATTR, image_);        
+        setComponentProperty(component, JsfConstants.IMAGE_ATTR, image_);
         setActionProperty(component, action_);
         setActionListenerProperty(component, actionListener_);
     }
 
     public void release() {
         super.release();
-        
+
         action_ = null;
         immediate_ = null;
         actionListener_ = null;
@@ -74,5 +73,5 @@ public class CommandButtonTag extends UIComponentTagBase {
     public void setImmediate(String immediate) {
         immediate_ = immediate;
     }
-   
+
 }

@@ -15,8 +15,6 @@
  */
 package javax.faces.internal;
 
-import javax.faces.internal.ComponentAttributesMap;
-
 import junit.framework.TestCase;
 
 import org.seasar.teeda.core.mock.MockUIComponent;

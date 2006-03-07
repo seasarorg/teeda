@@ -25,34 +25,36 @@ import org.seasar.teeda.core.util.ClassUtil;
 public abstract class ApplicationChildAssembler implements JsfAssembler {
 
     private Application application_;
+
     private String targetName_;
-    public ApplicationChildAssembler(String targetName, Application application){
-        if(targetName == null || targetName.equals("")){
+
+    public ApplicationChildAssembler(String targetName, Application application) {
+        if (targetName == null || targetName.equals("")) {
             throw new IllegalArgumentException("targetName");
         }
-        if(application == null){
+        if (application == null) {
             throw new IllegalArgumentException("application");
         }
         application_ = application;
         targetName_ = targetName;
     }
 
-    public ApplicationChildAssembler(Application application){
-        if(application == null){
+    public ApplicationChildAssembler(Application application) {
+        if (application == null) {
             throw new IllegalArgumentException("application");
         }
         application_ = application;
     }
 
-    protected Object createMarshalInstance(Class clazz, Object previous){
+    protected Object createMarshalInstance(Class clazz, Object previous) {
         return ClassUtil.createMarshalInstance(targetName_, clazz, previous);
     }
-    
-    protected final Application getApplication(){
+
+    protected final Application getApplication() {
         return application_;
     }
 
-    protected final String getTargetName(){
+    protected final String getTargetName() {
         return targetName_;
     }
 }

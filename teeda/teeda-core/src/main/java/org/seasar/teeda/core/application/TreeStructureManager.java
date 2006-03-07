@@ -23,6 +23,6 @@ import javax.faces.component.UIComponent;
 public interface TreeStructureManager {
 
     public TreeStructure buildTreeStructure(UIComponent component);
-    
+
     public UIComponent restoreTreeStructure(TreeStructure structure);
 }

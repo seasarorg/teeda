@@ -21,19 +21,26 @@ package org.seasar.teeda.core.application;
 public class ConverterConfiguration {
 
     private String propertyName_;
+
     private String propertyClass_;
+
     private String defaultValue_;
-    public ConverterConfiguration(String propertyName, String propertyClass, String defaultValue) {
+
+    public ConverterConfiguration(String propertyName, String propertyClass,
+            String defaultValue) {
         propertyName_ = propertyName;
         propertyClass_ = propertyClass;
         defaultValue_ = defaultValue;
     }
+
     public String getDefaultValue() {
         return defaultValue_;
     }
+
     public String getPropertyClass() {
         return propertyClass_;
     }
+
     public String getPropertyName() {
         return propertyName_;
     }

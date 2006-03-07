@@ -28,21 +28,22 @@ public class ManagedPropertyTagHandler extends JsfTagHandler {
 
     private static final long serialVersionUID = 1L;
 
-    public ManagedPropertyTagHandler(){
+    public ManagedPropertyTagHandler() {
     }
-    
+
     public void start(TagHandlerContext context, Attributes attributes) {
         ManagedPropertyElement managedProperty = createManagedPropertyElement();
         context.push(managedProperty);
     }
-    
+
     public void end(TagHandlerContext context, String body) {
-        ManagedPropertyElement managedProperty = (ManagedPropertyElement)context.pop();
-        ManagedBeanElement managedBean = (ManagedBeanElement)context.peek();
+        ManagedPropertyElement managedProperty = (ManagedPropertyElement) context
+                .pop();
+        ManagedBeanElement managedBean = (ManagedBeanElement) context.peek();
         managedBean.addManagedPropertyElement(managedProperty);
     }
-    
-    protected ManagedPropertyElement createManagedPropertyElement(){
+
+    protected ManagedPropertyElement createManagedPropertyElement() {
         return new ManagedPropertyElementImpl();
     }
 }

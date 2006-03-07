@@ -21,7 +21,6 @@ import javax.faces.component.html.HtmlOutputFormat;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.taglib.UIComponentTagBase;
 
-
 /**
  * @author yone
  */
@@ -36,20 +35,20 @@ public class OutputFormatTag extends UIComponentTagBase {
     public String getRendererType() {
         return "javax.faces.Format";
     }
-    
+
     protected void setProperties(UIComponent component) {
         super.setProperties(component);
 
-        setComponentProperty(component, JsfConstants.ESCAPE_ATTR, escape_);        
+        setComponentProperty(component, JsfConstants.ESCAPE_ATTR, escape_);
     }
-    
+
     public void release() {
         super.release();
         escape_ = null;
     }
-    
+
     public void setEscape(String escape) {
         escape_ = escape;
     }
-    
+
 }

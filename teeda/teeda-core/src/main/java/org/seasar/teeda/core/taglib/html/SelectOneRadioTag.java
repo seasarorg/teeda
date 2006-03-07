@@ -20,7 +20,6 @@ import javax.faces.component.html.HtmlSelectOneRadio;
 
 import org.seasar.teeda.core.JsfConstants;
 
-
 /**
  * @author yone
  */
@@ -35,13 +34,15 @@ public class SelectOneRadioTag extends InputTagBase {
     public String getRendererType() {
         return "javax.faces.Radio";
     }
-    
+
     protected void setProperties(UIComponent component) {
         super.setProperties(component);
-        
+
         setComponentProperty(component, JsfConstants.BORDER_ATTR, border_);
-        setComponentProperty(component, JsfConstants.DISABLED_CLASS_ATTR, disabledClass_);
-        setComponentProperty(component, JsfConstants.ENABLED_CLASS_ATTR, enabledClass_);
+        setComponentProperty(component, JsfConstants.DISABLED_CLASS_ATTR,
+                disabledClass_);
+        setComponentProperty(component, JsfConstants.ENABLED_CLASS_ATTR,
+                enabledClass_);
         setComponentProperty(component, JsfConstants.LAYOUT_ATTR, layout_);
         setComponentProperty(component, JsfConstants.ONCHANGE_ATTR, onchange_);
         setComponentProperty(component, JsfConstants.ONSELECT_ATTR, onselect_);

@@ -20,7 +20,6 @@ import javax.faces.component.html.HtmlInputText;
 
 import org.seasar.teeda.core.JsfConstants;
 
-
 /**
  * @author yone
  */
@@ -33,7 +32,7 @@ public class InputTextTag extends InputTagBase {
     public String getRendererType() {
         return "javax.faces.Text";
     }
-    
+
     protected void setProperties(UIComponent component) {
         super.setProperties(component);
 
@@ -43,9 +42,9 @@ public class InputTextTag extends InputTagBase {
         setComponentProperty(component, JsfConstants.ONSELECT_ATTR, onselect_);
         setComponentProperty(component, JsfConstants.SIZE_ATTR, size_);
     }
-    
+
     public void release() {
         super.release();
     }
-   
+
 }

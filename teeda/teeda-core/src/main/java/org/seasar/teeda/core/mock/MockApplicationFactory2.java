@@ -21,19 +21,20 @@ import javax.faces.application.ApplicationFactory;
 public class MockApplicationFactory2 extends ApplicationFactory {
 
     ApplicationFactory applicationFactory_;
-    public MockApplicationFactory2(){
+
+    public MockApplicationFactory2() {
     }
 
-    public MockApplicationFactory2(ApplicationFactory applicationFactory){
+    public MockApplicationFactory2(ApplicationFactory applicationFactory) {
         applicationFactory_ = applicationFactory;
     }
 
     public Application getApplication() {
-		return applicationFactory_.getApplication();
-	}
+        return applicationFactory_.getApplication();
+    }
 
-	public void setApplication(Application application) {
+    public void setApplication(Application application) {
         applicationFactory_.setApplication(application);
-	}
+    }
 
 }

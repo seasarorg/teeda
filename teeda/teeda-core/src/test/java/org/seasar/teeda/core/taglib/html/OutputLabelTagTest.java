@@ -27,23 +27,23 @@ import org.seasar.teeda.core.unit.TeedaTestCase;
  * @author yone
  */
 public class OutputLabelTagTest extends TeedaTestCase {
-    
+
     public void testGetComponentType() throws Exception {
         // # Arrange #
         OutputLabelTag tag = new OutputLabelTag();
-        
+
         // # Act & Assert #
         assertEquals("javax.faces.HtmlOutputLabel", tag.getComponentType());
     }
-    
+
     public void testGetRenderType() throws Exception {
         // # Arrange #
         OutputLabelTag tag = new OutputLabelTag();
-        
+
         // # Act & Assert #
-        assertEquals("javax.faces.Label", tag.getRendererType());        
+        assertEquals("javax.faces.Label", tag.getRendererType());
     }
-    
+
     public void testSetProperties_All() throws Exception {
         // # Arrange #
         HtmlOutputLabel component = createHtmlOutputLabel();
@@ -52,7 +52,7 @@ public class OutputLabelTagTest extends TeedaTestCase {
         app.addConverter("mock.converter",
                 "org.seasar.teeda.core.mock.MockConverter");
         setApplication(app);
-        
+
         tag.setConverter("mock.converter");
         tag.setValue("value");
         tag.setAccesskey("accessKey");
@@ -75,10 +75,10 @@ public class OutputLabelTagTest extends TeedaTestCase {
         tag.setStyleClass("styleclass");
         tag.setTabindex("70");
         tag.setTitle("title");
-        
+
         // # Act #
         tag.setProperties(component);
-        
+
         // # Assert #
         assertTrue(component.getConverter() instanceof MockConverter);
         assertEquals("value", component.getValue());
@@ -103,7 +103,7 @@ public class OutputLabelTagTest extends TeedaTestCase {
         assertEquals("70", component.getTabindex());
         assertEquals("title", component.getTitle());
     }
-    
+
     private HtmlOutputLabel createHtmlOutputLabel() {
         return (HtmlOutputLabel) createUIComponent();
     }

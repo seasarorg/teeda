@@ -23,6 +23,7 @@ import javax.faces.convert.ConverterException;
 public class MockConverter implements Converter {
 
     private String name_;
+
     public Object getAsObject(FacesContext context, UIComponent component,
             String value) throws ConverterException {
         return value;
@@ -33,11 +34,11 @@ public class MockConverter implements Converter {
         return (String) value;
     }
 
-    public void setName(String name){
+    public void setName(String name) {
         name_ = name;
     }
-    
-    public String getName(){
+
+    public String getName() {
         return name_;
     }
 }

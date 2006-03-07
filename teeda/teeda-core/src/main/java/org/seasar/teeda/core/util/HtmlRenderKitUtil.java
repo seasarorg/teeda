@@ -15,8 +15,6 @@
  */
 package org.seasar.teeda.core.util;
 
-import javax.faces.context.FacesContext;
-
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
 

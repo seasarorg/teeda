@@ -23,15 +23,16 @@ import org.seasar.framework.exception.SRuntimeException;
  */
 public class UriNotFoundRuntimeException extends SRuntimeException {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
+
     private String uri;
 
-	public UriNotFoundRuntimeException(String uri) {
-		super("EJSF0005", new Object[]{uri});
-		this.uri = uri;
-	}
-	
-	public String getUri() {
-		return uri;
-	}
+    public UriNotFoundRuntimeException(String uri) {
+        super("EJSF0005", new Object[] { uri });
+        this.uri = uri;
+    }
+
+    public String getUri() {
+        return uri;
+    }
 }

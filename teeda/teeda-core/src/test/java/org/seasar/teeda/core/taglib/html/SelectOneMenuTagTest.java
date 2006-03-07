@@ -32,20 +32,19 @@ public class SelectOneMenuTagTest extends TeedaTestCase {
     public void testGetComponentType() throws Exception {
         // # Arrange #
         SelectOneMenuTag tag = new SelectOneMenuTag();
-        
+
         // # Act & Assert #
-        assertEquals("javax.faces.HtmlSelectOneMenu",
-                tag.getComponentType());
+        assertEquals("javax.faces.HtmlSelectOneMenu", tag.getComponentType());
     }
-    
+
     public void testGetRenderType() throws Exception {
         // # Arrange #
         SelectOneMenuTag tag = new SelectOneMenuTag();
-        
+
         // # Act & Assert #
-        assertEquals("javax.faces.Menu", tag.getRendererType());        
+        assertEquals("javax.faces.Menu", tag.getRendererType());
     }
-    
+
     public void testSetProperties_All() throws Exception {
         // # Arrange #
         HtmlSelectOneMenu component = createHtmlSelectOneMenu();
@@ -56,7 +55,7 @@ public class SelectOneMenuTagTest extends TeedaTestCase {
         setApplication(app);
         app.addValidator("mock.validator",
                 "org.seasar.teeda.core.mock.MockValidator");
-        
+
         tag.setConverter("mock.converter");
         tag.setImmediate("true");
         tag.setRequired("true");
@@ -88,10 +87,10 @@ public class SelectOneMenuTagTest extends TeedaTestCase {
         tag.setStyleClass("styleclass");
         tag.setTabindex("13");
         tag.setTitle("title");
-        
+
         // # Act #
         tag.setProperties(component);
-        
+
         // # Assert #
         assertTrue(component.getConverter() instanceof MockConverter);
         assertTrue(component.isImmediate());

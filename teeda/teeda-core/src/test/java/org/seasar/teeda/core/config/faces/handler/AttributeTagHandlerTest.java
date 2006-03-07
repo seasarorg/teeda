@@ -25,7 +25,6 @@ import org.seasar.teeda.core.config.faces.element.ConverterElement;
 import org.seasar.teeda.core.config.faces.element.FacesConfig;
 import org.seasar.teeda.core.config.faces.element.ValidatorElement;
 import org.seasar.teeda.core.config.faces.element.impl.ComponentElementImpl;
-import org.seasar.teeda.core.config.faces.handler.AttributeTagHandler;
 
 /**
  * @author shot

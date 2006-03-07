@@ -20,7 +20,6 @@ import java.util.Map;
 
 import javax.faces.validator.Validator;
 
-import org.seasar.teeda.core.config.faces.assembler.impl.DefaultValidatorAssembler;
 import org.seasar.teeda.core.config.faces.element.ValidatorElement;
 import org.seasar.teeda.core.config.faces.element.impl.ValidatorElementImpl;
 import org.seasar.teeda.core.mock.MockValidator;
@@ -43,10 +42,10 @@ public class DefaultValidatorAssemblerTest extends TeedaTestCase {
         element.setValidatorClass("org.seasar.teeda.core.mock.MockValidator");
         map.put(element.getValidatorId(), element);
         DefaultValidatorAssembler assembler = new DefaultValidatorAssembler(map);
-        
+
         // # Act #
         assembler.assemble();
-        
+
         // # Assert #
         Validator v = getApplication().createValidator("mock");
         assertNotNull(v);

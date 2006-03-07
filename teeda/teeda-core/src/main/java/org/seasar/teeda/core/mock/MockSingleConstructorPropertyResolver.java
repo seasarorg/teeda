@@ -25,10 +25,11 @@ import javax.faces.el.PropertyResolver;
 public class MockSingleConstructorPropertyResolver extends PropertyResolver {
 
     private PropertyResolver originalResolver_;
-    public MockSingleConstructorPropertyResolver(PropertyResolver original){
+
+    public MockSingleConstructorPropertyResolver(PropertyResolver original) {
         originalResolver_ = original;
     }
-    
+
     public Class getType(Object base, int index) throws EvaluationException,
             PropertyNotFoundException {
         return originalResolver_.getType(base, index);
@@ -67,7 +68,7 @@ public class MockSingleConstructorPropertyResolver extends PropertyResolver {
             throws EvaluationException, PropertyNotFoundException {
     }
 
-    public PropertyResolver getOriginal(){
+    public PropertyResolver getOriginal() {
         return originalResolver_;
     }
 }

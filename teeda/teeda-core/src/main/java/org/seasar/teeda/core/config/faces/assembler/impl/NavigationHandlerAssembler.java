@@ -25,14 +25,15 @@ import org.seasar.teeda.core.config.faces.assembler.ApplicationChildAssembler;
  */
 public class NavigationHandlerAssembler extends ApplicationChildAssembler {
 
-    public NavigationHandlerAssembler(String handlerName, Application application){
+    public NavigationHandlerAssembler(String handlerName,
+            Application application) {
         super(handlerName, application);
     }
-    
+
     public void assemble() {
         NavigationHandler previous = getApplication().getNavigationHandler();
-        NavigationHandler handler = 
-            (NavigationHandler)createMarshalInstance(NavigationHandler.class, previous);
+        NavigationHandler handler = (NavigationHandler) createMarshalInstance(
+                NavigationHandler.class, previous);
         getApplication().setNavigationHandler(handler);
     }
 

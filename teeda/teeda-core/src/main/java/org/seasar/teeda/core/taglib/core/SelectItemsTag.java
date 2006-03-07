@@ -25,7 +25,7 @@ import org.seasar.teeda.core.taglib.UIComponentTagBase;
 public class SelectItemsTag extends UIComponentTagBase {
 
     private static final String COMPONENT_TYPE = UISelectItems.COMPONENT_TYPE;
-        
+
     public SelectItemsTag() {
         super();
     }

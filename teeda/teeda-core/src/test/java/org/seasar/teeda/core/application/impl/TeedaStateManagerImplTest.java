@@ -51,11 +51,11 @@ public class TeedaStateManagerImplTest extends TeedaTestCase {
         getFacesContext().setViewRoot(root);
         manager.setTreeStructureManager(new TreeStructureManagerImpl());
         manager.saveSerializedView(getFacesContext());
-        
+
         // # Act #
-        UIViewRoot r = manager.restoreView(getFacesContext(),
-                "viewId", RenderKitFactory.HTML_BASIC_RENDER_KIT);
-        
+        UIViewRoot r = manager.restoreView(getFacesContext(), "viewId",
+                RenderKitFactory.HTML_BASIC_RENDER_KIT);
+
         // # Assert #
         assertNotNull(r);
         assertTrue(r instanceof MockUIViewRoot);
@@ -63,7 +63,8 @@ public class TeedaStateManagerImplTest extends TeedaTestCase {
         assertEquals("renderKitId", r.getRenderKitId());
         assertEquals("viewId", r.getViewId());
         assertEquals(Locale.JAPAN, r.getLocale());
-        assertNull(manager.getSerializedViewFromServer(getExternalContext(), "viewId"));
+        assertNull(manager.getSerializedViewFromServer(getExternalContext(),
+                "viewId"));
     }
 
     public void testRestoreView_getFromClient() throws Exception {
@@ -85,9 +86,9 @@ public class TeedaStateManagerImplTest extends TeedaTestCase {
         manager.saveSerializedView(getFacesContext());
 
         // # Act #
-        UIViewRoot r = manager.restoreView(getFacesContext(),
-                "foo", RenderKitFactory.HTML_BASIC_RENDER_KIT);
-        
+        UIViewRoot r = manager.restoreView(getFacesContext(), "foo",
+                RenderKitFactory.HTML_BASIC_RENDER_KIT);
+
         // # Assert #
         assertNotNull(r);
         assertTrue(r instanceof MockUIViewRoot);
@@ -95,7 +96,7 @@ public class TeedaStateManagerImplTest extends TeedaTestCase {
         assertEquals("foo", r.getViewId());
         assertEquals("bar", r.getRenderKitId());
     }
-    
+
     public void testSaveSerializedView_componentIdDuplicated() throws Exception {
         // # Arrange #
         UIViewRoot orgRoot = getFacesContext().getViewRoot();

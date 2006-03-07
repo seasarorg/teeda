@@ -29,10 +29,11 @@ import javax.faces.context.FacesContext;
 public class MockSingleConstructorViewHandler extends ViewHandler {
 
     private ViewHandler originalHandler_;
+
     public MockSingleConstructorViewHandler(ViewHandler originalHandler) {
         originalHandler_ = originalHandler;
     }
-    
+
     public Locale calculateLocale(FacesContext context) {
         return null;
     }

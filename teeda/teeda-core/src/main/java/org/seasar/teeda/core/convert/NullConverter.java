@@ -27,76 +27,76 @@ import javax.faces.convert.ConverterException;
  */
 public class NullConverter implements Converter, StateHolder {
 
-	private static final String[] DEFAULT_NULL_VALUES = new String[] { "", "on" };
-	
-	private String[] nullValues = DEFAULT_NULL_VALUES;
-	
-	private boolean transientValue;
-	
-	public String[] getNullValues() {
-		return nullValues;
-	}
-	
-	public void setNullValues(String[] nullValues) {
-		this.nullValues = nullValues;
-	}
+    private static final String[] DEFAULT_NULL_VALUES = new String[] { "", "on" };
 
-	/**
-	 * @see javax.faces.convert.Converter#getAsObject(javax.faces.context.FacesContext, javax.faces.component.UIComponent, java.lang.String)
-	 */
-	public Object getAsObject(FacesContext context, UIComponent component,
-			String value) throws ConverterException {
-		
-		for (int i = 0; i < nullValues.length; ++i) {
-			if (nullValues[i].equalsIgnoreCase(value)) {
-				return null;
-			}
-		}
-		return value;
-	}
+    private String[] nullValues = DEFAULT_NULL_VALUES;
 
-	/**
-	 * @see javax.faces.convert.Converter#getAsString(javax.faces.context.FacesContext, javax.faces.component.UIComponent, java.lang.Object)
-	 */
-	public String getAsString(FacesContext context, UIComponent component,
-			Object value) throws ConverterException {
-		
-		if (value == null) {
-			return "";
-		}
-		return value.toString();
-	}
+    private boolean transientValue;
 
-	/**
-	 * @see javax.faces.component.StateHolder#saveState(javax.faces.context.FacesContext)
-	 */
-	public Object saveState(FacesContext context) {
-		Object[] values = new Object[1];
+    public String[] getNullValues() {
+        return nullValues;
+    }
+
+    public void setNullValues(String[] nullValues) {
+        this.nullValues = nullValues;
+    }
+
+    /**
+     * @see javax.faces.convert.Converter#getAsObject(javax.faces.context.FacesContext, javax.faces.component.UIComponent, java.lang.String)
+     */
+    public Object getAsObject(FacesContext context, UIComponent component,
+            String value) throws ConverterException {
+
+        for (int i = 0; i < nullValues.length; ++i) {
+            if (nullValues[i].equalsIgnoreCase(value)) {
+                return null;
+            }
+        }
+        return value;
+    }
+
+    /**
+     * @see javax.faces.convert.Converter#getAsString(javax.faces.context.FacesContext, javax.faces.component.UIComponent, java.lang.Object)
+     */
+    public String getAsString(FacesContext context, UIComponent component,
+            Object value) throws ConverterException {
+
+        if (value == null) {
+            return "";
+        }
+        return value.toString();
+    }
+
+    /**
+     * @see javax.faces.component.StateHolder#saveState(javax.faces.context.FacesContext)
+     */
+    public Object saveState(FacesContext context) {
+        Object[] values = new Object[1];
         values[0] = nullValues;
         return values;
-	}
+    }
 
-	/**
-	 * @see javax.faces.component.StateHolder#restoreState(javax.faces.context.FacesContext, java.lang.Object)
-	 */
-	public void restoreState(FacesContext context, Object state) {
-		Object[] values = (Object[]) state;
+    /**
+     * @see javax.faces.component.StateHolder#restoreState(javax.faces.context.FacesContext, java.lang.Object)
+     */
+    public void restoreState(FacesContext context, Object state) {
+        Object[] values = (Object[]) state;
         nullValues = (String[]) values[0];
 
-	}
+    }
 
-	/**
-	 * @see javax.faces.component.StateHolder#isTransient()
-	 */
-	public boolean isTransient() {
-		return transientValue;
-	}
+    /**
+     * @see javax.faces.component.StateHolder#isTransient()
+     */
+    public boolean isTransient() {
+        return transientValue;
+    }
 
-	/**
-	 * @see javax.faces.component.StateHolder#setTransient(boolean)
-	 */
-	public void setTransient(boolean transientValue) {
-		this.transientValue = transientValue;
-	}
+    /**
+     * @see javax.faces.component.StateHolder#setTransient(boolean)
+     */
+    public void setTransient(boolean transientValue) {
+        this.transientValue = transientValue;
+    }
 
 }

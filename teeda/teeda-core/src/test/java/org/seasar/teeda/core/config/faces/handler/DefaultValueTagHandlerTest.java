@@ -20,7 +20,6 @@ import org.seasar.teeda.core.config.faces.element.AttributeElement;
 import org.seasar.teeda.core.config.faces.element.PropertyElement;
 import org.seasar.teeda.core.config.faces.element.impl.AttributeElementImpl;
 import org.seasar.teeda.core.config.faces.element.impl.PropertyElementImpl;
-import org.seasar.teeda.core.config.faces.handler.DefaultValueTagHandler;
 
 /**
  * @author shot
@@ -36,7 +35,8 @@ public class DefaultValueTagHandlerTest extends TagHandlerTestCase {
         super(name);
     }
 
-    public void testDefaultValueTagHandler_withPropertyElement() throws Exception {
+    public void testDefaultValueTagHandler_withPropertyElement()
+            throws Exception {
         // # Arrange #
         PropertyElement element = new PropertyElementImpl();
         getContext().push(element);
@@ -49,7 +49,8 @@ public class DefaultValueTagHandlerTest extends TagHandlerTestCase {
         assertEquals("a", element.getDefaultValue());
     }
 
-    public void testDefaultValueTagHandler_withAttributeElement() throws Exception {
+    public void testDefaultValueTagHandler_withAttributeElement()
+            throws Exception {
         // # Arrange #
         TagHandlerContext context = new TagHandlerContext();
         AttributeElement element = new AttributeElementImpl();

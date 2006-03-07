@@ -23,14 +23,14 @@ import java.util.List;
 public interface RenderKitElement extends JsfConfigElement {
 
     public void setRenderKitId(String renderKitId);
-    
+
     public void setRenderKitClass(String renderKitClass);
-    
+
     public String getRenderKitId();
-    
+
     public String getRenderKitClass();
-    
+
     public void addRendererElement(RendererElement renderer);
-    
+
     public List getRendererElements();
 }

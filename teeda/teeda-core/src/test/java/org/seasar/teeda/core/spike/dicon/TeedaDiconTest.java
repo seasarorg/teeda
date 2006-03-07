@@ -37,8 +37,7 @@ public class TeedaDiconTest extends S2FrameworkTestCase {
         assertNotNull(app.getViewHandler());
         assertNotNull(app.getValueBindingContext());
         assertNotNull(app.getMethodBindingContext());
-        
-        
+
         TeedaStateManagerImpl stateManager = (TeedaStateManagerImpl) app
                 .getStateManager();
         assertNotNull(stateManager.getTreeStructureManager());
@@ -61,10 +60,10 @@ public class TeedaDiconTest extends S2FrameworkTestCase {
                 .getComponent("valueBindingContext");
         assertNotNull(vbContext.getELParser());
         assertNotNull(vbContext.getELParser().getExpressionProcessor());
-        
-//        ConfigFilesFacesConfigurator configFilesConfigurator = (ConfigFilesFacesConfigurator) container.getComponent("configFilesConfigurator");
-//        assertNotNull(configFilesConfigurator);
-//        assertNotNull(configFilesConfigurator.getExternalContext());
+
+        //        ConfigFilesFacesConfigurator configFilesConfigurator = (ConfigFilesFacesConfigurator) container.getComponent("configFilesConfigurator");
+        //        assertNotNull(configFilesConfigurator);
+        //        assertNotNull(configFilesConfigurator.getExternalContext());
     }
 
     public void tearDown() throws Exception {

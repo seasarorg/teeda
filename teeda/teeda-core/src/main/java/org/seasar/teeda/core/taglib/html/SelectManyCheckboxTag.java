@@ -20,14 +20,13 @@ import javax.faces.component.html.HtmlSelectManyCheckbox;
 
 import org.seasar.teeda.core.JsfConstants;
 
-
 /**
  * @author yone
  */
 public class SelectManyCheckboxTag extends InputTagBase {
 
     private String layout_;
-    
+
     public String getComponentType() {
         return HtmlSelectManyCheckbox.COMPONENT_TYPE;
     }
@@ -35,18 +34,20 @@ public class SelectManyCheckboxTag extends InputTagBase {
     public String getRendererType() {
         return "javax.faces.Checkbox";
     }
-    
+
     protected void setProperties(UIComponent component) {
         super.setProperties(component);
-        
+
         setComponentProperty(component, JsfConstants.BORDER_ATTR, border_);
         setComponentProperty(component, JsfConstants.ONCHANGE_ATTR, onchange_);
         setComponentProperty(component, JsfConstants.ONSELECT_ATTR, onselect_);
-        setComponentProperty(component, JsfConstants.DISABLED_CLASS_ATTR, disabledClass_);
-        setComponentProperty(component, JsfConstants.ENABLED_CLASS_ATTR, enabledClass_);
+        setComponentProperty(component, JsfConstants.DISABLED_CLASS_ATTR,
+                disabledClass_);
+        setComponentProperty(component, JsfConstants.ENABLED_CLASS_ATTR,
+                enabledClass_);
         setComponentProperty(component, JsfConstants.LAYOUT_ATTR, layout_);
     }
-    
+
     public void release() {
         super.release();
         layout_ = null;
@@ -55,5 +56,5 @@ public class SelectManyCheckboxTag extends InputTagBase {
     public void setLayout(String layout) {
         layout_ = layout;
     }
-    
+
 }

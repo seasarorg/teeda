@@ -28,20 +28,20 @@ public class FacetTagHandler extends JsfTagHandler {
 
     private static final long serialVersionUID = 1L;
 
-    public FacetTagHandler(){
+    public FacetTagHandler() {
     }
-    
+
     public void start(TagHandlerContext context, Attributes attributes) {
         FacetElement facet = createFacetElement();
         context.push(facet);
     }
-    
+
     public void end(TagHandlerContext context, String body) {
-        FacetElement facet = (FacetElement)context.pop();
-        FacetHolder holder = (FacetHolder)context.peek();
+        FacetElement facet = (FacetElement) context.pop();
+        FacetHolder holder = (FacetHolder) context.peek();
         holder.addFacetElement(facet);
     }
-    
+
     protected FacetElement createFacetElement() {
         return new FacetElementImpl();
     }

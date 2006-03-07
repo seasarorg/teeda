@@ -24,23 +24,23 @@ import junit.framework.TestCase;
  * @author yone
  */
 public class MessagesTagTest extends TestCase {
-    
+
     public void testGetComponentType() throws Exception {
         // # Arrange #
         MessagesTag tag = new MessagesTag();
-        
+
         // # Act & Assert #
         assertEquals("javax.faces.HtmlMessages", tag.getComponentType());
     }
-    
+
     public void testGetRenderType() throws Exception {
         // # Arrange #
         MessagesTag tag = new MessagesTag();
-        
+
         // # Act & Assert #
-        assertEquals("javax.faces.Messages", tag.getRendererType());        
+        assertEquals("javax.faces.Messages", tag.getRendererType());
     }
-    
+
     public void testSetProperties_All() throws Exception {
         // # Arrange #
         HtmlMessages component = createHtmlMessages();
@@ -62,10 +62,10 @@ public class MessagesTagTest extends TestCase {
         tag.setTooltip("true");
         tag.setWarnClass("WarnClass");
         tag.setWarnStyle("WarnStyle");
-        
+
         // # Act #
         tag.setProperties(component);
-        
+
         // # Assert #
         assertTrue(component.isGlobalOnly());
         assertTrue(component.isShowDetail());

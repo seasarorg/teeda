@@ -28,26 +28,29 @@ import javax.faces.context.FacesContext;
  */
 public class StateManagerUtil {
 
-    private StateManagerUtil(){
+    private StateManagerUtil() {
     }
-    
+
     public static boolean isSavingStateInClient(FacesContext context) {
-        return context.getApplication().getStateManager().isSavingStateInClient(context);
+        return context.getApplication().getStateManager()
+                .isSavingStateInClient(context);
     }
-    
+
     public static void assertComponentNoDuplicateId(UIComponent component) {
         assertComponentNoDuplicateIdInternal(component, new ArrayList());
     }
-    
-    private static void assertComponentNoDuplicateIdInternal(UIComponent component, List idList) {
+
+    private static void assertComponentNoDuplicateIdInternal(
+            UIComponent component, List idList) {
         String id = component.getId();
-        if(id != null && idList.contains(id)) {
-            throw new IllegalStateException("Component id:" + id + " has same id in view tree.");
+        if (id != null && idList.contains(id)) {
+            throw new IllegalStateException("Component id:" + id
+                    + " has same id in view tree.");
         }
         idList.add(id);
-        for(Iterator itr = component.getFacetsAndChildren(); itr.hasNext();) {
+        for (Iterator itr = component.getFacetsAndChildren(); itr.hasNext();) {
             UIComponent child = (UIComponent) itr.next();
-            if(component instanceof NamingContainer) {
+            if (component instanceof NamingContainer) {
                 assertComponentNoDuplicateId(child);
             } else {
                 assertComponentNoDuplicateIdInternal(child, idList);

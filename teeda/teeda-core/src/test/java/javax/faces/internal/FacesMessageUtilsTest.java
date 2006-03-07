@@ -20,7 +20,6 @@ import java.util.Locale;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIViewRoot;
-import javax.faces.internal.FacesMessageUtils;
 
 import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.mock.MockUIComponent;
@@ -72,7 +71,8 @@ public class FacesMessageUtilsTest extends TeedaTestCase {
         UIViewRoot root = new UIViewRoot();
         root.setLocale(Locale.ENGLISH);
         context.setViewRoot(root);
-        FacesMessageUtils.addErrorMessage(context, component, "javax.faces.component.UIInput.CONVERSION");
+        FacesMessageUtils.addErrorMessage(context, component,
+                "javax.faces.component.UIInput.CONVERSION");
         assertNotNull(context.getMessages("c"));
         Iterator itr = context.getMessages();
         FacesMessage message = (FacesMessage) itr.next();

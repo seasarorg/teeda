@@ -217,28 +217,36 @@ public class ValueBindingImplTest extends TeedaTestCase {
                 createELParser());
         assertTrue(vb.isReadOnly(getFacesContext()));
 
-        vb = new ValueBindingImpl(getApplication(), "#{facesContext}", createELParser());
+        vb = new ValueBindingImpl(getApplication(), "#{facesContext}",
+                createELParser());
         assertTrue(vb.isReadOnly(getFacesContext()));
 
-        vb = new ValueBindingImpl(getApplication(), "#{header}", createELParser());
+        vb = new ValueBindingImpl(getApplication(), "#{header}",
+                createELParser());
         assertTrue(vb.isReadOnly(getFacesContext()));
 
-        vb = new ValueBindingImpl(getApplication(), "#{headerValues}", createELParser());
+        vb = new ValueBindingImpl(getApplication(), "#{headerValues}",
+                createELParser());
         assertTrue(vb.isReadOnly(getFacesContext()));
 
-        vb = new ValueBindingImpl(getApplication(), "#{initParam}", createELParser());
+        vb = new ValueBindingImpl(getApplication(), "#{initParam}",
+                createELParser());
         assertTrue(vb.isReadOnly(getFacesContext()));
 
-        vb = new ValueBindingImpl(getApplication(), "#{param}", createELParser());
+        vb = new ValueBindingImpl(getApplication(), "#{param}",
+                createELParser());
         assertTrue(vb.isReadOnly(getFacesContext()));
 
-        vb = new ValueBindingImpl(getApplication(), "#{paramValues}", createELParser());
+        vb = new ValueBindingImpl(getApplication(), "#{paramValues}",
+                createELParser());
         assertTrue(vb.isReadOnly(getFacesContext()));
 
-        vb = new ValueBindingImpl(getApplication(), "#{requestScope}", createELParser());
+        vb = new ValueBindingImpl(getApplication(), "#{requestScope}",
+                createELParser());
         assertTrue(vb.isReadOnly(getFacesContext()));
 
-        vb = new ValueBindingImpl(getApplication(), "#{sessionScope}", createELParser());
+        vb = new ValueBindingImpl(getApplication(), "#{sessionScope}",
+                createELParser());
         assertTrue(vb.isReadOnly(getFacesContext()));
     }
 
@@ -273,7 +281,8 @@ public class ValueBindingImplTest extends TeedaTestCase {
         A a = new A();
         MockVariableResolver resolver = getVariableResolver();
         resolver.putValue("a", a);
-        ValueBinding vb = new ValueBindingImpl(getApplication(), "#{a}", createELParser());
+        ValueBinding vb = new ValueBindingImpl(getApplication(), "#{a}",
+                createELParser());
         String str = vb.getExpressionString();
         assertEquals("#{a}", str);
     }
@@ -283,7 +292,8 @@ public class ValueBindingImplTest extends TeedaTestCase {
         a.setName("hoge");
         MockVariableResolver resolver = getVariableResolver();
         resolver.putValue("a", a);
-        ValueBinding vb = new ValueBindingImpl(getApplication(), "#{a}", createELParser());
+        ValueBinding vb = new ValueBindingImpl(getApplication(), "#{a}",
+                createELParser());
         A anotherA = (A) vb.getValue(getFacesContext());
         assertEquals("hoge", anotherA.getName());
 

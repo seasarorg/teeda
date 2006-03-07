@@ -32,18 +32,18 @@ public class SelectManyListboxTagTest extends TeedaTestCase {
     public void testGetComponentType() throws Exception {
         // # Arrange #
         SelectManyListboxTag tag = new SelectManyListboxTag();
-        
+
         // # Act & Assert #
-        assertEquals("javax.faces.HtmlSelectManyListbox",
-                tag.getComponentType());
+        assertEquals("javax.faces.HtmlSelectManyListbox", tag
+                .getComponentType());
     }
-    
+
     public void testGetRenderType() throws Exception {
         // # Arrange #
         SelectManyListboxTag tag = new SelectManyListboxTag();
-        
+
         // # Act & Assert #
-        assertEquals("javax.faces.Listbox", tag.getRendererType());        
+        assertEquals("javax.faces.Listbox", tag.getRendererType());
     }
 
     public void testSetProperties_All() throws Exception {
@@ -56,7 +56,7 @@ public class SelectManyListboxTagTest extends TeedaTestCase {
         setApplication(app);
         app.addValidator("mock.validator",
                 "org.seasar.teeda.core.mock.MockValidator");
-        
+
         tag.setConverter("mock.converter");
         tag.setImmediate("true");
         tag.setRequired("true");
@@ -89,10 +89,10 @@ public class SelectManyListboxTagTest extends TeedaTestCase {
         tag.setStyleClass("styleclass");
         tag.setTabindex("13");
         tag.setTitle("title");
-        
+
         // # Act #
         tag.setProperties(component);
-        
+
         // # Assert #
         assertTrue(component.getConverter() instanceof MockConverter);
         assertTrue(component.isImmediate());
@@ -130,8 +130,8 @@ public class SelectManyListboxTagTest extends TeedaTestCase {
         assertEquals("styleclass", component.getStyleClass());
         assertEquals("13", component.getTabindex());
         assertEquals("title", component.getTitle());
-    }    
-    
+    }
+
     private HtmlSelectManyListbox createHtmlSelectManyListbox() {
         return (HtmlSelectManyListbox) createUIComponent();
     }

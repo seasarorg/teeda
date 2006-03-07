@@ -15,7 +15,6 @@
  */
 package org.seasar.teeda.core.config.faces.element;
 
-
 public interface SuggestedValueHolder {
 
     public void setSuggestedValue(String suggestedValue);

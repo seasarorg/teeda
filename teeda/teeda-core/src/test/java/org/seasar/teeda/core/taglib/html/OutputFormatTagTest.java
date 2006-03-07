@@ -27,21 +27,21 @@ import org.seasar.teeda.core.unit.TeedaTestCase;
  * @author yone
  */
 public class OutputFormatTagTest extends TeedaTestCase {
-    
+
     public void testGetComponentType() throws Exception {
         // # Arrange #
         OutputFormatTag tag = new OutputFormatTag();
-        
+
         // # Act & Assert #
         assertEquals("javax.faces.HtmlOutputFormat", tag.getComponentType());
     }
-    
+
     public void testGetRenderType() throws Exception {
         // # Arrange #
         OutputFormatTag tag = new OutputFormatTag();
-        
+
         // # Act & Assert #
-        assertEquals("javax.faces.Format", tag.getRendererType());        
+        assertEquals("javax.faces.Format", tag.getRendererType());
     }
 
     public void testSetProperties_All() throws Exception {
@@ -52,17 +52,17 @@ public class OutputFormatTagTest extends TeedaTestCase {
         app.addConverter("mock.converter",
                 "org.seasar.teeda.core.mock.MockConverter");
         setApplication(app);
-        
+
         tag.setConverter("mock.converter");
         tag.setEscape("true");
         tag.setValue("value");
         tag.setStyle("style");
         tag.setStyleClass("styleclass");
         tag.setTitle("title");
-        
+
         // # Act #
         tag.setProperties(component);
-        
+
         // # Assert #
         assertTrue(component.getConverter() instanceof MockConverter);
         assertTrue(component.isEscape());

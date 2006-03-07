@@ -25,14 +25,15 @@ import org.seasar.teeda.core.el.Replacer;
 public class ExpressionStringReplacer implements Replacer {
 
     private ExpressionProcessor processor_;
-    public ExpressionStringReplacer(ExpressionProcessor processor){
+
+    public ExpressionStringReplacer(ExpressionProcessor processor) {
         processor_ = processor;
     }
 
     public void replace(Object expression) {
-        ExpressionString expressionString = (ExpressionString)expression;
-        Object[] expressions = (Object[])expressionString.getElements();
-        for (int i = 0; i < expressions.length;i++){
+        ExpressionString expressionString = (ExpressionString) expression;
+        Object[] expressions = (Object[]) expressionString.getElements();
+        for (int i = 0; i < expressions.length; i++) {
             Object e = expressions[i];
             processor_.processExpression(e, e.getClass());
         }

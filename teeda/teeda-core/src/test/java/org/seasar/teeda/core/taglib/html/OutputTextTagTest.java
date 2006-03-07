@@ -27,23 +27,23 @@ import org.seasar.teeda.core.unit.TeedaTestCase;
  * @author yone
  */
 public class OutputTextTagTest extends TeedaTestCase {
-    
+
     public void testGetComponentType() throws Exception {
         // # Arrange #
         OutputTextTag tag = new OutputTextTag();
-        
+
         // # Act & Assert #
         assertEquals("javax.faces.HtmlOutputText", tag.getComponentType());
     }
-    
+
     public void testGetRenderType() throws Exception {
         // # Arrange #
         OutputTextTag tag = new OutputTextTag();
-        
+
         // # Act & Assert #
-        assertEquals("javax.faces.Text", tag.getRendererType());        
+        assertEquals("javax.faces.Text", tag.getRendererType());
     }
-    
+
     public void testSetProperties_All() throws Exception {
         // # Arrange #
         HtmlOutputText component = createHtmlOutputText();
@@ -52,17 +52,17 @@ public class OutputTextTagTest extends TeedaTestCase {
         app.addConverter("mock.converter",
                 "org.seasar.teeda.core.mock.MockConverter");
         setApplication(app);
-        
+
         tag.setConverter("mock.converter");
         tag.setValue("value");
         tag.setEscape("false");
         tag.setStyle("style");
         tag.setStyleClass("styleclass");
         tag.setTitle("title");
-        
+
         // # Act #
         tag.setProperties(component);
-        
+
         // # Assert #
         assertTrue(component.getConverter() instanceof MockConverter);
         assertEquals("value", component.getValue());
@@ -71,7 +71,7 @@ public class OutputTextTagTest extends TeedaTestCase {
         assertEquals("styleclass", component.getStyleClass());
         assertEquals("title", component.getTitle());
     }
-    
+
     private HtmlOutputText createHtmlOutputText() {
         return (HtmlOutputText) createUIComponent();
     }
@@ -79,5 +79,5 @@ public class OutputTextTagTest extends TeedaTestCase {
     protected UIComponent createUIComponent() {
         return new HtmlOutputText();
     }
-    
+
 }

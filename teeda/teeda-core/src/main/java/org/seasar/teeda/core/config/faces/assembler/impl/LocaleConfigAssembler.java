@@ -26,11 +26,12 @@ import org.seasar.teeda.core.config.faces.element.LocaleConfigElement;
 /**
  * @author shot
  */
-public class LocaleConfigAssembler extends ApplicationChildAssembler{
+public class LocaleConfigAssembler extends ApplicationChildAssembler {
 
     private LocaleConfigElement localeConfig_;
-    
-    public LocaleConfigAssembler(LocaleConfigElement localeConfig, Application application) {
+
+    public LocaleConfigAssembler(LocaleConfigElement localeConfig,
+            Application application) {
         super(application);
         localeConfig_ = localeConfig;
     }
@@ -38,9 +39,9 @@ public class LocaleConfigAssembler extends ApplicationChildAssembler{
     public void assemble() {
         Locale defaultLocale = localeConfig_.getDefaultLocale();
         getApplication().setDefaultLocale(defaultLocale);
-        
+
         List supportedLocales = localeConfig_.getSupportedLocales();
         getApplication().setSupportedLocales(supportedLocales);
     }
-    
+
 }

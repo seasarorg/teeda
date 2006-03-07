@@ -32,20 +32,19 @@ public class SelectManyMenuTagTest extends TeedaTestCase {
     public void testGetComponentType() throws Exception {
         // # Arrange #
         SelectManyMenuTag tag = new SelectManyMenuTag();
-        
+
         // # Act & Assert #
-        assertEquals("javax.faces.HtmlSelectManyMenu",
-                tag.getComponentType());
+        assertEquals("javax.faces.HtmlSelectManyMenu", tag.getComponentType());
     }
-    
+
     public void testGetRenderType() throws Exception {
         // # Arrange #
         SelectManyMenuTag tag = new SelectManyMenuTag();
-        
+
         // # Act & Assert #
-        assertEquals("javax.faces.Menu", tag.getRendererType());        
+        assertEquals("javax.faces.Menu", tag.getRendererType());
     }
-    
+
     public void testSetProperties_All() throws Exception {
         // # Arrange #
         HtmlSelectManyMenu component = createHtmlSelectManyMenu();
@@ -56,7 +55,7 @@ public class SelectManyMenuTagTest extends TeedaTestCase {
         setApplication(app);
         app.addValidator("mock.validator",
                 "org.seasar.teeda.core.mock.MockValidator");
-        
+
         tag.setConverter("mock.converter");
         tag.setImmediate("true");
         tag.setRequired("true");
@@ -88,10 +87,10 @@ public class SelectManyMenuTagTest extends TeedaTestCase {
         tag.setStyleClass("styleclass");
         tag.setTabindex("13");
         tag.setTitle("title");
-        
+
         // # Act #
         tag.setProperties(component);
-        
+
         // # Assert #
         assertTrue(component.getConverter() instanceof MockConverter);
         assertTrue(component.isImmediate());
@@ -129,7 +128,7 @@ public class SelectManyMenuTagTest extends TeedaTestCase {
         assertEquals("13", component.getTabindex());
         assertEquals("title", component.getTitle());
     }
-    
+
     private HtmlSelectManyMenu createHtmlSelectManyMenu() {
         return (HtmlSelectManyMenu) createUIComponent();
     }

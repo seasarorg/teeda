@@ -22,7 +22,6 @@ import org.seasar.teeda.core.config.faces.element.ApplicationElement;
 import org.seasar.teeda.core.config.faces.element.FacesConfig;
 import org.seasar.teeda.core.config.faces.element.LocaleConfigElement;
 import org.seasar.teeda.core.config.faces.element.impl.ApplicationElementImpl;
-import org.seasar.teeda.core.config.faces.handler.LocaleConfigTagHandler;
 
 public class LocaleConfigTagHandlerTest extends TagHandlerTestCase {
 

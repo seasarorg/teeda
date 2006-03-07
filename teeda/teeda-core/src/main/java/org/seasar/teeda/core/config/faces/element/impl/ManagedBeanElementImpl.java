@@ -23,17 +23,23 @@ import org.seasar.teeda.core.config.faces.element.ManagedBeanElement;
 import org.seasar.teeda.core.config.faces.element.ManagedPropertyElement;
 import org.seasar.teeda.core.config.faces.element.MapEntriesElement;
 
-public class ManagedBeanElementImpl implements ManagedBeanElement{
+public class ManagedBeanElementImpl implements ManagedBeanElement {
 
     private String managedBeanName_;
+
     private String managedBeanClass_;
+
     private String managedBeanScope_;
+
     private List managedProperties_ = new ArrayList();
+
     private ListEntriesElement listEntries_;
+
     private MapEntriesElement mapEntries_;
-    public ManagedBeanElementImpl(){
+
+    public ManagedBeanElementImpl() {
     }
-    
+
     public void setManagedBeanName(String managedBeanName) {
         managedBeanName_ = managedBeanName;
     }
@@ -81,5 +87,5 @@ public class ManagedBeanElementImpl implements ManagedBeanElement{
     public List getManagedProperties() {
         return managedProperties_;
     }
-    
+
 }

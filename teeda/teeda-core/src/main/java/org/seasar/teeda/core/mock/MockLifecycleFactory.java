@@ -22,21 +22,21 @@ import java.util.Map;
 import javax.faces.lifecycle.Lifecycle;
 import javax.faces.lifecycle.LifecycleFactory;
 
-
 public class MockLifecycleFactory extends LifecycleFactory {
 
     private Map lifecycles_ = new HashMap();
-    
-    public MockLifecycleFactory(){
-        addLifecycle(LifecycleFactory.DEFAULT_LIFECYCLE, new MockLifecycleImpl());
+
+    public MockLifecycleFactory() {
+        addLifecycle(LifecycleFactory.DEFAULT_LIFECYCLE,
+                new MockLifecycleImpl());
     }
-    
+
     public void addLifecycle(String lifecycleId, Lifecycle lifecycle) {
         lifecycles_.put(lifecycleId, lifecycle);
     }
 
     public Lifecycle getLifecycle(String lifecycleId) {
-        return (Lifecycle)lifecycles_.get(lifecycleId);
+        return (Lifecycle) lifecycles_.get(lifecycleId);
     }
 
     public Iterator getLifecycleIds() {

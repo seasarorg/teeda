@@ -28,21 +28,22 @@ public class LocaleConfigTagHandler extends JsfTagHandler {
 
     private static final long serialVersionUID = 1L;
 
-    public LocaleConfigTagHandler(){
+    public LocaleConfigTagHandler() {
     }
-    
+
     public void start(TagHandlerContext context, Attributes attributes) {
         LocaleConfigElement localeConfigTag = createLocaleConfigTag();
         context.push(localeConfigTag);
     }
 
     public void end(TagHandlerContext context, String body) {
-        LocaleConfigElement localeConfigTag = (LocaleConfigElement)context.pop();
-        ApplicationElement applicationTag = (ApplicationElement)context.peek();
+        LocaleConfigElement localeConfigTag = (LocaleConfigElement) context
+                .pop();
+        ApplicationElement applicationTag = (ApplicationElement) context.peek();
         applicationTag.addLocaleConfig(localeConfigTag);
     }
-    
-    protected LocaleConfigElement createLocaleConfigTag(){
+
+    protected LocaleConfigElement createLocaleConfigTag() {
         return new LocaleConfigElementImpl();
     }
 }

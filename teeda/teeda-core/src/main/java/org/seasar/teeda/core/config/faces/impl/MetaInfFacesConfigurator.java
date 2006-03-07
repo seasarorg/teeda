@@ -37,7 +37,8 @@ import org.seasar.teeda.core.util.ClassLoaderUtil;
  */
 public class MetaInfFacesConfigurator extends AbstractFacesConfigurator {
 
-    private static final Logger logger_ = Logger.getLogger(MetaInfFacesConfigurator.class);
+    private static final Logger logger_ = Logger
+            .getLogger(MetaInfFacesConfigurator.class);
 
     private String path_ = JsfConstants.WEB_INF_LIB;
 
@@ -47,7 +48,7 @@ public class MetaInfFacesConfigurator extends AbstractFacesConfigurator {
 
     public FacesConfig configure() {
         String path = getPath();
-        if(logger_.isDebugEnabled()) {
+        if (logger_.isDebugEnabled()) {
             logger_.debug("target file path = " + path);
         }
         SaxHandlerParser parser = createSaxHandlerParser();

@@ -25,50 +25,50 @@ import org.seasar.teeda.core.JsfConstants;
  * @author yone
  */
 public class VerbatimTagTest extends TestCase {
-    
+
     public void testGetComponentType() throws Exception {
         // # Arrange #
         VerbatimTag tag = new VerbatimTag();
-        
+
         // # Act & Assert #
         assertEquals("javax.faces.Output", tag.getComponentType());
     }
-    
+
     public void testGetRenderType() throws Exception {
         // # Arrange #
         VerbatimTag tag = new VerbatimTag();
-        
+
         // # Act & Assert #
-        assertEquals("javax.faces.Text", tag.getRendererType());        
+        assertEquals("javax.faces.Text", tag.getRendererType());
     }
-    
-    
+
     public void testSetProperties_default() throws Exception {
         // # Arrange #
         UIOutput output = createUIOutput();
         VerbatimTag tag = new VerbatimTag();
-        
+
         // # Act #
         tag.setProperties(output);
 
         // # Assert #
-        assertEquals(Boolean.FALSE, output.getAttributes()
-                .get(JsfConstants.ESCAPE_ATTR));   
+        assertEquals(Boolean.FALSE, output.getAttributes().get(
+                JsfConstants.ESCAPE_ATTR));
     }
-    
+
     public void testSetProperties_true() throws Exception {
         // # Arrange #
         UIOutput output = createUIOutput();
         VerbatimTag tag = new VerbatimTag();
-        
+
         // # Act #
         tag.setEscape("true");
         tag.setProperties(output);
 
         // # Assert #
-        assertEquals(Boolean.TRUE, output.getAttributes()
-                .get(JsfConstants.ESCAPE_ATTR));   
-    } 
+        assertEquals(Boolean.TRUE, output.getAttributes().get(
+                JsfConstants.ESCAPE_ATTR));
+    }
+
     private UIOutput createUIOutput() {
         return (UIOutput) createUIComponent();
     }
@@ -76,6 +76,5 @@ public class VerbatimTagTest extends TestCase {
     protected UIOutput createUIComponent() {
         return new UIOutput();
     }
-   
-        
+
 }

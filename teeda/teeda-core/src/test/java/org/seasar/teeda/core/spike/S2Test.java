@@ -103,9 +103,9 @@ public class S2Test extends S2FrameworkTestCase {
 
         C c_ = (C) getContainer().getComponent("c");
         assertEquals("aaa", c_.getStr());
-        
+
     }
-    
+
     public static class A {
         private B b_;
 

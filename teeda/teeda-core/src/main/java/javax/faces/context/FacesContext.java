@@ -18,8 +18,8 @@ package javax.faces.context;
 import java.util.Iterator;
 
 import javax.faces.application.FacesMessage;
-import javax.faces.render.RenderKit;
 import javax.faces.component.UIViewRoot;
+import javax.faces.render.RenderKit;
 
 /**
  * @author shot

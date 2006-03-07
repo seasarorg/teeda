@@ -15,8 +15,9 @@
  */
 package org.seasar.teeda.core.config.faces.element;
 
-public interface ConverterElement extends JsfConfigElement, AttributeHolder, PropertyHolder{
-    
+public interface ConverterElement extends JsfConfigElement, AttributeHolder,
+        PropertyHolder {
+
     public void setConverterId(String converterId);
 
     public void setConverterForClass(String converterForClass);

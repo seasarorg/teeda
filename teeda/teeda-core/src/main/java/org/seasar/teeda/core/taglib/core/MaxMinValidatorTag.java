@@ -23,13 +23,13 @@ import javax.faces.webapp.ValidatorTag;
 public abstract class MaxMinValidatorTag extends ValidatorTag {
 
     protected String minimum_ = null;
-    
+
     protected boolean minimumSet = false;
-    
+
     protected String maximum_ = null;
-    
+
     protected boolean maximumSet = false;
-    
+
     public void setMinimum(String minimum) {
         minimumSet = true;
         minimum_ = minimum;

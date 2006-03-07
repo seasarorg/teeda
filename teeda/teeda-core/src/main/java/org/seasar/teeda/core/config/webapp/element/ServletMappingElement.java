@@ -21,11 +21,11 @@ package org.seasar.teeda.core.config.webapp.element;
 public interface ServletMappingElement {
 
     public String getServletName();
-    
+
     public void setServletName(String servletName);
-    
+
     public String getUrlPattern();
-    
+
     public void setUrlPattern(String urlPattern);
-    
+
 }

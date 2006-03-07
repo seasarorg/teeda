@@ -17,7 +17,6 @@ package org.seasar.teeda.core.taglib.html;
 
 import javax.faces.component.html.HtmlInputHidden;
 
-
 /**
  * @author yone
  */
@@ -30,5 +29,5 @@ public class InputHiddenTag extends InputTagBase {
     public String getRendererType() {
         return "javax.faces.Hidden";
     }
-    
+
 }

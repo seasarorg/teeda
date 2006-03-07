@@ -21,15 +21,17 @@ import java.util.List;
 import org.seasar.teeda.core.config.faces.element.MapEntriesElement;
 import org.seasar.teeda.core.config.faces.element.MapEntryElement;
 
-
 public class MapEntriesElementImpl implements MapEntriesElement {
 
     private String keyClassName_;
+
     private String valueClassName_;
+
     private List mapEntries_ = new ArrayList();
-    public MapEntriesElementImpl(){
+
+    public MapEntriesElementImpl() {
     }
-    
+
     public void setKeyClass(String keyClassName) {
         keyClassName_ = keyClassName;
     }

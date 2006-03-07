@@ -20,8 +20,6 @@ import java.util.List;
 import org.seasar.teeda.core.config.faces.element.FacesConfig;
 import org.seasar.teeda.core.config.faces.element.FactoryElement;
 import org.seasar.teeda.core.config.faces.element.impl.FacesConfigImpl;
-import org.seasar.teeda.core.config.faces.handler.FactoryTagHandler;
-
 
 public class FactoryTagHandlerTest extends TagHandlerTestCase {
 
@@ -46,11 +44,11 @@ public class FactoryTagHandlerTest extends TagHandlerTestCase {
         super(arg0);
     }
 
-    public void testFactoryTagHandler() throws Exception{
+    public void testFactoryTagHandler() throws Exception {
         FacesConfig config = new FacesConfigImpl();
         getContext().push(config);
         FactoryTagHandler handler = new FactoryTagHandler();
-        FactoryElement element  = new FactoryElement(){
+        FactoryElement element = new FactoryElement() {
 
             public void addApplicationFactory(String applicationFactory) {
             }
@@ -83,31 +81,30 @@ public class FactoryTagHandlerTest extends TagHandlerTestCase {
         };
         getContext().push(element);
         handler.end(getContext(), null);
-        FacesConfig c = (FacesConfig)getContext().pop();
-        List list = (List)c.getFactoryElements();
+        FacesConfig c = (FacesConfig) getContext().pop();
+        List list = (List) c.getFactoryElements();
         assertTrue(list != null);
         assertEquals(1, list.size());
         assertTrue(list.get(0) instanceof FactoryElement);
     }
-     
-    public void testFactoryTagHandlerByXMLParse() throws Exception{
+
+    public void testFactoryTagHandlerByXMLParse() throws Exception {
         FacesConfig facesConfig = parse("testFactoryTagHandler.xml");
         List list = facesConfig.getFactoryElements();
         assertEquals(1, list.size());
-        
-        FactoryElement factory = (FactoryElement)list.get(0);
+
+        FactoryElement factory = (FactoryElement) list.get(0);
         assertEquals(1, factory.getApplicationFactories().size());
         assertEquals("a", factory.getApplicationFactories().get(0));
-        
+
         assertEquals(1, factory.getFacesContextFactories().size());
         assertEquals("b", factory.getFacesContextFactories().get(0));
-        
+
         assertEquals(1, factory.getLifecycleFactories().size());
         assertEquals("c", factory.getLifecycleFactories().get(0));
-        
+
         assertEquals(1, factory.getRenderKitFactories().size());
         assertEquals("d", factory.getRenderKitFactories().get(0));
     }
 
 }
-

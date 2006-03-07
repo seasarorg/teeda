@@ -28,22 +28,21 @@ public class ReferencedBeanTagHandler extends JsfTagHandler {
 
     private static final long serialVersionUID = 1L;
 
-    public ReferencedBeanTagHandler(){
+    public ReferencedBeanTagHandler() {
     }
-    
+
     public void start(TagHandlerContext context, Attributes attributes) {
         ReferencedBeanElement navigationCase = createReferencedBeanElement();
         context.push(navigationCase);
     }
 
-    
     public void end(TagHandlerContext context, String body) {
-        ReferencedBeanElement refBean = (ReferencedBeanElement)context.pop();
-        FacesConfig config = (FacesConfig)context.peek();
+        ReferencedBeanElement refBean = (ReferencedBeanElement) context.pop();
+        FacesConfig config = (FacesConfig) context.peek();
         config.addReferencedBeanElement(refBean);
     }
-    
-    protected ReferencedBeanElement createReferencedBeanElement(){
+
+    protected ReferencedBeanElement createReferencedBeanElement() {
         return new ReferencedBeanElementImpl();
     }
 }

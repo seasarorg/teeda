@@ -23,6 +23,6 @@ import java.util.List;
 public interface PropertyHolder {
 
     public void addPropertyElement(PropertyElement property);
-    
+
     public List getPropertyElements();
 }

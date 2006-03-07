@@ -27,7 +27,7 @@ import org.seasar.teeda.core.unit.TeedaTestCase;
  * @author yone
  */
 public class ValidateDoubleRangeTagTest extends TeedaTestCase {
-    
+
     public void testCreateValidator() throws Exception {
         // # Arrange #
         String validatorId = DoubleRangeValidator.VALIDATOR_ID;
@@ -36,10 +36,10 @@ public class ValidateDoubleRangeTagTest extends TeedaTestCase {
         app.addValidator(validatorId, validatorClassName);
         setApplication(app);
         ValidateDoubleRangeTag tag = new ValidateDoubleRangeTag();
-        
+
         // # Act #
         Validator validator = tag.createValidator();
-        
+
         // # Assert #
         assertNotNull(validator);
         assertTrue(validator instanceof DoubleRangeValidator);
@@ -52,12 +52,12 @@ public class ValidateDoubleRangeTagTest extends TeedaTestCase {
             // # Act #
             tag.createValidator();
             fail();
-        }catch(NullPointerException e){
+        } catch (NullPointerException e) {
             // # Assert #
             success();
         }
     }
-    
+
     public void testCreateValidator_noSetProperty() throws Exception {
         // # Arrange #
         addValidator();
@@ -65,12 +65,12 @@ public class ValidateDoubleRangeTagTest extends TeedaTestCase {
 
         // # Act #
         tag.createValidator();
-        
+
         // # Assert #
         assertFalse(tag.minimumSet);
         assertFalse(tag.maximumSet);
-    }    
-    
+    }
+
     public void testSetMinimum_constantValue() throws Exception {
         // # Arrange #
         addValidator();
@@ -78,66 +78,70 @@ public class ValidateDoubleRangeTagTest extends TeedaTestCase {
 
         // # Act #
         tag.setMinimum("11.01");
-        DoubleRangeValidator validator = (DoubleRangeValidator)tag.createValidator();
-        
+        DoubleRangeValidator validator = (DoubleRangeValidator) tag
+                .createValidator();
+
         // # Assert #
         assertTrue(tag.minimumSet);
         assertTrue(11.01d == validator.getMinimum());
-    }    
-    
+    }
+
     public void testSetMinimum_bindingValue() throws Exception {
         // # Arrange #
         addValidator();
         MockValueBinding vb = new MockValueBinding();
         vb.setValue(getFacesContext(), new Double(321.01d));
-        getApplication().setValueBinding(vb);        
+        getApplication().setValueBinding(vb);
         ValidateDoubleRangeTag tag = new ValidateDoubleRangeTag();
 
         // # Act #
         tag.setMinimum("#{hoge.minimum}");
-        DoubleRangeValidator validator = (DoubleRangeValidator)tag.createValidator();
-        
+        DoubleRangeValidator validator = (DoubleRangeValidator) tag
+                .createValidator();
+
         // # Assert #
         assertTrue(tag.minimumSet);
-        assertTrue(321.01d == validator.getMinimum());       
+        assertTrue(321.01d == validator.getMinimum());
     }
-    
+
     public void testSetMaximum_constantValue() throws Exception {
         // # Arrange #
         addValidator();
         ValidateDoubleRangeTag tag = new ValidateDoubleRangeTag();
-        
+
         // # Act #        
         tag.setMaximum("543.21");
-        DoubleRangeValidator validator = (DoubleRangeValidator)tag.createValidator();
-        
+        DoubleRangeValidator validator = (DoubleRangeValidator) tag
+                .createValidator();
+
         // # Assert #
         assertTrue(tag.maximumSet);
         assertTrue(543.21d == validator.getMaximum());
-    }    
-    
+    }
+
     public void testSetMaximum_bindingValue() throws Exception {
         // # Arrange #
         addValidator();
         MockValueBinding vb = new MockValueBinding();
         vb.setValue(getFacesContext(), new Double(999.99d));
-        getApplication().setValueBinding(vb);        
+        getApplication().setValueBinding(vb);
         ValidateDoubleRangeTag tag = new ValidateDoubleRangeTag();
 
         // # Act #        
         tag.setMaximum("#{hoge.maximum}");
-        DoubleRangeValidator validator = (DoubleRangeValidator)tag.createValidator();
-        
+        DoubleRangeValidator validator = (DoubleRangeValidator) tag
+                .createValidator();
+
         // # Assert #
         assertTrue(tag.maximumSet);
-        assertTrue(999.99d == validator.getMaximum());       
+        assertTrue(999.99d == validator.getMaximum());
     }
-    
+
     private void addValidator() throws Exception {
         MockApplication app = new MockApplicationImpl();
-        app.addValidator("javax.faces.DoubleRange", 
+        app.addValidator("javax.faces.DoubleRange",
                 "javax.faces.validator.DoubleRangeValidator");
-        setApplication(app);       
+        setApplication(app);
     }
-    
+
 }

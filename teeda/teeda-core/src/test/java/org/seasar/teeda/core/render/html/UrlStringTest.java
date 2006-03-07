@@ -17,9 +17,9 @@ package org.seasar.teeda.core.render.html;
 
 import java.util.Set;
 
-import org.apache.commons.lang.StringUtils;
-
 import junit.framework.TestCase;
+
+import org.apache.commons.lang.StringUtils;
 
 /**
  * @author manhole

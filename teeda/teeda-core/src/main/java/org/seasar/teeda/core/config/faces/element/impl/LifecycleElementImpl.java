@@ -26,10 +26,11 @@ import org.seasar.teeda.core.config.faces.element.LifecycleElement;
 public class LifecycleElementImpl implements LifecycleElement {
 
     private List phaseListeners_;
-    public LifecycleElementImpl(){
+
+    public LifecycleElementImpl() {
         phaseListeners_ = new ArrayList();
     }
-    
+
     public void addPhaseListener(String phaseListener) {
         phaseListeners_.add(phaseListener);
     }

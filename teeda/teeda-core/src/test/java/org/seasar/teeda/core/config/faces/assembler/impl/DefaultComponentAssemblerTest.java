@@ -20,7 +20,6 @@ import java.util.Map;
 
 import javax.faces.component.UIComponent;
 
-import org.seasar.teeda.core.config.faces.assembler.impl.DefaultComponentAssembler;
 import org.seasar.teeda.core.config.faces.element.ComponentElement;
 import org.seasar.teeda.core.config.faces.element.impl.ComponentElementImpl;
 import org.seasar.teeda.core.mock.MockUIComponent;

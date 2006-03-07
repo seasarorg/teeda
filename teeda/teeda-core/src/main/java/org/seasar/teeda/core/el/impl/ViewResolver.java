@@ -25,11 +25,11 @@ import org.seasar.teeda.core.el.FacesResolver;
  */
 public class ViewResolver implements FacesResolver {
 
-	/**
-	 * @see org.seasar.jsf.el.FacesResolver#resolveVariable(javax.faces.context.FacesContext)
-	 */
-	public Object resolveVariable(FacesContext context) {
-		return context.getViewRoot();
-	}
+    /**
+     * @see org.seasar.jsf.el.FacesResolver#resolveVariable(javax.faces.context.FacesContext)
+     */
+    public Object resolveVariable(FacesContext context) {
+        return context.getViewRoot();
+    }
 
 }

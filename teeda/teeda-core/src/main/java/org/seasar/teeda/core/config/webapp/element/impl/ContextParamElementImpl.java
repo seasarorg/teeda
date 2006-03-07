@@ -23,10 +23,12 @@ import org.seasar.teeda.core.config.webapp.element.ContextParamElement;
  * @author manhole
  */
 public class ContextParamElementImpl implements ContextParamElement,
-    Serializable {
+        Serializable {
 
     private static final long serialVersionUID = 1L;
+
     private String paramName_;
+
     private String paramValue_;
 
     public String getParamName() {

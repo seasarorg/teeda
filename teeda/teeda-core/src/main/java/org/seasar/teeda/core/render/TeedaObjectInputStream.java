@@ -32,9 +32,9 @@ public class TeedaObjectInputStream extends ObjectInputStream {
     protected Class resolveClass(ObjectStreamClass clazz) throws IOException,
             ClassNotFoundException {
         String clazzName = clazz.getName();
-        try{
+        try {
             return Class.forName(clazzName);
-        }catch(ClassNotFoundException e){
+        } catch (ClassNotFoundException e) {
             return super.resolveClass(clazz);
         }
     }

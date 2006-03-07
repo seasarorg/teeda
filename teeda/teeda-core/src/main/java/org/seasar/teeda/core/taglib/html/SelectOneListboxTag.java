@@ -20,7 +20,6 @@ import javax.faces.component.html.HtmlSelectOneListbox;
 
 import org.seasar.teeda.core.JsfConstants;
 
-
 /**
  * @author yone
  */
@@ -33,12 +32,14 @@ public class SelectOneListboxTag extends InputTagBase {
     public String getRendererType() {
         return "javax.faces.Listbox";
     }
-    
+
     protected void setProperties(UIComponent component) {
         super.setProperties(component);
-        
-        setComponentProperty(component, JsfConstants.DISABLED_CLASS_ATTR, disabledClass_);
-        setComponentProperty(component, JsfConstants.ENABLED_CLASS_ATTR, enabledClass_);
+
+        setComponentProperty(component, JsfConstants.DISABLED_CLASS_ATTR,
+                disabledClass_);
+        setComponentProperty(component, JsfConstants.ENABLED_CLASS_ATTR,
+                enabledClass_);
         setComponentProperty(component, JsfConstants.ONCHANGE_ATTR, onchange_);
         setComponentProperty(component, JsfConstants.ONSELECT_ATTR, onselect_);
         setComponentProperty(component, JsfConstants.SIZE_ATTR, size_);

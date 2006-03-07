@@ -19,7 +19,6 @@ import java.util.ArrayList;
 
 import junit.framework.TestCase;
 
-
 public class TestCoercionsUtil extends TestCase {
 
     public static void main(String[] args) {
@@ -48,15 +47,18 @@ public class TestCoercionsUtil extends TestCase {
         super(arg0);
     }
 
-    public void testCoerceToInteger(){
+    public void testCoerceToInteger() {
         assertEquals(new Integer(3), CoercionsUtil.coerceToInteger("3"));
-        assertEquals(new Integer(1), CoercionsUtil.coerceToInteger(new Boolean(true)));
-        assertEquals(new Integer(0), CoercionsUtil.coerceToInteger(new Boolean(false)));
-        assertEquals(new Integer(1), CoercionsUtil.coerceToInteger(new Double(1.1)));
+        assertEquals(new Integer(1), CoercionsUtil.coerceToInteger(new Boolean(
+                true)));
+        assertEquals(new Integer(0), CoercionsUtil.coerceToInteger(new Boolean(
+                false)));
+        assertEquals(new Integer(1), CoercionsUtil.coerceToInteger(new Double(
+                1.1)));
         assertNull(CoercionsUtil.coerceToInteger(new ArrayList()));
     }
-    
-    public void testCoerceToPrimitiveBoolean(){
+
+    public void testCoerceToPrimitiveBoolean() {
         assertFalse(CoercionsUtil.coerceToPrimitiveBoolean(null));
         assertFalse(CoercionsUtil.coerceToPrimitiveBoolean(""));
         assertFalse(CoercionsUtil.coerceToPrimitiveBoolean("false"));
@@ -64,31 +66,34 @@ public class TestCoercionsUtil extends TestCase {
         assertTrue(CoercionsUtil.coerceToPrimitiveBoolean("true"));
         assertTrue(CoercionsUtil.coerceToPrimitiveBoolean(Boolean.TRUE));
     }
-    
-    public void testCoerce(){
+
+    public void testCoerce() {
         B b = new B();
         b.setStr("b");
         Object obj = CoercionsUtil.coerce(b, A.class);
         assertNotNull(obj);
         assertTrue(obj instanceof B);
-        assertEquals("b", ((A)obj).getString());
-        assertEquals("aaa", CoercionsUtil.coerce("aaa",String.class));
-        assertEquals(new Integer(1), CoercionsUtil.coerce("1",Integer.class));
-        assertEquals(new Character('a'), CoercionsUtil.coerce("a",Character.class));
-        assertNull(CoercionsUtil.coerce(null,A.class));
+        assertEquals("b", ((A) obj).getString());
+        assertEquals("aaa", CoercionsUtil.coerce("aaa", String.class));
+        assertEquals(new Integer(1), CoercionsUtil.coerce("1", Integer.class));
+        assertEquals(new Character('a'), CoercionsUtil.coerce("a",
+                Character.class));
+        assertNull(CoercionsUtil.coerce(null, A.class));
     }
-    
-    public static class A{
+
+    public static class A {
         private String str_;
-        public void setStr(String str){
+
+        public void setStr(String str) {
             str_ = str;
         }
-        public String getString(){
+
+        public String getString() {
             return str_;
         }
     }
-    
-    public static class B extends A{
+
+    public static class B extends A {
     }
-    
+
 }

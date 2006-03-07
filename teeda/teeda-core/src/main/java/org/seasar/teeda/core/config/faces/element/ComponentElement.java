@@ -15,19 +15,18 @@
  */
 package org.seasar.teeda.core.config.faces.element;
 
-
 /**
  * @author shot
  */
-public interface ComponentElement 
-    extends JsfConfigElement, FacetHolder, AttributeHolder, PropertyHolder {
+public interface ComponentElement extends JsfConfigElement, FacetHolder,
+        AttributeHolder, PropertyHolder {
 
     public void setComponentType(String componentType);
 
     public void setComponentClass(String componentClass);
-    
+
     public String getComponentType();
-    
+
     public String getComponentClass();
-    
+
 }

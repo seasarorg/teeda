@@ -65,7 +65,7 @@ public class LengthValidatorTest extends TeedaTestCase {
             success();
         }
     }
-    
+
     public void testValidate_componentIsNull() throws Exception {
         LengthValidator validator = new LengthValidator(5, 2);
         try {
@@ -83,12 +83,12 @@ public class LengthValidatorTest extends TeedaTestCase {
         try {
             validator.validate(context, context.getViewRoot(), "b");
             fail();
-        } catch(ValidatorException expected) {
+        } catch (ValidatorException expected) {
             assertEquals("length less than min(2,a)", expected.getMessage());
             success();
         }
     }
-    
+
     public void testValidate_lengthMoreThanMax() throws Exception {
         FacesContext context = getFacesContextWithSetMessageBundle("a",
                 Locale.ENGLISH);
@@ -96,12 +96,12 @@ public class LengthValidatorTest extends TeedaTestCase {
         try {
             validator.validate(context, context.getViewRoot(), "123456");
             fail();
-        } catch(ValidatorException expected) {
+        } catch (ValidatorException expected) {
             assertEquals("length more than max(5,a)", expected.getMessage());
             success();
         }
     }
-    
+
     protected FacesContext getFacesContextWithSetMessageBundle(
             String viewRootId, Locale locale) {
         getApplication().setMessageBundle("javax.faces.component.TestMessages");

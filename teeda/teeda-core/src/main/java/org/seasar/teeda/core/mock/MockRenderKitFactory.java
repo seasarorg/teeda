@@ -23,15 +23,15 @@ import javax.faces.context.FacesContext;
 import javax.faces.render.RenderKit;
 import javax.faces.render.RenderKitFactory;
 
-
 public class MockRenderKitFactory extends RenderKitFactory {
 
     private Map renderKits_ = new HashMap();
-    public MockRenderKitFactory(){
+
+    public MockRenderKitFactory() {
     }
-    
+
     public RenderKit getRenderKit(FacesContext context, String renderKitId) {
-        return (RenderKit)renderKits_.get(renderKitId);
+        return (RenderKit) renderKits_.get(renderKitId);
     }
 
     public Iterator getRenderKitIds() {

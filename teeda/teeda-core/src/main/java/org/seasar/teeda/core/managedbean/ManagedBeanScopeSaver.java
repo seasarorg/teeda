@@ -25,7 +25,8 @@ import org.seasar.teeda.core.scope.ScopeSaver;
  */
 public interface ManagedBeanScopeSaver {
 
-	public void saveToScope(FacesContext context, Scope scope, String key, Object value);
-	
-	public void addScope(Scope scope, ScopeSaver saver);
+    public void saveToScope(FacesContext context, Scope scope, String key,
+            Object value);
+
+    public void addScope(Scope scope, ScopeSaver saver);
 }

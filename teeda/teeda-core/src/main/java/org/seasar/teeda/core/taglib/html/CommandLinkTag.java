@@ -21,40 +21,39 @@ import javax.faces.component.html.HtmlCommandLink;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.taglib.UIComponentTagBase;
 
-
 /**
  * @author yone
  */
 public class CommandLinkTag extends UIComponentTagBase {
-    
+
     private String accesskey_;
-    
+
     private String charset_;
-    
+
     private String coords_;
-    
+
     private String hreflang_;
-    
+
     private String rel_;
-    
+
     private String rev_;
-    
+
     private String shape_;
-    
+
     private String tabindex_;
-    
+
     private String type_;
-    
+
     private String target_;
-    
+
     private String onblur_;
-    
+
     private String onfocus_;
-    
+
     private String action_;
-    
+
     private String immediate_;
-    
+
     private String actionListener_;
 
     public String getComponentType() {
@@ -67,7 +66,7 @@ public class CommandLinkTag extends UIComponentTagBase {
 
     protected void setProperties(UIComponent component) {
         super.setProperties(component);
-        
+
         setActionProperty(component, action_);
         setActionListenerProperty(component, actionListener_);
         setComponentProperty(component, JsfConstants.IMMEDIATE_ATTR, immediate_);
@@ -84,10 +83,10 @@ public class CommandLinkTag extends UIComponentTagBase {
         setComponentProperty(component, JsfConstants.TARGET_ATTR, target_);
         setComponentProperty(component, JsfConstants.TYPE_ATTR, type_);
     }
-    
+
     public void release() {
         super.release();
-        
+
         action_ = null;
         immediate_ = null;
         actionListener_ = null;

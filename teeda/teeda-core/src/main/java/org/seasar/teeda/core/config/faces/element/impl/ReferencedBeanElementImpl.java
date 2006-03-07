@@ -23,10 +23,12 @@ import org.seasar.teeda.core.config.faces.element.ReferencedBeanElement;
 public class ReferencedBeanElementImpl implements ReferencedBeanElement {
 
     private String referencedBeanName_;
+
     private String referencedClassName_;
-    public ReferencedBeanElementImpl(){
+
+    public ReferencedBeanElementImpl() {
     }
-    
+
     public void setReferencedBeanName(String referencedBeanName) {
         referencedBeanName_ = referencedBeanName;
     }

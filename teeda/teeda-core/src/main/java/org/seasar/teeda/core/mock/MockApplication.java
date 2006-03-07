@@ -27,6 +27,6 @@ import javax.faces.el.ValueBinding;
 public abstract class MockApplication extends Application {
 
     public abstract void addSupportedLocale(Locale locale);
-    
+
     public abstract void setValueBinding(ValueBinding vb);
 }

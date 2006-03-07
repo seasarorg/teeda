@@ -31,11 +31,11 @@ import org.seasar.teeda.core.unit.TeedaTestCase;
  * @author yone
  */
 public class ValueChangeListenerTagTest extends TeedaTestCase {
-    
+
     public void testDoStartTag_typeIsNull() throws Exception {
         // # Arrange #
         ValueChangeListenerTag tag = new ValueChangeListenerTag();
-        
+
         // # Act #
         try {
             tag.doStartTag();
@@ -47,13 +47,13 @@ public class ValueChangeListenerTagTest extends TeedaTestCase {
             assertTrue(message.trim().length() > 0);
         }
     }
-    
+
     public void testDoStartTag_NotNestTag() throws Exception {
         // # Arrange #
         ValueChangeListenerTag tag = new ValueChangeListenerTag();
         tag.setType("hoge");
         tag.setPageContext(new NullPageContext());
-        
+
         // # Act #
         try {
             tag.doStartTag();
@@ -65,7 +65,7 @@ public class ValueChangeListenerTagTest extends TeedaTestCase {
             assertTrue(message.trim().length() > 0);
         }
     }
-        
+
     public void testDoStartTag_returnSKIP_BODY() throws Exception {
         // # Arrange #
         ViewTag view = new ViewTag();
@@ -73,11 +73,11 @@ public class ValueChangeListenerTagTest extends TeedaTestCase {
         list.add(view);
         PageContext pageContext = new MockPageContext();
         PageContextUtil.setComponentStackAttribute(pageContext, list);
-        
+
         ValueChangeListenerTag tag = new ValueChangeListenerTag();
         tag.setType("hoge");
         tag.setPageContext(pageContext);
-        
+
         // # Act #
         assertEquals(Tag.SKIP_BODY, tag.doStartTag());
     }

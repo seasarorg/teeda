@@ -23,15 +23,16 @@ import org.seasar.framework.exception.SRuntimeException;
  */
 public class PrefixNotFoundRuntimeException extends SRuntimeException {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
+
     private String prefix;
 
-	public PrefixNotFoundRuntimeException(String prefix) {
-		super("EJSF0006", new Object[] { prefix });
-		this.prefix = prefix;
-	}
+    public PrefixNotFoundRuntimeException(String prefix) {
+        super("EJSF0006", new Object[] { prefix });
+        this.prefix = prefix;
+    }
 
-	public String getPrefix() {
-		return prefix;
-	}
+    public String getPrefix() {
+        return prefix;
+    }
 }

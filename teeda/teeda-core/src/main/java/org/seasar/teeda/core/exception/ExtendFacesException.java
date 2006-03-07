@@ -29,30 +29,36 @@ public class ExtendFacesException extends FacesException {
     private static final String DEFAULT_FACES_EXCEPTION_ID = "ETDA0001";
 
     private String messageCode_;
+
     private Object[] args_;
+
     private String simpleMessage_;
+
     private String message_;
 
-    public ExtendFacesException(){
+    public ExtendFacesException() {
         this(DEFAULT_FACES_EXCEPTION_ID, null, null);
     }
 
-    public ExtendFacesException(String messageCode){
+    public ExtendFacesException(String messageCode) {
         this(messageCode, null, null);
     }
 
-    public ExtendFacesException(String messageCode, Object[] args){
+    public ExtendFacesException(String messageCode, Object[] args) {
         this(messageCode, args, null);
     }
 
-    public ExtendFacesException(String messageCode, Object[] args, Throwable cause){
+    public ExtendFacesException(String messageCode, Object[] args,
+            Throwable cause) {
         super(cause);
         messageCode_ = messageCode;
         args_ = args;
-        simpleMessage_ = MessageFormatterUtil.getSimpleMessage(messageCode_, args_);
-        message_ = MessageFormatterUtil.getFormattedMessage(messageCode_, simpleMessage_);
+        simpleMessage_ = MessageFormatterUtil.getSimpleMessage(messageCode_,
+                args_);
+        message_ = MessageFormatterUtil.getFormattedMessage(messageCode_,
+                simpleMessage_);
     }
-    
+
     public final String getMessageCode() {
         return messageCode_;
     }
@@ -64,11 +70,11 @@ public class ExtendFacesException extends FacesException {
     public final String getMessage() {
         return message_;
     }
-    
+
     protected void setMessage(String message) {
         message_ = message;
     }
-    
+
     public final String getSimpleMessage() {
         return simpleMessage_;
     }

@@ -20,7 +20,6 @@ import java.util.List;
 import org.seasar.teeda.core.config.faces.element.FacesConfig;
 import org.seasar.teeda.core.config.faces.element.LifecycleElement;
 import org.seasar.teeda.core.config.faces.element.impl.FacesConfigImpl;
-import org.seasar.teeda.core.config.faces.handler.LifecycleTagHandler;
 import org.seasar.teeda.core.mock.MockPhaseListener;
 
 /**

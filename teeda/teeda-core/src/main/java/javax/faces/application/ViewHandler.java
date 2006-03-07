@@ -28,25 +28,25 @@ import javax.faces.context.FacesContext;
 public abstract class ViewHandler {
 
     public static final String CHARACTER_ENCODING_KEY = "javax.faces.request.charset";
-    
+
     public static final String DEFAULT_SUFFIX = ".jsp";
-    
+
     public static final String DEFAULT_SUFFIX_PARAM_NAME = "javax.faces.DEFAULT_SUFFIX";
-    
-	public abstract Locale calculateLocale(FacesContext context);
 
-	public abstract String calculateRenderKitId(FacesContext context);
+    public abstract Locale calculateLocale(FacesContext context);
 
-	public abstract UIViewRoot createView(FacesContext context, String viewId);
+    public abstract String calculateRenderKitId(FacesContext context);
 
-	public abstract String getActionURL(FacesContext context, String viewId);
+    public abstract UIViewRoot createView(FacesContext context, String viewId);
 
-	public abstract String getResourceURL(FacesContext context, String path);
+    public abstract String getActionURL(FacesContext context, String viewId);
+
+    public abstract String getResourceURL(FacesContext context, String path);
 
     public abstract void renderView(FacesContext context, UIViewRoot viewRoot)
             throws IOException, FacesException;
-    
-	public abstract UIViewRoot restoreView(FacesContext context, String viewId);
 
-	public abstract void writeState(FacesContext context) throws IOException;
+    public abstract UIViewRoot restoreView(FacesContext context, String viewId);
+
+    public abstract void writeState(FacesContext context) throws IOException;
 }

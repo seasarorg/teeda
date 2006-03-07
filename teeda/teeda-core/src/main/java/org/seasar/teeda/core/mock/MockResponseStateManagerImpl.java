@@ -29,9 +29,9 @@ import org.seasar.teeda.core.application.TreeStructure;
 public class MockResponseStateManagerImpl extends MockResponseStateManager {
 
     private TreeStructure struct_;
-    
+
     private Object state_;
-    
+
     public void writeState(FacesContext context, SerializedView state)
             throws IOException {
         //TODO need to notify something for test?

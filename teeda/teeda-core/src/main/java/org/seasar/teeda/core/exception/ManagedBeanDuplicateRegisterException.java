@@ -25,6 +25,6 @@ public class ManagedBeanDuplicateRegisterException extends ExtendFacesException 
     private static final long serialVersionUID = 1L;
 
     public ManagedBeanDuplicateRegisterException(String managedBeanName) {
-        super("ETDA0022", new Object[]{managedBeanName});
+        super("ETDA0022", new Object[] { managedBeanName });
     }
 }

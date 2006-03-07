@@ -23,17 +23,15 @@ import java.util.Map;
 
 import javax.servlet.ServletContext;
 
-import org.seasar.framework.mock.servlet.MockServletContext;
-import org.seasar.framework.mock.servlet.MockServletContextImpl;
-import org.seasar.teeda.core.context.AbstractExternalContextMap;
-
 import junit.framework.TestCase;
 
+import org.seasar.framework.mock.servlet.MockServletContext;
+import org.seasar.framework.mock.servlet.MockServletContextImpl;
 
 public class AbstractExternalContextMapTest extends TestCase {
 
     private MockServletContext context_;
-    
+
     /*
      * @see TestCase#setUp()
      */
@@ -56,13 +54,13 @@ public class AbstractExternalContextMapTest extends TestCase {
         super(arg0);
     }
 
-    public void testGet(){
+    public void testGet() {
         ExternalContextMap map = new ExternalContextMap(context_);
         map.put("a", "A");
         assertEquals("A", map.get("a"));
     }
-    
-    public void testPutAll(){
+
+    public void testPutAll() {
         ExternalContextMap map = new ExternalContextMap(context_);
         Map m = new HashMap();
         m.put("a", "A");
@@ -71,15 +69,15 @@ public class AbstractExternalContextMapTest extends TestCase {
         assertEquals("A", map.get("a"));
         assertEquals("B", map.get("b"));
     }
-    
-    public void testIsEmpty(){
+
+    public void testIsEmpty() {
         ExternalContextMap map = new ExternalContextMap(context_);
         assertTrue(map.isEmpty());
-        map.put("a","A");
+        map.put("a", "A");
         assertFalse(map.isEmpty());
     }
 
-    public void testClear(){
+    public void testClear() {
         ExternalContextMap map = new ExternalContextMap(context_);
         map.put("c", "C");
         map.put("d", "D");
@@ -87,59 +85,59 @@ public class AbstractExternalContextMapTest extends TestCase {
         map.clear();
         assertNull(map.get("c"));
     }
-    
-    public void testContainsKey(){
+
+    public void testContainsKey() {
         ExternalContextMap map = new ExternalContextMap(context_);
-        map.put("e","E");
+        map.put("e", "E");
         assertTrue(map.containsKey("e"));
         assertFalse(map.containsKey("not_a_key"));
     }
-    
-    public void testContainsValue(){
+
+    public void testContainsValue() {
         ExternalContextMap map = new ExternalContextMap(context_);
-        map.put("f","F");
-        map.put("g","F");
-        map.put("h","H");
+        map.put("f", "F");
+        map.put("g", "F");
+        map.put("h", "H");
         assertTrue(map.containsValue("F"));
         assertFalse(map.containsValue("not_a_value"));
     }
-    
-    public void testEntrySet(){
+
+    public void testEntrySet() {
         ExternalContextMap map = new ExternalContextMap(context_);
         map.put("a", "A");
         map.put("b", "B");
-        for(Iterator itr = map.entrySet().iterator();itr.hasNext();){
+        for (Iterator itr = map.entrySet().iterator(); itr.hasNext();) {
             Object o = itr.next();
             assertNotNull(o);
             assertTrue(o instanceof Map.Entry);
         }
     }
-    
-    public void testKeySet(){
-        context_.setAttribute("a","A");
-        context_.setAttribute("b","B");
+
+    public void testKeySet() {
+        context_.setAttribute("a", "A");
+        context_.setAttribute("b", "B");
         ExternalContextMap map = new ExternalContextMap(context_);
-        for(Iterator itr = map.keySet().iterator();itr.hasNext();){
+        for (Iterator itr = map.keySet().iterator(); itr.hasNext();) {
             Object o = itr.next();
             assertNotNull(o);
             assertTrue(o instanceof String);
         }
-        
+
     }
 
-    public void testRemove(){
-        context_.setAttribute("i","I");
+    public void testRemove() {
+        context_.setAttribute("i", "I");
         ExternalContextMap map = new ExternalContextMap(context_);
-        String s = (String)map.get("i");
+        String s = (String) map.get("i");
         assertNotNull(s);
         map.remove("i");
         assertNull(map.get("i"));
     }
-    
-    public void testValues(){
-        context_.setAttribute("j","1");
-        context_.setAttribute("k","2");
-        context_.setAttribute("l","3");
+
+    public void testValues() {
+        context_.setAttribute("j", "1");
+        context_.setAttribute("k", "2");
+        context_.setAttribute("l", "3");
         ExternalContextMap map = new ExternalContextMap(context_);
         Collection c = map.values();
         assertEquals(3, c.size());
@@ -147,13 +145,15 @@ public class AbstractExternalContextMapTest extends TestCase {
         assertTrue(c.contains("2"));
         assertTrue(c.contains("3"));
     }
-    
-    private static class ExternalContextMap extends AbstractExternalContextMap{
+
+    private static class ExternalContextMap extends AbstractExternalContextMap {
 
         private ServletContext context_;
-        public ExternalContextMap(ServletContext context){
+
+        public ExternalContextMap(ServletContext context) {
             context_ = context;
         }
+
         protected Object getAttribute(String key) {
             return context_.getAttribute(key);
         }
@@ -169,6 +169,6 @@ public class AbstractExternalContextMapTest extends TestCase {
         protected void removeAttribute(String key) {
             context_.removeAttribute(key);
         }
-        
+
     }
 }

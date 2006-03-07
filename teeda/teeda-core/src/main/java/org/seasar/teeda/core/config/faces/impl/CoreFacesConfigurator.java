@@ -23,20 +23,21 @@ import org.seasar.teeda.core.config.faces.AbstractFacesConfigurator;
  */
 public class CoreFacesConfigurator extends AbstractFacesConfigurator {
 
-    private static final String BASE_FACES_CONFIG = "core-faces-config.xml"; 
+    private static final String BASE_FACES_CONFIG = "core-faces-config.xml";
 
-    private String path_ = JsfConstants.CORE_PACKAGE_ROOT.replace('.', '/') + "/" + BASE_FACES_CONFIG;
-    
-    public CoreFacesConfigurator(){
+    private String path_ = JsfConstants.CORE_PACKAGE_ROOT.replace('.', '/')
+            + "/" + BASE_FACES_CONFIG;
+
+    public CoreFacesConfigurator() {
         super();
     }
 
     protected String getPath() {
         return path_;
     }
-    
-    protected void setPath(String path){
+
+    protected void setPath(String path) {
         path_ = path;
     }
-    
+
 }

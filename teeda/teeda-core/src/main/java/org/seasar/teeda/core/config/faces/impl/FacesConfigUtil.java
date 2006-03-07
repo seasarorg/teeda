@@ -26,21 +26,21 @@ import org.seasar.teeda.core.config.faces.element.impl.FacesConfigWrapperImpl;
  */
 public class FacesConfigUtil {
 
-    private FacesConfigUtil(){
+    private FacesConfigUtil() {
     }
-    
-    public static FacesConfig collectAllFacesConfig(List configs){
+
+    public static FacesConfig collectAllFacesConfig(List configs) {
         isAllFacesConfig(configs);
         FacesConfig wrappedFacesConfig = new FacesConfigWrapperImpl(configs);
         return wrappedFacesConfig;
     }
-    
-    public static void isAllFacesConfig(List configs){
-        if(configs == null){
+
+    public static void isAllFacesConfig(List configs) {
+        if (configs == null) {
             throw new IllegalArgumentException();
         }
-        for(Iterator itr = configs.iterator();itr.hasNext();){
-            if(!(itr.next() instanceof FacesConfig)){
+        for (Iterator itr = configs.iterator(); itr.hasNext();) {
+            if (!(itr.next() instanceof FacesConfig)) {
                 throw new IllegalStateException();
             }
         }

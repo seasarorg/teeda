@@ -21,7 +21,6 @@ import java.util.Map;
 
 import javax.faces.convert.Converter;
 
-import org.seasar.teeda.core.config.faces.assembler.impl.DefaultConverterAssembler;
 import org.seasar.teeda.core.config.faces.element.ConverterElement;
 import org.seasar.teeda.core.config.faces.element.impl.ConverterElementImpl;
 import org.seasar.teeda.core.mock.MockConverter;
@@ -44,17 +43,20 @@ public class DefaultConverterAssemblerTest extends TeedaTestCase {
     public void testAssemble1() throws Exception {
         // # Arrange #
         ConverterElement element = new ConverterElementImpl();
-        element.setConverterForClass("org.seasar.teeda.core.mock.MockUIComponent");
+        element
+                .setConverterForClass("org.seasar.teeda.core.mock.MockUIComponent");
         element.setConverterClass("org.seasar.teeda.core.mock.MockConverter");
         Map map = new HashMap();
         map.put(element.getConverterForClass(), element);
-        DefaultConverterAssembler assembler = new DefaultConverterAssembler(map, Collections.EMPTY_MAP);
-        
+        DefaultConverterAssembler assembler = new DefaultConverterAssembler(
+                map, Collections.EMPTY_MAP);
+
         // # Act #
         assembler.assemble();
-        
+
         // # Assert #
-        Converter converter = getApplication().createConverter(MockUIComponent.class);
+        Converter converter = getApplication().createConverter(
+                MockUIComponent.class);
         assertNotNull(converter);
         assertTrue(converter instanceof MockConverter);
     }
@@ -66,16 +68,17 @@ public class DefaultConverterAssemblerTest extends TeedaTestCase {
         element.setConverterClass("org.seasar.teeda.core.mock.MockConverter");
         Map map = new HashMap();
         map.put(element.getConverterId(), element);
-        DefaultConverterAssembler assembler = new DefaultConverterAssembler(Collections.EMPTY_MAP, map);
-        
+        DefaultConverterAssembler assembler = new DefaultConverterAssembler(
+                Collections.EMPTY_MAP, map);
+
         // # Act #
         assembler.assemble();
-        
+
         // # Assert #
         Converter converter = getApplication().createConverter("hoge");
         assertNotNull(converter);
         assertTrue(converter instanceof MockConverter);
     }
-    
+
     //TODO if need to support property for Converter, do more tests.
 }

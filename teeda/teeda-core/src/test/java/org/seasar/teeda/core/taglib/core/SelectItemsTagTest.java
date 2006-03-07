@@ -21,21 +21,21 @@ import junit.framework.TestCase;
  * @author yone
  */
 public class SelectItemsTagTest extends TestCase {
-    
+
     public void testGetComponentType() throws Exception {
         // # Arrange #
         SelectItemsTag tag = new SelectItemsTag();
-        
+
         // # Act & Assert #
         assertEquals("javax.faces.SelectItems", tag.getComponentType());
     }
-    
+
     public void testGetRenderType() throws Exception {
         // # Arrange #
         SelectItemsTag tag = new SelectItemsTag();
-        
+
         // # Act & Assert #
-        assertEquals(null, tag.getRendererType());        
+        assertEquals(null, tag.getRendererType());
     }
-        
+
 }

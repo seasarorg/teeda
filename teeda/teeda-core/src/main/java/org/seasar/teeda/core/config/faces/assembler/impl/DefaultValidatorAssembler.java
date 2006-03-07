@@ -45,7 +45,8 @@ public class DefaultValidatorAssembler extends ValidatorAssembler {
                 .hasNext();) {
             Map.Entry entry = (Map.Entry) itr.next();
             String validatorId = (String) entry.getKey();
-            ValidatorElement validatorElement = (ValidatorElement) entry.getValue();
+            ValidatorElement validatorElement = (ValidatorElement) entry
+                    .getValue();
             String validatorClass = validatorElement.getValidatorClass();
             application_.addValidator(validatorId, validatorClass);
         }

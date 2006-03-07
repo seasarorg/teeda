@@ -21,7 +21,6 @@ import javax.faces.component.html.HtmlForm;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.taglib.UIComponentTagBase;
 
-
 /**
  * @author yone
  */
@@ -34,14 +33,15 @@ public class FormTag extends UIComponentTagBase {
     public String getRendererType() {
         return "javax.faces.Form";
     }
-    
+
     protected void setProperties(UIComponent component) {
         super.setProperties(component);
-        
+
         setComponentProperty(component, JsfConstants.ACCEPT_ATTR, accept_);
-        setComponentProperty(component, JsfConstants.ACCEPTCHARSET_ATTR, acceptcharset_);
+        setComponentProperty(component, JsfConstants.ACCEPTCHARSET_ATTR,
+                acceptcharset_);
         setComponentProperty(component, JsfConstants.ONRESET_ATTR, onreset_);
         setComponentProperty(component, JsfConstants.ONSUBMIT_ATTR, onsubmit_);
     }
-    
+
 }

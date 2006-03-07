@@ -27,36 +27,36 @@ public class AssemblerAssembler {
     public void assembleFactories(FacesConfig facesConfig) {
         getProvider().assembleFactories(facesConfig).assemble();
     }
-    
-    public void assembleApplication(FacesConfig facesConfig){
+
+    public void assembleApplication(FacesConfig facesConfig) {
         getProvider().assembleApplication(facesConfig).assemble();
         getProvider().assembleComponent(facesConfig).assemble();
         getProvider().assembleConverter(facesConfig).assemble();
         getProvider().assembleValidator(facesConfig).assemble();
     }
-    
-    public void assembleManagedBeans(FacesConfig facesConfig){
+
+    public void assembleManagedBeans(FacesConfig facesConfig) {
         getProvider().assembleManagedBeans(facesConfig).assemble();
     }
-    
-    public void assmbleNavigationRules(FacesConfig facesConfig){
+
+    public void assmbleNavigationRules(FacesConfig facesConfig) {
         getProvider().assembleNavigationRules(facesConfig).assemble();
     }
-    
-    public void assembleRenderKits(FacesConfig facesConfig){
+
+    public void assembleRenderKits(FacesConfig facesConfig) {
         getProvider().assembleRenderKits(facesConfig).assemble();
     }
-    
-    public void assembleLifecycle(FacesConfig facesConfig){
+
+    public void assembleLifecycle(FacesConfig facesConfig) {
         getProvider().assembleLifecycle(facesConfig).assemble();
     }
-    
-    public void setAssembleProvider(AssembleProvider provider){
+
+    public void setAssembleProvider(AssembleProvider provider) {
         provider_ = provider;
     }
-    
-    public AssembleProvider getProvider(){
+
+    public AssembleProvider getProvider() {
         return provider_;
     }
-        
+
 }

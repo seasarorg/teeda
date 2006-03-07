@@ -28,20 +28,20 @@ public class MapEntryTagHandler extends JsfTagHandler {
 
     private static final long serialVersionUID = 1L;
 
-    public MapEntryTagHandler(){
+    public MapEntryTagHandler() {
     }
-    
+
     public void start(TagHandlerContext context, Attributes attributes) {
-    	MapEntryElement mapEntry = createMapEntryElement();
+        MapEntryElement mapEntry = createMapEntryElement();
         context.push(mapEntry);
     }
-    
+
     public void end(TagHandlerContext context, String body) {
-    	MapEntryElement mapEntry = (MapEntryElement)context.pop();
-        MapEntriesElement mapEntries = (MapEntriesElement)context.peek();
+        MapEntryElement mapEntry = (MapEntryElement) context.pop();
+        MapEntriesElement mapEntries = (MapEntriesElement) context.peek();
         mapEntries.addMapEntry(mapEntry);
     }
-    
+
     protected MapEntryElement createMapEntryElement() {
         return new MapEntryElementImpl();
     }

@@ -62,9 +62,9 @@ public class FacesContextFactoryImplTest extends TeedaTestCase {
 
     public void testGetFacesContext_getSuccess() throws Exception {
         FacesContextFactoryImpl factory = new FacesContextFactoryImpl();
-        FacesContext context = factory.getFacesContext(getServletContext(), getRequest(),
-                getResponse(), getLifecycle());
-        
+        FacesContext context = factory.getFacesContext(getServletContext(),
+                getRequest(), getResponse(), getLifecycle());
+
         assertNotNull(context);
         assertTrue(context instanceof ServletFacesContextImpl);
     }

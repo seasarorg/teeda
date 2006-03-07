@@ -17,7 +17,6 @@ package org.seasar.teeda.core.managedbean;
 
 import org.seasar.framework.beans.BeanDesc;
 
-
 /**
  * @author shot
  * 
@@ -26,30 +25,31 @@ import org.seasar.framework.beans.BeanDesc;
 public interface ManagedBeanDesc {
 
     public Class getManagedBeanClass();
-    
+
 }
 
 class ManagedBeanDescImpl implements ManagedBeanDesc {
 
     private BeanDesc beanDesc_;
-    public ManagedBeanDescImpl(BeanDesc beanDesc){
+
+    public ManagedBeanDescImpl(BeanDesc beanDesc) {
         beanDesc_ = beanDesc;
     }
-    
-    public Class getManagedBeanClass(){
+
+    public Class getManagedBeanClass() {
         return beanDesc_.getBeanClass();
     }
-    
+
 }
 
 interface ManagedPropertyDesc {
     public String getPropertyName();
-    
+
     public Class getPropertyType();
-    
+
     public boolean isListExtensionClass();
-    
+
     public boolean isMapExtensionClass();
-    
+
     public boolean hasValueBindingExpression();
 }

@@ -24,7 +24,6 @@ import org.seasar.teeda.core.config.faces.element.FacesConfig;
 import org.seasar.teeda.core.config.faces.element.PropertyElement;
 import org.seasar.teeda.core.config.faces.element.impl.ConverterElementImpl;
 import org.seasar.teeda.core.config.faces.element.impl.FacesConfigImpl;
-import org.seasar.teeda.core.config.faces.handler.ConverterTagHandler;
 import org.seasar.teeda.core.mock.MockConverter;
 
 /**
@@ -47,8 +46,8 @@ public class ConverterTagHandlerTest extends TagHandlerTestCase {
         getContext().push(facesConfig);
 
         // # Act #
-        ConverterTagHandler handler = new ConverterTagHandler(){
-            protected ConverterElement createConverterElement(){
+        ConverterTagHandler handler = new ConverterTagHandler() {
+            protected ConverterElement createConverterElement() {
                 ConverterElementImpl c = new ConverterElementImpl();
                 c.setConverterId("aaa");
                 return c;
@@ -65,14 +64,15 @@ public class ConverterTagHandlerTest extends TagHandlerTestCase {
         assertEquals("aaa", converter.getConverterId());
     }
 
-    public void testConverterTagHandler_withConverterForClass() throws Exception {
+    public void testConverterTagHandler_withConverterForClass()
+            throws Exception {
         // # Arrange #
         FacesConfig facesConfig = new FacesConfigImpl();
         getContext().push(facesConfig);
 
         // # Act #
-        ConverterTagHandler handler = new ConverterTagHandler(){
-            protected ConverterElement createConverterElement(){
+        ConverterTagHandler handler = new ConverterTagHandler() {
+            protected ConverterElement createConverterElement() {
                 ConverterElementImpl c = new ConverterElementImpl();
                 c.setConverterForClass("aaa");
                 return c;
@@ -88,8 +88,7 @@ public class ConverterTagHandlerTest extends TagHandlerTestCase {
         ConverterElement converter = (ConverterElement) converters.get("aaa");
         assertEquals("aaa", converter.getConverterForClass());
     }
-    
-    
+
     public void testConverterTagHandlerByXMLParse() throws Exception {
         // # Arrange & Act#
         FacesConfig facesConfig = parse("testConverterTagHandler.xml");

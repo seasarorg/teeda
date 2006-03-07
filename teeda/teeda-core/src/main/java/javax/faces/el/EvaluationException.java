@@ -22,22 +22,22 @@ import javax.faces.FacesException;
  */
 public class EvaluationException extends FacesException {
 
-	private static final long serialVersionUID = 3762254153753179189L;
+    private static final long serialVersionUID = 3762254153753179189L;
 
     public EvaluationException() {
-		super();
-	}
+        super();
+    }
 
-	public EvaluationException(String message) {
-		super(message);
-	}
+    public EvaluationException(String message) {
+        super(message);
+    }
 
-	public EvaluationException(Throwable cause) {
-		super(cause);
-	}
+    public EvaluationException(Throwable cause) {
+        super(cause);
+    }
 
-	public EvaluationException(String message, Throwable cause) {
-		super(message, cause);
-	}
+    public EvaluationException(String message, Throwable cause) {
+        super(message, cause);
+    }
 
 }

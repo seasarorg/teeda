@@ -17,10 +17,9 @@ package org.seasar.teeda.core.config.faces.element;
 
 import java.util.List;
 
-
-public interface FacetHolder{
+public interface FacetHolder {
 
     public void addFacetElement(FacetElement facet);
- 
+
     public List getFacetElements();
 }

@@ -31,11 +31,11 @@ import org.seasar.teeda.core.util.ConverterUtil;
 public class ValidateLongRangeTag extends MaxMinValidatorTag {
 
     private static final long serialVersionUID = 1L;
-    
+
     private static final String VALIDATOR_ID = LongRangeValidator.VALIDATOR_ID;
-    
+
     protected long minimum = 0;
-    
+
     protected long maximum = 0;
 
     public ValidateLongRangeTag() {
@@ -45,9 +45,9 @@ public class ValidateLongRangeTag extends MaxMinValidatorTag {
     protected Validator createValidator() throws JspException {
         super.setValidatorId(VALIDATOR_ID);
         LongRangeValidator validator = null;
-        validator = (LongRangeValidator)super.createValidator();
+        validator = (LongRangeValidator) super.createValidator();
         AssertionUtil.assertNotNull("LongRangeValidator", validator);
-                
+
         evaluateExpressions();
         if (minimumSet) {
             validator.setMinimum(minimum);
@@ -62,7 +62,8 @@ public class ValidateLongRangeTag extends MaxMinValidatorTag {
         FacesContext context = FacesContext.getCurrentInstance();
         if (minimum_ != null) {
             if (BindingUtil.isValueReference(minimum_)) {
-                ValueBinding vb = context.getApplication().createValueBinding(minimum_);
+                ValueBinding vb = context.getApplication().createValueBinding(
+                        minimum_);
                 minimum = ConverterUtil.convertToLong(vb.getValue(context));
             } else {
                 minimum = ConverterUtil.convertToLong(minimum_);
@@ -70,7 +71,8 @@ public class ValidateLongRangeTag extends MaxMinValidatorTag {
         }
         if (maximum_ != null) {
             if (BindingUtil.isValueReference(maximum_)) {
-                ValueBinding vb = context.getApplication().createValueBinding(maximum_);
+                ValueBinding vb = context.getApplication().createValueBinding(
+                        maximum_);
                 maximum = ConverterUtil.convertToLong(vb.getValue(context));
             } else {
                 maximum = ConverterUtil.convertToLong(maximum_);

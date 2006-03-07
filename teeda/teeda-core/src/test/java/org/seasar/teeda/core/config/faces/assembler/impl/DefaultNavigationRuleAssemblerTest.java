@@ -22,7 +22,6 @@ import java.util.Map;
 import org.seasar.teeda.core.application.navigation.NavigationCaseContext;
 import org.seasar.teeda.core.application.navigation.NavigationContext;
 import org.seasar.teeda.core.application.navigation.NavigationContextFactory;
-import org.seasar.teeda.core.config.faces.assembler.impl.DefaultNavigationRuleAssembler;
 import org.seasar.teeda.core.config.faces.element.NavigationCaseElement;
 import org.seasar.teeda.core.config.faces.element.NavigationRuleElement;
 import org.seasar.teeda.core.config.faces.element.impl.NavigationCaseElementImpl;
@@ -46,10 +45,11 @@ public class DefaultNavigationRuleAssemblerTest extends TeedaTestCase {
         List list = new ArrayList();
         NavigationRuleElement rule = new NavigationRuleElementImpl();
         list.add(rule);
-        DefaultNavigationRuleAssembler assembler = new DefaultNavigationRuleAssembler(list, getExternalContext());
+        DefaultNavigationRuleAssembler assembler = new DefaultNavigationRuleAssembler(
+                list, getExternalContext());
         assembler.setupBeforeAssemble();
     }
-    
+
     public void testAssemble() throws Exception {
         // ## Arrange ##
         NavigationRuleElement rule = new NavigationRuleElementImpl();
@@ -62,21 +62,24 @@ public class DefaultNavigationRuleAssemblerTest extends TeedaTestCase {
         rule.addNavigationCase(caseElement);
         List list = new ArrayList();
         list.add(rule);
-        DefaultNavigationRuleAssembler assembler = new DefaultNavigationRuleAssembler(list, getExternalContext());
+        DefaultNavigationRuleAssembler assembler = new DefaultNavigationRuleAssembler(
+                list, getExternalContext());
         assembler.setExternalContext(getExternalContext());
-        
+
         // ## Act ##
         assembler.assemble();
-        
+
         // ## Assert ##
-        Map map = NavigationContextFactory.getNavigationContexts(getFacesContext());
+        Map map = NavigationContextFactory
+                .getNavigationContexts(getFacesContext());
         assertTrue(map.containsKey("aaa"));
-        NavigationContext navContext = (NavigationContext)map.get("aaa");
+        NavigationContext navContext = (NavigationContext) map.get("aaa");
         assertEquals("aaa", navContext.getFromViewId());
         assertFalse(navContext.isWildCardMatch());
         List cases = navContext.getNavigationCases();
         assertEquals(1, cases.size());
-        NavigationCaseContext caseContext = (NavigationCaseContext)cases.get(0);
+        NavigationCaseContext caseContext = (NavigationCaseContext) cases
+                .get(0);
         assertEquals("bbb", caseContext.getFromAction());
         assertEquals("ccc", caseContext.getFromOutcome());
         assertEquals("ddd", caseContext.getToViewId());
@@ -90,17 +93,17 @@ public class DefaultNavigationRuleAssemblerTest extends TeedaTestCase {
         NavigationCaseElement element = new NavigationCaseElementImpl();
         element.setFromAction("outcome");
         rule.addNavigationCase(element);
-        
+
         // ## Act ##
-        DefaultNavigationRuleAssembler.NavigationContextWrapper wrapper = 
-            new DefaultNavigationRuleAssembler.NavigationContextWrapper(rule);
-        
+        DefaultNavigationRuleAssembler.NavigationContextWrapper wrapper = new DefaultNavigationRuleAssembler.NavigationContextWrapper(
+                rule);
+
         // ## Assert ##
         assertEquals("aaa*", wrapper.getFromViewId());
         assertTrue(wrapper.isWildCardMatch());
         assertEquals(1, wrapper.getNavigationCases().size());
     }
-    
+
     public void testNavigationCaseContextWrapper() throws Exception {
         // ## Arrange ##
         NavigationCaseElement element = new NavigationCaseElementImpl();
@@ -108,8 +111,8 @@ public class DefaultNavigationRuleAssemblerTest extends TeedaTestCase {
         element.setFromOutcome("outcome");
 
         // ## Act ##
-        DefaultNavigationRuleAssembler.NavigationCaseContextWrapper wrapper = 
-            new DefaultNavigationRuleAssembler.NavigationCaseContextWrapper(element);
+        DefaultNavigationRuleAssembler.NavigationCaseContextWrapper wrapper = new DefaultNavigationRuleAssembler.NavigationCaseContextWrapper(
+                element);
 
         // ## Assert ##
         assertEquals("action", wrapper.getFromAction());

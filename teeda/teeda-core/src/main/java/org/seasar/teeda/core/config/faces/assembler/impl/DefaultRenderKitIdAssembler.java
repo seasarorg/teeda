@@ -24,7 +24,8 @@ import org.seasar.teeda.core.config.faces.assembler.ApplicationChildAssembler;
  */
 public class DefaultRenderKitIdAssembler extends ApplicationChildAssembler {
 
-    public DefaultRenderKitIdAssembler(String defaultRenderKitId, Application application) {
+    public DefaultRenderKitIdAssembler(String defaultRenderKitId,
+            Application application) {
         super(defaultRenderKitId, application);
     }
 

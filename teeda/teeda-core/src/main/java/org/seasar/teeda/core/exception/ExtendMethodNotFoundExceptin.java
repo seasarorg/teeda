@@ -41,25 +41,27 @@ public class ExtendMethodNotFoundExceptin extends MethodNotFoundException {
 
     public ExtendMethodNotFoundExceptin(MethodNotFoundException cause,
             MethodBinding mb) {
-    	this(cause, mb.getClass().getName(), mb.getExpressionString());
+        this(cause, mb.getClass().getName(), mb.getExpressionString());
         methodBinding_ = mb;
     }
 
-    public ExtendMethodNotFoundExceptin(Exception cause, String className, String expressionString){
-    	this(cause, className, expressionString, METHOD_NOT_FOUND_EXCEPTION_ID);
+    public ExtendMethodNotFoundExceptin(Exception cause, String className,
+            String expressionString) {
+        this(cause, className, expressionString, METHOD_NOT_FOUND_EXCEPTION_ID);
     }
-    
-    protected ExtendMethodNotFoundExceptin(Exception cause, String className, String expressionString, String messageCode){
-    	super(cause);
-        args_ = new Object[] { className, expressionString};
+
+    protected ExtendMethodNotFoundExceptin(Exception cause, String className,
+            String expressionString, String messageCode) {
+        super(cause);
+        args_ = new Object[] { className, expressionString };
         messageCode_ = messageCode;
-        simpleMessage_ = 
-            MessageFormatterUtil.getSimpleMessage(messageCode_, args_);
-        message_ = 
-            MessageFormatterUtil.getFormattedMessage(messageCode_, simpleMessage_);
-    	
+        simpleMessage_ = MessageFormatterUtil.getSimpleMessage(messageCode_,
+                args_);
+        message_ = MessageFormatterUtil.getFormattedMessage(messageCode_,
+                simpleMessage_);
+
     }
-    
+
     public MethodBinding getMethodBinding() {
         return methodBinding_;
     }

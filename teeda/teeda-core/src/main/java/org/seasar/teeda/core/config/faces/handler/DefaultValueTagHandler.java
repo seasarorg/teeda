@@ -25,11 +25,11 @@ public class DefaultValueTagHandler extends JsfTagHandler {
 
     private static final long serialVersionUID = 1L;
 
-    public DefaultValueTagHandler(){
+    public DefaultValueTagHandler() {
     }
-    
+
     public void end(TagHandlerContext context, String body) {
-        DefaultValueHolder holder = (DefaultValueHolder)context.peek();
+        DefaultValueHolder holder = (DefaultValueHolder) context.peek();
         holder.setDefaultValue(body);
     }
 }

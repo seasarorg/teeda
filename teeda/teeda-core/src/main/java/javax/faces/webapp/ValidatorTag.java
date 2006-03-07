@@ -28,7 +28,7 @@ import javax.servlet.jsp.tagext.TagSupport;
 public class ValidatorTag extends TagSupport {
 
     private static final long serialVersionUID = 1L;
-    
+
     private String validatorId_ = null;
 
     public ValidatorTag() {
@@ -41,37 +41,37 @@ public class ValidatorTag extends TagSupport {
     public int doStartTag() throws JspException {
         UIComponentTag tag = UIComponentTag
                 .getParentUIComponentTag(pageContext);
-        if(tag == null){
+        if (tag == null) {
             throw new JspException("Not nested in a UIComponentTag");
         }
-        if(!tag.getCreated()){
+        if (!tag.getCreated()) {
             return EVAL_PAGE;
         }
         Validator validator = createValidator();
         UIComponent component = tag.getComponentInstance();
-        if(component == null || !(component instanceof EditableValueHolder)){
+        if (component == null || !(component instanceof EditableValueHolder)) {
             throw new JspException(
                     "Component is null or not editable value holder.");
         }
-        EditableValueHolder editableValueHolder = (EditableValueHolder)component;
+        EditableValueHolder editableValueHolder = (EditableValueHolder) component;
         editableValueHolder.addValidator(validator);
         return SKIP_BODY;
     }
 
-    public void release(){
+    public void release() {
         validatorId_ = null;
         super.release();
     }
-    
+
     protected Validator createValidator() throws JspException {
-        try{
+        try {
             String validatorId = validatorId_;
-            if(UIComponentTag.isValueReference(validatorId_)){
-                validatorId = (String)WebAppUtils
+            if (UIComponentTag.isValueReference(validatorId_)) {
+                validatorId = (String) WebAppUtils
                         .getValueFromCreatedValueBinding(validatorId_);
             }
             return WebAppUtils.createValidator(validatorId);
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new JspException(e);
         }
     }

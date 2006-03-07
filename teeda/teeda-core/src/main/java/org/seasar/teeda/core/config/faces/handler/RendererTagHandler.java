@@ -28,22 +28,21 @@ public class RendererTagHandler extends JsfTagHandler {
 
     private static final long serialVersionUID = 1L;
 
-    public RendererTagHandler(){
+    public RendererTagHandler() {
     }
-    
+
     public void start(TagHandlerContext context, Attributes attributes) {
         RendererElement renderer = createRendererElement();
         context.push(renderer);
     }
 
-    
     public void end(TagHandlerContext context, String body) {
-        RendererElement renderer = (RendererElement)context.pop();
-        RenderKitElement config = (RenderKitElement)context.peek();
+        RendererElement renderer = (RendererElement) context.pop();
+        RenderKitElement config = (RenderKitElement) context.peek();
         config.addRendererElement(renderer);
     }
-    
-    protected RendererElement createRendererElement(){
+
+    protected RendererElement createRendererElement() {
         return new RendererElementImpl();
     }
 }

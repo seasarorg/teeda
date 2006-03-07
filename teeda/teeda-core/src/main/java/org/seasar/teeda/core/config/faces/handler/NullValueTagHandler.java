@@ -25,11 +25,11 @@ public class NullValueTagHandler extends JsfTagHandler {
 
     private static final long serialVersionUID = 1L;
 
-    public NullValueTagHandler(){
+    public NullValueTagHandler() {
     }
-    
+
     public void end(TagHandlerContext context, String body) {
-        NullValueHolder holder = (NullValueHolder)context.peek();
+        NullValueHolder holder = (NullValueHolder) context.peek();
         holder.setNullValue(true);
     }
 }

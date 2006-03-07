@@ -56,8 +56,8 @@ public class HtmlOutputLinkTest extends UIOutputTest {
         vb.setValue(context, "bar charset");
         component.setValueBinding("charset", vb);
         assertEquals("bar charset", component.getCharset());
-        assertEquals("bar charset", component.getValueBinding("charset").getValue(
-                context));
+        assertEquals("bar charset", component.getValueBinding("charset")
+                .getValue(context));
     }
 
     public void testSetGetCoords() throws Exception {

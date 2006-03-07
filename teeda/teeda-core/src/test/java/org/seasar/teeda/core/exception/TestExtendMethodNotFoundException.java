@@ -15,15 +15,11 @@
  */
 package org.seasar.teeda.core.exception;
 
-import javax.faces.el.EvaluationException;
 import javax.faces.el.MethodNotFoundException;
-
-
-import org.seasar.teeda.core.exception.ExtendMethodNotFoundExceptin;
-import org.seasar.teeda.core.mock.MockMethodBinding;
 
 import junit.framework.TestCase;
 
+import org.seasar.teeda.core.mock.MockMethodBinding;
 
 public class TestExtendMethodNotFoundException extends TestCase {
 
@@ -52,16 +48,16 @@ public class TestExtendMethodNotFoundException extends TestCase {
     public TestExtendMethodNotFoundException(String arg0) {
         super(arg0);
     }
-    
-    public void testExtendedMethodNotFoundException(){
+
+    public void testExtendedMethodNotFoundException() {
         MockMethodBinding mb = new MockMethodBinding("#{aaa}");
-        ExtendMethodNotFoundExceptin e = 
-            new ExtendMethodNotFoundExceptin(new MethodNotFoundException(), mb);
-            assertNotNull(e.getArgs());
-            assertNotNull(e.getMessage());
-            assertNotNull(e.getMessageCode());
-            assertEquals(mb, e.getMethodBinding());
-            assertEquals("ETDA0002", e.getMessageCode());
+        ExtendMethodNotFoundExceptin e = new ExtendMethodNotFoundExceptin(
+                new MethodNotFoundException(), mb);
+        assertNotNull(e.getArgs());
+        assertNotNull(e.getMessage());
+        assertNotNull(e.getMessageCode());
+        assertEquals(mb, e.getMethodBinding());
+        assertEquals("ETDA0002", e.getMessageCode());
     }
 
 }

@@ -26,9 +26,9 @@ public interface LocaleConfigElement extends JsfConfigElement {
     public void setDefaultLocale(String defaultLocaleName);
 
     public Locale getDefaultLocale();
-    
+
     public void addSupportedLocale(String supportedLocaleName);
-    
+
     public List getSupportedLocales();
-    
+
 }

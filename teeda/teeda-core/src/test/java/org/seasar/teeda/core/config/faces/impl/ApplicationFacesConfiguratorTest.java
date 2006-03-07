@@ -33,8 +33,11 @@ public class ApplicationFacesConfiguratorTest extends TestCase {
 
     public void testConfigure() throws Exception {
 
-        String path = this.getClass().getPackage().getName().replaceAll("\\.", "/") + "/" + "faces-config.xml";
-        TargetApplicationFacesConfigurator configurator = new TargetApplicationFacesConfigurator(path);
+        String path = this.getClass().getPackage().getName().replaceAll("\\.",
+                "/")
+                + "/" + "faces-config.xml";
+        TargetApplicationFacesConfigurator configurator = new TargetApplicationFacesConfigurator(
+                path);
         FacesConfig facesConfig = configurator.configure();
 
         assertNotNull(facesConfig);
@@ -43,23 +46,29 @@ public class ApplicationFacesConfiguratorTest extends TestCase {
         FactoryElement factory = (FactoryElement) factories.get(0);
         assertNotNull(factory);
 
-        assertEquals(MockApplicationFactory.class.getName(), factory.getApplicationFactories().get(0));
-        assertEquals(MockFacesContextFactory.class.getName(), factory.getFacesContextFactories().get(0));
-        assertEquals(MockLifecycleFactory.class.getName(), factory.getLifecycleFactories().get(0));
-        assertEquals(MockRenderKitFactory.class.getName(), factory.getRenderKitFactories().get(0));
+        assertEquals(MockApplicationFactory.class.getName(), factory
+                .getApplicationFactories().get(0));
+        assertEquals(MockFacesContextFactory.class.getName(), factory
+                .getFacesContextFactories().get(0));
+        assertEquals(MockLifecycleFactory.class.getName(), factory
+                .getLifecycleFactories().get(0));
+        assertEquals(MockRenderKitFactory.class.getName(), factory
+                .getRenderKitFactories().get(0));
     }
-    
-    private static class TargetApplicationFacesConfigurator extends ApplicationFacesConfigurator {
+
+    private static class TargetApplicationFacesConfigurator extends
+            ApplicationFacesConfigurator {
 
         private String path_;
+
         public TargetApplicationFacesConfigurator(String path) {
             super();
             path_ = path;
         }
-        
+
         public String getPath() {
             return path_;
         }
-        
+
     }
 }

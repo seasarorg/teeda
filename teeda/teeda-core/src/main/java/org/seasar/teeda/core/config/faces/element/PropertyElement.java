@@ -20,16 +20,17 @@ import java.util.List;
 /**
  * @author Shinpei Ohtani(aka shot)
  */
-public interface PropertyElement extends JsfConfigElement, DefaultValueHolder, SuggestedValueHolder {
+public interface PropertyElement extends JsfConfigElement, DefaultValueHolder,
+        SuggestedValueHolder {
 
     public void setPropertyName(String attributeName);
-    
+
     public void setPropertyClass(String attributeClass);
-    
+
     public void addPropertyExtension(String propertyExtension);
-    
+
     public String getPropertyName();
-    
+
     public String getPropertyClass();
 
     public List getPropertyExtensions();

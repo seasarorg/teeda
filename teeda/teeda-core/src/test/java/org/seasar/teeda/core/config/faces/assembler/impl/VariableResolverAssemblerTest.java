@@ -17,7 +17,6 @@ package org.seasar.teeda.core.config.faces.assembler.impl;
 
 import javax.faces.el.VariableResolver;
 
-import org.seasar.teeda.core.config.faces.assembler.impl.VariableResolverAssembler;
 import org.seasar.teeda.core.mock.MockSingleConstructorVariableResolver;
 import org.seasar.teeda.core.mock.MockVariableResolver;
 import org.seasar.teeda.core.unit.TeedaTestCase;

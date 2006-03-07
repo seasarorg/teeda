@@ -31,67 +31,71 @@ import org.seasar.teeda.core.util.IteratorUtil;
 public class DefaultFactoryAssembler extends FactoryAssembler {
 
     private FactoryChildAssembler applicationFactory_;
-    
+
     private FactoryChildAssembler facesContextFactory_;
-    
+
     private FactoryChildAssembler lifecycleFactory_;
-    
+
     private FactoryChildAssembler renderKitFactory_;
-    
+
     public DefaultFactoryAssembler(List factories) {
         super(factories);
     }
 
     protected void setupBeforeAssemble() {
-        applicationFactory_ = new FactoryChildAssembler(){
+        applicationFactory_ = new FactoryChildAssembler() {
             protected String getFactoryClassName() {
                 return FactoryFinder.APPLICATION_FACTORY;
             }
         };
-        
-        facesContextFactory_ = new FactoryChildAssembler(){
+
+        facesContextFactory_ = new FactoryChildAssembler() {
             protected String getFactoryClassName() {
                 return FactoryFinder.FACES_CONTEXT_FACTORY;
             }
         };
-        
-        lifecycleFactory_ = new FactoryChildAssembler(){
+
+        lifecycleFactory_ = new FactoryChildAssembler() {
             protected String getFactoryClassName() {
                 return FactoryFinder.LIFECYCLE_FACTORY;
             }
         };
-        
-        renderKitFactory_ = new FactoryChildAssembler(){
+
+        renderKitFactory_ = new FactoryChildAssembler() {
             protected String getFactoryClassName() {
                 return FactoryFinder.RENDER_KIT_FACTORY;
             }
         };
-        
-        for(Iterator itr = IteratorUtil.getIterator(getFactories());itr.hasNext();){
-            FactoryElement factory = (FactoryElement)itr.next();
-            applicationFactory_.setTargetFactories(factory.getApplicationFactories());
-            facesContextFactory_.setTargetFactories(factory.getFacesContextFactories());
-            lifecycleFactory_.setTargetFactories(factory.getLifecycleFactories());
-            renderKitFactory_.setTargetFactories(factory.getRenderKitFactories());
+
+        for (Iterator itr = IteratorUtil.getIterator(getFactories()); itr
+                .hasNext();) {
+            FactoryElement factory = (FactoryElement) itr.next();
+            applicationFactory_.setTargetFactories(factory
+                    .getApplicationFactories());
+            facesContextFactory_.setTargetFactories(factory
+                    .getFacesContextFactories());
+            lifecycleFactory_.setTargetFactories(factory
+                    .getLifecycleFactories());
+            renderKitFactory_.setTargetFactories(factory
+                    .getRenderKitFactories());
         }
-        
+
     }
-    
-    protected void assembleApplicationFactory(){
+
+    protected void assembleApplicationFactory() {
         applicationFactory_.assemble();
     }
-    
-    protected void assembleFacesContextFactory(){
+
+    protected void assembleFacesContextFactory() {
         facesContextFactory_.assemble();
     }
 
-    protected void assembleLifecycleFactory(){
+    protected void assembleLifecycleFactory() {
         lifecycleFactory_.assemble();
     }
 
-    protected void assembleRenderKitFactory(){
+    protected void assembleRenderKitFactory() {
         renderKitFactory_.assemble();
     }
 
 }
-

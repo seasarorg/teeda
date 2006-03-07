@@ -85,12 +85,12 @@ public final class ClassUtil {
     public static Class getWrapperClass(Class clazz) {
         return org.seasar.framework.util.ClassUtil.getWrapperClass(clazz);
     }
-    
+
     public static Class getWrapperClassByTypeName(String typeName) {
         return (Class) typeNameToPrimitiveMap_.get(typeName);
     }
 
-    public static Class getWrapperClassIfPrimitiveTypeName(String typeName){
+    public static Class getWrapperClassIfPrimitiveTypeName(String typeName) {
         Class ret = getWrapperClassByTypeName(typeName);
         if (ret != null) {
             return ret;

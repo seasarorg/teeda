@@ -25,33 +25,38 @@ import org.seasar.teeda.core.config.faces.element.MapEntriesElement;
 public class ManagedPropertyElementImpl implements ManagedPropertyElement {
 
     private String propertyName_;
+
     private String propertyClass_;
+
     private String value_;
+
     private ListEntriesElement listEntries_;
+
     private MapEntriesElement mapEntries_;
+
     private boolean nullValue_ = false;
-    
-    public ManagedPropertyElementImpl(){
+
+    public ManagedPropertyElementImpl() {
     }
 
     public void setPropertyName(String propertyName) {
-    	propertyName_ = propertyName;
+        propertyName_ = propertyName;
     }
 
     public void setPropertyClass(String propertyClass) {
-    	propertyClass_ = propertyClass;
+        propertyClass_ = propertyClass;
     }
 
     public void setValue(String value) {
-    	value_ = value;
+        value_ = value;
     }
 
     public void setListEntries(ListEntriesElement listEntries) {
-    	listEntries_ = listEntries;
+        listEntries_ = listEntries;
     }
 
     public void setMapEntries(MapEntriesElement mapEntries) {
-    	mapEntries_ = mapEntries;
+        mapEntries_ = mapEntries;
     }
 
     public String getPropertyName() {
@@ -75,7 +80,7 @@ public class ManagedPropertyElementImpl implements ManagedPropertyElement {
     }
 
     public void setNullValue(boolean nullValue) {
-    	nullValue_ = nullValue;
+        nullValue_ = nullValue;
     }
 
     public boolean isNullValue() {

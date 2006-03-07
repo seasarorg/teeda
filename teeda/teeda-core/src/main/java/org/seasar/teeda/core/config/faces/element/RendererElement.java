@@ -21,15 +21,15 @@ package org.seasar.teeda.core.config.faces.element;
 public interface RendererElement extends JsfConfigElement {
 
     public void setComponentFamily(String family);
-    
+
     public void setRendererType(String rendererType);
-    
+
     public void setRendererClass(String rendererClass);
-    
+
     public String getComponentFamily();
-    
+
     public String getRendererType();
-    
+
     public String getRendererClass();
-    
+
 }

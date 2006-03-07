@@ -28,25 +28,24 @@ public class PanelGridTagTest extends TestCase {
     public void testGetComponentType() throws Exception {
         // # Arrange #
         PanelGridTag tag = new PanelGridTag();
-        
+
         // # Act & Assert #
-        assertEquals("javax.faces.HtmlPanelGrid",
-                tag.getComponentType());
+        assertEquals("javax.faces.HtmlPanelGrid", tag.getComponentType());
     }
-    
+
     public void testGetRenderType() throws Exception {
         // # Arrange #
         PanelGridTag tag = new PanelGridTag();
-        
+
         // # Act & Assert #
-        assertEquals("javax.faces.Grid", tag.getRendererType());        
+        assertEquals("javax.faces.Grid", tag.getRendererType());
     }
-    
+
     public void testSetProperties_All() throws Exception {
         // # Arrange #
         HtmlPanelGrid component = createHtmlPanelGrid();
         PanelGridTag tag = new PanelGridTag();
-        
+
         tag.setBgcolor("blue");
         tag.setBorder("9");
         tag.setCellpadding("5");
@@ -75,10 +74,10 @@ public class PanelGridTagTest extends TestCase {
         tag.setSummary("Summary");
         tag.setWidth("650");
         tag.setTitle("title");
-        
+
         // # Act #
         tag.setProperties(component);
-        
+
         // # Assert #
         assertEquals("blue", component.getBgcolor());
         assertEquals(9, component.getBorder());
@@ -108,7 +107,7 @@ public class PanelGridTagTest extends TestCase {
         assertEquals("Summary", component.getSummary());
         assertEquals("title", component.getTitle());
         assertEquals("650", component.getWidth());
-    }    
+    }
 
     private HtmlPanelGrid createHtmlPanelGrid() {
         return (HtmlPanelGrid) createUIComponent();

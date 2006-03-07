@@ -42,5 +42,5 @@ public class ExternalContextUtil {
         }
         return viewId;
     }
-    
+
 }

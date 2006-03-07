@@ -31,11 +31,11 @@ import org.seasar.teeda.core.util.ConverterUtil;
 public class VerbatimTag extends UIComponentBodyTag {
 
     private static final String COMPONENT_TYPE = "javax.faces.Output";
-    
+
     private static final String RENDER_TYPE = "javax.faces.Text";
 
     private String escape_ = null;
-    
+
     public VerbatimTag() {
         super();
     }
@@ -54,32 +54,33 @@ public class VerbatimTag extends UIComponentBodyTag {
 
     protected void setProperties(UIComponent component) {
         super.setProperties(component);
-        
+
         if (escape_ != null) {
             if (BindingUtil.isValueReference(escape_)) {
-                BindingUtil.setValueBinding(component, 
+                BindingUtil.setValueBinding(component,
                         JsfConstants.ESCAPE_ATTR, escape_);
             } else {
                 boolean escape = ConverterUtil.convertToBoolean(escape_);
-                component.getAttributes().put
-                        (JsfConstants.ESCAPE_ATTR, escape ? Boolean.TRUE : Boolean.FALSE);
+                component.getAttributes().put(JsfConstants.ESCAPE_ATTR,
+                        escape ? Boolean.TRUE : Boolean.FALSE);
             }
         } else {
-            component.getAttributes().put(JsfConstants.ESCAPE_ATTR, Boolean.FALSE);
+            component.getAttributes().put(JsfConstants.ESCAPE_ATTR,
+                    Boolean.FALSE);
         }
         component.setTransient(true);
     }
-    
+
     public int doAfterBody() throws JspException {
         BodyContent bodyContent = getBodyContent();
         if (bodyContent != null) {
             String value = bodyContent.getString().trim();
             if (value != null) {
-                UIOutput component = (UIOutput)getComponentInstance();
+                UIOutput component = (UIOutput) getComponentInstance();
                 component.setValue(value);
             }
-        }        
+        }
         return doAfterBody();
     }
-    
+
 }

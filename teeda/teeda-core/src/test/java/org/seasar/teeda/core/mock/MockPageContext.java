@@ -22,15 +22,15 @@ import java.util.Map;
  * @author yone
  */
 public class MockPageContext extends NullPageContext {
-    
+
     private Map attr_ = new HashMap();
 
     public void setAttribute(String arg0, Object arg1) {
-        attr_.put(arg0, arg1);        
+        attr_.put(arg0, arg1);
     }
 
     public void setAttribute(String arg0, Object arg1, int arg2) {
-        attr_.put(arg0, arg1); 
+        attr_.put(arg0, arg1);
     }
 
     public Object getAttribute(String arg0) {

@@ -22,7 +22,7 @@ public class FacesContextNotFoundRuntimeException extends ExtendFacesException {
 
     private static final long serialVersionUID = 1L;
 
-    public FacesContextNotFoundRuntimeException(){
+    public FacesContextNotFoundRuntimeException() {
         super("ETDA0017");
     }
 }

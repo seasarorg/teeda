@@ -24,15 +24,16 @@ import javax.faces.webapp.UIComponentTag;
  */
 public class ValueBindingUtil {
 
-    private ValueBindingUtil(){
+    private ValueBindingUtil() {
     }
-    
-    public static Object getValue(FacesContext context, String value){
-        if(value != null && UIComponentTag.isValueReference(value)) {
-            ValueBinding vb = context.getApplication().createValueBinding(value);
+
+    public static Object getValue(FacesContext context, String value) {
+        if (value != null && UIComponentTag.isValueReference(value)) {
+            ValueBinding vb = context.getApplication()
+                    .createValueBinding(value);
             return vb.getValue(context);
         }
         return null;
     }
-    
+
 }

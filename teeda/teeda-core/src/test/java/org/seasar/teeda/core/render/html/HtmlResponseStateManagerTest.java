@@ -60,8 +60,8 @@ public class HtmlResponseStateManagerTest extends TeedaTestCase {
         // getResponseText());
         // assertEquals(diff.toString(), true, diff.identical());
         assertEquals(
-                "<input type=\"hidden\" name=\"javax.faces.ViewState\" id=\"javax.faces.ViewState\" value=\"b\" />" +
-                "<input type=\"hidden\" name=\"javax.faces.ViewState\" id=\"javax.faces.ViewState\" value=\"hoge\" />",
+                "<input type=\"hidden\" name=\"javax.faces.ViewState\" id=\"javax.faces.ViewState\" value=\"b\" />"
+                        + "<input type=\"hidden\" name=\"javax.faces.ViewState\" id=\"javax.faces.ViewState\" value=\"hoge\" />",
                 getResponseText());
     }
 
@@ -80,8 +80,8 @@ public class HtmlResponseStateManagerTest extends TeedaTestCase {
         manager.writeState(getFacesContext(), view);
 
         assertEquals(
-                "<input type=\"hidden\" name=\"javax.faces.ViewState\" id=\"javax.faces.ViewState\" value=\"a\" />" +
-                "<input type=\"hidden\" name=\"javax.faces.ViewState\" id=\"javax.faces.ViewState\" value=\"foo\" />",
+                "<input type=\"hidden\" name=\"javax.faces.ViewState\" id=\"javax.faces.ViewState\" value=\"a\" />"
+                        + "<input type=\"hidden\" name=\"javax.faces.ViewState\" id=\"javax.faces.ViewState\" value=\"foo\" />",
                 getResponseText());
     }
 

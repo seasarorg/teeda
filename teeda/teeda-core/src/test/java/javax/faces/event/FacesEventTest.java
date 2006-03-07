@@ -241,7 +241,7 @@ public class FacesEventTest extends TestCase {
         public void restoreState(FacesContext context, Object state) {
         }
 
-        public List getNotify(){
+        public List getNotify() {
             return list_;
         }
     }

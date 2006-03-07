@@ -21,14 +21,13 @@ import javax.faces.component.html.HtmlGraphicImage;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.taglib.UIComponentTagBase;
 
-
 /**
  * @author yone
  */
 public class GraphicImageTag extends UIComponentTagBase {
 
     private String url_;
-    
+
     public String getComponentType() {
         return HtmlGraphicImage.COMPONENT_TYPE;
     }
@@ -36,10 +35,10 @@ public class GraphicImageTag extends UIComponentTagBase {
     public String getRendererType() {
         return "javax.faces.Image";
     }
-    
+
     protected void setProperties(UIComponent component) {
         super.setProperties(component);
-        
+
         setComponentProperty(component, JsfConstants.URL_ATTR, url_);
         setComponentProperty(component, JsfConstants.ALT_ATTR, alt_);
         setComponentProperty(component, JsfConstants.HEIGHT_ATTR, height_);
@@ -47,15 +46,14 @@ public class GraphicImageTag extends UIComponentTagBase {
         setComponentProperty(component, JsfConstants.LONGDESC_ATTR, longdesc_);
         setComponentProperty(component, JsfConstants.USEMAP_ATTR, usemap_);
     }
-    
+
     public void release() {
         super.release();
         url_ = null;
     }
-    
+
     public void setUrl(String url) {
         url_ = url;
     }
 
-    
 }

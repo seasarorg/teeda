@@ -31,7 +31,6 @@ import org.seasar.extension.unit.S2TestCase;
 import org.seasar.teeda.core.config.faces.assembler.AssemblerAssembler;
 import org.seasar.teeda.core.config.faces.assembler.impl.DefaultAssembleProvider;
 import org.seasar.teeda.core.config.faces.element.FacesConfig;
-import org.seasar.teeda.core.config.faces.impl.ConfigFilesFacesConfigurator;
 import org.seasar.teeda.core.mock.MockActionListener;
 import org.seasar.teeda.core.mock.MockApplication;
 import org.seasar.teeda.core.mock.MockApplicationFactory;
@@ -78,10 +77,10 @@ public class ConfigFilesFacesConfiguratorTest extends S2TestCase {
 
         // ## Act ##
         FacesConfig facesConfig = configurator.configure();
-        
+
         // ## Assert ##
         assertNotNull(facesConfig);
-        
+
         // do actually initialize.
         AssemblerAssembler assembler = new AssemblerAssembler();
         DefaultAssembleProvider provider = new DefaultAssembleProvider();

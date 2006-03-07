@@ -21,14 +21,13 @@ import javax.faces.component.html.HtmlOutputLabel;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.taglib.UIComponentTagBase;
 
-
 /**
  * @author yone
  */
 public class OutputLabelTag extends UIComponentTagBase {
 
     private String for_;
-    
+
     public String getComponentType() {
         return HtmlOutputLabel.COMPONENT_TYPE;
     }
@@ -40,9 +39,9 @@ public class OutputLabelTag extends UIComponentTagBase {
     protected void setProperties(UIComponent component) {
         super.setProperties(component);
 
-        setComponentProperty(component, JsfConstants.FOR_ATTR, for_);        
+        setComponentProperty(component, JsfConstants.FOR_ATTR, for_);
     }
-    
+
     public void release() {
         super.release();
         for_ = null;
@@ -52,5 +51,4 @@ public class OutputLabelTag extends UIComponentTagBase {
         for_ = for1;
     }
 
-    
 }

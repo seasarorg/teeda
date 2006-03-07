@@ -33,45 +33,57 @@ import org.seasar.teeda.core.util.IteratorUtil;
  */
 public class DefaultNavigationRuleAssembler extends NavigationRuleAssembler {
 
-    public DefaultNavigationRuleAssembler(List navigationRules, ExternalContext externalContext){
+    public DefaultNavigationRuleAssembler(List navigationRules,
+            ExternalContext externalContext) {
         super(navigationRules, externalContext);
     }
-    
+
     protected void setupBeforeAssemble() {
-        for(Iterator itr = IteratorUtil.getIterator(getNavigationRules()); itr.hasNext();){
-            NavigationRuleElement rule = (NavigationRuleElement)itr.next();
-            isAllSuitableJsfElement(rule.getNavigationCaseElements(), NavigationCaseElement.class);
+        for (Iterator itr = IteratorUtil.getIterator(getNavigationRules()); itr
+                .hasNext();) {
+            NavigationRuleElement rule = (NavigationRuleElement) itr.next();
+            isAllSuitableJsfElement(rule.getNavigationCaseElements(),
+                    NavigationCaseElement.class);
         }
     }
 
     public void assemble() {
-        for(Iterator itr = IteratorUtil.getIterator(getNavigationRules()); itr.hasNext();){
-            NavigationRuleElement rule = (NavigationRuleElement)itr.next();
-            NavigationContextWrapper wrapper = new NavigationContextWrapper(rule);
-            NavigationContextFactory.addNavigationContext(getExternalContext(), wrapper);
+        for (Iterator itr = IteratorUtil.getIterator(getNavigationRules()); itr
+                .hasNext();) {
+            NavigationRuleElement rule = (NavigationRuleElement) itr.next();
+            NavigationContextWrapper wrapper = new NavigationContextWrapper(
+                    rule);
+            NavigationContextFactory.addNavigationContext(getExternalContext(),
+                    wrapper);
         }
     }
-    
+
     public static class NavigationContextWrapper extends NavigationContext {
-        
-        public NavigationContextWrapper(NavigationRuleElement navigationRule){
+
+        public NavigationContextWrapper(NavigationRuleElement navigationRule) {
             String fromViewId = navigationRule.getFromViewId();
             setFromViewId(fromViewId);
             toNavigationCaseContext(navigationRule);
         }
-        
-        private void toNavigationCaseContext(NavigationRuleElement navigationRule){
+
+        private void toNavigationCaseContext(
+                NavigationRuleElement navigationRule) {
             List navigationCases = navigationRule.getNavigationCaseElements();
-            for(Iterator itr = IteratorUtil.getIterator(navigationCases); itr.hasNext();){
-                NavigationCaseElement caseElement = (NavigationCaseElement)itr.next();
-                addNavigationCaseContext(new NavigationCaseContextWrapper(caseElement));
+            for (Iterator itr = IteratorUtil.getIterator(navigationCases); itr
+                    .hasNext();) {
+                NavigationCaseElement caseElement = (NavigationCaseElement) itr
+                        .next();
+                addNavigationCaseContext(new NavigationCaseContextWrapper(
+                        caseElement));
             }
         }
     }
-    
-    public static class NavigationCaseContextWrapper extends NavigationCaseContext{
-        public NavigationCaseContextWrapper(NavigationCaseElement element){
-            super(element.getFromAction(), element.getFromOutcome(), element.getToViewId(), element.isRedirect());
+
+    public static class NavigationCaseContextWrapper extends
+            NavigationCaseContext {
+        public NavigationCaseContextWrapper(NavigationCaseElement element) {
+            super(element.getFromAction(), element.getFromOutcome(), element
+                    .getToViewId(), element.isRedirect());
         }
     }
 }

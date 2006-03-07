@@ -23,5 +23,5 @@ import javax.faces.context.FacesContext;
  */
 public interface FacesResolver {
 
-	public Object resolveVariable(FacesContext context);
+    public Object resolveVariable(FacesContext context);
 }

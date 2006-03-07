@@ -23,11 +23,14 @@ import org.seasar.teeda.core.config.faces.element.MapEntryElement;
 public class MapEntryElementImpl implements MapEntryElement {
 
     private String key_;
+
     private String value_;
+
     private boolean nullValue_ = false;
-    public MapEntryElementImpl(){
+
+    public MapEntryElementImpl() {
     }
-    
+
     public void setKey(String key) {
         key_ = key;
     }

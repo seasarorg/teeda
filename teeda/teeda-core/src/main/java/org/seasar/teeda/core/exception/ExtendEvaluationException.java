@@ -39,25 +39,26 @@ public class ExtendEvaluationException extends EvaluationException {
 
     private MethodBinding methodBinding_;
 
-    public ExtendEvaluationException(EvaluationException cause,
-            MethodBinding mb) {
-    	this(cause, mb.getClass().getName(), mb.getExpressionString());
+    public ExtendEvaluationException(EvaluationException cause, MethodBinding mb) {
+        this(cause, mb.getClass().getName(), mb.getExpressionString());
         methodBinding_ = mb;
     }
 
-    public ExtendEvaluationException(Exception cause, String className, String expressionString){
-    	this(cause, className, expressionString, EVALUATION_EXCEPTION_ID);
+    public ExtendEvaluationException(Exception cause, String className,
+            String expressionString) {
+        this(cause, className, expressionString, EVALUATION_EXCEPTION_ID);
     }
-    
-    protected ExtendEvaluationException(Exception cause, String className, String expressionString, String messageCode){
-    	super(cause);
-        args_ = new Object[] { className, expressionString};
+
+    protected ExtendEvaluationException(Exception cause, String className,
+            String expressionString, String messageCode) {
+        super(cause);
+        args_ = new Object[] { className, expressionString };
         messageCode_ = messageCode;
-        simpleMessage_ = 
-            MessageFormatterUtil.getSimpleMessage(messageCode_, args_);
-        message_ = 
-            MessageFormatterUtil.getFormattedMessage(messageCode_, simpleMessage_);
-    	
+        simpleMessage_ = MessageFormatterUtil.getSimpleMessage(messageCode_,
+                args_);
+        message_ = MessageFormatterUtil.getFormattedMessage(messageCode_,
+                simpleMessage_);
+
     }
 
     public MethodBinding getMethodBinding() {

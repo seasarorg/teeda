@@ -25,10 +25,11 @@ import javax.faces.render.ResponseStateManager;
 public abstract class AbstractRenderKit extends RenderKit {
 
     protected abstract String getGeneratedKey(String family, String renderType);
-    
-    public abstract void setResponseStateManager(ResponseStateManager responseStateManager);
-    
+
+    public abstract void setResponseStateManager(
+            ResponseStateManager responseStateManager);
+
     public abstract void setResponseWriter(ResponseWriter responseWriter);
-    
+
     public abstract ResponseWriter getResponseWriter();
 }

@@ -23,11 +23,9 @@ import javax.faces.application.ApplicationFactory;
 
 import junit.framework.TestCase;
 
-import org.seasar.teeda.core.config.faces.assembler.impl.DefaultFactoryAssembler;
 import org.seasar.teeda.core.config.faces.element.FactoryElement;
 import org.seasar.teeda.core.config.faces.element.impl.FactoryElementImpl;
 import org.seasar.teeda.core.mock.MockApplicationFactory;
-
 
 public class DefaultFactoryAssemblerTest extends TestCase {
 
@@ -53,20 +51,20 @@ public class DefaultFactoryAssemblerTest extends TestCase {
         super(arg0);
     }
 
-    public void testAssemble(){
+    public void testAssemble() {
         FactoryElement factoryElement = new FactoryElementImpl();
-        factoryElement.addApplicationFactory("org.seasar.teeda.core.mock.MockApplicationFactory");
+        factoryElement
+                .addApplicationFactory("org.seasar.teeda.core.mock.MockApplicationFactory");
         List list = new ArrayList();
         list.add(factoryElement);
         DefaultFactoryAssembler assembler = new DefaultFactoryAssembler(list);
         assembler.assemble();
-        
-        ApplicationFactory appFactory = 
-            (ApplicationFactory)FactoryFinder.getFactory(FactoryFinder.APPLICATION_FACTORY);
-        
+
+        ApplicationFactory appFactory = (ApplicationFactory) FactoryFinder
+                .getFactory(FactoryFinder.APPLICATION_FACTORY);
+
         assertNotNull(appFactory);
         assertTrue(appFactory instanceof MockApplicationFactory);
-        
+
     }
 }
-

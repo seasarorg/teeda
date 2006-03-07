@@ -26,24 +26,26 @@ import org.seasar.teeda.core.util.IteratorUtil;
 /**
  * @author shot
  */
-public abstract class AbstractJsfAssembler implements JsfAssembler{
+public abstract class AbstractJsfAssembler implements JsfAssembler {
 
     private ExternalContext externalContext_;
-    
-    protected final void isAllSuitableJsfElement(Collection elements, Class target){
+
+    protected final void isAllSuitableJsfElement(Collection elements,
+            Class target) {
         Object o = null;
-        for(Iterator itr = IteratorUtil.getIterator(elements);itr.hasNext();){
+        for (Iterator itr = IteratorUtil.getIterator(elements); itr.hasNext();) {
             o = itr.next();
-            if(!ClassUtil.isAssignableFrom(target, o.getClass())){
-                throw new IllegalJsfConfigStateException(new Object[]{o, target});
+            if (!ClassUtil.isAssignableFrom(target, o.getClass())) {
+                throw new IllegalJsfConfigStateException(new Object[] { o,
+                        target });
             }
         }
     }
-    
-    public void setExternalContext(ExternalContext externalContext){
+
+    public void setExternalContext(ExternalContext externalContext) {
         externalContext_ = externalContext;
     }
-    
+
     public ExternalContext getExternalContext() {
         return externalContext_;
     }

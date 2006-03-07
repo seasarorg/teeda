@@ -18,16 +18,15 @@ package org.seasar.teeda.core.config.faces.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.seasar.teeda.core.config.faces.element.FacesConfig;
-import org.seasar.teeda.core.config.faces.element.ReferencedBeanElement;
-import org.seasar.teeda.core.config.faces.element.impl.FacesConfigImpl;
-import org.seasar.teeda.core.config.faces.element.impl.ReferencedBeanElementImpl;
-import org.seasar.teeda.core.config.faces.impl.FacesConfigUtil;
-
 import junit.framework.TestCase;
 import junitx.framework.ListAssert;
 import junitx.framework.ObjectAssert;
 import junitx.framework.ThrowableAssert;
+
+import org.seasar.teeda.core.config.faces.element.FacesConfig;
+import org.seasar.teeda.core.config.faces.element.ReferencedBeanElement;
+import org.seasar.teeda.core.config.faces.element.impl.FacesConfigImpl;
+import org.seasar.teeda.core.config.faces.element.impl.ReferencedBeanElementImpl;
 
 /**
  * @author shot
@@ -64,11 +63,12 @@ public class FacesConfigUtilTest extends TestCase {
     }
 
     public void testIsAllFacesConfig() throws Exception {
-        try{
+        try {
             FacesConfigUtil.isAllFacesConfig(null);
             fail();
-        }catch(Exception expected){
-            ThrowableAssert.assertEquals(expected, new IllegalArgumentException());
+        } catch (Exception expected) {
+            ThrowableAssert.assertEquals(expected,
+                    new IllegalArgumentException());
         }
         List list = null;
         try {
@@ -79,11 +79,11 @@ public class FacesConfigUtilTest extends TestCase {
         } catch (Exception expected) {
             ThrowableAssert.assertEquals(expected, new IllegalStateException());
         }
-        try{
+        try {
             list = new ArrayList();
             list.add(new FacesConfigImpl());
             FacesConfigUtil.isAllFacesConfig(list);
-        }catch(Exception e){
+        } catch (Exception e) {
             fail();
         }
     }

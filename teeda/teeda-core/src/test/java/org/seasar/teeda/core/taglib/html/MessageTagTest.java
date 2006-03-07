@@ -27,19 +27,19 @@ public class MessageTagTest extends TestCase {
     public void testGetComponentType() throws Exception {
         // # Arrange #
         MessageTag tag = new MessageTag();
-        
+
         // # Act & Assert #
         assertEquals("javax.faces.HtmlMessage", tag.getComponentType());
     }
-    
+
     public void testGetRenderType() throws Exception {
         // # Arrange #
         MessageTag tag = new MessageTag();
-        
+
         // # Act & Assert #
-        assertEquals("javax.faces.Message", tag.getRendererType());        
+        assertEquals("javax.faces.Message", tag.getRendererType());
     }
-    
+
     public void testSetProperties_All() throws Exception {
         // # Arrange #
         HtmlMessage component = createHtmlMessage();
@@ -60,10 +60,10 @@ public class MessageTagTest extends TestCase {
         tag.setTooltip("true");
         tag.setWarnClass("WarnClass");
         tag.setWarnStyle("WarnStyle");
-        
+
         // # Act #
         tag.setProperties(component);
-        
+
         // # Assert #
         assertEquals("ForId", component.getFor());
         assertTrue(component.isShowDetail());
@@ -81,7 +81,7 @@ public class MessageTagTest extends TestCase {
         assertEquals("WarnClass", component.getWarnClass());
         assertEquals("WarnStyle", component.getWarnStyle());
     }
-    
+
     private HtmlMessage createHtmlMessage() {
         return (HtmlMessage) createUIComponent();
     }

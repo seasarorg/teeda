@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import org.seasar.teeda.core.config.faces.assembler.impl.DefaultApplicationAssembler;
 import org.seasar.teeda.core.config.faces.element.ApplicationElement;
 import org.seasar.teeda.core.config.faces.element.LocaleConfigElement;
 import org.seasar.teeda.core.config.faces.element.impl.ApplicationElementImpl;
@@ -49,7 +48,8 @@ public class DefaultApplicationAssemblerTest extends TeedaTestCase {
     public void testAssembleApplication() throws Exception {
         // ## Arrange ##
         ApplicationElement element = new ApplicationElementImpl();
-        element.addActionListener("org.seasar.teeda.core.mock.MockActionListener");
+        element
+                .addActionListener("org.seasar.teeda.core.mock.MockActionListener");
         element.addDefaultRenderKitId("hoge");
         LocaleConfigElement locale = new LocaleConfigElementImpl();
         locale.setDefaultLocale("en");
@@ -57,15 +57,20 @@ public class DefaultApplicationAssemblerTest extends TeedaTestCase {
         locale.addSupportedLocale("fr");
         element.addLocaleConfig(locale);
         element.addMessageBundle("foo");
-        element.addNavigationHandler("org.seasar.teeda.core.mock.MockNavigationHandler");
-        element.addPropertyResolver("org.seasar.teeda.core.mock.MockPropertyResolver");
+        element
+                .addNavigationHandler("org.seasar.teeda.core.mock.MockNavigationHandler");
+        element
+                .addPropertyResolver("org.seasar.teeda.core.mock.MockPropertyResolver");
         element.addStateManager("org.seasar.teeda.core.mock.MockStateManager");
-        element.addVariableResolver("org.seasar.teeda.core.mock.MockVariableResolver");
-        element.addViewHandler("org.seasar.teeda.core.mock.MockViewHandlerImpl");
+        element
+                .addVariableResolver("org.seasar.teeda.core.mock.MockVariableResolver");
+        element
+                .addViewHandler("org.seasar.teeda.core.mock.MockViewHandlerImpl");
         List list = new ArrayList();
         list.add(element);
-        DefaultApplicationAssembler assembler = new DefaultApplicationAssembler(list);
-        
+        DefaultApplicationAssembler assembler = new DefaultApplicationAssembler(
+                list);
+
         // ## Act ##
         assembler.assemble();
 
@@ -80,6 +85,6 @@ public class DefaultApplicationAssemblerTest extends TeedaTestCase {
         assertTrue(app.getStateManager() instanceof MockStateManager);
         assertTrue(app.getVariableResolver() instanceof MockVariableResolver);
         assertTrue(app.getViewHandler() instanceof MockViewHandlerImpl);
-        
+
     }
 }

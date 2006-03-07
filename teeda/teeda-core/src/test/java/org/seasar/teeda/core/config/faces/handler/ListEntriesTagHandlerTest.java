@@ -22,7 +22,6 @@ import org.seasar.teeda.core.config.faces.element.ListEntriesElement;
 import org.seasar.teeda.core.config.faces.element.ListEntriesHolder;
 import org.seasar.teeda.core.config.faces.element.impl.ManagedBeanElementImpl;
 import org.seasar.teeda.core.config.faces.element.impl.ManagedPropertyElementImpl;
-import org.seasar.teeda.core.config.faces.handler.ListEntriesTagHandler;
 
 /**
  * @author shot

@@ -23,7 +23,6 @@ import javax.faces.convert.Converter;
 
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.application.ApplicationImpl;
-import org.seasar.teeda.core.config.faces.assembler.ConverterChildAssembler;
 import org.seasar.teeda.core.config.faces.element.ConverterElement;
 import org.seasar.teeda.core.config.faces.element.PropertyElement;
 import org.seasar.teeda.core.config.faces.element.impl.ConverterElementImpl;
@@ -125,7 +124,7 @@ public class ConverterChildAssemblerTest extends TeedaTestCase {
 
             assertNotNull(c);
             assertTrue(c instanceof MockConverter);
-            assertEquals("hoge", ((MockConverter)c).getName());
+            assertEquals("hoge", ((MockConverter) c).getName());
         } finally {
             appFactory.setApplication(previous);
         }

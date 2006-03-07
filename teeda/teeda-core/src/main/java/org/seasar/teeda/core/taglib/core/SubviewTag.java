@@ -24,7 +24,7 @@ import javax.faces.webapp.UIComponentTag;
 public class SubviewTag extends UIComponentTag {
 
     private static final String COMPONENT_TYPE = UINamingContainer.COMPONENT_TYPE;
-    
+
     public SubviewTag() {
         super();
     }
@@ -36,6 +36,5 @@ public class SubviewTag extends UIComponentTag {
     public String getRendererType() {
         return null;
     }
-
 
 }

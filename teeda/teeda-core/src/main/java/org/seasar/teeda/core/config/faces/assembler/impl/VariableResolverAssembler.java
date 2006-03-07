@@ -25,14 +25,15 @@ import org.seasar.teeda.core.config.faces.assembler.ApplicationChildAssembler;
  */
 public class VariableResolverAssembler extends ApplicationChildAssembler {
 
-    public VariableResolverAssembler(String resolverName, Application application){
+    public VariableResolverAssembler(String resolverName,
+            Application application) {
         super(resolverName, application);
     }
-    
+
     public void assemble() {
         VariableResolver previous = getApplication().getVariableResolver();
-        VariableResolver resolver = 
-            (VariableResolver)createMarshalInstance(VariableResolver.class, previous);
+        VariableResolver resolver = (VariableResolver) createMarshalInstance(
+                VariableResolver.class, previous);
         getApplication().setVariableResolver(resolver);
     }
 

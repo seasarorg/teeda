@@ -22,7 +22,7 @@ import javax.faces.webapp.UIComponentTag;
  * @author yone
  */
 public class ColumnTag extends UIComponentTag {
-    
+
     public String getComponentType() {
         return UIColumn.COMPONENT_TYPE;
     }

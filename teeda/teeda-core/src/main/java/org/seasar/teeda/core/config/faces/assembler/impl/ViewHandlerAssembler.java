@@ -24,15 +24,15 @@ import org.seasar.teeda.core.config.faces.assembler.ApplicationChildAssembler;
  * @author shot
  */
 public class ViewHandlerAssembler extends ApplicationChildAssembler {
-    
-    public ViewHandlerAssembler(String handlerName, Application application){
+
+    public ViewHandlerAssembler(String handlerName, Application application) {
         super(handlerName, application);
     }
-    
+
     public void assemble() {
         ViewHandler previous = getApplication().getViewHandler();
-        ViewHandler handler = 
-            (ViewHandler)createMarshalInstance(ViewHandler.class, previous);
+        ViewHandler handler = (ViewHandler) createMarshalInstance(
+                ViewHandler.class, previous);
         getApplication().setViewHandler(handler);
     }
 

@@ -28,22 +28,22 @@ import org.seasar.teeda.core.unit.TeedaTestCase;
  * @author yone
  */
 public class InputTextareaTagTest extends TeedaTestCase {
-    
+
     public void testGetComponentType() throws Exception {
         // # Arrange #
         InputTextareaTag tag = new InputTextareaTag();
-        
+
         // # Act & Assert #
         assertEquals("javax.faces.HtmlInputTextarea", tag.getComponentType());
     }
-    
+
     public void testGetRenderType() throws Exception {
         // # Arrange #
         InputTextareaTag tag = new InputTextareaTag();
-        
+
         // # Act & Assert #
-        assertEquals("javax.faces.Textarea", tag.getRendererType());        
-    }    
+        assertEquals("javax.faces.Textarea", tag.getRendererType());
+    }
 
     public void testSetProperties_All() throws Exception {
         // # Arrange #
@@ -55,7 +55,7 @@ public class InputTextareaTagTest extends TeedaTestCase {
         setApplication(app);
         app.addValidator("mock.validator",
                 "org.seasar.teeda.core.mock.MockValidator");
-        
+
         tag.setConverter("mock.converter");
         tag.setImmediate("true");
         tag.setRequired("true");
@@ -87,10 +87,10 @@ public class InputTextareaTagTest extends TeedaTestCase {
         tag.setStyleClass("styleclass");
         tag.setTabindex("13");
         tag.setTitle("title");
-        
+
         // # Act #
         tag.setProperties(component);
-        
+
         assertTrue(component.getConverter() instanceof MockConverter);
         assertTrue(component.isImmediate());
         assertTrue(component.isRequired());
@@ -126,8 +126,8 @@ public class InputTextareaTagTest extends TeedaTestCase {
         assertEquals("styleclass", component.getStyleClass());
         assertEquals("13", component.getTabindex());
         assertEquals("title", component.getTitle());
-    }    
-    
+    }
+
     private HtmlInputTextarea createHtmlInputTextarea() {
         return (HtmlInputTextarea) createUIComponent();
     }

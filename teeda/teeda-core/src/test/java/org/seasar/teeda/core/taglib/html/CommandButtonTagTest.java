@@ -27,23 +27,23 @@ import org.seasar.teeda.core.unit.TeedaTestCase;
  * @author yone
  */
 public class CommandButtonTagTest extends TeedaTestCase {
-    
+
     public void testGetComponentType() throws Exception {
         // # Arrange #
         CommandButtonTag tag = new CommandButtonTag();
-        
+
         // # Act & Assert #
         assertEquals("javax.faces.HtmlCommandButton", tag.getComponentType());
     }
-    
+
     public void testGetRenderType() throws Exception {
         // # Arrange #
         CommandButtonTag tag = new CommandButtonTag();
-        
+
         // # Act & Assert #
-        assertEquals("javax.faces.Button", tag.getRendererType());        
+        assertEquals("javax.faces.Button", tag.getRendererType());
     }
-    
+
     public void testSetProperties_All() throws Exception {
         // # Arrange #
         HtmlCommandButton command = createHtmlCommandButton();
@@ -74,10 +74,10 @@ public class CommandButtonTagTest extends TeedaTestCase {
         tag.setStyleClass("styleclass");
         tag.setTabindex("5");
         tag.setTitle("title");
-        
+
         // # Act #
         tag.setProperties(command);
-        
+
         // # Assert #
         assertFalse(command.isImmediate());
         assertEquals("image", command.getImage());
@@ -105,12 +105,12 @@ public class CommandButtonTagTest extends TeedaTestCase {
         assertEquals("5", command.getTabindex());
         assertEquals("title", command.getTitle());
     }
-    
+
     public void testSetAction_constantValue() throws Exception {
         // # Arrange #
         HtmlCommandButton command = createHtmlCommandButton();
         CommandButtonTag tag = new CommandButtonTag();
-        
+
         // # Act #
         tag.setAction("testAction");
         tag.setProperties(command);
@@ -124,7 +124,7 @@ public class CommandButtonTagTest extends TeedaTestCase {
         HtmlCommandButton command = createHtmlCommandButton();
         CommandButtonTag tag = new CommandButtonTag();
         //MockMethodBinding mb = new MockMethodBinding("#{hoge.test}");
-        
+
         // # Act #
         tag.setAction("#{hoge.test}");
         tag.setProperties(command);
@@ -137,13 +137,13 @@ public class CommandButtonTagTest extends TeedaTestCase {
         // # Arrange #
         HtmlCommandButton command = createHtmlCommandButton();
         CommandButtonTag tag = new CommandButtonTag();
-        
+
         // # Act & Assert#
         tag.setActionListener("testActionListener");
         try {
             tag.setProperties(command);
             fail();
-        } catch (NoValueReferenceRuntimeException e ){
+        } catch (NoValueReferenceRuntimeException e) {
             success();
         }
     }
@@ -152,14 +152,14 @@ public class CommandButtonTagTest extends TeedaTestCase {
         // # Arrange #
         HtmlCommandButton command = createHtmlCommandButton();
         CommandButtonTag tag = new CommandButtonTag();
-        
+
         // # Act & Assert#
         tag.setActionListener("#{hoge.do}");
         tag.setProperties(command);
-        
+
         assertTrue(command.getActionListener() instanceof MockMethodBinding);
     }
-    
+
     private HtmlCommandButton createHtmlCommandButton() {
         return (HtmlCommandButton) createUIComponent();
     }

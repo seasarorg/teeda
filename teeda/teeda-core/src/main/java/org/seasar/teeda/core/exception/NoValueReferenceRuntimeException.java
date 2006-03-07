@@ -22,15 +22,16 @@ import org.seasar.framework.exception.SRuntimeException;
  */
 public class NoValueReferenceRuntimeException extends SRuntimeException {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
+
     private String expression;
 
-	public NoValueReferenceRuntimeException(String expression) {
-		super("ETDA0020", new Object[] { expression });
-		this.expression = expression;
-	}
+    public NoValueReferenceRuntimeException(String expression) {
+        super("ETDA0020", new Object[] { expression });
+        this.expression = expression;
+    }
 
-	public String getExpression() {
-		return expression;
-	}
+    public String getExpression() {
+        return expression;
+    }
 }

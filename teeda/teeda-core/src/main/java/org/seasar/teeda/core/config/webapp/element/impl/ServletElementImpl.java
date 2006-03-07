@@ -28,9 +28,13 @@ import org.seasar.teeda.core.config.webapp.element.ServletElement;
 public class ServletElementImpl implements ServletElement, Serializable {
 
     private static final long serialVersionUID = 1L;
+
     private String servletName_;
+
     private String servletClass_;
+
     private String loadOnStartup_;
+
     private Map initParams_ = new HashMap();
 
     public String getServletName() {

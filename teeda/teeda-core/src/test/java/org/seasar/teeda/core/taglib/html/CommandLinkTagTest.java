@@ -25,29 +25,28 @@ import org.seasar.teeda.core.unit.TeedaTestCase;
  * @author yone
  */
 public class CommandLinkTagTest extends TeedaTestCase {
-    
+
     public void testGetComponentType() throws Exception {
         // # Arrange #
         CommandLinkTag tag = new CommandLinkTag();
-        
+
         // # Act & Assert #
-        assertEquals("javax.faces.HtmlCommandLink",
-                tag.getComponentType());
+        assertEquals("javax.faces.HtmlCommandLink", tag.getComponentType());
     }
-    
+
     public void testGetRenderType() throws Exception {
         // # Arrange #
         CommandLinkTag tag = new CommandLinkTag();
-        
+
         // # Act & Assert #
-        assertEquals("javax.faces.Link", tag.getRendererType());        
+        assertEquals("javax.faces.Link", tag.getRendererType());
     }
-    
+
     public void testSetProperties_All() throws Exception {
         // # Arrange #
         HtmlCommandLink command = createHtmlCommandLink();
         CommandLinkTag tag = new CommandLinkTag();
-        
+
         tag.setAction("#{testAction}");
         tag.setActionListener("#{hoge.do}");
         tag.setImmediate("true");
@@ -82,7 +81,7 @@ public class CommandLinkTagTest extends TeedaTestCase {
 
         // # Act #
         tag.setProperties(command);
-                
+
         // # Assert #
         assertTrue(command.getAction() instanceof MockMethodBinding);
         assertTrue(command.getActionListener() instanceof MockMethodBinding);
@@ -124,5 +123,5 @@ public class CommandLinkTagTest extends TeedaTestCase {
     protected UIComponent createUIComponent() {
         return new HtmlCommandLink();
     }
-    
+
 }

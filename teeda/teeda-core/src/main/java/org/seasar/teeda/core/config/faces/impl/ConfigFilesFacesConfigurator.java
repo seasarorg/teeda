@@ -34,8 +34,9 @@ import org.seasar.teeda.core.config.faces.element.FacesConfig;
  */
 public class ConfigFilesFacesConfigurator extends AbstractFacesConfigurator {
 
-    private static final Logger logger_ = Logger.getLogger(ConfigFilesFacesConfigurator.class);
-    
+    private static final Logger logger_ = Logger
+            .getLogger(ConfigFilesFacesConfigurator.class);
+
     private static final String FACES_CONFIG_DELIMETER = ",";
 
     private ExternalContext externalContext_;
@@ -46,7 +47,7 @@ public class ConfigFilesFacesConfigurator extends AbstractFacesConfigurator {
     public FacesConfig configure() {
         List configs = new LinkedList();
         String path = getPath();
-        if(logger_.isDebugEnabled()) {
+        if (logger_.isDebugEnabled()) {
             logger_.debug("target file path = " + path);
         }
         if (path == null) {
@@ -57,7 +58,8 @@ public class ConfigFilesFacesConfigurator extends AbstractFacesConfigurator {
         for (int i = 0; i < paths.length; i++) {
             String targetPath = paths[i];
             SaxHandlerParser parser = createSaxHandlerParser();
-            InputStream is = resourceResolver_.getInputStream(targetPath.trim());
+            InputStream is = resourceResolver_
+                    .getInputStream(targetPath.trim());
             try {
                 configs.add(parser.parse(is));
             } finally {

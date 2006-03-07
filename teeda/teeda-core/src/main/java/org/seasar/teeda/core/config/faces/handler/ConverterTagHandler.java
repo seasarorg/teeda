@@ -28,22 +28,22 @@ public class ConverterTagHandler extends JsfTagHandler {
 
     private static final long serialVersionUID = 1L;
 
-    public ConverterTagHandler(){
+    public ConverterTagHandler() {
     }
-    
+
     public void start(TagHandlerContext context, Attributes attributes) {
         super.start(context, attributes);
         ConverterElement converter = createConverterElement();
         context.push(converter);
     }
-    
+
     public void end(TagHandlerContext context, String body) {
-        ConverterElement converter = (ConverterElement)context.pop();
-        FacesConfig facesConfig = (FacesConfig)context.peek();
+        ConverterElement converter = (ConverterElement) context.pop();
+        FacesConfig facesConfig = (FacesConfig) context.peek();
         facesConfig.addConverterElement(converter);
     }
-    
-    protected ConverterElement createConverterElement(){
+
+    protected ConverterElement createConverterElement() {
         return new ConverterElementImpl();
     }
 }

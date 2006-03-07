@@ -15,9 +15,9 @@
  */
 package org.seasar.teeda.core.config.faces.assembler.impl;
 
-import java.util.List;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.faces.application.Application;
 

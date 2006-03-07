@@ -80,12 +80,12 @@ public class DoubleConverterTest extends TeedaTestCase {
         String s = converter.getAsString(getFacesContext(),
                 new MockUIComponent(), new Double(1.234));
         assertEquals("1.234", s);
-        
-        s = converter.getAsString(getFacesContext(),
-                new MockUIComponent(), "aaa");
+
+        s = converter.getAsString(getFacesContext(), new MockUIComponent(),
+                "aaa");
         assertEquals("aaa", s);
     }
-    
+
     public void testGetAsString_throwConverterException() throws Exception {
         DoubleConverter converter = new DoubleConverter();
         try {

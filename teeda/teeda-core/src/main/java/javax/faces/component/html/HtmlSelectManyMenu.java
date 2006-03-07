@@ -37,9 +37,11 @@ public class HtmlSelectManyMenu extends UISelectMany {
     private String dir_ = null;
 
     private Boolean disabled_ = null;
+
     private String disabledClass_ = null;
 
     private String enabledClass_ = null;
+
     private String lang_ = null;
 
     private String onblur_ = null;
@@ -121,6 +123,7 @@ public class HtmlSelectManyMenu extends UISelectMany {
                 : null;
         return v != null ? v.booleanValue() : DEFAULT_DISABLED;
     }
+
     public void setDisabledClass(String disabledClass) {
         disabledClass_ = disabledClass;
     }

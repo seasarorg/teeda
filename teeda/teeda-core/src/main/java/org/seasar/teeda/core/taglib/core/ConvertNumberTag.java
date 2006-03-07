@@ -35,39 +35,39 @@ import org.seasar.teeda.core.util.ValueBindingUtil;
 public class ConvertNumberTag extends ConverterTag {
 
     private static final long serialVersionUID = 1L;
-    
+
     private String currencyCode_ = null;
-    
+
     private String currencySymbol_ = null;
-    
+
     private String groupingUsed_ = JsfConstants.DEFAULT_CONVERTNUMBER_GROUPING_USED;
-    
+
     private String integerOnly_ = JsfConstants.DEFAULT_CONVERTNUMBER_INTEGER_ONLY;
-    
+
     private String locale_ = null;
-    
+
     private String maxFractionDigits_ = null;
-    
+
     private String maxIntegerDigits_ = null;
-    
+
     private String minFractionDigits_ = null;
-    
+
     private String minIntegerDigits_ = null;
-    
+
     private String pattern_ = null;
-    
+
     private String type_ = JsfConstants.DEFAULT_CONVERTNUMBER_TYPE;
-    
+
     public ConvertNumberTag() {
     }
-    
+
     public void setPageContext(PageContext context) {
         super.setPageContext(context);
         setConverterId(NumberConverter.CONVERTER_ID);
     }
 
     protected Converter createConverter() throws JspException {
-        NumberConverter converter = (NumberConverter)super.createConverter();
+        NumberConverter converter = (NumberConverter) super.createConverter();
 
         FacesContext facesContext = FacesContext.getCurrentInstance();
         setConverterCurrencyCode(facesContext, converter);
@@ -90,34 +90,33 @@ public class ConvertNumberTag extends ConverterTag {
         if (currencyCode_ == null) {
             return;
         }
-        String currencyCode = (String)ValueBindingUtil.getValue(context,
+        String currencyCode = (String) ValueBindingUtil.getValue(context,
                 currencyCode_);
         if (currencyCode == null) {
             currencyCode = currencyCode_;
         }
         converter.setCurrencyCode(currencyCode);
     }
-    
+
     protected void setConverterCurrencySymbol(FacesContext context,
             NumberConverter converter) {
         if (currencySymbol_ == null) {
             return;
         }
-        String currencySymbol = (String)ValueBindingUtil.getValue(context,
+        String currencySymbol = (String) ValueBindingUtil.getValue(context,
                 currencySymbol_);
         if (currencySymbol == null) {
             currencySymbol = currencySymbol_;
         }
         converter.setCurrencySymbol(currencySymbol);
     }
-    
+
     protected void setConverterGroupingUsed(FacesContext context,
             NumberConverter converter) {
         if (groupingUsed_ == null) {
             return;
         }
-        Boolean b = (Boolean)ValueBindingUtil.getValue(context,
-                groupingUsed_);
+        Boolean b = (Boolean) ValueBindingUtil.getValue(context, groupingUsed_);
         if (b == null) {
             b = new Boolean(groupingUsed_);
         }
@@ -129,8 +128,7 @@ public class ConvertNumberTag extends ConverterTag {
         if (integerOnly_ == null) {
             return;
         }
-        Boolean b = (Boolean)ValueBindingUtil.getValue(context,
-                integerOnly_);
+        Boolean b = (Boolean) ValueBindingUtil.getValue(context, integerOnly_);
         if (b == null) {
             b = new Boolean(integerOnly_);
         }
@@ -139,7 +137,7 @@ public class ConvertNumberTag extends ConverterTag {
 
     protected void setConverterLocale(FacesContext context,
             NumberConverter converter) {
-        Locale locale = (Locale)ValueBindingUtil.getValue(context, locale_);
+        Locale locale = (Locale) ValueBindingUtil.getValue(context, locale_);
         if (locale == null) {
             locale = LocaleUtil.getLocale(locale_);
         }
@@ -151,20 +149,20 @@ public class ConvertNumberTag extends ConverterTag {
         if (maxFractionDigits_ == null) {
             return;
         }
-        Integer i = (Integer)ValueBindingUtil.getValue(context, 
+        Integer i = (Integer) ValueBindingUtil.getValue(context,
                 maxFractionDigits_);
         if (i == null) {
             i = new Integer(maxFractionDigits_);
         }
         converter.setMaxFractionDigits(i.intValue());
     }
-    
+
     protected void setConverterMaxIntegerDigits(FacesContext context,
             NumberConverter converter) {
         if (maxIntegerDigits_ == null) {
             return;
         }
-        Integer i = (Integer)ValueBindingUtil.getValue(context, 
+        Integer i = (Integer) ValueBindingUtil.getValue(context,
                 maxIntegerDigits_);
         if (i == null) {
             i = new Integer(maxIntegerDigits_);
@@ -177,7 +175,7 @@ public class ConvertNumberTag extends ConverterTag {
         if (minFractionDigits_ == null) {
             return;
         }
-        Integer i = (Integer)ValueBindingUtil.getValue(context, 
+        Integer i = (Integer) ValueBindingUtil.getValue(context,
                 minFractionDigits_);
         if (i == null) {
             i = new Integer(minFractionDigits_);
@@ -190,7 +188,7 @@ public class ConvertNumberTag extends ConverterTag {
         if (minIntegerDigits_ == null) {
             return;
         }
-        Integer i = (Integer)ValueBindingUtil.getValue(context, 
+        Integer i = (Integer) ValueBindingUtil.getValue(context,
                 minIntegerDigits_);
         if (i == null) {
             i = new Integer(minIntegerDigits_);
@@ -231,7 +229,7 @@ public class ConvertNumberTag extends ConverterTag {
     public void setIntegerOnly(String integerOnly) {
         integerOnly_ = integerOnly;
     }
-    
+
     public void setLocale(String locale) {
         locale_ = locale;
     }

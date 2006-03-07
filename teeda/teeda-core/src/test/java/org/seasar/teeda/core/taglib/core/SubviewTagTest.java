@@ -21,21 +21,21 @@ import junit.framework.TestCase;
  * @author yone
  */
 public class SubviewTagTest extends TestCase {
-    
+
     public void testGetComponentType() throws Exception {
         // # Arrange #
         SubviewTag tag = new SubviewTag();
-        
+
         // # Act & Assert #
         assertEquals("javax.faces.NamingContainer", tag.getComponentType());
     }
-    
+
     public void testGetRenderType() throws Exception {
         // # Arrange #
         SubviewTag tag = new SubviewTag();
-        
+
         // # Act & Assert #
-        assertEquals(null, tag.getRendererType());        
+        assertEquals(null, tag.getRendererType());
     }
-        
+
 }

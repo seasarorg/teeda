@@ -36,7 +36,8 @@ public class PhaseEventTest extends TestCase {
 
     public void testPhaseEvent_PhaseIdCantBeNull() throws Exception {
         try {
-            new PhaseEvent(new MockFacesContextImpl(), null, new MockLifecycleImpl());
+            new PhaseEvent(new MockFacesContextImpl(), null,
+                    new MockLifecycleImpl());
             fail();
         } catch (NullPointerException expected) {
             assertTrue(true);

@@ -15,7 +15,6 @@
  */
 package org.seasar.teeda.core.config.faces.assembler.impl;
 
-import org.seasar.teeda.core.config.faces.assembler.impl.DefaultRenderKitIdAssembler;
 import org.seasar.teeda.core.mock.MockApplication;
 import org.seasar.teeda.core.unit.TeedaTestCase;
 
@@ -33,9 +32,10 @@ public class DefaultRenderKitIdAssemblerTest extends TeedaTestCase {
     }
 
     public void testAssemble() throws Exception {
-        DefaultRenderKitIdAssembler assembler = new DefaultRenderKitIdAssembler("hoge", getApplication());
+        DefaultRenderKitIdAssembler assembler = new DefaultRenderKitIdAssembler(
+                "hoge", getApplication());
         assembler.assemble();
-        
+
         MockApplication app = getApplication();
         assertEquals("hoge", app.getDefaultRenderKitId());
     }

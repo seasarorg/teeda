@@ -27,11 +27,11 @@ import javax.faces.model.ResultSetDataModel.ResultSetMap;
  */
 public class ResultSetEntries extends ResultSetBaseSet {
 
-	public ResultSetEntries(ResultSetMap map) {
-		super(map);		
-	}
+    public ResultSetEntries(ResultSetMap map) {
+        super(map);
+    }
 
-	public Iterator iterator() {
-		return new ResultSetEntriesIterator(map_);
-	}
+    public Iterator iterator() {
+        return new ResultSetEntriesIterator(map_);
+    }
 }

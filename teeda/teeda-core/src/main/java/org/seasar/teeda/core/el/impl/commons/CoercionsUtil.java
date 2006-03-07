@@ -26,43 +26,47 @@ import org.apache.commons.el.Logger;
  */
 public class CoercionsUtil {
 
-    private static final org.seasar.framework.log.Logger logger_ = 
-        org.seasar.framework.log.Logger.getLogger(CoercionsUtil.class);
-    
-    private CoercionsUtil(){
+    private static final org.seasar.framework.log.Logger logger_ = org.seasar.framework.log.Logger
+            .getLogger(CoercionsUtil.class);
+
+    private CoercionsUtil() {
     }
 
-    public static Integer coerceToInteger(Object index){
+    public static Integer coerceToInteger(Object index) {
         return coerceToInteger(index, CommonsElLogger.getLogger());
     }
-    
+
     public static Integer coerceToInteger(Object index, Logger logger) {
-        try{
+        try {
             return Coercions.coerceToInteger(index, logger);
-        }catch (ELException e){
+        } catch (ELException e) {
             logger_.error(e + " occured at " + CoercionsUtil.class);
             return null;
         }
     }
-    
-    public static boolean coerceToPrimitiveBoolean(Object value) throws EvaluationException{
+
+    public static boolean coerceToPrimitiveBoolean(Object value)
+            throws EvaluationException {
         return coerceToPrimitiveBoolean(value, CommonsElLogger.getLogger());
     }
-    
-    public static boolean coerceToPrimitiveBoolean(Object value, Logger logger) throws EvaluationException{
-        try{
+
+    public static boolean coerceToPrimitiveBoolean(Object value, Logger logger)
+            throws EvaluationException {
+        try {
             return Coercions.coerceToBoolean(value, logger).booleanValue();
-        }catch(ELException e){
+        } catch (ELException e) {
             throw new EvaluationException(e);
         }
     }
 
-    public static Object coerce(Object newValue, Class type) throws EvaluationException{
-        try{
-            return Coercions.coerce(newValue, type, CommonsElLogger.getLogger());
-        }catch (ELException e){
+    public static Object coerce(Object newValue, Class type)
+            throws EvaluationException {
+        try {
+            return Coercions
+                    .coerce(newValue, type, CommonsElLogger.getLogger());
+        } catch (ELException e) {
             throw new EvaluationException(e);
         }
     }
-    
+
 }

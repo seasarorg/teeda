@@ -21,25 +21,25 @@ import javax.faces.event.ActionListener;
 
 public class MockSingleConstructorActionListener implements ActionListener {
 
-	private ActionEvent event_ = null;
+    private ActionEvent event_ = null;
 
     private ActionListener originalListener_;
-    
-    public MockSingleConstructorActionListener(ActionListener listener){
+
+    public MockSingleConstructorActionListener(ActionListener listener) {
         originalListener_ = listener;
     }
-    
-	public void processAction(ActionEvent event)
-			throws AbortProcessingException {
+
+    public void processAction(ActionEvent event)
+            throws AbortProcessingException {
         originalListener_.processAction(event);
         event_ = event;
-	}
+    }
 
-	public ActionEvent getEvent() {
-		return event_;
-	}
-    
-    public ActionListener getOriginal(){
+    public ActionEvent getEvent() {
+        return event_;
+    }
+
+    public ActionListener getOriginal() {
         return originalListener_;
     }
 }

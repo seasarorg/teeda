@@ -17,7 +17,6 @@ package org.seasar.teeda.core.config.faces.assembler.impl;
 
 import javax.faces.application.ViewHandler;
 
-import org.seasar.teeda.core.config.faces.assembler.impl.ViewHandlerAssembler;
 import org.seasar.teeda.core.mock.MockSingleConstructorViewHandler;
 import org.seasar.teeda.core.mock.MockViewHandlerImpl;
 import org.seasar.teeda.core.unit.TeedaTestCase;

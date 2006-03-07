@@ -28,35 +28,40 @@ import org.seasar.teeda.core.config.faces.element.PropertyElement;
 public class ConverterElementImpl implements ConverterElement {
 
     private String converterId_;
+
     private String converterForClass_;
+
     private String converterClass_;
+
     private List attributeElements_;
+
     private List propertyElements_;
-    public ConverterElementImpl(){
+
+    public ConverterElementImpl() {
         attributeElements_ = new ArrayList();
         propertyElements_ = new ArrayList();
     }
 
-    public void setConverterId(String converterId){
+    public void setConverterId(String converterId) {
         converterId_ = converterId;
     }
-    
-    public void setConverterForClass(String converterForClass){
+
+    public void setConverterForClass(String converterForClass) {
         converterForClass_ = converterForClass;
     }
-    
-    public void setConverterClass(String converterClass){
-        converterClass_ = converterClass; 
+
+    public void setConverterClass(String converterClass) {
+        converterClass_ = converterClass;
     }
-    
+
     public String getConverterClass() {
         return converterClass_;
     }
-    
+
     public String getConverterForClass() {
         return converterForClass_;
     }
-    
+
     public String getConverterId() {
         return converterId_;
     }

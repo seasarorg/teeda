@@ -26,35 +26,38 @@ import org.seasar.teeda.core.config.faces.element.ListEntriesElement;
 public class ListEntriesElementImpl implements ListEntriesElement {
 
     private String valueClassName_;
+
     private List values_;
+
     private boolean nullValue_;
-    public ListEntriesElementImpl(){
+
+    public ListEntriesElementImpl() {
         values_ = new ArrayList();
     }
-    
-	public void setValueClass(String valueClassName) {
+
+    public void setValueClass(String valueClassName) {
         valueClassName_ = valueClassName;
-	}
+    }
 
-	public void addValue(String value) {
+    public void addValue(String value) {
         values_.add(value);
-	}
+    }
 
-	public String getValueClass() {
-		return valueClassName_;
-	}
+    public String getValueClass() {
+        return valueClassName_;
+    }
 
-	public List getValues() {
-		return values_;
-	}
+    public List getValues() {
+        return values_;
+    }
 
-	public void setNullValue(boolean nullValue) {
+    public void setNullValue(boolean nullValue) {
         nullValue_ = nullValue;
         values_.add(null);
-	}
+    }
 
-	public boolean isNullValue() {
-		return nullValue_;
-	}
+    public boolean isNullValue() {
+        return nullValue_;
+    }
 
 }

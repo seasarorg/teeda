@@ -26,13 +26,13 @@ import org.seasar.teeda.core.taglib.UIComponentTagBase;
 public abstract class InputTagBase extends UIComponentTagBase {
 
     private String immediate_;
-    
+
     private String required_;
-    
+
     private String validator_;
-    
+
     private String valueChangeListener_;
-    
+
     private String readonly_;
 
     protected void setProperties(UIComponent component) {
@@ -44,7 +44,7 @@ public abstract class InputTagBase extends UIComponentTagBase {
         setValueChangeListenerProperty(component, valueChangeListener_);
         setComponentProperty(component, JsfConstants.READONLY_ATTR, readonly_);
     }
-    
+
     public void release() {
         super.release();
         immediate_ = null;
@@ -52,8 +52,7 @@ public abstract class InputTagBase extends UIComponentTagBase {
         validator_ = null;
         valueChangeListener_ = null;
     }
-    
-    
+
     public void setImmediate(String immediate) {
         immediate_ = immediate;
     }
@@ -73,5 +72,5 @@ public abstract class InputTagBase extends UIComponentTagBase {
     public void setValueChangeListener(String valueChangeListener) {
         valueChangeListener_ = valueChangeListener;
     }
-    
+
 }

@@ -24,23 +24,23 @@ import org.seasar.teeda.core.unit.TeedaTestCase;
  * @author yone
  */
 public class FormTagTest extends TeedaTestCase {
-    
+
     public void testGetComponentType() throws Exception {
         // # Arrange #
         FormTag tag = new FormTag();
-        
+
         // # Act & Assert #
         assertEquals("javax.faces.HtmlForm", tag.getComponentType());
     }
-    
+
     public void testGetRenderType() throws Exception {
         // # Arrange #
         FormTag tag = new FormTag();
-        
+
         // # Act & Assert #
-        assertEquals("javax.faces.Form", tag.getRendererType());        
+        assertEquals("javax.faces.Form", tag.getRendererType());
     }
-    
+
     public void testSetProperties_All() throws Exception {
         // # Arrange #
         HtmlForm component = createHtmlForm();
@@ -65,15 +65,16 @@ public class FormTagTest extends TeedaTestCase {
         tag.setStyle("style");
         tag.setStyleClass("styleclass");
         tag.setTitle("title");
-        
+
         // # Act #
         tag.setProperties(component);
-        
+
         // # Assert #
         assertEquals("accept", component.getAccept());
         assertEquals("acceptcharset", component.getAcceptcharset());
         assertEquals("dir", component.getDir());
-        assertEquals("application/x-www-form-urlencoded", component.getEnctype());
+        assertEquals("application/x-www-form-urlencoded", component
+                .getEnctype());
         assertEquals("lang", component.getLang());
         assertEquals("onclick", component.getOnclick());
         assertEquals("ondblclick", component.getOndblclick());
@@ -91,7 +92,7 @@ public class FormTagTest extends TeedaTestCase {
         assertEquals("styleclass", component.getStyleClass());
         assertEquals("title", component.getTitle());
     }
-    
+
     private HtmlForm createHtmlForm() {
         return (HtmlForm) createUIComponent();
     }

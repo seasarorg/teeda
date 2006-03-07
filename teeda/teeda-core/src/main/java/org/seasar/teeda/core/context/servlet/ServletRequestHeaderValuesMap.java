@@ -30,8 +30,10 @@ public class ServletRequestHeaderValuesMap extends
         AbstractUnmodifiableExternalContextMap {
 
     private static final String[] EMPTY_STRING_ARRAY = new String[0];
+
     private final HttpServletRequest request_;
-    public ServletRequestHeaderValuesMap(final HttpServletRequest request){
+
+    public ServletRequestHeaderValuesMap(final HttpServletRequest request) {
         request_ = request;
     }
 
@@ -44,14 +46,14 @@ public class ServletRequestHeaderValuesMap extends
         return request_.getHeaderNames();
     }
 
-    private String[] toStringArray(Enumeration e){
-        if(e == null){
+    private String[] toStringArray(Enumeration e) {
+        if (e == null) {
             return EMPTY_STRING_ARRAY;
         }
         List list = new ArrayList();
-        while(e.hasMoreElements()){
+        while (e.hasMoreElements()) {
             list.add(e.nextElement());
         }
-        return (String[])list.toArray(new String[list.size()]);
+        return (String[]) list.toArray(new String[list.size()]);
     }
 }

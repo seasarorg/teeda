@@ -22,7 +22,6 @@ import javax.faces.event.PhaseListener;
 
 import junitx.framework.ArrayAssert;
 
-import org.seasar.teeda.core.config.faces.assembler.impl.PhaseListenerAssembler;
 import org.seasar.teeda.core.mock.MockPhaseListener;
 import org.seasar.teeda.core.unit.TeedaTestCase;
 

@@ -28,21 +28,21 @@ public class LifecycleTagHandler extends JsfTagHandler {
 
     private static final long serialVersionUID = 1L;
 
-    public LifecycleTagHandler(){
+    public LifecycleTagHandler() {
     }
-    
+
     public void start(TagHandlerContext context, Attributes attributes) {
         LifecycleElement lifecycle = createLifecycleElement();
         context.push(lifecycle);
     }
-    
+
     public void end(TagHandlerContext context, String body) {
-        LifecycleElement lifecycle = (LifecycleElement)context.pop();
-        FacesConfig facesConfig = (FacesConfig)context.peek();
+        LifecycleElement lifecycle = (LifecycleElement) context.pop();
+        FacesConfig facesConfig = (FacesConfig) context.peek();
         facesConfig.addLifecycleElement(lifecycle);
     }
-    
-    protected LifecycleElement createLifecycleElement(){
+
+    protected LifecycleElement createLifecycleElement() {
         return new LifecycleElementImpl();
     }
 }

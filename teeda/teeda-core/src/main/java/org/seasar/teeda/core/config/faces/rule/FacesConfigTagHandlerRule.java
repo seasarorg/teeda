@@ -96,7 +96,6 @@ public class FacesConfigTagHandlerRule extends JsfBaseTagHandlerRule {
         addTagHandler("attribute-class");
         addTagHandler("attribute-extension");
 
-        
         addTagHandler("property", new PropertyTagHandler());
         addTagHandler("property-name");
         addTagHandler("property-class");
@@ -136,17 +135,17 @@ public class FacesConfigTagHandlerRule extends JsfBaseTagHandlerRule {
 
         addTagHandler("navigation-rule", new NavigationRuleTagHandler());
         addTagHandler("from-view-id");
-        
+
         addTagHandler("navigation-case", new NavigationCaseTagHandler());
         addTagHandler("from-action");
         addTagHandler("from-outcome");
         addTagHandler("to-view-id");
         addTagHandler("redirect");
-        
+
         addTagHandler("referenced-bean", new ReferencedBeanTagHandler());
         addTagHandler("referenced-bean-name");
         addTagHandler("referenced-bean-class");
-        
+
         addTagHandler("render-kit", new RenderKitTagHandler());
         addTagHandler("render-kit-id");
         addTagHandler("render-kit-class");

@@ -25,15 +25,16 @@ import org.seasar.teeda.core.config.faces.element.NavigationRuleElement;
 public abstract class NavigationRuleAssembler extends AbstractJsfAssembler {
 
     private List navigationRules_ = Collections.EMPTY_LIST;
-    
-    public NavigationRuleAssembler(List navigationRules, ExternalContext externalContext){
+
+    public NavigationRuleAssembler(List navigationRules,
+            ExternalContext externalContext) {
         isAllSuitableJsfElement(navigationRules, NavigationRuleElement.class);
         navigationRules_ = navigationRules;
         setExternalContext(externalContext);
         setupBeforeAssemble();
     }
-    
-    protected final List getNavigationRules(){
+
+    protected final List getNavigationRules() {
         return navigationRules_;
     }
 }

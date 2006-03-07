@@ -17,7 +17,6 @@ package org.seasar.teeda.core.config.faces.assembler.impl;
 
 import javax.faces.application.NavigationHandler;
 
-import org.seasar.teeda.core.config.faces.assembler.impl.NavigationHandlerAssembler;
 import org.seasar.teeda.core.mock.MockNavigationHandler;
 import org.seasar.teeda.core.mock.MockSingleConstructorNavigationHandler;
 import org.seasar.teeda.core.unit.TeedaTestCase;
@@ -38,11 +37,12 @@ public class NavigationHandlerAssemblerTest extends TeedaTestCase {
     public void testSimpleAssembleNavigationHandler() throws Exception {
         // ## Arrange ##
         String navHandlerName = "org.seasar.teeda.core.mock.MockNavigationHandler";
-        NavigationHandlerAssembler assembler = new NavigationHandlerAssembler(navHandlerName, getApplication());
-        
+        NavigationHandlerAssembler assembler = new NavigationHandlerAssembler(
+                navHandlerName, getApplication());
+
         // ## Act ##
         assembler.assemble();
-        
+
         // ## Assert ##
         NavigationHandler handler = getApplication().getNavigationHandler();
         assertNotNull(handler);
@@ -53,7 +53,8 @@ public class NavigationHandlerAssemblerTest extends TeedaTestCase {
         // ## Arrange ##
         getApplication().setNavigationHandler(new MockNavigationHandler());
         String navHandlerName = "org.seasar.teeda.core.mock.MockSingleConstructorNavigationHandler";
-        NavigationHandlerAssembler assembler = new NavigationHandlerAssembler(navHandlerName, getApplication());
+        NavigationHandlerAssembler assembler = new NavigationHandlerAssembler(
+                navHandlerName, getApplication());
 
         // ## Act ##
         assembler.assemble();
@@ -62,7 +63,7 @@ public class NavigationHandlerAssemblerTest extends TeedaTestCase {
         NavigationHandler handler = getApplication().getNavigationHandler();
         assertNotNull(handler);
         assertTrue(handler instanceof MockSingleConstructorNavigationHandler);
-        MockSingleConstructorNavigationHandler h = (MockSingleConstructorNavigationHandler)handler;
+        MockSingleConstructorNavigationHandler h = (MockSingleConstructorNavigationHandler) handler;
         assertTrue(h.getOriginal() instanceof MockNavigationHandler);
     }
 

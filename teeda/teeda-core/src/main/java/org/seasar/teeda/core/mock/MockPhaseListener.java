@@ -19,23 +19,24 @@ import javax.faces.event.PhaseEvent;
 import javax.faces.event.PhaseId;
 import javax.faces.event.PhaseListener;
 
-
 public class MockPhaseListener implements PhaseListener {
 
     private static final long serialVersionUID = 1L;
+
     private String name_;
-    public MockPhaseListener(){
+
+    public MockPhaseListener() {
         name_ = this.getClass().getName();
     }
 
-    public MockPhaseListener(String name){
+    public MockPhaseListener(String name) {
         name_ = name;
     }
-    
-    public void setName(String name){
+
+    public void setName(String name) {
         name_ = name;
     }
-    
+
     public void afterPhase(PhaseEvent event) {
     }
 
@@ -46,7 +47,7 @@ public class MockPhaseListener implements PhaseListener {
         return PhaseId.ANY_PHASE;
     }
 
-    public String toString(){
+    public String toString() {
         return name_;
     }
 }

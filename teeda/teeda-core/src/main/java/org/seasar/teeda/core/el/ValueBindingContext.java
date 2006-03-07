@@ -21,15 +21,16 @@ import javax.faces.el.ValueBinding;
 /**
  * @author Shinpei Ohtani
  */
-public interface ValueBindingContext{
-    
+public interface ValueBindingContext {
+
     public void setValueBindingName(String valueBindingName);
-    
+
     public String getValueBindingName();
-    
-    public ValueBinding createValueBinding(Application application, String expression);
-    
+
+    public ValueBinding createValueBinding(Application application,
+            String expression);
+
     public ELParser getELParser();
-    
+
     public void setELParser(ELParser parser);
 }

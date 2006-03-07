@@ -17,10 +17,9 @@ package org.seasar.teeda.core.config.faces.element;
 
 import javax.faces.application.ViewHandler;
 
-
 public interface ViewHandlerElement extends JsfConfigElement {
 
     public void setViewHandler(ViewHandler handler);
-    
+
     public ViewHandler getViewHandler();
 }

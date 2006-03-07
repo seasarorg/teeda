@@ -24,35 +24,35 @@ import junit.framework.TestCase;
  * @author yone
  */
 public class ParamTagTest extends TestCase {
-    
+
     public void testGetComponentType() throws Exception {
         // # Arrange #
         ParamTag tag = new ParamTag();
-        
+
         // # Act & Assert #
         assertEquals("javax.faces.Parameter", tag.getComponentType());
     }
-    
+
     public void testGetRenderType() throws Exception {
         // # Arrange #
         ParamTag tag = new ParamTag();
-        
+
         // # Act & Assert #
-        assertEquals(null, tag.getRendererType());        
+        assertEquals(null, tag.getRendererType());
     }
 
     public void testSetProperties() throws Exception {
         // # Arrange #
         UIParameter parameter = createUIParameter();
-        
+
         ParamTag tag = new ParamTag();
         tag.setName("param name");
         tag.setProperties(parameter);
 
         // # Act & Assert #
-        assertEquals("param name", parameter.getName());        
+        assertEquals("param name", parameter.getName());
     }
-    
+
     private UIParameter createUIParameter() {
         return (UIParameter) createUIComponent();
     }
@@ -60,5 +60,5 @@ public class ParamTagTest extends TestCase {
     protected UIComponent createUIComponent() {
         return new UIParameter();
     }
-        
+
 }

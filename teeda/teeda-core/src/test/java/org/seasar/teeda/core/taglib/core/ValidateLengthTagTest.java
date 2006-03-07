@@ -27,7 +27,7 @@ import org.seasar.teeda.core.unit.TeedaTestCase;
  * @author yone
  */
 public class ValidateLengthTagTest extends TeedaTestCase {
-    
+
     public void testCreateValidator() throws Exception {
         // # Arrange #
         String validatorId = LengthValidator.VALIDATOR_ID;
@@ -36,10 +36,10 @@ public class ValidateLengthTagTest extends TeedaTestCase {
         app.addValidator(validatorId, validatorClassName);
         setApplication(app);
         ValidateLengthTag tag = new ValidateLengthTag();
-        
+
         // # Act #
         Validator validator = tag.createValidator();
-        
+
         // # Assert #
         assertNotNull(validator);
         assertTrue(validator instanceof LengthValidator);
@@ -52,12 +52,12 @@ public class ValidateLengthTagTest extends TeedaTestCase {
             // # Act #
             tag.createValidator();
             fail();
-        }catch(NullPointerException e){
+        } catch (NullPointerException e) {
             // # Assert #
             success();
         }
     }
-    
+
     public void testCreateValidator_noSetProperty() throws Exception {
         // # Arrange #
         addValidator();
@@ -65,12 +65,12 @@ public class ValidateLengthTagTest extends TeedaTestCase {
 
         // # Act #
         tag.createValidator();
-        
+
         // # Assert #
         assertFalse(tag.minimumSet);
         assertFalse(tag.maximumSet);
-    }    
-    
+    }
+
     public void testSetMinimum_constantValue() throws Exception {
         // # Arrange #
         addValidator();
@@ -78,66 +78,66 @@ public class ValidateLengthTagTest extends TeedaTestCase {
 
         // # Act #
         tag.setMinimum("2");
-        LengthValidator validator = (LengthValidator)tag.createValidator();
-        
+        LengthValidator validator = (LengthValidator) tag.createValidator();
+
         // # Assert #
         assertTrue(tag.minimumSet);
         assertTrue(2 == validator.getMinimum());
-    }    
-    
+    }
+
     public void testSetMinimum_bindingValue() throws Exception {
         // # Arrange #
         addValidator();
         MockValueBinding vb = new MockValueBinding();
         vb.setValue(getFacesContext(), new Integer(1));
-        getApplication().setValueBinding(vb);        
+        getApplication().setValueBinding(vb);
         ValidateLengthTag tag = new ValidateLengthTag();
 
         // # Act #
         tag.setMinimum("#{hoge.minimum}");
-        LengthValidator validator = (LengthValidator)tag.createValidator();
-        
+        LengthValidator validator = (LengthValidator) tag.createValidator();
+
         // # Assert #
         assertTrue(tag.minimumSet);
-        assertTrue(1 == validator.getMinimum());       
+        assertTrue(1 == validator.getMinimum());
     }
-    
+
     public void testSetMaximum_constantValue() throws Exception {
         // # Arrange #
         addValidator();
         ValidateLengthTag tag = new ValidateLengthTag();
-        
+
         // # Act #        
         tag.setMaximum("30");
-        LengthValidator validator = (LengthValidator)tag.createValidator();
-        
+        LengthValidator validator = (LengthValidator) tag.createValidator();
+
         // # Assert #
         assertTrue(tag.maximumSet);
         assertTrue(30 == validator.getMaximum());
-    }    
-    
+    }
+
     public void testSetMaximum_bindingValue() throws Exception {
         // # Arrange #
         addValidator();
         MockValueBinding vb = new MockValueBinding();
         vb.setValue(getFacesContext(), new Integer(50));
-        getApplication().setValueBinding(vb);        
+        getApplication().setValueBinding(vb);
         ValidateLengthTag tag = new ValidateLengthTag();
 
         // # Act #        
         tag.setMaximum("#{hoge.maximum}");
-        LengthValidator validator = (LengthValidator)tag.createValidator();
-        
+        LengthValidator validator = (LengthValidator) tag.createValidator();
+
         // # Assert #
         assertTrue(tag.maximumSet);
-        assertTrue(50 == validator.getMaximum());       
+        assertTrue(50 == validator.getMaximum());
     }
-    
+
     private void addValidator() throws Exception {
         MockApplication app = new MockApplicationImpl();
-        app.addValidator("javax.faces.Length", 
+        app.addValidator("javax.faces.Length",
                 "javax.faces.validator.LengthValidator");
-        setApplication(app);       
+        setApplication(app);
     }
-    
+
 }

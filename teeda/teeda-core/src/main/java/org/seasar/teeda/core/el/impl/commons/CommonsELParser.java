@@ -27,30 +27,31 @@ import org.seasar.teeda.core.el.impl.JspELParserUtil;
 /**
  * @author Shinpei Ohtani
  */
-public class CommonsELParser implements org.seasar.teeda.core.el.ELParser{
+public class CommonsELParser implements org.seasar.teeda.core.el.ELParser {
 
     private ExpressionProcessor processor_;
-    
-    public CommonsELParser(){
+
+    public CommonsELParser() {
     }
-    
-    public Object parse(final String expression){
-        String jspExpression = JspELParserUtil.convertToJspExpression(expression);
+
+    public Object parse(final String expression) {
+        String jspExpression = JspELParserUtil
+                .convertToJspExpression(expression);
         ELParser parser = new ELParser(new StringReader(jspExpression));
-        try{
+        try {
             Object obj = parser.ExpressionString();
             processor_.processExpression(obj, Object.class);
             return obj;
-        }catch (ParseException e){
+        } catch (ParseException e) {
             throw new ReferenceSyntaxException();
         }
     }
-    
-    public ExpressionProcessor getExpressionProcessor(){
+
+    public ExpressionProcessor getExpressionProcessor() {
         return processor_;
     }
-    
-    public void setExpressionProcessor(ExpressionProcessor processor){
+
+    public void setExpressionProcessor(ExpressionProcessor processor) {
         processor_ = processor;
     }
 }

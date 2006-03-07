@@ -23,18 +23,21 @@ import org.seasar.teeda.core.config.faces.element.ComponentElement;
 import org.seasar.teeda.core.config.faces.element.FacetElement;
 import org.seasar.teeda.core.config.faces.element.PropertyElement;
 
-
 public class ComponentElementImpl implements ComponentElement {
 
     private String componentType_;
+
     private String componentClass_;
+
     private List attributes_ = new ArrayList();
+
     private List properties_ = new ArrayList();
+
     private List facets_ = new ArrayList();
-    
-    public ComponentElementImpl(){
+
+    public ComponentElementImpl() {
     }
-    
+
     public void setComponentType(String componentType) {
         componentType_ = componentType;
     }

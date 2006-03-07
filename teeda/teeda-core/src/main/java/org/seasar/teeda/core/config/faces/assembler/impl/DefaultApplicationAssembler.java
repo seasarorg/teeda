@@ -28,41 +28,48 @@ import org.seasar.teeda.core.config.faces.element.ApplicationElement;
 import org.seasar.teeda.core.util.ApplicationUtil;
 import org.seasar.teeda.core.util.IteratorUtil;
 
-public class DefaultApplicationAssembler extends ApplicationAssembler{
-    
+public class DefaultApplicationAssembler extends ApplicationAssembler {
+
     private ApplicationAssemblerHelper helper_;
 
-    public DefaultApplicationAssembler(List applications){
+    public DefaultApplicationAssembler(List applications) {
         super(applications);
     }
 
     public void assemble() {
         List assemblers = helper_.getCollectedAssemblers();
-        for(Iterator itr = IteratorUtil.getIterator(assemblers);itr.hasNext();){
-            ApplicationChildAssembler assembler = (ApplicationChildAssembler)itr.next();
+        for (Iterator itr = IteratorUtil.getIterator(assemblers); itr.hasNext();) {
+            ApplicationChildAssembler assembler = (ApplicationChildAssembler) itr
+                    .next();
             assembler.assemble();
         }
     }
-    
-    protected void setupBeforeAssemble(){
+
+    protected void setupBeforeAssemble() {
         ApplicationElement appElement = null;
         helper_ = createApplicationAssemblerHelper();
-        for(Iterator itr = IteratorUtil.getIterator(getApplications());itr.hasNext();){
-            appElement = (ApplicationElement)itr.next();
-            helper_.setupActionListenerAssembler(appElement.getActionListeners());
+        for (Iterator itr = IteratorUtil.getIterator(getApplications()); itr
+                .hasNext();) {
+            appElement = (ApplicationElement) itr.next();
+            helper_.setupActionListenerAssembler(appElement
+                    .getActionListeners());
             helper_.setupLocaleConfigAssembler(appElement.getLocaleConfigs());
-            helper_.setupNavigationHandlerAssembler(appElement.getNavigationHandlers());
-            helper_.setupPropertyResolverAssembler(appElement.getPropertyResolvers());
+            helper_.setupNavigationHandlerAssembler(appElement
+                    .getNavigationHandlers());
+            helper_.setupPropertyResolverAssembler(appElement
+                    .getPropertyResolvers());
             helper_.setupStateManagerAssembler(appElement.getStateManagers());
-            helper_.setupVariableResolverAssembler(appElement.getVariableResolvers());
+            helper_.setupVariableResolverAssembler(appElement
+                    .getVariableResolvers());
             helper_.setupViewHandlerAssembler(appElement.getViewHandlers());
-            helper_.setupDefaultRenderKitIdAssembler(appElement.getDefaultRenderKitIds());
+            helper_.setupDefaultRenderKitIdAssembler(appElement
+                    .getDefaultRenderKitIds());
             helper_.setupMessageBundleAssembler(appElement.getMessageBundles());
         }
     }
 
-    protected ApplicationAssemblerHelper createApplicationAssemblerHelper(){
-        if(helper_ != null){
+    protected ApplicationAssemblerHelper createApplicationAssemblerHelper() {
+        if (helper_ != null) {
             return helper_;
         }
         Application application = ApplicationUtil.getApplicationFromFactory();
@@ -70,4 +77,3 @@ public class DefaultApplicationAssembler extends ApplicationAssembler{
     }
 
 }
-

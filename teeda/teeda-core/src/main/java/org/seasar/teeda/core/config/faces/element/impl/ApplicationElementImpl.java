@@ -36,15 +36,15 @@ public class ApplicationElementImpl implements ApplicationElement {
     private List variableResolvers_;
 
     private List navigationHandlers_;
-    
+
     private List viewHandlers_;
-    
+
     private List defaultRenderKitIds_;
-    
+
     private List localeConfigs_;
-    
+
     private List messageBundles_;
-    
+
     public ApplicationElementImpl() {
         actionListeners_ = new ArrayList();
         stateManagers_ = new ArrayList();
@@ -124,7 +124,7 @@ public class ApplicationElementImpl implements ApplicationElement {
     public List getLocaleConfigs() {
         return localeConfigs_;
     }
-    
+
     public List getMessageBundles() {
         return messageBundles_;
     }

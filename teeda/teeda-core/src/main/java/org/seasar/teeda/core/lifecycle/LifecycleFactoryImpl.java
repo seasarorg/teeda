@@ -34,28 +34,29 @@ import org.seasar.teeda.core.util.DIContainerUtil;
  */
 public class LifecycleFactoryImpl extends LifecycleFactory {
 
-	private Map lifecycles = Collections.synchronizedMap(new HashMap());
+    private Map lifecycles = Collections.synchronizedMap(new HashMap());
 
-	public LifecycleFactoryImpl() {
-		Lifecycle lifecycle = (Lifecycle)DIContainerUtil.getComponentNoException(Lifecycle.class);
-		addLifecycle(LifecycleFactory.DEFAULT_LIFECYCLE, lifecycle);
-	}
+    public LifecycleFactoryImpl() {
+        Lifecycle lifecycle = (Lifecycle) DIContainerUtil
+                .getComponentNoException(Lifecycle.class);
+        addLifecycle(LifecycleFactory.DEFAULT_LIFECYCLE, lifecycle);
+    }
 
-	public void addLifecycle(String id, Lifecycle lifecycle) {
-		if (lifecycles.put(id, lifecycle) != null) {
-			throw new LifecycleIdAlreadyExistRuntimeException(id);
-		}
-	}
+    public void addLifecycle(String id, Lifecycle lifecycle) {
+        if (lifecycles.put(id, lifecycle) != null) {
+            throw new LifecycleIdAlreadyExistRuntimeException(id);
+        }
+    }
 
-	public Lifecycle getLifecycle(String id) throws FacesException {
-		Lifecycle lifecycle = (Lifecycle) lifecycles.get(id);
-		if (lifecycle == null) {
-			throw new LifecycleIdNotFoundRuntimeException(id);
-		}
-		return lifecycle;
-	}
+    public Lifecycle getLifecycle(String id) throws FacesException {
+        Lifecycle lifecycle = (Lifecycle) lifecycles.get(id);
+        if (lifecycle == null) {
+            throw new LifecycleIdNotFoundRuntimeException(id);
+        }
+        return lifecycle;
+    }
 
-	public Iterator getLifecycleIds() {
-		return lifecycles.keySet().iterator();
-	}
+    public Iterator getLifecycleIds() {
+        return lifecycles.keySet().iterator();
+    }
 }

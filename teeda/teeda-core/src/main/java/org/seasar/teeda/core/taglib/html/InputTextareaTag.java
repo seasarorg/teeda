@@ -20,7 +20,6 @@ import javax.faces.component.html.HtmlInputTextarea;
 
 import org.seasar.teeda.core.JsfConstants;
 
-
 /**
  * @author yone
  */
@@ -33,7 +32,7 @@ public class InputTextareaTag extends InputTagBase {
     public String getRendererType() {
         return "javax.faces.Textarea";
     }
-    
+
     protected void setProperties(UIComponent component) {
         super.setProperties(component);
 

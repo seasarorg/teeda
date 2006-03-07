@@ -28,22 +28,21 @@ public class ValidatorTagHandler extends JsfTagHandler {
 
     private static final long serialVersionUID = 1L;
 
-    public ValidatorTagHandler(){
+    public ValidatorTagHandler() {
     }
-    
+
     public void start(TagHandlerContext context, Attributes attributes) {
         ValidatorElement validator = createValidatorElement();
         context.push(validator);
     }
 
-    
     public void end(TagHandlerContext context, String body) {
-        ValidatorElement validator = (ValidatorElement)context.pop();
-        FacesConfig facesConfig = (FacesConfig)context.peek();
+        ValidatorElement validator = (ValidatorElement) context.pop();
+        FacesConfig facesConfig = (FacesConfig) context.peek();
         facesConfig.addValidatorElement(validator);
     }
-    
-    protected ValidatorElement createValidatorElement(){
+
+    protected ValidatorElement createValidatorElement() {
         return new ValidatorElementImpl();
     }
 }

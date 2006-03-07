@@ -20,17 +20,19 @@ package org.seasar.teeda.core.exception;
  * @author Shinpei Ohtani
  *  
  */
-public class LifecycleIdAlreadyExistRuntimeException extends ExtendFacesException {
+public class LifecycleIdAlreadyExistRuntimeException extends
+        ExtendFacesException {
 
     private static final long serialVersionUID = 3833469504771339572L;
+
     private String lifecycleId;
 
-	public LifecycleIdAlreadyExistRuntimeException(String lifecycleId) {
-		super("ETDA0015", new Object[] { lifecycleId });
-		this.lifecycleId = lifecycleId;
-	}
+    public LifecycleIdAlreadyExistRuntimeException(String lifecycleId) {
+        super("ETDA0015", new Object[] { lifecycleId });
+        this.lifecycleId = lifecycleId;
+    }
 
-	public String getLifecycleId() {
-		return lifecycleId;
-	}
+    public String getLifecycleId() {
+        return lifecycleId;
+    }
 }

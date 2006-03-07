@@ -25,8 +25,8 @@ import org.seasar.teeda.core.unit.TeedaTestCase;
 public class InvokeApplicationPhaseTest extends TeedaTestCase {
 
     public void testGetCurrentPhaseId() throws Exception {
-        assertEquals(PhaseId.INVOKE_APPLICATION,
-                new InvokeApplicationPhase().getCurrentPhaseId());
+        assertEquals(PhaseId.INVOKE_APPLICATION, new InvokeApplicationPhase()
+                .getCurrentPhaseId());
     }
 
 }

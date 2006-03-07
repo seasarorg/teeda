@@ -44,74 +44,87 @@ public class NavigationHandlerImpl extends NavigationHandler {
         }
         ExternalContext externalContext = context.getExternalContext();
         String viewId = context.getViewRoot().getViewId();
-        NavigationContext navigationContext = getExactMatchNavigationCases(viewId, context);
+        NavigationContext navigationContext = getExactMatchNavigationCases(
+                viewId, context);
         NavigationCaseContext navigationCaseContext = null;
-        if(navigationContext != null){
-            navigationCaseContext = getNavigationCaseContext(navigationContext, fromAction, outcome);
+        if (navigationContext != null) {
+            navigationCaseContext = getNavigationCaseContext(navigationContext,
+                    fromAction, outcome);
         }
-        if(navigationCaseContext == null){
+        if (navigationCaseContext == null) {
             navigationContext = getWildCardMatchNavigationCases(viewId, context);
-            navigationCaseContext = getNavigationCaseContext(navigationContext, fromAction, outcome);
+            navigationCaseContext = getNavigationCaseContext(navigationContext,
+                    fromAction, outcome);
         }
-        if(navigationCaseContext != null){
+        if (navigationCaseContext != null) {
             ViewHandler viewHandler = context.getApplication().getViewHandler();
             String newViewId = navigationCaseContext.getToViewId();
-            if(isRedirect(navigationCaseContext)) {
-                String redirectPath = getRedirectActionPath(context, viewHandler, newViewId);
+            if (isRedirect(navigationCaseContext)) {
+                String redirectPath = getRedirectActionPath(context,
+                        viewHandler, newViewId);
                 redirect(context, externalContext, redirectPath, newViewId);
             } else {
                 render(context, viewHandler, newViewId);
             }
-        }else{
+        } else {
             //Stay current ViewRoot.
         }
     }
 
-    protected String getRedirectActionPath(FacesContext context, ViewHandler viewHandler, String newViewId){
+    protected String getRedirectActionPath(FacesContext context,
+            ViewHandler viewHandler, String newViewId) {
         return viewHandler.getActionURL(context, newViewId);
     }
-    
-    protected void redirect(FacesContext context, ExternalContext externalContext, String redirectPath, String newViewId) {
+
+    protected void redirect(FacesContext context,
+            ExternalContext externalContext, String redirectPath,
+            String newViewId) {
         try {
-            externalContext.redirect(externalContext.encodeActionURL(redirectPath));
+            externalContext.redirect(externalContext
+                    .encodeActionURL(redirectPath));
         } catch (IOException e) {
             throw new FacesException(e.getMessage(), e);
         }
         context.responseComplete();
     }
-    
-    protected void render(FacesContext context, ViewHandler viewHandler, String newViewId) {
+
+    protected void render(FacesContext context, ViewHandler viewHandler,
+            String newViewId) {
         UIViewRoot viewRoot = viewHandler.createView(context, newViewId);
         viewRoot.setViewId(newViewId);
         context.setViewRoot(viewRoot);
         context.renderResponse();
     }
 
-    protected boolean isRedirect(NavigationCaseContext caseContext){
+    protected boolean isRedirect(NavigationCaseContext caseContext) {
         return caseContext.isRedirect();
     }
-    
-    protected NavigationCaseContext getNavigationCaseContext(NavigationContext navContext, String fromAction, String outcome){
-        if(navContext == null){
+
+    protected NavigationCaseContext getNavigationCaseContext(
+            NavigationContext navContext, String fromAction, String outcome) {
+        if (navContext == null) {
             return null;
         }
         return navContext.getNavigationCase(fromAction, outcome);
     }
 
-    protected NavigationContext getExactMatchNavigationCases(String viewId, FacesContext context) {
+    protected NavigationContext getExactMatchNavigationCases(String viewId,
+            FacesContext context) {
         Map map = NavigationContextFactory.getNavigationContexts(context);
-        if(map != null){
-            return (NavigationContext)map.get(viewId);
+        if (map != null) {
+            return (NavigationContext) map.get(viewId);
         }
         return null;
     }
-    
-    protected NavigationContext getWildCardMatchNavigationCases(String viewId, FacesContext context) {
-        Map map = NavigationContextFactory.getWildCardMatchNavigationContexts(context);
-        if(map != null){
-            return (NavigationContext)map.get(viewId);
+
+    protected NavigationContext getWildCardMatchNavigationCases(String viewId,
+            FacesContext context) {
+        Map map = NavigationContextFactory
+                .getWildCardMatchNavigationContexts(context);
+        if (map != null) {
+            return (NavigationContext) map.get(viewId);
         }
         return null;
     }
-    
+
 }

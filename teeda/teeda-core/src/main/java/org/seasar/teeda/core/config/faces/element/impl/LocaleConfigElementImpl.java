@@ -28,12 +28,13 @@ import org.seasar.teeda.core.config.faces.element.LocaleConfigElement;
 public class LocaleConfigElementImpl implements LocaleConfigElement {
 
     private Locale defaultLocale_;
+
     private List supportedLocales_;
-    
-    public LocaleConfigElementImpl(){
+
+    public LocaleConfigElementImpl() {
         supportedLocales_ = new ArrayList();
     }
-    
+
     public void setDefaultLocale(String defaultLocaleName) {
         defaultLocale_ = LocaleUtil.getLocale(defaultLocaleName);
     }

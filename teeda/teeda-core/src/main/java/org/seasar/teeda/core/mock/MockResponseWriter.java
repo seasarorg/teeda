@@ -50,18 +50,18 @@ public class MockResponseWriter extends ResponseWriter {
     }
 
     public void startElement(String s, UIComponent uicomponent)
-        throws IOException {
+            throws IOException {
     }
 
     public void endElement(String s) throws IOException {
     }
 
     public void writeAttribute(String s, Object obj, String s1)
-        throws IOException {
+            throws IOException {
     }
 
     public void writeURIAttribute(String s, Object obj, String s1)
-        throws IOException {
+            throws IOException {
     }
 
     public void writeComment(Object obj) throws IOException {

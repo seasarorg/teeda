@@ -26,47 +26,51 @@ import org.seasar.teeda.core.config.faces.element.FactoryElement;
  */
 public class FactoryElementImpl implements FactoryElement {
 
-	private List applicationFactories_;
-	private List facesContextFactories_;
-	private List lifecycleFactories_;
-	private List renderKitFactories_;
-	public FactoryElementImpl(){
-		applicationFactories_ = new ArrayList();
-		facesContextFactories_ = new ArrayList();
-		lifecycleFactories_ = new ArrayList();
-		renderKitFactories_ = new ArrayList();
-	}
-    
-	public void addApplicationFactory(String applicationFactory) {
-		applicationFactories_.add(applicationFactory);
-	}
+    private List applicationFactories_;
 
-	public void addFacesContextFactory(String facesContextFactory) {
-		facesContextFactories_.add(facesContextFactory);
-	}
+    private List facesContextFactories_;
 
-	public void addLifecycleFactory(String lifecycleFactory) {
-		lifecycleFactories_.add(lifecycleFactory);
-	}
+    private List lifecycleFactories_;
 
-	public void addRenderKitFactory(String renderKitFactory) {
-		renderKitFactories_.add(renderKitFactory);
-	}
+    private List renderKitFactories_;
 
-	public List getApplicationFactories() {
-		return applicationFactories_;
-	}
+    public FactoryElementImpl() {
+        applicationFactories_ = new ArrayList();
+        facesContextFactories_ = new ArrayList();
+        lifecycleFactories_ = new ArrayList();
+        renderKitFactories_ = new ArrayList();
+    }
 
-	public List getFacesContextFactories() {
-		return facesContextFactories_;
-	}
+    public void addApplicationFactory(String applicationFactory) {
+        applicationFactories_.add(applicationFactory);
+    }
 
-	public List getLifecycleFactories() {
-		return lifecycleFactories_;
-	}
+    public void addFacesContextFactory(String facesContextFactory) {
+        facesContextFactories_.add(facesContextFactory);
+    }
 
-	public List getRenderKitFactories() {
-		return renderKitFactories_;
-	}
+    public void addLifecycleFactory(String lifecycleFactory) {
+        lifecycleFactories_.add(lifecycleFactory);
+    }
+
+    public void addRenderKitFactory(String renderKitFactory) {
+        renderKitFactories_.add(renderKitFactory);
+    }
+
+    public List getApplicationFactories() {
+        return applicationFactories_;
+    }
+
+    public List getFacesContextFactories() {
+        return facesContextFactories_;
+    }
+
+    public List getLifecycleFactories() {
+        return lifecycleFactories_;
+    }
+
+    public List getRenderKitFactories() {
+        return renderKitFactories_;
+    }
 
 }

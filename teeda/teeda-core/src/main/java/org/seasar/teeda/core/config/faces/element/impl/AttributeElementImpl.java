@@ -20,17 +20,21 @@ import java.util.List;
 
 import org.seasar.teeda.core.config.faces.element.AttributeElement;
 
-
 public class AttributeElementImpl implements AttributeElement {
 
     private String attributeName_;
+
     private String attributeClass_;
+
     private String defaultValue_;
+
     private String suggestedValue_;
+
     private List attributeExtensions_ = new ArrayList();
-    public AttributeElementImpl(){
+
+    public AttributeElementImpl() {
     }
-    
+
     public void setAttributeName(String attributeName) {
         attributeName_ = attributeName;
     }

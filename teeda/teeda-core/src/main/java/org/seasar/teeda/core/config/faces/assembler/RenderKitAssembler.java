@@ -27,21 +27,21 @@ import org.seasar.teeda.core.util.ClassUtil;
 public abstract class RenderKitAssembler extends AbstractJsfAssembler {
 
     private Map renderKits_ = Collections.EMPTY_MAP;
-    
-    public RenderKitAssembler(Map renderKits){
-        if(renderKits == null){
+
+    public RenderKitAssembler(Map renderKits) {
+        if (renderKits == null) {
             throw new IllegalArgumentException("renderKits");
         }
         isAllSuitableJsfElement(renderKits.values(), RenderKitElement.class);
         renderKits_ = renderKits;
         setupBeforeAssemble();
     }
-     
-    protected final Map getRenderKits(){
+
+    protected final Map getRenderKits() {
         return renderKits_;
     }
-    
-    protected Object newInstance(String className){
+
+    protected Object newInstance(String className) {
         return ClassUtil.newInstance(className);
     }
 

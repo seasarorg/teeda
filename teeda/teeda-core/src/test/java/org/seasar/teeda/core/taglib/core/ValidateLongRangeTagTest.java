@@ -27,7 +27,7 @@ import org.seasar.teeda.core.unit.TeedaTestCase;
  * @author yone
  */
 public class ValidateLongRangeTagTest extends TeedaTestCase {
-    
+
     public void testCreateValidator() throws Exception {
         // # Arrange #
         String validatorId = LongRangeValidator.VALIDATOR_ID;
@@ -36,10 +36,10 @@ public class ValidateLongRangeTagTest extends TeedaTestCase {
         app.addValidator(validatorId, validatorClassName);
         setApplication(app);
         ValidateLongRangeTag tag = new ValidateLongRangeTag();
-        
+
         // # Act #
         Validator validator = tag.createValidator();
-        
+
         // # Assert #
         assertNotNull(validator);
         assertTrue(validator instanceof LongRangeValidator);
@@ -52,12 +52,12 @@ public class ValidateLongRangeTagTest extends TeedaTestCase {
             // # Act #
             tag.createValidator();
             fail();
-        }catch(NullPointerException e){
+        } catch (NullPointerException e) {
             // # Assert #
             success();
         }
     }
-    
+
     public void testCreateValidator_noSetProperty() throws Exception {
         // # Arrange #
         addValidator();
@@ -65,12 +65,12 @@ public class ValidateLongRangeTagTest extends TeedaTestCase {
 
         // # Act #
         tag.createValidator();
-        
+
         // # Assert #
         assertFalse(tag.minimumSet);
         assertFalse(tag.maximumSet);
-    }    
-    
+    }
+
     public void testSetMinimum_constantValue() throws Exception {
         // # Arrange #
         addValidator();
@@ -78,66 +78,70 @@ public class ValidateLongRangeTagTest extends TeedaTestCase {
 
         // # Act #
         tag.setMinimum("2");
-        LongRangeValidator validator = (LongRangeValidator)tag.createValidator();
-        
+        LongRangeValidator validator = (LongRangeValidator) tag
+                .createValidator();
+
         // # Assert #
         assertTrue(tag.minimumSet);
         assertTrue(2L == validator.getMinimum());
-    }    
-    
+    }
+
     public void testSetMinimum_bindingValue() throws Exception {
         // # Arrange #
         addValidator();
         MockValueBinding vb = new MockValueBinding();
         vb.setValue(getFacesContext(), new Long(3L));
-        getApplication().setValueBinding(vb);        
+        getApplication().setValueBinding(vb);
         ValidateLongRangeTag tag = new ValidateLongRangeTag();
 
         // # Act #
         tag.setMinimum("#{hoge.minimum}");
-        LongRangeValidator validator = (LongRangeValidator)tag.createValidator();
-        
+        LongRangeValidator validator = (LongRangeValidator) tag
+                .createValidator();
+
         // # Assert #
         assertTrue(tag.minimumSet);
-        assertTrue(3L == validator.getMinimum());       
+        assertTrue(3L == validator.getMinimum());
     }
-    
+
     public void testSetMaximum_constantValue() throws Exception {
         // # Arrange #
         addValidator();
         ValidateLongRangeTag tag = new ValidateLongRangeTag();
-        
+
         // # Act #        
         tag.setMaximum("888888888888");
-        LongRangeValidator validator = (LongRangeValidator)tag.createValidator();
-        
+        LongRangeValidator validator = (LongRangeValidator) tag
+                .createValidator();
+
         // # Assert #
         assertTrue(tag.maximumSet);
         assertTrue(888888888888L == validator.getMaximum());
-    }    
-    
+    }
+
     public void testSetMaximum_bindingValue() throws Exception {
         // # Arrange #
         addValidator();
         MockValueBinding vb = new MockValueBinding();
         vb.setValue(getFacesContext(), new Long(9999999999L));
-        getApplication().setValueBinding(vb);        
+        getApplication().setValueBinding(vb);
         ValidateLongRangeTag tag = new ValidateLongRangeTag();
 
         // # Act #        
         tag.setMaximum("#{hoge.maximum}");
-        LongRangeValidator validator = (LongRangeValidator)tag.createValidator();
-        
+        LongRangeValidator validator = (LongRangeValidator) tag
+                .createValidator();
+
         // # Assert #
         assertTrue(tag.maximumSet);
-        assertTrue(9999999999L == validator.getMaximum());       
+        assertTrue(9999999999L == validator.getMaximum());
     }
-    
+
     private void addValidator() throws Exception {
         MockApplication app = new MockApplicationImpl();
-        app.addValidator("javax.faces.LongRange", 
+        app.addValidator("javax.faces.LongRange",
                 "javax.faces.validator.LongRangeValidator");
-        setApplication(app);       
+        setApplication(app);
     }
-    
+
 }

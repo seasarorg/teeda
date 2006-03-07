@@ -21,24 +21,23 @@ import javax.faces.component.html.HtmlDataTable;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.taglib.UIComponentTagBase;
 
-
 /**
  * @author yone
  */
 public class DataTableTag extends UIComponentTagBase {
-    
+
     private String first_;
-    
+
     private String var_;
-    
+
     private String columnClasses_;
-    
+
     private String footerClass_;
-    
+
     private String headerClass_;
-    
+
     private String rowClasses_;
-    
+
     public String getComponentType() {
         return HtmlDataTable.COMPONENT_TYPE;
     }
@@ -46,27 +45,33 @@ public class DataTableTag extends UIComponentTagBase {
     public String getRendererType() {
         return "javax.faces.Table";
     }
-    
+
     protected void setProperties(UIComponent component) {
         super.setProperties(component);
-        
+
         setComponentProperty(component, JsfConstants.FIRST_ATTR, first_);
         setComponentProperty(component, JsfConstants.ROWS_ATTR, rows_);
         setComponentProperty(component, JsfConstants.VAR_ATTR, var_);
         setComponentProperty(component, JsfConstants.BGCOLOR_ATTR, bgcolor_);
         setComponentProperty(component, JsfConstants.BORDER_ATTR, border_);
-        setComponentProperty(component, JsfConstants.CELLPADDING_ATTR, cellpadding_);
-        setComponentProperty(component, JsfConstants.CELLSPACING_ATTR, cellspacing_);
-        setComponentProperty(component, JsfConstants.COLUMN_CLASSES_ATTR, columnClasses_);
-        setComponentProperty(component, JsfConstants.FOOTER_CLASS_ATTR, footerClass_);
+        setComponentProperty(component, JsfConstants.CELLPADDING_ATTR,
+                cellpadding_);
+        setComponentProperty(component, JsfConstants.CELLSPACING_ATTR,
+                cellspacing_);
+        setComponentProperty(component, JsfConstants.COLUMN_CLASSES_ATTR,
+                columnClasses_);
+        setComponentProperty(component, JsfConstants.FOOTER_CLASS_ATTR,
+                footerClass_);
         setComponentProperty(component, JsfConstants.FRAME_ATTR, frame_);
-        setComponentProperty(component, JsfConstants.HEADER_CLASS_ATTR, headerClass_);
-        setComponentProperty(component, JsfConstants.ROW_CLASSES_ATTR, rowClasses_);
+        setComponentProperty(component, JsfConstants.HEADER_CLASS_ATTR,
+                headerClass_);
+        setComponentProperty(component, JsfConstants.ROW_CLASSES_ATTR,
+                rowClasses_);
         setComponentProperty(component, JsfConstants.RULES_ATTR, rules_);
         setComponentProperty(component, JsfConstants.SUMMARY_ATTR, summary_);
         setComponentProperty(component, JsfConstants.WIDTH_ATTR, width_);
     }
-    
+
     public void release() {
         super.release();
         first_ = null;

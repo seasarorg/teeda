@@ -48,9 +48,9 @@ public class WebappTagHandlerRule extends TagHandlerRule {
         // filter
         addTagHandler("/web-app/filter", new FilterTagHandler());
         addTagHandler("/web-app/filter/filter-name",
-            new SimpleStringTagHandler("filter-name"));
+                new SimpleStringTagHandler("filter-name"));
         addTagHandler("/web-app/filter/filter-class",
-            new SimpleStringTagHandler("filter-class"));
+                new SimpleStringTagHandler("filter-class"));
 
         addTagHandler("init-param", new InitParamTagHandler());
 
@@ -60,20 +60,20 @@ public class WebappTagHandlerRule extends TagHandlerRule {
         // servlet
         addTagHandler("/web-app/servlet", new ServletTagHandler());
         addTagHandler("/web-app/servlet/servlet-name",
-            new SimpleStringTagHandler("servlet-name"));
+                new SimpleStringTagHandler("servlet-name"));
         addTagHandler("/web-app/servlet/servlet-class",
-            new SimpleStringTagHandler("servlet-class"));
+                new SimpleStringTagHandler("servlet-class"));
         addTagHandler("/web-app/servlet/load-on-startup",
-            new SimpleStringTagHandler("load-on-startup"));
+                new SimpleStringTagHandler("load-on-startup"));
 
         // servlet-mapping
-        addTagHandler("/web-app/servlet-mapping", new ServletMappingTagHandler());
+        addTagHandler("/web-app/servlet-mapping",
+                new ServletMappingTagHandler());
         addTagHandler("/web-app/servlet-mapping/servlet-name",
-            new SimpleStringTagHandler("servlet-name"));
+                new SimpleStringTagHandler("servlet-name"));
         addTagHandler("/web-app/servlet-mapping/url-pattern",
                 new SimpleStringTagHandler("url-pattern"));
-        
-        
+
         // session-config
         // mime-mapping
         // welcome-file-list
@@ -82,9 +82,9 @@ public class WebappTagHandlerRule extends TagHandlerRule {
         // taglib
         addTagHandler("/web-app/taglib", new TaglibTagHandler());
         addTagHandler("/web-app/taglib/taglib-uri", new SimpleStringTagHandler(
-            "taglib-uri"));
+                "taglib-uri"));
         addTagHandler("/web-app/taglib/taglib-location",
-            new SimpleStringTagHandler("taglib-location"));
+                new SimpleStringTagHandler("taglib-location"));
 
         // resource-env-ref
         // resource-ref

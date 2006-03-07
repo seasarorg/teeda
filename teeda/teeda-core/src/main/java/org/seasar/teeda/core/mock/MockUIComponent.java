@@ -55,9 +55,9 @@ public class MockUIComponent extends UIComponent {
     private FacesContext context_ = null;
 
     private Map valueBindingMap_ = new HashMap();
-    
+
     private List children_ = new ArrayList();
-    
+
     public Map getAttributes() {
         return null;
     }

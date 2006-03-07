@@ -28,7 +28,7 @@ public interface FactoryElement extends JsfConfigElement {
     public void addRenderKitFactory(String renderKitFactory);
 
     public List getApplicationFactories();
-    
+
     public List getFacesContextFactories();
 
     public List getLifecycleFactories();

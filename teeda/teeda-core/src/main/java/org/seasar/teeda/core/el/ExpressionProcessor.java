@@ -23,19 +23,19 @@ import javax.faces.el.ReferenceSyntaxException;
 /**
  * @author Shinpei Ohtani
  */
-public interface ExpressionProcessor{
-    
+public interface ExpressionProcessor {
+
     public void processExpression(Object o, Class type);
-    
+
     public Object evaluate(FacesContext context, Object expression)
-        throws EvaluationException;
-    
+            throws EvaluationException;
+
     public Integer toIndex(Object base, Object index)
-        throws ReferenceSyntaxException;
-        
+            throws ReferenceSyntaxException;
+
     public Object resolveBase(FacesContext context, Object expression)
-        throws PropertyNotFoundException;
-    
+            throws PropertyNotFoundException;
+
     public Object getCoercedObject(Object newValue, Class type)
-        throws EvaluationException;
+            throws EvaluationException;
 }

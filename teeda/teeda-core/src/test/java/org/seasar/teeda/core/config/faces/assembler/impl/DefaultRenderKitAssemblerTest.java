@@ -52,19 +52,21 @@ public class DefaultRenderKitAssemblerTest extends TeedaTestCase {
         String id = "id";
         RenderKitElement renderKitElement = new RenderKitElementImpl();
         renderKitElement.setRenderKitId(id);
-        renderKitElement.setRenderKitClass("org.seasar.teeda.core.mock.MockRenderKitImpl");
+        renderKitElement
+                .setRenderKitClass("org.seasar.teeda.core.mock.MockRenderKitImpl");
         RendererElement rendererElement = new RendererElementImpl();
         rendererElement.setComponentFamily("family");
-        rendererElement.setRendererClass("org.seasar.teeda.core.mock.MockRenderer");
+        rendererElement
+                .setRendererClass("org.seasar.teeda.core.mock.MockRenderer");
         rendererElement.setRendererType("type");
         renderKitElement.addRendererElement(rendererElement);
         Map map = new HashMap();
         map.put(id, renderKitElement);
         DefaultRenderKitAssembler assembler = createAssembler(map);
-        
+
         // ## Act ##
         assembler.assemble();
-        
+
         // ## Assert ##
         RenderKitFactory factory = FactoryFinderUtil.getRenderKitFactory();
         RenderKit kit = factory.getRenderKit(getFacesContext(), id);
@@ -74,7 +76,7 @@ public class DefaultRenderKitAssemblerTest extends TeedaTestCase {
         assertNotNull(renderer);
         assertTrue(renderer instanceof MockRenderer);
     }
-    
+
     public void testGetRenderKitClassName() throws Exception {
         // ## Arrange ##
         DefaultRenderKitAssembler assembler = createAssembler();

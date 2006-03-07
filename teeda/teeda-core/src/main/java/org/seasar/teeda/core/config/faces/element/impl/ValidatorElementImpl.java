@@ -21,16 +21,21 @@ import java.util.List;
 import org.seasar.teeda.core.config.faces.element.AttributeElement;
 import org.seasar.teeda.core.config.faces.element.PropertyElement;
 import org.seasar.teeda.core.config.faces.element.ValidatorElement;
+
 /**
  * @author Shinpei Ohtani(aka shot)
  */
 public class ValidatorElementImpl implements ValidatorElement {
 
     private String validatorId_;
+
     private String validatorClass_;
+
     private List attributeElements_ = new ArrayList();
+
     private List propertyElements_ = new ArrayList();
-    public ValidatorElementImpl(){
+
+    public ValidatorElementImpl() {
     }
 
     public void setValidatorId(String validatorId) {
@@ -64,6 +69,5 @@ public class ValidatorElementImpl implements ValidatorElement {
     public List getPropertyElements() {
         return propertyElements_;
     }
-    
 
 }

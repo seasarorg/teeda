@@ -20,13 +20,13 @@ import java.util.List;
 /**
  * @author Shinpei Ohtani(aka shot)
  */
-public interface FacetElement extends JsfConfigElement{
-    
+public interface FacetElement extends JsfConfigElement {
+
     public void setFacetName(String facetName);
-    
+
     public void addFacetExtension(String facetExtension);
-    
+
     public String getFacetName();
-        
+
     public List getFacetExtensions();
 }

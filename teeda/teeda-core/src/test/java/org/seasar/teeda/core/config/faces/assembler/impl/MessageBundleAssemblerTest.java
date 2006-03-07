@@ -15,7 +15,6 @@
  */
 package org.seasar.teeda.core.config.faces.assembler.impl;
 
-import org.seasar.teeda.core.config.faces.assembler.impl.MessageBundleAssembler;
 import org.seasar.teeda.core.mock.MockApplication;
 import org.seasar.teeda.core.unit.TeedaTestCase;
 
@@ -33,9 +32,10 @@ public class MessageBundleAssemblerTest extends TeedaTestCase {
     }
 
     public void testAssemble() throws Exception {
-        MessageBundleAssembler assembler = new MessageBundleAssembler("hoge", getApplication());
+        MessageBundleAssembler assembler = new MessageBundleAssembler("hoge",
+                getApplication());
         assembler.assemble();
-        
+
         MockApplication app = getApplication();
         assertEquals("hoge", app.getMessageBundle());
     }

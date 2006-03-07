@@ -32,18 +32,18 @@ public class SelectManyCheckboxTagTest extends TeedaTestCase {
     public void testGetComponentType() throws Exception {
         // # Arrange #
         SelectManyCheckboxTag tag = new SelectManyCheckboxTag();
-        
+
         // # Act & Assert #
-        assertEquals("javax.faces.HtmlSelectManyCheckbox",
-                tag.getComponentType());
+        assertEquals("javax.faces.HtmlSelectManyCheckbox", tag
+                .getComponentType());
     }
-    
+
     public void testGetRenderType() throws Exception {
         // # Arrange #
         SelectManyCheckboxTag tag = new SelectManyCheckboxTag();
-        
+
         // # Act & Assert #
-        assertEquals("javax.faces.Checkbox", tag.getRendererType());        
+        assertEquals("javax.faces.Checkbox", tag.getRendererType());
     }
 
     public void testSetProperties_All() throws Exception {
@@ -56,7 +56,7 @@ public class SelectManyCheckboxTagTest extends TeedaTestCase {
         setApplication(app);
         app.addValidator("mock.validator",
                 "org.seasar.teeda.core.mock.MockValidator");
-        
+
         tag.setConverter("mock.converter");
         tag.setImmediate("true");
         tag.setRequired("true");
@@ -90,10 +90,10 @@ public class SelectManyCheckboxTagTest extends TeedaTestCase {
         tag.setStyleClass("styleclass");
         tag.setTabindex("13");
         tag.setTitle("title");
-        
+
         // # Act #
         tag.setProperties(component);
-        
+
         // # Assert #
         assertTrue(component.getConverter() instanceof MockConverter);
         assertTrue(component.isImmediate());
@@ -132,8 +132,8 @@ public class SelectManyCheckboxTagTest extends TeedaTestCase {
         assertEquals("styleclass", component.getStyleClass());
         assertEquals("13", component.getTabindex());
         assertEquals("title", component.getTitle());
-    }    
-    
+    }
+
     private HtmlSelectManyCheckbox createHtmlSelectManyCheckbox() {
         return (HtmlSelectManyCheckbox) createUIComponent();
     }

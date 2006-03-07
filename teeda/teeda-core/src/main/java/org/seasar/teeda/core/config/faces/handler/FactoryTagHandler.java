@@ -28,22 +28,22 @@ public class FactoryTagHandler extends JsfTagHandler {
 
     private static final long serialVersionUID = 1L;
 
-    public FactoryTagHandler(){
+    public FactoryTagHandler() {
     }
-    
+
     public void start(TagHandlerContext context, Attributes attributes) {
         FactoryElement factoryTag = createFactoryElement();
         context.push(factoryTag);
     }
 
     public void end(TagHandlerContext context, String body) {
-        FactoryElement factoryConfig = (FactoryElement)context.pop();
-        FacesConfig facesConfig = (FacesConfig)context.peek();
+        FactoryElement factoryConfig = (FactoryElement) context.pop();
+        FacesConfig facesConfig = (FacesConfig) context.peek();
         facesConfig.addFactoryElement(factoryConfig);
     }
-    
-    protected FactoryElement createFactoryElement(){
+
+    protected FactoryElement createFactoryElement() {
         return new FactoryElementImpl();
     }
-    
+
 }

@@ -18,7 +18,6 @@ package org.seasar.teeda.core.config.faces.assembler.impl;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.seasar.teeda.core.config.faces.assembler.impl.DefaultManagedBeanAssembler;
 import org.seasar.teeda.core.config.faces.element.ManagedBeanElement;
 import org.seasar.teeda.core.config.faces.element.ManagedPropertyElement;
 import org.seasar.teeda.core.config.faces.element.impl.ManagedBeanElementImpl;

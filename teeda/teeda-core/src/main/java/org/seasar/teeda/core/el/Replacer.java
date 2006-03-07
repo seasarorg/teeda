@@ -18,9 +18,8 @@ package org.seasar.teeda.core.el;
 /**
  * @author Shinpei Ohtani
  */
-public interface Replacer{
-    
-    public void replace(Object expression);
-    
-}
+public interface Replacer {
 
+    public void replace(Object expression);
+
+}

@@ -41,7 +41,6 @@ import org.seasar.teeda.core.application.navigation.NavigationContextFactory;
 import org.seasar.teeda.core.config.faces.assembler.AssemblerAssembler;
 import org.seasar.teeda.core.config.faces.assembler.impl.DefaultAssembleProvider;
 import org.seasar.teeda.core.config.faces.element.FacesConfig;
-import org.seasar.teeda.core.config.faces.impl.CoreFacesConfigurator;
 import org.seasar.teeda.core.config.faces.rule.FacesConfigTagHandlerRule;
 import org.seasar.teeda.core.managedbean.ManagedBeanFactory;
 import org.seasar.teeda.core.managedbean.impl.ManagedBeanFactoryImpl;
@@ -56,8 +55,8 @@ import org.seasar.teeda.core.mock.MockLifecycleFactory;
 import org.seasar.teeda.core.mock.MockNavigationHandler;
 import org.seasar.teeda.core.mock.MockPhaseListener;
 import org.seasar.teeda.core.mock.MockPropertyResolver;
-import org.seasar.teeda.core.mock.MockRenderKitImpl;
 import org.seasar.teeda.core.mock.MockRenderKitFactory;
+import org.seasar.teeda.core.mock.MockRenderKitImpl;
 import org.seasar.teeda.core.mock.MockRenderer;
 import org.seasar.teeda.core.mock.MockStateManager;
 import org.seasar.teeda.core.mock.MockVariableResolver;
@@ -210,7 +209,8 @@ public class CoreFacesConfiguratorTest extends S2TestCase {
         List cases = navContext.getNavigationCases();
         assertNotNull(cases);
         assertEquals(1, cases.size());
-        NavigationCaseContext caseContext = (NavigationCaseContext) cases.get(0);
+        NavigationCaseContext caseContext = (NavigationCaseContext) cases
+                .get(0);
         assertEquals("action", caseContext.getFromAction());
         assertEquals("outcome", caseContext.getFromOutcome());
         assertEquals("to", caseContext.getToViewId());
