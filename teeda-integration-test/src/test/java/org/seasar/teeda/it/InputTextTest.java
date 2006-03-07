@@ -19,6 +19,8 @@ import java.net.URL;
 
 import junit.framework.Test;
 
+import org.custommonkey.xmlunit.Diff;
+
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.gargoylesoftware.htmlunit.html.HtmlSpan;
@@ -45,9 +47,47 @@ public class InputTextTest extends AbstractTestCase {
         // ## Assert ##
         HtmlPage page1 = (HtmlPage) webClient.getPage(url);
 
+        final String body1 = getBody(page1).trim();
+        System.out.println(body1);
+        assertEquals("inputText.jsp", page1.getTitleText());
+
+        final String expected = readText("testRender.html");
+        Diff diff = diff(expected, body1);
+        assertEquals(diff.toString(), true, diff.similar());
+
+        HtmlTextInput textA1 = (HtmlTextInput) page1
+                .getHtmlElementById("textA");
+        assertEquals("", textA1.getValueAttribute());
+        textA1.setValueAttribute("aa bbb");
+
+        HtmlSubmitInput submit1 = (HtmlSubmitInput) page1
+                .getHtmlElementById("submit1");
+
+        HtmlPage page2 = (HtmlPage) submit1.click();
+        final String body2 = getBody(page2);
+        System.out.println(body2.trim());
+
+        HtmlTextInput textA2 = (HtmlTextInput) page2
+                .getHtmlElementById("textA");
+        assertEquals("aa bbb", textA2.getValueAttribute());
+        HtmlSpan outputA2 = (HtmlSpan) page2.getHtmlElementById("outputA");
+        assertEquals("aa bbb", outputA2.asText());
+    }
+
+    public void testCalculate() throws Exception {
+        // ## Arrange ##
+        URL url = getUrl("faces/inputText2.jsp");
+        System.out.println(url);
+
+        WebClient webClient = new WebClient();
+
+        // ## Act ##
+        // ## Assert ##
+        HtmlPage page1 = (HtmlPage) webClient.getPage(url);
+
         final String body = getBody(page1).trim();
         System.out.println(body);
-        assertEquals("inputText.jsp", page1.getTitleText());
+        assertEquals("inputText2.jsp", page1.getTitleText());
 
         HtmlTextInput x1 = (HtmlTextInput) page1.getHtmlElementById("x");
         assertEquals("", x1.getValueAttribute());
@@ -57,10 +97,6 @@ public class InputTextTest extends AbstractTestCase {
         assertEquals("", result1.asText());
         x1.setValueAttribute("4");
         y1.setValueAttribute("70");
-
-        //        final String expected = readText("testRender.html");
-        //        Diff diff = diff(expected, body);
-        //        assertEquals(diff.toString(), true, diff.similar());
 
         HtmlSubmitInput multiply1 = (HtmlSubmitInput) page1
                 .getHtmlElementById("multiply");
