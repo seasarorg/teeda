@@ -26,5 +26,10 @@
 		<managed-bean-class>org.seasar.teeda.it.CalculatorBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>secretBean</managed-bean-name>
+		<managed-bean-class>org.seasar.teeda.it.SecretBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
 	
 </faces-config>
