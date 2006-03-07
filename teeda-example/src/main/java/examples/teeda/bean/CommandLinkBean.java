@@ -13,47 +13,26 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package examples.teeda.dto;
-
-import java.io.Serializable;
+package examples.teeda.bean;
 
 /**
- * @author yone
+ * @author manhole
  */
-public class AddDto implements Serializable {
+public class CommandLinkBean {
 
-    private static final long serialVersionUID = 1L;
+    private Integer a_ = new Integer(123);
 
-    private int arg1;
-
-    private int arg2;
-
-    private int result;
-
-    public AddDto() {
+    public Integer getA() {
+        return a_;
     }
 
-    public int getArg1() {
-        return arg1;
+    public void setA(Integer a) {
+        a_ = a;
     }
 
-    public void setArg1(int arg1) {
-        this.arg1 = arg1;
+    public String countUp() {
+        a_ = new Integer(a_.intValue() + 1);
+        return null;
     }
 
-    public int getArg2() {
-        return arg2;
-    }
-
-    public void setArg2(int arg2) {
-        this.arg2 = arg2;
-    }
-
-    public int getResult() {
-        return result;
-    }
-
-    public void setResult(int result) {
-        this.result = result;
-    }
 }

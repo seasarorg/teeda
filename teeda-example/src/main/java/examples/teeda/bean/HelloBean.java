@@ -13,30 +13,22 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package examples.teeda.action.impl;
+package examples.teeda.bean;
 
-import examples.teeda.action.AddAction;
-import examples.teeda.dto.AddDto;
-import examples.teeda.logic.AddLogic;
 
-public class AddActionImpl implements AddAction {
+/**
+ * @author yone
+ */
+public class HelloBean {
 
-    private AddDto addDto;
+	private String hello_ = "hello Teeda!";
 
-    private AddLogic addLogic;
+	public String getHello() {
+		return hello_;
+	}
 
-    public void setAddDto(AddDto addDto) {
-        this.addDto = addDto;
-    }
-
-    public void setAddLogic(AddLogic addLogic) {
-        this.addLogic = addLogic;
-    }
-
-    public String calculate() {
-        int result = addLogic.calculate(addDto);
-        addDto.setResult(result);
-        return null;
-    }
-
+	public void setHello(String hello) {
+		hello_ = hello;
+	}	
+	
 }

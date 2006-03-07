@@ -3,6 +3,6 @@
 	"http://www.seasar.org/dtd/components21.dtd">
 <components>
 	<include path="teeda.dicon"/>
-	<include path="examples/teeda/dicon/test.dicon"/>
+	<include path="examples/teeda/dicon/hello.dicon"/>
 	<include path="examples/teeda/dicon/add.dicon"/>
 </components>

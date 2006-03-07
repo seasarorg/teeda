@@ -13,13 +13,19 @@
 
 	<managed-bean>
 		<managed-bean-name>helloBean</managed-bean-name>
-		<managed-bean-class>examples.teeda.dto.HelloBean</managed-bean-class>
+		<managed-bean-class>examples.teeda.bean.HelloBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	
 	<managed-bean>
 		<managed-bean-name>commandLinkBean</managed-bean-name>
-		<managed-bean-class>examples.teeda.action.CommandLinkBean</managed-bean-class>
+		<managed-bean-class>examples.teeda.bean.CommandLinkBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>addBean</managed-bean-name>
+		<managed-bean-class>examples.teeda.bean.AddBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	
