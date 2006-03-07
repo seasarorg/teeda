@@ -14,20 +14,30 @@
   <artifactId>teeda-integration-test</artifactId>
   <packaging>war</packaging>
   <name>Teeda Integration Test</name>
-  <version>0.1-SNAPSHOT</version>
   <description></description>
   <url>http://teeda.seasar.org/</url>
-  <inceptionYear>2006</inceptionYear>
   <build>
     <finalName>teeda-integration-test</finalName>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <configuration>
+            <excludes>
+              <exclude>**/Abstract*TestCase.java</exclude>
+              <exclude>**/*$*</exclude>
+            </excludes>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
   </build>
-  <!--
   <scm>
-    <connection>scm:svn:https://www.seasar.org/svn/teeda/trunk/teeda/</connection>
-    <developerConnection>scm:svn:https://www.seasar.org/svn/teeda/trunk/teeda/</developerConnection>
+    <connection>scm:svn:https://www.seasar.org/svn/teeda/trunk/teeda-integration-test/</connection>
+    <developerConnection>scm:svn:https://www.seasar.org/svn/teeda/trunk/teeda-integration-test/</developerConnection>
     <url>http://www.seasar.org/websvn/listing.php?repname=teeda</url>
   </scm>
-  -->
   <dependencies>
     <dependency>
       <groupId>org.seasar.container</groupId>
@@ -97,7 +107,6 @@
       <scope>system</scope>
       <systemPath>${java.home}/../lib/tools.jar</systemPath>
     </dependency>
-    <!--  -->
     <dependency>
       <groupId>org.apache.maven</groupId>
       <artifactId>maven-embedder</artifactId>
@@ -125,7 +134,6 @@
       <version>1.1-beta-8</version>
       <scope>test</scope>
     </dependency>
-    
     <dependency>
       <groupId>org.seasar.teeda</groupId>
       <artifactId>teeda-core</artifactId>
