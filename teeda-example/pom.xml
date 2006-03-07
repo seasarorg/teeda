@@ -18,10 +18,6 @@
   <url>http://teeda.seasar.org/</url>
   <build>
     <finalName>teeda-example</finalName>
-    <pluginManagement>
-    </pluginManagement>
-    <plugins>
-    </plugins>
   </build>
   <dependencies>
     <dependency>
