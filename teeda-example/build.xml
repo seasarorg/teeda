@@ -1,0 +1,15 @@
+<project name="teeda-example" default="dist" basedir=".">
+
+	<property name="ver" value="b1"/>
+
+	<target name="dist">
+		<mkdir dir="target"/>
+		<zip zipfile="target/teeda-example-${ver}.zip">
+			<zipfileset prefix="teeda-example" dir=".">
+				<exclude name="**/target/**"/>
+				<exclude name="**/.settings/**"/>
+			</zipfileset>
+		</zip>
+	</target>
+
+</project>
