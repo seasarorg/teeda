@@ -9,7 +9,7 @@
 <f:view>
 	<h:form id="commandButtonForm">
 		<h:inputText id="text1" value="#{commandLinkBean.a}"/>
-		<h:commandButton id="link1" action="#{commandLinkBean.countUp}"/>
+		<h:commandButton id="button1" action="#{commandLinkBean.countUp}"/>
 	</h:form>
 </f:view>
 </body>

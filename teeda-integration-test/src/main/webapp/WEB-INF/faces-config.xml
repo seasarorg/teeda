@@ -19,7 +19,12 @@
 	<managed-bean>
 		<managed-bean-name>commandLinkBean</managed-bean-name>
 		<managed-bean-class>org.seasar.teeda.it.CommandLinkBean</managed-bean-class>
-		<managed-bean-scope>session</managed-bean-scope>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>calculatorBean</managed-bean-name>
+		<managed-bean-class>org.seasar.teeda.it.CalculatorBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	
 </faces-config>

@@ -43,15 +43,15 @@ public class CommandButtonTest extends AbstractTestCase {
         WebClient webClient = new WebClient();
 
         // ## Act ##
+        // ## Assert ##
         HtmlPage page1 = (HtmlPage) webClient.getPage(url);
 
-        // ## Assert ##
         final String body = getBody(page1).trim();
         System.out.println(body);
         assertEquals("commandButton.jsp", page1.getTitleText());
 
         HtmlTextInput input1 = (HtmlTextInput) page1
-            .getHtmlElementById("text1");
+                .getHtmlElementById("text1");
         assertEquals("123", input1.getValueAttribute());
 
         final String expected = readText("testRender.html");
@@ -59,13 +59,13 @@ public class CommandButtonTest extends AbstractTestCase {
         assertEquals(diff.toString(), true, diff.similar());
 
         HtmlSubmitInput submit = (HtmlSubmitInput) page1
-            .getHtmlElementById("link1");
+                .getHtmlElementById("button1");
 
         HtmlPage page2 = (HtmlPage) submit.click();
         System.out.println(getBody(page2).trim());
 
         HtmlTextInput input2 = (HtmlTextInput) page2
-            .getHtmlElementById("text1");
+                .getHtmlElementById("text1");
         assertEquals("123 + 1", "124", input2.getValueAttribute());
     }
 
