@@ -16,6 +16,11 @@
   <name>Teeda Example</name>
   <description></description>
   <url>http://teeda.seasar.org/</url>
+  <scm>
+    <connection>scm:svn:https://www.seasar.org/svn/teeda/trunk/teeda-example/</connection>
+    <developerConnection>scm:svn:https://www.seasar.org/svn/teeda/trunk/teeda-example/</developerConnection>
+    <url>http://www.seasar.org/websvn/listing.php?repname=teeda</url>
+  </scm>
   <build>
     <finalName>teeda-example</finalName>
   </build>
