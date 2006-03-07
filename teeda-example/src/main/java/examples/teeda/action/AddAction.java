@@ -20,5 +20,6 @@ package examples.teeda.action;
  */
 public interface AddAction {
 
-	public String calculate();
+    public String calculate();
+
 }
