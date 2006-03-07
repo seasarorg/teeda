@@ -42,7 +42,7 @@ public class HtmlRenderKitUtil {
         String[] contentTypes = removeSemiColon(strs);
 
         for (int i = 0; i < contentTypes.length; i++) {
-            String type = contentTypes[i];
+            String type = contentTypes[i].trim();
             if (isHtmlContentType(type)) {
                 return JsfConstants.HTML_CONTENT_TYPE;
             } else if (isXmlContentType(type)) {

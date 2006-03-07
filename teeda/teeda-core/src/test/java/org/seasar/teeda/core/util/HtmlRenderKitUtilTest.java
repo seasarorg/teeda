@@ -58,5 +58,9 @@ public class HtmlRenderKitUtilTest extends TeedaTestCase {
         assertNull(HtmlRenderKitUtil.getContentType("hoge"));
         assertEquals("text/html", HtmlRenderKitUtil
                 .getContentType("hoge, text/html, foo"));
+        assertEquals("text/html", HtmlRenderKitUtil.getContentType("*/*"));
+        assertEquals("text/html", HtmlRenderKitUtil
+                .getContentType("hoge, */*, foo"));
     }
+
 }
