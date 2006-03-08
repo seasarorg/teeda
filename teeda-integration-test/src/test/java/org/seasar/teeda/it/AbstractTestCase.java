@@ -51,7 +51,9 @@ import com.gargoylesoftware.htmlunit.html.HtmlPage;
  */
 public abstract class AbstractTestCase extends TestCase {
 
-    private static int port_ = 8080;
+    private static int port_ = SocketUtil.findFreePort();
+
+    private static String baseUrl_ = "http://localhost:" + port_ + "/";
 
     protected static WebApplicationTestSetup setUpTestSuite(
             final Class testClass) {
@@ -65,8 +67,6 @@ public abstract class AbstractTestCase extends TestCase {
 
     protected static WebApplicationTestSetup setUpTestSuite(
             TestSuite testSuite, File pomFile) {
-
-        port_ = SocketUtil.findFreePort();
         JettyServerSetup jettySetup = new JettyServerSetup(testSuite);
         jettySetup.setPort(port_);
         File webapp = new File(pomFile.getParentFile(),
@@ -80,11 +80,7 @@ public abstract class AbstractTestCase extends TestCase {
     }
 
     protected URL getUrl(String path) throws MalformedURLException {
-        return new URL(getBaseUrl() + path);
-    }
-
-    private String getBaseUrl() {
-        return "http://localhost:" + port_ + "/";
+        return new URL(baseUrl_ + path);
     }
 
     protected String getBody(HtmlPage page) throws UnsupportedEncodingException {
