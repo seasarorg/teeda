@@ -21,7 +21,7 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
     <listener>
-        <listener-class>org.seasar.teeda.core.webapp.S2ContainerListener</listener-class>
+        <listener-class>org.seasar.framework.container.servlet.S2ContainerListener</listener-class>
     </listener>
     <listener>
         <listener-class>org.seasar.teeda.core.webapp.JsfConfigureListener</listener-class>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE components PUBLIC "-//SEASAR2.1//DTD S2Container//EN"
 	"http://www.seasar.org/dtd/components24.dtd">
-<components namespace="add">
+<components>
 	<component name="addDto" class="examples.teeda.dto.AddDto" instance="request"/>
 	<component class="examples.teeda.logic.impl.AddLogicImpl"/>
 	<component name="addAction" class="examples.teeda.action.impl.AddActionImpl" instance="request"/>
