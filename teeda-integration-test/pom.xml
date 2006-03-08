@@ -7,7 +7,7 @@
   <parent>
     <groupId>org.seasar.teeda</groupId>
     <artifactId>teeda-project</artifactId>
-    <version>0.1-SNAPSHOT</version>
+    <version>1.0-beta-1</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.seasar.teeda</groupId>
@@ -47,7 +47,7 @@
     <dependency>
       <groupId>org.seasar.teeda</groupId>
       <artifactId>teeda-core</artifactId>
-      <version>0.1-SNAPSHOT</version>
+      <version>1.0-beta-1</version>
       <type>jar</type>
     </dependency>
     <dependency>
@@ -136,7 +136,7 @@
     <dependency>
       <groupId>org.seasar.teeda</groupId>
       <artifactId>teeda-core</artifactId>
-      <version>0.1-SNAPSHOT</version>
+      <version>1.0-beta-1</version>
       <type>test-jar</type>
     </dependency>
   </dependencies>
