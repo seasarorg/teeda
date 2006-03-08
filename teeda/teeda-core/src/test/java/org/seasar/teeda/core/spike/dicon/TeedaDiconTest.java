@@ -54,12 +54,6 @@ public class TeedaDiconTest extends S2FrameworkTestCase {
         assertNotNull(mbFactory.getManagedBeanScopeSaver());
         assertNotNull(mbFactory.getScopeManager());
 
-        try {
-            container.getComponent("valueBindingContext");
-            fail();
-        } catch (ComponentNotFoundRuntimeException e) {
-        }
-
         ValueBindingContext vbContext = (ValueBindingContext) container
                 .getComponent("teeda.valueBindingContext");
         assertNotNull(vbContext.getELParser());
