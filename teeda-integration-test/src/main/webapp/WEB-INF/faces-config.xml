@@ -36,5 +36,10 @@
 		<managed-bean-class>org.seasar.teeda.it.TextBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>hiddenBean</managed-bean-name>
+		<managed-bean-class>org.seasar.teeda.it.HiddenBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
 	
 </faces-config>
