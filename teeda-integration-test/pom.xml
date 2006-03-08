@@ -29,10 +29,9 @@
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-surefire-plugin</artifactId>
           <configuration>
-            <excludes>
-              <exclude>**/Abstract*TestCase.java</exclude>
-              <exclude>**/*$*</exclude>
-            </excludes>
+            <includes>
+              <include>**/TeedaIntegrationTests.java</include>
+            </includes>
           </configuration>
         </plugin>
       </plugins>

@@ -6,7 +6,6 @@ import java.util.Properties;
 
 import junit.extensions.TestSetup;
 import junit.framework.Test;
-import junit.framework.TestSuite;
 
 import org.apache.maven.BuildFailureException;
 import org.apache.maven.artifact.resolver.ArtifactNotFoundException;
@@ -23,20 +22,13 @@ import org.apache.maven.monitor.event.EventMonitor;
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.project.ProjectBuildingException;
 import org.codehaus.plexus.util.dag.CycleDetectedException;
-import org.seasar.teeda.core.util.MavenUtil;
-
 
 public class WebApplicationTestSetup extends TestSetup {
 
-    private Class _testClass;
+    private File pomFile_;
 
     public WebApplicationTestSetup(Test test) {
         super(test);
-    }
-
-    public WebApplicationTestSetup(Class testClass) {
-        this(new TestSuite(testClass));
-        setTestClass(testClass);
     }
 
     protected void setUp() throws Exception {
@@ -49,12 +41,6 @@ public class WebApplicationTestSetup extends TestSetup {
             ArtifactNotFoundException, CycleDetectedException,
             LifecycleExecutionException, BuildFailureException {
 
-        if (_testClass == null) {
-            NullPointerException npe = new NullPointerException(
-                    "_testClass is null");
-            npe.printStackTrace();
-            throw npe;
-        }
         MavenEmbedder maven = new MavenEmbedder();
         maven.setClassLoader(Thread.currentThread().getContextClassLoader());
         MavenEmbedderLogger mavenLogger = new MavenEmbedderConsoleLogger();
@@ -62,7 +48,7 @@ public class WebApplicationTestSetup extends TestSetup {
         maven.setLogger(mavenLogger);
         maven.start();
 
-        final File pomFile = getProjectPomFile(_testClass);
+        final File pomFile = getProjectPomFile();
         System.out.println("pomFile:" + pomFile);
         final File projectDirectory = pomFile.getParentFile();
 
@@ -81,12 +67,15 @@ public class WebApplicationTestSetup extends TestSetup {
         maven.stop();
     }
 
-    protected File getProjectPomFile(Class clazz) {
-        return MavenUtil.getProjectPomFile(clazz);
+    private File getProjectPomFile() {
+        if (pomFile_ == null) {
+            throw new NullPointerException("pomFile is null");
+        }
+        return pomFile_;
     }
 
-    public void setTestClass(Class testClass) {
-        _testClass = testClass;
+    public void setPomFile(File pomFile) {
+        pomFile_ = pomFile;
     }
 
 }

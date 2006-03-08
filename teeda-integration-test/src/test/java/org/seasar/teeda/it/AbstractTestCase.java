@@ -53,35 +53,44 @@ public abstract class AbstractTestCase extends TestCase {
 
     private static int port_ = 8080;
 
-    private String baseUrl_ = "http://localhost:" + port_ + "/";
-
     protected static WebApplicationTestSetup setUpTestSuite(
-        final Class testClass) {
+            final Class testClass) {
         if (testClass == null) {
             throw new NullPointerException("testClass");
         }
+        TestSuite testSuite = new TestSuite(testClass);
+        File pomFile = MavenUtil.getProjectPomFile(testClass);
+        return setUpTestSuite(testSuite, pomFile);
+    }
+
+    protected static WebApplicationTestSetup setUpTestSuite(
+            TestSuite testSuite, File pomFile) {
+
         port_ = SocketUtil.findFreePort();
-        JettyServerSetup jettySetup = new JettyServerSetup(new TestSuite(
-            testClass));
+        JettyServerSetup jettySetup = new JettyServerSetup(testSuite);
         jettySetup.setPort(port_);
-        File project = MavenUtil.getProjectPomFile(testClass).getParentFile();
-        File webapp = new File(project, "target/teeda-integration-test");
+        File webapp = new File(pomFile.getParentFile(),
+                "target/teeda-integration-test");
         jettySetup.setWebapp(webapp);
 
         WebApplicationTestSetup webApplicationTestSetup = new WebApplicationTestSetup(
-            jettySetup);
-        webApplicationTestSetup.setTestClass(testClass);
+                jettySetup);
+        webApplicationTestSetup.setPomFile(pomFile);
         return webApplicationTestSetup;
     }
 
     protected URL getUrl(String path) throws MalformedURLException {
-        return new URL(baseUrl_ + path);
+        return new URL(getBaseUrl() + path);
+    }
+
+    private String getBaseUrl() {
+        return "http://localhost:" + port_ + "/";
     }
 
     protected String getBody(HtmlPage page) throws UnsupportedEncodingException {
         WebResponse webResponse = page.getWebResponse();
         String body = new String(webResponse.getResponseBody(), page
-            .getPageEncoding());
+                .getPageEncoding());
         return body;
     }
 
@@ -92,8 +101,8 @@ public abstract class AbstractTestCase extends TestCase {
             is = ResourceUtil.getResourceAsStream(pathByClass);
         } catch (ResourceNotFoundRuntimeException e) {
             String pathByPackage = getClass().getPackage().getName().replace(
-                '.', '/')
-                + "/" + s;
+                    '.', '/')
+                    + "/" + s;
             is = ResourceUtil.getResourceAsStream(pathByPackage);
         }
         Reader reader = InputStreamReaderUtil.create(is, "UTF-8");
@@ -102,20 +111,20 @@ public abstract class AbstractTestCase extends TestCase {
 
     protected URL getFileAsUrl(String s) {
         String fileNameByClass = getClass().getName().replace('.', '/') + "_"
-            + s;
+                + s;
         try {
             return ResourceUtil.getResource(fileNameByClass);
         } catch (ResourceNotFoundRuntimeException e) {
             String fileNameByPackage = getClass().getPackage().getName()
-                .replace('.', '/')
-                + "/" + s;
+                    .replace('.', '/')
+                    + "/" + s;
             return ResourceUtil.getResource(fileNameByPackage);
         }
     }
 
-    protected Diff diff(final String expected, final String body)
-        throws SAXException, IOException, ParserConfigurationException {
-        Diff diff = new Diff(expected, body);
+    protected Diff diff(final String expected, final String actual)
+            throws SAXException, IOException, ParserConfigurationException {
+        Diff diff = new Diff(expected, actual);
         DifferenceListenerChain chain = new DifferenceListenerChain();
         chain.addDifferenceListener(new TextTrimmingDifferenceListener());
         chain.addDifferenceListener(new IgnoreJsessionidDifferenceListener());
