@@ -57,7 +57,7 @@ public class TeedaDiconTest extends S2FrameworkTestCase {
         assertNotNull(mbFactory.getScopeManager());
 
         ValueBindingContext vbContext = (ValueBindingContext) container
-                .getComponent("valueBindingContext");
+                .getComponent("teeda.valueBindingContext");
         assertNotNull(vbContext.getELParser());
         assertNotNull(vbContext.getELParser().getExpressionProcessor());
 
