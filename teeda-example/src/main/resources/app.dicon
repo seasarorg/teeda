@@ -5,4 +5,5 @@
 	<include path="teeda.dicon"/>
 	<include path="examples/teeda/dicon/hello.dicon"/>
 	<include path="examples/teeda/dicon/add.dicon"/>
+	<include path="examples/teeda/dicon/checkbox.dicon"/>
 </components>
