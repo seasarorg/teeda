@@ -34,7 +34,7 @@ import org.seasar.teeda.core.util.DIContainerUtil;
  */
 public class LifecycleFactoryImpl extends LifecycleFactory {
 
-    private Map lifecycles = Collections.synchronizedMap(new HashMap());
+    private Map lifecycles_ = Collections.synchronizedMap(new HashMap());
 
     public LifecycleFactoryImpl() {
         Lifecycle lifecycle = (Lifecycle) DIContainerUtil
@@ -43,13 +43,13 @@ public class LifecycleFactoryImpl extends LifecycleFactory {
     }
 
     public void addLifecycle(String id, Lifecycle lifecycle) {
-        if (lifecycles.put(id, lifecycle) != null) {
+        if (lifecycles_.put(id, lifecycle) != null) {
             throw new LifecycleIdAlreadyExistRuntimeException(id);
         }
     }
 
     public Lifecycle getLifecycle(String id) throws FacesException {
-        Lifecycle lifecycle = (Lifecycle) lifecycles.get(id);
+        Lifecycle lifecycle = (Lifecycle) lifecycles_.get(id);
         if (lifecycle == null) {
             throw new LifecycleIdNotFoundRuntimeException(id);
         }
@@ -57,6 +57,6 @@ public class LifecycleFactoryImpl extends LifecycleFactory {
     }
 
     public Iterator getLifecycleIds() {
-        return lifecycles.keySet().iterator();
+        return lifecycles_.keySet().iterator();
     }
 }

@@ -359,15 +359,10 @@ public class AbstractPhaseTest extends TeedaTestCase {
 
     private static class MockNotifyBeforePhaseListener extends
             MockNotifyPhaseListener {
+        private static final long serialVersionUID = 1L;
+
         public MockNotifyBeforePhaseListener(List notify) {
             super(notify, NOTIFY_BEFORE_PHASE);
-        }
-    }
-
-    private static class MockNotifyAfterPhaseListener extends
-            MockNotifyPhaseListener {
-        public MockNotifyAfterPhaseListener(List notify) {
-            super(notify, NOTIFY_AFTER_PHASE);
         }
     }
 
