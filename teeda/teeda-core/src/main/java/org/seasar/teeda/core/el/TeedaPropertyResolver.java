@@ -47,8 +47,9 @@ public class TeedaPropertyResolver extends PropertyResolver {
             return ((Map) base).get(property);
         }
         if (base instanceof UIComponent) {
-            for (Iterator children = ((UIComponent) base).getChildren()
-                    .iterator(); children.hasNext();) {
+            UIComponent baseComponent = (UIComponent) base;
+            for (Iterator children = baseComponent.getChildren().iterator(); children
+                    .hasNext();) {
                 UIComponent child = (UIComponent) children.next();
                 if (property.equals(child.getId())) {
                     return child;
