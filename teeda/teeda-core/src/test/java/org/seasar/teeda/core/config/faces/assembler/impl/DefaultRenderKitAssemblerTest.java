@@ -16,14 +16,16 @@
 package org.seasar.teeda.core.config.faces.assembler.impl;
 
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import javax.faces.render.RenderKit;
 import javax.faces.render.RenderKitFactory;
 import javax.faces.render.Renderer;
 
-import org.seasar.framework.exception.ClassNotFoundRuntimeException;
 import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.core.config.faces.assembler.impl.DefaultRenderKitAssembler.RenderKitBean;
 import org.seasar.teeda.core.config.faces.element.RenderKitElement;
 import org.seasar.teeda.core.config.faces.element.RendererElement;
 import org.seasar.teeda.core.config.faces.element.impl.RenderKitElementImpl;
@@ -37,15 +39,6 @@ import org.seasar.teeda.core.util.FactoryFinderUtil;
  * @author shot
  */
 public class DefaultRenderKitAssemblerTest extends TeedaTestCase {
-
-    /**
-     * Constructor for DefaultRenderKitAssemblerTest.
-     * 
-     * @param name
-     */
-    public DefaultRenderKitAssemblerTest(String name) {
-        super(name);
-    }
 
     public void testAssemble() throws Exception {
         // ## Arrange ##
@@ -77,7 +70,37 @@ public class DefaultRenderKitAssemblerTest extends TeedaTestCase {
         assertTrue(renderer instanceof MockRenderer);
     }
 
-    public void testGetRenderKitClassName() throws Exception {
+    public void testGetDefaultRenderKitId() throws Exception {
+        // ## Arrange ##
+        RenderKitElement renderKitElement = new RenderKitElementImpl();
+
+        RendererElement rendererElement = new RendererElementImpl();
+        rendererElement.setComponentFamily("family");
+        rendererElement
+                .setRendererClass("org.seasar.teeda.core.mock.MockRenderer");
+        rendererElement.setRendererType("type");
+        renderKitElement.addRendererElement(rendererElement);
+
+        Map map = new HashMap();
+        map.put(null, renderKitElement);
+
+        DefaultRenderKitAssembler assembler = createAssembler(map);
+
+        // ## Act ##
+        assembler.assemble();
+
+        // ## Assert ##
+        List renderList = assembler.getRenderList();
+        Iterator it = renderList.iterator();
+
+        assertEquals(true, it.hasNext());
+        RenderKitBean bean = (RenderKitBean) it.next();
+        assertEquals(RenderKitFactory.HTML_BASIC_RENDER_KIT, bean
+                .getRenderKitId());
+        assertEquals(false, it.hasNext());
+    }
+
+    public void testGetDefaultRenderKitClassName() throws Exception {
         // ## Arrange ##
         DefaultRenderKitAssembler assembler = createAssembler();
         RenderKitElement element = new RenderKitElementImpl();
@@ -104,13 +127,9 @@ public class DefaultRenderKitAssemblerTest extends TeedaTestCase {
     public void testCreateRendererReturnNull() throws Exception {
         // ## Arrange ##
         DefaultRenderKitAssembler assembler = createAssembler();
-        Renderer r = null;
 
         // ## Act ##
-        try {
-            r = assembler.createRenderer("nosuchpackage.NoSuchRenderer");
-        } catch (ClassNotFoundRuntimeException expected) {
-        }
+        Renderer r = assembler.createRenderer("nosuchpackage.NoSuchRenderer");
 
         // ## Assert ##
         assertNull(r);

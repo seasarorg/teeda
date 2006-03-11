@@ -51,9 +51,9 @@ public class DefaultRenderKitAssembler extends RenderKitAssembler {
         for (Iterator itr = IteratorUtil.getEntryIterator(getRenderKits()); itr
                 .hasNext();) {
             Map.Entry entry = (Map.Entry) itr.next();
-            String renderKitId = (String) entry.getKey();
             RenderKitElement renderKitElement = (RenderKitElement) entry
                     .getValue();
+            String renderKitId = getRenderKitId(renderKitElement);
             String className = getRenderKitClassName(renderKitElement);
             List renderers = renderKitElement.getRendererElements();
             isAllSuitableJsfElement(renderers, RendererElement.class);
@@ -61,6 +61,14 @@ public class DefaultRenderKitAssembler extends RenderKitAssembler {
                     renderers);
             renderLists_.add(bean);
         }
+    }
+
+    private String getRenderKitId(RenderKitElement renderKitElement) {
+        String renderKitId = renderKitElement.getRenderKitId();
+        if (renderKitId != null) {
+            return renderKitId;
+        }
+        return RenderKitFactory.HTML_BASIC_RENDER_KIT;
     }
 
     public void assemble() {
@@ -106,7 +114,12 @@ public class DefaultRenderKitAssembler extends RenderKitAssembler {
         return renderer;
     }
 
-    private static class RenderKitBean {
+    List getRenderList() {
+        return renderLists_;
+    }
+
+    static class RenderKitBean {
+
         private String renderKitId_;
 
         private String className_;
