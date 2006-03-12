@@ -204,7 +204,8 @@ public class CoreFacesConfiguratorTest extends S2TestCase {
 
         // # Assert #
         Map map = NavigationContextFactory.getNavigationContexts(context);
-        NavigationContext navContext = (NavigationContext) map.get("from");
+        List list = (List) map.get("from");
+        NavigationContext navContext = (NavigationContext) list.get(0);
         assertEquals("from", navContext.getFromViewId());
         List cases = navContext.getNavigationCases();
         assertNotNull(cases);

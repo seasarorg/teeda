@@ -96,7 +96,7 @@ public class MockExternalContextImpl extends MockExternalContext {
     }
 
     public String encodeActionURL(String sb) {
-        throw new UnsupportedOperationException();
+        return getMockHttpServletResponse().encodeUrl(sb);
     }
 
     public String encodeNamespace(String aValue) {
@@ -283,7 +283,7 @@ public class MockExternalContextImpl extends MockExternalContext {
     }
 
     public void redirect(String requestURI) throws IOException {
-        throw new UnsupportedOperationException();
+        getMockHttpServletResponse().sendRedirect(requestURI);
     }
 
     private static class LocalesIterator implements Iterator {

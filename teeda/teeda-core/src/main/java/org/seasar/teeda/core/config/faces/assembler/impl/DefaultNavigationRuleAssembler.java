@@ -77,6 +77,7 @@ public class DefaultNavigationRuleAssembler extends NavigationRuleAssembler {
                         caseElement));
             }
         }
+        
     }
 
     public static class NavigationCaseContextWrapper extends

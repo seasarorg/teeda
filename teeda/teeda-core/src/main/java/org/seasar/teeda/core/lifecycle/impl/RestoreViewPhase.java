@@ -34,7 +34,9 @@ public class RestoreViewPhase extends AbstractPhase implements Postback {
     private static final String VIEW_ID_ATTR = RestoreViewPhase.class.getName()
             + ".VIEW_ID";
 
-    private boolean postback_;
+    private static final String POSTBACK_ATTR = RestoreViewPhase.class
+            .getName()
+            + ".POSTBACK";
 
     public RestoreViewPhase() {
     }
@@ -54,7 +56,7 @@ public class RestoreViewPhase extends AbstractPhase implements Postback {
         if (externalContext.getRequestParameterMap().isEmpty()) {
             context.renderResponse();
         }
-        setPostback(viewId.equals(previousViewId));
+        setPostback(externalContext, viewId.equals(previousViewId));
     }
 
     protected String getViewIdFromSession(ExternalContext externalContext) {
@@ -70,12 +72,17 @@ public class RestoreViewPhase extends AbstractPhase implements Postback {
         return PhaseId.RESTORE_VIEW;
     }
 
-    protected void setPostback(boolean postback) {
-        postback_ = postback;
+    protected void setPostback(ExternalContext externalContext, boolean postback) {
+        externalContext.getRequestMap().put(POSTBACK_ATTR,
+                new Boolean(postback));
     }
 
     public boolean isPostBack() {
-        return postback_;
+        FacesContext context = FacesContext.getCurrentInstance();
+        ExternalContext externalContext = context.getExternalContext();
+        Boolean postBack = (Boolean) externalContext.getRequestMap().get(
+                POSTBACK_ATTR);
+        return postBack.booleanValue();
     }
 
 }

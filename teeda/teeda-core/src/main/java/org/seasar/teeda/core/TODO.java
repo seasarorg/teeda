@@ -21,9 +21,6 @@ package org.seasar.teeda.core;
 public interface TODO {
     /*
      * TODO for 1.0
-     *  - Make JSF init-code complete. 
-     *  - StateManager 
-     *  - Renderers(Last 1! CommandLink)
      *  - Test, test, test
      *    -> JSF Specification part(UIComponent things!)
      *    -> Teeda original part
@@ -35,12 +32,8 @@ public interface TODO {
      *  - Use UIComponent's label attribute (if exist) for Conversion, Validation Error Message.
      *  - Support list-entries, map-entries to ManagedBean.
      *    (Need to modify ManagedBeanFactoryImpl, and ManagedBeanAssembler) 
-     *  - Configure core-faces-config.xml for default setting.
      *  - MetaInfFacesConfigurator -> Support multiple jar file.
      *  - Add DI Support for Converter, Validator, UIComponent, Renderer
-     *  - impl StateManager
-     *  - impl taglib core
-     *  - impl taglib html
      *  - [Seasar-user:3230]
      *  - [#7682] http://sourceforge.jp/tracker/index.php?func=detail&aid=7682&group_id=689&atid=6584
      *  - [#7975] [Seasar-user:3127] http://sourceforge.jp/tracker/index.php?func=detail&aid=7975&group_id=689&atid=6584
@@ -65,6 +58,13 @@ public interface TODO {
      *  - Make Assemblers done.
      *  - change S2ScopeTranslator for Application scope.
      *  - use Clover or cobertura?
+     *  - Make JSF init-code complete. 
+     *  - StateManager 
+     *  - Renderers(Last 1! CommandLink)
+     *  - Configure core-faces-config.xml for default setting.
+     *  - impl StateManager
+     *  - impl taglib core
+     *  - impl taglib html
      * 
      * PEND
      *  - Selenium integration

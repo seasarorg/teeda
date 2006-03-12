@@ -21,6 +21,9 @@ import java.util.Map;
 
 /**
  * @author shot
+ * 
+ * This class might be changed without notice. Please do not use it
+ * excluding the JSF specification part.
  */
 public class SerializableStateHolder implements Serializable {
 

@@ -15,8 +15,10 @@
  */
 package org.seasar.teeda.core.application.navigation;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.faces.context.ExternalContext;
@@ -35,6 +37,10 @@ public class NavigationContextFactory {
             .getName()
             + "_WILDCARD_NAVIGATION_CONTEXTS";
 
+    private static final String DEFAULT_NAVIGATION_CONTEXTS = NavigationContextFactory.class
+            .getName()
+            + "_DEFAULT_NAVIGATION_CONTEXTS";
+
     private NavigationContextFactory() {
     }
 
@@ -46,23 +52,18 @@ public class NavigationContextFactory {
         Map applicationMap = externalContext.getApplicationMap();
         String fromViewId = navigationContext.getFromViewId();
         if (navigationContext.isWildCardMatch()) {
-            Map wildCardMatchContexts = (Map) applicationMap
-                    .get(WILDCARD_NAVIGATION_CONTEXTS);
-            if (wildCardMatchContexts == null) {
-                wildCardMatchContexts = Collections
-                        .synchronizedMap(new HashMap());
-                applicationMap.put(WILDCARD_NAVIGATION_CONTEXTS,
-                        wildCardMatchContexts);
+            //if default match
+            if ("*".equals(fromViewId)) {
+                storeNavigationContext(applicationMap, fromViewId,
+                        navigationContext, DEFAULT_NAVIGATION_CONTEXTS);
+            } else {
+                storeNavigationContext(applicationMap, fromViewId,
+                        navigationContext, WILDCARD_NAVIGATION_CONTEXTS);
             }
-            wildCardMatchContexts.put(fromViewId, navigationContext);
+
         } else {
-            Map navigationContexts = (Map) applicationMap
-                    .get(NAVIGATON_CONTEXTS);
-            if (navigationContexts == null) {
-                navigationContexts = Collections.synchronizedMap(new HashMap());
-                applicationMap.put(NAVIGATON_CONTEXTS, navigationContexts);
-            }
-            navigationContexts.put(fromViewId, navigationContext);
+            storeNavigationContext(applicationMap, fromViewId,
+                    navigationContext, NAVIGATON_CONTEXTS);
         }
     }
 
@@ -74,6 +75,27 @@ public class NavigationContextFactory {
     public static Map getWildCardMatchNavigationContexts(FacesContext context) {
         Map appMap = context.getExternalContext().getApplicationMap();
         return (Map) appMap.get(WILDCARD_NAVIGATION_CONTEXTS);
+    }
+
+    public static Map getDefaultMatchNavigationContexts(FacesContext context) {
+        Map appMap = context.getExternalContext().getApplicationMap();
+        return (Map) appMap.get(DEFAULT_NAVIGATION_CONTEXTS);
+    }
+
+    private static void storeNavigationContext(Map applicationMap,
+            String fromViewId, NavigationContext navContext,
+            String applicationKey) {
+        Map navContextsMap = (Map) applicationMap.get(applicationKey);
+        if (navContextsMap == null) {
+            navContextsMap = Collections.synchronizedMap(new HashMap());
+            applicationMap.put(applicationKey, navContextsMap);
+        }
+        List navContextList = (List) navContextsMap.get(fromViewId);
+        if (navContextList == null) {
+            navContextList = new ArrayList();
+        }
+        navContextList.add(navContext);
+        navContextsMap.put(fromViewId, navContextList);
     }
 
 }

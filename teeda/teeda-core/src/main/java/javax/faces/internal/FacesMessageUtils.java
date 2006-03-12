@@ -29,7 +29,7 @@ import javax.faces.context.FacesContext;
 /**
  * @author shot
  * 
- * This class might be changed without a previous notice. Please do not use it
+ * This class might be changed without notice. Please do not use it
  * excluding the JSF specification part.
  */
 public class FacesMessageUtils {

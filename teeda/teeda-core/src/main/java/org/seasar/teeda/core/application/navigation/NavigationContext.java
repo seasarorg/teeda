@@ -21,8 +21,6 @@ import java.util.List;
 
 /**
  * @author shot
- * 
- * TODO : provide easy way to get NavigationCaseContext(generate key and cache to map)
  */
 public class NavigationContext {
 
@@ -44,7 +42,9 @@ public class NavigationContext {
         if (navigationCaseContext != null) {
             navigationCases_.add(navigationCaseContext);
         }
-        isWildCardMatch_ = fromViewId_.endsWith("*");
+        if (fromViewId_ != null) {
+            isWildCardMatch_ = fromViewId_.endsWith("*");
+        }
     }
 
     public String getFromViewId() {
@@ -62,8 +62,8 @@ public class NavigationContext {
                     .next();
             String from = caseContext.getFromAction();
             String out = caseContext.getFromOutcome();
-            if ((fromAction == null || fromAction.equals(from))
-                    && (outCome == null || outCome.equals(out))) {
+            if ((from == null || from.equals(fromAction))
+                    && (out == null || out.equals(outCome))) {
                 return caseContext;
             }
         }
@@ -75,10 +75,10 @@ public class NavigationContext {
     }
 
     public String toString() {
-        StringBuffer buf = new StringBuffer(100);
+        StringBuffer buf = new StringBuffer();
         buf.append("navigation-rule = ");
         buf.append("[");
-        buf.append("from-view-id = " + fromViewId_);
+        buf.append("from-view-id = \"" + fromViewId_ + "\"");
         buf.append(" ");
         for (Iterator itr = navigationCases_.iterator(); itr.hasNext();) {
             buf.append(itr.next());

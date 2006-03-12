@@ -28,7 +28,7 @@ import org.seasar.teeda.core.unit.TeedaTestCase;
  */
 public class NavigationHandlerImplTest extends TeedaTestCase {
 
-    public void testHandleNavigation1() throws Exception {
+    public void testHandleNavigation_exactMatch() throws Exception {
         // ## Arrange ##
         MockFacesContext context = getFacesContext();
         UIViewRoot root = new UIViewRoot();
@@ -47,7 +47,7 @@ public class NavigationHandlerImplTest extends TeedaTestCase {
         assertEquals("bbb", context.getViewRoot().getViewId());
     }
 
-    public void testHandleNavigation2() throws Exception {
+    public void testHandleNavigation_wildCardMatch() throws Exception {
         // ## Arrange ##
         MockFacesContext context = getFacesContext();
         UIViewRoot root = new UIViewRoot();
@@ -66,7 +66,7 @@ public class NavigationHandlerImplTest extends TeedaTestCase {
         assertEquals("bbb", context.getViewRoot().getViewId());
     }
 
-    public void testHandleNavigation3() throws Exception {
+    public void testHandleNavigation_defaultMatch() throws Exception {
         // ## Arrange ##
         MockFacesContext context = getFacesContext();
         UIViewRoot root = new UIViewRoot();
@@ -85,15 +85,37 @@ public class NavigationHandlerImplTest extends TeedaTestCase {
         assertEquals("bbb", context.getViewRoot().getViewId());
     }
 
-    public void testGetNavigationCaseContext1() throws Exception {
+    public void testHandleNavigation_redirect() throws Exception {
+        // ## Arrange ##
+        MockFacesContext context = getFacesContext();
+        UIViewRoot root = new UIViewRoot();
+        root.setViewId("id");
+        context.setViewRoot(root);
+        NavigationContext navContext = createNavigationContext("id", "from",
+                "outcome", "bbb", true);
+        NavigationContextFactory.addNavigationContext(getExternalContext(),
+                navContext);
+
+        // ## Act ##
+        NavigationHandlerImpl handler = new NavigationHandlerImpl();
+        handler.handleNavigation(context, "from", "outcome");
+
+        // ## Assert ##
+        assertEquals("id", context.getViewRoot().getViewId());
+    }
+
+    public void testGetNavigationCaseContext_fromActionAndOutComeNotNull()
+            throws Exception {
         // ## Arrange ##
         NavigationContext navContext = createNavigationContext("id", "action",
                 "outcome", "to", false);
+        NavigationContextFactory.addNavigationContext(getExternalContext(),
+                navContext);
         NavigationHandlerImpl handler = new NavigationHandlerImpl();
 
         // ## Act ##
         NavigationCaseContext caseContext = handler.getNavigationCaseContext(
-                navContext, "action", "outcome");
+                getFacesContext(), "action", "outcome", "id");
 
         // ## Arrange ##
         assertNotNull(caseContext);
@@ -103,58 +125,105 @@ public class NavigationHandlerImplTest extends TeedaTestCase {
         assertFalse(caseContext.isRedirect());
     }
 
-    public void testGetNavigationCaseContext2() throws Exception {
+    public void testGetNavigationCaseContext_outcomeIsNull() throws Exception {
         // ## Arrange ##
         NavigationContext navContext = createNavigationContext("id", "action",
-                "outcome", "to", false);
+                null, "to", false);
+        NavigationContextFactory.addNavigationContext(getExternalContext(),
+                navContext);
         NavigationHandlerImpl handler = new NavigationHandlerImpl();
 
         // ## Act ##
         NavigationCaseContext caseContext = handler.getNavigationCaseContext(
-                navContext, "action", null);
+                getFacesContext(), "action", "outcome", "id");
 
         // ## Arrange ##
         assertNotNull(caseContext);
         assertEquals("action", caseContext.getFromAction());
+        assertNull(caseContext.getFromOutcome());
+        assertEquals("to", caseContext.getToViewId());
+        assertFalse(caseContext.isRedirect());
+    }
+
+    public void testNavigationCaseContext_fromActionIsNull() throws Exception {
+        // ## Arrange ##
+        NavigationContext navContext = createNavigationContext("id", null,
+                "outcome", "to", false);
+        NavigationContextFactory.addNavigationContext(getExternalContext(),
+                navContext);
+        NavigationHandlerImpl handler = new NavigationHandlerImpl();
+
+        // ## Act ##
+        NavigationCaseContext caseContext = handler.getNavigationCaseContext(
+                getFacesContext(), "action", "outcome", "id");
+
+        // ## Arrange ##
+        assertNotNull(caseContext);
+        assertNull(caseContext.getFromAction());
         assertEquals("outcome", caseContext.getFromOutcome());
         assertEquals("to", caseContext.getToViewId());
         assertFalse(caseContext.isRedirect());
     }
 
-    public void testGetNavigationCaseContext3() throws Exception {
+    public void testNavigationCaseContext_fromActionAndOutComeNull()
+            throws Exception {
         // ## Arrange ##
-        NavigationContext navContext = createNavigationContext("id", "action",
-                "outcome", "to", false);
+        NavigationContext navContext = createNavigationContext("id", null,
+                null, "to", false);
+        NavigationContextFactory.addNavigationContext(getExternalContext(),
+                navContext);
         NavigationHandlerImpl handler = new NavigationHandlerImpl();
 
         // ## Act ##
         NavigationCaseContext caseContext = handler.getNavigationCaseContext(
-                navContext, null, "outcome");
+                getFacesContext(), "action", "outcome", "id");
 
         // ## Arrange ##
         assertNotNull(caseContext);
-        assertEquals("action", caseContext.getFromAction());
-        assertEquals("outcome", caseContext.getFromOutcome());
+        assertNull(caseContext.getFromAction());
+        assertNull(caseContext.getFromOutcome());
         assertEquals("to", caseContext.getToViewId());
         assertFalse(caseContext.isRedirect());
     }
 
-    public void testGetNavigationCaseContext4() throws Exception {
+    public void testHandleNavigationMoreReallistic_likeNormalLogin() {
         // ## Arrange ##
-        NavigationContext navContext = createNavigationContext("id", "action",
-                "outcome", "to", false);
-        NavigationHandlerImpl handler = new NavigationHandlerImpl();
+        MockFacesContext context = getFacesContext();
+        UIViewRoot root = new UIViewRoot();
+        root.setViewId("/index.jsp");
+        context.setViewRoot(root);
+        NavigationContext navContext = createNavigationContext("/index.jsp",
+                null, "login", "/welcome.jsp", false);
+        NavigationContextFactory.addNavigationContext(getExternalContext(),
+                navContext);
 
         // ## Act ##
-        NavigationCaseContext caseContext = handler.getNavigationCaseContext(
-                navContext, null, null);
+        NavigationHandlerImpl handler = new NavigationHandlerImpl();
+        handler.handleNavigation(context, "/index.jsp", "login");
 
+        // ## Assert ##
+        assertEquals("/welcome.jsp", context.getViewRoot().getViewId());
+
+    }
+
+    public void testHandleNavigationMoreReallistic_likeNormalLogout() {
         // ## Arrange ##
-        assertNotNull(caseContext);
-        assertEquals("action", caseContext.getFromAction());
-        assertEquals("outcome", caseContext.getFromOutcome());
-        assertEquals("to", caseContext.getToViewId());
-        assertFalse(caseContext.isRedirect());
+        MockFacesContext context = getFacesContext();
+        UIViewRoot root = new UIViewRoot();
+        root.setViewId("/index.jsp");
+        context.setViewRoot(root);
+        NavigationContext navContext = createNavigationContext("*", null,
+                "logout", "/logout.jsp", false);
+        NavigationContextFactory.addNavigationContext(getExternalContext(),
+                navContext);
+
+        // ## Act ##
+        NavigationHandlerImpl handler = new NavigationHandlerImpl();
+        handler.handleNavigation(context, "/index.jsp", "logout");
+
+        // ## Assert ##
+        assertEquals("/logout.jsp", context.getViewRoot().getViewId());
+
     }
 
     private NavigationContext createNavigationContext(String fromViewId,

@@ -33,14 +33,6 @@ import org.seasar.teeda.core.unit.TeedaTestCase;
  */
 public class DefaultNavigationRuleAssemblerTest extends TeedaTestCase {
 
-    /**
-     * Constructor for SimpleNavigationRuleAssemblerTest.
-     * @param name
-     */
-    public DefaultNavigationRuleAssemblerTest(String name) {
-        super(name);
-    }
-
     public void testSetupChildAssembler() throws Exception {
         List list = new ArrayList();
         NavigationRuleElement rule = new NavigationRuleElementImpl();
@@ -73,7 +65,8 @@ public class DefaultNavigationRuleAssemblerTest extends TeedaTestCase {
         Map map = NavigationContextFactory
                 .getNavigationContexts(getFacesContext());
         assertTrue(map.containsKey("aaa"));
-        NavigationContext navContext = (NavigationContext) map.get("aaa");
+        List l = (List) map.get("aaa");
+        NavigationContext navContext = (NavigationContext) l.get(0);
         assertEquals("aaa", navContext.getFromViewId());
         assertFalse(navContext.isWildCardMatch());
         List cases = navContext.getNavigationCases();
@@ -83,6 +76,42 @@ public class DefaultNavigationRuleAssemblerTest extends TeedaTestCase {
         assertEquals("bbb", caseContext.getFromAction());
         assertEquals("ccc", caseContext.getFromOutcome());
         assertEquals("ddd", caseContext.getToViewId());
+        assertTrue(caseContext.isRedirect());
+    }
+
+    public void testAssemble_noViewId() throws Exception {
+        // ## Arrange ##
+        NavigationRuleElement rule = new NavigationRuleElementImpl();
+        NavigationCaseElement caseElement = new NavigationCaseElementImpl();
+        caseElement.setFromAction("b");
+        caseElement.setFromOutcome("c");
+        caseElement.setRedirect("");
+        caseElement.setToViewId("d");
+        rule.addNavigationCase(caseElement);
+        List list = new ArrayList();
+        list.add(rule);
+        DefaultNavigationRuleAssembler assembler = new DefaultNavigationRuleAssembler(
+                list, getExternalContext());
+        assembler.setExternalContext(getExternalContext());
+
+        // ## Act ##
+        assembler.assemble();
+
+        // ## Assert ##
+        Map map = NavigationContextFactory
+                .getDefaultMatchNavigationContexts(getFacesContext());
+        assertTrue(map.containsKey("*"));
+        List l = (List) map.get("*");
+        NavigationContext navContext = (NavigationContext) l.get(0);
+        assertEquals("*", navContext.getFromViewId());
+        assertTrue(navContext.isWildCardMatch());
+        List cases = navContext.getNavigationCases();
+        assertEquals(1, cases.size());
+        NavigationCaseContext caseContext = (NavigationCaseContext) cases
+                .get(0);
+        assertEquals("b", caseContext.getFromAction());
+        assertEquals("c", caseContext.getFromOutcome());
+        assertEquals("d", caseContext.getToViewId());
         assertTrue(caseContext.isRedirect());
     }
 

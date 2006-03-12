@@ -37,7 +37,7 @@ import javax.faces.el.ValueBinding;
  * @author shot
  * @author manhole
  * 
- * This class might be changed without a previous notice. Please do not use it
+ * This class might be changed without notice. Please do not use it
  * excluding the JSF specification part.
  */
 public class ComponentAttributesMap implements Map, Serializable {

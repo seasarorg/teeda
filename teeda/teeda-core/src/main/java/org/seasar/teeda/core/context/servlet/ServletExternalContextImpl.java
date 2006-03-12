@@ -37,7 +37,7 @@ import org.seasar.framework.log.Logger;
 import org.seasar.teeda.core.util.ServletExternalContextUtil;
 
 /**
- * @author Shinpei Ohtani(aka shot)
+ * @author shot
  */
 public class ServletExternalContextImpl extends ExternalContext {
 

@@ -16,6 +16,8 @@
 package org.seasar.teeda.core.application;
 
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import javax.faces.FacesException;
@@ -25,14 +27,19 @@ import javax.faces.component.UIViewRoot;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
+import org.seasar.framework.log.Logger;
 import org.seasar.teeda.core.application.navigation.NavigationCaseContext;
 import org.seasar.teeda.core.application.navigation.NavigationContext;
 import org.seasar.teeda.core.application.navigation.NavigationContextFactory;
+import org.seasar.teeda.core.util.IteratorUtil;
 
 /**
  * @author shot
  */
 public class NavigationHandlerImpl extends NavigationHandler {
+
+    private static final Logger logger_ = Logger
+            .getLogger(NavigationHandlerImpl.class);
 
     public void handleNavigation(FacesContext context, String fromAction,
             String outcome) {
@@ -44,18 +51,8 @@ public class NavigationHandlerImpl extends NavigationHandler {
         }
         ExternalContext externalContext = context.getExternalContext();
         String viewId = context.getViewRoot().getViewId();
-        NavigationContext navigationContext = getExactMatchNavigationCases(
-                viewId, context);
-        NavigationCaseContext navigationCaseContext = null;
-        if (navigationContext != null) {
-            navigationCaseContext = getNavigationCaseContext(navigationContext,
-                    fromAction, outcome);
-        }
-        if (navigationCaseContext == null) {
-            navigationContext = getWildCardMatchNavigationCases(viewId, context);
-            navigationCaseContext = getNavigationCaseContext(navigationContext,
-                    fromAction, outcome);
-        }
+        NavigationCaseContext navigationCaseContext = getNavigationCaseContext(
+                context, fromAction, outcome, viewId);
         if (navigationCaseContext != null) {
             ViewHandler viewHandler = context.getApplication().getViewHandler();
             String newViewId = navigationCaseContext.getToViewId();
@@ -67,7 +64,9 @@ public class NavigationHandlerImpl extends NavigationHandler {
                 render(context, viewHandler, newViewId);
             }
         } else {
-            //Stay current ViewRoot.
+            if(logger_.isDebugEnabled()) {
+                logger_.debug("Stay current ViewRoot");
+            }
         }
     }
 
@@ -101,30 +100,78 @@ public class NavigationHandlerImpl extends NavigationHandler {
     }
 
     protected NavigationCaseContext getNavigationCaseContext(
-            NavigationContext navContext, String fromAction, String outcome) {
-        if (navContext == null) {
-            return null;
+            FacesContext context, String fromAction, String outcome,
+            String viewId) {
+        //exact match
+        List navigationList = getExactMatchNavigationCases(viewId, context);
+        NavigationCaseContext navigationCaseContext = getNavigationCaseContextInternal(
+                navigationList, fromAction, outcome);
+        //wildcard match
+        if (navigationCaseContext == null) {
+            navigationList = getWildCardMatchNavigationCases(viewId, context);
+            navigationCaseContext = getNavigationCaseContextInternal(
+                    navigationList, fromAction, outcome);
         }
-        return navContext.getNavigationCase(fromAction, outcome);
+        //and * match
+        if (navigationCaseContext == null) {
+            navigationList = getDefaultNavigationCases(viewId, context);
+            navigationCaseContext = getNavigationCaseContextInternal(
+                    navigationList, fromAction, outcome);
+        }
+        return navigationCaseContext;
     }
 
-    protected NavigationContext getExactMatchNavigationCases(String viewId,
-            FacesContext context) {
-        Map map = NavigationContextFactory.getNavigationContexts(context);
-        if (map != null) {
-            return (NavigationContext) map.get(viewId);
+    private NavigationCaseContext getNavigationCaseContextInternal(
+            List navigationList, String fromAction, String outcome) {
+        for (Iterator itr = IteratorUtil.getIterator(navigationList); itr
+                .hasNext();) {
+            NavigationContext navContext = (NavigationContext) itr.next();
+            NavigationCaseContext caseContext = navContext.getNavigationCase(
+                    fromAction, outcome);
+            if (caseContext != null) {
+                return caseContext;
+            }
         }
         return null;
     }
 
-    protected NavigationContext getWildCardMatchNavigationCases(String viewId,
+    protected List getExactMatchNavigationCases(String viewId,
+            FacesContext context) {
+        Map map = NavigationContextFactory.getNavigationContexts(context);
+        if (map != null) {
+            if (logger_.isDebugEnabled()) {
+                logger_.debug("Exact macth. viewId = " + viewId);
+            }
+            return (List) map.get(viewId);
+        }
+        return null;
+    }
+
+    protected List getWildCardMatchNavigationCases(String viewId,
             FacesContext context) {
         Map map = NavigationContextFactory
                 .getWildCardMatchNavigationContexts(context);
         if (map != null) {
-            return (NavigationContext) map.get(viewId);
+            if (logger_.isDebugEnabled()) {
+                logger_.debug("Wildcard macth. viewId = " + viewId);
+            }
+            if(!viewId.endsWith("*")) {
+                viewId = viewId + "*";
+            }
+            return (List) map.get(viewId);
         }
         return null;
     }
 
+    protected List getDefaultNavigationCases(String viewId, FacesContext context) {
+        Map map = NavigationContextFactory
+                .getDefaultMatchNavigationContexts(context);
+        if (map != null) {
+            if (logger_.isDebugEnabled()) {
+                logger_.debug("Default macth. viewId = " + viewId);
+            }
+            return (List) map.get("*");
+        }
+        return null;
+    }
 }

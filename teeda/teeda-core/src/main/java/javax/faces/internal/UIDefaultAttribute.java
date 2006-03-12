@@ -17,6 +17,9 @@ package javax.faces.internal;
 
 /**
  * @author manhole
+ * 
+ * This class might be changed without notice. Please do not use it
+ * excluding the JSF specification part.
  */
 public abstract class UIDefaultAttribute {
 

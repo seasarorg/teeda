@@ -79,10 +79,10 @@ public class NavigationCaseContext {
         StringBuffer buf = new StringBuffer(50);
         buf.append("navigation-case = ");
         buf.append("[");
-        buf.append("from-action = " + fromAction_);
-        buf.append("from-outcome = " + fromOutcome_);
-        buf.append("to-view-id = " + toViewId_);
-        buf.append("redirect = " + redirect_);
+        buf.append(" from-action = \"" + fromAction_ + "\"");
+        buf.append(" from-outcome = \"" + fromOutcome_ + "\"");
+        buf.append(" to-view-id = \"" + toViewId_ + "\"");
+        buf.append(" redirect = \"" + redirect_ + "\"");
         buf.append("]");
         return buf.toString();
     }
