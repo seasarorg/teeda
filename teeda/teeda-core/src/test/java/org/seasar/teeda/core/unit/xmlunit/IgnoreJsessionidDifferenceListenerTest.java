@@ -24,7 +24,7 @@ import org.custommonkey.xmlunit.Diff;
  */
 public class IgnoreJsessionidDifferenceListenerTest extends TestCase {
 
-    public void testJsessionid1() throws Exception {
+    public void testHref1() throws Exception {
         // ## Arrange ##
         Diff diff = new Diff("<a href=\"bbb\"></a>",
                 "<a href=\"bbb;jsessionid=2kn98btcu73r6\"></a>");
@@ -38,7 +38,7 @@ public class IgnoreJsessionidDifferenceListenerTest extends TestCase {
         assertEquals(diff.toString(), false, diff.identical());
     }
 
-    public void testJsessionid2() throws Exception {
+    public void testHref2() throws Exception {
         // ## Arrange ##
         Diff diff = new Diff("<a href=\"bbb\" style=\"c\"></a>",
                 "<a href=\"bbb;jsessionid=2kn98btcu73r6\" style=\"d\"></a>");
@@ -52,10 +52,24 @@ public class IgnoreJsessionidDifferenceListenerTest extends TestCase {
         assertEquals(diff.toString(), false, diff.identical());
     }
 
-    public void testJsessionid3() throws Exception {
+    public void testHref3() throws Exception {
         // ## Arrange ##
         Diff diff = new Diff("<a href=\"bbb?a=1\"></a>",
                 "<a href=\"bbb;jsessionid=g8fpaqxqoql3?a=1\"></a>");
+
+        // ## Act ##
+        diff
+                .overrideDifferenceListener(new IgnoreJsessionidDifferenceListener());
+
+        // ## Assert ##
+        assertEquals(diff.toString(), true, diff.similar());
+        assertEquals(diff.toString(), false, diff.identical());
+    }
+
+    public void testSrc() throws Exception {
+        // ## Arrange ##
+        Diff diff = new Diff("<img src=\"bbb.gif\" />",
+                "<img src=\"bbb.gif;jsessionid=g8fpaqxqoql3\" />");
 
         // ## Act ##
         diff

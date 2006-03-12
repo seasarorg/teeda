@@ -29,7 +29,8 @@ public class IgnoreJsessionidDifferenceListener implements DifferenceListener {
         if (DifferenceConstants.ATTR_VALUE.getId() == difference.getId()) {
             String nodeName = difference.getControlNodeDetail().getNode()
                     .getNodeName();
-            if ("href".equalsIgnoreCase(nodeName)) {
+            if ("href".equalsIgnoreCase(nodeName)
+                    || "src".equalsIgnoreCase(nodeName)) {
                 String controlNodeValue = difference.getControlNodeDetail()
                         .getValue();
                 String testNodeValue = difference.getTestNodeDetail()
