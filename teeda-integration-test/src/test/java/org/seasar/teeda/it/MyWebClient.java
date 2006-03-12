@@ -25,9 +25,12 @@ import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.WebRequestSettings;
 import com.gargoylesoftware.htmlunit.WebWindow;
 
+/**
+ * @author manhole
+ */
 public class MyWebClient extends WebClient {
 
-    WebRequestSettings webRequestSettings_;
+    private WebRequestSettings webRequestSettings_;
 
     public Page getPage(WebWindow webWindow, WebRequestSettings parameters)
         throws IOException, FailingHttpStatusCodeException {
