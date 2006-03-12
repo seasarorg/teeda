@@ -13,7 +13,7 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.core.lifecycle;
+package org.seasar.teeda.core.lifecycle.impl;
 
 import java.util.Iterator;
 
@@ -22,6 +22,7 @@ import javax.faces.lifecycle.LifecycleFactory;
 
 import org.seasar.teeda.core.exception.LifecycleIdAlreadyExistRuntimeException;
 import org.seasar.teeda.core.exception.LifecycleIdNotFoundRuntimeException;
+import org.seasar.teeda.core.lifecycle.LifecycleFactoryImpl;
 import org.seasar.teeda.core.mock.MockLifecycle;
 import org.seasar.teeda.core.mock.MockLifecycleImpl;
 import org.seasar.teeda.core.unit.TeedaTestCase;

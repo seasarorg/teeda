@@ -21,8 +21,8 @@ import javax.faces.FactoryFinder;
 import javax.faces.context.ExternalContext;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
 
+import org.seasar.framework.container.servlet.S2ContainerListener;
 import org.seasar.framework.log.Logger;
 import org.seasar.framework.util.InputStreamUtil;
 import org.seasar.teeda.core.JsfConstants;
@@ -37,15 +37,16 @@ import org.seasar.teeda.core.util.DIContainerUtil;
  * @author shot
  * @author manhole
  */
-public class JsfConfigureListener implements ServletContextListener {
+public class TeedaConfigureListener extends S2ContainerListener {
 
-    private static final String FACES_INIT_DONE = JsfConfigureListener.class
+    private static final String FACES_INIT_DONE = TeedaConfigureListener.class
             .getName()
             + ".FACES_INIT_DONE";
 
-    private static Logger logger = Logger.getLogger(JsfConfigureListener.class);
+    private static Logger logger = Logger.getLogger(TeedaConfigureListener.class);
 
     public void contextInitialized(ServletContextEvent event) {
+        super.contextInitialized(event);
         logger.debug("JSF initialize start");
         try {
             initializeFaces(event.getServletContext());
@@ -57,6 +58,7 @@ public class JsfConfigureListener implements ServletContextListener {
     }
 
     public void contextDestroyed(ServletContextEvent event) {
+        super.contextDestroyed(event);
         FactoryFinder.releaseFactories();
     }
 

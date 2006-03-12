@@ -63,7 +63,7 @@
     </filter-mapping>
 
     <listener>
-        <listener-class>org.seasar.teeda.core.webapp.JsfConfigureListener</listener-class>
+        <listener-class>org.seasar.teeda.core.webapp.TeedaConfigureListener</listener-class>
     </listener>
 
 
