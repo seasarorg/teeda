@@ -28,14 +28,6 @@ import org.seasar.teeda.core.unit.TeedaTestCase;
  */
 public class NavigationHandlerImplTest extends TeedaTestCase {
 
-    /**
-     * Constructor for NavigationHandlerImplTest.
-     * @param name
-     */
-    public NavigationHandlerImplTest(String name) {
-        super(name);
-    }
-
     public void testHandleNavigation1() throws Exception {
         // ## Arrange ##
         MockFacesContext context = getFacesContext();
@@ -49,10 +41,10 @@ public class NavigationHandlerImplTest extends TeedaTestCase {
 
         // ## Act ##
         NavigationHandlerImpl handler = new NavigationHandlerImpl();
-        handler.handleNavigation(getFacesContext(), "from", "outcome");
+        handler.handleNavigation(context, "from", "outcome");
 
         // ## Assert ##
-        assertEquals("bbb", getFacesContext().getViewRoot().getViewId());
+        assertEquals("bbb", context.getViewRoot().getViewId());
     }
 
     public void testHandleNavigation2() throws Exception {
@@ -68,10 +60,10 @@ public class NavigationHandlerImplTest extends TeedaTestCase {
 
         // ## Act ##
         NavigationHandlerImpl handler = new NavigationHandlerImpl();
-        handler.handleNavigation(getFacesContext(), "from", "outcome");
+        handler.handleNavigation(context, "from", "outcome");
 
         // ## Assert ##
-        assertEquals("bbb", getFacesContext().getViewRoot().getViewId());
+        assertEquals("bbb", context.getViewRoot().getViewId());
     }
 
     public void testHandleNavigation3() throws Exception {
@@ -87,10 +79,10 @@ public class NavigationHandlerImplTest extends TeedaTestCase {
 
         // ## Act ##
         NavigationHandlerImpl handler = new NavigationHandlerImpl();
-        handler.handleNavigation(getFacesContext(), "from", "outcome");
+        handler.handleNavigation(context, "from", "outcome");
 
         // ## Assert ##
-        assertEquals("bbb", getFacesContext().getViewRoot().getViewId());
+        assertEquals("bbb", context.getViewRoot().getViewId());
     }
 
     public void testGetNavigationCaseContext1() throws Exception {
@@ -129,7 +121,7 @@ public class NavigationHandlerImplTest extends TeedaTestCase {
         assertFalse(caseContext.isRedirect());
     }
 
-    public void testetNavigationCaseContext3() throws Exception {
+    public void testGetNavigationCaseContext3() throws Exception {
         // ## Arrange ##
         NavigationContext navContext = createNavigationContext("id", "action",
                 "outcome", "to", false);
@@ -147,7 +139,7 @@ public class NavigationHandlerImplTest extends TeedaTestCase {
         assertFalse(caseContext.isRedirect());
     }
 
-    public void testetNavigationCaseContext4() throws Exception {
+    public void testGetNavigationCaseContext4() throws Exception {
         // ## Arrange ##
         NavigationContext navContext = createNavigationContext("id", "action",
                 "outcome", "to", false);
