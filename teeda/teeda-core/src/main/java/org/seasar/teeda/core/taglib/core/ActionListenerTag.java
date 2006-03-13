@@ -82,4 +82,9 @@ public class ActionListenerTag extends TagSupport {
     protected ActionListener createActionListener(String className) {
         return (ActionListener) ClassUtil.newInstance(className);
     }
+
+    String getType() {
+        return type_;
+    }
+    
 }

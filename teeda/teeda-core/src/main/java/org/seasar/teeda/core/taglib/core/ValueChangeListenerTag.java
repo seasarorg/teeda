@@ -82,4 +82,8 @@ public class ValueChangeListenerTag extends TagSupport {
         type_ = null;
     }
 
+    String getType() {
+        return type_;
+    }
+
 }

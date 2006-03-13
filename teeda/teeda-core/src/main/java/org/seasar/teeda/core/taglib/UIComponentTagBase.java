@@ -535,6 +535,184 @@ public abstract class UIComponentTagBase extends UIComponentTag {
                 styleClass_);
     }
 
+    public void release() {
+        super.release();
+        styleClass_ = null;
+        title_ = null;
+        enabledClass_ = null;
+        disabledClass_ = null;
+        onclick_ = null;
+        ondblclick_ = null;
+        onmousedown_ = null;
+        onmouseover_ = null;
+        onmousemove_ = null;
+        onmouseout_ = null;
+        onkeypress_ = null;
+        onkeydown_ = null;
+        onkeyup_ = null;
+        lang_ = null;
+        dir_ = null;
+        height_ = null;
+        width_ = null;
+        cellspacing_ = null;
+        cellpadding_ = null;
+        disabled_ = null;
+        size_ = null;
+        tabindex_ = null;
+        checked_ = null;
+        border_ = null;
+        readonly_ = null;
+        ismap_ = null;
+        maxlength_ = null;
+        rows_ = null;
+        cols_ = null;
+        formatStyle_ = null;
+        dateStyle_ = null;
+        timeStyle_ = null;
+        timezone_ = null;
+        formatPattern_ = null;
+        accept_ = null;
+        acceptcharset_ = null;
+        accesskey_ = null;
+        action_ = null;
+        alt_ = null;
+        charset_ = null;
+        coords_ = null;
+        enctype_ = null;
+        htmlFor_ = null;
+        href_ = null;
+        hreflang_ = null;
+        hspace_ = null;
+        label_ = null;
+        longdesc_ = null;
+        method_ = null;
+        multiple_ = null;
+        name_ = null;
+        onblur_ = null;
+        onchange_ = null;
+        onfocus_ = null;
+        onmouseup_ = null;
+        onreset_ = null;
+        onselect_ = null;
+        onsubmit_ = null;
+        rel_ = null;
+        rev_ = null;
+        selected_ = null;
+        shape_ = null;
+        src_ = null;
+        style_ = null;
+        target_ = null;
+        type_ = null;
+        usemap_ = null;
+        value_ = null;
+        summary_ = null;
+        bgcolor_ = null;
+        frame_ = null;
+        rules_ = null;
+        converter_ = null;
+    }
+
+    
+    String getAccesskey() {
+        return accesskey_;
+    }
+
+    String getDateStyle() {
+        return dateStyle_;
+    }
+
+    String getDir() {
+        return dir_;
+    }
+
+    String getDisabled() {
+        return disabled_;
+    }
+
+    String getFormatPattern() {
+        return formatPattern_;
+    }
+
+    String getLang() {
+        return lang_;
+    }
+
+    String getOnblur() {
+        return onblur_;
+    }
+
+    String getOnclick() {
+        return onclick_;
+    }
+
+    String getOndblclick() {
+        return ondblclick_;
+    }
+
+    String getOnfocus() {
+        return onfocus_;
+    }
+
+    String getOnkeydown() {
+        return onkeydown_;
+    }
+
+    String getOnkeypress() {
+        return onkeypress_;
+    }
+
+    String getOnkeyup() {
+        return onkeyup_;
+    }
+
+    String getOnmousedown() {
+        return onmousedown_;
+    }
+
+    String getOnmousemove() {
+        return onmousemove_;
+    }
+
+    String getOnmouseout() {
+        return onmouseout_;
+    }
+
+    String getOnmouseover() {
+        return onmouseover_;
+    }
+
+    String getOnmouseup() {
+        return onmouseup_;
+    }
+
+    String getStyle() {
+        return style_;
+    }
+
+    String getStyleClass() {
+        return styleClass_;
+    }
+
+    String getTabindex() {
+        return tabindex_;
+    }
+
+    String getTimeStyle() {
+        return timeStyle_;
+    }
+
+    String getTimezone() {
+        return timezone_;
+    }
+
+    String getTitle() {
+        return title_;
+    }
+
+    String getValue() {
+        return value_;
+    }
+
     protected void setComponentProperty(UIComponent component,
             String propertyName, String value) {
         if (value == null) {

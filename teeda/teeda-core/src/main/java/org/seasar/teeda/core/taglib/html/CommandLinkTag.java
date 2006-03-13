@@ -26,8 +26,6 @@ import org.seasar.teeda.core.taglib.UIComponentTagBase;
  */
 public class CommandLinkTag extends UIComponentTagBase {
 
-    private String accesskey_;
-
     private String charset_;
 
     private String coords_;
@@ -40,15 +38,9 @@ public class CommandLinkTag extends UIComponentTagBase {
 
     private String shape_;
 
-    private String tabindex_;
-
     private String type_;
 
     private String target_;
-
-    private String onblur_;
-
-    private String onfocus_;
 
     private String action_;
 
@@ -70,42 +62,29 @@ public class CommandLinkTag extends UIComponentTagBase {
         setActionProperty(component, action_);
         setActionListenerProperty(component, actionListener_);
         setComponentProperty(component, JsfConstants.IMMEDIATE_ATTR, immediate_);
-        setComponentProperty(component, JsfConstants.ACCESSKEY_ATTR, accesskey_);
         setComponentProperty(component, JsfConstants.CHARSET_ATTR, charset_);
         setComponentProperty(component, JsfConstants.COORDS_ATTR, coords_);
         setComponentProperty(component, JsfConstants.HREFLANG_ATTR, hreflang_);
-        setComponentProperty(component, JsfConstants.ONBLUR_ATTR, onblur_);
-        setComponentProperty(component, JsfConstants.ONFOCUS_ATTR, onfocus_);
         setComponentProperty(component, JsfConstants.REL_ATTR, rel_);
         setComponentProperty(component, JsfConstants.REV_ATTR, rev_);
         setComponentProperty(component, JsfConstants.SHAPE_ATTR, shape_);
-        setComponentProperty(component, JsfConstants.TABINDEX_ATTR, tabindex_);
         setComponentProperty(component, JsfConstants.TARGET_ATTR, target_);
         setComponentProperty(component, JsfConstants.TYPE_ATTR, type_);
     }
 
     public void release() {
         super.release();
-
         action_ = null;
         immediate_ = null;
         actionListener_ = null;
-        accesskey_ = null;
         charset_ = null;
         coords_ = null;
         hreflang_ = null;
         rel_ = null;
         rev_ = null;
         shape_ = null;
-        tabindex_ = null;
-        type_ = null;
         target_ = null;
-        onblur_ = null;
-        onfocus_ = null;
-    }
-
-    public void setAccesskey(String accesskey) {
-        accesskey_ = accesskey;
+        type_ = null;
     }
 
     public void setAction(String action) {
@@ -132,14 +111,6 @@ public class CommandLinkTag extends UIComponentTagBase {
         immediate_ = immediate;
     }
 
-    public void setOnblur(String onblur) {
-        onblur_ = onblur;
-    }
-
-    public void setOnfocus(String onfocus) {
-        onfocus_ = onfocus;
-    }
-
     public void setRel(String rel) {
         rel_ = rel;
     }
@@ -152,10 +123,6 @@ public class CommandLinkTag extends UIComponentTagBase {
         shape_ = shape;
     }
 
-    public void setTabindex(String tabindex) {
-        tabindex_ = tabindex;
-    }
-
     public void setTarget(String target) {
         target_ = target;
     }
@@ -164,4 +131,48 @@ public class CommandLinkTag extends UIComponentTagBase {
         type_ = type;
     }
 
+    String getAction() {
+        return action_;
+    }
+    
+    String getActionListener() {
+        return actionListener_;
+    }
+
+    String getCharset() {
+        return charset_;
+    }
+
+    String getCoords() {
+        return coords_;
+    }
+
+    String getHreflang() {
+        return hreflang_;
+    }
+
+    String getImmediate() {
+        return immediate_;
+    }
+
+    String getRel() {
+        return rel_;
+    }
+
+    String getRev() {
+        return rev_;
+    }
+
+    String getShape() {
+        return shape_;
+    }
+
+    String getTarget() {
+        return target_;
+    }
+
+    String getType() {
+        return type_;
+    }
+    
 }

@@ -214,6 +214,21 @@ public class ConvertNumberTag extends ConverterTag {
         converter.setType(type);
     }
 
+    public void release() {
+        super.release();
+        currencyCode_ = null;
+        currencySymbol_ = null;
+        groupingUsed_ = JsfConstants.DEFAULT_CONVERTNUMBER_GROUPING_USED;
+        integerOnly_ = JsfConstants.DEFAULT_CONVERTNUMBER_INTEGER_ONLY;
+        locale_ = null;
+        maxFractionDigits_ = null;
+        maxIntegerDigits_ = null;
+        minFractionDigits_ = null;
+        minIntegerDigits_ = null;
+        pattern_ = null;
+        type_ = JsfConstants.DEFAULT_CONVERTNUMBER_TYPE;
+    }
+    
     public void setCurrencyCode(String currencyCode) {
         currencyCode_ = currencyCode;
     }
@@ -256,6 +271,50 @@ public class ConvertNumberTag extends ConverterTag {
 
     public void setType(String type) {
         type_ = type;
+    }
+
+    String getCurrencyCode() {
+        return currencyCode_;
+    }
+
+    String getCurrencySymbol() {
+        return currencySymbol_;
+    }
+
+    String getGroupingUsed() {
+        return groupingUsed_;
+    }
+
+    String getIntegerOnly() {
+        return integerOnly_;
+    }
+
+    String getLocale() {
+        return locale_;
+    }
+
+    String getMaxFractionDigits() {
+        return maxFractionDigits_;
+    }
+
+    String getMaxIntegerDigits() {
+        return maxIntegerDigits_;
+    }
+
+    String getMinFractionDigits() {
+        return minFractionDigits_;
+    }
+
+    String getMinIntegerDigits() {
+        return minIntegerDigits_;
+    }
+
+    String getPattern() {
+        return pattern_;
+    }
+
+    String getType() {
+        return type_;
     }
 
 }

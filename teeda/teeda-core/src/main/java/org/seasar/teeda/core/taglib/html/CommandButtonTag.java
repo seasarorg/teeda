@@ -55,8 +55,6 @@ public class CommandButtonTag extends UIComponentTagBase {
 
     public void release() {
         super.release();
-
-        action_ = null;
         immediate_ = null;
         actionListener_ = null;
         image_ = null;
@@ -74,4 +72,16 @@ public class CommandButtonTag extends UIComponentTagBase {
         immediate_ = immediate;
     }
 
+    String getActionListener() {
+        return actionListener_;
+    }
+
+    String getImage() {
+        return image_;
+    }
+
+    String getImmediate() {
+        return immediate_;
+    }
+    
 }

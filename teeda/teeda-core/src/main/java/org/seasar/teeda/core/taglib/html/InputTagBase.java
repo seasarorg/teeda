@@ -73,4 +73,24 @@ public abstract class InputTagBase extends UIComponentTagBase {
         valueChangeListener_ = valueChangeListener;
     }
 
+    String getImmediate() {
+        return immediate_;
+    }
+
+    String getReadonly() {
+        return readonly_;
+    }
+
+    String getRequired() {
+        return required_;
+    }
+
+    String getValidator() {
+        return validator_;
+    }
+
+    String getValueChangeListener() {
+        return valueChangeListener_;
+    }
+    
 }

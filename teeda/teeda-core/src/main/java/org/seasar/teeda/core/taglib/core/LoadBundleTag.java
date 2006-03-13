@@ -205,4 +205,13 @@ public class LoadBundleTag extends TagSupport {
         basename_ = null;
         var_ = null;
     }
+
+    String getBasename() {
+        return basename_;
+    }
+
+    String getVar() {
+        return var_;
+    }
+    
 }

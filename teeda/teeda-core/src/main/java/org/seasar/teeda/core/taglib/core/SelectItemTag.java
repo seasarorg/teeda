@@ -84,4 +84,20 @@ public class SelectItemTag extends UIComponentTagBase {
         itemValue_ = null;
     }
 
+    String getItemDescription() {
+        return itemDescription_;
+    }
+
+    String getItemDisabled() {
+        return itemDisabled_;
+    }
+
+    String getItemLabel() {
+        return itemLabel_;
+    }
+
+    String getItemValue() {
+        return itemValue_;
+    }
+
 }

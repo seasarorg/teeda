@@ -31,10 +31,10 @@ import org.seasar.teeda.core.util.ValueBindingUtil;
 
 /**
  * @author shot
+ * @author yone
  */
 public class ConvertDateTimeTag extends ConverterTag {
 
-    // TODO testing
     private static final long serialVersionUID = 1L;
 
     private String dateStyle_ = JsfConstants.DEFAULT_CONVERTDATETIME_DATE_STYLE;
@@ -131,6 +131,16 @@ public class ConvertDateTimeTag extends ConverterTag {
         converter.setType(type);
     }
 
+    public void release() {
+        super.release();
+        dateStyle_ = JsfConstants.DEFAULT_CONVERTDATETIME_DATE_STYLE;
+        locale_ = null;
+        pattern_ = null;
+        timeStyle_ = JsfConstants.DEFAULT_CONVERTDATETIME_TIME_STYLE;
+        timeZone_ = null;
+        type_ = JsfConstants.DEFAULT_CONVERTDATETIME_TYPE;
+    }
+    
     public void setDateStyle(String dateStyle) {
         dateStyle_ = dateStyle;
     }
@@ -158,4 +168,29 @@ public class ConvertDateTimeTag extends ConverterTag {
     private static FacesContext getFacesContext() {
         return FacesContext.getCurrentInstance();
     }
+
+    String getDateStyle() {
+        return dateStyle_;
+    }
+
+    String getLocale() {
+        return locale_;
+    }
+
+    String getPattern() {
+        return pattern_;
+    }
+
+    String getTimeStyle() {
+        return timeStyle_;
+    }
+
+    String getTimeZone() {
+        return timeZone_;
+    }
+
+    String getType() {
+        return type_;
+    }
+    
 }
