@@ -46,6 +46,78 @@
 	<li>サンプル解説</li>
 </ul>
 
+<h3><a name="vs">Teeda Core vs Struts, MyFaces</a></h3>	
+<table border="1" width="500" summary="Teeda vs Struts, normal JSF">
+	<caption><font size="3">[ Teeda Core, Struts, 通常のJSFの機能比較 ]</font></caption>
+	<tr><th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th><th>Teeda Core</th><th>Struts</th><th>通常のJSF実装</th></tr>
+	<tr>
+		<td>DI機能</td>
+		<td>S2による高度なDI機能あり</td>
+		<td>なし</td>
+		<td>簡易DI機能あり</td>
+	</tr>
+	<tr>
+		<td>AOP機能</td>
+		<td>S2による高度なAOP機能あり</td>
+		<td>なし</td>
+		<td>なし</td>
+	</tr>
+	<tr>
+		<td>初期化機能</td>
+		<td>前のページのアクションで指定（明示的に変更予定）</td>
+		<td>Actionクラスで指定</td>
+		<td>前のページのアクションで指定</td>
+	</tr>
+	<tr>
+		<td>入力値の保持</td>
+		<td>POJOを使って、UIComponentを自動的に処理</td>
+		<td>ActionFormでStringかbooleanに格納</td>
+		<td>POJOを使って、UIComponentを自動的に処理</td>
+	</tr>
+	<tr>
+		<td>入力値の型変換</td>
+		<td>指定されたConverterで自動変換</td>
+		<td>BeanUtils.copyProperties()と個別に変換</td>
+		<td>指定されたConverterで自動変換</td>
+	</tr>
+	<tr>
+		<td>入力値の検証</td>
+		<td>サーバサイドのみ。指定されたValidatorで自動検証</td>
+		<td>クライアントサイド・サーバサイド共に利用可能</td>
+		<td>サーバサイドのみ。指定されたValidatorで自動検証</td>
+	</tr>
+	<tr>
+		<td>入力値のモデルへの適用</td>
+		<td>UIComponentによる自動適用</td>
+		<td>自前で変換</td>
+		<td>UIComponentによる自動適用</td>
+	</tr>
+	<tr>
+		<td>例外処理</td>
+		<td>例外ページ指定可能</td>
+		<td>例外クラスごとのページ指定</td>
+		<td>web.xmlの設定のみ。うまく遷移しない可能性あり</td>
+	</tr>
+	<tr>
+		<td>ボタンやリンクの処理</td>
+		<td>任意のPOJOの任意のメソッドで処理</td>
+		<td>特定クラス(Action)で処理</td>
+		<td>任意のPOJOの任意のメソッドで処理</td>
+	</tr>
+	<tr>
+		<td>レイアウト機能</td>
+		<td>なし（追加予定）</td>
+		<td>Tilesにより実現</td>
+		<td>標準ではなし。（MyFacesではTilesとの連動機能あり）</td>
+	</tr>
+	<tr>
+		<td>一つのフォームに複数のボタンがある処理</td>
+		<td>ボタンごとに任意のPOJOの任意のメソッドで処理</td>
+		<td>DispatchActionやLookupDispatchActionで処理可能だがいまいち。</td>
+		<td>ボタンごとに任意のPOJOの任意のメソッドで処理</td>
+	</tr>
+</table>	
+	
 <!-- document end -->
 <!-- don't edit start -->
 </td>
