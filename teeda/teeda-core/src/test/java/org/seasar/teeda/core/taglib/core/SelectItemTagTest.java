@@ -59,6 +59,24 @@ public class SelectItemTagTest extends TestCase {
         assertEquals("item label", item.getItemLabel());
         assertEquals("item value", item.getItemValue());
     }
+    
+    public void testRelease() throws Exception {
+        // # Arrange #
+        SelectItemTag tag = new SelectItemTag();
+        tag.setItemDescription("item description");
+        tag.setItemDisabled("true");
+        tag.setItemLabel("item label");
+        tag.setItemValue("item value");
+        
+        // # Act #
+        tag.release();
+        
+        // # Assert #
+        assertEquals(null, tag.getItemDescription());
+        assertEquals(null, tag.getItemDisabled());
+        assertEquals(null, tag.getItemLabel());
+        assertEquals(null, tag.getItemValue());
+    }
 
     private UISelectItem createUISelectItem() {
         return (UISelectItem) createUIComponent();

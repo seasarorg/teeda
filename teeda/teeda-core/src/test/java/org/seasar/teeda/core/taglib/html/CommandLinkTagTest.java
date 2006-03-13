@@ -115,6 +115,38 @@ public class CommandLinkTagTest extends TeedaTestCase {
         assertEquals("title", command.getTitle());
         assertEquals("type", command.getType());
     }
+    
+    public void testRelease() throws Exception {
+        // # Arrange #
+        CommandLinkTag tag = new CommandLinkTag();
+        tag.setAction("#{testAction}");
+        tag.setActionListener("#{hoge.do}");
+        tag.setImmediate("true");
+        tag.setCharset("charset");
+        tag.setCoords("coords");
+        tag.setHreflang("hreflang");
+        tag.setRel("rel");
+        tag.setRev("rev");
+        tag.setShape("shape");
+        tag.setTarget("target");
+        tag.setType("type");
+
+        // # Act #
+        tag.release();
+        
+        // # Assert #
+        assertEquals(null, tag.getAction());
+        assertEquals(null, tag.getActionListener());
+        assertEquals(null, tag.getImmediate());
+        assertEquals(null, tag.getCharset());
+        assertEquals(null, tag.getCoords());
+        assertEquals(null, tag.getHreflang());
+        assertEquals(null, tag.getRel());
+        assertEquals(null, tag.getRev());
+        assertEquals(null, tag.getShape());
+        assertEquals(null, tag.getTarget());
+        assertEquals(null, tag.getType());
+    }
 
     private HtmlCommandLink createHtmlCommandLink() {
         return (HtmlCommandLink) createUIComponent();

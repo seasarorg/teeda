@@ -81,4 +81,17 @@ public class ValueChangeListenerTagTest extends TeedaTestCase {
         // # Act #
         assertEquals(Tag.SKIP_BODY, tag.doStartTag());
     }
+
+    public void testRelease() throws Exception {
+        // # Arrange #
+        ValueChangeListenerTag tag = new ValueChangeListenerTag();
+        tag.setType("hoge");
+        
+        // # Act #
+        tag.release();
+        
+        // # Assert #
+        assertEquals(null, tag.getType());
+    }
+    
 }

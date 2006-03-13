@@ -320,4 +320,38 @@ public class ConvertNumberTagTest extends TeedaTestCase {
         assertEquals("percent", nc.getType());
     }
 
+    public void testRelease() throws Exception {
+        // # Arrange #
+        ConvertNumberTag tag = new ConvertNumberTag();
+        tag.setCurrencyCode("JPY");
+        tag.setCurrencySymbol("$");
+        tag.setGroupingUsed("false");
+        tag.setIntegerOnly("true");
+        tag.setMaxFractionDigits("2");
+        tag.setMaxIntegerDigits("4");
+        tag.setMinFractionDigits("1");
+        tag.setMinIntegerDigits("5");
+        tag.setPattern("###,###.###");
+        tag.setType("percent");
+        
+        // # Act #
+        tag.release();
+        
+        // # Assert #
+        assertEquals(null, tag.getCurrencyCode());
+        assertEquals(null, tag.getCurrencySymbol());
+        assertEquals(JsfConstants.DEFAULT_CONVERTNUMBER_GROUPING_USED,
+                tag.getGroupingUsed());
+        assertEquals(JsfConstants.DEFAULT_CONVERTNUMBER_INTEGER_ONLY,
+                tag.getIntegerOnly());
+        assertEquals(null, tag.getLocale());
+        assertEquals(null, tag.getMaxFractionDigits());
+        assertEquals(null, tag.getMaxIntegerDigits());
+        assertEquals(null, tag.getMinFractionDigits());
+        assertEquals(null, tag.getMinIntegerDigits());
+        assertEquals(null, tag.getPattern());
+        assertEquals(JsfConstants.DEFAULT_CONVERTNUMBER_TYPE,
+                tag.getType());
+    }
+
 }

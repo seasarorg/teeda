@@ -128,4 +128,18 @@ public class LoadBundleTagTest extends TeedaTestCase {
         assertTrue(testMap.values().contains(value));
     }
 
+    public void testRelease() throws Exception {
+        // # Arrange #
+        LoadBundleTag tag = new LoadBundleTag();
+        tag.setBasename("org.seasar.teeda.core.taglib.core.TestMessages");
+        tag.setVar("messages");
+        
+        // # Act #
+        tag.release();
+        
+        // # Assert #
+        assertEquals(null, tag.getBasename());
+        assertEquals(null, tag.getVar());
+    }
+
 }

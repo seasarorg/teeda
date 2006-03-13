@@ -159,7 +159,22 @@ public class CommandButtonTagTest extends TeedaTestCase {
 
         assertTrue(command.getActionListener() instanceof MockMethodBinding);
     }
+    
+    public void testRelease() throws Exception {
+        // # Arrange #
+        CommandButtonTag tag = new CommandButtonTag();
+        tag.setImmediate("false");
+        tag.setActionListener("testActionListener");
+        tag.setImage("image");
 
+        // # Act #
+        tag.release();
+        
+        // # Assert #
+        assertEquals(null, tag.getImmediate());
+        assertEquals(null, tag.getImage());
+        assertEquals(null, tag.getActionListener());
+    }
     private HtmlCommandButton createHtmlCommandButton() {
         return (HtmlCommandButton) createUIComponent();
     }
