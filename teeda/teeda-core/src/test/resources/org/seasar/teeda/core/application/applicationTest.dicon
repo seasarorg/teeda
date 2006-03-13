@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="Shift_JIS"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE components PUBLIC "-//SEASAR2.1//DTD S2Container//EN"
 	"http://www.seasar.org/dtd/components21.dtd">
-<components namespace="jsf" >
+<components namespace="jsf">
 
 	<component name="valueBindingContext" class="org.seasar.teeda.core.el.impl.ValueBindingContextImpl">
 		<property name="valueBindingName">"org.seasar.teeda.core.el.impl.ValueBindingImpl"</property>
