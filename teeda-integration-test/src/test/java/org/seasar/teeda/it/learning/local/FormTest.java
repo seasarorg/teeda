@@ -80,9 +80,8 @@ public class FormTest extends AbstractTestCase {
 
         // ## Act ##
         HtmlPage page1 = (HtmlPage) webClient.getPage(url);
-
-        XPath path = new HtmlUnitXPath("//form[@id='myFormId']");
-        HtmlForm form = (HtmlForm) path.selectSingleNode(page1);
+        XPath xpath = new HtmlUnitXPath("//form[@id='myFormId']");
+        HtmlForm form = (HtmlForm) xpath.selectSingleNode(page1);
 
         HtmlSubmitInput button = (HtmlSubmitInput) form
                 .getHtmlElementById("doSubmitId");
