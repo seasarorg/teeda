@@ -13,58 +13,52 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.it;
+package org.seasar.teeda.it.render;
 
 import java.net.URL;
 
-import org.custommonkey.xmlunit.Diff;
-
 import junit.framework.Test;
+import junitx.framework.StringAssert;
+
+import org.custommonkey.xmlunit.Diff;
+import org.seasar.teeda.it.AbstractTestCase;
 
 import com.gargoylesoftware.htmlunit.WebClient;
-import com.gargoylesoftware.htmlunit.html.HtmlAnchor;
+import com.gargoylesoftware.htmlunit.html.HtmlImage;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
-import com.gargoylesoftware.htmlunit.html.HtmlTextInput;
 
 /**
  * @author manhole
  */
-public class CommandLinkTest extends AbstractTestCase {
+public class GraphicImageTest extends AbstractTestCase {
 
     public static Test suite() throws Exception {
-        return setUpTestSuite(CommandLinkTest.class);
+        return setUpTestSuite(GraphicImageTest.class);
     }
 
     public void testRender() throws Exception {
         // ## Arrange ##
-        URL url = getUrl("faces/commandLink.jsp");
+        URL url = getUrl("faces/render/graphicImage.jsp");
         System.out.println(url);
 
         WebClient webClient = new WebClient();
 
         // ## Act ##
-        // ## Assert ##
-        HtmlPage page1 = (HtmlPage) webClient.getPage(url);
-        final String body = getBody(page1).trim();
-        System.out.println(body);
-        assertEquals("commandLink.jsp", page1.getTitleText());
+        HtmlPage page = (HtmlPage) webClient.getPage(url);
 
-        HtmlTextInput input1 = (HtmlTextInput) page1
-            .getHtmlElementById("text1");
-        assertEquals("123", input1.getValueAttribute());
+        // ## Assert ##
+        final String body1 = getBody(page).trim();
+        System.out.println(body1);
+        assertEquals("graphicImage.jsp", page.getTitleText());
+
+        HtmlImage image = (HtmlImage) page.getHtmlElementById("imageA");
+        StringAssert.assertStartsWith("/image/item_large_b.gif", image
+                .getSrcAttribute());
+        assertEquals("image title", image.getTitleAttribute());
 
         final String expected = readText("testRender.html");
-        Diff diff = diff(expected, body);
+        Diff diff = diff(expected, body1);
         assertEquals(diff.toString(), true, diff.similar());
-
-        HtmlAnchor link = (HtmlAnchor) page1.getHtmlElementById("link1");
-
-        HtmlPage page2 = (HtmlPage) link.click();
-        System.out.println(getBody(page2).trim());
-
-        HtmlTextInput input2 = (HtmlTextInput) page2
-            .getHtmlElementById("text1");
-        assertEquals("123 + 1", "124", input2.getValueAttribute());
     }
 
 }

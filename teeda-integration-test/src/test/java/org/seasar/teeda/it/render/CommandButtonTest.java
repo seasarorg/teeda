@@ -13,13 +13,14 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.it;
+package org.seasar.teeda.it.render;
 
 import java.net.URL;
 
 import junit.framework.Test;
 
 import org.custommonkey.xmlunit.Diff;
+import org.seasar.teeda.it.AbstractTestCase;
 
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
@@ -37,7 +38,7 @@ public class CommandButtonTest extends AbstractTestCase {
 
     public void testRender() throws Exception {
         // ## Arrange ##
-        URL url = getUrl("faces/commandButton.jsp");
+        URL url = getUrl("faces/render/commandButton.jsp");
         System.out.println(url);
 
         WebClient webClient = new WebClient();

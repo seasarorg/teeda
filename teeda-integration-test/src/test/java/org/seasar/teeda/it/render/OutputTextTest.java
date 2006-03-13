@@ -13,11 +13,14 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.it;
+package org.seasar.teeda.it.render;
 
 import java.net.URL;
 
+import org.seasar.teeda.it.AbstractTestCase;
+
 import junit.framework.Test;
+import junitx.framework.StringAssert;
 
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
@@ -26,15 +29,15 @@ import com.gargoylesoftware.htmlunit.html.HtmlSpan;
 /**
  * @author manhole
  */
-public class OutputFormatTest extends AbstractTestCase {
+public class OutputTextTest extends AbstractTestCase {
 
     public static Test suite() throws Exception {
-        return setUpTestSuite(OutputFormatTest.class);
+        return setUpTestSuite(OutputTextTest.class);
     }
 
-    public void testOutputFormat() throws Exception {
+    public void testOutputText() throws Exception {
         // ## Arrange ##
-        URL url = getUrl("faces/outputFormat.jsp");
+        URL url = getUrl("faces/render/outputText.jsp");
         System.out.println(url);
 
         WebClient webClient = new WebClient();
@@ -45,15 +48,15 @@ public class OutputFormatTest extends AbstractTestCase {
         // ## Assert ##
         final String body = getBody(page).trim();
         System.out.println(body);
-        assertEquals("outputFormat.jsp", page.getTitleText());
+        assertEquals("this is outputText.jsp", page.getTitleText());
 
-        HtmlSpan span = (HtmlSpan) page.getHtmlElementById("format1");
-        assertEquals("Hello Teeda!", span.asText());
+        HtmlSpan span = (HtmlSpan) page.getHtmlElementById("hello");
+        assertEquals("Hello OutputText", span.asText());
     }
 
-    public void testOutputFormatJa() throws Exception {
+    public void testOutputTextJa() throws Exception {
         // ## Arrange ##
-        URL url = getUrl("faces/outputFormatJa.jsp");
+        URL url = getUrl("faces/render/outputTextJa.jsp");
         System.out.println(url);
 
         WebClient webClient = new WebClient();
@@ -64,10 +67,28 @@ public class OutputFormatTest extends AbstractTestCase {
         // ## Assert ##
         final String body = getBody(page).trim();
         System.out.println(body);
-        assertEquals("outputFormatJa.jsp", page.getTitleText());
+        assertEquals("outputTextJa.jspです", page.getTitleText());
 
-        HtmlSpan span = (HtmlSpan) page.getHtmlElementById("format1");
-        assertEquals("こんにちは、てぃーだ!", span.asText());
+        HtmlSpan span = (HtmlSpan) page.getHtmlElementById("hello");
+        assertEquals("こんにちはOutputText", span.asText());
+    }
+
+    public void testOutputTextNoId() throws Exception {
+        // ## Arrange ##
+        URL url = getUrl("faces/render/outputTextNoId.jsp");
+        System.out.println(url);
+
+        WebClient webClient = new WebClient();
+
+        // ## Act ##
+        HtmlPage page = (HtmlPage) webClient.getPage(url);
+
+        // ## Assert ##
+        final String body = getBody(page).trim();
+        System.out.println(body);
+        assertEquals("outputTextNoId.jsp", page.getTitleText());
+
+        StringAssert.assertNotContains("<span>", body);
     }
 
 }

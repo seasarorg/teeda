@@ -13,13 +13,15 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.it;
+package org.seasar.teeda.it.render;
 
 import java.net.URL;
 
 import junit.framework.Test;
 
 import org.custommonkey.xmlunit.Diff;
+import org.seasar.teeda.it.AbstractTestCase;
+import org.seasar.teeda.it.MyWebClient;
 
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlAnchor;
@@ -36,7 +38,7 @@ public class OutputLinkTest extends AbstractTestCase {
 
     public void testRender() throws Exception {
         // ## Arrange ##
-        URL url = getUrl("faces/outputLink1.jsp");
+        URL url = getUrl("faces/render/outputLink1.jsp");
         System.out.println(url);
 
         WebClient webClient = new WebClient();
@@ -56,7 +58,7 @@ public class OutputLinkTest extends AbstractTestCase {
 
     public void testLinkClink() throws Exception {
         // ## Arrange ##
-        URL url = getUrl("faces/outputLink1.jsp");
+        URL url = getUrl("faces/render/outputLink1.jsp");
         System.out.println(url);
 
         WebClient webClient = new WebClient();
@@ -75,7 +77,7 @@ public class OutputLinkTest extends AbstractTestCase {
 
     public void testParam1() throws Exception {
         // ## Arrange ##
-        URL url = getUrl("faces/outputLinkParam.jsp");
+        URL url = getUrl("faces/render/outputLinkParam.jsp");
         System.out.println(url);
 
         MyWebClient webClient = new MyWebClient();
@@ -98,7 +100,7 @@ public class OutputLinkTest extends AbstractTestCase {
 
     public void testParamJa() throws Exception {
         // ## Arrange ##
-        URL url = getUrl("faces/outputLinkParamJa.jsp");
+        URL url = getUrl("faces/render/outputLinkParamJa.jsp");
         System.out.println(url);
 
         MyWebClient webClient = new MyWebClient();

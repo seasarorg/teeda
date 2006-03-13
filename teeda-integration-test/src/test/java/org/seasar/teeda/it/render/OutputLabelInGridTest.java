@@ -13,9 +13,11 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.it;
+package org.seasar.teeda.it.render;
 
 import java.net.URL;
+
+import org.seasar.teeda.it.AbstractTestCase;
 
 import junit.framework.Test;
 
@@ -34,7 +36,7 @@ public class OutputLabelInGridTest extends AbstractTestCase {
 
     public void testOutputLabelInGrid() throws Exception {
         // ## Arrange ##
-        URL url = getUrl("faces/outputLabelInGrid.jsp");
+        URL url = getUrl("faces/render/outputLabelInGrid.jsp");
         System.out.println(url);
 
         WebClient webClient = new WebClient();

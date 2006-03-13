@@ -13,31 +13,30 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.it;
+package org.seasar.teeda.it.render;
 
 import java.net.URL;
 
-import junit.framework.Test;
-import junitx.framework.StringAssert;
+import org.seasar.teeda.it.AbstractTestCase;
 
-import org.custommonkey.xmlunit.Diff;
+import junit.framework.Test;
 
 import com.gargoylesoftware.htmlunit.WebClient;
-import com.gargoylesoftware.htmlunit.html.HtmlImage;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import com.gargoylesoftware.htmlunit.html.HtmlSpan;
 
 /**
  * @author manhole
  */
-public class GraphicImageTest extends AbstractTestCase {
+public class OutputLabelTest extends AbstractTestCase {
 
     public static Test suite() throws Exception {
-        return setUpTestSuite(GraphicImageTest.class);
+        return setUpTestSuite(OutputLabelTest.class);
     }
 
-    public void testRender() throws Exception {
+    public void testOutputLink() throws Exception {
         // ## Arrange ##
-        URL url = getUrl("faces/graphicImage.jsp");
+        URL url = getUrl("faces/render/outputLabel.jsp");
         System.out.println(url);
 
         WebClient webClient = new WebClient();
@@ -46,18 +45,11 @@ public class GraphicImageTest extends AbstractTestCase {
         HtmlPage page = (HtmlPage) webClient.getPage(url);
 
         // ## Assert ##
-        final String body1 = getBody(page).trim();
-        System.out.println(body1);
-        assertEquals("graphicImage.jsp", page.getTitleText());
+        final String body = getBody(page).trim();
+        System.out.println(body);
 
-        HtmlImage image = (HtmlImage) page.getHtmlElementById("imageA");
-        StringAssert.assertStartsWith("/image/item_large_b.gif", image
-                .getSrcAttribute());
-        assertEquals("image title", image.getTitleAttribute());
-
-        final String expected = readText("testRender.html");
-        Diff diff = diff(expected, body1);
-        assertEquals(diff.toString(), true, diff.similar());
+        HtmlSpan span = (HtmlSpan) page.getHtmlElementById("hello");
+        assertEquals("Hello OutputLabel", span.asText());
     }
 
 }

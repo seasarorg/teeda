@@ -13,9 +13,11 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.it;
+package org.seasar.teeda.it.render;
 
 import java.net.URL;
+
+import org.seasar.teeda.it.AbstractTestCase;
 
 import junit.framework.Test;
 
@@ -24,17 +26,17 @@ import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.gargoylesoftware.htmlunit.html.HtmlSpan;
 
 /**
- * @author yone
+ * @author shot
  */
-public class OutputTextDITest extends AbstractTestCase {
+public class OutputText2Test extends AbstractTestCase {
 
     public static Test suite() throws Exception {
-        return setUpTestSuite(OutputTextDITest.class);
+        return setUpTestSuite(OutputText2Test.class);
     }
 
-    public void testOutputText() throws Exception {
+    public void testOutputLink() throws Exception {
         // ## Arrange ##
-        URL url = getUrl("faces/outputTextDI.jsp");
+        URL url = getUrl("faces/render/outputText2.jsp");
         System.out.println(url);
 
         WebClient webClient = new WebClient();
@@ -45,10 +47,10 @@ public class OutputTextDITest extends AbstractTestCase {
         // ## Assert ##
         final String body = getBody(page).trim();
         System.out.println(body);
-        assertEquals("this is outputTextDI.jsp", page.getTitleText());
+        assertEquals("this is outputText2.jsp", page.getTitleText());
 
-        HtmlSpan span = (HtmlSpan) page.getHtmlElementById("helloDI");
-        assertEquals("Hello DI", span.asText());
+        HtmlSpan span = (HtmlSpan) page.getHtmlElementById("hello");
+        assertEquals("Hello OutputText2", span.asText());
     }
 
 }
