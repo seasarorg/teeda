@@ -51,7 +51,7 @@ public class NavigationHandlerImplTest extends TeedaTestCase {
         // ## Arrange ##
         MockFacesContext context = getFacesContext();
         UIViewRoot root = new UIViewRoot();
-        root.setViewId("aaa*");
+        root.setViewId("aaabbb");
         context.setViewRoot(root);
         NavigationContext navContext = createNavigationContext("aaa*", "from",
                 "outcome", "bbb", false);

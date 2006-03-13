@@ -64,7 +64,7 @@ public class NavigationHandlerImpl extends NavigationHandler {
                 render(context, viewHandler, newViewId);
             }
         } else {
-            if(logger_.isDebugEnabled()) {
+            if (logger_.isDebugEnabled()) {
                 logger_.debug("Stay current ViewRoot");
             }
         }
@@ -155,10 +155,13 @@ public class NavigationHandlerImpl extends NavigationHandler {
             if (logger_.isDebugEnabled()) {
                 logger_.debug("Wildcard macth. viewId = " + viewId);
             }
-            if(!viewId.endsWith("*")) {
-                viewId = viewId + "*";
+            for (Iterator itr = map.keySet().iterator(); itr.hasNext();) {
+                String key = (String) itr.next();
+                key = key.substring(0, key.lastIndexOf("*"));
+                if (viewId.startsWith(key)) {
+                    return (List) map.get(key + "*");
+                }
             }
-            return (List) map.get(viewId);
         }
         return null;
     }
