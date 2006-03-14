@@ -86,6 +86,9 @@ public class ApplicationImpl extends Application implements
 
     private Map validatorMap_ = Collections.synchronizedMap(new HashMap());
 
+    private Map validatorFromDIMap_ = Collections
+            .synchronizedMap(new HashMap());
+
     private Collection supportedLocales_ = Collections.EMPTY_SET;
 
     private ValueBindingContext vbContext_ = null;
@@ -389,6 +392,13 @@ public class ApplicationImpl extends Application implements
         supportedLocales_ = supportedLocales;
     }
 
+    public void addValidator(String validatorId, Validator validator) {
+        if (StringUtil.isEmpty(validatorId)) {
+            throw new NullPointerException("Validator id is null.");
+        }
+        validatorFromDIMap_.put(validatorId, validator);
+    }
+    
     public void addValidator(String validatorId, String validatorClassName) {
         if (StringUtil.isEmpty(validatorId)) {
             throw new NullPointerException("Validator id is null.");
@@ -405,6 +415,9 @@ public class ApplicationImpl extends Application implements
         if (validatorId == null) {
             throw new NullPointerException();
         }
+        if(validatorFromDIMap_.get(validatorId) != null) {
+            return (Validator) validatorFromDIMap_.get(validatorId);
+        }
         Class validatorClass = (Class) validatorMap_.get(validatorId);
         if (validatorClass == null) {
             throw new FacesException("Undefined validator class:"
@@ -414,7 +427,7 @@ public class ApplicationImpl extends Application implements
     }
 
     public Iterator getValidatorIds() {
-        return validatorMap_.keySet().iterator();
+        return IteratorUtil.getCompositeIterator(validatorMap_, validatorFromDIMap_);
     }
 
     public MethodBinding createMethodBinding(String ref, Class[] params)

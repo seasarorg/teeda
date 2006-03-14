@@ -1,6 +1,10 @@
 package org.seasar.teeda.core.spike.dicon;
 
-import org.seasar.framework.container.ComponentNotFoundRuntimeException;
+import javax.faces.validator.DoubleRangeValidator;
+import javax.faces.validator.LengthValidator;
+import javax.faces.validator.LongRangeValidator;
+import javax.faces.validator.Validator;
+
 import org.seasar.framework.container.S2Container;
 import org.seasar.framework.unit.S2FrameworkTestCase;
 import org.seasar.teeda.core.application.ApplicationImpl;
@@ -14,7 +18,7 @@ import org.seasar.teeda.core.render.html.HtmlResponseStateManager;
 public class TeedaDiconTest extends S2FrameworkTestCase {
 
     public void testDicon() throws Exception {
-        include("test.dicon");
+        include("teeda.dicon");
         S2Container container = getContainer();
         LifecycleImpl lifecycle = (LifecycleImpl) container
                 .getComponent(LifecycleImpl.class);
@@ -35,7 +39,20 @@ public class TeedaDiconTest extends S2FrameworkTestCase {
         assertNotNull(app.getViewHandler());
         assertNotNull(app.getValueBindingContext());
         assertNotNull(app.getMethodBindingContext());
+        
+        Validator doubleRangeValidator = app.createValidator("javax.faces.DoubleRange");
+        assertNotNull(doubleRangeValidator);
+        assertTrue(doubleRangeValidator instanceof DoubleRangeValidator);
 
+        Validator lengthValidator = app.createValidator("javax.faces.Length");
+        assertNotNull(lengthValidator);
+        assertTrue(lengthValidator instanceof LengthValidator);
+
+        Validator longRangeValidator = app.createValidator("javax.faces.LongRange");
+        assertNotNull(longRangeValidator);
+        assertTrue(longRangeValidator instanceof LongRangeValidator);
+
+        
         TeedaStateManagerImpl stateManager = (TeedaStateManagerImpl) app
                 .getStateManager();
         assertNotNull(stateManager.getTreeStructureManager());
@@ -59,9 +76,6 @@ public class TeedaDiconTest extends S2FrameworkTestCase {
         assertNotNull(vbContext.getELParser());
         assertNotNull(vbContext.getELParser().getExpressionProcessor());
 
-        //        ConfigFilesFacesConfigurator configFilesConfigurator = (ConfigFilesFacesConfigurator) container.getComponent("configFilesConfigurator");
-        //        assertNotNull(configFilesConfigurator);
-        //        assertNotNull(configFilesConfigurator.getExternalContext());
     }
 
 }

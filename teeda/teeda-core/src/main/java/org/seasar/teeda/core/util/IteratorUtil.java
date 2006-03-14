@@ -19,6 +19,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 
+import org.apache.commons.collections.iterators.IteratorChain;
 import org.seasar.framework.util.EmptyIterator;
 
 public class IteratorUtil {
@@ -42,5 +43,12 @@ public class IteratorUtil {
         } else {
             return EMPTY_ITERATOR;
         }
+    }
+    
+    public static Iterator getCompositeIterator(Map map1, Map map2) {
+        IteratorChain chain = new IteratorChain();
+        chain.addIterator(map1.keySet().iterator());
+        chain.addIterator(map2.keySet().iterator());
+        return chain;
     }
 }

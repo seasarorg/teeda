@@ -358,24 +358,6 @@
 		<converter-class>javax.faces.convert.ShortConverter</converter-class>
 	</converter>
 	
-	<!-- Standard Validators -->
-	<validator>
-		<validator-id>javax.faces.DoubleRange</validator-id>
-		<validator-class>
-			javax.faces.validator.DoubleRangeValidator</validator-class>
-	</validator>
-	
-	<validator>
-		<validator-id>javax.faces.Length</validator-id>
-		<validator-class>javax.faces.validator.LengthValidator</validator-class>
-	</validator>
-	
-	<validator>
-		<validator-id>javax.faces.LongRange</validator-id>
-		<validator-class>
-			javax.faces.validator.LongRangeValidator</validator-class>
-	</validator>
-	
 	<!-- standard renderkit -->
 	<render-kit>
 		<render-kit-id>HTML_BASIC</render-kit-id>

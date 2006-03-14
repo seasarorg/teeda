@@ -15,6 +15,8 @@
  */
 package org.seasar.teeda.core.application;
 
+import java.util.Iterator;
+
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -31,6 +33,7 @@ import org.seasar.teeda.core.exception.IllegalClassTypeException;
 import org.seasar.teeda.core.mock.MockConverter;
 import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.mock.MockUIComponent;
+import org.seasar.teeda.core.mock.MockValidatorWithProperties;
 import org.seasar.teeda.core.mock.MockValueBinding;
 import org.seasar.teeda.core.mock.MockVariableResolver;
 import org.seasar.teeda.core.mock.NullValidator;
@@ -39,30 +42,7 @@ import org.seasar.teeda.core.unit.TeedaTestCase;
 public class ApplicationImplTest extends TeedaTestCase {
 
     private ApplicationImpl app_;
-
-    /*
-     * @see TestCase#setUp()
-     */
-    protected void setUp() throws Exception {
-        app_ = new ApplicationImpl();
-    }
-
-    /*
-     * @see TestCase#tearDown()
-     */
-    protected void tearDown() throws Exception {
-        super.tearDown();
-    }
-
-    /**
-     * Constructor for TestApplicationImpl.
-     * 
-     * @param arg0
-     */
-    public ApplicationImplTest(String arg0) {
-        super(arg0);
-    }
-
+    
     public void testAddComponent() {
         app_ = new ApplicationImpl();
         MockUIComponent mock = new MockUIComponent();
@@ -151,7 +131,7 @@ public class ApplicationImplTest extends TeedaTestCase {
         assertTrue(c instanceof MockConverter);
     }
 
-    public void testAddValidator() {
+    public void testAddValidator1() {
         app_ = new ApplicationImpl();
         app_.addValidator("teeda.null",
                 "org.seasar.teeda.core.mock.NullValidator");
@@ -167,6 +147,43 @@ public class ApplicationImplTest extends TeedaTestCase {
 
     }
 
+    public void testAddValidator2() {
+        // # Arrange
+        app_ = new ApplicationImpl();
+        MockValidatorWithProperties mock = new MockValidatorWithProperties();
+        mock.setName("aaa");
+        app_.addValidator("aaa.id", mock);
+
+        // # Act
+        Validator v = app_.createValidator("aaa.id");
+
+        // # Assert
+        assertNotNull(v);
+        assertTrue(v instanceof MockValidatorWithProperties);
+        MockValidatorWithProperties mv = (MockValidatorWithProperties) v;
+        assertEquals("aaa", mv.getName());
+
+    }
+
+    public void testGetValidatorIds() throws Exception {
+        // # Arrange
+        app_ = new ApplicationImpl();
+        app_.addValidator("teeda.null",
+                "org.seasar.teeda.core.mock.NullValidator");
+        MockValidatorWithProperties mock = new MockValidatorWithProperties();
+        mock.setName("bbb");
+        app_.addValidator("teeda.id", mock);
+        
+        // # Act
+        Iterator itr = app_.getValidatorIds();
+        
+        // # Assert
+        assertNotNull(itr);
+        assertEquals("teeda.null", itr.next());
+        assertEquals("teeda.id", itr.next());
+    }
+    
+    
     public void testCreateConverter_withProperties1() throws Exception {
         app_ = new ApplicationImpl();
         ConverterConfiguration config = new ConverterConfiguration("pattern",

@@ -69,7 +69,25 @@
 		<property name="propertyResolver">propertyResolver</property>
 		<property name="variableResolver">variableResolver</property>
 		<property name="stateManager">stateManager</property>
+		<initMethod name="addValidator">
+			<arg>"javax.faces.DoubleRange"</arg>
+			<arg>doubleRangeValidator</arg>
+		</initMethod>
+		<initMethod name="addValidator">
+			<arg>"javax.faces.Length"</arg>
+			<arg>lengthValidator</arg>
+		</initMethod>
+		<initMethod name="addValidator">
+			<arg>"javax.faces.LongRange"</arg>
+			<arg>longRangeValidator</arg>
+		</initMethod>
 	</component>
+
+	<component name="doubleRangeValidator" class="javax.faces.validator.DoubleRangeValidator" />
+
+	<component name="lengthValidator" class="javax.faces.validator.LengthValidator" />
+
+	<component name="longRangeValidator" class="javax.faces.validator.LongRangeValidator" />
 
 	<component name="actionListener" class="org.seasar.teeda.core.application.ActionListenerImpl" />
 

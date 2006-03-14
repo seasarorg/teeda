@@ -13,29 +13,32 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.core.application;
+package org.seasar.teeda.core.mock;
 
+import javax.faces.FacesException;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
 import javax.faces.validator.Validator;
-
-import org.seasar.teeda.core.el.MethodBindingContext;
-import org.seasar.teeda.core.el.ValueBindingContext;
 
 /**
  * @author shot
+ * 
  */
-public interface ConfigurationSupport {
+public class MockValidatorWithProperties implements Validator {
 
-    // TODO add Converter and Component DI support
-    public void addConverterConfiguration(String converterClassName,
-            ConverterConfiguration converterConfig);
+    private String name_;
 
-    public void addValidator(String validatorId, Validator validator);
+    public void validate(FacesContext context, UIComponent component,
+            Object value) throws FacesException {
+        // TODO Auto-generated method stub
 
-    public void setValueBindingContext(ValueBindingContext vbContext);
+    }
 
-    public ValueBindingContext getValueBindingContext();
+    public void setName(String name) {
+        name_ = name;
+    }
 
-    public void setMethodBindingContext(MethodBindingContext mbContext);
-
-    public MethodBindingContext getMethodBindingContext();
+    public String getName() {
+        return name_;
+    }
 }
