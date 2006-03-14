@@ -51,6 +51,7 @@ public abstract class InputTagBase extends UIComponentTagBase {
         required_ = null;
         validator_ = null;
         valueChangeListener_ = null;
+        readonly_ = null;
     }
 
     public void setImmediate(String immediate) {

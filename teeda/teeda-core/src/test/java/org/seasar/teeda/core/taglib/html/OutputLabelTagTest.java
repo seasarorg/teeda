@@ -104,6 +104,18 @@ public class OutputLabelTagTest extends TeedaTestCase {
         assertEquals("title", component.getTitle());
     }
 
+    public void testRelease() throws Exception {
+        // # Arrange #
+        OutputLabelTag tag = new OutputLabelTag();
+        tag.setFor("forId");
+        
+        // # Act #
+        tag.release();
+        
+        // # Assert #
+        assertEquals(null, tag.getFor());
+    }
+
     private HtmlOutputLabel createHtmlOutputLabel() {
         return (HtmlOutputLabel) createUIComponent();
     }

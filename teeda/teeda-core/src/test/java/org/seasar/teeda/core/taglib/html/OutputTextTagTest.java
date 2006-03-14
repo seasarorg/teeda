@@ -72,6 +72,18 @@ public class OutputTextTagTest extends TeedaTestCase {
         assertEquals("title", component.getTitle());
     }
 
+    public void testRelease() throws Exception {
+        // # Arrange #
+        OutputTextTag tag = new OutputTextTag();
+        tag.setEscape("true");
+        
+        // # Act #
+        tag.release();
+        
+        // # Assert #
+        assertEquals(null, tag.getEscape());
+    }
+
     private HtmlOutputText createHtmlOutputText() {
         return (HtmlOutputText) createUIComponent();
     }

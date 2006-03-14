@@ -97,4 +97,24 @@ public class PanelGridTag extends UIComponentTagBase {
         rowClasses_ = rowClasses;
     }
 
+    String getColumnClasses() {
+        return columnClasses_;
+    }
+
+    String getColumns() {
+        return columns_;
+    }
+
+    String getFooterClass() {
+        return footerClass_;
+    }
+
+    String getHeaderClass() {
+        return headerClass_;
+    }
+
+    String getRowClasses() {
+        return rowClasses_;
+    }
+
 }

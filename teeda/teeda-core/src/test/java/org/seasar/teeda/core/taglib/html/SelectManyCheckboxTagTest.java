@@ -134,6 +134,18 @@ public class SelectManyCheckboxTagTest extends TeedaTestCase {
         assertEquals("title", component.getTitle());
     }
 
+    public void testRelease() throws Exception {
+        // # Arrange #
+        SelectManyCheckboxTag tag = new SelectManyCheckboxTag();
+        tag.setLayout("pageDirection");
+        
+        // # Act #
+        tag.release();
+        
+        // # Assert #
+        assertEquals(null, tag.getLayout());
+    }
+
     private HtmlSelectManyCheckbox createHtmlSelectManyCheckbox() {
         return (HtmlSelectManyCheckbox) createUIComponent();
     }

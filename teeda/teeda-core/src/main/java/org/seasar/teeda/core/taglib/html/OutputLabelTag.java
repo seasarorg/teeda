@@ -51,4 +51,8 @@ public class OutputLabelTag extends UIComponentTagBase {
         for_ = for1;
     }
 
+    String getFor() {
+        return for_;
+    }
+
 }

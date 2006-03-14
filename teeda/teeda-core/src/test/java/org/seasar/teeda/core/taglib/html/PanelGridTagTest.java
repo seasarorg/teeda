@@ -109,6 +109,26 @@ public class PanelGridTagTest extends TestCase {
         assertEquals("650", component.getWidth());
     }
 
+    public void testRelease() throws Exception {
+        // # Arrange #
+        PanelGridTag tag = new PanelGridTag();
+        tag.setColumnClasses("columnClass");
+        tag.setColumns("99");
+        tag.setFooterClass("FooterClass");
+        tag.setHeaderClass("HeaderClass");
+        tag.setRowClasses("RowClass");
+        
+        // # Act #
+        tag.release();
+        
+        // # Assert #
+        assertEquals(null, tag.getColumnClasses());
+        assertEquals(null, tag.getColumns());
+        assertEquals(null, tag.getFooterClass());
+        assertEquals(null, tag.getHeaderClass());
+        assertEquals(null, tag.getRowClasses());
+    }
+
     private HtmlPanelGrid createHtmlPanelGrid() {
         return (HtmlPanelGrid) createUIComponent();
     }

@@ -26,24 +26,6 @@ import org.seasar.teeda.core.taglib.UIComponentTagBase;
  */
 public class CommandLinkTag extends UIComponentTagBase {
 
-    private String charset_;
-
-    private String coords_;
-
-    private String hreflang_;
-
-    private String rel_;
-
-    private String rev_;
-
-    private String shape_;
-
-    private String type_;
-
-    private String target_;
-
-    private String action_;
-
     private String immediate_;
 
     private String actionListener_;
@@ -74,17 +56,8 @@ public class CommandLinkTag extends UIComponentTagBase {
 
     public void release() {
         super.release();
-        action_ = null;
         immediate_ = null;
         actionListener_ = null;
-        charset_ = null;
-        coords_ = null;
-        hreflang_ = null;
-        rel_ = null;
-        rev_ = null;
-        shape_ = null;
-        target_ = null;
-        type_ = null;
     }
 
     public void setAction(String action) {
@@ -95,84 +68,16 @@ public class CommandLinkTag extends UIComponentTagBase {
         actionListener_ = actionListener;
     }
 
-    public void setCharset(String charset) {
-        charset_ = charset;
-    }
-
-    public void setCoords(String coords) {
-        coords_ = coords;
-    }
-
-    public void setHreflang(String hreflang) {
-        hreflang_ = hreflang;
-    }
-
     public void setImmediate(String immediate) {
         immediate_ = immediate;
     }
 
-    public void setRel(String rel) {
-        rel_ = rel;
-    }
-
-    public void setRev(String rev) {
-        rev_ = rev;
-    }
-
-    public void setShape(String shape) {
-        shape_ = shape;
-    }
-
-    public void setTarget(String target) {
-        target_ = target;
-    }
-
-    public void setType(String type) {
-        type_ = type;
-    }
-
-    String getAction() {
-        return action_;
-    }
-    
     String getActionListener() {
         return actionListener_;
     }
-
-    String getCharset() {
-        return charset_;
-    }
-
-    String getCoords() {
-        return coords_;
-    }
-
-    String getHreflang() {
-        return hreflang_;
-    }
-
+    
     String getImmediate() {
         return immediate_;
     }
 
-    String getRel() {
-        return rel_;
-    }
-
-    String getRev() {
-        return rev_;
-    }
-
-    String getShape() {
-        return shape_;
-    }
-
-    String getTarget() {
-        return target_;
-    }
-
-    String getType() {
-        return type_;
-    }
-    
 }

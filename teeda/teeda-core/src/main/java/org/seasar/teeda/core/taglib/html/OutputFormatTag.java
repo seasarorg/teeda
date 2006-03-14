@@ -51,4 +51,8 @@ public class OutputFormatTag extends UIComponentTagBase {
         escape_ = escape;
     }
 
+    String getEscape() {
+        return escape_;
+    }
+
 }

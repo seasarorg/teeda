@@ -50,4 +50,9 @@ public class OutputTextTag extends UIComponentTagBase {
         super.release();
         escape_ = null;
     }
+
+    String getEscape() {
+        return escape_;
+    }
+    
 }

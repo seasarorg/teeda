@@ -82,6 +82,40 @@ public class MessageTagTest extends TestCase {
         assertEquals("WarnStyle", component.getWarnStyle());
     }
 
+    public void testRelease() throws Exception {
+        // # Arrange #
+        MessageTag tag = new MessageTag();
+        tag.setFor("ForId");
+        tag.setShowDetail("true");
+        tag.setShowSummary("false");
+        tag.setErrorClass("ErrorClass");
+        tag.setErrorStyle("ErrorStyle");
+        tag.setFatalClass("FatalClass");
+        tag.setFatalStyle("FatalStyle");
+        tag.setInfoClass("InfoClass");
+        tag.setInfoStyle("InfoStyle");
+        tag.setTooltip("true");
+        tag.setWarnClass("WarnClass");
+        tag.setWarnStyle("WarnStyle");
+        
+        // # Act #
+        tag.release();
+        
+        // # Assert #
+        assertEquals(null, tag.getFor());
+        assertEquals(null, tag.getShowDetail());
+        assertEquals(null, tag.getShowSummary());
+        assertEquals(null, tag.getErrorClass());
+        assertEquals(null, tag.getErrorStyle());
+        assertEquals(null, tag.getFatalClass());
+        assertEquals(null, tag.getFatalStyle());
+        assertEquals(null, tag.getInfoClass());
+        assertEquals(null, tag.getInfoStyle());
+        assertEquals(null, tag.getTooltip());
+        assertEquals(null, tag.getWarnClass());
+        assertEquals(null, tag.getWarnStyle());
+    }
+
     private HtmlMessage createHtmlMessage() {
         return (HtmlMessage) createUIComponent();
     }

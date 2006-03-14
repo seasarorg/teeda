@@ -106,4 +106,28 @@ public class DataTableTag extends UIComponentTagBase {
         rowClasses_ = rowClasses;
     }
 
+    String getColumnClasses() {
+        return columnClasses_;
+    }
+
+    String getFirst() {
+        return first_;
+    }
+
+    String getFooterClass() {
+        return footerClass_;
+    }
+
+    String getHeaderClass() {
+        return headerClass_;
+    }
+
+    String getRowClasses() {
+        return rowClasses_;
+    }
+
+    String getVar() {
+        return var_;
+    }
+
 }

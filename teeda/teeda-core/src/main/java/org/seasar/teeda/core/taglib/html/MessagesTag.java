@@ -158,4 +158,56 @@ public class MessagesTag extends UIComponentTagBase {
         warnStyle_ = warnStyle;
     }
 
+    String getErrorClass() {
+        return errorClass_;
+    }
+
+    String getErrorStyle() {
+        return errorStyle_;
+    }
+
+    String getFatalClass() {
+        return fatalClass_;
+    }
+
+    String getFatalStyle() {
+        return fatalStyle_;
+    }
+
+    String getGlobalOnly() {
+        return globalOnly_;
+    }
+
+    String getInfoClass() {
+        return infoClass_;
+    }
+
+    String getInfoStyle() {
+        return infoStyle_;
+    }
+
+    String getLayout() {
+        return layout_;
+    }
+
+    String getShowDetail() {
+        return showDetail_;
+    }
+
+    String getShowSummary() {
+        return showSummary_;
+    }
+
+    String getTooltip() {
+        return tooltip_;
+    }
+
+    String getWarnClass() {
+        return warnClass_;
+    }
+
+    String getWarnStyle() {
+        return warnStyle_;
+    }
+
 }

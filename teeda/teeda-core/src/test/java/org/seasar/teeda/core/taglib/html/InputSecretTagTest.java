@@ -130,6 +130,18 @@ public class InputSecretTagTest extends TeedaTestCase {
         assertEquals("title", component.getTitle());
     }
 
+    public void testRelease() throws Exception {
+        // # Arrange #
+        InputSecretTag tag = new InputSecretTag();
+        tag.setRedisplay("true");
+        
+        // # Act #
+        tag.release();
+        
+        // # Assert #
+        assertEquals(null, tag.getRedisplay());
+    }
+
     private HtmlInputSecret createHtmlInputSecret() {
         return (HtmlInputSecret) createUIComponent();
     }

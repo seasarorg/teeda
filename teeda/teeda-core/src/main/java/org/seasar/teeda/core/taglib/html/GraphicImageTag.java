@@ -56,4 +56,8 @@ public class GraphicImageTag extends UIComponentTagBase {
         url_ = url;
     }
 
+    String getUrl() {
+        return url_;
+    }
+    
 }

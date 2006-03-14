@@ -132,6 +132,26 @@ public class InputTextTagTest extends TeedaTestCase {
         assertEquals("title", component.getTitle());
     }
 
+    public void testRelease() throws Exception {
+        // # Arrange #
+        InputTextTag tag = new InputTextTag();
+        tag.setImmediate("true");
+        tag.setRequired("true");
+        tag.setValidator("hoge");
+        tag.setValueChangeListener("#{mock.listener}");
+        tag.setReadonly("true");
+        
+        // # Act #
+        tag.release();
+        
+        // # Assert #
+        assertEquals(null, tag.getImmediate());
+        assertEquals(null, tag.getRequired());
+        assertEquals(null, tag.getValidator());
+        assertEquals(null, tag.getValueChangeListener());
+        assertEquals(null, tag.getReadonly());
+    }
+
     private HtmlInputText createHtmlInputText() {
         return (HtmlInputText) createUIComponent();
     }

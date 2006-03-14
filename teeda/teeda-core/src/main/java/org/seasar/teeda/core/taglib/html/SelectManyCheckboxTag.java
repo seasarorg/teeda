@@ -57,4 +57,8 @@ public class SelectManyCheckboxTag extends InputTagBase {
         layout_ = layout;
     }
 
+    String getLayout() {
+        return layout_;
+    }
+
 }

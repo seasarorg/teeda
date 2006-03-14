@@ -133,6 +133,18 @@ public class SelectOneRadioTagTest extends TeedaTestCase {
         assertEquals("title", component.getTitle());
     }
 
+    public void testRelease() throws Exception {
+        // # Arrange #
+        SelectOneRadioTag tag = new SelectOneRadioTag();
+        tag.setLayout("pageDirection");
+        
+        // # Act #
+        tag.release();
+        
+        // # Assert #
+        assertEquals(null, tag.getLayout());
+    }
+
     private HtmlSelectOneRadio createHtmlSelectOneRadio() {
         return (HtmlSelectOneRadio) createUIComponent();
     }

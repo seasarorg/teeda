@@ -57,4 +57,8 @@ public class SelectOneRadioTag extends InputTagBase {
         layout_ = layout;
     }
 
+    String getLayout() {
+        return layout_;
+    }
+
 }

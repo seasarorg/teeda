@@ -44,8 +44,6 @@ public class MessageTag extends UIComponentTagBase {
 
     private String infoStyle_;
 
-    private String layout_;
-
     private String tooltip_;
 
     private String warnClass_;
@@ -80,7 +78,6 @@ public class MessageTag extends UIComponentTagBase {
                 infoClass_);
         setComponentProperty(component, JsfConstants.INFO_STYLE_ATTR,
                 infoStyle_);
-        setComponentProperty(component, JsfConstants.LAYOUT_ATTR, layout_);
         setComponentProperty(component, JsfConstants.TOOLTIP_ATTR, tooltip_);
         setComponentProperty(component, JsfConstants.WARN_CLASS_ATTR,
                 warnClass_);
@@ -99,7 +96,6 @@ public class MessageTag extends UIComponentTagBase {
         fatalStyle_ = null;
         infoClass_ = null;
         infoStyle_ = null;
-        layout_ = null;
         tooltip_ = null;
         warnClass_ = null;
         warnStyle_ = null;
@@ -141,10 +137,6 @@ public class MessageTag extends UIComponentTagBase {
         infoStyle_ = infoStyle;
     }
 
-    public void setLayout(String layout) {
-        layout_ = layout;
-    }
-
     public void setTooltip(String tooltip) {
         tooltip_ = tooltip;
     }
@@ -155,6 +147,54 @@ public class MessageTag extends UIComponentTagBase {
 
     public void setWarnStyle(String warnStyle) {
         warnStyle_ = warnStyle;
+    }
+
+    String getErrorClass() {
+        return errorClass_;
+    }
+
+    String getErrorStyle() {
+        return errorStyle_;
+    }
+
+    String getFatalClass() {
+        return fatalClass_;
+    }
+
+    String getFatalStyle() {
+        return fatalStyle_;
+    }
+
+    String getFor() {
+        return for_;
+    }
+
+    String getInfoClass() {
+        return infoClass_;
+    }
+
+    String getInfoStyle() {
+        return infoStyle_;
+    }
+
+    String getShowDetail() {
+        return showDetail_;
+    }
+
+    String getShowSummary() {
+        return showSummary_;
+    }
+
+    String getTooltip() {
+        return tooltip_;
+    }
+
+    String getWarnClass() {
+        return warnClass_;
+    }
+
+    String getWarnStyle() {
+        return warnStyle_;
     }
 
 }

@@ -98,6 +98,18 @@ public class GraphicImageTagTest extends TestCase {
         assertEquals("mapName", component.getUsemap());
     }
 
+    public void testRelease() throws Exception {
+        // # Arrange #
+        GraphicImageTag tag = new GraphicImageTag();
+        tag.setUrl("url");
+        
+        // # Act #
+        tag.release();
+        
+        // # Assert #
+        assertEquals(null, tag.getUrl());
+    }
+
     private HtmlGraphicImage createHtmlGraphicImage() {
         return (HtmlGraphicImage) createUIComponent();
     }

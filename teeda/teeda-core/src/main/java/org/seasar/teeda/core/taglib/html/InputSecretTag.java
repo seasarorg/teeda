@@ -54,4 +54,8 @@ public class InputSecretTag extends InputTagBase {
         redisplay_ = redisplay;
     }
 
+    String getRedisplay() {
+        return redisplay_;
+    }
+
 }
