@@ -41,5 +41,17 @@
 		<managed-bean-class>org.seasar.teeda.it.HiddenBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>changePageBean</managed-bean-name>
+		<managed-bean-class>org.seasar.teeda.it.ChangePageBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
 	
+	<navigation-rule>
+		<from-view-id>/render/changePage1.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>ok</from-outcome>
+			<to-view-id>/render/changePage1_result.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
 </faces-config>
