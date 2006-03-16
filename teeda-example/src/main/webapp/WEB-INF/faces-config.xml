@@ -28,15 +28,18 @@
 		<managed-bean-class>examples.teeda.bean.AddBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>changePageBean</managed-bean-name>
+		<managed-bean-class>examples.teeda.bean.ChangePageBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
 	
-	<!--
 	<navigation-rule>
-		<from-view-id>*</from-view-id>
+		<from-view-id>/change/changePage1.jsp</from-view-id>
 		<navigation-case>
-			<from-outcome>back</from-outcome>
-			<to-view-id>/index.html</to-view-id>
-			<redirect />
+			<from-outcome>ok</from-outcome>
+			<to-view-id>/change/changePage1_result.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
-	-->
 </faces-config>
