@@ -15,8 +15,11 @@
  */
 package org.seasar.teeda.core.lifecycle.impl;
 
+import javax.faces.component.UIViewRoot;
+import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseId;
 
+import org.seasar.teeda.core.mock.MockFacesContextImpl;
 import org.seasar.teeda.core.unit.TeedaTestCase;
 
 /**
@@ -25,7 +28,17 @@ import org.seasar.teeda.core.unit.TeedaTestCase;
 public class ProcessValidationsPhaseTest extends TeedaTestCase {
 
     public void testExecutePhase() throws Exception {
+        // # Arrange
+        FacesContext context = new MockFacesContextImpl();
+        context.setViewRoot(new MockViewRoot());
+        ProcessValidationsPhase phase = new ProcessValidationsPhase();
 
+        // # Act
+        phase.executePhase(context);
+        
+        // # Assert
+        MockViewRoot root = (MockViewRoot) context.getViewRoot();
+        assertTrue(root.isCalled());
     }
 
     public void testGetCurrentPhaseId() throws Exception {
@@ -33,4 +46,16 @@ public class ProcessValidationsPhaseTest extends TeedaTestCase {
                 .getCurrentPhaseId());
     }
 
+    private static class MockViewRoot extends UIViewRoot {
+
+        private boolean isCalled_ = false;
+        
+        public void processValidators(FacesContext context) {
+            isCalled_ = true;
+        }
+        
+        public boolean isCalled() {
+            return isCalled_;
+        }
+    }
 }
