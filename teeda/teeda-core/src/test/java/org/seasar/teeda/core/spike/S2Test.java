@@ -56,7 +56,6 @@ public class S2Test extends S2FrameworkTestCase {
 
     public void test3() {
         List list = new ArrayList();
-        list.add("aaa");
         ComponentDef cDef = new ComponentDefImpl(list.getClass(), "a");
         cDef.setInstanceDef(InstanceDefFactory.SINGLETON);
 
@@ -77,8 +76,8 @@ public class S2Test extends S2FrameworkTestCase {
         cDef.setInstanceDef(InstanceDefFactory.SINGLETON);
 
         InitMethodDef mDef = new InitMethodDefImpl("put");
-        ArgDef aDef1 = new ArgDefImpl("a");
-        ArgDef aDef2 = new ArgDefImpl("A");
+        ArgDef aDef1 = new ArgDefImpl("key");
+        ArgDef aDef2 = new ArgDefImpl("value");
         mDef.addArgDef(aDef1);
         mDef.addArgDef(aDef2);
         cDef.addInitMethodDef(mDef);
@@ -86,7 +85,7 @@ public class S2Test extends S2FrameworkTestCase {
         getContainer().register(cDef);
 
         Map m = (Map) getContainer().getComponent("a");
-        assertEquals("A", m.get("a"));
+        assertEquals("value", m.get("key"));
     }
 
     public void test5() {
