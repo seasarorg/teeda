@@ -26,36 +26,13 @@ import javax.faces.component.UIViewRoot;
 
 import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.mock.MockUIComponent;
-import org.seasar.teeda.core.unit.TeedaTestCase;
 
-public class DateTimeConverterTest extends TeedaTestCase {
+public class DateTimeConverterTest extends AbstractConverterTestCase {
 
     public void testGetAsObject() {
-
+        DateTimeConverter converter = (DateTimeConverter) createConverter();
         MockFacesContext context = getFacesContext();
         MockUIComponent component = new MockUIComponent();
-
-        DateTimeConverter converter = new DateTimeConverter();
-
-        try {
-            converter.getAsObject(null, component, "");
-            fail();
-        } catch (NullPointerException e) {
-            assertTrue(true);
-        }
-
-        try {
-            converter.getAsObject(context, null, "");
-            fail();
-        } catch (NullPointerException e) {
-            assertTrue(true);
-        }
-
-        Object o = converter.getAsObject(context, component, null);
-        assertNull(o);
-
-        o = converter.getAsObject(context, component, " ");
-        assertNull(o);
 
         Locale locale = Locale.getDefault();
         converter.setLocale(locale);
@@ -67,7 +44,7 @@ public class DateTimeConverterTest extends TeedaTestCase {
         converter.setPattern(pattern);
 
         String dateValue = "2005/08/01";
-        o = converter.getAsObject(context, component, dateValue);
+        Object o = converter.getAsObject(context, component, dateValue);
 
         Date dateTarget = createDateTarget(pattern, locale, dateValue);
 
@@ -145,11 +122,10 @@ public class DateTimeConverterTest extends TeedaTestCase {
     }
 
     public void testGetAsString() {
-
+        Converter converter = createConverter();
         MockFacesContext context = getFacesContext();
         MockUIComponent component = new MockUIComponent();
 
-        DateTimeConverter converter = new DateTimeConverter();
         String value = converter.getAsString(context, component, null);
 
         assertEquals(value, "");
@@ -298,6 +274,18 @@ public class DateTimeConverterTest extends TeedaTestCase {
             fail();
         }
         return null;
+    }
+
+    public void testConstants() throws Exception {
+        assertEquals("javax.faces.DateTime", DateTimeConverter.CONVERTER_ID);
+    }
+
+    protected Converter createConverter() {
+        return createDateTimeConverter();
+    }
+
+    private DateTimeConverter createDateTimeConverter() {
+        return new DateTimeConverter();
     }
 
 }

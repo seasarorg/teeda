@@ -18,31 +18,14 @@ package javax.faces.convert;
 import java.util.ArrayList;
 
 import org.seasar.teeda.core.mock.MockUIComponent;
-import org.seasar.teeda.core.unit.TeedaTestCase;
 
 /**
  * @author shot
  */
-public class FloatConverterTest extends TeedaTestCase {
+public class FloatConverterTest extends AbstractConverterTestCase {
 
-    public void testGetAsObject() throws Exception {
-        FloatConverter converter = new FloatConverter();
-        try {
-            converter.getAsObject(null, new MockUIComponent(), "a");
-            fail();
-        } catch (NullPointerException expected) {
-            success();
-        }
-        try {
-            converter.getAsObject(getFacesContext(), null, "a");
-            fail();
-        } catch (NullPointerException expected) {
-            success();
-        }
-        assertNull(converter.getAsObject(getFacesContext(),
-                new MockUIComponent(), null));
-        assertNull(converter.getAsObject(getFacesContext(),
-                new MockUIComponent(), ""));
+    public void testGetAsObject_convertSuccess() throws Exception {
+        Converter converter = createConverter();
         Object target = converter.getAsObject(getFacesContext(),
                 new MockUIComponent(), "1.2F");
         assertNotNull(target);
@@ -51,8 +34,8 @@ public class FloatConverterTest extends TeedaTestCase {
         assertTrue(f.floatValue() == 1.2F);
     }
 
-    public void testGetAsObject_throwConverterException() throws Exception {
-        FloatConverter converter = new FloatConverter();
+    public void testGetAsObject_convertFail() throws Exception {
+        Converter converter = createConverter();
         try {
             converter.getAsObject(getFacesContext(), new MockUIComponent(),
                     "hoge");
@@ -62,31 +45,15 @@ public class FloatConverterTest extends TeedaTestCase {
         }
     }
 
-    public void testGetAsString() throws Exception {
-        FloatConverter converter = new FloatConverter();
-        try {
-            converter.getAsString(null, new MockUIComponent(), "a");
-            fail();
-        } catch (NullPointerException expected) {
-            success();
-        }
-        try {
-            converter.getAsString(getFacesContext(), null, "a");
-            fail();
-        } catch (NullPointerException expected) {
-            success();
-        }
+    public void testGetAsString_convertSuccess() throws Exception {
+        Converter converter = createConverter();
         String s = converter.getAsString(getFacesContext(),
                 new MockUIComponent(), new Float(2.3F));
         assertEquals("2.3", s);
-
-        s = converter.getAsString(getFacesContext(), new MockUIComponent(),
-                "bbb");
-        assertEquals("bbb", s);
     }
 
-    public void testGetAsString_throwConverterException() throws Exception {
-        FloatConverter converter = new FloatConverter();
+    public void testGetAsString_convertFail() throws Exception {
+        Converter converter = createConverter();
         try {
             converter.getAsString(getFacesContext(), new MockUIComponent(),
                     new ArrayList());
@@ -94,5 +61,17 @@ public class FloatConverterTest extends TeedaTestCase {
         } catch (ConverterException expected) {
             success();
         }
+    }
+
+    public void testConstants() throws Exception {
+        assertEquals("javax.faces.Float", FloatConverter.CONVERTER_ID);
+    }
+
+    protected Converter createConverter() {
+        return createFloatConverter();
+    }
+
+    private FloatConverter createFloatConverter() {
+        return new FloatConverter();
     }
 }

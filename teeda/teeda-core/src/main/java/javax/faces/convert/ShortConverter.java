@@ -22,7 +22,6 @@ import javax.faces.internal.ConvertUtils;
 
 /**
  * @author shot
- * TODO testing
  */
 public class ShortConverter implements Converter {
 
@@ -38,12 +37,10 @@ public class ShortConverter implements Converter {
         if (value == null) {
             return null;
         }
-
         value = value.trim();
         if (value.length() < 1) {
             return null;
         }
-
         try {
             return Short.valueOf(value);
         } catch (Exception e) {
@@ -58,6 +55,9 @@ public class ShortConverter implements Converter {
             Object value) throws ConverterException {
         AssertionUtil.assertNotNull("FacesContext", context);
         AssertionUtil.assertNotNull("UIComponent", component);
+        if (value == null) {
+            return "";
+        }
         try {
             return (value instanceof String) ? (String) value : (Short
                     .toString(((Short) value).shortValue()));

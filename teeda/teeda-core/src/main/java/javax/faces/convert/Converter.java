@@ -18,6 +18,9 @@ package javax.faces.convert;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 
+/**
+ * @author shot
+ */
 public interface Converter {
 
     public Object getAsObject(FacesContext context, UIComponent component,

@@ -34,7 +34,6 @@ public class CharacterConverter implements Converter {
         if (value == null) {
             return null;
         }
-
         value = value.trim();
         if (value.length() < 1) {
             return null;
@@ -56,7 +55,6 @@ public class CharacterConverter implements Converter {
         if (value == null) {
             return "";
         }
-
         try {
             return (value instanceof String) ? (String) value
                     : ((Character) value).toString();

@@ -112,11 +112,9 @@ public class DateTimeConverter implements Converter, StateHolder {
         if (value == null) {
             return "";
         }
-
         if (value instanceof String) {
             return (String) value;
         }
-
         DateFormat formatter = getDateFormat(getLocale());
         TimeZone timeZone = getTimeZone();
         if (timeZone != null) {

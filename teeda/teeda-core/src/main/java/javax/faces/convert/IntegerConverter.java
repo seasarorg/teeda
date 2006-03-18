@@ -22,7 +22,6 @@ import javax.faces.internal.ConvertUtils;
 
 /**
  * @author shot
- * TODO testing
  */
 public class IntegerConverter implements Converter {
 
@@ -38,12 +37,10 @@ public class IntegerConverter implements Converter {
         if (value == null) {
             return null;
         }
-
         value = value.trim();
         if (value.length() < 1) {
             return null;
         }
-
         try {
             return Integer.valueOf(value);
         } catch (Exception e) {
@@ -58,6 +55,9 @@ public class IntegerConverter implements Converter {
             Object value) throws ConverterException {
         AssertionUtil.assertNotNull("FacesContext", context);
         AssertionUtil.assertNotNull("UIComponent", component);
+        if (value == null) {
+            return "";
+        }
         try {
             return (value instanceof String) ? (String) value : (Integer
                     .toString(((Integer) value).intValue()));

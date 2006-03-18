@@ -56,6 +56,9 @@ public class FloatConverter implements Converter {
             Object value) throws ConverterException {
         AssertionUtil.assertNotNull("FacesContext", context);
         AssertionUtil.assertNotNull("UIComponent", component);
+        if (value == null) {
+            return "";
+        }
         try {
             return (value instanceof String) ? (String) value : (Float
                     .toString(((Float) value).floatValue()));

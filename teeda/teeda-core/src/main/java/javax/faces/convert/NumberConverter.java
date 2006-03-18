@@ -33,7 +33,6 @@ import javax.faces.internal.ConvertUtils;
  */
 public class NumberConverter implements Converter, StateHolder {
 
-    // TODO testing
     public static final String CONVERTER_ID = "javax.faces.Number";
 
     private Locale locale_ = null;
@@ -84,16 +83,13 @@ public class NumberConverter implements Converter, StateHolder {
         if (value == null) {
             return null;
         }
-
         value = value.trim();
         if (value.length() < 1) {
             return null;
         }
-
         Locale locale = getLocale(context);
         NumberFormat parser = getNumberFormat(locale);
         parser.setParseIntegerOnly(isIntegerOnly());
-
         try {
             return parser.parse(value);
         } catch (ParseException e) {
@@ -111,18 +107,14 @@ public class NumberConverter implements Converter, StateHolder {
         if (value == null) {
             return "";
         }
-
         if (value instanceof String) {
             return (String) value;
         }
-
         Locale locale = getLocale(context);
-
         String pattern = getPattern();
         NumberFormat formatter = getNumberFormat(locale);
         if (pattern == null) {
             configureFormatter(formatter);
-
             if (TYPE_CURRENCY.equals(type_)) {
                 configureCurrency(formatter);
             }
@@ -282,16 +274,13 @@ public class NumberConverter implements Converter, StateHolder {
     }
 
     private NumberFormat getNumberFormat(Locale locale) {
-
         if (pattern_ != null) {
             DecimalFormatSymbols symbols = new DecimalFormatSymbols(locale);
             return new DecimalFormat(pattern_, symbols);
         }
-
         if (type_ != null) {
             return getNumberFormatForType();
         }
-
         throw new ConverterException("NumberFormat not found");
     }
 
@@ -340,21 +329,17 @@ public class NumberConverter implements Converter, StateHolder {
     }
 
     protected void configureCurrency(NumberFormat formatter) {
-
         boolean isCurrencyCodeUse = false;
         String currencyCode = getCurrencyCode();
         String currencySymbol = getCurrencySymbol();
-
         if ((currencyCode == null) && (currencySymbol == null)) {
             return;
         }
-
         if (isSetBothCurrencyProperties() && isJava14()) {
             isCurrencyCodeUse = (currencyCode != null);
         } else {
             isCurrencyCodeUse = (currencySymbol == null);
         }
-
         if (isCurrencyCodeUse) {
             formatter.setCurrency(Currency.getInstance(currencyCode));
         } else {
