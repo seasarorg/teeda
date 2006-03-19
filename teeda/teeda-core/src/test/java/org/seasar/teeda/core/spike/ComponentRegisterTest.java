@@ -35,7 +35,8 @@ public class ComponentRegisterTest extends TestCase {
         handler.appendInitMethod(cd);
         assertEquals(1, cd.getInitMethodDefSize());
 
-        assertEquals("singleton", cd.getInstanceDef().getName());
+        //assertEquals("request", cd.getInstanceDef().getName());
+        assertEquals("session", cd.getInstanceDef().getName());
         InitMethodDef initMethodDef = cd.getInitMethodDef(0);
         assertEquals("foo", initMethodDef.getMethodName());
     }
@@ -51,9 +52,12 @@ public class ComponentRegisterTest extends TestCase {
     }
 
     public static class InitMethodBean {
-        private int fooCalls_ = 0;
+
+        public static final String COMPONENT = "instance = session";
 
         public static final String INIT_METHOD = "foo";
+
+        private int fooCalls_ = 0;
 
         public void foo() {
             fooCalls_++;
@@ -61,6 +65,7 @@ public class ComponentRegisterTest extends TestCase {
 
         public void bar() {
         }
+
     }
 
 }

@@ -5,7 +5,8 @@
 
 	<component 
 		name="initMethodBean"
-		class="org.seasar.teeda.core.spike.ComponentRegisterTest$InitMethodBean">
+		class="org.seasar.teeda.core.spike.ComponentRegisterTest$InitMethodBean"
+		instance="request">
 		<initMethod name="bar"/>
 	</component>
 
