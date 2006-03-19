@@ -6,7 +6,7 @@
 	<component 
 		name="initMethodBean"
 		class="org.seasar.teeda.core.spike.ComponentRegisterTest$InitMethodBean"
-		instance="request">
+		instance="singleton">
 		<initMethod name="bar"/>
 	</component>
 

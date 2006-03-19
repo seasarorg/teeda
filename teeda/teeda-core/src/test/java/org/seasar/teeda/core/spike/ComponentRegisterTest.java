@@ -35,26 +35,43 @@ public class ComponentRegisterTest extends TestCase {
         handler.appendInitMethod(cd);
         assertEquals(1, cd.getInitMethodDefSize());
 
-        assertEquals("session", cd.getInstanceDef().getName());
+        assertEquals("prototype", cd.getInstanceDef().getName());
         InitMethodDef initMethodDef = cd.getInitMethodDef(0);
         assertEquals("foo", initMethodDef.getMethodName());
     }
 
     public void testDiconAndAnnotation() throws Exception {
-        S2Container container = S2ContainerFactory.create(getClass()
-                .getPackage().getName().replace('.', '/')
-                + "/ComponentRegisterTest.dicon");
-        ComponentDef cd = container.getComponentDef("initMethodBean");
+        S2Container container = S2ContainerFactory
+                .create(getFilePath("ComponentRegisterTest.dicon"));
+        container.init();
+        ComponentDef cd = container.getComponentDef(InitMethodBean.class);
 
-        assertEquals("dicon > annotation", "request", cd.getInstanceDef().getName());
+        assertEquals("dicon > annotation", "singleton", cd.getInstanceDef()
+                .getName());
         assertEquals(2, cd.getInitMethodDefSize());
         assertEquals("bar", cd.getInitMethodDef(0).getMethodName());
         assertEquals("foo", cd.getInitMethodDef(1).getMethodName());
     }
 
+    private String getFilePath(String name) {
+        return getClass().getPackage().getName().replace('.', '/') + "/" + name;
+    }
+
+    public void testAutoRegisterAndAnnotation() throws Exception {
+        S2Container container = S2ContainerFactory
+                .create(getFilePath("ComponentRegisterTest_autoRegister.dicon"));
+        container.init();
+        ComponentDef cd = container.getComponentDef(InitMethodBean.class);
+
+        assertEquals("with AutoRegister, dicon < annotation", "prototype", cd
+                .getInstanceDef().getName());
+        assertEquals(1, cd.getInitMethodDefSize());
+        assertEquals("foo", cd.getInitMethodDef(0).getMethodName());
+    }
+
     public static class InitMethodBean {
 
-        public static final String COMPONENT = "instance = session";
+        public static final String COMPONENT = "instance = prototype";
 
         public static final String INIT_METHOD = "foo";
 
