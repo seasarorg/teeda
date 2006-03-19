@@ -28,24 +28,25 @@ import org.seasar.framework.container.factory.S2ContainerFactory;
  */
 public class ComponentRegisterTest extends TestCase {
 
-    public void test1() throws Exception {
+    public void testAnnotation() throws Exception {
         ConstantAnnotationHandler handler = new ConstantAnnotationHandler();
         ComponentDef cd = handler
                 .createComponentDef(InitMethodBean.class, null);
         handler.appendInitMethod(cd);
         assertEquals(1, cd.getInitMethodDefSize());
 
-        //assertEquals("request", cd.getInstanceDef().getName());
         assertEquals("session", cd.getInstanceDef().getName());
         InitMethodDef initMethodDef = cd.getInitMethodDef(0);
         assertEquals("foo", initMethodDef.getMethodName());
     }
 
-    public void test2() throws Exception {
+    public void testDiconAndAnnotation() throws Exception {
         S2Container container = S2ContainerFactory.create(getClass()
                 .getPackage().getName().replace('.', '/')
                 + "/ComponentRegisterTest.dicon");
         ComponentDef cd = container.getComponentDef("initMethodBean");
+
+        assertEquals("dicon > annotation", "request", cd.getInstanceDef().getName());
         assertEquals(2, cd.getInitMethodDefSize());
         assertEquals("bar", cd.getInitMethodDef(0).getMethodName());
         assertEquals("foo", cd.getInitMethodDef(1).getMethodName());
