@@ -537,4 +537,8 @@ public interface JsfConstants {
     public String DEFAULT_CONVERTNUMBER_INTEGER_ONLY = "false";
 
     public String DEFAULT_CONVERTNUMBER_TYPE = "number";
+    
+    public String TEEDA_NAMESPACE = "teeda";
+    
+    public String NS_SEP = ".";
 }

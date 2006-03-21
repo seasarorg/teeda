@@ -15,6 +15,8 @@
  */
 package org.seasar.teeda.core.util;
 
+import junitx.framework.ArrayAssert;
+
 import org.seasar.framework.container.ComponentNotFoundRuntimeException;
 import org.seasar.teeda.core.unit.TeedaTestCase;
 
@@ -22,15 +24,6 @@ import org.seasar.teeda.core.unit.TeedaTestCase;
  * @author shot
  */
 public class DIContainerUtilTest extends TeedaTestCase {
-
-    /**
-     * Constructor for DIContainerUtilTest.
-     * 
-     * @param name
-     */
-    public DIContainerUtilTest(String name) {
-        super(name);
-    }
 
     public void testGetComponent_findOne() throws Exception {
         getContainer().register(Hoge.class);
@@ -40,7 +33,7 @@ public class DIContainerUtilTest extends TeedaTestCase {
 
     public void testGetComponent_NotFound() throws Exception {
         try {
-            Hoge hoge = (Hoge) DIContainerUtil.getComponent(Hoge.class);
+            DIContainerUtil.getComponent(Hoge.class);
             fail();
         } catch (ComponentNotFoundRuntimeException expected) {
             success();
@@ -63,7 +56,47 @@ public class DIContainerUtilTest extends TeedaTestCase {
         assertNull(hoge);
     }
 
+    public void testGetComponentNoException_findOneByClass() throws Exception {
+        getContainer().register(Hoge.class, "hoge");
+        Hoge hoge = (Hoge) DIContainerUtil.getComponentNoException("hoge");
+        assertNotNull(hoge);
+    }
+
+    public void testGetComponentKeys_sameClass() throws Exception {
+        getContainer().register(Hoge.class, "hoge1");
+        getContainer().register(Hoge.class, "hoge2");
+        getContainer().register(Hoge.class, "hoge3");
+        Object[] keys = DIContainerUtil.getComponentKeys(Hoge.class);
+        ArrayAssert.assertEquals(new String[] { "hoge1", "hoge2", "hoge3" },
+                keys);
+    }
+
+    public void testGetComponentKeys_includeChildClass() throws Exception {
+        getContainer().register(Hoge.class, "hoge1");
+        getContainer().register(Hoge2.class, "hoge2");
+        getContainer().register(Hoge3.class, "hoge3");
+        Object[] keys = DIContainerUtil.getComponentKeys(Hoge.class);
+        ArrayAssert.assertEquals(new String[] { "hoge1", "hoge2", "hoge3" },
+                keys);
+    }
+
+    public void testHasComponent() throws Exception {
+        getContainer().register(Hoge.class, "hoge1");
+        assertTrue(DIContainerUtil.hasComponent(Hoge.class));
+        assertTrue(DIContainerUtil.hasComponent("hoge1"));
+        assertFalse(DIContainerUtil.hasComponent("hoge2"));
+    }
+
     public static class Hoge {
 
     }
+
+    public static class Hoge2 extends Hoge {
+
+    }
+
+    public static class Hoge3 extends Hoge2 {
+
+    }
+
 }

@@ -1,9 +1,6 @@
 package org.seasar.teeda.core.spike.dicon;
 
-import javax.faces.validator.DoubleRangeValidator;
-import javax.faces.validator.LengthValidator;
-import javax.faces.validator.LongRangeValidator;
-import javax.faces.validator.Validator;
+import javax.faces.convert.BigDecimalConverter;
 
 import org.seasar.framework.container.S2Container;
 import org.seasar.framework.unit.S2FrameworkTestCase;
@@ -39,20 +36,7 @@ public class TeedaDiconTest extends S2FrameworkTestCase {
         assertNotNull(app.getViewHandler());
         assertNotNull(app.getValueBindingContext());
         assertNotNull(app.getMethodBindingContext());
-        
-        Validator doubleRangeValidator = app.createValidator("javax.faces.DoubleRange");
-        assertNotNull(doubleRangeValidator);
-        assertTrue(doubleRangeValidator instanceof DoubleRangeValidator);
 
-        Validator lengthValidator = app.createValidator("javax.faces.Length");
-        assertNotNull(lengthValidator);
-        assertTrue(lengthValidator instanceof LengthValidator);
-
-        Validator longRangeValidator = app.createValidator("javax.faces.LongRange");
-        assertNotNull(longRangeValidator);
-        assertTrue(longRangeValidator instanceof LongRangeValidator);
-
-        
         TeedaStateManagerImpl stateManager = (TeedaStateManagerImpl) app
                 .getStateManager();
         assertNotNull(stateManager.getTreeStructureManager());

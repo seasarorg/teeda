@@ -15,8 +15,6 @@
  */
 package org.seasar.teeda.core.application;
 
-import java.util.Iterator;
-
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -24,6 +22,10 @@ import javax.faces.convert.ConverterException;
 import javax.faces.el.ValueBinding;
 import javax.faces.validator.Validator;
 
+import org.seasar.framework.container.ComponentDef;
+import org.seasar.framework.container.PropertyDef;
+import org.seasar.framework.container.impl.ComponentDefImpl;
+import org.seasar.framework.container.impl.PropertyDefImpl;
 import org.seasar.teeda.core.el.ELParser;
 import org.seasar.teeda.core.el.ValueBindingContext;
 import org.seasar.teeda.core.el.impl.ValueBindingContextImpl;
@@ -42,7 +44,7 @@ import org.seasar.teeda.core.unit.TeedaTestCase;
 public class ApplicationImplTest extends TeedaTestCase {
 
     private ApplicationImpl app_;
-    
+
     public void testAddComponent() {
         app_ = new ApplicationImpl();
         MockUIComponent mock = new MockUIComponent();
@@ -101,6 +103,31 @@ public class ApplicationImplTest extends TeedaTestCase {
         assertTrue(c instanceof MockConverter);
     }
 
+    public void testAddConverter_converterInstanciateEverytime() {
+        // # Arrange
+        app_ = new ApplicationImpl();
+        app_.addConverter("aaa", HogeConverter2.class.getName());
+        app_.addConverter(Hoge.class, HogeConverter2.class.getName());
+
+        // # Act
+        Converter c = app_.createConverter("aaa");
+        
+        // # Assert
+        assertNotNull(c);
+        assertTrue(c instanceof HogeConverter2);
+        HogeConverter2 c2 = (HogeConverter2)c;
+        assertTrue(c2.getNum() == 1);
+        
+        // # Act
+        c = app_.createConverter(Hoge.class);
+
+        // # Assert
+        assertNotNull(c);
+        assertTrue(c instanceof HogeConverter2);
+        HogeConverter2 c3 = (HogeConverter2)c;
+        assertTrue(c3.getNum() == 1);
+    }
+
     public void testCreateConverterForInterface() {
         app_ = new ApplicationImpl();
         app_
@@ -147,43 +174,6 @@ public class ApplicationImplTest extends TeedaTestCase {
 
     }
 
-    public void testAddValidator2() {
-        // # Arrange
-        app_ = new ApplicationImpl();
-        MockValidatorWithProperties mock = new MockValidatorWithProperties();
-        mock.setName("aaa");
-        app_.addValidator("aaa.id", mock);
-
-        // # Act
-        Validator v = app_.createValidator("aaa.id");
-
-        // # Assert
-        assertNotNull(v);
-        assertTrue(v instanceof MockValidatorWithProperties);
-        MockValidatorWithProperties mv = (MockValidatorWithProperties) v;
-        assertEquals("aaa", mv.getName());
-
-    }
-
-    public void testGetValidatorIds() throws Exception {
-        // # Arrange
-        app_ = new ApplicationImpl();
-        app_.addValidator("teeda.null",
-                "org.seasar.teeda.core.mock.NullValidator");
-        MockValidatorWithProperties mock = new MockValidatorWithProperties();
-        mock.setName("bbb");
-        app_.addValidator("teeda.id", mock);
-        
-        // # Act
-        Iterator itr = app_.getValidatorIds();
-        
-        // # Assert
-        assertNotNull(itr);
-        assertEquals("teeda.null", itr.next());
-        assertEquals("teeda.id", itr.next());
-    }
-    
-    
     public void testCreateConverter_withProperties1() throws Exception {
         app_ = new ApplicationImpl();
         ConverterConfiguration config = new ConverterConfiguration("pattern",
@@ -237,6 +227,22 @@ public class ApplicationImplTest extends TeedaTestCase {
         assertEquals("AAA", value);
     }
 
+    public void testCreateValidator_registerToDIContainer() throws Exception {
+        ComponentDef cDef = new ComponentDefImpl(MockValidatorWithProperties.class);
+        cDef.setComponentName("mock");
+        PropertyDef pDef = new PropertyDefImpl("name");
+        pDef.setValue("hoge");
+        cDef.addPropertyDef(pDef);
+        getContainer().register(cDef);
+        
+        app_ = new ApplicationImpl();
+        Validator v = app_.createValidator("mock");
+        assertNotNull(v);
+        assertTrue(v instanceof MockValidatorWithProperties);
+        MockValidatorWithProperties mock = (MockValidatorWithProperties) v;
+        assertEquals("hoge", mock.getName());
+    }
+    
     public static class HogeConverter implements Converter {
 
         private String pattern_;
@@ -297,5 +303,28 @@ public class ApplicationImplTest extends TeedaTestCase {
             name_ = name;
         }
 
+    }
+
+    public static class HogeConverter2 implements Converter {
+
+        public int num = 0;
+        
+        public HogeConverter2() {
+            num++;
+        }
+        
+        public Object getAsObject(FacesContext context, UIComponent component,
+                String value) throws ConverterException {
+            return null;
+        }
+
+        public String getAsString(FacesContext context, UIComponent component,
+                Object value) throws ConverterException {
+            return null;
+        }
+
+        public int getNum() {
+            return num;
+        }
     }
 }

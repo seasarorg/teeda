@@ -15,6 +15,10 @@
  */
 package org.seasar.teeda.core.util;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.seasar.framework.container.ComponentDef;
 import org.seasar.framework.container.ComponentNotFoundRuntimeException;
 import org.seasar.framework.container.S2Container;
 import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
@@ -28,20 +32,43 @@ public class DIContainerUtil {
     private DIContainerUtil() {
     }
 
-    public static Object getComponent(Class clazz) {
-        S2Container container = SingletonS2ContainerFactory.getContainer();
-        return container.getComponent(clazz);
-    }
-
-    public static Object getComponentNoException(Class clazz) {
-        S2Container container = SingletonS2ContainerFactory.getContainer();
+    public static Object getComponentNoException(Object componentKey) {
         try {
-            return container.getComponent(clazz);
+            return getContainer().getComponent(componentKey);
         } catch (ComponentNotFoundRuntimeException e) {
-            logger_.warn("Component: " + clazz
-                    + " is not found at DIContainer.");
+            logger_.warn("Component(componentKey = " + componentKey
+                    + ") is not found at DIContainer.");
             return null;
         }
     }
 
+    public static Object getComponent(Class clazz) {
+        return getContainer().getComponent(clazz);
+    }
+
+    public static synchronized void register(ComponentDef componentDef) {
+        if(logger_.isDebugEnabled()) {
+            logger_.debug("componentDef name  = " + componentDef.getComponentName());
+            logger_.debug("componentDef class = " + componentDef.getComponentClass());
+        }
+        getContainer().register(componentDef);
+    }
+
+    public static Object[] getComponentKeys(Class clazz) {
+        ComponentDef[] componentDefs = getContainer().findComponentDefs(clazz);
+        List list = new ArrayList();
+        for(int i = 0; i < componentDefs.length; i++){
+            ComponentDef componentDef = componentDefs[i];
+            list.add(componentDef.getComponentName());
+        }
+        return list.toArray();
+    }
+
+    public static boolean hasComponent(Object componentKey) {
+        return getContainer().hasComponentDef(componentKey);
+    }
+    
+    private static S2Container getContainer() {
+        return SingletonS2ContainerFactory.getContainer();
+    }
 }

@@ -49,8 +49,8 @@ public abstract class ConverterChildAssembler implements JsfAssembler {
             converterKey = (String) entry.getKey();
             converterElement = (ConverterElement) entry.getValue();
             if (!StringUtil.isEmpty(converterKey) && converterElement != null) {
-                doAssemble(converterKey, converterElement);
                 setConverterConfiguration(converterElement);
+                doAssemble(converterKey, converterElement);
             }
         }
     }

@@ -15,8 +15,6 @@
  */
 package org.seasar.teeda.core.application;
 
-import javax.faces.validator.Validator;
-
 import org.seasar.teeda.core.el.MethodBindingContext;
 import org.seasar.teeda.core.el.ValueBindingContext;
 
@@ -25,11 +23,8 @@ import org.seasar.teeda.core.el.ValueBindingContext;
  */
 public interface ConfigurationSupport {
 
-    // TODO add Converter and Component DI support
     public void addConverterConfiguration(String converterClassName,
             ConverterConfiguration converterConfig);
-
-    public void addValidator(String validatorId, Validator validator);
 
     public void setValueBindingContext(ValueBindingContext vbContext);
 

@@ -19,10 +19,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import javax.faces.FacesException;
 import javax.faces.application.Application;
@@ -40,22 +42,33 @@ import javax.faces.el.VariableResolver;
 import javax.faces.event.ActionListener;
 import javax.faces.validator.Validator;
 
+import org.seasar.framework.container.ComponentDef;
+import org.seasar.framework.container.PropertyDef;
+import org.seasar.framework.container.assembler.AutoBindingDefFactory;
+import org.seasar.framework.container.deployer.InstanceDefFactory;
+import org.seasar.framework.container.impl.ComponentDefImpl;
+import org.seasar.framework.container.impl.PropertyDefImpl;
+import org.seasar.framework.log.Logger;
+import org.seasar.framework.util.ArrayIterator;
 import org.seasar.framework.util.StringUtil;
+import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.el.MethodBindingContext;
 import org.seasar.teeda.core.el.ValueBindingContext;
-import org.seasar.teeda.core.exception.InstantiateConverterFailureException;
 import org.seasar.teeda.core.exception.NoMethodBindingContextException;
 import org.seasar.teeda.core.exception.NoValueBindingContextException;
 import org.seasar.teeda.core.util.ApplicationUtil;
 import org.seasar.teeda.core.util.ClassUtil;
+import org.seasar.teeda.core.util.DIContainerUtil;
 import org.seasar.teeda.core.util.IteratorUtil;
-import org.seasar.teeda.core.util.PropertyUtil;
 
 /**
  * @author shot
  */
 public class ApplicationImpl extends Application implements
         ConfigurationSupport {
+
+    private static final Logger logger_ = Logger
+            .getLogger(ApplicationImpl.class);
 
     private ActionListener listener_ = null;
 
@@ -75,19 +88,16 @@ public class ApplicationImpl extends Application implements
 
     private StateManager manager_ = null;
 
-    private Map componentClassMap_ = Collections.synchronizedMap(new HashMap());
+    private Map componentTypeMap_ = Collections.synchronizedMap(new HashMap());
 
-    private Map converterIdMap_ = Collections.synchronizedMap(new HashMap());
-
-    private Map converterClassMap_ = Collections.synchronizedMap(new HashMap());
+    private Map convertersMap_ = Collections.synchronizedMap(new HashMap());
 
     private Map converterConfigurationMap_ = Collections
             .synchronizedMap(new HashMap());
 
-    private Map validatorMap_ = Collections.synchronizedMap(new HashMap());
+    private Set converterIdSet_ = new HashSet();
 
-    private Map validatorFromDIMap_ = Collections
-            .synchronizedMap(new HashMap());
+    private Set converterTypeSet_ = new HashSet();
 
     private Collection supportedLocales_ = Collections.EMPTY_SET;
 
@@ -96,7 +106,6 @@ public class ApplicationImpl extends Application implements
     private MethodBindingContext mbContext_ = null;
 
     public ApplicationImpl() {
-
     }
 
     public ActionListener getActionListener() {
@@ -201,7 +210,8 @@ public class ApplicationImpl extends Application implements
         }
         Class clazz = ClassUtil.forName(componentClassName);
         ApplicationUtil.verifyClassType(UIComponent.class, clazz);
-        componentClassMap_.put(componentType, clazz);
+        registerApplicationComponent(clazz);
+        componentTypeMap_.put(componentType, clazz);
     }
 
     public UIComponent createComponent(String componentType)
@@ -209,12 +219,13 @@ public class ApplicationImpl extends Application implements
         if (StringUtil.isEmpty(componentType)) {
             throw new NullPointerException("componentType is null.");
         }
-        Class componentClass = (Class) componentClassMap_.get(componentType);
-        if (componentClass == null) {
+        Class componentClazz = (Class) componentTypeMap_.get(componentType);
+        UIComponent component = (UIComponent) getApplicationComponent(componentClazz);
+        if (component == null) {
             throw new FacesException("Undeifined component type:"
                     + componentType);
         }
-        return (UIComponent) ClassUtil.newInstance(componentClass);
+        return component;
     }
 
     public UIComponent createComponent(ValueBinding vb, FacesContext context,
@@ -230,7 +241,9 @@ public class ApplicationImpl extends Application implements
     }
 
     public Iterator getComponentTypes() {
-        return componentClassMap_.keySet().iterator();
+        Object[] componentTypeKeys = DIContainerUtil
+                .getComponentKeys(UIComponent.class);
+        return new ArrayIterator(componentTypeKeys);
     }
 
     public void addConverter(String converterId, String converterClassName) {
@@ -240,9 +253,13 @@ public class ApplicationImpl extends Application implements
         if (StringUtil.isEmpty(converterClassName)) {
             throw new NullPointerException("converterClass is null");
         }
-        Class clazz = ClassUtil.forName(converterClassName);
-        ApplicationUtil.verifyClassType(Converter.class, clazz);
-        converterIdMap_.put(converterId, clazz);
+        Class converterClazz = ClassUtil.forName(converterClassName);
+        ApplicationUtil.verifyClassType(Converter.class, converterClazz);
+        if (!convertersMap_.containsKey(converterId)) {
+            convertersMap_.put(converterId, converterClazz);
+            registerConverterComponent(converterClazz);
+        }
+        converterIdSet_.add(converterId);
     }
 
     public void addConverter(Class targetClass, String converterClassName) {
@@ -252,23 +269,28 @@ public class ApplicationImpl extends Application implements
         if (StringUtil.isEmpty(converterClassName)) {
             throw new NullPointerException("converterClass is null");
         }
-        Class clazz = ClassUtil.forName(converterClassName);
-        ApplicationUtil.verifyClassType(Converter.class, clazz);
-        converterClassMap_.put(targetClass, clazz);
+        Class converterClazz = ClassUtil.forName(converterClassName);
+        ApplicationUtil.verifyClassType(Converter.class, converterClazz);
+        if (!convertersMap_.containsKey(targetClass.getName())) {
+            //Avoid duplicate registration because some converter already registered by converterId.
+            if (!DIContainerUtil.hasComponent(converterClazz)) {
+                registerConverterComponent(converterClazz);
+            }
+            convertersMap_.put(targetClass.getName(), converterClazz);
+        }
+        converterTypeSet_.add(targetClass);
     }
 
     public Converter createConverter(String converterId) {
         if (converterId == null) {
             throw new NullPointerException("converterId is null");
         }
-        Class clazz = (Class) converterIdMap_.get(converterId);
-        try {
-            Converter converter = (Converter) createConverter0(clazz);
-            return converter;
-        } catch (Exception e) {
-            Object[] args = { e, clazz };
-            throw new InstantiateConverterFailureException(args, e);
+        Converter converter = (Converter) getApplicationComponentByName(converterId);
+        if (converter == null) {
+            Class converterClazz = (Class) convertersMap_.get(converterId);
+            converter = (Converter) getApplicationComponent(converterClazz);
         }
+        return converter;
     }
 
     public Converter createConverter(Class targetClass) {
@@ -277,43 +299,6 @@ public class ApplicationImpl extends Application implements
         }
         Converter c = doCreateConverter(targetClass);
         return c;
-    }
-
-    public void addConverterConfiguration(String converterClassName,
-            ConverterConfiguration converterConfig) {
-        if (StringUtil.isEmpty(converterClassName)) {
-            throw new NullPointerException("converter target class name");
-        }
-        if (converterConfig == null) {
-            throw new NullPointerException("converter config support");
-        }
-        Class clazz = ClassUtil.forName(converterClassName);
-        List list = (List) converterConfigurationMap_.get(clazz);
-        if (list == null) {
-            list = new ArrayList();
-        }
-        list.add(converterConfig);
-        converterConfigurationMap_.put(clazz, list);
-    }
-
-    private Converter createConverter0(Class clazz) {
-        Converter converter = null;
-        try {
-            converter = (Converter) ClassUtil.newInstance(clazz);
-        } catch (Exception e) {
-            Object[] args = { e, clazz };
-            throw new InstantiateConverterFailureException(args, e);
-        }
-        List list = (List) converterConfigurationMap_.get(clazz);
-        for (Iterator itr = IteratorUtil.getIterator(list); itr.hasNext();) {
-            ConverterConfiguration config = (ConverterConfiguration) itr.next();
-            if (config != null) {
-                String propertyName = config.getPropertyName();
-                PropertyUtil.setValue(converter, propertyName, config
-                        .getDefaultValue());
-            }
-        }
-        return converter;
     }
 
     private Converter doCreateConverter(Class targetClass) {
@@ -337,11 +322,17 @@ public class ApplicationImpl extends Application implements
     }
 
     protected Converter createConverterByClass(Class targetClass) {
-        Class converterClass = (Class) converterClassMap_.get(targetClass);
-        if (converterClass != null) {
-            return (Converter) createConverter0(converterClass);
+        Converter converter = (Converter) getApplicationComponentByName(targetClass
+                .getName());
+        if (converter != null) {
+            return converter;
         }
-        return null;
+        Class converterClazz = (Class) convertersMap_
+                .get(targetClass.getName());
+        if (converterClazz != null) {
+            converter = (Converter) getApplicationComponent(converterClazz);
+        }
+        return converter;
     }
 
     protected Converter createConverterByInterface(Class targetClass) {
@@ -373,12 +364,29 @@ public class ApplicationImpl extends Application implements
         return null;
     }
 
+    public void addConverterConfiguration(String converterClassName,
+            ConverterConfiguration converterConfig) {
+        if (StringUtil.isEmpty(converterClassName)) {
+            throw new NullPointerException("converter target class name");
+        }
+        if (converterConfig == null) {
+            throw new NullPointerException("converter config support");
+        }
+        Class converterClazz = ClassUtil.forName(converterClassName);
+        List list = (List) converterConfigurationMap_.get(converterClazz);
+        if (list == null) {
+            list = new ArrayList();
+        }
+        list.add(converterConfig);
+        converterConfigurationMap_.put(converterClazz, list);
+    }
+
     public Iterator getConverterIds() {
-        return converterIdMap_.keySet().iterator();
+        return converterIdSet_.iterator();
     }
 
     public Iterator getConverterTypes() {
-        return converterClassMap_.keySet().iterator();
+        return converterTypeSet_.iterator();
     }
 
     public Iterator getSupportedLocales() {
@@ -392,13 +400,6 @@ public class ApplicationImpl extends Application implements
         supportedLocales_ = supportedLocales;
     }
 
-    public void addValidator(String validatorId, Validator validator) {
-        if (StringUtil.isEmpty(validatorId)) {
-            throw new NullPointerException("Validator id is null.");
-        }
-        validatorFromDIMap_.put(validatorId, validator);
-    }
-    
     public void addValidator(String validatorId, String validatorClassName) {
         if (StringUtil.isEmpty(validatorId)) {
             throw new NullPointerException("Validator id is null.");
@@ -406,28 +407,27 @@ public class ApplicationImpl extends Application implements
         if (StringUtil.isEmpty(validatorClassName)) {
             throw new NullPointerException("Validator class is null.");
         }
-        Class clazz = ClassUtil.forName(validatorClassName);
-        ApplicationUtil.verifyClassType(Validator.class, clazz);
-        validatorMap_.put(validatorId, clazz);
+        Class validatorClazz = ClassUtil.forName(validatorClassName);
+        ApplicationUtil.verifyClassType(Validator.class, validatorClazz);
+        registerApplicationComponent(validatorClazz, validatorId);
     }
 
     public Validator createValidator(String validatorId) throws FacesException {
         if (validatorId == null) {
             throw new NullPointerException();
         }
-        if(validatorFromDIMap_.get(validatorId) != null) {
-            return (Validator) validatorFromDIMap_.get(validatorId);
+        Validator validator = (Validator) getApplicationComponentByName(validatorId);
+        if (validator == null) {
+            throw new FacesException("Undefined validator class for "
+                    + validatorId);
         }
-        Class validatorClass = (Class) validatorMap_.get(validatorId);
-        if (validatorClass == null) {
-            throw new FacesException("Undefined validator class:"
-                    + validatorClass);
-        }
-        return (Validator) ClassUtil.newInstance(validatorClass);
+        return validator;
     }
 
     public Iterator getValidatorIds() {
-        return IteratorUtil.getCompositeIterator(validatorMap_, validatorFromDIMap_);
+        Object[] validatorKeys = DIContainerUtil
+                .getComponentKeys(Validator.class);
+        return new ArrayIterator(validatorKeys);
     }
 
     public MethodBinding createMethodBinding(String ref, Class[] params)
@@ -468,4 +468,68 @@ public class ApplicationImpl extends Application implements
         return mbContext_;
     }
 
+    protected void registerApplicationComponent(Class targetClazz,
+            String targetId) {
+        ComponentDef componentDef = createComponentDef(targetClazz, targetId);
+        registerApplicationComponent(componentDef);
+    }
+
+    protected void registerApplicationComponent(Class targetClazz) {
+        registerApplicationComponent(targetClazz, null);
+    }
+
+    protected void registerApplicationComponent(ComponentDef componentDef) {
+        if (logger_.isDebugEnabled()) {
+            logger_.debug("component name = "
+                            + componentDef.getComponentName());
+            logger_.debug("component class = "
+                    + componentDef.getComponentClass());
+        }
+        DIContainerUtil.register(componentDef);
+    }
+
+    //TODO need support multiple namespaces.
+    protected Object getApplicationComponentByName(String componentName) {
+        Object o = getApplicationComponent(componentName);
+        if (o == null) {
+            o = getApplicationComponent(JsfConstants.TEEDA_NAMESPACE
+                    + JsfConstants.NS_SEP + componentName);
+        }
+        return o;
+    }
+
+    protected Object getApplicationComponent(Object componentKey) {
+        return DIContainerUtil.getComponentNoException(componentKey);
+    }
+
+    protected void registerConverterComponent(Class converterClazz,
+            String converterId) {
+        ComponentDef componentDef = createComponentDef(converterClazz,
+                converterId);
+        List converterConfigs = (List) converterConfigurationMap_
+                .get(converterClazz);
+        for (Iterator itr = IteratorUtil.getIterator(converterConfigs); itr
+                .hasNext();) {
+            ConverterConfiguration config = (ConverterConfiguration) itr.next();
+            if (config != null) {
+                String propertyName = config.getPropertyName();
+                PropertyDef propertyDef = new PropertyDefImpl(propertyName);
+                propertyDef.setValue(config.getDefaultValue());
+                componentDef.addPropertyDef(propertyDef);
+            }
+        }
+        registerApplicationComponent(componentDef);
+    }
+
+    protected void registerConverterComponent(Class converterClazz) {
+        registerConverterComponent(converterClazz, null);
+    }
+
+    private ComponentDef createComponentDef(Class targetClazz, String targetName) {
+        ComponentDef componentDef = new ComponentDefImpl(targetClazz,
+                targetName);
+        componentDef.setInstanceDef(InstanceDefFactory.PROTOTYPE);
+        componentDef.setAutoBindingDef(AutoBindingDefFactory.NONE);
+        return componentDef;
+    }
 }

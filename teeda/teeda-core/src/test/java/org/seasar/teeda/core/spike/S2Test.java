@@ -105,6 +105,15 @@ public class S2Test extends S2FrameworkTestCase {
 
     }
 
+    public void test6() throws Exception {
+        getContainer().register(A1.class);
+        getContainer().register(A2.class);
+        getContainer().register(A.class);
+        getContainer().register(B.class);
+        
+        getContainer().getComponent(B.class);
+    }
+    
     public static class A {
         private B b_;
 
@@ -121,6 +130,13 @@ public class S2Test extends S2FrameworkTestCase {
         }
     }
 
+    public static class A1 extends A {
+    }
+
+    public static class A2 extends A {
+        
+    }
+    
     public static class B {
         public String getName() {
             return "bbb";
