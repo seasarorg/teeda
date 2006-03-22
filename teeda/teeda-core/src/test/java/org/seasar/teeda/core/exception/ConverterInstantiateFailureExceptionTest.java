@@ -17,36 +17,17 @@ package org.seasar.teeda.core.exception;
 
 import junit.framework.TestCase;
 
-public class InstantiateConverterFailureExceptionTest extends TestCase {
-
-    /*
-     * @see TestCase#setUp()
-     */
-    protected void setUp() throws Exception {
-        super.setUp();
-    }
-
-    /*
-     * @see TestCase#tearDown()
-     */
-    protected void tearDown() throws Exception {
-        super.tearDown();
-    }
-
-    /**
-     * Constructor for InstantiateConverterFailureExceptionTest.
-     * @param arg0
-     */
-    public InstantiateConverterFailureExceptionTest(String arg0) {
-        super(arg0);
-    }
+/**
+ * @author shot
+ */
+public class ConverterInstantiateFailureExceptionTest extends TestCase {
 
     public void testInstantiateConverterFailureException() {
-        Object[] args = { "hoge", "foo" };
-        InstantiateConverterFailureException e = new InstantiateConverterFailureException(
-                args, new Exception());
+        Object[] args = { "hoge" };
+        ConverterInstantiateFailureException e = new ConverterInstantiateFailureException(
+                args);
         assertEquals("ETDA0005", e.getMessageCode());
-        assertEquals("foo", e.getArgs()[1]);
+        assertEquals("hoge", e.getArgs()[0]);
     }
 
 }

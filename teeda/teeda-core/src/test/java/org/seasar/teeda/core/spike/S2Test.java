@@ -23,10 +23,13 @@ import java.util.Map;
 import org.seasar.framework.container.ArgDef;
 import org.seasar.framework.container.ComponentDef;
 import org.seasar.framework.container.InitMethodDef;
+import org.seasar.framework.container.PropertyDef;
+import org.seasar.framework.container.assembler.BindingTypeDefFactory;
 import org.seasar.framework.container.deployer.InstanceDefFactory;
 import org.seasar.framework.container.impl.ArgDefImpl;
 import org.seasar.framework.container.impl.ComponentDefImpl;
 import org.seasar.framework.container.impl.InitMethodDefImpl;
+import org.seasar.framework.container.impl.PropertyDefImpl;
 import org.seasar.framework.unit.S2FrameworkTestCase;
 
 /**
@@ -113,7 +116,7 @@ public class S2Test extends S2FrameworkTestCase {
         
         getContainer().getComponent(B.class);
     }
-    
+
     public static class A {
         private B b_;
 

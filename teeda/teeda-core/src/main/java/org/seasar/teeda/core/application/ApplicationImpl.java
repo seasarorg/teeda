@@ -54,6 +54,7 @@ import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.el.MethodBindingContext;
 import org.seasar.teeda.core.el.ValueBindingContext;
+import org.seasar.teeda.core.exception.ConverterInstantiateFailureException;
 import org.seasar.teeda.core.exception.NoMethodBindingContextException;
 import org.seasar.teeda.core.exception.NoValueBindingContextException;
 import org.seasar.teeda.core.util.ApplicationUtil;
@@ -94,6 +95,8 @@ public class ApplicationImpl extends Application implements
 
     private Map converterConfigurationMap_ = Collections
             .synchronizedMap(new HashMap());
+
+    private Map validatorsMap_ = Collections.synchronizedMap(new HashMap());
 
     private Set converterIdSet_ = new HashSet();
 
@@ -219,12 +222,16 @@ public class ApplicationImpl extends Application implements
         if (StringUtil.isEmpty(componentType)) {
             throw new NullPointerException("componentType is null.");
         }
+        UIComponent component = (UIComponent) getApplicationComponentByName(componentType);
+        if (component != null) {
+            return component;
+        }
         Class componentClazz = (Class) componentTypeMap_.get(componentType);
-        UIComponent component = (UIComponent) getApplicationComponent(componentClazz);
-        if (component == null) {
+        if (componentClazz == null) {
             throw new FacesException("Undeifined component type:"
                     + componentType);
         }
+        component = (UIComponent) getApplicationComponent(componentClazz);
         return component;
     }
 
@@ -256,8 +263,10 @@ public class ApplicationImpl extends Application implements
         Class converterClazz = ClassUtil.forName(converterClassName);
         ApplicationUtil.verifyClassType(Converter.class, converterClazz);
         if (!convertersMap_.containsKey(converterId)) {
+            if (!DIContainerUtil.hasComponent(converterClazz)) {
+                registerConverterComponent(converterClazz);
+            }
             convertersMap_.put(converterId, converterClazz);
-            registerConverterComponent(converterClazz);
         }
         converterIdSet_.add(converterId);
     }
@@ -286,10 +295,15 @@ public class ApplicationImpl extends Application implements
             throw new NullPointerException("converterId is null");
         }
         Converter converter = (Converter) getApplicationComponentByName(converterId);
-        if (converter == null) {
-            Class converterClazz = (Class) convertersMap_.get(converterId);
-            converter = (Converter) getApplicationComponent(converterClazz);
+        if (converter != null) {
+            return converter;
         }
+        Class converterClazz = (Class) convertersMap_.get(converterId);
+        if (converterClazz == null) {
+            throw new ConverterInstantiateFailureException(
+                    new Object[] { converterId });
+        }
+        converter = (Converter) getApplicationComponent(converterClazz);
         return converter;
     }
 
@@ -409,7 +423,8 @@ public class ApplicationImpl extends Application implements
         }
         Class validatorClazz = ClassUtil.forName(validatorClassName);
         ApplicationUtil.verifyClassType(Validator.class, validatorClazz);
-        registerApplicationComponent(validatorClazz, validatorId);
+        registerApplicationComponent(validatorClazz);
+        validatorsMap_.put(validatorId, validatorClazz);
     }
 
     public Validator createValidator(String validatorId) throws FacesException {
@@ -417,10 +432,15 @@ public class ApplicationImpl extends Application implements
             throw new NullPointerException();
         }
         Validator validator = (Validator) getApplicationComponentByName(validatorId);
-        if (validator == null) {
+        if (validator != null) {
+            return validator;
+        }
+        Class validatorClazz = (Class) validatorsMap_.get(validatorId);
+        if (validatorClazz == null) {
             throw new FacesException("Undefined validator class for "
                     + validatorId);
         }
+        validator = (Validator) getApplicationComponent(validatorClazz);
         return validator;
     }
 
@@ -480,7 +500,8 @@ public class ApplicationImpl extends Application implements
 
     protected void registerApplicationComponent(ComponentDef componentDef) {
         if (logger_.isDebugEnabled()) {
-            logger_.debug("component name = "
+            logger_
+                    .debug("component name = "
                             + componentDef.getComponentName());
             logger_.debug("component class = "
                     + componentDef.getComponentClass());
@@ -492,6 +513,9 @@ public class ApplicationImpl extends Application implements
     protected Object getApplicationComponentByName(String componentName) {
         Object o = getApplicationComponent(componentName);
         if (o == null) {
+            if(logger_.isDebugEnabled()) {
+                logger_.debug("Component(component name = " + componentName + ") not found.");
+            }
             o = getApplicationComponent(JsfConstants.TEEDA_NAMESPACE
                     + JsfConstants.NS_SEP + componentName);
         }

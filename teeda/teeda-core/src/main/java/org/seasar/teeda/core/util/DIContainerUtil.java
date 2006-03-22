@@ -36,8 +36,6 @@ public class DIContainerUtil {
         try {
             return getContainer().getComponent(componentKey);
         } catch (ComponentNotFoundRuntimeException e) {
-            logger_.warn("Component(componentKey = " + componentKey
-                    + ") is not found at DIContainer.");
             return null;
         }
     }

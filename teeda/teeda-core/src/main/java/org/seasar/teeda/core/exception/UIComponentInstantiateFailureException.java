@@ -16,13 +16,13 @@
 package org.seasar.teeda.core.exception;
 
 /**
- * @author Shinpei Ohtani
+ * @author shot
  */
-public class InstantiateConverterFailureException extends ExtendFacesException {
+public class UIComponentInstantiateFailureException extends ExtendFacesException {
 
-    private static final long serialVersionUID = 3616453397189310261L;
+    private static final long serialVersionUID = 1L;
 
-    public InstantiateConverterFailureException(Object[] args, Throwable cause) {
-        super("ETDA0005", args, cause);
+    public UIComponentInstantiateFailureException(Object[] args) {
+        super("ETDA0024", args);
     }
 }
