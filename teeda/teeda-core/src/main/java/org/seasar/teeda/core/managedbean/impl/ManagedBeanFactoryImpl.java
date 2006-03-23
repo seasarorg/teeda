@@ -56,7 +56,7 @@ public class ManagedBeanFactoryImpl implements ManagedBeanFactory {
         S2Container container = (S2Container) SingletonS2ContainerFactory
                 .getContainer();
         ComponentDef componentDef = new ComponentDefImpl(type, name);
-        setInstanceType(componentDef, scope);
+        setInstanceTypeFor(componentDef, scope);
         container.register(componentDef);
     }
 
@@ -65,7 +65,7 @@ public class ManagedBeanFactoryImpl implements ManagedBeanFactory {
         S2Container container = (S2Container) SingletonS2ContainerFactory
                 .getContainer();
         ComponentDef componentDef = new ComponentDefImpl(type, name);
-        setInstanceType(componentDef, scope);
+        setInstanceTypeFor(componentDef, scope);
         componentDef.addInitMethodDef(new InitMethodDefImpl(initMethodName));
         componentDef.addDestroyMethodDef(new DestroyMethodDefImpl(
                 destroyMethodName));
@@ -106,7 +106,7 @@ public class ManagedBeanFactoryImpl implements ManagedBeanFactory {
         return managedBeanScopeSaver_;
     }
 
-    private void setInstanceType(ComponentDef componentDef, Scope scope) {
+    private void setInstanceTypeFor(ComponentDef componentDef, Scope scope) {
         InstanceDef instanceDef = (InstanceDef) scopeManager_
                 .getScopeTranslator().toExternalComponentScope(scope);
         componentDef.setInstanceDef(instanceDef);
