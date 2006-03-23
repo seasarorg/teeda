@@ -35,11 +35,31 @@
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	
+	<managed-bean>
+		<managed-bean-name>changePageBean2</managed-bean-name>
+		<managed-bean-class>examples.teeda.bean.ChangePageBean2</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	
 	<navigation-rule>
-		<from-view-id>/change/changePage1.jsp</from-view-id>
+		<from-view-id>/changePage/changePage1.jsp</from-view-id>
 		<navigation-case>
 			<from-outcome>ok</from-outcome>
-			<to-view-id>/change/changePage1_result.jsp</to-view-id>
+			<to-view-id>/changePage/changePage1_result.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/changePage2/changePage2.jsp</from-view-id>
+		<navigation-case>
+			<from-action>#{changePageBean2.doAction}</from-action>
+			<from-outcome>dog</from-outcome>
+			<to-view-id>/changePage2/changePage2_result_dog.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-action>#{changePageBean2.doAction}</from-action>
+			<from-outcome>cat</from-outcome>
+			<to-view-id>/changePage2/changePage2_result_cat.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
 </faces-config>
