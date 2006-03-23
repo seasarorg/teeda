@@ -6,7 +6,7 @@
 	<classpathentry output="teeda-core/target/test-classes" kind="src" path="teeda-core/src/test/resources"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/aopalliance-1.0.jar"/>
-	<classpathentry kind="lib" path="lib/commons-collections-2.1.jar"/>
+	<classpathentry sourcepath="lib/sources/commons-collections-3.1-sources.jar" kind="lib" path="lib/commons-collections-3.1.jar"/>
 	<classpathentry sourcepath="lib/sources/commons-el-1.0-sources.jar" kind="lib" path="lib/commons-el-1.0.jar"/>
 	<classpathentry sourcepath="lib/sources/commons-logging-1.0.4-sources.jar" kind="lib" path="lib/commons-logging-1.0.4.jar"/>
 	<classpathentry sourcepath="lib/sources/commons-lang-2.1-sources.jar" kind="lib" path="lib/commons-lang-2.1.jar"/>
