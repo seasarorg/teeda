@@ -18,6 +18,8 @@ package org.seasar.teeda.core.config.faces.element.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.faces.render.RenderKitFactory;
+
 import org.seasar.teeda.core.config.faces.element.RenderKitElement;
 import org.seasar.teeda.core.config.faces.element.RendererElement;
 
@@ -26,7 +28,7 @@ import org.seasar.teeda.core.config.faces.element.RendererElement;
  */
 public class RenderKitElementImpl implements RenderKitElement {
 
-    private String renderKitId_;
+    private String renderKitId_ = RenderKitFactory.HTML_BASIC_RENDER_KIT;
 
     private String renderKitClass_;
 

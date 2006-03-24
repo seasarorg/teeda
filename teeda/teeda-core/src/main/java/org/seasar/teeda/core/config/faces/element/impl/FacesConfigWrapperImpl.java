@@ -20,6 +20,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.seasar.teeda.core.config.faces.element.ApplicationElement;
 import org.seasar.teeda.core.config.faces.element.ComponentElement;
@@ -31,10 +32,12 @@ import org.seasar.teeda.core.config.faces.element.ManagedBeanElement;
 import org.seasar.teeda.core.config.faces.element.NavigationRuleElement;
 import org.seasar.teeda.core.config.faces.element.ReferencedBeanElement;
 import org.seasar.teeda.core.config.faces.element.RenderKitElement;
+import org.seasar.teeda.core.config.faces.element.RendererElement;
 import org.seasar.teeda.core.config.faces.element.ValidatorElement;
 
 /**
  * @author shot
+ * @author manhole
  */
 public class FacesConfigWrapperImpl implements FacesConfig {
 
@@ -60,11 +63,11 @@ public class FacesConfigWrapperImpl implements FacesConfig {
 
     private Map validators_ = new HashMap();
 
-    public FacesConfigWrapperImpl(List facesConfig) {
-        if (facesConfig == null) {
+    public FacesConfigWrapperImpl(List facesConfigs) {
+        if (facesConfigs == null) {
             throw new NullPointerException("facesConfig");
         }
-        deployAllFacesConfig(facesConfig);
+        deployAllFacesConfig(facesConfigs);
     }
 
     public void addApplicationElement(ApplicationElement application) {
@@ -156,12 +159,11 @@ public class FacesConfigWrapperImpl implements FacesConfig {
         return referencedBeans_;
     }
 
-    private void deployAllFacesConfig(List facesConfig) {
-        FacesConfig config = null;
-        for (Iterator itr = facesConfig.iterator(); itr.hasNext();) {
+    private void deployAllFacesConfig(List facesConfigs) {
+        for (Iterator itr = facesConfigs.iterator(); itr.hasNext();) {
             Object o = itr.next();
             if (o instanceof FacesConfig) {
-                config = (FacesConfig) o;
+                FacesConfig config = (FacesConfig) o;
                 deployFacesConfig(config);
             }
         }
@@ -177,7 +179,38 @@ public class FacesConfigWrapperImpl implements FacesConfig {
         convertersByClasses_.putAll(facesConfig.getConverterElementsByClass());
         managedBeans_.putAll(facesConfig.getManagedBeanElements());
         navigationRules_.addAll(facesConfig.getNavigationRuleElements());
-        renderKits_.putAll(facesConfig.getRenderKitElements());
+        deployRenderKitElements(facesConfig.getRenderKitElements());
         validators_.putAll(facesConfig.getValidatorElements());
     }
+
+    private void deployRenderKitElements(Map renderKitElements) {
+        for (Iterator it = renderKitElements.entrySet().iterator(); it
+                .hasNext();) {
+            Map.Entry entry = (Entry) it.next();
+            String renderKitId = (String) entry.getKey();
+            RenderKitElement renderKitElement = (RenderKitElement) entry
+                    .getValue();
+            RenderKitElement earlier = (RenderKitElement) renderKits_
+                    .get(renderKitId);
+            if (earlier != null) {
+                mergeRenderKitElement(earlier, renderKitElement);
+            } else {
+                renderKits_.put(renderKitId, renderKitElement);
+            }
+        }
+    }
+
+    private void mergeRenderKitElement(RenderKitElement earlier,
+            RenderKitElement renderKitElement) {
+        String renderKitClass = renderKitElement.getRenderKitClass();
+        if (renderKitClass != null) {
+            earlier.setRenderKitClass(renderKitClass);
+        }
+        for (Iterator it = renderKitElement.getRendererElements().iterator(); it
+                .hasNext();) {
+            RendererElement rendererElement = (RendererElement) it.next();
+            earlier.addRendererElement(rendererElement);
+        }
+    }
+
 }
