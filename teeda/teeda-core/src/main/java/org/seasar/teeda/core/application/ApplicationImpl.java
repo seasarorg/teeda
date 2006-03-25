@@ -513,9 +513,6 @@ public class ApplicationImpl extends Application implements
     protected Object getApplicationComponentByName(String componentName) {
         Object o = getApplicationComponent(componentName);
         if (o == null) {
-            if(logger_.isDebugEnabled()) {
-                logger_.debug("Component(component name = " + componentName + ") not found.");
-            }
             o = getApplicationComponent(JsfConstants.TEEDA_NAMESPACE
                     + JsfConstants.NS_SEP + componentName);
         }
@@ -523,6 +520,9 @@ public class ApplicationImpl extends Application implements
     }
 
     protected Object getApplicationComponent(Object componentKey) {
+        if (logger_.isDebugEnabled()) {
+            logger_.debug("Trying to find component by " + componentKey);
+        }
         return DIContainerUtil.getComponentNoException(componentKey);
     }
 
