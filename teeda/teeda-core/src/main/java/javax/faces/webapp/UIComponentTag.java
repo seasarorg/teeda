@@ -429,14 +429,11 @@ public abstract class UIComponentTag implements Tag {
         }
         for (Iterator olds = oldList.iterator(); olds.hasNext();) {
             String old = (String) olds.next();
-            if (createdComponents_ != null && !createdComponents_.contains(old)) {
+            if (createdComponents_ == null || !createdComponents_.contains(old)) {
                 UIComponent child = component_.findComponent(old);
                 if (child != null) {
                     component_.getChildren().remove(child);
                 }
-            } else {
-                UIComponent child = component_.findComponent(old);
-                component_.getChildren().remove(child);
             }
         }
         saveChildrenComponentAttribute();
@@ -450,9 +447,7 @@ public abstract class UIComponentTag implements Tag {
         }
         for (Iterator olds = oldList.iterator(); olds.hasNext();) {
             String old = (String) olds.next();
-            if (createdFacets_ != null && !createdFacets_.contains(old)) {
-                component_.getFacets().remove(old);
-            } else {
+            if (createdFacets_ == null || !createdFacets_.contains(old)) {
                 component_.getFacets().remove(old);
             }
         }
