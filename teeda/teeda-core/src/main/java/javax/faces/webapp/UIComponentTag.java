@@ -121,7 +121,8 @@ public abstract class UIComponentTag implements Tag {
     }
 
     public int doStartTag() throws JspException {
-        context_ = PageContextUtil.getCurrentFacesContextAttribute(pageContext_);
+        context_ = PageContextUtil
+                .getCurrentFacesContextAttribute(pageContext_);
         if (context_ == null) {
             context_ = FacesContext.getCurrentInstance();
             if (context_ == null) {
@@ -298,7 +299,7 @@ public abstract class UIComponentTag implements Tag {
     protected String getFacetName() {
         Tag parent = getParent();
         if (parent instanceof FacetTag) {
-            return (((FacetTag) parent).getName());
+            return ((FacetTag) parent).getName();
         } else {
             return null;
         }
