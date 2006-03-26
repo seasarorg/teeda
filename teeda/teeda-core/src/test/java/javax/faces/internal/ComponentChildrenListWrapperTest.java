@@ -41,12 +41,14 @@ public class ComponentChildrenListWrapperTest extends TestCase {
         component.setId("a");
         ComponentChildrenListWrapper wrapper = new ComponentChildrenListWrapper(
                 component);
+        assertEquals(0, wrapper.size());
         MockUIComponent child = new MockUIComponent();
         child.setId("b");
         wrapper.add(child);
         assertEquals(1, wrapper.size());
         UIComponent c = (UIComponent) wrapper.remove(wrapper.size() - 1);
         assertEquals("b", c.getId());
+        assertEquals(0, wrapper.size());
     }
 
 }
