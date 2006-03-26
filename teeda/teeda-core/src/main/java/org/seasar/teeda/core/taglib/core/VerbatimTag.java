@@ -80,7 +80,7 @@ public class VerbatimTag extends UIComponentBodyTag {
                 component.setValue(value);
             }
         }
-        return doAfterBody();
+        return super.doAfterBody();
     }
 
 }
