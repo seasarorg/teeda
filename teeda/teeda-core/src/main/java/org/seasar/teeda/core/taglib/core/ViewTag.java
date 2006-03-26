@@ -68,7 +68,7 @@ public class ViewTag extends UIComponentBodyTag {
         FacesContext context = FacesContext.getCurrentInstance();
         AssertionUtil.assertNotNull("FacesContext", context);
 
-        pageContext.getResponse().setLocale(context.getViewRoot().getLocale());
+        pageContext_.getResponse().setLocale(context.getViewRoot().getLocale());
 
         ResponseWriter writer = context.getResponseWriter();
         AssertionUtil.assertNotNull("ResponseWriter", writer);
@@ -151,9 +151,9 @@ public class ViewTag extends UIComponentBodyTag {
         }
 
         HttpSession session = null;
-        if ((session = pageContext.getSession()) != null) {
+        if ((session = pageContext_.getSession()) != null) {
             session.setAttribute(ViewHandler.CHARACTER_ENCODING_KEY,
-                    pageContext.getResponse().getCharacterEncoding());
+                    pageContext_.getResponse().getCharacterEncoding());
         }
         return rc;
     }
@@ -167,7 +167,7 @@ public class ViewTag extends UIComponentBodyTag {
             locale = LocaleUtil.getLocale(locale_);
         }
         ((UIViewRoot) component).setLocale(locale);
-        Config.set(pageContext.getRequest(), Config.FMT_LOCALE, locale);
+        Config.set(pageContext_.getRequest(), Config.FMT_LOCALE, locale);
     }
 
 }
