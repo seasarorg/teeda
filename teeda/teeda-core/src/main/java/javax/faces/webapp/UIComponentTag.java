@@ -50,7 +50,7 @@ public abstract class UIComponentTag implements Tag {
 
     private List createdFacets_ = null;
 
-    protected PageContext pageContext = null;
+    protected PageContext pageContext_ = null;
 
     private Tag parent_ = null;
 
@@ -109,7 +109,7 @@ public abstract class UIComponentTag implements Tag {
     }
 
     public void setPageContext(PageContext pageContext) {
-        this.pageContext = pageContext;
+        pageContext_ = pageContext;
     }
 
     public Tag getParent() {
@@ -121,17 +121,17 @@ public abstract class UIComponentTag implements Tag {
     }
 
     public int doStartTag() throws JspException {
-        context_ = PageContextUtil.getCurrentFacesContextAttribute(pageContext);
+        context_ = PageContextUtil.getCurrentFacesContextAttribute(pageContext_);
         if (context_ == null) {
             context_ = FacesContext.getCurrentInstance();
             if (context_ == null) {
                 throw new JspException("Cannot find FacesContext");
             }
-            PageContextUtil.setCurrentFacesContextAttribute(pageContext,
+            PageContextUtil.setCurrentFacesContextAttribute(pageContext_,
                     context_);
         }
         setupResponseWriter();
-        UIComponentTag parentTag = getParentUIComponentTag(pageContext);
+        UIComponentTag parentTag = getParentUIComponentTag(pageContext_);
         Map requestMap = context_.getExternalContext().getRequestMap();
         Map componentIds = null;
         if (parentTag == null) {
@@ -231,7 +231,7 @@ public abstract class UIComponentTag implements Tag {
         if (component_ != null) {
             return component_;
         }
-        UIComponentTag parentTag = getParentUIComponentTag(pageContext);
+        UIComponentTag parentTag = getParentUIComponentTag(pageContext_);
         UIComponent parentComponent = null;
         if (parentTag != null) {
             parentComponent = parentTag.getComponentInstance();
@@ -262,10 +262,10 @@ public abstract class UIComponentTag implements Tag {
 
     private UIComponent findComponentSpecially(FacesContext context) {
         UIComponent parentComponent = PageContextUtil
-                .getCurrentViewRootAttribute(pageContext);
+                .getCurrentViewRootAttribute(pageContext_);
         if (parentComponent == null) {
             parentComponent = context.getViewRoot();
-            PageContextUtil.setCurrentViewRootAttribute(pageContext,
+            PageContextUtil.setCurrentViewRootAttribute(pageContext_,
                     parentComponent);
             if (parentComponent.getAttributes().get(
                     WebAppConstants.CURRENT_VIEW_ROOT) == null) {
@@ -310,10 +310,10 @@ public abstract class UIComponentTag implements Tag {
 
     protected boolean isSuppressed() {
         if (getFacetName() != null) {
-            return (true);
+            return true;
         }
         if (!component_.isRendered()) {
-            return (true);
+            return true;
         }
         for (UIComponent c = component_.getParent(); c != null; c = c
                 .getParent()) {
@@ -343,7 +343,7 @@ public abstract class UIComponentTag implements Tag {
     protected void setupResponseWriter() {
         ResponseWriter writer = context_.getResponseWriter();
         if (writer == null) {
-            writer = WebAppUtils.buildResponseWriter(context_, pageContext);
+            writer = WebAppUtils.buildResponseWriter(context_, pageContext_);
             context_.setResponseWriter(writer);
         }
     }
@@ -373,7 +373,7 @@ public abstract class UIComponentTag implements Tag {
     private UIComponent createChild(FacesContext context, UIComponent parent,
             String componentId) {
         UIComponent component = createComponent(context, componentId);
-        UIComponentTag parentTag = getParentUIComponentTag(pageContext);
+        UIComponentTag parentTag = getParentUIComponentTag(pageContext_);
         parent.getChildren().add(parentTag.getIndex(), component);
         created_ = true;
         return component;
@@ -403,20 +403,20 @@ public abstract class UIComponentTag implements Tag {
     }
 
     private void popUIComponentTag() {
-        List list = PageContextUtil.getComponentTagStackAttribute(pageContext);
+        List list = PageContextUtil.getComponentTagStackAttribute(pageContext_);
         if (list != null) {
             list.remove(list.size() - 1);
             if (list.size() < 1) {
-                PageContextUtil.removeComponentStackAttribute(pageContext);
+                PageContextUtil.removeComponentStackAttribute(pageContext_);
             }
         }
     }
 
     private void pushUIComponentTag() {
-        List list = PageContextUtil.getComponentTagStackAttribute(pageContext);
+        List list = PageContextUtil.getComponentTagStackAttribute(pageContext_);
         if (list == null) {
             list = new ArrayList();
-            PageContextUtil.setComponentStackAttribute(pageContext, list);
+            PageContextUtil.setComponentStackAttribute(pageContext_, list);
         }
         list.add(this);
     }
@@ -475,7 +475,7 @@ public abstract class UIComponentTag implements Tag {
     private String createNewId() {
         if (id_ == null) {
             FacesContext context = PageContextUtil
-                    .getCurrentFacesContextAttribute(pageContext);
+                    .getCurrentFacesContextAttribute(pageContext_);
             return context.getViewRoot().createUniqueId();
         } else {
             return id_;
