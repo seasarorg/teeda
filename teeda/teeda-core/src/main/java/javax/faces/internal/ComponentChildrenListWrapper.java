@@ -48,7 +48,7 @@ public class ComponentChildrenListWrapper extends AbstractList implements
     }
 
     public Object remove(int num) {
-        UIComponent child = (UIComponent) list_.get(num);
+        UIComponent child = (UIComponent) list_.remove(num);
         if (child != null) {
             child.setParent(null);
         }
