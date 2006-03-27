@@ -20,6 +20,8 @@ import java.util.Iterator;
 
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIViewRoot;
+import javax.faces.component.html.HtmlCommandLink;
+import javax.faces.component.html.HtmlOutputText;
 import javax.faces.context.FacesContext;
 
 import org.aopalliance.intercept.MethodInvocation;
@@ -63,8 +65,9 @@ public class DumpComponentTreeInterceptor extends AbstractInterceptor {
 
     void dumpTree(PrintWriter writer, FacesContext context) {
         UIViewRoot viewRoot = context.getViewRoot();
-        writer.println("viewId=" + viewRoot.getViewId());
-        writer.println("[tree] " + viewRoot);
+        writer
+                .println("[tree] " + viewRoot + " viewId="
+                        + viewRoot.getViewId());
         dumpTree(writer, viewRoot, 1);
     }
 
@@ -75,9 +78,23 @@ public class DumpComponentTreeInterceptor extends AbstractInterceptor {
             for (int i = 0; i < depth; i++) {
                 writer.print("  ");
             }
-            writer.print(child);
+            printComponent(writer, child);
             writer.println("");
             dumpTree(writer, child, depth + 1);
+        }
+    }
+
+    private void printComponent(PrintWriter writer, UIComponent child) {
+        if (child instanceof HtmlCommandLink) {
+            HtmlCommandLink commandLink = (HtmlCommandLink) child;
+            writer.print(commandLink);
+            writer.print(" " + commandLink.getValue());
+        } else if (child instanceof HtmlOutputText) {
+            HtmlOutputText outputText = (HtmlOutputText) child;
+            writer.print(outputText);
+            writer.print(" " + outputText.getValue());
+        } else {
+            writer.print(child);
         }
     }
 
