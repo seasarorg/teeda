@@ -15,6 +15,7 @@
  */
 package org.seasar.teeda.core.el.impl;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import javax.faces.component.StateHolder;
@@ -65,7 +66,6 @@ public class MethodBindingImpl extends MethodBinding implements StateHolder {
         try {
             Method m = base.getClass().getMethod(property.toString(), classes_);
             return m.invoke(base, params);
-
         } catch (SecurityException e) {
             throw new MethodNotAccessibleException(e,
                     base.getClass().getName(), getExpressionString());
@@ -75,6 +75,9 @@ public class MethodBindingImpl extends MethodBinding implements StateHolder {
         } catch (IndexOutOfBoundsException e) {
             throw new PropertyNotFoundException("Expression:"
                     + getExpressionString(), e);
+        } catch (InvocationTargetException e) {
+            throw new ExtendEvaluationException(e.getCause(), base.getClass().getName(),
+                    getExpressionString());
         } catch (Exception e) {
             throw new ExtendEvaluationException(e, base.getClass().getName(),
                     getExpressionString());

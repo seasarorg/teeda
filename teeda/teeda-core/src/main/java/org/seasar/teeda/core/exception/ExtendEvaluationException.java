@@ -22,6 +22,7 @@ import org.seasar.teeda.core.util.MessageFormatterUtil;
 
 /**
  * @author shot
+ * @author manhole
  */
 public class ExtendEvaluationException extends EvaluationException {
 
@@ -44,12 +45,12 @@ public class ExtendEvaluationException extends EvaluationException {
         methodBinding_ = mb;
     }
 
-    public ExtendEvaluationException(Exception cause, String className,
+    public ExtendEvaluationException(Throwable cause, String className,
             String expressionString) {
         this(cause, className, expressionString, EVALUATION_EXCEPTION_ID);
     }
 
-    protected ExtendEvaluationException(Exception cause, String className,
+    protected ExtendEvaluationException(Throwable cause, String className,
             String expressionString, String messageCode) {
         super(cause);
         args_ = new Object[] { className, expressionString };

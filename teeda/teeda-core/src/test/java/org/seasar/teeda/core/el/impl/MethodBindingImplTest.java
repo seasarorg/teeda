@@ -18,13 +18,19 @@ package org.seasar.teeda.core.el.impl;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.faces.el.EvaluationException;
 import javax.faces.el.MethodBinding;
+import javax.faces.el.MethodNotFoundException;
 
+import junitx.framework.ObjectAssert;
+
+import org.seasar.framework.exception.SRuntimeException;
 import org.seasar.teeda.core.el.ELParser;
 import org.seasar.teeda.core.el.ValueBindingBase;
 import org.seasar.teeda.core.el.impl.commons.CommonsELParser;
 import org.seasar.teeda.core.el.impl.commons.CommonsExpressionProcessorImpl;
 import org.seasar.teeda.core.mock.MockVariableResolver;
+import org.seasar.teeda.core.unit.ExceptionAssert;
 import org.seasar.teeda.core.unit.TeedaTestCase;
 
 /**
@@ -82,6 +88,53 @@ public class MethodBindingImplTest extends TeedaTestCase {
         assertEquals(a.getName(), mb.invoke(getFacesContext(), null));
     }
 
+    public void testInvokeThrowsEvaluationException() throws Exception {
+        // ## Arrange ##
+        C c = new C();
+        c.setThrowable(new SRuntimeException("someMessageId"));
+        MockVariableResolver resolver = getVariableResolver();
+        resolver.putValue("c", c);
+        ELParser parser = new CommonsELParser();
+        parser.setExpressionProcessor(new CommonsExpressionProcessorImpl());
+        ValueBindingBase vb = new ValueBindingImpl(getApplication(),
+                "#{c.execute}", parser);
+        MethodBindingImpl mb = new MethodBindingImpl(vb, new Class[] {}, parser);
+
+        // ## Act ##
+        // ## Assert ##
+        try {
+            mb.invoke(getFacesContext(), null);
+            fail();
+        } catch (EvaluationException e) {
+            ExceptionAssert.assertMessageExist(e);
+            Throwable cause = e.getCause();
+            ObjectAssert.assertInstanceOf(SRuntimeException.class, cause);
+            SRuntimeException runtimeException = (SRuntimeException) cause;
+            assertEquals("someMessageId", runtimeException.getMessageCode());
+        }
+    }
+
+    public void testInvokeThrowsMethodNotFoundException() throws Exception {
+        // ## Arrange ##
+        A a = new A();
+        MockVariableResolver resolver = getVariableResolver();
+        resolver.putValue("a", a);
+        ELParser parser = new CommonsELParser();
+        parser.setExpressionProcessor(new CommonsExpressionProcessorImpl());
+        ValueBindingBase vb = new ValueBindingImpl(getApplication(),
+                "#{a.wrongMethodName}", parser);
+        MethodBinding mb = new MethodBindingImpl(vb, new Class[] {}, parser);
+
+        // ## Act ##
+        // ## Assert ##
+        try {
+            mb.invoke(getFacesContext(), null);
+            fail();
+        } catch (MethodNotFoundException e) {
+            ExceptionAssert.assertMessageExist(e);
+        }
+    }
+
     public static class A {
         private String name_ = "aaa";
 
@@ -130,6 +183,18 @@ public class MethodBindingImplTest extends TeedaTestCase {
         public void setName(String name) {
             name_ = name;
         }
-
     }
+
+    public static class C {
+        private RuntimeException re_;
+
+        public void execute() {
+            throw re_;
+        }
+
+        public void setThrowable(RuntimeException re) {
+            re_ = re;
+        }
+    }
+
 }
