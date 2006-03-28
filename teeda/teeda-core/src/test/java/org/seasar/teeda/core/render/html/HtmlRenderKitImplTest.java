@@ -28,7 +28,6 @@ import org.seasar.framework.util.SPrintWriter;
 import org.seasar.teeda.core.context.html.HtmlResponseWriter;
 import org.seasar.teeda.core.mock.MockHtmlResponseWriter;
 import org.seasar.teeda.core.mock.MockRenderer;
-import org.seasar.teeda.core.unit.ExceptionAssert;
 import org.seasar.teeda.core.unit.TeedaTestCase;
 
 /**
@@ -126,15 +125,13 @@ public class HtmlRenderKitImplTest extends TeedaTestCase {
         assertTrue(((HtmlResponseWriter) w).getWriter() instanceof SPrintWriter);
     }
 
-    public void testCreateResponseWriter_NoMatchContentType() throws Exception {
+    public void testCreateResponseWriter_ReturnsDefaultContentTypeWhenContentTypeListNoMatch()
+            throws Exception {
         HtmlRenderKitImpl renderKit = new HtmlRenderKitImpl();
-        try {
-            renderKit.createResponseWriter(new SPrintWriter(), "a, b",
-                    "Windows-31J");
-            fail();
-        } catch (IllegalArgumentException iae) {
-            ExceptionAssert.assertMessageExist(iae);
-        }
+        ResponseWriter w = renderKit.createResponseWriter(new SPrintWriter(),
+                "a, b", "Windows-31J");
+        assertEquals("[text/html] is Default ContentType", "text/html", w
+                .getContentType());
     }
 
     private static class MockOutputStream extends OutputStream {
