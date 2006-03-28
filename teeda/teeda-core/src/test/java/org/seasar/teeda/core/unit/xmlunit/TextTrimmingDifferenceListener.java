@@ -135,13 +135,13 @@ public class TextTrimmingDifferenceListener implements DifferenceListener {
     private List minusEmptyTextNode(NodeList containChildrenNode) {
         List l = new ArrayList();
         for (int i = 0; i < containChildrenNode.getLength(); i++) {
-            Node item = containChildrenNode.item(i);
-            String nodeValue = item.getNodeValue();
+            Node node = containChildrenNode.item(i);
+            String nodeValue = node.getNodeValue();
             // TEXT_NODE=3
-            if (Node.TEXT_NODE != item.getNodeType()) {
-                l.add(item);
+            if (Node.TEXT_NODE != node.getNodeType()) {
+                l.add(node);
             } else if (nodeValue != null && !"".equals(nodeValue.trim())) {
-                l.add(item);
+                l.add(node);
             }
         }
         return l;

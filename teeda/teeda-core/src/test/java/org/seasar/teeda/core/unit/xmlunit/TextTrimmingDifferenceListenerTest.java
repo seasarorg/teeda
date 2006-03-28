@@ -15,9 +15,16 @@
  */
 package org.seasar.teeda.core.unit.xmlunit;
 
+import java.io.StringReader;
+import java.util.Iterator;
+
 import junit.framework.TestCase;
 
 import org.custommonkey.xmlunit.Diff;
+import org.custommonkey.xmlunit.XMLUnit;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 /**
  * @author manhole
@@ -68,6 +75,13 @@ public class TextTrimmingDifferenceListenerTest extends TestCase {
 
     public void testIgnoreSpace6() throws Exception {
         Diff diff = new Diff("<a> <b></b></a>", "<a><b></b></a>");
+        diff.overrideDifferenceListener(new TextTrimmingDifferenceListener());
+        assertEquals(diff.toString(), true, diff.similar());
+        assertEquals(diff.toString(), true, diff.identical());
+    }
+
+    public void testIgnoreSpace7() throws Exception {
+        Diff diff = new Diff("<a><b /><b /></a>", "<a> <b /><b /></a>");
         diff.overrideDifferenceListener(new TextTrimmingDifferenceListener());
         assertEquals(diff.toString(), true, diff.similar());
         assertEquals(diff.toString(), true, diff.identical());
