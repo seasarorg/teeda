@@ -46,7 +46,17 @@
 		<managed-bean-class>org.seasar.teeda.it.ChangePageBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
-	
+	<managed-bean>
+		<managed-bean-name>selectManyListboxAaaBean</managed-bean-name>
+		<managed-bean-class>org.seasar.teeda.it.SelectManyListboxAaaBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>selectManyListboxBbbItems</managed-bean-name>
+		<managed-bean-class>org.seasar.teeda.it.SelectManyListboxBbbItems</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
 	<navigation-rule>
 		<from-view-id>/render/changePage1.jsp</from-view-id>
 		<navigation-case>

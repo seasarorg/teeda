@@ -17,8 +17,7 @@ package org.seasar.teeda.it;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.Reader;
+import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -29,18 +28,20 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.custommonkey.xmlunit.Diff;
-import org.seasar.framework.util.InputStreamReaderUtil;
-import org.seasar.framework.util.ReaderUtil;
+import org.custommonkey.xmlunit.XMLUnit;
 import org.seasar.framework.util.ResourceNotFoundRuntimeException;
 import org.seasar.framework.util.ResourceUtil;
 import org.seasar.teeda.core.unit.JettyServerSetup;
+import org.seasar.teeda.core.unit.TestUtil;
 import org.seasar.teeda.core.unit.WebApplicationTestSetup;
 import org.seasar.teeda.core.unit.xmlunit.DifferenceListenerChain;
+import org.seasar.teeda.core.unit.xmlunit.HtmlDomUtil;
 import org.seasar.teeda.core.unit.xmlunit.IgnoreJsessionidDifferenceListener;
 import org.seasar.teeda.core.unit.xmlunit.RegexpDifferenceListener;
 import org.seasar.teeda.core.unit.xmlunit.TextTrimmingDifferenceListener;
 import org.seasar.teeda.core.util.MavenUtil;
 import org.seasar.teeda.core.util.SocketUtil;
+import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
 import com.gargoylesoftware.htmlunit.WebResponse;
@@ -90,19 +91,8 @@ public abstract class AbstractTestCase extends TestCase {
         return body;
     }
 
-    protected String readText(String s) {
-        String pathByClass = getClass().getName().replace('.', '/') + "_" + s;
-        InputStream is = null;
-        try {
-            is = ResourceUtil.getResourceAsStream(pathByClass);
-        } catch (ResourceNotFoundRuntimeException e) {
-            String pathByPackage = getClass().getPackage().getName().replace(
-                    '.', '/')
-                    + "/" + s;
-            is = ResourceUtil.getResourceAsStream(pathByPackage);
-        }
-        Reader reader = InputStreamReaderUtil.create(is, "UTF-8");
-        return ReaderUtil.readText(reader);
+    protected String readText(String fileName) {
+        return TestUtil.readText(getClass(), fileName, "UTF-8");
     }
 
     protected URL getFileAsUrl(String s) {
@@ -120,7 +110,13 @@ public abstract class AbstractTestCase extends TestCase {
 
     protected Diff diff(final String expected, final String actual)
             throws SAXException, IOException, ParserConfigurationException {
-        Diff diff = new Diff(expected, actual);
+        Document cDoc = XMLUnit.buildDocument(XMLUnit.getControlParser(),
+                new StringReader(expected));
+        Document tDoc = XMLUnit.buildDocument(XMLUnit.getTestParser(),
+                new StringReader(actual));
+        HtmlDomUtil.removeBlankTextNode(cDoc.getChildNodes());
+        HtmlDomUtil.removeBlankTextNode(tDoc.getChildNodes());
+        Diff diff = new Diff(cDoc, tDoc);
         DifferenceListenerChain chain = new DifferenceListenerChain();
         chain.addDifferenceListener(new TextTrimmingDifferenceListener());
         chain.addDifferenceListener(new IgnoreJsessionidDifferenceListener());

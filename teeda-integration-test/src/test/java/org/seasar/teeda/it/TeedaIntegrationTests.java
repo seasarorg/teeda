@@ -57,7 +57,7 @@ public class TeedaIntegrationTests extends TestCase {
                     className = className.substring(0, className.length()
                             - ".class".length());
                     className = className.replace('/', '.');
-                    System.out.println("testClass: " + className);
+                    System.out.println("found testClass: " + className);
                     Class clazz = ClassUtil.forName(className);
                     suite.addTestSuite(clazz);
                     return true;
