@@ -37,6 +37,8 @@ import org.seasar.teeda.core.util.HtmlRenderKitUtil;
  */
 public class HtmlRenderKitImpl extends AbstractRenderKit {
 
+    private static String DEFAULT_CONTENTTYPE = "text/html";
+
     private Map renderers_ = new HashMap();
 
     private ResponseStateManager responseStateManager_;
@@ -99,9 +101,7 @@ public class HtmlRenderKitImpl extends AbstractRenderKit {
         htmlResponseWriter.setWriter(writer);
         String contentType = HtmlRenderKitUtil.getContentType(contentTypeList);
         if (contentType == null) {
-            throw new IllegalArgumentException(
-                    "No suitable contentType. contentTypeList=["
-                            + contentTypeList + "]");
+            contentType = DEFAULT_CONTENTTYPE;
         }
         htmlResponseWriter.setContentType(contentType);
         htmlResponseWriter.setCharacterEncoding(characterEncoding);
