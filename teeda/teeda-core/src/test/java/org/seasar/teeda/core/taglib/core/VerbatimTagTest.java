@@ -16,7 +16,7 @@
 package org.seasar.teeda.core.taglib.core;
 
 import javax.faces.component.UIOutput;
-import javax.faces.webapp.UIComponentBodyTag;
+import javax.servlet.jsp.tagext.Tag;
 
 import junit.framework.TestCase;
 
@@ -68,6 +68,7 @@ public class VerbatimTagTest extends TestCase {
         // # Assert #
         assertEquals(Boolean.TRUE, output.getAttributes().get(
                 JsfConstants.ESCAPE_ATTR));
+        assertEquals(true, output.isTransient());
     }
     
     public void testDoAfterBody() throws Exception {
@@ -78,7 +79,7 @@ public class VerbatimTagTest extends TestCase {
         int rc = tag.doAfterBody();
 
         // # Assert #
-        assertEquals(rc, UIComponentBodyTag.SKIP_BODY);      
+        assertEquals(rc, Tag.SKIP_BODY);      
     }
 
     private UIOutput createUIOutput() {

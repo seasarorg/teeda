@@ -18,13 +18,23 @@ package org.seasar.teeda.core.mock;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpSession;
+
 /**
  * @author yone
  */
 public class MockPageContext extends NullPageContext {
 
     private Map attr_ = new HashMap();
-
+    
+    private ServletRequest request_;
+    
+    private ServletResponse response_;
+    
+    private HttpSession session_;
+    
     public void setAttribute(String arg0, Object arg1) {
         attr_.put(arg0, arg1);
     }
@@ -39,6 +49,30 @@ public class MockPageContext extends NullPageContext {
 
     public Object getAttribute(String arg0, int arg1) {
         return attr_.get(arg0);
+    }
+    
+    public void setRequest(ServletRequest request) {
+        request_ = request;
+    }
+    
+    public ServletRequest getRequest() {
+        return request_;
+    }
+
+    public ServletResponse getResponse() {
+        return response_;
+    }
+
+    public void setResponse(ServletResponse response) {
+        response_ = response;
+    }
+
+    public HttpSession getSession() {
+        return session_;
+    }
+
+    public void setSession(HttpSession session) {
+        session_ = session;
     }
 
 }
