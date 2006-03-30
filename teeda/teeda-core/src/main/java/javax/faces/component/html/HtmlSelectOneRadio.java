@@ -19,6 +19,8 @@ import javax.faces.component.UISelectOne;
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
 
+import org.seasar.teeda.core.JsfConstants;
+
 public class HtmlSelectOneRadio extends UISelectOne {
 
     public static final String COMPONENT_TYPE = "javax.faces.HtmlSelectOneRadio";
@@ -84,6 +86,8 @@ public class HtmlSelectOneRadio extends UISelectOne {
     private String tabindex_ = null;
 
     private String title_ = null;
+
+    private String label_ = null;
 
     public HtmlSelectOneRadio() {
         setRendererType(DEFAULT_RENDERER_TYPE);
@@ -419,8 +423,20 @@ public class HtmlSelectOneRadio extends UISelectOne {
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
+    public void setLabel(String label) {
+        label_ = label;
+    }
+
+    public String getLabel() {
+        if (label_ != null) {
+            return label_;
+        }
+        ValueBinding vb = getValueBinding(JsfConstants.LABEL_ATTR);
+        return vb != null ? (String) vb.getValue(getFacesContext()) : getId();
+    }
+
     public Object saveState(FacesContext context) {
-        Object values[] = new Object[28];
+        Object values[] = new Object[29];
         values[0] = super.saveState(context);
         values[1] = accesskey_;
         values[2] = border_;
@@ -449,6 +465,7 @@ public class HtmlSelectOneRadio extends UISelectOne {
         values[25] = styleClass_;
         values[26] = tabindex_;
         values[27] = title_;
+        values[28] = label_;
         return ((Object) (values));
     }
 
@@ -482,6 +499,7 @@ public class HtmlSelectOneRadio extends UISelectOne {
         styleClass_ = (String) values[25];
         tabindex_ = (String) values[26];
         title_ = (String) values[27];
+        label_ = (String) values[28];
     }
 
 }

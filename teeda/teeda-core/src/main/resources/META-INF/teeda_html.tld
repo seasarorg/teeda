@@ -608,9 +608,18 @@
     <attribute><name>onmouseout</name> <required>false</required>  <rtexprvalue>false</rtexprvalue></attribute>
     <attribute><name>onkeypress</name> <required>false</required>  <rtexprvalue>false</rtexprvalue></attribute>
     <attribute><name>onkeydown</name>  <required>false</required>  <rtexprvalue>false</rtexprvalue></attribute>
-    <attribute><name>onkeyup</name>  <required>false</required>  <rtexprvalue>false</rtexprvalue></attribute>
+	<attribute>
+		<name>onkeyup</name>
+		<required>false</required>
+		<rtexprvalue>false</rtexprvalue>
+	</attribute>
     <attribute>
       <name>redisplay</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>label</name>
       <required>false</required>
       <rtexprvalue>false</rtexprvalue>
     </attribute>
@@ -705,6 +714,11 @@
     <attribute><name>readonly</name>  <required>false</required>  <rtexprvalue>false</rtexprvalue><type>java.lang.String</type></attribute>
     <attribute><name>size</name>    <required>false</required>  <rtexprvalue>false</rtexprvalue><type>java.lang.String</type></attribute>
     <attribute><name>tabindex</name>  <required>false</required>  <rtexprvalue>false</rtexprvalue><type>java.lang.String</type></attribute>
+	<attribute>
+      <name>label</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
   </tag>
 
   <tag>
@@ -797,6 +811,11 @@
     <attribute><name>onkeypress</name> <required>false</required>  <rtexprvalue>false</rtexprvalue></attribute>
     <attribute><name>onkeydown</name>  <required>false</required>  <rtexprvalue>false</rtexprvalue></attribute>
     <attribute><name>onkeyup</name>  <required>false</required>  <rtexprvalue>false</rtexprvalue></attribute>
+    <attribute>
+      <name>label</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
    </tag>
 
   <tag>
@@ -1491,6 +1510,10 @@
     <attribute><name>onselect</name>  <required>false</required>  <rtexprvalue>false</rtexprvalue><type>java.lang.String</type></attribute>
     <attribute><name>readonly</name>  <required>false</required>  <rtexprvalue>false</rtexprvalue><type>java.lang.String</type></attribute>
     <attribute><name>tabindex</name>  <required>false</required>  <rtexprvalue>false</rtexprvalue><type>java.lang.String</type></attribute>
+    <attribute><name>label</name>
+	  <required>false</required>
+	  <rtexprvalue>false</rtexprvalue>
+	</attribute>
   </tag>
 
   <tag>
@@ -1590,6 +1613,10 @@
     </attribute>
     <attribute><name>enabledClass</name>   <required>false</required>  <rtexprvalue>false</rtexprvalue></attribute>
     <attribute><name>disabledClass</name>   <required>false</required>  <rtexprvalue>false</rtexprvalue></attribute>
+    <attribute><name>label</name>
+	  <required>false</required>
+	  <rtexprvalue>false</rtexprvalue>
+	</attribute>
   </tag>
 
   <tag>
@@ -1691,6 +1718,10 @@
     </attribute>
     <attribute><name>enabledClass</name>   <required>false</required>  <rtexprvalue>false</rtexprvalue></attribute>
     <attribute><name>disabledClass</name>   <required>false</required>  <rtexprvalue>false</rtexprvalue></attribute>
+    <attribute><name>label</name>
+	  <required>false</required>
+	  <rtexprvalue>false</rtexprvalue>
+	</attribute>
   </tag>
 
   <tag>
@@ -1982,6 +2013,10 @@
     </attribute>
     <attribute><name>enabledClass</name>   <required>false</required>  <rtexprvalue>false</rtexprvalue></attribute>
     <attribute><name>disabledClass</name>   <required>false</required>  <rtexprvalue>false</rtexprvalue></attribute>
+    <attribute><name>label</name>
+	  <required>false</required>
+	  <rtexprvalue>false</rtexprvalue>
+	</attribute>
   </tag>
 
   <tag>
@@ -2087,6 +2122,10 @@
     </attribute>
     <attribute><name>enabledClass</name>   <required>false</required>  <rtexprvalue>false</rtexprvalue></attribute>
     <attribute><name>disabledClass</name>   <required>false</required>  <rtexprvalue>false</rtexprvalue></attribute>
+    <attribute><name>label</name>
+	  <required>false</required>
+	  <rtexprvalue>false</rtexprvalue>
+	</attribute>
   </tag>
 
 </taglib>

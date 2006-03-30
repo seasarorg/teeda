@@ -28,6 +28,7 @@ import org.seasar.teeda.core.unit.TeedaTestCase;
  */
 public class LengthValidatorTest extends TeedaTestCase {
 
+    //TODO more test for label
     public void testConstants() throws Exception {
         assertEquals("javax.faces.validator.LengthValidator.MAXIMUM",
                 LengthValidator.MAXIMUM_MESSAGE_ID);

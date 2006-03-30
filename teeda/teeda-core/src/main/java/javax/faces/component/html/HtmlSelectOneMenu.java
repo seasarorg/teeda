@@ -19,6 +19,8 @@ import javax.faces.component.UISelectOne;
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
 
+import org.seasar.teeda.core.JsfConstants;
+
 /**
  * @author shot
  * @author manhole
@@ -82,6 +84,8 @@ public class HtmlSelectOneMenu extends UISelectOne {
     private String tabindex_ = null;
 
     private String title_ = null;
+
+    private String label_ = null;
 
     public HtmlSelectOneMenu() {
         setRendererType(DEFAULT_RENDERER_TYPE);
@@ -368,8 +372,20 @@ public class HtmlSelectOneMenu extends UISelectOne {
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
+    public void setLabel(String label) {
+        label_ = label;
+    }
+
+    public String getLabel() {
+        if (label_ != null) {
+            return label_;
+        }
+        ValueBinding vb = getValueBinding(JsfConstants.LABEL_ATTR);
+        return vb != null ? (String) vb.getValue(getFacesContext()) : getId();
+    }
+
     public Object saveState(FacesContext context) {
-        Object values[] = new Object[26];
+        Object values[] = new Object[27];
         values[0] = super.saveState(context);
         values[1] = accesskey_;
         values[2] = dir_;
@@ -397,6 +413,7 @@ public class HtmlSelectOneMenu extends UISelectOne {
         // XXX
         values[24] = disabledClass_;
         values[25] = enabledClass_;
+        values[26] = label_;
         return ((Object) (values));
     }
 
@@ -429,5 +446,6 @@ public class HtmlSelectOneMenu extends UISelectOne {
         // XXX
         disabledClass_ = (String) values[24];
         enabledClass_ = (String) values[25];
+        label_ = (String) values[26];
     }
 }

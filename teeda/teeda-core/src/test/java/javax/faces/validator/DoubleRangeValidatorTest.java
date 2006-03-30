@@ -18,6 +18,7 @@ package javax.faces.validator;
 import java.util.Locale;
 
 import javax.faces.component.UIViewRoot;
+import javax.faces.component.html.HtmlInputText;
 import javax.faces.context.FacesContext;
 
 import org.seasar.teeda.core.mock.MockFacesContext;
@@ -118,6 +119,22 @@ public class DoubleRangeValidatorTest extends TeedaTestCase {
         }
     }
 
+    public void testValidate_lessThanMinWhenBothMaxMinNotNullWithLabel()
+            throws Exception {
+        getApplication().setMessageBundle("javax.faces.component.TestMessages");
+        HtmlInputText component = new HtmlInputText();
+        component.setLabel("hoge");
+        component.setId("id");
+        DoubleRangeValidator validator = new DoubleRangeValidator(2d, 1d);
+        try {
+            validator.validate(getFacesContext(), component, new Integer(0));
+            fail();
+        } catch (ValidatorException expected) {
+            assertEquals("not in range(1,2,hoge)", expected.getMessage());
+            success();
+        }
+    }
+
     public void testValidate_moreThanMaxWhenBothMaxMinNotNull()
             throws Exception {
         FacesContext context = getFacesContextWithSetMessageBundle("b",
@@ -128,6 +145,22 @@ public class DoubleRangeValidatorTest extends TeedaTestCase {
             fail();
         } catch (ValidatorException expected) {
             assertEquals("not in range(1,2,b)", expected.getMessage());
+            success();
+        }
+    }
+
+    public void testValidate_moreThanMaxWhenBothMaxMinNotNullWithLabel()
+            throws Exception {
+        getApplication().setMessageBundle("javax.faces.component.TestMessages");
+        HtmlInputText component = new HtmlInputText();
+        component.setLabel("hoge");
+        component.setId("id");
+        DoubleRangeValidator validator = new DoubleRangeValidator(2d, 1d);
+        try {
+            validator.validate(getFacesContext(), component, new Integer(3));
+            fail();
+        } catch (ValidatorException expected) {
+            assertEquals("not in range(1,2,hoge)", expected.getMessage());
             success();
         }
     }
@@ -146,6 +179,22 @@ public class DoubleRangeValidatorTest extends TeedaTestCase {
         }
     }
 
+    public void testValidate_lessThanMinWhenMinNotNullWithLabel() throws Exception {
+        getApplication().setMessageBundle("javax.faces.component.TestMessages");
+        HtmlInputText component = new HtmlInputText();
+        component.setLabel("hoge");
+        component.setId("id");
+        DoubleRangeValidator validator = new DoubleRangeValidator();
+        validator.setMinimum(1);
+        try {
+            validator.validate(getFacesContext(), component, new Integer(0));
+            fail();
+        } catch (ValidatorException expected) {
+            assertEquals("less than min(1,hoge)", expected.getMessage());
+            success();
+        }
+    }
+
     public void testValidate_moreThanMaxWhenMaxNotNull() throws Exception {
         FacesContext context = getFacesContextWithSetMessageBundle("a",
                 Locale.ENGLISH);
@@ -159,12 +208,42 @@ public class DoubleRangeValidatorTest extends TeedaTestCase {
         }
     }
 
+    public void testValidate_moreThanMaxWhenMaxNotNullWithLabel() throws Exception {
+        getApplication().setMessageBundle("javax.faces.component.TestMessages");
+        HtmlInputText component = new HtmlInputText();
+        component.setLabel("hoge");
+        component.setId("id");
+        DoubleRangeValidator validator = new DoubleRangeValidator(10);
+        try {
+            validator.validate(getFacesContext(), component, new Float(11));
+            fail();
+        } catch (ValidatorException expected) {
+            assertEquals("more than max(10,hoge)", expected.getMessage());
+            success();
+        }
+    }
+
     public void testValidate_valueIsNotNumber() throws Exception {
         FacesContext context = getFacesContextWithSetMessageBundle("hoge",
                 Locale.ENGLISH);
         DoubleRangeValidator validator = new DoubleRangeValidator(10);
         try {
             validator.validate(context, context.getViewRoot(), "aaa");
+            fail();
+        } catch (ValidatorException expected) {
+            assertEquals("type(hoge) is not double", expected.getMessage());
+            success();
+        }
+    }
+
+    public void testValidate_valueIsNotNumberWithLabel() throws Exception {
+        getApplication().setMessageBundle("javax.faces.component.TestMessages");
+        HtmlInputText component = new HtmlInputText();
+        component.setLabel("hoge");
+        component.setId("id");
+        DoubleRangeValidator validator = new DoubleRangeValidator(10);
+        try {
+            validator.validate(getFacesContext(), component, "aaa");
             fail();
         } catch (ValidatorException expected) {
             assertEquals("type(hoge) is not double", expected.getMessage());

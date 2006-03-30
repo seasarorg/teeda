@@ -19,6 +19,8 @@ import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
 
+import org.seasar.teeda.core.JsfConstants;
+
 /**
  * @author shot
  */
@@ -86,6 +88,8 @@ public class HtmlInputTextarea extends UIInput {
 
     private String title_ = null;
 
+    private String label_ = null;
+    
     public HtmlInputTextarea() {
         super();
         setRendererType(DEFAULT_RENDERER_TYPE);
@@ -399,8 +403,20 @@ public class HtmlInputTextarea extends UIInput {
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
+    public void setLabel(String label) {
+        label_ = label;
+    }
+
+    public String getLabel() {
+        if (label_ != null) {
+            return label_;
+        }
+        ValueBinding vb = getValueBinding(JsfConstants.LABEL_ATTR);
+        return vb != null ? (String) vb.getValue(getFacesContext()) : getId();
+    }
+
     public Object saveState(FacesContext context) {
-        Object values[] = new Object[26];
+        Object values[] = new Object[27];
         values[0] = super.saveState(context);
         values[1] = accesskey_;
         values[2] = cols_;
@@ -427,6 +443,7 @@ public class HtmlInputTextarea extends UIInput {
         values[23] = styleClass_;
         values[24] = tabindex_;
         values[25] = title_;
+        values[26] = label_;
         return ((Object) (values));
     }
 
@@ -458,5 +475,6 @@ public class HtmlInputTextarea extends UIInput {
         styleClass_ = (String) values[23];
         tabindex_ = (String) values[24];
         title_ = (String) values[25];
+        label_ = (String) values[26];
     }
 }

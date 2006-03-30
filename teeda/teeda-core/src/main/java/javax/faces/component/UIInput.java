@@ -291,8 +291,9 @@ public class UIInput extends UIOutput implements EditableValueHolder {
             if (facesMessage != null) {
                 context.addMessage(getClientId(context), facesMessage);
             } else {
+                Object[] args = new Object[] { getId() };
                 FacesMessageUtils.addErrorMessage(context, this,
-                        CONVERSION_MESSAGE_ID, new Object[] { getId() });
+                        CONVERSION_MESSAGE_ID, args);
             }
             setValid(false);
         }
@@ -301,8 +302,9 @@ public class UIInput extends UIOutput implements EditableValueHolder {
 
     protected void validateValue(FacesContext context, Object newValue) {
         if (isValid() && isRequired() && isEmpty(newValue)) {
+            Object[] args = new Object[] { getId() };
             FacesMessageUtils.addErrorMessage(context, this,
-                    REQUIRED_MESSAGE_ID, new Object[] { getId() });
+                    REQUIRED_MESSAGE_ID, args);
             setValid(false);
         }
         if (isValid() && !isEmpty(newValue)) {

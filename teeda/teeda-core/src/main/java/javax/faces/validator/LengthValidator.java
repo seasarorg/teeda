@@ -22,6 +22,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.internal.AssertionUtil;
 import javax.faces.internal.FacesMessageUtils;
 
+import org.seasar.teeda.core.util.UIComponentUtil;
+
 public class LengthValidator implements Validator, StateHolder {
 
     public static final String VALIDATOR_ID = "javax.faces.Length";
@@ -109,13 +111,13 @@ public class LengthValidator implements Validator, StateHolder {
 
         int length = getConvertedValueLength(value);
         if (minimum_ != null && length < minimum_.intValue()) {
-            Object[] args = { minimum_, component.getId() };
+            Object[] args = { minimum_, UIComponentUtil.getLabel(component) };
             throw new ValidatorException(FacesMessageUtils.getMessage(context,
                     MINIMUM_MESSAGE_ID, args));
         }
 
         if (maximum_ != null && length > maximum_.intValue()) {
-            Object[] args = { maximum_, component.getId() };
+            Object[] args = { maximum_, UIComponentUtil.getLabel(component) };
             throw new ValidatorException(FacesMessageUtils.getMessage(context,
                     MAXIMUM_MESSAGE_ID, args));
         }

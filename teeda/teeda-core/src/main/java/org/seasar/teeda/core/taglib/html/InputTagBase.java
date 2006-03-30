@@ -35,6 +35,8 @@ public abstract class InputTagBase extends UIComponentTagBase {
 
     private String readonly_;
 
+    private String label_;
+
     protected void setProperties(UIComponent component) {
         super.setProperties(component);
 
@@ -43,6 +45,7 @@ public abstract class InputTagBase extends UIComponentTagBase {
         setValidatorProperty(component, validator_);
         setValueChangeListenerProperty(component, valueChangeListener_);
         setComponentProperty(component, JsfConstants.READONLY_ATTR, readonly_);
+        setComponentProperty(component, JsfConstants.LABEL_ATTR, label_);
     }
 
     public void release() {
@@ -52,6 +55,7 @@ public abstract class InputTagBase extends UIComponentTagBase {
         validator_ = null;
         valueChangeListener_ = null;
         readonly_ = null;
+        label_ = null;
     }
 
     public void setImmediate(String immediate) {
@@ -74,6 +78,10 @@ public abstract class InputTagBase extends UIComponentTagBase {
         valueChangeListener_ = valueChangeListener;
     }
 
+    public void setLabel(String label) {
+        label_ = label;
+    }
+
     String getImmediate() {
         return immediate_;
     }
@@ -93,5 +101,9 @@ public abstract class InputTagBase extends UIComponentTagBase {
     String getValueChangeListener() {
         return valueChangeListener_;
     }
-    
+
+    public String getLabel() {
+        return label_;
+    }
+
 }

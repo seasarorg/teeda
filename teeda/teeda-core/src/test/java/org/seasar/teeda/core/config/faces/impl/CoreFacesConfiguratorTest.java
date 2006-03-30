@@ -71,10 +71,6 @@ import org.seasar.teeda.core.util.FactoryFinderUtil;
  */
 public class CoreFacesConfiguratorTest extends S2TestCase {
 
-    private static ClassPathResourceResolver resolver = new ClassPathResourceResolver();
-
-    private static FacesConfigTagHandlerRule rule = new FacesConfigTagHandlerRule();
-
     /**
      * Constructor for CoreFacesConfiguratorTest.
      * 

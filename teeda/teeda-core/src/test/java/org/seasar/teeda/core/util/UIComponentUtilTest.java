@@ -73,4 +73,31 @@ public class UIComponentUtilTest extends TestCase {
                 "size"));
     }
 
+    public void testGetLabel_labelReturned() {
+        MockHtmlInputText component = new MockHtmlInputText();
+        component.setId("aaa");
+        component.setLabel("bbb");
+        assertEquals("bbb", UIComponentUtil.getLabel(component));
+    }
+
+    public void testGetLabel_idReturned() {
+        UIComponent component = new HtmlInputText();
+        component.setId("aaa");
+        assertEquals("aaa", UIComponentUtil.getLabel(component));
+    }
+    
+    public static class MockHtmlInputText extends HtmlInputText {
+        
+        private String label_;
+
+        public String getLabel() {
+            return label_;
+        }
+
+        public void setLabel(String label) {
+            label_ = label;
+        }
+        
+        
+    }
 }

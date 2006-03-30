@@ -21,6 +21,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 
+import org.seasar.teeda.core.util.UIComponentUtil;
+
 /**
  * @author shot
  * 
@@ -67,7 +69,6 @@ public class ConvertUtils {
 
     public static Object[] createExceptionMessageArgs(UIComponent component,
             String value) {
-        // TODO label attribute
-        return new Object[] { component.getId(), value };
+        return new Object[] { UIComponentUtil.getLabel(component), value };
     }
 }

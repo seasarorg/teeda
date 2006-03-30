@@ -63,7 +63,7 @@ public class UIComponentTagBaseTest extends TestCase {
         tag.setHref("href");
         tag.setHreflang("hrefLang");
         tag.setHspace("hspace");
-        tag.setLabel("label");
+//        tag.setLabel("label");
         tag.setLongdesc("longdesc");
         tag.setMethod("method");
         tag.setMultiple("multiple");
@@ -141,7 +141,7 @@ public class UIComponentTagBaseTest extends TestCase {
         assertEquals(null, tag.href_);
         assertEquals(null, tag.hreflang_);
         assertEquals(null, tag.hspace_);
-        assertEquals(null, tag.label_);
+//        assertEquals(null, tag.label_);
         assertEquals(null, tag.longdesc_);
         assertEquals(null, tag.method_);
         assertEquals(null, tag.multiple_);

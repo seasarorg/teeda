@@ -485,6 +485,22 @@ public class HtmlSelectManyCheckboxTest extends UISelectManyTest {
                 context));
     }
 
+    public void testSetGetLabel() throws Exception {
+        HtmlSelectManyCheckbox component = createHtmlSelectManyCheckbox();
+        component.setLabel("label1");
+        assertEquals("label1", component.getLabel());
+    }
+    
+    public void testSetGetLabel_ValueBinding() throws Exception {
+        HtmlSelectManyCheckbox component = createHtmlSelectManyCheckbox();
+        MockValueBinding vb = new MockValueBinding();
+        FacesContext context = getFacesContext();
+        vb.setValue(context, "bar label");
+        component.setValueBinding("label", vb);
+        assertEquals("bar label", component.getLabel());
+        assertEquals("bar label", component.getValueBinding("label").getValue(context));
+    }
+
     private HtmlSelectManyCheckbox createHtmlSelectManyCheckbox() {
         return (HtmlSelectManyCheckbox) createUIComponent();
     }

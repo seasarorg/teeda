@@ -21,6 +21,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.internal.AssertionUtil;
 import javax.faces.internal.FacesMessageUtils;
 
+import org.seasar.teeda.core.util.UIComponentUtil;
+
 /**
  * @author shot
  */
@@ -138,7 +140,8 @@ public class DoubleRangeValidator implements Validator, StateHolder {
                 double maxValue = maximum_.doubleValue();
 
                 if (doubleValue < minValue || doubleValue > maxValue) {
-                    Object[] args = { minimum_, maximum_, component.getId() };
+                    Object[] args = { minimum_, maximum_,
+                            UIComponentUtil.getLabel(component) };
                     throw new ValidatorException(FacesMessageUtils.getMessage(
                             context, NOT_IN_RANGE_MESSAGE_ID, args));
                 }
@@ -147,7 +150,8 @@ public class DoubleRangeValidator implements Validator, StateHolder {
 
                 double minValue = minimum_.doubleValue();
                 if (doubleValue < minValue) {
-                    Object[] args = { minimum_, component.getId() };
+                    Object[] args = { minimum_,
+                            UIComponentUtil.getLabel(component) };
                     throw new ValidatorException(FacesMessageUtils.getMessage(
                             context, MINIMUM_MESSAGE_ID, args));
                 }
@@ -156,14 +160,15 @@ public class DoubleRangeValidator implements Validator, StateHolder {
 
                 double maxValue = maximum_.doubleValue();
                 if (doubleValue > maxValue) {
-                    Object[] args = { maximum_, component.getId() };
+                    Object[] args = { maximum_,
+                            UIComponentUtil.getLabel(component) };
                     throw new ValidatorException(FacesMessageUtils.getMessage(
                             context, MAXIMUM_MESSAGE_ID, args));
                 }
             }
 
         } catch (NumberFormatException e) {
-            Object[] args = { component.getId() };
+            Object[] args = { UIComponentUtil.getLabel(component) };
             throw new ValidatorException(FacesMessageUtils.getMessage(context,
                     TYPE_MESSAGE_ID, args));
         }

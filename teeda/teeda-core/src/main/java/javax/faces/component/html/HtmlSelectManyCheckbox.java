@@ -19,6 +19,8 @@ import javax.faces.component.UISelectMany;
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
 
+import org.seasar.teeda.core.JsfConstants;
+
 /**
  * @author shot
  */
@@ -87,6 +89,8 @@ public class HtmlSelectManyCheckbox extends UISelectMany {
     private String tabindex_ = null;
 
     private String title_ = null;
+
+    private String label_ = null;
 
     public HtmlSelectManyCheckbox() {
         super();
@@ -423,8 +427,20 @@ public class HtmlSelectManyCheckbox extends UISelectMany {
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
+    public void setLabel(String label) {
+        label_ = label;
+    }
+
+    public String getLabel() {
+        if (label_ != null) {
+            return label_;
+        }
+        ValueBinding vb = getValueBinding(JsfConstants.LABEL_ATTR);
+        return vb != null ? (String) vb.getValue(getFacesContext()) : getId();
+    }
+
     public Object saveState(FacesContext context) {
-        Object values[] = new Object[28];
+        Object values[] = new Object[29];
         values[0] = super.saveState(context);
         values[1] = accesskey_;
         values[2] = border_;
@@ -453,6 +469,7 @@ public class HtmlSelectManyCheckbox extends UISelectMany {
         values[25] = styleClass_;
         values[26] = tabindex_;
         values[27] = title_;
+        values[28] = label_;
         return ((Object) (values));
     }
 
@@ -486,5 +503,6 @@ public class HtmlSelectManyCheckbox extends UISelectMany {
         styleClass_ = (String) values[25];
         tabindex_ = (String) values[26];
         title_ = (String) values[27];
+        label_ = (String) values[28];
     }
 }

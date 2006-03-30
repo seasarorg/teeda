@@ -19,6 +19,8 @@ import javax.faces.component.UISelectBoolean;
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
 
+import org.seasar.teeda.core.JsfConstants;
+
 /**
  * @author shot
  */
@@ -77,6 +79,8 @@ public class HtmlSelectBooleanCheckbox extends UISelectBoolean {
     private String tabindex_ = null;
 
     private String title_ = null;
+
+    private String label_ = null;
 
     public HtmlSelectBooleanCheckbox() {
         setRendererType(DEFAULT_RENDERER_TYPE);
@@ -360,6 +364,18 @@ public class HtmlSelectBooleanCheckbox extends UISelectBoolean {
         }
         ValueBinding vb = getValueBinding("title");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+    }
+
+    public void setLabel(String label) {
+        label_ = label;
+    }
+
+    public String getLabel() {
+        if (label_ != null) {
+            return label_;
+        }
+        ValueBinding vb = getValueBinding(JsfConstants.LABEL_ATTR);
+        return vb != null ? (String) vb.getValue(getFacesContext()) : getId();
     }
 
     public Object saveState(FacesContext context) {

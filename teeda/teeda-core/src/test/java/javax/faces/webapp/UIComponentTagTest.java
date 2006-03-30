@@ -15,9 +15,14 @@
  */
 package javax.faces.webapp;
 
-import junit.framework.TestCase;
+import javax.faces.component.UIViewRoot;
 
-public class UIComponentTagTest extends TestCase {
+import org.seasar.teeda.core.unit.TeedaTestCase;
+
+/**
+ * @author shot
+ */
+public class UIComponentTagTest extends TeedaTestCase {
 
     public void testIsValueReference() {
         try {
@@ -37,6 +42,37 @@ public class UIComponentTagTest extends TestCase {
         assertFalse(UIComponentTag.isValueReference("#a{aa}"));
     }
 
+    public void testSetBinding_notValidExpression() throws Exception {
+        TargetUIComponentTag tag = new TargetUIComponentTag();
+        try {
+            tag.setBinding("aaaa");
+            fail();
+        } catch (IllegalArgumentException expected) {
+            success();
+        }
+    }
+    
+    public void testSetId_notStartsWithUniqueIdPrefix() throws Exception {
+        TargetUIComponentTag tag = new TargetUIComponentTag();
+        try {
+            tag.setId(UIViewRoot.UNIQUE_ID_PREFIX);
+            fail();
+        } catch (IllegalArgumentException expected) {
+            success();
+        }
+    }
+
     // XXX more tests?
 
+    private static class TargetUIComponentTag extends UIComponentTag {
+
+        public String getComponentType() {
+            return "mock";
+        }
+
+        public String getRendererType() {
+            return "mock";
+        }
+
+    }
 }

@@ -19,6 +19,8 @@ import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
 
+import org.seasar.teeda.core.JsfConstants;
+
 /**
  * @author shot
  */
@@ -92,6 +94,8 @@ public class HtmlInputSecret extends UIInput {
 
     private String title_ = null;
 
+    private String label_ = null;
+    
     public HtmlInputSecret() {
         setRendererType(DEFAULT_RENDERER_TYPE);
     }
@@ -430,8 +434,20 @@ public class HtmlInputSecret extends UIInput {
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
+    public void setLabel(String label) {
+        label_ = label;
+    }
+
+    public String getLabel() {
+        if (label_ != null) {
+            return label_;
+        }
+        ValueBinding vb = getValueBinding(JsfConstants.LABEL_ATTR);
+        return vb != null ? (String) vb.getValue(getFacesContext()) : getId();
+    }
+
     public Object saveState(FacesContext context) {
-        Object values[] = new Object[28];
+        Object values[] = new Object[29];
         values[0] = super.saveState(context);
         values[1] = accesskey_;
         values[2] = alt_;
@@ -460,6 +476,7 @@ public class HtmlInputSecret extends UIInput {
         values[25] = styleClass_;
         values[26] = tabindex_;
         values[27] = title_;
+        values[28] = label_;
         return ((Object) (values));
     }
 
@@ -493,6 +510,7 @@ public class HtmlInputSecret extends UIInput {
         styleClass_ = (String) values[25];
         tabindex_ = (String) values[26];
         title_ = (String) values[27];
+        label_ = (String) values[28];
     }
 
 }

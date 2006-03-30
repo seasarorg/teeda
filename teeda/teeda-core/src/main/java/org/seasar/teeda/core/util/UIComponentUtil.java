@@ -54,4 +54,12 @@ public class UIComponentUtil {
         return ((Integer) value).intValue();
     }
 
+    public static String getLabel(UIComponent component) {
+        String label = (String) component.getAttributes().get(
+                JsfConstants.LABEL_ATTR);
+        if(label != null) {
+            return label;
+        }
+        return component.getId();
+    }
 }

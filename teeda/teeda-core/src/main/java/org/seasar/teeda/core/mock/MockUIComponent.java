@@ -57,9 +57,11 @@ public class MockUIComponent extends UIComponent {
     private Map valueBindingMap_ = new HashMap();
 
     private List children_ = new ArrayList();
-
+    
+    private Map attributesMap_ = new HashMap();
+    
     public Map getAttributes() {
-        return null;
+        return attributesMap_;
     }
 
     public ValueBinding getValueBinding(String name) {

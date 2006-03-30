@@ -142,8 +142,6 @@ public abstract class UIComponentTagBase extends UIComponentTag {
 
     protected String hspace_ = null;
 
-    protected String label_ = null;
-
     protected String longdesc_ = null;
 
     protected String method_ = null;
@@ -314,10 +312,6 @@ public abstract class UIComponentTagBase extends UIComponentTag {
 
     public void setIsmap(String ismap) {
         ismap_ = ismap;
-    }
-
-    public void setLabel(String label) {
-        label_ = label;
     }
 
     public void setLang(String lang) {
@@ -583,7 +577,6 @@ public abstract class UIComponentTagBase extends UIComponentTag {
         href_ = null;
         hreflang_ = null;
         hspace_ = null;
-        label_ = null;
         longdesc_ = null;
         method_ = null;
         multiple_ = null;

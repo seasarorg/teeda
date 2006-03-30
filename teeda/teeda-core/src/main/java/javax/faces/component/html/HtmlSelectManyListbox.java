@@ -19,6 +19,8 @@ import javax.faces.component.UISelectMany;
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
 
+import org.seasar.teeda.core.JsfConstants;
+
 /**
  * @author shot
  */
@@ -85,6 +87,8 @@ public class HtmlSelectManyListbox extends UISelectMany {
     private String tabindex_ = null;
 
     private String title_ = null;
+
+    private String label_ = null;
 
     public HtmlSelectManyListbox() {
         setRendererType(DEFAULT_RENDERER_TYPE);
@@ -408,8 +412,20 @@ public class HtmlSelectManyListbox extends UISelectMany {
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
+    public void setLabel(String label) {
+        label_ = label;
+    }
+
+    public String getLabel() {
+        if (label_ != null) {
+            return label_;
+        }
+        ValueBinding vb = getValueBinding(JsfConstants.LABEL_ATTR);
+        return vb != null ? (String) vb.getValue(getFacesContext()) : getId();
+    }
+
     public Object saveState(FacesContext context) {
-        Object values[] = new Object[27];
+        Object values[] = new Object[28];
         values[0] = super.saveState(context);
         values[1] = accesskey_;
         values[2] = dir_;
@@ -438,6 +454,7 @@ public class HtmlSelectManyListbox extends UISelectMany {
         // XXX
         values[25] = disabledClass_;
         values[26] = enabledClass_;
+        values[27] = label_;
         return ((Object) (values));
     }
 
@@ -471,5 +488,6 @@ public class HtmlSelectManyListbox extends UISelectMany {
         // XXX
         disabledClass_ = (String) values[25];
         enabledClass_ = (String) values[26];
+        label_ = (String) values[27];
     }
 }

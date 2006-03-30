@@ -468,6 +468,22 @@ public class HtmlSelectManyListboxTest extends UISelectManyTest {
                 context));
     }
 
+    public void testSetGetLabel() throws Exception {
+        HtmlSelectManyListbox component = createHtmlSelectManyListbox();
+        component.setLabel("label1");
+        assertEquals("label1", component.getLabel());
+    }
+    
+    public void testSetGetLabel_ValueBinding() throws Exception {
+        HtmlSelectManyListbox component = createHtmlSelectManyListbox();
+        MockValueBinding vb = new MockValueBinding();
+        FacesContext context = getFacesContext();
+        vb.setValue(context, "bar label");
+        component.setValueBinding("label", vb);
+        assertEquals("bar label", component.getLabel());
+        assertEquals("bar label", component.getValueBinding("label").getValue(context));
+    }
+
     private HtmlSelectManyListbox createHtmlSelectManyListbox() {
         return (HtmlSelectManyListbox) createUIComponent();
     }
