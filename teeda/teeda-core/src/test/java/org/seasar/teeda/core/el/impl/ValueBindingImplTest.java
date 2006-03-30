@@ -15,7 +15,10 @@
  */
 package org.seasar.teeda.core.el.impl;
 
+import java.beans.PropertyEditorManager;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +30,7 @@ import org.seasar.teeda.core.el.ELParser;
 import org.seasar.teeda.core.el.TeedaVariableResolver;
 import org.seasar.teeda.core.el.impl.commons.CommonsELParser;
 import org.seasar.teeda.core.el.impl.commons.CommonsExpressionProcessorImpl;
+import org.seasar.teeda.core.el.impl.commons.DateEditorForTest;
 import org.seasar.teeda.core.managedbean.ManagedBeanFactory;
 import org.seasar.teeda.core.mock.MockPropertyResolver;
 import org.seasar.teeda.core.mock.MockVariableResolver;
@@ -349,6 +353,29 @@ public class ValueBindingImplTest extends TeedaTestCase {
         }
     }
 
+    public void testSetValue_DateType() throws Exception {
+        // ## Arrange ##
+        Conv c = new Conv();
+        Date now = new Date();
+        c.setDate(now);
+        MockVariableResolver resolver = getVariableResolver();
+        resolver.putValue("c", c);
+        ValueBindingImpl vb = new ValueBindingImpl(getApplication(), "#{c.date}",
+                createELParser());
+        FacesContext context = getFacesContext();
+        
+        // ## Act ##
+        // ## Assert ##
+        assertEquals(now, vb.getValue(context));
+
+        // comment out => fail
+        PropertyEditorManager.registerEditor(java.util.Date.class, DateEditorForTest.class);
+
+        vb.setValue(context, "20061231");
+        assertEquals(new SimpleDateFormat("yyyyMMdd").parse("20061231"), 
+                vb.getValue(context));
+    }
+
     public void testSaveAndRestoreState() throws Exception {
         // ## Arrange ##
         FacesContext context = getFacesContext();
@@ -370,6 +397,18 @@ public class ValueBindingImplTest extends TeedaTestCase {
         assertEquals("abab", vb2.getExpression());
     }
 
+    public static class Conv {
+        private Date date_;
+        
+        public void setDate(Date date) {
+            this.date_ = date;
+        }
+        
+        public Date getDate() {
+            return this.date_;
+        }
+    }
+    
     public static class A {
         private String name = "aaa";
 
@@ -455,5 +494,5 @@ public class ValueBindingImplTest extends TeedaTestCase {
             return 0;
         }
     }
-
+    
 }
