@@ -98,14 +98,10 @@ public class ValueBindingImpl extends ValueBindingBase {
                 Integer index = parser_.getExpressionProcessor().toIndex(base,
                         property);
                 PropertyResolver resolver = application_.getPropertyResolver();
-                Class clazz = PropertyResolverUtil.getType(application_, base,
-                        property, index);
                 if (index == null) {
-                    resolver.setValue(base, property, processor
-                            .getCoercedObject(newValue, clazz));
+                    resolver.setValue(base, property, newValue);
                 } else {
-                    resolver.setValue(base, index.intValue(), processor
-                            .getCoercedObject(newValue, clazz));
+                    resolver.setValue(base, index.intValue(), newValue);
                 }
             }
         } catch (IndexOutOfBoundsException e) {
