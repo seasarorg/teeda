@@ -40,6 +40,12 @@
 		<managed-bean-class>examples.teeda.bean.ChangePageBean2</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>converterBean</managed-bean-name>
+		<managed-bean-class>examples.teeda.bean.ConverterBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
 	
 	<managed-bean>
 		<managed-bean-name>converterBean</managed-bean-name>
