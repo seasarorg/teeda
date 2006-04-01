@@ -20,4 +20,11 @@ package org.seasar.teeda.core.application;
  */
 public interface ComponentLookupStrategy {
 
+    public Object getComponentByName(String componentName);
+
+    public Object getComponentByClass(Class componentClazz);
+
+    public void setNamespace(String namespace);
+
+    public String getNamespace();
 }

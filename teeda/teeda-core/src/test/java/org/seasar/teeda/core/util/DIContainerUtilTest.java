@@ -87,6 +87,12 @@ public class DIContainerUtilTest extends TeedaTestCase {
         assertFalse(DIContainerUtil.hasComponent("hoge2"));
     }
 
+    public void testHasComponent2() throws Exception {
+        getContainer().register(Hoge2.class);
+        assertTrue(DIContainerUtil.hasComponent(Hoge.class));
+        assertTrue(DIContainerUtil.hasComponent(Hoge2.class));
+    }
+
     public static class Hoge {
 
     }

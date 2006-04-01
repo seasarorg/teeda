@@ -15,6 +15,8 @@
  */
 package org.seasar.teeda.core.application;
 
+import java.util.Date;
+
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -40,6 +42,7 @@ import org.seasar.teeda.core.mock.MockValueBinding;
 import org.seasar.teeda.core.mock.MockVariableResolver;
 import org.seasar.teeda.core.mock.NullValidator;
 import org.seasar.teeda.core.unit.TeedaTestCase;
+import org.seasar.teeda.core.util.DIContainerUtil;
 
 public class ApplicationImplTest extends TeedaTestCase {
 
@@ -111,20 +114,20 @@ public class ApplicationImplTest extends TeedaTestCase {
 
         // # Act
         Converter c = app_.createConverter("aaa");
-        
+
         // # Assert
         assertNotNull(c);
         assertTrue(c instanceof HogeConverter2);
-        HogeConverter2 c2 = (HogeConverter2)c;
+        HogeConverter2 c2 = (HogeConverter2) c;
         assertTrue(c2.getNum() == 1);
-        
+
         // # Act
         c = app_.createConverter(Hoge.class);
 
         // # Assert
         assertNotNull(c);
         assertTrue(c instanceof HogeConverter2);
-        HogeConverter2 c3 = (HogeConverter2)c;
+        HogeConverter2 c3 = (HogeConverter2) c;
         assertTrue(c3.getNum() == 1);
     }
 
@@ -228,19 +231,61 @@ public class ApplicationImplTest extends TeedaTestCase {
     }
 
     public void testCreateValidator_registerToDIContainer() throws Exception {
-        ComponentDef cDef = new ComponentDefImpl(MockValidatorWithProperties.class);
+        ComponentDef cDef = new ComponentDefImpl(
+                MockValidatorWithProperties.class);
         cDef.setComponentName("mock");
         PropertyDef pDef = new PropertyDefImpl("name");
         pDef.setValue("hoge");
         cDef.addPropertyDef(pDef);
         getContainer().register(cDef);
-        
+
         app_ = new ApplicationImpl();
         Validator v = app_.createValidator("mock");
         assertNotNull(v);
         assertTrue(v instanceof MockValidatorWithProperties);
         MockValidatorWithProperties mock = (MockValidatorWithProperties) v;
         assertEquals("hoge", mock.getName());
+    }
+
+    public void testCreateConverter_duplicateConverter1() throws Exception {
+        app_ = new ApplicationImpl();
+        app_.addConverter(Date.class, A1Converter.class.getName());
+        app_.addConverter(Date.class, A2Converter.class.getName());
+
+        Converter c = app_.createConverter(Date.class);
+        assertNotNull(c);
+        assertTrue(c instanceof A1Converter);
+    }
+
+    public void testCreateConverter_duplicateConverter2() throws Exception {
+        ComponentDef cDef = new ComponentDefImpl(
+                A1Converter.class, Date.class.getName());
+        getContainer().register(cDef);
+        app_ = new ApplicationImpl();
+        app_.addConverter(Date.class, A2Converter.class.getName());
+
+        Converter c = app_.createConverter(Date.class);
+        assertNotNull(c);
+        assertTrue(c instanceof A1Converter);
+        
+        
+        DIContainerUtil.getComponent(A1Converter.class);
+    }
+    
+    public void testCreateComponent_orderTest() throws Exception {
+        ComponentDef cDef = new ComponentDefImpl(MockUIComponent.class, "mock");
+        PropertyDef pDef = new PropertyDefImpl("id");
+        pDef.setValue("aaa");
+        cDef.addPropertyDef(pDef);
+        getContainer().register(cDef);
+        
+        app_ = new ApplicationImpl();
+        app_.addComponent("mock", MockUIComponent.class.getName());
+        
+        UIComponent c = app_.createComponent("mock");
+        assertNotNull(c);
+        MockUIComponent mock = (MockUIComponent) c;
+        assertEquals("aaa", mock.getId());
     }
     
     public static class HogeConverter implements Converter {
@@ -308,11 +353,11 @@ public class ApplicationImplTest extends TeedaTestCase {
     public static class HogeConverter2 implements Converter {
 
         public int num = 0;
-        
+
         public HogeConverter2() {
             num++;
         }
-        
+
         public Object getAsObject(FacesContext context, UIComponent component,
                 String value) throws ConverterException {
             return null;
@@ -326,5 +371,22 @@ public class ApplicationImplTest extends TeedaTestCase {
         public int getNum() {
             return num;
         }
+    }
+
+    public static class A1Converter implements Converter {
+
+        public Object getAsObject(FacesContext context, UIComponent component,
+                String value) throws ConverterException {
+            return null;
+        }
+
+        public String getAsString(FacesContext context, UIComponent component,
+                Object value) throws ConverterException {
+            return null;
+        }
+
+    }
+
+    public static class A2Converter extends A1Converter {
     }
 }
