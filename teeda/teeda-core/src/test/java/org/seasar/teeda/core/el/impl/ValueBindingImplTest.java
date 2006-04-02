@@ -368,8 +368,8 @@ public class ValueBindingImplTest extends TeedaTestCase {
         // ## Assert ##
         assertEquals(now, vb.getValue(context));
 
-        // comment out => fail
-        PropertyEditorManager.registerEditor(java.util.Date.class, DateEditorForTest.class);
+        // comment out => fail(old ValuBindingImpl)
+        //PropertyEditorManager.registerEditor(java.util.Date.class, DateEditorForTest.class);
 
         vb.setValue(context, "20061231");
         assertEquals(new SimpleDateFormat("yyyyMMdd").parse("20061231"), 
