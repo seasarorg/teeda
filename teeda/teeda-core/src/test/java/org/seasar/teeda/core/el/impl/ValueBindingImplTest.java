@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.faces.context.FacesContext;
@@ -363,7 +364,7 @@ public class ValueBindingImplTest extends TeedaTestCase {
         ValueBindingImpl vb = new ValueBindingImpl(getApplication(), "#{c.date}",
                 createELParser());
         FacesContext context = getFacesContext();
-        
+
         // ## Act ##
         // ## Assert ##
         assertEquals(now, vb.getValue(context));
@@ -371,7 +372,13 @@ public class ValueBindingImplTest extends TeedaTestCase {
         // comment out => fail(old ValuBindingImpl)
         //PropertyEditorManager.registerEditor(java.util.Date.class, DateEditorForTest.class);
 
-        vb.setValue(context, "20061231");
+        Locale defaultLocale = Locale.getDefault();
+        try {
+            Locale.setDefault(Locale.JAPANESE);
+            vb.setValue(context, "20061231");
+        } finally {
+            Locale.setDefault(defaultLocale);
+        }
         assertEquals(new SimpleDateFormat("yyyyMMdd").parse("20061231"), 
                 vb.getValue(context));
     }
@@ -399,16 +406,16 @@ public class ValueBindingImplTest extends TeedaTestCase {
 
     public static class Conv {
         private Date date_;
-        
+
         public void setDate(Date date) {
             this.date_ = date;
         }
-        
+
         public Date getDate() {
             return this.date_;
         }
     }
-    
+
     public static class A {
         private String name = "aaa";
 
@@ -494,5 +501,5 @@ public class ValueBindingImplTest extends TeedaTestCase {
             return 0;
         }
     }
-    
+
 }
