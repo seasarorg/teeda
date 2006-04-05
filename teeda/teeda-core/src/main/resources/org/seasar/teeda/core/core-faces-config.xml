@@ -366,7 +366,7 @@
 	</converter>
 
 	<converter>
-		<converter-for-class>javax.util.Date</converter-for-class>
+		<converter-for-class>java.util.Date</converter-for-class>
 		<converter-class>javax.faces.convert.DateTimeConverter</converter-class>
 	</converter>
 	
