@@ -15,6 +15,14 @@
 		<render-kit-factory>
 			org.seasar.teeda.core.render.RenderKitFactoryImpl</render-kit-factory>
 	</factory>
+
+	<application>	
+		<locale-config>
+			<default-locale>ja</default-locale>
+			<supported-locale>ja</supported-locale>
+			<supported-locale>en</supported-locale>
+		</locale-config>
+	</application>
 	
 	<!-- Standard components -->
 	<component>
@@ -355,6 +363,11 @@
 	<converter>
 		<converter-for-class>java.lang.Short</converter-for-class>
 		<converter-class>javax.faces.convert.ShortConverter</converter-class>
+	</converter>
+
+	<converter>
+		<converter-for-class>javax.util.Date</converter-for-class>
+		<converter-class>javax.faces.convert.DateTimeConverter</converter-class>
 	</converter>
 	
 	<!-- Standard Validators -->
