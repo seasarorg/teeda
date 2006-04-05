@@ -18,11 +18,7 @@ package javax.faces.convert;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Locale;
-import java.util.StringTokenizer;
 import java.util.TimeZone;
 
 import javax.faces.component.StateHolder;
@@ -31,8 +27,11 @@ import javax.faces.context.FacesContext;
 import javax.faces.internal.AssertionUtil;
 import javax.faces.internal.ConvertUtils;
 
+import org.seasar.framework.util.DateConversionUtil;
+
 /**
- * TODO test & refactor(because of having lots of responsibility)
+ * @author higa
+ * 
  */
 public class DateTimeConverter implements Converter, StateHolder {
 
@@ -64,8 +63,7 @@ public class DateTimeConverter implements Converter, StateHolder {
 
     private String timeStyle_ = STYLE_DEFAULT;
 
-    private static final TimeZone DEFAULT_TIME_ZONE = TimeZone
-            .getTimeZone("GMT");
+    private static final TimeZone DEFAULT_TIME_ZONE = TimeZone.getDefault();
 
     private TimeZone timeZone_ = DEFAULT_TIME_ZONE;
 
@@ -86,17 +84,17 @@ public class DateTimeConverter implements Converter, StateHolder {
             return null;
         }
         Locale locale = getLocale();
-        DateFormat parser = getDateFormat(value, locale);
-        if (parser == null) {
-            parser = getDateFormat0(value, locale);
+        DateFormat format = getDateFormat(value, locale);
+        if (format == null) {
+            format = DateConversionUtil.getDateFormat(value, locale);
         }
-        parser.setLenient(false);
+        format.setLenient(false);
         TimeZone timeZone = getTimeZone();
         if (timeZone != null) {
-            parser.setTimeZone(timeZone);
+            format.setTimeZone(timeZone);
         }
         try {
-            return parser.parse(value);
+            return format.parse(value);
         } catch (ParseException e) {
             Object[] args = ConvertUtils.createExceptionMessageArgs(component,
                     value);
@@ -216,13 +214,8 @@ public class DateTimeConverter implements Converter, StateHolder {
         if (pattern != null) {
             return new SimpleDateFormat(pattern, locale);
         }
-
         if (isDefaultStyle()) {
-            pattern = getPattern(locale);
-            if (pattern.indexOf("yyyy") < 0) {
-                pattern = replace(pattern, "yy", "yyyy");
-            }
-            return new SimpleDateFormat(pattern);
+            return DateConversionUtil.getY4DateFormat(locale);
         }
         return getDateFormatForType();
     }
@@ -232,9 +225,8 @@ public class DateTimeConverter implements Converter, StateHolder {
         if (pattern != null) {
             return new SimpleDateFormat(pattern, locale);
         }
-
         if (isDefaultStyle()) {
-            return getDateFormat0(value, locale);
+            return DateConversionUtil.getDateFormat(value, locale);
         }
         return getDateFormatForType();
     }
@@ -242,107 +234,6 @@ public class DateTimeConverter implements Converter, StateHolder {
     protected boolean isDefaultStyle() {
         return STYLE_DEFAULT.equalsIgnoreCase(getDateStyle())
                 && STYLE_DEFAULT.equalsIgnoreCase(getTimeStyle());
-    }
-
-    private static DateFormat getDateFormat0(String s, Locale locale) {
-        String pattern = getPattern(locale);
-        String shortPattern = removeDelimiter(pattern);
-        String[] delimitors = findDelimiter(s);
-
-        String array[];
-        if (delimitors == null) {
-            if (s.length() == shortPattern.length())
-                return new SimpleDateFormat(shortPattern);
-            if (s.length() == shortPattern.length() + 2)
-                return new SimpleDateFormat(replace(shortPattern, "yy", "yyyy"));
-            else
-                return new SimpleDateFormat();
-        }
-
-        array = split(s, delimitors);
-        for (int i = 0; i < array.length; i++) {
-            if (array[i].length() != 4)
-                continue;
-            pattern = replace(pattern, "yy", "yyyy");
-            break;
-        }
-
-        return new SimpleDateFormat(pattern);
-    }
-
-    private static String getPattern(Locale locale) {
-        SimpleDateFormat df = (SimpleDateFormat) DateFormat.getDateInstance(3,
-                locale);
-        String pattern = df.toPattern();
-        int index = pattern.indexOf(' ');
-        if (index > 0)
-            pattern = pattern.replaceAll(" ", "");
-        if (pattern.indexOf("MM") < 0)
-            pattern = replace(pattern, "M", "MM");
-        if (pattern.indexOf("dd") < 0)
-            pattern = replace(pattern, "d", "dd");
-        return pattern;
-    }
-
-    private static String[] findDelimiter(String value) {
-        List list = new LinkedList();
-        for (int i = 0; i < value.length(); i++) {
-            char c = value.charAt(i);
-            if (!Character.isDigit(c)) {
-                list.add(Character.toString(c));
-            }
-        }
-        return (list.size() != 0) ? (String[]) list.toArray(new String[list
-                .size()]) : null;
-    }
-
-    private static String removeDelimiter(String pattern) {
-        StringBuffer buf = new StringBuffer();
-        for (int i = 0; i < pattern.length(); i++) {
-            char c = pattern.charAt(i);
-            if (c == 'y' || c == 'M' || c == 'd')
-                buf.append(c);
-        }
-
-        return buf.toString();
-    }
-
-    protected static final String replace(String text, String fromText,
-            String toText) {
-        if (text == null || fromText == null || toText == null)
-            return null;
-        StringBuffer buf = new StringBuffer(100);
-        int pos = 0;
-        int pos2 = 0;
-        for (;;) {
-            pos = text.indexOf(fromText, pos2);
-            if (pos == 0) {
-                buf.append(toText);
-                pos2 = fromText.length();
-            } else if (pos > 0) {
-                buf.append(text.substring(pos2, pos));
-                buf.append(toText);
-                pos2 = pos + fromText.length();
-            } else {
-                buf.append(text.substring(pos2));
-                break;
-            }
-        }
-        return buf.toString();
-    }
-
-    protected static String[] split(String str, String[] delimeters) {
-        if (str == null)
-            return new String[0];
-
-        List list = new ArrayList();
-        for (int i = 0; i < delimeters.length; i++) {
-            for (StringTokenizer st = new StringTokenizer(str, delimeters[i]); st
-                    .hasMoreElements(); list.add(st.nextElement()))
-                ;
-        }
-
-        return (String[]) list.toArray(new String[list.size()]);
     }
 
     protected DateFormat getDateFormatForType() {
