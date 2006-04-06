@@ -7,4 +7,5 @@
 	<include path="examples/teeda/dicon/add.dicon"/>
 	<include path="examples/teeda/dicon/checkbox.dicon"/>
 	<include path="examples/teeda/dicon/inputtextarea.dicon"/>
+	<include path="examples/teeda/dicon/allconverter.dicon"/>
 </components>
