@@ -75,7 +75,7 @@ public class ConverterTest extends AbstractTestCase {
         System.out.println(getBody(page2).trim());
         HtmlTextInput input2 = (HtmlTextInput) page2
                 .getHtmlElementById("text1");
-        HtmlSpan span2 = (HtmlSpan) page1.getHtmlElementById("result");
+        HtmlSpan span2 = (HtmlSpan) page2.getHtmlElementById("result");
 
         assertEquals("20061231", input2.getValueAttribute());
         assertEquals("2006/12/31", span2.asText());
