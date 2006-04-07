@@ -15,11 +15,16 @@
  */
 package org.seasar.teeda.core.render.html;
 
+import javax.faces.component.UIComponent;
 import javax.faces.component.UIViewRoot;
+import javax.faces.context.FacesContext;
+import javax.faces.convert.Converter;
+import javax.faces.convert.ConverterException;
 import javax.faces.render.Renderer;
 import javax.faces.render.RendererTest;
 
 import org.custommonkey.xmlunit.Diff;
+import org.seasar.teeda.core.mock.MockConverter;
 import org.seasar.teeda.core.mock.MockFacesContext;
 
 /**
@@ -183,6 +188,41 @@ public class HtmlOutputTextRendererTest extends RendererTest {
 
         // ## Assert ##
         assertEquals("abc", getResponseText());
+    }
+
+    public void testEncode_Converter() throws Exception {
+        // ## Arrange ##
+        Converter converter = new MockConverter() {
+            public String getAsString(FacesContext context,
+                    UIComponent component, Object value)
+                    throws ConverterException {
+                return value + "ddd";
+            }
+        };
+        htmlOutputText_.setValue("abc");
+        htmlOutputText_.setConverter(converter);
+
+        // ## Act ##
+        MockFacesContext context = getFacesContext();
+        encodeByRenderer(renderer_, context, htmlOutputText_);
+
+        // ## Assert ##
+        assertEquals("abcddd", getResponseText());
+    }
+
+    public void testGetConvertedValue() throws Exception {
+        Converter converter = new MockConverter() {
+            public Object getAsObject(FacesContext context,
+                    UIComponent component, String value)
+                    throws ConverterException {
+                return value + ".testGetConvertedValue";
+            }
+        };
+        htmlOutputText_.setConverter(converter);
+        Object convertedValue = renderer_.getConvertedValue(getFacesContext(),
+                htmlOutputText_, "bbb");
+
+        assertEquals("bbb.testGetConvertedValue", convertedValue);
     }
 
     public void testGetRendersChildren() throws Exception {

@@ -18,11 +18,18 @@ package org.seasar.teeda.core.util;
 import java.io.IOException;
 import java.util.Map;
 
+import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
+import javax.faces.component.UIOutput;
 import javax.faces.component.UIViewRoot;
+import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+import javax.faces.convert.Converter;
+import javax.faces.convert.ConverterException;
+import javax.faces.el.ValueBinding;
 import javax.faces.internal.UIDefaultAttribute;
 
+import org.seasar.framework.log.Logger;
 import org.seasar.framework.util.IntegerConversionUtil;
 import org.seasar.teeda.core.JsfConstants;
 
@@ -31,8 +38,7 @@ import org.seasar.teeda.core.JsfConstants;
  */
 public class RendererUtil {
 
-    private RendererUtil() {
-    }
+    private static Logger logger = Logger.getLogger(RendererUtil.class);
 
     public static boolean containsAttributesForRender(UIComponent component,
             String[] attributeNames) {
@@ -173,6 +179,56 @@ public class RendererUtil {
             throws IOException {
         renderAttribute(writer, JsfConstants.SELECTED_ATTR,
                 JsfConstants.SELECTED_ATTR);
+    }
+
+    public static Object getConvertedUIOutputValue(FacesContext context,
+            UIOutput output, Object submittedValue) throws ConverterException {
+        if (submittedValue == null) {
+            return null;
+        }
+        Converter converter = findConverterForSubmittedValue(context, output);
+        if (converter == null) {
+            return submittedValue;
+        }
+        return converter.getAsObject(context, output, (String) submittedValue);
+    }
+
+    static Converter findConverterForSubmittedValue(FacesContext context,
+            UIOutput component) {
+
+        Converter converter = component.getConverter();
+        if (converter != null) {
+            return converter;
+        }
+        Class valueType = getValueType(context, component);
+        if (valueType == null) {
+            return null;
+        }
+        if (String.class.equals(valueType) || Object.class.equals(valueType)) {
+            return null;
+        }
+        try {
+            return context.getApplication().createConverter(valueType);
+        } catch (FacesException ex) {
+            logger.log(ex);
+            return null;
+        }
+    }
+
+    static Class getValueType(FacesContext context, UIOutput component) {
+        ValueBinding vb = component.getValueBinding("value");
+        if (vb == null) {
+            return null;
+        }
+        Class valueType = vb.getType(context);
+        if (valueType == null) {
+            return null;
+        }
+        if (valueType.isArray()) {
+            return valueType.getComponentType();
+        } else {
+            return valueType;
+        }
     }
 
 }

@@ -20,10 +20,13 @@ import javax.faces.component.UIForm;
 import javax.faces.component.UIInput;
 import javax.faces.component.html.HtmlOutputLabel;
 import javax.faces.context.FacesContext;
+import javax.faces.convert.Converter;
+import javax.faces.convert.ConverterException;
 import javax.faces.render.Renderer;
 import javax.faces.render.RendererTest;
 
 import org.custommonkey.xmlunit.Diff;
+import org.seasar.teeda.core.mock.MockConverter;
 import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.mock.MockUIComponentBase;
 import org.seasar.teeda.core.mock.MockUIInput;
@@ -164,6 +167,21 @@ public class HtmlOutputLabelRendererTest extends RendererTest {
                 + " tabindex=\"s\"" + " title=\"t\">u</label>",
                 getResponseText());
         assertEquals(diff.toString(), true, diff.identical());
+    }
+
+    public void testGetConvertedValue() throws Exception {
+        Converter converter = new MockConverter() {
+            public Object getAsObject(FacesContext context,
+                    UIComponent component, String value)
+                    throws ConverterException {
+                return value + ".testGetConvertedValue";
+            }
+        };
+        htmlOutputLabel_.setConverter(converter);
+        Object convertedValue = renderer_.getConvertedValue(getFacesContext(),
+                htmlOutputLabel_, "c");
+
+        assertEquals("c.testGetConvertedValue", convertedValue);
     }
 
     public void testGetRendersChildren() throws Exception {

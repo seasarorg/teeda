@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.util.Iterator;
 
 import javax.faces.component.UIComponent;
+import javax.faces.component.UIOutput;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.ConverterException;
 import javax.faces.internal.AssertionUtil;
@@ -28,18 +29,20 @@ import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.util.LoopIterator;
 import org.seasar.teeda.core.util.RenderedComponentIterator;
+import org.seasar.teeda.core.util.RendererUtil;
 import org.seasar.teeda.core.util.UIComponentUtil;
 
 /**
  * @author manhole
  */
-public class AbstractHtmlRenderer extends Renderer {
+public abstract class AbstractHtmlRenderer extends Renderer {
 
     public Object getConvertedValue(FacesContext context,
             UIComponent component, Object submittedValue)
             throws ConverterException {
-        // TODO use converter
-        return super.getConvertedValue(context, component, submittedValue);
+        assertNotNull(context, component);
+        return RendererUtil.getConvertedUIOutputValue(context,
+                (UIOutput) component, submittedValue);
     }
 
     // TODO to change pluggable

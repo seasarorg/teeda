@@ -18,10 +18,13 @@ package org.seasar.teeda.core.render.html;
 import javax.faces.component.UIComponent;
 import javax.faces.component.html.HtmlInputText;
 import javax.faces.context.FacesContext;
+import javax.faces.convert.Converter;
+import javax.faces.convert.ConverterException;
 import javax.faces.render.Renderer;
 import javax.faces.render.RendererTest;
 
 import org.custommonkey.xmlunit.Diff;
+import org.seasar.teeda.core.mock.MockConverter;
 import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.mock.MockUIComponentBaseWithNamingContainer;
 
@@ -170,6 +173,42 @@ public class HtmlInputTextRendererTest extends RendererTest {
 
         // ## Assert ##
         assertEquals("12345", htmlInputText_.getSubmittedValue());
+    }
+
+    public void testEncode_Converter() throws Exception {
+        // ## Arrange ##
+        Converter converter = new MockConverter() {
+            public String getAsString(FacesContext context,
+                    UIComponent component, Object value)
+                    throws ConverterException {
+                return value + "ddd";
+            }
+        };
+        htmlInputText_.setValue("abc");
+        htmlInputText_.setConverter(converter);
+
+        // ## Act ##
+        MockFacesContext context = getFacesContext();
+        encodeByRenderer(renderer_, context, htmlInputText_);
+
+        // ## Assert ##
+        assertEquals("<input type=\"text\" name=\"_id0\" value=\"abcddd\" />",
+                getResponseText());
+    }
+
+    public void testGetConvertedValue() throws Exception {
+        Converter converter = new MockConverter() {
+            public Object getAsObject(FacesContext context,
+                    UIComponent component, String value)
+                    throws ConverterException {
+                return value + ".testGetConvertedValue";
+            }
+        };
+        htmlInputText_.setConverter(converter);
+        Object convertedValue = renderer_.getConvertedValue(getFacesContext(),
+                htmlInputText_, "aaa");
+
+        assertEquals("aaa.testGetConvertedValue", convertedValue);
     }
 
     public void testGetRendersChildren() throws Exception {

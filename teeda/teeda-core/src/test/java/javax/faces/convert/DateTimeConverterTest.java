@@ -23,107 +23,131 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 import javax.faces.component.UIViewRoot;
+import javax.faces.context.FacesContext;
 
 import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.mock.MockUIComponent;
+import org.seasar.teeda.core.mock.NullUIComponent;
 
+/**
+ * @author shot
+ */
 public class DateTimeConverterTest extends AbstractConverterTestCase {
 
-    public void testGetAsObject() {
+    private Locale defaultLocale;
+
+    private TimeZone defaultTimeZone;
+
+    protected void setUp() throws Exception {
+        super.setUp();
+        defaultLocale = Locale.getDefault();
+        defaultTimeZone = TimeZone.getDefault();
+    }
+
+    protected void tearDown() throws Exception {
+        Locale.setDefault(defaultLocale);
+        TimeZone.setDefault(defaultTimeZone);
+        super.tearDown();
+    }
+
+    public void testGetAsObject1() throws Exception {
         DateTimeConverter converter = (DateTimeConverter) createConverter();
-        MockFacesContext context = getFacesContext();
-        MockUIComponent component = new MockUIComponent();
+        FacesContext context = getFacesContext();
+        converter.setLocale(defaultLocale);
+        converter.setTimeZone(defaultTimeZone);
 
-        Locale locale = Locale.getDefault();
-        converter.setLocale(locale);
-
-        TimeZone timeZone = TimeZone.getDefault();
-        converter.setTimeZone(timeZone);
-
-        String pattern = "yyyy/MM/dd";
+        final String pattern = "yyyy/MM/dd";
         converter.setPattern(pattern);
 
         String dateValue = "2005/08/01";
-        Object o = converter.getAsObject(context, component, dateValue);
+        Date date = (Date) converter.getAsObject(context,
+                new NullUIComponent(), dateValue);
 
-        Date dateTarget = createDateTarget(pattern, locale, dateValue);
-
-        Date date = (Date) o;
+        Date dateTarget = createDateTarget(pattern, defaultLocale, dateValue);
         assertEquals(date, dateTarget);
+    }
 
-        converter.setTimeZone(null);
+    public void testGetAsObject2() throws Exception {
+        FacesContext context = getFacesContext();
+        DateTimeConverter converter = (DateTimeConverter) createConverter();
+        final Locale locale = Locale.JAPANESE;
+        converter.setLocale(locale);
+        converter.setTimeZone(TimeZone.getTimeZone("JST"));
 
-        o = converter.getAsObject(context, component, dateValue);
-        assertEquals((Date) o, dateTarget);
+        final String dateValue = "2005/08/01";
+        Date date = (Date) converter.getAsObject(context,
+                new NullUIComponent(), dateValue);
+        Date dateTarget = createDateTarget("yyyy/MM/dd", locale, dateValue);
+        assertEquals(date, dateTarget);
+    }
 
-        DateTimeConverter converter2 = new DateTimeConverter();
+    public void testGetAsObject3() throws Exception {
+        FacesContext context = getFacesContext();
+        DateTimeConverter converter = new DateTimeConverter();
 
-        UIViewRoot viewRoot2 = new UIViewRoot();
-        viewRoot2.setLocale(Locale.US);
-        context.setViewRoot(viewRoot2);
+        UIViewRoot viewRoot = new UIViewRoot();
+        final Locale locale = Locale.US;
+        viewRoot.setLocale(locale);
+        context.setViewRoot(viewRoot);
 
-        TimeZone timeZone2 = TimeZone.getDefault();
-        TimeZone.setDefault(converter2.getTimeZone());
+        TimeZone.setDefault(converter.getTimeZone());
 
-        pattern = "M/d/yy";
-        converter2.setPattern(pattern);
+        String pattern = "M/d/yy";
+        converter.setPattern(pattern);
 
-        dateValue = "8/3/05";
-        Object o2 = converter2.getAsObject(context, component, dateValue);
+        String dateValue = "8/3/05";
+        Date date = (Date) converter.getAsObject(context, new NullUIComponent(),
+                dateValue);
+        Date dateTarget = createDateTarget(pattern, locale, dateValue);
+        assertEquals(date, dateTarget);
+    }
 
-        dateTarget = createDateTarget(pattern, Locale.US, dateValue);
+    public void testGetAsObject4() throws Exception {
+        FacesContext context = getFacesContext();
+        DateTimeConverter converter = new DateTimeConverter();
+        converter.setTimeZone(TimeZone.getDefault());
 
-        assertEquals((Date) o2, dateTarget);
-
-        TimeZone.setDefault(timeZone2);
-
-        DateTimeConverter converter3 = new DateTimeConverter();
-
-        converter3.setTimeZone(TimeZone.getDefault());
-
-        UIViewRoot viewRoot3 = new UIViewRoot();
-        Locale locale3 = Locale.GERMAN;
-        viewRoot3.setLocale(locale3);
-        context.setViewRoot(viewRoot3);
+        UIViewRoot viewRoot = new UIViewRoot();
+        Locale locale = Locale.GERMAN;
+        viewRoot.setLocale(locale);
+        context.setViewRoot(viewRoot);
 
         String style = DateTimeConverter.STYLE_MEDIUM;
-        converter3.setDateStyle(style);
+        converter.setDateStyle(style);
 
         String type = DateTimeConverter.TYPE_DATE;
-        converter3.setType(type);
+        converter.setType(type);
 
-        dateValue = "04.08.2005";
-        Object o3 = converter3.getAsObject(context, component, dateValue);
+        String dateValue = "04.08.2005";
+        Object o3 = converter.getAsObject(context, new NullUIComponent(),
+                dateValue);
 
         SimpleDateFormat format = (SimpleDateFormat) DateFormat
-                .getDateInstance(DateFormat.MEDIUM, locale3);
+                .getDateInstance(DateFormat.MEDIUM, locale);
 
-        try {
-            dateTarget = format.parse(dateValue);
-        } catch (ParseException e) {
-            fail();
-        }
-
+        Date dateTarget = format.parse(dateValue);
         assertEquals((Date) o3, dateTarget);
+    }
 
-        DateTimeConverter converter4 = new DateTimeConverter();
+    public void testGetAsObject5() throws Exception {
+        FacesContext context = getFacesContext();
+        DateTimeConverter converter = new DateTimeConverter();
 
-        converter4.setTimeZone(TimeZone.getDefault());
-        converter4.setPattern("yyyy/MM/dd");
-
+        converter.setTimeZone(TimeZone.getDefault());
+        converter.setPattern("yyyy/MM/dd");
+        converter.setLocale(defaultLocale);
         try {
-            converter4.getAsObject(context, component, "200508/04");
+            converter.getAsObject(context, new MockUIComponent(), "200508/04");
             fail();
-        } catch (Exception e) {
+        } catch (ConverterException e) {
             // TODO somehow need catching ConverterException
             assertTrue(true);
         }
-
     }
 
     public void testGetAsString() {
         Converter converter = createConverter();
-        MockFacesContext context = getFacesContext();
+        FacesContext context = getFacesContext();
         MockUIComponent component = new MockUIComponent();
 
         String value = converter.getAsString(context, component, null);
@@ -254,15 +278,10 @@ public class DateTimeConverterTest extends AbstractConverterTestCase {
 
     }
 
-    private static Date createDateTarget(String pattern, Locale locale,
-            String date) {
+    private Date createDateTarget(String pattern, Locale locale, String date)
+            throws ParseException {
         DateFormat formatter = new SimpleDateFormat(pattern, locale);
-        try {
-            return formatter.parse(date);
-        } catch (Exception e) {
-            fail();
-        }
-        return null;
+        return formatter.parse(date);
     }
 
     private static String createDateFormat(String pattern, Locale locale,
