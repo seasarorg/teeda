@@ -20,7 +20,10 @@ import java.lang.reflect.Array;
 import java.util.Map;
 
 import javax.faces.FacesException;
+import javax.faces.FactoryFinder;
+import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
+import javax.faces.component.UIInput;
 import javax.faces.component.UIOutput;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
@@ -28,7 +31,11 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 import javax.faces.el.ValueBinding;
+import javax.faces.internal.FacesMessageUtils;
 import javax.faces.internal.UIDefaultAttribute;
+import javax.faces.render.RenderKit;
+import javax.faces.render.RenderKitFactory;
+import javax.faces.render.Renderer;
 
 import org.seasar.framework.log.Logger;
 import org.seasar.framework.util.IntegerConversionUtil;
@@ -182,6 +189,49 @@ public class RendererUtil {
                 JsfConstants.SELECTED_ATTR);
     }
 
+    public static Object getConvertedValue(FacesContext context,
+            UIInput component, Object submittedValue) {
+        try {
+            Renderer renderer = getRenderer(context, component);
+            if (renderer != null) {
+                return renderer.getConvertedValue(context, component,
+                        submittedValue);
+            } else if (submittedValue instanceof String) {
+                return getConvertedUIOutputValue(context, component,
+                        submittedValue);
+            }
+        } catch (ConverterException e) {
+            FacesMessage facesMessage = e.getFacesMessage();
+            if (facesMessage != null) {
+                context
+                        .addMessage(component.getClientId(context),
+                                facesMessage);
+            } else {
+                Object[] args = new Object[] { UIComponentUtil
+                        .getLabel(component) };
+                context.addMessage(component.getClientId(context),
+                        FacesMessageUtils.getMessage(context,
+                                UIInput.CONVERSION_MESSAGE_ID, args));
+            }
+            component.setValid(false);
+        }
+        return submittedValue;
+    }
+
+    public static Renderer getRenderer(FacesContext context,
+            UIComponent component) {
+
+        String rendererType = component.getRendererType();
+        if (rendererType == null) {
+            return null;
+        }
+        String renderKitId = context.getViewRoot().getRenderKitId();
+        RenderKitFactory rkf = (RenderKitFactory) FactoryFinder
+                .getFactory(FactoryFinder.RENDER_KIT_FACTORY);
+        RenderKit renderKit = rkf.getRenderKit(context, renderKitId);
+        return renderKit.getRenderer(component.getFamily(), rendererType);
+    }
+
     public static Object getConvertedUIOutputValue(FacesContext context,
             UIOutput output, Object submittedValue) throws ConverterException {
         if (submittedValue == null) {
@@ -208,7 +258,7 @@ public class RendererUtil {
         Object ret = Array.newInstance(valueType, length);
         for (int i = 0; i < length; ++i) {
             Object target = Array.get(submittedValue, i);
-            String value = (String)target; 
+            String value = (String) target;
             Object o = converter.getAsObject(context, output, value);
             ArrayUtil.setArrayValue(ret, valueType, o, i);
         }

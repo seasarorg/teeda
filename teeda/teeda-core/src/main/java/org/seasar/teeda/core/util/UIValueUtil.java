@@ -15,6 +15,9 @@
  */
 package org.seasar.teeda.core.util;
 
+import java.lang.reflect.Array;
+import java.util.List;
+
 import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -49,6 +52,12 @@ public class UIValueUtil {
             return value.toString();
         }
         return converter.getAsString(context, component, value);
+    }
+
+    public static final boolean isManyEmpty(Object value) {
+        return value == null
+                || (value.getClass().isArray() && Array.getLength(value) == 0)
+                || ((value instanceof List) && ((List) value).isEmpty());
     }
 
 }

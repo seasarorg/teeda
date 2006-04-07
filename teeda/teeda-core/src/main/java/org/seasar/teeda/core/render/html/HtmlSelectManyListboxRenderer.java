@@ -19,8 +19,10 @@ import java.io.IOException;
 import java.util.Iterator;
 
 import javax.faces.component.UIComponent;
+import javax.faces.component.UIOutput;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+import javax.faces.convert.ConverterException;
 import javax.faces.internal.SelectItemsIterator;
 import javax.faces.model.SelectItem;
 import javax.faces.model.SelectItemGroup;
@@ -162,6 +164,14 @@ public class HtmlSelectManyListboxRenderer extends AbstractHtmlRenderer {
     public void decode(FacesContext context, UIComponent component) {
         assertNotNull(context, component);
         DecodeUtil.decodeMany(context, component);
+    }
+
+    public Object getConvertedValue(FacesContext context,
+            UIComponent component, Object submittedValue)
+            throws ConverterException {
+        assertNotNull(context, component);
+        return RendererUtil.getConvertedUIOutputValues(context,
+                (UIOutput) component, submittedValue);
     }
 
 }

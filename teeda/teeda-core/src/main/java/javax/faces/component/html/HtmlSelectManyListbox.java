@@ -18,8 +18,13 @@ package javax.faces.component.html;
 import javax.faces.component.UISelectMany;
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
+import javax.faces.event.ValueChangeEvent;
+import javax.faces.internal.FacesMessageUtils;
 
 import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.core.util.RendererUtil;
+import org.seasar.teeda.core.util.UIComponentUtil;
+import org.seasar.teeda.core.util.UIValueUtil;
 
 /**
  * @author shot
@@ -422,6 +427,41 @@ public class HtmlSelectManyListbox extends UISelectMany {
         }
         ValueBinding vb = getValueBinding(JsfConstants.LABEL_ATTR);
         return vb != null ? (String) vb.getValue(getFacesContext()) : getId();
+    }
+
+    public void validate(FacesContext context) {
+        Object submittedValue = getSubmittedValue();
+        if ("".equals(submittedValue)) {
+            submittedValue = new String[0];
+        }
+        Object convertedValue = RendererUtil.getConvertedValue(context, this,
+                submittedValue);
+        if (!isValid()) {
+            return;
+        }
+        boolean empty = UIValueUtil.isManyEmpty(convertedValue);
+        if (isRequired() && empty) {
+            context.addMessage(getClientId(context), FacesMessageUtils
+                    .getMessage(context, REQUIRED_MESSAGE_ID,
+                            new Object[] { getLabel() }));
+            setValid(false);
+            return;
+        }
+        if (!empty) {
+            UIComponentUtil.callValidators(context, this, convertedValue);
+        }
+        if (!isValid()) {
+            return;
+        }
+        if (isDisabled()) {
+            return;
+        }
+        Object previousValue = getValue();
+        setValue(convertedValue);
+        setSubmittedValue(null);
+        if (compareValues(previousValue, convertedValue)) {
+            queueEvent(new ValueChangeEvent(this, previousValue, convertedValue));
+        }
     }
 
     public Object saveState(FacesContext context) {
