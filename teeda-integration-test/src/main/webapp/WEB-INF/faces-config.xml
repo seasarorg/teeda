@@ -37,6 +37,11 @@
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
+		<managed-bean-name>dateBean</managed-bean-name>
+		<managed-bean-class>org.seasar.teeda.it.DateBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
 		<managed-bean-name>hiddenBean</managed-bean-name>
 		<managed-bean-class>org.seasar.teeda.it.HiddenBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
@@ -69,4 +74,24 @@
 			<to-view-id>/render/changePage1_result.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
+
+	<converter>
+		<converter-id>inputDateTimeConverter</converter-id>
+		<converter-class>javax.faces.convert.DateTimeConverter</converter-class>
+		<property>
+			<property-name>pattern</property-name>
+			<property-class>String</property-class>
+			<default-value>yyyy.MM.dd</default-value>
+		</property>
+	</converter>
+	<converter>
+		<converter-id>outputDateTimeConverter</converter-id>
+		<converter-class>javax.faces.convert.DateTimeConverter</converter-class>
+		<property>
+			<property-name>pattern</property-name>
+			<property-class>String</property-class>
+			<default-value>yyyy/MM/dd</default-value>
+		</property>
+	</converter>
+
 </faces-config>
