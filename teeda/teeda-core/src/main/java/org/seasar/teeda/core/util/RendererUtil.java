@@ -16,6 +16,7 @@
 package org.seasar.teeda.core.util;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.Map;
 
 import javax.faces.FacesException;
@@ -191,6 +192,27 @@ public class RendererUtil {
             return submittedValue;
         }
         return converter.getAsObject(context, output, (String) submittedValue);
+    }
+
+    public static Object getConvertedUIOutputValues(FacesContext context,
+            UIOutput output, Object submittedValue) {
+        if (submittedValue == null) {
+            return null;
+        }
+        Converter converter = findConverterForSubmittedValue(context, output);
+        if (converter == null) {
+            return submittedValue;
+        }
+        int length = Array.getLength(submittedValue);
+        Class valueType = getValueType(context, output);
+        Object ret = Array.newInstance(valueType, length);
+        for (int i = 0; i < length; ++i) {
+            Object target = Array.get(submittedValue, i);
+            String value = (String)target; 
+            Object o = converter.getAsObject(context, output, value);
+            ArrayUtil.setArrayValue(ret, valueType, o, i);
+        }
+        return ret;
     }
 
     static Converter findConverterForSubmittedValue(FacesContext context,

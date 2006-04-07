@@ -15,8 +15,16 @@
  */
 package org.seasar.teeda.core.util;
 
+import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.List;
+
+import org.seasar.framework.util.BooleanConversionUtil;
+import org.seasar.framework.util.DoubleConversionUtil;
+import org.seasar.framework.util.FloatConversionUtil;
+import org.seasar.framework.util.IntegerConversionUtil;
+import org.seasar.framework.util.LongConversionUtil;
+import org.seasar.framework.util.ShortConversionUtil;
 
 /**
  * @author shot
@@ -64,6 +72,35 @@ public class ArrayUtil {
         }
         sb.append("]");
         return sb.toString();
+    }
+
+    public static void setArrayValue(Object array, Class valueType,
+            Object value, int index) {
+        if (value == null) {
+            return;
+        }
+        if (valueType == int.class) {
+            Array.setInt(array, index, IntegerConversionUtil
+                    .toPrimitiveInt(value));
+        } else if (valueType == double.class) {
+            Array.setDouble(array, index, DoubleConversionUtil
+                    .toPrimitiveDouble(value));
+        } else if (valueType == long.class) {
+            Array.setLong(array, index, LongConversionUtil
+                    .toPrimitiveLong(value));
+        } else if (valueType == float.class) {
+            Array.setFloat(array, index, FloatConversionUtil
+                    .toPrimitiveFloat(value));
+        } else if (valueType == short.class) {
+            Array.setShort(array, index, ShortConversionUtil
+                    .toPrimitiveShort(value));
+        } else if (valueType == boolean.class) {
+            Array.setBoolean(array, index, BooleanConversionUtil
+                    .toPrimitiveBoolean(value));
+        } else if (valueType == char.class) {
+            Array.setChar(array, index, ((Character) value).charValue());
+        }
+        Array.set(array, index, value);
     }
 
 }

@@ -15,10 +15,14 @@
  */
 package org.seasar.teeda.core.render.html;
 
+import java.lang.reflect.Array;
+
+import javax.faces.component.UIOutput;
 import javax.faces.component.UISelectItem;
 import javax.faces.component.UISelectItems;
 import javax.faces.component.html.HtmlSelectManyCheckbox;
 import javax.faces.context.FacesContext;
+import javax.faces.convert.IntegerConverter;
 import javax.faces.model.SelectItem;
 import javax.faces.model.SelectItemGroup;
 import javax.faces.render.Renderer;
@@ -28,6 +32,7 @@ import junitx.framework.ArrayAssert;
 
 import org.custommonkey.xmlunit.Diff;
 import org.seasar.teeda.core.mock.MockFacesContext;
+import org.seasar.teeda.core.mock.MockValueBinding;
 
 /**
  * @author manhole
@@ -446,6 +451,23 @@ public class HtmlSelectManyCheckboxRendererTest extends RendererTest {
 
     public void testGetRendersChildren() throws Exception {
         assertEquals(false, renderer_.getRendersChildren());
+    }
+
+    public void testGetConvertedValue() throws Exception {
+        UIOutput out = new UIOutput();
+        out.setConverter(new IntegerConverter());
+        MockValueBinding vb = new MockValueBinding();
+        vb.setType(int[].class);
+        out.setValueBinding("value", vb);
+        Object submittedValue = Array.newInstance(String.class, 3);
+        Array.set(submittedValue, 0, "1");
+        Array.set(submittedValue, 1, "2");
+        Array.set(submittedValue, 2, "3");
+        Object o = renderer_.getConvertedValue(getFacesContext(), out,
+                submittedValue);
+        int[] result = (int[]) o;
+        assertEquals(3, result.length);
+        ArrayAssert.assertEquals(new int[] { 1, 2, 3 }, result);
     }
 
     private HtmlSelectManyCheckboxRenderer createHtmlSelectManyCheckboxRenderer() {

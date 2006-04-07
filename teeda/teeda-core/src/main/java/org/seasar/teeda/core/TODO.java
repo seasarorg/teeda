@@ -46,7 +46,7 @@ public interface TODO {
      *  - [Seasar-user:3253]
      *  - Continuum
      *  - To know navigation (from and outcome, and go to where), provide interceptor 
-     *  
+     *  - Security aspect interceptor for NavigationHandler(Thx Mr.Kameda)
      * 
      * TODO for 1.1
      *  - 

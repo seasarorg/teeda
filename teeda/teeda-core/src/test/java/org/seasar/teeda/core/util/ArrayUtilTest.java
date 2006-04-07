@@ -15,7 +15,10 @@
  */
 package org.seasar.teeda.core.util;
 
+import java.lang.reflect.Array;
+
 import junit.framework.TestCase;
+import junitx.framework.ArrayAssert;
 
 public class ArrayUtilTest extends TestCase {
 
@@ -34,6 +37,15 @@ public class ArrayUtilTest extends TestCase {
         assertEquals(true, ArrayUtil.equalsIgnoreSequence(null, null));
         assertEquals(false, ArrayUtil.equalsIgnoreSequence(null,
                 new Object[] {}));
+    }
+
+    public void testSetArrayValue() throws Exception {
+        Object o = Array.newInstance(int.class, 3);
+        ArrayUtil.setArrayValue(o, int.class, new Integer(1), 0);
+        ArrayUtil.setArrayValue(o, int.class, new Integer(2), 1);
+        ArrayUtil.setArrayValue(o, int.class, new Integer(3), 2);
+        int[] num = (int[]) o;
+        ArrayAssert.assertEquals(new int[] { 1, 2, 3 }, num);
     }
 
 }

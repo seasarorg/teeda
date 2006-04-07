@@ -15,13 +15,21 @@
  */
 package org.seasar.teeda.core.util;
 
+import java.lang.reflect.Array;
+
 import javax.faces.component.UIComponent;
+import javax.faces.component.UIOutput;
 import javax.faces.component.UIViewRoot;
+import javax.faces.convert.IntegerConverter;
 
 import junit.framework.TestCase;
+import junitx.framework.ArrayAssert;
 
+import org.seasar.teeda.core.mock.MockConverter;
+import org.seasar.teeda.core.mock.MockFacesContextImpl;
 import org.seasar.teeda.core.mock.MockUIComponent;
 import org.seasar.teeda.core.mock.MockUIComponentBase;
+import org.seasar.teeda.core.mock.MockValueBinding;
 
 /**
  * @author manhole
@@ -93,6 +101,52 @@ public class RendererUtilTest extends TestCase {
         component.getAttributes().put("rendered", Boolean.FALSE);
         assertEquals(false, RendererUtil.containsAttributesForRender(component,
                 new String[] { "rendered" }));
+    }
+
+    public void testGetConvertedUIOutputValues_submittedValueIsNull()
+            throws Exception {
+        assertNull(RendererUtil.getConvertedUIOutputValues(
+                new MockFacesContextImpl(), new UIOutput(), null));
+    }
+
+    public void testGetConvertedUIOutputValues_converterIsNull()
+            throws Exception {
+        UIOutput out = new UIOutput();
+        out.setConverter(null);
+        Object o = RendererUtil.getConvertedUIOutputValues(
+                new MockFacesContextImpl(), out, "aaa");
+        assertEquals("aaa", o);
+    }
+
+    public void testGetConvertedUIOutputValues_arrayLengthIsZero()
+            throws Exception {
+        UIOutput out = new UIOutput();
+        out.setConverter(new MockConverter());
+        MockValueBinding vb = new MockValueBinding();
+        vb.setType(int[].class);
+        out.setValueBinding("value", vb);
+        Object submittedValue = Array.newInstance(int.class, 0);
+        Object o = RendererUtil.getConvertedUIOutputValues(
+                new MockFacesContextImpl(), out, submittedValue);
+        int[] result = (int[]) o;
+        assertEquals(0, result.length);
+    }
+
+    public void testGetConvertedUIOutputValues_arrayReturn() throws Exception {
+        UIOutput out = new UIOutput();
+        out.setConverter(new IntegerConverter());
+        MockValueBinding vb = new MockValueBinding();
+        vb.setType(int[].class);
+        out.setValueBinding("value", vb);
+        Object submittedValue = Array.newInstance(String.class, 3);
+        Array.set(submittedValue, 0, "1");
+        Array.set(submittedValue, 1, "2");
+        Array.set(submittedValue, 2, "3");
+        Object o = RendererUtil.getConvertedUIOutputValues(
+                new MockFacesContextImpl(), out, submittedValue);
+        int[] result = (int[]) o;
+        assertEquals(3, result.length);
+        ArrayAssert.assertEquals(new int[] { 1, 2, 3 }, result);
     }
 
     // TODO more tests
