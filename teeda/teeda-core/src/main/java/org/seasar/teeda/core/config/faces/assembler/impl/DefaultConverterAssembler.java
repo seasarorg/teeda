@@ -18,6 +18,8 @@ package org.seasar.teeda.core.config.faces.assembler.impl;
 import java.util.Map;
 
 import org.seasar.framework.util.StringUtil;
+import org.seasar.teeda.core.application.ConfigurationSupport;
+import org.seasar.teeda.core.application.ConverterConfiguration;
 import org.seasar.teeda.core.config.faces.assembler.ConverterAssembler;
 import org.seasar.teeda.core.config.faces.assembler.ConverterChildAssembler;
 import org.seasar.teeda.core.config.faces.element.ConverterElement;
@@ -37,31 +39,61 @@ public class DefaultConverterAssembler extends ConverterAssembler {
     }
 
     protected void setupBeforeAssemble() {
-        converterIdAssembler_ = new ConverterChildAssembler(getConvertersById()) {
-            protected void doAssemble(String converterId,
-                    ConverterElement converterElement) {
-                String converterClass = converterElement.getConverterClass();
-                if (!StringUtil.isEmpty(converterClass)) {
-                    getApplication().addConverter(converterId, converterClass);
-                }
-            }
-        };
-        conveterClassAssembler_ = new ConverterChildAssembler(
-                getConvertersByClass()) {
-            protected void doAssemble(String converterForClass,
-                    ConverterElement converterElement) {
-                String converterClass = converterElement.getConverterClass();
-                if (!StringUtil.isEmpty(converterClass)) {
-                    Class targetClazz = ClassUtil.forName(converterForClass);
-                    getApplication().addConverter(targetClazz, converterClass);
-                }
-            }
-        };
+        converterIdAssembler_ = new ConverterChildAssemblerById(
+                getConvertersById());
+        conveterClassAssembler_ = new ConverterChildAssemblerByTargetClass(
+                getConvertersByClass());
     }
 
     public void assemble() {
         converterIdAssembler_.assemble();
         conveterClassAssembler_.assemble();
+    }
+
+    private static class ConverterChildAssemblerById extends
+            ConverterChildAssembler {
+
+        public ConverterChildAssemblerById(Map targetConverters) {
+            super(targetConverters);
+        }
+
+        protected void doAssemble(String converterId,
+                ConverterElement converterElement) {
+            String converterClass = converterElement.getConverterClass();
+            if (!StringUtil.isEmpty(converterClass)) {
+                getApplication().addConverter(converterId, converterClass);
+            }
+        }
+
+        protected void doAddConverterConfiguration(
+                ConfigurationSupport support, String converterKey,
+                ConverterConfiguration configuration) {
+            support.addConverterConfiguration(converterKey, configuration);
+        }
+    }
+
+    private static class ConverterChildAssemblerByTargetClass extends
+            ConverterChildAssembler {
+
+        public ConverterChildAssemblerByTargetClass(Map targetConverters) {
+            super(targetConverters);
+        }
+
+        protected void doAssemble(String converterForClass,
+                ConverterElement converterElement) {
+            String converterClass = converterElement.getConverterClass();
+            if (!StringUtil.isEmpty(converterClass)) {
+                Class targetClazz = ClassUtil.forName(converterForClass);
+                getApplication().addConverter(targetClazz, converterClass);
+            }
+        }
+
+        protected void doAddConverterConfiguration(
+                ConfigurationSupport support, String converterForClass,
+                ConverterConfiguration configuration) {
+            Class targetClazz = ClassUtil.forName(converterForClass);
+            support.addConverterConfiguration(targetClazz, configuration);
+        }
     }
 
 }

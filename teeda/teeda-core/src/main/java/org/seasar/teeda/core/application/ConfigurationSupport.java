@@ -23,7 +23,10 @@ import org.seasar.teeda.core.el.ValueBindingContext;
  */
 public interface ConfigurationSupport {
 
-    public void addConverterConfiguration(String converterClassName,
+    public void addConverterConfiguration(String converterId,
+            ConverterConfiguration converterConfig);
+
+    public void addConverterConfiguration(Class targetClass,
             ConverterConfiguration converterConfig);
 
     public void setValueBindingContext(ValueBindingContext vbContext);

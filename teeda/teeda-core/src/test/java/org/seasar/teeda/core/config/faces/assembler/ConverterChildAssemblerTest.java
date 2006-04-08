@@ -23,6 +23,8 @@ import javax.faces.convert.Converter;
 
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.application.ApplicationImpl;
+import org.seasar.teeda.core.application.ConfigurationSupport;
+import org.seasar.teeda.core.application.ConverterConfiguration;
 import org.seasar.teeda.core.config.faces.element.ConverterElement;
 import org.seasar.teeda.core.config.faces.element.PropertyElement;
 import org.seasar.teeda.core.config.faces.element.impl.ConverterElementImpl;
@@ -44,7 +46,7 @@ public class ConverterChildAssemblerTest extends TeedaTestCase {
         cElement.setConverterId("id");
         Map map = new HashMap();
         map.put(cElement.getConverterId(), cElement);
-        MockConverterChildAssembler1 assembler = new MockConverterChildAssembler1(
+        MockConverterChildAssemblerForId assembler = new MockConverterChildAssemblerForId(
                 map);
 
         assembler.assemble();
@@ -78,7 +80,7 @@ public class ConverterChildAssemblerTest extends TeedaTestCase {
         cElement.setConverterId("");
         Map map = new HashMap();
         map.put(cElement.getConverterId(), cElement);
-        MockConverterChildAssembler1 assembler = new MockConverterChildAssembler1(
+        MockConverterChildAssemblerForId assembler = new MockConverterChildAssemblerForId(
                 map);
 
         assembler.assemble();
@@ -89,6 +91,7 @@ public class ConverterChildAssemblerTest extends TeedaTestCase {
     }
 
     public void testAssemble_withConverterConfiguration() throws Exception {
+        // TODO
         MockApplication previous = getApplication();
         ApplicationFactory appFactory = FactoryFinderUtil
                 .getApplicationFactory();
@@ -106,7 +109,7 @@ public class ConverterChildAssemblerTest extends TeedaTestCase {
             cElement.addPropertyElement(pElement);
             Map map = new HashMap();
             map.put(cElement.getConverterId(), cElement);
-            MockConverterChildAssembler1 assembler = new MockConverterChildAssembler1(
+            MockConverterChildAssemblerForId assembler = new MockConverterChildAssemblerForId(
                     map);
 
             assembler.assemble();
@@ -121,10 +124,10 @@ public class ConverterChildAssemblerTest extends TeedaTestCase {
         }
     }
 
-    private static class MockConverterChildAssembler1 extends
+    private static class MockConverterChildAssemblerForId extends
             ConverterChildAssembler {
 
-        public MockConverterChildAssembler1(Map targetMap) {
+        public MockConverterChildAssemblerForId(Map targetMap) {
             super(targetMap);
         }
 
@@ -134,6 +137,12 @@ public class ConverterChildAssemblerTest extends TeedaTestCase {
             if (!StringUtil.isEmpty(converterClass)) {
                 getApplication().addConverter(converterId, converterClass);
             }
+        }
+
+        protected void doAddConverterConfiguration(
+                ConfigurationSupport support, String converterKey,
+                ConverterConfiguration configuration) {
+            support.addConverterConfiguration(converterKey, configuration);
         }
     }
 
@@ -151,6 +160,13 @@ public class ConverterChildAssemblerTest extends TeedaTestCase {
                 Class targetClazz = ClassUtil.forName(converterForClass);
                 getApplication().addConverter(targetClazz, converterClass);
             }
+        }
+
+        protected void doAddConverterConfiguration(
+                ConfigurationSupport support, String converterKey,
+                ConverterConfiguration configuration) {
+            // TODO Auto-generated method stub
+
         }
     }
 

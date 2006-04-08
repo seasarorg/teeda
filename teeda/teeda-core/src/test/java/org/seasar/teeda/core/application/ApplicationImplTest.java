@@ -41,6 +41,7 @@ import org.seasar.teeda.core.mock.MockValidatorWithProperties;
 import org.seasar.teeda.core.mock.MockValueBinding;
 import org.seasar.teeda.core.mock.MockVariableResolver;
 import org.seasar.teeda.core.mock.NullValidator;
+import org.seasar.teeda.core.unit.ExceptionAssert;
 import org.seasar.teeda.core.unit.TeedaTestCase;
 import org.seasar.teeda.core.util.DIContainerUtil;
 
@@ -86,6 +87,34 @@ public class ApplicationImplTest extends TeedaTestCase {
         UIComponent c = app_.createComponent(vb, context, "mock");
         assertNotNull(c);
         assertTrue(c instanceof MockUIComponent);
+    }
+
+    public void testCreateConverter_ConverterIdIsNull() throws Exception {
+        // ## Arrange ##
+        app_ = new ApplicationImpl();
+        String converterId = null;
+
+        // ## Act & Assert ##
+        try {
+            app_.createConverter(converterId);
+            fail();
+        } catch (NullPointerException npe) {
+            ExceptionAssert.assertMessageExist(npe);
+        }
+    }
+
+    public void testCreateConverter_ConverterForClassIsNull() throws Exception {
+        // ## Arrange ##
+        app_ = new ApplicationImpl();
+        Class converterForClass = null;
+
+        // ## Act & Assert ##
+        try {
+            app_.createConverter(converterForClass);
+            fail();
+        } catch (NullPointerException npe) {
+            ExceptionAssert.assertMessageExist(npe);
+        }
     }
 
     public void testAddConverter1() {
@@ -181,11 +210,10 @@ public class ApplicationImplTest extends TeedaTestCase {
         app_ = new ApplicationImpl();
         ConverterConfiguration config = new ConverterConfiguration("pattern",
                 "String", "yyyy/MM/dd HH:mm:ss");
-        app_.addConverterConfiguration(this.getClass().getName()
-                + "$HogeConverter", config);
-        app_.addConverter("id", this.getClass().getName() + "$HogeConverter");
+        app_.addConverterConfiguration("someConverterId", config);
+        app_.addConverter("someConverterId", HogeConverter.class.getName());
 
-        Converter c = app_.createConverter("id");
+        Converter c = app_.createConverter("someConverterId");
 
         assertNotNull(c);
         assertTrue(c instanceof HogeConverter);
@@ -196,15 +224,23 @@ public class ApplicationImplTest extends TeedaTestCase {
         app_ = new ApplicationImpl();
         ConverterConfiguration config = new ConverterConfiguration("num",
                 "int", "3");
-        app_.addConverterConfiguration(this.getClass().getName()
-                + "$HogeConverter", config);
-        app_.addConverter("id", this.getClass().getName() + "$HogeConverter");
+        app_.addConverterConfiguration("someConverterId", config);
+        app_.addConverter("someConverterId", HogeConverter.class.getName());
 
-        Converter c = app_.createConverter("id");
+        Converter c = app_.createConverter("someConverterId");
 
         assertNotNull(c);
         assertTrue(c instanceof HogeConverter);
         assertEquals(3, ((HogeConverter) c).getNum());
+    }
+
+    public void test1() throws Exception {
+        // ## Arrange ##
+
+        // ## Act ##
+
+        // ## Assert ##
+
     }
 
     public void testCreateValueBinding() throws Exception {
@@ -258,8 +294,8 @@ public class ApplicationImplTest extends TeedaTestCase {
     }
 
     public void testCreateConverter_duplicateConverter2() throws Exception {
-        ComponentDef cDef = new ComponentDefImpl(
-                A1Converter.class, Date.class.getName());
+        ComponentDef cDef = new ComponentDefImpl(A1Converter.class, Date.class
+                .getName());
         getContainer().register(cDef);
         app_ = new ApplicationImpl();
         app_.addConverter(Date.class, A2Converter.class.getName());
@@ -267,27 +303,26 @@ public class ApplicationImplTest extends TeedaTestCase {
         Converter c = app_.createConverter(Date.class);
         assertNotNull(c);
         assertTrue(c instanceof A1Converter);
-        
-        
+
         DIContainerUtil.getComponent(A1Converter.class);
     }
-    
+
     public void testCreateComponent_orderTest() throws Exception {
         ComponentDef cDef = new ComponentDefImpl(MockUIComponent.class, "mock");
         PropertyDef pDef = new PropertyDefImpl("id");
         pDef.setValue("aaa");
         cDef.addPropertyDef(pDef);
         getContainer().register(cDef);
-        
+
         app_ = new ApplicationImpl();
         app_.addComponent("mock", MockUIComponent.class.getName());
-        
+
         UIComponent c = app_.createComponent("mock");
         assertNotNull(c);
         MockUIComponent mock = (MockUIComponent) c;
         assertEquals("aaa", mock.getId());
     }
-    
+
     public static class HogeConverter implements Converter {
 
         private String pattern_;

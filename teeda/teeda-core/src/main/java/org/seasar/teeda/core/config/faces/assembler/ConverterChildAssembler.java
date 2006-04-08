@@ -31,6 +31,7 @@ import org.seasar.teeda.core.util.ApplicationUtil;
 import org.seasar.teeda.core.util.IteratorUtil;
 
 public abstract class ConverterChildAssembler implements JsfAssembler {
+
     private Application application_;
 
     private Map targetCovnerters_ = Collections.EMPTY_MAP;
@@ -49,17 +50,17 @@ public abstract class ConverterChildAssembler implements JsfAssembler {
             converterKey = (String) entry.getKey();
             converterElement = (ConverterElement) entry.getValue();
             if (!StringUtil.isEmpty(converterKey) && converterElement != null) {
-                setConverterConfiguration(converterElement);
+                setConverterConfiguration(converterKey, converterElement);
                 doAssemble(converterKey, converterElement);
             }
         }
     }
 
-    protected void setConverterConfiguration(ConverterElement converterElement) {
+    protected void setConverterConfiguration(String converterKey,
+            ConverterElement converterElement) {
         if (converterElement == null) {
             return;
         }
-        String targetClassName = converterElement.getConverterClass();
         Application app = getApplication();
         if (app instanceof ConfigurationSupport) {
             List properties = converterElement.getPropertyElements();
@@ -72,7 +73,7 @@ public abstract class ConverterChildAssembler implements JsfAssembler {
                 String defaultValue = property.getDefaultValue();
                 if (!StringUtil.isEmpty(propertyName)
                         && !StringUtil.isEmpty(propertyClass)) {
-                    support.addConverterConfiguration(targetClassName,
+                    doAddConverterConfiguration(support, converterKey,
                             new ConverterConfiguration(propertyName,
                                     propertyClass, defaultValue));
                 }
@@ -86,5 +87,9 @@ public abstract class ConverterChildAssembler implements JsfAssembler {
 
     protected abstract void doAssemble(String converterKey,
             ConverterElement converterElement);
+
+    protected abstract void doAddConverterConfiguration(
+            ConfigurationSupport support, String converterKey,
+            ConverterConfiguration configuration);
 
 }

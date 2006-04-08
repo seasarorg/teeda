@@ -80,7 +80,8 @@ public class ApplicationImpl extends Application implements
 
     private Map converterIdMap_ = Collections.synchronizedMap(new HashMap());
 
-    private Map converterClassMap_ = Collections.synchronizedMap(new HashMap());
+    private Map converterForClassMap_ = Collections
+            .synchronizedMap(new HashMap());
 
     private Map converterConfigurationMap_ = Collections
             .synchronizedMap(new HashMap());
@@ -250,6 +251,7 @@ public class ApplicationImpl extends Application implements
         converterIdMap_.put(converterId, clazz);
     }
 
+    // "targetClass" is converterForClass
     public void addConverter(Class targetClass, String converterClassName) {
         if (targetClass == null) {
             throw new NullPointerException("targetClass is null");
@@ -259,7 +261,7 @@ public class ApplicationImpl extends Application implements
         }
         Class clazz = ClassUtil.forName(converterClassName);
         ApplicationUtil.verifyClassType(Converter.class, clazz);
-        converterClassMap_.put(targetClass, clazz);
+        converterForClassMap_.put(targetClass, clazz);
     }
 
     public Converter createConverter(String converterId) {
@@ -273,7 +275,8 @@ public class ApplicationImpl extends Application implements
         }
         Class clazz = (Class) converterIdMap_.get(converterId);
         try {
-            Converter converter = (Converter) createConverter0(clazz);
+            Converter converter = (Converter) createConverterByConverterClass(clazz);
+            setConverterPropertiesFor(converterId, converter);
             return converter;
         } catch (Exception e) {
             Object[] args = { converterId };
@@ -281,40 +284,61 @@ public class ApplicationImpl extends Application implements
         }
     }
 
+    // "targetClass" is converterForClass 
     public Converter createConverter(Class targetClass) {
         if (targetClass == null) {
-            throw new NullPointerException();
+            throw new NullPointerException("targetClass");
         }
-        Converter c = doCreateConverter(targetClass);
-        return c;
+        return doCreateConverterByTargetClass(targetClass);
     }
 
-    public void addConverterConfiguration(String converterClassName,
-            ConverterConfiguration converterConfig) {
-        if (StringUtil.isEmpty(converterClassName)) {
-            throw new NullPointerException("converter target class name");
+    public void addConverterConfiguration(String converterId,
+            ConverterConfiguration converterConfiguration) {
+        if (StringUtil.isEmpty(converterId)) {
+            throw new NullPointerException("converterId");
         }
-        if (converterConfig == null) {
-            throw new NullPointerException("converter config support");
+        if (converterConfiguration == null) {
+            throw new NullPointerException("converterConfiguration");
         }
-        Class clazz = ClassUtil.forName(converterClassName);
-        List list = (List) converterConfigurationMap_.get(clazz);
+        List list = getConverterConfigurationList(converterId);
+        list.add(converterConfiguration);
+    }
+
+    private List getConverterConfigurationList(Object key) {
+        List list = (List) converterConfigurationMap_.get(key);
         if (list == null) {
             list = new ArrayList();
+            converterConfigurationMap_.put(key, list);
         }
-        list.add(converterConfig);
-        converterConfigurationMap_.put(clazz, list);
+        return list;
     }
 
-    private Converter createConverter0(Class clazz) {
-        Converter converter = null;
+    public void addConverterConfiguration(Class targetClass,
+            ConverterConfiguration converterConfiguration) {
+        if (targetClass == null) {
+            throw new NullPointerException("targetClass");
+        }
+        if (converterConfiguration == null) {
+            throw new NullPointerException("converterConfiguration");
+        }
+        List list = getConverterConfigurationList(targetClass);
+        list.add(converterConfiguration);
+    }
+
+    private Converter createConverterByConverterClass(Class converterClass) {
         try {
-            converter = (Converter) ClassUtil.newInstance(clazz);
+            Converter converter = (Converter) ClassUtil
+                    .newInstance(converterClass);
+            return converter;
         } catch (Exception e) {
-            Object[] args = { clazz.getName() };
+            Object[] args = { converterClass.getName() };
             throw new ConverterInstantiateFailureException(args);
         }
-        List list = (List) converterConfigurationMap_.get(clazz);
+    }
+
+    private void setConverterPropertiesFor(Object propertyKey,
+            Converter converter) {
+        List list = (List) converterConfigurationMap_.get(propertyKey);
         for (Iterator itr = IteratorUtil.getIterator(list); itr.hasNext();) {
             ConverterConfiguration config = (ConverterConfiguration) itr.next();
             if (config != null) {
@@ -323,27 +347,23 @@ public class ApplicationImpl extends Application implements
                         .getDefaultValue());
             }
         }
-        return converter;
     }
 
-    private Converter doCreateConverter(Class targetClass) {
-        Converter c = createConverterByClass(targetClass);
-        if (c != null) {
-            return c;
+    private Converter doCreateConverterByTargetClass(Class targetClass) {
+        Converter converter = createConverterByClass(targetClass);
+        if (converter == null) {
+            converter = createConverterByInterface(targetClass);
         }
-        c = createConverterByInterface(targetClass);
-        if (c != null) {
-            return c;
+        if (converter == null) {
+            converter = createConverterBySuperClass(targetClass);
         }
-        c = createConverterBySuperClass(targetClass);
-        if (c != null) {
-            return c;
+        if (converter == null) {
+            converter = createConverterForPrimitive(targetClass);
         }
-        c = createConverterForPrimitive(targetClass);
-        if (c != null) {
-            return c;
+        if (converter != null) {
+            setConverterPropertiesFor(targetClass, converter);
         }
-        return null;
+        return converter;
     }
 
     protected Converter createConverterByClass(Class targetClass) {
@@ -352,9 +372,9 @@ public class ApplicationImpl extends Application implements
         if (component != null) {
             return (Converter) component;
         }
-        Class converterClass = (Class) converterClassMap_.get(targetClass);
+        Class converterClass = (Class) converterForClassMap_.get(targetClass);
         if (converterClass != null) {
-            return (Converter) createConverter0(converterClass);
+            return (Converter) createConverterByConverterClass(converterClass);
         }
         return null;
     }
@@ -363,7 +383,7 @@ public class ApplicationImpl extends Application implements
         Class[] interfaces = targetClass.getInterfaces();
         if (interfaces != null) {
             for (int i = 0; i < interfaces.length; i++) {
-                Converter converter = doCreateConverter(interfaces[i]);
+                Converter converter = doCreateConverterByTargetClass(interfaces[i]);
                 if (converter != null) {
                     return converter;
                 }
@@ -375,7 +395,7 @@ public class ApplicationImpl extends Application implements
     protected Converter createConverterBySuperClass(Class targetClass) {
         Class superClass = targetClass.getSuperclass();
         if (superClass != null) {
-            return doCreateConverter(superClass);
+            return doCreateConverterByTargetClass(superClass);
         }
         return null;
     }
@@ -383,7 +403,7 @@ public class ApplicationImpl extends Application implements
     protected Converter createConverterForPrimitive(Class targetClass) {
         Class primitiveClass = ClassUtil.getWrapperClass(targetClass);
         if (primitiveClass != null) {
-            return doCreateConverter(primitiveClass);
+            return doCreateConverterByTargetClass(primitiveClass);
         }
         return null;
     }
@@ -393,7 +413,7 @@ public class ApplicationImpl extends Application implements
     }
 
     public Iterator getConverterTypes() {
-        return converterClassMap_.keySet().iterator();
+        return converterForClassMap_.keySet().iterator();
     }
 
     public Iterator getSupportedLocales() {
