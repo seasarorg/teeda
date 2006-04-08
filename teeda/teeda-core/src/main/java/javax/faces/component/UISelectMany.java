@@ -77,7 +77,7 @@ public class UISelectMany extends UIInput {
         if (previous == null || value == null) {
             return true;
         }
-        if ((previous instanceof List) && value instanceof List) {
+        if ((previous instanceof List) && (value instanceof List)) {
             previous = ((List) previous).toArray();
             value = ((List) value).toArray();
         }

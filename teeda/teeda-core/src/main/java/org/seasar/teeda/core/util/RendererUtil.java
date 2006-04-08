@@ -20,7 +20,6 @@ import java.lang.reflect.Array;
 import java.util.Map;
 
 import javax.faces.FacesException;
-import javax.faces.FactoryFinder;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
@@ -32,9 +31,9 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 import javax.faces.el.ValueBinding;
 import javax.faces.internal.FacesMessageUtils;
+import javax.faces.internal.RenderKitUtil;
 import javax.faces.internal.UIDefaultAttribute;
 import javax.faces.render.RenderKit;
-import javax.faces.render.RenderKitFactory;
 import javax.faces.render.Renderer;
 
 import org.seasar.framework.log.Logger;
@@ -218,17 +217,12 @@ public class RendererUtil {
         return submittedValue;
     }
 
-    public static Renderer getRenderer(FacesContext context,
-            UIComponent component) {
-
+    static Renderer getRenderer(FacesContext context, UIComponent component) {
         String rendererType = component.getRendererType();
         if (rendererType == null) {
             return null;
         }
-        String renderKitId = context.getViewRoot().getRenderKitId();
-        RenderKitFactory rkf = (RenderKitFactory) FactoryFinder
-                .getFactory(FactoryFinder.RENDER_KIT_FACTORY);
-        RenderKit renderKit = rkf.getRenderKit(context, renderKitId);
+        RenderKit renderKit = RenderKitUtil.getRenderKit(context);
         return renderKit.getRenderer(component.getFamily(), rendererType);
     }
 

@@ -255,15 +255,16 @@ public class UIInput extends UIOutput implements EditableValueHolder {
         if (submittedValue == null) {
             return;
         }
-        Object newValue = getConvertedValue(context, submittedValue);
-        validateValue(context, newValue);
-        if (isValid()) {
-            Object previous = getValue();
-            setValue(newValue);
-            setSubmittedValue(null);
-            if (compareValues(previous, newValue)) {
-                queueEvent(new ValueChangeEvent(this, previous, newValue));
-            }
+        Object convertedValue = getConvertedValue(context, submittedValue);
+        validateValue(context, convertedValue);
+        if (!isValid()) {
+            return;
+        }
+        Object previous = getValue();
+        setValue(convertedValue);
+        setSubmittedValue(null);
+        if (compareValues(previous, convertedValue)) {
+            queueEvent(new ValueChangeEvent(this, previous, convertedValue));
         }
     }
 

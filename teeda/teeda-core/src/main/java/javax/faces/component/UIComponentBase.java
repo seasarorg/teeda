@@ -509,13 +509,12 @@ public abstract class UIComponentBase extends UIComponent {
     }
 
     protected Renderer getRenderer(FacesContext context) {
-        Renderer renderer = null;
         String rendererType = getRendererType();
-        if (rendererType != null) {
-            RenderKit renderKit = RenderKitUtil.getRenderKit(context);
-            renderer = renderKit.getRenderer(getFamily(), rendererType);
+        if (rendererType == null) {
+            return null;
         }
-        return renderer;
+        RenderKit renderKit = RenderKitUtil.getRenderKit(context);
+        return renderKit.getRenderer(getFamily(), rendererType);
     }
 
     public boolean isTransient() {

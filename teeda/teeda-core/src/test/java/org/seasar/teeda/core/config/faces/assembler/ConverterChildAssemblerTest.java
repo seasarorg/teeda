@@ -38,15 +38,6 @@ import org.seasar.teeda.core.util.FactoryFinderUtil;
  */
 public class ConverterChildAssemblerTest extends TeedaTestCase {
 
-    /**
-     * Constructor for ConverterChildAssemblerTest.
-     * 
-     * @param name
-     */
-    public ConverterChildAssemblerTest(String name) {
-        super(name);
-    }
-
     public void testAssemble_withConverterId() throws Exception {
         ConverterElement cElement = new ConverterElementImpl();
         cElement.setConverterClass("org.seasar.teeda.core.mock.MockConverter");
