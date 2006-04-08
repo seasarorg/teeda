@@ -41,7 +41,11 @@ public class HiddenBean {
     }
 
     public void doSomething() {
-        b_ = a_ + b_;
+        if (b_ != null) {
+            b_ = a_ + b_;
+        } else {
+            b_ = a_;
+        }
     }
 
 }
