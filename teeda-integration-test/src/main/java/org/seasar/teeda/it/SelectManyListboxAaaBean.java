@@ -23,6 +23,9 @@ import org.seasar.teeda.core.util.ArrayUtil;
 public class SelectManyListboxAaaBean {
 
     private String[] aaaSelected_;
+    {
+        aaaSelected_ = new String[] { "2" };
+    }
 
     public String[] getAaaSelected() {
         return aaaSelected_;

@@ -62,11 +62,12 @@ public class SelectManyListboxTest extends AbstractTestCase {
             assertEquals(true, aaa.isMultipleSelectEnabled());
             assertEquals(3, aaa.getOptionSize());
             assertEquals(false, aaa.getOption(0).isSelected());
-            assertEquals(false, aaa.getOption(1).isSelected());
+            assertEquals(true, aaa.getOption(1).isSelected());
             assertEquals(false, aaa.getOption(2).isSelected());
+            aaa.getOption(1).setSelected(false);
             aaa.getOption(2).setSelected(true);
         }
-        assertEquals("null", getSelectedString(page1));
+        assertEquals("[2]", getSelectedString(page1));
 
         HtmlSubmitInput submit1 = (HtmlSubmitInput) page1
                 .getHtmlElementById("submit1");
@@ -137,7 +138,7 @@ public class SelectManyListboxTest extends AbstractTestCase {
         System.out.println(url);
 
         WebClient webClient = new WebClient();
-        
+
         // ## Act ##
         // ## Assert ##
         HtmlPage page1 = (HtmlPage) webClient.getPage(url);
@@ -149,7 +150,7 @@ public class SelectManyListboxTest extends AbstractTestCase {
         final String expected = readText("testRender2.html");
         Diff diff = diff(expected, body1);
         assertEquals(diff.toString(), true, diff.similar());
-        
+
         // 1
 
         {
@@ -157,14 +158,14 @@ public class SelectManyListboxTest extends AbstractTestCase {
             assertEquals(true, aaa.isMultipleSelectEnabled());
             assertEquals(4, aaa.getOptionSize());
             assertEquals(false, aaa.getOption(0).isSelected());
-            assertEquals(false, aaa.getOption(1).isSelected());
+            assertEquals(true, aaa.getOption(1).isSelected());
             assertEquals(false, aaa.getOption(2).isSelected());
             assertEquals(false, aaa.getOption(3).isSelected());
             assertEquals(true, aaa.getOption(3).isDisabled());
             aaa.getOption(1).setSelected(true);
             aaa.getOption(2).setSelected(true);
         }
-        assertEquals("null", getSelectedString(page1));
+        assertEquals("[2]", getSelectedString(page1));
 
         HtmlSubmitInput submit1 = (HtmlSubmitInput) page1
                 .getHtmlElementById("submit1");
