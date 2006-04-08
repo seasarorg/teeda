@@ -20,10 +20,12 @@ import java.util.List;
 
 import javax.faces.model.SelectItem;
 
+import org.seasar.teeda.core.util.ArrayUtil;
+
 /**
  * @author manhole
  */
-public class SelectManyListboxBbbItems {
+public class SelectManyListboxBbbBean {
 
     private List list_;
 
@@ -41,6 +43,23 @@ public class SelectManyListboxBbbItems {
 
     public void setList(List list) {
         list_ = list;
+    }
+
+    private int[] bbbSelected_;
+    {
+        bbbSelected_ = new int[] { 2 };
+    }
+
+    public int[] getBbbSelected() {
+        return bbbSelected_;
+    }
+
+    public void setBbbSelected(int[] bbbSelected) {
+        bbbSelected_ = bbbSelected;
+    }
+
+    public String getSelectedString() {
+        return ArrayUtil.toString(ArrayUtil.toObjectArray(bbbSelected_));
     }
 
 }

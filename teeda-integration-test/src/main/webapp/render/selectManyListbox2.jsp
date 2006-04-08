@@ -8,10 +8,10 @@
 <body>
 <f:view>
 	<h:form id="selectManyListboxForm">
-		<h:selectManyListbox id="aaa" value="#{selectManyListboxAaaBean.aaaSelected}">
-			<f:selectItems value="#{selectManyListboxBbbItems.list}"/>
+		<h:selectManyListbox id="aaa" value="#{selectManyListboxBbbBean.bbbSelected}">
+			<f:selectItems value="#{selectManyListboxBbbBean.list}"/>
 		</h:selectManyListbox>
-		<h:outputText id="selectedString" value="#{selectManyListboxAaaBean.selectedString}"/>
+		<h:outputText id="selectedString" value="#{selectManyListboxBbbBean.selectedString}"/>
 		<h:commandButton id="submit1"/>
 	</h:form>
 </f:view>

@@ -57,8 +57,8 @@
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
-		<managed-bean-name>selectManyListboxBbbItems</managed-bean-name>
-		<managed-bean-class>org.seasar.teeda.it.SelectManyListboxBbbItems</managed-bean-class>
+		<managed-bean-name>selectManyListboxBbbBean</managed-bean-name>
+		<managed-bean-class>org.seasar.teeda.it.SelectManyListboxBbbBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
