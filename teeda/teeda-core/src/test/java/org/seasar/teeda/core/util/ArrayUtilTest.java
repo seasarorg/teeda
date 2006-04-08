@@ -48,4 +48,18 @@ public class ArrayUtilTest extends TestCase {
         ArrayAssert.assertEquals(new int[] { 1, 2, 3 }, num);
     }
 
+    public void testToObjectArray() throws Exception {
+        final Object[] a = ArrayUtil.toObjectArray(new int[] { 1, 5, 2 });
+        ArrayAssert.assertEquals(new Integer[] { new Integer(1),
+                new Integer(5), new Integer(2) }, a);
+    }
+
+    public void testToObjectArray_NoArray() throws Exception {
+        try {
+            ArrayUtil.toObjectArray("a");
+            fail();
+        } catch (IllegalArgumentException e) {
+        }
+    }
+
 }

@@ -170,7 +170,7 @@ public class HtmlSelectManyCheckboxRenderer extends AbstractHtmlRenderer {
                         writer,
                         htmlSelectManyCheckbox,
                         JsfConstants.INPUT_PASSTHROUGH_ATTRIBUTES_WITHOUT_DISABLED_AND_STYLE);
-        if (isChecked(selectedValues, value)) {
+        if (isChecked(selectedValues, value.toString())) {
             RendererUtil.renderCheckedAttribute(writer);
         }
         if (disabled) {
@@ -185,7 +185,7 @@ public class HtmlSelectManyCheckboxRenderer extends AbstractHtmlRenderer {
                         JsfConstants.LAYOUT_ATTR));
     }
 
-    protected boolean isChecked(String[] selectedValues, final Object value) {
+    protected boolean isChecked(String[] selectedValues, final String value) {
         return ArrayUtil.contains(selectedValues, value);
     }
 

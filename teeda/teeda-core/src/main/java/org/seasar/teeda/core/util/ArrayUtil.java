@@ -103,4 +103,13 @@ public class ArrayUtil {
         Array.set(array, index, value);
     }
 
+    public static Object[] toObjectArray(Object obj) {
+        int length = Array.getLength(obj);
+        Object[] array = new Object[length];
+        for (int i = 0; i < length; i++) {
+            array[i] = Array.get(obj, i);
+        }
+        return array;
+    }
+
 }

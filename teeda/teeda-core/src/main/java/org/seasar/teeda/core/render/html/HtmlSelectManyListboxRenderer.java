@@ -71,8 +71,8 @@ public class HtmlSelectManyListboxRenderer extends AbstractHtmlRenderer {
         }
         RendererUtil.renderAttributes(writer, component,
                 JsfConstants.SELECT_PASSTHROUGH_ATTRIBUTES_WITHOUT_DISABLED);
-        final String[] values = getValuesForRender(context, component);
-        renderSelectItems(context, component, writer, it, values);
+        final String[] selectedValues = getValuesForRender(context, component);
+        renderSelectItems(context, component, writer, it, selectedValues);
 
         writer.endElement(JsfConstants.SELECT_ELEM);
     }
@@ -115,7 +115,7 @@ public class HtmlSelectManyListboxRenderer extends AbstractHtmlRenderer {
 
     protected void renderSelectItems(FacesContext context,
             UIComponent component, ResponseWriter writer, Iterator it,
-            String[] values) throws IOException {
+            String[] selectedValues) throws IOException {
 
         while (it.hasNext()) {
             final SelectItem selectItem = (SelectItem) it.next();
@@ -129,7 +129,7 @@ public class HtmlSelectManyListboxRenderer extends AbstractHtmlRenderer {
                         selectItemGroup.getLabel());
                 // TODO case: optgroup is disabled
                 renderSelectItems(context, component, writer, selectItemsIt,
-                        values);
+                        selectedValues);
                 writer.endElement(JsfConstants.OPTGROUP_ELEM);
             } else {
                 writer.startElement(JsfConstants.OPTION_ELEM, component);
@@ -145,7 +145,7 @@ public class HtmlSelectManyListboxRenderer extends AbstractHtmlRenderer {
                     RendererUtil.renderAttribute(writer,
                             JsfConstants.CLASS_ATTR, labelClass);
                 }
-                if (isSelected(values, value)) {
+                if (isSelected(selectedValues, value.toString())) {
                     RendererUtil.renderSelectedAttribute(writer);
                 }
                 if (selectItem.isDisabled()) {
@@ -157,8 +157,8 @@ public class HtmlSelectManyListboxRenderer extends AbstractHtmlRenderer {
         }
     }
 
-    private boolean isSelected(String[] values, final Object value) {
-        return ArrayUtil.contains(values, value);
+    private boolean isSelected(final String[] selectedValues, final String value) {
+        return ArrayUtil.contains(selectedValues, value);
     }
 
     public void decode(FacesContext context, UIComponent component) {

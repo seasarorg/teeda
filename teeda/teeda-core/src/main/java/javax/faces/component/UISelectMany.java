@@ -25,6 +25,8 @@ import javax.faces.internal.AssertionUtil;
 import javax.faces.internal.FacesMessageUtils;
 import javax.faces.internal.SelectItemsIterator;
 
+import org.seasar.teeda.core.util.ArrayUtil;
+
 /**
  * @author shot
  * @author manhole
@@ -151,11 +153,7 @@ public class UISelectMany extends UIInput {
             // } else if (!isArray(obj)) {
             // return null;
         }
-        int length = Array.getLength(obj);
-        Object[] array = new Object[length];
-        for (int i = 0; i < length; i++) {
-            array[i] = Array.get(obj, i);
-        }
+        Object[] array = ArrayUtil.toObjectArray(obj);
         return array;
     }
 
