@@ -251,7 +251,6 @@ public class ApplicationImpl extends Application implements
         converterIdMap_.put(converterId, clazz);
     }
 
-    // "targetClass" is converterForClass
     public void addConverter(Class targetClass, String converterClassName) {
         if (targetClass == null) {
             throw new NullPointerException("targetClass is null");
@@ -275,7 +274,7 @@ public class ApplicationImpl extends Application implements
         }
         Class clazz = (Class) converterIdMap_.get(converterId);
         try {
-            Converter converter = (Converter) createConverterByConverterClass(clazz);
+            Converter converter = createConverterByConverterClass(clazz);
             setConverterPropertiesFor(converterId, converter);
             return converter;
         } catch (Exception e) {
@@ -284,7 +283,6 @@ public class ApplicationImpl extends Application implements
         }
     }
 
-    // "targetClass" is converterForClass 
     public Converter createConverter(Class targetClass) {
         if (targetClass == null) {
             throw new NullPointerException("targetClass");
@@ -304,15 +302,6 @@ public class ApplicationImpl extends Application implements
         list.add(converterConfiguration);
     }
 
-    private List getConverterConfigurationList(Object key) {
-        List list = (List) converterConfigurationMap_.get(key);
-        if (list == null) {
-            list = new ArrayList();
-            converterConfigurationMap_.put(key, list);
-        }
-        return list;
-    }
-
     public void addConverterConfiguration(Class targetClass,
             ConverterConfiguration converterConfiguration) {
         if (targetClass == null) {
@@ -323,6 +312,15 @@ public class ApplicationImpl extends Application implements
         }
         List list = getConverterConfigurationList(targetClass);
         list.add(converterConfiguration);
+    }
+
+    private List getConverterConfigurationList(Object key) {
+        List list = (List) converterConfigurationMap_.get(key);
+        if (list == null) {
+            list = new ArrayList();
+            converterConfigurationMap_.put(key, list);
+        }
+        return list;
     }
 
     private Converter createConverterByConverterClass(Class converterClass) {
@@ -336,21 +334,8 @@ public class ApplicationImpl extends Application implements
         }
     }
 
-    private void setConverterPropertiesFor(Object propertyKey,
-            Converter converter) {
-        List list = (List) converterConfigurationMap_.get(propertyKey);
-        for (Iterator itr = IteratorUtil.getIterator(list); itr.hasNext();) {
-            ConverterConfiguration config = (ConverterConfiguration) itr.next();
-            if (config != null) {
-                String propertyName = config.getPropertyName();
-                PropertyUtil.setValue(converter, propertyName, config
-                        .getDefaultValue());
-            }
-        }
-    }
-
     private Converter doCreateConverterByTargetClass(Class targetClass) {
-        Converter converter = createConverterByClass(targetClass);
+        Converter converter = createConverterByTargetClass(targetClass);
         if (converter == null) {
             converter = createConverterByInterface(targetClass);
         }
@@ -366,7 +351,19 @@ public class ApplicationImpl extends Application implements
         return converter;
     }
 
-    protected Converter createConverterByClass(Class targetClass) {
+    private void setConverterPropertiesFor(Object key, Converter converter) {
+        List list = (List) converterConfigurationMap_.get(key);
+        for (Iterator itr = IteratorUtil.getIterator(list); itr.hasNext();) {
+            ConverterConfiguration config = (ConverterConfiguration) itr.next();
+            if (config != null) {
+                String propertyName = config.getPropertyName();
+                PropertyUtil.setValue(converter, propertyName, config
+                        .getDefaultValue());
+            }
+        }
+    }
+
+    protected Converter createConverterByTargetClass(Class targetClass) {
         Object component = componentLookupStrategy_
                 .getComponentByClass(targetClass);
         if (component != null) {
@@ -374,7 +371,7 @@ public class ApplicationImpl extends Application implements
         }
         Class converterClass = (Class) converterForClassMap_.get(targetClass);
         if (converterClass != null) {
-            return (Converter) createConverterByConverterClass(converterClass);
+            return createConverterByConverterClass(converterClass);
         }
         return null;
     }
