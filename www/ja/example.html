@@ -34,9 +34,85 @@
 teeda-exmapleのプログラムを順に解説します。
 実際に動作するサンプルを参考に、teeda coreの使い方を学習しましょう。
 </p>
-<li><a href="#hello">hello.html</a></li>
-<h2><a name="hello">hello.html</a></h2>
-<p>ブラウザで、http://localhost:8080/teeda-example/faces/hello/hello.htmlにアクセスしてみましょう。
+<li><a href="#hello">hello.jsp</a></li>
+<li><a href="#helloDI">helloDI.jsp</a></li>
+<h2><a name="hello">hello.jsp</a></h2>
+<p>ブラウザで、http://localhost:8080/teeda-example/faces/hello/hello.jspにアクセスしてみましょう。
+
+hello Teeda!と表示されるはずです。このサンプルでは、次のことを学びます。</p>
+<ul>
+<li>Teedaによる通常のJSFの例。</li>
+</ul>
+<p>それでは、通常のJSFの例のHTMLの中身を見てみましょう。 </p>
+<pre>
+01:&lt;%@ page contentType="text/html; charset=UTF-8" %&gt;
+02:&lt;%@ taglib uri="http://java.sun.com/jsf/core" prefix="f" %&gt;
+03:&lt;%@ taglib uri="http://java.sun.com/jsf/html" prefix="h" %&gt;
+04:&lt;html&gt;
+05:&lt;head&gt;
+06:&lt;title&gt;hello&lt;/title&gt;
+07:&lt;/head&gt;
+08:&lt;body&gt;
+09:&lt;f:view&gt;
+10:  &lt;h:outputText value="#{helloBean.hello}"/&gt;
+11:&lt;/f:view&gt;
+12:&lt;/body&gt;
+13:&lt;/html&gt;
+</pre>
+<p>
+10行目のhelloBeanというBeanはWEB-INF/faces-config.xmlで設定されています。
+それでは、該当個所を見てみましょう。
+</p>
+<pre>
+&lt;managed-bean&gt;
+	&lt;managed-bean-name&gt;helloBean&lt;/managed-bean-name&gt;
+	&lt;managed-bean-class&gt;examples.teeda.bean.HelloBean&lt;/managed-bean-class&gt;
+	&lt;managed-bean-scope&gt;request&lt;/managed-bean-scope&gt;
+&lt;/managed-bean&gt;
+</pre>
+<p>
+これは通常のJSFと同じですね。examples.teeda.bean.HelloBeanクラスをrequestスコープでhelloBeanという名前で設定しています。
+</p>
+<h2><a name="helloDI">helloDI.jsp</a></h2>
+<p>ブラウザで、http://localhost:8080/teeda-example/faces/hello/helloDI.jspにアクセスしてみましょう。
+
+hello Teeda x DI!と表示されるはずです。このサンプルでは、次のことを学びます。</p>
+<ul>
+<li>TeedaによるDIを使用したJSFの例。</li>
+</ul>
+
+<p>それでは、DIを使用した例のHTMLの中身を見てみましょう。 </p>
+<pre>
+01:&lt;%@ page contentType="text/html; charset=UTF-8" %&gt;
+02:&lt;%@ taglib uri="http://java.sun.com/jsf/core" prefix="f" %&gt;
+03:&lt;%@ taglib uri="http://java.sun.com/jsf/html" prefix="h" %&gt;
+04:&lt;html&gt;
+05:&lt;head&gt;
+06:&lt;title&gt;hello x DI&lt;/title&gt;
+07:&lt;/head&gt;
+08:&lt;body&gt;
+09:&lt;f:view&gt;
+10:  &lt;h:outputText value="#{helloDto.hello}"/&gt;
+11:&lt;/f:view&gt;
+12:&lt;/body&gt;
+13:&lt;/html&gt;
+</pre>
+<p>
+これは先ほどのhello.jspとほとんど変わらないと思います。大きな違いは、10行目のhelloDtoがdiconファイルに定義されている部分です。
+それでは、helloDtoが定義されているhello.diconを見てみましょう。
+</p>
+<pre>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE components PUBLIC "-//SEASAR2.1//DTD S2Container//EN"
+    "http://www.seasar.org/dtd/components24.dtd"&gt;
+&lt;components&gt;
+    &lt;component name="helloDto" class="examples.teeda.dto.HelloDto"/&gt;
+&lt;/components&gt;
+</pre>
+<p>
+examples.teeda.dto.HelloDtoクラスをhelloDtoという名前で設定しています。
+Teedaでは、JSFで扱うBeanをSeasar2に管理させる事が可能なのです。
+</p>
 
 <!-- document end -->
 <!-- don't edit start -->
