@@ -36,9 +36,9 @@ teeda-exmapleのプログラムを順に解説します。
 </p>
 <li><a href="#hello">hello.jsp</a></li>
 <li><a href="#helloDI">helloDI.jsp</a></li>
+<li><a href="#addDI">addDI.jsp</a></li>
 <h2><a name="hello">hello.jsp</a></h2>
 <p>ブラウザで、http://localhost:8080/teeda-example/faces/hello/hello.jspにアクセスしてみましょう。
-
 hello Teeda!と表示されるはずです。このサンプルでは、次のことを学びます。</p>
 <ul>
 <li>Teedaによる通常のJSFの例。</li>
@@ -60,7 +60,7 @@ hello Teeda!と表示されるはずです。このサンプルでは、次の�
 13:&lt;/html&gt;
 </pre>
 <p>
-10行目のhelloBeanというBeanはWEB-INF/faces-config.xmlで設定されています。
+10行目のhelloBeanというJavaBeansはWEB-INF/faces-config.xmlで設定されています。
 それでは、該当個所を見てみましょう。
 </p>
 <pre>
@@ -71,7 +71,7 @@ hello Teeda!と表示されるはずです。このサンプルでは、次の�
 &lt;/managed-bean&gt;
 </pre>
 <p>
-これは通常のJSFと同じですね。examples.teeda.bean.HelloBeanクラスをrequestスコープでhelloBeanという名前で設定しています。
+これは通常のJSFと同じですね。examples.teeda.bean.HelloBeanクラスをリクエストスコープでhelloBeanという名前で設定しています。
 </p>
 <h2><a name="helloDI">helloDI.jsp</a></h2>
 <p>ブラウザで、http://localhost:8080/teeda-example/faces/hello/helloDI.jspにアクセスしてみましょう。
@@ -111,8 +111,67 @@ hello Teeda x DI!と表示されるはずです。このサンプルでは、次
 </pre>
 <p>
 examples.teeda.dto.HelloDtoクラスをhelloDtoという名前で設定しています。
-Teedaでは、JSFで扱うBeanをSeasar2に管理させる事が可能なのです。
+Teedaでは、JSFで扱うJavaBeansをS2Containerに管理させる事が可能なのです。
 </p>
+<h2><a name="addDI">addDI.jsp</a></h2>
+<p>このサンプルでは、次のことを学びます。</p>
+<ul>
+<li>入力値をJavaBeansのプロパティと連動させる方法。</li>
+<li>ボタンをクリックしたときにJavaBeansのメソッドを呼び出す方法。</li>
+<li>Actionにsetterメソッドを定義してリクエスト、セッション、S2Containerのオブジェクトをプロパティに自動設定する方法。</li>
+</ul>
+<p>それでは、HTMLの中身を見てみましょう。 </p>
+<pre>
+01:&lt;%@ page contentType="text/html; charset=UTF-8" %&gt;
+02:&lt;%@ taglib uri="http://java.sun.com/jsf/core" prefix="f" %&gt;
+03:&lt;%@ taglib uri="http://java.sun.com/jsf/html" prefix="h" %&gt;
+04:&lt;html&gt;
+05:&lt;head&gt;
+06:  &lt;title&gt;add x DI&lt;/title&gt;
+07:&lt;/head&gt;
+08:&lt;body&gt;
+09:&lt;f:view&gt;
+10:  &lt;h:form&gt;
+11:    &lt;h:messages globalOnly="false" showDetail="true"/&gt;
+12:    &lt;h:inputText value="#{addDto.arg1}" required="true"/&gt; +
+13:    &lt;h:inputText value="#{addDto.arg2}" required="true"/&gt; =
+14:    &lt;h:outputText value="#{addDto.result}"/&gt;
+15:    &lt;h:commandButton action="#{addAction.calculate}" value="calculate"/&gt;
+16:  &lt;/h:form&gt;
+17:&lt;/f:view&gt;
+18:&lt;/body&gt;
+19:&lt;/html&gt;
+</pre>
+<p>
+12行目の&lt;h:inputText value="#{addDto.arg1}" required="true"/&gt;で、
+入出力用のタグとJavaBeansのプロパティを連動させています。
+入力した値は、バリデーションがOKならJavaBeansのプロパティに格納され、
+NGの場合は入力された値がそのままページに表示されることになります。
+</p>
+<p>
+addDtoはどこで定義されているのでしょうか。addDtoは、examples/jsf/dicon/add.diconの中で、次のように定義されています。
+</p>
+<pre>
+&lt;component name="addDto" class="examples.teeda.dto.AddDto" instance="request"/&gt;
+</pre>
+<p>
+instance属性がrequestなので、addDtoはrequestスコープで管理されることになります。
+また、add.diconはルートの定義であるapp.diconから次のようにincludeされています。
+</p>
+<pre>&lt;include path=&quot;examples/teeda/dicon/add.dicon&quot;/&gt;
+</pre>
+<p>
+15行目の&lt;h:commandButton action="#{addAction.calculate}" value="calculate"/&gt;で、
+ボタンがクリックされたときにJavaBeansのメソッドを呼び出す設定をしています。
+ボタンやリンクのaction属性で、#{変数名.メソッド名}のように記述することをMethodBindingと呼びます。
+MethodBindingで呼び出されるメソッドは、引数がなく、戻り値がStringでなければいけません。
+addActionはadd.diconで次のように定義されています。
+</p>
+<pre>
+&lt;component name="addAction" class="examples.teeda.action.impl.AddActionImpl" instance="request"/&gt;
+</pre>
+
+
 
 <!-- document end -->
 <!-- don't edit start -->
