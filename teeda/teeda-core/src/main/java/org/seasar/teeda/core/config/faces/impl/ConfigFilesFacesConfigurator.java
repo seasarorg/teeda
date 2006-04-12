@@ -22,6 +22,7 @@ import java.util.List;
 import javax.faces.context.ExternalContext;
 import javax.faces.webapp.FacesServlet;
 
+import org.seasar.framework.container.factory.WebResourceResolver;
 import org.seasar.framework.log.Logger;
 import org.seasar.framework.util.InputStreamUtil;
 import org.seasar.framework.util.StringUtil;
@@ -42,6 +43,7 @@ public class ConfigFilesFacesConfigurator extends AbstractFacesConfigurator {
     private ExternalContext externalContext_;
 
     public ConfigFilesFacesConfigurator() {
+        setResourceResolver(new WebResourceResolver());
     }
 
     public FacesConfig configure() {
