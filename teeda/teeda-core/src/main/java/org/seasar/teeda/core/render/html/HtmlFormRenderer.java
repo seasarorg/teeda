@@ -69,6 +69,7 @@ public class HtmlFormRenderer extends AbstractHtmlRenderer {
         if (!component.isRendered()) {
             return;
         }
+        context.getApplication().getViewHandler().writeState(context);
         encodeHtmlFormEnd(context, (HtmlForm) component);
     }
 

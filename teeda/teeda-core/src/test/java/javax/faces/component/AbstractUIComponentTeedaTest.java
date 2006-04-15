@@ -19,6 +19,7 @@ import javax.faces.context.FacesContext;
 
 import junitx.framework.Assert;
 
+import org.seasar.teeda.core.mock.NullELParser;
 import org.seasar.teeda.core.unit.TeedaTestCase;
 
 /**
@@ -26,6 +27,10 @@ import org.seasar.teeda.core.unit.TeedaTestCase;
  */
 public abstract class AbstractUIComponentTeedaTest extends TeedaTestCase {
 
+    public void setUp() throws Exception {
+        getContainer().register(NullELParser.class);
+    }
+    
     public final void testGetClientId_ConsecutiveCallsReturnSameValue()
             throws Exception {
         // ## Arrange ##

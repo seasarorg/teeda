@@ -1,7 +1,5 @@
 package org.seasar.teeda.core.spike.dicon;
 
-import javax.faces.convert.BigDecimalConverter;
-
 import org.seasar.framework.container.S2Container;
 import org.seasar.framework.unit.S2FrameworkTestCase;
 import org.seasar.teeda.core.application.ApplicationImpl;

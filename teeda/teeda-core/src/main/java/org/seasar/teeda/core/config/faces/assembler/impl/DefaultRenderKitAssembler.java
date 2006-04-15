@@ -29,6 +29,8 @@ import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.config.faces.assembler.RenderKitAssembler;
 import org.seasar.teeda.core.config.faces.element.RenderKitElement;
 import org.seasar.teeda.core.config.faces.element.RendererElement;
+import org.seasar.teeda.core.util.ClassUtil;
+import org.seasar.teeda.core.util.DIContainerUtil;
 import org.seasar.teeda.core.util.FactoryFinderUtil;
 import org.seasar.teeda.core.util.IteratorUtil;
 
@@ -100,6 +102,11 @@ public class DefaultRenderKitAssembler extends RenderKitAssembler {
     }
 
     protected RenderKit createRenderKit(String className) {
+        RenderKit renderKit = (RenderKit) DIContainerUtil
+                .getComponentNoException(ClassUtil.forName(className));
+        if (renderKit != null) {
+            return renderKit;
+        }
         return (RenderKit) newInstance(className);
     }
 

@@ -15,7 +15,6 @@
  */
 package org.seasar.teeda.core.el.impl;
 
-import java.beans.PropertyEditorManager;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -31,7 +30,6 @@ import org.seasar.teeda.core.el.ELParser;
 import org.seasar.teeda.core.el.TeedaVariableResolver;
 import org.seasar.teeda.core.el.impl.commons.CommonsELParser;
 import org.seasar.teeda.core.el.impl.commons.CommonsExpressionProcessorImpl;
-import org.seasar.teeda.core.el.impl.commons.DateEditorForTest;
 import org.seasar.teeda.core.managedbean.ManagedBeanFactory;
 import org.seasar.teeda.core.mock.MockPropertyResolver;
 import org.seasar.teeda.core.mock.MockVariableResolver;
@@ -361,8 +359,8 @@ public class ValueBindingImplTest extends TeedaTestCase {
         c.setDate(now);
         MockVariableResolver resolver = getVariableResolver();
         resolver.putValue("c", c);
-        ValueBindingImpl vb = new ValueBindingImpl(getApplication(), "#{c.date}",
-                createELParser());
+        ValueBindingImpl vb = new ValueBindingImpl(getApplication(),
+                "#{c.date}", createELParser());
         FacesContext context = getFacesContext();
 
         // ## Act ##
@@ -379,19 +377,21 @@ public class ValueBindingImplTest extends TeedaTestCase {
         } finally {
             Locale.setDefault(defaultLocale);
         }
-        assertEquals(new SimpleDateFormat("yyyyMMdd").parse("20061231"), 
-                vb.getValue(context));
+        assertEquals(new SimpleDateFormat("yyyyMMdd").parse("20061231"), vb
+                .getValue(context));
     }
 
     public void testSaveAndRestoreState() throws Exception {
         // ## Arrange ##
+        ELParser parser = new NullELParser() {
+            public Object parse(String expression) {
+                return expression + expression;
+            }
+        };
+        getContainer().register(parser);
         FacesContext context = getFacesContext();
         ValueBindingImpl vb1 = new ValueBindingImpl(context.getApplication(),
-                "ab", new NullELParser() {
-                    public Object parse(String expression) {
-                        return expression + expression;
-                    }
-                });
+                "ab", parser);
 
         // ## Act ##
         Object state = vb1.saveState(context);

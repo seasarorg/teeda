@@ -84,10 +84,7 @@
 
 	<component class="org.seasar.teeda.core.application.impl.TreeStructureManagerImpl" />
 
-	<component class="org.seasar.teeda.core.render.html.HtmlRenderKitImpl">
-		<property name="responseStateManager">responseStateManager</property>
-		<property name="responseWriter">responseWriter</property>
-	</component>
+	<component class="org.seasar.teeda.core.render.html.HtmlRenderKitImpl"/>
 	
 	<component name="responseStateManager" class="org.seasar.teeda.core.render.html.HtmlResponseStateManager" />
 
