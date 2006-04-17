@@ -31,6 +31,7 @@ import org.seasar.teeda.core.config.faces.element.RendererElement;
 import org.seasar.teeda.core.config.faces.element.impl.RenderKitElementImpl;
 import org.seasar.teeda.core.config.faces.element.impl.RendererElementImpl;
 import org.seasar.teeda.core.mock.MockRenderKit;
+import org.seasar.teeda.core.mock.MockRenderKitImpl;
 import org.seasar.teeda.core.mock.MockRenderer;
 import org.seasar.teeda.core.unit.TeedaTestCase;
 import org.seasar.teeda.core.util.FactoryFinderUtil;
@@ -145,6 +146,21 @@ public class DefaultRenderKitAssemblerTest extends TeedaTestCase {
 
         // ## Assert ##
         assertTrue(renderKit instanceof MockRenderKit);
+    }
+
+    public void testCreateRenderKitReturnsFromContainerIfRegistered()
+            throws Exception {
+        // ## Arrange ##
+        DefaultRenderKitAssembler assembler = createAssembler();
+        final MockRenderKitImpl registeredRenderKit = new MockRenderKitImpl();
+        getContainer().register(registeredRenderKit);
+
+        // ## Act ##
+        RenderKit renderKit = assembler.createRenderKit(MockRenderKitImpl.class
+                .getName());
+
+        // ## Assert ##
+        assertSame(registeredRenderKit, renderKit);
     }
 
     private DefaultRenderKitAssembler createAssembler() {
