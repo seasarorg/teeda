@@ -15,6 +15,11 @@
  */
 package org.seasar.teeda.core.el.impl;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -402,6 +407,32 @@ public class ValueBindingImplTest extends TeedaTestCase {
         // ## Assert ##
         assertEquals("ab", vb2.getExpressionString());
         assertEquals("abab", vb2.getExpression());
+    }
+
+    public void testNotSaveELParser() throws Exception {
+        // ## Arrange ##
+        FacesContext context = getFacesContext();
+        final NullELParser parser = new NullELParser();
+        assertEquals(false, parser instanceof Serializable);
+        getContainer().register(parser);
+        ValueBindingImpl vb1 = new ValueBindingImpl(context.getApplication(),
+                "fooo", parser);
+
+        // ## Act ##
+        // ## Assert ##
+        final Object saved = vb1.saveState(context);
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        final ObjectOutputStream oos = new ObjectOutputStream(baos);
+        oos.writeObject(saved);
+
+        ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
+        ObjectInputStream ois = new ObjectInputStream(bais);
+        final Object restored = ois.readObject();
+
+        ValueBindingImpl vb2 = new ValueBindingImpl();
+        vb2.restoreState(context, restored);
+
+        assertEquals("fooo", vb2.getExpressionString());
     }
 
     public static class Conv {

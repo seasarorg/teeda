@@ -15,9 +15,15 @@
  */
 package org.seasar.teeda.core.el.impl;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.faces.context.FacesContext;
 import javax.faces.el.EvaluationException;
 import javax.faces.el.MethodBinding;
 import javax.faces.el.MethodNotFoundException;
@@ -133,6 +139,65 @@ public class MethodBindingImplTest extends TeedaTestCase {
         } catch (MethodNotFoundException e) {
             ExceptionAssert.assertMessageExist(e);
         }
+    }
+
+    public void testSaveAndRestoreState() throws Exception {
+        //      ## Arrange ##
+        A a = new A();
+        a.setName("foooooo");
+        getVariableResolver().putValue("aaa", a);
+
+        ELParser parser = new CommonsELParser();
+        parser.setExpressionProcessor(new CommonsExpressionProcessorImpl());
+        ValueBindingBase vb = new ValueBindingImpl(getApplication(),
+                "#{aaa.getName}", parser);
+        MethodBindingImpl mb1 = new MethodBindingImpl(vb, new Class[] {},
+                parser);
+        final FacesContext context = getFacesContext();
+        assertEquals("foooooo", mb1.invoke(context, null));
+
+        getContainer().register(parser);
+
+        // ## Act ##
+        final Object state = mb1.saveState(context);
+        MethodBindingImpl mb2 = new MethodBindingImpl();
+        mb2.restoreState(context, state);
+
+        // ## Assert ##
+        assertEquals("foooooo", mb2.invoke(context, null));
+    }
+
+    public void testNotSaveELParser() throws Exception {
+        // ## Arrange ##
+        MockVariableResolver resolver = getVariableResolver();
+        A a = new A();
+        resolver.putValue("a", a);
+        ELParser parser = new CommonsELParser();
+        getContainer().register(parser);
+        parser.setExpressionProcessor(new CommonsExpressionProcessorImpl());
+        ValueBindingImpl vb = new ValueBindingImpl(getApplication(),
+                "#{a.getNum}", parser);
+        MethodBindingImpl mb1 = new MethodBindingImpl(vb, new Class[] {},
+                parser);
+        FacesContext context = getFacesContext();
+
+        assertEquals(false, parser instanceof Serializable);
+
+        // ## Act ##
+        // ## Assert ##
+        final Object saved = mb1.saveState(context);
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        final ObjectOutputStream oos = new ObjectOutputStream(baos);
+        oos.writeObject(saved);
+
+        ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
+        ObjectInputStream ois = new ObjectInputStream(bais);
+        final Object restored = ois.readObject();
+
+        MethodBindingImpl mb2 = new MethodBindingImpl();
+        mb2.restoreState(context, restored);
+
+        assertEquals("#{a.getNum}", mb2.getExpressionString());
     }
 
     public static class A {
