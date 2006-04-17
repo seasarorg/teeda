@@ -15,11 +15,15 @@
  */
 package org.seasar.teeda.core.render.html;
 
+import java.io.IOException;
+
+import javax.faces.context.FacesContext;
 import javax.faces.render.Renderer;
 import javax.faces.render.RendererTest;
 
 import org.custommonkey.xmlunit.Diff;
 import org.seasar.teeda.core.mock.MockFacesContext;
+import org.seasar.teeda.core.mock.MockViewHandlerImpl;
 
 /**
  * @author manhole
@@ -54,6 +58,22 @@ public class HtmlFormRendererTest extends RendererTest {
                 "<form name=\"_id0\" method=\"post\" enctype=\"application/x-www-form-urlencoded\">"
                         + "<input type=\"hidden\" name=\"_id0/aa\" value=\"_id0\" />"
                         + "</form>", getResponseText());
+    }
+
+    public void testEncode_CallsViewHandler() throws Exception {
+        MockFacesContext context = getFacesContext();
+        final boolean[] calls = { false };
+        context.getApplication().setViewHandler(new MockViewHandlerImpl() {
+            public void writeState(FacesContext context) throws IOException {
+                calls[0] = true;
+            }
+        });
+
+        // ## Act ##
+        encodeByRenderer(renderer_, context, htmlForm_);
+
+        // ## Assert ##
+        assertEquals(true, calls[0]);
     }
 
     public void testEncode_RenderFalse() throws Exception {
