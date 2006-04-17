@@ -171,6 +171,7 @@ public class MethodBindingImplTest extends TeedaTestCase {
         // ## Arrange ##
         MockVariableResolver resolver = getVariableResolver();
         A a = new A();
+        a.setNum(4);
         resolver.putValue("a", a);
         ELParser parser = new CommonsELParser();
         getContainer().register(parser);
@@ -198,6 +199,9 @@ public class MethodBindingImplTest extends TeedaTestCase {
         mb2.restoreState(context, restored);
 
         assertEquals("#{a.getNum}", mb2.getExpressionString());
+        
+        Object o = mb2.invoke(context, new Object[]{});
+        assertEquals(new Integer(4), o);
     }
 
     public static class A {
