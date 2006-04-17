@@ -113,13 +113,13 @@ public class LengthValidator implements Validator, StateHolder {
         if (minimum_ != null && length < minimum_.intValue()) {
             Object[] args = { minimum_, UIComponentUtil.getLabel(component) };
             throw new ValidatorException(FacesMessageUtils.getMessage(context,
-                    MINIMUM_MESSAGE_ID, args));
+                    getMinimumMessageId(), args));
         }
 
         if (maximum_ != null && length > maximum_.intValue()) {
             Object[] args = { maximum_, UIComponentUtil.getLabel(component) };
             throw new ValidatorException(FacesMessageUtils.getMessage(context,
-                    MAXIMUM_MESSAGE_ID, args));
+                    getMaximumMessageId(), args));
         }
     }
 
@@ -140,7 +140,7 @@ public class LengthValidator implements Validator, StateHolder {
         minimum_ = (Integer) values[1];
     }
 
-    private static int getConvertedValueLength(Object value) {
+    protected int getConvertedValueLength(Object value) {
         int length = 0;
         if (value instanceof String) {
             length = ((String) value).length();
@@ -148,5 +148,13 @@ public class LengthValidator implements Validator, StateHolder {
             length = value.toString().length();
         }
         return length;
+    }
+    
+    protected String getMinimumMessageId() {
+        return MINIMUM_MESSAGE_ID;
+    }
+    
+    protected String getMaximumMessageId() {
+        return MAXIMUM_MESSAGE_ID;
     }
 }
