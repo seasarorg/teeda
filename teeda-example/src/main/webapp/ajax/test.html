@@ -1,0 +1,105 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<script language="JavaScript" src="/teeda-example/js/s2ajax.js"></script>
+<script language="JavaScript" src="/teeda-example/js/test.js"></script>
+<script language="JavaScript">
+<!--
+function sampleAjaxOrg(food) {
+    var ajax = getS2AjaxComponent();
+	ajax.params = { "component" : "ajaxBean", "action" : "ajaxOrg", "food" : food };
+    ajax.doAction = function(response) {
+        createOptionsFromOrg(response, document.frm.menuOrg);
+    };
+    executeAjax(ajax);
+}
+function sampleAjaxJson(food) {
+    var ajax = getS2AjaxComponent();
+	ajax.params = { "component" : "ajaxBean", "action" : "ajaxJson", "food" : food };
+    ajax.doAction = function(response) {
+        createOptionsFromJSON(response, document.frm.menuJson);
+    };
+    executeAjax(ajax);
+}
+function sampleAjaxXml(food) {
+    var ajax = getS2AjaxComponent();
+	ajax.params = { "component" : "ajaxBean", "action" : "ajaxXml", "food" : food };
+	ajax.responseType = AJAX_RESPONSE_TYPE_XML;
+    ajax.doAction = function(response) {
+        createOptionsFromXml(response, document.frm.menuXml);
+    };
+    executeAjax(ajax);
+}
+//-->
+</script>
+</head>
+<body>
+Ajax Sample<br/>
+<form name="frm">
+ <hr/>
+  <b><font color="blue">[Original Format]</font></b>
+  <table>
+   <tr>
+     <th>Menu</th>
+     <th>詳細</th>
+   </tr>
+   <tr>
+    <td>  
+    <select name="foodOrg" size="5" style="width:70px;" onchange="sampleAjaxOrg(this.value);">
+     <option value="1">果物</option>
+     <option value="2">飲み物</option>
+     <option value="3">麺類</option>
+    </select>
+    </td>
+    <td valign="top">
+    <select name="menuOrg" size="5" style="width:100px;">
+    </select>
+    </td>
+   </tr>
+  </table>
+ <hr/>
+  <b><font color="blue">[JSON Format]</font></b>
+  <table>
+   <tr>
+     <th>Menu</th>
+     <th>詳細</th>
+   </tr>
+   <tr>
+    <td>  
+    <select name="foodJson" size="5" style="width:70px;" onchange="sampleAjaxJson(this.value);">
+     <option value="1">果物</option>
+     <option value="2">飲み物</option>
+     <option value="3">麺類</option>
+    </select>
+    </td>
+    <td valign="top">
+    <select name="menuJson" size="5" style="width:100px;">
+    </select>
+    </td>
+   </tr>
+  </table>
+ <hr/>
+  <b><font color="blue">[XML Format]</font></b>
+  <table>
+   <tr>
+     <th>Menu</th>
+     <th>詳細</th>
+   </tr>
+   <tr>
+    <td>  
+    <select name="foodXml" size="5" style="width:70px;" onchange="sampleAjaxXml(this.value);">
+     <option value="1">果物</option>
+     <option value="2">飲み物</option>
+     <option value="3">麺類</option>
+    </select>
+    </td>
+    <td valign="top">
+    <select name="menuXml" size="5" style="width:100px;">
+    </select>
+    </td>
+   </tr>
+  </table>
+ <hr/>
+</form>
+</body>
+</html>

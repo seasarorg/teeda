@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE components PUBLIC "-//SEASAR2.1//DTD S2Container//EN"
+	"http://www.seasar.org/dtd/components24.dtd">
+<components>
+	<component name="ajaxBean" class="examples.teeda.ajax.AjaxSampleBean" instance="request">
+	    <meta name="teeda-ajax"/>
+	</component>
+</components>
