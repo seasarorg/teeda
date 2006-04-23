@@ -15,6 +15,16 @@
  */
 package examples.teeda.bean;
 
+import javax.faces.FacesException;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.internal.AssertionUtil;
+import javax.faces.internal.FacesMessageUtils;
+import javax.faces.validator.LengthValidator;
+import javax.faces.validator.ValidatorException;
+
+import org.seasar.teeda.core.util.UIComponentUtil;
+
 /**
  * @author shot
  */
@@ -28,6 +38,23 @@ public class ValidatorBean {
 
     public void setName(String name) {
         name_ = name;
+    }
+
+    public void validate(FacesContext context, UIComponent component,
+            Object value) throws FacesException {
+        AssertionUtil.assertNotNull("context", context);
+        AssertionUtil.assertNotNull("component", component);
+
+        if (value == null) {
+            return;
+        }
+
+        int length = value.toString().length();
+        if (length < 2) {
+            Object[] args = { new Integer(2), UIComponentUtil.getLabel(component) };
+            throw new ValidatorException(FacesMessageUtils.getMessage(context,
+                    LengthValidator.MINIMUM_MESSAGE_ID, args));
+        }
     }
 
 }
