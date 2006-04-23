@@ -21,6 +21,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
+import javax.faces.convert.DateTimeConverter;
 import javax.faces.el.ValueBinding;
 import javax.faces.validator.Validator;
 
@@ -234,13 +235,16 @@ public class ApplicationImplTest extends TeedaTestCase {
         assertEquals(3, ((HogeConverter) c).getNum());
     }
 
-    public void test1() throws Exception {
+    public void testCreateConverter_notCreatedFromDI() throws Exception {
         // ## Arrange ##
-
-        // ## Act ##
-
-        // ## Assert ##
-
+        ComponentDef componentDef = new ComponentDefImpl(DateTimeConverter.class);
+        componentDef.setComponentName("java.util.Date");
+        getContainer().register(componentDef);
+        
+        app_ = new ApplicationImpl();
+        
+        // ## Act & Assert ##
+        assertNull(app_.createConverter(Date.class));
     }
 
     public void testCreateValueBinding() throws Exception {
