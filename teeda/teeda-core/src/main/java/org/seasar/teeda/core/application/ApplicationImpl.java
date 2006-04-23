@@ -364,11 +364,6 @@ public class ApplicationImpl extends Application implements
     }
 
     protected Converter createConverterByTargetClass(Class targetClass) {
-        Object component = componentLookupStrategy_
-                .getComponentByClass(targetClass);
-        if (component != null) {
-            return (Converter) component;
-        }
         Class converterClass = (Class) converterForClassMap_.get(targetClass);
         if (converterClass != null) {
             return createConverterByConverterClass(converterClass);
