@@ -5,4 +5,7 @@
 	<component name="ajaxBean" class="examples.teeda.ajax.AjaxSampleBean" instance="request">
 	    <meta name="teeda-ajax"/>
 	</component>
+	<component name="autoCompleteBean" class="examples.teeda.ajax.AutoCompleteSampleBean" instance="request">
+	    <meta name="teeda-ajax"/>
+	</component>
 </components>

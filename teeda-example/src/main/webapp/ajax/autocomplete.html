@@ -1,0 +1,44 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<script src="/teeda-example/js/scriptaculous/prototype.js"></script>
+<script src="/teeda-example/js/scriptaculous/effects.js"></script>
+<script src="/teeda-example/js/scriptaculous/controls.js"></script>
+<script src="/teeda-example/js/s2autocomplete.js"></script>
+</head>
+<body>
+<style>
+  #sample_auto_complete {
+    width: 350px;
+    background: #fff;
+  }
+  #sample_auto_complete ul {
+    border:1px solid #888;
+    margin:0;
+    padding:0;
+    width:100%;
+    list-style-type:none;
+  }
+  #sample_auto_complete ul li {
+    margin:0;
+    padding:3px;
+  }
+  #sample_auto_complete ul li.selected { 
+    background-color: #ffb; 
+  }
+  #sample_auto_complete ul strong.highlight { 
+    color: #800; 
+    margin:0;
+    padding:0;
+  }
+</style>
+AutoCompleteSample<br>
+
+<input type="text" name="name" id="sample" />
+<div id="sample_auto_complete" />
+<script>
+teedaAutocompleter('sample', {component:'autoCompleteBean',action:'autoComplete'});
+</script>
+</body>
+</html>
