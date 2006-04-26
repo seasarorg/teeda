@@ -27,6 +27,7 @@ import javax.faces.render.Renderer;
 
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.core.render.ComponentIdLookupStrategy;
 import org.seasar.teeda.core.util.LoopIterator;
 import org.seasar.teeda.core.util.RenderedComponentIterator;
 import org.seasar.teeda.core.util.RendererUtil;
@@ -37,6 +38,8 @@ import org.seasar.teeda.core.util.UIComponentUtil;
  */
 public abstract class AbstractHtmlRenderer extends Renderer {
 
+    private ComponentIdLookupStrategy idLookupStartegy_;
+    
     public Object getConvertedValue(FacesContext context,
             UIComponent component, Object submittedValue)
             throws ConverterException {
@@ -47,11 +50,7 @@ public abstract class AbstractHtmlRenderer extends Renderer {
 
     // TODO to change pluggable
     protected String getIdForRender(FacesContext context, UIComponent component) {
-        String id = component.getId();
-        if (id != null) {
-            return id;
-        }
-        return component.getClientId(context);
+        return idLookupStartegy_.getId(context, component);
     }
 
     protected UIComponent toNullIfNotRendered(UIComponent component) {
@@ -113,4 +112,11 @@ public abstract class AbstractHtmlRenderer extends Renderer {
         }
     }
 
+    public void setComponentIdLookupStrategy(ComponentIdLookupStrategy idLookupStartegy) {
+        idLookupStartegy_ = idLookupStartegy;
+    }
+    
+    public ComponentIdLookupStrategy getComponentIdLookupStrategy() {
+        return idLookupStartegy_;
+    }
 }
