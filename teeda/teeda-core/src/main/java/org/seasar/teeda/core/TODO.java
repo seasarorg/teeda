@@ -36,8 +36,8 @@ public interface TODO {
      *  - Add DI Support for Converter, Validator, UIComponent, Renderer
      *     -> Converter not yet
      *     -> Validator done
-     *     -> Converter not yet
-     *     -> Converter not yet
+     *     -> UIComponent not yet
+     *     -> Renderer not yet
      *  - [Seasar-user:3230]
      *  - [#7682] http://sourceforge.jp/tracker/index.php?func=detail&aid=7682&group_id=689&atid=6584
      *  - [#7975] [Seasar-user:3127] http://sourceforge.jp/tracker/index.php?func=detail&aid=7975&group_id=689&atid=6584
