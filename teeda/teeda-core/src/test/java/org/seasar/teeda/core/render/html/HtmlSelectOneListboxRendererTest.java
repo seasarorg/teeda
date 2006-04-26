@@ -408,7 +408,9 @@ public class HtmlSelectOneListboxRendererTest extends RendererTest {
     }
 
     protected Renderer createRenderer() {
-        return new HtmlSelectOneListboxRenderer();
+        HtmlSelectOneListboxRenderer renderer = new HtmlSelectOneListboxRenderer();
+        renderer.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
+        return renderer;
     }
 
     private static class MockHtmlSelectOneListbox extends HtmlSelectOneListbox {

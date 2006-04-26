@@ -475,7 +475,9 @@ public class HtmlSelectManyCheckboxRendererTest extends RendererTest {
     }
 
     protected Renderer createRenderer() {
-        return new HtmlSelectManyCheckboxRenderer();
+        HtmlSelectManyCheckboxRenderer renderer = new HtmlSelectManyCheckboxRenderer();
+        renderer.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
+        return renderer;
     }
 
     private static class MockHtmlSelectManyCheckbox extends

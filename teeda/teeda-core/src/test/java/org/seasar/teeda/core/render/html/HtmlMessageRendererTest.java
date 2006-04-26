@@ -465,7 +465,9 @@ public class HtmlMessageRendererTest extends RendererTest {
     }
 
     protected Renderer createRenderer() {
-        return new HtmlMessageRenderer();
+        HtmlMessageRenderer renderer = new HtmlMessageRenderer();
+        renderer.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
+        return renderer;
     }
 
     private static class MockHtmlMessage extends HtmlMessage {

@@ -193,7 +193,9 @@ public class HtmlOutputLabelRendererTest extends RendererTest {
     }
 
     protected Renderer createRenderer() {
-        return new HtmlOutputLabelRenderer();
+        HtmlOutputLabelRenderer renderer = new HtmlOutputLabelRenderer();
+        renderer.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
+        return renderer;
     }
 
     private static class MockHtmlOutputLabel extends HtmlOutputLabel {

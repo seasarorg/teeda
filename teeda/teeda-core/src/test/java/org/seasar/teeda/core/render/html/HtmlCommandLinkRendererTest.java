@@ -382,7 +382,9 @@ public class HtmlCommandLinkRendererTest extends RendererTest {
     }
 
     protected Renderer createRenderer() {
-        return new HtmlCommandLinkRenderer();
+        HtmlCommandLinkRenderer renderer = new HtmlCommandLinkRenderer();
+        renderer.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
+        return renderer;
     }
 
 }

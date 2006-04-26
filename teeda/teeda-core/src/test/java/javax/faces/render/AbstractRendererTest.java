@@ -25,6 +25,8 @@ import junit.framework.TestCase;
 import org.seasar.teeda.core.context.html.HtmlResponseWriter;
 import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.mock.MockFacesContextImpl;
+import org.seasar.teeda.core.render.ComponentIdLookupStrategy;
+import org.seasar.teeda.core.render.DefaultComponentIdLookupStrategy;
 
 /**
  * @author manhole
@@ -33,18 +35,26 @@ public abstract class AbstractRendererTest extends TestCase {
 
     private MockFacesContext mockFacesContext_;
 
+    private ComponentIdLookupStrategy idLookupStrategy_;
+
     protected void setUp() throws Exception {
         super.setUp();
         mockFacesContext_ = new MockFacesContextImpl();
+        idLookupStrategy_ = new DefaultComponentIdLookupStrategy();
     }
 
     protected void tearDown() throws Exception {
         mockFacesContext_.release();
+        idLookupStrategy_ = null;
         super.tearDown();
     }
 
     protected MockFacesContext getFacesContext() {
         return mockFacesContext_;
+    }
+
+    protected ComponentIdLookupStrategy getComponentIdLookupStrategy() {
+        return idLookupStrategy_;
     }
 
     protected String getResponseText() throws IOException {

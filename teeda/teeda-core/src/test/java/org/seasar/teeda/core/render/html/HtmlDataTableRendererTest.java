@@ -1021,7 +1021,9 @@ public class HtmlDataTableRendererTest extends RendererTest {
     }
 
     protected Renderer createRenderer() {
-        return new HtmlDataTableRenderer();
+        HtmlDataTableRenderer renderer = new HtmlDataTableRenderer();
+        renderer.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
+        return renderer;
     }
 
 }

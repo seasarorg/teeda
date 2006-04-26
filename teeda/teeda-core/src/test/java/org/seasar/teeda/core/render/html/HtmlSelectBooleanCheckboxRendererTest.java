@@ -217,7 +217,9 @@ public class HtmlSelectBooleanCheckboxRendererTest extends RendererTest {
     }
 
     protected Renderer createRenderer() {
-        return new HtmlSelectBooleanCheckboxRenderer();
+        HtmlSelectBooleanCheckboxRenderer renderer = new HtmlSelectBooleanCheckboxRenderer();
+        renderer.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
+        return renderer;
     }
 
     private static class MockHtmlSelectBooleanCheckbox extends

@@ -387,7 +387,9 @@ public class HtmlSelectOneMenuRendererTest extends RendererTest {
     }
 
     protected Renderer createRenderer() {
-        return new HtmlSelectOneMenuRenderer();
+        HtmlSelectOneMenuRenderer renderer = new HtmlSelectOneMenuRenderer();
+        renderer.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
+        return renderer;
     }
 
     private static class MockHtmlSelectOneMenu extends HtmlSelectOneMenu {

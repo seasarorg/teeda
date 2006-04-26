@@ -142,7 +142,9 @@ public class HtmlInputHiddenRendererTest extends RendererTest {
     }
 
     protected Renderer createRenderer() {
-        return new HtmlInputHiddenRenderer();
+        HtmlInputHiddenRenderer renderer = new HtmlInputHiddenRenderer();
+        renderer.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
+        return renderer;
     }
 
     private static class MockHtmlInputHidden extends HtmlInputHidden {

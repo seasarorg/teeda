@@ -1,5 +1,7 @@
 package org.seasar.teeda.core.spike.dicon;
 
+import javax.faces.render.Renderer;
+
 import org.seasar.framework.container.S2Container;
 import org.seasar.framework.unit.S2FrameworkTestCase;
 import org.seasar.teeda.core.application.ApplicationImpl;
@@ -7,6 +9,7 @@ import org.seasar.teeda.core.application.impl.TeedaStateManagerImpl;
 import org.seasar.teeda.core.el.ValueBindingContext;
 import org.seasar.teeda.core.lifecycle.LifecycleImpl;
 import org.seasar.teeda.core.managedbean.ManagedBeanFactory;
+import org.seasar.teeda.core.render.html.HtmlInputTextRenderer;
 import org.seasar.teeda.core.render.html.HtmlRenderKitImpl;
 import org.seasar.teeda.core.render.html.HtmlResponseStateManager;
 
@@ -43,6 +46,11 @@ public class TeedaDiconTest extends S2FrameworkTestCase {
                 .getComponent(HtmlRenderKitImpl.class);
         assertNotNull(renderKit.getResponseStateManager());
 
+        Renderer renderer = renderKit.getRenderer("javax.faces.Input", "javax.faces.Text");
+        assertTrue(renderer instanceof HtmlInputTextRenderer);
+        HtmlInputTextRenderer inputTextRenderer = (HtmlInputTextRenderer) renderer;
+        assertNotNull(inputTextRenderer.getComponentIdLookupStrategy());
+        
         HtmlResponseStateManager responseStateManager = (HtmlResponseStateManager) renderKit
                 .getResponseStateManager();
         assertNotNull(responseStateManager.getEncodeConverter());

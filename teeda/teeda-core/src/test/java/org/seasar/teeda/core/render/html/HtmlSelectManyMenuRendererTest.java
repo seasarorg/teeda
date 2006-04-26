@@ -393,7 +393,9 @@ public class HtmlSelectManyMenuRendererTest extends RendererTest {
     }
 
     protected Renderer createRenderer() {
-        return new HtmlSelectManyMenuRenderer();
+        HtmlSelectManyMenuRenderer renderer = new HtmlSelectManyMenuRenderer();
+        renderer.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
+        return renderer;
     }
 
     private static class MockHtmlSelectManyMenu extends HtmlSelectManyMenu {

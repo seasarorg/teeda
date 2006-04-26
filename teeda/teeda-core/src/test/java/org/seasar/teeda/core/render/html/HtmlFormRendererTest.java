@@ -187,7 +187,9 @@ public class HtmlFormRendererTest extends RendererTest {
     }
 
     protected Renderer createRenderer() {
-        return new HtmlFormRenderer();
+        HtmlFormRenderer renderer = new HtmlFormRenderer();
+        renderer.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
+        return renderer;
     }
 
 }

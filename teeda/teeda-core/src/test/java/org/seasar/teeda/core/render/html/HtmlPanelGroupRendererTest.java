@@ -211,7 +211,9 @@ public class HtmlPanelGroupRendererTest extends RendererTest {
     }
 
     protected Renderer createRenderer() {
-        return new HtmlPanelGroupRenderer();
+        HtmlPanelGroupRenderer renderer = new HtmlPanelGroupRenderer();
+        renderer.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
+        return renderer;
     }
 
 }

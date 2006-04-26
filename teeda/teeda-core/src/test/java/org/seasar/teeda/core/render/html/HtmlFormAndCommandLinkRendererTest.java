@@ -34,11 +34,13 @@ public class HtmlFormAndCommandLinkRendererTest extends AbstractRendererTest {
     protected void setUp() throws Exception {
         super.setUp();
         formRenderer_ = new HtmlFormRenderer();
+        formRenderer_.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
         htmlForm_ = new MockHtmlForm();
         htmlForm_.setRenderer(formRenderer_);
         htmlForm_.setEnctype(null);
 
         commandLinkRenderer_ = new HtmlCommandLinkRenderer();
+        commandLinkRenderer_.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
     }
 
     public void test1() throws Exception {

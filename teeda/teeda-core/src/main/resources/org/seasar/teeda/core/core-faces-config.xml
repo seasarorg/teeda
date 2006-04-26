@@ -389,11 +389,10 @@
 	</validator>
 	
 	<!-- standard renderkit -->
+	<!--
 	<render-kit>
 		<render-kit-id>HTML_BASIC</render-kit-id>
 		<render-kit-class>org.seasar.teeda.core.render.html.HtmlRenderKitImpl</render-kit-class>
-		
-		<!-- Standard HTML renderers -->
 		<renderer>
 			<component-family>javax.faces.Command</component-family>
 			<renderer-type>javax.faces.Button</renderer-type>
@@ -562,5 +561,5 @@
 		</renderer>
 		
 	</render-kit>
-	
+	-->
 </faces-config>

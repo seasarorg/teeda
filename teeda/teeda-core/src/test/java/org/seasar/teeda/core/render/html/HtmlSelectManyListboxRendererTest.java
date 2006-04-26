@@ -414,7 +414,9 @@ public class HtmlSelectManyListboxRendererTest extends RendererTest {
     }
 
     protected Renderer createRenderer() {
-        return new HtmlSelectManyListboxRenderer();
+        HtmlSelectManyListboxRenderer renderer = new HtmlSelectManyListboxRenderer();
+        renderer.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
+        return renderer;
     }
 
     private static class MockHtmlSelectManyListbox extends

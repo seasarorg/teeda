@@ -220,7 +220,9 @@ public class HtmlInputTextRendererTest extends RendererTest {
     }
 
     protected Renderer createRenderer() {
-        return new HtmlInputTextRenderer();
+        HtmlInputTextRenderer renderer = new HtmlInputTextRenderer();
+        renderer.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
+        return renderer;
     }
 
     private static class MockHtmlInputText extends HtmlInputText {

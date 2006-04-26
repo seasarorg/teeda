@@ -262,7 +262,9 @@ public class HtmlOutputLinkRendererTest extends RendererTest {
     }
 
     protected Renderer createRenderer() {
-        return new HtmlOutputLinkRenderer();
+        HtmlOutputLinkRenderer renderer = new HtmlOutputLinkRenderer();
+        renderer.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
+        return renderer;
     }
 
     private static class MockHtmlOutputLink extends HtmlOutputLink {

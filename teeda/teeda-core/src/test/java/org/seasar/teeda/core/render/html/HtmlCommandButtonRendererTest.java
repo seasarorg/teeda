@@ -274,7 +274,9 @@ public class HtmlCommandButtonRendererTest extends RendererTest {
     }
 
     protected Renderer createRenderer() {
-        return new HtmlCommandButtonRenderer();
+        HtmlCommandButtonRenderer renderer = new HtmlCommandButtonRenderer();
+        renderer.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
+        return renderer;
     }
 
     private static class MockHtmlCommandButton extends HtmlCommandButton {

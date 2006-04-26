@@ -180,7 +180,9 @@ public class HtmlGraphicImageRendererTest extends RendererTest {
     }
 
     protected Renderer createRenderer() {
-        return new HtmlGraphicImageRenderer();
+        HtmlGraphicImageRenderer renderer = new HtmlGraphicImageRenderer();
+        renderer.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
+        return renderer;
     }
 
     private static class MockHtmlGraphicImage extends HtmlGraphicImage {

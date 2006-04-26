@@ -234,7 +234,9 @@ public class HtmlOutputTextRendererTest extends RendererTest {
     }
 
     protected Renderer createRenderer() {
-        return new HtmlOutputTextRenderer();
+        HtmlOutputTextRenderer renderer = new HtmlOutputTextRenderer();
+        renderer.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
+        return renderer;
     }
 
 }

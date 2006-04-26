@@ -449,7 +449,9 @@ public class HtmlSelectOneRadioRendererTest extends RendererTest {
     }
 
     protected Renderer createRenderer() {
-        return new HtmlSelectOneRadioRenderer();
+        HtmlSelectOneRadioRenderer renderer = new HtmlSelectOneRadioRenderer();
+        renderer.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
+        return renderer;
     }
 
     private static class MockHtmlSelectOneRadio extends HtmlSelectOneRadio {

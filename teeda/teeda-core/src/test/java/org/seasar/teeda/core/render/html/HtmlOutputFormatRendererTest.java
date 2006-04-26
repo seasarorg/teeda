@@ -204,7 +204,9 @@ public class HtmlOutputFormatRendererTest extends RendererTest {
     }
 
     protected Renderer createRenderer() {
-        return new HtmlOutputFormatRenderer();
+        HtmlOutputFormatRenderer renderer = new HtmlOutputFormatRenderer();
+        renderer.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
+        return renderer;
     }
 
     private static class MockHtmlOutputFormat extends HtmlOutputFormat {

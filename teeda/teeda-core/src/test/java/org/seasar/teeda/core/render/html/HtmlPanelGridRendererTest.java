@@ -408,7 +408,9 @@ public class HtmlPanelGridRendererTest extends RendererTest {
     }
 
     protected Renderer createRenderer() {
-        return new HtmlPanelGridRenderer();
+        HtmlPanelGridRenderer renderer = new HtmlPanelGridRenderer();
+        renderer.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
+        return renderer;
     }
 
     private static class MockHtmlPanelGrid extends HtmlPanelGrid {
