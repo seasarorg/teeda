@@ -73,8 +73,7 @@ public class FormTagTest extends TeedaTestCase {
         assertEquals("accept", component.getAccept());
         assertEquals("acceptcharset", component.getAcceptcharset());
         assertEquals("dir", component.getDir());
-        assertEquals("application/x-www-form-urlencoded", component
-                .getEnctype());
+        assertEquals("enctype", component.getEnctype());
         assertEquals("lang", component.getLang());
         assertEquals("onclick", component.getOnclick());
         assertEquals("ondblclick", component.getOndblclick());
@@ -91,6 +90,18 @@ public class FormTagTest extends TeedaTestCase {
         assertEquals("style", component.getStyle());
         assertEquals("styleclass", component.getStyleClass());
         assertEquals("title", component.getTitle());
+    }
+    
+    public void testSetEnctype_default() throws Exception {
+        // # Arrange #
+        HtmlForm component = createHtmlForm();
+        FormTag tag = new FormTag();
+        
+        // # Act #
+        tag.setProperties(component);
+
+        // # Assert #
+        assertEquals("application/x-www-form-urlencoded", component.getEnctype());        
     }
 
     private HtmlForm createHtmlForm() {
