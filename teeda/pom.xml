@@ -38,7 +38,6 @@
       <id>manhole</id>
       <name>HONMA Hirotaka</name>
       <email>manholex@gmail.com</email>
-      <url></url>
       <organization>ARK Systems Co., Ltd.</organization>
       <organizationUrl>http://www.arksystems.co.jp/</organizationUrl>
       <timezone>+9</timezone>
@@ -47,9 +46,26 @@
       <id>yone</id>
       <name>Masaaki Yonebayashi</name>
       <email>yone098@gmail.com</email>
-      <url></url>
       <organization>Abby Co., Ltd.</organization>
       <organizationUrl>http://www.abby.co.jp/</organizationUrl>
+      <timezone>+9</timezone>
+    </developer>
+    <developer>
+      <id>mopemope</id>
+      <name></name>
+      <email></email>
+      <url></url>
+      <organization></organization>
+      <organizationUrl></organizationUrl>
+      <timezone>+9</timezone>
+    </developer>
+    <developer>
+      <id>yukinekonyan</id>
+      <name></name>
+      <email></email>
+      <url></url>
+      <organization></organization>
+      <organizationUrl></organizationUrl>
       <timezone>+9</timezone>
     </developer>
   </developers>
