@@ -82,6 +82,18 @@ public class HtmlGraphicImageRendererTest extends RendererTest {
         assertEquals("<img src=\"abc\" />", getResponseText());
     }
 
+    public void testEncode_WithValueContainsAmpersand() throws Exception {
+        // ## Arrange ##
+        htmlGraphicImage_.setValue("a?a=b&c=d");
+        MockFacesContext context = getFacesContext();
+
+        // ## Act ##
+        encodeByRenderer(renderer_, context, htmlGraphicImage_);
+
+        // ## Assert ##
+        assertEquals("<img src=\"a?a=b&amp;c=d\" />", getResponseText());
+    }
+
     public void testEncode_WithId() throws Exception {
         htmlGraphicImage_.setId("a");
 
