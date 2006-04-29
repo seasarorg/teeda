@@ -594,6 +594,20 @@ public class HtmlResponseWriterTest extends TestCase {
         assertEquals("script body is not escaped", "<script><>\"&</script>",
                 value);
     }
+    
+    public void testWriteText_ScriptBodyUpperCase() throws Exception {
+        HtmlResponseWriter responseWriter = new HtmlResponseWriter();
+        SPrintWriter writer = new SPrintWriter();
+        responseWriter.setWriter(writer);
+
+        responseWriter.startElement("SCRIPT", null);
+        responseWriter.writeText("<>\"&", null);
+        responseWriter.endElement("SCRIPT");
+
+        String value = writer.toString();
+        assertEquals("SCRIPT body is not escaped", "<SCRIPT><>\"&</SCRIPT>",
+                value);
+    }
 
     public void testEncodeURIAttribute() throws Exception {
         HtmlResponseWriter responseWriter = new HtmlResponseWriter();
