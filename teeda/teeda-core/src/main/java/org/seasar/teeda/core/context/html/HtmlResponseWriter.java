@@ -48,6 +48,8 @@ public class HtmlResponseWriter extends ResponseWriter {
 
     private boolean startTagOpening_;
 
+    private boolean shouldEscape_ = true;
+
     public void startElement(String name, UIComponent componentForElement)
             throws IOException {
         AssertionUtil.assertNotNull("name", name);
@@ -55,6 +57,11 @@ public class HtmlResponseWriter extends ResponseWriter {
         closeStartTagIfOpening(writer);
         writer.write("<");
         writer.write(name);
+        if ("script".equals(name)) {
+            shouldEscape_ = false;
+        } else {
+            shouldEscape_ = true;
+        }
 
         startTagOpening_ = true;
     }
@@ -80,6 +87,7 @@ public class HtmlResponseWriter extends ResponseWriter {
         } else {
             writer.write("</" + name + ">");
         }
+        shouldEscape_ = true;
     }
 
     protected boolean isEmptyElement(String name) {
@@ -131,7 +139,13 @@ public class HtmlResponseWriter extends ResponseWriter {
         AssertionUtil.assertNotNull("text", text);
         Writer writer = getWriter();
         closeStartTagIfOpening(writer);
-        writer.write(htmlSpecialChars(text.toString()));
+        String str = null;
+        if (shouldEscape_) {
+            str = htmlSpecialChars(text.toString());
+        } else {
+            str = text.toString();
+        }
+        writer.write(str);
     }
 
     public void writeText(char text[], int off, int len) throws IOException {
@@ -212,7 +226,6 @@ public class HtmlResponseWriter extends ResponseWriter {
     public void flush() throws IOException {
         Writer writer = getWriter();
         closeStartTagIfOpening(writer);
-        //writer.flush();
     }
 
     public void close() throws IOException {

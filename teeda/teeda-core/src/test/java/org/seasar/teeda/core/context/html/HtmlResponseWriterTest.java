@@ -554,6 +554,7 @@ public class HtmlResponseWriterTest extends TestCase {
         assertEquals("url?a=b", writeURIAttributeTest("url?a=b"));
         assertEquals("url?a=b%3Fc=d", writeURIAttributeTest("url?a=b?c=d"));
         assertEquals("ur%25l?a=b", writeURIAttributeTest("ur%l?a=b"));
+        assertEquals("url?a=b&amp;c=d", writeURIAttributeTest("url?a=b&c=d"));
 
         final Character japaneseA = new Character((char) 12354);
         assertEquals("url?a=%E3%81%82", writeURIAttributeTest("url?a="
@@ -578,6 +579,20 @@ public class HtmlResponseWriterTest extends TestCase {
         value = value.substring(prefix.length());
         value = value.substring(0, value.length() - suffix.length());
         return value;
+    }
+
+    public void testWriteText_ScriptBody() throws Exception {
+        HtmlResponseWriter responseWriter = new HtmlResponseWriter();
+        SPrintWriter writer = new SPrintWriter();
+        responseWriter.setWriter(writer);
+
+        responseWriter.startElement("script", null);
+        responseWriter.writeText("<>\"&", null);
+        responseWriter.endElement("script");
+
+        String value = writer.toString();
+        assertEquals("script body is not escaped", "<script><>\"&</script>",
+                value);
     }
 
     public void testEncodeURIAttribute() throws Exception {
