@@ -45,4 +45,15 @@ public class MessageBeanTest extends TeedaTestCase {
         assertEquals(FacesMessage.SEVERITY_WARN, messages[0].getSeverity());
         assertEquals(FacesMessage.SEVERITY_WARN, messages[1].getSeverity());
     }
+    
+    public void testGetMessagesBySeverity2() throws Exception {
+        getFacesContext().addMessage("fooId", new FacesMessage(FacesMessage.SEVERITY_WARN, "a", "b"));
+        getFacesContext().addMessage("barId", new FacesMessage(FacesMessage.SEVERITY_ERROR, "c", "d"));
+        MessageBean messageBean = new MessageBean();
+        FacesMessage[] messages = messageBean.getMessagesBySeverity(FacesMessage.SEVERITY_WARN);
+        assertEquals(FacesMessage.SEVERITY_WARN, messages[0].getSeverity());
+        assertEquals(FacesMessage.SEVERITY_ERROR, messages[1].getSeverity());
+    }
+
+    //TODO testing
 }

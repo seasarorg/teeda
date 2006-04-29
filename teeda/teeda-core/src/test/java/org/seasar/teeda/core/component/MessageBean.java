@@ -16,8 +16,10 @@
 package org.seasar.teeda.core.component;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -28,13 +30,38 @@ import javax.faces.context.FacesContext;
  */
 public class MessageBean {
 
+    private static final FacesMessage.Severity[] INFO = new FacesMessage.Severity[] {
+            FacesMessage.SEVERITY_INFO, FacesMessage.SEVERITY_WARN,
+            FacesMessage.SEVERITY_ERROR, FacesMessage.SEVERITY_FATAL };
+
+    private static final FacesMessage.Severity[] WARN = new FacesMessage.Severity[] {
+            FacesMessage.SEVERITY_WARN, FacesMessage.SEVERITY_ERROR,
+            FacesMessage.SEVERITY_FATAL };
+
+    private static final FacesMessage.Severity[] ERROR = new FacesMessage.Severity[] {
+            FacesMessage.SEVERITY_ERROR, FacesMessage.SEVERITY_FATAL };
+
+    private static final FacesMessage.Severity[] FATAL = new FacesMessage.Severity[] { FacesMessage.SEVERITY_FATAL };
+
+    private static Map map = new HashMap();
+    static {
+        map.put(FacesMessage.SEVERITY_INFO.toString(), INFO);
+        map.put(FacesMessage.SEVERITY_WARN.toString(), WARN);
+        map.put(FacesMessage.SEVERITY_ERROR.toString(), ERROR);
+        map.put(FacesMessage.SEVERITY_FATAL.toString(), FATAL);
+    }
+
     public FacesMessage[] getMessagesBySeverity(FacesMessage.Severity severity) {
         FacesContext context = getFacesContext();
         List list = new ArrayList();
+        String type = severity.toString();
+        FacesMessage.Severity[] severities = (FacesMessage.Severity[]) map.get(type);
         for (Iterator it = context.getMessages(); it.hasNext();) {
             FacesMessage message = (FacesMessage) it.next();
-            if (message.getSeverity().equals(severity)) {
-                list.add(message);
+            for(int i = 0; i < severities.length; i++) {
+                if (message.getSeverity().equals(severities[i])) {
+                    list.add(message);
+                }
             }
         }
         return (FacesMessage[]) list.toArray(new FacesMessage[list.size()]);
