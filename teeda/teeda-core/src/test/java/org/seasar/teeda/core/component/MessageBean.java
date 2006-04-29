@@ -15,14 +15,30 @@
  */
 package org.seasar.teeda.core.component;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
 /**
  * @author manhole
+ * @author shot
  */
 public class MessageBean {
+
+    public FacesMessage[] getMessagesBySeverity(FacesMessage.Severity severity) {
+        FacesContext context = getFacesContext();
+        List list = new ArrayList();
+        for (Iterator it = context.getMessages(); it.hasNext();) {
+            FacesMessage message = (FacesMessage) it.next();
+            if (message.getSeverity().equals(severity)) {
+                list.add(message);
+            }
+        }
+        return (FacesMessage[]) list.toArray(new FacesMessage[list.size()]);
+    }
 
     public boolean isEmpty() {
         FacesContext context = getFacesContext();
