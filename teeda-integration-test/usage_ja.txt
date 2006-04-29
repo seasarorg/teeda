@@ -1,0 +1,13 @@
+* teeda-integration-testの使い方
+
+1. SVNからチェックアウトする。
+2. mvn test するとテストが実行される。
+
+** Eclipseを使う場合
+
+SVNからチェックアウトした後に、mvn eclipse:eclipse して
+(もしくは mvn -Declipse.downloadSources=true eclipse:eclipse)
+.classpathと.projectを生成する。
+
+pom.xmlが更新される度に(dependencyが変更される度に)、
+mvn eclipse:eclipseすること。
