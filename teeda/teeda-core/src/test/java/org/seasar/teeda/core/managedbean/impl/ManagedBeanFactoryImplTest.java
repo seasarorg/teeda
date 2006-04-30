@@ -16,7 +16,11 @@
 package org.seasar.teeda.core.managedbean.impl;
 
 import org.seasar.framework.container.ComponentDef;
+import org.seasar.framework.container.InitMethodDef;
 import org.seasar.framework.container.deployer.InstanceDefFactory;
+import org.seasar.framework.container.impl.ArgDefImpl;
+import org.seasar.framework.container.impl.ComponentDefImpl;
+import org.seasar.framework.container.impl.InitMethodDefImpl;
 import org.seasar.teeda.core.managedbean.ManagedBeanFactory;
 import org.seasar.teeda.core.scope.Scope;
 import org.seasar.teeda.core.unit.TeedaTestCase;
@@ -73,6 +77,20 @@ public class ManagedBeanFactoryImplTest extends TeedaTestCase {
         assertEquals("hoge", a.getStr());
     }
 
+    public void testSetManagedBean5() throws Exception {
+        ManagedBeanFactory factory = getManagedBeanFactory();
+        A a = new A();
+        ComponentDef cDef = new ComponentDefImpl(a.getClass());
+        cDef.setComponentName("aaa");
+        InitMethodDef iDef = new InitMethodDefImpl("setStr");
+        iDef.addArgDef(new ArgDefImpl("foo"));
+        cDef.addInitMethodDef(iDef);
+        factory.setManagedBean(cDef, Scope.REQUEST);
+
+        A a2 = (A) factory.getManagedBean("aaa");
+        assertEquals("foo", a2.getStr());
+    }
+
     public void testManagedBeanScope_request() throws Exception {
         ManagedBeanFactory factory = getManagedBeanFactory();
         factory.setManagedBean("A", A.class, Scope.REQUEST);
@@ -113,6 +131,10 @@ public class ManagedBeanFactoryImplTest extends TeedaTestCase {
 
         public String getStr() {
             return str;
+        }
+
+        public void setStr(String str) {
+            this.str = str;
         }
     }
 

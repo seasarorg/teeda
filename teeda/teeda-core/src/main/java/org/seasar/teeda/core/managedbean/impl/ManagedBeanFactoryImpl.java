@@ -68,15 +68,16 @@ public class ManagedBeanFactoryImpl implements ManagedBeanFactory {
 
     public void setManagedBean(ComponentDef componentDef, Scope scope) {
         S2Container container = (S2Container) SingletonS2ContainerFactory
-        .getContainer();
+                .getContainer();
         setManagedBean(container, componentDef, scope);
     }
 
-    protected void setManagedBean(S2Container container, ComponentDef componentDef, Scope scope) {
+    protected void setManagedBean(S2Container container,
+            ComponentDef componentDef, Scope scope) {
         setInstanceTypeFor(componentDef, scope);
         container.register(componentDef);
     }
-    
+
     public Scope getManagedBeanScope(String name) {
         S2Container container = (S2Container) SingletonS2ContainerFactory
                 .getContainer();
