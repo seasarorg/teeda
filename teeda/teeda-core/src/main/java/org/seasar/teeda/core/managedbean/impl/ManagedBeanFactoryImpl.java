@@ -53,25 +53,30 @@ public class ManagedBeanFactoryImpl implements ManagedBeanFactory {
     }
 
     public void setManagedBean(String name, Class type, Scope scope) {
-        S2Container container = (S2Container) SingletonS2ContainerFactory
-                .getContainer();
         ComponentDef componentDef = new ComponentDefImpl(type, name);
-        setInstanceTypeFor(componentDef, scope);
-        container.register(componentDef);
+        setManagedBean(componentDef, scope);
     }
 
     public void setManagedBean(String name, Class type, Scope scope,
             String initMethodName, String destroyMethodName) {
-        S2Container container = (S2Container) SingletonS2ContainerFactory
-                .getContainer();
         ComponentDef componentDef = new ComponentDefImpl(type, name);
-        setInstanceTypeFor(componentDef, scope);
         componentDef.addInitMethodDef(new InitMethodDefImpl(initMethodName));
         componentDef.addDestroyMethodDef(new DestroyMethodDefImpl(
                 destroyMethodName));
-        container.register(componentDef);
+        setManagedBean(componentDef, scope);
     }
 
+    public void setManagedBean(ComponentDef componentDef, Scope scope) {
+        S2Container container = (S2Container) SingletonS2ContainerFactory
+        .getContainer();
+        setManagedBean(container, componentDef, scope);
+    }
+
+    protected void setManagedBean(S2Container container, ComponentDef componentDef, Scope scope) {
+        setInstanceTypeFor(componentDef, scope);
+        container.register(componentDef);
+    }
+    
     public Scope getManagedBeanScope(String name) {
         S2Container container = (S2Container) SingletonS2ContainerFactory
                 .getContainer();

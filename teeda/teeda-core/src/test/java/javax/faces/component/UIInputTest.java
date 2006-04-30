@@ -15,11 +15,20 @@
  */
 package javax.faces.component;
 
+import java.util.Iterator;
+
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.el.MethodBinding;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.event.ValueChangeListener;
+import javax.faces.render.RenderKitFactory;
+import javax.faces.validator.LengthValidator;
 import javax.faces.validator.Validator;
+import javax.faces.validator.ValidatorException;
 
+import org.seasar.teeda.core.annotation.ValidatorResource;
+import org.seasar.teeda.core.annotation.ValidatorResourceImpl;
 import org.seasar.teeda.core.mock.MockMethodBinding;
 import org.seasar.teeda.core.mock.MockUIComponentBase;
 import org.seasar.teeda.core.mock.MockValueBinding;
@@ -253,6 +262,53 @@ public class UIInputTest extends UIOutputTest {
         assertEquals(null, input.getValue());
     }
 
+    public final void testHandleValidationException() throws Exception {
+        // ## Arrange ##
+        UIInput input = new UIInput();
+        input.setId("id");
+        ValidatorException ve = new ValidatorException(new FacesMessage("aaa"));
+        FacesContext context = getFacesContext();
+        UIViewRoot root = new UIViewRoot();
+        root.setRenderKitId(RenderKitFactory.HTML_BASIC_RENDER_KIT);
+        context.setViewRoot(root);
+        
+        // ## Act ##
+        input.handleValidationException(context, ve);
+
+        // ## Assert ##
+        Iterator itr = context.getMessages();
+        Object o = itr.next();
+        assertTrue(o instanceof FacesMessage);
+        FacesMessage message = (FacesMessage)o;
+        assertEquals("aaa", message.getSummary());
+    }
+
+    public void testValidateValue() throws Exception {
+        // ## Arrange ##
+        UIInput input = new UIInput();
+        input.setValid(true);
+        input.setRequired(true);
+
+        MockValueBinding vb = new MockValueBinding();
+        vb.setExpressionString("#{a.name}");
+        input.setValueBinding("value", vb);
+        
+        ValidatorResource resource = new ValidatorResourceImpl();
+        resource.addValidatorResource("#{a.name}", new LengthValidator(5, 2));
+        getContainer().register(resource);
+        
+        input.validateValue(getFacesContext(), new Integer(6));
+        
+        Iterator itr = getFacesContext().getMessages();
+        Object o = itr.next();
+        assertTrue(o instanceof FacesMessage);
+        FacesMessage message = (FacesMessage)o;
+        assertNotNull(message);
+        assertEquals(FacesMessage.SEVERITY_ERROR, message.getSeverity());
+    }
+
+    //TODO testing more.
+    
     private UIInput createUIInput() {
         return (UIInput) createUIComponent();
     }

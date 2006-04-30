@@ -81,6 +81,6 @@ public class ValidatorChain implements Validator, StateHolder {
     }
 
     public void setTransient(boolean transientValue) {
-        this.transientValue_ = transientValue;
+        transientValue_ = transientValue;
     }
 }

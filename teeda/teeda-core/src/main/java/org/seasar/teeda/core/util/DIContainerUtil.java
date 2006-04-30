@@ -40,8 +40,8 @@ public class DIContainerUtil {
         }
     }
 
-    public static Object getComponent(Class clazz) {
-        return getContainer().getComponent(clazz);
+    public static Object getComponent(Object componentKey) {
+        return getContainer().getComponent(componentKey);
     }
 
     public static synchronized void register(ComponentDef componentDef) {

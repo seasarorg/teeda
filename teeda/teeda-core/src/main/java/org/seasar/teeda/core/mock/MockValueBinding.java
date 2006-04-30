@@ -31,6 +31,8 @@ public class MockValueBinding extends ValueBinding implements StateHolder {
 
     private String ref_;
 
+    private String exprStr_;
+    
     public MockValueBinding() {
     }
 
@@ -77,4 +79,12 @@ public class MockValueBinding extends ValueBinding implements StateHolder {
     public void restoreState(FacesContext context, Object state) {
     }
 
+    public String getExpressionString() {
+        return exprStr_;
+    }
+
+    public void setExpressionString(String exprStr) {
+        exprStr_ = exprStr;
+    }
+    
 }

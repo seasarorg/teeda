@@ -15,6 +15,7 @@
  */
 package org.seasar.teeda.core.managedbean;
 
+import org.seasar.framework.container.ComponentDef;
 import org.seasar.teeda.core.scope.Scope;
 import org.seasar.teeda.core.scope.ScopeManager;
 
@@ -23,21 +24,18 @@ import org.seasar.teeda.core.scope.ScopeManager;
  */
 public interface ManagedBeanFactory {
 
+    //TODO need HOT support
     public Object getManagedBean(String name);
 
     public Scope getManagedBeanScope(String name);
 
-    /**
-     * normal managed bean setting
-     */
     public void setManagedBean(String name, Class type, Scope scope);
 
-    /**
-     * extend managed bean setting(init and destroy method called)
-     */
     public void setManagedBean(String name, Class type, Scope scope,
             String initMethodName, String destroyMethodName);
 
+    public void setManagedBean(ComponentDef componentDef, Scope scope);
+    
     public void setScopeManager(ScopeManager ScopeManager);
 
     public ScopeManager getScopeManager();

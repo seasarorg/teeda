@@ -15,6 +15,8 @@
  */
 package org.seasar.teeda.core.unit;
 
+import java.util.Locale;
+
 import javax.faces.FactoryFinder;
 import javax.faces.component.UIViewRoot;
 import javax.faces.lifecycle.LifecycleFactory;
@@ -109,6 +111,7 @@ public abstract class TeedaTestCase extends S2FrameworkTestCase {
         facesContext.setResponseWriter(responseWriter);
         UIViewRoot viewRoot = new UIViewRoot();
         viewRoot.setRenderKitId(RenderKitFactory.HTML_BASIC_RENDER_KIT);
+        viewRoot.setLocale(Locale.getDefault());
         facesContext.setViewRoot(viewRoot);
         renderKit = new MockRenderKitImpl();
 

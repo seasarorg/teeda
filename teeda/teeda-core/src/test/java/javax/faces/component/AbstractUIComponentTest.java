@@ -20,18 +20,17 @@ import java.util.Map;
 
 import javax.faces.context.FacesContext;
 
-import junit.framework.TestCase;
-
 import org.seasar.teeda.core.mock.MockValueBinding;
 import org.seasar.teeda.core.mock.NullFacesContext;
 import org.seasar.teeda.core.mock.NullFacesEvent;
 import org.seasar.teeda.core.mock.NullValueBinding;
 import org.seasar.teeda.core.unit.ExceptionAssert;
+import org.seasar.teeda.core.unit.TeedaTestCase;
 
 /**
  * @author manhole
  */
-public abstract class AbstractUIComponentTest extends TestCase {
+public abstract class AbstractUIComponentTest extends TeedaTestCase {
 
     public final void testGetValueBinding_NullArg() throws Exception {
         UIComponent component = createUIComponent();

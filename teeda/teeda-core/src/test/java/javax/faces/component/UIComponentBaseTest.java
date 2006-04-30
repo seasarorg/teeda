@@ -25,8 +25,6 @@ import javax.faces.event.FacesListener;
 
 import junitx.framework.ObjectAssert;
 
-import org.seasar.teeda.core.mock.MockFacesContext;
-import org.seasar.teeda.core.mock.MockFacesContextImpl;
 import org.seasar.teeda.core.mock.MockUIComponent;
 import org.seasar.teeda.core.mock.MockUIComponentBase;
 import org.seasar.teeda.core.mock.MockValueBinding;
@@ -560,22 +558,6 @@ public class UIComponentBaseTest extends AbstractUIComponentTest {
 
     protected UIComponent createUIComponent() {
         return new MockUIComponentBase();
-    }
-
-    private MockFacesContext facesContext_;
-
-    protected void setUp() throws Exception {
-        super.setUp();
-        facesContext_ = new MockFacesContextImpl();
-    }
-
-    protected void tearDown() throws Exception {
-        facesContext_.release();
-        super.tearDown();
-    }
-
-    public MockFacesContext getFacesContext() {
-        return facesContext_;
     }
 
 }

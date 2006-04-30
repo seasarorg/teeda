@@ -34,14 +34,12 @@ import javax.faces.render.Renderer;
 import junitx.framework.ObjectAssert;
 
 import org.seasar.extension.unit.S2TestCase;
-import org.seasar.framework.container.factory.ClassPathResourceResolver;
 import org.seasar.teeda.core.application.navigation.NavigationCaseContext;
 import org.seasar.teeda.core.application.navigation.NavigationContext;
 import org.seasar.teeda.core.application.navigation.NavigationContextFactory;
 import org.seasar.teeda.core.config.faces.assembler.AssemblerAssembler;
 import org.seasar.teeda.core.config.faces.assembler.impl.DefaultAssembleProvider;
 import org.seasar.teeda.core.config.faces.element.FacesConfig;
-import org.seasar.teeda.core.config.faces.rule.FacesConfigTagHandlerRule;
 import org.seasar.teeda.core.managedbean.ManagedBeanFactory;
 import org.seasar.teeda.core.managedbean.impl.ManagedBeanFactoryImpl;
 import org.seasar.teeda.core.managedbean.impl.ManagedBeanScopeSaverImpl;

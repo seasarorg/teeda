@@ -26,6 +26,7 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 import javax.faces.el.EvaluationException;
 import javax.faces.el.MethodBinding;
+import javax.faces.el.ValueBinding;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.FacesEvent;
 import javax.faces.event.ValueChangeEvent;
@@ -35,6 +36,9 @@ import javax.faces.internal.FacesMessageUtils;
 import javax.faces.render.Renderer;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
+
+import org.seasar.teeda.core.annotation.ValidatorResource;
+import org.seasar.teeda.core.util.DIContainerUtil;
 
 /**
  * @author shot
@@ -309,8 +313,9 @@ public class UIInput extends UIOutput implements EditableValueHolder {
             setValid(false);
         }
         if (isValid() && !isEmpty(newValue)) {
-            validateValueReally(context, newValue);
+            validateFromAddedValidator(context, newValue);
             validateFromBinding(context, newValue);
+            validateFromAnnotation(context, newValue);
         }
     }
 
@@ -454,7 +459,7 @@ public class UIInput extends UIOutput implements EditableValueHolder {
         }
     }
 
-    private void validateValueReally(FacesContext context, Object value) {
+    private void validateFromAddedValidator(FacesContext context, Object value) {
         if (validators_ == null) {
             return;
         }
@@ -463,12 +468,7 @@ public class UIInput extends UIOutput implements EditableValueHolder {
             try {
                 validator.validate(context, this, value);
             } catch (ValidatorException e) {
-                setValid(false);
-                FacesMessage message = e.getFacesMessage();
-                if (message != null) {
-                    message.setSeverity(FacesMessage.SEVERITY_ERROR);
-                    context.addMessage(getClientId(context), message);
-                }
+                handleValidationException(context, e);
             }
         }
     }
@@ -484,16 +484,36 @@ public class UIInput extends UIOutput implements EditableValueHolder {
             Throwable cause = e.getCause();
             if (cause instanceof ValidatorException) {
                 ValidatorException ve = (ValidatorException) e.getCause();
-                setValid(false);
-                FacesMessage message = ve.getFacesMessage();
-                if (message != null) {
-                    message.setSeverity(FacesMessage.SEVERITY_ERROR);
-                    context.addMessage(getClientId(context), message);
-                }
+                handleValidationException(context, ve);
             } else {
                 throw e;
             }
         }
     }
 
+    private void validateFromAnnotation(FacesContext context, Object value) {
+        ValueBinding vb = getValueBinding("value");
+        if (vb != null) {
+            String expression = vb.getExpressionString();
+            ValidatorResource resource = (ValidatorResource) DIContainerUtil
+                    .getComponentNoException(ValidatorResource.class);
+            if(resource != null) {
+                try {
+                    resource.getValidator(expression).validate(context, this, value);
+                } catch (ValidatorException e) {
+                    handleValidationException(context, e);
+                }
+            }
+        }
+    }
+
+    protected void handleValidationException(FacesContext context,
+            ValidatorException e) {
+        setValid(false);
+        FacesMessage message = e.getFacesMessage();
+        if (message != null) {
+            message.setSeverity(FacesMessage.SEVERITY_ERROR);
+            context.addMessage(getClientId(context), message);
+        }
+    }
 }

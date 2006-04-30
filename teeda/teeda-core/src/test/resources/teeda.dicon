@@ -244,4 +244,8 @@
 		</initMethod>
 	</component>
 	
+	<component class="org.seasar.teeda.core.annotation.factory.ValidatorAnnotationHandlerFactoryImpl" />
+	
+	<component class="org.seasar.teeda.core.annotation.ConstantValidatorAnnotationHandler" />
+	
 </components>

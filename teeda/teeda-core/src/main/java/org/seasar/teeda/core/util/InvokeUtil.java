@@ -34,24 +34,14 @@ import org.seasar.framework.container.deployer.InstanceDefFactory;
 import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
 import org.seasar.framework.util.FieldUtil;
 import org.seasar.framework.util.StringUtil;
+import org.seasar.teeda.core.annotation.AnnotationConstants;
 
 /**
  * @author higa
+ * @author shot
  * 
  */
 public class InvokeUtil {
-
-    private static final String EXPORT_SUFFIX = "_EXPORT";
-
-    private static final String ACTION_BINDING_SUFFIX = "_ACTION_BINDING";
-
-    private static final String VALUE = "value";
-
-    private static final String BINDING_TYPE = "bindingType";
-
-    private static final String NONE = "none";
-
-    private static final String SESSION = "session";
 
     private InvokeUtil() {
     }
@@ -107,7 +97,8 @@ public class InvokeUtil {
             PropertyDesc pd = beanDesc.getPropertyDesc(i);
             if (pd.hasWriteMethod()) {
                 String varName = pd.getPropertyName();
-                String fieldName = pd.getPropertyName() + ACTION_BINDING_SUFFIX;
+                String fieldName = pd.getPropertyName()
+                        + AnnotationConstants.ACTION_BINDING_SUFFIX;
                 if (beanDesc.hasField(fieldName)) {
                     String bindingStr = (String) beanDesc.getFieldValue(
                             fieldName, null);
@@ -120,9 +111,12 @@ public class InvokeUtil {
                             for (int j = 0; j < array.length; j += 2) {
                                 String k = array[j].trim();
                                 String v = array[j + 1].trim();
-                                if (BINDING_TYPE.equalsIgnoreCase(k)) {
-                                    nobinding = NONE.equalsIgnoreCase(v);
-                                } else if (VALUE.equalsIgnoreCase(k)) {
+                                if (AnnotationConstants.BINDING_TYPE
+                                        .equalsIgnoreCase(k)) {
+                                    nobinding = AnnotationConstants.NONE
+                                            .equalsIgnoreCase(v);
+                                } else if (AnnotationConstants.VALUE
+                                        .equalsIgnoreCase(k)) {
                                     varName = v;
                                 } else {
                                     throw new IllegalArgumentException(
@@ -159,11 +153,12 @@ public class InvokeUtil {
                 Object var = pd.getValue(component);
                 if (var != null) {
                     boolean useSession = false;
-                    String fieldName = pd.getPropertyName() + EXPORT_SUFFIX;
+                    String fieldName = pd.getPropertyName()
+                            + AnnotationConstants.EXPORT_SUFFIX;
                     if (beanDesc.hasField(fieldName)) {
                         Field field = beanDesc.getField(fieldName);
                         String value = (String) FieldUtil.get(field, null);
-                        if (SESSION.equalsIgnoreCase(value)) {
+                        if (AnnotationConstants.SESSION.equalsIgnoreCase(value)) {
                             useSession = true;
                         }
                     } else if (container.hasComponentDef(pd.getPropertyName())) {

@@ -18,6 +18,9 @@ package org.seasar.teeda.core.config.faces.assembler.impl;
 import java.util.Iterator;
 import java.util.Map;
 
+import org.seasar.framework.container.ComponentDef;
+import org.seasar.framework.container.impl.ComponentDefImpl;
+import org.seasar.teeda.core.annotation.factory.ValidatorAnnotationHandlerFactory;
 import org.seasar.teeda.core.config.faces.assembler.ManagedBeanAssembler;
 import org.seasar.teeda.core.config.faces.element.ManagedBeanElement;
 import org.seasar.teeda.core.exception.ManagedBeanDuplicateRegisterException;
@@ -37,6 +40,8 @@ public class DefaultManagedBeanAssembler extends ManagedBeanAssembler {
 
     private ScopeManager scopeManager_;
 
+    private ValidatorAnnotationHandlerFactory annotationHandlerFactory_;
+
     public DefaultManagedBeanAssembler(Map managedBeans) {
         super(managedBeans);
     }
@@ -46,6 +51,8 @@ public class DefaultManagedBeanAssembler extends ManagedBeanAssembler {
                 .getComponent(ManagedBeanFactory.class);
         scopeManager_ = (ScopeManager) DIContainerUtil
                 .getComponent(ScopeManager.class);
+        annotationHandlerFactory_ = (ValidatorAnnotationHandlerFactory) DIContainerUtil
+                .getComponentNoException(ValidatorAnnotationHandlerFactory.class);
     }
 
     public void assemble() {
@@ -60,8 +67,13 @@ public class DefaultManagedBeanAssembler extends ManagedBeanAssembler {
             assertNotRegisteredYet(mbName);
 
             Scope scope = scopeManager_.getScope(mbScope);
-            managedBeanFactory_.setManagedBean(mbName, ClassUtil
-                    .forName(mbClassName), scope);
+            Class clazz = ClassUtil.forName(mbClassName);
+            ComponentDef cDef = new ComponentDefImpl(clazz, mbName);
+            managedBeanFactory_.setManagedBean(cDef, scope);
+            if(annotationHandlerFactory_ != null) {
+                annotationHandlerFactory_.getAnnotationHandler().registerValidator(
+                        cDef);
+            }
         }
     }
 
