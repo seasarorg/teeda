@@ -55,10 +55,11 @@ public class MessageBean {
         FacesContext context = getFacesContext();
         List list = new ArrayList();
         String type = severity.toString();
-        FacesMessage.Severity[] severities = (FacesMessage.Severity[]) map.get(type);
+        FacesMessage.Severity[] severities = (FacesMessage.Severity[]) map
+                .get(type);
         for (Iterator it = context.getMessages(); it.hasNext();) {
             FacesMessage message = (FacesMessage) it.next();
-            for(int i = 0; i < severities.length; i++) {
+            for (int i = 0; i < severities.length; i++) {
                 if (message.getSeverity().equals(severities[i])) {
                     list.add(message);
                 }
@@ -79,6 +80,10 @@ public class MessageBean {
 
     FacesContext getFacesContext() {
         return FacesContext.getCurrentInstance();
+    }
+
+    public FacesMessage[] getErrorMessages() {
+        return getMessagesBySeverity(FacesMessage.SEVERITY_ERROR);
     }
 
 }

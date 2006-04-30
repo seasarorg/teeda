@@ -21,6 +21,7 @@ import org.seasar.teeda.core.unit.TeedaTestCase;
 
 /**
  * @author manhole
+ * @author shot
  */
 public class MessageBeanTest extends TeedaTestCase {
 
@@ -38,21 +39,50 @@ public class MessageBeanTest extends TeedaTestCase {
     }
 
     public void testGetMessagesBySeverity() throws Exception {
-        getFacesContext().addMessage("fooId", new FacesMessage(FacesMessage.SEVERITY_WARN, "a", "b"));
-        getFacesContext().addMessage("barId", new FacesMessage(FacesMessage.SEVERITY_WARN, "c", "d"));
+        getFacesContext().addMessage("fooId",
+                new FacesMessage(FacesMessage.SEVERITY_WARN, "a", "b"));
+        getFacesContext().addMessage("barId",
+                new FacesMessage(FacesMessage.SEVERITY_WARN, "c", "d"));
         MessageBean messageBean = new MessageBean();
-        FacesMessage[] messages = messageBean.getMessagesBySeverity(FacesMessage.SEVERITY_WARN);
+        FacesMessage[] messages = messageBean
+                .getMessagesBySeverity(FacesMessage.SEVERITY_WARN);
         assertEquals(FacesMessage.SEVERITY_WARN, messages[0].getSeverity());
         assertEquals(FacesMessage.SEVERITY_WARN, messages[1].getSeverity());
     }
-    
+
     public void testGetMessagesBySeverity2() throws Exception {
-        getFacesContext().addMessage("fooId", new FacesMessage(FacesMessage.SEVERITY_WARN, "a", "b"));
-        getFacesContext().addMessage("barId", new FacesMessage(FacesMessage.SEVERITY_ERROR, "c", "d"));
+        getFacesContext().addMessage("fooId",
+                new FacesMessage(FacesMessage.SEVERITY_WARN, "a", "b"));
+        getFacesContext().addMessage("barId",
+                new FacesMessage(FacesMessage.SEVERITY_ERROR, "c", "d"));
         MessageBean messageBean = new MessageBean();
-        FacesMessage[] messages = messageBean.getMessagesBySeverity(FacesMessage.SEVERITY_WARN);
+        FacesMessage[] messages = messageBean
+                .getMessagesBySeverity(FacesMessage.SEVERITY_WARN);
         assertEquals(FacesMessage.SEVERITY_WARN, messages[0].getSeverity());
         assertEquals(FacesMessage.SEVERITY_ERROR, messages[1].getSeverity());
+    }
+
+    public void testGetErrorMessages() throws Exception {
+        // ## Arrange ##
+        FacesMessage m1 = new FacesMessage(FacesMessage.SEVERITY_WARN, "a", "a");
+        FacesMessage m2 = new FacesMessage(FacesMessage.SEVERITY_WARN, "a", "a");
+        FacesMessage m3 = new FacesMessage(FacesMessage.SEVERITY_ERROR, "a",
+                "a");
+        FacesMessage m4 = new FacesMessage(FacesMessage.SEVERITY_ERROR, "a",
+                "a");
+        getFacesContext().addMessage("1", m1);
+        getFacesContext().addMessage("2", m2);
+        getFacesContext().addMessage("3", m3);
+        getFacesContext().addMessage("4", m4);
+
+        // ## Act ##
+        MessageBean messageBean = new MessageBean();
+        FacesMessage[] messages = messageBean.getErrorMessages();
+
+        // ## Assert ##
+        assertEquals(2, messages.length);
+        assertSame(m3, messages[0]);
+        assertSame(m4, messages[1]);
     }
 
     //TODO testing
