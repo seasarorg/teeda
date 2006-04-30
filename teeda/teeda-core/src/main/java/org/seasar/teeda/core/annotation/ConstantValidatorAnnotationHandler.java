@@ -83,7 +83,9 @@ public class ConstantValidatorAnnotationHandler extends
             }
         }
         Validator validator = chainValidators(list);
-        getValidatorResource().addValidatorResource(expression, validator);
+        if(validator != null) {
+            getValidatorResource().addValidatorResource(expression, validator);
+        }
     }
 
     protected Validator setUpValidator(final String config) {
