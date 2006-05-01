@@ -1,0 +1,19 @@
+* myfacesの拡張コンポーネント(tomahawk)を使うには
+
+次の設定をすれば、teedaにてtomahawkコンポーネントを利用できるようになります。
+
+- web.xmlにてextensionFilterを有効にする
+- tomahawk-x.x.x.jarをWEB-INF/libへ追加する
+
+※tomahawkはmyfaces実装に依存している箇所が見受けられるので、
+  全てがそのまま動作するとは限りません。
+  ここには動作確認できたものを記載します。
+
+** inputCalendar
+
+tomahawk-1.1.1で確認。
+
+- id生成に、DefaultComponentIdLookupStrategyではなく
+  JsfSpecComponentIdLookupStrategyを使うようにする
+- formとinputCalendarの両方にid属性を付ける
+
