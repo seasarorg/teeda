@@ -48,7 +48,6 @@ public abstract class AbstractHtmlRenderer extends Renderer {
                 (UIOutput) component, submittedValue);
     }
 
-    // TODO to change pluggable
     protected String getIdForRender(FacesContext context, UIComponent component) {
         return idLookupStartegy_.getId(context, component);
     }
