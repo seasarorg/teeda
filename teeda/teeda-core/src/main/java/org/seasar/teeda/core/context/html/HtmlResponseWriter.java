@@ -57,7 +57,7 @@ public class HtmlResponseWriter extends ResponseWriter {
         closeStartTagIfOpening(writer);
         writer.write("<");
         writer.write(name);
-        if ("script".equals(name.toLowerCase())) {
+        if ("script".equalsIgnoreCase(name)) {
             shouldEscape_ = false;
         } else {
             shouldEscape_ = true;
