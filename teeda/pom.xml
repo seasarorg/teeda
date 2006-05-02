@@ -163,6 +163,7 @@
   </build>
   <modules>
     <module>teeda-core</module>
+    <module>teeda-extension</module>
   </modules>
   <repositories>
     <repository>
