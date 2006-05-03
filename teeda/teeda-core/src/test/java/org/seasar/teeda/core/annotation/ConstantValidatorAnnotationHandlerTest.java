@@ -4,6 +4,7 @@ import javax.faces.validator.LengthValidator;
 import javax.faces.validator.LongRangeValidator;
 
 import org.seasar.framework.beans.BeanDesc;
+import org.seasar.framework.beans.PropertyNotFoundRuntimeException;
 import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.framework.container.ComponentDef;
 import org.seasar.framework.container.impl.ComponentDefImpl;
@@ -43,6 +44,21 @@ public class ConstantValidatorAnnotationHandlerTest extends TeedaTestCase {
         assertTrue(resources.getValidator("#{barBean.name}") instanceof ValidatorChain);
     }
 
+    public void testRegisterValidator_noSuchProperty() throws Exception {
+        getContainer().register(LengthValidator.class, "length");
+        ConstantValidatorAnnotationHandler handler = new ConstantValidatorAnnotationHandler();
+        ValidatorResource resources = new ValidatorResourceImpl();
+        handler.setValidatorResource(resources);
+        ComponentDef cDef = new ComponentDefImpl(BazBean.class);
+        try {
+            handler.registerValidator(cDef);
+            fail();
+        }catch(PropertyNotFoundRuntimeException expected){
+            success();
+        }
+        
+    }
+
     public void testGetShortClassName1() throws Exception {
         ConstantValidatorAnnotationHandler handler = new ConstantValidatorAnnotationHandler();
         assertEquals("ConstantValidatorAnnotationHandlerTest", handler
@@ -75,7 +91,7 @@ public class ConstantValidatorAnnotationHandlerTest extends TeedaTestCase {
         ConstantValidatorAnnotationHandler handler = new ConstantValidatorAnnotationHandler();
         assertEquals("#{b.c}", handler.getExpressionByAuto(B.class, "c"));
     }
-
+    
     public static class AAAImpl {
 
     }
@@ -125,6 +141,22 @@ public class ConstantValidatorAnnotationHandlerTest extends TeedaTestCase {
         private String name = null;
 
         public static final String name_VALIDATOR = "{length, minimum=2, maximum=5}, {longRange, minimum=2}";
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+    }
+
+    public static class BazBean {
+
+        private String name = null;
+
+        public static final String name_VALIDATOR = "{length, mmmminimum=2, maximum=5}";
 
         public String getName() {
             return name;

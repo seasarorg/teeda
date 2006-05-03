@@ -33,7 +33,6 @@ import org.seasar.teeda.core.util.AnnotationUtil;
 public class ConstantValidatorAnnotationHandler extends
         AbstractValidatorAnnotationHandler {
 
-    //TODO more testing and do refactoring for AbstractValidatorAnnotationHandler
     protected static final String DELIMETER = ",";
 
     public void doRegisterValidator(Class targetClass, BeanDesc beanDesc) {
@@ -83,7 +82,7 @@ public class ConstantValidatorAnnotationHandler extends
             }
         }
         Validator validator = chainValidators(list);
-        if(validator != null) {
+        if (validator != null) {
             getValidatorResource().addValidatorResource(expression, validator);
         }
     }
@@ -100,8 +99,7 @@ public class ConstantValidatorAnnotationHandler extends
             if (pair.length == 2) {
                 String propertyName = pair[0].trim();
                 String value = pair[1].trim();
-                PropertyDesc propDesc = beanDesc.getPropertyDesc(propertyName);
-                propDesc.setValue(validator, value);
+                setValidatorProperty(beanDesc, propertyName, validator, value);
             }
         }
         return validator;
@@ -137,6 +135,12 @@ public class ConstantValidatorAnnotationHandler extends
             }
         }
         return null;
+    }
+
+    protected static void setValidatorProperty(BeanDesc beanDesc,
+            String propertyName, Validator validator, Object value) {
+        PropertyDesc propDesc = beanDesc.getPropertyDesc(propertyName);
+        propDesc.setValue(validator, value);
     }
 
     private static boolean checkIfHasNextConfig(String config) {
