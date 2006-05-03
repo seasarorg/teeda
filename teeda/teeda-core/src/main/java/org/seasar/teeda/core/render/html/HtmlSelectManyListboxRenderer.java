@@ -145,7 +145,7 @@ public class HtmlSelectManyListboxRenderer extends AbstractHtmlRenderer {
                     RendererUtil.renderAttribute(writer,
                             JsfConstants.CLASS_ATTR, labelClass);
                 }
-                if (isSelected(selectedValues, value.toString())) {
+                if (value != null && isSelected(selectedValues, value.toString())) {
                     RendererUtil.renderSelectedAttribute(writer);
                 }
                 if (selectItem.isDisabled()) {

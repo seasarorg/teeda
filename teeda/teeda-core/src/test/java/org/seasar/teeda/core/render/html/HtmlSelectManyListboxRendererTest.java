@@ -15,6 +15,9 @@
  */
 package org.seasar.teeda.core.render.html;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.faces.component.UISelectItem;
 import javax.faces.component.UISelectItems;
 import javax.faces.component.html.HtmlSelectManyListbox;
@@ -409,6 +412,30 @@ public class HtmlSelectManyListboxRendererTest extends RendererTest {
         assertEquals(false, renderer_.getRendersChildren());
     }
 
+    public void testSelectItemValueIsNull() throws Exception {
+        // ## Arrange ##
+        htmlSelectManyListbox_.setRendered(true);
+        {
+            UISelectItems selectItems = new UISelectItems();
+            List list = new ArrayList();
+            SelectItem selectItem = new SelectItem();
+            selectItem.setLabel("aaa");
+            list.add(selectItem);
+            selectItems.setValue(list);
+            htmlSelectManyListbox_.getChildren().add(selectItems);
+        }
+        FacesContext context = getFacesContext();
+
+        // ## Act ##
+        encodeByRenderer(renderer_, context, htmlSelectManyListbox_);
+
+        // ## Assert ##
+        assertEquals("<select name=\"_id0\" multiple=\"multiple\" size=\"1\">"
+                + "<option>aaa</option>" + "</select>",
+                getResponseText());
+    }
+    
+    
     private HtmlSelectManyListboxRenderer createHtmlSelectManyListboxRenderer() {
         return (HtmlSelectManyListboxRenderer) createRenderer();
     }
