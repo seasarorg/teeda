@@ -403,6 +403,11 @@ public class HtmlSelectOneListboxRendererTest extends RendererTest {
         assertEquals(false, renderer_.getRendersChildren());
     }
 
+    public void testGetConvertedValue() throws Exception {
+        assertEquals("hoge", renderer_.getConvertedValue(getFacesContext(), htmlSelectOneListbox_, "hoge"));
+    }
+    
+    
     private HtmlSelectOneListboxRenderer createHtmlSelectOneListboxRenderer() {
         return (HtmlSelectOneListboxRenderer) createRenderer();
     }
