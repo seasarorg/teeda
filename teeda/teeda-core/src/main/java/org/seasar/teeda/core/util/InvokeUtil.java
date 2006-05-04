@@ -34,7 +34,7 @@ import org.seasar.framework.container.deployer.InstanceDefFactory;
 import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
 import org.seasar.framework.util.FieldUtil;
 import org.seasar.framework.util.StringUtil;
-import org.seasar.teeda.core.annotation.AnnotationConstants;
+import org.seasar.teeda.core.AnnotationConstants;
 
 /**
  * @author higa

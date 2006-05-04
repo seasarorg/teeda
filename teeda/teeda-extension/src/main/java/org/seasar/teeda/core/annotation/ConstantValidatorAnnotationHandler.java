@@ -25,6 +25,7 @@ import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.PropertyDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.framework.util.StringUtil;
+import org.seasar.teeda.core.AnnotationConstants;
 import org.seasar.teeda.core.util.AnnotationUtil;
 
 /**
