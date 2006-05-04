@@ -20,6 +20,6 @@
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/s2-framework-2.4.0-beta-1.jar"/>
 	<classpathentry output="work" kind="src" path="work"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/commons-collections-2.1.jar"/>
-	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/teeda-core-1.0-beta-2.jar"/>
+	<classpathentry sourcepath="/teeda" kind="lib" path="src/main/webapp/WEB-INF/lib/teeda-core-1.0-beta-3-SNAPSHOT.jar"/>
 	<classpathentry kind="output" path="src/main/webapp/WEB-INF/classes"/>
 </classpath>
