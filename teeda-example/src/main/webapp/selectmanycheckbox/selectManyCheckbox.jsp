@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h" %>
 <html>
 <head>
-<title>selectMayCheckbox.jsp</title>
+<title>selectManyCheckbox.jsp</title>
 </head>
 <body>
 <f:view>
