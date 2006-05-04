@@ -29,14 +29,10 @@ public interface TODO {
      *       (JSFTestCase and TeedaTestCase?)
      *  - AbstractPhase.initializeChildren should be modified to use EditableValueHolder
      *  - Test LifecycleImpl and Phase
-     *  - Use UIComponent's label attribute (if exist) for Conversion, Validation Error Message.
      *  - Support list-entries, map-entries to ManagedBean.
      *    (Need to modify ManagedBeanFactoryImpl, and ManagedBeanAssembler) 
      *  - MetaInfFacesConfigurator -> Support multiple jar file.
      *  - Add DI Support for Converter, Validator, UIComponent, Renderer
-     *     -> Converter not yet
-     *     -> Validator done
-     *     -> UIComponent not yet
      *     -> Renderer not yet
      *  - [Seasar-user:3230]
      *  - [#7682] http://sourceforge.jp/tracker/index.php?func=detail&aid=7682&group_id=689&atid=6584
@@ -69,6 +65,11 @@ public interface TODO {
      *  - impl StateManager
      *  - impl taglib core
      *  - impl taglib html
+     *  - Use UIComponent's label attribute (if exist) for Conversion, Validation Error Message.
+     *  - Add DI Support for Converter, Validator, UIComponent, Renderer
+     *     -> Converter dobe
+     *     -> Validator done
+     *     -> UIComponent done
      * 
      * PEND
      *  - Selenium integration
