@@ -37,8 +37,8 @@ import javax.faces.render.Renderer;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
-import org.seasar.teeda.core.resource.NullValidatorResource;
 import org.seasar.teeda.core.resource.ValidatorResource;
+import org.seasar.teeda.core.util.DIContainerUtil;
 
 /**
  * @author shot
@@ -76,7 +76,7 @@ public class UIInput extends UIOutput implements EditableValueHolder {
 
     private List validators_ = null;
 
-    private ValidatorResource resource_ = NullValidatorResource.getInstance();
+    private ValidatorResource resource_;
 
     private static final String DEFAULT_RENDER_TYPE = "javax.faces.Text";
 
@@ -497,8 +497,11 @@ public class UIInput extends UIOutput implements EditableValueHolder {
         ValueBinding vb = getValueBinding("value");
         if (vb != null) {
             String expression = vb.getExpressionString();
+            if(resource_ == null) {
+                resource_ = (ValidatorResource) DIContainerUtil.getComponentNoException(ValidatorResource.class);
+            }
             try {
-                getValidatorResource().getValidator(expression).validate(context, this, value);
+                resource_.getValidator(expression).validate(context, this, value);
             } catch (ValidatorException e) {
                 handleValidationException(context, e);
             }

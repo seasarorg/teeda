@@ -55,7 +55,7 @@ public class RegularExpressionValidator implements Validator, StateHolder {
         }
         String strValue = value.toString();
         if (!PatternUtil.matches(getPattern(), strValue)) {
-            Object[] args = new Object[] { getPattern(), strValue,
+            Object[] args = new Object[] { getPattern(),
                     UIComponentUtil.getLabel(component) };
             FacesMessage message = FacesMessageUtils.getMessage(context,
                     REGULAR_EXPRRESSION_MESSAGE_ID, args);

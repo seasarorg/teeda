@@ -39,7 +39,7 @@ public class TeedaDiconTest extends S2FrameworkTestCase {
         assertNotNull(app.getViewHandler());
         assertNotNull(app.getValueBindingContext());
         assertNotNull(app.getMethodBindingContext());
-
+        
         TeedaStateManagerImpl stateManager = (TeedaStateManagerImpl) app
                 .getStateManager();
         assertNotNull(stateManager.getTreeStructureManager());
@@ -68,10 +68,6 @@ public class TeedaDiconTest extends S2FrameworkTestCase {
                 .getComponent("teeda.valueBindingContext");
         assertNotNull(vbContext.getELParser());
         assertNotNull(vbContext.getELParser().getExpressionProcessor());
-
-        UIInput input = (UIInput) container.getComponent("javax.faces.Input");
-        assertNotNull(input.getValidatorResource());
-        assertTrue(input.getValidatorResource() instanceof ValidatorResourceImpl);
     }
 
 }

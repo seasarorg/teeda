@@ -96,7 +96,7 @@
 	<!-- ManagedBean -->	
 	<component class="org.seasar.teeda.core.managedbean.impl.ManagedBeanFactoryImpl" />
 	
-	<component class="org.seasar.teeda.core.managedbean.impl.ManagedBeanScopeSaverImpl" ></component>
+	<component class="org.seasar.teeda.core.managedbean.impl.ManagedBeanScopeSaverImpl" />
 		
 	<component name="scopeManager" class="org.seasar.teeda.core.scope.impl.ScopeManagerImpl" />
 	
@@ -124,9 +124,6 @@
 	<component class="org.seasar.teeda.core.render.DefaultComponentIdLookupStrategy" />
 		
 	<component class="org.seasar.teeda.core.resource.ValidatorResourceImpl" />
-
-	<!-- UIComponent -->
-	<component name="javax.faces.Input" class="javax.faces.component.UIInput" />
 
 	<!-- Renderer -->
 	<component class="org.seasar.teeda.core.render.html.HtmlRenderKitImpl">

@@ -15,12 +15,40 @@
  */
 package org.seasar.teeda.core.validator;
 
-import junit.framework.TestCase;
+import javax.faces.validator.ValidatorException;
 
-public class RegularExpressionValidatorTest extends TestCase {
+import org.seasar.teeda.core.mock.MockUIComponent;
+import org.seasar.teeda.core.unit.TeedaTestCase;
 
-    //TODO testing
-    public void testValidate() throws Exception {
-        assertTrue(true);
+/**
+ * @author shot
+ */
+public class RegularExpressionValidatorTest extends TeedaTestCase {
+
+    public void testValidate_validationError() throws Exception {
+        MockUIComponent component = new MockUIComponent();
+        component.setId("aaa");
+        RegularExpressionValidator validator = new RegularExpressionValidator();
+        validator.setPattern("^[1-9][a-z]");
+        try {
+            validator.validate(getFacesContext(), new MockUIComponent(), "aa");
+            fail();
+        } catch (ValidatorException e) {
+            assertNotNull(e.getFacesMessage());
+        }
     }
+    
+    public void testValidate_validationOk() throws Exception {
+        MockUIComponent component = new MockUIComponent();
+        component.setId("aaa");
+        RegularExpressionValidator validator = new RegularExpressionValidator();
+        validator.setPattern("^[1-9][a-z]");
+        try {
+            validator.validate(getFacesContext(), new MockUIComponent(), "1a");
+            success();
+        } catch (ValidatorException e) {
+            fail();
+        }
+    }
+
 }
