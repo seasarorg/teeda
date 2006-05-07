@@ -50,11 +50,13 @@
 		<component-class>javax.faces.component.UIGraphic</component-class>
 	</component>
 	
+	<!--
 	<component>
 		<component-type>javax.faces.Input</component-type>
 		<component-class>javax.faces.component.UIInput</component-class>
 	</component>
-	
+	-->
+		
 	<component>
 		<component-type>javax.faces.Message</component-type>
 		<component-class>javax.faces.component.UIMessage</component-class>

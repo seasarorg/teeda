@@ -49,7 +49,6 @@ import org.seasar.teeda.core.util.WebappConfigUtil;
  */
 public class ViewHandlerImpl extends ViewHandler {
 
-    // TODO testing
     public ViewHandlerImpl() {
     }
 

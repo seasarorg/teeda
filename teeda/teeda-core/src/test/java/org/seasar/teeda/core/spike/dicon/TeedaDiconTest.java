@@ -1,5 +1,6 @@
 package org.seasar.teeda.core.spike.dicon;
 
+import javax.faces.component.UIInput;
 import javax.faces.render.Renderer;
 
 import org.seasar.framework.container.S2Container;
@@ -12,6 +13,7 @@ import org.seasar.teeda.core.managedbean.ManagedBeanFactory;
 import org.seasar.teeda.core.render.html.HtmlInputTextRenderer;
 import org.seasar.teeda.core.render.html.HtmlRenderKitImpl;
 import org.seasar.teeda.core.render.html.HtmlResponseStateManager;
+import org.seasar.teeda.core.resource.ValidatorResourceImpl;
 
 public class TeedaDiconTest extends S2FrameworkTestCase {
 
@@ -46,11 +48,12 @@ public class TeedaDiconTest extends S2FrameworkTestCase {
                 .getComponent(HtmlRenderKitImpl.class);
         assertNotNull(renderKit.getResponseStateManager());
 
-        Renderer renderer = renderKit.getRenderer("javax.faces.Input", "javax.faces.Text");
+        Renderer renderer = renderKit.getRenderer("javax.faces.Input",
+                "javax.faces.Text");
         assertTrue(renderer instanceof HtmlInputTextRenderer);
         HtmlInputTextRenderer inputTextRenderer = (HtmlInputTextRenderer) renderer;
         assertNotNull(inputTextRenderer.getComponentIdLookupStrategy());
-        
+
         HtmlResponseStateManager responseStateManager = (HtmlResponseStateManager) renderKit
                 .getResponseStateManager();
         assertNotNull(responseStateManager.getEncodeConverter());
@@ -66,6 +69,9 @@ public class TeedaDiconTest extends S2FrameworkTestCase {
         assertNotNull(vbContext.getELParser());
         assertNotNull(vbContext.getELParser().getExpressionProcessor());
 
+        UIInput input = (UIInput) container.getComponent("javax.faces.Input");
+        assertNotNull(input.getValidatorResource());
+        assertTrue(input.getValidatorResource() instanceof ValidatorResourceImpl);
     }
 
 }

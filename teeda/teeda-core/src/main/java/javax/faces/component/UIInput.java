@@ -37,8 +37,8 @@ import javax.faces.render.Renderer;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
-import org.seasar.teeda.core.annotation.ValidatorResource;
-import org.seasar.teeda.core.util.DIContainerUtil;
+import org.seasar.teeda.core.resource.NullValidatorResource;
+import org.seasar.teeda.core.resource.ValidatorResource;
 
 /**
  * @author shot
@@ -75,6 +75,8 @@ public class UIInput extends UIOutput implements EditableValueHolder {
     private MethodBinding valueChangeMethod_ = null;
 
     private List validators_ = null;
+
+    private ValidatorResource resource_ = NullValidatorResource.getInstance();
 
     private static final String DEFAULT_RENDER_TYPE = "javax.faces.Text";
 
@@ -490,19 +492,15 @@ public class UIInput extends UIOutput implements EditableValueHolder {
             }
         }
     }
-
+    
     private void validateFromAnnotation(FacesContext context, Object value) {
         ValueBinding vb = getValueBinding("value");
         if (vb != null) {
             String expression = vb.getExpressionString();
-            ValidatorResource resource = (ValidatorResource) DIContainerUtil
-                    .getComponentNoException(ValidatorResource.class);
-            if(resource != null) {
-                try {
-                    resource.getValidator(expression).validate(context, this, value);
-                } catch (ValidatorException e) {
-                    handleValidationException(context, e);
-                }
+            try {
+                getValidatorResource().getValidator(expression).validate(context, this, value);
+            } catch (ValidatorException e) {
+                handleValidationException(context, e);
             }
         }
     }
@@ -516,4 +514,13 @@ public class UIInput extends UIOutput implements EditableValueHolder {
             context.addMessage(getClientId(context), message);
         }
     }
+    
+    public ValidatorResource getValidatorResource() {
+        return resource_;
+    }
+
+    public void setValidatorResource(ValidatorResource resource) {
+        resource_ = resource;
+    }
+
 }

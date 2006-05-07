@@ -15,12 +15,13 @@
  */
 package org.seasar.teeda.core.config.faces.assembler.impl;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import org.seasar.framework.container.ComponentDef;
 import org.seasar.framework.container.impl.ComponentDefImpl;
-import org.seasar.teeda.core.annotation.factory.ValidatorAnnotationHandlerFactory;
 import org.seasar.teeda.core.config.faces.assembler.ManagedBeanAssembler;
 import org.seasar.teeda.core.config.faces.element.ManagedBeanElement;
 import org.seasar.teeda.core.exception.ManagedBeanDuplicateRegisterException;
@@ -40,8 +41,6 @@ public class DefaultManagedBeanAssembler extends ManagedBeanAssembler {
 
     private ScopeManager scopeManager_;
 
-    private ValidatorAnnotationHandlerFactory annotationHandlerFactory_;
-
     public DefaultManagedBeanAssembler(Map managedBeans) {
         super(managedBeans);
     }
@@ -51,8 +50,6 @@ public class DefaultManagedBeanAssembler extends ManagedBeanAssembler {
                 .getComponent(ManagedBeanFactory.class);
         scopeManager_ = (ScopeManager) DIContainerUtil
                 .getComponent(ScopeManager.class);
-        annotationHandlerFactory_ = (ValidatorAnnotationHandlerFactory) DIContainerUtil
-                .getComponentNoException(ValidatorAnnotationHandlerFactory.class);
     }
 
     public void assemble() {
@@ -66,15 +63,23 @@ public class DefaultManagedBeanAssembler extends ManagedBeanAssembler {
 
             assertNotRegisteredYet(mbName);
 
-            Scope scope = scopeManager_.getScope(mbScope);
+            Scope scope = getScopeManager().getScope(mbScope);
             Class clazz = ClassUtil.forName(mbClassName);
             ComponentDef cDef = new ComponentDefImpl(clazz, mbName);
-            managedBeanFactory_.setManagedBean(cDef, scope);
-            if(annotationHandlerFactory_ != null) {
-                annotationHandlerFactory_.getAnnotationHandler().registerValidator(
-                        cDef);
-            }
+            registerManagedBean(cDef, scope);
         }
+    }
+
+    protected void registerManagedBean(ComponentDef componentDef, Scope scope) {
+        getManagedBeanFactory().registerManagedBean(componentDef, scope);
+    }
+    
+    protected ManagedBeanFactory getManagedBeanFactory() {
+        return managedBeanFactory_;
+    }
+
+    protected ScopeManager getScopeManager() {
+        return scopeManager_;
     }
 
     private void assertNotRegisteredYet(String managedBeanName) {
@@ -82,6 +87,66 @@ public class DefaultManagedBeanAssembler extends ManagedBeanAssembler {
                 .getManagedBean(managedBeanName);
         if (managedBean != null) {
             throw new ManagedBeanDuplicateRegisterException(managedBeanName);
+        }
+    }
+
+    protected static class ManagedBeans {
+        private List beans_ = new ArrayList();
+
+        public ManagedBeans() {
+        }
+
+        public void addManagedBeanInfo(String name, Scope scope, Class beanClass) {
+            beans_.add(new ManagedBean(name, scope, beanClass));
+        }
+
+        public boolean hasNext() {
+            return beans_.iterator().hasNext();
+        }
+
+        public ManagedBean getManagedBean() {
+            if (!hasNext()) {
+                return null;
+            }
+            return (ManagedBean) beans_.iterator().next();
+        }
+    }
+
+    private static class ManagedBean {
+        private String name_;
+
+        private Scope scope_;
+
+        private Class beanClass_;
+
+        public ManagedBean(String name, Scope scope, Class beanClass) {
+            name_ = name;
+            scope_ = scope;
+            beanClass_ = beanClass;
+        }
+
+        public Class getBeanClass() {
+            return beanClass_;
+        }
+
+        public void setBeanClass(Class beanClass) {
+            beanClass_ = beanClass;
+        }
+
+        public String getName() {
+            return name_;
+        }
+
+        public void setName(String name) {
+            name_ = name;
+        }
+
+        public Scope getScope() {
+            return scope_;
+        }
+
+        public void setScope(Scope scope) {
+            scope_ = scope;
         }
     }
 }

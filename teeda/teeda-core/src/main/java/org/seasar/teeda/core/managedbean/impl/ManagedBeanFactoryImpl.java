@@ -52,21 +52,21 @@ public class ManagedBeanFactoryImpl implements ManagedBeanFactory {
         }
     }
 
-    public void setManagedBean(String name, Class type, Scope scope) {
+    public void registerManagedBean(String name, Class type, Scope scope) {
         ComponentDef componentDef = new ComponentDefImpl(type, name);
-        setManagedBean(componentDef, scope);
+        registerManagedBean(componentDef, scope);
     }
 
-    public void setManagedBean(String name, Class type, Scope scope,
+    public void registerManagedBean(String name, Class type, Scope scope,
             String initMethodName, String destroyMethodName) {
         ComponentDef componentDef = new ComponentDefImpl(type, name);
         componentDef.addInitMethodDef(new InitMethodDefImpl(initMethodName));
         componentDef.addDestroyMethodDef(new DestroyMethodDefImpl(
                 destroyMethodName));
-        setManagedBean(componentDef, scope);
+        registerManagedBean(componentDef, scope);
     }
 
-    public void setManagedBean(ComponentDef componentDef, Scope scope) {
+    public void registerManagedBean(ComponentDef componentDef, Scope scope) {
         S2Container container = (S2Container) SingletonS2ContainerFactory
                 .getContainer();
         setManagedBean(container, componentDef, scope);

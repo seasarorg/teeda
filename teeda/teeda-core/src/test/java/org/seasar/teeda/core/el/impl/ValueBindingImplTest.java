@@ -306,7 +306,7 @@ public class ValueBindingImplTest extends TeedaTestCase {
         assertEquals("hoge", anotherA.getName());
 
         ManagedBeanFactory factory = getManagedBeanFactory();
-        factory.setManagedBean("a", A.class, Scope.REQUEST);
+        factory.registerManagedBean("a", A.class, Scope.REQUEST);
 
         anotherA.setName("foo");
         vb.setValue(getFacesContext(), anotherA);

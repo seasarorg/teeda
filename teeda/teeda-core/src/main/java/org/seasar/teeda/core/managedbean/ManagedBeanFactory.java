@@ -24,17 +24,16 @@ import org.seasar.teeda.core.scope.ScopeManager;
  */
 public interface ManagedBeanFactory {
 
-    //TODO need HOT support
     public Object getManagedBean(String name);
 
     public Scope getManagedBeanScope(String name);
 
-    public void setManagedBean(String name, Class type, Scope scope);
+    public void registerManagedBean(String name, Class type, Scope scope);
 
-    public void setManagedBean(String name, Class type, Scope scope,
+    public void registerManagedBean(String name, Class type, Scope scope,
             String initMethodName, String destroyMethodName);
 
-    public void setManagedBean(ComponentDef componentDef, Scope scope);
+    public void registerManagedBean(ComponentDef componentDef, Scope scope);
     
     public void setScopeManager(ScopeManager ScopeManager);
 

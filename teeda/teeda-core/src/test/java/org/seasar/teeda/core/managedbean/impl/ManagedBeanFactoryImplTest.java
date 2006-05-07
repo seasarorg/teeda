@@ -41,43 +41,43 @@ public class ManagedBeanFactoryImplTest extends TeedaTestCase {
         super.tearDown();
     }
 
-    public void testSetManagedBean() {
+    public void testRegisterManagedBean() {
         ManagedBeanFactory factory = getManagedBeanFactory();
-        factory.setManagedBean("a", A.class, Scope.REQUEST);
+        factory.registerManagedBean("a", A.class, Scope.REQUEST);
         A a = (A) factory.getManagedBean("a");
         assertNotNull(a);
         assertEquals("hoge", a.getStr());
     }
 
-    public void testSetManagedBean2() {
+    public void testRegisterManagedBean2() {
         ManagedBeanFactory factory = getManagedBeanFactory();
-        factory.setManagedBean("a", A.class, Scope.REQUEST);
-        factory.setManagedBean("b", B.class, Scope.REQUEST);
+        factory.registerManagedBean("a", A.class, Scope.REQUEST);
+        factory.registerManagedBean("b", B.class, Scope.REQUEST);
         B b = (B) factory.getManagedBean("b");
         assertEquals("hoge", b.getString());
     }
 
-    public void testSetManagedBean3() {
+    public void testRegisterManagedBean3() {
         ManagedBeanFactory factory = getManagedBeanFactory();
-        factory.setManagedBean("c", C.class, Scope.SESSION, "init", "destroy");
+        factory.registerManagedBean("c", C.class, Scope.SESSION, "init", "destroy");
         c = (C) factory.getManagedBean("c");
         assertEquals("init:", c.toString());
     }
 
-    protected void tearDownSetManagedBean3() throws Throwable {
+    protected void tearDownRegisterManagedBean3() throws Throwable {
         super.tearDownForEachTestMethod();
         assertEquals("init:destroy", c.toString());
     }
 
-    public void testSetManagedBean4() throws Exception {
+    public void testRegisterManagedBean4() throws Exception {
         ManagedBeanFactory factory = getManagedBeanFactory();
-        factory.setManagedBean("a", A.class, Scope.REQUEST);
-        factory.setManagedBean("b", A.class, Scope.REQUEST);
+        factory.registerManagedBean("a", A.class, Scope.REQUEST);
+        factory.registerManagedBean("b", A.class, Scope.REQUEST);
         A a = (A) factory.getManagedBean("b");
         assertEquals("hoge", a.getStr());
     }
 
-    public void testSetManagedBean5() throws Exception {
+    public void testRegisterManagedBean5() throws Exception {
         ManagedBeanFactory factory = getManagedBeanFactory();
         A a = new A();
         ComponentDef cDef = new ComponentDefImpl(a.getClass());
@@ -85,7 +85,7 @@ public class ManagedBeanFactoryImplTest extends TeedaTestCase {
         InitMethodDef iDef = new InitMethodDefImpl("setStr");
         iDef.addArgDef(new ArgDefImpl("foo"));
         cDef.addInitMethodDef(iDef);
-        factory.setManagedBean(cDef, Scope.REQUEST);
+        factory.registerManagedBean(cDef, Scope.REQUEST);
 
         A a2 = (A) factory.getManagedBean("aaa");
         assertEquals("foo", a2.getStr());
@@ -93,7 +93,7 @@ public class ManagedBeanFactoryImplTest extends TeedaTestCase {
 
     public void testManagedBeanScope_request() throws Exception {
         ManagedBeanFactory factory = getManagedBeanFactory();
-        factory.setManagedBean("A", A.class, Scope.REQUEST);
+        factory.registerManagedBean("A", A.class, Scope.REQUEST);
 
         ComponentDef cDef = getContainer().getComponentDef("A");
         assertEquals(InstanceDefFactory.REQUEST, cDef.getInstanceDef());
@@ -101,7 +101,7 @@ public class ManagedBeanFactoryImplTest extends TeedaTestCase {
 
     public void testManagedBeanScope_session() throws Exception {
         ManagedBeanFactory factory = getManagedBeanFactory();
-        factory.setManagedBean("A", A.class, Scope.SESSION);
+        factory.registerManagedBean("A", A.class, Scope.SESSION);
 
         ComponentDef cDef = getContainer().getComponentDef("A");
         assertEquals(InstanceDefFactory.SESSION, cDef.getInstanceDef());
@@ -109,7 +109,7 @@ public class ManagedBeanFactoryImplTest extends TeedaTestCase {
 
     public void testManagedBeanScope_application() throws Exception {
         ManagedBeanFactory factory = getManagedBeanFactory();
-        factory.setManagedBean("A", A.class, Scope.APPLICATION);
+        factory.registerManagedBean("A", A.class, Scope.APPLICATION);
 
         ComponentDef cDef = getContainer().getComponentDef("A");
         assertEquals(InstanceDefFactory.APPLICATION, cDef.getInstanceDef());
@@ -117,7 +117,7 @@ public class ManagedBeanFactoryImplTest extends TeedaTestCase {
 
     public void testManagedBeanScope_none() throws Exception {
         ManagedBeanFactory factory = getManagedBeanFactory();
-        factory.setManagedBean("A", A.class, Scope.NONE);
+        factory.registerManagedBean("A", A.class, Scope.NONE);
 
         ComponentDef cDef = getContainer().getComponentDef("A");
         assertEquals(InstanceDefFactory.OUTER, cDef.getInstanceDef());

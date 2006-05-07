@@ -3,8 +3,8 @@
 	"http://www.seasar.org/dtd/components24.dtd">
 <components namespace="teeda">
 
-	<!-- Error page include -->
 	<include path="teedaErrorPage.dicon" />
+	<include path="teedaExtension.dicon" />
 
 	<!-- ExternalContext -->
 	<component name="externalContext" class="org.seasar.teeda.core.context.servlet.ServletExternalContextImpl">
@@ -40,8 +40,11 @@
 	<component name="applicationConfigurator" class="org.seasar.teeda.core.config.faces.impl.ApplicationFacesConfigurator" autoBinding="none" />
 
 	<!-- FacesConfig Assembler -->
+	<!-- For no need annotation. With annotation, see teedaExtension.dicon -->
+	<!--
 	<component class="org.seasar.teeda.core.config.faces.assembler.impl.DefaultAssembleProvider"/>
-	
+	-->
+		
 	<component class="org.seasar.teeda.core.config.faces.assembler.AssemblerAssembler" />
 
 	<!-- ValueBinding relates -->
@@ -83,11 +86,11 @@
 	<component name="stateManager" class="org.seasar.teeda.core.application.impl.TeedaStateManagerImpl" />
 
 	<component class="org.seasar.teeda.core.application.impl.TreeStructureManagerImpl" />
-	
+
 	<component name="responseStateManager" class="org.seasar.teeda.core.render.html.HtmlResponseStateManager" />
 
 	<component name="responseWriter" class="org.seasar.teeda.core.context.html.HtmlResponseWriter" />
-	
+		
 	<component class="org.seasar.teeda.core.render.Base64EncodeConverter" />
 	
 	<!-- ManagedBean -->	
@@ -119,7 +122,12 @@
 	<component name="webappConfigBuilder" class="org.seasar.teeda.core.config.webapp.impl.WebappConfigBuilderImpl"/>
 
 	<component class="org.seasar.teeda.core.render.DefaultComponentIdLookupStrategy" />
-	
+		
+	<component class="org.seasar.teeda.core.resource.ValidatorResourceImpl" />
+
+	<!-- UIComponent -->
+	<component name="javax.faces.Input" class="javax.faces.component.UIInput" />
+
 	<!-- Renderer -->
 	<component class="org.seasar.teeda.core.render.html.HtmlRenderKitImpl">
 		<initMethod name="addRenderer">
@@ -243,9 +251,5 @@
 			<arg><component class="org.seasar.teeda.core.render.html.HtmlSelectOneRadioRenderer" /></arg>
 		</initMethod>
 	</component>
-	
-	<component class="org.seasar.teeda.core.annotation.factory.ValidatorAnnotationHandlerFactoryImpl" />
-	
-	<component class="org.seasar.teeda.core.annotation.ConstantValidatorAnnotationHandler" />
-	
+		
 </components>

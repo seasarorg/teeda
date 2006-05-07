@@ -1,4 +1,4 @@
-package org.seasar.teeda.core.annotation;
+package org.seasar.teeda.extension.annotation;
 
 import javax.faces.validator.LengthValidator;
 import javax.faces.validator.LongRangeValidator;
@@ -8,8 +8,11 @@ import org.seasar.framework.beans.PropertyNotFoundRuntimeException;
 import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.framework.container.ComponentDef;
 import org.seasar.framework.container.impl.ComponentDefImpl;
+import org.seasar.teeda.core.resource.ValidatorResource;
+import org.seasar.teeda.core.resource.ValidatorResourceImpl;
 import org.seasar.teeda.core.unit.TeedaTestCase;
 import org.seasar.teeda.core.validator.ValidatorChain;
+import org.seasar.teeda.extension.annotation.ConstantValidatorAnnotationHandler;
 
 public class ConstantValidatorAnnotationHandlerTest extends TeedaTestCase {
 
@@ -53,10 +56,10 @@ public class ConstantValidatorAnnotationHandlerTest extends TeedaTestCase {
         try {
             handler.registerValidator(cDef);
             fail();
-        }catch(PropertyNotFoundRuntimeException expected){
+        } catch (PropertyNotFoundRuntimeException expected) {
             success();
         }
-        
+
     }
 
     public void testGetShortClassName1() throws Exception {
@@ -67,6 +70,7 @@ public class ConstantValidatorAnnotationHandlerTest extends TeedaTestCase {
 
     public void testGetShortClassName2() throws Exception {
         ConstantValidatorAnnotationHandler handler = new ConstantValidatorAnnotationHandler();
+        handler.addIgnoreSuffix("Impl");
         assertEquals("AAA", handler.getShortClassName(AAAImpl.class));
     }
 
@@ -91,7 +95,7 @@ public class ConstantValidatorAnnotationHandlerTest extends TeedaTestCase {
         ConstantValidatorAnnotationHandler handler = new ConstantValidatorAnnotationHandler();
         assertEquals("#{b.c}", handler.getExpressionByAuto(B.class, "c"));
     }
-    
+
     public static class AAAImpl {
 
     }
@@ -135,7 +139,7 @@ public class ConstantValidatorAnnotationHandlerTest extends TeedaTestCase {
         }
 
     }
-    
+
     public static class BarBean {
 
         private String name = null;

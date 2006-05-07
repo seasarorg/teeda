@@ -23,9 +23,9 @@ import javax.faces.render.RenderKitFactory;
 import javax.faces.validator.LengthValidator;
 import javax.faces.validator.ValidatorException;
 
-import org.seasar.teeda.core.annotation.ValidatorResource;
-import org.seasar.teeda.core.annotation.ValidatorResourceImpl;
 import org.seasar.teeda.core.mock.MockValueBinding;
+import org.seasar.teeda.core.resource.ValidatorResource;
+import org.seasar.teeda.core.resource.ValidatorResourceImpl;
 
 /**
  * @author manhole
@@ -71,7 +71,7 @@ public class UIInputTeedaTest extends UIOutputTeedaTest {
 
         ValidatorResource resource = new ValidatorResourceImpl();
         resource.addValidatorResource("#{a.name}", new LengthValidator(5, 2));
-        getContainer().register(resource);
+        input.setValidatorResource(resource);
 
         input.validateValue(getFacesContext(), new Integer(6));
 
