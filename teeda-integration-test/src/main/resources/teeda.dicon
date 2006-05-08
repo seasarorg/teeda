@@ -88,8 +88,6 @@
 
 	<component name="responseStateManager" class="org.seasar.teeda.core.render.html.HtmlResponseStateManager" />
 
-	<component name="responseWriter" class="org.seasar.teeda.core.context.html.HtmlResponseWriter" />
-		
 	<component class="org.seasar.teeda.core.render.Base64EncodeConverter" />
 	
 	<!-- ManagedBean -->	
