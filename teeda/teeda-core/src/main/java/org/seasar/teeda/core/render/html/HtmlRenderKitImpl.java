@@ -43,8 +43,6 @@ public class HtmlRenderKitImpl extends AbstractRenderKit {
 
     private ResponseStateManager responseStateManager_;
 
-    private ResponseWriter responseWriter_;
-
     public HtmlRenderKitImpl() {
     }
 
@@ -92,12 +90,7 @@ public class HtmlRenderKitImpl extends AbstractRenderKit {
 
     public ResponseWriter createResponseWriter(Writer writer,
             String contentTypeList, String characterEncoding) {
-        HtmlResponseWriter htmlResponseWriter = null;
-        if (responseWriter_ instanceof HtmlResponseWriter) {
-            htmlResponseWriter = (HtmlResponseWriter) responseWriter_;
-        } else {
-            htmlResponseWriter = new HtmlResponseWriter();
-        }
+        HtmlResponseWriter htmlResponseWriter = new HtmlResponseWriter();
         htmlResponseWriter.setWriter(writer);
         String contentType = HtmlRenderKitUtil.getContentType(contentTypeList);
         if (contentType == null) {
@@ -115,14 +108,6 @@ public class HtmlRenderKitImpl extends AbstractRenderKit {
     public void setResponseStateManager(
             ResponseStateManager responseStateManager) {
         responseStateManager_ = responseStateManager;
-    }
-
-    public void setResponseWriter(ResponseWriter responseWriter) {
-        responseWriter_ = responseWriter;
-    }
-
-    public ResponseWriter getResponseWriter() {
-        return responseWriter_;
     }
 
     protected String getGeneratedKey(String family, String renderType) {

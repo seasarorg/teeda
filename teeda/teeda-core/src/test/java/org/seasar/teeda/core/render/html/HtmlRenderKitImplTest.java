@@ -101,19 +101,6 @@ public class HtmlRenderKitImplTest extends TeedaTestCase {
         assertEquals("a.b", renderKit.getGeneratedKey("a", "b"));
     }
 
-    public void testCreateResponseWriter1() throws Exception {
-        HtmlRenderKitImpl renderKit = new HtmlRenderKitImpl();
-        MockHtmlResponseWriter writer = new MockHtmlResponseWriter();
-        renderKit.setResponseWriter(writer);
-        ResponseWriter w = renderKit.createResponseWriter(new SPrintWriter(),
-                "text/html, hoge, foo", "Windows-31J");
-        assertNotNull(w);
-        assertTrue(w instanceof MockHtmlResponseWriter);
-        assertEquals("Windows-31J", w.getCharacterEncoding());
-        assertEquals("text/html", w.getContentType());
-        assertTrue(((HtmlResponseWriter) w).getWriter() instanceof SPrintWriter);
-    }
-
     public void testCreateResponseWriter2() throws Exception {
         HtmlRenderKitImpl renderKit = new HtmlRenderKitImpl();
         ResponseWriter w = renderKit.createResponseWriter(new SPrintWriter(),

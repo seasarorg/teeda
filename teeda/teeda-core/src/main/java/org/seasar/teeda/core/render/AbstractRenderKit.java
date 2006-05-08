@@ -29,7 +29,4 @@ public abstract class AbstractRenderKit extends RenderKit {
     public abstract void setResponseStateManager(
             ResponseStateManager responseStateManager);
 
-    public abstract void setResponseWriter(ResponseWriter responseWriter);
-
-    public abstract ResponseWriter getResponseWriter();
 }
