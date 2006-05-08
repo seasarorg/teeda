@@ -63,9 +63,8 @@ public class FactoryFinderUtilTest extends TestCase {
     public void testCreateFactoryInstance() {
         List list = new ArrayList();
         list.add("org.seasar.teeda.core.mock.MockApplicationFactory");
-        ClassLoader loader = Thread.currentThread().getContextClassLoader();
         Object o = FactoryFinderUtil.createFactoryInstance(
-                FactoryFinder.APPLICATION_FACTORY, list, loader);
+                FactoryFinder.APPLICATION_FACTORY, list);
         assertNotNull(o);
         assertEquals("org.seasar.teeda.core.mock.MockApplicationFactory", o
                 .getClass().getName());
@@ -73,7 +72,7 @@ public class FactoryFinderUtilTest extends TestCase {
         list.add("javax.faces.internal.FactoryFinderUtilTest");
         try {
             o = FactoryFinderUtil.createFactoryInstance(
-                    FactoryFinder.APPLICATION_FACTORY, list, loader);
+                    FactoryFinder.APPLICATION_FACTORY, list);
             fail();
         } catch (IllegalArgumentException e) {
             assertTrue(true);

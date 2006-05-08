@@ -84,7 +84,9 @@ public class FactoryFinderUtil {
     }
 
     public static Object createFactoryInstance(String factoryName,
-            List classNames, ClassLoader classLoader) {
+            List classNames) {
+        
+        ClassLoader loader = getClassLoader();
         Class abstractFactoryClass = getAbstractFactoryClass(factoryName);
         Object current = null;
         Class implClass = null;
@@ -92,7 +94,7 @@ public class FactoryFinderUtil {
                 .hasNext();) {
             String implClassName = (String) classNamesIterator.next();
             try {
-                implClass = classLoader.loadClass(implClassName);
+                implClass = loader.loadClass(implClassName);
             } catch (ClassNotFoundException e) {
                 throw new FacesException(e);
             }

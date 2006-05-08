@@ -16,7 +16,6 @@
 package javax.faces;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +25,7 @@ import javax.faces.internal.FactoryFinderUtil;
 
 /**
  * @author shot
+ * @author higa
  */
 public final class FactoryFinder {
 
@@ -37,34 +37,22 @@ public final class FactoryFinder {
 
     public static final String RENDER_KIT_FACTORY = "javax.faces.render.RenderKitFactory";
 
-    private static final Map registeredFactoryNamesMap_ = Collections
-            .synchronizedMap(new HashMap());
+    private static final Map factories = new HashMap();
 
-    private static final Map factories_ = new HashMap();
+    private static final Map factoryClassNames = new HashMap();
 
     public static Object getFactory(String factoryName) throws FacesException {
         AssertionUtil.assertNotNull("factoryName", factoryName);
-        ClassLoader classLoader = FactoryFinderUtil.getClassLoader();
-        Map factoryClassNames = (Map) registeredFactoryNamesMap_
-                .get(classLoader);
-        if (factoryClassNames == null) {
-            throw new IllegalStateException("No factories configured.");
-        }
         if (!factoryClassNames.containsKey(factoryName)) {
             throw new IllegalStateException("no factory " + factoryName
                     + " configured for this appliction");
         }
-        Map factoryMap = (Map) factories_.get(classLoader);
-        if (factoryMap == null) {
-            factoryMap = new HashMap();
-            factories_.put(classLoader, factoryMap);
-        }
-        Object factory = factoryMap.get(factoryName);
+        Object factory = factories.get(factoryName);
         if (factory == null) {
             List classNames = (List) factoryClassNames.get(factoryName);
             factory = FactoryFinderUtil.createFactoryInstance(factoryName,
-                    classNames, classLoader);
-            factoryMap.put(factoryName, factory);
+                    classNames);
+            factories.put(factoryName, factory);
             return factory;
         } else {
             return factory;
@@ -74,28 +62,20 @@ public final class FactoryFinder {
     public static void setFactory(String factoryName, String implName) {
         AssertionUtil.assertNotNull("factoryName", factoryName);
         FactoryFinderUtil.checkValidFactoryNames(factoryName);
-        ClassLoader classLoader = FactoryFinderUtil.getClassLoader();
-        Map factoryMap = (Map) factories_.get(classLoader);
-        if (FactoryFinderUtil.isAlreadySetFactory(factoryMap, factoryName)) {
-            return;
-        }
-        Map factoryClassNames = (Map) registeredFactoryNamesMap_
-                .get(classLoader);
-        if (factoryClassNames == null) {
-            factoryClassNames = new HashMap();
-            registeredFactoryNamesMap_.put(classLoader, factoryClassNames);
-        }
         List classNameList = (List) factoryClassNames.get(factoryName);
         if (classNameList == null) {
             classNameList = new ArrayList();
             factoryClassNames.put(factoryName, classNameList);
         }
+        if (classNameList.contains(implName)) {
+            return;
+        }
         classNameList.add(implName);
     }
 
     public static void releaseFactories() throws FacesException {
-        ClassLoader classLoader = FactoryFinderUtil.getClassLoader();
-        factories_.remove(classLoader);
+        factories.clear();
+        factoryClassNames.clear();
     }
 
 }
