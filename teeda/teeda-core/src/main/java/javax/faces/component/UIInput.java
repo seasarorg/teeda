@@ -492,18 +492,22 @@ public class UIInput extends UIOutput implements EditableValueHolder {
             }
         }
     }
-    
+
     private void validateFromAnnotation(FacesContext context, Object value) {
         ValueBinding vb = getValueBinding("value");
         if (vb != null) {
             String expression = vb.getExpressionString();
-            if(resource_ == null) {
-                resource_ = (ValidatorResource) DIContainerUtil.getComponentNoException(ValidatorResource.class);
+            if (resource_ == null) {
+                resource_ = (ValidatorResource) DIContainerUtil
+                        .getComponentNoException(ValidatorResource.class);
             }
-            try {
-                resource_.getValidator(expression).validate(context, this, value);
-            } catch (ValidatorException e) {
-                handleValidationException(context, e);
+            Validator validator = resource_.getValidator(expression);
+            if (validator != null) {
+                try {
+                    validator.validate(context, this, value);
+                } catch (ValidatorException e) {
+                    handleValidationException(context, e);
+                }
             }
         }
     }
@@ -517,7 +521,7 @@ public class UIInput extends UIOutput implements EditableValueHolder {
             context.addMessage(getClientId(context), message);
         }
     }
-    
+
     public ValidatorResource getValidatorResource() {
         return resource_;
     }
