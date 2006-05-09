@@ -54,29 +54,29 @@ public class UIInput extends UIOutput implements EditableValueHolder {
 
     public static final String REQUIRED_MESSAGE_ID = "javax.faces.component.UIInput.REQUIRED";
 
-    private Object submittedValue_ = null;
+    private Object submittedValue = null;
 
-    private boolean localValueSet_ = false;
+    private boolean localValueSet = false;
 
-    private boolean required_ = false;
+    private boolean required = false;
 
-    private boolean requiredSet_ = false;
+    private boolean requiredSet = false;
 
-    private boolean valid_ = false;
+    private boolean valid = false;
 
-    private boolean validSet_ = false;
+    private boolean validSet = false;
 
-    private boolean immediate_ = false;
+    private boolean immediate = false;
 
-    private boolean immediateSet_ = false;
+    private boolean immediateSet = false;
 
-    private MethodBinding validatorBinding_ = null;
+    private MethodBinding validatorBinding = null;
 
-    private MethodBinding valueChangeMethod_ = null;
+    private MethodBinding valueChangeMethod = null;
 
-    private List validators_ = null;
+    private List validators = null;
 
-    private ValidatorResource resource_;
+    private ValidatorResource resource;
 
     private static final String DEFAULT_RENDER_TYPE = "javax.faces.Text";
 
@@ -91,11 +91,11 @@ public class UIInput extends UIOutput implements EditableValueHolder {
     }
 
     public Object getSubmittedValue() {
-        return submittedValue_;
+        return submittedValue;
     }
 
     public void setSubmittedValue(Object submittedValue) {
-        submittedValue_ = submittedValue;
+        this.submittedValue = submittedValue;
     }
 
     public void setValue(Object value) {
@@ -107,69 +107,69 @@ public class UIInput extends UIOutput implements EditableValueHolder {
     }
 
     public boolean isLocalValueSet() {
-        return localValueSet_;
+        return localValueSet;
     }
 
     public void setLocalValueSet(boolean localValueSet) {
-        localValueSet_ = localValueSet;
+        this.localValueSet = localValueSet;
     }
 
     public boolean isRequired() {
-        if (requiredSet_) {
-            return required_;
+        if (requiredSet) {
+            return required;
         }
         Boolean value = (Boolean) ComponentUtils_.getValueBindingValue(this,
                 "required");
-        return (value != null) ? Boolean.TRUE.equals(value) : required_;
+        return (value != null) ? Boolean.TRUE.equals(value) : required;
     }
 
     public void setRequired(boolean required) {
-        required_ = required;
-        requiredSet_ = true;
+        this.required = required;
+        requiredSet = true;
     }
 
     public boolean isValid() {
-        if (validSet_) {
-            return valid_;
+        if (validSet) {
+            return valid;
         }
         Boolean value = (Boolean) ComponentUtils_.getValueBindingValue(this,
                 "valid");
-        return (value != null) ? Boolean.TRUE.equals(value) : valid_;
+        return (value != null) ? Boolean.TRUE.equals(value) : valid;
     }
 
     public void setValid(boolean valid) {
-        valid_ = valid;
-        validSet_ = true;
+        this.valid = valid;
+        validSet = true;
     }
 
     public boolean isImmediate() {
-        if (immediateSet_) {
-            return immediate_;
+        if (immediateSet) {
+            return immediate;
         }
         Boolean value = (Boolean) ComponentUtils_.getValueBindingValue(this,
                 "immediate");
-        return (value != null) ? Boolean.TRUE.equals(value) : immediate_;
+        return (value != null) ? Boolean.TRUE.equals(value) : immediate;
     }
 
     public void setImmediate(boolean immediate) {
-        immediate_ = immediate;
-        immediateSet_ = true;
+        this.immediate = immediate;
+        immediateSet = true;
     }
 
     public MethodBinding getValidator() {
-        return validatorBinding_;
+        return validatorBinding;
     }
 
     public void setValidator(MethodBinding validatorBinding) {
-        validatorBinding_ = validatorBinding;
+        this.validatorBinding = validatorBinding;
     }
 
     public MethodBinding getValueChangeListener() {
-        return valueChangeMethod_;
+        return valueChangeMethod;
     }
 
     public void setValueChangeListener(MethodBinding valueChangeMethod) {
-        valueChangeMethod_ = valueChangeMethod;
+        this.valueChangeMethod = valueChangeMethod;
     }
 
     public void processDecodes(FacesContext context) {
@@ -333,23 +333,23 @@ public class UIInput extends UIOutput implements EditableValueHolder {
 
     public void addValidator(Validator validator) {
         AssertionUtil.assertNotNull("validator", validator);
-        if (validators_ == null) {
-            validators_ = new ArrayList();
+        if (validators == null) {
+            validators = new ArrayList();
         }
-        validators_.add(validator);
+        validators.add(validator);
     }
 
     public Validator[] getValidators() {
-        if (validators_ == null) {
+        if (validators == null) {
             return EMPTY_VALIDATOR_ARRAY;
         }
-        return ((Validator[]) validators_.toArray(new Validator[validators_
+        return ((Validator[]) validators.toArray(new Validator[validators
                 .size()]));
     }
 
     public void removeValidator(Validator validator) {
-        if (validators_ != null) {
-            validators_.remove(validator);
+        if (validators != null) {
+            validators.remove(validator);
         }
     }
 
@@ -369,42 +369,42 @@ public class UIInput extends UIOutput implements EditableValueHolder {
     public Object saveState(FacesContext context) {
         Object values[] = new Object[10];
         values[0] = super.saveState(context);
-        values[1] = localValueSet_ ? Boolean.TRUE : Boolean.FALSE;
-        values[2] = required_ ? Boolean.TRUE : Boolean.FALSE;
-        values[3] = requiredSet_ ? Boolean.TRUE : Boolean.FALSE;
-        values[4] = valid_ ? Boolean.TRUE : Boolean.FALSE;
-        values[5] = immediate_ ? Boolean.TRUE : Boolean.FALSE;
-        values[6] = immediateSet_ ? Boolean.TRUE : Boolean.FALSE;
-        values[7] = saveAttachedState(context, validators_);
-        values[8] = saveAttachedState(context, validatorBinding_);
-        values[9] = saveAttachedState(context, valueChangeMethod_);
+        values[1] = localValueSet ? Boolean.TRUE : Boolean.FALSE;
+        values[2] = required ? Boolean.TRUE : Boolean.FALSE;
+        values[3] = requiredSet ? Boolean.TRUE : Boolean.FALSE;
+        values[4] = valid ? Boolean.TRUE : Boolean.FALSE;
+        values[5] = immediate ? Boolean.TRUE : Boolean.FALSE;
+        values[6] = immediateSet ? Boolean.TRUE : Boolean.FALSE;
+        values[7] = saveAttachedState(context, validators);
+        values[8] = saveAttachedState(context, validatorBinding);
+        values[9] = saveAttachedState(context, valueChangeMethod);
         return values;
     }
 
     public void restoreState(FacesContext context, Object state) {
         Object values[] = (Object[]) state;
         super.restoreState(context, values[0]);
-        localValueSet_ = ((Boolean) values[1]).booleanValue();
-        required_ = ((Boolean) values[2]).booleanValue();
-        requiredSet_ = ((Boolean) values[3]).booleanValue();
-        valid_ = ((Boolean) values[4]).booleanValue();
-        immediate_ = ((Boolean) values[5]).booleanValue();
-        immediateSet_ = ((Boolean) values[6]).booleanValue();
+        localValueSet = ((Boolean) values[1]).booleanValue();
+        required = ((Boolean) values[2]).booleanValue();
+        requiredSet = ((Boolean) values[3]).booleanValue();
+        valid = ((Boolean) values[4]).booleanValue();
+        immediate = ((Boolean) values[5]).booleanValue();
+        immediateSet = ((Boolean) values[6]).booleanValue();
         List restoredValidators = (List) restoreAttachedState(context,
                 values[7]);
         if (restoredValidators != null) {
-            if (validators_ != null) {
+            if (validators != null) {
                 for (Iterator itr = restoredValidators.iterator(); itr
                         .hasNext();) {
-                    validators_.add(itr.next());
+                    validators.add(itr.next());
                 }
             } else {
-                validators_ = restoredValidators;
+                validators = restoredValidators;
             }
         }
-        validatorBinding_ = (MethodBinding) restoreAttachedState(context,
+        validatorBinding = (MethodBinding) restoreAttachedState(context,
                 values[8]);
-        valueChangeMethod_ = (MethodBinding) restoreAttachedState(context,
+        valueChangeMethod = (MethodBinding) restoreAttachedState(context,
                 values[9]);
     }
 
@@ -462,11 +462,11 @@ public class UIInput extends UIOutput implements EditableValueHolder {
     }
 
     private void validateFromAddedValidator(FacesContext context, Object value) {
-        if (validators_ == null) {
+        if (validators == null) {
             return;
         }
-        for (Iterator validators = validators_.iterator(); validators.hasNext();) {
-            Validator validator = (Validator) validators.next();
+        for (Iterator itr = validators.iterator(); itr.hasNext();) {
+            Validator validator = (Validator) itr.next();
             try {
                 validator.validate(context, this, value);
             } catch (ValidatorException e) {
@@ -476,11 +476,11 @@ public class UIInput extends UIOutput implements EditableValueHolder {
     }
 
     private void validateFromBinding(FacesContext context, Object value) {
-        if (validatorBinding_ == null) {
+        if (validatorBinding == null) {
             return;
         }
         try {
-            validatorBinding_.invoke(context, new Object[] { context, this,
+            validatorBinding.invoke(context, new Object[] { context, this,
                     value });
         } catch (EvaluationException e) {
             Throwable cause = e.getCause();
@@ -497,11 +497,11 @@ public class UIInput extends UIOutput implements EditableValueHolder {
         ValueBinding vb = getValueBinding("value");
         if (vb != null) {
             String expression = vb.getExpressionString();
-            if (resource_ == null) {
-                resource_ = (ValidatorResource) DIContainerUtil
+            if (resource == null) {
+                resource = (ValidatorResource) DIContainerUtil
                         .getComponentNoException(ValidatorResource.class);
             }
-            Validator validator = resource_.getValidator(expression);
+            Validator validator = resource.getValidator(expression);
             if (validator != null) {
                 try {
                     validator.validate(context, this, value);
@@ -523,11 +523,11 @@ public class UIInput extends UIOutput implements EditableValueHolder {
     }
 
     public ValidatorResource getValidatorResource() {
-        return resource_;
+        return resource;
     }
 
     public void setValidatorResource(ValidatorResource resource) {
-        resource_ = resource;
+        this.resource = resource;
     }
 
 }

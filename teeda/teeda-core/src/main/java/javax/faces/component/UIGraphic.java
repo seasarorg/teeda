@@ -33,9 +33,9 @@ public class UIGraphic extends UIComponentBase {
 
     private static final String URL_BINDING_NAME = "url";
 
-    private Object value_ = null;
+    private Object value = null;
 
-    private boolean valueSet_ = false;
+    private boolean valueSet = false;
 
     public UIGraphic() {
         setRendererType(DEFAULT_RENDER_TYPE);
@@ -54,15 +54,15 @@ public class UIGraphic extends UIComponentBase {
     }
 
     public Object getValue() {
-        if (valueSet_) {
-            return value_;
+        if (valueSet) {
+            return value;
         }
         return ComponentUtils_.getValueBindingValue(this, VALUE_BINDING_NAME);
     }
 
     public void setValue(Object value) {
-        value_ = value;
-        valueSet_ = true;
+        this.value = value;
+        valueSet = true;
     }
 
     public ValueBinding getValueBinding(String name) {
@@ -83,15 +83,15 @@ public class UIGraphic extends UIComponentBase {
     public void restoreState(FacesContext context, Object state) {
         Object[] values = (Object[]) state;
         super.restoreState(context, values[0]);
-        value_ = values[1];
-        valueSet_ = ((Boolean) values[2]).booleanValue();
+        value = values[1];
+        valueSet = ((Boolean) values[2]).booleanValue();
     }
 
     public Object saveState(FacesContext context) {
         Object[] values = new Object[3];
         values[0] = super.saveState(context);
-        values[1] = value_;
-        values[2] = (valueSet_) ? Boolean.TRUE : Boolean.FALSE;
+        values[1] = value;
+        values[2] = (valueSet) ? Boolean.TRUE : Boolean.FALSE;
         return values;
     }
 

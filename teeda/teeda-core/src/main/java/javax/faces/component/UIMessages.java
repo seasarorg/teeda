@@ -28,17 +28,17 @@ public class UIMessages extends UIComponentBase {
 
     private static final String DEFAULT_RENDER_TYPE = "javax.faces.Messages";
 
-    private boolean globalOnly_ = false;
+    private boolean globalOnly = false;
 
-    private boolean globalOnlySet_ = false;
+    private boolean globalOnlySet = false;
 
-    private boolean showDetail_ = false;
+    private boolean showDetail = false;
 
-    private boolean showDetailSet_ = false;
+    private boolean showDetailSet = false;
 
-    private boolean showSummary_ = true;
+    private boolean showSummary = true;
 
-    private boolean showSummarySet_ = false;
+    private boolean showSummarySet = false;
 
     public UIMessages() {
         setRendererType(DEFAULT_RENDER_TYPE);
@@ -49,65 +49,65 @@ public class UIMessages extends UIComponentBase {
     }
 
     public boolean isGlobalOnly() {
-        if (globalOnlySet_) {
-            return globalOnly_;
+        if (globalOnlySet) {
+            return globalOnly;
         }
         Object value = ComponentUtils_.getValueBindingValue(this, "globalOnly");
-        return (value != null) ? Boolean.TRUE.equals(value) : globalOnly_;
+        return (value != null) ? Boolean.TRUE.equals(value) : globalOnly;
     }
 
     public void setGlobalOnly(boolean isGlobalOnly) {
-        globalOnly_ = isGlobalOnly;
-        globalOnlySet_ = true;
+        globalOnly = isGlobalOnly;
+        globalOnlySet = true;
     }
 
     public boolean isShowDetail() {
-        if (showDetailSet_) {
-            return showDetail_;
+        if (showDetailSet) {
+            return showDetail;
         }
         Object value = ComponentUtils_.getValueBindingValue(this, "showDetail");
-        return (value != null) ? Boolean.TRUE.equals(value) : showDetail_;
+        return (value != null) ? Boolean.TRUE.equals(value) : showDetail;
     }
 
     public void setShowDetail(boolean isShowDetail) {
-        showDetail_ = isShowDetail;
-        showDetailSet_ = true;
+        showDetail = isShowDetail;
+        showDetailSet = true;
     }
 
     public boolean isShowSummary() {
-        if (showSummarySet_) {
-            return showSummary_;
+        if (showSummarySet) {
+            return showSummary;
         }
         Object value = ComponentUtils_
                 .getValueBindingValue(this, "showSummary");
-        return (value != null) ? Boolean.TRUE.equals(value) : showSummary_;
+        return (value != null) ? Boolean.TRUE.equals(value) : showSummary;
     }
 
     public void setShowSummary(boolean showSummary) {
-        showSummary_ = showSummary;
-        showSummarySet_ = true;
+        this.showSummary = showSummary;
+        showSummarySet = true;
     }
 
     public void restoreState(FacesContext context, Object state) {
         Object[] values = (Object[]) state;
         super.restoreState(context, values[0]);
-        globalOnly_ = ((Boolean) values[1]).booleanValue();
-        globalOnlySet_ = ((Boolean) values[2]).booleanValue();
-        showDetail_ = ((Boolean) values[3]).booleanValue();
-        showDetailSet_ = ((Boolean) values[4]).booleanValue();
-        showSummary_ = ((Boolean) values[5]).booleanValue();
-        showSummarySet_ = ((Boolean) values[6]).booleanValue();
+        globalOnly = ((Boolean) values[1]).booleanValue();
+        globalOnlySet = ((Boolean) values[2]).booleanValue();
+        showDetail = ((Boolean) values[3]).booleanValue();
+        showDetailSet = ((Boolean) values[4]).booleanValue();
+        showSummary = ((Boolean) values[5]).booleanValue();
+        showSummarySet = ((Boolean) values[6]).booleanValue();
     }
 
     public Object saveState(FacesContext context) {
         Object[] values = new Object[7];
         values[0] = super.saveState(context);
-        values[1] = ComponentUtils_.convertToBoolean(globalOnly_);
-        values[2] = ComponentUtils_.convertToBoolean(globalOnlySet_);
-        values[3] = ComponentUtils_.convertToBoolean(showDetail_);
-        values[4] = ComponentUtils_.convertToBoolean(showDetailSet_);
-        values[5] = ComponentUtils_.convertToBoolean(showSummary_);
-        values[6] = ComponentUtils_.convertToBoolean(showSummarySet_);
+        values[1] = ComponentUtils_.convertToBoolean(globalOnly);
+        values[2] = ComponentUtils_.convertToBoolean(globalOnlySet);
+        values[3] = ComponentUtils_.convertToBoolean(showDetail);
+        values[4] = ComponentUtils_.convertToBoolean(showDetailSet);
+        values[5] = ComponentUtils_.convertToBoolean(showSummary);
+        values[6] = ComponentUtils_.convertToBoolean(showSummarySet);
         return values;
     }
 

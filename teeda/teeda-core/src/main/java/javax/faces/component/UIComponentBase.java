@@ -45,27 +45,27 @@ import javax.faces.render.Renderer;
  */
 public abstract class UIComponentBase extends UIComponent {
 
-    private String id_;
+    private String id;
 
-    private ComponentAttributesMap attributesMap_ = null;
+    private ComponentAttributesMap attributesMap = null;
 
-    private Map bindingMap_ = new HashMap();
+    private Map bindingMap = new HashMap();
 
-    private UIComponent parent_;
+    private UIComponent parent;
 
-    private String clientId_ = null;
+    private String clientId = null;
 
-    private Boolean isRendered_;
+    private Boolean isRendered;
 
-    private String renderType_ = null;
+    private String renderType = null;
 
-    private List childrenList_ = null;
+    private List childrenList = null;
 
-    private Map facetMap_ = null;
+    private Map facetMap = null;
 
-    private List listeners_ = null;
+    private List listeners = null;
 
-    private boolean isTransient_ = false;
+    private boolean isTransient = false;
 
     private static final String RENDERED = "rendered";
 
@@ -74,15 +74,15 @@ public abstract class UIComponentBase extends UIComponent {
     private static final int LIST_NULL_SIZE = 0;
 
     public Map getAttributes() {
-        if (attributesMap_ == null) {
-            attributesMap_ = new ComponentAttributesMap(this);
+        if (attributesMap == null) {
+            attributesMap = new ComponentAttributesMap(this);
         }
-        return attributesMap_;
+        return attributesMap;
     }
 
     public ValueBinding getValueBinding(String name) {
         AssertionUtil.assertNotNull("name", name);
-        return (ValueBinding) bindingMap_.get(name);
+        return (ValueBinding) bindingMap.get(name);
     }
 
     public void setValueBinding(String name, ValueBinding binding) {
@@ -91,16 +91,16 @@ public abstract class UIComponentBase extends UIComponent {
             throw new IllegalArgumentException("invalid name is specified");
         }
         if (binding != null) {
-            bindingMap_.put(name, binding);
+            bindingMap.put(name, binding);
         } else {
-            bindingMap_.remove(name);
+            bindingMap.remove(name);
         }
     }
 
     public String getClientId(FacesContext context) {
         AssertionUtil.assertNotNull("context", context);
-        if (clientId_ != null) {
-            return clientId_;
+        if (clientId != null) {
+            return clientId;
         }
 
         UIComponent component = this;
@@ -113,12 +113,12 @@ public abstract class UIComponentBase extends UIComponent {
             }
         }
 
-        clientId_ = parentId + ((id_ != null) ? id_ : getUniqueId(context));
+        clientId = parentId + ((id != null) ? id : getUniqueId(context));
         Renderer renderer = getRenderer(context);
         if (renderer != null) {
-            clientId_ = renderer.convertClientId(context, clientId_);
+            clientId = renderer.convertClientId(context, clientId);
         }
-        return clientId_;
+        return clientId;
     }
 
     private String uniqueId_;
@@ -131,45 +131,45 @@ public abstract class UIComponentBase extends UIComponent {
     }
 
     public String getId() {
-        return id_;
+        return id;
     }
 
     public void setId(String id) {
         validateId(id);
-        id_ = id;
-        clientId_ = null;
+        this.id = id;
+        clientId = null;
     }
 
     public UIComponent getParent() {
-        return parent_;
+        return parent;
     }
 
     public void setParent(UIComponent parent) {
-        parent_ = parent;
+        this.parent = parent;
     }
 
     public boolean isRendered() {
-        if (isRendered_ != null) {
-            return isRendered_.booleanValue();
+        if (isRendered != null) {
+            return isRendered.booleanValue();
         }
         ValueBinding vb = getValueBinding(RENDERED);
         if (vb != null) {
-            isRendered_ = ((Boolean) this.getValueFromBinding(vb));
+            isRendered = ((Boolean) this.getValueFromBinding(vb));
         }
-        if (isRendered_ != null) {
-            return isRendered_.booleanValue();
+        if (isRendered != null) {
+            return isRendered.booleanValue();
         } else {
             return true;
         }
     }
 
     public void setRendered(boolean isRendered) {
-        isRendered_ = Boolean.valueOf(isRendered);
+        this.isRendered = Boolean.valueOf(isRendered);
     }
 
     public String getRendererType() {
-        if (renderType_ != null) {
-            return renderType_;
+        if (renderType != null) {
+            return renderType;
         }
         ValueBinding vb = getValueBinding(RENDERER_TYPE);
         String result = null;
@@ -180,7 +180,7 @@ public abstract class UIComponentBase extends UIComponent {
     }
 
     public void setRendererType(String renderType) {
-        renderType_ = renderType;
+        this.renderType = renderType;
     }
 
     private Object getValueFromBinding(ValueBinding vb) {
@@ -197,14 +197,14 @@ public abstract class UIComponentBase extends UIComponent {
     }
 
     public List getChildren() {
-        if (childrenList_ == null) {
-            childrenList_ = new ComponentChildrenListWrapper(this);
+        if (childrenList == null) {
+            childrenList = new ComponentChildrenListWrapper(this);
         }
-        return childrenList_;
+        return childrenList;
     }
 
     public int getChildCount() {
-        return (childrenList_ != null) ? childrenList_.size() : LIST_NULL_SIZE;
+        return (childrenList != null) ? childrenList.size() : LIST_NULL_SIZE;
     }
 
     public UIComponent findComponent(String expr) {
@@ -283,24 +283,24 @@ public abstract class UIComponentBase extends UIComponent {
     }
 
     public Map getFacets() {
-        if (facetMap_ == null) {
-            facetMap_ = new ComponentFacetMapWrapper(this);
+        if (facetMap == null) {
+            facetMap = new ComponentFacetMapWrapper(this);
         }
-        return facetMap_;
+        return facetMap;
     }
 
     public UIComponent getFacet(String name) {
-        return (facetMap_ != null) ? (UIComponent) facetMap_.get(name) : null;
+        return (facetMap != null) ? (UIComponent) facetMap.get(name) : null;
     }
 
     public Iterator getFacetsAndChildren() {
-        return new ComponentFacetAndChildrenIterator(facetMap_, childrenList_);
+        return new ComponentFacetAndChildrenIterator(facetMap, childrenList);
     }
 
     public void broadcast(FacesEvent event) throws AbortProcessingException {
         AssertionUtil.assertNotNull("event", event);
-        if (listeners_ != null) {
-            for (Iterator itr = listeners_.iterator(); itr.hasNext();) {
+        if (listeners != null) {
+            for (Iterator itr = listeners.iterator(); itr.hasNext();) {
                 FacesListener listener = (FacesListener) itr.next();
                 if (event.isAppropriateListener(listener)) {
                     event.processListener(listener);
@@ -353,10 +353,10 @@ public abstract class UIComponentBase extends UIComponent {
 
     protected void addFacesListener(FacesListener listener) {
         AssertionUtil.assertNotNull("listener", listener);
-        if (listeners_ == null) {
-            listeners_ = new ArrayList();
+        if (listeners == null) {
+            listeners = new ArrayList();
         }
-        listeners_.add(listener);
+        listeners.add(listener);
     }
 
     protected FacesListener[] getFacesListeners(Class clazz) {
@@ -366,13 +366,13 @@ public abstract class UIComponentBase extends UIComponent {
                     + " is not FacesListener");
         }
 
-        if (listeners_ == null) {
+        if (listeners == null) {
             return (FacesListener[]) Array.newInstance(clazz, 0);
         }
 
         List result = new ArrayList();
         FacesListener listener = null;
-        for (Iterator itr = listeners_.iterator(); itr.hasNext();) {
+        for (Iterator itr = listeners.iterator(); itr.hasNext();) {
             listener = (FacesListener) itr.next();
             if (clazz.isAssignableFrom(listener.getClass())) {
                 result.add(listener);
@@ -386,8 +386,8 @@ public abstract class UIComponentBase extends UIComponent {
     protected void removeFacesListener(FacesListener listener) {
         AssertionUtil.assertNotNull("listener", listener);
 
-        if (listeners_ != null) {
-            listeners_.remove(listener);
+        if (listeners != null) {
+            listeners.remove(listener);
         }
     }
 
@@ -518,21 +518,21 @@ public abstract class UIComponentBase extends UIComponent {
     }
 
     public boolean isTransient() {
-        return isTransient_;
+        return isTransient;
     }
 
     public void setTransient(boolean transientFlag) {
-        isTransient_ = transientFlag;
+        isTransient = transientFlag;
     }
 
     public Object saveState(FacesContext context) {
         Object[] values = new Object[7];
-        values[0] = id_;
-        values[1] = isRendered_;
-        values[2] = renderType_;
-        values[3] = clientId_;
+        values[0] = id;
+        values[1] = isRendered;
+        values[2] = renderType;
+        values[3] = clientId;
         values[4] = saveAttributesMap();
-        values[5] = saveAttachedState(context, listeners_);
+        values[5] = saveAttachedState(context, listeners);
         values[6] = saveValueBindingMap(context);
 
         return (Object) values;
@@ -540,12 +540,12 @@ public abstract class UIComponentBase extends UIComponent {
 
     public void restoreState(FacesContext context, Object state) {
         Object[] values = (Object[]) state;
-        id_ = (String) values[0];
-        isRendered_ = (Boolean) values[1];
-        renderType_ = (String) values[2];
-        clientId_ = (String) values[3];
+        id = (String) values[0];
+        isRendered = (Boolean) values[1];
+        renderType = (String) values[2];
+        clientId = (String) values[3];
         restoreAttributeMap(values[4]);
-        listeners_ = (List) restoreAttachedState(context, values[5]);
+        listeners = (List) restoreAttachedState(context, values[5]);
         restoreValueBindingMap(context, values[6]);
     }
 
@@ -596,13 +596,13 @@ public abstract class UIComponentBase extends UIComponent {
     }
 
     private Object saveAttributesMap() {
-        return (attributesMap_ != null) ? attributesMap_.getAttributesActual()
+        return (attributesMap != null) ? attributesMap.getAttributesActual()
                 : null;
     }
 
     private void restoreAttributeMap(Object state) {
         if (state != null) {
-            attributesMap_ = new ComponentAttributesMap(this, (Map) state);
+            attributesMap = new ComponentAttributesMap(this, (Map) state);
         } else {
             clearAttributeMap();
         }
@@ -610,10 +610,9 @@ public abstract class UIComponentBase extends UIComponent {
 
     private Object saveValueBindingMap(FacesContext context) {
         Map states = null;
-        if (bindingMap_ != null) {
+        if (bindingMap != null) {
             states = new HashMap();
-            for (Iterator itr = bindingMap_.entrySet().iterator(); itr
-                    .hasNext();) {
+            for (Iterator itr = bindingMap.entrySet().iterator(); itr.hasNext();) {
                 Map.Entry entry = (Map.Entry) itr.next();
                 states.put(entry.getKey(), saveAttachedState(context, entry
                         .getValue()));
@@ -623,20 +622,20 @@ public abstract class UIComponentBase extends UIComponent {
     }
 
     private void restoreValueBindingMap(FacesContext context, Object state) {
-        bindingMap_ = null;
+        bindingMap = null;
         if (state != null) {
             Map stateMap = (Map) state;
-            bindingMap_ = new HashMap();
+            bindingMap = new HashMap();
             for (Iterator itr = stateMap.entrySet().iterator(); itr.hasNext();) {
                 Map.Entry entry = (Map.Entry) itr.next();
-                bindingMap_.put(entry.getKey(), restoreAttachedState(context,
+                bindingMap.put(entry.getKey(), restoreAttachedState(context,
                         entry.getValue()));
             }
         }
     }
 
     private void clearAttributeMap() {
-        attributesMap_ = null;
+        attributesMap = null;
     }
 
     private void validateId(String id) {

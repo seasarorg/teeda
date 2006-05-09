@@ -27,9 +27,9 @@ public class UIOutput extends UIComponentBase implements ValueHolder {
 
     public static final String COMPONENT_FAMILY = "javax.faces.Output";
 
-    private Converter converter_ = null;
+    private Converter converter = null;
 
-    private Object value_ = null;
+    private Object value = null;
 
     private static final String DEFAULT_RENDER_TYPE = "javax.faces.Text";
 
@@ -42,44 +42,44 @@ public class UIOutput extends UIComponentBase implements ValueHolder {
     }
 
     public Converter getConverter() {
-        if (converter_ != null) {
-            return converter_;
+        if (converter != null) {
+            return converter;
         }
         return (Converter) ComponentUtils_.getValueBindingValue(this,
                 "converter");
     }
 
     public void setConverter(Converter converter) {
-        converter_ = converter;
+        this.converter = converter;
     }
 
     public Object getLocalValue() {
-        return value_;
+        return value;
     }
 
     public Object getValue() {
-        if (value_ != null) {
-            return value_;
+        if (value != null) {
+            return value;
         }
         return ComponentUtils_.getValueBindingValue(this, "value");
     }
 
     public void setValue(Object value) {
-        value_ = value;
+        this.value = value;
     }
 
     public void restoreState(FacesContext context, Object state) {
         Object[] values = (Object[]) state;
         super.restoreState(context, values[0]);
-        converter_ = (Converter) values[1];
-        value_ = values[2];
+        converter = (Converter) values[1];
+        value = values[2];
     }
 
     public Object saveState(FacesContext context) {
         Object[] values = new Object[4];
         values[0] = super.saveState(context);
-        values[1] = converter_;
-        values[2] = value_;
+        values[1] = converter;
+        values[2] = value;
         return values;
     }
 }

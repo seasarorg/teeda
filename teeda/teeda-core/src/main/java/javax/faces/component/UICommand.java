@@ -33,15 +33,15 @@ public class UICommand extends UIComponentBase implements ActionSource {
 
     public static final String COMPONENT_TYPE = "javax.faces.Command";
 
-    private MethodBinding action_ = null;
+    private MethodBinding action = null;
 
-    private MethodBinding actionListener_ = null;
+    private MethodBinding actionListener = null;
 
-    private boolean immediate_ = false;
+    private boolean immediate = false;
 
-    private boolean immediateSet_ = false;
+    private boolean immediateSet = false;
 
-    private Object value_ = null;
+    private Object value = null;
 
     private static final String IMMEDIATE_BINDING_NAME = "immediate";
 
@@ -59,44 +59,44 @@ public class UICommand extends UIComponentBase implements ActionSource {
     }
 
     public MethodBinding getAction() {
-        return action_;
+        return action;
     }
 
     public void setAction(MethodBinding action) {
-        action_ = action;
+        this.action = action;
     }
 
     public MethodBinding getActionListener() {
-        return actionListener_;
+        return actionListener;
     }
 
     public void setActionListener(MethodBinding actionListener) {
-        actionListener_ = actionListener;
+        this.actionListener = actionListener;
     }
 
     public boolean isImmediate() {
-        if (immediateSet_) {
-            return immediate_;
+        if (immediateSet) {
+            return immediate;
         }
         ValueBinding vb = getValueBinding(IMMEDIATE_BINDING_NAME);
-        return (vb != null) ? isBindingValueTrue(vb) : immediate_;
+        return (vb != null) ? isBindingValueTrue(vb) : immediate;
     }
 
     public void setImmediate(boolean immediate) {
-        immediate_ = immediate;
-        immediateSet_ = true;
+        this.immediate = immediate;
+        immediateSet = true;
     }
 
     public Object getValue() {
-        if (value_ != null) {
-            return value_;
+        if (value != null) {
+            return value;
         }
         ValueBinding vb = getValueBinding(VALUE_BINDING_NAME);
         return (vb != null) ? getValueFromBinding(vb) : null;
     }
 
     public void setValue(Object value) {
-        value_ = value;
+        this.value = value;
     }
 
     public void addActionListener(ActionListener listener) {
@@ -115,22 +115,22 @@ public class UICommand extends UIComponentBase implements ActionSource {
     public void restoreState(FacesContext context, Object state) {
         Object[] values = (Object[]) state;
         super.restoreState(context, values[0]);
-        action_ = (MethodBinding) restoreAttachedState(context, values[1]);
-        actionListener_ = (MethodBinding) restoreAttachedState(context,
+        action = (MethodBinding) restoreAttachedState(context, values[1]);
+        actionListener = (MethodBinding) restoreAttachedState(context,
                 values[2]);
-        immediate_ = ((Boolean) values[3]).booleanValue();
-        immediateSet_ = ((Boolean) values[4]).booleanValue();
-        value_ = values[5];
+        immediate = ((Boolean) values[3]).booleanValue();
+        immediateSet = ((Boolean) values[4]).booleanValue();
+        value = values[5];
     }
 
     public Object saveState(FacesContext context) {
         Object[] values = new Object[6];
         values[0] = super.saveState(context);
-        values[1] = saveAttachedState(context, action_);
-        values[2] = saveAttachedState(context, actionListener_);
-        values[3] = immediate_ ? Boolean.TRUE : Boolean.FALSE;
-        values[4] = immediateSet_ ? Boolean.TRUE : Boolean.FALSE;
-        values[5] = value_;
+        values[1] = saveAttachedState(context, action);
+        values[2] = saveAttachedState(context, actionListener);
+        values[3] = immediate ? Boolean.TRUE : Boolean.FALSE;
+        values[4] = immediateSet ? Boolean.TRUE : Boolean.FALSE;
+        values[5] = value;
         return values;
     }
 

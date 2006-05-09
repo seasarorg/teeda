@@ -55,23 +55,23 @@ public class UIData extends UIComponentBase implements NamingContainer {
 
     private static final String ROWS_BINDING_NAME = "rows";
 
-    private int first_ = 0;
+    private int first = 0;
 
-    private int rowIndex_ = 0;
+    private int rowIndex = 0;
 
-    private int rows_ = 0;
+    private int rows = 0;
 
-    private boolean firstSet_ = false;
+    private boolean firstSet = false;
 
-    private boolean rowsSet_ = false;
+    private boolean rowsSet = false;
 
-    private Map savedMap_ = new HashMap();
+    private Map savedMap = new HashMap();
 
-    private transient DataModel model_ = null;
+    private transient DataModel model = null;
 
-    private Object value_ = null;
+    private Object value = null;
 
-    private String var_ = null;
+    private String var = null;
 
     private static final String DEFAULT_RENDER_TYPE = "javax.faces.Table";
 
@@ -90,18 +90,18 @@ public class UIData extends UIComponentBase implements NamingContainer {
     }
 
     public int getFirst() {
-        if (firstSet_) {
-            return first_;
+        if (firstSet) {
+            return first;
         }
-        Integer first = (Integer) ComponentUtils_.getValueBindingValue(this,
+        Integer firstValue = (Integer) ComponentUtils_.getValueBindingValue(this,
                 FIRST_BINDING_NAME);
-        return (first != null) ? first.intValue() : first_;
+        return (firstValue != null) ? firstValue.intValue() : first;
     }
 
     public void setFirst(int first) {
         AssertionUtil.assertIntegerNotNegative(first, "first");
-        first_ = first;
-        firstSet_ = true;
+        this.first = first;
+        firstSet = true;
     }
 
     public UIComponent getFooter() {
@@ -135,21 +135,21 @@ public class UIData extends UIComponentBase implements NamingContainer {
     }
 
     public int getRowIndex() {
-        return rowIndex_;
+        return rowIndex;
     }
 
     public void setRowIndex(int rowIndex) {
         saveDescendantState();
         // int previous = rowIndex_;
-        rowIndex_ = rowIndex;
+        this.rowIndex = rowIndex;
         DataModel model = getDataModel();
-        model.setRowIndex(rowIndex_);
+        model.setRowIndex(rowIndex);
 
         String var = getVar();
         if (var != null) {
             Map requestMap = getFacesContext().getExternalContext()
                     .getRequestMap();
-            if (rowIndex_ == -1) {
+            if (rowIndex == -1) {
                 requestMap.remove(var);
             } else if (isRowAvailable()) {
                 requestMap.put(var, getRowData());
@@ -161,65 +161,65 @@ public class UIData extends UIComponentBase implements NamingContainer {
     }
 
     public int getRows() {
-        if (rowsSet_) {
-            return rows_;
+        if (rowsSet) {
+            return rows;
         }
         Integer value = (Integer) ComponentUtils_.getValueBindingValue(this,
                 ROWS_BINDING_NAME);
-        return (value != null) ? value.intValue() : rows_;
+        return (value != null) ? value.intValue() : rows;
     }
 
     public void setRows(int rows) {
         AssertionUtil.assertIntegerNotNegative(rows, "rows");
-        rows_ = rows;
-        rowsSet_ = true;
+        this.rows = rows;
+        rowsSet = true;
     }
 
     public String getVar() {
-        return var_;
+        return var;
     }
 
     public void setVar(String var) {
-        var_ = var;
+        this.var = var;
     }
 
     public void restoreState(FacesContext context, Object state) {
         Object[] values = (Object[]) state;
         super.restoreState(context, values[0]);
-        first_ = ((Integer) values[1]).intValue();
-        firstSet_ = ((Boolean) values[2]).booleanValue();
-        rowIndex_ = ((Integer) values[3]).intValue();
-        rows_ = ((Integer) values[4]).intValue();
-        rowsSet_ = ((Boolean) values[5]).booleanValue();
-        savedMap_ = (Map) values[6];
-        value_ = (Object) values[7];
-        var_ = (String) values[8];
+        first = ((Integer) values[1]).intValue();
+        firstSet = ((Boolean) values[2]).booleanValue();
+        rowIndex = ((Integer) values[3]).intValue();
+        rows = ((Integer) values[4]).intValue();
+        rowsSet = ((Boolean) values[5]).booleanValue();
+        savedMap = (Map) values[6];
+        value = (Object) values[7];
+        var = (String) values[8];
     }
 
     public Object saveState(FacesContext context) {
         Object[] values = new Object[9];
         values[0] = super.saveState(context);
-        values[1] = new Integer(first_);
-        values[2] = firstSet_ ? Boolean.TRUE : Boolean.FALSE;
-        values[3] = new Integer(rowIndex_);
-        values[4] = new Integer(rows_);
-        values[5] = rowsSet_ ? Boolean.TRUE : Boolean.FALSE;
-        values[6] = savedMap_;
-        values[7] = value_;
-        values[8] = var_;
+        values[1] = new Integer(first);
+        values[2] = firstSet ? Boolean.TRUE : Boolean.FALSE;
+        values[3] = new Integer(rowIndex);
+        values[4] = new Integer(rows);
+        values[5] = rowsSet ? Boolean.TRUE : Boolean.FALSE;
+        values[6] = savedMap;
+        values[7] = value;
+        values[8] = var;
         return values;
     }
 
     public Object getValue() {
-        if (value_ != null) {
-            return value_;
+        if (value != null) {
+            return value;
         }
         return ComponentUtils_.getValueBindingValue(this, VALUE_BINDING_NAME);
     }
 
     public void setValue(Object value) {
-        value_ = value;
-        model_ = null;
+        this.value = value;
+        model = null;
     }
 
     public void setValueBinding(String name, ValueBinding vb) {
@@ -227,7 +227,7 @@ public class UIData extends UIComponentBase implements NamingContainer {
         if (name.equals("var") || name.equals("rowIndex")) {
             throw new IllegalArgumentException("setValueBinding");
         } else if (name.equals(VALUE_BINDING_NAME)) {
-            model_ = null;
+            model = null;
         }
         super.setValueBinding(name, vb);
     }
@@ -235,8 +235,8 @@ public class UIData extends UIComponentBase implements NamingContainer {
     public String getClientId(FacesContext context) {
         AssertionUtil.assertNotNull("context", context);
         String clientId = super.getClientId(context);
-        if (rowIndex_ >= 0) {
-            clientId = clientId + NamingContainer.SEPARATOR_CHAR + rowIndex_;
+        if (rowIndex >= 0) {
+            clientId = clientId + NamingContainer.SEPARATOR_CHAR + rowIndex;
         }
         return clientId;
     }
@@ -368,7 +368,7 @@ public class UIData extends UIComponentBase implements NamingContainer {
 
     protected boolean keepSavedState(FacesContext context) {
         String clientId = null;
-        for (Iterator children = savedMap_.keySet().iterator(); children
+        for (Iterator children = savedMap.keySet().iterator(); children
                 .hasNext();) {
             clientId = (String) children.next();
             if (keepSavedState0(context, clientId)) {
@@ -405,10 +405,10 @@ public class UIData extends UIComponentBase implements NamingContainer {
         if (component instanceof EditableValueHolder) {
             String clientId = component.getClientId(context);
             EditableValueHolder holder = (EditableValueHolder) component;
-            SavedState state = (SavedState) savedMap_.get(clientId);
+            SavedState state = (SavedState) savedMap.get(clientId);
             if (state == null) {
                 state = new SavedState();
-                savedMap_.put(clientId, state);
+                savedMap.put(clientId, state);
             }
             state.setLocalValue(holder.getLocalValue());
             state.setValid(holder.isValid());
@@ -439,7 +439,7 @@ public class UIData extends UIComponentBase implements NamingContainer {
         if (component instanceof EditableValueHolder) {
             EditableValueHolder holder = (EditableValueHolder) component;
             String clientId = component.getClientId(context);
-            SavedState state = (SavedState) savedMap_.get(clientId);
+            SavedState state = (SavedState) savedMap.get(clientId);
             if (state == null) {
                 state = new SavedState();
             }
@@ -455,17 +455,17 @@ public class UIData extends UIComponentBase implements NamingContainer {
     }
 
     protected DataModel getDataModel() {
-        if (model_ != null) {
-            return model_;
+        if (model != null) {
+            return model;
         }
-        model_ = UIDataUtil.getSuitableDataModel(getValue());
-        return model_;
+        model = UIDataUtil.getSuitableDataModel(getValue());
+        return model;
     }
 
     private void resetModelAndSavedState() {
-        model_ = null;
-        if (savedMap_ != null) {
-            savedMap_.clear();
+        model = null;
+        if (savedMap != null) {
+            savedMap.clear();
         }
     }
 

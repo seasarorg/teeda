@@ -33,7 +33,7 @@ public class UIForm extends UIComponentBase implements NamingContainer {
 
     private static final String DEFAULT_RENDER_TYPE = "javax.faces.Form";
 
-    private transient boolean submitted_ = false;
+    private transient boolean submitted = false;
 
     public UIForm() {
         setRendererType(DEFAULT_RENDER_TYPE);
@@ -49,11 +49,11 @@ public class UIForm extends UIComponentBase implements NamingContainer {
     }
 
     public boolean isSubmitted() {
-        return submitted_;
+        return submitted;
     }
 
     public void setSubmitted(boolean submitted) {
-        submitted_ = submitted;
+        this.submitted = submitted;
     }
 
     public void processDecodes(FacesContext context) {

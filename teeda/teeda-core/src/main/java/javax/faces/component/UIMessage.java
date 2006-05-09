@@ -29,15 +29,15 @@ public class UIMessage extends UIComponentBase {
 
     private static final String DEFAULT_RENDER_TYPE = "javax.faces.Message";
 
-    private String for_ = null;
+    private String forTarget = null;
 
-    private boolean showDetail_ = true;
+    private boolean showDetail = true;
 
-    private boolean showDetailSet_ = false;
+    private boolean showDetailSet = false;
 
-    private boolean showSummary_ = false;
+    private boolean showSummary = false;
 
-    private boolean showSummarySet_ = false;
+    private boolean showSummarySet = false;
 
     public UIMessage() {
         setRendererType(DEFAULT_RENDER_TYPE);
@@ -48,61 +48,61 @@ public class UIMessage extends UIComponentBase {
     }
 
     public String getFor() {
-        if (for_ != null) {
-            return for_;
+        if (forTarget != null) {
+            return forTarget;
         }
         return (String) ComponentUtils_.getValueBindingValue(this, "for");
     }
 
     public void setFor(String newFor) {
-        for_ = newFor;
+        forTarget = newFor;
     }
 
     public boolean isShowDetail() {
-        if (showDetailSet_) {
-            return showDetail_;
+        if (showDetailSet) {
+            return showDetail;
         }
         Object value = ComponentUtils_.getValueBindingValue(this, "showDetail");
-        return (value != null) ? Boolean.TRUE.equals(value) : showDetail_;
+        return (value != null) ? Boolean.TRUE.equals(value) : showDetail;
     }
 
     public void setShowDetail(boolean isShowDetail) {
-        showDetail_ = isShowDetail;
-        showDetailSet_ = true;
+        showDetail = isShowDetail;
+        showDetailSet = true;
     }
 
     public boolean isShowSummary() {
-        if (showSummarySet_) {
-            return showSummary_;
+        if (showSummarySet) {
+            return showSummary;
         }
         Object value = ComponentUtils_
                 .getValueBindingValue(this, "showSummary");
-        return (value != null) ? Boolean.TRUE.equals(value) : showSummary_;
+        return (value != null) ? Boolean.TRUE.equals(value) : showSummary;
     }
 
     public void setShowSummary(boolean showSummary) {
-        showSummary_ = showSummary;
-        showSummarySet_ = true;
+        this.showSummary = showSummary;
+        showSummarySet = true;
     }
 
     public void restoreState(FacesContext context, Object state) {
         Object[] values = (Object[]) state;
         super.restoreState(context, values[0]);
-        for_ = (String) values[1];
-        showDetail_ = ComponentUtils_.convertToPrimitiveBoolean(values[2]);
-        showDetailSet_ = ComponentUtils_.convertToPrimitiveBoolean(values[3]);
-        showSummary_ = ComponentUtils_.convertToPrimitiveBoolean(values[4]);
-        showSummarySet_ = ComponentUtils_.convertToPrimitiveBoolean(values[5]);
+        forTarget = (String) values[1];
+        showDetail = ComponentUtils_.convertToPrimitiveBoolean(values[2]);
+        showDetailSet = ComponentUtils_.convertToPrimitiveBoolean(values[3]);
+        showSummary = ComponentUtils_.convertToPrimitiveBoolean(values[4]);
+        showSummarySet = ComponentUtils_.convertToPrimitiveBoolean(values[5]);
     }
 
     public Object saveState(FacesContext context) {
         Object[] values = new Object[6];
         values[0] = super.saveState(context);
-        values[1] = for_;
-        values[2] = ComponentUtils_.convertToBoolean(showDetail_);
-        values[3] = ComponentUtils_.convertToBoolean(showDetailSet_);
-        values[4] = ComponentUtils_.convertToBoolean(showSummary_);
-        values[5] = ComponentUtils_.convertToBoolean(showSummarySet_);
+        values[1] = forTarget;
+        values[2] = ComponentUtils_.convertToBoolean(showDetail);
+        values[3] = ComponentUtils_.convertToBoolean(showDetailSet);
+        values[4] = ComponentUtils_.convertToBoolean(showSummary);
+        values[5] = ComponentUtils_.convertToBoolean(showSummarySet);
         return values;
     }
 
