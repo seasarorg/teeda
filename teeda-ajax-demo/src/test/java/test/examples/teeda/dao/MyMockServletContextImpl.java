@@ -29,7 +29,7 @@ class MyMockServletContextImpl extends MockServletContextImpl {
     private static final long serialVersionUID = 1L;
 
     public MyMockServletContextImpl() {
-        this("/yone-demo");
+        this("/teeda-ajax-demo");
     }
 
     public MyMockServletContextImpl(String path) {
