@@ -26,7 +26,7 @@ public class UISelectItems extends UIComponentBase {
 
     public static final String COMPONENT_TYPE = "javax.faces.SelectItems";
 
-    private Object value_ = null;
+    private Object value = null;
 
     private static final String VALUE_BINDING_NAME = "value";
 
@@ -38,26 +38,26 @@ public class UISelectItems extends UIComponentBase {
     }
 
     public Object getValue() {
-        if (value_ != null) {
-            return value_;
+        if (value != null) {
+            return value;
         }
         return ComponentUtils_.getValueBindingValue(this, VALUE_BINDING_NAME);
     }
 
     public void setValue(Object value) {
-        value_ = value;
+        this.value = value;
     }
 
     public void restoreState(FacesContext context, Object state) {
         Object values[] = (Object[]) state;
         super.restoreState(context, values[0]);
-        value_ = values[1];
+        value = values[1];
     }
 
     public Object saveState(FacesContext context) {
         Object values[] = new Object[2];
         values[0] = super.saveState(context);
-        values[1] = value_;
+        values[1] = value;
         return values;
     }
 

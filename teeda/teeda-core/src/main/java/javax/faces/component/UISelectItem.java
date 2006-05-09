@@ -36,17 +36,17 @@ public class UISelectItem extends UIComponentBase {
 
     private static final String VALUE_BINDING_NAME = "value";
 
-    private String itemDescription_ = null;
+    private String itemDescription = null;
 
-    private String itemLabel_ = null;
+    private String itemLabel = null;
 
-    private Object itemValue_ = null;
+    private Object itemValue = null;
 
-    private Object value_ = null;
+    private Object value = null;
 
-    private boolean itemDisabled_ = false;
+    private boolean itemDisabled = false;
 
-    private boolean itemDisabledSet_ = false;
+    private boolean itemDisabledSet = false;
 
     public UISelectItem() {
     }
@@ -56,84 +56,84 @@ public class UISelectItem extends UIComponentBase {
     }
 
     public String getItemDescription() {
-        if (itemDescription_ != null) {
-            return itemDescription_;
+        if (itemDescription != null) {
+            return itemDescription;
         }
         return (String) ComponentUtils_.getValueBindingValue(this,
                 ITEM_DESCRIPTION_BINDING_NAME);
     }
 
     public void setItemDescription(String itemDescription) {
-        itemDescription_ = itemDescription;
+        this.itemDescription = itemDescription;
     }
 
     public boolean isItemDisabled() {
-        if (itemDisabledSet_) {
-            return itemDisabled_;
+        if (itemDisabledSet) {
+            return itemDisabled;
         }
         Object value = ComponentUtils_.getValueBindingValue(this,
                 ITEM_DISABLED_BINDING_NAME);
-        return (value != null) ? Boolean.TRUE.equals(value) : itemDisabled_;
+        return (value != null) ? Boolean.TRUE.equals(value) : itemDisabled;
     }
 
     public void setItemDisabled(boolean itemDisabled) {
-        itemDisabled_ = itemDisabled;
-        itemDisabledSet_ = true;
+        this.itemDisabled = itemDisabled;
+        itemDisabledSet = true;
     }
 
     public String getItemLabel() {
-        if (itemLabel_ != null) {
-            return itemLabel_;
+        if (itemLabel != null) {
+            return itemLabel;
         }
         return (String) ComponentUtils_.getValueBindingValue(this,
                 ITEM_LABEL_BINDING_NAME);
     }
 
     public void setItemLabel(String itemLabel) {
-        itemLabel_ = itemLabel;
+        this.itemLabel = itemLabel;
     }
 
     public Object getItemValue() {
-        if (itemValue_ != null) {
-            return itemValue_;
+        if (itemValue != null) {
+            return itemValue;
         }
         return ComponentUtils_.getValueBindingValue(this,
                 ITEM_VALUE_BINDING_NAME);
     }
 
     public void setItemValue(Object itemValue) {
-        itemValue_ = itemValue;
+        this.itemValue = itemValue;
     }
 
     public Object getValue() {
-        if (value_ != null) {
-            return value_;
+        if (value != null) {
+            return value;
         }
         return ComponentUtils_.getValueBindingValue(this, VALUE_BINDING_NAME);
     }
 
     public void setValue(Object value) {
-        value_ = value;
+        this.value = value;
     }
 
     public void restoreState(FacesContext context, Object state) {
         Object[] values = (Object[]) state;
         super.restoreState(context, values[0]);
-        itemDescription_ = (String) values[1];
-        itemDisabled_ = ((Boolean) values[2]).booleanValue();
-        itemDisabledSet_ = ((Boolean) values[3]).booleanValue();
-        itemLabel_ = (String) values[4];
-        itemValue_ = values[5];
+        itemDescription = (String) values[1];
+        itemDisabled = ((Boolean) values[2]).booleanValue();
+        itemDisabledSet = ((Boolean) values[3]).booleanValue();
+        itemLabel = (String) values[4];
+        itemValue = values[5];
     }
 
     public Object saveState(FacesContext context) {
         Object[] values = new Object[6];
         values[0] = super.saveState(context);
-        values[1] = itemDescription_;
-        values[2] = ComponentUtils_.convertToBoolean(itemDisabled_);
-        values[3] = ComponentUtils_.convertToBoolean(itemDisabledSet_);
-        values[4] = itemLabel_;
-        values[5] = itemValue_;
+        values[1] = itemDescription;
+        values[2] = ComponentUtils_.convertToBoolean(itemDisabled);
+        values[3] = ComponentUtils_.convertToBoolean(itemDisabledSet);
+        values[4] = itemLabel;
+        values[5] = itemValue;
         return values;
     }
 

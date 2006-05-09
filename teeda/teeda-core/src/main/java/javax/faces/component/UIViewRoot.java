@@ -38,15 +38,15 @@ public class UIViewRoot extends UIComponentBase {
 
     public static final String UNIQUE_ID_PREFIX = "_id";
 
-    private String renderKitId_ = null;
+    private String renderKitId = null;
 
-    private String viewId_ = null;
+    private String viewId = null;
 
-    private List events_ = null;
+    private List events = null;
 
-    private int lastId_ = 0;
+    private int lastId = 0;
 
-    private Locale locale_ = null;
+    private Locale locale = null;
 
     public UIViewRoot() {
     }
@@ -56,23 +56,23 @@ public class UIViewRoot extends UIComponentBase {
     }
 
     public String getRenderKitId() {
-        if (renderKitId_ != null) {
-            return renderKitId_;
+        if (renderKitId != null) {
+            return renderKitId;
         }
         return (String) ComponentUtils_.getValueBindingValue(this,
                 "renderKitId");
     }
 
     public void setRenderKitId(String renderKitId) {
-        renderKitId_ = renderKitId;
+        this.renderKitId = renderKitId;
     }
 
     public String getViewId() {
-        return viewId_;
+        return this.viewId;
     }
 
     public void setViewId(String viewId) {
-        viewId_ = viewId;
+        this.viewId = viewId;
     }
 
     public void queueEvent(FacesEvent event) {
@@ -81,10 +81,10 @@ public class UIViewRoot extends UIComponentBase {
     }
 
     private List getEvents() {
-        if (events_ == null) {
-            events_ = new ArrayList();
+        if (events == null) {
+            events = new ArrayList();
         }
-        return events_;
+        return events;
     }
 
     public void processDecodes(FacesContext context) {
@@ -94,7 +94,7 @@ public class UIViewRoot extends UIComponentBase {
     }
 
     public void encodeBegin(FacesContext context) throws IOException {
-        lastId_ = 0;
+        lastId = 0;
         clearEvents();
         super.encodeBegin(context);
     }
@@ -118,12 +118,12 @@ public class UIViewRoot extends UIComponentBase {
     }
 
     public String createUniqueId() {
-        return UNIQUE_ID_PREFIX + (lastId_++);
+        return UNIQUE_ID_PREFIX + (lastId++);
     }
 
     public Locale getLocale() {
-        if (locale_ != null) {
-            return locale_;
+        if (locale != null) {
+            return locale;
         }
         Locale locale = null;
         FacesContext context = getFacesContext();
@@ -143,23 +143,23 @@ public class UIViewRoot extends UIComponentBase {
     }
 
     public void setLocale(Locale locale) {
-        locale_ = locale;
+        this.locale = locale;
     }
 
     public void restoreState(FacesContext context, Object state) {
         Object values[] = (Object[]) state;
         super.restoreState(context, values[0]);
-        renderKitId_ = (String) values[1];
-        viewId_ = (String) values[2];
-        locale_ = (Locale) values[3];
+        renderKitId = (String) values[1];
+        viewId = (String) values[2];
+        locale = (Locale) values[3];
     }
 
     public Object saveState(FacesContext context) {
         Object values[] = new Object[4];
         values[0] = super.saveState(context);
-        values[1] = renderKitId_;
-        values[2] = viewId_;
-        values[3] = locale_;
+        values[1] = renderKitId;
+        values[2] = viewId;
+        values[3] = locale;
         return values;
     }
 
@@ -180,7 +180,7 @@ public class UIViewRoot extends UIComponentBase {
             return;
         }
         int phaseIdOrdinal = phaseId.getOrdinal();
-        for (Iterator itr = events_.iterator(); itr.hasNext();) {
+        for (Iterator itr = events.iterator(); itr.hasNext();) {
             FacesEvent event = (FacesEvent) itr.next();
             int ordinal = event.getPhaseId().getOrdinal();
             if (ordinal == PhaseId.ANY_PHASE.getOrdinal()
@@ -207,7 +207,7 @@ public class UIViewRoot extends UIComponentBase {
     }
 
     private void clearEvents() {
-        events_ = null;
+        events = null;
     }
 
     public int getEventSize() {

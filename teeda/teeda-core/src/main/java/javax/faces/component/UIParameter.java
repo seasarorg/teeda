@@ -26,9 +26,9 @@ public class UIParameter extends UIComponentBase {
 
     public static final String COMPONENT_FAMILY = "javax.faces.Parameter";
 
-    private String name_ = null;
+    private String name = null;
 
-    private Object value_ = null;
+    private Object value = null;
 
     private static final String NAME_BINDING_NAME = "name";
 
@@ -43,40 +43,40 @@ public class UIParameter extends UIComponentBase {
     }
 
     public String getName() {
-        if (name_ != null) {
-            return name_;
+        if (name != null) {
+            return name;
         }
         return (String) ComponentUtils_.getValueBindingValue(this,
                 NAME_BINDING_NAME);
     }
 
     public void setName(String name) {
-        name_ = name;
+        this.name = name;
     }
 
     public Object getValue() {
-        if (value_ != null) {
-            return value_;
+        if (value != null) {
+            return value;
         }
         return ComponentUtils_.getValueBindingValue(this, VALUE_BINDING_NAME);
     }
 
     public void setValue(Object value) {
-        value_ = value;
+        this.value = value;
     }
 
     public void restoreState(FacesContext context, Object state) {
         Object[] values = (Object[]) state;
         super.restoreState(context, values[0]);
-        name_ = (String) values[1];
-        value_ = values[2];
+        name = (String) values[1];
+        value = values[2];
     }
 
     public Object saveState(FacesContext context) {
         Object[] values = new Object[3];
         values[0] = super.saveState(context);
-        values[1] = name_;
-        values[2] = value_;
+        values[1] = name;
+        values[2] = value;
         return values;
     }
 }
