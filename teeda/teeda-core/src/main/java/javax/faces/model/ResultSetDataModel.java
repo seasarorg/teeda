@@ -34,11 +34,11 @@ import javax.faces.internal.ResultSetValues;
  */
 public class ResultSetDataModel extends DataModel {
 
-    private ResultSet resultSet_ = null;
+    private ResultSet resultSet = null;
 
-    private int index_ = -1;
+    private int index = -1;
 
-    private boolean isUpdated_ = false;
+    private boolean isUpdated = false;
 
     public ResultSetDataModel() {
         setWrappedData(null);
@@ -55,7 +55,7 @@ public class ResultSetDataModel extends DataModel {
     }
 
     public Object getRowData() {
-        if (resultSet_ == null) {
+        if (resultSet == null) {
             return null;
         }
 
@@ -71,19 +71,19 @@ public class ResultSetDataModel extends DataModel {
     }
 
     public int getRowIndex() {
-        return index_;
+        return index;
     }
 
     public Object getWrappedData() {
-        return resultSet_;
+        return resultSet;
     }
 
     public boolean isRowAvailable() {
-        if (resultSet_ == null || index_ < 0) {
+        if (resultSet == null || index < 0) {
             return false;
         }
         try {
-            return resultSet_.absolute(index_ + 1);
+            return resultSet.absolute(index + 1);
         } catch (SQLException e) {
             throw new FacesException();
         }
@@ -93,18 +93,18 @@ public class ResultSetDataModel extends DataModel {
         if (rowIndex < -1) {
             throw new IllegalArgumentException();
         }
-        if (isUpdated_) {
+        if (isUpdated) {
             updateResultSetIfNeeded();
         }
-        int oldIndex = index_;
-        index_ = rowIndex;
+        int oldIndex = index;
+        index = rowIndex;
         DataModelListener[] listeners = getDataModelListeners();
-        if ((oldIndex != index_) && (listeners != null)) {
+        if ((oldIndex != index) && (listeners != null)) {
             Object rowData = null;
             if (isRowAvailable()) {
                 rowData = getRowData();
             }
-            DataModelEvent event = new DataModelEvent(this, index_, rowData);
+            DataModelEvent event = new DataModelEvent(this, index, rowData);
             for (int i = 0; i < listeners.length; i++) {
                 listeners[i].rowSelected(event);
             }
@@ -115,16 +115,16 @@ public class ResultSetDataModel extends DataModel {
         if (data == null) {
             setRowIndex(-1);
         } else {
-            resultSet_ = (ResultSet) data;
+            resultSet = (ResultSet) data;
             setRowIndex(0);
         }
     }
 
     private void updateResultSetIfNeeded() {
         try {
-            if (resultSet_ != null && !resultSet_.rowDeleted()) {
-                resultSet_.updateRow();
-                isUpdated_ = false;
+            if (resultSet != null && !resultSet.rowDeleted()) {
+                resultSet.updateRow();
+                isUpdated = false;
             }
         } catch (SQLException e) {
             throw new FacesException();
@@ -148,17 +148,17 @@ public class ResultSetDataModel extends DataModel {
 
         private static final long serialVersionUID = 1L;
 
-        private int mapIndex_ = 0;
+        private int mapIndex = 0;
 
-        private ResultSetMetaData metaData_ = null;
+        private ResultSetMetaData metaData = null;
 
         public ResultSetMap(Comparator comparator) throws SQLException {
             super(comparator);
-            mapIndex_ = index_;
-            resultSet_.absolute(mapIndex_ + 1);
-            metaData_ = getMetaData();
-            for (int i = 1; i <= metaData_.getColumnCount(); i++) {
-                super.put(metaData_.getColumnName(i), metaData_
+            mapIndex = index;
+            resultSet.absolute(mapIndex + 1);
+            metaData = getMetaData();
+            for (int i = 1; i <= metaData.getColumnCount(); i++) {
+                super.put(metaData.getColumnName(i), metaData
                         .getColumnName(i));
             }
         }
@@ -183,8 +183,8 @@ public class ResultSetDataModel extends DataModel {
                 return null;
             }
             try {
-                resultSet_.absolute(index_ + 1);
-                return resultSet_.getObject((String) realKey(key));
+                resultSet.absolute(index + 1);
+                return resultSet.getObject((String) realKey(key));
             } catch (SQLException e) {
                 throw new FacesException();
             }
@@ -199,11 +199,11 @@ public class ResultSetDataModel extends DataModel {
                 throw new IllegalArgumentException();
             }
             try {
-                resultSet_.absolute(index_ + 1);
+                resultSet.absolute(index + 1);
                 String realKey = (String) realKey(key);
-                resultSet_.updateObject(realKey, value);
-                isUpdated_ = true;
-                return resultSet_.getObject(realKey);
+                resultSet.updateObject(realKey, value);
+                isUpdated = true;
+                return resultSet.getObject(realKey);
             } catch (SQLException e) {
                 throw new FacesException();
             }
@@ -231,13 +231,13 @@ public class ResultSetDataModel extends DataModel {
 
         private ResultSetMetaData getMetaData() {
             try {
-                if (metaData_ == null) {
-                    metaData_ = resultSet_.getMetaData();
+                if (metaData == null) {
+                    metaData = resultSet.getMetaData();
                 }
             } catch (SQLException e) {
                 throw new FacesException();
             }
-            return metaData_;
+            return metaData;
         }
 
     }

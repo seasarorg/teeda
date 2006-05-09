@@ -20,6 +20,9 @@ import java.io.IOException;
 import javax.faces.application.StateManager;
 import javax.faces.context.FacesContext;
 
+/**
+ * @author shot
+ */
 public abstract class ResponseStateManager {
 
     public abstract void writeState(FacesContext context,

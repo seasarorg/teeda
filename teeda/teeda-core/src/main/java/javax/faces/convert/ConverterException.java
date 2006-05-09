@@ -25,7 +25,7 @@ public class ConverterException extends FacesException {
 
     private static final long serialVersionUID = 1L;
 
-    private FacesMessage facesMessage_ = null;
+    private FacesMessage facesMessage = null;
 
     public ConverterException() {
         super();
@@ -45,16 +45,16 @@ public class ConverterException extends FacesException {
 
     public ConverterException(FacesMessage facesMessage) {
         super(facesMessage.getDetail());
-        facesMessage_ = facesMessage;
+        this.facesMessage = facesMessage;
     }
 
     public ConverterException(FacesMessage facesMessage, Throwable cause) {
         super(facesMessage.getDetail(), cause);
-        facesMessage_ = facesMessage;
+        this.facesMessage = facesMessage;
     }
 
     public FacesMessage getFacesMessage() {
-        return facesMessage_;
+        return facesMessage;
     }
 
 }

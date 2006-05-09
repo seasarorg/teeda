@@ -33,41 +33,41 @@ public class AttachedObjectStateWrapper implements Serializable {
 
     private static final long serialVersionUID = 3256726169255885111L;
 
-    private Object savedState_ = null;
+    private Object savedState = null;
 
-    private String className_ = null;
+    private String className = null;
 
-    private boolean isSavedStateHolder_ = false;
+    private boolean isSavedStateHolder = false;
 
     public AttachedObjectStateWrapper(FacesContext context, Object obj) {
         if (obj == null) {
             throw new IllegalArgumentException();
         }
-        className_ = obj.getClass().getName();
+        className = obj.getClass().getName();
         if (obj instanceof StateHolder) {
             StateHolder stateHolder = (StateHolder) obj;
             if (!stateHolder.isTransient()) {
-                savedState_ = stateHolder.saveState(context);
-                isSavedStateHolder_ = true;
+                savedState = stateHolder.saveState(context);
+                isSavedStateHolder = true;
             }
         } else {
             if (obj instanceof Serializable) {
-                savedState_ = obj;
+                savedState = obj;
             }
         }
     }
 
     public Object restore(FacesContext context) throws IllegalStateException {
         Object result = null;
-        if (savedState_ == null) {
+        if (savedState == null) {
             return null;
         }
-        if (!isSavedStateHolder_) {
-            result = savedState_;
-        } else if (isSavedStateHolder_) {
+        if (!isSavedStateHolder) {
+            result = savedState;
+        } else if (isSavedStateHolder) {
             try {
                 ClassLoader loader = ClassLoaderUtil.getClassLoader(context);
-                Class clazz = ClassLoaderUtil.loadClass(loader, className_);
+                Class clazz = ClassLoaderUtil.loadClass(loader, className);
                 result = clazz.newInstance();
             } catch (ClassNotFoundException e) {
                 throw new IllegalStateException(e.getMessage());
@@ -77,7 +77,7 @@ public class AttachedObjectStateWrapper implements Serializable {
                 throw new IllegalStateException(e.getMessage());
             }
             if (result instanceof StateHolder) {
-                ((StateHolder) result).restoreState(context, savedState_);
+                ((StateHolder) result).restoreState(context, savedState);
             }
         }
         return result;

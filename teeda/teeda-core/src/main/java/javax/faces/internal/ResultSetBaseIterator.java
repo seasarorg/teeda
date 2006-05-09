@@ -27,14 +27,14 @@ import javax.faces.model.ResultSetDataModel;
  */
 public class ResultSetBaseIterator implements Iterator {
 
-    ResultSetDataModel.ResultSetMap map_ = null;
+    ResultSetDataModel.ResultSetMap map = null;
 
-    Iterator itr_ = null;
+    Iterator itr = null;
 
     public ResultSetBaseIterator(ResultSetDataModel.ResultSetMap map) {
         super();
-        map_ = map;
-        itr_ = map_.keySet().iterator();
+        this.map = map;
+        this.itr = map.keySet().iterator();
     }
 
     public void remove() {
@@ -42,11 +42,11 @@ public class ResultSetBaseIterator implements Iterator {
     }
 
     public boolean hasNext() {
-        return itr_.hasNext();
+        return itr.hasNext();
     }
 
     public Object next() {
-        return itr_.next();
+        return itr.next();
     }
 
 }

@@ -28,37 +28,37 @@ import javax.servlet.jsp.PageContext;
  */
 public class PageContextOutWriter extends Writer {
 
-    private PageContext pageContext_;
+    private PageContext pageContext;
 
     public PageContextOutWriter(PageContext pageContext) {
-        pageContext_ = pageContext;
+        this.pageContext = pageContext;
     }
 
     public void close() throws IOException {
-        pageContext_.getOut().close();
+        pageContext.getOut().close();
     }
 
     public void flush() throws IOException {
-        pageContext_.getOut().flush();
+        pageContext.getOut().flush();
     }
 
     public void write(char cbuf[], int off, int len) throws IOException {
-        pageContext_.getOut().write(cbuf, off, len);
+        pageContext.getOut().write(cbuf, off, len);
     }
 
     public void write(int c) throws IOException {
-        pageContext_.getOut().write(c);
+        pageContext.getOut().write(c);
     }
 
     public void write(char cbuf[]) throws IOException {
-        pageContext_.getOut().write(cbuf);
+        pageContext.getOut().write(cbuf);
     }
 
     public void write(String str) throws IOException {
-        pageContext_.getOut().write(str);
+        pageContext.getOut().write(str);
     }
 
     public void write(String str, int off, int len) throws IOException {
-        pageContext_.getOut().write(str, off, len);
+        pageContext.getOut().write(str, off, len);
     }
 }

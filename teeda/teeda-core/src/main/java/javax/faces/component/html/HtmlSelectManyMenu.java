@@ -32,91 +32,91 @@ public class HtmlSelectManyMenu extends UISelectMany {
 
     private static final boolean DEFAULT_READONLY = false;
 
-    private String accesskey_ = null;
+    private String accesskey = null;
 
-    private String dir_ = null;
+    private String dir = null;
 
-    private Boolean disabled_ = null;
+    private Boolean disabled = null;
 
-    private String disabledClass_ = null;
+    private String disabledClass = null;
 
-    private String enabledClass_ = null;
+    private String enabledClass = null;
 
-    private String lang_ = null;
+    private String lang = null;
 
-    private String onblur_ = null;
+    private String onblur = null;
 
-    private String onchange_ = null;
+    private String onchange = null;
 
-    private String onclick_ = null;
+    private String onclick = null;
 
-    private String ondblclick_ = null;
+    private String ondblclick = null;
 
-    private String onfocus_ = null;
+    private String onfocus = null;
 
-    private String onkeydown_ = null;
+    private String onkeydown = null;
 
-    private String onkeypress_ = null;
+    private String onkeypress = null;
 
-    private String onkeyup_ = null;
+    private String onkeyup = null;
 
-    private String onmousedown_ = null;
+    private String onmousedown = null;
 
-    private String onmousemove_ = null;
+    private String onmousemove = null;
 
-    private String onmouseout_ = null;
+    private String onmouseout = null;
 
-    private String onmouseover_ = null;
+    private String onmouseover = null;
 
-    private String onmouseup_ = null;
+    private String onmouseup = null;
 
-    private String onselect_ = null;
+    private String onselect = null;
 
-    private Boolean readonly_ = null;
+    private Boolean readonly = null;
 
-    private String style_ = null;
+    private String style = null;
 
-    private String styleClass_ = null;
+    private String styleClass = null;
 
-    private String tabindex_ = null;
+    private String tabindex = null;
 
-    private String title_ = null;
+    private String title = null;
 
     public HtmlSelectManyMenu() {
         setRendererType(DEFAULT_RENDERER_TYPE);
     }
 
     public void setAccesskey(String accesskey) {
-        accesskey_ = accesskey;
+        this.accesskey = accesskey;
     }
 
     public String getAccesskey() {
-        if (accesskey_ != null) {
-            return accesskey_;
+        if (accesskey != null) {
+            return accesskey;
         }
         ValueBinding vb = getValueBinding("accesskey");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setDir(String dir) {
-        dir_ = dir;
+        this.dir = dir;
     }
 
     public String getDir() {
-        if (dir_ != null) {
-            return dir_;
+        if (dir != null) {
+            return dir;
         }
         ValueBinding vb = getValueBinding("dir");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setDisabled(boolean disabled) {
-        disabled_ = Boolean.valueOf(disabled);
+        this.disabled = Boolean.valueOf(disabled);
     }
 
     public boolean isDisabled() {
-        if (disabled_ != null) {
-            return disabled_.booleanValue();
+        if (disabled != null) {
+            return disabled.booleanValue();
         }
         ValueBinding vb = getValueBinding("disabled");
         Boolean v = vb != null ? (Boolean) vb.getValue(getFacesContext())
@@ -125,216 +125,216 @@ public class HtmlSelectManyMenu extends UISelectMany {
     }
 
     public void setDisabledClass(String disabledClass) {
-        disabledClass_ = disabledClass;
+        this.disabledClass = disabledClass;
     }
 
     public String getDisabledClass() {
-        if (disabledClass_ != null) {
-            return disabledClass_;
+        if (disabledClass != null) {
+            return disabledClass;
         }
         ValueBinding vb = getValueBinding("disabledClass");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setEnabledClass(String enabledClass) {
-        enabledClass_ = enabledClass;
+        this.enabledClass = enabledClass;
     }
 
     public String getEnabledClass() {
-        if (enabledClass_ != null) {
-            return enabledClass_;
+        if (enabledClass != null) {
+            return enabledClass;
         }
         ValueBinding vb = getValueBinding("enabledClass");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setLang(String lang) {
-        lang_ = lang;
+        this.lang = lang;
     }
 
     public String getLang() {
-        if (lang_ != null) {
-            return lang_;
+        if (lang != null) {
+            return lang;
         }
         ValueBinding vb = getValueBinding("lang");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setOnblur(String onblur) {
-        onblur_ = onblur;
+        this.onblur = onblur;
     }
 
     public String getOnblur() {
-        if (onblur_ != null) {
-            return onblur_;
+        if (onblur != null) {
+            return onblur;
         }
         ValueBinding vb = getValueBinding("onblur");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setOnchange(String onchange) {
-        onchange_ = onchange;
+        this.onchange = onchange;
     }
 
     public String getOnchange() {
-        if (onchange_ != null) {
-            return onchange_;
+        if (onchange != null) {
+            return onchange;
         }
         ValueBinding vb = getValueBinding("onchange");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setOnclick(String onclick) {
-        onclick_ = onclick;
+        this.onclick = onclick;
     }
 
     public String getOnclick() {
-        if (onclick_ != null) {
-            return onclick_;
+        if (onclick != null) {
+            return onclick;
         }
         ValueBinding vb = getValueBinding("onclick");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setOndblclick(String ondblclick) {
-        ondblclick_ = ondblclick;
+        this.ondblclick = ondblclick;
     }
 
     public String getOndblclick() {
-        if (ondblclick_ != null) {
-            return ondblclick_;
+        if (ondblclick != null) {
+            return ondblclick;
         }
         ValueBinding vb = getValueBinding("ondblclick");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setOnfocus(String onfocus) {
-        onfocus_ = onfocus;
+        this.onfocus = onfocus;
     }
 
     public String getOnfocus() {
-        if (onfocus_ != null) {
-            return onfocus_;
+        if (onfocus != null) {
+            return onfocus;
         }
         ValueBinding vb = getValueBinding("onfocus");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setOnkeydown(String onkeydown) {
-        onkeydown_ = onkeydown;
+        this.onkeydown = onkeydown;
     }
 
     public String getOnkeydown() {
-        if (onkeydown_ != null) {
-            return onkeydown_;
+        if (onkeydown != null) {
+            return onkeydown;
         }
         ValueBinding vb = getValueBinding("onkeydown");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setOnkeypress(String onkeypress) {
-        onkeypress_ = onkeypress;
+        this.onkeypress = onkeypress;
     }
 
     public String getOnkeypress() {
-        if (onkeypress_ != null) {
-            return onkeypress_;
+        if (onkeypress != null) {
+            return onkeypress;
         }
         ValueBinding vb = getValueBinding("onkeypress");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setOnkeyup(String onkeyup) {
-        onkeyup_ = onkeyup;
+        this.onkeyup = onkeyup;
     }
 
     public String getOnkeyup() {
-        if (onkeyup_ != null) {
-            return onkeyup_;
+        if (onkeyup != null) {
+            return onkeyup;
         }
         ValueBinding vb = getValueBinding("onkeyup");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setOnmousedown(String onmousedown) {
-        onmousedown_ = onmousedown;
+        this.onmousedown = onmousedown;
     }
 
     public String getOnmousedown() {
-        if (onmousedown_ != null) {
-            return onmousedown_;
+        if (onmousedown != null) {
+            return onmousedown;
         }
         ValueBinding vb = getValueBinding("onmousedown");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setOnmousemove(String onmousemove) {
-        onmousemove_ = onmousemove;
+        this.onmousemove = onmousemove;
     }
 
     public String getOnmousemove() {
-        if (onmousemove_ != null) {
-            return onmousemove_;
+        if (onmousemove != null) {
+            return onmousemove;
         }
         ValueBinding vb = getValueBinding("onmousemove");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setOnmouseout(String onmouseout) {
-        onmouseout_ = onmouseout;
+        this.onmouseout = onmouseout;
     }
 
     public String getOnmouseout() {
-        if (onmouseout_ != null) {
-            return onmouseout_;
+        if (onmouseout != null) {
+            return onmouseout;
         }
         ValueBinding vb = getValueBinding("onmouseout");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setOnmouseover(String onmouseover) {
-        onmouseover_ = onmouseover;
+        this.onmouseover = onmouseover;
     }
 
     public String getOnmouseover() {
-        if (onmouseover_ != null) {
-            return onmouseover_;
+        if (onmouseover != null) {
+            return onmouseover;
         }
         ValueBinding vb = getValueBinding("onmouseover");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setOnmouseup(String onmouseup) {
-        onmouseup_ = onmouseup;
+        this.onmouseup = onmouseup;
     }
 
     public String getOnmouseup() {
-        if (onmouseup_ != null) {
-            return onmouseup_;
+        if (onmouseup != null) {
+            return onmouseup;
         }
         ValueBinding vb = getValueBinding("onmouseup");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setOnselect(String onselect) {
-        onselect_ = onselect;
+        this.onselect = onselect;
     }
 
     public String getOnselect() {
-        if (onselect_ != null) {
-            return onselect_;
+        if (onselect != null) {
+            return onselect;
         }
         ValueBinding vb = getValueBinding("onselect");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setReadonly(boolean readonly) {
-        readonly_ = Boolean.valueOf(readonly);
+        this.readonly = Boolean.valueOf(readonly);
     }
 
     public boolean isReadonly() {
-        if (readonly_ != null) {
-            return readonly_.booleanValue();
+        if (readonly != null) {
+            return readonly.booleanValue();
         }
         ValueBinding vb = getValueBinding("readonly");
         Boolean v = vb != null ? (Boolean) vb.getValue(getFacesContext())
@@ -343,48 +343,48 @@ public class HtmlSelectManyMenu extends UISelectMany {
     }
 
     public void setStyle(String style) {
-        style_ = style;
+        this.style = style;
     }
 
     public String getStyle() {
-        if (style_ != null) {
-            return style_;
+        if (style != null) {
+            return style;
         }
         ValueBinding vb = getValueBinding("style");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setStyleClass(String styleClass) {
-        styleClass_ = styleClass;
+        this.styleClass = styleClass;
     }
 
     public String getStyleClass() {
-        if (styleClass_ != null) {
-            return styleClass_;
+        if (styleClass != null) {
+            return styleClass;
         }
         ValueBinding vb = getValueBinding("styleClass");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setTabindex(String tabindex) {
-        tabindex_ = tabindex;
+        this.tabindex = tabindex;
     }
 
     public String getTabindex() {
-        if (tabindex_ != null) {
-            return tabindex_;
+        if (tabindex != null) {
+            return tabindex;
         }
         ValueBinding vb = getValueBinding("tabindex");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setTitle(String title) {
-        title_ = title;
+        this.title = title;
     }
 
     public String getTitle() {
-        if (title_ != null) {
-            return title_;
+        if (title != null) {
+            return title;
         }
         ValueBinding vb = getValueBinding("title");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
@@ -393,63 +393,63 @@ public class HtmlSelectManyMenu extends UISelectMany {
     public Object saveState(FacesContext context) {
         Object values[] = new Object[26];
         values[0] = super.saveState(context);
-        values[1] = accesskey_;
-        values[2] = dir_;
-        values[3] = disabled_;
-        values[4] = lang_;
-        values[5] = onblur_;
-        values[6] = onchange_;
-        values[7] = onclick_;
-        values[8] = ondblclick_;
-        values[9] = onfocus_;
-        values[10] = onkeydown_;
-        values[11] = onkeypress_;
-        values[12] = onkeyup_;
-        values[13] = onmousedown_;
-        values[14] = onmousemove_;
-        values[15] = onmouseout_;
-        values[16] = onmouseover_;
-        values[17] = onmouseup_;
-        values[18] = onselect_;
-        values[19] = readonly_;
-        values[20] = style_;
-        values[21] = styleClass_;
-        values[22] = tabindex_;
-        values[23] = title_;
+        values[1] = accesskey;
+        values[2] = dir;
+        values[3] = disabled;
+        values[4] = lang;
+        values[5] = onblur;
+        values[6] = onchange;
+        values[7] = onclick;
+        values[8] = ondblclick;
+        values[9] = onfocus;
+        values[10] = onkeydown;
+        values[11] = onkeypress;
+        values[12] = onkeyup;
+        values[13] = onmousedown;
+        values[14] = onmousemove;
+        values[15] = onmouseout;
+        values[16] = onmouseover;
+        values[17] = onmouseup;
+        values[18] = onselect;
+        values[19] = readonly;
+        values[20] = style;
+        values[21] = styleClass;
+        values[22] = tabindex;
+        values[23] = title;
         // XXX
-        values[24] = disabledClass_;
-        values[25] = enabledClass_;
+        values[24] = disabledClass;
+        values[25] = enabledClass;
         return ((Object) (values));
     }
 
     public void restoreState(FacesContext context, Object state) {
         Object values[] = (Object[]) state;
         super.restoreState(context, values[0]);
-        accesskey_ = (String) values[1];
-        dir_ = (String) values[2];
-        disabled_ = (Boolean) values[3];
-        lang_ = (String) values[4];
-        onblur_ = (String) values[5];
-        onchange_ = (String) values[6];
-        onclick_ = (String) values[7];
-        ondblclick_ = (String) values[8];
-        onfocus_ = (String) values[9];
-        onkeydown_ = (String) values[10];
-        onkeypress_ = (String) values[11];
-        onkeyup_ = (String) values[12];
-        onmousedown_ = (String) values[13];
-        onmousemove_ = (String) values[14];
-        onmouseout_ = (String) values[15];
-        onmouseover_ = (String) values[16];
-        onmouseup_ = (String) values[17];
-        onselect_ = (String) values[18];
-        readonly_ = (Boolean) values[19];
-        style_ = (String) values[20];
-        styleClass_ = (String) values[21];
-        tabindex_ = (String) values[22];
-        title_ = (String) values[23];
+        accesskey = (String) values[1];
+        dir = (String) values[2];
+        disabled = (Boolean) values[3];
+        lang = (String) values[4];
+        onblur = (String) values[5];
+        onchange = (String) values[6];
+        onclick = (String) values[7];
+        ondblclick = (String) values[8];
+        onfocus = (String) values[9];
+        onkeydown = (String) values[10];
+        onkeypress = (String) values[11];
+        onkeyup = (String) values[12];
+        onmousedown = (String) values[13];
+        onmousemove = (String) values[14];
+        onmouseout = (String) values[15];
+        onmouseover = (String) values[16];
+        onmouseup = (String) values[17];
+        onselect = (String) values[18];
+        readonly = (Boolean) values[19];
+        style = (String) values[20];
+        styleClass = (String) values[21];
+        tabindex = (String) values[22];
+        title = (String) values[23];
         // XXX
-        disabledClass_ = (String) values[24];
-        enabledClass_ = (String) values[25];
+        disabledClass = (String) values[24];
+        enabledClass = (String) values[25];
     }
 }

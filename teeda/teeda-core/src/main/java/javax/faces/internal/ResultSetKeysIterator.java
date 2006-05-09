@@ -28,14 +28,14 @@ public class ResultSetKeysIterator extends ResultSetBaseIterator {
 
     public ResultSetKeysIterator(ResultSetDataModel.ResultSetMap map) {
         super(map);
-        super.itr_ = super.map_.realKeys();
+        super.itr = super.map.realKeys();
     }
 
     public boolean hasNext() {
-        return super.itr_.hasNext();
+        return super.itr.hasNext();
     }
 
     public Object next() {
-        return super.itr_.next();
+        return super.itr.next();
     }
 }

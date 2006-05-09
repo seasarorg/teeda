@@ -35,20 +35,20 @@ public class ComponentChildrenListWrapper extends AbstractList implements
 
     private static final long serialVersionUID = 3617294519188666163L;
 
-    private List list_ = new ArrayList();
+    private List list = new ArrayList();
 
-    private UIComponent component_ = null;
+    private UIComponent parent = null;
 
-    public ComponentChildrenListWrapper(UIComponent component) {
-        component_ = component;
+    public ComponentChildrenListWrapper(UIComponent parent) {
+        this.parent = parent;
     }
 
     public Object get(int num) {
-        return list_.get(num);
+        return list.get(num);
     }
 
     public Object remove(int num) {
-        UIComponent child = (UIComponent) list_.remove(num);
+        UIComponent child = (UIComponent) list.remove(num);
         if (child != null) {
             child.setParent(null);
         }
@@ -56,19 +56,19 @@ public class ComponentChildrenListWrapper extends AbstractList implements
     }
 
     public int size() {
-        return list_.size();
+        return list.size();
     }
 
     public void add(int num, Object obj) {
         assertUIComponent(obj);
         setNewParent((UIComponent) obj);
-        list_.add(num, obj);
+        list.add(num, obj);
     }
 
     public boolean add(Object obj) {
         assertUIComponent(obj);
         setNewParent((UIComponent) obj);
-        return list_.add(obj);
+        return list.add(obj);
     }
 
     public boolean addAll(Collection collection) {
@@ -84,11 +84,11 @@ public class ComponentChildrenListWrapper extends AbstractList implements
     }
 
     private void setNewParent(UIComponent child) {
-        UIComponent parent = child.getParent();
-        if (parent != null) {
-            removeFromParent(parent, child);
+        UIComponent oldParent = child.getParent();
+        if (oldParent != null) {
+            removeFromParent(oldParent, child);
         }
-        child.setParent(component_);
+        child.setParent(parent);
     }
 
     private void removeFromParent(UIComponent parent, UIComponent child) {

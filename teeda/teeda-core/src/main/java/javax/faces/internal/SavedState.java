@@ -28,47 +28,47 @@ public class SavedState implements Serializable {
 
     private static final long serialVersionUID = 3688791349478568242L;
 
-    private Object localValue_ = null;
+    private Object localValue = null;
 
-    private Object submittedValue_ = null;
+    private Object submittedValue = null;
 
-    private boolean valid_ = true;
+    private boolean valid = true;
 
-    private boolean localValueSet_ = false;
+    private boolean localValueSet = false;
 
     public SavedState() {
     }
 
     public Object getLocalValue() {
-        return localValue_;
+        return localValue;
     }
 
     public void setLocalValue(Object localValue) {
-        localValue_ = localValue;
+        this.localValue = localValue;
     }
 
     public boolean isLocalValueSet() {
-        return localValueSet_;
+        return localValueSet;
     }
 
     public void setLocalValueSet(boolean localValueSet) {
-        localValueSet_ = localValueSet;
+        this.localValueSet = localValueSet;
     }
 
     public Object getSubmittedValue() {
-        return submittedValue_;
+        return submittedValue;
     }
 
     public void setSubmittedValue(Object submittedValue) {
-        submittedValue_ = submittedValue;
+        this.submittedValue = submittedValue;
     }
 
     public boolean isValid() {
-        return valid_;
+        return valid;
     }
 
     public void setValid(boolean valid) {
-        valid_ = valid;
+        this.valid = valid;
     }
 
 }

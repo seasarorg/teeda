@@ -18,7 +18,7 @@ package javax.faces.el;
 import javax.faces.FacesException;
 
 /**
- * @author Shinpei Ohtani
+ * @author shot
  */
 public class EvaluationException extends FacesException {
 

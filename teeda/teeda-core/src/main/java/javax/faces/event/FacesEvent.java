@@ -19,16 +19,19 @@ import java.util.EventObject;
 
 import javax.faces.component.UIComponent;
 
+/**
+ * @author shot
+ */
 public abstract class FacesEvent extends EventObject {
 
-    protected PhaseId phaseId_;
+    protected PhaseId phaseId;
 
     public FacesEvent(UIComponent component) {
         super(component);
         if (component == null) {
             throw new IllegalArgumentException("FacesEvent");
         }
-        phaseId_ = PhaseId.ANY_PHASE;
+        phaseId = PhaseId.ANY_PHASE;
     }
 
     public UIComponent getComponent() {
@@ -36,11 +39,11 @@ public abstract class FacesEvent extends EventObject {
     }
 
     public PhaseId getPhaseId() {
-        return phaseId_;
+        return phaseId;
     }
 
     public void setPhaseId(PhaseId phaseId) {
-        phaseId_ = phaseId;
+        this.phaseId = phaseId;
     }
 
     public abstract boolean isAppropriateListener(FacesListener listener);

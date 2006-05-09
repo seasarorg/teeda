@@ -25,14 +25,14 @@ public class DataModelEvent extends EventObject implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private int index_ = 0;
+    private int index = 0;
 
-    private Object data_ = null;
+    private Object data = null;
 
     public DataModelEvent(DataModel model, int index, Object data) {
         super(model);
-        index_ = index;
-        data_ = data;
+        this.index = index;
+        this.data = data;
     }
 
     public DataModel getDataModel() {
@@ -40,10 +40,10 @@ public class DataModelEvent extends EventObject implements Serializable {
     }
 
     public Object getRowData() {
-        return data_;
+        return data;
     }
 
     public int getRowIndex() {
-        return index_;
+        return index;
     }
 }

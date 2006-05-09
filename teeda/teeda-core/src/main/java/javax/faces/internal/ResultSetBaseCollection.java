@@ -29,26 +29,26 @@ import javax.faces.model.ResultSetDataModel;
  */
 public class ResultSetBaseCollection extends AbstractCollection {
 
-    ResultSetDataModel.ResultSetMap map_ = null;
+    ResultSetDataModel.ResultSetMap map = null;
 
     public ResultSetBaseCollection(ResultSetDataModel.ResultSetMap map) {
-        map_ = map;
+        this.map = map;
     }
 
     public boolean contains(Object o) {
-        return map_.containsKey(o);
+        return map.containsKey(o);
     }
 
     public boolean isEmpty() {
-        return map_.isEmpty();
+        return map.isEmpty();
     }
 
     public Iterator iterator() {
-        return map_.keySet().iterator();
+        return map.keySet().iterator();
     }
 
     public int size() {
-        return map_.size();
+        return map.size();
     }
 
     public final boolean add(Object o) {

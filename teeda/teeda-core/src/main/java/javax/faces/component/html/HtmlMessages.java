@@ -32,31 +32,31 @@ public class HtmlMessages extends UIMessages {
 
     private static final boolean DEFAULT_TOOLTIP = false;
 
-    private String errorClass_ = null;
+    private String errorClass = null;
 
-    private String errorStyle_ = null;
+    private String errorStyle = null;
 
-    private String fatalClass_ = null;
+    private String fatalClass = null;
 
-    private String fatalStyle_ = null;
+    private String fatalStyle = null;
 
-    private String infoClass_ = null;
+    private String infoClass = null;
 
-    private String infoStyle_ = null;
+    private String infoStyle = null;
 
-    private String layout_ = null;
+    private String layout = null;
 
-    private String style_ = null;
+    private String style = null;
 
-    private String styleClass_ = null;
+    private String styleClass = null;
 
-    private String title_ = null;
+    private String title = null;
 
-    private Boolean tooltip_ = null;
+    private Boolean tooltip = null;
 
-    private String warnClass_ = null;
+    private String warnClass = null;
 
-    private String warnStyle_ = null;
+    private String warnStyle = null;
 
     public HtmlMessages() {
         super();
@@ -64,84 +64,84 @@ public class HtmlMessages extends UIMessages {
     }
 
     public void setErrorClass(String errorClass) {
-        errorClass_ = errorClass;
+        this.errorClass = errorClass;
     }
 
     public String getErrorClass() {
-        if (errorClass_ != null) {
-            return errorClass_;
+        if (errorClass != null) {
+            return errorClass;
         }
         ValueBinding vb = getValueBinding("errorClass");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setErrorStyle(String errorStyle) {
-        errorStyle_ = errorStyle;
+        this.errorStyle = errorStyle;
     }
 
     public String getErrorStyle() {
-        if (errorStyle_ != null) {
-            return errorStyle_;
+        if (errorStyle != null) {
+            return errorStyle;
         }
         ValueBinding vb = getValueBinding("errorStyle");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setFatalClass(String fatalClass) {
-        fatalClass_ = fatalClass;
+        this.fatalClass = fatalClass;
     }
 
     public String getFatalClass() {
-        if (fatalClass_ != null) {
-            return fatalClass_;
+        if (fatalClass != null) {
+            return fatalClass;
         }
         ValueBinding vb = getValueBinding("fatalClass");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setFatalStyle(String fatalStyle) {
-        fatalStyle_ = fatalStyle;
+        this.fatalStyle = fatalStyle;
     }
 
     public String getFatalStyle() {
-        if (fatalStyle_ != null) {
-            return fatalStyle_;
+        if (fatalStyle != null) {
+            return fatalStyle;
         }
         ValueBinding vb = getValueBinding("fatalStyle");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setInfoClass(String infoClass) {
-        infoClass_ = infoClass;
+        this.infoClass = infoClass;
     }
 
     public String getInfoClass() {
-        if (infoClass_ != null) {
-            return infoClass_;
+        if (infoClass != null) {
+            return infoClass;
         }
         ValueBinding vb = getValueBinding("infoClass");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setInfoStyle(String infoStyle) {
-        infoStyle_ = infoStyle;
+        this.infoStyle = infoStyle;
     }
 
     public String getInfoStyle() {
-        if (infoStyle_ != null) {
-            return infoStyle_;
+        if (infoStyle != null) {
+            return infoStyle;
         }
         ValueBinding vb = getValueBinding("infoStyle");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setLayout(String layout) {
-        layout_ = layout;
+        this.layout = layout;
     }
 
     public String getLayout() {
-        if (layout_ != null) {
-            return layout_;
+        if (layout != null) {
+            return layout;
         }
         ValueBinding vb = getValueBinding("layout");
         return vb != null ? (String) vb.getValue(getFacesContext())
@@ -149,48 +149,48 @@ public class HtmlMessages extends UIMessages {
     }
 
     public void setStyle(String style) {
-        style_ = style;
+        this.style = style;
     }
 
     public String getStyle() {
-        if (style_ != null) {
-            return style_;
+        if (style != null) {
+            return style;
         }
         ValueBinding vb = getValueBinding("style");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setStyleClass(String styleClass) {
-        styleClass_ = styleClass;
+        this.styleClass = styleClass;
     }
 
     public String getStyleClass() {
-        if (styleClass_ != null) {
-            return styleClass_;
+        if (styleClass != null) {
+            return styleClass;
         }
         ValueBinding vb = getValueBinding("styleClass");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setTitle(String title) {
-        title_ = title;
+        this.title = title;
     }
 
     public String getTitle() {
-        if (title_ != null) {
-            return title_;
+        if (title != null) {
+            return title;
         }
         ValueBinding vb = getValueBinding("title");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setTooltip(boolean tooltip) {
-        tooltip_ = Boolean.valueOf(tooltip);
+        this.tooltip = Boolean.valueOf(tooltip);
     }
 
     public boolean isTooltip() {
-        if (tooltip_ != null) {
-            return tooltip_.booleanValue();
+        if (tooltip != null) {
+            return tooltip.booleanValue();
         }
         ValueBinding vb = getValueBinding("tooltip");
         Boolean v = vb != null ? (Boolean) vb.getValue(getFacesContext())
@@ -199,24 +199,24 @@ public class HtmlMessages extends UIMessages {
     }
 
     public void setWarnClass(String warnClass) {
-        warnClass_ = warnClass;
+        this.warnClass = warnClass;
     }
 
     public String getWarnClass() {
-        if (warnClass_ != null) {
-            return warnClass_;
+        if (warnClass != null) {
+            return warnClass;
         }
         ValueBinding vb = getValueBinding("warnClass");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setWarnStyle(String warnStyle) {
-        warnStyle_ = warnStyle;
+        this.warnStyle = warnStyle;
     }
 
     public String getWarnStyle() {
-        if (warnStyle_ != null) {
-            return warnStyle_;
+        if (warnStyle != null) {
+            return warnStyle;
         }
         ValueBinding vb = getValueBinding("warnStyle");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
@@ -225,37 +225,37 @@ public class HtmlMessages extends UIMessages {
     public Object saveState(FacesContext context) {
         Object values[] = new Object[14];
         values[0] = super.saveState(context);
-        values[1] = errorClass_;
-        values[2] = errorStyle_;
-        values[3] = fatalClass_;
-        values[4] = fatalStyle_;
-        values[5] = infoClass_;
-        values[6] = infoStyle_;
-        values[7] = layout_;
-        values[8] = style_;
-        values[9] = styleClass_;
-        values[10] = title_;
-        values[11] = tooltip_;
-        values[12] = warnClass_;
-        values[13] = warnStyle_;
+        values[1] = errorClass;
+        values[2] = errorStyle;
+        values[3] = fatalClass;
+        values[4] = fatalStyle;
+        values[5] = infoClass;
+        values[6] = infoStyle;
+        values[7] = layout;
+        values[8] = style;
+        values[9] = styleClass;
+        values[10] = title;
+        values[11] = tooltip;
+        values[12] = warnClass;
+        values[13] = warnStyle;
         return ((Object) (values));
     }
 
     public void restoreState(FacesContext context, Object state) {
         Object values[] = (Object[]) state;
         super.restoreState(context, values[0]);
-        errorClass_ = (String) values[1];
-        errorStyle_ = (String) values[2];
-        fatalClass_ = (String) values[3];
-        fatalStyle_ = (String) values[4];
-        infoClass_ = (String) values[5];
-        infoStyle_ = (String) values[6];
-        layout_ = (String) values[7];
-        style_ = (String) values[8];
-        styleClass_ = (String) values[9];
-        title_ = (String) values[10];
-        tooltip_ = (Boolean) values[11];
-        warnClass_ = (String) values[12];
-        warnStyle_ = (String) values[13];
+        errorClass = (String) values[1];
+        errorStyle = (String) values[2];
+        fatalClass = (String) values[3];
+        fatalStyle = (String) values[4];
+        infoClass = (String) values[5];
+        infoStyle = (String) values[6];
+        layout = (String) values[7];
+        style = (String) values[8];
+        styleClass = (String) values[9];
+        title = (String) values[10];
+        tooltip = (Boolean) values[11];
+        warnClass = (String) values[12];
+        warnStyle = (String) values[13];
     }
 }

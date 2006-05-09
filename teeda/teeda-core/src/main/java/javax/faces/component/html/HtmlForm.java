@@ -30,95 +30,95 @@ public class HtmlForm extends UIForm {
 
     private static final String DEFAULT_ENCTYPE = "application/x-www-form-urlencoded";
 
-    private String accept_ = null;
+    private String accept = null;
 
-    private String acceptcharset_ = null;
+    private String acceptcharset = null;
 
-    private String dir_ = null;
+    private String dir = null;
 
-    private String enctype_ = null;
+    private String enctype = null;
 
-    private String lang_ = null;
+    private String lang = null;
 
-    private String onclick_ = null;
+    private String onclick = null;
 
-    private String ondblclick_ = null;
+    private String ondblclick = null;
 
-    private String onkeydown_ = null;
+    private String onkeydown = null;
 
-    private String onkeypress_ = null;
+    private String onkeypress = null;
 
-    private String onkeyup_ = null;
+    private String onkeyup = null;
 
-    private String onmousedown_ = null;
+    private String onmousedown = null;
 
-    private String onmousemove_ = null;
+    private String onmousemove = null;
 
-    private String onmouseout_ = null;
+    private String onmouseout = null;
 
-    private String onmouseover_ = null;
+    private String onmouseover = null;
 
-    private String onmouseup_ = null;
+    private String onmouseup = null;
 
-    private String onreset_ = null;
+    private String onreset = null;
 
-    private String onsubmit_ = null;
+    private String onsubmit = null;
 
-    private String style_ = null;
+    private String style = null;
 
-    private String styleClass_ = null;
+    private String styleClass = null;
 
-    private String target_ = null;
+    private String target = null;
 
-    private String title_ = null;
+    private String title = null;
 
     public HtmlForm() {
         setRendererType(DEFAULT_RENDERER_TYPE);
     }
 
     public void setAccept(String accept) {
-        accept_ = accept;
+        this.accept = accept;
     }
 
     public String getAccept() {
-        if (accept_ != null) {
-            return accept_;
+        if (accept != null) {
+            return accept;
         }
         ValueBinding vb = getValueBinding("accept");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setAcceptcharset(String acceptcharset) {
-        acceptcharset_ = acceptcharset;
+        this.acceptcharset = acceptcharset;
     }
 
     public String getAcceptcharset() {
-        if (acceptcharset_ != null) {
-            return acceptcharset_;
+        if (acceptcharset != null) {
+            return acceptcharset;
         }
         ValueBinding vb = getValueBinding("acceptcharset");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setDir(String dir) {
-        dir_ = dir;
+        this.dir = dir;
     }
 
     public String getDir() {
-        if (dir_ != null) {
-            return dir_;
+        if (dir != null) {
+            return dir;
         }
         ValueBinding vb = getValueBinding("dir");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setEnctype(String enctype) {
-        enctype_ = enctype;
+        this.enctype = enctype;
     }
 
     public String getEnctype() {
-        if (enctype_ != null) {
-            return enctype_;
+        if (enctype != null) {
+            return enctype;
         }
         ValueBinding vb = getValueBinding("enctype");
         return vb != null ? (String) vb.getValue(getFacesContext())
@@ -126,204 +126,204 @@ public class HtmlForm extends UIForm {
     }
 
     public void setLang(String lang) {
-        lang_ = lang;
+        this.lang = lang;
     }
 
     public String getLang() {
-        if (lang_ != null) {
-            return lang_;
+        if (lang != null) {
+            return lang;
         }
         ValueBinding vb = getValueBinding("lang");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setOnclick(String onclick) {
-        onclick_ = onclick;
+        this.onclick = onclick;
     }
 
     public String getOnclick() {
-        if (onclick_ != null) {
-            return onclick_;
+        if (onclick != null) {
+            return onclick;
         }
         ValueBinding vb = getValueBinding("onclick");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setOndblclick(String ondblclick) {
-        ondblclick_ = ondblclick;
+        this.ondblclick = ondblclick;
     }
 
     public String getOndblclick() {
-        if (ondblclick_ != null) {
-            return ondblclick_;
+        if (ondblclick != null) {
+            return ondblclick;
         }
         ValueBinding vb = getValueBinding("ondblclick");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setOnkeydown(String onkeydown) {
-        onkeydown_ = onkeydown;
+        this.onkeydown = onkeydown;
     }
 
     public String getOnkeydown() {
-        if (onkeydown_ != null) {
-            return onkeydown_;
+        if (onkeydown != null) {
+            return onkeydown;
         }
         ValueBinding vb = getValueBinding("onkeydown");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setOnkeypress(String onkeypress) {
-        onkeypress_ = onkeypress;
+        this.onkeypress = onkeypress;
     }
 
     public String getOnkeypress() {
-        if (onkeypress_ != null) {
-            return onkeypress_;
+        if (onkeypress != null) {
+            return onkeypress;
         }
         ValueBinding vb = getValueBinding("onkeypress");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setOnkeyup(String onkeyup) {
-        onkeyup_ = onkeyup;
+        this.onkeyup = onkeyup;
     }
 
     public String getOnkeyup() {
-        if (onkeyup_ != null) {
-            return onkeyup_;
+        if (onkeyup != null) {
+            return onkeyup;
         }
         ValueBinding vb = getValueBinding("onkeyup");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setOnmousedown(String onmousedown) {
-        onmousedown_ = onmousedown;
+        this.onmousedown = onmousedown;
     }
 
     public String getOnmousedown() {
-        if (onmousedown_ != null) {
-            return onmousedown_;
+        if (onmousedown != null) {
+            return onmousedown;
         }
         ValueBinding vb = getValueBinding("onmousedown");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setOnmousemove(String onmousemove) {
-        onmousemove_ = onmousemove;
+        this.onmousemove = onmousemove;
     }
 
     public String getOnmousemove() {
-        if (onmousemove_ != null) {
-            return onmousemove_;
+        if (onmousemove != null) {
+            return onmousemove;
         }
         ValueBinding vb = getValueBinding("onmousemove");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setOnmouseout(String onmouseout) {
-        onmouseout_ = onmouseout;
+        this.onmouseout = onmouseout;
     }
 
     public String getOnmouseout() {
-        if (onmouseout_ != null) {
-            return onmouseout_;
+        if (onmouseout != null) {
+            return onmouseout;
         }
         ValueBinding vb = getValueBinding("onmouseout");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setOnmouseover(String onmouseover) {
-        onmouseover_ = onmouseover;
+        this.onmouseover = onmouseover;
     }
 
     public String getOnmouseover() {
-        if (onmouseover_ != null) {
-            return onmouseover_;
+        if (onmouseover != null) {
+            return onmouseover;
         }
         ValueBinding vb = getValueBinding("onmouseover");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setOnmouseup(String onmouseup) {
-        onmouseup_ = onmouseup;
+        this.onmouseup = onmouseup;
     }
 
     public String getOnmouseup() {
-        if (onmouseup_ != null) {
-            return onmouseup_;
+        if (onmouseup != null) {
+            return onmouseup;
         }
         ValueBinding vb = getValueBinding("onmouseup");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setOnreset(String onreset) {
-        onreset_ = onreset;
+        this.onreset = onreset;
     }
 
     public String getOnreset() {
-        if (onreset_ != null) {
-            return onreset_;
+        if (onreset != null) {
+            return onreset;
         }
         ValueBinding vb = getValueBinding("onreset");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setOnsubmit(String onsubmit) {
-        onsubmit_ = onsubmit;
+        this.onsubmit = onsubmit;
     }
 
     public String getOnsubmit() {
-        if (onsubmit_ != null) {
-            return onsubmit_;
+        if (onsubmit != null) {
+            return onsubmit;
         }
         ValueBinding vb = getValueBinding("onsubmit");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setStyle(String style) {
-        style_ = style;
+        this.style = style;
     }
 
     public String getStyle() {
-        if (style_ != null) {
-            return style_;
+        if (style != null) {
+            return style;
         }
         ValueBinding vb = getValueBinding("style");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setStyleClass(String styleClass) {
-        styleClass_ = styleClass;
+        this.styleClass = styleClass;
     }
 
     public String getStyleClass() {
-        if (styleClass_ != null) {
-            return styleClass_;
+        if (styleClass != null) {
+            return styleClass;
         }
         ValueBinding vb = getValueBinding("styleClass");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setTarget(String target) {
-        target_ = target;
+        this.target = target;
     }
 
     public String getTarget() {
-        if (target_ != null) {
-            return target_;
+        if (target != null) {
+            return target;
         }
         ValueBinding vb = getValueBinding("target");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setTitle(String title) {
-        title_ = title;
+        this.title = title;
     }
 
     public String getTitle() {
-        if (title_ != null) {
-            return title_;
+        if (title != null) {
+            return title;
         }
         ValueBinding vb = getValueBinding("title");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
@@ -332,54 +332,54 @@ public class HtmlForm extends UIForm {
     public Object saveState(FacesContext context) {
         Object values[] = new Object[22];
         values[0] = super.saveState(context);
-        values[1] = accept_;
-        values[2] = acceptcharset_;
-        values[3] = dir_;
-        values[4] = enctype_;
-        values[5] = lang_;
-        values[6] = onclick_;
-        values[7] = ondblclick_;
-        values[8] = onkeydown_;
-        values[9] = onkeypress_;
-        values[10] = onkeyup_;
-        values[11] = onmousedown_;
-        values[12] = onmousemove_;
-        values[13] = onmouseout_;
-        values[14] = onmouseover_;
-        values[15] = onmouseup_;
-        values[16] = onreset_;
-        values[17] = onsubmit_;
-        values[18] = style_;
-        values[19] = styleClass_;
-        values[20] = target_;
-        values[21] = title_;
+        values[1] = accept;
+        values[2] = acceptcharset;
+        values[3] = dir;
+        values[4] = enctype;
+        values[5] = lang;
+        values[6] = onclick;
+        values[7] = ondblclick;
+        values[8] = onkeydown;
+        values[9] = onkeypress;
+        values[10] = onkeyup;
+        values[11] = onmousedown;
+        values[12] = onmousemove;
+        values[13] = onmouseout;
+        values[14] = onmouseover;
+        values[15] = onmouseup;
+        values[16] = onreset;
+        values[17] = onsubmit;
+        values[18] = style;
+        values[19] = styleClass;
+        values[20] = target;
+        values[21] = title;
         return ((Object) (values));
     }
 
     public void restoreState(FacesContext context, Object state) {
         Object values[] = (Object[]) state;
         super.restoreState(context, values[0]);
-        accept_ = (String) values[1];
-        acceptcharset_ = (String) values[2];
-        dir_ = (String) values[3];
-        enctype_ = (String) values[4];
-        lang_ = (String) values[5];
-        onclick_ = (String) values[6];
-        ondblclick_ = (String) values[7];
-        onkeydown_ = (String) values[8];
-        onkeypress_ = (String) values[9];
-        onkeyup_ = (String) values[10];
-        onmousedown_ = (String) values[11];
-        onmousemove_ = (String) values[12];
-        onmouseout_ = (String) values[13];
-        onmouseover_ = (String) values[14];
-        onmouseup_ = (String) values[15];
-        onreset_ = (String) values[16];
-        onsubmit_ = (String) values[17];
-        style_ = (String) values[18];
-        styleClass_ = (String) values[19];
-        target_ = (String) values[20];
-        title_ = (String) values[21];
+        accept = (String) values[1];
+        acceptcharset = (String) values[2];
+        dir = (String) values[3];
+        enctype = (String) values[4];
+        lang = (String) values[5];
+        onclick = (String) values[6];
+        ondblclick = (String) values[7];
+        onkeydown = (String) values[8];
+        onkeypress = (String) values[9];
+        onkeyup = (String) values[10];
+        onmousedown = (String) values[11];
+        onmousemove = (String) values[12];
+        onmouseout = (String) values[13];
+        onmouseover = (String) values[14];
+        onmouseup = (String) values[15];
+        onreset = (String) values[16];
+        onsubmit = (String) values[17];
+        style = (String) values[18];
+        styleClass = (String) values[19];
+        target = (String) values[20];
+        title = (String) values[21];
     }
 
 }

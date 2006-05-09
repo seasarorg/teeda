@@ -35,14 +35,14 @@ import javax.faces.model.SelectItem;
  */
 public class SelectItemsIterator implements Iterator {
 
-    private Iterator children_ = null;
+    private Iterator children = null;
 
-    private Iterator items_ = null;
+    private Iterator items = null;
 
-    private SelectItem nextValue_;
+    private SelectItem nextValue;
 
     public SelectItemsIterator(UIComponent component) {
-        children_ = component.getChildren().iterator();
+        this.children = component.getChildren().iterator();
     }
 
     public void remove() {
@@ -50,28 +50,28 @@ public class SelectItemsIterator implements Iterator {
     }
 
     public boolean hasNext() {
-        if (nextValue_ != null) {
+        if (nextValue != null) {
             return true;
         }
-        nextValue_ = getNextSelectItem();
-        if (nextValue_ != null) {
+        nextValue = getNextSelectItem();
+        if (nextValue != null) {
             return true;
         }
         return false;
     }
 
     protected SelectItem getNextSelectItem() {
-        if (items_ != null) {
-            if (items_.hasNext()) {
-                return (SelectItem) items_.next();
+        if (items != null) {
+            if (items.hasNext()) {
+                return (SelectItem) items.next();
             } else {
-                items_ = null;
+                items = null;
             }
         }
-        if (!children_.hasNext()) {
+        if (!children.hasNext()) {
             return null;
         }
-        UIComponent child = (UIComponent) children_.next();
+        UIComponent child = (UIComponent) children.next();
         if (child instanceof UISelectItem) {
             return createSelectItem((UISelectItem) child);
         } else if (child instanceof UISelectItems) {
@@ -88,14 +88,14 @@ public class SelectItemsIterator implements Iterator {
         if (value instanceof SelectItem) {
             return (SelectItem) value;
         } else if (value instanceof SelectItem[]) {
-            items_ = Arrays.asList((SelectItem[]) value).iterator();
+            this.items = Arrays.asList((SelectItem[]) value).iterator();
             return getNextSelectItem();
         } else if (value instanceof Collection) {
             Collection c = (Collection) value;
-            items_ = c.iterator();
+            this.items = c.iterator();
             return getNextSelectItem();
         } else if (value instanceof Map) {
-            items_ = new SelectItemsMapIterator((Map) value);
+            this.items = new SelectItemsMapIterator((Map) value);
             return getNextSelectItem();
         } else {
             // throw new IllegalArgumentException();
@@ -107,9 +107,9 @@ public class SelectItemsIterator implements Iterator {
         if (!hasNext()) {
             throw new NoSuchElementException();
         }
-        if (nextValue_ != null) {
-            Object o = nextValue_;
-            nextValue_ = null;
+        if (nextValue != null) {
+            Object o = nextValue;
+            nextValue = null;
             return o;
         }
         throw new NoSuchElementException();
@@ -126,25 +126,25 @@ public class SelectItemsIterator implements Iterator {
 
     protected static class SelectItemsMapIterator implements Iterator {
 
-        private Map map_;
+        private Map map;
 
-        private Iterator keys_;
+        private Iterator keys;
 
         public SelectItemsMapIterator(Map map) {
-            map_ = map;
+            this.map = map;
             /*
              * use key iterator. see: API document of UISelectItems.
              */
-            keys_ = map.keySet().iterator();
+            this.keys = map.keySet().iterator();
         }
 
         public boolean hasNext() {
-            return keys_.hasNext();
+            return keys.hasNext();
         }
 
         public Object next() {
-            Object key = keys_.next();
-            Object value = map_.get(key);
+            Object key = keys.next();
+            Object value = map.get(key);
             return new SelectItem(value.toString(), key.toString());
         }
 

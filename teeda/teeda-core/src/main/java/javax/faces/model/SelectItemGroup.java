@@ -25,7 +25,7 @@ public class SelectItemGroup extends SelectItem {
 
     private static final long serialVersionUID = 1L;
 
-    private SelectItem[] selectItems_ = null;
+    private SelectItem[] selectItems = null;
 
     public SelectItemGroup() {
     }
@@ -41,11 +41,11 @@ public class SelectItemGroup extends SelectItem {
     }
 
     public SelectItem[] getSelectItems() {
-        return selectItems_;
+        return selectItems;
     }
 
     public void setSelectItems(SelectItem[] selectItems) {
         AssertionUtil.assertNotNull("selectItems", selectItems);
-        selectItems_ = selectItems;
+        this.selectItems = selectItems;
     }
 }

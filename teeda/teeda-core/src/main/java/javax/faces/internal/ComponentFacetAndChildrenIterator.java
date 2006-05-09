@@ -28,16 +28,16 @@ import java.util.NoSuchElementException;
  */
 public class ComponentFacetAndChildrenIterator implements Iterator {
 
-    private Iterator facetItr_ = null;
+    private Iterator facetIterator = null;
 
-    private Iterator childrenItr_ = null;
+    private Iterator childrenIterator = null;
 
     public ComponentFacetAndChildrenIterator(Map facetMap, List childrenList) {
         if (facetMap != null) {
-            facetItr_ = facetMap.values().iterator();
+            facetIterator = facetMap.values().iterator();
         }
         if (childrenList != null) {
-            childrenItr_ = childrenList.iterator();
+            childrenIterator = childrenList.iterator();
         }
     }
 
@@ -51,19 +51,19 @@ public class ComponentFacetAndChildrenIterator implements Iterator {
 
     public Object next() {
         if (facetHasNext()) {
-            return facetItr_.next();
+            return facetIterator.next();
         }
         if (childrenHasNext()) {
-            return childrenItr_.next();
+            return childrenIterator.next();
         }
         throw new NoSuchElementException();
     }
 
     private boolean facetHasNext() {
-        return (facetItr_ != null && facetItr_.hasNext());
+        return (facetIterator != null && facetIterator.hasNext());
     }
 
     private boolean childrenHasNext() {
-        return (childrenItr_ != null && childrenItr_.hasNext());
+        return (childrenIterator != null && childrenIterator.hasNext());
     }
 }

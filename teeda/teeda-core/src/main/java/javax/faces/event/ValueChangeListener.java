@@ -15,6 +15,9 @@
  */
 package javax.faces.event;
 
+/**
+ * @author shot
+ */
 public interface ValueChangeListener extends FacesListener {
 
     public void processValueChange(ValueChangeEvent event)

@@ -25,22 +25,22 @@ public class FacetTag extends TagSupport {
 
     private static final long serialVersionUID = 1L;
 
-    private String name_ = null;
+    private String name = null;
 
     public FacetTag() {
     }
 
     public String getName() {
-        return name_;
+        return name;
     }
 
     public void setName(String name) {
-        name_ = name;
+        this.name = name;
     }
 
     public void release() {
         super.release();
-        name_ = null;
+        name = null;
     }
 
     public int doStartTag() throws JspException {

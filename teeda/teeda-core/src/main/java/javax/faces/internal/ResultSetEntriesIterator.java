@@ -27,11 +27,11 @@ public class ResultSetEntriesIterator extends ResultSetBaseIterator {
 
     public ResultSetEntriesIterator(ResultSetMap map) {
         super(map);
-        super.itr_ = map_.keySet().iterator();
+        super.itr = map.keySet().iterator();
     }
 
     public Object next() {
-        Object key = itr_.next();
-        return new ResultSetEntry(map_, key);
+        Object key = itr.next();
+        return new ResultSetEntry(map, key);
     }
 }

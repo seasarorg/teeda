@@ -28,10 +28,10 @@ public class ResultSetValuesIterator extends ResultSetBaseIterator {
 
     public ResultSetValuesIterator(ResultSetMap map) {
         super(map);
-        super.itr_ = map_.keySet().iterator();
+        super.itr = map.keySet().iterator();
     }
 
     public Object next() {
-        return map_.get(itr_.next());
+        return map.get(itr.next());
     }
 }

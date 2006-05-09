@@ -21,6 +21,9 @@ import java.io.Writer;
 import javax.faces.context.ResponseStream;
 import javax.faces.context.ResponseWriter;
 
+/**
+ * @author shot
+ */
 public abstract class RenderKit {
 
     public abstract void addRenderer(String family, String renderType,

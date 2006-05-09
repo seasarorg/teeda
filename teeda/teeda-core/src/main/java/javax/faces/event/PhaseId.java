@@ -19,6 +19,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * @author shot
+ */
 public class PhaseId {
 
     public static final PhaseId ANY_PHASE;
@@ -51,9 +54,9 @@ public class PhaseId {
 
     public static final List VALUES;
 
-    private final String name_;
+    private final String name;
 
-    private final int ordinal_;
+    private final int ordinal;
 
     static {
         int i = 0;
@@ -79,20 +82,20 @@ public class PhaseId {
     }
 
     private PhaseId(String name, int ordinal) {
-        this.name_ = name;
-        this.ordinal_ = ordinal;
+        this.name = name;
+        this.ordinal = ordinal;
     }
 
     public int compareTo(Object o) {
-        return ordinal_ - ((PhaseId) o).ordinal_;
+        return ordinal - ((PhaseId) o).ordinal;
     }
 
     public int getOrdinal() {
-        return ordinal_;
+        return ordinal;
     }
 
     public String toString() {
-        return name_ + ":" + ordinal_;
+        return name + ":" + ordinal;
     }
 
 }

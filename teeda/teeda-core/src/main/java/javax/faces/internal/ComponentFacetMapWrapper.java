@@ -34,52 +34,52 @@ public class ComponentFacetMapWrapper implements Map, Serializable {
 
     private static final long serialVersionUID = 3977016266726585651L;
 
-    private UIComponent parent_ = null;
+    private UIComponent parent = null;
 
-    private Map map_ = new HashMap();
+    private Map facetMap = new HashMap();
 
     public ComponentFacetMapWrapper(UIComponent parent) {
-        parent_ = parent;
+        this.parent = parent;
     }
 
     public int size() {
-        return map_.size();
+        return facetMap.size();
     }
 
     public void clear() {
-        map_.clear();
+        facetMap.clear();
     }
 
     public boolean isEmpty() {
-        return map_.isEmpty();
+        return facetMap.isEmpty();
     }
 
     public boolean containsKey(Object key) {
-        return map_.containsKey(key);
+        return facetMap.containsKey(key);
     }
 
     public boolean containsValue(Object value) {
-        return map_.containsValue(value);
+        return facetMap.containsValue(value);
     }
 
     public Collection values() {
-        return map_.values();
+        return facetMap.values();
     }
 
     public Set entrySet() {
-        return map_.entrySet();
+        return facetMap.entrySet();
     }
 
     public Set keySet() {
-        return map_.keySet();
+        return facetMap.keySet();
     }
 
     public Object get(Object key) {
-        return map_.get(key);
+        return facetMap.get(key);
     }
 
     public Object remove(Object key) {
-        UIComponent facet = (UIComponent) map_.remove(key);
+        UIComponent facet = (UIComponent) facetMap.remove(key);
         if (facet != null) {
             facet.setParent(null);
         }
@@ -92,7 +92,7 @@ public class ComponentFacetMapWrapper implements Map, Serializable {
         checkKeyClass(key);
         checkValueClass(facet);
         setNewParent((String) key, (UIComponent) facet);
-        return map_.put(key, facet);
+        return facetMap.put(key, facet);
     }
 
     public void putAll(Map map) {
@@ -103,11 +103,11 @@ public class ComponentFacetMapWrapper implements Map, Serializable {
     }
 
     private void setNewParent(String facetName, UIComponent facet) {
-        UIComponent parent = facet.getParent();
-        if (parent != null) {
-            parent.getFacets().remove(facetName);
+        UIComponent oldParent = facet.getParent();
+        if (oldParent != null) {
+            oldParent.getFacets().remove(facetName);
         }
-        facet.setParent(parent_);
+        facet.setParent(parent);
     }
 
     private static void checkKeyClass(Object key) {

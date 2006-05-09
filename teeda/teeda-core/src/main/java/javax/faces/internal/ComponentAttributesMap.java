@@ -44,11 +44,11 @@ public class ComponentAttributesMap implements Map, Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private UIComponent component_ = null;
+    private UIComponent component = null;
 
-    private Map attributes_ = null;
+    private Map attributes = null;
 
-    private Map propertyDescriptorMap_ = null;
+    private Map propertyDescriptorMap = null;
 
     private static Object[] EMPTY_ARGS = new Object[0];
 
@@ -57,38 +57,38 @@ public class ComponentAttributesMap implements Map, Serializable {
     }
 
     public ComponentAttributesMap(UIComponent component, Map attributes) {
-        component_ = component;
-        attributes_ = attributes;
-        propertyDescriptorMap_ = new HashMap();
+        this.component = component;
+        this.attributes = attributes;
+        propertyDescriptorMap = new HashMap();
         setupPropertyDescriptor();
     }
 
     public int size() {
-        return attributes_.size();
+        return attributes.size();
     }
 
     public void clear() {
-        attributes_.clear();
+        attributes.clear();
     }
 
     public boolean isEmpty() {
-        return attributes_.isEmpty();
+        return attributes.isEmpty();
     }
 
     public boolean containsKey(Object key) {
         if (getPropertyDescriptor((String) key) != null) {
             return false;
         } else {
-            return attributes_.containsKey(key);
+            return attributes.containsKey(key);
         }
     }
 
     public boolean containsValue(Object value) {
-        return attributes_.containsValue(value);
+        return attributes.containsValue(value);
     }
 
     public Collection values() {
-        return attributes_.values();
+        return attributes.values();
     }
 
     public void putAll(Map map) {
@@ -99,11 +99,11 @@ public class ComponentAttributesMap implements Map, Serializable {
     }
 
     public Set entrySet() {
-        return attributes_.entrySet();
+        return attributes.entrySet();
     }
 
     public Set keySet() {
-        return attributes_.keySet();
+        return attributes.keySet();
     }
 
     public Object get(Object key) {
@@ -113,11 +113,11 @@ public class ComponentAttributesMap implements Map, Serializable {
             if (value != null) {
                 return value;
             }
-            ValueBinding vb = component_.getValueBinding((String) key);
+            ValueBinding vb = component.getValueBinding((String) key);
             return (vb != null) ? vb
                     .getValue(FacesContext.getCurrentInstance()) : null;
         } else {
-            return attributes_.get((String) key);
+            return attributes.get((String) key);
         }
     }
 
@@ -127,7 +127,7 @@ public class ComponentAttributesMap implements Map, Serializable {
             throw new IllegalArgumentException(
                     "can't remove component property");
         }
-        return attributes_.remove(key);
+        return attributes.remove(key);
     }
 
     public Object put(Object key, Object value) {
@@ -143,7 +143,7 @@ public class ComponentAttributesMap implements Map, Serializable {
                 setComponentProperty(propertyDescriptor, value);
             }
         } else {
-            returnValue = attributes_.put(key, value);
+            returnValue = attributes.put(key, value);
         }
         return returnValue;
     }
@@ -155,7 +155,7 @@ public class ComponentAttributesMap implements Map, Serializable {
     }
 
     private void setupPropertyDescriptor() {
-        Class clazz = component_.getClass();
+        Class clazz = component.getClass();
         BeanInfo beanInfo = null;
         try {
             beanInfo = Introspector.getBeanInfo(clazz);
@@ -167,14 +167,14 @@ public class ComponentAttributesMap implements Map, Serializable {
         for (int i = 0; i < propertyDescriptors.length; i++) {
             PropertyDescriptor propertyDescriptor = propertyDescriptors[i];
             if (hasReadMethod(propertyDescriptor)) {
-                propertyDescriptorMap_.put(propertyDescriptor.getName(),
+                propertyDescriptorMap.put(propertyDescriptor.getName(),
                         propertyDescriptor);
             }
         }
     }
 
     private PropertyDescriptor getPropertyDescriptor(String key) {
-        return (PropertyDescriptor) propertyDescriptorMap_.get(key);
+        return (PropertyDescriptor) propertyDescriptorMap.get(key);
     }
 
     private void setComponentProperty(PropertyDescriptor propertyDescriptor,
@@ -186,7 +186,7 @@ public class ComponentAttributesMap implements Map, Serializable {
                     + propertyDescriptor.getName() + "] is not writeable");
         }
         try {
-            writeMethod.invoke(component_, new Object[] { value });
+            writeMethod.invoke(component, new Object[] { value });
         } catch (IllegalAccessException e) {
             throw new FacesException(e);
         } catch (InvocationTargetException e) {
@@ -197,7 +197,7 @@ public class ComponentAttributesMap implements Map, Serializable {
     private Object getComponentProperty(PropertyDescriptor propertyDescriptor) {
         Method readMethod = propertyDescriptor.getReadMethod();
         try {
-            return readMethod.invoke(component_, EMPTY_ARGS);
+            return readMethod.invoke(component, EMPTY_ARGS);
         } catch (IllegalAccessException e) {
             throw new FacesException(e);
         } catch (InvocationTargetException e) {
@@ -206,7 +206,7 @@ public class ComponentAttributesMap implements Map, Serializable {
     }
 
     public Map getAttributesActual() {
-        return attributes_;
+        return attributes;
     }
 
     private static boolean hasReadMethod(PropertyDescriptor propertyDescriptor) {

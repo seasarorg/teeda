@@ -25,10 +25,10 @@ import javax.faces.internal.AssertionUtil;
  */
 public abstract class DataModel {
 
-    private List listeners_ = null;
+    private List listeners = null;
 
     public DataModel() {
-        listeners_ = new ArrayList();
+        listeners = new ArrayList();
     }
 
     public abstract int getRowCount();
@@ -47,24 +47,24 @@ public abstract class DataModel {
 
     public void addDataModelListener(DataModelListener listener) {
         AssertionUtil.assertNotNull("listener", listener);
-        listeners_.add(listener);
+        listeners.add(listener);
     }
 
     public DataModelListener[] getDataModelListeners() {
-        DataModelListener[] listeners = null;
-        if (listeners_ == null) {
-            listeners = new DataModelListener[0];
+        DataModelListener[] dataModelListeners = null;
+        if (listeners == null) {
+            dataModelListeners = new DataModelListener[0];
         } else {
-            listeners = (DataModelListener[]) listeners_
-                    .toArray(new DataModelListener[listeners_.size()]);
+            dataModelListeners = (DataModelListener[]) this.listeners
+                    .toArray(new DataModelListener[this.listeners.size()]);
         }
-        return listeners;
+        return dataModelListeners;
     }
 
     public void removeDataModelListener(DataModelListener listener) {
         AssertionUtil.assertNotNull("listener", listener);
-        if (listeners_ != null) {
-            listeners_.remove(listener);
+        if (listeners != null) {
+            listeners.remove(listener);
         }
     }
 

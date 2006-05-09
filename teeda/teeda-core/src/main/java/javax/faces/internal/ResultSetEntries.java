@@ -32,6 +32,6 @@ public class ResultSetEntries extends ResultSetBaseSet {
     }
 
     public Iterator iterator() {
-        return new ResultSetEntriesIterator(map_);
+        return new ResultSetEntriesIterator(map);
     }
 }

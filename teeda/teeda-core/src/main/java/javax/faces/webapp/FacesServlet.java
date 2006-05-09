@@ -37,20 +37,20 @@ public class FacesServlet implements Servlet {
 
     public static final String LIFECYCLE_ID_ATTR = "javax.faces.LIFECYCLE_ID";
 
-    private ServletConfig config_ = null;
+    private ServletConfig config = null;
 
-    private FacesContextFactory facesContextFactory_ = null;
+    private FacesContextFactory facesContextFactory = null;
 
-    private Lifecycle lifecycle_ = null;
+    private Lifecycle lifecycle = null;
 
     public void destroy() {
-        config_ = null;
-        facesContextFactory_ = null;
-        lifecycle_ = null;
+        config = null;
+        facesContextFactory = null;
+        lifecycle = null;
     }
 
     public ServletConfig getServletConfig() {
-        return config_;
+        return config;
     }
 
     public String getServletInfo() {
@@ -58,23 +58,23 @@ public class FacesServlet implements Servlet {
     }
 
     public void init(ServletConfig config) throws ServletException {
-        config_ = config;
-        facesContextFactory_ = (FacesContextFactory) WebAppUtils
+        this.config = config;
+        facesContextFactory = (FacesContextFactory) WebAppUtils
                 .getFactory(FactoryFinder.FACES_CONTEXT_FACTORY);
         LifecycleFactory lifecycleFactory = (LifecycleFactory) WebAppUtils
                 .getFactory(FactoryFinder.LIFECYCLE_FACTORY);
-        String lifecycleId = WebAppUtils.getLifecycleId(config_);
-        lifecycle_ = lifecycleFactory.getLifecycle(lifecycleId);
+        String lifecycleId = WebAppUtils.getLifecycleId(config);
+        lifecycle = lifecycleFactory.getLifecycle(lifecycleId);
     }
 
     public void service(ServletRequest request, ServletResponse response)
             throws ServletException, IOException {
-        ServletContext servletContext = config_.getServletContext();
-        FacesContext context = facesContextFactory_.getFacesContext(
-                servletContext, request, response, lifecycle_);
+        ServletContext servletContext = config.getServletContext();
+        FacesContext context = facesContextFactory.getFacesContext(
+                servletContext, request, response, lifecycle);
         try {
-            lifecycle_.execute(context);
-            lifecycle_.render(context);
+            lifecycle.execute(context);
+            lifecycle.render(context);
         } catch (FacesException e) {
             Throwable t = e.getCause();
             if (t == null) {

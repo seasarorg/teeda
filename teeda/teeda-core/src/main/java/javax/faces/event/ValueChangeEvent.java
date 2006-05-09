@@ -24,23 +24,23 @@ public class ValueChangeEvent extends FacesEvent {
 
     private static final long serialVersionUID = 1L;
 
-    private Object oldValue_ = null;
+    private Object oldValue = null;
 
-    private Object newValue_ = null;
+    private Object newValue = null;
 
     public ValueChangeEvent(UIComponent component, Object oldValue,
             Object newValue) {
         super(component);
-        oldValue_ = oldValue;
-        newValue_ = newValue;
+        this.oldValue = oldValue;
+        this.newValue = newValue;
     }
 
     public Object getNewValue() {
-        return newValue_;
+        return newValue;
     }
 
     public Object getOldValue() {
-        return oldValue_;
+        return oldValue;
     }
 
     public boolean isAppropriateListener(FacesListener listener) {

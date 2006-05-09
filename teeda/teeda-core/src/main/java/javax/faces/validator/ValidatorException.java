@@ -25,7 +25,7 @@ public class ValidatorException extends FacesException {
 
     private static final long serialVersionUID = 1L;
 
-    private FacesMessage facesMessage_ = null;
+    private FacesMessage facesMessage = null;
 
     public ValidatorException(FacesMessage facesMessage) {
         this(facesMessage, null);
@@ -33,11 +33,11 @@ public class ValidatorException extends FacesException {
 
     public ValidatorException(FacesMessage facesMessage, Throwable cause) {
         super(facesMessage.getSummary(), cause);
-        facesMessage_ = facesMessage;
+        this.facesMessage = facesMessage;
     }
 
     public FacesMessage getFacesMessage() {
-        return facesMessage_;
+        return facesMessage;
     }
 
 }

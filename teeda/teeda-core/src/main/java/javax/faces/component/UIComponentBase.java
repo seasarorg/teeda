@@ -67,6 +67,8 @@ public abstract class UIComponentBase extends UIComponent {
 
     private boolean isTransient = false;
 
+    private String uniqueId;
+
     private static final String RENDERED = "rendered";
 
     private static final String RENDERER_TYPE = "rendererType";
@@ -121,13 +123,11 @@ public abstract class UIComponentBase extends UIComponent {
         return clientId;
     }
 
-    private String uniqueId_;
-
     private String getUniqueId(FacesContext context) {
-        if (uniqueId_ == null) {
-            uniqueId_ = context.getViewRoot().createUniqueId();
+        if (uniqueId == null) {
+            uniqueId = context.getViewRoot().createUniqueId();
         }
-        return uniqueId_;
+        return uniqueId;
     }
 
     public String getId() {

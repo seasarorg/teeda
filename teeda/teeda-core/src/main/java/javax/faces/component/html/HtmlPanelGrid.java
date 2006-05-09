@@ -32,61 +32,61 @@ public class HtmlPanelGrid extends UIPanel {
 
     private static final int DEFAULT_COLUMNS = Integer.MIN_VALUE;
 
-    private String bgcolor_ = null;
+    private String bgcolor = null;
 
-    private Integer border_ = null;
+    private Integer border = null;
 
-    private String cellpadding_ = null;
+    private String cellpadding = null;
 
-    private String cellspacing_ = null;
+    private String cellspacing = null;
 
-    private String columnClasses_ = null;
+    private String columnClasses = null;
 
-    private Integer columns_ = null;
+    private Integer columns = null;
 
-    private String dir_ = null;
+    private String dir = null;
 
-    private String footerClass_ = null;
+    private String footerClass = null;
 
-    private String frame_ = null;
+    private String frame = null;
 
-    private String headerClass_ = null;
+    private String headerClass = null;
 
-    private String lang_ = null;
+    private String lang = null;
 
-    private String onclick_ = null;
+    private String onclick = null;
 
-    private String ondblclick_ = null;
+    private String ondblclick = null;
 
-    private String onkeydown_ = null;
+    private String onkeydown = null;
 
-    private String onkeypress_ = null;
+    private String onkeypress = null;
 
-    private String onkeyup_ = null;
+    private String onkeyup = null;
 
-    private String onmousedown_ = null;
+    private String onmousedown = null;
 
-    private String onmousemove_ = null;
+    private String onmousemove = null;
 
-    private String onmouseout_ = null;
+    private String onmouseout = null;
 
-    private String onmouseover_ = null;
+    private String onmouseover = null;
 
-    private String onmouseup_ = null;
+    private String onmouseup = null;
 
-    private String rowClasses_ = null;
+    private String rowClasses = null;
 
-    private String rules_ = null;
+    private String rules = null;
 
-    private String style_ = null;
+    private String style = null;
 
-    private String styleClass_ = null;
+    private String styleClass = null;
 
-    private String summary_ = null;
+    private String summary = null;
 
-    private String title_ = null;
+    private String title = null;
 
-    private String width_ = null;
+    private String width = null;
 
     public HtmlPanelGrid() {
         super();
@@ -94,24 +94,24 @@ public class HtmlPanelGrid extends UIPanel {
     }
 
     public void setBgcolor(String bgcolor) {
-        bgcolor_ = bgcolor;
+        this.bgcolor = bgcolor;
     }
 
     public String getBgcolor() {
-        if (bgcolor_ != null) {
-            return bgcolor_;
+        if (bgcolor != null) {
+            return bgcolor;
         }
         ValueBinding vb = getValueBinding("bgcolor");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setBorder(int border) {
-        border_ = new Integer(border);
+        this.border = new Integer(border);
     }
 
     public int getBorder() {
-        if (border_ != null) {
-            return border_.intValue();
+        if (border != null) {
+            return border.intValue();
         }
         ValueBinding vb = getValueBinding("border");
         Integer v = vb != null ? (Integer) vb.getValue(getFacesContext())
@@ -120,48 +120,48 @@ public class HtmlPanelGrid extends UIPanel {
     }
 
     public void setCellpadding(String cellpadding) {
-        cellpadding_ = cellpadding;
+        this.cellpadding = cellpadding;
     }
 
     public String getCellpadding() {
-        if (cellpadding_ != null) {
-            return cellpadding_;
+        if (cellpadding != null) {
+            return cellpadding;
         }
         ValueBinding vb = getValueBinding("cellpadding");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setCellspacing(String cellspacing) {
-        cellspacing_ = cellspacing;
+        this.cellspacing = cellspacing;
     }
 
     public String getCellspacing() {
-        if (cellspacing_ != null) {
-            return cellspacing_;
+        if (cellspacing != null) {
+            return cellspacing;
         }
         ValueBinding vb = getValueBinding("cellspacing");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setColumnClasses(String columnClasses) {
-        columnClasses_ = columnClasses;
+        this.columnClasses = columnClasses;
     }
 
     public String getColumnClasses() {
-        if (columnClasses_ != null) {
-            return columnClasses_;
+        if (columnClasses != null) {
+            return columnClasses;
         }
         ValueBinding vb = getValueBinding("columnClasses");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setColumns(int columns) {
-        columns_ = new Integer(columns);
+        this.columns = new Integer(columns);
     }
 
     public int getColumns() {
-        if (columns_ != null) {
-            return columns_.intValue();
+        if (columns != null) {
+            return columns.intValue();
         }
         ValueBinding vb = getValueBinding("columns");
         Integer v = vb != null ? (Integer) vb.getValue(getFacesContext())
@@ -170,264 +170,264 @@ public class HtmlPanelGrid extends UIPanel {
     }
 
     public void setDir(String dir) {
-        dir_ = dir;
+        this.dir = dir;
     }
 
     public String getDir() {
-        if (dir_ != null) {
-            return dir_;
+        if (dir != null) {
+            return dir;
         }
         ValueBinding vb = getValueBinding("dir");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setFooterClass(String footerClass) {
-        footerClass_ = footerClass;
+        this.footerClass = footerClass;
     }
 
     public String getFooterClass() {
-        if (footerClass_ != null) {
-            return footerClass_;
+        if (footerClass != null) {
+            return footerClass;
         }
         ValueBinding vb = getValueBinding("footerClass");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setFrame(String frame) {
-        frame_ = frame;
+        this.frame = frame;
     }
 
     public String getFrame() {
-        if (frame_ != null) {
-            return frame_;
+        if (frame != null) {
+            return frame;
         }
         ValueBinding vb = getValueBinding("frame");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setHeaderClass(String headerClass) {
-        headerClass_ = headerClass;
+        this.headerClass = headerClass;
     }
 
     public String getHeaderClass() {
-        if (headerClass_ != null) {
-            return headerClass_;
+        if (headerClass != null) {
+            return headerClass;
         }
         ValueBinding vb = getValueBinding("headerClass");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setLang(String lang) {
-        lang_ = lang;
+        this.lang = lang;
     }
 
     public String getLang() {
-        if (lang_ != null) {
-            return lang_;
+        if (lang != null) {
+            return lang;
         }
         ValueBinding vb = getValueBinding("lang");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setOnclick(String onclick) {
-        onclick_ = onclick;
+        this.onclick = onclick;
     }
 
     public String getOnclick() {
-        if (onclick_ != null) {
-            return onclick_;
+        if (onclick != null) {
+            return onclick;
         }
         ValueBinding vb = getValueBinding("onclick");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setOndblclick(String ondblclick) {
-        ondblclick_ = ondblclick;
+        this.ondblclick = ondblclick;
     }
 
     public String getOndblclick() {
-        if (ondblclick_ != null) {
-            return ondblclick_;
+        if (ondblclick != null) {
+            return ondblclick;
         }
         ValueBinding vb = getValueBinding("ondblclick");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setOnkeydown(String onkeydown) {
-        onkeydown_ = onkeydown;
+        this.onkeydown = onkeydown;
     }
 
     public String getOnkeydown() {
-        if (onkeydown_ != null) {
-            return onkeydown_;
+        if (onkeydown != null) {
+            return onkeydown;
         }
         ValueBinding vb = getValueBinding("onkeydown");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setOnkeypress(String onkeypress) {
-        onkeypress_ = onkeypress;
+        this.onkeypress = onkeypress;
     }
 
     public String getOnkeypress() {
-        if (onkeypress_ != null) {
-            return onkeypress_;
+        if (onkeypress != null) {
+            return onkeypress;
         }
         ValueBinding vb = getValueBinding("onkeypress");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setOnkeyup(String onkeyup) {
-        onkeyup_ = onkeyup;
+        this.onkeyup = onkeyup;
     }
 
     public String getOnkeyup() {
-        if (onkeyup_ != null) {
-            return onkeyup_;
+        if (onkeyup != null) {
+            return onkeyup;
         }
         ValueBinding vb = getValueBinding("onkeyup");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setOnmousedown(String onmousedown) {
-        onmousedown_ = onmousedown;
+        this.onmousedown = onmousedown;
     }
 
     public String getOnmousedown() {
-        if (onmousedown_ != null) {
-            return onmousedown_;
+        if (onmousedown != null) {
+            return onmousedown;
         }
         ValueBinding vb = getValueBinding("onmousedown");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setOnmousemove(String onmousemove) {
-        onmousemove_ = onmousemove;
+        this.onmousemove = onmousemove;
     }
 
     public String getOnmousemove() {
-        if (onmousemove_ != null) {
-            return onmousemove_;
+        if (onmousemove != null) {
+            return onmousemove;
         }
         ValueBinding vb = getValueBinding("onmousemove");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setOnmouseout(String onmouseout) {
-        onmouseout_ = onmouseout;
+        this.onmouseout = onmouseout;
     }
 
     public String getOnmouseout() {
-        if (onmouseout_ != null) {
-            return onmouseout_;
+        if (onmouseout != null) {
+            return onmouseout;
         }
         ValueBinding vb = getValueBinding("onmouseout");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setOnmouseover(String onmouseover) {
-        onmouseover_ = onmouseover;
+        this.onmouseover = onmouseover;
     }
 
     public String getOnmouseover() {
-        if (onmouseover_ != null) {
-            return onmouseover_;
+        if (onmouseover != null) {
+            return onmouseover;
         }
         ValueBinding vb = getValueBinding("onmouseover");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setOnmouseup(String onmouseup) {
-        onmouseup_ = onmouseup;
+        this.onmouseup = onmouseup;
     }
 
     public String getOnmouseup() {
-        if (onmouseup_ != null) {
-            return onmouseup_;
+        if (onmouseup != null) {
+            return onmouseup;
         }
         ValueBinding vb = getValueBinding("onmouseup");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setRowClasses(String rowClasses) {
-        rowClasses_ = rowClasses;
+        this.rowClasses = rowClasses;
     }
 
     public String getRowClasses() {
-        if (rowClasses_ != null) {
-            return rowClasses_;
+        if (rowClasses != null) {
+            return rowClasses;
         }
         ValueBinding vb = getValueBinding("rowClasses");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setRules(String rules) {
-        rules_ = rules;
+        this.rules = rules;
     }
 
     public String getRules() {
-        if (rules_ != null) {
-            return rules_;
+        if (rules != null) {
+            return rules;
         }
         ValueBinding vb = getValueBinding("rules");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setStyle(String style) {
-        style_ = style;
+        this.style = style;
     }
 
     public String getStyle() {
-        if (style_ != null) {
-            return style_;
+        if (style != null) {
+            return style;
         }
         ValueBinding vb = getValueBinding("style");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setStyleClass(String styleClass) {
-        styleClass_ = styleClass;
+        this.styleClass = styleClass;
     }
 
     public String getStyleClass() {
-        if (styleClass_ != null) {
-            return styleClass_;
+        if (styleClass != null) {
+            return styleClass;
         }
         ValueBinding vb = getValueBinding("styleClass");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setSummary(String summary) {
-        summary_ = summary;
+        this.summary = summary;
     }
 
     public String getSummary() {
-        if (summary_ != null) {
-            return summary_;
+        if (summary != null) {
+            return summary;
         }
         ValueBinding vb = getValueBinding("summary");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setTitle(String title) {
-        title_ = title;
+        this.title = title;
     }
 
     public String getTitle() {
-        if (title_ != null) {
-            return title_;
+        if (title != null) {
+            return title;
         }
         ValueBinding vb = getValueBinding("title");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setWidth(String width) {
-        width_ = width;
+        this.width = width;
     }
 
     public String getWidth() {
-        if (width_ != null) {
-            return width_;
+        if (width != null) {
+            return width;
         }
         ValueBinding vb = getValueBinding("width");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
@@ -436,67 +436,67 @@ public class HtmlPanelGrid extends UIPanel {
     public Object saveState(FacesContext context) {
         Object values[] = new Object[29];
         values[0] = super.saveState(context);
-        values[1] = bgcolor_;
-        values[2] = border_;
-        values[3] = cellpadding_;
-        values[4] = cellspacing_;
-        values[5] = columnClasses_;
-        values[6] = columns_;
-        values[7] = dir_;
-        values[8] = footerClass_;
-        values[9] = frame_;
-        values[10] = headerClass_;
-        values[11] = lang_;
-        values[12] = onclick_;
-        values[13] = ondblclick_;
-        values[14] = onkeydown_;
-        values[15] = onkeypress_;
-        values[16] = onkeyup_;
-        values[17] = onmousedown_;
-        values[18] = onmousemove_;
-        values[19] = onmouseout_;
-        values[20] = onmouseover_;
-        values[21] = onmouseup_;
-        values[22] = rowClasses_;
-        values[23] = rules_;
-        values[24] = style_;
-        values[25] = styleClass_;
-        values[26] = summary_;
-        values[27] = title_;
-        values[28] = width_;
+        values[1] = bgcolor;
+        values[2] = border;
+        values[3] = cellpadding;
+        values[4] = cellspacing;
+        values[5] = columnClasses;
+        values[6] = columns;
+        values[7] = dir;
+        values[8] = footerClass;
+        values[9] = frame;
+        values[10] = headerClass;
+        values[11] = lang;
+        values[12] = onclick;
+        values[13] = ondblclick;
+        values[14] = onkeydown;
+        values[15] = onkeypress;
+        values[16] = onkeyup;
+        values[17] = onmousedown;
+        values[18] = onmousemove;
+        values[19] = onmouseout;
+        values[20] = onmouseover;
+        values[21] = onmouseup;
+        values[22] = rowClasses;
+        values[23] = rules;
+        values[24] = style;
+        values[25] = styleClass;
+        values[26] = summary;
+        values[27] = title;
+        values[28] = width;
         return ((Object) (values));
     }
 
     public void restoreState(FacesContext context, Object state) {
         Object values[] = (Object[]) state;
         super.restoreState(context, values[0]);
-        bgcolor_ = (String) values[1];
-        border_ = (Integer) values[2];
-        cellpadding_ = (String) values[3];
-        cellspacing_ = (String) values[4];
-        columnClasses_ = (String) values[5];
-        columns_ = (Integer) values[6];
-        dir_ = (String) values[7];
-        footerClass_ = (String) values[8];
-        frame_ = (String) values[9];
-        headerClass_ = (String) values[10];
-        lang_ = (String) values[11];
-        onclick_ = (String) values[12];
-        ondblclick_ = (String) values[13];
-        onkeydown_ = (String) values[14];
-        onkeypress_ = (String) values[15];
-        onkeyup_ = (String) values[16];
-        onmousedown_ = (String) values[17];
-        onmousemove_ = (String) values[18];
-        onmouseout_ = (String) values[19];
-        onmouseover_ = (String) values[20];
-        onmouseup_ = (String) values[21];
-        rowClasses_ = (String) values[22];
-        rules_ = (String) values[23];
-        style_ = (String) values[24];
-        styleClass_ = (String) values[25];
-        summary_ = (String) values[26];
-        title_ = (String) values[27];
-        width_ = (String) values[28];
+        bgcolor = (String) values[1];
+        border = (Integer) values[2];
+        cellpadding = (String) values[3];
+        cellspacing = (String) values[4];
+        columnClasses = (String) values[5];
+        columns = (Integer) values[6];
+        dir = (String) values[7];
+        footerClass = (String) values[8];
+        frame = (String) values[9];
+        headerClass = (String) values[10];
+        lang = (String) values[11];
+        onclick = (String) values[12];
+        ondblclick = (String) values[13];
+        onkeydown = (String) values[14];
+        onkeypress = (String) values[15];
+        onkeyup = (String) values[16];
+        onmousedown = (String) values[17];
+        onmousemove = (String) values[18];
+        onmouseout = (String) values[19];
+        onmouseover = (String) values[20];
+        onmouseup = (String) values[21];
+        rowClasses = (String) values[22];
+        rules = (String) values[23];
+        style = (String) values[24];
+        styleClass = (String) values[25];
+        summary = (String) values[26];
+        title = (String) values[27];
+        width = (String) values[28];
     }
 }

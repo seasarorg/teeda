@@ -27,19 +27,19 @@ public class AttributeTag extends TagSupport {
 
     private static final long serialVersionUID = 1L;
 
-    private String name_ = null;
+    private String name = null;
 
-    private String value_ = null;
+    private String value = null;
 
     public AttributeTag() {
     }
 
     public void setName(String name) {
-        name_ = name;
+        this.name = name;
     }
 
     public void setValue(String value) {
-        value_ = value;
+        this.value = value;
     }
 
     public int doStartTag() throws JspException {
@@ -53,22 +53,23 @@ public class AttributeTag extends TagSupport {
             throw new JspException(
                     "No component associated with UIComponentTag");
         }
-        String name = name_;
-        if (UIComponentTag.isValueReference(name_)) {
-            name = (String) WebAppUtils.getValueFromCreatedValueBinding(name_);
+        String nameObj = name;
+        if (UIComponentTag.isValueReference(name)) {
+            nameObj = (String) WebAppUtils
+                    .getValueFromCreatedValueBinding(name);
         }
-        Object value = value_;
-        if (UIComponentTag.isValueReference(value_)) {
-            value = WebAppUtils.getValueFromCreatedValueBinding(value_);
+        Object valueObj = value;
+        if (UIComponentTag.isValueReference(value)) {
+            valueObj = WebAppUtils.getValueFromCreatedValueBinding(value);
         }
-        if (component.getAttributes().get(name) == null) {
-            component.getAttributes().put(name, value);
+        if (component.getAttributes().get(nameObj) == null) {
+            component.getAttributes().put(nameObj, valueObj);
         }
         return SKIP_BODY;
     }
 
     public void release() {
-        name_ = null;
-        value_ = null;
+        name = null;
+        value = null;
     }
 }

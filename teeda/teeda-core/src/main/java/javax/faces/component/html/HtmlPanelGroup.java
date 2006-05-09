@@ -28,33 +28,33 @@ public class HtmlPanelGroup extends UIPanel {
 
     private static final String DEFAULT_RENDERER_TYPE = "javax.faces.Group";
 
-    private String style_ = null;
+    private String style = null;
 
-    private String styleClass_ = null;
+    private String styleClass = null;
 
     public HtmlPanelGroup() {
         setRendererType(DEFAULT_RENDERER_TYPE);
     }
 
     public void setStyle(String style) {
-        style_ = style;
+        this.style = style;
     }
 
     public String getStyle() {
-        if (style_ != null) {
-            return style_;
+        if (style != null) {
+            return style;
         }
         ValueBinding vb = getValueBinding("style");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setStyleClass(String styleClass) {
-        styleClass_ = styleClass;
+        this.styleClass = styleClass;
     }
 
     public String getStyleClass() {
-        if (styleClass_ != null) {
-            return styleClass_;
+        if (styleClass != null) {
+            return styleClass;
         }
         ValueBinding vb = getValueBinding("styleClass");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
@@ -63,15 +63,15 @@ public class HtmlPanelGroup extends UIPanel {
     public Object saveState(FacesContext context) {
         Object values[] = new Object[3];
         values[0] = super.saveState(context);
-        values[1] = style_;
-        values[2] = styleClass_;
+        values[1] = style;
+        values[2] = styleClass;
         return ((Object) (values));
     }
 
     public void restoreState(FacesContext context, Object state) {
         Object values[] = (Object[]) state;
         super.restoreState(context, values[0]);
-        style_ = (String) values[1];
-        styleClass_ = (String) values[2];
+        style = (String) values[1];
+        styleClass = (String) values[2];
     }
 }

@@ -28,383 +28,383 @@ public class HtmlCommandLink extends UICommand {
 
     private static final String DEFAULT_RENDERER_TYPE = "javax.faces.Link";
 
-    private String accesskey_ = null;
+    private String accesskey = null;
 
-    private String charset_ = null;
+    private String charset = null;
 
-    private String coords_ = null;
+    private String coords = null;
 
-    private String dir_ = null;
+    private String dir = null;
 
-    private String hreflang_ = null;
+    private String hreflang = null;
 
-    private String lang_ = null;
+    private String lang = null;
 
-    private String onblur_ = null;
+    private String onblur = null;
 
-    private String onclick_ = null;
+    private String onclick = null;
 
-    private String ondblclick_ = null;
+    private String ondblclick = null;
 
-    private String onfocus_ = null;
+    private String onfocus = null;
 
-    private String onkeydown_ = null;
+    private String onkeydown = null;
 
-    private String onkeypress_ = null;
+    private String onkeypress = null;
 
-    private String onkeyup_ = null;
+    private String onkeyup = null;
 
-    private String onmousedown_ = null;
+    private String onmousedown = null;
 
-    private String onmousemove_ = null;
+    private String onmousemove = null;
 
-    private String onmouseout_ = null;
+    private String onmouseout = null;
 
-    private String onmouseover_ = null;
+    private String onmouseover = null;
 
-    private String onmouseup_ = null;
+    private String onmouseup = null;
 
-    private String rel_ = null;
+    private String rel = null;
 
-    private String rev_ = null;
+    private String rev = null;
 
-    private String shape_ = null;
+    private String shape = null;
 
-    private String style_ = null;
+    private String style = null;
 
-    private String styleClass_ = null;
+    private String styleClass = null;
 
-    private String tabindex_ = null;
+    private String tabindex = null;
 
-    private String target_ = null;
+    private String target = null;
 
-    private String title_ = null;
+    private String title = null;
 
-    private String type_ = null;
+    private String type = null;
 
     public HtmlCommandLink() {
         setRendererType(DEFAULT_RENDERER_TYPE);
     }
 
     public void setAccesskey(String accesskey) {
-        accesskey_ = accesskey;
+        this.accesskey = accesskey;
     }
 
     public String getAccesskey() {
-        if (accesskey_ != null) {
-            return accesskey_;
+        if (accesskey != null) {
+            return accesskey;
         }
         ValueBinding vb = getValueBinding("accesskey");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setCharset(String charset) {
-        charset_ = charset;
+        this.charset = charset;
     }
 
     public String getCharset() {
-        if (charset_ != null) {
-            return charset_;
+        if (charset != null) {
+            return charset;
         }
         ValueBinding vb = getValueBinding("charset");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setCoords(String coords) {
-        coords_ = coords;
+        this.coords = coords;
     }
 
     public String getCoords() {
-        if (coords_ != null) {
-            return coords_;
+        if (coords != null) {
+            return coords;
         }
         ValueBinding vb = getValueBinding("coords");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setDir(String dir) {
-        dir_ = dir;
+        this.dir = dir;
     }
 
     public String getDir() {
-        if (dir_ != null) {
-            return dir_;
+        if (dir != null) {
+            return dir;
         }
         ValueBinding vb = getValueBinding("dir");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setHreflang(String hreflang) {
-        hreflang_ = hreflang;
+        this.hreflang = hreflang;
     }
 
     public String getHreflang() {
-        if (hreflang_ != null) {
-            return hreflang_;
+        if (hreflang != null) {
+            return hreflang;
         }
         ValueBinding vb = getValueBinding("hreflang");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setLang(String lang) {
-        lang_ = lang;
+        this.lang = lang;
     }
 
     public String getLang() {
-        if (lang_ != null) {
-            return lang_;
+        if (lang != null) {
+            return lang;
         }
         ValueBinding vb = getValueBinding("lang");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setOnblur(String onblur) {
-        onblur_ = onblur;
+        this.onblur = onblur;
     }
 
     public String getOnblur() {
-        if (onblur_ != null) {
-            return onblur_;
+        if (onblur != null) {
+            return onblur;
         }
         ValueBinding vb = getValueBinding("onblur");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setOnclick(String onclick) {
-        onclick_ = onclick;
+        this.onclick = onclick;
     }
 
     public String getOnclick() {
-        if (onclick_ != null) {
-            return onclick_;
+        if (onclick != null) {
+            return onclick;
         }
         ValueBinding vb = getValueBinding("onclick");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setOndblclick(String ondblclick) {
-        ondblclick_ = ondblclick;
+        this.ondblclick = ondblclick;
     }
 
     public String getOndblclick() {
-        if (ondblclick_ != null) {
-            return ondblclick_;
+        if (ondblclick != null) {
+            return ondblclick;
         }
         ValueBinding vb = getValueBinding("ondblclick");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setOnfocus(String onfocus) {
-        onfocus_ = onfocus;
+        this.onfocus = onfocus;
     }
 
     public String getOnfocus() {
-        if (onfocus_ != null) {
-            return onfocus_;
+        if (onfocus != null) {
+            return onfocus;
         }
         ValueBinding vb = getValueBinding("onfocus");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setOnkeydown(String onkeydown) {
-        onkeydown_ = onkeydown;
+        this.onkeydown = onkeydown;
     }
 
     public String getOnkeydown() {
-        if (onkeydown_ != null) {
-            return onkeydown_;
+        if (onkeydown != null) {
+            return onkeydown;
         }
         ValueBinding vb = getValueBinding("onkeydown");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setOnkeypress(String onkeypress) {
-        onkeypress_ = onkeypress;
+        this.onkeypress = onkeypress;
     }
 
     public String getOnkeypress() {
-        if (onkeypress_ != null) {
-            return onkeypress_;
+        if (onkeypress != null) {
+            return onkeypress;
         }
         ValueBinding vb = getValueBinding("onkeypress");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setOnkeyup(String onkeyup) {
-        onkeyup_ = onkeyup;
+        this.onkeyup = onkeyup;
     }
 
     public String getOnkeyup() {
-        if (onkeyup_ != null) {
-            return onkeyup_;
+        if (onkeyup != null) {
+            return onkeyup;
         }
         ValueBinding vb = getValueBinding("onkeyup");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setOnmousedown(String onmousedown) {
-        onmousedown_ = onmousedown;
+        this.onmousedown = onmousedown;
     }
 
     public String getOnmousedown() {
-        if (onmousedown_ != null) {
-            return onmousedown_;
+        if (onmousedown != null) {
+            return onmousedown;
         }
         ValueBinding vb = getValueBinding("onmousedown");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setOnmousemove(String onmousemove) {
-        onmousemove_ = onmousemove;
+        this.onmousemove = onmousemove;
     }
 
     public String getOnmousemove() {
-        if (onmousemove_ != null) {
-            return onmousemove_;
+        if (onmousemove != null) {
+            return onmousemove;
         }
         ValueBinding vb = getValueBinding("onmousemove");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setOnmouseout(String onmouseout) {
-        onmouseout_ = onmouseout;
+        this.onmouseout = onmouseout;
     }
 
     public String getOnmouseout() {
-        if (onmouseout_ != null) {
-            return onmouseout_;
+        if (onmouseout != null) {
+            return onmouseout;
         }
         ValueBinding vb = getValueBinding("onmouseout");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setOnmouseover(String onmouseover) {
-        onmouseover_ = onmouseover;
+        this.onmouseover = onmouseover;
     }
 
     public String getOnmouseover() {
-        if (onmouseover_ != null) {
-            return onmouseover_;
+        if (onmouseover != null) {
+            return onmouseover;
         }
         ValueBinding vb = getValueBinding("onmouseover");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setOnmouseup(String onmouseup) {
-        onmouseup_ = onmouseup;
+        this.onmouseup = onmouseup;
     }
 
     public String getOnmouseup() {
-        if (onmouseup_ != null) {
-            return onmouseup_;
+        if (onmouseup != null) {
+            return onmouseup;
         }
         ValueBinding vb = getValueBinding("onmouseup");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setRel(String rel) {
-        rel_ = rel;
+        this.rel = rel;
     }
 
     public String getRel() {
-        if (rel_ != null) {
-            return rel_;
+        if (rel != null) {
+            return rel;
         }
         ValueBinding vb = getValueBinding("rel");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setRev(String rev) {
-        rev_ = rev;
+        this.rev = rev;
     }
 
     public String getRev() {
-        if (rev_ != null) {
-            return rev_;
+        if (rev != null) {
+            return rev;
         }
         ValueBinding vb = getValueBinding("rev");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setShape(String shape) {
-        shape_ = shape;
+        this.shape = shape;
     }
 
     public String getShape() {
-        if (shape_ != null) {
-            return shape_;
+        if (shape != null) {
+            return shape;
         }
         ValueBinding vb = getValueBinding("shape");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setStyle(String style) {
-        style_ = style;
+        this.style = style;
     }
 
     public String getStyle() {
-        if (style_ != null) {
-            return style_;
+        if (style != null) {
+            return style;
         }
         ValueBinding vb = getValueBinding("style");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setStyleClass(String styleClass) {
-        styleClass_ = styleClass;
+        this.styleClass = styleClass;
     }
 
     public String getStyleClass() {
-        if (styleClass_ != null) {
-            return styleClass_;
+        if (styleClass != null) {
+            return styleClass;
         }
         ValueBinding vb = getValueBinding("styleClass");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setTabindex(String tabindex) {
-        tabindex_ = tabindex;
+        this.tabindex = tabindex;
     }
 
     public String getTabindex() {
-        if (tabindex_ != null) {
-            return tabindex_;
+        if (tabindex != null) {
+            return tabindex;
         }
         ValueBinding vb = getValueBinding("tabindex");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setTarget(String target) {
-        target_ = target;
+        this.target = target;
     }
 
     public String getTarget() {
-        if (target_ != null) {
-            return target_;
+        if (target != null) {
+            return target;
         }
         ValueBinding vb = getValueBinding("target");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setTitle(String title) {
-        title_ = title;
+        this.title = title;
     }
 
     public String getTitle() {
-        if (title_ != null) {
-            return title_;
+        if (title != null) {
+            return title;
         }
         ValueBinding vb = getValueBinding("title");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setType(String type) {
-        type_ = type;
+        this.type = type;
     }
 
     public String getType() {
-        if (type_ != null) {
-            return type_;
+        if (type != null) {
+            return type;
         }
         ValueBinding vb = getValueBinding("type");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
@@ -413,65 +413,65 @@ public class HtmlCommandLink extends UICommand {
     public Object saveState(FacesContext context) {
         Object values[] = new Object[28];
         values[0] = super.saveState(context);
-        values[1] = accesskey_;
-        values[2] = charset_;
-        values[3] = coords_;
-        values[4] = dir_;
-        values[5] = hreflang_;
-        values[6] = lang_;
-        values[7] = onblur_;
-        values[8] = onclick_;
-        values[9] = ondblclick_;
-        values[10] = onfocus_;
-        values[11] = onkeydown_;
-        values[12] = onkeypress_;
-        values[13] = onkeyup_;
-        values[14] = onmousedown_;
-        values[15] = onmousemove_;
-        values[16] = onmouseout_;
-        values[17] = onmouseover_;
-        values[18] = onmouseup_;
-        values[19] = rel_;
-        values[20] = rev_;
-        values[21] = shape_;
-        values[22] = style_;
-        values[23] = styleClass_;
-        values[24] = tabindex_;
-        values[25] = target_;
-        values[26] = title_;
-        values[27] = type_;
+        values[1] = accesskey;
+        values[2] = charset;
+        values[3] = coords;
+        values[4] = dir;
+        values[5] = hreflang;
+        values[6] = lang;
+        values[7] = onblur;
+        values[8] = onclick;
+        values[9] = ondblclick;
+        values[10] = onfocus;
+        values[11] = onkeydown;
+        values[12] = onkeypress;
+        values[13] = onkeyup;
+        values[14] = onmousedown;
+        values[15] = onmousemove;
+        values[16] = onmouseout;
+        values[17] = onmouseover;
+        values[18] = onmouseup;
+        values[19] = rel;
+        values[20] = rev;
+        values[21] = shape;
+        values[22] = style;
+        values[23] = styleClass;
+        values[24] = tabindex;
+        values[25] = target;
+        values[26] = title;
+        values[27] = type;
         return ((Object) (values));
     }
 
     public void restoreState(FacesContext context, Object state) {
         Object values[] = (Object[]) state;
         super.restoreState(context, values[0]);
-        accesskey_ = (String) values[1];
-        charset_ = (String) values[2];
-        coords_ = (String) values[3];
-        dir_ = (String) values[4];
-        hreflang_ = (String) values[5];
-        lang_ = (String) values[6];
-        onblur_ = (String) values[7];
-        onclick_ = (String) values[8];
-        ondblclick_ = (String) values[9];
-        onfocus_ = (String) values[10];
-        onkeydown_ = (String) values[11];
-        onkeypress_ = (String) values[12];
-        onkeyup_ = (String) values[13];
-        onmousedown_ = (String) values[14];
-        onmousemove_ = (String) values[15];
-        onmouseout_ = (String) values[16];
-        onmouseover_ = (String) values[17];
-        onmouseup_ = (String) values[18];
-        rel_ = (String) values[19];
-        rev_ = (String) values[20];
-        shape_ = (String) values[21];
-        style_ = (String) values[22];
-        styleClass_ = (String) values[23];
-        tabindex_ = (String) values[24];
-        target_ = (String) values[25];
-        title_ = (String) values[26];
-        type_ = (String) values[27];
+        accesskey = (String) values[1];
+        charset = (String) values[2];
+        coords = (String) values[3];
+        dir = (String) values[4];
+        hreflang = (String) values[5];
+        lang = (String) values[6];
+        onblur = (String) values[7];
+        onclick = (String) values[8];
+        ondblclick = (String) values[9];
+        onfocus = (String) values[10];
+        onkeydown = (String) values[11];
+        onkeypress = (String) values[12];
+        onkeyup = (String) values[13];
+        onmousedown = (String) values[14];
+        onmousemove = (String) values[15];
+        onmouseout = (String) values[16];
+        onmouseover = (String) values[17];
+        onmouseup = (String) values[18];
+        rel = (String) values[19];
+        rev = (String) values[20];
+        shape = (String) values[21];
+        style = (String) values[22];
+        styleClass = (String) values[23];
+        tabindex = (String) values[24];
+        target = (String) values[25];
+        title = (String) values[26];
+        type = (String) values[27];
     }
 }

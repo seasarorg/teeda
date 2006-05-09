@@ -17,6 +17,9 @@ package javax.faces.event;
 
 import javax.faces.component.UIComponent;
 
+/**
+ * @author shot
+ */
 public class ActionEvent extends FacesEvent {
 
     private static final long serialVersionUID = 1L;

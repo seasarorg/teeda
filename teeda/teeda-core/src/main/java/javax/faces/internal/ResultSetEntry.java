@@ -28,25 +28,25 @@ import javax.faces.model.ResultSetDataModel;
  */
 public class ResultSetEntry implements Entry {
 
-    ResultSetDataModel.ResultSetMap map_ = null;
+    ResultSetDataModel.ResultSetMap map = null;
 
-    Object key_ = null;
+    Object key = null;
 
     public ResultSetEntry(ResultSetDataModel.ResultSetMap map, Object key) {
-        map_ = map;
-        key_ = key;
+        this.map = map;
+        this.key = key;
     }
 
     public Object getKey() {
-        return key_;
+        return key;
     }
 
     public Object getValue() {
-        return map_.get(key_);
+        return map.get(key);
     }
 
     public Object setValue(Object value) {
-        return map_.put(key_, value);
+        return map.put(key, value);
     }
 
     public boolean equals(Object obj) {
@@ -71,7 +71,7 @@ public class ResultSetEntry implements Entry {
     }
 
     public int hashCode() {
-        return ((map_ != null) ? map_.hashCode() : 0) * 17;
+        return ((map != null) ? map.hashCode() : 0) * 17;
     }
 
 }

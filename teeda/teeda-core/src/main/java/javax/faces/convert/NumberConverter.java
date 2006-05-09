@@ -35,29 +35,29 @@ public class NumberConverter implements Converter, StateHolder {
 
     public static final String CONVERTER_ID = "javax.faces.Number";
 
-    private Locale locale_ = null;
+    private Locale locale = null;
 
-    private String pattern_ = null;
+    private String pattern = null;
 
-    private String type_ = null;
+    private String type = null;
 
-    private String currencyCode_ = null;
+    private String currencyCode = null;
 
-    private String currencySymbol_ = null;
+    private String currencySymbol = null;
 
-    private boolean isIntegerOnly_ = false;
+    private boolean isIntegerOnly = false;
 
-    private boolean isTransient_ = false;
+    private boolean isTransient = false;
 
-    private boolean isGroupingUsed_ = false;
+    private boolean isGroupingUsed = false;
 
-    private int maxFractionDigits_ = 0;
+    private int maxFractionDigits = 0;
 
-    private int maxIntegerDigits_ = 0;
+    private int maxIntegerDigits = 0;
 
-    private int minFractionDigits_ = 0;
+    private int minFractionDigits = 0;
 
-    private int minIntegerDigits_ = 0;
+    private int minIntegerDigits = 0;
 
     private static final String TYPE_CURRENCY = "currency";
 
@@ -65,13 +65,13 @@ public class NumberConverter implements Converter, StateHolder {
 
     private static final String TYPE_PERCENT = "currency";
 
-    private boolean isSetMaxFractionDigits_ = false;
+    private boolean isSetMaxFractionDigits = false;
 
-    private boolean isSetMaxIntegerDigits_ = false;
+    private boolean isSetMaxIntegerDigits = false;
 
-    private boolean isSetMinFractionDigits_ = false;
+    private boolean isSetMinFractionDigits = false;
 
-    private boolean isSetMinIntegerDigits_ = false;
+    private boolean isSetMinIntegerDigits = false;
 
     public NumberConverter() {
     }
@@ -115,7 +115,7 @@ public class NumberConverter implements Converter, StateHolder {
         NumberFormat formatter = getNumberFormat(locale);
         if (pattern == null) {
             configureFormatter(formatter);
-            if (TYPE_CURRENCY.equals(type_)) {
+            if (TYPE_CURRENCY.equals(type)) {
                 configureCurrency(formatter);
             }
         }
@@ -133,13 +133,13 @@ public class NumberConverter implements Converter, StateHolder {
         values[2] = isGroupingUsed() ? Boolean.TRUE : Boolean.FALSE;
         values[3] = isIntegerOnly() ? Boolean.TRUE : Boolean.FALSE;
         values[4] = new Integer(getMaxFractionDigits());
-        values[5] = isSetMaxFractionDigits_ ? Boolean.TRUE : Boolean.FALSE;
+        values[5] = isSetMaxFractionDigits ? Boolean.TRUE : Boolean.FALSE;
         values[6] = new Integer(getMaxIntegerDigits());
-        values[7] = isSetMaxIntegerDigits_ ? Boolean.TRUE : Boolean.FALSE;
+        values[7] = isSetMaxIntegerDigits ? Boolean.TRUE : Boolean.FALSE;
         values[8] = new Integer(getMinFractionDigits());
-        values[9] = isSetMinFractionDigits_ ? Boolean.TRUE : Boolean.FALSE;
+        values[9] = isSetMinFractionDigits ? Boolean.TRUE : Boolean.FALSE;
         values[10] = new Integer(getMinIntegerDigits());
-        values[11] = isSetMinIntegerDigits_ ? Boolean.TRUE : Boolean.FALSE;
+        values[11] = isSetMinIntegerDigits ? Boolean.TRUE : Boolean.FALSE;
         values[12] = getLocale();
         values[13] = getPattern();
         values[14] = getType();
@@ -148,121 +148,121 @@ public class NumberConverter implements Converter, StateHolder {
 
     public void restoreState(FacesContext context, Object state) {
         Object[] values = (Object[]) state;
-        currencyCode_ = (String) values[0];
-        currencySymbol_ = (String) values[1];
-        isGroupingUsed_ = ((Boolean) values[2]).booleanValue();
-        isIntegerOnly_ = ((Boolean) values[3]).booleanValue();
-        maxFractionDigits_ = ((Integer) values[4]).intValue();
-        isSetMaxFractionDigits_ = ((Boolean) values[5]).booleanValue();
-        maxIntegerDigits_ = ((Integer) values[6]).intValue();
-        isSetMaxIntegerDigits_ = ((Boolean) values[7]).booleanValue();
-        minFractionDigits_ = ((Integer) values[8]).intValue();
-        isSetMinFractionDigits_ = ((Boolean) values[9]).booleanValue();
-        minIntegerDigits_ = ((Integer) values[10]).intValue();
-        isSetMinIntegerDigits_ = ((Boolean) values[11]).booleanValue();
-        locale_ = (Locale) values[12];
-        pattern_ = (String) values[13];
-        type_ = (String) values[14];
+        currencyCode = (String) values[0];
+        currencySymbol = (String) values[1];
+        isGroupingUsed = ((Boolean) values[2]).booleanValue();
+        isIntegerOnly = ((Boolean) values[3]).booleanValue();
+        maxFractionDigits = ((Integer) values[4]).intValue();
+        isSetMaxFractionDigits = ((Boolean) values[5]).booleanValue();
+        maxIntegerDigits = ((Integer) values[6]).intValue();
+        isSetMaxIntegerDigits = ((Boolean) values[7]).booleanValue();
+        minFractionDigits = ((Integer) values[8]).intValue();
+        isSetMinFractionDigits = ((Boolean) values[9]).booleanValue();
+        minIntegerDigits = ((Integer) values[10]).intValue();
+        isSetMinIntegerDigits = ((Boolean) values[11]).booleanValue();
+        locale = (Locale) values[12];
+        pattern = (String) values[13];
+        type = (String) values[14];
     }
 
     public boolean isTransient() {
-        return isTransient_;
+        return isTransient;
     }
 
     public void setTransient(boolean isTransient) {
-        isTransient_ = isTransient;
+        this.isTransient = isTransient;
     }
 
     public Locale getLocale() {
-        return locale_;
+        return locale;
     }
 
     public void setLocale(Locale locale) {
-        locale_ = locale;
+        this.locale = locale;
     }
 
     public String getPattern() {
-        return pattern_;
+        return pattern;
     }
 
     public void setPattern(String pattern) {
-        pattern_ = pattern;
+        this.pattern = pattern;
     }
 
     public String getType() {
-        return type_;
+        return type;
     }
 
     public void setType(String type) {
-        type_ = type;
+        this.type = type;
     }
 
     public boolean isIntegerOnly() {
-        return isIntegerOnly_;
+        return isIntegerOnly;
     }
 
     public void setIntegerOnly(boolean isIntegerOnly) {
-        isIntegerOnly_ = isIntegerOnly;
+        this.isIntegerOnly = isIntegerOnly;
     }
 
     public boolean isGroupingUsed() {
-        return isGroupingUsed_;
+        return isGroupingUsed;
     }
 
     public void setGroupingUsed(boolean isGroupingUsed) {
-        isGroupingUsed_ = isGroupingUsed;
+        this.isGroupingUsed = isGroupingUsed;
     }
 
     public String getCurrencyCode() {
-        return currencyCode_;
+        return currencyCode;
     }
 
     public void setCurrencyCode(String currencyCode) {
-        currencyCode_ = currencyCode;
+        this.currencyCode = currencyCode;
     }
 
     public String getCurrencySymbol() {
-        return currencySymbol_;
+        return currencySymbol;
     }
 
     public void setCurrencySymbol(String currencySymbol) {
-        currencySymbol_ = currencySymbol;
+        this.currencySymbol = currencySymbol;
     }
 
     public int getMaxFractionDigits() {
-        return maxFractionDigits_;
+        return maxFractionDigits;
     }
 
     public void setMaxFractionDigits(int maxFractionDigits) {
-        maxFractionDigits_ = maxFractionDigits;
-        isSetMaxFractionDigits_ = true;
+        this.maxFractionDigits = maxFractionDigits;
+        this.isSetMaxFractionDigits = true;
     }
 
     public int getMaxIntegerDigits() {
-        return maxIntegerDigits_;
+        return maxIntegerDigits;
     }
 
     public void setMaxIntegerDigits(int maxIntegerDigits) {
-        maxIntegerDigits_ = maxIntegerDigits;
-        isSetMaxIntegerDigits_ = true;
+        this.maxIntegerDigits = maxIntegerDigits;
+        this.isSetMaxIntegerDigits = true;
     }
 
     public int getMinFractionDigits() {
-        return minFractionDigits_;
+        return minFractionDigits;
     }
 
     public void setMinFractionDigits(int minFractionDigits) {
-        minFractionDigits_ = minFractionDigits;
-        isSetMinFractionDigits_ = true;
+        this.minFractionDigits = minFractionDigits;
+        this.isSetMinFractionDigits = true;
     }
 
     public int getMinIntegerDigits() {
-        return minIntegerDigits_;
+        return minIntegerDigits;
     }
 
     public void setMinIntegerDigits(int minIntegerDigits) {
-        minIntegerDigits_ = minIntegerDigits;
-        isSetMinIntegerDigits_ = true;
+        this.minIntegerDigits = minIntegerDigits;
+        this.isSetMinIntegerDigits = true;
     }
 
     private Locale getLocale(FacesContext context) {
@@ -274,22 +274,22 @@ public class NumberConverter implements Converter, StateHolder {
     }
 
     private NumberFormat getNumberFormat(Locale locale) {
-        if (pattern_ != null) {
+        if (pattern != null) {
             DecimalFormatSymbols symbols = new DecimalFormatSymbols(locale);
-            return new DecimalFormat(pattern_, symbols);
+            return new DecimalFormat(pattern, symbols);
         }
-        if (type_ != null) {
+        if (type != null) {
             return getNumberFormatForType();
         }
         throw new ConverterException("NumberFormat not found");
     }
 
     private NumberFormat getNumberFormatForType() {
-        if (type_.equals(TYPE_CURRENCY)) {
+        if (type.equals(TYPE_CURRENCY)) {
             return NumberFormat.getCurrencyInstance();
-        } else if (type_.equals(TYPE_NUMBER)) {
+        } else if (type.equals(TYPE_NUMBER)) {
             return NumberFormat.getNumberInstance();
-        } else if (type_.equals(TYPE_PERCENT)) {
+        } else if (type.equals(TYPE_PERCENT)) {
             return NumberFormat.getPercentInstance();
         } else {
             throw new ConverterException(new IllegalArgumentException());
@@ -305,25 +305,25 @@ public class NumberConverter implements Converter, StateHolder {
     }
 
     protected void setMaximumFractionDigitsToFormatter(NumberFormat formatter) {
-        if (isSetMaxFractionDigits_) {
+        if (isSetMaxFractionDigits) {
             formatter.setMaximumFractionDigits(getMaxFractionDigits());
         }
     }
 
     protected void setMaximumIntegerDigitsToFormatter(NumberFormat formatter) {
-        if (isSetMaxIntegerDigits_) {
+        if (isSetMaxIntegerDigits) {
             formatter.setMaximumIntegerDigits(getMaxIntegerDigits());
         }
     }
 
     protected void setMinimumFractionDigitsToFormatter(NumberFormat formatter) {
-        if (isSetMinFractionDigits_) {
+        if (isSetMinFractionDigits) {
             formatter.setMinimumFractionDigits(getMinFractionDigits());
         }
     }
 
     protected void setMinimumIntegerDigitsToFormatter(NumberFormat formatter) {
-        if (isSetMinIntegerDigits_) {
+        if (isSetMinIntegerDigits) {
             formatter.setMinimumIntegerDigits(getMinIntegerDigits());
         }
     }

@@ -24,6 +24,9 @@ import javax.faces.internal.FacesMessageUtils;
 
 import org.seasar.teeda.core.util.UIComponentUtil;
 
+/**
+ * @author shot
+ */
 public class LengthValidator implements Validator, StateHolder {
 
     public static final String VALIDATOR_ID = "javax.faces.Length";
@@ -32,9 +35,9 @@ public class LengthValidator implements Validator, StateHolder {
 
     public static final String MINIMUM_MESSAGE_ID = "javax.faces.validator.LengthValidator.MINIMUM";
 
-    private Integer maximum_ = null;
+    private Integer maximum = null;
 
-    private Integer minimum_ = null;
+    private Integer minimum = null;
 
     private boolean transientValue_ = false;
 
@@ -44,13 +47,13 @@ public class LengthValidator implements Validator, StateHolder {
 
     public LengthValidator(int maximum) {
         super();
-        maximum_ = new Integer(maximum);
+        this.maximum = new Integer(maximum);
     }
 
     public LengthValidator(int maximum, int minimum) {
         super();
-        maximum_ = new Integer(maximum);
-        minimum_ = new Integer(minimum);
+        this.maximum = new Integer(maximum);
+        this.minimum = new Integer(minimum);
     }
 
     public boolean equals(Object obj) {
@@ -59,13 +62,13 @@ public class LengthValidator implements Validator, StateHolder {
         }
 
         LengthValidator v = (LengthValidator) obj;
-        if ((maximum_ != null && v.maximum_ == null)
-                && (maximum_ == null && v.maximum_ != null)) {
+        if ((maximum != null && v.maximum == null)
+                && (maximum == null && v.maximum != null)) {
             return false;
         }
 
-        if ((minimum_ != null && v.minimum_ == null)
-                && (minimum_ == null && v.minimum_ != null)) {
+        if ((minimum != null && v.minimum == null)
+                && (minimum == null && v.minimum != null)) {
             return false;
         }
 
@@ -75,25 +78,25 @@ public class LengthValidator implements Validator, StateHolder {
     }
 
     public int hashCode() {
-        Integer max = maximum_ != null ? maximum_ : new Integer(1);
-        Integer min = minimum_ != null ? minimum_ : new Integer(1);
+        Integer max = maximum != null ? maximum : new Integer(1);
+        Integer min = minimum != null ? minimum : new Integer(1);
         return max.hashCode() * min.hashCode() * 17;
     }
 
     public int getMaximum() {
-        return (maximum_ != null) ? maximum_.intValue() : 0;
+        return (maximum != null) ? maximum.intValue() : 0;
     }
 
     public int getMinimum() {
-        return (minimum_ != null) ? minimum_.intValue() : 0;
+        return (minimum != null) ? minimum.intValue() : 0;
     }
 
     public void setMaximum(int maximum) {
-        maximum_ = new Integer(maximum);
+        this.maximum = new Integer(maximum);
     }
 
     public void setMinimum(int minimum) {
-        minimum_ = new Integer(minimum);
+        this.minimum = new Integer(minimum);
     }
 
     public boolean isTransient() {
@@ -110,14 +113,14 @@ public class LengthValidator implements Validator, StateHolder {
         }
 
         int length = getConvertedValueLength(value);
-        if (minimum_ != null && length < minimum_.intValue()) {
-            Object[] args = { minimum_, UIComponentUtil.getLabel(component) };
+        if (minimum != null && length < minimum.intValue()) {
+            Object[] args = { minimum, UIComponentUtil.getLabel(component) };
             throw new ValidatorException(FacesMessageUtils.getMessage(context,
                     getMinimumMessageId(), args));
         }
 
-        if (maximum_ != null && length > maximum_.intValue()) {
-            Object[] args = { maximum_, UIComponentUtil.getLabel(component) };
+        if (maximum != null && length > maximum.intValue()) {
+            Object[] args = { maximum, UIComponentUtil.getLabel(component) };
             throw new ValidatorException(FacesMessageUtils.getMessage(context,
                     getMaximumMessageId(), args));
         }
@@ -129,15 +132,15 @@ public class LengthValidator implements Validator, StateHolder {
 
     public Object saveState(FacesContext context) {
         Object[] values = new Object[2];
-        values[0] = maximum_;
-        values[1] = minimum_;
+        values[0] = maximum;
+        values[1] = minimum;
         return values;
     }
 
     public void restoreState(FacesContext context, Object state) {
         Object[] values = (Object[]) state;
-        maximum_ = (Integer) values[0];
-        minimum_ = (Integer) values[1];
+        maximum = (Integer) values[0];
+        minimum = (Integer) values[1];
     }
 
     protected int getConvertedValueLength(Object value) {
@@ -149,11 +152,11 @@ public class LengthValidator implements Validator, StateHolder {
         }
         return length;
     }
-    
+
     protected String getMinimumMessageId() {
         return MINIMUM_MESSAGE_ID;
     }
-    
+
     protected String getMaximumMessageId() {
         return MAXIMUM_MESSAGE_ID;
     }

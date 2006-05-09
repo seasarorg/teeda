@@ -33,6 +33,6 @@ public class ResultSetValues extends ResultSetBaseCollection {
     }
 
     public Iterator iterator() {
-        return new ResultSetValuesIterator(map_);
+        return new ResultSetValuesIterator(map);
     }
 }

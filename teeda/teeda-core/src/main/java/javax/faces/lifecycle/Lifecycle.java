@@ -19,6 +19,9 @@ import javax.faces.FacesException;
 import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseListener;
 
+/**
+ * @author shot
+ */
 public abstract class Lifecycle {
 
     public abstract void addPhaseListener(PhaseListener listener);

@@ -16,7 +16,7 @@
 package javax.faces.el;
 
 /**
- * @author Shinpei Ohtani
+ * @author shot
  */
 public class ReferenceSyntaxException extends EvaluationException {
 

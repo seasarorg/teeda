@@ -17,9 +17,9 @@ package javax.faces.model;
 
 public class ArrayDataModel extends DataModel {
 
-    private Object[] array_ = null;
+    private Object[] array = null;
 
-    private int index_ = -1;
+    private int index = -1;
 
     public ArrayDataModel() {
         this(null);
@@ -31,11 +31,11 @@ public class ArrayDataModel extends DataModel {
     }
 
     public int getRowCount() {
-        return (array_ != null) ? array_.length : -1;
+        return (array != null) ? array.length : -1;
     }
 
     public Object getRowData() {
-        if (array_ == null) {
+        if (array == null) {
             return null;
         }
 
@@ -43,50 +43,50 @@ public class ArrayDataModel extends DataModel {
             throw new IllegalArgumentException();
         }
 
-        return array_[index_];
+        return array[index];
     }
 
     public int getRowIndex() {
-        return index_;
+        return index;
     }
 
     public Object getWrappedData() {
-        return array_;
+        return array;
     }
 
     public boolean isRowAvailable() {
-        if (array_ == null) {
+        if (array == null) {
             return false;
         }
-        return (index_ >= 0 && index_ < array_.length);
+        return (index >= 0 && index < array.length);
     }
 
     public void setWrappedData(Object data) {
-        array_ = (Object[]) data;
+        array = (Object[]) data;
         int index = (data != null) ? 0 : -1;
         setRowIndex(index);
     }
 
-    public void setRowIndex(int index) {
-        if (index < -1) {
+    public void setRowIndex(int rowIndex) {
+        if (rowIndex < -1) {
             throw new IllegalArgumentException();
         }
 
-        int oldIndex = index_;
-        index_ = index;
+        int oldIndex = index;
+        index = rowIndex;
 
-        if (array_ == null) {
+        if (array == null) {
             return;
         }
 
         DataModelListener[] listeners = getDataModelListeners();
-        if ((oldIndex != index_) && (listeners != null)) {
+        if ((oldIndex != index) && (listeners != null)) {
             Object rowData = null;
             if (isRowAvailable()) {
                 rowData = getRowData();
             }
 
-            DataModelEvent event = new DataModelEvent(this, index_, rowData);
+            DataModelEvent event = new DataModelEvent(this, index, rowData);
             for (int i = 0; i < listeners.length; i++) {
                 listeners[i].rowSelected(event);
             }

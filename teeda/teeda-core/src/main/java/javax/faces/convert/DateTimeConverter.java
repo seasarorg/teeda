@@ -53,21 +53,21 @@ public class DateTimeConverter implements Converter, StateHolder {
 
     protected static final String TYPE_BOTH = "both";
 
-    private String dateStyle_ = STYLE_DEFAULT;
+    private String dateStyle = STYLE_DEFAULT;
 
-    private boolean transientValue_ = false;
+    private boolean transientValue = false;
 
-    private Locale locale_ = null;
+    private Locale locale = null;
 
-    private String pattern_ = null;
+    private String pattern = null;
 
-    private String timeStyle_ = STYLE_DEFAULT;
+    private String timeStyle = STYLE_DEFAULT;
 
     private static final TimeZone DEFAULT_TIME_ZONE = TimeZone.getDefault();
 
-    private TimeZone timeZone_ = DEFAULT_TIME_ZONE;
+    private TimeZone timeZone = DEFAULT_TIME_ZONE;
 
-    private String type_ = TYPE_DATE;
+    private String type = TYPE_DATE;
 
     public DateTimeConverter() {
     }
@@ -126,83 +126,83 @@ public class DateTimeConverter implements Converter, StateHolder {
     }
 
     public boolean isTransient() {
-        return transientValue_;
+        return transientValue;
     }
 
     public void setTransient(boolean transientValue) {
-        transientValue_ = transientValue;
+        this.transientValue = transientValue;
     }
 
     public Object saveState(FacesContext context) {
         Object[] values = new Object[6];
-        values[0] = dateStyle_;
-        values[1] = locale_;
-        values[2] = pattern_;
-        values[3] = timeStyle_;
-        values[4] = timeZone_;
-        values[5] = type_;
+        values[0] = dateStyle;
+        values[1] = locale;
+        values[2] = pattern;
+        values[3] = timeStyle;
+        values[4] = timeZone;
+        values[5] = type;
         return values;
     }
 
     public void restoreState(FacesContext context, Object state) {
         Object[] values = (Object[]) state;
-        dateStyle_ = (String) values[0];
-        locale_ = (Locale) values[1];
-        pattern_ = (String) values[2];
-        timeStyle_ = (String) values[3];
-        timeZone_ = (TimeZone) values[4];
-        type_ = (String) values[5];
+        dateStyle = (String) values[0];
+        locale = (Locale) values[1];
+        pattern = (String) values[2];
+        timeStyle = (String) values[3];
+        timeZone = (TimeZone) values[4];
+        type = (String) values[5];
     }
 
     public String getDateStyle() {
-        return dateStyle_;
+        return dateStyle;
     }
 
     public void setDateStyle(String dateStyle) {
-        dateStyle_ = dateStyle;
+        this.dateStyle = dateStyle;
     }
 
     public Locale getLocale() {
-        if (locale_ == null) {
-            locale_ = getLocale(FacesContext.getCurrentInstance());
+        if (locale == null) {
+            locale = getLocale(FacesContext.getCurrentInstance());
         }
-        return locale_;
+        return locale;
     }
 
     public void setLocale(Locale locale) {
-        locale_ = locale;
+        this.locale = locale;
     }
 
     public String getPattern() {
-        return pattern_;
+        return pattern;
     }
 
     public void setPattern(String pattern) {
-        pattern_ = pattern;
+        this.pattern = pattern;
     }
 
     public String getTimeStyle() {
-        return timeStyle_;
+        return timeStyle;
     }
 
     public void setTimeStyle(String timeStyle) {
-        timeStyle_ = timeStyle;
+        this.timeStyle = timeStyle;
     }
 
     public TimeZone getTimeZone() {
-        return timeZone_;
+        return timeZone;
     }
 
     public void setTimeZone(TimeZone timeZone) {
-        timeZone_ = timeZone;
+        this.timeZone = timeZone;
     }
 
     public String getType() {
-        return type_;
+        return type;
     }
 
     public void setType(String type) {
-        type_ = type;
+        this.type = type;
     }
 
     private Locale getLocale(FacesContext context) {

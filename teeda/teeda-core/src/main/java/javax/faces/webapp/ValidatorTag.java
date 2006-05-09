@@ -29,13 +29,13 @@ public class ValidatorTag extends TagSupport {
 
     private static final long serialVersionUID = 1L;
 
-    private String validatorId_ = null;
+    private String validatorId = null;
 
     public ValidatorTag() {
     }
 
     public void setValidatorId(String validatorId) {
-        validatorId_ = validatorId;
+        this.validatorId = validatorId;
     }
 
     public int doStartTag() throws JspException {
@@ -59,18 +59,17 @@ public class ValidatorTag extends TagSupport {
     }
 
     public void release() {
-        validatorId_ = null;
+        validatorId = null;
         super.release();
     }
 
     protected Validator createValidator() throws JspException {
         try {
-            String validatorId = validatorId_;
-            if (UIComponentTag.isValueReference(validatorId_)) {
-                validatorId = (String) WebAppUtils
-                        .getValueFromCreatedValueBinding(validatorId_);
+            String id = this.validatorId;
+            if (UIComponentTag.isValueReference(id)) {
+                id = (String) WebAppUtils.getValueFromCreatedValueBinding(id);
             }
-            return WebAppUtils.createValidator(validatorId);
+            return WebAppUtils.createValidator(id);
         } catch (Exception e) {
             throw new JspException(e);
         }

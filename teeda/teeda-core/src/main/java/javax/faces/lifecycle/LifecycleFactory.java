@@ -17,6 +17,9 @@ package javax.faces.lifecycle;
 
 import java.util.Iterator;
 
+/**
+ * @author shot
+ */
 public abstract class LifecycleFactory {
 
     public static final String DEFAULT_LIFECYCLE = "DEFAULT";

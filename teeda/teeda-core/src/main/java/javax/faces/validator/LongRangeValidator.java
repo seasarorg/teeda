@@ -24,6 +24,9 @@ import javax.faces.internal.FacesMessageUtils;
 
 import org.seasar.teeda.core.util.UIComponentUtil;
 
+/**
+ * @author shot
+ */
 public class LongRangeValidator implements Validator, StateHolder {
 
     public static final String VALIDATOR_ID = "javax.faces.LongRange";
@@ -34,9 +37,9 @@ public class LongRangeValidator implements Validator, StateHolder {
 
     public static final String MINIMUM_MESSAGE_ID = "javax.faces.validator.LongRangeValidator.MINIMUM";
 
-    private Long maximum_ = null;
+    private Long maximum = null;
 
-    private Long minimum_ = null;
+    private Long minimum = null;
 
     private boolean transientValue_ = false;
 
@@ -46,13 +49,13 @@ public class LongRangeValidator implements Validator, StateHolder {
 
     public LongRangeValidator(long maximum) {
         super();
-        maximum_ = new Long(maximum);
+        this.maximum = new Long(maximum);
     }
 
     public LongRangeValidator(long maximum, long minimum) {
         super();
-        maximum_ = new Long(maximum);
-        minimum_ = new Long(minimum);
+        this.maximum = new Long(maximum);
+        this.minimum = new Long(minimum);
     }
 
     public void validate(FacesContext context, UIComponent component,
@@ -67,33 +70,33 @@ public class LongRangeValidator implements Validator, StateHolder {
         try {
             longValue = parseLongValue(value);
 
-            if (maximum_ != null && minimum_ != null) {
+            if (maximum != null && minimum != null) {
 
-                double minValue = minimum_.longValue();
-                double maxValue = maximum_.longValue();
+                double minValue = minimum.longValue();
+                double maxValue = maximum.longValue();
 
                 if (longValue < minValue || longValue > maxValue) {
-                    Object[] args = { minimum_, maximum_,
+                    Object[] args = { minimum, maximum,
                             UIComponentUtil.getLabel(component) };
                     throw new ValidatorException(FacesMessageUtils.getMessage(
                             context, NOT_IN_RANGE_MESSAGE_ID, args));
                 }
 
-            } else if (minimum_ != null) {
+            } else if (minimum != null) {
 
-                double minValue = minimum_.longValue();
+                double minValue = minimum.longValue();
                 if (longValue < minValue) {
-                    Object[] args = { minimum_,
+                    Object[] args = { minimum,
                             UIComponentUtil.getLabel(component) };
                     throw new ValidatorException(FacesMessageUtils.getMessage(
                             context, MINIMUM_MESSAGE_ID, args));
                 }
 
-            } else if (maximum_ != null) {
+            } else if (maximum != null) {
 
-                double maxValue = maximum_.longValue();
+                double maxValue = maximum.longValue();
                 if (longValue > maxValue) {
-                    Object[] args = { maximum_,
+                    Object[] args = { maximum,
                             UIComponentUtil.getLabel(component) };
                     throw new ValidatorException(FacesMessageUtils.getMessage(
                             context, MAXIMUM_MESSAGE_ID, args));
@@ -118,31 +121,31 @@ public class LongRangeValidator implements Validator, StateHolder {
 
     public Object saveState(FacesContext context) {
         Object[] values = new Object[2];
-        values[0] = maximum_;
-        values[1] = minimum_;
+        values[0] = maximum;
+        values[1] = minimum;
         return values;
     }
 
     public void restoreState(FacesContext context, Object state) {
         Object[] values = (Object[]) state;
-        maximum_ = (Long) values[0];
-        minimum_ = (Long) values[1];
+        maximum = (Long) values[0];
+        minimum = (Long) values[1];
     }
 
     public long getMaximum() {
-        return (maximum_ != null) ? maximum_.longValue() : Long.MAX_VALUE;
+        return (maximum != null) ? maximum.longValue() : Long.MAX_VALUE;
     }
 
     public long getMinimum() {
-        return (minimum_ != null) ? minimum_.longValue() : Long.MIN_VALUE;
+        return (minimum != null) ? minimum.longValue() : Long.MIN_VALUE;
     }
 
     public void setMaximum(long maximum) {
-        maximum_ = new Long(maximum);
+        this.maximum = new Long(maximum);
     }
 
     public void setMinimum(long minimum) {
-        minimum_ = new Long(minimum);
+        this.minimum = new Long(minimum);
     }
 
     public boolean equals(Object obj) {
@@ -152,13 +155,13 @@ public class LongRangeValidator implements Validator, StateHolder {
 
         LongRangeValidator v = (LongRangeValidator) obj;
 
-        if ((maximum_ != null && v.maximum_ == null)
-                && (maximum_ == null && v.maximum_ != null)) {
+        if ((maximum != null && v.maximum == null)
+                && (maximum == null && v.maximum != null)) {
             return false;
         }
 
-        if ((minimum_ != null && v.minimum_ == null)
-                && (minimum_ == null && v.minimum_ != null)) {
+        if ((minimum != null && v.minimum == null)
+                && (minimum == null && v.minimum != null)) {
             return false;
         }
 
@@ -167,8 +170,8 @@ public class LongRangeValidator implements Validator, StateHolder {
     }
 
     public int hashCode() {
-        Long max = maximum_ != null ? maximum_ : new Long(1);
-        Long min = minimum_ != null ? minimum_ : new Long(1);
+        Long max = maximum != null ? maximum : new Long(1);
+        Long min = minimum != null ? minimum : new Long(1);
         return max.hashCode() * min.hashCode() * 17;
     }
 

@@ -20,9 +20,9 @@ package javax.faces.model;
  */
 public class ScalarDataModel extends DataModel {
 
-    private Object scalar_ = null;
+    private Object scalar = null;
 
-    private int index_ = -1;
+    private int index = -1;
 
     public ScalarDataModel() {
         this(null);
@@ -34,49 +34,49 @@ public class ScalarDataModel extends DataModel {
     }
 
     public int getRowCount() {
-        return (scalar_ != null) ? 1 : -1;
+        return (scalar != null) ? 1 : -1;
     }
 
     public Object getRowData() {
-        if (scalar_ == null) {
+        if (scalar == null) {
             return null;
         }
         if (!isRowAvailable()) {
             throw new IllegalArgumentException();
         }
-        return scalar_;
+        return scalar;
     }
 
     public int getRowIndex() {
-        return (scalar_ != null) ? 0 : -1;
+        return (scalar != null) ? 0 : -1;
     }
 
     public Object getWrappedData() {
-        return scalar_;
+        return scalar;
     }
 
     public boolean isRowAvailable() {
-        if (scalar_ == null) {
+        if (scalar == null) {
             return false;
         }
-        return (index_ == 0) ? true : false;
+        return (index == 0) ? true : false;
     }
 
-    public void setRowIndex(int index) {
-        if (index < -1) {
+    public void setRowIndex(int rowIndex) {
+        if (rowIndex < -1) {
             throw new IllegalArgumentException();
         }
 
-        int oldIndex = index_;
-        index_ = index;
+        int oldIndex = index;
+        index = rowIndex;
 
-        if (scalar_ == null) {
+        if (scalar == null) {
             return;
         }
 
         DataModelListener[] listeners = getDataModelListeners();
-        if ((oldIndex != index_) && (listeners != null)) {
-            DataModelEvent event = new DataModelEvent(this, index_, scalar_);
+        if ((oldIndex != index) && (listeners != null)) {
+            DataModelEvent event = new DataModelEvent(this, index, scalar);
             for (int i = 0; i < listeners.length; i++) {
                 listeners[i].rowSelected(event);
             }
@@ -85,10 +85,10 @@ public class ScalarDataModel extends DataModel {
 
     public void setWrappedData(Object data) {
         if (data == null) {
-            scalar_ = null;
+            scalar = null;
             setRowIndex(-1);
         } else {
-            scalar_ = data;
+            scalar = data;
             setRowIndex(0);
         }
     }

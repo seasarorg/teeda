@@ -17,6 +17,9 @@ package javax.faces.model;
 
 import java.util.EventListener;
 
+/**
+ * @author shot
+ */
 public interface DataModelListener extends EventListener {
 
     public void rowSelected(DataModelEvent event);

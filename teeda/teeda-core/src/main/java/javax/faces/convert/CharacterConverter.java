@@ -20,6 +20,9 @@ import javax.faces.context.FacesContext;
 import javax.faces.internal.AssertionUtil;
 import javax.faces.internal.ConvertUtils;
 
+/**
+ * @author shot
+ */
 public class CharacterConverter implements Converter {
 
     public static final String CONVERTER_ID = "javax.faces.Character";

@@ -31,13 +31,13 @@ public class ConverterTag extends TagSupport {
 
     private static final long serialVersionUID = 1L;
 
-    private String converterId_ = null;
+    private String converterId = null;
 
     public ConverterTag() {
     }
 
     public void setConverterId(String converterId) {
-        converterId_ = converterId;
+        this.converterId = converterId;
     }
 
     public int doStartTag() throws JspException {
@@ -77,17 +77,16 @@ public class ConverterTag extends TagSupport {
     }
 
     public void release() {
-        converterId_ = null;
+        converterId = null;
     }
 
     protected Converter createConverter() throws JspException {
         try {
-            String converterId = converterId_;
-            if (UIComponentTag.isValueReference(converterId_)) {
-                converterId = (String) WebAppUtils
-                        .getValueFromCreatedValueBinding(converterId_);
+            String id = this.converterId;
+            if (UIComponentTag.isValueReference(id)) {
+                id = (String) WebAppUtils.getValueFromCreatedValueBinding(id);
             }
-            return WebAppUtils.createConverter(converterId);
+            return WebAppUtils.createConverter(id);
         } catch (Exception e) {
             throw new JspException(e);
         }

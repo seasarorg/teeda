@@ -29,28 +29,28 @@ public class SerializableStateHolder implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private Object state_ = null;
+    private Object state = null;
 
-    private Map facetMap_ = null;
+    private Map facetMap = null;
 
-    private List children_ = null;
+    private List children = null;
 
     public SerializableStateHolder(Object state, Map facetMap, List children) {
-        state_ = state;
-        facetMap_ = facetMap;
-        children_ = children;
+        this.state = state;
+        this.facetMap = facetMap;
+        this.children = children;
     }
 
     public List getChildren() {
-        return children_;
+        return children;
     }
 
     public Map getFacetMap() {
-        return facetMap_;
+        return facetMap;
     }
 
     public Object getState() {
-        return state_;
+        return state;
     }
 
 }

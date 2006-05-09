@@ -26,7 +26,7 @@ import javax.faces.render.RenderKit;
  */
 public abstract class FacesContext {
 
-    private static ThreadLocal threadLocal_ = new ThreadLocal();
+    private static ThreadLocal threadLocal = new ThreadLocal();
 
     public abstract javax.faces.application.Application getApplication();
 
@@ -69,12 +69,12 @@ public abstract class FacesContext {
     public abstract void responseComplete();
 
     public static FacesContext getCurrentInstance() {
-        return (FacesContext) threadLocal_.get();
+        return (FacesContext) threadLocal.get();
     }
 
     protected static void setCurrentInstance(
             javax.faces.context.FacesContext context) {
-        threadLocal_.set(context);
+        threadLocal.set(context);
     }
 
 }

@@ -15,6 +15,11 @@
  */
 package javax.faces.context;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.security.Principal;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
@@ -24,6 +29,7 @@ import java.util.Set;
  * @author shot
  */
 public abstract class ExternalContext {
+
     public static final String BASIC_AUTH = "BASIC";
 
     public static final String CLIENT_CERT_AUTH = "CLIENT_CERT";
@@ -32,7 +38,7 @@ public abstract class ExternalContext {
 
     public static final String FORM_AUTH = "FORM";
 
-    public abstract void dispatch(String path) throws java.io.IOException;
+    public abstract void dispatch(String path) throws IOException;
 
     public abstract String encodeActionURL(String url);
 
@@ -78,10 +84,9 @@ public abstract class ExternalContext {
 
     public abstract String getRequestServletPath();
 
-    public abstract java.net.URL getResource(String path)
-            throws java.net.MalformedURLException;
+    public abstract URL getResource(String path) throws MalformedURLException;
 
-    public abstract java.io.InputStream getResourceAsStream(String path);
+    public abstract InputStream getResourceAsStream(String path);
 
     public abstract Set getResourcePaths(String path);
 
@@ -91,7 +96,7 @@ public abstract class ExternalContext {
 
     public abstract Map getSessionMap();
 
-    public abstract java.security.Principal getUserPrincipal();
+    public abstract Principal getUserPrincipal();
 
     public abstract boolean isUserInRole(String role);
 
@@ -99,5 +104,5 @@ public abstract class ExternalContext {
 
     public abstract void log(String message, Throwable exception);
 
-    public abstract void redirect(String url) throws java.io.IOException;
+    public abstract void redirect(String url) throws IOException;
 }

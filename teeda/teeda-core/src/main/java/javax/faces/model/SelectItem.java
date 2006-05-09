@@ -27,20 +27,20 @@ public class SelectItem implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private Object value_ = null;
+    private Object value = null;
 
-    private String label_ = null;
+    private String label = null;
 
-    private String description_ = null;
+    private String description = null;
 
-    private boolean disabled_ = false;
+    private boolean disabled = false;
 
     public SelectItem() {
     }
 
     public SelectItem(Object value) {
         AssertionUtil.assertNotNull("value", value);
-        value_ = value;
+        this.value = value;
     }
 
     public SelectItem(Object value, String label) {
@@ -55,44 +55,44 @@ public class SelectItem implements Serializable {
             boolean disabled) {
         AssertionUtil.assertNotNull("value", value);
         AssertionUtil.assertNotNull("label", label);
-        value_ = value;
-        label_ = label;
-        description_ = description;
-        disabled_ = disabled;
+        this.value = value;
+        this.label = label;
+        this.description = description;
+        this.disabled = disabled;
     }
 
     public String getDescription() {
-        return description_;
+        return description;
     }
 
     public void setDescription(String description) {
-        description_ = description;
+        this.description = description;
     }
 
     public boolean isDisabled() {
-        return disabled_;
+        return disabled;
     }
 
     public void setDisabled(boolean disabled) {
-        disabled_ = disabled;
+        this.disabled = disabled;
     }
 
     public String getLabel() {
-        return label_;
+        return label;
     }
 
     public void setLabel(String label) {
         AssertionUtil.assertNotNull("label", label);
-        label_ = label;
+        this.label = label;
     }
 
     public Object getValue() {
-        return value_;
+        return value;
     }
 
     public void setValue(Object value) {
         AssertionUtil.assertNotNull("value", value);
-        value_ = value;
+        this.value = value;
     }
 
 }

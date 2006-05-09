@@ -19,9 +19,9 @@ import java.util.List;
 
 public class ListDataModel extends DataModel {
 
-    private List list_ = null;
+    private List list = null;
 
-    int index_ = -1;
+    int index = -1;
 
     public ListDataModel() {
         this(null);
@@ -33,56 +33,56 @@ public class ListDataModel extends DataModel {
     }
 
     public int getRowCount() {
-        return (list_ != null) ? list_.size() : -1;
+        return (list != null) ? list.size() : -1;
     }
 
     public Object getRowData() {
-        if (list_ == null) {
+        if (list == null) {
             return null;
         }
 
         if (!isRowAvailable()) {
             throw new IllegalArgumentException();
         }
-        return list_.get(index_);
+        return list.get(index);
     }
 
     public int getRowIndex() {
-        return index_;
+        return index;
     }
 
     public Object getWrappedData() {
-        return list_;
+        return list;
     }
 
     public boolean isRowAvailable() {
-        if (list_ == null) {
+        if (list == null) {
             return false;
         }
-        return (index_ >= 0 && index_ < list_.size());
+        return (index >= 0 && index < list.size());
     }
 
-    public void setRowIndex(int index) {
+    public void setRowIndex(int rowIndex) {
 
-        if (index < -1) {
+        if (rowIndex < -1) {
             throw new IllegalArgumentException();
         }
 
-        int oldIndex = index_;
-        index_ = index;
+        int oldIndex = index;
+        index = rowIndex;
 
-        if (list_ == null) {
+        if (list == null) {
             return;
         }
 
         DataModelListener[] listeners = getDataModelListeners();
-        if ((oldIndex != index_) && (listeners != null)) {
+        if ((oldIndex != index) && (listeners != null)) {
             Object rowData = null;
             if (isRowAvailable()) {
                 rowData = getRowData();
             }
 
-            DataModelEvent event = new DataModelEvent(this, index_, rowData);
+            DataModelEvent event = new DataModelEvent(this, index, rowData);
             for (int i = 0; i < listeners.length; i++) {
                 listeners[i].rowSelected(event);
             }
@@ -91,8 +91,8 @@ public class ListDataModel extends DataModel {
     }
 
     public void setWrappedData(Object data) {
-        list_ = (List) data;
-        int index = (list_ != null) ? 0 : -1;
+        list = (List) data;
+        int index = (list != null) ? 0 : -1;
         setRowIndex(index);
     }
 

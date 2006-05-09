@@ -28,24 +28,24 @@ public class PhaseEvent extends EventObject {
 
     private static final long serialVersionUID = 1L;
 
-    private FacesContext facesContext_;
+    private FacesContext context;
 
-    private PhaseId phaseId_;
+    private PhaseId phaseId;
 
     public PhaseEvent(FacesContext context, PhaseId phaseId, Lifecycle lifecycle) {
         super(lifecycle);
         AssertionUtil.assertNotNull("FacesContext", context);
         AssertionUtil.assertNotNull("PhaseId", phaseId);
         AssertionUtil.assertNotNull("Lifecycle", lifecycle);
-        facesContext_ = context;
-        phaseId_ = phaseId;
+        this.context = context;
+        this.phaseId = phaseId;
     }
 
     public FacesContext getFacesContext() {
-        return facesContext_;
+        return context;
     }
 
     public PhaseId getPhaseId() {
-        return phaseId_;
+        return phaseId;
     }
 }

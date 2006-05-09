@@ -21,9 +21,9 @@ import javax.servlet.jsp.jstl.sql.Result;
 
 public class ResultDataModel extends DataModel {
 
-    private Result result_ = null;
+    private Result result = null;
 
-    private int index_ = -1;
+    private int index = -1;
 
     private SortedMap[] rows_ = null;
 
@@ -37,56 +37,56 @@ public class ResultDataModel extends DataModel {
     }
 
     public int getRowCount() {
-        return (result_ != null) ? rows_.length : -1;
+        return (result != null) ? rows_.length : -1;
     }
 
     public Object getRowData() {
-        if (result_ == null) {
+        if (result == null) {
             return null;
         }
 
         if (!isRowAvailable()) {
             throw new IllegalArgumentException();
         }
-        return rows_[index_];
+        return rows_[index];
     }
 
     public int getRowIndex() {
-        return index_;
+        return index;
     }
 
     public Object getWrappedData() {
-        return result_;
+        return result;
     }
 
     public boolean isRowAvailable() {
-        if (result_ == null) {
+        if (result == null) {
             return false;
         }
-        return (index_ >= 0 && index_ < rows_.length);
+        return (index >= 0 && index < rows_.length);
     }
 
-    public void setRowIndex(int index) {
+    public void setRowIndex(int rowIndex) {
 
-        if (index < -1) {
+        if (rowIndex < -1) {
             throw new IllegalArgumentException();
         }
 
-        int oldIndex = index_;
-        index_ = index;
+        int oldIndex = index;
+        index = rowIndex;
 
-        if (result_ == null) {
+        if (result == null) {
             return;
         }
 
         DataModelListener[] listeners = getDataModelListeners();
-        if ((oldIndex != index_) && (listeners != null)) {
+        if ((oldIndex != index) && (listeners != null)) {
             Object rowData = null;
             if (isRowAvailable()) {
                 rowData = getRowData();
             }
 
-            DataModelEvent event = new DataModelEvent(this, index_, rowData);
+            DataModelEvent event = new DataModelEvent(this, index, rowData);
             for (int i = 0; i < listeners.length; i++) {
                 listeners[i].rowSelected(event);
             }
@@ -98,8 +98,8 @@ public class ResultDataModel extends DataModel {
         if (data == null) {
             setRowIndex(-1);
         } else {
-            result_ = (Result) data;
-            rows_ = result_.getRows();
+            result = (Result) data;
+            rows_ = result.getRows();
             setRowIndex(0);
         }
     }
