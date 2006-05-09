@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE components PUBLIC "-//SEASAR2.1//DTD S2Container//EN"
+	"http://www.seasar.org/dtd/components24.dtd">
+<components>
+	<include path="examples/teeda/dicon/zip.dicon"/>
+	<component name="zipBean" class="examples.teeda.ajax.ZipBean" instance="request">
+	    <meta name="teeda-ajax"/>
+	</component>
+</components>

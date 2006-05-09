@@ -1,0 +1,62 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<script language="JavaScript" src="../js/kumu.js"></script>
+<script language="JavaScript" src="../js/ajax.js"></script>
+<script language="JavaScript">
+<!--
+function init(){
+    var val = "1066001";
+    var zip = document.frm.zipcode;
+    zip.value = val;
+    zip.disabled = true;
+    demo(val);
+}
+function clearData(opt){
+    var listcnt = opt.length;
+    for (var i = listcnt - 1; i >= 0; i--) opt.options[i] = null;
+    $i("cnt").innerHTML = "0";
+}
+function createOpt(opt, json){
+    var len = json.address.length;
+    $i("cnt").innerHTML = len;
+    for(var i = 0; i < len; i++){
+        var addr = json.address[i];
+        opt.options[i] = new Option(addr, "");
+    }
+    document.frm.zipcode.disabled = false;
+}
+
+// exec zipBean#getAddress see ajax.dicon
+function zipBean_getAddress(response){
+    if(!response) return;
+    var json = eval('('+response+')');
+    createOpt(document.frm.address, json);
+}
+function demo(zipcode){
+    clearData(document.frm.address);
+    if(zipcode == "" || zipcode.match(/[^0-9]/g) || zipcode.length < 3) return;
+    // execute Ajax
+    Kumu.ajax.executeTeedaAjax(zipBean_getAddress, {"zipcode" : zipcode});
+}
+//-->
+</script>
+</head>
+<body onload="javascript:init();">
+<marquee width="146" behavior="alternate" scrolldelay="140"><font color="blue">Ajax Demo</font></marquee><br/>
+<img src="http://teeda.seasar.org/teeda_banner.png" border="0"/>
+<form name="frm">
+<hr/>
+<table border="1">
+ <tr>
+ <td><font size="2px;">〒(数値のみ)</font></td><td align="center"><font size="2px;">住所候補 [<b><span id="cnt"></span></b>]件</font></td>
+ </tr>
+ <tr>
+  <td valign="top" align="center"><input type="text" name="zipcode" onkeyup="javascript:demo(this.value);" maxlength="7" style="width:70px;"/></td>
+  <td align="center"><select name="address" size="8" style="width:500px;"></select></td>
+ </tr>
+</table>
+<hr/>
+</form>
+</body>
+</html>

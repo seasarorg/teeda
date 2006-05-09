@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE components PUBLIC "-//SEASAR2.1//DTD S2Container//EN"
+	"http://www.seasar.org/dtd/components24.dtd">
+<components>
+	<include path="dao.dicon"/>
+	<include path="aop.dicon"/>
+	<component name="zipDto" class="examples.teeda.dto.ZipDto" instance="request"/>
+	<component name="zipLogic" class="examples.teeda.logic.impl.ZipLogicImpl"/>
+	<component name="zipDtoDao" class="examples.teeda.dao.ZipDtoDao">
+		<aspect>aop.traceInterceptor</aspect>
+		<aspect>dao.interceptor</aspect>
+	</component>
+</components>
