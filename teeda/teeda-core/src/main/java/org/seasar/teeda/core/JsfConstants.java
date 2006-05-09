@@ -22,9 +22,12 @@ import org.seasar.teeda.core.render.html.HtmlRenderKitImpl;
  * @author shot
  * @author manhole
  * @author yone
+ * @author higa
  */
 public interface JsfConstants {
 
+    public String LINE_SP = System.getProperty("line.separator");
+    
     public String MESSAGES = "Messages";
 
     public String DEFAULT_XML_NS = "http://java.sun.com/JSF/Configuration";
