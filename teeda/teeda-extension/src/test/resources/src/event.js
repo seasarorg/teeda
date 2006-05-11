@@ -16,44 +16,46 @@ Kumu.extend(Kumu.Event, {
   caches: false,
   
   _cached: function(element, name, observer, useCapture) {
-    if (!this.caches){
-    	 this.caches = [];
+  	var self = Kumu.Event;
+    if (!self.caches){
+    	 self.caches = [];
     }
-    
-    if (element.addeventListener) {
-      this.caches.push([element, name, observer, useCapture]);
-      element.addeventListener(name, observer, useCapture);
-    } else if (element.attachevent) {
-      this.caches.push([element, name, observer, useCapture]);
-      element.attachevent('on' + name, observer);
+    if (element.addEventListener) {
+      self.caches.push([element, name, observer, useCapture]);
+      element.addEventListener(name, observer, useCapture);
+    } else if (element.attachEvent) {
+      self.caches.push([element, name, observer, useCapture]);
+      element.attachEvent('on' + name, observer);
     }
   },
   
   unloadCache: function() {
-    if (!this.caches){
+  	var self = Kumu.Event;
+    if (!self.caches){
     	 return;
     }
     
-    for (var i = 0; i < this.caches.length; i++) {
-      this.stopObserving.apply(this, this.caches[i]);
-      this.caches[i][0] = null;
+    for (var i = 0; i < self.caches.length; i++) {
+      self.stopObserving.apply(this, self.caches[i]);
+      self.caches[i][0] = null;
     }
-    this.caches = false;
+    self.caches = false;
   },
 
   observe: function(element, name, observer, useCapture) {
-    var element = $i(element);
+  	var self = Kumu.Event;
+    var ele = $i(element);
     useCapture = useCapture || false;
     
     if (name == 'keypress' && (navigator.appVersion.match(/Konqueror|Safari|KHTML/) 
-     || element.attachevent)){
+     || ele.attachevent)){
       name = 'keydown';
     }
-    
-    this._cached(element, name, observer, useCapture);
+    self._cached(ele, name, observer, useCapture);
   },
 
   stopObserving: function(element, name, observer, useCapture) {
+  	var self = Kumu.Event;
     var element = $i(element);
     useCapture = useCapture || false;
     

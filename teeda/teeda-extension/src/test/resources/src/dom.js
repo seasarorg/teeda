@@ -85,13 +85,14 @@ Kumu.extend(Kumu.DOM, {
         if((!node)||(!ref)){ 
 	        return false; 
 	    }
+	    var self = Kumu.DOM;
 	    node = $i(node);
         ref = $i(ref);
 	    var pn = ref.parentNode;
 	    if(ref == pn.lastChild){
 		    pn.appendChild(node);
 	    }else{
-		    return this.insertBefore(node, ref.nextSibling);
+		    return self.insertBefore(node, ref.nextSibling);
 	    } 
 	    return true;
     },
@@ -100,16 +101,17 @@ Kumu.extend(Kumu.DOM, {
 	    if((!node)||(!ref)||(!position)){ 
 	        return false; 
 	    }
-        node = $i(node);
+	    var self = Kumu.DOM;
+	    node = $i(node);
         ref = $i(ref);
 	    switch(position.toLowerCase()){
 		    case "before":
-			    return Kumu.DOM.insertBefore(node, ref);
+			    return self.insertBefore(node, ref);
 		    case "after":
-			    return Kumu.DOM.insertAfter(node, ref);
+			    return self.insertAfter(node, ref);
 		    case "first":
 			    if(ref.firstChild){
-				    return Kumu.DOM.insertBefore(node, ref.firstChild);
+				    return self.insertBefore(node, ref.firstChild);
 			    }else{
 				    ref.appendChild(node);
 				    return true;
