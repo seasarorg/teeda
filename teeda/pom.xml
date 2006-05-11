@@ -35,11 +35,27 @@
       <timezone>+9</timezone>
     </developer>
     <developer>
+      <id>higa</id>
+      <name>HIGA Yasuo</name>
+      <email></email>
+      <url>http://d.hatena.ne.jp/higayasuo/</url>
+      <timezone>+9</timezone>
+    </developer>
+    <developer>
       <id>manhole</id>
       <name>HONMA Hirotaka</name>
       <email>manholex@gmail.com</email>
       <organization>ARK Systems Co., Ltd.</organization>
       <organizationUrl>http://www.arksystems.co.jp/</organizationUrl>
+      <timezone>+9</timezone>
+    </developer>
+    <developer>
+      <id>tidus</id>
+      <name/>
+      <email/>
+      <url/>
+      <organization/>
+      <organizationUrl/>
       <timezone>+9</timezone>
     </developer>
     <developer>
@@ -66,6 +82,13 @@
       <url></url>
       <organization></organization>
       <organizationUrl></organizationUrl>
+      <timezone>+9</timezone>
+    </developer>
+    <developer>
+      <id>koichik</id>
+      <name>KOBAYASHI Koichi</name>
+      <email></email>
+      <url>http://d.hatena.ne.jp/koichik/</url>
       <timezone>+9</timezone>
     </developer>
   </developers>
