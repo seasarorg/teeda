@@ -17,6 +17,7 @@ package org.seasar.teeda.core.context.servlet;
 
 import java.util.Enumeration;
 
+import javax.faces.internal.AssertionUtil;
 import javax.servlet.ServletContext;
 
 import org.seasar.teeda.core.context.AbstractExternalContextMap;
@@ -29,9 +30,7 @@ public class ServletApplicationMap extends AbstractExternalContextMap {
     private ServletContext context_;
 
     public ServletApplicationMap(ServletContext context) {
-        if (context == null) {
-            throw new NullPointerException();
-        }
+        AssertionUtil.assertNotNull("ServletContext is null.", context);
         context_ = context;
     }
 

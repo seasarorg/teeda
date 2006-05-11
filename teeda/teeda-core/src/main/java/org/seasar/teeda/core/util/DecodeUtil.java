@@ -20,6 +20,7 @@ import java.util.Map;
 import javax.faces.component.EditableValueHolder;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.internal.AssertionUtil;
 
 import org.seasar.teeda.core.exception.NoEditableValueHolderRuntimeException;
 
@@ -33,12 +34,8 @@ public class DecodeUtil {
     }
 
     public static void decode(FacesContext context, UIComponent component) {
-        if (context == null) {
-            throw new NullPointerException("context");
-        }
-        if (component == null) {
-            throw new NullPointerException("component");
-        }
+        AssertionUtil.assertNotNull("context is null.", context);
+        AssertionUtil.assertNotNull("component is null.", component);
         if (!(component instanceof EditableValueHolder)) {
             throw new NoEditableValueHolderRuntimeException(component
                     .getClass());
@@ -53,12 +50,8 @@ public class DecodeUtil {
     }
 
     public static void decodeMany(FacesContext context, UIComponent component) {
-        if (context == null) {
-            throw new NullPointerException("context");
-        }
-        if (component == null) {
-            throw new NullPointerException("component");
-        }
+        AssertionUtil.assertNotNull("context is null.", context);
+        AssertionUtil.assertNotNull("component is null.", component);
         if (!(component instanceof EditableValueHolder)) {
             throw new NoEditableValueHolderRuntimeException(component
                     .getClass());

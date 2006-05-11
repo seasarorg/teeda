@@ -38,6 +38,7 @@ import javax.faces.el.ReferenceSyntaxException;
 import javax.faces.el.ValueBinding;
 import javax.faces.el.VariableResolver;
 import javax.faces.event.ActionListener;
+import javax.faces.internal.AssertionUtil;
 import javax.faces.validator.Validator;
 
 import org.seasar.framework.util.StringUtil;
@@ -105,9 +106,7 @@ public class ApplicationImpl extends Application implements
     }
 
     public void setActionListener(ActionListener listener) {
-        if (listener == null) {
-            throw new NullPointerException("ActionListener is null.");
-        }
+        AssertionUtil.assertNotNull("ActionListener is null.", listener);
         listener_ = listener;
     }
 
@@ -116,9 +115,7 @@ public class ApplicationImpl extends Application implements
     }
 
     public void setDefaultLocale(Locale locale) {
-        if (locale == null) {
-            throw new NullPointerException("Locale is null.");
-        }
+        AssertionUtil.assertNotNull("Locale is null.", locale);
         locale_ = locale;
     }
 
@@ -135,9 +132,7 @@ public class ApplicationImpl extends Application implements
     }
 
     public void setMessageBundle(String bundle) {
-        if (bundle == null) {
-            throw new NullPointerException("MessageBundle is null.");
-        }
+        AssertionUtil.assertNotNull("MessageBundle is null.", bundle);
         bundle_ = bundle;
     }
 
@@ -146,9 +141,7 @@ public class ApplicationImpl extends Application implements
     }
 
     public void setNavigationHandler(NavigationHandler handler) {
-        if (handler == null) {
-            throw new NullPointerException("NavigationHandler is null.");
-        }
+        AssertionUtil.assertNotNull("NavigationHandler is null.", handler);
         navigationHandler_ = handler;
     }
 
@@ -157,9 +150,7 @@ public class ApplicationImpl extends Application implements
     }
 
     public void setPropertyResolver(PropertyResolver resolver) {
-        if (resolver == null) {
-            throw new NullPointerException("PropertyResolver is null.");
-        }
+        AssertionUtil.assertNotNull("PropertyResolver is null.", resolver);
         propertyResolver_ = resolver;
     }
 
@@ -168,9 +159,7 @@ public class ApplicationImpl extends Application implements
     }
 
     public void setVariableResolver(VariableResolver resolver) {
-        if (resolver == null) {
-            throw new NullPointerException("VariableResolver is null.");
-        }
+        AssertionUtil.assertNotNull("VariableResolver is null.", resolver);
         variableResolver_ = resolver;
     }
 
@@ -179,9 +168,7 @@ public class ApplicationImpl extends Application implements
     }
 
     public void setViewHandler(ViewHandler handler) {
-        if (handler == null) {
-            throw new NullPointerException("ViewHandler is null.");
-        }
+        AssertionUtil.assertNotNull("ViewHandler is null.", handler);
         viewHandler_ = handler;
     }
 
@@ -252,9 +239,7 @@ public class ApplicationImpl extends Application implements
     }
 
     public void addConverter(Class targetClass, String converterClassName) {
-        if (targetClass == null) {
-            throw new NullPointerException("targetClass is null");
-        }
+        AssertionUtil.assertNotNull("targetClass is null", targetClass);
         if (StringUtil.isEmpty(converterClassName)) {
             throw new NullPointerException("converterClass is null");
         }
@@ -264,9 +249,7 @@ public class ApplicationImpl extends Application implements
     }
 
     public Converter createConverter(String converterId) {
-        if (converterId == null) {
-            throw new NullPointerException("converterId is null");
-        }
+        AssertionUtil.assertNotNull("converterId is null", converterId);
         Object component = componentLookupStrategy_
                 .getComponentByName(converterId);
         if (component != null) {
@@ -284,32 +267,26 @@ public class ApplicationImpl extends Application implements
     }
 
     public Converter createConverter(Class targetClass) {
-        if (targetClass == null) {
-            throw new NullPointerException("targetClass");
-        }
+        AssertionUtil.assertNotNull("targetClass is null", targetClass);
         return doCreateConverterByTargetClass(targetClass);
     }
 
     public void addConverterConfiguration(String converterId,
             ConverterConfiguration converterConfiguration) {
         if (StringUtil.isEmpty(converterId)) {
-            throw new NullPointerException("converterId");
+            throw new NullPointerException("converterId is null.");
         }
-        if (converterConfiguration == null) {
-            throw new NullPointerException("converterConfiguration");
-        }
+        AssertionUtil.assertNotNull("converterConfiguration is null",
+                converterConfiguration);
         List list = getConverterConfigurationList(converterId);
         list.add(converterConfiguration);
     }
 
     public void addConverterConfiguration(Class targetClass,
             ConverterConfiguration converterConfiguration) {
-        if (targetClass == null) {
-            throw new NullPointerException("targetClass");
-        }
-        if (converterConfiguration == null) {
-            throw new NullPointerException("converterConfiguration");
-        }
+        AssertionUtil.assertNotNull("targetClass is null", targetClass);
+        AssertionUtil.assertNotNull("converterConfiguration is null",
+                converterConfiguration);
         List list = getConverterConfigurationList(targetClass);
         list.add(converterConfiguration);
     }
@@ -413,9 +390,7 @@ public class ApplicationImpl extends Application implements
     }
 
     public void setSupportedLocales(Collection supportedLocales) {
-        if (supportedLocales == null) {
-            throw new NullPointerException();
-        }
+        AssertionUtil.assertNotNull("suppoertedLocales is null", supportedLocales);
         supportedLocales_ = supportedLocales;
     }
 
@@ -432,9 +407,7 @@ public class ApplicationImpl extends Application implements
     }
 
     public Validator createValidator(String validatorId) throws FacesException {
-        if (validatorId == null) {
-            throw new NullPointerException();
-        }
+        AssertionUtil.assertNotNull("validatorId is null", validatorId);
         Object component = componentLookupStrategy_
                 .getComponentByName(validatorId);
         if (component != null) {
@@ -454,9 +427,7 @@ public class ApplicationImpl extends Application implements
 
     public MethodBinding createMethodBinding(String ref, Class[] params)
             throws ReferenceSyntaxException {
-        if (ref == null) {
-            throw new NullPointerException();
-        }
+        AssertionUtil.assertNotNull("ref is null", ref);
         if (mbContext_ == null) {
             throw new NoMethodBindingContextException(ref, params);
         }
@@ -465,9 +436,7 @@ public class ApplicationImpl extends Application implements
 
     public ValueBinding createValueBinding(String ref)
             throws ReferenceSyntaxException {
-        if (ref == null) {
-            throw new NullPointerException();
-        }
+        AssertionUtil.assertNotNull("ref is null", ref);
         if (vbContext_ == null) {
             throw new NoValueBindingContextException(ref);
         }

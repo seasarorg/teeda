@@ -24,6 +24,7 @@ import javax.faces.el.PropertyNotFoundException;
 import javax.faces.el.PropertyResolver;
 import javax.faces.el.ReferenceSyntaxException;
 import javax.faces.el.VariableResolver;
+import javax.faces.internal.AssertionUtil;
 
 import org.seasar.teeda.core.el.ELParser;
 import org.seasar.teeda.core.el.ExpressionProcessor;
@@ -76,9 +77,7 @@ public class ValueBindingImpl extends ValueBindingBase {
 
     public void setValue(FacesContext context, Object newValue)
             throws EvaluationException, PropertyNotFoundException {
-        if (context == null) {
-            throw new NullPointerException("context");
-        }
+        AssertionUtil.assertNotNull("context is null.", context);
         try {
             ExpressionProcessor processor = parser_.getExpressionProcessor();
             Object obj = processor.resolveBase(context, expression_);

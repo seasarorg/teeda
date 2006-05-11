@@ -18,6 +18,8 @@ package org.seasar.teeda.core.util;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import javax.faces.internal.AssertionUtil;
+
 public class LoopIterator implements Iterator {
 
     private static final int INITIAL_INDEX = 0;
@@ -27,9 +29,7 @@ public class LoopIterator implements Iterator {
     private int index_ = INITIAL_INDEX;
 
     public LoopIterator(Object[] values) {
-        if (values == null) {
-            throw new NullPointerException("values");
-        }
+        AssertionUtil.assertNotNull("values is null.", values);
         values_ = values;
     }
 

@@ -27,6 +27,7 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.faces.context.ExternalContext;
+import javax.faces.internal.AssertionUtil;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -98,9 +99,7 @@ public class ServletExternalContextImpl extends ExternalContext {
     }
 
     public String encodeActionURL(String url) {
-        if (url == null) {
-            throw new NullPointerException();
-        }
+        AssertionUtil.assertNotNull("url is null.", url);
         if (!isHttpServletResponse_) {
             throw new IllegalStateException();
         }
@@ -109,16 +108,12 @@ public class ServletExternalContextImpl extends ExternalContext {
     }
 
     public String encodeNamespace(final String name) {
-        if (name == null) {
-            throw new NullPointerException();
-        }
+        AssertionUtil.assertNotNull("name is null.", name);
         return name;
     }
 
     public String encodeResourceURL(String url) {
-        if (url == null) {
-            throw new NullPointerException();
-        }
+        AssertionUtil.assertNotNull("url is null.", url);
         if (!isHttpServletResponse_) {
             throw new IllegalStateException();
         }
@@ -299,9 +294,7 @@ public class ServletExternalContextImpl extends ExternalContext {
     }
 
     public void log(String message) {
-        if (message == null) {
-            throw new NullPointerException();
-        }
+        AssertionUtil.assertNotNull("message is null.", message);
         context_.log(message);
         logger_.debug(message);
     }

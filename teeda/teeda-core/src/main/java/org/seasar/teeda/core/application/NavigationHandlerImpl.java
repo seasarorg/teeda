@@ -26,6 +26,7 @@ import javax.faces.application.ViewHandler;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.faces.internal.AssertionUtil;
 
 import org.seasar.framework.log.Logger;
 import org.seasar.teeda.core.application.navigation.NavigationCaseContext;
@@ -43,9 +44,7 @@ public class NavigationHandlerImpl extends NavigationHandler {
 
     public void handleNavigation(FacesContext context, String fromAction,
             String outcome) {
-        if (context == null) {
-            throw new NullPointerException("context");
-        }
+        AssertionUtil.assertNotNull("context is null.", context);
         if (outcome == null) {
             return;
         }

@@ -24,6 +24,7 @@ import javax.faces.FacesException;
 import javax.faces.application.ViewHandler;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.faces.internal.AssertionUtil;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
@@ -115,9 +116,7 @@ public class ServletExternalContextUtil {
 
     public static void dispatch(String path, ServletRequest request,
             ServletResponse response) throws IOException {
-        if (path == null) {
-            throw new NullPointerException();
-        }
+        AssertionUtil.assertNotNull("path is null.", path);
         RequestDispatcher dispatcher = request.getRequestDispatcher(path);
         try {
             dispatcher.forward(request, response);

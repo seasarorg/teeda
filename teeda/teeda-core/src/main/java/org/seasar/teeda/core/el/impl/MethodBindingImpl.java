@@ -25,6 +25,7 @@ import javax.faces.el.MethodBinding;
 import javax.faces.el.MethodNotFoundException;
 import javax.faces.el.PropertyNotFoundException;
 import javax.faces.el.ReferenceSyntaxException;
+import javax.faces.internal.AssertionUtil;
 
 import org.seasar.teeda.core.el.ELParser;
 import org.seasar.teeda.core.el.ValueBindingBase;
@@ -61,9 +62,7 @@ public class MethodBindingImpl extends MethodBinding implements StateHolder {
 
     public Object invoke(FacesContext context, Object[] params)
             throws EvaluationException, MethodNotFoundException {
-        if (context == null) {
-            throw new NullPointerException();
-        }
+        AssertionUtil.assertNotNull("context is null.", context);
         Object[] obj = getBaseAndProperty(context);
         Object base = obj[0];
         Object property = obj[1];
@@ -89,9 +88,7 @@ public class MethodBindingImpl extends MethodBinding implements StateHolder {
     }
 
     public Class getType(FacesContext context) throws MethodNotFoundException {
-        if (context == null) {
-            throw new NullPointerException();
-        }
+        AssertionUtil.assertNotNull("context is null.", context);
         Object[] obj = getBaseAndProperty(context);
         Object base = obj[0];
         Object property = obj[1];
