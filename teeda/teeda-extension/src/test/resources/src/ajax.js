@@ -23,14 +23,14 @@ Kumu.ajax = Kumu.extend(Kumu.ajax,{
         "Msxml2.XMLHTTP"
     ),
 
-    DEBUG : true,
+    DEBUG : false,
     
     getS2AjaxComponent : function() {
         return new this.AjaxComponent();
     },
     
     AjaxComponent : function () {
-        this.name = AJAX_COMPONENT_NAME;
+        this.name = Kumu.ajax.AJAX_COMPONENT_NAME;
 	    this.responseType = null;
         this.url = "teeda.ajax";
         this.params = null;
@@ -41,9 +41,10 @@ Kumu.ajax = Kumu.extend(Kumu.ajax,{
         var xmlHttp = false;
         /*@cc_on
         @if (@_jscript_version >= 5)
-        for (var i = 0; !xmlHttp && i < axo.length; i++) {
+        var len = Kumu.ajax.axo.length;
+        for (var i = 0; !xmlHttp && i < len; i++) {
             try {
-                xmlHttp = new ActiveXObject(axo[i]);
+                xmlHttp = new ActiveXObject(Kumu.ajax.axo[i]);
             } catch(e) {
             }
         }
@@ -90,7 +91,7 @@ Kumu.ajax = Kumu.extend(Kumu.ajax,{
         } catch(e) {
             return false;
         }
-        if (AJAX_COMPONENT_NAME != name || !component.doAction || !component.url) {
+        if (Kumu.ajax.AJAX_COMPONENT_NAME != name || !component.doAction || !component.url) {
             return false;
         }
         return true;
@@ -107,11 +108,11 @@ Kumu.ajax = Kumu.extend(Kumu.ajax,{
             return;
         }
         var sysdate = new String(new Date());
-        var url = ajaxComponent.url + "?time=" + encodeURL(sysdate);
+        var url = ajaxComponent.url + "?time=" + Kumu.ajax.encodeURL(sysdate);
         var parameters = "";
         if(null != ajaxComponent.params){
             for(var key in ajaxComponent.params){
-                parameters += "&" + key + "=" + encodeURL(ajaxComponent.params[key]);
+                parameters += "&" + key + "=" + Kumu.ajax.encodeURL(ajaxComponent.params[key]);
             }
         }
         url += parameters;
@@ -134,16 +135,16 @@ Kumu.ajax = Kumu.extend(Kumu.ajax,{
 
     _registAjaxListener : function(req, ajaxComponent) {
         req.onreadystatechange = function() {
-            if (XML_HTTP_REQUEST_STATUS_COMPLETE == req.readyState) { 
-                if (HTTP_STATUS_OK == req.status) {
-                    if (DEBUG) debugPrint(req.responseText);
+            if (Kumu.ajax.XML_HTTP_REQUEST_STATUS_COMPLETE == req.readyState) { 
+                if (Kumu.ajax.HTTP_STATUS_OK == req.status) {
+                    if (Kumu.ajax.DEBUG) Kumu.ajax.debugPrint(req.responseText);
                     if (ajaxComponent.responseType) {
                         ajaxComponent.doAction(req.responseXML);
                     } else {
    	            	    ajaxComponent.doAction(req.responseText);
    	                }
 			    } else {
-        		    this.debugPrint("AjaxError! status["+req.status+"] message["+req.responseText+"]", true);
+        		    Kumu.ajax.debugPrint("AjaxError! status["+req.status+"] message["+req.responseText+"]", true);
 			    }
             }
         };
@@ -179,7 +180,7 @@ Kumu.ajax = Kumu.extend(Kumu.ajax,{
             ajax.params["action"] = components[1];
         }
         ajax.doAction = callback;
-        executeAjax(ajax);   
+        Kumu.ajax.executeAjax(ajax);   
     }
     
 });
