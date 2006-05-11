@@ -17,8 +17,9 @@ package org.seasar.teeda.extension.annotation.backport175;
 
 /**
  * @author shot
+ * @org.seasar.teeda.extension.annotation.backport175.ValidatorTarget(id=teeda.core.RegularExpression)
  */
-public interface ValidatorTarget {
+public interface RegularExpressionValidator {
 
-	String id();
+	String pattern();
 }

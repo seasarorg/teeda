@@ -17,8 +17,11 @@ package org.seasar.teeda.extension.annotation.backport175;
 
 /**
  * @author shot
+ * @org.seasar.teeda.extension.annotation.backport175.ValidatorTarget(id=teeda.core.ByteLength)
  */
-public interface ValidatorTarget {
+public interface ByteLengthValidator {
 
-	String id();
+	int minimum();
+	
+	int maximum();
 }

@@ -17,8 +17,11 @@ package org.seasar.teeda.extension.annotation.backport175;
 
 /**
  * @author shot
+ * @org.seasar.teeda.extension.annotation.backport175.ValidatorTarget(id=javax.faces.DoubleRange)
  */
-public interface ValidatorTarget {
+public interface DoubleRangeValidator {
 
-	String id();
+	double minimum();
+	
+	double maximum();
 }

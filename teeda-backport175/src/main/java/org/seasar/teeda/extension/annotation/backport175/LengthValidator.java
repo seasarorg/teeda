@@ -17,8 +17,11 @@ package org.seasar.teeda.extension.annotation.backport175;
 
 /**
  * @author shot
+ * @org.seasar.teeda.extension.annotation.backport175.ValidatorTarget(id=javax.faces.Length)
  */
-public interface ValidatorTarget {
+public interface LengthValidator {
 
-	String id();
+	int minimum();
+	
+	int maximum();
 }
