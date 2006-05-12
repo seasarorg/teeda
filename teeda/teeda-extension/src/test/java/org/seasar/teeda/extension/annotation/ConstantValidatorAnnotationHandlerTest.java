@@ -62,6 +62,29 @@ public class ConstantValidatorAnnotationHandlerTest extends TeedaTestCase {
 
     }
 
+    public void testRegisterValidator_removeSuffix() throws Exception {
+        getContainer().register(LengthValidator.class, "length");
+        ConstantValidatorAnnotationHandler handler = new ConstantValidatorAnnotationHandler();
+        handler.addIgnoreSuffix("Impl");
+        handler.addIgnoreSuffix("Bean");
+        ValidatorResource resources = new ValidatorResourceImpl();
+        handler.setValidatorResource(resources);
+        ComponentDef cDef = new ComponentDefImpl(HogeBeanImpl.class);
+        handler.registerValidator(cDef);
+        assertTrue(resources.getValidator("#{hoge.name}") instanceof LengthValidator);
+    }
+
+    public void testRegisterValidator_concreteClass() throws Exception {
+        getContainer().register(LengthValidator.class, "length");
+        ConstantValidatorAnnotationHandler handler = new ConstantValidatorAnnotationHandler();
+        handler.addIgnoreSuffix("Impl");
+        ValidatorResource resources = new ValidatorResourceImpl();
+        handler.setValidatorResource(resources);
+        ComponentDef cDef = new ComponentDefImpl(A1Impl.class);
+        handler.registerValidator(cDef);
+        assertTrue(resources.getValidator("#{a1.name}") instanceof LengthValidator);
+    }
+
     public void testGetShortClassName1() throws Exception {
         ConstantValidatorAnnotationHandler handler = new ConstantValidatorAnnotationHandler();
         assertEquals("ConstantValidatorAnnotationHandlerTest", handler
@@ -172,4 +195,38 @@ public class ConstantValidatorAnnotationHandlerTest extends TeedaTestCase {
 
     }
 
+    public static class HogeBeanImpl {
+        private String name = null;
+
+        public static final String name_VALIDATOR = "{length, minimum=2, maximum=5}";
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+    }
+
+    public static interface A1 {
+
+        public static final String name_VALIDATOR = "{length, minimum=2, maximum=5}";
+
+    }
+    
+    public static class A1Impl implements A1 {
+
+        private String name = null;
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+    }
 }
