@@ -9,6 +9,6 @@
 		</initMethod>
 	</component>
 	
-	<component class="org.seasar.teeda.extension.annotation.assembler.AnnotationEnhanceManagedBeanAssembler"/>
+	<component class="org.seasar.teeda.extension.annotation.provider.AnnotationEnhanceAssembleProvider"/>
 	
 </components>
