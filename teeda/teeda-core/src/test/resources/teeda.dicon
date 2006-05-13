@@ -4,7 +4,6 @@
 <components namespace="teeda">
 
 	<include path="teedaErrorPage.dicon" />
-	<include path="teedaExtension.dicon" />
 
 	<!-- ExternalContext -->
 	<component name="externalContext" class="org.seasar.teeda.core.context.servlet.ServletExternalContextImpl">

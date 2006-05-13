@@ -74,7 +74,7 @@ public class DefaultAssembleProvider implements AssembleProvider {
             FacesConfig facesConfig) {
         List navigationRules = facesConfig.getNavigationRuleElements();
         return new DefaultNavigationRuleAssembler(navigationRules,
-                externalContext_);
+                getExternalContext());
     }
 
     public RenderKitAssembler assembleRenderKits(FacesConfig facesConfig) {
@@ -84,11 +84,14 @@ public class DefaultAssembleProvider implements AssembleProvider {
 
     public LifecycleAssembler assembleLifecycle(FacesConfig facesConfig) {
         List lifecycles = facesConfig.getLifecycleElements();
-        return new DefaultLifecycleAssembler(lifecycles, externalContext_);
+        return new DefaultLifecycleAssembler(lifecycles, getExternalContext());
     }
 
     public void setExternalContext(ExternalContext externalContext) {
         externalContext_ = externalContext;
     }
 
+    public ExternalContext getExternalContext() {
+        return externalContext_;
+    }
 }

@@ -3,6 +3,8 @@
 	"http://www.seasar.org/dtd/components24.dtd">
 <components>
 	
+	<include path="teeda.dicon" />
+	
 	<component class="org.seasar.teeda.extension.annotation.ConstantValidatorAnnotationHandler">
 		<initMethod name="addIgnoreSuffix">
 			<arg>"Impl"</arg>
