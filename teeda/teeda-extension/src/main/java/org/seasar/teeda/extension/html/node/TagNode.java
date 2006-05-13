@@ -14,7 +14,9 @@ public class TagNode implements HtmlNode {
     
     private List children = new ArrayList();
     
-    private StringBuffer buffer; 
+    private StringBuffer buffer;
+    
+    private int childTextSize;
     
     public TagNode(String tagName, Map properties) {
         this.tagName = tagName;
@@ -56,6 +58,18 @@ public class TagNode implements HtmlNode {
 
     public void addChild(HtmlNode child) {
         children.add(child);
+    }
+    
+    public int getChildTextSize() {
+        return childTextSize;
+    }
+    
+    public void incrementChildTextSize() {
+        ++childTextSize;
+    }
+    
+    public void decrementChildTextSize() {
+        --childTextSize;
     }
     
     public String toString() {

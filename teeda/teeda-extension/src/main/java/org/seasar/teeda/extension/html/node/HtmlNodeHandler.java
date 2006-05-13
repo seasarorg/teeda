@@ -43,43 +43,33 @@ public class HtmlNodeHandler extends DefaultHandler {
 
         Map props = HtmlNodeUtil.convertMap(attributes);
         if (root == null) {
-            TagNode r = new TagNode(qName, props); 
-            root = r;
-            push(r);
+            TagNode n = new TagNode(qName, props);
+            root = n;
+            push(n);
         } else {
-            TagNode parent = peekTagNode();
+            TagNode parent = peek();
             if (attributes.getValue(JsfConstants.ID_ATTR) != null) {
                 TagNode tagNode = new TagNode(qName, props);
                 parent.addTagNode(tagNode);
                 push(tagNode);
             } else {
                 parent.addText(HtmlNodeUtil.getStartTagString(qName, props));
-                push(new TextProcessingNode());
+                parent.incrementChildTextSize();
             }
         }
         
 	}
 
-	protected HtmlNode peek() {
-		return (HtmlNode) nodeStack.peek();
+	protected TagNode peek() {
+		return (TagNode) nodeStack.peek();
 	}
-    
-    protected TagNode peekTagNode() {
-        for (int i = nodeStack.size() - 1; i >= 0; --i) {
-            HtmlNode n = (HtmlNode) nodeStack.get(i);
-            if (n instanceof TagNode) {
-                return (TagNode) n;
-            }
-        }
-        throw new IllegalStateException();
-    }
 
-	protected HtmlNode pop() {
-		return (HtmlNode) nodeStack.pop();
+	protected TagNode pop() {
+		return (TagNode) nodeStack.pop();
 	}
     
-    protected void push(HtmlNode htmlNode) {
-        nodeStack.push(htmlNode);
+    protected void push(TagNode node) {
+        nodeStack.push(node);
     }
 
 	public void characters(char[] buffer, int start, int length) {
@@ -87,17 +77,18 @@ public class HtmlNodeHandler extends DefaultHandler {
             return;
         }
 		String text = new String(buffer, start, length);
-        TagNode tagNode = peekTagNode();
+        TagNode tagNode = peek();
         tagNode.addText(text);
 	}
 
 	public void endElement(String namespaceURI, String localName, String qName) {
-        HtmlNode current = pop();
-        if (current instanceof TagNode) {
-            ((TagNode) current).endElement();
+        TagNode current = peek();
+        if (current.getChildTextSize() == 0) {
+            current.endElement();
+            pop();
         } else {
-            TagNode parent = peekTagNode();
-            parent.addText(HtmlNodeUtil.getEndTagString(qName));
+            current.addText(HtmlNodeUtil.getEndTagString(qName));
+            current.decrementChildTextSize();
         }
 	}
 
