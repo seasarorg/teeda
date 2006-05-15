@@ -26,15 +26,17 @@ function zipBean_getAddress(response){
     
 	ele.style.display = 'block';
     ele.style.position = 'absolute';
-    var ul = document.createElement('ul');
     var len = json.address.length;
+    var ul = document.createElement('ul');
     for(var i = 0; i < len; i++){
         var addr = json.address[i].split(':')[0];
         var li  = document.createElement('li');
+        
         li.innerHTML = addr.toString();
+        li.setAttribute('val', addr.toString());
         ul.appendChild(li);
         
-		Kumu.Event.observe(li, 'click', entry(li));
+		Kumu.Event.observe(li, 'click', yone(li));
 		Kumu.Event.observe(li, 'mouseover', active(li));
 		Kumu.Event.observe(li, 'mouseout', nonactive(li));
     }
@@ -42,6 +44,14 @@ function zipBean_getAddress(response){
 	
 	//createOpt(document.frm.address, json);
     document.frm.zipcode.disabled = false;
+}
+
+function yone(x){
+    var value = x.getAttribute('val');
+    return function(event){
+        document.frm.zipcode.value = value;
+	    $i('demo_').style.display = 'none';
+    }
 }
 
 function active(e){
@@ -59,12 +69,10 @@ function nonactive(e){
 }
 
 function entry(e){
-	
 	return function(event){
 		var el = e;
-		alert(event);
+		//alert(event);
  	}
-
 }
 
 function demo(zipcode){
@@ -81,15 +89,17 @@ function send(){
 
 function hide() {
 	this.update = $i('demo_');
-   	if(this.update.style.display != 'none'){
-   		this.update.style.display = 'none';
+	var disp = this.update.style.display;
+   	if(disp != 'none'){
+   		disp = 'none';
    	}
 }
 
-
 function load(){
+/*
 	Kumu.Event.observe($i('demo'), "blur", hide);
-	Kumu.Event.observe($i('demo'), "keypress", hide);
+	Kumu.Event.observe($i('demo'), "click", hide);
+*/	
 	Kumu.Event.observe('demo', 'keyup', send);
 }
 
@@ -135,12 +145,10 @@ Kumu.Event.observe(window, 'load', load);
 	<tr>
 		<td valign="top" align="center"><input type="text" name="zipcode"
 			id="demo" maxlength="7" style="width:70px;" />
-		<div id="demo_" />
+		<div id="demo_"/>
 		</td>
 	</tr>
 </table>
-
-
 <hr />
 </form>
 </body>
