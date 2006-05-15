@@ -1,0 +1,147 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<script language="JavaScript" src="../js/kumu.js"></script>
+<script language="JavaScript" src="../js/ajax.js"></script>
+<script language="JavaScript" src="../js/event.js"></script>
+<script language="JavaScript">
+<!--
+function init(){
+    var val = "1066001";
+    var zip = document.frm.zipcode;
+    zip.value = val;
+    zip.disabled = true;
+    demo(val);
+}
+
+// exec zipBean#getAddress see ajax.dicon
+function zipBean_getAddress(response){
+    var ele = $i('demo_');
+	if(ele.firstChild){
+		ele.removeChild(ele.firstChild);
+	}
+	
+	if(!response) return;
+    var json = eval('('+response+')');
+    
+	ele.style.display = 'block';
+    ele.style.position = 'absolute';
+    var ul = document.createElement('ul');
+    var len = json.address.length;
+    for(var i = 0; i < len; i++){
+        var addr = json.address[i].split(':')[0];
+        var li  = document.createElement('li');
+        li.innerHTML = addr.toString();
+        ul.appendChild(li);
+        
+		Kumu.Event.observe(li, 'click', entry(li));
+		Kumu.Event.observe(li, 'mouseover', active(li));
+		Kumu.Event.observe(li, 'mouseout', nonactive(li));
+    }
+	ele.appendChild(ul);
+	
+	//createOpt(document.frm.address, json);
+    document.frm.zipcode.disabled = false;
+}
+
+function active(e){
+	return function(event){
+		var el = e;
+		el.className = "selected";
+	}
+}
+
+function nonactive(e){
+	return function(event){
+		var el = e;
+		el.className = "";
+	}
+}
+
+function entry(e){
+	
+	return function(event){
+		var el = e;
+		alert(event);
+ 	}
+
+}
+
+function demo(zipcode){
+    if(zipcode == "" || zipcode.match(/[^0-9]/g) || zipcode.length < 3) return;
+    //zipBean_getAddress( '{address: [ "1:eeee", "2:ww","3:uuuu" ]}');
+    // execute Ajax
+    Kumu.ajax.executeTeedaAjax(zipBean_getAddress, {"zipcode" : zipcode});
+}
+
+function send(){
+   var v = $i("demo").value;
+   demo(v);
+}
+
+function hide() {
+	this.update = $i('demo_');
+   	if(this.update.style.display != 'none'){
+   		this.update.style.display = 'none';
+   	}
+}
+
+
+function load(){
+	Kumu.Event.observe($i('demo'), "blur", hide);
+	Kumu.Event.observe($i('demo'), "keypress", hide);
+	Kumu.Event.observe('demo', 'keyup', send);
+}
+
+Kumu.Event.observe(window, 'load', load);
+
+//-->
+</script>
+<style>
+  #demo_ {
+    width: 350px;
+    background: #fff;
+  }
+  #demo_ ul {
+    border:1px solid #888;
+    margin:0;
+    padding:0;
+    width:100%;
+    list-style-type:none;
+  }
+  #demo_ ul li {
+    margin:0;
+    padding:3px;
+  }
+  
+  #demo_ ul li.selected { 
+    background-color: #ffb; 
+  }
+  
+</style>
+
+</head>
+<body onload="javascript:init();">
+<marquee width="146" behavior="alternate" scrolldelay="140"><font
+	color="blue">Ajax Demo</font></marquee>
+<br />
+<img src="http://teeda.seasar.org/teeda_banner.png" border="0" />
+<form name="frm">
+<hr />
+<table border="1">
+	<tr>
+		<td><font size="2px;">Auto Complete サンプル〒(数値のみ)</font></td>
+	</tr>
+	<tr>
+		<td valign="top" align="center"><input type="text" name="zipcode"
+			id="demo" maxlength="7" style="width:70px;" />
+		<div id="demo_" />
+		</td>
+	</tr>
+</table>
+
+
+<hr />
+</form>
+</body>
+</html>
