@@ -13,11 +13,24 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.extension.html;
+package org.seasar.teeda.extension.render.html;
 
-import java.io.InputStream;
+import javax.faces.render.AbstractRendererTest;
 
-public interface HtmlParser {
+import org.seasar.teeda.extension.component.UIText;
 
-    HtmlNode parse(InputStream is);
+/**
+ * @author higa
+ *
+ */
+public class HtmlTextRendererTest extends AbstractRendererTest {
+
+	public void testEncode() throws Exception {
+        UIText component = new UIText();
+        String value = "hoge";
+        component.setValue(value);
+        HtmlTextRenderer renderer = new HtmlTextRenderer();
+        encodeByRenderer(renderer, component);
+		assertEquals("1", value, getResponseText());
+	}
 }

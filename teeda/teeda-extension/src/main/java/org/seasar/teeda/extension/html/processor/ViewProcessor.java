@@ -13,11 +13,22 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.extension.html;
+package org.seasar.teeda.extension.html.processor;
 
-import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
-public interface HtmlParser {
+import org.seasar.teeda.core.taglib.core.ViewTag;
 
-    HtmlNode parse(InputStream is);
+/**
+ * @author higa
+ * 
+ */
+public class ViewProcessor extends ElementProcessorImpl {
+
+    private static Map EMPTY_PROPERTIES = new HashMap();
+    
+    public ViewProcessor() {
+        super(ViewTag.class, EMPTY_PROPERTIES);
+    }
 }

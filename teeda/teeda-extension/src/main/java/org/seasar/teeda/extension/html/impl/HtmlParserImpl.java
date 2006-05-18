@@ -13,11 +13,24 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.extension.html;
+package org.seasar.teeda.extension.html.impl;
 
 import java.io.InputStream;
 
-public interface HtmlParser {
+import javax.xml.parsers.SAXParser;
 
-    HtmlNode parse(InputStream is);
+import org.seasar.framework.util.SAXParserFactoryUtil;
+import org.seasar.framework.util.SAXParserUtil;
+import org.seasar.teeda.extension.html.HtmlNode;
+import org.seasar.teeda.extension.html.HtmlParser;
+import org.xml.sax.InputSource;
+
+public class HtmlParserImpl implements HtmlParser {
+
+    public HtmlNode parse(InputStream is) {
+        SAXParser parser = SAXParserFactoryUtil.newSAXParser();
+        HtmlNodeHandler handler = new HtmlNodeHandler();
+        SAXParserUtil.parse(parser, new InputSource(is), handler);
+        return handler.getRoot();
+    }
 }

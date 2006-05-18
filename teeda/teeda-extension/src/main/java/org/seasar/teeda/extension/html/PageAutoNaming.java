@@ -15,9 +15,9 @@
  */
 package org.seasar.teeda.extension.html;
 
-import java.io.InputStream;
+public interface PageAutoNaming {
 
-public interface HtmlParser {
-
-    HtmlNode parse(InputStream is);
+    String convertToPageName(String htmlPath);
+    
+    String convertToHtmlPath(String pageName);
 }

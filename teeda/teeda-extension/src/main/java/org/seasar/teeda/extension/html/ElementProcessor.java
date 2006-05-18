@@ -15,9 +15,26 @@
  */
 package org.seasar.teeda.extension.html;
 
-import java.io.InputStream;
 
-public interface HtmlParser {
 
-    HtmlNode parse(InputStream is);
+
+public interface ElementProcessor extends TagProcessor {
+
+    Class getTagClass();
+
+    int getChildSize();
+
+    TagProcessor getChild(int index);
+
+    void addElement(ElementProcessor processor);
+
+    void addText(String text);
+
+    void endElement();
+    
+    int getChildTextSize();
+    
+    void incrementChildTextSize();
+    
+    void decrementChildTextSize();
 }

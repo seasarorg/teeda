@@ -13,11 +13,36 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.extension.html;
+package org.seasar.teeda.extension.config.taglib.element.impl;
 
-import java.io.InputStream;
+import org.seasar.teeda.extension.config.taglib.element.TagElement;
 
-public interface HtmlParser {
+/**
+ * @author higa
+ *  
+ */
+public class TagElementImpl implements TagElement {
 
-    HtmlNode parse(InputStream is);
+    private String name;
+
+    private Class tagClass;
+
+    public TagElementImpl() {
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Class getTagClass() {
+        return tagClass;
+    }
+
+    public void setTagClass(Class tagClass) {
+        this.tagClass = tagClass;
+    }
 }

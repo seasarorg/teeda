@@ -15,9 +15,14 @@
  */
 package org.seasar.teeda.extension.html;
 
-import java.io.InputStream;
 
-public interface HtmlParser {
+/**
+ * @author higa
+ *
+ */
+public interface ElementProcessorFactory {
 
-    HtmlNode parse(InputStream is);
+	boolean isMatch(ElementNode elementNode);
+
+	ElementProcessor createProcessor(ElementNode elementNode);
 }

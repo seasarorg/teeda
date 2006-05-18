@@ -13,11 +13,25 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.extension.html;
+package org.seasar.teeda.core.exception;
 
-import java.io.InputStream;
+import org.seasar.framework.exception.SRuntimeException;
 
-public interface HtmlParser {
+/**
+ * @author higa
+ *
+ */
+public class TagNotFoundRuntimeException extends SRuntimeException {
 
-    HtmlNode parse(InputStream is);
+	private static final long serialVersionUID = 1L;
+    private String tagName;
+
+	public TagNotFoundRuntimeException(String tagName) {
+		super("ETDA0025", new Object[]{tagName});
+		this.tagName = tagName;
+	}
+	
+	public String getTagName() {
+		return tagName;
+	}
 }

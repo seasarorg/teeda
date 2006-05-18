@@ -15,9 +15,9 @@
  */
 package org.seasar.teeda.extension.html;
 
-import java.io.InputStream;
+public interface HtmlDescCache {
 
-public interface HtmlParser {
-
-    HtmlNode parse(InputStream is);
+    HtmlDesc getHtmlDesc(String viewId);
+    
+    HtmlDesc createHtmlDesc(String viewId);
 }

@@ -15,9 +15,11 @@
  */
 package org.seasar.teeda.extension.html;
 
-import java.io.InputStream;
+/**
+ * @author higa
+ * 
+ */
+public interface TagProcessorAssembler {
 
-public interface HtmlParser {
-
-    HtmlNode parse(InputStream is);
+    TagProcessor assemble(HtmlDesc htmlDesc, PageDesc pageDesc);
 }

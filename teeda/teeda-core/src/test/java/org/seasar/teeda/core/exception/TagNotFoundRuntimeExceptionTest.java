@@ -13,11 +13,20 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.extension.html;
+package org.seasar.teeda.core.exception;
 
-import java.io.InputStream;
+import org.seasar.teeda.core.exception.TagNotFoundRuntimeException;
 
-public interface HtmlParser {
+import junit.framework.TestCase;
 
-    HtmlNode parse(InputStream is);
+/**
+ * @author higa
+ *
+ */
+public class TagNotFoundRuntimeExceptionTest extends TestCase {
+	
+	public void testGetMessage() throws Exception {
+		RuntimeException ex = new TagNotFoundRuntimeException("hoge");
+		System.out.println(ex.getMessage());
+	}
 }

@@ -15,5 +15,6 @@
  */
 package org.seasar.teeda.extension.html;
 
+
 public interface HtmlNode {
 }

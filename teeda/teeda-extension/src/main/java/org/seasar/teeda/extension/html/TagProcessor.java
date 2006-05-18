@@ -15,9 +15,16 @@
  */
 package org.seasar.teeda.extension.html;
 
-import java.io.InputStream;
+import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.PageContext;
+import javax.servlet.jsp.tagext.Tag;
 
-public interface HtmlParser {
-
-    HtmlNode parse(InputStream is);
+/**
+ * @author higa
+ *  
+ */
+public interface TagProcessor {
+    
+    public void process(PageContext pageContext, Tag parentTag)
+			throws JspException;
 }

@@ -62,6 +62,11 @@ public abstract class AbstractRendererTest extends TestCase {
                 .getResponseWriter());
         return htmlResponseWriter.getWriter().toString();
     }
+    
+    protected void encodeByRenderer(Renderer renderer,
+            UIComponent component) throws IOException {
+        encodeByRenderer(renderer, getFacesContext(), component);
+    }
 
     protected void encodeByRenderer(Renderer renderer, FacesContext context,
             UIComponent component) throws IOException {
