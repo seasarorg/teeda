@@ -15,7 +15,6 @@
  */
 package org.seasar.teeda.core.render;
 
-import javax.faces.context.ResponseWriter;
 import javax.faces.render.RenderKit;
 import javax.faces.render.ResponseStateManager;
 

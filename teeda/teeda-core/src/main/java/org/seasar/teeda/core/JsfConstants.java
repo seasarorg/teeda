@@ -26,6 +26,10 @@ import org.seasar.teeda.core.render.html.HtmlRenderKitImpl;
  */
 public interface JsfConstants {
 
+    public String JSF_HTML_URI = "http://java.sun.com/jsf/html";
+
+    public String JSF_CORE_URI = "http://java.sun.com/jsf/core";
+    
     public String LINE_SP = System.getProperty("line.separator");
     
     public String MESSAGES = "Messages";

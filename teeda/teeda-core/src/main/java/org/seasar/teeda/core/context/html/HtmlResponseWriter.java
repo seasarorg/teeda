@@ -375,4 +375,7 @@ public class HtmlResponseWriter extends ResponseWriter {
         return new String(sb);
     }
 
+    public String toString() {
+        return writer_.toString();
+    }
 }

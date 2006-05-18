@@ -28,7 +28,7 @@ public class UriNotFoundRuntimeException extends SRuntimeException {
     private String uri;
 
     public UriNotFoundRuntimeException(String uri) {
-        super("EJSF0005", new Object[] { uri });
+        super("ETDA0026", new Object[] { uri });
         this.uri = uri;
     }
 

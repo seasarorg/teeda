@@ -19,14 +19,13 @@ import java.io.IOException;
 import java.io.Serializable;
 
 import javax.faces.component.UIViewRoot;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.render.ResponseStateManager;
 
+import org.seasar.teeda.core.application.SerializedViewCache;
 import org.seasar.teeda.core.application.TeedaStateManager;
 import org.seasar.teeda.core.application.TreeStructure;
 import org.seasar.teeda.core.util.ResponseStateManagerUtil;
-import org.seasar.teeda.core.util.StateManagerUtil;
 
 /**
  * @author higa
@@ -40,39 +39,38 @@ public class TeedaStateManagerImpl extends TeedaStateManager implements
     public TeedaStateManagerImpl() {
     }
 
-    public UIViewRoot restoreView(FacesContext context, String viewId,
-            String renderKitId) {
+    public synchronized UIViewRoot restoreView(FacesContext context,
+            String viewId, String renderKitId) {
         assertRenderKitIdNotNull(renderKitId);
         UIViewRoot viewRoot = restoreTreeStructure(context, viewId, renderKitId);
         if (viewRoot != null) {
             viewRoot.setViewId(viewId);
             restoreComponentState(context, viewRoot, renderKitId);
-            if (!isSavingStateInClient(context)) {
-                ExternalContext extContext = context.getExternalContext();
-                removeSerializedViewFromServer(extContext, viewId);
-            }
         }
         return viewRoot;
     }
 
-    public SerializedView saveSerializedView(FacesContext context)
+    public synchronized SerializedView saveSerializedView(FacesContext context)
             throws IllegalStateException {
         UIViewRoot viewRoot = context.getViewRoot();
-        StateManagerUtil.assertComponentNoDuplicateId(viewRoot);
-        Object struct = getTreeStructureToSave(context);
-        Object state = getComponentStateToSave(context);
-        SerializedView serializedView = new SerializedView(struct, state);
         if (isSavingStateInClient(context)) {
-            return serializedView;
+            return createSerializedView(context);
         }
-        ExternalContext externalContext = context.getExternalContext();
-        saveSerializedViewToServer(externalContext, viewRoot.getViewId(),
-                serializedView);
+        if (!hasSerializedViewInServer(viewRoot.getViewId())) {
+            saveSerializedViewToServer(viewRoot.getViewId(),
+                    createSerializedView(context));
+        }
         return null;
     }
 
-    public void writeState(FacesContext context, SerializedView serializedView)
-            throws IOException {
+    protected SerializedView createSerializedView(FacesContext context) {
+        Object struct = getTreeStructureToSave(context);
+        Object state = getComponentStateToSave(context);
+        return new SerializedView(struct, state);
+    }
+
+    public synchronized void writeState(FacesContext context,
+            SerializedView serializedView) throws IOException {
         if (isSavingStateInClient(context)) {
             UIViewRoot viewRoot = context.getViewRoot();
             ResponseStateManager responseStateManager = ResponseStateManagerUtil
@@ -129,8 +127,8 @@ public class TeedaStateManagerImpl extends TeedaStateManager implements
 
     protected void restoreComponentStateFromServer(FacesContext context,
             UIViewRoot viewRoot) {
-        SerializedView serializedView = getSerializedViewFromServer(context
-                .getExternalContext(), viewRoot.getViewId());
+        SerializedView serializedView = getSerializedViewFromServer(viewRoot
+                .getViewId());
         if (serializedView == null) {
             return;
         }
@@ -156,8 +154,7 @@ public class TeedaStateManagerImpl extends TeedaStateManager implements
 
     protected UIViewRoot restoreTreeStructureFromServer(FacesContext context,
             String viewId) {
-        SerializedView serializedView = getSerializedViewFromServer(context
-                .getExternalContext(), viewId);
+        SerializedView serializedView = getSerializedViewFromServer(viewId);
         if (serializedView == null) {
             return null;
         }
@@ -172,22 +169,16 @@ public class TeedaStateManagerImpl extends TeedaStateManager implements
         }
     }
 
-    protected SerializedView getSerializedViewFromServer(
-            ExternalContext externalContext, String viewId) {
-        return (SerializedView) externalContext.getSessionMap().get(
-                SERIALIZED_VIEW_ATTR + "-" + viewId);
+    protected SerializedView getSerializedViewFromServer(String viewId) {
+        return SerializedViewCache.getSerializedView(viewId);
     }
 
-    protected void saveSerializedViewToServer(ExternalContext externalContext,
-            String viewId, SerializedView serializedView) {
-        externalContext.getSessionMap().put(
-                SERIALIZED_VIEW_ATTR + "-" + viewId, serializedView);
+    protected boolean hasSerializedViewInServer(String viewId) {
+        return SerializedViewCache.hasSerializedView(viewId);
     }
 
-    protected void removeSerializedViewFromServer(
-            ExternalContext externalContext, String viewId) {
-        externalContext.getSessionMap().remove(
-                SERIALIZED_VIEW_ATTR + "-" + viewId);
+    protected void saveSerializedViewToServer(String viewId,
+            SerializedView serializedView) {
+        SerializedViewCache.saveSerializedView(viewId, serializedView);
     }
-
 }
