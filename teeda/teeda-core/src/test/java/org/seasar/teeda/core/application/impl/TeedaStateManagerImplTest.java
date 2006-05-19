@@ -9,7 +9,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.internal.SerializableStateHolder;
 import javax.faces.render.RenderKitFactory;
 
-import org.seasar.teeda.core.application.SerializedViewCache;
 import org.seasar.teeda.core.application.TreeStructure;
 import org.seasar.teeda.core.application.TreeStructureManager;
 import org.seasar.teeda.core.mock.MockRenderKit;
@@ -21,9 +20,6 @@ import org.seasar.teeda.core.unit.TeedaTestCase;
 
 public class TeedaStateManagerImplTest extends TeedaTestCase {
 
-    protected void tearDown() {
-        SerializedViewCache.removeAll();
-    }
     // TODO testing need more real test?
     public void testRestoreView() throws Exception {
     }
@@ -380,7 +376,8 @@ public class TeedaStateManagerImplTest extends TeedaTestCase {
             throws Exception {
         // # Arrange #
         TeedaStateManagerImpl manager = new TeedaStateManagerImpl();
-
+        TreeStructureManager structManager = new TreeStructureManagerImpl();
+        manager.setTreeStructureManager(structManager);
         // # Act & Assert #
         assertNull(manager.restoreTreeStructureFromServer(getFacesContext(),
                 "id"));
@@ -408,7 +405,7 @@ public class TeedaStateManagerImplTest extends TeedaTestCase {
         assertEquals("root", root.getId());
     }
 
-    private static class NotifyUIViewRoot extends UIViewRoot {
+    public static class NotifyUIViewRoot extends UIViewRoot {
 
         private int count = 0;
 

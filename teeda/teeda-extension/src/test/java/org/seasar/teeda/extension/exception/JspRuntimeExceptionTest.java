@@ -13,16 +13,20 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.extension.html;
+package org.seasar.teeda.extension.exception;
 
+import javax.servlet.jsp.JspException;
+
+import junit.framework.TestCase;
 
 /**
  * @author higa
  *
  */
-public interface ElementProcessorFactory {
-
-	boolean isMatch(ElementNode elementNode);
-
-	ElementProcessor createProcessor(ElementNode elementNode, PageDesc pageDesc);
+public class JspRuntimeExceptionTest extends TestCase {
+	
+	public void testGetMessage() throws Exception {
+		RuntimeException ex = new JspRuntimeException(new JspException("hoge"));
+		System.out.println(ex.getMessage());
+	}
 }

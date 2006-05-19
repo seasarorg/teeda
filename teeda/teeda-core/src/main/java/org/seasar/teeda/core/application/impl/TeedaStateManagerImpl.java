@@ -17,12 +17,13 @@ package org.seasar.teeda.core.application.impl;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 import javax.faces.render.ResponseStateManager;
 
-import org.seasar.teeda.core.application.SerializedViewCache;
 import org.seasar.teeda.core.application.TeedaStateManager;
 import org.seasar.teeda.core.application.TreeStructure;
 import org.seasar.teeda.core.util.ResponseStateManagerUtil;
@@ -35,6 +36,8 @@ public class TeedaStateManagerImpl extends TeedaStateManager implements
         Serializable {
 
     static final long serialVersionUID = 0L;
+    
+    private Map serializedViews = new HashMap();
 
     public TeedaStateManagerImpl() {
     }
@@ -67,6 +70,10 @@ public class TeedaStateManagerImpl extends TeedaStateManager implements
         Object struct = getTreeStructureToSave(context);
         Object state = getComponentStateToSave(context);
         return new SerializedView(struct, state);
+    }
+    
+    public synchronized void removeSerializedView(String viewId) {
+        serializedViews.remove(viewId);
     }
 
     public synchronized void writeState(FacesContext context,
@@ -170,15 +177,15 @@ public class TeedaStateManagerImpl extends TeedaStateManager implements
     }
 
     protected SerializedView getSerializedViewFromServer(String viewId) {
-        return SerializedViewCache.getSerializedView(viewId);
+        return (SerializedView) serializedViews.get(viewId);
     }
 
     protected boolean hasSerializedViewInServer(String viewId) {
-        return SerializedViewCache.hasSerializedView(viewId);
+        return serializedViews.containsKey(viewId);
     }
 
     protected void saveSerializedViewToServer(String viewId,
             SerializedView serializedView) {
-        SerializedViewCache.saveSerializedView(viewId, serializedView);
+        serializedViews.put(viewId, serializedView);
     }
 }

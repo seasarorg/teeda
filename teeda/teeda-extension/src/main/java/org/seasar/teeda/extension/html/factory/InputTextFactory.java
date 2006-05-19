@@ -19,6 +19,7 @@ package org.seasar.teeda.extension.html.factory;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.ElementProcessor;
+import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.processor.ElementProcessorImpl;
 
 /**
@@ -36,7 +37,7 @@ public class InputTextFactory extends AbstractElementProcessorFactory {
 		return JsfConstants.TEXT_VALUE.equalsIgnoreCase(elementNode.getProperty(JsfConstants.TYPE_ATTR));
 	}
 
-	public ElementProcessor createProcessor(ElementNode elementNode) {
+	public ElementProcessor createProcessor(ElementNode elementNode, PageDesc pageDesc) {
 		Class tagClass = getTagClass(JsfConstants.JSF_HTML_URI, TAG_NAME);
         return new ElementProcessorImpl(tagClass, elementNode.getProperties());
 	}

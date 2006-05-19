@@ -15,14 +15,17 @@
  */
 package org.seasar.teeda.extension.html;
 
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author higa
- *
+ *  
  */
-public interface ElementProcessorFactory {
+public interface ViewRenderer {
 
-	boolean isMatch(ElementNode elementNode);
-
-	ElementProcessor createProcessor(ElementNode elementNode, PageDesc pageDesc);
+    void renderView(String path, HttpServletRequest request,
+            HttpServletResponse response) throws IOException;
 }

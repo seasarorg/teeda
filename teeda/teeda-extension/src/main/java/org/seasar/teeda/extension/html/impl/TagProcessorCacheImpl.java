@@ -18,6 +18,7 @@ package org.seasar.teeda.extension.html.impl;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.seasar.teeda.core.application.TeedaStateManager;
 import org.seasar.teeda.extension.html.HtmlDesc;
 import org.seasar.teeda.extension.html.HtmlDescCache;
 import org.seasar.teeda.extension.html.PageDesc;
@@ -40,6 +41,8 @@ public class TagProcessorCacheImpl implements TagProcessorCache {
     
     private TagProcessorAssembler assembler;
     
+    private TeedaStateManager teedaStateManager;
+    
     public void setHtmlDescCache(HtmlDescCache htmlDescCache) {
         this.htmlDescCache = htmlDescCache;
     }
@@ -50,6 +53,10 @@ public class TagProcessorCacheImpl implements TagProcessorCache {
 
     public void setAssembler(TagProcessorAssembler assembler) {
         this.assembler = assembler;
+    }
+
+    public void setTeedaStateManager(TeedaStateManager teedaStateManager) {
+        this.teedaStateManager = teedaStateManager;
     }
 
     public synchronized TagProcessor getTagProcessor(String viewId) {
@@ -67,6 +74,7 @@ public class TagProcessorCacheImpl implements TagProcessorCache {
         if (created) {
             processors.put(viewId, assembler.assemble(
                     htmlDesc, pageDesc));
+            teedaStateManager.removeSerializedView(viewId);
         }
         return (TagProcessor) processors.get(viewId);
     }

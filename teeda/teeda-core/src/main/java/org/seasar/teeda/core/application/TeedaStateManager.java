@@ -51,4 +51,5 @@ public abstract class TeedaStateManager extends StateManager {
         treeStructureManager_ = treeStructureManager;
     }
 
+    public abstract void removeSerializedView(String viewId);
 }

@@ -16,11 +16,19 @@
 package org.seasar.teeda.extension.html.impl;
 
 import org.seasar.framework.unit.S2FrameworkTestCase;
+import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.core.taglib.html.InputTextTag;
+import org.seasar.teeda.extension.config.taglib.element.TagElement;
+import org.seasar.teeda.extension.config.taglib.element.TaglibElement;
+import org.seasar.teeda.extension.config.taglib.element.impl.TagElementImpl;
+import org.seasar.teeda.extension.config.taglib.element.impl.TaglibElementImpl;
 import org.seasar.teeda.extension.html.ElementProcessor;
 import org.seasar.teeda.extension.html.HtmlDesc;
 import org.seasar.teeda.extension.html.TagProcessor;
 import org.seasar.teeda.extension.html.TagProcessorAssembler;
 import org.seasar.teeda.extension.html.TextProcessor;
+import org.seasar.teeda.extension.html.factory.InputTextFactory;
+import org.seasar.teeda.extension.mock.MockTaglibManager;
 
 
 /**
@@ -115,5 +123,37 @@ public class TagProcessorAssembleImplTest extends S2FrameworkTestCase {
         assertEquals("2", 1, viewRoot.getChildSize());
         TextProcessor textProcessor = (TextProcessor) viewRoot.getChild(0);
         assertEquals("3", "<html><body id=\"aaa\">Hello</body></html>", textProcessor.getValue());
+    }
+    
+    public void testAssembleElementNode() throws Exception {
+        String path = convertPath("element.html");
+        HtmlDescCacheImpl cache = new HtmlDescCacheImpl();
+        cache.setServletContext(getServletContext());
+        HtmlDesc htmlDesc = cache.createHtmlDesc(path);
+        PageDescImpl pageDesc = new PageDescImpl(FooPage.class);
+        MockTaglibManager taglibManager = new MockTaglibManager();
+        TaglibElement jsfHtml = new TaglibElementImpl();
+        jsfHtml.setUri(JsfConstants.JSF_HTML_URI);
+        TagElement inputTextTagElement = new TagElementImpl();
+        inputTextTagElement.setName("inputText");
+        inputTextTagElement.setTagClass(InputTextTag.class);
+        jsfHtml.addTagElement(inputTextTagElement);
+        taglibManager.addTaglibElement(jsfHtml);
+        InputTextFactory factory = new InputTextFactory();
+        factory.setTaglibManager(taglibManager);
+        TagProcessorAssemblerImpl assembler = new TagProcessorAssemblerImpl();
+        assembler.addFactory(factory);
+        TagProcessor root = assembler.assemble(htmlDesc, pageDesc);
+        assertTrue("1", root instanceof ElementProcessor);
+        ElementProcessor viewRoot = (ElementProcessor) root;
+        assertEquals("2", 3, viewRoot.getChildSize());
+        TextProcessor textProcessor = (TextProcessor) viewRoot.getChild(0);
+        assertEquals("3", "<html><body>", textProcessor.getValue());
+        ElementProcessor elementProcessor = (ElementProcessor) viewRoot.getChild(1);
+        assertEquals("4", 1, elementProcessor.getChildSize());
+        textProcessor = (TextProcessor) elementProcessor.getChild(0);
+        assertEquals("5", "<hoge id=\"xxx\" />Hello", textProcessor.getValue());
+        textProcessor = (TextProcessor) viewRoot.getChild(2);
+        assertEquals("6", "</body></html>", textProcessor.getValue());
     }
 }

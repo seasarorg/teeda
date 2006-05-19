@@ -71,6 +71,10 @@ public abstract class AbstractTaglibManager implements TaglibManager {
 	public boolean hasTaglibElement(String uri) {
 		return taglibElements.containsKey(uri);
 	}
+    
+    public void addTaglibElement(TaglibElement taglibElement) {
+        taglibElements.put(taglibElement.getUri(), taglibElement);
+    }
 	
 	public void destroy() {
 		taglibElements.clear();
@@ -120,7 +124,6 @@ public abstract class AbstractTaglibManager implements TaglibManager {
     }
 
     protected void scanTld(InputStream is) {
-		TaglibElement taglibElement = builder.build(is);
-		taglibElements.put(taglibElement.getUri(), taglibElement);
+		addTaglibElement(builder.build(is));
 	}
 }

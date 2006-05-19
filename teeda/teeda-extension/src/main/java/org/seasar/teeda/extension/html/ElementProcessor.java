@@ -31,10 +31,4 @@ public interface ElementProcessor extends TagProcessor {
     void addText(String text);
 
     void endElement();
-    
-    int getChildTextSize();
-    
-    void incrementChildTextSize();
-    
-    void decrementChildTextSize();
 }

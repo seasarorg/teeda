@@ -53,8 +53,6 @@ public class ElementProcessorImpl implements ElementProcessor {
     private Set customPropertyNames = new HashSet();
 
     private StringBuffer buffer;
-    
-    private int childTextSize = 0;
 
     public ElementProcessorImpl(Class tagClass, Map properties) {
         this.tagClass = tagClass;
@@ -120,18 +118,6 @@ public class ElementProcessorImpl implements ElementProcessor {
 
     public void endElement() {
         processText();
-    }
-    
-    public int getChildTextSize() {
-        return childTextSize;
-    }
-    
-    public void incrementChildTextSize() {
-        ++childTextSize;
-    }
-    
-    public void decrementChildTextSize() {
-        --childTextSize;
     }
 
     public void process(PageContext pageContext, Tag parentTag)

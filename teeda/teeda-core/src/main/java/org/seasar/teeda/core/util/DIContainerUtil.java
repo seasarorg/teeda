@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.seasar.framework.container.ComponentDef;
-import org.seasar.framework.container.ComponentNotFoundRuntimeException;
 import org.seasar.framework.container.S2Container;
 import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
 import org.seasar.framework.log.Logger;
@@ -33,11 +32,10 @@ public class DIContainerUtil {
     }
 
     public static Object getComponentNoException(Object componentKey) {
-        try {
+        if (getContainer().hasComponentDef(componentKey)) {
             return getContainer().getComponent(componentKey);
-        } catch (ComponentNotFoundRuntimeException e) {
-            return null;
         }
+        return null;
     }
 
     public static Object getComponent(Object componentKey) {

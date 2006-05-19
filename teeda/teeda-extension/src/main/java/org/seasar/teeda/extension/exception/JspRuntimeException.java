@@ -13,16 +13,22 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.extension.html;
+package org.seasar.teeda.extension.exception;
+
+import javax.servlet.jsp.JspException;
+
+import org.seasar.framework.exception.SRuntimeException;
 
 
 /**
  * @author higa
  *
  */
-public interface ElementProcessorFactory {
+public class JspRuntimeException extends SRuntimeException {
 
-	boolean isMatch(ElementNode elementNode);
+	private static final long serialVersionUID = 1L;
 
-	ElementProcessor createProcessor(ElementNode elementNode, PageDesc pageDesc);
+    public JspRuntimeException(JspException cause) {
+		super("ETDA0027", new Object[]{cause}, cause);
+	}
 }

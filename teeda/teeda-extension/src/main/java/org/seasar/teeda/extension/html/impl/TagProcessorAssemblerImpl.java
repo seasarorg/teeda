@@ -53,11 +53,12 @@ public class TagProcessorAssemblerImpl implements TagProcessorAssembler {
         HtmlNode rootNode = htmlDesc.getHtmlNode();
         ViewProcessor rootProcessor = new ViewProcessor();
         assembleTagProcessor(rootProcessor, rootNode, pageDesc);
+        rootProcessor.endElement();
         return rootProcessor;
     }
     
     protected void assembleTagProcessor(ElementProcessor parentProcessor, HtmlNode node, PageDesc pageDesc) {
-        if (node instanceof TextNodeImpl) {
+        if (node instanceof TextNode) {
             assembleTagProcessor(parentProcessor, (TextNodeImpl) node);
         } else {
             assembleTagProcessor(parentProcessor, (ElementNodeImpl) node, pageDesc);
@@ -81,7 +82,10 @@ public class TagProcessorAssemblerImpl implements TagProcessorAssembler {
         for (int i = 0; i < getFactorySize(); ++i) {
             ElementProcessorFactory factory = getFactory(i);
             if (factory.isMatch(elementNode)) {
-                parentProcessor.addElement(factory.createProcessor(elementNode));
+                ElementProcessor elementProcessor = factory.createProcessor(elementNode, pageDesc);
+                parentProcessor.addElement(elementProcessor);
+                assembleElementNodeChildren(elementProcessor, elementNode, pageDesc);
+                elementProcessor.endElement();
                 return;
             }
         }
@@ -89,17 +93,12 @@ public class TagProcessorAssemblerImpl implements TagProcessorAssembler {
     }
     
     protected void assembleElementNodeAsText(ElementProcessor parentProcessor, ElementNode elementNode, PageDesc pageDesc) {
-        parentProcessor.incrementChildTextSize();
         if (elementNode.getChildSize() == 0) {
             parentProcessor.addText(elementNode.getEmptyTagString());
         } else {
             parentProcessor.addText(elementNode.getStartTagString());
             assembleElementNodeChildren(parentProcessor, elementNode, pageDesc);
             parentProcessor.addText(elementNode.getEndTagString());
-        }
-        parentProcessor.decrementChildTextSize();
-        if (parentProcessor.getChildTextSize() == 0) {
-            parentProcessor.endElement();
         }
     }
     
