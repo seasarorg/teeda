@@ -100,6 +100,10 @@ public interface JsfConstants {
 
     public String TEXT_VALUE = "text";
 
+    public String SUBMIT_VALUE = "submit";
+    
+    public String BUTTON_VALUE = "button";
+    
     // -- element --
 
     public String ANCHOR_ELEM = "a";

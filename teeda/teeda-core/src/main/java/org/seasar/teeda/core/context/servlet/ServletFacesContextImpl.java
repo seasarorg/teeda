@@ -31,6 +31,7 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.internal.AssertionUtil;
 import javax.faces.render.RenderKit;
 
+import org.seasar.teeda.core.context.Releaseable;
 import org.seasar.teeda.core.util.ApplicationUtil;
 import org.seasar.teeda.core.util.FactoryFinderUtil;
 
@@ -39,76 +40,76 @@ import org.seasar.teeda.core.util.FactoryFinderUtil;
  */
 public class ServletFacesContextImpl extends FacesContext {
 
-    private ExternalContext externalContext_;
+    private ExternalContext externalContext;
 
-    private Application application_;
+    private Application application;
 
-    private boolean released_ = false;
+    private boolean released = false;
 
-    private boolean renderResponse_ = false;
+    private boolean renderResponse = false;
 
-    private boolean responseComplete_ = false;
+    private boolean responseComplete = false;
 
-    private ResponseWriter responseWriter_;
+    private ResponseWriter responseWriter;
 
-    private UIViewRoot root_;
+    private UIViewRoot root;
 
-    private List messages_;
+    private List messages;
 
-    private List messageClientIds_;
+    private List messageClientIds;
 
-    private FacesMessage.Severity maxSeverity_;
+    private FacesMessage.Severity maxSeverity;
 
-    private ResponseStream responseStream_;
+    private ResponseStream responseStream;
 
     public ServletFacesContextImpl(ExternalContext externalContext) {
-        externalContext_ = externalContext;
-        application_ = ApplicationUtil.getApplicationFromFactory();
+        this.externalContext = externalContext;
+        this.application = ApplicationUtil.getApplicationFromFactory();
         FacesContext.setCurrentInstance(this);
     }
 
     public Application getApplication() {
         assertNotReleased();
-        return application_;
+        return application;
     }
 
     public Iterator getClientIdsWithMessages() {
         assertNotReleased();
-        if (messages_ == null) {
+        if (messages == null) {
             return Collections.EMPTY_LIST.iterator();
         }
-        return messageClientIds_.iterator();
+        return messageClientIds.iterator();
     }
 
     public ExternalContext getExternalContext() {
         assertNotReleased();
-        return externalContext_;
+        return externalContext;
     }
 
     public Severity getMaximumSeverity() {
         assertNotReleased();
-        return maxSeverity_;
+        return maxSeverity;
     }
 
     public Iterator getMessages() {
         assertNotReleased();
-        return (messages_ != null) ? messages_.iterator()
+        return (messages != null) ? messages.iterator()
                 : Collections.EMPTY_LIST.iterator();
     }
 
     public Iterator getMessages(String clientId) {
         assertNotReleased();
-        if (messages_ == null) {
+        if (messages == null) {
             return Collections.EMPTY_LIST.iterator();
         }
-        if (messages_.size() != messageClientIds_.size()) {
+        if (messages.size() != messageClientIds.size()) {
             throw new IllegalStateException();
         }
         List list = new ArrayList();
-        for (int i = 0; i < messages_.size(); i++) {
-            String savedClientId = (String) messageClientIds_.get(i);
+        for (int i = 0; i < messages.size(); i++) {
+            String savedClientId = (String) messageClientIds.get(i);
             if (stringEquals(clientId, savedClientId)) {
-                list.add(messages_.get(i));
+                list.add(messages.get(i));
             }
         }
         return list.iterator();
@@ -137,87 +138,90 @@ public class ServletFacesContextImpl extends FacesContext {
 
     public boolean getRenderResponse() {
         assertNotReleased();
-        return renderResponse_;
+        return renderResponse;
     }
 
     public boolean getResponseComplete() {
         assertNotReleased();
-        return responseComplete_;
+        return responseComplete;
     }
 
     public ResponseStream getResponseStream() {
         assertNotReleased();
-        return responseStream_;
+        return responseStream;
     }
 
     public void setResponseStream(ResponseStream responseStream) {
         assertNotReleased();
         AssertionUtil.assertNotNull("responseStream", responseStream);
-        responseStream_ = responseStream;
+        this.responseStream = responseStream;
     }
 
     public ResponseWriter getResponseWriter() {
         assertNotReleased();
-        return responseWriter_;
+        return responseWriter;
     }
 
     public void setResponseWriter(ResponseWriter responseWriter) {
         assertNotReleased();
         AssertionUtil.assertNotNull("responseWriter", responseWriter);
-        responseWriter_ = responseWriter;
+        this.responseWriter = responseWriter;
     }
 
     public UIViewRoot getViewRoot() {
         assertNotReleased();
-        return root_;
+        return root;
     }
 
     public void setViewRoot(UIViewRoot root) {
         assertNotReleased();
         AssertionUtil.assertNotNull("root", root);
-        root_ = root;
+        this.root = root;
     }
 
     public void addMessage(String clientId, FacesMessage message) {
         assertNotReleased();
         AssertionUtil.assertNotNull("message", message);
-        if (messages_ == null) {
-            messages_ = new ArrayList();
-            messageClientIds_ = new ArrayList();
+        if (messages == null) {
+            messages = new ArrayList();
+            messageClientIds = new ArrayList();
         }
-        messages_.add(message);
-        messageClientIds_.add(clientId);
+        messages.add(message);
+        messageClientIds.add(clientId);
         FacesMessage.Severity severity = message.getSeverity();
         setSeverity(severity);
     }
 
     public void release() {
-        released_ = true;
-        application_ = null;
-        externalContext_ = null;
+        released = true;
+        application = null;
+        if(externalContext instanceof Releaseable) {
+            ((Releaseable)externalContext).release();
+        }
+        externalContext = null;
         FacesContext.setCurrentInstance(null);
     }
 
     public void renderResponse() {
         assertNotReleased();
-        renderResponse_ = true;
+        renderResponse = true;
     }
 
     public void responseComplete() {
         assertNotReleased();
-        responseComplete_ = true;
+        responseComplete = true;
     }
 
     private void setSeverity(FacesMessage.Severity severity) {
         if (severity != null) {
-            if (maxSeverity_ == null || severity.compareTo(maxSeverity_) > 0) {
-                maxSeverity_ = severity;
+            if (maxSeverity == null || severity.compareTo(maxSeverity) > 0) {
+                maxSeverity = severity;
             }
         }
     }
 
     private void assertNotReleased() {
-        if (released_) {
+        if (released) {
             throw new IllegalStateException("already released");
         }
     }

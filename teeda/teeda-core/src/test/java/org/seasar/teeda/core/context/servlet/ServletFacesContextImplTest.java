@@ -22,6 +22,7 @@ import javax.faces.application.FacesMessage;
 
 import junit.framework.TestCase;
 
+import org.seasar.teeda.core.context.Releaseable;
 import org.seasar.teeda.core.mock.MockApplicationFactory;
 import org.seasar.teeda.core.mock.MockExternalContextImpl;
 import org.seasar.teeda.core.unit.ExceptionAssert;
@@ -30,8 +31,6 @@ import org.seasar.teeda.core.unit.ExceptionAssert;
  * @author manhole
  */
 public class ServletFacesContextImplTest extends TestCase {
-
-    // TODO test, test, test...
 
     private ServletFacesContextImpl context_;
 
@@ -221,6 +220,26 @@ public class ServletFacesContextImplTest extends TestCase {
             assertEquals(message3, it.next());
             assertEquals(false, it.hasNext());
         }
+    }
+
+    public void testEnsureReleased() throws Exception {
+        final boolean[] calls = new boolean[] { false };
+        ServletFacesContextImpl context = new ServletFacesContextImpl(
+                new ReleaseableMockExternalContextImpl() {
+                    public void release() {
+                        calls[0] = true;
+                    }
+                });
+        context.release();
+        assertTrue(calls[0]);
+    }
+
+    public static class ReleaseableMockExternalContextImpl extends
+            MockExternalContextImpl implements Releaseable {
+
+        public void release() {
+        }
+
     }
 
 }

@@ -48,4 +48,8 @@ public class AnnotationEnhanceAssembleProvider extends DefaultAssembleProvider {
             ValidatorAnnotationHandler annotationHandler) {
         this.annotationHandler = annotationHandler;
     }
+    
+    public ValidatorAnnotationHandler getValidatorAnnotationHandler() {
+        return annotationHandler;
+    }
 }

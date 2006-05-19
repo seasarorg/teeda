@@ -36,9 +36,9 @@ import org.seasar.teeda.core.validator.ValidatorChain;
 public abstract class AbstractValidatorAnnotationHandler implements
         ValidatorAnnotationHandler {
 
-    private ValidatorResource resource_;
+    private ValidatorResource resource;
 
-    private List ignoreSuffixes_ = new ArrayList();
+    private List ignoreSuffixes = new ArrayList();
     
     public void registerValidator(ComponentDef componentDef) {
         Class targetClass = componentDef.getComponentClass();
@@ -47,15 +47,15 @@ public abstract class AbstractValidatorAnnotationHandler implements
     }
 
     public void setValidatorResource(ValidatorResource resources) {
-        resource_ = resources;
+        resource = resources;
     }
 
     public ValidatorResource getValidatorResource() {
-        return resource_;
+        return resource;
     }
 
     public void addIgnoreSuffix(String suffix) {
-        ignoreSuffixes_.add(suffix);
+        ignoreSuffixes.add(suffix);
     }
 
     protected abstract void doRegisterValidator(Class targetClass, BeanDesc beanDesc);
@@ -103,6 +103,6 @@ public abstract class AbstractValidatorAnnotationHandler implements
     }
     
     protected List getIgnoreSuffixes() {
-        return ignoreSuffixes_;
+        return ignoreSuffixes;
     }
 }

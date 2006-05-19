@@ -35,75 +35,74 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.seasar.framework.log.Logger;
+import org.seasar.teeda.core.context.Releaseable;
 import org.seasar.teeda.core.util.ServletExternalContextUtil;
 
 /**
  * @author shot
  */
-public class ServletExternalContextImpl extends ExternalContext {
+public class ServletExternalContextImpl extends ExternalContext implements Releaseable {
 
-    private static Logger logger_ = Logger
+    private static Logger logger = Logger
             .getLogger(ServletExternalContextImpl.class);
 
-    private final ServletContext context_;
+    private ServletContext context;
 
-    private final ServletRequest request_;
+    private ServletRequest request;
 
-    private final ServletResponse response_;
+    private ServletResponse response;
 
-    private String servletPath_ = null;
+    private String servletPath = null;
 
-    private String pathInfo_ = null;
+    private String pathInfo = null;
 
-    private boolean isHttpServletRequest_ = false;
+    private boolean isHttpServletRequest = false;
 
-    private boolean isHttpServletResponse_ = false;
+    private boolean isHttpServletResponse = false;
 
-    private Map applicationMap_ = null;
+    private Map applicationMap = null;
 
-    private Map initParameterMap_ = null;
+    private Map initParameterMap = null;
 
-    private Map sessionMap_ = null;
+    private Map sessionMap = null;
 
-    private Map requestCookieMap_ = null;
+    private Map requestCookieMap = null;
 
-    private Map requestParameterMap_ = null;
+    private Map requestParameterMap = null;
 
-    private Map requestParameterValuesMap_ = null;
+    private Map requestParameterValuesMap = null;
 
-    private Map requestMap_ = null;
+    private Map requestMap = null;
 
-    private Map requestHeaderMap_ = null;
+    private Map requestHeaderMap = null;
 
-    private Map requestHeaderValuesMap_ = null;
+    private Map requestHeaderValuesMap = null;
 
     public ServletExternalContextImpl(final ServletContext context,
             final ServletRequest request, final ServletResponse response) {
-        context_ = context;
-        request_ = request;
-        response_ = response;
-        isHttpServletRequest_ = ServletExternalContextUtil
-                .isHttpServletRequest(request_);
-        isHttpServletResponse_ = ServletExternalContextUtil
-                .isHttpServletResponse(response_);
-        ServletExternalContextUtil.setCharacterEncoding(request_);
-        if (isHttpServletRequest_) {
-            HttpServletRequest httpRequest = (HttpServletRequest) request_;
-            servletPath_ = httpRequest.getServletPath();
-            pathInfo_ = httpRequest.getPathInfo();
+        this.context = context;
+        this.request = request;
+        this.response = response;
+        this.isHttpServletRequest = ServletExternalContextUtil
+                .isHttpServletRequest(this.request);
+        this.isHttpServletResponse = ServletExternalContextUtil
+                .isHttpServletResponse(this.response);
+        ServletExternalContextUtil.setCharacterEncoding(this.request);
+        if (isHttpServletRequest) {
+            HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+            this.servletPath = httpServletRequest.getServletPath();
+            this.pathInfo = httpServletRequest.getPathInfo();
         }
     }
 
     public void dispatch(String path) throws IOException {
-        ServletExternalContextUtil.dispatch(path, request_, response_);
+        ServletExternalContextUtil.dispatch(path, request, response);
     }
 
     public String encodeActionURL(String url) {
         AssertionUtil.assertNotNull("url is null.", url);
-        if (!isHttpServletResponse_) {
-            throw new IllegalStateException();
-        }
-        HttpServletResponse httpResponse = (HttpServletResponse) response_;
+        assertHttpServletResponse();
+        HttpServletResponse httpResponse = (HttpServletResponse) response;
         return httpResponse.encodeURL(url);
     }
 
@@ -114,205 +113,211 @@ public class ServletExternalContextImpl extends ExternalContext {
 
     public String encodeResourceURL(String url) {
         AssertionUtil.assertNotNull("url is null.", url);
-        if (!isHttpServletResponse_) {
-            throw new IllegalStateException();
-        }
-        HttpServletResponse httpResponse = (HttpServletResponse) response_;
+        assertHttpServletResponse();
+        HttpServletResponse httpResponse = (HttpServletResponse) response;
         return httpResponse.encodeURL(url);
     }
 
     public Map getApplicationMap() {
-        if (applicationMap_ == null) {
-            applicationMap_ = new ServletApplicationMap(context_);
+        if (applicationMap == null) {
+            applicationMap = new ServletApplicationMap(context);
         }
-        return applicationMap_;
+        return applicationMap;
     }
 
     public String getAuthType() {
-        if (isHttpServletRequest_) {
-            throw new IllegalStateException();
-        }
-        HttpServletRequest request = (HttpServletRequest) request_;
-        return request.getAuthType();
+        assertHttpServletRequest();
+        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+        return httpServletRequest.getAuthType();
     }
 
     public Object getContext() {
-        return context_;
+        return context;
     }
 
     public String getInitParameter(String name) {
-        return context_.getInitParameter(name);
+        return context.getInitParameter(name);
     }
 
     public Map getInitParameterMap() {
-        if (initParameterMap_ == null) {
-            initParameterMap_ = new ServletInitParameterMap(context_);
+        if (initParameterMap == null) {
+            initParameterMap = new ServletInitParameterMap(context);
         }
-        return initParameterMap_;
+        return initParameterMap;
     }
 
     public String getRemoteUser() {
-        if (!isHttpServletRequest_) {
-            throw new IllegalStateException();
-        }
-        HttpServletRequest httpRequest = (HttpServletRequest) request_;
+        assertHttpServletRequest();
+        HttpServletRequest httpRequest = (HttpServletRequest) request;
         return httpRequest.getRemoteUser();
     }
 
     public Object getRequest() {
-        return request_;
+        return request;
     }
 
     public String getRequestContextPath() {
-        if (!isHttpServletRequest_) {
-            throw new IllegalStateException();
-        }
-        HttpServletRequest httpRequest = (HttpServletRequest) request_;
+        assertHttpServletRequest();
+        HttpServletRequest httpRequest = (HttpServletRequest) request;
         return httpRequest.getContextPath();
     }
 
     public Map getRequestCookieMap() {
-        if (!isHttpServletRequest_) {
-            throw new IllegalStateException();
+        assertHttpServletRequest();
+        if (requestCookieMap == null) {
+            requestCookieMap = new CookieMap((HttpServletRequest) request);
         }
-        if (requestCookieMap_ == null) {
-            requestCookieMap_ = new CookieMap((HttpServletRequest) request_);
-        }
-        return requestCookieMap_;
+        return requestCookieMap;
     }
 
     public Map getRequestHeaderMap() {
-        if (!isHttpServletRequest_) {
-            throw new IllegalStateException();
+        assertHttpServletRequest();
+        if (requestHeaderMap == null) {
+            requestHeaderMap = new ServletRequestHeaderMap(
+                    (HttpServletRequest) request);
         }
-        if (requestHeaderMap_ == null) {
-            requestHeaderMap_ = new ServletRequestHeaderMap(
-                    (HttpServletRequest) request_);
-        }
-        return requestHeaderMap_;
+        return requestHeaderMap;
     }
 
     public Map getRequestHeaderValuesMap() {
-        if (requestHeaderValuesMap_ == null) {
-            requestHeaderValuesMap_ = new ServletRequestHeaderValuesMap(
-                    (HttpServletRequest) request_);
+        if (requestHeaderValuesMap == null) {
+            requestHeaderValuesMap = new ServletRequestHeaderValuesMap(
+                    (HttpServletRequest) request);
         }
-        return requestHeaderValuesMap_;
+        return requestHeaderValuesMap;
     }
 
     public Locale getRequestLocale() {
-        return request_.getLocale();
+        return request.getLocale();
     }
 
     public Iterator getRequestLocales() {
-        final Enumeration locales = request_.getLocales();
+        final Enumeration locales = request.getLocales();
         return ServletExternalContextUtil.getLocales(locales);
     }
 
     public Map getRequestMap() {
-        if (requestMap_ == null) {
-            requestMap_ = new ServletRequestMap(request_);
+        if (requestMap == null) {
+            requestMap = new ServletRequestMap(request);
         }
-        return requestMap_;
+        return requestMap;
     }
 
     public Map getRequestParameterMap() {
-        if (requestParameterMap_ == null) {
-            requestParameterMap_ = new ServletRequestParameterMap(request_);
+        if (requestParameterMap == null) {
+            requestParameterMap = new ServletRequestParameterMap(request);
         }
-        return requestParameterMap_;
+        return requestParameterMap;
     }
 
     public Iterator getRequestParameterNames() {
-        final Enumeration paramNames = request_.getParameterNames();
+        final Enumeration paramNames = request.getParameterNames();
         return ServletExternalContextUtil.getRequestParameterNames(paramNames);
     }
 
     public Map getRequestParameterValuesMap() {
-        if (requestParameterValuesMap_ == null) {
-            requestParameterValuesMap_ = new ServletRequestParameterValuesMap(
-                    request_);
+        if (requestParameterValuesMap == null) {
+            requestParameterValuesMap = new ServletRequestParameterValuesMap(
+                    request);
         }
-        return requestParameterValuesMap_;
+        return requestParameterValuesMap;
     }
 
     public String getRequestPathInfo() {
-        return pathInfo_;
+        return pathInfo;
     }
 
     public String getRequestServletPath() {
-        return servletPath_;
+        return servletPath;
     }
 
     public URL getResource(String path) throws MalformedURLException {
-        return context_.getResource(path);
+        return context.getResource(path);
     }
 
     public InputStream getResourceAsStream(String path) {
-        return context_.getResourceAsStream(path);
+        return context.getResourceAsStream(path);
     }
 
     public Set getResourcePaths(String path) {
-        return context_.getResourcePaths(path);
+        return context.getResourcePaths(path);
     }
 
     public Object getResponse() {
-        return response_;
+        return response;
     }
 
     public Object getSession(boolean create) {
-        if (!isHttpServletRequest_) {
-            throw new IllegalStateException(
-                    "Request should be supported session.");
-        }
-        HttpServletRequest httpRequest = (HttpServletRequest) request_;
+        assertHttpServletRequest();
+        HttpServletRequest httpRequest = (HttpServletRequest) request;
         return httpRequest.getSession(create);
     }
 
     public Map getSessionMap() {
-        if (sessionMap_ == null) {
-            HttpServletRequest httpRequest = (HttpServletRequest) request_;
-            sessionMap_ = new HttpSessionMap(httpRequest);
+        if (sessionMap == null) {
+            HttpServletRequest httpRequest = (HttpServletRequest) request;
+            sessionMap = new HttpSessionMap(httpRequest);
         }
-        return sessionMap_;
+        return sessionMap;
     }
 
     public Principal getUserPrincipal() {
-        if (!isHttpServletRequest_) {
-            throw new IllegalStateException();
-        }
-        HttpServletRequest httpRequest = (HttpServletRequest) request_;
+        assertHttpServletRequest();
+        HttpServletRequest httpRequest = (HttpServletRequest) request;
         return httpRequest.getUserPrincipal();
     }
 
     public boolean isUserInRole(String role) {
-        if (!isHttpServletRequest_) {
-            throw new IllegalStateException();
-        }
-        HttpServletRequest httpRequest = (HttpServletRequest) request_;
+        assertHttpServletRequest();
+        HttpServletRequest httpRequest = (HttpServletRequest) request;
         return httpRequest.isUserInRole(role);
     }
 
     public void log(String message) {
         AssertionUtil.assertNotNull("message is null.", message);
-        context_.log(message);
-        logger_.debug(message);
+        context.log(message);
+        logger.debug(message);
     }
 
     public void log(String message, Throwable exception) {
-        if (message == null || exception == null) {
-            throw new NullPointerException();
-        }
-        context_.log(message, exception);
-        logger_.log(exception);
+        AssertionUtil.assertNotNull("message", message);
+        AssertionUtil.assertNotNull("exception", exception);
+        context.log(message, exception);
+        logger.log(exception);
     }
 
     public void redirect(String url) throws IOException {
-        if (!isHttpServletResponse_) {
-            throw new IllegalStateException(
-                    "Redirect is only for HttpServletResponse");
+        assertHttpServletResponse();
+        ServletExternalContextUtil.redirect(url, response);
+    }
+
+    private void assertHttpServletRequest() {
+        if (!isHttpServletRequest) {
+            throw new IllegalStateException();
         }
-        ServletExternalContextUtil.redirect(url, response_);
+    }
+
+    private void assertHttpServletResponse() {
+        if (!isHttpServletResponse) {
+            throw new IllegalStateException();
+        }
+    }
+
+    public void release() {
+        this.context = null;
+        this.request = null;
+        this.response = null;
+        this.servletPath = null;
+        this.pathInfo = null;
+        this.applicationMap = null;
+        this.initParameterMap = null;
+        this.sessionMap = null;
+        this.requestCookieMap = null;
+        this.requestParameterMap = null;
+        this.requestParameterValuesMap = null;
+        this.requestMap = null;
+        this.requestHeaderMap = null;
+        this.requestHeaderValuesMap = null;
     }
 
 }

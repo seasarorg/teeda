@@ -10,7 +10,7 @@ import org.seasar.teeda.extension.annotation.ValidatorAnnotationHandler;
 public class AnnotationEnhanceManagedBeanAssembler extends
         DefaultManagedBeanAssembler {
 
-    private ValidatorAnnotationHandler annotationHandler_;
+    private ValidatorAnnotationHandler annotationHandler;
 
     public AnnotationEnhanceManagedBeanAssembler(Map managedBeans) {
         super(managedBeans);
@@ -22,11 +22,11 @@ public class AnnotationEnhanceManagedBeanAssembler extends
     }
 
     public ValidatorAnnotationHandler getAnnotationHandler() {
-        return annotationHandler_;
+        return annotationHandler;
     }
 
     public void setAnnotationHandler(ValidatorAnnotationHandler annotationHandler) {
-        annotationHandler_ = annotationHandler;
+        this.annotationHandler = annotationHandler;
     }
 
 }

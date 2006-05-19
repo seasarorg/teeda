@@ -45,27 +45,27 @@ public class LifecycleImpl extends Lifecycle {
 
     private PhaseListener[] phaseListeners = new PhaseListener[0];
 
-    private Phase restoreViewPhase_;
+    private Phase restoreViewPhase;
 
-    private AbstractPhase applyRequestValuesPhase_;
+    private AbstractPhase applyRequestValuesPhase;
 
-    private Phase invokeApplicationPhase_;
+    private Phase invokeApplicationPhase;
 
-    private Phase renderResponsePhase_;
+    private Phase renderResponsePhase;
 
-    private Phase processValidationPhase_;
+    private Phase processValidationPhase;
 
-    private Phase updateModelValuesPhase_;
+    private Phase updateModelValuesPhase;
 
     public LifecycleImpl() {
     }
 
     public void execute(FacesContext context) throws FacesException {
         try {
-            restoreViewPhase_.execute(context);
+            restoreViewPhase.execute(context);
             Postback postback = NullPostback.getCurrentInstance();
-            if (restoreViewPhase_ instanceof Postback) {
-                postback = (Postback) restoreViewPhase_;
+            if (restoreViewPhase instanceof Postback) {
+                postback = (Postback) restoreViewPhase;
             }
             if (isFinished(context)) {
                 return;
@@ -86,23 +86,23 @@ public class LifecycleImpl extends Lifecycle {
                 return;
             }
             requestMap.put(EXECUTED_ATTR, EXECUTED_ATTR);
-            applyRequestValuesPhase_.execute(context);
+            applyRequestValuesPhase.execute(context);
             if (isFinished(context)) {
-                applyRequestValuesPhase_.initializeChildren(context, context
+                applyRequestValuesPhase.initializeChildren(context, context
                         .getViewRoot());
                 return;
             }
             if (postback.isPostBack() || hasEvent(context)) {
-                processValidationPhase_.execute(context);
+                processValidationPhase.execute(context);
                 if (isFinished(context)) {
                     return;
                 }
             }
-            updateModelValuesPhase_.execute(context);
+            updateModelValuesPhase.execute(context);
             if (isFinished(context)) {
                 return;
             }
-            invokeApplicationPhase_.execute(context);
+            invokeApplicationPhase.execute(context);
             if (isGetRedirect(context)) {
                 sessionMap.put(REDIRECTED_TIME_ATTR, new Long(System
                         .currentTimeMillis()));
@@ -131,7 +131,7 @@ public class LifecycleImpl extends Lifecycle {
         if (context.getResponseComplete()) {
             return;
         }
-        renderResponsePhase_.execute(context);
+        renderResponsePhase.execute(context);
     }
 
     protected boolean isFinished(FacesContext context) throws FacesException {
@@ -158,59 +158,59 @@ public class LifecycleImpl extends Lifecycle {
     }
 
     public void setRestoreViewPhase(Phase restoreViewPhase) {
-        restoreViewPhase_ = restoreViewPhase;
+        this.restoreViewPhase = restoreViewPhase;
     }
 
     public void setApplyRequestValuesPhase(AbstractPhase applyRequestValuesPhase) {
-        applyRequestValuesPhase_ = applyRequestValuesPhase;
+        this.applyRequestValuesPhase = applyRequestValuesPhase;
     }
 
     public void setInvokeApplicationPhase(Phase invokeApplicationPhase) {
-        invokeApplicationPhase_ = invokeApplicationPhase;
+        this.invokeApplicationPhase = invokeApplicationPhase;
     }
 
     public void setRenderResponsePhase(Phase renderPhase) {
-        renderResponsePhase_ = renderPhase;
+        renderResponsePhase = renderPhase;
     }
 
     public void setProcessValidationsPhase(Phase processValidationPhase) {
-        processValidationPhase_ = processValidationPhase;
+        this.processValidationPhase = processValidationPhase;
     }
 
     public void setUpdateModelValuesPhase(Phase updateModelValuesPhase) {
-        updateModelValuesPhase_ = updateModelValuesPhase;
+        this.updateModelValuesPhase = updateModelValuesPhase;
     }
 
     public AbstractPhase getApplyRequestValuesPhase() {
-        return applyRequestValuesPhase_;
+        return applyRequestValuesPhase;
     }
 
     public Phase getInvokeApplicationPhase() {
-        return invokeApplicationPhase_;
+        return invokeApplicationPhase;
     }
 
     public Phase getProcessValidationPhase() {
-        return processValidationPhase_;
+        return processValidationPhase;
     }
 
     public Phase getRenderResponsePhase() {
-        return renderResponsePhase_;
+        return renderResponsePhase;
     }
 
     public Phase getRestoreViewPhase() {
-        return restoreViewPhase_;
+        return restoreViewPhase;
     }
 
     public Phase getUpdateModelValuesPhase() {
-        return updateModelValuesPhase_;
+        return updateModelValuesPhase;
     }
 
     private static final class NullPostback implements Postback {
 
-        private static final NullPostback instance_ = new NullPostback();
+        private static final NullPostback instance = new NullPostback();
 
         public static NullPostback getCurrentInstance() {
-            return instance_;
+            return instance;
         }
 
         public boolean isPostBack() {

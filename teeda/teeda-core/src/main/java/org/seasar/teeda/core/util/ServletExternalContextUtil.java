@@ -43,7 +43,7 @@ import org.seasar.framework.util.MethodUtil;
  */
 public class ServletExternalContextUtil {
 
-    private static Logger logger_ = Logger
+    private static Logger logger = Logger
             .getLogger(ServletExternalContextUtil.class);
 
     private static final String CONTENT_TYPE = "Content-Type";
@@ -149,7 +149,7 @@ public class ServletExternalContextUtil {
             return clazz.getMethod("setCharacterEncoding",
                     new Class[] { String.class });
         } catch (Exception e) {
-            logger_.log(e);
+            logger.log(e);
             return null;
         }
     }

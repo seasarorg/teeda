@@ -16,16 +16,12 @@
 package org.seasar.teeda.core.context;
 
 import javax.faces.FacesException;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.FacesContextFactory;
 import javax.faces.lifecycle.Lifecycle;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 
-import org.seasar.teeda.core.context.servlet.ServletExternalContextImpl;
-import org.seasar.teeda.core.context.servlet.ServletFacesContextImpl;
+import org.seasar.teeda.core.context.creator.DispatchableFacesContextCreator;
+import org.seasar.teeda.core.context.creator.FacesContextCreator;
 import org.seasar.teeda.core.exception.FacesContextNotFoundRuntimeException;
 
 /**
@@ -33,7 +29,10 @@ import org.seasar.teeda.core.exception.FacesContextNotFoundRuntimeException;
  */
 public class FacesContextFactoryImpl extends FacesContextFactory {
 
+    private FacesContextCreator contextCreator;
+
     public FacesContextFactoryImpl() {
+        contextCreator = new DispatchableFacesContextCreator();
     }
 
     public FacesContext getFacesContext(Object context, Object request,
@@ -45,19 +44,12 @@ public class FacesContextFactoryImpl extends FacesContextFactory {
                             + ", request = " + request + ", response = "
                             + response + ", lifecycle = " + lifecycle);
         }
-        if (isServletEnvironment(context, request, response)) {
-            ExternalContext externalContext = new ServletExternalContextImpl(
-                    (ServletContext) context, (ServletRequest) request,
-                    (ServletResponse) response);
-            return new ServletFacesContextImpl(externalContext);
+        FacesContext facesContext = contextCreator.create(context, request,
+                response, lifecycle);
+        if (facesContext == null) {
+            throw new FacesContextNotFoundRuntimeException();
         }
-        throw new FacesContextNotFoundRuntimeException();
+        return facesContext;
     }
 
-    private static boolean isServletEnvironment(Object context, Object request,
-            Object response) {
-        return (context instanceof ServletContext)
-                && (request instanceof ServletRequest)
-                && (response instanceof ServletResponse);
-    }
 }

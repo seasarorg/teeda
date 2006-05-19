@@ -32,12 +32,12 @@ import javax.faces.validator.ValidatorException;
 public class ValidatorChain implements Validator, StateHolder {
 
     //TODO testing
-    private boolean transientValue_ = false;
+    private boolean transientValue = false;
 
-    private List validators_ = new LinkedList();
+    private List validators = new LinkedList();
 
     public void add(Validator validator) {
-        validators_.add(validator);
+        validators.add(validator);
     }
 
     public void validate(FacesContext context, UIComponent component,
@@ -45,31 +45,31 @@ public class ValidatorChain implements Validator, StateHolder {
         if (value == null) {
             return;
         }
-        for (Iterator iterator = validators_.iterator(); iterator.hasNext();) {
+        for (Iterator iterator = validators.iterator(); iterator.hasNext();) {
             Validator validator = (Validator) iterator.next();
             validator.validate(context, component, value);
         }
     }
 
     public Object saveState(FacesContext context) {
-        Object values[] = new Object[validators_.size() + 1];
-        for (int i = 0; i < validators_.size(); i++) {
-            Object validator = validators_.get(i);
+        Object values[] = new Object[validators.size() + 1];
+        for (int i = 0; i < validators.size(); i++) {
+            Object validator = validators.get(i);
             if (validator instanceof StateHolder) {
                 values[i] = ((StateHolder) validator).saveState(context);
             } else {
                 values[i] = null;
             }
         }
-        values[values.length - 1] = validators_;
+        values[values.length - 1] = validators;
         return values;
     }
 
     public void restoreState(FacesContext context, Object state) {
         Object values[] = (Object[]) state;
-        validators_ = (List) values[values.length - 1];
-        for (int i = 0; i < validators_.size(); i++) {
-            Object validator = validators_.get(i);
+        validators = (List) values[values.length - 1];
+        for (int i = 0; i < validators.size(); i++) {
+            Object validator = validators.get(i);
             if (validator instanceof StateHolder) {
                 ((StateHolder) validator).restoreState(context, values[i]);
             }
@@ -77,10 +77,10 @@ public class ValidatorChain implements Validator, StateHolder {
     }
 
     public boolean isTransient() {
-        return transientValue_;
+        return transientValue;
     }
 
     public void setTransient(boolean transientValue) {
-        transientValue_ = transientValue;
+        this.transientValue = transientValue;
     }
 }
