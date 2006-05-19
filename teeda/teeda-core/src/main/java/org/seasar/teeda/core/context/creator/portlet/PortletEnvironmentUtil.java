@@ -13,26 +13,24 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.core.context.creator.servlet;
+package org.seasar.teeda.core.context.creator.portlet;
 
-import javax.servlet.ServletContext;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
+import javax.portlet.PortletContext;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 /**
  * @author shot
- * 
  */
-public class ServletEnvironmentUtil {
+public class PortletEnvironmentUtil {
 
-    public ServletEnvironmentUtil() {
+    private PortletEnvironmentUtil() {
     }
 
-    public static boolean isServletEnvironment(Object context, Object request,
+    public static boolean isPortletEnvironment(Object context, Object request,
             Object response) {
-        return (context instanceof ServletContext)
-                && (request instanceof ServletRequest)
-                && (response instanceof ServletResponse);
+        return (context instanceof PortletContext)
+                && (request instanceof PortletRequest)
+                && (response instanceof PortletResponse);
     }
-
 }

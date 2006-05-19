@@ -13,26 +13,27 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.core.context.creator.servlet;
-
-import javax.servlet.ServletContext;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
+package org.seasar.teeda.core.mock;
 
 /**
  * @author shot
  * 
  */
-public class ServletEnvironmentUtil {
+public class MockPortletResponseImpl implements MockPortletResponse {
 
-    public ServletEnvironmentUtil() {
+    public void addProperty(String arg0, String arg1) {
+        // TODO Auto-generated method stub
+
     }
 
-    public static boolean isServletEnvironment(Object context, Object request,
-            Object response) {
-        return (context instanceof ServletContext)
-                && (request instanceof ServletRequest)
-                && (response instanceof ServletResponse);
+    public void setProperty(String arg0, String arg1) {
+        // TODO Auto-generated method stub
+
+    }
+
+    public String encodeURL(String arg0) {
+        // TODO Auto-generated method stub
+        return null;
     }
 
 }

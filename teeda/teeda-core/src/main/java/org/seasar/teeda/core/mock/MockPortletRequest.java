@@ -13,26 +13,14 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.core.context.creator.servlet;
+package org.seasar.teeda.core.mock;
 
-import javax.servlet.ServletContext;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
+import javax.portlet.PortletRequest;
 
 /**
  * @author shot
  * 
  */
-public class ServletEnvironmentUtil {
-
-    public ServletEnvironmentUtil() {
-    }
-
-    public static boolean isServletEnvironment(Object context, Object request,
-            Object response) {
-        return (context instanceof ServletContext)
-                && (request instanceof ServletRequest)
-                && (response instanceof ServletResponse);
-    }
+public interface MockPortletRequest extends PortletRequest {
 
 }

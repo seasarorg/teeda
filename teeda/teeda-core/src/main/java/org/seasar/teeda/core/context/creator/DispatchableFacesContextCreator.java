@@ -18,6 +18,8 @@ package org.seasar.teeda.core.context.creator;
 import javax.faces.context.FacesContext;
 import javax.faces.lifecycle.Lifecycle;
 
+import org.seasar.teeda.core.context.creator.portlet.PortletEnvironmentUtil;
+import org.seasar.teeda.core.context.creator.portlet.PortletFacesContextCreator;
 import org.seasar.teeda.core.context.creator.servlet.ServletEnvironmentUtil;
 import org.seasar.teeda.core.context.creator.servlet.ServletFacesContextCreator;
 
@@ -26,15 +28,42 @@ import org.seasar.teeda.core.context.creator.servlet.ServletFacesContextCreator;
  * 
  */
 public class DispatchableFacesContextCreator implements FacesContextCreator {
+
+    private ServletFacesContextCreator servletFacesContextCreator = new ServletFacesContextCreator();
     
-    //TODO dispatch to applicable creator
+    private PortletFacesContextCreator portletFacesContextCreator = new PortletFacesContextCreator();
+    
+    //TODO need to change pluggable.
     public FacesContext create(Object context, Object request, Object response,
             Lifecycle lifecycle) {
-        if(ServletEnvironmentUtil.isServletEnvironment(context, request, response)) {
-            return new ServletFacesContextCreator().create(context, request, response, lifecycle);
+        if (ServletEnvironmentUtil.isServletEnvironment(context, request,
+                response)) {
+            return getServletFacesContextCreator().create(context, request,
+                    response, lifecycle);
+        } else if (PortletEnvironmentUtil.isPortletEnvironment(context,
+                request, response)) {
+            return getPortletFacesContextCreator().create(context, request,
+                    response, lifecycle);
         }
-        //TODO add Portlet environment case
         return null;
+    }
+
+    public PortletFacesContextCreator getPortletFacesContextCreator() {
+        return portletFacesContextCreator;
+    }
+
+    public void setPortletFacesContextCreator(
+            PortletFacesContextCreator portletFacesContextCreator) {
+        this.portletFacesContextCreator = portletFacesContextCreator;
+    }
+
+    public ServletFacesContextCreator getServletFacesContextCreator() {
+        return servletFacesContextCreator;
+    }
+
+    public void setServletFacesContextCreator(
+            ServletFacesContextCreator servletFacesContextCreator) {
+        this.servletFacesContextCreator = servletFacesContextCreator;
     }
 
 }

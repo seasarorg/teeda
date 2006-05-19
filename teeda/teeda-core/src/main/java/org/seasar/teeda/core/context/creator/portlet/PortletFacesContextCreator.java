@@ -13,26 +13,26 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.core.context.creator.servlet;
+package org.seasar.teeda.core.context.creator.portlet;
 
-import javax.servlet.ServletContext;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
+
+import org.seasar.teeda.core.context.creator.AbstractFacesContextCreator;
+import org.seasar.teeda.core.context.portlet.PortletFacesContextImpl;
 
 /**
  * @author shot
  * 
  */
-public class ServletEnvironmentUtil {
+public class PortletFacesContextCreator extends AbstractFacesContextCreator {
 
-    public ServletEnvironmentUtil() {
+    public PortletFacesContextCreator() {
+        setExternalContextCreator(new PortletExternalContextCreator());
     }
 
-    public static boolean isServletEnvironment(Object context, Object request,
-            Object response) {
-        return (context instanceof ServletContext)
-                && (request instanceof ServletRequest)
-                && (response instanceof ServletResponse);
+    protected FacesContext doCreateFacesContext(ExternalContext externalContext) {
+        return new PortletFacesContextImpl(externalContext);
     }
 
 }
