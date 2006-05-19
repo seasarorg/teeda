@@ -441,7 +441,7 @@ public abstract class UIComponentTag implements Tag {
     private void removeOldFacets() {
         List oldList = WebAppUtils.getCreatedFacetNames(component);
         if (oldList == null) {
-            saveFacesComponentAttribute();
+            saveFacetsComponentAttribute();
             return;
         }
         for (Iterator olds = oldList.iterator(); olds.hasNext();) {
@@ -450,7 +450,7 @@ public abstract class UIComponentTag implements Tag {
                 component.getFacets().remove(old);
             }
         }
-        saveFacesComponentAttribute();
+        saveFacetsComponentAttribute();
     }
 
     private void saveChildrenComponentAttribute() {
@@ -462,9 +462,9 @@ public abstract class UIComponentTag implements Tag {
         createdComponents = null;
     }
 
-    private void saveFacesComponentAttribute() {
+    private void saveFacetsComponentAttribute() {
         if (createdFacets != null) {
-            WebAppUtils.setCreatedFacetNames(component, createdComponents);
+            WebAppUtils.setCreatedFacetNames(component, createdFacets);
         } else {
             WebAppUtils.removeCreatedFacetNames(component);
         }
