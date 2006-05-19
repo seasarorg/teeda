@@ -60,7 +60,7 @@ public class CommandButtonFactoryTest extends TestCase {
         // ## Act ##
         taglibManager
                 .init("org/seasar/teeda/extension/config/taglib/impl/tlds");
-        ElementProcessor processor = factory.createProcessor(elementNode);
+        ElementProcessor processor = factory.createProcessor(elementNode, null);
         // ## Assert ##
         assertNotNull("1", processor);
         assertEquals("2", CommandButtonTag.class, processor.getTagClass());
