@@ -28,10 +28,11 @@ import junit.framework.TestCase;
  */
 public class PageDescImplTest extends TestCase {
 	
-    public void testHasProperty() throws Exception {
+    public void testIsValid() throws Exception {
         PageDescImpl pd = new PageDescImpl(FooPage.class, "fooPage");
-        assertTrue("1", pd.hasProperty("aaa"));
-        assertFalse("2", pd.hasProperty("xxx"));
+        assertTrue("1", pd.isValid("aaa"));
+        assertFalse("2", pd.isValid("xxx"));
+        assertTrue("3", pd.isValid("fooForm"));
     }
 
     public void testIsModified() throws Exception {

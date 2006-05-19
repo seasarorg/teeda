@@ -1,6 +1,7 @@
 package org.seasar.teeda.extension.html.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -49,6 +50,10 @@ public class ElementNodeImpl implements ElementNode {
     
     public Map getProperties() {
         return properties;
+    }
+    
+    public Map copyProperties() {
+        return new HashMap(properties);
     }
 
     public void addText(String text) {

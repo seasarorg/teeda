@@ -39,7 +39,7 @@ public class CommandButtonFactory extends AbstractElementProcessorFactory {
 
     public ElementProcessor createProcessor(ElementNode elementNode, PageDesc pageDesc) {
         Class tagClass = getTagClass(JsfConstants.JSF_HTML_URI, TAG_NAME);
-        return new ElementProcessorImpl(tagClass, elementNode.getProperties());
+        return new ElementProcessorImpl(tagClass, elementNode.copyProperties());
     }
 
 }

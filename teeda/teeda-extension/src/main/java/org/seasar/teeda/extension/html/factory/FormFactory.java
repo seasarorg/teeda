@@ -15,9 +15,6 @@
  */
 package org.seasar.teeda.extension.html.factory;
 
-
-import java.util.Map;
-
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.ElementProcessor;
@@ -28,21 +25,16 @@ import org.seasar.teeda.extension.html.processor.ElementProcessorImpl;
  * @author higa
  *  
  */
-public class InputTextFactory extends AbstractElementProcessorFactory {
+public class FormFactory extends AbstractElementProcessorFactory {
 
-	private static final String TAG_NAME = "inputText";
+	private static final String TAG_NAME = "form";
 
 	public boolean isMatch(ElementNode elementNode) {
-		if (!JsfConstants.INPUT_ELEM.equalsIgnoreCase(elementNode.getTagName())) {
-			return false;
-		}
-		return JsfConstants.TEXT_VALUE.equalsIgnoreCase(elementNode.getProperty(JsfConstants.TYPE_ATTR));
+		return JsfConstants.FORM_ELEM.equalsIgnoreCase(elementNode.getTagName());
 	}
 
-	public ElementProcessor createProcessor(ElementNode elementNode, PageDesc pageDesc) {
-		Class tagClass = getTagClass(JsfConstants.JSF_HTML_URI, TAG_NAME);
-        Map props = elementNode.copyProperties();
-        props.put(JsfConstants.VALUE_ATTR, getValueBindingExpression(pageDesc.getPageName(), elementNode.getId()));
-        return new ElementProcessorImpl(tagClass, props);
-	}
+    public ElementProcessor createProcessor(ElementNode elementNode, PageDesc pageDesc) {
+        Class tagClass = getTagClass(JsfConstants.JSF_HTML_URI, TAG_NAME);
+        return new ElementProcessorImpl(tagClass, elementNode.copyProperties());
+    }
 }

@@ -30,6 +30,8 @@ import org.seasar.teeda.extension.html.PageDesc;
  */
 public class PageDescImpl implements PageDesc {
 
+    private static final String FORM = "Form";
+
     private String pageName;
     
     private Set propertyNames = new HashSet();
@@ -63,8 +65,11 @@ public class PageDescImpl implements PageDesc {
         }
     }
     
-    public boolean hasProperty(String name) {
-        return propertyNames.contains(name);
+    public boolean isValid(String id) {
+        if (propertyNames.contains(id)) {
+            return true;
+        }
+        return id.endsWith(FORM);
     }
 
     public boolean isModified() {
