@@ -39,9 +39,9 @@ public class HtmlRenderKitImpl extends AbstractRenderKit {
 
     private static String DEFAULT_CONTENTTYPE = "text/html";
 
-    private Map renderers_ = new HashMap();
+    private Map renderers = new HashMap();
 
-    private ResponseStateManager responseStateManager_;
+    private ResponseStateManager responseStateManager;
 
     public HtmlRenderKitImpl() {
     }
@@ -51,14 +51,14 @@ public class HtmlRenderKitImpl extends AbstractRenderKit {
         AssertionUtil.assertNotNull("renderType", renderType);
         AssertionUtil.assertNotNull("renderer", renderer);
         String key = getGeneratedKey(family, renderType);
-        renderers_.put(key, renderer);
+        renderers.put(key, renderer);
     }
 
     public Renderer getRenderer(String family, String renderType) {
         AssertionUtil.assertNotNull("family", family);
         AssertionUtil.assertNotNull("renderType", renderType);
         String key = getGeneratedKey(family, renderType);
-        return (Renderer) renderers_.get(key);
+        return (Renderer) renderers.get(key);
     }
 
     public ResponseStream createResponseStream(final OutputStream out) {
@@ -102,12 +102,12 @@ public class HtmlRenderKitImpl extends AbstractRenderKit {
     }
 
     public ResponseStateManager getResponseStateManager() {
-        return responseStateManager_;
+        return responseStateManager;
     }
 
     public void setResponseStateManager(
             ResponseStateManager responseStateManager) {
-        responseStateManager_ = responseStateManager;
+        this.responseStateManager = responseStateManager;
     }
 
     protected String getGeneratedKey(String family, String renderType) {

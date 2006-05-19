@@ -3,6 +3,7 @@
 	"http://www.seasar.org/dtd/components24.dtd">
 <components>
 	
+	<include path="provider.dicon" />
 	<include path="teeda.dicon" />
 	
 	<component class="org.seasar.teeda.extension.annotation.ConstantValidatorAnnotationHandler">
@@ -10,7 +11,5 @@
 			<arg>"Impl"</arg>
 		</initMethod>
 	</component>
-	
-	<component class="org.seasar.teeda.extension.annotation.provider.AnnotationEnhanceAssembleProvider"/>
 	
 </components>

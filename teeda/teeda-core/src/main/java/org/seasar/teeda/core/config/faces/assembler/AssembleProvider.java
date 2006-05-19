@@ -15,6 +15,8 @@
  */
 package org.seasar.teeda.core.config.faces.assembler;
 
+import javax.faces.context.ExternalContext;
+
 import org.seasar.teeda.core.config.faces.element.FacesConfig;
 
 /**
@@ -40,5 +42,9 @@ public interface AssembleProvider {
     public RenderKitAssembler assembleRenderKits(FacesConfig facesConfig);
 
     public LifecycleAssembler assembleLifecycle(FacesConfig facesConfig);
+
+    public void setExternalContext(ExternalContext externalContext);
+
+    public ExternalContext getExternalContext();
 
 }

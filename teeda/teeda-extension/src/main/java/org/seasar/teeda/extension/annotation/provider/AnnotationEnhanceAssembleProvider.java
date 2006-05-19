@@ -15,9 +15,12 @@
  */
 package org.seasar.teeda.extension.annotation.provider;
 
+import javax.faces.context.ExternalContext;
+
 import org.seasar.teeda.core.config.faces.assembler.ManagedBeanAssembler;
 import org.seasar.teeda.core.config.faces.assembler.impl.DefaultAssembleProvider;
 import org.seasar.teeda.core.config.faces.element.FacesConfig;
+import org.seasar.teeda.core.util.DIContainerUtil;
 import org.seasar.teeda.extension.annotation.ValidatorAnnotationHandler;
 import org.seasar.teeda.extension.annotation.assembler.AnnotationEnhanceManagedBeanAssembler;
 
@@ -26,17 +29,23 @@ import org.seasar.teeda.extension.annotation.assembler.AnnotationEnhanceManagedB
  */
 public class AnnotationEnhanceAssembleProvider extends DefaultAssembleProvider {
 
-    private ValidatorAnnotationHandler annotationHandler_;
+    private ValidatorAnnotationHandler annotationHandler;
+
+    public AnnotationEnhanceAssembleProvider() {
+        ExternalContext extContext = (ExternalContext) DIContainerUtil
+                .getComponentNoException(ExternalContext.class);
+        setExternalContext(extContext);
+    }
 
     public ManagedBeanAssembler assembleManagedBeans(FacesConfig facesConfig) {
         AnnotationEnhanceManagedBeanAssembler assembler = new AnnotationEnhanceManagedBeanAssembler(
                 facesConfig.getManagedBeanElements());
-        assembler.setAnnotationHandler(annotationHandler_);
+        assembler.setAnnotationHandler(annotationHandler);
         return assembler;
     }
 
     public void setValidatorAnnotationHandler(
             ValidatorAnnotationHandler annotationHandler) {
-        annotationHandler_ = annotationHandler;
+        this.annotationHandler = annotationHandler;
     }
 }

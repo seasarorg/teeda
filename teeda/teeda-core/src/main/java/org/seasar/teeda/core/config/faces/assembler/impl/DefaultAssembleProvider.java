@@ -37,7 +37,7 @@ import org.seasar.teeda.core.config.faces.element.FacesConfig;
  */
 public class DefaultAssembleProvider implements AssembleProvider {
 
-    private ExternalContext externalContext_;
+    private ExternalContext externalContext;
 
     public FactoryAssembler assembleFactories(FacesConfig facesConfig) {
         List factories = facesConfig.getFactoryElements();
@@ -88,10 +88,10 @@ public class DefaultAssembleProvider implements AssembleProvider {
     }
 
     public void setExternalContext(ExternalContext externalContext) {
-        externalContext_ = externalContext;
+        this.externalContext = externalContext;
     }
 
     public ExternalContext getExternalContext() {
-        return externalContext_;
+        return externalContext;
     }
 }
