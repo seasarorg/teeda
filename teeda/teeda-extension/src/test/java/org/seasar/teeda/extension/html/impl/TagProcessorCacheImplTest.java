@@ -47,7 +47,7 @@ public class TagProcessorCacheImplTest extends S2FrameworkTestCase {
         tagProcessorCache.setHtmlDescCache(htmlDescCache);
         tagProcessorCache.setPageDescCache(pageDescCache);
         tagProcessorCache.setAssembler(new TagProcessorAssemblerImpl());
-        tagProcessorCache.setTeedaStateManager(new TeedaStateManagerImpl());
+        tagProcessorCache.setStateManager(new TeedaStateManagerImpl());
         
         TagProcessor processor = tagProcessorCache.getTagProcessor(path);
         

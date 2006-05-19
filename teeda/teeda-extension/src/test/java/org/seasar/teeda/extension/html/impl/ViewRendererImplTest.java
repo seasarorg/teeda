@@ -58,7 +58,7 @@ public class ViewRendererImplTest extends TeedaExtensionTestCase {
         tagProcessorCache.setHtmlDescCache(htmlDescCache);
         tagProcessorCache.setPageDescCache(pageDescCache);
         tagProcessorCache.setAssembler(new TagProcessorAssemblerImpl());
-        tagProcessorCache.setTeedaStateManager(new TeedaStateManagerImpl());
+        tagProcessorCache.setStateManager(new TeedaStateManagerImpl());
         
         ViewRendererImpl viewRenderer = new ViewRendererImpl();
         viewRenderer.setTagProcessorCache(tagProcessorCache);

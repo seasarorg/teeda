@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container 2.4//EN" 
+	"http://www.seasar.org/dtd/components24.dtd">
+<components>
+	
+	<include path="annotationProvider.dicon" />
+	<include path="teeda.dicon" />
+	
+	<component class="org.seasar.teeda.extension.config.taglib.impl.ServletContextTaglibManagerImpl"/>
+	<component class="org.seasar.teeda.extension.config.taglib.impl.TaglibElementBuilderImpl"/>
+	
+	<component class="org.seasar.teeda.extension.html.impl.HtmlDescCacheImpl"/>
+	<component class="org.seasar.teeda.extension.html.impl.PageDescCacheImpl"/>
+	<component class="org.seasar.teeda.extension.html.impl.TagProcessorAssemblerImpl"/>
+	<component class="org.seasar.teeda.extension.html.impl.TagProcessorCacheImpl"/>
+	<component name="viewHandler" class="org.seasar.teeda.extension.html.impl.ViewRendererImpl"/>
+	<component class="org.seasar.teeda.extension.html.impl.HtmlViewHandler"/>
+	
+	<component class="org.seasar.teeda.core.application.ApplicationImpl">
+		<property name="actionListener">actionListener</property>
+		<property name="navigationHandler">navigationHandler</property>
+		<property name="viewHandler">viewHandler</property>
+		<property name="propertyResolver">propertyResolver</property>
+		<property name="variableResolver">variableResolver</property>
+		<property name="stateManager">stateManager</property>
+	</component>
+		
+</components>

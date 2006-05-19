@@ -41,7 +41,7 @@ public class TagProcessorCacheImpl implements TagProcessorCache {
     
     private TagProcessorAssembler assembler;
     
-    private TeedaStateManager teedaStateManager;
+    private TeedaStateManager stateManager;
     
     public void setHtmlDescCache(HtmlDescCache htmlDescCache) {
         this.htmlDescCache = htmlDescCache;
@@ -55,8 +55,8 @@ public class TagProcessorCacheImpl implements TagProcessorCache {
         this.assembler = assembler;
     }
 
-    public void setTeedaStateManager(TeedaStateManager teedaStateManager) {
-        this.teedaStateManager = teedaStateManager;
+    public void setStateManager(TeedaStateManager stateManager) {
+        this.stateManager = stateManager;
     }
 
     public synchronized TagProcessor getTagProcessor(String viewId) {
@@ -74,7 +74,7 @@ public class TagProcessorCacheImpl implements TagProcessorCache {
         if (created) {
             processors.put(viewId, assembler.assemble(
                     htmlDesc, pageDesc));
-            teedaStateManager.removeSerializedView(viewId);
+            stateManager.removeSerializedView(viewId);
         }
         return (TagProcessor) processors.get(viewId);
     }
