@@ -65,12 +65,13 @@ public class InputTextFactoryTest extends TestCase {
         properties.put("id", "aaa");
         properties.put("type", "text");
         ElementNode elementNode = new ElementNodeImpl("input", properties);
-        PageDesc pageDesc = new PageDescImpl(FooPage.class);
+        PageDesc pageDesc = new PageDescImpl(FooPage.class, "fooPage");
 
         // ## Act ##
         ElementProcessor processor = factory.createProcessor(elementNode, pageDesc);
         // ## Assert ##
         assertNotNull("1", processor);
         assertEquals("2", InputTextTag.class, processor.getTagClass());
+        assertEquals("3", "#{fooPage.aaa}", processor.getProperty("value"));
     }
 }

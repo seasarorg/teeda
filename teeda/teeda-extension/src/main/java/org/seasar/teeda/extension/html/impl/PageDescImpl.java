@@ -30,22 +30,29 @@ import org.seasar.teeda.extension.html.PageDesc;
  */
 public class PageDescImpl implements PageDesc {
 
+    private String pageName;
+    
     private Set propertyNames = new HashSet();
     
     private File file;
     
     private long lastModified;
     
-    public PageDescImpl(Class pageClass) {
-        this(pageClass, null);
+    public PageDescImpl(Class pageClass, String pageName) {
+        this(pageClass, pageName, null);
     }
     
-    public PageDescImpl(Class pageClass, File file) {
+    public PageDescImpl(Class pageClass, String pageName, File file) {
+        this.pageName = pageName;
         setupProperties(pageClass);
         if (file != null) {
             this.file = file;
             lastModified = file.lastModified();
         }
+    }
+    
+    public String getPageName() {
+        return pageName;
     }
     
     protected void setupProperties(Class pageClass) {

@@ -15,12 +15,18 @@
  */
 package org.seasar.teeda.extension.html;
 
+import java.util.Iterator;
+
 
 
 
 public interface ElementProcessor extends TagProcessor {
 
     Class getTagClass();
+    
+    String getProperty(String name);
+    
+    Iterator getPropertyNameIterator();
 
     int getChildSize();
 

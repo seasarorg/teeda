@@ -16,6 +16,9 @@
 package org.seasar.teeda.extension.html.factory;
 
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.ElementProcessor;
@@ -39,6 +42,8 @@ public class InputTextFactory extends AbstractElementProcessorFactory {
 
 	public ElementProcessor createProcessor(ElementNode elementNode, PageDesc pageDesc) {
 		Class tagClass = getTagClass(JsfConstants.JSF_HTML_URI, TAG_NAME);
-        return new ElementProcessorImpl(tagClass, elementNode.getProperties());
+        Map props = new HashMap(elementNode.getProperties());
+        props.put(JsfConstants.VALUE_ATTR, getValueBindingExpression(pageDesc.getPageName(), elementNode.getId()));
+        return new ElementProcessorImpl(tagClass, props);
 	}
 }

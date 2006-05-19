@@ -29,7 +29,7 @@ import junit.framework.TestCase;
 public class PageDescImplTest extends TestCase {
 	
     public void testHasProperty() throws Exception {
-        PageDescImpl pd = new PageDescImpl(FooPage.class);
+        PageDescImpl pd = new PageDescImpl(FooPage.class, "fooPage");
         assertTrue("1", pd.hasProperty("aaa"));
         assertFalse("2", pd.hasProperty("xxx"));
     }
@@ -37,7 +37,7 @@ public class PageDescImplTest extends TestCase {
     public void testIsModified() throws Exception {
         File file = ResourceUtil.getResourceAsFile(
                 ClassUtil.getResourcePath(FooPage.class));
-        PageDescImpl pd = new PageDescImpl(FooPage.class, file);
+        PageDescImpl pd = new PageDescImpl(FooPage.class, "fooPage", file);
         assertFalse("1", pd.isModified());
         Thread.sleep(1000);
         file.setLastModified(System.currentTimeMillis());

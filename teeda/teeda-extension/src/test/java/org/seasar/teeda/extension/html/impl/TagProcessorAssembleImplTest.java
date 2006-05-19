@@ -42,7 +42,7 @@ public class TagProcessorAssembleImplTest extends S2FrameworkTestCase {
         HtmlDescCacheImpl cache = new HtmlDescCacheImpl();
         cache.setServletContext(getServletContext());
         HtmlDesc htmlDesc = cache.createHtmlDesc(path);
-        PageDescImpl pageDesc = new PageDescImpl(FooPage.class);
+        PageDescImpl pageDesc = new PageDescImpl(FooPage.class, "fooPage");
         TagProcessorAssembler assembler = new TagProcessorAssemblerImpl();
         TagProcessor root = assembler.assemble(htmlDesc, pageDesc);
         assertTrue("1", root instanceof ElementProcessor);
@@ -55,7 +55,7 @@ public class TagProcessorAssembleImplTest extends S2FrameworkTestCase {
         HtmlDescCacheImpl cache = new HtmlDescCacheImpl();
         cache.setServletContext(getServletContext());
         HtmlDesc htmlDesc = cache.createHtmlDesc(path);
-        PageDescImpl pageDesc = new PageDescImpl(FooPage.class);
+        PageDescImpl pageDesc = new PageDescImpl(FooPage.class, "fooPage");
         TagProcessorAssembler assembler = new TagProcessorAssemblerImpl();
         TagProcessor root = assembler.assemble(htmlDesc, pageDesc);
         assertTrue("1", root instanceof ElementProcessor);
@@ -70,7 +70,7 @@ public class TagProcessorAssembleImplTest extends S2FrameworkTestCase {
         HtmlDescCacheImpl cache = new HtmlDescCacheImpl();
         cache.setServletContext(getServletContext());
         HtmlDesc htmlDesc = cache.createHtmlDesc(path);
-        PageDescImpl pageDesc = new PageDescImpl(FooPage.class);
+        PageDescImpl pageDesc = new PageDescImpl(FooPage.class, "fooPage");
         TagProcessorAssembler assembler = new TagProcessorAssemblerImpl();
         TagProcessor root = assembler.assemble(htmlDesc, pageDesc);
         assertTrue("1", root instanceof ElementProcessor);
@@ -85,7 +85,7 @@ public class TagProcessorAssembleImplTest extends S2FrameworkTestCase {
         HtmlDescCacheImpl cache = new HtmlDescCacheImpl();
         cache.setServletContext(getServletContext());
         HtmlDesc htmlDesc = cache.createHtmlDesc(path);
-        PageDescImpl pageDesc = new PageDescImpl(FooPage.class);
+        PageDescImpl pageDesc = new PageDescImpl(FooPage.class, "fooPage");
         TagProcessorAssembler assembler = new TagProcessorAssemblerImpl();
         TagProcessor root = assembler.assemble(htmlDesc, pageDesc);
         assertTrue("1", root instanceof ElementProcessor);
@@ -100,7 +100,7 @@ public class TagProcessorAssembleImplTest extends S2FrameworkTestCase {
         HtmlDescCacheImpl cache = new HtmlDescCacheImpl();
         cache.setServletContext(getServletContext());
         HtmlDesc htmlDesc = cache.createHtmlDesc(path);
-        PageDescImpl pageDesc = new PageDescImpl(FooPage.class);
+        PageDescImpl pageDesc = new PageDescImpl(FooPage.class, "fooPage");
         TagProcessorAssembler assembler = new TagProcessorAssemblerImpl();
         TagProcessor root = assembler.assemble(htmlDesc, pageDesc);
         assertTrue("1", root instanceof ElementProcessor);
@@ -115,7 +115,7 @@ public class TagProcessorAssembleImplTest extends S2FrameworkTestCase {
         HtmlDescCacheImpl cache = new HtmlDescCacheImpl();
         cache.setServletContext(getServletContext());
         HtmlDesc htmlDesc = cache.createHtmlDesc(path);
-        PageDescImpl pageDesc = new PageDescImpl(FooPage.class);
+        PageDescImpl pageDesc = new PageDescImpl(FooPage.class, "fooPage");
         TagProcessorAssembler assembler = new TagProcessorAssemblerImpl();
         TagProcessor root = assembler.assemble(htmlDesc, pageDesc);
         assertTrue("1", root instanceof ElementProcessor);
@@ -130,7 +130,7 @@ public class TagProcessorAssembleImplTest extends S2FrameworkTestCase {
         HtmlDescCacheImpl cache = new HtmlDescCacheImpl();
         cache.setServletContext(getServletContext());
         HtmlDesc htmlDesc = cache.createHtmlDesc(path);
-        PageDescImpl pageDesc = new PageDescImpl(FooPage.class);
+        PageDescImpl pageDesc = new PageDescImpl(FooPage.class, "fooPage");
         MockTaglibManager taglibManager = new MockTaglibManager();
         TaglibElement jsfHtml = new TaglibElementImpl();
         jsfHtml.setUri(JsfConstants.JSF_HTML_URI);

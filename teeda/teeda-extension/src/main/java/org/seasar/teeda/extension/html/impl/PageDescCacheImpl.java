@@ -67,11 +67,11 @@ public class PageDescCacheImpl implements PageDescCache {
         if (realPath != null) {
             File file = new File(realPath);
             if (file.exists()) {
-                pageDesc = new PageDescImpl(cd.getConcreteClass(), file);
+                pageDesc = new PageDescImpl(cd.getConcreteClass(), pageName, file);
             }
         }
         if (pageDesc == null) {
-            pageDesc = new PageDescImpl(cd.getConcreteClass());
+            pageDesc = new PageDescImpl(cd.getConcreteClass(), pageName);
         }
         pageDescs.put(viewId, pageDesc);
         return pageDesc;

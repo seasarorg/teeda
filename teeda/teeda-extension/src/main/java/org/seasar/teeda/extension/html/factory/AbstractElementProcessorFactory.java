@@ -42,4 +42,8 @@ public abstract class AbstractElementProcessorFactory implements ElementProcesso
         TagElement tagElement = taglibElement.getTagElement(tagName);
         return tagElement.getTagClass();
     }
+    
+    protected String getValueBindingExpression(String pageName, String propertyName) {
+        return "#{" + pageName + "." + propertyName + "}";
+    }
 }

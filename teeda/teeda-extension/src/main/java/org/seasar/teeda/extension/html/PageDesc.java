@@ -17,6 +17,8 @@ package org.seasar.teeda.extension.html;
 
 public interface PageDesc {
 
+    String getPageName();
+
     boolean hasProperty(String name);
     
     boolean isModified();

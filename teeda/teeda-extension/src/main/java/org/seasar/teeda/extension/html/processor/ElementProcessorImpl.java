@@ -69,11 +69,11 @@ public class ElementProcessorImpl implements ElementProcessor {
         return tagClass;
     }
 
-    protected String getProperty(String name) {
+    public String getProperty(String name) {
         return (String) properties.get(name);
     }
 
-    protected Iterator getPropertyNameIterator() {
+    public Iterator getPropertyNameIterator() {
         return properties.keySet().iterator();
     }
 
