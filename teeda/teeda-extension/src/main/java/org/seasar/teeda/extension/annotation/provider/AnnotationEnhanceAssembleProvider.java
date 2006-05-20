@@ -15,12 +15,9 @@
  */
 package org.seasar.teeda.extension.annotation.provider;
 
-import javax.faces.context.ExternalContext;
-
 import org.seasar.teeda.core.config.faces.assembler.ManagedBeanAssembler;
 import org.seasar.teeda.core.config.faces.assembler.impl.DefaultAssembleProvider;
 import org.seasar.teeda.core.config.faces.element.FacesConfig;
-import org.seasar.teeda.core.util.DIContainerUtil;
 import org.seasar.teeda.extension.annotation.ValidatorAnnotationHandler;
 import org.seasar.teeda.extension.annotation.assembler.AnnotationEnhanceManagedBeanAssembler;
 
@@ -32,9 +29,6 @@ public class AnnotationEnhanceAssembleProvider extends DefaultAssembleProvider {
     private ValidatorAnnotationHandler annotationHandler;
 
     public AnnotationEnhanceAssembleProvider() {
-        ExternalContext extContext = (ExternalContext) DIContainerUtil
-                .getComponentNoException(ExternalContext.class);
-        setExternalContext(extContext);
     }
 
     public ManagedBeanAssembler assembleManagedBeans(FacesConfig facesConfig) {

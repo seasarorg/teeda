@@ -4,7 +4,7 @@
 <components>
 
 	<!-- ExternalContext -->
-	<component name="externalContext" class="org.seasar.teeda.core.context.servlet.ServletExternalContextImpl">
+	<component name="externalContext" class="org.seasar.teeda.core.context.servlet.ServletExternalContextImpl" instance="request">
 		<arg>application</arg>
 		<arg>request</arg>
 		<arg>response</arg>
