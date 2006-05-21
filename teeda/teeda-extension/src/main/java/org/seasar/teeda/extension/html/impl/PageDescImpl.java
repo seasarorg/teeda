@@ -33,17 +33,17 @@ public class PageDescImpl implements PageDesc {
     private static final String FORM = "Form";
 
     private String pageName;
-    
+
     private Set propertyNames = new HashSet();
-    
+
     private File file;
-    
+
     private long lastModified;
-    
+
     public PageDescImpl(Class pageClass, String pageName) {
         this(pageClass, pageName, null);
     }
-    
+
     public PageDescImpl(Class pageClass, String pageName, File file) {
         this.pageName = pageName;
         setupProperties(pageClass);
@@ -52,11 +52,11 @@ public class PageDescImpl implements PageDesc {
             lastModified = file.lastModified();
         }
     }
-    
+
     public String getPageName() {
         return pageName;
     }
-    
+
     protected void setupProperties(Class pageClass) {
         BeanDesc beanDesc = BeanDescFactory.getBeanDesc(pageClass);
         for (int i = 0; i < beanDesc.getPropertyDescSize(); ++i) {
@@ -64,8 +64,11 @@ public class PageDescImpl implements PageDesc {
             propertyNames.add(pd.getPropertyName());
         }
     }
-    
+
     public boolean isValid(String id) {
+        if (id == null) {
+            return false;
+        }
         if (propertyNames.contains(id)) {
             return true;
         }

@@ -27,17 +27,18 @@ import junit.framework.TestCase;
  *
  */
 public class PageDescImplTest extends TestCase {
-	
+
     public void testIsValid() throws Exception {
         PageDescImpl pd = new PageDescImpl(FooPage.class, "fooPage");
         assertTrue("1", pd.isValid("aaa"));
         assertFalse("2", pd.isValid("xxx"));
         assertTrue("3", pd.isValid("fooForm"));
+        assertFalse(pd.isValid(null));
     }
 
     public void testIsModified() throws Exception {
-        File file = ResourceUtil.getResourceAsFile(
-                ClassUtil.getResourcePath(FooPage.class));
+        File file = ResourceUtil.getResourceAsFile(ClassUtil
+                .getResourcePath(FooPage.class));
         PageDescImpl pd = new PageDescImpl(FooPage.class, "fooPage", file);
         assertFalse("1", pd.isModified());
         Thread.sleep(1000);
