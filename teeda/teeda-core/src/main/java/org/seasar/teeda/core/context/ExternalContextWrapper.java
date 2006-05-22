@@ -27,9 +27,19 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.faces.context.ExternalContext;
+import javax.portlet.PortletContext;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+
+import org.seasar.teeda.core.context.portlet.PortletExternalContextImpl;
+import org.seasar.teeda.core.context.servlet.ServletExternalContextImpl;
 
 /**
  * @author shot
+ * @author shinsuke
  */
 public class ExternalContextWrapper extends ExternalContext implements
         Serializable {
@@ -40,9 +50,19 @@ public class ExternalContextWrapper extends ExternalContext implements
 
     public ExternalContextWrapper() {
     }
-    
+
     public ExternalContextWrapper(ExternalContext externalContext) {
         this.externalContext = externalContext;
+    }
+
+    public ExternalContextWrapper(ServletContext context,
+            ServletRequest request, ServletResponse response) {
+        this(new ServletExternalContextImpl(context, request, response));
+    }
+
+    public ExternalContextWrapper(PortletContext context,
+            PortletRequest request, PortletResponse response) {
+        this(new PortletExternalContextImpl(context, request, response));
     }
 
     public void dispatch(String path) throws IOException {
