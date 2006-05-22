@@ -49,6 +49,8 @@ public class ClassLoaderResourceTest extends TestCase {
             }
         });
         assertEquals(3, jars.length);
+        // sort
+        java.util.Arrays.sort(jars);
         URL[] jarUrls = new URL[jars.length];
         for (int i = 0; i < jars.length; i++) {
             System.out.println(jars[i].toURL());
