@@ -91,6 +91,15 @@
       <url>http://d.hatena.ne.jp/koichik/</url>
       <timezone>+9</timezone>
     </developer>
+    <developer>
+      <id>shinsuke</id>
+      <name/>
+      <email/>
+      <url/>
+      <organization/>
+      <organizationUrl/>
+      <timezone>+9</timezone>
+    </developer>
   </developers>
   <licenses>
     <license>
