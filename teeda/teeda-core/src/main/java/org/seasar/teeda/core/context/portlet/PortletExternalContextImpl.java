@@ -17,200 +17,319 @@ package org.seasar.teeda.core.context.portlet;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.Principal;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
+import javax.faces.FacesException;
+import javax.faces.application.ViewHandler;
 import javax.faces.context.ExternalContext;
+import javax.faces.internal.AssertionUtil;
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 import javax.portlet.PortletContext;
+import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.PortletResponse;
+import javax.portlet.PortletSession;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+
+import org.seasar.framework.log.Logger;
+import org.seasar.framework.util.EnumerationIterator;
 
 /**
+ * PortletExternalContextImpl is ExternalContext implementation for Portlet environment.
+ * 
  * @author shot
+ * @author shinsuke
  * 
  */
 public class PortletExternalContextImpl extends ExternalContext {
 
-    //TODO impl these.
+    private static Logger logger = Logger
+            .getLogger(PortletExternalContextImpl.class);
+
+    private static final String INIT_PARAMETER_MAP_ATTRIBUTE = PortletInitParameterMap.class
+            .getName();
+
+    private static final Map EMPTY_UNMODIFIABLE_MAP = Collections
+            .unmodifiableMap(new HashMap(0));
+
+    private PortletContext portletContext;
+
+    private PortletRequest portletRequest;
+
+    private PortletResponse portletResponse;
+
+    private Map applicationMap;
+
+    private Map sessionMap;
+
+    private Map requestMap;
+
+    private Map requestParameterMap;
+
+    private Map requestParameterValuesMap;
+
+    private Map requestHeaderMap;
+
+    private Map requestHeaderValuesMap;
+
+    private Map initParameterMap;
+
+    private boolean isActionRequest;
 
     public PortletExternalContextImpl(PortletContext context,
             PortletRequest request, PortletResponse response) {
-        // TODO Auto-generated constructor stub
+        this.portletContext = portletContext;
+        this.portletRequest = portletRequest;
+        this.portletResponse = portletResponse;
+        this.isActionRequest = (portletRequest != null && portletRequest instanceof ActionRequest);
+
+        if (isActionRequest) {
+            ActionRequest actionRequest = (ActionRequest) portletRequest;
+
+            // Section 2.5.2.2 in JSF 1.1 spec
+            String contentType = portletRequest.getProperty("Content-Type");
+
+            String characterEncoding = null;
+            if (contentType != null) {
+                int charIndex = contentType.indexOf("charset=");
+                if (charIndex != -1) {
+                    characterEncoding = contentType.substring(charIndex + 8);
+                }
+            }
+
+            if (characterEncoding == null) {
+                PortletSession session = portletRequest
+                        .getPortletSession(false);
+
+                if (session != null) {
+                    characterEncoding = (String) session.getAttribute(
+                            ViewHandler.CHARACTER_ENCODING_KEY,
+                            PortletSession.PORTLET_SCOPE);
+                }
+            }
+
+            // Set the encoding to the request if the request is ActionRequest.
+            if (characterEncoding != null) {
+                try {
+                    actionRequest.setCharacterEncoding(characterEncoding);
+                } catch (UnsupportedEncodingException e) {
+                    logger.warn("The specified encoding is wrong: "
+                            + characterEncoding, e);
+                }
+            }
+
+        }
     }
 
     public void dispatch(String path) throws IOException {
-        // TODO Auto-generated method stub
+        if (isActionRequest) {
+            throw new IllegalStateException(
+                    "Cannot call dispatch(String) if the reqeust is ActionRequest.");
+        }
 
+        PortletRequestDispatcher requestDispatcher = portletContext
+                .getRequestDispatcher(path);
+
+        try {
+            requestDispatcher.include((RenderRequest) portletRequest,
+                    (RenderResponse) portletResponse);
+        } catch (PortletException e) {
+                throw new FacesException("Failed to include the content of a resource in the response.", e);
+        }
     }
 
     public String encodeActionURL(String url) {
-        // TODO Auto-generated method stub
-        return null;
+        AssertionUtil.assertNotNull("url is null.", url);
+        return portletResponse.encodeURL(url);
     }
 
     public String encodeNamespace(String name) {
-        // TODO Auto-generated method stub
-        return null;
+        if (isActionRequest) { 
+            throw new IllegalStateException("Cannot call encodeNamespace(String) if the request is ActionRequest.");
+        }
+        return name + ((RenderResponse) portletResponse).getNamespace();
     }
 
     public String encodeResourceURL(String url) {
-        // TODO Auto-generated method stub
-        return null;
+        AssertionUtil.assertNotNull("url is null.", url);
+        return portletResponse.encodeURL(url);
     }
 
     public Map getApplicationMap() {
-        // TODO Auto-generated method stub
-        return null;
+        if (applicationMap == null) {
+            applicationMap = new PortletApplicationMap(portletContext);
+        }
+        return applicationMap;
     }
 
     public String getAuthType() {
-        // TODO Auto-generated method stub
-        return null;
+        return portletRequest.getAuthType();
     }
 
     public Object getContext() {
-        // TODO Auto-generated method stub
-        return null;
+        return portletContext;
     }
 
     public String getInitParameter(String name) {
-        // TODO Auto-generated method stub
-        return null;
+        return portletContext.getInitParameter(name);
     }
 
     public Map getInitParameterMap() {
-        // TODO Auto-generated method stub
-        return null;
+        if (initParameterMap == null) {
+            if ((initParameterMap = (Map) portletContext
+                    .getAttribute(INIT_PARAMETER_MAP_ATTRIBUTE)) == null) {
+                initParameterMap = new PortletInitParameterMap(portletContext);
+                portletContext.setAttribute(INIT_PARAMETER_MAP_ATTRIBUTE,
+                        initParameterMap);
+            }
+        }
+        return initParameterMap;
     }
 
     public String getRemoteUser() {
-        // TODO Auto-generated method stub
-        return null;
+        return portletRequest.getRemoteUser();
     }
 
     public Object getRequest() {
-        // TODO Auto-generated method stub
-        return null;
+        return portletRequest;
     }
 
     public String getRequestContextPath() {
-        // TODO Auto-generated method stub
-        return null;
+        return portletRequest.getContextPath();
     }
 
     public Map getRequestCookieMap() {
-        // TODO Auto-generated method stub
-        return null;
+        return EMPTY_UNMODIFIABLE_MAP;
     }
 
     public Map getRequestHeaderMap() {
-        // TODO Auto-generated method stub
-        return null;
+        if (requestHeaderMap == null) {
+            requestHeaderMap = new PortletRequestHeaderMap(portletRequest);
+        }
+        return requestHeaderMap;
     }
 
     public Map getRequestHeaderValuesMap() {
-        // TODO Auto-generated method stub
-        return null;
+        if (requestHeaderValuesMap == null) {
+            requestHeaderValuesMap = new PortletRequestHeaderValuesMap(
+                    portletRequest);
+        }
+        return requestHeaderValuesMap;
     }
 
     public Locale getRequestLocale() {
-        // TODO Auto-generated method stub
-        return null;
+        return portletRequest.getLocale();
     }
 
     public Iterator getRequestLocales() {
-        // TODO Auto-generated method stub
-        return null;
+        return new EnumerationIterator(portletRequest.getLocales());
     }
 
     public Map getRequestMap() {
-        // TODO Auto-generated method stub
-        return null;
+        if (requestMap == null) {
+            requestMap = new PortletRequestMap(portletRequest);
+        }
+        return requestMap;
     }
 
     public Map getRequestParameterMap() {
-        // TODO Auto-generated method stub
-        return null;
+        if (requestParameterMap == null) {
+            requestParameterMap = new PortletRequestParameterMap(
+                    portletRequest);
+        }
+        return requestParameterMap;
     }
 
     public Iterator getRequestParameterNames() {
-        // TODO Auto-generated method stub
-        return null;
+        return new EnumerationIterator(portletRequest.getParameterNames());
     }
 
     public Map getRequestParameterValuesMap() {
-        // TODO Auto-generated method stub
-        return null;
+        if (requestParameterValuesMap == null) {
+            requestParameterValuesMap = new PortletRequestParameterValuesMap(
+                    portletRequest);
+        }
+        return requestParameterValuesMap;
     }
 
     public String getRequestPathInfo() {
-        // TODO Auto-generated method stub
+        // must return null
         return null;
     }
 
     public String getRequestServletPath() {
-        // TODO Auto-generated method stub
+        // must return null
         return null;
     }
 
     public URL getResource(String path) throws MalformedURLException {
-        // TODO Auto-generated method stub
-        return null;
+        AssertionUtil.assertNotNull("path is null.", path);
+        return portletContext.getResource(path);
     }
 
     public InputStream getResourceAsStream(String path) {
-        // TODO Auto-generated method stub
-        return null;
+        AssertionUtil.assertNotNull("path is null.", path);
+        return portletContext.getResourceAsStream(path);
     }
 
     public Set getResourcePaths(String path) {
-        // TODO Auto-generated method stub
-        return null;
+        AssertionUtil.assertNotNull("path is null.", path);
+        return portletContext.getResourcePaths(path);
     }
 
     public Object getResponse() {
-        // TODO Auto-generated method stub
-        return null;
+        return portletResponse;
     }
 
     public Object getSession(boolean create) {
-        // TODO Auto-generated method stub
-        return null;
+        return portletRequest.getPortletSession(create);
     }
 
     public Map getSessionMap() {
-        // TODO Auto-generated method stub
-        return null;
+        if (sessionMap == null) {
+            sessionMap = new PortletSessionMap(portletRequest);
+        }
+        return sessionMap;
     }
 
     public Principal getUserPrincipal() {
-        // TODO Auto-generated method stub
-        return null;
+        return portletRequest.getUserPrincipal();
     }
 
     public boolean isUserInRole(String role) {
-        // TODO Auto-generated method stub
-        return false;
+        AssertionUtil.assertNotNull("role is null.", role);
+        return portletRequest.isUserInRole(role);
     }
 
     public void log(String message) {
-        // TODO Auto-generated method stub
-
+        AssertionUtil.assertNotNull("message is null.", message);
+        portletContext.log(message);
     }
 
     public void log(String message, Throwable exception) {
-        // TODO Auto-generated method stub
-
+        AssertionUtil.assertNotNull("message", message);
+        AssertionUtil.assertNotNull("exception", exception);
+        portletContext.log(message, exception);
     }
 
     public void redirect(String url) throws IOException {
-        // TODO Auto-generated method stub
-
+        if (portletResponse instanceof ActionResponse) {
+            ((ActionResponse) portletResponse).sendRedirect(url);
+        } else {
+            throw new IllegalArgumentException("RenderResponse does not support redirect(String).");
+        }
     }
 
 }
