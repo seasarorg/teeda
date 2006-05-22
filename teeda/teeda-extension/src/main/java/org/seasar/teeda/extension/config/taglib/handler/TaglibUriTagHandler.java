@@ -26,15 +26,15 @@ import org.seasar.teeda.extension.config.taglib.element.TaglibElement;
  */
 public class TaglibUriTagHandler extends TagHandler {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
     public void end(TagHandlerContext context, String body) {
-		if (body != null) {
-			body = body.trim();
-		}
-		if (!StringUtil.isEmpty(body)) {
-			TaglibElement taglibElement = (TaglibElement) context.peek();
-			taglibElement.setUri(body);
-		}
-	}
+        if (body != null) {
+            body = body.trim();
+        }
+        if (!StringUtil.isEmpty(body)) {
+            TaglibElement taglibElement = (TaglibElement) context.peek();
+            taglibElement.setUri(body);
+        }
+    }
 }

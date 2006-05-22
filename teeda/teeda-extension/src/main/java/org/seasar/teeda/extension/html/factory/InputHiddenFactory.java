@@ -39,13 +39,16 @@ public class InputHiddenFactory extends AbstractElementProcessorFactory {
                 .getProperty(JsfConstants.TYPE_ATTR));
     }
 
-    public ElementProcessor createProcessor(ElementNode elementNode, PageDesc pageDesc, ActionDesc actionDesc) {
-        return createProcessor(elementNode, pageDesc, actionDesc, JsfConstants.JSF_HTML_URI, TAG_NAME);
+    public ElementProcessor createProcessor(ElementNode elementNode,
+            PageDesc pageDesc, ActionDesc actionDesc) {
+        return createProcessor(elementNode, pageDesc, actionDesc,
+                JsfConstants.JSF_HTML_URI, TAG_NAME);
     }
 
     protected void customizeProperties(Map properties, ElementNode elementNode,
             PageDesc pageDesc, ActionDesc actionDesc) {
-        super.customizeProperties(properties, elementNode, pageDesc,
+        super
+                .customizeProperties(properties, elementNode, pageDesc,
                         actionDesc);
         properties.put(JsfConstants.VALUE_ATTR, getBindingExpression(pageDesc
                 .getPageName(), elementNode.getId()));

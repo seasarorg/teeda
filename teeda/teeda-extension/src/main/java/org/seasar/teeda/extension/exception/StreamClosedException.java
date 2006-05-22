@@ -23,9 +23,9 @@ import org.seasar.framework.exception.SIOException;
  */
 public class StreamClosedException extends SIOException {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
     public StreamClosedException() {
-		super("ETDA0101", null);
-	}
+        super("ETDA0101", null);
+    }
 }

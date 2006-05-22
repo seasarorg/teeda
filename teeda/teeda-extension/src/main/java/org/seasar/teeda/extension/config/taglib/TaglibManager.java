@@ -22,8 +22,8 @@ import org.seasar.teeda.extension.config.taglib.element.TaglibElement;
  *
  */
 public interface TaglibManager {
-	
-	TaglibElement getTaglibElement(String uri);
-    
+
+    TaglibElement getTaglibElement(String uri);
+
     void addTaglibElement(TaglibElement taglibElement);
 }

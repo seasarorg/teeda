@@ -24,24 +24,24 @@ import javax.servlet.http.HttpServletResponseWrapper;
 import javax.servlet.jsp.JspWriter;
 
 public class ServletResponseWrapperInclude extends HttpServletResponseWrapper {
-	
-	private PrintWriter writer;
 
-	public ServletResponseWrapperInclude(ServletResponse response,
-			JspWriter jspWriter) {
+    private PrintWriter writer;
 
-		super((HttpServletResponse) response);
-		this.writer = new PrintWriter(jspWriter);
-	}
+    public ServletResponseWrapperInclude(ServletResponse response,
+            JspWriter jspWriter) {
 
-	/**
-	 * Returns a wrapper around the JspWriter of the including page.
-	 */
-	public java.io.PrintWriter getWriter() throws java.io.IOException {
-		return writer;
-	}
+        super((HttpServletResponse) response);
+        this.writer = new PrintWriter(jspWriter);
+    }
 
-	public ServletOutputStream getOutputStream() throws java.io.IOException {
-		throw new IllegalStateException();
-	}
+    /**
+     * Returns a wrapper around the JspWriter of the including page.
+     */
+    public java.io.PrintWriter getWriter() throws java.io.IOException {
+        return writer;
+    }
+
+    public ServletOutputStream getOutputStream() throws java.io.IOException {
+        throw new IllegalStateException();
+    }
 }

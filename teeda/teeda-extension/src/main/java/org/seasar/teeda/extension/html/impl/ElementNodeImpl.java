@@ -13,15 +13,15 @@ import org.seasar.teeda.extension.html.HtmlNode;
 public class ElementNodeImpl implements ElementNode {
 
     private String tagName;
-    
+
     private Map properties;
-    
+
     private List children = new ArrayList();
-    
+
     private StringBuffer buffer;
-    
+
     private int childTextSize;
-    
+
     public ElementNodeImpl(String tagName, Map properties) {
         this.tagName = tagName;
         this.properties = properties;
@@ -31,11 +31,11 @@ public class ElementNodeImpl implements ElementNode {
     protected void initializeBuffer() {
         buffer = new StringBuffer(100);
     }
-    
+
     public String getTagName() {
         return tagName;
     }
-    
+
     public String getId() {
         return getProperty(JsfConstants.ID_ATTR);
     }
@@ -47,7 +47,7 @@ public class ElementNodeImpl implements ElementNode {
     public Iterator getPropertyNameIterator() {
         return properties.keySet().iterator();
     }
-    
+
     public Map copyProperties() {
         return new HashMap(properties);
     }
@@ -55,23 +55,23 @@ public class ElementNodeImpl implements ElementNode {
     public void addText(String text) {
         buffer.append(text);
     }
-    
+
     public void addElement(ElementNode elementNode) {
         processText();
         addChild(elementNode);
     }
-    
+
     protected void processText() {
         if (buffer.length() > 0) {
             addChild(new TextNodeImpl(buffer.toString()));
             initializeBuffer();
         }
     }
-    
+
     public void endElement() {
         processText();
     }
-    
+
     public int getChildSize() {
         return children.size();
     }
@@ -83,31 +83,31 @@ public class ElementNodeImpl implements ElementNode {
     protected void addChild(HtmlNode child) {
         children.add(child);
     }
-    
+
     public int getChildTextSize() {
         return childTextSize;
     }
-    
+
     public void incrementChildTextSize() {
         ++childTextSize;
     }
-    
+
     public void decrementChildTextSize() {
         --childTextSize;
     }
-    
+
     public String getEmptyTagString() {
         return HtmlNodeUtil.getEmptyTagString(tagName, properties);
     }
-    
+
     public String getStartTagString() {
         return HtmlNodeUtil.getStartTagString(tagName, properties);
     }
-    
+
     public String getEndTagString() {
         return HtmlNodeUtil.getEndTagString(tagName);
     }
-    
+
     public String toString() {
         if (getChildSize() == 0) {
             return getEmptyTagString();

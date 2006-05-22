@@ -23,15 +23,15 @@ import org.seasar.teeda.extension.html.HtmlNode;
 public class HtmlDescImpl implements HtmlDesc {
 
     private HtmlNode htmlNode;
-    
+
     private File file;
-    
+
     private long lastModified;
-    
+
     public HtmlDescImpl(HtmlNode htmlNode) {
         this(htmlNode, null);
     }
-    
+
     public HtmlDescImpl(HtmlNode htmlNode, File file) {
         this.htmlNode = htmlNode;
         if (file != null) {
@@ -39,7 +39,7 @@ public class HtmlDescImpl implements HtmlDesc {
             lastModified = file.lastModified();
         }
     }
-    
+
     public HtmlNode getHtmlNode() {
         return htmlNode;
     }

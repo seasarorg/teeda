@@ -36,17 +36,17 @@ import org.seasar.teeda.extension.html.TagProcessorCache;
 public class TagProcessorCacheImpl implements TagProcessorCache {
 
     private Map processors = new HashMap();
-    
+
     private HtmlDescCache htmlDescCache;
-    
+
     private PageDescCache pageDescCache;
-    
+
     private ActionDescCache actionDescCache;
-    
+
     private TagProcessorAssembler assembler;
-    
+
     private TeedaStateManager stateManager;
-    
+
     public void setHtmlDescCache(HtmlDescCache htmlDescCache) {
         this.htmlDescCache = htmlDescCache;
     }
@@ -85,8 +85,8 @@ public class TagProcessorCacheImpl implements TagProcessorCache {
             created = true;
         }
         if (created) {
-            processors.put(viewId, assembler.assemble(
-                    htmlDesc, pageDesc, actionDesc));
+            processors.put(viewId, assembler.assemble(htmlDesc, pageDesc,
+                    actionDesc));
             stateManager.removeSerializedView(viewId);
         }
         return (TagProcessor) processors.get(viewId);

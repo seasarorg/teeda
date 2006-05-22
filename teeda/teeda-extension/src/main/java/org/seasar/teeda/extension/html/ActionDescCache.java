@@ -18,6 +18,6 @@ package org.seasar.teeda.extension.html;
 public interface ActionDescCache {
 
     ActionDesc getActionDesc(String viewId);
-    
+
     ActionDesc createActionDesc(String viewId);
 }

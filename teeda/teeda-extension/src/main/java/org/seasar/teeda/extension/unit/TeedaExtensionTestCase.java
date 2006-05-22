@@ -31,7 +31,7 @@ public abstract class TeedaExtensionTestCase extends TeedaTestCase {
     protected PageContextImpl getPageContext() {
         return pageContext;
     }
-    
+
     protected String getResponseText() throws IOException {
         return getResponse().getWriter().toString();
     }

@@ -27,16 +27,16 @@ import org.seasar.teeda.extension.config.taglib.element.TagElement;
  */
 public class TaglibTagClassTagHandler extends TagHandler {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
     public void end(TagHandlerContext context, String body) {
-		if (body != null) {
-			body = body.trim();
-		}
-		if (!StringUtil.isEmpty(body)) {
-			Class tagClass = ClassUtil.forName(body);
-			TagElement tagElement = (TagElement) context.peek();
-			tagElement.setTagClass(tagClass);
-		}
-	}
+        if (body != null) {
+            body = body.trim();
+        }
+        if (!StringUtil.isEmpty(body)) {
+            Class tagClass = ClassUtil.forName(body);
+            TagElement tagElement = (TagElement) context.peek();
+            tagElement.setTagClass(tagClass);
+        }
+    }
 }

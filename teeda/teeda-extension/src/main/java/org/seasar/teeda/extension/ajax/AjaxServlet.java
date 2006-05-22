@@ -70,8 +70,8 @@ public class AjaxServlet extends HttpServlet {
         doAjax(request, response);
     }
 
-    protected void doAjax(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doAjax(HttpServletRequest request,
+            HttpServletResponse response) throws ServletException, IOException {
         String componentName = request
                 .getParameter(AjaxConstants.REQ_PARAM_COMPONENT);
         String method = request.getParameter(AjaxConstants.REQ_PARAM_ACTION);

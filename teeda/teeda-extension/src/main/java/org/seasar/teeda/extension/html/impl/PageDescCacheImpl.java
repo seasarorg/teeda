@@ -35,17 +35,17 @@ import org.seasar.teeda.extension.html.PageDescCache;
 public class PageDescCacheImpl implements PageDescCache {
 
     private Map pageDescs = new HashMap();
-    
+
     private ServletContext servletContext;
-    
+
     private HtmlAutoNaming htmlAutoNaming = new DefaultHtmlAutoNaming();
 
     private S2Container container;
-    
+
     public void setServletContext(ServletContext servletContext) {
         this.servletContext = servletContext;
     }
-    
+
     public void setHtmlAutoNaming(HtmlAutoNaming pageAutoNaming) {
         this.htmlAutoNaming = pageAutoNaming;
     }
@@ -67,7 +67,8 @@ public class PageDescCacheImpl implements PageDescCache {
         if (realPath != null) {
             File file = new File(realPath);
             if (file.exists()) {
-                pageDesc = new PageDescImpl(cd.getConcreteClass(), pageName, file);
+                pageDesc = new PageDescImpl(cd.getConcreteClass(), pageName,
+                        file);
             }
         }
         if (pageDesc == null) {

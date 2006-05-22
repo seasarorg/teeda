@@ -15,14 +15,14 @@
  */
 package org.seasar.teeda.extension.html;
 
-
 /**
  * @author higa
  *
  */
 public interface ElementProcessorFactory {
 
-	boolean isMatch(ElementNode elementNode);
+    boolean isMatch(ElementNode elementNode);
 
-	ElementProcessor createProcessor(ElementNode elementNode, PageDesc pageDesc, ActionDesc actionDesc);
+    ElementProcessor createProcessor(ElementNode elementNode,
+            PageDesc pageDesc, ActionDesc actionDesc);
 }

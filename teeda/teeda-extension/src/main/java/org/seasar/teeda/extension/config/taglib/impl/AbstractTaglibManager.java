@@ -40,81 +40,81 @@ import org.seasar.teeda.extension.config.taglib.element.TaglibElement;
  */
 public abstract class AbstractTaglibManager implements TaglibManager {
 
-	protected static final String FILE_PROTOCOL = "file:";
+    protected static final String FILE_PROTOCOL = "file:";
 
-	protected static final String JAR_PROTOCOL = "jar:";
+    protected static final String JAR_PROTOCOL = "jar:";
 
-	protected static final String JAR_PROTOCOL_SUFFIX = "!/";
+    protected static final String JAR_PROTOCOL_SUFFIX = "!/";
 
     protected static final String JAR_EXTENSION = "jar";
-    
-	protected static final String JAR_FILE_SUFFIX = "." + JAR_EXTENSION;
 
-	private Map taglibElements = new HashMap();
+    protected static final String JAR_FILE_SUFFIX = "." + JAR_EXTENSION;
 
-	private TaglibElementBuilder builder;
+    private Map taglibElements = new HashMap();
 
-	public void setBuilder(TaglibElementBuilder builder) {
+    private TaglibElementBuilder builder;
+
+    public void setBuilder(TaglibElementBuilder builder) {
         this.builder = builder;
     }
 
     public TaglibElement getTaglibElement(String uri)
-			throws UriNotFoundRuntimeException {
+            throws UriNotFoundRuntimeException {
 
-		TaglibElement taglibElement = (TaglibElement) taglibElements.get(uri);
-		if (taglibElement == null) {
-			throw new UriNotFoundRuntimeException(uri);
-		}
-		return taglibElement;
-	}
+        TaglibElement taglibElement = (TaglibElement) taglibElements.get(uri);
+        if (taglibElement == null) {
+            throw new UriNotFoundRuntimeException(uri);
+        }
+        return taglibElement;
+    }
 
-	public boolean hasTaglibElement(String uri) {
-		return taglibElements.containsKey(uri);
-	}
-    
+    public boolean hasTaglibElement(String uri) {
+        return taglibElements.containsKey(uri);
+    }
+
     public void addTaglibElement(TaglibElement taglibElement) {
         taglibElements.put(taglibElement.getUri(), taglibElement);
     }
-	
-	public void destroy() {
-		taglibElements.clear();
-	}
-	
-	protected JarURLConnection openJarURLConnection(URL url) {
-		URLConnection conn = URLUtil.openConnection(url);
-		if (conn instanceof JarURLConnection) {
-			return (JarURLConnection) conn;
-		}
-		String urlStr = url.toString();
+
+    public void destroy() {
+        taglibElements.clear();
+    }
+
+    protected JarURLConnection openJarURLConnection(URL url) {
+        URLConnection conn = URLUtil.openConnection(url);
+        if (conn instanceof JarURLConnection) {
+            return (JarURLConnection) conn;
+        }
+        String urlStr = url.toString();
         String ext = ResourceUtil.getExtension(urlStr);
-        
+
         if (ext == null || !ext.equalsIgnoreCase(JAR_EXTENSION)) {
             return null;
         }
-		URL jarURL = URLUtil.create(JAR_PROTOCOL + urlStr
-					+ JAR_PROTOCOL_SUFFIX);
-		return (JarURLConnection) URLUtil.openConnection(jarURL);
-	}
+        URL jarURL = URLUtil
+                .create(JAR_PROTOCOL + urlStr + JAR_PROTOCOL_SUFFIX);
+        return (JarURLConnection) URLUtil.openConnection(jarURL);
+    }
 
-	protected void scanJar(JarURLConnection conn) {
-		conn.setUseCaches(false);
-		JarFile jarFile = JarURLConnectionUtil.getJarFile(conn);
-		Enumeration entries = jarFile.entries();
-		while (entries.hasMoreElements()) {
-			JarEntry entry = (JarEntry) entries.nextElement();
-			String name = entry.getName();
-			if (!name.startsWith("META-INF/")) {
-				continue;
-			}
-			if (!name.endsWith(".tld")) {
-				continue;
-			}
-			InputStream is = JarFileUtil.getInputStream(jarFile, entry);
-			try {
-				scanTld(is);
-			} finally {
-				if (is != null) {
-					try {
+    protected void scanJar(JarURLConnection conn) {
+        conn.setUseCaches(false);
+        JarFile jarFile = JarURLConnectionUtil.getJarFile(conn);
+        Enumeration entries = jarFile.entries();
+        while (entries.hasMoreElements()) {
+            JarEntry entry = (JarEntry) entries.nextElement();
+            String name = entry.getName();
+            if (!name.startsWith("META-INF/")) {
+                continue;
+            }
+            if (!name.endsWith(".tld")) {
+                continue;
+            }
+            InputStream is = JarFileUtil.getInputStream(jarFile, entry);
+            try {
+                scanTld(is);
+            } finally {
+                if (is != null) {
+                    try {
                         is.close();
                     } catch (Throwable ignore) {
                     }
@@ -124,6 +124,6 @@ public abstract class AbstractTaglibManager implements TaglibManager {
     }
 
     protected void scanTld(InputStream is) {
-		addTaglibElement(builder.build(is));
-	}
+        addTaglibElement(builder.build(is));
+    }
 }

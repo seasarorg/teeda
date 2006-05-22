@@ -33,23 +33,25 @@ import org.seasar.teeda.extension.html.ViewRenderer;
  */
 public class HtmlViewHandler extends ViewHandlerImpl {
 
-	private ViewRenderer viewRenderer;
+    private ViewRenderer viewRenderer;
 
-	public void setViewRenderer(ViewRenderer viewRenderer) {
+    public void setViewRenderer(ViewRenderer viewRenderer) {
         this.viewRenderer = viewRenderer;
     }
 
-	public void renderView(FacesContext context, UIViewRoot viewRoot)
-			throws IOException {
+    public void renderView(FacesContext context, UIViewRoot viewRoot)
+            throws IOException {
 
-		ExternalContext externalContext = context.getExternalContext();
-		String path = ExternalContextUtil.getViewId(externalContext);
-		if (path.equals(viewRoot.getViewId())) {
-			HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
-			HttpServletResponse response = (HttpServletResponse) externalContext.getResponse();
-			viewRenderer.renderView(path, request, response);
-		} else {
-			externalContext.dispatch(viewRoot.getViewId());
-		}
-	}
+        ExternalContext externalContext = context.getExternalContext();
+        String path = ExternalContextUtil.getViewId(externalContext);
+        if (path.equals(viewRoot.getViewId())) {
+            HttpServletRequest request = (HttpServletRequest) externalContext
+                    .getRequest();
+            HttpServletResponse response = (HttpServletResponse) externalContext
+                    .getResponse();
+            viewRenderer.renderView(path, request, response);
+        } else {
+            externalContext.dispatch(viewRoot.getViewId());
+        }
+    }
 }

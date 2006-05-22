@@ -27,7 +27,7 @@ import org.seasar.teeda.core.taglib.core.ViewTag;
 public class ViewProcessor extends ElementProcessorImpl {
 
     private static Map EMPTY_PROPERTIES = new HashMap();
-    
+
     public ViewProcessor() {
         super(ViewTag.class, EMPTY_PROPERTIES);
     }

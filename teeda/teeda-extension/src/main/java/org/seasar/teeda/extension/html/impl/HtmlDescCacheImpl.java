@@ -37,13 +37,13 @@ import org.seasar.teeda.extension.html.HtmlParser;
 public class HtmlDescCacheImpl implements HtmlDescCache {
 
     private Map htmlDescs = new HashMap();
-    
+
     private ServletContext servletContext;
 
     public void setServletContext(ServletContext servletContext) {
         this.servletContext = servletContext;
     }
-    
+
     public synchronized HtmlDesc getHtmlDesc(String viewId) {
         return (HtmlDesc) htmlDescs.get(viewId);
     }
@@ -76,7 +76,7 @@ public class HtmlDescCacheImpl implements HtmlDescCache {
         }
         return new HtmlDescImpl(htmlNode, file);
     }
-    
+
     protected HtmlDesc createHtmlDescFromResource(String viewId) {
         HtmlNode htmlNode = null;
         HtmlParser parser = new HtmlParserImpl();

@@ -32,7 +32,7 @@ public class ValidatorAnnotationCustomizer implements ComponentDefCustomizer {
     public ValidatorAnnotationHandler getValidatorAnnotationHandler() {
         return annotationHandler_;
     }
-    
+
     public void setValidatorAnnotationHandler(
             ValidatorAnnotationHandler annotationHandler) {
         annotationHandler_ = annotationHandler;

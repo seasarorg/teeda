@@ -15,8 +15,7 @@
  */
 package org.seasar.teeda.extension.html;
 
-
 public interface TextNode extends HtmlNode {
-    
+
     String getValue();
 }

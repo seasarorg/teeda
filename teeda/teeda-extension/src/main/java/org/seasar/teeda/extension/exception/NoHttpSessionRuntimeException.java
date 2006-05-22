@@ -23,9 +23,9 @@ import org.seasar.framework.exception.SRuntimeException;
  */
 public class NoHttpSessionRuntimeException extends SRuntimeException {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
     public NoHttpSessionRuntimeException() {
-		super("ETDA0102");
-	}
+        super("ETDA0102");
+    }
 }

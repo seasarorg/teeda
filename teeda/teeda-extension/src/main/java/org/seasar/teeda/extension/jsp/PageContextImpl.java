@@ -439,6 +439,5 @@ public class PageContextImpl extends PageContext {
     public VariableResolver getVariableResolver() {
         return null;
     }
-    
-    
+
 }

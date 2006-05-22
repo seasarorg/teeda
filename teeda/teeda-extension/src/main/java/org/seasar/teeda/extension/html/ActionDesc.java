@@ -20,6 +20,6 @@ public interface ActionDesc {
     String getActionName();
 
     boolean isValid(String id);
-    
+
     boolean isModified();
 }

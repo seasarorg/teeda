@@ -28,7 +28,7 @@ public class DefaultHtmlAutoNaming implements HtmlAutoNaming {
     private String htmlExtension = ".html";
 
     private String pageSuffix = "Page";
-    
+
     private String actionSuffix = "Action";
 
     public String getHtmlRootPath() {
@@ -66,11 +66,11 @@ public class DefaultHtmlAutoNaming implements HtmlAutoNaming {
     public String convertToPageName(String htmlPath) {
         return convertToComponentName(htmlPath, pageSuffix);
     }
-    
+
     public String convertToActionName(String htmlPath) {
         return convertToComponentName(htmlPath, actionSuffix);
     }
-    
+
     protected String convertToComponentName(String htmlPath, String nameSuffix) {
         if (!htmlPath.startsWith(htmlRootPath)
                 || !htmlPath.endsWith(htmlExtension)) {

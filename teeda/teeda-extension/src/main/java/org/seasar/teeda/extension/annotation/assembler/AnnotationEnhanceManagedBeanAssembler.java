@@ -25,7 +25,8 @@ public class AnnotationEnhanceManagedBeanAssembler extends
         return annotationHandler;
     }
 
-    public void setAnnotationHandler(ValidatorAnnotationHandler annotationHandler) {
+    public void setAnnotationHandler(
+            ValidatorAnnotationHandler annotationHandler) {
         this.annotationHandler = annotationHandler;
     }
 

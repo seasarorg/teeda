@@ -19,16 +19,15 @@ import javax.servlet.jsp.JspException;
 
 import org.seasar.framework.exception.SRuntimeException;
 
-
 /**
  * @author higa
  *
  */
 public class JspRuntimeException extends SRuntimeException {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
     public JspRuntimeException(JspException cause) {
-		super("ETDA0027", new Object[]{cause}, cause);
-	}
+        super("ETDA0027", new Object[] { cause }, cause);
+    }
 }

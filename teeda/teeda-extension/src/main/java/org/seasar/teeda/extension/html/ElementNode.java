@@ -18,38 +18,37 @@ package org.seasar.teeda.extension.html;
 import java.util.Iterator;
 import java.util.Map;
 
-
 public interface ElementNode extends HtmlNode {
-    
+
     String getTagName();
-    
+
     String getId();
 
     String getProperty(String name);
 
     Iterator getPropertyNameIterator();
-    
+
     Map copyProperties();
 
     void addText(String text);
-    
+
     void addElement(ElementNode elementNode);
-    
+
     void endElement();
-    
+
     int getChildSize();
 
     HtmlNode getChild(int index);
-    
+
     int getChildTextSize();
-    
+
     void incrementChildTextSize();
-    
+
     void decrementChildTextSize();
-    
+
     String getEmptyTagString();
-    
+
     String getStartTagString();
-    
+
     String getEndTagString();
 }

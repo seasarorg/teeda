@@ -15,7 +15,6 @@
  */
 package org.seasar.teeda.extension.html.factory;
 
-
 import java.util.Map;
 
 import org.seasar.teeda.core.JsfConstants;
@@ -33,9 +32,10 @@ import org.seasar.teeda.extension.html.processor.ElementProcessorImpl;
  * @author higa
  *  
  */
-public abstract class AbstractElementProcessorFactory implements ElementProcessorFactory {
+public abstract class AbstractElementProcessorFactory implements
+        ElementProcessorFactory {
 
-	private TaglibManager taglibManager;
+    private TaglibManager taglibManager;
 
     public TaglibManager getTaglibManager() {
         return taglibManager;
@@ -44,37 +44,42 @@ public abstract class AbstractElementProcessorFactory implements ElementProcesso
     public void setTaglibManager(TaglibManager taglibManager) {
         this.taglibManager = taglibManager;
     }
-    
+
     protected Class getTagClass(String uri, String tagName) {
         TaglibElement taglibElement = taglibManager.getTaglibElement(uri);
         TagElement tagElement = taglibElement.getTagElement(tagName);
         return tagElement.getTagClass();
     }
-    
-    protected ElementProcessor createProcessor(ElementNode elementNode, PageDesc pageDesc, ActionDesc actionDesc, String uri, String tagName) {
+
+    protected ElementProcessor createProcessor(ElementNode elementNode,
+            PageDesc pageDesc, ActionDesc actionDesc, String uri, String tagName) {
         Class tagClass = getTagClass(uri, tagName);
         Map props = createProperties(elementNode, pageDesc, actionDesc);
         return new ElementProcessorImpl(tagClass, props);
     }
-    
-    protected Map createProperties(ElementNode elementNode, PageDesc pageDesc, ActionDesc actionDesc) {
+
+    protected Map createProperties(ElementNode elementNode, PageDesc pageDesc,
+            ActionDesc actionDesc) {
         Map props = elementNode.copyProperties();
         customizeProperties(props, elementNode, pageDesc, actionDesc);
         return props;
     }
-    
-    protected void customizeProperties(Map properties, ElementNode elementNode, PageDesc pageDesc, ActionDesc actionDesc) {
-        renameProperty(properties, JsfConstants.CLASS_ATTR, JsfConstants.STYLE_CLASS_ATTR);
+
+    protected void customizeProperties(Map properties, ElementNode elementNode,
+            PageDesc pageDesc, ActionDesc actionDesc) {
+        renameProperty(properties, JsfConstants.CLASS_ATTR,
+                JsfConstants.STYLE_CLASS_ATTR);
     }
-    
+
     protected void renameProperty(Map properties, String from, String to) {
         if (properties.containsKey(from)) {
             Object value = properties.remove(from);
             properties.put(to, value);
         }
     }
-    
-    protected String getBindingExpression(String componentName, String targetName) {
+
+    protected String getBindingExpression(String componentName,
+            String targetName) {
         return "#{" + componentName + "." + targetName + "}";
     }
 }

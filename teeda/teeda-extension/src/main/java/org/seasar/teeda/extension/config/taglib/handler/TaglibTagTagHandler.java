@@ -28,24 +28,24 @@ import org.xml.sax.Attributes;
  */
 public class TaglibTagTagHandler extends TagHandler {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
     /**
-	 * @see org.seasar.framework.xml.sax.handler.TagHandler#start(org.seasar.framework.xml.sax.handler.TagHandlerContext, org.xml.sax.Attributes)
-	 */
-	public void start(TagHandlerContext context, Attributes attributes) {
-		TagElement tagElement = new TagElementImpl();
-		context.push(tagElement);
-	}
+     * @see org.seasar.framework.xml.sax.handler.TagHandler#start(org.seasar.framework.xml.sax.handler.TagHandlerContext, org.xml.sax.Attributes)
+     */
+    public void start(TagHandlerContext context, Attributes attributes) {
+        TagElement tagElement = new TagElementImpl();
+        context.push(tagElement);
+    }
 
-	/**
-	 * @see org.seasar.framework.xml.sax.handler.TagHandler#end(org.seasar.framework.xml.sax.handler.TagHandlerContext, java.lang.String)
-	 */
-	public void end(TagHandlerContext context, String body) {
-		TagElement tagElement = (TagElement) context.pop();
-		TaglibElement taglibElement = (TaglibElement) context.peek();
-		taglibElement.addTagElement(tagElement);
-		
-	}
+    /**
+     * @see org.seasar.framework.xml.sax.handler.TagHandler#end(org.seasar.framework.xml.sax.handler.TagHandlerContext, java.lang.String)
+     */
+    public void end(TagHandlerContext context, String body) {
+        TagElement tagElement = (TagElement) context.pop();
+        TaglibElement taglibElement = (TaglibElement) context.peek();
+        taglibElement.addTagElement(tagElement);
+
+    }
 
 }

@@ -21,11 +21,11 @@ package org.seasar.teeda.extension.config.taglib.element;
  */
 public interface TagElement {
 
-	public String getName();
-	
-	public void setName(String name);
-	
-	public Class getTagClass();
-	
-	public void setTagClass(Class tagClass);
+    public String getName();
+
+    public void setName(String name);
+
+    public Class getTagClass();
+
+    public void setTagClass(Class tagClass);
 }

@@ -18,6 +18,6 @@ package org.seasar.teeda.extension.html;
 public interface HtmlAutoNaming {
 
     String convertToPageName(String htmlPath);
-    
+
     String convertToActionName(String htmlPath);
 }

@@ -29,17 +29,17 @@ import org.seasar.teeda.extension.html.ActionDesc;
 public class ActionDescImpl implements ActionDesc {
 
     private String actionName;
-    
+
     private Set methodNames = new HashSet();
-    
+
     private File file;
-    
+
     private long lastModified;
-    
+
     public ActionDescImpl(Class actionClass, String actionName) {
         this(actionClass, actionName, null);
     }
-    
+
     public ActionDescImpl(Class actionClass, String actionName, File file) {
         this.actionName = actionName;
         setup(actionClass);
@@ -48,11 +48,11 @@ public class ActionDescImpl implements ActionDesc {
             lastModified = file.lastModified();
         }
     }
-    
+
     public String getActionName() {
         return actionName;
     }
-    
+
     protected void setup(Class actionClass) {
         Method[] methods = actionClass.getMethods();
         for (int i = 0; i < methods.length; ++i) {
@@ -62,12 +62,12 @@ public class ActionDescImpl implements ActionDesc {
             }
         }
     }
-    
+
     protected boolean isMaybeActionMethod(Method method) {
-        return method.getReturnType().equals(String.class) &&
-            method.getParameterTypes().length == 0;
+        return method.getReturnType().equals(String.class)
+                && method.getParameterTypes().length == 0;
     }
-    
+
     public boolean isValid(String id) {
         return methodNames.contains(id);
     }

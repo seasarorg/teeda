@@ -25,7 +25,7 @@ import org.seasar.teeda.extension.config.taglib.element.TaglibElement;
 public class MockTaglibManager implements TaglibManager {
 
     private Map taglibElements = new HashMap();
-    
+
     public TaglibElement getTaglibElement(String uri) {
         TaglibElement taglibElement = (TaglibElement) taglibElements.get(uri);
         if (taglibElement == null) {

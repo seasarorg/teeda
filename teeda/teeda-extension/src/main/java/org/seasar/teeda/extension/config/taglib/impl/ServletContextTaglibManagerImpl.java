@@ -29,41 +29,42 @@ import org.seasar.framework.log.Logger;
  *  
  */
 public class ServletContextTaglibManagerImpl extends AbstractTaglibManager {
-	
-	private static Logger logger = Logger.getLogger(ServletContextTaglibManagerImpl.class);
 
-	private ServletContext servletContext;
+    private static Logger logger = Logger
+            .getLogger(ServletContextTaglibManagerImpl.class);
 
-	public void setServletContext(ServletContext servletContext) {
-		this.servletContext = servletContext;
-	}
+    private ServletContext servletContext;
 
-	public void init() {
-		scanJars("/WEB-INF/lib/");
-	}
+    public void setServletContext(ServletContext servletContext) {
+        this.servletContext = servletContext;
+    }
 
-	public void scanJars(String libPath) {
-		Set jars = servletContext.getResourcePaths(libPath);
-		if (jars != null) {
-			for (Iterator i = jars.iterator(); i.hasNext();) {
-				String path = (String) i.next();
-				if (path.toLowerCase().endsWith(".jar")) {
-					scanJar(path);
-				}
-			}
-		}
-	}
+    public void init() {
+        scanJars("/WEB-INF/lib/");
+    }
 
-	public void scanJar(String jarPath) {
-		try {
-			URL url = servletContext.getResource(jarPath);
-			JarURLConnection conn = openJarURLConnection(url);
-			if (conn == null) {
-				return;
-			}
-			scanJar(conn);
-		} catch (Throwable t) {
-			logger.log(t);
-		}
-	}
+    public void scanJars(String libPath) {
+        Set jars = servletContext.getResourcePaths(libPath);
+        if (jars != null) {
+            for (Iterator i = jars.iterator(); i.hasNext();) {
+                String path = (String) i.next();
+                if (path.toLowerCase().endsWith(".jar")) {
+                    scanJar(path);
+                }
+            }
+        }
+    }
+
+    public void scanJar(String jarPath) {
+        try {
+            URL url = servletContext.getResource(jarPath);
+            JarURLConnection conn = openJarURLConnection(url);
+            if (conn == null) {
+                return;
+            }
+            scanJar(conn);
+        } catch (Throwable t) {
+            logger.log(t);
+        }
+    }
 }

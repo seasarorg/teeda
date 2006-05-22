@@ -27,13 +27,16 @@ import org.seasar.teeda.extension.html.PageDesc;
  */
 public class FormFactory extends AbstractElementProcessorFactory {
 
-	private static final String TAG_NAME = "form";
+    private static final String TAG_NAME = "form";
 
-	public boolean isMatch(ElementNode elementNode) {
-		return JsfConstants.FORM_ELEM.equalsIgnoreCase(elementNode.getTagName());
-	}
+    public boolean isMatch(ElementNode elementNode) {
+        return JsfConstants.FORM_ELEM
+                .equalsIgnoreCase(elementNode.getTagName());
+    }
 
-    public ElementProcessor createProcessor(ElementNode elementNode, PageDesc pageDesc, ActionDesc actionDesc) {
-        return createProcessor(elementNode, pageDesc, actionDesc, JsfConstants.JSF_HTML_URI, TAG_NAME);
+    public ElementProcessor createProcessor(ElementNode elementNode,
+            PageDesc pageDesc, ActionDesc actionDesc) {
+        return createProcessor(elementNode, pageDesc, actionDesc,
+                JsfConstants.JSF_HTML_URI, TAG_NAME);
     }
 }

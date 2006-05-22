@@ -18,6 +18,6 @@ package org.seasar.teeda.extension.html;
 public interface HtmlDescCache {
 
     HtmlDesc getHtmlDesc(String viewId);
-    
+
     HtmlDesc createHtmlDesc(String viewId);
 }

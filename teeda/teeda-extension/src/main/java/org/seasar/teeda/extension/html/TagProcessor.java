@@ -24,7 +24,7 @@ import javax.servlet.jsp.tagext.Tag;
  *  
  */
 public interface TagProcessor {
-    
+
     public void process(PageContext pageContext, Tag parentTag)
-			throws JspException;
+            throws JspException;
 }

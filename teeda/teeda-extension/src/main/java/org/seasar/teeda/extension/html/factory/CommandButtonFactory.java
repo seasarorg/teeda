@@ -39,12 +39,18 @@ public class CommandButtonFactory extends AbstractElementProcessorFactory {
                 .equalsIgnoreCase(type));
     }
 
-    public ElementProcessor createProcessor(ElementNode elementNode, PageDesc pageDesc, ActionDesc actionDesc) {
-        return createProcessor(elementNode, pageDesc, actionDesc, JsfConstants.JSF_HTML_URI, TAG_NAME);
+    public ElementProcessor createProcessor(ElementNode elementNode,
+            PageDesc pageDesc, ActionDesc actionDesc) {
+        return createProcessor(elementNode, pageDesc, actionDesc,
+                JsfConstants.JSF_HTML_URI, TAG_NAME);
     }
-    
-    protected void customizeProperties(Map properties, ElementNode elementNode, PageDesc pageDesc, ActionDesc actionDesc) {
-        super.customizeProperties(properties, elementNode, pageDesc, actionDesc);
-        properties.put(JsfConstants.ACTION_ATTR, getBindingExpression(actionDesc.getActionName(), elementNode.getId()));
+
+    protected void customizeProperties(Map properties, ElementNode elementNode,
+            PageDesc pageDesc, ActionDesc actionDesc) {
+        super
+                .customizeProperties(properties, elementNode, pageDesc,
+                        actionDesc);
+        properties.put(JsfConstants.ACTION_ATTR, getBindingExpression(
+                actionDesc.getActionName(), elementNode.getId()));
     }
 }

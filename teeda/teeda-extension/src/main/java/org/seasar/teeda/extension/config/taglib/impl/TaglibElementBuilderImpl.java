@@ -37,8 +37,8 @@ public class TaglibElementBuilderImpl implements TaglibElementBuilder {
 
     public static final String PUBLIC_ID_12 = "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN";
 
-    protected static final String ROOT_PATH = ClassUtil
-            .getPackageName(TaglibElementBuilderImpl.class).replace('.', '/');
+    protected static final String ROOT_PATH = ClassUtil.getPackageName(
+            TaglibElementBuilderImpl.class).replace('.', '/');
 
     public static final String DTD_PATH_11 = ROOT_PATH
             + "/web-jsptaglibrary_1_1.dtd";

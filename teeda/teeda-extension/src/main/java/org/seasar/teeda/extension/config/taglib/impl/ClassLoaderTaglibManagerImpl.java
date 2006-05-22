@@ -25,22 +25,22 @@ import java.net.URLClassLoader;
  */
 public class ClassLoaderTaglibManagerImpl extends AbstractTaglibManager {
 
-	public void init() {
-		scanJars(getClass().getClassLoader());
-	}
+    public void init() {
+        scanJars(getClass().getClassLoader());
+    }
 
-	public void scanJars(ClassLoader classLoader) {
-		while (classLoader != null) {
-			if (classLoader instanceof URLClassLoader) {
-				URL[] urls = ((URLClassLoader) classLoader).getURLs();
-				for (int i = 0; i < urls.length; ++i) {
-					JarURLConnection conn = openJarURLConnection(urls[i]);
-					if (conn != null) {
-						scanJar(conn);
-					}
-				}
-			}
-			classLoader = classLoader.getParent();
-		}
-	}
+    public void scanJars(ClassLoader classLoader) {
+        while (classLoader != null) {
+            if (classLoader instanceof URLClassLoader) {
+                URL[] urls = ((URLClassLoader) classLoader).getURLs();
+                for (int i = 0; i < urls.length; ++i) {
+                    JarURLConnection conn = openJarURLConnection(urls[i]);
+                    if (conn != null) {
+                        scanJar(conn);
+                    }
+                }
+            }
+            classLoader = classLoader.getParent();
+        }
+    }
 }

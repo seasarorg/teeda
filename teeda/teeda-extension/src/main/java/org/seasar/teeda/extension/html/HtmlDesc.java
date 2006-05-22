@@ -18,6 +18,6 @@ package org.seasar.teeda.extension.html;
 public interface HtmlDesc {
 
     HtmlNode getHtmlNode();
-    
+
     boolean isModified();
 }

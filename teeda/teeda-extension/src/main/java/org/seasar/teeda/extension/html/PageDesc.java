@@ -20,6 +20,6 @@ public interface PageDesc {
     String getPageName();
 
     boolean isValid(String id);
-    
+
     boolean isModified();
 }

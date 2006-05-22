@@ -27,19 +27,19 @@ import org.xml.sax.helpers.DefaultHandler;
 
 public class HtmlNodeHandler extends DefaultHandler {
 
-	private Stack nodeStack = new Stack();
+    private Stack nodeStack = new Stack();
 
-	private HtmlNode root;
+    private HtmlNode root;
 
-	public HtmlNodeHandler() {
-	}
+    public HtmlNodeHandler() {
+    }
 
-	public HtmlNode getRoot() {
-		return root;
-	}
+    public HtmlNode getRoot() {
+        return root;
+    }
 
-	public void startElement(String namespaceURI, String localName,
-			String qName, Attributes attributes) {
+    public void startElement(String namespaceURI, String localName,
+            String qName, Attributes attributes) {
 
         Map props = HtmlNodeUtil.convertMap(attributes);
         if (root == null) {
@@ -57,31 +57,31 @@ public class HtmlNodeHandler extends DefaultHandler {
                 parent.incrementChildTextSize();
             }
         }
-        
-	}
 
-	protected ElementNodeImpl peek() {
-		return (ElementNodeImpl) nodeStack.peek();
-	}
+    }
 
-	protected ElementNodeImpl pop() {
-		return (ElementNodeImpl) nodeStack.pop();
-	}
-    
+    protected ElementNodeImpl peek() {
+        return (ElementNodeImpl) nodeStack.peek();
+    }
+
+    protected ElementNodeImpl pop() {
+        return (ElementNodeImpl) nodeStack.pop();
+    }
+
     protected void push(ElementNodeImpl node) {
         nodeStack.push(node);
     }
 
-	public void characters(char[] buffer, int start, int length) {
+    public void characters(char[] buffer, int start, int length) {
         if (root == null) {
             return;
         }
-		String text = new String(buffer, start, length);
+        String text = new String(buffer, start, length);
         ElementNodeImpl tagNode = peek();
         tagNode.addText(text);
-	}
+    }
 
-	public void endElement(String namespaceURI, String localName, String qName) {
+    public void endElement(String namespaceURI, String localName, String qName) {
         ElementNodeImpl current = peek();
         if (current.getChildTextSize() == 0) {
             current.endElement();
@@ -90,13 +90,13 @@ public class HtmlNodeHandler extends DefaultHandler {
             current.addText(HtmlNodeUtil.getEndTagString(qName));
             current.decrementChildTextSize();
         }
-	}
+    }
 
-	public void error(SAXParseException e) throws SAXException {
-		throw e;
-	}
+    public void error(SAXParseException e) throws SAXException {
+        throw e;
+    }
 
-	public void warning(SAXParseException e) throws SAXException {
-		System.err.println(e);
-	}
+    public void warning(SAXParseException e) throws SAXException {
+        System.err.println(e);
+    }
 }

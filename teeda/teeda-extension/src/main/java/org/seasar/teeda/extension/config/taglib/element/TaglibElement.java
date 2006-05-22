@@ -15,18 +15,17 @@
  */
 package org.seasar.teeda.extension.config.taglib.element;
 
-
 /**
  * @author higa
  *
  */
 public interface TaglibElement {
 
-	public String getUri();
-	
-	public void setUri(String uri);
-	
-	public TagElement getTagElement(String name);
-	
-	public void addTagElement(TagElement tagElement);
+    public String getUri();
+
+    public void setUri(String uri);
+
+    public TagElement getTagElement(String name);
+
+    public void addTagElement(TagElement tagElement);
 }

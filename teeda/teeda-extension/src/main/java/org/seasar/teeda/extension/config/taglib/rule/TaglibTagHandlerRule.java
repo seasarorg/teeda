@@ -28,14 +28,14 @@ import org.seasar.teeda.extension.config.taglib.handler.TaglibUriTagHandler;
  */
 public class TaglibTagHandlerRule extends TagHandlerRule {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
     public TaglibTagHandlerRule() {
-		addTagHandler("/taglib", new TaglibTaglibTagHandler());
-		addTagHandler("/taglib/uri", new TaglibUriTagHandler());
-		addTagHandler("/taglib/tag", new TaglibTagTagHandler());
-		addTagHandler("/taglib/tag/name", new TaglibTagNameTagHandler());
-		addTagHandler("/taglib/tag/tagclass", new TaglibTagClassTagHandler());
-		addTagHandler("/taglib/tag/tag-class", new TaglibTagClassTagHandler());
-	}
+        addTagHandler("/taglib", new TaglibTaglibTagHandler());
+        addTagHandler("/taglib/uri", new TaglibUriTagHandler());
+        addTagHandler("/taglib/tag", new TaglibTagTagHandler());
+        addTagHandler("/taglib/tag/name", new TaglibTagNameTagHandler());
+        addTagHandler("/taglib/tag/tagclass", new TaglibTagClassTagHandler());
+        addTagHandler("/taglib/tag/tag-class", new TaglibTagClassTagHandler());
+    }
 }

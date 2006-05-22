@@ -30,32 +30,32 @@ import org.seasar.teeda.extension.component.UIText;
  */
 public class HtmlTextRenderer extends Renderer {
 
-	public void encodeBegin(FacesContext facesContext, UIComponent component)
-			throws IOException {
+    public void encodeBegin(FacesContext facesContext, UIComponent component)
+            throws IOException {
 
-		if (!component.isRendered()) {
-			return;
-		}
-		ResponseWriter writer = facesContext.getResponseWriter();
-		String value = ((UIText) component).getValue();
-		if (value != null) {
-			writer.write(value);
-		}
-	}
+        if (!component.isRendered()) {
+            return;
+        }
+        ResponseWriter writer = facesContext.getResponseWriter();
+        String value = ((UIText) component).getValue();
+        if (value != null) {
+            writer.write(value);
+        }
+    }
 
-	public void encodeEnd(FacesContext facesContext, UIComponent component)
-			throws IOException {
+    public void encodeEnd(FacesContext facesContext, UIComponent component)
+            throws IOException {
 
-	}
+    }
 
-	/**
-	 * @see javax.faces.render.Renderer#getRendersChildren()
-	 */
-	public boolean getRendersChildren() {
-		return false;
-	}
+    /**
+     * @see javax.faces.render.Renderer#getRendersChildren()
+     */
+    public boolean getRendersChildren() {
+        return false;
+    }
 
-	public void encodeChildren(FacesContext context, UIComponent component)
-			throws IOException {
-	}
+    public void encodeChildren(FacesContext context, UIComponent component)
+            throws IOException {
+    }
 }

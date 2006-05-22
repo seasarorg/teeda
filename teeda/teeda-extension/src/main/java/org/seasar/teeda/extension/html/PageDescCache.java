@@ -18,6 +18,6 @@ package org.seasar.teeda.extension.html;
 public interface PageDescCache {
 
     PageDesc getPageDesc(String viewId);
-    
+
     PageDesc createPageDesc(String viewId);
 }

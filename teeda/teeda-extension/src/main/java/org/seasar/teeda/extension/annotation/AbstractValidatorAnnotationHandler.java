@@ -39,7 +39,7 @@ public abstract class AbstractValidatorAnnotationHandler implements
     private ValidatorResource resource;
 
     private List ignoreSuffixes = new ArrayList();
-    
+
     public void registerValidator(ComponentDef componentDef) {
         Class targetClass = componentDef.getComponentClass();
         BeanDesc beanDesc = BeanDescFactory.getBeanDesc(targetClass);
@@ -58,7 +58,8 @@ public abstract class AbstractValidatorAnnotationHandler implements
         ignoreSuffixes.add(suffix);
     }
 
-    protected abstract void doRegisterValidator(Class targetClass, BeanDesc beanDesc);
+    protected abstract void doRegisterValidator(Class targetClass,
+            BeanDesc beanDesc);
 
     protected final Validator chainValidators(List validators) {
         if (validators.size() > 1) {
@@ -91,17 +92,18 @@ public abstract class AbstractValidatorAnnotationHandler implements
         }
         return className;
     }
-    
+
     protected String removeIgnoreSuffixes(String className) {
-        for(Iterator itr = getIgnoreSuffixes().iterator(); itr.hasNext();) {
+        for (Iterator itr = getIgnoreSuffixes().iterator(); itr.hasNext();) {
             String suffix = (String) itr.next();
-            if(className.endsWith(suffix)) {
-                className = className.substring(0, className.length() - suffix.length());
+            if (className.endsWith(suffix)) {
+                className = className.substring(0, className.length()
+                        - suffix.length());
             }
         }
         return className;
     }
-    
+
     protected List getIgnoreSuffixes() {
         return ignoreSuffixes;
     }
