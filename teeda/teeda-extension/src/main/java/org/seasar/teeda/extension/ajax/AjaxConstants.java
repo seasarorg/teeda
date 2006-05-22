@@ -30,6 +30,8 @@ public interface AjaxConstants {
 
     public String CONTENT_TYPE_TEXT = "text/plain; charset=UTF-8";
 
+    public String CONTENT_TYPE_HTML = "text/html; charset=UTF-8";
+
     public String REQ_PARAM_COMPONENT = "component";
 
     public String REQ_PARAM_ACTION = "action";
