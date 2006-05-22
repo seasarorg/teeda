@@ -33,7 +33,7 @@ public class PageDescImplTest extends TestCase {
         assertTrue("1", pd.isValid("aaa"));
         assertFalse("2", pd.isValid("xxx"));
         assertTrue("3", pd.isValid("fooForm"));
-        assertFalse("4"pd.isValid(null));
+        assertFalse("4", pd.isValid(null));
     }
 
     public void testIsModified() throws Exception {
