@@ -16,63 +16,60 @@
 package org.seasar.teeda.extension.html.impl;
 
 import java.io.File;
+import java.lang.reflect.Method;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.seasar.framework.beans.BeanDesc;
-import org.seasar.framework.beans.PropertyDesc;
-import org.seasar.framework.beans.factory.BeanDescFactory;
-import org.seasar.teeda.extension.html.PageDesc;
+import org.seasar.teeda.extension.html.ActionDesc;
 
 /**
  * @author higa
  * 
  */
-public class PageDescImpl implements PageDesc {
+public class ActionDescImpl implements ActionDesc {
 
-    private static final String FORM = "Form";
-
-    private String pageName;
-
-    private Set propertyNames = new HashSet();
-
+    private String actionName;
+    
+    private Set methodNames = new HashSet();
+    
     private File file;
-
+    
     private long lastModified;
-
-    public PageDescImpl(Class pageClass, String pageName) {
-        this(pageClass, pageName, null);
+    
+    public ActionDescImpl(Class actionClass, String actionName) {
+        this(actionClass, actionName, null);
     }
-
-    public PageDescImpl(Class pageClass, String pageName, File file) {
-        this.pageName = pageName;
-        setup(pageClass);
+    
+    public ActionDescImpl(Class actionClass, String actionName, File file) {
+        this.actionName = actionName;
+        setup(actionClass);
         if (file != null) {
             this.file = file;
             lastModified = file.lastModified();
         }
     }
-
-    public String getPageName() {
-        return pageName;
+    
+    public String getActionName() {
+        return actionName;
     }
-
-    protected void setup(Class pageClass) {
-        BeanDesc beanDesc = BeanDescFactory.getBeanDesc(pageClass);
-        for (int i = 0; i < beanDesc.getPropertyDescSize(); ++i) {
-            PropertyDesc pd = beanDesc.getPropertyDesc(i);
-            propertyNames.add(pd.getPropertyName());
+    
+    protected void setup(Class actionClass) {
+        Method[] methods = actionClass.getMethods();
+        for (int i = 0; i < methods.length; ++i) {
+            Method m = methods[i];
+            if (isMaybeActionMethod(m)) {
+                methodNames.add(m.getName());
+            }
         }
     }
-
+    
+    protected boolean isMaybeActionMethod(Method method) {
+        return method.getReturnType().equals(String.class) &&
+            method.getParameterTypes().length == 0;
+    }
+    
     public boolean isValid(String id) {
-        if (id == null) {
-            return false;
-        }
-        if (propertyNames.contains(id)) {
-            return true;
-        }
-        return id.endsWith(FORM);
+        return methodNames.contains(id);
     }
 
     public boolean isModified() {
@@ -81,5 +78,4 @@ public class PageDescImpl implements PageDesc {
         }
         return file.lastModified() > lastModified;
     }
-
 }

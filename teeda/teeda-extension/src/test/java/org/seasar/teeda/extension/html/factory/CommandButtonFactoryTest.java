@@ -10,9 +10,13 @@ import org.seasar.teeda.core.taglib.html.CommandButtonTag;
 import org.seasar.teeda.extension.config.taglib.TaglibElementBuilder;
 import org.seasar.teeda.extension.config.taglib.impl.FileSystemTaglibManagerImpl;
 import org.seasar.teeda.extension.config.taglib.impl.TaglibElementBuilderImpl;
+import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.ElementProcessor;
+import org.seasar.teeda.extension.html.PageDesc;
+import org.seasar.teeda.extension.html.impl.ActionDescImpl;
 import org.seasar.teeda.extension.html.impl.ElementNodeImpl;
+import org.seasar.teeda.extension.html.impl.PageDescImpl;
 
 public class CommandButtonFactoryTest extends TestCase {
 
@@ -53,16 +57,18 @@ public class CommandButtonFactoryTest extends TestCase {
         CommandButtonFactory factory = new CommandButtonFactory();
         factory.setTaglibManager(taglibManager);
         Map properties = new HashMap();
-        properties.put("id", "aaa");
+        properties.put("id", "doAaa");
         properties.put("type", "submit");
         ElementNode elementNode = new ElementNodeImpl("input", properties);
-
+        PageDesc pageDesc = new PageDescImpl(FooPage.class, "fooPage");
+        ActionDesc actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
         // ## Act ##
         taglibManager
                 .init("org/seasar/teeda/extension/config/taglib/impl/tlds");
-        ElementProcessor processor = factory.createProcessor(elementNode, null);
+        ElementProcessor processor = factory.createProcessor(elementNode, pageDesc, actionDesc);
         // ## Assert ##
         assertNotNull("1", processor);
         assertEquals("2", CommandButtonTag.class, processor.getTagClass());
+        assertEquals("3", "#{fooAction.doAaa}", processor.getProperty("action"));
     }
 }

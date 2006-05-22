@@ -24,5 +24,5 @@ public interface ElementProcessorFactory {
 
 	boolean isMatch(ElementNode elementNode);
 
-	ElementProcessor createProcessor(ElementNode elementNode, PageDesc pageDesc);
+	ElementProcessor createProcessor(ElementNode elementNode, PageDesc pageDesc, ActionDesc actionDesc);
 }

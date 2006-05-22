@@ -26,9 +26,11 @@ import org.seasar.teeda.extension.config.taglib.element.TagElement;
 import org.seasar.teeda.extension.config.taglib.element.TaglibElement;
 import org.seasar.teeda.extension.config.taglib.element.impl.TagElementImpl;
 import org.seasar.teeda.extension.config.taglib.element.impl.TaglibElementImpl;
+import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.ElementProcessor;
 import org.seasar.teeda.extension.html.PageDesc;
+import org.seasar.teeda.extension.html.impl.ActionDescImpl;
 import org.seasar.teeda.extension.html.impl.ElementNodeImpl;
 import org.seasar.teeda.extension.html.impl.PageDescImpl;
 import org.seasar.teeda.extension.mock.MockTaglibManager;
@@ -54,10 +56,10 @@ public class InputTextFactoryTest extends TestCase {
         MockTaglibManager taglibManager = new MockTaglibManager();
         TaglibElement jsfHtml = new TaglibElementImpl();
         jsfHtml.setUri(JsfConstants.JSF_HTML_URI);
-        TagElement inputTextTagElement = new TagElementImpl();
-        inputTextTagElement.setName("inputText");
-        inputTextTagElement.setTagClass(InputTextTag.class);
-        jsfHtml.addTagElement(inputTextTagElement);
+        TagElement tagElement = new TagElementImpl();
+        tagElement.setName("inputText");
+        tagElement.setTagClass(InputTextTag.class);
+        jsfHtml.addTagElement(tagElement);
         taglibManager.addTaglibElement(jsfHtml);
         InputTextFactory factory = new InputTextFactory();
         factory.setTaglibManager(taglibManager);
@@ -66,9 +68,10 @@ public class InputTextFactoryTest extends TestCase {
         properties.put("type", "text");
         ElementNode elementNode = new ElementNodeImpl("input", properties);
         PageDesc pageDesc = new PageDescImpl(FooPage.class, "fooPage");
+        ActionDesc actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
 
         // ## Act ##
-        ElementProcessor processor = factory.createProcessor(elementNode, pageDesc);
+        ElementProcessor processor = factory.createProcessor(elementNode, pageDesc, actionDesc);
         // ## Assert ##
         assertNotNull("1", processor);
         assertEquals("2", InputTextTag.class, processor.getTagClass());

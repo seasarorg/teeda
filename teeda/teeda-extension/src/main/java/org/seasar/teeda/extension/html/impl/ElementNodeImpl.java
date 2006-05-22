@@ -48,10 +48,6 @@ public class ElementNodeImpl implements ElementNode {
         return properties.keySet().iterator();
     }
     
-    public Map getProperties() {
-        return properties;
-    }
-    
     public Map copyProperties() {
         return new HashMap(properties);
     }

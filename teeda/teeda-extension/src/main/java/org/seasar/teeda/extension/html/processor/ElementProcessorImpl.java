@@ -16,11 +16,9 @@
 package org.seasar.teeda.extension.html.processor;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
@@ -34,7 +32,6 @@ import org.seasar.framework.beans.PropertyDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.framework.util.ClassUtil;
 import org.seasar.framework.util.StringUtil;
-import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.extension.html.ElementProcessor;
 import org.seasar.teeda.extension.html.TagProcessor;
 
@@ -50,14 +47,11 @@ public class ElementProcessorImpl implements ElementProcessor {
 
     private List children = new ArrayList();
 
-    private Set customPropertyNames = new HashSet();
-
     private StringBuffer buffer;
 
     public ElementProcessorImpl(Class tagClass, Map properties) {
         this.tagClass = tagClass;
         this.properties = properties;
-        renameProperties();
         initializeBuffer();
     }
 
@@ -75,17 +69,6 @@ public class ElementProcessorImpl implements ElementProcessor {
 
     public Iterator getPropertyNameIterator() {
         return properties.keySet().iterator();
-    }
-
-    protected void renameProperties() {
-        renameProperty(JsfConstants.CLASS_ATTR, JsfConstants.STYLE_CLASS_ATTR);
-    }
-
-    protected void renameProperty(String from, String to) {
-        if (properties.containsKey(from)) {
-            Object value = properties.remove(from);
-            properties.put(to, value);
-        }
     }
 
     public int getChildSize() {
@@ -203,8 +186,7 @@ public class ElementProcessorImpl implements ElementProcessor {
         BeanDesc beanDesc = BeanDescFactory.getBeanDesc(tag.getClass());
         for (Iterator i = getPropertyNameIterator(); i.hasNext();) {
             String propertyName = (String) i.next();
-            if (!beanDesc.hasPropertyDesc(propertyName)
-                    || isCustomProperty(propertyName)) {
+            if (!beanDesc.hasPropertyDesc(propertyName)) {
                 continue;
             }
             String value = getProperty(propertyName);
@@ -214,13 +196,5 @@ public class ElementProcessorImpl implements ElementProcessor {
             PropertyDesc pd = beanDesc.getPropertyDesc(propertyName);
             pd.setValue(tag, value);
         }
-    }
-
-    protected void addCustomPropertyName(String name) {
-        customPropertyNames.add(name);
-    }
-
-    protected boolean isCustomProperty(String name) {
-        return customPropertyNames.contains(name);
     }
 }

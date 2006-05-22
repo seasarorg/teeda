@@ -15,9 +15,9 @@
  */
 package org.seasar.teeda.extension.html;
 
-public interface PageAutoNaming {
+public interface ActionDescCache {
 
-    String convertToPageName(String htmlPath);
+    ActionDesc getActionDesc(String viewId);
     
-    String convertToHtmlPath(String pageName);
+    ActionDesc createActionDesc(String viewId);
 }

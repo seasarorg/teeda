@@ -24,17 +24,17 @@ import javax.servlet.ServletContext;
 import org.seasar.framework.container.ComponentDef;
 import org.seasar.framework.container.S2Container;
 import org.seasar.framework.util.ClassUtil;
+import org.seasar.teeda.extension.html.ActionDesc;
+import org.seasar.teeda.extension.html.ActionDescCache;
 import org.seasar.teeda.extension.html.HtmlAutoNaming;
-import org.seasar.teeda.extension.html.PageDesc;
-import org.seasar.teeda.extension.html.PageDescCache;
 
 /**
  * @author higa
  * 
  */
-public class PageDescCacheImpl implements PageDescCache {
+public class ActionDescCacheImpl implements ActionDescCache {
 
-    private Map pageDescs = new HashMap();
+    private Map actionDescs = new HashMap();
     
     private ServletContext servletContext;
     
@@ -54,26 +54,26 @@ public class PageDescCacheImpl implements PageDescCache {
         this.container = container;
     }
 
-    public synchronized PageDesc getPageDesc(String viewId) {
-        return (PageDesc) pageDescs.get(viewId);
+    public synchronized ActionDesc getActionDesc(String viewId) {
+        return (ActionDesc) actionDescs.get(viewId);
     }
 
-    public synchronized PageDesc createPageDesc(String viewId) {
-        PageDesc pageDesc = null;
-        String pageName = htmlAutoNaming.convertToPageName(viewId);
-        ComponentDef cd = container.getRoot().getComponentDef(pageName);
+    public synchronized ActionDesc createActionDesc(String viewId) {
+        ActionDesc actionDesc = null;
+        String actionName = htmlAutoNaming.convertToActionName(viewId);
+        ComponentDef cd = container.getRoot().getComponentDef(actionName);
         String pagePath = ClassUtil.getResourcePath(cd.getComponentClass());
         String realPath = servletContext.getRealPath(pagePath);
         if (realPath != null) {
             File file = new File(realPath);
             if (file.exists()) {
-                pageDesc = new PageDescImpl(cd.getConcreteClass(), pageName, file);
+                actionDesc = new ActionDescImpl(cd.getConcreteClass(), actionName, file);
             }
         }
-        if (pageDesc == null) {
-            pageDesc = new PageDescImpl(cd.getConcreteClass(), pageName);
+        if (actionDesc == null) {
+            actionDesc = new ActionDescImpl(cd.getConcreteClass(), actionName);
         }
-        pageDescs.put(viewId, pageDesc);
-        return pageDesc;
+        actionDescs.put(viewId, actionDesc);
+        return actionDesc;
     }
 }

@@ -30,8 +30,6 @@ public interface ElementNode extends HtmlNode {
     Iterator getPropertyNameIterator();
     
     Map copyProperties();
-    
-    Map getProperties();
 
     void addText(String text);
     

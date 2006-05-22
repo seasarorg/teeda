@@ -21,7 +21,7 @@ import java.util.Map;
 import junit.framework.TestCase;
 
 import org.seasar.teeda.core.JsfConstants;
-import org.seasar.teeda.core.taglib.html.FormTag;
+import org.seasar.teeda.core.taglib.html.InputHiddenTag;
 import org.seasar.teeda.extension.config.taglib.element.TagElement;
 import org.seasar.teeda.extension.config.taglib.element.TaglibElement;
 import org.seasar.teeda.extension.config.taglib.element.impl.TagElementImpl;
@@ -38,16 +38,22 @@ import org.seasar.teeda.extension.mock.MockTaglibManager;
 /**
  * @author higa
  */
-public class FormFactoryTest extends TestCase {
+public class InputHiddenFactoryTest extends TestCase {
 
     public void testIsMatch() throws Exception {
-        FormFactory factory = new FormFactory();
-        Map properties = new HashMap();
-        properties.put("id", "hogeForm");
-        ElementNode elementNode = new ElementNodeImpl("form", properties);
+        InputHiddenFactory factory = new InputHiddenFactory();
+        Map props = new HashMap();
+        props.put("id", "aaa");
+        props.put("type", "hidden");
+        ElementNode elementNode = new ElementNodeImpl("input", props);
         assertTrue("1", factory.isMatch(elementNode));
-        ElementNode elementNode2 = new ElementNodeImpl("hoge", properties);
+        ElementNode elementNode2 = new ElementNodeImpl("hoge", props);
         assertFalse("2", factory.isMatch(elementNode2));
+        Map props2 = new HashMap();
+        props2.put("id", "aaa");
+        props2.put("type", "text");
+        ElementNode elementNode3 = new ElementNodeImpl("input", props2);
+        assertFalse("3", factory.isMatch(elementNode3));
     }
     
     public void testCreateFactory() throws Exception {
@@ -56,22 +62,24 @@ public class FormFactoryTest extends TestCase {
         TaglibElement jsfHtml = new TaglibElementImpl();
         jsfHtml.setUri(JsfConstants.JSF_HTML_URI);
         TagElement tagElement = new TagElementImpl();
-        tagElement.setName("form");
-        tagElement.setTagClass(FormTag.class);
+        tagElement.setName("inputHidden");
+        tagElement.setTagClass(InputHiddenTag.class);
         jsfHtml.addTagElement(tagElement);
         taglibManager.addTaglibElement(jsfHtml);
-        FormFactory factory = new FormFactory();
+        InputHiddenFactory factory = new InputHiddenFactory();
         factory.setTaglibManager(taglibManager);
-        Map properties = new HashMap();
-        properties.put("id", "fooForm");
-        ElementNode elementNode = new ElementNodeImpl("form", properties);
+        Map props = new HashMap();
+        props.put("id", "aaa");
+        props.put("type", "hidden");
+        ElementNode elementNode = new ElementNodeImpl("input", props);
         PageDesc pageDesc = new PageDescImpl(FooPage.class, "fooPage");
         ActionDesc actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
-        
+
         // ## Act ##
         ElementProcessor processor = factory.createProcessor(elementNode, pageDesc, actionDesc);
         // ## Assert ##
         assertNotNull("1", processor);
-        assertEquals("2", FormTag.class, processor.getTagClass());
+        assertEquals("2", InputHiddenTag.class, processor.getTagClass());
+        assertEquals("3", "#{fooPage.aaa}", processor.getProperty("value"));
     }
 }

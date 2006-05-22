@@ -18,6 +18,7 @@ package org.seasar.teeda.extension.html.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.ElementProcessor;
 import org.seasar.teeda.extension.html.ElementProcessorFactory;
@@ -49,19 +50,19 @@ public class TagProcessorAssemblerImpl implements TagProcessorAssembler {
         factories.add(factory);
     }
     
-    public TagProcessor assemble(HtmlDesc htmlDesc, PageDesc pageDesc) {
+    public TagProcessor assemble(HtmlDesc htmlDesc, PageDesc pageDesc, ActionDesc actionDesc) {
         HtmlNode rootNode = htmlDesc.getHtmlNode();
         ViewProcessor rootProcessor = new ViewProcessor();
-        assembleTagProcessor(rootProcessor, rootNode, pageDesc);
+        assembleTagProcessor(rootProcessor, rootNode, pageDesc, actionDesc);
         rootProcessor.endElement();
         return rootProcessor;
     }
     
-    protected void assembleTagProcessor(ElementProcessor parentProcessor, HtmlNode node, PageDesc pageDesc) {
+    protected void assembleTagProcessor(ElementProcessor parentProcessor, HtmlNode node, PageDesc pageDesc, ActionDesc actionDesc) {
         if (node instanceof TextNode) {
             assembleTagProcessor(parentProcessor, (TextNodeImpl) node);
         } else {
-            assembleTagProcessor(parentProcessor, (ElementNodeImpl) node, pageDesc);
+            assembleTagProcessor(parentProcessor, (ElementNodeImpl) node, pageDesc, actionDesc);
         }
     }
     
@@ -69,42 +70,42 @@ public class TagProcessorAssemblerImpl implements TagProcessorAssembler {
         parentProcessor.addText(textNode.getValue());
     }
     
-    protected void assembleTagProcessor(ElementProcessor parentProcessor, ElementNode elementNode, PageDesc pageDesc) {
+    protected void assembleTagProcessor(ElementProcessor parentProcessor, ElementNode elementNode, PageDesc pageDesc, ActionDesc actionDesc) {
         String id = elementNode.getId();
-        if (pageDesc.isValid(id)) {
-            assembleElementNode(parentProcessor, elementNode, pageDesc);
+        if (pageDesc.isValid(id) || actionDesc.isValid(id)) {
+            assembleElementNode(parentProcessor, elementNode, pageDesc, actionDesc);
         } else {
-            assembleElementNodeAsText(parentProcessor, elementNode, pageDesc);
+            assembleElementNodeAsText(parentProcessor, elementNode, pageDesc, actionDesc);
         }
     }
     
-    protected void assembleElementNode(ElementProcessor parentProcessor, ElementNode elementNode, PageDesc pageDesc) {
+    protected void assembleElementNode(ElementProcessor parentProcessor, ElementNode elementNode, PageDesc pageDesc, ActionDesc actionDesc) {
         for (int i = 0; i < getFactorySize(); ++i) {
             ElementProcessorFactory factory = getFactory(i);
             if (factory.isMatch(elementNode)) {
-                ElementProcessor elementProcessor = factory.createProcessor(elementNode, pageDesc);
+                ElementProcessor elementProcessor = factory.createProcessor(elementNode, pageDesc, actionDesc);
                 parentProcessor.addElement(elementProcessor);
-                assembleElementNodeChildren(elementProcessor, elementNode, pageDesc);
+                assembleElementNodeChildren(elementProcessor, elementNode, pageDesc, actionDesc);
                 elementProcessor.endElement();
                 return;
             }
         }
-        assembleElementNodeAsText(parentProcessor, elementNode, pageDesc);
+        assembleElementNodeAsText(parentProcessor, elementNode, pageDesc, actionDesc);
     }
     
-    protected void assembleElementNodeAsText(ElementProcessor parentProcessor, ElementNode elementNode, PageDesc pageDesc) {
+    protected void assembleElementNodeAsText(ElementProcessor parentProcessor, ElementNode elementNode, PageDesc pageDesc, ActionDesc actionDesc) {
         if (elementNode.getChildSize() == 0) {
             parentProcessor.addText(elementNode.getEmptyTagString());
         } else {
             parentProcessor.addText(elementNode.getStartTagString());
-            assembleElementNodeChildren(parentProcessor, elementNode, pageDesc);
+            assembleElementNodeChildren(parentProcessor, elementNode, pageDesc, actionDesc);
             parentProcessor.addText(elementNode.getEndTagString());
         }
     }
     
-    protected void assembleElementNodeChildren(ElementProcessor parentProcessor, ElementNode elementNode, PageDesc pageDesc) {
+    protected void assembleElementNodeChildren(ElementProcessor parentProcessor, ElementNode elementNode, PageDesc pageDesc, ActionDesc actionDesc) {
         for (int i = 0; i < elementNode.getChildSize(); ++i) {
-            assembleTagProcessor(parentProcessor, elementNode.getChild(i), pageDesc);
+            assembleTagProcessor(parentProcessor, elementNode.getChild(i), pageDesc, actionDesc);
         }
     }
 }

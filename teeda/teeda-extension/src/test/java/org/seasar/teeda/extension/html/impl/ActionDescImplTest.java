@@ -26,23 +26,22 @@ import junit.framework.TestCase;
  * @author higa
  *
  */
-public class PageDescImplTest extends TestCase {
+public class ActionDescImplTest extends TestCase {
 	
     public void testIsValid() throws Exception {
-        PageDescImpl pd = new PageDescImpl(FooPage.class, "fooPage");
-        assertTrue("1", pd.isValid("aaa"));
-        assertFalse("2", pd.isValid("xxx"));
-        assertTrue("3", pd.isValid("fooForm"));
-        assertFalse("4"pd.isValid(null));
+        ActionDescImpl ad = new ActionDescImpl(FooAction.class, "fooAction");
+        assertTrue("1", ad.isValid("doAaa"));
+        assertFalse("2", ad.isValid("xxx"));
+        assertFalse("3", ad.isValid(null));
     }
 
     public void testIsModified() throws Exception {
         File file = ResourceUtil.getResourceAsFile(
-                ClassUtil.getResourcePath(FooPage.class));
-        PageDescImpl pd = new PageDescImpl(FooPage.class, "fooPage", file);
-        assertFalse("1", pd.isModified());
+                ClassUtil.getResourcePath(FooAction.class));
+        ActionDescImpl ad = new ActionDescImpl(FooAction.class, "fooAction", file);
+        assertFalse("1", ad.isModified());
         Thread.sleep(1000);
         file.setLastModified(System.currentTimeMillis());
-        assertTrue("2", pd.isModified());
+        assertTrue("2", ad.isModified());
     }
 }

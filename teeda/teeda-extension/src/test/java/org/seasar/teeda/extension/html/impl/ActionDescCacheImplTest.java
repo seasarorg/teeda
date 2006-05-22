@@ -17,26 +17,26 @@ package org.seasar.teeda.extension.html.impl;
 
 import org.seasar.framework.unit.S2FrameworkTestCase;
 import org.seasar.framework.util.ClassUtil;
-import org.seasar.teeda.extension.html.PageDesc;
+import org.seasar.teeda.extension.html.ActionDesc;
 
 /**
  * @author higa
  *
  */
-public class PageDescCacheImplTest extends S2FrameworkTestCase {
+public class ActionDescCacheImplTest extends S2FrameworkTestCase {
 	
     public void testCreateAndGetPageDesc() throws Exception {
         DefaultHtmlAutoNaming naming = new DefaultHtmlAutoNaming();
         String rootPath = "/" + ClassUtil.getPackageName(getClass()).replace('.', '/');
         naming.setHtmlRootPath(rootPath);
-        PageDescCacheImpl cache = new PageDescCacheImpl();
+        ActionDescCacheImpl cache = new ActionDescCacheImpl();
         cache.setServletContext(getServletContext());
         cache.setHtmlAutoNaming(naming);
         cache.setContainer(getContainer());
-        register(FooPage.class, "fooPage");
+        register(FooAction.class, "fooAction");
         String path = rootPath + "/foo.html";
-        PageDesc pageDesc = cache.createPageDesc(path);
-        assertNotNull("1", pageDesc);
-        assertSame("2", pageDesc, cache.getPageDesc(path));
+        ActionDesc actionDesc = cache.createActionDesc(path);
+        assertNotNull("1", actionDesc);
+        assertSame("2", actionDesc, cache.getActionDesc(path));
     }
 }

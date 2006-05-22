@@ -15,20 +15,21 @@
  */
 package org.seasar.teeda.extension.html.impl;
 
-import org.seasar.framework.util.StringUtil;
-import org.seasar.teeda.extension.html.PageAutoNaming;
+import org.seasar.teeda.extension.html.HtmlAutoNaming;
 
 /**
  * @author higa
  * 
  */
-public class DefaultPageAutoNaming implements PageAutoNaming {
+public class DefaultHtmlAutoNaming implements HtmlAutoNaming {
 
     private String htmlRootPath = "/html";
 
     private String htmlExtension = ".html";
 
     private String pageSuffix = "Page";
+    
+    private String actionSuffix = "Action";
 
     public String getHtmlRootPath() {
         return htmlRootPath;
@@ -54,29 +55,30 @@ public class DefaultPageAutoNaming implements PageAutoNaming {
         this.pageSuffix = pageSuffix;
     }
 
+    public String getActionSuffix() {
+        return actionSuffix;
+    }
+
+    public void setActionSuffix(String actionSuffix) {
+        this.actionSuffix = actionSuffix;
+    }
+
     public String convertToPageName(String htmlPath) {
+        return convertToComponentName(htmlPath, pageSuffix);
+    }
+    
+    public String convertToActionName(String htmlPath) {
+        return convertToComponentName(htmlPath, actionSuffix);
+    }
+    
+    protected String convertToComponentName(String htmlPath, String nameSuffix) {
         if (!htmlPath.startsWith(htmlRootPath)
                 || !htmlPath.endsWith(htmlExtension)) {
             throw new IllegalArgumentException(htmlPath);
         }
-        String pageName = htmlPath.substring(htmlRootPath.length() + 1,
+        String componentName = htmlPath.substring(htmlRootPath.length() + 1,
                 htmlPath.length() - htmlExtension.length())
-                + pageSuffix;
-        return pageName.replace('/', '_');
-    }
-
-    public String convertToHtmlPath(String pageName) {
-        String[] names = StringUtil.split(pageName, "_");
-        String fileName = names[names.length - 1];
-        if (!fileName.endsWith(pageSuffix)) {
-            throw new IllegalArgumentException(pageName);
-        }
-        fileName = fileName.substring(0, fileName.length()
-                - pageSuffix.length());
-        String prefix = "/";
-        for (int i = 0; i < names.length - 1; ++i) {
-            prefix = prefix + names[i] + "/";
-        }
-        return htmlRootPath + prefix + fileName + htmlExtension;
+                + nameSuffix;
+        return componentName.replace('/', '_');
     }
 }

@@ -30,15 +30,22 @@ import org.seasar.teeda.extension.html.TagProcessor;
 public class TagProcessorCacheImplTest extends S2FrameworkTestCase {
 	
     public void testGetTagProcessor() throws Exception {
-        DefaultPageAutoNaming naming = new DefaultPageAutoNaming();
+        DefaultHtmlAutoNaming naming = new DefaultHtmlAutoNaming();
         String rootPath = "/" + ClassUtil.getPackageName(getClass()).replace('.', '/');
         naming.setHtmlRootPath(rootPath);
+        String path = rootPath + "/foo.html";
+        
         PageDescCacheImpl pageDescCache = new PageDescCacheImpl();
         pageDescCache.setServletContext(getServletContext());
-        pageDescCache.setPageAutoNaming(naming);
+        pageDescCache.setHtmlAutoNaming(naming);
         pageDescCache.setContainer(getContainer());
         register(FooPage.class, "fooPage");
-        String path = rootPath + "/foo.html";
+        
+        ActionDescCacheImpl actionDescCache = new ActionDescCacheImpl();
+        actionDescCache.setServletContext(getServletContext());
+        actionDescCache.setHtmlAutoNaming(naming);
+        actionDescCache.setContainer(getContainer());
+        register(FooAction.class, "fooAction");
         
         HtmlDescCacheImpl htmlDescCache = new HtmlDescCacheImpl();
         htmlDescCache.setServletContext(getServletContext());
@@ -46,6 +53,7 @@ public class TagProcessorCacheImplTest extends S2FrameworkTestCase {
         TagProcessorCacheImpl tagProcessorCache = new TagProcessorCacheImpl();
         tagProcessorCache.setHtmlDescCache(htmlDescCache);
         tagProcessorCache.setPageDescCache(pageDescCache);
+        tagProcessorCache.setActionDescCache(actionDescCache);
         tagProcessorCache.setAssembler(new TagProcessorAssemblerImpl());
         tagProcessorCache.setStateManager(new TeedaStateManagerImpl());
         

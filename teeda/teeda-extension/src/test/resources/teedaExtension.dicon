@@ -11,7 +11,28 @@
 	
 	<component class="org.seasar.teeda.extension.html.impl.HtmlDescCacheImpl"/>
 	<component class="org.seasar.teeda.extension.html.impl.PageDescCacheImpl"/>
-	<component class="org.seasar.teeda.extension.html.impl.TagProcessorAssemblerImpl"/>
+	<component class="org.seasar.teeda.extension.html.impl.TagProcessorAssemblerImpl">
+		<initMethod name="addFacotry">
+			<arg>
+				<component class="org.seasar.teeda.extension.html.factory.InputTextFactory"/>
+			</arg>
+		</initMethod>
+		<initMethod name="addFacotry">
+			<arg>
+				<component class="org.seasar.teeda.extension.html.factory.FormFactory"/>
+			</arg>
+		</initMethod>
+		<initMethod name="addFacotry">
+			<arg>
+				<component class="org.seasar.teeda.extension.html.factory.CommandButtonFactory"/>
+			</arg>
+		</initMethod>
+		<initMethod name="addFacotry">
+			<arg>
+				<component class="org.seasar.teeda.extension.html.factory.OutputLinkFactory"/>
+			</arg>
+		</initMethod>
+	</component>
 	<component class="org.seasar.teeda.extension.html.impl.TagProcessorCacheImpl"/>
 	<component name="viewHandler" class="org.seasar.teeda.extension.html.impl.ViewRendererImpl"/>
 	<component class="org.seasar.teeda.extension.html.impl.HtmlViewHandler"/>

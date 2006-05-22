@@ -21,7 +21,7 @@ import java.util.Map;
 import junit.framework.TestCase;
 
 import org.seasar.teeda.core.JsfConstants;
-import org.seasar.teeda.core.taglib.html.FormTag;
+import org.seasar.teeda.core.taglib.html.OutputLinkTag;
 import org.seasar.teeda.extension.config.taglib.element.TagElement;
 import org.seasar.teeda.extension.config.taglib.element.TaglibElement;
 import org.seasar.teeda.extension.config.taglib.element.impl.TagElementImpl;
@@ -38,16 +38,22 @@ import org.seasar.teeda.extension.mock.MockTaglibManager;
 /**
  * @author higa
  */
-public class FormFactoryTest extends TestCase {
+public class OutputLinkFactoryTest extends TestCase {
 
     public void testIsMatch() throws Exception {
-        FormFactory factory = new FormFactory();
+        OutputLinkFactory factory = new OutputLinkFactory();
         Map properties = new HashMap();
-        properties.put("id", "hogeForm");
-        ElementNode elementNode = new ElementNodeImpl("form", properties);
+        properties.put("id", "goHoge");
+        properties.put("href", "hoge.html");
+        ElementNode elementNode = new ElementNodeImpl("a", properties);
         assertTrue("1", factory.isMatch(elementNode));
         ElementNode elementNode2 = new ElementNodeImpl("hoge", properties);
         assertFalse("2", factory.isMatch(elementNode2));
+        Map properties2 = new HashMap();
+        properties2.put("id", "aaa");
+        properties2.put("href", "hoge.html");
+        ElementNode elementNode3 = new ElementNodeImpl("a", properties2);
+        assertFalse("3", factory.isMatch(elementNode3));
     }
     
     public void testCreateFactory() throws Exception {
@@ -56,22 +62,24 @@ public class FormFactoryTest extends TestCase {
         TaglibElement jsfHtml = new TaglibElementImpl();
         jsfHtml.setUri(JsfConstants.JSF_HTML_URI);
         TagElement tagElement = new TagElementImpl();
-        tagElement.setName("form");
-        tagElement.setTagClass(FormTag.class);
+        tagElement.setName("outputLink");
+        tagElement.setTagClass(OutputLinkTag.class);
         jsfHtml.addTagElement(tagElement);
         taglibManager.addTaglibElement(jsfHtml);
-        FormFactory factory = new FormFactory();
+        OutputLinkFactory factory = new OutputLinkFactory();
         factory.setTaglibManager(taglibManager);
         Map properties = new HashMap();
-        properties.put("id", "fooForm");
-        ElementNode elementNode = new ElementNodeImpl("form", properties);
+        properties.put("id", "goHoge");
+        properties.put("href", "hoge.html");
+        ElementNode elementNode = new ElementNodeImpl("a", properties);
         PageDesc pageDesc = new PageDescImpl(FooPage.class, "fooPage");
         ActionDesc actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
-        
+
         // ## Act ##
         ElementProcessor processor = factory.createProcessor(elementNode, pageDesc, actionDesc);
         // ## Assert ##
         assertNotNull("1", processor);
-        assertEquals("2", FormTag.class, processor.getTagClass());
+        assertEquals("2", OutputLinkTag.class, processor.getTagClass());
+        assertEquals("3", "hoge.html", processor.getProperty("value"));
     }
 }

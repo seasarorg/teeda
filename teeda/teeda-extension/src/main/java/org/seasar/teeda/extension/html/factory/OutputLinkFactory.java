@@ -24,27 +24,35 @@ import org.seasar.teeda.extension.html.ElementProcessor;
 import org.seasar.teeda.extension.html.PageDesc;
 
 /**
- * @author shot
+ * @author higa
+ *
  */
-public class CommandButtonFactory extends AbstractElementProcessorFactory {
+public class OutputLinkFactory extends AbstractElementProcessorFactory {
 
-    private static final String TAG_NAME = "commandButton";
+    private static final String GO = "go";
+
+    private static final String TAG_NAME = "outputLink";
 
     public boolean isMatch(ElementNode elementNode) {
-        if (!JsfConstants.INPUT_ELEM.equalsIgnoreCase(elementNode.getTagName())) {
+        if (!JsfConstants.ANCHOR_ELEM
+                .equalsIgnoreCase(elementNode.getTagName())) {
             return false;
         }
-        String type = elementNode.getProperty(JsfConstants.TYPE_ATTR);
-        return (JsfConstants.SUBMIT_VALUE.equalsIgnoreCase(type) || JsfConstants.BUTTON_VALUE
-                .equalsIgnoreCase(type));
+        return elementNode.getId().startsWith(GO);
     }
 
-    public ElementProcessor createProcessor(ElementNode elementNode, PageDesc pageDesc, ActionDesc actionDesc) {
-        return createProcessor(elementNode, pageDesc, actionDesc, JsfConstants.JSF_HTML_URI, TAG_NAME);
+    public ElementProcessor createProcessor(ElementNode elementNode,
+            PageDesc pageDesc, ActionDesc actionDesc) {
+        return createProcessor(elementNode, pageDesc, actionDesc,
+                JsfConstants.JSF_HTML_URI, TAG_NAME);
     }
-    
-    protected void customizeProperties(Map properties, ElementNode elementNode, PageDesc pageDesc, ActionDesc actionDesc) {
-        super.customizeProperties(properties, elementNode, pageDesc, actionDesc);
-        properties.put(JsfConstants.ACTION_ATTR, getBindingExpression(actionDesc.getActionName(), elementNode.getId()));
+
+    protected void customizeProperties(Map properties, ElementNode elementNode,
+            PageDesc pageDesc, ActionDesc actionDesc) {
+        super
+                .customizeProperties(properties, elementNode, pageDesc,
+                        actionDesc);
+        renameProperty(properties, JsfConstants.HREF_ATTR,
+                JsfConstants.VALUE_ATTR);
     }
 }

@@ -13,20 +13,11 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.extension.html.impl;
+package org.seasar.teeda.extension.html;
 
-import junit.framework.TestCase;
+public interface HtmlAutoNaming {
 
-/**
- * @author higa
- *
- */
-public class DefaultPageAutoNamingTest extends TestCase {
-	
-    public void testConvertToPageName() throws Exception {
-        DefaultHtmlAutoNaming naming = new DefaultHtmlAutoNaming();
-        assertEquals("1", "hogePage", naming.convertToPageName("/html/hoge.html"));
-        assertEquals("2", "aaa_hogePage", naming.convertToPageName("/html/aaa/hoge.html"));
-        assertEquals("3", "aaa_bbb_hogePage", naming.convertToPageName("/html/aaa/bbb/hoge.html"));
-    }
+    String convertToPageName(String htmlPath);
+    
+    String convertToActionName(String htmlPath);
 }

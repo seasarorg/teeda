@@ -19,6 +19,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.seasar.teeda.core.application.TeedaStateManager;
+import org.seasar.teeda.extension.html.ActionDesc;
+import org.seasar.teeda.extension.html.ActionDescCache;
 import org.seasar.teeda.extension.html.HtmlDesc;
 import org.seasar.teeda.extension.html.HtmlDescCache;
 import org.seasar.teeda.extension.html.PageDesc;
@@ -39,6 +41,8 @@ public class TagProcessorCacheImpl implements TagProcessorCache {
     
     private PageDescCache pageDescCache;
     
+    private ActionDescCache actionDescCache;
+    
     private TagProcessorAssembler assembler;
     
     private TeedaStateManager stateManager;
@@ -49,6 +53,10 @@ public class TagProcessorCacheImpl implements TagProcessorCache {
 
     public void setPageDescCache(PageDescCache pageDescCache) {
         this.pageDescCache = pageDescCache;
+    }
+
+    public void setActionDescCache(ActionDescCache actionDescCache) {
+        this.actionDescCache = actionDescCache;
     }
 
     public void setAssembler(TagProcessorAssembler assembler) {
@@ -71,9 +79,14 @@ public class TagProcessorCacheImpl implements TagProcessorCache {
             pageDesc = pageDescCache.createPageDesc(viewId);
             created = true;
         }
+        ActionDesc actionDesc = actionDescCache.getActionDesc(viewId);
+        if (actionDesc == null || actionDesc.isModified()) {
+            actionDesc = actionDescCache.createActionDesc(viewId);
+            created = true;
+        }
         if (created) {
             processors.put(viewId, assembler.assemble(
-                    htmlDesc, pageDesc));
+                    htmlDesc, pageDesc, actionDesc));
             stateManager.removeSerializedView(viewId);
         }
         return (TagProcessor) processors.get(viewId);

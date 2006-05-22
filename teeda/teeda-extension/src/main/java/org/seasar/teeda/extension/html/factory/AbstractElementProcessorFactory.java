@@ -16,10 +16,18 @@
 package org.seasar.teeda.extension.html.factory;
 
 
+import java.util.Map;
+
+import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.extension.config.taglib.TaglibManager;
 import org.seasar.teeda.extension.config.taglib.element.TagElement;
 import org.seasar.teeda.extension.config.taglib.element.TaglibElement;
+import org.seasar.teeda.extension.html.ActionDesc;
+import org.seasar.teeda.extension.html.ElementNode;
+import org.seasar.teeda.extension.html.ElementProcessor;
 import org.seasar.teeda.extension.html.ElementProcessorFactory;
+import org.seasar.teeda.extension.html.PageDesc;
+import org.seasar.teeda.extension.html.processor.ElementProcessorImpl;
 
 /**
  * @author higa
@@ -43,7 +51,30 @@ public abstract class AbstractElementProcessorFactory implements ElementProcesso
         return tagElement.getTagClass();
     }
     
-    protected String getValueBindingExpression(String pageName, String propertyName) {
-        return "#{" + pageName + "." + propertyName + "}";
+    protected ElementProcessor createProcessor(ElementNode elementNode, PageDesc pageDesc, ActionDesc actionDesc, String uri, String tagName) {
+        Class tagClass = getTagClass(uri, tagName);
+        Map props = createProperties(elementNode, pageDesc, actionDesc);
+        return new ElementProcessorImpl(tagClass, props);
+    }
+    
+    protected Map createProperties(ElementNode elementNode, PageDesc pageDesc, ActionDesc actionDesc) {
+        Map props = elementNode.copyProperties();
+        customizeProperties(props, elementNode, pageDesc, actionDesc);
+        return props;
+    }
+    
+    protected void customizeProperties(Map properties, ElementNode elementNode, PageDesc pageDesc, ActionDesc actionDesc) {
+        renameProperty(properties, JsfConstants.CLASS_ATTR, JsfConstants.STYLE_CLASS_ATTR);
+    }
+    
+    protected void renameProperty(Map properties, String from, String to) {
+        if (properties.containsKey(from)) {
+            Object value = properties.remove(from);
+            properties.put(to, value);
+        }
+    }
+    
+    protected String getBindingExpression(String componentName, String targetName) {
+        return "#{" + componentName + "." + targetName + "}";
     }
 }

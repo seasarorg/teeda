@@ -19,10 +19,10 @@ package org.seasar.teeda.extension.html.factory;
 import java.util.Map;
 
 import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.ElementProcessor;
 import org.seasar.teeda.extension.html.PageDesc;
-import org.seasar.teeda.extension.html.processor.ElementProcessorImpl;
 
 /**
  * @author higa
@@ -39,10 +39,12 @@ public class InputTextFactory extends AbstractElementProcessorFactory {
 		return JsfConstants.TEXT_VALUE.equalsIgnoreCase(elementNode.getProperty(JsfConstants.TYPE_ATTR));
 	}
 
-	public ElementProcessor createProcessor(ElementNode elementNode, PageDesc pageDesc) {
-		Class tagClass = getTagClass(JsfConstants.JSF_HTML_URI, TAG_NAME);
-        Map props = elementNode.copyProperties();
-        props.put(JsfConstants.VALUE_ATTR, getValueBindingExpression(pageDesc.getPageName(), elementNode.getId()));
-        return new ElementProcessorImpl(tagClass, props);
+	public ElementProcessor createProcessor(ElementNode elementNode, PageDesc pageDesc, ActionDesc actionDesc) {
+        return createProcessor(elementNode, pageDesc, actionDesc, JsfConstants.JSF_HTML_URI, TAG_NAME);
 	}
+    
+    protected void customizeProperties(Map properties, ElementNode elementNode, PageDesc pageDesc, ActionDesc actionDesc) {
+        super.customizeProperties(properties, elementNode, pageDesc, actionDesc);
+        properties.put(JsfConstants.VALUE_ATTR, getBindingExpression(pageDesc.getPageName(), elementNode.getId()));
+    }
 }

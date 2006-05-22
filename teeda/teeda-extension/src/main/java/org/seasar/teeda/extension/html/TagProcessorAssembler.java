@@ -21,5 +21,5 @@ package org.seasar.teeda.extension.html;
  */
 public interface TagProcessorAssembler {
 
-    TagProcessor assemble(HtmlDesc htmlDesc, PageDesc pageDesc);
+    TagProcessor assemble(HtmlDesc htmlDesc, PageDesc pageDesc, ActionDesc actionDesc);
 }
