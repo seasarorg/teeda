@@ -105,6 +105,7 @@ Kumu.Ajax = {
             self.debugPrint("IllegalArgument. argument object is not AjaxComponent. implements url or doAction!", true);
             return;
         }
+        
         var xmlHttp = self._createXmlHttp();
         if (!xmlHttp || !document.getElementById) {
             self.debugPrint("This browser does not support Ajax.", true);
@@ -112,22 +113,49 @@ Kumu.Ajax = {
         }
         
         var sysdate = new String(new Date());
-        var url = ajaxComponent.url + "?time=" + self.encodeURL(sysdate);
-        var parameters = "";
-        if(null != ajaxComponent.params){
-            for(var key in ajaxComponent.params){
-                parameters += "&" + key + "=" + self.encodeURL(ajaxComponent.params[key]);
-            }
-        }
+        var url = ajaxComponent.url;
         
-        url += parameters;
-        if(xmlHttp){
-            self._registAjaxListener(xmlHttp, ajaxComponent);
-
-            xmlHttp.open("GET", url, true);
-            xmlHttp.setRequestHeader("If-Modified-Since", sysdate);
-            xmlHttp.send(null);
+        var parameters = "";
+        var params = ajaxComponent.params;
+        var method = 'GET';
+        if(params.method){
+        	method = params.method.toUpperCase();
+        	if(method != 'GET' && method != 'POST'){
+        		method = 'GET';
+        	}
+        	delete params.method;
         }
+		if(method == 'GET'){
+            url += "?time=" + self.encodeURL(sysdate);
+            if(null != params){
+                for(var key in params){
+                    parameters += "&" + key + "=" + self.encodeURL(params[key]);
+                }
+            }
+            url += parameters;
+            if(xmlHttp){
+                self._registAjaxListener(xmlHttp, ajaxComponent);
+                xmlHttp.open("GET", url, true);
+                xmlHttp.setRequestHeader("If-Modified-Since", sysdate);
+                xmlHttp.send(null);
+            }
+		}else{
+			params['time'] = self.encodeURL(sysdate);
+            if(params){
+                var array = new Array();
+                for(var v in params) {
+                    array.push(v + "=" + encodeURIComponent(params[v]));
+                }
+                parameters = array.join("&");
+            }
+            if(xmlHttp){
+                self._registAjaxListener(xmlHttp, ajaxComponent);
+				xmlHttp.open("POST", url, true);
+		        xmlHttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                xmlHttp.setRequestHeader("If-Modified-Since", sysdate);
+                xmlHttp.send(parameters);
+            }
+		}
     },
 
     _getComponentName : function(func){
@@ -187,7 +215,7 @@ Kumu.Ajax = {
             ajax.params["action"] = components[1];
         }
         ajax.doAction = callback;
-        self.executeAjax(ajax);   
+        self.executeAjax(ajax);
     }
     
 };
