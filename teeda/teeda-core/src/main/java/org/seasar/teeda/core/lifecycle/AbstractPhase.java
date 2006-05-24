@@ -19,7 +19,6 @@ import java.util.Iterator;
 
 import javax.faces.component.EditableValueHolder;
 import javax.faces.component.UIComponent;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseEvent;
 import javax.faces.event.PhaseId;
@@ -34,7 +33,7 @@ import org.seasar.teeda.core.util.LifecycleUtil;
 public abstract class AbstractPhase implements Phase {
 
     public final void prePhase(FacesContext context) {
-        Lifecycle lifecycle = getLifecycle(context);
+        Lifecycle lifecycle = getLifecycle();
         PhaseListener[] phaseListeners = lifecycle.getPhaseListeners();
         if (phaseListeners != null) {
             for (int i = 0; i < phaseListeners.length; i++) {
@@ -57,7 +56,7 @@ public abstract class AbstractPhase implements Phase {
     }
 
     public final void postPhase(FacesContext context) {
-        Lifecycle lifecycle = getLifecycle(context);
+        Lifecycle lifecycle = getLifecycle();
         PhaseListener[] phaseListeners = lifecycle.getPhaseListeners();
         if (phaseListeners != null) {
             for (int i = phaseListeners.length - 1; i >= 0; i--) {
@@ -98,10 +97,8 @@ public abstract class AbstractPhase implements Phase {
                 || listenerOrdinal == phaseId.getOrdinal();
     }
 
-    protected final Lifecycle getLifecycle(FacesContext context) {
-        ExternalContext externalContext = context.getExternalContext();
-        Lifecycle lifecycle = LifecycleUtil.getLifecycle(externalContext);
-        return lifecycle;
+    protected final Lifecycle getLifecycle() {
+        return LifecycleUtil.getLifecycle();
     }
 
     protected abstract void executePhase(FacesContext context);

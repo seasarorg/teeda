@@ -21,7 +21,6 @@ import java.net.URL;
 import java.net.URLClassLoader;
 
 import javax.faces.application.ApplicationFactory;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContextFactory;
 import javax.faces.lifecycle.LifecycleFactory;
 import javax.faces.render.RenderKitFactory;
@@ -34,7 +33,6 @@ import org.seasar.teeda.core.config.faces.assembler.AssemblerAssembler;
 import org.seasar.teeda.core.config.faces.assembler.impl.DefaultAssembleProvider;
 import org.seasar.teeda.core.config.faces.element.FacesConfig;
 import org.seasar.teeda.core.mock.MockApplicationFactory;
-import org.seasar.teeda.core.mock.MockExternalContextImpl;
 import org.seasar.teeda.core.mock.MockFacesContextFactory;
 import org.seasar.teeda.core.mock.MockLifecycleFactory;
 import org.seasar.teeda.core.mock.MockRenderKitFactory;
@@ -72,9 +70,6 @@ public class MetaInfFacesConfiguratorTest extends S2TestCase {
             // ## Arrange ##
             String path = getClass().getPackage().getName().replace('.', '/');
 
-            ExternalContext externalContext = new MockExternalContextImpl(
-                    getServletContext(), getRequest(), getResponse());
-
             MetaInfFacesConfigurator configurator = new MetaInfFacesConfigurator();
             configurator.setPath(path);
 
@@ -87,7 +82,6 @@ public class MetaInfFacesConfiguratorTest extends S2TestCase {
             // do actually initialize.
             AssemblerAssembler assembler = new AssemblerAssembler();
             DefaultAssembleProvider provider = new DefaultAssembleProvider();
-            provider.setExternalContext(externalContext);
             assembler.setAssembleProvider(provider);
 
             // ## Act ##

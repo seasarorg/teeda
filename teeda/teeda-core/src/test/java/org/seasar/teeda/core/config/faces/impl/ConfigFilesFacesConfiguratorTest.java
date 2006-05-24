@@ -19,11 +19,10 @@ import java.util.Locale;
 
 import javax.faces.application.Application;
 import javax.faces.application.ApplicationFactory;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContextFactory;
+import javax.faces.internal.FacesConfigOptions;
 import javax.faces.lifecycle.LifecycleFactory;
 import javax.faces.render.RenderKitFactory;
-import javax.faces.webapp.FacesServlet;
 
 import junitx.framework.ObjectAssert;
 
@@ -34,7 +33,6 @@ import org.seasar.teeda.core.config.faces.element.FacesConfig;
 import org.seasar.teeda.core.mock.MockActionListener;
 import org.seasar.teeda.core.mock.MockApplication;
 import org.seasar.teeda.core.mock.MockApplicationFactory;
-import org.seasar.teeda.core.mock.MockExternalContextImpl;
 import org.seasar.teeda.core.mock.MockFacesContextFactory;
 import org.seasar.teeda.core.mock.MockLifecycleFactory;
 import org.seasar.teeda.core.mock.MockNavigationHandler;
@@ -58,6 +56,10 @@ public class ConfigFilesFacesConfiguratorTest extends S2TestCase {
     public ConfigFilesFacesConfiguratorTest(String name) {
         super(name);
     }
+    
+    protected void tearDown() {
+        FacesConfigOptions.clear();
+    }
 
     public void testConfigure1() throws Exception {
         // ## Arrange ##
@@ -67,13 +69,9 @@ public class ConfigFilesFacesConfiguratorTest extends S2TestCase {
         String path2 = getClass().getPackage().getName().replace('.', '/')
                 + "/ConfigFilesFacesConfiguratorTest-testConfigure1_2.xml";
 
-        getServletContext().setInitParameter(FacesServlet.CONFIG_FILES_ATTR,
-                path1 + ", " + path2);
-        ExternalContext externalContext = new MockExternalContextImpl(
-                getServletContext(), getRequest(), getResponse());
+        FacesConfigOptions.setConfigFiles(path1 + ", " + path2);
 
         ConfigFilesFacesConfigurator configurator = new ConfigFilesFacesConfigurator();
-        configurator.setExternalContext(externalContext);
 
         // ## Act ##
         FacesConfig facesConfig = configurator.configure();
@@ -84,7 +82,6 @@ public class ConfigFilesFacesConfiguratorTest extends S2TestCase {
         // do actually initialize.
         AssemblerAssembler assembler = new AssemblerAssembler();
         DefaultAssembleProvider provider = new DefaultAssembleProvider();
-        provider.setExternalContext(externalContext);
         assembler.setAssembleProvider(provider);
 
         // ## Act ##

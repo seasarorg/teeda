@@ -38,7 +38,7 @@ public class DefaultNavigationRuleAssemblerTest extends TeedaTestCase {
         NavigationRuleElement rule = new NavigationRuleElementImpl();
         list.add(rule);
         DefaultNavigationRuleAssembler assembler = new DefaultNavigationRuleAssembler(
-                list, getExternalContext());
+                list);
         assembler.setupBeforeAssemble();
     }
 
@@ -55,8 +55,7 @@ public class DefaultNavigationRuleAssemblerTest extends TeedaTestCase {
         List list = new ArrayList();
         list.add(rule);
         DefaultNavigationRuleAssembler assembler = new DefaultNavigationRuleAssembler(
-                list, getExternalContext());
-        assembler.setExternalContext(getExternalContext());
+                list);
 
         // ## Act ##
         assembler.assemble();
@@ -91,8 +90,7 @@ public class DefaultNavigationRuleAssemblerTest extends TeedaTestCase {
         List list = new ArrayList();
         list.add(rule);
         DefaultNavigationRuleAssembler assembler = new DefaultNavigationRuleAssembler(
-                list, getExternalContext());
-        assembler.setExternalContext(getExternalContext());
+                list);
 
         // ## Act ##
         assembler.assemble();

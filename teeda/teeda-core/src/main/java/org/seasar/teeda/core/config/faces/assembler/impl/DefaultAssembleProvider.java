@@ -18,8 +18,6 @@ package org.seasar.teeda.core.config.faces.assembler.impl;
 import java.util.List;
 import java.util.Map;
 
-import javax.faces.context.ExternalContext;
-
 import org.seasar.teeda.core.config.faces.assembler.ApplicationAssembler;
 import org.seasar.teeda.core.config.faces.assembler.AssembleProvider;
 import org.seasar.teeda.core.config.faces.assembler.ComponentAssembler;
@@ -36,8 +34,6 @@ import org.seasar.teeda.core.config.faces.element.FacesConfig;
  * @author shot
  */
 public class DefaultAssembleProvider implements AssembleProvider {
-
-    private ExternalContext externalContext;
 
     public FactoryAssembler assembleFactories(FacesConfig facesConfig) {
         List factories = facesConfig.getFactoryElements();
@@ -73,8 +69,7 @@ public class DefaultAssembleProvider implements AssembleProvider {
     public NavigationRuleAssembler assembleNavigationRules(
             FacesConfig facesConfig) {
         List navigationRules = facesConfig.getNavigationRuleElements();
-        return new DefaultNavigationRuleAssembler(navigationRules,
-                getExternalContext());
+        return new DefaultNavigationRuleAssembler(navigationRules);
     }
 
     public RenderKitAssembler assembleRenderKits(FacesConfig facesConfig) {
@@ -84,14 +79,6 @@ public class DefaultAssembleProvider implements AssembleProvider {
 
     public LifecycleAssembler assembleLifecycle(FacesConfig facesConfig) {
         List lifecycles = facesConfig.getLifecycleElements();
-        return new DefaultLifecycleAssembler(lifecycles, getExternalContext());
-    }
-
-    public void setExternalContext(ExternalContext externalContext) {
-        this.externalContext = externalContext;
-    }
-
-    public ExternalContext getExternalContext() {
-        return externalContext;
+        return new DefaultLifecycleAssembler(lifecycles);
     }
 }

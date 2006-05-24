@@ -17,7 +17,6 @@ package org.seasar.teeda.core.config.faces.assembler.impl;
 
 import java.util.List;
 
-import javax.faces.context.ExternalContext;
 import javax.faces.event.PhaseListener;
 
 import org.seasar.teeda.core.config.faces.assembler.LifecycleChildAssembler;
@@ -28,9 +27,8 @@ import org.seasar.teeda.core.util.ClassUtil;
  */
 public class PhaseListenerAssembler extends LifecycleChildAssembler {
 
-    public PhaseListenerAssembler(List phaseListeners,
-            ExternalContext externalContext) {
-        super(phaseListeners, externalContext);
+    public PhaseListenerAssembler(List phaseListeners) {
+        super(phaseListeners);
     }
 
     protected void doAssemble(String targetName) {

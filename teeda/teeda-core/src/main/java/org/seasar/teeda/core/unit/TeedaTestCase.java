@@ -19,6 +19,7 @@ import java.util.Locale;
 
 import javax.faces.FactoryFinder;
 import javax.faces.component.UIViewRoot;
+import javax.faces.internal.FacesConfigOptions;
 import javax.faces.lifecycle.LifecycleFactory;
 import javax.faces.render.RenderKitFactory;
 
@@ -199,6 +200,7 @@ public abstract class TeedaTestCase extends S2FrameworkTestCase {
         navigationHandler = null;
         FactoryFinder.releaseFactories();
         NavigationContextFactory.removeAll();
+        FacesConfigOptions.clear();
     }
 
     /**

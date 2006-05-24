@@ -18,8 +18,6 @@ package org.seasar.teeda.core.config.faces.assembler;
 import java.util.Collection;
 import java.util.Iterator;
 
-import javax.faces.context.ExternalContext;
-
 import org.seasar.teeda.core.util.ClassUtil;
 import org.seasar.teeda.core.util.IteratorUtil;
 
@@ -27,8 +25,6 @@ import org.seasar.teeda.core.util.IteratorUtil;
  * @author shot
  */
 public abstract class AbstractJsfAssembler implements JsfAssembler {
-
-    private ExternalContext externalContext_;
 
     protected final void isAllSuitableJsfElement(Collection elements,
             Class target) {
@@ -40,14 +36,6 @@ public abstract class AbstractJsfAssembler implements JsfAssembler {
                         target });
             }
         }
-    }
-
-    public void setExternalContext(ExternalContext externalContext) {
-        externalContext_ = externalContext;
-    }
-
-    public ExternalContext getExternalContext() {
-        return externalContext_;
     }
 
     protected abstract void setupBeforeAssemble();

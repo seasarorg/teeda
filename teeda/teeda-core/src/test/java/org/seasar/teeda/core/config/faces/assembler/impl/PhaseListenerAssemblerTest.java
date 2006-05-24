@@ -42,8 +42,7 @@ public class PhaseListenerAssemblerTest extends TeedaTestCase {
     public void testDoAssemble1() throws Exception {
         // # Arrange #
         getLifecycle().clearAllPhaseListener();
-        PhaseListenerAssembler assembler = new PhaseListenerAssembler(null,
-                getExternalContext());
+        PhaseListenerAssembler assembler = new PhaseListenerAssembler(null);
 
         // # Act #
         assembler.assemble();
@@ -59,8 +58,7 @@ public class PhaseListenerAssemblerTest extends TeedaTestCase {
         try {
             List list = new ArrayList();
             list.add(getClass().getName() + "$" + "MockPhaseListener2");
-            PhaseListenerAssembler assembler = new PhaseListenerAssembler(list,
-                    getExternalContext());
+            PhaseListenerAssembler assembler = new PhaseListenerAssembler(list);
 
             // # Act #
             assembler.assemble();

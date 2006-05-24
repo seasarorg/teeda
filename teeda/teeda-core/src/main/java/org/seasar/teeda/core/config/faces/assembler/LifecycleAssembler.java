@@ -18,8 +18,6 @@ package org.seasar.teeda.core.config.faces.assembler;
 import java.util.Collections;
 import java.util.List;
 
-import javax.faces.context.ExternalContext;
-
 import org.seasar.teeda.core.config.faces.element.LifecycleElement;
 
 /**
@@ -29,10 +27,9 @@ public abstract class LifecycleAssembler extends AbstractJsfAssembler {
 
     private List lifecycles_ = Collections.EMPTY_LIST;
 
-    public LifecycleAssembler(List lifecycles, ExternalContext externalContext) {
+    public LifecycleAssembler(List lifecycles) {
         isAllSuitableJsfElement(lifecycles, LifecycleElement.class);
         lifecycles_ = lifecycles;
-        setExternalContext(externalContext);
         setupBeforeAssemble();
     }
 

@@ -18,7 +18,10 @@ package org.seasar.teeda.core.webapp;
 import java.io.InputStream;
 
 import javax.faces.FactoryFinder;
-import javax.faces.context.ExternalContext;
+import javax.faces.application.StateManager;
+import javax.faces.application.ViewHandler;
+import javax.faces.internal.FacesConfigOptions;
+import javax.faces.webapp.FacesServlet;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 
@@ -62,11 +65,11 @@ public class TeedaConfigureListener extends S2ContainerListener {
         FactoryFinder.releaseFactories();
     }
 
-    private void initializeFaces(ServletContext context) {
-        Boolean b = (Boolean) context.getAttribute(FACES_INIT_DONE);
+    protected void initializeFaces(ServletContext servletContext) {
+        Boolean b = (Boolean) servletContext.getAttribute(FACES_INIT_DONE);
         boolean isAlreadyInitialized = (b != null) ? b.booleanValue() : false;
         if (!isAlreadyInitialized) {
-
+            initializeFacesConfigOptions(servletContext);
             FacesConfigBuilder facesConfigBuilder = (FacesConfigBuilder) DIContainerUtil
                     .getComponent(FacesConfigBuilder.class);
 
@@ -84,25 +87,44 @@ public class TeedaConfigureListener extends S2ContainerListener {
 
             WebappConfigBuilder webAppConfigBuilder = (WebappConfigBuilder) DIContainerUtil
                     .getComponent(WebappConfigBuilder.class);
-            ExternalContext externalContext = (ExternalContext) DIContainerUtil
-                    .getComponent(ExternalContext.class);
 
             InputStream is = null;
             WebappConfig webappConfig = null;
             try {
-                is = externalContext
+                is = servletContext
                         .getResourceAsStream(JsfConstants.WEB_XML_PATH);
                 webappConfig = webAppConfigBuilder.build(is);
             } finally {
                 InputStreamUtil.close(is);
             }
 
-            externalContext.getApplicationMap().put(
+            servletContext.setAttribute(
                     WebappConfig.class.getName(), webappConfig);
 
-            context.setAttribute(FACES_INIT_DONE, Boolean.TRUE);
+            servletContext.setAttribute(FACES_INIT_DONE, Boolean.TRUE);
         }
 
+    }
+    
+    protected void initializeFacesConfigOptions(ServletContext servletContext) {
+        FacesConfigOptions.setConfigFiles(servletContext.getInitParameter(FacesServlet.CONFIG_FILES_ATTR));
+        String savingMethod = servletContext.getInitParameter(
+                StateManager.STATE_SAVING_METHOD_PARAM_NAME);
+        if (savingMethod != null) {
+            FacesConfigOptions.setSavingStateInClient(StateManager.STATE_SAVING_METHOD_CLIENT.equalsIgnoreCase(savingMethod));
+        }
+        String suffix = servletContext.getInitParameter(
+                ViewHandler.DEFAULT_SUFFIX_PARAM_NAME);
+        if (suffix != null) {
+            FacesConfigOptions.setDefaultSuffix(suffix);
+        } else {
+            FacesConfigOptions.setDefaultSuffix(ViewHandler.DEFAULT_SUFFIX);
+        }
+        String lifecycleId = servletContext.getInitParameter(
+                FacesServlet.LIFECYCLE_ID_ATTR);
+        if (lifecycleId != null) {
+            FacesConfigOptions.setLifecycleId(lifecycleId);
+        }
     }
 
 }

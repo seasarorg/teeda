@@ -18,8 +18,6 @@ package org.seasar.teeda.core.config.faces.assembler.impl;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.faces.context.ExternalContext;
-
 import org.seasar.teeda.core.application.navigation.NavigationCaseContext;
 import org.seasar.teeda.core.application.navigation.NavigationContext;
 import org.seasar.teeda.core.application.navigation.NavigationContextFactory;
@@ -33,9 +31,8 @@ import org.seasar.teeda.core.util.IteratorUtil;
  */
 public class DefaultNavigationRuleAssembler extends NavigationRuleAssembler {
 
-    public DefaultNavigationRuleAssembler(List navigationRules,
-            ExternalContext externalContext) {
-        super(navigationRules, externalContext);
+    public DefaultNavigationRuleAssembler(List navigationRules) {
+        super(navigationRules);
     }
 
     protected void setupBeforeAssemble() {

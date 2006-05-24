@@ -19,7 +19,6 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.faces.context.ExternalContext;
 import javax.faces.lifecycle.Lifecycle;
 
 import org.seasar.teeda.core.util.IteratorUtil;
@@ -32,12 +31,8 @@ public abstract class LifecycleChildAssembler implements JsfAssembler {
 
     private List targetLists_ = Collections.EMPTY_LIST;
 
-    private ExternalContext externalContext_;
-
-    public LifecycleChildAssembler(List targetLists,
-            ExternalContext externalContext) {
+    public LifecycleChildAssembler(List targetLists) {
         targetLists_ = targetLists;
-        externalContext_ = externalContext;
     }
 
     public void assemble() {
@@ -49,7 +44,7 @@ public abstract class LifecycleChildAssembler implements JsfAssembler {
     }
 
     protected Lifecycle getLifecycle() {
-        return LifecycleUtil.getLifecycle(externalContext_);
+        return LifecycleUtil.getLifecycle();
     }
 
     protected abstract void doAssemble(String targetName);

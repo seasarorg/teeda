@@ -15,8 +15,6 @@
  */
 package org.seasar.teeda.core.config.faces.assembler;
 
-import javax.faces.context.ExternalContext;
-
 import org.seasar.teeda.core.config.faces.assembler.impl.DefaultAssembleProvider;
 import org.seasar.teeda.core.config.faces.element.FacesConfig;
 
@@ -26,8 +24,6 @@ import org.seasar.teeda.core.config.faces.element.FacesConfig;
 public class AssemblerAssembler {
 
     private AssembleProvider provider = new DefaultAssembleProvider();
-
-    private ExternalContext externalContext;
     
     public void assembleFactories(FacesConfig facesConfig) {
         getProvider().assembleFactories(facesConfig).assemble();
@@ -61,17 +57,6 @@ public class AssemblerAssembler {
     }
 
     public AssembleProvider getProvider() {
-        if(externalContext != null) {
-            provider.setExternalContext(externalContext);
-        }
         return provider;
-    }
-
-    public void setExternalContext(ExternalContext extContext) {
-        this.externalContext = extContext;
-    }
-    
-    public ExternalContext getExternalContext() {
-        return externalContext;
     }
 }

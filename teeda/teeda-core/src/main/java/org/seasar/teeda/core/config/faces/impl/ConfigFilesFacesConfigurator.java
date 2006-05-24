@@ -19,8 +19,7 @@ import java.io.InputStream;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.faces.context.ExternalContext;
-import javax.faces.webapp.FacesServlet;
+import javax.faces.internal.FacesConfigOptions;
 
 import org.seasar.framework.container.factory.WebResourceResolver;
 import org.seasar.framework.log.Logger;
@@ -39,8 +38,6 @@ public class ConfigFilesFacesConfigurator extends AbstractFacesConfigurator {
             .getLogger(ConfigFilesFacesConfigurator.class);
 
     private static final String FACES_CONFIG_DELIMETER = ",";
-
-    private ExternalContext externalContext_;
 
     public ConfigFilesFacesConfigurator() {
         setResourceResolver(new WebResourceResolver());
@@ -72,17 +69,6 @@ public class ConfigFilesFacesConfigurator extends AbstractFacesConfigurator {
     }
 
     public String getPath() {
-        String paths = getExternalContext().getInitParameter(
-                FacesServlet.CONFIG_FILES_ATTR);
-        return paths;
+        return FacesConfigOptions.getConfigFiles();
     }
-
-    public ExternalContext getExternalContext() {
-        return externalContext_;
-    }
-
-    public void setExternalContext(ExternalContext externalContext) {
-        externalContext_ = externalContext;
-    }
-
 }

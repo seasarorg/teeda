@@ -207,7 +207,7 @@ public class AbstractPhaseTest extends TeedaTestCase {
 
     public void testGetLifecycle() {
         TargetPhase p = new TargetPhase();
-        Lifecycle lifecycle = p.getLifecycle(getFacesContext());
+        Lifecycle lifecycle = p.getLifecycle();
         assertNotNull(lifecycle);
         assertTrue(lifecycle instanceof MockLifecycle);
     }

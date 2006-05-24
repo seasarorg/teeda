@@ -19,8 +19,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.faces.context.ExternalContext;
-
 import org.seasar.teeda.core.config.faces.assembler.LifecycleAssembler;
 import org.seasar.teeda.core.config.faces.assembler.LifecycleChildAssembler;
 import org.seasar.teeda.core.config.faces.element.LifecycleElement;
@@ -33,9 +31,8 @@ public class DefaultLifecycleAssembler extends LifecycleAssembler {
 
     private LifecycleChildAssembler child_;
 
-    public DefaultLifecycleAssembler(List lifecycles,
-            ExternalContext externalContext) {
-        super(lifecycles, externalContext);
+    public DefaultLifecycleAssembler(List lifecycles) {
+        super(lifecycles);
     }
 
     protected void setupBeforeAssemble() {
@@ -45,7 +42,7 @@ public class DefaultLifecycleAssembler extends LifecycleAssembler {
             LifecycleElement element = (LifecycleElement) itr.next();
             targets.addAll(element.getPhaseListeners());
         }
-        child_ = new PhaseListenerAssembler(targets, getExternalContext());
+        child_ = new PhaseListenerAssembler(targets);
     }
 
     public void assemble() {

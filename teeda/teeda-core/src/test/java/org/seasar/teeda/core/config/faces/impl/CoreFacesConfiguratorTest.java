@@ -21,7 +21,6 @@ import java.util.Map;
 
 import javax.faces.application.Application;
 import javax.faces.application.ApplicationFactory;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.FacesContextFactory;
 import javax.faces.event.PhaseListener;
@@ -46,7 +45,6 @@ import org.seasar.teeda.core.managedbean.impl.ManagedBeanScopeSaverImpl;
 import org.seasar.teeda.core.mock.MockActionListener;
 import org.seasar.teeda.core.mock.MockApplication;
 import org.seasar.teeda.core.mock.MockApplicationFactory;
-import org.seasar.teeda.core.mock.MockExternalContextImpl;
 import org.seasar.teeda.core.mock.MockFacesContextFactory;
 import org.seasar.teeda.core.mock.MockLifecycle;
 import org.seasar.teeda.core.mock.MockLifecycleFactory;
@@ -94,9 +92,6 @@ public class CoreFacesConfiguratorTest extends S2TestCase {
         // do actually initialize.
         AssemblerAssembler assembler = new AssemblerAssembler();
         DefaultAssembleProvider provider = new DefaultAssembleProvider();
-        ExternalContext externalContext = new MockExternalContextImpl(
-                getServletContext(), getRequest(), getResponse());
-        provider.setExternalContext(externalContext);
         assembler.setAssembleProvider(provider);
 
         // ## Act ##

@@ -18,7 +18,6 @@ package org.seasar.teeda.core.config.faces.assembler.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.faces.context.ExternalContext;
 import javax.faces.event.PhaseListener;
 
 import org.seasar.teeda.core.config.faces.element.LifecycleElement;
@@ -31,15 +30,6 @@ import org.seasar.teeda.core.unit.TeedaTestCase;
  */
 public class DefaultLifecycleAssemblerTest extends TeedaTestCase {
 
-    /**
-     * Constructor for DefaultLifecycleAssemblerTest.
-     * 
-     * @param name
-     */
-    public DefaultLifecycleAssemblerTest(String name) {
-        super(name);
-    }
-
     public void testAssemble1() throws Exception {
         PhaseListener[] orgListeners = getLifecycle().clearAllPhaseListener();
         try {
@@ -49,9 +39,8 @@ public class DefaultLifecycleAssemblerTest extends TeedaTestCase {
                     .addPhaseListener("org.seasar.teeda.core.mock.MockPhaseListener");
             List list = new ArrayList();
             list.add(lifecycleElement);
-            ExternalContext externalContext = getExternalContext();
             DefaultLifecycleAssembler assembler = new DefaultLifecycleAssembler(
-                    list, externalContext);
+                    list);
 
             // # Act #
             assembler.assemble();
