@@ -51,7 +51,7 @@ public class NavigationHandlerImpl extends NavigationHandler {
         ExternalContext externalContext = context.getExternalContext();
         String viewId = context.getViewRoot().getViewId();
         NavigationCaseContext navigationCaseContext = getNavigationCaseContext(
-                context, fromAction, outcome, viewId);
+                fromAction, outcome, viewId);
         if (navigationCaseContext != null) {
             ViewHandler viewHandler = context.getApplication().getViewHandler();
             String newViewId = navigationCaseContext.getToViewId();
@@ -99,21 +99,21 @@ public class NavigationHandlerImpl extends NavigationHandler {
     }
 
     protected NavigationCaseContext getNavigationCaseContext(
-            FacesContext context, String fromAction, String outcome,
+            String fromAction, String outcome,
             String viewId) {
         //exact match
-        List navigationList = getExactMatchNavigationCases(viewId, context);
+        List navigationList = getExactMatchNavigationCases(viewId);
         NavigationCaseContext navigationCaseContext = getNavigationCaseContextInternal(
                 navigationList, fromAction, outcome);
         //wildcard match
         if (navigationCaseContext == null) {
-            navigationList = getWildCardMatchNavigationCases(viewId, context);
+            navigationList = getWildCardMatchNavigationCases(viewId);
             navigationCaseContext = getNavigationCaseContextInternal(
                     navigationList, fromAction, outcome);
         }
         //and * match
         if (navigationCaseContext == null) {
-            navigationList = getDefaultNavigationCases(viewId, context);
+            navigationList = getDefaultNavigationCases(viewId);
             navigationCaseContext = getNavigationCaseContextInternal(
                     navigationList, fromAction, outcome);
         }
@@ -134,9 +134,8 @@ public class NavigationHandlerImpl extends NavigationHandler {
         return null;
     }
 
-    protected List getExactMatchNavigationCases(String viewId,
-            FacesContext context) {
-        Map map = NavigationContextFactory.getNavigationContexts(context);
+    protected List getExactMatchNavigationCases(String viewId) {
+        Map map = NavigationContextFactory.getNavigationContexts();
         if (map != null) {
             if (logger_.isDebugEnabled()) {
                 logger_.debug("Exact macth. viewId = " + viewId);
@@ -146,10 +145,9 @@ public class NavigationHandlerImpl extends NavigationHandler {
         return null;
     }
 
-    protected List getWildCardMatchNavigationCases(String viewId,
-            FacesContext context) {
+    protected List getWildCardMatchNavigationCases(String viewId) {
         Map map = NavigationContextFactory
-                .getWildCardMatchNavigationContexts(context);
+                .getWildCardMatchNavigationContexts();
         if (map != null) {
             if (logger_.isDebugEnabled()) {
                 logger_.debug("Wildcard macth. viewId = " + viewId);
@@ -165,9 +163,9 @@ public class NavigationHandlerImpl extends NavigationHandler {
         return null;
     }
 
-    protected List getDefaultNavigationCases(String viewId, FacesContext context) {
+    protected List getDefaultNavigationCases(String viewId) {
         Map map = NavigationContextFactory
-                .getDefaultMatchNavigationContexts(context);
+                .getDefaultMatchNavigationContexts();
         if (map != null) {
             if (logger_.isDebugEnabled()) {
                 logger_.debug("Default macth. viewId = " + viewId);

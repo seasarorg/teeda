@@ -53,8 +53,7 @@ public class DefaultNavigationRuleAssembler extends NavigationRuleAssembler {
             NavigationRuleElement rule = (NavigationRuleElement) itr.next();
             NavigationContextWrapper wrapper = new NavigationContextWrapper(
                     rule);
-            NavigationContextFactory.addNavigationContext(getExternalContext(),
-                    wrapper);
+            NavigationContextFactory.addNavigationContext(wrapper);
         }
     }
 
@@ -77,7 +76,7 @@ public class DefaultNavigationRuleAssembler extends NavigationRuleAssembler {
                         caseElement));
             }
         }
-        
+
     }
 
     public static class NavigationCaseContextWrapper extends

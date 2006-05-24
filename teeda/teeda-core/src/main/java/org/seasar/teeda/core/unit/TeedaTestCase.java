@@ -23,6 +23,7 @@ import javax.faces.lifecycle.LifecycleFactory;
 import javax.faces.render.RenderKitFactory;
 
 import org.seasar.framework.unit.S2FrameworkTestCase;
+import org.seasar.teeda.core.application.navigation.NavigationContextFactory;
 import org.seasar.teeda.core.context.html.HtmlResponseWriter;
 import org.seasar.teeda.core.managedbean.ManagedBeanFactory;
 import org.seasar.teeda.core.managedbean.impl.ManagedBeanFactoryImpl;
@@ -197,6 +198,7 @@ public abstract class TeedaTestCase extends S2FrameworkTestCase {
         phaseListener = null;
         navigationHandler = null;
         FactoryFinder.releaseFactories();
+        NavigationContextFactory.removeAll();
     }
 
     /**

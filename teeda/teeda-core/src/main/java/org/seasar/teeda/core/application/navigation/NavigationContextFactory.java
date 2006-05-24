@@ -21,9 +21,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
-
 /**
  * @author shot
  */
@@ -40,55 +37,56 @@ public class NavigationContextFactory {
     private static final String DEFAULT_NAVIGATION_CONTEXTS = NavigationContextFactory.class
             .getName()
             + "_DEFAULT_NAVIGATION_CONTEXTS";
+    
+    private static Map cache = new HashMap();
 
     private NavigationContextFactory() {
     }
 
-    public static void addNavigationContext(ExternalContext externalContext,
-            NavigationContext navigationContext) {
-        if (externalContext == null || navigationContext == null) {
-            throw new IllegalArgumentException();
+    public static void addNavigationContext(NavigationContext navigationContext) {
+        if (navigationContext == null) {
+            throw new IllegalArgumentException("navigationContext");
         }
-        Map applicationMap = externalContext.getApplicationMap();
         String fromViewId = navigationContext.getFromViewId();
         if (navigationContext.isWildCardMatch()) {
             //if default match
             if ("*".equals(fromViewId)) {
-                storeNavigationContext(applicationMap, fromViewId,
+                storeNavigationContext(fromViewId,
                         navigationContext, DEFAULT_NAVIGATION_CONTEXTS);
             } else {
-                storeNavigationContext(applicationMap, fromViewId,
+                storeNavigationContext(fromViewId,
                         navigationContext, WILDCARD_NAVIGATION_CONTEXTS);
             }
 
         } else {
-            storeNavigationContext(applicationMap, fromViewId,
+            storeNavigationContext(fromViewId,
                     navigationContext, NAVIGATON_CONTEXTS);
         }
     }
 
-    public static Map getNavigationContexts(FacesContext context) {
-        Map appMap = context.getExternalContext().getApplicationMap();
-        return (Map) appMap.get(NAVIGATON_CONTEXTS);
+    public static Map getNavigationContexts() {
+        return (Map) cache.get(NAVIGATON_CONTEXTS);
     }
 
-    public static Map getWildCardMatchNavigationContexts(FacesContext context) {
-        Map appMap = context.getExternalContext().getApplicationMap();
-        return (Map) appMap.get(WILDCARD_NAVIGATION_CONTEXTS);
+    public static Map getWildCardMatchNavigationContexts() {
+        return (Map) cache.get(WILDCARD_NAVIGATION_CONTEXTS);
     }
 
-    public static Map getDefaultMatchNavigationContexts(FacesContext context) {
-        Map appMap = context.getExternalContext().getApplicationMap();
-        return (Map) appMap.get(DEFAULT_NAVIGATION_CONTEXTS);
+    public static Map getDefaultMatchNavigationContexts() {
+        return (Map) cache.get(DEFAULT_NAVIGATION_CONTEXTS);
+    }
+    
+    public static void removeAll() {
+        cache.clear();
     }
 
-    private static void storeNavigationContext(Map applicationMap,
+    protected static void storeNavigationContext(
             String fromViewId, NavigationContext navContext,
             String applicationKey) {
-        Map navContextsMap = (Map) applicationMap.get(applicationKey);
+        Map navContextsMap = (Map) cache.get(applicationKey);
         if (navContextsMap == null) {
             navContextsMap = Collections.synchronizedMap(new HashMap());
-            applicationMap.put(applicationKey, navContextsMap);
+            cache.put(applicationKey, navContextsMap);
         }
         List navContextList = (List) navContextsMap.get(fromViewId);
         if (navContextList == null) {

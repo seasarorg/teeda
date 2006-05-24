@@ -18,30 +18,17 @@ package org.seasar.teeda.core.application.navigation;
 import java.util.List;
 import java.util.Map;
 
-import org.seasar.teeda.core.mock.MockExternalContextImpl;
-import org.seasar.teeda.core.unit.TeedaTestCase;
+import junit.framework.TestCase;
 
 /**
  * @author shot
  */
-public class NavigationContextFactoryTest extends TeedaTestCase {
-
-    public void testAddNavigationContext_externalContextIsNull()
-            throws Exception {
-        try {
-            NavigationContextFactory.addNavigationContext(null,
-                    new NavigationContext());
-            fail();
-        } catch (IllegalArgumentException expected) {
-            assertTrue(true);
-        }
-    }
+public class NavigationContextFactoryTest extends TestCase {
 
     public void testAddNavigationContext_navigationContextIsNull()
             throws Exception {
         try {
-            NavigationContextFactory.addNavigationContext(
-                    new MockExternalContextImpl(), null);
+            NavigationContextFactory.addNavigationContext(null);
             fail();
         } catch (IllegalArgumentException expected) {
             assertTrue(true);
@@ -61,12 +48,10 @@ public class NavigationContextFactoryTest extends TeedaTestCase {
         navContext.addNavigationCaseContext(caseContext);
 
         // # Act
-        NavigationContextFactory.addNavigationContext(getExternalContext(),
-                navContext);
+        NavigationContextFactory.addNavigationContext(navContext);
 
         // # Assert
-        Map map = NavigationContextFactory
-                .getNavigationContexts(getFacesContext());
+        Map map = NavigationContextFactory.getNavigationContexts();
         List list = (List) map.get("fromId");
         NavigationContext targetContext = (NavigationContext) list.get(0);
         assertNotNull(targetContext);
@@ -92,12 +77,10 @@ public class NavigationContextFactoryTest extends TeedaTestCase {
         navContext.addNavigationCaseContext(caseContext);
 
         // # Act
-        NavigationContextFactory.addNavigationContext(getExternalContext(),
-                navContext);
+        NavigationContextFactory.addNavigationContext(navContext);
 
         // # Assert
-        Map map = NavigationContextFactory
-                .getWildCardMatchNavigationContexts(getFacesContext());
+        Map map = NavigationContextFactory.getWildCardMatchNavigationContexts();
         List list = (List) map.get("aa*");
         NavigationContext targetContext = (NavigationContext) list.get(0);
         assertNotNull(targetContext);

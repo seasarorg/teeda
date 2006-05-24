@@ -197,7 +197,7 @@ public class CoreFacesConfiguratorTest extends S2TestCase {
         assembler.assmbleNavigationRules(facesConfig);
 
         // # Assert #
-        Map map = NavigationContextFactory.getNavigationContexts(context);
+        Map map = NavigationContextFactory.getNavigationContexts();
         List list = (List) map.get("from");
         NavigationContext navContext = (NavigationContext) list.get(0);
         assertEquals("from", navContext.getFromViewId());
