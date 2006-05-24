@@ -20,7 +20,6 @@ import java.util.Map;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ElementNode;
-import org.seasar.teeda.extension.html.ElementProcessor;
 import org.seasar.teeda.extension.html.PageDesc;
 
 /**
@@ -41,12 +40,6 @@ public class OutputLinkFactory extends AbstractElementProcessorFactory {
         return elementNode.getId().startsWith(GO);
     }
 
-    public ElementProcessor createProcessor(ElementNode elementNode,
-            PageDesc pageDesc, ActionDesc actionDesc) {
-        return createProcessor(elementNode, pageDesc, actionDesc,
-                JsfConstants.JSF_HTML_URI, TAG_NAME);
-    }
-
     protected void customizeProperties(Map properties, ElementNode elementNode,
             PageDesc pageDesc, ActionDesc actionDesc) {
         super
@@ -54,5 +47,13 @@ public class OutputLinkFactory extends AbstractElementProcessorFactory {
                         actionDesc);
         renameProperty(properties, JsfConstants.HREF_ATTR,
                 JsfConstants.VALUE_ATTR);
+    }
+
+    protected String getTagName() {
+        return TAG_NAME;
+    }
+
+    protected String getUri() {
+        return JsfConstants.JSF_HTML_URI;
     }
 }

@@ -24,18 +24,18 @@ import org.seasar.teeda.extension.html.PageDesc;
 
 /**
  * @author shot
+ *  
  */
-public class CommandButtonFactory extends AbstractElementProcessorFactory {
+public class InputSecretFactory extends AbstractElementProcessorFactory {
 
-    private static final String TAG_NAME = "commandButton";
+    private static final String TAG_NAME = "inputSecret";
 
     public boolean isMatch(ElementNode elementNode) {
         if (!JsfConstants.INPUT_ELEM.equalsIgnoreCase(elementNode.getTagName())) {
             return false;
         }
-        String type = elementNode.getProperty(JsfConstants.TYPE_ATTR);
-        return (JsfConstants.SUBMIT_VALUE.equalsIgnoreCase(type) || JsfConstants.BUTTON_VALUE
-                .equalsIgnoreCase(type));
+        return JsfConstants.PASSWORD_VALUE.equalsIgnoreCase(elementNode
+                .getProperty(JsfConstants.TYPE_ATTR));
     }
 
     protected void customizeProperties(Map properties, ElementNode elementNode,
@@ -43,8 +43,8 @@ public class CommandButtonFactory extends AbstractElementProcessorFactory {
         super
                 .customizeProperties(properties, elementNode, pageDesc,
                         actionDesc);
-        properties.put(JsfConstants.ACTION_ATTR, getBindingExpression(
-                actionDesc.getActionName(), elementNode.getId()));
+        properties.put(JsfConstants.VALUE_ATTR, getBindingExpression(pageDesc
+                .getPageName(), elementNode.getId()));
     }
 
     protected String getTagName() {

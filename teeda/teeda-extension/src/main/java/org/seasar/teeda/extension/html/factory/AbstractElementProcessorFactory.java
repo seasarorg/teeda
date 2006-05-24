@@ -45,6 +45,12 @@ public abstract class AbstractElementProcessorFactory implements
         this.taglibManager = taglibManager;
     }
 
+    public ElementProcessor createProcessor(ElementNode elementNode,
+            PageDesc pageDesc, ActionDesc actionDesc) {
+        return createProcessor(elementNode, pageDesc, actionDesc, getUri(),
+                getTagName());
+    }
+
     protected Class getTagClass(String uri, String tagName) {
         TaglibElement taglibElement = taglibManager.getTaglibElement(uri);
         TagElement tagElement = taglibElement.getTagElement(tagName);
@@ -82,4 +88,9 @@ public abstract class AbstractElementProcessorFactory implements
             String targetName) {
         return "#{" + componentName + "." + targetName + "}";
     }
+
+    protected abstract String getUri();
+
+    protected abstract String getTagName();
+
 }

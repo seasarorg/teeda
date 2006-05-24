@@ -16,10 +16,7 @@
 package org.seasar.teeda.extension.html.factory;
 
 import org.seasar.teeda.core.JsfConstants;
-import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ElementNode;
-import org.seasar.teeda.extension.html.ElementProcessor;
-import org.seasar.teeda.extension.html.PageDesc;
 
 /**
  * @author higa
@@ -34,9 +31,12 @@ public class FormFactory extends AbstractElementProcessorFactory {
                 .equalsIgnoreCase(elementNode.getTagName());
     }
 
-    public ElementProcessor createProcessor(ElementNode elementNode,
-            PageDesc pageDesc, ActionDesc actionDesc) {
-        return createProcessor(elementNode, pageDesc, actionDesc,
-                JsfConstants.JSF_HTML_URI, TAG_NAME);
+    protected String getTagName() {
+        return TAG_NAME;
     }
+
+    protected String getUri() {
+        return JsfConstants.JSF_HTML_URI;
+    }
+
 }
