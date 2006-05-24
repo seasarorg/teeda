@@ -3,7 +3,6 @@
 	"http://www.seasar.org/dtd/components24.dtd">
 <components namespace="teeda">
 
-	<include path="context.dicon" />
 	<include path="teedaErrorPage.dicon" />
 
 	<!-- ExternalContext -->
@@ -35,9 +34,7 @@
 
 	<component name="metaInfConfigurator" class="org.seasar.teeda.core.config.faces.impl.MetaInfFacesConfigurator" autoBinding="none" />
 	
-	<component name="configFilesConfigurator" class="org.seasar.teeda.core.config.faces.impl.ConfigFilesFacesConfigurator" autoBinding="none">
-		<property name="externalContext">externalContext</property>
-	</component>
+	<component name="configFilesConfigurator" class="org.seasar.teeda.core.config.faces.impl.ConfigFilesFacesConfigurator" autoBinding="none"/>
 
 	<component name="applicationConfigurator" class="org.seasar.teeda.core.config.faces.impl.ApplicationFacesConfigurator" autoBinding="none" />
 
