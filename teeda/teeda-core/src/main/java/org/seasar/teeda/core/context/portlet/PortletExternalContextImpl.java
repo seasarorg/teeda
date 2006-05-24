@@ -90,9 +90,9 @@ public class PortletExternalContextImpl extends ExternalContext {
 
     public PortletExternalContextImpl(PortletContext context,
             PortletRequest request, PortletResponse response) {
-        this.portletContext = portletContext;
-        this.portletRequest = portletRequest;
-        this.portletResponse = portletResponse;
+        this.portletContext = context;
+        this.portletRequest = request;
+        this.portletResponse = response;
         this.isActionRequest = (portletRequest != null && portletRequest instanceof ActionRequest);
 
         if (isActionRequest) {

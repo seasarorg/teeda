@@ -197,8 +197,8 @@ public class PortletFacesContextImpl extends FacesContext {
     public void release() {
         released = true;
         application = null;
-        if(externalContext instanceof Releaseable) {
-            ((Releaseable)externalContext).release();
+        if (externalContext instanceof Releaseable) {
+            ((Releaseable) externalContext).release();
         }
         externalContext = null;
         FacesContext.setCurrentInstance(null);
@@ -228,5 +228,9 @@ public class PortletFacesContextImpl extends FacesContext {
         }
     }
 
+    public void setExternalContext(ExternalContext externalContext) {
+        assertNotReleased();
+        this.externalContext = externalContext;
+    }
 
 }
