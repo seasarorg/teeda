@@ -161,14 +161,6 @@ Kumu.Ajax = {
 		}
     },
 
-    _getComponentName : function(func){
-        var str = func.toString();
-        ret = str.match(/[0-9A-Za-z_]+\(/).toString();
-        ret = ret.substring(0,ret.length-1); 
-        var arr = ret.split('_');
-        return arr;
-    },
-
     _registAjaxListener : function(req, ajaxComponent) {
     	var self = Kumu.Ajax;
         req.onreadystatechange = function() {
@@ -198,7 +190,7 @@ Kumu.Ajax = {
             return escape(val);
         }        
     },    
-    
+
     _getComponentName : function(func){
         var str = func.toString();
         var ret = str.match(/[0-9A-Za-z_]+\(/).toString();
