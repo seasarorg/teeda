@@ -1,3 +1,6 @@
+if (typeof(Kumu) == 'undefined') {
+    Kumu = {};
+}
 if (typeof(Kumu.Event) == 'undefined') {
     Kumu.Event = {};
 }
