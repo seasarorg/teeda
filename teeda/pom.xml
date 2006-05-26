@@ -291,6 +291,12 @@
       <type>jar</type>
       <scope>provided</scope>
     </dependency>
+    <dependency>
+      <groupId>rhino</groupId>
+      <artifactId>rhino</artifactId>
+      <version>1.6r2</version>
+      <type>jar</type>
+    </dependency>
   </dependencies>
   <reporting>
     <plugins>
