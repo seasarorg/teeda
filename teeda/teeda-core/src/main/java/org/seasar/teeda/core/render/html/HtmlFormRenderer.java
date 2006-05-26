@@ -21,6 +21,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.faces.application.ViewHandler;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIForm;
 import javax.faces.component.UIViewRoot;
@@ -61,6 +62,14 @@ public class HtmlFormRenderer extends AbstractHtmlRenderer {
                 JsfConstants.POST_VALUE);
         RendererUtil.renderAttributes(writer, htmlForm,
                 JsfConstants.FORM_PASSTHROUGH_ATTRIBUTES);
+
+        // action attribute
+        ViewHandler viewHandler = context.getApplication().getViewHandler();
+        String viewId = context.getViewRoot().getViewId();
+        writer.writeURIAttribute(JsfConstants.ACTION_ATTR, context
+                .getExternalContext().encodeActionURL(
+                        viewHandler.getActionURL(context, viewId)), null);
+
     }
 
     public void encodeEnd(FacesContext context, UIComponent component)

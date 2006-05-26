@@ -231,6 +231,10 @@ public class PortletFacesContextImpl extends FacesContext {
     public void setExternalContext(ExternalContext externalContext) {
         assertNotReleased();
         this.externalContext = externalContext;
+        //TODO this code is needed Portlet render method. needs to review FacesContext handling..
+        if (FacesContext.getCurrentInstance() == null) {
+            FacesContext.setCurrentInstance(this);
+        }
     }
 
 }

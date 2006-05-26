@@ -29,6 +29,8 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.internal.AssertionUtil;
 import javax.faces.render.RenderKitFactory;
+import javax.portlet.PortletURL;
+import javax.portlet.RenderResponse;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
@@ -39,6 +41,8 @@ import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.config.webapp.element.ServletMappingElement;
 import org.seasar.teeda.core.config.webapp.element.WebappConfig;
+import org.seasar.teeda.core.portlet.FacesPortlet;
+import org.seasar.teeda.core.util.PortletUtil;
 import org.seasar.teeda.core.util.ServletExternalContextUtil;
 import org.seasar.teeda.core.util.StateManagerUtil;
 import org.seasar.teeda.core.util.WebappConfigUtil;
@@ -195,7 +199,17 @@ public class ViewHandlerImpl extends ViewHandler {
         if (!viewId.startsWith("/")) {
             throw new IllegalArgumentException();
         }
+
         // PortletSupport
+        if (PortletUtil.isRender(context)) {
+            RenderResponse response = (RenderResponse) context
+                    .getExternalContext().getResponse();
+            PortletURL url = response.createActionURL();
+            url.setParameter(FacesPortlet.VIEW_ID, viewId);
+            return url.toString();
+        } else if (PortletUtil.isPortlet(context)) {
+            return viewId;
+        }
 
         WebappConfig webappConfig = getWebappConfig(context);
         String urlPattern = getUrlPattern(webappConfig, context);
@@ -260,6 +274,10 @@ public class ViewHandlerImpl extends ViewHandler {
         ExternalContext externalContext = context.getExternalContext();
         String urlPattern = getUrlPattern(webappConfig, context);
         String viewId = context.getViewRoot().getViewId();
+        // PortletSupport
+        if (PortletUtil.isPortlet(context)) {
+            return viewId;
+        }
         if (urlPattern != null && isExtensionMapping(urlPattern)) {
             String defaultSuffix = externalContext
                     .getInitParameter(ViewHandler.DEFAULT_SUFFIX_PARAM_NAME);

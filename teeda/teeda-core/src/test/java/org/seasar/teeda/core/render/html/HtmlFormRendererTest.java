@@ -55,7 +55,7 @@ public class HtmlFormRendererTest extends RendererTest {
 
         // ## Assert ##
         assertEquals(
-                "<form name=\"_id0\" method=\"post\" enctype=\"application/x-www-form-urlencoded\">"
+                "<form name=\"_id0\" method=\"post\" enctype=\"application/x-www-form-urlencoded\" action=\"/aa\">"
                         + "<input type=\"hidden\" name=\"_id0/aa\" value=\"_id0\" />"
                         + "</form>", getResponseText());
     }
@@ -68,6 +68,7 @@ public class HtmlFormRendererTest extends RendererTest {
                 calls[0] = true;
             }
         });
+        context.getViewRoot().setViewId("/abc");
 
         // ## Act ##
         encodeByRenderer(renderer_, context, htmlForm_);
@@ -99,7 +100,7 @@ public class HtmlFormRendererTest extends RendererTest {
 
         // ## Assert ##
         assertEquals(
-                "<form id=\"a\" name=\"a\" method=\"post\" enctype=\"application/x-www-form-urlencoded\">"
+                "<form id=\"a\" name=\"a\" method=\"post\" enctype=\"application/x-www-form-urlencoded\" action=\"/abc\">"
                         + "<input type=\"hidden\" name=\"a/abc\" value=\"a\" />"
                         + "</form>", getResponseText());
     }
@@ -141,7 +142,7 @@ public class HtmlFormRendererTest extends RendererTest {
                 + " onmousemove=\"l\"" + " onmouseout=\"m\""
                 + " onmouseover=\"n\"" + " onmouseup=\"o\"" + " onreset=\"p\""
                 + " onsubmit=\"q\"" + " style=\"r\"" + " class=\"s\""
-                + " target=\"t\"" + " title=\"u\"" + ">"
+                + " target=\"t\"" + " title=\"u\"" + " action=\"/xyz\">"
                 + "<input type=\"hidden\" name=\"AA/xyz\" value=\"AA\" />"
                 + "</form>", getResponseText());
         assertEquals(diff.toString(), true, diff.identical());

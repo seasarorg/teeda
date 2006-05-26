@@ -44,7 +44,7 @@ public class MockViewHandlerImpl extends MockViewHandler {
     }
 
     public String getActionURL(FacesContext context, String viewId) {
-        return null;
+        return viewId;
     }
 
     public String getResourceURL(FacesContext context, String path) {

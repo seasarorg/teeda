@@ -65,7 +65,8 @@ public class HtmlFormAndCommandLinkRendererTest extends AbstractRendererTest {
         // ## Assert ##
         assertEquals(
                 "<form id=\"fooForm\" name=\"fooForm\" method=\"post\""
-                        + " enctype=\"application/x-www-form-urlencoded\">"
+                        + " enctype=\"application/x-www-form-urlencoded\""
+                        + " action=\"/aa\">"
                         + "<a"
                         + " id=\"fooLink\""
                         + " href=\"#\""
@@ -115,7 +116,8 @@ public class HtmlFormAndCommandLinkRendererTest extends AbstractRendererTest {
         // ## Assert ##
         assertEquals(
                 "<form id=\"fooForm\" name=\"fooForm\" method=\"post\""
-                        + " enctype=\"application/x-www-form-urlencoded\">"
+                        + " enctype=\"application/x-www-form-urlencoded\""
+                        + " action=\"/abc\">"
                         + "<a"
                         + " id=\"fooLink\""
                         + " href=\"#\""

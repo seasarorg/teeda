@@ -21,10 +21,13 @@ import javax.faces.component.UIViewRoot;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseId;
+import javax.portlet.PortletRequest;
 
 import org.seasar.teeda.core.lifecycle.AbstractPhase;
 import org.seasar.teeda.core.lifecycle.Postback;
+import org.seasar.teeda.core.portlet.FacesPortlet;
 import org.seasar.teeda.core.util.ExternalContextUtil;
+import org.seasar.teeda.core.util.PortletUtil;
 
 /**
  * @author shot
@@ -43,7 +46,15 @@ public class RestoreViewPhase extends AbstractPhase implements Postback {
 
     protected void executePhase(FacesContext context) throws FacesException {
         ExternalContext externalContext = context.getExternalContext();
-        String viewId = ExternalContextUtil.getViewId(externalContext);
+        String viewId = null;
+        // PortletSupport
+        if (PortletUtil.isPortlet(context)) {
+            PortletRequest request = (PortletRequest) externalContext
+                    .getRequest();
+            viewId = request.getParameter(FacesPortlet.VIEW_ID);
+        } else {
+            viewId = ExternalContextUtil.getViewId(externalContext);
+        }
         ViewHandler viewHandler = context.getApplication().getViewHandler();
         UIViewRoot viewRoot = viewHandler.restoreView(context, viewId);
         if (viewRoot == null) {

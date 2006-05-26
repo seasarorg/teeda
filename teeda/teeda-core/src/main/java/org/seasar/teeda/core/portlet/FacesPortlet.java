@@ -24,7 +24,6 @@ import javax.faces.application.ApplicationFactory;
 import javax.faces.application.StateManager;
 import javax.faces.application.ViewHandler;
 import javax.faces.component.UIViewRoot;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.FacesContextFactory;
 import javax.faces.internal.FacesConfigOptions;
@@ -47,6 +46,7 @@ import org.seasar.teeda.core.config.faces.assembler.AssemblerAssembler;
 import org.seasar.teeda.core.config.faces.element.FacesConfig;
 import org.seasar.teeda.core.config.webapp.WebappConfigBuilder;
 import org.seasar.teeda.core.config.webapp.element.WebappConfig;
+import org.seasar.teeda.core.context.portlet.PortletExternalContextImpl;
 import org.seasar.teeda.core.context.portlet.PortletFacesContextImpl;
 import org.seasar.teeda.core.util.DIContainerUtil;
 
@@ -239,9 +239,9 @@ public class FacesPortlet extends GenericPortlet {
             if (facesContext.getResponseComplete())
                 return;
 
-            facesContext.setExternalContext((ExternalContext) DIContainerUtil
-                    .getComponent(ExternalContext.class));
-            lifecycle.render(facesContext);
+            facesContext.setExternalContext(new PortletExternalContextImpl(
+                    getPortletContext(), request, response));
+           lifecycle.render(facesContext);
         } catch (Throwable e) {
             handleExceptionFromLifecycle(e);
         }
