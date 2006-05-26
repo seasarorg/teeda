@@ -77,7 +77,7 @@ public class TagProcessorAssemblerImpl implements TagProcessorAssembler {
     protected void assembleTagProcessor(ElementProcessor parentProcessor,
             ElementNode elementNode, PageDesc pageDesc, ActionDesc actionDesc) {
         String id = elementNode.getId();
-        if (pageDesc.isValid(id) || actionDesc.isValid(id)) {
+        if (pageDesc != null && pageDesc.isValid(id) || actionDesc != null && actionDesc.isValid(id)) {
             assembleElementNode(parentProcessor, elementNode, pageDesc,
                     actionDesc);
         } else {

@@ -61,6 +61,9 @@ public class ActionDescCacheImpl implements ActionDescCache {
     public synchronized ActionDesc createActionDesc(String viewId) {
         ActionDesc actionDesc = null;
         String actionName = htmlAutoNaming.convertToActionName(viewId);
+        if (!container.getRoot().hasComponentDef(actionName)) {
+            return null;
+        }
         ComponentDef cd = container.getRoot().getComponentDef(actionName);
         String pagePath = ClassUtil.getResourcePath(cd.getComponentClass());
         String realPath = servletContext.getRealPath(pagePath);

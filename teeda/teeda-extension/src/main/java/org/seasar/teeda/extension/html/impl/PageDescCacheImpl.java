@@ -61,15 +61,15 @@ public class PageDescCacheImpl implements PageDescCache {
     public synchronized PageDesc createPageDesc(String viewId) {
         PageDesc pageDesc = null;
         String pageName = htmlAutoNaming.convertToPageName(viewId);
+        if (!container.getRoot().hasComponentDef(pageName)) {
+            return null;
+        }
         ComponentDef cd = container.getRoot().getComponentDef(pageName);
         String pagePath = ClassUtil.getResourcePath(cd.getComponentClass());
         String realPath = servletContext.getRealPath(pagePath);
         if (realPath != null) {
             File file = new File(realPath);
-            if (file.exists()) {
-                pageDesc = new PageDescImpl(cd.getConcreteClass(), pageName,
-                        file);
-            }
+            pageDesc = new PageDescImpl(cd.getConcreteClass(), pageName, file);
         }
         if (pageDesc == null) {
             pageDesc = new PageDescImpl(cd.getConcreteClass(), pageName);

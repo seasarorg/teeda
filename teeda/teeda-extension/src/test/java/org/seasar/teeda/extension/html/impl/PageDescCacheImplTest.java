@@ -38,5 +38,6 @@ public class PageDescCacheImplTest extends S2FrameworkTestCase {
         PageDesc pageDesc = cache.createPageDesc(path);
         assertNotNull("1", pageDesc);
         assertSame("2", pageDesc, cache.getPageDesc(path));
+        assertNull("3", cache.createPageDesc(rootPath + "xxx.html"));
     }
 }

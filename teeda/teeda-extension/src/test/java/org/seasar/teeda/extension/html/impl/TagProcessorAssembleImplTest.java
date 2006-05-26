@@ -133,6 +133,20 @@ public class TagProcessorAssembleImplTest extends S2FrameworkTestCase {
         assertEquals("3", "<html><body id=\"aaa\">Hello</body></html>", textProcessor.getValue());
     }
     
+    public void testAssembleElementNodeAsText7() throws Exception {
+        String path = convertPath("allText5.html");
+        HtmlDescCacheImpl cache = new HtmlDescCacheImpl();
+        cache.setServletContext(getServletContext());
+        HtmlDesc htmlDesc = cache.createHtmlDesc(path);
+        TagProcessorAssembler assembler = new TagProcessorAssemblerImpl();
+        TagProcessor root = assembler.assemble(htmlDesc, null, null);
+        assertTrue("1", root instanceof ElementProcessor);
+        ElementProcessor viewRoot = (ElementProcessor) root;
+        assertEquals("2", 1, viewRoot.getChildSize());
+        TextProcessor textProcessor = (TextProcessor) viewRoot.getChild(0);
+        assertEquals("3", "<html><body id=\"aaa\">Hello</body></html>", textProcessor.getValue());
+    }
+    
     public void testAssembleElementNode() throws Exception {
         String path = convertPath("element.html");
         HtmlDescCacheImpl cache = new HtmlDescCacheImpl();

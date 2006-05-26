@@ -38,5 +38,6 @@ public class ActionDescCacheImplTest extends S2FrameworkTestCase {
         ActionDesc actionDesc = cache.createActionDesc(path);
         assertNotNull("1", actionDesc);
         assertSame("2", actionDesc, cache.getActionDesc(path));
+        assertNull("3", cache.createActionDesc(rootPath + "xxx.html"));
     }
 }

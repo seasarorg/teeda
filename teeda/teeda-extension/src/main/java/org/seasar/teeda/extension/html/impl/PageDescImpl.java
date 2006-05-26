@@ -79,6 +79,9 @@ public class PageDescImpl implements PageDesc {
         if (file == null) {
             return false;
         }
+        if (!file.exists()) {
+            return true;
+        }
         return file.lastModified() > lastModified;
     }
 
