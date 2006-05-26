@@ -40,10 +40,5 @@
       <version>1.0-beta-3-SNAPSHOT</version>
       <type>test-jar</type>
     </dependency>
-    <dependency>
-      <groupId>rhino</groupId>
-      <artifactId>js</artifactId>
-      <version>1.6R2</version>
-    </dependency>
   </dependencies>
 </project>
