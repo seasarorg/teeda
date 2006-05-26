@@ -29,7 +29,7 @@ import org.seasar.framework.log.Logger;
  *  
  */
 public class ServletContextTaglibManagerImpl extends AbstractTaglibManager {
-
+    
     private static Logger logger = Logger
             .getLogger(ServletContextTaglibManagerImpl.class);
 

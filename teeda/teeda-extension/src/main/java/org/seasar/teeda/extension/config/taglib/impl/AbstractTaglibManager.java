@@ -40,6 +40,8 @@ import org.seasar.teeda.extension.config.taglib.element.TaglibElement;
  */
 public abstract class AbstractTaglibManager implements TaglibManager {
 
+    public static final String INIT_METHOD = "init";
+    
     protected static final String FILE_PROTOCOL = "file:";
 
     protected static final String JAR_PROTOCOL = "jar:";
@@ -75,6 +77,8 @@ public abstract class AbstractTaglibManager implements TaglibManager {
     public void addTaglibElement(TaglibElement taglibElement) {
         taglibElements.put(taglibElement.getUri(), taglibElement);
     }
+    
+    public abstract void init();
 
     public void destroy() {
         taglibElements.clear();

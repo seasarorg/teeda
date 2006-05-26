@@ -23,6 +23,7 @@ import javax.servlet.ServletContext;
 
 import org.seasar.framework.container.ComponentDef;
 import org.seasar.framework.container.S2Container;
+import org.seasar.framework.exception.ClassNotFoundRuntimeException;
 import org.seasar.framework.util.ClassUtil;
 import org.seasar.teeda.extension.html.HtmlAutoNaming;
 import org.seasar.teeda.extension.html.PageDesc;
@@ -61,7 +62,11 @@ public class PageDescCacheImpl implements PageDescCache {
     public synchronized PageDesc createPageDesc(String viewId) {
         PageDesc pageDesc = null;
         String pageName = htmlAutoNaming.convertToPageName(viewId);
-        if (!container.getRoot().hasComponentDef(pageName)) {
+        try {
+            if (!container.getRoot().hasComponentDef(pageName)) {
+                return null;
+            }
+        } catch (ClassNotFoundRuntimeException ignore) {
             return null;
         }
         ComponentDef cd = container.getRoot().getComponentDef(pageName);
