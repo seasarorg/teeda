@@ -9,33 +9,35 @@
 	<component class="org.seasar.teeda.extension.config.taglib.impl.ServletContextTaglibManagerImpl"/>
 	<component class="org.seasar.teeda.extension.config.taglib.impl.TaglibElementBuilderImpl"/>
 	
+	<component class="org.seasar.teeda.extension.html.impl.DefaultHtmlAutoNaming"/>
 	<component class="org.seasar.teeda.extension.html.impl.HtmlDescCacheImpl"/>
 	<component class="org.seasar.teeda.extension.html.impl.PageDescCacheImpl"/>
+	<component class="org.seasar.teeda.extension.html.impl.ActionDescCacheImpl"/>
 	<component class="org.seasar.teeda.extension.html.impl.TagProcessorAssemblerImpl">
-		<initMethod name="addFacotry">
+		<initMethod name="addFactory">
 			<arg>
 				<component class="org.seasar.teeda.extension.html.factory.InputTextFactory"/>
 			</arg>
 		</initMethod>
-		<initMethod name="addFacotry">
+		<initMethod name="addFactory">
 			<arg>
 				<component class="org.seasar.teeda.extension.html.factory.FormFactory"/>
 			</arg>
 		</initMethod>
-		<initMethod name="addFacotry">
+		<initMethod name="addFactory">
 			<arg>
 				<component class="org.seasar.teeda.extension.html.factory.CommandButtonFactory"/>
 			</arg>
 		</initMethod>
-		<initMethod name="addFacotry">
+		<initMethod name="addFactory">
 			<arg>
 				<component class="org.seasar.teeda.extension.html.factory.OutputLinkFactory"/>
 			</arg>
 		</initMethod>
 	</component>
 	<component class="org.seasar.teeda.extension.html.impl.TagProcessorCacheImpl"/>
-	<component name="viewHandler" class="org.seasar.teeda.extension.html.impl.ViewRendererImpl"/>
-	<component class="org.seasar.teeda.extension.html.impl.HtmlViewHandler"/>
+	<component class="org.seasar.teeda.extension.html.impl.ViewRendererImpl"/>
+	<component name="viewHandler" class="org.seasar.teeda.extension.html.impl.HtmlViewHandler"/>
 	
 	<component class="org.seasar.teeda.core.application.ApplicationImpl">
 		<property name="actionListener">actionListener</property>

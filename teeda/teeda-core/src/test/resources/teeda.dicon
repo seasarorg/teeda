@@ -39,6 +39,8 @@
 	<component name="applicationConfigurator" class="org.seasar.teeda.core.config.faces.impl.ApplicationFacesConfigurator" autoBinding="none" />
 
 	<!-- FacesConfig Assembler -->
+	<component class="org.seasar.teeda.core.config.faces.assembler.impl.DefaultAssembleProvider"/>
+
 	<component class="org.seasar.teeda.core.config.faces.assembler.AssemblerAssembler" />
 
 	<!-- ValueBinding relates -->
