@@ -66,10 +66,11 @@ public class HtmlFormRenderer extends AbstractHtmlRenderer {
         // action attribute
         ViewHandler viewHandler = context.getApplication().getViewHandler();
         String viewId = context.getViewRoot().getViewId();
-        writer.writeURIAttribute(JsfConstants.ACTION_ATTR, context
-                .getExternalContext().encodeActionURL(
-                        viewHandler.getActionURL(context, viewId)), null);
-
+        String url = viewHandler.getActionURL(context, viewId);
+        if (url != null) {
+            writer.writeURIAttribute(JsfConstants.ACTION_ATTR, context
+                    .getExternalContext().encodeActionURL(url), null);
+        }
     }
 
     public void encodeEnd(FacesContext context, UIComponent component)
