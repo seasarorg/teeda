@@ -23,7 +23,6 @@ import javax.servlet.ServletContext;
 
 import org.seasar.framework.container.ComponentDef;
 import org.seasar.framework.container.S2Container;
-import org.seasar.framework.exception.ClassNotFoundRuntimeException;
 import org.seasar.framework.util.ClassUtil;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ActionDescCache;
@@ -62,11 +61,7 @@ public class ActionDescCacheImpl implements ActionDescCache {
     public synchronized ActionDesc createActionDesc(String viewId) {
         ActionDesc actionDesc = null;
         String actionName = htmlAutoNaming.convertToActionName(viewId);
-        try {
-            if (!container.getRoot().hasComponentDef(actionName)) {
-                return null;
-            }
-        } catch (ClassNotFoundRuntimeException ignore) {
+        if (!container.getRoot().hasComponentDef(actionName)) {
             return null;
         }
         ComponentDef cd = container.getRoot().getComponentDef(actionName);
