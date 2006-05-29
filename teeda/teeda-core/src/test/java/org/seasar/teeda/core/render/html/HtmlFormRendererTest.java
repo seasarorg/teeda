@@ -178,6 +178,18 @@ public class HtmlFormRendererTest extends RendererTest {
         assertEquals(1, htmlForm_.getSetSubmittedCalls());
         assertEquals(true, htmlForm_.isSubmitted());
     }
+    
+    public void testAction_Null() throws Exception {
+        // ## Arrange ##
+        MockFacesContext context = getFacesContext();
+        //context.getViewRoot().setViewId(null);
+
+        // ## Act ##
+        encodeByRenderer(renderer_, context, htmlForm_);
+
+        // ## Assert ##
+        assertTrue(getResponseText().indexOf("action") == -1);
+    }
 
     public void testGetRendersChildren() throws Exception {
         assertEquals(false, renderer_.getRendersChildren());
