@@ -79,7 +79,7 @@ function demo(zipcode){
     if(zipcode == "" || zipcode.match(/[^0-9]/g) || zipcode.length < 3) return;
     //zipBean_getAddress( '{address: [ "1:eeee", "2:ww","3:uuuu" ]}');
     // execute Ajax
-    Kumu.ajax.executeTeedaAjax(zipBean_getAddress, {"zipcode" : zipcode});
+    Kumu.Ajax.executeTeedaAjax(zipBean_getAddress, {"zipcode" : zipcode});
 }
 
 function send(){
