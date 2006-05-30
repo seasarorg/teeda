@@ -36,7 +36,6 @@
 		</initMethod>
 	</component>
 	<component class="org.seasar.teeda.extension.html.impl.TagProcessorCacheImpl"/>
-	<component class="org.seasar.teeda.extension.html.impl.ViewRendererImpl"/>
 	<component name="viewHandler" class="org.seasar.teeda.extension.html.impl.HtmlViewHandler"/>
 	
 	<component class="org.seasar.teeda.core.application.ApplicationImpl">

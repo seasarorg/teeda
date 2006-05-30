@@ -21,5 +21,7 @@ package org.seasar.teeda.extension.html;
  */
 public interface TagProcessorCache {
 
+    TagProcessor updateTagProcessor(String viewId);
+    
     TagProcessor getTagProcessor(String viewId);
 }

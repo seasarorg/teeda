@@ -67,7 +67,7 @@ public class TagProcessorCacheImpl implements TagProcessorCache {
         this.stateManager = stateManager;
     }
 
-    public synchronized TagProcessor getTagProcessor(String viewId) {
+    public synchronized TagProcessor updateTagProcessor(String viewId) {
         boolean created = false;
         HtmlDesc htmlDesc = htmlDescCache.getHtmlDesc(viewId);
         if (htmlDesc == null || htmlDesc.isModified()) {
@@ -95,6 +95,10 @@ public class TagProcessorCacheImpl implements TagProcessorCache {
                     actionDesc));
             stateManager.removeSerializedView(viewId);
         }
+        return getTagProcessor(viewId);
+    }
+    
+    public synchronized TagProcessor getTagProcessor(String viewId) {
         return (TagProcessor) cache.get(viewId);
     }
 }

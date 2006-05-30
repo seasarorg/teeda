@@ -22,7 +22,9 @@ import javax.faces.render.RenderKit;
 
 import org.seasar.framework.util.ClassUtil;
 import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.core.application.TeedaStateManager;
 import org.seasar.teeda.core.application.impl.TeedaStateManagerImpl;
+import org.seasar.teeda.core.application.impl.TreeStructureManagerImpl;
 import org.seasar.teeda.core.render.DefaultComponentIdLookupStrategy;
 import org.seasar.teeda.core.render.html.HtmlFormRenderer;
 import org.seasar.teeda.core.taglib.html.FormTag;
@@ -40,7 +42,7 @@ import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
  * @author higa
  *
  */
-public class ViewRendererImplTest extends TeedaExtensionTestCase {
+public class HtmlViewHandlerTest extends TeedaExtensionTestCase {
 	
     protected void setUp() throws Exception {
         RenderKit renderKit = getRenderKit();
@@ -56,7 +58,7 @@ public class ViewRendererImplTest extends TeedaExtensionTestCase {
         app.addComponent(HtmlForm.COMPONENT_TYPE, HtmlForm.class.getName());
     }
     
-    public void testGetTagProcessor() throws Exception {
+    public void testRenderView() throws Exception {
         MockTaglibManager taglibManager = new MockTaglibManager();
         TaglibElement jsfHtml = new TaglibElementImpl();
         jsfHtml.setUri(JsfConstants.JSF_HTML_URI);
@@ -94,13 +96,17 @@ public class ViewRendererImplTest extends TeedaExtensionTestCase {
         tagProcessorCache.setPageDescCache(pageDescCache);
         tagProcessorCache.setActionDescCache(actionDescCache);
         tagProcessorCache.setAssembler(assembler);
-        tagProcessorCache.setStateManager(new TeedaStateManagerImpl());
+        TeedaStateManager stateManager = new TeedaStateManagerImpl();
+        stateManager.setTreeStructureManager(new TreeStructureManagerImpl());
+        tagProcessorCache.setStateManager(stateManager);
+        getApplication().setStateManager(stateManager);
         
-        ViewRendererImpl viewRenderer = new ViewRendererImpl();
-        viewRenderer.setTagProcessorCache(tagProcessorCache);
+        HtmlViewHandler viewHandler = new HtmlViewHandler();
+        viewHandler.setTagProcessorCache(tagProcessorCache);
+        getFacesContext().getViewRoot().setViewId(path);
+        viewHandler.restoreView(getFacesContext(), path);
+        viewHandler.renderView(path, getRequest(), getResponse());
         
-        viewRenderer.renderView(path, getRequest(), getResponse());
-        
-        assertEquals("1", "<html><body><form id=\"fooForm\" name=\"fooForm\" method=\"post\" enctype=\"application/x-www-form-urlencoded\"><input type=\"hidden\" name=\"fooFormnull\" value=\"fooForm\" /></form></body></html>", getResponseText());
+        assertEquals("1", "<html><body><form id=\"fooForm\" name=\"fooForm\" method=\"post\" enctype=\"application/x-www-form-urlencoded\" action=\"/org/seasar/teeda/extension/html/impl/foo.html\"><input type=\"hidden\" name=\"fooForm/org/seasar/teeda/extension/html/impl/foo.html\" value=\"fooForm\" /></form></body></html>", getResponseText());
     }
 }

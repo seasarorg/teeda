@@ -29,7 +29,7 @@ import org.seasar.teeda.extension.html.TagProcessor;
  */
 public class TagProcessorCacheImplTest extends S2FrameworkTestCase {
 	
-    public void testGetTagProcessor() throws Exception {
+    public void testUpdateTagProcessor() throws Exception {
         DefaultHtmlAutoNaming naming = new DefaultHtmlAutoNaming();
         String rootPath = "/" + ClassUtil.getPackageName(getClass()).replace('.', '/');
         naming.setHtmlRootPath(rootPath);
@@ -57,13 +57,13 @@ public class TagProcessorCacheImplTest extends S2FrameworkTestCase {
         tagProcessorCache.setAssembler(new TagProcessorAssemblerImpl());
         tagProcessorCache.setStateManager(new TeedaStateManagerImpl());
         
-        TagProcessor processor = tagProcessorCache.getTagProcessor(path);
+        TagProcessor processor = tagProcessorCache.updateTagProcessor(path);
         
         assertNotNull("1", processor);
-        assertSame("2", processor, tagProcessorCache.getTagProcessor(path));
+        assertSame("2", processor, tagProcessorCache.updateTagProcessor(path));
         File file = ResourceUtil.getResourceAsFile(ClassUtil.getResourcePath(FooPage.class));
         Thread.sleep(1000);
         file.setLastModified(System.currentTimeMillis());
-        assertNotSame("3", processor, tagProcessorCache.getTagProcessor(path));
+        assertNotSame("3", processor, tagProcessorCache.updateTagProcessor(path));
     }
 }
