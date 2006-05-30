@@ -1,8 +1,11 @@
-if (typeof(Kumu.ajax) == 'undefined') {
-    Kumu.ajax = {};
+if (typeof(Kumu) == 'undefined') {
+    Kumu = {};
+}
+if (typeof(Kumu.Ajax) == 'undefined') {
+    Kumu.Ajax = {};
 };
 
-Kumu.ajax = Kumu.extend(Kumu.ajax,{
+Kumu.Ajax = {
 
     AJAX_COMPONENT_NAME : "AjaxComponent",
     HTTP_STATUS_OK : 200,
@@ -26,11 +29,12 @@ Kumu.ajax = Kumu.extend(Kumu.ajax,{
     DEBUG : false,
     
     getS2AjaxComponent : function() {
-        return new this.AjaxComponent();
+    	return new this.AjaxComponent();
     },
     
     AjaxComponent : function () {
-        this.name = Kumu.ajax.AJAX_COMPONENT_NAME;
+    	var self = Kumu.Ajax;
+        this.name = self.AJAX_COMPONENT_NAME;
 	    this.responseType = null;
         this.url = "teeda.ajax";
         this.params = null;
@@ -41,10 +45,10 @@ Kumu.ajax = Kumu.extend(Kumu.ajax,{
         var xmlHttp = false;
         /*@cc_on
         @if (@_jscript_version >= 5)
-        var len = Kumu.ajax.axo.length;
-        for (var i = 0; !xmlHttp && i < len; i++) {
+        var self = Kumu.Ajax;
+        for (var i = 0; !xmlHttp && i < self.axo.length; i++) {
             try {
-                xmlHttp = new ActiveXObject(Kumu.ajax.axo[i]);
+                xmlHttp = new ActiveXObject(self.axo[i]);
             } catch(e) {
             }
         }
@@ -85,66 +89,91 @@ Kumu.ajax = Kumu.extend(Kumu.ajax,{
     },
     
     _checkComponent : function(component) {
+    	var self = Kumu.Ajax;
         var name;
         try {
             name = component.name;
         } catch(e) {
             return false;
         }
-        if (Kumu.ajax.AJAX_COMPONENT_NAME != name || !component.doAction || !component.url) {
+        if (self.AJAX_COMPONENT_NAME != name || !component.doAction || !component.url) {
             return false;
         }
         return true;
     },
 
     executeAjax : function(ajaxComponent) {
-        if (!this._checkComponent(ajaxComponent)) {
-            this.debugPrint("IllegalArgument. argument object is not AjaxComponent. implements url or doAction!", true);
+    	var self = Kumu.Ajax;
+        if (!self._checkComponent(ajaxComponent)) {
+            self.debugPrint("IllegalArgument. argument object is not AjaxComponent. implements url or doAction!", true);
             return;
         }
-        var xmlHttp = this._createXmlHttp();
+        
+        var xmlHttp = self._createXmlHttp();
         if (!xmlHttp || !document.getElementById) {
-            this.debugPrint("This browser does not support Ajax.", true);
+            self.debugPrint("This browser does not support Ajax.", true);
             return;
         }
+        
         var sysdate = new String(new Date());
-        var url = ajaxComponent.url + "?time=" + Kumu.ajax.encodeURL(sysdate);
+        var url = ajaxComponent.url;
+        
         var parameters = "";
-        if(null != ajaxComponent.params){
-            for(var key in ajaxComponent.params){
-                parameters += "&" + key + "=" + Kumu.ajax.encodeURL(ajaxComponent.params[key]);
+        var params = ajaxComponent.params;
+        var method = 'GET';
+        if(params.method){
+        	method = params.method.toUpperCase();
+        	if(method != 'GET' && method != 'POST'){
+        		method = 'GET';
+        	}
+        	delete params.method;
+        }
+		if(method == 'GET'){
+            url += "?time=" + self.encodeURL(sysdate);
+            if(null != params){
+                for(var key in params){
+                    parameters += "&" + key + "=" + self.encodeURL(params[key]);
+                }
             }
-        }
-        url += parameters;
-        if(xmlHttp){
-            this._registAjaxListener(xmlHttp, ajaxComponent);
-
-            xmlHttp.open("GET", url, true);
-            xmlHttp.setRequestHeader("If-Modified-Since", sysdate);
-            xmlHttp.send(null);
-        }
-    },
-
-    _getComponentName : function(func){
-        var str = func.toString();
-        ret = str.match(/[0-9A-Za-z_]+\(/).toString();
-        ret = ret.substring(0,ret.length-1); 
-        var arr = ret.split('_');
-        return arr;
+            url += parameters;
+            if(xmlHttp){
+                self._registAjaxListener(xmlHttp, ajaxComponent);
+                xmlHttp.open("GET", url, true);
+                xmlHttp.setRequestHeader("If-Modified-Since", sysdate);
+                xmlHttp.send(null);
+            }
+		}else{
+			params['time'] = self.encodeURL(sysdate);
+            if(params){
+                var array = new Array();
+                for(var v in params) {
+                    array.push(v + "=" + encodeURIComponent(params[v]));
+                }
+                parameters = array.join("&");
+            }
+            if(xmlHttp){
+                self._registAjaxListener(xmlHttp, ajaxComponent);
+				xmlHttp.open("POST", url, true);
+		        xmlHttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                xmlHttp.setRequestHeader("If-Modified-Since", sysdate);
+                xmlHttp.send(parameters);
+            }
+		}
     },
 
     _registAjaxListener : function(req, ajaxComponent) {
+    	var self = Kumu.Ajax;
         req.onreadystatechange = function() {
-            if (Kumu.ajax.XML_HTTP_REQUEST_STATUS_COMPLETE == req.readyState) { 
-                if (Kumu.ajax.HTTP_STATUS_OK == req.status) {
-                    if (Kumu.ajax.DEBUG) Kumu.ajax.debugPrint(req.responseText);
+            if (self.XML_HTTP_REQUEST_STATUS_COMPLETE == req.readyState) { 
+                if (self.HTTP_STATUS_OK == req.status) {
+                    if (self.DEBUG) self.debugPrint(req.responseText);
                     if (ajaxComponent.responseType) {
                         ajaxComponent.doAction(req.responseXML);
                     } else {
    	            	    ajaxComponent.doAction(req.responseText);
    	                }
 			    } else {
-        		    Kumu.ajax.debugPrint("AjaxError! status["+req.status+"] message["+req.responseText+"]", true);
+        		    self.debugPrint("AjaxError! status["+req.status+"] message["+req.responseText+"]", true);
 			    }
             }
         };
@@ -161,7 +190,7 @@ Kumu.ajax = Kumu.extend(Kumu.ajax,{
             return escape(val);
         }        
     },    
-    
+
     _getComponentName : function(func){
         var str = func.toString();
         var ret = str.match(/[0-9A-Za-z_]+\(/).toString();
@@ -171,8 +200,9 @@ Kumu.ajax = Kumu.extend(Kumu.ajax,{
     },
     
     executeTeedaAjax : function(callback, param){
-        var ajax = this.getS2AjaxComponent();
-        var components = this._getComponentName(callback);
+    	var self = Kumu.Ajax;
+        var ajax = self.getS2AjaxComponent();
+        var components = self._getComponentName(callback);
         ajax.params = param;
         if(!("component" in param) && !("action" in param) && (components.length == 2) ){
             //callback name bind
@@ -180,8 +210,9 @@ Kumu.ajax = Kumu.extend(Kumu.ajax,{
             ajax.params["action"] = components[1];
         }
         ajax.doAction = callback;
-        Kumu.ajax.executeAjax(ajax);   
+        self.executeAjax(ajax);
     }
     
-});
+};
+
 

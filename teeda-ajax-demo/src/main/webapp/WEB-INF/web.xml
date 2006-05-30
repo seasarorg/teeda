@@ -33,9 +33,11 @@
 		<servlet-name>Faces Servlet</servlet-name>
 		<url-pattern>/faces/*</url-pattern>
 	</servlet-mapping>
+	
+	<!-- for teeda-ajax -->
 	<servlet>
 		<servlet-name>AjaxServlet</servlet-name>
-		<servlet-class>org.seasar.teeda.extension.ajax.AjaxServlet</servlet-class>
+		<servlet-class>org.seasar.teeda.ajax.AjaxServlet</servlet-class>
 		<load-on-startup>3</load-on-startup>
 	</servlet>
 	<servlet-mapping>

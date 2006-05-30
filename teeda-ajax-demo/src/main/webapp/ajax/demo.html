@@ -37,7 +37,7 @@ function demo(zipcode){
     clearData(document.frm.address);
     if(zipcode == "" || zipcode.match(/[^0-9]/g) || zipcode.length < 3) return;
     // execute Ajax
-    Kumu.ajax.executeTeedaAjax(zipBean_getAddress, {"zipcode" : zipcode});
+    Kumu.Ajax.executeTeedaAjax(zipBean_getAddress, {"zipcode" : zipcode});
 }
 //-->
 </script>
