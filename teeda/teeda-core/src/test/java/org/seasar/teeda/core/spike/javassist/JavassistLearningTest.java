@@ -34,8 +34,8 @@ import org.seasar.framework.aop.Aspect;
 import org.seasar.framework.aop.Pointcut;
 import org.seasar.framework.aop.impl.AspectImpl;
 import org.seasar.framework.aop.impl.PointcutImpl;
-import org.seasar.framework.aop.javassist.ClassPoolUtil;
 import org.seasar.framework.aop.proxy.AopProxy;
+import org.seasar.framework.util.ClassPoolUtil;
 import org.seasar.teeda.core.mock.MockUIComponentBase;
 
 /**
