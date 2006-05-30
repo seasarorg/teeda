@@ -196,6 +196,7 @@
   <modules>
     <module>teeda-core</module>
     <module>teeda-extension</module>
+    <module>teeda-ajax</module>
   </modules>
   <repositories>
     <repository>
