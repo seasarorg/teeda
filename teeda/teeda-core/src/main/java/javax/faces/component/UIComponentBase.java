@@ -120,6 +120,8 @@ public abstract class UIComponentBase extends UIComponent {
         if (renderer != null) {
             clientId = renderer.convertClientId(context, clientId);
         }
+        //TODO needs to encode clientId
+        //clientId = context.getExternalContext().encodeNamespace(clientId);
         return clientId;
     }
 

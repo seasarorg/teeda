@@ -100,7 +100,7 @@ public class MockExternalContextImpl extends MockExternalContext {
     }
 
     public String encodeNamespace(String aValue) {
-        throw new UnsupportedOperationException();
+        return aValue;
     }
 
     public String encodeResourceURL(String url) {
