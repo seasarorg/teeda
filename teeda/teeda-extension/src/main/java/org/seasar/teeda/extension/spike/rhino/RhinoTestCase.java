@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.net.URL;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -14,6 +15,10 @@ import org.mozilla.javascript.Function;
 import org.mozilla.javascript.Script;
 import org.mozilla.javascript.ScriptableObject;
 
+/**
+ * 
+ * @author mopemope
+ */
 public abstract class RhinoTestCase extends TestCase {
 
     public RhinoTestCase() {
@@ -31,7 +36,8 @@ public abstract class RhinoTestCase extends TestCase {
         try {
             in = loader.getResourceAsStream(path);
             reader = new InputStreamReader(in, RhinoConstants.DEFAULT_ENCODING);
-            ScriptableObject scope = cx.initStandardObjects();
+
+            ScriptableObject scope = getInitScopeObject(cx);
 
             builtinAssertMethods(cx, scope);
             loadScript(cx, scope);
@@ -56,6 +62,22 @@ public abstract class RhinoTestCase extends TestCase {
             }
             Context.exit();
         }
+    }
+
+    private ScriptableObject getInitScopeObject(Context cx) throws Exception {
+        ScriptableObject scope = null;
+        String htmlPath = this.getClass().getName();
+        htmlPath = htmlPath.replace('.', '/') + ".html";
+        ClassLoader loader = Thread.currentThread().getContextClassLoader();
+        URL url = loader.getResource(htmlPath);
+        if (url != null) {
+            htmlPath = url.getFile();
+            if (new File(url.getFile()).exists()) {
+                ScriptablePageLoader pageLoader = new ScriptablePageLoader();
+                return pageLoader.load(htmlPath);
+            }
+        }
+        return cx.initStandardObjects();
     }
 
     //TODO use ScriptableObject.defineFunctionProperties()

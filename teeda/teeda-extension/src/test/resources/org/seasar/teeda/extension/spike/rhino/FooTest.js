@@ -15,3 +15,9 @@ function testFunction2(){
 		assertEquals(b, 'TEST_2');
 		//assertEquals(true, true);
 }
+
+function testElementById(){
+	var ele = document.getElementById("test");
+	var name = ele.nodeName;
+	assertEquals(name, 'DIV');
+}
