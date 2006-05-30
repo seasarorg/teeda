@@ -65,13 +65,13 @@ public class ClassLoaderResourceTest extends TestCase {
         assertEquals(true, facesConfigUrlIterator.hasNext());
         URL url1 = (URL) facesConfigUrlIterator.next();
         StringAssert.assertEndsWith(
-                "/faces-config-contains-1.jar!/META-INF/faces-config.xml", url1
+                "/faces-config-contains-1.jar!/META-INF/faces-config-test.xml", url1
                         .getPath());
 
         assertEquals(true, facesConfigUrlIterator.hasNext());
         URL url2 = (URL) facesConfigUrlIterator.next();
         StringAssert.assertEndsWith(
-                "/faces-config-contains-2.jar!/META-INF/faces-config.xml", url2
+                "/faces-config-contains-2.jar!/META-INF/faces-config-test.xml", url2
                         .getPath());
 
         assertEquals(false, facesConfigUrlIterator.hasNext());
@@ -79,7 +79,7 @@ public class ClassLoaderResourceTest extends TestCase {
 
     Iterator getConfigurationUrlFromResources(ClassLoader cl)
             throws IOException {
-        Enumeration resources = cl.getResources("META-INF/faces-config.xml");
+        Enumeration resources = cl.getResources("META-INF/faces-config-test.xml");
         return new EnumerationIterator(resources);
     }
 
