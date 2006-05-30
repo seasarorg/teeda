@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE components PUBLIC "-//SEASAR2.1//DTD S2Container//EN"
+	"http://www.seasar.org/dtd/components24.dtd">
+<components>
+	<component name="ajaxBean1" class="org.seasar.teeda.ajax.AjaxBean1" instance="request">
+	    <meta name="teeda-ajax"/>
+	</component>
+	
+	<component name="ajaxBean2" class="org.seasar.teeda.ajax.AjaxBean2" instance="request"/>
+	
+	<component name="ajaxBean3" class="org.seasar.teeda.ajax.AjaxBean2" instance="request">
+	    <meta name="bad-meta"/>
+	</component>
+</components>
