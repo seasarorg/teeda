@@ -31,40 +31,41 @@ import org.mozilla.javascript.ScriptableObject;
  */
 public class JavascriptLoader {
 
-	public static void load(String name, Object obj) {
-		if (obj instanceof ScriptableObject) {
-			ScriptableObject o = (ScriptableObject) obj;
-			Context cx = Context.enter();
-			Script s = loadScript(name, cx);
-			s.exec(cx, o);
-			Context.exit();
-		}
-	}
+    public static void load(String name, Object obj) {
+        if (obj instanceof ScriptableObject) {
+            ScriptableObject o = (ScriptableObject) obj;
+            Context cx = Context.enter();
+            Script s = loadScript(name, cx);
+            s.exec(cx, o);
+            Context.exit();
+        }
+    }
 
-	public static Script loadScript(String scriptName, Context cx) {
-		String path = scriptName.replace('.', '/') + ".js";
-		ClassLoader loader = Thread.currentThread().getContextClassLoader();
-		InputStream in = null;
-		BufferedReader reader = null;
-		try {
-			in = loader.getResourceAsStream(path);
-			reader = new BufferedReader(new InputStreamReader(in, "UTF-8"));
-			return cx.compileReader(reader, scriptName, 1, null);
+    public static Script loadScript(String scriptName, Context cx) {
+        String path = scriptName.replace('.', '/') + ".js";
+        ClassLoader loader = Thread.currentThread().getContextClassLoader();
+        InputStream in = null;
+        BufferedReader reader = null;
+        try {
+            in = loader.getResourceAsStream(path);
+            reader = new BufferedReader(new InputStreamReader(in,
+                    RhinoConstants.DEFAULT_ENCODING));
+            return cx.compileReader(reader, scriptName, 1, null);
 
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (reader != null) {
-					reader.close();
-				}
-				if (in != null) {
-					in.close();
-				}
-			} catch (Exception e) {
-			}
-		}
-		return null;
-	}
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (reader != null) {
+                    reader.close();
+                }
+                if (in != null) {
+                    in.close();
+                }
+            } catch (Exception e) {
+            }
+        }
+        return null;
+    }
 
 }

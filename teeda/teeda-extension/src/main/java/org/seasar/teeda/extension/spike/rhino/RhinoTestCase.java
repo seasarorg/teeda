@@ -25,7 +25,7 @@ public class RhinoTestCase extends TestCase {
         super(name);
         this.globalScope = globalScope;
     }
-    
+
     public Test createJsTestCase() throws Throwable {
 
         String path = this.getClass().getName();
@@ -36,7 +36,7 @@ public class RhinoTestCase extends TestCase {
         TestSuite suite = new TestSuite(path);
         try {
             in = loader.getResourceAsStream(path);
-            reader = new InputStreamReader(in, "UTF-8");
+            reader = new InputStreamReader(in, RhinoConstants.DEFAULT_ENCODING);
             Context cx = Context.enter();
             ScriptableObject scope = cx.initStandardObjects();
 
