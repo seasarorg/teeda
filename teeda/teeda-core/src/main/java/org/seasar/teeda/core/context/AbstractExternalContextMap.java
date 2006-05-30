@@ -60,7 +60,7 @@ public abstract class AbstractExternalContextMap extends AbstractMap {
     }
 
     public boolean containsKey(Object key) {
-        return (getAttribute((String) key) != null);
+        return (getAttribute(key.toString()) != null);
     }
 
     public boolean containsValue(Object value) {
@@ -84,11 +84,11 @@ public abstract class AbstractExternalContextMap extends AbstractMap {
     }
 
     public Object get(Object key) {
-        return getAttribute((String) key);
+        return getAttribute(key.toString());
     }
 
     public Object put(Object key, Object value) {
-        String keyStr = (String) key;
+        String keyStr = key.toString();
         Object o = getAttribute(keyStr);
         setAttribute(keyStr, value);
         return o;
@@ -114,7 +114,7 @@ public abstract class AbstractExternalContextMap extends AbstractMap {
     }
 
     public Object remove(Object key) {
-        String keyStr = (String) key;
+        String keyStr = key.toString();
         Object o = getAttribute(keyStr);
         removeAttribute(keyStr);
         return o;
