@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.seasar.framework.beans.BeanDesc;
+import org.seasar.framework.beans.PropertyDesc;
 import org.seasar.framework.beans.PropertyNotFoundRuntimeException;
 import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.framework.container.ComponentDef;
@@ -33,7 +34,6 @@ import org.seasar.framework.container.ComponentNotFoundRuntimeException;
 import org.seasar.framework.container.MetaDef;
 import org.seasar.framework.container.S2Container;
 import org.seasar.framework.container.servlet.S2ContainerServlet;
-import org.seasar.teeda.core.util.PropertyUtil;
 
 /**
  * @author yone
@@ -128,20 +128,16 @@ public class AjaxServlet extends HttpServlet {
         while (enume.hasMoreElements()) {
             String key = (String) enume.nextElement();
             String value = request.getParameter(key);
-            /*
-             String value = null;
-             try {
-             value = new String(value.getBytes("ISO-8859-1"), "UTF-8");
-             } catch (UnsupportedEncodingException e) {
-             }
-             */
             this.setPropertyNoException(obj, key, value);
         }
     }
 
-    protected void setPropertyNoException(Object obj, String key, String value) {
+    protected void setPropertyNoException(Object target, String propertyName,
+            String value) {
         try {
-            PropertyUtil.setValue(obj, key, value);
+            BeanDesc beanDesc = BeanDescFactory.getBeanDesc(target.getClass());
+            PropertyDesc propertyDesc = beanDesc.getPropertyDesc(propertyName);
+            propertyDesc.setValue(target, value);
         } catch (PropertyNotFoundRuntimeException e) {
         }
     }

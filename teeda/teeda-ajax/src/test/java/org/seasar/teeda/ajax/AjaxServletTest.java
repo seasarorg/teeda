@@ -22,7 +22,6 @@ import junit.framework.TestCase;
 import org.seasar.framework.mock.servlet.MockHttpServletRequest;
 import org.seasar.framework.mock.servlet.MockHttpServletResponse;
 import org.seasar.framework.unit.S2FrameworkTestCase;
-import org.seasar.teeda.core.unit.ExceptionAssert;
 
 /**
  * @author yone
@@ -64,8 +63,7 @@ public class AjaxServletTest extends S2FrameworkTestCase {
             servlet.doGet(getRequest(), getResponse());
             fail();
         } catch (ServletException e) {
-            System.out.println(e.getMessage());
-            ExceptionAssert.assertMessageExist(e);
+            assertMessageExist(e);
         }
     }
 
@@ -80,8 +78,7 @@ public class AjaxServletTest extends S2FrameworkTestCase {
             servlet.doGet(getRequest(), getResponse());
             fail();
         } catch (ServletException e) {
-            System.out.println(e.getMessage());
-            ExceptionAssert.assertMessageExist(e);
+            assertMessageExist(e);
         }
     }
 
@@ -96,8 +93,7 @@ public class AjaxServletTest extends S2FrameworkTestCase {
             servlet.doGet(getRequest(), getResponse());
             fail();
         } catch (ServletException e) {
-            System.out.println(e.getMessage());
-            ExceptionAssert.assertMessageExist(e);
+            assertMessageExist(e);
         }
     }
 
@@ -114,8 +110,7 @@ public class AjaxServletTest extends S2FrameworkTestCase {
             servlet.doGet(request, getResponse());
             fail();
         } catch (ServletException e) {
-            System.out.println(e.getMessage());
-            ExceptionAssert.assertMessageExist(e);
+            assertMessageExist(e);
         }
     }
 
@@ -133,8 +128,7 @@ public class AjaxServletTest extends S2FrameworkTestCase {
             servlet.doGet(request, getResponse());
             fail();
         } catch (ServletException e) {
-            System.out.println(e.getMessage());
-            ExceptionAssert.assertMessageExist(e);
+            assertMessageExist(e);
         }
     }
 
@@ -188,5 +182,12 @@ public class AjaxServletTest extends S2FrameworkTestCase {
 
         // ## Assert ##
         assertEquals(AjaxConstants.CONTENT_TYPE_JSON, response.getContentType());
+    }
+    
+    private static void assertMessageExist(Exception e) {
+        String message = e.getMessage();
+        System.out.println(message);
+        assertNotNull(message);
+        assertTrue(message.trim().length() > 0);
     }
 }
