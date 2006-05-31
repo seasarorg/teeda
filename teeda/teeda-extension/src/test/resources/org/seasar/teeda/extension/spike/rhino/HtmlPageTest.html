@@ -1,0 +1,27 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<script type="text/javascript" src="./Target.js"></script>
+<title>HtmlPageTest</title>
+<script>
+function testFunction1(){
+		assertEquals(a, 'TEST_1');
+}
+
+function testFunction2(){
+		assertEquals(b, 'TEST_2');
+}
+
+function testElementById(){
+	var ele = document.getElementById("test");
+	var name = ele.nodeName;
+	assertEquals(name, 'DIV');
+}
+
+</script>
+</head>
+<body>
+<div id="test"></div>
+</body>
+</html>
