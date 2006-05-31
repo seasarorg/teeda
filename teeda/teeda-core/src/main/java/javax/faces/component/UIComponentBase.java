@@ -115,13 +115,13 @@ public abstract class UIComponentBase extends UIComponent {
             }
         }
 
-        clientId = parentId + ((id != null) ? id : getUniqueId(context));
+        clientId = parentId
+                + context.getExternalContext().encodeNamespace(
+                        (id != null) ? id : getUniqueId(context));
         Renderer renderer = getRenderer(context);
         if (renderer != null) {
             clientId = renderer.convertClientId(context, clientId);
         }
-        //TODO needs to encode clientId
-        //clientId = context.getExternalContext().encodeNamespace(clientId);
         return clientId;
     }
 

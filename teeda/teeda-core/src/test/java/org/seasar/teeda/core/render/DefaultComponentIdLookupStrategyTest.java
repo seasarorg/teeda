@@ -17,8 +17,8 @@ package org.seasar.teeda.core.render;
 
 import junit.framework.TestCase;
 
+import org.seasar.teeda.core.mock.MockFacesContextImpl;
 import org.seasar.teeda.core.mock.MockUIComponent;
-import org.seasar.teeda.core.mock.NullFacesContext;
 
 /**
  * @author manhole
@@ -29,14 +29,14 @@ public class DefaultComponentIdLookupStrategyTest extends TestCase {
         DefaultComponentIdLookupStrategy strategy = new DefaultComponentIdLookupStrategy();
         final MockUIComponent component = new MockUIComponent();
         component.setId("a");
-        assertEquals("a", strategy.getId(new NullFacesContext(), component));
+        assertEquals("a", strategy.getId(new MockFacesContextImpl(), component));
     }
 
     public void test2() throws Exception {
         DefaultComponentIdLookupStrategy strategy = new DefaultComponentIdLookupStrategy();
         final MockUIComponent component = new MockUIComponent();
         component.setClientId("a");
-        assertEquals("a", strategy.getId(new NullFacesContext(), component));
+        assertEquals("a", strategy.getId(new MockFacesContextImpl(), component));
     }
 
     public void test3() throws Exception {
@@ -44,7 +44,7 @@ public class DefaultComponentIdLookupStrategyTest extends TestCase {
         final MockUIComponent component = new MockUIComponent();
         component.setId("a");
         component.setClientId("b");
-        assertEquals("a", strategy.getId(new NullFacesContext(), component));
+        assertEquals("a", strategy.getId(new MockFacesContextImpl(), component));
     }
 
 }

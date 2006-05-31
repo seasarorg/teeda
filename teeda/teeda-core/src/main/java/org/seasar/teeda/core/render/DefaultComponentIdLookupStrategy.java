@@ -27,7 +27,7 @@ public class DefaultComponentIdLookupStrategy implements
     public String getId(FacesContext context, UIComponent component) {
         String id = component.getId();
         if (id != null) {
-            return id;
+            return context.getExternalContext().encodeNamespace(id);
         }
         return component.getClientId(context);
     }
