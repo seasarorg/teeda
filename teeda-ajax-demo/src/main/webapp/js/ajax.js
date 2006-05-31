@@ -199,7 +199,7 @@ Kumu.Ajax = {
         return arr;
     },
     
-    executeTeedaAjax : function(callback, param){
+    executeTeedaAjax : function(callback, param, responseType){
     	var self = Kumu.Ajax;
         var ajax = self.getS2AjaxComponent();
         var components = self._getComponentName(callback);
@@ -210,9 +210,10 @@ Kumu.Ajax = {
             ajax.params["action"] = components[1];
         }
         ajax.doAction = callback;
+        if(responseType != 'undefined'){
+            ajax.responseType = responseType;
+        }
         self.executeAjax(ajax);
     }
     
 };
-
-

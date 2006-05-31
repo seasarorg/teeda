@@ -6,4 +6,7 @@
 	<component name="zipBean" class="examples.teeda.ajax.ZipBean" instance="request">
 	    <meta name="teeda-ajax"/>
 	</component>
+	<component name="exampleBean" class="examples.teeda.ajax.ExampleBean" instance="request">
+	    <meta name="teeda-ajax"/>
+	</component>	
 </components>
