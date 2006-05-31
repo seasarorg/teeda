@@ -144,7 +144,7 @@ Kumu.MockAjax = {
         return arr;
     },
     
-    executeTeedaAjax : function(callback, param){
+    executeTeedaAjax : function(callback, param, responseType){
     	var self = Kumu.MockAjax;
         var ajax = self.getS2AjaxComponent();
         var components = self._getComponentName(callback);
@@ -157,6 +157,9 @@ Kumu.MockAjax = {
         self.debugPrint("call Component[" + ajax.params["component"] + "]");
         self.debugPrint("call Component action[" + ajax.params["action"] + "]");
         ajax.doAction = callback;
+        if(responseType != 'undefined'){
+            ajax.responseType = responseType;
+        }
         self.executeAjax(ajax);
     }
     
