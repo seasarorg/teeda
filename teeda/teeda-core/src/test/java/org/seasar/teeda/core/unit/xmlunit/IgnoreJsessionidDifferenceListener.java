@@ -30,7 +30,8 @@ public class IgnoreJsessionidDifferenceListener implements DifferenceListener {
             String nodeName = difference.getControlNodeDetail().getNode()
                     .getNodeName();
             if ("href".equalsIgnoreCase(nodeName)
-                    || "src".equalsIgnoreCase(nodeName)) {
+                    || "src".equalsIgnoreCase(nodeName)
+                    || "action".equalsIgnoreCase(nodeName)) {
                 String controlNodeValue = difference.getControlNodeDetail()
                         .getValue();
                 String testNodeValue = difference.getTestNodeDetail()
