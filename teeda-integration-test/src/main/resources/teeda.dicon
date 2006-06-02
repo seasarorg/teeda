@@ -3,17 +3,17 @@
 	"http://www.seasar.org/dtd/components24.dtd">
 <components namespace="teeda">
 
+	<include path="context.dicon" />
 	<include path="teedaErrorPage.dicon" />
-	<!--
-	<include path="teedaExtension.dicon" />
-	-->
 
 	<!-- ExternalContext -->
+	<!--
 	<component name="externalContext" class="org.seasar.teeda.core.context.servlet.ServletExternalContextImpl">
 		<arg>application</arg>
 		<arg>request</arg>
 		<arg>response</arg>
 	</component>
+	-->
 	
 	<!-- FacesConfig configurator -->
 	<component class="org.seasar.teeda.core.config.faces.impl.FacesConfigBuilderImpl">
@@ -42,8 +42,6 @@
 	<component name="applicationConfigurator" class="org.seasar.teeda.core.config.faces.impl.ApplicationFacesConfigurator" autoBinding="none" />
 
 	<!-- FacesConfig Assembler -->
-	<!-- For no need annotation. With annotation, see teedaExtension.dicon -->
-	<component class="org.seasar.teeda.core.config.faces.assembler.impl.DefaultAssembleProvider"/>
 	<component class="org.seasar.teeda.core.config.faces.assembler.AssemblerAssembler" />
 
 	<!-- ValueBinding relates -->
@@ -119,8 +117,6 @@
 	<component name="webappConfigBuilder" class="org.seasar.teeda.core.config.webapp.impl.WebappConfigBuilderImpl"/>
 
 	<component class="org.seasar.teeda.core.render.DefaultComponentIdLookupStrategy" />
-		
-	<component class="org.seasar.teeda.core.resource.ValidatorResourceImpl" />
 
 	<!-- Renderer -->
 	<component class="org.seasar.teeda.core.render.html.HtmlRenderKitImpl">

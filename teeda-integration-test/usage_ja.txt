@@ -1,7 +1,8 @@
 * teeda-integration-testの使い方
 
 1. SVNからチェックアウトする。
-2. mvn test するとテストが実行される。
+2. teedaで"mvn install"する
+3. teeda-integration-testで"mvn test"するとテストが実行される。
 
 ** Eclipseを使う場合
 
