@@ -62,6 +62,11 @@
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
+		<managed-bean-name>dataTableBean</managed-bean-name>
+		<managed-bean-class>org.seasar.teeda.it.DataTableBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
 		<managed-bean-name>converterBean</managed-bean-name>
 		<managed-bean-class>org.seasar.teeda.it.ConverterBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
