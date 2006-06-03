@@ -20,7 +20,12 @@ import javax.faces.component.UIViewRoot;
 import org.seasar.teeda.core.application.navigation.NavigationCaseContext;
 import org.seasar.teeda.core.application.navigation.NavigationContext;
 import org.seasar.teeda.core.application.navigation.NavigationContextFactory;
+import org.seasar.teeda.core.context.portlet.PortletExternalContextImpl;
+import org.seasar.teeda.core.context.portlet.PortletFacesContextImpl;
 import org.seasar.teeda.core.mock.MockFacesContext;
+import org.seasar.teeda.core.mock.MockPortletContextImpl;
+import org.seasar.teeda.core.mock.MockPortletRequestImpl;
+import org.seasar.teeda.core.mock.MockPortletResponseImpl;
 import org.seasar.teeda.core.unit.TeedaTestCase;
 
 /**
@@ -98,6 +103,27 @@ public class NavigationHandlerImplTest extends TeedaTestCase {
 
         // ## Assert ##
         assertEquals("id", context.getViewRoot().getViewId());
+    }
+
+    public void testHandleNavigation_redirectWithPortlet() throws Exception {
+        // ## Arrange ##
+        PortletExternalContextImpl extContext = new PortletExternalContextImpl(
+                new MockPortletContextImpl(), new MockPortletRequestImpl(),
+                new MockPortletResponseImpl());
+        PortletFacesContextImpl context = new PortletFacesContextImpl(extContext);
+        UIViewRoot root = new UIViewRoot();
+        root.setViewId("id");
+        context.setViewRoot(root);
+        NavigationContext navContext = createNavigationContext("id", "from",
+                "outcome", "bbb", true);
+        NavigationContextFactory.addNavigationContext(navContext);
+
+        // ## Act ##
+        NavigationHandlerImpl handler = new NavigationHandlerImpl();
+        handler.handleNavigation(context, "from", "outcome");
+
+        // ## Assert ##
+        assertEquals("bbb", context.getViewRoot().getViewId());
     }
 
     public void testGetNavigationCaseContext_fromActionAndOutComeNotNull()
@@ -226,4 +252,5 @@ public class NavigationHandlerImplTest extends TeedaTestCase {
         navContext.addNavigationCaseContext(caseContext);
         return navContext;
     }
+
 }

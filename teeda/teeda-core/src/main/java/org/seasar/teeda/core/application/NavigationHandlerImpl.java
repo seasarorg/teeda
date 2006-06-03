@@ -33,6 +33,7 @@ import org.seasar.teeda.core.application.navigation.NavigationCaseContext;
 import org.seasar.teeda.core.application.navigation.NavigationContext;
 import org.seasar.teeda.core.application.navigation.NavigationContextFactory;
 import org.seasar.teeda.core.util.IteratorUtil;
+import org.seasar.teeda.core.util.PortletUtil;
 
 /**
  * @author shot
@@ -55,7 +56,7 @@ public class NavigationHandlerImpl extends NavigationHandler {
         if (navigationCaseContext != null) {
             ViewHandler viewHandler = context.getApplication().getViewHandler();
             String newViewId = navigationCaseContext.getToViewId();
-            if (isRedirect(navigationCaseContext)) {
+            if (isRedirect(context, navigationCaseContext)) {
                 String redirectPath = getRedirectActionPath(context,
                         viewHandler, newViewId);
                 redirect(context, externalContext, redirectPath, newViewId);
@@ -94,7 +95,10 @@ public class NavigationHandlerImpl extends NavigationHandler {
         context.renderResponse();
     }
 
-    protected boolean isRedirect(NavigationCaseContext caseContext) {
+    protected boolean isRedirect(FacesContext context, NavigationCaseContext caseContext) {
+        if(PortletUtil.isPortlet(context)) {
+           return false; 
+        }
         return caseContext.isRedirect();
     }
 
