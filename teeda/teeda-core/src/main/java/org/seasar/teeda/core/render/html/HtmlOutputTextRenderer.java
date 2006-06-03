@@ -18,6 +18,7 @@ package org.seasar.teeda.core.render.html;
 import java.io.IOException;
 
 import javax.faces.component.UIComponent;
+import javax.faces.component.UIOutput;
 import javax.faces.component.html.HtmlOutputText;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
@@ -37,7 +38,12 @@ public class HtmlOutputTextRenderer extends AbstractHtmlRenderer {
         if (!component.isRendered()) {
             return;
         }
-        encodeHtmlOutputTextEnd(context, (HtmlOutputText) component);
+        //TODO if there is no impact to other code, it's better to merge them
+        if (component instanceof HtmlOutputText) {
+            encodeHtmlOutputTextEnd(context, (HtmlOutputText) component);
+        } else if (component instanceof UIOutput) {
+            encodeUIOutputEnd(context, (UIOutput) component);
+        }
     }
 
     protected void encodeHtmlOutputTextEnd(FacesContext context,
@@ -56,6 +62,32 @@ public class HtmlOutputTextRenderer extends AbstractHtmlRenderer {
         String value = ValueHolderUtil.getValueForRender(context,
                 htmlOutputText);
         if (htmlOutputText.isEscape()) {
+            writer.writeText(value, null);
+        } else {
+            writer.write(value);
+        }
+        if (startSpan) {
+            writer.endElement(JsfConstants.SPAN_ELEM);
+        }
+    }
+
+    protected void encodeUIOutputEnd(FacesContext context, UIOutput uiOutput)
+            throws IOException {
+        ResponseWriter writer = context.getResponseWriter();
+        boolean startSpan = false;
+        if (RendererUtil.containsAttributesForRender(uiOutput,
+                JsfConstants.ID_WITH_COMMON_PASSTROUGH_ATTRIBUTES)) {
+            writer.startElement(JsfConstants.SPAN_ELEM, uiOutput);
+            startSpan = true;
+            RendererUtil.renderIdAttributeIfNecessary(writer, uiOutput,
+                    getIdForRender(context, uiOutput));
+            RendererUtil.renderAttributes(writer, uiOutput,
+                    JsfConstants.COMMON_PASSTROUGH_ATTRIBUTES);
+        }
+        String value = ValueHolderUtil.getValueForRender(context, uiOutput);
+        Boolean b = (Boolean) uiOutput.getAttributes().get(
+                JsfConstants.ESCAPE_ATTR);
+        if (b != null && b.booleanValue()) {
             writer.writeText(value, null);
         } else {
             writer.write(value);
