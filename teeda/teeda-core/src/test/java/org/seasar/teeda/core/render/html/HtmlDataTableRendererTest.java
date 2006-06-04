@@ -123,6 +123,35 @@ public class HtmlDataTableRendererTest extends RendererTest {
                 getResponseText());
     }
 
+    public void testEncodeBegin_TableHeaderFacet2() throws Exception {
+        // ## Arrange ##
+        MockHtmlOutputText facet = new MockHtmlOutputText();
+        final HtmlOutputTextRenderer textRenderer = new HtmlOutputTextRenderer();
+        facet.setRenderer(textRenderer);
+        {
+            MockHtmlOutputText c = new MockHtmlOutputText();
+            c.setValue("a");
+            c.setRenderer(textRenderer);
+            facet.getChildren().add(c);
+        }
+        {
+            MockHtmlOutputText c = new MockHtmlOutputText();
+            c.setValue("b");
+            c.setRenderer(textRenderer);
+            facet.getChildren().add(c);
+        }
+        htmlDataTable_.setHeader(facet);
+        MockFacesContext context = getFacesContext();
+
+        // ## Act ##
+        renderer_.encodeBegin(context, htmlDataTable_);
+
+        // ## Assert ##
+        assertEquals(
+                "<table><thead><tr><th scope=\"colgroup\">ab</th></tr></thead>",
+                getResponseText());
+    }
+
     public void testEncodeBegin_TableHeaderStyle() throws Exception {
         // ## Arrange ##
         MockHtmlOutputText facet = new MockHtmlOutputText();
@@ -362,6 +391,34 @@ public class HtmlDataTableRendererTest extends RendererTest {
 
         // ## Assert ##
         assertEquals("<table><tfoot><tr><td>a</td></tr></tfoot>",
+                getResponseText());
+    }
+
+    public void testEncodeBegin_TableFooterFacet2() throws Exception {
+        // ## Arrange ##
+        MockHtmlOutputText facet = new MockHtmlOutputText();
+        final HtmlOutputTextRenderer textRenderer = new HtmlOutputTextRenderer();
+        facet.setRenderer(textRenderer);
+        {
+            MockHtmlOutputText c = new MockHtmlOutputText();
+            c.setValue("a");
+            c.setRenderer(textRenderer);
+            facet.getChildren().add(c);
+        }
+        {
+            MockHtmlOutputText c = new MockHtmlOutputText();
+            c.setValue("b");
+            c.setRenderer(textRenderer);
+            facet.getChildren().add(c);
+        }
+        htmlDataTable_.setFooter(facet);
+        MockFacesContext context = getFacesContext();
+
+        // ## Act ##
+        renderer_.encodeBegin(context, htmlDataTable_);
+
+        // ## Assert ##
+        assertEquals("<table><tfoot><tr><td>ab</td></tr></tfoot>",
                 getResponseText());
     }
 
