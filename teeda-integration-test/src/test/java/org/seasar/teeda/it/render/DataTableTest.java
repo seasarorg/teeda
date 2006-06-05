@@ -34,7 +34,7 @@ public class DataTableTest extends AbstractTestCase {
         return setUpTestSuite(DataTableTest.class);
     }
 
-    public void __testRender1() throws Exception {
+    public void testRender1() throws Exception {
         // ## Arrange ##
         URL url = getUrl("faces/render/dataTable1.jsp");
         System.out.println(url);
@@ -54,7 +54,7 @@ public class DataTableTest extends AbstractTestCase {
         assertEquals(diff.toString(), true, diff.similar());
     }
 
-    public void __testRender2() throws Exception {
+    public void testRender2() throws Exception {
         // ## Arrange ##
         URL url = getUrl("faces/render/dataTable2.jsp");
         System.out.println(url);
