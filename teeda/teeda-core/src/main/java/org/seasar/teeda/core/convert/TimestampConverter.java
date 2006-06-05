@@ -28,9 +28,11 @@ import javax.faces.convert.DateTimeConverter;
  *
  */
 public class TimestampConverter extends DateTimeConverter {
+    
     public Object getAsObject(FacesContext context, UIComponent component,
             String value) {
-        return new Timestamp(((Date) super.getAsObject(context, component,
-                value)).getTime());
+        Date date = (Date) super.getAsObject(context, component, value);
+        Timestamp timeStamp = new Timestamp(date.getTime());
+        return timeStamp;
     }
 }
