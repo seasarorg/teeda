@@ -94,4 +94,14 @@ public class JSONObjectTest extends TestCase {
                 json.toString());
     }
 
+    public void test9() throws Exception {
+        Hoge hoge = new Hoge();
+        hoge.setName("ccc");
+        hoge.setValue("ddd");
+        JSONObject json = new JSONObject(hoge);
+        System.out.println(json.toString());
+        assertEquals("{\"value\":\"ddd\",\"name\":\"ccc\"}", json.toString());
+    }
+    
+
 }

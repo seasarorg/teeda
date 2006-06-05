@@ -49,6 +49,10 @@ public class JSONObject {
     public JSONObject() {
     }
 
+    public JSONObject(Object object) {
+        this(createJSONMap(object));
+    }
+
     public JSONObject(Map map) {
         this.map.putAll(map);
     }
@@ -105,18 +109,23 @@ public class JSONObject {
         } else if (value instanceof JSONObject) {
             buf.append(value.toString());
         } else {
-            Map map = new HashMap();
-            //TODO  
-            BeanDesc beanDesc = BeanDescFactory.getBeanDesc(value.getClass());
-            for (int j = 0; j < beanDesc.getPropertyDescSize(); j++) {
-                PropertyDesc propertyDesc = beanDesc.getPropertyDesc(j);
-                String name = propertyDesc.getPropertyName();
-                Object o = propertyDesc.getValue(value);
-                map.put(name, o);
-            }
+            Map map = createJSONMap(value);
             JSONObject json = new JSONObject(map);
             buf.append(json.toString());
         }
+    }
+
+    private static Map createJSONMap(Object value) {
+        Map map = new HashMap();
+        //TODO  
+        BeanDesc beanDesc = BeanDescFactory.getBeanDesc(value.getClass());
+        for (int j = 0; j < beanDesc.getPropertyDescSize(); j++) {
+            PropertyDesc propertyDesc = beanDesc.getPropertyDesc(j);
+            String name = propertyDesc.getPropertyName();
+            Object o = propertyDesc.getValue(value);
+            map.put(name, o);
+        }
+        return map;
     }
 
     private static void assertNotInfiniteOrNaN(Object value) {
