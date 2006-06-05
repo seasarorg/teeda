@@ -241,7 +241,7 @@ public class FacesPortlet extends GenericPortlet {
 
             facesContext.setExternalContext(new PortletExternalContextImpl(
                     getPortletContext(), request, response));
-           lifecycle.render(facesContext);
+            lifecycle.render(facesContext);
         } catch (Throwable e) {
             handleExceptionFromLifecycle(e);
         }
