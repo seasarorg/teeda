@@ -16,10 +16,14 @@
 package org.seasar.teeda.core.convert;
 
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Locale;
 import java.util.TimeZone;
 
 import javax.faces.context.FacesContext;
+import javax.faces.convert.Converter;
 
 import org.seasar.teeda.core.mock.NullUIComponent;
 import org.seasar.teeda.core.unit.TeedaTestCase;
@@ -30,7 +34,7 @@ import org.seasar.teeda.core.unit.TeedaTestCase;
 public class TimestampConverterTest extends TeedaTestCase {
 
     public void testGetAsObject() throws Exception {
-        TimestampConverter converter = new TimestampConverter();
+        TimestampConverter converter = (TimestampConverter) createConverter();
         FacesContext context = getFacesContext();
         converter.setLocale(Locale.getDefault());
         converter.setTimeZone(TimeZone.getDefault());
@@ -45,4 +49,37 @@ public class TimestampConverterTest extends TeedaTestCase {
         assertNotNull(o);
         assertTrue(o instanceof Timestamp);
     }
+
+    public void testGetAsObject2() throws Exception {
+        TimestampConverter converter = (TimestampConverter) createConverter();
+        FacesContext context = getFacesContext();
+        converter.setLocale(Locale.getDefault());
+        converter.setTimeZone(TimeZone.getDefault());
+
+        final String pattern = "yyyy/MM/dd hh:mm:ss";
+        converter.setPattern(pattern);
+
+        String dateValue = "2006/06/06 12:45:50";
+        Timestamp timeStamp = (Timestamp) converter.getAsObject(context,
+                new NullUIComponent(), dateValue);
+
+        Timestamp timestampTarget = createTimestampTarget(pattern, Locale
+                .getDefault(), dateValue);
+        assertEquals(timeStamp, timestampTarget);
+    }
+
+    private Timestamp createTimestampTarget(String pattern, Locale locale,
+            String date) throws ParseException {
+        DateFormat formatter = new SimpleDateFormat(pattern, locale);
+        return new Timestamp(formatter.parse(date).getTime());
+    }
+
+    protected Converter createConverter() {
+        return createTimestampConverter();
+    }
+
+    private TimestampConverter createTimestampConverter() {
+        return new TimestampConverter();
+    }
+
 }
