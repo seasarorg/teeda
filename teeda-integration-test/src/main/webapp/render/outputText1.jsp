@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h" %>
 <html>
 <head>
-<title>this is outputText.jsp</title>
+<title>this is outputText1.jsp</title>
 </head>
 <body>
 <f:view>

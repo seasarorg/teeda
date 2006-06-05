@@ -35,9 +35,9 @@ public class OutputTextTest extends AbstractTestCase {
         return setUpTestSuite(OutputTextTest.class);
     }
 
-    public void testOutputText() throws Exception {
+    public void testOutputText1() throws Exception {
         // ## Arrange ##
-        URL url = getUrl("faces/render/outputText.jsp");
+        URL url = getUrl("faces/render/outputText1.jsp");
         System.out.println(url);
 
         WebClient webClient = new WebClient();
@@ -48,10 +48,29 @@ public class OutputTextTest extends AbstractTestCase {
         // ## Assert ##
         final String body = getBody(page).trim();
         System.out.println(body);
-        assertEquals("this is outputText.jsp", page.getTitleText());
+        assertEquals("this is outputText1.jsp", page.getTitleText());
 
         HtmlSpan span = (HtmlSpan) page.getHtmlElementById("hello");
         assertEquals("Hello OutputText", span.asText());
+    }
+
+    public void testOutputText2() throws Exception {
+        // ## Arrange ##
+        URL url = getUrl("faces/render/outputText2.jsp");
+        System.out.println(url);
+
+        WebClient webClient = new WebClient();
+
+        // ## Act ##
+        HtmlPage page = (HtmlPage) webClient.getPage(url);
+
+        // ## Assert ##
+        final String body = getBody(page).trim();
+        System.out.println(body);
+        assertEquals("this is outputText2.jsp", page.getTitleText());
+
+        HtmlSpan span = (HtmlSpan) page.getHtmlElementById("hello");
+        assertEquals("Hello OutputText2", span.asText());
     }
 
     public void testOutputTextJa() throws Exception {
@@ -88,7 +107,7 @@ public class OutputTextTest extends AbstractTestCase {
         System.out.println(body);
         assertEquals("outputTextNoId.jsp", page.getTitleText());
 
-        StringAssert.assertNotContains("<span>", body);
+        StringAssert.assertNotContains("<span", body);
     }
 
 }
