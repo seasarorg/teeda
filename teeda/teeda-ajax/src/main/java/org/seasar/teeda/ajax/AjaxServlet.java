@@ -34,6 +34,8 @@ import org.seasar.framework.container.ComponentNotFoundRuntimeException;
 import org.seasar.framework.container.MetaDef;
 import org.seasar.framework.container.S2Container;
 import org.seasar.framework.container.servlet.S2ContainerServlet;
+import org.seasar.teeda.ajax.json.JSONArray;
+import org.seasar.teeda.ajax.json.JSONObject;
 
 /**
  * @author yone
@@ -105,16 +107,25 @@ public class AjaxServlet extends HttpServlet {
 
         this.setRequestParameter(request, obj);
 
-        String result = null;
+        Object target = null;
         try {
-            result = (String) beanDesc.invoke(obj, method, null);
+            target = beanDesc.invoke(obj, method, null);
         } catch (Exception e) {
             throw new ServletException(
                     "The error occurred while create Ajax response.");
         }
-        if (response.getContentType() == null) {
-            response.setContentType(AjaxConstants.CONTENT_TYPE_JSON);
+        String contentType = response.getContentType();
+        if (contentType == null) {
+            contentType = AjaxConstants.CONTENT_TYPE_JSON;
+            response.setContentType(contentType);
         }
+        
+        String result = null;
+        if(contentType.equals(AjaxConstants.CONTENT_TYPE_JSON)) {
+            JSONObject json = new JSONObject(target);
+            result = json.toString();
+        }
+        
         response.setHeader("Cache-Control", "no-cache");
         response.setHeader("Pragma", "no-cache");
 

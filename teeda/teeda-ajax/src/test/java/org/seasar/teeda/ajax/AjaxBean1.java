@@ -15,7 +15,6 @@
  */
 package org.seasar.teeda.ajax;
 
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author yone
@@ -24,12 +23,6 @@ public class AjaxBean1 {
     private String arg1;
 
     private int arg2;
-
-    private HttpServletResponse response;
-
-    public void setResponse(HttpServletResponse response) {
-        this.response = response;
-    }
 
     public String getArg1() {
         return arg1;
@@ -47,22 +40,8 @@ public class AjaxBean1 {
         this.arg2 = arg2;
     }
 
-    public String ajaxText() {
-        this.response.setContentType(AjaxConstants.CONTENT_TYPE_TEXT);
-        return "ajaxOrg";
-    }
-
-    public String ajaxJson() {
-        return null;
-    }
-
-    public String ajaxXml() {
-        this.response.setContentType(AjaxConstants.CONTENT_TYPE_XML);
-        return null;
-    }
-
-    public String ajaxHoge() {
-        return "call default ajaxAction";
+    public Object ajaxHoge() {
+        return this;
     }
 
 }

@@ -15,13 +15,18 @@
  */
 package org.seasar.teeda.ajax;
 
+import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 
 import junit.framework.TestCase;
 
 import org.seasar.framework.mock.servlet.MockHttpServletRequest;
 import org.seasar.framework.mock.servlet.MockHttpServletResponse;
+import org.seasar.framework.mock.servlet.MockHttpServletResponseImpl;
 import org.seasar.framework.unit.S2FrameworkTestCase;
+import org.seasar.framework.util.SPrintWriter;
 
 /**
  * @author yone
@@ -141,11 +146,17 @@ public class AjaxServletTest extends S2FrameworkTestCase {
         request.addParameter("action", "ajaxHoge");
         final String ARG1 = "ABCDEFG";
         request.addParameter("arg1", ARG1);
+        request.addParameter("arg2", "2");
+        MockSPrintWriter writer = new MockSPrintWriter();
+        MyMockHttpServletResponseImpl response = new MyMockHttpServletResponseImpl(
+                getRequest());
+        response.setWriter(writer);
 
         // ## Act ##
-        servlet.doGet(request, getResponse());
+        servlet.doGet(request, response);
 
         // ## Assert ##
+        assertEquals("{\"arg1\":\"ABCDEFG\",\"arg2\":2}", writer.getResult());
         assertEquals(ARG1, ((AjaxBean1) getComponent("ajaxBean1")).getArg1());
     }
 
@@ -158,12 +169,17 @@ public class AjaxServletTest extends S2FrameworkTestCase {
         request.addParameter("action", "ajaxHoge");
         final String ARG2 = "22222";
         request.addParameter("arg2", ARG2);
+        MockSPrintWriter writer = new MockSPrintWriter();
+        MyMockHttpServletResponseImpl response = new MyMockHttpServletResponseImpl(
+                getRequest());
+        response.setWriter(writer);
 
         // ## Act ##
-        servlet.doGet(request, getResponse());
+        servlet.doGet(request, response);
 
         // ## Assert ##
         Integer arg2 = new Integer(ARG2);
+        assertEquals("{\"arg1\":null,\"arg2\":22222}", writer.getResult());
         assertEquals(arg2.intValue(), ((AjaxBean1) getComponent("ajaxBean1"))
                 .getArg2());
     }
@@ -183,11 +199,45 @@ public class AjaxServletTest extends S2FrameworkTestCase {
         // ## Assert ##
         assertEquals(AjaxConstants.CONTENT_TYPE_JSON, response.getContentType());
     }
-    
+
     private static void assertMessageExist(Exception e) {
         String message = e.getMessage();
         System.out.println(message);
         assertNotNull(message);
         assertTrue(message.trim().length() > 0);
+    }
+
+    private static class MyMockHttpServletResponseImpl extends
+            MockHttpServletResponseImpl {
+
+        private PrintWriter writer = new SPrintWriter();
+
+        public MyMockHttpServletResponseImpl(HttpServletRequest request) {
+            super(request);
+        }
+
+        public PrintWriter getWriter() {
+            return writer;
+        }
+
+        public void setWriter(PrintWriter writer) {
+            this.writer = writer;
+        }
+
+    }
+
+    private static class MockSPrintWriter extends SPrintWriter {
+
+        private String result = null;
+
+        public String getResult() {
+            return result;
+        }
+
+        public void close() {
+            result = out.toString();
+            super.close();
+        }
+
     }
 }
