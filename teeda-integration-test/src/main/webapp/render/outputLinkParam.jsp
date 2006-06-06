@@ -9,6 +9,7 @@
 <f:view>
 	<h:outputLink id="link1" value="outputLinkParam.jsp">
 		<f:param name="a" value="1"/>
+		<f:param name="b" value="2"/>
 		<h:outputText value="xyz" />
 	</h:outputLink>
 </f:view>
