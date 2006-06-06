@@ -102,6 +102,16 @@ public class JSONObjectTest extends TestCase {
         System.out.println(json.toString());
         assertEquals("{\"value\":\"ddd\",\"name\":\"ccc\"}", json.toString());
     }
-    
+
+    public void test10() throws Exception {
+        Foo foo = new Foo();
+        foo.setNames(new String[] { "aaa", "bbb", "ccc", "ddd" });
+        foo.setAges(new int[] { 10, 20, 30, 40 });
+        JSONObject json = new JSONObject(foo);
+        System.out.println(json.toString());
+        assertEquals(
+                "{\"names\":[\"aaa\",\"bbb\",\"ccc\",\"ddd\"],\"ages\":[\"10\",\"20\",\"30\",\"40\"]}",
+                json.toString());
+    }
 
 }
