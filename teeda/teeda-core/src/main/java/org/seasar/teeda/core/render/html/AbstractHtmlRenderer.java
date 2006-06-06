@@ -38,7 +38,7 @@ import org.seasar.teeda.core.util.UIComponentUtil;
  */
 public abstract class AbstractHtmlRenderer extends Renderer {
 
-    private ComponentIdLookupStrategy idLookupStartegy_;
+    private ComponentIdLookupStrategy idLookupStartegy;
     
     public Object getConvertedValue(FacesContext context,
             UIComponent component, Object submittedValue)
@@ -49,7 +49,7 @@ public abstract class AbstractHtmlRenderer extends Renderer {
     }
 
     protected String getIdForRender(FacesContext context, UIComponent component) {
-        return idLookupStartegy_.getId(context, component);
+        return idLookupStartegy.getId(context, component);
     }
 
     protected UIComponent toNullIfNotRendered(UIComponent component) {
@@ -112,10 +112,10 @@ public abstract class AbstractHtmlRenderer extends Renderer {
     }
 
     public void setComponentIdLookupStrategy(ComponentIdLookupStrategy idLookupStartegy) {
-        idLookupStartegy_ = idLookupStartegy;
+        this.idLookupStartegy = idLookupStartegy;
     }
     
     public ComponentIdLookupStrategy getComponentIdLookupStrategy() {
-        return idLookupStartegy_;
+        return idLookupStartegy;
     }
 }

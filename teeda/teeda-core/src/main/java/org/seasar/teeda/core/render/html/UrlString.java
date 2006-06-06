@@ -29,33 +29,30 @@ import org.seasar.framework.util.StringUtil;
  */
 public class UrlString {
 
-    private Map parameters_ = new LinkedHashMap();
+    private Map parameters = new LinkedHashMap();
 
-    // private String url_;
+    private String path;
 
-    private String path_;
-
-    private String queryString_;
+    private String queryString;
 
     public void parse(String url) {
-        // url_ = url;
         if (StringUtils.contains(url, '?')) {
             int questionPos = url.indexOf('?');
-            path_ = url.substring(0, questionPos);
-            queryString_ = url.substring(questionPos + 1);
+            path = url.substring(0, questionPos);
+            queryString = url.substring(questionPos + 1);
         } else {
-            path_ = url;
+            path = url;
         }
-        String[] params = StringUtil.split(queryString_, "&");
+        String[] params = StringUtil.split(queryString, "&");
         for (int i = 0; i < params.length; i++) {
             final String param = params[i];
             if (StringUtils.contains(param, '=')) {
                 final String key = param.substring(0, param.indexOf('='));
-                UrlParameter urlParameter = (UrlParameter) parameters_.get(key);
+                UrlParameter urlParameter = (UrlParameter) parameters.get(key);
                 if (urlParameter == null) {
                     urlParameter = new UrlParameter();
                     urlParameter.setKey(key);
-                    parameters_.put(urlParameter.getKey(), urlParameter);
+                    parameters.put(urlParameter.getKey(), urlParameter);
                 }
                 urlParameter.addValue(param.substring(param.indexOf('=') + 1));
             }
@@ -63,11 +60,11 @@ public class UrlString {
     }
 
     public String getPath() {
-        return path_;
+        return path;
     }
 
     public String getParameter(String key) {
-        UrlParameter param = (UrlParameter) parameters_.get(key);
+        UrlParameter param = (UrlParameter) parameters.get(key);
         if (param == null) {
             return null;
         }
@@ -75,7 +72,7 @@ public class UrlString {
     }
 
     public String[] getParameters(String key) {
-        UrlParameter param = (UrlParameter) parameters_.get(key);
+        UrlParameter param = (UrlParameter) parameters.get(key);
         if (param == null) {
             return null;
         }
@@ -104,7 +101,7 @@ public class UrlString {
     }
 
     public Set getParameterNames() {
-        return Collections.unmodifiableSet(parameters_.keySet());
+        return Collections.unmodifiableSet(parameters.keySet());
     }
 
 }

@@ -26,9 +26,9 @@ import org.apache.commons.lang.StringUtils;
  */
 public class UrlBuilder {
 
-    private String base_;
+    private String base;
 
-    private Map urlParameters_ = new LinkedHashMap() {
+    private Map urlParameters = new LinkedHashMap() {
 
         private static final long serialVersionUID = 1L;
 
@@ -45,17 +45,17 @@ public class UrlBuilder {
     };
 
     public void setBase(String base) {
-        base_ = base;
+        this.base = base;
     }
 
     public String build() {
         StringBuffer sb = new StringBuffer(100);
-        sb.append(base_);
+        sb.append(base);
         boolean questionAppeared = false;
-        if (StringUtils.contains(base_, '?')) {
+        if (StringUtils.contains(base, '?')) {
             questionAppeared = true;
         }
-        for (Iterator it = urlParameters_.entrySet().iterator(); it.hasNext();) {
+        for (Iterator it = urlParameters.entrySet().iterator(); it.hasNext();) {
             Map.Entry entry = (Map.Entry) it.next();
             String key = (String) entry.getKey();
             UrlParameter parameter = (UrlParameter) entry.getValue();
@@ -77,7 +77,7 @@ public class UrlBuilder {
     }
 
     public void add(String key, String value) {
-        UrlParameter p = (UrlParameter) urlParameters_.get(key);
+        UrlParameter p = (UrlParameter) urlParameters.get(key);
         p.addValue(value);
     }
 

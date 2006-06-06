@@ -22,39 +22,39 @@ import org.seasar.framework.util.ArrayUtil;
  */
 public class UrlParameter {
 
-    private String key_;
+    private String key;
 
-    private String[] values_ = {};
+    private String[] values = {};
 
     public String getKey() {
-        return key_;
+        return key;
     }
 
     public void setKey(String key) {
-        key_ = key;
+        this.key = key;
     }
 
     public String getValue() {
-        if (ArrayUtil.isEmpty(values_)) {
+        if (ArrayUtil.isEmpty(values)) {
             return "";
         }
-        return values_[0];
+        return values[0];
     }
 
     public void setValue(String value) {
-        values_ = new String[] { value };
+        values = new String[] { value };
     }
 
     public void addValue(String value) {
-        values_ = (String[]) ArrayUtil.add(values_, value);
+        this.values = (String[]) ArrayUtil.add(this.values, value);
     }
 
     public String[] getValues() {
-        return values_;
+        return values;
     }
 
     public void setValues(String[] values) {
-        values_ = values;
+        this.values = values;
     }
 
 }

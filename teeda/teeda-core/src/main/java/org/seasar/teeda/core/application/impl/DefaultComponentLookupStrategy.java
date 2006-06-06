@@ -25,7 +25,7 @@ import org.seasar.teeda.core.util.DIContainerUtil;
  */
 public class DefaultComponentLookupStrategy implements ComponentLookupStrategy {
 
-    private String namespace_ = JsfConstants.TEEDA_NAMESPACE;
+    private String namespace = JsfConstants.TEEDA_NAMESPACE;
 
     public Object getComponentByName(String componentName) {
         if (StringUtil.isEmpty(componentName)) {
@@ -47,11 +47,11 @@ public class DefaultComponentLookupStrategy implements ComponentLookupStrategy {
     }
 
     public void setNamespace(String namespace) {
-        namespace_ = namespace;
+        this.namespace = namespace;
     }
 
     public String getNamespace() {
-        return namespace_;
+        return namespace;
     }
 
     private Object getComponentByDefaultNamespace(String componentName) {

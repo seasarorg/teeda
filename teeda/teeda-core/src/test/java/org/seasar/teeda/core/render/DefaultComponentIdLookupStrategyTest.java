@@ -15,15 +15,17 @@
  */
 package org.seasar.teeda.core.render;
 
-import junit.framework.TestCase;
-
+import org.seasar.teeda.core.mock.MockExternalContext;
+import org.seasar.teeda.core.mock.MockExternalContextImpl;
+import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.mock.MockFacesContextImpl;
 import org.seasar.teeda.core.mock.MockUIComponent;
+import org.seasar.teeda.core.unit.TeedaTestCase;
 
 /**
  * @author manhole
  */
-public class DefaultComponentIdLookupStrategyTest extends TestCase {
+public class DefaultComponentIdLookupStrategyTest extends TeedaTestCase {
 
     public void test1() throws Exception {
         DefaultComponentIdLookupStrategy strategy = new DefaultComponentIdLookupStrategy();
@@ -47,4 +49,20 @@ public class DefaultComponentIdLookupStrategyTest extends TestCase {
         assertEquals("a", strategy.getId(new MockFacesContextImpl(), component));
     }
 
+    public void testGetId_withNamespace() throws Exception {
+        DefaultComponentIdLookupStrategy strategy = new DefaultComponentIdLookupStrategy();
+        MockExternalContext externalContext = new MockExternalContextImpl() {
+
+            public String encodeNamespace(String value) {
+                return "encode:" + value;
+            }
+
+        };
+        MockFacesContext context = getFacesContext();
+        context.setExternalContext(externalContext);
+        MockUIComponent mock = new MockUIComponent();
+        mock.setId("aaa");
+        String id = strategy.getId(context, mock);
+        assertEquals("encode:aaa", id);
+    }
 }
