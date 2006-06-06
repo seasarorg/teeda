@@ -21,6 +21,10 @@ public class ScriptTest extends TestCase {
         System.out.println(result + ", " + result.getClass());
         Number actual = (Number) result;
         assertEquals(124, actual.intValue());
+
+        Object[] ids = scriptable.getIds();
+        assertEquals(1, ids.length);
+        assertEquals("plus", ids[0]);
     }
 
 }
