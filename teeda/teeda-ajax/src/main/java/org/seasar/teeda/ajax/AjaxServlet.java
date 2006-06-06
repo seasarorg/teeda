@@ -34,8 +34,9 @@ import org.seasar.framework.container.ComponentNotFoundRuntimeException;
 import org.seasar.framework.container.MetaDef;
 import org.seasar.framework.container.S2Container;
 import org.seasar.framework.container.servlet.S2ContainerServlet;
-import org.seasar.teeda.ajax.json.JSONArray;
-import org.seasar.teeda.ajax.json.JSONObject;
+import org.seasar.teeda.ajax.creator.Contents;
+import org.seasar.teeda.ajax.creator.ContentsCreatorFactory;
+import org.seasar.teeda.ajax.creator.JSONContentsCreator;
 
 /**
  * @author yone
@@ -52,6 +53,7 @@ public class AjaxServlet extends HttpServlet {
     public void init(ServletConfig config) throws ServletException {
         container_ = S2ContainerServlet.getContainer();
         System.setErr(System.out);
+        initContentsCreator();
     }
 
     /**
@@ -114,23 +116,15 @@ public class AjaxServlet extends HttpServlet {
             throw new ServletException(
                     "The error occurred while create Ajax response.");
         }
-        String contentType = response.getContentType();
-        if (contentType == null) {
-            contentType = AjaxConstants.CONTENT_TYPE_JSON;
-            response.setContentType(contentType);
-        }
-        
-        String result = null;
-        if(contentType.equals(AjaxConstants.CONTENT_TYPE_JSON)) {
-            JSONObject json = new JSONObject(target);
-            result = json.toString();
-        }
-        
+
+        Contents contents = ContentsCreatorFactory.getContentsCreator(response)
+                .create(target);
+
         response.setHeader("Cache-Control", "no-cache");
         response.setHeader("Pragma", "no-cache");
 
         PrintWriter pw = response.getWriter();
-        pw.write(result);
+        pw.write(contents.getContentsAsText());
         pw.close();
     }
 
@@ -162,4 +156,9 @@ public class AjaxServlet extends HttpServlet {
         return def;
     }
 
+    //TODO need to add for HTML, XML, and plain text.
+    protected void initContentsCreator() {
+        ContentsCreatorFactory.addContentsCreator(
+                AjaxConstants.CONTENT_TYPE_JSON, new JSONContentsCreator());
+    }
 }
