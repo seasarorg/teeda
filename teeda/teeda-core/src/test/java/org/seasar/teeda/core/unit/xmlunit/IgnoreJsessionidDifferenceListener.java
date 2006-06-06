@@ -51,9 +51,9 @@ public class IgnoreJsessionidDifferenceListener implements DifferenceListener {
             return s;
         }
         String removed = s.substring(0, leftPos);
-        int rightPos = s.indexOf("&", leftPos);
+        int rightPos = s.indexOf("?", leftPos);
         if (rightPos == -1) {
-            rightPos = s.indexOf("?", leftPos);
+            rightPos = s.indexOf("&", leftPos);
         }
         if (-1 < rightPos) {
             removed = removed + s.substring(rightPos);

@@ -12,6 +12,17 @@
   <description></description>
   <url>http://teeda.seasar.org/</url>
   <build>
+    <testResources>
+      <testResource>
+        <directory>${basedir}/src/test/resources</directory>
+      </testResource>
+      <testResource>
+        <directory>${basedir}/../teeda-core/src/test/resources</directory>
+        <includes>
+          <include>*.dicon</include>
+        </includes>
+      </testResource>
+    </testResources>
     <plugins>
       <plugin>
         <artifactId>maven-jar-plugin</artifactId>

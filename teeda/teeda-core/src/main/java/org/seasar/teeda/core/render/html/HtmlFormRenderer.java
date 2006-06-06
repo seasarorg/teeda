@@ -130,10 +130,9 @@ public class HtmlFormRenderer extends AbstractHtmlRenderer {
 
     private void renderFormSubmitMarker(FacesContext context,
             HtmlForm htmlForm, ResponseWriter writer) throws IOException {
-        String clientId = htmlForm.getClientId(context);
-        String key = getFormSubmitKey(context, htmlForm);
-        String value = clientId;
-        renderHidden(htmlForm, writer, key, value);
+        final String clientId = htmlForm.getClientId(context);
+        final String key = getFormSubmitKey(context, htmlForm);
+        renderHidden(htmlForm, writer, key, clientId);
     }
 
     public void decode(FacesContext context, UIComponent component) {

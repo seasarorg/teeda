@@ -66,6 +66,21 @@ public class IgnoreJsessionidDifferenceListenerTest extends TestCase {
         assertEquals(diff.toString(), false, diff.identical());
     }
 
+    public void testHref4() throws Exception {
+        // ## Arrange ##
+        Diff diff = new Diff(
+                "<a id=\"link1\" href=\"outputLinkParam.jsp?a=1&amp;b=2\">xyz</a>",
+                "<a id=\"link1\" href=\"outputLinkParam.jsp;jsessionid=1o8noejq3q5ai?a=1&amp;b=2\">xyz</a>");
+
+        // ## Act ##
+        diff
+                .overrideDifferenceListener(new IgnoreJsessionidDifferenceListener());
+
+        // ## Assert ##
+        assertEquals(diff.toString(), true, diff.similar());
+        assertEquals(diff.toString(), false, diff.identical());
+    }
+
     public void testSrc() throws Exception {
         // ## Arrange ##
         Diff diff = new Diff("<img src=\"bbb.gif\" />",
