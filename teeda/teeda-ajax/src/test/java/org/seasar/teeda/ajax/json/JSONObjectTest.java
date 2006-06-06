@@ -110,7 +110,7 @@ public class JSONObjectTest extends TestCase {
         JSONObject json = new JSONObject(foo);
         System.out.println(json.toString());
         assertEquals(
-                "{\"names\":[\"aaa\",\"bbb\",\"ccc\",\"ddd\"],\"ages\":[\"10\",\"20\",\"30\",\"40\"]}",
+                "{\"names\":[\"aaa\",\"bbb\",\"ccc\",\"ddd\"],\"ages\":[10,20,30,40]}",
                 json.toString());
     }
 

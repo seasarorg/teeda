@@ -15,6 +15,8 @@
  */
 package org.seasar.teeda.ajax.json;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -27,6 +29,7 @@ import org.seasar.framework.beans.factory.BeanDescFactory;
 /**
  * 
  * @author mopemope
+ * @author yone
  */
 public class JSONObject {
 
@@ -109,9 +112,13 @@ public class JSONObject {
         } else if (value instanceof JSONObject) {
             buf.append(value.toString());
         } else {
-            Map map = createJSONMap(value);
-            JSONObject json = new JSONObject(map);
-            buf.append(json.toString());
+            if (value.getClass().isArray()) {
+                buf.append(createArrayString(value));
+            } else {
+                Map map = createJSONMap(value);
+                JSONObject json = new JSONObject(map);
+                buf.append(json.toString());
+            }
         }
     }
 
@@ -126,6 +133,21 @@ public class JSONObject {
             map.put(name, o);
         }
         return map;
+    }
+    
+    private static String createArrayString(Object array) {
+        StringBuffer buf = new StringBuffer();
+        buf.append(START_LIST_BRACE);
+        final int length = Array.getLength(array);
+        for (int i = 0; i < length; i++) {
+            append(buf, Array.get(array, i));
+            buf.append(ARRAY_SEPARATOR);
+        }
+        if (length > 0) {
+            buf.setLength(buf.length() - ARRAY_SEPARATOR.length());
+        }
+        buf.append(END_LIST_BRACE);
+        return buf.toString();
     }
 
     private static void assertNotInfiniteOrNaN(Object value) {
