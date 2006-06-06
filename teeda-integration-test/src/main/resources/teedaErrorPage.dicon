@@ -2,13 +2,12 @@
 <!DOCTYPE components PUBLIC "-//SEASAR2.1//DTD S2Container//EN"
 	"http://www.seasar.org/dtd/components21.dtd">
 <components namespace="teedaErrorPage" >
-	
+
 	<component class="org.seasar.teeda.core.ServletErrorPageManagerImpl">
-		<!--
 		<initMethod name="addErrorPage">
-			<arg>@java.lang.Throwable@class</arg>
-			<arg>"/aaa/bbb.html"</arg>
+			<arg>@org.seasar.teeda.it.errorpage.ErrorPageException@class</arg>
+			<arg>"/faces/errorpage/errorPage.jsp"</arg>
 		</initMethod>
-		-->
 	</component>
+
 </components>
