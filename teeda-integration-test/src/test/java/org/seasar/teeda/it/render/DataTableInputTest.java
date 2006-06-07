@@ -19,10 +19,16 @@ import java.net.URL;
 
 import junit.framework.Test;
 
+import org.jaxen.JaxenException;
 import org.seasar.teeda.it.AbstractTestCase;
 
+import com.gargoylesoftware.htmlunit.Page;
 import com.gargoylesoftware.htmlunit.WebClient;
+import com.gargoylesoftware.htmlunit.html.HtmlForm;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import com.gargoylesoftware.htmlunit.html.HtmlSubmitInput;
+import com.gargoylesoftware.htmlunit.html.HtmlTextInput;
+import com.gargoylesoftware.htmlunit.html.xpath.HtmlUnitXPath;
 
 /**
  * @author manhole
@@ -34,22 +40,65 @@ public class DataTableInputTest extends AbstractTestCase {
     }
 
     public void testRender4() throws Exception {
-        // ## Arrange ##
         URL url = getUrl("faces/render/dataTable4.jsp");
         System.out.println(url);
 
         WebClient webClient = new WebClient();
 
-        // ## Act ##
-        HtmlPage page = (HtmlPage) webClient.getPage(url);
+        HtmlPage page1 = (HtmlPage) webClient.getPage(url);
 
-        // ## Assert ##
-        final String body1 = getBody(page).trim();
+        final String body1 = getBody(page1).trim();
         System.out.println(body1);
-        assertEquals("dataTable4.jsp", page.getTitleText());
+        assertEquals("dataTable4.jsp", page1.getTitleText());
 
+        {
+            final HtmlTextInput a = getInputA(page1);
+            final HtmlTextInput b = getInputB(page1);
+            final HtmlTextInput c = getInputC(page1);
+            assertEquals("1000", a.getValueAttribute());
+            assertEquals("2000", b.getValueAttribute());
+            assertEquals("3000", c.getValueAttribute());
+
+            c.setValueAttribute("3003");
+            assertEquals("3003", c.getValueAttribute());
+        }
+        final HtmlPage page2 = (HtmlPage) getSubmit(page1).click();
+        final String body2 = getBody(page2).trim();
+        System.out.println(body2);
+        {
+            final HtmlTextInput a = getInputA(page2);
+            final HtmlTextInput b = getInputB(page2);
+            final HtmlTextInput c = getInputC(page2);
+            assertEquals("1000", a.getValueAttribute());
+            assertEquals("2000", b.getValueAttribute());
+            assertEquals("3003", c.getValueAttribute());
+        }
     }
 
- 
+    private HtmlSubmitInput getSubmit(HtmlPage page1) {
+        return (HtmlSubmitInput) page1.getHtmlElementById("submit1");
+    }
+
+    private HtmlForm getForm(HtmlPage page1) {
+        return (HtmlForm) page1.getForms().get(0);
+    }
+
+    private HtmlTextInput getInputA(final HtmlPage page1) throws JaxenException {
+        final HtmlForm form = getForm(page1);
+        return (HtmlTextInput) new HtmlUnitXPath(".//input[@type='text']")
+                .selectNodes(form).get(0);
+    }
+
+    private HtmlTextInput getInputB(final HtmlPage page1) throws JaxenException {
+        final HtmlForm form = getForm(page1);
+        return (HtmlTextInput) new HtmlUnitXPath(".//input[@type='text']")
+                .selectNodes(form).get(1);
+    }
+
+    private HtmlTextInput getInputC(final HtmlPage page1) throws JaxenException {
+        final HtmlForm form = getForm(page1);
+        return (HtmlTextInput) new HtmlUnitXPath(".//input[@type='text']")
+                .selectNodes(form).get(2);
+    }
 
 }

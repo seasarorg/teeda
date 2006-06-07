@@ -15,11 +15,11 @@
  */
 package org.seasar.teeda.it;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author manhole
@@ -33,19 +33,55 @@ public class DataTableBean {
         items.add(createItem("item3", new BigDecimal("3000")));
     }
 
-    public List getItems() {
-        return items;
+    public Item[] getItems() {
+        return (Item[]) items.toArray(new Item[items.size()]);
     }
 
     public int getItemSize() {
         return items.size();
     }
 
-    private Map createItem(String name, BigDecimal price) {
-        Map item = new HashMap();
-        item.put("name", name);
-        item.put("price", price);
-        return item;
+    private Item createItem(String name, BigDecimal price) {
+        return new Item(name, price);
+    }
+
+    public void setItems(Item[] items) {
+        this.items = Arrays.asList(items);
+    }
+
+    public static class Item implements Serializable {
+
+        private String name;
+
+        private BigDecimal price;
+
+        public Item(String name, BigDecimal price) {
+            this.name = name;
+            this.price = price;
+        }
+
+        private static final long serialVersionUID = 1L;
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public BigDecimal getPrice() {
+            return price;
+        }
+
+        public void setPrice(BigDecimal price) {
+            this.price = price;
+        }
+
+        public String toString() {
+            return "{name=" + name + ", price=" + price + "}";
+        }
+
     }
 
 }

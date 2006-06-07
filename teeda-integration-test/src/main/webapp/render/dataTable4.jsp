@@ -15,7 +15,7 @@
 			<f:facet name="footer">
 				<h:panelGroup>
 					<h:outputText value="#{dataTableBean.itemSize}" />
-					<f:verbatim> items.</f:verbatim>
+					<h:outputText value=" items." />
 				</h:panelGroup>
 			</f:facet>
 			<h:column>
@@ -31,6 +31,7 @@
 				<h:inputText value="#{item.price}" />
 			</h:column>
 		</h:dataTable>
+		<h:commandButton id="submit1"/>
 	</h:form>
 </f:view>
 </body>
