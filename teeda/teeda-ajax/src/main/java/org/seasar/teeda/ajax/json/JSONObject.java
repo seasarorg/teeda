@@ -68,8 +68,55 @@ public class JSONObject {
     }
 
     public static String quote(String str) {
-        //TODO \t\b\n\r
-        return "\"" + str + "\"";
+        if (str == null || str.length() == 0) {
+            return "\"\"";
+        }
+        char previous;
+        char current = 0;
+        int len = str.length();
+        StringBuffer sb = new StringBuffer(len + 4);
+        sb.append('"');
+        for (int i = 0; i < len; i += 1) {
+            previous = current;
+            current = str.charAt(i);
+            switch (current) {
+            case '\\':
+            case '"':
+                sb.append('\\');
+                sb.append(current);
+                break;
+            case '/':
+                if (previous == '<') {
+                    sb.append('\\');
+                }
+                sb.append(current);
+                break;
+            case '\b':
+                sb.append("\\b");
+                break;
+            case '\t':
+                sb.append("\\t");
+                break;
+            case '\n':
+                sb.append("\\n");
+                break;
+            case '\f':
+                sb.append("\\f");
+                break;
+            case '\r':
+                sb.append("\\r");
+                break;
+            default:
+                if (current < ' ') {
+                    String t = "000" + Integer.toHexString(current);
+                    sb.append("\\u" + t.substring(t.length() - 4));
+                } else {
+                    sb.append(current);
+                }
+            }
+        }
+        sb.append('"');
+        return sb.toString();
     }
 
     public String toString() {
@@ -133,7 +180,7 @@ public class JSONObject {
         }
         return map;
     }
-    
+
     private static String createArrayString(Object array) {
         StringBuffer buf = new StringBuffer();
         buf.append(START_LIST_BRACE);

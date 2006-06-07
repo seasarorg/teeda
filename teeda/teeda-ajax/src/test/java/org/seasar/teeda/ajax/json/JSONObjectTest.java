@@ -114,4 +114,51 @@ public class JSONObjectTest extends TestCase {
                 json.toString());
     }
 
+    public void test11() throws Exception {
+        JSONObject json = new JSONObject();
+        json.put("a", new Boolean(true));
+        assertEquals("{\"a\":true}", json.toString());
+    }
+
+    public void test12() throws Exception {
+        JSONObject json = new JSONObject();
+        assertEquals("{}", json.toString());
+    }
+    
+    public void testQuote1() throws Exception {
+        assertEquals("\"\"", JSONObject.quote(null));
+        assertEquals("\"\"", JSONObject.quote(""));
+    }
+    
+    public void testQuote2() throws Exception {
+        assertEquals("\"\\\\\"", JSONObject.quote("\\"));
+    }
+    
+    public void testQuote3() throws Exception {
+        assertEquals("\"\\\"\"", JSONObject.quote("\""));
+    }
+    
+    public void testQuote4() throws Exception {
+        assertEquals("\"<\\/aaa>\"", JSONObject.quote("</aaa>"));
+    }
+    
+    public void testQuote5() throws Exception {
+        assertEquals("\"\\b\"", JSONObject.quote("\b"));
+    }
+    
+    public void testQuote6() throws Exception {
+        assertEquals("\"\\t\"", JSONObject.quote("\t"));
+    }
+
+    public void testQuote7() throws Exception {
+        assertEquals("\"\\n\"", JSONObject.quote("\n"));
+    }
+
+    public void testQuote8() throws Exception {
+        assertEquals("\"\\r\"", JSONObject.quote("\r"));
+    }
+
+    public void testQuote9() throws Exception {
+        assertEquals("\" \"", JSONObject.quote(" "));
+    }
 }
