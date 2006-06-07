@@ -272,7 +272,6 @@ public class UIData extends UIComponentBase implements NamingContainer {
         if (!isRendered()) {
             return;
         }
-        resetModelAndSavedState();
         processAppropriateAction(context, PhaseId.APPLY_REQUEST_VALUES);
         try {
             decode(context);
@@ -287,8 +286,8 @@ public class UIData extends UIComponentBase implements NamingContainer {
         if (!isRendered()) {
             return;
         }
-        resetModelAndSavedState();
         processAppropriateAction(context, PhaseId.UPDATE_MODEL_VALUES);
+        resetModelAndSavedState();
     }
 
     public void processValidators(FacesContext context) {
@@ -296,7 +295,6 @@ public class UIData extends UIComponentBase implements NamingContainer {
         if (!isRendered()) {
             return;
         }
-        resetModelAndSavedState();
         processAppropriateAction(context, PhaseId.PROCESS_VALIDATIONS);
     }
 
