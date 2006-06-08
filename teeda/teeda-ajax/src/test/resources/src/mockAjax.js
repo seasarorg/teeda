@@ -148,6 +148,9 @@ Kumu.MockAjax = {
     	var self = Kumu.MockAjax;
         var ajax = self.getS2AjaxComponent();
         var components = self._getComponentName(callback);
+        if(!param){
+            param = {};
+        }
         ajax.params = param;
         if(!("component" in param) && !("action" in param) && (components.length == 2) ){
             //callback name bind
