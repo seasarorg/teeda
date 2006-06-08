@@ -65,6 +65,7 @@ public class FormTagTest extends TeedaTestCase {
         tag.setStyle("style");
         tag.setStyleClass("styleclass");
         tag.setTitle("title");
+        tag.setTarget("_blank");
 
         // # Act #
         tag.setProperties(component);
@@ -90,6 +91,7 @@ public class FormTagTest extends TeedaTestCase {
         assertEquals("style", component.getStyle());
         assertEquals("styleclass", component.getStyleClass());
         assertEquals("title", component.getTitle());
+        assertEquals("_blank", component.getTarget());
     }
     
     public void testSetEnctype_default() throws Exception {
