@@ -26,7 +26,7 @@ import org.seasar.teeda.core.taglib.UIComponentTagBase;
  */
 public class OutputLabelTag extends UIComponentTagBase {
 
-    private String for_;
+    private String forStr;
 
     public String getComponentType() {
         return HtmlOutputLabel.COMPONENT_TYPE;
@@ -39,20 +39,20 @@ public class OutputLabelTag extends UIComponentTagBase {
     protected void setProperties(UIComponent component) {
         super.setProperties(component);
 
-        setComponentProperty(component, JsfConstants.FOR_ATTR, for_);
+        setComponentProperty(component, JsfConstants.FOR_ATTR, forStr);
     }
 
     public void release() {
         super.release();
-        for_ = null;
+        forStr = null;
     }
 
-    public void setFor(String for1) {
-        for_ = for1;
+    public void setFor(String forStr) {
+        this.forStr = forStr;
     }
 
-    String getFor() {
-        return for_;
+    public String getFor() {
+        return forStr;
     }
 
 }

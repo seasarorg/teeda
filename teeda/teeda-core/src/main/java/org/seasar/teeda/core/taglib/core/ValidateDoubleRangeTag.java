@@ -27,6 +27,7 @@ import org.seasar.teeda.core.util.ConverterUtil;
 
 /**
  * @author yone
+ * @author shot
  */
 public class ValidateDoubleRangeTag extends MaxMinValidatorTag {
 
@@ -49,10 +50,10 @@ public class ValidateDoubleRangeTag extends MaxMinValidatorTag {
         AssertionUtil.assertNotNull("DoubleRangeValidator", validator);
 
         evaluateExpressions();
-        if (minimumSet) {
+        if (isMinimumSet()) {
             validator.setMinimum(minimum);
         }
-        if (maximumSet) {
+        if (isMaximumSet()) {
             validator.setMaximum(maximum);
         }
         return validator;
@@ -60,22 +61,24 @@ public class ValidateDoubleRangeTag extends MaxMinValidatorTag {
 
     private void evaluateExpressions() throws JspException {
         FacesContext context = FacesContext.getCurrentInstance();
-        if (minimum_ != null) {
-            if (BindingUtil.isValueReference(minimum_)) {
+        final String min = getMinimum();
+        if (min != null) {
+            if (BindingUtil.isValueReference(min)) {
                 ValueBinding vb = context.getApplication().createValueBinding(
-                        minimum_);
+                        min);
                 minimum = ConverterUtil.convertToDouble(vb.getValue(context));
             } else {
-                minimum = ConverterUtil.convertToDouble(minimum_);
+                minimum = ConverterUtil.convertToDouble(min);
             }
         }
-        if (maximum_ != null) {
-            if (BindingUtil.isValueReference(maximum_)) {
+        final String max = getMaximum();
+        if (max != null) {
+            if (BindingUtil.isValueReference(max)) {
                 ValueBinding vb = context.getApplication().createValueBinding(
-                        maximum_);
+                        max);
                 maximum = ConverterUtil.convertToDouble(vb.getValue(context));
             } else {
-                maximum = ConverterUtil.convertToDouble(maximum_);
+                maximum = ConverterUtil.convertToDouble(max);
             }
         }
     }

@@ -22,6 +22,7 @@ import org.seasar.teeda.core.JsfConstants;
 
 /**
  * @author yone
+ * @author shot
  */
 public class InputTextareaTag extends InputTagBase {
 
@@ -35,11 +36,16 @@ public class InputTextareaTag extends InputTagBase {
 
     protected void setProperties(UIComponent component) {
         super.setProperties(component);
+        setComponentProperty(component, JsfConstants.COLS_ATTR, getCols());
+        setComponentProperty(component, JsfConstants.ONCHANGE_ATTR,
+                getOnchange());
+        setComponentProperty(component, JsfConstants.ONSELECT_ATTR,
+                getOnselect());
+        setComponentProperty(component, JsfConstants.ROWS_ATTR, getRows());
+    }
 
-        setComponentProperty(component, JsfConstants.COLS_ATTR, cols_);
-        setComponentProperty(component, JsfConstants.ONCHANGE_ATTR, onchange_);
-        setComponentProperty(component, JsfConstants.ONSELECT_ATTR, onselect_);
-        setComponentProperty(component, JsfConstants.ROWS_ATTR, rows_);
+    public void release() {
+        super.release();
     }
 
 }

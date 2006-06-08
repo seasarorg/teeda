@@ -23,34 +23,35 @@ import org.seasar.teeda.core.taglib.UIComponentTagBase;
 
 /**
  * @author yone
+ * @author shot
  */
 public class MessagesTag extends UIComponentTagBase {
 
-    private String globalOnly_;
+    private String globalOnly;
 
-    private String showDetail_;
+    private String showDetail;
 
-    private String showSummary_;
+    private String showSummary;
 
-    private String errorClass_;
+    private String errorClass;
 
-    private String errorStyle_;
+    private String errorStyle;
 
-    private String fatalClass_;
+    private String fatalClass;
 
-    private String fatalStyle_;
+    private String fatalStyle;
 
-    private String infoClass_;
+    private String infoClass;
 
-    private String infoStyle_;
+    private String infoStyle;
 
-    private String layout_;
+    private String layout;
 
-    private String tooltip_;
+    private String tooltip;
 
-    private String warnClass_;
+    private String warnClass;
 
-    private String warnStyle_;
+    private String warnStyle;
 
     public String getComponentType() {
         return HtmlMessages.COMPONENT_TYPE;
@@ -64,150 +65,146 @@ public class MessagesTag extends UIComponentTagBase {
         super.setProperties(component);
 
         setComponentProperty(component, JsfConstants.GLOBAL_ONLY_ATTR,
-                globalOnly_);
+                globalOnly);
         setComponentProperty(component, JsfConstants.SHOW_DETAIL_ATTR,
-                showDetail_);
+                showDetail);
         setComponentProperty(component, JsfConstants.SHOW_SUMMARY_ATTR,
-                showSummary_);
+                showSummary);
         setComponentProperty(component, JsfConstants.ERROR_CLASS_ATTR,
-                errorClass_);
+                errorClass);
         setComponentProperty(component, JsfConstants.ERROR_STYLE_ATTR,
-                errorStyle_);
+                errorStyle);
         setComponentProperty(component, JsfConstants.FATAL_CLASS_ATTR,
-                fatalClass_);
+                fatalClass);
         setComponentProperty(component, JsfConstants.FATAL_STYLE_ATTR,
-                fatalStyle_);
-        setComponentProperty(component, JsfConstants.INFO_CLASS_ATTR,
-                infoClass_);
-        setComponentProperty(component, JsfConstants.INFO_STYLE_ATTR,
-                infoStyle_);
-        setComponentProperty(component, JsfConstants.LAYOUT_ATTR, layout_);
-        setComponentProperty(component, JsfConstants.TOOLTIP_ATTR, tooltip_);
-        setComponentProperty(component, JsfConstants.WARN_CLASS_ATTR,
-                warnClass_);
-        setComponentProperty(component, JsfConstants.WARN_STYLE_ATTR,
-                warnStyle_);
+                fatalStyle);
+        setComponentProperty(component, JsfConstants.INFO_CLASS_ATTR, infoClass);
+        setComponentProperty(component, JsfConstants.INFO_STYLE_ATTR, infoStyle);
+        setComponentProperty(component, JsfConstants.LAYOUT_ATTR, layout);
+        setComponentProperty(component, JsfConstants.TOOLTIP_ATTR, tooltip);
+        setComponentProperty(component, JsfConstants.WARN_CLASS_ATTR, warnClass);
+        setComponentProperty(component, JsfConstants.WARN_STYLE_ATTR, warnStyle);
     }
 
     public void release() {
         super.release();
-        globalOnly_ = null;
-        showDetail_ = null;
-        showSummary_ = null;
-        errorClass_ = null;
-        errorStyle_ = null;
-        fatalClass_ = null;
-        fatalStyle_ = null;
-        infoClass_ = null;
-        infoStyle_ = null;
-        layout_ = null;
-        tooltip_ = null;
-        warnClass_ = null;
-        warnStyle_ = null;
+        globalOnly = null;
+        showDetail = null;
+        showSummary = null;
+        errorClass = null;
+        errorStyle = null;
+        fatalClass = null;
+        fatalStyle = null;
+        infoClass = null;
+        infoStyle = null;
+        layout = null;
+        tooltip = null;
+        warnClass = null;
+        warnStyle = null;
     }
 
     public void setGlobalOnly(String globalOnly) {
-        globalOnly_ = globalOnly;
+        this.globalOnly = globalOnly;
     }
 
     public void setShowDetail(String showDetail) {
-        showDetail_ = showDetail;
+        this.showDetail = showDetail;
     }
 
     public void setShowSummary(String showSummary) {
-        showSummary_ = showSummary;
+        this.showSummary = showSummary;
     }
 
     public void setErrorClass(String errorClass) {
-        errorClass_ = errorClass;
+        this.errorClass = errorClass;
     }
 
     public void setErrorStyle(String errorStyle) {
-        errorStyle_ = errorStyle;
+        this.errorStyle = errorStyle;
     }
 
     public void setFatalClass(String fatalClass) {
-        fatalClass_ = fatalClass;
+        this.fatalClass = fatalClass;
     }
 
     public void setFatalStyle(String fatalStyle) {
-        fatalStyle_ = fatalStyle;
+        this.fatalStyle = fatalStyle;
     }
 
     public void setInfoClass(String infoClass) {
-        infoClass_ = infoClass;
+        this.infoClass = infoClass;
     }
 
     public void setInfoStyle(String infoStyle) {
-        infoStyle_ = infoStyle;
+        this.infoStyle = infoStyle;
     }
 
     public void setLayout(String layout) {
-        layout_ = layout;
+        this.layout = layout;
     }
 
     public void setTooltip(String tooltip) {
-        tooltip_ = tooltip;
+        this.tooltip = tooltip;
     }
 
     public void setWarnClass(String warnClass) {
-        warnClass_ = warnClass;
+        this.warnClass = warnClass;
     }
 
     public void setWarnStyle(String warnStyle) {
-        warnStyle_ = warnStyle;
+        this.warnStyle = warnStyle;
     }
 
-    String getErrorClass() {
-        return errorClass_;
+    public String getErrorClass() {
+        return errorClass;
     }
 
-    String getErrorStyle() {
-        return errorStyle_;
+    public String getErrorStyle() {
+        return errorStyle;
     }
 
-    String getFatalClass() {
-        return fatalClass_;
+    public String getFatalClass() {
+        return fatalClass;
     }
 
-    String getFatalStyle() {
-        return fatalStyle_;
+    public String getFatalStyle() {
+        return fatalStyle;
     }
 
-    String getGlobalOnly() {
-        return globalOnly_;
+    public String getGlobalOnly() {
+        return globalOnly;
     }
 
-    String getInfoClass() {
-        return infoClass_;
+    public String getInfoClass() {
+        return infoClass;
     }
 
-    String getInfoStyle() {
-        return infoStyle_;
+    public String getInfoStyle() {
+        return infoStyle;
     }
 
-    String getLayout() {
-        return layout_;
+    public String getLayout() {
+        return layout;
     }
 
-    String getShowDetail() {
-        return showDetail_;
+    public String getShowDetail() {
+        return showDetail;
     }
 
-    String getShowSummary() {
-        return showSummary_;
+    public String getShowSummary() {
+        return showSummary;
     }
 
-    String getTooltip() {
-        return tooltip_;
+    public String getTooltip() {
+        return tooltip;
     }
 
-    String getWarnClass() {
-        return warnClass_;
+    public String getWarnClass() {
+        return warnClass;
     }
 
-    String getWarnStyle() {
-        return warnStyle_;
+    public String getWarnStyle() {
+        return warnStyle;
     }
 
 }

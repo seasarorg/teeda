@@ -27,6 +27,7 @@ import org.seasar.teeda.core.util.ConverterUtil;
 
 /**
  * @author yone
+ * @author shot
  */
 public class ValidateLengthTag extends MaxMinValidatorTag {
 
@@ -48,10 +49,10 @@ public class ValidateLengthTag extends MaxMinValidatorTag {
         AssertionUtil.assertNotNull("LengthValidator", validator);
 
         evaluateExpressions();
-        if (minimumSet) {
+        if (isMinimumSet()) {
             validator.setMinimum(minimum);
         }
-        if (maximumSet) {
+        if (isMaximumSet()) {
             validator.setMaximum(maximum);
         }
         return validator;
@@ -59,22 +60,24 @@ public class ValidateLengthTag extends MaxMinValidatorTag {
 
     private void evaluateExpressions() throws JspException {
         FacesContext context = FacesContext.getCurrentInstance();
-        if (minimum_ != null) {
-            if (BindingUtil.isValueReference(minimum_)) {
+        final String min = getMinimum();
+        if (min != null) {
+            if (BindingUtil.isValueReference(min)) {
                 ValueBinding vb = context.getApplication().createValueBinding(
-                        minimum_);
+                        min);
                 minimum = ConverterUtil.convertToInt(vb.getValue(context));
             } else {
-                minimum = ConverterUtil.convertToInt(minimum_);
+                minimum = ConverterUtil.convertToInt(min);
             }
         }
-        if (maximum_ != null) {
-            if (BindingUtil.isValueReference(maximum_)) {
+        final String max = getMaximum();
+        if (max != null) {
+            if (BindingUtil.isValueReference(max)) {
                 ValueBinding vb = context.getApplication().createValueBinding(
-                        maximum_);
+                        max);
                 maximum = ConverterUtil.convertToInt(vb.getValue(context));
             } else {
-                maximum = ConverterUtil.convertToInt(maximum_);
+                maximum = ConverterUtil.convertToInt(max);
             }
         }
     }

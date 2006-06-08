@@ -41,10 +41,9 @@ public class ParamTag extends UIComponentTagBase {
 
     protected void setProperties(UIComponent component) {
         super.setProperties(component);
-
         if (component instanceof UIParameter) {
             UIParameter parameter = (UIParameter) component;
-            setComponentProperty(parameter, JsfConstants.NAME_ATTR, name_);
+            setComponentProperty(parameter, JsfConstants.NAME_ATTR, getName());
         }
     }
 }

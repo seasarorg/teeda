@@ -42,20 +42,29 @@ import org.seasar.framework.log.Logger;
  * @author yone
  */
 public class LoadBundleTag extends TagSupport {
-    private static Logger logger_ = Logger.getLogger(LoadBundleTag.class);
+
+    private static Logger logger = Logger.getLogger(LoadBundleTag.class);
 
     private static final long serialVersionUID = 1L;
 
-    private String basename_;
+    private String basename;
 
-    private String var_;
+    private String var;
 
     public void setBasename(String basename) {
-        basename_ = basename;
+        this.basename = basename;
     }
 
     public void setVar(String var) {
-        var_ = var;
+        this.var = var;
+    }
+
+    public String getBasename() {
+        return basename;
+    }
+
+    public String getVar() {
+        return var;
     }
 
     public int doStartTag() throws JspException {
@@ -69,38 +78,39 @@ public class LoadBundleTag extends TagSupport {
         if (locale == null) {
             locale = context.getApplication().getDefaultLocale();
         }
-        String basename = null;
-        if (basename_ != null) {
-            if (UIComponentTag.isValueReference(basename_)) {
-                basename = (String) context.getApplication()
-                        .createValueBinding(basename_).getValue(context);
+        String bname = null;
+        final String basename = getBasename();
+        if (basename != null) {
+            if (UIComponentTag.isValueReference(basename)) {
+                bname = (String) context.getApplication().createValueBinding(
+                        basename).getValue(context);
             } else {
-                basename = basename_;
+                bname = basename;
             }
         }
         final ResourceBundle bundle;
         try {
-            bundle = ResourceBundle.getBundle(basename, locale, Thread
+            bundle = ResourceBundle.getBundle(bname, locale, Thread
                     .currentThread().getContextClassLoader());
         } catch (MissingResourceException e) {
-            logger_.error("Resource bundle '" + basename
-                    + "' could not be found");
+            logger.error("Resource bundle '" + bname + "' could not be found");
             return Tag.SKIP_BODY;
         }
 
-        context.getExternalContext().getRequestMap().put(var_,
+        context.getExternalContext().getRequestMap().put(var,
                 new BundleMap(bundle));
 
         return Tag.SKIP_BODY;
     }
 
     private static class BundleMap implements Map {
-        private ResourceBundle bundle_;
 
-        private List values_;
+        private ResourceBundle bundle;
+
+        private List values;
 
         public BundleMap(ResourceBundle bundle) {
-            bundle_ = bundle;
+            this.bundle = bundle;
         }
 
         public void clear() {
@@ -110,31 +120,31 @@ public class LoadBundleTag extends TagSupport {
         public boolean containsKey(Object key) {
             boolean result = false;
             if (key != null) {
-                result = (bundle_.getObject(key.toString()) != null);
+                result = (bundle.getObject(key.toString()) != null);
             }
             return result;
         }
 
         public int hashCode() {
-            return bundle_.hashCode();
+            return bundle.hashCode();
         }
 
         public boolean isEmpty() {
             boolean result = true;
-            Enumeration keys = bundle_.getKeys();
+            Enumeration keys = bundle.getKeys();
             result = !keys.hasMoreElements();
             return result;
         }
 
         public Collection values() {
-            if (values_ == null) {
-                values_ = new ArrayList();
-                Enumeration keys = bundle_.getKeys();
+            if (values == null) {
+                values = new ArrayList();
+                Enumeration keys = bundle.getKeys();
                 while (keys.hasMoreElements()) {
-                    values_.add(bundle_.getString((String) keys.nextElement()));
+                    values.add(bundle.getString((String) keys.nextElement()));
                 }
             }
-            return values_;
+            return values;
         }
 
         public int size() {
@@ -147,10 +157,10 @@ public class LoadBundleTag extends TagSupport {
 
         public Set entrySet() {
             HashMap mappings = new HashMap();
-            Enumeration keys = bundle_.getKeys();
+            Enumeration keys = bundle.getKeys();
             while (keys.hasMoreElements()) {
                 Object key = keys.nextElement();
-                Object value = bundle_.getObject((String) key);
+                Object value = bundle.getObject((String) key);
                 mappings.put(key, value);
             }
             return mappings.entrySet();
@@ -172,7 +182,7 @@ public class LoadBundleTag extends TagSupport {
             }
             Object result = null;
             try {
-                result = bundle_.getObject(key.toString());
+                result = bundle.getObject(key.toString());
             } catch (MissingResourceException e) {
                 result = "???" + key + "???";
             }
@@ -181,7 +191,7 @@ public class LoadBundleTag extends TagSupport {
 
         public Set keySet() {
             Set set = new HashSet();
-            for (Enumeration enumer = bundle_.getKeys(); enumer
+            for (Enumeration enumer = bundle.getKeys(); enumer
                     .hasMoreElements();) {
                 set.add(enumer.nextElement());
             }
@@ -202,16 +212,8 @@ public class LoadBundleTag extends TagSupport {
     }
 
     public void release() {
-        basename_ = null;
-        var_ = null;
+        basename = null;
+        var = null;
     }
 
-    String getBasename() {
-        return basename_;
-    }
-
-    String getVar() {
-        return var_;
-    }
-    
 }

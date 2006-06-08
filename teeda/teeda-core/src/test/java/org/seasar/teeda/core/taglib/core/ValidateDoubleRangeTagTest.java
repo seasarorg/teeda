@@ -67,8 +67,8 @@ public class ValidateDoubleRangeTagTest extends TeedaTestCase {
         tag.createValidator();
 
         // # Assert #
-        assertFalse(tag.minimumSet);
-        assertFalse(tag.maximumSet);
+        assertFalse(tag.isMinimumSet());
+        assertFalse(tag.isMaximumSet());
     }
 
     public void testSetMinimum_constantValue() throws Exception {
@@ -82,7 +82,7 @@ public class ValidateDoubleRangeTagTest extends TeedaTestCase {
                 .createValidator();
 
         // # Assert #
-        assertTrue(tag.minimumSet);
+        assertTrue(tag.isMinimumSet());
         assertTrue(11.01d == validator.getMinimum());
     }
 
@@ -100,7 +100,7 @@ public class ValidateDoubleRangeTagTest extends TeedaTestCase {
                 .createValidator();
 
         // # Assert #
-        assertTrue(tag.minimumSet);
+        assertTrue(tag.isMinimumSet());
         assertTrue(321.01d == validator.getMinimum());
     }
 
@@ -115,7 +115,7 @@ public class ValidateDoubleRangeTagTest extends TeedaTestCase {
                 .createValidator();
 
         // # Assert #
-        assertTrue(tag.maximumSet);
+        assertTrue(tag.isMaximumSet());
         assertTrue(543.21d == validator.getMaximum());
     }
 
@@ -133,7 +133,7 @@ public class ValidateDoubleRangeTagTest extends TeedaTestCase {
                 .createValidator();
 
         // # Assert #
-        assertTrue(tag.maximumSet);
+        assertTrue(tag.isMaximumSet());
         assertTrue(999.99d == validator.getMaximum());
     }
 

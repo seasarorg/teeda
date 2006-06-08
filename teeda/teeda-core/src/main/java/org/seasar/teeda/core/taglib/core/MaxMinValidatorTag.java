@@ -22,22 +22,46 @@ import javax.faces.webapp.ValidatorTag;
  */
 public abstract class MaxMinValidatorTag extends ValidatorTag {
 
-    protected String minimum_ = null;
+    private String minimum_ = null;
 
-    protected boolean minimumSet = false;
+    private boolean minimumSet = false;
 
-    protected String maximum_ = null;
+    private String maximum_ = null;
 
-    protected boolean maximumSet = false;
+    private boolean maximumSet = false;
 
     public void setMinimum(String minimum) {
         minimumSet = true;
-        minimum_ = minimum;
+        this.minimum_ = minimum;
+    }
+
+    public String getMinimum() {
+        return minimum_;
     }
 
     public void setMaximum(String maximum) {
         maximumSet = true;
-        maximum_ = maximum;
+        this.maximum_ = maximum;
+    }
+
+    public String getMaximum() {
+        return maximum_;
+    }
+
+    public boolean isMaximumSet() {
+        return maximumSet;
+    }
+
+    public void setMaximumSet(boolean maximumSet) {
+        this.maximumSet = maximumSet;
+    }
+
+    public boolean isMinimumSet() {
+        return minimumSet;
+    }
+
+    public void setMinimumSet(boolean minimumSet) {
+        this.minimumSet = minimumSet;
     }
 
     public void release() {

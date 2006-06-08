@@ -26,29 +26,125 @@ import org.seasar.teeda.core.taglib.UIComponentTagBase;
  */
 public class MessageTag extends UIComponentTagBase {
 
-    private String for_;
+    private String forStr;
 
-    private String showDetail_;
+    private String showDetail;
 
-    private String showSummary_;
+    private String showSummary;
 
-    private String errorClass_;
+    private String errorClass;
 
-    private String errorStyle_;
+    private String errorStyle;
 
-    private String fatalClass_;
+    private String fatalClass;
 
-    private String fatalStyle_;
+    private String fatalStyle;
 
-    private String infoClass_;
+    private String infoClass;
 
-    private String infoStyle_;
+    private String infoStyle;
 
-    private String tooltip_;
+    private String tooltip;
 
-    private String warnClass_;
+    private String warnClass;
 
-    private String warnStyle_;
+    private String warnStyle;
+
+    public String getErrorClass() {
+        return errorClass;
+    }
+
+    public void setErrorClass(String errorClass) {
+        this.errorClass = errorClass;
+    }
+
+    public String getErrorStyle() {
+        return errorStyle;
+    }
+
+    public void setErrorStyle(String errorStyle) {
+        this.errorStyle = errorStyle;
+    }
+
+    public String getFatalClass() {
+        return fatalClass;
+    }
+
+    public void setFatalClass(String fatalClass) {
+        this.fatalClass = fatalClass;
+    }
+
+    public String getFatalStyle() {
+        return fatalStyle;
+    }
+
+    public void setFatalStyle(String fatalStyle) {
+        this.fatalStyle = fatalStyle;
+    }
+
+    public String getFor() {
+        return forStr;
+    }
+
+    public void setFor(String forStr) {
+        this.forStr = forStr;
+    }
+
+    public String getInfoClass() {
+        return infoClass;
+    }
+
+    public void setInfoClass(String infoClass) {
+        this.infoClass = infoClass;
+    }
+
+    public String getInfoStyle() {
+        return infoStyle;
+    }
+
+    public void setInfoStyle(String infoStyle) {
+        this.infoStyle = infoStyle;
+    }
+
+    public String getShowDetail() {
+        return showDetail;
+    }
+
+    public void setShowDetail(String showDetail) {
+        this.showDetail = showDetail;
+    }
+
+    public String getShowSummary() {
+        return showSummary;
+    }
+
+    public void setShowSummary(String showSummary) {
+        this.showSummary = showSummary;
+    }
+
+    public String getTooltip() {
+        return tooltip;
+    }
+
+    public void setTooltip(String tooltip) {
+        this.tooltip = tooltip;
+    }
+
+    public String getWarnClass() {
+        return warnClass;
+    }
+
+    public void setWarnClass(String warnClass) {
+        this.warnClass = warnClass;
+    }
+
+    public String getWarnStyle() {
+        return warnStyle;
+    }
+
+    public void setWarnStyle(String warnStyle) {
+        this.warnStyle = warnStyle;
+    }
 
     public String getComponentType() {
         return HtmlMessage.COMPONENT_TYPE;
@@ -61,140 +157,40 @@ public class MessageTag extends UIComponentTagBase {
     protected void setProperties(UIComponent component) {
         super.setProperties(component);
 
-        setComponentProperty(component, JsfConstants.FOR_ATTR, for_);
+        setComponentProperty(component, JsfConstants.FOR_ATTR, forStr);
         setComponentProperty(component, JsfConstants.SHOW_DETAIL_ATTR,
-                showDetail_);
+                showDetail);
         setComponentProperty(component, JsfConstants.SHOW_SUMMARY_ATTR,
-                showSummary_);
+                showSummary);
         setComponentProperty(component, JsfConstants.ERROR_CLASS_ATTR,
-                errorClass_);
+                errorClass);
         setComponentProperty(component, JsfConstants.ERROR_STYLE_ATTR,
-                errorStyle_);
+                errorStyle);
         setComponentProperty(component, JsfConstants.FATAL_CLASS_ATTR,
-                fatalClass_);
+                fatalClass);
         setComponentProperty(component, JsfConstants.FATAL_STYLE_ATTR,
-                fatalStyle_);
-        setComponentProperty(component, JsfConstants.INFO_CLASS_ATTR,
-                infoClass_);
-        setComponentProperty(component, JsfConstants.INFO_STYLE_ATTR,
-                infoStyle_);
-        setComponentProperty(component, JsfConstants.TOOLTIP_ATTR, tooltip_);
-        setComponentProperty(component, JsfConstants.WARN_CLASS_ATTR,
-                warnClass_);
-        setComponentProperty(component, JsfConstants.WARN_STYLE_ATTR,
-                warnStyle_);
+                fatalStyle);
+        setComponentProperty(component, JsfConstants.INFO_CLASS_ATTR, infoClass);
+        setComponentProperty(component, JsfConstants.INFO_STYLE_ATTR, infoStyle);
+        setComponentProperty(component, JsfConstants.TOOLTIP_ATTR, tooltip);
+        setComponentProperty(component, JsfConstants.WARN_CLASS_ATTR, warnClass);
+        setComponentProperty(component, JsfConstants.WARN_STYLE_ATTR, warnStyle);
     }
 
     public void release() {
         super.release();
-        for_ = null;
-        showDetail_ = null;
-        showSummary_ = null;
-        errorClass_ = null;
-        errorStyle_ = null;
-        fatalClass_ = null;
-        fatalStyle_ = null;
-        infoClass_ = null;
-        infoStyle_ = null;
-        tooltip_ = null;
-        warnClass_ = null;
-        warnStyle_ = null;
-    }
-
-    public void setFor(String for1) {
-        for_ = for1;
-    }
-
-    public void setShowDetail(String showDetail) {
-        showDetail_ = showDetail;
-    }
-
-    public void setShowSummary(String showSummary) {
-        showSummary_ = showSummary;
-    }
-
-    public void setErrorClass(String errorClass) {
-        errorClass_ = errorClass;
-    }
-
-    public void setErrorStyle(String errorStyle) {
-        errorStyle_ = errorStyle;
-    }
-
-    public void setFatalClass(String fatalClass) {
-        fatalClass_ = fatalClass;
-    }
-
-    public void setFatalStyle(String fatalStyle) {
-        fatalStyle_ = fatalStyle;
-    }
-
-    public void setInfoClass(String infoClass) {
-        infoClass_ = infoClass;
-    }
-
-    public void setInfoStyle(String infoStyle) {
-        infoStyle_ = infoStyle;
-    }
-
-    public void setTooltip(String tooltip) {
-        tooltip_ = tooltip;
-    }
-
-    public void setWarnClass(String warnClass) {
-        warnClass_ = warnClass;
-    }
-
-    public void setWarnStyle(String warnStyle) {
-        warnStyle_ = warnStyle;
-    }
-
-    String getErrorClass() {
-        return errorClass_;
-    }
-
-    String getErrorStyle() {
-        return errorStyle_;
-    }
-
-    String getFatalClass() {
-        return fatalClass_;
-    }
-
-    String getFatalStyle() {
-        return fatalStyle_;
-    }
-
-    String getFor() {
-        return for_;
-    }
-
-    String getInfoClass() {
-        return infoClass_;
-    }
-
-    String getInfoStyle() {
-        return infoStyle_;
-    }
-
-    String getShowDetail() {
-        return showDetail_;
-    }
-
-    String getShowSummary() {
-        return showSummary_;
-    }
-
-    String getTooltip() {
-        return tooltip_;
-    }
-
-    String getWarnClass() {
-        return warnClass_;
-    }
-
-    String getWarnStyle() {
-        return warnStyle_;
+        forStr = null;
+        showDetail = null;
+        showSummary = null;
+        errorClass = null;
+        errorStyle = null;
+        fatalClass = null;
+        fatalStyle = null;
+        infoClass = null;
+        infoStyle = null;
+        tooltip = null;
+        warnClass = null;
+        warnStyle = null;
     }
 
 }

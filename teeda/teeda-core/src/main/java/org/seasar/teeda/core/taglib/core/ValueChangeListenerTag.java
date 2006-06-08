@@ -34,14 +34,19 @@ public class ValueChangeListenerTag extends TagSupport {
 
     private static final long serialVersionUID = 1L;
 
-    private String type_ = null;
+    private String type = null;
 
     public void setType(String type) {
-        type_ = type;
+        this.type = type;
+    }
+
+    public String getType() {
+        return type;
     }
 
     public int doStartTag() throws JspException {
-        if (type_ == null) {
+        final String type = getType();
+        if (type == null) {
             throw new JspException("type attribute not set");
         }
         UIComponentTag tag = UIComponentTag
@@ -60,13 +65,13 @@ public class ValueChangeListenerTag extends TagSupport {
         }
         if (component instanceof EditableValueHolder) {
             String className = null;
-            if (UIComponentTag.isValueReference(type_)) {
+            if (UIComponentTag.isValueReference(type)) {
                 FacesContext context = FacesContext.getCurrentInstance();
                 ValueBinding vb = context.getApplication().createValueBinding(
-                        type_);
+                        type);
                 className = (String) vb.getValue(context);
             } else {
-                className = type_;
+                className = type;
             }
             ValueChangeListener listener = (ValueChangeListener) ClassUtil
                     .newInstance(className);
@@ -79,11 +84,8 @@ public class ValueChangeListenerTag extends TagSupport {
     }
 
     public void release() {
-        type_ = null;
-    }
-
-    String getType() {
-        return type_;
+        super.release();
+        type = null;
     }
 
 }

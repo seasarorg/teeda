@@ -34,13 +34,17 @@ public class ActionListenerTag extends TagSupport {
 
     private static final long serialVersionUID = 1L;
 
-    private String type_ = null;
+    private String type = null;
 
     public ActionListenerTag() {
     }
 
     public void setType(String type) {
-        type_ = type;
+        this.type = type;
+    }
+
+    public String getType() {
+        return type;
     }
 
     public int doStartTag() throws JspException {
@@ -65,15 +69,14 @@ public class ActionListenerTag extends TagSupport {
     }
 
     public void release() {
-        type_ = null;
+        type = null;
     }
 
     protected String getActionListenerClassName() {
-        String className = type_;
-        if (UIComponentTag.isValueReference(type_)) {
+        String className = type;
+        if (UIComponentTag.isValueReference(type)) {
             FacesContext context = FacesContext.getCurrentInstance();
-            ValueBinding vb = context.getApplication()
-                    .createValueBinding(type_);
+            ValueBinding vb = context.getApplication().createValueBinding(type);
             className = (String) vb.getValue(context);
         }
         return className;
@@ -83,8 +86,4 @@ public class ActionListenerTag extends TagSupport {
         return (ActionListener) ClassUtil.newInstance(className);
     }
 
-    String getType() {
-        return type_;
-    }
-    
 }

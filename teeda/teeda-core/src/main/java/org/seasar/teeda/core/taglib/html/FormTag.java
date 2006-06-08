@@ -23,6 +23,7 @@ import org.seasar.teeda.core.taglib.UIComponentTagBase;
 
 /**
  * @author yone
+ * @author shot
  */
 public class FormTag extends UIComponentTagBase {
 
@@ -36,13 +37,13 @@ public class FormTag extends UIComponentTagBase {
 
     protected void setProperties(UIComponent component) {
         super.setProperties(component);
-
-        setComponentProperty(component, JsfConstants.ACCEPT_ATTR, accept_);
+        setComponentProperty(component, JsfConstants.ACCEPT_ATTR, getAccept());
         setComponentProperty(component, JsfConstants.ACCEPTCHARSET_ATTR,
-                acceptcharset_);
-        setComponentProperty(component, JsfConstants.ENCTYPE_ATTR, enctype_);
-        setComponentProperty(component, JsfConstants.ONRESET_ATTR, onreset_);
-        setComponentProperty(component, JsfConstants.ONSUBMIT_ATTR, onsubmit_);
+                getAcceptcharset());
+        setComponentProperty(component, JsfConstants.ENCTYPE_ATTR, getEnctype());
+        setComponentProperty(component, JsfConstants.ONRESET_ATTR, getOnreset());
+        setComponentProperty(component, JsfConstants.ONSUBMIT_ATTR,
+                getOnsubmit());
     }
 
 }

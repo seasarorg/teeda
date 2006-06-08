@@ -38,24 +38,28 @@ import org.seasar.teeda.core.util.ValueBindingUtil;
 
 /**
  * @author yone
+ * @author shot
  */
 public class ViewTag extends UIComponentBodyTag {
 
     private static final String COMPONENT_TYPE = UIViewRoot.COMPONENT_TYPE;
 
-    protected String locale_ = null;
+    protected String locale = null;
 
     public ViewTag() {
         super();
     }
 
     public void setLocale(String locale) {
-        locale_ = locale;
+        this.locale = locale;
+    }
+
+    public String getLocale() {
+        return locale;
     }
 
     public String getComponentType() {
         return COMPONENT_TYPE;
-        //throw new IllegalStateException();
     }
 
     public String getRendererType() {
@@ -160,11 +164,11 @@ public class ViewTag extends UIComponentBodyTag {
 
     protected void setProperties(UIComponent component) {
         super.setProperties(component);
-
+        final String localeStr = getLocale();
         FacesContext context = FacesContext.getCurrentInstance();
-        Locale locale = (Locale) ValueBindingUtil.getValue(context, locale_);
+        Locale locale = (Locale) ValueBindingUtil.getValue(context, localeStr);
         if (locale == null) {
-            locale = LocaleUtil.getLocale(locale_);
+            locale = LocaleUtil.getLocale(localeStr);
         }
         ((UIViewRoot) component).setLocale(locale);
         Config.set(pageContext.getRequest(), Config.FMT_LOCALE, locale);

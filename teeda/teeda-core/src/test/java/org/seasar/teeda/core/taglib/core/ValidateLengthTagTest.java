@@ -67,8 +67,8 @@ public class ValidateLengthTagTest extends TeedaTestCase {
         tag.createValidator();
 
         // # Assert #
-        assertFalse(tag.minimumSet);
-        assertFalse(tag.maximumSet);
+        assertFalse(tag.isMinimumSet());
+        assertFalse(tag.isMaximumSet());
     }
 
     public void testSetMinimum_constantValue() throws Exception {
@@ -81,7 +81,7 @@ public class ValidateLengthTagTest extends TeedaTestCase {
         LengthValidator validator = (LengthValidator) tag.createValidator();
 
         // # Assert #
-        assertTrue(tag.minimumSet);
+        assertTrue(tag.isMinimumSet());
         assertTrue(2 == validator.getMinimum());
     }
 
@@ -98,7 +98,7 @@ public class ValidateLengthTagTest extends TeedaTestCase {
         LengthValidator validator = (LengthValidator) tag.createValidator();
 
         // # Assert #
-        assertTrue(tag.minimumSet);
+        assertTrue(tag.isMinimumSet());
         assertTrue(1 == validator.getMinimum());
     }
 
@@ -112,7 +112,7 @@ public class ValidateLengthTagTest extends TeedaTestCase {
         LengthValidator validator = (LengthValidator) tag.createValidator();
 
         // # Assert #
-        assertTrue(tag.maximumSet);
+        assertTrue(tag.isMaximumSet());
         assertTrue(30 == validator.getMaximum());
     }
 
@@ -129,7 +129,7 @@ public class ValidateLengthTagTest extends TeedaTestCase {
         LengthValidator validator = (LengthValidator) tag.createValidator();
 
         // # Assert #
-        assertTrue(tag.maximumSet);
+        assertTrue(tag.isMaximumSet());
         assertTrue(50 == validator.getMaximum());
     }
 

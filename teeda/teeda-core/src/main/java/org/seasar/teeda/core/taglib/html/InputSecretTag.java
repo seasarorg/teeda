@@ -22,10 +22,11 @@ import org.seasar.teeda.core.JsfConstants;
 
 /**
  * @author yone
+ * @author shot
  */
 public class InputSecretTag extends InputTagBase {
 
-    private String redisplay_;
+    private String redisplay;
 
     public String getComponentType() {
         return HtmlInputSecret.COMPONENT_TYPE;
@@ -37,25 +38,27 @@ public class InputSecretTag extends InputTagBase {
 
     protected void setProperties(UIComponent component) {
         super.setProperties(component);
-
-        setComponentProperty(component, JsfConstants.ALT_ATTR, alt_);
-        setComponentProperty(component, JsfConstants.REDISPLAY_ATTR, redisplay_);
-        setComponentProperty(component, JsfConstants.ONCHANGE_ATTR, onchange_);
-        setComponentProperty(component, JsfConstants.ONSELECT_ATTR, onselect_);
-        setComponentProperty(component, JsfConstants.SIZE_ATTR, size_);
+        setComponentProperty(component, JsfConstants.ALT_ATTR, getAlt());
+        setComponentProperty(component, JsfConstants.REDISPLAY_ATTR,
+                getRedisplay());
+        setComponentProperty(component, JsfConstants.ONCHANGE_ATTR,
+                getOnchange());
+        setComponentProperty(component, JsfConstants.ONSELECT_ATTR,
+                getOnselect());
+        setComponentProperty(component, JsfConstants.SIZE_ATTR, getSize());
     }
 
     public void release() {
         super.release();
-        redisplay_ = null;
+        redisplay = null;
     }
 
     public void setRedisplay(String redisplay) {
-        redisplay_ = redisplay;
+        this.redisplay = redisplay;
     }
 
-    String getRedisplay() {
-        return redisplay_;
+    public String getRedisplay() {
+        return redisplay;
     }
 
 }

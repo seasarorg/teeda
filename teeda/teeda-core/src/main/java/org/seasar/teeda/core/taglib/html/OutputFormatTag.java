@@ -26,7 +26,7 @@ import org.seasar.teeda.core.taglib.UIComponentTagBase;
  */
 public class OutputFormatTag extends UIComponentTagBase {
 
-    private String escape_;
+    private String escape;
 
     public String getComponentType() {
         return HtmlOutputFormat.COMPONENT_TYPE;
@@ -39,20 +39,20 @@ public class OutputFormatTag extends UIComponentTagBase {
     protected void setProperties(UIComponent component) {
         super.setProperties(component);
 
-        setComponentProperty(component, JsfConstants.ESCAPE_ATTR, escape_);
+        setComponentProperty(component, JsfConstants.ESCAPE_ATTR, escape);
     }
 
     public void release() {
         super.release();
-        escape_ = null;
+        escape = null;
     }
 
     public void setEscape(String escape) {
-        escape_ = escape;
+        this.escape = escape;
     }
 
-    String getEscape() {
-        return escape_;
+    public String getEscape() {
+        return escape;
     }
 
 }

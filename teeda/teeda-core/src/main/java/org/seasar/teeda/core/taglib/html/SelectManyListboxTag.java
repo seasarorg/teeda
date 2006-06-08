@@ -22,6 +22,7 @@ import org.seasar.teeda.core.JsfConstants;
 
 /**
  * @author yone
+ * @author shot
  */
 public class SelectManyListboxTag extends InputTagBase {
 
@@ -36,12 +37,14 @@ public class SelectManyListboxTag extends InputTagBase {
     protected void setProperties(UIComponent component) {
         super.setProperties(component);
         setComponentProperty(component, JsfConstants.DISABLED_CLASS_ATTR,
-                disabledClass_);
+                getDisabledClass());
         setComponentProperty(component, JsfConstants.ENABLED_CLASS_ATTR,
-                enabledClass_);
-        setComponentProperty(component, JsfConstants.ONCHANGE_ATTR, onchange_);
-        setComponentProperty(component, JsfConstants.ONSELECT_ATTR, onselect_);
-        setComponentProperty(component, JsfConstants.SIZE_ATTR, size_);
+                getEnabledClass());
+        setComponentProperty(component, JsfConstants.ONCHANGE_ATTR,
+                getOnchange());
+        setComponentProperty(component, JsfConstants.ONSELECT_ATTR,
+                getOnselect());
+        setComponentProperty(component, JsfConstants.SIZE_ATTR, getSize());
     }
 
 }

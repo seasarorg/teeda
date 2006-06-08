@@ -87,129 +87,139 @@ public class ConvertNumberTag extends ConverterTag {
 
     protected void setConverterCurrencyCode(FacesContext context,
             NumberConverter converter) {
-        if (currencyCode_ == null) {
+        String currencyCode = getCurrencyCode();
+        if (currencyCode == null) {
             return;
         }
-        String currencyCode = (String) ValueBindingUtil.getValue(context,
-                currencyCode_);
-        if (currencyCode == null) {
-            currencyCode = currencyCode_;
+        String cCode = (String) ValueBindingUtil
+                .getValue(context, currencyCode);
+        if (cCode == null) {
+            cCode = currencyCode;
         }
-        converter.setCurrencyCode(currencyCode);
+        converter.setCurrencyCode(cCode);
     }
 
     protected void setConverterCurrencySymbol(FacesContext context,
             NumberConverter converter) {
-        if (currencySymbol_ == null) {
+        String currencySymbol = getCurrencySymbol();
+        if (currencySymbol == null) {
             return;
         }
-        String currencySymbol = (String) ValueBindingUtil.getValue(context,
-                currencySymbol_);
-        if (currencySymbol == null) {
-            currencySymbol = currencySymbol_;
+        String symbol = (String) ValueBindingUtil.getValue(context,
+                currencySymbol);
+        if (symbol == null) {
+            symbol = currencySymbol;
         }
-        converter.setCurrencySymbol(currencySymbol);
+        converter.setCurrencySymbol(symbol);
     }
 
     protected void setConverterGroupingUsed(FacesContext context,
             NumberConverter converter) {
-        if (groupingUsed_ == null) {
+        final String groupingUsed = getGroupingUsed();
+        if (groupingUsed == null) {
             return;
         }
-        Boolean b = (Boolean) ValueBindingUtil.getValue(context, groupingUsed_);
+        Boolean b = (Boolean) ValueBindingUtil.getValue(context, groupingUsed);
         if (b == null) {
-            b = new Boolean(groupingUsed_);
+            b = new Boolean(groupingUsed);
         }
         converter.setGroupingUsed(b.booleanValue());
     }
 
     protected void setConverterIntegerOnly(FacesContext context,
             NumberConverter converter) {
-        if (integerOnly_ == null) {
+        final String integerOnly = getIntegerOnly();
+        if (integerOnly == null) {
             return;
         }
-        Boolean b = (Boolean) ValueBindingUtil.getValue(context, integerOnly_);
+        Boolean b = (Boolean) ValueBindingUtil.getValue(context, integerOnly);
         if (b == null) {
-            b = new Boolean(integerOnly_);
+            b = new Boolean(integerOnly);
         }
         converter.setIntegerOnly(b.booleanValue());
     }
 
     protected void setConverterLocale(FacesContext context,
             NumberConverter converter) {
-        Locale locale = (Locale) ValueBindingUtil.getValue(context, locale_);
+        Locale locale = (Locale) ValueBindingUtil
+                .getValue(context, getLocale());
         if (locale == null) {
-            locale = LocaleUtil.getLocale(locale_);
+            locale = LocaleUtil.getLocale(getLocale());
         }
         converter.setLocale(locale);
     }
 
     protected void setConverterMaxFractionDigits(FacesContext context,
             NumberConverter converter) {
-        if (maxFractionDigits_ == null) {
+        final String maxFractionDigits = getMaxFractionDigits();
+        if (maxFractionDigits == null) {
             return;
         }
         Integer i = (Integer) ValueBindingUtil.getValue(context,
-                maxFractionDigits_);
+                maxFractionDigits);
         if (i == null) {
-            i = new Integer(maxFractionDigits_);
+            i = new Integer(maxFractionDigits);
         }
         converter.setMaxFractionDigits(i.intValue());
     }
 
     protected void setConverterMaxIntegerDigits(FacesContext context,
             NumberConverter converter) {
-        if (maxIntegerDigits_ == null) {
+        final String maxIntegerDigits = getMaxIntegerDigits();
+        if (maxIntegerDigits == null) {
             return;
         }
         Integer i = (Integer) ValueBindingUtil.getValue(context,
-                maxIntegerDigits_);
+                maxIntegerDigits);
         if (i == null) {
-            i = new Integer(maxIntegerDigits_);
+            i = new Integer(maxIntegerDigits);
         }
         converter.setMaxIntegerDigits(i.intValue());
     }
 
     protected void setConverterMinFractionDigits(FacesContext context,
             NumberConverter converter) {
-        if (minFractionDigits_ == null) {
+        final String minFractionDigits = getMinFractionDigits();
+        if (minFractionDigits == null) {
             return;
         }
         Integer i = (Integer) ValueBindingUtil.getValue(context,
-                minFractionDigits_);
+                minFractionDigits);
         if (i == null) {
-            i = new Integer(minFractionDigits_);
+            i = new Integer(minFractionDigits);
         }
         converter.setMinFractionDigits(i.intValue());
     }
 
     protected void setConverterMinIntegerDigits(FacesContext context,
             NumberConverter converter) {
-        if (minIntegerDigits_ == null) {
+        final String minIntegerDigits = getMinIntegerDigits();
+        if (minIntegerDigits == null) {
             return;
         }
         Integer i = (Integer) ValueBindingUtil.getValue(context,
-                minIntegerDigits_);
+                minIntegerDigits);
         if (i == null) {
-            i = new Integer(minIntegerDigits_);
+            i = new Integer(minIntegerDigits);
         }
         converter.setMinIntegerDigits(i.intValue());
     }
 
     protected void setConverterPattern(FacesContext context,
             NumberConverter converter) {
-        String pattern = (String) ValueBindingUtil.getValue(context, pattern_);
+        String pattern = (String) ValueBindingUtil.getValue(context,
+                getPattern());
         if (pattern == null) {
-            pattern = pattern_;
+            pattern = getPattern();
         }
         converter.setPattern(pattern);
     }
 
     protected void setConverterType(FacesContext context,
             NumberConverter converter) {
-        String type = (String) ValueBindingUtil.getValue(context, type_);
+        String type = (String) ValueBindingUtil.getValue(context, getType());
         if (type == null) {
-            type = type_;
+            type = getType();
         }
         converter.setType(type);
     }
@@ -228,92 +238,92 @@ public class ConvertNumberTag extends ConverterTag {
         pattern_ = null;
         type_ = JsfConstants.DEFAULT_CONVERTNUMBER_TYPE;
     }
-    
+
     public void setCurrencyCode(String currencyCode) {
-        currencyCode_ = currencyCode;
+        this.currencyCode_ = currencyCode;
     }
 
     public void setCurrencySymbol(String currencySymbol) {
-        currencySymbol_ = currencySymbol;
+        this.currencySymbol_ = currencySymbol;
     }
 
     public void setGroupingUsed(String groupingUsed) {
-        groupingUsed_ = groupingUsed;
+        this.groupingUsed_ = groupingUsed;
     }
 
     public void setIntegerOnly(String integerOnly) {
-        integerOnly_ = integerOnly;
+        this.integerOnly_ = integerOnly;
     }
 
     public void setLocale(String locale) {
-        locale_ = locale;
+        this.locale_ = locale;
     }
 
     public void setMaxFractionDigits(String maxFractionDigits) {
-        maxFractionDigits_ = maxFractionDigits;
+        this.maxFractionDigits_ = maxFractionDigits;
     }
 
     public void setMaxIntegerDigits(String maxIntegerDigits) {
-        maxIntegerDigits_ = maxIntegerDigits;
+        this.maxIntegerDigits_ = maxIntegerDigits;
     }
 
     public void setMinFractionDigits(String minFractionDigits) {
-        minFractionDigits_ = minFractionDigits;
+        this.minFractionDigits_ = minFractionDigits;
     }
 
     public void setMinIntegerDigits(String minIntegerDigits) {
-        minIntegerDigits_ = minIntegerDigits;
+        this.minIntegerDigits_ = minIntegerDigits;
     }
 
     public void setPattern(String pattern) {
-        pattern_ = pattern;
+        this.pattern_ = pattern;
     }
 
     public void setType(String type) {
-        type_ = type;
+        this.type_ = type;
     }
 
-    String getCurrencyCode() {
+    public String getCurrencyCode() {
         return currencyCode_;
     }
 
-    String getCurrencySymbol() {
+    public String getCurrencySymbol() {
         return currencySymbol_;
     }
 
-    String getGroupingUsed() {
+    public String getGroupingUsed() {
         return groupingUsed_;
     }
 
-    String getIntegerOnly() {
+    public String getIntegerOnly() {
         return integerOnly_;
     }
 
-    String getLocale() {
+    public String getLocale() {
         return locale_;
     }
 
-    String getMaxFractionDigits() {
+    public String getMaxFractionDigits() {
         return maxFractionDigits_;
     }
 
-    String getMaxIntegerDigits() {
+    public String getMaxIntegerDigits() {
         return maxIntegerDigits_;
     }
 
-    String getMinFractionDigits() {
+    public String getMinFractionDigits() {
         return minFractionDigits_;
     }
 
-    String getMinIntegerDigits() {
+    public String getMinIntegerDigits() {
         return minIntegerDigits_;
     }
 
-    String getPattern() {
+    public String getPattern() {
         return pattern_;
     }
 
-    String getType() {
+    public String getType() {
         return type_;
     }
 

@@ -22,88 +22,79 @@ import org.seasar.teeda.core.taglib.UIComponentTagBase;
 
 /**
  * @author yone
+ * @author shot
  */
 public abstract class InputTagBase extends UIComponentTagBase {
 
-    private String immediate_;
+    private String immediate;
 
-    private String required_;
+    private String required;
 
-    private String validator_;
+    private String validator;
 
-    private String valueChangeListener_;
+    private String valueChangeListener;
 
-    private String readonly_;
-
-    private String label_;
+    private String label;
 
     protected void setProperties(UIComponent component) {
         super.setProperties(component);
-
-        setComponentProperty(component, JsfConstants.IMMEDIATE_ATTR, immediate_);
-        setComponentProperty(component, JsfConstants.REQUIRED_ATTR, required_);
-        setValidatorProperty(component, validator_);
-        setValueChangeListenerProperty(component, valueChangeListener_);
-        setComponentProperty(component, JsfConstants.READONLY_ATTR, readonly_);
-        setComponentProperty(component, JsfConstants.LABEL_ATTR, label_);
+        setComponentProperty(component, JsfConstants.IMMEDIATE_ATTR,
+                getImmediate());
+        setComponentProperty(component, JsfConstants.REQUIRED_ATTR,
+                getRequired());
+        setValidatorProperty(component, getValidator());
+        setValueChangeListenerProperty(component, getValueChangeListener());
+        setComponentProperty(component, JsfConstants.READONLY_ATTR, getReadonly());
+        setComponentProperty(component, JsfConstants.LABEL_ATTR, getLabel());
     }
 
     public void release() {
         super.release();
-        immediate_ = null;
-        required_ = null;
-        validator_ = null;
-        valueChangeListener_ = null;
-        readonly_ = null;
-        label_ = null;
+        immediate = null;
+        required = null;
+        validator = null;
+        valueChangeListener = null;
+        label = null;
     }
 
     public void setImmediate(String immediate) {
-        immediate_ = immediate;
-    }
-
-    public void setReadonly(String readonly) {
-        readonly_ = readonly;
+        this.immediate = immediate;
     }
 
     public void setRequired(String required) {
-        required_ = required;
+        this.required = required;
     }
 
     public void setValidator(String validator) {
-        validator_ = validator;
+        this.validator = validator;
     }
 
     public void setValueChangeListener(String valueChangeListener) {
-        valueChangeListener_ = valueChangeListener;
+        this.valueChangeListener = valueChangeListener;
     }
 
     public void setLabel(String label) {
-        label_ = label;
+        this.label = label;
     }
 
-    String getImmediate() {
-        return immediate_;
+    public String getImmediate() {
+        return immediate;
     }
 
-    String getReadonly() {
-        return readonly_;
+    public String getRequired() {
+        return required;
     }
 
-    String getRequired() {
-        return required_;
+    public String getValidator() {
+        return validator;
     }
 
-    String getValidator() {
-        return validator_;
-    }
-
-    String getValueChangeListener() {
-        return valueChangeListener_;
+    public String getValueChangeListener() {
+        return valueChangeListener;
     }
 
     public String getLabel() {
-        return label_;
+        return label;
     }
 
 }

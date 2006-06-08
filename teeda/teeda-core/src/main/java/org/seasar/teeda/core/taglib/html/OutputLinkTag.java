@@ -36,15 +36,14 @@ public class OutputLinkTag extends UIComponentTagBase {
 
     protected void setProperties(UIComponent component) {
         super.setProperties(component);
-
-        setComponentProperty(component, JsfConstants.CHARSET_ATTR, charset_);
-        setComponentProperty(component, JsfConstants.COORDS_ATTR, coords_);
-        setComponentProperty(component, JsfConstants.HREFLANG_ATTR, hreflang_);
-        setComponentProperty(component, JsfConstants.REL_ATTR, rel_);
-        setComponentProperty(component, JsfConstants.REV_ATTR, rev_);
-        setComponentProperty(component, JsfConstants.SHAPE_ATTR, shape_);
-        setComponentProperty(component, JsfConstants.TARGET_ATTR, target_);
-        setComponentProperty(component, JsfConstants.TYPE_ATTR, type_);
+        setComponentProperty(component, JsfConstants.CHARSET_ATTR, getCharset());
+        setComponentProperty(component, JsfConstants.COORDS_ATTR, getCoords());
+        setComponentProperty(component, JsfConstants.HREFLANG_ATTR, getHreflang());
+        setComponentProperty(component, JsfConstants.REL_ATTR, getRel());
+        setComponentProperty(component, JsfConstants.REV_ATTR, getRev());
+        setComponentProperty(component, JsfConstants.SHAPE_ATTR, getShape());
+        setComponentProperty(component, JsfConstants.TARGET_ATTR, getTarget());
+        setComponentProperty(component, JsfConstants.TYPE_ATTR, getType());
     }
 
 }

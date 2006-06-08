@@ -23,18 +23,19 @@ import org.seasar.teeda.core.taglib.UIComponentTagBase;
 
 /**
  * @author yone
+ * @author shot
  */
 public class PanelGridTag extends UIComponentTagBase {
 
-    private String columnClasses_;
+    private String columnClasses;
 
-    private String columns_;
+    private String columns;
 
-    private String footerClass_;
+    private String footerClass;
 
-    private String headerClass_;
+    private String headerClass;
 
-    private String rowClasses_;
+    private String rowClasses;
 
     public String getComponentType() {
         return HtmlPanelGrid.COMPONENT_TYPE;
@@ -46,75 +47,74 @@ public class PanelGridTag extends UIComponentTagBase {
 
     protected void setProperties(UIComponent component) {
         super.setProperties(component);
-
-        setComponentProperty(component, JsfConstants.BORDER_ATTR, border_);
-        setComponentProperty(component, JsfConstants.BGCOLOR_ATTR, bgcolor_);
+        setComponentProperty(component, JsfConstants.BORDER_ATTR, getBorder());
+        setComponentProperty(component, JsfConstants.BGCOLOR_ATTR, getBgcolor());
         setComponentProperty(component, JsfConstants.CELLPADDING_ATTR,
-                cellpadding_);
+                getCellpadding());
         setComponentProperty(component, JsfConstants.CELLSPACING_ATTR,
-                cellspacing_);
+                getCellspacing());
         setComponentProperty(component, JsfConstants.COLUMN_CLASSES_ATTR,
-                columnClasses_);
-        setComponentProperty(component, JsfConstants.COLUMNS_ATTR, columns_);
+                getColumnClasses());
+        setComponentProperty(component, JsfConstants.COLUMNS_ATTR, getColumns());
         setComponentProperty(component, JsfConstants.FOOTER_CLASS_ATTR,
-                footerClass_);
-        setComponentProperty(component, JsfConstants.FRAME_ATTR, frame_);
+                getFooterClass());
+        setComponentProperty(component, JsfConstants.FRAME_ATTR, getFrame());
         setComponentProperty(component, JsfConstants.HEADER_CLASS_ATTR,
-                headerClass_);
+                getHeaderClass());
         setComponentProperty(component, JsfConstants.ROW_CLASSES_ATTR,
-                rowClasses_);
-        setComponentProperty(component, JsfConstants.RULES_ATTR, rules_);
-        setComponentProperty(component, JsfConstants.SUMMARY_ATTR, summary_);
-        setComponentProperty(component, JsfConstants.WIDTH_ATTR, width_);
+                getRowClasses());
+        setComponentProperty(component, JsfConstants.RULES_ATTR, getRules());
+        setComponentProperty(component, JsfConstants.SUMMARY_ATTR, getSummary());
+        setComponentProperty(component, JsfConstants.WIDTH_ATTR, getWidth());
     }
 
     public void release() {
         super.release();
-        columnClasses_ = null;
-        columns_ = null;
-        footerClass_ = null;
-        headerClass_ = null;
-        rowClasses_ = null;
+        columnClasses = null;
+        columns = null;
+        footerClass = null;
+        headerClass = null;
+        rowClasses = null;
     }
 
     public void setColumnClasses(String columnClasses) {
-        columnClasses_ = columnClasses;
+        this.columnClasses = columnClasses;
     }
 
     public void setColumns(String columns) {
-        columns_ = columns;
+        this.columns = columns;
     }
 
     public void setFooterClass(String footerClass) {
-        footerClass_ = footerClass;
+        this.footerClass = footerClass;
     }
 
     public void setHeaderClass(String headerClass) {
-        headerClass_ = headerClass;
+        this.headerClass = headerClass;
     }
 
     public void setRowClasses(String rowClasses) {
-        rowClasses_ = rowClasses;
+        this.rowClasses = rowClasses;
     }
 
-    String getColumnClasses() {
-        return columnClasses_;
+    public String getColumnClasses() {
+        return columnClasses;
     }
 
-    String getColumns() {
-        return columns_;
+    public String getColumns() {
+        return columns;
     }
 
-    String getFooterClass() {
-        return footerClass_;
+    public String getFooterClass() {
+        return footerClass;
     }
 
-    String getHeaderClass() {
-        return headerClass_;
+    public String getHeaderClass() {
+        return headerClass;
     }
 
-    String getRowClasses() {
-        return rowClasses_;
+    public String getRowClasses() {
+        return rowClasses;
     }
 
 }

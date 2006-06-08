@@ -22,6 +22,7 @@ import org.seasar.teeda.core.JsfConstants;
 
 /**
  * @author yone
+ * @author shot
  */
 public class SelectBooleanCheckboxTag extends InputTagBase {
 
@@ -35,9 +36,8 @@ public class SelectBooleanCheckboxTag extends InputTagBase {
 
     protected void setProperties(UIComponent component) {
         super.setProperties(component);
-
-        setComponentProperty(component, JsfConstants.ONCHANGE_ATTR, onchange_);
-        setComponentProperty(component, JsfConstants.ONSELECT_ATTR, onselect_);
+        setComponentProperty(component, JsfConstants.ONCHANGE_ATTR, getOnchange());
+        setComponentProperty(component, JsfConstants.ONSELECT_ATTR, getOnselect());
     }
 
     public void release() {

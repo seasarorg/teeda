@@ -28,32 +28,48 @@ public class SelectItemTag extends UIComponentTagBase {
 
     private static final String COMPONENT_TYPE = UISelectItem.COMPONENT_TYPE;
 
-    protected String itemDescription_;
+    protected String itemDescription;
 
-    protected String itemDisabled_;
+    protected String itemDisabled;
 
-    protected String itemLabel_;
+    protected String itemLabel;
 
-    protected String itemValue_;
+    protected String itemValue;
 
     public SelectItemTag() {
         super();
     }
 
     public void setItemDescription(String itemDescription) {
-        itemDescription_ = itemDescription;
+        this.itemDescription = itemDescription;
     }
 
     public void setItemDisabled(String itemDisabled) {
-        itemDisabled_ = itemDisabled;
+        this.itemDisabled = itemDisabled;
     }
 
     public void setItemLabel(String itemLabel) {
-        itemLabel_ = itemLabel;
+        this.itemLabel = itemLabel;
     }
 
     public void setItemValue(String itemValue) {
-        itemValue_ = itemValue;
+        this.itemValue = itemValue;
+    }
+
+    public String getItemDescription() {
+        return itemDescription;
+    }
+
+    public String getItemDisabled() {
+        return itemDisabled;
+    }
+
+    public String getItemLabel() {
+        return itemLabel;
+    }
+
+    public String getItemValue() {
+        return itemValue;
     }
 
     public String getComponentType() {
@@ -67,37 +83,19 @@ public class SelectItemTag extends UIComponentTagBase {
     protected void setProperties(UIComponent component) {
         super.setProperties(component);
         setComponentProperty(component, JsfConstants.ITEM_DESCRIPTION_ATTR,
-                itemDescription_);
+                itemDescription);
         setComponentProperty(component, JsfConstants.ITEM_DISABLED_ATTR,
-                itemDisabled_);
-        setComponentProperty(component, JsfConstants.ITEM_LABEL_ATTR,
-                itemLabel_);
-        setComponentProperty(component, JsfConstants.ITEM_VALUE_ATTR,
-                itemValue_);
+                itemDisabled);
+        setComponentProperty(component, JsfConstants.ITEM_LABEL_ATTR, itemLabel);
+        setComponentProperty(component, JsfConstants.ITEM_VALUE_ATTR, itemValue);
     }
 
     public void release() {
         super.release();
-        itemDescription_ = null;
-        itemDisabled_ = null;
-        itemLabel_ = null;
-        itemValue_ = null;
-    }
-
-    String getItemDescription() {
-        return itemDescription_;
-    }
-
-    String getItemDisabled() {
-        return itemDisabled_;
-    }
-
-    String getItemLabel() {
-        return itemLabel_;
-    }
-
-    String getItemValue() {
-        return itemValue_;
+        itemDescription = null;
+        itemDisabled = null;
+        itemLabel = null;
+        itemValue = null;
     }
 
 }

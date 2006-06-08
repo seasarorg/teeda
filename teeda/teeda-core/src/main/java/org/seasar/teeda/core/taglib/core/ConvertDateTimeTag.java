@@ -37,19 +37,67 @@ public class ConvertDateTimeTag extends ConverterTag {
 
     private static final long serialVersionUID = 1L;
 
-    private String dateStyle_ = JsfConstants.DEFAULT_CONVERTDATETIME_DATE_STYLE;
+    private String dateStyle = JsfConstants.DEFAULT_CONVERTDATETIME_DATE_STYLE;
 
-    private String locale_;
+    private String locale;
 
-    private String pattern_;
+    private String pattern;
 
-    private String timeStyle_ = JsfConstants.DEFAULT_CONVERTDATETIME_TIME_STYLE;
+    private String timeStyle = JsfConstants.DEFAULT_CONVERTDATETIME_TIME_STYLE;
 
-    private String timeZone_;
+    private String timeZone;
 
-    private String type_ = JsfConstants.DEFAULT_CONVERTDATETIME_TYPE;
+    private String type = JsfConstants.DEFAULT_CONVERTDATETIME_TYPE;
 
     public ConvertDateTimeTag() {
+    }
+
+    public void setDateStyle(String dateStyle) {
+        this.dateStyle = dateStyle;
+    }
+
+    public void setLocale(String locale) {
+        this.locale = locale;
+    }
+
+    public void setPattern(String pattern) {
+        this.pattern = pattern;
+    }
+
+    public void setTimeStyle(String timeStyle) {
+        this.timeStyle = timeStyle;
+    }
+
+    public void setTimeZone(String timeZone) {
+        this.timeZone = timeZone;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getDateStyle() {
+        return dateStyle;
+    }
+
+    public String getLocale() {
+        return locale;
+    }
+
+    public String getPattern() {
+        return pattern;
+    }
+
+    public String getTimeStyle() {
+        return timeStyle;
+    }
+
+    public String getTimeZone() {
+        return timeZone;
+    }
+
+    public String getType() {
+        return type;
     }
 
     public void setPageContext(PageContext context) {
@@ -73,27 +121,29 @@ public class ConvertDateTimeTag extends ConverterTag {
     protected void setConverterDateStyle(FacesContext context,
             DateTimeConverter converter) {
         String dateStyle = (String) ValueBindingUtil.getValue(context,
-                dateStyle_);
+                this.dateStyle);
         if (dateStyle == null) {
-            dateStyle = dateStyle_;
+            dateStyle = this.dateStyle;
         }
         converter.setDateStyle(dateStyle);
     }
 
     protected void setConverterLocale(FacesContext context,
             DateTimeConverter converter) {
-        Locale locale = (Locale) ValueBindingUtil.getValue(context, locale_);
+        Locale locale = (Locale) ValueBindingUtil
+                .getValue(context, getLocale());
         if (locale == null) {
-            locale = LocaleUtil.getLocale(locale_);
+            locale = LocaleUtil.getLocale(getLocale());
         }
         converter.setLocale(locale);
     }
 
     protected void setConverterPattern(FacesContext context,
             DateTimeConverter converter) {
-        String pattern = (String) ValueBindingUtil.getValue(context, pattern_);
+        String pattern = (String) ValueBindingUtil.getValue(context,
+                getPattern());
         if (pattern == null) {
-            pattern = pattern_;
+            pattern = getPattern();
         }
         converter.setPattern(pattern);
     }
@@ -101,9 +151,9 @@ public class ConvertDateTimeTag extends ConverterTag {
     protected void setConverterTimeStyle(FacesContext context,
             DateTimeConverter converter) {
         String timeStyle = (String) ValueBindingUtil.getValue(context,
-                timeStyle_);
+                getTimeStyle());
         if (timeStyle == null) {
-            timeStyle = timeStyle_;
+            timeStyle = getTimeStyle();
         }
         converter.setTimeStyle(timeStyle);
     }
@@ -111,10 +161,10 @@ public class ConvertDateTimeTag extends ConverterTag {
     protected void setConverterTimeZone(FacesContext context,
             DateTimeConverter converter) {
         TimeZone timeZone = (TimeZone) ValueBindingUtil.getValue(context,
-                timeZone_);
+                getTimeZone());
         if (timeZone == null) {
-            if (timeZone_ != null) {
-                timeZone = TimeZone.getTimeZone(timeZone_);
+            if (getTimeZone() != null) {
+                timeZone = TimeZone.getTimeZone(getTimeZone());
             } else {
                 timeZone = TimeZone.getDefault();
             }
@@ -124,73 +174,25 @@ public class ConvertDateTimeTag extends ConverterTag {
 
     protected void setConverterType(FacesContext context,
             DateTimeConverter converter) {
-        String type = (String) ValueBindingUtil.getValue(context, type_);
+        String type = (String) ValueBindingUtil.getValue(context, getType());
         if (type == null) {
-            type = type_;
+            type = getType();
         }
         converter.setType(type);
     }
 
     public void release() {
         super.release();
-        dateStyle_ = JsfConstants.DEFAULT_CONVERTDATETIME_DATE_STYLE;
-        locale_ = null;
-        pattern_ = null;
-        timeStyle_ = JsfConstants.DEFAULT_CONVERTDATETIME_TIME_STYLE;
-        timeZone_ = null;
-        type_ = JsfConstants.DEFAULT_CONVERTDATETIME_TYPE;
-    }
-    
-    public void setDateStyle(String dateStyle) {
-        dateStyle_ = dateStyle;
-    }
-
-    public void setLocale(String locale) {
-        locale_ = locale;
-    }
-
-    public void setPattern(String pattern) {
-        pattern_ = pattern;
-    }
-
-    public void setTimeStyle(String timeStyle) {
-        timeStyle_ = timeStyle;
-    }
-
-    public void setTimeZone(String timeZone) {
-        timeZone_ = timeZone;
-    }
-
-    public void setType(String type) {
-        type_ = type;
+        dateStyle = JsfConstants.DEFAULT_CONVERTDATETIME_DATE_STYLE;
+        locale = null;
+        pattern = null;
+        timeStyle = JsfConstants.DEFAULT_CONVERTDATETIME_TIME_STYLE;
+        timeZone = null;
+        type = JsfConstants.DEFAULT_CONVERTDATETIME_TYPE;
     }
 
     private static FacesContext getFacesContext() {
         return FacesContext.getCurrentInstance();
     }
 
-    String getDateStyle() {
-        return dateStyle_;
-    }
-
-    String getLocale() {
-        return locale_;
-    }
-
-    String getPattern() {
-        return pattern_;
-    }
-
-    String getTimeStyle() {
-        return timeStyle_;
-    }
-
-    String getTimeZone() {
-        return timeZone_;
-    }
-
-    String getType() {
-        return type_;
-    }
-    
 }

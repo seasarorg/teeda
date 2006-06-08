@@ -19,6 +19,7 @@ import junit.framework.TestCase;
 
 /**
  * @author yone
+ * @author shot
  */
 public class UIComponentTagBaseTest extends TestCase {
 
@@ -63,7 +64,6 @@ public class UIComponentTagBaseTest extends TestCase {
         tag.setHref("href");
         tag.setHreflang("hrefLang");
         tag.setHspace("hspace");
-//        tag.setLabel("label");
         tag.setLongdesc("longdesc");
         tag.setMethod("method");
         tag.setMultiple("multiple");
@@ -90,84 +90,83 @@ public class UIComponentTagBaseTest extends TestCase {
         tag.setFrame("frame");
         tag.setRules("rules");
         tag.setConverter("converter");
-        
+
         // # Act #
         tag.release();
-        
+
         // # Assert #
-        assertEquals(null, tag.styleClass_);
-        assertEquals(null, tag.title_);
-        assertEquals(null, tag.enabledClass_);
-        assertEquals(null, tag.disabledClass_);
-        assertEquals(null, tag.onclick_);
-        assertEquals(null, tag.ondblclick_);
-        assertEquals(null, tag.onmousedown_);
-        assertEquals(null, tag.onmouseover_);
-        assertEquals(null, tag.onmousemove_);
-        assertEquals(null, tag.onmouseout_);
-        assertEquals(null, tag.onkeypress_);
-        assertEquals(null, tag.onkeydown_);
-        assertEquals(null, tag.onkeyup_);
-        assertEquals(null, tag.lang_);
-        assertEquals(null, tag.dir_);
-        assertEquals(null, tag.height_);
-        assertEquals(null, tag.width_);
-        assertEquals(null, tag.cellspacing_);
-        assertEquals(null, tag.cellpadding_);
-        assertEquals(null, tag.disabled_);
-        assertEquals(null, tag.size_);
-        assertEquals(null, tag.tabindex_);
-        assertEquals(null, tag.checked_);
-        assertEquals(null, tag.border_);
-        assertEquals(null, tag.readonly_);
-        assertEquals(null, tag.ismap_);
-        assertEquals(null, tag.maxlength_);
-        assertEquals(null, tag.rows_);
-        assertEquals(null, tag.cols_);
-        assertEquals(null, tag.formatStyle_);
-        assertEquals(null, tag.dateStyle_);
-        assertEquals(null, tag.timeStyle_);
-        assertEquals(null, tag.timezone_);
-        assertEquals(null, tag.formatPattern_);
-        assertEquals(null, tag.accept_);
-        assertEquals(null, tag.acceptcharset_);
-        assertEquals(null, tag.accesskey_);
-        assertEquals(null, tag.action_);
-        assertEquals(null, tag.alt_);
-        assertEquals(null, tag.charset_);
-        assertEquals(null, tag.coords_);
-        assertEquals(null, tag.enctype_);
-        assertEquals(null, tag.htmlFor_);
-        assertEquals(null, tag.href_);
-        assertEquals(null, tag.hreflang_);
-        assertEquals(null, tag.hspace_);
-//        assertEquals(null, tag.label_);
-        assertEquals(null, tag.longdesc_);
-        assertEquals(null, tag.method_);
-        assertEquals(null, tag.multiple_);
-        assertEquals(null, tag.name_);
-        assertEquals(null, tag.onblur_);
-        assertEquals(null, tag.onchange_);
-        assertEquals(null, tag.onfocus_);
-        assertEquals(null, tag.onmouseup_);
-        assertEquals(null, tag.onreset_);
-        assertEquals(null, tag.onselect_);
-        assertEquals(null, tag.onsubmit_);
-        assertEquals(null, tag.rel_);
-        assertEquals(null, tag.rev_);
-        assertEquals(null, tag.selected_);
-        assertEquals(null, tag.shape_);
-        assertEquals(null, tag.src_);
-        assertEquals(null, tag.style_);
-        assertEquals(null, tag.target_);
-        assertEquals(null, tag.type_);
-        assertEquals(null, tag.usemap_);
-        assertEquals(null, tag.value_);
-        assertEquals(null, tag.summary_);
-        assertEquals(null, tag.bgcolor_);
-        assertEquals(null, tag.frame_);
-        assertEquals(null, tag.rules_);
-        assertEquals(null, tag.converter_);
+        assertEquals(null, tag.getStyleClass());
+        assertEquals(null, tag.getTitle());
+        assertEquals(null, tag.getEnabledClass());
+        assertEquals(null, tag.getDisabledClass());
+        assertEquals(null, tag.getOnclick());
+        assertEquals(null, tag.getOndblclick());
+        assertEquals(null, tag.getOnmousedown());
+        assertEquals(null, tag.getOnmouseover());
+        assertEquals(null, tag.getOnmousemove());
+        assertEquals(null, tag.getOnmouseout());
+        assertEquals(null, tag.getOnkeypress());
+        assertEquals(null, tag.getOnkeydown());
+        assertEquals(null, tag.getOnkeyup());
+        assertEquals(null, tag.getLang());
+        assertEquals(null, tag.getDir());
+        assertEquals(null, tag.getHeight());
+        assertEquals(null, tag.getWidth());
+        assertEquals(null, tag.getCellspacing());
+        assertEquals(null, tag.getCellpadding());
+        assertEquals(null, tag.getDisabled());
+        assertEquals(null, tag.getSize());
+        assertEquals(null, tag.getTabindex());
+        assertEquals(null, tag.getChecked());
+        assertEquals(null, tag.getBorder());
+        assertEquals(null, tag.getReadonly());
+        assertEquals(null, tag.getIsmap());
+        assertEquals(null, tag.getMaxlength());
+        assertEquals(null, tag.getRows());
+        assertEquals(null, tag.getCols());
+        assertEquals(null, tag.getFormatStyle());
+        assertEquals(null, tag.getDateStyle());
+        assertEquals(null, tag.getTimeStyle());
+        assertEquals(null, tag.getTimezone());
+        assertEquals(null, tag.getFormatPattern());
+        assertEquals(null, tag.getAccept());
+        assertEquals(null, tag.getAcceptcharset());
+        assertEquals(null, tag.getAccesskey());
+        assertEquals(null, tag.getAction());
+        assertEquals(null, tag.getAlt());
+        assertEquals(null, tag.getCharset());
+        assertEquals(null, tag.getCoords());
+        assertEquals(null, tag.getEnctype());
+        assertEquals(null, tag.getHtmlFor());
+        assertEquals(null, tag.getHref());
+        assertEquals(null, tag.getHreflang());
+        assertEquals(null, tag.getHspace());
+        assertEquals(null, tag.getLongdesc());
+        assertEquals(null, tag.getMethod());
+        assertEquals(null, tag.getMultiple());
+        assertEquals(null, tag.getName());
+        assertEquals(null, tag.getOnblur());
+        assertEquals(null, tag.getOnchange());
+        assertEquals(null, tag.getOnfocus());
+        assertEquals(null, tag.getOnmouseup());
+        assertEquals(null, tag.getOnreset());
+        assertEquals(null, tag.getOnselect());
+        assertEquals(null, tag.getOnsubmit());
+        assertEquals(null, tag.getRel());
+        assertEquals(null, tag.getRev());
+        assertEquals(null, tag.getSelected());
+        assertEquals(null, tag.getShape());
+        assertEquals(null, tag.getSrc());
+        assertEquals(null, tag.getStyle());
+        assertEquals(null, tag.getTarget());
+        assertEquals(null, tag.getType());
+        assertEquals(null, tag.getUsemap());
+        assertEquals(null, tag.getValue());
+        assertEquals(null, tag.getSummary());
+        assertEquals(null, tag.getBgcolor());
+        assertEquals(null, tag.getFrame());
+        assertEquals(null, tag.getRules());
+        assertEquals(null, tag.getConverter());
     }
 
     class UIComponentTagBaseImpl extends UIComponentTagBase {
@@ -179,7 +178,7 @@ public class UIComponentTagBaseTest extends TestCase {
         public String getRendererType() {
             return null;
         }
-        
+
         public void release() {
             super.release();
         }

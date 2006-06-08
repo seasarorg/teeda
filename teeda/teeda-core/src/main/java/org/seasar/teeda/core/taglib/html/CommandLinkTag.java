@@ -23,12 +23,13 @@ import org.seasar.teeda.core.taglib.UIComponentTagBase;
 
 /**
  * @author yone
+ * @author shot
  */
 public class CommandLinkTag extends UIComponentTagBase {
 
-    private String immediate_;
+    private String immediate;
 
-    private String actionListener_;
+    private String actionListener;
 
     public String getComponentType() {
         return HtmlCommandLink.COMPONENT_TYPE;
@@ -40,44 +41,41 @@ public class CommandLinkTag extends UIComponentTagBase {
 
     protected void setProperties(UIComponent component) {
         super.setProperties(component);
-
-        setActionProperty(component, action_);
-        setActionListenerProperty(component, actionListener_);
-        setComponentProperty(component, JsfConstants.IMMEDIATE_ATTR, immediate_);
-        setComponentProperty(component, JsfConstants.CHARSET_ATTR, charset_);
-        setComponentProperty(component, JsfConstants.COORDS_ATTR, coords_);
-        setComponentProperty(component, JsfConstants.HREFLANG_ATTR, hreflang_);
-        setComponentProperty(component, JsfConstants.REL_ATTR, rel_);
-        setComponentProperty(component, JsfConstants.REV_ATTR, rev_);
-        setComponentProperty(component, JsfConstants.SHAPE_ATTR, shape_);
-        setComponentProperty(component, JsfConstants.TARGET_ATTR, target_);
-        setComponentProperty(component, JsfConstants.TYPE_ATTR, type_);
+        setActionProperty(component, getAction());
+        setActionListenerProperty(component, getActionListener());
+        setComponentProperty(component, JsfConstants.IMMEDIATE_ATTR,
+                getImmediate());
+        setComponentProperty(component, JsfConstants.CHARSET_ATTR, getCharset());
+        setComponentProperty(component, JsfConstants.COORDS_ATTR, getCoords());
+        setComponentProperty(component, JsfConstants.HREFLANG_ATTR,
+                getHreflang());
+        setComponentProperty(component, JsfConstants.REL_ATTR, getRel());
+        setComponentProperty(component, JsfConstants.REV_ATTR, getRev());
+        setComponentProperty(component, JsfConstants.SHAPE_ATTR, getShape());
+        setComponentProperty(component, JsfConstants.TARGET_ATTR, getTarget());
+        setComponentProperty(component, JsfConstants.TYPE_ATTR, getType());
     }
 
     public void release() {
         super.release();
-        immediate_ = null;
-        actionListener_ = null;
-    }
-
-    public void setAction(String action) {
-        action_ = action;
+        immediate = null;
+        actionListener = null;
     }
 
     public void setActionListener(String actionListener) {
-        actionListener_ = actionListener;
+        this.actionListener = actionListener;
     }
 
     public void setImmediate(String immediate) {
-        immediate_ = immediate;
+        this.immediate = immediate;
     }
 
-    String getActionListener() {
-        return actionListener_;
+    public String getActionListener() {
+        return actionListener;
     }
-    
-    String getImmediate() {
-        return immediate_;
+
+    public String getImmediate() {
+        return immediate;
     }
 
 }

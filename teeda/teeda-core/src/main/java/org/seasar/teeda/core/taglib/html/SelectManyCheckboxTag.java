@@ -22,10 +22,11 @@ import org.seasar.teeda.core.JsfConstants;
 
 /**
  * @author yone
+ * @author shot
  */
 public class SelectManyCheckboxTag extends InputTagBase {
 
-    private String layout_;
+    private String layout;
 
     public String getComponentType() {
         return HtmlSelectManyCheckbox.COMPONENT_TYPE;
@@ -37,28 +38,27 @@ public class SelectManyCheckboxTag extends InputTagBase {
 
     protected void setProperties(UIComponent component) {
         super.setProperties(component);
-
-        setComponentProperty(component, JsfConstants.BORDER_ATTR, border_);
-        setComponentProperty(component, JsfConstants.ONCHANGE_ATTR, onchange_);
-        setComponentProperty(component, JsfConstants.ONSELECT_ATTR, onselect_);
+        setComponentProperty(component, JsfConstants.BORDER_ATTR, getBorder());
+        setComponentProperty(component, JsfConstants.ONCHANGE_ATTR, getOnchange());
+        setComponentProperty(component, JsfConstants.ONSELECT_ATTR, getOnselect());
         setComponentProperty(component, JsfConstants.DISABLED_CLASS_ATTR,
-                disabledClass_);
+                getDisabledClass());
         setComponentProperty(component, JsfConstants.ENABLED_CLASS_ATTR,
-                enabledClass_);
-        setComponentProperty(component, JsfConstants.LAYOUT_ATTR, layout_);
+                getEnabledClass());
+        setComponentProperty(component, JsfConstants.LAYOUT_ATTR, getLayout());
     }
 
     public void release() {
         super.release();
-        layout_ = null;
+        layout = null;
     }
 
     public void setLayout(String layout) {
-        layout_ = layout;
+        this.layout = layout;
     }
 
-    String getLayout() {
-        return layout_;
+    public String getLayout() {
+        return layout;
     }
 
 }

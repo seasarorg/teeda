@@ -23,14 +23,15 @@ import org.seasar.teeda.core.taglib.UIComponentTagBase;
 
 /**
  * @author yone
+ * @author shot
  */
 public class CommandButtonTag extends UIComponentTagBase {
 
-    private String immediate_;
+    private String immediate;
 
-    private String actionListener_;
+    private String actionListener;
 
-    private String image_;
+    private String image;
 
     public String getComponentType() {
         return HtmlCommandButton.COMPONENT_TYPE;
@@ -42,46 +43,46 @@ public class CommandButtonTag extends UIComponentTagBase {
 
     protected void setProperties(UIComponent component) {
         super.setProperties(component);
-
-        setComponentProperty(component, JsfConstants.ALT_ATTR, alt_);
-        setComponentProperty(component, JsfConstants.ONCHANGE_ATTR, onchange_);
-        setComponentProperty(component, JsfConstants.ONSELECT_ATTR, onselect_);
-
-        setComponentProperty(component, JsfConstants.IMMEDIATE_ATTR, immediate_);
-        setComponentProperty(component, JsfConstants.IMAGE_ATTR, image_);
-        setActionProperty(component, action_);
-        setActionListenerProperty(component, actionListener_);
+        setComponentProperty(component, JsfConstants.ALT_ATTR, getAlt());
+        setComponentProperty(component, JsfConstants.ONCHANGE_ATTR,
+                getOnchange());
+        setComponentProperty(component, JsfConstants.ONSELECT_ATTR,
+                getOnselect());
+        setComponentProperty(component, JsfConstants.IMMEDIATE_ATTR, immediate);
+        setComponentProperty(component, JsfConstants.IMAGE_ATTR, image);
+        setActionProperty(component, getAction());
+        setActionListenerProperty(component, actionListener);
     }
 
     public void release() {
         super.release();
-        immediate_ = null;
-        actionListener_ = null;
-        image_ = null;
+        immediate = null;
+        actionListener = null;
+        image = null;
     }
 
     public void setActionListener(String actionListener) {
-        actionListener_ = actionListener;
+        this.actionListener = actionListener;
     }
 
     public void setImage(String image) {
-        image_ = image;
+        this.image = image;
     }
 
     public void setImmediate(String immediate) {
-        immediate_ = immediate;
+        this.immediate = immediate;
     }
 
-    String getActionListener() {
-        return actionListener_;
+    public String getActionListener() {
+        return actionListener;
     }
 
-    String getImage() {
-        return image_;
+    public String getImage() {
+        return image;
     }
 
-    String getImmediate() {
-        return immediate_;
+    public String getImmediate() {
+        return immediate;
     }
-    
+
 }

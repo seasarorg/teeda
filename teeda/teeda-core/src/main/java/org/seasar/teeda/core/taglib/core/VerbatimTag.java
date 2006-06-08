@@ -27,6 +27,7 @@ import org.seasar.teeda.core.util.ConverterUtil;
 
 /**
  * @author yone
+ * @author shot
  */
 public class VerbatimTag extends UIComponentBodyTag {
 
@@ -34,7 +35,7 @@ public class VerbatimTag extends UIComponentBodyTag {
 
     private static final String RENDER_TYPE = "javax.faces.Text";
 
-    private String escape_ = null;
+    private String escape = null;
 
     public VerbatimTag() {
         super();
@@ -49,18 +50,22 @@ public class VerbatimTag extends UIComponentBodyTag {
     }
 
     public void setEscape(String escape) {
-        escape_ = escape;
+        this.escape = escape;
+    }
+
+    public String getEscape() {
+        return escape;
     }
 
     protected void setProperties(UIComponent component) {
         super.setProperties(component);
-
-        if (escape_ != null) {
-            if (BindingUtil.isValueReference(escape_)) {
+        final String escapeStr = getEscape();
+        if (escapeStr != null) {
+            if (BindingUtil.isValueReference(escapeStr)) {
                 BindingUtil.setValueBinding(component,
-                        JsfConstants.ESCAPE_ATTR, escape_);
+                        JsfConstants.ESCAPE_ATTR, escapeStr);
             } else {
-                boolean escape = ConverterUtil.convertToBoolean(escape_);
+                boolean escape = ConverterUtil.convertToBoolean(escapeStr);
                 component.getAttributes().put(JsfConstants.ESCAPE_ATTR,
                         escape ? Boolean.TRUE : Boolean.FALSE);
             }
