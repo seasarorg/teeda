@@ -16,12 +16,12 @@
 package org.seasar.teeda.extension.annotation;
 
 import org.seasar.framework.container.ComponentDef;
-import org.seasar.framework.container.autoregister.ComponentDefCustomizer;
+import org.seasar.framework.container.autoregister.ComponentCustomizer;
 
 /**
  * @author shot
  */
-public class ValidatorAnnotationCustomizer implements ComponentDefCustomizer {
+public class ValidatorAnnotationCustomizer implements ComponentCustomizer {
 
     private ValidatorAnnotationHandler annotationHandler_;
 
