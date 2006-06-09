@@ -43,6 +43,7 @@ public interface TODO {
      *  - Continuum
      *  - To know navigation (from and outcome, and go to where), provide interceptor 
      *  - Security aspect interceptor for NavigationHandler(Thx Mr.Kameda)
+     *  - Nobody wants NullPointer so we provide good exception when config are something wrong.
      * 
      * TODO for 1.1
      *  - 
