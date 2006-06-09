@@ -12,8 +12,8 @@ function testFunction2(){
 		assertEquals(b, 'TEST_2');
 }
 
-function testElementById(){
-	var ele = document.getElementById("test");
-	var name = ele.nodeName;
-	assertEquals(name, 'DIV');
-}
+//function testElementById(){
+//	var ele = document.getElementById("test");
+//	var name = ele.nodeName;
+//	assertEquals(name, 'DIV');
+//}

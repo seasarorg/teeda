@@ -14,7 +14,6 @@ import org.mozilla.javascript.Context;
 import org.mozilla.javascript.Function;
 import org.mozilla.javascript.Script;
 import org.mozilla.javascript.Scriptable;
-import org.mozilla.javascript.ScriptableObject;
 
 /**
  * 
@@ -74,7 +73,6 @@ public abstract class RhinoTestCase extends TestCase {
     }
 
     private Scriptable getInitScopeObject(Context cx) throws Exception {
-        ScriptableObject scope = null;
         String htmlPath = this.getClass().getName();
         htmlPath = htmlPath.replace('.', '/') + ".html";
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
@@ -83,7 +81,10 @@ public abstract class RhinoTestCase extends TestCase {
             htmlPath = url.getFile();
             if (new File(url.getFile()).exists()) {
                 ScriptablePageLoader pageLoader = new ScriptablePageLoader();
-                return pageLoader.load(htmlPath).getParentScope();
+                Scriptable scope = pageLoader.load(htmlPath);
+                if (scope != null) {
+                    return scope.getParentScope();
+                }
             }
         }
         return cx.initStandardObjects();

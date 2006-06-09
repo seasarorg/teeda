@@ -293,18 +293,6 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>htmlunit</groupId>
-      <artifactId>htmlunit</artifactId>
-      <version>1.8</version>
-      <type>jar</type>
-      <exclusions>
-        <exclusion>
-          <artifactId>jsr173</artifactId>
-          <groupId>javax.xml</groupId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
       <groupId>rhino</groupId>
       <artifactId>rhino</artifactId>
       <version>1.6r2</version>
