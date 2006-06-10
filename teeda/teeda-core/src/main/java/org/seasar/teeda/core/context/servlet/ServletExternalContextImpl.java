@@ -34,6 +34,15 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.seasar.framework.container.impl.servlet.CookieMap;
+import org.seasar.framework.container.impl.servlet.HttpSessionMap;
+import org.seasar.framework.container.impl.servlet.ServletApplicationMap;
+import org.seasar.framework.container.impl.servlet.ServletInitParameterMap;
+import org.seasar.framework.container.impl.servlet.ServletRequestHeaderMap;
+import org.seasar.framework.container.impl.servlet.ServletRequestHeaderValuesMap;
+import org.seasar.framework.container.impl.servlet.ServletRequestMap;
+import org.seasar.framework.container.impl.servlet.ServletRequestParameterMap;
+import org.seasar.framework.container.impl.servlet.ServletRequestParameterValuesMap;
 import org.seasar.framework.log.Logger;
 import org.seasar.teeda.core.context.Releaseable;
 import org.seasar.teeda.core.util.ServletExternalContextUtil;
