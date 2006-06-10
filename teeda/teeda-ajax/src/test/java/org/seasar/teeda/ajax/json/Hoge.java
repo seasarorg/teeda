@@ -16,7 +16,7 @@
 package org.seasar.teeda.ajax.json;
 
 /**
- * @author ohtani
+ * @author shot
  * 
  */
 public class Hoge {
@@ -40,6 +40,5 @@ public class Hoge {
     public void setValue(Object value) {
         this.value = value;
     }
-    
     
 }
