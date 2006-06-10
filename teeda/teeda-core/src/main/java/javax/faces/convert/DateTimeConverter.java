@@ -24,9 +24,9 @@ import java.util.TimeZone;
 import javax.faces.component.StateHolder;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.internal.AssertionUtil;
 import javax.faces.internal.ConvertUtils;
 
+import org.seasar.framework.util.AssertionUtil;
 import org.seasar.framework.util.DateConversionUtil;
 
 /**

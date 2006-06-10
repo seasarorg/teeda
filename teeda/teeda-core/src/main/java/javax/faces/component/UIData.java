@@ -27,17 +27,16 @@ import javax.faces.event.AbortProcessingException;
 import javax.faces.event.FacesEvent;
 import javax.faces.event.FacesListener;
 import javax.faces.event.PhaseId;
-import javax.faces.internal.AssertionUtil;
 import javax.faces.internal.NamingContainerUtil;
 import javax.faces.internal.SavedState;
 import javax.faces.internal.UIDataUtil;
 import javax.faces.model.DataModel;
 
+import org.seasar.framework.util.AssertionUtil;
+
 /**
  * @author shot
  * @author manhole
- * 
- * TODO TEST
  */
 public class UIData extends UIComponentBase implements NamingContainer {
 
@@ -93,8 +92,8 @@ public class UIData extends UIComponentBase implements NamingContainer {
         if (firstSet) {
             return first;
         }
-        Integer firstValue = (Integer) ComponentUtils_.getValueBindingValue(this,
-                FIRST_BINDING_NAME);
+        Integer firstValue = (Integer) ComponentUtils_.getValueBindingValue(
+                this, FIRST_BINDING_NAME);
         return (firstValue != null) ? firstValue.intValue() : first;
     }
 

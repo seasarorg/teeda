@@ -16,9 +16,10 @@
 package javax.faces.component;
 
 import javax.faces.context.FacesContext;
-import javax.faces.internal.AssertionUtil;
 import javax.faces.internal.FacesMessageUtils;
 import javax.faces.internal.SelectItemsIterator;
+
+import org.seasar.framework.util.AssertionUtil;
 
 /**
  * @author shot

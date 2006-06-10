@@ -17,11 +17,11 @@ package org.seasar.teeda.core.taglib.core;
 
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
-import javax.faces.internal.AssertionUtil;
 import javax.faces.validator.LongRangeValidator;
 import javax.faces.validator.Validator;
 import javax.servlet.jsp.JspException;
 
+import org.seasar.framework.util.AssertionUtil;
 import org.seasar.teeda.core.util.BindingUtil;
 import org.seasar.teeda.core.util.ConverterUtil;
 

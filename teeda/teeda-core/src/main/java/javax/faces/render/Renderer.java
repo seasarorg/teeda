@@ -21,7 +21,8 @@ import java.util.Iterator;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.ConverterException;
-import javax.faces.internal.AssertionUtil;
+
+import org.seasar.framework.util.AssertionUtil;
 
 /**
  * @author shot

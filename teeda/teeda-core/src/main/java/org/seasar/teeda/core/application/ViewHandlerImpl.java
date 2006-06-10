@@ -27,7 +27,6 @@ import javax.faces.application.ViewHandler;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.faces.internal.AssertionUtil;
 import javax.faces.render.RenderKitFactory;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
@@ -37,6 +36,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.jstl.core.Config;
 
+import org.seasar.framework.util.AssertionUtil;
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.config.webapp.element.ServletMappingElement;

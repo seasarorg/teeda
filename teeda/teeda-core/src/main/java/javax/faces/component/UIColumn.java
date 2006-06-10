@@ -15,7 +15,7 @@
  */
 package javax.faces.component;
 
-import javax.faces.internal.AssertionUtil;
+import org.seasar.framework.util.AssertionUtil;
 
 /**
  * @author Shinpei Ohtani

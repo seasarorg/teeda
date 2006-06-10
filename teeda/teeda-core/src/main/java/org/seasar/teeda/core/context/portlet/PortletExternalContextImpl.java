@@ -31,7 +31,6 @@ import java.util.Set;
 import javax.faces.FacesException;
 import javax.faces.application.ViewHandler;
 import javax.faces.context.ExternalContext;
-import javax.faces.internal.AssertionUtil;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletContext;
@@ -44,6 +43,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.seasar.framework.log.Logger;
+import org.seasar.framework.util.AssertionUtil;
 import org.seasar.framework.util.EnumerationIterator;
 
 /**

@@ -25,8 +25,8 @@ import javax.faces.el.MethodBinding;
 import javax.faces.el.MethodNotFoundException;
 import javax.faces.el.PropertyNotFoundException;
 import javax.faces.el.ReferenceSyntaxException;
-import javax.faces.internal.AssertionUtil;
 
+import org.seasar.framework.util.AssertionUtil;
 import org.seasar.teeda.core.el.ELParser;
 import org.seasar.teeda.core.el.ValueBindingBase;
 import org.seasar.teeda.core.exception.ExtendEvaluationException;

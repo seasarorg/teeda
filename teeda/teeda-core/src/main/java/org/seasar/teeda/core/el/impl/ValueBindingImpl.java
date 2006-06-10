@@ -24,8 +24,8 @@ import javax.faces.el.PropertyNotFoundException;
 import javax.faces.el.PropertyResolver;
 import javax.faces.el.ReferenceSyntaxException;
 import javax.faces.el.VariableResolver;
-import javax.faces.internal.AssertionUtil;
 
+import org.seasar.framework.util.AssertionUtil;
 import org.seasar.teeda.core.el.ELParser;
 import org.seasar.teeda.core.el.ExpressionProcessor;
 import org.seasar.teeda.core.el.ValueBindingBase;

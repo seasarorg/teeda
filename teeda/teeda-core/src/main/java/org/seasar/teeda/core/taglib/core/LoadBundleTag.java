@@ -29,13 +29,13 @@ import java.util.Set;
 
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
-import javax.faces.internal.AssertionUtil;
 import javax.faces.webapp.UIComponentTag;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.Tag;
 import javax.servlet.jsp.tagext.TagSupport;
 
 import org.seasar.framework.log.Logger;
+import org.seasar.framework.util.AssertionUtil;
 
 /**
  * @author shot

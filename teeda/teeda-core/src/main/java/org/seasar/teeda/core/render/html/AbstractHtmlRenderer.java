@@ -22,9 +22,9 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.UIOutput;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.ConverterException;
-import javax.faces.internal.AssertionUtil;
 import javax.faces.render.Renderer;
 
+import org.seasar.framework.util.AssertionUtil;
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.ComponentIdLookupStrategy;

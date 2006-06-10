@@ -28,7 +28,6 @@ import javax.faces.el.ValueBinding;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.FacesEvent;
 import javax.faces.event.FacesListener;
-import javax.faces.internal.AssertionUtil;
 import javax.faces.internal.AttachedObjectStateWrapper;
 import javax.faces.internal.ComponentAttributesMap;
 import javax.faces.internal.ComponentChildrenListWrapper;
@@ -38,6 +37,8 @@ import javax.faces.internal.RenderKitUtil;
 import javax.faces.internal.SerializableStateHolder;
 import javax.faces.render.RenderKit;
 import javax.faces.render.Renderer;
+
+import org.seasar.framework.util.AssertionUtil;
 
 /**
  * @author shot

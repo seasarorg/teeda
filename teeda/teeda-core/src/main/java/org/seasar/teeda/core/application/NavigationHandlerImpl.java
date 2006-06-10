@@ -26,9 +26,9 @@ import javax.faces.application.ViewHandler;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.faces.internal.AssertionUtil;
 
 import org.seasar.framework.log.Logger;
+import org.seasar.framework.util.AssertionUtil;
 import org.seasar.teeda.core.application.navigation.NavigationCaseContext;
 import org.seasar.teeda.core.application.navigation.NavigationContext;
 import org.seasar.teeda.core.application.navigation.NavigationContextFactory;

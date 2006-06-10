@@ -20,8 +20,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.faces.internal.AssertionUtil;
 import javax.faces.internal.FactoryFinderUtil;
+
+import org.seasar.framework.util.AssertionUtil;
 
 /**
  * @author shot

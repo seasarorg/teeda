@@ -38,9 +38,9 @@ import javax.faces.el.ReferenceSyntaxException;
 import javax.faces.el.ValueBinding;
 import javax.faces.el.VariableResolver;
 import javax.faces.event.ActionListener;
-import javax.faces.internal.AssertionUtil;
 import javax.faces.validator.Validator;
 
+import org.seasar.framework.util.AssertionUtil;
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.application.impl.DefaultComponentLookupStrategy;
 import org.seasar.teeda.core.el.MethodBindingContext;

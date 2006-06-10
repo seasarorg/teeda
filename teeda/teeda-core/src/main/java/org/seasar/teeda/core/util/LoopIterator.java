@@ -18,7 +18,7 @@ package org.seasar.teeda.core.util;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import javax.faces.internal.AssertionUtil;
+import org.seasar.framework.util.AssertionUtil;
 
 public class LoopIterator implements Iterator {
 

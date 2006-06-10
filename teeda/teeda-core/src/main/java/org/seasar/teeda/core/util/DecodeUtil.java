@@ -20,8 +20,8 @@ import java.util.Map;
 import javax.faces.component.EditableValueHolder;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.internal.AssertionUtil;
 
+import org.seasar.framework.util.AssertionUtil;
 import org.seasar.teeda.core.exception.NoEditableValueHolderRuntimeException;
 
 /**

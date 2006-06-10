@@ -24,6 +24,8 @@ import java.util.List;
 
 import javax.faces.component.UIComponent;
 
+import org.seasar.framework.util.AssertionUtil;
+
 /**
  * @author shot
  * 

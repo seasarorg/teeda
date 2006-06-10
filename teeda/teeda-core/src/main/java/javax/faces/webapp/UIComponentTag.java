@@ -26,13 +26,14 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
-import javax.faces.internal.AssertionUtil;
 import javax.faces.internal.PageContextUtil;
 import javax.faces.internal.WebAppConstants;
 import javax.faces.internal.WebAppUtils;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.Tag;
+
+import org.seasar.framework.util.AssertionUtil;
 
 /**
  * @author shot

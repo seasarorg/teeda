@@ -18,7 +18,7 @@ package javax.faces.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.faces.internal.AssertionUtil;
+import org.seasar.framework.util.AssertionUtil;
 
 /**
  * @author shot

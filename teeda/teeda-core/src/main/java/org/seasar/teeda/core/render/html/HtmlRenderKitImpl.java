@@ -23,10 +23,10 @@ import java.util.Map;
 
 import javax.faces.context.ResponseStream;
 import javax.faces.context.ResponseWriter;
-import javax.faces.internal.AssertionUtil;
 import javax.faces.render.Renderer;
 import javax.faces.render.ResponseStateManager;
 
+import org.seasar.framework.util.AssertionUtil;
 import org.seasar.teeda.core.context.html.HtmlResponseWriter;
 import org.seasar.teeda.core.render.AbstractRenderKit;
 import org.seasar.teeda.core.util.HtmlRenderKitUtil;

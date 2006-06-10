@@ -23,9 +23,9 @@ import java.util.List;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.ResponseWriter;
-import javax.faces.internal.AssertionUtil;
 
 import org.apache.commons.lang.ArrayUtils;
+import org.seasar.framework.util.AssertionUtil;
 
 /**
  * @author manhole

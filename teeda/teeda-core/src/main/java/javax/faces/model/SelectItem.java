@@ -17,7 +17,7 @@ package javax.faces.model;
 
 import java.io.Serializable;
 
-import javax.faces.internal.AssertionUtil;
+import org.seasar.framework.util.AssertionUtil;
 
 /**
  * @author shot

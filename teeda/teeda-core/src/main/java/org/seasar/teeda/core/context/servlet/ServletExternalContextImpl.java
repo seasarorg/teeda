@@ -27,7 +27,6 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.faces.context.ExternalContext;
-import javax.faces.internal.AssertionUtil;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -44,6 +43,7 @@ import org.seasar.framework.container.impl.servlet.ServletRequestMap;
 import org.seasar.framework.container.impl.servlet.ServletRequestParameterMap;
 import org.seasar.framework.container.impl.servlet.ServletRequestParameterValuesMap;
 import org.seasar.framework.log.Logger;
+import org.seasar.framework.util.AssertionUtil;
 import org.seasar.teeda.core.context.Releaseable;
 import org.seasar.teeda.core.util.ServletExternalContextUtil;
 

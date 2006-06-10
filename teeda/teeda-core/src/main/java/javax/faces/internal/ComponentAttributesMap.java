@@ -33,6 +33,8 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
 
+import org.seasar.framework.util.AssertionUtil;
+
 /**
  * @author shot
  * @author manhole

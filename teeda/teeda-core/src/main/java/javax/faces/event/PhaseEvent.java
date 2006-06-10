@@ -18,8 +18,9 @@ package javax.faces.event;
 import java.util.EventObject;
 
 import javax.faces.context.FacesContext;
-import javax.faces.internal.AssertionUtil;
 import javax.faces.lifecycle.Lifecycle;
+
+import org.seasar.framework.util.AssertionUtil;
 
 /**
  * @author shot

@@ -19,9 +19,9 @@ import javax.faces.FacesException;
 import javax.faces.component.StateHolder;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.internal.AssertionUtil;
 import javax.faces.internal.FacesMessageUtils;
 
+import org.seasar.framework.util.AssertionUtil;
 import org.seasar.teeda.core.util.UIComponentUtil;
 
 /**

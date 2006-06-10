@@ -21,11 +21,11 @@ import java.util.Iterator;
 import java.util.Map;
 
 import javax.faces.context.FacesContext;
-import javax.faces.internal.AssertionUtil;
 import javax.faces.render.RenderKit;
 import javax.faces.render.RenderKitFactory;
 
 import org.seasar.framework.log.Logger;
+import org.seasar.framework.util.AssertionUtil;
 import org.seasar.teeda.core.util.DIContainerUtil;
 
 /**
