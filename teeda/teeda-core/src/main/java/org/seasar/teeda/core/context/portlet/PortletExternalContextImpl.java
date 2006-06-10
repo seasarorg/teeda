@@ -42,6 +42,14 @@ import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import org.seasar.framework.container.impl.portlet.PortletSessionMap;
+import org.seasar.framework.container.impl.portlet.PortletApplicationMap;
+import org.seasar.framework.container.impl.portlet.PortletInitParameterMap;
+import org.seasar.framework.container.impl.portlet.PortletRequestHeaderMap;
+import org.seasar.framework.container.impl.portlet.PortletRequestHeaderValuesMap;
+import org.seasar.framework.container.impl.portlet.PortletRequestMap;
+import org.seasar.framework.container.impl.portlet.PortletRequestParameterMap;
+import org.seasar.framework.container.impl.portlet.PortletRequestParameterValuesMap;
 import org.seasar.framework.log.Logger;
 import org.seasar.framework.util.AssertionUtil;
 import org.seasar.framework.util.EnumerationIterator;
@@ -127,6 +135,12 @@ public class PortletExternalContextImpl extends ExternalContext {
                 } catch (UnsupportedEncodingException e) {
                     logger.warn("The specified encoding is wrong: "
                             + characterEncoding, e);
+                } catch (IllegalStateException e) {
+                    logger
+                            .warn(
+                                    "setCharacterEncoding(String) must not be called "
+                                            + "after reading request parameters or reading input using getReader()",
+                                    e);
                 }
             }
 
@@ -146,7 +160,9 @@ public class PortletExternalContextImpl extends ExternalContext {
             requestDispatcher.include((RenderRequest) portletRequest,
                     (RenderResponse) portletResponse);
         } catch (PortletException e) {
-                throw new FacesException("Failed to include the content of a resource in the response.", e);
+            throw new FacesException(
+                    "Failed to include the content of a resource in the response.",
+                    e);
         }
     }
 
@@ -156,8 +172,9 @@ public class PortletExternalContextImpl extends ExternalContext {
     }
 
     public String encodeNamespace(String name) {
-        if (isActionRequest) { 
-            throw new IllegalStateException("Cannot call encodeNamespace(String) if the request is ActionRequest.");
+        if (isActionRequest) {
+            throw new IllegalStateException(
+                    "Cannot call encodeNamespace(String) if the request is ActionRequest.");
         }
         return name + ((RenderResponse) portletResponse).getNamespace();
     }
@@ -246,8 +263,7 @@ public class PortletExternalContextImpl extends ExternalContext {
 
     public Map getRequestParameterMap() {
         if (requestParameterMap == null) {
-            requestParameterMap = new PortletRequestParameterMap(
-                    portletRequest);
+            requestParameterMap = new PortletRequestParameterMap(portletRequest);
         }
         return requestParameterMap;
     }
@@ -328,7 +344,8 @@ public class PortletExternalContextImpl extends ExternalContext {
         if (portletResponse instanceof ActionResponse) {
             ((ActionResponse) portletResponse).sendRedirect(url);
         } else {
-            throw new IllegalArgumentException("RenderResponse does not support redirect(String).");
+            throw new IllegalArgumentException(
+                    "RenderResponse does not support redirect(String).");
         }
     }
 
