@@ -21,11 +21,12 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * @author Shinpei Ohtani
+ * @author shot
  */
 public abstract class AbstractUnmodifiableExternalContextMap extends
         AbstractExternalContextMap {
 
+    //TODO REMOVE this after org.seasar.teeda.core.context.portlet.* remove.
     public AbstractUnmodifiableExternalContextMap() {
     }
 

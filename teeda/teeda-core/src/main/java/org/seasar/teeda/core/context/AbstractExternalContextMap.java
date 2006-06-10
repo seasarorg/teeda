@@ -29,10 +29,11 @@ import java.util.Set;
 import org.seasar.framework.util.EnumerationIterator;
 
 /**
- * @author Shinpei Ohtani
+ * @author shot
  */
 public abstract class AbstractExternalContextMap extends AbstractMap {
 
+    //TODO REMOVE this after org.seasar.teeda.core.context.portlet.* remove.
     private Set entrySet_;
 
     private Set keySet_;
