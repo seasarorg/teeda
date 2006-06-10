@@ -26,15 +26,6 @@ import org.seasar.teeda.core.unit.TeedaTestCase;
  */
 public class FacesContextFactoryImplTest extends TeedaTestCase {
 
-    /**
-     * Constructor for FacesContextFactoryImplTest.
-     * 
-     * @param name
-     */
-    public FacesContextFactoryImplTest(String name) {
-        super(name);
-    }
-
     public void testGetFacesContext_getFail() throws Exception {
         FacesContextFactoryImpl factory = new FacesContextFactoryImpl();
         try {

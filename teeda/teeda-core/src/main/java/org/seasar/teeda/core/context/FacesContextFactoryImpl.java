@@ -20,6 +20,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.FacesContextFactory;
 import javax.faces.lifecycle.Lifecycle;
 
+import org.seasar.framework.util.AssertionUtil;
 import org.seasar.teeda.core.context.creator.DispatchableFacesContextCreator;
 import org.seasar.teeda.core.context.creator.FacesContextCreator;
 import org.seasar.teeda.core.exception.FacesContextNotFoundRuntimeException;
@@ -37,13 +38,10 @@ public class FacesContextFactoryImpl extends FacesContextFactory {
 
     public FacesContext getFacesContext(Object context, Object request,
             Object response, Lifecycle lifecycle) throws FacesException {
-        if (context == null || request == null || response == null
-                || lifecycle == null) {
-            throw new NullPointerException(
-                    "Any of parameters are null context = " + context
-                            + ", request = " + request + ", response = "
-                            + response + ", lifecycle = " + lifecycle);
-        }
+        AssertionUtil.assertNotNull("Context", context);
+        AssertionUtil.assertNotNull("Request", request);
+        AssertionUtil.assertNotNull("Response", response);
+        AssertionUtil.assertNotNull("Lifecycle", lifecycle);
         FacesContext facesContext = contextCreator.create(context, request,
                 response, lifecycle);
         if (facesContext == null) {
