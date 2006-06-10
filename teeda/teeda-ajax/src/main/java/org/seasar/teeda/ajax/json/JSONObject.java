@@ -24,6 +24,8 @@ import java.util.Map;
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.PropertyDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
+import org.seasar.teeda.ajax.AjaxConstants;
+import org.seasar.teeda.ajax.QuoteUtil;
 
 /**
  * 
@@ -31,20 +33,6 @@ import org.seasar.framework.beans.factory.BeanDescFactory;
  * @author yone
  */
 public class JSONObject {
-
-    public static final String ARRAY_SEPARATOR = ",";
-
-    public static final String JSON_SEPARATOR = ":";
-
-    public static final String NULL_STRING = "null";
-
-    public static final String END_BRACE = "}";
-
-    public static final String START_BRACE = "{";
-
-    public static final String END_LIST_BRACE = "]";
-
-    public static final String START_LIST_BRACE = "[";
 
     private Map map = new HashMap();
 
@@ -67,88 +55,40 @@ public class JSONObject {
         map.put(key, value);
     }
 
-    public static String quote(String str) {
-        if (str == null || str.length() == 0) {
-            return "\"\"";
-        }
-        char previous;
-        char current = 0;
-        int len = str.length();
-        StringBuffer sb = new StringBuffer(len + 4);
-        sb.append('"');
-        for (int i = 0; i < len; i += 1) {
-            previous = current;
-            current = str.charAt(i);
-            switch (current) {
-            case '\\':
-            case '"':
-                sb.append('\\');
-                sb.append(current);
-                break;
-            case '/':
-                if (previous == '<') {
-                    sb.append('\\');
-                }
-                sb.append(current);
-                break;
-            case '\b':
-                sb.append("\\b");
-                break;
-            case '\t':
-                sb.append("\\t");
-                break;
-            case '\n':
-                sb.append("\\n");
-                break;
-            case '\f':
-                sb.append("\\f");
-                break;
-            case '\r':
-                sb.append("\\r");
-                break;
-            default:
-                if (current < ' ') {
-                    String t = "000" + Integer.toHexString(current);
-                    sb.append("\\u" + t.substring(t.length() - 4));
-                } else {
-                    sb.append(current);
-                }
-            }
-        }
-        sb.append('"');
-        return sb.toString();
-    }
-
-    public String toString() {
+    public String toJSON() {
         //TODO support JSONFunction type Object
         StringBuffer buf = new StringBuffer();
-        buf.append(JSONObject.START_BRACE);
+        buf.append(AjaxConstants.JSON_START_BRACE);
         int index = 0;
         for (Iterator itr = map.entrySet().iterator(); itr.hasNext();) {
             if (index > 0) {
-                buf.append(JSONObject.ARRAY_SEPARATOR);
+                buf.append(AjaxConstants.JSON_ARRAY_SEPARATOR);
             }
             Map.Entry entry = (Map.Entry) itr.next();
             String key = (String) entry.getKey();
             Object value = entry.getValue();
-            buf.append(JSONObject.quote(key));
-            buf.append(JSONObject.JSON_SEPARATOR);
+            buf.append(QuoteUtil.quote(key));
+            buf.append(AjaxConstants.JSON_SEPARATOR);
             append(buf, value);
             index++;
         }
-        buf.append(JSONObject.END_BRACE);
+        buf.append(AjaxConstants.JSON_END_BRACE);
         return buf.toString();
+    }
+
+    public String toString() {
+        return toJSON();
     }
 
     public static void append(StringBuffer buf, Object value) {
         if (value == null) {
-            buf.append(NULL_STRING);
+            buf.append(AjaxConstants.NULL_STRING);
         } else if (value instanceof Number) {
             buf.append(value.toString());
         } else if (value instanceof Boolean) {
             buf.append(value.toString());
         } else if (value instanceof String) {
-            buf.append(JSONObject.quote(value.toString()));
+            buf.append(QuoteUtil.quote(value.toString()));
         } else if (value instanceof List) {
             buf.append(new JSONArray((List) value).toString());
         } else if (value instanceof Map) {
@@ -183,16 +123,17 @@ public class JSONObject {
 
     private static String createArrayString(Object array) {
         StringBuffer buf = new StringBuffer();
-        buf.append(START_LIST_BRACE);
+        buf.append(AjaxConstants.JSON_START_LIST_BRACE);
         final int length = Array.getLength(array);
         for (int i = 0; i < length; i++) {
             append(buf, Array.get(array, i));
-            buf.append(ARRAY_SEPARATOR);
+            buf.append(AjaxConstants.JSON_ARRAY_SEPARATOR);
         }
         if (length > 0) {
-            buf.setLength(buf.length() - ARRAY_SEPARATOR.length());
+            buf.setLength(buf.length()
+                    - AjaxConstants.JSON_ARRAY_SEPARATOR.length());
         }
-        buf.append(END_LIST_BRACE);
+        buf.append(AjaxConstants.JSON_END_LIST_BRACE);
         return buf.toString();
     }
 

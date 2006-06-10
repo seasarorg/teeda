@@ -18,6 +18,8 @@ package org.seasar.teeda.ajax.json;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.seasar.teeda.ajax.AjaxConstants;
+
 /**
  * 
  * @author mopemope
@@ -42,15 +44,15 @@ public class JSONArray {
 
     public String toString() {
         StringBuffer buf = new StringBuffer();
-        buf.append(JSONObject.START_LIST_BRACE);
+        buf.append(AjaxConstants.JSON_START_LIST_BRACE);
         for (int i = 0; i < this.list.size(); i++) {
             if (i > 0) {
-                buf.append(JSONObject.ARRAY_SEPARATOR);
+                buf.append(AjaxConstants.JSON_ARRAY_SEPARATOR);
             }
             Object value = list.get(i);
             JSONObject.append(buf, value);
         }
-        buf.append(JSONObject.END_LIST_BRACE);
+        buf.append(AjaxConstants.JSON_END_LIST_BRACE);
         return buf.toString();
     }
 }
