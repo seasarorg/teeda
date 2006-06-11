@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry output="teeda-core/target/classes" kind="src" path="teeda-core/src/main/java"/>
-	<classpathentry output="teeda-core/target/classes" kind="src" path="teeda-core/src/main/resources"/>
-	<classpathentry output="teeda-core/target/test-classes" kind="src" path="teeda-core/src/test/java"/>
-	<classpathentry output="teeda-core/target/test-classes" kind="src" path="teeda-core/src/test/resources"/>
-	<classpathentry output="teeda-extension/target/classes" kind="src" path="teeda-extension/src/main/java"/>
-	<classpathentry output="teeda-extension/target/classes" kind="src" path="teeda-extension/src/main/resources"/>
-	<classpathentry output="teeda-extension/target/test-classes" kind="src" path="teeda-extension/src/test/java"/>
-	<classpathentry output="teeda-extension/target/test-classes" kind="src" path="teeda-extension/src/test/resources"/>
-	<classpathentry output="teeda-ajax/target/classes" kind="src" path="teeda-ajax/src/main/java"/>
-	<classpathentry output="teeda-ajax/target/classes" kind="src" path="teeda-ajax/src/main/resources"/>
-	<classpathentry output="teeda-ajax/target/test-classes" kind="src" path="teeda-ajax/src/test/java"/>
-	<classpathentry output="teeda-ajax/target/test-classes" kind="src" path="teeda-ajax/src/test/resources"/>
+	<classpathentry output="build/teeda-core/classes" kind="src" path="teeda-core/src/main/java"/>
+	<classpathentry output="build/teeda-core/classes" kind="src" path="teeda-core/src/main/resources"/>
+	<classpathentry output="build/teeda-core/test-classes" kind="src" path="teeda-core/src/test/java"/>
+	<classpathentry output="build/teeda-core/test-classes" kind="src" path="teeda-core/src/test/resources"/>
+	<classpathentry output="build/teeda-extension/classes" kind="src" path="teeda-extension/src/main/java"/>
+	<classpathentry output="build/teeda-extension/classes" kind="src" path="teeda-extension/src/main/resources"/>
+	<classpathentry output="build/teeda-extension/test-classes" kind="src" path="teeda-extension/src/test/java"/>
+	<classpathentry output="build/teeda-extension/test-classes" kind="src" path="teeda-extension/src/test/resources"/>
+	<classpathentry output="build/teeda-ajax/classes" kind="src" path="teeda-ajax/src/main/java"/>
+	<classpathentry output="build/teeda-ajax/classes" kind="src" path="teeda-ajax/src/main/resources"/>
+	<classpathentry output="build/teeda-ajax/test-classes" kind="src" path="teeda-ajax/src/test/java"/>
+	<classpathentry output="build/teeda-ajax/test-classes" kind="src" path="teeda-ajax/src/test/resources"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/aopalliance-1.0.jar"/>
 	<classpathentry sourcepath="lib/sources/commons-collections-3.1-sources.jar" kind="lib" path="lib/commons-collections-3.1.jar"/>
@@ -34,5 +34,5 @@
 	<classpathentry sourcepath="lib/sources/s2-extension-2.4.0-beta-3-SNAPSHOT-sources.jar" kind="lib" path="lib/s2-extension-2.4.0-beta-3-SNAPSHOT.jar"/>
 	<classpathentry sourcepath="lib/sources/s2-framework-2.4.0-beta-3-SNAPSHOT-sources.jar" kind="lib" path="lib/s2-framework-2.4.0-beta-3-SNAPSHOT.jar"/>
 	<classpathentry kind="lib" path="lib/rhino-1.6r2.jar"/>
-	<classpathentry kind="output" path="teeda-core/target/classes"/>
+	<classpathentry kind="output" path="build/teeda-core/classes"/>
 </classpath>

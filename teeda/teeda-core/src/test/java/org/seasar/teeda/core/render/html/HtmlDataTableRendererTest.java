@@ -97,10 +97,9 @@ public class HtmlDataTableRendererTest extends RendererTest {
 
     public void testEncode_NoValue() throws Exception {
         // ## Arrange ##
-        MockFacesContext context = getFacesContext();
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlDataTable_);
+        encodeByRenderer(renderer_, htmlDataTable_);
 
         // ## Assert ##
         assertEquals("<table><tbody></tbody></table>", getResponseText());
