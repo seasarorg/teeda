@@ -1,8 +1,9 @@
 * teeda-integration-testの使い方
 
-1. SVNからチェックアウトする。
-2. teedaで"mvn install"する
-3. teeda-integration-testで"mvn test"するとテストが実行される。
+1. 環境変数JAVA_HOMEにJDKを設定しておく。
+2. SVNからチェックアウトする。
+3. teedaで"mvn install"する
+4. teeda-integration-testで"mvn test"するとテストが実行される。
 
 ** Eclipseを使う場合
 
