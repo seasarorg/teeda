@@ -36,18 +36,18 @@ public interface AjaxConstants {
 
     public String REQ_PARAM_ACTION = "action";
 
-    public static final String JSON_ARRAY_SEPARATOR = ",";
+    public String JSON_ARRAY_SEPARATOR = ",";
 
-    public static final String JSON_SEPARATOR = ":";
+    public String JSON_SEPARATOR = ":";
 
-    public static final String NULL_STRING = "null";
+    public String NULL_STRING = "null";
 
-    public static final String JSON_START_BRACE = "{";
+    public String JSON_START_BRACE = "{";
 
-    public static final String JSON_END_BRACE = "}";
+    public String JSON_END_BRACE = "}";
 
-    public static final String JSON_START_LIST_BRACE = "[";
+    public String JSON_START_LIST_BRACE = "[";
 
-    public static final String JSON_END_LIST_BRACE = "]";
+    public String JSON_END_LIST_BRACE = "]";
 
 }
