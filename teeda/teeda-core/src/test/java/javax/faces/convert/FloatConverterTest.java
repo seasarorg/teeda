@@ -63,6 +63,17 @@ public class FloatConverterTest extends AbstractConverterTestCase {
         }
     }
 
+    public void testGetAsObject_convertWithDelimeter() throws Exception {
+        Converter converter = createConverter();
+        String value = "1,000.2F";
+        Object target = converter.getAsObject(getFacesContext(),
+                new MockUIComponent(), value);
+        assertNotNull(target);
+        assertTrue(target instanceof Float);
+        Float f = (Float) target;
+        assertTrue(f.floatValue() == 1000.2F);
+    }
+
     public void testConstants() throws Exception {
         assertEquals("javax.faces.Float", FloatConverter.CONVERTER_ID);
     }

@@ -15,11 +15,15 @@
  */
 package javax.faces.convert;
 
+import java.util.Locale;
+
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.internal.ConvertUtils;
 
 import org.seasar.framework.util.AssertionUtil;
+import org.seasar.framework.util.NumberConversionUtil;
+import org.seasar.teeda.core.util.FacesContextUtil;
 
 /**
  * @author shot
@@ -42,6 +46,8 @@ public class IntegerConverter implements Converter {
         if (value.length() < 1) {
             return null;
         }
+        Locale locale = FacesContextUtil.getLocale(context);
+        value = NumberConversionUtil.removeDelimeter(value, locale);
         try {
             return Integer.valueOf(value);
         } catch (Exception e) {

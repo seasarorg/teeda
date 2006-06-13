@@ -16,13 +16,19 @@
 package javax.faces.convert;
 
 import java.math.BigDecimal;
+import java.util.Locale;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.internal.ConvertUtils;
 
 import org.seasar.framework.util.AssertionUtil;
+import org.seasar.framework.util.NumberConversionUtil;
+import org.seasar.teeda.core.util.FacesContextUtil;
 
+/**
+ * @author shot
+ */
 public class BigDecimalConverter implements Converter {
 
     public static final String CONVERTER_ID = "javax.faces.BigDecimal";
@@ -41,6 +47,8 @@ public class BigDecimalConverter implements Converter {
         if (value.length() < 1) {
             return null;
         }
+        Locale locale = FacesContextUtil.getLocale(context);
+        value = NumberConversionUtil.removeDelimeter(value, locale);
         try {
             return new BigDecimal(value);
         } catch (NumberFormatException e) {

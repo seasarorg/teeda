@@ -16,12 +16,16 @@
 package javax.faces.convert;
 
 import java.math.BigDecimal;
+import java.util.Locale;
 
 import org.seasar.teeda.core.mock.MockUIComponent;
 
+/**
+ * @author shot
+ */
 public class BigDecimalConverterTest extends AbstractConverterTestCase {
 
-    public void testGetAsObject() throws Exception {
+    public void testGetAsObject_convertSuccess() throws Exception {
         Converter converter = createConverter();
         String value = "123000000000";
         Object o = converter.getAsObject(getFacesContext(),
@@ -60,6 +64,17 @@ public class BigDecimalConverterTest extends AbstractConverterTestCase {
         } catch (ConverterException e) {
             assertTrue(true);
         }
+    }
+
+    public void testGetAsObject_convertwithDelimeter() throws Exception {
+        Converter converter = createConverter();
+        String value = "123,000,000,000";
+        getFacesContext().getViewRoot().setLocale(Locale.JAPAN);
+        Object o = converter.getAsObject(getFacesContext(),
+                new MockUIComponent(), value);
+        assertTrue(o instanceof BigDecimal);
+        BigDecimal b = (BigDecimal) o;
+        assertEquals(Long.valueOf("123000000000").longValue(), b.longValue());
     }
 
     public void testConstants() throws Exception {

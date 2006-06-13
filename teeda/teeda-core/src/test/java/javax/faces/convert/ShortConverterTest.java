@@ -1,5 +1,7 @@
 package javax.faces.convert;
 
+import java.util.Locale;
+
 import org.seasar.teeda.core.mock.MockUIComponent;
 
 public class ShortConverterTest extends AbstractConverterTestCase {
@@ -31,7 +33,7 @@ public class ShortConverterTest extends AbstractConverterTestCase {
     public void testGetValueAsString_convertSuccess() throws Exception {
         Converter converter = createConverter();
         String str = converter.getAsString(getFacesContext(),
-                new MockUIComponent(), new Short((short)2));
+                new MockUIComponent(), new Short((short) 2));
         assertEquals("2", str);
     }
 
@@ -45,8 +47,18 @@ public class ShortConverterTest extends AbstractConverterTestCase {
             success();
         }
     }
-    
-    
+
+    public void testGetValueAsObject_convertWithDelimeter() throws Exception {
+        Converter converter = createConverter();
+        String value = "32,767";
+        getFacesContext().getViewRoot().setLocale(Locale.JAPAN);
+        Object o = converter.getAsObject(getFacesContext(),
+                new MockUIComponent(), value);
+        assertNotNull(o);
+        Short s = (Short) o;
+        assertTrue(s.intValue() == 32767);
+    }
+
     protected Converter createConverter() {
         return createShortConverter();
     }

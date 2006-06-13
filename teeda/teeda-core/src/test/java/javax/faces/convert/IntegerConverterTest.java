@@ -1,6 +1,7 @@
 package javax.faces.convert;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import org.seasar.teeda.core.mock.MockUIComponent;
 
@@ -42,6 +43,16 @@ public class IntegerConverterTest extends AbstractConverterTestCase {
         } catch (ConverterException expected) {
             success();
         }
+    }
+
+    public void testGetAsObject_convertWithDelimeter() throws Exception {
+        Converter converter = createConverter();
+        getFacesContext().getViewRoot().setLocale(Locale.JAPAN);
+        Object o = converter.getAsObject(getFacesContext(),
+                new MockUIComponent(), "1,000,000");
+        assertNotNull(o);
+        Integer i = (Integer) o;
+        assertEquals(1000000, i.intValue());
     }
 
     public void testConstants() throws Exception {

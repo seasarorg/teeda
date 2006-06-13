@@ -1,6 +1,7 @@
 package javax.faces.convert;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import org.seasar.teeda.core.mock.MockUIComponent;
 
@@ -44,7 +45,18 @@ public class LongConverterTest extends AbstractConverterTestCase {
             success();
         }
     }
-    
+
+    public void testGetAsObject_convertWithDelimeter() throws Exception {
+        Converter converter = createConverter();
+        String value = "12,345,678,901,234";
+        getFacesContext().getViewRoot().setLocale(Locale.JAPAN);
+        Object o = converter.getAsObject(getFacesContext(),
+                new MockUIComponent(), value);
+        assertNotNull(o);
+        Long l = (Long) o;
+        assertEquals(12345678901234L, l.longValue());
+    }
+
     public void testConstants() throws Exception {
         assertEquals("javax.faces.Long", LongConverter.CONVERTER_ID);
     }

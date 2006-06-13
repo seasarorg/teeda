@@ -16,6 +16,7 @@
 package javax.faces.convert;
 
 import java.math.BigInteger;
+import java.util.Locale;
 
 import org.seasar.teeda.core.mock.MockUIComponent;
 
@@ -63,6 +64,17 @@ public class BigIntegerConverterTest extends AbstractConverterTestCase {
             assertTrue(true);
         }
 
+    }
+
+    public void testGetAsObject_convertWithDelimeter() throws Exception {
+        Converter converter = createConverter();
+        String value = "4,294,967,296";
+        getFacesContext().getViewRoot().setLocale(Locale.JAPAN);
+        Object o = converter.getAsObject(getFacesContext(),
+                new MockUIComponent(), value);
+        assertTrue(o instanceof BigInteger);
+        BigInteger result = (BigInteger) o;
+        assertEquals(Long.valueOf(value.replaceAll(",", "")).longValue(), result.longValue());
     }
 
     public void testConstants() throws Exception {

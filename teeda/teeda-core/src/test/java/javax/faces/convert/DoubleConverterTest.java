@@ -16,6 +16,7 @@
 package javax.faces.convert;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import org.seasar.teeda.core.mock.MockUIComponent;
 
@@ -61,6 +62,18 @@ public class DoubleConverterTest extends AbstractConverterTestCase {
         } catch (ConverterException expected) {
             success();
         }
+    }
+
+    public void testGetAsObject_convertWithDelimeter() throws Exception {
+        Converter converter = createConverter();
+        String value = "1,002.834";
+        getFacesContext().getViewRoot().setLocale(Locale.JAPAN);
+        Object target = converter.getAsObject(getFacesContext(),
+                new MockUIComponent(), value);
+        assertNotNull(target);
+        assertTrue(target instanceof Double);
+        Double d = (Double) target;
+        assertTrue(d.doubleValue() == 1002.834);
     }
 
     public void testConstants() throws Exception {
