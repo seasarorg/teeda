@@ -149,7 +149,6 @@ public class ViewHandlerImpl extends ViewHandler {
                     .getExternalContext().getResponse();
             PortletURL url = response.createActionURL();
             url.setParameter(FacesPortlet.VIEW_ID, viewId);
-            System.out.println("TEST: getActionURL: url=" + url.toString());
             return url.toString();
         }
 
