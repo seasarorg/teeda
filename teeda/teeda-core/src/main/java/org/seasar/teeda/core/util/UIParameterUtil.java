@@ -21,7 +21,6 @@ import javax.faces.component.UICommand;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIParameter;
 import javax.faces.context.FacesContext;
-import javax.servlet.ServletRequest;
 
 public class UIParameterUtil {
 
@@ -30,14 +29,13 @@ public class UIParameterUtil {
 
     public static void saveParametersToRequest(UICommand command,
             FacesContext context) {
-        ServletRequest request = (ServletRequest) context.getExternalContext()
-                .getRequest();
         List children = command.getChildren();
         for (int i = 0; i < children.size(); ++i) {
             UIComponent child = (UIComponent) children.get(i);
             if (child instanceof UIParameter) {
                 UIParameter param = (UIParameter) child;
-                request.setAttribute(param.getName(), param.getValue());
+                context.getExternalContext().getRequestMap().put(
+                        param.getName(), param.getValue());
             }
         }
     }

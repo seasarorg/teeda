@@ -142,6 +142,17 @@ public class ViewHandlerImpl extends ViewHandler {
     public String getActionURL(FacesContext context, String viewId) {
         AssertionUtil.assertNotNull("context", context);
         AssertionUtil.assertNotNull("viewId", viewId);
+
+        // PortletSupport
+        if (PortletUtil.isRender(context)) {
+            RenderResponse response = (RenderResponse) context
+                    .getExternalContext().getResponse();
+            PortletURL url = response.createActionURL();
+            url.setParameter(FacesPortlet.VIEW_ID, viewId);
+            System.out.println("TEST: getActionURL: url=" + url.toString());
+            return url.toString();
+        }
+
         String path = getViewIdPath(context, viewId);
         if (path != null && path.startsWith("/")) {
             return context.getExternalContext().getRequestContextPath() + path;
@@ -201,13 +212,7 @@ public class ViewHandlerImpl extends ViewHandler {
         }
 
         // PortletSupport
-        if (PortletUtil.isRender(context)) {
-            RenderResponse response = (RenderResponse) context
-                    .getExternalContext().getResponse();
-            PortletURL url = response.createActionURL();
-            url.setParameter(FacesPortlet.VIEW_ID, viewId);
-            return url.toString();
-        } else if (PortletUtil.isPortlet(context)) {
+        if (PortletUtil.isPortlet(context)) {
             return viewId;
         }
 
@@ -301,12 +306,16 @@ public class ViewHandlerImpl extends ViewHandler {
 
     protected void ensureResponseLocaleSet(ExternalContext externalContext,
             UIViewRoot viewRoot) {
-        ServletResponse res = (ServletResponse) externalContext.getResponse();
-        res.setLocale(viewRoot.getLocale());
+        if (externalContext.getResponse() instanceof ServletResponse) {
+            ServletResponse res = (ServletResponse) externalContext
+                    .getResponse();
+            res.setLocale(viewRoot.getLocale());
+        }
     }
 
     protected void ensureRequestLocaleSet(ExternalContext externalContext,
             UIViewRoot viewRoot) {
+        //TODO Config#set(...) seems not to support Portlet API
         if (externalContext.getRequest() instanceof ServletRequest) {
             Config.set((ServletRequest) externalContext.getRequest(),
                     Config.FMT_LOCALE, viewRoot.getLocale());
@@ -315,15 +324,18 @@ public class ViewHandlerImpl extends ViewHandler {
 
     protected void storeResponseCharacterEncoding(
             ExternalContext externalContext) {
-        ServletRequest req = (ServletRequest) externalContext.getRequest();
-        if (ServletExternalContextUtil.isHttpServletRequest(req)) {
-            HttpServletResponse httpRes = ServletExternalContextUtil
-                    .getResponse(externalContext);
-            HttpSession session = (HttpSession) externalContext
-                    .getSession(false);
-            if (session != null) {
-                session.setAttribute(ViewHandler.CHARACTER_ENCODING_KEY,
-                        httpRes.getCharacterEncoding());
+        // Portlet: RenderRequest does not have getCharacterEncoding()
+        if (externalContext.getRequest() instanceof ServletRequest) {
+            ServletRequest req = (ServletRequest) externalContext.getRequest();
+            if (ServletExternalContextUtil.isHttpServletRequest(req)) {
+                HttpServletResponse httpRes = ServletExternalContextUtil
+                        .getResponse(externalContext);
+                HttpSession session = (HttpSession) externalContext
+                        .getSession(false);
+                if (session != null) {
+                    session.setAttribute(ViewHandler.CHARACTER_ENCODING_KEY,
+                            httpRes.getCharacterEncoding());
+                }
             }
         }
     }

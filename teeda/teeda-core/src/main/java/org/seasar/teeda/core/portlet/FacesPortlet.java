@@ -17,12 +17,13 @@ package org.seasar.teeda.core.portlet;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Iterator;
 
 import javax.faces.FactoryFinder;
-import javax.faces.application.Application;
-import javax.faces.application.ApplicationFactory;
 import javax.faces.application.StateManager;
 import javax.faces.application.ViewHandler;
+import javax.faces.component.EditableValueHolder;
+import javax.faces.component.UIComponent;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 import javax.faces.context.FacesContextFactory;
@@ -39,6 +40,8 @@ import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.seasar.framework.util.InputStreamUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.config.faces.FacesConfigBuilder;
@@ -55,6 +58,10 @@ import org.seasar.teeda.core.util.DIContainerUtil;
  * 
  */
 public class FacesPortlet extends GenericPortlet {
+    /**
+     * Logger for this class
+     */
+    private static final Log log = LogFactory.getLog(FacesPortlet.class);
 
     public static final String VIEW_ID = FacesPortlet.class.getName()
             + ".VIEW_ID";
@@ -224,10 +231,15 @@ public class FacesPortlet extends GenericPortlet {
 
     protected void facesRender(RenderRequest request, RenderResponse response,
             String page) throws PortletException, java.io.IOException {
+        if (log.isDebugEnabled()) {
+            log
+                    .debug("called facesRender(RenderRequest, RenderResponse, String).");
+        }
 
         String viewId = request.getParameter(VIEW_ID);
         if ((viewId == null) || sessionTimedOut(request)) {
             nonFacesRequest(request, response, page);
+            storeResponseCharacterEncoding(request);
             return;
         }
 
@@ -235,13 +247,27 @@ public class FacesPortlet extends GenericPortlet {
             PortletFacesContextImpl facesContext = (PortletFacesContextImpl) request
                     .getPortletSession().getAttribute(CURRENT_FACES_CONTEXT);
 
-            // TODO: not sure if this can happen.  Also double check this against spec section 2.1.3
-            if (facesContext.getResponseComplete())
+            if (facesContext == null) {
+                if (log.isDebugEnabled()) {
+                    log.debug("facesContext is null.  viewId=" + viewId);
+                }
+                nonFacesRequest(request, response, page);
+                storeResponseCharacterEncoding(request);
                 return;
+            }
+
+            // TODO: not sure if this can happen.  Also double check this against spec section 2.1.3
+            if (facesContext.getResponseComplete()) {
+                return;
+            }
 
             facesContext.setExternalContext(new PortletExternalContextImpl(
                     getPortletContext(), request, response));
             lifecycle.render(facesContext);
+
+            storeResponseCharacterEncoding(request);
+
+            request.getPortletSession().removeAttribute(CURRENT_FACES_CONTEXT);
         } catch (Throwable e) {
             handleExceptionFromLifecycle(e);
         }
@@ -249,20 +275,35 @@ public class FacesPortlet extends GenericPortlet {
 
     protected void nonFacesRequest(RenderRequest request,
             RenderResponse response, String view) throws PortletException {
-        ApplicationFactory appFactory = (ApplicationFactory) FactoryFinder
-                .getFactory(FactoryFinder.APPLICATION_FACTORY);
-        Application application = appFactory.getApplication();
-        ViewHandler viewHandler = application.getViewHandler();
         FacesContext facesContext = facesContextFactory.getFacesContext(
                 getPortletContext(), request, response, lifecycle);
-        UIViewRoot viewRoot = viewHandler.createView(facesContext, view);
-        viewRoot.setViewId(view);
+
+        ViewHandler viewHandler = facesContext.getApplication()
+                .getViewHandler();
+        UIViewRoot viewRoot = viewHandler.restoreView(facesContext, view);
+        if (viewRoot == null) {
+            viewRoot = viewHandler.createView(facesContext, view);
+        }
         facesContext.setViewRoot(viewRoot);
+        initializeChildren(facesContext, viewRoot);
+
         lifecycle.render(facesContext);
+    }
+
+    protected void storeResponseCharacterEncoding(RenderRequest request) {
+        String characterEncoding = request
+                .getParameter(ViewHandler.CHARACTER_ENCODING_KEY);
+        if (characterEncoding != null) {
+            request.getPortletSession().setAttribute(
+                    ViewHandler.CHARACTER_ENCODING_KEY, characterEncoding);
+        }
     }
 
     public void processAction(ActionRequest request, ActionResponse response)
             throws PortletException, IOException {
+        if (log.isDebugEnabled()) {
+            log.debug("called processAction(ActionRequest, ActionResponse).");
+        }
 
         // check session timeout
         if (sessionTimedOut(request))
@@ -278,6 +319,10 @@ public class FacesPortlet extends GenericPortlet {
                 response.setRenderParameter(VIEW_ID, facesContext.getViewRoot()
                         .getViewId());
             }
+
+            // pass it to render..
+            response.setRenderParameter(ViewHandler.CHARACTER_ENCODING_KEY,
+                    request.getCharacterEncoding());
 
             request.getPortletSession().setAttribute(CURRENT_FACES_CONTEXT,
                     facesContext);
@@ -304,4 +349,20 @@ public class FacesPortlet extends GenericPortlet {
     protected boolean sessionTimedOut(PortletRequest request) {
         return request.getPortletSession(false) == null;
     }
+
+    protected void initializeChildren(FacesContext context,
+            UIComponent component) {
+        for (Iterator i = component.getFacetsAndChildren(); i.hasNext();) {
+            UIComponent child = (UIComponent) i.next();
+            if (child instanceof EditableValueHolder) {
+                EditableValueHolder editableValueHolder = (EditableValueHolder) child;
+                editableValueHolder.setValid(true);
+                editableValueHolder.setSubmittedValue(null);
+                editableValueHolder.setValue(null);
+                editableValueHolder.setLocalValueSet(false);
+            }//For each
+            initializeChildren(context, child);
+        }
+    }
+
 }

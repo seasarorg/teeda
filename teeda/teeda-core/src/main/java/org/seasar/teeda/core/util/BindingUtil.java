@@ -19,9 +19,8 @@ import javax.faces.application.Application;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
+import org.seasar.framework.container.ExternalContext;
 import org.seasar.framework.container.S2Container;
 
 /**
@@ -46,9 +45,7 @@ public class BindingUtil {
     }
 
     public static Object getValue(S2Container container, String name) {
-        HttpServletRequest request = (HttpServletRequest) container
-                .getExternalContext().getRequest();
-        Object var = getValue(request, name);
+        Object var = getValue(container.getExternalContext(), name);
         if (var != null) {
             return var;
         }
@@ -58,25 +55,18 @@ public class BindingUtil {
         return null;
     }
 
-    public static Object getValue(HttpServletRequest request, String name) {
-        Object var = request.getAttribute(name);
+    public static Object getValue(ExternalContext externalContext, String name) {
+        Object var = externalContext.getRequestMap().get(name);
         if (var != null) {
             return var;
         }
-        var = request.getParameter(name);
+        var = externalContext.getRequestParameterMap().get(name);
         if (var != null && !"null".equals(var)) {
             return var;
         }
-        var = request.getAttribute(name);
+        var = externalContext.getSessionMap().get(name);
         if (var != null) {
             return var;
-        }
-        HttpSession session = request.getSession(false);
-        if (session != null) {
-            var = session.getAttribute(name);
-            if (var != null) {
-                return var;
-            }
         }
         return null;
     }

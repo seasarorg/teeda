@@ -52,8 +52,10 @@ public class UIParameterUtilTest extends TeedaTestCase {
         UIParameterUtil.saveParametersToRequest(command, getFacesContext());
 
         // # Assert #
-        assertEquals("AAA", getRequest().getAttribute("aaa"));
-        assertEquals("BBB", getRequest().getAttribute("bbb"));
+        assertEquals("AAA", getFacesContext().getExternalContext()
+                .getRequestMap().get("aaa"));
+        assertEquals("BBB", getFacesContext().getExternalContext()
+                .getRequestMap().get("bbb"));
     }
 
 }

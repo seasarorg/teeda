@@ -16,14 +16,12 @@
 package org.seasar.teeda.core.util;
 
 import java.lang.reflect.Field;
+import java.util.Map;
 
 import javax.faces.context.FacesContext;
 import javax.faces.el.EvaluationException;
 import javax.faces.el.MethodBinding;
 import javax.faces.event.AbortProcessingException;
-import javax.servlet.ServletRequest;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.PropertyDesc;
@@ -132,9 +130,7 @@ public class InvokeUtil {
                 if (container.hasComponentDef(varName)) {
                     continue;
                 }
-                HttpServletRequest request = (HttpServletRequest) container
-                        .getExternalContext().getRequest();
-                Object var = BindingUtil.getValue(request, varName);
+                Object var = BindingUtil.getValue(container, varName);
                 if ("".equals(var)) {
                     pd.setValue(component, null);
                 } else if (var != null) {
@@ -168,13 +164,13 @@ public class InvokeUtil {
                                 .getInstanceDef());
                     }
                     if (useSession) {
-                        HttpSession session = (HttpSession) container
-                                .getExternalContext().getSession();
-                        session.setAttribute(pd.getPropertyName(), var);
+                        Map sessionMap = container.getExternalContext()
+                                .getSessionMap();
+                        sessionMap.put(pd.getPropertyName(), var);
                     } else {
-                        ServletRequest request = (ServletRequest) container
-                                .getExternalContext().getRequest();
-                        request.setAttribute(pd.getPropertyName(), var);
+                        Map requestMap = container.getExternalContext()
+                                .getRequestMap();
+                        requestMap.put(pd.getPropertyName(), var);
                     }
                 }
             }
