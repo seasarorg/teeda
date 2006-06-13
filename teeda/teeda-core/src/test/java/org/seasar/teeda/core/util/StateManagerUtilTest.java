@@ -15,6 +15,8 @@
  */
 package org.seasar.teeda.core.util;
 
+import org.seasar.teeda.core.mock.MockUIComponentBase;
+import org.seasar.teeda.core.mock.MockUIComponentBaseWithNamingContainer;
 import org.seasar.teeda.core.unit.TeedaTestCase;
 
 /**
@@ -25,7 +27,7 @@ public class StateManagerUtilTest extends TeedaTestCase {
     public void testIsSavingStateClient() throws Exception {
         assertFalse(StateManagerUtil.isSavingStateInClient(getFacesContext()));
     }
-/*
+
     public void testAssertComponentNoDuplicateId_success() throws Exception {
         MockUIComponentBase parent = new MockUIComponentBase();
         parent.setId("id0");
@@ -82,5 +84,5 @@ public class StateManagerUtilTest extends TeedaTestCase {
             success();
         }
     }
-*/
+
 }
