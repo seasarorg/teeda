@@ -28,7 +28,7 @@ import javax.faces.render.RenderKitFactory;
 import junitx.framework.ObjectAssert;
 
 import org.seasar.extension.unit.S2TestCase;
-import org.seasar.framework.util.EclipseUtil;
+import org.seasar.framework.util.ResourceUtil;
 import org.seasar.teeda.core.config.faces.assembler.AssemblerAssembler;
 import org.seasar.teeda.core.config.faces.assembler.impl.DefaultAssembleProvider;
 import org.seasar.teeda.core.config.faces.element.FacesConfig;
@@ -44,10 +44,9 @@ import org.seasar.teeda.core.util.FactoryFinderUtil;
 public class MetaInfFacesConfiguratorTest extends S2TestCase {
 
     public void testConfigure1() throws Exception {
-        File projectRoot = EclipseUtil.getProjectRoot("teeda-core")
-                .getCanonicalFile();
-        File jarDir = new File(projectRoot,
-                "target/test-classes/org/seasar/teeda/core/config/faces/impl");
+        final File buildDir = ResourceUtil.getBuildDir(getClass());
+        File jarDir = new File(buildDir, getClass().getPackage().getName()
+                .replace('.', '/'));
         File[] jars = jarDir.listFiles(new FilenameFilter() {
             public boolean accept(File dir, String name) {
                 if (name.endsWith(".jar")) {
