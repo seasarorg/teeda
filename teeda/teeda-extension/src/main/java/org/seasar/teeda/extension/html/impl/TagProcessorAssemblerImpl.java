@@ -94,8 +94,10 @@ public class TagProcessorAssemblerImpl implements TagProcessorAssembler {
                 ElementProcessor elementProcessor = factory.createProcessor(
                         elementNode, pageDesc, actionDesc);
                 parentProcessor.addElement(elementProcessor);
-                assembleElementNodeChildren(elementProcessor, elementNode,
-                        pageDesc, actionDesc);
+                if (!factory.isLeaf()) {
+                    assembleElementNodeChildren(elementProcessor, elementNode,
+                            pageDesc, actionDesc);
+                }
                 elementProcessor.endElement();
                 return;
             }

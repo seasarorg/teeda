@@ -39,6 +39,10 @@ public class OutputTextFactory extends AbstractElementProcessorFactory {
         }
         return (elementNode.getProperty(JsfConstants.ID_ATTR) != null);
     }
+    
+    public boolean isLeaf() {
+        return true;
+    }
 
     protected void customizeProperties(Map properties, ElementNode elementNode,
             PageDesc pageDesc, ActionDesc actionDesc) {

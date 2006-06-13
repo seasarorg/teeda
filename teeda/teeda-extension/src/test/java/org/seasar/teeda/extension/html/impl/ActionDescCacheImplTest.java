@@ -30,7 +30,6 @@ public class ActionDescCacheImplTest extends S2FrameworkTestCase {
         String rootPath = "/" + ClassUtil.getPackageName(getClass()).replace('.', '/');
         naming.setHtmlRootPath(rootPath);
         ActionDescCacheImpl cache = new ActionDescCacheImpl();
-        cache.setServletContext(getServletContext());
         cache.setHtmlAutoNaming(naming);
         cache.setContainer(getContainer());
         register(FooAction.class, "fooAction");

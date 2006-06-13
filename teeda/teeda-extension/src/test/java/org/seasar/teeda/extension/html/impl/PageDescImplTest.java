@@ -30,10 +30,11 @@ public class PageDescImplTest extends TestCase {
 	
     public void testIsValid() throws Exception {
         PageDescImpl pd = new PageDescImpl(FooPage.class, "fooPage");
-        assertTrue("1", pd.isValid("aaa"));
-        assertFalse("2", pd.isValid("xxx"));
-        assertTrue("3", pd.isValid("fooForm"));
-        assertFalse("4", pd.isValid(null));
+        assertTrue(pd.isValid("aaa"));
+        assertTrue(pd.isValid("doBbb"));
+        assertFalse(pd.isValid("xxx"));
+        assertTrue(pd.isValid("fooForm"));
+        assertFalse(pd.isValid(null));
     }
 
     public void testIsModified() throws Exception {

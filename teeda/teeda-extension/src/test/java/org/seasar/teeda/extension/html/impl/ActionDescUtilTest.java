@@ -13,18 +13,21 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.extension.html;
+package org.seasar.teeda.extension.html.impl;
+
+import java.util.Set;
+
+import junit.framework.TestCase;
 
 /**
  * @author higa
  *
  */
-public interface ElementProcessorFactory {
+public class ActionDescUtilTest extends TestCase {
 
-    boolean isMatch(ElementNode elementNode);
-    
-    boolean isLeaf();
-
-    ElementProcessor createProcessor(ElementNode elementNode,
-            PageDesc pageDesc, ActionDesc actionDesc);
+    public void testGetActionMethodNames() throws Exception {
+        Set names = ActionDescUtil.getActionMethodNames(FooAction.class);
+        assertTrue(names.contains("doAaa"));
+        assertFalse(names.contains("xxx"));
+    }
 }

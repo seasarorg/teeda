@@ -19,11 +19,9 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.ServletContext;
-
 import org.seasar.framework.container.ComponentDef;
 import org.seasar.framework.container.S2Container;
-import org.seasar.framework.util.ClassUtil;
+import org.seasar.framework.util.ResourceUtil;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ActionDescCache;
 import org.seasar.teeda.extension.html.HtmlAutoNaming;
@@ -36,15 +34,9 @@ public class ActionDescCacheImpl implements ActionDescCache {
 
     private Map actionDescs = new HashMap();
 
-    private ServletContext servletContext;
-
     private HtmlAutoNaming htmlAutoNaming = new DefaultHtmlAutoNaming();
 
     private S2Container container;
-
-    public void setServletContext(ServletContext servletContext) {
-        this.servletContext = servletContext;
-    }
 
     public void setHtmlAutoNaming(HtmlAutoNaming pageAutoNaming) {
         this.htmlAutoNaming = pageAutoNaming;
@@ -65,16 +57,12 @@ public class ActionDescCacheImpl implements ActionDescCache {
             return null;
         }
         ComponentDef cd = container.getRoot().getComponentDef(actionName);
-        String pagePath = ClassUtil.getResourcePath(cd.getComponentClass());
-        String realPath = servletContext.getRealPath(pagePath);
-        if (realPath != null) {
-            File file = new File(realPath);
-            if (file.exists()) {
-                actionDesc = new ActionDescImpl(cd.getConcreteClass(),
-                        actionName, file);
-            }
-        }
-        if (actionDesc == null) {
+        File file = ResourceUtil.getResourceAsFileNoException(cd
+                .getComponentClass());
+        if (file != null) {
+            actionDesc = new ActionDescImpl(cd.getConcreteClass(), actionName,
+                    file);
+        } else {
             actionDesc = new ActionDescImpl(cd.getConcreteClass(), actionName);
         }
         actionDescs.put(viewId, actionDesc);

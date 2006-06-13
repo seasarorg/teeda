@@ -34,7 +34,7 @@ public class PageDescImpl implements PageDesc {
 
     private String pageName;
 
-    private Set propertyNames = new HashSet();
+    private Set names = new HashSet();
 
     private File file;
 
@@ -61,15 +61,16 @@ public class PageDescImpl implements PageDesc {
         BeanDesc beanDesc = BeanDescFactory.getBeanDesc(pageClass);
         for (int i = 0; i < beanDesc.getPropertyDescSize(); ++i) {
             PropertyDesc pd = beanDesc.getPropertyDesc(i);
-            propertyNames.add(pd.getPropertyName());
+            names.add(pd.getPropertyName());
         }
+        names.addAll(ActionDescUtil.getActionMethodNames(pageClass));
     }
 
     public boolean isValid(String id) {
         if (id == null) {
             return false;
         }
-        if (propertyNames.contains(id)) {
+        if (names.contains(id)) {
             return true;
         }
         return id.endsWith(FORM);

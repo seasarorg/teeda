@@ -43,8 +43,15 @@ public class CommandButtonFactory extends AbstractElementProcessorFactory {
         super
                 .customizeProperties(properties, elementNode, pageDesc,
                         actionDesc);
-        properties.put(JsfConstants.ACTION_ATTR, getBindingExpression(
-                actionDesc.getActionName(), elementNode.getId()));
+        String baseName = null;
+        String id = elementNode.getId();
+        if (pageDesc != null && pageDesc.isValid(id)) {
+            baseName = pageDesc.getPageName();
+        } else {
+            baseName = actionDesc.getActionName();
+        }
+        properties.put(JsfConstants.ACTION_ATTR, getBindingExpression(baseName,
+                id));
     }
 
     protected String getTagName() {

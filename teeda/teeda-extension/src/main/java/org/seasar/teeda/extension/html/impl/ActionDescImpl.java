@@ -16,8 +16,6 @@
 package org.seasar.teeda.extension.html.impl;
 
 import java.io.File;
-import java.lang.reflect.Method;
-import java.util.HashSet;
 import java.util.Set;
 
 import org.seasar.teeda.extension.html.ActionDesc;
@@ -30,7 +28,7 @@ public class ActionDescImpl implements ActionDesc {
 
     private String actionName;
 
-    private Set methodNames = new HashSet();
+    private Set methodNames;
 
     private File file;
 
@@ -54,18 +52,7 @@ public class ActionDescImpl implements ActionDesc {
     }
 
     protected void setup(Class actionClass) {
-        Method[] methods = actionClass.getMethods();
-        for (int i = 0; i < methods.length; ++i) {
-            Method m = methods[i];
-            if (isMaybeActionMethod(m)) {
-                methodNames.add(m.getName());
-            }
-        }
-    }
-
-    protected boolean isMaybeActionMethod(Method method) {
-        return method.getReturnType().equals(String.class)
-                && method.getParameterTypes().length == 0;
+        methodNames = ActionDescUtil.getActionMethodNames(actionClass);
     }
 
     public boolean isValid(String id) {

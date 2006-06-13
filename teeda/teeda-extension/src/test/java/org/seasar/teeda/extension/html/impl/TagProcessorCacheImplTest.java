@@ -36,13 +36,11 @@ public class TagProcessorCacheImplTest extends S2FrameworkTestCase {
         String path = rootPath + "/foo.html";
         
         PageDescCacheImpl pageDescCache = new PageDescCacheImpl();
-        pageDescCache.setServletContext(getServletContext());
         pageDescCache.setHtmlAutoNaming(naming);
         pageDescCache.setContainer(getContainer());
         register(FooPage.class, "fooPage");
         
         ActionDescCacheImpl actionDescCache = new ActionDescCacheImpl();
-        actionDescCache.setServletContext(getServletContext());
         actionDescCache.setHtmlAutoNaming(naming);
         actionDescCache.setContainer(getContainer());
         register(FooAction.class, "fooAction");

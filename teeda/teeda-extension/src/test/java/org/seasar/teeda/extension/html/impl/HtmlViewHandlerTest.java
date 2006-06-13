@@ -72,14 +72,12 @@ public class HtmlViewHandlerTest extends TeedaExtensionTestCase {
         String rootPath = "/" + ClassUtil.getPackageName(getClass()).replace('.', '/');
         naming.setHtmlRootPath(rootPath);
         PageDescCacheImpl pageDescCache = new PageDescCacheImpl();
-        pageDescCache.setServletContext(getServletContext());
         pageDescCache.setHtmlAutoNaming(naming);
         pageDescCache.setContainer(getContainer());
         register(FooPage.class, "fooPage");
         String path = rootPath + "/foo.html";
         
         ActionDescCacheImpl actionDescCache = new ActionDescCacheImpl();
-        actionDescCache.setServletContext(getServletContext());
         actionDescCache.setHtmlAutoNaming(naming);
         actionDescCache.setContainer(getContainer());
         register(FooAction.class, "fooAction");

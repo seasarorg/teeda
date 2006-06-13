@@ -19,11 +19,9 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.ServletContext;
-
 import org.seasar.framework.container.ComponentDef;
 import org.seasar.framework.container.S2Container;
-import org.seasar.framework.util.ClassUtil;
+import org.seasar.framework.util.ResourceUtil;
 import org.seasar.teeda.extension.html.HtmlAutoNaming;
 import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.PageDescCache;
@@ -36,15 +34,9 @@ public class PageDescCacheImpl implements PageDescCache {
 
     private Map pageDescs = new HashMap();
 
-    private ServletContext servletContext;
-
     private HtmlAutoNaming htmlAutoNaming = new DefaultHtmlAutoNaming();
 
     private S2Container container;
-
-    public void setServletContext(ServletContext servletContext) {
-        this.servletContext = servletContext;
-    }
 
     public void setHtmlAutoNaming(HtmlAutoNaming pageAutoNaming) {
         this.htmlAutoNaming = pageAutoNaming;
@@ -65,13 +57,11 @@ public class PageDescCacheImpl implements PageDescCache {
             return null;
         }
         ComponentDef cd = container.getRoot().getComponentDef(pageName);
-        String pagePath = ClassUtil.getResourcePath(cd.getComponentClass());
-        String realPath = servletContext.getRealPath(pagePath);
-        if (realPath != null) {
-            File file = new File(realPath);
+        File file = ResourceUtil.getResourceAsFileNoException(cd
+                .getComponentClass());
+        if (file != null) {
             pageDesc = new PageDescImpl(cd.getConcreteClass(), pageName, file);
-        }
-        if (pageDesc == null) {
+        } else {
             pageDesc = new PageDescImpl(cd.getConcreteClass(), pageName);
         }
         pageDescs.put(viewId, pageDesc);

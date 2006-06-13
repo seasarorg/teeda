@@ -30,7 +30,6 @@ public class PageDescCacheImplTest extends S2FrameworkTestCase {
         String rootPath = "/" + ClassUtil.getPackageName(getClass()).replace('.', '/');
         naming.setHtmlRootPath(rootPath);
         PageDescCacheImpl cache = new PageDescCacheImpl();
-        cache.setServletContext(getServletContext());
         cache.setHtmlAutoNaming(naming);
         cache.setContainer(getContainer());
         register(FooPage.class, "fooPage");

@@ -19,6 +19,7 @@ import org.seasar.framework.unit.S2FrameworkTestCase;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.taglib.html.CommandButtonTag;
 import org.seasar.teeda.core.taglib.html.InputTextTag;
+import org.seasar.teeda.core.taglib.html.OutputTextTag;
 import org.seasar.teeda.extension.config.taglib.element.TagElement;
 import org.seasar.teeda.extension.config.taglib.element.TaglibElement;
 import org.seasar.teeda.extension.config.taglib.element.impl.TagElementImpl;
@@ -30,6 +31,7 @@ import org.seasar.teeda.extension.html.TagProcessorAssembler;
 import org.seasar.teeda.extension.html.TextProcessor;
 import org.seasar.teeda.extension.html.factory.CommandButtonFactory;
 import org.seasar.teeda.extension.html.factory.InputTextFactory;
+import org.seasar.teeda.extension.html.factory.OutputTextFactory;
 import org.seasar.teeda.extension.mock.MockTaglibManager;
 
 
@@ -208,5 +210,37 @@ public class TagProcessorAssembleImplTest extends S2FrameworkTestCase {
         assertTrue("4", viewRoot.getChild(1) instanceof ElementProcessor);
         textProcessor = (TextProcessor) viewRoot.getChild(2);
         assertEquals("5", "</body></html>", textProcessor.getValue());
+    }
+    
+    public void testOutputText() throws Exception {
+        String path = convertPath("outputText.html");
+        HtmlDescCacheImpl cache = new HtmlDescCacheImpl();
+        cache.setServletContext(getServletContext());
+        HtmlDesc htmlDesc = cache.createHtmlDesc(path);
+        PageDescImpl pageDesc = new PageDescImpl(FooPage.class, "fooPage");
+        ActionDescImpl actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
+        MockTaglibManager taglibManager = new MockTaglibManager();
+        TaglibElement jsfHtml = new TaglibElementImpl();
+        jsfHtml.setUri(JsfConstants.JSF_HTML_URI);
+        TagElement tagElement = new TagElementImpl();
+        tagElement.setName("outputText");
+        tagElement.setTagClass(OutputTextTag.class);
+        jsfHtml.addTagElement(tagElement);
+        taglibManager.addTaglibElement(jsfHtml);
+        OutputTextFactory factory = new OutputTextFactory();
+        factory.setTaglibManager(taglibManager);
+        TagProcessorAssemblerImpl assembler = new TagProcessorAssemblerImpl();
+        assembler.addFactory(factory);
+        TagProcessor root = assembler.assemble(htmlDesc, pageDesc, actionDesc);
+        assertTrue(root instanceof ElementProcessor);
+        ElementProcessor viewRoot = (ElementProcessor) root;
+        assertEquals(3, viewRoot.getChildSize());
+        TextProcessor textProcessor = (TextProcessor) viewRoot.getChild(0);
+        assertEquals("<html><body>", textProcessor.getValue());
+        assertTrue(viewRoot.getChild(1) instanceof ElementProcessor);
+        ElementProcessor ep = (ElementProcessor) viewRoot.getChild(1);
+        assertEquals(0, ep.getChildSize());
+        textProcessor = (TextProcessor) viewRoot.getChild(2);
+        assertEquals("</body></html>", textProcessor.getValue());
     }
 }

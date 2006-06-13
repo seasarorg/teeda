@@ -51,6 +51,10 @@ public abstract class AbstractElementProcessorFactory implements
                 getTagName());
     }
 
+    public boolean isLeaf() {
+        return false;
+    }
+
     protected Class getTagClass(String uri, String tagName) {
         TaglibElement taglibElement = taglibManager.getTaglibElement(uri);
         TagElement tagElement = taglibElement.getTagElement(tagName);
