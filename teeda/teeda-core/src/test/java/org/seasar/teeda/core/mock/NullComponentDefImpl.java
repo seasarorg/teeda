@@ -87,6 +87,13 @@ public class NullComponentDefImpl implements ComponentDef {
     public void setExpression(Expression Expression) {
     }
 
+    public boolean isExternalBinding() {
+        return false;
+    }
+
+    public void setExternalBinding(boolean externalBinding) {
+    }
+
     public void init() {
     }
 
