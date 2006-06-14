@@ -9,4 +9,7 @@
 	<component name="exampleBean" class="examples.teeda.ajax.ExampleBean" instance="request">
 	    <meta name="teeda-ajax"/>
 	</component>	
+	<component name="helloBean" class="examples.teeda.ajax.HelloBean" instance="request">
+	    <meta name="teeda-ajax"/>
+	</component>	
 </components>
