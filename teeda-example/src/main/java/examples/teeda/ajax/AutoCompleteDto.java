@@ -15,34 +15,29 @@
  */
 package examples.teeda.ajax;
 
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * @author mopemope
+ * @author shot
  */
-public class AutoCompleteSampleBean {
+public class AutoCompleteDto {
 
-    private static final String[] JSON_DATA = { "test1", "test2", "test3",
-            "dummy1", "dummy2", "dummy3", "dummy4", "teeda1", "teeda2", "teeda3" };
-
-    private String name;
-
-    public String getName() {
-        return this.name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Object autoComplete() {
-        AutoCompleteDto dto = new AutoCompleteDto();
-        for (int i = 0; i < JSON_DATA.length; i++) {
-            if (JSON_DATA[i].indexOf(this.name) > -1) {
-                dto.add(JSON_DATA[i]);
-            }
-        }
-        return dto;
+    List data = new ArrayList();
+    
+    public AutoCompleteDto() {
     }
     
+    public void add(String str) {
+        data.add(str);
+    }
 
+    public List getData() {
+        return data;
+    }
+
+    public void setData(List data) {
+        this.data = data;
+    }
+    
 }

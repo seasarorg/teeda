@@ -15,23 +15,42 @@
  */
 package examples.teeda.ajax;
 
-
 /**
- * @author yone
+ * @author shot
  */
-public interface AjaxConstants {
+public class AjaxDto {
 
-    public String DEFAULT_AJAX_METHOD = "ajaxAction";
+    private String menuName;
     
-    public String TEEDA_AJAX_META = "teeda-ajax";
+    private int price;
 
-    public String CONTENT_TYPE_XML = "text/xml; charset=UTF-8";
+    public AjaxDto(int foodNo) {
+        if(foodNo == 1) {
+            menuName = "hoge";
+            price = 100;
+        } else if(foodNo == 2){
+            menuName = "foo";
+            price = 200;
+        } else {
+            menuName = "bar";
+            price = 300;
+        }
+    }
     
-    public String CONTENT_TYPE_JSON = "text/javascript; charset=UTF-8";
+    public String getMenuName() {
+        return menuName;
+    }
+
+    public void setMenuName(String menuName) {
+        this.menuName = menuName;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
     
-    public String CONTENT_TYPE_TEXT = "text/plain; charset=UTF-8";
-    
-    public String REQ_PARAM_COMPONENT = "component";
-    
-    public String REQ_PARAM_ACTION = "action";
 }

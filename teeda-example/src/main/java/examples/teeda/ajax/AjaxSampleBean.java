@@ -15,10 +15,10 @@
  */
 package examples.teeda.ajax;
 
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author yone
+ * @author shot
  */
 public class AjaxSampleBean {
 
@@ -31,34 +31,6 @@ public class AjaxSampleBean {
     private static final String NOODLE = "250\tうどん\n300\tそば\n"
             + "550\tラーメン\n180\tソーメン\n880\tスパゲティ\n30\t焼きそば\n"
             + "440\tナポリタン\n1280\t長崎チャンポン\n";
-
-    private static final String JSON_FRUIT = "{ \"detail\" : [\n "
-            + "{ \"menuName\" : \"オレンジ\", \"price\" : \"100\" },\n"
-            + "{ \"menuName\" : \"リンゴ\", \"price\" : \"200\" },\n"
-            + "{ \"menuName\" : \"桃\", \"price\" : \"300\" },\n"
-            + "{ \"menuName\" : \"葡萄\", \"price\" : \"400\" },\n"
-            + "{ \"menuName\" : \"メロン\", \"price\" : \"500\" },\n"
-            + "{ \"menuName\" : \"すいか\", \"price\" : \"600\" } \n" + "]\n"
-            + "}";
-
-    private static final String JSON_DRINK = "{ \"detail\" : [\n "
-            + "{ \"menuName\" : \"水\", \"price\" : \"0\" },\n"
-            + "{ \"menuName\" : \"コーラ\", \"price\" : \"120\" },\n"
-            + "{ \"menuName\" : \"コーヒー\", \"price\" : \"240\" },\n"
-            + "{ \"menuName\" : \"紅茶\", \"price\" : \"200\" },\n"
-            + "{ \"menuName\" : \"スプライト\", \"price\" : \"120\" },\n"
-            + "{ \"menuName\" : \"ペプシ\", \"price\" : \"120\" }\n" + "]\n" + "}";
-
-    private static final String JSON_NOODLE = "{ \"detail\" : [\n "
-            + "{ \"menuName\" : \"うどん\", \"price\" : \"250\" },\n"
-            + "{ \"menuName\" : \"そば\", \"price\" : \"300\" },\n"
-            + "{ \"menuName\" : \"ラーメン\", \"price\" : \"550\" },\n"
-            + "{ \"menuName\" : \"ソーメン\", \"price\" : \"180\" },\n"
-            + "{ \"menuName\" : \"スパゲティ\", \"price\" : \"880\" },\n"
-            + "{ \"menuName\" : \"焼きそば\", \"price\" : \"30\" },\n"
-            + "{ \"menuName\" : \"ナポリタン\", \"price\" : \"440\" },\n"
-            + "{ \"menuName\" : \"長崎チャンポン\", \"price\" : \"1280\" } \n" + "]\n"
-            + "}";
 
     private static final String XML_FRUIT = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
             + "<detail>\n"
@@ -94,9 +66,6 @@ public class AjaxSampleBean {
 
     private final String[] ORG_TEXT = { "", FRUIT, DRINK, NOODLE };
 
-    private final String[] JSON_TEXT = { "", JSON_FRUIT, JSON_DRINK,
-            JSON_NOODLE };
-
     private final String[] XML_TEXT = { "", XML_FRUIT, XML_DRINK, XML_NOODLE };
 
     private String arg1;
@@ -104,12 +73,6 @@ public class AjaxSampleBean {
     private String arg2;
 
     private int food;
-
-    private HttpServletResponse response;
-
-    public void setResponse(HttpServletResponse response) {
-        this.response = response;
-    }
 
     public String getArg1() {
         return arg1;
@@ -137,35 +100,31 @@ public class AjaxSampleBean {
         this.food = food;
     }
 
-    public String ajaxOrg() {
+    public Object ajaxOrg() {
         return this.createResponseOrg();
     }
 
-    public String ajaxJson() {
+    public Object ajaxJson() {
         return this.createResponseJson();
     }
 
-    public String ajaxXml() {
+    public Object ajaxXml() {
         return this.createResponseXml();
     }
 
     public String ajaxAction() {
-        this.response.setContentType(AjaxConstants.CONTENT_TYPE_TEXT);
         return this.arg2;
     }
 
     private String createResponseOrg() {
-        this.response.setContentType(AjaxConstants.CONTENT_TYPE_TEXT);
         return ORG_TEXT[this.food];
     }
 
-    private String createResponseJson() {
-        this.response.setContentType(AjaxConstants.CONTENT_TYPE_JSON);
-        return JSON_TEXT[this.food];
+    private Object createResponseJson() {
+        return new AjaxDto(this.food);
     }
 
     private String createResponseXml() {
-        this.response.setContentType(AjaxConstants.CONTENT_TYPE_XML);
         return XML_TEXT[this.food];
     }
 }

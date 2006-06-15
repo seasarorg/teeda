@@ -35,7 +35,7 @@
 	</servlet-mapping>
 	<servlet>
 		<servlet-name>AjaxServlet</servlet-name>
-		<servlet-class>examples.teeda.ajax.AjaxServlet</servlet-class>
+		<servlet-class>org.seasar.teeda.ajax.AjaxServlet</servlet-class>
 		<load-on-startup>3</load-on-startup>
 	</servlet>
 	<servlet-mapping>
