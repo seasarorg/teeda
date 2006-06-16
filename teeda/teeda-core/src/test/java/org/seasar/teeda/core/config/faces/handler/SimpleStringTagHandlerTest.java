@@ -24,31 +24,7 @@ import org.seasar.teeda.core.config.faces.element.impl.ConverterElementImpl;
 
 public class SimpleStringTagHandlerTest extends TagHandlerTestCase {
 
-    private static final String PATH = "org/seasar/teeda/core/config/handler/testSimpleStringTagHandler.xml";
-
-    public static void main(String[] args) {
-        junit.textui.TestRunner.run(SimpleStringTagHandlerTest.class);
-    }
-
-    /*
-     * @see TestCase#setUp()
-     */
-    protected void setUp() throws Exception {
-        super.setUp();
-    }
-
-    /*
-     * @see TestCase#tearDown()
-     */
-    protected void tearDown() throws Exception {
-        super.tearDown();
-    }
-
-    public SimpleStringTagHandlerTest(String arg0) {
-        super(arg0);
-    }
-
-    public void testEndTagHandlerContextString() {
+    public void testEndTagHandlerContextString() throws Exception {
         ConverterElement tag = new ConverterElementImpl();
         getContext().push(tag);
         SimpleStringTagHandler handler = new SimpleStringTagHandler(

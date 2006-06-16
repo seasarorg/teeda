@@ -19,17 +19,24 @@ import junit.framework.TestCase;
 
 public class TagConvertUtilTest extends TestCase {
 
-    public void testConvertToSetter() {
+    public void testConvertToSetter() throws Exception {
         String[] strs = TagConvertUtil.convertToSetter("converter-for-class");
         assertEquals("setConverterForClass", strs[0]);
         assertEquals("addConverterForClass", strs[1]);
     }
 
-    public void testWithoutAnySetter() {
+    public void testWithoutAnySetter() throws Exception {
         String s = "converter";
         String[] strs = TagConvertUtil.convertToSetter(s);
         assertEquals("setConverter", strs[0]);
         assertEquals("addConverter", strs[1]);
     }
 
+    public void testSimple() throws Exception {
+        String s = "redirect";
+        String[] strs = TagConvertUtil.convertToSetter(s);
+        assertEquals("setRedirect", strs[0]);
+        assertEquals("addRedirect", strs[1]);
+    }
+    
 }

@@ -18,7 +18,6 @@ package org.seasar.teeda.core.config.faces.handler;
 import java.lang.reflect.Method;
 
 import org.seasar.framework.log.Logger;
-import org.seasar.framework.util.StringUtil;
 import org.seasar.framework.xml.TagHandlerContext;
 import org.seasar.teeda.core.util.TagConvertUtil;
 
@@ -27,17 +26,17 @@ import org.seasar.teeda.core.util.TagConvertUtil;
  */
 public class SimpleStringTagHandler extends JsfTagHandler {
 
-    private static Logger logger_ = Logger
+    private static Logger logger = Logger
             .getLogger(SimpleStringTagHandler.class);
 
     private static final long serialVersionUID = 3257284721212863026L;
 
     private static final int SINGLE_PARAMETER = 1;
 
-    private String tagName_;
+    private String tagName;
 
     public SimpleStringTagHandler(String tagName) {
-        tagName_ = tagName;
+        this.tagName = tagName;
     }
 
     public void end(TagHandlerContext context, String body) {
@@ -45,10 +44,10 @@ public class SimpleStringTagHandler extends JsfTagHandler {
     }
 
     protected void setAppropriateProperty(Object tag, String context) {
-        if (StringUtil.isEmpty(context)) {
+        if (context == null) {
             return;
         }
-        String[] setters = TagConvertUtil.convertToSetter(tagName_);
+        String[] setters = TagConvertUtil.convertToSetter(tagName);
         Method[] methods = tag.getClass().getDeclaredMethods();
         String setterName = null;
         Method method = null;
@@ -62,12 +61,12 @@ public class SimpleStringTagHandler extends JsfTagHandler {
                     try {
                         method.invoke(tag, new Object[] { context });
                     } catch (Exception ignore) {
-                        logger_.log(ignore);
+                        logger.log(ignore);
                         break;
                     } finally {
-                        if (logger_.isDebugEnabled()) {
-                            logger_.debug("<" + tagName_ + ">" + context + "</"
-                                    + tagName_ + ">");
+                        if (logger.isDebugEnabled()) {
+                            logger.debug("<" + tagName + ">" + context + "</"
+                                    + tagName + ">");
                         }
                     }
                 }
