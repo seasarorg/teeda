@@ -1,0 +1,27 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<script language="JavaScript" src="../js/ajax.js"></script>
+<script language="JavaScript" src="../js/kumu.js"></script>
+<script language="JavaScript">
+<!--
+function json(response){
+	var t = $i('result');
+	t.value=response;
+}
+function sampleAjaxJson(name) {
+    // for disp response data
+    Kumu.Ajax.DEBUG = true;
+    Kumu.Ajax.executeTeedaAjax(json, { "component" : "ajaxHelloBean", "action" : "ajaxAction", "name" : name });
+}
+//-->
+</script>
+</head>
+<body>
+Ajax First Step<br/>
+<form name="frm">
+  <input type="text" id="name" onblur="sampleAjaxJson(this.value);" />
+  <span id="result"></span>
+</form>
+</body>
+</html>

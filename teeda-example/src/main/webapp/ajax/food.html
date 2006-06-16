@@ -1,34 +1,38 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-<script language="JavaScript" src="/teeda-example/js/s2ajax.js"></script>
-<script language="JavaScript" src="/teeda-example/js/test.js"></script>
+<script language="JavaScript" src="/teeda-example/js/ajax.js"></script>
+<script language="JavaScript" src="/teeda-example/js/kumu.js"></script>
+<script language="JavaScript" src="/teeda-example/js/food.js"></script>
 <script language="JavaScript">
 <!--
 function sampleAjaxOrg(food) {
-    var ajax = getS2AjaxComponent();
+    Kumu.Ajax.DEBUG = true;
+    var ajax = Kumu.Ajax.getS2AjaxComponent();
 	ajax.params = { "component" : "ajaxBean", "action" : "ajaxOrg", "food" : food };
     ajax.doAction = function(response) {
         createOptionsFromOrg(response, document.frm.menuOrg);
     };
-    executeAjax(ajax);
+    Kumu.Ajax.executeAjax(ajax);
 }
 function sampleAjaxJson(food) {
-    var ajax = getS2AjaxComponent();
+    Kumu.Ajax.DEBUG = true;
+    var ajax = Kumu.Ajax.getS2AjaxComponent();
 	ajax.params = { "component" : "ajaxBean", "action" : "ajaxJson", "food" : food };
     ajax.doAction = function(response) {
         createOptionsFromJSON(response, document.frm.menuJson);
     };
-    executeAjax(ajax);
+    Kumu.Ajax.executeAjax(ajax);
 }
 function sampleAjaxXml(food) {
-    var ajax = getS2AjaxComponent();
+    Kumu.Ajax.DEBUG = true;
+    var ajax = Kumu.Ajax.getS2AjaxComponent();
 	ajax.params = { "component" : "ajaxBean", "action" : "ajaxXml", "food" : food };
-	ajax.responseType = AJAX_RESPONSE_TYPE_XML;
+	ajax.responseType = Kumu.Ajax.AJAX_RESPONSE_TYPE_XML;
     ajax.doAction = function(response) {
         createOptionsFromXml(response, document.frm.menuXml);
     };
-    executeAjax(ajax);
+    Kumu.Ajax.executeAjax(ajax);
 }
 //-->
 </script>
