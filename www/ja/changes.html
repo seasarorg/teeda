@@ -29,26 +29,32 @@
 <!-- don't edit end -->
 <!-- document start -->
 <br/>
-<h2><i>Teeda</i></h2>
-<p>Teeda is a JSF implementation from the Seasar Foundation.<br/>
-<b>The main concept of Teeda is "<font color="red">JSF meets DI x AOP</font>".</b><br/>
-Teeda has some highly useful and maintainancable features of DI and AOP based on JSF implementation.<br/>
-These features makes web application easy.</p>
+<h2><i>Teeda Changes</i></h2>
 
-<h3><a name="document">Documents</a></h3>
-<p>Teeda has two parts:JSF core part, and some extendable feature part.</p>
+<h2><a name="core">Teeda 1.0 beta3</a></h2>
+<h3><a name="core">Teeda Core</a></h3>
 <ul>
-	<li>Teeda Core</li>
-	<li>Teeda Extension(not implemented yet)</li>
+	<li>PortletがTeeda上で動作するよう修正しました。</li>
+	<li>コンポーネントツリーをセッションで管理しないように修正しました。</li>
+	<li>今までのセッション管理を行うTeedaStateManagerImplをTeedaSessionStateManagerImplに名前を変更しました。</li>
+	<li>formのtarget属性が消えるバグを修正しました。</li>
+	<li>java.sql.TimeStamp用のConverter新規作成しました。</li>
+	<li>ByteLength用のConverter新規作成しました。</li>
+	<li>正規表現用のConverter新規作成しました。</li>
 </ul>
 
-<h3><a name="download">Download</a></h3>
+<h3><a name="core">Teeda Extension</a></h3>
 <ul>
-	<li><a href="../download/2006-06-16/teeda-1.0-beta-3.zip">Teeda Core Beta3</a></li>
-	<li><a href="../download/2006-06-16/teeda-example-1.0-beta-3.zip">Teeda Core Example Beta3</a></li>
-	<li><a href="../download/2006-06-16/teeda-example.war">Teeda Core Example Beta3(war file)</a></li>
-	<li><a href="../download/2006-05-31/teeda-ajax-demo-1.0.zip">Teeda Ajax demo</a></li>
+	<li>HTMLレイアウト機能新規作成しました。</li>
+	<li>定数Validator機能追加しました。（次のバージョンで機能拡張のため、仕様変更します）</li>
 </ul>
+
+<h3><a name="core">Teeda Ajax</a></h3>
+<ul>
+	<li>Ajax機能新規作成しました。</li>
+	<li>S2管理のコンポーネントがObjectを返してきた場合のみJSON形式に変更するよう修正しました。</li>
+</ul>
+
 <!-- document end -->
 <!-- don't edit start -->
 </td>
