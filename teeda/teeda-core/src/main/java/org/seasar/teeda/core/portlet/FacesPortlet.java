@@ -243,19 +243,19 @@ public class FacesPortlet extends GenericPortlet {
             return;
         }
 
-        try {
-            PortletFacesContextImpl facesContext = (PortletFacesContextImpl) request
-                    .getPortletSession().getAttribute(CURRENT_FACES_CONTEXT);
+        PortletFacesContextImpl facesContext = (PortletFacesContextImpl) request
+                .getPortletSession().getAttribute(CURRENT_FACES_CONTEXT);
 
-            if (facesContext == null) {
-                if (log.isDebugEnabled()) {
-                    log.debug("facesContext is null.  viewId=" + viewId);
-                }
-                nonFacesRequest(request, response, page);
-                storeResponseCharacterEncoding(request);
-                return;
+        if (facesContext == null) {
+            if (log.isDebugEnabled()) {
+                log.debug("facesContext is null.  viewId=" + viewId);
             }
+            nonFacesRequest(request, response, page);
+            storeResponseCharacterEncoding(request);
+            return;
+        }
 
+        try {
             // TODO: not sure if this can happen.  Also double check this against spec section 2.1.3
             if (facesContext.getResponseComplete()) {
                 return;
@@ -268,8 +268,11 @@ public class FacesPortlet extends GenericPortlet {
             storeResponseCharacterEncoding(request);
 
             request.getPortletSession().removeAttribute(CURRENT_FACES_CONTEXT);
+
         } catch (Throwable e) {
             handleExceptionFromLifecycle(e);
+        } finally {
+            facesContext.release();
         }
     }
 
@@ -288,6 +291,8 @@ public class FacesPortlet extends GenericPortlet {
         initializeChildren(facesContext, viewRoot);
 
         lifecycle.render(facesContext);
+
+        facesContext.release();
     }
 
     protected void storeResponseCharacterEncoding(RenderRequest request) {

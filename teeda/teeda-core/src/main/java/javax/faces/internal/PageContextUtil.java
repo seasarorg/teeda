@@ -64,13 +64,12 @@ public class PageContextUtil {
 
     public static UIComponent getCurrentViewRootAttribute(
             PageContext pageContext) {
-        return (UIComponent) pageContext.getAttribute(
-                WebAppConstants.CURRENT_VIEW_ROOT, PAGE_CONTEXT_SCOPE);
+        return (UIComponent) pageContext
+                .getAttribute(WebAppConstants.CURRENT_VIEW_ROOT);
     }
 
     public static void setCurrentViewRootAttribute(PageContext pageContext,
             UIComponent component) {
-        pageContext.setAttribute(WebAppConstants.CURRENT_VIEW_ROOT, component,
-                PAGE_CONTEXT_SCOPE);
+        pageContext.setAttribute(WebAppConstants.CURRENT_VIEW_ROOT, component);
     }
 }
