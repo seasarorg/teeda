@@ -69,6 +69,10 @@ public class PortletExternalContextImpl extends ExternalContext {
     private static final String INIT_PARAMETER_MAP_ATTRIBUTE = PortletInitParameterMap.class
             .getName();
 
+    private static final String SESSION_NAMESPACE = PortletExternalContextImpl.class
+            .getName()
+            + ".Namespace";
+
     private static final Map EMPTY_UNMODIFIABLE_MAP = Collections
             .unmodifiableMap(new HashMap(0));
 
@@ -104,6 +108,8 @@ public class PortletExternalContextImpl extends ExternalContext {
         this.isActionRequest = (portletRequest != null && portletRequest instanceof ActionRequest);
 
         if (isActionRequest) {
+            // ActionRequest/ActionResponse
+
             ActionRequest actionRequest = (ActionRequest) portletRequest;
 
             // Section 2.5.2.2 in JSF 1.1 spec
@@ -144,6 +150,12 @@ public class PortletExternalContextImpl extends ExternalContext {
                 }
             }
 
+        } else {
+            // RenderRequest/RenderResponse
+
+            Map sessionMap = getSessionMap();
+            sessionMap.put(SESSION_NAMESPACE,
+                    ((RenderResponse) portletResponse).getNamespace());
         }
     }
 
@@ -172,11 +184,7 @@ public class PortletExternalContextImpl extends ExternalContext {
     }
 
     public String encodeNamespace(String name) {
-        if (isActionRequest) {
-            throw new IllegalStateException(
-                    "Cannot call encodeNamespace(String) if the request is ActionRequest.");
-        }
-        return name + ((RenderResponse) portletResponse).getNamespace();
+        return name + getNamespace();
     }
 
     public String encodeResourceURL(String url) {
@@ -349,4 +357,16 @@ public class PortletExternalContextImpl extends ExternalContext {
         }
     }
 
+    protected String getNamespace() {
+        if (isActionRequest) {
+            Map sessionMap = getSessionMap();
+            String namespace = (String) sessionMap.get(SESSION_NAMESPACE);
+            if (namespace != null) {
+                return namespace;
+            }
+            throw new IllegalStateException(
+                    "Cannot call encodeNamespace(String) if the request is ActionRequest.");
+        }
+        return ((RenderResponse) portletResponse).getNamespace();
+    }
 }
