@@ -29,6 +29,7 @@ import org.seasar.framework.container.servlet.S2ContainerListener;
 import org.seasar.framework.log.Logger;
 import org.seasar.framework.util.InputStreamUtil;
 import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.core.Version;
 import org.seasar.teeda.core.config.faces.FacesConfigBuilder;
 import org.seasar.teeda.core.config.faces.assembler.AssemblerAssembler;
 import org.seasar.teeda.core.config.faces.element.FacesConfig;
@@ -50,6 +51,7 @@ public class TeedaConfigureListener extends S2ContainerListener {
 
     public void contextInitialized(ServletContextEvent event) {
         super.contextInitialized(event);
+        printVersion();
         logger.debug("JSF initialize start");
         try {
             initializeFaces(event.getServletContext());
@@ -127,4 +129,7 @@ public class TeedaConfigureListener extends S2ContainerListener {
         }
     }
 
+    private void printVersion() {
+        logger.debug("Teeda version :" + Version.getVersion());
+    }
 }

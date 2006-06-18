@@ -21,22 +21,19 @@ package org.seasar.teeda.core;
 public class Version {
 
     private static final String MAJOR_VERSION = "1";
-    
+
     private static final String MINOR_VERSION = "0";
-    
+
     private static final String BETA_VERSION = "3";
-    
+
     private static boolean isBeta = true;
-    
+
     public static String getVersion() {
         return MAJOR_VERSION + "." + MINOR_VERSION + "-" + getBetaVersion();
     }
-    
+
     public static String getBetaVersion() {
-        return (isBeta) ? "beta" + BETA_VERSION : ""; 
+        return (isBeta) ? "beta" + BETA_VERSION : "";
     }
-    
-    public static void main(String[] args) {
-        System.out.println(Version.getVersion());
-    }
+
 }
