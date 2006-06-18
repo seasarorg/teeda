@@ -30,6 +30,10 @@ public class FacesConfigOptions {
     
     private static String lifecycleId;
     
+    private static boolean javascriptAllowed = true;
+    
+    private static boolean compressState = false;
+    
     protected FacesConfigOptions() {
     }
     
@@ -65,10 +69,29 @@ public class FacesConfigOptions {
         lifecycleId = id;
     }
 
+    public static boolean isJavascriptAllowed() {
+        return javascriptAllowed;
+    }
+
+    public static void setJavascriptAllowed(boolean isJavaScriptAllowed) {
+        javascriptAllowed = isJavaScriptAllowed;
+    }
+
+    public static boolean getCompressState() {
+        return compressState;
+    }
+
+    public static void setCompressState(boolean isCompress) {
+        compressState = isCompress;
+    }
+    
     public static void clear() {
         configFiles = null;
         savingStateInClient = false;
         defaultSuffix = null;
         lifecycleId = null;
+        javascriptAllowed = true;
+        compressState = false;
     }
+
 }

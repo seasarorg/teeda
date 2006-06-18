@@ -20,6 +20,7 @@ import java.util.Map;
 
 import javax.faces.application.StateManager;
 import javax.faces.application.StateManager.SerializedView;
+import javax.faces.internal.FacesConfigOptions;
 
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.unit.TeedaTestCase;
@@ -55,13 +56,11 @@ public class Base64EncodeConverterTest extends TeedaTestCase {
     }
 
     public void testIsCompressRequested() throws Exception {
-        getServletContext().setInitParameter(JsfConstants.COMPRESS_STATE_ATTR,
-                "true");
+        FacesConfigOptions.setCompressState(true);
         Base64EncodeConverter converter = new Base64EncodeConverter();
         assertTrue(converter.isCompressRequested());
 
-        getServletContext().setInitParameter(JsfConstants.COMPRESS_STATE_ATTR,
-                "false");
+        FacesConfigOptions.setCompressState(false);
         assertFalse(converter.isCompressRequested());
     }
 

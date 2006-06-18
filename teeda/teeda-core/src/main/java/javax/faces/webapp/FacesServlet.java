@@ -31,7 +31,10 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
-public class FacesServlet implements Servlet {
+/**
+ * @author shot
+ */
+public final class FacesServlet implements Servlet {
 
     public static final String CONFIG_FILES_ATTR = "javax.faces.CONFIG_FILES";
 

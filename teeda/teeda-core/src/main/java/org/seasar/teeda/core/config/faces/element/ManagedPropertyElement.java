@@ -30,7 +30,7 @@ public interface ManagedPropertyElement extends JsfConfigElement,
 
     public String getPropertyName();
 
-    public String getPropertyClas();
+    public String getPropertyClass();
 
     public String getValue();
 

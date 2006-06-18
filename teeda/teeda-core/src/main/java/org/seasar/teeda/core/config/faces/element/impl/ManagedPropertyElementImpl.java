@@ -20,7 +20,7 @@ import org.seasar.teeda.core.config.faces.element.ManagedPropertyElement;
 import org.seasar.teeda.core.config.faces.element.MapEntriesElement;
 
 /**
- * @author Shinpei Ohtani(aka shot)
+ * @author shot
  */
 public class ManagedPropertyElementImpl implements ManagedPropertyElement {
 
@@ -63,7 +63,7 @@ public class ManagedPropertyElementImpl implements ManagedPropertyElement {
         return propertyName_;
     }
 
-    public String getPropertyClas() {
+    public String getPropertyClass() {
         return propertyClass_;
     }
 

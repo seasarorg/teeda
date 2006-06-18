@@ -554,4 +554,6 @@ public interface JsfConstants {
     String TEEDA_NAMESPACE = "teeda";
     
     String NS_SEP = ".";
+    
+    String JAVASCRIPT_ALLOWED = "teeda.JAVASCRIPT_ALLOWED";
 }

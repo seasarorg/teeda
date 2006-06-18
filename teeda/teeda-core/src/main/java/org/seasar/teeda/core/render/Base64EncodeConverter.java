@@ -24,10 +24,10 @@ import java.io.OutputStream;
 
 import javax.faces.application.StateManager.SerializedView;
 import javax.faces.context.FacesContext;
+import javax.faces.internal.FacesConfigOptions;
 
 import org.seasar.framework.util.Base64Util;
 import org.seasar.framework.util.InputStreamUtil;
-import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.util.GZIPInputStreamUtil;
 import org.seasar.teeda.core.util.GZIPOutputStreamUtil;
 import org.seasar.teeda.core.util.ObjectInputStreamUtil;
@@ -95,10 +95,7 @@ public class Base64EncodeConverter implements EncodeConverter {
     }
 
     protected boolean isCompressRequested() {
-        FacesContext context = FacesContext.getCurrentInstance();
-        String compressState = context.getExternalContext().getInitParameter(
-                JsfConstants.COMPRESS_STATE_ATTR);
-        return "true".equalsIgnoreCase(compressState);
+        return FacesConfigOptions.getCompressState();
     }
 
     protected void storeViewState(Object viewState) {

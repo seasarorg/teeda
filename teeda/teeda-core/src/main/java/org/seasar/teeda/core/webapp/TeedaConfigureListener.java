@@ -47,7 +47,8 @@ public class TeedaConfigureListener extends S2ContainerListener {
             .getName()
             + ".FACES_INIT_DONE";
 
-    private static Logger logger = Logger.getLogger(TeedaConfigureListener.class);
+    private static Logger logger = Logger
+            .getLogger(TeedaConfigureListener.class);
 
     public void contextInitialized(ServletContextEvent event) {
         super.contextInitialized(event);
@@ -100,32 +101,52 @@ public class TeedaConfigureListener extends S2ContainerListener {
                 InputStreamUtil.close(is);
             }
 
-            servletContext.setAttribute(
-                    WebappConfig.class.getName(), webappConfig);
+            servletContext.setAttribute(WebappConfig.class.getName(),
+                    webappConfig);
 
             servletContext.setAttribute(FACES_INIT_DONE, Boolean.TRUE);
         }
 
     }
-    
+
     protected void initializeFacesConfigOptions(ServletContext servletContext) {
-        FacesConfigOptions.setConfigFiles(servletContext.getInitParameter(FacesServlet.CONFIG_FILES_ATTR));
-        String savingMethod = servletContext.getInitParameter(
-                StateManager.STATE_SAVING_METHOD_PARAM_NAME);
+        FacesConfigOptions.setConfigFiles(servletContext
+                .getInitParameter(FacesServlet.CONFIG_FILES_ATTR));
+        String savingMethod = servletContext
+                .getInitParameter(StateManager.STATE_SAVING_METHOD_PARAM_NAME);
         if (savingMethod != null) {
-            FacesConfigOptions.setSavingStateInClient(StateManager.STATE_SAVING_METHOD_CLIENT.equalsIgnoreCase(savingMethod));
+            FacesConfigOptions
+                    .setSavingStateInClient(StateManager.STATE_SAVING_METHOD_CLIENT
+                            .equalsIgnoreCase(savingMethod));
         }
-        String suffix = servletContext.getInitParameter(
-                ViewHandler.DEFAULT_SUFFIX_PARAM_NAME);
+        String suffix = servletContext
+                .getInitParameter(ViewHandler.DEFAULT_SUFFIX_PARAM_NAME);
         if (suffix != null) {
             FacesConfigOptions.setDefaultSuffix(suffix);
         } else {
             FacesConfigOptions.setDefaultSuffix(ViewHandler.DEFAULT_SUFFIX);
         }
-        String lifecycleId = servletContext.getInitParameter(
-                FacesServlet.LIFECYCLE_ID_ATTR);
+        String lifecycleId = servletContext
+                .getInitParameter(FacesServlet.LIFECYCLE_ID_ATTR);
         if (lifecycleId != null) {
             FacesConfigOptions.setLifecycleId(lifecycleId);
+        }
+        initializeFacesConfigCustomOptions(servletContext);
+    }
+
+    protected void initializeFacesConfigCustomOptions(
+            ServletContext servletContext) {
+        String isJavascriptAllowed = servletContext
+                .getInitParameter(JsfConstants.JAVASCRIPT_ALLOWED);
+        if (isJavascriptAllowed != null) {
+            FacesConfigOptions.setJavascriptAllowed(isJavascriptAllowed
+                    .equalsIgnoreCase("true"));
+        }
+        String compressState = servletContext
+                .getInitParameter(JsfConstants.COMPRESS_STATE_ATTR);
+        if (compressState != null) {
+            FacesConfigOptions.setCompressState(compressState
+                    .equalsIgnoreCase("true"));
         }
     }
 
