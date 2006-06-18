@@ -13,27 +13,30 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.core.mock;
+package org.seasar.teeda.core;
 
 /**
  * @author shot
- * 
  */
-public class MockPortletResponseImpl implements MockPortletResponse {
+public class Version {
 
-    public void addProperty(String arg0, String arg1) {
-        // TODO Auto-generated method stub
-
+    private static final String MAJOR_VERSION = "1";
+    
+    private static final String MINOR_VERSION = "0";
+    
+    private static final String BETA_VERSION = "3";
+    
+    private static boolean isBeta = true;
+    
+    public static String getVersion() {
+        return MAJOR_VERSION + "." + MINOR_VERSION + "-" + getBetaVersion();
     }
-
-    public void setProperty(String arg0, String arg1) {
-        // TODO Auto-generated method stub
-
+    
+    public static String getBetaVersion() {
+        return (isBeta) ? "beta" + BETA_VERSION : ""; 
     }
-
-    public String encodeURL(String arg0) {
-        // TODO Auto-generated method stub
-        return null;
+    
+    public static void main(String[] args) {
+        System.out.println(Version.getVersion());
     }
-
 }

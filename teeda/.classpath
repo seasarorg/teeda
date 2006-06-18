@@ -36,7 +36,7 @@
 	<classpathentry kind="src" path="teeda-spike/src/main/resources"/>
 	<classpathentry kind="src" path="teeda-spike/src/test/java"/>
 	<classpathentry kind="src" path="teeda-spike/src/test/resources"/>
-	<classpathentry kind="lib" path="lib/s2-extension-2.4.0-beta-3.jar"/>
-	<classpathentry kind="lib" path="lib/s2-framework-2.4.0-beta-3.jar"/>
+	<classpathentry kind="lib" path="lib/s2-extension-2.4.0-beta-4-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="lib/s2-framework-2.4.0-beta-4-SNAPSHOT.jar"/>
 	<classpathentry kind="output" path="build/teeda-core/classes"/>
 </classpath>

@@ -18,14 +18,14 @@ package org.seasar.teeda.core.context.creator.portlet;
 import javax.faces.context.ExternalContext;
 import javax.portlet.PortletContext;
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
 
 import junit.framework.TestCase;
 
+import org.seasar.framework.mock.portlet.MockPortletContextImpl;
+import org.seasar.framework.mock.portlet.MockPortletRenderResponse;
+import org.seasar.framework.mock.portlet.MockPortletRenderResponseImpl;
+import org.seasar.framework.mock.portlet.MockPortletRequestImpl;
 import org.seasar.teeda.core.context.portlet.PortletExternalContextImpl;
-import org.seasar.teeda.core.mock.MockPortletContextImpl;
-import org.seasar.teeda.core.mock.MockPortletRequestImpl;
-import org.seasar.teeda.core.mock.MockPortletResponseImpl;
 
 /**
  * @author shot
@@ -36,9 +36,10 @@ public class PortletExternalContextCreatorTest extends TestCase {
         PortletExternalContextCreator creator = new PortletExternalContextCreator();
         assertNull(creator.create("a", "b", "c"));
 
-        PortletContext context = new MockPortletContextImpl();
-        PortletRequest request = new MockPortletRequestImpl();
-        PortletResponse response = new MockPortletResponseImpl();
+        PortletContext context = new MockPortletContextImpl("/hoge");
+        PortletRequest request = new MockPortletRequestImpl(context);
+        MockPortletRenderResponse response = new MockPortletRenderResponseImpl();
+        response.setNamespace("aaa");
         ExternalContext externalContext = creator.create(context, request,
                 response);
         assertNotNull(externalContext);
