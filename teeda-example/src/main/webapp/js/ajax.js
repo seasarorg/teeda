@@ -131,6 +131,7 @@ Kumu.Ajax = {
 		if(method == 'GET'){
             url += "?time=" + self.encodeURL(sysdate);
             if(null != params){
+            
                 for(var key in params){
                     parameters += "&" + key + "=" + self.encodeURL(params[key]);
                 }
@@ -207,11 +208,18 @@ Kumu.Ajax = {
             param = {};
         }
         ajax.params = param;
+        if(param instanceof Array){
+            for(var i = 0; i < param.length; i++){
+                ajax.params["AjaxParam" + new String(i)] = param[i];
+            }
+        }
         if(!("component" in param) && !("action" in param) && (components.length == 2) ){
             //callback name bind
             ajax.params["component"] = components[0];
             ajax.params["action"] = components[1];
         }
+        
+        
         ajax.doAction = callback;
         if(responseType != 'undefined'){
             ajax.responseType = responseType;

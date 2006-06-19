@@ -6,33 +6,31 @@
 <script language="JavaScript" src="/teeda-example/js/food.js"></script>
 <script language="JavaScript">
 <!--
+function org(response){
+    createOptionsFromOrg(response, document.frm.menuOrg);
+}
 function sampleAjaxOrg(food) {
-    Kumu.Ajax.DEBUG = true;
-    var ajax = Kumu.Ajax.getS2AjaxComponent();
-	ajax.params = { "component" : "ajaxBean", "action" : "ajaxOrg", "food" : food };
-    ajax.doAction = function(response) {
-        createOptionsFromOrg(response, document.frm.menuOrg);
-    };
-    Kumu.Ajax.executeAjax(ajax);
+    Kumu.Ajax.executeTeedaAjax(org, { "component" : "exampleBean", "action" : "ajaxOrg", "food" : food });
+}
+function json(response){
+    createOptionsFromJSON(response, document.frm.menuJson);
+}
+function exampleBean_newTest(response){
+    createOptionsFromJSON(response, document.frm.menuJson);
 }
 function sampleAjaxJson(food) {
+    // for disp response data
     Kumu.Ajax.DEBUG = true;
-    var ajax = Kumu.Ajax.getS2AjaxComponent();
-	ajax.params = { "component" : "ajaxBean", "action" : "ajaxJson", "food" : food };
-    ajax.doAction = function(response) {
-        createOptionsFromJSON(response, document.frm.menuJson);
-    };
-    Kumu.Ajax.executeAjax(ajax);
+    Kumu.Ajax.executeTeedaAjax(json, { "component" : "exampleBean", "action" : "ajaxJson", "food" : food });
+}
+function xml(response){
+    createOptionsFromXml(response, document.frm.menuXml);
 }
 function sampleAjaxXml(food) {
+    // for disp response data
     Kumu.Ajax.DEBUG = true;
-    var ajax = Kumu.Ajax.getS2AjaxComponent();
-	ajax.params = { "component" : "ajaxBean", "action" : "ajaxXml", "food" : food };
-	ajax.responseType = Kumu.Ajax.AJAX_RESPONSE_TYPE_XML;
-    ajax.doAction = function(response) {
-        createOptionsFromXml(response, document.frm.menuXml);
-    };
-    Kumu.Ajax.executeAjax(ajax);
+    // for xml type 3rd param
+    Kumu.Ajax.executeTeedaAjax(xml, { "component" : "exampleBean", "action" : "ajaxXml", "food" : food }, Kumu.Ajax.AJAX_RESPONSE_TYPE_XML);
 }
 //-->
 </script>
