@@ -26,7 +26,7 @@ import org.seasar.teeda.core.config.faces.element.NavigationRuleElement;
  */
 public class NavigationRuleElementImpl implements NavigationRuleElement {
 
-    private String fromViewId_ = DEFAULT_FROM_VIEW_ID;
+    private String fromViewId_;
 
     private List navigationCases_ = new ArrayList();
 

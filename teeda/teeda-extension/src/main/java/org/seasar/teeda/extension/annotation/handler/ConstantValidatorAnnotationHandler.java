@@ -13,7 +13,7 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.extension.annotation;
+package org.seasar.teeda.extension.annotation.handler;
 
 import java.lang.reflect.Field;
 import java.util.LinkedList;
@@ -27,6 +27,7 @@ import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.AnnotationConstants;
 import org.seasar.teeda.core.util.AnnotationUtil;
+import org.seasar.teeda.core.validator.ValidatorResource;
 
 /**
  * @author shot
@@ -84,7 +85,7 @@ public class ConstantValidatorAnnotationHandler extends
         }
         Validator validator = chainValidators(list);
         if (validator != null) {
-            getValidatorResource().addValidatorResource(expression, validator);
+            ValidatorResource.addValidator(expression, validator);
         }
     }
 

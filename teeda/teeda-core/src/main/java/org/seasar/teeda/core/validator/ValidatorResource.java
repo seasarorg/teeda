@@ -13,7 +13,7 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.core.resource;
+package org.seasar.teeda.core.validator;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,23 +24,26 @@ import javax.faces.validator.Validator;
 /**
  * @author shot
  */
-public class ValidatorResourceImpl implements ValidatorResource {
+public class ValidatorResource {
 
-    private Map resources_ = new HashMap();
-
-    public Validator getValidator(String expression) {
-        return (Validator) resources_.get(expression);
+    private static Map validators_ = new HashMap();
+    
+    protected ValidatorResource() {
     }
 
-    public void addValidatorResource(String expression, Validator validator) {
-        resources_.put(expression, validator);
+    public static Validator getValidator(String expression) {
+        return (Validator) validators_.get(expression);
     }
 
-    public void removeValidatorResource(String expression) {
-        resources_.remove(expression);
+    public static void addValidator(String expression, Validator validator) {
+        validators_.put(expression, validator);
     }
 
-    public void remove() {
-        resources_ = new HashMap();
+    public static void removeValidator(String expression) {
+        validators_.remove(expression);
+    }
+
+    public static void removeAll() {
+        validators_.clear();
     }
 }

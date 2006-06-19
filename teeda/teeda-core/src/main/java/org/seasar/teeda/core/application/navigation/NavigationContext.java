@@ -24,7 +24,9 @@ import java.util.List;
  */
 public class NavigationContext {
 
-    private String fromViewId_;
+    protected static final String WILDCARD = "*";
+    
+    private String fromViewId_ = WILDCARD;
 
     private boolean isWildCardMatch_ = false;
 
@@ -43,7 +45,7 @@ public class NavigationContext {
             navigationCases_.add(navigationCaseContext);
         }
         if (fromViewId_ != null) {
-            isWildCardMatch_ = fromViewId_.endsWith("*");
+            isWildCardMatch_ = fromViewId_.endsWith(WILDCARD);
         }
     }
 

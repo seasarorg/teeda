@@ -23,7 +23,7 @@ import org.seasar.framework.mock.portlet.MockPortletRenderResponseImpl;
 import org.seasar.framework.mock.portlet.MockPortletRequestImpl;
 import org.seasar.teeda.core.application.navigation.NavigationCaseContext;
 import org.seasar.teeda.core.application.navigation.NavigationContext;
-import org.seasar.teeda.core.application.navigation.NavigationContextFactory;
+import org.seasar.teeda.core.application.navigation.NavigationResource;
 import org.seasar.teeda.core.context.portlet.PortletExternalContextImpl;
 import org.seasar.teeda.core.context.portlet.PortletFacesContextImpl;
 import org.seasar.teeda.core.mock.MockFacesContext;
@@ -42,7 +42,7 @@ public class NavigationHandlerImplTest extends TeedaTestCase {
         context.setViewRoot(root);
         NavigationContext navContext = createNavigationContext("aaa", "from",
                 "outcome", "bbb", false);
-        NavigationContextFactory.addNavigationContext(navContext);
+        NavigationResource.addNavigationContext(navContext);
 
         // ## Act ##
         NavigationHandlerImpl handler = new NavigationHandlerImpl();
@@ -60,7 +60,7 @@ public class NavigationHandlerImplTest extends TeedaTestCase {
         context.setViewRoot(root);
         NavigationContext navContext = createNavigationContext("aaa*", "from",
                 "outcome", "bbb", false);
-        NavigationContextFactory.addNavigationContext(navContext);
+        NavigationResource.addNavigationContext(navContext);
 
         // ## Act ##
         NavigationHandlerImpl handler = new NavigationHandlerImpl();
@@ -78,7 +78,7 @@ public class NavigationHandlerImplTest extends TeedaTestCase {
         context.setViewRoot(root);
         NavigationContext navContext = createNavigationContext("*", "from",
                 "outcome", "bbb", false);
-        NavigationContextFactory.addNavigationContext(navContext);
+        NavigationResource.addNavigationContext(navContext);
 
         // ## Act ##
         NavigationHandlerImpl handler = new NavigationHandlerImpl();
@@ -96,7 +96,7 @@ public class NavigationHandlerImplTest extends TeedaTestCase {
         context.setViewRoot(root);
         NavigationContext navContext = createNavigationContext("id", "from",
                 "outcome", "bbb", true);
-        NavigationContextFactory.addNavigationContext(navContext);
+        NavigationResource.addNavigationContext(navContext);
 
         // ## Act ##
         NavigationHandlerImpl handler = new NavigationHandlerImpl();
@@ -118,7 +118,7 @@ public class NavigationHandlerImplTest extends TeedaTestCase {
         context.setViewRoot(root);
         NavigationContext navContext = createNavigationContext("id", "from",
                 "outcome", "bbb", true);
-        NavigationContextFactory.addNavigationContext(navContext);
+        NavigationResource.addNavigationContext(navContext);
 
         // ## Act ##
         NavigationHandlerImpl handler = new NavigationHandlerImpl();
@@ -133,7 +133,7 @@ public class NavigationHandlerImplTest extends TeedaTestCase {
         // ## Arrange ##
         NavigationContext navContext = createNavigationContext("id", "action",
                 "outcome", "to", false);
-        NavigationContextFactory.addNavigationContext(navContext);
+        NavigationResource.addNavigationContext(navContext);
         NavigationHandlerImpl handler = new NavigationHandlerImpl();
 
         // ## Act ##
@@ -152,7 +152,7 @@ public class NavigationHandlerImplTest extends TeedaTestCase {
         // ## Arrange ##
         NavigationContext navContext = createNavigationContext("id", "action",
                 null, "to", false);
-        NavigationContextFactory.addNavigationContext(navContext);
+        NavigationResource.addNavigationContext(navContext);
         NavigationHandlerImpl handler = new NavigationHandlerImpl();
 
         // ## Act ##
@@ -171,7 +171,7 @@ public class NavigationHandlerImplTest extends TeedaTestCase {
         // ## Arrange ##
         NavigationContext navContext = createNavigationContext("id", null,
                 "outcome", "to", false);
-        NavigationContextFactory.addNavigationContext(navContext);
+        NavigationResource.addNavigationContext(navContext);
         NavigationHandlerImpl handler = new NavigationHandlerImpl();
 
         // ## Act ##
@@ -191,7 +191,7 @@ public class NavigationHandlerImplTest extends TeedaTestCase {
         // ## Arrange ##
         NavigationContext navContext = createNavigationContext("id", null,
                 null, "to", false);
-        NavigationContextFactory.addNavigationContext(navContext);
+        NavigationResource.addNavigationContext(navContext);
         NavigationHandlerImpl handler = new NavigationHandlerImpl();
 
         // ## Act ##
@@ -214,7 +214,7 @@ public class NavigationHandlerImplTest extends TeedaTestCase {
         context.setViewRoot(root);
         NavigationContext navContext = createNavigationContext("/index.jsp",
                 null, "login", "/welcome.jsp", false);
-        NavigationContextFactory.addNavigationContext(navContext);
+        NavigationResource.addNavigationContext(navContext);
 
         // ## Act ##
         NavigationHandlerImpl handler = new NavigationHandlerImpl();
@@ -233,7 +233,7 @@ public class NavigationHandlerImplTest extends TeedaTestCase {
         context.setViewRoot(root);
         NavigationContext navContext = createNavigationContext("*", null,
                 "logout", "/logout.jsp", false);
-        NavigationContextFactory.addNavigationContext(navContext);
+        NavigationResource.addNavigationContext(navContext);
 
         // ## Act ##
         NavigationHandlerImpl handler = new NavigationHandlerImpl();

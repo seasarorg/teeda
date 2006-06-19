@@ -8,7 +8,7 @@ public class NavigationContextTest extends TestCase {
         NavigationContext context = new NavigationContext();
         context.addNavigationCaseContext(null);
         
-        assertNull(context.getFromViewId());
+        assertEquals(NavigationContext.WILDCARD, context.getFromViewId());
         assertTrue(context.getNavigationCases().size() == 0);
    }
     

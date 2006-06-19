@@ -24,13 +24,16 @@ import javax.faces.validator.LengthValidator;
 import javax.faces.validator.ValidatorException;
 
 import org.seasar.teeda.core.mock.MockValueBinding;
-import org.seasar.teeda.core.resource.ValidatorResource;
-import org.seasar.teeda.core.resource.ValidatorResourceImpl;
+import org.seasar.teeda.core.validator.ValidatorResource;
 
 /**
  * @author manhole
  */
 public class UIInputTeedaTest extends UIOutputTeedaTest {
+
+    public void tearDown() {
+        ValidatorResource.removeAll();
+    }
 
     public void testSaveAndRestoreState() throws Exception {
         super.testSaveAndRestoreState();
@@ -69,9 +72,7 @@ public class UIInputTeedaTest extends UIOutputTeedaTest {
         vb.setExpressionString("#{a.name}");
         input.setValueBinding("value", vb);
 
-        ValidatorResource resource = new ValidatorResourceImpl();
-        resource.addValidatorResource("#{a.name}", new LengthValidator(5, 2));
-        input.setValidatorResource(resource);
+        ValidatorResource.addValidator("#{a.name}", new LengthValidator(5, 2));
 
         input.validateValue(getFacesContext(), new Integer(6));
 

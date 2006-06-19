@@ -24,7 +24,7 @@ import javax.faces.lifecycle.LifecycleFactory;
 import javax.faces.render.RenderKitFactory;
 
 import org.seasar.framework.unit.S2FrameworkTestCase;
-import org.seasar.teeda.core.application.navigation.NavigationContextFactory;
+import org.seasar.teeda.core.application.navigation.NavigationResource;
 import org.seasar.teeda.core.context.html.HtmlResponseWriter;
 import org.seasar.teeda.core.managedbean.ManagedBeanFactory;
 import org.seasar.teeda.core.managedbean.impl.ManagedBeanFactoryImpl;
@@ -54,6 +54,7 @@ import org.seasar.teeda.core.mock.MockViewHandler;
 import org.seasar.teeda.core.mock.MockViewHandlerImpl;
 import org.seasar.teeda.core.scope.impl.S2ScopeTranslator;
 import org.seasar.teeda.core.scope.impl.ScopeManagerImpl;
+import org.seasar.teeda.core.validator.ValidatorResource;
 
 /**
  * @author shot
@@ -199,7 +200,8 @@ public abstract class TeedaTestCase extends S2FrameworkTestCase {
         phaseListener = null;
         navigationHandler = null;
         FactoryFinder.releaseFactories();
-        NavigationContextFactory.removeAll();
+        NavigationResource.removeAll();
+        ValidatorResource.removeAll();
         FacesConfigOptions.clear();
     }
 

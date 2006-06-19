@@ -13,20 +13,20 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.core.resource;
+package org.seasar.teeda.extension.annotation.handler;
 
-import javax.faces.validator.Validator;
+import junit.framework.TestCase;
 
 /**
- * @author shot
+ * @author higa
+ * 
  */
-public interface ValidatorResource {
+public class ValidatorAnnotationHandlerFactoryTest extends TestCase {
 
-    public void addValidatorResource(String expression, Validator validator);
-    
-    public Validator getValidator(String expression);
-    
-    public void removeValidatorResource(String expression);
-    
-    public void remove();
+    public void testGetAnnotationHandler() throws Exception {
+        ValidatorAnnotationHandler handler = ValidatorAnnotationHandlerFactory
+                .getAnnotationHandler();
+        assertEquals("1", ConstantValidatorAnnotationHandler.class, handler
+                .getClass());
+    }
 }

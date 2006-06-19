@@ -13,7 +13,7 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.extension.annotation;
+package org.seasar.teeda.extension.annotation.handler;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -25,7 +25,6 @@ import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.framework.container.ComponentDef;
 import org.seasar.teeda.core.JsfConstants;
-import org.seasar.teeda.core.resource.ValidatorResource;
 import org.seasar.teeda.core.util.DIContainerUtil;
 import org.seasar.teeda.core.util.IteratorUtil;
 import org.seasar.teeda.core.validator.ValidatorChain;
@@ -36,22 +35,12 @@ import org.seasar.teeda.core.validator.ValidatorChain;
 public abstract class AbstractValidatorAnnotationHandler implements
         ValidatorAnnotationHandler {
 
-    private ValidatorResource resource;
-
     private List ignoreSuffixes = new ArrayList();
 
     public void registerValidator(ComponentDef componentDef) {
         Class targetClass = componentDef.getComponentClass();
         BeanDesc beanDesc = BeanDescFactory.getBeanDesc(targetClass);
         doRegisterValidator(targetClass, beanDesc);
-    }
-
-    public void setValidatorResource(ValidatorResource resources) {
-        resource = resources;
-    }
-
-    public ValidatorResource getValidatorResource() {
-        return resource;
     }
 
     public void addIgnoreSuffix(String suffix) {

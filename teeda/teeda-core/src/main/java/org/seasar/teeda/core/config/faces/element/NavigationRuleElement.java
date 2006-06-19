@@ -19,8 +19,6 @@ import java.util.List;
 
 public interface NavigationRuleElement extends JsfConfigElement {
 
-    public static final String DEFAULT_FROM_VIEW_ID = "*";
-
     public void setFromViewId(String fromViewId);
 
     public String getFromViewId();

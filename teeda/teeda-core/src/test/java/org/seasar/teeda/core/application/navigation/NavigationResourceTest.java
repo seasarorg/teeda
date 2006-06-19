@@ -23,12 +23,16 @@ import junit.framework.TestCase;
 /**
  * @author shot
  */
-public class NavigationContextFactoryTest extends TestCase {
+public class NavigationResourceTest extends TestCase {
+
+    public void tearDown() {
+        NavigationResource.removeAll();
+    }
 
     public void testAddNavigationContext_navigationContextIsNull()
             throws Exception {
         try {
-            NavigationContextFactory.addNavigationContext(null);
+            NavigationResource.addNavigationContext(null);
             fail();
         } catch (IllegalArgumentException expected) {
             assertTrue(true);
@@ -48,10 +52,10 @@ public class NavigationContextFactoryTest extends TestCase {
         navContext.addNavigationCaseContext(caseContext);
 
         // # Act
-        NavigationContextFactory.addNavigationContext(navContext);
+        NavigationResource.addNavigationContext(navContext);
 
         // # Assert
-        Map map = NavigationContextFactory.getNavigationContexts();
+        Map map = NavigationResource.getNavigationContexts();
         List list = (List) map.get("fromId");
         NavigationContext targetContext = (NavigationContext) list.get(0);
         assertNotNull(targetContext);
@@ -77,10 +81,10 @@ public class NavigationContextFactoryTest extends TestCase {
         navContext.addNavigationCaseContext(caseContext);
 
         // # Act
-        NavigationContextFactory.addNavigationContext(navContext);
+        NavigationResource.addNavigationContext(navContext);
 
         // # Assert
-        Map map = NavigationContextFactory.getWildCardMatchNavigationContexts();
+        Map map = NavigationResource.getWildCardMatchNavigationContexts();
         List list = (List) map.get("aa*");
         NavigationContext targetContext = (NavigationContext) list.get(0);
         assertNotNull(targetContext);
@@ -93,4 +97,23 @@ public class NavigationContextFactoryTest extends TestCase {
         assertEquals("toId", targetCase.getToViewId());
     }
 
+    public void testRemoveNavigationContext() throws Exception {
+        // # Arrange
+        NavigationContext navContext = new NavigationContext();
+        navContext.setFromViewId("fromId");
+        NavigationCaseContext caseContext = new NavigationCaseContext();
+        caseContext.setToViewId("toId");
+        caseContext.setFromAction("action");
+        caseContext.setFromOutcome("outcome");
+        caseContext.setRedirect(true);
+        navContext.addNavigationCaseContext(caseContext);
+
+        // # Act
+        NavigationResource.addNavigationContext(navContext);
+        NavigationResource.removeNavigationContext("fromId");
+
+        // # Assert
+        Map map = NavigationResource.getNavigationContexts();
+        assertNull(map.get("fromId"));
+    }
 }

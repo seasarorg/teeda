@@ -1,4 +1,4 @@
-package org.seasar.teeda.extension.annotation;
+package org.seasar.teeda.extension.annotation.handler;
 
 import javax.faces.validator.LengthValidator;
 import javax.faces.validator.LongRangeValidator;
@@ -8,50 +8,40 @@ import org.seasar.framework.beans.PropertyNotFoundRuntimeException;
 import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.framework.container.ComponentDef;
 import org.seasar.framework.container.impl.ComponentDefImpl;
-import org.seasar.teeda.core.resource.ValidatorResource;
-import org.seasar.teeda.core.resource.ValidatorResourceImpl;
 import org.seasar.teeda.core.unit.TeedaTestCase;
 import org.seasar.teeda.core.validator.ValidatorChain;
-import org.seasar.teeda.extension.annotation.ConstantValidatorAnnotationHandler;
+import org.seasar.teeda.core.validator.ValidatorResource;
 
 public class ConstantValidatorAnnotationHandlerTest extends TeedaTestCase {
 
     public void testRegisterValidator_autoNaming() throws Exception {
         getContainer().register(LengthValidator.class, "length");
         ConstantValidatorAnnotationHandler handler = new ConstantValidatorAnnotationHandler();
-        ValidatorResource resources = new ValidatorResourceImpl();
-        handler.setValidatorResource(resources);
         ComponentDef cDef = new ComponentDefImpl(HogeBean.class);
         handler.registerValidator(cDef);
-        assertTrue(resources.getValidator("#{hogeBean.name}") instanceof LengthValidator);
+        assertTrue(ValidatorResource.getValidator("#{hogeBean.name}") instanceof LengthValidator);
     }
 
     public void testRegisterValidator_aliasNaming() throws Exception {
         getContainer().register(LengthValidator.class, "length");
         ConstantValidatorAnnotationHandler handler = new ConstantValidatorAnnotationHandler();
-        ValidatorResource resources = new ValidatorResourceImpl();
-        handler.setValidatorResource(resources);
         ComponentDef cDef = new ComponentDefImpl(FooBean.class);
         handler.registerValidator(cDef);
-        assertTrue(resources.getValidator("#{y.name}") instanceof LengthValidator);
+        assertTrue(ValidatorResource.getValidator("#{y.name}") instanceof LengthValidator);
     }
 
     public void testRegisterValidator_multipleValidators() throws Exception {
         getContainer().register(LengthValidator.class, "length");
         getContainer().register(LongRangeValidator.class, "longRange");
         ConstantValidatorAnnotationHandler handler = new ConstantValidatorAnnotationHandler();
-        ValidatorResource resources = new ValidatorResourceImpl();
-        handler.setValidatorResource(resources);
         ComponentDef cDef = new ComponentDefImpl(BarBean.class);
         handler.registerValidator(cDef);
-        assertTrue(resources.getValidator("#{barBean.name}") instanceof ValidatorChain);
+        assertTrue(ValidatorResource.getValidator("#{barBean.name}") instanceof ValidatorChain);
     }
 
     public void testRegisterValidator_noSuchProperty() throws Exception {
         getContainer().register(LengthValidator.class, "length");
         ConstantValidatorAnnotationHandler handler = new ConstantValidatorAnnotationHandler();
-        ValidatorResource resources = new ValidatorResourceImpl();
-        handler.setValidatorResource(resources);
         ComponentDef cDef = new ComponentDefImpl(BazBean.class);
         try {
             handler.registerValidator(cDef);
@@ -67,22 +57,18 @@ public class ConstantValidatorAnnotationHandlerTest extends TeedaTestCase {
         ConstantValidatorAnnotationHandler handler = new ConstantValidatorAnnotationHandler();
         handler.addIgnoreSuffix("Impl");
         handler.addIgnoreSuffix("Bean");
-        ValidatorResource resources = new ValidatorResourceImpl();
-        handler.setValidatorResource(resources);
         ComponentDef cDef = new ComponentDefImpl(HogeBeanImpl.class);
         handler.registerValidator(cDef);
-        assertTrue(resources.getValidator("#{hoge.name}") instanceof LengthValidator);
+        assertTrue(ValidatorResource.getValidator("#{hoge.name}") instanceof LengthValidator);
     }
 
     public void testRegisterValidator_concreteClass() throws Exception {
         getContainer().register(LengthValidator.class, "length");
         ConstantValidatorAnnotationHandler handler = new ConstantValidatorAnnotationHandler();
         handler.addIgnoreSuffix("Impl");
-        ValidatorResource resources = new ValidatorResourceImpl();
-        handler.setValidatorResource(resources);
         ComponentDef cDef = new ComponentDefImpl(A1Impl.class);
         handler.registerValidator(cDef);
-        assertTrue(resources.getValidator("#{a1.name}") instanceof LengthValidator);
+        assertTrue(ValidatorResource.getValidator("#{a1.name}") instanceof LengthValidator);
     }
 
     public void testGetShortClassName1() throws Exception {
@@ -215,7 +201,7 @@ public class ConstantValidatorAnnotationHandlerTest extends TeedaTestCase {
         public static final String name_VALIDATOR = "{length, minimum=2, maximum=5}";
 
     }
-    
+
     public static class A1Impl implements A1 {
 
         private String name = null;

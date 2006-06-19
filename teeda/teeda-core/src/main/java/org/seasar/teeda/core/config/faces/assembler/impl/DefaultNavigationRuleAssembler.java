@@ -20,7 +20,7 @@ import java.util.List;
 
 import org.seasar.teeda.core.application.navigation.NavigationCaseContext;
 import org.seasar.teeda.core.application.navigation.NavigationContext;
-import org.seasar.teeda.core.application.navigation.NavigationContextFactory;
+import org.seasar.teeda.core.application.navigation.NavigationResource;
 import org.seasar.teeda.core.config.faces.assembler.NavigationRuleAssembler;
 import org.seasar.teeda.core.config.faces.element.NavigationCaseElement;
 import org.seasar.teeda.core.config.faces.element.NavigationRuleElement;
@@ -50,7 +50,7 @@ public class DefaultNavigationRuleAssembler extends NavigationRuleAssembler {
             NavigationRuleElement rule = (NavigationRuleElement) itr.next();
             NavigationContextWrapper wrapper = new NavigationContextWrapper(
                     rule);
-            NavigationContextFactory.addNavigationContext(wrapper);
+            NavigationResource.addNavigationContext(wrapper);
         }
     }
 
@@ -58,7 +58,9 @@ public class DefaultNavigationRuleAssembler extends NavigationRuleAssembler {
 
         public NavigationContextWrapper(NavigationRuleElement navigationRule) {
             String fromViewId = navigationRule.getFromViewId();
-            setFromViewId(fromViewId);
+            if (fromViewId != null) {
+                setFromViewId(fromViewId);
+            }
             toNavigationCaseContext(navigationRule);
         }
 

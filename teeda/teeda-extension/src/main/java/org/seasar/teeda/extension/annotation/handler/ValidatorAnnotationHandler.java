@@ -13,28 +13,16 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.extension.annotation;
+package org.seasar.teeda.extension.annotation.handler;
 
 import org.seasar.framework.container.ComponentDef;
-import org.seasar.framework.container.autoregister.ComponentCustomizer;
 
 /**
  * @author shot
  */
-public class ValidatorAnnotationCustomizer implements ComponentCustomizer {
+public interface ValidatorAnnotationHandler {
 
-    private ValidatorAnnotationHandler annotationHandler_;
+    public void registerValidator(ComponentDef componentDef);
 
-    public void customize(ComponentDef componentDef) {
-        getValidatorAnnotationHandler().registerValidator(componentDef);
-    }
-
-    public ValidatorAnnotationHandler getValidatorAnnotationHandler() {
-        return annotationHandler_;
-    }
-
-    public void setValidatorAnnotationHandler(
-            ValidatorAnnotationHandler annotationHandler) {
-        annotationHandler_ = annotationHandler;
-    }
+    public void addIgnoreSuffix(String suffix);
 }

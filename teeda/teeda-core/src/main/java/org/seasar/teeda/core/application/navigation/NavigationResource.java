@@ -24,23 +24,23 @@ import java.util.Map;
 /**
  * @author shot
  */
-public class NavigationContextFactory {
+public class NavigationResource {
 
-    private static final String NAVIGATON_CONTEXTS = NavigationContextFactory.class
+    private static final String NAVIGATON_CONTEXTS = NavigationResource.class
             .getName()
             + "_NAVIGATION_CONTEXTS";
 
-    private static final String WILDCARD_NAVIGATION_CONTEXTS = NavigationContextFactory.class
+    private static final String WILDCARD_NAVIGATION_CONTEXTS = NavigationResource.class
             .getName()
             + "_WILDCARD_NAVIGATION_CONTEXTS";
 
-    private static final String DEFAULT_NAVIGATION_CONTEXTS = NavigationContextFactory.class
+    private static final String DEFAULT_NAVIGATION_CONTEXTS = NavigationResource.class
             .getName()
             + "_DEFAULT_NAVIGATION_CONTEXTS";
     
     private static Map cache = new HashMap();
 
-    private NavigationContextFactory() {
+    private NavigationResource() {
     }
 
     public static void addNavigationContext(NavigationContext navigationContext) {
@@ -50,7 +50,7 @@ public class NavigationContextFactory {
         String fromViewId = navigationContext.getFromViewId();
         if (navigationContext.isWildCardMatch()) {
             //if default match
-            if ("*".equals(fromViewId)) {
+            if (NavigationContext.WILDCARD.equals(fromViewId)) {
                 storeNavigationContext(fromViewId,
                         navigationContext, DEFAULT_NAVIGATION_CONTEXTS);
             } else {
@@ -62,6 +62,17 @@ public class NavigationContextFactory {
             storeNavigationContext(fromViewId,
                     navigationContext, NAVIGATON_CONTEXTS);
         }
+    }
+    
+    public static void removeNavigationContext(String fromViewId) {
+        if (fromViewId == null) {
+            throw new IllegalArgumentException(fromViewId);
+        }
+        Map navContextsMap = (Map) cache.get(NAVIGATON_CONTEXTS);
+        if (navContextsMap == null) {
+            return;
+        }
+        navContextsMap.remove(fromViewId);
     }
 
     public static Map getNavigationContexts() {

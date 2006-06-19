@@ -21,7 +21,7 @@ import java.util.Map;
 
 import org.seasar.teeda.core.application.navigation.NavigationCaseContext;
 import org.seasar.teeda.core.application.navigation.NavigationContext;
-import org.seasar.teeda.core.application.navigation.NavigationContextFactory;
+import org.seasar.teeda.core.application.navigation.NavigationResource;
 import org.seasar.teeda.core.config.faces.element.NavigationCaseElement;
 import org.seasar.teeda.core.config.faces.element.NavigationRuleElement;
 import org.seasar.teeda.core.config.faces.element.impl.NavigationCaseElementImpl;
@@ -61,7 +61,7 @@ public class DefaultNavigationRuleAssemblerTest extends TeedaTestCase {
         assembler.assemble();
 
         // ## Assert ##
-        Map map = NavigationContextFactory
+        Map map = NavigationResource
                 .getNavigationContexts();
         assertTrue(map.containsKey("aaa"));
         List l = (List) map.get("aaa");
@@ -96,7 +96,7 @@ public class DefaultNavigationRuleAssemblerTest extends TeedaTestCase {
         assembler.assemble();
 
         // ## Assert ##
-        Map map = NavigationContextFactory
+        Map map = NavigationResource
                 .getDefaultMatchNavigationContexts();
         assertTrue(map.containsKey("*"));
         List l = (List) map.get("*");

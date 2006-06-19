@@ -35,7 +35,7 @@ import junitx.framework.ObjectAssert;
 import org.seasar.extension.unit.S2TestCase;
 import org.seasar.teeda.core.application.navigation.NavigationCaseContext;
 import org.seasar.teeda.core.application.navigation.NavigationContext;
-import org.seasar.teeda.core.application.navigation.NavigationContextFactory;
+import org.seasar.teeda.core.application.navigation.NavigationResource;
 import org.seasar.teeda.core.config.faces.assembler.AssemblerAssembler;
 import org.seasar.teeda.core.config.faces.assembler.impl.DefaultAssembleProvider;
 import org.seasar.teeda.core.config.faces.element.FacesConfig;
@@ -192,7 +192,7 @@ public class CoreFacesConfiguratorTest extends S2TestCase {
         assembler.assmbleNavigationRules(facesConfig);
 
         // # Assert #
-        Map map = NavigationContextFactory.getNavigationContexts();
+        Map map = NavigationResource.getNavigationContexts();
         List list = (List) map.get("from");
         NavigationContext navContext = (NavigationContext) list.get(0);
         assertEquals("from", navContext.getFromViewId());

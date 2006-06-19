@@ -37,7 +37,7 @@ import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
 import org.seasar.framework.util.AssertionUtil;
-import org.seasar.teeda.core.resource.ValidatorResource;
+import org.seasar.teeda.core.validator.ValidatorResource;
 
 /**
  * @author shot
@@ -74,8 +74,6 @@ public class UIInput extends UIOutput implements EditableValueHolder {
     private MethodBinding valueChangeMethod = null;
 
     private List validators = null;
-
-    private ValidatorResource resource;
 
     private static final String DEFAULT_RENDER_TYPE = "javax.faces.Text";
 
@@ -496,14 +494,12 @@ public class UIInput extends UIOutput implements EditableValueHolder {
         ValueBinding vb = getValueBinding("value");
         if (vb != null) {
             String expression = vb.getExpressionString();
-            if (resource != null) {
-                Validator validator = resource.getValidator(expression);
-                if (validator != null) {
-                    try {
-                        validator.validate(context, this, value);
-                    } catch (ValidatorException e) {
-                        handleValidationException(context, e);
-                    }
+            Validator validator = ValidatorResource.getValidator(expression);
+            if (validator != null) {
+                try {
+                    validator.validate(context, this, value);
+                } catch (ValidatorException e) {
+                    handleValidationException(context, e);
                 }
             }
         }
@@ -518,13 +514,4 @@ public class UIInput extends UIOutput implements EditableValueHolder {
             context.addMessage(getClientId(context), message);
         }
     }
-
-    public ValidatorResource getValidatorResource() {
-        return resource;
-    }
-
-    public void setValidatorResource(ValidatorResource resource) {
-        this.resource = resource;
-    }
-
 }

@@ -31,7 +31,7 @@ import org.seasar.framework.log.Logger;
 import org.seasar.framework.util.AssertionUtil;
 import org.seasar.teeda.core.application.navigation.NavigationCaseContext;
 import org.seasar.teeda.core.application.navigation.NavigationContext;
-import org.seasar.teeda.core.application.navigation.NavigationContextFactory;
+import org.seasar.teeda.core.application.navigation.NavigationResource;
 import org.seasar.teeda.core.util.IteratorUtil;
 import org.seasar.teeda.core.util.PortletUtil;
 
@@ -139,7 +139,7 @@ public class NavigationHandlerImpl extends NavigationHandler {
     }
 
     protected List getExactMatchNavigationCases(String viewId) {
-        Map map = NavigationContextFactory.getNavigationContexts();
+        Map map = NavigationResource.getNavigationContexts();
         if (map != null) {
             if (logger_.isDebugEnabled()) {
                 logger_.debug("Exact macth. viewId = " + viewId);
@@ -150,7 +150,7 @@ public class NavigationHandlerImpl extends NavigationHandler {
     }
 
     protected List getWildCardMatchNavigationCases(String viewId) {
-        Map map = NavigationContextFactory
+        Map map = NavigationResource
                 .getWildCardMatchNavigationContexts();
         if (map != null) {
             if (logger_.isDebugEnabled()) {
@@ -168,7 +168,7 @@ public class NavigationHandlerImpl extends NavigationHandler {
     }
 
     protected List getDefaultNavigationCases(String viewId) {
-        Map map = NavigationContextFactory
+        Map map = NavigationResource
                 .getDefaultMatchNavigationContexts();
         if (map != null) {
             if (logger_.isDebugEnabled()) {
