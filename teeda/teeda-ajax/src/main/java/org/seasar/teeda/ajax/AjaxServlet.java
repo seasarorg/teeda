@@ -17,7 +17,12 @@ package org.seasar.teeda.ajax;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -104,19 +109,17 @@ public class AjaxServlet extends HttpServlet {
             throw new ServletException("Ajax Component Name[" + componentName
                     + "] does not has method[" + method + "]");
         }
-
-        this.setRequestParameter(request, obj);
-
+        Object[] args = this.setRequestParameter(request, obj);
         Object target = null;
         try {
-            target = beanDesc.invoke(obj, method, null);
+            target = beanDesc.invoke(obj, method, args);
         } catch (Exception e) {
             throw new ServletException(
-                    "The error occurred while create Ajax response.");
+                    "The error occurred while create Ajax response. " + e.getMessage());
         }
         String result = AjaxTranslator.translate(target);
         AjaxTranslator.setContentType(response, result);
-        
+
         response.setHeader("Cache-Control", "no-cache");
         response.setHeader("Pragma", "no-cache");
 
@@ -125,13 +128,30 @@ public class AjaxServlet extends HttpServlet {
         pw.close();
     }
 
-    protected void setRequestParameter(HttpServletRequest request, Object obj) {
+    protected Object[] setRequestParameter(HttpServletRequest request,
+            Object obj) {
+        Object[] args = null;
+        Map ajaxParam = new TreeMap();
         Enumeration enume = request.getParameterNames();
         while (enume.hasMoreElements()) {
             String key = (String) enume.nextElement();
             String value = request.getParameter(key);
+            if (key.startsWith(AjaxConstants.DEFAULT_ARRAY_PARAM_NAME)) {
+                String index = key.substring(AjaxConstants.DEFAULT_ARRAY_PARAM_LENGTH);
+                ajaxParam.put(new Integer(index), value);
+                continue;
+            }
             this.setPropertyNoException(obj, key, value);
         }
+        int ajaxParamSize = ajaxParam.size();
+        if (0 < ajaxParamSize) {
+            args = new Object[ajaxParamSize];
+            Iterator iterator = ajaxParam.keySet().iterator();
+            for (int i = 0; iterator.hasNext(); i++) {
+                args[i] = ajaxParam.get(iterator.next());
+            }
+        }
+        return args;
     }
 
     protected void setPropertyNoException(Object target, String propertyName,

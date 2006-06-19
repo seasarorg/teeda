@@ -49,5 +49,9 @@ public interface AjaxConstants {
     public String JSON_START_LIST_BRACE = "[";
 
     public String JSON_END_LIST_BRACE = "]";
+    
+    public String DEFAULT_ARRAY_PARAM_NAME = "AjaxParam";
+    
+    public int DEFAULT_ARRAY_PARAM_LENGTH = DEFAULT_ARRAY_PARAM_NAME.length();
 
 }

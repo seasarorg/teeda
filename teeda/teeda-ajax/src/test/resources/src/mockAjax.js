@@ -152,6 +152,11 @@ Kumu.MockAjax = {
             param = {};
         }
         ajax.params = param;
+        if(param instanceof Array){
+            for(var i = 0; i < param.length; i++){
+                ajax.params["AjaxParam" + new String(i)] = param[i];
+            }
+        }
         if(!("component" in param) && !("action" in param) && (components.length == 2) ){
             //callback name bind
             ajax.params["component"] = components[0];

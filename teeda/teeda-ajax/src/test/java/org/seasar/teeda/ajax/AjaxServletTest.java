@@ -199,6 +199,110 @@ public class AjaxServletTest extends S2FrameworkTestCase {
         // ## Assert ##
         assertEquals(AjaxConstants.CONTENT_TYPE_JSON, response.getContentType());
     }
+    
+    public void testArgs_isNull() throws Exception {
+        // ## Arrange ##
+        AjaxServlet servlet = new AjaxServlet();
+        servlet.init(getServletConfig());
+        MockHttpServletRequest request = getRequest();
+        request.addParameter("component", "ajaxBean1");
+        request.addParameter("action", "ajaxFoo");
+
+        // ## Act ##
+        // ## Assert ##
+        try {
+            servlet.doGet(request, getResponse());
+            fail();
+        } catch (ServletException e) {
+            assertMessageExist(e);
+        }
+    }
+
+    public void testArgs_BadArgType() throws Exception {
+        // target method is "public Object ajaxFoo(int arg1, String arg2)" 
+        // ## Arrange ##
+        AjaxServlet servlet = new AjaxServlet();
+        servlet.init(getServletConfig());
+        MockHttpServletRequest request = getRequest();
+        request.addParameter("component", "ajaxBean1");
+        request.addParameter("action", "ajaxFoo");
+        request.addParameter("AjaxParam0", "aaa");
+        request.addParameter("AjaxParam1", "6");
+
+        // ## Act ##
+        // ## Assert ##
+        try {
+            servlet.doGet(request, getResponse());
+            fail();
+        } catch (ServletException e) {
+            assertMessageExist(e);
+        }
+    }
+    
+    public void testArgs_BadArgc() throws Exception {
+        // target method is "public Object ajaxFoo(int arg1, String arg2)" 
+        // ## Arrange ##
+        AjaxServlet servlet = new AjaxServlet();
+        servlet.init(getServletConfig());
+        MockHttpServletRequest request = getRequest();
+        request.addParameter("component", "ajaxBean1");
+        request.addParameter("action", "ajaxFoo");
+        request.addParameter("AjaxParam0", "4");
+        request.addParameter("AjaxParam1", "abc");
+        request.addParameter("AjaxParam2", "def");
+
+        // ## Act ##
+        // ## Assert ##
+        try {
+            servlet.doGet(request, getResponse());
+            fail();
+        } catch (ServletException e) {
+            assertMessageExist(e);
+        }
+    }
+
+    public void testArgs_BadArgvOrder() throws Exception {
+        // target method is "public Object ajaxFoo(int arg1, String arg2)" 
+        // ## Arrange ##
+        AjaxServlet servlet = new AjaxServlet();
+        servlet.init(getServletConfig());
+        MockHttpServletRequest request = getRequest();
+        request.addParameter("component", "ajaxBean1");
+        request.addParameter("action", "ajaxFoo");
+        request.addParameter("AjaxParam1", "4");
+        request.addParameter("AjaxParam0", "abc");
+
+        // ## Act ##
+        // ## Assert ##
+        try {
+            servlet.doGet(request, getResponse());
+            fail();
+        } catch (ServletException e) {
+            assertMessageExist(e);
+        }
+    }
+    
+    public void testArgs_InvokeSuccess() throws Exception {
+        // target method is "public Object ajaxFoo(int arg1, String arg2)" 
+        // ## Arrange ##
+        AjaxServlet servlet = new AjaxServlet();
+        servlet.init(getServletConfig());
+        MockHttpServletRequest request = getRequest();
+        MockSPrintWriter writer = new MockSPrintWriter();
+        MyMockHttpServletResponseImpl response = new MyMockHttpServletResponseImpl(
+                getRequest());
+        response.setWriter(writer);
+        request.addParameter("component", "ajaxBean1");
+        request.addParameter("action", "ajaxFoo");
+        request.addParameter("AjaxParam0", "1");
+        request.addParameter("AjaxParam1", "abc");
+
+        // ## Act ##
+        servlet.doGet(request, response);
+
+        // ## Assert ##
+        assertEquals("{\"arg1\":null,\"arg2\":0}", writer.getResult());
+    }
 
     private static void assertMessageExist(Exception e) {
         String message = e.getMessage();
