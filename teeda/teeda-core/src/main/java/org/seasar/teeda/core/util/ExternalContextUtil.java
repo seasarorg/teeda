@@ -17,6 +17,9 @@ package org.seasar.teeda.core.util;
 
 import javax.faces.application.ViewHandler;
 import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
+
+import org.seasar.framework.util.AssertionUtil;
 
 /**
  * @author higa
@@ -43,4 +46,8 @@ public class ExternalContextUtil {
         return viewId;
     }
 
+    public static String encodeActionURL(FacesContext context, String url) {
+        AssertionUtil.assertNotNull("FacesContext", context);
+        return context.getExternalContext().encodeActionURL(url);
+    }
 }

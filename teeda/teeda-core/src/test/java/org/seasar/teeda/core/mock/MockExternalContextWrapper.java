@@ -233,4 +233,8 @@ public class MockExternalContextWrapper extends MockExternalContext {
         return mockExternalContext_.getMockHttpServletResponse();
     }
 
+    public void setRequestPathInfo(String pathInfo) {
+        mockExternalContext_.setRequestPathInfo(pathInfo);
+    }
+
 }

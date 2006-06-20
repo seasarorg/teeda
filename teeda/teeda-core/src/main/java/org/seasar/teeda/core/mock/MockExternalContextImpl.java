@@ -62,6 +62,8 @@ public class MockExternalContextImpl extends MockExternalContext {
 
     private Map requestParameterValuesMap_;
 
+    private String pathInfo;
+    
     public MockExternalContextImpl() {
     }
 
@@ -218,7 +220,14 @@ public class MockExternalContextImpl extends MockExternalContext {
     }
 
     public String getRequestPathInfo() {
+        if(pathInfo != null) {
+            return pathInfo;
+        }
         return getMockHttpServletRequest().getPathInfo();
+    }
+
+    public void setRequestPathInfo(String pathInfo) {
+        this.pathInfo = pathInfo;
     }
 
     public String getRequestServletPath() {

@@ -15,9 +15,6 @@
  */
 package org.seasar.teeda.core.util;
 
-import java.util.Locale;
-
-import javax.faces.application.StateManager;
 import javax.faces.application.ViewHandler;
 import javax.faces.context.FacesContext;
 
@@ -27,34 +24,19 @@ import org.seasar.framework.util.AssertionUtil;
  * @author shot
  * 
  */
-public class FacesContextUtil {
+public class ViewHandlerUtil {
 
-    private FacesContextUtil() {
+    private ViewHandlerUtil() {
     }
-
-    public static Locale getLocale() {
-        return getLocale(FacesContext.getCurrentInstance());
-    }
-
-    public static Locale getLocale(FacesContext context) {
-        return context.getViewRoot().getLocale();
-    }
-
-    public static ViewHandler getViewHandler() {
-        return getViewHandler(FacesContext.getCurrentInstance());
-    }
-
-    public static ViewHandler getViewHandler(FacesContext context) {
+    
+    public static String getActionURL(FacesContext context) {
         AssertionUtil.assertNotNull("FacesContext", context);
-        return context.getApplication().getViewHandler();
+        return getActionURL(context, context.getViewRoot().getViewId());
     }
-
-    public static StateManager getStateManager() {
-        return getStateManager(FacesContext.getCurrentInstance());
-    }
-
-    public static StateManager getStateManager(FacesContext context) {
+    
+    public static String getActionURL(FacesContext context, String viewId) {
         AssertionUtil.assertNotNull("FacesContext", context);
-        return context.getApplication().getStateManager();
+        ViewHandler handler = FacesContextUtil.getViewHandler(context);
+        return handler.getActionURL(context, viewId);
     }
 }

@@ -16,15 +16,21 @@
 package org.seasar.teeda.core.render.html;
 
 import javax.faces.component.UIParameter;
+import javax.faces.component.UIViewRoot;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.FacesEvent;
+import javax.faces.internal.FacesConfigOptions;
 import javax.faces.render.Renderer;
 import javax.faces.render.RendererTest;
 
 import junitx.framework.ObjectAssert;
 
 import org.custommonkey.xmlunit.Diff;
+import org.seasar.framework.mock.servlet.MockHttpServletRequest;
+import org.seasar.framework.mock.servlet.MockHttpServletRequestImpl;
+import org.seasar.framework.mock.servlet.MockServletContextImpl;
 import org.seasar.teeda.core.exception.TagNotFoundRuntimeException;
+import org.seasar.teeda.core.mock.MockExternalContext;
 import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.unit.ExceptionAssert;
 
@@ -261,6 +267,43 @@ public class HtmlCommandLinkRendererTest extends RendererTest {
                 + " class=\"w\"" + " tabindex=\"x\"" + " target=\"y\""
                 + " title=\"z\"" + " type=\"1\">B</a>", getResponseText());
         assertEquals(diff.toString(), true, diff.identical());
+    }
+
+    public void testEncodeWithoutJavascript() throws Exception {
+        // ## Arrange ##
+        htmlCommandLink_.setId("hoge");
+        MockHtmlForm form = new MockHtmlForm();
+        form.setRenderer(new HtmlFormRenderer());
+        form.setId("foo");
+        form.getChildren().add(htmlCommandLink_);
+        UIParameter param = new UIParameter();
+        param.setName("bar");
+        param.setValue("1111");
+        htmlCommandLink_.getChildren().add(param);
+        htmlCommandLink_.setValue("value");
+        MockFacesContext context = getFacesContext();
+        MockExternalContext extContext = (MockExternalContext) context
+                .getExternalContext();
+        MockHttpServletRequest request = new MockHttpServletRequestImpl(
+                new MockServletContextImpl("hoge"), "/faces");
+        request.setPathInfo("/no_allow_js/aaa");
+        extContext.setMockHttpServletRequest(request);
+
+        FacesConfigOptions
+                .setJavascriptNotPermittedPath(new String[] { "/no_allow_js" });
+        UIViewRoot root = new UIViewRoot();
+        root.setViewId("/baz");
+        context.setViewRoot(root);
+        // ## Act ##
+        //        renderer_.encodeHtmlCommandLinkWithoutJavaScript(context, context
+        //                .getResponseWriter(), htmlCommandLink_);
+
+        encodeByRenderer(renderer_, context, htmlCommandLink_);
+
+        // ## Assert ##
+        assertEquals(
+                "<a id=\"hoge\" href=\"/baz?foo/baz=foo/baz&amp;foo%3A__link_clicked__=foo%3Ahoge&amp;bar=1111\">value</a>",
+                getResponseText());
     }
 
     public void testDecode_NoEntry() throws Exception {

@@ -15,7 +15,6 @@
  */
 package javax.faces.internal;
 
-
 /**
  * @author higa
  * @author shot
@@ -23,24 +22,24 @@ package javax.faces.internal;
 public class FacesConfigOptions {
 
     private static String configFiles;
-    
+
     private static boolean savingStateInClient = false;
-    
+
     private static String defaultSuffix;
-    
+
     private static String lifecycleId;
-    
-    private static boolean javascriptAllowed = true;
-    
+
+    private static String[] javascriptNotPermittedPath;
+
     private static boolean compressState = false;
-    
+
     protected FacesConfigOptions() {
     }
-    
+
     public static boolean isSavingStateInClient() {
         return savingStateInClient;
     }
-    
+
     public static void setSavingStateInClient(boolean inClient) {
         savingStateInClient = inClient;
     }
@@ -60,7 +59,7 @@ public class FacesConfigOptions {
     public static void setDefaultSuffix(String suffix) {
         defaultSuffix = suffix;
     }
-    
+
     public static String getLifecycleId() {
         return lifecycleId;
     }
@@ -69,12 +68,12 @@ public class FacesConfigOptions {
         lifecycleId = id;
     }
 
-    public static boolean isJavascriptAllowed() {
-        return javascriptAllowed;
+    public static String[] getJavascriptNotPermittedPath() {
+        return javascriptNotPermittedPath;
     }
 
-    public static void setJavascriptAllowed(boolean isJavaScriptAllowed) {
-        javascriptAllowed = isJavaScriptAllowed;
+    public static void setJavascriptNotPermittedPath(String[] notAllowedPath) {
+        javascriptNotPermittedPath = notAllowedPath;
     }
 
     public static boolean getCompressState() {
@@ -84,13 +83,13 @@ public class FacesConfigOptions {
     public static void setCompressState(boolean isCompress) {
         compressState = isCompress;
     }
-    
+
     public static void clear() {
         configFiles = null;
         savingStateInClient = false;
         defaultSuffix = null;
         lifecycleId = null;
-        javascriptAllowed = true;
+        javascriptNotPermittedPath = null;
         compressState = false;
     }
 

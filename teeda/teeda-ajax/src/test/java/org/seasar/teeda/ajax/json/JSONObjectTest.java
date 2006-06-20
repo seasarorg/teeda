@@ -124,5 +124,10 @@ public class JSONObjectTest extends TestCase {
         JSONObject json = new JSONObject();
         assertEquals("{}", json.toString());
     }
-    
+
+    public void test13() throws Exception {
+        JSONObject json = new JSONObject();
+        json.put("a,", "b");
+        assertEquals("{\"a,\":\"b\"}", json.toString());
+    }
 }

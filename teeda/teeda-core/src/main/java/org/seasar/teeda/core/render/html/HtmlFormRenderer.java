@@ -24,13 +24,13 @@ import java.util.Map.Entry;
 import javax.faces.application.ViewHandler;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIForm;
-import javax.faces.component.UIViewRoot;
 import javax.faces.component.html.HtmlForm;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.util.FacesContextUtil;
+import org.seasar.teeda.core.util.HtmlFormRendererUtil;
 import org.seasar.teeda.core.util.RendererUtil;
 
 /**
@@ -119,7 +119,7 @@ public class HtmlFormRenderer extends AbstractHtmlRenderer {
         map.put(name, value);
     }
 
-    private static Map getHiddenParameters(UIForm form) {
+    public static Map getHiddenParameters(UIForm form) {
         Map attributes = form.getAttributes();
         Map map = (Map) attributes.get(HIDDEN_PARAMETER_KEY);
         if (map == null) {
@@ -132,7 +132,7 @@ public class HtmlFormRenderer extends AbstractHtmlRenderer {
     private void renderFormSubmitMarker(FacesContext context,
             HtmlForm htmlForm, ResponseWriter writer) throws IOException {
         final String clientId = htmlForm.getClientId(context);
-        final String key = getFormSubmitKey(context, htmlForm);
+        final String key = HtmlFormRendererUtil.getFormSubmitKey(context, htmlForm);
         renderHidden(htmlForm, writer, key, clientId);
     }
 
@@ -143,18 +143,12 @@ public class HtmlFormRenderer extends AbstractHtmlRenderer {
 
     protected void decodeHtmlForm(FacesContext context, HtmlForm htmlForm) {
         Map reqParam = context.getExternalContext().getRequestParameterMap();
-        String key = getFormSubmitKey(context, htmlForm);
+        String key = HtmlFormRendererUtil.getFormSubmitKey(context, htmlForm);
         if (reqParam.containsKey(key)) {
             htmlForm.setSubmitted(true);
         } else {
             htmlForm.setSubmitted(false);
         }
-    }
-
-    protected String getFormSubmitKey(FacesContext context, HtmlForm htmlForm) {
-        UIViewRoot viewRoot = context.getViewRoot();
-        String viewId = viewRoot.getViewId();
-        return htmlForm.getClientId(context) + viewId;
     }
 
 }

@@ -555,5 +555,5 @@ public interface JsfConstants {
     
     String NS_SEP = ".";
     
-    String JAVASCRIPT_ALLOWED = "teeda.JAVASCRIPT_ALLOWED";
+    String JAVASCRIPT_NOT_PERMITTED_PATH = "teeda.JAVASCRIPT_NOT_PERMITTED_PATH";
 }

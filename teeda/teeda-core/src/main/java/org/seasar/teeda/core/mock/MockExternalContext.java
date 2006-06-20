@@ -51,4 +51,6 @@ public abstract class MockExternalContext extends ExternalContext {
             MockHttpServletResponse mockHttpServletResponse);
 
     public abstract MockHttpServletResponse getMockHttpServletResponse();
+    
+    public abstract void setRequestPathInfo(String pathInfo);
 }

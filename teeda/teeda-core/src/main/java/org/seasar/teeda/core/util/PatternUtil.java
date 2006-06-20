@@ -26,16 +26,16 @@ import java.util.regex.Pattern;
  */
 public class PatternUtil {
 
-    private static Map patternCache_ = new HashMap();
+    private static Map patternCache = new HashMap();
 
     private PatternUtil() {
     }
 
     public static Pattern getPattern(String regex) {
-        Pattern pattern = (Pattern) patternCache_.get(regex);
+        Pattern pattern = (Pattern) patternCache.get(regex);
         if (pattern == null) {
             pattern = Pattern.compile(regex);
-            patternCache_.put(regex, pattern);
+            patternCache.put(regex, pattern);
         }
         return pattern;
     }
@@ -50,6 +50,6 @@ public class PatternUtil {
     }
 
     public static void clearPatternCache() {
-        patternCache_ = new HashMap();
+        patternCache.clear();
     }
 }
