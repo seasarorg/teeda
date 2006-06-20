@@ -23,6 +23,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
 import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.core.util.FacesContextUtil;
 import org.seasar.teeda.core.util.RendererUtil;
 
 /**
@@ -50,7 +51,7 @@ public class HtmlGraphicImageRenderer extends AbstractHtmlRenderer {
         if (url == null) {
             url = "";
         }
-        url = context.getApplication().getViewHandler().getResourceURL(context,
+        url = FacesContextUtil.getViewHandler(context).getResourceURL(context,
                 url);
         url = context.getExternalContext().encodeResourceURL(url);
         RendererUtil.renderAttribute(writer, JsfConstants.SRC_ATTR, url);

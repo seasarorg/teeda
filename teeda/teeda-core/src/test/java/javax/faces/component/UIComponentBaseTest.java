@@ -22,6 +22,7 @@ import java.util.List;
 
 import javax.faces.context.FacesContext;
 import javax.faces.event.FacesListener;
+import javax.faces.internal.AttachedObjectStateWrapper;
 
 import junitx.framework.ObjectAssert;
 
@@ -542,6 +543,16 @@ public class UIComponentBaseTest extends AbstractUIComponentTest {
         UIComponentBase.restoreAttachedState(context, stateObj);
     }
 
+    public final void testSaveAndRestoreAttachedState_AttacedObjectIsList() throws Exception {
+        NullFacesContext context = new NullFacesContext();
+        AttachedObjectStateWrapper wrapper = new AttachedObjectStateWrapper(context, new Hoge());
+        List restoreList = new ArrayList();
+        restoreList.add(wrapper);
+        List restoredList = (List) UIComponentBase.restoreAttachedState(context, restoreList);
+        assertNotNull(restoredList);
+        assertTrue(restoredList.size() == 0);
+    }
+    
     private static class MockFacesListener1 implements FacesListener {
         public String toString() {
             return "mock1";
@@ -578,4 +589,7 @@ public class UIComponentBaseTest extends AbstractUIComponentTest {
         return facesContext_;
     }
 
+    public static class Hoge {
+        
+    }
 }

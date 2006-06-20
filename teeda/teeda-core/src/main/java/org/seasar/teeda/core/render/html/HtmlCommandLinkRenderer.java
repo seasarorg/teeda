@@ -16,9 +16,12 @@
 package org.seasar.teeda.core.render.html;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Iterator;
 import java.util.Map;
 
+import javax.faces.application.ViewHandler;
 import javax.faces.component.NamingContainer;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIForm;
@@ -27,13 +30,17 @@ import javax.faces.component.html.HtmlCommandLink;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.event.ActionEvent;
+import javax.faces.internal.FacesConfigOptions;
 
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.exception.TagNotFoundRuntimeException;
+import org.seasar.teeda.core.util.FacesContextUtil;
 import org.seasar.teeda.core.util.RendererUtil;
+import org.seasar.teeda.core.util.StateManagerUtil;
 
 /**
  * @author manhole
+ * @author shot
  */
 public class HtmlCommandLinkRenderer extends AbstractHtmlRenderer {
 
@@ -50,15 +57,23 @@ public class HtmlCommandLinkRenderer extends AbstractHtmlRenderer {
 
     protected void encodeHtmlCommandLinkBegin(FacesContext context,
             HtmlCommandLink commandLink) throws IOException {
-
-        UIForm parentForm = findParentForm(commandLink);
-        final String formId = getIdForRender(context, parentForm);
-
         ResponseWriter writer = context.getResponseWriter();
-
         writer.startElement(JsfConstants.ANCHOR_ELEM, commandLink);
         RendererUtil.renderIdAttributeIfNecessary(writer, commandLink,
                 getIdForRender(context, commandLink));
+        if (FacesConfigOptions.isJavascriptAllowed()) {
+            encodeHtmlCommandLinkWithJavaScript(context, writer, commandLink);
+        } else {
+            encodeHtmlCommandLinkWithoutJavaScript(context, writer, commandLink);
+        }
+    }
+
+    protected void encodeHtmlCommandLinkWithJavaScript(FacesContext context,
+            ResponseWriter writer, HtmlCommandLink commandLink)
+            throws IOException {
+        UIForm parentForm = findParentForm(commandLink);
+        final String formId = getIdForRender(context, parentForm);
+
         RendererUtil.renderAttribute(writer, JsfConstants.HREF_ATTR, "#");
 
         StringBuffer sb = new StringBuffer();
@@ -101,6 +116,98 @@ public class HtmlCommandLinkRenderer extends AbstractHtmlRenderer {
         Object value = commandLink.getValue();
         if (value != null) {
             writer.writeText(value.toString(), JsfConstants.VALUE_ATTR);
+        }
+    }
+
+    protected void encodeHtmlCommandLinkWithoutJavaScript(FacesContext context,
+            ResponseWriter writer, HtmlCommandLink commandLink)
+            throws IOException {
+        ViewHandler viewHandler = FacesContextUtil.getViewHandler(context);
+        String viewId = context.getViewRoot().getViewId();
+        String path = viewHandler.getActionURL(context, viewId);
+
+        StringBuffer hrefBuf = new StringBuffer(100);
+        hrefBuf.append(path);
+        if (path.indexOf('?') == -1) {
+            hrefBuf.append('?');
+        } else {
+            hrefBuf.append('&');
+        }
+
+        UIForm parentForm = findParentForm(commandLink);
+        final String formId = getIdForRender(context, parentForm);
+        final String hiddenFieldName = getHiddenFieldName(formId);
+        hrefBuf.append(hiddenFieldName);
+        hrefBuf.append('=');
+        hrefBuf.append(commandLink.getClientId(context));
+
+        if (commandLink.getChildCount() > 0) {
+            addChildParametersToHref(commandLink, hrefBuf, false, writer.getCharacterEncoding());
+        }
+
+        hrefBuf.append("&");
+        if (StateManagerUtil.isSavingStateInClient(context)) {
+            hrefBuf.append("JSF_URL_STATE_MARKER=DUMMY");
+        } else {
+            hrefBuf.append(SEQUENCE_PARAM);
+            hrefBuf.append('=');
+            hrefBuf.append(getViewSequence(context));
+        }
+        String href = context.getExternalContext().encodeActionURL(
+                hrefBuf.toString());
+        writer.startElement(JsfConstants.ANCHOR_ELEM, commandLink);
+        writer.writeURIAttribute(JsfConstants.HREF_ATTR, context
+                .getExternalContext().encodeActionURL(href), null);
+
+    }
+
+    public static final String SEQUENCE_PARAM = "jsf_sequence";
+
+    public static Integer getViewSequence(FacesContext context) {
+        Map map = context.getExternalContext().getRequestMap();
+        Integer sequence = (Integer) map.get(SEQUENCE_PARAM);
+        if (sequence == null) {
+            sequence = new Integer(1);
+            map.put(SEQUENCE_PARAM, sequence);
+
+            synchronized (context.getExternalContext().getSession(true)) {
+                context.getExternalContext().getSessionMap().put(
+                        SEQUENCE_PARAM, sequence);
+            }
+        }
+        return sequence;
+    }
+
+    private void addChildParametersToHref(UIComponent linkComponent,
+            StringBuffer hrefBuf, boolean firstParameter, String charEncoding)
+            throws IOException {
+        for (Iterator it = linkComponent.getChildren().iterator(); it.hasNext();) {
+            UIComponent child = (UIComponent) it.next();
+            if (child instanceof UIParameter) {
+                String name = ((UIParameter) child).getName();
+                Object value = ((UIParameter) child).getValue();
+
+                addParameterToHref(name, value, hrefBuf, firstParameter,
+                        charEncoding);
+                firstParameter = false;
+            }
+        }
+    }
+
+    private static void addParameterToHref(String name, Object value,
+            StringBuffer hrefBuf, boolean firstParameter, String charEncoding)
+            throws UnsupportedEncodingException {
+        if (name == null) {
+            throw new IllegalArgumentException(
+                    "Unnamed parameter value not allowed within command link.");
+        }
+
+        hrefBuf.append(firstParameter ? '?' : '&');
+        hrefBuf.append(URLEncoder.encode(name, charEncoding));
+        hrefBuf.append('=');
+        if (value != null) {
+            //UIParameter is no ConvertibleValueHolder, so no conversion possible
+            hrefBuf.append(URLEncoder.encode(value.toString(), charEncoding));
         }
     }
 

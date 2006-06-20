@@ -17,6 +17,8 @@ package org.seasar.teeda.core.util;
 
 import java.util.Locale;
 
+import javax.faces.application.StateManager;
+import javax.faces.application.ViewHandler;
 import javax.faces.context.FacesContext;
 
 /**
@@ -27,12 +29,28 @@ public class FacesContextUtil {
 
     private FacesContextUtil() {
     }
-    
+
     public static Locale getLocale() {
         return getLocale(FacesContext.getCurrentInstance());
     }
-    
+
     public static Locale getLocale(FacesContext context) {
         return context.getViewRoot().getLocale();
+    }
+
+    public static ViewHandler getViewHandler() {
+        return getViewHandler(FacesContext.getCurrentInstance());
+    }
+
+    public static ViewHandler getViewHandler(FacesContext context) {
+        return context.getApplication().getViewHandler();
+    }
+
+    public static StateManager getStateManager() {
+        return getStateManager(FacesContext.getCurrentInstance());
+    }
+
+    public static StateManager getStateManager(FacesContext context) {
+        return context.getApplication().getStateManager();
     }
 }

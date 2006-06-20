@@ -16,6 +16,7 @@
 package org.seasar.teeda.core.render.html;
 
 import javax.faces.component.UIParameter;
+import javax.faces.component.UIViewRoot;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.FacesEvent;
 import javax.faces.render.Renderer;
@@ -26,6 +27,7 @@ import junitx.framework.ObjectAssert;
 import org.custommonkey.xmlunit.Diff;
 import org.seasar.teeda.core.exception.TagNotFoundRuntimeException;
 import org.seasar.teeda.core.mock.MockFacesContext;
+import org.seasar.teeda.core.mock.MockStateManager;
 import org.seasar.teeda.core.unit.ExceptionAssert;
 
 /**
@@ -375,6 +377,39 @@ public class HtmlCommandLinkRendererTest extends RendererTest {
 
     public void testGetRendersChildren() throws Exception {
         assertEquals(true, renderer_.getRendersChildren());
+    }
+
+    public void testEncodeWithoutJavascript() throws Exception {
+        // ## Arrange ##
+        htmlCommandLink_.setId("a");
+
+        MockHtmlForm form = new MockHtmlForm();
+        form.setRenderer(new HtmlFormRenderer());
+        form.setId("b");
+        form.getChildren().add(htmlCommandLink_);
+
+        UIParameter param = new UIParameter();
+        param.setName("c");
+        param.setValue("1");
+        htmlCommandLink_.getChildren().add(param);
+
+        MockFacesContext context = getFacesContext();
+
+        UIViewRoot root = new UIViewRoot();
+        root.setViewId("hoge");
+        context.setViewRoot(root);
+
+
+        MockStateManager stateManager = new MockStateManager();
+        stateManager.setSavingStateInClient(MockStateManager.MOCK_SAVING_STATE_SERVER);
+        context.getApplication().setStateManager(stateManager);
+        
+        // ## Act ##
+        renderer_.encodeHtmlCommandLinkWithoutJavaScript(context, context
+                .getResponseWriter(), htmlCommandLink_);
+
+        // ## Assert ##
+        System.out.println(getResponseText());
     }
 
     private HtmlCommandLinkRenderer createHtmlCommandLinkRenderer() {

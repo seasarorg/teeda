@@ -24,7 +24,7 @@ public class Version {
 
     private static final String MINOR_VERSION = "0";
 
-    private static final String BETA_VERSION = "3";
+    private static final String BETA_VERSION = "4";
 
     private static boolean isBeta = true;
 

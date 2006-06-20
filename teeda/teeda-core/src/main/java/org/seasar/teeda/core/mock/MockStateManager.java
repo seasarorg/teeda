@@ -28,6 +28,12 @@ import org.apache.commons.lang.NotImplementedException;
  */
 public class MockStateManager extends StateManager {
 
+    public static final boolean MOCK_SAVING_STATE_CLIENT = true;
+
+    public static final boolean MOCK_SAVING_STATE_SERVER = false;
+
+    private Boolean isSavingStateClient = null;
+    
     public SerializedView saveSerializedView(FacesContext context) {
         return null;
     }
@@ -71,4 +77,14 @@ public class MockStateManager extends StateManager {
             UIViewRoot viewRoot, String renderKitId) {
     }
 
+    public boolean isSavingStateInClient(FacesContext context) {
+        if(isSavingStateClient != null) {
+            return isSavingStateClient.booleanValue();
+        }
+        return super.isSavingStateInClient(context);
+    }
+    
+    public void setSavingStateInClient(boolean savingState) {
+        isSavingStateClient = new Boolean(savingState);
+    }
 }

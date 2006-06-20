@@ -18,7 +18,7 @@ package javax.faces.internal;
 
 /**
  * @author higa
- * 
+ * @author shot
  */
 public class FacesConfigOptions {
 

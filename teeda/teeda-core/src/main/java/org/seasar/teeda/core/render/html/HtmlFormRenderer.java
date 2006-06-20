@@ -30,6 +30,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
 import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.core.util.FacesContextUtil;
 import org.seasar.teeda.core.util.RendererUtil;
 
 /**
@@ -64,7 +65,7 @@ public class HtmlFormRenderer extends AbstractHtmlRenderer {
                 JsfConstants.FORM_PASSTHROUGH_ATTRIBUTES);
 
         // action attribute
-        ViewHandler viewHandler = context.getApplication().getViewHandler();
+        ViewHandler viewHandler = FacesContextUtil.getViewHandler(context);
         String viewId = context.getViewRoot().getViewId();
         String url = viewHandler.getActionURL(context, viewId);
         if (url != null) {

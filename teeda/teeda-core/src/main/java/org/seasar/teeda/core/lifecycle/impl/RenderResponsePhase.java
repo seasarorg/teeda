@@ -18,13 +18,13 @@ package org.seasar.teeda.core.lifecycle.impl;
 import java.io.IOException;
 
 import javax.faces.FacesException;
-import javax.faces.application.Application;
 import javax.faces.application.ViewHandler;
 import javax.faces.context.FacesContext;
 import javax.faces.el.EvaluationException;
 import javax.faces.event.PhaseId;
 
 import org.seasar.teeda.core.lifecycle.AbstractPhase;
+import org.seasar.teeda.core.util.FacesContextUtil;
 
 /**
  * @author shot
@@ -32,8 +32,7 @@ import org.seasar.teeda.core.lifecycle.AbstractPhase;
 public class RenderResponsePhase extends AbstractPhase {
 
     public void executePhase(FacesContext context) throws FacesException {
-        Application application = context.getApplication();
-        ViewHandler viewHandler = application.getViewHandler();
+        ViewHandler viewHandler = FacesContextUtil.getViewHandler(context);
         try {
             viewHandler.renderView(context, context.getViewRoot());
         } catch (IOException e) {

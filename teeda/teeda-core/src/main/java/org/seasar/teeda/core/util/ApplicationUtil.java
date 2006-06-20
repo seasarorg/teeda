@@ -22,7 +22,7 @@ import javax.faces.context.FacesContext;
 import org.seasar.teeda.core.exception.IllegalClassTypeException;
 
 /**
- * @author Shinpei Ohtani
+ * @author shot
  */
 public class ApplicationUtil {
 
@@ -39,11 +39,10 @@ public class ApplicationUtil {
         FacesContext context = FacesContext.getCurrentInstance();
         return context.getApplication();
     }
-
+    
     public static void verifyClassType(Class expected, Class actual) {
         if (!ClassUtil.isAssignableFrom(expected, actual)) {
             throw new IllegalClassTypeException(expected, actual);
         }
-
     }
 }

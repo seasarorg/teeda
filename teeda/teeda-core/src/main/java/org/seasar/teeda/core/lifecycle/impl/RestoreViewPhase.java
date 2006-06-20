@@ -27,6 +27,7 @@ import org.seasar.teeda.core.lifecycle.AbstractPhase;
 import org.seasar.teeda.core.lifecycle.Postback;
 import org.seasar.teeda.core.portlet.FacesPortlet;
 import org.seasar.teeda.core.util.ExternalContextUtil;
+import org.seasar.teeda.core.util.FacesContextUtil;
 import org.seasar.teeda.core.util.PortletUtil;
 
 /**
@@ -55,7 +56,7 @@ public class RestoreViewPhase extends AbstractPhase implements Postback {
         } else {
             viewId = ExternalContextUtil.getViewId(externalContext);
         }
-        ViewHandler viewHandler = context.getApplication().getViewHandler();
+        ViewHandler viewHandler = FacesContextUtil.getViewHandler(context);
         UIViewRoot viewRoot = viewHandler.restoreView(context, viewId);
         if (viewRoot == null) {
             viewRoot = viewHandler.createView(context, viewId);

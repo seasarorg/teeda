@@ -587,7 +587,10 @@ public abstract class UIComponentBase extends UIComponent {
             for (Iterator itr = list.iterator(); itr.hasNext();) {
                 AttachedObjectStateWrapper wrapper = (AttachedObjectStateWrapper) itr
                         .next();
-                restoredList.add(wrapper.restore(context));
+                Object restoredObject = wrapper.restore(context);
+                if(restoredObject != null) {
+                    restoredList.add(restoredObject);
+                }
             }
             return restoredList;
         } else if (stateObject instanceof AttachedObjectStateWrapper) {

@@ -52,6 +52,7 @@ import org.seasar.teeda.core.config.webapp.element.WebappConfig;
 import org.seasar.teeda.core.context.portlet.PortletExternalContextImpl;
 import org.seasar.teeda.core.context.portlet.PortletFacesContextImpl;
 import org.seasar.teeda.core.util.DIContainerUtil;
+import org.seasar.teeda.core.util.FacesContextUtil;
 
 /**
  * @author shinsuke
@@ -281,8 +282,7 @@ public class FacesPortlet extends GenericPortlet {
         FacesContext facesContext = facesContextFactory.getFacesContext(
                 getPortletContext(), request, response, lifecycle);
 
-        ViewHandler viewHandler = facesContext.getApplication()
-                .getViewHandler();
+        ViewHandler viewHandler = FacesContextUtil.getViewHandler(facesContext);
         UIViewRoot viewRoot = viewHandler.restoreView(facesContext, view);
         if (viewRoot == null) {
             viewRoot = viewHandler.createView(facesContext, view);

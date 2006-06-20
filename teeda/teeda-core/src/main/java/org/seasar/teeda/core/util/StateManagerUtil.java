@@ -32,10 +32,10 @@ public class StateManagerUtil {
     }
 
     public static boolean isSavingStateInClient(FacesContext context) {
-        return context.getApplication().getStateManager()
-                .isSavingStateInClient(context);
+        return FacesContextUtil.getStateManager(context).isSavingStateInClient(
+                context);
     }
-    
+
     public static void assertComponentNoDuplicateId(UIComponent component) {
         assertComponentNoDuplicateIdInternal(component, new ArrayList());
     }
@@ -57,5 +57,5 @@ public class StateManagerUtil {
             }
         }
     }
-    
+
 }
