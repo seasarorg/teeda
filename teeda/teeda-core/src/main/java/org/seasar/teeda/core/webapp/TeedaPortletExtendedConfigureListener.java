@@ -28,6 +28,7 @@ import javax.servlet.ServletContextEvent;
 import org.seasar.framework.container.servlet.PortletExtendedS2ContainerListener;
 import org.seasar.framework.log.Logger;
 import org.seasar.framework.util.InputStreamUtil;
+import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.Version;
 import org.seasar.teeda.core.config.faces.FacesConfigBuilder;
@@ -75,6 +76,7 @@ public class TeedaPortletExtendedConfigureListener extends
         boolean isAlreadyInitialized = (b != null) ? b.booleanValue() : false;
         if (!isAlreadyInitialized) {
             initializeFacesConfigOptions(servletContext);
+            initializeFacesConfigCustomOptions(servletContext);
             FacesConfigBuilder facesConfigBuilder = (FacesConfigBuilder) DIContainerUtil
                     .getComponent(FacesConfigBuilder.class);
 
@@ -133,16 +135,15 @@ public class TeedaPortletExtendedConfigureListener extends
         if (lifecycleId != null) {
             FacesConfigOptions.setLifecycleId(lifecycleId);
         }
-        initializeFacesConfigCustomOptions(servletContext);
     }
 
     protected void initializeFacesConfigCustomOptions(
             ServletContext servletContext) {
-        String isJavascriptAllowed = servletContext
-                .getInitParameter(JsfConstants.JAVASCRIPT_ALLOWED);
-        if (isJavascriptAllowed != null) {
-            FacesConfigOptions.setJavascriptAllowed(isJavascriptAllowed
-                    .equalsIgnoreCase("true"));
+        String javaScriptNotPermittedPath = servletContext
+                .getInitParameter(JsfConstants.JAVASCRIPT_NOT_PERMITTED_PATH);
+        if (javaScriptNotPermittedPath != null) {
+            String[] paths = StringUtil.split(javaScriptNotPermittedPath, ",");
+            FacesConfigOptions.setJavascriptNotPermittedPath(paths);
         }
         String compressState = servletContext
                 .getInitParameter(JsfConstants.COMPRESS_STATE_ATTR);
