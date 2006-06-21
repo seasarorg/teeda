@@ -51,8 +51,11 @@ public abstract class AbstractPhase implements Phase {
     //If need pre-prePhase or post-prePhase(and also postPhase) action, add method.
     public void execute(FacesContext context) {
         prePhase(context);
-        executePhase(context);
-        postPhase(context);
+        try {
+            executePhase(context);
+        } finally {
+            postPhase(context);
+        }
     }
 
     public final void postPhase(FacesContext context) {
