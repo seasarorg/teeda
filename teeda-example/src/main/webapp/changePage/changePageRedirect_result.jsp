@@ -3,9 +3,9 @@
 <html>
 	<body>
 		<f:view>
-			<h2>Changing page result.</h2>
+			<h2>Changing page result(redirect).</h2>
 			<h:form id="changingPagesForm1_result">
-				<h:outputText>changing page</h:outputText>
+				<h:outputText>changing page(redirect)</h:outputText>
 			</h:form>
 		</f:view>
 	</body>
