@@ -29,6 +29,12 @@
 	</managed-bean>
 
 	<managed-bean>
+		<managed-bean-name>commandLinkBean2</managed-bean-name>
+		<managed-bean-class>examples.teeda.bean.CommandLinkBean2</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
 		<managed-bean-name>addBean</managed-bean-name>
 		<managed-bean-class>examples.teeda.bean.AddBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
@@ -65,6 +71,7 @@
 			<to-view-id>/changePage/changePage1_result.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
+	
 	<navigation-rule>
 		<from-view-id>/changePage2/changePage2.jsp</from-view-id>
 		<navigation-case>
@@ -78,5 +85,23 @@
 			<to-view-id>/changePage2/changePage2_result_cat.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/link_no_js/commandLink2.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>hoge</from-outcome>
+			<to-view-id>/link_no_js/commandLink2_result.jsp</to-view-id>
+			<redirect/>
+		</navigation-case>
+	</navigation-rule>
 
+	<navigation-rule>
+		<from-view-id>/changePageRedirect/changePageRedirect.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>ok</from-outcome>
+			<to-view-id>/changePageRedirect/changePageRedirect_result.jsp</to-view-id>
+			<redirect/>
+		</navigation-case>
+	</navigation-rule>
+	
 </faces-config>
