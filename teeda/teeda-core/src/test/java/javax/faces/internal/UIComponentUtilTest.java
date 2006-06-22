@@ -13,10 +13,11 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.core.util;
+package javax.faces.internal;
 
 import javax.faces.component.UIComponent;
 import javax.faces.component.html.HtmlInputText;
+import javax.faces.internal.UIComponentUtil;
 import javax.faces.internal.UIDefaultAttribute;
 
 import junit.framework.TestCase;
