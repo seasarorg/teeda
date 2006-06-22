@@ -54,7 +54,9 @@ public class TestCommonsELParser extends TeedaTestCase {
         parser.setExpressionProcessor(new CommonsExpressionProcessorImpl());
         Object o = parser.parse("#{hoge.name}");
         MockApplication app = getApplication();
-        app.setVariableResolver(new TeedaVariableResolver());
+        TeedaVariableResolver resolver = new TeedaVariableResolver();
+        resolver.setContainer(getContainer());
+        app.setVariableResolver(resolver);
         Object obj = parser.getExpressionProcessor().evaluate(
                 getFacesContext(), o);
         assertEquals("foo", obj);

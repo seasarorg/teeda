@@ -4,15 +4,6 @@
 <components namespace="teeda">
 
 	<include path="teedaErrorPage.dicon" />
-
-	<!-- ExternalContext -->
-	<!--
-	<component name="externalContext" class="org.seasar.teeda.core.context.servlet.ServletExternalContextImpl">
-		<arg>application</arg>
-		<arg>request</arg>
-		<arg>response</arg>
-	</component>
-	-->
 	
 	<!-- FacesConfig configurator -->
 	<component class="org.seasar.teeda.core.config.faces.impl.FacesConfigBuilderImpl">

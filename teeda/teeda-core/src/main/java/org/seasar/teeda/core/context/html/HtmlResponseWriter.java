@@ -29,6 +29,7 @@ import org.seasar.framework.util.AssertionUtil;
 
 /**
  * @author manhole
+ * @author shot
  * 
  * TODO handle "javascript: xxxx" attribute (really necessary?)
  */
@@ -40,15 +41,18 @@ public class HtmlResponseWriter extends ResponseWriter {
             .asList(new String[] { "area", "br", "base", "col", "hr", "img",
                     "input", "link", "meta", "param" });
 
-    private Writer writer_;
+    private final char[] reserved = { ';', '/', '?', ':', '@', '&', '=', '+',
+            '$', ',' };
 
-    private String contentType_;
+    private Writer writer;
 
-    private String characterEncoding_;
+    private String contentType;
 
-    private boolean startTagOpening_;
+    private String characterEncoding;
 
-    private boolean shouldEscape_ = true;
+    private boolean startTagOpening;
+
+    private boolean shouldEscape = true;
 
     public void startElement(String name, UIComponent componentForElement)
             throws IOException {
@@ -58,36 +62,36 @@ public class HtmlResponseWriter extends ResponseWriter {
         writer.write("<");
         writer.write(name);
         if ("script".equalsIgnoreCase(name)) {
-            shouldEscape_ = false;
+            shouldEscape = false;
         } else {
-            shouldEscape_ = true;
+            shouldEscape = true;
         }
 
-        startTagOpening_ = true;
+        startTagOpening = true;
     }
 
     protected void closeStartTagIfOpening(Writer writer) throws IOException {
-        if (startTagOpening_) {
+        if (startTagOpening) {
             writer.write(">");
-            startTagOpening_ = false;
+            startTagOpening = false;
         }
     }
 
     public void endElement(String name) throws IOException {
         AssertionUtil.assertNotNull("name", name);
         Writer writer = getWriter();
-        if (startTagOpening_) {
+        if (startTagOpening) {
             if (isEmptyElement(name)) {
                 writer.write(" />");
             } else {
                 writer.write(">");
                 writer.write("</" + name + ">");
             }
-            startTagOpening_ = false;
+            startTagOpening = false;
         } else {
             writer.write("</" + name + ">");
         }
-        shouldEscape_ = true;
+        shouldEscape = true;
     }
 
     protected boolean isEmptyElement(String name) {
@@ -97,7 +101,7 @@ public class HtmlResponseWriter extends ResponseWriter {
     public void writeAttribute(String name, Object value, String property)
             throws IOException {
         AssertionUtil.assertNotNull("name", name);
-        if (!startTagOpening_) {
+        if (!startTagOpening) {
             throw new IllegalStateException(
                     "there is no currently open element");
         }
@@ -112,7 +116,7 @@ public class HtmlResponseWriter extends ResponseWriter {
     public void writeURIAttribute(String name, Object value, String property)
             throws IOException {
         AssertionUtil.assertNotNull("name", name);
-        if (!startTagOpening_) {
+        if (!startTagOpening) {
             throw new IllegalStateException(
                     "there is no currently open element");
         }
@@ -140,7 +144,7 @@ public class HtmlResponseWriter extends ResponseWriter {
         Writer writer = getWriter();
         closeStartTagIfOpening(writer);
         String str = null;
-        if (shouldEscape_) {
+        if (shouldEscape) {
             str = htmlSpecialChars(text.toString());
         } else {
             str = text.toString();
@@ -242,64 +246,31 @@ public class HtmlResponseWriter extends ResponseWriter {
     }
 
     public String getContentType() {
-        return contentType_;
+        return contentType;
     }
 
     public void setContentType(String contentType) {
-        contentType_ = contentType;
+        this.contentType = contentType;
     }
 
     public String getCharacterEncoding() {
-        if (characterEncoding_ == null) {
+        if (characterEncoding == null) {
             return DEFAULT_CHARACTER_ENCODING;
         }
-        return characterEncoding_;
+        return characterEncoding;
     }
 
     public void setCharacterEncoding(String characterEncoding) {
-        characterEncoding_ = characterEncoding;
+        this.characterEncoding = characterEncoding;
     }
 
     public Writer getWriter() {
-        return writer_;
+        return writer;
     }
 
     public void setWriter(Writer writer) {
-        writer_ = writer;
+        this.writer = writer;
     }
-
-    private final char[] reserved_ = { ';', '/', '?', ':', '@', '&', '=', '+',
-            '$', ',' };
-
-    /*
-     * private final char[] lowalpha_ = { 'a', 'b', 'c', 'd', 'e', 'f', 'g',
-     * 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
-     * 'v', 'w', 'x', 'y', 'z' };
-     * 
-     * private final char[] upalpha_ = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',
-     * 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V',
-     * 'W', 'X', 'Y', 'Z' };
-     * 
-     * private static char[] digit_ = { '0', '1', '2', '3', '4', '5', '6', '7',
-     * '8', '9' };
-     * 
-     * private final char[] mark_ = { '-', '_', '.', '!', '~', '*', '\'', '(',
-     * ')' };
-     * 
-     * private final char[] alpha_ = addArray(lowalpha_, upalpha_);
-     * 
-     * private final char[] alphanum_ = addArray(alpha_, digit_);
-     * 
-     * private final char[] unreserved_ = addArray(alphanum_, mark_);
-     * 
-     * private final char[] delims_ = { '<', '>', '#', '%', '\"' };
-     * 
-     * private final char[] unwise_ = { '{', '}', '|', '\\', '^', '[', ']', '`' };
-     * char[] addArray(char[] c1, char[] c2) { char[] newArray = new
-     * char[c1.length + c2.length]; int counter = 0; for (int i = 0; i <
-     * c1.length; i++) { newArray[counter++] = c1[i]; } for (int i = 0; i <
-     * c2.length; i++) { newArray[counter++] = c2[i]; } return newArray; }
-     */
 
     protected String encodeURIAttribute(String url) throws IOException {
         char[] chars = url.toCharArray();
@@ -307,7 +278,7 @@ public class HtmlResponseWriter extends ResponseWriter {
         final int length = chars.length;
         forLoop: for (int i = 0; i < length; i++) {
             final char c = chars[i];
-            if (ArrayUtils.contains(reserved_, c)) {
+            if (ArrayUtils.contains(reserved, c)) {
                 sb.append(c);
                 if ('?' == c) {
                     if (i < length) {
@@ -376,6 +347,6 @@ public class HtmlResponseWriter extends ResponseWriter {
     }
 
     public String toString() {
-        return writer_.toString();
+        return writer.toString();
     }
 }

@@ -15,9 +15,7 @@
  */
 package org.seasar.teeda.core.config.faces.assembler.impl;
 
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import org.seasar.framework.container.ComponentDef;
@@ -37,18 +35,18 @@ import org.seasar.teeda.core.util.IteratorUtil;
  */
 public class DefaultManagedBeanAssembler extends ManagedBeanAssembler {
 
-    private ManagedBeanFactory managedBeanFactory_;
+    private ManagedBeanFactory managedBeanFactory;
 
-    private ScopeManager scopeManager_;
+    private ScopeManager scopeManager;
 
     public DefaultManagedBeanAssembler(Map managedBeans) {
         super(managedBeans);
     }
 
     protected void setupBeforeAssemble() {
-        managedBeanFactory_ = (ManagedBeanFactory) DIContainerUtil
+        managedBeanFactory = (ManagedBeanFactory) DIContainerUtil
                 .getComponent(ManagedBeanFactory.class);
-        scopeManager_ = (ScopeManager) DIContainerUtil
+        scopeManager = (ScopeManager) DIContainerUtil
                 .getComponent(ScopeManager.class);
     }
 
@@ -75,78 +73,19 @@ public class DefaultManagedBeanAssembler extends ManagedBeanAssembler {
     }
     
     protected ManagedBeanFactory getManagedBeanFactory() {
-        return managedBeanFactory_;
+        return this.managedBeanFactory;
     }
 
     protected ScopeManager getScopeManager() {
-        return scopeManager_;
+        return this.scopeManager;
     }
 
     private void assertNotRegisteredYet(String managedBeanName) {
-        Object managedBean = managedBeanFactory_
+        Object managedBean = managedBeanFactory
                 .getManagedBean(managedBeanName);
         if (managedBean != null) {
             throw new ManagedBeanDuplicateRegisterException(managedBeanName);
         }
     }
 
-    protected static class ManagedBeans {
-        private List beans_ = new ArrayList();
-
-        public ManagedBeans() {
-        }
-
-        public void addManagedBeanInfo(String name, Scope scope, Class beanClass) {
-            beans_.add(new ManagedBean(name, scope, beanClass));
-        }
-
-        public boolean hasNext() {
-            return beans_.iterator().hasNext();
-        }
-
-        public ManagedBean getManagedBean() {
-            if (!hasNext()) {
-                return null;
-            }
-            return (ManagedBean) beans_.iterator().next();
-        }
-    }
-
-    private static class ManagedBean {
-        private String name_;
-
-        private Scope scope_;
-
-        private Class beanClass_;
-
-        public ManagedBean(String name, Scope scope, Class beanClass) {
-            name_ = name;
-            scope_ = scope;
-            beanClass_ = beanClass;
-        }
-
-        public Class getBeanClass() {
-            return beanClass_;
-        }
-
-        public void setBeanClass(Class beanClass) {
-            beanClass_ = beanClass;
-        }
-
-        public String getName() {
-            return name_;
-        }
-
-        public void setName(String name) {
-            name_ = name;
-        }
-
-        public Scope getScope() {
-            return scope_;
-        }
-
-        public void setScope(Scope scope) {
-            scope_ = scope;
-        }
-    }
 }

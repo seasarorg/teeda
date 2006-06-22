@@ -16,10 +16,8 @@
 package org.seasar.teeda.core.managedbean.impl;
 
 import org.seasar.framework.container.ComponentDef;
-import org.seasar.framework.container.ComponentNotFoundRuntimeException;
 import org.seasar.framework.container.InstanceDef;
 import org.seasar.framework.container.S2Container;
-import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
 import org.seasar.framework.container.impl.ComponentDefImpl;
 import org.seasar.framework.container.impl.DestroyMethodDefImpl;
 import org.seasar.framework.container.impl.InitMethodDefImpl;
@@ -35,19 +33,19 @@ import org.seasar.teeda.core.scope.ScopeManager;
  */
 public class ManagedBeanFactoryImpl implements ManagedBeanFactory {
 
-    private ManagedBeanScopeSaver managedBeanScopeSaver_;
+    private ManagedBeanScopeSaver managedBeanScopeSaver;
 
-    private ScopeManager scopeManager_;
+    private ScopeManager scopeManager;
 
+    private S2Container container;
+    
     public ManagedBeanFactoryImpl() {
     }
 
     public Object getManagedBean(String name) {
-        S2Container container = (S2Container) SingletonS2ContainerFactory
-                .getContainer();
-        try {
+        if(container.hasComponentDef(name)) {
             return container.getComponent(name);
-        } catch (ComponentNotFoundRuntimeException e) {
+        } else {
             return null;
         }
     }
@@ -67,8 +65,6 @@ public class ManagedBeanFactoryImpl implements ManagedBeanFactory {
     }
 
     public void registerManagedBean(ComponentDef componentDef, Scope scope) {
-        S2Container container = (S2Container) SingletonS2ContainerFactory
-                .getContainer();
         setManagedBean(container, componentDef, scope);
     }
 
@@ -79,41 +75,41 @@ public class ManagedBeanFactoryImpl implements ManagedBeanFactory {
     }
 
     public Scope getManagedBeanScope(String name) {
-        S2Container container = (S2Container) SingletonS2ContainerFactory
-                .getContainer();
-        ComponentDef componentDef = null;
-        try {
-            componentDef = container.getComponentDef(name);
-        } catch (ComponentNotFoundRuntimeException e) {
-            return null;
-        }
         Scope scope = null;
-        if (componentDef != null) {
-            InstanceDef instanceDef = componentDef.getInstanceDef();
-            scope = scopeManager_.getScopeTranslator().toScope(instanceDef);
+        if(container.hasComponentDef(name)) {
+            InstanceDef instanceDef = container.getComponentDef(name).getInstanceDef();
+            scope = scopeManager.getScopeTranslator().toScope(instanceDef);
         }
         return scope;
     }
 
     public void setScopeManager(ScopeManager scopeManager) {
-        scopeManager_ = scopeManager;
+        this.scopeManager = scopeManager;
     }
 
     public ScopeManager getScopeManager() {
-        return scopeManager_;
+        return scopeManager;
     }
 
     public void setManagedBeanScopeSaver(
             ManagedBeanScopeSaver managedBeanScopeSaver) {
-        managedBeanScopeSaver_ = managedBeanScopeSaver;
+        this.managedBeanScopeSaver = managedBeanScopeSaver;
     }
 
     public ManagedBeanScopeSaver getManagedBeanScopeSaver() {
-        return managedBeanScopeSaver_;
+        return managedBeanScopeSaver;
+    }
+    
+    public S2Container getContainer() {
+        return container;
+    }
+
+    public void setContainer(S2Container container) {
+        this.container = container;
     }
 
     private void setInstanceTypeFor(ComponentDef componentDef, Scope scope) {
-        InstanceDef instanceDef = (InstanceDef) scopeManager_
+        InstanceDef instanceDef = (InstanceDef) scopeManager
                 .getScopeTranslator().toExternalComponentScope(scope);
         componentDef.setInstanceDef(instanceDef);
     }

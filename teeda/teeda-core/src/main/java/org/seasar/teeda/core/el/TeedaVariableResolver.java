@@ -23,7 +23,6 @@ import javax.faces.el.EvaluationException;
 import javax.faces.el.VariableResolver;
 
 import org.seasar.framework.container.S2Container;
-import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.el.impl.ApplicationScopeResolver;
 import org.seasar.teeda.core.el.impl.CookieResolver;
@@ -66,6 +65,8 @@ public class TeedaVariableResolver extends VariableResolver {
         facesResolvers.put(JsfConstants.VIEW, new ViewResolver());
     }
 
+    private S2Container container;
+    
     public TeedaVariableResolver() {
     }
 
@@ -79,7 +80,10 @@ public class TeedaVariableResolver extends VariableResolver {
         if (resolver != null) {
             return resolver.resolveVariable(context);
         }
-        S2Container container = SingletonS2ContainerFactory.getContainer();
         return BindingUtil.getValue(container, name);
+    }
+    
+    public void setContainer(S2Container container) {
+        this.container = container;
     }
 }

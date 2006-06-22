@@ -301,7 +301,7 @@ public class AjaxServletTest extends S2FrameworkTestCase {
         servlet.doGet(request, response);
 
         // ## Assert ##
-        assertEquals("{\"arg1\":null,\"arg2\":0}", writer.getResult());
+        assertEquals("{arg1:null,arg2:0}", writer.getResult());
     }
 
     private static void assertMessageExist(Exception e) {
