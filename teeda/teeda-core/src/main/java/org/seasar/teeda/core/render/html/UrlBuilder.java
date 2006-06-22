@@ -19,7 +19,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.apache.commons.lang.StringUtils;
+import org.seasar.framework.util.StringUtil;
 
 /**
  * @author manhole
@@ -52,7 +52,7 @@ public class UrlBuilder {
         StringBuffer sb = new StringBuffer(100);
         sb.append(base);
         boolean questionAppeared = false;
-        if (StringUtils.contains(base, '?')) {
+        if (StringUtil.contains(base, '?')) {
             questionAppeared = true;
         }
         for (Iterator it = urlParameters.entrySet().iterator(); it.hasNext();) {

@@ -21,7 +21,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.lang.StringUtils;
 import org.seasar.framework.util.StringUtil;
 
 /**
@@ -36,7 +35,7 @@ public class UrlString {
     private String queryString;
 
     public void parse(String url) {
-        if (StringUtils.contains(url, '?')) {
+        if (StringUtil.contains(url, '?')) {
             int questionPos = url.indexOf('?');
             path = url.substring(0, questionPos);
             queryString = url.substring(questionPos + 1);
@@ -46,7 +45,7 @@ public class UrlString {
         String[] params = StringUtil.split(queryString, "&");
         for (int i = 0; i < params.length; i++) {
             final String param = params[i];
-            if (StringUtils.contains(param, '=')) {
+            if (StringUtil.contains(param, '=')) {
                 final String key = param.substring(0, param.indexOf('='));
                 UrlParameter urlParameter = (UrlParameter) parameters.get(key);
                 if (urlParameter == null) {

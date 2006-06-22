@@ -24,7 +24,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.event.ActionEvent;
 
-import org.apache.commons.lang.StringUtils;
+import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.util.RendererUtil;
 
@@ -47,7 +47,7 @@ public class HtmlCommandButtonRenderer extends AbstractHtmlRenderer {
         ResponseWriter writer = context.getResponseWriter();
         writer.startElement(JsfConstants.INPUT_ELEM, htmlCommandButton);
         final String image = htmlCommandButton.getImage();
-        final boolean isImageType = StringUtils.isNotBlank(image);
+        final boolean isImageType = StringUtil.isNotBlank(image);
         String type;
         if (isImageType) {
             type = JsfConstants.IMAGE_VALUE;

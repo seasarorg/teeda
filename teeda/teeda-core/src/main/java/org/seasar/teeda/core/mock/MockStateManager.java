@@ -21,8 +21,6 @@ import javax.faces.application.StateManager;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 
-import org.apache.commons.lang.NotImplementedException;
-
 /**
  * @author shot
  */
@@ -33,7 +31,7 @@ public class MockStateManager extends StateManager {
     public static final boolean MOCK_SAVING_STATE_SERVER = false;
 
     private Boolean isSavingStateClient = null;
-    
+
     public SerializedView saveSerializedView(FacesContext context) {
         return null;
     }
@@ -65,7 +63,7 @@ public class MockStateManager extends StateManager {
 
     public UIViewRoot restoreView(FacesContext context, String viewId,
             String renderKitId) {
-        throw new NotImplementedException();
+        throw new UnsupportedOperationException();
     }
 
     protected UIViewRoot restoreTreeStructure(FacesContext context,
@@ -78,12 +76,12 @@ public class MockStateManager extends StateManager {
     }
 
     public boolean isSavingStateInClient(FacesContext context) {
-        if(isSavingStateClient != null) {
+        if (isSavingStateClient != null) {
             return isSavingStateClient.booleanValue();
         }
         return super.isSavingStateInClient(context);
     }
-    
+
     public void setSavingStateInClient(boolean savingState) {
         isSavingStateClient = new Boolean(savingState);
     }

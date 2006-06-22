@@ -24,7 +24,7 @@ import junitx.framework.Assert;
 import junitx.framework.ObjectAssert;
 import junitx.framework.StringAssert;
 
-import org.apache.commons.lang.StringUtils;
+import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.el.impl.ValueBindingImpl;
 import org.seasar.teeda.core.mock.MockUIComponentBase;
 import org.seasar.teeda.core.mock.MockUIComponentBaseWithNamingContainer;
@@ -41,7 +41,7 @@ public class UIComponentBaseTeedaTest extends AbstractUIComponentTeedaTest {
         component.setId(null);
 
         String clientId = component.getClientId(getFacesContext());
-        assertEquals(true, StringUtils.isNotBlank(clientId));
+        assertEquals(true, StringUtil.isNotBlank(clientId));
         StringAssert.assertStartsWith(UIViewRoot.UNIQUE_ID_PREFIX, clientId);
         assertEquals(null, component.getId());
     }
