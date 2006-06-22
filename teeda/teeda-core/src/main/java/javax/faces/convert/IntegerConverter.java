@@ -23,7 +23,6 @@ import javax.faces.internal.ConvertUtils;
 
 import org.seasar.framework.util.AssertionUtil;
 import org.seasar.framework.util.NumberConversionUtil;
-import org.seasar.teeda.core.util.FacesContextUtil;
 
 /**
  * @author shot
@@ -46,7 +45,7 @@ public class IntegerConverter implements Converter {
         if (value.length() < 1) {
             return null;
         }
-        Locale locale = FacesContextUtil.getLocale(context);
+        Locale locale = context.getViewRoot().getLocale();
         value = NumberConversionUtil.removeDelimeter(value, locale);
         try {
             return Integer.valueOf(value);
