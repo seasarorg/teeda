@@ -259,7 +259,7 @@ public class HtmlGridRendererTest extends RendererTest {
                 getResponseText());
     }
 
-    public void test1() throws Exception {
+    public void ignore_test1() throws Exception {
         // ## Arrange ##
         {
             HtmlGridColumn col = new HtmlGridColumn();
