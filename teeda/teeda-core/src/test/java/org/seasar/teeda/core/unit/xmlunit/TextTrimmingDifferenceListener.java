@@ -18,11 +18,11 @@ package org.seasar.teeda.core.unit.xmlunit;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
 import org.custommonkey.xmlunit.Difference;
 import org.custommonkey.xmlunit.DifferenceConstants;
 import org.custommonkey.xmlunit.DifferenceListener;
 import org.custommonkey.xmlunit.NodeDetail;
+import org.seasar.framework.util.StringUtil;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -48,8 +48,8 @@ public class TextTrimmingDifferenceListener implements DifferenceListener {
             // 17
             String cNodeValue = cNode.getNodeValue();
             String tNodeValue = tNode.getNodeValue();
-            if (StringUtils.isBlank(cNodeValue)
-                    && StringUtils.isBlank(tNodeValue)) {
+            if (StringUtil.isBlank(cNodeValue)
+                    && StringUtil.isBlank(tNodeValue)) {
                 System.out.println("recover:NODE_TYPE");
                 return DifferenceListener.RETURN_IGNORE_DIFFERENCE_NODES_IDENTICAL;
             }
@@ -104,8 +104,9 @@ public class TextTrimmingDifferenceListener implements DifferenceListener {
                     if (!node1.getNodeName().equals(node2.getNodeName())) {
                         equal = false;
                     }
-                    if (!StringUtils.equals(node1.getNodeValue(), node2
-                            .getNodeValue())) {
+                    String node1Value = node1.getNodeValue();
+                    String node2Value = node2.getNodeValue();
+                    if (!(StringUtil.equals(node1Value, node2Value))) {
                         equal = false;
                     }
                 }

@@ -15,16 +15,9 @@
  */
 package org.seasar.teeda.core.unit.xmlunit;
 
-import java.io.StringReader;
-import java.util.Iterator;
-
 import junit.framework.TestCase;
 
 import org.custommonkey.xmlunit.Diff;
-import org.custommonkey.xmlunit.XMLUnit;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 /**
  * @author manhole
