@@ -15,7 +15,6 @@
  */
 package javax.faces.component;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -32,6 +31,7 @@ import javax.faces.event.FacesEvent;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.event.ValueChangeListener;
 import javax.faces.internal.FacesMessageUtils;
+import javax.faces.internal.UIInputUtil;
 import javax.faces.internal.ValidatorResource;
 import javax.faces.render.Renderer;
 import javax.faces.validator.Validator;
@@ -305,13 +305,13 @@ public class UIInput extends UIOutput implements EditableValueHolder {
     }
 
     protected void validateValue(FacesContext context, Object newValue) {
-        if (isValid() && isRequired() && isEmpty(newValue)) {
+        if (isValid() && isRequired() && UIInputUtil.isEmpty(newValue)) {
             Object[] args = new Object[] { getId() };
             FacesMessageUtils.addErrorMessage(context, this,
                     REQUIRED_MESSAGE_ID, args);
             setValid(false);
         }
-        if (isValid() && !isEmpty(newValue)) {
+        if (isValid() && !UIInputUtil.isEmpty(newValue)) {
             validateFromAddedValidator(context, newValue);
             validateFromBinding(context, newValue);
             validateFromAnnotation(context, newValue);
@@ -429,27 +429,6 @@ public class UIInput extends UIOutput implements EditableValueHolder {
         } catch (Exception ignore) {
             return null;
         }
-    }
-
-    private boolean isEmpty(Object value) {
-        if (value == null) {
-            return true;
-        } else if (value instanceof String) {
-            String s = (String) value;
-            if (s.length() < 1) {
-                return true;
-            }
-        } else if (value.getClass().isArray()) {
-            if (Array.getLength(value) == 0) {
-                return true;
-            }
-        } else if (value instanceof List) {
-            List list = (List) value;
-            if (list.size() == 0) {
-                return true;
-            }
-        }
-        return false;
     }
 
     private void renderResponseIfNotValid(FacesContext context) {
