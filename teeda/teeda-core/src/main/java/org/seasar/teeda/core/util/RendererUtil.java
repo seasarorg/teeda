@@ -32,6 +32,7 @@ import javax.faces.convert.ConverterException;
 import javax.faces.el.ValueBinding;
 import javax.faces.internal.FacesMessageUtils;
 import javax.faces.internal.RenderKitUtil;
+import javax.faces.internal.UIComponentUtil;
 import javax.faces.internal.UIDefaultAttribute;
 import javax.faces.render.RenderKit;
 import javax.faces.render.Renderer;

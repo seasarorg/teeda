@@ -22,10 +22,10 @@ import javax.faces.application.FacesMessage.Severity;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+import javax.faces.internal.UIComponentUtil;
 
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.util.RendererUtil;
-import org.seasar.teeda.core.util.UIComponentUtil;
 
 /**
  * @author manhole

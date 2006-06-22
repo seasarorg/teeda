@@ -22,6 +22,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.UIOutput;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.ConverterException;
+import javax.faces.internal.UIComponentUtil;
 import javax.faces.render.Renderer;
 
 import org.seasar.framework.util.AssertionUtil;
@@ -31,7 +32,6 @@ import org.seasar.teeda.core.render.ComponentIdLookupStrategy;
 import org.seasar.teeda.core.util.LoopIterator;
 import org.seasar.teeda.core.util.RenderedComponentIterator;
 import org.seasar.teeda.core.util.RendererUtil;
-import org.seasar.teeda.core.util.UIComponentUtil;
 
 /**
  * @author manhole
