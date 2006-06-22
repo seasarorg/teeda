@@ -17,10 +17,8 @@ package org.seasar.teeda.ajax;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -39,7 +37,6 @@ import org.seasar.framework.container.ComponentNotFoundRuntimeException;
 import org.seasar.framework.container.MetaDef;
 import org.seasar.framework.container.S2Container;
 import org.seasar.framework.container.servlet.S2ContainerServlet;
-import org.seasar.teeda.ajax.translator.AjaxTranslator;
 
 /**
  * @author yone
@@ -115,10 +112,11 @@ public class AjaxServlet extends HttpServlet {
             target = beanDesc.invoke(obj, method, args);
         } catch (Exception e) {
             throw new ServletException(
-                    "The error occurred while create Ajax response. " + e.getMessage());
+                    "The error occurred while create Ajax response. "
+                            + e.getMessage());
         }
-        String result = AjaxTranslator.translate(target);
-        AjaxTranslator.setContentType(response, result);
+        String result = AjaxUtil.toJson(target);
+        AjaxUtil.setContentType(response, result);
 
         response.setHeader("Cache-Control", "no-cache");
         response.setHeader("Pragma", "no-cache");
@@ -137,7 +135,8 @@ public class AjaxServlet extends HttpServlet {
             String key = (String) enume.nextElement();
             String value = request.getParameter(key);
             if (key.startsWith(AjaxConstants.DEFAULT_ARRAY_PARAM_NAME)) {
-                String index = key.substring(AjaxConstants.DEFAULT_ARRAY_PARAM_LENGTH);
+                String index = key
+                        .substring(AjaxConstants.DEFAULT_ARRAY_PARAM_LENGTH);
                 ajaxParam.put(new Integer(index), value);
                 continue;
             }

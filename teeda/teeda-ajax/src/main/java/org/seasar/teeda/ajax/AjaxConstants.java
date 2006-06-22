@@ -20,38 +20,41 @@ package org.seasar.teeda.ajax;
  */
 public interface AjaxConstants {
 
-    public String DEFAULT_AJAX_METHOD = "ajaxAction";
+    String DEFAULT_AJAX_METHOD = "ajaxAction";
 
-    public String TEEDA_AJAX_META = "teeda-ajax";
+    String TEEDA_AJAX_META = "teeda-ajax";
 
-    public String CONTENT_TYPE_XML = "text/xml; charset=UTF-8";
+    String CONTENT_TYPE_XML = "text/xml; charset=UTF-8";
 
-    public String CONTENT_TYPE_JSON = "text/javascript; charset=UTF-8";
+    String CONTENT_TYPE_JSON = "text/javascript; charset=UTF-8";
 
-    public String CONTENT_TYPE_TEXT = "text/plain; charset=UTF-8";
+    String CONTENT_TYPE_TEXT = "text/plain; charset=UTF-8";
 
-    public String CONTENT_TYPE_HTML = "text/html; charset=UTF-8";
+    String CONTENT_TYPE_HTML = "text/html; charset=UTF-8";
 
-    public String REQ_PARAM_COMPONENT = "component";
+    String REQ_PARAM_COMPONENT = "component";
 
-    public String REQ_PARAM_ACTION = "action";
+    String REQ_PARAM_ACTION = "action";
 
-    public String JSON_ARRAY_SEPARATOR = ",";
+    String COMMA = ",";
 
-    public String JSON_SEPARATOR = ":";
+    String COLON = ":";
 
-    public String NULL_STRING = "null";
-
-    public String JSON_START_BRACE = "{";
-
-    public String JSON_END_BRACE = "}";
-
-    public String JSON_START_LIST_BRACE = "[";
-
-    public String JSON_END_LIST_BRACE = "]";
+    String NULL_STRING = "null";
     
-    public String DEFAULT_ARRAY_PARAM_NAME = "AjaxParam";
-    
-    public int DEFAULT_ARRAY_PARAM_LENGTH = DEFAULT_ARRAY_PARAM_NAME.length();
+    String TRUE_STRING = "true";
 
+    String FALSE_STRING = "false";
+
+    String START_BRACKET = "[";
+
+    String END_BRACKET = "]";
+
+    String START_BRACE = "{";
+    
+    String END_BRACE = "}";
+    
+    String DEFAULT_ARRAY_PARAM_NAME = "AjaxParam";
+    
+    int DEFAULT_ARRAY_PARAM_LENGTH = DEFAULT_ARRAY_PARAM_NAME.length();
 }
