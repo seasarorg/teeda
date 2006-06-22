@@ -156,7 +156,7 @@ public class AjaxServletTest extends S2FrameworkTestCase {
         servlet.doGet(request, response);
 
         // ## Assert ##
-        assertEquals("{\"arg1\":\"ABCDEFG\",\"arg2\":2}", writer.getResult());
+        assertEquals("{arg1:\"ABCDEFG\",arg2:2}", writer.getResult());
         assertEquals(ARG1, ((AjaxBean1) getComponent("ajaxBean1")).getArg1());
     }
 
@@ -179,7 +179,7 @@ public class AjaxServletTest extends S2FrameworkTestCase {
 
         // ## Assert ##
         Integer arg2 = new Integer(ARG2);
-        assertEquals("{\"arg1\":null,\"arg2\":22222}", writer.getResult());
+        assertEquals("{arg1:null,arg2:22222}", writer.getResult());
         assertEquals(arg2.intValue(), ((AjaxBean1) getComponent("ajaxBean1"))
                 .getArg2());
     }
