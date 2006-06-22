@@ -15,85 +15,58 @@
  */
 package org.seasar.teeda.extension.annotation.handler;
 
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
+import javax.faces.internal.ValidatorResource;
 import javax.faces.validator.Validator;
 
-import org.seasar.framework.beans.BeanDesc;
-import org.seasar.framework.beans.factory.BeanDescFactory;
-import org.seasar.framework.container.ComponentDef;
-import org.seasar.teeda.core.JsfConstants;
-import org.seasar.teeda.core.util.DIContainerUtil;
-import org.seasar.teeda.core.util.IteratorUtil;
-import org.seasar.teeda.core.validator.ValidatorChain;
 
 /**
  * @author shot
+ * @author higa
  */
 public abstract class AbstractValidatorAnnotationHandler implements
         ValidatorAnnotationHandler {
 
-    private List ignoreSuffixes = new ArrayList();
+    private Map expressionsMap = new HashMap();
 
-    public void registerValidator(ComponentDef componentDef) {
-        Class targetClass = componentDef.getComponentClass();
-        BeanDesc beanDesc = BeanDescFactory.getBeanDesc(targetClass);
-        doRegisterValidator(targetClass, beanDesc);
-    }
-
-    public void addIgnoreSuffix(String suffix) {
-        ignoreSuffixes.add(suffix);
-    }
-
-    protected abstract void doRegisterValidator(Class targetClass,
-            BeanDesc beanDesc);
-
-    protected final Validator chainValidators(List validators) {
-        if (validators.size() > 1) {
-            ValidatorChain chain = new ValidatorChain();
-            for (Iterator itr = IteratorUtil.getIterator(validators); itr
-                    .hasNext();) {
-                Validator v = (Validator) itr.next();
-                chain.add(v);
-            }
-            return chain;
-        } else {
-            return (Validator) validators.get(0);
+    public void registerValidator(String componentName, String propertyName,
+            Validator validator) {
+        String expression = getExpression(componentName, propertyName);
+        ValidatorResource.addValidator(expression, validator);
+        Set expressions = (Set) expressionsMap.get(componentName);
+        if (expressions == null) {
+            expressions = new HashSet();
+            expressionsMap.put(componentName, expressions);
         }
+        expressions.add(expression);
     }
 
-    protected Validator createValidator(String validatorType) {
-        Object o = DIContainerUtil.getComponentNoException(validatorType);
-        if (o == null) {
-            o = DIContainerUtil.getComponent(JsfConstants.TEEDA_NAMESPACE
-                    + JsfConstants.NS_SEP + validatorType);
+    protected String getExpression(String componentName, String propertyName) {
+        return "#{" + componentName + "." + propertyName + "}";
+    }
+
+    public void removeValidators(String componentName) {
+        Set expressions = (Set) expressionsMap.get(componentName);
+        if (expressions == null) {
+            return;
         }
-        return (Validator) o;
-    }
-
-    protected String getShortClassName(Class clazz) {
-        String className = removeIgnoreSuffixes(clazz.getName());
-        className = className.substring(clazz.getName().lastIndexOf(".") + 1);
-        if (className.indexOf("$") != -1) {
-            return className.substring(className.indexOf("$") + 1);
+        for (Iterator i = expressions.iterator(); i.hasNext();) {
+            String expression = (String) i.next();
+            ValidatorResource.removeValidator(expression);
         }
-        return className;
+        expressionsMap.remove(componentName);
     }
 
-    protected String removeIgnoreSuffixes(String className) {
-        for (Iterator itr = getIgnoreSuffixes().iterator(); itr.hasNext();) {
-            String suffix = (String) itr.next();
-            if (className.endsWith(suffix)) {
-                className = className.substring(0, className.length()
-                        - suffix.length());
-            }
+    public int getExpressionSize(String componentName) {
+        Set expressions = (Set) expressionsMap.get(componentName);
+        if (expressions == null) {
+            return 0;
         }
-        return className;
-    }
-
-    protected List getIgnoreSuffixes() {
-        return ignoreSuffixes;
+        return expressions.size();
     }
 }

@@ -13,11 +13,12 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.core.validator;
+package javax.faces.internal;
 
 import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.internal.ValidatorChain;
 import javax.faces.validator.Validator;
 
 import org.seasar.teeda.core.mock.MockUIComponent;

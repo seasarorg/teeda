@@ -16,137 +16,85 @@
 package org.seasar.teeda.extension.annotation.handler;
 
 import java.lang.reflect.Field;
-import java.util.LinkedList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.faces.validator.Validator;
 
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.PropertyDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
+import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
+import org.seasar.framework.exception.EmptyRuntimeException;
+import org.seasar.framework.util.FieldUtil;
+import org.seasar.framework.util.OgnlUtil;
 import org.seasar.framework.util.StringUtil;
-import org.seasar.teeda.core.AnnotationConstants;
-import org.seasar.teeda.core.util.AnnotationUtil;
-import org.seasar.teeda.core.validator.ValidatorResource;
 
 /**
  * @author shot
+ * @author higa
  */
 public class ConstantValidatorAnnotationHandler extends
         AbstractValidatorAnnotationHandler {
 
-    protected static final String DELIMETER = ",";
+    private static final String VALIDATOR_SUFFIX = "_VALIDATOR";
 
-    public void doRegisterValidator(Class targetClass, BeanDesc beanDesc) {
-        String alias = getAlias(beanDesc);
-        for (int i = 0; i < beanDesc.getPropertyDescSize(); i++) {
-            PropertyDesc propDesc = beanDesc.getPropertyDesc(i);
-            String validatorRule = getValidatorRule(propDesc);
-            if (!beanDesc.hasField(validatorRule)) {
+    private static final String VALIDATOR = "validator";
+
+    public void registerValidator(String componentName, Class clazz) {
+        BeanDesc beanDesc = BeanDescFactory.getBeanDesc(clazz);
+        for (int i = 0; i < beanDesc.getPropertyDescSize(); ++i) {
+            PropertyDesc pd = beanDesc.getPropertyDesc(i);
+            if (!beanDesc.hasField(pd.getPropertyName() + VALIDATOR_SUFFIX)) {
                 continue;
             }
-            if (!AnnotationUtil.isConstantAnnotation(beanDesc
-                    .getField(validatorRule))) {
+            Field field = beanDesc.getField(pd.getPropertyName()
+                    + VALIDATOR_SUFFIX);
+            String s = (String) FieldUtil.get(field, null);
+            if (StringUtil.isEmpty(s)) {
                 continue;
             }
-            String config = (String) beanDesc
-                    .getFieldValue(validatorRule, null);
-            String propertyName = propDesc.getPropertyName();
-            String expression = getExpressionByAuto(targetClass, propertyName);
-            if (alias != null) {
-                expression = getExpression(alias, propertyName);
-            }
-            handleValidatorConfig(config, expression);
-        }
-    }
-
-    protected String getValidatorRule(PropertyDesc propDesc) {
-        String propertyName = propDesc.getPropertyName();
-        String validatorRule = propertyName + AnnotationConstants.VALIDATOR;
-        return validatorRule;
-    }
-
-    protected void handleValidatorConfig(String config, String expression) {
-        List list = new LinkedList();
-        for (;;) {
-            int start = config.indexOf("{");
-            int end = config.indexOf("}");
-            if (start != -1 && end != -1) {
-                String content = config.substring(start, end + 1);
-                Validator validator = setUpValidator(content);
-                list.add(validator);
+            Object o = OgnlUtil.getValue(OgnlUtil.parseExpression(s),
+                    SingletonS2ContainerFactory.getContainer());
+            if (o instanceof List) {
+                List l = (List) o;
+                for (int j = 0; j < l.size(); ++j) {
+                    Map m = (Map) l.get(j);
+                    registerValidator(componentName, pd.getPropertyName(), m);
+                }
+            } else if (o instanceof Map) {
+                Map m = (Map) o;
+                registerValidator(componentName, pd.getPropertyName(), m);
             } else {
-                break;
+                throw new IllegalStateException(s);
             }
-            config = config.substring(end + 1);
-            if (!checkIfHasNextConfig(config)) {
-                break;
-            }
-        }
-        Validator validator = chainValidators(list);
-        if (validator != null) {
-            ValidatorResource.addValidator(expression, validator);
         }
     }
 
-    protected Validator setUpValidator(final String config) {
-        String content = config.substring(1, config.length() - 1);
-        String[] configs = content.split(DELIMETER);
-        String validatorType = configs[0];
-        Validator validator = createValidator(validatorType);
+    protected void registerValidator(String componentName, String propertyName,
+            Map m) {
+        String validatorName = (String) m.remove(VALIDATOR);
+        if (validatorName == null) {
+            throw new EmptyRuntimeException("validatorName");
+        }
+        Validator validator = (Validator) SingletonS2ContainerFactory
+                .getContainer().getComponent(validatorName);
+        copyProperties(validator, m);
+        registerValidator(componentName, propertyName, validator);
+    }
+
+    protected void copyProperties(Validator validator, Map m) {
         BeanDesc beanDesc = BeanDescFactory.getBeanDesc(validator.getClass());
-        String[] params = getParams(configs);
-        for (int i = 0; i < params.length; i++) {
-            String[] pair = StringUtil.split(params[i], "=");
-            if (pair.length == 2) {
-                String propertyName = pair[0].trim();
-                String value = pair[1].trim();
-                setValidatorProperty(beanDesc, propertyName, validator, value);
+        for (Iterator i = m.keySet().iterator(); i.hasNext();) {
+            String key = (String) i.next();
+            if (!beanDesc.hasPropertyDesc(key)) {
+                continue;
+            }
+            PropertyDesc pd = beanDesc.getPropertyDesc(key);
+            if (pd.hasWriteMethod()) {
+                pd.setValue(validator, m.get(key));
             }
         }
-        return validator;
     }
-
-    protected String[] getParams(String[] configs) {
-        String[] params = new String[configs.length - 1];
-        System.arraycopy(configs, 1, params, 0, configs.length - 1);
-        return params;
-    }
-
-    protected String getExpressionByAuto(Class targetClass, String property) {
-        String className = getShortClassName(targetClass);
-        if (className.length() > 1) {
-            className = className.substring(0, 1).toLowerCase()
-                    + className.substring(1);
-        } else {
-            className = className.toLowerCase();
-        }
-        return getExpression(className, property);
-    }
-
-    protected String getExpression(String base, String property) {
-        return "#{" + base + "." + property + "}";
-    }
-
-    protected String getAlias(BeanDesc beanDesc) {
-        if (beanDesc.hasField(AnnotationConstants.ALIAS)) {
-            Field field = beanDesc.getField(AnnotationConstants.ALIAS);
-            if (AnnotationUtil.isConstantAnnotation(field)) {
-                return (String) beanDesc.getFieldValue(
-                        AnnotationConstants.ALIAS, null);
-            }
-        }
-        return null;
-    }
-
-    protected static void setValidatorProperty(BeanDesc beanDesc,
-            String propertyName, Validator validator, Object value) {
-        PropertyDesc propDesc = beanDesc.getPropertyDesc(propertyName);
-        propDesc.setValue(validator, value);
-    }
-
-    private static boolean checkIfHasNextConfig(String config) {
-        return (config != null) && (config.indexOf(",") < config.indexOf("{"));
-    }
-
 }

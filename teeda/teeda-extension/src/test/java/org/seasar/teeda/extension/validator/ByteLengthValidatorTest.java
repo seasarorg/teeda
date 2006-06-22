@@ -1,9 +1,10 @@
-package org.seasar.teeda.core.validator;
+package org.seasar.teeda.extension.validator;
 
 import javax.faces.validator.ValidatorException;
 
 import org.seasar.teeda.core.mock.MockUIComponent;
 import org.seasar.teeda.core.unit.TeedaTestCase;
+import org.seasar.teeda.extension.validator.ByteLengthValidator;
 
 public class ByteLengthValidatorTest extends TeedaTestCase {
 

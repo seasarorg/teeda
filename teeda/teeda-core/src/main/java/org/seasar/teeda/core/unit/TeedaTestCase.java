@@ -20,6 +20,7 @@ import java.util.Locale;
 import javax.faces.FactoryFinder;
 import javax.faces.component.UIViewRoot;
 import javax.faces.internal.FacesConfigOptions;
+import javax.faces.internal.ValidatorResource;
 import javax.faces.lifecycle.LifecycleFactory;
 import javax.faces.render.RenderKitFactory;
 
@@ -54,7 +55,6 @@ import org.seasar.teeda.core.mock.MockViewHandler;
 import org.seasar.teeda.core.mock.MockViewHandlerImpl;
 import org.seasar.teeda.core.scope.impl.S2ScopeTranslator;
 import org.seasar.teeda.core.scope.impl.ScopeManagerImpl;
-import org.seasar.teeda.core.validator.ValidatorResource;
 
 /**
  * @author shot

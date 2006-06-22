@@ -13,7 +13,7 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.core.validator;
+package javax.faces.internal;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -35,6 +35,14 @@ public class ValidatorChain implements Validator, StateHolder {
     private boolean transientValue = false;
 
     private List validators = new LinkedList();
+    
+    public int getValidatorSize() {
+        return validators.size();
+    }
+    
+    public Validator getValidator(int index) {
+        return (Validator) validators.get(index);
+    }
 
     public void add(Validator validator) {
         validators.add(validator);

@@ -19,12 +19,12 @@ import java.util.Iterator;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.internal.ValidatorResource;
 import javax.faces.render.RenderKitFactory;
 import javax.faces.validator.LengthValidator;
 import javax.faces.validator.ValidatorException;
 
 import org.seasar.teeda.core.mock.MockValueBinding;
-import org.seasar.teeda.core.validator.ValidatorResource;
 
 /**
  * @author manhole

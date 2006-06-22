@@ -32,12 +32,12 @@ import javax.faces.event.FacesEvent;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.event.ValueChangeListener;
 import javax.faces.internal.FacesMessageUtils;
+import javax.faces.internal.ValidatorResource;
 import javax.faces.render.Renderer;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
 import org.seasar.framework.util.AssertionUtil;
-import org.seasar.teeda.core.validator.ValidatorResource;
 
 /**
  * @author shot

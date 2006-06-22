@@ -15,14 +15,12 @@
  */
 package org.seasar.teeda.extension.annotation.handler;
 
-import org.seasar.framework.container.ComponentDef;
 
 /**
  * @author shot
+ * @author higa
  */
 public interface ValidatorAnnotationHandler {
 
-    public void registerValidator(ComponentDef componentDef);
-
-    public void addIgnoreSuffix(String suffix);
+    void registerValidator(String componentName, Class clazz);
 }
