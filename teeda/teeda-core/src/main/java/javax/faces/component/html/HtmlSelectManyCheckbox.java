@@ -20,10 +20,10 @@ import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.internal.FacesMessageUtils;
+import javax.faces.internal.UIComponentUtil;
 
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.util.RendererUtil;
-import org.seasar.teeda.core.util.UIComponentUtil;
 import org.seasar.teeda.core.util.UIValueUtil;
 
 /**

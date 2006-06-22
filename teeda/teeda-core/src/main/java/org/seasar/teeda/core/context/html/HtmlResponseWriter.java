@@ -24,7 +24,7 @@ import java.util.List;
 import javax.faces.component.UIComponent;
 import javax.faces.context.ResponseWriter;
 
-import org.apache.commons.lang.ArrayUtils;
+import org.seasar.framework.util.ArrayUtil;
 import org.seasar.framework.util.AssertionUtil;
 
 /**
@@ -278,7 +278,7 @@ public class HtmlResponseWriter extends ResponseWriter {
         final int length = chars.length;
         forLoop: for (int i = 0; i < length; i++) {
             final char c = chars[i];
-            if (ArrayUtils.contains(reserved, c)) {
+            if (ArrayUtil.contains(reserved, c)) {
                 sb.append(c);
                 if ('?' == c) {
                     if (i < length) {
