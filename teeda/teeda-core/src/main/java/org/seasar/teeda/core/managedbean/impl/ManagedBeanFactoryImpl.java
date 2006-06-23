@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -28,7 +28,7 @@ import org.seasar.teeda.core.scope.ScopeManager;
 
 /**
  * @author shot
- * 
+ *
  * TODO need support ValueBinding for list-entries, map-entries, and managed-property
  */
 public class ManagedBeanFactoryImpl implements ManagedBeanFactory {
@@ -38,7 +38,7 @@ public class ManagedBeanFactoryImpl implements ManagedBeanFactory {
     private ScopeManager scopeManager;
 
     private S2Container container;
-    
+
     public ManagedBeanFactoryImpl() {
     }
 
@@ -99,13 +99,16 @@ public class ManagedBeanFactoryImpl implements ManagedBeanFactory {
     public ManagedBeanScopeSaver getManagedBeanScopeSaver() {
         return managedBeanScopeSaver;
     }
-    
+
     public S2Container getContainer() {
         return container;
     }
 
     public void setContainer(S2Container container) {
         this.container = container;
+        if(container != null) {
+            this.container = container.getRoot();
+        }
     }
 
     private void setInstanceTypeFor(ComponentDef componentDef, Scope scope) {
