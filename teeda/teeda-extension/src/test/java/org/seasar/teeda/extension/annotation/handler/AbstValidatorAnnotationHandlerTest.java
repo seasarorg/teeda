@@ -45,9 +45,19 @@ public class AbstValidatorAnnotationHandlerTest extends TestCase {
         assertEquals(0, handler.getExpressionSize("aaa"));
     }
     
+    public void testRemoveAll() throws Exception {
+        MockAnnotationHandler handler = new MockAnnotationHandler();
+        handler.registerValidator("aaa", "bbb", new ByteLengthValidator());
+        handler.registerValidator("aaa", "bbb", new DoubleRangeValidator());
+        handler.registerValidator("aaa", "ccc", new DoubleRangeValidator());
+        handler.removeAll();
+        assertNull(ValidatorResource.getValidator("#{aaa.bbb}"));
+        assertEquals(0, handler.getExpressionSize("aaa"));
+    }
+    
     public static class MockAnnotationHandler extends AbstractValidatorAnnotationHandler {
 
-        public void registerValidator(String componentName, Class clazz) {
+        public void registerValidators(String componentName, Class clazz) {
         }
     }
 }

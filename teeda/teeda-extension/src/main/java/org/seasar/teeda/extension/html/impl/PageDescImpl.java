@@ -22,6 +22,7 @@ import java.util.Set;
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.PropertyDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
+import org.seasar.teeda.extension.annotation.handler.ValidatorAnnotationHandlerFactory;
 import org.seasar.teeda.extension.html.PageDesc;
 
 /**
@@ -64,6 +65,8 @@ public class PageDescImpl implements PageDesc {
             names.add(pd.getPropertyName());
         }
         names.addAll(ActionDescUtil.getActionMethodNames(pageClass));
+        ValidatorAnnotationHandlerFactory.getAnnotationHandler()
+                .registerValidators(pageName, pageClass);
     }
 
     public boolean isValid(String id) {

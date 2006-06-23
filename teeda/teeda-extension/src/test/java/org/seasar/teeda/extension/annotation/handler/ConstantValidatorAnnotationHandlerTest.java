@@ -11,12 +11,16 @@ import org.seasar.teeda.core.unit.TeedaTestCase;
 
 public class ConstantValidatorAnnotationHandlerTest extends TeedaTestCase {
 
+    protected void tearDown() {
+        ValidatorResource.removeAll();
+    }
+
     public void testRegisterValidator_single() throws Exception {
         ComponentDef cd = new ComponentDefImpl(LengthValidator.class, "lengthValidator");
         cd.setInstanceDef(InstanceDefFactory.PROTOTYPE);
         getContainer().register(cd);
         ConstantValidatorAnnotationHandler handler = new ConstantValidatorAnnotationHandler();
-        handler.registerValidator("hogeBean", HogeBean.class);
+        handler.registerValidators("hogeBean", HogeBean.class);
         LengthValidator validator = (LengthValidator) ValidatorResource.getValidator("#{hogeBean.name}");
         assertEquals(2, validator.getMinimum());
         assertEquals(5, validator.getMaximum());
@@ -27,7 +31,7 @@ public class ConstantValidatorAnnotationHandlerTest extends TeedaTestCase {
         cd.setInstanceDef(InstanceDefFactory.PROTOTYPE);
         getContainer().register(cd);
         ConstantValidatorAnnotationHandler handler = new ConstantValidatorAnnotationHandler();
-        handler.registerValidator("hogeBean", HogeBean.class);
+        handler.registerValidators("hogeBean", HogeBean.class);
         ValidatorChain chain = (ValidatorChain) ValidatorResource.getValidator("#{hogeBean.aaa}");
         assertNotNull(chain);
         assertEquals(2, chain.getValidatorSize());

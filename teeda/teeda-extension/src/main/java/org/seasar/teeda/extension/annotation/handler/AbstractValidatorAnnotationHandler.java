@@ -36,6 +36,7 @@ public abstract class AbstractValidatorAnnotationHandler implements
 
     public void registerValidator(String componentName, String propertyName,
             Validator validator) {
+
         String expression = getExpression(componentName, propertyName);
         ValidatorResource.addValidator(expression, validator);
         Set expressions = (Set) expressionsMap.get(componentName);
@@ -60,6 +61,13 @@ public abstract class AbstractValidatorAnnotationHandler implements
             ValidatorResource.removeValidator(expression);
         }
         expressionsMap.remove(componentName);
+    }
+    
+    public void removeAll() {
+        for (Iterator i = expressionsMap.keySet().iterator(); i.hasNext(); ) {
+            String componentName = (String) i.next();
+            removeValidators(componentName);
+        }
     }
 
     public int getExpressionSize(String componentName) {

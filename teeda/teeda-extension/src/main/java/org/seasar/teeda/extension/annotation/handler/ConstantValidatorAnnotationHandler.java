@@ -42,7 +42,8 @@ public class ConstantValidatorAnnotationHandler extends
 
     private static final String VALIDATOR = "validator";
 
-    public void registerValidator(String componentName, Class clazz) {
+    public void registerValidators(String componentName, Class clazz) {
+        removeValidators(componentName);
         BeanDesc beanDesc = BeanDescFactory.getBeanDesc(clazz);
         for (int i = 0; i < beanDesc.getPropertyDescSize(); ++i) {
             PropertyDesc pd = beanDesc.getPropertyDesc(i);

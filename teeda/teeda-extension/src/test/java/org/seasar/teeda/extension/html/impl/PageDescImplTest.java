@@ -17,8 +17,14 @@ package org.seasar.teeda.extension.html.impl;
 
 import java.io.File;
 
+import javax.faces.internal.ValidatorResource;
+
+import org.seasar.framework.container.ComponentDef;
+import org.seasar.framework.container.impl.ComponentDefImpl;
+import org.seasar.framework.unit.S2FrameworkTestCase;
 import org.seasar.framework.util.ClassUtil;
 import org.seasar.framework.util.ResourceUtil;
+import org.seasar.teeda.extension.validator.RequiredValidator;
 
 import junit.framework.TestCase;
 
@@ -26,8 +32,12 @@ import junit.framework.TestCase;
  * @author higa
  *
  */
-public class PageDescImplTest extends TestCase {
+public class PageDescImplTest extends S2FrameworkTestCase {
 	
+    protected void tearDown() {
+        ValidatorResource.removeAll();
+    }
+
     public void testIsValid() throws Exception {
         PageDescImpl pd = new PageDescImpl(FooPage.class, "fooPage");
         assertTrue(pd.isValid("aaa"));
@@ -45,5 +55,12 @@ public class PageDescImplTest extends TestCase {
         Thread.sleep(1000);
         file.setLastModified(System.currentTimeMillis());
         assertTrue("2", pd.isModified());
+    }
+    
+    public void testValidator() throws Exception {
+        ComponentDef cd = new ComponentDefImpl(RequiredValidator.class, "requiredValidator");
+        register(cd);
+        new PageDescImpl(HogePage.class, "hogePage");
+        assertNotNull(ValidatorResource.getValidator("#{hogePage.aaa}"));
     }
 }

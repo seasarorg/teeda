@@ -22,5 +22,7 @@ package org.seasar.teeda.extension.annotation.handler;
  */
 public interface ValidatorAnnotationHandler {
 
-    void registerValidator(String componentName, Class clazz);
+    void registerValidators(String componentName, Class clazz);
+    
+    void removeAll();
 }
