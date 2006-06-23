@@ -281,7 +281,30 @@ public class AjaxServletTest extends S2FrameworkTestCase {
             assertMessageExist(e);
         }
     }
-    
+
+    public void testSetParameter_ArgIntegerNull() throws Exception {
+        // ## Arrange ##
+        AjaxServlet servlet = new AjaxServlet();
+        servlet.init(getServletConfig());
+        MockHttpServletRequest request = getRequest();
+        request.addParameter("component", "ajaxBean4");
+        request.addParameter("action", "ajaxTest");
+        final String EMPTY_STRING = "";
+        request.addParameter("argNum", EMPTY_STRING);
+        request.addParameter("arg1", EMPTY_STRING);
+        MockSPrintWriter writer = new MockSPrintWriter();
+        MyMockHttpServletResponseImpl response = new MyMockHttpServletResponseImpl(
+                getRequest());
+        response.setWriter(writer);
+
+        // ## Act ##
+        servlet.doGet(request, response);
+
+        // ## Assert ##
+        assertEquals("{arg1:0,argNum:null}", writer.getResult());
+        assertEquals(null, ((AjaxBean4) getComponent("ajaxBean4"))
+                .getArgNum());
+    }    
     public void testArgs_InvokeSuccess() throws Exception {
         // target method is "public Object ajaxFoo(int arg1, String arg2)" 
         // ## Arrange ##

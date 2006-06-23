@@ -57,4 +57,6 @@ public interface AjaxConstants {
     String DEFAULT_ARRAY_PARAM_NAME = "AjaxParam";
     
     int DEFAULT_ARRAY_PARAM_LENGTH = DEFAULT_ARRAY_PARAM_NAME.length();
+    
+    String EMPTY_PARAM = "";
 }

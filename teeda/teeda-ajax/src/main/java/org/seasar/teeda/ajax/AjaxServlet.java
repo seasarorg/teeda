@@ -158,8 +158,12 @@ public class AjaxServlet extends HttpServlet {
         try {
             BeanDesc beanDesc = BeanDescFactory.getBeanDesc(target.getClass());
             PropertyDesc propertyDesc = beanDesc.getPropertyDesc(propertyName);
+            if (AjaxConstants.EMPTY_PARAM.equals(value)
+                    && propertyDesc.getPropertyType() != String.class) {
+                value = null;
+            }
             propertyDesc.setValue(target, value);
-        } catch (PropertyNotFoundRuntimeException e) {
+        } catch (PropertyNotFoundRuntimeException e1) {
         }
     }
 

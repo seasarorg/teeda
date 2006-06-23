@@ -11,4 +11,8 @@
 	<component name="ajaxBean3" class="org.seasar.teeda.ajax.AjaxBean2" instance="request">
 	    <meta name="bad-meta"/>
 	</component>
+
+	<component name="ajaxBean4" class="org.seasar.teeda.ajax.AjaxBean4" instance="request">
+	    <meta name="teeda-ajax"/>
+	</component>
 </components>
