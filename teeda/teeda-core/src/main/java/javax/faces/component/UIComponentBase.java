@@ -155,12 +155,13 @@ public abstract class UIComponentBase extends UIComponent {
         if (isRendered != null) {
             return isRendered.booleanValue();
         }
+        Boolean v = null;
         ValueBinding vb = getValueBinding(RENDERED);
         if (vb != null) {
-            isRendered = ((Boolean) this.getValueFromBinding(vb));
+            v = ((Boolean) this.getValueFromBinding(vb));
         }
-        if (isRendered != null) {
-            return isRendered.booleanValue();
+        if (v != null) {
+            return v.booleanValue();
         } else {
             return true;
         }
@@ -588,7 +589,7 @@ public abstract class UIComponentBase extends UIComponent {
                 AttachedObjectStateWrapper wrapper = (AttachedObjectStateWrapper) itr
                         .next();
                 Object restoredObject = wrapper.restore(context);
-                if(restoredObject != null) {
+                if (restoredObject != null) {
                     restoredList.add(restoredObject);
                 }
             }
