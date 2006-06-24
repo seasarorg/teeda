@@ -43,41 +43,43 @@ import org.seasar.teeda.core.util.FactoryFinderUtil;
  */
 public class MockFacesContextImpl extends MockFacesContext {
 
-    private UIViewRoot viewRoot_ = null;
+    private UIViewRoot viewRoot = null;
 
-    private MockExternalContext externalContext_;
+    private MockExternalContext externalContext;
 
-    private Application application_;
+    private Application application;
 
-    private Map messages_ = new LinkedHashMap();
+    private Map messages = new LinkedHashMap();
 
-    private ResponseWriter responseWriter_;
+    private ResponseWriter responseWriter;
 
-    private boolean renderResponse_;
+    private boolean renderResponse;
+
+    private boolean responseComplete;
 
     public MockFacesContextImpl() {
         setCurrentInstance(this);
     }
 
     public MockFacesContextImpl(MockExternalContext externalContext) {
-        externalContext_ = externalContext;
-        application_ = FactoryFinderUtil.getApplicationFactory()
+        this.externalContext = externalContext;
+        application = FactoryFinderUtil.getApplicationFactory()
                 .getApplication();
         setCurrentInstance(this);
     }
 
     public MockFacesContextImpl(MockExternalContext context,
             Application application) {
-        externalContext_ = context;
-        application_ = application;
+        this.externalContext = context;
+        this.application = application;
         setCurrentInstance(this);
     }
 
     public Application getApplication() {
-        if (application_ == null) {
-            application_ = new MockApplicationImpl();
+        if (application == null) {
+            application = new MockApplicationImpl();
         }
-        return application_;
+        return application;
     }
 
     public Iterator getClientIdsWithMessages() {
@@ -94,7 +96,7 @@ public class MockFacesContextImpl extends MockFacesContext {
 
     public Iterator getMessages() {
         List all = new ArrayList();
-        for (Iterator it = messages_.values().iterator(); it.hasNext();) {
+        for (Iterator it = messages.values().iterator(); it.hasNext();) {
             List messages = (List) it.next();
             all.addAll(messages);
         }
@@ -110,11 +112,11 @@ public class MockFacesContextImpl extends MockFacesContext {
     }
 
     public boolean getRenderResponse() {
-        return renderResponse_;
+        return renderResponse;
     }
 
     public boolean getResponseComplete() {
-        return false;
+        return responseComplete;
     }
 
     public ResponseStream getResponseStream() {
@@ -125,34 +127,34 @@ public class MockFacesContextImpl extends MockFacesContext {
     }
 
     public ResponseWriter getResponseWriter() {
-        if (responseWriter_ == null) {
+        if (responseWriter == null) {
             HtmlResponseWriter responseWriter = new HtmlResponseWriter();
             ServletResponse response = (ServletResponse) getExternalContext()
                     .getResponse();
             try {
                 responseWriter.setWriter(response.getWriter());
-                responseWriter_ = responseWriter;
+                this.responseWriter = responseWriter;
             } catch (IOException e) {
                 throw new IORuntimeException(e);
             }
         }
-        return responseWriter_;
+        return responseWriter;
     }
 
     public void setResponseWriter(ResponseWriter responseWriter) {
-        responseWriter_ = responseWriter;
+        this.responseWriter = responseWriter;
     }
 
     public UIViewRoot getViewRoot() {
-        if (viewRoot_ == null) {
-            viewRoot_ = new UIViewRoot();
-            viewRoot_.setLocale(Locale.getDefault());
+        if (viewRoot == null) {
+            viewRoot = new UIViewRoot();
+            viewRoot.setLocale(Locale.getDefault());
         }
-        return viewRoot_;
+        return viewRoot;
     }
 
     public void setViewRoot(UIViewRoot root) {
-        viewRoot_ = root;
+        this.viewRoot = root;
     }
 
     public void addMessage(String clientId, FacesMessage message) {
@@ -161,10 +163,10 @@ public class MockFacesContextImpl extends MockFacesContext {
     }
 
     private List getMessagesList(String clientId) {
-        List l = (List) messages_.get(clientId);
+        List l = (List) messages.get(clientId);
         if (l == null) {
             l = new ArrayList();
-            messages_.put(clientId, l);
+            messages.put(clientId, l);
         }
         return l;
     }
@@ -174,10 +176,11 @@ public class MockFacesContextImpl extends MockFacesContext {
     }
 
     public void renderResponse() {
-        renderResponse_ = true;
+        renderResponse = true;
     }
 
     public void responseComplete() {
+        responseComplete = true;
     }
 
     public void setExternalContext(ExternalContext context) {
@@ -185,18 +188,18 @@ public class MockFacesContextImpl extends MockFacesContext {
     }
 
     public void setMockExternalContext(MockExternalContext context) {
-        externalContext_ = context;
+        externalContext = context;
     }
 
     public void setApplication(Application application) {
-        application_ = application;
+        this.application = application;
     }
 
     public MockExternalContext getMockExternalContext() {
-        if (externalContext_ == null) {
-            externalContext_ = new MockExternalContextImpl();
+        if (externalContext == null) {
+            externalContext = new MockExternalContextImpl();
         }
-        return externalContext_;
+        return externalContext;
     }
 
 }
