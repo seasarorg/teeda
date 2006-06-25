@@ -46,11 +46,15 @@ public class InputTextFactoryTest extends TestCase {
         properties.put("id", "aaa");
         properties.put("type", "text");
         ElementNode elementNode = new ElementNodeImpl("input", properties);
-        assertTrue("1", factory.isMatch(elementNode));
+        PageDesc pageDesc = new PageDescImpl(FooPage.class, "fooPage");
+        assertTrue(factory.isMatch(elementNode, pageDesc, null));
         ElementNode elementNode2 = new ElementNodeImpl("hoge", properties);
-        assertFalse("2", factory.isMatch(elementNode2));
+        assertFalse(factory.isMatch(elementNode2, pageDesc, null));
+        properties.put("id", "xxx");
+        ElementNode elementNode3 = new ElementNodeImpl("input", properties);
+        assertFalse(factory.isMatch(elementNode3, pageDesc, null));
     }
-    
+
     public void testCreateFactory() throws Exception {
         // ## Arrange ##
         MockTaglibManager taglibManager = new MockTaglibManager();
@@ -71,7 +75,8 @@ public class InputTextFactoryTest extends TestCase {
         ActionDesc actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
 
         // ## Act ##
-        ElementProcessor processor = factory.createProcessor(elementNode, pageDesc, actionDesc);
+        ElementProcessor processor = factory.createProcessor(elementNode,
+                pageDesc, actionDesc);
         // ## Assert ##
         assertNotNull("1", processor);
         assertEquals("2", InputTextTag.class, processor.getTagClass());

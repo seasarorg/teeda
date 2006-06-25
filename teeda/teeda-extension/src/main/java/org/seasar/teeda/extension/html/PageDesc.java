@@ -19,7 +19,9 @@ public interface PageDesc {
 
     String getPageName();
 
-    boolean isValid(String id);
+    boolean hasProperty(String name);
+    
+    boolean hasMethod(String name);
 
     boolean isModified();
 }

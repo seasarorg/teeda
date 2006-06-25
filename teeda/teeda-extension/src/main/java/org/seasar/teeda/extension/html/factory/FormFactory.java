@@ -16,7 +16,9 @@
 package org.seasar.teeda.extension.html.factory;
 
 import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ElementNode;
+import org.seasar.teeda.extension.html.PageDesc;
 
 /**
  * @author higa
@@ -26,9 +28,18 @@ public class FormFactory extends AbstractElementProcessorFactory {
 
     private static final String TAG_NAME = "form";
 
-    public boolean isMatch(ElementNode elementNode) {
-        return JsfConstants.FORM_ELEM
-                .equalsIgnoreCase(elementNode.getTagName());
+    private static final String FORM_SUFFIX = "Form";
+
+    public boolean isMatch(ElementNode elementNode, PageDesc pageDesc,
+            ActionDesc actionDesc) {
+        if (!JsfConstants.FORM_ELEM.equalsIgnoreCase(elementNode.getTagName())) {
+            return false;
+        }
+        String id = elementNode.getId();
+        if (id == null) {
+            return false;
+        }
+        return id.endsWith(FORM_SUFFIX);
     }
 
     protected String getTagName() {

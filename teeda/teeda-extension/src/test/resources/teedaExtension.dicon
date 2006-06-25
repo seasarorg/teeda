@@ -2,8 +2,7 @@
 <!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container 2.4//EN" 
 	"http://www.seasar.org/dtd/components24.dtd">
 <components>
-	
-	<include path="annotationProvider.dicon" />
+
 	<include path="teeda.dicon" />
 	
 	<component class="org.seasar.teeda.extension.config.taglib.impl.ServletContextTaglibManagerImpl"/>
@@ -50,6 +49,17 @@
 		<property name="propertyResolver">propertyResolver</property>
 		<property name="variableResolver">variableResolver</property>
 		<property name="stateManager">stateManager</property>
+	</component>
+	
+	<component class="org.seasar.framework.container.autoregister.JarComponentAutoRegister">
+		<property name="referenceClass">
+			@org.seasar.teeda.extension.validator.ByteLengthValidator@class
+		</property>
+		<property name="jarFileNames">"teeda-extension.*"</property>
+		<initMethod name="addClassPattern">
+			<arg>"org.seasar.teeda.extension.validator"</arg>
+			<arg>"..*Validator"</arg>
+		</initMethod>
 	</component>
 		
 </components>

@@ -31,11 +31,11 @@ import org.seasar.teeda.extension.html.PageDesc;
  */
 public class PageDescImpl implements PageDesc {
 
-    private static final String FORM = "Form";
-
     private String pageName;
 
-    private Set names = new HashSet();
+    private Set propertyNames = new HashSet();
+
+    private Set methodNames;
 
     private File file;
 
@@ -62,21 +62,19 @@ public class PageDescImpl implements PageDesc {
         BeanDesc beanDesc = BeanDescFactory.getBeanDesc(pageClass);
         for (int i = 0; i < beanDesc.getPropertyDescSize(); ++i) {
             PropertyDesc pd = beanDesc.getPropertyDesc(i);
-            names.add(pd.getPropertyName());
+            propertyNames.add(pd.getPropertyName());
         }
-        names.addAll(ActionDescUtil.getActionMethodNames(pageClass));
+        methodNames = ActionDescUtil.getActionMethodNames(pageClass);
         ValidatorAnnotationHandlerFactory.getAnnotationHandler()
                 .registerValidators(pageName, pageClass);
     }
 
-    public boolean isValid(String id) {
-        if (id == null) {
-            return false;
-        }
-        if (names.contains(id)) {
-            return true;
-        }
-        return id.endsWith(FORM);
+    public boolean hasProperty(String name) {
+        return propertyNames.contains(name);
+    }
+
+    public boolean hasMethod(String name) {
+        return methodNames.contains(name);
     }
 
     public boolean isModified() {

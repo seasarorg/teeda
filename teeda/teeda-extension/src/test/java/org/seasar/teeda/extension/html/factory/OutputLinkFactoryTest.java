@@ -46,16 +46,16 @@ public class OutputLinkFactoryTest extends TestCase {
         properties.put("id", "goHoge");
         properties.put("href", "hoge.html");
         ElementNode elementNode = new ElementNodeImpl("a", properties);
-        assertTrue("1", factory.isMatch(elementNode));
+        assertTrue("1", factory.isMatch(elementNode, null, null));
         ElementNode elementNode2 = new ElementNodeImpl("hoge", properties);
-        assertFalse("2", factory.isMatch(elementNode2));
+        assertFalse("2", factory.isMatch(elementNode2, null, null));
         Map properties2 = new HashMap();
         properties2.put("id", "aaa");
         properties2.put("href", "hoge.html");
         ElementNode elementNode3 = new ElementNodeImpl("a", properties2);
-        assertFalse("3", factory.isMatch(elementNode3));
+        assertFalse("3", factory.isMatch(elementNode3, null, null));
     }
-    
+
     public void testCreateFactory() throws Exception {
         // ## Arrange ##
         MockTaglibManager taglibManager = new MockTaglibManager();
@@ -76,7 +76,8 @@ public class OutputLinkFactoryTest extends TestCase {
         ActionDesc actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
 
         // ## Act ##
-        ElementProcessor processor = factory.createProcessor(elementNode, pageDesc, actionDesc);
+        ElementProcessor processor = factory.createProcessor(elementNode,
+                pageDesc, actionDesc);
         // ## Assert ##
         assertNotNull("1", processor);
         assertEquals("2", OutputLinkTag.class, processor.getTagClass());

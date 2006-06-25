@@ -30,12 +30,16 @@ public class InputTextFactory extends AbstractElementProcessorFactory {
 
     private static final String TAG_NAME = "inputText";
 
-    public boolean isMatch(ElementNode elementNode) {
+    public boolean isMatch(ElementNode elementNode, PageDesc pageDesc,
+            ActionDesc actionDesc) {
         if (!JsfConstants.INPUT_ELEM.equalsIgnoreCase(elementNode.getTagName())) {
             return false;
         }
-        return JsfConstants.TEXT_VALUE.equalsIgnoreCase(elementNode
-                .getProperty(JsfConstants.TYPE_ATTR));
+        if (!JsfConstants.TEXT_VALUE.equalsIgnoreCase(elementNode
+                .getProperty(JsfConstants.TYPE_ATTR))) {
+            return false;
+        }
+        return pageDesc.hasProperty(elementNode.getId());
     }
 
     protected void customizeProperties(Map properties, ElementNode elementNode,

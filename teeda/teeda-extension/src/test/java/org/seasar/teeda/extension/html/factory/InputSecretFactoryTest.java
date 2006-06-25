@@ -28,16 +28,22 @@ public class InputSecretFactoryTest extends TestCase {
         props.put("id", "aaa");
         props.put("type", "password");
         ElementNode elementNode = new ElementNodeImpl("input", props);
-        assertTrue("1", factory.isMatch(elementNode));
+        PageDesc pageDesc = new PageDescImpl(FooPage.class, "fooPage");
+        assertTrue("1", factory.isMatch(elementNode, pageDesc, null));
         ElementNode elementNode2 = new ElementNodeImpl("hoge", props);
-        assertFalse("2", factory.isMatch(elementNode2));
+        assertFalse("2", factory.isMatch(elementNode2, pageDesc, null));
         Map props2 = new HashMap();
         props2.put("id", "aaa");
         props2.put("type", "text");
         ElementNode elementNode3 = new ElementNodeImpl("input", props2);
-        assertFalse("3", factory.isMatch(elementNode3));
+        assertFalse("3", factory.isMatch(elementNode3, pageDesc, null));
+        Map props3 = new HashMap();
+        props3.put("id", "xxx");
+        props3.put("type", "password");
+        ElementNode elementNode4 = new ElementNodeImpl("input", props3);
+        assertFalse("3", factory.isMatch(elementNode4, pageDesc, null));
     }
-    
+
     public void testCreateFactory() throws Exception {
         // ## Arrange ##
         MockTaglibManager taglibManager = new MockTaglibManager();
@@ -58,7 +64,8 @@ public class InputSecretFactoryTest extends TestCase {
         ActionDesc actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
 
         // ## Act ##
-        ElementProcessor processor = factory.createProcessor(elementNode, pageDesc, actionDesc);
+        ElementProcessor processor = factory.createProcessor(elementNode,
+                pageDesc, actionDesc);
         // ## Assert ##
         assertNotNull("1", processor);
         assertEquals("2", InputSecretTag.class, processor.getTagClass());

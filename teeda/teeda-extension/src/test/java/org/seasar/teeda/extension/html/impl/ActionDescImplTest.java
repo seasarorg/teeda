@@ -28,11 +28,11 @@ import junit.framework.TestCase;
  */
 public class ActionDescImplTest extends TestCase {
 	
-    public void testIsValid() throws Exception {
+    public void testHasMethod() throws Exception {
         ActionDescImpl ad = new ActionDescImpl(FooAction.class, "fooAction");
-        assertTrue("1", ad.isValid("doAaa"));
-        assertFalse("2", ad.isValid("xxx"));
-        assertFalse("3", ad.isValid(null));
+        assertTrue("1", ad.hasMethod("doAaa"));
+        assertFalse("2", ad.hasMethod("xxx"));
+        assertFalse("3", ad.hasMethod(null));
     }
 
     public void testIsModified() throws Exception {

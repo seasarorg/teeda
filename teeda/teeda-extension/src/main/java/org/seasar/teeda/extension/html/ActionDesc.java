@@ -19,7 +19,7 @@ public interface ActionDesc {
 
     String getActionName();
 
-    boolean isValid(String id);
+    boolean hasMethod(String name);
 
     boolean isModified();
 }

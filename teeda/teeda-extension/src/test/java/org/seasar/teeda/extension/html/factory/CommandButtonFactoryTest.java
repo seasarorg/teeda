@@ -22,31 +22,48 @@ import org.seasar.teeda.extension.mock.MockTaglibManager;
 
 public class CommandButtonFactoryTest extends TestCase {
 
-    public void testIsMatch() throws Exception {
+    public void testIsMatch_go() throws Exception {
         CommandButtonFactory factory = new CommandButtonFactory();
         Map properties = new HashMap();
         properties.put("type", "submit");
-        ElementNode node1 = new ElementNodeImpl("input", properties);
-        assertTrue(factory.isMatch(node1));
+        properties.put("id", "goNextPage");
+        ElementNode elementNode = new ElementNodeImpl("input", properties);
+        assertTrue(factory.isMatch(elementNode, null, null));
 
-        ElementNode node2 = new ElementNodeImpl("hoge", properties);
-        assertFalse(factory.isMatch(node2));
+        ElementNode elementNode2 = new ElementNodeImpl("hoge", properties);
+        assertFalse(factory.isMatch(elementNode2, null, null));
     }
-
-    public void testIsMatch_typeSubmit() throws Exception {
+    
+    public void testIsMatch_do() throws Exception {
         CommandButtonFactory factory = new CommandButtonFactory();
         Map properties = new HashMap();
         properties.put("type", "submit");
-        ElementNode node1 = new ElementNodeImpl("input", properties);
-        assertTrue(factory.isMatch(node1));
+        properties.put("id", "doBbb");
+        ElementNode elementNode = new ElementNodeImpl("input", properties);
+        PageDesc pageDesc = new PageDescImpl(FooPage.class, "fooPage");
+        ActionDesc actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
+        assertTrue(factory.isMatch(elementNode, pageDesc, null));
+        assertTrue(factory.isMatch(elementNode, pageDesc, actionDesc));
+        
+        Map properties2 = new HashMap();
+        properties2.put("type", "submit");
+        properties2.put("id", "doCcc");
+        ElementNode elementNode2 = new ElementNodeImpl("input", properties2);
+        assertTrue(factory.isMatch(elementNode2, pageDesc, actionDesc));
+        assertTrue(factory.isMatch(elementNode2, null, actionDesc));
+        assertFalse(factory.isMatch(elementNode2, null, null));
     }
 
-    public void testIsMatch_typeButton() throws Exception {
+    public void testIsMatch_button() throws Exception {
         CommandButtonFactory factory = new CommandButtonFactory();
         Map properties = new HashMap();
         properties.put("type", "button");
-        ElementNode node1 = new ElementNodeImpl("input", properties);
-        assertTrue(factory.isMatch(node1));
+        properties.put("id", "goNextPage");
+        ElementNode elementNode = new ElementNodeImpl("input", properties);
+        assertTrue(factory.isMatch(elementNode, null, null));
+
+        ElementNode elementNode2 = new ElementNodeImpl("hoge", properties);
+        assertFalse(factory.isMatch(elementNode2, null, null));
     }
 
     public void testCreateFactory() throws Exception {
@@ -77,11 +94,19 @@ public class CommandButtonFactoryTest extends TestCase {
         assertEquals("#{fooPage.doBbb}", processor.getProperty("action"));
         
         Map properties2 = new HashMap();
-        properties2.put("id", "doAaa");
+        properties2.put("id", "doCcc");
         properties2.put("type", "submit");
         ElementNode elementNode2 = new ElementNodeImpl("input", properties2);
         ElementProcessor processor2 = factory.createProcessor(elementNode2,
                 pageDesc, actionDesc);
-        assertEquals("#{fooAction.doAaa}", processor2.getProperty("action"));
+        assertEquals("#{fooAction.doCcc}", processor2.getProperty("action"));
+        
+        Map properties3 = new HashMap();
+        properties3.put("id", "goNextPage");
+        properties3.put("type", "submit");
+        ElementNode elementNode3 = new ElementNodeImpl("input", properties3);
+        ElementProcessor processor3 = factory.createProcessor(elementNode3,
+                pageDesc, actionDesc);
+        assertEquals("nextPage", processor3.getProperty("action"));
     }
 }

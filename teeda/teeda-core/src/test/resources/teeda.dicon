@@ -231,5 +231,16 @@
 			<arg><component class="org.seasar.teeda.core.render.html.HtmlSelectOneRadioRenderer" /></arg>
 		</initMethod>
 	</component>
+	
+	<component class="org.seasar.framework.container.autoregister.JarComponentAutoRegister">
+		<property name="referenceClass">
+			@javax.faces.validator.LengthValidator@class
+		</property>
+		<property name="jarFileNames">"teeda-core.*"</property>
+		<initMethod name="addClassPattern">
+			<arg>"javax.faces.validator"</arg>
+			<arg>"..*Validator"</arg>
+		</initMethod>
+	</component>
 		
 </components>

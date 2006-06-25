@@ -21,8 +21,9 @@ package org.seasar.teeda.extension.html;
  */
 public interface ElementProcessorFactory {
 
-    boolean isMatch(ElementNode elementNode);
-    
+    boolean isMatch(ElementNode elementNode, PageDesc pageDesc,
+            ActionDesc actionDesc);
+
     boolean isLeaf();
 
     ElementProcessor createProcessor(ElementNode elementNode,

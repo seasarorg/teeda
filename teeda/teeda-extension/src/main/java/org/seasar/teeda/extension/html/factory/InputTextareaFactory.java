@@ -30,9 +30,13 @@ public class InputTextareaFactory extends AbstractElementProcessorFactory {
 
     private static final String TAG_NAME = "inputTextarea";
 
-    public boolean isMatch(ElementNode elementNode) {
-        return JsfConstants.TEXTAREA_ELEM.equalsIgnoreCase(elementNode
-                .getTagName());
+    public boolean isMatch(ElementNode elementNode, PageDesc pageDesc,
+            ActionDesc actionDesc) {
+        if (!JsfConstants.TEXTAREA_ELEM.equalsIgnoreCase(elementNode
+                .getTagName())) {
+            return false;
+        }
+        return pageDesc.hasProperty(elementNode.getId());
     }
 
     protected void customizeProperties(Map properties, ElementNode elementNode,

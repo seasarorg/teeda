@@ -45,9 +45,11 @@ public class FormFactoryTest extends TestCase {
         Map properties = new HashMap();
         properties.put("id", "hogeForm");
         ElementNode elementNode = new ElementNodeImpl("form", properties);
-        assertTrue("1", factory.isMatch(elementNode));
+        assertTrue(factory.isMatch(elementNode, null, null));
         ElementNode elementNode2 = new ElementNodeImpl("hoge", properties);
-        assertFalse("2", factory.isMatch(elementNode2));
+        assertFalse(factory.isMatch(elementNode2, null, null));
+        ElementNode elementNode3 = new ElementNodeImpl("form", new HashMap());
+        assertFalse(factory.isMatch(elementNode3, null, null));
     }
     
     public void testCreateFactory() throws Exception {

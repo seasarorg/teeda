@@ -43,17 +43,18 @@ public class OutputTextFactoryTest extends TestCase {
     public void testIsMatch() throws Exception {
         OutputTextFactory factory = new OutputTextFactory();
         Map properties = new HashMap();
-        properties.put("id", "hoge");
+        properties.put("id", "aaa");
         ElementNode elementNode = new ElementNodeImpl("span", properties);
-        assertTrue("1", factory.isMatch(elementNode));
+        PageDesc pageDesc = new PageDescImpl(FooPage.class, "fooPage");
+        assertTrue("1", factory.isMatch(elementNode, pageDesc, null));
 
         ElementNode elementNode2 = new ElementNodeImpl("foo", properties);
-        assertFalse("2", factory.isMatch(elementNode2));
+        assertFalse("2", factory.isMatch(elementNode2, pageDesc, null));
 
         Map properties2 = new HashMap();
         properties2.put("href", "bbb");
         ElementNode elementNode3 = new ElementNodeImpl("span", properties2);
-        assertFalse("3", factory.isMatch(elementNode3));
+        assertFalse("3", factory.isMatch(elementNode3, pageDesc, null));
     }
 
     public void testCreateProcessor() throws Exception {

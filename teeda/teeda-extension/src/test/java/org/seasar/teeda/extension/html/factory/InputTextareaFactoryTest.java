@@ -45,9 +45,12 @@ public class InputTextareaFactoryTest extends TestCase {
         Map props = new HashMap();
         props.put("id", "aaa");
         ElementNode elementNode = new ElementNodeImpl("textarea", props);
-        assertTrue("1", factory.isMatch(elementNode));
+        PageDesc pageDesc = new PageDescImpl(FooPage.class, "fooPage");
+        assertTrue(factory.isMatch(elementNode, pageDesc, null));
         ElementNode elementNode2 = new ElementNodeImpl("hoge", props);
-        assertFalse("2", factory.isMatch(elementNode2));
+        assertFalse(factory.isMatch(elementNode2, pageDesc, null));
+        ElementNode elementNode3 = new ElementNodeImpl("textarea", new HashMap());
+        assertFalse(factory.isMatch(elementNode3, pageDesc, null));
     }
 
     public void testCreateFactory() throws Exception {

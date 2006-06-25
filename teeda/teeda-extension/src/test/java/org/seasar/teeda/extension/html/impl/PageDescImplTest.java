@@ -26,39 +26,43 @@ import org.seasar.framework.util.ClassUtil;
 import org.seasar.framework.util.ResourceUtil;
 import org.seasar.teeda.extension.validator.RequiredValidator;
 
-import junit.framework.TestCase;
-
 /**
  * @author higa
  *
  */
 public class PageDescImplTest extends S2FrameworkTestCase {
-	
+
     protected void tearDown() {
         ValidatorResource.removeAll();
     }
 
-    public void testIsValid() throws Exception {
+    public void testHasProperty() throws Exception {
         PageDescImpl pd = new PageDescImpl(FooPage.class, "fooPage");
-        assertTrue(pd.isValid("aaa"));
-        assertTrue(pd.isValid("doBbb"));
-        assertFalse(pd.isValid("xxx"));
-        assertTrue(pd.isValid("fooForm"));
-        assertFalse(pd.isValid(null));
+        assertTrue(pd.hasProperty("aaa"));
+        assertFalse(pd.hasProperty("xxx"));
+        assertFalse(pd.hasProperty(null));
+    }
+
+    public void testHasMethod() throws Exception {
+        PageDescImpl pd = new PageDescImpl(FooPage.class, "fooPage");
+        assertTrue(pd.hasMethod("doBbb"));
+        assertFalse(pd.hasMethod("doXxx"));
+        assertFalse(pd.hasMethod(null));
     }
 
     public void testIsModified() throws Exception {
-        File file = ResourceUtil.getResourceAsFile(
-                ClassUtil.getResourcePath(FooPage.class));
+        File file = ResourceUtil.getResourceAsFile(ClassUtil
+                .getResourcePath(FooPage.class));
         PageDescImpl pd = new PageDescImpl(FooPage.class, "fooPage", file);
         assertFalse("1", pd.isModified());
         Thread.sleep(1000);
         file.setLastModified(System.currentTimeMillis());
         assertTrue("2", pd.isModified());
     }
-    
+
     public void testValidator() throws Exception {
-        ComponentDef cd = new ComponentDefImpl(RequiredValidator.class, "requiredValidator");
+        ComponentDef cd = new ComponentDefImpl(RequiredValidator.class,
+                "requiredValidator");
         register(cd);
         new PageDescImpl(HogePage.class, "hogePage");
         assertNotNull(ValidatorResource.getValidator("#{hogePage.aaa}"));

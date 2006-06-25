@@ -55,8 +55,8 @@ public class ActionDescImpl implements ActionDesc {
         methodNames = ActionDescUtil.getActionMethodNames(actionClass);
     }
 
-    public boolean isValid(String id) {
-        return methodNames.contains(id);
+    public boolean hasMethod(String name) {
+        return methodNames.contains(name);
     }
 
     public boolean isModified() {

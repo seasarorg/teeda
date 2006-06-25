@@ -28,16 +28,20 @@ import org.seasar.teeda.extension.html.PageDesc;
  */
 public class OutputLinkFactory extends AbstractElementProcessorFactory {
 
-    private static final String GO = "go";
+    private static final String GO_PREFIX = "go";
 
     private static final String TAG_NAME = "outputLink";
 
-    public boolean isMatch(ElementNode elementNode) {
+    public boolean isMatch(ElementNode elementNode, PageDesc pageDesc, ActionDesc actionDesc) {
         if (!JsfConstants.ANCHOR_ELEM
                 .equalsIgnoreCase(elementNode.getTagName())) {
             return false;
         }
-        return elementNode.getId().startsWith(GO);
+        String id = elementNode.getId();
+        if (id == null) {
+            return false;
+        }
+        return id.startsWith(GO_PREFIX);
     }
 
     protected void customizeProperties(Map properties, ElementNode elementNode,
