@@ -509,10 +509,6 @@ public class UIData extends UIComponentBase implements NamingContainer {
             event_.processListener(listener);
         }
 
-        public UIComponent getComponent() {
-            return event_.getComponent();
-        }
-
         public void queue() {
             event_.queue();
         }
