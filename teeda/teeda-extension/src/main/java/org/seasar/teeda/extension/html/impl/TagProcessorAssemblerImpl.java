@@ -15,9 +15,6 @@
  */
 package org.seasar.teeda.extension.html.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.ElementProcessor;
@@ -36,18 +33,14 @@ import org.seasar.teeda.extension.html.processor.ViewProcessor;
  */
 public class TagProcessorAssemblerImpl implements TagProcessorAssembler {
 
-    private List factories = new ArrayList();
+    private ElementProcessorFactory[] factories = new ElementProcessorFactory[0];
 
-    public int getFactorySize() {
-        return factories.size();
+    public ElementProcessorFactory[] getFactories() {
+        return factories;
     }
 
-    public ElementProcessorFactory getFactory(int index) {
-        return (ElementProcessorFactory) factories.get(index);
-    }
-
-    public void addFactory(ElementProcessorFactory factory) {
-        factories.add(factory);
+    public void setFactories(ElementProcessorFactory[] factories) {
+        this.factories = factories;
     }
 
     public TagProcessor assemble(HtmlDesc htmlDesc, PageDesc pageDesc,
@@ -76,8 +69,8 @@ public class TagProcessorAssemblerImpl implements TagProcessorAssembler {
 
     protected void assembleTagProcessor(ElementProcessor parentProcessor,
             ElementNode elementNode, PageDesc pageDesc, ActionDesc actionDesc) {
-        for (int i = 0; i < getFactorySize(); ++i) {
-            ElementProcessorFactory factory = getFactory(i);
+        for (int i = 0; i < factories.length; ++i) {
+            ElementProcessorFactory factory = factories[i];
             if (factory.isMatch(elementNode, pageDesc, actionDesc)) {
                 ElementProcessor elementProcessor = factory.createProcessor(
                         elementNode, pageDesc, actionDesc);

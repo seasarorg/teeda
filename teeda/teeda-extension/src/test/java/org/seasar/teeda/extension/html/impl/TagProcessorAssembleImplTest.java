@@ -25,6 +25,7 @@ import org.seasar.teeda.extension.config.taglib.element.TaglibElement;
 import org.seasar.teeda.extension.config.taglib.element.impl.TagElementImpl;
 import org.seasar.teeda.extension.config.taglib.element.impl.TaglibElementImpl;
 import org.seasar.teeda.extension.html.ElementProcessor;
+import org.seasar.teeda.extension.html.ElementProcessorFactory;
 import org.seasar.teeda.extension.html.HtmlDesc;
 import org.seasar.teeda.extension.html.TagProcessor;
 import org.seasar.teeda.extension.html.TagProcessorAssembler;
@@ -167,7 +168,7 @@ public class TagProcessorAssembleImplTest extends S2FrameworkTestCase {
         InputTextFactory factory = new InputTextFactory();
         factory.setTaglibManager(taglibManager);
         TagProcessorAssemblerImpl assembler = new TagProcessorAssemblerImpl();
-        assembler.addFactory(factory);
+        assembler.setFactories(new ElementProcessorFactory[]{factory});
         TagProcessor root = assembler.assemble(htmlDesc, pageDesc, actionDesc);
         assertTrue("1", root instanceof ElementProcessor);
         ElementProcessor viewRoot = (ElementProcessor) root;
@@ -200,7 +201,7 @@ public class TagProcessorAssembleImplTest extends S2FrameworkTestCase {
         CommandButtonFactory factory = new CommandButtonFactory();
         factory.setTaglibManager(taglibManager);
         TagProcessorAssemblerImpl assembler = new TagProcessorAssemblerImpl();
-        assembler.addFactory(factory);
+        assembler.setFactories(new ElementProcessorFactory[]{factory});
         TagProcessor root = assembler.assemble(htmlDesc, pageDesc, actionDesc);
         assertTrue("1", root instanceof ElementProcessor);
         ElementProcessor viewRoot = (ElementProcessor) root;
@@ -230,7 +231,7 @@ public class TagProcessorAssembleImplTest extends S2FrameworkTestCase {
         OutputTextFactory factory = new OutputTextFactory();
         factory.setTaglibManager(taglibManager);
         TagProcessorAssemblerImpl assembler = new TagProcessorAssemblerImpl();
-        assembler.addFactory(factory);
+        assembler.setFactories(new ElementProcessorFactory[]{factory});
         TagProcessor root = assembler.assemble(htmlDesc, pageDesc, actionDesc);
         assertTrue(root instanceof ElementProcessor);
         ElementProcessor viewRoot = (ElementProcessor) root;

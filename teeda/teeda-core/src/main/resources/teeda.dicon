@@ -4,6 +4,7 @@
 <components namespace="teeda">
 
 	<include path="teedaErrorPage.dicon" />
+	<include path="teedaIdLookup.dicon" />
 	
 	<!-- FacesConfig configurator -->
 	<component class="org.seasar.teeda.core.config.faces.impl.FacesConfigBuilderImpl">
@@ -105,8 +106,6 @@
 	<component name="renderResponsePhase" class="org.seasar.teeda.core.lifecycle.impl.RenderResponsePhase"/>
 	
 	<component name="webappConfigBuilder" class="org.seasar.teeda.core.config.webapp.impl.WebappConfigBuilderImpl"/>
-
-	<component class="org.seasar.teeda.core.render.DefaultComponentIdLookupStrategy" />
 
 	<!-- Renderer -->
 	<component class="org.seasar.teeda.core.render.html.HtmlRenderKitImpl">
@@ -236,6 +235,7 @@
 		<property name="referenceClass">
 			@javax.faces.validator.LengthValidator@class
 		</property>
+		<property name="instanceDef">@org.seasar.framework.container.deployer.InstanceDefFactory@PROTOTYPE"</property>
 		<property name="jarFileNames">"teeda-core.*"</property>
 		<initMethod name="addClassPattern">
 			<arg>"javax.faces.validator"</arg>

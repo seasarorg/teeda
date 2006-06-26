@@ -12,49 +12,27 @@
 	<component class="org.seasar.teeda.extension.html.impl.HtmlDescCacheImpl"/>
 	<component class="org.seasar.teeda.extension.html.impl.PageDescCacheImpl"/>
 	<component class="org.seasar.teeda.extension.html.impl.ActionDescCacheImpl"/>
-	<component class="org.seasar.teeda.extension.html.impl.TagProcessorAssemblerImpl">
-		<initMethod name="addFactory">
-			<arg>
-				<component class="org.seasar.teeda.extension.html.factory.InputTextFactory"/>
-			</arg>
-		</initMethod>
-		<initMethod name="addFactory">
-			<arg>
-				<component class="org.seasar.teeda.extension.html.factory.OutputTextFactory"/>
-			</arg>
-		</initMethod>
-		<initMethod name="addFactory">
-			<arg>
-				<component class="org.seasar.teeda.extension.html.factory.FormFactory"/>
-			</arg>
-		</initMethod>
-		<initMethod name="addFactory">
-			<arg>
-				<component class="org.seasar.teeda.extension.html.factory.CommandButtonFactory"/>
-			</arg>
-		</initMethod>
-		<initMethod name="addFactory">
-			<arg>
-				<component class="org.seasar.teeda.extension.html.factory.OutputLinkFactory"/>
-			</arg>
+	<component class="org.seasar.teeda.extension.html.impl.TagProcessorAssemblerImpl"/>
+	<component class="org.seasar.framework.container.autoregister.JarComponentAutoRegister">
+		<property name="referenceClass">
+			@org.seasar.teeda.extension.html.factory.InputTextFactory@class
+		</property>
+		<property name="jarFileNames">"teeda-extension.*"</property>
+		<initMethod name="addClassPattern">
+			<arg>"org.seasar.teeda.extension.html.factory"</arg>
+			<arg>"..*Factory"</arg>
 		</initMethod>
 	</component>
 	<component class="org.seasar.teeda.extension.html.impl.TagProcessorCacheImpl"/>
 	<component name="viewHandler" class="org.seasar.teeda.extension.html.impl.HtmlViewHandler"/>
 	
-	<component class="org.seasar.teeda.core.application.ApplicationImpl">
-		<property name="actionListener">actionListener</property>
-		<property name="navigationHandler">navigationHandler</property>
-		<property name="viewHandler">viewHandler</property>
-		<property name="propertyResolver">propertyResolver</property>
-		<property name="variableResolver">variableResolver</property>
-		<property name="stateManager">stateManager</property>
-	</component>
+	<component class="org.seasar.teeda.core.application.ApplicationImpl"/>
 	
 	<component class="org.seasar.framework.container.autoregister.JarComponentAutoRegister">
 		<property name="referenceClass">
 			@org.seasar.teeda.extension.validator.ByteLengthValidator@class
 		</property>
+		<property name="instanceDef">@org.seasar.framework.container.deployer.InstanceDefFactory@PROTOTYPE"</property>
 		<property name="jarFileNames">"teeda-extension.*"</property>
 		<initMethod name="addClassPattern">
 			<arg>"org.seasar.teeda.extension.validator"</arg>
