@@ -19,11 +19,11 @@ import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.internal.FacesMessageUtils;
+import javax.faces.internal.UIComponentUtil;
 import javax.faces.validator.LengthValidator;
 import javax.faces.validator.ValidatorException;
 
 import org.seasar.framework.util.AssertionUtil;
-import org.seasar.teeda.core.util.UIComponentUtil;
 
 /**
  * @author shot

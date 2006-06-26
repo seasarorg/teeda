@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE components PUBLIC "-//SEASAR2.1//DTD S2Container//EN"
+	"http://www.seasar.org/dtd/components24.dtd">
+<components>
+	<component 
+		name="dataTableBean" 
+		class="examples.teeda.bean.DataTableBean" 
+		instance="session" 
+	/>
+</components>
