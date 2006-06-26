@@ -22,6 +22,10 @@
 			<arg>"org.seasar.teeda.extension.html.factory"</arg>
 			<arg>"..*Factory"</arg>
 		</initMethod>
+		<initMethod name="addIgnoreClassPattern">
+			<arg>"org.seasar.teeda.extension.html.factory"</arg>
+			<arg>"Abstract..*Factory"</arg>
+		</initMethod>
 	</component>
 	<component class="org.seasar.teeda.extension.html.impl.TagProcessorCacheImpl"/>
 	<component name="viewHandler" class="org.seasar.teeda.extension.html.impl.HtmlViewHandler"/>
