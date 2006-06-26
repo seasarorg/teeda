@@ -15,6 +15,8 @@
  */
 package org.seasar.teeda.core.render.html;
 
+import java.io.IOException;
+import java.io.StringReader;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,13 +24,23 @@ import javax.faces.component.UIColumn;
 import javax.faces.el.ValueBinding;
 import javax.faces.render.Renderer;
 import javax.faces.render.RendererTest;
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.custommonkey.xmlunit.Diff;
+import org.custommonkey.xmlunit.XMLUnit;
 import org.seasar.teeda.core.el.ELParser;
 import org.seasar.teeda.core.el.impl.ValueBindingImpl;
 import org.seasar.teeda.core.el.impl.commons.CommonsELParser;
 import org.seasar.teeda.core.el.impl.commons.CommonsExpressionProcessorImpl;
 import org.seasar.teeda.core.mock.MockFacesContext;
+import org.seasar.teeda.core.unit.TestUtil;
+import org.seasar.teeda.core.unit.xmlunit.DifferenceListenerChain;
+import org.seasar.teeda.core.unit.xmlunit.HtmlDomUtil;
+import org.seasar.teeda.core.unit.xmlunit.IgnoreJsessionidDifferenceListener;
+import org.seasar.teeda.core.unit.xmlunit.RegexpDifferenceListener;
+import org.seasar.teeda.core.unit.xmlunit.TextTrimmingDifferenceListener;
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
 
 /**
  * @author manhole
@@ -860,29 +872,17 @@ public class HtmlDataTableRendererTest extends RendererTest {
         renderer_.encodeChildren(context, htmlDataTable_);
 
         // ## Assert ##
-        assertEquals(
-                "<tbody>"
-                        + "<tr class=\"r1\">"
-                        + "<td class=\"c1\">Z</td><td class=\"c2\">Y</td><td class=\"c3\">X</td><td class=\"c1\">a</td>"
-                        + "</tr>"
-                        + "<tr class=\"r2\">"
-                        + "<td class=\"c1\">Z</td><td class=\"c2\">Y</td><td class=\"c3\">X</td><td class=\"c1\">b</td>"
-                        + "</tr>"
-                        + "<tr class=\"r1\">"
-                        + "<td class=\"c1\">Z</td><td class=\"c2\">Y</td><td class=\"c3\">X</td><td class=\"c1\">c</td>"
-                        + "</tr>"
-                        + "<tr class=\"r2\">"
-                        + "<td class=\"c1\">Z</td><td class=\"c2\">Y</td><td class=\"c3\">X</td><td class=\"c1\">d</td>"
-                        + "</tr>"
-                        + "<tr class=\"r1\">"
-                        + "<td class=\"c1\">Z</td><td class=\"c2\">Y</td><td class=\"c3\">X</td><td class=\"c1\">e</td>"
-                        + "</tr>" + "</tbody>", getResponseText());
+        final String readText = TestUtil.readText(getClass(),
+                "testEncodeChildren_RowAndColumnStyle.html", "UTF-8");
+        final String expected = extract(readText);
+        Diff diff = diff(expected, getResponseText());
+        assertEquals(diff.toString(), true, diff.identical());
     }
 
     public void testEncode_WithAllAttributes() throws Exception {
         // attributes
         {
-            htmlDataTable_.setBgcolor("a");
+            htmlDataTable_.setBgcolor("gray");
             htmlDataTable_.setBorder(3);
             htmlDataTable_.setCellpadding("c");
             htmlDataTable_.setCellspacing("d");
@@ -1012,59 +1012,10 @@ public class HtmlDataTableRendererTest extends RendererTest {
         MockFacesContext context = getFacesContext();
         encodeByRenderer(renderer_, context, htmlDataTable_);
 
-        Diff diff = new Diff(
-                "<table"
-                        + " id=\"A\""
-                        + " bgcolor=\"a\""
-                        + " border=\"3\""
-                        + " cellpadding=\"c\""
-                        + " cellspacing=\"d\""
-                        + " dir=\"f\""
-                        + " frame=\"h\""
-                        + " lang=\"j\""
-                        + " onclick=\"k\""
-                        + " ondblclick=\"l\""
-                        + " onkeydown=\"m\""
-                        + " onkeypress=\"n\""
-                        + " onkeyup=\"o\""
-                        + " onmousedown=\"p\""
-                        + " onmousemove=\"q\""
-                        + " onmouseout=\"r\""
-                        + " onmouseover=\"s\""
-                        + " onmouseup=\"t\""
-                        + " rules=\"v\""
-                        + " style=\"w\""
-                        + " class=\"x\""
-                        + " summary=\"y\""
-                        + " title=\"z\""
-                        + " width=\"1\""
-                        + ">"
-
-                        + "<thead>"
-                        + "<tr>"
-                        + "<th class=\"i\" colspan=\"2\" scope=\"colgroup\">tableHeader</th>"
-                        + "</tr>"
-                        + "<tr>"
-                        + "<th colgroup=\"col\" class=\"i\">col1Header</th>"
-                        + "<th colgroup=\"col\" class=\"i\">col2Header</th>"
-                        + "</tr>"
-                        + "</thead>"
-
-                        + "<tfoot>"
-                        + "<tr>"
-                        + "<td class=\"g\" colspan=\"2\">tableFooter</td>"
-                        + "</tr>"
-                        + "<tr><td class=\"g\">col1Footer</td>"
-                        + "<td class=\"g\">col2Footer</td></tr>"
-                        + "</tfoot>"
-
-                        + "<tbody>"
-                        + "<tr class=\"u1\"><td class=\"e1\">a4</td><td class=\"e2\">b4</td></tr>"
-                        + "<tr class=\"u2\"><td class=\"e1\">a5</td><td class=\"e2\">b5</td></tr>"
-                        + "<tr class=\"u1\"><td class=\"e1\">a6</td><td class=\"e2\">b6</td></tr>"
-                        + "</tbody>"
-
-                        + "</table>", getResponseText());
+        final String readText = TestUtil.readText(getClass(),
+                "testEncode_WithAllAttributes.html", "UTF-8");
+        final String expected = extract(readText);
+        Diff diff = diff(expected, getResponseText());
         assertEquals(diff.toString(), true, diff.identical());
     }
 
@@ -1080,6 +1031,36 @@ public class HtmlDataTableRendererTest extends RendererTest {
         HtmlDataTableRenderer renderer = new HtmlDataTableRenderer();
         renderer.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
         return renderer;
+    }
+
+    private String extract(final String s) {
+        final String BEGIN = "<!-- BEGIN -->";
+        final String END = "<!-- END -->";
+        final int begin = s.indexOf(BEGIN);
+        if (-1 < begin) {
+            final int end = s.indexOf(END, begin + BEGIN.length());
+            if (-1 < end) {
+                return s.substring(begin + BEGIN.length(), end);
+            }
+        }
+        return s;
+    }
+
+    private Diff diff(final String expected, final String actual)
+            throws SAXException, IOException, ParserConfigurationException {
+        Document cDoc = XMLUnit.buildDocument(XMLUnit.getControlParser(),
+                new StringReader(expected));
+        Document tDoc = XMLUnit.buildDocument(XMLUnit.getTestParser(),
+                new StringReader(actual));
+        HtmlDomUtil.removeBlankTextNode(cDoc.getChildNodes());
+        HtmlDomUtil.removeBlankTextNode(tDoc.getChildNodes());
+        Diff diff = new Diff(cDoc, tDoc);
+        DifferenceListenerChain chain = new DifferenceListenerChain();
+        chain.addDifferenceListener(new TextTrimmingDifferenceListener());
+        chain.addDifferenceListener(new IgnoreJsessionidDifferenceListener());
+        chain.addDifferenceListener(new RegexpDifferenceListener());
+        diff.overrideDifferenceListener(chain);
+        return diff;
     }
 
 }
