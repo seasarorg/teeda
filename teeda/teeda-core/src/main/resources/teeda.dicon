@@ -235,7 +235,7 @@
 		<property name="referenceClass">
 			@javax.faces.validator.LengthValidator@class
 		</property>
-		<property name="instanceDef">@org.seasar.framework.container.deployer.InstanceDefFactory@PROTOTYPE"</property>
+		<property name="instanceDef">@org.seasar.framework.container.deployer.InstanceDefFactory@PROTOTYPE</property>
 		<property name="jarFileNames">"teeda-core.*"</property>
 		<initMethod name="addClassPattern">
 			<arg>"javax.faces.validator"</arg>

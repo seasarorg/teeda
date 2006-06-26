@@ -32,7 +32,7 @@
 		<property name="referenceClass">
 			@org.seasar.teeda.extension.validator.ByteLengthValidator@class
 		</property>
-		<property name="instanceDef">@org.seasar.framework.container.deployer.InstanceDefFactory@PROTOTYPE"</property>
+		<property name="instanceDef">@org.seasar.framework.container.deployer.InstanceDefFactory@PROTOTYPE</property>
 		<property name="jarFileNames">"teeda-extension.*"</property>
 		<initMethod name="addClassPattern">
 			<arg>"org.seasar.teeda.extension.validator"</arg>
