@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container 2.4//EN" 
+	"http://www.seasar.org/dtd/components24.dtd">
+<components>
+
+	<include path="teeda.dicon" />
+	
+	<component class="org.seasar.teeda.extension.config.taglib.impl.ServletContextTaglibManagerImpl"/>
+	<component class="org.seasar.teeda.extension.config.taglib.impl.TaglibElementBuilderImpl"/>
+	
+	<component class="org.seasar.teeda.extension.html.impl.DefaultHtmlAutoNaming"/>
+	<component class="org.seasar.teeda.extension.html.impl.HtmlDescCacheImpl"/>
+	<component class="org.seasar.teeda.extension.html.impl.PageDescCacheImpl"/>
+	<component class="org.seasar.teeda.extension.html.impl.ActionDescCacheImpl"/>
+	<component class="org.seasar.framework.container.autoregister.JarComponentAutoRegister">
+		<property name="referenceClass">
+			@org.seasar.teeda.extension.html.factory.InputTextFactory@class
+		</property>
+		<property name="jarFileNames">"teeda-extension.*"</property>
+		<initMethod name="addClassPattern">
+			<arg>"org.seasar.teeda.extension.html.factory"</arg>
+			<arg>"..*Factory"</arg>
+		</initMethod>
+		<initMethod name="addIgnoreClassPattern">
+			<arg>"org.seasar.teeda.extension.html.factory"</arg>
+			<arg>"Abstract..*Factory"</arg>
+		</initMethod>
+	</component>
+	<component class="org.seasar.teeda.extension.html.impl.TagProcessorAssemblerImpl"/>
+	<component class="org.seasar.teeda.extension.html.impl.TagProcessorCacheImpl"/>
+	<component name="viewHandler" class="org.seasar.teeda.extension.html.impl.HtmlViewHandler"/>
+	
+	<component class="org.seasar.teeda.core.application.ApplicationImpl"/>
+	
+	<component class="org.seasar.framework.container.autoregister.JarComponentAutoRegister">
+		<property name="referenceClass">
+			@org.seasar.teeda.extension.validator.ByteLengthValidator@class
+		</property>
+		<property name="instanceDef">@org.seasar.framework.container.deployer.InstanceDefFactory@PROTOTYPE</property>
+		<property name="jarFileNames">"teeda-extension.*"</property>
+		<initMethod name="addClassPattern">
+			<arg>"org.seasar.teeda.extension.validator"</arg>
+			<arg>"..*Validator"</arg>
+		</initMethod>
+	</component>
+		
+</components>

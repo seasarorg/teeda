@@ -1,0 +1,20 @@
+<project name="hotdeploy-demo" default="dist" basedir=".">
+
+	<property name="ver" value="EA1"/>
+
+	<target name="dist">
+		<delete includeemptydirs="true" failonerror="false">
+			<fileset dir="target"/>
+		</delete>
+		<mkdir dir="target"/>
+		<zip zipfile="target/hotdeploy-demo-${ver}.zip">
+			<zipfileset prefix="hotdeploy-demo" dir=".">
+				<exclude name="target/**"/>
+				<exclude name="**/.settings/**"/>
+				<exclude name="build.xml"/>
+				<exclude name="**/.DS_Store"/>
+			</zipfileset>
+		</zip>
+	</target>
+
+</project>

@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container 2.4//EN" 
+	"http://www.seasar.org/dtd/components24.dtd">
+<components namespace="teeda">
+
+	<include path="teedaErrorPage.dicon" />
+	<include path="teedaIdLookup.dicon" />
+	
+	<!-- FacesConfig configurator -->
+	<component class="org.seasar.teeda.core.config.faces.impl.FacesConfigBuilderImpl">
+		<initMethod name="addFacesConfigurator">
+			<arg>coreConfigurator</arg>
+		</initMethod>
+		<initMethod name="addFacesConfigurator">
+			<arg>metaInfConfigurator</arg>
+		</initMethod>
+		<initMethod name="addFacesConfigurator">
+			<arg>configFilesConfigurator</arg>
+		</initMethod>
+		<initMethod name="addFacesConfigurator">
+			<arg>applicationConfigurator</arg>
+		</initMethod>
+	</component>
+	
+	<component name="coreConfigurator" class="org.seasar.teeda.core.config.faces.impl.CoreFacesConfigurator" autoBinding="none" />
+
+	<component name="metaInfConfigurator" class="org.seasar.teeda.core.config.faces.impl.MetaInfFacesConfigurator" autoBinding="none" />
+	
+	<component name="configFilesConfigurator" class="org.seasar.teeda.core.config.faces.impl.ConfigFilesFacesConfigurator" autoBinding="none"/>
+
+	<component name="applicationConfigurator" class="org.seasar.teeda.core.config.faces.impl.ApplicationFacesConfigurator" autoBinding="none" />
+
+	<!-- FacesConfig Assembler -->
+	<component class="org.seasar.teeda.core.config.faces.assembler.impl.DefaultAssembleProvider"/>
+
+	<component class="org.seasar.teeda.core.config.faces.assembler.AssemblerAssembler" />
+
+	<!-- ValueBinding relates -->
+	<component class="org.seasar.teeda.core.el.impl.commons.CommonsELParser" />
+	
+	<component class="org.seasar.teeda.core.el.impl.commons.CommonsExpressionProcessorImpl" />
+	
+	<component name="valueBindingContext" class="org.seasar.teeda.core.el.impl.ValueBindingContextImpl">
+		<property name="valueBindingName">"org.seasar.teeda.core.el.impl.ValueBindingImpl"</property>
+	</component>
+
+	<component name="methodBindingContext" class="org.seasar.teeda.core.el.impl.MethodBindingContextImpl">
+		<property name="methodBindingName">"org.seasar.teeda.core.el.impl.MethodBindingImpl"</property>
+		<initMethod name="setValueBindingContext">
+			<arg>valueBindingContext</arg>
+		</initMethod>
+	</component>
+
+	<!-- Applications -->
+	<component class="org.seasar.teeda.core.application.ApplicationImpl">
+		<property name="actionListener">actionListener</property>
+		<property name="navigationHandler">navigationHandler</property>
+		<property name="viewHandler">viewHandler</property>
+		<property name="propertyResolver">propertyResolver</property>
+		<property name="variableResolver">variableResolver</property>
+		<property name="stateManager">stateManager</property>
+	</component>
+	
+	<component name="actionListener" class="org.seasar.teeda.core.application.ActionListenerImpl" />
+
+	<component name="navigationHandler" class="org.seasar.teeda.core.application.NavigationHandlerImpl" />
+
+	<component name="viewHandler" class="org.seasar.teeda.core.application.ViewHandlerImpl" />
+
+	<component name="propertyResolver" class="org.seasar.teeda.core.el.TeedaPropertyResolver" />
+
+	<component name="variableResolver" class="org.seasar.teeda.core.el.TeedaVariableResolver" />
+
+	<component name="stateManager" class="org.seasar.teeda.core.application.impl.TeedaStateManagerImpl" />
+
+	<component class="org.seasar.teeda.core.application.impl.TreeStructureManagerImpl" />
+
+	<component name="responseStateManager" class="org.seasar.teeda.core.render.html.HtmlResponseStateManager" />
+
+	<component class="org.seasar.teeda.core.render.Base64EncodeConverter" />
+	
+	<!-- ManagedBean -->	
+	<component class="org.seasar.teeda.core.managedbean.impl.ManagedBeanFactoryImpl" />
+	
+	<component class="org.seasar.teeda.core.managedbean.impl.ManagedBeanScopeSaverImpl" />
+		
+	<component name="scopeManager" class="org.seasar.teeda.core.scope.impl.ScopeManagerImpl" />
+	
+	<component name="translator" class="org.seasar.teeda.core.scope.impl.S2ScopeTranslator" />
+	
+	<!-- Lifecycle -->
+	<component class="org.seasar.teeda.core.lifecycle.LifecycleImpl">
+		<property name="restoreViewPhase">restoreViewPhase</property>
+		<property name="applyRequestValuesPhase">applyRequestValuesPhase</property>
+		<property name="processValidationsPhase">processValidationsPhase</property>
+		<property name="updateModelValuesPhase">updateModelValuesPhase</property>
+		<property name="invokeApplicationPhase">invokeApplicationPhase</property>
+		<property name="renderResponsePhase">renderResponsePhase</property>
+	</component>
+
+	<component name="restoreViewPhase" class="org.seasar.teeda.core.lifecycle.impl.RestoreViewPhase"/>
+	<component name="applyRequestValuesPhase" class="org.seasar.teeda.core.lifecycle.impl.ApplyRequestValuesPhase"/>
+	<component name="processValidationsPhase" class="org.seasar.teeda.core.lifecycle.impl.ProcessValidationsPhase"/>
+	<component name="updateModelValuesPhase" class="org.seasar.teeda.core.lifecycle.impl.UpdateModelValuesPhase"/>
+	<component name="invokeApplicationPhase" class="org.seasar.teeda.core.lifecycle.impl.InvokeApplicationPhase"/>
+	<component name="renderResponsePhase" class="org.seasar.teeda.core.lifecycle.impl.RenderResponsePhase"/>
+	
+	<component name="webappConfigBuilder" class="org.seasar.teeda.core.config.webapp.impl.WebappConfigBuilderImpl"/>
+
+	<!-- Renderer -->
+	<component class="org.seasar.teeda.core.render.html.HtmlRenderKitImpl">
+		<initMethod name="addRenderer">
+			<arg>"javax.faces.Command"</arg>
+			<arg>"javax.faces.Button"</arg>
+			<arg><component class="org.seasar.teeda.core.render.html.HtmlCommandButtonRenderer" /></arg>
+		</initMethod>
+		<initMethod name="addRenderer">
+			<arg>"javax.faces.Command"</arg>
+			<arg>"javax.faces.Link"</arg>
+			<arg><component class="org.seasar.teeda.core.render.html.HtmlCommandLinkRenderer" /></arg>
+		</initMethod>
+		<initMethod name="addRenderer">
+			<arg>"javax.faces.Data"</arg>
+			<arg>"javax.faces.Table"</arg>
+			<arg><component class="org.seasar.teeda.core.render.html.HtmlDataTableRenderer" /></arg>
+		</initMethod>
+		<initMethod name="addRenderer">
+			<arg>"javax.faces.Form"</arg>
+			<arg>"javax.faces.Form"</arg>
+			<arg><component class="org.seasar.teeda.core.render.html.HtmlFormRenderer" /></arg>
+		</initMethod>
+		<initMethod name="addRenderer">
+			<arg>"javax.faces.Graphic"</arg>
+			<arg>"javax.faces.Image"</arg>
+			<arg><component class="org.seasar.teeda.core.render.html.HtmlGraphicImageRenderer" /></arg>
+		</initMethod>
+		<initMethod name="addRenderer">
+			<arg>"javax.faces.Input"</arg>
+			<arg>"javax.faces.Hidden"</arg>
+			<arg><component class="org.seasar.teeda.core.render.html.HtmlInputHiddenRenderer" /></arg>
+		</initMethod>
+		<initMethod name="addRenderer">
+			<arg>"javax.faces.Input"</arg>
+			<arg>"javax.faces.Secret"</arg>
+			<arg><component class="org.seasar.teeda.core.render.html.HtmlInputSecretRenderer" /></arg>
+		</initMethod>
+		<initMethod name="addRenderer">
+			<arg>"javax.faces.Input"</arg>
+			<arg>"javax.faces.Text"</arg>
+			<arg><component class="org.seasar.teeda.core.render.html.HtmlInputTextRenderer" /></arg>
+		</initMethod>
+		<initMethod name="addRenderer">
+			<arg>"javax.faces.Input"</arg>
+			<arg>"javax.faces.Textarea"</arg>
+			<arg><component class="org.seasar.teeda.core.render.html.HtmlInputTextareaRenderer" /></arg>
+		</initMethod>
+		<initMethod name="addRenderer">
+			<arg>"javax.faces.Message"</arg>
+			<arg>"javax.faces.Message"</arg>
+			<arg><component class="org.seasar.teeda.core.render.html.HtmlMessageRenderer" /></arg>
+		</initMethod>
+		<initMethod name="addRenderer">
+			<arg>"javax.faces.Messages"</arg>
+			<arg>"javax.faces.Messages"</arg>
+			<arg><component class="org.seasar.teeda.core.render.html.HtmlMessagesRenderer" /></arg>
+		</initMethod>
+		<initMethod name="addRenderer">
+			<arg>"javax.faces.Output"</arg>
+			<arg>"javax.faces.Format"</arg>
+			<arg><component class="org.seasar.teeda.core.render.html.HtmlOutputFormatRenderer" /></arg>
+		</initMethod>
+		<initMethod name="addRenderer">
+			<arg>"javax.faces.Output"</arg>
+			<arg>"javax.faces.Label"</arg>
+			<arg><component class="org.seasar.teeda.core.render.html.HtmlOutputLabelRenderer" /></arg>
+		</initMethod>
+		<initMethod name="addRenderer">
+			<arg>"javax.faces.Output"</arg>
+			<arg>"javax.faces.Link"</arg>
+			<arg><component class="org.seasar.teeda.core.render.html.HtmlOutputLinkRenderer" /></arg>
+		</initMethod>
+		<initMethod name="addRenderer">
+			<arg>"javax.faces.Output"</arg>
+			<arg>"javax.faces.Text"</arg>
+			<arg><component class="org.seasar.teeda.core.render.html.HtmlOutputTextRenderer" /></arg>
+		</initMethod>
+		<initMethod name="addRenderer">
+			<arg>"javax.faces.Panel"</arg>
+			<arg>"javax.faces.Grid"</arg>
+			<arg><component class="org.seasar.teeda.core.render.html.HtmlPanelGridRenderer" /></arg>
+		</initMethod>
+		<initMethod name="addRenderer">
+			<arg>"javax.faces.Panel"</arg>
+			<arg>"javax.faces.Group"</arg>
+			<arg><component class="org.seasar.teeda.core.render.html.HtmlPanelGroupRenderer" /></arg>
+		</initMethod>
+		<initMethod name="addRenderer">
+			<arg>"javax.faces.SelectBoolean"</arg>
+			<arg>"javax.faces.Checkbox"</arg>
+			<arg><component class="org.seasar.teeda.core.render.html.HtmlSelectBooleanCheckboxRenderer" /></arg>
+		</initMethod>
+		<initMethod name="addRenderer">
+			<arg>"javax.faces.SelectMany"</arg>
+			<arg>"javax.faces.Checkbox"</arg>
+			<arg><component class="org.seasar.teeda.core.render.html.HtmlSelectManyCheckboxRenderer" /></arg>
+		</initMethod>
+		<initMethod name="addRenderer">
+			<arg>"javax.faces.SelectMany"</arg>
+			<arg>"javax.faces.Listbox"</arg>
+			<arg><component class="org.seasar.teeda.core.render.html.HtmlSelectManyListboxRenderer" /></arg>
+		</initMethod>
+		<initMethod name="addRenderer">
+			<arg>"javax.faces.SelectMany"</arg>
+			<arg>"javax.faces.Menu"</arg>
+			<arg><component class="org.seasar.teeda.core.render.html.HtmlSelectManyMenuRenderer" /></arg>
+		</initMethod>
+		<initMethod name="addRenderer">
+			<arg>"javax.faces.SelectOne"</arg>
+			<arg>"javax.faces.Listbox"</arg>
+			<arg><component class="org.seasar.teeda.core.render.html.HtmlSelectOneListboxRenderer" /></arg>
+		</initMethod>
+		<initMethod name="addRenderer">
+			<arg>"javax.faces.SelectOne"</arg>
+			<arg>"javax.faces.Menu"</arg>
+			<arg><component class="org.seasar.teeda.core.render.html.HtmlSelectOneMenuRenderer" /></arg>
+		</initMethod>
+		<initMethod name="addRenderer">
+			<arg>"javax.faces.SelectOne"</arg>
+			<arg>"javax.faces.Radio"</arg>
+			<arg><component class="org.seasar.teeda.core.render.html.HtmlSelectOneRadioRenderer" /></arg>
+		</initMethod>
+	</component>
+	
+	<component class="org.seasar.framework.container.autoregister.JarComponentAutoRegister">
+		<property name="referenceClass">
+			@javax.faces.validator.LengthValidator@class
+		</property>
+		<property name="instanceDef">@org.seasar.framework.container.deployer.InstanceDefFactory@PROTOTYPE</property>
+		<property name="jarFileNames">"teeda-core.*"</property>
+		<initMethod name="addClassPattern">
+			<arg>"javax.faces.validator"</arg>
+			<arg>"..*Validator"</arg>
+		</initMethod>
+	</component>
+		
+</components>
