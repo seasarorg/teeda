@@ -23,11 +23,6 @@ Kumu.NAME = "Kumu";
 Kumu.DEBUG = false;
 Kumu.Libs = [];
 
-/** global option **/
-var $i = Kumu.$i;
-var $t = Kumu.$t;
-var $n = Kumu.$n;
-
 /** extends **/
 Kumu.extend = function (self, obj) {
     if (self == null) {
@@ -243,6 +238,10 @@ Kumu = Kumu.extend(Kumu, {
     
 });
 
+/** global option **/
+var $i = Kumu.$i;
+var $t = Kumu.$t;
+var $n = Kumu.$n;
 
 /** **/
 Array.prototype = Kumu.extend(Array.prototype, {
