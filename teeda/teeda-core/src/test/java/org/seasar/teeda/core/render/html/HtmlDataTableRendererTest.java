@@ -15,8 +15,6 @@
  */
 package org.seasar.teeda.core.render.html;
 
-import java.io.IOException;
-import java.io.StringReader;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,23 +22,14 @@ import javax.faces.component.UIColumn;
 import javax.faces.el.ValueBinding;
 import javax.faces.render.Renderer;
 import javax.faces.render.RendererTest;
-import javax.xml.parsers.ParserConfigurationException;
 
 import org.custommonkey.xmlunit.Diff;
-import org.custommonkey.xmlunit.XMLUnit;
 import org.seasar.teeda.core.el.ELParser;
 import org.seasar.teeda.core.el.impl.ValueBindingImpl;
 import org.seasar.teeda.core.el.impl.commons.CommonsELParser;
 import org.seasar.teeda.core.el.impl.commons.CommonsExpressionProcessorImpl;
 import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.unit.TestUtil;
-import org.seasar.teeda.core.unit.xmlunit.DifferenceListenerChain;
-import org.seasar.teeda.core.unit.xmlunit.HtmlDomUtil;
-import org.seasar.teeda.core.unit.xmlunit.IgnoreJsessionidDifferenceListener;
-import org.seasar.teeda.core.unit.xmlunit.RegexpDifferenceListener;
-import org.seasar.teeda.core.unit.xmlunit.TextTrimmingDifferenceListener;
-import org.w3c.dom.Document;
-import org.xml.sax.SAXException;
 
 /**
  * @author manhole
@@ -1031,36 +1020,6 @@ public class HtmlDataTableRendererTest extends RendererTest {
         HtmlDataTableRenderer renderer = new HtmlDataTableRenderer();
         renderer.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
         return renderer;
-    }
-
-    private String extract(final String s) {
-        final String BEGIN = "<!-- BEGIN -->";
-        final String END = "<!-- END -->";
-        final int begin = s.indexOf(BEGIN);
-        if (-1 < begin) {
-            final int end = s.indexOf(END, begin + BEGIN.length());
-            if (-1 < end) {
-                return s.substring(begin + BEGIN.length(), end);
-            }
-        }
-        return s;
-    }
-
-    private Diff diff(final String expected, final String actual)
-            throws SAXException, IOException, ParserConfigurationException {
-        Document cDoc = XMLUnit.buildDocument(XMLUnit.getControlParser(),
-                new StringReader(expected));
-        Document tDoc = XMLUnit.buildDocument(XMLUnit.getTestParser(),
-                new StringReader(actual));
-        HtmlDomUtil.removeBlankTextNode(cDoc.getChildNodes());
-        HtmlDomUtil.removeBlankTextNode(tDoc.getChildNodes());
-        Diff diff = new Diff(cDoc, tDoc);
-        DifferenceListenerChain chain = new DifferenceListenerChain();
-        chain.addDifferenceListener(new TextTrimmingDifferenceListener());
-        chain.addDifferenceListener(new IgnoreJsessionidDifferenceListener());
-        chain.addDifferenceListener(new RegexpDifferenceListener());
-        diff.overrideDifferenceListener(chain);
-        return diff;
     }
 
 }
