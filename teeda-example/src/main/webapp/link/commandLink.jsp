@@ -10,7 +10,9 @@
 	<h:form id="commandLinkForm">
 		<h:inputText id="text1" value="#{commandLinkBean.a}"/>
 		<h:commandLink id="link1" action="#{commandLinkBean.countUp}">
-			<h:outputText value="foo"/>
+			<f:verbatim escape="true">
+				<h:outputText value="#{commandLinkBean.hoge}"/>
+			</f:verbatim>
 		</h:commandLink>
 	</h:form>
 </f:view>
