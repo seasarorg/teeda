@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -45,14 +45,18 @@ public abstract class Renderer {
             throws IOException {
         AssertionUtil.assertNotNull("context", context);
         AssertionUtil.assertNotNull("component", component);
-        UIComponent child = null;
         for (Iterator itr = component.getChildren().iterator(); itr.hasNext();) {
-            child = (UIComponent) itr.next();
+            UIComponent child = (UIComponent) itr.next();
             child.encodeBegin(context);
             if (child.getRendersChildren()) {
                 child.encodeChildren(context);
+            } else {
+                encodeChildren(context, child);
             }
             child.encodeEnd(context);
+            if (context.getResponseComplete()) {
+                break;
+            }
         }
     }
 
