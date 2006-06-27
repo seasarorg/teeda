@@ -98,7 +98,7 @@ public class UIData extends UIComponentBase implements NamingContainer {
     }
 
     public void setFirst(int first) {
-        AssertionUtil.assertIntegerNotNegative(first, "first");
+        AssertionUtil.assertIntegerNotNegative("first", first);
         this.first = first;
         firstSet = true;
     }
@@ -169,7 +169,7 @@ public class UIData extends UIComponentBase implements NamingContainer {
     }
 
     public void setRows(int rows) {
-        AssertionUtil.assertIntegerNotNegative(rows, "rows");
+        AssertionUtil.assertIntegerNotNegative("rows", rows);
         this.rows = rows;
         rowsSet = true;
     }
