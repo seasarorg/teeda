@@ -80,4 +80,20 @@ public class FacesMessageUtilsTest extends TeedaTestCase {
         assertNotNull(message.getSummary());
     }
 
+    public void testApplicationResourceAndDefaultResource() {
+        getApplication().setMessageBundle(
+                "javax.faces.component.TestMessages");
+        MockFacesContext context = getFacesContext();
+        MockUIComponent component = new MockUIComponent();
+        component.setClientId("c");
+        UIViewRoot root = new UIViewRoot();
+        root.setLocale(Locale.US);
+        context.setViewRoot(root);
+        FacesMessageUtils.addErrorMessage(context, component,
+                "javax.faces.component.UIInput.CONVERSION");
+        assertNotNull(context.getMessages("c"));
+        Iterator itr = context.getMessages();
+        FacesMessage message = (FacesMessage) itr.next();
+        assertNotNull(message.getSummary());
+    }
 }

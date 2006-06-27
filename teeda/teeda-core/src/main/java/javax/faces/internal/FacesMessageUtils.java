@@ -73,13 +73,23 @@ public class FacesMessageUtils {
         ResourceBundle bundle = getResourceBundle(context, locale);
         String summary = getBundleString(bundle, messageId);
         String detail = getBundleString(bundle, messageId + DETAIL_SUFFIX);
-        if (args != null && args.length >= 1) {
+        if (summary == null) {
+            ResourceBundle defaultBundle = getDefaultBundle(context, locale);
+            summary = getBundleString(defaultBundle, messageId);
             if (summary != null) {
-                summary = getFormattedMessage(summary, locale, args);
+                detail = getBundleString(defaultBundle, messageId + DETAIL_SUFFIX);
+            } else {
+                detail = getBundleString(bundle, messageId + DETAIL_SUFFIX);
+                if (detail == null) {
+                    detail = getBundleString(defaultBundle, messageId + DETAIL_SUFFIX);
+                }
             }
-            if (detail != null) {
-                detail = getFormattedMessage(detail, locale, args);
-            }
+        }
+        if (summary != null) {
+            summary = getFormattedMessage(summary, locale, args);
+        }
+        if (detail != null) {
+            detail = getFormattedMessage(detail, locale, args);
         }
         return new FacesMessage(severity, summary, detail);
     }
@@ -130,6 +140,9 @@ public class FacesMessageUtils {
 
     private static String getFormattedMessage(String message, Locale locale,
             Object[] args) {
+        if (args == null || args.length == 0) {
+            return message;
+        }
         return new MessageFormat(message, locale).format(args);
     }
 
