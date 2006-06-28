@@ -17,6 +17,7 @@ package org.seasar.teeda.core.application;
 
 import java.io.IOException;
 
+import javax.faces.component.ActionSource;
 import javax.faces.component.UICommand;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -46,9 +47,12 @@ public class ActionListenerImpl implements ActionListener {
     public void processAction(ActionEvent actionEvent)
             throws AbortProcessingException {
         FacesContext context = FacesContext.getCurrentInstance();
-        UICommand command = (UICommand) actionEvent.getComponent();
-        UIParameterUtil.saveParametersToRequest(command, context);
-        MethodBinding mb = command.getAction();
+        if (actionEvent.getComponent() instanceof UICommand) {
+            UICommand command = (UICommand) actionEvent.getComponent();
+            UIParameterUtil.saveParametersToRequest(command, context);
+        }
+        ActionSource actionSource = (ActionSource) actionEvent.getComponent();
+        MethodBinding mb = actionSource.getAction();
         String fromAction = null;
         String outcome = null;
         if (mb != null) {
