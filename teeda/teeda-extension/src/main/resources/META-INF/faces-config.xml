@@ -17,13 +17,88 @@
 			</renderer-class>
 		</renderer>
 	</render-kit>
-	
+
+	<render-kit>
+		<renderer>
+			<component-family>org.seasar.teeda.extension.Grid</component-family>
+			<renderer-type>org.seasar.teeda.extension.HtmlGrid</renderer-type>
+			<renderer-class>
+				org.seasar.teeda.extension.render.html.HtmlGridRenderer
+			</renderer-class>
+		</renderer>
+	</render-kit>
+
 	<component>
 		<component-type>
 			org.seasar.jsf.Text
 		</component-type>
 		<component-class>
 			org.seasar.teeda.extension.component.UIText
+		</component-class>
+	</component>
+
+	<component>
+		<component-type>
+			org.seasar.teeda.extension.HtmlGrid
+		</component-type>
+		<component-class>
+			org.seasar.teeda.extension.component.html.HtmlGrid
+		</component-class>
+	</component>
+	<component>
+		<component-type>
+			org.seasar.teeda.extension.HtmlGridBody
+		</component-type>
+		<component-class>
+			org.seasar.teeda.extension.component.html.HtmlGridBody
+		</component-class>
+	</component>
+	<component>
+		<component-type>
+			org.seasar.teeda.extension.HtmlGridColumn
+		</component-type>
+		<component-class>
+			org.seasar.teeda.extension.component.html.HtmlGridColumn
+		</component-class>
+	</component>
+	<component>
+		<component-type>
+			org.seasar.teeda.extension.HtmlGridColumnGroup
+		</component-type>
+		<component-class>
+			org.seasar.teeda.extension.component.html.HtmlGridColumnGroup
+		</component-class>
+	</component>
+	<component>
+		<component-type>
+			org.seasar.teeda.extension.HtmlGridHeader
+		</component-type>
+		<component-class>
+			org.seasar.teeda.extension.component.html.HtmlGridHeader
+		</component-class>
+	</component>
+	<component>
+		<component-type>
+			org.seasar.teeda.extension.HtmlGridTd
+		</component-type>
+		<component-class>
+			org.seasar.teeda.extension.component.html.HtmlGridTd
+		</component-class>
+	</component>
+	<component>
+		<component-type>
+			org.seasar.teeda.extension.HtmlGridTh
+		</component-type>
+		<component-class>
+			org.seasar.teeda.extension.component.html.HtmlGridTh
+		</component-class>
+	</component>
+	<component>
+		<component-type>
+			org.seasar.teeda.extension.HtmlGridTr
+		</component-type>
+		<component-class>
+			org.seasar.teeda.extension.component.html.HtmlGridTr
 		</component-class>
 	</component>
 

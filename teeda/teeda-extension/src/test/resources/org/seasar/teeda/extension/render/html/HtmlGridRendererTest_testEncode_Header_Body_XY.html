@@ -1,0 +1,31 @@
+<table id="someGridXY">
+	<tr>
+		<td>
+			<div id="someGridXYRightHeader" style="overflow:hidden; width:284px;">
+				<table>
+					<thead>
+						<tr>
+							<th><nobr>th1</nobr></th>
+							<th><nobr>th2</nobr></th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td style="vertical-align:top;">
+			<div id="someGridXYRightBody" style="overflow:scroll; width:300px; height:388px;"
+				onscroll="document.all.someGridXYRightHeader.scrollLeft=this.scrollLeft; document.all.someGridXYLeftBody.scrollTop=this.scrollTop;">
+				<table>
+					<tbody>
+						<tr>
+							<td><nobr>td1</nobr></td>
+							<td><nobr>td2</nobr></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</td>
+	</tr>
+</table>

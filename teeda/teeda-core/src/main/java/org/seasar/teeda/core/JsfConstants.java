@@ -122,6 +122,8 @@ public interface JsfConstants {
 
     String LI_ELEM = "li";
 
+    String NOBR_ELEM = "nobr";
+
     String OPTGROUP_ELEM = "optgroup";
 
     String OPTION_ELEM = "option";
@@ -303,6 +305,8 @@ public interface JsfConstants {
     String ONKEYUP_ATTR = "onkeyup";
 
     String ONRESET_ATTR = "onreset";
+
+    String ONSCROLL_ATTR = "onscroll";
 
     String ONSELECT_ATTR = "onselect";
 
@@ -558,4 +562,5 @@ public interface JsfConstants {
     String NS_SEP = ".";
 
     String JAVASCRIPT_NOT_PERMITTED_PATH = "teeda.JAVASCRIPT_NOT_PERMITTED_PATH";
+
 }

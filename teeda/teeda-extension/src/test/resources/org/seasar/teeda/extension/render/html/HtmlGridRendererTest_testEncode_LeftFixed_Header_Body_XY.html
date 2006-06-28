@@ -1,0 +1,67 @@
+<table id="someGridXY">
+	<tr>
+		<td>
+			<table>
+				<thead>
+					<tr>
+						<th><nobr>th1</nobr></th>
+					</tr>
+				</thead>
+			</table>
+		</td>
+		<td>
+			<div id="someGridXYRightHeader" style="overflow:hidden; width:174px;">
+				<table>
+					<thead>
+						<tr>
+							<th><nobr>th2</nobr></th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td style="vertical-align:top;">
+			<div id="someGridXYLeftBody" style="overflow:hidden; height:372px;">
+				<table>
+					<tbody>
+						<tr>
+							<td><nobr>TD1_1</nobr></td>
+						</tr>
+						<tr>
+							<td><nobr>TD1_2</nobr></td>
+						</tr>
+						<tr>
+							<td><nobr>TD1_3</nobr></td>
+						</tr>
+						<tr>
+							<td><nobr>TD1_4</nobr></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</td>
+		<td style="vertical-align:top;">
+			<div id="someGridXYRightBody" style="overflow:scroll; width:190px; height:388px;"
+				onscroll="document.all.someGridXYRightHeader.scrollLeft=this.scrollLeft; document.all.someGridXYLeftBody.scrollTop=this.scrollTop;">
+				<table>
+					<tbody>
+						<tr>
+							<td><nobr>TD2_1</nobr></td>
+						</tr>
+						<tr>
+							<td><nobr>TD2_2</nobr></td>
+						</tr>
+						<tr>
+							<td><nobr>TD2_3</nobr></td>
+						</tr>
+						<tr>
+							<td><nobr>TD2_4</nobr></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</td>
+	</tr>
+</table>
