@@ -31,6 +31,10 @@ public class BindingUtil {
 
     private BindingUtil() {
     }
+    
+    public static String getExpression(String componentName, String propertyName) {
+        return "#{" + componentName + "." + propertyName + "}";
+    }
 
     public static boolean isValueReference(String value) {
         if (value == null) {

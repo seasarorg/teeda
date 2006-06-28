@@ -24,6 +24,8 @@ import java.util.Set;
 import javax.faces.internal.ValidatorResource;
 import javax.faces.validator.Validator;
 
+import org.seasar.teeda.core.util.BindingUtil;
+
 
 /**
  * @author shot
@@ -37,7 +39,7 @@ public abstract class AbstractValidatorAnnotationHandler implements
     public void registerValidator(String componentName, String propertyName,
             Validator validator) {
 
-        String expression = getExpression(componentName, propertyName);
+        String expression = BindingUtil.getExpression(componentName, propertyName);
         ValidatorResource.addValidator(expression, validator);
         Set expressions = (Set) expressionsMap.get(componentName);
         if (expressions == null) {
@@ -45,10 +47,6 @@ public abstract class AbstractValidatorAnnotationHandler implements
             expressionsMap.put(componentName, expressions);
         }
         expressions.add(expression);
-    }
-
-    protected String getExpression(String componentName, String propertyName) {
-        return "#{" + componentName + "." + propertyName + "}";
     }
 
     public void removeValidators(String componentName) {
