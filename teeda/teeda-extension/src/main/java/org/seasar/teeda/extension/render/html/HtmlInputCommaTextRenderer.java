@@ -72,8 +72,8 @@ public class HtmlInputCommaTextRenderer extends HtmlInputTextRenderer {
             JavaScriptContext scriptContext = new JavaScriptContext();
             scriptContext.loadScript(scriptPath);
             sRoot.addScript(scriptPath, scriptContext);
+            writer.write(sRoot.getAllScripts());
         }
-        writer.write(sRoot.getAllScripts());
 
         writer.startElement(JsfConstants.INPUT_ELEM, htmlInputCommaText);
         RendererUtil.renderAttribute(writer, JsfConstants.TYPE_ATTR,

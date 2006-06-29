@@ -194,6 +194,23 @@ public class HtmlInputCommaTextRendererTest extends RendererTest {
 
         // ## Assert ##
         System.out.println(getResponseText());
+        assertTrue(getResponseText().startsWith("<script"));
+    }
+
+    public void testEncodeEnd_ensureJavaScriptNotOutTwice() throws Exception {
+        ScriptEnhanceUIViewRoot root = new ScriptEnhanceUIViewRoot();
+        htmlInputCommaText.setFraction("4");
+        htmlInputCommaText.setOnblur("hoge();");
+        root.setLocale(Locale.JAPAN);
+        FacesContext context = getFacesContext();
+        context.setViewRoot(root);
+
+        // ## Act ##
+        encodeByRenderer(renderer, context, htmlInputCommaText);
+        encodeByRenderer(renderer, context, htmlInputCommaText);
+
+        // ## Assert ##
+        System.out.println(getResponseText());
     }
 
     private HtmlInputCommaTextRenderer createHtmlInputCommaTextRenderer() {

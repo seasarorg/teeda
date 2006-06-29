@@ -81,8 +81,8 @@ function convertByKey(o) {
   if(o.value.match(/[t]/) != null) {
    o.value=o.value.replace(/[t]/g, "000000000");
   }
-  if(o.value.match(/([^0-9mbt\-\.\,]|[０-９])/)!=null) {
-   o.value=o.value.replace(/([^0-9mbt\-\.\,]|[^mbtMBT]|[０-９])/g,"");
+  if(o.value.match(/([^0-9mbt\-\.\,])/)!=null) {
+   o.value=o.value.replace(/([^0-9mbt\-\.\,]|[^mbtMBT])/g,"");
    return true;
   }
 }

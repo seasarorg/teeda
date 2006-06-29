@@ -23,4 +23,5 @@ import org.seasar.teeda.core.taglib.html.InputTextTag;
  */
 public class InputNumberTextTag extends InputTextTag {
 
+    //TODO impl
 }
