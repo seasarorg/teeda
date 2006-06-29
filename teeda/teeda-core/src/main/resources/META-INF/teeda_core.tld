@@ -349,7 +349,7 @@
   <tag>
     <name>validator</name>
     <tag-class>javax.faces.webapp.ValidatorTag</tag-class>
-    <body-content>JSP</body-content>
+    <body-content>empty</body-content>
     <attribute>
       <name>validatorId</name>
       <required>true</required>
