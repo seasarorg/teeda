@@ -33,6 +33,7 @@ import org.seasar.framework.util.NumberConversionUtil;
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.html.HtmlInputTextRenderer;
+import org.seasar.teeda.core.util.JavaScriptPermissionUtil;
 import org.seasar.teeda.core.util.RendererUtil;
 import org.seasar.teeda.core.util.ValueHolderUtil;
 import org.seasar.teeda.extension.component.HtmlInputCommaText;
@@ -55,7 +56,8 @@ public class HtmlInputCommaTextRenderer extends HtmlInputTextRenderer {
             return;
         }
         UIViewRoot root = context.getViewRoot();
-        if (root instanceof ScriptEnhanceUIViewRoot) {
+        if (root instanceof ScriptEnhanceUIViewRoot
+                && JavaScriptPermissionUtil.isJavaScriptPermitted(context)) {
             encodeHtmlInputCommaTextEnd(context, (HtmlInputCommaText) component);
         } else {
             encodeHtmlInputTextEnd(context, (HtmlInputText) component);

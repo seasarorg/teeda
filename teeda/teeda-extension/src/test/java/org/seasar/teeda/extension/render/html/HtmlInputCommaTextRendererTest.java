@@ -18,10 +18,12 @@ package org.seasar.teeda.extension.render.html;
 import java.util.Locale;
 
 import javax.faces.context.FacesContext;
+import javax.faces.internal.FacesConfigOptions;
 import javax.faces.render.Renderer;
 import javax.faces.render.RendererTest;
 
 import org.custommonkey.xmlunit.Diff;
+import org.seasar.teeda.core.mock.MockExternalContext;
 import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.extension.component.HtmlInputCommaText;
 import org.seasar.teeda.extension.component.ScriptEnhanceUIViewRoot;
@@ -155,8 +157,6 @@ public class HtmlInputCommaTextRendererTest extends RendererTest {
                 "onmousemove=\"p\" />",
                 getResponseText());
 
-        System.out.println(getResponseText());
-
         assertEquals(diff.toString(), true, diff.identical());
     }
 
@@ -194,23 +194,25 @@ public class HtmlInputCommaTextRendererTest extends RendererTest {
 
         // ## Assert ##
         System.out.println(getResponseText());
-        assertTrue(getResponseText().startsWith("<script"));
     }
 
-    public void testEncodeEnd_ensureJavaScriptNotOutTwice() throws Exception {
+    public void testEncodeEnd_withoutJavaScript() throws Exception {
+        // # Arrange #
         ScriptEnhanceUIViewRoot root = new ScriptEnhanceUIViewRoot();
         htmlInputCommaText.setFraction("4");
         htmlInputCommaText.setOnblur("hoge();");
         root.setLocale(Locale.JAPAN);
         FacesContext context = getFacesContext();
+        MockExternalContext extContext = (MockExternalContext) context.getExternalContext();
+        extContext.setRequestPathInfo("/path1/hoge");
+        FacesConfigOptions.setJavascriptNotPermittedPath(new String[]{"/not_path1"});
         context.setViewRoot(root);
 
         // ## Act ##
         encodeByRenderer(renderer, context, htmlInputCommaText);
-        encodeByRenderer(renderer, context, htmlInputCommaText);
 
         // ## Assert ##
-        System.out.println(getResponseText());
+        assertFalse(getResponseText().matches("removeComma(this);"));
     }
 
     private HtmlInputCommaTextRenderer createHtmlInputCommaTextRenderer() {

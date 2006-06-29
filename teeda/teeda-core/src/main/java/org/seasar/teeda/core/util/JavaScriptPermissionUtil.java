@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -18,9 +18,11 @@ package org.seasar.teeda.core.util;
 import javax.faces.context.FacesContext;
 import javax.faces.internal.FacesConfigOptions;
 
+import org.seasar.framework.util.StringUtil;
+
 /**
  * @author shot
- * 
+ *
  */
 public class JavaScriptPermissionUtil {
 
@@ -41,8 +43,10 @@ public class JavaScriptPermissionUtil {
         for (int i = 0; i < javascriptNotAllowedPath.length; i++) {
             String notAllowedPath = adjustNotAllowedPath(javascriptNotAllowedPath[i]);
             if (requestServletPath != null
-                    && requestServletPath.startsWith(notAllowedPath)
-                    || (requestServletPath == null && notAllowedPath.equals("/"))) {
+                    && StringUtil
+                            .startsWith(requestServletPath, notAllowedPath)
+                    || (requestServletPath == null && notAllowedPath
+                            .equals("/"))) {
                 javaScriptAllowed = false;
                 break;
             }
