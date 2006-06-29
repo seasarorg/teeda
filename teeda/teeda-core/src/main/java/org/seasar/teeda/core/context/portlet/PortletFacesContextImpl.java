@@ -232,9 +232,7 @@ public class PortletFacesContextImpl extends FacesContext {
         assertNotReleased();
         this.externalContext = externalContext;
         //TODO this code is needed Portlet render method. needs to review FacesContext handling..
-        if (FacesContext.getCurrentInstance() == null) {
-            FacesContext.setCurrentInstance(this);
-        }
+        FacesContext.setCurrentInstance(this);
     }
 
 }
