@@ -10,7 +10,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
 -->
@@ -23,7 +23,7 @@
   <short-name>f</short-name>
   <uri>http://java.sun.com/jsf/core</uri>
   <description>
-      JSF Core Tag Library 
+      JSF Core Tag Library
   </description>
 
   <tag>
@@ -349,7 +349,7 @@
   <tag>
     <name>validator</name>
     <tag-class>javax.faces.webapp.ValidatorTag</tag-class>
-    <body-content>empty</body-content>
+    <body-content>JSP</body-content>
     <attribute>
       <name>validatorId</name>
       <required>true</required>

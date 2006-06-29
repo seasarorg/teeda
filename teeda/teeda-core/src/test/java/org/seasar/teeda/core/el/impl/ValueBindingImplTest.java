@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -108,6 +108,16 @@ public class ValueBindingImplTest extends TeedaTestCase {
                 createELParser());
         Object o = vb.getValue(getFacesContext());
         assertTrue(((Boolean) o).booleanValue());
+    }
+
+    public void testGetValueSimple6() {
+        E e = new E();
+        MockVariableResolver resolver = getVariableResolver();
+        resolver.putValue("a", new Integer(1));
+        ValueBinding vb = new ValueBindingImpl(getApplication(), "#{a == 1}",
+                createELParser());
+        Object o = vb.getValue(getFacesContext());
+        assertEquals(Boolean.TRUE, o);
     }
 
     public void testGetMapValue1() {
@@ -533,4 +543,15 @@ public class ValueBindingImplTest extends TeedaTestCase {
         }
     }
 
+    public static class E {
+        int a;
+
+        public int getA() {
+            return a;
+        }
+
+        public void setA(int a) {
+            this.a = a;
+        }
+    }
 }

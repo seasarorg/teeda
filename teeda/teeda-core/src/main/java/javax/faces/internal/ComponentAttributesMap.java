@@ -9,18 +9,13 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
 package javax.faces.internal;
 
-import java.beans.BeanInfo;
-import java.beans.IntrospectionException;
-import java.beans.Introspector;
-import java.beans.PropertyDescriptor;
 import java.io.Serializable;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.HashMap;
@@ -28,17 +23,20 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
 
+import org.seasar.framework.beans.BeanDesc;
+import org.seasar.framework.beans.PropertyDesc;
+import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.framework.util.AssertionUtil;
+import org.seasar.framework.util.MethodUtil;
 
 /**
  * @author shot
  * @author manhole
- * 
+ *
  * This class might be changed without notice. Please do not use it
  * excluding the JSF specification part.
  */
@@ -50,7 +48,7 @@ public class ComponentAttributesMap implements Map, Serializable {
 
     private Map attributes = null;
 
-    private Map propertyDescriptorMap = null;
+    private BeanDesc beanDesc = null;
 
     private static Object[] EMPTY_ARGS = new Object[0];
 
@@ -61,8 +59,7 @@ public class ComponentAttributesMap implements Map, Serializable {
     public ComponentAttributesMap(UIComponent component, Map attributes) {
         this.component = component;
         this.attributes = attributes;
-        propertyDescriptorMap = new HashMap();
-        setupPropertyDescriptor();
+        setupPropertyDesc();
     }
 
     public int size() {
@@ -77,8 +74,9 @@ public class ComponentAttributesMap implements Map, Serializable {
         return attributes.isEmpty();
     }
 
+    //it is a specification of JSF1.1.
     public boolean containsKey(Object key) {
-        if (getPropertyDescriptor((String) key) != null) {
+        if (beanDesc.hasPropertyDesc((String) key)) {
             return false;
         } else {
             return attributes.containsKey(key);
@@ -109,9 +107,10 @@ public class ComponentAttributesMap implements Map, Serializable {
     }
 
     public Object get(Object key) {
-        PropertyDescriptor propertyDescriptor = getPropertyDescriptor((String) key);
-        if (propertyDescriptor != null) {
-            Object value = getComponentProperty(propertyDescriptor);
+        String k = (String) key;
+        if (beanDesc.hasPropertyDesc(k)) {
+            PropertyDesc propertyDesc = beanDesc.getPropertyDesc(k);
+            Object value = getComponentProperty(propertyDesc);
             if (value != null) {
                 return value;
             }
@@ -124,8 +123,8 @@ public class ComponentAttributesMap implements Map, Serializable {
     }
 
     public Object remove(Object key) {
-        PropertyDescriptor propertyDescriptor = getPropertyDescriptor((String) key);
-        if (propertyDescriptor != null) {
+        String k = (String) key;
+        if (beanDesc.hasPropertyDesc(k)) {
             throw new IllegalArgumentException(
                     "can't remove component property");
         }
@@ -135,84 +134,52 @@ public class ComponentAttributesMap implements Map, Serializable {
     public Object put(Object key, Object value) {
         AssertionUtil.assertNotNull("key", key);
         AssertionUtil.assertNotNull("value", value);
-        verifyKeyIsString(key);
-
-        PropertyDescriptor propertyDescriptor = getPropertyDescriptor((String) key);
+        assertKeyIsString(key);
+        String k = (String) key;
+        PropertyDesc propertyDesc = null;
+        if (beanDesc.hasPropertyDesc(k)) {
+            propertyDesc = beanDesc.getPropertyDesc(k);
+        }
         Object returnValue = null;
-        if (propertyDescriptor != null) {
-            if (hasReadMethod(propertyDescriptor)) {
-                returnValue = getComponentProperty(propertyDescriptor);
-                setComponentProperty(propertyDescriptor, value);
-            }
+        if (propertyDesc != null && propertyDesc.hasReadMethod()) {
+            returnValue = getComponentProperty(propertyDesc);
+            setComponentProperty(propertyDesc, value);
         } else {
             returnValue = attributes.put(key, value);
         }
         return returnValue;
     }
 
-    private void verifyKeyIsString(Object key) {
-        if (!(key instanceof String)) {
-            throw new ClassCastException("key must be a String");
-        }
-    }
-
-    private void setupPropertyDescriptor() {
+    private void setupPropertyDesc() {
         Class clazz = component.getClass();
-        BeanInfo beanInfo = null;
-        try {
-            beanInfo = Introspector.getBeanInfo(clazz);
-        } catch (IntrospectionException e) {
-            throw new FacesException(e);
-        }
-        PropertyDescriptor[] propertyDescriptors = beanInfo
-                .getPropertyDescriptors();
-        for (int i = 0; i < propertyDescriptors.length; i++) {
-            PropertyDescriptor propertyDescriptor = propertyDescriptors[i];
-            if (hasReadMethod(propertyDescriptor)) {
-                propertyDescriptorMap.put(propertyDescriptor.getName(),
-                        propertyDescriptor);
-            }
-        }
+        beanDesc = BeanDescFactory.getBeanDesc(clazz);
     }
 
-    private PropertyDescriptor getPropertyDescriptor(String key) {
-        return (PropertyDescriptor) propertyDescriptorMap.get(key);
-    }
-
-    private void setComponentProperty(PropertyDescriptor propertyDescriptor,
-            Object value) {
-
-        Method writeMethod = propertyDescriptor.getWriteMethod();
-        if (writeMethod == null) {
+    //TODO need throwing FacesException when invoke fail?
+    private void setComponentProperty(PropertyDesc propertyDesc, Object value) {
+        if (propertyDesc.hasWriteMethod()) {
+            Method m = propertyDesc.getWriteMethod();
+            MethodUtil.invoke(m, component, new Object[] { value });
+        } else {
             throw new IllegalArgumentException("component property ["
-                    + propertyDescriptor.getName() + "] is not writeable");
-        }
-        try {
-            writeMethod.invoke(component, new Object[] { value });
-        } catch (IllegalAccessException e) {
-            throw new FacesException(e);
-        } catch (InvocationTargetException e) {
-            throw new FacesException(e.getTargetException());
+                    + propertyDesc.getPropertyName() + "] is not writeable");
         }
     }
 
-    private Object getComponentProperty(PropertyDescriptor propertyDescriptor) {
-        Method readMethod = propertyDescriptor.getReadMethod();
-        try {
-            return readMethod.invoke(component, EMPTY_ARGS);
-        } catch (IllegalAccessException e) {
-            throw new FacesException(e);
-        } catch (InvocationTargetException e) {
-            throw new FacesException(e.getTargetException());
-        }
+    //TODO need throwing FacesException?
+    private Object getComponentProperty(PropertyDesc propertyDesc) {
+        Method m = propertyDesc.getReadMethod();
+        return MethodUtil.invoke(m, component, EMPTY_ARGS);
     }
 
     public Map getAttributesActual() {
         return attributes;
     }
 
-    private static boolean hasReadMethod(PropertyDescriptor propertyDescriptor) {
-        return (propertyDescriptor.getReadMethod() != null);
+    private static void assertKeyIsString(Object key) {
+        if (!(key instanceof String)) {
+            throw new ClassCastException("key must be a String");
+        }
     }
 
 }

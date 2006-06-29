@@ -19,7 +19,7 @@ import java.util.Locale;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.internal.ConvertUtils;
+import javax.faces.internal.ConvertUtil;
 
 import org.seasar.framework.util.AssertionUtil;
 import org.seasar.framework.util.NumberConversionUtil;
@@ -50,9 +50,9 @@ public class LongConverter implements Converter {
         try {
             return Long.valueOf(value);
         } catch (Exception e) {
-            Object[] args = ConvertUtils.createExceptionMessageArgs(component,
+            Object[] args = ConvertUtil.createExceptionMessageArgs(component,
                     value);
-            throw ConvertUtils.wrappedByConverterException(this, context, args,
+            throw ConvertUtil.wrappedByConverterException(this, context, args,
                     e);
         }
     }
@@ -68,7 +68,7 @@ public class LongConverter implements Converter {
             return (value instanceof String) ? (String) value : (Long
                     .toString(((Long) value).longValue()));
         } catch (Exception e) {
-            throw ConvertUtils.wrappedByConverterException(e);
+            throw ConvertUtil.wrappedByConverterException(e);
         }
     }
 }

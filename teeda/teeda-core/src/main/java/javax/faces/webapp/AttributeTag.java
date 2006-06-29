@@ -16,7 +16,7 @@
 package javax.faces.webapp;
 
 import javax.faces.component.UIComponent;
-import javax.faces.internal.WebAppUtils;
+import javax.faces.internal.WebAppUtil;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
@@ -55,12 +55,12 @@ public class AttributeTag extends TagSupport {
         }
         String nameObj = name;
         if (UIComponentTag.isValueReference(name)) {
-            nameObj = (String) WebAppUtils
+            nameObj = (String) WebAppUtil
                     .getValueFromCreatedValueBinding(name);
         }
         Object valueObj = value;
         if (UIComponentTag.isValueReference(value)) {
-            valueObj = WebAppUtils.getValueFromCreatedValueBinding(value);
+            valueObj = WebAppUtil.getValueFromCreatedValueBinding(value);
         }
         if (component.getAttributes().get(nameObj) == null) {
             component.getAttributes().put(nameObj, valueObj);

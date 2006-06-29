@@ -9,31 +9,18 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.core.util;
+package org.seasar.teeda.extension.taglib;
 
-import javax.faces.context.FacesContext;
-import javax.faces.el.ValueBinding;
-import javax.faces.webapp.UIComponentTag;
+import org.seasar.teeda.core.taglib.html.InputTextTag;
 
 /**
  * @author shot
+ *
  */
-public class ValueBindingUtil {
-
-    private ValueBindingUtil() {
-    }
-
-    public static Object getValue(FacesContext context, String value) {
-        if (value != null && UIComponentTag.isValueReference(value)) {
-            ValueBinding vb = context.getApplication()
-                    .createValueBinding(value);
-            return vb.getValue(context);
-        }
-        return null;
-    }
+public class InputNumberTextTag extends InputTextTag {
 
 }

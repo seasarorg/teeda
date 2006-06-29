@@ -25,7 +25,7 @@ import java.util.Locale;
 import javax.faces.component.StateHolder;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.internal.ConvertUtils;
+import javax.faces.internal.ConvertUtil;
 
 import org.seasar.framework.util.AssertionUtil;
 
@@ -94,9 +94,9 @@ public class NumberConverter implements Converter, StateHolder {
         try {
             return parser.parse(value);
         } catch (ParseException e) {
-            Object[] args = ConvertUtils.createExceptionMessageArgs(component,
+            Object[] args = ConvertUtil.createExceptionMessageArgs(component,
                     value);
-            throw ConvertUtils.wrappedByConverterException(this, context, args,
+            throw ConvertUtil.wrappedByConverterException(this, context, args,
                     e);
         }
     }
@@ -123,7 +123,7 @@ public class NumberConverter implements Converter, StateHolder {
         try {
             return formatter.format(value);
         } catch (Exception e) {
-            throw ConvertUtils.wrappedByConverterException(e);
+            throw ConvertUtil.wrappedByConverterException(e);
         }
     }
 

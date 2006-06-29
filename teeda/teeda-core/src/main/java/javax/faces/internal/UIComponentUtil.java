@@ -9,11 +9,15 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
 package javax.faces.internal;
+
+import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
@@ -24,12 +28,18 @@ import javax.faces.el.MethodBinding;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
+import org.seasar.framework.beans.BeanDesc;
+import org.seasar.framework.beans.PropertyDesc;
+import org.seasar.framework.beans.factory.BeanDescFactory;
+import org.seasar.framework.util.ArrayUtil;
 import org.seasar.teeda.core.JsfConstants;
 
 /**
  * @author manhole
  */
 public class UIComponentUtil {
+
+    private static final IgnoreComponent DEFAULT_IGNORE = new IgnoreComponent();
 
     private UIComponentUtil() {
     }
@@ -110,4 +120,31 @@ public class UIComponentUtil {
         }
     }
 
+    public static Map getAllAttributesAndProperties(UIComponent component) {
+        return getAllAttributesAndProperties(component, DEFAULT_IGNORE);
+    }
+
+    public static Map getAllAttributesAndProperties(UIComponent component,
+            IgnoreComponent ignore) {
+        Map map = new HashMap();
+        BeanDesc beanDesc = BeanDescFactory.getBeanDesc(component.getClass());
+        for (int i = 0; i < beanDesc.getPropertyDescSize(); i++) {
+            PropertyDesc propertyDesc = beanDesc.getPropertyDesc(i);
+            Method m = propertyDesc.getReadMethod();
+            if (propertyDesc.hasReadMethod() && isPublicNoParameterMethod(m)) {
+                if (ArrayUtil.contains(ignore.getIgnoreComponentNames(),
+                        propertyDesc.getPropertyName())) {
+                    continue;
+                }
+                map.put(propertyDesc.getPropertyName(), propertyDesc
+                        .getValue(component));
+            }
+        }
+        map.putAll(component.getAttributes());
+        return map;
+    }
+
+    private static boolean isPublicNoParameterMethod(Method m) {
+        return ModifierUtil.isPublic(m) && m.getParameterTypes().length == 0;
+    }
 }

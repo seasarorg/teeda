@@ -82,7 +82,7 @@ public class UIForm extends UIComponentBase implements NamingContainer {
         }
         for (Iterator children = getFacetsAndChildren(); children.hasNext();) {
             UIComponent component = (UIComponent) children.next();
-            ComponentUtils_.processAppropriatePhaseAction(context, component,
+            ComponentUtil_.processAppropriatePhaseAction(context, component,
                     phase);
         }
     }

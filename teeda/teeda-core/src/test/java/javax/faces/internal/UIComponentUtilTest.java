@@ -9,25 +9,25 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
 package javax.faces.internal;
 
-import javax.faces.component.UIComponent;
-import javax.faces.component.html.HtmlInputText;
-import javax.faces.internal.UIComponentUtil;
-import javax.faces.internal.UIDefaultAttribute;
+import java.util.Map;
 
-import junit.framework.TestCase;
+import javax.faces.component.UIComponent;
+import javax.faces.component.UIComponentBase;
+import javax.faces.component.html.HtmlInputText;
 
 import org.seasar.teeda.core.mock.MockUIComponentBase;
+import org.seasar.teeda.core.unit.TeedaTestCase;
 
 /**
  * @author manhole
  */
-public class UIComponentUtilTest extends TestCase {
+public class UIComponentUtilTest extends TeedaTestCase {
 
     public void testIsDisabled() throws Exception {
         {
@@ -86,9 +86,26 @@ public class UIComponentUtilTest extends TestCase {
         component.setId("aaa");
         assertEquals("aaa", UIComponentUtil.getLabel(component));
     }
-    
+
+    public void testGetAllAttributesAndProperties() throws Exception {
+        MockNoComponent component = new MockNoComponent();
+        component.setHoge("aaa");
+        Map map = UIComponentUtil.getAllAttributesAndProperties(component);
+        assertEquals("aaa", map.get("hoge"));
+    }
+
+    public void testGetAllAttributesAndProperties_setIgnore() throws Exception {
+        MockNoComponent component = new MockNoComponent();
+        component.setHoge("aaa");
+        IgnoreComponent ignore = new IgnoreComponent();
+        ignore.addIgnoreComponentName("hoge");
+        ignore.addIgnoreComponentName("id");
+        Map map = UIComponentUtil.getAllAttributesAndProperties(component, ignore);
+        assertTrue(map.size() == 0);
+    }
+
     public static class MockHtmlInputText extends HtmlInputText {
-        
+
         private String label_;
 
         public String getLabel() {
@@ -98,7 +115,23 @@ public class UIComponentUtilTest extends TestCase {
         public void setLabel(String label) {
             label_ = label;
         }
-        
-        
+    }
+
+    public static class MockNoComponent extends UIComponentBase {
+
+        private String hoge;
+
+        public String getHoge() {
+            return hoge;
+        }
+
+        public void setHoge(String hoge) {
+            this.hoge = hoge;
+        }
+
+        public String getFamily() {
+            return "none";
+        }
+
     }
 }

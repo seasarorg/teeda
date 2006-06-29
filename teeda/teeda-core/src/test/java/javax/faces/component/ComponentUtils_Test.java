@@ -47,11 +47,11 @@ public class ComponentUtils_Test extends TeedaTestCase {
             throws Exception {
         List notify = new LinkedList();
         MockNotifyUIComponent component = new MockNotifyUIComponent(notify);
-        ComponentUtils_.processAppropriatePhaseAction(getFacesContext(),
+        ComponentUtil_.processAppropriatePhaseAction(getFacesContext(),
                 component, PhaseId.APPLY_REQUEST_VALUES);
-        ComponentUtils_.processAppropriatePhaseAction(getFacesContext(),
+        ComponentUtil_.processAppropriatePhaseAction(getFacesContext(),
                 component, PhaseId.UPDATE_MODEL_VALUES);
-        ComponentUtils_.processAppropriatePhaseAction(getFacesContext(),
+        ComponentUtil_.processAppropriatePhaseAction(getFacesContext(),
                 component, PhaseId.PROCESS_VALIDATIONS);
         assertEquals(DECODE, notify.get(0));
         assertEquals(UPDATE, notify.get(1));
@@ -63,7 +63,7 @@ public class ComponentUtils_Test extends TeedaTestCase {
         List notify = new LinkedList();
         MockNotifyUIComponent component = new MockNotifyUIComponent(notify);
         try {
-            ComponentUtils_.processAppropriatePhaseAction(getFacesContext(),
+            ComponentUtil_.processAppropriatePhaseAction(getFacesContext(),
                     component, PhaseId.INVOKE_APPLICATION);
             fail();
         } catch (IllegalArgumentException expected) {
@@ -77,7 +77,7 @@ public class ComponentUtils_Test extends TeedaTestCase {
         MockValueBinding vb = new MockValueBinding();
         vb.setValue(getFacesContext(), "HOGE");
         component.setValueBinding("hoge", vb);
-        Object o = ComponentUtils_.getValueBindingValue(component, "hoge");
+        Object o = ComponentUtil_.getValueBindingValue(component, "hoge");
         assertEquals("HOGE", o);
     }
 
@@ -86,7 +86,7 @@ public class ComponentUtils_Test extends TeedaTestCase {
         MockValueBinding vb = new MockValueBinding();
         vb.setValue(getFacesContext(), "HOGE");
         component.setValueBinding("foo", vb);
-        Object o = ComponentUtils_.getValueBindingValue(component, "hoge");
+        Object o = ComponentUtil_.getValueBindingValue(component, "hoge");
         assertNull(o);
     }
 
@@ -95,7 +95,7 @@ public class ComponentUtils_Test extends TeedaTestCase {
         MockValueBinding vb = new MockValueBinding();
         vb.setType(MockUIComponent.class);
         component.setValueBinding("foo", vb);
-        Class type = ComponentUtils_.getValueBindingType(component, "foo");
+        Class type = ComponentUtil_.getValueBindingType(component, "foo");
         assertEquals(MockUIComponent.class, type);
     }
 
@@ -104,36 +104,36 @@ public class ComponentUtils_Test extends TeedaTestCase {
         MockValueBinding vb = new MockValueBinding();
         vb.setType(MockUIComponent.class);
         component.setValueBinding("foo", vb);
-        Class type = ComponentUtils_.getValueBindingType(component, "bar");
+        Class type = ComponentUtil_.getValueBindingType(component, "bar");
         assertNull(type);
     }
 
     public void testConvertToBoolean() throws Exception {
-        assertEquals(Boolean.TRUE, ComponentUtils_.convertToBoolean(true));
-        assertEquals(Boolean.FALSE, ComponentUtils_.convertToBoolean(false));
+        assertEquals(Boolean.TRUE, ComponentUtil_.convertToBoolean(true));
+        assertEquals(Boolean.FALSE, ComponentUtil_.convertToBoolean(false));
     }
 
     public void testConvertToPrimitiveBoolean() throws Exception {
-        assertTrue(ComponentUtils_.convertToPrimitiveBoolean(Boolean.TRUE));
-        assertFalse(ComponentUtils_.convertToPrimitiveBoolean(Boolean.FALSE));
-        assertFalse(ComponentUtils_.convertToPrimitiveBoolean(null));
-        assertFalse(ComponentUtils_.convertToPrimitiveBoolean("hoge"));
+        assertTrue(ComponentUtil_.convertToPrimitiveBoolean(Boolean.TRUE));
+        assertFalse(ComponentUtil_.convertToPrimitiveBoolean(Boolean.FALSE));
+        assertFalse(ComponentUtil_.convertToPrimitiveBoolean(null));
+        assertFalse(ComponentUtil_.convertToPrimitiveBoolean("hoge"));
     }
 
     public void testCreateConverter() throws Exception {
         getApplication().addConverter(MockUIComponent.class,
                 MockConverter.class.getName());
-        Converter c = ComponentUtils_.createConverter(getFacesContext(),
+        Converter c = ComponentUtil_.createConverter(getFacesContext(),
                 MockUIComponent.class);
         assertNotNull(c);
         assertTrue(c instanceof MockConverter);
     }
 
     public void testIsPerformNoConversion() throws Exception {
-        assertTrue(ComponentUtils_.isPerformNoConversion(null));
-        assertTrue(ComponentUtils_.isPerformNoConversion(String.class));
-        assertTrue(ComponentUtils_.isPerformNoConversion(Object.class));
-        assertFalse(ComponentUtils_
+        assertTrue(ComponentUtil_.isPerformNoConversion(null));
+        assertTrue(ComponentUtil_.isPerformNoConversion(String.class));
+        assertTrue(ComponentUtil_.isPerformNoConversion(Object.class));
+        assertFalse(ComponentUtil_
                 .isPerformNoConversion(MockUIComponent.class));
     }
 
@@ -142,20 +142,20 @@ public class ComponentUtils_Test extends TeedaTestCase {
         Locale org = handler.calculateLocale(getFacesContext());
         handler.setLocale(Locale.JAPANESE);
         setViewHandler(handler);
-        Locale l = ComponentUtils_.calculateLocale(getFacesContext());
+        Locale l = ComponentUtil_.calculateLocale(getFacesContext());
         assertEquals(Locale.JAPANESE, l);
         getViewHandler().setLocale(org);
     }
 
     public void testGetLocale() throws Exception {
         getFacesContext().getViewRoot().setLocale(Locale.CANADA);
-        assertEquals(Locale.CANADA, ComponentUtils_
+        assertEquals(Locale.CANADA, ComponentUtil_
                 .getLocale(getFacesContext()));
     }
 
     public void testIsLocaleShort_null() throws Exception {
         try {
-            ComponentUtils_.isLocaleShort(null);
+            ComponentUtil_.isLocaleShort(null);
             fail();
         } catch (NullPointerException expected) {
             success();
@@ -163,18 +163,18 @@ public class ComponentUtils_Test extends TeedaTestCase {
     }
 
     public void testIsLocaleShort_short() throws Exception {
-        assertTrue(ComponentUtils_.isLocaleShort("en"));
-        assertTrue(ComponentUtils_.isLocaleShort("ja"));
+        assertTrue(ComponentUtil_.isLocaleShort("en"));
+        assertTrue(ComponentUtil_.isLocaleShort("ja"));
     }
 
     public void testIsLocaleShort_longName() throws Exception {
-        assertFalse(ComponentUtils_.isLocaleShort(Locale.US.toString()));
-        assertFalse(ComponentUtils_.isLocaleShort(Locale.JAPAN.toString()));
+        assertFalse(ComponentUtil_.isLocaleShort(Locale.US.toString()));
+        assertFalse(ComponentUtil_.isLocaleShort(Locale.JAPAN.toString()));
     }
 
     public void testIsLocaleLong_null() throws Exception {
         try {
-            ComponentUtils_.isLocaleLong(null);
+            ComponentUtil_.isLocaleLong(null);
             fail();
         } catch (NullPointerException expected) {
             success();
@@ -182,15 +182,15 @@ public class ComponentUtils_Test extends TeedaTestCase {
     }
 
     public void testIsLocaleLong_long() throws Exception {
-        assertTrue(ComponentUtils_.isLocaleLong(Locale.US.toString()));
-        assertTrue(ComponentUtils_.isLocaleLong(Locale.JAPAN.toString()));
+        assertTrue(ComponentUtil_.isLocaleLong(Locale.US.toString()));
+        assertTrue(ComponentUtil_.isLocaleLong(Locale.JAPAN.toString()));
     }
 
     public void testValueMatches_allValuesAreNull() throws Exception {
         SelectItem item = new SelectItem();
         List list = new ArrayList();
         list.add(item);
-        assertTrue(ComponentUtils_.valueMatches(null, list.iterator()));
+        assertTrue(ComponentUtil_.valueMatches(null, list.iterator()));
     }
 
     public void testValueMatches_allValuesAreNotNull() throws Exception {
@@ -198,7 +198,7 @@ public class ComponentUtils_Test extends TeedaTestCase {
         item.setValue("hoge");
         List list = new ArrayList();
         list.add(item);
-        assertTrue(ComponentUtils_.valueMatches("hoge", list.iterator()));
+        assertTrue(ComponentUtil_.valueMatches("hoge", list.iterator()));
     }
 
     public void testValueMatches_hasSelectItemGroup() throws Exception {
@@ -208,12 +208,12 @@ public class ComponentUtils_Test extends TeedaTestCase {
         group.setSelectItems(new SelectItem[] { item });
         List list = new ArrayList();
         list.add(group);
-        assertTrue(ComponentUtils_.valueMatches("aaa", list.iterator()));
+        assertTrue(ComponentUtil_.valueMatches("aaa", list.iterator()));
     }
 
     public void testIsObjectArray() throws Exception {
-        assertTrue(ComponentUtils_.isObjectArray(new Object[] {}));
-        assertFalse(ComponentUtils_.isObjectArray("hoge"));
+        assertTrue(ComponentUtil_.isObjectArray(new Object[] {}));
+        assertFalse(ComponentUtil_.isObjectArray("hoge"));
     }
 
     private static class MockNotifyUIComponent extends MockUIComponent {

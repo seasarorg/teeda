@@ -60,7 +60,7 @@ public class UIViewRoot extends UIComponentBase {
         if (renderKitId != null) {
             return renderKitId;
         }
-        return (String) ComponentUtils_.getValueBindingValue(this,
+        return (String) ComponentUtil_.getValueBindingValue(this,
                 "renderKitId");
     }
 
@@ -129,16 +129,16 @@ public class UIViewRoot extends UIComponentBase {
         Locale locale = null;
         FacesContext context = getFacesContext();
         if (getValueBinding("locale") != null) {
-            Object obj = ComponentUtils_.getValueBindingValue(this, "locale");
+            Object obj = ComponentUtil_.getValueBindingValue(this, "locale");
             if (obj == null) {
-                locale = ComponentUtils_.calculateLocale(context);
+                locale = ComponentUtil_.calculateLocale(context);
             } else if (obj instanceof Locale) {
                 locale = (Locale) obj;
             } else if (obj instanceof String) {
                 locale = getLocaleFromString((String) obj);
             }
         } else {
-            locale = ComponentUtils_.calculateLocale(context);
+            locale = ComponentUtil_.calculateLocale(context);
         }
         return locale;
     }
@@ -166,9 +166,9 @@ public class UIViewRoot extends UIComponentBase {
 
     private Locale getLocaleFromString(String localeStr) {
         Locale locale = Locale.getDefault();
-        if (ComponentUtils_.isLocaleShort(localeStr)) {
+        if (ComponentUtil_.isLocaleShort(localeStr)) {
             locale = new Locale(localeStr);
-        } else if (ComponentUtils_.isLocaleLong(localeStr)) {
+        } else if (ComponentUtil_.isLocaleLong(localeStr)) {
             String language = localeStr.substring(0, 2);
             String country = localeStr.substring(3, 5);
             locale = new Locale(language, country);

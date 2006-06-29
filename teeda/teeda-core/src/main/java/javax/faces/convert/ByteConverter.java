@@ -17,7 +17,7 @@ package javax.faces.convert;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.internal.ConvertUtils;
+import javax.faces.internal.ConvertUtil;
 
 import org.seasar.framework.util.AssertionUtil;
 
@@ -42,9 +42,9 @@ public class ByteConverter implements Converter {
         try {
             return Byte.valueOf(value);
         } catch (Exception e) {
-            Object[] args = ConvertUtils.createExceptionMessageArgs(component,
+            Object[] args = ConvertUtil.createExceptionMessageArgs(component,
                     value);
-            throw ConvertUtils.wrappedByConverterException(this, context, args,
+            throw ConvertUtil.wrappedByConverterException(this, context, args,
                     e);
         }
     }
@@ -60,7 +60,7 @@ public class ByteConverter implements Converter {
             return (value instanceof String) ? (String) value : Byte
                     .toString(((Byte) value).byteValue());
         } catch (Exception e) {
-            throw ConvertUtils.wrappedByConverterException(e);
+            throw ConvertUtil.wrappedByConverterException(e);
 
         }
     }

@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -92,7 +92,7 @@ public class UIData extends UIComponentBase implements NamingContainer {
         if (firstSet) {
             return first;
         }
-        Integer firstValue = (Integer) ComponentUtils_.getValueBindingValue(
+        Integer firstValue = (Integer) ComponentUtil_.getValueBindingValue(
                 this, FIRST_BINDING_NAME);
         return (firstValue != null) ? firstValue.intValue() : first;
     }
@@ -163,7 +163,7 @@ public class UIData extends UIComponentBase implements NamingContainer {
         if (rowsSet) {
             return rows;
         }
-        Integer value = (Integer) ComponentUtils_.getValueBindingValue(this,
+        Integer value = (Integer) ComponentUtil_.getValueBindingValue(this,
                 ROWS_BINDING_NAME);
         return (value != null) ? value.intValue() : rows;
     }
@@ -213,7 +213,7 @@ public class UIData extends UIComponentBase implements NamingContainer {
         if (value != null) {
             return value;
         }
-        return ComponentUtils_.getValueBindingValue(this, VALUE_BINDING_NAME);
+        return ComponentUtil_.getValueBindingValue(this, VALUE_BINDING_NAME);
     }
 
     public void setValue(Object value) {
@@ -309,7 +309,7 @@ public class UIData extends UIComponentBase implements NamingContainer {
         for (Iterator facets = getFacets().keySet().iterator(); facets
                 .hasNext();) {
             UIComponent facet = (UIComponent) getFacets().get(facets.next());
-            ComponentUtils_.processAppropriatePhaseAction(context, facet,
+            ComponentUtil_.processAppropriatePhaseAction(context, facet,
                     phaseId);
         }
     }
@@ -328,7 +328,7 @@ public class UIData extends UIComponentBase implements NamingContainer {
                     .hasNext();) {
                 UIComponent columnFacet = (UIComponent) column.getFacets().get(
                         columnFacets.next());
-                ComponentUtils_.processAppropriatePhaseAction(context,
+                ComponentUtil_.processAppropriatePhaseAction(context,
                         columnFacet, phaseId);
             }
         }
@@ -355,7 +355,7 @@ public class UIData extends UIComponentBase implements NamingContainer {
                     if (!grandChild.isRendered()) {
                         continue;
                     }
-                    ComponentUtils_.processAppropriatePhaseAction(context,
+                    ComponentUtil_.processAppropriatePhaseAction(context,
                             grandChild, phaseId);
                 }
             }

@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -27,8 +27,9 @@ import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.internal.PageContextUtil;
+import javax.faces.internal.ValueBindingUtil;
 import javax.faces.internal.WebAppConstants;
-import javax.faces.internal.WebAppUtils;
+import javax.faces.internal.WebAppUtil;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.Tag;
@@ -328,9 +329,8 @@ public abstract class UIComponentTag implements Tag {
     protected void setProperties(UIComponent component) {
         if (rendered != null) {
             if (isValueReference(rendered)) {
-                component.setValueBinding("rendered", WebAppUtils
-                        .createValueBindingByApplication(component, context,
-                                rendered));
+                component.setValueBinding("rendered", ValueBindingUtil
+                        .createValueBinding(context, rendered));
             } else {
                 component.setRendered(Boolean.valueOf(rendered).booleanValue());
             }
@@ -343,7 +343,7 @@ public abstract class UIComponentTag implements Tag {
     protected void setupResponseWriter() {
         ResponseWriter writer = context.getResponseWriter();
         if (writer == null) {
-            writer = WebAppUtils.buildResponseWriter(context, pageContext);
+            writer = WebAppUtil.buildResponseWriter(context, pageContext);
             context.setResponseWriter(writer);
         }
     }
@@ -363,7 +363,7 @@ public abstract class UIComponentTag implements Tag {
     }
 
     private UIComponent createComponent(FacesContext context, String newId) {
-        UIComponent component = WebAppUtils.createComponent(context, binding,
+        UIComponent component = WebAppUtil.createComponent(context, binding,
                 getComponentType());
         component.setId(newId);
         setProperties(component);
@@ -422,7 +422,7 @@ public abstract class UIComponentTag implements Tag {
     }
 
     private void removeOldChildren() {
-        List oldList = WebAppUtils.getCreatedComponentIds(component);
+        List oldList = WebAppUtil.getCreatedComponentIds(component);
         if (oldList == null) {
             saveChildrenComponentAttribute();
             return;
@@ -440,7 +440,7 @@ public abstract class UIComponentTag implements Tag {
     }
 
     private void removeOldFacets() {
-        List oldList = WebAppUtils.getCreatedFacetNames(component);
+        List oldList = WebAppUtil.getCreatedFacetNames(component);
         if (oldList == null) {
             saveFacetsComponentAttribute();
             return;
@@ -456,18 +456,18 @@ public abstract class UIComponentTag implements Tag {
 
     private void saveChildrenComponentAttribute() {
         if (createdComponents != null) {
-            WebAppUtils.setCreatedComponentIds(component, createdComponents);
+            WebAppUtil.setCreatedComponentIds(component, createdComponents);
         } else {
-            WebAppUtils.removeCreatedComponentIds(component);
+            WebAppUtil.removeCreatedComponentIds(component);
         }
         createdComponents = null;
     }
 
     private void saveFacetsComponentAttribute() {
         if (createdFacets != null) {
-            WebAppUtils.setCreatedFacetNames(component, createdFacets);
+            WebAppUtil.setCreatedFacetNames(component, createdFacets);
         } else {
-            WebAppUtils.removeCreatedFacetNames(component);
+            WebAppUtil.removeCreatedFacetNames(component);
         }
         createdFacets = null;
     }

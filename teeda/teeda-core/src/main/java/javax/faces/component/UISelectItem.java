@@ -59,7 +59,7 @@ public class UISelectItem extends UIComponentBase {
         if (itemDescription != null) {
             return itemDescription;
         }
-        return (String) ComponentUtils_.getValueBindingValue(this,
+        return (String) ComponentUtil_.getValueBindingValue(this,
                 ITEM_DESCRIPTION_BINDING_NAME);
     }
 
@@ -71,7 +71,7 @@ public class UISelectItem extends UIComponentBase {
         if (itemDisabledSet) {
             return itemDisabled;
         }
-        Object value = ComponentUtils_.getValueBindingValue(this,
+        Object value = ComponentUtil_.getValueBindingValue(this,
                 ITEM_DISABLED_BINDING_NAME);
         return (value != null) ? Boolean.TRUE.equals(value) : itemDisabled;
     }
@@ -85,7 +85,7 @@ public class UISelectItem extends UIComponentBase {
         if (itemLabel != null) {
             return itemLabel;
         }
-        return (String) ComponentUtils_.getValueBindingValue(this,
+        return (String) ComponentUtil_.getValueBindingValue(this,
                 ITEM_LABEL_BINDING_NAME);
     }
 
@@ -97,7 +97,7 @@ public class UISelectItem extends UIComponentBase {
         if (itemValue != null) {
             return itemValue;
         }
-        return ComponentUtils_.getValueBindingValue(this,
+        return ComponentUtil_.getValueBindingValue(this,
                 ITEM_VALUE_BINDING_NAME);
     }
 
@@ -109,7 +109,7 @@ public class UISelectItem extends UIComponentBase {
         if (value != null) {
             return value;
         }
-        return ComponentUtils_.getValueBindingValue(this, VALUE_BINDING_NAME);
+        return ComponentUtil_.getValueBindingValue(this, VALUE_BINDING_NAME);
     }
 
     public void setValue(Object value) {
@@ -130,8 +130,8 @@ public class UISelectItem extends UIComponentBase {
         Object[] values = new Object[6];
         values[0] = super.saveState(context);
         values[1] = itemDescription;
-        values[2] = ComponentUtils_.convertToBoolean(itemDisabled);
-        values[3] = ComponentUtils_.convertToBoolean(itemDisabledSet);
+        values[2] = ComponentUtil_.convertToBoolean(itemDisabled);
+        values[3] = ComponentUtil_.convertToBoolean(itemDisabledSet);
         values[4] = itemLabel;
         values[5] = itemValue;
         return values;

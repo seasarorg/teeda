@@ -13,14 +13,14 @@ public class ConvertUtilsTest extends TestCase {
     public void testCreateConversionMessage() throws Exception {
         IntegerConverter converter = new IntegerConverter();
         assertEquals(converter.getClass().getName() + ".CONVERSION",
-                ConvertUtils.createConversionMessage(converter));
+                ConvertUtil.createConversionMessage(converter));
     }
 
     public void testCreateExceptionMessageArgs_withComponentId()
             throws Exception {
         MockUIComponent component = new MockUIComponent();
         component.setId("aaa");
-        Object[] args = ConvertUtils.createExceptionMessageArgs(component,
+        Object[] args = ConvertUtil.createExceptionMessageArgs(component,
                 "bbb");
         ArrayAssert.assertEquals(new String[] { "aaa", "bbb" }, args);
     }
@@ -29,7 +29,7 @@ public class ConvertUtilsTest extends TestCase {
         HtmlInputText component = new HtmlInputText();
         component.setId("aaa");
         component.setLabel("ccc");
-        Object[] args = ConvertUtils.createExceptionMessageArgs(component,
+        Object[] args = ConvertUtil.createExceptionMessageArgs(component,
                 "bbb");
         ArrayAssert.assertEquals(new String[] { "ccc", "bbb" }, args);
     }

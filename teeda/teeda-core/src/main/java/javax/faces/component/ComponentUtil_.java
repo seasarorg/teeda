@@ -32,13 +32,13 @@ import org.seasar.framework.util.AssertionUtil;
 /**
  * @author shot
  */
-public class ComponentUtils_ {
+public class ComponentUtil_ {
 
     private static final int LOCALE_LENGTH_SHORT = 2;
 
     private static final int LOCALE_LENGTH_LONG = 5;
 
-    private ComponentUtils_() {
+    private ComponentUtil_() {
     }
 
     public static void processAppropriatePhaseAction(FacesContext context,

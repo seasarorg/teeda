@@ -41,7 +41,7 @@ public class UISelectItems extends UIComponentBase {
         if (value != null) {
             return value;
         }
-        return ComponentUtils_.getValueBindingValue(this, VALUE_BINDING_NAME);
+        return ComponentUtil_.getValueBindingValue(this, VALUE_BINDING_NAME);
     }
 
     public void setValue(Object value) {

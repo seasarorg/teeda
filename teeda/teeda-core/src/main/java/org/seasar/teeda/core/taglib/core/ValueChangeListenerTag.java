@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -20,6 +20,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
 import javax.faces.event.ValueChangeListener;
+import javax.faces.internal.ValueBindingUtil;
 import javax.faces.webapp.UIComponentTag;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
@@ -67,7 +68,7 @@ public class ValueChangeListenerTag extends TagSupport {
             String className = null;
             if (UIComponentTag.isValueReference(type)) {
                 FacesContext context = FacesContext.getCurrentInstance();
-                ValueBinding vb = context.getApplication().createValueBinding(
+                ValueBinding vb = ValueBindingUtil.createValueBinding(context,
                         type);
                 className = (String) vb.getValue(context);
             } else {

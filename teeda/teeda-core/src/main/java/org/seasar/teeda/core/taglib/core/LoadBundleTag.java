@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -29,6 +29,8 @@ import java.util.Set;
 
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
+import javax.faces.el.ValueBinding;
+import javax.faces.internal.ValueBindingUtil;
 import javax.faces.webapp.UIComponentTag;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.Tag;
@@ -82,8 +84,9 @@ public class LoadBundleTag extends TagSupport {
         final String basename = getBasename();
         if (basename != null) {
             if (UIComponentTag.isValueReference(basename)) {
-                bname = (String) context.getApplication().createValueBinding(
-                        basename).getValue(context);
+                ValueBinding vb = ValueBindingUtil.createValueBinding(context,
+                        basename);
+                bname = (String) vb.getValue(context);
             } else {
                 bname = basename;
             }

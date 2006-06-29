@@ -57,7 +57,7 @@ public class UIGraphic extends UIComponentBase {
         if (valueSet) {
             return value;
         }
-        return ComponentUtils_.getValueBindingValue(this, VALUE_BINDING_NAME);
+        return ComponentUtil_.getValueBindingValue(this, VALUE_BINDING_NAME);
     }
 
     public void setValue(Object value) {

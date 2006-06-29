@@ -120,7 +120,7 @@ public class UISelectMany extends UIInput {
             Iterator items = new SelectItemsIterator(this);
             Object indexValue = (isList) ? ((List) value).get(i) : Array.get(
                     value, i);
-            if (!ComponentUtils_.valueMatches(indexValue, items)) {
+            if (!ComponentUtil_.valueMatches(indexValue, items)) {
                 Object[] args = { getId() };
                 FacesMessageUtils.addErrorMessage(context, this,
                         INVALID_MESSAGE_ID, args);
@@ -146,7 +146,7 @@ public class UISelectMany extends UIInput {
 
     private Object[] toObjectArray(Object obj) {
         AssertionUtil.assertNotNull("primitiveArray", obj);
-        if (ComponentUtils_.isObjectArray(obj)) {
+        if (ComponentUtil_.isObjectArray(obj)) {
             return (Object[]) obj;
         } else if (obj instanceof List) {
             return ((List) obj).toArray();

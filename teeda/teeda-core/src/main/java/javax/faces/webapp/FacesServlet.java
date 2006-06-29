@@ -21,7 +21,7 @@ import javax.faces.FacesException;
 import javax.faces.FactoryFinder;
 import javax.faces.context.FacesContext;
 import javax.faces.context.FacesContextFactory;
-import javax.faces.internal.WebAppUtils;
+import javax.faces.internal.WebAppUtil;
 import javax.faces.lifecycle.Lifecycle;
 import javax.faces.lifecycle.LifecycleFactory;
 import javax.servlet.Servlet;
@@ -62,11 +62,11 @@ public final class FacesServlet implements Servlet {
 
     public void init(ServletConfig config) throws ServletException {
         this.config = config;
-        facesContextFactory = (FacesContextFactory) WebAppUtils
+        facesContextFactory = (FacesContextFactory) WebAppUtil
                 .getFactory(FactoryFinder.FACES_CONTEXT_FACTORY);
-        LifecycleFactory lifecycleFactory = (LifecycleFactory) WebAppUtils
+        LifecycleFactory lifecycleFactory = (LifecycleFactory) WebAppUtil
                 .getFactory(FactoryFinder.LIFECYCLE_FACTORY);
-        String lifecycleId = WebAppUtils.getLifecycleId(config);
+        String lifecycleId = WebAppUtil.getLifecycleId(config);
         lifecycle = lifecycleFactory.getLifecycle(lifecycleId);
     }
 

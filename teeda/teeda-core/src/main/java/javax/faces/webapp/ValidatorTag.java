@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -17,7 +17,7 @@ package javax.faces.webapp;
 
 import javax.faces.component.EditableValueHolder;
 import javax.faces.component.UIComponent;
-import javax.faces.internal.WebAppUtils;
+import javax.faces.internal.WebAppUtil;
 import javax.faces.validator.Validator;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
@@ -67,9 +67,9 @@ public class ValidatorTag extends TagSupport {
         try {
             String id = this.validatorId;
             if (UIComponentTag.isValueReference(id)) {
-                id = (String) WebAppUtils.getValueFromCreatedValueBinding(id);
+                id = (String) WebAppUtil.getValueFromCreatedValueBinding(id);
             }
-            return WebAppUtils.createValidator(id);
+            return WebAppUtil.createValidator(id);
         } catch (Exception e) {
             throw new JspException(e);
         }

@@ -25,6 +25,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+import javax.faces.internal.ValueBindingUtil;
 import javax.faces.webapp.UIComponentBodyTag;
 import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.JspException;
@@ -34,7 +35,6 @@ import javax.servlet.jsp.tagext.BodyContent;
 import org.seasar.framework.util.AssertionUtil;
 import org.seasar.framework.util.LocaleUtil;
 import org.seasar.teeda.core.JsfConstants;
-import org.seasar.teeda.core.util.ValueBindingUtil;
 
 /**
  * @author yone

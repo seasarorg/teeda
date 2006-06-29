@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -17,6 +17,7 @@ package org.seasar.teeda.core.taglib.core;
 
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
+import javax.faces.internal.ValueBindingUtil;
 import javax.faces.validator.LengthValidator;
 import javax.faces.validator.Validator;
 import javax.servlet.jsp.JspException;
@@ -63,7 +64,7 @@ public class ValidateLengthTag extends MaxMinValidatorTag {
         final String min = getMinimum();
         if (min != null) {
             if (BindingUtil.isValueReference(min)) {
-                ValueBinding vb = context.getApplication().createValueBinding(
+                ValueBinding vb = ValueBindingUtil.createValueBinding(context,
                         min);
                 minimum = ConverterUtil.convertToInt(vb.getValue(context));
             } else {

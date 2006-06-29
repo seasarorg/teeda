@@ -52,7 +52,7 @@ public class UIMessages extends UIComponentBase {
         if (globalOnlySet) {
             return globalOnly;
         }
-        Object value = ComponentUtils_.getValueBindingValue(this, "globalOnly");
+        Object value = ComponentUtil_.getValueBindingValue(this, "globalOnly");
         return (value != null) ? Boolean.TRUE.equals(value) : globalOnly;
     }
 
@@ -65,7 +65,7 @@ public class UIMessages extends UIComponentBase {
         if (showDetailSet) {
             return showDetail;
         }
-        Object value = ComponentUtils_.getValueBindingValue(this, "showDetail");
+        Object value = ComponentUtil_.getValueBindingValue(this, "showDetail");
         return (value != null) ? Boolean.TRUE.equals(value) : showDetail;
     }
 
@@ -78,7 +78,7 @@ public class UIMessages extends UIComponentBase {
         if (showSummarySet) {
             return showSummary;
         }
-        Object value = ComponentUtils_
+        Object value = ComponentUtil_
                 .getValueBindingValue(this, "showSummary");
         return (value != null) ? Boolean.TRUE.equals(value) : showSummary;
     }
@@ -102,12 +102,12 @@ public class UIMessages extends UIComponentBase {
     public Object saveState(FacesContext context) {
         Object[] values = new Object[7];
         values[0] = super.saveState(context);
-        values[1] = ComponentUtils_.convertToBoolean(globalOnly);
-        values[2] = ComponentUtils_.convertToBoolean(globalOnlySet);
-        values[3] = ComponentUtils_.convertToBoolean(showDetail);
-        values[4] = ComponentUtils_.convertToBoolean(showDetailSet);
-        values[5] = ComponentUtils_.convertToBoolean(showSummary);
-        values[6] = ComponentUtils_.convertToBoolean(showSummarySet);
+        values[1] = ComponentUtil_.convertToBoolean(globalOnly);
+        values[2] = ComponentUtil_.convertToBoolean(globalOnlySet);
+        values[3] = ComponentUtil_.convertToBoolean(showDetail);
+        values[4] = ComponentUtil_.convertToBoolean(showDetailSet);
+        values[5] = ComponentUtil_.convertToBoolean(showSummary);
+        values[6] = ComponentUtil_.convertToBoolean(showSummarySet);
         return values;
     }
 

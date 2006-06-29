@@ -17,7 +17,7 @@ package javax.faces.convert;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.internal.ConvertUtils;
+import javax.faces.internal.ConvertUtil;
 
 import org.seasar.framework.util.AssertionUtil;
 
@@ -42,9 +42,9 @@ public class BooleanConverter implements Converter {
         try {
             return Boolean.valueOf(value);
         } catch (Exception e) {
-            Object[] args = ConvertUtils.createExceptionMessageArgs(component,
+            Object[] args = ConvertUtil.createExceptionMessageArgs(component,
                     value);
-            throw ConvertUtils.wrappedByConverterException(this, context, args,
+            throw ConvertUtil.wrappedByConverterException(this, context, args,
                     e);
         }
     }
@@ -60,7 +60,7 @@ public class BooleanConverter implements Converter {
             return (value instanceof String) ? (String) value
                     : ((Boolean) value).toString();
         } catch (Exception e) {
-            throw ConvertUtils.wrappedByConverterException(e);
+            throw ConvertUtil.wrappedByConverterException(e);
         }
     }
 }

@@ -50,7 +50,7 @@ public class UISelectOne extends UIInput {
             return;
         }
 
-        if (!ComponentUtils_.valueMatches(value, new SelectItemsIterator(this))) {
+        if (!ComponentUtil_.valueMatches(value, new SelectItemsIterator(this))) {
             Object[] args = { getId() };
             FacesMessageUtils.addErrorMessage(context, this,
                     INVALID_MESSAGE_ID, args);

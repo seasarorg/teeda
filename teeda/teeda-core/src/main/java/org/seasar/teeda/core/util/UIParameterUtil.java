@@ -9,35 +9,59 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
 package org.seasar.teeda.core.util;
 
+import java.util.Iterator;
 import java.util.List;
 
-import javax.faces.component.UICommand;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIParameter;
 import javax.faces.context.FacesContext;
+
+import org.seasar.framework.beans.BeanDesc;
+import org.seasar.framework.beans.PropertyDesc;
+import org.seasar.framework.beans.factory.BeanDescFactory;
+import org.seasar.framework.util.AssertionUtil;
 
 public class UIParameterUtil {
 
     private UIParameterUtil() {
     }
 
-    public static void saveParametersToRequest(UICommand command,
+    public static void saveParametersToRequest(UIComponent component,
             FacesContext context) {
-        List children = command.getChildren();
+        List children = component.getChildren();
         for (int i = 0; i < children.size(); ++i) {
-            UIComponent child = (UIComponent) children.get(i);
-            if (child instanceof UIParameter) {
-                UIParameter param = (UIParameter) child;
+            Object o = (UIComponent) children.get(i);
+            if (o instanceof UIParameter) {
+                UIParameter param = (UIParameter) o;
                 context.getExternalContext().getRequestMap().put(
                         param.getName(), param.getValue());
             }
         }
     }
+
+    public static void saveParametersToInstance(UIComponent component, Object obj) {
+        AssertionUtil.assertNotNull("component", component);
+        AssertionUtil.assertNotNull("obj", obj);
+        for(Iterator itr = component.getChildren().iterator(); itr.hasNext();) {
+            Object o = itr.next();
+            if(o instanceof UIParameter) {
+                UIParameter param = (UIParameter) o;
+                String name = param.getName();
+                Object value = param.getValue();
+                BeanDesc beanDesc = BeanDescFactory.getBeanDesc(obj.getClass());
+                if(beanDesc.hasPropertyDesc(name)) {
+                    PropertyDesc propertyDesc = beanDesc.getPropertyDesc(name);
+                    propertyDesc.setValue(obj, value);
+                }
+            }
+        }
+    }
+
 
 }

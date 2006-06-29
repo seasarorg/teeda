@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -26,14 +26,6 @@ import org.seasar.teeda.core.unit.TeedaTestCase;
  * @author shot
  */
 public class UIParameterUtilTest extends TeedaTestCase {
-
-    /**
-     * Constructor for UIParameterUtilTest.
-     * @param name
-     */
-    public UIParameterUtilTest(String name) {
-        super(name);
-    }
 
     public void testSaveParametersToRequest() throws Exception {
         // # Arrange #
@@ -58,4 +50,47 @@ public class UIParameterUtilTest extends TeedaTestCase {
                 .getRequestMap().get("bbb"));
     }
 
+    public void testSaveParameterToInstance() throws Exception {
+        // # Arrange #
+        UICommand command = new UICommand();
+        List childrenList = command.getChildren();
+        UIParameter parameter1 = new UIParameter();
+        parameter1.setName("aaa");
+        parameter1.setValue("AAA");
+        childrenList.add(parameter1);
+        UIParameter parameter2 = new UIParameter();
+        parameter2.setName("bbb");
+        parameter2.setValue("2");
+        childrenList.add(parameter2);
+        Hoge hoge = new Hoge();
+
+        // # Act #
+        UIParameterUtil.saveParametersToInstance(command, hoge);
+
+        // # Assert #
+        assertEquals("AAA", hoge.getAaa());
+        assertTrue(hoge.getBbb() == 2);
+    }
+
+    public static class Hoge {
+        private String aaa;
+
+        private int bbb;
+
+        public String getAaa() {
+            return aaa;
+        }
+
+        public void setAaa(String aaa) {
+            this.aaa = aaa;
+        }
+
+        public int getBbb() {
+            return bbb;
+        }
+
+        public void setBbb(int bbb) {
+            this.bbb = bbb;
+        }
+    }
 }

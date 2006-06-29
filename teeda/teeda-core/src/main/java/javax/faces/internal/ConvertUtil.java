@@ -28,7 +28,7 @@ import javax.faces.convert.ConverterException;
  * This class might be changed without notice. Please do not use it
  * excluding the JSF specification part.
  */
-public class ConvertUtils {
+public class ConvertUtil {
 
     public static ConverterException wrappedByConverterException() {
         return new ConverterException();

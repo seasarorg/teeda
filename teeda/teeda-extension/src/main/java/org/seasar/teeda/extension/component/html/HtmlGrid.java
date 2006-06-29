@@ -9,13 +9,13 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
 package org.seasar.teeda.extension.component.html;
 
-import javax.faces.component.ComponentUtils_;
+import javax.faces.component.ComponentUtil_;
 import javax.faces.component.UIComponentBase;
 
 public class HtmlGrid extends UIComponentBase /* TODO implements NamingContainer */{
@@ -40,7 +40,7 @@ public class HtmlGrid extends UIComponentBase /* TODO implements NamingContainer
         if (value != null) {
             return value;
         }
-        return ComponentUtils_.getValueBindingValue(this, "value");
+        return ComponentUtil_.getValueBindingValue(this, "value");
     }
 
     public void setValue(Object value) {

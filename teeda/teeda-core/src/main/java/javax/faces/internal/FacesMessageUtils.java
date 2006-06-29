@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -22,13 +22,13 @@ import java.util.ResourceBundle;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.application.FacesMessage.Severity;
-import javax.faces.component.ComponentUtils_;
+import javax.faces.component.ComponentUtil_;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 
 /**
  * @author shot
- * 
+ *
  * This class might be changed without notice. Please do not use it
  * excluding the JSF specification part.
  */
@@ -42,7 +42,7 @@ public class FacesMessageUtils {
     public static void addErrorMessage(FacesContext context,
             UIComponent component, String messageId) {
         String clientId = component.getClientId(context);
-        Locale locale = ComponentUtils_.getLocale(context);
+        Locale locale = ComponentUtil_.getLocale(context);
         FacesMessage message = getMessage(context, locale,
                 FacesMessage.SEVERITY_ERROR, messageId, null);
         context.addMessage(clientId, message);
@@ -51,7 +51,7 @@ public class FacesMessageUtils {
     public static void addErrorMessage(FacesContext context,
             UIComponent component, String messageId, Object[] args) {
         String clientId = component.getClientId(context);
-        Locale locale = ComponentUtils_.getLocale(context);
+        Locale locale = ComponentUtil_.getLocale(context);
         FacesMessage message = getMessage(context, locale,
                 FacesMessage.SEVERITY_ERROR, messageId, args);
         context.addMessage(clientId, message);
@@ -59,7 +59,7 @@ public class FacesMessageUtils {
 
     public static FacesMessage getMessage(FacesContext context,
             String messageId, Object[] args) {
-        Locale locale = ComponentUtils_.getLocale(context);
+        Locale locale = ComponentUtil_.getLocale(context);
         if (locale == null) {
             locale = Locale.getDefault();
         }

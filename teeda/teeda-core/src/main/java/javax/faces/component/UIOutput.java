@@ -45,7 +45,7 @@ public class UIOutput extends UIComponentBase implements ValueHolder {
         if (converter != null) {
             return converter;
         }
-        return (Converter) ComponentUtils_.getValueBindingValue(this,
+        return (Converter) ComponentUtil_.getValueBindingValue(this,
                 "converter");
     }
 
@@ -61,7 +61,7 @@ public class UIOutput extends UIComponentBase implements ValueHolder {
         if (value != null) {
             return value;
         }
-        return ComponentUtils_.getValueBindingValue(this, "value");
+        return ComponentUtil_.getValueBindingValue(this, "value");
     }
 
     public void setValue(Object value) {

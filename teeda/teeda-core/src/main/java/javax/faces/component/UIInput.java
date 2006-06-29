@@ -115,7 +115,7 @@ public class UIInput extends UIOutput implements EditableValueHolder {
         if (requiredSet) {
             return required;
         }
-        Boolean value = (Boolean) ComponentUtils_.getValueBindingValue(this,
+        Boolean value = (Boolean) ComponentUtil_.getValueBindingValue(this,
                 "required");
         return (value != null) ? Boolean.TRUE.equals(value) : required;
     }
@@ -129,7 +129,7 @@ public class UIInput extends UIOutput implements EditableValueHolder {
         if (validSet) {
             return valid;
         }
-        Boolean value = (Boolean) ComponentUtils_.getValueBindingValue(this,
+        Boolean value = (Boolean) ComponentUtil_.getValueBindingValue(this,
                 "valid");
         return (value != null) ? Boolean.TRUE.equals(value) : valid;
     }
@@ -143,7 +143,7 @@ public class UIInput extends UIOutput implements EditableValueHolder {
         if (immediateSet) {
             return immediate;
         }
-        Boolean value = (Boolean) ComponentUtils_.getValueBindingValue(this,
+        Boolean value = (Boolean) ComponentUtil_.getValueBindingValue(this,
                 "immediate");
         return (value != null) ? Boolean.TRUE.equals(value) : immediate;
     }
@@ -420,12 +420,12 @@ public class UIInput extends UIOutput implements EditableValueHolder {
         if (converter != null) {
             return converter;
         }
-        Class type = ComponentUtils_.getValueBindingType(this, "value");
-        if (ComponentUtils_.isPerformNoConversion(type)) {
+        Class type = ComponentUtil_.getValueBindingType(this, "value");
+        if (ComponentUtil_.isPerformNoConversion(type)) {
             return null;
         }
         try {
-            return ComponentUtils_.createConverter(context, type);
+            return ComponentUtil_.createConverter(context, type);
         } catch (Exception ignore) {
             return null;
         }
