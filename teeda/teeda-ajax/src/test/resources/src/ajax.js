@@ -17,6 +17,11 @@ Kumu.Ajax = {
     XML_HTTP_REQUEST_STATUS_INTERACTIVE : 3,
     XML_HTTP_REQUEST_STATUS_COMPLETE : 4,
     
+    CONTENT_TYPE_XML : "text/xml",
+    CONTENT_TYPE_JSON : "text/javascript",
+    CONTENT_TYPE_TEXT : "text/plain",
+    CONTENT_TYPE_HTML : "text/html",
+
     AJAX_RESPONSE_TYPE_XML : 1,
 
     axo : new Array(
@@ -168,15 +173,12 @@ Kumu.Ajax = {
             if (self.XML_HTTP_REQUEST_STATUS_COMPLETE == req.readyState) { 
                 if (self.HTTP_STATUS_OK == req.status) {
                     if (self.DEBUG) self.debugPrint(req.responseText);
-                    if (ajaxComponent.responseType) {
+                    if (ajaxComponent.responseType == self.CONTENT_TYPE_JSON) {
+                        ajaxComponent.doAction(eval('(' + req.responseText + ')'));
+                    } else if (ajaxComponent.responseType) {
                         ajaxComponent.doAction(req.responseXML);
                     } else {
-                        var contentType = req.getResponseHeader('Content-Type');
-                        if (contentType != null  && -1 < contentType.indexOf("text/javascript")) {
-                            ajaxComponent.doAction(eval('(' + req.responseText + ')'));
-                        } else {
-                            ajaxComponent.doAction(req.responseText);
-                        }
+                        ajaxComponent.doAction(req.responseText);
                     }
                 } else {
                     self.debugPrint("AjaxError! status["+req.status+"] message["+req.responseText+"]", true);
