@@ -29,13 +29,13 @@ Kumu.Ajax = {
     DEBUG : false,
     
     getS2AjaxComponent : function() {
-    	return new this.AjaxComponent();
+        return new this.AjaxComponent();
     },
     
     AjaxComponent : function () {
-    	var self = Kumu.Ajax;
+        var self = Kumu.Ajax;
         this.name = self.AJAX_COMPONENT_NAME;
-	    this.responseType = null;
+        this.responseType = null;
         this.url = "teeda.ajax";
         this.params = null;
         this.doAction = function(ajaxResponse){}
@@ -89,7 +89,7 @@ Kumu.Ajax = {
     },
     
     _checkComponent : function(component) {
-    	var self = Kumu.Ajax;
+        var self = Kumu.Ajax;
         var name;
         try {
             name = component.name;
@@ -103,7 +103,7 @@ Kumu.Ajax = {
     },
 
     executeAjax : function(ajaxComponent) {
-    	var self = Kumu.Ajax;
+        var self = Kumu.Ajax;
         if (!self._checkComponent(ajaxComponent)) {
             self.debugPrint("IllegalArgument. argument object is not AjaxComponent. implements url or doAction!", true);
             return;
@@ -122,13 +122,13 @@ Kumu.Ajax = {
         var params = ajaxComponent.params;
         var method = 'GET';
         if(params.method){
-        	method = params.method.toUpperCase();
-        	if(method != 'GET' && method != 'POST'){
-        		method = 'GET';
-        	}
-        	delete params.method;
+            method = params.method.toUpperCase();
+            if(method != 'GET' && method != 'POST'){
+                method = 'GET';
+            }
+            delete params.method;
         }
-		if(method == 'GET'){
+        if(method == 'GET'){
             url += "?time=" + self.encodeURL(sysdate);
             if(null != params){
             
@@ -143,8 +143,8 @@ Kumu.Ajax = {
                 xmlHttp.setRequestHeader("If-Modified-Since", sysdate);
                 xmlHttp.send(null);
             }
-		}else{
-			params['time'] = self.encodeURL(sysdate);
+        }else{
+            params['time'] = self.encodeURL(sysdate);
             if(params){
                 var array = new Array();
                 for(var v in params) {
@@ -154,16 +154,16 @@ Kumu.Ajax = {
             }
             if(xmlHttp){
                 self._registAjaxListener(xmlHttp, ajaxComponent);
-				xmlHttp.open("POST", url, true);
-		        xmlHttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                xmlHttp.open("POST", url, true);
+                xmlHttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
                 xmlHttp.setRequestHeader("If-Modified-Since", sysdate);
                 xmlHttp.send(parameters);
             }
-		}
+        }
     },
 
     _registAjaxListener : function(req, ajaxComponent) {
-    	var self = Kumu.Ajax;
+        var self = Kumu.Ajax;
         req.onreadystatechange = function() {
             if (self.XML_HTTP_REQUEST_STATUS_COMPLETE == req.readyState) { 
                 if (self.HTTP_STATUS_OK == req.status) {
@@ -171,11 +171,16 @@ Kumu.Ajax = {
                     if (ajaxComponent.responseType) {
                         ajaxComponent.doAction(req.responseXML);
                     } else {
-   	            	    ajaxComponent.doAction(req.responseText);
-   	                }
-			    } else {
-        		    self.debugPrint("AjaxError! status["+req.status+"] message["+req.responseText+"]", true);
-			    }
+                        var contentType = req.getResponseHeader('Content-Type');
+                        if (contentType != null  && -1 < contentType.indexOf("text/javascript")) {
+                            ajaxComponent.doAction(eval('(' + req.responseText + ')'));
+                        } else {
+                            ajaxComponent.doAction(req.responseText);
+                        }
+                    }
+                } else {
+                    self.debugPrint("AjaxError! status["+req.status+"] message["+req.responseText+"]", true);
+                }
             }
         };
     },
@@ -201,7 +206,7 @@ Kumu.Ajax = {
     },
     
     executeTeedaAjax : function(callback, param, responseType){
-    	var self = Kumu.Ajax;
+        var self = Kumu.Ajax;
         var ajax = self.getS2AjaxComponent();
         var components = self._getComponentName(callback);
         if(!param){
