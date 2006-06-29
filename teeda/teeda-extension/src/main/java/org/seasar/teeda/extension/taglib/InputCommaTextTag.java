@@ -16,7 +16,7 @@
 package org.seasar.teeda.extension.taglib;
 
 import org.seasar.teeda.core.taglib.html.InputTextTag;
-import org.seasar.teeda.extension.component.HtmlInputCommaText;
+import org.seasar.teeda.extension.component.html.HtmlInputCommaText;
 
 /**
  * @author shot

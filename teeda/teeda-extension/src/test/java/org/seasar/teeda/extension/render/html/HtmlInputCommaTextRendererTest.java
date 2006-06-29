@@ -25,8 +25,8 @@ import javax.faces.render.RendererTest;
 import org.custommonkey.xmlunit.Diff;
 import org.seasar.teeda.core.mock.MockExternalContext;
 import org.seasar.teeda.core.mock.MockFacesContext;
-import org.seasar.teeda.extension.component.HtmlInputCommaText;
 import org.seasar.teeda.extension.component.ScriptEnhanceUIViewRoot;
+import org.seasar.teeda.extension.component.html.HtmlInputCommaText;
 import org.seasar.teeda.extension.util.JavaScriptContext;
 
 /**

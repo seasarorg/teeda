@@ -36,8 +36,8 @@ import org.seasar.teeda.core.render.html.HtmlInputTextRenderer;
 import org.seasar.teeda.core.util.JavaScriptPermissionUtil;
 import org.seasar.teeda.core.util.RendererUtil;
 import org.seasar.teeda.core.util.ValueHolderUtil;
-import org.seasar.teeda.extension.component.HtmlInputCommaText;
 import org.seasar.teeda.extension.component.ScriptEnhanceUIViewRoot;
+import org.seasar.teeda.extension.component.html.HtmlInputCommaText;
 import org.seasar.teeda.extension.util.JavaScriptContext;
 
 /**
