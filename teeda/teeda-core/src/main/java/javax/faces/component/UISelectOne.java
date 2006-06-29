@@ -16,7 +16,7 @@
 package javax.faces.component;
 
 import javax.faces.context.FacesContext;
-import javax.faces.internal.FacesMessageUtils;
+import javax.faces.internal.FacesMessageUtil;
 import javax.faces.internal.SelectItemsIterator;
 
 import org.seasar.framework.util.AssertionUtil;
@@ -52,7 +52,7 @@ public class UISelectOne extends UIInput {
 
         if (!ComponentUtil_.valueMatches(value, new SelectItemsIterator(this))) {
             Object[] args = { getId() };
-            FacesMessageUtils.addErrorMessage(context, this,
+            FacesMessageUtil.addErrorMessage(context, this,
                     INVALID_MESSAGE_ID, args);
             setValid(false);
         }

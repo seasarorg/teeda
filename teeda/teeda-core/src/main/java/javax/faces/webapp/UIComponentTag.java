@@ -26,9 +26,9 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+import javax.faces.internal.InternalConstants;
 import javax.faces.internal.PageContextUtil;
 import javax.faces.internal.ValueBindingUtil;
-import javax.faces.internal.WebAppConstants;
 import javax.faces.internal.WebAppUtil;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
@@ -138,9 +138,9 @@ public abstract class UIComponentTag implements Tag {
         Map componentIds = null;
         if (parentTag == null) {
             componentIds = new HashMap();
-            requestMap.put(WebAppConstants.GLOBAL_ID_VIEW, componentIds);
+            requestMap.put(InternalConstants.GLOBAL_ID_VIEW, componentIds);
         } else {
-            componentIds = (Map) requestMap.get(WebAppConstants.GLOBAL_ID_VIEW);
+            componentIds = (Map) requestMap.get(InternalConstants.GLOBAL_ID_VIEW);
         }
         component = findComponent(context);
 
@@ -270,14 +270,14 @@ public abstract class UIComponentTag implements Tag {
             PageContextUtil.setCurrentViewRootAttribute(pageContext,
                     parentComponent);
             if (parentComponent.getAttributes().get(
-                    WebAppConstants.CURRENT_VIEW_ROOT) == null) {
+                    InternalConstants.CURRENT_VIEW_ROOT) == null) {
                 setProperties(parentComponent);
                 if (id != null) {
                     parentComponent.setId(id);
                 }
                 parentComponent.getAttributes().put(
-                        WebAppConstants.CURRENT_VIEW_ROOT,
-                        WebAppConstants.CURRENT_VIEW_ROOT);
+                        InternalConstants.CURRENT_VIEW_ROOT,
+                        InternalConstants.CURRENT_VIEW_ROOT);
             } else if (binding == null) {
                 setProperties(parentComponent);
             }

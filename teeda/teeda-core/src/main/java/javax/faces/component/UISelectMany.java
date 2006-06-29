@@ -21,7 +21,7 @@ import java.util.List;
 
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
-import javax.faces.internal.FacesMessageUtils;
+import javax.faces.internal.FacesMessageUtil;
 import javax.faces.internal.SelectItemsIterator;
 
 import org.seasar.framework.util.AssertionUtil;
@@ -122,7 +122,7 @@ public class UISelectMany extends UIInput {
                     value, i);
             if (!ComponentUtil_.valueMatches(indexValue, items)) {
                 Object[] args = { getId() };
-                FacesMessageUtils.addErrorMessage(context, this,
+                FacesMessageUtil.addErrorMessage(context, this,
                         INVALID_MESSAGE_ID, args);
                 setValid(false);
                 break;

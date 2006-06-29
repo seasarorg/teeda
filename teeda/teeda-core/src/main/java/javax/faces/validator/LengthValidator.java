@@ -19,7 +19,7 @@ import javax.faces.FacesException;
 import javax.faces.component.StateHolder;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.internal.FacesMessageUtils;
+import javax.faces.internal.FacesMessageUtil;
 import javax.faces.internal.UIComponentUtil;
 
 import org.seasar.framework.util.AssertionUtil;
@@ -115,13 +115,13 @@ public class LengthValidator implements Validator, StateHolder {
         int length = getConvertedValueLength(value);
         if (minimum != null && length < minimum.intValue()) {
             Object[] args = { minimum, UIComponentUtil.getLabel(component) };
-            throw new ValidatorException(FacesMessageUtils.getMessage(context,
+            throw new ValidatorException(FacesMessageUtil.getMessage(context,
                     getMinimumMessageId(), args));
         }
 
         if (maximum != null && length > maximum.intValue()) {
             Object[] args = { maximum, UIComponentUtil.getLabel(component) };
-            throw new ValidatorException(FacesMessageUtils.getMessage(context,
+            throw new ValidatorException(FacesMessageUtil.getMessage(context,
                     getMaximumMessageId(), args));
         }
     }

@@ -19,7 +19,7 @@ import javax.faces.component.UISelectMany;
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
 import javax.faces.event.ValueChangeEvent;
-import javax.faces.internal.FacesMessageUtils;
+import javax.faces.internal.FacesMessageUtil;
 import javax.faces.internal.UIComponentUtil;
 
 import org.seasar.teeda.core.JsfConstants;
@@ -441,7 +441,7 @@ public class HtmlSelectManyListbox extends UISelectMany {
         }
         boolean empty = UIValueUtil.isManyEmpty(convertedValue);
         if (isRequired() && empty) {
-            context.addMessage(getClientId(context), FacesMessageUtils
+            context.addMessage(getClientId(context), FacesMessageUtil
                     .getMessage(context, REQUIRED_MESSAGE_ID,
                             new Object[] { getLabel() }));
             setValid(false);

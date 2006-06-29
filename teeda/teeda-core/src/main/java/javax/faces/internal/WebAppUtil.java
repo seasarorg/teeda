@@ -63,34 +63,34 @@ public class WebAppUtil {
 
     public static List getCreatedComponentIds(UIComponent component) {
         return (List) component.getAttributes().get(
-                WebAppConstants.JSP_CREATED_COMPONENT_IDS);
+                InternalConstants.JSP_CREATED_COMPONENT_IDS);
     }
 
     public static void setCreatedComponentIds(UIComponent component,
             List createdComponents) {
         component.getAttributes().put(
-                WebAppConstants.JSP_CREATED_COMPONENT_IDS, createdComponents);
+                InternalConstants.JSP_CREATED_COMPONENT_IDS, createdComponents);
     }
 
     public static void removeCreatedComponentIds(UIComponent component) {
         component.getAttributes().remove(
-                WebAppConstants.JSP_CREATED_COMPONENT_IDS);
+                InternalConstants.JSP_CREATED_COMPONENT_IDS);
     }
 
     public static List getCreatedFacetNames(UIComponent component) {
         return (List) component.getAttributes().get(
-                WebAppConstants.JSP_CREATED_FACET_NAMES);
+                InternalConstants.JSP_CREATED_FACET_NAMES);
     }
 
     public static void setCreatedFacetNames(UIComponent component,
             List createdComponents) {
-        component.getAttributes().put(WebAppConstants.JSP_CREATED_FACET_NAMES,
+        component.getAttributes().put(InternalConstants.JSP_CREATED_FACET_NAMES,
                 createdComponents);
     }
 
     public static void removeCreatedFacetNames(UIComponent component) {
         component.getAttributes().remove(
-                WebAppConstants.JSP_CREATED_FACET_NAMES);
+                InternalConstants.JSP_CREATED_FACET_NAMES);
     }
 
     public static ResponseWriter buildResponseWriter(FacesContext facesContext,

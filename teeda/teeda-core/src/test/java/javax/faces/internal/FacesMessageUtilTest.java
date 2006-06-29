@@ -28,7 +28,7 @@ import org.seasar.teeda.core.unit.TeedaTestCase;
 /**
  * @author shot
  */
-public class FacesMessageUtilsTest extends TeedaTestCase {
+public class FacesMessageUtilTest extends TeedaTestCase {
 
     public void testGetSimpleErrorMessage() {
         getApplication().setMessageBundle("javax.faces.component.TestMessages");
@@ -38,7 +38,7 @@ public class FacesMessageUtilsTest extends TeedaTestCase {
         UIViewRoot root = new UIViewRoot();
         root.setLocale(Locale.ENGLISH);
         context.setViewRoot(root);
-        FacesMessageUtils.addErrorMessage(context, component, "aaa");
+        FacesMessageUtil.addErrorMessage(context, component, "aaa");
         assertNotNull(context.getMessages("a"));
         Iterator itr = context.getMessages();
         FacesMessage message = (FacesMessage) itr.next();
@@ -53,7 +53,7 @@ public class FacesMessageUtilsTest extends TeedaTestCase {
         UIViewRoot root = new UIViewRoot();
         root.setLocale(Locale.ENGLISH);
         context.setViewRoot(root);
-        FacesMessageUtils.addErrorMessage(context, component, "bbb",
+        FacesMessageUtil.addErrorMessage(context, component, "bbb",
                 new Object[] { "B1", "B2" });
         assertNotNull(context.getMessages("b"));
         Iterator itr = context.getMessages();
@@ -72,7 +72,7 @@ public class FacesMessageUtilsTest extends TeedaTestCase {
         UIViewRoot root = new UIViewRoot();
         root.setLocale(Locale.US);
         context.setViewRoot(root);
-        FacesMessageUtils.addErrorMessage(context, component,
+        FacesMessageUtil.addErrorMessage(context, component,
                 "javax.faces.component.UIInput.CONVERSION");
         assertNotNull(context.getMessages("c"));
         Iterator itr = context.getMessages();
@@ -89,7 +89,7 @@ public class FacesMessageUtilsTest extends TeedaTestCase {
         UIViewRoot root = new UIViewRoot();
         root.setLocale(Locale.US);
         context.setViewRoot(root);
-        FacesMessageUtils.addErrorMessage(context, component,
+        FacesMessageUtil.addErrorMessage(context, component,
                 "javax.faces.component.UIInput.CONVERSION");
         assertNotNull(context.getMessages("c"));
         Iterator itr = context.getMessages();

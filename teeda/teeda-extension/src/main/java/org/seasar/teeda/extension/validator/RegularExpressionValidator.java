@@ -20,7 +20,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.component.StateHolder;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.internal.FacesMessageUtils;
+import javax.faces.internal.FacesMessageUtil;
 import javax.faces.internal.UIComponentUtil;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
@@ -57,7 +57,7 @@ public class RegularExpressionValidator implements Validator, StateHolder {
         if (!PatternUtil.matches(getPattern(), strValue)) {
             Object[] args = new Object[] { getPattern(),
                     UIComponentUtil.getLabel(component) };
-            FacesMessage message = FacesMessageUtils.getMessage(context,
+            FacesMessage message = FacesMessageUtil.getMessage(context,
                     REGULAR_EXPRRESSION_MESSAGE_ID, args);
             throw new ValidatorException(message);
         }

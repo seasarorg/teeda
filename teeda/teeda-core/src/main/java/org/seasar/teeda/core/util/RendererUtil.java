@@ -30,7 +30,7 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 import javax.faces.el.ValueBinding;
-import javax.faces.internal.FacesMessageUtils;
+import javax.faces.internal.FacesMessageUtil;
 import javax.faces.internal.RenderKitUtil;
 import javax.faces.internal.UIComponentUtil;
 import javax.faces.internal.UIDefaultAttribute;
@@ -210,7 +210,7 @@ public class RendererUtil {
                 Object[] args = new Object[] { UIComponentUtil
                         .getLabel(component) };
                 context.addMessage(component.getClientId(context),
-                        FacesMessageUtils.getMessage(context,
+                        FacesMessageUtil.getMessage(context,
                                 UIInput.CONVERSION_MESSAGE_ID, args));
             }
             component.setValid(false);

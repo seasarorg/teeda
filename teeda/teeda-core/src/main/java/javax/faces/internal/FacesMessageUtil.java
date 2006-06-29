@@ -32,11 +32,11 @@ import javax.faces.context.FacesContext;
  * This class might be changed without notice. Please do not use it
  * excluding the JSF specification part.
  */
-public class FacesMessageUtils {
+public class FacesMessageUtil {
 
     private static final String DETAIL_SUFFIX = "_detail";
 
-    private FacesMessageUtils() {
+    private FacesMessageUtil() {
     }
 
     public static void addErrorMessage(FacesContext context,

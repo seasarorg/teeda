@@ -57,7 +57,7 @@ public class ConvertUtil {
             Throwable t) {
 
         String conversionMessage = createConversionMessage(converter);
-        FacesMessage facesMessage = FacesMessageUtils.getMessage(context,
+        FacesMessage facesMessage = FacesMessageUtil.getMessage(context,
                 conversionMessage, args);
         return new ConverterException(facesMessage, t);
     }

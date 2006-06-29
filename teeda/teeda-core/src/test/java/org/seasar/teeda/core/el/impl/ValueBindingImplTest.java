@@ -111,7 +111,6 @@ public class ValueBindingImplTest extends TeedaTestCase {
     }
 
     public void testGetValueSimple6() {
-        E e = new E();
         MockVariableResolver resolver = getVariableResolver();
         resolver.putValue("a", new Integer(1));
         ValueBinding vb = new ValueBindingImpl(getApplication(), "#{a == 1}",
@@ -543,15 +542,4 @@ public class ValueBindingImplTest extends TeedaTestCase {
         }
     }
 
-    public static class E {
-        int a;
-
-        public int getA() {
-            return a;
-        }
-
-        public void setA(int a) {
-            this.a = a;
-        }
-    }
 }

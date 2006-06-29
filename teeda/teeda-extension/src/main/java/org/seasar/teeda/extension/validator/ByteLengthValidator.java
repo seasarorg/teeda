@@ -18,7 +18,7 @@ package org.seasar.teeda.extension.validator;
 import java.io.UnsupportedEncodingException;
 
 import javax.faces.context.FacesContext;
-import javax.faces.internal.FacesMessageUtils;
+import javax.faces.internal.FacesMessageUtil;
 import javax.faces.validator.LengthValidator;
 import javax.faces.validator.ValidatorException;
 
@@ -53,7 +53,7 @@ public class ByteLengthValidator extends LengthValidator {
             return getBytes(str, charSet_).length;
         } catch (UnsupportedEncodingException e) {
             Object[] args = new Object[] { value, charSet_ };
-            throw new ValidatorException(FacesMessageUtils.getMessage(
+            throw new ValidatorException(FacesMessageUtil.getMessage(
                     FacesContext.getCurrentInstance(), ENCODE_MESSAGE_ID, args));
         }
 

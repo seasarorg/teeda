@@ -20,7 +20,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.component.StateHolder;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.internal.FacesMessageUtils;
+import javax.faces.internal.FacesMessageUtil;
 import javax.faces.internal.UIComponentUtil;
 import javax.faces.internal.UIInputUtil;
 import javax.faces.validator.Validator;
@@ -50,7 +50,7 @@ public class RequiredValidator implements Validator, StateHolder {
 
         if (UIInputUtil.isEmpty(value)) {
             Object[] args = new Object[] { UIComponentUtil.getLabel(component) };
-            FacesMessage message = FacesMessageUtils.getMessage(context,
+            FacesMessage message = FacesMessageUtil.getMessage(context,
                     REQUIRED_MESSAGE_ID, args);
             throw new ValidatorException(message);
         }
