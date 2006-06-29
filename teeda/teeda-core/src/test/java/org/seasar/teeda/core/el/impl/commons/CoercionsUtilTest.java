@@ -19,33 +19,7 @@ import java.util.ArrayList;
 
 import junit.framework.TestCase;
 
-public class TestCoercionsUtil extends TestCase {
-
-    public static void main(String[] args) {
-        junit.textui.TestRunner.run(TestCoercionsUtil.class);
-    }
-
-    /*
-     * @see TestCase#setUp()
-     */
-    protected void setUp() throws Exception {
-        super.setUp();
-    }
-
-    /*
-     * @see TestCase#tearDown()
-     */
-    protected void tearDown() throws Exception {
-        super.tearDown();
-    }
-
-    /**
-     * Constructor for TestCoercionsUtil.
-     * @param arg0
-     */
-    public TestCoercionsUtil(String arg0) {
-        super(arg0);
-    }
+public class CoercionsUtilTest extends TestCase {
 
     public void testCoerceToInteger() {
         assertEquals(new Integer(3), CoercionsUtil.coerceToInteger("3"));

@@ -20,33 +20,7 @@ import org.seasar.teeda.core.el.TeedaVariableResolver;
 import org.seasar.teeda.core.mock.MockApplication;
 import org.seasar.teeda.core.unit.TeedaTestCase;
 
-public class TestCommonsELParser extends TeedaTestCase {
-
-    public static void main(String[] args) {
-        junit.textui.TestRunner.run(TestCommonsELParser.class);
-    }
-
-    /*
-     * @see TestCase#setUp()
-     */
-    protected void setUp() throws Exception {
-        super.setUp();
-    }
-
-    /*
-     * @see TestCase#tearDown()
-     */
-    protected void tearDown() throws Exception {
-        super.tearDown();
-    }
-
-    /**
-     * Constructor for TestCommonsELParser.
-     * @param arg0
-     */
-    public TestCommonsELParser(String arg0) {
-        super(arg0);
-    }
+public class CommonsELParserTest extends TeedaTestCase {
 
     public void testParse() {
         getContainer().register(new Hoge(), "hoge");
@@ -60,6 +34,16 @@ public class TestCommonsELParser extends TeedaTestCase {
         Object obj = parser.getExpressionProcessor().evaluate(
                 getFacesContext(), o);
         assertEquals("foo", obj);
+    }
+
+    public void testNullHandle() throws Exception {
+        CommonsELParser parser = new CommonsELParser();
+        CommonsExpressionProcessorImpl processor = new CommonsExpressionProcessorImpl();
+        parser.setExpressionProcessor(processor);
+        Object o = parser.parse("#{hoge == null}");
+        assertNotNull(o);
+        Boolean b = (Boolean) processor.evaluate(getFacesContext(), o);
+        assertTrue(b.booleanValue());
     }
 
     public static class Hoge {

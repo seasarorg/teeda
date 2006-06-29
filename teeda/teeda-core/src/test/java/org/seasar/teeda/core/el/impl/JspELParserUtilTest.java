@@ -68,6 +68,7 @@ public class JspELParserUtilTest extends TestCase {
                 .convertToJspExpression("foo#{'}'}"));
         assertEquals("18", "foo#{bar'}", JspELParserUtil
                 .convertToJspExpression("foo#{bar'}"));
-
+        assertEquals("19", "${bar == null}", JspELParserUtil
+                .convertToJspExpression("#{bar == null}"));
     }
 }

@@ -27,10 +27,10 @@ import org.seasar.teeda.core.mock.MockUIComponent;
 import org.seasar.teeda.core.mock.MockVariableResolver;
 import org.seasar.teeda.core.unit.TeedaTestCase;
 
-public class TestCommonsExpressionProcessorImpl extends TeedaTestCase {
+public class CommonsExpressionProcessorImplTest extends TeedaTestCase {
 
     public static void main(String[] args) {
-        junit.textui.TestRunner.run(TestCommonsExpressionProcessorImpl.class);
+        junit.textui.TestRunner.run(CommonsExpressionProcessorImplTest.class);
     }
 
     /*
@@ -51,7 +51,7 @@ public class TestCommonsExpressionProcessorImpl extends TeedaTestCase {
      * Constructor for TestCommonsExpressionProcessorImpl.
      * @param arg0
      */
-    public TestCommonsExpressionProcessorImpl(String arg0) {
+    public CommonsExpressionProcessorImplTest(String arg0) {
         super(arg0);
     }
 
