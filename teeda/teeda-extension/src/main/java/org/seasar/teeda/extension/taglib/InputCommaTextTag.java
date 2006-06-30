@@ -34,6 +34,11 @@ public class InputCommaTextTag extends InputTextTag {
         return HtmlInputCommaText.COMPONENT_TYPE;
     }
 
+    public String getRendererType() {
+        return HtmlInputCommaText.DEFAULT_RENDERER_TYPE;
+    }
+
+
     public String getFraction() {
         return fraction;
     }
