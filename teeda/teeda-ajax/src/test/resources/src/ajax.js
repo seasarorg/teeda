@@ -227,8 +227,8 @@ Kumu.Ajax = {
         }
         
         ajax.doAction = callback;
-        if (responseType == undefined) {
-	        responseType = self.CONTENT_TYPE_JSON;
+        if (!responseType) {
+            responseType = self.CONTENT_TYPE_JSON;
         }
         ajax.responseType = responseType;
         self.executeAjax(ajax);
