@@ -565,4 +565,5 @@ public interface JsfConstants {
 
     String JAVASCRIPT_NOT_PERMITTED_PATH = "teeda.JAVASCRIPT_NOT_PERMITTED_PATH";
 
+    String SUBMITTED_COMMAND = "teeda.SUBMITTED_COMMAND";
 }

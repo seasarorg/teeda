@@ -1,6 +1,6 @@
 package org.seasar.teeda.extension.html.impl;
 
-public class FooPage {
+public class Foo3Page {
     
     private boolean initialized = false;
     

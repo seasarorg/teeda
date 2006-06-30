@@ -40,9 +40,6 @@ import org.seasar.teeda.core.util.PortletUtil;
  */
 public class NavigationHandlerImpl extends NavigationHandler {
 
-    private static final Logger logger_ = Logger
-            .getLogger(NavigationHandlerImpl.class);
-
     public void handleNavigation(FacesContext context, String fromAction,
             String outcome) {
         AssertionUtil.assertNotNull("context is null.", context);
@@ -62,10 +59,6 @@ public class NavigationHandlerImpl extends NavigationHandler {
                 redirect(context, externalContext, redirectPath, newViewId);
             } else {
                 render(context, viewHandler, newViewId);
-            }
-        } else {
-            if (logger_.isDebugEnabled()) {
-                logger_.debug("Stay current ViewRoot");
             }
         }
     }
@@ -141,9 +134,6 @@ public class NavigationHandlerImpl extends NavigationHandler {
     protected List getExactMatchNavigationCases(String viewId) {
         Map map = NavigationResource.getNavigationContexts();
         if (map != null) {
-            if (logger_.isDebugEnabled()) {
-                logger_.debug("Exact macth. viewId = " + viewId);
-            }
             return (List) map.get(viewId);
         }
         return null;
@@ -153,9 +143,6 @@ public class NavigationHandlerImpl extends NavigationHandler {
         Map map = NavigationResource
                 .getWildCardMatchNavigationContexts();
         if (map != null) {
-            if (logger_.isDebugEnabled()) {
-                logger_.debug("Wildcard macth. viewId = " + viewId);
-            }
             for (Iterator itr = map.keySet().iterator(); itr.hasNext();) {
                 String key = (String) itr.next();
                 key = key.substring(0, key.lastIndexOf("*"));
@@ -171,9 +158,6 @@ public class NavigationHandlerImpl extends NavigationHandler {
         Map map = NavigationResource
                 .getDefaultMatchNavigationContexts();
         if (map != null) {
-            if (logger_.isDebugEnabled()) {
-                logger_.debug("Default macth. viewId = " + viewId);
-            }
             return (List) map.get("*");
         }
         return null;

@@ -46,6 +46,7 @@ import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ActionDescCache;
 import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.PageDescCache;
+import org.seasar.teeda.extension.html.PagePersistence;
 import org.seasar.teeda.extension.html.TagProcessor;
 import org.seasar.teeda.extension.html.TagProcessorCache;
 import org.seasar.teeda.extension.jsp.PageContextImpl;
@@ -63,6 +64,8 @@ public class HtmlViewHandler extends ViewHandlerImpl {
     private PageDescCache pageDescCache;
 
     private ActionDescCache actionDescCache;
+    
+    private PagePersistence pagePersistence;
 
     public void setTagProcessorCache(TagProcessorCache tagProcessorCache) {
         this.tagProcessorCache = tagProcessorCache;
@@ -76,8 +79,13 @@ public class HtmlViewHandler extends ViewHandlerImpl {
         this.actionDescCache = actionDescCache;
     }
 
+    public void setPagePersistence(PagePersistence pagePersistence) {
+        this.pagePersistence = pagePersistence;
+    }
+
     public UIViewRoot restoreView(FacesContext context, String viewId) {
         tagProcessorCache.updateTagProcessor(viewId);
+        pagePersistence.restore(context, viewId);
         return super.restoreView(context, viewId);
     }
 

@@ -104,12 +104,19 @@ public class HtmlViewHandlerTest extends TeedaExtensionTestCase {
         viewHandler.setTagProcessorCache(tagProcessorCache);
         viewHandler.setPageDescCache(pageDescCache);
         viewHandler.setActionDescCache(actionDescCache);
+        SessionPagePersistence spp = new SessionPagePersistence();
+        spp.setPageDescCache(pageDescCache);
+        viewHandler.setPagePersistence(spp);
         getFacesContext().getViewRoot().setViewId(path);
+        FooPage fooPage = (FooPage) getComponent(FooPage.class);
+        fooPage.setAaa("123");
+        pageDescCache.createPageDesc(path);
+        spp.save(getFacesContext(), path);
         viewHandler.restoreView(getFacesContext(), path);
         viewHandler.renderView(getFacesContext(), path);
         
         assertEquals("<html><body><form id=\"fooForm\" name=\"fooForm\" method=\"post\" enctype=\"application/x-www-form-urlencoded\" action=\"/org/seasar/teeda/extension/html/impl/foo.html\"><input type=\"hidden\" name=\"fooForm/org/seasar/teeda/extension/html/impl/foo.html\" value=\"fooForm\" /></form></body></html>", getResponseText());
-        FooPage fooPage = (FooPage) getComponent(FooPage.class);
         assertTrue(fooPage.isInitialized());
+        assertEquals("123", getExternalContext().getRequestMap().get("aaa"));
     }
 }

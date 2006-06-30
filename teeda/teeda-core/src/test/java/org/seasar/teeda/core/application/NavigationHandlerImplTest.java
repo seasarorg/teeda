@@ -244,7 +244,7 @@ public class NavigationHandlerImplTest extends TeedaTestCase {
 
     }
 
-    private NavigationContext createNavigationContext(String fromViewId,
+    public static NavigationContext createNavigationContext(String fromViewId,
             String fromAction, String outcome, String toViewId,
             boolean isRedirect) {
         NavigationContext navContext = new NavigationContext();
