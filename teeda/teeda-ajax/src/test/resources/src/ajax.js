@@ -16,7 +16,7 @@ Kumu.Ajax = {
     XML_HTTP_REQUEST_STATUS_LOADED : 2,
     XML_HTTP_REQUEST_STATUS_INTERACTIVE : 3,
     XML_HTTP_REQUEST_STATUS_COMPLETE : 4,
-    
+
     CONTENT_TYPE_XML : "text/xml",
     CONTENT_TYPE_JSON : "text/javascript",
     CONTENT_TYPE_TEXT : "text/plain",
@@ -173,9 +173,9 @@ Kumu.Ajax = {
             if (self.XML_HTTP_REQUEST_STATUS_COMPLETE == req.readyState) { 
                 if (self.HTTP_STATUS_OK == req.status) {
                     if (self.DEBUG) self.debugPrint(req.responseText);
-                    if (ajaxComponent.responseType == self.CONTENT_TYPE_JSON) {
+                    if (self.CONTENT_TYPE_JSON == ajaxComponent.responseType) {
                         ajaxComponent.doAction(eval('(' + req.responseText + ')'));
-                    } else if (ajaxComponent.responseType) {
+                    } else if (self.CONTENT_TYPE_XML == ajaxComponent.responseType) {
                         ajaxComponent.doAction(req.responseXML);
                     } else {
                         ajaxComponent.doAction(req.responseText);
@@ -226,11 +226,11 @@ Kumu.Ajax = {
             ajax.params["action"] = components[1];
         }
         
-        
         ajax.doAction = callback;
-        if(responseType != 'undefined'){
-            ajax.responseType = responseType;
+        if (responseType == undefined) {
+	        responseType = self.CONTENT_TYPE_JSON;
         }
+        ajax.responseType = responseType;
         self.executeAjax(ajax);
     }
     
