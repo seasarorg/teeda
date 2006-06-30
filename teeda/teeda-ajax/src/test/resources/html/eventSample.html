@@ -1,0 +1,27 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<script language="JavaScript" type="text/javascript" src="../src/kumu.js"></script>
+<script language="JavaScript" type="text/javascript" src="../src/event.js"></script>
+<script language="JavaScript" type="text/javascript" src="../src/effect.js"></script>
+<script language="JavaScript" type="text/javascript" src="../src/sample.js"></script>
+<script>
+
+KumuEventConf = {
+  'click_test:id0' : move,
+  'click_test:id1' : o.debug.bindScope(o),
+  'click_button' : function(){Position.init();Dragable.init();}
+}
+
+</script>
+</head>
+
+<body>
+<div id='test:id0'>クリックすると動きます</div>
+
+<div id='test:id1'>アラートが出ます</div>
+<input type="button" id="button" value="ここを押す要素が移動可能になります"/>
+
+</body>
+</html>

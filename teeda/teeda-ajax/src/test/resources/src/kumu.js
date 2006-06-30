@@ -13,7 +13,6 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-
 if (typeof(Kumu) == 'undefined') {
     Kumu = {};
 }
@@ -35,23 +34,6 @@ Kumu.extend = function (self, obj) {
                 self[k] = o[k];
             }
         }
-    }
-    return self;
-};
-
-Kumu.add = function (self, obj, skip) {
-    if (!skip) {
-        skip = 0;
-    }
-
-    if (self == null) {
-        self = {};
-    }
-    if (obj) {
-      var l = obj.length;
-      for (var i = skip; i < l; i++) {
-        self.push(obj[i]);
-      }
     }
     return self;
 };
@@ -139,8 +121,70 @@ Kumu = Kumu.extend(Kumu, {
             }
         }
         return ret;
-    }
+    },
 
+	toArray : function(list) {
+   		if (!list){
+        	return [];
+       	}
+		if (list.toArray) {
+       		return list.toArray();
+        } else {
+	        var arr = [];
+    	    for (var i = 0; i < list.length; i++){
+        		arr.push(list[i]);
+        	}
+        	return arr;
+    	}
+    },
+
+	shift : function(list) {
+	    if(!list){
+	        list = this;
+	    }
+	    var obj = list[0];
+        for (var i = 0; i < list.length-1; i++){
+            list[i] = list[i + 1];
+        }
+	    list.length--;
+	    return obj;
+	},
+
+	unshift : function() {
+	    var start = 1;
+	    var list;
+	    if(arguments[0] instanceof Array){
+	        list = arguments[0];
+	    }else{
+	        list = this;
+	        start = 0;
+	    }
+	    var arr = [];
+        for (var i = start; i < arguments.length; i++){
+       	    if(arguments[i] instanceof Array){
+       	        arr = arr.concat(arguments[i]);
+       	    }else{
+                arr.push(arguments[i]);
+       	    }
+        }
+        var o = arr.concat(list);
+        for (var i = 0; i < o.length; i++){
+            list[i] = o[i];
+        }
+	    return list.length;
+	},
+
+    separate : function(str){
+        var i = str.indexOf("_");
+        if(i == 0){
+            i = str.indexOf("_", 1);
+        }
+        var ar = [];
+        ar.push(str.substring(0, i));
+        ar.push(str.substring(i+1, str.length));
+        return ar;
+    }
+    
     /** AOP TraceLog
     beginTrace : function(args, func){
         var funcstr = func.toString();
@@ -243,10 +287,45 @@ var $i = Kumu.$i;
 var $t = Kumu.$t;
 var $n = Kumu.$n;
 
-/** **/
 Array.prototype = Kumu.extend(Array.prototype, {
     map:Kumu.map,
-    filter:Kumu.filter
+    
+    filter:Kumu.filter,
+    
+    shift:Kumu.shift,
+
+    unshift:Kumu.unshift
     
 });
+
+Function.prototype.bind = function() {
+    return Kumu.bind(this);
+}
+
+Function.prototype.bindScope = function() {
+    if(arguments.length == 0){
+        return this;
+    }
+    var x = this;
+    var args = Kumu.toArray(arguments);
+    var object = args.shift();
+    return function() {
+      var args2 = Kumu.toArray(arguments);
+      args2 = args2.concat(args);        
+      return x.apply(object, args2);
+    }
+}
+
+Function.prototype.bindScopeAsEventListener = function() {
+    if(arguments.length == 0){
+        return this;
+    }
+    var x = this;
+    var args = Kumu.toArray(arguments);
+    var object = args.shift();
+    return function(event) {
+        var arr = Array.prototype.concat.apply([event || window.event], args);
+        return x.apply(object, arr);
+    }
+}
 
