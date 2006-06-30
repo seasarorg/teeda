@@ -203,7 +203,14 @@ Kumu.Ajax = {
         var str = func.toString();
         var ret = str.match(/[0-9A-Za-z_]+\(/).toString();
         ret = ret.substring(0,ret.length-1); 
-        var arr = ret.split('_');
+		var idx = ret.indexOf("_");
+		if (idx == -1) {
+		    return [];
+		}
+        var componentName = ret.substring(0, idx);
+		var actionName = ret.substring(idx + 1);
+        var arr = new Array(componentName, actionName);
+
         return arr;
     },
     
