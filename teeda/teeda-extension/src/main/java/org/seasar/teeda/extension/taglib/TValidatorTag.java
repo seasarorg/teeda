@@ -30,13 +30,13 @@ import org.seasar.teeda.core.util.UIParameterUtil;
  * @author shot
  *
  */
-public class SimpleValidatorTag extends BodyTagSupport {
+public class TValidatorTag extends BodyTagSupport {
 
     private static final long serialVersionUID = 1L;
 
     private String validatorId;
 
-    public SimpleValidatorTag() {
+    public TValidatorTag() {
     }
 
     public int doStartTag() throws JspException {

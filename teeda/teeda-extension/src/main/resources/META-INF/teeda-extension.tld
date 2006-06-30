@@ -345,7 +345,7 @@
 
     <tag>
         <name>validator</name>
-        <tag-class>org.seasar.teeda.extension.taglib.SimpleValidatorTag</tag-class>
+        <tag-class>org.seasar.teeda.extension.taglib.TValidatorTag</tag-class>
         <body-content>JSP</body-content>
         <attribute>
             <name>validatorId</name>
