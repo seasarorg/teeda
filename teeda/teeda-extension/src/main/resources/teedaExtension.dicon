@@ -28,7 +28,9 @@
 	</component>
 	<component class="org.seasar.teeda.extension.html.impl.TagProcessorAssemblerImpl"/>
 	<component class="org.seasar.teeda.extension.html.impl.TagProcessorCacheImpl"/>
+	<component class="org.seasar.teeda.extension.html.impl.SessionPagePersistence"/>
 	<component name="viewHandler" class="org.seasar.teeda.extension.html.impl.HtmlViewHandler"/>
+	<component name="navigationHandler" class="org.seasar.teeda.extension.html.impl.HtmlNavigationHandler"/>
 
 	<component class="org.seasar.teeda.core.application.ApplicationImpl"/>
 
