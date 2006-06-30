@@ -19,6 +19,7 @@ import java.util.List;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.validator.Validator;
 import javax.servlet.jsp.PageContext;
 
 /**
@@ -29,25 +30,26 @@ import javax.servlet.jsp.PageContext;
  */
 public class PageContextUtil {
 
-    private static final int PAGE_CONTEXT_SCOPE = PageContext.REQUEST_SCOPE;
+    private static final int PAGE_CONTEXT_REQUEST_SCOPE = PageContext.REQUEST_SCOPE;
 
     private PageContextUtil() {
     }
 
     public static List getComponentTagStackAttribute(PageContext pageContext) {
         return (List) pageContext.getAttribute(
-                InternalConstants.COMPONENT_TAG_STACK_ATTR, PAGE_CONTEXT_SCOPE);
+                InternalConstants.COMPONENT_TAG_STACK_ATTR,
+                PAGE_CONTEXT_REQUEST_SCOPE);
     }
 
     public static void setComponentStackAttribute(PageContext pageContext,
             List list) {
         pageContext.setAttribute(InternalConstants.COMPONENT_TAG_STACK_ATTR,
-                list, PAGE_CONTEXT_SCOPE);
+                list, PAGE_CONTEXT_REQUEST_SCOPE);
     }
 
     public static void removeComponentStackAttribute(PageContext pageContext) {
         pageContext.removeAttribute(InternalConstants.COMPONENT_TAG_STACK_ATTR,
-                PAGE_CONTEXT_SCOPE);
+                PAGE_CONTEXT_REQUEST_SCOPE);
     }
 
     public static FacesContext getCurrentFacesContextAttribute(
@@ -58,8 +60,8 @@ public class PageContextUtil {
 
     public static void setCurrentFacesContextAttribute(PageContext pageContext,
             FacesContext context) {
-        pageContext
-                .setAttribute(InternalConstants.CURRENT_FACES_CONTEXT, context);
+        pageContext.setAttribute(InternalConstants.CURRENT_FACES_CONTEXT,
+                context);
     }
 
     public static UIComponent getCurrentViewRootAttribute(
@@ -70,6 +72,24 @@ public class PageContextUtil {
 
     public static void setCurrentViewRootAttribute(PageContext pageContext,
             UIComponent component) {
-        pageContext.setAttribute(InternalConstants.CURRENT_VIEW_ROOT, component);
+        pageContext
+                .setAttribute(InternalConstants.CURRENT_VIEW_ROOT, component);
+    }
+
+    public static Validator getValidatorAttribute(PageContext pageContext) {
+        return (Validator) pageContext.getAttribute(
+                InternalConstants.VALIDATOR_STACK_ATTR,
+                PAGE_CONTEXT_REQUEST_SCOPE);
+    }
+
+    public static void setValidatorAttribute(PageContext pageContext,
+            Validator validator) {
+        pageContext.setAttribute(InternalConstants.VALIDATOR_STACK_ATTR,
+                validator, PAGE_CONTEXT_REQUEST_SCOPE);
+    }
+
+    public static void removeValidatorAttribute(PageContext pageContext) {
+        pageContext.removeAttribute(InternalConstants.VALIDATOR_STACK_ATTR,
+                PAGE_CONTEXT_REQUEST_SCOPE);
     }
 }

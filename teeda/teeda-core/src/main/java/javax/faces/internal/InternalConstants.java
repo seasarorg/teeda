@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -17,7 +17,7 @@ package javax.faces.internal;
 
 /**
  * @author shot
- * 
+ *
  */
 public interface InternalConstants {
 
@@ -32,5 +32,7 @@ public interface InternalConstants {
     String CURRENT_FACES_CONTEXT = "javax.faces.webapp.CURRENT_FACES_CONTEXT";
 
     String CURRENT_VIEW_ROOT = "javax.faces.webapp.CURRENT_VIEW_ROOT";
+
+    String VALIDATOR_STACK_ATTR = "javax.faces.webapp.VALIDATOR_STORE_ATTR";
 
 }

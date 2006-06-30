@@ -343,4 +343,15 @@
 		</attribute>
     </tag>
 
+    <tag>
+        <name>validator</name>
+        <tag-class>org.seasar.teeda.extension.taglib.SimpleValidatorTag</tag-class>
+        <body-content>JSP</body-content>
+        <attribute>
+            <name>validatorId</name>
+            <required>true</required>
+            <rtexprvalue>false</rtexprvalue>
+        </attribute>
+    </tag>
+
 </taglib>

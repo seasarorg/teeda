@@ -16,7 +16,6 @@
 package org.seasar.teeda.extension.util;
 
 import org.seasar.framework.util.ResourceUtil;
-import org.seasar.framework.util.StringUtil;
 import org.seasar.framework.util.TextUtil;
 
 /**
@@ -30,12 +29,11 @@ public class JavaScriptContext {
     public JavaScriptContext() {
     }
 
+    //TODO need escape?
     public void loadScript(String scriptPath) {
         String text = TextUtil.readText(ResourceUtil.getResourcePath(
                 scriptPath, "js"));
-        text = StringUtil.replace(text, "\"", "\\\"");
         scripts.append(text);
-        scripts.append("\\r\\n");
     }
 
     public void clear() {
