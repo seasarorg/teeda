@@ -24,6 +24,7 @@ import javax.faces.context.FacesContext;
  */
 public class HtmlInputCommaText extends HtmlInputText {
 
+    //TODO config
     public static final String COMPONENT_TYPE = "org.seasar.jsf.HtmlInputCommaText";
 
     public static final String COMPONENT_FAMILY = "javax.faces.Input";
