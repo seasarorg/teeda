@@ -105,11 +105,12 @@ public class HtmlResponseWriter extends ResponseWriter {
             throw new IllegalStateException(
                     "there is no currently open element");
         }
+        String strValue = (value == null) ? "" : value.toString();
         Writer writer = getWriter();
         writer.write(" ");
         writer.write(name);
         writer.write("=\"");
-        writer.write(escapeAttribute(value.toString()));
+        writer.write(escapeAttribute(strValue));
         writer.write("\"");
     }
 
