@@ -17,7 +17,7 @@ import org.seasar.teeda.extension.html.impl.ActionDescImpl;
 import org.seasar.teeda.extension.html.impl.ElementNodeImpl;
 import org.seasar.teeda.extension.html.impl.PageDescImpl;
 import org.seasar.teeda.extension.mock.MockTaglibManager;
-import org.seasar.teeda.extension.taglib.InputCommaTextTag;
+import org.seasar.teeda.extension.taglib.TInputCommaTextTag;
 
 public class InputCommaTextFactoryTest extends TeedaTestCase {
 
@@ -51,7 +51,7 @@ public class InputCommaTextFactoryTest extends TeedaTestCase {
         jsfHtml.setUri(ExtensionConstants.TEEDA_EXTENSION_URI);
         TagElement tagElement = new TagElementImpl();
         tagElement.setName("inputCommaText");
-        tagElement.setTagClass(InputCommaTextTag.class);
+        tagElement.setTagClass(TInputCommaTextTag.class);
         jsfHtml.addTagElement(tagElement);
         taglibManager.addTaglibElement(jsfHtml);
         InputCommaTextFactory factory = new InputCommaTextFactory();
@@ -69,7 +69,7 @@ public class InputCommaTextFactoryTest extends TeedaTestCase {
                 pageDesc, actionDesc);
         // ## Assert ##
         assertNotNull("1", processor);
-        assertEquals("2", InputCommaTextTag.class, processor.getTagClass());
+        assertEquals("2", TInputCommaTextTag.class, processor.getTagClass());
         assertEquals("3", "#{fooPage.aaa}", processor.getProperty("value"));
     }
 }
