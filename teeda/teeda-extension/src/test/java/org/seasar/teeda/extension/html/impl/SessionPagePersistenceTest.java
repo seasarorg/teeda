@@ -24,6 +24,7 @@ import java.util.Map;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
+import org.seasar.framework.convention.impl.NamingConventionImpl;
 import org.seasar.framework.util.ClassUtil;
 import org.seasar.teeda.core.unit.TeedaTestCase;
 import org.seasar.teeda.extension.html.impl.SessionPagePersistence.PersistenceData;
@@ -57,11 +58,12 @@ public class SessionPagePersistenceTest extends TeedaTestCase {
     public void testSaveAndRestore() throws Exception {
         SessionPagePersistence spp = new SessionPagePersistence();
         spp.setPageSize(2);
-        DefaultHtmlAutoNaming naming = new DefaultHtmlAutoNaming();
+        NamingConventionImpl convention = new NamingConventionImpl();
         String rootPath = "/" + ClassUtil.getPackageName(getClass()).replace('.', '/');
-        naming.setHtmlRootPath(rootPath);
+        convention.setViewRootPath(rootPath);
+        convention.setViewExtension(".html");
         PageDescCacheImpl cache = new PageDescCacheImpl();
-        cache.setHtmlAutoNaming(naming);
+        cache.setNamingConvention(convention);
         cache.setContainer(getContainer());
         spp.setPageDescCache(cache);
         register(FooPage.class, "fooPage");
@@ -74,23 +76,27 @@ public class SessionPagePersistenceTest extends TeedaTestCase {
         cache.createPageDesc(path2);
         cache.createPageDesc(path3);
         FacesContext context = getFacesContext();
-        spp.save(context, path);
+        context.getViewRoot().setViewId(path);
+        spp.save(context, path2);
         ExternalContext extCtx = context.getExternalContext();
         Map sessionMap = extCtx.getSessionMap();
         PersistenceData pd = (PersistenceData) sessionMap.get(SessionPagePersistence.class.getName());
         assertNotNull(pd);
         assertEquals(1, pd.getSize());
         
-        spp.save(context, path2);
+        
+        context.getViewRoot().setViewId(path2);
+        spp.save(context, path3);
         assertEquals(2, pd.getSize());
         
         Foo3Page foo3Page = (Foo3Page) getComponent(Foo3Page.class);
         foo3Page.setAaa("123");
-        spp.save(context, path3);
+        context.getViewRoot().setViewId(path3);
+        spp.save(context, path);
         assertEquals(2, pd.getSize());
-        assertNull(pd.get(path));
+        assertNull(pd.get(path2));
         
-        spp.restore(context, path3);
+        spp.restore(context, path);
         Map requestMap = extCtx.getRequestMap();
         assertEquals("123", requestMap.get("aaa"));
     }

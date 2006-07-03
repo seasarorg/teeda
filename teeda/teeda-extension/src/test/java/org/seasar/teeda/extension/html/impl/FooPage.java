@@ -1,7 +1,7 @@
 package org.seasar.teeda.extension.html.impl;
 
 public class FooPage {
-    
+
     private boolean initialized = false;
     
     private String aaa;

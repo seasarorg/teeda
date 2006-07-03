@@ -16,6 +16,8 @@
 package org.seasar.teeda.extension.html.impl;
 
 import java.io.File;
+import java.util.List;
+import java.util.Map;
 
 import javax.faces.internal.ValidatorResource;
 
@@ -24,6 +26,8 @@ import org.seasar.framework.container.impl.ComponentDefImpl;
 import org.seasar.framework.unit.S2FrameworkTestCase;
 import org.seasar.framework.util.ClassUtil;
 import org.seasar.framework.util.ResourceUtil;
+import org.seasar.teeda.core.application.navigation.NavigationContext;
+import org.seasar.teeda.core.application.navigation.NavigationResource;
 import org.seasar.teeda.extension.validator.RequiredValidator;
 
 /**
@@ -34,6 +38,7 @@ public class PageDescImplTest extends S2FrameworkTestCase {
 
     protected void tearDown() {
         ValidatorResource.removeAll();
+        NavigationResource.removeAll();
     }
 
     public void testHasProperty() throws Exception {
@@ -66,5 +71,18 @@ public class PageDescImplTest extends S2FrameworkTestCase {
         register(cd);
         new PageDescImpl(HogePage.class, "hogePage");
         assertNotNull(ValidatorResource.getValidator("#{hogePage.aaa}"));
+    }
+    
+    public void testNavigation() throws Exception {
+        register(FooPage.class);
+        register(Foo4Page.class);
+        new PageDescImpl(Foo4Page.class, "foo4Page");
+        Map m = NavigationResource.getNavigationContexts();
+        assertNotNull(m);
+        List l = (List) m.get("/view/foo4.html");
+        assertNotNull(l);
+        assertEquals(1, l.size());
+        NavigationContext nc = (NavigationContext) l.get(0);
+        assertEquals("/view/foo4.html", nc.getFromViewId());
     }
 }

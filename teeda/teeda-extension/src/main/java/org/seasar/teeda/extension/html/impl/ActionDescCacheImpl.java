@@ -21,10 +21,10 @@ import java.util.Map;
 
 import org.seasar.framework.container.ComponentDef;
 import org.seasar.framework.container.S2Container;
+import org.seasar.framework.convention.NamingConvention;
 import org.seasar.framework.util.ResourceUtil;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ActionDescCache;
-import org.seasar.teeda.extension.html.HtmlAutoNaming;
 
 /**
  * @author higa
@@ -34,12 +34,14 @@ public class ActionDescCacheImpl implements ActionDescCache {
 
     private Map actionDescs = new HashMap();
 
-    private HtmlAutoNaming htmlAutoNaming = new DefaultHtmlAutoNaming();
+    public static final String namingConvention_BINDING = "bindingType=must";
+    
+    private NamingConvention namingConvention;
 
     private S2Container container;
 
-    public void setHtmlAutoNaming(HtmlAutoNaming pageAutoNaming) {
-        this.htmlAutoNaming = pageAutoNaming;
+    public void setNamingConvention(NamingConvention namingConvention) {
+        this.namingConvention = namingConvention;
     }
 
     public void setContainer(S2Container container) {
@@ -52,7 +54,7 @@ public class ActionDescCacheImpl implements ActionDescCache {
 
     public synchronized ActionDesc createActionDesc(String viewId) {
         ActionDesc actionDesc = null;
-        String actionName = htmlAutoNaming.convertToActionName(viewId);
+        String actionName = namingConvention.fromPathToActionName(viewId);
         if (!container.getRoot().hasComponentDef(actionName)) {
             return null;
         }

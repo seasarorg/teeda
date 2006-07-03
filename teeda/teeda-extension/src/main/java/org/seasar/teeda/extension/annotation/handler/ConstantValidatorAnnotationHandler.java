@@ -39,6 +39,8 @@ public class ConstantValidatorAnnotationHandler extends
         AbstractValidatorAnnotationHandler {
 
     private static final String VALIDATOR_SUFFIX = "_VALIDATOR";
+    
+    private static final String VALIDATOR_NAME_SUFFIX = "Validator";
 
     private static final String VALIDATOR = "validator";
 
@@ -79,6 +81,7 @@ public class ConstantValidatorAnnotationHandler extends
         if (validatorName == null) {
             throw new EmptyRuntimeException("validatorName");
         }
+        validatorName = validatorName + VALIDATOR_NAME_SUFFIX;
         Validator validator = (Validator) SingletonS2ContainerFactory
                 .getContainer().getComponent(validatorName);
         copyProperties(validator, m);

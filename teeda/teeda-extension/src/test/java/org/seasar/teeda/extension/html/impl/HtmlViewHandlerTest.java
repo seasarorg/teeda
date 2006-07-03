@@ -20,6 +20,7 @@ import javax.faces.component.UIViewRoot;
 import javax.faces.component.html.HtmlForm;
 import javax.faces.render.RenderKit;
 
+import org.seasar.framework.convention.impl.NamingConventionImpl;
 import org.seasar.framework.util.ClassUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.application.TeedaStateManager;
@@ -69,17 +70,18 @@ public class HtmlViewHandlerTest extends TeedaExtensionTestCase {
         jsfHtml.addTagElement(tagElement);
         taglibManager.addTaglibElement(jsfHtml);
         
-        DefaultHtmlAutoNaming naming = new DefaultHtmlAutoNaming();
+        NamingConventionImpl convention = new NamingConventionImpl();
         String rootPath = "/" + ClassUtil.getPackageName(getClass()).replace('.', '/');
-        naming.setHtmlRootPath(rootPath);
+        convention.setViewRootPath(rootPath);
+        convention.setViewExtension(".html");
         PageDescCacheImpl pageDescCache = new PageDescCacheImpl();
-        pageDescCache.setHtmlAutoNaming(naming);
+        pageDescCache.setNamingConvention(convention);
         pageDescCache.setContainer(getContainer());
         register(FooPage.class, "fooPage");
         String path = rootPath + "/foo.html";
         
         ActionDescCacheImpl actionDescCache = new ActionDescCacheImpl();
-        actionDescCache.setHtmlAutoNaming(naming);
+        actionDescCache.setNamingConvention(convention);
         actionDescCache.setContainer(getContainer());
         register(FooAction.class, "fooAction");
         

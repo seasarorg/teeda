@@ -37,7 +37,7 @@ public class OutputTextFactory extends AbstractElementProcessorFactory {
         if (!JsfConstants.SPAN_ELEM.equalsIgnoreCase(elementNode.getTagName())) {
             return false;
         }
-        return pageDesc.hasProperty(elementNode.getId());
+        return pageDesc != null && pageDesc.hasProperty(elementNode.getId());
     }
     
     public boolean isLeaf() {

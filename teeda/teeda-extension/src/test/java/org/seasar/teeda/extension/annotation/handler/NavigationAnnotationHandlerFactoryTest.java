@@ -13,11 +13,20 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.extension.html;
+package org.seasar.teeda.extension.annotation.handler;
 
-public interface HtmlAutoNaming {
+import junit.framework.TestCase;
 
-    String convertToPageName(String htmlPath);
+/**
+ * @author higa
+ * 
+ */
+public class NavigationAnnotationHandlerFactoryTest extends TestCase {
 
-    String convertToActionName(String htmlPath);
+    public void testGetAnnotationHandler() throws Exception {
+        NavigationAnnotationHandler handler = NavigationAnnotationHandlerFactory
+                .getAnnotationHandler();
+        assertEquals(ConstantNavigationAnnotationHandler.class, handler
+                .getClass());
+    }
 }

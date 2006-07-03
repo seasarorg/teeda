@@ -47,9 +47,9 @@ public class ConstantValidatorAnnotationHandlerTest extends TeedaTestCase {
         private String name = null;
         private String aaa;
 
-        public static final String name_VALIDATOR = "#{'validator':'lengthValidator', 'minimum':2, 'maximum':5}";
+        public static final String name_VALIDATOR = "#{'validator':'length', 'minimum':2, 'maximum':5}";
         
-        public static final String aaa_VALIDATOR = "{#{'validator':'lengthValidator', 'minimum':2, 'maximum':5},#{'validator':'lengthValidator', 'minimum':1, 'maximum':4}}";
+        public static final String aaa_VALIDATOR = "{#{'validator':'length', 'minimum':2, 'maximum':5},#{'validator':'length', 'minimum':1, 'maximum':4}}";
 
         public String getName() {
             return name;

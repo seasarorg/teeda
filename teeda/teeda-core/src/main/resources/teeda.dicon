@@ -2,7 +2,7 @@
 <!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container 2.4//EN" 
 	"http://www.seasar.org/dtd/components24.dtd">
 <components namespace="teeda">
-
+	<include path="convention.dicon" />
 	<include path="teedaErrorPage.dicon" />
 	<include path="teedaIdLookup.dicon" />
 	
@@ -232,9 +232,6 @@
 	</component>
 	
 	<component class="org.seasar.framework.container.autoregister.JarComponentAutoRegister">
-		<property name="referenceClass">
-			@javax.faces.validator.LengthValidator@class
-		</property>
 		<property name="instanceDef">@org.seasar.framework.container.deployer.InstanceDefFactory@PROTOTYPE</property>
 		<property name="jarFileNames">"teeda-core.*"</property>
 		<initMethod name="addClassPattern">

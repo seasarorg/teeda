@@ -17,6 +17,7 @@ package org.seasar.teeda.extension.html.impl;
 
 import javax.faces.component.UIViewRoot;
 
+import org.seasar.framework.convention.impl.NamingConventionImpl;
 import org.seasar.framework.util.ClassUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.application.NavigationHandlerImplTest;
@@ -47,12 +48,12 @@ public class HtmlNavigationHandlerTest extends TeedaTestCase {
         jsfHtml.addTagElement(tagElement);
         taglibManager.addTaglibElement(jsfHtml);
 
-        DefaultHtmlAutoNaming naming = new DefaultHtmlAutoNaming();
-        String rootPath = "/"
-                + ClassUtil.getPackageName(getClass()).replace('.', '/');
-        naming.setHtmlRootPath(rootPath);
+        NamingConventionImpl convention = new NamingConventionImpl();
+        String rootPath = "/" + ClassUtil.getPackageName(getClass()).replace('.', '/');
+        convention.setViewRootPath(rootPath);
+        convention.setViewExtension(".html");
         PageDescCacheImpl pageDescCache = new PageDescCacheImpl();
-        pageDescCache.setHtmlAutoNaming(naming);
+        pageDescCache.setNamingConvention(convention);
         pageDescCache.setContainer(getContainer());
         register(FooPage.class, "fooPage");
         register(Foo2Page.class, "foo2Page");

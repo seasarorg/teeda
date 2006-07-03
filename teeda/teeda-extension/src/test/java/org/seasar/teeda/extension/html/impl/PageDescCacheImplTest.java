@@ -15,6 +15,7 @@
  */
 package org.seasar.teeda.extension.html.impl;
 
+import org.seasar.framework.convention.impl.NamingConventionImpl;
 import org.seasar.framework.unit.S2FrameworkTestCase;
 import org.seasar.framework.util.ClassUtil;
 import org.seasar.teeda.extension.html.PageDesc;
@@ -26,11 +27,12 @@ import org.seasar.teeda.extension.html.PageDesc;
 public class PageDescCacheImplTest extends S2FrameworkTestCase {
 	
     public void testCreateAndGetPageDesc() throws Exception {
-        DefaultHtmlAutoNaming naming = new DefaultHtmlAutoNaming();
+        NamingConventionImpl convention = new NamingConventionImpl();
         String rootPath = "/" + ClassUtil.getPackageName(getClass()).replace('.', '/');
-        naming.setHtmlRootPath(rootPath);
+        convention.setViewRootPath(rootPath);
+        convention.setViewExtension(".html");
         PageDescCacheImpl cache = new PageDescCacheImpl();
-        cache.setHtmlAutoNaming(naming);
+        cache.setNamingConvention(convention);
         cache.setContainer(getContainer());
         register(FooPage.class, "fooPage");
         String path = rootPath + "/foo.html";

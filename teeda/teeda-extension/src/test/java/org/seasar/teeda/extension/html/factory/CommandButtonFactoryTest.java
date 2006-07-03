@@ -3,10 +3,9 @@ package org.seasar.teeda.extension.html.factory;
 import java.util.HashMap;
 import java.util.Map;
 
-import junit.framework.TestCase;
-
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.taglib.html.CommandButtonTag;
+import org.seasar.teeda.core.unit.TeedaTestCase;
 import org.seasar.teeda.extension.config.taglib.element.TagElement;
 import org.seasar.teeda.extension.config.taglib.element.TaglibElement;
 import org.seasar.teeda.extension.config.taglib.element.impl.TagElementImpl;
@@ -20,7 +19,7 @@ import org.seasar.teeda.extension.html.impl.ElementNodeImpl;
 import org.seasar.teeda.extension.html.impl.PageDescImpl;
 import org.seasar.teeda.extension.mock.MockTaglibManager;
 
-public class CommandButtonFactoryTest extends TestCase {
+public class CommandButtonFactoryTest extends TeedaTestCase {
 
     public void testIsMatch_go() throws Exception {
         CommandButtonFactory factory = new CommandButtonFactory();

@@ -34,6 +34,8 @@ import org.seasar.teeda.extension.html.PagePersistence;
 
 public class SessionPagePersistence implements PagePersistence {
 
+    private static final long serialVersionUID = 1L;
+
     private int pageSize = 10;
     
     private PageDescCache pageDescCache;
@@ -55,10 +57,10 @@ public class SessionPagePersistence implements PagePersistence {
         Map sessionMap = extCtx.getSessionMap();
         PersistenceData pd = (PersistenceData) sessionMap.get(getClass().getName());
         if (pd == null) {
-            pd = new PersistenceData();
+            pd = new PersistenceData(pageSize);
             sessionMap.put(getClass().getName(), pd);
         }
-        pd.set(viewId, getPageData(viewId));
+        pd.set(viewId, getPageData(context.getViewRoot().getViewId()));
     }
     
     protected Map getPageData(String viewId) {
@@ -106,13 +108,19 @@ public class SessionPagePersistence implements PagePersistence {
         requestMap.putAll(pageData);
     }
 
-    public class PersistenceData implements Serializable {
+    public static class PersistenceData implements Serializable {
         
         private static final long serialVersionUID = 1L;
 
         private SLinkedList list = new SLinkedList();
         
         private Map map = new HashMap();
+        
+        private int pageSize;
+        
+        public PersistenceData(int pageSize) {
+            this.pageSize = pageSize;
+        }
 
         public synchronized Map get(String viewId) {
             list.remove(viewId);

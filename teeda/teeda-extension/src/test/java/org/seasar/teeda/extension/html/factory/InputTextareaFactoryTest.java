@@ -18,10 +18,9 @@ package org.seasar.teeda.extension.html.factory;
 import java.util.HashMap;
 import java.util.Map;
 
-import junit.framework.TestCase;
-
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.taglib.html.InputTextareaTag;
+import org.seasar.teeda.core.unit.TeedaTestCase;
 import org.seasar.teeda.extension.config.taglib.element.TagElement;
 import org.seasar.teeda.extension.config.taglib.element.TaglibElement;
 import org.seasar.teeda.extension.config.taglib.element.impl.TagElementImpl;
@@ -38,7 +37,7 @@ import org.seasar.teeda.extension.mock.MockTaglibManager;
 /**
  * @author shot
  */
-public class InputTextareaFactoryTest extends TestCase {
+public class InputTextareaFactoryTest extends TeedaTestCase {
 
     public void testIsMatch() throws Exception {
         InputTextareaFactory factory = new InputTextareaFactory();

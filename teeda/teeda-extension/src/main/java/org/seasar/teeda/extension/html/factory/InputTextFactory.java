@@ -39,7 +39,7 @@ public class InputTextFactory extends AbstractElementProcessorFactory {
                 .getProperty(JsfConstants.TYPE_ATTR))) {
             return false;
         }
-        return pageDesc.hasProperty(elementNode.getId());
+        return pageDesc != null && pageDesc.hasProperty(elementNode.getId());
     }
 
     protected void customizeProperties(Map properties, ElementNode elementNode,

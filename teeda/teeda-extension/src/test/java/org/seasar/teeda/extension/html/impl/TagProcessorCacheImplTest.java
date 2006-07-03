@@ -17,6 +17,7 @@ package org.seasar.teeda.extension.html.impl;
 
 import java.io.File;
 
+import org.seasar.framework.convention.impl.NamingConventionImpl;
 import org.seasar.framework.unit.S2FrameworkTestCase;
 import org.seasar.framework.util.ClassUtil;
 import org.seasar.framework.util.ResourceUtil;
@@ -30,18 +31,19 @@ import org.seasar.teeda.extension.html.TagProcessor;
 public class TagProcessorCacheImplTest extends S2FrameworkTestCase {
 	
     public void testUpdateTagProcessor() throws Exception {
-        DefaultHtmlAutoNaming naming = new DefaultHtmlAutoNaming();
+        NamingConventionImpl convention = new NamingConventionImpl();
         String rootPath = "/" + ClassUtil.getPackageName(getClass()).replace('.', '/');
-        naming.setHtmlRootPath(rootPath);
+        convention.setViewRootPath(rootPath);
+        convention.setViewExtension(".html");
         String path = rootPath + "/foo.html";
         
         PageDescCacheImpl pageDescCache = new PageDescCacheImpl();
-        pageDescCache.setHtmlAutoNaming(naming);
+        pageDescCache.setNamingConvention(convention);
         pageDescCache.setContainer(getContainer());
         register(FooPage.class, "fooPage");
         
         ActionDescCacheImpl actionDescCache = new ActionDescCacheImpl();
-        actionDescCache.setHtmlAutoNaming(naming);
+        actionDescCache.setNamingConvention(convention);
         actionDescCache.setContainer(getContainer());
         register(FooAction.class, "fooAction");
         
