@@ -1,4 +1,4 @@
-<project name="hotdeploy-demo" default="dist" basedir=".">
+<project name="teeda-extension-example" default="dist" basedir=".">
 
 	<property name="ver" value="EA1"/>
 
@@ -7,8 +7,8 @@
 			<fileset dir="target"/>
 		</delete>
 		<mkdir dir="target"/>
-		<zip zipfile="target/hotdeploy-demo-${ver}.zip">
-			<zipfileset prefix="hotdeploy-demo" dir=".">
+		<zip zipfile="target/teeda-extension-example-${ver}.zip">
+			<zipfileset prefix="teeda-extension-example" dir=".">
 				<exclude name="target/**"/>
 				<exclude name="**/.settings/**"/>
 				<exclude name="build.xml"/>
