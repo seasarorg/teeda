@@ -3,8 +3,7 @@ package org.seasar.teeda.extension.html.factory;
 import java.util.HashMap;
 import java.util.Map;
 
-import junit.framework.TestCase;
-
+import org.seasar.teeda.core.unit.TeedaTestCase;
 import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.config.taglib.element.TagElement;
 import org.seasar.teeda.extension.config.taglib.element.TaglibElement;
@@ -20,7 +19,7 @@ import org.seasar.teeda.extension.html.impl.PageDescImpl;
 import org.seasar.teeda.extension.mock.MockTaglibManager;
 import org.seasar.teeda.extension.taglib.InputCommaTextTag;
 
-public class InputCommaTextFactoryTest extends TestCase {
+public class InputCommaTextFactoryTest extends TeedaTestCase {
 
     public void testIsMatch() throws Exception {
         InputCommaTextFactory factory = new InputCommaTextFactory();

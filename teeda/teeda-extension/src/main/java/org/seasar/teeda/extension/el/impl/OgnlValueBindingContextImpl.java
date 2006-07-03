@@ -40,8 +40,7 @@ public class OgnlValueBindingContextImpl extends ValueBindingContextImpl
         if (!isOgnlValueReference(expression)) {
             return super.createValueBinding(application, expression);
         } else {
-            String source = expression.substring(3);
-            source = source.substring(0, source.length() - 1);
+            String source = expression.substring(3, expression.length() - 1);
             Object obj = createExpression(source)
                     .evaluate(getContainer(), null);
             return super.createValueBinding(application, BindingUtil
