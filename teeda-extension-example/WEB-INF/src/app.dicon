@@ -2,5 +2,6 @@
 <!DOCTYPE components PUBLIC "-//SEASAR2.1//DTD S2Container//EN"
 	"http://www.seasar.org/dtd/components21.dtd">
 <components>
+	<include path="convention.dicon"/>
 	<include path="teedaExtension.dicon"/>
 </components>

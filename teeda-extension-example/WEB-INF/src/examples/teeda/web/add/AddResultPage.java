@@ -1,8 +1,6 @@
 package examples.teeda.web.add;
 
-public class AddPage {
-
-	public static final String arg1_VALIDATOR = "#{'validator':'lengthValidator','minimum':3}";
+public class AddResultPage {
     
 	private int arg1;
     
@@ -34,7 +32,7 @@ public class AddPage {
         this.result = result;
     }
     
-    public String doCalculate() {
+    public String initialize() {
         result = arg1 + arg2;
         return null;
     }
