@@ -37,7 +37,7 @@
 
 	<tag>
 		<name>grid</name>
-		<tag-class>org.seasar.teeda.extension.taglib.GridTag</tag-class>
+		<tag-class>org.seasar.teeda.extension.taglib.TGridTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
 			<name>id</name>
@@ -62,12 +62,12 @@
 	</tag>
 	<tag>
 		<name>gridBody</name>
-		<tag-class>org.seasar.teeda.extension.taglib.GridBodyTag</tag-class>
+		<tag-class>org.seasar.teeda.extension.taglib.TGridBodyTag</tag-class>
 		<body-content>JSP</body-content>
 	</tag>
 	<tag>
 		<name>gridCol</name>
-		<tag-class>org.seasar.teeda.extension.taglib.GridColumnTag</tag-class>
+		<tag-class>org.seasar.teeda.extension.taglib.TGridColumnTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
 			<name>span</name>
@@ -82,7 +82,7 @@
 	</tag>
 	<tag>
 		<name>gridColGroup</name>
-		<tag-class>org.seasar.teeda.extension.taglib.GridColumnGroupTag</tag-class>
+		<tag-class>org.seasar.teeda.extension.taglib.TGridColumnGroupTag</tag-class>
 		<body-content>JSP</body-content>
 	    <attribute>
 			<name>styleClass</name>
@@ -92,22 +92,22 @@
 	</tag>
 	<tag>
 		<name>gridHeader</name>
-		<tag-class>org.seasar.teeda.extension.taglib.GridHeaderTag</tag-class>
+		<tag-class>org.seasar.teeda.extension.taglib.TGridHeaderTag</tag-class>
 		<body-content>JSP</body-content>
 	</tag>
 	<tag>
 		<name>gridTd</name>
-		<tag-class>org.seasar.teeda.extension.taglib.GridTdTag</tag-class>
+		<tag-class>org.seasar.teeda.extension.taglib.TGridTdTag</tag-class>
 		<body-content>JSP</body-content>
 	</tag>
 	<tag>
 		<name>gridTh</name>
-		<tag-class>org.seasar.teeda.extension.taglib.GridThTag</tag-class>
+		<tag-class>org.seasar.teeda.extension.taglib.TGridThTag</tag-class>
 		<body-content>JSP</body-content>
 	</tag>
 	<tag>
 		<name>gridTr</name>
-		<tag-class>org.seasar.teeda.extension.taglib.GridTrTag</tag-class>
+		<tag-class>org.seasar.teeda.extension.taglib.TGridTrTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
 			<name>height</name>
@@ -118,7 +118,7 @@
 
     <tag>
         <name>inputCommaText</name>
-        <tag-class>org.seasar.teeda.extension.taglib.InputCommaTextTag</tag-class>
+        <tag-class>org.seasar.teeda.extension.taglib.TInputCommaTextTag</tag-class>
         <body-content>JSP</body-content>
         <attribute>
             <name>id</name>

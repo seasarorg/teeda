@@ -20,14 +20,14 @@
 			<component-family>org.seasar.teeda.extension.Grid</component-family>
 			<renderer-type>org.seasar.teeda.extension.HtmlGrid</renderer-type>
 			<renderer-class>
-				org.seasar.teeda.extension.render.html.HtmlGridRenderer
+				org.seasar.teeda.extension.render.html.THtmlGridRenderer
 			</renderer-class>
 		</renderer>
 		<renderer>
 			<component-family>javax.faces.Input</component-family>
 			<renderer-type>org.seasar.jsf.HtmlInputCommaText</renderer-type>
 			<renderer-class>
-				org.seasar.teeda.extension.render.html.HtmlInputCommaTextRenderer
+				org.seasar.teeda.extension.render.html.THtmlInputCommaTextRenderer
 			</renderer-class>
 		</renderer>
 		<renderer>
@@ -53,7 +53,7 @@
 			org.seasar.teeda.extension.HtmlGrid
 		</component-type>
 		<component-class>
-			org.seasar.teeda.extension.component.html.HtmlGrid
+			org.seasar.teeda.extension.component.html.THtmlGrid
 		</component-class>
 	</component>
 	<component>
@@ -61,7 +61,7 @@
 			org.seasar.teeda.extension.HtmlGridBody
 		</component-type>
 		<component-class>
-			org.seasar.teeda.extension.component.html.HtmlGridBody
+			org.seasar.teeda.extension.component.html.THtmlGridBody
 		</component-class>
 	</component>
 	<component>
@@ -69,7 +69,7 @@
 			org.seasar.teeda.extension.HtmlGridColumn
 		</component-type>
 		<component-class>
-			org.seasar.teeda.extension.component.html.HtmlGridColumn
+			org.seasar.teeda.extension.component.html.THtmlGridColumn
 		</component-class>
 	</component>
 	<component>
@@ -77,7 +77,7 @@
 			org.seasar.teeda.extension.HtmlGridColumnGroup
 		</component-type>
 		<component-class>
-			org.seasar.teeda.extension.component.html.HtmlGridColumnGroup
+			org.seasar.teeda.extension.component.html.THtmlGridColumnGroup
 		</component-class>
 	</component>
 	<component>
@@ -85,7 +85,7 @@
 			org.seasar.teeda.extension.HtmlGridHeader
 		</component-type>
 		<component-class>
-			org.seasar.teeda.extension.component.html.HtmlGridHeader
+			org.seasar.teeda.extension.component.html.THtmlGridHeader
 		</component-class>
 	</component>
 	<component>
@@ -93,7 +93,7 @@
 			org.seasar.teeda.extension.HtmlGridTd
 		</component-type>
 		<component-class>
-			org.seasar.teeda.extension.component.html.HtmlGridTd
+			org.seasar.teeda.extension.component.html.THtmlGridTd
 		</component-class>
 	</component>
 	<component>
@@ -101,7 +101,7 @@
 			org.seasar.teeda.extension.HtmlGridTh
 		</component-type>
 		<component-class>
-			org.seasar.teeda.extension.component.html.HtmlGridTh
+			org.seasar.teeda.extension.component.html.THtmlGridTh
 		</component-class>
 	</component>
 	<component>
@@ -109,7 +109,7 @@
 			org.seasar.teeda.extension.HtmlGridTr
 		</component-type>
 		<component-class>
-			org.seasar.teeda.extension.component.html.HtmlGridTr
+			org.seasar.teeda.extension.component.html.THtmlGridTr
 		</component-class>
 	</component>
 	<component>
@@ -117,7 +117,7 @@
 			org.seasar.jsf.HtmlInputCommaText
 		</component-type>
 		<component-class>
-			org.seasar.teeda.extension.component.html.HtmlInputCommaText
+			org.seasar.teeda.extension.component.html.THtmlInputCommaText
 		</component-class>
 	</component>
 	<component>

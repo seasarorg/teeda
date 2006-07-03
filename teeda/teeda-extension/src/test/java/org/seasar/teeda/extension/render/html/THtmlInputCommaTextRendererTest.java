@@ -26,17 +26,17 @@ import org.custommonkey.xmlunit.Diff;
 import org.seasar.teeda.core.mock.MockExternalContext;
 import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.extension.component.ScriptEnhanceUIViewRoot;
-import org.seasar.teeda.extension.component.html.HtmlInputCommaText;
+import org.seasar.teeda.extension.component.html.THtmlInputCommaText;
 import org.seasar.teeda.extension.util.JavaScriptContext;
 
 /**
  * @author shot
  */
-public class HtmlInputCommaTextRendererTest extends RendererTest {
+public class THtmlInputCommaTextRendererTest extends RendererTest {
 
     private MockHtmlInputCommaText htmlInputCommaText;
 
-    private HtmlInputCommaTextRenderer renderer;
+    private THtmlInputCommaTextRenderer renderer;
 
     public void setUp() throws Exception {
         super.setUp();
@@ -215,17 +215,17 @@ public class HtmlInputCommaTextRendererTest extends RendererTest {
         assertFalse(getResponseText().matches("removeComma(this);"));
     }
 
-    private HtmlInputCommaTextRenderer createHtmlInputCommaTextRenderer() {
-        return (HtmlInputCommaTextRenderer) createRenderer();
+    private THtmlInputCommaTextRenderer createHtmlInputCommaTextRenderer() {
+        return (THtmlInputCommaTextRenderer) createRenderer();
     }
 
     protected Renderer createRenderer() {
-        HtmlInputCommaTextRenderer renderer = new HtmlInputCommaTextRenderer();
+        THtmlInputCommaTextRenderer renderer = new THtmlInputCommaTextRenderer();
         renderer.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
         return renderer;
     }
 
-    private static class MockHtmlInputCommaText extends HtmlInputCommaText {
+    private static class MockHtmlInputCommaText extends THtmlInputCommaText {
 
         private Renderer renderer;
 

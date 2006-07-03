@@ -37,29 +37,29 @@ import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.render.html.HtmlOutputTextRenderer;
 import org.seasar.teeda.core.render.html.MockHtmlOutputText;
 import org.seasar.teeda.core.unit.TestUtil;
-import org.seasar.teeda.extension.component.html.HtmlGrid;
-import org.seasar.teeda.extension.component.html.HtmlGridBody;
-import org.seasar.teeda.extension.component.html.HtmlGridColumn;
-import org.seasar.teeda.extension.component.html.HtmlGridColumnGroup;
-import org.seasar.teeda.extension.component.html.HtmlGridHeader;
-import org.seasar.teeda.extension.component.html.HtmlGridTd;
-import org.seasar.teeda.extension.component.html.HtmlGridTh;
-import org.seasar.teeda.extension.component.html.HtmlGridTr;
+import org.seasar.teeda.extension.component.html.THtmlGrid;
+import org.seasar.teeda.extension.component.html.THtmlGridBody;
+import org.seasar.teeda.extension.component.html.THtmlGridColumn;
+import org.seasar.teeda.extension.component.html.THtmlGridColumnGroup;
+import org.seasar.teeda.extension.component.html.THtmlGridHeader;
+import org.seasar.teeda.extension.component.html.THtmlGridTd;
+import org.seasar.teeda.extension.component.html.THtmlGridTh;
+import org.seasar.teeda.extension.component.html.THtmlGridTr;
 
 /**
  * @author manhole
  */
-public class HtmlGridRendererTest extends RendererTest {
+public class THtmlGridRendererTest extends RendererTest {
 
     // TODO making
 
-    private HtmlGridRenderer renderer;
+    private THtmlGridRenderer renderer;
 
     private MockHtmlGrid htmlGrid;
 
     protected void setUp() throws Exception {
         super.setUp();
-        renderer = (HtmlGridRenderer) createRenderer();
+        renderer = (THtmlGridRenderer) createRenderer();
         htmlGrid = new MockHtmlGrid();
         htmlGrid.setRenderer(renderer);
     }
@@ -88,7 +88,7 @@ public class HtmlGridRendererTest extends RendererTest {
 
     public void ignore_testEncode_HeaderNoValue() throws Exception {
         // ## Arrange ##
-        HtmlGridHeader thead = new HtmlGridHeader();
+        THtmlGridHeader thead = new THtmlGridHeader();
         htmlGrid.getChildren().add(thead);
         htmlGrid.setId("aa");
 
@@ -105,13 +105,13 @@ public class HtmlGridRendererTest extends RendererTest {
         // ## Arrange ##
         HtmlOutputTextRenderer htmlOutputTextRenderer = new HtmlOutputTextRenderer();
 
-        HtmlGridHeader thead = new HtmlGridHeader();
+        THtmlGridHeader thead = new THtmlGridHeader();
         htmlGrid.getChildren().add(thead);
 
-        HtmlGridTr tr = new HtmlGridTr();
+        THtmlGridTr tr = new THtmlGridTr();
         addChild(thead, tr);
         {
-            HtmlGridTh th = new HtmlGridTh();
+            THtmlGridTh th = new THtmlGridTh();
             addChild(tr, th);
             MockHtmlOutputText text = new MockHtmlOutputText();
             text.setRenderer(htmlOutputTextRenderer);
@@ -119,7 +119,7 @@ public class HtmlGridRendererTest extends RendererTest {
             addChild(th, text);
         }
         {
-            HtmlGridTh th = new HtmlGridTh();
+            THtmlGridTh th = new THtmlGridTh();
             addChild(tr, th);
             MockHtmlOutputText text = new MockHtmlOutputText();
             text.setRenderer(htmlOutputTextRenderer);
@@ -139,7 +139,7 @@ public class HtmlGridRendererTest extends RendererTest {
 
     public void ignore_testEncode_BodyNoValue() throws Exception {
         // ## Arrange ##
-        HtmlGridBody tbody = new HtmlGridBody();
+        THtmlGridBody tbody = new THtmlGridBody();
         htmlGrid.getChildren().add(tbody);
 
         // ## Act ##
@@ -155,13 +155,13 @@ public class HtmlGridRendererTest extends RendererTest {
         // ## Arrange ##
         HtmlOutputTextRenderer htmlOutputTextRenderer = new HtmlOutputTextRenderer();
 
-        HtmlGridBody tbody = new HtmlGridBody();
+        THtmlGridBody tbody = new THtmlGridBody();
         addChild(htmlGrid, tbody);
 
-        HtmlGridTr tr = new HtmlGridTr();
+        THtmlGridTr tr = new THtmlGridTr();
         addChild(tbody, tr);
         {
-            HtmlGridTd td = new HtmlGridTd();
+            THtmlGridTd td = new THtmlGridTd();
             addChild(tr, td);
             MockHtmlOutputText text = new MockHtmlOutputText();
             text.setRenderer(htmlOutputTextRenderer);
@@ -170,7 +170,7 @@ public class HtmlGridRendererTest extends RendererTest {
             addChild(td, text);
         }
         {
-            HtmlGridTd td = new HtmlGridTd();
+            THtmlGridTd td = new THtmlGridTd();
             addChild(tr, td);
             MockHtmlOutputText text = new MockHtmlOutputText();
             text.setRenderer(htmlOutputTextRenderer);
@@ -212,14 +212,14 @@ public class HtmlGridRendererTest extends RendererTest {
         final int trHeight = 12;
         // thead
         {
-            HtmlGridHeader thead = new HtmlGridHeader();
+            THtmlGridHeader thead = new THtmlGridHeader();
             htmlGrid.getChildren().add(thead);
 
-            HtmlGridTr tr = new HtmlGridTr();
+            THtmlGridTr tr = new THtmlGridTr();
             tr.setHeight(String.valueOf(trHeight));
             addChild(thead, tr);
             {
-                HtmlGridTh th = new HtmlGridTh();
+                THtmlGridTh th = new THtmlGridTh();
                 addChild(tr, th);
                 MockHtmlOutputText text = new MockHtmlOutputText();
                 text.setRenderer(htmlOutputTextRenderer);
@@ -227,7 +227,7 @@ public class HtmlGridRendererTest extends RendererTest {
                 addChild(th, text);
             }
             {
-                HtmlGridTh th = new HtmlGridTh();
+                THtmlGridTh th = new THtmlGridTh();
                 addChild(tr, th);
                 MockHtmlOutputText text = new MockHtmlOutputText();
                 text.setRenderer(htmlOutputTextRenderer);
@@ -240,13 +240,13 @@ public class HtmlGridRendererTest extends RendererTest {
         final ELParser parser = new CommonsELParser();
         parser.setExpressionProcessor(new CommonsExpressionProcessorImpl());
         {
-            HtmlGridBody tbody = new HtmlGridBody();
+            THtmlGridBody tbody = new THtmlGridBody();
             addChild(htmlGrid, tbody);
 
-            HtmlGridTr tr = new HtmlGridTr();
+            THtmlGridTr tr = new THtmlGridTr();
             addChild(tbody, tr);
             {
-                HtmlGridTd td = new HtmlGridTd();
+                THtmlGridTd td = new THtmlGridTd();
                 addChild(tr, td);
                 MockHtmlOutputText text = new MockHtmlOutputText();
                 text.setRenderer(htmlOutputTextRenderer);
@@ -256,7 +256,7 @@ public class HtmlGridRendererTest extends RendererTest {
                 addChild(td, text);
             }
             {
-                HtmlGridTd td = new HtmlGridTd();
+                THtmlGridTd td = new THtmlGridTd();
                 addChild(tr, td);
                 MockHtmlOutputText text = new MockHtmlOutputText();
                 text.setRenderer(htmlOutputTextRenderer);
@@ -319,10 +319,10 @@ public class HtmlGridRendererTest extends RendererTest {
 
         // colgroup
         {
-            HtmlGridColumnGroup columnGroup = new HtmlGridColumnGroup();
+            THtmlGridColumnGroup columnGroup = new THtmlGridColumnGroup();
             addChild(htmlGrid, columnGroup);
 
-            HtmlGridColumn col = new HtmlGridColumn();
+            THtmlGridColumn col = new THtmlGridColumn();
             col.setSpan(String.valueOf(1));
             col.setWidth(String.valueOf(110));
             addChild(columnGroup, col);
@@ -331,14 +331,14 @@ public class HtmlGridRendererTest extends RendererTest {
         // thead
 
         {
-            HtmlGridHeader thead = new HtmlGridHeader();
+            THtmlGridHeader thead = new THtmlGridHeader();
             htmlGrid.getChildren().add(thead);
 
-            HtmlGridTr tr = new HtmlGridTr();
+            THtmlGridTr tr = new THtmlGridTr();
             tr.setHeight(String.valueOf(12));
             addChild(thead, tr);
             {
-                HtmlGridTh th = new HtmlGridTh();
+                THtmlGridTh th = new THtmlGridTh();
                 addChild(tr, th);
                 MockHtmlOutputText text = new MockHtmlOutputText();
                 text.setRenderer(htmlOutputTextRenderer);
@@ -346,7 +346,7 @@ public class HtmlGridRendererTest extends RendererTest {
                 addChild(th, text);
             }
             {
-                HtmlGridTh th = new HtmlGridTh();
+                THtmlGridTh th = new THtmlGridTh();
                 addChild(tr, th);
                 MockHtmlOutputText text = new MockHtmlOutputText();
                 text.setRenderer(htmlOutputTextRenderer);
@@ -358,13 +358,13 @@ public class HtmlGridRendererTest extends RendererTest {
         parser.setExpressionProcessor(new CommonsExpressionProcessorImpl());
         // tbody
         {
-            HtmlGridBody tbody = new HtmlGridBody();
+            THtmlGridBody tbody = new THtmlGridBody();
             addChild(htmlGrid, tbody);
 
-            HtmlGridTr tr = new HtmlGridTr();
+            THtmlGridTr tr = new THtmlGridTr();
             addChild(tbody, tr);
             {
-                HtmlGridTd td = new HtmlGridTd();
+                THtmlGridTd td = new THtmlGridTd();
                 addChild(tr, td);
                 MockHtmlOutputText text = new MockHtmlOutputText();
                 text.setRenderer(htmlOutputTextRenderer);
@@ -374,7 +374,7 @@ public class HtmlGridRendererTest extends RendererTest {
                 addChild(td, text);
             }
             {
-                HtmlGridTd td = new HtmlGridTd();
+                THtmlGridTd td = new THtmlGridTd();
                 addChild(tr, td);
                 MockHtmlOutputText text = new MockHtmlOutputText();
                 text.setRenderer(htmlOutputTextRenderer);
@@ -443,12 +443,12 @@ public class HtmlGridRendererTest extends RendererTest {
     }
 
     protected Renderer createRenderer() {
-        HtmlGridRenderer renderer = new HtmlGridRenderer();
+        THtmlGridRenderer renderer = new THtmlGridRenderer();
         renderer.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
         return renderer;
     }
 
-    public class MockHtmlGrid extends HtmlGrid {
+    public class MockHtmlGrid extends THtmlGrid {
 
         private Renderer renderer;
 
