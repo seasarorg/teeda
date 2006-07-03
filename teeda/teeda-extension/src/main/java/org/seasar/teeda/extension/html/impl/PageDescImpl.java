@@ -16,12 +16,14 @@
 package org.seasar.teeda.extension.html.impl;
 
 import java.io.File;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.PropertyDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
+import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.annotation.handler.NavigationAnnotationHandlerFactory;
 import org.seasar.teeda.extension.annotation.handler.ValidatorAnnotationHandlerFactory;
 import org.seasar.teeda.extension.html.PageDesc;
@@ -35,6 +37,8 @@ public class PageDescImpl implements PageDesc {
     private String pageName;
 
     private Set propertyNames = new HashSet();
+
+    private Set itemsPropertyNames = new HashSet();
 
     private Set methodNames;
 
@@ -63,7 +67,11 @@ public class PageDescImpl implements PageDesc {
         BeanDesc beanDesc = BeanDescFactory.getBeanDesc(pageClass);
         for (int i = 0; i < beanDesc.getPropertyDescSize(); ++i) {
             PropertyDesc pd = beanDesc.getPropertyDesc(i);
-            propertyNames.add(pd.getPropertyName());
+            if (isItemsProperty(pd)) {
+                itemsPropertyNames.add(pd.getPropertyName());
+            } else {
+                propertyNames.add(pd.getPropertyName());
+            }
         }
         methodNames = ActionDescUtil.getActionMethodNames(pageClass);
         ValidatorAnnotationHandlerFactory.getAnnotationHandler()
@@ -72,8 +80,20 @@ public class PageDescImpl implements PageDesc {
                 .registerNavigationsByPage(pageName, pageClass);
     }
 
+    protected boolean isItemsProperty(PropertyDesc pd) {
+        if (!pd.getPropertyName().endsWith(ExtensionConstants.ITEMS_SUFFIX)) {
+            return false;
+        }
+        Class clazz = pd.getPropertyType();
+        return clazz.isArray() || Collection.class.isAssignableFrom(clazz);
+    }
+
     public boolean hasProperty(String name) {
         return propertyNames.contains(name);
+    }
+
+    public boolean hasItemsProperty(String name) {
+        return itemsPropertyNames.contains(name);
     }
 
     public boolean hasMethod(String name) {

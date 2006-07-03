@@ -13,17 +13,25 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.extension.html;
+package org.seasar.teeda.extension.component;
 
-public interface PageDesc {
+import junit.framework.TestCase;
 
-    String getPageName();
+/**
+ * @author higa
+ *
+ */
+public class TForEachTest extends TestCase {
 
-    boolean hasProperty(String name);
+    public void testGetItemName() throws Exception {
+        TForEach component = new TForEach();
+        component.setItemsName("fooItems");
+        assertEquals("foo", component.getItemName());
+    }
 
-    boolean hasItemsProperty(String name);
-
-    boolean hasMethod(String name);
-
-    boolean isModified();
+    public void testGetItemIndex() throws Exception {
+        TForEach component = new TForEach();
+        component.setItemsName("fooItems");
+        assertEquals("fooIndex", component.getIndexName());
+    }
 }

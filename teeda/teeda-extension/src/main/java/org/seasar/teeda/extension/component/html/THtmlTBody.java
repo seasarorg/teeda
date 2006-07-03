@@ -13,17 +13,15 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.extension.html;
+package org.seasar.teeda.extension.component.html;
 
-public interface PageDesc {
+import org.seasar.teeda.extension.component.TForEach;
 
-    String getPageName();
+public class THtmlTBody extends TForEach {
 
-    boolean hasProperty(String name);
+    public static final String COMPONENT_TYPE = "org.seasar.teeda.extension.THtmlTBody";
 
-    boolean hasItemsProperty(String name);
-
-    boolean hasMethod(String name);
-
-    boolean isModified();
+    public String getFamily() {
+        return HtmlGrid.COMPONENT_FAMILY;
+    }
 }

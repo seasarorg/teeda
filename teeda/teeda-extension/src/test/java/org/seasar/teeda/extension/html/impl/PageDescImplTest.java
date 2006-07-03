@@ -48,6 +48,14 @@ public class PageDescImplTest extends S2FrameworkTestCase {
         assertFalse(pd.hasProperty(null));
     }
 
+    public void testHasItemsProperty() throws Exception {
+        PageDescImpl pd = new PageDescImpl(FooPage.class, "fooPage");
+        assertTrue(pd.hasItemsProperty("cccItems"));
+        assertFalse(pd.hasItemsProperty("dddItems"));
+        assertFalse(pd.hasItemsProperty("xxx"));
+        assertFalse(pd.hasItemsProperty(null));
+    }
+
     public void testHasMethod() throws Exception {
         PageDescImpl pd = new PageDescImpl(FooPage.class, "fooPage");
         assertTrue(pd.hasMethod("doBbb"));

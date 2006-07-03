@@ -35,5 +35,9 @@ public interface ExtensionConstants {
 
     String CONVERTER_STACK_ATTR = "javax.faces.webapp.CONVERTER_STORE_ATTR";
 
+    String PAGE_NAME_ATTR = "pageName";
+
+    String ITEMS_NAME_ATTR = "itemsName";
+
     String ITEMS_SUFFIX = "Items";
 }
