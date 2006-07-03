@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -22,49 +22,38 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.internal.FacesMessageUtil;
 import javax.faces.internal.UIComponentUtil;
+import javax.faces.internal.UIInputUtil;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
 import org.seasar.framework.util.AssertionUtil;
-import org.seasar.teeda.core.util.PatternUtil;
 
 /**
- * @author shot
+ * @author higa
  */
-public class RegularExpressionValidator implements Validator, StateHolder {
+public class TRequiredValidator implements Validator, StateHolder {
 
-    public static final String VALIDATOR_ID = RegularExpressionValidator.class
-            .getName();
+    public static final String VALIDATOR_ID = "javax.faces.Required";
 
-    public static final String REGULAR_EXPRRESSION_MESSAGE_ID = VALIDATOR_ID
-            + ".INVALID";
+    public static final String REQUIRED_MESSAGE_ID = "javax.faces.component.UIInput.REQUIRED";
 
     private boolean transientValue_ = false;
 
-    private String pattern_;
-
-    public RegularExpressionValidator() {
+    public boolean isTransient() {
+        return transientValue_;
     }
 
     public void validate(FacesContext context, UIComponent component,
             Object value) throws FacesException {
         AssertionUtil.assertNotNull("context", context);
         AssertionUtil.assertNotNull("component", component);
-        if (value == null) {
-            return;
-        }
-        String strValue = value.toString();
-        if (!PatternUtil.matches(getPattern(), strValue)) {
-            Object[] args = new Object[] { getPattern(),
-                    UIComponentUtil.getLabel(component) };
+
+        if (UIInputUtil.isEmpty(value)) {
+            Object[] args = new Object[] { UIComponentUtil.getLabel(component) };
             FacesMessage message = FacesMessageUtil.getMessage(context,
-                    REGULAR_EXPRRESSION_MESSAGE_ID, args);
+                    REQUIRED_MESSAGE_ID, args);
             throw new ValidatorException(message);
         }
-    }
-
-    public boolean isTransient() {
-        return transientValue_;
     }
 
     public void setTransient(boolean transientValue) {
@@ -72,19 +61,9 @@ public class RegularExpressionValidator implements Validator, StateHolder {
     }
 
     public Object saveState(FacesContext context) {
-        return pattern_;
+        return new Object[0];
     }
 
     public void restoreState(FacesContext context, Object state) {
-        pattern_ = (String) state;
     }
-
-    public String getPattern() {
-        return pattern_;
-    }
-
-    public void setPattern(String pattern) {
-        pattern_ = pattern;
-    }
-
 }

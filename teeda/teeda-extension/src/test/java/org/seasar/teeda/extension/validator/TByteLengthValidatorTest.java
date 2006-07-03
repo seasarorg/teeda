@@ -4,22 +4,22 @@ import javax.faces.validator.ValidatorException;
 
 import org.seasar.teeda.core.mock.MockUIComponent;
 import org.seasar.teeda.core.unit.TeedaTestCase;
-import org.seasar.teeda.extension.validator.ByteLengthValidator;
+import org.seasar.teeda.extension.validator.TByteLengthValidator;
 
-public class ByteLengthValidatorTest extends TeedaTestCase {
+public class TByteLengthValidatorTest extends TeedaTestCase {
 
     public void testConstants() throws Exception {
         assertEquals("org.seasar.teeda.core.validator.ByteLengthValidator.MAXIMUM",
-                ByteLengthValidator.MAXIMUM_MESSAGE_ID);
+                TByteLengthValidator.MAXIMUM_MESSAGE_ID);
         assertEquals("org.seasar.teeda.core.validator.ByteLengthValidator.MINIMUM",
-                ByteLengthValidator.MINIMUM_MESSAGE_ID);
-        assertEquals("teeda.core.ByteLength", ByteLengthValidator.VALIDATOR_ID);
+                TByteLengthValidator.MINIMUM_MESSAGE_ID);
+        assertEquals("teeda.core.ByteLength", TByteLengthValidator.VALIDATOR_ID);
     }
 
     public void testValidate_greaterThanMaximum() throws Exception {
         MockUIComponent mock = new MockUIComponent();
         mock.setId("aaa");
-        ByteLengthValidator validator = new ByteLengthValidator();
+        TByteLengthValidator validator = new TByteLengthValidator();
         validator.setMaximum(5);
         validator.setMinimum(1);
         validator.setCharSet("Shift_JIS");
@@ -35,7 +35,7 @@ public class ByteLengthValidatorTest extends TeedaTestCase {
     public void testValidate_lowerThanMinimum() throws Exception {
         MockUIComponent mock = new MockUIComponent();
         mock.setId("aaa");
-        ByteLengthValidator validator = new ByteLengthValidator();
+        TByteLengthValidator validator = new TByteLengthValidator();
         validator.setMaximum(5);
         validator.setMinimum(3);
         validator.setCharSet("Shift_JIS");
@@ -49,7 +49,7 @@ public class ByteLengthValidatorTest extends TeedaTestCase {
     }
 
     public void testGetConvertedValueLength() throws Exception {
-        ByteLengthValidator validator = new ByteLengthValidator();
+        TByteLengthValidator validator = new TByteLengthValidator();
         validator.setCharSet("NO_SUCH_ENCODE");
         try {
             validator.getConvertedValueLength("aaaa");

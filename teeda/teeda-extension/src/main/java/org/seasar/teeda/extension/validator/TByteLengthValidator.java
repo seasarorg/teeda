@@ -27,7 +27,7 @@ import org.seasar.framework.util.StringUtil;
 /**
  * @author shot
  */
-public class ByteLengthValidator extends LengthValidator {
+public class TByteLengthValidator extends LengthValidator {
 
     public static final String VALIDATOR_ID = "teeda.core.ByteLength";
 

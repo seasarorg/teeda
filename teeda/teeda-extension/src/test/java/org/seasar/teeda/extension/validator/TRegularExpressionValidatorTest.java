@@ -23,12 +23,12 @@ import org.seasar.teeda.core.unit.TeedaTestCase;
 /**
  * @author shot
  */
-public class RegularExpressionValidatorTest extends TeedaTestCase {
+public class TRegularExpressionValidatorTest extends TeedaTestCase {
 
     public void testValidate_validationError() throws Exception {
         MockUIComponent component = new MockUIComponent();
         component.setId("aaa");
-        RegularExpressionValidator validator = new RegularExpressionValidator();
+        TRegularExpressionValidator validator = new TRegularExpressionValidator();
         validator.setPattern("^[1-9][a-z]");
         try {
             validator.validate(getFacesContext(), new MockUIComponent(), "aa");
@@ -41,7 +41,7 @@ public class RegularExpressionValidatorTest extends TeedaTestCase {
     public void testValidate_validationOk() throws Exception {
         MockUIComponent component = new MockUIComponent();
         component.setId("aaa");
-        RegularExpressionValidator validator = new RegularExpressionValidator();
+        TRegularExpressionValidator validator = new TRegularExpressionValidator();
         validator.setPattern("^[1-9][a-z]");
         try {
             validator.validate(getFacesContext(), new MockUIComponent(), "1a");
