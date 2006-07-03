@@ -19,7 +19,6 @@ import java.util.List;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.validator.Validator;
 import javax.servlet.jsp.PageContext;
 
 /**
@@ -76,20 +75,4 @@ public class PageContextUtil {
                 .setAttribute(InternalConstants.CURRENT_VIEW_ROOT, component);
     }
 
-    public static Validator getValidatorAttribute(PageContext pageContext) {
-        return (Validator) pageContext.getAttribute(
-                InternalConstants.VALIDATOR_STACK_ATTR,
-                PAGE_CONTEXT_REQUEST_SCOPE);
-    }
-
-    public static void setValidatorAttribute(PageContext pageContext,
-            Validator validator) {
-        pageContext.setAttribute(InternalConstants.VALIDATOR_STACK_ATTR,
-                validator, PAGE_CONTEXT_REQUEST_SCOPE);
-    }
-
-    public static void removeValidatorAttribute(PageContext pageContext) {
-        pageContext.removeAttribute(InternalConstants.VALIDATOR_STACK_ATTR,
-                PAGE_CONTEXT_REQUEST_SCOPE);
-    }
 }

@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -64,7 +64,7 @@ public class NumberConverter implements Converter, StateHolder {
 
     private static final String TYPE_NUMBER = "number";
 
-    private static final String TYPE_PERCENT = "currency";
+    private static final String TYPE_PERCENT = "percent";
 
     private boolean isSetMaxFractionDigits = false;
 
@@ -89,10 +89,10 @@ public class NumberConverter implements Converter, StateHolder {
             return null;
         }
         Locale locale = getLocale(context);
-        NumberFormat parser = getNumberFormat(locale);
-        parser.setParseIntegerOnly(isIntegerOnly());
+        NumberFormat formatter = getNumberFormat(locale);
+        formatter.setParseIntegerOnly(isIntegerOnly());
         try {
-            return parser.parse(value);
+            return formatter.parse(value);
         } catch (ParseException e) {
             Object[] args = ConvertUtil.createExceptionMessageArgs(component,
                     value);

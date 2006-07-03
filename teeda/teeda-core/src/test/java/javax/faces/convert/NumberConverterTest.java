@@ -53,6 +53,28 @@ public class NumberConverterTest extends AbstractConverterTestCase {
         }
     }
 
+    public void testGetAsObjectWithCurrency() throws Exception {
+        NumberConverter converter = (NumberConverter) createConverter();
+        converter.setType("currency");
+        converter.setPattern("#,##0.000");
+        double amount = 500000.123;
+        Object o = converter.getAsObject(getFacesContext(),
+                new MockUIComponent(), Double.toString(amount));
+        assertEquals("500000.123", o.toString());
+    }
+
+    public void testGetAsStringWithCurrency() throws Exception {
+        NumberConverter converter = (NumberConverter) createConverter();
+        converter.setType("currency");
+        converter.setPattern("#,##0.000");
+        double amount = 500000.123456;
+        String s = converter.getAsString(getFacesContext(),
+                new MockUIComponent(), new Double(amount));
+        System.out.println(s);
+        assertEquals("500,000.123", s);
+    }
+
+
     protected Converter createConverter() {
         return createNumberConverter();
     }

@@ -129,6 +129,11 @@ public class WebAppUtil {
         return context.getApplication().createConverter(converterId);
     }
 
+    public static Converter createConverter(Class clazz) {
+        FacesContext context = getFacesContext();
+        return context.getApplication().createConverter(clazz);
+    }
+
     public static Validator createValidator(String validatorId) {
         FacesContext context = getFacesContext();
         return context.getApplication().createValidator(validatorId);

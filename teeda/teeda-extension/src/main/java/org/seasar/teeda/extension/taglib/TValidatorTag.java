@@ -17,14 +17,15 @@ package org.seasar.teeda.extension.taglib;
 
 import javax.faces.component.EditableValueHolder;
 import javax.faces.component.UIComponent;
-import javax.faces.internal.PageContextUtil;
 import javax.faces.internal.WebAppUtil;
 import javax.faces.validator.Validator;
 import javax.faces.webapp.UIComponentTag;
 import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.BodyTagSupport;
 
 import org.seasar.teeda.core.util.UIParameterUtil;
+import org.seasar.teeda.extension.ExtensionConstants;
 
 /**
  * @author shot
@@ -56,7 +57,8 @@ public class TValidatorTag extends BodyTagSupport {
         }
         EditableValueHolder editableValueHolder = (EditableValueHolder) component;
         editableValueHolder.addValidator(validator);
-        PageContextUtil.setValidatorAttribute(pageContext, validator);
+        pageContext.setAttribute(ExtensionConstants.VALIDATOR_STACK_ATTR,
+                validator, PageContext.REQUEST_SCOPE);
         return EVAL_BODY_BUFFERED;
     }
 
@@ -70,12 +72,16 @@ public class TValidatorTag extends BodyTagSupport {
             return EVAL_PAGE;
         }
         UIComponent component = tag.getComponentInstance();
-        Object attribute = PageContextUtil.getValidatorAttribute(pageContext);
+        Object attribute = pageContext.getAttribute(
+                ExtensionConstants.VALIDATOR_STACK_ATTR,
+                PageContext.REQUEST_SCOPE);
         if (attribute instanceof Validator) {
             Validator validator = (Validator) attribute;
             UIParameterUtil.saveParametersToInstance(component, validator);
         }
-        PageContextUtil.removeValidatorAttribute(pageContext);
+        pageContext.removeAttribute(ExtensionConstants.VALIDATOR_STACK_ATTR,
+                PageContext.REQUEST_SCOPE);
+
         return super.doEndTag();
     }
 

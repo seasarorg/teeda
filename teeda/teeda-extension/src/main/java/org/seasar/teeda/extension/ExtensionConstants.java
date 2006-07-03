@@ -13,24 +13,26 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.core.el;
-
-import javax.faces.application.Application;
-import javax.faces.el.ValueBinding;
+package org.seasar.teeda.extension;
 
 /**
  * @author shot
+ *
  */
-public interface ValueBindingContext {
+public interface ExtensionConstants {
 
-    public void setValueBindingName(String valueBindingName);
+    String TEEDA_EXTENSION_URI = "http://www.seasar.org/teeda/extension";
 
-    public String getValueBindingName();
+    String FRACTION_ATTR = "fraction";
 
-    public ValueBinding createValueBinding(Application application,
-            String expression);
+    String GROUPING_SEPARATOR_ATTR = "groupingSeparator";
 
-    public ELParser getELParser();
+    String FRACTION_SEPARATOR_ATTR = "fractioonSeparator";
 
-    public void setELParser(ELParser parser);
+    String TEEDA_CURRENY_STYLE_CLASS = "T_currency";
+
+    String VALIDATOR_STACK_ATTR = "javax.faces.webapp.VALIDATOR_STORE_ATTR";
+
+    String CONVERTER_STACK_ATTR = "javax.faces.webapp.CONVERTER_STORE_ATTR";
+
 }

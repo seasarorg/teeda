@@ -33,6 +33,4 @@ public interface InternalConstants {
 
     String CURRENT_VIEW_ROOT = "javax.faces.webapp.CURRENT_VIEW_ROOT";
 
-    String VALIDATOR_STACK_ATTR = "javax.faces.webapp.VALIDATOR_STORE_ATTR";
-
 }

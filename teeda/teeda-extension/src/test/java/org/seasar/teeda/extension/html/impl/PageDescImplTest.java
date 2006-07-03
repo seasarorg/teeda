@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -28,7 +28,7 @@ import org.seasar.framework.util.ClassUtil;
 import org.seasar.framework.util.ResourceUtil;
 import org.seasar.teeda.core.application.navigation.NavigationContext;
 import org.seasar.teeda.core.application.navigation.NavigationResource;
-import org.seasar.teeda.extension.validator.RequiredValidator;
+import org.seasar.teeda.extension.validator.TRequiredValidator;
 
 /**
  * @author higa
@@ -66,13 +66,13 @@ public class PageDescImplTest extends S2FrameworkTestCase {
     }
 
     public void testValidator() throws Exception {
-        ComponentDef cd = new ComponentDefImpl(RequiredValidator.class,
+        ComponentDef cd = new ComponentDefImpl(TRequiredValidator.class,
                 "requiredValidator");
         register(cd);
         new PageDescImpl(HogePage.class, "hogePage");
         assertNotNull(ValidatorResource.getValidator("#{hogePage.aaa}"));
     }
-    
+
     public void testNavigation() throws Exception {
         register(FooPage.class);
         register(Foo4Page.class);

@@ -17,9 +17,11 @@ package org.seasar.teeda.extension.component;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.faces.component.UIViewRoot;
+import javax.faces.context.FacesContext;
 
 import org.seasar.teeda.extension.util.JavaScriptContext;
 
@@ -60,4 +62,18 @@ public class ScriptEnhanceUIViewRoot extends UIViewRoot {
     public void clearScript(String scriptId) {
         scripts.remove(scriptId);
     }
+
+    public void restoreState(FacesContext context, Object state) {
+        Object values[] = (Object[]) state;
+        super.restoreState(context, values[0]);
+        scripts = (Map) values[1];
+    }
+
+    public Object saveState(FacesContext context) {
+        Object values[] = new Object[2];
+        values[0] = super.saveState(context);
+        values[1] = scripts;
+        return values;
+    }
+
 }

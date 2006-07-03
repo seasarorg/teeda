@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -25,13 +25,17 @@ import org.seasar.framework.container.S2Container;
 
 /**
  * @author higa
- *  
+ * @author shot
  */
 public class BindingUtil {
 
     private BindingUtil() {
     }
-    
+
+    public static String getExpression(String componentName) {
+        return "#{" + componentName + "}";
+    }
+
     public static String getExpression(String componentName, String propertyName) {
         return "#{" + componentName + "." + propertyName + "}";
     }

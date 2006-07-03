@@ -20,7 +20,7 @@ import javax.faces.validator.DoubleRangeValidator;
 
 import junit.framework.TestCase;
 
-import org.seasar.teeda.extension.validator.ByteLengthValidator;
+import org.seasar.teeda.extension.validator.TByteLengthValidator;
 
 /**
  * @author higa
@@ -34,7 +34,7 @@ public class AbstValidatorAnnotationHandlerTest extends TestCase {
 
     public void testAddAndRemoveValidator() throws Exception {
         MockAnnotationHandler handler = new MockAnnotationHandler();
-        handler.registerValidator("aaa", "bbb", new ByteLengthValidator());
+        handler.registerValidator("aaa", "bbb", new TByteLengthValidator());
         handler.registerValidator("aaa", "bbb", new DoubleRangeValidator());
         handler.registerValidator("aaa", "ccc", new DoubleRangeValidator());
         assertNotNull(ValidatorResource.getValidator("#{aaa.bbb}"));
@@ -47,7 +47,7 @@ public class AbstValidatorAnnotationHandlerTest extends TestCase {
     
     public void testRemoveAll() throws Exception {
         MockAnnotationHandler handler = new MockAnnotationHandler();
-        handler.registerValidator("aaa", "bbb", new ByteLengthValidator());
+        handler.registerValidator("aaa", "bbb", new TByteLengthValidator());
         handler.registerValidator("aaa", "bbb", new DoubleRangeValidator());
         handler.registerValidator("aaa", "ccc", new DoubleRangeValidator());
         handler.removeAll();

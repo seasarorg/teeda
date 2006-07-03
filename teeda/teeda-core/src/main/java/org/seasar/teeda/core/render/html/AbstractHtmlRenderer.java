@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -29,6 +29,7 @@ import org.seasar.framework.util.AssertionUtil;
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.ComponentIdLookupStrategy;
+import org.seasar.teeda.core.render.DefaultComponentIdLookupStrategy;
 import org.seasar.teeda.core.util.LoopIterator;
 import org.seasar.teeda.core.util.RenderedComponentIterator;
 import org.seasar.teeda.core.util.RendererUtil;
@@ -39,7 +40,11 @@ import org.seasar.teeda.core.util.RendererUtil;
 public abstract class AbstractHtmlRenderer extends Renderer {
 
     private ComponentIdLookupStrategy idLookupStartegy;
-    
+
+    public AbstractHtmlRenderer() {
+        idLookupStartegy = new DefaultComponentIdLookupStrategy();
+    }
+
     public Object getConvertedValue(FacesContext context,
             UIComponent component, Object submittedValue)
             throws ConverterException {
@@ -114,7 +119,7 @@ public abstract class AbstractHtmlRenderer extends Renderer {
     public void setComponentIdLookupStrategy(ComponentIdLookupStrategy idLookupStartegy) {
         this.idLookupStartegy = idLookupStartegy;
     }
-    
+
     public ComponentIdLookupStrategy getComponentIdLookupStrategy() {
         return idLookupStartegy;
     }

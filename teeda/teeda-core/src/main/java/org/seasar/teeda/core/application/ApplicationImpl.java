@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -59,125 +59,126 @@ import org.seasar.teeda.core.util.PropertyUtil;
 public class ApplicationImpl extends Application implements
         ConfigurationSupport {
 
-    private ActionListener listener_ = null;
+    private ActionListener listener = null;
 
-    private Locale locale_ = null;
+    private Locale locale = null;
 
-    private String renderKitId_ = null;
+    private String renderKitId = null;
 
-    private String bundle_ = null;
+    private String bundle = null;
 
-    private NavigationHandler navigationHandler_ = null;
+    private NavigationHandler navigationHandler = null;
 
-    private PropertyResolver propertyResolver_ = null;
+    private PropertyResolver propertyResolver = null;
 
-    private VariableResolver variableResolver_ = null;
+    private VariableResolver variableResolver = null;
 
-    private ViewHandler viewHandler_ = null;
+    private ViewHandler viewHandler = null;
 
-    private StateManager manager_ = null;
+    private StateManager stateManager = null;
 
-    private Map componentClassMap_ = Collections.synchronizedMap(new HashMap());
+    private Map componentClassMap = Collections.synchronizedMap(new HashMap());
 
-    private Map converterIdMap_ = Collections.synchronizedMap(new HashMap());
+    private Map converterIdMap = Collections.synchronizedMap(new HashMap());
 
-    private Map converterForClassMap_ = Collections
+    private Map converterForClassMap = Collections
             .synchronizedMap(new HashMap());
 
-    private Map converterConfigurationMap_ = Collections
+    private Map converterConfigurationMap = Collections
             .synchronizedMap(new HashMap());
 
-    private Map validatorMap_ = Collections.synchronizedMap(new HashMap());
+    private Map validatorMap = Collections.synchronizedMap(new HashMap());
 
-    private Collection supportedLocales_ = Collections.EMPTY_SET;
+    private Collection supportedLocales = Collections.EMPTY_SET;
 
-    private ValueBindingContext vbContext_ = null;
+    private ValueBindingContext vbContext = null;
 
-    private MethodBindingContext mbContext_ = null;
+    private MethodBindingContext mbContext = null;
 
-    private ComponentLookupStrategy componentLookupStrategy_;
+    private ComponentLookupStrategy componentLookupStrategy;
 
     public ApplicationImpl() {
-        componentLookupStrategy_ = new DefaultComponentLookupStrategy();
+        componentLookupStrategy = new DefaultComponentLookupStrategy();
     }
 
     public ActionListener getActionListener() {
-        return listener_;
+        return listener;
     }
 
     public void setActionListener(ActionListener listener) {
         AssertionUtil.assertNotNull("ActionListener is null.", listener);
-        listener_ = listener;
+        this.listener = listener;
     }
 
     public Locale getDefaultLocale() {
-        return locale_;
+        return locale;
     }
 
     public void setDefaultLocale(Locale locale) {
         AssertionUtil.assertNotNull("Locale is null.", locale);
-        locale_ = locale;
+        this.locale = locale;
     }
 
     public String getDefaultRenderKitId() {
-        return renderKitId_;
+        return renderKitId;
     }
 
     public void setDefaultRenderKitId(String renderKitId) {
-        renderKitId_ = renderKitId;
+        this.renderKitId = renderKitId;
     }
 
     public String getMessageBundle() {
-        return bundle_;
+        return bundle;
     }
 
     public void setMessageBundle(String bundle) {
         AssertionUtil.assertNotNull("MessageBundle is null.", bundle);
-        bundle_ = bundle;
+        this.bundle = bundle;
     }
 
     public NavigationHandler getNavigationHandler() {
-        return navigationHandler_;
+        return navigationHandler;
     }
 
     public void setNavigationHandler(NavigationHandler handler) {
         AssertionUtil.assertNotNull("NavigationHandler is null.", handler);
-        navigationHandler_ = handler;
+        this.navigationHandler = handler;
     }
 
     public PropertyResolver getPropertyResolver() {
-        return propertyResolver_;
+        return propertyResolver;
     }
 
     public void setPropertyResolver(PropertyResolver resolver) {
         AssertionUtil.assertNotNull("PropertyResolver is null.", resolver);
-        propertyResolver_ = resolver;
+        this.propertyResolver = resolver;
     }
 
     public VariableResolver getVariableResolver() {
-        return variableResolver_;
+        return variableResolver;
     }
 
     public void setVariableResolver(VariableResolver resolver) {
         AssertionUtil.assertNotNull("VariableResolver is null.", resolver);
-        variableResolver_ = resolver;
+        this.variableResolver = resolver;
     }
 
     public ViewHandler getViewHandler() {
-        return viewHandler_;
+        return viewHandler;
     }
 
     public void setViewHandler(ViewHandler handler) {
         AssertionUtil.assertNotNull("ViewHandler is null.", handler);
-        viewHandler_ = handler;
+        this.viewHandler = handler;
     }
 
     public StateManager getStateManager() {
-        return manager_;
+        return stateManager;
     }
 
     public void setStateManager(StateManager manager) {
-        manager_ = manager;
+        AssertionUtil.assertNotNull("StateManager is null.", manager);
+        this.stateManager = manager;
     }
 
     public void addComponent(String componentType, String componentClassName) {
@@ -189,7 +190,7 @@ public class ApplicationImpl extends Application implements
         }
         Class clazz = ClassUtil.forName(componentClassName);
         ApplicationUtil.verifyClassType(UIComponent.class, clazz);
-        componentClassMap_.put(componentType, clazz);
+        componentClassMap.put(componentType, clazz);
     }
 
     public UIComponent createComponent(String componentType)
@@ -197,12 +198,12 @@ public class ApplicationImpl extends Application implements
         if (StringUtil.isEmpty(componentType)) {
             throw new NullPointerException("componentType is null.");
         }
-        Object component = componentLookupStrategy_
+        Object component = componentLookupStrategy
                 .getComponentByName(componentType);
         if (component != null) {
             return (UIComponent) component;
         }
-        Class componentClass = (Class) componentClassMap_.get(componentType);
+        Class componentClass = (Class) componentClassMap.get(componentType);
         if (componentClass == null) {
             throw new FacesException("Undeifined component type:"
                     + componentType);
@@ -223,7 +224,7 @@ public class ApplicationImpl extends Application implements
     }
 
     public Iterator getComponentTypes() {
-        return componentClassMap_.keySet().iterator();
+        return componentClassMap.keySet().iterator();
     }
 
     public void addConverter(String converterId, String converterClassName) {
@@ -235,7 +236,7 @@ public class ApplicationImpl extends Application implements
         }
         Class clazz = ClassUtil.forName(converterClassName);
         ApplicationUtil.verifyClassType(Converter.class, clazz);
-        converterIdMap_.put(converterId, clazz);
+        converterIdMap.put(converterId, clazz);
     }
 
     public void addConverter(Class targetClass, String converterClassName) {
@@ -245,17 +246,17 @@ public class ApplicationImpl extends Application implements
         }
         Class clazz = ClassUtil.forName(converterClassName);
         ApplicationUtil.verifyClassType(Converter.class, clazz);
-        converterForClassMap_.put(targetClass, clazz);
+        converterForClassMap.put(targetClass, clazz);
     }
 
     public Converter createConverter(String converterId) {
         AssertionUtil.assertNotNull("converterId is null", converterId);
-        Object component = componentLookupStrategy_
+        Object component = componentLookupStrategy
                 .getComponentByName(converterId);
         if (component != null) {
             return (Converter) component;
         }
-        Class clazz = (Class) converterIdMap_.get(converterId);
+        Class clazz = (Class) converterIdMap.get(converterId);
         try {
             Converter converter = createConverterByConverterClass(clazz);
             setConverterPropertiesFor(converterId, converter);
@@ -292,10 +293,10 @@ public class ApplicationImpl extends Application implements
     }
 
     private List getConverterConfigurationList(Object key) {
-        List list = (List) converterConfigurationMap_.get(key);
+        List list = (List) converterConfigurationMap.get(key);
         if (list == null) {
             list = new ArrayList();
-            converterConfigurationMap_.put(key, list);
+            converterConfigurationMap.put(key, list);
         }
         return list;
     }
@@ -329,7 +330,7 @@ public class ApplicationImpl extends Application implements
     }
 
     private void setConverterPropertiesFor(Object key, Converter converter) {
-        List list = (List) converterConfigurationMap_.get(key);
+        List list = (List) converterConfigurationMap.get(key);
         for (Iterator itr = IteratorUtil.getIterator(list); itr.hasNext();) {
             ConverterConfiguration config = (ConverterConfiguration) itr.next();
             if (config != null) {
@@ -341,7 +342,7 @@ public class ApplicationImpl extends Application implements
     }
 
     protected Converter createConverterByTargetClass(Class targetClass) {
-        Class converterClass = (Class) converterForClassMap_.get(targetClass);
+        Class converterClass = (Class) converterForClassMap.get(targetClass);
         if (converterClass != null) {
             return createConverterByConverterClass(converterClass);
         }
@@ -378,20 +379,21 @@ public class ApplicationImpl extends Application implements
     }
 
     public Iterator getConverterIds() {
-        return converterIdMap_.keySet().iterator();
+        return converterIdMap.keySet().iterator();
     }
 
     public Iterator getConverterTypes() {
-        return converterForClassMap_.keySet().iterator();
+        return converterForClassMap.keySet().iterator();
     }
 
     public Iterator getSupportedLocales() {
-        return supportedLocales_.iterator();
+        return supportedLocales.iterator();
     }
 
     public void setSupportedLocales(Collection supportedLocales) {
-        AssertionUtil.assertNotNull("suppoertedLocales is null", supportedLocales);
-        supportedLocales_ = supportedLocales;
+        AssertionUtil.assertNotNull("suppoertedLocales is null",
+                supportedLocales);
+        this.supportedLocales = supportedLocales;
     }
 
     public void addValidator(String validatorId, String validatorClassName) {
@@ -403,60 +405,60 @@ public class ApplicationImpl extends Application implements
         }
         Class clazz = ClassUtil.forName(validatorClassName);
         ApplicationUtil.verifyClassType(Validator.class, clazz);
-        validatorMap_.put(validatorId, clazz);
+        validatorMap.put(validatorId, clazz);
     }
 
     public Validator createValidator(String validatorId) throws FacesException {
         AssertionUtil.assertNotNull("validatorId is null", validatorId);
-        Object component = componentLookupStrategy_
+        Object component = componentLookupStrategy
                 .getComponentByName(validatorId);
         if (component != null) {
             return (Validator) component;
         }
-        Class validatorClass = (Class) validatorMap_.get(validatorId);
+        Class validatorClass = (Class) validatorMap.get(validatorId);
         if (validatorClass == null) {
-            throw new FacesException("Undefined validator class:"
-                    + validatorClass);
+            throw new FacesException("Undefined validator class(validatorId = "
+                    + validatorId + ")");
         }
         return (Validator) ClassUtil.newInstance(validatorClass);
     }
 
     public Iterator getValidatorIds() {
-        return validatorMap_.keySet().iterator();
+        return validatorMap.keySet().iterator();
     }
 
     public MethodBinding createMethodBinding(String ref, Class[] params)
             throws ReferenceSyntaxException {
         AssertionUtil.assertNotNull("ref is null", ref);
-        if (mbContext_ == null) {
+        if (mbContext == null) {
             throw new NoMethodBindingContextException(ref, params);
         }
-        return mbContext_.createMethodBinding(this, ref, params);
+        return mbContext.createMethodBinding(this, ref, params);
     }
 
     public ValueBinding createValueBinding(String ref)
             throws ReferenceSyntaxException {
         AssertionUtil.assertNotNull("ref is null", ref);
-        if (vbContext_ == null) {
+        if (vbContext == null) {
             throw new NoValueBindingContextException(ref);
         }
-        return vbContext_.createValueBinding(this, ref);
+        return vbContext.createValueBinding(this, ref);
     }
 
     public void setValueBindingContext(ValueBindingContext vbContext) {
-        vbContext_ = vbContext;
+        this.vbContext = vbContext;
     }
 
     public void setMethodBindingContext(MethodBindingContext mbContext) {
-        mbContext_ = mbContext;
+        this.mbContext = mbContext;
     }
 
     public ValueBindingContext getValueBindingContext() {
-        return vbContext_;
+        return vbContext;
     }
 
     public MethodBindingContext getMethodBindingContext() {
-        return mbContext_;
+        return mbContext;
     }
 
 }

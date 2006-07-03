@@ -36,6 +36,7 @@ import org.seasar.teeda.core.render.html.HtmlInputTextRenderer;
 import org.seasar.teeda.core.util.JavaScriptPermissionUtil;
 import org.seasar.teeda.core.util.RendererUtil;
 import org.seasar.teeda.core.util.ValueHolderUtil;
+import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.component.ScriptEnhanceUIViewRoot;
 import org.seasar.teeda.extension.component.html.HtmlInputCommaText;
 import org.seasar.teeda.extension.util.JavaScriptContext;
@@ -214,7 +215,9 @@ public class HtmlInputCommaTextRenderer extends HtmlInputTextRenderer {
         ignore.addIgnoreComponentName(JsfConstants.ONKEYPRESS_ATTR);
         ignore.addIgnoreComponentName(JsfConstants.ONKEYUP_ATTR);
         ignore.addIgnoreComponentName(JsfConstants.DISABLED_ATTR);
-        ignore.addIgnoreComponentName(JsfConstants.FRACTION_ATTR);
+        ignore.addIgnoreComponentName(ExtensionConstants.FRACTION_ATTR);
+        ignore.addIgnoreComponentName(ExtensionConstants.GROUPING_SEPARATOR_ATTR);
+        ignore.addIgnoreComponentName(ExtensionConstants.FRACTION_SEPARATOR_ATTR);
         return ignore;
     };
 

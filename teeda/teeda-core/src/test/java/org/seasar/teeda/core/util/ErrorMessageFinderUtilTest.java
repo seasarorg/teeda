@@ -9,33 +9,32 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.core.component;
+package org.seasar.teeda.core.util;
 
 import javax.faces.application.FacesMessage;
 
 import org.seasar.teeda.core.unit.TeedaTestCase;
+import org.seasar.teeda.core.util.ErrorMessageFinderUtil;
 
 /**
  * @author manhole
  * @author shot
  */
-public class MessageBeanTest extends TeedaTestCase {
+public class ErrorMessageFinderUtilTest extends TeedaTestCase {
 
     public void testIsEmpty() throws Exception {
-        MessageBean messageBean = new MessageBean();
-        assertEquals(true, messageBean.isEmpty());
-        assertEquals(false, messageBean.isNotEmpty());
+        assertEquals(true, ErrorMessageFinderUtil.hasNoErrorMessage());
+        assertEquals(false, ErrorMessageFinderUtil.hasErrorMessage());
     }
 
     public void testIsNotEmpty() throws Exception {
         getFacesContext().addMessage("fooId", new FacesMessage());
-        MessageBean messageBean = new MessageBean();
-        assertEquals(false, messageBean.isEmpty());
-        assertEquals(true, messageBean.isNotEmpty());
+        assertEquals(false, ErrorMessageFinderUtil.hasNoErrorMessage());
+        assertEquals(true, ErrorMessageFinderUtil.hasErrorMessage());
     }
 
     public void testGetMessagesBySeverity() throws Exception {
@@ -43,8 +42,7 @@ public class MessageBeanTest extends TeedaTestCase {
                 new FacesMessage(FacesMessage.SEVERITY_WARN, "a", "b"));
         getFacesContext().addMessage("barId",
                 new FacesMessage(FacesMessage.SEVERITY_WARN, "c", "d"));
-        MessageBean messageBean = new MessageBean();
-        FacesMessage[] messages = messageBean
+        FacesMessage[] messages = ErrorMessageFinderUtil
                 .getMessagesBySeverity(FacesMessage.SEVERITY_WARN);
         assertEquals(FacesMessage.SEVERITY_WARN, messages[0].getSeverity());
         assertEquals(FacesMessage.SEVERITY_WARN, messages[1].getSeverity());
@@ -55,8 +53,7 @@ public class MessageBeanTest extends TeedaTestCase {
                 new FacesMessage(FacesMessage.SEVERITY_WARN, "a", "b"));
         getFacesContext().addMessage("barId",
                 new FacesMessage(FacesMessage.SEVERITY_ERROR, "c", "d"));
-        MessageBean messageBean = new MessageBean();
-        FacesMessage[] messages = messageBean
+        FacesMessage[] messages = ErrorMessageFinderUtil
                 .getMessagesBySeverity(FacesMessage.SEVERITY_WARN);
         assertEquals(FacesMessage.SEVERITY_WARN, messages[0].getSeverity());
         assertEquals(FacesMessage.SEVERITY_ERROR, messages[1].getSeverity());
@@ -76,8 +73,7 @@ public class MessageBeanTest extends TeedaTestCase {
         getFacesContext().addMessage("4", m4);
 
         // ## Act ##
-        MessageBean messageBean = new MessageBean();
-        FacesMessage[] messages = messageBean.getErrorMessages();
+        FacesMessage[] messages = ErrorMessageFinderUtil.getErrorMessages();
 
         // ## Assert ##
         assertEquals(2, messages.length);

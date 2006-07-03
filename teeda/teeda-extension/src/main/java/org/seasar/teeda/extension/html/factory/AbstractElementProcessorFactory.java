@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -18,6 +18,7 @@ package org.seasar.teeda.extension.html.factory;
 import java.util.Map;
 
 import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.core.util.BindingUtil;
 import org.seasar.teeda.extension.config.taglib.TaglibManager;
 import org.seasar.teeda.extension.config.taglib.element.TagElement;
 import org.seasar.teeda.extension.config.taglib.element.TaglibElement;
@@ -30,7 +31,7 @@ import org.seasar.teeda.extension.html.processor.ElementProcessorImpl;
 
 /**
  * @author higa
- *  
+ *
  */
 public abstract class AbstractElementProcessorFactory implements
         ElementProcessorFactory {
@@ -90,7 +91,7 @@ public abstract class AbstractElementProcessorFactory implements
 
     protected String getBindingExpression(String componentName,
             String targetName) {
-        return "#{" + componentName + "." + targetName + "}";
+        return BindingUtil.getExpression(componentName, targetName);
     }
 
     protected abstract String getUri();

@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -33,33 +33,33 @@ import org.seasar.teeda.core.el.ELParser;
 import org.seasar.teeda.core.el.ValueBindingContext;
 
 /**
- * @author Shinpei Ohtani
+ * @author shot
  */
 public class ValueBindingContextImpl implements ValueBindingContext {
 
-    private Map cache_ = Collections.synchronizedMap(new HashMap());
+    private Map cache = Collections.synchronizedMap(new HashMap());
 
-    private String valueBindingName_;
+    private String valueBindingName;
 
-    private ELParser parser_;
+    private ELParser parser;
 
     public ValueBindingContextImpl() {
     }
 
     public void setValueBindingName(String valueBindingName) {
-        valueBindingName_ = valueBindingName;
+        this.valueBindingName = valueBindingName;
     }
 
     public String getValueBindingName() {
-        return valueBindingName_;
-    }
-
-    public ELParser getELParser() {
-        return parser_;
+        return valueBindingName;
     }
 
     public void setELParser(ELParser parser) {
-        parser_ = parser;
+        this.parser = parser;
+    }
+
+    public ELParser getELParser() {
+        return parser;
     }
 
     public ValueBinding createValueBinding(Application application,
@@ -74,14 +74,14 @@ public class ValueBindingContextImpl implements ValueBindingContext {
         if (vb != null) {
             return vb;
         }
-        Class clazz = ClassUtil.forName(valueBindingName_);
+        Class clazz = ClassUtil.forName(valueBindingName);
         Class[] argTypes = new Class[] { Application.class, String.class,
                 ELParser.class };
         try {
             Constructor c = clazz.getConstructor(argTypes);
             vb = (ValueBinding) ConstructorUtil.newInstance(c, new Object[] {
-                    application, expression, parser_ });
-            cache_.put(expression, vb);
+                    application, expression, parser });
+            cache.put(expression, vb);
             return vb;
         } catch (NoSuchMethodException e) {
             vb = (ValueBinding) ClassUtil.newInstance(clazz);
@@ -95,13 +95,13 @@ public class ValueBindingContextImpl implements ValueBindingContext {
     private ValueBinding getRestoredValueBinding(StateHolder holder,
             String expression) {
         FacesContext context = FacesContext.getCurrentInstance();
-        holder.restoreState(context, new Object[] { expression, parser_ });
+        holder.restoreState(context, new Object[] { expression, parser });
         return (ValueBinding) holder;
     }
 
     private ValueBinding getValueBindingFromCache(Application application,
             String expression) {
-        ValueBinding vb = (ValueBinding) cache_.get(expression);
+        ValueBinding vb = (ValueBinding) cache.get(expression);
         if (vb != null && vb instanceof StateHolder) {
             vb = getRestoredValueBinding((StateHolder) vb, expression);
         }

@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -25,11 +25,11 @@ import org.seasar.teeda.core.el.ExpressionProcessor;
 import org.seasar.teeda.core.el.impl.JspELParserUtil;
 
 /**
- * @author Shinpei Ohtani
+ * @author shot
  */
 public class CommonsELParser implements org.seasar.teeda.core.el.ELParser {
 
-    private ExpressionProcessor processor_;
+    private ExpressionProcessor processor;
 
     public CommonsELParser() {
     }
@@ -40,7 +40,7 @@ public class CommonsELParser implements org.seasar.teeda.core.el.ELParser {
         ELParser parser = new ELParser(new StringReader(jspExpression));
         try {
             Object obj = parser.ExpressionString();
-            processor_.processExpression(obj, Object.class);
+            getExpressionProcessor().processExpression(obj, Object.class);
             return obj;
         } catch (ParseException e) {
             throw new ReferenceSyntaxException();
@@ -48,10 +48,10 @@ public class CommonsELParser implements org.seasar.teeda.core.el.ELParser {
     }
 
     public ExpressionProcessor getExpressionProcessor() {
-        return processor_;
+        return processor;
     }
 
     public void setExpressionProcessor(ExpressionProcessor processor) {
-        processor_ = processor;
+        this.processor = processor;
     }
 }

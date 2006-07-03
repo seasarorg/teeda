@@ -9,11 +9,11 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.core.component;
+package org.seasar.teeda.core.util;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,7 +28,7 @@ import javax.faces.context.FacesContext;
  * @author manhole
  * @author shot
  */
-public class MessageBean {
+public class ErrorMessageFinderUtil {
 
     private static final FacesMessage.Severity[] INFO = new FacesMessage.Severity[] {
             FacesMessage.SEVERITY_INFO, FacesMessage.SEVERITY_WARN,
@@ -51,8 +51,35 @@ public class MessageBean {
         map.put(FacesMessage.SEVERITY_FATAL.toString(), FATAL);
     }
 
-    public FacesMessage[] getMessagesBySeverity(FacesMessage.Severity severity) {
-        FacesContext context = getFacesContext();
+    public static boolean hasNoErrorMessage() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        Iterator it = context.getMessages();
+        return !it.hasNext();
+    }
+
+    public static boolean hasErrorMessage() {
+        return !hasNoErrorMessage();
+    }
+
+    public static FacesMessage[] getInfoMessages() {
+        return getMessagesBySeverity(FacesMessage.SEVERITY_INFO);
+    }
+
+    public static FacesMessage[] getWarnMessages() {
+        return getMessagesBySeverity(FacesMessage.SEVERITY_WARN);
+    }
+
+    public static FacesMessage[] getErrorMessages() {
+        return getMessagesBySeverity(FacesMessage.SEVERITY_ERROR);
+    }
+
+    public static FacesMessage[] getFatalMessages() {
+        return getMessagesBySeverity(FacesMessage.SEVERITY_FATAL);
+    }
+
+    public static FacesMessage[] getMessagesBySeverity(
+            FacesMessage.Severity severity) {
+        FacesContext context = FacesContext.getCurrentInstance();
         List list = new ArrayList();
         String type = severity.toString();
         FacesMessage.Severity[] severities = (FacesMessage.Severity[]) map
@@ -66,24 +93,6 @@ public class MessageBean {
             }
         }
         return (FacesMessage[]) list.toArray(new FacesMessage[list.size()]);
-    }
-
-    public boolean isEmpty() {
-        FacesContext context = getFacesContext();
-        Iterator it = context.getMessages();
-        return !it.hasNext();
-    }
-
-    public boolean isNotEmpty() {
-        return !isEmpty();
-    }
-
-    FacesContext getFacesContext() {
-        return FacesContext.getCurrentInstance();
-    }
-
-    public FacesMessage[] getErrorMessages() {
-        return getMessagesBySeverity(FacesMessage.SEVERITY_ERROR);
     }
 
 }

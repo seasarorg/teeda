@@ -15,7 +15,10 @@
  */
 package org.seasar.teeda.extension.taglib;
 
+import javax.faces.component.UIComponent;
+
 import org.seasar.teeda.core.taglib.html.InputTextTag;
+import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.component.html.HtmlInputCommaText;
 
 /**
@@ -37,7 +40,6 @@ public class InputCommaTextTag extends InputTextTag {
     public String getRendererType() {
         return HtmlInputCommaText.DEFAULT_RENDERER_TYPE;
     }
-
 
     public String getFraction() {
         return fraction;
@@ -61,6 +63,16 @@ public class InputCommaTextTag extends InputTextTag {
 
     public void setGroupingSeparator(String groupingSeparator) {
         this.groupingSeparator = groupingSeparator;
+    }
+
+    protected void setProperties(UIComponent component) {
+        super.setProperties(component);
+        setComponentProperty(component, ExtensionConstants.FRACTION_ATTR,
+                getFraction());
+        setComponentProperty(component,
+                ExtensionConstants.GROUPING_SEPARATOR_ATTR, getHeight());
+        setComponentProperty(component,
+                ExtensionConstants.FRACTION_SEPARATOR_ATTR, getHeight());
     }
 
 }
