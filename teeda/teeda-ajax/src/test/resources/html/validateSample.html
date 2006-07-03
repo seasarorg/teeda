@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<title>ValidateSample</title>
+<link rel="stylesheet" type="text/css" href="../js/jsunit/css/jsUnitStyle.css">
+
+<script language="JavaScript" type="text/javascript" src="../src/kumu.js"></script>
+<script language="JavaScript" type="text/javascript" src="../src/event.js"></script>
+<script language="JavaScript" type="text/javascript" src="../src/validate.js"></script>
+
+<script language="JavaScript" type="text/javascript">
+//Kumu.Validator.modeId(true);
+
+
+function test(element, result){
+        if(result){
+            element.style.background = '#ffffff';
+        }else{
+            element.style.background = '#cc00ff';
+        }
+    }
+
+KumuValidatorConf = {
+  test : ['Required','Integer','MinLength:2','MaxLength:5'],
+  test1 : ['Required','RegularExpression:[A-Z]'],
+  test2 : {'RegularExpression:([a-z]){2}' : test },
+  ok : 'result',
+  cancel : 'result'
+}
+
+</script>
+
+</head>
+<body>
+<table border="1">
+<tr>
+  <td> ['Required','Integer','MinLength:2','MaxLength:5']</td>
+  <td><input type="text" name="test" value=""></td>
+</tr>
+<tr>
+  <td>['Required','RegularExpression:[A-Z]']</td>
+  <td><input type="text1" name="test1" value=""></td>
+</tr>
+<tr>
+  <td>{'RegularExpression:([a-z]){2}' : test } override showResult</td>
+  <td><input type="text2" name="test2" value=""></td>
+</tr>
+</table>
+<input type="submit" name="ok" value="ALL_OK">
+<input type="reset" name="cancel" value="CANCEL">
+
+</body>
+</html>
