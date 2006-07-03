@@ -28,19 +28,19 @@ import javax.faces.context.ResponseWriter;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.html.AbstractHtmlRenderer;
 import org.seasar.teeda.core.util.RendererUtil;
-import org.seasar.teeda.extension.component.html.HtmlGrid;
-import org.seasar.teeda.extension.component.html.HtmlGridBody;
-import org.seasar.teeda.extension.component.html.HtmlGridColumn;
-import org.seasar.teeda.extension.component.html.HtmlGridColumnGroup;
-import org.seasar.teeda.extension.component.html.HtmlGridHeader;
-import org.seasar.teeda.extension.component.html.HtmlGridTd;
-import org.seasar.teeda.extension.component.html.HtmlGridTh;
-import org.seasar.teeda.extension.component.html.HtmlGridTr;
+import org.seasar.teeda.extension.component.html.THtmlGrid;
+import org.seasar.teeda.extension.component.html.THtmlGridBody;
+import org.seasar.teeda.extension.component.html.THtmlGridColumn;
+import org.seasar.teeda.extension.component.html.THtmlGridColumnGroup;
+import org.seasar.teeda.extension.component.html.THtmlGridHeader;
+import org.seasar.teeda.extension.component.html.THtmlGridTd;
+import org.seasar.teeda.extension.component.html.THtmlGridTh;
+import org.seasar.teeda.extension.component.html.THtmlGridTr;
 
 /**
  * @author manhole
  */
-public class HtmlGridRenderer extends AbstractHtmlRenderer {
+public class THtmlGridRenderer extends AbstractHtmlRenderer {
 
     public void encodeBegin(FacesContext context, UIComponent component)
             throws IOException {
@@ -48,11 +48,11 @@ public class HtmlGridRenderer extends AbstractHtmlRenderer {
         if (!component.isRendered()) {
             return;
         }
-        encodeHtmlGridBegin(context, (HtmlGrid) component);
+        encodeHtmlGridBegin(context, (THtmlGrid) component);
     }
 
     protected void encodeHtmlGridBegin(final FacesContext context,
-            final HtmlGrid htmlGrid) throws IOException {
+            final THtmlGrid htmlGrid) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
         writer.startElement(JsfConstants.TABLE_ELEM, htmlGrid);
         RendererUtil.renderIdAttributeIfNecessary(writer, htmlGrid,
@@ -65,25 +65,25 @@ public class HtmlGridRenderer extends AbstractHtmlRenderer {
         if (!component.isRendered()) {
             return;
         }
-        encodeHtmlGridChildren(context, (HtmlGrid) component);
+        encodeHtmlGridChildren(context, (THtmlGrid) component);
     }
 
     protected void encodeHtmlGridChildren(FacesContext context,
-            HtmlGrid htmlGrid) throws IOException {
+            THtmlGrid htmlGrid) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
-        HtmlGridRenderer.GridAttribute attribute = getGridAttribute(htmlGrid);
+        THtmlGridRenderer.GridAttribute attribute = getGridAttribute(htmlGrid);
         for (Iterator it = getRenderedChildrenIterator(htmlGrid); it.hasNext();) {
             final UIComponent child = (UIComponent) it.next();
-            if (child instanceof HtmlGridHeader) {
-                encodeGridHeader(context, htmlGrid, (HtmlGridHeader) child,
+            if (child instanceof THtmlGridHeader) {
+                encodeGridHeader(context, htmlGrid, (THtmlGridHeader) child,
                         writer, attribute);
                 break;
             }
         }
         for (Iterator it = getRenderedChildrenIterator(htmlGrid); it.hasNext();) {
             final UIComponent child = (UIComponent) it.next();
-            if (child instanceof HtmlGridBody) {
-                encodeGridBody(context, htmlGrid, (HtmlGridBody) child, writer,
+            if (child instanceof THtmlGridBody) {
+                encodeGridBody(context, htmlGrid, (THtmlGridBody) child, writer,
                         attribute);
                 break;
             }
@@ -96,19 +96,19 @@ public class HtmlGridRenderer extends AbstractHtmlRenderer {
         if (!component.isRendered()) {
             return;
         }
-        encodeHtmlGridEnd(context, (HtmlGrid) component);
+        encodeHtmlGridEnd(context, (THtmlGrid) component);
     }
 
-    protected void encodeHtmlGridEnd(FacesContext context, HtmlGrid htmlGrid)
+    protected void encodeHtmlGridEnd(FacesContext context, THtmlGrid htmlGrid)
             throws IOException {
         ResponseWriter writer = context.getResponseWriter();
         writer.endElement(JsfConstants.TABLE_ELEM);
     }
 
     private void encodeGridHeader(final FacesContext context,
-            HtmlGrid htmlGrid, final HtmlGridHeader header,
+            THtmlGrid htmlGrid, final THtmlGridHeader header,
             final ResponseWriter writer,
-            final HtmlGridRenderer.GridAttribute attribute) throws IOException {
+            final THtmlGridRenderer.GridAttribute attribute) throws IOException {
         writer.startElement(JsfConstants.TR_ELEM, header);
         writer.startElement(JsfConstants.TD_ELEM, header);
 
@@ -119,8 +119,8 @@ public class HtmlGridRenderer extends AbstractHtmlRenderer {
             for (Iterator it = getRenderedChildrenIterator(header); it
                     .hasNext();) {
                 final UIComponent child = (UIComponent) it.next();
-                if (child instanceof HtmlGridTr) {
-                    encodeGridLeftHeaderTr(context, (HtmlGridTr) child, writer,
+                if (child instanceof THtmlGridTr) {
+                    encodeGridLeftHeaderTr(context, (THtmlGridTr) child, writer,
                             attribute);
                 }
             }
@@ -144,8 +144,8 @@ public class HtmlGridRenderer extends AbstractHtmlRenderer {
         writer.startElement(JsfConstants.THEAD_ELEM, header);
         for (Iterator it = getRenderedChildrenIterator(header); it.hasNext();) {
             final UIComponent child = (UIComponent) it.next();
-            if (child instanceof HtmlGridTr) {
-                encodeGridRightHeaderTr(context, (HtmlGridTr) child, writer,
+            if (child instanceof THtmlGridTr) {
+                encodeGridRightHeaderTr(context, (THtmlGridTr) child, writer,
                         attribute);
             }
         }
@@ -157,18 +157,18 @@ public class HtmlGridRenderer extends AbstractHtmlRenderer {
     }
 
     private void encodeGridLeftHeaderTr(final FacesContext context,
-            final HtmlGridTr tr, final ResponseWriter writer,
-            final HtmlGridRenderer.GridAttribute attribute) throws IOException {
+            final THtmlGridTr tr, final ResponseWriter writer,
+            final THtmlGridRenderer.GridAttribute attribute) throws IOException {
         writer.startElement(JsfConstants.TR_ELEM, tr);
         int counter = 0;
         for (final Iterator it = getRenderedChildrenIterator(tr); it.hasNext();) {
             final UIComponent child = (UIComponent) it.next();
-            if (child instanceof HtmlGridTh) {
+            if (child instanceof THtmlGridTh) {
                 counter++;
-                encodeGridHeaderTh(context, (HtmlGridTh) child, writer);
-            } else if (child instanceof HtmlGridTd) {
+                encodeGridHeaderTh(context, (THtmlGridTh) child, writer);
+            } else if (child instanceof THtmlGridTd) {
                 counter++;
-                encodeGridHeaderTd(context, (HtmlGridTd) child, writer);
+                encodeGridHeaderTd(context, (THtmlGridTd) child, writer);
             }
             if (attribute.getLeftFixCols() <= counter) {
                 break;
@@ -178,30 +178,30 @@ public class HtmlGridRenderer extends AbstractHtmlRenderer {
     }
 
     private void encodeGridRightHeaderTr(final FacesContext context,
-            final HtmlGridTr tr, final ResponseWriter writer,
-            final HtmlGridRenderer.GridAttribute attribute) throws IOException {
+            final THtmlGridTr tr, final ResponseWriter writer,
+            final THtmlGridRenderer.GridAttribute attribute) throws IOException {
         writer.startElement(JsfConstants.TR_ELEM, tr);
         int counter = 0;
         for (final Iterator it = getRenderedChildrenIterator(tr); it.hasNext();) {
             final UIComponent child = (UIComponent) it.next();
-            if (child instanceof HtmlGridTh) {
+            if (child instanceof THtmlGridTh) {
                 counter++;
                 if (counter <= attribute.getLeftFixCols()) {
                     continue;
                 }
-                encodeGridHeaderTh(context, (HtmlGridTh) child, writer);
-            } else if (child instanceof HtmlGridTd) {
+                encodeGridHeaderTh(context, (THtmlGridTh) child, writer);
+            } else if (child instanceof THtmlGridTd) {
                 counter++;
                 if (counter <= attribute.getLeftFixCols()) {
                     continue;
                 }
-                encodeGridHeaderTd(context, (HtmlGridTd) child, writer);
+                encodeGridHeaderTd(context, (THtmlGridTd) child, writer);
             }
         }
         writer.endElement(JsfConstants.TR_ELEM);
     }
 
-    private void encodeGridHeaderTd(FacesContext context, HtmlGridTd td,
+    private void encodeGridHeaderTd(FacesContext context, THtmlGridTd td,
             ResponseWriter writer) throws IOException {
         writer.startElement(JsfConstants.TD_ELEM, td);
         writer.startElement(JsfConstants.NOBR_ELEM, td);
@@ -210,7 +210,7 @@ public class HtmlGridRenderer extends AbstractHtmlRenderer {
         writer.endElement(JsfConstants.TD_ELEM);
     }
 
-    private void encodeGridHeaderTh(FacesContext context, HtmlGridTh th,
+    private void encodeGridHeaderTh(FacesContext context, THtmlGridTh th,
             ResponseWriter writer) throws IOException {
         writer.startElement(JsfConstants.TH_ELEM, th);
         writer.startElement(JsfConstants.NOBR_ELEM, th);
@@ -219,9 +219,9 @@ public class HtmlGridRenderer extends AbstractHtmlRenderer {
         writer.endElement(JsfConstants.TH_ELEM);
     }
 
-    private void encodeGridBody(final FacesContext context, HtmlGrid htmlGrid,
-            final HtmlGridBody body, final ResponseWriter writer,
-            final HtmlGridRenderer.GridAttribute attribute) throws IOException {
+    private void encodeGridBody(final FacesContext context, THtmlGrid htmlGrid,
+            final THtmlGridBody body, final ResponseWriter writer,
+            final THtmlGridRenderer.GridAttribute attribute) throws IOException {
         writer.startElement(JsfConstants.TR_ELEM, body);
         writer.startElement(JsfConstants.TD_ELEM, body);
         RendererUtil.renderAttribute(writer, JsfConstants.STYLE_ATTR,
@@ -248,8 +248,8 @@ public class HtmlGridRenderer extends AbstractHtmlRenderer {
                 for (Iterator it = getRenderedChildrenIterator(body); it
                         .hasNext();) {
                     final UIComponent child = (UIComponent) it.next();
-                    if (child instanceof HtmlGridTr) {
-                        encodeGridLeftBodyTr(context, (HtmlGridTr) child,
+                    if (child instanceof THtmlGridTr) {
+                        encodeGridLeftBodyTr(context, (THtmlGridTr) child,
                                 writer, attribute);
                     }
                 }
@@ -295,8 +295,8 @@ public class HtmlGridRenderer extends AbstractHtmlRenderer {
 
             for (Iterator it = getRenderedChildrenIterator(body); it.hasNext();) {
                 final UIComponent child = (UIComponent) it.next();
-                if (child instanceof HtmlGridTr) {
-                    encodeGridRightBodyTr(context, (HtmlGridTr) child, writer,
+                if (child instanceof THtmlGridTr) {
+                    encodeGridRightBodyTr(context, (THtmlGridTr) child, writer,
                             attribute);
                 }
             }
@@ -312,15 +312,15 @@ public class HtmlGridRenderer extends AbstractHtmlRenderer {
     }
 
     private void encodeGridLeftBodyTr(final FacesContext context,
-            final HtmlGridTr tr, final ResponseWriter writer,
-            final HtmlGridRenderer.GridAttribute attribute) throws IOException {
+            final THtmlGridTr tr, final ResponseWriter writer,
+            final THtmlGridRenderer.GridAttribute attribute) throws IOException {
         writer.startElement(JsfConstants.TR_ELEM, tr);
         int counter = 0;
         for (final Iterator it = getRenderedChildrenIterator(tr); it.hasNext();) {
             final UIComponent child = (UIComponent) it.next();
-            if (child instanceof HtmlGridTd) {
+            if (child instanceof THtmlGridTd) {
                 counter++;
-                encodeGridBodyTd(context, (HtmlGridTd) child, writer);
+                encodeGridBodyTd(context, (THtmlGridTd) child, writer);
             }
             if (attribute.getLeftFixCols() <= counter) {
                 break;
@@ -330,24 +330,24 @@ public class HtmlGridRenderer extends AbstractHtmlRenderer {
     }
 
     private void encodeGridRightBodyTr(final FacesContext context,
-            final HtmlGridTr tr, final ResponseWriter writer,
-            final HtmlGridRenderer.GridAttribute attribute) throws IOException {
+            final THtmlGridTr tr, final ResponseWriter writer,
+            final THtmlGridRenderer.GridAttribute attribute) throws IOException {
         writer.startElement(JsfConstants.TR_ELEM, tr);
         int counter = 0;
         for (final Iterator it = getRenderedChildrenIterator(tr); it.hasNext();) {
             final UIComponent child = (UIComponent) it.next();
-            if (child instanceof HtmlGridTd) {
+            if (child instanceof THtmlGridTd) {
                 counter++;
                 if (counter <= attribute.getLeftFixCols()) {
                     continue;
                 }
-                encodeGridBodyTd(context, (HtmlGridTd) child, writer);
+                encodeGridBodyTd(context, (THtmlGridTd) child, writer);
             }
         }
         writer.endElement(JsfConstants.TR_ELEM);
     }
 
-    private void encodeGridBodyTd(FacesContext context, HtmlGridTd td,
+    private void encodeGridBodyTd(FacesContext context, THtmlGridTd td,
             ResponseWriter writer) throws IOException {
         writer.startElement(JsfConstants.TD_ELEM, td);
         writer.startElement(JsfConstants.NOBR_ELEM, td);
@@ -356,11 +356,11 @@ public class HtmlGridRenderer extends AbstractHtmlRenderer {
         writer.endElement(JsfConstants.TD_ELEM);
     }
 
-    static final String GRID_ATTRIBUTE = HtmlGrid.class.getName()
+    static final String GRID_ATTRIBUTE = THtmlGrid.class.getName()
             + ".GRID_ATTRIBUTE";
 
-    private HtmlGridRenderer.GridAttribute getGridAttribute(HtmlGrid htmlGrid) {
-        HtmlGridRenderer.GridAttribute attribute = (HtmlGridRenderer.GridAttribute) htmlGrid
+    private THtmlGridRenderer.GridAttribute getGridAttribute(THtmlGrid htmlGrid) {
+        THtmlGridRenderer.GridAttribute attribute = (THtmlGridRenderer.GridAttribute) htmlGrid
                 .getAttributes().get(GRID_ATTRIBUTE);
         if (attribute == null) {
             attribute = new GridAttribute();
@@ -378,13 +378,13 @@ public class HtmlGridRenderer extends AbstractHtmlRenderer {
             for (final Iterator it = getRenderedChildrenIterator(htmlGrid); it
                     .hasNext();) {
                 final UIComponent child = (UIComponent) it.next();
-                if (child instanceof HtmlGridColumnGroup) {
-                    HtmlGridColumnGroup columnGroup = (HtmlGridColumnGroup) child;
+                if (child instanceof THtmlGridColumnGroup) {
+                    THtmlGridColumnGroup columnGroup = (THtmlGridColumnGroup) child;
                     for (Iterator itr = getRenderedChildrenIterator(columnGroup); itr
                             .hasNext();) {
                         final UIComponent element = (UIComponent) itr.next();
-                        if (element instanceof HtmlGridColumn) {
-                            final HtmlGridColumn col = (HtmlGridColumn) element;
+                        if (element instanceof THtmlGridColumn) {
+                            final THtmlGridColumn col = (THtmlGridColumn) element;
                             final String span = col.getSpan();
                             if (span != null) {
                                 attribute
@@ -402,13 +402,13 @@ public class HtmlGridRenderer extends AbstractHtmlRenderer {
             for (final Iterator itGrid = getRenderedChildrenIterator(htmlGrid); itGrid
                     .hasNext();) {
                 final UIComponent gridChild = (UIComponent) itGrid.next();
-                if (gridChild instanceof HtmlGridHeader) {
+                if (gridChild instanceof THtmlGridHeader) {
                     for (final Iterator itHeader = getRenderedChildrenIterator(gridChild); itHeader
                             .hasNext();) {
                         final UIComponent headerChild = (UIComponent) itHeader
                                 .next();
-                        if (headerChild instanceof HtmlGridTr) {
-                            final HtmlGridTr tr = (HtmlGridTr) headerChild;
+                        if (headerChild instanceof THtmlGridTr) {
+                            final THtmlGridTr tr = (THtmlGridTr) headerChild;
                             final String height = tr.getHeight();
                             if (height != null) {
                                 attribute.setHeaderHeight(toDigit(height)
@@ -558,7 +558,7 @@ public class HtmlGridRenderer extends AbstractHtmlRenderer {
 
     }
 
-    Collection getBodyItems(final FacesContext context, final HtmlGrid htmlGrid) {
+    Collection getBodyItems(final FacesContext context, final THtmlGrid htmlGrid) {
         //        final String itemsName = getNaturalId(htmlGrid) + "Items";
         //        final Object value = context.getApplication().getVariableResolver()
         //                .resolveVariable(context, itemsName);
@@ -572,20 +572,20 @@ public class HtmlGridRenderer extends AbstractHtmlRenderer {
         return (Collection) value;
     }
 
-    private String getNaturalId(final HtmlGrid htmlGrid) {
+    private String getNaturalId(final THtmlGrid htmlGrid) {
         final String id = htmlGrid.getId();
         final int pos = id.lastIndexOf("Grid");
         final String naturalId = id.substring(0, pos);
         return naturalId;
     }
 
-    void enterRow(final FacesContext context, final HtmlGrid htmlGrid,
+    void enterRow(final FacesContext context, final THtmlGrid htmlGrid,
             Object rowBean) {
         final String itemName = getNaturalId(htmlGrid);
         context.getExternalContext().getRequestMap().put(itemName, rowBean);
     }
 
-    void leaveRow(FacesContext context, HtmlGrid htmlGrid) {
+    void leaveRow(FacesContext context, THtmlGrid htmlGrid) {
         final String itemName = getNaturalId(htmlGrid);
         context.getExternalContext().getRequestMap().remove(itemName);
     }

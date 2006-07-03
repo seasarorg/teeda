@@ -19,13 +19,13 @@ import javax.faces.component.UIComponent;
 
 import org.seasar.teeda.core.taglib.html.InputTextTag;
 import org.seasar.teeda.extension.ExtensionConstants;
-import org.seasar.teeda.extension.component.html.HtmlInputCommaText;
+import org.seasar.teeda.extension.component.html.THtmlInputCommaText;
 
 /**
  * @author shot
  *
  */
-public class InputCommaTextTag extends InputTextTag {
+public class TInputCommaTextTag extends InputTextTag {
 
     private String fraction;
 
@@ -34,11 +34,11 @@ public class InputCommaTextTag extends InputTextTag {
     private String fractionSeparator;
 
     public String getComponentType() {
-        return HtmlInputCommaText.COMPONENT_TYPE;
+        return THtmlInputCommaText.COMPONENT_TYPE;
     }
 
     public String getRendererType() {
-        return HtmlInputCommaText.DEFAULT_RENDERER_TYPE;
+        return THtmlInputCommaText.DEFAULT_RENDERER_TYPE;
     }
 
     public String getFraction() {

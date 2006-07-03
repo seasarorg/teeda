@@ -38,14 +38,14 @@ import org.seasar.teeda.core.util.RendererUtil;
 import org.seasar.teeda.core.util.ValueHolderUtil;
 import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.component.ScriptEnhanceUIViewRoot;
-import org.seasar.teeda.extension.component.html.HtmlInputCommaText;
+import org.seasar.teeda.extension.component.html.THtmlInputCommaText;
 import org.seasar.teeda.extension.util.JavaScriptContext;
 
 /**
  * @author shot
  *
  */
-public class HtmlInputCommaTextRenderer extends HtmlInputTextRenderer {
+public class THtmlInputCommaTextRenderer extends HtmlInputTextRenderer {
 
     private static final String DEFAULT_FRACTION = "0";
 
@@ -59,14 +59,14 @@ public class HtmlInputCommaTextRenderer extends HtmlInputTextRenderer {
         UIViewRoot root = context.getViewRoot();
         if (root instanceof ScriptEnhanceUIViewRoot
                 && JavaScriptPermissionUtil.isJavaScriptPermitted(context)) {
-            encodeHtmlInputCommaTextEnd(context, (HtmlInputCommaText) component);
+            encodeHtmlInputCommaTextEnd(context, (THtmlInputCommaText) component);
         } else {
             encodeHtmlInputTextEnd(context, (HtmlInputText) component);
         }
     }
 
     protected void encodeHtmlInputCommaTextEnd(FacesContext context,
-            HtmlInputCommaText htmlInputCommaText) throws IOException {
+            THtmlInputCommaText htmlInputCommaText) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
         UIViewRoot root = context.getViewRoot();
         ScriptEnhanceUIViewRoot sRoot = (ScriptEnhanceUIViewRoot) root;
@@ -123,7 +123,7 @@ public class HtmlInputCommaTextRenderer extends HtmlInputTextRenderer {
         writer.endElement(JsfConstants.INPUT_ELEM);
     }
 
-    protected void renderRemain(HtmlInputCommaText htmlInputCommaText,
+    protected void renderRemain(THtmlInputCommaText htmlInputCommaText,
             ResponseWriter writer) throws IOException {
         IgnoreComponent ignore = buildIgnoreComponent();
         Map map = UIComponentUtil.getAllAttributesAndProperties(
@@ -136,7 +136,7 @@ public class HtmlInputCommaTextRenderer extends HtmlInputTextRenderer {
         }
     }
 
-    protected void renderStyle(HtmlInputCommaText htmlInputCommaText,
+    protected void renderStyle(THtmlInputCommaText htmlInputCommaText,
             ResponseWriter writer) throws IOException {
         String style = appendSemiColonIfNeed(htmlInputCommaText.getStyle());
         if (!style.endsWith("ime-mode:disabled;")) {
@@ -146,7 +146,7 @@ public class HtmlInputCommaTextRenderer extends HtmlInputTextRenderer {
         }
     }
 
-    protected void renderOnfocus(HtmlInputCommaText htmlInputCommaText,
+    protected void renderOnfocus(THtmlInputCommaText htmlInputCommaText,
             ResponseWriter writer, String groupingSeparator) throws IOException {
         String onfocus = appendSemiColonIfNeed(htmlInputCommaText.getOnfocus());
         if (!onfocus.endsWith("removeComma(this);")) {
@@ -156,7 +156,7 @@ public class HtmlInputCommaTextRenderer extends HtmlInputTextRenderer {
         }
     }
 
-    protected void renderOnblur(HtmlInputCommaText htmlInputCommaText,
+    protected void renderOnblur(THtmlInputCommaText htmlInputCommaText,
             ResponseWriter writer, String fraction, String groupingSeparator,
             String fractionSeparator) throws IOException {
         String onblur = appendSemiColonIfNeed(htmlInputCommaText.getOnblur());
@@ -171,14 +171,14 @@ public class HtmlInputCommaTextRenderer extends HtmlInputTextRenderer {
         }
     }
 
-    protected void renderOnkeydown(HtmlInputCommaText htmlInputCommaText,
+    protected void renderOnkeydown(THtmlInputCommaText htmlInputCommaText,
             ResponseWriter writer) throws IOException {
         String onkeydown = appendSemiColonIfNeed(htmlInputCommaText
                 .getOnkeydown());
         renderKeycheckEvent(writer, JsfConstants.ONKEYDOWN_ATTR, onkeydown);
     }
 
-    protected void renderOnkeypress(HtmlInputCommaText htmlInputCommaText,
+    protected void renderOnkeypress(THtmlInputCommaText htmlInputCommaText,
             ResponseWriter writer) throws IOException {
         String onkeypress = appendSemiColonIfNeed(htmlInputCommaText
                 .getOnkeypress());
@@ -193,7 +193,7 @@ public class HtmlInputCommaTextRenderer extends HtmlInputTextRenderer {
         }
     }
 
-    protected void renderOnkeyup(HtmlInputCommaText htmlInputCommaText,
+    protected void renderOnkeyup(THtmlInputCommaText htmlInputCommaText,
             ResponseWriter writer) throws IOException {
         String onkeyup = appendSemiColonIfNeed(htmlInputCommaText.getOnkeyup());
         if (!onkeyup.endsWith("convertByKey(this);")) {

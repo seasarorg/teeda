@@ -18,18 +18,18 @@ package org.seasar.teeda.extension.taglib;
 import javax.faces.component.UIComponent;
 
 import org.seasar.teeda.core.taglib.UIComponentTagBase;
-import org.seasar.teeda.extension.component.html.HtmlGridHeader;
+import org.seasar.teeda.extension.component.html.THtmlGridHeader;
 
 /**
  * @author manhole
  */
-public class GridHeaderTag extends UIComponentTagBase {
+public class TGridHeaderTag extends UIComponentTagBase {
 
-    public GridHeaderTag() {
+    public TGridHeaderTag() {
     }
 
     public String getComponentType() {
-        return HtmlGridHeader.COMPONENT_TYPE;
+        return THtmlGridHeader.COMPONENT_TYPE;
     }
 
     public String getRendererType() {

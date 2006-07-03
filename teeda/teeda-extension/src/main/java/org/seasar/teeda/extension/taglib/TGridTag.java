@@ -19,22 +19,22 @@ import javax.faces.component.UIComponent;
 
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.taglib.UIComponentTagBase;
-import org.seasar.teeda.extension.component.html.HtmlGrid;
+import org.seasar.teeda.extension.component.html.THtmlGrid;
 
 /**
  * @author manhole
  */
-public class GridTag extends UIComponentTagBase {
+public class TGridTag extends UIComponentTagBase {
 
-    public GridTag() {
+    public TGridTag() {
     }
 
     public String getComponentType() {
-        return HtmlGrid.COMPONENT_TYPE;
+        return THtmlGrid.COMPONENT_TYPE;
     }
 
     public String getRendererType() {
-        return HtmlGrid.DEFAULT_RENDERER_TYPE;
+        return THtmlGrid.DEFAULT_RENDERER_TYPE;
     }
 
     protected void setProperties(UIComponent component) {

@@ -19,18 +19,20 @@ import javax.faces.component.UIComponent;
 
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.taglib.UIComponentTagBase;
-import org.seasar.teeda.extension.component.html.HtmlGridTr;
+import org.seasar.teeda.extension.component.html.THtmlGridColumn;
 
 /**
  * @author manhole
  */
-public class GridTrTag extends UIComponentTagBase {
+public class TGridColumnTag extends UIComponentTagBase {
 
-    public GridTrTag() {
+    private String span;
+
+    public TGridColumnTag() {
     }
 
     public String getComponentType() {
-        return HtmlGridTr.COMPONENT_TYPE;
+        return THtmlGridColumn.COMPONENT_TYPE;
     }
 
     public String getRendererType() {
@@ -39,7 +41,21 @@ public class GridTrTag extends UIComponentTagBase {
 
     protected void setProperties(UIComponent component) {
         super.setProperties(component);
-        setComponentProperty(component, JsfConstants.HEIGHT_ATTR, getHeight());
+        setComponentProperty(component, JsfConstants.WIDTH_ATTR, getWidth());
+        setComponentProperty(component, JsfConstants.SPAN_ELEM, getSpan());
+    }
+
+    public String getSpan() {
+        return span;
+    }
+
+    public void setSpan(String span) {
+        this.span = span;
+    }
+
+    public void release() {
+        super.release();
+        span = null;
     }
 
 }

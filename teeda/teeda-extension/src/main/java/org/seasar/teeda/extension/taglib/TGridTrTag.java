@@ -17,19 +17,20 @@ package org.seasar.teeda.extension.taglib;
 
 import javax.faces.component.UIComponent;
 
+import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.taglib.UIComponentTagBase;
-import org.seasar.teeda.extension.component.html.HtmlGridColumnGroup;
+import org.seasar.teeda.extension.component.html.THtmlGridTr;
 
 /**
  * @author manhole
  */
-public class GridColumnGroupTag extends UIComponentTagBase {
+public class TGridTrTag extends UIComponentTagBase {
 
-    public GridColumnGroupTag() {
+    public TGridTrTag() {
     }
 
     public String getComponentType() {
-        return HtmlGridColumnGroup.COMPONENT_TYPE;
+        return THtmlGridTr.COMPONENT_TYPE;
     }
 
     public String getRendererType() {
@@ -38,6 +39,7 @@ public class GridColumnGroupTag extends UIComponentTagBase {
 
     protected void setProperties(UIComponent component) {
         super.setProperties(component);
+        setComponentProperty(component, JsfConstants.HEIGHT_ATTR, getHeight());
     }
 
 }
