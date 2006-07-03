@@ -11,10 +11,20 @@
 KumuEventConf = {
   'click_test:id0' : move,
   'click_test:id1' : o.debug.bindScope(o),
-  'click_button' : function(){Position.init();Dragable.init();}
+  'click_button' : function(){Position.init();Dragable.init();},
+  'mouseover_change' : on,
+  'mouseout_change' : off
 }
 
 </script>
+<style type="text/css">
+.on {
+  background-color: #ffb;
+}
+.off{
+  background-color: #ffffff;
+}
+</style>
 </head>
 
 <body>
@@ -22,6 +32,12 @@ KumuEventConf = {
 
 <div id='test:id1'>アラートが出ます</div>
 <input type="button" id="button" value="ここを押す要素が移動可能になります"/>
-
+<ul>
+<li id="change">mouseover</li>
+<li id="change">mouseover</li>
+<li id="change">mouseover</li>
+<li id="change">mouseover</li>
+<li id="change">mouseover</li>
+</ul>
 </body>
 </html>

@@ -13,7 +13,6 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
- 
 if (typeof(Kumu) == 'undefined') {
     Kumu = {};
 }
@@ -25,7 +24,35 @@ if (typeof(Kumu.Event) == 'undefined') {
 var KumuEventConf;
 
 Kumu.extend(Kumu.Event, {
-		
+	
+	nodeCache : {},
+
+  	caches: false,
+	
+  	elementsById : function(id){
+  		if(!(id instanceof String) && typeof id != "string"){
+  			return [id];
+		}  		
+		var nodes = [];
+		var elem = $i(id);
+		if(!this.nodeCache[id]){
+			this.nodeCache[id] = []; 
+		}
+		while(elem){
+			if(!elem["cached"]){
+				nodes.push(elem);
+			}
+			elem.id = "";
+			elem = $i(id);
+		}
+		this.nodeCache[id] = this.nodeCache[id].concat(nodes);
+		this.nodeCache[id].map(function(n){
+				n.id = id;
+				n.cached = true;
+			} );
+		return this.nodeCache[id];
+	},
+	
 	stopEvent : function(event) {
     	if (event.preventDefault) { 
       		event.preventDefault(); 
@@ -35,8 +62,6 @@ Kumu.extend(Kumu.Event, {
 	        event.cancelBubble = true;
     	}
   	},
-
-  	caches: false,
   
   	_cached: function(element, name, observer, useCapture) {
     	if (!this.caches){
@@ -63,13 +88,16 @@ Kumu.extend(Kumu.Event, {
   	},
 
 	addEvent : function(element, name, observer, useCapture) {
-    	var ele = $i(element);
+    	var nodes = this.elementsById(element);
     	useCapture = useCapture || false;
 	    if (name == 'keypress' && (navigator.appVersion.match(/Konqueror|Safari|KHTML/) 
     	 || ele.attachevent)){
 		      name = 'keydown';
     	}
-    	this._cached(ele, name, observer, useCapture);
+    	nodes.map(function(node){
+    		this._cached(node, name, observer, useCapture);
+    	}.bindScope(this));
+    	
   	},
 
  	removeEvent : function(element, name, observer, useCapture) {
@@ -103,7 +131,7 @@ Kumu.extend(Kumu.Event, {
   	addOnLoadEvent : function(func){
 		this.addEvent(window, 'load', func, false);
   	}
-	  	
+	
 });
 
 Function.prototype.registEventToElement = function(element, scope){

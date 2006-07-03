@@ -18,3 +18,19 @@ var o ={
       this.show(element);
    }
 }
+
+function on(evt){
+    var elem = (evt.target) ? evt.target : evt.srcElement;
+    if(elem.nodeType == 3){
+      elem = elem.parentNode;
+    }
+    elem.className = 'on';  
+}
+
+function off(evt){
+    var elem = (evt.target) ? evt.target : evt.srcElement;
+    if(elem.nodeType == 3){
+      elem = elem.parentNode;
+    }
+    elem.className = 'off';  
+}
