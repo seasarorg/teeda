@@ -22,7 +22,7 @@ import javax.faces.context.FacesContext;
  * @author shot
  *
  */
-public class HtmlInputCommaText extends HtmlInputText {
+public class THtmlInputCommaText extends HtmlInputText {
 
     public static final String COMPONENT_TYPE = "org.seasar.jsf.HtmlInputCommaText";
 
@@ -36,7 +36,7 @@ public class HtmlInputCommaText extends HtmlInputText {
 
     private String fractionSeparator;
 
-    public HtmlInputCommaText() {
+    public THtmlInputCommaText() {
         setRendererType(DEFAULT_RENDERER_TYPE);
     }
 

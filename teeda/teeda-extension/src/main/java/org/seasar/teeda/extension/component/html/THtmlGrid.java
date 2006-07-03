@@ -18,7 +18,7 @@ package org.seasar.teeda.extension.component.html;
 import javax.faces.component.ComponentUtil_;
 import javax.faces.component.UIComponentBase;
 
-public class HtmlGrid extends UIComponentBase /* TODO implements NamingContainer */{
+public class THtmlGrid extends UIComponentBase /* TODO implements NamingContainer */{
 
     public static final String COMPONENT_FAMILY = "org.seasar.teeda.extension.Grid";
 

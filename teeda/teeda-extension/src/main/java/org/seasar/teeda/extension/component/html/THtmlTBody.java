@@ -22,6 +22,6 @@ public class THtmlTBody extends TForEach {
     public static final String COMPONENT_TYPE = "org.seasar.teeda.extension.THtmlTBody";
 
     public String getFamily() {
-        return HtmlGrid.COMPONENT_FAMILY;
+        return THtmlGrid.COMPONENT_FAMILY;
     }
 }

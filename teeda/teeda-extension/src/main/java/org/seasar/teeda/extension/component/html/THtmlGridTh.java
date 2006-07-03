@@ -17,13 +17,13 @@ package org.seasar.teeda.extension.component.html;
 
 import javax.faces.component.UIComponentBase;
 
-public class HtmlGridTd extends UIComponentBase {
+public class THtmlGridTh extends UIComponentBase {
 
-    public static final String COMPONENT_TYPE = "org.seasar.teeda.extension.HtmlGridTd";
+    public static final String COMPONENT_TYPE = "org.seasar.teeda.extension.HtmlGridTh";
 
     public String getFamily() {
         // TODO Auto-generated method stub
-        return HtmlGrid.COMPONENT_FAMILY;
+        return THtmlGrid.COMPONENT_FAMILY;
     }
 
 }

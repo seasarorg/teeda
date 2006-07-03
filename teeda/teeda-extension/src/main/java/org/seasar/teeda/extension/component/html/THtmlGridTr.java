@@ -17,13 +17,23 @@ package org.seasar.teeda.extension.component.html;
 
 import javax.faces.component.UIComponentBase;
 
-public class HtmlGridHeader extends UIComponentBase {
-    
-    public static final String COMPONENT_TYPE = "org.seasar.teeda.extension.HtmlGridHeader";
+public class THtmlGridTr extends UIComponentBase {
+
+    public static final String COMPONENT_TYPE = "org.seasar.teeda.extension.HtmlGridTr";
 
     public String getFamily() {
         // TODO Auto-generated method stub
-        return HtmlGrid.COMPONENT_FAMILY;
+        return THtmlGrid.COMPONENT_FAMILY;
+    }
+
+    private String height;
+
+    public String getHeight() {
+        return height;
+    }
+
+    public void setHeight(String width) {
+        this.height = width;
     }
 
 }
