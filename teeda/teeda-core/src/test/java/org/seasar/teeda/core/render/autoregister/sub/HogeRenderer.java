@@ -13,21 +13,17 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package javax.faces.component;
+package org.seasar.teeda.core.render.autoregister.sub;
 
-import javax.faces.context.FacesContext;
+import javax.faces.render.Renderer;
 
 /**
  * @author shot
+ *
  */
-public interface StateHolder {
+public class HogeRenderer extends Renderer {
 
-    public boolean isTransient();
+    public static final String COMPONENT_FAMILY = "a";
 
-    public void setTransient(boolean transientValue);
-
-    public Object saveState(FacesContext context);
-
-    public void restoreState(FacesContext context, Object state);
-
+    public static final String RENDERER_TYPE = "b";
 }

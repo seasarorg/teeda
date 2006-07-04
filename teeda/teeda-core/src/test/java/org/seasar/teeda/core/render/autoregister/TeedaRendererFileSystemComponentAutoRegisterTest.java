@@ -13,21 +13,26 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package javax.faces.component;
+package org.seasar.teeda.core.render.autoregister;
 
-import javax.faces.context.FacesContext;
+import org.seasar.framework.container.S2Container;
+import org.seasar.teeda.core.render.autoregister.sub.HogeRenderer;
+import org.seasar.teeda.core.unit.TeedaTestCase;
 
 /**
  * @author shot
  */
-public interface StateHolder {
+public class TeedaRendererFileSystemComponentAutoRegisterTest extends
+        TeedaTestCase {
 
-    public boolean isTransient();
+    private S2Container child;
 
-    public void setTransient(boolean transientValue);
+    public void setUpAutoRegister() throws Exception {
+        include("teedaRendererFileSystemComponentAutoRegister.dicon");
+    }
 
-    public Object saveState(FacesContext context);
-
-    public void restoreState(FacesContext context, Object state);
-
+    public void testAutoRegister() throws Exception {
+        assertNotNull(child.getComponent(HogeRenderer.class));
+        assertTrue(child.hasComponentDef("a.b"));
+    }
 }

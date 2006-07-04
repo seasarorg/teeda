@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -42,32 +42,32 @@ import org.seasar.teeda.core.util.VariableResolverUtil;
  */
 public class ValueBindingImpl extends ValueBindingBase {
 
-    private Application application_;
+    private Application application;
 
-    private String expressionString_;
+    private String expressionString;
 
-    private ELParser parser_;
+    private ELParser parser;
 
-    private Object expression_;
+    private Object expression;
 
-    private boolean transientValue_ = false;
+    private boolean transientValue = false;
 
     public ValueBindingImpl() {
     }
 
-    public ValueBindingImpl(Application application, String expressionString,
-            ELParser parser) {
-        application_ = application;
-        expressionString_ = expressionString;
-        parser_ = parser;
-        expression_ = parser_.parse(expressionString_);
+    public ValueBindingImpl(Application application, String expressionStr,
+            ELParser p) {
+        this.application = application;
+        this.expressionString = expressionStr;
+        this.parser = p;
+        this.expression = p.parse(this.expressionString);
     }
 
     public Object getValue(FacesContext context) throws EvaluationException,
             PropertyNotFoundException {
         try {
-            return parser_.getExpressionProcessor().evaluate(context,
-                    expression_);
+            return parser.getExpressionProcessor()
+                    .evaluate(context, expression);
         } catch (IndexOutOfBoundsException e) {
             throw new PropertyNotFoundException(e);
         } catch (EvaluationException e) {
@@ -79,8 +79,8 @@ public class ValueBindingImpl extends ValueBindingBase {
             throws EvaluationException, PropertyNotFoundException {
         AssertionUtil.assertNotNull("context is null.", context);
         try {
-            ExpressionProcessor processor = parser_.getExpressionProcessor();
-            Object obj = processor.resolveBase(context, expression_);
+            ExpressionProcessor processor = parser.getExpressionProcessor();
+            Object obj = processor.resolveBase(context, expression);
             if (obj == null) {
                 throw new EvaluationException();
             }
@@ -95,9 +95,9 @@ public class ValueBindingImpl extends ValueBindingBase {
                 Object[] bases = (Object[]) obj;
                 Object base = bases[0];
                 Object property = bases[1];
-                Integer index = parser_.getExpressionProcessor().toIndex(base,
+                Integer index = parser.getExpressionProcessor().toIndex(base,
                         property);
-                PropertyResolver resolver = application_.getPropertyResolver();
+                PropertyResolver resolver = application.getPropertyResolver();
                 if (index == null) {
                     resolver.setValue(base, property, newValue);
                 } else {
@@ -111,8 +111,8 @@ public class ValueBindingImpl extends ValueBindingBase {
 
     protected void setValueInScope(FacesContext context, String name,
             Object newValue) {
-        VariableResolver resolver = application_.getVariableResolver();
-        ExpressionProcessor processor = parser_.getExpressionProcessor();
+        VariableResolver resolver = application.getVariableResolver();
+        ExpressionProcessor processor = parser.getExpressionProcessor();
         Map scopeMap = VariableResolverUtil.getDefaultScopeMap(context,
                 resolver, name);
         if (scopeMap != null) {
@@ -137,8 +137,8 @@ public class ValueBindingImpl extends ValueBindingBase {
 
     public boolean isReadOnly(FacesContext context) throws EvaluationException,
             PropertyNotFoundException {
-        Object obj = parser_.getExpressionProcessor().resolveBase(context,
-                expression_);
+        Object obj = parser.getExpressionProcessor().resolveBase(context,
+                expression);
         if (obj == null) {
             return true;
         }
@@ -148,17 +148,17 @@ public class ValueBindingImpl extends ValueBindingBase {
             Object[] bases = (Object[]) obj;
             Object base = bases[0];
             Object property = bases[1];
-            Integer index = parser_.getExpressionProcessor().toIndex(base,
+            Integer index = parser.getExpressionProcessor().toIndex(base,
                     property);
-            return PropertyResolverUtil.isReadOnly(application_, base,
-                    property, index);
+            return PropertyResolverUtil.isReadOnly(application, base, property,
+                    index);
         }
     }
 
     public Class getType(FacesContext context) throws EvaluationException,
             PropertyNotFoundException {
-        Object obj = parser_.getExpressionProcessor().resolveBase(context,
-                expression_);
+        Object obj = parser.getExpressionProcessor().resolveBase(context,
+                expression);
         if (obj == null) {
             return getValue(context).getClass();
         }
@@ -169,49 +169,48 @@ public class ValueBindingImpl extends ValueBindingBase {
             if (managedBean != null) {
                 return managedBean.getClass();
             }
-            Object value = application_.getVariableResolver().resolveVariable(
+            Object value = application.getVariableResolver().resolveVariable(
                     context, name);
             return (value != null) ? value.getClass() : Object.class;
         } else {
             Object[] bases = (Object[]) obj;
             Object base = bases[0];
             Object property = bases[1];
-            Integer index = parser_.getExpressionProcessor().toIndex(base,
+            Integer index = parser.getExpressionProcessor().toIndex(base,
                     property);
-            return PropertyResolverUtil.getType(application_, base, property,
+            return PropertyResolverUtil.getType(application, base, property,
                     index);
         }
     }
 
     public String getExpressionString() {
-        return expressionString_;
+        return expressionString;
     }
 
     public Object getExpression() {
-        return expression_;
+        return expression;
     }
 
     public boolean isTransient() {
-        return transientValue_;
+        return transientValue;
     }
 
     public void setTransient(boolean transientValue) {
-        transientValue_ = transientValue;
+        this.transientValue = transientValue;
     }
 
     public Object saveState(FacesContext context) {
         Object[] state = new Object[2];
-        state[0] = expressionString_;
+        state[0] = expressionString;
         return state;
     }
 
     public void restoreState(FacesContext context, Object obj) {
-        application_ = context.getApplication();
         Object[] state = (Object[]) obj;
-        expressionString_ = (String) state[0];
-        parser_ = (ELParser) DIContainerUtil
-                .getComponentNoException(ELParser.class);
-        expression_ = parser_.parse(expressionString_);
+        application = context.getApplication();
+        expressionString = (String) state[0];
+        parser = (ELParser) DIContainerUtil.getComponent(ELParser.class);
+        expression = parser.parse(expressionString);
     }
 
 }

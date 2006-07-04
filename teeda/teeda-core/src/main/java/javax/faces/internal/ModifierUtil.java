@@ -33,10 +33,10 @@ public class ModifierUtil {
     }
 
     public static boolean isPublicStaticFinalField(Field f) {
-        return isPublicFinalStatic(f.getModifiers());
+        return isPublicStaticFinal(f.getModifiers());
     }
 
-    public static boolean isPublicFinalStatic(int modifier) {
+    public static boolean isPublicStaticFinal(int modifier) {
         return isPublic(modifier) && isStatic(modifier) && isFinal(modifier);
     }
 

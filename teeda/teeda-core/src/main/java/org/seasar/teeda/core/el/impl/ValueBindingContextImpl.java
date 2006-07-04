@@ -92,10 +92,14 @@ public class ValueBindingContextImpl implements ValueBindingContext {
         return null;
     }
 
+    public void clearCache() {
+        cache.clear();
+    }
+
     private ValueBinding getRestoredValueBinding(StateHolder holder,
             String expression) {
         FacesContext context = FacesContext.getCurrentInstance();
-        holder.restoreState(context, new Object[] { expression, parser });
+        holder.restoreState(context, new Object[] { expression });
         return (ValueBinding) holder;
     }
 

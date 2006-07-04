@@ -15,7 +15,7 @@
  */
 package org.seasar.teeda.core.unit;
 
-import org.seasar.teeda.core.render.html.UrlString;
+import org.seasar.teeda.core.render.html.support.UrlString;
 
 /**
  * @author manhole

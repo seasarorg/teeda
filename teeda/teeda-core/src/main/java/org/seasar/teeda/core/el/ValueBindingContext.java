@@ -33,4 +33,6 @@ public interface ValueBindingContext {
     public ELParser getELParser();
 
     public void setELParser(ELParser parser);
+
+    public void clearCache();
 }

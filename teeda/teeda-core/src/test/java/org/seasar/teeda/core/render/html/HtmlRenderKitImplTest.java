@@ -37,6 +37,7 @@ public class HtmlRenderKitImplTest extends TeedaTestCase {
 
     public void testAddRenderer() throws Exception {
         HtmlRenderKitImpl renderKit = new HtmlRenderKitImpl();
+        renderKit.setContainer(getContainer());
         try {
             renderKit.addRenderer(null, "a", new MockRenderer());
             fail();
@@ -64,6 +65,7 @@ public class HtmlRenderKitImplTest extends TeedaTestCase {
 
     public void testGetRenderer() throws Exception {
         HtmlRenderKitImpl renderKit = new HtmlRenderKitImpl();
+        renderKit.setContainer(getContainer());
         MockRenderer mock = new MockRenderer();
         renderKit.addRenderer("a", "b", mock);
         Renderer r;
@@ -93,11 +95,6 @@ public class HtmlRenderKitImplTest extends TeedaTestCase {
         List list = out.getResultList();
         assertEquals(new Integer(0), list.get(0));
         assertEquals(new Integer(1), list.get(1));
-    }
-
-    public void testGetGeneratedKey() throws Exception {
-        HtmlRenderKitImpl renderKit = new HtmlRenderKitImpl();
-        assertEquals("a.b", renderKit.getGeneratedKey("a", "b"));
     }
 
     public void testCreateResponseWriter2() throws Exception {

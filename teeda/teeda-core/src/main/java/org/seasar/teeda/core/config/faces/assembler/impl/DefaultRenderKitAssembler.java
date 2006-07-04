@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -24,6 +24,10 @@ import javax.faces.render.RenderKit;
 import javax.faces.render.RenderKitFactory;
 import javax.faces.render.Renderer;
 
+import org.seasar.framework.beans.BeanDesc;
+import org.seasar.framework.beans.factory.BeanDescFactory;
+import org.seasar.framework.container.S2Container;
+import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
 import org.seasar.framework.log.Logger;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.config.faces.assembler.RenderKitAssembler;
@@ -102,12 +106,19 @@ public class DefaultRenderKitAssembler extends RenderKitAssembler {
     }
 
     protected RenderKit createRenderKit(String className) {
+        Class clazz = ClassUtil.forName(className);
         RenderKit renderKit = (RenderKit) DIContainerUtil
-                .getComponentNoException(ClassUtil.forName(className));
-        if (renderKit != null) {
-            return renderKit;
+                .getComponentNoException(clazz);
+        if (renderKit == null) {
+            renderKit = (RenderKit) newInstance(className);
+            S2Container container = SingletonS2ContainerFactory.getContainer();
+            BeanDesc beanDesc = BeanDescFactory.getBeanDesc(clazz);
+            if (beanDesc.hasPropertyDesc("container")) {
+                beanDesc.getPropertyDesc("container").setValue(renderKit,
+                        container);
+            }
         }
-        return (RenderKit) newInstance(className);
+        return renderKit;
     }
 
     protected Renderer createRenderer(String className) {

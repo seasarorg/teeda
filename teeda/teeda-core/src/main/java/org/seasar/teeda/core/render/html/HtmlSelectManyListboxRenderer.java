@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -39,6 +39,10 @@ import org.seasar.teeda.core.util.ValueHolderUtil;
  * @author manhole
  */
 public class HtmlSelectManyListboxRenderer extends AbstractHtmlRenderer {
+
+    public static final String COMPONENT_FAMILY = "javax.faces.SelectMany";
+
+    public static final String RENDERER_TYPE = "javax.faces.Listbox";
 
     public void encodeEnd(FacesContext context, UIComponent component)
             throws IOException {
@@ -145,7 +149,8 @@ public class HtmlSelectManyListboxRenderer extends AbstractHtmlRenderer {
                     RendererUtil.renderAttribute(writer,
                             JsfConstants.CLASS_ATTR, labelClass);
                 }
-                if (value != null && isSelected(selectedValues, value.toString())) {
+                if (value != null
+                        && isSelected(selectedValues, value.toString())) {
                     RendererUtil.renderSelectedAttribute(writer);
                 }
                 if (selectItem.isDisabled()) {

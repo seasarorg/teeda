@@ -13,21 +13,26 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package javax.faces.component;
+package org.seasar.teeda.core.render.html.support;
 
-import javax.faces.context.FacesContext;
+import org.seasar.framework.util.StringUtil;
+import org.seasar.teeda.core.render.IllegalRendererKeyException;
 
 /**
  * @author shot
+ *
  */
-public interface StateHolder {
+public class HtmlRenderKitKeyGenerateUtil {
 
-    public boolean isTransient();
+    private HtmlRenderKitKeyGenerateUtil() {
+    }
 
-    public void setTransient(boolean transientValue);
-
-    public Object saveState(FacesContext context);
-
-    public void restoreState(FacesContext context, Object state);
+    public static String getGeneratedKey(String family, String renderType) {
+        if (!StringUtil.isEmpty(family) && !StringUtil.isEmpty(renderType)) {
+            return family + "." + renderType;
+        } else {
+            throw new IllegalRendererKeyException(family, renderType);
+        }
+    }
 
 }

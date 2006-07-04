@@ -13,9 +13,11 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.core.render.html;
+package org.seasar.teeda.core.render.html.support;
 
 import java.util.Set;
+
+import org.seasar.teeda.core.render.html.support.UrlString;
 
 import junit.framework.TestCase;
 
