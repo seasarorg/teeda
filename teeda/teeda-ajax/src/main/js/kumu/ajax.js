@@ -292,11 +292,13 @@ Kumu.Ajax = {
                                     temp.id = "";
                                 }
                             }
+                            clone.id = "";
                         }
                     }
                 }else{
                     self._setJSONData(node, o);
                 }
+                node.id = "";
             }
         }
     }
