@@ -17,6 +17,8 @@ package javax.faces.internal;
 
 import java.io.Serializable;
 
+import javax.faces.component.EditableValueHolder;
+
 /**
  * @author shot
  * @author manhole
@@ -69,6 +71,20 @@ public class SavedState implements Serializable {
 
     public void setValid(boolean valid) {
         this.valid = valid;
+    }
+
+    public void save(EditableValueHolder holder) {
+        setLocalValue(holder.getLocalValue());
+        setLocalValueSet(holder.isLocalValueSet());
+        setValid(holder.isValid());
+        setSubmittedValue(holder.getSubmittedValue());
+    }
+
+    public void restore(EditableValueHolder holder) {
+        holder.setValue(getLocalValue());
+        holder.setLocalValueSet(isLocalValueSet());
+        holder.setValid(isValid());
+        holder.setSubmittedValue(getSubmittedValue());
     }
 
 }

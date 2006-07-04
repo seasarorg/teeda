@@ -64,7 +64,7 @@ public class UIData extends UIComponentBase implements NamingContainer {
 
     private boolean rowsSet = false;
 
-    private Map savedMap = new HashMap();
+    private Map savedStates = new HashMap();
 
     private transient DataModel model = null;
 
@@ -190,7 +190,7 @@ public class UIData extends UIComponentBase implements NamingContainer {
         rowIndex = ((Integer) values[3]).intValue();
         rows = ((Integer) values[4]).intValue();
         rowsSet = ((Boolean) values[5]).booleanValue();
-        savedMap = (Map) values[6];
+        savedStates = (Map) values[6];
         value = (Object) values[7];
         var = (String) values[8];
     }
@@ -203,7 +203,7 @@ public class UIData extends UIComponentBase implements NamingContainer {
         values[3] = new Integer(rowIndex);
         values[4] = new Integer(rows);
         values[5] = rowsSet ? Boolean.TRUE : Boolean.FALSE;
-        values[6] = savedMap;
+        values[6] = savedStates;
         values[7] = value;
         values[8] = var;
         return values;
@@ -365,7 +365,7 @@ public class UIData extends UIComponentBase implements NamingContainer {
 
     protected boolean keepSavedState(FacesContext context) {
         String clientId = null;
-        for (Iterator children = savedMap.keySet().iterator(); children
+        for (Iterator children = savedStates.keySet().iterator(); children
                 .hasNext();) {
             clientId = (String) children.next();
             if (keepSavedState0(context, clientId)) {
@@ -402,15 +402,9 @@ public class UIData extends UIComponentBase implements NamingContainer {
         if (component instanceof EditableValueHolder) {
             String clientId = component.getClientId(context);
             EditableValueHolder holder = (EditableValueHolder) component;
-            SavedState state = (SavedState) savedMap.get(clientId);
-            if (state == null) {
-                state = new SavedState();
-                savedMap.put(clientId, state);
-            }
-            state.setLocalValue(holder.getLocalValue());
-            state.setValid(holder.isValid());
-            state.setSubmittedValue(holder.getSubmittedValue());
-            state.setLocalValueSet(holder.isLocalValueSet());
+            SavedState state = new SavedState();
+            state.save(holder);
+            savedStates.put(clientId, state);
         }
         for (Iterator children = component.getChildren().iterator(); children
                 .hasNext();) {
@@ -430,20 +424,16 @@ public class UIData extends UIComponentBase implements NamingContainer {
 
     protected void restoreDescendantState(UIComponent component,
             FacesContext context) {
-
         forceComponentIdClear(component);
-
         if (component instanceof EditableValueHolder) {
             EditableValueHolder holder = (EditableValueHolder) component;
             String clientId = component.getClientId(context);
-            SavedState state = (SavedState) savedMap.get(clientId);
+            SavedState state = (SavedState) savedStates.get(clientId);
             if (state == null) {
                 state = new SavedState();
+                savedStates.put(clientId, state);
             }
-            holder.setValue(state.getLocalValue());
-            holder.setValid(state.isValid());
-            holder.setSubmittedValue(state.getSubmittedValue());
-            holder.setLocalValueSet(state.isLocalValueSet());
+            state.restore(holder);
         }
         for (Iterator children = component.getChildren().iterator(); children
                 .hasNext();) {
@@ -461,8 +451,8 @@ public class UIData extends UIComponentBase implements NamingContainer {
 
     private void resetModelAndSavedState() {
         model = null;
-        if (savedMap != null) {
-            savedMap.clear();
+        if (savedStates != null) {
+            savedStates.clear();
         }
     }
 
