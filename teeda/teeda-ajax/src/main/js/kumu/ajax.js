@@ -239,6 +239,65 @@ Kumu.Ajax = {
         }
         ajax.responseType = responseType;
         self.executeAjax(ajax);
+    },
+
+    _setJSONData : function(node, data){
+        //TODO Mapping Rule 
+        if(node.hasChildNodes()){
+            node.childNodes[0].nodeValue = data;
+        }else{
+            node.setAttribute('value', data);
+        }
+    },
+        
+    render : function(json){
+        var self = Kumu.Ajax;
+        for(var v in json){
+            var nodes = [];
+            var elem = document.getElementById(v);
+            while(elem){
+                nodes.push(elem);
+                elem.id = "";
+                elem = document.getElementById(v);
+            }
+            for(var i = 0; i < nodes.length; i++){
+                var node = nodes[i];
+                node.id = v;
+                var o = json[v];
+                if(o && o instanceof Array){
+                    var parent = node.parentNode;
+                    var orig = node.cloneNode(true);
+                    var next;
+                    for(var j = 0; j < o.length; j++){
+                        var obj = o[j];
+                        var next;
+                        if(j == 0){
+                            for(var k in obj){
+                                var temp = document.getElementById(k);
+                                if(temp){
+                                    self._setJSONData(temp, obj[k]);
+                                    temp.id = "";
+                                }
+                            }
+                        }else{
+                            var clone = orig.cloneNode(true);
+                            if(j == 1){
+                                next = node.nextSibling;
+                            }
+                            parent.insertBefore(clone, next);
+                            for(var k in obj){
+                                var temp = document.getElementById(k);
+                                if(temp){
+                                    self._setJSONData(temp, obj[k]);
+                                    temp.id = "";
+                                }
+                            }
+                        }
+                    }
+                }else{
+                    self._setJSONData(node, o);
+                }
+            }
+        }
     }
-    
 };
