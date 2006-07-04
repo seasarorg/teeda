@@ -26,7 +26,6 @@ import javax.faces.render.RendererTest;
 import junitx.framework.ObjectAssert;
 
 import org.custommonkey.xmlunit.Diff;
-import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.mock.MockUIComponentBaseWithNamingContainer;
 
@@ -228,25 +227,6 @@ public class HtmlCommandButtonRendererTest extends RendererTest {
 
         // ## Assert ##
         assertEquals(null, args[0]);
-    }
-    
-    public void testDecode_SubmittedCommand() throws Exception {
-        MockHtmlCommandButton htmlCommandButton = new MockHtmlCommandButton() {
-            public void queueEvent(FacesEvent event) {
-            }
-        };
-        htmlCommandButton.setId("aaa");
-        htmlCommandButton.setClientId("form:aaa");
-
-        MockFacesContext context = getFacesContext();
-        context.getExternalContext().getRequestParameterMap().put("form:aaa",
-                "xxx");
-
-        // ## Act ##
-        renderer_.decode(context, htmlCommandButton);
-
-        // ## Assert ##
-        assertEquals("aaa", context.getExternalContext().getRequestMap().get(JsfConstants.SUBMITTED_COMMAND));
     }
 
     public void testDecode_SubmitSuccess() throws Exception {

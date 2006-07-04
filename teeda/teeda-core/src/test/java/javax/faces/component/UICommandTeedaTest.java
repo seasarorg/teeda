@@ -18,7 +18,10 @@ package javax.faces.component;
 import java.io.Serializable;
 
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 
+import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.mock.MockSerializableActionListener;
 import org.seasar.teeda.core.mock.MockSerializableMethodBinding;
 
@@ -59,6 +62,25 @@ public class UICommandTeedaTest extends UIComponentBaseTeedaTest {
         assertEquals(command1.isImmediate(), command2.isImmediate());
 
         assertEquals("bb", command2.getValue());
+    }
+
+    public void testDecode_SubmittedCommand() throws Exception {
+        UICommand command = createUICommand();
+        command.setId("aaa");
+
+        MockFacesContext context = getFacesContext();
+        context.getExternalContext().getRequestParameterMap().put("form:aaa",
+                "xxx");
+
+        UIViewRoot viewRoot = context.getViewRoot();
+        command.setParent(viewRoot);
+        // ## Act ##
+        ActionEvent ae = new ActionEvent(command);
+        command.queueEvent(ae);
+
+        // ## Assert ##
+        assertEquals("aaa", context.getExternalContext().getRequestMap().get(
+                JsfConstants.SUBMITTED_COMMAND));
     }
 
     private UICommand createUICommand() {

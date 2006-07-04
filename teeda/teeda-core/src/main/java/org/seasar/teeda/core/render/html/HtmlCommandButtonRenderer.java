@@ -96,12 +96,6 @@ public class HtmlCommandButtonRenderer extends AbstractHtmlRenderer {
             if (JsfConstants.RESET_VALUE.equalsIgnoreCase(htmlCommandButton
                     .getType())) {
             } else {
-                String id = htmlCommandButton.getId();
-                if (id != null) {
-                    Map requestMap = context.getExternalContext()
-                            .getRequestMap();
-                    requestMap.put(JsfConstants.SUBMITTED_COMMAND, id);
-                }
                 htmlCommandButton
                         .queueEvent(new ActionEvent(htmlCommandButton));
             }

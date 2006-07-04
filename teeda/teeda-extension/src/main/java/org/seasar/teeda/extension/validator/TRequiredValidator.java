@@ -27,6 +27,8 @@ import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
 import org.seasar.framework.util.AssertionUtil;
+import org.seasar.framework.util.StringUtil;
+import org.seasar.teeda.extension.util.ValidatorUtil;
 
 /**
  * @author higa
@@ -39,8 +41,25 @@ public class TRequiredValidator implements Validator, StateHolder {
 
     private boolean transientValue_ = false;
 
+    private String forValue;
+
+    private String[] forValues;
+
     public boolean isTransient() {
         return transientValue_;
+    }
+
+    public void setTransient(boolean transientValue) {
+        transientValue_ = transientValue;
+    }
+
+    public String getFor() {
+        return forValue;
+    }
+
+    public void setFor(String forValue) {
+        this.forValue = forValue;
+        forValues = StringUtil.split(forValue, ", ");
     }
 
     public void validate(FacesContext context, UIComponent component,
@@ -48,6 +67,9 @@ public class TRequiredValidator implements Validator, StateHolder {
         AssertionUtil.assertNotNull("context", context);
         AssertionUtil.assertNotNull("component", component);
 
+        if (!ValidatorUtil.isTargetCommand(context, forValues)) {
+            return;
+        }
         if (UIInputUtil.isEmpty(value)) {
             Object[] args = new Object[] { UIComponentUtil.getLabel(component) };
             FacesMessage message = FacesMessageUtil.getMessage(context,
@@ -56,14 +78,14 @@ public class TRequiredValidator implements Validator, StateHolder {
         }
     }
 
-    public void setTransient(boolean transientValue) {
-        transientValue_ = transientValue;
-    }
-
     public Object saveState(FacesContext context) {
-        return new Object[0];
+        Object[] values = new Object[1];
+        values[0] = forValue;
+        return values;
     }
 
     public void restoreState(FacesContext context, Object state) {
+        Object[] values = (Object[]) state;
+        setFor((String) values[0]);
     }
 }
