@@ -19,7 +19,9 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -57,6 +59,11 @@ public class THtmlGridRenderer extends AbstractHtmlRenderer {
         writer.startElement(JsfConstants.TABLE_ELEM, htmlGrid);
         RendererUtil.renderIdAttributeIfNecessary(writer, htmlGrid,
                 getIdForRender(context, htmlGrid));
+        RendererUtil.renderAttribute(writer, JsfConstants.BORDER_ATTR, "0");
+        RendererUtil
+                .renderAttribute(writer, JsfConstants.CELLSPACING_ATTR, "0");
+        RendererUtil
+                .renderAttribute(writer, JsfConstants.CELLPADDING_ATTR, "0");
     }
 
     public void encodeChildren(FacesContext context, UIComponent component)
@@ -83,8 +90,8 @@ public class THtmlGridRenderer extends AbstractHtmlRenderer {
         for (Iterator it = getRenderedChildrenIterator(htmlGrid); it.hasNext();) {
             final UIComponent child = (UIComponent) it.next();
             if (child instanceof THtmlGridBody) {
-                encodeGridBody(context, htmlGrid, (THtmlGridBody) child, writer,
-                        attribute);
+                encodeGridBody(context, htmlGrid, (THtmlGridBody) child,
+                        writer, attribute);
                 break;
             }
         }
@@ -115,13 +122,15 @@ public class THtmlGridRenderer extends AbstractHtmlRenderer {
         // encodeLeftHeader
         if (attribute.hasLeftFixCols()) {
             writer.startElement(JsfConstants.TABLE_ELEM, header);
+            renderInnerTableAttributes(writer);
+
             writer.startElement(JsfConstants.THEAD_ELEM, header);
             for (Iterator it = getRenderedChildrenIterator(header); it
                     .hasNext();) {
                 final UIComponent child = (UIComponent) it.next();
                 if (child instanceof THtmlGridTr) {
-                    encodeGridLeftHeaderTr(context, (THtmlGridTr) child, writer,
-                            attribute);
+                    encodeGridLeftHeaderTr(context, (THtmlGridTr) child,
+                            writer, attribute);
                 }
             }
 
@@ -141,6 +150,7 @@ public class THtmlGridRenderer extends AbstractHtmlRenderer {
                         + "px;");
 
         writer.startElement(JsfConstants.TABLE_ELEM, header);
+        renderInnerTableAttributes(writer);
         writer.startElement(JsfConstants.THEAD_ELEM, header);
         for (Iterator it = getRenderedChildrenIterator(header); it.hasNext();) {
             final UIComponent child = (UIComponent) it.next();
@@ -156,21 +166,33 @@ public class THtmlGridRenderer extends AbstractHtmlRenderer {
         writer.endElement(JsfConstants.TR_ELEM);
     }
 
+    private void renderInnerTableAttributes(final ResponseWriter writer)
+            throws IOException {
+        RendererUtil
+                .renderAttribute(writer, JsfConstants.CELLSPACING_ATTR, "1");
+        RendererUtil
+                .renderAttribute(writer, JsfConstants.CELLPADDING_ATTR, "0");
+        RendererUtil.renderAttribute(writer, JsfConstants.CLASS_ATTR,
+                "gridTable");
+    }
+
     private void encodeGridLeftHeaderTr(final FacesContext context,
             final THtmlGridTr tr, final ResponseWriter writer,
             final THtmlGridRenderer.GridAttribute attribute) throws IOException {
         writer.startElement(JsfConstants.TR_ELEM, tr);
-        int counter = 0;
+        int columnNo = 0;
         for (final Iterator it = getRenderedChildrenIterator(tr); it.hasNext();) {
             final UIComponent child = (UIComponent) it.next();
             if (child instanceof THtmlGridTh) {
-                counter++;
-                encodeGridHeaderTh(context, (THtmlGridTh) child, writer);
+                columnNo++;
+                encodeGridHeaderTh(context, (THtmlGridTh) child, writer,
+                        attribute, columnNo);
             } else if (child instanceof THtmlGridTd) {
-                counter++;
-                encodeGridHeaderTd(context, (THtmlGridTd) child, writer);
+                columnNo++;
+                encodeGridHeaderTd(context, (THtmlGridTd) child, writer,
+                        attribute, columnNo);
             }
-            if (attribute.getLeftFixCols() <= counter) {
+            if (attribute.getLeftFixCols() <= columnNo) {
                 break;
             }
         }
@@ -181,28 +203,32 @@ public class THtmlGridRenderer extends AbstractHtmlRenderer {
             final THtmlGridTr tr, final ResponseWriter writer,
             final THtmlGridRenderer.GridAttribute attribute) throws IOException {
         writer.startElement(JsfConstants.TR_ELEM, tr);
-        int counter = 0;
+        int columnNo = 0;
         for (final Iterator it = getRenderedChildrenIterator(tr); it.hasNext();) {
             final UIComponent child = (UIComponent) it.next();
             if (child instanceof THtmlGridTh) {
-                counter++;
-                if (counter <= attribute.getLeftFixCols()) {
+                columnNo++;
+                if (columnNo <= attribute.getLeftFixCols()) {
                     continue;
                 }
-                encodeGridHeaderTh(context, (THtmlGridTh) child, writer);
+                encodeGridHeaderTh(context, (THtmlGridTh) child, writer,
+                        attribute, columnNo);
             } else if (child instanceof THtmlGridTd) {
-                counter++;
-                if (counter <= attribute.getLeftFixCols()) {
+                columnNo++;
+                if (columnNo <= attribute.getLeftFixCols()) {
                     continue;
                 }
-                encodeGridHeaderTd(context, (THtmlGridTd) child, writer);
+                encodeGridHeaderTd(context, (THtmlGridTd) child, writer,
+                        attribute, columnNo);
             }
         }
         writer.endElement(JsfConstants.TR_ELEM);
     }
 
-    private void encodeGridHeaderTd(FacesContext context, THtmlGridTd td,
-            ResponseWriter writer) throws IOException {
+    private void encodeGridHeaderTd(final FacesContext context,
+            final THtmlGridTd td, final ResponseWriter writer,
+            final THtmlGridRenderer.GridAttribute attribute, final int columnNo)
+            throws IOException {
         writer.startElement(JsfConstants.TD_ELEM, td);
         writer.startElement(JsfConstants.NOBR_ELEM, td);
         encodeDescendantComponent(context, td);
@@ -210,12 +236,21 @@ public class THtmlGridRenderer extends AbstractHtmlRenderer {
         writer.endElement(JsfConstants.TD_ELEM);
     }
 
-    private void encodeGridHeaderTh(FacesContext context, THtmlGridTh th,
-            ResponseWriter writer) throws IOException {
+    private void encodeGridHeaderTh(final FacesContext context,
+            final THtmlGridTh th, final ResponseWriter writer,
+            final THtmlGridRenderer.GridAttribute attribute, final int columnNo)
+            throws IOException {
         writer.startElement(JsfConstants.TH_ELEM, th);
+        writer.startElement(JsfConstants.DIV_ELEM, th);
+        RendererUtil.renderAttribute(writer, JsfConstants.CLASS_ATTR,
+                "gridHeader");
+        RendererUtil.renderAttribute(writer, JsfConstants.STYLE_ATTR,
+                "overflow:hidden; width:" + attribute.getColumnWidth(columnNo)
+                        + "px;");
         writer.startElement(JsfConstants.NOBR_ELEM, th);
         encodeDescendantComponent(context, th);
         writer.endElement(JsfConstants.NOBR_ELEM);
+        writer.endElement(JsfConstants.DIV_ELEM);
         writer.endElement(JsfConstants.TH_ELEM);
     }
 
@@ -237,14 +272,13 @@ public class THtmlGridRenderer extends AbstractHtmlRenderer {
                             + "px;");
 
             writer.startElement(JsfConstants.TABLE_ELEM, body);
+            renderInnerTableAttributes(writer);
             writer.startElement(JsfConstants.TBODY_ELEM, body);
 
-            // TODO
             final Collection items = getBodyItems(context, htmlGrid);
             for (final Iterator itItem = items.iterator(); itItem.hasNext();) {
                 Object rowBean = (Object) itItem.next();
                 enterRow(context, htmlGrid, rowBean);
-
                 for (Iterator it = getRenderedChildrenIterator(body); it
                         .hasNext();) {
                     final UIComponent child = (UIComponent) it.next();
@@ -253,7 +287,6 @@ public class THtmlGridRenderer extends AbstractHtmlRenderer {
                                 writer, attribute);
                     }
                 }
-
                 leaveRow(context, htmlGrid);
             }
 
@@ -285,14 +318,13 @@ public class THtmlGridRenderer extends AbstractHtmlRenderer {
                                 + "LeftBody.scrollTop=this.scrollTop;");
 
         writer.startElement(JsfConstants.TABLE_ELEM, body);
+        renderInnerTableAttributes(writer);
         writer.startElement(JsfConstants.TBODY_ELEM, body);
 
-        // TODO
         final Collection items = getBodyItems(context, htmlGrid);
         for (final Iterator itItem = items.iterator(); itItem.hasNext();) {
             Object rowBean = (Object) itItem.next();
             enterRow(context, htmlGrid, rowBean);
-
             for (Iterator it = getRenderedChildrenIterator(body); it.hasNext();) {
                 final UIComponent child = (UIComponent) it.next();
                 if (child instanceof THtmlGridTr) {
@@ -300,7 +332,6 @@ public class THtmlGridRenderer extends AbstractHtmlRenderer {
                             attribute);
                 }
             }
-
             leaveRow(context, htmlGrid);
         }
 
@@ -315,14 +346,15 @@ public class THtmlGridRenderer extends AbstractHtmlRenderer {
             final THtmlGridTr tr, final ResponseWriter writer,
             final THtmlGridRenderer.GridAttribute attribute) throws IOException {
         writer.startElement(JsfConstants.TR_ELEM, tr);
-        int counter = 0;
+        int columnNo = 0;
         for (final Iterator it = getRenderedChildrenIterator(tr); it.hasNext();) {
             final UIComponent child = (UIComponent) it.next();
             if (child instanceof THtmlGridTd) {
-                counter++;
-                encodeGridBodyTd(context, (THtmlGridTd) child, writer);
+                columnNo++;
+                encodeGridBodyTd(context, (THtmlGridTd) child, writer,
+                        attribute, columnNo);
             }
-            if (attribute.getLeftFixCols() <= counter) {
+            if (attribute.getLeftFixCols() <= columnNo) {
                 break;
             }
         }
@@ -333,26 +365,36 @@ public class THtmlGridRenderer extends AbstractHtmlRenderer {
             final THtmlGridTr tr, final ResponseWriter writer,
             final THtmlGridRenderer.GridAttribute attribute) throws IOException {
         writer.startElement(JsfConstants.TR_ELEM, tr);
-        int counter = 0;
+        int columnNo = 0;
         for (final Iterator it = getRenderedChildrenIterator(tr); it.hasNext();) {
             final UIComponent child = (UIComponent) it.next();
             if (child instanceof THtmlGridTd) {
-                counter++;
-                if (counter <= attribute.getLeftFixCols()) {
+                columnNo++;
+                if (columnNo <= attribute.getLeftFixCols()) {
                     continue;
                 }
-                encodeGridBodyTd(context, (THtmlGridTd) child, writer);
+                encodeGridBodyTd(context, (THtmlGridTd) child, writer,
+                        attribute, columnNo);
             }
         }
         writer.endElement(JsfConstants.TR_ELEM);
     }
 
     private void encodeGridBodyTd(FacesContext context, THtmlGridTd td,
-            ResponseWriter writer) throws IOException {
+            ResponseWriter writer,
+            final THtmlGridRenderer.GridAttribute attribute, final int columnNo)
+            throws IOException {
         writer.startElement(JsfConstants.TD_ELEM, td);
+        writer.startElement(JsfConstants.DIV_ELEM, td);
+        RendererUtil.renderAttribute(writer, JsfConstants.CLASS_ATTR,
+                "gridCell");
+        RendererUtil.renderAttribute(writer, JsfConstants.STYLE_ATTR,
+                "overflow:hidden; width:" + attribute.getColumnWidth(columnNo)
+                        + "px;");
         writer.startElement(JsfConstants.NOBR_ELEM, td);
         encodeDescendantComponent(context, td);
         writer.endElement(JsfConstants.NOBR_ELEM);
+        writer.endElement(JsfConstants.DIV_ELEM);
         writer.endElement(JsfConstants.TD_ELEM);
     }
 
@@ -375,6 +417,7 @@ public class THtmlGridRenderer extends AbstractHtmlRenderer {
                 }
             }
 
+            int columnNo = 1;
             for (final Iterator it = getRenderedChildrenIterator(htmlGrid); it
                     .hasNext();) {
                 final UIComponent child = (UIComponent) it.next();
@@ -385,16 +428,22 @@ public class THtmlGridRenderer extends AbstractHtmlRenderer {
                         final UIComponent element = (UIComponent) itr.next();
                         if (element instanceof THtmlGridColumn) {
                             final THtmlGridColumn col = (THtmlGridColumn) element;
-                            final String span = col.getSpan();
-                            if (span != null) {
-                                attribute
-                                        .setLeftFixCols(Integer.parseInt(span));
-                            }
-                            final String width = col.getWidth();
-                            if (width != null) {
-                                attribute.setLeftWidth(toDigit(width)
+                            // TODO check
+                            final int span = Integer.parseInt(col.getSpan());
+                            final int width = toDigit(col.getWidth());
+                            final String styleClass = col.getStyleClass();
+                            if (styleClass != null
+                                    && -1 < styleClass
+                                            .indexOf("teeda_leftFixed")) {
+                                attribute.setLeftFixCols(span);
+                                // TODO check
+                                attribute.setLeftWidth(width * span
                                         + attribute.getLeftWidth());
                             }
+                            for (int i = 0; i < span; i++) {
+                                attribute.setColumnWidth(columnNo + i, width);
+                            }
+                            columnNo += span;
                         }
                     }
                 }
@@ -419,6 +468,7 @@ public class THtmlGridRenderer extends AbstractHtmlRenderer {
                 }
             }
 
+            // TODO
             attribute.rightHeaderWidth = attribute.tableWidth
                     - attribute.leftWidth - attribute.scrollBarWidth;
             attribute.leftBodyHeight = attribute.tableHeight
@@ -469,6 +519,16 @@ public class THtmlGridRenderer extends AbstractHtmlRenderer {
         private int rightBodyWidth;
 
         private int leftFixCols;
+
+        private Map columnWidths = new HashMap();
+
+        public int getColumnWidth(int no) {
+            return ((Integer) columnWidths.get(new Integer(no))).intValue();
+        }
+
+        public void setColumnWidth(int no, int width) {
+            columnWidths.put(new Integer(no), new Integer(width));
+        }
 
         public boolean hasLeftFixCols() {
             return 0 < leftFixCols;
@@ -559,9 +619,6 @@ public class THtmlGridRenderer extends AbstractHtmlRenderer {
     }
 
     Collection getBodyItems(final FacesContext context, final THtmlGrid htmlGrid) {
-        //        final String itemsName = getNaturalId(htmlGrid) + "Items";
-        //        final Object value = context.getApplication().getVariableResolver()
-        //                .resolveVariable(context, itemsName);
         final Object value = htmlGrid.getValue();
         if (value == null) {
             return Collections.EMPTY_LIST;

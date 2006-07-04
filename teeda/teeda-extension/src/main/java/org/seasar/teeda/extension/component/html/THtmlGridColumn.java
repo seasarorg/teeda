@@ -18,12 +18,14 @@ package org.seasar.teeda.extension.component.html;
 import javax.faces.component.UIComponentBase;
 
 public class THtmlGridColumn extends UIComponentBase {
-    
+
     public static final String COMPONENT_TYPE = "org.seasar.teeda.extension.HtmlGridColumn";
 
-    private String span;
+    private String span = "1";
 
-    private String width;
+    private String width = "100";
+
+    private String styleClass;
 
     public String getFamily() {
         // TODO Auto-generated method stub
@@ -44,6 +46,14 @@ public class THtmlGridColumn extends UIComponentBase {
 
     public void setWidth(String width) {
         this.width = width;
+    }
+
+    public String getStyleClass() {
+        return styleClass;
+    }
+
+    public void setStyleClass(String styleClass) {
+        this.styleClass = styleClass;
     }
 
 }

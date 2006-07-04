@@ -83,7 +83,9 @@ public class THtmlGridRendererTest extends RendererTest {
         encodeByRenderer(renderer, htmlGrid);
 
         // ## Assert ##
-        assertEquals("<table></table>", getResponseText());
+        assertEquals(
+                "<table border=\"0\" cellspacing=\"0\" cellpadding=\"0\"></table>",
+                getResponseText());
     }
 
     public void ignore_testEncode_HeaderNoValue() throws Exception {
@@ -204,9 +206,19 @@ public class THtmlGridRendererTest extends RendererTest {
                 m.put("td2", "td2");
                 someItems.add(m);
             }
-            //            getFacesContext().getExternalContext().getRequestMap().put(
-            //                    "someItems", someItems);
             htmlGrid.setValue(someItems);
+        }
+
+        // colgroup
+        {
+            THtmlGridColumnGroup columnGroup = new THtmlGridColumnGroup();
+            addChild(htmlGrid, columnGroup);
+            {
+                THtmlGridColumn col = new THtmlGridColumn();
+                col.setSpan(String.valueOf(2));
+                col.setWidth(String.valueOf(50));
+                addChild(columnGroup, col);
+            }
         }
 
         final int trHeight = 12;
@@ -282,54 +294,42 @@ public class THtmlGridRendererTest extends RendererTest {
         // ## Arrange ##
         HtmlOutputTextRenderer htmlOutputTextRenderer = new HtmlOutputTextRenderer();
         htmlGrid.setId("someGridXY");
-        htmlGrid.setWidth(String.valueOf(300));
-        htmlGrid.setHeight(String.valueOf(400));
+        htmlGrid.setWidth(String.valueOf(170));
+        htmlGrid.setHeight(String.valueOf(150));
 
         // items
         {
-            final List someItems = new ArrayList();
-            {
-                Map m = new HashMap();
-                m.put("td1", "TD1_1");
-                m.put("td2", "TD2_1");
-                someItems.add(m);
+            final List items = new ArrayList();
+            for (int i = 1; i <= 7; i++) {
+                final Map m = new HashMap();
+                for (int j = 1; j <= 6; j++) {
+                    m.put("td" + j, "TD" + j + "_" + i);
+                }
+                items.add(m);
             }
-            {
-                Map m = new HashMap();
-                m.put("td1", "TD1_2");
-                m.put("td2", "TD2_2");
-                someItems.add(m);
-            }
-            {
-                Map m = new HashMap();
-                m.put("td1", "TD1_3");
-                m.put("td2", "TD2_3");
-                someItems.add(m);
-            }
-            {
-                Map m = new HashMap();
-                m.put("td1", "TD1_4");
-                m.put("td2", "TD2_4");
-                someItems.add(m);
-            }
-            //            getFacesContext().getExternalContext().getRequestMap().put(
-            //                    "someItems", someItems);
-            htmlGrid.setValue(someItems);
+            htmlGrid.setValue(items);
         }
 
         // colgroup
         {
             THtmlGridColumnGroup columnGroup = new THtmlGridColumnGroup();
             addChild(htmlGrid, columnGroup);
-
-            THtmlGridColumn col = new THtmlGridColumn();
-            col.setSpan(String.valueOf(1));
-            col.setWidth(String.valueOf(110));
-            addChild(columnGroup, col);
+            {
+                THtmlGridColumn col = new THtmlGridColumn();
+                col.setSpan(String.valueOf(2));
+                col.setWidth(String.valueOf(40));
+                col.setStyleClass("teeda_leftFixed");
+                addChild(columnGroup, col);
+            }
+            {
+                THtmlGridColumn col = new THtmlGridColumn();
+                col.setSpan(String.valueOf(5));
+                col.setWidth(String.valueOf(30));
+                addChild(columnGroup, col);
+            }
         }
 
         // thead
-
         {
             THtmlGridHeader thead = new THtmlGridHeader();
             htmlGrid.getChildren().add(thead);
@@ -337,20 +337,12 @@ public class THtmlGridRendererTest extends RendererTest {
             THtmlGridTr tr = new THtmlGridTr();
             tr.setHeight(String.valueOf(12));
             addChild(thead, tr);
-            {
+            for (int i = 1; i <= 6; i++) {
                 THtmlGridTh th = new THtmlGridTh();
                 addChild(tr, th);
                 MockHtmlOutputText text = new MockHtmlOutputText();
                 text.setRenderer(htmlOutputTextRenderer);
-                text.setValue("th1");
-                addChild(th, text);
-            }
-            {
-                THtmlGridTh th = new THtmlGridTh();
-                addChild(tr, th);
-                MockHtmlOutputText text = new MockHtmlOutputText();
-                text.setRenderer(htmlOutputTextRenderer);
-                text.setValue("th2");
+                text.setValue("th" + i);
                 addChild(th, text);
             }
         }
@@ -363,23 +355,13 @@ public class THtmlGridRendererTest extends RendererTest {
 
             THtmlGridTr tr = new THtmlGridTr();
             addChild(tbody, tr);
-            {
+            for (int i = 1; i <= 6; i++) {
                 THtmlGridTd td = new THtmlGridTd();
                 addChild(tr, td);
                 MockHtmlOutputText text = new MockHtmlOutputText();
                 text.setRenderer(htmlOutputTextRenderer);
                 ValueBinding vb = new ValueBindingImpl(getFacesContext()
-                        .getApplication(), "#{some.td1}", parser);
-                text.setValueBinding("value", vb);
-                addChild(td, text);
-            }
-            {
-                THtmlGridTd td = new THtmlGridTd();
-                addChild(tr, td);
-                MockHtmlOutputText text = new MockHtmlOutputText();
-                text.setRenderer(htmlOutputTextRenderer);
-                ValueBinding vb = new ValueBindingImpl(getFacesContext()
-                        .getApplication(), "#{some.td2}", parser);
+                        .getApplication(), "#{some.td" + i + "}", parser);
                 text.setValueBinding("value", vb);
                 addChild(td, text);
             }
@@ -399,8 +381,6 @@ public class THtmlGridRendererTest extends RendererTest {
 
     public void testGetItems() throws Exception {
         // ## Arrange ##
-        htmlGrid.setId("someGridXY");
-
         final FacesContext facesContext = getFacesContext();
         final List someItems = Arrays.asList(new String[] { "v1", "v2", "v3" });
         htmlGrid.setValue(someItems);

@@ -1,12 +1,30 @@
-<table id="someGridXY">
+<html>
+<head>
+<style>
+	.gridHeader {
+		background-color: green;
+		color: white;
+		font-weight: bold;
+	}
+	.gridTable {
+		background-color: black;
+	}
+	.gridCell {
+		background-color: white;
+	}
+</style>
+</head>
+<body>
+<!-- BEGIN -->
+<table id="someGridXY" border="0" cellspacing="0" cellpadding="0">
 	<tr>
 		<td>
 			<div id="someGridXYRightHeader" style="overflow:hidden; width:284px;">
-				<table>
+				<table cellspacing="1" cellpadding="0" class="gridTable">
 					<thead>
 						<tr>
-							<th><nobr>th1</nobr></th>
-							<th><nobr>th2</nobr></th>
+							<th><div class="gridHeader" style="overflow:hidden; width:50px;"><nobr>th1</nobr></div></th>
+							<th><div class="gridHeader" style="overflow:hidden; width:50px;"><nobr>th2</nobr></div></th>
 						</tr>
 					</thead>
 				</table>
@@ -17,11 +35,11 @@
 		<td style="vertical-align:top;">
 			<div id="someGridXYRightBody" style="overflow:scroll; width:300px; height:388px;"
 				onscroll="document.all.someGridXYRightHeader.scrollLeft=this.scrollLeft; document.all.someGridXYLeftBody.scrollTop=this.scrollTop;">
-				<table>
+				<table cellspacing="1" cellpadding="0" class="gridTable">
 					<tbody>
 						<tr>
-							<td><nobr>td1</nobr></td>
-							<td><nobr>td2</nobr></td>
+							<td><div class="gridCell" style="overflow:hidden; width:50px;"><nobr>td1</nobr></div></td>
+							<td><div class="gridCell" style="overflow:hidden; width:50px;"><nobr>td2</nobr></div></td>
 						</tr>
 					</tbody>
 				</table>
@@ -29,3 +47,6 @@
 		</td>
 	</tr>
 </table>
+<!-- END -->
+</html>
+</body>
