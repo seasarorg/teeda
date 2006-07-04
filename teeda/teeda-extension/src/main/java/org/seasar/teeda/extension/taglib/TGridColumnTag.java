@@ -43,6 +43,8 @@ public class TGridColumnTag extends UIComponentTagBase {
         super.setProperties(component);
         setComponentProperty(component, JsfConstants.WIDTH_ATTR, getWidth());
         setComponentProperty(component, JsfConstants.SPAN_ELEM, getSpan());
+        setComponentProperty(component, JsfConstants.STYLE_CLASS_ATTR,
+                getStyleClass());
     }
 
     public String getSpan() {

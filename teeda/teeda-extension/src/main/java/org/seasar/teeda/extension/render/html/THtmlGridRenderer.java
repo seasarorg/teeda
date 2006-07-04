@@ -17,16 +17,17 @@ package org.seasar.teeda.extension.render.html;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
+import org.seasar.framework.exception.IORuntimeException;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.html.AbstractHtmlRenderer;
 import org.seasar.teeda.core.util.RendererUtil;
@@ -275,20 +276,22 @@ public class THtmlGridRenderer extends AbstractHtmlRenderer {
             renderInnerTableAttributes(writer);
             writer.startElement(JsfConstants.TBODY_ELEM, body);
 
-            final Collection items = getBodyItems(context, htmlGrid);
-            for (final Iterator itItem = items.iterator(); itItem.hasNext();) {
-                Object rowBean = (Object) itItem.next();
-                enterRow(context, htmlGrid, rowBean);
-                for (Iterator it = getRenderedChildrenIterator(body); it
-                        .hasNext();) {
-                    final UIComponent child = (UIComponent) it.next();
-                    if (child instanceof THtmlGridTr) {
-                        encodeGridLeftBodyTr(context, (THtmlGridTr) child,
-                                writer, attribute);
+            htmlGrid.eachRow(new THtmlGrid.Each() {
+                public void each() {
+                    try {
+                        for (Iterator it = getRenderedChildrenIterator(body); it
+                                .hasNext();) {
+                            final UIComponent child = (UIComponent) it.next();
+                            if (child instanceof THtmlGridTr) {
+                                encodeGridLeftBodyTr(context,
+                                        (THtmlGridTr) child, writer, attribute);
+                            }
+                        }
+                    } catch (IOException e) {
+                        throw new IORuntimeException(e);
                     }
                 }
-                leaveRow(context, htmlGrid);
-            }
+            });
 
             writer.endElement(JsfConstants.TBODY_ELEM);
             writer.endElement(JsfConstants.TABLE_ELEM);
@@ -321,19 +324,22 @@ public class THtmlGridRenderer extends AbstractHtmlRenderer {
         renderInnerTableAttributes(writer);
         writer.startElement(JsfConstants.TBODY_ELEM, body);
 
-        final Collection items = getBodyItems(context, htmlGrid);
-        for (final Iterator itItem = items.iterator(); itItem.hasNext();) {
-            Object rowBean = (Object) itItem.next();
-            enterRow(context, htmlGrid, rowBean);
-            for (Iterator it = getRenderedChildrenIterator(body); it.hasNext();) {
-                final UIComponent child = (UIComponent) it.next();
-                if (child instanceof THtmlGridTr) {
-                    encodeGridRightBodyTr(context, (THtmlGridTr) child, writer,
-                            attribute);
+        htmlGrid.eachRow(new THtmlGrid.Each() {
+            public void each() {
+                try {
+                    for (final Iterator it = getRenderedChildrenIterator(body); it
+                            .hasNext();) {
+                        final UIComponent child = (UIComponent) it.next();
+                        if (child instanceof THtmlGridTr) {
+                            encodeGridRightBodyTr(context, (THtmlGridTr) child,
+                                    writer, attribute);
+                        }
+                    }
+                } catch (IOException e) {
+                    throw new IORuntimeException(e);
                 }
             }
-            leaveRow(context, htmlGrid);
-        }
+        });
 
         writer.endElement(JsfConstants.TBODY_ELEM);
         writer.endElement(JsfConstants.TABLE_ELEM);
@@ -497,6 +503,24 @@ public class THtmlGridRenderer extends AbstractHtmlRenderer {
         return true;
     }
 
+    public void decode(FacesContext context, UIComponent component) {
+        assertNotNull(context, component);
+        decodeHtmlGrid(context, (THtmlGrid) component);
+    }
+
+    protected void decodeHtmlGrid(final FacesContext context,
+            final THtmlGrid htmlGrid) {
+        htmlGrid.eachRow(new THtmlGrid.Each() {
+            public void each() {
+                for (final Iterator it = getRenderedChildrenIterator(htmlGrid); it
+                        .hasNext();) {
+                    final UIComponent child = (UIComponent) it.next();
+                    child.processDecodes(context);
+                }
+            }
+        });
+    }
+
     private static class GridAttribute implements Serializable {
 
         private static final long serialVersionUID = 1L;
@@ -618,33 +642,15 @@ public class THtmlGridRenderer extends AbstractHtmlRenderer {
 
     }
 
-    Collection getBodyItems(final FacesContext context, final THtmlGrid htmlGrid) {
+    List getBodyItems(final FacesContext context, final THtmlGrid htmlGrid) {
         final Object value = htmlGrid.getValue();
         if (value == null) {
             return Collections.EMPTY_LIST;
         }
-        if (!(value instanceof Collection)) {
+        if (!(value instanceof List)) {
             throw new ClassCastException(value.getClass().getName());
         }
-        return (Collection) value;
-    }
-
-    private String getNaturalId(final THtmlGrid htmlGrid) {
-        final String id = htmlGrid.getId();
-        final int pos = id.lastIndexOf("Grid");
-        final String naturalId = id.substring(0, pos);
-        return naturalId;
-    }
-
-    void enterRow(final FacesContext context, final THtmlGrid htmlGrid,
-            Object rowBean) {
-        final String itemName = getNaturalId(htmlGrid);
-        context.getExternalContext().getRequestMap().put(itemName, rowBean);
-    }
-
-    void leaveRow(FacesContext context, THtmlGrid htmlGrid) {
-        final String itemName = getNaturalId(htmlGrid);
-        context.getExternalContext().getRequestMap().remove(itemName);
+        return (List) value;
     }
 
 }

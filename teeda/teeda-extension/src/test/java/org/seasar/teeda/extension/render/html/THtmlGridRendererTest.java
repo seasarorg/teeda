@@ -16,8 +16,6 @@
 package org.seasar.teeda.extension.render.html;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -377,49 +375,6 @@ public class THtmlGridRendererTest extends RendererTest {
         Diff diff = diff(expected, getResponseText());
         System.out.println(getResponseText());
         assertEquals(diff.toString(), true, diff.identical());
-    }
-
-    public void testGetItems() throws Exception {
-        // ## Arrange ##
-        final FacesContext facesContext = getFacesContext();
-        final List someItems = Arrays.asList(new String[] { "v1", "v2", "v3" });
-        htmlGrid.setValue(someItems);
-
-        // ## Act ##
-        final Collection items = renderer.getBodyItems(facesContext, htmlGrid);
-
-        // ## Assert ##
-        assertEquals(someItems, items);
-    }
-
-    public void testEnterRow() throws Exception {
-        // ## Arrange ##
-        htmlGrid.setId("fooooGrid");
-        final FacesContext facesContext = getFacesContext();
-        final Object object = new Object();
-
-        // ## Act ##
-        renderer.enterRow(facesContext, htmlGrid, object);
-
-        // ## Assert ##
-        final Object rowBean = facesContext.getApplication()
-                .getVariableResolver().resolveVariable(facesContext, "foooo");
-        assertSame(object, rowBean);
-    }
-
-    public void testLeaveRow() throws Exception {
-        // ## Arrange ##
-        htmlGrid.setId("a12345GridX");
-        final FacesContext facesContext = getFacesContext();
-        final Object object = new Object();
-        facesContext.getExternalContext().getRequestMap().put("a12345", object);
-
-        // ## Act ##
-        renderer.leaveRow(facesContext, htmlGrid);
-
-        // ## Assert ##
-        assertEquals(null, facesContext.getExternalContext().getRequestMap()
-                .get("a12345"));
     }
 
     protected Renderer createRenderer() {
