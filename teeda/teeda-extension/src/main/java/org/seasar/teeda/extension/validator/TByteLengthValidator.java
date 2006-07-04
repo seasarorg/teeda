@@ -17,18 +17,24 @@ package org.seasar.teeda.extension.validator;
 
 import java.io.UnsupportedEncodingException;
 
+import javax.faces.FacesException;
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.internal.FacesMessageUtil;
 import javax.faces.validator.LengthValidator;
 import javax.faces.validator.ValidatorException;
 
+import org.seasar.framework.util.AssertionUtil;
 import org.seasar.framework.util.StringUtil;
+import org.seasar.teeda.extension.util.ValidatorUtil;
 
 /**
  * @author shot
  */
 public class TByteLengthValidator extends LengthValidator {
 
+    //TODO testing
+    
     public static final String VALIDATOR_ID = "teeda.core.ByteLength";
 
     public static final String MAXIMUM_MESSAGE_ID = "org.seasar.teeda.core.validator.ByteLengthValidator.MAXIMUM";
@@ -37,7 +43,21 @@ public class TByteLengthValidator extends LengthValidator {
 
     public static final String ENCODE_MESSAGE_ID = "org.seasar.teeda.core.validator.ByteLengthValidator.ENCODE";
 
-    private String charSet_ = null;
+    private String charSet = null;
+
+    private String forValue;
+
+    private String[] forValues;
+
+    public void validate(FacesContext context, UIComponent component,
+            Object value) throws FacesException {
+        AssertionUtil.assertNotNull("context", context);
+        AssertionUtil.assertNotNull("component", component);
+        if (!ValidatorUtil.isTargetCommand(context, forValues)) {
+            return;
+        }
+        super.validate(context, component, value);
+    }
 
     protected int getConvertedValueLength(Object value) {
         String str = null;
@@ -46,13 +66,13 @@ public class TByteLengthValidator extends LengthValidator {
         } else {
             str = value.toString();
         }
-        if (StringUtil.isEmpty(charSet_)) {
+        if (StringUtil.isEmpty(charSet)) {
             return str.getBytes().length;
         }
         try {
-            return getBytes(str, charSet_).length;
+            return getBytes(str, charSet).length;
         } catch (UnsupportedEncodingException e) {
-            Object[] args = new Object[] { value, charSet_ };
+            Object[] args = new Object[] { value, charSet };
             throw new ValidatorException(FacesMessageUtil.getMessage(
                     FacesContext.getCurrentInstance(), ENCODE_MESSAGE_ID, args));
         }
@@ -60,11 +80,36 @@ public class TByteLengthValidator extends LengthValidator {
     }
 
     public String getCharSet() {
-        return charSet_;
+        return charSet;
     }
 
     public void setCharSet(String charSet) {
-        charSet_ = charSet;
+        this.charSet = charSet;
+    }
+
+    public String getFor() {
+        return forValue;
+    }
+
+    public void setFor(String forValue) {
+        this.forValue = forValue;
+        forValues = StringUtil.split(forValue, ", ");
+    }
+
+    public Object saveState(FacesContext context) {
+        Object[] values = new Object[3];
+        values[0] = super.saveState(context);
+        values[1] = charSet;
+        values[2] = forValue;
+        return values;
+    }
+
+    public void restoreState(FacesContext context, Object state) {
+        Object[] values = (Object[]) state;
+        super.restoreState(context, values[0]);
+        charSet = (String) values[1];
+        forValue = (String) values[2];
+        setFor(forValue);
     }
 
     private static byte[] getBytes(String value, String charSet)

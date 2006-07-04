@@ -25,9 +25,6 @@ import org.seasar.teeda.core.JsfConstants;
  */
 public class ValidatorUtil {
 
-    /**
-     * 
-     */
     protected ValidatorUtil() {
     }
 

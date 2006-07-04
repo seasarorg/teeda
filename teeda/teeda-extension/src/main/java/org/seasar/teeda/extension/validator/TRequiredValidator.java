@@ -39,18 +39,18 @@ public class TRequiredValidator implements Validator, StateHolder {
 
     public static final String REQUIRED_MESSAGE_ID = "javax.faces.component.UIInput.REQUIRED";
 
-    private boolean transientValue_ = false;
+    private boolean transientValue = false;
 
     private String forValue;
 
     private String[] forValues;
 
     public boolean isTransient() {
-        return transientValue_;
+        return transientValue;
     }
 
     public void setTransient(boolean transientValue) {
-        transientValue_ = transientValue;
+        this.transientValue = transientValue;
     }
 
     public String getFor() {
@@ -66,7 +66,6 @@ public class TRequiredValidator implements Validator, StateHolder {
             Object value) throws FacesException {
         AssertionUtil.assertNotNull("context", context);
         AssertionUtil.assertNotNull("component", component);
-
         if (!ValidatorUtil.isTargetCommand(context, forValues)) {
             return;
         }

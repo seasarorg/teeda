@@ -16,92 +16,59 @@
 package org.seasar.teeda.extension.validator;
 
 import javax.faces.FacesException;
-import javax.faces.application.FacesMessage;
-import javax.faces.component.StateHolder;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.internal.FacesMessageUtil;
-import javax.faces.internal.UIComponentUtil;
-import javax.faces.validator.Validator;
-import javax.faces.validator.ValidatorException;
+import javax.faces.validator.LongRangeValidator;
 
 import org.seasar.framework.util.AssertionUtil;
 import org.seasar.framework.util.StringUtil;
-import org.seasar.teeda.core.util.PatternUtil;
 import org.seasar.teeda.extension.util.ValidatorUtil;
 
 /**
  * @author shot
  */
-public class TRegularExpressionValidator implements Validator, StateHolder {
+public class TLongRangeValidator extends LongRangeValidator {
 
-    //TODO testing for targetCommands
-
-    public static final String VALIDATOR_ID = TRegularExpressionValidator.class
-            .getName();
-
-    public static final String REGULAR_EXPRRESSION_MESSAGE_ID = VALIDATOR_ID
-            + ".INVALID";
-
-    private boolean transientValue = false;
-
-    private String pattern;
+    //TODO testing
 
     private String forValue;
 
     private String[] forValues;
 
-    public TRegularExpressionValidator() {
+    public TLongRangeValidator() {
+        super();
+    }
+
+    public TLongRangeValidator(long maximum) {
+        super(maximum);
+    }
+
+    public TLongRangeValidator(long maximum, long minimum) {
+        super(maximum, minimum);
     }
 
     public void validate(FacesContext context, UIComponent component,
             Object value) throws FacesException {
         AssertionUtil.assertNotNull("context", context);
         AssertionUtil.assertNotNull("component", component);
-        if (value == null) {
-            return;
-        }
         if (!ValidatorUtil.isTargetCommand(context, forValues)) {
             return;
         }
-        String strValue = value.toString();
-        if (!PatternUtil.matches(getPattern(), strValue)) {
-            Object[] args = new Object[] { getPattern(),
-                    UIComponentUtil.getLabel(component) };
-            FacesMessage message = FacesMessageUtil.getMessage(context,
-                    REGULAR_EXPRRESSION_MESSAGE_ID, args);
-            throw new ValidatorException(message);
-        }
-    }
-
-    public boolean isTransient() {
-        return transientValue;
-    }
-
-    public void setTransient(boolean transientValue) {
-        this.transientValue = transientValue;
+        super.validate(context, component, value);
     }
 
     public Object saveState(FacesContext context) {
         Object[] state = new Object[2];
-        state[0] = pattern;
+        state[0] = super.saveState(context);
         state[1] = forValue;
         return state;
     }
 
     public void restoreState(FacesContext context, Object obj) {
         Object[] state = (Object[]) obj;
-        pattern = (String) state[0];
+        super.restoreState(context, state[0]);
         forValue = (String) state[1];
         setFor(forValue);
-    }
-
-    public String getPattern() {
-        return pattern;
-    }
-
-    public void setPattern(String pattern) {
-        this.pattern = pattern;
     }
 
     public String getFor() {
