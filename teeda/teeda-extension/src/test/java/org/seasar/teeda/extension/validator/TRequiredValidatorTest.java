@@ -38,4 +38,13 @@ public class TRequiredValidatorTest extends TeedaTestCase {
             System.out.println(expected.getFacesMessage().getDetail());
         }
     }
+
+    public void testSaveAndRestore() throws Exception {
+        TRequiredValidator validator = new TRequiredValidator();
+        validator.setFor("aaa");
+        Object state = validator.saveState(getFacesContext());
+        validator = new TRequiredValidator();
+        validator.restoreState(getFacesContext(), state);
+        assertEquals("aaa", validator.getFor());
+    }
 }

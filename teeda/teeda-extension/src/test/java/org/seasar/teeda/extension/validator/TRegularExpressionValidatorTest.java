@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -17,6 +17,7 @@ package org.seasar.teeda.extension.validator;
 
 import javax.faces.validator.ValidatorException;
 
+import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.mock.MockUIComponent;
 import org.seasar.teeda.core.unit.TeedaTestCase;
 
@@ -37,7 +38,7 @@ public class TRegularExpressionValidatorTest extends TeedaTestCase {
             assertNotNull(e.getFacesMessage());
         }
     }
-    
+
     public void testValidate_validationOk() throws Exception {
         MockUIComponent component = new MockUIComponent();
         component.setId("aaa");
@@ -51,4 +52,46 @@ public class TRegularExpressionValidatorTest extends TeedaTestCase {
         }
     }
 
+    public void testValidate_validateTargetPointed() throws Exception {
+        MockUIComponent component = new MockUIComponent();
+        component.setId("aaa");
+        TRegularExpressionValidator validator = new TRegularExpressionValidator();
+        validator.setFor("aaa");
+        getFacesContext().getExternalContext().getRequestMap().put(
+                JsfConstants.SUBMITTED_COMMAND, "aaa");
+        validator.setPattern("^[1-9][a-z]");
+        try {
+            validator.validate(getFacesContext(), new MockUIComponent(), "a1");
+            fail();
+        } catch (ValidatorException e) {
+            assertNotNull(e.getFacesMessage());
+        }
+    }
+
+    public void testValidate_validateTargetNotPointed() throws Exception {
+        MockUIComponent component = new MockUIComponent();
+        component.setId("aaa");
+        TRegularExpressionValidator validator = new TRegularExpressionValidator();
+        validator.setFor("aaa");
+        getFacesContext().getExternalContext().getRequestMap().put(
+                JsfConstants.SUBMITTED_COMMAND, "bbb");
+        validator.setPattern("^[1-9][a-z]");
+        try {
+            validator.validate(getFacesContext(), new MockUIComponent(), "a1");
+            success();
+        } catch (ValidatorException e) {
+            fail();
+        }
+    }
+
+    public void testSaveAndRestore() throws Exception {
+        TRegularExpressionValidator validator = new TRegularExpressionValidator();
+        validator.setFor("aaa");
+        validator.setPattern("^[1-9]");
+        Object state = validator.saveState(getFacesContext());
+        validator = new TRegularExpressionValidator();
+        validator.restoreState(getFacesContext(), state);
+        assertEquals("aaa", validator.getFor());
+        assertEquals("^[1-9]", validator.getPattern());
+    }
 }

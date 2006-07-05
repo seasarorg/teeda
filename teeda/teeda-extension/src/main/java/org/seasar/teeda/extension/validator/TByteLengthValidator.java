@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -33,8 +33,6 @@ import org.seasar.teeda.extension.util.ValidatorUtil;
  */
 public class TByteLengthValidator extends LengthValidator {
 
-    //TODO testing
-    
     public static final String VALIDATOR_ID = "teeda.core.ByteLength";
 
     public static final String MAXIMUM_MESSAGE_ID = "org.seasar.teeda.core.validator.ByteLengthValidator.MAXIMUM";
@@ -104,11 +102,11 @@ public class TByteLengthValidator extends LengthValidator {
         return values;
     }
 
-    public void restoreState(FacesContext context, Object state) {
-        Object[] values = (Object[]) state;
-        super.restoreState(context, values[0]);
-        charSet = (String) values[1];
-        forValue = (String) values[2];
+    public void restoreState(FacesContext context, Object obj) {
+        Object[] state = (Object[]) obj;
+        super.restoreState(context, state[0]);
+        charSet = (String) state[1];
+        forValue = (String) state[2];
         setFor(forValue);
     }
 

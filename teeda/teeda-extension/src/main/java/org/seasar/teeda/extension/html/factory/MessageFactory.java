@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -18,19 +18,18 @@ package org.seasar.teeda.extension.html.factory;
 import java.util.Map;
 
 import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.PageDesc;
 
 /**
  * @author higa
- *  
+ *
  */
 public class MessageFactory extends AbstractElementProcessorFactory {
 
     private static final String TAG_NAME = "message";
-    
-    private static final String MESSAGE_SUFFIX = "Message";
 
     public boolean isMatch(ElementNode elementNode, PageDesc pageDesc,
             ActionDesc actionDesc) {
@@ -41,7 +40,7 @@ public class MessageFactory extends AbstractElementProcessorFactory {
         if (id == null) {
             return false;
         }
-        return id.endsWith(MESSAGE_SUFFIX);
+        return id.endsWith(ExtensionConstants.MESSAGE_SUFFIX);
     }
 
     protected void customizeProperties(Map properties, ElementNode elementNode,
@@ -51,7 +50,7 @@ public class MessageFactory extends AbstractElementProcessorFactory {
                         actionDesc);
         String id = elementNode.getId();
         properties.put(JsfConstants.FOR_ATTR, id.substring(0, id.length()
-                - MESSAGE_SUFFIX.length()));
+                - ExtensionConstants.MESSAGE_SUFFIX.length()));
     }
 
     protected String getTagName() {

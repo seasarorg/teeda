@@ -17,7 +17,6 @@ package org.seasar.teeda.extension.component;
 
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Locale;
 import java.util.Map;
 
 import javax.faces.component.UIViewRoot;
@@ -31,7 +30,11 @@ import org.seasar.teeda.extension.util.JavaScriptContext;
  */
 public class ScriptEnhanceUIViewRoot extends UIViewRoot {
 
-    private Map scripts = new HashMap();
+    private Map scripts = null;
+
+    public ScriptEnhanceUIViewRoot() {
+        scripts = new HashMap();
+    }
 
     public void addScript(String scriptId, JavaScriptContext context) {
         if (!scripts.containsKey(scriptId)) {

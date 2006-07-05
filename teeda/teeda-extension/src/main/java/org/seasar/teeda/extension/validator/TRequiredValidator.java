@@ -32,6 +32,7 @@ import org.seasar.teeda.extension.util.ValidatorUtil;
 
 /**
  * @author higa
+ * @author shot
  */
 public class TRequiredValidator implements Validator, StateHolder {
 

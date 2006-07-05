@@ -29,8 +29,6 @@ public interface ExtensionConstants {
 
     String FRACTION_SEPARATOR_ATTR = "fractioonSeparator";
 
-    String TEEDA_CURRENY_STYLE_CLASS = "T_currency";
-
     String VALIDATOR_STACK_ATTR = "javax.faces.webapp.VALIDATOR_STORE_ATTR";
 
     String CONVERTER_STACK_ATTR = "javax.faces.webapp.CONVERTER_STORE_ATTR";
@@ -40,4 +38,15 @@ public interface ExtensionConstants {
     String ITEMS_NAME_ATTR = "itemsName";
 
     String ITEMS_SUFFIX = "Items";
+
+    String GO_PREFIX = "go";
+
+    String MESSAGE_SUFFIX = "Message";
+
+    String FORM_SUFFIX = "Form";
+
+    String DO_PREFIX = "do";
+
+    String TEEDA_CURRENY_STYLE_CLASS = "T_currency";
+
 }

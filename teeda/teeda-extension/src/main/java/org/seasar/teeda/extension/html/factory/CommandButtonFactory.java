@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -19,6 +19,7 @@ import java.util.Map;
 
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.PageDesc;
@@ -29,10 +30,6 @@ import org.seasar.teeda.extension.html.PageDesc;
 public class CommandButtonFactory extends AbstractElementProcessorFactory {
 
     private static final String TAG_NAME = "commandButton";
-
-    private static final String GO_PREFIX = "go";
-
-    private static final String DO_PREFIX = "do";
 
     public boolean isMatch(ElementNode elementNode, PageDesc pageDesc,
             ActionDesc actionDesc) {
@@ -48,10 +45,10 @@ public class CommandButtonFactory extends AbstractElementProcessorFactory {
         if (id == null) {
             return false;
         }
-        if (id.startsWith(GO_PREFIX)) {
+        if (id.startsWith(ExtensionConstants.GO_PREFIX)) {
             return true;
         }
-        if (id.startsWith(DO_PREFIX)) {
+        if (id.startsWith(ExtensionConstants.DO_PREFIX)) {
             if (pageDesc != null && pageDesc.hasMethod(id)) {
                 return true;
             }
@@ -68,7 +65,7 @@ public class CommandButtonFactory extends AbstractElementProcessorFactory {
                 .customizeProperties(properties, elementNode, pageDesc,
                         actionDesc);
         String id = elementNode.getId();
-        if (id.startsWith(GO_PREFIX)) {
+        if (id.startsWith(ExtensionConstants.GO_PREFIX)) {
             String next = StringUtil.decapitalize(id.substring(2));
             properties.put(JsfConstants.ACTION_ATTR, next);
         } else {
