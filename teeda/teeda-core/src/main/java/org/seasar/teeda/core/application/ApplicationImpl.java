@@ -42,7 +42,6 @@ import javax.faces.validator.Validator;
 
 import org.seasar.framework.util.AssertionUtil;
 import org.seasar.framework.util.StringUtil;
-import org.seasar.teeda.core.application.impl.DefaultComponentLookupStrategy;
 import org.seasar.teeda.core.el.MethodBindingContext;
 import org.seasar.teeda.core.el.ValueBindingContext;
 import org.seasar.teeda.core.exception.ConverterInstantiateFailureException;
@@ -98,7 +97,6 @@ public class ApplicationImpl extends Application implements
     private ComponentLookupStrategy componentLookupStrategy;
 
     public ApplicationImpl() {
-        componentLookupStrategy = new DefaultComponentLookupStrategy();
     }
 
     public ActionListener getActionListener() {
@@ -459,6 +457,15 @@ public class ApplicationImpl extends Application implements
 
     public MethodBindingContext getMethodBindingContext() {
         return mbContext;
+    }
+
+    public ComponentLookupStrategy getComponentLookupStrategy() {
+        return componentLookupStrategy;
+    }
+
+    public void setComponentLookupStrategy(
+            ComponentLookupStrategy componentLookupStrategy) {
+        this.componentLookupStrategy = componentLookupStrategy;
     }
 
 }

@@ -26,6 +26,7 @@ import javax.faces.render.ResponseStateManager;
 
 import org.seasar.framework.container.S2Container;
 import org.seasar.framework.util.AssertionUtil;
+import org.seasar.teeda.core.application.ComponentLookupStrategy;
 import org.seasar.teeda.core.context.html.HtmlResponseWriter;
 import org.seasar.teeda.core.render.AbstractRenderKit;
 import org.seasar.teeda.core.render.html.support.HtmlRenderKitKeyGenerateUtil;
@@ -42,6 +43,8 @@ public class HtmlRenderKitImpl extends AbstractRenderKit {
     private ResponseStateManager responseStateManager;
 
     private S2Container container;
+
+    private ComponentLookupStrategy componentLookupStrategy;
 
     public HtmlRenderKitImpl() {
     }
@@ -60,11 +63,7 @@ public class HtmlRenderKitImpl extends AbstractRenderKit {
         AssertionUtil.assertNotNull("renderType", renderType);
         String key = HtmlRenderKitKeyGenerateUtil.getGeneratedKey(family,
                 renderType);
-        if (getContainer().hasComponentDef(key)) {
-            return (Renderer) getContainer().getComponent(key);
-        } else {
-            return null;
-        }
+        return (Renderer) componentLookupStrategy.getComponentByName(key);
     }
 
     public ResponseStream createResponseStream(final OutputStream out) {
@@ -122,6 +121,15 @@ public class HtmlRenderKitImpl extends AbstractRenderKit {
 
     public S2Container getContainer() {
         return container;
+    }
+
+    public ComponentLookupStrategy getComponentLookupStrategy() {
+        return componentLookupStrategy;
+    }
+
+    public void setComponentLookupStrategy(
+            ComponentLookupStrategy componentLookupStrategy) {
+        this.componentLookupStrategy = componentLookupStrategy;
     }
 
 }

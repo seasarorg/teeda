@@ -47,6 +47,10 @@ import org.seasar.teeda.extension.util.JavaScriptContext;
  */
 public class THtmlInputCommaTextRenderer extends HtmlInputTextRenderer {
 
+    public static final String COMPONENT_FAMILY = "javax.faces.Input";
+
+    public static final String RENDERER_TYPE = "org.seasar.jsf.HtmlInputCommaText";
+
     private static final String DEFAULT_FRACTION = "0";
 
     public void encodeEnd(FacesContext context, UIComponent component)
@@ -59,7 +63,8 @@ public class THtmlInputCommaTextRenderer extends HtmlInputTextRenderer {
         UIViewRoot root = context.getViewRoot();
         if (root instanceof ScriptEnhanceUIViewRoot
                 && JavaScriptPermissionUtil.isJavaScriptPermitted(context)) {
-            encodeHtmlInputCommaTextEnd(context, (THtmlInputCommaText) component);
+            encodeHtmlInputCommaTextEnd(context,
+                    (THtmlInputCommaText) component);
         } else {
             encodeHtmlInputTextEnd(context, (HtmlInputText) component);
         }
@@ -216,8 +221,10 @@ public class THtmlInputCommaTextRenderer extends HtmlInputTextRenderer {
         ignore.addIgnoreComponentName(JsfConstants.ONKEYUP_ATTR);
         ignore.addIgnoreComponentName(JsfConstants.DISABLED_ATTR);
         ignore.addIgnoreComponentName(ExtensionConstants.FRACTION_ATTR);
-        ignore.addIgnoreComponentName(ExtensionConstants.GROUPING_SEPARATOR_ATTR);
-        ignore.addIgnoreComponentName(ExtensionConstants.FRACTION_SEPARATOR_ATTR);
+        ignore
+                .addIgnoreComponentName(ExtensionConstants.GROUPING_SEPARATOR_ATTR);
+        ignore
+                .addIgnoreComponentName(ExtensionConstants.FRACTION_SEPARATOR_ATTR);
         return ignore;
     };
 

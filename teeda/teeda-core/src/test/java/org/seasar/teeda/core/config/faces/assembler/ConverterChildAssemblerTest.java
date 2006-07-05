@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -25,6 +25,7 @@ import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.application.ApplicationImpl;
 import org.seasar.teeda.core.application.ConfigurationSupport;
 import org.seasar.teeda.core.application.ConverterConfiguration;
+import org.seasar.teeda.core.application.impl.DefaultComponentLookupStrategy;
 import org.seasar.teeda.core.config.faces.element.ConverterElement;
 import org.seasar.teeda.core.config.faces.element.PropertyElement;
 import org.seasar.teeda.core.config.faces.element.impl.ConverterElementImpl;
@@ -97,6 +98,8 @@ public class ConverterChildAssemblerTest extends TeedaTestCase {
                 .getApplicationFactory();
         try {
             ApplicationImpl app = new ApplicationImpl();
+            app
+                    .setComponentLookupStrategy(new DefaultComponentLookupStrategy());
             appFactory.setApplication(app);
             ConverterElement cElement = new ConverterElementImpl();
             cElement

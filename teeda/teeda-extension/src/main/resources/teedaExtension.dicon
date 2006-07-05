@@ -30,9 +30,8 @@
 	<component class="org.seasar.teeda.extension.html.impl.SessionPagePersistence"/>
 	<component name="viewHandler" class="org.seasar.teeda.extension.html.impl.HtmlViewHandler"/>
 	<component name="navigationHandler" class="org.seasar.teeda.extension.html.impl.HtmlNavigationHandler"/>
-
 	<component class="org.seasar.teeda.core.application.ApplicationImpl"/>
-
+	<component class="org.seasar.teeda.core.render.html.HtmlRenderKitImpl"/>
 	<component class="org.seasar.framework.container.autoregister.JarComponentAutoRegister">
 		<property name="instanceDef">@org.seasar.framework.container.deployer.InstanceDefFactory@PROTOTYPE</property>
 		<property name="jarFileNames">"teeda-extension.*"</property>
@@ -41,5 +40,18 @@
 			<arg>"..*Validator"</arg>
 		</initMethod>
 	</component>
+
 	<component name="javax.faces.ViewRoot" class="org.seasar.teeda.extension.component.ScriptEnhanceUIViewRoot" instance="prototype" />
+
+	<component class="org.seasar.teeda.core.render.autoregister.TeedaRendererJarComponentAutoRegister">
+		<property name="referenceClass">
+			@org.seasar.teeda.extension.render.html.HtmlTextRenderer@class
+		</property>
+		<property name="jarFileNames">"teeda-extension.*"</property>
+		<initMethod name="addClassPattern">
+			<arg>"org.seasar.teeda.extension.render"</arg>
+			<arg>"..*Renderer"</arg>
+		</initMethod>
+	</component>
+
 </components>

@@ -358,7 +358,7 @@
             <rtexprvalue>false</rtexprvalue>
         </attribute>
     </tag>
-    
+
     <tag>
         <name>forEach</name>
         <tag-class>org.seasar.teeda.extension.taglib.TForEachTag</tag-class>
@@ -371,6 +371,22 @@
         <attribute>
             <name>itemsName</name>
             <required>true</required>
+            <rtexprvalue>false</rtexprvalue>
+        </attribute>
+    </tag>
+
+    <tag>
+        <name>converter</name>
+        <tag-class>org.seasar.teeda.extension.taglib.TConverterTag</tag-class>
+        <body-content>JSP</body-content>
+        <attribute>
+            <name>converterId</name>
+            <required>true</required>
+            <rtexprvalue>false</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>targetClass</name>
+            <required>false</required>
             <rtexprvalue>false</rtexprvalue>
         </attribute>
     </tag>

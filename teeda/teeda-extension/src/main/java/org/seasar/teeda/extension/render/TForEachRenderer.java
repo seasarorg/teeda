@@ -38,6 +38,10 @@ import org.seasar.teeda.extension.component.TForEach;
  */
 public class TForEachRenderer extends Renderer {
 
+    public static final String COMPONENT_FAMILY = "org.seasar.teeda.extension.ForEach";
+
+    public static final String RENDERER_TYPE = "org.seasar.teeda.extension.ForEach";
+
     private static final Object[] EMPTY_ITEMS = new Object[0];
 
     public void encodeChildren(FacesContext context, UIComponent component)

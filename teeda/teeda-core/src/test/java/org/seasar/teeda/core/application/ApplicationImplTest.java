@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -29,6 +29,7 @@ import org.seasar.framework.container.ComponentDef;
 import org.seasar.framework.container.PropertyDef;
 import org.seasar.framework.container.impl.ComponentDefImpl;
 import org.seasar.framework.container.impl.PropertyDefImpl;
+import org.seasar.teeda.core.application.impl.DefaultComponentLookupStrategy;
 import org.seasar.teeda.core.el.ELParser;
 import org.seasar.teeda.core.el.ValueBindingContext;
 import org.seasar.teeda.core.el.impl.ValueBindingContextImpl;
@@ -48,17 +49,15 @@ import org.seasar.teeda.core.util.DIContainerUtil;
 
 public class ApplicationImplTest extends TeedaTestCase {
 
-    private ApplicationImpl app_;
-
     public void testAddComponent() {
-        app_ = new ApplicationImpl();
+        ApplicationImpl app = createApplication();
         MockUIComponent mock = new MockUIComponent();
-        app_.addComponent("mock", mock.getClass().getName());
-        UIComponent c = app_.createComponent("mock");
+        app.addComponent("mock", mock.getClass().getName());
+        UIComponent c = app.createComponent("mock");
         assertNotNull(c);
         assertTrue(c instanceof MockUIComponent);
         try {
-            app_.addComponent("mock2", "java.lang.String");
+            app.addComponent("mock2", "java.lang.String");
             fail();
         } catch (IllegalClassTypeException e) {
             assertEquals(UIComponent.class.getName(), e.getArgs()[0]);
@@ -67,37 +66,37 @@ public class ApplicationImplTest extends TeedaTestCase {
     }
 
     public void testCreateComponent1() {
-        app_ = new ApplicationImpl();
+        ApplicationImpl app = createApplication();
         MockUIComponent mock = new MockUIComponent();
-        app_.addComponent("mock", mock.getClass().getName());
+        app.addComponent("mock", mock.getClass().getName());
         MockValueBinding vb = new MockValueBinding();
         MockFacesContext context = getFacesContext();
         vb.setValue(context, mock);
-        UIComponent c = app_.createComponent(vb, context, "mock");
+        UIComponent c = app.createComponent(vb, context, "mock");
         assertNotNull(c);
         assertTrue(c instanceof MockUIComponent);
     }
 
     public void testCreateComponent2() {
-        app_ = new ApplicationImpl();
+        ApplicationImpl app = createApplication();
         MockUIComponent mock = new MockUIComponent();
-        app_.addComponent("mock", mock.getClass().getName());
+        app.addComponent("mock", mock.getClass().getName());
         MockValueBinding vb = new MockValueBinding();
         MockFacesContext context = getFacesContext();
         vb.setValue(context, "mock");
-        UIComponent c = app_.createComponent(vb, context, "mock");
+        UIComponent c = app.createComponent(vb, context, "mock");
         assertNotNull(c);
         assertTrue(c instanceof MockUIComponent);
     }
 
     public void testCreateConverter_ConverterIdIsNull() throws Exception {
         // ## Arrange ##
-        app_ = new ApplicationImpl();
+        ApplicationImpl app = createApplication();
         String converterId = null;
 
         // ## Act & Assert ##
         try {
-            app_.createConverter(converterId);
+            app.createConverter(converterId);
             fail();
         } catch (NullPointerException npe) {
             ExceptionAssert.assertMessageExist(npe);
@@ -106,12 +105,12 @@ public class ApplicationImplTest extends TeedaTestCase {
 
     public void testCreateConverter_ConverterForClassIsNull() throws Exception {
         // ## Arrange ##
-        app_ = new ApplicationImpl();
+        ApplicationImpl app = createApplication();
         Class converterForClass = null;
 
         // ## Act & Assert ##
         try {
-            app_.createConverter(converterForClass);
+            app.createConverter(converterForClass);
             fail();
         } catch (NullPointerException npe) {
             ExceptionAssert.assertMessageExist(npe);
@@ -119,31 +118,32 @@ public class ApplicationImplTest extends TeedaTestCase {
     }
 
     public void testAddConverter1() {
-        app_ = new ApplicationImpl();
-        app_.addConverter("mock.converter",
+        ApplicationImpl app = createApplication();
+        app.addConverter("mock.converter",
                 "org.seasar.teeda.core.mock.MockConverter");
-        Converter c = app_.createConverter("mock.converter");
+        Converter c = app.createConverter("mock.converter");
         assertNotNull(c);
         assertTrue(c instanceof MockConverter);
     }
 
     public void testAddConverter2() {
-        app_ = new ApplicationImpl();
-        app_.addConverter(Hoge.class,
-                "org.seasar.teeda.core.mock.MockConverter");
-        Converter c = app_.createConverter(Hoge.class);
+        ApplicationImpl app = createApplication();
+        app
+                .addConverter(Hoge.class,
+                        "org.seasar.teeda.core.mock.MockConverter");
+        Converter c = app.createConverter(Hoge.class);
         assertNotNull(c);
         assertTrue(c instanceof MockConverter);
     }
 
     public void testAddConverter_converterInstanciateEverytime() {
         // # Arrange
-        app_ = new ApplicationImpl();
-        app_.addConverter("aaa", HogeConverter2.class.getName());
-        app_.addConverter(Hoge.class, HogeConverter2.class.getName());
+        ApplicationImpl app = createApplication();
+        app.addConverter("aaa", HogeConverter2.class.getName());
+        app.addConverter(Hoge.class, HogeConverter2.class.getName());
 
         // # Act
-        Converter c = app_.createConverter("aaa");
+        Converter c = app.createConverter("aaa");
 
         // # Assert
         assertNotNull(c);
@@ -152,7 +152,7 @@ public class ApplicationImplTest extends TeedaTestCase {
         assertTrue(c2.getNum() == 1);
 
         // # Act
-        c = app_.createConverter(Hoge.class);
+        c = app.createConverter(Hoge.class);
 
         // # Assert
         assertNotNull(c);
@@ -162,44 +162,43 @@ public class ApplicationImplTest extends TeedaTestCase {
     }
 
     public void testCreateConverterForInterface() {
-        app_ = new ApplicationImpl();
-        app_
-                .addConverter(Foo.class,
-                        "org.seasar.teeda.core.mock.MockConverter");
+        ApplicationImpl app = createApplication();
+        app.addConverter(Foo.class, "org.seasar.teeda.core.mock.MockConverter");
         Foo foo = new FooImpl();
-        Converter c = app_.createConverter(foo.getClass());
+        Converter c = app.createConverter(foo.getClass());
         assertNotNull(c);
         assertTrue(c instanceof MockConverter);
     }
 
     public void testCreateConverterForSuperClass() {
-        app_ = new ApplicationImpl();
-        app_.addConverter(Hoge.class,
-                "org.seasar.teeda.core.mock.MockConverter");
+        ApplicationImpl app = createApplication();
+        app
+                .addConverter(Hoge.class,
+                        "org.seasar.teeda.core.mock.MockConverter");
         Hoge hoge = new Hoge2();
-        Converter c = app_.createConverter(hoge.getClass());
+        Converter c = app.createConverter(hoge.getClass());
         assertNotNull(c);
         assertTrue(c instanceof MockConverter);
     }
 
     public void testCreateCoverterForPrimitive() {
-        app_ = new ApplicationImpl();
-        app_.addConverter(Integer.class,
+        ApplicationImpl app = createApplication();
+        app.addConverter(Integer.class,
                 "org.seasar.teeda.core.mock.MockConverter");
-        Converter c = app_.createConverter(Integer.TYPE);
+        Converter c = app.createConverter(Integer.TYPE);
         assertNotNull(c);
         assertTrue(c instanceof MockConverter);
     }
 
     public void testAddValidator1() {
-        app_ = new ApplicationImpl();
-        app_.addValidator("teeda.null",
+        ApplicationImpl app = createApplication();
+        app.addValidator("teeda.null",
                 "org.seasar.teeda.core.mock.NullValidator");
-        Validator v = app_.createValidator("teeda.null");
+        Validator v = app.createValidator("teeda.null");
         assertNotNull(v);
         assertTrue(v instanceof NullValidator);
         try {
-            app_.addValidator("hoge", "java.lang.String");
+            app.addValidator("hoge", "java.lang.String");
         } catch (IllegalClassTypeException e) {
             assertEquals(Validator.class.getName(), e.getArgs()[0]);
             assertTrue(true);
@@ -208,13 +207,13 @@ public class ApplicationImplTest extends TeedaTestCase {
     }
 
     public void testCreateConverter_withProperties1() throws Exception {
-        app_ = new ApplicationImpl();
+        ApplicationImpl app = createApplication();
         ConverterConfiguration config = new ConverterConfiguration("pattern",
                 "String", "yyyy/MM/dd HH:mm:ss");
-        app_.addConverterConfiguration("someConverterId", config);
-        app_.addConverter("someConverterId", HogeConverter.class.getName());
+        app.addConverterConfiguration("someConverterId", config);
+        app.addConverter("someConverterId", HogeConverter.class.getName());
 
-        Converter c = app_.createConverter("someConverterId");
+        Converter c = app.createConverter("someConverterId");
 
         assertNotNull(c);
         assertTrue(c instanceof HogeConverter);
@@ -222,13 +221,13 @@ public class ApplicationImplTest extends TeedaTestCase {
     }
 
     public void testCreateConverter_withProperties2() throws Exception {
-        app_ = new ApplicationImpl();
+        ApplicationImpl app = createApplication();
         ConverterConfiguration config = new ConverterConfiguration("num",
                 "int", "3");
-        app_.addConverterConfiguration("someConverterId", config);
-        app_.addConverter("someConverterId", HogeConverter.class.getName());
+        app.addConverterConfiguration("someConverterId", config);
+        app.addConverter("someConverterId", HogeConverter.class.getName());
 
-        Converter c = app_.createConverter("someConverterId");
+        Converter c = app.createConverter("someConverterId");
 
         assertNotNull(c);
         assertTrue(c instanceof HogeConverter);
@@ -237,14 +236,13 @@ public class ApplicationImplTest extends TeedaTestCase {
 
     public void testCreateConverter_notCreatedFromDI() throws Exception {
         // ## Arrange ##
-        ComponentDef componentDef = new ComponentDefImpl(DateTimeConverter.class);
+        ComponentDef componentDef = new ComponentDefImpl(
+                DateTimeConverter.class);
         componentDef.setComponentName("java.util.Date");
         getContainer().register(componentDef);
-        
-        app_ = new ApplicationImpl();
-        
+        ApplicationImpl app = createApplication();
         // ## Act & Assert ##
-        assertNull(app_.createConverter(Date.class));
+        assertNull(app.createConverter(Date.class));
     }
 
     public void testCreateValueBinding() throws Exception {
@@ -254,15 +252,15 @@ public class ApplicationImplTest extends TeedaTestCase {
         ctx.setELParser(parser);
         ctx
                 .setValueBindingName("org.seasar.teeda.core.el.impl.ValueBindingImpl");
-        app_ = new ApplicationImpl();
-        app_.setValueBindingContext(ctx);
+        ApplicationImpl app = createApplication();
+        app.setValueBindingContext(ctx);
         MockVariableResolver resolver = getVariableResolver();
         A a = new A();
         a.setName("AAA");
         resolver.putValue("a", a);
-        app_.setVariableResolver(resolver);
+        app.setVariableResolver(resolver);
 
-        ValueBinding vb = app_.createValueBinding("#{a.name}");
+        ValueBinding vb = app.createValueBinding("#{a.name}");
         assertNotNull(vb);
 
         assertEquals("#{a.name}", vb.getExpressionString());
@@ -278,9 +276,8 @@ public class ApplicationImplTest extends TeedaTestCase {
         pDef.setValue("hoge");
         cDef.addPropertyDef(pDef);
         getContainer().register(cDef);
-
-        app_ = new ApplicationImpl();
-        Validator v = app_.createValidator("mock");
+        ApplicationImpl app = createApplication();
+        Validator v = app.createValidator("mock");
         assertNotNull(v);
         assertTrue(v instanceof MockValidatorWithProperties);
         MockValidatorWithProperties mock = (MockValidatorWithProperties) v;
@@ -288,11 +285,11 @@ public class ApplicationImplTest extends TeedaTestCase {
     }
 
     public void testCreateConverter_duplicateConverter1() throws Exception {
-        app_ = new ApplicationImpl();
-        app_.addConverter(Date.class, A1Converter.class.getName());
-        app_.addConverter(Date.class, A2Converter.class.getName());
+        ApplicationImpl app = createApplication();
+        app.addConverter(Date.class, A1Converter.class.getName());
+        app.addConverter(Date.class, A2Converter.class.getName());
 
-        Converter c = app_.createConverter(Date.class);
+        Converter c = app.createConverter(Date.class);
         assertNotNull(c);
         assertTrue(c instanceof A1Converter);
     }
@@ -301,10 +298,10 @@ public class ApplicationImplTest extends TeedaTestCase {
         ComponentDef cDef = new ComponentDefImpl(A1Converter.class, Date.class
                 .getName());
         getContainer().register(cDef);
-        app_ = new ApplicationImpl();
-        app_.addConverter(Date.class, A2Converter.class.getName());
+        ApplicationImpl app = createApplication();
+        app.addConverter(Date.class, A2Converter.class.getName());
 
-        Converter c = app_.createConverter(Date.class);
+        Converter c = app.createConverter(Date.class);
         assertNotNull(c);
         assertTrue(c instanceof A1Converter);
 
@@ -317,14 +314,19 @@ public class ApplicationImplTest extends TeedaTestCase {
         pDef.setValue("aaa");
         cDef.addPropertyDef(pDef);
         getContainer().register(cDef);
+        ApplicationImpl app = createApplication();
+        app.addComponent("mock", MockUIComponent.class.getName());
 
-        app_ = new ApplicationImpl();
-        app_.addComponent("mock", MockUIComponent.class.getName());
-
-        UIComponent c = app_.createComponent("mock");
+        UIComponent c = app.createComponent("mock");
         assertNotNull(c);
         MockUIComponent mock = (MockUIComponent) c;
         assertEquals("aaa", mock.getId());
+    }
+
+    public ApplicationImpl createApplication() {
+        ApplicationImpl app = new ApplicationImpl();
+        app.setComponentLookupStrategy(new DefaultComponentLookupStrategy());
+        return app;
     }
 
     public static class HogeConverter implements Converter {

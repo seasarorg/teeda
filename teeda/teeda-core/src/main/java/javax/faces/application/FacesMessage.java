@@ -56,80 +56,77 @@ public class FacesMessage implements Serializable {
         VALUES_MAP = Collections.unmodifiableMap(map);
     }
 
-    private String summary_;
+    private String summary;
 
-    private String detail_;
+    private String detail;
 
-    private Severity severity_;
+    private Severity severity;
 
     public FacesMessage() {
-        severity_ = SEVERITY_INFO;
+        this(SEVERITY_INFO, null, null);
     }
 
     public FacesMessage(String summary) {
-        severity_ = SEVERITY_INFO;
-        summary_ = summary;
+        this(SEVERITY_INFO, summary, null);
     }
 
     public FacesMessage(String summary, String detail) {
-        severity_ = SEVERITY_INFO;
-        summary_ = summary;
-        detail_ = detail;
+        this(SEVERITY_INFO, summary, detail);
     }
 
     public FacesMessage(Severity severity, String summary, String detail) {
         setSeverity(severity);
-        summary_ = summary;
-        detail_ = detail;
+        this.summary = summary;
+        this.detail = detail;
     }
 
     public String getDetail() {
-        return (detail_ != null) ? detail_ : summary_;
+        return (detail != null) ? detail : summary;
     }
 
     public void setDetail(String detail) {
-        detail_ = detail;
+        this.detail = detail;
     }
 
     public Severity getSeverity() {
-        return severity_;
+        return severity;
     }
 
     public void setSeverity(Severity severity) {
         if (!VALUES.contains(severity)) {
             throw new IllegalArgumentException("severity");
         }
-        severity_ = severity;
+        this.severity = severity;
     }
 
     public String getSummary() {
-        return summary_;
+        return summary;
     }
 
     public void setSummary(String summary) {
-        summary_ = summary;
+        this.summary = summary;
     }
 
     public static class Severity extends Object implements Comparable {
-        private String type_;
+        private String type;
 
-        private int ordinal_;
+        private int ordinal;
 
         public Severity(String type, int ordinal) {
-            type_ = type;
-            ordinal_ = ordinal;
+            this.type = type;
+            this.ordinal = ordinal;
         }
 
         public int getOrdinal() {
-            return ordinal_;
+            return ordinal;
         }
 
         public String toString() {
-            return type_;
+            return type;
         }
 
         public int compareTo(Object o) {
-            return ordinal_ - ((Severity) o).ordinal_;
+            return ordinal - ((Severity) o).ordinal;
         }
     }
 }

@@ -25,6 +25,7 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.render.Renderer;
 
 import org.seasar.framework.util.SPrintWriter;
+import org.seasar.teeda.core.application.impl.DefaultComponentLookupStrategy;
 import org.seasar.teeda.core.context.html.HtmlResponseWriter;
 import org.seasar.teeda.core.mock.MockRenderer;
 import org.seasar.teeda.core.unit.TeedaTestCase;
@@ -37,6 +38,9 @@ public class HtmlRenderKitImplTest extends TeedaTestCase {
 
     public void testAddRenderer() throws Exception {
         HtmlRenderKitImpl renderKit = new HtmlRenderKitImpl();
+        renderKit
+                .setComponentLookupStrategy(new DefaultComponentLookupStrategy());
+
         renderKit.setContainer(getContainer());
         try {
             renderKit.addRenderer(null, "a", new MockRenderer());
@@ -65,6 +69,9 @@ public class HtmlRenderKitImplTest extends TeedaTestCase {
 
     public void testGetRenderer() throws Exception {
         HtmlRenderKitImpl renderKit = new HtmlRenderKitImpl();
+        renderKit
+                .setComponentLookupStrategy(new DefaultComponentLookupStrategy());
+
         renderKit.setContainer(getContainer());
         MockRenderer mock = new MockRenderer();
         renderKit.addRenderer("a", "b", mock);

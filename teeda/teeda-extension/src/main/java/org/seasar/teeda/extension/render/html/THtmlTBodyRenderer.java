@@ -31,6 +31,11 @@ import org.seasar.teeda.core.JsfConstants;
  */
 public class THtmlTBodyRenderer extends Renderer {
 
+    //TODO : for autoregister, fix this.
+    public static final String COMPONENT_FAMILY = "fix_this";
+
+    public static final String RENDERER_TYPE = "fix_this";
+
     public void encodeChildren(FacesContext context, UIComponent component)
             throws IOException {
         AssertionUtil.assertNotNull("FacesContext", context);
