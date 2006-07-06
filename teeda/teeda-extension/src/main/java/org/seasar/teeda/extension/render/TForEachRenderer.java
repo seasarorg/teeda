@@ -131,4 +131,9 @@ public class TForEachRenderer extends Renderer {
             setValue(beanDesc, page, name, value);
         }
     }
+
+    public boolean getRendersChildren() {
+        return true;
+    }
+
 }
