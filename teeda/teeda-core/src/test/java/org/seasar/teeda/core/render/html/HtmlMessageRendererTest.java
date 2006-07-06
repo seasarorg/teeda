@@ -112,6 +112,22 @@ public class HtmlMessageRendererTest extends RendererTest {
         assertEquals("detail", getResponseText());
     }
 
+    public void testEncode_Detail_NoEscape() throws Exception {
+        FacesContext context = getFacesContext();
+        arrangeForComponent("fooFor");
+        htmlMessage_.setFor("fooFor");
+
+        FacesMessage facesMessage = new FacesMessage();
+        facesMessage.setDetail("<detail>");
+        context.addMessage("fooFor", facesMessage);
+
+        // ## Act ##
+        encodeByRenderer(renderer_, context, htmlMessage_);
+
+        // ## Assert ##
+        assertEquals("<detail>", getResponseText());
+    }
+
     public void testEncode_FirstMessageOnly() throws Exception {
         FacesContext context = getFacesContext();
         arrangeForComponent("fooFor");
@@ -151,6 +167,24 @@ public class HtmlMessageRendererTest extends RendererTest {
 
         // ## Assert ##
         assertEquals("summary", getResponseText());
+    }
+
+    public void testEncode_Summary_NoEscape() throws Exception {
+        FacesContext context = getFacesContext();
+        arrangeForComponent("fooFor");
+        htmlMessage_.setFor("fooFor");
+        htmlMessage_.setShowSummary(true);
+        htmlMessage_.setShowDetail(false);
+
+        FacesMessage facesMessage = new FacesMessage();
+        facesMessage.setSummary("<summary>");
+        context.addMessage("fooFor", facesMessage);
+
+        // ## Act ##
+        encodeByRenderer(renderer_, context, htmlMessage_);
+
+        // ## Assert ##
+        assertEquals("<summary>", getResponseText());
     }
 
     public void testEncode_SummaryAndDetail() throws Exception {

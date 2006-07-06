@@ -68,13 +68,13 @@ public abstract class AbstractHtmlMessagesRenderer extends AbstractHtmlRenderer 
 
         // TODO don't escape HTML tags
         if (isWriteSummary) {
-            writer.writeText(summary, null);
+            writer.write(summary);
         }
         if (isWriteDetail) {
             if (isWriteSummary) {
-                writer.writeText(" ", detail);
+                writer.write(" ");
             }
-            writer.writeText(detail, null);
+            writer.write(detail);
         }
 
         if (startSpan) {

@@ -73,6 +73,20 @@ public class HtmlMessagesRendererTest extends RendererTest {
         assertEquals("<ul><li>s</li></ul>", getResponseText());
     }
 
+    public void testEncode_Summary1_NoEscape() throws Exception {
+        FacesContext context = getFacesContext();
+
+        FacesMessage facesMessage = new FacesMessage();
+        facesMessage.setSummary("<s>");
+        context.addMessage(null, facesMessage);
+
+        // ## Act ##
+        encodeByRenderer(renderer_, context, htmlMessages_);
+
+        // ## Assert ##
+        assertEquals("<ul><li><s></li></ul>", getResponseText());
+    }
+
     public void testEncode_Summary1_table() throws Exception {
         FacesContext context = getFacesContext();
 
@@ -176,6 +190,22 @@ public class HtmlMessagesRendererTest extends RendererTest {
         assertEquals("<ul><li>d</li></ul>", getResponseText());
     }
 
+    public void testEncode_Detail_Escape() throws Exception {
+        FacesContext context = getFacesContext();
+        htmlMessages_.setShowSummary(false);
+        htmlMessages_.setShowDetail(true);
+
+        FacesMessage facesMessage = new FacesMessage();
+        facesMessage.setDetail("<d>");
+        context.addMessage(null, facesMessage);
+
+        // ## Act ##
+        encodeByRenderer(renderer_, context, htmlMessages_);
+
+        // ## Assert ##
+        assertEquals("<ul><li><d></li></ul>", getResponseText());
+    }
+
     public void testEncode_SummaryAndDetail() throws Exception {
         FacesContext context = getFacesContext();
         htmlMessages_.setShowSummary(true);
@@ -191,6 +221,23 @@ public class HtmlMessagesRendererTest extends RendererTest {
 
         // ## Assert ##
         assertEquals("<ul><li>s d</li></ul>", getResponseText());
+    }
+
+    public void testEncode_SummaryAndDetail_NoEscape() throws Exception {
+        FacesContext context = getFacesContext();
+        htmlMessages_.setShowSummary(true);
+        htmlMessages_.setShowDetail(true);
+
+        FacesMessage facesMessage = new FacesMessage();
+        facesMessage.setSummary("<s>");
+        facesMessage.setDetail("<d>");
+        context.addMessage("a", facesMessage);
+
+        // ## Act ##
+        encodeByRenderer(renderer_, context, htmlMessages_);
+
+        // ## Assert ##
+        assertEquals("<ul><li><s> <d></li></ul>", getResponseText());
     }
 
     public void testEncode_RenderFalse() throws Exception {
