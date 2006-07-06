@@ -20,10 +20,15 @@ import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
+import javax.faces.el.ValueBinding;
 import javax.faces.render.Renderer;
 import javax.faces.render.RendererTest;
 
 import org.custommonkey.xmlunit.Diff;
+import org.seasar.teeda.core.el.ELParser;
+import org.seasar.teeda.core.el.impl.ValueBindingImpl;
+import org.seasar.teeda.core.el.impl.commons.CommonsELParser;
+import org.seasar.teeda.core.el.impl.commons.CommonsExpressionProcessorImpl;
 import org.seasar.teeda.core.mock.MockConverter;
 import org.seasar.teeda.core.mock.MockFacesContext;
 
@@ -227,6 +232,21 @@ public class HtmlOutputTextRendererTest extends RendererTest {
 
     public void testGetRendersChildren() throws Exception {
         assertEquals(false, renderer_.getRendersChildren());
+    }
+
+    public void testValueBinding() throws Exception {
+        MockFacesContext context = getFacesContext();
+        ELParser parser = new CommonsELParser();
+        parser.setExpressionProcessor(new CommonsExpressionProcessorImpl());
+        ValueBinding vb = new ValueBindingImpl(context.getApplication(),
+                "#{a}", parser);
+        htmlOutputText_.setValueBinding("value", vb);
+
+        context.getExternalContext().getRequestMap().put("a", "123");
+
+        encodeByRenderer(renderer_, context, htmlOutputText_);
+
+        assertEquals("123", getResponseText());
     }
 
     private HtmlOutputTextRenderer createHtmlOutputTextRenderer() {
