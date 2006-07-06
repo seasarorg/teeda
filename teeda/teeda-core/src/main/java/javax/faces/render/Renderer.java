@@ -45,13 +45,18 @@ public abstract class Renderer {
             throws IOException {
         AssertionUtil.assertNotNull("context", context);
         AssertionUtil.assertNotNull("component", component);
+        encodeChildren0(context, component);
+    }
+
+    private void encodeChildren0(FacesContext context, UIComponent component)
+            throws IOException {
         for (Iterator itr = component.getChildren().iterator(); itr.hasNext();) {
             UIComponent child = (UIComponent) itr.next();
             child.encodeBegin(context);
             if (child.getRendersChildren()) {
                 child.encodeChildren(context);
             } else {
-                encodeChildren(context, child);
+                encodeChildren0(context, child);
             }
             child.encodeEnd(context);
             if (context.getResponseComplete()) {
