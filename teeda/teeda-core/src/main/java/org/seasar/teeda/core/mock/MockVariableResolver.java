@@ -23,6 +23,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.el.EvaluationException;
 import javax.faces.el.VariableResolver;
 
+import org.seasar.framework.container.S2Container;
+import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
 import org.seasar.teeda.core.JsfConstants;
 
 /**
@@ -84,6 +86,16 @@ public class MockVariableResolver extends VariableResolver {
             Object value = applicationMap.get(name);
             if (value != null) {
                 return value;
+            }
+        }
+        {
+            final S2Container container = SingletonS2ContainerFactory
+                    .getContainer();
+            if (container != null) {
+                final Object value = container.getComponent(name);
+                if (value != null) {
+                    return value;
+                }
             }
         }
         return null;
