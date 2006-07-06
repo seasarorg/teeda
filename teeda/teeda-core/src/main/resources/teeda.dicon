@@ -4,7 +4,7 @@
 <components namespace="teeda">
 	<include path="convention.dicon" />
 	<include path="teedaErrorPage.dicon" />
-	<include path="teedaIdLookup.dicon" />
+	<include path="teedaLookup.dicon" />
 
 	<!-- FacesConfig configurator -->
 	<component class="org.seasar.teeda.core.config.faces.impl.FacesConfigBuilderImpl">
