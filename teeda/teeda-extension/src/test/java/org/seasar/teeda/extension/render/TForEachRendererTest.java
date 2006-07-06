@@ -31,37 +31,37 @@ public class TForEachRendererTest extends TestCase {
 
     public void testProcessMapItem() throws Exception {
         TForEachRenderer renderer = new TForEachRenderer();
-        Map map = new HashMap();
-        map.put("aaa", "111");
-        map.put("bbb", "111");
+        Map item = new HashMap();
+        item.put("aaa", "111");
+        item.put("bbb", "112");
         BeanDesc beanDesc = BeanDescFactory.getBeanDesc(Hoge.class);
         Hoge hoge = new Hoge();
-        renderer.processMapItem(beanDesc, hoge, map);
+        renderer.processMapItem(beanDesc, hoge, item);
         assertEquals("111", hoge.getAaa());
     }
 
     public void testProcessBeanItem() throws Exception {
         TForEachRenderer renderer = new TForEachRenderer();
-        Hoge2 hoge2 = new Hoge2();
-        hoge2.setAaa("111");
-        hoge2.setBbb("111");
+        Hoge2 item = new Hoge2();
+        item.setAaa("111");
+        item.setBbb("112");
         BeanDesc beanDesc = BeanDescFactory.getBeanDesc(Hoge.class);
-        Hoge hoge = new Hoge();
-        renderer.processBeanItem(beanDesc, hoge, hoge2);
-        assertEquals("111", hoge.getAaa());
+        Hoge page = new Hoge();
+        renderer.processBeanItem(beanDesc, page, item);
+        assertEquals("111", page.getAaa());
     }
 
     public void testProcessItem() throws Exception {
         TForEachRenderer renderer = new TForEachRenderer();
-        Map map = new HashMap();
-        map.put("aaa", "111");
-        map.put("bbb", "111");
+        Map item = new HashMap();
+        item.put("aaa", "111");
+        item.put("bbb", "112");
         BeanDesc beanDesc = BeanDescFactory.getBeanDesc(Hoge.class);
-        Hoge hoge = new Hoge();
-        renderer.processItem(beanDesc, hoge, map, "foo", 1, "fooIndex");
-        assertEquals("111", hoge.getAaa());
-        assertSame(map, hoge.getFoo());
-        assertEquals(1, hoge.getFooIndex());
+        Hoge page = new Hoge();
+        renderer.processItem(beanDesc, page, item, "foo", 1, "fooIndex");
+        assertEquals("111", page.getAaa());
+        assertSame(item, page.getFoo());
+        assertEquals(1, page.getFooIndex());
     }
 
     public static class Hoge {
@@ -117,4 +117,5 @@ public class TForEachRendererTest extends TestCase {
             this.bbb = bbb;
         }
     }
+
 }
