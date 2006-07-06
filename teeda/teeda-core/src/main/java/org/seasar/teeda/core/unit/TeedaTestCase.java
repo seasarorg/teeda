@@ -15,6 +15,7 @@
  */
 package org.seasar.teeda.core.unit;
 
+import java.io.IOException;
 import java.util.Locale;
 
 import javax.faces.FactoryFinder;
@@ -188,6 +189,10 @@ public abstract class TeedaTestCase extends S2FrameworkTestCase {
     protected ManagedBeanFactory getManagedBeanFactory() {
         return (ManagedBeanFactory) getContainer().getComponent(
                 ManagedBeanFactory.class);
+    }
+
+    protected String getResponseText() throws IOException {
+        return getResponse().getWriter().toString();
     }
 
     protected void tearDownContainer() throws Throwable {

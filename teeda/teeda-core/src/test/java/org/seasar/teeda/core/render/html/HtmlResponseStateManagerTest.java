@@ -15,14 +15,11 @@
  */
 package org.seasar.teeda.core.render.html;
 
-import java.io.IOException;
-
 import javax.faces.application.StateManager;
 import javax.faces.application.StateManager.SerializedView;
 import javax.faces.context.ResponseWriter;
 
 import org.custommonkey.xmlunit.Diff;
-import org.seasar.teeda.core.context.html.HtmlResponseWriter;
 import org.seasar.teeda.core.render.AbstractResponseStateManager;
 import org.seasar.teeda.core.render.EncodeConverter;
 import org.seasar.teeda.core.unit.TeedaTestCase;
@@ -31,12 +28,6 @@ import org.seasar.teeda.core.unit.TeedaTestCase;
  * @author shot
  */
 public class HtmlResponseStateManagerTest extends TeedaTestCase {
-
-    protected String getResponseText() throws IOException {
-        HtmlResponseWriter htmlResponseWriter = ((HtmlResponseWriter) getFacesContext()
-                .getResponseWriter());
-        return htmlResponseWriter.getWriter().toString();
-    }
 
     public void testWriteState_getEncodeInClient() throws Exception {
         // # Arrange #

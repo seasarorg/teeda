@@ -15,8 +15,6 @@
  */
 package org.seasar.teeda.extension.unit;
 
-import java.io.IOException;
-
 import org.seasar.teeda.core.unit.TeedaTestCase;
 import org.seasar.teeda.extension.jsp.PageContextImpl;
 
@@ -30,10 +28,6 @@ public abstract class TeedaExtensionTestCase extends TeedaTestCase {
 
     protected PageContextImpl getPageContext() {
         return pageContext;
-    }
-
-    protected String getResponseText() throws IOException {
-        return getResponse().getWriter().toString();
     }
 
     protected void setUpContainer() throws Throwable {
