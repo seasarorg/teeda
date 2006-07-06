@@ -266,39 +266,31 @@ Kumu.Ajax = {
                 var o = json[v];
                 if(o && o instanceof Array){
                     var parent = node.parentNode;
+       	            if(parent.nodeType == 3){
+           	        	parent = parent.parentNode;
+               	    }
                     var orig = node.cloneNode(true);
-                    var next;
+                    parent.removeChild(node);
                     for(var j = 0; j < o.length; j++){
                         var obj = o[j];
-                        var next;
-                        if(j == 0){
-                            for(var k in obj){
-                                var temp = document.getElementById(k);
-                                if(temp){
-                                    self._setJSONData(temp, obj[k]);
-                                    temp.id = "";
-                                }
-                            }
-                        }else{
-                            var clone = orig.cloneNode(true);
-                            if(j == 1){
-                                next = node.nextSibling;
-                            }
-                            parent.insertBefore(clone, next);
-                            for(var k in obj){
-                                var temp = document.getElementById(k);
-                                if(temp){
-                                    self._setJSONData(temp, obj[k]);
-                                    temp.id = "";
-                                }
-                            }
-                            clone.id = "";
+                        var clone = orig.cloneNode(true);
+                        if(clone.style.display &&  clone.style.display == 'none'){
+	                        clone.style.display = '';
                         }
+                        parent.appendChild(clone);
+                        for(var k in obj){
+                            var temp = document.getElementById(k);
+                            if(temp){
+                                self._setJSONData(temp, obj[k]);
+                               	temp.id = "";
+                            }
+                        }
+                        clone.id = "";
                     }
+                   parent.appendChild(orig);
                 }else{
                     self._setJSONData(node, o);
                 }
-                node.id = "";
             }
         }
     }
