@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -92,9 +92,11 @@ public class MockVariableResolver extends VariableResolver {
             final S2Container container = SingletonS2ContainerFactory
                     .getContainer();
             if (container != null) {
-                final Object value = container.getComponent(name);
-                if (value != null) {
-                    return value;
+                if (container.hasComponentDef(name)) {
+                    final Object value = container.getComponent(name);
+                    if (value != null) {
+                        return value;
+                    }
                 }
             }
         }
