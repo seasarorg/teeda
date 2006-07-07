@@ -22,7 +22,6 @@ function createOptionsFromOrg(data, opt) {
 function createOptionsFromJSON(data, opt) {
     clearOptions(opt);
     if (!data) return;
-    var json = eval('(' + data + ')');
     createOptionsFromJson(opt, json);
 }
 
@@ -31,7 +30,7 @@ function createOptionsFromXml(data, opt) {
     if (!data) return;
     var doc = data.documentElement;
     var itemTag = data.documentElement.getElementsByTagName("item");
-    
+
     for (var i = 0; i < itemTag.length; i++) {
     	var item = itemTag.item(i);
     	var menuName = item.childNodes.item(0).childNodes.item(0).data;
@@ -48,9 +47,9 @@ function clearOptions(opt) {
 }
 
 function createOptionsFromJson(opt, json) {
-    var dataCnt = json.detail.length;
-	for (var i = 0; i < json.detail.length; i++) {
-	    var detail = json.detail[i];
+    var dataCnt = json.length;
+	for (var i = 0; i < dataCnt; i++) {
+	    var detail = json[i];
 	    opt.options[i] = new Option(detail.menuName, detail.price);
 	}
 }

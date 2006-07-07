@@ -9,12 +9,11 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
 package examples.teeda.ajax;
-
 
 /**
  * @author yone
@@ -25,12 +24,27 @@ public class AjaxSampleBean {
     private static final String FRUIT = "100\tオレンジ\n200\tリンゴ\n"
             + "300\t桃\n400\t葡萄\n500\tメロン\n600\tすいか\n";
 
-    private static final String DRINK = "0\t水\n120\tコーラ\n"
+    private static final String DRINK = "100\t水\n120\tコーラ\n"
             + "240\tコーヒー\n200\t紅茶\n120\tスプライト\n80\tペプシ\n";
 
     private static final String NOODLE = "250\tうどん\n300\tそば\n"
             + "550\tラーメン\n180\tソーメン\n880\tスパゲティ\n30\t焼きそば\n"
             + "440\tナポリタン\n1280\t長崎チャンポン\n";
+
+    private static final AjaxDto[] JSON_FRUIT = { new AjaxDto("オレンジ", 100),
+            new AjaxDto("リンゴ", 200), new AjaxDto("桃", 300),
+            new AjaxDto("葡萄", 400), new AjaxDto("メロン", 500),
+            new AjaxDto("すいか", 600) };
+
+    private static final AjaxDto[] JSON_DRINK = { new AjaxDto("オレンジ", 100),
+            new AjaxDto("リンゴ", 200), new AjaxDto("桃", 300),
+            new AjaxDto("葡萄", 400), new AjaxDto("メロン", 500),
+            new AjaxDto("すいか", 600) };
+
+    private static final AjaxDto[] JSON_NOODLE = { new AjaxDto("オレンジ", 100),
+            new AjaxDto("リンゴ", 200), new AjaxDto("桃", 300),
+            new AjaxDto("葡萄", 400), new AjaxDto("メロン", 500),
+            new AjaxDto("すいか", 600) };
 
     private static final String XML_FRUIT = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
             + "<detail>\n"
@@ -67,6 +81,9 @@ public class AjaxSampleBean {
     private final String[] ORG_TEXT = { "", FRUIT, DRINK, NOODLE };
 
     private final String[] XML_TEXT = { "", XML_FRUIT, XML_DRINK, XML_NOODLE };
+
+    private final AjaxDto[][] JSON_ARRAY = { new AjaxDto[0], JSON_FRUIT,
+            JSON_DRINK, JSON_NOODLE };
 
     private String arg1;
 
@@ -121,7 +138,7 @@ public class AjaxSampleBean {
     }
 
     private Object createResponseJson() {
-        return new AjaxDto(this.food);
+        return JSON_ARRAY[this.food];
     }
 
     private String createResponseXml() {

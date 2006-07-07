@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -21,14 +21,19 @@ package examples.teeda.ajax;
 public class AjaxDto {
 
     private String menuName;
-    
+
     private int price;
 
-    public AjaxDto(int foodNo) {
-        if(foodNo == 1) {
+    public AjaxDto(String menuName, int price) {
+        this.menuName = menuName;
+        this.price = price;
+    }
+
+    private AjaxDto(int foodNo) {
+        if (foodNo == 1) {
             menuName = "hoge";
             price = 100;
-        } else if(foodNo == 2){
+        } else if (foodNo == 2) {
             menuName = "foo";
             price = 200;
         } else {
@@ -36,7 +41,7 @@ public class AjaxDto {
             price = 300;
         }
     }
-    
+
     public String getMenuName() {
         return menuName;
     }
@@ -52,5 +57,5 @@ public class AjaxDto {
     public void setPrice(int price) {
         this.price = price;
     }
-    
+
 }

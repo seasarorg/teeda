@@ -172,9 +172,11 @@ Kumu.Ajax = {
                 if (self.HTTP_STATUS_OK == req.status) {
                     if (self.DEBUG) self.debugPrint(req.responseText);
                     if (self.RESPONSE_TYPE_JSON == ajaxComponent.responseType) {
-                        ajaxComponent.doAction(eval('(' + req.responseText + ')'));
+                    	var resText = req.responseText;
+                        ajaxComponent.doAction(eval('(' + resText + ')'));
                     } else if (self.RESPONSE_TYPE_XML == ajaxComponent.responseType) {
-                        ajaxComponent.doAction(req.responseXML);
+	                    var responseText = req.responseText;
+                        ajaxComponent.doAction(responseText);
                     } else {
                         ajaxComponent.doAction(req.responseText);
                     }
