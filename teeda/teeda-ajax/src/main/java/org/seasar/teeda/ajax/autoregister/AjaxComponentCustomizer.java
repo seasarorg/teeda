@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -25,11 +25,10 @@ import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.framework.container.ComponentDef;
 import org.seasar.framework.container.autoregister.ComponentCustomizer;
 import org.seasar.framework.container.impl.MetaDefImpl;
-import org.seasar.teeda.core.util.PatternUtil;
 
 /**
  * @author shot
- * 
+ *
  */
 public class AjaxComponentCustomizer implements ComponentCustomizer {
 
@@ -45,20 +44,21 @@ public class AjaxComponentCustomizer implements ComponentCustomizer {
         String[] names = beanDesc.getMethodNames();
         for (int i = 0; i < names.length; i++) {
             String name = names[i];
-            if(isMatch(name)) {
+            if (isMatch(name)) {
                 componentDef.addMetaDef(new MetaDefImpl("teeda-ajax"));
             }
         }
     }
 
     public void addMethodPattern(String methodName) {
-        this.methodNames.add(PatternUtil.getPattern(methodName));
+        Pattern pattern = Pattern.compile(methodName);
+        this.methodNames.add(pattern);
     }
-    
+
     protected boolean isMatch(String name) {
-        for(Iterator itr = methodNames.iterator(); itr.hasNext();) {
+        for (Iterator itr = methodNames.iterator(); itr.hasNext();) {
             Pattern pattern = (Pattern) itr.next();
-            if(pattern.matcher(name).matches()) {
+            if (pattern.matcher(name).matches()) {
                 return true;
             }
         }
