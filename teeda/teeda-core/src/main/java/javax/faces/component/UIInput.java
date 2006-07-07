@@ -236,11 +236,12 @@ public class UIInput extends UIOutput implements EditableValueHolder {
         if (!isValid() || !isLocalValueSet()) {
             return;
         }
-        if (getValueBinding("value") == null) {
+        final ValueBinding valueBinding = getValueBinding("value");
+        if (valueBinding == null) {
             return;
         }
         try {
-            getValueBinding("value").setValue(context, getLocalValue());
+            valueBinding.setValue(context, getLocalValue());
             setValue(null);
             setLocalValueSet(false);
         } catch (RuntimeException e) {
