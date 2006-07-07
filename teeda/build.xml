@@ -1,6 +1,6 @@
 <project name="teeda" default="dist" basedir=".">
 
-	<property name="ver" value="1.0-beta-5-SNAPSHOT"/>
+	<property name="ver" value="1.0-beta-5"/>
 
 	<target name="dist">
 		<mkdir dir="target"/>
@@ -13,6 +13,14 @@
 			<zipfileset prefix="teeda" dir="teeda-core/target">
 				<include name="teeda-core-${ver}.jar"/>
 				<include name="teeda-core-${ver}-sources.jar"/>
+			</zipfileset>
+			<zipfileset prefix="teeda" dir="teeda-extension/target">
+				<include name="teeda-extension-${ver}.jar"/>
+				<include name="teeda-extension-${ver}-sources.jar"/>
+			</zipfileset>
+			<zipfileset prefix="teeda" dir="teeda-ajax/target">
+				<include name="teeda-ajax-${ver}.jar"/>
+				<include name="teeda-ajax-${ver}-sources.jar"/>
 			</zipfileset>
 			<zipfileset prefix="teeda/resources" dir="teeda-core/src/test/resources">
 				<include name="teeda.dicon"/>

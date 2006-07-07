@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -28,13 +28,19 @@ import org.seasar.framework.beans.factory.BeanDescFactory;
 /**
  * @author mopemope
  * @author higa
- * 
+ *
  */
 public class AjaxUtil {
 
     protected AjaxUtil() {
     }
-    
+
+    public static boolean isJSON(String str) {
+        return str != null
+                && (str.startsWith(AjaxConstants.START_BRACE) && str
+                        .endsWith(AjaxConstants.END_BRACE));
+    }
+
     public static void setContentType(HttpServletResponse response,
             String result) {
         String contentType;
@@ -80,14 +86,14 @@ public class AjaxUtil {
             appendBean(buf, o);
         }
     }
-    
+
     public static void appendFloat(StringBuffer buf, Float f) {
         if (f.isNaN() || f.isInfinite()) {
             throw new IllegalArgumentException(f.toString());
         }
         buf.append(f.toString());
     }
-    
+
     public static void appendDouble(StringBuffer buf, Double d) {
         if (d.isNaN() || d.isInfinite()) {
             throw new IllegalArgumentException(d.toString());
@@ -115,10 +121,10 @@ public class AjaxUtil {
         }
         buf.append(AjaxConstants.END_BRACKET);
     }
-    
+
     public static void appendMap(StringBuffer buf, Map map) {
         buf.append(AjaxConstants.START_BRACE);
-        for (Iterator i = map.keySet().iterator(); i.hasNext(); ) {
+        for (Iterator i = map.keySet().iterator(); i.hasNext();) {
             String key = (String) i.next();
             buf.append(key + AjaxConstants.COLON);
             append(buf, map.get(key));
@@ -129,7 +135,7 @@ public class AjaxUtil {
         }
         buf.append(AjaxConstants.END_BRACE);
     }
-    
+
     public static void appendBean(StringBuffer buf, Object bean) {
         buf.append(AjaxConstants.START_BRACE);
         BeanDesc beanDesc = BeanDescFactory.getBeanDesc(bean.getClass());

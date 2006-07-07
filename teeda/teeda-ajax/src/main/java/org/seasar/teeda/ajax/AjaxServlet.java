@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -116,13 +116,21 @@ public class AjaxServlet extends HttpServlet {
                             + e.getMessage());
         }
         String result = AjaxUtil.toJson(target);
-        AjaxUtil.setContentType(response, result);
+        if (AjaxUtil.isJSON(result)) {
+            AjaxUtil.setContentType(response, result);
+        } else {
+            AjaxUtil.setContentType(response, target.toString());
+        }
 
         response.setHeader("Cache-Control", "no-cache");
         response.setHeader("Pragma", "no-cache");
 
         PrintWriter pw = response.getWriter();
-        pw.write(result);
+        if (AjaxUtil.isJSON(result)) {
+            pw.write(result);
+        } else {
+            pw.write(target.toString());
+        }
         pw.close();
     }
 
