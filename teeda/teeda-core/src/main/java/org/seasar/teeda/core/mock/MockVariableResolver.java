@@ -33,20 +33,20 @@ import org.seasar.teeda.core.JsfConstants;
  */
 public class MockVariableResolver extends VariableResolver {
 
-    private Map values_ = new HashMap();
+    private Map values = new HashMap();
 
     public MockVariableResolver() {
     }
 
     public void putValue(String key, Object value) {
-        values_.put(key, value);
+        values.put(key, value);
     }
 
     public Object resolveVariable(FacesContext context, String name)
             throws EvaluationException {
         ExternalContext externalContext = context.getExternalContext();
         {
-            Object value = values_.get(name);
+            Object value = values.get(name);
             if (value != null) {
                 return value;
             }
@@ -69,8 +69,8 @@ public class MockVariableResolver extends VariableResolver {
                 return value;
             }
         }
-        Map requestParameterMap = externalContext.getRequestParameterMap();
         {
+            Map requestParameterMap = externalContext.getRequestParameterMap();
             Object value = requestParameterMap.get(name);
             if (value != null) {
                 return value;
@@ -88,15 +88,13 @@ public class MockVariableResolver extends VariableResolver {
                 return value;
             }
         }
-        {
+        if (SingletonS2ContainerFactory.hasContainer()) {
             final S2Container container = SingletonS2ContainerFactory
                     .getContainer();
-            if (container != null) {
-                if (container.hasComponentDef(name)) {
-                    final Object value = container.getComponent(name);
-                    if (value != null) {
-                        return value;
-                    }
+            if (container.hasComponentDef(name)) {
+                final Object value = container.getComponent(name);
+                if (value != null) {
+                    return value;
                 }
             }
         }
