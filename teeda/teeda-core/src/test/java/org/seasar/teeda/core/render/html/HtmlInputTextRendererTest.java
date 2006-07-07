@@ -16,7 +16,6 @@
 package org.seasar.teeda.core.render.html;
 
 import javax.faces.component.UIComponent;
-import javax.faces.component.html.HtmlInputText;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
@@ -223,34 +222,6 @@ public class HtmlInputTextRendererTest extends RendererTest {
         HtmlInputTextRenderer renderer = new HtmlInputTextRenderer();
         renderer.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
         return renderer;
-    }
-
-    private static class MockHtmlInputText extends HtmlInputText {
-        private Renderer renderer_;
-
-        private String clientId_;
-
-        public void setRenderer(Renderer renderer) {
-            renderer_ = renderer;
-        }
-
-        protected Renderer getRenderer(FacesContext context) {
-            if (renderer_ != null) {
-                return renderer_;
-            }
-            return super.getRenderer(context);
-        }
-
-        public String getClientId(FacesContext context) {
-            if (clientId_ != null) {
-                return clientId_;
-            }
-            return super.getClientId(context);
-        }
-
-        public void setClientId(String clientId) {
-            clientId_ = clientId;
-        }
     }
 
 }
