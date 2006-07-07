@@ -17,12 +17,10 @@ Kumu.Ajax = {
     XML_HTTP_REQUEST_STATUS_INTERACTIVE : 3,
     XML_HTTP_REQUEST_STATUS_COMPLETE : 4,
 
-    CONTENT_TYPE_XML : "text/xml",
-    CONTENT_TYPE_JSON : "text/javascript",
-    CONTENT_TYPE_TEXT : "text/plain",
-    CONTENT_TYPE_HTML : "text/html",
-
-    AJAX_RESPONSE_TYPE_XML : 1,
+    RESPONSE_TYPE_XML : 1,
+    RESPONSE_TYPE_JSON : 2,
+    RESPONSE_TYPE_TEXT : 3,
+    RESPONSE_TYPE_HTML : 4,
 
     axo : new Array(
         "Microsoft.XMLHTTP",
@@ -32,11 +30,11 @@ Kumu.Ajax = {
     ),
 
     DEBUG : false,
-    
+
     getS2AjaxComponent : function() {
         return new this.AjaxComponent();
     },
-    
+
     AjaxComponent : function () {
         var self = Kumu.Ajax;
         this.name = self.AJAX_COMPONENT_NAME;
@@ -45,7 +43,7 @@ Kumu.Ajax = {
         this.params = null;
         this.doAction = function(ajaxResponse){}
     },
-    
+
     _createXmlHttp : function(){
         var xmlHttp = false;
         /*@cc_on
@@ -92,7 +90,7 @@ Kumu.Ajax = {
             }
         }
     },
-    
+
     _checkComponent : function(component) {
         var self = Kumu.Ajax;
         var name;
@@ -113,16 +111,16 @@ Kumu.Ajax = {
             self.debugPrint("IllegalArgument. argument object is not AjaxComponent. implements url or doAction!", true);
             return;
         }
-        
+
         var xmlHttp = self._createXmlHttp();
         if (!xmlHttp || !document.getElementById) {
             self.debugPrint("This browser does not support Ajax.", true);
             return;
         }
-        
+
         var sysdate = new String(new Date());
         var url = ajaxComponent.url;
-        
+
         var parameters = "";
         var params = ajaxComponent.params;
         var method = 'GET';
@@ -136,7 +134,7 @@ Kumu.Ajax = {
         if(method == 'GET'){
             url += "?time=" + self.encodeURL(sysdate);
             if(null != params){
-            
+
                 for(var key in params){
                     parameters += "&" + key + "=" + self.encodeURL(params[key]);
                 }
@@ -170,12 +168,12 @@ Kumu.Ajax = {
     _registAjaxListener : function(req, ajaxComponent) {
         var self = Kumu.Ajax;
         req.onreadystatechange = function() {
-            if (self.XML_HTTP_REQUEST_STATUS_COMPLETE == req.readyState) { 
+            if (self.XML_HTTP_REQUEST_STATUS_COMPLETE == req.readyState) {
                 if (self.HTTP_STATUS_OK == req.status) {
                     if (self.DEBUG) self.debugPrint(req.responseText);
-                    if (self.CONTENT_TYPE_JSON == ajaxComponent.responseType) {
+                    if (self.RESPONSE_TYPE_JSON == ajaxComponent.responseType) {
                         ajaxComponent.doAction(eval('(' + req.responseText + ')'));
-                    } else if (self.CONTENT_TYPE_XML == ajaxComponent.responseType) {
+                    } else if (self.RESPONSE_TYPE_XML == ajaxComponent.responseType) {
                         ajaxComponent.doAction(req.responseXML);
                     } else {
                         ajaxComponent.doAction(req.responseText);
@@ -196,13 +194,13 @@ Kumu.Ajax = {
         }
         if (escape) {
             return escape(val);
-        }        
-    },    
+        }
+    },
 
     _getComponentName : function(func){
         var str = func.toString();
         var ret = str.match(/[0-9A-Za-z_]+\(/).toString();
-        ret = ret.substring(0,ret.length-1); 
+        ret = ret.substring(0,ret.length-1);
 		var idx = ret.indexOf("_");
 		if (idx == -1) {
 		    return [];
@@ -213,7 +211,7 @@ Kumu.Ajax = {
 
         return arr;
     },
-    
+
     executeTeedaAjax : function(callback, param, responseType){
         var self = Kumu.Ajax;
         var ajax = self.getS2AjaxComponent();
@@ -232,24 +230,24 @@ Kumu.Ajax = {
             ajax.params["component"] = components[0];
             ajax.params["action"] = components[1];
         }
-        
+
         ajax.doAction = callback;
         if (!responseType) {
-            responseType = self.CONTENT_TYPE_JSON;
+            responseType = self.RESPONSE_TYPE_JSON;
         }
         ajax.responseType = responseType;
         self.executeAjax(ajax);
     },
 
     _setJSONData : function(node, data){
-        //TODO Mapping Rule 
+        //TODO Mapping Rule
         if(node.hasChildNodes()){
             node.childNodes[0].nodeValue = data;
         }else{
             node.setAttribute('value', data);
         }
     },
-        
+
     render : function(json){
         var self = Kumu.Ajax;
         for(var v in json){

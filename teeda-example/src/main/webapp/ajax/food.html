@@ -1,8 +1,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-<script language="JavaScript" src="/teeda-example/js/ajax.js"></script>
-<script language="JavaScript" src="/teeda-example/js/kumu.js"></script>
+<script language="JavaScript" src="/teeda-example/js/kumu/ajax.js"></script>
+<script language="JavaScript" src="/teeda-example/js/kumu/kumu.js"></script>
 <script language="JavaScript" src="/teeda-example/js/food.js"></script>
 <script language="JavaScript">
 <!--
@@ -10,7 +10,7 @@ function org(response){
     createOptionsFromOrg(response, document.frm.menuOrg);
 }
 function sampleAjaxOrg(food) {
-    Kumu.Ajax.executeTeedaAjax(org, { "component" : "exampleBean", "action" : "ajaxOrg", "food" : food });
+    Kumu.Ajax.executeTeedaAjax(org, { "component" : "ajaxBean", "action" : "ajaxOrg", "food" : food });
 }
 function json(response){
     createOptionsFromJSON(response, document.frm.menuJson);
@@ -21,7 +21,7 @@ function exampleBean_newTest(response){
 function sampleAjaxJson(food) {
     // for disp response data
     Kumu.Ajax.DEBUG = true;
-    Kumu.Ajax.executeTeedaAjax(json, { "component" : "exampleBean", "action" : "ajaxJson", "food" : food });
+    Kumu.Ajax.executeTeedaAjax(json, { "component" : "ajaxBean", "action" : "ajaxJson", "food" : food });
 }
 function xml(response){
     createOptionsFromXml(response, document.frm.menuXml);
@@ -30,7 +30,7 @@ function sampleAjaxXml(food) {
     // for disp response data
     Kumu.Ajax.DEBUG = true;
     // for xml type 3rd param
-    Kumu.Ajax.executeTeedaAjax(xml, { "component" : "exampleBean", "action" : "ajaxXml", "food" : food }, Kumu.Ajax.AJAX_RESPONSE_TYPE_XML);
+    Kumu.Ajax.executeTeedaAjax(xml, { "component" : "ajaxBean", "action" : "ajaxXml", "food" : food }, Kumu.Ajax.AJAX_RESPONSE_TYPE_XML);
 }
 //-->
 </script>
@@ -46,7 +46,7 @@ Ajax Sample<br/>
      <th>詳細</th>
    </tr>
    <tr>
-    <td>  
+    <td>
     <select name="foodOrg" size="5" style="width:70px;" onchange="sampleAjaxOrg(this.value);">
      <option value="1">果物</option>
      <option value="2">飲み物</option>
@@ -67,7 +67,7 @@ Ajax Sample<br/>
      <th>詳細</th>
    </tr>
    <tr>
-    <td>  
+    <td>
     <select name="foodJson" size="5" style="width:70px;" onchange="sampleAjaxJson(this.value);">
      <option value="1">果物</option>
      <option value="2">飲み物</option>
@@ -88,7 +88,7 @@ Ajax Sample<br/>
      <th>詳細</th>
    </tr>
    <tr>
-    <td>  
+    <td>
     <select name="foodXml" size="5" style="width:70px;" onchange="sampleAjaxXml(this.value);">
      <option value="1">果物</option>
      <option value="2">飲み物</option>

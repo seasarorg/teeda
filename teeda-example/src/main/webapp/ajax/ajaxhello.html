@@ -1,8 +1,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<!--
 <script language="JavaScript" src="../js/kumu.js"></script>
 <script language="JavaScript" src="../js/ajax.js"></script>
+ -->
+<script language="JavaScript" src="../js/kumu/kumu.js"></script>
+<script language="JavaScript" src="../js/kumu/ajax.js"></script>
 <script language="JavaScript">
 <!--
 function json(response){
@@ -10,18 +14,18 @@ function json(response){
 	t.innerHTML = response;
 }
 function ajaxHelloBean_ajaxAction2(response){
-	var t = $i("result2");
+	var t = $i("calculate");
     t.innerHTML = response;
 }
 function sampleAjaxJson(name) {
     // for disp response data
-    Kumu.Ajax.DEBUG = true;
-    Kumu.Ajax.executeTeedaAjax(json, { "component" : "ajaxHelloBean", "action" : "ajaxAction", "name" : name });
+    Kumu.Ajax.DEBUG = false;
+    Kumu.Ajax.executeTeedaAjax(json, { "component" : "ajaxHelloBean", "action" : "ajaxAction", "name" : name }, Kumu.Ajax.RESPONSE_TYPE_TEXT);
 }
 function sampleAjaxJson2(name, arg1, arg2) {
     // for disp response data
-    Kumu.Ajax.DEBUG = true;
-    Kumu.Ajax.executeTeedaAjax(ajaxHelloBean_ajaxAction2, [name, arg1, arg2]);
+    Kumu.Ajax.DEBUG = false;
+    Kumu.Ajax.executeTeedaAjax(ajaxHelloBean_ajaxAction2, [name, arg1, arg2], Kumu.Ajax.RESPONSE_TYPE_TEXT);
 }
 //-->
 </script>
@@ -44,7 +48,7 @@ Ajax First Step<br/>
    <option value="888">888</option>
    <option value="777">777</option>
   </select>
-  <span id="result2"></span>
+  <span id="calculate"></span>
 </form>
 </body>
 </html>
