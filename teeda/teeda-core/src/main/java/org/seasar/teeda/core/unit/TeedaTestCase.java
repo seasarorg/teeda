@@ -196,7 +196,6 @@ public abstract class TeedaTestCase extends S2FrameworkTestCase {
     }
 
     protected void tearDownContainer() throws Throwable {
-        super.tearDownContainer();
         externalContext = null;
         application = null;
         facesContext.release();
@@ -208,6 +207,7 @@ public abstract class TeedaTestCase extends S2FrameworkTestCase {
         NavigationResource.removeAll();
         ValidatorResource.removeAll();
         FacesConfigOptions.clear();
+        super.tearDownContainer();
     }
 
     /**
