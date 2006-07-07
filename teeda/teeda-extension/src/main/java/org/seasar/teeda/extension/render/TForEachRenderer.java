@@ -20,6 +20,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 
+import javax.faces.component.NamingContainer;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.render.Renderer;
@@ -27,8 +28,6 @@ import javax.faces.render.Renderer;
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.PropertyDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
-import org.seasar.framework.container.S2Container;
-import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
 import org.seasar.framework.util.AssertionUtil;
 import org.seasar.teeda.extension.component.TForEach;
 
@@ -46,23 +45,29 @@ public class TForEachRenderer extends Renderer {
 
     public void encodeChildren(FacesContext context, UIComponent component)
             throws IOException {
-        AssertionUtil.assertNotNull("FacesContext", context);
-        AssertionUtil.assertNotNull("UIComponent", component);
+        assertNotNull(context, component);
         if (!component.isRendered()) {
             return;
         }
         TForEach forEach = (TForEach) component;
-        S2Container container = SingletonS2ContainerFactory.getContainer();
-        Object page = container.getComponent(forEach.getPageName());
+        Object page = forEach.getPage();
         BeanDesc beanDesc = BeanDescFactory.getBeanDesc(page.getClass());
         PropertyDesc pd = beanDesc.getPropertyDesc(forEach.getItemsName());
         Object[] items = getItems(page, pd);
-        String itemName = forEach.getItemName();
-        String indexName = forEach.getIndexName();
+        final String itemName = forEach.getItemName();
+        final String indexName = forEach.getIndexName();
         for (int i = 0; i < items.length; ++i) {
+            forEach.setRowIndex(i);
+            forEach.restoreDescendantState(context);
             processItem(beanDesc, page, items[i], itemName, i, indexName);
             super.encodeChildren(context, component);
+            forEach.saveDescendantComponentStates(context);
         }
+    }
+
+    protected void assertNotNull(FacesContext context, UIComponent component) {
+        AssertionUtil.assertNotNull("context", context);
+        AssertionUtil.assertNotNull("component", component);
     }
 
     protected Object[] getItems(Object page, PropertyDesc pd) {
@@ -129,6 +134,53 @@ public class TForEachRenderer extends Renderer {
             String name = pd.getPropertyName();
             Object value = getValue(itemBeanDesc, item, name);
             setValue(beanDesc, page, name, value);
+        }
+    }
+
+    public void decode(FacesContext context, UIComponent component) {
+        assertNotNull(context, component);
+        final TForEach forEach = (TForEach) component;
+        final int rowCount = getRowCount(context, forEach);
+        forEach.setRowCount(rowCount);
+        for (int i = 0; i < rowCount; i++) {
+            forEach.setRowIndex(i);
+            forEach.restoreDescendantState(context);
+            decodeChildren(context, component);
+            forEach.saveDescendantComponentStates(context);
+        }
+    }
+
+    private int getRowCount(FacesContext context, final TForEach forEach) {
+        final Map req = context.getExternalContext().getRequestParameterMap();
+        final String namingPrefix = forEach.getClientId(context)
+                + NamingContainer.SEPARATOR_CHAR;
+        int rowCount = -1;
+        for (final Iterator it = req.keySet().iterator(); it.hasNext();) {
+            final String name = (String) it.next();
+            if (name.startsWith(namingPrefix)) {
+                final int pos = name.indexOf(NamingContainer.SEPARATOR_CHAR,
+                        namingPrefix.length());
+                if (-1 < pos) {
+                    String num = name.substring(namingPrefix.length(), pos);
+                    try {
+                        int index = Integer.parseInt(num);
+                        rowCount = Math.max(rowCount, index);
+                    } catch (NumberFormatException e) {
+                        // TODO 
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+        rowCount++;
+        return rowCount;
+    }
+
+    private void decodeChildren(FacesContext context, UIComponent component) {
+        for (final Iterator it = component.getChildren().iterator(); it
+                .hasNext();) {
+            final UIComponent child = (UIComponent) it.next();
+            child.processDecodes(context);
         }
     }
 

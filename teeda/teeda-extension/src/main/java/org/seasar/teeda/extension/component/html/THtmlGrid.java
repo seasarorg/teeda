@@ -16,31 +16,25 @@
 package org.seasar.teeda.extension.component.html;
 
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import javax.faces.component.ComponentUtil_;
-import javax.faces.component.EditableValueHolder;
 import javax.faces.component.NamingContainer;
-import javax.faces.component.UIComponent;
 import javax.faces.component.UIComponentBase;
 import javax.faces.context.FacesContext;
-import javax.faces.internal.NamingContainerUtil;
-import javax.faces.internal.SavedState;
+import javax.faces.internal.ComponentStates;
 
 import org.seasar.framework.util.AssertionUtil;
 
 public class THtmlGrid extends UIComponentBase implements NamingContainer {
 
-    static final String GRID = "Grid";
+    private static final String GRID = "Grid";
 
     public static final String COMPONENT_FAMILY = "org.seasar.teeda.extension.Grid";
 
     public static final String COMPONENT_TYPE = "org.seasar.teeda.extension.HtmlGrid";
 
-    public static final String DEFAULT_RENDERER_TYPE = "org.seasar.teeda.extension.Grid";
+    public static final String DEFAULT_RENDERER_TYPE = "org.seasar.teeda.extension.HtmlGrid";
 
     public String getFamily() {
         return COMPONENT_FAMILY;
@@ -54,15 +48,13 @@ public class THtmlGrid extends UIComponentBase implements NamingContainer {
 
     private String height;
 
-    private Map savedStates = new HashMap();
-
     public String getClientId(FacesContext context) {
         String clientId = super.getClientId(context);
         int rowIndex = getRowIndex();
         if (rowIndex == -1) {
             return clientId;
         }
-        return clientId + "_" + rowIndex;
+        return clientId + NamingContainer.SEPARATOR_CHAR + rowIndex;
     }
 
     private int getRowIndex() {
@@ -129,13 +121,13 @@ public class THtmlGrid extends UIComponentBase implements NamingContainer {
     void enterRow(final FacesContext context, Object rowBean) {
         final String itemName = getNaturalId();
         context.getExternalContext().getRequestMap().put(itemName, rowBean);
-        restoreDescendantState(context, this);
+        componentStates.restoreDescendantState(context, this);
     }
 
     void leaveRow(FacesContext context) {
         final String itemName = getNaturalId();
         context.getExternalContext().getRequestMap().remove(itemName);
-        saveDescendantComponentStates(context, this);
+        componentStates.saveDescendantComponentStates(context, this);
     }
 
     private String getNaturalId() {
@@ -149,40 +141,7 @@ public class THtmlGrid extends UIComponentBase implements NamingContainer {
         return naturalId;
     }
 
-    protected void restoreDescendantState(FacesContext context,
-            UIComponent component) {
-        for (final Iterator it = component.getChildren().iterator(); it
-                .hasNext();) {
-            final UIComponent child = (UIComponent) it.next();
-            NamingContainerUtil.refreshClientId(child);
-            if (child instanceof EditableValueHolder) {
-                final EditableValueHolder holder = (EditableValueHolder) child;
-                final String clientId = child.getClientId(context);
-                SavedState state = (SavedState) savedStates.get(clientId);
-                if (state == null) {
-                    state = new SavedState();
-                    savedStates.put(clientId, state);
-                }
-                state.restore(holder);
-            }
-            restoreDescendantState(context, child);
-        }
-    }
-
-    protected void saveDescendantComponentStates(FacesContext context,
-            UIComponent component) {
-        for (final Iterator it = component.getChildren().iterator(); it
-                .hasNext();) {
-            final UIComponent child = (UIComponent) it.next();
-            if (child instanceof EditableValueHolder) {
-                final EditableValueHolder holder = (EditableValueHolder) child;
-                final SavedState state = new SavedState();
-                state.save(holder);
-                savedStates.put(child.getClientId(context), state);
-            }
-            saveDescendantComponentStates(context, child);
-        }
-    }
+    private ComponentStates componentStates = new ComponentStates();
 
     public void processDecodes(final FacesContext context) {
         AssertionUtil.assertNotNull("context", context);

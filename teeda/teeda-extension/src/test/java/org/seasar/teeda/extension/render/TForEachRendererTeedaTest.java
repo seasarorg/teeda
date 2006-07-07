@@ -15,11 +15,11 @@
  */
 package org.seasar.teeda.extension.render;
 
-import java.io.IOException;
+import java.util.Map;
 
-import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
+import javax.faces.render.AbstractRendererTeedaTest;
 import javax.faces.render.Renderer;
 
 import org.seasar.framework.container.S2Container;
@@ -27,108 +27,206 @@ import org.seasar.teeda.core.el.ELParser;
 import org.seasar.teeda.core.el.impl.ValueBindingImpl;
 import org.seasar.teeda.core.el.impl.commons.CommonsELParser;
 import org.seasar.teeda.core.el.impl.commons.CommonsExpressionProcessorImpl;
+import org.seasar.teeda.core.mock.MockUIViewRoot;
+import org.seasar.teeda.core.render.html.HtmlInputTextRenderer;
 import org.seasar.teeda.core.render.html.HtmlOutputTextRenderer;
+import org.seasar.teeda.core.render.html.MockHtmlInputText;
 import org.seasar.teeda.core.render.html.MockHtmlOutputText;
-import org.seasar.teeda.core.unit.TeedaTestCase;
-import org.seasar.teeda.extension.component.TForEach;
 
 /**
  * @author manhole
  */
-public class TForEachRendererTeedaTest extends TeedaTestCase {
+public class TForEachRendererTeedaTest extends AbstractRendererTeedaTest {
 
     private S2Container container;
 
-    public void testEncode() throws Exception {
-        // ## Arrange ##
-        final HtmlOutputTextRenderer htmlOutputTextRenderer = new HtmlOutputTextRenderer();
+    private TForEachRenderer renderer;
 
-        TForEachRenderer renderer = new TForEachRenderer();
-        TForEach forEach = new TForEach();
+    private MockTForEach forEach;
+
+    protected void setUp() throws Exception {
+        super.setUp();
+        renderer = createTForEachRenderer();
+        forEach = new MockTForEach();
+        forEach.setRenderer(renderer);
+    }
+
+    public void testEncode1() throws Exception {
+        // ## Arrange ##
+        final HtmlOutputTextRenderer outputTextRenderer = new HtmlOutputTextRenderer();
+        final FacesContext context = getFacesContext();
 
         final String pageName = "fooPage";
         FooPage page = new FooPage();
         container.register(page, pageName);
         forEach.setPageName(pageName);
-        forEach.setItemsName("fooItems");
+        forEach.setItemsName("barItems");
+
         // items
         {
-            Foo[] items = new Foo[3];
-            {
-                Foo item = new Foo();
-                item.setAaa("1");
-                items[0] = item;
-            }
-            {
-                Foo item = new Foo();
-                item.setAaa("2");
-                items[1] = item;
-            }
-            {
-                Foo item = new Foo();
-                item.setAaa("3");
-                items[2] = item;
-            }
-            page.setFooItems(items);
+            Bar[] items = new Bar[3];
+            items[0] = new Bar("11");
+            items[1] = new Bar("22");
+            items[2] = new Bar("33");
+            page.setBarItems(items);
         }
 
         {
             MockHtmlOutputText text = new MockHtmlOutputText();
-            text.setRenderer(htmlOutputTextRenderer);
-            ELParser parser = new CommonsELParser();
-            parser.setExpressionProcessor(new CommonsExpressionProcessorImpl());
-            ValueBinding vb = new ValueBindingImpl(getFacesContext()
-                    .getApplication(), "#{fooPage.aaa}", parser);
-            text.setValueBinding("value", vb);
-
+            text.setRenderer(outputTextRenderer);
+            text.setValueBinding("value",
+                    createValueBinding("#{fooPage.bar.aaa}"));
             forEach.getChildren().add(text);
         }
 
         // ## Act ##
-        encodeByRenderer(renderer, forEach);
+        encodeComponent(context, forEach);
 
         // ## Assert ##
-        assertEquals("123", getResponseText());
+        assertEquals("112233", getResponseText());
     }
 
-    protected void encodeByRenderer(Renderer renderer, UIComponent component)
-            throws IOException {
-        encodeByRenderer(renderer, getFacesContext(), component);
-    }
+    public void testEncode2() throws Exception {
+        // ## Arrange ##
+        final HtmlInputTextRenderer inputTextRenderer = new HtmlInputTextRenderer();
+        final FacesContext context = getFacesContext();
 
-    protected void encodeByRenderer(Renderer renderer, FacesContext context,
-            UIComponent component) throws IOException {
-        renderer.encodeBegin(context, component);
-        if (renderer.getRendersChildren()) {
-            renderer.encodeChildren(context, component);
+        {
+            final String pageName = "fooPage";
+            FooPage page = new FooPage();
+            container.register(page, pageName);
+            forEach.setPageName(pageName);
+            forEach.setItemsName("barItems");
+            forEach.setId("a");
+
+            // items
+            Bar[] items = new Bar[3];
+            items[0] = new Bar("111");
+            items[1] = new Bar("222");
+            items[2] = new Bar("333");
+            page.setBarItems(items);
         }
-        renderer.encodeEnd(context, component);
+
+        {
+            MockHtmlInputText text = new MockHtmlInputText();
+            text.setId("z");
+            text.setRenderer(inputTextRenderer);
+            text.setValueBinding("value",
+                    createValueBinding("#{fooPage.bar.aaa}"));
+            forEach.getChildren().add(text);
+        }
+
+        // ## Act ##
+        encodeComponent(context, forEach);
+
+        // ## Assert ##
+        assertEquals(
+                "<input type=\"text\" id=\"z\" name=\"a:0:z\" value=\"111\" />"
+                        + "<input type=\"text\" id=\"z\" name=\"a:1:z\" value=\"222\" />"
+                        + "<input type=\"text\" id=\"z\" name=\"a:2:z\" value=\"333\" />",
+                getResponseText());
+    }
+
+    private ValueBinding createValueBinding(final String el) {
+        final FacesContext context = getFacesContext();
+        ELParser parser = new CommonsELParser();
+        parser.setExpressionProcessor(new CommonsExpressionProcessorImpl());
+        ValueBinding vb = new ValueBindingImpl(context.getApplication(), el,
+                parser);
+        return vb;
+    }
+
+    public void testDecode() throws Exception {
+        // ## Arrange ##
+        MockUIViewRoot mockUIViewRoot = new MockUIViewRoot();
+        mockUIViewRoot.getChildren().add(forEach);
+
+        final HtmlInputTextRenderer inputTextRenderer = new HtmlInputTextRenderer();
+        final FacesContext context = getFacesContext();
+
+        FooPage page = new FooPage();
+        {
+            final String pageName = "fooPage";
+            container.register(page, pageName);
+            forEach.setPageName(pageName);
+            forEach.setItemsName("barItems");
+            forEach.setId("a");
+        }
+
+        {
+            MockHtmlInputText text = new MockHtmlInputText();
+            text.setId("z");
+            text.setRenderer(inputTextRenderer);
+            text.setValueBinding("value",
+                    createValueBinding("#{fooPage.bar.aaa}"));
+            forEach.getChildren().add(text);
+        }
+
+        // input parameters
+        {
+            final Map req = context.getExternalContext()
+                    .getRequestParameterMap();
+            req.put("a:0:z", "A");
+            req.put("a:1:z", "B");
+            req.put("a:2:z", "C");
+        }
+
+        // ## Act ##
+        forEach.decode(context);
+        forEach.processValidators(context);
+        forEach.processUpdates(context);
+
+        // ## Assert ##
+        final Bar[] items = page.getBarItems();
+        assertEquals(3, items.length);
+        assertEquals("A", items[0].getAaa());
+        assertEquals("B", items[1].getAaa());
+        assertEquals("C", items[2].getAaa());
+    }
+
+    private TForEachRenderer createTForEachRenderer() {
+        return (TForEachRenderer) createRenderer();
+    }
+
+    protected Renderer createRenderer() {
+        TForEachRenderer renderer = new TForEachRenderer();
+        //renderer.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
+        return renderer;
     }
 
     public static class FooPage {
 
-        private String aaa;
+        private Bar bar;
 
-        private Foo[] fooItems;
+        private Bar[] barItems;
 
-        public Foo[] getFooItems() {
-            return fooItems;
+        public Bar[] getBarItems() {
+            return barItems;
         }
 
-        public void setFooItems(Foo[] hogeItems) {
-            this.fooItems = hogeItems;
+        public void setBarItems(Bar[] hogeItems) {
+            this.barItems = hogeItems;
         }
 
-        public String getAaa() {
-            return aaa;
+        public Bar getBar() {
+            return bar;
         }
 
-        public void setAaa(String aaa) {
-            this.aaa = aaa;
+        public void setBar(Bar bar) {
+            this.bar = bar;
         }
+
     }
 
-    public static class Foo {
+    public static class Bar {
+
+        public Bar() {
+        }
+
+        public Bar(String aaa) {
+            setAaa(aaa);
+        }
+
         private String aaa;
 
         public String getAaa() {
@@ -137,6 +235,10 @@ public class TForEachRendererTeedaTest extends TeedaTestCase {
 
         public void setAaa(String aaa) {
             this.aaa = aaa;
+        }
+
+        public String toString() {
+            return "Bar{aaa=" + aaa + "}";
         }
     }
 

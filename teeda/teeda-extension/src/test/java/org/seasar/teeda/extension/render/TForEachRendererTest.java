@@ -18,16 +18,17 @@ package org.seasar.teeda.extension.render;
 import java.util.HashMap;
 import java.util.Map;
 
-import junit.framework.TestCase;
+import javax.faces.render.Renderer;
+import javax.faces.render.RendererTest;
 
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
 
 /**
  * @author higa
- *
+ * @author manhole
  */
-public class TForEachRendererTest extends TestCase {
+public class TForEachRendererTest extends RendererTest {
 
     public void testProcessMapItem() throws Exception {
         TForEachRenderer renderer = new TForEachRenderer();
@@ -64,7 +65,12 @@ public class TForEachRendererTest extends TestCase {
         assertEquals(1, page.getFooIndex());
     }
 
+    protected Renderer createRenderer() {
+        return new TForEachRenderer();
+    }
+
     public static class Hoge {
+
         private String aaa;
 
         private Map foo;
@@ -97,6 +103,7 @@ public class TForEachRendererTest extends TestCase {
     }
 
     public static class Hoge2 {
+
         private String aaa;
 
         private String bbb;
