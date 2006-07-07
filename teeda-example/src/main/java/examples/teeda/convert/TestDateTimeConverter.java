@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -23,7 +23,7 @@ import java.util.Locale;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.DateTimeConverter;
-import javax.faces.internal.ConvertUtils;
+import javax.faces.internal.ConvertUtil;
 
 import org.seasar.framework.util.DateConversionUtil;
 
@@ -74,9 +74,9 @@ public class TestDateTimeConverter extends DateTimeConverter {
                 try {
                     return format.parse(value);
                 } catch (ParseException e) {
-                    Object[] args = ConvertUtils.createExceptionMessageArgs(
+                    Object[] args = ConvertUtil.createExceptionMessageArgs(
                             component, value);
-                    throw ConvertUtils.wrappedByConverterException(this,
+                    throw ConvertUtil.wrappedByConverterException(this,
                             context, args, e);
                 }
             }
@@ -135,7 +135,7 @@ public class TestDateTimeConverter extends DateTimeConverter {
     }
 
     /**
-     * 
+     *
      * @see javax.faces.convert.Converter#getAsString(javax.faces.context.FacesContext,
      *      javax.faces.component.UIComponent, java.lang.Object)
      */
