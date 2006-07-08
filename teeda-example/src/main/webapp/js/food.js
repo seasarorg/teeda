@@ -22,7 +22,7 @@ function createOptionsFromOrg(data, opt) {
 function createOptionsFromJSON(data, opt) {
     clearOptions(opt);
     if (!data) return;
-    createOptionsFromJson(opt, json);
+    createOptionsFromJson(opt, data["detail"]);
 }
 
 function createOptionsFromXml(data, opt) {

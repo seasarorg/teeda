@@ -30,7 +30,35 @@ public class AjaxSampleBean {
     private static final String NOODLE = "250\tうどん\n300\tそば\n"
             + "550\tラーメン\n180\tソーメン\n880\tスパゲティ\n30\t焼きそば\n"
             + "440\tナポリタン\n1280\t長崎チャンポン\n";
+    
+    private static final String JSON_FRUIT = "{ \"detail\" : [\n "
+        + "{ \"menuName\" : \"オレンジ\", \"price\" : \"100\" },\n"
+        + "{ \"menuName\" : \"リンゴ\", \"price\" : \"200\" },\n"
+        + "{ \"menuName\" : \"桃\", \"price\" : \"300\" },\n"
+        + "{ \"menuName\" : \"葡萄\", \"price\" : \"400\" },\n"
+        + "{ \"menuName\" : \"メロン\", \"price\" : \"500\" },\n"
+        + "{ \"menuName\" : \"すいか\", \"price\" : \"600\" } \n" + "]\n"
+        + "}";
 
+private static final String JSON_DRINK = "{ \"detail\" : [\n "
+        + "{ \"menuName\" : \"水\", \"price\" : \"0\" },\n"
+        + "{ \"menuName\" : \"コーラ\", \"price\" : \"120\" },\n"
+        + "{ \"menuName\" : \"コーヒー\", \"price\" : \"240\" },\n"
+        + "{ \"menuName\" : \"紅茶\", \"price\" : \"200\" },\n"
+        + "{ \"menuName\" : \"スプライト\", \"price\" : \"120\" },\n"
+        + "{ \"menuName\" : \"ペプシ\", \"price\" : \"120\" }\n" + "]\n" + "}";
+
+private static final String JSON_NOODLE = "{ \"detail\" : [\n "
+        + "{ \"menuName\" : \"うどん\", \"price\" : \"250\" },\n"
+        + "{ \"menuName\" : \"そば\", \"price\" : \"300\" },\n"
+        + "{ \"menuName\" : \"ラーメン\", \"price\" : \"550\" },\n"
+        + "{ \"menuName\" : \"ソーメン\", \"price\" : \"180\" },\n"
+        + "{ \"menuName\" : \"スパゲティ\", \"price\" : \"880\" },\n"
+        + "{ \"menuName\" : \"焼きそば\", \"price\" : \"30\" },\n"
+        + "{ \"menuName\" : \"ナポリタン\", \"price\" : \"440\" },\n"
+        + "{ \"menuName\" : \"長崎チャンポン\", \"price\" : \"1280\" } \n" + "]\n"
+        + "}";
+/*
     private static final AjaxDto[] JSON_FRUIT = { new AjaxDto("オレンジ", 100),
             new AjaxDto("リンゴ", 200), new AjaxDto("桃", 300),
             new AjaxDto("葡萄", 400), new AjaxDto("メロン", 500),
@@ -45,7 +73,7 @@ public class AjaxSampleBean {
             new AjaxDto("リンゴ", 200), new AjaxDto("桃", 300),
             new AjaxDto("葡萄", 400), new AjaxDto("メロン", 500),
             new AjaxDto("すいか", 600) };
-
+*/
     private static final String XML_FRUIT = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
             + "<detail>\n"
             + " <item><menuName>オレンジ</menuName><price>100</price></item>\n"
@@ -82,7 +110,7 @@ public class AjaxSampleBean {
 
     private final String[] XML_TEXT = { "", XML_FRUIT, XML_DRINK, XML_NOODLE };
 
-    private final AjaxDto[][] JSON_ARRAY = { new AjaxDto[0], JSON_FRUIT,
+    private final String[] JSON_ARRAY = { "", JSON_FRUIT,
             JSON_DRINK, JSON_NOODLE };
 
     private String arg1;

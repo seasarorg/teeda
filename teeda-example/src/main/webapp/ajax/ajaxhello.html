@@ -1,10 +1,6 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-<!--
-<script language="JavaScript" src="../js/kumu.js"></script>
-<script language="JavaScript" src="../js/ajax.js"></script>
- -->
 <script language="JavaScript" src="../js/kumu/kumu.js"></script>
 <script language="JavaScript" src="../js/kumu/ajax.js"></script>
 <script language="JavaScript">
@@ -24,8 +20,8 @@ function sampleAjaxJson(name) {
 }
 function sampleAjaxJson2(name, arg1, arg2) {
     // for disp response data
-    Kumu.Ajax.DEBUG = false;
-    Kumu.Ajax.executeTeedaAjax(ajaxHelloBean_ajaxAction2, [name, arg1, arg2], Kumu.Ajax.RESPONSE_TYPE_TEXT);
+    Kumu.Ajax.DEBUG = true;
+    Kumu.Ajax.executeTeedaAjax(ajaxHelloBean_ajaxAction2, [name, arg1, arg2]);
 }
 //-->
 </script>

@@ -10,7 +10,7 @@ function org(response){
     createOptionsFromOrg(response, document.frm.menuOrg);
 }
 function sampleAjaxOrg(food) {
-    Kumu.Ajax.executeTeedaAjax(org, { "component" : "ajaxBean", "action" : "ajaxOrg", "food" : food });
+    Kumu.Ajax.executeTeedaAjax(org, { "component" : "ajaxBean", "action" : "ajaxOrg", "food" : food }, Kumu.Ajax.RESPONSE_TYPE_TEXT);
 }
 function json(response){
     createOptionsFromJSON(response, document.frm.menuJson);
@@ -30,7 +30,7 @@ function sampleAjaxXml(food) {
     // for disp response data
     Kumu.Ajax.DEBUG = true;
     // for xml type 3rd param
-    Kumu.Ajax.executeTeedaAjax(xml, { "component" : "ajaxBean", "action" : "ajaxXml", "food" : food }, Kumu.Ajax.AJAX_RESPONSE_TYPE_XML);
+    Kumu.Ajax.executeTeedaAjax(xml, { "component" : "ajaxBean", "action" : "ajaxXml", "food" : food }, Kumu.Ajax.RESPONSE_TYPE_XML);
 }
 //-->
 </script>

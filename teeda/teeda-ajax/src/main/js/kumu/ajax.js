@@ -175,7 +175,7 @@ Kumu.Ajax = {
                     	var resText = req.responseText;
                         ajaxComponent.doAction(eval('(' + resText + ')'));
                     } else if (self.RESPONSE_TYPE_XML == ajaxComponent.responseType) {
-	                    var responseText = req.responseText;
+	                    var responseText = req.responseXML;
                         ajaxComponent.doAction(responseText);
                     } else {
                         ajaxComponent.doAction(req.responseText);
