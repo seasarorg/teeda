@@ -115,22 +115,19 @@ public class AjaxServlet extends HttpServlet {
                     "The error occurred while create Ajax response. "
                             + e.getMessage());
         }
-        String result = AjaxUtil.toJson(target);
-        if (AjaxUtil.isJSON(result)) {
-            AjaxUtil.setContentType(response, result);
+        String result = null;
+        if (target instanceof String) {
+            result = target.toString();
         } else {
-            AjaxUtil.setContentType(response, target.toString());
+            result = AjaxUtil.toJson(target);
         }
+        AjaxUtil.setContentType(response, result);
 
         response.setHeader("Cache-Control", "no-cache");
         response.setHeader("Pragma", "no-cache");
 
         PrintWriter pw = response.getWriter();
-        if (AjaxUtil.isJSON(result)) {
-            pw.write(result);
-        } else {
-            pw.write(target.toString());
-        }
+        pw.write(result);
         pw.close();
     }
 
