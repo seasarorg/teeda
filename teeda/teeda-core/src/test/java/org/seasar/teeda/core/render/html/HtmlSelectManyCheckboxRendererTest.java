@@ -129,9 +129,12 @@ public class HtmlSelectManyCheckboxRendererTest extends RendererTest {
         encodeByRenderer(renderer, htmlSelectManyCheckbox);
 
         // ## Assert ##
-        assertEquals("<table id=\"a\" aa=\"bb\"><tr><td>" + "<label>"
-                + "<input type=\"checkbox\" name=\"a\" value=\"val\" />"
-                + "lab</label>" + "</td></tr></table>", getResponseText());
+        assertEquals(
+                "<table id=\"a\"><tr><td>"
+                        + "<label>"
+                        + "<input type=\"checkbox\" name=\"a\" value=\"val\" aa=\"bb\" />"
+                        + "lab</label>" + "</td></tr></table>",
+                getResponseText());
     }
 
     public void testEncode_WithUnknownAttribute2() throws Exception {
@@ -505,6 +508,7 @@ public class HtmlSelectManyCheckboxRendererTest extends RendererTest {
     protected Renderer createRenderer() {
         HtmlSelectManyCheckboxRenderer renderer = new HtmlSelectManyCheckboxRenderer();
         renderer.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
+        renderer.setRenderAttributes(getRenderAttributes());
         return renderer;
     }
 

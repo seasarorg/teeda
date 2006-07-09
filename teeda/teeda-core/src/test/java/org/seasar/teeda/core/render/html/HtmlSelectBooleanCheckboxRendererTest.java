@@ -240,6 +240,7 @@ public class HtmlSelectBooleanCheckboxRendererTest extends RendererTest {
     protected Renderer createRenderer() {
         HtmlSelectBooleanCheckboxRenderer renderer = new HtmlSelectBooleanCheckboxRenderer();
         renderer.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
+        renderer.setRenderAttributes(getRenderAttributes());
         return renderer;
     }
 

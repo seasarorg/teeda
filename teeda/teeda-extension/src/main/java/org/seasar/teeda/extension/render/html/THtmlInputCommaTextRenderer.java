@@ -95,7 +95,7 @@ public class THtmlInputCommaTextRenderer extends HtmlInputTextRenderer {
                 htmlInputCommaText);
         RendererUtil.renderAttribute(writer, JsfConstants.VALUE_ATTR, value);
         if (htmlInputCommaText.isDisabled()) {
-            RendererUtil.renderDisabledAttribute(writer);
+            renderDisabledAttribute(writer);
         }
 
         Locale locale = context.getViewRoot().getLocale();

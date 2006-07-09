@@ -75,8 +75,6 @@ public class HtmlOutputLinkRenderer extends AbstractHtmlRenderer {
         RendererUtil.renderIdAttributeIfNecessary(writer, htmlOutputLink,
                 getIdForRender(context, htmlOutputLink));
         writer.writeURIAttribute(JsfConstants.HREF_ATTR, href, null);
-        RendererUtil.renderAttributes(writer, htmlOutputLink,
-                JsfConstants.ANCHOR_PASSTHROUGH_ATTRIBUTES);
         renderAttributes(htmlOutputLink, writer);
     }
 

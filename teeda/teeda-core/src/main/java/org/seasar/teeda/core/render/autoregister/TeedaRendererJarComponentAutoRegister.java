@@ -27,6 +27,7 @@ import org.seasar.framework.container.autoregister.JarComponentAutoRegister;
 import org.seasar.framework.container.factory.AnnotationHandler;
 import org.seasar.framework.container.factory.AnnotationHandlerFactory;
 import org.seasar.framework.util.ClassUtil;
+import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.html.support.HtmlRenderKitKeyGenerateUtil;
 
 /**
@@ -36,17 +37,13 @@ import org.seasar.teeda.core.render.html.support.HtmlRenderKitKeyGenerateUtil;
 public class TeedaRendererJarComponentAutoRegister extends
         JarComponentAutoRegister {
 
-    private static final String COMPONENT_FAMILY = "COMPONENT_FAMILY";
-
-    private static final String RENDERER_TYPE = "RENDERER_TYPE";
-
     private String familyFieldName;
 
     private String renderTypeFieldName;
 
     public TeedaRendererJarComponentAutoRegister() {
-        familyFieldName = COMPONENT_FAMILY;
-        renderTypeFieldName = RENDERER_TYPE;
+        familyFieldName = JsfConstants.COMPONENT_FAMILY;
+        renderTypeFieldName = JsfConstants.RENDERER_TYPE;
     }
 
     protected void register(final String className) {

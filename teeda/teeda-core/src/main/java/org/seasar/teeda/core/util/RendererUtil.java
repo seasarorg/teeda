@@ -100,8 +100,20 @@ public class RendererUtil {
             return false;
         }
         attributeName = toHtmlAttributeName(attributeName);
+        value = convertValue(attributeName, value);
         writer.writeAttribute(attributeName, value, propertyName);
         return true;
+    }
+
+    private static Object convertValue(String attributeName, Object value) {
+        if (JsfConstants.CHECKED_ATTR.equals(attributeName)) {
+            return JsfConstants.CHECKED_ATTR;
+        } else if (JsfConstants.SELECTED_ATTR.equals(attributeName)) {
+            return JsfConstants.SELECTED_ATTR;
+        } else if (JsfConstants.DISABLED_ATTR.equals(attributeName)) {
+            return JsfConstants.DISABLED_ATTR;
+        }
+        return value;
     }
 
     private static String toHtmlAttributeName(String attributeName) {
@@ -135,7 +147,7 @@ public class RendererUtil {
         return true;
     }
 
-    public static boolean isDefaultAttributeValue(Object value) {
+    static boolean isDefaultAttributeValue(Object value) {
         if (value == null) {
             return true;
         }
@@ -147,13 +159,11 @@ public class RendererUtil {
             return UIDefaultAttribute
                     .isDefaultInt(((Integer) value).intValue());
         }
-
         return false;
     }
 
     public static boolean shouldRenderIdAttribute(UIComponent component) {
-        String id = component.getId();
-        return shouldRenderIdAttribute(id);
+        return shouldRenderIdAttribute(component.getId());
     }
 
     private static boolean shouldRenderIdAttribute(String id) {
@@ -168,19 +178,6 @@ public class RendererUtil {
         if (RendererUtil.shouldRenderIdAttribute(component)) {
             RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR, idValue);
         }
-    }
-
-    public static void renderDisabledAttribute(ResponseWriter writer)
-            throws IOException {
-        renderAttribute(writer, JsfConstants.DISABLED_ATTR,
-                JsfConstants.DISABLED_ATTR);
-    }
-
-    // select/option
-    public static void renderSelectedAttribute(ResponseWriter writer)
-            throws IOException {
-        renderAttribute(writer, JsfConstants.SELECTED_ATTR,
-                JsfConstants.SELECTED_ATTR);
     }
 
     public static Object getConvertedValue(FacesContext context,

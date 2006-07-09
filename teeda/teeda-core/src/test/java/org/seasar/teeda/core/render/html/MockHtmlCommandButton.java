@@ -15,14 +15,14 @@
  */
 package org.seasar.teeda.core.render.html;
 
-import javax.faces.component.html.HtmlDataTable;
+import javax.faces.component.html.HtmlCommandButton;
 import javax.faces.context.FacesContext;
 import javax.faces.render.Renderer;
 
 /**
  * @author manhole
  */
-public class MockHtmlDataTable extends HtmlDataTable {
+public class MockHtmlCommandButton extends HtmlCommandButton {
 
     private Renderer renderer;
 

@@ -23,6 +23,7 @@ import javax.faces.context.FacesContext;
 
 import org.seasar.teeda.core.render.ComponentIdLookupStrategy;
 import org.seasar.teeda.core.render.DefaultComponentIdLookupStrategy;
+import org.seasar.teeda.core.render.html.support.RenderAttributesImpl;
 import org.seasar.teeda.core.unit.TeedaTestCase;
 
 /**
@@ -31,6 +32,15 @@ import org.seasar.teeda.core.unit.TeedaTestCase;
 public abstract class AbstractRendererTeedaTest extends TeedaTestCase {
 
     private ComponentIdLookupStrategy idLookupStrategy;
+
+    private static RenderAttributesImpl defaultRenderAttributes;
+
+    private RenderAttributesImpl renderAttributes = defaultRenderAttributes;
+
+    static {
+        defaultRenderAttributes = new RenderAttributesImpl();
+        defaultRenderAttributes.initialize();
+    }
 
     protected void setUp() throws Exception {
         super.setUp();
@@ -75,6 +85,14 @@ public abstract class AbstractRendererTeedaTest extends TeedaTestCase {
                 encodeComponent(context, child);
             }
         }
+    }
+
+    protected RenderAttributesImpl getRenderAttributes() {
+        return renderAttributes;
+    }
+
+    protected void setRenderAttributes(RenderAttributesImpl renderAttributes) {
+        this.renderAttributes = renderAttributes;
     }
 
 }

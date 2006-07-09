@@ -44,16 +44,23 @@ public class TForEachRendererTeedaTest extends AbstractRendererTeedaTest {
 
     private MockTForEach forEach;
 
+    private HtmlOutputTextRenderer outputTextRenderer;
+
+    private HtmlInputTextRenderer inputTextRenderer;
+
     protected void setUp() throws Exception {
         super.setUp();
         renderer = createTForEachRenderer();
+        outputTextRenderer = new HtmlOutputTextRenderer();
+        outputTextRenderer.setRenderAttributes(getRenderAttributes());
+        inputTextRenderer = new HtmlInputTextRenderer();
+        inputTextRenderer.setRenderAttributes(getRenderAttributes());
         forEach = new MockTForEach();
         forEach.setRenderer(renderer);
     }
 
     public void testEncode1() throws Exception {
         // ## Arrange ##
-        final HtmlOutputTextRenderer outputTextRenderer = new HtmlOutputTextRenderer();
         final FacesContext context = getFacesContext();
 
         final String pageName = "fooPage";
@@ -88,7 +95,6 @@ public class TForEachRendererTeedaTest extends AbstractRendererTeedaTest {
 
     public void testEncode2() throws Exception {
         // ## Arrange ##
-        final HtmlInputTextRenderer inputTextRenderer = new HtmlInputTextRenderer();
         final FacesContext context = getFacesContext();
 
         {

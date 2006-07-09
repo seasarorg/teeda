@@ -213,6 +213,7 @@ public class HtmlOutputFormatRendererTest extends RendererTest {
     protected Renderer createRenderer() {
         HtmlOutputFormatRenderer renderer = new HtmlOutputFormatRenderer();
         renderer.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
+        renderer.setRenderAttributes(getRenderAttributes());
         return renderer;
     }
 

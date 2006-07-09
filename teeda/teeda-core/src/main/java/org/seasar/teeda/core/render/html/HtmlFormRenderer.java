@@ -65,8 +65,6 @@ public class HtmlFormRenderer extends AbstractHtmlRenderer {
                 .getClientId(context));
         RendererUtil.renderAttribute(writer, JsfConstants.METHOD_ATTR,
                 JsfConstants.POST_VALUE);
-        RendererUtil.renderAttributes(writer, htmlForm,
-                JsfConstants.FORM_PASSTHROUGH_ATTRIBUTES);
         renderAttributes(htmlForm, writer);
 
         // action attribute

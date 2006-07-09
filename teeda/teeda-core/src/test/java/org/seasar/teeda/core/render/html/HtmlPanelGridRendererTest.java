@@ -32,9 +32,13 @@ public class HtmlPanelGridRendererTest extends RendererTest {
 
     private MockHtmlPanelGrid htmlPanelGrid;
 
+    private HtmlOutputTextRenderer textRenderer;
+
     protected void setUp() throws Exception {
         super.setUp();
         renderer = createHtmlPanelGridRenderer();
+        textRenderer = new HtmlOutputTextRenderer();
+        textRenderer.setRenderAttributes(getRenderAttributes());
         htmlPanelGrid = new MockHtmlPanelGrid();
         htmlPanelGrid.setRenderer(renderer);
     }
@@ -117,7 +121,7 @@ public class HtmlPanelGridRendererTest extends RendererTest {
     public void testEncodeBegin_TableHeaderFacet() throws Exception {
         // ## Arrange ##
         MockHtmlOutputText facet = new MockHtmlOutputText();
-        facet.setRenderer(new HtmlOutputTextRenderer());
+        facet.setRenderer(textRenderer);
         facet.setValue("a");
         htmlPanelGrid.getFacets().put("header", facet);
         MockFacesContext context = getFacesContext();
@@ -134,7 +138,7 @@ public class HtmlPanelGridRendererTest extends RendererTest {
     public void testEncodeBegin_TableHeaderStyle() throws Exception {
         // ## Arrange ##
         MockHtmlOutputText facet = new MockHtmlOutputText();
-        facet.setRenderer(new HtmlOutputTextRenderer());
+        facet.setRenderer(textRenderer);
         facet.setValue("aa");
         htmlPanelGrid.getFacets().put("header", facet);
         htmlPanelGrid.setHeaderClass("bb");
@@ -152,7 +156,7 @@ public class HtmlPanelGridRendererTest extends RendererTest {
     public void testEncodeBegin_TableHeaderColspan() throws Exception {
         // ## Arrange ##
         MockHtmlOutputText facet = new MockHtmlOutputText();
-        facet.setRenderer(new HtmlOutputTextRenderer());
+        facet.setRenderer(textRenderer);
         facet.setValue("a");
         htmlPanelGrid.getFacets().put("header", facet);
         htmlPanelGrid.setColumns(4);
@@ -170,7 +174,7 @@ public class HtmlPanelGridRendererTest extends RendererTest {
     public void testEncodeBegin_TableHeaderFacetRenderFalse() throws Exception {
         // ## Arrange ##
         MockHtmlOutputText facet = new MockHtmlOutputText();
-        facet.setRenderer(new HtmlOutputTextRenderer());
+        facet.setRenderer(textRenderer);
         facet.setValue("a");
         facet.setRendered(false);
         htmlPanelGrid.getFacets().put("header", facet);
@@ -186,7 +190,7 @@ public class HtmlPanelGridRendererTest extends RendererTest {
     public void testEncodeBegin_TableFooterFacet() throws Exception {
         // ## Arrange ##
         MockHtmlOutputText facet = new MockHtmlOutputText();
-        facet.setRenderer(new HtmlOutputTextRenderer());
+        facet.setRenderer(textRenderer);
         facet.setValue("a");
         htmlPanelGrid.getFacets().put("footer", facet);
         MockFacesContext context = getFacesContext();
@@ -202,7 +206,7 @@ public class HtmlPanelGridRendererTest extends RendererTest {
     public void testEncodeBegin_TableFooterStyle() throws Exception {
         // ## Arrange ##
         MockHtmlOutputText facet = new MockHtmlOutputText();
-        facet.setRenderer(new HtmlOutputTextRenderer());
+        facet.setRenderer(textRenderer);
         facet.setValue("aa");
         htmlPanelGrid.getFacets().put("footer", facet);
         htmlPanelGrid.setFooterClass("bb");
@@ -219,7 +223,7 @@ public class HtmlPanelGridRendererTest extends RendererTest {
     public void testEncodeBegin_TableFooterColspan() throws Exception {
         // ## Arrange ##
         MockHtmlOutputText facet = new MockHtmlOutputText();
-        facet.setRenderer(new HtmlOutputTextRenderer());
+        facet.setRenderer(textRenderer);
         facet.setValue("a");
         htmlPanelGrid.getFacets().put("footer", facet);
         htmlPanelGrid.setColumns(4);
@@ -236,7 +240,7 @@ public class HtmlPanelGridRendererTest extends RendererTest {
     public void testEncodeBegin_TableFooterFacetRenderFalse() throws Exception {
         // ## Arrange ##
         MockHtmlOutputText facet = new MockHtmlOutputText();
-        facet.setRenderer(new HtmlOutputTextRenderer());
+        facet.setRenderer(textRenderer);
         facet.setValue("a");
         facet.setRendered(false);
         htmlPanelGrid.getFacets().put("footer", facet);
@@ -250,10 +254,9 @@ public class HtmlPanelGridRendererTest extends RendererTest {
     }
 
     public void testEncodeChildren() throws Exception {
-        HtmlOutputTextRenderer htmlOutputTextRenderer = new HtmlOutputTextRenderer();
         {
             MockHtmlOutputText child = new MockHtmlOutputText();
-            child.setRenderer(htmlOutputTextRenderer);
+            child.setRenderer(textRenderer);
             child.setValue("Z");
             htmlPanelGrid.getChildren().add(child);
         }
@@ -268,14 +271,13 @@ public class HtmlPanelGridRendererTest extends RendererTest {
     }
 
     public void testEncodeChildren_RowAndColumnStyle() throws Exception {
-        HtmlOutputTextRenderer htmlOutputTextRenderer = new HtmlOutputTextRenderer();
         htmlPanelGrid.setColumnClasses("c1, c2, c3");
         htmlPanelGrid.setRowClasses("r1a r1b, r2");
         htmlPanelGrid.setColumns(7);
 
         for (int i = 0; i < 15; i++) {
             MockHtmlOutputText child = new MockHtmlOutputText();
-            child.setRenderer(htmlOutputTextRenderer);
+            child.setRenderer(textRenderer);
             char c = (char) ('A' + i); // A .. O
             child.setValue(String.valueOf(c));
             htmlPanelGrid.getChildren().add(child);
@@ -344,15 +346,14 @@ public class HtmlPanelGridRendererTest extends RendererTest {
         htmlPanelGrid.setColumns(3);
 
         // table header, footer
-        HtmlOutputTextRenderer htmlOutputTextRenderer = new HtmlOutputTextRenderer();
         {
             MockHtmlOutputText header = new MockHtmlOutputText();
-            header.setRenderer(htmlOutputTextRenderer);
+            header.setRenderer(textRenderer);
             header.setValue("tableHeader");
             htmlPanelGrid.getFacets().put("header", header);
 
             MockHtmlOutputText footer = new MockHtmlOutputText();
-            footer.setRenderer(htmlOutputTextRenderer);
+            footer.setRenderer(textRenderer);
             footer.setValue("tableFooter");
             htmlPanelGrid.getFacets().put("footer", footer);
         }
@@ -360,7 +361,7 @@ public class HtmlPanelGridRendererTest extends RendererTest {
         // table value
         for (int i = 10; i < 24; i++) {
             MockHtmlOutputText child = new MockHtmlOutputText();
-            child.setRenderer(htmlOutputTextRenderer);
+            child.setRenderer(textRenderer);
             child.setValue(String.valueOf(i));
             htmlPanelGrid.getChildren().add(child);
         }
@@ -430,6 +431,7 @@ public class HtmlPanelGridRendererTest extends RendererTest {
     protected Renderer createRenderer() {
         HtmlPanelGridRenderer renderer = new HtmlPanelGridRenderer();
         renderer.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
+        renderer.setRenderAttributes(getRenderAttributes());
         return renderer;
     }
 

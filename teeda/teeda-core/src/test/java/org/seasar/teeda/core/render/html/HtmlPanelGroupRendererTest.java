@@ -29,9 +29,13 @@ public class HtmlPanelGroupRendererTest extends RendererTest {
 
     private MockHtmlPanelGroup htmlPanelGroup;
 
+    private HtmlOutputTextRenderer textRenderer;
+
     protected void setUp() throws Exception {
         super.setUp();
         renderer = createHtmlPanelGroupRenderer();
+        textRenderer = new HtmlOutputTextRenderer();
+        textRenderer.setRenderAttributes(getRenderAttributes());
         htmlPanelGroup = new MockHtmlPanelGroup();
         htmlPanelGroup.setRenderer(renderer);
     }
@@ -47,11 +51,10 @@ public class HtmlPanelGroupRendererTest extends RendererTest {
 
     public void testEncode_Child() throws Exception {
         // ## Arrange ##
-        HtmlOutputTextRenderer htmlOutputTextRenderer = new HtmlOutputTextRenderer();
         {
             MockHtmlOutputText child = new MockHtmlOutputText();
             child.setValue("a");
-            child.setRenderer(htmlOutputTextRenderer);
+            child.setRenderer(textRenderer);
             htmlPanelGroup.getChildren().add(child);
         }
 
@@ -64,23 +67,22 @@ public class HtmlPanelGroupRendererTest extends RendererTest {
 
     public void testEncode_Children() throws Exception {
         // ## Arrange ##
-        HtmlOutputTextRenderer htmlOutputTextRenderer = new HtmlOutputTextRenderer();
         {
             MockHtmlOutputText child = new MockHtmlOutputText();
             child.setValue("a");
-            child.setRenderer(htmlOutputTextRenderer);
+            child.setRenderer(textRenderer);
             htmlPanelGroup.getChildren().add(child);
         }
         {
             MockHtmlOutputText child = new MockHtmlOutputText();
             child.setValue("b");
-            child.setRenderer(htmlOutputTextRenderer);
+            child.setRenderer(textRenderer);
             htmlPanelGroup.getChildren().add(child);
         }
         {
             MockHtmlOutputText child = new MockHtmlOutputText();
             child.setValue("c");
-            child.setRenderer(htmlOutputTextRenderer);
+            child.setRenderer(textRenderer);
             htmlPanelGroup.getChildren().add(child);
         }
 
@@ -93,11 +95,10 @@ public class HtmlPanelGroupRendererTest extends RendererTest {
 
     public void testEncode_NestedChildren() throws Exception {
         // ## Arrange ##
-        HtmlOutputTextRenderer htmlOutputTextRenderer = new HtmlOutputTextRenderer();
         {
             MockHtmlOutputText child = new MockHtmlOutputText();
             child.setValue("a");
-            child.setRenderer(htmlOutputTextRenderer);
+            child.setRenderer(textRenderer);
             htmlPanelGroup.getChildren().add(child);
         }
         {
@@ -106,13 +107,13 @@ public class HtmlPanelGroupRendererTest extends RendererTest {
             {
                 MockHtmlOutputText child = new MockHtmlOutputText();
                 child.setValue("b");
-                child.setRenderer(htmlOutputTextRenderer);
+                child.setRenderer(textRenderer);
                 childGroup.getChildren().add(child);
             }
             {
                 MockHtmlOutputText child = new MockHtmlOutputText();
                 child.setValue("c");
-                child.setRenderer(htmlOutputTextRenderer);
+                child.setRenderer(textRenderer);
                 childGroup.getChildren().add(child);
             }
             htmlPanelGroup.getChildren().add(childGroup);
@@ -120,7 +121,7 @@ public class HtmlPanelGroupRendererTest extends RendererTest {
         {
             MockHtmlOutputText child = new MockHtmlOutputText();
             child.setValue("d");
-            child.setRenderer(htmlOutputTextRenderer);
+            child.setRenderer(textRenderer);
             htmlPanelGroup.getChildren().add(child);
         }
 
@@ -136,10 +137,10 @@ public class HtmlPanelGroupRendererTest extends RendererTest {
         htmlPanelGroup.setRendered(false);
         htmlPanelGroup.setId("a");
 
-        HtmlOutputTextRenderer htmlOutputTextRenderer = new HtmlOutputTextRenderer();
+        HtmlOutputTextRenderer textRenderer = new HtmlOutputTextRenderer();
         MockHtmlOutputText child = new MockHtmlOutputText();
         child.setValue("v");
-        child.setRenderer(htmlOutputTextRenderer);
+        child.setRenderer(textRenderer);
         htmlPanelGroup.getChildren().add(child);
 
         // ## Act ##
@@ -220,6 +221,7 @@ public class HtmlPanelGroupRendererTest extends RendererTest {
     protected Renderer createRenderer() {
         HtmlPanelGroupRenderer renderer = new HtmlPanelGroupRenderer();
         renderer.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
+        renderer.setRenderAttributes(getRenderAttributes());
         return renderer;
     }
 

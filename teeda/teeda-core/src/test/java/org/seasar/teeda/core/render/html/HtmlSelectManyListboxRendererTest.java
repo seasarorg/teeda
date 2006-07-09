@@ -481,6 +481,7 @@ public class HtmlSelectManyListboxRendererTest extends RendererTest {
     protected Renderer createRenderer() {
         HtmlSelectManyListboxRenderer renderer = new HtmlSelectManyListboxRenderer();
         renderer.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
+        renderer.setRenderAttributes(getRenderAttributes());
         return renderer;
     }
 

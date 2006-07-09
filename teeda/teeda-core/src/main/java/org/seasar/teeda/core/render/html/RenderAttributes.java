@@ -15,25 +15,11 @@
  */
 package org.seasar.teeda.core.render.html;
 
-import javax.faces.component.html.HtmlPanelGroup;
-import javax.faces.context.FacesContext;
-import javax.faces.render.Renderer;
-
 /**
  * @author manhole
  */
-public class MockHtmlPanelGroup extends HtmlPanelGroup {
+public interface RenderAttributes {
 
-    private Renderer renderer;
+    String[] getAttributeNames(String componentFamily, String rendererType);
 
-    public void setRenderer(Renderer renderer) {
-        this.renderer = renderer;
-    }
-
-    protected Renderer getRenderer(FacesContext context) {
-        if (renderer != null) {
-            return renderer;
-        }
-        return super.getRenderer(context);
-    }
 }

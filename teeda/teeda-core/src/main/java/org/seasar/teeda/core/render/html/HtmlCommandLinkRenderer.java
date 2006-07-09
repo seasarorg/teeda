@@ -112,12 +112,9 @@ public class HtmlCommandLinkRenderer extends AbstractHtmlRenderer {
         sb.append(" if (f.onsubmit) { f.onsubmit(); }");
         sb.append(" f.submit();");
         sb.append(" return false;");
-
         RendererUtil.renderAttribute(writer, JsfConstants.ONCLICK_ATTR, sb
                 .toString());
 
-        RendererUtil.renderAttributes(writer, commandLink,
-                JsfConstants.ANCHOR_PASSTHROUGH_ATTRIBUTES_WITHOUT_ONCLICK);
         renderAttributes(commandLink, writer);
 
         Object value = commandLink.getValue();

@@ -122,8 +122,8 @@ public class HtmlSelectOneRadioRendererTest extends RendererTest {
         encodeByRenderer(renderer, htmlSelectOneRadio);
 
         // ## Assert ##
-        assertEquals("<table id=\"a\" z=\"x\"><tr><td>" + "<label>"
-                + "<input type=\"radio\" name=\"a\" value=\"val\" />"
+        assertEquals("<table id=\"a\"><tr><td>" + "<label>"
+                + "<input type=\"radio\" name=\"a\" value=\"val\" z=\"x\" />"
                 + "lab</label>" + "</td></tr></table>", getResponseText());
     }
 
@@ -478,6 +478,7 @@ public class HtmlSelectOneRadioRendererTest extends RendererTest {
     protected Renderer createRenderer() {
         HtmlSelectOneRadioRenderer renderer = new HtmlSelectOneRadioRenderer();
         renderer.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
+        renderer.setRenderAttributes(getRenderAttributes());
         return renderer;
     }
 

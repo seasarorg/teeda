@@ -50,16 +50,12 @@ public class HtmlPanelGroupRenderer extends AbstractHtmlRenderer {
             writer.startElement(JsfConstants.SPAN_ELEM, htmlPanelGroup);
             RendererUtil.renderIdAttributeIfNecessary(writer, htmlPanelGroup,
                     getIdForRender(context, htmlPanelGroup));
-            RendererUtil.renderAttributes(writer, htmlPanelGroup,
-                    JsfConstants.COMMON_PASSTROUGH_ATTRIBUTES);
             renderAttributes(htmlPanelGroup, writer);
         }
     }
 
     private boolean isWriteSpan(HtmlPanelGroup htmlPanelGroup) {
-        return RendererUtil.containsAttributesForRender(htmlPanelGroup,
-                JsfConstants.ID_WITH_COMMON_PASSTROUGH_ATTRIBUTES)
-                || containsAttributeForRender(htmlPanelGroup);
+        return containsAttributeForRender(htmlPanelGroup);
     }
 
     public void encodeChildren(FacesContext context, UIComponent component)

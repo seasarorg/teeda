@@ -54,15 +54,11 @@ public class HtmlOutputTextRenderer extends AbstractHtmlRenderer {
             HtmlOutputText htmlOutputText) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
         boolean startSpan = false;
-        if (RendererUtil.containsAttributesForRender(htmlOutputText,
-                JsfConstants.ID_WITH_COMMON_PASSTROUGH_ATTRIBUTES)
-                || containsAttributeForRender(htmlOutputText)) {
+        if (containsAttributeForRender(htmlOutputText)) {
             writer.startElement(JsfConstants.SPAN_ELEM, htmlOutputText);
             startSpan = true;
             RendererUtil.renderIdAttributeIfNecessary(writer, htmlOutputText,
                     getIdForRender(context, htmlOutputText));
-            RendererUtil.renderAttributes(writer, htmlOutputText,
-                    JsfConstants.COMMON_PASSTROUGH_ATTRIBUTES);
             renderAttributes(htmlOutputText, writer);
         }
         String value = ValueHolderUtil.getValueForRender(context,
@@ -81,14 +77,12 @@ public class HtmlOutputTextRenderer extends AbstractHtmlRenderer {
             throws IOException {
         ResponseWriter writer = context.getResponseWriter();
         boolean startSpan = false;
-        if (RendererUtil.containsAttributesForRender(uiOutput,
-                JsfConstants.ID_WITH_COMMON_PASSTROUGH_ATTRIBUTES)) {
+        if (containsAttributeForRender(uiOutput)) {
             writer.startElement(JsfConstants.SPAN_ELEM, uiOutput);
             startSpan = true;
             RendererUtil.renderIdAttributeIfNecessary(writer, uiOutput,
                     getIdForRender(context, uiOutput));
-            RendererUtil.renderAttributes(writer, uiOutput,
-                    JsfConstants.COMMON_PASSTROUGH_ATTRIBUTES);
+            renderAttributes(uiOutput, writer);
         }
         String value = ValueHolderUtil.getValueForRender(context, uiOutput);
         Boolean b = (Boolean) uiOutput.getAttributes().get(

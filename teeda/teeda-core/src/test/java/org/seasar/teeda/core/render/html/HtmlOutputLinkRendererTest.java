@@ -34,9 +34,13 @@ public class HtmlOutputLinkRendererTest extends RendererTest {
 
     private MockHtmlOutputLink htmlOutputLink;
 
+    private HtmlOutputTextRenderer textRenderer;
+
     protected void setUp() throws Exception {
         super.setUp();
         renderer = createHtmlOutputLinkRenderer();
+        textRenderer = new HtmlOutputTextRenderer();
+        textRenderer.setRenderAttributes(getRenderAttributes());
         htmlOutputLink = new MockHtmlOutputLink();
         htmlOutputLink.setRenderer(renderer);
     }
@@ -87,9 +91,8 @@ public class HtmlOutputLinkRendererTest extends RendererTest {
 
     public void testEncode_WithChild() throws Exception {
         // ## Arrange ##
-        HtmlOutputTextRenderer htmlOutputTextRenderer = new HtmlOutputTextRenderer();
         MockHtmlOutputText child = new MockHtmlOutputText();
-        child.setRenderer(htmlOutputTextRenderer);
+        child.setRenderer(textRenderer);
         child.setValue("Y");
         htmlOutputLink.getChildren().add(child);
 
@@ -277,6 +280,7 @@ public class HtmlOutputLinkRendererTest extends RendererTest {
     protected Renderer createRenderer() {
         HtmlOutputLinkRenderer renderer = new HtmlOutputLinkRenderer();
         renderer.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
+        renderer.setRenderAttributes(getRenderAttributes());
         return renderer;
     }
 

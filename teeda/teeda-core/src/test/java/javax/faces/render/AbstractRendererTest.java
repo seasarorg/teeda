@@ -27,6 +27,7 @@ import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.mock.MockFacesContextImpl;
 import org.seasar.teeda.core.render.ComponentIdLookupStrategy;
 import org.seasar.teeda.core.render.DefaultComponentIdLookupStrategy;
+import org.seasar.teeda.core.render.html.support.RenderAttributesImpl;
 
 /**
  * @author manhole
@@ -36,6 +37,15 @@ public abstract class AbstractRendererTest extends TestCase {
     private MockFacesContext mockFacesContext_;
 
     private ComponentIdLookupStrategy idLookupStrategy_;
+
+    private static RenderAttributesImpl defaultRenderAttributes;
+
+    private RenderAttributesImpl renderAttributes = defaultRenderAttributes;
+
+    static {
+        defaultRenderAttributes = new RenderAttributesImpl();
+        defaultRenderAttributes.initialize();
+    }
 
     protected void setUp() throws Exception {
         super.setUp();
@@ -62,9 +72,9 @@ public abstract class AbstractRendererTest extends TestCase {
                 .getResponseWriter());
         return htmlResponseWriter.getWriter().toString();
     }
-    
-    protected void encodeByRenderer(Renderer renderer,
-            UIComponent component) throws IOException {
+
+    protected void encodeByRenderer(Renderer renderer, UIComponent component)
+            throws IOException {
         encodeByRenderer(renderer, getFacesContext(), component);
     }
 
@@ -75,6 +85,14 @@ public abstract class AbstractRendererTest extends TestCase {
             renderer.encodeChildren(context, component);
         }
         renderer.encodeEnd(context, component);
+    }
+
+    protected RenderAttributesImpl getRenderAttributes() {
+        return renderAttributes;
+    }
+
+    protected void setRenderAttributes(RenderAttributesImpl renderAttributes) {
+        this.renderAttributes = renderAttributes;
     }
 
 }

@@ -441,6 +441,7 @@ public class HtmlSelectOneListboxRendererTest extends RendererTest {
     protected Renderer createRenderer() {
         HtmlSelectOneListboxRenderer renderer = new HtmlSelectOneListboxRenderer();
         renderer.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
+        renderer.setRenderAttributes(getRenderAttributes());
         return renderer;
     }
 

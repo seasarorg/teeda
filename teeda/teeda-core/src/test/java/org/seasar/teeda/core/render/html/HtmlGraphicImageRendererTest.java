@@ -192,6 +192,7 @@ public class HtmlGraphicImageRendererTest extends RendererTest {
     protected Renderer createRenderer() {
         HtmlGraphicImageRenderer renderer = new HtmlGraphicImageRenderer();
         renderer.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
+        renderer.setRenderAttributes(getRenderAttributes());
         return renderer;
     }
 

@@ -236,6 +236,7 @@ public class HtmlInputTextRendererTest extends RendererTest {
     protected Renderer createRenderer() {
         HtmlInputTextRenderer renderer = new HtmlInputTextRenderer();
         renderer.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
+        renderer.setRenderAttributes(getRenderAttributes());
         return renderer;
     }
 

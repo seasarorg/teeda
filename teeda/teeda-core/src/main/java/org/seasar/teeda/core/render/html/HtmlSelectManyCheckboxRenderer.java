@@ -55,6 +55,10 @@ public class HtmlSelectManyCheckboxRenderer extends AbstractHtmlRenderer {
         encodeHtmlSelectManyCheckboxEnd(context, component);
     }
 
+    private static final String[] TABLE_ATTRIBUTE = new String[] {
+            JsfConstants.BORDER_ATTR, JsfConstants.STYLE_ATTR,
+            JsfConstants.STYLE_CLASS_ATTR };
+
     protected void encodeHtmlSelectManyCheckboxEnd(FacesContext context,
             UIComponent htmlSelectManyCheckbox) throws IOException {
 
@@ -67,10 +71,7 @@ public class HtmlSelectManyCheckboxRenderer extends AbstractHtmlRenderer {
         RendererUtil.renderIdAttributeIfNecessary(writer,
                 htmlSelectManyCheckbox, getIdForRender(context,
                         htmlSelectManyCheckbox));
-        RendererUtil.renderAttributes(writer, htmlSelectManyCheckbox,
-                JsfConstants.SELECT_TABLE_PASSTHROUGH_ATTRIBUTES);
-        renderAttributes(htmlSelectManyCheckbox, writer);
-
+        RendererUtil.renderAttributes(writer, htmlSelectManyCheckbox, TABLE_ATTRIBUTE);
         String[] selectedValues = getValuesForRender(context,
                 htmlSelectManyCheckbox);
 
@@ -170,16 +171,12 @@ public class HtmlSelectManyCheckboxRenderer extends AbstractHtmlRenderer {
                 htmlSelectManyCheckbox.getClientId(context));
         final Object value = selectItem.getValue();
         RendererUtil.renderAttribute(writer, JsfConstants.VALUE_ATTR, value);
-        RendererUtil
-                .renderAttributes(
-                        writer,
-                        htmlSelectManyCheckbox,
-                        JsfConstants.INPUT_PASSTHROUGH_ATTRIBUTES_WITHOUT_DISABLED_AND_STYLE);
+        renderAttributes(htmlSelectManyCheckbox, writer);
         if (isChecked(selectedValues, value.toString())) {
             renderCheckedAttribute(writer);
         }
         if (disabled) {
-            RendererUtil.renderDisabledAttribute(writer);
+            renderDisabledAttribute(writer);
         }
         writer.endElement(JsfConstants.INPUT_ELEM);
     }

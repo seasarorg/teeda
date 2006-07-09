@@ -19,9 +19,12 @@ import javax.faces.component.html.HtmlOutputText;
 import javax.faces.context.FacesContext;
 import javax.faces.render.Renderer;
 
+/**
+ * @author manhole
+ */
 public class MockHtmlOutputText extends HtmlOutputText {
 
-    private Renderer renderer = null;
+    private Renderer renderer;
 
     public void setRenderer(Renderer renderer) {
         this.renderer = renderer;

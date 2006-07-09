@@ -282,7 +282,8 @@ public class HtmlMessagesRendererTest extends RendererTest {
         encodeByRenderer(renderer, htmlMessages);
 
         // ## Assert ##
-        assertEquals("<ul abc=\"ABC\"><li>s</li></ul>", getResponseText());
+        assertEquals("<ul><li><span abc=\"ABC\">s</span></li></ul>",
+                getResponseText());
     }
 
     public void testEncode_WithUnknownAttribute2() throws Exception {
@@ -589,6 +590,7 @@ public class HtmlMessagesRendererTest extends RendererTest {
     protected Renderer createRenderer() {
         HtmlMessagesRenderer renderer = new HtmlMessagesRenderer();
         renderer.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
+        renderer.setRenderAttributes(getRenderAttributes());
         return renderer;
     }
 

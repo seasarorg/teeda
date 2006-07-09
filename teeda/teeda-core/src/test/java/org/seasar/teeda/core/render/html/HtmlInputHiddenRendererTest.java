@@ -151,6 +151,7 @@ public class HtmlInputHiddenRendererTest extends RendererTest {
     protected Renderer createRenderer() {
         HtmlInputHiddenRenderer renderer = new HtmlInputHiddenRenderer();
         renderer.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
+        renderer.setRenderAttributes(getRenderAttributes());
         return renderer;
     }
 

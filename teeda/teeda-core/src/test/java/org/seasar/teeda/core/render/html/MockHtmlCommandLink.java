@@ -22,7 +22,7 @@ import javax.faces.render.Renderer;
 /**
  * @author manhole
  */
-class MockHtmlCommandLink extends HtmlCommandLink {
+public class MockHtmlCommandLink extends HtmlCommandLink {
 
     private Renderer renderer;
 

@@ -70,11 +70,6 @@ public class HtmlSelectManyListboxRenderer extends AbstractHtmlRenderer {
                 .getClientId(context));
         renderMultiple(context, component, writer);
         renderSize(context, component, writer);
-        if (UIComponentUtil.isDisabled(component)) {
-            RendererUtil.renderDisabledAttribute(writer);
-        }
-        RendererUtil.renderAttributes(writer, component,
-                JsfConstants.SELECT_PASSTHROUGH_ATTRIBUTES_WITHOUT_DISABLED);
         renderAttributes(component, writer);
         final String[] selectedValues = getValuesForRender(context, component);
         renderSelectItems(context, component, writer, it, selectedValues);
@@ -152,10 +147,10 @@ public class HtmlSelectManyListboxRenderer extends AbstractHtmlRenderer {
                 }
                 if (value != null
                         && isSelected(selectedValues, value.toString())) {
-                    RendererUtil.renderSelectedAttribute(writer);
+                    renderSelectedAttribute(writer);
                 }
                 if (selectItem.isDisabled()) {
-                    RendererUtil.renderDisabledAttribute(writer);
+                    renderDisabledAttribute(writer);
                 }
                 writer.writeText(selectItem.getLabel(), null);
                 writer.endElement(JsfConstants.OPTION_ELEM);

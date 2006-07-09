@@ -15,7 +15,6 @@
  */
 package org.seasar.teeda.core.render.html;
 
-
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
 import javax.faces.render.AbstractRendererTeedaTest;
@@ -108,6 +107,7 @@ public class HtmlInputTextRendererTeedaTest extends AbstractRendererTeedaTest {
     protected Renderer createRenderer() {
         HtmlInputTextRenderer renderer = new HtmlInputTextRenderer();
         renderer.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
+        renderer.setRenderAttributes(getRenderAttributes());
         return renderer;
     }
 

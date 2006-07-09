@@ -54,9 +54,13 @@ public class THtmlGridRendererTest extends RendererTest {
 
     private MockHtmlGrid htmlGrid;
 
+    private HtmlOutputTextRenderer outputTextRenderer = new HtmlOutputTextRenderer();
+
     protected void setUp() throws Exception {
         super.setUp();
         renderer = (THtmlGridRenderer) createRenderer();
+        outputTextRenderer = new HtmlOutputTextRenderer();
+        outputTextRenderer.setRenderAttributes(getRenderAttributes());
         htmlGrid = new MockHtmlGrid();
         htmlGrid.setRenderer(renderer);
     }
@@ -188,7 +192,6 @@ public class THtmlGridRendererTest extends RendererTest {
 
     public void testEncode_Header_Body_XY() throws Exception {
         // ## Arrange ##
-        HtmlOutputTextRenderer htmlOutputTextRenderer = new HtmlOutputTextRenderer();
         htmlGrid.setId("someGridXY");
         htmlGrid.setWidth(String.valueOf(300));
         htmlGrid.setHeight(String.valueOf(400));
@@ -230,7 +233,7 @@ public class THtmlGridRendererTest extends RendererTest {
                 THtmlGridTh th = new THtmlGridTh();
                 addChild(tr, th);
                 MockHtmlOutputText text = new MockHtmlOutputText();
-                text.setRenderer(htmlOutputTextRenderer);
+                text.setRenderer(outputTextRenderer);
                 text.setValue("th1");
                 addChild(th, text);
             }
@@ -238,7 +241,7 @@ public class THtmlGridRendererTest extends RendererTest {
                 THtmlGridTh th = new THtmlGridTh();
                 addChild(tr, th);
                 MockHtmlOutputText text = new MockHtmlOutputText();
-                text.setRenderer(htmlOutputTextRenderer);
+                text.setRenderer(outputTextRenderer);
                 text.setValue("th2");
                 addChild(th, text);
             }
@@ -257,7 +260,7 @@ public class THtmlGridRendererTest extends RendererTest {
                 THtmlGridTd td = new THtmlGridTd();
                 addChild(tr, td);
                 MockHtmlOutputText text = new MockHtmlOutputText();
-                text.setRenderer(htmlOutputTextRenderer);
+                text.setRenderer(outputTextRenderer);
                 ValueBinding vb = new ValueBindingImpl(getFacesContext()
                         .getApplication(), "#{some.td1}", parser);
                 text.setValueBinding("value", vb);
@@ -267,7 +270,7 @@ public class THtmlGridRendererTest extends RendererTest {
                 THtmlGridTd td = new THtmlGridTd();
                 addChild(tr, td);
                 MockHtmlOutputText text = new MockHtmlOutputText();
-                text.setRenderer(htmlOutputTextRenderer);
+                text.setRenderer(outputTextRenderer);
                 ValueBinding vb = new ValueBindingImpl(getFacesContext()
                         .getApplication(), "#{some.td2}", parser);
                 text.setValueBinding("value", vb);
@@ -288,7 +291,6 @@ public class THtmlGridRendererTest extends RendererTest {
 
     public void testEncode_LeftFixed_Header_Body_XY() throws Exception {
         // ## Arrange ##
-        HtmlOutputTextRenderer htmlOutputTextRenderer = new HtmlOutputTextRenderer();
         htmlGrid.setId("someGridXY");
         htmlGrid.setWidth(String.valueOf(170));
         htmlGrid.setHeight(String.valueOf(150));
@@ -337,7 +339,7 @@ public class THtmlGridRendererTest extends RendererTest {
                 THtmlGridTh th = new THtmlGridTh();
                 addChild(tr, th);
                 MockHtmlOutputText text = new MockHtmlOutputText();
-                text.setRenderer(htmlOutputTextRenderer);
+                text.setRenderer(outputTextRenderer);
                 text.setValue("th" + i);
                 addChild(th, text);
             }
@@ -355,7 +357,7 @@ public class THtmlGridRendererTest extends RendererTest {
                 THtmlGridTd td = new THtmlGridTd();
                 addChild(tr, td);
                 MockHtmlOutputText text = new MockHtmlOutputText();
-                text.setRenderer(htmlOutputTextRenderer);
+                text.setRenderer(outputTextRenderer);
                 ValueBinding vb = new ValueBindingImpl(getFacesContext()
                         .getApplication(), "#{some.td" + i + "}", parser);
                 text.setValueBinding("value", vb);

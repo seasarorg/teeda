@@ -16,6 +16,7 @@
 package org.seasar.teeda.core.render.html;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -28,7 +29,10 @@ import javax.faces.convert.ConverterException;
 import javax.faces.internal.UIComponentUtil;
 import javax.faces.render.Renderer;
 
+import org.seasar.framework.beans.BeanDesc;
+import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.framework.util.AssertionUtil;
+import org.seasar.framework.util.FieldUtil;
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.ComponentIdLookupStrategy;
@@ -43,6 +47,8 @@ import org.seasar.teeda.core.util.RendererUtil;
 public abstract class AbstractHtmlRenderer extends Renderer {
 
     private ComponentIdLookupStrategy idLookupStartegy;
+
+    protected RenderAttributes renderAttributes;
 
     public AbstractHtmlRenderer() {
         idLookupStartegy = new DefaultComponentIdLookupStrategy();
@@ -121,7 +127,35 @@ public abstract class AbstractHtmlRenderer extends Renderer {
 
     protected void renderAttributes(UIComponent component, ResponseWriter writer)
             throws IOException {
+        final String[] names = getRenderAttributeNames(getClass());
+        RendererUtil.renderAttributes(writer, component, names);
         renderAttributes(component.getAttributes(), writer);
+    }
+
+    private String[] getRenderAttributeNames(final Class rendererClass) {
+        for (Class clazz = rendererClass; !clazz.equals(Object.class); clazz = clazz
+                .getSuperclass()) {
+            final String[] names = getRenderAttributeNames0(clazz);
+            if (names != null) {
+                return names;
+            }
+        }
+        return new String[0];
+    }
+
+    private String[] getRenderAttributeNames0(Class rendererClass) {
+        final BeanDesc beanDesc = BeanDescFactory.getBeanDesc(rendererClass);
+        if (!(beanDesc.hasField(JsfConstants.COMPONENT_FAMILY) && beanDesc
+                .hasField(JsfConstants.RENDERER_TYPE))) {
+            return null;
+        }
+        final Field family = beanDesc.getField(JsfConstants.COMPONENT_FAMILY);
+        final String componentFamily = (String) FieldUtil.get(family, null);
+        final Field type = beanDesc.getField(JsfConstants.RENDERER_TYPE);
+        final String rendererType = (String) FieldUtil.get(type, null);
+        final String[] names = renderAttributes.getAttributeNames(
+                componentFamily, rendererType);
+        return names;
     }
 
     protected void renderAttributes(Map attributes, ResponseWriter writer)
@@ -149,6 +183,13 @@ public abstract class AbstractHtmlRenderer extends Renderer {
     }
 
     protected boolean containsAttributeForRender(UIComponent component) {
+        if (RendererUtil.shouldRenderIdAttribute(component)) {
+            return true;
+        }
+        final String[] names = getRenderAttributeNames(getClass());
+        if (RendererUtil.containsAttributesForRender(component, names)) {
+            return true;
+        }
         return containsAttributeForRender(component.getAttributes());
     }
 
@@ -171,6 +212,23 @@ public abstract class AbstractHtmlRenderer extends Renderer {
             throws IOException {
         RendererUtil.renderAttribute(writer, JsfConstants.CHECKED_ATTR,
                 JsfConstants.CHECKED_ATTR);
+    }
+
+    protected void renderDisabledAttribute(ResponseWriter writer)
+            throws IOException {
+        RendererUtil.renderAttribute(writer, JsfConstants.DISABLED_ATTR,
+                JsfConstants.DISABLED_ATTR);
+    }
+
+    // select/option
+    protected void renderSelectedAttribute(ResponseWriter writer)
+            throws IOException {
+        RendererUtil.renderAttribute(writer, JsfConstants.SELECTED_ATTR,
+                JsfConstants.SELECTED_ATTR);
+    }
+
+    public void setRenderAttributes(RenderAttributes renderAttributes) {
+        this.renderAttributes = renderAttributes;
     }
 
 }

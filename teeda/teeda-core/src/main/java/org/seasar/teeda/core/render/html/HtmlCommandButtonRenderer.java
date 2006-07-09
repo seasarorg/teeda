@@ -72,12 +72,6 @@ public class HtmlCommandButtonRenderer extends AbstractHtmlRenderer {
             RendererUtil.renderAttribute(writer, JsfConstants.VALUE_ATTR,
                     htmlCommandButton.getValue());
         }
-
-        if (htmlCommandButton.isDisabled()) {
-            RendererUtil.renderDisabledAttribute(writer);
-        }
-        RendererUtil.renderAttributes(writer, htmlCommandButton,
-                JsfConstants.INPUT_PASSTHROUGH_ATTRIBUTES_WITHOUT_DISABLED);
         renderAttributes(htmlCommandButton, writer);
         writer.endElement(JsfConstants.INPUT_ELEM);
     }

@@ -59,9 +59,6 @@ public class HtmlGraphicImageRenderer extends AbstractHtmlRenderer {
                 url);
         url = context.getExternalContext().encodeResourceURL(url);
         RendererUtil.renderAttribute(writer, JsfConstants.SRC_ATTR, url);
-
-        RendererUtil.renderAttributes(writer, htmlGraphicImage,
-                JsfConstants.IMG_PASSTHROUGH_ATTRIBUTES);
         renderAttributes(htmlGraphicImage, writer);
         writer.endElement(JsfConstants.IMG_ELEM);
     }
