@@ -105,7 +105,12 @@ private static final String JSON_NOODLE = "{ \"detail\" : [\n "
             + " <item><menuName>ナポリタン</menuName><price>440</price></item>\n"
             + " <item><menuName>長崎チャンポン</menuName><price>1280</price></item>\n"
             + "</detail>\n";
-
+    
+    private static final AjaxDto[] JSON_ARRAY_TEST = { new AjaxDto("オレンジ", 100),
+        new AjaxDto("リンゴ", 200), new AjaxDto("桃", 300),
+        new AjaxDto("葡萄", 400), new AjaxDto("メロン", 500),
+        new AjaxDto("すいか", 600) };
+    
     private final String[] ORG_TEXT = { "", FRUIT, DRINK, NOODLE };
 
     private final String[] XML_TEXT = { "", XML_FRUIT, XML_DRINK, XML_NOODLE };
@@ -157,6 +162,10 @@ private static final String JSON_NOODLE = "{ \"detail\" : [\n "
         return this.createResponseXml();
     }
 
+    public Object jsonArrayTest() {
+        return JSON_ARRAY_TEST;
+    }
+    
     public String ajaxAction() {
         return this.arg2;
     }

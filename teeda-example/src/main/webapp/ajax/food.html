@@ -32,6 +32,14 @@ function sampleAjaxXml(food) {
     // for xml type 3rd param
     Kumu.Ajax.executeTeedaAjax(xml, { "component" : "ajaxBean", "action" : "ajaxXml", "food" : food }, Kumu.Ajax.RESPONSE_TYPE_XML);
 }
+function ajaxBean_jsonArrayTest(response){
+    //alert(response);
+}
+function sampleAjaxJsonArray() {
+    // for disp response data
+    Kumu.Ajax.DEBUG = true;
+    Kumu.Ajax.executeTeedaAjax(ajaxBean_jsonArrayTest);
+}
 //-->
 </script>
 </head>
@@ -102,6 +110,8 @@ Ajax Sample<br/>
    </tr>
   </table>
  <hr/>
+  JSON array test
+  <input type="button" value="JSON array test" onclick="sampleAjaxJsonArray();" />
 </form>
 </body>
 </html>
