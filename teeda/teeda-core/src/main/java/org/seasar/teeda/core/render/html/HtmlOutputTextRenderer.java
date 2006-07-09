@@ -55,13 +55,15 @@ public class HtmlOutputTextRenderer extends AbstractHtmlRenderer {
         ResponseWriter writer = context.getResponseWriter();
         boolean startSpan = false;
         if (RendererUtil.containsAttributesForRender(htmlOutputText,
-                JsfConstants.ID_WITH_COMMON_PASSTROUGH_ATTRIBUTES)) {
+                JsfConstants.ID_WITH_COMMON_PASSTROUGH_ATTRIBUTES)
+                || containsAttributeForRender(htmlOutputText)) {
             writer.startElement(JsfConstants.SPAN_ELEM, htmlOutputText);
             startSpan = true;
             RendererUtil.renderIdAttributeIfNecessary(writer, htmlOutputText,
                     getIdForRender(context, htmlOutputText));
             RendererUtil.renderAttributes(writer, htmlOutputText,
                     JsfConstants.COMMON_PASSTROUGH_ATTRIBUTES);
+            renderAttributes(htmlOutputText, writer);
         }
         String value = ValueHolderUtil.getValueForRender(context,
                 htmlOutputText);

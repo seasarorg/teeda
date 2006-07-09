@@ -106,6 +106,17 @@ public class HtmlInputSecretRendererTest extends RendererTest {
                 getResponseText());
     }
 
+    public void testEncode_WithUnknownAttribute() throws Exception {
+        htmlInputSecret_.setId("a");
+        htmlInputSecret_.getAttributes().put("foo", "bar");
+
+        encodeByRenderer(renderer_, htmlInputSecret_);
+
+        assertEquals(
+                "<input type=\"password\" id=\"a\" name=\"a\" value=\"\" foo=\"bar\" />",
+                getResponseText());
+    }
+
     public void testEncode_WithAllAttributes() throws Exception {
         htmlInputSecret_.setAccesskey("a");
         htmlInputSecret_.setAlt("b");

@@ -90,6 +90,16 @@ public class HtmlInputTextareaRendererTest extends RendererTest {
                 getResponseText());
     }
 
+    public void testEncode_WithUnknownAttribute() throws Exception {
+        htmlInputTextarea_.setId("a");
+        htmlInputTextarea_.getAttributes().put("aa", "bb");
+
+        encodeByRenderer(renderer_, htmlInputTextarea_);
+
+        assertEquals("<textarea id=\"a\" name=\"a\" aa=\"bb\"></textarea>",
+                getResponseText());
+    }
+
     public void testDecode_None() throws Exception {
         // ## Arrange ##
         htmlInputTextarea_.setClientId("key1");

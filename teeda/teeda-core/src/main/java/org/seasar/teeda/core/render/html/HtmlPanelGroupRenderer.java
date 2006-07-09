@@ -52,12 +52,14 @@ public class HtmlPanelGroupRenderer extends AbstractHtmlRenderer {
                     getIdForRender(context, htmlPanelGroup));
             RendererUtil.renderAttributes(writer, htmlPanelGroup,
                     JsfConstants.COMMON_PASSTROUGH_ATTRIBUTES);
+            renderAttributes(htmlPanelGroup, writer);
         }
     }
 
     private boolean isWriteSpan(HtmlPanelGroup htmlPanelGroup) {
         return RendererUtil.containsAttributesForRender(htmlPanelGroup,
-                JsfConstants.ID_WITH_COMMON_PASSTROUGH_ATTRIBUTES);
+                JsfConstants.ID_WITH_COMMON_PASSTROUGH_ATTRIBUTES)
+                || containsAttributeForRender(htmlPanelGroup);
     }
 
     public void encodeChildren(FacesContext context, UIComponent component)

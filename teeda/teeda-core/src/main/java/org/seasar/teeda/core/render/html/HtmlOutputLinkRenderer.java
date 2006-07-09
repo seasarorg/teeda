@@ -77,6 +77,7 @@ public class HtmlOutputLinkRenderer extends AbstractHtmlRenderer {
         writer.writeURIAttribute(JsfConstants.HREF_ATTR, href, null);
         RendererUtil.renderAttributes(writer, htmlOutputLink,
                 JsfConstants.ANCHOR_PASSTHROUGH_ATTRIBUTES);
+        renderAttributes(htmlOutputLink, writer);
     }
 
     public void encodeEnd(FacesContext context, UIComponent component)

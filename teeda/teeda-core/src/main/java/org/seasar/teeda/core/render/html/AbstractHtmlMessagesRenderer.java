@@ -16,6 +16,7 @@
 package org.seasar.teeda.core.render.html;
 
 import java.io.IOException;
+import java.util.Map;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.application.FacesMessage.Severity;
@@ -34,7 +35,7 @@ public abstract class AbstractHtmlMessagesRenderer extends AbstractHtmlRenderer 
 
     protected void renderOneMessage(FacesContext context,
             UIComponent component, FacesMessage facesMassage,
-            final String idForRender) throws IOException {
+            final String idForRender, Map attributes) throws IOException {
 
         final String style = getStyle(component, facesMassage.getSeverity());
         final String styleClass = getStyleClass(component, facesMassage
@@ -53,7 +54,7 @@ public abstract class AbstractHtmlMessagesRenderer extends AbstractHtmlRenderer 
         ResponseWriter writer = context.getResponseWriter();
         boolean startSpan = false;
         if (idForRender != null || style != null || styleClass != null
-                || title != null) {
+                || title != null || containsAttributeForRender(attributes)) {
             startSpan = true;
             writer.startElement(JsfConstants.SPAN_ELEM, component);
             RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR,
@@ -64,6 +65,7 @@ public abstract class AbstractHtmlMessagesRenderer extends AbstractHtmlRenderer 
                     .renderAttribute(writer, JsfConstants.STYLE_ATTR, style);
             RendererUtil.renderAttribute(writer, JsfConstants.STYLE_CLASS_ATTR,
                     styleClass);
+            renderAttributes(attributes, writer);
         }
 
         // TODO don't escape HTML tags

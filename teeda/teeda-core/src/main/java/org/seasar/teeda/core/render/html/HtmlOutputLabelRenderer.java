@@ -66,6 +66,7 @@ public class HtmlOutputLabelRenderer extends AbstractHtmlRenderer {
 
         RendererUtil.renderAttributes(writer, htmlOutputLabel,
                 JsfConstants.LABEL_PASSTHROUGH_ATTRIBUTES);
+        renderAttributes(htmlOutputLabel, writer);
         String value = ValueHolderUtil.getValueForRender(context,
                 htmlOutputLabel);
         writer.writeText(value, null);

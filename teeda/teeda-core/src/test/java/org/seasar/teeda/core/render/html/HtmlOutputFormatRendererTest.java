@@ -71,6 +71,26 @@ public class HtmlOutputFormatRendererTest extends RendererTest {
         assertEquals("<span id=\"a\">b</span>", getResponseText());
     }
 
+    public void testEncode_WithUnknownAttribute1() throws Exception {
+        htmlOutputFormat_.setValue("b");
+        htmlOutputFormat_.getAttributes().put("aa", "AA");
+
+        MockFacesContext context = getFacesContext();
+        encodeByRenderer(renderer_, context, htmlOutputFormat_);
+
+        assertEquals("<span aa=\"AA\">b</span>", getResponseText());
+    }
+
+    public void testEncode_WithUnknownAttribute2() throws Exception {
+        htmlOutputFormat_.setValue("b");
+        htmlOutputFormat_.getAttributes().put("a.a", "AA");
+
+        MockFacesContext context = getFacesContext();
+        encodeByRenderer(renderer_, context, htmlOutputFormat_);
+
+        assertEquals("b", getResponseText());
+    }
+
     public void testEncode_RenderFalse() throws Exception {
         htmlOutputFormat_.setRendered(false);
         htmlOutputFormat_.setId("a");

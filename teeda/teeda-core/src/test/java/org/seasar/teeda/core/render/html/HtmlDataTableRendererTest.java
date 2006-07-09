@@ -96,6 +96,20 @@ public class HtmlDataTableRendererTest extends RendererTest {
         assertEquals("<table id=\"aa\"", getResponseText());
     }
 
+    public void testEncodeBegin_WithUnknownAttribute() throws Exception {
+        // ## Arrange ##
+        htmlDataTable_.setId("aa");
+        htmlDataTable_.getAttributes().put("a", "b");
+
+        MockFacesContext context = getFacesContext();
+
+        // ## Act ##
+        renderer_.encodeBegin(context, htmlDataTable_);
+
+        // ## Assert ##
+        assertEquals("<table id=\"aa\" a=\"b\"", getResponseText());
+    }
+
     public void testEncode_NoValue() throws Exception {
         // ## Arrange ##
 

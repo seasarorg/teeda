@@ -58,10 +58,11 @@ public class HtmlInputTextareaRenderer extends AbstractHtmlRenderer {
         if (htmlInputTextarea.isDisabled()) {
             RendererUtil.renderDisabledAttribute(writer);
         }
+        renderAttributes(htmlInputTextarea, writer);
 
         String value = ValueHolderUtil.getValueForRender(context,
                 htmlInputTextarea);
-        writer.write(value);
+        writer.writeText(value, null);
 
         writer.endElement(JsfConstants.TEXTAREA_ELEM);
     }

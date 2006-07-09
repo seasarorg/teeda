@@ -271,6 +271,37 @@ public class HtmlMessagesRendererTest extends RendererTest {
         assertEquals("<ul id=\"ab\"><li>s</li></ul>", getResponseText());
     }
 
+    public void testEncode_WithUnknownAttribute1() throws Exception {
+        FacesContext context = getFacesContext();
+        htmlMessages_.getAttributes().put("abc", "ABC");
+        htmlMessages_.getAttributes().put("a.b", "AAA");
+
+        FacesMessage facesMessage = new FacesMessage();
+        facesMessage.setSummary("s");
+        context.addMessage("foo", facesMessage);
+
+        // ## Act ##
+        encodeByRenderer(renderer_, context, htmlMessages_);
+
+        // ## Assert ##
+        assertEquals("<ul abc=\"ABC\"><li>s</li></ul>", getResponseText());
+    }
+
+    public void testEncode_WithUnknownAttribute2() throws Exception {
+        FacesContext context = getFacesContext();
+        htmlMessages_.getAttributes().put("a.b", "AAA");
+
+        FacesMessage facesMessage = new FacesMessage();
+        facesMessage.setSummary("s");
+        context.addMessage("foo", facesMessage);
+
+        // ## Act ##
+        encodeByRenderer(renderer_, context, htmlMessages_);
+
+        // ## Assert ##
+        assertEquals("<ul><li>s</li></ul>", getResponseText());
+    }
+
     public void testEncode_Id_table() throws Exception {
         FacesContext context = getFacesContext();
         htmlMessages_.setId("ab");

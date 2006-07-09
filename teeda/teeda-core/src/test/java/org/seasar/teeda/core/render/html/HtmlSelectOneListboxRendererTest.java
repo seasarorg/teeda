@@ -111,6 +111,48 @@ public class HtmlSelectOneListboxRendererTest extends RendererTest {
                 getResponseText());
     }
 
+    public void testEncode_WithUnknownAttribute1() throws Exception {
+        // ## Arrange ##
+        MockFacesContext context = getFacesContext();
+        {
+            UISelectItem selectItem = new UISelectItem();
+            selectItem.setItemValue("val");
+            selectItem.setItemLabel("lab");
+            htmlSelectOneListbox_.getChildren().add(selectItem);
+        }
+        htmlSelectOneListbox_.setId("a");
+        htmlSelectOneListbox_.getAttributes().put("bb", "cc");
+
+        // ## Act ##
+        encodeByRenderer(renderer_, context, htmlSelectOneListbox_);
+
+        // ## Assert ##
+        assertEquals("<select id=\"a\" name=\"a\" size=\"1\" bb=\"cc\">"
+                + "<option value=\"val\">lab</option>" + "</select>",
+                getResponseText());
+    }
+
+    public void testEncode_WithUnknownAttribute2() throws Exception {
+        // ## Arrange ##
+        MockFacesContext context = getFacesContext();
+        {
+            UISelectItem selectItem = new UISelectItem();
+            selectItem.setItemValue("val");
+            selectItem.setItemLabel("lab");
+            htmlSelectOneListbox_.getChildren().add(selectItem);
+        }
+        htmlSelectOneListbox_.setId("a");
+        htmlSelectOneListbox_.getAttributes().put("b.b", "cc");
+
+        // ## Act ##
+        encodeByRenderer(renderer_, context, htmlSelectOneListbox_);
+
+        // ## Assert ##
+        assertEquals("<select id=\"a\" name=\"a\" size=\"1\">"
+                + "<option value=\"val\">lab</option>" + "</select>",
+                getResponseText());
+    }
+
     public void testEncode_Children() throws Exception {
         // ## Arrange ##
         MockFacesContext context = getFacesContext();
@@ -404,10 +446,10 @@ public class HtmlSelectOneListboxRendererTest extends RendererTest {
     }
 
     public void testGetConvertedValue() throws Exception {
-        assertEquals("hoge", renderer_.getConvertedValue(getFacesContext(), htmlSelectOneListbox_, "hoge"));
+        assertEquals("hoge", renderer_.getConvertedValue(getFacesContext(),
+                htmlSelectOneListbox_, "hoge"));
     }
-    
-    
+
     private HtmlSelectOneListboxRenderer createHtmlSelectOneListboxRenderer() {
         return (HtmlSelectOneListboxRenderer) createRenderer();
     }

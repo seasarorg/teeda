@@ -117,6 +117,46 @@ public class HtmlSelectManyCheckboxRendererTest extends RendererTest {
                 + "lab</label>" + "</td></tr></table>", getResponseText());
     }
 
+    public void testEncode_WithUnknownAttribute1() throws Exception {
+        // ## Arrange ##
+        {
+            UISelectItem selectItem = new UISelectItem();
+            selectItem.setItemValue("val");
+            selectItem.setItemLabel("lab");
+            htmlSelectManyCheckbox_.getChildren().add(selectItem);
+        }
+        htmlSelectManyCheckbox_.setId("a");
+        htmlSelectManyCheckbox_.getAttributes().put("aa", "bb");
+
+        // ## Act ##
+        encodeByRenderer(renderer_, htmlSelectManyCheckbox_);
+
+        // ## Assert ##
+        assertEquals("<table id=\"a\" aa=\"bb\"><tr><td>" + "<label>"
+                + "<input type=\"checkbox\" name=\"a\" value=\"val\" />"
+                + "lab</label>" + "</td></tr></table>", getResponseText());
+    }
+
+    public void testEncode_WithUnknownAttribute2() throws Exception {
+        // ## Arrange ##
+        {
+            UISelectItem selectItem = new UISelectItem();
+            selectItem.setItemValue("val");
+            selectItem.setItemLabel("lab");
+            htmlSelectManyCheckbox_.getChildren().add(selectItem);
+        }
+        htmlSelectManyCheckbox_.setId("a");
+        htmlSelectManyCheckbox_.getAttributes().put("a.a", "bb");
+
+        // ## Act ##
+        encodeByRenderer(renderer_, htmlSelectManyCheckbox_);
+
+        // ## Assert ##
+        assertEquals("<table id=\"a\"><tr><td>" + "<label>"
+                + "<input type=\"checkbox\" name=\"a\" value=\"val\" />"
+                + "lab</label>" + "</td></tr></table>", getResponseText());
+    }
+
     public void testEncode_Children() throws Exception {
         // ## Arrange ##
         MockFacesContext context = getFacesContext();

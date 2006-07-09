@@ -75,6 +75,7 @@ public class HtmlSelectManyListboxRenderer extends AbstractHtmlRenderer {
         }
         RendererUtil.renderAttributes(writer, component,
                 JsfConstants.SELECT_PASSTHROUGH_ATTRIBUTES_WITHOUT_DISABLED);
+        renderAttributes(component, writer);
         final String[] selectedValues = getValuesForRender(context, component);
         renderSelectItems(context, component, writer, it, selectedValues);
 

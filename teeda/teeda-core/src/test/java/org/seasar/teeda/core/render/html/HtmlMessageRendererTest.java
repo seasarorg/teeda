@@ -241,6 +241,43 @@ public class HtmlMessageRendererTest extends RendererTest {
         assertEquals("<span id=\"ab\">detail</span>", getResponseText());
     }
 
+    public void testEncode_WithUnknownAttribute1() throws Exception {
+        FacesContext context = getFacesContext();
+        arrangeForComponent("foo");
+        htmlMessage_.setFor("foo");
+        htmlMessage_.getAttributes().put("aa", "bb");
+        htmlMessage_.getAttributes().put("a.a", "bbb");
+
+        FacesMessage facesMessage = new FacesMessage();
+        facesMessage.setDetail("detail");
+        facesMessage.setSeverity(FacesMessage.SEVERITY_INFO);
+        context.addMessage("foo", facesMessage);
+
+        // ## Act ##
+        encodeByRenderer(renderer_, context, htmlMessage_);
+
+        // ## Assert ##
+        assertEquals("<span aa=\"bb\">detail</span>", getResponseText());
+    }
+
+    public void testEncode_WithUnknownAttribute2() throws Exception {
+        FacesContext context = getFacesContext();
+        arrangeForComponent("foo");
+        htmlMessage_.setFor("foo");
+        htmlMessage_.getAttributes().put("a.a", "bb");
+
+        FacesMessage facesMessage = new FacesMessage();
+        facesMessage.setDetail("detail");
+        facesMessage.setSeverity(FacesMessage.SEVERITY_INFO);
+        context.addMessage("foo", facesMessage);
+
+        // ## Act ##
+        encodeByRenderer(renderer_, context, htmlMessage_);
+
+        // ## Assert ##
+        assertEquals("detail", getResponseText());
+    }
+
     public void testEncode_InfoStyle() throws Exception {
         FacesContext context = getFacesContext();
         arrangeForComponent("foo");

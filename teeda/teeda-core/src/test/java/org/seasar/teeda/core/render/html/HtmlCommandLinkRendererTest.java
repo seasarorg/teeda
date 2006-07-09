@@ -142,7 +142,8 @@ public class HtmlCommandLinkRendererTest extends RendererTest {
         // ## Assert ##
         assertEquals("<a" + " id=\"a\"" + " href=\"#\"" + " onclick=\""
                 + "var f = document.forms['b'];"
-                + " f['b:__link_clicked__'].value = 'b:a';" +
+                + " f['b:__link_clicked__'].value = 'b:a';"
+                +
                 // " f['a'].value = '1';" +
                 " if (f.onsubmit) { f.onsubmit(); }" + " f.submit();"
                 + " return false;" + "\"></a>", getResponseText());
@@ -210,6 +211,27 @@ public class HtmlCommandLinkRendererTest extends RendererTest {
                 + " f['c'].value = '1';" + " f['d'].value = '2';"
                 + " if (f.onsubmit) { f.onsubmit(); }" + " f.submit();"
                 + " return false;" + "\"></a>", getResponseText());
+    }
+
+    public void testEncode_WithUnknownAttribute() throws Exception {
+        // ## Arrange ##
+        htmlCommandLink_.setValue("abc");
+        htmlCommandLink_.getAttributes().put("c", "d");
+
+        MockHtmlForm form = new MockHtmlForm();
+        form.setRenderer(new HtmlFormRenderer());
+        form.setId("b");
+        form.getChildren().add(htmlCommandLink_);
+
+        // ## Act ##
+        encodeByRenderer(renderer_, htmlCommandLink_);
+
+        // ## Assert ##
+        assertEquals("<a" + " href=\"#\"" + " onclick=\""
+                + "var f = document.forms['b'];"
+                + " f['b:__link_clicked__'].value = 'b:_id0';"
+                + " if (f.onsubmit) { f.onsubmit(); }" + " f.submit();"
+                + " return false;" + "\" c=\"d\">abc</a>", getResponseText());
     }
 
     public void testEncode_WithAllAttributes() throws Exception {

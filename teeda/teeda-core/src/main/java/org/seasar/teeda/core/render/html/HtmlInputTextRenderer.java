@@ -64,6 +64,7 @@ public class HtmlInputTextRenderer extends AbstractHtmlRenderer {
         }
         RendererUtil.renderAttributes(writer, htmlInputText,
                 JsfConstants.INPUT_PASSTHROUGH_ATTRIBUTES_WITHOUT_DISABLED);
+        renderAttributes(htmlInputText, writer);
         writer.endElement(JsfConstants.INPUT_ELEM);
     }
 

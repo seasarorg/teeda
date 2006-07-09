@@ -135,6 +135,26 @@ public class HtmlCommandButtonRendererTest extends RendererTest {
                 getResponseText());
     }
 
+    public void testEncode_WithUnknownAttribute1() throws Exception {
+        htmlCommandButton_.setId("a");
+        htmlCommandButton_.getAttributes().put("b", "c");
+
+        encodeByRenderer(renderer_, htmlCommandButton_);
+
+        assertEquals("<input type=\"submit\" id=\"a\" name=\"a\" b=\"c\" />",
+                getResponseText());
+    }
+
+    public void testEncode_WithUnknownAttribute2() throws Exception {
+        htmlCommandButton_.setId("a");
+        htmlCommandButton_.getAttributes().put("b.c", "c");
+
+        encodeByRenderer(renderer_, htmlCommandButton_);
+
+        assertEquals("<input type=\"submit\" id=\"a\" name=\"a\" />",
+                getResponseText());
+    }
+
     public void testEncode_WithAllAttributes() throws Exception {
         htmlCommandButton_.setAccesskey("a");
         htmlCommandButton_.setAlt("b");

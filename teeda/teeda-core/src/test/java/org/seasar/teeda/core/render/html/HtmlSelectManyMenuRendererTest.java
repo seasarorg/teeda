@@ -113,6 +113,50 @@ public class HtmlSelectManyMenuRendererTest extends RendererTest {
                 getResponseText());
     }
 
+    public void testEncode_WithUnknownAttribute1() throws Exception {
+        // ## Arrange ##
+        MockFacesContext context = getFacesContext();
+        {
+            UISelectItem selectItem = new UISelectItem();
+            selectItem.setItemValue("val");
+            selectItem.setItemLabel("lab");
+            htmlSelectManyMenu_.getChildren().add(selectItem);
+        }
+        htmlSelectManyMenu_.setId("a");
+        htmlSelectManyMenu_.getAttributes().put("a1", "b1");
+
+        // ## Act ##
+        encodeByRenderer(renderer_, context, htmlSelectManyMenu_);
+
+        // ## Assert ##
+        assertEquals(
+                "<select id=\"a\" name=\"a\" multiple=\"multiple\" size=\"1\" a1=\"b1\">"
+                        + "<option value=\"val\">lab</option>" + "</select>",
+                getResponseText());
+    }
+
+    public void testEncode_WithUnknownAttribute2() throws Exception {
+        // ## Arrange ##
+        MockFacesContext context = getFacesContext();
+        {
+            UISelectItem selectItem = new UISelectItem();
+            selectItem.setItemValue("val");
+            selectItem.setItemLabel("lab");
+            htmlSelectManyMenu_.getChildren().add(selectItem);
+        }
+        htmlSelectManyMenu_.setId("a");
+        htmlSelectManyMenu_.getAttributes().put("a.1", "b1");
+
+        // ## Act ##
+        encodeByRenderer(renderer_, context, htmlSelectManyMenu_);
+
+        // ## Assert ##
+        assertEquals(
+                "<select id=\"a\" name=\"a\" multiple=\"multiple\" size=\"1\">"
+                        + "<option value=\"val\">lab</option>" + "</select>",
+                getResponseText());
+    }
+
     public void testEncode_Children() throws Exception {
         // ## Arrange ##
         MockFacesContext context = getFacesContext();

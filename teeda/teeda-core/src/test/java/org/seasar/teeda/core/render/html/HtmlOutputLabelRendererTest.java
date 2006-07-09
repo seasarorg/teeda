@@ -85,6 +85,22 @@ public class HtmlOutputLabelRendererTest extends RendererTest {
         assertEquals("<label id=\"someId\">", getResponseText());
     }
 
+    public void testEncodeBegin_WithUnknownAttribute1() throws Exception {
+        htmlOutputLabel_.getAttributes().put("aaa", "bbb");
+
+        renderer_.encodeBegin(getFacesContext(), htmlOutputLabel_);
+
+        assertEquals("<label aaa=\"bbb\">", getResponseText());
+    }
+
+    public void testEncodeBegin_WithUnknownAttribute2() throws Exception {
+        htmlOutputLabel_.getAttributes().put("a.a", "bbb");
+
+        renderer_.encodeBegin(getFacesContext(), htmlOutputLabel_);
+
+        assertEquals("<label>", getResponseText());
+    }
+
     public void testEncodeBegin_WithFor() throws Exception {
         htmlOutputLabel_.setFor("bb");
 

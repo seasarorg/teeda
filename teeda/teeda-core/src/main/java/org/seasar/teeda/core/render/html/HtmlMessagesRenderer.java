@@ -16,6 +16,7 @@
 package org.seasar.teeda.core.render.html;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.Iterator;
 
 import javax.faces.application.FacesMessage;
@@ -66,6 +67,7 @@ public class HtmlMessagesRenderer extends AbstractHtmlMessagesRenderer {
         }
         RendererUtil.renderIdAttributeIfNecessary(writer, htmlMessages,
                 getIdForRender(context, htmlMessages));
+        renderAttributes(htmlMessages, writer);
         while (it.hasNext()) {
             if (tableLayout) {
                 writer.startElement(JsfConstants.TR_ELEM, htmlMessages);
@@ -74,7 +76,8 @@ public class HtmlMessagesRenderer extends AbstractHtmlMessagesRenderer {
                 writer.startElement(JsfConstants.LI_ELEM, htmlMessages);
             }
             FacesMessage facesMassage = (FacesMessage) it.next();
-            renderOneMessage(context, htmlMessages, facesMassage, null);
+            renderOneMessage(context, htmlMessages, facesMassage, null,
+                    Collections.EMPTY_MAP);
             if (tableLayout) {
                 writer.endElement(JsfConstants.TD_ELEM);
                 writer.endElement(JsfConstants.TR_ELEM);

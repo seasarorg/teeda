@@ -116,6 +116,50 @@ public class HtmlSelectManyListboxRendererTest extends RendererTest {
                 getResponseText());
     }
 
+    public void testEncode_WithUnknownAttribute1() throws Exception {
+        // ## Arrange ##
+        MockFacesContext context = getFacesContext();
+        {
+            UISelectItem selectItem = new UISelectItem();
+            selectItem.setItemValue("val");
+            selectItem.setItemLabel("lab");
+            htmlSelectManyListbox_.getChildren().add(selectItem);
+        }
+        htmlSelectManyListbox_.setId("a");
+        htmlSelectManyListbox_.getAttributes().put("zz", "y");
+
+        // ## Act ##
+        encodeByRenderer(renderer_, context, htmlSelectManyListbox_);
+
+        // ## Assert ##
+        assertEquals(
+                "<select id=\"a\" name=\"a\" multiple=\"multiple\" size=\"1\" zz=\"y\">"
+                        + "<option value=\"val\">lab</option>" + "</select>",
+                getResponseText());
+    }
+
+    public void testEncode_WithUnknownAttribute2() throws Exception {
+        // ## Arrange ##
+        MockFacesContext context = getFacesContext();
+        {
+            UISelectItem selectItem = new UISelectItem();
+            selectItem.setItemValue("val");
+            selectItem.setItemLabel("lab");
+            htmlSelectManyListbox_.getChildren().add(selectItem);
+        }
+        htmlSelectManyListbox_.setId("a");
+        htmlSelectManyListbox_.getAttributes().put("z.z", "y");
+
+        // ## Act ##
+        encodeByRenderer(renderer_, context, htmlSelectManyListbox_);
+
+        // ## Assert ##
+        assertEquals(
+                "<select id=\"a\" name=\"a\" multiple=\"multiple\" size=\"1\">"
+                        + "<option value=\"val\">lab</option>" + "</select>",
+                getResponseText());
+    }
+
     public void testEncode_Children() throws Exception {
         // ## Arrange ##
         MockFacesContext context = getFacesContext();
@@ -431,11 +475,9 @@ public class HtmlSelectManyListboxRendererTest extends RendererTest {
 
         // ## Assert ##
         assertEquals("<select name=\"_id0\" multiple=\"multiple\" size=\"1\">"
-                + "<option>aaa</option>" + "</select>",
-                getResponseText());
+                + "<option>aaa</option>" + "</select>", getResponseText());
     }
-    
-    
+
     private HtmlSelectManyListboxRenderer createHtmlSelectManyListboxRenderer() {
         return (HtmlSelectManyListboxRenderer) createRenderer();
     }

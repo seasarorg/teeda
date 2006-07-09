@@ -55,7 +55,7 @@ public class HtmlSelectOneRadioRenderer extends HtmlSelectManyCheckboxRenderer {
                         htmlSelectManyCheckbox,
                         JsfConstants.INPUT_PASSTHROUGH_ATTRIBUTES_WITHOUT_DISABLED_AND_STYLE);
         if (isChecked(selectedValues, value.toString())) {
-            RendererUtil.renderCheckedAttribute(writer);
+            renderCheckedAttribute(writer);
         }
         if (disabled) {
             RendererUtil.renderDisabledAttribute(writer);

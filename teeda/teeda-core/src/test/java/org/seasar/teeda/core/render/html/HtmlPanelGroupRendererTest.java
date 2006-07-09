@@ -171,6 +171,32 @@ public class HtmlPanelGroupRendererTest extends RendererTest {
         assertEquals("<span id=\"aaa\"></span>", getResponseText());
     }
 
+    public void testEncode_WithUnknownAttribute1() throws Exception {
+        // ## Arrange ##
+        htmlPanelGroup_.getAttributes().put("a", "b");
+
+        MockFacesContext context = getFacesContext();
+
+        // ## Act ##
+        encodeByRenderer(renderer_, context, htmlPanelGroup_);
+
+        // ## Assert ##
+        assertEquals("<span a=\"b\"></span>", getResponseText());
+    }
+
+    public void testEncode_WithUnknownAttribute2() throws Exception {
+        // ## Arrange ##
+        htmlPanelGroup_.getAttributes().put("a.c", "b");
+
+        MockFacesContext context = getFacesContext();
+
+        // ## Act ##
+        encodeByRenderer(renderer_, context, htmlPanelGroup_);
+
+        // ## Assert ##
+        assertEquals("", getResponseText());
+    }
+
     public void testEncode_Style() throws Exception {
         // ## Arrange ##
         htmlPanelGroup_.setStyle("a");

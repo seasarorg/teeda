@@ -111,6 +111,48 @@ public class HtmlSelectOneMenuRendererTest extends RendererTest {
                 getResponseText());
     }
 
+    public void testEncode_WithUnknownAttribute1() throws Exception {
+        // ## Arrange ##
+        MockFacesContext context = getFacesContext();
+        {
+            UISelectItem selectItem = new UISelectItem();
+            selectItem.setItemValue("val");
+            selectItem.setItemLabel("lab");
+            htmlSelectOneMenu_.getChildren().add(selectItem);
+        }
+        htmlSelectOneMenu_.setId("a");
+        htmlSelectOneMenu_.getAttributes().put("aa", "11");
+
+        // ## Act ##
+        encodeByRenderer(renderer_, context, htmlSelectOneMenu_);
+
+        // ## Assert ##
+        assertEquals("<select id=\"a\" name=\"a\" size=\"1\" aa=\"11\">"
+                + "<option value=\"val\">lab</option>" + "</select>",
+                getResponseText());
+    }
+
+    public void testEncode_WithUnknownAttribute2() throws Exception {
+        // ## Arrange ##
+        MockFacesContext context = getFacesContext();
+        {
+            UISelectItem selectItem = new UISelectItem();
+            selectItem.setItemValue("val");
+            selectItem.setItemLabel("lab");
+            htmlSelectOneMenu_.getChildren().add(selectItem);
+        }
+        htmlSelectOneMenu_.setId("a");
+        htmlSelectOneMenu_.getAttributes().put("a.a", "11");
+
+        // ## Act ##
+        encodeByRenderer(renderer_, context, htmlSelectOneMenu_);
+
+        // ## Assert ##
+        assertEquals("<select id=\"a\" name=\"a\" size=\"1\">"
+                + "<option value=\"val\">lab</option>" + "</select>",
+                getResponseText());
+    }
+
     public void testEncode_Children() throws Exception {
         // ## Arrange ##
         MockFacesContext context = getFacesContext();

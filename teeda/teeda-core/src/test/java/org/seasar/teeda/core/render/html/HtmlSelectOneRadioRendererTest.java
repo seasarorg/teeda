@@ -111,6 +111,48 @@ public class HtmlSelectOneRadioRendererTest extends RendererTest {
                 + "lab</label>" + "</td></tr></table>", getResponseText());
     }
 
+    public void testEncode_WithUnknownAttribute1() throws Exception {
+        // ## Arrange ##
+        MockFacesContext context = getFacesContext();
+        {
+            UISelectItem selectItem = new UISelectItem();
+            selectItem.setItemValue("val");
+            selectItem.setItemLabel("lab");
+            htmlSelectOneRadio_.getChildren().add(selectItem);
+        }
+        htmlSelectOneRadio_.setId("a");
+        htmlSelectOneRadio_.getAttributes().put("z", "x");
+
+        // ## Act ##
+        encodeByRenderer(renderer_, context, htmlSelectOneRadio_);
+
+        // ## Assert ##
+        assertEquals("<table id=\"a\" z=\"x\"><tr><td>" + "<label>"
+                + "<input type=\"radio\" name=\"a\" value=\"val\" />"
+                + "lab</label>" + "</td></tr></table>", getResponseText());
+    }
+
+    public void testEncode_WithUnknownAttribute2() throws Exception {
+        // ## Arrange ##
+        MockFacesContext context = getFacesContext();
+        {
+            UISelectItem selectItem = new UISelectItem();
+            selectItem.setItemValue("val");
+            selectItem.setItemLabel("lab");
+            htmlSelectOneRadio_.getChildren().add(selectItem);
+        }
+        htmlSelectOneRadio_.setId("a");
+        htmlSelectOneRadio_.getAttributes().put(".", "x");
+
+        // ## Act ##
+        encodeByRenderer(renderer_, context, htmlSelectOneRadio_);
+
+        // ## Assert ##
+        assertEquals("<table id=\"a\"><tr><td>" + "<label>"
+                + "<input type=\"radio\" name=\"a\" value=\"val\" />"
+                + "lab</label>" + "</td></tr></table>", getResponseText());
+    }
+
     public void testEncode_Children() throws Exception {
         // ## Arrange ##
         MockFacesContext context = getFacesContext();

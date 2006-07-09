@@ -115,7 +115,8 @@ public class RendererUtil {
         }
     }
 
-    static boolean shouldRenderAttribute(String attributeName, Object value) {
+    public static boolean shouldRenderAttribute(String attributeName,
+            Object value) {
         if (isDefaultAttributeValue(value)) {
             return false;
         }
@@ -167,13 +168,6 @@ public class RendererUtil {
         if (RendererUtil.shouldRenderIdAttribute(component)) {
             RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR, idValue);
         }
-    }
-
-    // checkbox, radio
-    public static void renderCheckedAttribute(ResponseWriter writer)
-            throws IOException {
-        renderAttribute(writer, JsfConstants.CHECKED_ATTR,
-                JsfConstants.CHECKED_ATTR);
     }
 
     public static void renderDisabledAttribute(ResponseWriter writer)

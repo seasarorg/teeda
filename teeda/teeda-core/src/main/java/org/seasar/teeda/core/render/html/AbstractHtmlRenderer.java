@@ -17,10 +17,13 @@ package org.seasar.teeda.core.render.html;
 
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIOutput;
 import javax.faces.context.FacesContext;
+import javax.faces.context.ResponseWriter;
 import javax.faces.convert.ConverterException;
 import javax.faces.internal.UIComponentUtil;
 import javax.faces.render.Renderer;
@@ -116,11 +119,58 @@ public abstract class AbstractHtmlRenderer extends Renderer {
         }
     }
 
-    public void setComponentIdLookupStrategy(ComponentIdLookupStrategy idLookupStartegy) {
+    protected void renderAttributes(UIComponent component, ResponseWriter writer)
+            throws IOException {
+        renderAttributes(component.getAttributes(), writer);
+    }
+
+    protected void renderAttributes(Map attributes, ResponseWriter writer)
+            throws IOException {
+        for (final Iterator it = attributes.entrySet().iterator(); it.hasNext();) {
+            final Map.Entry entry = (Entry) it.next();
+            final String key = (String) entry.getKey();
+            if (isRenderAttributeName(key)) {
+                RendererUtil.renderAttribute(writer, key, entry.getValue());
+            }
+        }
+    }
+
+    private boolean isRenderAttributeName(final String key) {
+        return -1 == key.indexOf('.');
+    }
+
+    public void setComponentIdLookupStrategy(
+            ComponentIdLookupStrategy idLookupStartegy) {
         this.idLookupStartegy = idLookupStartegy;
     }
 
     public ComponentIdLookupStrategy getComponentIdLookupStrategy() {
         return idLookupStartegy;
     }
+
+    protected boolean containsAttributeForRender(UIComponent component) {
+        return containsAttributeForRender(component.getAttributes());
+    }
+
+    protected boolean containsAttributeForRender(Map attributes) {
+        for (final Iterator it = attributes.entrySet().iterator(); it.hasNext();) {
+            final Map.Entry entry = (Entry) it.next();
+            final String key = (String) entry.getKey();
+            if (isRenderAttributeName(key)) {
+                final Object value = entry.getValue();
+                if (RendererUtil.shouldRenderAttribute(key, value)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    // checkbox, radio
+    protected void renderCheckedAttribute(ResponseWriter writer)
+            throws IOException {
+        RendererUtil.renderAttribute(writer, JsfConstants.CHECKED_ATTR,
+                JsfConstants.CHECKED_ATTR);
+    }
+
 }

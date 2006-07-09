@@ -63,7 +63,8 @@ public class HtmlMessageRenderer extends AbstractHtmlMessagesRenderer {
 
         FacesMessage facesMassage = (FacesMessage) it.next();
         String idForRender = getIdForRenderOrNull(context, htmlMessage);
-        renderOneMessage(context, htmlMessage, facesMassage, idForRender);
+        renderOneMessage(context, htmlMessage, facesMassage, idForRender,
+                htmlMessage.getAttributes());
     }
 
     private String getIdForRenderOrNull(FacesContext context,

@@ -67,6 +67,7 @@ public class HtmlFormRenderer extends AbstractHtmlRenderer {
                 JsfConstants.POST_VALUE);
         RendererUtil.renderAttributes(writer, htmlForm,
                 JsfConstants.FORM_PASSTHROUGH_ATTRIBUTES);
+        renderAttributes(htmlForm, writer);
 
         // action attribute
         ViewHandler viewHandler = FacesContextUtil.getViewHandler(context);

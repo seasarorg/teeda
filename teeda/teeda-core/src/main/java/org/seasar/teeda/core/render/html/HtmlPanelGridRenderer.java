@@ -53,6 +53,7 @@ public class HtmlPanelGridRenderer extends AbstractHtmlRenderer {
                 getIdForRender(context, htmlPanelGrid));
         RendererUtil.renderAttributes(writer, htmlPanelGrid,
                 JsfConstants.TABLE_PASSTHROUGH_ATTRIBUTES);
+        renderAttributes(htmlPanelGrid, writer);
 
         // thead
         {

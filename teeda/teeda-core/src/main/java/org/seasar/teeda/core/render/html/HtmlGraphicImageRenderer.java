@@ -62,6 +62,7 @@ public class HtmlGraphicImageRenderer extends AbstractHtmlRenderer {
 
         RendererUtil.renderAttributes(writer, htmlGraphicImage,
                 JsfConstants.IMG_PASSTHROUGH_ATTRIBUTES);
+        renderAttributes(htmlGraphicImage, writer);
         writer.endElement(JsfConstants.IMG_ELEM);
     }
 

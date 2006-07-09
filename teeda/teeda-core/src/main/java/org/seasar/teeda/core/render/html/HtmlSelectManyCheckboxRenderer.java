@@ -69,6 +69,7 @@ public class HtmlSelectManyCheckboxRenderer extends AbstractHtmlRenderer {
                         htmlSelectManyCheckbox));
         RendererUtil.renderAttributes(writer, htmlSelectManyCheckbox,
                 JsfConstants.SELECT_TABLE_PASSTHROUGH_ATTRIBUTES);
+        renderAttributes(htmlSelectManyCheckbox, writer);
 
         String[] selectedValues = getValuesForRender(context,
                 htmlSelectManyCheckbox);
@@ -175,7 +176,7 @@ public class HtmlSelectManyCheckboxRenderer extends AbstractHtmlRenderer {
                         htmlSelectManyCheckbox,
                         JsfConstants.INPUT_PASSTHROUGH_ATTRIBUTES_WITHOUT_DISABLED_AND_STYLE);
         if (isChecked(selectedValues, value.toString())) {
-            RendererUtil.renderCheckedAttribute(writer);
+            renderCheckedAttribute(writer);
         }
         if (disabled) {
             RendererUtil.renderDisabledAttribute(writer);

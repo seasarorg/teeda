@@ -70,6 +70,28 @@ public class HtmlPanelGridRendererTest extends RendererTest {
         assertEquals("<table id=\"aaa\"", getResponseText());
     }
 
+    public void testEncodeBegin_WithUnknownAttribute1() throws Exception {
+        // ## Arrange ##
+        htmlPanelGrid_.getAttributes().put("abc", "ABC");
+
+        // ## Act ##
+        renderer_.encodeBegin(getFacesContext(), htmlPanelGrid_);
+
+        // ## Assert ##
+        assertEquals("<table abc=\"ABC\"", getResponseText());
+    }
+
+    public void testEncodeBegin_WithUnknownAttribute2() throws Exception {
+        // ## Arrange ##
+        htmlPanelGrid_.getAttributes().put("a.bc", "ABC");
+
+        // ## Act ##
+        renderer_.encodeBegin(getFacesContext(), htmlPanelGrid_);
+
+        // ## Assert ##
+        assertEquals("<table", getResponseText());
+    }
+
     public void testEncodeBegin_TableStyle() throws Exception {
         // ## Arrange ##
         htmlPanelGrid_.setStyle("a");

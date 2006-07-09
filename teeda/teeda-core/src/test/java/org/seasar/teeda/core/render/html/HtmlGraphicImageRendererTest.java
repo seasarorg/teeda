@@ -16,7 +16,6 @@
 package org.seasar.teeda.core.render.html;
 
 import javax.faces.application.ViewHandler;
-import javax.faces.component.UIComponent;
 import javax.faces.component.html.HtmlGraphicImage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -29,7 +28,6 @@ import org.seasar.teeda.core.mock.MockApplicationImpl;
 import org.seasar.teeda.core.mock.MockExternalContext;
 import org.seasar.teeda.core.mock.MockExternalContextWrapper;
 import org.seasar.teeda.core.mock.MockFacesContext;
-import org.seasar.teeda.core.mock.MockUIComponentBaseWithNamingContainer;
 import org.seasar.teeda.core.mock.MockViewHandlerImpl;
 
 /**
@@ -85,10 +83,9 @@ public class HtmlGraphicImageRendererTest extends RendererTest {
     public void testEncode_WithValueContainsAmpersand() throws Exception {
         // ## Arrange ##
         htmlGraphicImage_.setValue("a?a=b&c=d");
-        MockFacesContext context = getFacesContext();
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlGraphicImage_);
+        encodeByRenderer(renderer_, htmlGraphicImage_);
 
         // ## Assert ##
         assertEquals("<img src=\"a?a=b&amp;c=d\" />", getResponseText());
@@ -97,13 +94,21 @@ public class HtmlGraphicImageRendererTest extends RendererTest {
     public void testEncode_WithId() throws Exception {
         htmlGraphicImage_.setId("a");
 
-        UIComponent parent = new MockUIComponentBaseWithNamingContainer();
-        parent.setId("b");
-        parent.getChildren().add(htmlGraphicImage_);
-
         encodeByRenderer(renderer_, getFacesContext(), htmlGraphicImage_);
 
         assertEquals("<img id=\"a\" src=\"\" />", getResponseText());
+    }
+
+    public void testEncode_WithUnknownAttribute() throws Exception {
+        htmlGraphicImage_.setId("a");
+        htmlGraphicImage_.getAttributes().put("a", "1");
+        htmlGraphicImage_.getAttributes().put("b", "2");
+
+        encodeByRenderer(renderer_, getFacesContext(), htmlGraphicImage_);
+
+        final Diff diff = diff("<img id=\"a\" src=\"\" a=\"1\" b=\"2\" />",
+                getResponseText());
+        assertEquals(diff.toString(), true, diff.identical());
     }
 
     public void testEncode_UrlEncode() throws Exception {
@@ -139,11 +144,6 @@ public class HtmlGraphicImageRendererTest extends RendererTest {
     }
 
     public void testEncode_WithAllAttributes() throws Exception {
-        MockApplication application = new MockApplicationImpl();
-        application.setViewHandler(new MockViewHandlerImpl());
-        MockFacesContext context = getFacesContext();
-        context.setApplication(application);
-
         htmlGraphicImage_.setAlt("a");
         htmlGraphicImage_.setDir("b");
         htmlGraphicImage_.setHeight("c");
@@ -169,7 +169,7 @@ public class HtmlGraphicImageRendererTest extends RendererTest {
         htmlGraphicImage_.setId("A");
         htmlGraphicImage_.setValue("B");
 
-        encodeByRenderer(renderer_, context, htmlGraphicImage_);
+        encodeByRenderer(renderer_, htmlGraphicImage_);
 
         Diff diff = new Diff("<img id=\"A\" src=\"B\"" + " alt=\"a\""
                 + " dir=\"b\"" + " height=\"c\"" + " ismap=\"true\""

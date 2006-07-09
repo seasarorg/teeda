@@ -51,6 +51,32 @@ public class HtmlSelectBooleanCheckboxRendererTest extends RendererTest {
                 getResponseText());
     }
 
+    public void testEncode_WithUnknownAttribute1() throws Exception {
+        // ## Arrange ##
+        htmlSelectBooleanCheckbox_.getAttributes().put("a", "b");
+
+        // ## Act ##
+        encodeByRenderer(renderer_, htmlSelectBooleanCheckbox_);
+
+        // ## Assert ##
+        assertEquals(
+                "<input type=\"checkbox\" name=\"_id0\" value=\"true\" a=\"b\" />",
+                getResponseText());
+    }
+
+    public void testEncode_WithUnknownAttribute2() throws Exception {
+        // ## Arrange ##
+        htmlSelectBooleanCheckbox_.getAttributes().put("a.b", "b");
+
+        // ## Act ##
+        encodeByRenderer(renderer_, htmlSelectBooleanCheckbox_);
+
+        // ## Assert ##
+        assertEquals(
+                "<input type=\"checkbox\" name=\"_id0\" value=\"true\" />",
+                getResponseText());
+    }
+
     public void testEncode_RenderFalse() throws Exception {
         // ## Arrange ##
         htmlSelectBooleanCheckbox_.setRendered(false);

@@ -105,6 +105,23 @@ public class HtmlFormRendererTest extends RendererTest {
                         + "</form>", getResponseText());
     }
 
+    public void testEncode_WithUnknownAttribute() throws Exception {
+        // ## Arrange ##
+        MockFacesContext context = getFacesContext();
+        context.getViewRoot().setViewId("/abc");
+        htmlForm_.setId("a");
+        htmlForm_.getAttributes().put("zz", "yy");
+
+        // ## Act ##
+        encodeByRenderer(renderer_, context, htmlForm_);
+
+        // ## Assert ##
+        assertEquals(
+                "<form id=\"a\" name=\"a\" method=\"post\" enctype=\"application/x-www-form-urlencoded\" zz=\"yy\" action=\"/abc\">"
+                        + "<input type=\"hidden\" name=\"a/abc\" value=\"a\" />"
+                        + "</form>", getResponseText());
+    }
+
     public void testEncode_WithAllAttributes() throws Exception {
         htmlForm_.setAccept("a");
         htmlForm_.setAcceptcharset("b");
@@ -178,7 +195,7 @@ public class HtmlFormRendererTest extends RendererTest {
         assertEquals(1, htmlForm_.getSetSubmittedCalls());
         assertEquals(true, htmlForm_.isSubmitted());
     }
-    
+
     public void testAction_Null() throws Exception {
         // ## Arrange ##
         MockFacesContext context = getFacesContext();
