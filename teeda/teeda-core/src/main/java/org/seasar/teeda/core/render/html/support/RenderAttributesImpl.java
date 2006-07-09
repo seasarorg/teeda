@@ -36,13 +36,15 @@ import org.seasar.teeda.core.render.html.RenderAttributes;
 
 public class RenderAttributesImpl implements RenderAttributes {
 
+    private static final String RENDER_ON = "1";
+
     private Map map = new HashMap();
 
     private List path = new ArrayList();
 
     public RenderAttributesImpl() {
-        String a = ClassUtil.getPackageName(RenderAttributes.class).replace(
-                '.', '/')
+        String a = ClassUtil.getPackageName(RenderAttributesImpl.class)
+                .replace('.', '/')
                 + "/renderAttributes.xls";
         path.add(a);
     }
@@ -50,40 +52,44 @@ public class RenderAttributesImpl implements RenderAttributes {
     public void initialize() {
         for (final Iterator it = getPath().iterator(); it.hasNext();) {
             final String path = (String) it.next();
-            HSSFWorkbook workbook = createWorkbook(path);
-            final HSSFSheet sheet = workbook.getSheetAt(0);
-            final HSSFRow componentFamilyRow = sheet.getRow(0);
-            final HSSFRow rendererTypeRow = sheet.getRow(1);
-            for (short colIndex = 1;; ++colIndex) {
-                final HSSFCell componentFamilyCell = componentFamilyRow
-                        .getCell(colIndex);
-                if (componentFamilyCell == null) {
+            initWorkBook(createWorkbook(path));
+        }
+    }
+
+    private void initWorkBook(final HSSFWorkbook workbook) {
+        final HSSFSheet sheet = workbook.getSheetAt(0);
+        final HSSFRow componentFamilyRow = sheet.getRow(0);
+        final HSSFRow rendererTypeRow = sheet.getRow(1);
+        for (short colIndex = 1;; colIndex++) {
+            final HSSFCell componentFamilyCell = componentFamilyRow
+                    .getCell(colIndex);
+            final HSSFCell rendererTypeCell = rendererTypeRow.getCell(colIndex);
+            if (componentFamilyCell == null || rendererTypeCell == null) {
+                break;
+            }
+            final List names = new ArrayList();
+            for (int rowIndex = 2;; rowIndex++) {
+                final HSSFRow row = sheet.getRow(rowIndex);
+                if (row == null) {
                     break;
                 }
-                final List names = new ArrayList();
-                for (int rowIndex = 2;; rowIndex++) {
-                    final HSSFRow row = sheet.getRow(rowIndex);
-                    if (row == null) {
-                        break;
-                    }
-                    final HSSFCell cell = row.getCell(colIndex);
-                    if (cell == null) {
-                        continue;
-                    }
-                    final String value = getValueAsString(cell);
-                    if ("1".equals(value)) {
-                        final String name = (String) row.getCell((short) 0)
-                                .getStringCellValue().trim();
-                        names.add(name);
-                    }
+                final HSSFCell cell = row.getCell(colIndex);
+                if (cell == null) {
+                    continue;
                 }
-                final String componentFamily = componentFamilyCell
-                        .getStringCellValue().trim();
-                final String rendererType = rendererTypeRow.getCell(colIndex)
-                        .getStringCellValue().trim();
-                final String key = createKey(componentFamily, rendererType);
-                map.put(key, names.toArray(new String[names.size()]));
+                final String value = getValueAsString(cell);
+                if (RENDER_ON.equals(value)) {
+                    final String name = (String) row.getCell((short) 0)
+                            .getStringCellValue().trim();
+                    names.add(name);
+                }
             }
+            final String componentFamily = componentFamilyCell
+                    .getStringCellValue().trim();
+            final String rendererType = rendererTypeCell.getStringCellValue()
+                    .trim();
+            final String key = createKey(componentFamily, rendererType);
+            map.put(key, names.toArray(new String[names.size()]));
         }
     }
 
@@ -115,6 +121,7 @@ public class RenderAttributesImpl implements RenderAttributes {
         return componentFamily + "\f" + rendererType;
     }
 
+    // TODO refactor
     public Object getValue(HSSFCell cell) {
         if (cell == null) {
             return null;

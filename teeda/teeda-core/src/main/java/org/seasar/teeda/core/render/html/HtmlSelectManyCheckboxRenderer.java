@@ -55,14 +55,14 @@ public class HtmlSelectManyCheckboxRenderer extends AbstractHtmlRenderer {
         encodeHtmlSelectManyCheckboxEnd(context, component);
     }
 
-    private static final String[] TABLE_ATTRIBUTE = new String[] {
+    private static final String[] TABLE_ATTRIBUTES = new String[] {
             JsfConstants.BORDER_ATTR, JsfConstants.STYLE_ATTR,
             JsfConstants.STYLE_CLASS_ATTR };
 
     protected void encodeHtmlSelectManyCheckboxEnd(FacesContext context,
             UIComponent htmlSelectManyCheckbox) throws IOException {
 
-        Iterator it = new SelectItemsIterator(htmlSelectManyCheckbox);
+        final Iterator it = new SelectItemsIterator(htmlSelectManyCheckbox);
         if (!it.hasNext()) {
             return;
         }
@@ -71,7 +71,8 @@ public class HtmlSelectManyCheckboxRenderer extends AbstractHtmlRenderer {
         RendererUtil.renderIdAttributeIfNecessary(writer,
                 htmlSelectManyCheckbox, getIdForRender(context,
                         htmlSelectManyCheckbox));
-        RendererUtil.renderAttributes(writer, htmlSelectManyCheckbox, TABLE_ATTRIBUTE);
+        RendererUtil.renderAttributes(writer, htmlSelectManyCheckbox,
+                TABLE_ATTRIBUTES);
         String[] selectedValues = getValuesForRender(context,
                 htmlSelectManyCheckbox);
 

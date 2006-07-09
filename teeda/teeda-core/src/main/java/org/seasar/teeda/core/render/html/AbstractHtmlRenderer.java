@@ -49,7 +49,7 @@ public abstract class AbstractHtmlRenderer extends Renderer {
 
     private ComponentIdLookupStrategy idLookupStartegy;
 
-    protected RenderAttributes renderAttributes;
+    private RenderAttributes renderAttributes;
 
     public AbstractHtmlRenderer() {
         idLookupStartegy = new DefaultComponentIdLookupStrategy();

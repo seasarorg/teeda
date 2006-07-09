@@ -25,22 +25,22 @@ import javax.faces.component.UIComponent;
  */
 public class RenderedComponentIterator implements Iterator {
 
-    private Iterator iterator_;
+    private Iterator iterator;
 
-    public RenderedComponentIterator(Collection c) {
-        iterator_ = c.iterator();
+    private UIComponent component;
+
+    public RenderedComponentIterator(final Collection collection) {
+        iterator = collection.iterator();
     }
 
-    private UIComponent component_;
-
     public boolean hasNext() {
-        if (component_ != null) {
+        if (component != null) {
             return true;
         }
-        while (iterator_.hasNext()) {
-            UIComponent component = (UIComponent) iterator_.next();
-            if (component.isRendered()) {
-                component_ = component;
+        while (iterator.hasNext()) {
+            final UIComponent c = (UIComponent) iterator.next();
+            if (c.isRendered()) {
+                component = c;
                 return true;
             }
         }
@@ -48,15 +48,15 @@ public class RenderedComponentIterator implements Iterator {
     }
 
     public Object next() {
-        if (component_ != null) {
-            UIComponent component = component_;
-            component_ = null;
-            return component;
+        if (component != null) {
+            final UIComponent c = component;
+            component = null;
+            return c;
         }
         while (true) {
-            UIComponent component = (UIComponent) iterator_.next();
-            if (component.isRendered()) {
-                return component;
+            final UIComponent c = (UIComponent) iterator.next();
+            if (c.isRendered()) {
+                return c;
             }
         }
     }

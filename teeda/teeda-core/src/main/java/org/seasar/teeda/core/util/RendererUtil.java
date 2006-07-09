@@ -46,13 +46,13 @@ import org.seasar.teeda.core.JsfConstants;
  */
 public class RendererUtil {
 
-    private static Logger logger = Logger.getLogger(RendererUtil.class);
+    private static final Logger logger = Logger.getLogger(RendererUtil.class);
 
-    public static boolean containsAttributesForRender(UIComponent component,
-            String[] attributeNames) {
-        Map attributes = component.getAttributes();
+    public static boolean containsAttributesForRender(
+            final UIComponent component, final String[] attributeNames) {
+        final Map attributes = component.getAttributes();
         for (int i = 0, len = attributeNames.length; i < len; i++) {
-            String attributeName = attributeNames[i];
+            final String attributeName = attributeNames[i];
             /*
              * don't use UIComponent#containsKey method.
              * 
@@ -60,7 +60,7 @@ public class RendererUtil {
              * UIComponent, containsKey returns false. See
              * UIComponent#getAttributes API document.
              */
-            Object value = attributes.get(attributeName);
+            final Object value = attributes.get(attributeName);
             if (shouldRenderAttribute(attributeName, value)) {
                 return true;
             }
@@ -68,12 +68,13 @@ public class RendererUtil {
         return false;
     }
 
-    public static boolean renderAttributes(ResponseWriter writer,
-            UIComponent component, String[] attributeNames) throws IOException {
+    public static boolean renderAttributes(final ResponseWriter writer,
+            final UIComponent component, final String[] attributeNames)
+            throws IOException {
 
         boolean somethingDone = false;
         for (int i = 0, len = attributeNames.length; i < len; i++) {
-            String attrName = attributeNames[i];
+            final String attrName = attributeNames[i];
             if (renderAttribute(writer, component, attrName)) {
                 somethingDone = true;
             }
@@ -81,20 +82,21 @@ public class RendererUtil {
         return somethingDone;
     }
 
-    static boolean renderAttribute(ResponseWriter writer,
-            UIComponent component, String attributeName) throws IOException {
+    static boolean renderAttribute(final ResponseWriter writer,
+            final UIComponent component, final String attributeName)
+            throws IOException {
 
-        Object value = component.getAttributes().get(attributeName);
+        final Object value = component.getAttributes().get(attributeName);
         return renderAttribute(writer, attributeName, value, attributeName);
     }
 
-    public static void renderAttribute(ResponseWriter writer,
-            String attributeName, Object value) throws IOException {
+    public static void renderAttribute(final ResponseWriter writer,
+            final String attributeName, final Object value) throws IOException {
         renderAttribute(writer, attributeName, value, attributeName);
     }
 
-    public static boolean renderAttribute(ResponseWriter writer,
-            String attributeName, Object value, String propertyName)
+    public static boolean renderAttribute(final ResponseWriter writer,
+            String attributeName, Object value, final String propertyName)
             throws IOException {
         if (!shouldRenderAttribute(attributeName, value)) {
             return false;
@@ -105,7 +107,8 @@ public class RendererUtil {
         return true;
     }
 
-    private static Object convertValue(String attributeName, Object value) {
+    private static Object convertValue(final String attributeName,
+            final Object value) {
         if (JsfConstants.CHECKED_ATTR.equals(attributeName)) {
             return JsfConstants.CHECKED_ATTR;
         } else if (JsfConstants.SELECTED_ATTR.equals(attributeName)) {
@@ -116,7 +119,7 @@ public class RendererUtil {
         return value;
     }
 
-    private static String toHtmlAttributeName(String attributeName) {
+    private static String toHtmlAttributeName(final String attributeName) {
         if (attributeName.equalsIgnoreCase(JsfConstants.STYLE_CLASS_ATTR)) {
             return JsfConstants.CLASS_ATTR;
         } else if (attributeName
@@ -127,13 +130,13 @@ public class RendererUtil {
         }
     }
 
-    public static boolean shouldRenderAttribute(String attributeName,
-            Object value) {
+    public static boolean shouldRenderAttribute(final String attributeName,
+            final Object value) {
         if (isDefaultAttributeValue(value)) {
             return false;
         }
         if (JsfConstants.COLSPAN_ATTR.equals(attributeName)) {
-            Integer integerValue = IntegerConversionUtil.toInteger(value);
+            final Integer integerValue = IntegerConversionUtil.toInteger(value);
             if (integerValue == null) {
                 return false;
             }
@@ -147,7 +150,7 @@ public class RendererUtil {
         return true;
     }
 
-    static boolean isDefaultAttributeValue(Object value) {
+    static boolean isDefaultAttributeValue(final Object value) {
         if (value == null) {
             return true;
         }
@@ -162,28 +165,29 @@ public class RendererUtil {
         return false;
     }
 
-    public static boolean shouldRenderIdAttribute(UIComponent component) {
+    public static boolean shouldRenderIdAttribute(final UIComponent component) {
         return shouldRenderIdAttribute(component.getId());
     }
 
-    private static boolean shouldRenderIdAttribute(String id) {
-        if (id != null && !id.startsWith(UIViewRoot.UNIQUE_ID_PREFIX)) {
+    private static boolean shouldRenderIdAttribute(final String id) {
+        if ((id != null) && !id.startsWith(UIViewRoot.UNIQUE_ID_PREFIX)) {
             return true;
         }
         return false;
     }
 
-    public static void renderIdAttributeIfNecessary(ResponseWriter writer,
-            UIComponent component, String idValue) throws IOException {
+    public static void renderIdAttributeIfNecessary(
+            final ResponseWriter writer, final UIComponent component,
+            final String idValue) throws IOException {
         if (RendererUtil.shouldRenderIdAttribute(component)) {
             RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR, idValue);
         }
     }
 
-    public static Object getConvertedValue(FacesContext context,
-            UIInput component, Object submittedValue) {
+    public static Object getConvertedValue(final FacesContext context,
+            final UIInput component, final Object submittedValue) {
         try {
-            Renderer renderer = getRenderer(context, component);
+            final Renderer renderer = getRenderer(context, component);
             if (renderer != null) {
                 return renderer.getConvertedValue(context, component,
                         submittedValue);
@@ -191,14 +195,14 @@ public class RendererUtil {
                 return getConvertedUIOutputValue(context, component,
                         submittedValue);
             }
-        } catch (ConverterException e) {
-            FacesMessage facesMessage = e.getFacesMessage();
+        } catch (final ConverterException e) {
+            final FacesMessage facesMessage = e.getFacesMessage();
             if (facesMessage != null) {
                 context
                         .addMessage(component.getClientId(context),
                                 facesMessage);
             } else {
-                Object[] args = new Object[] { UIComponentUtil
+                final Object[] args = new Object[] { UIComponentUtil
                         .getLabel(component) };
                 context.addMessage(component.getClientId(context),
                         FacesMessageUtil.getMessage(context,
@@ -209,56 +213,60 @@ public class RendererUtil {
         return submittedValue;
     }
 
-    static Renderer getRenderer(FacesContext context, UIComponent component) {
-        String rendererType = component.getRendererType();
+    static Renderer getRenderer(final FacesContext context,
+            final UIComponent component) {
+        final String rendererType = component.getRendererType();
         if (rendererType == null) {
             return null;
         }
-        RenderKit renderKit = RenderKitUtil.getRenderKit(context);
+        final RenderKit renderKit = RenderKitUtil.getRenderKit(context);
         return renderKit.getRenderer(component.getFamily(), rendererType);
     }
 
-    public static Object getConvertedUIOutputValue(FacesContext context,
-            UIOutput output, Object submittedValue) throws ConverterException {
+    public static Object getConvertedUIOutputValue(final FacesContext context,
+            final UIOutput output, final Object submittedValue)
+            throws ConverterException {
         if (submittedValue == null) {
             return null;
         }
-        Converter converter = findConverterForSubmittedValue(context, output);
+        final Converter converter = findConverterForSubmittedValue(context,
+                output);
         if (converter == null) {
             return submittedValue;
         }
         return converter.getAsObject(context, output, (String) submittedValue);
     }
 
-    public static Object getConvertedUIOutputValues(FacesContext context,
-            UIOutput output, Object submittedValue) {
+    public static Object getConvertedUIOutputValues(final FacesContext context,
+            final UIOutput output, final Object submittedValue) {
         if (submittedValue == null) {
             return null;
         }
-        Converter converter = findConverterForSubmittedValue(context, output);
+        final Converter converter = findConverterForSubmittedValue(context,
+                output);
         if (converter == null) {
             return submittedValue;
         }
-        int length = Array.getLength(submittedValue);
-        Class valueType = getValueType(context, output);
-        Object ret = Array.newInstance(valueType, length);
+        final int length = Array.getLength(submittedValue);
+        final Class valueType = getValueType(context, output);
+        final Object ret = Array.newInstance(valueType, length);
         for (int i = 0; i < length; ++i) {
-            Object target = Array.get(submittedValue, i);
-            String value = (String) target;
-            Object o = converter.getAsObject(context, output, value);
+            final Object target = Array.get(submittedValue, i);
+            final String value = (String) target;
+            final Object o = converter.getAsObject(context, output, value);
             ArrayUtil.setArrayValue(ret, valueType, o, i);
         }
         return ret;
     }
 
-    static Converter findConverterForSubmittedValue(FacesContext context,
-            UIOutput component) {
+    static Converter findConverterForSubmittedValue(final FacesContext context,
+            final UIOutput component) {
 
-        Converter converter = component.getConverter();
+        final Converter converter = component.getConverter();
         if (converter != null) {
             return converter;
         }
-        Class valueType = getValueType(context, component);
+        final Class valueType = getValueType(context, component);
         if (valueType == null) {
             return null;
         }
@@ -267,18 +275,19 @@ public class RendererUtil {
         }
         try {
             return context.getApplication().createConverter(valueType);
-        } catch (FacesException ex) {
+        } catch (final FacesException ex) {
             logger.log(ex);
             return null;
         }
     }
 
-    static Class getValueType(FacesContext context, UIOutput component) {
-        ValueBinding vb = component.getValueBinding("value");
+    static Class getValueType(final FacesContext context,
+            final UIOutput component) {
+        final ValueBinding vb = component.getValueBinding("value");
         if (vb == null) {
             return null;
         }
-        Class valueType = vb.getType(context);
+        final Class valueType = vb.getType(context);
         if (valueType == null) {
             return null;
         }

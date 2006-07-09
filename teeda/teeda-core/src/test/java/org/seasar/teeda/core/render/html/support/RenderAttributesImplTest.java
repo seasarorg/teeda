@@ -53,8 +53,10 @@ public class RenderAttributesImplTest extends TestCase {
         // ## Assert ##
         assertNotNull(names);
         List l = Arrays.asList(names);
+        assertEquals(true, l.contains("bgcolor"));
         assertEquals(true, l.contains("cellspacing"));
         assertEquals(false, l.contains("columnClasses"));
+        assertEquals(false, l.contains("disabledClass"));
     }
 
 }
