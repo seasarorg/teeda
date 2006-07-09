@@ -30,22 +30,20 @@ import org.seasar.teeda.core.mock.MockUIComponentBaseWithNamingContainer;
  */
 public class HtmlInputSecretRendererTest extends RendererTest {
 
-    private HtmlInputSecretRenderer renderer_;
+    private HtmlInputSecretRenderer renderer;
 
-    private MockHtmlInputSecret htmlInputSecret_;
+    private MockHtmlInputSecret htmlInputSecret;
 
     protected void setUp() throws Exception {
         super.setUp();
-        renderer_ = createHtmlInputSecretRenderer();
-        htmlInputSecret_ = new MockHtmlInputSecret();
-        htmlInputSecret_.setRenderer(renderer_);
+        renderer = createHtmlInputSecretRenderer();
+        htmlInputSecret = new MockHtmlInputSecret();
+        htmlInputSecret.setRenderer(renderer);
     }
 
     public void testEncode_NoValue() throws Exception {
-        MockFacesContext context = getFacesContext();
-
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlInputSecret_);
+        encodeByRenderer(renderer, htmlInputSecret);
 
         // ## Assert ##
         assertEquals("<input type=\"password\" name=\"_id0\" value=\"\" />",
@@ -54,12 +52,12 @@ public class HtmlInputSecretRendererTest extends RendererTest {
 
     public void testEncodeEnd_RenderFalse() throws Exception {
         // ## Arrange ##
-        htmlInputSecret_.setRendered(false);
+        htmlInputSecret.setRendered(false);
         MockFacesContext context = getFacesContext();
 
         // ## Act ##
-        renderer_.encodeBegin(context, htmlInputSecret_);
-        renderer_.encodeEnd(context, htmlInputSecret_);
+        renderer.encodeBegin(context, htmlInputSecret);
+        renderer.encodeEnd(context, htmlInputSecret);
 
         // ## Assert ##
         assertEquals("", getResponseText());
@@ -67,11 +65,10 @@ public class HtmlInputSecretRendererTest extends RendererTest {
 
     public void testEncode_WithValue() throws Exception {
         // ## Arrange ##
-        htmlInputSecret_.setValue("abc");
-        MockFacesContext context = getFacesContext();
+        htmlInputSecret.setValue("abc");
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlInputSecret_);
+        encodeByRenderer(renderer, htmlInputSecret);
 
         // ## Assert ##
         assertEquals("<input type=\"password\" name=\"_id0\" value=\"\" />",
@@ -80,12 +77,11 @@ public class HtmlInputSecretRendererTest extends RendererTest {
 
     public void testEncode_WithValueRedisplayTrue() throws Exception {
         // ## Arrange ##
-        htmlInputSecret_.setValue("abc");
-        htmlInputSecret_.setRedisplay(true);
-        MockFacesContext context = getFacesContext();
+        htmlInputSecret.setValue("abc");
+        htmlInputSecret.setRedisplay(true);
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlInputSecret_);
+        encodeByRenderer(renderer, htmlInputSecret);
 
         // ## Assert ##
         assertEquals("<input type=\"password\" name=\"_id0\" value=\"abc\" />",
@@ -93,13 +89,13 @@ public class HtmlInputSecretRendererTest extends RendererTest {
     }
 
     public void testEncode_WithId() throws Exception {
-        htmlInputSecret_.setId("a");
+        htmlInputSecret.setId("a");
 
         UIComponent parent = new MockUIComponentBaseWithNamingContainer();
         parent.setId("b");
-        parent.getChildren().add(htmlInputSecret_);
+        parent.getChildren().add(htmlInputSecret);
 
-        encodeByRenderer(renderer_, getFacesContext(), htmlInputSecret_);
+        encodeByRenderer(renderer, htmlInputSecret);
 
         assertEquals(
                 "<input type=\"password\" id=\"a\" name=\"b:a\" value=\"\" />",
@@ -107,10 +103,10 @@ public class HtmlInputSecretRendererTest extends RendererTest {
     }
 
     public void testEncode_WithUnknownAttribute() throws Exception {
-        htmlInputSecret_.setId("a");
-        htmlInputSecret_.getAttributes().put("foo", "bar");
+        htmlInputSecret.setId("a");
+        htmlInputSecret.getAttributes().put("foo", "bar");
 
-        encodeByRenderer(renderer_, htmlInputSecret_);
+        encodeByRenderer(renderer, htmlInputSecret);
 
         assertEquals(
                 "<input type=\"password\" id=\"a\" name=\"a\" value=\"\" foo=\"bar\" />",
@@ -118,39 +114,38 @@ public class HtmlInputSecretRendererTest extends RendererTest {
     }
 
     public void testEncode_WithAllAttributes() throws Exception {
-        htmlInputSecret_.setAccesskey("a");
-        htmlInputSecret_.setAlt("b");
-        htmlInputSecret_.setDir("c");
-        htmlInputSecret_.setDisabled(true);
-        htmlInputSecret_.setLang("e");
-        htmlInputSecret_.setMaxlength(5);
-        htmlInputSecret_.setOnblur("g");
-        htmlInputSecret_.setOnchange("h");
-        htmlInputSecret_.setOnclick("i");
-        htmlInputSecret_.setOndblclick("j");
-        htmlInputSecret_.setOnfocus("k");
-        htmlInputSecret_.setOnkeydown("l");
-        htmlInputSecret_.setOnkeypress("m");
-        htmlInputSecret_.setOnkeyup("n");
-        htmlInputSecret_.setOnmousedown("o");
-        htmlInputSecret_.setOnmousemove("p");
-        htmlInputSecret_.setOnmouseout("q");
-        htmlInputSecret_.setOnmouseover("r");
-        htmlInputSecret_.setOnmouseup("s");
-        htmlInputSecret_.setOnselect("t");
-        htmlInputSecret_.setReadonly(true);
-        htmlInputSecret_.setSize(2);
-        htmlInputSecret_.setStyle("w");
-        htmlInputSecret_.setStyleClass("u");
-        htmlInputSecret_.setTabindex("x");
-        htmlInputSecret_.setTitle("y");
+        htmlInputSecret.setAccesskey("a");
+        htmlInputSecret.setAlt("b");
+        htmlInputSecret.setDir("c");
+        htmlInputSecret.setDisabled(true);
+        htmlInputSecret.setLang("e");
+        htmlInputSecret.setMaxlength(5);
+        htmlInputSecret.setOnblur("g");
+        htmlInputSecret.setOnchange("h");
+        htmlInputSecret.setOnclick("i");
+        htmlInputSecret.setOndblclick("j");
+        htmlInputSecret.setOnfocus("k");
+        htmlInputSecret.setOnkeydown("l");
+        htmlInputSecret.setOnkeypress("m");
+        htmlInputSecret.setOnkeyup("n");
+        htmlInputSecret.setOnmousedown("o");
+        htmlInputSecret.setOnmousemove("p");
+        htmlInputSecret.setOnmouseout("q");
+        htmlInputSecret.setOnmouseover("r");
+        htmlInputSecret.setOnmouseup("s");
+        htmlInputSecret.setOnselect("t");
+        htmlInputSecret.setReadonly(true);
+        htmlInputSecret.setSize(2);
+        htmlInputSecret.setStyle("w");
+        htmlInputSecret.setStyleClass("u");
+        htmlInputSecret.setTabindex("x");
+        htmlInputSecret.setTitle("y");
 
-        htmlInputSecret_.setId("Aa");
-        htmlInputSecret_.setValue("Ba");
-        htmlInputSecret_.setRedisplay(false);
+        htmlInputSecret.setId("Aa");
+        htmlInputSecret.setValue("Ba");
+        htmlInputSecret.setRedisplay(false);
 
-        MockFacesContext context = getFacesContext();
-        encodeByRenderer(renderer_, context, htmlInputSecret_);
+        encodeByRenderer(renderer, htmlInputSecret);
 
         Diff diff = new Diff(
                 "<input type=\"password\" id=\"Aa\" name=\"Aa\" value=\"\""
@@ -172,34 +167,34 @@ public class HtmlInputSecretRendererTest extends RendererTest {
 
     public void testDecode_None() throws Exception {
         // ## Arrange ##
-        htmlInputSecret_.setClientId("key");
+        htmlInputSecret.setClientId("key");
 
         MockFacesContext context = getFacesContext();
 
         // ## Act ##
-        renderer_.decode(context, htmlInputSecret_);
+        renderer.decode(context, htmlInputSecret);
 
         // ## Assert ##
-        assertEquals(null, htmlInputSecret_.getSubmittedValue());
+        assertEquals(null, htmlInputSecret.getSubmittedValue());
     }
 
     public void testDecode_Success() throws Exception {
         // ## Arrange ##
-        htmlInputSecret_.setClientId("key");
+        htmlInputSecret.setClientId("key");
 
         MockFacesContext context = getFacesContext();
         context.getExternalContext().getRequestParameterMap().put("key",
                 "12345");
 
         // ## Act ##
-        renderer_.decode(context, htmlInputSecret_);
+        renderer.decode(context, htmlInputSecret);
 
         // ## Assert ##
-        assertEquals("12345", htmlInputSecret_.getSubmittedValue());
+        assertEquals("12345", htmlInputSecret.getSubmittedValue());
     }
 
     public void testGetRendersChildren() throws Exception {
-        assertEquals(false, renderer_.getRendersChildren());
+        assertEquals(false, renderer.getRendersChildren());
     }
 
     private HtmlInputSecretRenderer createHtmlInputSecretRenderer() {

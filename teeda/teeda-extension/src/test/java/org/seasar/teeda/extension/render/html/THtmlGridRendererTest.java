@@ -31,7 +31,6 @@ import org.seasar.teeda.core.el.ELParser;
 import org.seasar.teeda.core.el.impl.ValueBindingImpl;
 import org.seasar.teeda.core.el.impl.commons.CommonsELParser;
 import org.seasar.teeda.core.el.impl.commons.CommonsExpressionProcessorImpl;
-import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.render.html.HtmlOutputTextRenderer;
 import org.seasar.teeda.core.render.html.MockHtmlOutputText;
 import org.seasar.teeda.core.unit.TestUtil;
@@ -65,10 +64,9 @@ public class THtmlGridRendererTest extends RendererTest {
     public void testEncode_RenderFalse() throws Exception {
         // ## Arrange ##
         htmlGrid.setRendered(false);
-        MockFacesContext context = getFacesContext();
 
         // ## Act ##
-        encodeByRenderer(renderer, context, htmlGrid);
+        encodeByRenderer(renderer, htmlGrid);
 
         // ## Assert ##
         assertEquals("", getResponseText());

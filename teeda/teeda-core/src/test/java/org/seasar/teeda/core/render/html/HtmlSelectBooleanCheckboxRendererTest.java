@@ -28,22 +28,22 @@ import org.seasar.teeda.core.mock.MockFacesContext;
  */
 public class HtmlSelectBooleanCheckboxRendererTest extends RendererTest {
 
-    private HtmlSelectBooleanCheckboxRenderer renderer_;
+    private HtmlSelectBooleanCheckboxRenderer renderer;
 
-    private MockHtmlSelectBooleanCheckbox htmlSelectBooleanCheckbox_;
+    private MockHtmlSelectBooleanCheckbox htmlSelectBooleanCheckbox;
 
     protected void setUp() throws Exception {
         super.setUp();
-        renderer_ = createHtmlSelectBooleanCheckboxRenderer();
-        htmlSelectBooleanCheckbox_ = new MockHtmlSelectBooleanCheckbox();
-        htmlSelectBooleanCheckbox_.setRenderer(renderer_);
+        renderer = createHtmlSelectBooleanCheckboxRenderer();
+        htmlSelectBooleanCheckbox = new MockHtmlSelectBooleanCheckbox();
+        htmlSelectBooleanCheckbox.setRenderer(renderer);
     }
 
     public void testEncode_NoValue() throws Exception {
-        FacesContext context = getFacesContext();
+        // ## Arrange ##
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectBooleanCheckbox_);
+        encodeByRenderer(renderer, htmlSelectBooleanCheckbox);
 
         // ## Assert ##
         assertEquals(
@@ -53,10 +53,10 @@ public class HtmlSelectBooleanCheckboxRendererTest extends RendererTest {
 
     public void testEncode_WithUnknownAttribute1() throws Exception {
         // ## Arrange ##
-        htmlSelectBooleanCheckbox_.getAttributes().put("a", "b");
+        htmlSelectBooleanCheckbox.getAttributes().put("a", "b");
 
         // ## Act ##
-        encodeByRenderer(renderer_, htmlSelectBooleanCheckbox_);
+        encodeByRenderer(renderer, htmlSelectBooleanCheckbox);
 
         // ## Assert ##
         assertEquals(
@@ -66,10 +66,10 @@ public class HtmlSelectBooleanCheckboxRendererTest extends RendererTest {
 
     public void testEncode_WithUnknownAttribute2() throws Exception {
         // ## Arrange ##
-        htmlSelectBooleanCheckbox_.getAttributes().put("a.b", "b");
+        htmlSelectBooleanCheckbox.getAttributes().put("a.b", "b");
 
         // ## Act ##
-        encodeByRenderer(renderer_, htmlSelectBooleanCheckbox_);
+        encodeByRenderer(renderer, htmlSelectBooleanCheckbox);
 
         // ## Assert ##
         assertEquals(
@@ -79,11 +79,10 @@ public class HtmlSelectBooleanCheckboxRendererTest extends RendererTest {
 
     public void testEncode_RenderFalse() throws Exception {
         // ## Arrange ##
-        htmlSelectBooleanCheckbox_.setRendered(false);
-        FacesContext context = getFacesContext();
+        htmlSelectBooleanCheckbox.setRendered(false);
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectBooleanCheckbox_);
+        encodeByRenderer(renderer, htmlSelectBooleanCheckbox);
 
         // ## Assert ##
         assertEquals("", getResponseText());
@@ -91,11 +90,10 @@ public class HtmlSelectBooleanCheckboxRendererTest extends RendererTest {
 
     public void testEncode_WithValue() throws Exception {
         // ## Arrange ##
-        htmlSelectBooleanCheckbox_.setValue("abc");
-        MockFacesContext context = getFacesContext();
+        htmlSelectBooleanCheckbox.setValue("abc");
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectBooleanCheckbox_);
+        encodeByRenderer(renderer, htmlSelectBooleanCheckbox);
 
         // ## Assert ##
         assertEquals(
@@ -105,12 +103,11 @@ public class HtmlSelectBooleanCheckboxRendererTest extends RendererTest {
 
     public void testEncode_Disabled() throws Exception {
         // ## Arrange ##
-        htmlSelectBooleanCheckbox_.setValue("abc");
-        htmlSelectBooleanCheckbox_.setDisabled(true);
-        MockFacesContext context = getFacesContext();
+        htmlSelectBooleanCheckbox.setValue("abc");
+        htmlSelectBooleanCheckbox.setDisabled(true);
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectBooleanCheckbox_);
+        encodeByRenderer(renderer, htmlSelectBooleanCheckbox);
 
         // ## Assert ##
         assertEquals(
@@ -120,11 +117,10 @@ public class HtmlSelectBooleanCheckboxRendererTest extends RendererTest {
 
     public void testEncode_Checked() throws Exception {
         // ## Arrange ##
-        htmlSelectBooleanCheckbox_.setValue("true");
-        MockFacesContext context = getFacesContext();
+        htmlSelectBooleanCheckbox.setValue("true");
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectBooleanCheckbox_);
+        encodeByRenderer(renderer, htmlSelectBooleanCheckbox);
 
         // ## Assert ##
         assertEquals(
@@ -133,35 +129,34 @@ public class HtmlSelectBooleanCheckboxRendererTest extends RendererTest {
     }
 
     public void testEncode_WithAllAttributes() throws Exception {
-        htmlSelectBooleanCheckbox_.setAccesskey("a");
-        htmlSelectBooleanCheckbox_.setDir("c");
-        htmlSelectBooleanCheckbox_.setDisabled(true);
-        htmlSelectBooleanCheckbox_.setLang("e");
-        htmlSelectBooleanCheckbox_.setOnblur("g");
-        htmlSelectBooleanCheckbox_.setOnchange("h");
-        htmlSelectBooleanCheckbox_.setOnclick("i");
-        htmlSelectBooleanCheckbox_.setOndblclick("j");
-        htmlSelectBooleanCheckbox_.setOnfocus("k");
-        htmlSelectBooleanCheckbox_.setOnkeydown("l");
-        htmlSelectBooleanCheckbox_.setOnkeypress("m");
-        htmlSelectBooleanCheckbox_.setOnkeyup("n");
-        htmlSelectBooleanCheckbox_.setOnmousedown("o");
-        htmlSelectBooleanCheckbox_.setOnmousemove("p");
-        htmlSelectBooleanCheckbox_.setOnmouseout("q");
-        htmlSelectBooleanCheckbox_.setOnmouseover("r");
-        htmlSelectBooleanCheckbox_.setOnmouseup("s");
-        htmlSelectBooleanCheckbox_.setOnselect("t");
-        htmlSelectBooleanCheckbox_.setReadonly(true);
-        htmlSelectBooleanCheckbox_.setStyle("w");
-        htmlSelectBooleanCheckbox_.setStyleClass("u");
-        htmlSelectBooleanCheckbox_.setTabindex("x");
-        htmlSelectBooleanCheckbox_.setTitle("y");
+        htmlSelectBooleanCheckbox.setAccesskey("a");
+        htmlSelectBooleanCheckbox.setDir("c");
+        htmlSelectBooleanCheckbox.setDisabled(true);
+        htmlSelectBooleanCheckbox.setLang("e");
+        htmlSelectBooleanCheckbox.setOnblur("g");
+        htmlSelectBooleanCheckbox.setOnchange("h");
+        htmlSelectBooleanCheckbox.setOnclick("i");
+        htmlSelectBooleanCheckbox.setOndblclick("j");
+        htmlSelectBooleanCheckbox.setOnfocus("k");
+        htmlSelectBooleanCheckbox.setOnkeydown("l");
+        htmlSelectBooleanCheckbox.setOnkeypress("m");
+        htmlSelectBooleanCheckbox.setOnkeyup("n");
+        htmlSelectBooleanCheckbox.setOnmousedown("o");
+        htmlSelectBooleanCheckbox.setOnmousemove("p");
+        htmlSelectBooleanCheckbox.setOnmouseout("q");
+        htmlSelectBooleanCheckbox.setOnmouseover("r");
+        htmlSelectBooleanCheckbox.setOnmouseup("s");
+        htmlSelectBooleanCheckbox.setOnselect("t");
+        htmlSelectBooleanCheckbox.setReadonly(true);
+        htmlSelectBooleanCheckbox.setStyle("w");
+        htmlSelectBooleanCheckbox.setStyleClass("u");
+        htmlSelectBooleanCheckbox.setTabindex("x");
+        htmlSelectBooleanCheckbox.setTitle("y");
 
-        htmlSelectBooleanCheckbox_.setId("A");
-        htmlSelectBooleanCheckbox_.setValue("true");
+        htmlSelectBooleanCheckbox.setId("A");
+        htmlSelectBooleanCheckbox.setValue("true");
 
-        MockFacesContext context = getFacesContext();
-        encodeByRenderer(renderer_, context, htmlSelectBooleanCheckbox_);
+        encodeByRenderer(renderer, htmlSelectBooleanCheckbox);
 
         Diff diff = new Diff("<input type=\"checkbox\" id=\"A\" name=\"A\""
                 + " value=\"true\"" + " checked=\"checked\""
@@ -179,31 +174,31 @@ public class HtmlSelectBooleanCheckboxRendererTest extends RendererTest {
 
     public void testDecode_RequestParameterNotExist() throws Exception {
         // ## Arrange ##
-        htmlSelectBooleanCheckbox_.setClientId("key");
+        htmlSelectBooleanCheckbox.setClientId("key");
 
         MockFacesContext context = getFacesContext();
 
         // ## Act ##
-        renderer_.decode(context, htmlSelectBooleanCheckbox_);
+        renderer.decode(context, htmlSelectBooleanCheckbox);
 
         // ## Assert ##
-        assertEquals(1, htmlSelectBooleanCheckbox_.getSetSubmittedValueCalls());
-        assertEquals("false", htmlSelectBooleanCheckbox_.getSubmittedValue());
+        assertEquals(1, htmlSelectBooleanCheckbox.getSetSubmittedValueCalls());
+        assertEquals("false", htmlSelectBooleanCheckbox.getSubmittedValue());
     }
 
     public void testDecode_RequestParameterInvalidValue() throws Exception {
         // ## Arrange ##
-        htmlSelectBooleanCheckbox_.setClientId("key");
+        htmlSelectBooleanCheckbox.setClientId("key");
 
         MockFacesContext context = getFacesContext();
         context.getExternalContext().getRequestParameterMap().put("key", "aaa");
 
         // ## Act ##
-        renderer_.decode(context, htmlSelectBooleanCheckbox_);
+        renderer.decode(context, htmlSelectBooleanCheckbox);
 
         // ## Assert ##
-        assertEquals(1, htmlSelectBooleanCheckbox_.getSetSubmittedValueCalls());
-        assertEquals("false", htmlSelectBooleanCheckbox_.getSubmittedValue());
+        assertEquals(1, htmlSelectBooleanCheckbox.getSetSubmittedValueCalls());
+        assertEquals("false", htmlSelectBooleanCheckbox.getSubmittedValue());
     }
 
     public void testDecode_RequestParameterTrue() throws Exception {
@@ -220,22 +215,22 @@ public class HtmlSelectBooleanCheckboxRendererTest extends RendererTest {
 
     private void decodeSuccessTest(String input) throws Exception {
         // ## Arrange ##
-        htmlSelectBooleanCheckbox_.setClientId("keyA");
+        htmlSelectBooleanCheckbox.setClientId("keyA");
 
         MockFacesContext context = getFacesContext();
         context.getExternalContext().getRequestParameterMap()
                 .put("keyA", input);
 
         // ## Act ##
-        renderer_.decode(context, htmlSelectBooleanCheckbox_);
+        renderer.decode(context, htmlSelectBooleanCheckbox);
 
         // ## Assert ##
-        assertEquals(1, htmlSelectBooleanCheckbox_.getSetSubmittedValueCalls());
-        assertEquals("true", htmlSelectBooleanCheckbox_.getSubmittedValue());
+        assertEquals(1, htmlSelectBooleanCheckbox.getSetSubmittedValueCalls());
+        assertEquals("true", htmlSelectBooleanCheckbox.getSubmittedValue());
     }
 
     public void testGetRendersChildren() throws Exception {
-        assertEquals(false, renderer_.getRendersChildren());
+        assertEquals(false, renderer.getRendersChildren());
     }
 
     private HtmlSelectBooleanCheckboxRenderer createHtmlSelectBooleanCheckboxRenderer() {

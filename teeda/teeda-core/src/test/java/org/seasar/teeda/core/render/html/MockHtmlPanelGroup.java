@@ -21,15 +21,15 @@ import javax.faces.render.Renderer;
 
 public class MockHtmlPanelGroup extends HtmlPanelGroup {
 
-    private Renderer renderer_ = null;
+    private Renderer renderer;
 
     public void setRenderer(Renderer renderer) {
-        renderer_ = renderer;
+        this.renderer = renderer;
     }
 
     protected Renderer getRenderer(FacesContext context) {
-        if (renderer_ != null) {
-            return renderer_;
+        if (renderer != null) {
+            return renderer;
         }
         return super.getRenderer(context);
     }

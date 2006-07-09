@@ -26,22 +26,20 @@ import javax.faces.render.RendererTest;
  */
 public class HtmlMessagesRendererTest extends RendererTest {
 
-    private HtmlMessagesRenderer renderer_;
+    private HtmlMessagesRenderer renderer;
 
-    private MockHtmlMessages htmlMessages_;
+    private MockHtmlMessages htmlMessages;
 
     protected void setUp() throws Exception {
         super.setUp();
-        renderer_ = createHtmlMessagesRenderer();
-        htmlMessages_ = new MockHtmlMessages();
-        htmlMessages_.setRenderer(renderer_);
+        renderer = createHtmlMessagesRenderer();
+        htmlMessages = new MockHtmlMessages();
+        htmlMessages.setRenderer(renderer);
     }
 
     public void testEncode_NoMessage() throws Exception {
-        FacesContext context = getFacesContext();
-
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlMessages_);
+        encodeByRenderer(renderer, htmlMessages);
 
         // ## Assert ##
         assertEquals("", getResponseText());
@@ -53,7 +51,7 @@ public class HtmlMessagesRendererTest extends RendererTest {
         context.addMessage(null, facesMessage);
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlMessages_);
+        encodeByRenderer(renderer, htmlMessages);
 
         // ## Assert ##
         assertEquals("<ul><li></li></ul>", getResponseText());
@@ -67,7 +65,7 @@ public class HtmlMessagesRendererTest extends RendererTest {
         context.addMessage(null, facesMessage);
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlMessages_);
+        encodeByRenderer(renderer, htmlMessages);
 
         // ## Assert ##
         assertEquals("<ul><li>s</li></ul>", getResponseText());
@@ -81,7 +79,7 @@ public class HtmlMessagesRendererTest extends RendererTest {
         context.addMessage(null, facesMessage);
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlMessages_);
+        encodeByRenderer(renderer, htmlMessages);
 
         // ## Assert ##
         assertEquals("<ul><li><s></li></ul>", getResponseText());
@@ -93,10 +91,10 @@ public class HtmlMessagesRendererTest extends RendererTest {
         FacesMessage facesMessage = new FacesMessage();
         facesMessage.setSummary("s");
         context.addMessage(null, facesMessage);
-        htmlMessages_.setLayout("table");
+        htmlMessages.setLayout("table");
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlMessages_);
+        encodeByRenderer(renderer, htmlMessages);
 
         // ## Assert ##
         assertEquals("<table><tr><td>s</td></tr></table>", getResponseText());
@@ -114,10 +112,10 @@ public class HtmlMessagesRendererTest extends RendererTest {
             facesMessage.setSummary("s2");
             context.addMessage("aaa", facesMessage);
         }
-        htmlMessages_.setLayout("list");
+        htmlMessages.setLayout("list");
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlMessages_);
+        encodeByRenderer(renderer, htmlMessages);
 
         // ## Assert ##
         assertEquals("<ul><li>s1</li><li>s2</li></ul>", getResponseText());
@@ -135,10 +133,10 @@ public class HtmlMessagesRendererTest extends RendererTest {
             facesMessage.setSummary("s2");
             context.addMessage("aaa", facesMessage);
         }
-        htmlMessages_.setLayout("table");
+        htmlMessages.setLayout("table");
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlMessages_);
+        encodeByRenderer(renderer, htmlMessages);
 
         // ## Assert ##
         assertEquals("<table>" + "<tr><td>s1</td></tr>"
@@ -162,11 +160,11 @@ public class HtmlMessagesRendererTest extends RendererTest {
             facesMessage.setSummary("s3");
             context.addMessage(null, facesMessage);
         }
-        htmlMessages_.setGlobalOnly(true);
-        htmlMessages_.setLayout("table");
+        htmlMessages.setGlobalOnly(true);
+        htmlMessages.setLayout("table");
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlMessages_);
+        encodeByRenderer(renderer, htmlMessages);
 
         // ## Assert ##
         assertEquals("<table>" + "<tr><td>s2</td></tr>"
@@ -175,8 +173,8 @@ public class HtmlMessagesRendererTest extends RendererTest {
 
     public void testEncode_Detail() throws Exception {
         FacesContext context = getFacesContext();
-        htmlMessages_.setShowSummary(false);
-        htmlMessages_.setShowDetail(true);
+        htmlMessages.setShowSummary(false);
+        htmlMessages.setShowDetail(true);
 
         FacesMessage facesMessage = new FacesMessage();
         facesMessage.setSummary("s");
@@ -184,7 +182,7 @@ public class HtmlMessagesRendererTest extends RendererTest {
         context.addMessage(null, facesMessage);
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlMessages_);
+        encodeByRenderer(renderer, htmlMessages);
 
         // ## Assert ##
         assertEquals("<ul><li>d</li></ul>", getResponseText());
@@ -192,15 +190,15 @@ public class HtmlMessagesRendererTest extends RendererTest {
 
     public void testEncode_Detail_Escape() throws Exception {
         FacesContext context = getFacesContext();
-        htmlMessages_.setShowSummary(false);
-        htmlMessages_.setShowDetail(true);
+        htmlMessages.setShowSummary(false);
+        htmlMessages.setShowDetail(true);
 
         FacesMessage facesMessage = new FacesMessage();
         facesMessage.setDetail("<d>");
         context.addMessage(null, facesMessage);
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlMessages_);
+        encodeByRenderer(renderer, htmlMessages);
 
         // ## Assert ##
         assertEquals("<ul><li><d></li></ul>", getResponseText());
@@ -208,8 +206,8 @@ public class HtmlMessagesRendererTest extends RendererTest {
 
     public void testEncode_SummaryAndDetail() throws Exception {
         FacesContext context = getFacesContext();
-        htmlMessages_.setShowSummary(true);
-        htmlMessages_.setShowDetail(true);
+        htmlMessages.setShowSummary(true);
+        htmlMessages.setShowDetail(true);
 
         FacesMessage facesMessage = new FacesMessage();
         facesMessage.setSummary("s");
@@ -217,7 +215,7 @@ public class HtmlMessagesRendererTest extends RendererTest {
         context.addMessage("a", facesMessage);
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlMessages_);
+        encodeByRenderer(renderer, htmlMessages);
 
         // ## Assert ##
         assertEquals("<ul><li>s d</li></ul>", getResponseText());
@@ -225,8 +223,8 @@ public class HtmlMessagesRendererTest extends RendererTest {
 
     public void testEncode_SummaryAndDetail_NoEscape() throws Exception {
         FacesContext context = getFacesContext();
-        htmlMessages_.setShowSummary(true);
-        htmlMessages_.setShowDetail(true);
+        htmlMessages.setShowSummary(true);
+        htmlMessages.setShowDetail(true);
 
         FacesMessage facesMessage = new FacesMessage();
         facesMessage.setSummary("<s>");
@@ -234,14 +232,14 @@ public class HtmlMessagesRendererTest extends RendererTest {
         context.addMessage("a", facesMessage);
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlMessages_);
+        encodeByRenderer(renderer, htmlMessages);
 
         // ## Assert ##
         assertEquals("<ul><li><s> <d></li></ul>", getResponseText());
     }
 
     public void testEncode_RenderFalse() throws Exception {
-        htmlMessages_.setRendered(false);
+        htmlMessages.setRendered(false);
         FacesContext context = getFacesContext();
 
         FacesMessage facesMessage = new FacesMessage();
@@ -250,7 +248,7 @@ public class HtmlMessagesRendererTest extends RendererTest {
         context.addMessage("w", facesMessage);
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlMessages_);
+        encodeByRenderer(renderer, htmlMessages);
 
         // ## Assert ##
         assertEquals("", getResponseText());
@@ -258,14 +256,14 @@ public class HtmlMessagesRendererTest extends RendererTest {
 
     public void testEncode_Id() throws Exception {
         FacesContext context = getFacesContext();
-        htmlMessages_.setId("ab");
+        htmlMessages.setId("ab");
 
         FacesMessage facesMessage = new FacesMessage();
         facesMessage.setSummary("s");
         context.addMessage("foo", facesMessage);
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlMessages_);
+        encodeByRenderer(renderer, htmlMessages);
 
         // ## Assert ##
         assertEquals("<ul id=\"ab\"><li>s</li></ul>", getResponseText());
@@ -273,15 +271,15 @@ public class HtmlMessagesRendererTest extends RendererTest {
 
     public void testEncode_WithUnknownAttribute1() throws Exception {
         FacesContext context = getFacesContext();
-        htmlMessages_.getAttributes().put("abc", "ABC");
-        htmlMessages_.getAttributes().put("a.b", "AAA");
+        htmlMessages.getAttributes().put("abc", "ABC");
+        htmlMessages.getAttributes().put("a.b", "AAA");
 
         FacesMessage facesMessage = new FacesMessage();
         facesMessage.setSummary("s");
         context.addMessage("foo", facesMessage);
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlMessages_);
+        encodeByRenderer(renderer, htmlMessages);
 
         // ## Assert ##
         assertEquals("<ul abc=\"ABC\"><li>s</li></ul>", getResponseText());
@@ -289,14 +287,14 @@ public class HtmlMessagesRendererTest extends RendererTest {
 
     public void testEncode_WithUnknownAttribute2() throws Exception {
         FacesContext context = getFacesContext();
-        htmlMessages_.getAttributes().put("a.b", "AAA");
+        htmlMessages.getAttributes().put("a.b", "AAA");
 
         FacesMessage facesMessage = new FacesMessage();
         facesMessage.setSummary("s");
         context.addMessage("foo", facesMessage);
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlMessages_);
+        encodeByRenderer(renderer, htmlMessages);
 
         // ## Assert ##
         assertEquals("<ul><li>s</li></ul>", getResponseText());
@@ -304,16 +302,16 @@ public class HtmlMessagesRendererTest extends RendererTest {
 
     public void testEncode_Id_table() throws Exception {
         FacesContext context = getFacesContext();
-        htmlMessages_.setId("ab");
+        htmlMessages.setId("ab");
 
         FacesMessage facesMessage = new FacesMessage();
         facesMessage.setSummary("s");
         context.addMessage("foo", facesMessage);
 
-        htmlMessages_.setLayout("table");
+        htmlMessages.setLayout("table");
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlMessages_);
+        encodeByRenderer(renderer, htmlMessages);
 
         // ## Assert ##
         assertEquals("<table id=\"ab\"><tr><td>s</td></tr></table>",
@@ -327,10 +325,10 @@ public class HtmlMessagesRendererTest extends RendererTest {
         facesMessage.setSeverity(FacesMessage.SEVERITY_INFO);
         context.addMessage("foo", facesMessage);
 
-        htmlMessages_.setInfoStyle("aaa");
+        htmlMessages.setInfoStyle("aaa");
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlMessages_);
+        encodeByRenderer(renderer, htmlMessages);
 
         // ## Assert ##
         assertEquals("<ul><li><span style=\"aaa\">s</span></li></ul>",
@@ -344,10 +342,10 @@ public class HtmlMessagesRendererTest extends RendererTest {
         facesMessage.setSeverity(FacesMessage.SEVERITY_INFO);
         context.addMessage("foo", facesMessage);
 
-        htmlMessages_.setInfoClass("bb");
+        htmlMessages.setInfoClass("bb");
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlMessages_);
+        encodeByRenderer(renderer, htmlMessages);
 
         // ## Assert ##
         assertEquals("<ul><li><span class=\"bb\">s</span></li></ul>",
@@ -362,11 +360,11 @@ public class HtmlMessagesRendererTest extends RendererTest {
         facesMessage.setSeverity(FacesMessage.SEVERITY_WARN);
         context.addMessage("foo", facesMessage);
 
-        htmlMessages_.setStyle("ss");
-        htmlMessages_.setWarnClass("tt");
+        htmlMessages.setStyle("ss");
+        htmlMessages.setWarnClass("tt");
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlMessages_);
+        encodeByRenderer(renderer, htmlMessages);
 
         // ## Assert ##
         assertEquals(
@@ -382,11 +380,11 @@ public class HtmlMessagesRendererTest extends RendererTest {
         facesMessage.setSeverity(FacesMessage.SEVERITY_ERROR);
         context.addMessage("foo", facesMessage);
 
-        htmlMessages_.setErrorStyle("ee");
-        htmlMessages_.setStyleClass("ss");
+        htmlMessages.setErrorStyle("ee");
+        htmlMessages.setStyleClass("ss");
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlMessages_);
+        encodeByRenderer(renderer, htmlMessages);
 
         // ## Assert ##
         assertEquals(
@@ -402,10 +400,10 @@ public class HtmlMessagesRendererTest extends RendererTest {
         facesMessage.setSeverity(FacesMessage.SEVERITY_INFO);
         context.addMessage("foo", facesMessage);
 
-        arrangeStyles(htmlMessages_);
+        arrangeStyles(htmlMessages);
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlMessages_);
+        encodeByRenderer(renderer, htmlMessages);
 
         // ## Assert ##
         assertEquals(
@@ -421,10 +419,10 @@ public class HtmlMessagesRendererTest extends RendererTest {
         facesMessage.setSeverity(FacesMessage.SEVERITY_WARN);
         context.addMessage("foo", facesMessage);
 
-        arrangeStyles(htmlMessages_);
+        arrangeStyles(htmlMessages);
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlMessages_);
+        encodeByRenderer(renderer, htmlMessages);
 
         // ## Assert ##
         assertEquals(
@@ -440,10 +438,10 @@ public class HtmlMessagesRendererTest extends RendererTest {
         facesMessage.setSeverity(FacesMessage.SEVERITY_ERROR);
         context.addMessage("foo", facesMessage);
 
-        arrangeStyles(htmlMessages_);
+        arrangeStyles(htmlMessages);
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlMessages_);
+        encodeByRenderer(renderer, htmlMessages);
 
         // ## Assert ##
         assertEquals(
@@ -459,10 +457,10 @@ public class HtmlMessagesRendererTest extends RendererTest {
         facesMessage.setSeverity(FacesMessage.SEVERITY_FATAL);
         context.addMessage("foo", facesMessage);
 
-        arrangeStyles(htmlMessages_);
+        arrangeStyles(htmlMessages);
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlMessages_);
+        encodeByRenderer(renderer, htmlMessages);
 
         // ## Assert ##
         assertEquals(
@@ -478,11 +476,11 @@ public class HtmlMessagesRendererTest extends RendererTest {
         facesMessage.setSeverity(FacesMessage.SEVERITY_FATAL);
         context.addMessage("foo", facesMessage);
 
-        arrangeStyles(htmlMessages_);
-        htmlMessages_.setLayout("table");
+        arrangeStyles(htmlMessages);
+        htmlMessages.setLayout("table");
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlMessages_);
+        encodeByRenderer(renderer, htmlMessages);
 
         // ## Assert ##
         assertEquals("<table><tr><td>"
@@ -497,11 +495,11 @@ public class HtmlMessagesRendererTest extends RendererTest {
         facesMessage.setSummary("s");
         context.addMessage(null, facesMessage);
 
-        htmlMessages_.setStyle("s1");
-        htmlMessages_.setStyleClass("s2");
+        htmlMessages.setStyle("s1");
+        htmlMessages.setStyleClass("s2");
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlMessages_);
+        encodeByRenderer(renderer, htmlMessages);
 
         // ## Assert ##
         assertEquals(
@@ -529,10 +527,10 @@ public class HtmlMessagesRendererTest extends RendererTest {
         facesMessage.setSummary("s");
         context.addMessage("foo", facesMessage);
 
-        htmlMessages_.setTitle("t");
+        htmlMessages.setTitle("t");
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlMessages_);
+        encodeByRenderer(renderer, htmlMessages);
 
         // ## Assert ##
         assertEquals("<ul><li><span title=\"t\">s</span></li></ul>",
@@ -547,11 +545,11 @@ public class HtmlMessagesRendererTest extends RendererTest {
         facesMessage.setDetail("d");
         context.addMessage("foo", facesMessage);
 
-        htmlMessages_.setTooltip(true);
-        htmlMessages_.setShowDetail(true);
+        htmlMessages.setTooltip(true);
+        htmlMessages.setShowDetail(true);
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlMessages_);
+        encodeByRenderer(renderer, htmlMessages);
 
         // ## Assert ##
         assertEquals("<ul><li><span title=\"s\">d</span></li></ul>",
@@ -567,12 +565,12 @@ public class HtmlMessagesRendererTest extends RendererTest {
         facesMessage.setDetail("d");
         context.addMessage("bar", facesMessage);
 
-        htmlMessages_.setTitle("t"); // ignored
-        htmlMessages_.setTooltip(true);
-        htmlMessages_.setShowDetail(true);
+        htmlMessages.setTitle("t"); // ignored
+        htmlMessages.setTooltip(true);
+        htmlMessages.setShowDetail(true);
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlMessages_);
+        encodeByRenderer(renderer, htmlMessages);
 
         // ## Assert ##
         assertEquals("prioritize [tooltip] over [title]",
@@ -581,7 +579,7 @@ public class HtmlMessagesRendererTest extends RendererTest {
     }
 
     public void testGetRendersChildren() throws Exception {
-        assertEquals(false, renderer_.getRendersChildren());
+        assertEquals(false, renderer.getRendersChildren());
     }
 
     private HtmlMessagesRenderer createHtmlMessagesRenderer() {

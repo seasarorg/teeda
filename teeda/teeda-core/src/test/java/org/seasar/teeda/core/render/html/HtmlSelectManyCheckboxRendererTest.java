@@ -39,22 +39,22 @@ import org.seasar.teeda.core.mock.MockValueBinding;
  */
 public class HtmlSelectManyCheckboxRendererTest extends RendererTest {
 
-    private HtmlSelectManyCheckboxRenderer renderer_;
+    private HtmlSelectManyCheckboxRenderer renderer;
 
-    private MockHtmlSelectManyCheckbox htmlSelectManyCheckbox_;
+    private MockHtmlSelectManyCheckbox htmlSelectManyCheckbox;
 
     protected void setUp() throws Exception {
         super.setUp();
-        renderer_ = createHtmlSelectManyCheckboxRenderer();
-        htmlSelectManyCheckbox_ = new MockHtmlSelectManyCheckbox();
-        htmlSelectManyCheckbox_.setRenderer(renderer_);
+        renderer = createHtmlSelectManyCheckboxRenderer();
+        htmlSelectManyCheckbox = new MockHtmlSelectManyCheckbox();
+        htmlSelectManyCheckbox.setRenderer(renderer);
     }
 
     public void testEncode_NoChild() throws Exception {
-        FacesContext context = getFacesContext();
+        // ## Arrange ##
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectManyCheckbox_);
+        encodeByRenderer(renderer, htmlSelectManyCheckbox);
 
         // ## Assert ##
         assertEquals("", getResponseText());
@@ -62,17 +62,16 @@ public class HtmlSelectManyCheckboxRendererTest extends RendererTest {
 
     public void testEncode_RenderFalse() throws Exception {
         // ## Arrange ##
-        htmlSelectManyCheckbox_.setRendered(false);
+        htmlSelectManyCheckbox.setRendered(false);
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("val");
             selectItem.setItemLabel("lab");
-            htmlSelectManyCheckbox_.getChildren().add(selectItem);
+            htmlSelectManyCheckbox.getChildren().add(selectItem);
         }
-        FacesContext context = getFacesContext();
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectManyCheckbox_);
+        encodeByRenderer(renderer, htmlSelectManyCheckbox);
 
         // ## Assert ##
         assertEquals("", getResponseText());
@@ -80,16 +79,15 @@ public class HtmlSelectManyCheckboxRendererTest extends RendererTest {
 
     public void testEncode_Child() throws Exception {
         // ## Arrange ##
-        MockFacesContext context = getFacesContext();
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("val");
             selectItem.setItemLabel("lab");
-            htmlSelectManyCheckbox_.getChildren().add(selectItem);
+            htmlSelectManyCheckbox.getChildren().add(selectItem);
         }
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectManyCheckbox_);
+        encodeByRenderer(renderer, htmlSelectManyCheckbox);
 
         // ## Assert ##
         assertEquals("<table><tr><td>" + "<label>"
@@ -99,17 +97,16 @@ public class HtmlSelectManyCheckboxRendererTest extends RendererTest {
 
     public void testEncode_Id() throws Exception {
         // ## Arrange ##
-        MockFacesContext context = getFacesContext();
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("val");
             selectItem.setItemLabel("lab");
-            htmlSelectManyCheckbox_.getChildren().add(selectItem);
+            htmlSelectManyCheckbox.getChildren().add(selectItem);
         }
-        htmlSelectManyCheckbox_.setId("a");
+        htmlSelectManyCheckbox.setId("a");
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectManyCheckbox_);
+        encodeByRenderer(renderer, htmlSelectManyCheckbox);
 
         // ## Assert ##
         assertEquals("<table id=\"a\"><tr><td>" + "<label>"
@@ -123,13 +120,13 @@ public class HtmlSelectManyCheckboxRendererTest extends RendererTest {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("val");
             selectItem.setItemLabel("lab");
-            htmlSelectManyCheckbox_.getChildren().add(selectItem);
+            htmlSelectManyCheckbox.getChildren().add(selectItem);
         }
-        htmlSelectManyCheckbox_.setId("a");
-        htmlSelectManyCheckbox_.getAttributes().put("aa", "bb");
+        htmlSelectManyCheckbox.setId("a");
+        htmlSelectManyCheckbox.getAttributes().put("aa", "bb");
 
         // ## Act ##
-        encodeByRenderer(renderer_, htmlSelectManyCheckbox_);
+        encodeByRenderer(renderer, htmlSelectManyCheckbox);
 
         // ## Assert ##
         assertEquals("<table id=\"a\" aa=\"bb\"><tr><td>" + "<label>"
@@ -143,13 +140,13 @@ public class HtmlSelectManyCheckboxRendererTest extends RendererTest {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("val");
             selectItem.setItemLabel("lab");
-            htmlSelectManyCheckbox_.getChildren().add(selectItem);
+            htmlSelectManyCheckbox.getChildren().add(selectItem);
         }
-        htmlSelectManyCheckbox_.setId("a");
-        htmlSelectManyCheckbox_.getAttributes().put("a.a", "bb");
+        htmlSelectManyCheckbox.setId("a");
+        htmlSelectManyCheckbox.getAttributes().put("a.a", "bb");
 
         // ## Act ##
-        encodeByRenderer(renderer_, htmlSelectManyCheckbox_);
+        encodeByRenderer(renderer, htmlSelectManyCheckbox);
 
         // ## Assert ##
         assertEquals("<table id=\"a\"><tr><td>" + "<label>"
@@ -159,22 +156,21 @@ public class HtmlSelectManyCheckboxRendererTest extends RendererTest {
 
     public void testEncode_Children() throws Exception {
         // ## Arrange ##
-        MockFacesContext context = getFacesContext();
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("v1");
             selectItem.setItemLabel("l1");
-            htmlSelectManyCheckbox_.getChildren().add(selectItem);
+            htmlSelectManyCheckbox.getChildren().add(selectItem);
         }
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("v2");
             selectItem.setItemLabel("l2");
-            htmlSelectManyCheckbox_.getChildren().add(selectItem);
+            htmlSelectManyCheckbox.getChildren().add(selectItem);
         }
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectManyCheckbox_);
+        encodeByRenderer(renderer, htmlSelectManyCheckbox);
 
         // ## Assert ##
         assertEquals("<table><tr><td>" + "<label>"
@@ -186,23 +182,22 @@ public class HtmlSelectManyCheckboxRendererTest extends RendererTest {
 
     public void testEncode_Children_PageDirection() throws Exception {
         // ## Arrange ##
-        MockFacesContext context = getFacesContext();
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("v1");
             selectItem.setItemLabel("l1");
-            htmlSelectManyCheckbox_.getChildren().add(selectItem);
+            htmlSelectManyCheckbox.getChildren().add(selectItem);
         }
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("v2");
             selectItem.setItemLabel("l2");
-            htmlSelectManyCheckbox_.getChildren().add(selectItem);
+            htmlSelectManyCheckbox.getChildren().add(selectItem);
         }
-        htmlSelectManyCheckbox_.setLayout("pageDirection");
+        htmlSelectManyCheckbox.setLayout("pageDirection");
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectManyCheckbox_);
+        encodeByRenderer(renderer, htmlSelectManyCheckbox);
 
         // ## Assert ##
         assertEquals("<table>" + "<tr><td>" + "<label>"
@@ -214,23 +209,22 @@ public class HtmlSelectManyCheckboxRendererTest extends RendererTest {
 
     public void testEncode_Checked() throws Exception {
         // ## Arrange ##
-        htmlSelectManyCheckbox_.setSelectedValues(new String[] { "val" });
-        MockFacesContext context = getFacesContext();
+        htmlSelectManyCheckbox.setSelectedValues(new String[] { "val" });
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("val");
             selectItem.setItemLabel("lab");
-            htmlSelectManyCheckbox_.getChildren().add(selectItem);
+            htmlSelectManyCheckbox.getChildren().add(selectItem);
         }
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("v2");
             selectItem.setItemLabel("l2");
-            htmlSelectManyCheckbox_.getChildren().add(selectItem);
+            htmlSelectManyCheckbox.getChildren().add(selectItem);
         }
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectManyCheckbox_);
+        encodeByRenderer(renderer, htmlSelectManyCheckbox);
 
         // ## Assert ##
         assertEquals(
@@ -247,23 +241,22 @@ public class HtmlSelectManyCheckboxRendererTest extends RendererTest {
 
     public void testEncode_ItemDisabled() throws Exception {
         // ## Arrange ##
-        MockFacesContext context = getFacesContext();
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("v1");
             selectItem.setItemLabel("l1");
             selectItem.setItemDisabled(true);
-            htmlSelectManyCheckbox_.getChildren().add(selectItem);
+            htmlSelectManyCheckbox.getChildren().add(selectItem);
         }
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("v2");
             selectItem.setItemLabel("l2");
-            htmlSelectManyCheckbox_.getChildren().add(selectItem);
+            htmlSelectManyCheckbox.getChildren().add(selectItem);
         }
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectManyCheckbox_);
+        encodeByRenderer(renderer, htmlSelectManyCheckbox);
 
         // ## Assert ##
         assertEquals(
@@ -280,23 +273,22 @@ public class HtmlSelectManyCheckboxRendererTest extends RendererTest {
 
     public void testEncode_Disabled() throws Exception {
         // ## Arrange ##
-        htmlSelectManyCheckbox_.setDisabled(true);
-        MockFacesContext context = getFacesContext();
+        htmlSelectManyCheckbox.setDisabled(true);
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("v1");
             selectItem.setItemLabel("l1");
-            htmlSelectManyCheckbox_.getChildren().add(selectItem);
+            htmlSelectManyCheckbox.getChildren().add(selectItem);
         }
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("v2");
             selectItem.setItemLabel("l2");
-            htmlSelectManyCheckbox_.getChildren().add(selectItem);
+            htmlSelectManyCheckbox.getChildren().add(selectItem);
         }
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectManyCheckbox_);
+        encodeByRenderer(renderer, htmlSelectManyCheckbox);
 
         // ## Assert ##
         assertEquals(
@@ -313,25 +305,24 @@ public class HtmlSelectManyCheckboxRendererTest extends RendererTest {
 
     public void testEncode_LabelClass() throws Exception {
         // ## Arrange ##
-        htmlSelectManyCheckbox_.setEnabledClass("ec");
-        htmlSelectManyCheckbox_.setDisabledClass("dc");
-        MockFacesContext context = getFacesContext();
+        htmlSelectManyCheckbox.setEnabledClass("ec");
+        htmlSelectManyCheckbox.setDisabledClass("dc");
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("v1");
             selectItem.setItemLabel("l1");
-            htmlSelectManyCheckbox_.getChildren().add(selectItem);
+            htmlSelectManyCheckbox.getChildren().add(selectItem);
         }
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("v2");
             selectItem.setItemLabel("l2");
             selectItem.setItemDisabled(true);
-            htmlSelectManyCheckbox_.getChildren().add(selectItem);
+            htmlSelectManyCheckbox.getChildren().add(selectItem);
         }
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectManyCheckbox_);
+        encodeByRenderer(renderer, htmlSelectManyCheckbox);
 
         // ## Assert ##
         assertEquals(
@@ -348,17 +339,16 @@ public class HtmlSelectManyCheckboxRendererTest extends RendererTest {
 
     public void testEncode_GroupChildren() throws Exception {
         // ## Arrange ##
-        MockFacesContext context = getFacesContext();
         {
             UISelectItems selectItems = new UISelectItems();
             SelectItem item1 = new SelectItem("v1", "l1");
             SelectItem item2 = new SelectItem("v2", "l2", null, true);
             selectItems.setValue(new SelectItem[] { item1, item2 });
-            htmlSelectManyCheckbox_.getChildren().add(selectItems);
+            htmlSelectManyCheckbox.getChildren().add(selectItems);
         }
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectManyCheckbox_);
+        encodeByRenderer(renderer, htmlSelectManyCheckbox);
 
         // ## Assert ##
         assertEquals(
@@ -374,7 +364,6 @@ public class HtmlSelectManyCheckboxRendererTest extends RendererTest {
 
     public void testEncode_NestedChildren() throws Exception {
         // ## Arrange ##
-        MockFacesContext context = getFacesContext();
         {
             SelectItem item1 = new SelectItem("v1", "l1");
             SelectItem item2 = new SelectItem("v2", "l2", null, true);
@@ -382,11 +371,11 @@ public class HtmlSelectManyCheckboxRendererTest extends RendererTest {
             group.setSelectItems(new SelectItem[] { item1, item2 });
             UISelectItem selectItem = new UISelectItem();
             selectItem.setValue(group);
-            htmlSelectManyCheckbox_.getChildren().add(selectItem);
+            htmlSelectManyCheckbox.getChildren().add(selectItem);
         }
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectManyCheckbox_);
+        encodeByRenderer(renderer, htmlSelectManyCheckbox);
 
         // ## Assert ##
         assertEquals(
@@ -402,43 +391,42 @@ public class HtmlSelectManyCheckboxRendererTest extends RendererTest {
     }
 
     public void testEncode_WithAllAttributes() throws Exception {
-        htmlSelectManyCheckbox_.setAccesskey("a");
-        htmlSelectManyCheckbox_.setBorder(3);
-        htmlSelectManyCheckbox_.setDir("b");
-        htmlSelectManyCheckbox_.setDisabled(true);
-        htmlSelectManyCheckbox_.setDisabledClass("d");
-        htmlSelectManyCheckbox_.setEnabledClass("e");
-        htmlSelectManyCheckbox_.setLang("f");
-        htmlSelectManyCheckbox_.setOnblur("g");
-        htmlSelectManyCheckbox_.setOnchange("h");
-        htmlSelectManyCheckbox_.setOnclick("i");
-        htmlSelectManyCheckbox_.setOndblclick("j");
-        htmlSelectManyCheckbox_.setOnfocus("k");
-        htmlSelectManyCheckbox_.setOnkeydown("l");
-        htmlSelectManyCheckbox_.setOnkeypress("m");
-        htmlSelectManyCheckbox_.setOnkeyup("n");
-        htmlSelectManyCheckbox_.setOnmousedown("o");
-        htmlSelectManyCheckbox_.setOnmousemove("p");
-        htmlSelectManyCheckbox_.setOnmouseout("q");
-        htmlSelectManyCheckbox_.setOnmouseover("r");
-        htmlSelectManyCheckbox_.setOnmouseup("s");
-        htmlSelectManyCheckbox_.setOnselect("t");
-        htmlSelectManyCheckbox_.setReadonly(true);
-        htmlSelectManyCheckbox_.setStyle("w");
-        htmlSelectManyCheckbox_.setStyleClass("u");
-        htmlSelectManyCheckbox_.setTabindex("x");
-        htmlSelectManyCheckbox_.setTitle("y");
+        htmlSelectManyCheckbox.setAccesskey("a");
+        htmlSelectManyCheckbox.setBorder(3);
+        htmlSelectManyCheckbox.setDir("b");
+        htmlSelectManyCheckbox.setDisabled(true);
+        htmlSelectManyCheckbox.setDisabledClass("d");
+        htmlSelectManyCheckbox.setEnabledClass("e");
+        htmlSelectManyCheckbox.setLang("f");
+        htmlSelectManyCheckbox.setOnblur("g");
+        htmlSelectManyCheckbox.setOnchange("h");
+        htmlSelectManyCheckbox.setOnclick("i");
+        htmlSelectManyCheckbox.setOndblclick("j");
+        htmlSelectManyCheckbox.setOnfocus("k");
+        htmlSelectManyCheckbox.setOnkeydown("l");
+        htmlSelectManyCheckbox.setOnkeypress("m");
+        htmlSelectManyCheckbox.setOnkeyup("n");
+        htmlSelectManyCheckbox.setOnmousedown("o");
+        htmlSelectManyCheckbox.setOnmousemove("p");
+        htmlSelectManyCheckbox.setOnmouseout("q");
+        htmlSelectManyCheckbox.setOnmouseover("r");
+        htmlSelectManyCheckbox.setOnmouseup("s");
+        htmlSelectManyCheckbox.setOnselect("t");
+        htmlSelectManyCheckbox.setReadonly(true);
+        htmlSelectManyCheckbox.setStyle("w");
+        htmlSelectManyCheckbox.setStyleClass("u");
+        htmlSelectManyCheckbox.setTabindex("x");
+        htmlSelectManyCheckbox.setTitle("y");
 
-        htmlSelectManyCheckbox_.setId("A");
-        htmlSelectManyCheckbox_.setValue(new String[] { "val" });
+        htmlSelectManyCheckbox.setId("A");
+        htmlSelectManyCheckbox.setValue(new String[] { "val" });
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("val");
             selectItem.setItemLabel("lab");
-            htmlSelectManyCheckbox_.getChildren().add(selectItem);
+            htmlSelectManyCheckbox.getChildren().add(selectItem);
         }
-        MockFacesContext context = getFacesContext();
-        encodeByRenderer(renderer_, context, htmlSelectManyCheckbox_);
+        encodeByRenderer(renderer, htmlSelectManyCheckbox);
 
         Diff diff = new Diff("<table id=\"A\" border=\"3\" style=\"w\""
                 + " class=\"u\"" + ">" + "<tr><td>" + "<label class=\"d\">"
@@ -458,39 +446,39 @@ public class HtmlSelectManyCheckboxRendererTest extends RendererTest {
 
     public void testDecode_RequestParameterNotExist() throws Exception {
         // ## Arrange ##
-        htmlSelectManyCheckbox_.setClientId("key");
+        htmlSelectManyCheckbox.setClientId("key");
 
         MockFacesContext context = getFacesContext();
 
         // ## Act ##
-        renderer_.decode(context, htmlSelectManyCheckbox_);
+        renderer.decode(context, htmlSelectManyCheckbox);
 
         // ## Assert ##
-        assertEquals(1, htmlSelectManyCheckbox_.getSetSubmittedValueCalls());
-        String[] submittedValue = (String[]) htmlSelectManyCheckbox_
+        assertEquals(1, htmlSelectManyCheckbox.getSetSubmittedValueCalls());
+        String[] submittedValue = (String[]) htmlSelectManyCheckbox
                 .getSubmittedValue();
         assertEquals(0, submittedValue.length);
     }
 
     public void testDecodeSuccess() throws Exception {
         // ## Arrange ##
-        htmlSelectManyCheckbox_.setClientId("keyA");
+        htmlSelectManyCheckbox.setClientId("keyA");
 
         MockFacesContext context = getFacesContext();
         context.getExternalContext().getRequestParameterValuesMap().put("keyA",
                 new String[] { "a", "b", "c" });
 
         // ## Act ##
-        renderer_.decode(context, htmlSelectManyCheckbox_);
+        renderer.decode(context, htmlSelectManyCheckbox);
 
         // ## Assert ##
-        assertEquals(1, htmlSelectManyCheckbox_.getSetSubmittedValueCalls());
+        assertEquals(1, htmlSelectManyCheckbox.getSetSubmittedValueCalls());
         ArrayAssert.assertEquivalenceArrays(new String[] { "a", "b", "c" },
-                (Object[]) htmlSelectManyCheckbox_.getSubmittedValue());
+                (Object[]) htmlSelectManyCheckbox.getSubmittedValue());
     }
 
     public void testGetRendersChildren() throws Exception {
-        assertEquals(false, renderer_.getRendersChildren());
+        assertEquals(false, renderer.getRendersChildren());
     }
 
     public void testGetConvertedValue() throws Exception {
@@ -503,7 +491,7 @@ public class HtmlSelectManyCheckboxRendererTest extends RendererTest {
         Array.set(submittedValue, 0, "1");
         Array.set(submittedValue, 1, "2");
         Array.set(submittedValue, 2, "3");
-        Object o = renderer_.getConvertedValue(getFacesContext(), out,
+        Object o = renderer.getConvertedValue(getFacesContext(), out,
                 submittedValue);
         int[] result = (int[]) o;
         assertEquals(3, result.length);

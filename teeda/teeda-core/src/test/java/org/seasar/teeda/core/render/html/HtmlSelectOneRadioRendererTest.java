@@ -33,22 +33,21 @@ import org.seasar.teeda.core.mock.MockFacesContext;
  */
 public class HtmlSelectOneRadioRendererTest extends RendererTest {
 
-    private HtmlSelectOneRadioRenderer renderer_;
+    private HtmlSelectOneRadioRenderer renderer;
 
-    private MockHtmlSelectOneRadio htmlSelectOneRadio_;
+    private MockHtmlSelectOneRadio htmlSelectOneRadio;
 
     protected void setUp() throws Exception {
         super.setUp();
-        renderer_ = createHtmlSelectOneRadioRenderer();
-        htmlSelectOneRadio_ = new MockHtmlSelectOneRadio();
-        htmlSelectOneRadio_.setRenderer(renderer_);
+        renderer = createHtmlSelectOneRadioRenderer();
+        htmlSelectOneRadio = new MockHtmlSelectOneRadio();
+        htmlSelectOneRadio.setRenderer(renderer);
     }
 
     public void testEncode_NoChild() throws Exception {
-        FacesContext context = getFacesContext();
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectOneRadio_);
+        encodeByRenderer(renderer, htmlSelectOneRadio);
 
         // ## Assert ##
         assertEquals("", getResponseText());
@@ -56,17 +55,16 @@ public class HtmlSelectOneRadioRendererTest extends RendererTest {
 
     public void testEncode_RenderFalse() throws Exception {
         // ## Arrange ##
-        htmlSelectOneRadio_.setRendered(false);
+        htmlSelectOneRadio.setRendered(false);
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("val");
             selectItem.setItemLabel("lab");
-            htmlSelectOneRadio_.getChildren().add(selectItem);
+            htmlSelectOneRadio.getChildren().add(selectItem);
         }
-        FacesContext context = getFacesContext();
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectOneRadio_);
+        encodeByRenderer(renderer, htmlSelectOneRadio);
 
         // ## Assert ##
         assertEquals("", getResponseText());
@@ -74,16 +72,15 @@ public class HtmlSelectOneRadioRendererTest extends RendererTest {
 
     public void testEncode_Child() throws Exception {
         // ## Arrange ##
-        MockFacesContext context = getFacesContext();
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("val");
             selectItem.setItemLabel("lab");
-            htmlSelectOneRadio_.getChildren().add(selectItem);
+            htmlSelectOneRadio.getChildren().add(selectItem);
         }
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectOneRadio_);
+        encodeByRenderer(renderer, htmlSelectOneRadio);
 
         // ## Assert ##
         assertEquals("<table><tr><td>" + "<label>"
@@ -93,17 +90,16 @@ public class HtmlSelectOneRadioRendererTest extends RendererTest {
 
     public void testEncode_Id() throws Exception {
         // ## Arrange ##
-        MockFacesContext context = getFacesContext();
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("val");
             selectItem.setItemLabel("lab");
-            htmlSelectOneRadio_.getChildren().add(selectItem);
+            htmlSelectOneRadio.getChildren().add(selectItem);
         }
-        htmlSelectOneRadio_.setId("a");
+        htmlSelectOneRadio.setId("a");
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectOneRadio_);
+        encodeByRenderer(renderer, htmlSelectOneRadio);
 
         // ## Assert ##
         assertEquals("<table id=\"a\"><tr><td>" + "<label>"
@@ -113,18 +109,17 @@ public class HtmlSelectOneRadioRendererTest extends RendererTest {
 
     public void testEncode_WithUnknownAttribute1() throws Exception {
         // ## Arrange ##
-        MockFacesContext context = getFacesContext();
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("val");
             selectItem.setItemLabel("lab");
-            htmlSelectOneRadio_.getChildren().add(selectItem);
+            htmlSelectOneRadio.getChildren().add(selectItem);
         }
-        htmlSelectOneRadio_.setId("a");
-        htmlSelectOneRadio_.getAttributes().put("z", "x");
+        htmlSelectOneRadio.setId("a");
+        htmlSelectOneRadio.getAttributes().put("z", "x");
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectOneRadio_);
+        encodeByRenderer(renderer, htmlSelectOneRadio);
 
         // ## Assert ##
         assertEquals("<table id=\"a\" z=\"x\"><tr><td>" + "<label>"
@@ -134,18 +129,17 @@ public class HtmlSelectOneRadioRendererTest extends RendererTest {
 
     public void testEncode_WithUnknownAttribute2() throws Exception {
         // ## Arrange ##
-        MockFacesContext context = getFacesContext();
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("val");
             selectItem.setItemLabel("lab");
-            htmlSelectOneRadio_.getChildren().add(selectItem);
+            htmlSelectOneRadio.getChildren().add(selectItem);
         }
-        htmlSelectOneRadio_.setId("a");
-        htmlSelectOneRadio_.getAttributes().put(".", "x");
+        htmlSelectOneRadio.setId("a");
+        htmlSelectOneRadio.getAttributes().put(".", "x");
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectOneRadio_);
+        encodeByRenderer(renderer, htmlSelectOneRadio);
 
         // ## Assert ##
         assertEquals("<table id=\"a\"><tr><td>" + "<label>"
@@ -155,22 +149,21 @@ public class HtmlSelectOneRadioRendererTest extends RendererTest {
 
     public void testEncode_Children() throws Exception {
         // ## Arrange ##
-        MockFacesContext context = getFacesContext();
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("v1");
             selectItem.setItemLabel("l1");
-            htmlSelectOneRadio_.getChildren().add(selectItem);
+            htmlSelectOneRadio.getChildren().add(selectItem);
         }
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("v2");
             selectItem.setItemLabel("l2");
-            htmlSelectOneRadio_.getChildren().add(selectItem);
+            htmlSelectOneRadio.getChildren().add(selectItem);
         }
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectOneRadio_);
+        encodeByRenderer(renderer, htmlSelectOneRadio);
 
         // ## Assert ##
         assertEquals("<table><tr><td>" + "<label>"
@@ -182,23 +175,22 @@ public class HtmlSelectOneRadioRendererTest extends RendererTest {
 
     public void testEncode_Children_PageDirection() throws Exception {
         // ## Arrange ##
-        MockFacesContext context = getFacesContext();
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("v1");
             selectItem.setItemLabel("l1");
-            htmlSelectOneRadio_.getChildren().add(selectItem);
+            htmlSelectOneRadio.getChildren().add(selectItem);
         }
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("v2");
             selectItem.setItemLabel("l2");
-            htmlSelectOneRadio_.getChildren().add(selectItem);
+            htmlSelectOneRadio.getChildren().add(selectItem);
         }
-        htmlSelectOneRadio_.setLayout("pageDirection");
+        htmlSelectOneRadio.setLayout("pageDirection");
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectOneRadio_);
+        encodeByRenderer(renderer, htmlSelectOneRadio);
 
         // ## Assert ##
         assertEquals("<table>" + "<tr><td>" + "<label>"
@@ -210,23 +202,22 @@ public class HtmlSelectOneRadioRendererTest extends RendererTest {
 
     public void testEncode_Checked() throws Exception {
         // ## Arrange ##
-        htmlSelectOneRadio_.setValue("v2");
-        MockFacesContext context = getFacesContext();
+        htmlSelectOneRadio.setValue("v2");
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("v1");
             selectItem.setItemLabel("l1");
-            htmlSelectOneRadio_.getChildren().add(selectItem);
+            htmlSelectOneRadio.getChildren().add(selectItem);
         }
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("v2");
             selectItem.setItemLabel("l2");
-            htmlSelectOneRadio_.getChildren().add(selectItem);
+            htmlSelectOneRadio.getChildren().add(selectItem);
         }
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectOneRadio_);
+        encodeByRenderer(renderer, htmlSelectOneRadio);
 
         // ## Assert ##
         assertEquals(
@@ -243,23 +234,22 @@ public class HtmlSelectOneRadioRendererTest extends RendererTest {
 
     public void testEncode_ItemDisabled() throws Exception {
         // ## Arrange ##
-        MockFacesContext context = getFacesContext();
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("v1");
             selectItem.setItemLabel("l1");
             selectItem.setItemDisabled(true);
-            htmlSelectOneRadio_.getChildren().add(selectItem);
+            htmlSelectOneRadio.getChildren().add(selectItem);
         }
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("v2");
             selectItem.setItemLabel("l2");
-            htmlSelectOneRadio_.getChildren().add(selectItem);
+            htmlSelectOneRadio.getChildren().add(selectItem);
         }
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectOneRadio_);
+        encodeByRenderer(renderer, htmlSelectOneRadio);
 
         // ## Assert ##
         assertEquals(
@@ -275,24 +265,23 @@ public class HtmlSelectOneRadioRendererTest extends RendererTest {
 
     public void testEncode_Disabled() throws Exception {
         // ## Arrange ##
-        htmlSelectOneRadio_.setDisabled(true);
-        MockFacesContext context = getFacesContext();
+        htmlSelectOneRadio.setDisabled(true);
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("v1");
             selectItem.setItemLabel("l1");
             selectItem.setItemDisabled(true);
-            htmlSelectOneRadio_.getChildren().add(selectItem);
+            htmlSelectOneRadio.getChildren().add(selectItem);
         }
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("v2");
             selectItem.setItemLabel("l2");
-            htmlSelectOneRadio_.getChildren().add(selectItem);
+            htmlSelectOneRadio.getChildren().add(selectItem);
         }
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectOneRadio_);
+        encodeByRenderer(renderer, htmlSelectOneRadio);
 
         // ## Assert ##
         assertEquals(
@@ -308,25 +297,24 @@ public class HtmlSelectOneRadioRendererTest extends RendererTest {
 
     public void testEncode_LabelClass() throws Exception {
         // ## Arrange ##
-        htmlSelectOneRadio_.setEnabledClass("ec");
-        htmlSelectOneRadio_.setDisabledClass("dc");
-        MockFacesContext context = getFacesContext();
+        htmlSelectOneRadio.setEnabledClass("ec");
+        htmlSelectOneRadio.setDisabledClass("dc");
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("v1");
             selectItem.setItemLabel("l1");
-            htmlSelectOneRadio_.getChildren().add(selectItem);
+            htmlSelectOneRadio.getChildren().add(selectItem);
         }
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("v2");
             selectItem.setItemLabel("l2");
             selectItem.setItemDisabled(true);
-            htmlSelectOneRadio_.getChildren().add(selectItem);
+            htmlSelectOneRadio.getChildren().add(selectItem);
         }
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectOneRadio_);
+        encodeByRenderer(renderer, htmlSelectOneRadio);
 
         // ## Assert ##
         assertEquals(
@@ -343,17 +331,16 @@ public class HtmlSelectOneRadioRendererTest extends RendererTest {
 
     public void testEncode_GroupChildren() throws Exception {
         // ## Arrange ##
-        MockFacesContext context = getFacesContext();
         {
             UISelectItems selectItems = new UISelectItems();
             SelectItem item1 = new SelectItem("v1", "l1");
             SelectItem item2 = new SelectItem("v2", "l2", null, true);
             selectItems.setValue(new SelectItem[] { item1, item2 });
-            htmlSelectOneRadio_.getChildren().add(selectItems);
+            htmlSelectOneRadio.getChildren().add(selectItems);
         }
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectOneRadio_);
+        encodeByRenderer(renderer, htmlSelectOneRadio);
 
         // ## Assert ##
         assertEquals(
@@ -369,7 +356,6 @@ public class HtmlSelectOneRadioRendererTest extends RendererTest {
 
     public void testEncode_Optgroup() throws Exception {
         // ## Arrange ##
-        MockFacesContext context = getFacesContext();
         {
             SelectItem item1 = new SelectItem("v1", "l1");
             SelectItem item2 = new SelectItem("v2", "l2", null, true);
@@ -377,11 +363,11 @@ public class HtmlSelectOneRadioRendererTest extends RendererTest {
             group.setSelectItems(new SelectItem[] { item1, item2 });
             UISelectItem selectItem = new UISelectItem();
             selectItem.setValue(group);
-            htmlSelectOneRadio_.getChildren().add(selectItem);
+            htmlSelectOneRadio.getChildren().add(selectItem);
         }
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectOneRadio_);
+        encodeByRenderer(renderer, htmlSelectOneRadio);
 
         // ## Assert ##
         assertEquals(
@@ -397,43 +383,42 @@ public class HtmlSelectOneRadioRendererTest extends RendererTest {
     }
 
     public void testEncode_WithAllAttributes() throws Exception {
-        htmlSelectOneRadio_.setAccesskey("a");
-        htmlSelectOneRadio_.setBorder(3);
-        htmlSelectOneRadio_.setDir("b");
-        htmlSelectOneRadio_.setDisabled(true);
-        htmlSelectOneRadio_.setDisabledClass("d");
-        htmlSelectOneRadio_.setEnabledClass("e");
-        htmlSelectOneRadio_.setLang("f");
-        htmlSelectOneRadio_.setOnblur("g");
-        htmlSelectOneRadio_.setOnchange("h");
-        htmlSelectOneRadio_.setOnclick("i");
-        htmlSelectOneRadio_.setOndblclick("j");
-        htmlSelectOneRadio_.setOnfocus("k");
-        htmlSelectOneRadio_.setOnkeydown("l");
-        htmlSelectOneRadio_.setOnkeypress("m");
-        htmlSelectOneRadio_.setOnkeyup("n");
-        htmlSelectOneRadio_.setOnmousedown("o");
-        htmlSelectOneRadio_.setOnmousemove("p");
-        htmlSelectOneRadio_.setOnmouseout("q");
-        htmlSelectOneRadio_.setOnmouseover("r");
-        htmlSelectOneRadio_.setOnmouseup("s");
-        htmlSelectOneRadio_.setOnselect("t");
-        htmlSelectOneRadio_.setReadonly(true);
-        htmlSelectOneRadio_.setStyle("w");
-        htmlSelectOneRadio_.setStyleClass("u");
-        htmlSelectOneRadio_.setTabindex("x");
-        htmlSelectOneRadio_.setTitle("y");
+        htmlSelectOneRadio.setAccesskey("a");
+        htmlSelectOneRadio.setBorder(3);
+        htmlSelectOneRadio.setDir("b");
+        htmlSelectOneRadio.setDisabled(true);
+        htmlSelectOneRadio.setDisabledClass("d");
+        htmlSelectOneRadio.setEnabledClass("e");
+        htmlSelectOneRadio.setLang("f");
+        htmlSelectOneRadio.setOnblur("g");
+        htmlSelectOneRadio.setOnchange("h");
+        htmlSelectOneRadio.setOnclick("i");
+        htmlSelectOneRadio.setOndblclick("j");
+        htmlSelectOneRadio.setOnfocus("k");
+        htmlSelectOneRadio.setOnkeydown("l");
+        htmlSelectOneRadio.setOnkeypress("m");
+        htmlSelectOneRadio.setOnkeyup("n");
+        htmlSelectOneRadio.setOnmousedown("o");
+        htmlSelectOneRadio.setOnmousemove("p");
+        htmlSelectOneRadio.setOnmouseout("q");
+        htmlSelectOneRadio.setOnmouseover("r");
+        htmlSelectOneRadio.setOnmouseup("s");
+        htmlSelectOneRadio.setOnselect("t");
+        htmlSelectOneRadio.setReadonly(true);
+        htmlSelectOneRadio.setStyle("w");
+        htmlSelectOneRadio.setStyleClass("u");
+        htmlSelectOneRadio.setTabindex("x");
+        htmlSelectOneRadio.setTitle("y");
 
-        htmlSelectOneRadio_.setId("A");
-        htmlSelectOneRadio_.setValue("val");
+        htmlSelectOneRadio.setId("A");
+        htmlSelectOneRadio.setValue("val");
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("val");
             selectItem.setItemLabel("lab");
-            htmlSelectOneRadio_.getChildren().add(selectItem);
+            htmlSelectOneRadio.getChildren().add(selectItem);
         }
-        MockFacesContext context = getFacesContext();
-        encodeByRenderer(renderer_, context, htmlSelectOneRadio_);
+        encodeByRenderer(renderer, htmlSelectOneRadio);
 
         Diff diff = new Diff("<table id=\"A\" border=\"3\" style=\"w\""
                 + " class=\"u\"" + ">" + "<tr><td>" + "<label class=\"d\">"
@@ -453,21 +438,21 @@ public class HtmlSelectOneRadioRendererTest extends RendererTest {
 
     public void testDecode_RequestParameterNotExist() throws Exception {
         // ## Arrange ##
-        htmlSelectOneRadio_.setClientId("key");
+        htmlSelectOneRadio.setClientId("key");
 
         MockFacesContext context = getFacesContext();
 
         // ## Act ##
-        renderer_.decode(context, htmlSelectOneRadio_);
+        renderer.decode(context, htmlSelectOneRadio);
 
         // ## Assert ##
-        assertEquals(0, htmlSelectOneRadio_.getSetSubmittedValueCalls());
-        assertEquals(null, htmlSelectOneRadio_.getSubmittedValue());
+        assertEquals(0, htmlSelectOneRadio.getSetSubmittedValueCalls());
+        assertEquals(null, htmlSelectOneRadio.getSubmittedValue());
     }
 
     public void testDecodeSuccess() throws Exception {
         // ## Arrange ##
-        htmlSelectOneRadio_.setClientId("keyA");
+        htmlSelectOneRadio.setClientId("keyA");
 
         MockFacesContext context = getFacesContext();
         MockHttpServletRequest mockHttpServletRequest = context
@@ -475,15 +460,15 @@ public class HtmlSelectOneRadioRendererTest extends RendererTest {
         mockHttpServletRequest.addParameter("keyA", "a");
 
         // ## Act ##
-        renderer_.decode(context, htmlSelectOneRadio_);
+        renderer.decode(context, htmlSelectOneRadio);
 
         // ## Assert ##
-        assertEquals(1, htmlSelectOneRadio_.getSetSubmittedValueCalls());
-        assertEquals("a", htmlSelectOneRadio_.getSubmittedValue());
+        assertEquals(1, htmlSelectOneRadio.getSetSubmittedValueCalls());
+        assertEquals("a", htmlSelectOneRadio.getSubmittedValue());
     }
 
     public void testGetRendersChildren() throws Exception {
-        assertEquals(false, renderer_.getRendersChildren());
+        assertEquals(false, renderer.getRendersChildren());
     }
 
     private HtmlSelectOneRadioRenderer createHtmlSelectOneRadioRenderer() {

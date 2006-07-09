@@ -37,85 +37,78 @@ import org.seasar.teeda.core.mock.MockFacesContext;
  */
 public class HtmlOutputTextRendererTest extends RendererTest {
 
-    private HtmlOutputTextRenderer renderer_;
+    private HtmlOutputTextRenderer renderer;
 
-    private MockHtmlOutputText htmlOutputText_;
+    private MockHtmlOutputText htmlOutputText;
 
     protected void setUp() throws Exception {
         super.setUp();
-        renderer_ = createHtmlOutputTextRenderer();
-        htmlOutputText_ = new MockHtmlOutputText();
-        htmlOutputText_.setRenderer(renderer_);
+        renderer = createHtmlOutputTextRenderer();
+        htmlOutputText = new MockHtmlOutputText();
+        htmlOutputText.setRenderer(renderer);
     }
 
     public void testEncode_WithValue() throws Exception {
-        htmlOutputText_.setValue("abc");
+        htmlOutputText.setValue("abc");
 
-        MockFacesContext context = getFacesContext();
-        encodeByRenderer(renderer_, context, htmlOutputText_);
+        encodeByRenderer(renderer, htmlOutputText);
 
         assertEquals("abc", getResponseText());
     }
 
     public void testEncode_RenderFalse() throws Exception {
         // ## Arrange ##
-        htmlOutputText_.setRendered(false);
-        htmlOutputText_.setValue("abc");
+        htmlOutputText.setRendered(false);
+        htmlOutputText.setValue("abc");
 
         // ## Act ##
-        MockFacesContext context = getFacesContext();
-        encodeByRenderer(renderer_, context, htmlOutputText_);
+        encodeByRenderer(renderer, htmlOutputText);
 
         // ## Assert ##
         assertEquals("", getResponseText());
     }
 
     public void testEncode_NullValue() throws Exception {
-        htmlOutputText_.setValue(null);
+        htmlOutputText.setValue(null);
 
-        MockFacesContext context = getFacesContext();
-        encodeByRenderer(renderer_, context, htmlOutputText_);
+        encodeByRenderer(renderer, htmlOutputText);
 
         assertEquals("", getResponseText());
     }
 
     public void testEncode_EscapeTrue() throws Exception {
-        assertTrue("default is true", htmlOutputText_.isEscape());
-        htmlOutputText_.setValue("<a>");
+        assertTrue("default is true", htmlOutputText.isEscape());
+        htmlOutputText.setValue("<a>");
 
-        MockFacesContext context = getFacesContext();
-        encodeByRenderer(renderer_, context, htmlOutputText_);
+        encodeByRenderer(renderer, htmlOutputText);
 
         assertEquals("&lt;a&gt;", getResponseText());
     }
 
     public void testEncode_EscapeFalse() throws Exception {
-        htmlOutputText_.setEscape(false);
-        htmlOutputText_.setValue("<a>");
+        htmlOutputText.setEscape(false);
+        htmlOutputText.setValue("<a>");
 
-        MockFacesContext context = getFacesContext();
-        encodeByRenderer(renderer_, context, htmlOutputText_);
+        encodeByRenderer(renderer, htmlOutputText);
 
         assertEquals("<a>", getResponseText());
     }
 
     public void testEncode_WithStyle() throws Exception {
-        htmlOutputText_.setStyle("some style");
-        htmlOutputText_.setValue("a");
-        htmlOutputText_.setEscape(false);
+        htmlOutputText.setStyle("some style");
+        htmlOutputText.setValue("a");
+        htmlOutputText.setEscape(false);
 
-        MockFacesContext context = getFacesContext();
-        encodeByRenderer(renderer_, context, htmlOutputText_);
+        encodeByRenderer(renderer, htmlOutputText);
 
         assertEquals("<span style=\"some style\">a</span>", getResponseText());
     }
 
     public void testEncode_WithStyleClass() throws Exception {
-        htmlOutputText_.setStyleClass("some styleClass");
-        htmlOutputText_.setValue("a");
+        htmlOutputText.setStyleClass("some styleClass");
+        htmlOutputText.setValue("a");
 
-        MockFacesContext context = getFacesContext();
-        encodeByRenderer(renderer_, context, htmlOutputText_);
+        encodeByRenderer(renderer, htmlOutputText);
 
         assertEquals("styleClass -> class",
                 "<span class=\"some styleClass\">a</span>", getResponseText());
@@ -123,12 +116,11 @@ public class HtmlOutputTextRendererTest extends RendererTest {
 
     // TODO
     public void todo_testEncode_CommonAttributtes() throws Exception {
-        htmlOutputText_.getAttributes().put("onmouseout", "do something");
-        htmlOutputText_.getAttributes().put("title", "someTitle");
-        htmlOutputText_.setValue("a");
+        htmlOutputText.getAttributes().put("onmouseout", "do something");
+        htmlOutputText.getAttributes().put("title", "someTitle");
+        htmlOutputText.setValue("a");
 
-        MockFacesContext context = getFacesContext();
-        encodeByRenderer(renderer_, context, htmlOutputText_);
+        encodeByRenderer(renderer, htmlOutputText);
 
         System.out.println(getResponseText());
         Diff diff = new Diff(
@@ -139,12 +131,11 @@ public class HtmlOutputTextRendererTest extends RendererTest {
 
     public void testEncode_Id() throws Exception {
         // ## Arrange ##
-        htmlOutputText_.setId("someId");
-        htmlOutputText_.setValue("a");
+        htmlOutputText.setId("someId");
+        htmlOutputText.setValue("a");
 
         // ## Act ##
-        MockFacesContext context = getFacesContext();
-        encodeByRenderer(renderer_, context, htmlOutputText_);
+        encodeByRenderer(renderer, htmlOutputText);
 
         // ## Assert ##
         assertEquals("<span id=\"someId\">a</span>", getResponseText());
@@ -152,12 +143,11 @@ public class HtmlOutputTextRendererTest extends RendererTest {
 
     public void testEncode_WithUnknownAttribute1() throws Exception {
         // ## Arrange ##
-        htmlOutputText_.getAttributes().put("b", "c");
-        htmlOutputText_.setValue("a");
+        htmlOutputText.getAttributes().put("b", "c");
+        htmlOutputText.setValue("a");
 
         // ## Act ##
-        MockFacesContext context = getFacesContext();
-        encodeByRenderer(renderer_, context, htmlOutputText_);
+        encodeByRenderer(renderer, htmlOutputText);
 
         // ## Assert ##
         assertEquals("<span b=\"c\">a</span>", getResponseText());
@@ -165,12 +155,11 @@ public class HtmlOutputTextRendererTest extends RendererTest {
 
     public void testEncode_WithUnknownAttribute2() throws Exception {
         // ## Arrange ##
-        htmlOutputText_.getAttributes().put("b.c", "c");
-        htmlOutputText_.setValue("a");
+        htmlOutputText.getAttributes().put("b.c", "c");
+        htmlOutputText.setValue("a");
 
         // ## Act ##
-        MockFacesContext context = getFacesContext();
-        encodeByRenderer(renderer_, context, htmlOutputText_);
+        encodeByRenderer(renderer, htmlOutputText);
 
         // ## Assert ##
         assertEquals("a", getResponseText());
@@ -178,12 +167,11 @@ public class HtmlOutputTextRendererTest extends RendererTest {
 
     public void testEncode_NotWriteId() throws Exception {
         // ## Arrange ##
-        htmlOutputText_.setId(UIViewRoot.UNIQUE_ID_PREFIX + "someId");
-        htmlOutputText_.setValue("a");
+        htmlOutputText.setId(UIViewRoot.UNIQUE_ID_PREFIX + "someId");
+        htmlOutputText.setValue("a");
 
         // ## Act ##
-        MockFacesContext context = getFacesContext();
-        encodeByRenderer(renderer_, context, htmlOutputText_);
+        encodeByRenderer(renderer, htmlOutputText);
 
         // ## Assert ##
         assertEquals("a", getResponseText());
@@ -191,15 +179,14 @@ public class HtmlOutputTextRendererTest extends RendererTest {
 
     public void testEncode_WithAllAttributes() throws Exception {
         // ## Arrange ##
-        htmlOutputText_.setId("fooId");
-        htmlOutputText_.setTitle("someTitle");
-        htmlOutputText_.setValue("a");
-        htmlOutputText_.setStyle("style");
-        htmlOutputText_.setStyleClass("styleClass");
+        htmlOutputText.setId("fooId");
+        htmlOutputText.setTitle("someTitle");
+        htmlOutputText.setValue("a");
+        htmlOutputText.setStyle("style");
+        htmlOutputText.setStyleClass("styleClass");
 
         // ## Act ##
-        MockFacesContext context = getFacesContext();
-        encodeByRenderer(renderer_, context, htmlOutputText_);
+        encodeByRenderer(renderer, htmlOutputText);
 
         // ## Assert ##
         Diff diff = new Diff("<span" + " id=\"fooId\"" + " title=\"someTitle\""
@@ -210,16 +197,15 @@ public class HtmlOutputTextRendererTest extends RendererTest {
 
     public void testEncode_NotRenderChild() throws Exception {
         // ## Arrange ##
-        htmlOutputText_.setValue("abc");
+        htmlOutputText.setValue("abc");
 
         MockHtmlOutputText child = new MockHtmlOutputText();
-        child.setRenderer(renderer_);
+        child.setRenderer(renderer);
         child.setValue("d");
-        htmlOutputText_.getChildren().add(child);
+        htmlOutputText.getChildren().add(child);
 
         // ## Act ##
-        MockFacesContext context = getFacesContext();
-        encodeByRenderer(renderer_, context, htmlOutputText_);
+        encodeByRenderer(renderer, htmlOutputText);
 
         // ## Assert ##
         assertEquals("abc", getResponseText());
@@ -234,12 +220,11 @@ public class HtmlOutputTextRendererTest extends RendererTest {
                 return value + "ddd";
             }
         };
-        htmlOutputText_.setValue("abc");
-        htmlOutputText_.setConverter(converter);
+        htmlOutputText.setValue("abc");
+        htmlOutputText.setConverter(converter);
 
         // ## Act ##
-        MockFacesContext context = getFacesContext();
-        encodeByRenderer(renderer_, context, htmlOutputText_);
+        encodeByRenderer(renderer, htmlOutputText);
 
         // ## Assert ##
         assertEquals("abcddd", getResponseText());
@@ -253,15 +238,15 @@ public class HtmlOutputTextRendererTest extends RendererTest {
                 return value + ".testGetConvertedValue";
             }
         };
-        htmlOutputText_.setConverter(converter);
-        Object convertedValue = renderer_.getConvertedValue(getFacesContext(),
-                htmlOutputText_, "bbb");
+        htmlOutputText.setConverter(converter);
+        Object convertedValue = renderer.getConvertedValue(getFacesContext(),
+                htmlOutputText, "bbb");
 
         assertEquals("bbb.testGetConvertedValue", convertedValue);
     }
 
     public void testGetRendersChildren() throws Exception {
-        assertEquals(false, renderer_.getRendersChildren());
+        assertEquals(false, renderer.getRendersChildren());
     }
 
     public void testValueBinding() throws Exception {
@@ -270,11 +255,11 @@ public class HtmlOutputTextRendererTest extends RendererTest {
         parser.setExpressionProcessor(new CommonsExpressionProcessorImpl());
         ValueBinding vb = new ValueBindingImpl(context.getApplication(),
                 "#{a}", parser);
-        htmlOutputText_.setValueBinding("value", vb);
+        htmlOutputText.setValueBinding("value", vb);
 
         context.getExternalContext().getRequestMap().put("a", "123");
 
-        encodeByRenderer(renderer_, context, htmlOutputText_);
+        encodeByRenderer(renderer, htmlOutputText);
 
         assertEquals("123", getResponseText());
     }

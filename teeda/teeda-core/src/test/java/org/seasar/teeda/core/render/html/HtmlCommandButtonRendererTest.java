@@ -34,22 +34,21 @@ import org.seasar.teeda.core.mock.MockUIComponentBaseWithNamingContainer;
  */
 public class HtmlCommandButtonRendererTest extends RendererTest {
 
-    private HtmlCommandButtonRenderer renderer_;
+    private HtmlCommandButtonRenderer renderer;
 
-    private MockHtmlCommandButton htmlCommandButton_;
+    private MockHtmlCommandButton htmlCommandButton;
 
     protected void setUp() throws Exception {
         super.setUp();
-        renderer_ = createHtmlCommandButtonRenderer();
-        htmlCommandButton_ = new MockHtmlCommandButton();
-        htmlCommandButton_.setRenderer(renderer_);
+        renderer = createHtmlCommandButtonRenderer();
+        htmlCommandButton = new MockHtmlCommandButton();
+        htmlCommandButton.setRenderer(renderer);
     }
 
     public void testEncode_NoValue() throws Exception {
-        MockFacesContext context = getFacesContext();
-
+        // ## Arrange ##
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlCommandButton_);
+        encodeByRenderer(renderer, htmlCommandButton);
 
         // ## Assert ##
         assertEquals("<input type=\"submit\" name=\"_id0\" />",
@@ -58,11 +57,10 @@ public class HtmlCommandButtonRendererTest extends RendererTest {
 
     public void testEncode_WithValue() throws Exception {
         // ## Arrange ##
-        htmlCommandButton_.setValue("abc");
-        MockFacesContext context = getFacesContext();
+        htmlCommandButton.setValue("abc");
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlCommandButton_);
+        encodeByRenderer(renderer, htmlCommandButton);
 
         // ## Assert ##
         assertEquals("<input type=\"submit\" name=\"_id0\" value=\"abc\" />",
@@ -71,37 +69,34 @@ public class HtmlCommandButtonRendererTest extends RendererTest {
 
     public void testEncode_RenderFalse() throws Exception {
         // ## Arrange ##
-        htmlCommandButton_.setRendered(false);
-        htmlCommandButton_.setValue("abc");
-        MockFacesContext context = getFacesContext();
+        htmlCommandButton.setRendered(false);
+        htmlCommandButton.setValue("abc");
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlCommandButton_);
+        encodeByRenderer(renderer, htmlCommandButton);
 
         // ## Assert ##
         assertEquals("", getResponseText());
     }
 
     public void testEncode_WithId() throws Exception {
-        htmlCommandButton_.setId("a");
+        htmlCommandButton.setId("a");
 
         UIComponent parent = new MockUIComponentBaseWithNamingContainer();
         parent.setId("b");
-        parent.getChildren().add(htmlCommandButton_);
-        MockFacesContext context = getFacesContext();
+        parent.getChildren().add(htmlCommandButton);
 
-        encodeByRenderer(renderer_, context, htmlCommandButton_);
+        encodeByRenderer(renderer, htmlCommandButton);
 
         assertEquals("<input type=\"submit\" id=\"a\" name=\"b:a\" />",
                 getResponseText());
     }
 
     public void testEncode_Reset() throws Exception {
-        htmlCommandButton_.setId("a");
-        htmlCommandButton_.setType("reset");
+        htmlCommandButton.setId("a");
+        htmlCommandButton.setType("reset");
 
-        MockFacesContext context = getFacesContext();
-        encodeByRenderer(renderer_, context, htmlCommandButton_);
+        encodeByRenderer(renderer, htmlCommandButton);
 
         assertEquals("<input type=\"reset\" id=\"a\" name=\"a\" />",
                 getResponseText());
@@ -109,12 +104,12 @@ public class HtmlCommandButtonRendererTest extends RendererTest {
 
     public void testEncode_Image() throws Exception {
         // ## Arrange ##
-        htmlCommandButton_.setId("a");
-        htmlCommandButton_.setImage("bb");
-        htmlCommandButton_.setValue("c"); // should be ignored
+        htmlCommandButton.setId("a");
+        htmlCommandButton.setImage("bb");
+        htmlCommandButton.setValue("c"); // should be ignored
 
         // ## Act ##
-        encodeByRenderer(renderer_, getFacesContext(), htmlCommandButton_);
+        encodeByRenderer(renderer, htmlCommandButton);
 
         // ## Assert ##
         assertEquals("<input type=\"image\" id=\"a\" name=\"a\" src=\"bb\" />",
@@ -123,12 +118,12 @@ public class HtmlCommandButtonRendererTest extends RendererTest {
 
     public void testEncode_ImageIfTypeIsReset() throws Exception {
         // ## Arrange ##
-        htmlCommandButton_.setId("a");
-        htmlCommandButton_.setType("reset"); // should be ignored
-        htmlCommandButton_.setImage("bb");
+        htmlCommandButton.setId("a");
+        htmlCommandButton.setType("reset"); // should be ignored
+        htmlCommandButton.setImage("bb");
 
         // ## Act ##
-        encodeByRenderer(renderer_, getFacesContext(), htmlCommandButton_);
+        encodeByRenderer(renderer, htmlCommandButton);
 
         // ## Assert ##
         assertEquals("<input type=\"image\" id=\"a\" name=\"a\" src=\"bb\" />",
@@ -136,58 +131,57 @@ public class HtmlCommandButtonRendererTest extends RendererTest {
     }
 
     public void testEncode_WithUnknownAttribute1() throws Exception {
-        htmlCommandButton_.setId("a");
-        htmlCommandButton_.getAttributes().put("b", "c");
+        htmlCommandButton.setId("a");
+        htmlCommandButton.getAttributes().put("b", "c");
 
-        encodeByRenderer(renderer_, htmlCommandButton_);
+        encodeByRenderer(renderer, htmlCommandButton);
 
         assertEquals("<input type=\"submit\" id=\"a\" name=\"a\" b=\"c\" />",
                 getResponseText());
     }
 
     public void testEncode_WithUnknownAttribute2() throws Exception {
-        htmlCommandButton_.setId("a");
-        htmlCommandButton_.getAttributes().put("b.c", "c");
+        htmlCommandButton.setId("a");
+        htmlCommandButton.getAttributes().put("b.c", "c");
 
-        encodeByRenderer(renderer_, htmlCommandButton_);
+        encodeByRenderer(renderer, htmlCommandButton);
 
         assertEquals("<input type=\"submit\" id=\"a\" name=\"a\" />",
                 getResponseText());
     }
 
     public void testEncode_WithAllAttributes() throws Exception {
-        htmlCommandButton_.setAccesskey("a");
-        htmlCommandButton_.setAlt("b");
-        htmlCommandButton_.setDir("c");
-        htmlCommandButton_.setDisabled(true);
+        htmlCommandButton.setAccesskey("a");
+        htmlCommandButton.setAlt("b");
+        htmlCommandButton.setDir("c");
+        htmlCommandButton.setDisabled(true);
         // htmlCommandButton_.setImage("e");
-        htmlCommandButton_.setLang("f");
-        htmlCommandButton_.setOnblur("g");
-        htmlCommandButton_.setOnchange("h");
-        htmlCommandButton_.setOnclick("i");
-        htmlCommandButton_.setOndblclick("j");
-        htmlCommandButton_.setOnfocus("k");
-        htmlCommandButton_.setOnkeydown("l");
-        htmlCommandButton_.setOnkeypress("m");
-        htmlCommandButton_.setOnkeyup("n");
-        htmlCommandButton_.setOnmousedown("o");
-        htmlCommandButton_.setOnmousemove("p");
-        htmlCommandButton_.setOnmouseout("q");
-        htmlCommandButton_.setOnmouseover("r");
-        htmlCommandButton_.setOnmouseup("s");
-        htmlCommandButton_.setOnselect("t");
-        htmlCommandButton_.setReadonly(true);
-        htmlCommandButton_.setStyle("w");
-        htmlCommandButton_.setStyleClass("u");
-        htmlCommandButton_.setTabindex("x");
-        htmlCommandButton_.setTitle("y");
-        htmlCommandButton_.setType("reset");
+        htmlCommandButton.setLang("f");
+        htmlCommandButton.setOnblur("g");
+        htmlCommandButton.setOnchange("h");
+        htmlCommandButton.setOnclick("i");
+        htmlCommandButton.setOndblclick("j");
+        htmlCommandButton.setOnfocus("k");
+        htmlCommandButton.setOnkeydown("l");
+        htmlCommandButton.setOnkeypress("m");
+        htmlCommandButton.setOnkeyup("n");
+        htmlCommandButton.setOnmousedown("o");
+        htmlCommandButton.setOnmousemove("p");
+        htmlCommandButton.setOnmouseout("q");
+        htmlCommandButton.setOnmouseover("r");
+        htmlCommandButton.setOnmouseup("s");
+        htmlCommandButton.setOnselect("t");
+        htmlCommandButton.setReadonly(true);
+        htmlCommandButton.setStyle("w");
+        htmlCommandButton.setStyleClass("u");
+        htmlCommandButton.setTabindex("x");
+        htmlCommandButton.setTitle("y");
+        htmlCommandButton.setType("reset");
 
-        htmlCommandButton_.setId("A");
-        htmlCommandButton_.setValue("B");
+        htmlCommandButton.setId("A");
+        htmlCommandButton.setValue("B");
 
-        MockFacesContext context = getFacesContext();
-        encodeByRenderer(renderer_, context, htmlCommandButton_);
+        encodeByRenderer(renderer, htmlCommandButton);
 
         Diff diff = new Diff(
                 "<input type=\"reset\" id=\"A\" name=\"A\" value=\"B\""
@@ -214,13 +208,13 @@ public class HtmlCommandButtonRendererTest extends RendererTest {
                 args[0] = event;
             }
         };
-        htmlCommandButton.setRenderer(renderer_);
+        htmlCommandButton.setRenderer(renderer);
         htmlCommandButton.setClientId("key");
 
         MockFacesContext context = getFacesContext();
 
         // ## Act ##
-        renderer_.decode(context, htmlCommandButton);
+        renderer.decode(context, htmlCommandButton);
 
         // ## Assert ##
         assertEquals(null, args[0]);
@@ -234,7 +228,7 @@ public class HtmlCommandButtonRendererTest extends RendererTest {
                 args[0] = event;
             }
         };
-        htmlCommandButton.setRenderer(renderer_);
+        htmlCommandButton.setRenderer(renderer);
         htmlCommandButton.setType("reset");
         htmlCommandButton.setClientId("key");
 
@@ -243,7 +237,7 @@ public class HtmlCommandButtonRendererTest extends RendererTest {
                 "12345");
 
         // ## Act ##
-        renderer_.decode(context, htmlCommandButton);
+        renderer.decode(context, htmlCommandButton);
 
         // ## Assert ##
         assertEquals(null, args[0]);
@@ -269,7 +263,7 @@ public class HtmlCommandButtonRendererTest extends RendererTest {
                 args[0] = event;
             }
         };
-        htmlCommandButton.setRenderer(renderer_);
+        htmlCommandButton.setRenderer(renderer);
         htmlCommandButton.setClientId("key:aa");
 
         MockFacesContext context = getFacesContext();
@@ -277,7 +271,7 @@ public class HtmlCommandButtonRendererTest extends RendererTest {
                 "12345");
 
         // ## Act ##
-        renderer_.decode(context, htmlCommandButton);
+        renderer.decode(context, htmlCommandButton);
 
         // ## Assert ##
         assertNotNull(requestKey, args[0]);
@@ -286,7 +280,7 @@ public class HtmlCommandButtonRendererTest extends RendererTest {
     }
 
     public void testGetRendersChildren() throws Exception {
-        assertEquals(false, renderer_.getRendersChildren());
+        assertEquals(false, renderer.getRendersChildren());
     }
 
     private HtmlCommandButtonRenderer createHtmlCommandButtonRenderer() {

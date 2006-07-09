@@ -203,8 +203,7 @@ public class HtmlInputTextRendererTest extends RendererTest {
         htmlInputText.setConverter(converter);
 
         // ## Act ##
-        MockFacesContext context = getFacesContext();
-        encodeByRenderer(renderer, context, htmlInputText);
+        encodeByRenderer(renderer, htmlInputText);
 
         // ## Assert ##
         assertEquals("<input type=\"text\" name=\"_id0\" value=\"abcddd\" />",

@@ -21,15 +21,15 @@ import javax.faces.render.Renderer;
 
 public class MockHtmlOutputText extends HtmlOutputText {
 
-    private Renderer renderer_ = null;
+    private Renderer renderer = null;
 
     public void setRenderer(Renderer renderer) {
-        renderer_ = renderer;
+        this.renderer = renderer;
     }
 
     protected Renderer getRenderer(FacesContext context) {
-        if (renderer_ != null) {
-            return renderer_;
+        if (renderer != null) {
+            return renderer;
         }
         return super.getRenderer(context);
     }

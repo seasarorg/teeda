@@ -24,30 +24,30 @@ import javax.faces.render.Renderer;
  */
 class MockHtmlCommandLink extends HtmlCommandLink {
 
-    private Renderer renderer_;
+    private Renderer renderer;
 
-    private String clientId_;
+    private String clientId;
 
     public void setRenderer(Renderer renderer) {
-        renderer_ = renderer;
+        this.renderer = renderer;
     }
 
     protected Renderer getRenderer(FacesContext context) {
-        if (renderer_ != null) {
-            return renderer_;
+        if (renderer != null) {
+            return renderer;
         }
         return super.getRenderer(context);
     }
 
     public String getClientId(FacesContext context) {
-        if (clientId_ != null) {
-            return clientId_;
+        if (clientId != null) {
+            return clientId;
         }
         return super.getClientId(context);
     }
 
     public void setClientId(String clientId) {
-        clientId_ = clientId;
+        this.clientId = clientId;
     }
 
 }

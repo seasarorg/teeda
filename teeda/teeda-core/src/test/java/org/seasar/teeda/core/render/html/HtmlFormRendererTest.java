@@ -34,16 +34,16 @@ public class HtmlFormRendererTest extends RendererTest {
     // TODO ViewHandler#getActionURL
     // TODO ExternalContext#encodeActionURL
 
-    private HtmlFormRenderer renderer_;
+    private HtmlFormRenderer renderer;
 
-    private MockHtmlForm htmlForm_;
+    private MockHtmlForm htmlForm;
 
     protected void setUp() throws Exception {
         super.setUp();
-        renderer_ = createHtmlFormRenderer();
-        htmlForm_ = new MockHtmlForm();
-        htmlForm_.setRenderer(renderer_);
-        htmlForm_.setEnctype(null);
+        renderer = createHtmlFormRenderer();
+        htmlForm = new MockHtmlForm();
+        htmlForm.setRenderer(renderer);
+        htmlForm.setEnctype(null);
     }
 
     public void testEncode_NoValue() throws Exception {
@@ -51,7 +51,7 @@ public class HtmlFormRendererTest extends RendererTest {
         context.getViewRoot().setViewId("/aa");
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlForm_);
+        encodeByRenderer(renderer, htmlForm);
 
         // ## Assert ##
         assertEquals(
@@ -71,7 +71,7 @@ public class HtmlFormRendererTest extends RendererTest {
         context.getViewRoot().setViewId("/abc");
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlForm_);
+        encodeByRenderer(renderer, htmlForm);
 
         // ## Assert ##
         assertEquals(true, calls[0]);
@@ -79,11 +79,10 @@ public class HtmlFormRendererTest extends RendererTest {
 
     public void testEncode_RenderFalse() throws Exception {
         // ## Arrange ##
-        htmlForm_.setRendered(false);
-        MockFacesContext context = getFacesContext();
+        htmlForm.setRendered(false);
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlForm_);
+        encodeByRenderer(renderer, htmlForm);
 
         // ## Assert ##
         assertEquals("", getResponseText());
@@ -93,10 +92,10 @@ public class HtmlFormRendererTest extends RendererTest {
         // ## Arrange ##
         MockFacesContext context = getFacesContext();
         context.getViewRoot().setViewId("/abc");
-        htmlForm_.setId("a");
+        htmlForm.setId("a");
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlForm_);
+        encodeByRenderer(renderer, htmlForm);
 
         // ## Assert ##
         assertEquals(
@@ -109,11 +108,11 @@ public class HtmlFormRendererTest extends RendererTest {
         // ## Arrange ##
         MockFacesContext context = getFacesContext();
         context.getViewRoot().setViewId("/abc");
-        htmlForm_.setId("a");
-        htmlForm_.getAttributes().put("zz", "yy");
+        htmlForm.setId("a");
+        htmlForm.getAttributes().put("zz", "yy");
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlForm_);
+        encodeByRenderer(renderer, htmlForm);
 
         // ## Assert ##
         assertEquals(
@@ -123,33 +122,33 @@ public class HtmlFormRendererTest extends RendererTest {
     }
 
     public void testEncode_WithAllAttributes() throws Exception {
-        htmlForm_.setAccept("a");
-        htmlForm_.setAcceptcharset("b");
-        htmlForm_.setDir("c");
-        htmlForm_.setEnctype("d");
-        htmlForm_.setLang("e");
-        htmlForm_.setOnclick("f");
-        htmlForm_.setOndblclick("g");
-        htmlForm_.setOnkeydown("h");
-        htmlForm_.setOnkeypress("i");
-        htmlForm_.setOnkeyup("j");
-        htmlForm_.setOnmousedown("k");
-        htmlForm_.setOnmousemove("l");
-        htmlForm_.setOnmouseout("m");
-        htmlForm_.setOnmouseover("n");
-        htmlForm_.setOnmouseup("o");
-        htmlForm_.setOnreset("p");
-        htmlForm_.setOnsubmit("q");
-        htmlForm_.setStyle("r");
-        htmlForm_.setStyleClass("s");
-        htmlForm_.setTarget("t");
-        htmlForm_.setTitle("u");
+        htmlForm.setAccept("a");
+        htmlForm.setAcceptcharset("b");
+        htmlForm.setDir("c");
+        htmlForm.setEnctype("d");
+        htmlForm.setLang("e");
+        htmlForm.setOnclick("f");
+        htmlForm.setOndblclick("g");
+        htmlForm.setOnkeydown("h");
+        htmlForm.setOnkeypress("i");
+        htmlForm.setOnkeyup("j");
+        htmlForm.setOnmousedown("k");
+        htmlForm.setOnmousemove("l");
+        htmlForm.setOnmouseout("m");
+        htmlForm.setOnmouseover("n");
+        htmlForm.setOnmouseup("o");
+        htmlForm.setOnreset("p");
+        htmlForm.setOnsubmit("q");
+        htmlForm.setStyle("r");
+        htmlForm.setStyleClass("s");
+        htmlForm.setTarget("t");
+        htmlForm.setTitle("u");
 
-        htmlForm_.setId("AA");
+        htmlForm.setId("AA");
 
         MockFacesContext context = getFacesContext();
         context.getViewRoot().setViewId("/xyz");
-        encodeByRenderer(renderer_, context, htmlForm_);
+        encodeByRenderer(renderer, htmlForm);
 
         Diff diff = new Diff("<form id=\"AA\" name=\"AA\" method=\"post\""
                 + " accept=\"a\"" + " accept-charset=\"b\"" + " dir=\"c\""
@@ -167,21 +166,21 @@ public class HtmlFormRendererTest extends RendererTest {
 
     public void testDecode_None() throws Exception {
         // ## Arrange ##
-        htmlForm_.setClientId("key");
+        htmlForm.setClientId("key");
 
         MockFacesContext context = getFacesContext();
 
         // ## Act ##
-        renderer_.decode(context, htmlForm_);
+        renderer.decode(context, htmlForm);
 
         // ## Assert ##
-        assertEquals(1, htmlForm_.getSetSubmittedCalls());
-        assertEquals(false, htmlForm_.isSubmitted());
+        assertEquals(1, htmlForm.getSetSubmittedCalls());
+        assertEquals(false, htmlForm.isSubmitted());
     }
 
     public void testDecode_Success() throws Exception {
         // ## Arrange ##
-        htmlForm_.setClientId("key1");
+        htmlForm.setClientId("key1");
 
         MockFacesContext context = getFacesContext();
         context.getViewRoot().setViewId("/xyz");
@@ -189,27 +188,25 @@ public class HtmlFormRendererTest extends RendererTest {
                 "12345");
 
         // ## Act ##
-        renderer_.decode(context, htmlForm_);
+        renderer.decode(context, htmlForm);
 
         // ## Assert ##
-        assertEquals(1, htmlForm_.getSetSubmittedCalls());
-        assertEquals(true, htmlForm_.isSubmitted());
+        assertEquals(1, htmlForm.getSetSubmittedCalls());
+        assertEquals(true, htmlForm.isSubmitted());
     }
 
     public void testAction_Null() throws Exception {
         // ## Arrange ##
-        MockFacesContext context = getFacesContext();
-        //context.getViewRoot().setViewId(null);
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlForm_);
+        encodeByRenderer(renderer, htmlForm);
 
         // ## Assert ##
         assertTrue(getResponseText().indexOf("action") == -1);
     }
 
     public void testGetRendersChildren() throws Exception {
-        assertEquals(false, renderer_.getRendersChildren());
+        assertEquals(false, renderer.getRendersChildren());
     }
 
     private HtmlFormRenderer createHtmlFormRenderer() {

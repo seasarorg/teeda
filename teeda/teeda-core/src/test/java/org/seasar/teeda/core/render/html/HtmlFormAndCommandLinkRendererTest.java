@@ -25,32 +25,34 @@ import org.seasar.teeda.core.mock.MockFacesContext;
  */
 public class HtmlFormAndCommandLinkRendererTest extends AbstractRendererTest {
 
-    private HtmlFormRenderer formRenderer_;
+    private HtmlFormRenderer formRenderer;
 
-    private HtmlCommandLinkRenderer commandLinkRenderer_;
+    private HtmlCommandLinkRenderer commandLinkRenderer;
 
-    private MockHtmlForm htmlForm_;
+    private MockHtmlForm htmlForm;
 
     protected void setUp() throws Exception {
         super.setUp();
-        formRenderer_ = new HtmlFormRenderer();
-        formRenderer_.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
-        htmlForm_ = new MockHtmlForm();
-        htmlForm_.setRenderer(formRenderer_);
-        htmlForm_.setEnctype(null);
+        formRenderer = new HtmlFormRenderer();
+        formRenderer
+                .setComponentIdLookupStrategy(getComponentIdLookupStrategy());
+        htmlForm = new MockHtmlForm();
+        htmlForm.setRenderer(formRenderer);
+        htmlForm.setEnctype(null);
 
-        commandLinkRenderer_ = new HtmlCommandLinkRenderer();
-        commandLinkRenderer_.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
+        commandLinkRenderer = new HtmlCommandLinkRenderer();
+        commandLinkRenderer
+                .setComponentIdLookupStrategy(getComponentIdLookupStrategy());
     }
 
     public void test1() throws Exception {
         // ## Arrange ##
         MockHtmlCommandLink htmlCommandLink = new MockHtmlCommandLink();
-        htmlCommandLink.setRenderer(commandLinkRenderer_);
+        htmlCommandLink.setRenderer(commandLinkRenderer);
         htmlCommandLink.setId("fooLink");
 
-        htmlForm_.setId("fooForm");
-        htmlForm_.getChildren().add(htmlCommandLink);
+        htmlForm.setId("fooForm");
+        htmlForm.getChildren().add(htmlCommandLink);
 
         MockFacesContext context = getFacesContext();
         context.getViewRoot().setViewId("/aa");
@@ -58,9 +60,9 @@ public class HtmlFormAndCommandLinkRendererTest extends AbstractRendererTest {
         // <input type="hidden" name="fooForm:__link_clicked__" />
 
         // ## Act ##
-        formRenderer_.encodeBegin(context, htmlForm_);
-        formRenderer_.encodeChildren(context, htmlForm_);
-        formRenderer_.encodeEnd(context, htmlForm_);
+        formRenderer.encodeBegin(context, htmlForm);
+        formRenderer.encodeChildren(context, htmlForm);
+        formRenderer.encodeEnd(context, htmlForm);
 
         // ## Assert ##
         assertEquals(
@@ -85,11 +87,11 @@ public class HtmlFormAndCommandLinkRendererTest extends AbstractRendererTest {
     public void testWithUIParameters() throws Exception {
         // ## Arrange ##
         MockHtmlCommandLink htmlCommandLink = new MockHtmlCommandLink();
-        htmlCommandLink.setRenderer(commandLinkRenderer_);
+        htmlCommandLink.setRenderer(commandLinkRenderer);
         htmlCommandLink.setId("fooLink");
 
-        htmlForm_.setId("fooForm");
-        htmlForm_.getChildren().add(htmlCommandLink);
+        htmlForm.setId("fooForm");
+        htmlForm.getChildren().add(htmlCommandLink);
         {
             UIParameter param = new UIParameter();
             param.setName("x");
@@ -109,9 +111,9 @@ public class HtmlFormAndCommandLinkRendererTest extends AbstractRendererTest {
         // <input type="hidden" name="fooForm:__link_clicked__" />
 
         // ## Act ##
-        formRenderer_.encodeBegin(context, htmlForm_);
-        formRenderer_.encodeChildren(context, htmlForm_);
-        formRenderer_.encodeEnd(context, htmlForm_);
+        formRenderer.encodeBegin(context, htmlForm);
+        formRenderer.encodeChildren(context, htmlForm);
+        formRenderer.encodeEnd(context, htmlForm);
 
         // ## Assert ##
         assertEquals(

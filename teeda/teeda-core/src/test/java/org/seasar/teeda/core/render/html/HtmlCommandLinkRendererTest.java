@@ -39,25 +39,23 @@ import org.seasar.teeda.core.unit.ExceptionAssert;
  */
 public class HtmlCommandLinkRendererTest extends RendererTest {
 
-    private HtmlCommandLinkRenderer renderer_;
+    private HtmlCommandLinkRenderer renderer;
 
-    private MockHtmlCommandLink htmlCommandLink_;
+    private MockHtmlCommandLink htmlCommandLink;
 
     protected void setUp() throws Exception {
         super.setUp();
-        renderer_ = createHtmlCommandLinkRenderer();
-        htmlCommandLink_ = new MockHtmlCommandLink();
-        htmlCommandLink_.setRenderer(renderer_);
+        renderer = createHtmlCommandLinkRenderer();
+        htmlCommandLink = new MockHtmlCommandLink();
+        htmlCommandLink.setRenderer(renderer);
     }
 
     public void testNoParentForm() throws Exception {
         // ## Arrange ##
-        MockFacesContext context = getFacesContext();
-
         // ## Act ##
         // ## Assert ##
         try {
-            encodeByRenderer(renderer_, context, htmlCommandLink_);
+            encodeByRenderer(renderer, htmlCommandLink);
             fail();
         } catch (TagNotFoundRuntimeException e) {
             ExceptionAssert.assertMessageExist(e);
@@ -66,17 +64,17 @@ public class HtmlCommandLinkRendererTest extends RendererTest {
 
     public void testEncode_NoValue() throws Exception {
         // ## Arrange ##
-        MockFacesContext context = getFacesContext();
 
         MockHtmlForm form = new MockHtmlForm();
         form.setRenderer(new HtmlFormRenderer());
         form.setId("a");
-        form.getChildren().add(htmlCommandLink_);
+        form.getChildren().add(htmlCommandLink);
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlCommandLink_);
+        encodeByRenderer(renderer, htmlCommandLink);
 
         // ## Assert ##
+        MockFacesContext context = getFacesContext();
         assertEquals("a", form.getClientId(context));
         assertEquals("<a" + " href=\"#\"" + " onclick=\""
                 + "var f = document.forms['a'];"
@@ -87,16 +85,15 @@ public class HtmlCommandLinkRendererTest extends RendererTest {
 
     public void testEncode_WithValue() throws Exception {
         // ## Arrange ##
-        htmlCommandLink_.setValue("abc");
+        htmlCommandLink.setValue("abc");
 
         MockHtmlForm form = new MockHtmlForm();
         form.setRenderer(new HtmlFormRenderer());
         form.setId("b");
-        form.getChildren().add(htmlCommandLink_);
-        MockFacesContext context = getFacesContext();
+        form.getChildren().add(htmlCommandLink);
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlCommandLink_);
+        encodeByRenderer(renderer, htmlCommandLink);
 
         // ## Assert ##
         assertEquals("<a" + " href=\"#\"" + " onclick=\""
@@ -108,18 +105,16 @@ public class HtmlCommandLinkRendererTest extends RendererTest {
 
     public void testEncode_RenderFalse() throws Exception {
         // ## Arrange ##
-        htmlCommandLink_.setRendered(false);
-        htmlCommandLink_.setValue("abc");
+        htmlCommandLink.setRendered(false);
+        htmlCommandLink.setValue("abc");
 
         MockHtmlForm form = new MockHtmlForm();
         form.setRenderer(new HtmlFormRenderer());
         form.setId("c");
-        form.getChildren().add(htmlCommandLink_);
-
-        MockFacesContext context = getFacesContext();
+        form.getChildren().add(htmlCommandLink);
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlCommandLink_);
+        encodeByRenderer(renderer, htmlCommandLink);
 
         // ## Assert ##
         assertEquals("", getResponseText());
@@ -127,17 +122,15 @@ public class HtmlCommandLinkRendererTest extends RendererTest {
 
     public void testEncode_WithId() throws Exception {
         // ## Arrange ##
-        htmlCommandLink_.setId("a");
+        htmlCommandLink.setId("a");
 
         MockHtmlForm form = new MockHtmlForm();
         form.setRenderer(new HtmlFormRenderer());
         form.setId("b");
-        form.getChildren().add(htmlCommandLink_);
-
-        MockFacesContext context = getFacesContext();
+        form.getChildren().add(htmlCommandLink);
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlCommandLink_);
+        encodeByRenderer(renderer, htmlCommandLink);
 
         // ## Assert ##
         assertEquals("<a" + " id=\"a\"" + " href=\"#\"" + " onclick=\""
@@ -151,22 +144,20 @@ public class HtmlCommandLinkRendererTest extends RendererTest {
 
     public void testEncode_WithParameter() throws Exception {
         // ## Arrange ##
-        htmlCommandLink_.setId("a");
+        htmlCommandLink.setId("a");
 
         MockHtmlForm form = new MockHtmlForm();
         form.setRenderer(new HtmlFormRenderer());
         form.setId("b");
-        form.getChildren().add(htmlCommandLink_);
+        form.getChildren().add(htmlCommandLink);
 
         UIParameter param = new UIParameter();
         param.setName("c");
         param.setValue("1");
-        htmlCommandLink_.getChildren().add(param);
-
-        MockFacesContext context = getFacesContext();
+        htmlCommandLink.getChildren().add(param);
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlCommandLink_);
+        encodeByRenderer(renderer, htmlCommandLink);
 
         // ## Assert ##
         assertEquals("<a" + " id=\"a\"" + " href=\"#\"" + " onclick=\""
@@ -179,30 +170,28 @@ public class HtmlCommandLinkRendererTest extends RendererTest {
 
     public void testEncode_WithParameters() throws Exception {
         // ## Arrange ##
-        htmlCommandLink_.setId("a");
+        htmlCommandLink.setId("a");
 
         MockHtmlForm form = new MockHtmlForm();
         form.setRenderer(new HtmlFormRenderer());
         form.setId("b");
-        form.getChildren().add(htmlCommandLink_);
+        form.getChildren().add(htmlCommandLink);
 
         {
             UIParameter param = new UIParameter();
             param.setName("c");
             param.setValue("1");
-            htmlCommandLink_.getChildren().add(param);
+            htmlCommandLink.getChildren().add(param);
         }
         {
             UIParameter param = new UIParameter();
             param.setName("d");
             param.setValue("2");
-            htmlCommandLink_.getChildren().add(param);
+            htmlCommandLink.getChildren().add(param);
         }
 
-        MockFacesContext context = getFacesContext();
-
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlCommandLink_);
+        encodeByRenderer(renderer, htmlCommandLink);
 
         // ## Assert ##
         assertEquals("<a" + " id=\"a\"" + " href=\"#\"" + " onclick=\""
@@ -215,16 +204,16 @@ public class HtmlCommandLinkRendererTest extends RendererTest {
 
     public void testEncode_WithUnknownAttribute() throws Exception {
         // ## Arrange ##
-        htmlCommandLink_.setValue("abc");
-        htmlCommandLink_.getAttributes().put("c", "d");
+        htmlCommandLink.setValue("abc");
+        htmlCommandLink.getAttributes().put("c", "d");
 
         MockHtmlForm form = new MockHtmlForm();
         form.setRenderer(new HtmlFormRenderer());
         form.setId("b");
-        form.getChildren().add(htmlCommandLink_);
+        form.getChildren().add(htmlCommandLink);
 
         // ## Act ##
-        encodeByRenderer(renderer_, htmlCommandLink_);
+        encodeByRenderer(renderer, htmlCommandLink);
 
         // ## Assert ##
         assertEquals("<a" + " href=\"#\"" + " onclick=\""
@@ -238,41 +227,40 @@ public class HtmlCommandLinkRendererTest extends RendererTest {
         MockHtmlForm form = new MockHtmlForm();
         form.setRenderer(new HtmlFormRenderer());
         form.setId("zz");
-        form.getChildren().add(htmlCommandLink_);
+        form.getChildren().add(htmlCommandLink);
 
-        htmlCommandLink_.setAccesskey("a");
-        htmlCommandLink_.setCharset("b");
-        htmlCommandLink_.setCoords("c");
-        htmlCommandLink_.setDir("d");
-        htmlCommandLink_.setHreflang("e");
-        htmlCommandLink_.setLang("f");
-        htmlCommandLink_.setOnblur("g");
-        htmlCommandLink_.setOnclick("h");
-        htmlCommandLink_.setOndblclick("i");
-        htmlCommandLink_.setOnfocus("j");
-        htmlCommandLink_.setOnkeydown("k");
-        htmlCommandLink_.setOnkeypress("l");
-        htmlCommandLink_.setOnkeyup("m");
-        htmlCommandLink_.setOnmousedown("n");
-        htmlCommandLink_.setOnmousemove("o");
-        htmlCommandLink_.setOnmouseout("p");
-        htmlCommandLink_.setOnmouseover("q");
-        htmlCommandLink_.setOnmouseup("r");
-        htmlCommandLink_.setRel("s");
-        htmlCommandLink_.setRev("t");
-        htmlCommandLink_.setShape("u");
-        htmlCommandLink_.setStyle("v");
-        htmlCommandLink_.setStyleClass("w");
-        htmlCommandLink_.setTabindex("x");
-        htmlCommandLink_.setTarget("y");
-        htmlCommandLink_.setTitle("z");
-        htmlCommandLink_.setType("1");
+        htmlCommandLink.setAccesskey("a");
+        htmlCommandLink.setCharset("b");
+        htmlCommandLink.setCoords("c");
+        htmlCommandLink.setDir("d");
+        htmlCommandLink.setHreflang("e");
+        htmlCommandLink.setLang("f");
+        htmlCommandLink.setOnblur("g");
+        htmlCommandLink.setOnclick("h");
+        htmlCommandLink.setOndblclick("i");
+        htmlCommandLink.setOnfocus("j");
+        htmlCommandLink.setOnkeydown("k");
+        htmlCommandLink.setOnkeypress("l");
+        htmlCommandLink.setOnkeyup("m");
+        htmlCommandLink.setOnmousedown("n");
+        htmlCommandLink.setOnmousemove("o");
+        htmlCommandLink.setOnmouseout("p");
+        htmlCommandLink.setOnmouseover("q");
+        htmlCommandLink.setOnmouseup("r");
+        htmlCommandLink.setRel("s");
+        htmlCommandLink.setRev("t");
+        htmlCommandLink.setShape("u");
+        htmlCommandLink.setStyle("v");
+        htmlCommandLink.setStyleClass("w");
+        htmlCommandLink.setTabindex("x");
+        htmlCommandLink.setTarget("y");
+        htmlCommandLink.setTitle("z");
+        htmlCommandLink.setType("1");
 
-        htmlCommandLink_.setId("A");
-        htmlCommandLink_.setValue("B");
+        htmlCommandLink.setId("A");
+        htmlCommandLink.setValue("B");
 
-        MockFacesContext context = getFacesContext();
-        encodeByRenderer(renderer_, context, htmlCommandLink_);
+        encodeByRenderer(renderer, htmlCommandLink);
 
         Diff diff = new Diff("<a" + " id=\"A\"" + " href=\"#\"" + " onclick=\""
                 + "var f = document.forms['zz'];"
@@ -293,16 +281,16 @@ public class HtmlCommandLinkRendererTest extends RendererTest {
 
     public void testEncodeWithoutJavascript() throws Exception {
         // ## Arrange ##
-        htmlCommandLink_.setId("hoge");
+        htmlCommandLink.setId("hoge");
         MockHtmlForm form = new MockHtmlForm();
         form.setRenderer(new HtmlFormRenderer());
         form.setId("foo");
-        form.getChildren().add(htmlCommandLink_);
+        form.getChildren().add(htmlCommandLink);
         UIParameter param = new UIParameter();
         param.setName("bar");
         param.setValue("1111");
-        htmlCommandLink_.getChildren().add(param);
-        htmlCommandLink_.setValue("value");
+        htmlCommandLink.getChildren().add(param);
+        htmlCommandLink.setValue("value");
         MockFacesContext context = getFacesContext();
         MockExternalContext extContext = (MockExternalContext) context
                 .getExternalContext();
@@ -320,7 +308,7 @@ public class HtmlCommandLinkRendererTest extends RendererTest {
         //        renderer_.encodeHtmlCommandLinkWithoutJavaScript(context, context
         //                .getResponseWriter(), htmlCommandLink_);
 
-        encodeByRenderer(renderer_, context, htmlCommandLink_);
+        encodeByRenderer(renderer, htmlCommandLink);
 
         // ## Assert ##
         assertEquals(
@@ -336,7 +324,7 @@ public class HtmlCommandLinkRendererTest extends RendererTest {
                 args[0] = event;
             }
         };
-        htmlCommandLink.setRenderer(renderer_);
+        htmlCommandLink.setRenderer(renderer);
         htmlCommandLink.setClientId("linkClientId");
 
         MockHtmlForm form = new MockHtmlForm();
@@ -347,7 +335,7 @@ public class HtmlCommandLinkRendererTest extends RendererTest {
         MockFacesContext context = getFacesContext();
 
         // ## Act ##
-        renderer_.decode(context, htmlCommandLink);
+        renderer.decode(context, htmlCommandLink);
 
         // ## Assert ##
         assertEquals(null, args[0]);
@@ -361,7 +349,7 @@ public class HtmlCommandLinkRendererTest extends RendererTest {
                 args[0] = event;
             }
         };
-        htmlCommandLink.setRenderer(renderer_);
+        htmlCommandLink.setRenderer(renderer);
         htmlCommandLink.setClientId("linkClientId");
 
         MockHtmlForm form = new MockHtmlForm();
@@ -375,7 +363,7 @@ public class HtmlCommandLinkRendererTest extends RendererTest {
                 hiddenFieldName, "");
 
         // ## Act ##
-        renderer_.decode(context, htmlCommandLink);
+        renderer.decode(context, htmlCommandLink);
 
         // ## Assert ##
         assertEquals(null, args[0]);
@@ -389,7 +377,7 @@ public class HtmlCommandLinkRendererTest extends RendererTest {
                 args[0] = event;
             }
         };
-        htmlCommandLink.setRenderer(renderer_);
+        htmlCommandLink.setRenderer(renderer);
         htmlCommandLink.setClientId("linkClientId");
 
         MockHtmlForm form = new MockHtmlForm();
@@ -403,7 +391,7 @@ public class HtmlCommandLinkRendererTest extends RendererTest {
                 hiddenFieldName, "NoCommandLinkClientId");
 
         // ## Act ##
-        renderer_.decode(context, htmlCommandLink);
+        renderer.decode(context, htmlCommandLink);
 
         // ## Assert ##
         assertEquals(null, args[0]);
@@ -417,7 +405,7 @@ public class HtmlCommandLinkRendererTest extends RendererTest {
                 args[0] = event;
             }
         };
-        htmlCommandLink.setRenderer(renderer_);
+        htmlCommandLink.setRenderer(renderer);
         htmlCommandLink.setClientId("linkClientId");
 
         MockHtmlForm form = new MockHtmlForm();
@@ -431,7 +419,7 @@ public class HtmlCommandLinkRendererTest extends RendererTest {
                 hiddenFieldName, "linkClientId");
 
         // ## Act ##
-        renderer_.decode(context, htmlCommandLink);
+        renderer.decode(context, htmlCommandLink);
 
         // ## Assert ##
         ObjectAssert.assertInstanceOf(ActionEvent.class, args[0]);
@@ -439,7 +427,7 @@ public class HtmlCommandLinkRendererTest extends RendererTest {
     }
 
     public void testGetRendersChildren() throws Exception {
-        assertEquals(true, renderer_.getRendersChildren());
+        assertEquals(true, renderer.getRendersChildren());
     }
 
     private HtmlCommandLinkRenderer createHtmlCommandLinkRenderer() {

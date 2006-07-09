@@ -19,28 +19,27 @@ import javax.faces.render.Renderer;
 import javax.faces.render.RendererTest;
 
 import org.custommonkey.xmlunit.Diff;
-import org.seasar.teeda.core.mock.MockFacesContext;
 
 /**
  * @author manhole
  */
 public class HtmlPanelGroupRendererTest extends RendererTest {
 
-    private HtmlPanelGroupRenderer renderer_;
+    private HtmlPanelGroupRenderer renderer;
 
-    private MockHtmlPanelGroup htmlPanelGroup_;
+    private MockHtmlPanelGroup htmlPanelGroup;
 
     protected void setUp() throws Exception {
         super.setUp();
-        renderer_ = createHtmlPanelGroupRenderer();
-        htmlPanelGroup_ = new MockHtmlPanelGroup();
-        htmlPanelGroup_.setRenderer(renderer_);
+        renderer = createHtmlPanelGroupRenderer();
+        htmlPanelGroup = new MockHtmlPanelGroup();
+        htmlPanelGroup.setRenderer(renderer);
     }
 
     public void testEncode_NoChild() throws Exception {
         // ## Arrange ##
         // ## Act ##
-        renderer_.encodeBegin(getFacesContext(), htmlPanelGroup_);
+        renderer.encodeBegin(getFacesContext(), htmlPanelGroup);
 
         // ## Assert ##
         assertEquals("", getResponseText());
@@ -53,13 +52,11 @@ public class HtmlPanelGroupRendererTest extends RendererTest {
             MockHtmlOutputText child = new MockHtmlOutputText();
             child.setValue("a");
             child.setRenderer(htmlOutputTextRenderer);
-            htmlPanelGroup_.getChildren().add(child);
+            htmlPanelGroup.getChildren().add(child);
         }
 
-        MockFacesContext context = getFacesContext();
-
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlPanelGroup_);
+        encodeByRenderer(renderer, htmlPanelGroup);
 
         // ## Assert ##
         assertEquals("a", getResponseText());
@@ -72,25 +69,23 @@ public class HtmlPanelGroupRendererTest extends RendererTest {
             MockHtmlOutputText child = new MockHtmlOutputText();
             child.setValue("a");
             child.setRenderer(htmlOutputTextRenderer);
-            htmlPanelGroup_.getChildren().add(child);
+            htmlPanelGroup.getChildren().add(child);
         }
         {
             MockHtmlOutputText child = new MockHtmlOutputText();
             child.setValue("b");
             child.setRenderer(htmlOutputTextRenderer);
-            htmlPanelGroup_.getChildren().add(child);
+            htmlPanelGroup.getChildren().add(child);
         }
         {
             MockHtmlOutputText child = new MockHtmlOutputText();
             child.setValue("c");
             child.setRenderer(htmlOutputTextRenderer);
-            htmlPanelGroup_.getChildren().add(child);
+            htmlPanelGroup.getChildren().add(child);
         }
 
-        MockFacesContext context = getFacesContext();
-
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlPanelGroup_);
+        encodeByRenderer(renderer, htmlPanelGroup);
 
         // ## Assert ##
         assertEquals("abc", getResponseText());
@@ -103,11 +98,11 @@ public class HtmlPanelGroupRendererTest extends RendererTest {
             MockHtmlOutputText child = new MockHtmlOutputText();
             child.setValue("a");
             child.setRenderer(htmlOutputTextRenderer);
-            htmlPanelGroup_.getChildren().add(child);
+            htmlPanelGroup.getChildren().add(child);
         }
         {
             MockHtmlPanelGroup childGroup = new MockHtmlPanelGroup();
-            childGroup.setRenderer(renderer_);
+            childGroup.setRenderer(renderer);
             {
                 MockHtmlOutputText child = new MockHtmlOutputText();
                 child.setValue("b");
@@ -120,19 +115,17 @@ public class HtmlPanelGroupRendererTest extends RendererTest {
                 child.setRenderer(htmlOutputTextRenderer);
                 childGroup.getChildren().add(child);
             }
-            htmlPanelGroup_.getChildren().add(childGroup);
+            htmlPanelGroup.getChildren().add(childGroup);
         }
         {
             MockHtmlOutputText child = new MockHtmlOutputText();
             child.setValue("d");
             child.setRenderer(htmlOutputTextRenderer);
-            htmlPanelGroup_.getChildren().add(child);
+            htmlPanelGroup.getChildren().add(child);
         }
 
-        MockFacesContext context = getFacesContext();
-
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlPanelGroup_);
+        encodeByRenderer(renderer, htmlPanelGroup);
 
         // ## Assert ##
         assertEquals("abcd", getResponseText());
@@ -140,19 +133,17 @@ public class HtmlPanelGroupRendererTest extends RendererTest {
 
     public void testEncode_RenderFalse() throws Exception {
         // ## Arrange ##
-        htmlPanelGroup_.setRendered(false);
-        htmlPanelGroup_.setId("a");
+        htmlPanelGroup.setRendered(false);
+        htmlPanelGroup.setId("a");
 
         HtmlOutputTextRenderer htmlOutputTextRenderer = new HtmlOutputTextRenderer();
         MockHtmlOutputText child = new MockHtmlOutputText();
         child.setValue("v");
         child.setRenderer(htmlOutputTextRenderer);
-        htmlPanelGroup_.getChildren().add(child);
-
-        MockFacesContext context = getFacesContext();
+        htmlPanelGroup.getChildren().add(child);
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlPanelGroup_);
+        encodeByRenderer(renderer, htmlPanelGroup);
 
         // ## Assert ##
         assertEquals("", getResponseText());
@@ -160,12 +151,10 @@ public class HtmlPanelGroupRendererTest extends RendererTest {
 
     public void testEncode_Id() throws Exception {
         // ## Arrange ##
-        htmlPanelGroup_.setId("aaa");
-
-        MockFacesContext context = getFacesContext();
+        htmlPanelGroup.setId("aaa");
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlPanelGroup_);
+        encodeByRenderer(renderer, htmlPanelGroup);
 
         // ## Assert ##
         assertEquals("<span id=\"aaa\"></span>", getResponseText());
@@ -173,12 +162,10 @@ public class HtmlPanelGroupRendererTest extends RendererTest {
 
     public void testEncode_WithUnknownAttribute1() throws Exception {
         // ## Arrange ##
-        htmlPanelGroup_.getAttributes().put("a", "b");
-
-        MockFacesContext context = getFacesContext();
+        htmlPanelGroup.getAttributes().put("a", "b");
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlPanelGroup_);
+        encodeByRenderer(renderer, htmlPanelGroup);
 
         // ## Assert ##
         assertEquals("<span a=\"b\"></span>", getResponseText());
@@ -186,12 +173,10 @@ public class HtmlPanelGroupRendererTest extends RendererTest {
 
     public void testEncode_WithUnknownAttribute2() throws Exception {
         // ## Arrange ##
-        htmlPanelGroup_.getAttributes().put("a.c", "b");
-
-        MockFacesContext context = getFacesContext();
+        htmlPanelGroup.getAttributes().put("a.c", "b");
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlPanelGroup_);
+        encodeByRenderer(renderer, htmlPanelGroup);
 
         // ## Assert ##
         assertEquals("", getResponseText());
@@ -199,13 +184,11 @@ public class HtmlPanelGroupRendererTest extends RendererTest {
 
     public void testEncode_Style() throws Exception {
         // ## Arrange ##
-        htmlPanelGroup_.setStyle("a");
-        htmlPanelGroup_.setStyleClass("b");
-
-        MockFacesContext context = getFacesContext();
+        htmlPanelGroup.setStyle("a");
+        htmlPanelGroup.setStyleClass("b");
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlPanelGroup_);
+        encodeByRenderer(renderer, htmlPanelGroup);
 
         // ## Assert ##
         assertEquals("<span style=\"a\" class=\"b\"></span>", getResponseText());
@@ -213,14 +196,12 @@ public class HtmlPanelGroupRendererTest extends RendererTest {
 
     public void testEncode_WithAllAttributes() throws Exception {
         // ## Arrange ##
-        htmlPanelGroup_.setId("a");
-        htmlPanelGroup_.setStyle("b");
-        htmlPanelGroup_.setStyleClass("c");
-
-        MockFacesContext context = getFacesContext();
+        htmlPanelGroup.setId("a");
+        htmlPanelGroup.setStyle("b");
+        htmlPanelGroup.setStyleClass("c");
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlPanelGroup_);
+        encodeByRenderer(renderer, htmlPanelGroup);
 
         // ## Assert ##
         Diff diff = new Diff("<span id=\"a\" style=\"b\" class=\"c\"></span>",
@@ -229,7 +210,7 @@ public class HtmlPanelGroupRendererTest extends RendererTest {
     }
 
     public void testGetRendersChildren() throws Exception {
-        assertEquals(true, renderer_.getRendersChildren());
+        assertEquals(true, renderer.getRendersChildren());
     }
 
     private HtmlPanelGroupRenderer createHtmlPanelGroupRenderer() {

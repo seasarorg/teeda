@@ -27,29 +27,27 @@ import javax.faces.render.RendererTest;
 import junitx.framework.ArrayAssert;
 
 import org.custommonkey.xmlunit.Diff;
-import org.seasar.teeda.core.mock.MockFacesContext;
 
 /**
  * @author manhole
  */
 public class HtmlSelectManyMenuRendererTest extends RendererTest {
 
-    private HtmlSelectManyMenuRenderer renderer_;
+    private HtmlSelectManyMenuRenderer renderer;
 
-    private MockHtmlSelectManyMenu htmlSelectManyMenu_;
+    private MockHtmlSelectManyMenu htmlSelectManyMenu;
 
     protected void setUp() throws Exception {
         super.setUp();
-        renderer_ = createHtmlSelectManyMenuRenderer();
-        htmlSelectManyMenu_ = new MockHtmlSelectManyMenu();
-        htmlSelectManyMenu_.setRenderer(renderer_);
+        renderer = createHtmlSelectManyMenuRenderer();
+        htmlSelectManyMenu = new MockHtmlSelectManyMenu();
+        htmlSelectManyMenu.setRenderer(renderer);
     }
 
     public void testEncode_NoChild() throws Exception {
-        FacesContext context = getFacesContext();
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectManyMenu_);
+        encodeByRenderer(renderer, htmlSelectManyMenu);
 
         // ## Assert ##
         assertEquals("", getResponseText());
@@ -57,17 +55,16 @@ public class HtmlSelectManyMenuRendererTest extends RendererTest {
 
     public void testEncode_RenderFalse() throws Exception {
         // ## Arrange ##
-        htmlSelectManyMenu_.setRendered(false);
+        htmlSelectManyMenu.setRendered(false);
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("val");
             selectItem.setItemLabel("lab");
-            htmlSelectManyMenu_.getChildren().add(selectItem);
+            htmlSelectManyMenu.getChildren().add(selectItem);
         }
-        FacesContext context = getFacesContext();
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectManyMenu_);
+        encodeByRenderer(renderer, htmlSelectManyMenu);
 
         // ## Assert ##
         assertEquals("", getResponseText());
@@ -75,16 +72,16 @@ public class HtmlSelectManyMenuRendererTest extends RendererTest {
 
     public void testEncode_Child() throws Exception {
         // ## Arrange ##
-        MockFacesContext context = getFacesContext();
+
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("v");
             selectItem.setItemLabel("l");
-            htmlSelectManyMenu_.getChildren().add(selectItem);
+            htmlSelectManyMenu.getChildren().add(selectItem);
         }
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectManyMenu_);
+        encodeByRenderer(renderer, htmlSelectManyMenu);
 
         // ## Assert ##
         assertEquals("<select name=\"_id0\" multiple=\"multiple\" size=\"1\">"
@@ -94,17 +91,17 @@ public class HtmlSelectManyMenuRendererTest extends RendererTest {
 
     public void testEncode_Id() throws Exception {
         // ## Arrange ##
-        MockFacesContext context = getFacesContext();
+
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("val");
             selectItem.setItemLabel("lab");
-            htmlSelectManyMenu_.getChildren().add(selectItem);
+            htmlSelectManyMenu.getChildren().add(selectItem);
         }
-        htmlSelectManyMenu_.setId("a");
+        htmlSelectManyMenu.setId("a");
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectManyMenu_);
+        encodeByRenderer(renderer, htmlSelectManyMenu);
 
         // ## Assert ##
         assertEquals(
@@ -115,18 +112,18 @@ public class HtmlSelectManyMenuRendererTest extends RendererTest {
 
     public void testEncode_WithUnknownAttribute1() throws Exception {
         // ## Arrange ##
-        MockFacesContext context = getFacesContext();
+
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("val");
             selectItem.setItemLabel("lab");
-            htmlSelectManyMenu_.getChildren().add(selectItem);
+            htmlSelectManyMenu.getChildren().add(selectItem);
         }
-        htmlSelectManyMenu_.setId("a");
-        htmlSelectManyMenu_.getAttributes().put("a1", "b1");
+        htmlSelectManyMenu.setId("a");
+        htmlSelectManyMenu.getAttributes().put("a1", "b1");
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectManyMenu_);
+        encodeByRenderer(renderer, htmlSelectManyMenu);
 
         // ## Assert ##
         assertEquals(
@@ -137,18 +134,18 @@ public class HtmlSelectManyMenuRendererTest extends RendererTest {
 
     public void testEncode_WithUnknownAttribute2() throws Exception {
         // ## Arrange ##
-        MockFacesContext context = getFacesContext();
+
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("val");
             selectItem.setItemLabel("lab");
-            htmlSelectManyMenu_.getChildren().add(selectItem);
+            htmlSelectManyMenu.getChildren().add(selectItem);
         }
-        htmlSelectManyMenu_.setId("a");
-        htmlSelectManyMenu_.getAttributes().put("a.1", "b1");
+        htmlSelectManyMenu.setId("a");
+        htmlSelectManyMenu.getAttributes().put("a.1", "b1");
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectManyMenu_);
+        encodeByRenderer(renderer, htmlSelectManyMenu);
 
         // ## Assert ##
         assertEquals(
@@ -159,22 +156,22 @@ public class HtmlSelectManyMenuRendererTest extends RendererTest {
 
     public void testEncode_Children() throws Exception {
         // ## Arrange ##
-        MockFacesContext context = getFacesContext();
+
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("v1");
             selectItem.setItemLabel("l1");
-            htmlSelectManyMenu_.getChildren().add(selectItem);
+            htmlSelectManyMenu.getChildren().add(selectItem);
         }
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("v2");
             selectItem.setItemLabel("l2");
-            htmlSelectManyMenu_.getChildren().add(selectItem);
+            htmlSelectManyMenu.getChildren().add(selectItem);
         }
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectManyMenu_);
+        encodeByRenderer(renderer, htmlSelectManyMenu);
 
         // ## Assert ##
         assertEquals("<select name=\"_id0\" multiple=\"multiple\" size=\"1\">"
@@ -185,23 +182,23 @@ public class HtmlSelectManyMenuRendererTest extends RendererTest {
 
     public void testEncode_Selected() throws Exception {
         // ## Arrange ##
-        htmlSelectManyMenu_.setSelectedValues(new String[] { "v2" });
-        MockFacesContext context = getFacesContext();
+        htmlSelectManyMenu.setSelectedValues(new String[] { "v2" });
+
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("v1");
             selectItem.setItemLabel("l1");
-            htmlSelectManyMenu_.getChildren().add(selectItem);
+            htmlSelectManyMenu.getChildren().add(selectItem);
         }
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("v2");
             selectItem.setItemLabel("l2");
-            htmlSelectManyMenu_.getChildren().add(selectItem);
+            htmlSelectManyMenu.getChildren().add(selectItem);
         }
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectManyMenu_);
+        encodeByRenderer(renderer, htmlSelectManyMenu);
 
         // ## Assert ##
         assertEquals("<select name=\"_id0\" multiple=\"multiple\" size=\"1\">"
@@ -212,23 +209,23 @@ public class HtmlSelectManyMenuRendererTest extends RendererTest {
 
     public void testEncode_ItemDisabled() throws Exception {
         // ## Arrange ##
-        MockFacesContext context = getFacesContext();
+
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("v1");
             selectItem.setItemLabel("l1");
             selectItem.setItemDisabled(true);
-            htmlSelectManyMenu_.getChildren().add(selectItem);
+            htmlSelectManyMenu.getChildren().add(selectItem);
         }
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("v2");
             selectItem.setItemLabel("l2");
-            htmlSelectManyMenu_.getChildren().add(selectItem);
+            htmlSelectManyMenu.getChildren().add(selectItem);
         }
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectManyMenu_);
+        encodeByRenderer(renderer, htmlSelectManyMenu);
 
         // ## Assert ##
         assertEquals("<select name=\"_id0\" multiple=\"multiple\" size=\"1\">"
@@ -239,24 +236,24 @@ public class HtmlSelectManyMenuRendererTest extends RendererTest {
 
     public void testEncode_Disabled() throws Exception {
         // ## Arrange ##
-        htmlSelectManyMenu_.setDisabled(true);
-        MockFacesContext context = getFacesContext();
+        htmlSelectManyMenu.setDisabled(true);
+
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("v1");
             selectItem.setItemLabel("l1");
             selectItem.setItemDisabled(true);
-            htmlSelectManyMenu_.getChildren().add(selectItem);
+            htmlSelectManyMenu.getChildren().add(selectItem);
         }
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("v2");
             selectItem.setItemLabel("l2");
-            htmlSelectManyMenu_.getChildren().add(selectItem);
+            htmlSelectManyMenu.getChildren().add(selectItem);
         }
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectManyMenu_);
+        encodeByRenderer(renderer, htmlSelectManyMenu);
 
         // ## Assert ##
         assertEquals(
@@ -268,25 +265,25 @@ public class HtmlSelectManyMenuRendererTest extends RendererTest {
 
     public void testEncode_LabelClass() throws Exception {
         // ## Arrange ##
-        htmlSelectManyMenu_.setEnabledClass("ec");
-        htmlSelectManyMenu_.setDisabledClass("dc");
-        MockFacesContext context = getFacesContext();
+        htmlSelectManyMenu.setEnabledClass("ec");
+        htmlSelectManyMenu.setDisabledClass("dc");
+
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("v1");
             selectItem.setItemLabel("l1");
-            htmlSelectManyMenu_.getChildren().add(selectItem);
+            htmlSelectManyMenu.getChildren().add(selectItem);
         }
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("v2");
             selectItem.setItemLabel("l2");
             selectItem.setItemDisabled(true);
-            htmlSelectManyMenu_.getChildren().add(selectItem);
+            htmlSelectManyMenu.getChildren().add(selectItem);
         }
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectManyMenu_);
+        encodeByRenderer(renderer, htmlSelectManyMenu);
 
         // ## Assert ##
         assertEquals(
@@ -298,17 +295,17 @@ public class HtmlSelectManyMenuRendererTest extends RendererTest {
 
     public void testEncode_GroupChildren() throws Exception {
         // ## Arrange ##
-        MockFacesContext context = getFacesContext();
+
         {
             UISelectItems selectItems = new UISelectItems();
             SelectItem item1 = new SelectItem("v1", "l1");
             SelectItem item2 = new SelectItem("v2", "l2", null, true);
             selectItems.setValue(new SelectItem[] { item1, item2 });
-            htmlSelectManyMenu_.getChildren().add(selectItems);
+            htmlSelectManyMenu.getChildren().add(selectItems);
         }
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectManyMenu_);
+        encodeByRenderer(renderer, htmlSelectManyMenu);
 
         // ## Assert ##
         assertEquals("<select name=\"_id0\" multiple=\"multiple\" size=\"1\">"
@@ -319,7 +316,7 @@ public class HtmlSelectManyMenuRendererTest extends RendererTest {
 
     public void testEncode_Optgroup() throws Exception {
         // ## Arrange ##
-        MockFacesContext context = getFacesContext();
+
         {
             SelectItem item1 = new SelectItem("v1", "l1");
             SelectItem item2 = new SelectItem("v2", "l2", null, true);
@@ -327,11 +324,11 @@ public class HtmlSelectManyMenuRendererTest extends RendererTest {
             group.setSelectItems(new SelectItem[] { item1, item2 });
             UISelectItem selectItem = new UISelectItem();
             selectItem.setValue(group);
-            htmlSelectManyMenu_.getChildren().add(selectItem);
+            htmlSelectManyMenu.getChildren().add(selectItem);
         }
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectManyMenu_);
+        encodeByRenderer(renderer, htmlSelectManyMenu);
 
         // ## Assert ##
         assertEquals("<select name=\"_id0\" multiple=\"multiple\" size=\"1\">"
@@ -342,42 +339,42 @@ public class HtmlSelectManyMenuRendererTest extends RendererTest {
     }
 
     public void testEncode_WithAllAttributes() throws Exception {
-        htmlSelectManyMenu_.setAccesskey("a");
-        htmlSelectManyMenu_.setDir("b");
-        htmlSelectManyMenu_.setDisabled(true);
-        htmlSelectManyMenu_.setDisabledClass("d");
-        htmlSelectManyMenu_.setEnabledClass("e");
-        htmlSelectManyMenu_.setLang("f");
-        htmlSelectManyMenu_.setOnblur("g");
-        htmlSelectManyMenu_.setOnchange("h");
-        htmlSelectManyMenu_.setOnclick("i");
-        htmlSelectManyMenu_.setOndblclick("j");
-        htmlSelectManyMenu_.setOnfocus("k");
-        htmlSelectManyMenu_.setOnkeydown("l");
-        htmlSelectManyMenu_.setOnkeypress("m");
-        htmlSelectManyMenu_.setOnkeyup("n");
-        htmlSelectManyMenu_.setOnmousedown("o");
-        htmlSelectManyMenu_.setOnmousemove("p");
-        htmlSelectManyMenu_.setOnmouseout("q");
-        htmlSelectManyMenu_.setOnmouseover("r");
-        htmlSelectManyMenu_.setOnmouseup("s");
-        htmlSelectManyMenu_.setOnselect("t");
-        htmlSelectManyMenu_.setReadonly(true);
-        htmlSelectManyMenu_.setStyle("w");
-        htmlSelectManyMenu_.setStyleClass("u");
-        htmlSelectManyMenu_.setTabindex("x");
-        htmlSelectManyMenu_.setTitle("y");
+        htmlSelectManyMenu.setAccesskey("a");
+        htmlSelectManyMenu.setDir("b");
+        htmlSelectManyMenu.setDisabled(true);
+        htmlSelectManyMenu.setDisabledClass("d");
+        htmlSelectManyMenu.setEnabledClass("e");
+        htmlSelectManyMenu.setLang("f");
+        htmlSelectManyMenu.setOnblur("g");
+        htmlSelectManyMenu.setOnchange("h");
+        htmlSelectManyMenu.setOnclick("i");
+        htmlSelectManyMenu.setOndblclick("j");
+        htmlSelectManyMenu.setOnfocus("k");
+        htmlSelectManyMenu.setOnkeydown("l");
+        htmlSelectManyMenu.setOnkeypress("m");
+        htmlSelectManyMenu.setOnkeyup("n");
+        htmlSelectManyMenu.setOnmousedown("o");
+        htmlSelectManyMenu.setOnmousemove("p");
+        htmlSelectManyMenu.setOnmouseout("q");
+        htmlSelectManyMenu.setOnmouseover("r");
+        htmlSelectManyMenu.setOnmouseup("s");
+        htmlSelectManyMenu.setOnselect("t");
+        htmlSelectManyMenu.setReadonly(true);
+        htmlSelectManyMenu.setStyle("w");
+        htmlSelectManyMenu.setStyleClass("u");
+        htmlSelectManyMenu.setTabindex("x");
+        htmlSelectManyMenu.setTitle("y");
 
-        htmlSelectManyMenu_.setId("A");
-        htmlSelectManyMenu_.setValue(new String[] { "val" });
+        htmlSelectManyMenu.setId("A");
+        htmlSelectManyMenu.setValue(new String[] { "val" });
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("val");
             selectItem.setItemLabel("lab");
-            htmlSelectManyMenu_.getChildren().add(selectItem);
+            htmlSelectManyMenu.getChildren().add(selectItem);
         }
-        MockFacesContext context = getFacesContext();
-        encodeByRenderer(renderer_, context, htmlSelectManyMenu_);
+
+        encodeByRenderer(renderer, htmlSelectManyMenu);
 
         Diff diff = new Diff("<select id=\"A\"" + " name=\"A\""
                 + " multiple=\"multiple\" size=\"1\" style=\"w\""
@@ -397,39 +394,38 @@ public class HtmlSelectManyMenuRendererTest extends RendererTest {
 
     public void testDecode_RequestParameterNotExist() throws Exception {
         // ## Arrange ##
-        htmlSelectManyMenu_.setClientId("key");
-
-        MockFacesContext context = getFacesContext();
+        htmlSelectManyMenu.setClientId("key");
 
         // ## Act ##
-        renderer_.decode(context, htmlSelectManyMenu_);
+        renderer.decode(getFacesContext(), htmlSelectManyMenu);
 
         // ## Assert ##
-        assertEquals(1, htmlSelectManyMenu_.getSetSubmittedValueCalls());
-        String[] submittedValue = (String[]) htmlSelectManyMenu_
+        assertEquals(1, htmlSelectManyMenu.getSetSubmittedValueCalls());
+        String[] submittedValue = (String[]) htmlSelectManyMenu
                 .getSubmittedValue();
         assertEquals(0, submittedValue.length);
     }
 
     public void testDecodeSuccess() throws Exception {
         // ## Arrange ##
-        htmlSelectManyMenu_.setClientId("keyA");
+        htmlSelectManyMenu.setClientId("keyA");
 
-        MockFacesContext context = getFacesContext();
+        final FacesContext context = getFacesContext();
+        ;
         context.getExternalContext().getRequestParameterValuesMap().put("keyA",
                 new String[] { "a", "b", "c" });
 
         // ## Act ##
-        renderer_.decode(context, htmlSelectManyMenu_);
+        renderer.decode(context, htmlSelectManyMenu);
 
         // ## Assert ##
-        assertEquals(1, htmlSelectManyMenu_.getSetSubmittedValueCalls());
+        assertEquals(1, htmlSelectManyMenu.getSetSubmittedValueCalls());
         ArrayAssert.assertEquivalenceArrays(new String[] { "a", "b", "c" },
-                (Object[]) htmlSelectManyMenu_.getSubmittedValue());
+                (Object[]) htmlSelectManyMenu.getSubmittedValue());
     }
 
     public void testGetRendersChildren() throws Exception {
-        assertEquals(false, renderer_.getRendersChildren());
+        assertEquals(false, renderer.getRendersChildren());
     }
 
     private HtmlSelectManyMenuRenderer createHtmlSelectManyMenuRenderer() {

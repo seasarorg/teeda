@@ -33,22 +33,20 @@ import org.seasar.teeda.core.mock.MockFacesContext;
  */
 public class HtmlSelectOneListboxRendererTest extends RendererTest {
 
-    private HtmlSelectOneListboxRenderer renderer_;
+    private HtmlSelectOneListboxRenderer renderer;
 
-    private MockHtmlSelectOneListbox htmlSelectOneListbox_;
+    private MockHtmlSelectOneListbox htmlSelectOneListbox;
 
     protected void setUp() throws Exception {
         super.setUp();
-        renderer_ = createHtmlSelectOneListboxRenderer();
-        htmlSelectOneListbox_ = new MockHtmlSelectOneListbox();
-        htmlSelectOneListbox_.setRenderer(renderer_);
+        renderer = createHtmlSelectOneListboxRenderer();
+        htmlSelectOneListbox = new MockHtmlSelectOneListbox();
+        htmlSelectOneListbox.setRenderer(renderer);
     }
 
     public void testEncode_NoChild() throws Exception {
-        FacesContext context = getFacesContext();
-
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectOneListbox_);
+        encodeByRenderer(renderer, htmlSelectOneListbox);
 
         // ## Assert ##
         assertEquals("", getResponseText());
@@ -56,17 +54,16 @@ public class HtmlSelectOneListboxRendererTest extends RendererTest {
 
     public void testEncode_RenderFalse() throws Exception {
         // ## Arrange ##
-        htmlSelectOneListbox_.setRendered(false);
+        htmlSelectOneListbox.setRendered(false);
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("val");
             selectItem.setItemLabel("lab");
-            htmlSelectOneListbox_.getChildren().add(selectItem);
+            htmlSelectOneListbox.getChildren().add(selectItem);
         }
-        FacesContext context = getFacesContext();
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectOneListbox_);
+        encodeByRenderer(renderer, htmlSelectOneListbox);
 
         // ## Assert ##
         assertEquals("", getResponseText());
@@ -74,16 +71,15 @@ public class HtmlSelectOneListboxRendererTest extends RendererTest {
 
     public void testEncode_Child() throws Exception {
         // ## Arrange ##
-        MockFacesContext context = getFacesContext();
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("v");
             selectItem.setItemLabel("l");
-            htmlSelectOneListbox_.getChildren().add(selectItem);
+            htmlSelectOneListbox.getChildren().add(selectItem);
         }
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectOneListbox_);
+        encodeByRenderer(renderer, htmlSelectOneListbox);
 
         // ## Assert ##
         assertEquals("<select name=\"_id0\" size=\"1\">"
@@ -93,17 +89,16 @@ public class HtmlSelectOneListboxRendererTest extends RendererTest {
 
     public void testEncode_Id() throws Exception {
         // ## Arrange ##
-        MockFacesContext context = getFacesContext();
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("val");
             selectItem.setItemLabel("lab");
-            htmlSelectOneListbox_.getChildren().add(selectItem);
+            htmlSelectOneListbox.getChildren().add(selectItem);
         }
-        htmlSelectOneListbox_.setId("a");
+        htmlSelectOneListbox.setId("a");
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectOneListbox_);
+        encodeByRenderer(renderer, htmlSelectOneListbox);
 
         // ## Assert ##
         assertEquals("<select id=\"a\" name=\"a\" size=\"1\">"
@@ -113,18 +108,17 @@ public class HtmlSelectOneListboxRendererTest extends RendererTest {
 
     public void testEncode_WithUnknownAttribute1() throws Exception {
         // ## Arrange ##
-        MockFacesContext context = getFacesContext();
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("val");
             selectItem.setItemLabel("lab");
-            htmlSelectOneListbox_.getChildren().add(selectItem);
+            htmlSelectOneListbox.getChildren().add(selectItem);
         }
-        htmlSelectOneListbox_.setId("a");
-        htmlSelectOneListbox_.getAttributes().put("bb", "cc");
+        htmlSelectOneListbox.setId("a");
+        htmlSelectOneListbox.getAttributes().put("bb", "cc");
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectOneListbox_);
+        encodeByRenderer(renderer, htmlSelectOneListbox);
 
         // ## Assert ##
         assertEquals("<select id=\"a\" name=\"a\" size=\"1\" bb=\"cc\">"
@@ -134,18 +128,17 @@ public class HtmlSelectOneListboxRendererTest extends RendererTest {
 
     public void testEncode_WithUnknownAttribute2() throws Exception {
         // ## Arrange ##
-        MockFacesContext context = getFacesContext();
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("val");
             selectItem.setItemLabel("lab");
-            htmlSelectOneListbox_.getChildren().add(selectItem);
+            htmlSelectOneListbox.getChildren().add(selectItem);
         }
-        htmlSelectOneListbox_.setId("a");
-        htmlSelectOneListbox_.getAttributes().put("b.b", "cc");
+        htmlSelectOneListbox.setId("a");
+        htmlSelectOneListbox.getAttributes().put("b.b", "cc");
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectOneListbox_);
+        encodeByRenderer(renderer, htmlSelectOneListbox);
 
         // ## Assert ##
         assertEquals("<select id=\"a\" name=\"a\" size=\"1\">"
@@ -155,22 +148,21 @@ public class HtmlSelectOneListboxRendererTest extends RendererTest {
 
     public void testEncode_Children() throws Exception {
         // ## Arrange ##
-        MockFacesContext context = getFacesContext();
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("v1");
             selectItem.setItemLabel("l1");
-            htmlSelectOneListbox_.getChildren().add(selectItem);
+            htmlSelectOneListbox.getChildren().add(selectItem);
         }
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("v2");
             selectItem.setItemLabel("l2");
-            htmlSelectOneListbox_.getChildren().add(selectItem);
+            htmlSelectOneListbox.getChildren().add(selectItem);
         }
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectOneListbox_);
+        encodeByRenderer(renderer, htmlSelectOneListbox);
 
         // ## Assert ##
         assertEquals("<select name=\"_id0\" size=\"2\">"
@@ -181,17 +173,16 @@ public class HtmlSelectOneListboxRendererTest extends RendererTest {
 
     public void testEncode_Size() throws Exception {
         // ## Arrange ##
-        MockFacesContext context = getFacesContext();
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("v1");
             selectItem.setItemLabel("l1");
-            htmlSelectOneListbox_.getChildren().add(selectItem);
+            htmlSelectOneListbox.getChildren().add(selectItem);
         }
-        htmlSelectOneListbox_.setSize(6);
+        htmlSelectOneListbox.setSize(6);
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectOneListbox_);
+        encodeByRenderer(renderer, htmlSelectOneListbox);
 
         // ## Assert ##
         assertEquals("<select name=\"_id0\" size=\"6\">"
@@ -201,23 +192,22 @@ public class HtmlSelectOneListboxRendererTest extends RendererTest {
 
     public void testEncode_Selected() throws Exception {
         // ## Arrange ##
-        htmlSelectOneListbox_.setValue("v2");
-        MockFacesContext context = getFacesContext();
+        htmlSelectOneListbox.setValue("v2");
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("v1");
             selectItem.setItemLabel("l1");
-            htmlSelectOneListbox_.getChildren().add(selectItem);
+            htmlSelectOneListbox.getChildren().add(selectItem);
         }
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("v2");
             selectItem.setItemLabel("l2");
-            htmlSelectOneListbox_.getChildren().add(selectItem);
+            htmlSelectOneListbox.getChildren().add(selectItem);
         }
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectOneListbox_);
+        encodeByRenderer(renderer, htmlSelectOneListbox);
 
         // ## Assert ##
         assertEquals("<select name=\"_id0\" size=\"2\">"
@@ -228,23 +218,22 @@ public class HtmlSelectOneListboxRendererTest extends RendererTest {
 
     public void testEncode_ItemDisabled() throws Exception {
         // ## Arrange ##
-        MockFacesContext context = getFacesContext();
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("v1");
             selectItem.setItemLabel("l1");
             selectItem.setItemDisabled(true);
-            htmlSelectOneListbox_.getChildren().add(selectItem);
+            htmlSelectOneListbox.getChildren().add(selectItem);
         }
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("v2");
             selectItem.setItemLabel("l2");
-            htmlSelectOneListbox_.getChildren().add(selectItem);
+            htmlSelectOneListbox.getChildren().add(selectItem);
         }
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectOneListbox_);
+        encodeByRenderer(renderer, htmlSelectOneListbox);
 
         // ## Assert ##
         assertEquals("<select name=\"_id0\" size=\"2\">"
@@ -255,24 +244,23 @@ public class HtmlSelectOneListboxRendererTest extends RendererTest {
 
     public void testEncode_Disabled() throws Exception {
         // ## Arrange ##
-        htmlSelectOneListbox_.setDisabled(true);
-        MockFacesContext context = getFacesContext();
+        htmlSelectOneListbox.setDisabled(true);
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("v1");
             selectItem.setItemLabel("l1");
             selectItem.setItemDisabled(true);
-            htmlSelectOneListbox_.getChildren().add(selectItem);
+            htmlSelectOneListbox.getChildren().add(selectItem);
         }
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("v2");
             selectItem.setItemLabel("l2");
-            htmlSelectOneListbox_.getChildren().add(selectItem);
+            htmlSelectOneListbox.getChildren().add(selectItem);
         }
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectOneListbox_);
+        encodeByRenderer(renderer, htmlSelectOneListbox);
 
         // ## Assert ##
         assertEquals("<select name=\"_id0\" size=\"2\" disabled=\"disabled\">"
@@ -283,25 +271,24 @@ public class HtmlSelectOneListboxRendererTest extends RendererTest {
 
     public void testEncode_LabelClass() throws Exception {
         // ## Arrange ##
-        htmlSelectOneListbox_.setEnabledClass("ec");
-        htmlSelectOneListbox_.setDisabledClass("dc");
-        MockFacesContext context = getFacesContext();
+        htmlSelectOneListbox.setEnabledClass("ec");
+        htmlSelectOneListbox.setDisabledClass("dc");
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("v1");
             selectItem.setItemLabel("l1");
-            htmlSelectOneListbox_.getChildren().add(selectItem);
+            htmlSelectOneListbox.getChildren().add(selectItem);
         }
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("v2");
             selectItem.setItemLabel("l2");
             selectItem.setItemDisabled(true);
-            htmlSelectOneListbox_.getChildren().add(selectItem);
+            htmlSelectOneListbox.getChildren().add(selectItem);
         }
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectOneListbox_);
+        encodeByRenderer(renderer, htmlSelectOneListbox);
 
         // ## Assert ##
         assertEquals(
@@ -313,17 +300,16 @@ public class HtmlSelectOneListboxRendererTest extends RendererTest {
 
     public void testEncode_GroupChildren() throws Exception {
         // ## Arrange ##
-        MockFacesContext context = getFacesContext();
         {
             UISelectItems selectItems = new UISelectItems();
             SelectItem item1 = new SelectItem("v1", "l1");
             SelectItem item2 = new SelectItem("v2", "l2", null, true);
             selectItems.setValue(new SelectItem[] { item1, item2 });
-            htmlSelectOneListbox_.getChildren().add(selectItems);
+            htmlSelectOneListbox.getChildren().add(selectItems);
         }
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectOneListbox_);
+        encodeByRenderer(renderer, htmlSelectOneListbox);
 
         // ## Assert ##
         assertEquals("<select name=\"_id0\" size=\"2\">"
@@ -334,7 +320,6 @@ public class HtmlSelectOneListboxRendererTest extends RendererTest {
 
     public void testEncode_Optgroup() throws Exception {
         // ## Arrange ##
-        MockFacesContext context = getFacesContext();
         {
             SelectItem item1 = new SelectItem("v1", "l1");
             SelectItem item2 = new SelectItem("v2", "l2", null, true);
@@ -342,11 +327,11 @@ public class HtmlSelectOneListboxRendererTest extends RendererTest {
             group.setSelectItems(new SelectItem[] { item1, item2 });
             UISelectItem selectItem = new UISelectItem();
             selectItem.setValue(group);
-            htmlSelectOneListbox_.getChildren().add(selectItem);
+            htmlSelectOneListbox.getChildren().add(selectItem);
         }
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectOneListbox_);
+        encodeByRenderer(renderer, htmlSelectOneListbox);
 
         // ## Assert ##
         assertEquals("<select name=\"_id0\" size=\"3\">"
@@ -357,43 +342,42 @@ public class HtmlSelectOneListboxRendererTest extends RendererTest {
     }
 
     public void testEncode_WithAllAttributes() throws Exception {
-        htmlSelectOneListbox_.setAccesskey("a");
-        htmlSelectOneListbox_.setDir("b");
-        htmlSelectOneListbox_.setDisabled(true);
-        htmlSelectOneListbox_.setDisabledClass("d");
-        htmlSelectOneListbox_.setEnabledClass("e");
-        htmlSelectOneListbox_.setLang("f");
-        htmlSelectOneListbox_.setOnblur("g");
-        htmlSelectOneListbox_.setOnchange("h");
-        htmlSelectOneListbox_.setOnclick("i");
-        htmlSelectOneListbox_.setOndblclick("j");
-        htmlSelectOneListbox_.setOnfocus("k");
-        htmlSelectOneListbox_.setOnkeydown("l");
-        htmlSelectOneListbox_.setOnkeypress("m");
-        htmlSelectOneListbox_.setOnkeyup("n");
-        htmlSelectOneListbox_.setOnmousedown("o");
-        htmlSelectOneListbox_.setOnmousemove("p");
-        htmlSelectOneListbox_.setOnmouseout("q");
-        htmlSelectOneListbox_.setOnmouseover("r");
-        htmlSelectOneListbox_.setOnmouseup("s");
-        htmlSelectOneListbox_.setOnselect("t");
-        htmlSelectOneListbox_.setReadonly(true);
-        htmlSelectOneListbox_.setSize(4);
-        htmlSelectOneListbox_.setStyle("w");
-        htmlSelectOneListbox_.setStyleClass("u");
-        htmlSelectOneListbox_.setTabindex("x");
-        htmlSelectOneListbox_.setTitle("y");
+        htmlSelectOneListbox.setAccesskey("a");
+        htmlSelectOneListbox.setDir("b");
+        htmlSelectOneListbox.setDisabled(true);
+        htmlSelectOneListbox.setDisabledClass("d");
+        htmlSelectOneListbox.setEnabledClass("e");
+        htmlSelectOneListbox.setLang("f");
+        htmlSelectOneListbox.setOnblur("g");
+        htmlSelectOneListbox.setOnchange("h");
+        htmlSelectOneListbox.setOnclick("i");
+        htmlSelectOneListbox.setOndblclick("j");
+        htmlSelectOneListbox.setOnfocus("k");
+        htmlSelectOneListbox.setOnkeydown("l");
+        htmlSelectOneListbox.setOnkeypress("m");
+        htmlSelectOneListbox.setOnkeyup("n");
+        htmlSelectOneListbox.setOnmousedown("o");
+        htmlSelectOneListbox.setOnmousemove("p");
+        htmlSelectOneListbox.setOnmouseout("q");
+        htmlSelectOneListbox.setOnmouseover("r");
+        htmlSelectOneListbox.setOnmouseup("s");
+        htmlSelectOneListbox.setOnselect("t");
+        htmlSelectOneListbox.setReadonly(true);
+        htmlSelectOneListbox.setSize(4);
+        htmlSelectOneListbox.setStyle("w");
+        htmlSelectOneListbox.setStyleClass("u");
+        htmlSelectOneListbox.setTabindex("x");
+        htmlSelectOneListbox.setTitle("y");
 
-        htmlSelectOneListbox_.setId("A");
-        htmlSelectOneListbox_.setValue("val");
+        htmlSelectOneListbox.setId("A");
+        htmlSelectOneListbox.setValue("val");
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("val");
             selectItem.setItemLabel("lab");
-            htmlSelectOneListbox_.getChildren().add(selectItem);
+            htmlSelectOneListbox.getChildren().add(selectItem);
         }
-        MockFacesContext context = getFacesContext();
-        encodeByRenderer(renderer_, context, htmlSelectOneListbox_);
+        encodeByRenderer(renderer, htmlSelectOneListbox);
 
         Diff diff = new Diff("<select id=\"A\"" + " name=\"A\""
                 + " size=\"4\" style=\"w\"" + " class=\"u\""
@@ -412,21 +396,21 @@ public class HtmlSelectOneListboxRendererTest extends RendererTest {
 
     public void testDecode_RequestParameterNotExist() throws Exception {
         // ## Arrange ##
-        htmlSelectOneListbox_.setClientId("key");
+        htmlSelectOneListbox.setClientId("key");
 
         MockFacesContext context = getFacesContext();
 
         // ## Act ##
-        renderer_.decode(context, htmlSelectOneListbox_);
+        renderer.decode(context, htmlSelectOneListbox);
 
         // ## Assert ##
-        assertEquals(0, htmlSelectOneListbox_.getSetSubmittedValueCalls());
-        assertEquals(null, htmlSelectOneListbox_.getSubmittedValue());
+        assertEquals(0, htmlSelectOneListbox.getSetSubmittedValueCalls());
+        assertEquals(null, htmlSelectOneListbox.getSubmittedValue());
     }
 
     public void testDecodeSuccess() throws Exception {
         // ## Arrange ##
-        htmlSelectOneListbox_.setClientId("keyA");
+        htmlSelectOneListbox.setClientId("keyA");
 
         MockFacesContext context = getFacesContext();
         MockHttpServletRequest mockHttpServletRequest = context
@@ -434,20 +418,20 @@ public class HtmlSelectOneListboxRendererTest extends RendererTest {
         mockHttpServletRequest.addParameter("keyA", new String[] { "a" });
 
         // ## Act ##
-        renderer_.decode(context, htmlSelectOneListbox_);
+        renderer.decode(context, htmlSelectOneListbox);
 
         // ## Assert ##
-        assertEquals(1, htmlSelectOneListbox_.getSetSubmittedValueCalls());
-        assertEquals("a", htmlSelectOneListbox_.getSubmittedValue());
+        assertEquals(1, htmlSelectOneListbox.getSetSubmittedValueCalls());
+        assertEquals("a", htmlSelectOneListbox.getSubmittedValue());
     }
 
     public void testGetRendersChildren() throws Exception {
-        assertEquals(false, renderer_.getRendersChildren());
+        assertEquals(false, renderer.getRendersChildren());
     }
 
     public void testGetConvertedValue() throws Exception {
-        assertEquals("hoge", renderer_.getConvertedValue(getFacesContext(),
-                htmlSelectOneListbox_, "hoge"));
+        assertEquals("hoge", renderer.getConvertedValue(getFacesContext(),
+                htmlSelectOneListbox, "hoge"));
     }
 
     private HtmlSelectOneListboxRenderer createHtmlSelectOneListboxRenderer() {

@@ -25,7 +25,7 @@ public class MockHtmlDataTable extends HtmlDataTable {
     private String clientId_;
 
     public void setRenderer(Renderer renderer) {
-        renderer_ = renderer;
+        this.renderer_ = renderer;
     }
 
     protected Renderer getRenderer(FacesContext context) {
@@ -43,7 +43,7 @@ public class MockHtmlDataTable extends HtmlDataTable {
     }
 
     public void setClientId(String clientId) {
-        clientId_ = clientId;
+        this.clientId_ = clientId;
     }
 
 }

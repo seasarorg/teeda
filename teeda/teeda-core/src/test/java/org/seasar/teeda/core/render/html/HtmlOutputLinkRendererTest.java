@@ -30,23 +30,23 @@ import org.seasar.teeda.core.mock.MockFacesContext;
  */
 public class HtmlOutputLinkRendererTest extends RendererTest {
 
-    private HtmlOutputLinkRenderer renderer_;
+    private HtmlOutputLinkRenderer renderer;
 
-    private MockHtmlOutputLink htmlOutputLink_;
+    private MockHtmlOutputLink htmlOutputLink;
 
     protected void setUp() throws Exception {
         super.setUp();
-        renderer_ = createHtmlOutputLinkRenderer();
-        htmlOutputLink_ = new MockHtmlOutputLink();
-        htmlOutputLink_.setRenderer(renderer_);
+        renderer = createHtmlOutputLinkRenderer();
+        htmlOutputLink = new MockHtmlOutputLink();
+        htmlOutputLink.setRenderer(renderer);
     }
 
     public void testEncode() throws Exception {
         // ## Arrange ##
-        htmlOutputLink_.setValue("a");
+        htmlOutputLink.setValue("a");
 
         // ## Act ##
-        encodeByRenderer(renderer_, htmlOutputLink_);
+        encodeByRenderer(renderer, htmlOutputLink);
 
         // ## Assert ##
         assertEquals("<a href=\"a\"></a>", getResponseText());
@@ -54,7 +54,7 @@ public class HtmlOutputLinkRendererTest extends RendererTest {
 
     public void testEncode_CallsEncodeResourceUrl() throws Exception {
         // ## Arrange ##
-        htmlOutputLink_.setValue("/abc.html");
+        htmlOutputLink.setValue("/abc.html");
 
         final String[] param = { null };
         MockFacesContext context = getFacesContext();
@@ -66,7 +66,7 @@ public class HtmlOutputLinkRendererTest extends RendererTest {
         });
 
         // ## Act ##
-        encodeByRenderer(renderer_, htmlOutputLink_);
+        encodeByRenderer(renderer, htmlOutputLink);
 
         // ## Assert ##
         assertEquals("/abc.html", param[0]);
@@ -75,11 +75,11 @@ public class HtmlOutputLinkRendererTest extends RendererTest {
 
     public void testEncode_RenderFalse() throws Exception {
         // ## Arrange ##
-        htmlOutputLink_.setRendered(false);
-        htmlOutputLink_.setValue("abc");
+        htmlOutputLink.setRendered(false);
+        htmlOutputLink.setValue("abc");
 
         // ## Act ##
-        encodeByRenderer(renderer_, htmlOutputLink_);
+        encodeByRenderer(renderer, htmlOutputLink);
 
         // ## Assert ##
         assertEquals("", getResponseText());
@@ -91,166 +91,166 @@ public class HtmlOutputLinkRendererTest extends RendererTest {
         MockHtmlOutputText child = new MockHtmlOutputText();
         child.setRenderer(htmlOutputTextRenderer);
         child.setValue("Y");
-        htmlOutputLink_.getChildren().add(child);
+        htmlOutputLink.getChildren().add(child);
 
-        htmlOutputLink_.setValue("a");
+        htmlOutputLink.setValue("a");
 
         // ## Act ##
-        encodeByRenderer(renderer_, htmlOutputLink_);
+        encodeByRenderer(renderer, htmlOutputLink);
 
         // ## Assert ##
         assertEquals("<a href=\"a\">Y</a>", getResponseText());
     }
 
     public void testEncode_WithAccesskey() throws Exception {
-        htmlOutputLink_.setValue("url");
-        htmlOutputLink_.setAccesskey("aa");
+        htmlOutputLink.setValue("url");
+        htmlOutputLink.setAccesskey("aa");
 
-        encodeByRenderer(renderer_, htmlOutputLink_);
+        encodeByRenderer(renderer, htmlOutputLink);
 
         assertEquals("<a href=\"url\" accesskey=\"aa\"></a>", getResponseText());
     }
 
     public void testEncode_WithId() throws Exception {
-        htmlOutputLink_.setId("someId");
-        htmlOutputLink_.setValue("url");
+        htmlOutputLink.setId("someId");
+        htmlOutputLink.setValue("url");
 
-        encodeByRenderer(renderer_, htmlOutputLink_);
+        encodeByRenderer(renderer, htmlOutputLink);
 
         assertEquals("<a id=\"someId\" href=\"url\"></a>", getResponseText());
     }
 
     public void testEncode_WithUnknownAttribute1() throws Exception {
-        htmlOutputLink_.setValue("url");
-        htmlOutputLink_.getAttributes().put("aa", "bb");
+        htmlOutputLink.setValue("url");
+        htmlOutputLink.getAttributes().put("aa", "bb");
 
-        encodeByRenderer(renderer_, htmlOutputLink_);
+        encodeByRenderer(renderer, htmlOutputLink);
 
         assertEquals("<a href=\"url\" aa=\"bb\"></a>", getResponseText());
     }
 
     public void testEncode_WithUnknownAttribute2() throws Exception {
-        htmlOutputLink_.setValue("url");
-        htmlOutputLink_.getAttributes().put("a.a", "bb");
+        htmlOutputLink.setValue("url");
+        htmlOutputLink.getAttributes().put("a.a", "bb");
 
-        encodeByRenderer(renderer_, htmlOutputLink_);
+        encodeByRenderer(renderer, htmlOutputLink);
 
         assertEquals("<a href=\"url\"></a>", getResponseText());
     }
 
     public void testEncode_HrefIsJapanese() throws Exception {
         // japanese "a"
-        htmlOutputLink_.setValue("/" + new Character((char) 12354) + ".html");
+        htmlOutputLink.setValue("/" + new Character((char) 12354) + ".html");
 
-        encodeByRenderer(renderer_, htmlOutputLink_);
+        encodeByRenderer(renderer, htmlOutputLink);
 
         assertEquals("<a href=\"/%E3%81%82.html\"></a>", getResponseText());
     }
 
     public void testEncode_WithParam1() throws Exception {
-        htmlOutputLink_.setValue("url.html");
+        htmlOutputLink.setValue("url.html");
 
         UIParameter param = new UIParameter();
         param.setName("a");
         param.setValue("b");
-        htmlOutputLink_.getChildren().add(param);
+        htmlOutputLink.getChildren().add(param);
 
-        encodeByRenderer(renderer_, htmlOutputLink_);
+        encodeByRenderer(renderer, htmlOutputLink);
 
         assertEquals("<a href=\"url.html?a=b\"></a>", getResponseText());
     }
 
     public void testEncode_WithParam2() throws Exception {
-        htmlOutputLink_.setValue("/a/b/url.html");
+        htmlOutputLink.setValue("/a/b/url.html");
 
         UIParameter param = new UIParameter();
         param.setName("a");
         param.setValue("b/c");
-        htmlOutputLink_.getChildren().add(param);
+        htmlOutputLink.getChildren().add(param);
 
-        encodeByRenderer(renderer_, htmlOutputLink_);
+        encodeByRenderer(renderer, htmlOutputLink);
 
         assertEquals("<a href=\"/a/b/url.html?a=b%2Fc\"></a>",
                 getResponseText());
     }
 
     public void testEncodeBegin_BaseHrefHasQueryString() throws Exception {
-        htmlOutputLink_.setValue("url.html?1=2");
+        htmlOutputLink.setValue("url.html?1=2");
 
         UIParameter param = new UIParameter();
         param.setName("a");
         param.setValue("b");
-        htmlOutputLink_.getChildren().add(param);
+        htmlOutputLink.getChildren().add(param);
 
-        encodeByRenderer(renderer_, htmlOutputLink_);
+        encodeByRenderer(renderer, htmlOutputLink);
 
         assertEquals("<a href=\"url.html?1=2&amp;a=b\"></a>", getResponseText());
     }
 
     public void testEncode_WithJapaneseParamValue() throws Exception {
-        htmlOutputLink_.setValue("url");
+        htmlOutputLink.setValue("url");
         UIParameter param = new UIParameter();
         param.setName("a");
         param.setValue(new Character((char) 12354)); // japanese "a"
-        htmlOutputLink_.getChildren().add(param);
+        htmlOutputLink.getChildren().add(param);
 
-        encodeByRenderer(renderer_, htmlOutputLink_);
+        encodeByRenderer(renderer, htmlOutputLink);
 
         assertEquals("<a href=\"url?a=%E3%81%82\"></a>", getResponseText());
     }
 
     public void testEncode_WithParams() throws Exception {
-        htmlOutputLink_.setValue("url");
+        htmlOutputLink.setValue("url");
         {
             UIParameter param = new UIParameter();
             param.setName("a");
             param.setValue("1");
-            htmlOutputLink_.getChildren().add(param);
+            htmlOutputLink.getChildren().add(param);
         }
         {
             UIParameter param = new UIParameter();
             param.setName("b");
             param.setValue("2");
-            htmlOutputLink_.getChildren().add(param);
+            htmlOutputLink.getChildren().add(param);
         }
 
-        encodeByRenderer(renderer_, htmlOutputLink_);
+        encodeByRenderer(renderer, htmlOutputLink);
 
         assertEquals("<a href=\"url?a=1&amp;b=2\"></a>", getResponseText());
     }
 
     public void testEncode_WithAllAttributes() throws Exception {
-        htmlOutputLink_.setId("a");
-        htmlOutputLink_.setValue("b");
-        htmlOutputLink_.setAccesskey("c");
-        htmlOutputLink_.setCharset("d");
-        htmlOutputLink_.setCoords("e");
-        htmlOutputLink_.setDir("f");
-        htmlOutputLink_.setHreflang("g");
-        htmlOutputLink_.setLang("h");
-        htmlOutputLink_.setOnblur("i");
-        htmlOutputLink_.setOnclick("j");
-        htmlOutputLink_.setOndblclick("k");
-        htmlOutputLink_.setOnfocus("l");
-        htmlOutputLink_.setOnkeydown("m");
-        htmlOutputLink_.setOnkeypress("n");
-        htmlOutputLink_.setOnkeyup("o");
-        htmlOutputLink_.setOnmousedown("p");
-        htmlOutputLink_.setOnmousemove("q");
-        htmlOutputLink_.setOnmouseout("r");
-        htmlOutputLink_.setOnmouseover("s");
-        htmlOutputLink_.setOnmouseup("t");
-        htmlOutputLink_.setRel("u");
-        htmlOutputLink_.setRev("v");
-        htmlOutputLink_.setShape("w");
-        htmlOutputLink_.setStyle("u");
-        htmlOutputLink_.setStyleClass("x");
-        htmlOutputLink_.setTabindex("y");
-        htmlOutputLink_.setTarget("z");
-        htmlOutputLink_.setTitle("A");
-        htmlOutputLink_.setType("B");
+        htmlOutputLink.setId("a");
+        htmlOutputLink.setValue("b");
+        htmlOutputLink.setAccesskey("c");
+        htmlOutputLink.setCharset("d");
+        htmlOutputLink.setCoords("e");
+        htmlOutputLink.setDir("f");
+        htmlOutputLink.setHreflang("g");
+        htmlOutputLink.setLang("h");
+        htmlOutputLink.setOnblur("i");
+        htmlOutputLink.setOnclick("j");
+        htmlOutputLink.setOndblclick("k");
+        htmlOutputLink.setOnfocus("l");
+        htmlOutputLink.setOnkeydown("m");
+        htmlOutputLink.setOnkeypress("n");
+        htmlOutputLink.setOnkeyup("o");
+        htmlOutputLink.setOnmousedown("p");
+        htmlOutputLink.setOnmousemove("q");
+        htmlOutputLink.setOnmouseout("r");
+        htmlOutputLink.setOnmouseover("s");
+        htmlOutputLink.setOnmouseup("t");
+        htmlOutputLink.setRel("u");
+        htmlOutputLink.setRev("v");
+        htmlOutputLink.setShape("w");
+        htmlOutputLink.setStyle("u");
+        htmlOutputLink.setStyleClass("x");
+        htmlOutputLink.setTabindex("y");
+        htmlOutputLink.setTarget("z");
+        htmlOutputLink.setTitle("A");
+        htmlOutputLink.setType("B");
 
-        encodeByRenderer(renderer_, htmlOutputLink_);
+        encodeByRenderer(renderer, htmlOutputLink);
 
         Diff diff = new Diff("<a" + " id=\"a\"" + " href=\"b\""
                 + " accesskey=\"c\"" + " charset=\"d\"" + " coords=\"e\""
@@ -267,7 +267,7 @@ public class HtmlOutputLinkRendererTest extends RendererTest {
     }
 
     public void testGetRendersChildren() throws Exception {
-        assertEquals(true, renderer_.getRendersChildren());
+        assertEquals(true, renderer.getRendersChildren());
     }
 
     private HtmlOutputLinkRenderer createHtmlOutputLinkRenderer() {

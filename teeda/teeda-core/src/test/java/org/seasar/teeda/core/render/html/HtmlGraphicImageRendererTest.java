@@ -35,22 +35,22 @@ import org.seasar.teeda.core.mock.MockViewHandlerImpl;
  */
 public class HtmlGraphicImageRendererTest extends RendererTest {
 
-    private HtmlGraphicImageRenderer renderer_;
+    private HtmlGraphicImageRenderer renderer;
 
-    private MockHtmlGraphicImage htmlGraphicImage_;
+    private MockHtmlGraphicImage htmlGraphicImage;
 
     protected void setUp() throws Exception {
         super.setUp();
-        renderer_ = createHtmlGraphicImageRenderer();
-        htmlGraphicImage_ = new MockHtmlGraphicImage();
-        htmlGraphicImage_.setRenderer(renderer_);
+        renderer = createHtmlGraphicImageRenderer();
+        htmlGraphicImage = new MockHtmlGraphicImage();
+        htmlGraphicImage.setRenderer(renderer);
     }
 
     public void testEncode_WithNoValue() throws Exception {
-        MockFacesContext context = getFacesContext();
+        // ## Arrange ##
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlGraphicImage_);
+        encodeByRenderer(renderer, htmlGraphicImage);
 
         // ## Assert ##
         assertEquals("<img src=\"\" />", getResponseText());
@@ -58,11 +58,10 @@ public class HtmlGraphicImageRendererTest extends RendererTest {
 
     public void testEncode_RenderFalse() throws Exception {
         // ## Arrange ##
-        htmlGraphicImage_.setRendered(false);
-        MockFacesContext context = getFacesContext();
+        htmlGraphicImage.setRendered(false);
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlGraphicImage_);
+        encodeByRenderer(renderer, htmlGraphicImage);
 
         // ## Assert ##
         assertEquals("", getResponseText());
@@ -70,11 +69,10 @@ public class HtmlGraphicImageRendererTest extends RendererTest {
 
     public void testEncode_WithValue() throws Exception {
         // ## Arrange ##
-        htmlGraphicImage_.setValue("abc");
-        MockFacesContext context = getFacesContext();
+        htmlGraphicImage.setValue("abc");
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlGraphicImage_);
+        encodeByRenderer(renderer, htmlGraphicImage);
 
         // ## Assert ##
         assertEquals("<img src=\"abc\" />", getResponseText());
@@ -82,29 +80,29 @@ public class HtmlGraphicImageRendererTest extends RendererTest {
 
     public void testEncode_WithValueContainsAmpersand() throws Exception {
         // ## Arrange ##
-        htmlGraphicImage_.setValue("a?a=b&c=d");
+        htmlGraphicImage.setValue("a?a=b&c=d");
 
         // ## Act ##
-        encodeByRenderer(renderer_, htmlGraphicImage_);
+        encodeByRenderer(renderer, htmlGraphicImage);
 
         // ## Assert ##
         assertEquals("<img src=\"a?a=b&amp;c=d\" />", getResponseText());
     }
 
     public void testEncode_WithId() throws Exception {
-        htmlGraphicImage_.setId("a");
+        htmlGraphicImage.setId("a");
 
-        encodeByRenderer(renderer_, getFacesContext(), htmlGraphicImage_);
+        encodeByRenderer(renderer, htmlGraphicImage);
 
         assertEquals("<img id=\"a\" src=\"\" />", getResponseText());
     }
 
     public void testEncode_WithUnknownAttribute() throws Exception {
-        htmlGraphicImage_.setId("a");
-        htmlGraphicImage_.getAttributes().put("a", "1");
-        htmlGraphicImage_.getAttributes().put("b", "2");
+        htmlGraphicImage.setId("a");
+        htmlGraphicImage.getAttributes().put("a", "1");
+        htmlGraphicImage.getAttributes().put("b", "2");
 
-        encodeByRenderer(renderer_, getFacesContext(), htmlGraphicImage_);
+        encodeByRenderer(renderer, htmlGraphicImage);
 
         final Diff diff = diff("<img id=\"a\" src=\"\" a=\"1\" b=\"2\" />",
                 getResponseText());
@@ -134,42 +132,42 @@ public class HtmlGraphicImageRendererTest extends RendererTest {
         context.setApplication(application);
         context.setExternalContext(externalContext);
 
-        htmlGraphicImage_.setValue("abc");
+        htmlGraphicImage.setValue("abc");
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlGraphicImage_);
+        encodeByRenderer(renderer, htmlGraphicImage);
 
         // ## Assert ##
         assertEquals("<img src=\"abc_1_2\" />", getResponseText());
     }
 
     public void testEncode_WithAllAttributes() throws Exception {
-        htmlGraphicImage_.setAlt("a");
-        htmlGraphicImage_.setDir("b");
-        htmlGraphicImage_.setHeight("c");
-        htmlGraphicImage_.setIsmap(true);
-        htmlGraphicImage_.setLang("e");
-        htmlGraphicImage_.setLongdesc("f");
-        htmlGraphicImage_.setOnclick("g");
-        htmlGraphicImage_.setOndblclick("h");
-        htmlGraphicImage_.setOnkeydown("i");
-        htmlGraphicImage_.setOnkeypress("j");
-        htmlGraphicImage_.setOnkeyup("k");
-        htmlGraphicImage_.setOnmousedown("l");
-        htmlGraphicImage_.setOnmousemove("m");
-        htmlGraphicImage_.setOnmouseout("n");
-        htmlGraphicImage_.setOnmouseover("o");
-        htmlGraphicImage_.setOnmouseup("p");
-        htmlGraphicImage_.setStyle("q");
-        htmlGraphicImage_.setStyleClass("r");
-        htmlGraphicImage_.setTitle("s");
-        htmlGraphicImage_.setUsemap("t");
-        htmlGraphicImage_.setWidth("u");
+        htmlGraphicImage.setAlt("a");
+        htmlGraphicImage.setDir("b");
+        htmlGraphicImage.setHeight("c");
+        htmlGraphicImage.setIsmap(true);
+        htmlGraphicImage.setLang("e");
+        htmlGraphicImage.setLongdesc("f");
+        htmlGraphicImage.setOnclick("g");
+        htmlGraphicImage.setOndblclick("h");
+        htmlGraphicImage.setOnkeydown("i");
+        htmlGraphicImage.setOnkeypress("j");
+        htmlGraphicImage.setOnkeyup("k");
+        htmlGraphicImage.setOnmousedown("l");
+        htmlGraphicImage.setOnmousemove("m");
+        htmlGraphicImage.setOnmouseout("n");
+        htmlGraphicImage.setOnmouseover("o");
+        htmlGraphicImage.setOnmouseup("p");
+        htmlGraphicImage.setStyle("q");
+        htmlGraphicImage.setStyleClass("r");
+        htmlGraphicImage.setTitle("s");
+        htmlGraphicImage.setUsemap("t");
+        htmlGraphicImage.setWidth("u");
 
-        htmlGraphicImage_.setId("A");
-        htmlGraphicImage_.setValue("B");
+        htmlGraphicImage.setId("A");
+        htmlGraphicImage.setValue("B");
 
-        encodeByRenderer(renderer_, htmlGraphicImage_);
+        encodeByRenderer(renderer, htmlGraphicImage);
 
         Diff diff = new Diff("<img id=\"A\" src=\"B\"" + " alt=\"a\""
                 + " dir=\"b\"" + " height=\"c\"" + " ismap=\"true\""
@@ -184,7 +182,7 @@ public class HtmlGraphicImageRendererTest extends RendererTest {
     }
 
     public void testGetRendersChildren() throws Exception {
-        assertEquals(false, renderer_.getRendersChildren());
+        assertEquals(false, renderer.getRendersChildren());
     }
 
     private HtmlGraphicImageRenderer createHtmlGraphicImageRenderer() {

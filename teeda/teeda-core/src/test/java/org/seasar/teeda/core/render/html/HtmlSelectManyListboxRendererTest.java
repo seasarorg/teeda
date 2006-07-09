@@ -30,29 +30,28 @@ import javax.faces.render.RendererTest;
 import junitx.framework.ArrayAssert;
 
 import org.custommonkey.xmlunit.Diff;
-import org.seasar.teeda.core.mock.MockFacesContext;
 
 /**
  * @author manhole
  */
 public class HtmlSelectManyListboxRendererTest extends RendererTest {
 
-    private HtmlSelectManyListboxRenderer renderer_;
+    private HtmlSelectManyListboxRenderer renderer;
 
-    private MockHtmlSelectManyListbox htmlSelectManyListbox_;
+    private MockHtmlSelectManyListbox htmlSelectManyListbox;
 
     protected void setUp() throws Exception {
         super.setUp();
-        renderer_ = createHtmlSelectManyListboxRenderer();
-        htmlSelectManyListbox_ = new MockHtmlSelectManyListbox();
-        htmlSelectManyListbox_.setRenderer(renderer_);
+        renderer = createHtmlSelectManyListboxRenderer();
+        htmlSelectManyListbox = new MockHtmlSelectManyListbox();
+        htmlSelectManyListbox.setRenderer(renderer);
     }
 
     public void testEncode_NoChild() throws Exception {
-        FacesContext context = getFacesContext();
+        // ## Arrange ##
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectManyListbox_);
+        encodeByRenderer(renderer, htmlSelectManyListbox);
 
         // ## Assert ##
         assertEquals("", getResponseText());
@@ -60,17 +59,16 @@ public class HtmlSelectManyListboxRendererTest extends RendererTest {
 
     public void testEncode_RenderFalse() throws Exception {
         // ## Arrange ##
-        htmlSelectManyListbox_.setRendered(false);
+        htmlSelectManyListbox.setRendered(false);
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("val");
             selectItem.setItemLabel("lab");
-            htmlSelectManyListbox_.getChildren().add(selectItem);
+            htmlSelectManyListbox.getChildren().add(selectItem);
         }
-        FacesContext context = getFacesContext();
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectManyListbox_);
+        encodeByRenderer(renderer, htmlSelectManyListbox);
 
         // ## Assert ##
         assertEquals("", getResponseText());
@@ -78,16 +76,16 @@ public class HtmlSelectManyListboxRendererTest extends RendererTest {
 
     public void testEncode_Child() throws Exception {
         // ## Arrange ##
-        MockFacesContext context = getFacesContext();
+
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("v");
             selectItem.setItemLabel("l");
-            htmlSelectManyListbox_.getChildren().add(selectItem);
+            htmlSelectManyListbox.getChildren().add(selectItem);
         }
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectManyListbox_);
+        encodeByRenderer(renderer, htmlSelectManyListbox);
 
         // ## Assert ##
         assertEquals("<select name=\"_id0\" multiple=\"multiple\" size=\"1\">"
@@ -97,17 +95,17 @@ public class HtmlSelectManyListboxRendererTest extends RendererTest {
 
     public void testEncode_Id() throws Exception {
         // ## Arrange ##
-        MockFacesContext context = getFacesContext();
+
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("val");
             selectItem.setItemLabel("lab");
-            htmlSelectManyListbox_.getChildren().add(selectItem);
+            htmlSelectManyListbox.getChildren().add(selectItem);
         }
-        htmlSelectManyListbox_.setId("a");
+        htmlSelectManyListbox.setId("a");
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectManyListbox_);
+        encodeByRenderer(renderer, htmlSelectManyListbox);
 
         // ## Assert ##
         assertEquals(
@@ -118,18 +116,18 @@ public class HtmlSelectManyListboxRendererTest extends RendererTest {
 
     public void testEncode_WithUnknownAttribute1() throws Exception {
         // ## Arrange ##
-        MockFacesContext context = getFacesContext();
+
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("val");
             selectItem.setItemLabel("lab");
-            htmlSelectManyListbox_.getChildren().add(selectItem);
+            htmlSelectManyListbox.getChildren().add(selectItem);
         }
-        htmlSelectManyListbox_.setId("a");
-        htmlSelectManyListbox_.getAttributes().put("zz", "y");
+        htmlSelectManyListbox.setId("a");
+        htmlSelectManyListbox.getAttributes().put("zz", "y");
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectManyListbox_);
+        encodeByRenderer(renderer, htmlSelectManyListbox);
 
         // ## Assert ##
         assertEquals(
@@ -140,18 +138,18 @@ public class HtmlSelectManyListboxRendererTest extends RendererTest {
 
     public void testEncode_WithUnknownAttribute2() throws Exception {
         // ## Arrange ##
-        MockFacesContext context = getFacesContext();
+
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("val");
             selectItem.setItemLabel("lab");
-            htmlSelectManyListbox_.getChildren().add(selectItem);
+            htmlSelectManyListbox.getChildren().add(selectItem);
         }
-        htmlSelectManyListbox_.setId("a");
-        htmlSelectManyListbox_.getAttributes().put("z.z", "y");
+        htmlSelectManyListbox.setId("a");
+        htmlSelectManyListbox.getAttributes().put("z.z", "y");
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectManyListbox_);
+        encodeByRenderer(renderer, htmlSelectManyListbox);
 
         // ## Assert ##
         assertEquals(
@@ -162,22 +160,22 @@ public class HtmlSelectManyListboxRendererTest extends RendererTest {
 
     public void testEncode_Children() throws Exception {
         // ## Arrange ##
-        MockFacesContext context = getFacesContext();
+
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("v1");
             selectItem.setItemLabel("l1");
-            htmlSelectManyListbox_.getChildren().add(selectItem);
+            htmlSelectManyListbox.getChildren().add(selectItem);
         }
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("v2");
             selectItem.setItemLabel("l2");
-            htmlSelectManyListbox_.getChildren().add(selectItem);
+            htmlSelectManyListbox.getChildren().add(selectItem);
         }
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectManyListbox_);
+        encodeByRenderer(renderer, htmlSelectManyListbox);
 
         // ## Assert ##
         assertEquals("<select name=\"_id0\" multiple=\"multiple\" size=\"2\">"
@@ -188,17 +186,17 @@ public class HtmlSelectManyListboxRendererTest extends RendererTest {
 
     public void testEncode_Size() throws Exception {
         // ## Arrange ##
-        MockFacesContext context = getFacesContext();
+
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("v1");
             selectItem.setItemLabel("l1");
-            htmlSelectManyListbox_.getChildren().add(selectItem);
+            htmlSelectManyListbox.getChildren().add(selectItem);
         }
-        htmlSelectManyListbox_.setSize(6);
+        htmlSelectManyListbox.setSize(6);
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectManyListbox_);
+        encodeByRenderer(renderer, htmlSelectManyListbox);
 
         // ## Assert ##
         assertEquals("<select name=\"_id0\" multiple=\"multiple\" size=\"6\">"
@@ -208,23 +206,23 @@ public class HtmlSelectManyListboxRendererTest extends RendererTest {
 
     public void testEncode_Selected() throws Exception {
         // ## Arrange ##
-        htmlSelectManyListbox_.setSelectedValues(new String[] { "v2" });
-        MockFacesContext context = getFacesContext();
+        htmlSelectManyListbox.setSelectedValues(new String[] { "v2" });
+
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("v1");
             selectItem.setItemLabel("l1");
-            htmlSelectManyListbox_.getChildren().add(selectItem);
+            htmlSelectManyListbox.getChildren().add(selectItem);
         }
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("v2");
             selectItem.setItemLabel("l2");
-            htmlSelectManyListbox_.getChildren().add(selectItem);
+            htmlSelectManyListbox.getChildren().add(selectItem);
         }
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectManyListbox_);
+        encodeByRenderer(renderer, htmlSelectManyListbox);
 
         // ## Assert ##
         assertEquals("<select name=\"_id0\" multiple=\"multiple\" size=\"2\">"
@@ -235,23 +233,23 @@ public class HtmlSelectManyListboxRendererTest extends RendererTest {
 
     public void testEncode_ItemDisabled() throws Exception {
         // ## Arrange ##
-        MockFacesContext context = getFacesContext();
+
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("v1");
             selectItem.setItemLabel("l1");
             selectItem.setItemDisabled(true);
-            htmlSelectManyListbox_.getChildren().add(selectItem);
+            htmlSelectManyListbox.getChildren().add(selectItem);
         }
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("v2");
             selectItem.setItemLabel("l2");
-            htmlSelectManyListbox_.getChildren().add(selectItem);
+            htmlSelectManyListbox.getChildren().add(selectItem);
         }
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectManyListbox_);
+        encodeByRenderer(renderer, htmlSelectManyListbox);
 
         // ## Assert ##
         assertEquals("<select name=\"_id0\" multiple=\"multiple\" size=\"2\">"
@@ -262,24 +260,24 @@ public class HtmlSelectManyListboxRendererTest extends RendererTest {
 
     public void testEncode_Disabled() throws Exception {
         // ## Arrange ##
-        htmlSelectManyListbox_.setDisabled(true);
-        MockFacesContext context = getFacesContext();
+        htmlSelectManyListbox.setDisabled(true);
+
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("v1");
             selectItem.setItemLabel("l1");
             selectItem.setItemDisabled(true);
-            htmlSelectManyListbox_.getChildren().add(selectItem);
+            htmlSelectManyListbox.getChildren().add(selectItem);
         }
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("v2");
             selectItem.setItemLabel("l2");
-            htmlSelectManyListbox_.getChildren().add(selectItem);
+            htmlSelectManyListbox.getChildren().add(selectItem);
         }
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectManyListbox_);
+        encodeByRenderer(renderer, htmlSelectManyListbox);
 
         // ## Assert ##
         assertEquals(
@@ -291,25 +289,25 @@ public class HtmlSelectManyListboxRendererTest extends RendererTest {
 
     public void testEncode_LabelClass() throws Exception {
         // ## Arrange ##
-        htmlSelectManyListbox_.setEnabledClass("ec");
-        htmlSelectManyListbox_.setDisabledClass("dc");
-        MockFacesContext context = getFacesContext();
+        htmlSelectManyListbox.setEnabledClass("ec");
+        htmlSelectManyListbox.setDisabledClass("dc");
+
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("v1");
             selectItem.setItemLabel("l1");
-            htmlSelectManyListbox_.getChildren().add(selectItem);
+            htmlSelectManyListbox.getChildren().add(selectItem);
         }
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("v2");
             selectItem.setItemLabel("l2");
             selectItem.setItemDisabled(true);
-            htmlSelectManyListbox_.getChildren().add(selectItem);
+            htmlSelectManyListbox.getChildren().add(selectItem);
         }
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectManyListbox_);
+        encodeByRenderer(renderer, htmlSelectManyListbox);
 
         // ## Assert ##
         assertEquals(
@@ -321,17 +319,17 @@ public class HtmlSelectManyListboxRendererTest extends RendererTest {
 
     public void testEncode_GroupChildren() throws Exception {
         // ## Arrange ##
-        MockFacesContext context = getFacesContext();
+
         {
             UISelectItems selectItems = new UISelectItems();
             SelectItem item1 = new SelectItem("v1", "l1");
             SelectItem item2 = new SelectItem("v2", "l2", null, true);
             selectItems.setValue(new SelectItem[] { item1, item2 });
-            htmlSelectManyListbox_.getChildren().add(selectItems);
+            htmlSelectManyListbox.getChildren().add(selectItems);
         }
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectManyListbox_);
+        encodeByRenderer(renderer, htmlSelectManyListbox);
 
         // ## Assert ##
         assertEquals("<select name=\"_id0\" multiple=\"multiple\" size=\"2\">"
@@ -342,7 +340,7 @@ public class HtmlSelectManyListboxRendererTest extends RendererTest {
 
     public void testEncode_Optgroup() throws Exception {
         // ## Arrange ##
-        MockFacesContext context = getFacesContext();
+
         {
             SelectItem item1 = new SelectItem("v1", "l1");
             SelectItem item2 = new SelectItem("v2", "l2", null, true);
@@ -350,11 +348,11 @@ public class HtmlSelectManyListboxRendererTest extends RendererTest {
             group.setSelectItems(new SelectItem[] { item1, item2 });
             UISelectItem selectItem = new UISelectItem();
             selectItem.setValue(group);
-            htmlSelectManyListbox_.getChildren().add(selectItem);
+            htmlSelectManyListbox.getChildren().add(selectItem);
         }
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectManyListbox_);
+        encodeByRenderer(renderer, htmlSelectManyListbox);
 
         // ## Assert ##
         assertEquals("<select name=\"_id0\" multiple=\"multiple\" size=\"3\">"
@@ -365,43 +363,43 @@ public class HtmlSelectManyListboxRendererTest extends RendererTest {
     }
 
     public void testEncode_WithAllAttributes() throws Exception {
-        htmlSelectManyListbox_.setAccesskey("a");
-        htmlSelectManyListbox_.setDir("b");
-        htmlSelectManyListbox_.setDisabled(true);
-        htmlSelectManyListbox_.setDisabledClass("d");
-        htmlSelectManyListbox_.setEnabledClass("e");
-        htmlSelectManyListbox_.setLang("f");
-        htmlSelectManyListbox_.setOnblur("g");
-        htmlSelectManyListbox_.setOnchange("h");
-        htmlSelectManyListbox_.setOnclick("i");
-        htmlSelectManyListbox_.setOndblclick("j");
-        htmlSelectManyListbox_.setOnfocus("k");
-        htmlSelectManyListbox_.setOnkeydown("l");
-        htmlSelectManyListbox_.setOnkeypress("m");
-        htmlSelectManyListbox_.setOnkeyup("n");
-        htmlSelectManyListbox_.setOnmousedown("o");
-        htmlSelectManyListbox_.setOnmousemove("p");
-        htmlSelectManyListbox_.setOnmouseout("q");
-        htmlSelectManyListbox_.setOnmouseover("r");
-        htmlSelectManyListbox_.setOnmouseup("s");
-        htmlSelectManyListbox_.setOnselect("t");
-        htmlSelectManyListbox_.setReadonly(true);
-        htmlSelectManyListbox_.setSize(4);
-        htmlSelectManyListbox_.setStyle("w");
-        htmlSelectManyListbox_.setStyleClass("u");
-        htmlSelectManyListbox_.setTabindex("x");
-        htmlSelectManyListbox_.setTitle("y");
+        htmlSelectManyListbox.setAccesskey("a");
+        htmlSelectManyListbox.setDir("b");
+        htmlSelectManyListbox.setDisabled(true);
+        htmlSelectManyListbox.setDisabledClass("d");
+        htmlSelectManyListbox.setEnabledClass("e");
+        htmlSelectManyListbox.setLang("f");
+        htmlSelectManyListbox.setOnblur("g");
+        htmlSelectManyListbox.setOnchange("h");
+        htmlSelectManyListbox.setOnclick("i");
+        htmlSelectManyListbox.setOndblclick("j");
+        htmlSelectManyListbox.setOnfocus("k");
+        htmlSelectManyListbox.setOnkeydown("l");
+        htmlSelectManyListbox.setOnkeypress("m");
+        htmlSelectManyListbox.setOnkeyup("n");
+        htmlSelectManyListbox.setOnmousedown("o");
+        htmlSelectManyListbox.setOnmousemove("p");
+        htmlSelectManyListbox.setOnmouseout("q");
+        htmlSelectManyListbox.setOnmouseover("r");
+        htmlSelectManyListbox.setOnmouseup("s");
+        htmlSelectManyListbox.setOnselect("t");
+        htmlSelectManyListbox.setReadonly(true);
+        htmlSelectManyListbox.setSize(4);
+        htmlSelectManyListbox.setStyle("w");
+        htmlSelectManyListbox.setStyleClass("u");
+        htmlSelectManyListbox.setTabindex("x");
+        htmlSelectManyListbox.setTitle("y");
 
-        htmlSelectManyListbox_.setId("A");
-        htmlSelectManyListbox_.setValue(new String[] { "val" });
+        htmlSelectManyListbox.setId("A");
+        htmlSelectManyListbox.setValue(new String[] { "val" });
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("val");
             selectItem.setItemLabel("lab");
-            htmlSelectManyListbox_.getChildren().add(selectItem);
+            htmlSelectManyListbox.getChildren().add(selectItem);
         }
-        MockFacesContext context = getFacesContext();
-        encodeByRenderer(renderer_, context, htmlSelectManyListbox_);
+
+        encodeByRenderer(renderer, htmlSelectManyListbox);
 
         Diff diff = new Diff("<select id=\"A\"" + " name=\"A\""
                 + " multiple=\"multiple\" size=\"4\" style=\"w\""
@@ -421,44 +419,43 @@ public class HtmlSelectManyListboxRendererTest extends RendererTest {
 
     public void testDecode_RequestParameterNotExist() throws Exception {
         // ## Arrange ##
-        htmlSelectManyListbox_.setClientId("key");
-
-        MockFacesContext context = getFacesContext();
+        htmlSelectManyListbox.setClientId("key");
+        final FacesContext context = getFacesContext();
 
         // ## Act ##
-        renderer_.decode(context, htmlSelectManyListbox_);
+        renderer.decode(context, htmlSelectManyListbox);
 
         // ## Assert ##
-        assertEquals(1, htmlSelectManyListbox_.getSetSubmittedValueCalls());
-        String[] submittedValue = (String[]) htmlSelectManyListbox_
+        assertEquals(1, htmlSelectManyListbox.getSetSubmittedValueCalls());
+        String[] submittedValue = (String[]) htmlSelectManyListbox
                 .getSubmittedValue();
         assertEquals(0, submittedValue.length);
     }
 
     public void testDecodeSuccess() throws Exception {
         // ## Arrange ##
-        htmlSelectManyListbox_.setClientId("keyA");
+        htmlSelectManyListbox.setClientId("keyA");
 
-        MockFacesContext context = getFacesContext();
+        final FacesContext context = getFacesContext();
         context.getExternalContext().getRequestParameterValuesMap().put("keyA",
                 new String[] { "a", "b", "c" });
 
         // ## Act ##
-        renderer_.decode(context, htmlSelectManyListbox_);
+        renderer.decode(context, htmlSelectManyListbox);
 
         // ## Assert ##
-        assertEquals(1, htmlSelectManyListbox_.getSetSubmittedValueCalls());
+        assertEquals(1, htmlSelectManyListbox.getSetSubmittedValueCalls());
         ArrayAssert.assertEquivalenceArrays(new String[] { "a", "b", "c" },
-                (Object[]) htmlSelectManyListbox_.getSubmittedValue());
+                (Object[]) htmlSelectManyListbox.getSubmittedValue());
     }
 
     public void testGetRendersChildren() throws Exception {
-        assertEquals(false, renderer_.getRendersChildren());
+        assertEquals(false, renderer.getRendersChildren());
     }
 
     public void testSelectItemValueIsNull() throws Exception {
         // ## Arrange ##
-        htmlSelectManyListbox_.setRendered(true);
+        htmlSelectManyListbox.setRendered(true);
         {
             UISelectItems selectItems = new UISelectItems();
             List list = new ArrayList();
@@ -466,12 +463,11 @@ public class HtmlSelectManyListboxRendererTest extends RendererTest {
             selectItem.setLabel("aaa");
             list.add(selectItem);
             selectItems.setValue(list);
-            htmlSelectManyListbox_.getChildren().add(selectItems);
+            htmlSelectManyListbox.getChildren().add(selectItems);
         }
-        FacesContext context = getFacesContext();
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlSelectManyListbox_);
+        encodeByRenderer(renderer, htmlSelectManyListbox);
 
         // ## Assert ##
         assertEquals("<select name=\"_id0\" multiple=\"multiple\" size=\"1\">"

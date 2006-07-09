@@ -30,22 +30,22 @@ import org.seasar.teeda.core.mock.MockUIComponentBaseWithNamingContainer;
  */
 public class HtmlInputHiddenRendererTest extends RendererTest {
 
-    private HtmlInputHiddenRenderer renderer_;
+    private HtmlInputHiddenRenderer renderer;
 
-    private MockHtmlInputHidden htmlInputHidden_;
+    private MockHtmlInputHidden htmlInputHidden;
 
     protected void setUp() throws Exception {
         super.setUp();
-        renderer_ = createHtmlInputHiddenRenderer();
-        htmlInputHidden_ = new MockHtmlInputHidden();
-        htmlInputHidden_.setRenderer(renderer_);
+        renderer = createHtmlInputHiddenRenderer();
+        htmlInputHidden = new MockHtmlInputHidden();
+        htmlInputHidden.setRenderer(renderer);
     }
 
     public void testEncode_WithNoValue() throws Exception {
         // ## Arrange ##
 
         // ## Act ##
-        encodeByRenderer(renderer_, htmlInputHidden_);
+        encodeByRenderer(renderer, htmlInputHidden);
 
         // ## Assert ##
         assertEquals("<input type=\"hidden\" name=\"_id0\" value=\"\" />",
@@ -54,10 +54,10 @@ public class HtmlInputHiddenRendererTest extends RendererTest {
 
     public void testEncode_RenderFalse() throws Exception {
         // ## Arrange ##
-        htmlInputHidden_.setRendered(false);
+        htmlInputHidden.setRendered(false);
 
         // ## Act ##
-        encodeByRenderer(renderer_, htmlInputHidden_);
+        encodeByRenderer(renderer, htmlInputHidden);
 
         // ## Assert ##
         assertEquals("", getResponseText());
@@ -65,10 +65,10 @@ public class HtmlInputHiddenRendererTest extends RendererTest {
 
     public void testEncode_WithValue() throws Exception {
         // ## Arrange ##
-        htmlInputHidden_.setValue("abc");
+        htmlInputHidden.setValue("abc");
 
         // ## Act ##
-        encodeByRenderer(renderer_, htmlInputHidden_);
+        encodeByRenderer(renderer, htmlInputHidden);
 
         // ## Assert ##
         assertEquals("<input type=\"hidden\" name=\"_id0\" value=\"abc\" />",
@@ -76,13 +76,13 @@ public class HtmlInputHiddenRendererTest extends RendererTest {
     }
 
     public void testEncode_WithId() throws Exception {
-        htmlInputHidden_.setId("a");
+        htmlInputHidden.setId("a");
 
         UIComponent parent = new MockUIComponentBaseWithNamingContainer();
         parent.setId("b");
-        parent.getChildren().add(htmlInputHidden_);
+        parent.getChildren().add(htmlInputHidden);
 
-        encodeByRenderer(renderer_, htmlInputHidden_);
+        encodeByRenderer(renderer, htmlInputHidden);
 
         assertEquals(
                 "<input type=\"hidden\" id=\"a\" name=\"b:a\" value=\"\" />",
@@ -90,10 +90,10 @@ public class HtmlInputHiddenRendererTest extends RendererTest {
     }
 
     public void testEncode_WithUnknownAttribute() throws Exception {
-        htmlInputHidden_.setId("a");
-        htmlInputHidden_.getAttributes().put("unknown", "foo");
+        htmlInputHidden.setId("a");
+        htmlInputHidden.getAttributes().put("unknown", "foo");
 
-        encodeByRenderer(renderer_, htmlInputHidden_);
+        encodeByRenderer(renderer, htmlInputHidden);
 
         assertEquals(
                 "<input type=\"hidden\" id=\"a\" name=\"a\" value=\"\" unknown=\"foo\" />",
@@ -101,10 +101,10 @@ public class HtmlInputHiddenRendererTest extends RendererTest {
     }
 
     public void testEncode_WithAllAttributes() throws Exception {
-        htmlInputHidden_.setId("A");
-        htmlInputHidden_.setValue("B");
+        htmlInputHidden.setId("A");
+        htmlInputHidden.setValue("B");
 
-        encodeByRenderer(renderer_, htmlInputHidden_);
+        encodeByRenderer(renderer, htmlInputHidden);
 
         Diff diff = new Diff(
                 "<input type=\"hidden\" id=\"A\" name=\"A\" value=\"B\""
@@ -114,34 +114,34 @@ public class HtmlInputHiddenRendererTest extends RendererTest {
 
     public void testDecode_None() throws Exception {
         // ## Arrange ##
-        htmlInputHidden_.setClientId("key");
+        htmlInputHidden.setClientId("key");
 
         MockFacesContext context = getFacesContext();
 
         // ## Act ##
-        renderer_.decode(context, htmlInputHidden_);
+        renderer.decode(context, htmlInputHidden);
 
         // ## Assert ##
-        assertEquals(null, htmlInputHidden_.getSubmittedValue());
+        assertEquals(null, htmlInputHidden.getSubmittedValue());
     }
 
     public void testDecode_Success() throws Exception {
         // ## Arrange ##
-        htmlInputHidden_.setClientId("key:aa");
+        htmlInputHidden.setClientId("key:aa");
 
         MockFacesContext context = getFacesContext();
         context.getExternalContext().getRequestParameterMap().put("key:aa",
                 "12345");
 
         // ## Act ##
-        renderer_.decode(context, htmlInputHidden_);
+        renderer.decode(context, htmlInputHidden);
 
         // ## Assert ##
-        assertEquals("12345", htmlInputHidden_.getSubmittedValue());
+        assertEquals("12345", htmlInputHidden.getSubmittedValue());
     }
 
     public void testGetRendersChildren() throws Exception {
-        assertEquals(false, renderer_.getRendersChildren());
+        assertEquals(false, renderer.getRendersChildren());
     }
 
     private HtmlInputHiddenRenderer createHtmlInputHiddenRenderer() {

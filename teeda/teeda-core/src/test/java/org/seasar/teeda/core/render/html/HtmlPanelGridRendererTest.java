@@ -28,21 +28,21 @@ import org.seasar.teeda.core.mock.MockFacesContext;
  */
 public class HtmlPanelGridRendererTest extends RendererTest {
 
-    private HtmlPanelGridRenderer renderer_;
+    private HtmlPanelGridRenderer renderer;
 
-    private MockHtmlPanelGrid htmlPanelGrid_;
+    private MockHtmlPanelGrid htmlPanelGrid;
 
     protected void setUp() throws Exception {
         super.setUp();
-        renderer_ = createHtmlPanelGridRenderer();
-        htmlPanelGrid_ = new MockHtmlPanelGrid();
-        htmlPanelGrid_.setRenderer(renderer_);
+        renderer = createHtmlPanelGridRenderer();
+        htmlPanelGrid = new MockHtmlPanelGrid();
+        htmlPanelGrid.setRenderer(renderer);
     }
 
     public void testEncodeBegin_NoValue() throws Exception {
         // ## Arrange ##
         // ## Act ##
-        renderer_.encodeBegin(getFacesContext(), htmlPanelGrid_);
+        renderer.encodeBegin(getFacesContext(), htmlPanelGrid);
 
         // ## Assert ##
         assertEquals("<table", getResponseText());
@@ -50,10 +50,10 @@ public class HtmlPanelGridRendererTest extends RendererTest {
 
     public void testEncode_RenderFalse() throws Exception {
         // ## Arrange ##
-        htmlPanelGrid_.setRendered(false);
+        htmlPanelGrid.setRendered(false);
 
         // ## Act ##
-        encodeByRenderer(renderer_, getFacesContext(), htmlPanelGrid_);
+        encodeByRenderer(renderer, htmlPanelGrid);
 
         // ## Assert ##
         assertEquals("", getResponseText());
@@ -61,10 +61,10 @@ public class HtmlPanelGridRendererTest extends RendererTest {
 
     public void testEncodeBegin_Id() throws Exception {
         // ## Arrange ##
-        htmlPanelGrid_.setId("aaa");
+        htmlPanelGrid.setId("aaa");
 
         // ## Act ##
-        renderer_.encodeBegin(getFacesContext(), htmlPanelGrid_);
+        renderer.encodeBegin(getFacesContext(), htmlPanelGrid);
 
         // ## Assert ##
         assertEquals("<table id=\"aaa\"", getResponseText());
@@ -72,10 +72,10 @@ public class HtmlPanelGridRendererTest extends RendererTest {
 
     public void testEncodeBegin_WithUnknownAttribute1() throws Exception {
         // ## Arrange ##
-        htmlPanelGrid_.getAttributes().put("abc", "ABC");
+        htmlPanelGrid.getAttributes().put("abc", "ABC");
 
         // ## Act ##
-        renderer_.encodeBegin(getFacesContext(), htmlPanelGrid_);
+        renderer.encodeBegin(getFacesContext(), htmlPanelGrid);
 
         // ## Assert ##
         assertEquals("<table abc=\"ABC\"", getResponseText());
@@ -83,10 +83,10 @@ public class HtmlPanelGridRendererTest extends RendererTest {
 
     public void testEncodeBegin_WithUnknownAttribute2() throws Exception {
         // ## Arrange ##
-        htmlPanelGrid_.getAttributes().put("a.bc", "ABC");
+        htmlPanelGrid.getAttributes().put("a.bc", "ABC");
 
         // ## Act ##
-        renderer_.encodeBegin(getFacesContext(), htmlPanelGrid_);
+        renderer.encodeBegin(getFacesContext(), htmlPanelGrid);
 
         // ## Assert ##
         assertEquals("<table", getResponseText());
@@ -94,11 +94,11 @@ public class HtmlPanelGridRendererTest extends RendererTest {
 
     public void testEncodeBegin_TableStyle() throws Exception {
         // ## Arrange ##
-        htmlPanelGrid_.setStyle("a");
-        htmlPanelGrid_.setStyleClass("b");
+        htmlPanelGrid.setStyle("a");
+        htmlPanelGrid.setStyleClass("b");
 
         // ## Act ##
-        renderer_.encodeBegin(getFacesContext(), htmlPanelGrid_);
+        renderer.encodeBegin(getFacesContext(), htmlPanelGrid);
 
         // ## Assert ##
         assertEquals("<table style=\"a\" class=\"b\"", getResponseText());
@@ -106,10 +106,9 @@ public class HtmlPanelGridRendererTest extends RendererTest {
 
     public void testEncode_NoValue() throws Exception {
         // ## Arrange ##
-        MockFacesContext context = getFacesContext();
 
         // ## Act ##
-        encodeByRenderer(renderer_, context, htmlPanelGrid_);
+        encodeByRenderer(renderer, htmlPanelGrid);
 
         // ## Assert ##
         assertEquals("<table><tbody></tbody></table>", getResponseText());
@@ -120,11 +119,11 @@ public class HtmlPanelGridRendererTest extends RendererTest {
         MockHtmlOutputText facet = new MockHtmlOutputText();
         facet.setRenderer(new HtmlOutputTextRenderer());
         facet.setValue("a");
-        htmlPanelGrid_.getFacets().put("header", facet);
+        htmlPanelGrid.getFacets().put("header", facet);
         MockFacesContext context = getFacesContext();
 
         // ## Act ##
-        renderer_.encodeBegin(context, htmlPanelGrid_);
+        renderer.encodeBegin(context, htmlPanelGrid);
 
         // ## Assert ##
         assertEquals(
@@ -137,12 +136,12 @@ public class HtmlPanelGridRendererTest extends RendererTest {
         MockHtmlOutputText facet = new MockHtmlOutputText();
         facet.setRenderer(new HtmlOutputTextRenderer());
         facet.setValue("aa");
-        htmlPanelGrid_.getFacets().put("header", facet);
-        htmlPanelGrid_.setHeaderClass("bb");
+        htmlPanelGrid.getFacets().put("header", facet);
+        htmlPanelGrid.setHeaderClass("bb");
         MockFacesContext context = getFacesContext();
 
         // ## Act ##
-        renderer_.encodeBegin(context, htmlPanelGrid_);
+        renderer.encodeBegin(context, htmlPanelGrid);
 
         // ## Assert ##
         assertEquals(
@@ -155,12 +154,12 @@ public class HtmlPanelGridRendererTest extends RendererTest {
         MockHtmlOutputText facet = new MockHtmlOutputText();
         facet.setRenderer(new HtmlOutputTextRenderer());
         facet.setValue("a");
-        htmlPanelGrid_.getFacets().put("header", facet);
-        htmlPanelGrid_.setColumns(4);
+        htmlPanelGrid.getFacets().put("header", facet);
+        htmlPanelGrid.setColumns(4);
         MockFacesContext context = getFacesContext();
 
         // ## Act ##
-        renderer_.encodeBegin(context, htmlPanelGrid_);
+        renderer.encodeBegin(context, htmlPanelGrid);
 
         // ## Assert ##
         assertEquals("<table><thead><tr>"
@@ -174,11 +173,11 @@ public class HtmlPanelGridRendererTest extends RendererTest {
         facet.setRenderer(new HtmlOutputTextRenderer());
         facet.setValue("a");
         facet.setRendered(false);
-        htmlPanelGrid_.getFacets().put("header", facet);
+        htmlPanelGrid.getFacets().put("header", facet);
         MockFacesContext context = getFacesContext();
 
         // ## Act ##
-        renderer_.encodeBegin(context, htmlPanelGrid_);
+        renderer.encodeBegin(context, htmlPanelGrid);
 
         // ## Assert ##
         assertEquals("<table", getResponseText());
@@ -189,11 +188,11 @@ public class HtmlPanelGridRendererTest extends RendererTest {
         MockHtmlOutputText facet = new MockHtmlOutputText();
         facet.setRenderer(new HtmlOutputTextRenderer());
         facet.setValue("a");
-        htmlPanelGrid_.getFacets().put("footer", facet);
+        htmlPanelGrid.getFacets().put("footer", facet);
         MockFacesContext context = getFacesContext();
 
         // ## Act ##
-        renderer_.encodeBegin(context, htmlPanelGrid_);
+        renderer.encodeBegin(context, htmlPanelGrid);
 
         // ## Assert ##
         assertEquals("<table><tfoot><tr><td>a</td></tr></tfoot>",
@@ -205,12 +204,12 @@ public class HtmlPanelGridRendererTest extends RendererTest {
         MockHtmlOutputText facet = new MockHtmlOutputText();
         facet.setRenderer(new HtmlOutputTextRenderer());
         facet.setValue("aa");
-        htmlPanelGrid_.getFacets().put("footer", facet);
-        htmlPanelGrid_.setFooterClass("bb");
+        htmlPanelGrid.getFacets().put("footer", facet);
+        htmlPanelGrid.setFooterClass("bb");
         MockFacesContext context = getFacesContext();
 
         // ## Act ##
-        renderer_.encodeBegin(context, htmlPanelGrid_);
+        renderer.encodeBegin(context, htmlPanelGrid);
 
         // ## Assert ##
         assertEquals("<table><tfoot><tr><td class=\"bb\">aa</td></tr>"
@@ -222,12 +221,12 @@ public class HtmlPanelGridRendererTest extends RendererTest {
         MockHtmlOutputText facet = new MockHtmlOutputText();
         facet.setRenderer(new HtmlOutputTextRenderer());
         facet.setValue("a");
-        htmlPanelGrid_.getFacets().put("footer", facet);
-        htmlPanelGrid_.setColumns(4);
+        htmlPanelGrid.getFacets().put("footer", facet);
+        htmlPanelGrid.setColumns(4);
         MockFacesContext context = getFacesContext();
 
         // ## Act ##
-        renderer_.encodeBegin(context, htmlPanelGrid_);
+        renderer.encodeBegin(context, htmlPanelGrid);
 
         // ## Assert ##
         assertEquals("<table><tfoot><tr>" + "<td colspan=\"4\">a</td>"
@@ -240,11 +239,11 @@ public class HtmlPanelGridRendererTest extends RendererTest {
         facet.setRenderer(new HtmlOutputTextRenderer());
         facet.setValue("a");
         facet.setRendered(false);
-        htmlPanelGrid_.getFacets().put("footer", facet);
+        htmlPanelGrid.getFacets().put("footer", facet);
         MockFacesContext context = getFacesContext();
 
         // ## Act ##
-        renderer_.encodeBegin(context, htmlPanelGrid_);
+        renderer.encodeBegin(context, htmlPanelGrid);
 
         // ## Assert ##
         assertEquals("<table", getResponseText());
@@ -256,12 +255,12 @@ public class HtmlPanelGridRendererTest extends RendererTest {
             MockHtmlOutputText child = new MockHtmlOutputText();
             child.setRenderer(htmlOutputTextRenderer);
             child.setValue("Z");
-            htmlPanelGrid_.getChildren().add(child);
+            htmlPanelGrid.getChildren().add(child);
         }
         MockFacesContext context = getFacesContext();
 
         // ## Act ##
-        renderer_.encodeChildren(context, htmlPanelGrid_);
+        renderer.encodeChildren(context, htmlPanelGrid);
 
         // ## Assert ##
         assertEquals("<tbody>" + "<tr><td>Z</td></tr>" + "</tbody>",
@@ -270,22 +269,22 @@ public class HtmlPanelGridRendererTest extends RendererTest {
 
     public void testEncodeChildren_RowAndColumnStyle() throws Exception {
         HtmlOutputTextRenderer htmlOutputTextRenderer = new HtmlOutputTextRenderer();
-        htmlPanelGrid_.setColumnClasses("c1, c2, c3");
-        htmlPanelGrid_.setRowClasses("r1a r1b, r2");
-        htmlPanelGrid_.setColumns(7);
+        htmlPanelGrid.setColumnClasses("c1, c2, c3");
+        htmlPanelGrid.setRowClasses("r1a r1b, r2");
+        htmlPanelGrid.setColumns(7);
 
         for (int i = 0; i < 15; i++) {
             MockHtmlOutputText child = new MockHtmlOutputText();
             child.setRenderer(htmlOutputTextRenderer);
             char c = (char) ('A' + i); // A .. O
             child.setValue(String.valueOf(c));
-            htmlPanelGrid_.getChildren().add(child);
+            htmlPanelGrid.getChildren().add(child);
         }
 
         MockFacesContext context = getFacesContext();
 
         // ## Act ##
-        renderer_.encodeChildren(context, htmlPanelGrid_);
+        renderer.encodeChildren(context, htmlPanelGrid);
 
         // ## Assert ##
         assertEquals(
@@ -310,39 +309,39 @@ public class HtmlPanelGridRendererTest extends RendererTest {
     public void testEncode_WithAllAttributes() throws Exception {
         // attributes
         {
-            htmlPanelGrid_.setBgcolor("a");
-            htmlPanelGrid_.setBorder(3);
-            htmlPanelGrid_.setCellpadding("c");
-            htmlPanelGrid_.setCellspacing("d");
-            htmlPanelGrid_.setColumnClasses("e1, e2");
-            htmlPanelGrid_.setDir("f");
-            htmlPanelGrid_.setFooterClass("g");
-            htmlPanelGrid_.setFrame("h");
-            htmlPanelGrid_.setHeaderClass("i");
-            htmlPanelGrid_.setLang("j");
-            htmlPanelGrid_.setOnclick("k");
-            htmlPanelGrid_.setOndblclick("l");
-            htmlPanelGrid_.setOnkeydown("m");
-            htmlPanelGrid_.setOnkeypress("n");
-            htmlPanelGrid_.setOnkeyup("o");
-            htmlPanelGrid_.setOnmousedown("p");
-            htmlPanelGrid_.setOnmousemove("q");
-            htmlPanelGrid_.setOnmouseout("r");
-            htmlPanelGrid_.setOnmouseover("s");
-            htmlPanelGrid_.setOnmouseup("t");
-            htmlPanelGrid_.setRowClasses("u1, u2");
-            htmlPanelGrid_.setRules("v");
-            htmlPanelGrid_.setStyle("w");
-            htmlPanelGrid_.setStyleClass("x");
-            htmlPanelGrid_.setSummary("y");
-            htmlPanelGrid_.setTitle("z");
-            htmlPanelGrid_.setWidth("1");
+            htmlPanelGrid.setBgcolor("a");
+            htmlPanelGrid.setBorder(3);
+            htmlPanelGrid.setCellpadding("c");
+            htmlPanelGrid.setCellspacing("d");
+            htmlPanelGrid.setColumnClasses("e1, e2");
+            htmlPanelGrid.setDir("f");
+            htmlPanelGrid.setFooterClass("g");
+            htmlPanelGrid.setFrame("h");
+            htmlPanelGrid.setHeaderClass("i");
+            htmlPanelGrid.setLang("j");
+            htmlPanelGrid.setOnclick("k");
+            htmlPanelGrid.setOndblclick("l");
+            htmlPanelGrid.setOnkeydown("m");
+            htmlPanelGrid.setOnkeypress("n");
+            htmlPanelGrid.setOnkeyup("o");
+            htmlPanelGrid.setOnmousedown("p");
+            htmlPanelGrid.setOnmousemove("q");
+            htmlPanelGrid.setOnmouseout("r");
+            htmlPanelGrid.setOnmouseover("s");
+            htmlPanelGrid.setOnmouseup("t");
+            htmlPanelGrid.setRowClasses("u1, u2");
+            htmlPanelGrid.setRules("v");
+            htmlPanelGrid.setStyle("w");
+            htmlPanelGrid.setStyleClass("x");
+            htmlPanelGrid.setSummary("y");
+            htmlPanelGrid.setTitle("z");
+            htmlPanelGrid.setWidth("1");
         }
-        htmlPanelGrid_.setId("A");
+        htmlPanelGrid.setId("A");
 
-        htmlPanelGrid_.setColumnClasses("c1, c2");
-        htmlPanelGrid_.setRowClasses("r1, r2,r3");
-        htmlPanelGrid_.setColumns(3);
+        htmlPanelGrid.setColumnClasses("c1, c2");
+        htmlPanelGrid.setRowClasses("r1, r2,r3");
+        htmlPanelGrid.setColumns(3);
 
         // table header, footer
         HtmlOutputTextRenderer htmlOutputTextRenderer = new HtmlOutputTextRenderer();
@@ -350,12 +349,12 @@ public class HtmlPanelGridRendererTest extends RendererTest {
             MockHtmlOutputText header = new MockHtmlOutputText();
             header.setRenderer(htmlOutputTextRenderer);
             header.setValue("tableHeader");
-            htmlPanelGrid_.getFacets().put("header", header);
+            htmlPanelGrid.getFacets().put("header", header);
 
             MockHtmlOutputText footer = new MockHtmlOutputText();
             footer.setRenderer(htmlOutputTextRenderer);
             footer.setValue("tableFooter");
-            htmlPanelGrid_.getFacets().put("footer", footer);
+            htmlPanelGrid.getFacets().put("footer", footer);
         }
 
         // table value
@@ -363,11 +362,10 @@ public class HtmlPanelGridRendererTest extends RendererTest {
             MockHtmlOutputText child = new MockHtmlOutputText();
             child.setRenderer(htmlOutputTextRenderer);
             child.setValue(String.valueOf(i));
-            htmlPanelGrid_.getChildren().add(child);
+            htmlPanelGrid.getChildren().add(child);
         }
 
-        MockFacesContext context = getFacesContext();
-        encodeByRenderer(renderer_, context, htmlPanelGrid_);
+        encodeByRenderer(renderer, htmlPanelGrid);
 
         Diff diff = new Diff(
                 "<table"
@@ -422,7 +420,7 @@ public class HtmlPanelGridRendererTest extends RendererTest {
     }
 
     public void testGetRendersChildren() throws Exception {
-        assertEquals(true, renderer_.getRendersChildren());
+        assertEquals(true, renderer.getRendersChildren());
     }
 
     private HtmlPanelGridRenderer createHtmlPanelGridRenderer() {
