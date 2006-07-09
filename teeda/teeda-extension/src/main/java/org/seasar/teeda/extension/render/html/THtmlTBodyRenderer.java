@@ -26,7 +26,7 @@ import org.seasar.framework.util.AssertionUtil;
 import org.seasar.teeda.core.JsfConstants;
 
 /**
- * @author shot
+ * @author higa
  *
  */
 public class THtmlTBodyRenderer extends Renderer {
