@@ -17,6 +17,7 @@ package org.seasar.teeda.core.render.html;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -133,30 +134,18 @@ public abstract class AbstractHtmlRenderer extends Renderer {
     }
 
     private String[] getRenderAttributeNames(final Class rendererClass) {
-        for (Class clazz = rendererClass; !clazz.equals(Object.class); clazz = clazz
-                .getSuperclass()) {
-            final String[] names = getRenderAttributeNames0(clazz);
-            if (names != null) {
-                return names;
-            }
+        final RendererMetaData rendererMetaData = rendererMetaDataFactory
+                .getRendererMetaData(rendererClass);
+        final String[] names = renderAttributes.getAttributeNames(
+                rendererMetaData.getComponentFamily(), rendererMetaData
+                        .getRendererType());
+        if (names != null) {
+            return names;
         }
         return new String[0];
     }
 
-    private String[] getRenderAttributeNames0(Class rendererClass) {
-        final BeanDesc beanDesc = BeanDescFactory.getBeanDesc(rendererClass);
-        if (!(beanDesc.hasField(JsfConstants.COMPONENT_FAMILY) && beanDesc
-                .hasField(JsfConstants.RENDERER_TYPE))) {
-            return null;
-        }
-        final Field family = beanDesc.getField(JsfConstants.COMPONENT_FAMILY);
-        final String componentFamily = (String) FieldUtil.get(family, null);
-        final Field type = beanDesc.getField(JsfConstants.RENDERER_TYPE);
-        final String rendererType = (String) FieldUtil.get(type, null);
-        final String[] names = renderAttributes.getAttributeNames(
-                componentFamily, rendererType);
-        return names;
-    }
+    private RendererMetaDataFactory rendererMetaDataFactory = new RendererMetaDataFactory();
 
     protected void renderAttributes(Map attributes, ResponseWriter writer)
             throws IOException {
@@ -229,6 +218,85 @@ public abstract class AbstractHtmlRenderer extends Renderer {
 
     public void setRenderAttributes(RenderAttributes renderAttributes) {
         this.renderAttributes = renderAttributes;
+    }
+
+    private static class RendererMetaData {
+
+        private String componentFamily;
+
+        private String rendererType;
+
+        public String getComponentFamily() {
+            return componentFamily;
+        }
+
+        public void setComponentFamily(String componentFamily) {
+            this.componentFamily = componentFamily;
+        }
+
+        public String getRendererType() {
+            return rendererType;
+        }
+
+        public void setRendererType(String rendererType) {
+            this.rendererType = rendererType;
+        }
+
+    }
+
+    private static class RendererMetaDataFactory {
+
+        private Map rendererMetaDataCache = new HashMap();
+
+        public RendererMetaData getRendererMetaData(final Class rendererClass) {
+            RendererMetaData rmd = (RendererMetaData) rendererMetaDataCache
+                    .get(rendererClass.getName());
+            if (rmd != null) {
+                return rmd;
+            }
+            rmd = new RendererMetaData();
+            for (Class clazz = rendererClass; !clazz.equals(Object.class); clazz = clazz
+                    .getSuperclass()) {
+                final String componentFamily = getComponentFamily(rendererClass);
+                if (componentFamily == null) {
+                    continue;
+                }
+                rmd.setComponentFamily(componentFamily);
+            }
+            for (Class clazz = rendererClass; !clazz.equals(Object.class); clazz = clazz
+                    .getSuperclass()) {
+                final String rendererType = getRendererType(rendererClass);
+                if (rendererType == null) {
+                    continue;
+                }
+                rmd.setRendererType(rendererType);
+            }
+            rendererMetaDataCache.put(rendererClass.getName(), rmd);
+            return rmd;
+        }
+
+        private String getComponentFamily(Class rendererClass) {
+            final BeanDesc beanDesc = BeanDescFactory
+                    .getBeanDesc(rendererClass);
+            if (!beanDesc.hasField(JsfConstants.COMPONENT_FAMILY)) {
+                return null;
+            }
+            final Field family = beanDesc
+                    .getField(JsfConstants.COMPONENT_FAMILY);
+            final String componentFamily = (String) FieldUtil.get(family, null);
+            return componentFamily;
+        }
+
+        private String getRendererType(Class rendererClass) {
+            final BeanDesc beanDesc = BeanDescFactory
+                    .getBeanDesc(rendererClass);
+            if (!beanDesc.hasField(JsfConstants.RENDERER_TYPE)) {
+                return null;
+            }
+            final Field type = beanDesc.getField(JsfConstants.RENDERER_TYPE);
+            final String rendererType = (String) FieldUtil.get(type, null);
+            return rendererType;
+        }
     }
 
 }
