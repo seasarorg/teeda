@@ -17,3 +17,7 @@ tomahawk-1.1.1で確認。
   JsfSpecComponentIdLookupStrategyを使うようにする
 - formとinputCalendarの両方にid属性を付ける
 
+* 他のJSF実装と異なる点
+
+レンダラで、設定されている属性を(JSFで規定されていない属性でも)全て出力する。
+
