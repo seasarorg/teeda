@@ -16,19 +16,17 @@
 package javax.faces.component;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.FacesEvent;
 import javax.faces.event.FacesListener;
 import javax.faces.event.PhaseId;
+import javax.faces.internal.ComponentStates;
 import javax.faces.internal.NamingContainerUtil;
-import javax.faces.internal.SavedState;
 import javax.faces.internal.UIDataUtil;
 import javax.faces.model.DataModel;
 
@@ -64,13 +62,13 @@ public class UIData extends UIComponentBase implements NamingContainer {
 
     private boolean rowsSet = false;
 
-    private Map savedStates = new HashMap();
-
     private transient DataModel model = null;
 
     private Object value = null;
 
     private String var = null;
+
+    private ComponentStates componentStates = new ComponentStates();
 
     private static final String DEFAULT_RENDER_TYPE = "javax.faces.Table";
 
@@ -139,7 +137,6 @@ public class UIData extends UIComponentBase implements NamingContainer {
 
     public void setRowIndex(int rowIndex) {
         saveDescendantState();
-        // int previous = rowIndex_;
         this.rowIndex = rowIndex;
         DataModel model = getDataModel();
         model.setRowIndex(rowIndex);
@@ -190,22 +187,20 @@ public class UIData extends UIComponentBase implements NamingContainer {
         rowIndex = ((Integer) values[3]).intValue();
         rows = ((Integer) values[4]).intValue();
         rowsSet = ((Boolean) values[5]).booleanValue();
-        savedStates = (Map) values[6];
-        value = (Object) values[7];
-        var = (String) values[8];
+        value = (Object) values[6];
+        var = (String) values[7];
     }
 
     public Object saveState(FacesContext context) {
-        Object[] values = new Object[9];
+        Object[] values = new Object[8];
         values[0] = super.saveState(context);
         values[1] = new Integer(first);
         values[2] = firstSet ? Boolean.TRUE : Boolean.FALSE;
         values[3] = new Integer(rowIndex);
         values[4] = new Integer(rows);
         values[5] = rowsSet ? Boolean.TRUE : Boolean.FALSE;
-        values[6] = savedStates;
-        values[7] = value;
-        values[8] = var;
+        values[6] = value;
+        values[7] = var;
         return values;
     }
 
@@ -363,30 +358,6 @@ public class UIData extends UIComponentBase implements NamingContainer {
         setRowIndex(-1);
     }
 
-    protected boolean keepSavedState(FacesContext context) {
-        String clientId = null;
-        for (Iterator children = savedStates.keySet().iterator(); children
-                .hasNext();) {
-            clientId = (String) children.next();
-            if (keepSavedState0(context, clientId)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    protected boolean keepSavedState0(FacesContext context, String clientId) {
-        FacesMessage message = null;
-        for (Iterator messages = context.getMessages(clientId); messages
-                .hasNext();) {
-            message = (FacesMessage) messages.next();
-            if (message.getSeverity().compareTo(FacesMessage.SEVERITY_ERROR) >= 0) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     protected void saveDescendantState() {
         FacesContext context = getFacesContext();
         for (Iterator itr = getChildren().iterator(); itr.hasNext();) {
@@ -399,17 +370,7 @@ public class UIData extends UIComponentBase implements NamingContainer {
 
     protected void saveDescendantState(UIComponent component,
             FacesContext context) {
-        if (component instanceof EditableValueHolder) {
-            String clientId = component.getClientId(context);
-            EditableValueHolder holder = (EditableValueHolder) component;
-            SavedState state = new SavedState();
-            state.save(holder);
-            savedStates.put(clientId, state);
-        }
-        for (Iterator children = component.getChildren().iterator(); children
-                .hasNext();) {
-            saveDescendantState((UIComponent) children.next(), context);
-        }
+        componentStates.saveDescendantComponentStates(context, component);
     }
 
     protected void restoreDescendantState() {
@@ -424,21 +385,7 @@ public class UIData extends UIComponentBase implements NamingContainer {
 
     protected void restoreDescendantState(UIComponent component,
             FacesContext context) {
-        forceComponentIdClear(component);
-        if (component instanceof EditableValueHolder) {
-            EditableValueHolder holder = (EditableValueHolder) component;
-            String clientId = component.getClientId(context);
-            SavedState state = (SavedState) savedStates.get(clientId);
-            if (state == null) {
-                state = new SavedState();
-                savedStates.put(clientId, state);
-            }
-            state.restore(holder);
-        }
-        for (Iterator children = component.getChildren().iterator(); children
-                .hasNext();) {
-            restoreDescendantState((UIComponent) children.next(), context);
-        }
+        componentStates.restoreDescendantState(context, component);
     }
 
     protected DataModel getDataModel() {
@@ -451,13 +398,7 @@ public class UIData extends UIComponentBase implements NamingContainer {
 
     private void resetModelAndSavedState() {
         model = null;
-        if (savedStates != null) {
-            savedStates.clear();
-        }
-    }
-
-    private void forceComponentIdClear(UIComponent component) {
-        NamingContainerUtil.refreshClientId(component);
+        componentStates.clear();
     }
 
     static class FacesEventWrapper extends FacesEvent {

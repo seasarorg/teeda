@@ -33,7 +33,7 @@ import org.seasar.teeda.extension.component.TForEach;
 
 /**
  * @author higa
- *
+ * @author manhole
  */
 public class TForEachRenderer extends Renderer {
 
@@ -140,9 +140,9 @@ public class TForEachRenderer extends Renderer {
     public void decode(FacesContext context, UIComponent component) {
         assertNotNull(context, component);
         final TForEach forEach = (TForEach) component;
-        final int rowCount = getRowCount(context, forEach);
-        forEach.setRowCount(rowCount);
-        for (int i = 0; i < rowCount; i++) {
+        final int rowSize = getRowSize(context, forEach);
+        forEach.setRowSize(rowSize);
+        for (int i = 0; i < rowSize; i++) {
             forEach.setRowIndex(i);
             forEach.restoreDescendantState(context);
             decodeChildren(context, component);
@@ -150,12 +150,13 @@ public class TForEachRenderer extends Renderer {
         }
     }
 
-    private int getRowCount(FacesContext context, final TForEach forEach) {
-        final Map req = context.getExternalContext().getRequestParameterMap();
+    private int getRowSize(FacesContext context, final TForEach forEach) {
+        final Map reqParam = context.getExternalContext()
+                .getRequestParameterMap();
         final String namingPrefix = forEach.getClientId(context)
                 + NamingContainer.SEPARATOR_CHAR;
-        int rowCount = -1;
-        for (final Iterator it = req.keySet().iterator(); it.hasNext();) {
+        int rowSize = -1;
+        for (final Iterator it = reqParam.keySet().iterator(); it.hasNext();) {
             final String name = (String) it.next();
             if (name.startsWith(namingPrefix)) {
                 final int pos = name.indexOf(NamingContainer.SEPARATOR_CHAR,
@@ -164,7 +165,7 @@ public class TForEachRenderer extends Renderer {
                     String num = name.substring(namingPrefix.length(), pos);
                     try {
                         int index = Integer.parseInt(num);
-                        rowCount = Math.max(rowCount, index);
+                        rowSize = Math.max(rowSize, index);
                     } catch (NumberFormatException e) {
                         // TODO 
                         e.printStackTrace();
@@ -172,8 +173,8 @@ public class TForEachRenderer extends Renderer {
                 }
             }
         }
-        rowCount++;
-        return rowCount;
+        rowSize++;
+        return rowSize;
     }
 
     private void decodeChildren(FacesContext context, UIComponent component) {

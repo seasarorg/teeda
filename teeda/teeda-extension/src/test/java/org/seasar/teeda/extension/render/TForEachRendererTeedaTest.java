@@ -17,6 +17,7 @@ package org.seasar.teeda.extension.render;
 
 import java.util.Map;
 
+import javax.faces.component.UIForm;
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
 import javax.faces.render.AbstractRendererTeedaTest;
@@ -59,7 +60,7 @@ public class TForEachRendererTeedaTest extends AbstractRendererTeedaTest {
         forEach.setRenderer(renderer);
     }
 
-    public void testEncode1() throws Exception {
+    public void testEncode_Foo1() throws Exception {
         // ## Arrange ##
         final FacesContext context = getFacesContext();
 
@@ -93,7 +94,7 @@ public class TForEachRendererTeedaTest extends AbstractRendererTeedaTest {
         assertEquals("112233", getResponseText());
     }
 
-    public void testEncode2() throws Exception {
+    public void testEncode_Foo2() throws Exception {
         // ## Arrange ##
         final FacesContext context = getFacesContext();
 
@@ -133,6 +134,41 @@ public class TForEachRendererTeedaTest extends AbstractRendererTeedaTest {
                 getResponseText());
     }
 
+    public void testEncode_Hoge1() throws Exception {
+        // ## Arrange ##
+        final FacesContext context = getFacesContext();
+
+        final String pageName = "hogePage";
+        final HogePage page = new HogePage();
+        container.register(page, pageName);
+        forEach.setPageName(pageName);
+        forEach.setItemsName("fugaItems");
+
+        // items
+        {
+            Fuga[] items = new Fuga[3];
+            items[0] = new Fuga("a", "1");
+            items[1] = new Fuga("b", "2");
+            items[2] = new Fuga("c", "3");
+            page.setFugaItems(items);
+        }
+
+        {
+            MockHtmlOutputText text = new MockHtmlOutputText();
+            text.setRenderer(outputTextRenderer);
+            text
+                    .setValueBinding("value",
+                            createValueBinding("#{hogePage.aaa}"));
+            forEach.getChildren().add(text);
+        }
+
+        // ## Act ##
+        encodeComponent(context, forEach);
+
+        // ## Assert ##
+        assertEquals("abc", getResponseText());
+    }
+
     private ValueBinding createValueBinding(final String el) {
         final FacesContext context = getFacesContext();
         ELParser parser = new CommonsELParser();
@@ -142,15 +178,14 @@ public class TForEachRendererTeedaTest extends AbstractRendererTeedaTest {
         return vb;
     }
 
-    public void testDecode() throws Exception {
+    public void testDecode_Foo1() throws Exception {
         // ## Arrange ##
-        MockUIViewRoot mockUIViewRoot = new MockUIViewRoot();
-        mockUIViewRoot.getChildren().add(forEach);
+        final MockUIViewRoot root = new MockUIViewRoot();
+        root.getChildren().add(forEach);
 
-        final HtmlInputTextRenderer inputTextRenderer = new HtmlInputTextRenderer();
         final FacesContext context = getFacesContext();
 
-        FooPage page = new FooPage();
+        final FooPage page = new FooPage();
         {
             final String pageName = "fooPage";
             container.register(page, pageName);
@@ -188,6 +223,121 @@ public class TForEachRendererTeedaTest extends AbstractRendererTeedaTest {
         assertEquals("A", items[0].getAaa());
         assertEquals("B", items[1].getAaa());
         assertEquals("C", items[2].getAaa());
+    }
+
+    public void testDecode_Foo2() throws Exception {
+        // ## Arrange ##
+        final MockUIViewRoot root = new MockUIViewRoot();
+        final UIForm namingContainer = new UIForm();
+        namingContainer.setId("form");
+        root.getChildren().add(namingContainer);
+        namingContainer.getChildren().add(forEach);
+
+        final FacesContext context = getFacesContext();
+
+        final FooPage page = new FooPage();
+        {
+            final String pageName = "fooPage";
+            container.register(page, pageName);
+            forEach.setPageName(pageName);
+            forEach.setItemsName("barItems");
+            forEach.setId("forEach");
+        }
+
+        {
+            MockHtmlInputText text = new MockHtmlInputText();
+            text.setId("zz");
+            text.setRenderer(inputTextRenderer);
+            text.setValueBinding("value",
+                    createValueBinding("#{fooPage.bar.aaa}"));
+            forEach.getChildren().add(text);
+        }
+
+        // input parameters
+        {
+            final Map req = context.getExternalContext()
+                    .getRequestParameterMap();
+            req.put("form:forEach:0:zz", "A1");
+            req.put("form:forEach:1:zz", "B1");
+            req.put("form:forEach:2:zz", "C1");
+            req.put("form:forEach:3:zz", "D1");
+        }
+
+        // ## Act ##
+        forEach.decode(context);
+        forEach.processValidators(context);
+        forEach.processUpdates(context);
+
+        // ## Assert ##
+        final Bar[] items = page.getBarItems();
+        assertEquals(4, items.length);
+        assertEquals("A1", items[0].getAaa());
+        assertEquals("B1", items[1].getAaa());
+        assertEquals("C1", items[2].getAaa());
+        assertEquals("D1", items[3].getAaa());
+    }
+
+    public void testDecode_Hoge1() throws Exception {
+        // ## Arrange ##
+        final MockUIViewRoot root = new MockUIViewRoot();
+        root.getChildren().add(forEach);
+
+        final FacesContext context = getFacesContext();
+
+        final HogePage page = new HogePage();
+        {
+            final String pageName = "hogePage";
+            container.register(page, pageName);
+            forEach.setPageName(pageName);
+            forEach.setItemsName("fugaItems");
+            forEach.setId("a");
+        }
+
+        {
+            MockHtmlInputText text = new MockHtmlInputText();
+            text.setId("y");
+            text.setRenderer(inputTextRenderer);
+            text
+                    .setValueBinding("value",
+                            createValueBinding("#{hogePage.aaa}"));
+            forEach.getChildren().add(text);
+        }
+        {
+            MockHtmlInputText text = new MockHtmlInputText();
+            text.setId("z");
+            text.setRenderer(inputTextRenderer);
+            text
+                    .setValueBinding("value",
+                            createValueBinding("#{hogePage.bbb}"));
+            forEach.getChildren().add(text);
+        }
+
+        // input parameters
+        {
+            final Map req = context.getExternalContext()
+                    .getRequestParameterMap();
+            req.put("a:0:y", "A");
+            req.put("a:1:y", "B");
+            req.put("a:2:y", "C");
+            req.put("a:0:z", "1");
+            req.put("a:1:z", "2");
+            req.put("a:2:z", "3");
+        }
+
+        // ## Act ##
+        forEach.decode(context);
+        forEach.processValidators(context);
+        forEach.processUpdates(context);
+
+        // ## Assert ##
+        final Fuga[] items = page.getFugaItems();
+        assertEquals(3, items.length);
+        assertEquals("A", items[0].getAaa());
+        assertEquals("B", items[1].getAaa());
+        assertEquals("C", items[2].getAaa());
+        assertEquals("1", items[0].getBbb());
+        assertEquals("2", items[1].getBbb());
+        assertEquals("3", items[2].getBbb());
     }
 
     private TForEachRenderer createTForEachRenderer() {
@@ -248,4 +398,72 @@ public class TForEachRendererTeedaTest extends AbstractRendererTeedaTest {
         }
     }
 
+    public static class HogePage {
+
+        private Fuga[] fugaItems;
+
+        public Fuga[] getFugaItems() {
+            return fugaItems;
+        }
+
+        public void setFugaItems(Fuga[] hogeItems) {
+            this.fugaItems = hogeItems;
+        }
+
+        private String aaa;
+
+        private String bbb;
+
+        public String getAaa() {
+            return aaa;
+        }
+
+        public void setAaa(String aaa) {
+            this.aaa = aaa;
+        }
+
+        public String getBbb() {
+            return bbb;
+        }
+
+        public void setBbb(String bbb) {
+            this.bbb = bbb;
+        }
+    }
+
+    public static class Fuga {
+
+        public Fuga() {
+        }
+
+        public Fuga(String aaa, String bbb) {
+            setAaa(aaa);
+            setBbb(bbb);
+        }
+
+        private String aaa;
+
+        private String bbb;
+
+        public String getAaa() {
+            return aaa;
+        }
+
+        public void setAaa(String aaa) {
+            this.aaa = aaa;
+        }
+
+        public String getBbb() {
+            return bbb;
+        }
+
+        public void setBbb(String bbb) {
+            this.bbb = bbb;
+        }
+
+        public String toString() {
+            return "Fuga{aaa=" + aaa + ",bbb=" + bbb + "}";
+        }
+
+    }
 }

@@ -67,4 +67,9 @@ public class ComponentStates {
             saveDescendantComponentStates(context, child);
         }
     }
+
+    public void clear() {
+        savedStates.clear();
+    }
+
 }

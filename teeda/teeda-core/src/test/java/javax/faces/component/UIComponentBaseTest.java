@@ -137,24 +137,24 @@ public class UIComponentBaseTest extends AbstractUIComponentTest {
     public void testFindComponent_Parent() {
         UIComponentBase component = createUIComponentBase();
         component.setId("aa");
-        UIComponent target = new MockUIComponentBase();
-        target.setId("bb");
-        target.getChildren().add(component);
+        UIComponent parent = new MockUIComponentBase();
+        parent.setId("bb");
+        parent.getChildren().add(component);
 
         UIComponent found = component.findComponent("bb");
         if (component instanceof NamingContainer) {
             assertEquals(null, found);
         } else {
-            assertSame(target, found);
+            assertSame(parent, found);
         }
     }
 
     public void testFindComponent_FromParent() {
         UIComponentBase component = createUIComponentBase();
         component.setId("aa");
-        UIComponent target = new MockUIComponentBase();
-        target.setId("bb");
-        target.getChildren().add(component);
+        UIComponent parent = new MockUIComponentBase();
+        parent.setId("bb");
+        parent.getChildren().add(component);
 
         UIComponent found = component.findComponent("aa");
         assertSame(component, found);
@@ -165,12 +165,12 @@ public class UIComponentBaseTest extends AbstractUIComponentTest {
         UIComponentBase component = createUIComponentBase();
         component.setId("foo");
 
-        UIComponent target = new MockUIComponent();
-        target.setId("bb");
+        UIComponent bottom = new MockUIComponent();
+        bottom.setId("bb");
 
         UIForm namingContainer = new UIForm();
         namingContainer.setId("aa");
-        namingContainer.getChildren().add(target);
+        namingContainer.getChildren().add(bottom);
 
         component.getChildren().add(namingContainer);
 
@@ -543,16 +543,19 @@ public class UIComponentBaseTest extends AbstractUIComponentTest {
         UIComponentBase.restoreAttachedState(context, stateObj);
     }
 
-    public final void testSaveAndRestoreAttachedState_AttacedObjectIsList() throws Exception {
+    public final void testSaveAndRestoreAttachedState_AttacedObjectIsList()
+            throws Exception {
         NullFacesContext context = new NullFacesContext();
-        AttachedObjectStateWrapper wrapper = new AttachedObjectStateWrapper(context, new Hoge());
+        AttachedObjectStateWrapper wrapper = new AttachedObjectStateWrapper(
+                context, new Hoge());
         List restoreList = new ArrayList();
         restoreList.add(wrapper);
-        List restoredList = (List) UIComponentBase.restoreAttachedState(context, restoreList);
+        List restoredList = (List) UIComponentBase.restoreAttachedState(
+                context, restoreList);
         assertNotNull(restoredList);
         assertTrue(restoredList.size() == 0);
     }
-    
+
     private static class MockFacesListener1 implements FacesListener {
         public String toString() {
             return "mock1";
@@ -590,6 +593,6 @@ public class UIComponentBaseTest extends AbstractUIComponentTest {
     }
 
     public static class Hoge {
-        
+
     }
 }

@@ -33,7 +33,7 @@ import org.seasar.teeda.extension.ExtensionConstants;
 
 /**
  * @author higa
- * 
+ * @author manhole
  */
 public class TForEach extends UIComponentBase implements NamingContainer {
 
@@ -73,7 +73,7 @@ public class TForEach extends UIComponentBase implements NamingContainer {
 
     private int rowIndex = INITIAL_ROW_INDEX;
 
-    private int rowCount;
+    private int rowSize;
 
     private int getRowIndex() {
         return rowIndex;
@@ -135,11 +135,13 @@ public class TForEach extends UIComponentBase implements NamingContainer {
         }
         Object page = getPage();
         BeanDesc beanDesc = BeanDescFactory.getBeanDesc(page.getClass());
-        PropertyDesc itemPd = beanDesc.getPropertyDesc(getItemName());
-        final Class itemType = itemPd.getPropertyType();
-        final Object item = ClassUtil.newInstance(itemType);
-        itemPd.setValue(page, item);
-        for (int i = 0; i < rowCount; ++i) {
+        if (beanDesc.hasPropertyDesc(getItemName())) {
+            PropertyDesc itemPd = beanDesc.getPropertyDesc(getItemName());
+            final Class itemType = itemPd.getPropertyType();
+            final Object item = ClassUtil.newInstance(itemType);
+            itemPd.setValue(page, item);
+        }
+        for (int i = 0; i < rowSize; ++i) {
             setRowIndex(i);
             restoreDescendantState(context);
             super.processValidators(context);
@@ -154,27 +156,61 @@ public class TForEach extends UIComponentBase implements NamingContainer {
         if (!isRendered()) {
             return;
         }
-        Object page = getPage();
-        BeanDesc beanDesc = BeanDescFactory.getBeanDesc(page.getClass());
-        PropertyDesc itemsPd = beanDesc.getPropertyDesc(getItemsName());
-        final Class itemsType = itemsPd.getPropertyType();
-        if (!itemsType.isArray()) {
+        final Object page = getPage();
+        final BeanDesc pageBeanDesc = BeanDescFactory.getBeanDesc(page
+                .getClass());
+        final PropertyDesc itemsPd = pageBeanDesc
+                .getPropertyDesc(getItemsName());
+        final Class itemsClass = itemsPd.getPropertyType();
+        if (!itemsClass.isArray()) {
             return;
         }
-        final Object[] items = (Object[]) Array.newInstance(itemsType
-                .getComponentType(), rowCount);
-        final PropertyDesc itemPd = beanDesc.getPropertyDesc(getItemName());
-        final Class itemType = itemPd.getPropertyType();
-        for (int i = 0; i < rowCount; ++i) {
-            setRowIndex(i);
-            final Object item = ClassUtil.newInstance(itemType);
-            itemPd.setValue(page, item);
-            restoreDescendantState(context);
-            super.processUpdates(context);
-            saveDescendantComponentStates(context);
-            items[i] = item;
+        final Object[] items = (Object[]) Array.newInstance(itemsClass
+                .getComponentType(), rowSize);
+        if (pageBeanDesc.hasPropertyDesc(getItemName())) {
+            final PropertyDesc itemPd = pageBeanDesc
+                    .getPropertyDesc(getItemName());
+            final Class itemClass = itemPd.getPropertyType();
+            for (int i = 0; i < rowSize; ++i) {
+                setRowIndex(i);
+                final Object item = ClassUtil.newInstance(itemClass);
+                itemPd.setValue(page, item);
+                restoreDescendantState(context);
+                super.processUpdates(context);
+                saveDescendantComponentStates(context);
+                items[i] = item;
+            }
+        } else {
+            Class itemClass = itemsClass.getComponentType();
+            final BeanDesc itemBeanDesc = BeanDescFactory
+                    .getBeanDesc(itemClass);
+            for (int i = 0; i < rowSize; ++i) {
+                setRowIndex(i);
+                restoreDescendantState(context);
+                super.processUpdates(context);
+                saveDescendantComponentStates(context);
+                final Object item = ClassUtil.newInstance(itemClass);
+                pageToItem(page, pageBeanDesc, item, itemBeanDesc);
+                items[i] = item;
+            }
         }
+
         itemsPd.setValue(page, items);
+    }
+
+    private void pageToItem(final Object page, final BeanDesc pageBeanDesc,
+            final Object item, final BeanDesc itemBeanDesc) {
+        for (int i = 0; i < itemBeanDesc.getPropertyDescSize(); i++) {
+            final PropertyDesc itemPd = itemBeanDesc.getPropertyDesc(i);
+            final String propertyName = itemPd.getPropertyName();
+            if (!pageBeanDesc.hasPropertyDesc(propertyName)) {
+                continue;
+            }
+            final PropertyDesc pagePd = pageBeanDesc
+                    .getPropertyDesc(propertyName);
+            final Object value = pagePd.getValue(page);
+            itemPd.setValue(item, value);
+        }
     }
 
     public void saveDescendantComponentStates(FacesContext context) {
@@ -205,11 +241,12 @@ public class TForEach extends UIComponentBase implements NamingContainer {
         itemsName = (String) values[2];
     }
 
-    public int getRowCount() {
-        return rowCount;
+    public int getRowSize() {
+        return rowSize;
     }
 
-    public void setRowCount(int rowCount) {
-        this.rowCount = rowCount;
+    public void setRowSize(int rowCount) {
+        this.rowSize = rowCount;
     }
+
 }
