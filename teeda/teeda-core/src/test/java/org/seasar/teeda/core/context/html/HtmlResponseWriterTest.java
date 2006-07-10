@@ -248,6 +248,28 @@ public class HtmlResponseWriterTest extends TestCase {
         String value = writer.toString();
         assertEquals("&lt;" + "a" + "&gt;", value);
     }
+    
+    public void testWriteText_SingleQuart() throws Exception {
+        HtmlResponseWriter responseWriter = new HtmlResponseWriter();
+        SPrintWriter writer = new SPrintWriter();
+        responseWriter.setWriter(writer);
+        
+        responseWriter.writeText("abc'def", null);
+        String value = writer.toString();
+
+        assertEquals("abc&#39;def", value);
+    }
+
+    public void testWriteText_SingleQuart2() throws Exception {
+        HtmlResponseWriter responseWriter = new HtmlResponseWriter();
+        SPrintWriter writer = new SPrintWriter();
+        responseWriter.setWriter(writer);
+        
+        responseWriter.writeText("'''''", null);
+        String value = writer.toString();
+
+        assertEquals("&#39;&#39;&#39;&#39;&#39;", value);
+    }
 
     public void testWriteText_Chars() throws Exception {
         HtmlResponseWriter responseWriter = new HtmlResponseWriter();

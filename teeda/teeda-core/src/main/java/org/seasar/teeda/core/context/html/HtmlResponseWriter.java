@@ -177,7 +177,6 @@ public class HtmlResponseWriter extends ResponseWriter {
                 sb.append("&quot;");
             } else if (quote && c == '\'') {
                 sb.append("&#39;");
-                break;
             } else {
                 sb.append(c);
             }
