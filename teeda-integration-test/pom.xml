@@ -7,7 +7,7 @@
   <parent>
     <groupId>org.seasar.teeda</groupId>
     <artifactId>teeda-project</artifactId>
-    <version>1.0-beta-4</version>
+    <version>1.0-beta-5</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.seasar.teeda</groupId>
@@ -34,6 +34,13 @@
             </includes>
           </configuration>
         </plugin>
+        <plugin>
+          <artifactId>maven-eclipse-plugin</artifactId>
+          <configuration>
+            <outputDirectory>build/classes</outputDirectory>
+            <downloadSources>true</downloadSources>
+          </configuration>
+        </plugin>
       </plugins>
     </pluginManagement>
   </build>
@@ -54,9 +61,15 @@
     </dependency>
     -->
     <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.2</version>
+      <type>jar</type>
+    </dependency>
+    <dependency>
       <groupId>org.seasar.teeda</groupId>
       <artifactId>teeda-core</artifactId>
-      <version>1.0-beta-4</version>
+      <version>1.0-beta-5</version>
       <type>jar</type>
     </dependency>
     <dependency>
@@ -80,13 +93,17 @@
     <dependency>
       <groupId>htmlunit</groupId>
       <artifactId>htmlunit</artifactId>
-      <version>1.8</version>
+      <version>1.9</version>
       <type>jar</type>
       <scope>test</scope>
       <exclusions>
         <exclusion>
           <artifactId>jsr173</artifactId>
           <groupId>javax.xml</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>pull-parser</artifactId>
+          <groupId>pull-parser</groupId>
         </exclusion>
       </exclusions>
     </dependency>
@@ -145,7 +162,7 @@
     <dependency>
       <groupId>org.seasar.teeda</groupId>
       <artifactId>teeda-core</artifactId>
-      <version>1.0-beta-4</version>
+      <version>1.0-beta-5</version>
       <type>test-jar</type>
     </dependency>
   </dependencies>

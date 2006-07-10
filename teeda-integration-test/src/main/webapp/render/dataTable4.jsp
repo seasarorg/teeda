@@ -8,7 +8,7 @@
 <body>
 <f:view>
 	<h:form id="dataTableForm">
-		<h:dataTable value="#{dataTableBean.items}" var="item" border="1">
+		<h:dataTable id="table" value="#{dataTableBean.items}" var="item" border="1">
 			<f:facet name="header">
 				<h:outputText value="products" />
 			</f:facet>
@@ -28,7 +28,7 @@
 				<f:facet name="header">
 					<h:outputText value="price" />
 				</f:facet>
-				<h:inputText value="#{item.price}" />
+				<h:inputText id="price" value="#{item.price}" />
 			</h:column>
 		</h:dataTable>
 		<h:commandButton id="submit1"/>

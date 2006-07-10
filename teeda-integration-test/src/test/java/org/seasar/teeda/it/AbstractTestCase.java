@@ -24,6 +24,7 @@ import java.net.URL;
 
 import javax.xml.parsers.ParserConfigurationException;
 
+import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
@@ -56,7 +57,7 @@ public abstract class AbstractTestCase extends TestCase {
 
     private static String baseUrl_ = "http://localhost:" + port_ + "/";
 
-    protected static WebApplicationTestSetup setUpTestSuite(
+    protected static Test setUpTestSuite(
             final Class testClass) {
         if (testClass == null) {
             throw new NullPointerException("testClass");
@@ -66,7 +67,7 @@ public abstract class AbstractTestCase extends TestCase {
         return setUpTestSuite(testSuite, pomFile);
     }
 
-    protected static WebApplicationTestSetup setUpTestSuite(
+    protected static Test setUpTestSuite(
             TestSuite testSuite, File pomFile) {
         JettyServerSetup jettySetup = new JettyServerSetup(testSuite);
         jettySetup.setPort(port_);

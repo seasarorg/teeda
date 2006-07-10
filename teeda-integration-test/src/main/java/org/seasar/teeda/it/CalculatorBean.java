@@ -48,12 +48,20 @@ public class CalculatorBean {
         return result_;
     }
 
-    public void multiply() {
-        result_ = x_.multiply(y_);
+    public void add() {
+        result_ = x_.add(y_);
     }
 
     public void subtract() {
         result_ = x_.subtract(y_);
+    }
+
+    public void multiply() {
+        result_ = x_.multiply(y_);
+    }
+
+    public void divide() {
+        result_ = x_.divide(y_, BigDecimal.ROUND_HALF_EVEN);
     }
 
 }

@@ -16,7 +16,6 @@
 package org.seasar.teeda.core.unit;
 
 import java.io.File;
-import java.io.IOException;
 
 import junit.extensions.TestSetup;
 import junit.framework.Test;
@@ -25,7 +24,6 @@ import org.mortbay.http.SocketListener;
 import org.mortbay.jetty.Server;
 import org.mortbay.jetty.servlet.WebApplicationContext;
 import org.mortbay.util.InetAddrPort;
-import org.mortbay.util.MultiException;
 
 /**
  * @author manhole
@@ -51,23 +49,23 @@ public class JettyServerSetup extends TestSetup {
         server_ = startJetty();
     }
 
-    private Server startJetty() throws IOException, MultiException {
+    private Server startJetty() throws Exception {
         Server server = new Server();
         SocketListener listener = new SocketListener(new InetAddrPort(
-            getHost(), getPort()));
+                getHost(), getPort()));
         server.addListener(listener);
 
         File webapp = getWebapp();
         System.out.println("webapp:" + webapp);
         WebApplicationContext context = new WebApplicationContext(webapp
-            .getCanonicalPath());
+                .getCanonicalPath());
         context.setContextPath(getContextPath());
         server.addContext(context);
 
         try {
             System.out.println("### Jetty start ###");
             server.start();
-        } catch (MultiException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             throw e;
         }
@@ -123,6 +121,16 @@ public class JettyServerSetup extends TestSetup {
 
     public void setServer(Server server) {
         server_ = server;
+    }
+
+    private String name_;
+
+    public String getName() {
+        return name_;
+    }
+
+    public void setName(String name) {
+        name_ = name;
     }
 
 }

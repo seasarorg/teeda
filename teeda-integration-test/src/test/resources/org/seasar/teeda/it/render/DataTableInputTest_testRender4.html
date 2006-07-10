@@ -1,0 +1,49 @@
+<html>
+<head>
+<title>dataTable4.jsp</title>
+</head>
+<body>
+
+<form 
+	id="dataTableForm" 
+	name="dataTableForm" 
+	method="post" 
+	enctype="application/x-www-form-urlencoded" 
+	action="/faces/render/dataTable4.jsp"
+>
+	<table id="table" border="1">
+		<thead>
+			<tr>
+				<th colspan="2" scope="colgroup">products</th>
+			</tr>
+			<tr>
+				<th colgroup="col">name</th>
+				<th colgroup="col">price</th>
+			</tr>
+		</thead>
+	<tfoot>
+		<tr>
+			<td colspan="2">3 items.</td>
+		</tr>
+	</tfoot>
+	<tbody>
+		<tr>
+			<td>item1</td>
+			<td><input type="text" id="price" name="dataTableForm:table:0:price" value="1000" /></td>
+		</tr>
+		<tr>
+			<td>item2</td>
+			<td><input type="text" id="price" name="dataTableForm:table:1:price" value="2000" /></td>
+		</tr>
+		<tr>
+			<td>item3</td>
+			<td><input type="text" id="price" name="dataTableForm:table:2:price" value="3000" /></td>
+		</tr>
+	</tbody>
+	</table>
+	<input type="submit" id="submit1" name="dataTableForm:submit1" />
+	<input type="hidden" name="dataTableForm/render/dataTable4.jsp" value="dataTableForm" />
+</form>
+
+</body>
+</html>

@@ -17,9 +17,10 @@ package org.seasar.teeda.it.render;
 
 import java.net.URL;
 
-import org.seasar.teeda.it.AbstractTestCase;
-
 import junit.framework.Test;
+
+import org.custommonkey.xmlunit.Diff;
+import org.seasar.teeda.it.AbstractTestCase;
 
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
@@ -34,7 +35,7 @@ public class OutputLabelTest extends AbstractTestCase {
         return setUpTestSuite(OutputLabelTest.class);
     }
 
-    public void testOutputLink() throws Exception {
+    public void testRender() throws Exception {
         // ## Arrange ##
         URL url = getUrl("faces/render/outputLabel.jsp");
         System.out.println(url);
@@ -50,6 +51,10 @@ public class OutputLabelTest extends AbstractTestCase {
 
         HtmlSpan span = (HtmlSpan) page.getHtmlElementById("hello");
         assertEquals("Hello OutputLabel", span.asText());
+
+        final String expected = readText("testRender.html");
+        Diff diff = diff(expected, body);
+        assertEquals(diff.toString(), true, diff.similar());
     }
 
 }

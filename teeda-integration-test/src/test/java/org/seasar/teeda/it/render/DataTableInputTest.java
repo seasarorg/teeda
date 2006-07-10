@@ -19,10 +19,10 @@ import java.net.URL;
 
 import junit.framework.Test;
 
+import org.custommonkey.xmlunit.Diff;
 import org.jaxen.JaxenException;
 import org.seasar.teeda.it.AbstractTestCase;
 
-import com.gargoylesoftware.htmlunit.Page;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlForm;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
@@ -45,11 +45,17 @@ public class DataTableInputTest extends AbstractTestCase {
 
         WebClient webClient = new WebClient();
 
+        // 1
+
         HtmlPage page1 = (HtmlPage) webClient.getPage(url);
 
         final String body1 = getBody(page1).trim();
         System.out.println(body1);
         assertEquals("dataTable4.jsp", page1.getTitleText());
+
+        final String expected = readText("testRender4.html");
+        Diff diff = diff(expected, body1);
+        assertEquals(diff.toString(), true, diff.similar());
 
         {
             final HtmlTextInput a = getInputA(page1);
@@ -62,6 +68,9 @@ public class DataTableInputTest extends AbstractTestCase {
             c.setValueAttribute("3003");
             assertEquals("3003", c.getValueAttribute());
         }
+
+        // 2
+
         final HtmlPage page2 = (HtmlPage) getSubmit(page1).click();
         final String body2 = getBody(page2).trim();
         System.out.println(body2);
