@@ -162,9 +162,6 @@ public class TForEach extends UIComponentBase implements NamingContainer {
         final PropertyDesc itemsPd = pageBeanDesc
                 .getPropertyDesc(getItemsName());
         final Class itemsClass = itemsPd.getPropertyType();
-        if (!itemsClass.isArray()) {
-            return;
-        }
         final Object[] items = (Object[]) Array.newInstance(itemsClass
                 .getComponentType(), rowSize);
         if (pageBeanDesc.hasPropertyDesc(getItemName())) {

@@ -26,6 +26,9 @@ import javax.faces.internal.ComponentStates;
 
 import org.seasar.framework.util.AssertionUtil;
 
+/**
+ * @author manhole
+ */
 public class THtmlGrid extends UIComponentBase implements NamingContainer {
 
     private static final String GRID = "Grid";
@@ -63,21 +66,6 @@ public class THtmlGrid extends UIComponentBase implements NamingContainer {
 
     private void setRowIndex(int rowIndex) {
         this.rowIndex = rowIndex;
-    }
-
-    public void eachRow(Each block) {
-        FacesContext context = FacesContext.getCurrentInstance();
-        final List items = getItems();
-        for (int i = 0; i < items.size(); i++) {
-            setRowIndex(i);
-            final Object rowBean = items.get(i);
-            enterRow(context, rowBean);
-            try {
-                block.each();
-            } finally {
-                leaveRow(context);
-            }
-        }
     }
 
     public Object getValue() {
@@ -118,13 +106,15 @@ public class THtmlGrid extends UIComponentBase implements NamingContainer {
         return (List) value;
     }
 
-    void enterRow(final FacesContext context, Object rowBean) {
+    public void enterRow(final FacesContext context, final int rowIndex) {
+        setRowIndex(rowIndex);
+        final Object rowBean = getItems().get(getRowIndex());
         final String itemName = getNaturalId();
         context.getExternalContext().getRequestMap().put(itemName, rowBean);
         componentStates.restoreDescendantState(context, this);
     }
 
-    void leaveRow(FacesContext context) {
+    public void leaveRow(FacesContext context) {
         final String itemName = getNaturalId();
         context.getExternalContext().getRequestMap().remove(itemName);
         componentStates.saveDescendantComponentStates(context, this);
@@ -148,15 +138,12 @@ public class THtmlGrid extends UIComponentBase implements NamingContainer {
         if (!isRendered()) {
             return;
         }
-        eachRow(new Each() {
-            public void each() {
-                processDecodes0(context);
-            }
-        });
-    }
-
-    private void processDecodes0(final FacesContext context) {
-        super.processDecodes(context);
+        final int rowSize = getRowSize();
+        for (int i = 0; i < rowSize; i++) {
+            enterRow(context, i);
+            super.processDecodes(context);
+            leaveRow(context);
+        }
     }
 
     public void processValidators(final FacesContext context) {
@@ -164,15 +151,12 @@ public class THtmlGrid extends UIComponentBase implements NamingContainer {
         if (!isRendered()) {
             return;
         }
-        eachRow(new Each() {
-            public void each() {
-                processValidators0(context);
-            }
-        });
-    }
-
-    private void processValidators0(FacesContext context) {
-        super.processValidators(context);
+        final int rowSize = getRowSize();
+        for (int i = 0; i < rowSize; i++) {
+            enterRow(context, i);
+            super.processValidators(context);
+            leaveRow(context);
+        }
     }
 
     public void processUpdates(final FacesContext context) {
@@ -180,19 +164,16 @@ public class THtmlGrid extends UIComponentBase implements NamingContainer {
         if (!isRendered()) {
             return;
         }
-        eachRow(new Each() {
-            public void each() {
-                processUpdates0(context);
-            }
-        });
+        final int rowSize = getRowSize();
+        for (int i = 0; i < rowSize; i++) {
+            enterRow(context, i);
+            super.processUpdates(context);
+            leaveRow(context);
+        }
     }
 
-    private void processUpdates0(FacesContext context) {
-        super.processUpdates(context);
-    }
-
-    public static interface Each {
-        public void each();
+    public int getRowSize() {
+        return getItems().size();
     }
 
 }

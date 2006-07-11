@@ -21,6 +21,7 @@ import java.util.List;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIComponentBaseTest;
 import javax.faces.context.FacesContext;
+import javax.faces.el.VariableResolver;
 
 /**
  * @author manhole
@@ -43,17 +44,30 @@ public class THtmlGridTest extends UIComponentBaseTest {
     public void testEnterRow() throws Exception {
         // ## Arrange ##
         THtmlGrid htmlGrid = createTHtmlGrid();
-        htmlGrid.setId("fooooGrid");
+        final String prefix = "foooo";
+        htmlGrid.setId(prefix + "Grid");
         final FacesContext facesContext = getFacesContext();
-        final Object object = new Object();
+        final Object object1 = new Object();
+        final Object object2 = new Object();
+        htmlGrid.setValue(Arrays.asList(new Object[] { object1, object2 }));
+
+        final VariableResolver variableResolver = facesContext.getApplication()
+                .getVariableResolver();
 
         // ## Act ##
-        htmlGrid.enterRow(facesContext, object);
-
         // ## Assert ##
-        final Object rowBean = facesContext.getApplication()
-                .getVariableResolver().resolveVariable(facesContext, "foooo");
-        assertSame(object, rowBean);
+        {
+            htmlGrid.enterRow(facesContext, 0);
+            final Object rowBean = variableResolver.resolveVariable(
+                    facesContext, prefix);
+            assertSame(object1, rowBean);
+        }
+        {
+            htmlGrid.enterRow(facesContext, 1);
+            final Object rowBean = variableResolver.resolveVariable(
+                    facesContext, prefix);
+            assertSame(object2, rowBean);
+        }
     }
 
     public void testLeaveRow() throws Exception {

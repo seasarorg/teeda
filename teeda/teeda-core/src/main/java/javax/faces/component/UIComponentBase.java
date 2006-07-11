@@ -102,13 +102,16 @@ public abstract class UIComponentBase extends UIComponent {
 
     public String getClientId(FacesContext context) {
         AssertionUtil.assertNotNull("context", context);
-        if (clientId != null) {
-            return clientId;
+        if (clientId == null) {
+            clientId = createClientId(context);
         }
+        return clientId;
+    }
 
-        UIComponent component = this;
+    private String createClientId(FacesContext context) {
         String parentId = "";
-        while ((component = component.getParent()) != null) {
+        for (UIComponent component = getParent(); component != null; component = component
+                .getParent()) {
             if (component instanceof NamingContainer) {
                 parentId = component.getClientId(context)
                         + NamingContainer.SEPARATOR_CHAR;
@@ -116,7 +119,7 @@ public abstract class UIComponentBase extends UIComponent {
             }
         }
 
-        clientId = parentId
+        String clientId = parentId
                 + context.getExternalContext().encodeNamespace(
                         (id != null) ? id : getUniqueId(context));
         Renderer renderer = getRenderer(context);

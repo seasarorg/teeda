@@ -50,7 +50,14 @@ public class HtmlGraphicImageRenderer extends AbstractHtmlRenderer {
         writer.startElement(JsfConstants.IMG_ELEM, htmlGraphicImage);
         RendererUtil.renderIdAttributeIfNecessary(writer, htmlGraphicImage,
                 getIdForRender(context, htmlGraphicImage));
+        final String url = getUrl(context, htmlGraphicImage);
+        RendererUtil.renderAttribute(writer, JsfConstants.SRC_ATTR, url);
+        renderAttributes(htmlGraphicImage, writer);
+        writer.endElement(JsfConstants.IMG_ELEM);
+    }
 
+    private String getUrl(FacesContext context,
+            HtmlGraphicImage htmlGraphicImage) {
         String url = htmlGraphicImage.getUrl();
         if (url == null) {
             url = "";
@@ -58,9 +65,7 @@ public class HtmlGraphicImageRenderer extends AbstractHtmlRenderer {
         url = FacesContextUtil.getViewHandler(context).getResourceURL(context,
                 url);
         url = context.getExternalContext().encodeResourceURL(url);
-        RendererUtil.renderAttribute(writer, JsfConstants.SRC_ATTR, url);
-        renderAttributes(htmlGraphicImage, writer);
-        writer.endElement(JsfConstants.IMG_ELEM);
+        return url;
     }
 
 }
