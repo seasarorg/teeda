@@ -10,7 +10,7 @@
 	<lifecycle>
 		<phase-listener>org.seasar.teeda.core.event.PhaseChangeTracer</phase-listener>
 	</lifecycle>
-	
+
 	<converter>
 		<converter-for-class>java.util.Date</converter-for-class>
 		<converter-class>examples.teeda.convert.TestDateTimeConverter</converter-class>
@@ -21,7 +21,7 @@
 		<managed-bean-class>examples.teeda.bean.HelloBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
-	
+
 	<managed-bean>
 		<managed-bean-name>commandLinkBean</managed-bean-name>
 		<managed-bean-class>examples.teeda.bean.CommandLinkBean</managed-bean-class>
@@ -45,7 +45,7 @@
 		<managed-bean-class>examples.teeda.bean.ChangePageBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
-	
+
 	<managed-bean>
 		<managed-bean-name>changePageBean2</managed-bean-name>
 		<managed-bean-class>examples.teeda.bean.ChangePageBean2</managed-bean-class>
@@ -57,10 +57,16 @@
 		<managed-bean-class>examples.teeda.bean.ConverterBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
-	
+
 	<managed-bean>
 		<managed-bean-name>validatorBean</managed-bean-name>
 		<managed-bean-class>examples.teeda.bean.ValidatorBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>errorPageBean</managed-bean-name>
+		<managed-bean-class>examples.teeda.bean.ErrorPageBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 
@@ -71,7 +77,7 @@
 			<to-view-id>/changePage/changePage1_result.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
-	
+
 	<navigation-rule>
 		<from-view-id>/changePage2/changePage2.jsp</from-view-id>
 		<navigation-case>
@@ -85,7 +91,7 @@
 			<to-view-id>/changePage2/changePage2_result_cat.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
-	
+
 	<navigation-rule>
 		<from-view-id>/link_no_js/commandLink2.jsp</from-view-id>
 		<navigation-case>
@@ -103,5 +109,5 @@
 			<redirect/>
 		</navigation-case>
 	</navigation-rule>
-	
+
 </faces-config>
