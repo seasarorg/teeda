@@ -20,6 +20,7 @@ import javax.faces.validator.ValidatorException;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.mock.MockUIComponent;
 import org.seasar.teeda.core.unit.TeedaTestCase;
+import org.seasar.teeda.extension.exception.ExtendValidatorException;
 
 /**
  * @author shot
@@ -76,13 +77,38 @@ public class TLongRangeValidatorTest extends TeedaTestCase {
         }
     }
 
+    public void testValidate_withMessageId() throws Exception {
+        TLongRangeValidator validator = new TLongRangeValidator();
+        validator.setFor("aaa");
+        validator.setMaximum(3);
+        validator.setMinimum(1);
+        validator.setMaximumMessageId("a");
+        MockUIComponent component = new MockUIComponent();
+        component.setId("aaa");
+        try {
+            validator.validate(getFacesContext(), component, "4");
+            fail();
+        } catch (ExtendValidatorException expected) {
+            assertNotNull(expected.getMessage());
+            assertEquals("a", expected.getMesssageIds()[0]);
+        }
+    }
+
     public void testSaveAndRestore() throws Exception {
         TLongRangeValidator validator = new TLongRangeValidator();
         validator.setFor("aaa");
+        validator.setMaximumMessageId("a");
+        validator.setMinimumMessageId("b");
+        validator.setNotInRangeMessageId("c");
+        validator.setTypeMessageId("d");
         Object state = validator.saveState(getFacesContext());
         validator = new TLongRangeValidator();
         validator.restoreState(getFacesContext(), state);
         assertEquals("aaa", validator.getFor());
+        assertEquals("a", validator.getMaximumMessageId());
+        assertEquals("b", validator.getMinimumMessageId());
+        assertEquals("c", validator.getNotInRangeMessageId());
+        assertEquals("d", validator.getTypeMessageId());
     }
 
 }
