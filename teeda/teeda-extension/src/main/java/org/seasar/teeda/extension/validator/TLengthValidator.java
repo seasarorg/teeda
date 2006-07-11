@@ -19,9 +19,11 @@ import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.LengthValidator;
+import javax.faces.validator.ValidatorException;
 
 import org.seasar.framework.util.AssertionUtil;
 import org.seasar.framework.util.StringUtil;
+import org.seasar.teeda.extension.exception.ExtendValidatorException;
 import org.seasar.teeda.extension.util.ValidatorUtil;
 
 /**
@@ -32,6 +34,10 @@ public class TLengthValidator extends LengthValidator {
     private String forValue;
 
     private String[] forValues;
+
+    private String maximumMessageId;
+
+    private String minimumMessageId;
 
     public TLengthValidator() {
         super();
@@ -52,13 +58,20 @@ public class TLengthValidator extends LengthValidator {
         if (!ValidatorUtil.isTargetCommand(context, forValues)) {
             return;
         }
-        super.validate(context, component, value);
+        try {
+            super.validate(context, component, value);
+        } catch (ValidatorException e) {
+            throw new ExtendValidatorException(e.getFacesMessage(), e,
+                    new String[] { maximumMessageId, minimumMessageId });
+        }
     }
 
     public Object saveState(FacesContext context) {
-        Object[] state = new Object[2];
+        Object[] state = new Object[4];
         state[0] = super.saveState(context);
         state[1] = forValue;
+        state[2] = maximumMessageId;
+        state[3] = minimumMessageId;
         return state;
     }
 
@@ -67,6 +80,8 @@ public class TLengthValidator extends LengthValidator {
         super.restoreState(context, state[0]);
         forValue = (String) state[1];
         setFor(forValue);
+        maximumMessageId = (String) state[2];
+        minimumMessageId = (String) state[3];
     }
 
     public String getFor() {
@@ -76,6 +91,24 @@ public class TLengthValidator extends LengthValidator {
     public void setFor(String forValue) {
         this.forValue = forValue;
         forValues = StringUtil.split(forValue, ", ");
+    }
+
+    public String getMaximumMessageId() {
+        return (maximumMessageId != null) ? maximumMessageId
+                : MAXIMUM_MESSAGE_ID;
+    }
+
+    public String getMinimumMessageId() {
+        return (minimumMessageId != null) ? minimumMessageId
+                : MINIMUM_MESSAGE_ID;
+    }
+
+    public void setMaximumMessageId(String maximumMessageId) {
+        this.maximumMessageId = maximumMessageId;
+    }
+
+    public void setMinimumMessageId(String minimumMessageId) {
+        this.minimumMessageId = minimumMessageId;
     }
 
 }

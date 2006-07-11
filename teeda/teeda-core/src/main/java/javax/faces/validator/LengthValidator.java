@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -39,7 +39,7 @@ public class LengthValidator implements Validator, StateHolder {
 
     private Integer minimum = null;
 
-    private boolean transientValue_ = false;
+    private boolean transientValue = false;
 
     public LengthValidator() {
         super();
@@ -100,7 +100,7 @@ public class LengthValidator implements Validator, StateHolder {
     }
 
     public boolean isTransient() {
-        return transientValue_;
+        return transientValue;
     }
 
     public void validate(FacesContext context, UIComponent component,
@@ -127,7 +127,7 @@ public class LengthValidator implements Validator, StateHolder {
     }
 
     public void setTransient(boolean transientValue) {
-        transientValue_ = transientValue;
+        this.transientValue = transientValue;
     }
 
     public Object saveState(FacesContext context) {

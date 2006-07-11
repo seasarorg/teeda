@@ -20,6 +20,7 @@ import javax.faces.validator.ValidatorException;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.mock.MockUIComponent;
 import org.seasar.teeda.core.unit.TeedaTestCase;
+import org.seasar.teeda.extension.exception.ExtendValidatorException;
 
 /**
  * @author shot
@@ -84,14 +85,31 @@ public class TRegularExpressionValidatorTest extends TeedaTestCase {
         }
     }
 
+    public void testValidate_validationErrorWithMessageId() throws Exception {
+        MockUIComponent component = new MockUIComponent();
+        component.setId("aaa");
+        TRegularExpressionValidator validator = new TRegularExpressionValidator();
+        validator.setPattern("^[1-9][a-z]");
+        validator.setMessageId("hoge");
+        try {
+            validator.validate(getFacesContext(), new MockUIComponent(), "aa");
+            fail();
+        } catch (ExtendValidatorException e) {
+            assertNotNull(e.getFacesMessage());
+            assertEquals("hoge", e.getMesssageIds()[0]);
+        }
+    }
+
     public void testSaveAndRestore() throws Exception {
         TRegularExpressionValidator validator = new TRegularExpressionValidator();
         validator.setFor("aaa");
         validator.setPattern("^[1-9]");
+        validator.setMessageId("bbb");
         Object state = validator.saveState(getFacesContext());
         validator = new TRegularExpressionValidator();
         validator.restoreState(getFacesContext(), state);
         assertEquals("aaa", validator.getFor());
         assertEquals("^[1-9]", validator.getPattern());
+        assertEquals("bbb", validator.getMessageId());
     }
 }

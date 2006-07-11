@@ -27,6 +27,7 @@ import org.seasar.teeda.core.unit.TeedaTestCase;
  */
 public class TDoubleRangeValidatorTest extends TeedaTestCase {
 
+    //TODO test more
     public void testValidate_normal() throws Exception {
         TDoubleRangeValidator validator = new TDoubleRangeValidator();
         validator.setFor("aaa");

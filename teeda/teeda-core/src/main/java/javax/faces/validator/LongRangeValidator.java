@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -41,7 +41,7 @@ public class LongRangeValidator implements Validator, StateHolder {
 
     private Long minimum = null;
 
-    private boolean transientValue_ = false;
+    private boolean transientValue = false;
 
     public LongRangeValidator() {
         super();
@@ -79,7 +79,7 @@ public class LongRangeValidator implements Validator, StateHolder {
                     Object[] args = { minimum, maximum,
                             UIComponentUtil.getLabel(component) };
                     throw new ValidatorException(FacesMessageUtil.getMessage(
-                            context, NOT_IN_RANGE_MESSAGE_ID, args));
+                            context, getNotInRangeMessageId(), args));
                 }
 
             } else if (minimum != null) {
@@ -89,7 +89,7 @@ public class LongRangeValidator implements Validator, StateHolder {
                     Object[] args = { minimum,
                             UIComponentUtil.getLabel(component) };
                     throw new ValidatorException(FacesMessageUtil.getMessage(
-                            context, MINIMUM_MESSAGE_ID, args));
+                            context, getMinimumMessageId(), args));
                 }
 
             } else if (maximum != null) {
@@ -99,24 +99,24 @@ public class LongRangeValidator implements Validator, StateHolder {
                     Object[] args = { maximum,
                             UIComponentUtil.getLabel(component) };
                     throw new ValidatorException(FacesMessageUtil.getMessage(
-                            context, MAXIMUM_MESSAGE_ID, args));
+                            context, getMaximumMessageId(), args));
                 }
             }
 
         } catch (NumberFormatException e) {
             throw new ValidatorException(FacesMessageUtil.getMessage(context,
-                    TYPE_MESSAGE_ID, new Object[] { UIComponentUtil
+                    getTypeMessageId(), new Object[] { UIComponentUtil
                             .getLabel(component) }));
         }
 
     }
 
     public boolean isTransient() {
-        return transientValue_;
+        return transientValue;
     }
 
     public void setTransient(boolean transientValue) {
-        transientValue_ = transientValue;
+        this.transientValue = transientValue;
     }
 
     public Object saveState(FacesContext context) {
@@ -184,5 +184,21 @@ public class LongRangeValidator implements Validator, StateHolder {
             value = Long.parseLong(obj.toString());
         }
         return value;
+    }
+
+    protected String getMaximumMessageId() {
+        return MAXIMUM_MESSAGE_ID;
+    }
+
+    protected String getMinimumMessageId() {
+        return MINIMUM_MESSAGE_ID;
+    }
+
+    protected String getNotInRangeMessageId() {
+        return NOT_IN_RANGE_MESSAGE_ID;
+    }
+
+    protected String getTypeMessageId() {
+        return TYPE_MESSAGE_ID;
     }
 }

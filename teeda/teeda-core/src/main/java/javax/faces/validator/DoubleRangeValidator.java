@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -40,7 +40,7 @@ public class DoubleRangeValidator implements Validator, StateHolder {
 
     private Double minimum = null;
 
-    private boolean transientValue_ = false;
+    private boolean transientValue = false;
 
     public DoubleRangeValidator() {
         super();
@@ -93,7 +93,7 @@ public class DoubleRangeValidator implements Validator, StateHolder {
     }
 
     public boolean isTransient() {
-        return transientValue_;
+        return transientValue;
     }
 
     public void restoreState(FacesContext context, Object state) {
@@ -118,7 +118,7 @@ public class DoubleRangeValidator implements Validator, StateHolder {
     }
 
     public void setTransient(boolean transientValue) {
-        transientValue_ = transientValue;
+        this.transientValue = transientValue;
     }
 
     public void validate(FacesContext context, UIComponent component,
@@ -143,7 +143,7 @@ public class DoubleRangeValidator implements Validator, StateHolder {
                     Object[] args = { minimum, maximum,
                             UIComponentUtil.getLabel(component) };
                     throw new ValidatorException(FacesMessageUtil.getMessage(
-                            context, NOT_IN_RANGE_MESSAGE_ID, args));
+                            context, getNotInRangeMessageId(), args));
                 }
 
             } else if (minimum != null) {
@@ -153,7 +153,7 @@ public class DoubleRangeValidator implements Validator, StateHolder {
                     Object[] args = { minimum,
                             UIComponentUtil.getLabel(component) };
                     throw new ValidatorException(FacesMessageUtil.getMessage(
-                            context, MINIMUM_MESSAGE_ID, args));
+                            context, getMinimumMessageId(), args));
                 }
 
             } else if (maximum != null) {
@@ -163,16 +163,32 @@ public class DoubleRangeValidator implements Validator, StateHolder {
                     Object[] args = { maximum,
                             UIComponentUtil.getLabel(component) };
                     throw new ValidatorException(FacesMessageUtil.getMessage(
-                            context, MAXIMUM_MESSAGE_ID, args));
+                            context, getMaximumMessageId(), args));
                 }
             }
 
         } catch (NumberFormatException e) {
             Object[] args = { UIComponentUtil.getLabel(component) };
             throw new ValidatorException(FacesMessageUtil.getMessage(context,
-                    TYPE_MESSAGE_ID, args));
+                    getTypeMessageId(), args));
         }
 
+    }
+
+    protected String getMaximumMessageId() {
+        return MAXIMUM_MESSAGE_ID;
+    }
+
+    protected String getMinimumMessageId() {
+        return MINIMUM_MESSAGE_ID;
+    }
+
+    protected String getNotInRangeMessageId() {
+        return NOT_IN_RANGE_MESSAGE_ID;
+    }
+
+    protected String getTypeMessageId() {
+        return TYPE_MESSAGE_ID;
     }
 
     private static double parseDoubleValue(Object obj)

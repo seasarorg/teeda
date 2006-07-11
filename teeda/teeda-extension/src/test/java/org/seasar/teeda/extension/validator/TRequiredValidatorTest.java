@@ -5,6 +5,7 @@ import javax.faces.validator.ValidatorException;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.mock.MockUIComponent;
 import org.seasar.teeda.core.unit.TeedaTestCase;
+import org.seasar.teeda.extension.exception.ExtendValidatorException;
 
 public class TRequiredValidatorTest extends TeedaTestCase {
 
@@ -42,9 +43,27 @@ public class TRequiredValidatorTest extends TeedaTestCase {
     public void testSaveAndRestore() throws Exception {
         TRequiredValidator validator = new TRequiredValidator();
         validator.setFor("aaa");
+        validator.setMessageId("hoge");
         Object state = validator.saveState(getFacesContext());
         validator = new TRequiredValidator();
         validator.restoreState(getFacesContext(), state);
         assertEquals("aaa", validator.getFor());
+        assertEquals("hoge", validator.getMessageId());
     }
+
+    public void testValidate_withMessageId() throws Exception {
+        MockUIComponent mock = new MockUIComponent();
+        mock.setId("aaa");
+        mock.getAttributes().put("label", "abc");
+        TRequiredValidator validator = new TRequiredValidator();
+        validator.setMessageId("hoge");
+        try {
+            validator.validate(getFacesContext(), mock, "");
+            fail();
+        } catch (ExtendValidatorException expected) {
+            assertNotNull(expected.getFacesMessage());
+            assertEquals("hoge", expected.getMesssageIds()[0]);
+        }
+    }
+
 }

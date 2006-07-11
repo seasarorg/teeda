@@ -1,0 +1,17 @@
+<html>
+<head>
+<script type="text/javascript" src="./THtmlInputDateText.js"></script>
+</head>
+<body>
+<input
+ type="text"
+ onfocus="removeDateSeparate(this,'/');"
+ onkeydown="return keycheckForDate(event);"
+ onkeypress="return keycheckForDate(event)"
+ onkeyup="convertByKey(this)"
+ onblur="convertByKey(this);addDateSeparate(this,'/','6,4');"
+ style="ime-mode:disabled;"
+ maxlength="10"/>
+<input type="submit" value="submit"/>
+</body>
+</html>

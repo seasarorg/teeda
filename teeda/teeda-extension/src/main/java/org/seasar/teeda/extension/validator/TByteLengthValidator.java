@@ -26,6 +26,7 @@ import javax.faces.validator.ValidatorException;
 
 import org.seasar.framework.util.AssertionUtil;
 import org.seasar.framework.util.StringUtil;
+import org.seasar.teeda.extension.exception.ExtendValidatorException;
 import org.seasar.teeda.extension.util.ValidatorUtil;
 
 /**
@@ -47,6 +48,10 @@ public class TByteLengthValidator extends LengthValidator {
 
     private String[] forValues;
 
+    private String minimumMessageId;
+
+    private String maximumMessageId;
+
     public void validate(FacesContext context, UIComponent component,
             Object value) throws FacesException {
         AssertionUtil.assertNotNull("context", context);
@@ -54,7 +59,12 @@ public class TByteLengthValidator extends LengthValidator {
         if (!ValidatorUtil.isTargetCommand(context, forValues)) {
             return;
         }
-        super.validate(context, component, value);
+        try {
+            super.validate(context, component, value);
+        } catch (ValidatorException e) {
+            throw new ExtendValidatorException(e.getFacesMessage(), e,
+                    new String[] { maximumMessageId, minimumMessageId });
+        }
     }
 
     protected int getConvertedValueLength(Object value) {
@@ -95,10 +105,12 @@ public class TByteLengthValidator extends LengthValidator {
     }
 
     public Object saveState(FacesContext context) {
-        Object[] values = new Object[3];
+        Object[] values = new Object[5];
         values[0] = super.saveState(context);
         values[1] = charSet;
         values[2] = forValue;
+        values[3] = maximumMessageId;
+        values[4] = minimumMessageId;
         return values;
     }
 
@@ -108,6 +120,8 @@ public class TByteLengthValidator extends LengthValidator {
         charSet = (String) state[1];
         forValue = (String) state[2];
         setFor(forValue);
+        maximumMessageId = (String) state[3];
+        minimumMessageId = (String) state[4];
     }
 
     private static byte[] getBytes(String value, String charSet)
@@ -115,12 +129,22 @@ public class TByteLengthValidator extends LengthValidator {
         return value.getBytes(charSet);
     }
 
-    protected String getMaximumMessageId() {
-        return MAXIMUM_MESSAGE_ID;
+    public String getMaximumMessageId() {
+        return (maximumMessageId != null) ? maximumMessageId
+                : MAXIMUM_MESSAGE_ID;
     }
 
-    protected String getMinimumMessageId() {
-        return MINIMUM_MESSAGE_ID;
+    public String getMinimumMessageId() {
+        return (minimumMessageId != null) ? minimumMessageId
+                : MINIMUM_MESSAGE_ID;
+    }
+
+    public void setMinimumMessageId(String minimumMessageId) {
+        this.minimumMessageId = minimumMessageId;
+    }
+
+    public void setMaximumMessageId(String maximumMessageId) {
+        this.maximumMessageId = maximumMessageId;
     }
 
 }

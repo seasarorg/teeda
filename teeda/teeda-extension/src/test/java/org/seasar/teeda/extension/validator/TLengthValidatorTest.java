@@ -20,6 +20,7 @@ import javax.faces.validator.ValidatorException;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.mock.MockUIComponent;
 import org.seasar.teeda.core.unit.TeedaTestCase;
+import org.seasar.teeda.extension.exception.ExtendValidatorException;
 
 /**
  * @author shot
@@ -76,13 +77,35 @@ public class TLengthValidatorTest extends TeedaTestCase {
         }
     }
 
+    public void testValidate_validateWithMessageId() throws Exception {
+        MockUIComponent mock = new MockUIComponent();
+        mock.setId("aaa");
+        TLengthValidator validator = new TLengthValidator();
+        validator.setMinimum(4);
+        validator.setMaximumMessageId("max");
+        validator.setMinimumMessageId("min");
+        getFacesContext().getExternalContext().getRequestMap().put(
+                JsfConstants.SUBMITTED_COMMAND, "bbb");
+        try {
+            validator.validate(getFacesContext(), new MockUIComponent(), "1");
+            fail();
+        } catch (ExtendValidatorException e) {
+            assertEquals("max", e.getMesssageIds()[0]);
+            assertEquals("min", e.getMesssageIds()[1]);
+        }
+    }
+
     public void testSaveAndRestore() throws Exception {
         TLengthValidator validator = new TLengthValidator();
         validator.setFor("aaa");
+        validator.setMaximumMessageId("max");
+        validator.setMinimumMessageId("min");
         Object state = validator.saveState(getFacesContext());
         validator = new TLengthValidator();
         validator.restoreState(getFacesContext(), state);
         assertEquals("aaa", validator.getFor());
+        assertEquals("max", validator.getMaximumMessageId());
+        assertEquals("min", validator.getMinimumMessageId());
     }
 
 }

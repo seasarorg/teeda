@@ -23,11 +23,11 @@ import javax.faces.context.FacesContext;
 import javax.faces.internal.FacesMessageUtil;
 import javax.faces.internal.UIComponentUtil;
 import javax.faces.validator.Validator;
-import javax.faces.validator.ValidatorException;
 
 import org.seasar.framework.util.AssertionUtil;
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.util.PatternUtil;
+import org.seasar.teeda.extension.exception.ExtendValidatorException;
 import org.seasar.teeda.extension.util.ValidatorUtil;
 
 /**
@@ -49,6 +49,8 @@ public class TRegularExpressionValidator implements Validator, StateHolder {
 
     private String[] forValues;
 
+    private String messageId;
+
     public TRegularExpressionValidator() {
     }
 
@@ -66,9 +68,11 @@ public class TRegularExpressionValidator implements Validator, StateHolder {
         if (!PatternUtil.matches(getPattern(), strValue)) {
             Object[] args = new Object[] { getPattern(),
                     UIComponentUtil.getLabel(component) };
-            FacesMessage message = FacesMessageUtil.getMessage(context,
-                    REGULAR_EXPRRESSION_MESSAGE_ID, args);
-            throw new ValidatorException(message);
+            String msgId = (messageId != null) ? messageId
+                    : REGULAR_EXPRRESSION_MESSAGE_ID;
+            FacesMessage message = FacesMessageUtil.getMessage(context, msgId,
+                    args);
+            throw new ExtendValidatorException(message, new String[] { msgId });
         }
     }
 
@@ -81,9 +85,10 @@ public class TRegularExpressionValidator implements Validator, StateHolder {
     }
 
     public Object saveState(FacesContext context) {
-        Object[] state = new Object[2];
+        Object[] state = new Object[3];
         state[0] = pattern;
         state[1] = forValue;
+        state[2] = messageId;
         return state;
     }
 
@@ -92,6 +97,7 @@ public class TRegularExpressionValidator implements Validator, StateHolder {
         pattern = (String) state[0];
         forValue = (String) state[1];
         setFor(forValue);
+        messageId = (String) state[2];
     }
 
     public String getPattern() {
@@ -109,6 +115,14 @@ public class TRegularExpressionValidator implements Validator, StateHolder {
     public void setFor(String forValue) {
         this.forValue = forValue;
         forValues = StringUtil.split(forValue, ", ");
+    }
+
+    public String getMessageId() {
+        return messageId;
+    }
+
+    public void setMessageId(String messageId) {
+        this.messageId = messageId;
     }
 
 }

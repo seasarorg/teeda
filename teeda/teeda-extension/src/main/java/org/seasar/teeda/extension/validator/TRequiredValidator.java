@@ -24,10 +24,10 @@ import javax.faces.internal.FacesMessageUtil;
 import javax.faces.internal.UIComponentUtil;
 import javax.faces.internal.UIInputUtil;
 import javax.faces.validator.Validator;
-import javax.faces.validator.ValidatorException;
 
 import org.seasar.framework.util.AssertionUtil;
 import org.seasar.framework.util.StringUtil;
+import org.seasar.teeda.extension.exception.ExtendValidatorException;
 import org.seasar.teeda.extension.util.ValidatorUtil;
 
 /**
@@ -46,6 +46,25 @@ public class TRequiredValidator implements Validator, StateHolder {
 
     private String[] forValues;
 
+    private String messageId;
+
+    public void validate(FacesContext context, UIComponent component,
+            Object value) throws FacesException {
+        AssertionUtil.assertNotNull("context", context);
+        AssertionUtil.assertNotNull("component", component);
+        if (!ValidatorUtil.isTargetCommand(context, forValues)) {
+            return;
+        }
+        if (UIInputUtil.isEmpty(value)) {
+            Object[] args = new Object[] { UIComponentUtil.getLabel(component) };
+            String msgId = (getMessageId() != null) ? getMessageId()
+                    : REQUIRED_MESSAGE_ID;
+            FacesMessage message = FacesMessageUtil.getMessage(context, msgId,
+                    args);
+            throw new ExtendValidatorException(message, new String[]{msgId});
+        }
+    }
+
     public boolean isTransient() {
         return transientValue;
     }
@@ -63,29 +82,24 @@ public class TRequiredValidator implements Validator, StateHolder {
         forValues = StringUtil.split(forValue, ", ");
     }
 
-    public void validate(FacesContext context, UIComponent component,
-            Object value) throws FacesException {
-        AssertionUtil.assertNotNull("context", context);
-        AssertionUtil.assertNotNull("component", component);
-        if (!ValidatorUtil.isTargetCommand(context, forValues)) {
-            return;
-        }
-        if (UIInputUtil.isEmpty(value)) {
-            Object[] args = new Object[] { UIComponentUtil.getLabel(component) };
-            FacesMessage message = FacesMessageUtil.getMessage(context,
-                    REQUIRED_MESSAGE_ID, args);
-            throw new ValidatorException(message);
-        }
+    public String getMessageId() {
+        return messageId;
+    }
+
+    public void setMessageId(String messageId) {
+        this.messageId = messageId;
     }
 
     public Object saveState(FacesContext context) {
-        Object[] values = new Object[1];
+        Object[] values = new Object[2];
         values[0] = forValue;
+        values[1] = messageId;
         return values;
     }
 
     public void restoreState(FacesContext context, Object state) {
         Object[] values = (Object[]) state;
         setFor((String) values[0]);
+        messageId = (String) values[1];
     }
 }
