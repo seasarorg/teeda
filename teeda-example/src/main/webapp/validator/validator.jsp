@@ -9,7 +9,9 @@
 <f:view>
 	<h:form>
 		<h:messages globalOnly="false" showDetail="true"/>
-		<h:outputText value="name(2 letters or more)" />
+		<h:outputText value="input name(2 letters or more)" rendered="#{!teeda_errorFinder.errorMessage}" />
+		<h:outputText value="see error above and input again(2 letters or more)" rendered="#{teeda_errorFinder.errorMessage}" />
+		<br/><br/>
 		<h:inputText id="name" value="#{validatorBean.name}">
 			<f:validateLength minimum="2" />
 		</h:inputText>
