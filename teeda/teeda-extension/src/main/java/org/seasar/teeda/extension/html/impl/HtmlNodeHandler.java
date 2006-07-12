@@ -9,18 +9,21 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
 package org.seasar.teeda.extension.html.impl;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 
+import org.seasar.framework.util.ResourceUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.extension.html.HtmlNode;
 import org.xml.sax.Attributes;
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -31,7 +34,12 @@ public class HtmlNodeHandler extends DefaultHandler {
 
     private HtmlNode root;
 
+    private Map dtdPaths = new HashMap();
+
+    private static final String XHTML_DTD_RESOURCES_PATH = "org/seasar/teeda/extension/resource/xhtml1/";
+
     public HtmlNodeHandler() {
+        initialize();
     }
 
     public HtmlNode getRoot() {
@@ -58,6 +66,18 @@ public class HtmlNodeHandler extends DefaultHandler {
             }
         }
 
+    }
+
+    public InputSource resolveEntity(String publicId, String systemId)
+            throws SAXException {
+        String dtdPath = null;
+        if (publicId != null) {
+            dtdPath = (String) dtdPaths.get(publicId);
+        }
+        if (dtdPath == null) {
+            return null;
+        }
+        return new InputSource(ResourceUtil.getResourceAsStream(dtdPath));
     }
 
     protected ElementNodeImpl peek() {
@@ -98,5 +118,28 @@ public class HtmlNodeHandler extends DefaultHandler {
 
     public void warning(SAXParseException e) throws SAXException {
         System.err.println(e);
+    }
+
+    public void registerDtdPath(String publicId, String dtdPath) {
+        dtdPaths.put(publicId, dtdPath);
+    }
+
+    protected void initialize() {
+        initializeDtdPathForXhtml1();
+    }
+
+    protected void initializeDtdPathForXhtml1() {
+        dtdPaths.put("-//W3C//DTD XHTML 1.0 Frameset//EN",
+                XHTML_DTD_RESOURCES_PATH + "xhtml1-frameset.dtd");
+        dtdPaths.put("-//W3C//DTD XHTML 1.0 Strict//EN",
+                XHTML_DTD_RESOURCES_PATH + "xhtml1-strict.dtd");
+        dtdPaths.put("-//W3C//DTD XHTML 1.0 Transitional//EN",
+                XHTML_DTD_RESOURCES_PATH + "xhtml1-transitional.dtd");
+        dtdPaths.put("-//W3C//ENTITIES Latin 1 for XHTML//EN",
+                XHTML_DTD_RESOURCES_PATH + "xhtml-lat1.ent");
+        dtdPaths.put("-//W3C//ENTITIES Symbols for XHTML//EN",
+                XHTML_DTD_RESOURCES_PATH + "xhtml-symbol.ent");
+        dtdPaths.put("-//W3C//ENTITIES Special for XHTML//EN",
+                XHTML_DTD_RESOURCES_PATH + "xhtml-special.ent");
     }
 }

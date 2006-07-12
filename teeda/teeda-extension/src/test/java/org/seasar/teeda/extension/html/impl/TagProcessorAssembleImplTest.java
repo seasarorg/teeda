@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -35,111 +35,114 @@ import org.seasar.teeda.extension.html.factory.InputTextFactory;
 import org.seasar.teeda.extension.html.factory.OutputTextFactory;
 import org.seasar.teeda.extension.mock.MockTaglibManager;
 
-
 /**
  * @author higa
  *
  */
 public class TagProcessorAssembleImplTest extends S2FrameworkTestCase {
-	
-	public void testAssembleElementNodeAsText() throws Exception {
+
+    public void testAssembleElementNodeAsText() throws Exception {
         String path = convertPath("emptyHtmlTag.html");
-        HtmlDescCacheImpl cache = new HtmlDescCacheImpl();
-        cache.setServletContext(getServletContext());
+        HtmlDescCacheImpl cache = createHtmlDescCacheImpl();
         HtmlDesc htmlDesc = cache.createHtmlDesc(path);
         PageDescImpl pageDesc = new PageDescImpl(FooPage.class, "fooPage");
-        ActionDescImpl actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
+        ActionDescImpl actionDesc = new ActionDescImpl(FooAction.class,
+                "fooAction");
         TagProcessorAssembler assembler = new TagProcessorAssemblerImpl();
         TagProcessor root = assembler.assemble(htmlDesc, pageDesc, actionDesc);
         assertTrue("1", root instanceof ElementProcessor);
         ElementProcessor viewRoot = (ElementProcessor) root;
         assertEquals("2", 1, viewRoot.getChildSize());
-	}
-    
+    }
+
     public void testAssembleElementNodeAsText2() throws Exception {
         String path = convertPath("allText.html");
-        HtmlDescCacheImpl cache = new HtmlDescCacheImpl();
-        cache.setServletContext(getServletContext());
+        HtmlDescCacheImpl cache = createHtmlDescCacheImpl();
         HtmlDesc htmlDesc = cache.createHtmlDesc(path);
         PageDescImpl pageDesc = new PageDescImpl(FooPage.class, "fooPage");
-        ActionDescImpl actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
+        ActionDescImpl actionDesc = new ActionDescImpl(FooAction.class,
+                "fooAction");
         TagProcessorAssembler assembler = new TagProcessorAssemblerImpl();
         TagProcessor root = assembler.assemble(htmlDesc, pageDesc, actionDesc);
         assertTrue("1", root instanceof ElementProcessor);
         ElementProcessor viewRoot = (ElementProcessor) root;
         assertEquals("2", 1, viewRoot.getChildSize());
         TextProcessor textProcessor = (TextProcessor) viewRoot.getChild(0);
-        assertEquals("3", "<html><body>Hello</body></html>", textProcessor.getValue());
+        assertEquals("3", "<html><body>Hello</body></html>", textProcessor
+                .getValue());
     }
-    
+
     public void testAssembleElementNodeAsText3() throws Exception {
         String path = convertPath("allText2.html");
-        HtmlDescCacheImpl cache = new HtmlDescCacheImpl();
-        cache.setServletContext(getServletContext());
+        HtmlDescCacheImpl cache = createHtmlDescCacheImpl();
         HtmlDesc htmlDesc = cache.createHtmlDesc(path);
         PageDescImpl pageDesc = new PageDescImpl(FooPage.class, "fooPage");
-        ActionDescImpl actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
+        ActionDescImpl actionDesc = new ActionDescImpl(FooAction.class,
+                "fooAction");
         TagProcessorAssembler assembler = new TagProcessorAssemblerImpl();
         TagProcessor root = assembler.assemble(htmlDesc, pageDesc, actionDesc);
         assertTrue("1", root instanceof ElementProcessor);
         ElementProcessor viewRoot = (ElementProcessor) root;
         assertEquals("2", 1, viewRoot.getChildSize());
         TextProcessor textProcessor = (TextProcessor) viewRoot.getChild(0);
-        assertEquals("3", "<html><body id=\"xxx\">Hello</body></html>", textProcessor.getValue());
+        assertEquals("3", "<html><body id=\"xxx\">Hello</body></html>",
+                textProcessor.getValue());
     }
-    
+
     public void testAssembleElementNodeAsText4() throws Exception {
         String path = convertPath("allText3.html");
-        HtmlDescCacheImpl cache = new HtmlDescCacheImpl();
-        cache.setServletContext(getServletContext());
+        HtmlDescCacheImpl cache = createHtmlDescCacheImpl();
         HtmlDesc htmlDesc = cache.createHtmlDesc(path);
         PageDescImpl pageDesc = new PageDescImpl(FooPage.class, "fooPage");
-        ActionDescImpl actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
+        ActionDescImpl actionDesc = new ActionDescImpl(FooAction.class,
+                "fooAction");
         TagProcessorAssembler assembler = new TagProcessorAssemblerImpl();
         TagProcessor root = assembler.assemble(htmlDesc, pageDesc, actionDesc);
         assertTrue("1", root instanceof ElementProcessor);
         ElementProcessor viewRoot = (ElementProcessor) root;
         assertEquals("2", 1, viewRoot.getChildSize());
         TextProcessor textProcessor = (TextProcessor) viewRoot.getChild(0);
-        assertEquals("3", "<html><body id=\"xxx\" /></html>", textProcessor.getValue());
+        assertEquals("3", "<html><body id=\"xxx\" /></html>", textProcessor
+                .getValue());
     }
-    
+
     public void testAssembleElementNodeAsText5() throws Exception {
         String path = convertPath("allText4.html");
-        HtmlDescCacheImpl cache = new HtmlDescCacheImpl();
-        cache.setServletContext(getServletContext());
+        HtmlDescCacheImpl cache = createHtmlDescCacheImpl();
         HtmlDesc htmlDesc = cache.createHtmlDesc(path);
         PageDescImpl pageDesc = new PageDescImpl(FooPage.class, "fooPage");
-        ActionDescImpl actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
+        ActionDescImpl actionDesc = new ActionDescImpl(FooAction.class,
+                "fooAction");
         TagProcessorAssembler assembler = new TagProcessorAssemblerImpl();
         TagProcessor root = assembler.assemble(htmlDesc, pageDesc, actionDesc);
         assertTrue("1", root instanceof ElementProcessor);
         ElementProcessor viewRoot = (ElementProcessor) root;
         assertEquals("2", 1, viewRoot.getChildSize());
         TextProcessor textProcessor = (TextProcessor) viewRoot.getChild(0);
-        assertEquals("3", "<html><body><span id=\"xxx\" />Hello</body></html>", textProcessor.getValue());
+        assertEquals("3", "<html><body><span id=\"xxx\" />Hello</body></html>",
+                textProcessor.getValue());
     }
-    
+
     public void testAssembleElementNodeAsText6() throws Exception {
         String path = convertPath("allText5.html");
-        HtmlDescCacheImpl cache = new HtmlDescCacheImpl();
-        cache.setServletContext(getServletContext());
+        HtmlDescCacheImpl cache = createHtmlDescCacheImpl();
         HtmlDesc htmlDesc = cache.createHtmlDesc(path);
         PageDescImpl pageDesc = new PageDescImpl(FooPage.class, "fooPage");
-        ActionDescImpl actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
+        ActionDescImpl actionDesc = new ActionDescImpl(FooAction.class,
+                "fooAction");
         TagProcessorAssembler assembler = new TagProcessorAssemblerImpl();
         TagProcessor root = assembler.assemble(htmlDesc, pageDesc, actionDesc);
         assertTrue("1", root instanceof ElementProcessor);
         ElementProcessor viewRoot = (ElementProcessor) root;
         assertEquals("2", 1, viewRoot.getChildSize());
         TextProcessor textProcessor = (TextProcessor) viewRoot.getChild(0);
-        assertEquals("3", "<html><body id=\"aaa\">Hello</body></html>", textProcessor.getValue());
+        assertEquals("3", "<html><body id=\"aaa\">Hello</body></html>",
+                textProcessor.getValue());
     }
-    
+
     public void testAssembleElementNodeAsText7() throws Exception {
         String path = convertPath("allText5.html");
-        HtmlDescCacheImpl cache = new HtmlDescCacheImpl();
-        cache.setServletContext(getServletContext());
+        HtmlDescCacheImpl cache = createHtmlDescCacheImpl();
         HtmlDesc htmlDesc = cache.createHtmlDesc(path);
         TagProcessorAssembler assembler = new TagProcessorAssemblerImpl();
         TagProcessor root = assembler.assemble(htmlDesc, null, null);
@@ -147,16 +150,17 @@ public class TagProcessorAssembleImplTest extends S2FrameworkTestCase {
         ElementProcessor viewRoot = (ElementProcessor) root;
         assertEquals("2", 1, viewRoot.getChildSize());
         TextProcessor textProcessor = (TextProcessor) viewRoot.getChild(0);
-        assertEquals("3", "<html><body id=\"aaa\">Hello</body></html>", textProcessor.getValue());
+        assertEquals("3", "<html><body id=\"aaa\">Hello</body></html>",
+                textProcessor.getValue());
     }
-    
+
     public void testAssembleElementNode() throws Exception {
         String path = convertPath("element.html");
-        HtmlDescCacheImpl cache = new HtmlDescCacheImpl();
-        cache.setServletContext(getServletContext());
+        HtmlDescCacheImpl cache = createHtmlDescCacheImpl();
         HtmlDesc htmlDesc = cache.createHtmlDesc(path);
         PageDescImpl pageDesc = new PageDescImpl(FooPage.class, "fooPage");
-        ActionDescImpl actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
+        ActionDescImpl actionDesc = new ActionDescImpl(FooAction.class,
+                "fooAction");
         MockTaglibManager taglibManager = new MockTaglibManager();
         TaglibElement jsfHtml = new TaglibElementImpl();
         jsfHtml.setUri(JsfConstants.JSF_HTML_URI);
@@ -168,28 +172,29 @@ public class TagProcessorAssembleImplTest extends S2FrameworkTestCase {
         InputTextFactory factory = new InputTextFactory();
         factory.setTaglibManager(taglibManager);
         TagProcessorAssemblerImpl assembler = new TagProcessorAssemblerImpl();
-        assembler.setFactories(new ElementProcessorFactory[]{factory});
+        assembler.setFactories(new ElementProcessorFactory[] { factory });
         TagProcessor root = assembler.assemble(htmlDesc, pageDesc, actionDesc);
         assertTrue("1", root instanceof ElementProcessor);
         ElementProcessor viewRoot = (ElementProcessor) root;
         assertEquals("2", 3, viewRoot.getChildSize());
         TextProcessor textProcessor = (TextProcessor) viewRoot.getChild(0);
         assertEquals("3", "<html><body>", textProcessor.getValue());
-        ElementProcessor elementProcessor = (ElementProcessor) viewRoot.getChild(1);
+        ElementProcessor elementProcessor = (ElementProcessor) viewRoot
+                .getChild(1);
         assertEquals("4", 1, elementProcessor.getChildSize());
         textProcessor = (TextProcessor) elementProcessor.getChild(0);
         assertEquals("5", "<hoge id=\"xxx\" />Hello", textProcessor.getValue());
         textProcessor = (TextProcessor) viewRoot.getChild(2);
         assertEquals("6", "</body></html>", textProcessor.getValue());
     }
-    
+
     public void testAssembleElementNode2() throws Exception {
         String path = convertPath("element2.html");
-        HtmlDescCacheImpl cache = new HtmlDescCacheImpl();
-        cache.setServletContext(getServletContext());
+        HtmlDescCacheImpl cache = createHtmlDescCacheImpl();
         HtmlDesc htmlDesc = cache.createHtmlDesc(path);
         PageDescImpl pageDesc = new PageDescImpl(FooPage.class, "fooPage");
-        ActionDescImpl actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
+        ActionDescImpl actionDesc = new ActionDescImpl(FooAction.class,
+                "fooAction");
         MockTaglibManager taglibManager = new MockTaglibManager();
         TaglibElement jsfHtml = new TaglibElementImpl();
         jsfHtml.setUri(JsfConstants.JSF_HTML_URI);
@@ -201,7 +206,7 @@ public class TagProcessorAssembleImplTest extends S2FrameworkTestCase {
         CommandButtonFactory factory = new CommandButtonFactory();
         factory.setTaglibManager(taglibManager);
         TagProcessorAssemblerImpl assembler = new TagProcessorAssemblerImpl();
-        assembler.setFactories(new ElementProcessorFactory[]{factory});
+        assembler.setFactories(new ElementProcessorFactory[] { factory });
         TagProcessor root = assembler.assemble(htmlDesc, pageDesc, actionDesc);
         assertTrue("1", root instanceof ElementProcessor);
         ElementProcessor viewRoot = (ElementProcessor) root;
@@ -212,14 +217,14 @@ public class TagProcessorAssembleImplTest extends S2FrameworkTestCase {
         textProcessor = (TextProcessor) viewRoot.getChild(2);
         assertEquals("5", "</body></html>", textProcessor.getValue());
     }
-    
+
     public void testOutputText() throws Exception {
         String path = convertPath("outputText.html");
-        HtmlDescCacheImpl cache = new HtmlDescCacheImpl();
-        cache.setServletContext(getServletContext());
+        HtmlDescCacheImpl cache = createHtmlDescCacheImpl();
         HtmlDesc htmlDesc = cache.createHtmlDesc(path);
         PageDescImpl pageDesc = new PageDescImpl(FooPage.class, "fooPage");
-        ActionDescImpl actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
+        ActionDescImpl actionDesc = new ActionDescImpl(FooAction.class,
+                "fooAction");
         MockTaglibManager taglibManager = new MockTaglibManager();
         TaglibElement jsfHtml = new TaglibElementImpl();
         jsfHtml.setUri(JsfConstants.JSF_HTML_URI);
@@ -231,7 +236,7 @@ public class TagProcessorAssembleImplTest extends S2FrameworkTestCase {
         OutputTextFactory factory = new OutputTextFactory();
         factory.setTaglibManager(taglibManager);
         TagProcessorAssemblerImpl assembler = new TagProcessorAssemblerImpl();
-        assembler.setFactories(new ElementProcessorFactory[]{factory});
+        assembler.setFactories(new ElementProcessorFactory[] { factory });
         TagProcessor root = assembler.assemble(htmlDesc, pageDesc, actionDesc);
         assertTrue(root instanceof ElementProcessor);
         ElementProcessor viewRoot = (ElementProcessor) root;
@@ -243,5 +248,13 @@ public class TagProcessorAssembleImplTest extends S2FrameworkTestCase {
         assertEquals(0, ep.getChildSize());
         textProcessor = (TextProcessor) viewRoot.getChild(2);
         assertEquals("</body></html>", textProcessor.getValue());
+    }
+
+    protected HtmlDescCacheImpl createHtmlDescCacheImpl() {
+        HtmlDescCacheImpl cache = new HtmlDescCacheImpl();
+        cache.setServletContext(getServletContext());
+        HtmlParserImpl htmlParser = new HtmlParserImpl();
+        cache.setHtmlParser(htmlParser);
+        return cache;
     }
 }

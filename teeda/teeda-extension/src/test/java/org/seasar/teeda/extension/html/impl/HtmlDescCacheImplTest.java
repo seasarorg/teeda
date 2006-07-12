@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -26,15 +26,18 @@ import org.seasar.teeda.extension.html.HtmlDesc;
  *
  */
 public class HtmlDescCacheImplTest extends S2FrameworkTestCase {
-	
+
     public void testCreateAndGetHtmlDesc() throws Exception {
         String path = convertPath("HtmlNodeHandler.xhtml");
         HtmlDescCacheImpl cache = new HtmlDescCacheImpl();
+        HtmlParserImpl htmlParser = new HtmlParserImpl();
+        cache.setHtmlParser(htmlParser);
         cache.setServletContext(getServletContext());
         HtmlDesc htmlDesc = cache.createHtmlDesc(path);
         assertNotNull("1", htmlDesc);
         assertFalse("2", htmlDesc.isModified());
-        assertEquals("3", "<html><body>Hello</body></html>", htmlDesc.getHtmlNode().toString());
+        assertEquals("3", "<html><body>Hello</body></html>", htmlDesc
+                .getHtmlNode().toString());
         assertSame("4", htmlDesc, cache.getHtmlDesc(path));
         File file = ResourceUtil.getResourceAsFile(path);
         Thread.sleep(1000);

@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -18,20 +18,16 @@ package org.seasar.teeda.extension.html.impl;
 import org.seasar.framework.unit.S2FrameworkTestCase;
 import org.seasar.framework.util.ResourceUtil;
 import org.seasar.teeda.extension.html.HtmlNode;
-import org.seasar.teeda.extension.html.HtmlParser;
-import org.seasar.teeda.extension.html.impl.HtmlParserImpl;
-import org.seasar.teeda.extension.html.impl.ElementNodeImpl;
-import org.seasar.teeda.extension.html.impl.TextNodeImpl;
 
 /**
  * @author higa
  *
  */
 public class HtmlNodeHandlerTest extends S2FrameworkTestCase {
-	
+
     public void testParse() throws Exception {
         String path = convertPath("HtmlNodeHandler.xhtml");
-        HtmlParser parser = new HtmlParserImpl();
+        HtmlParserImpl parser = new HtmlParserImpl();
         HtmlNode node = parser.parse(ResourceUtil.getResourceAsStream(path));
         assertEquals("1", "<html><body>Hello</body></html>", node.toString());
         ElementNodeImpl n = (ElementNodeImpl) node;
@@ -39,12 +35,14 @@ public class HtmlNodeHandlerTest extends S2FrameworkTestCase {
         TextNodeImpl t = (TextNodeImpl) n.getChild(0);
         assertEquals("3", "<body>Hello</body>", t.getValue());
     }
-    
+
     public void testParseUsingId() throws Exception {
         String path = convertPath("HtmlNodeHandler2.xhtml");
-        HtmlParser parser = new HtmlParserImpl();
+        HtmlParserImpl parser = new HtmlParserImpl();
         HtmlNode node = parser.parse(ResourceUtil.getResourceAsStream(path));
-        assertEquals("1", "<html><body>Hello<span id=\"aaa\" />World</body></html>", node.toString());
+        assertEquals("1",
+                "<html><body>Hello<span id=\"aaa\" />World</body></html>", node
+                        .toString());
         ElementNodeImpl n = (ElementNodeImpl) node;
         assertEquals("2", 3, n.getChildSize());
         TextNodeImpl t = (TextNodeImpl) n.getChild(0);
@@ -54,12 +52,15 @@ public class HtmlNodeHandlerTest extends S2FrameworkTestCase {
         TextNodeImpl t2 = (TextNodeImpl) n.getChild(2);
         assertEquals("5", "World</body>", t2.getValue());
     }
-    
+
     public void testParseUsingIdNest() throws Exception {
         String path = convertPath("HtmlNodeHandler3.xhtml");
-        HtmlParser parser = new HtmlParserImpl();
+        HtmlParserImpl parser = new HtmlParserImpl();
         HtmlNode node = parser.parse(ResourceUtil.getResourceAsStream(path));
-        assertEquals("1", "<html><div id=\"aaa\">Hello<span id=\"bbb\" />World</div></html>", node.toString());
+        assertEquals(
+                "1",
+                "<html><div id=\"aaa\">Hello<span id=\"bbb\" />World</div></html>",
+                node.toString());
         ElementNodeImpl n = (ElementNodeImpl) node;
         assertEquals("2", 1, n.getChildSize());
         ElementNodeImpl n2 = (ElementNodeImpl) n.getChild(0);
@@ -71,4 +72,21 @@ public class HtmlNodeHandlerTest extends S2FrameworkTestCase {
         TextNodeImpl t2 = (TextNodeImpl) n2.getChild(2);
         assertEquals("6", "World", t2.getValue());
     }
+
+    public void testParseIfDtdIsXhtmlStrict() throws Exception {
+        String path = convertPath("HtmlNodeHandler4.xhtml");
+        HtmlParserImpl parser = new HtmlParserImpl();
+        HtmlNode node = parser.parse(ResourceUtil.getResourceAsStream(path));
+        assertEquals(
+                "1",
+                "<html xmlns=\"http://www.w3.org/1999/xhtml\"><body><div><span value=\"Hello\"></span></div></body></html>",
+                node.toString());
+        ElementNodeImpl n = (ElementNodeImpl) node;
+        assertEquals("2", 1, n.getChildSize());
+        TextNodeImpl t = (TextNodeImpl) n.getChild(0);
+        assertEquals("3",
+                "<body><div><span value=\"Hello\"></span></div></body>", t
+                        .getValue());
+    }
+
 }

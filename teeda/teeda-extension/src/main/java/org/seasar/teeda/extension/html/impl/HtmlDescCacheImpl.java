@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -32,13 +32,15 @@ import org.seasar.teeda.extension.html.HtmlParser;
 
 /**
  * @author higa
- * 
+ *
  */
 public class HtmlDescCacheImpl implements HtmlDescCache {
 
     private Map htmlDescs = new HashMap();
 
     private ServletContext servletContext;
+
+    private HtmlParser htmlParser;
 
     public void setServletContext(ServletContext servletContext) {
         this.servletContext = servletContext;
@@ -65,30 +67,35 @@ public class HtmlDescCacheImpl implements HtmlDescCache {
     }
 
     protected HtmlDesc createHtmlDescFromRealPath(File file) {
-        HtmlNode htmlNode = null;
-        HtmlParser parser = new HtmlParserImpl();
         InputStream is = new BufferedInputStream(FileInputStreamUtil
                 .create(file));
+        return createHtmlDesc(is, file);
+    }
+
+    protected HtmlDesc createHtmlDescFromResource(String viewId) {
+        InputStream is = servletContext.getResourceAsStream(viewId);
+        if (is == null) {
+            throw new IllegalArgumentException(viewId);
+        }
+        return createHtmlDesc(is, null);
+    }
+
+    private HtmlDesc createHtmlDesc(InputStream is, File file) {
+        HtmlNode htmlNode = null;
         try {
-            htmlNode = parser.parse(is);
+            htmlNode = htmlParser.parse(is);
         } finally {
             InputStreamUtil.close(is);
         }
         return new HtmlDescImpl(htmlNode, file);
     }
 
-    protected HtmlDesc createHtmlDescFromResource(String viewId) {
-        HtmlNode htmlNode = null;
-        HtmlParser parser = new HtmlParserImpl();
-        InputStream is = servletContext.getResourceAsStream(viewId);
-        if (is == null) {
-            throw new IllegalArgumentException(viewId);
-        }
-        try {
-            htmlNode = parser.parse(is);
-        } finally {
-            InputStreamUtil.close(is);
-        }
-        return new HtmlDescImpl(htmlNode);
+    public HtmlParser getHtmlParser() {
+        return htmlParser;
     }
+
+    public void setHtmlParser(HtmlParser htmlParser) {
+        this.htmlParser = htmlParser;
+    }
+
 }

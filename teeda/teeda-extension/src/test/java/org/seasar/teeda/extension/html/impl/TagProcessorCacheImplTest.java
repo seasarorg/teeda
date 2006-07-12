@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -29,41 +29,46 @@ import org.seasar.teeda.extension.html.TagProcessor;
  *
  */
 public class TagProcessorCacheImplTest extends S2FrameworkTestCase {
-	
+
     public void testUpdateTagProcessor() throws Exception {
         NamingConventionImpl convention = new NamingConventionImpl();
-        String rootPath = "/" + ClassUtil.getPackageName(getClass()).replace('.', '/');
+        String rootPath = "/"
+                + ClassUtil.getPackageName(getClass()).replace('.', '/');
         convention.setViewRootPath(rootPath);
         convention.setViewExtension(".html");
         String path = rootPath + "/foo.html";
-        
+
         PageDescCacheImpl pageDescCache = new PageDescCacheImpl();
         pageDescCache.setNamingConvention(convention);
         pageDescCache.setContainer(getContainer());
         register(FooPage.class, "fooPage");
-        
+
         ActionDescCacheImpl actionDescCache = new ActionDescCacheImpl();
         actionDescCache.setNamingConvention(convention);
         actionDescCache.setContainer(getContainer());
         register(FooAction.class, "fooAction");
-        
+
         HtmlDescCacheImpl htmlDescCache = new HtmlDescCacheImpl();
+        HtmlParserImpl htmlParser = new HtmlParserImpl();
+        htmlDescCache.setHtmlParser(htmlParser);
         htmlDescCache.setServletContext(getServletContext());
-        
+
         TagProcessorCacheImpl tagProcessorCache = new TagProcessorCacheImpl();
         tagProcessorCache.setHtmlDescCache(htmlDescCache);
         tagProcessorCache.setPageDescCache(pageDescCache);
         tagProcessorCache.setActionDescCache(actionDescCache);
         tagProcessorCache.setAssembler(new TagProcessorAssemblerImpl());
         tagProcessorCache.setStateManager(new TeedaStateManagerImpl());
-        
+
         TagProcessor processor = tagProcessorCache.updateTagProcessor(path);
-        
+
         assertNotNull("1", processor);
         assertSame("2", processor, tagProcessorCache.updateTagProcessor(path));
-        File file = ResourceUtil.getResourceAsFile(ClassUtil.getResourcePath(FooPage.class));
+        File file = ResourceUtil.getResourceAsFile(ClassUtil
+                .getResourcePath(FooPage.class));
         Thread.sleep(1000);
         file.setLastModified(System.currentTimeMillis());
-        assertNotSame("3", processor, tagProcessorCache.updateTagProcessor(path));
+        assertNotSame("3", processor, tagProcessorCache
+                .updateTagProcessor(path));
     }
 }
