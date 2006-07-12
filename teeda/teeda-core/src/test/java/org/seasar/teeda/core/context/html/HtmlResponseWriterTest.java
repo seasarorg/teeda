@@ -29,6 +29,7 @@ import org.seasar.teeda.core.unit.ExceptionAssert;
 
 /**
  * @author manhole
+ * @author yone
  */
 public class HtmlResponseWriterTest extends TestCase {
 
@@ -577,6 +578,8 @@ public class HtmlResponseWriterTest extends TestCase {
         assertEquals("url?a=b%3Fc=d", writeURIAttributeTest("url?a=b?c=d"));
         assertEquals("ur%25l?a=b", writeURIAttributeTest("ur%l?a=b"));
         assertEquals("url?a=b&amp;c=d", writeURIAttributeTest("url?a=b&c=d"));
+        assertEquals("#", writeURIAttributeTest("#"));
+        assertEquals("http://hoge.foo/bar#", writeURIAttributeTest("http://hoge.foo/bar#"));
 
         final Character japaneseA = new Character((char) 12354);
         assertEquals("url?a=%E3%81%82", writeURIAttributeTest("url?a="
