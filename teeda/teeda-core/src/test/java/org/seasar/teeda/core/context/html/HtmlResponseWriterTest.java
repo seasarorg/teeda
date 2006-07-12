@@ -249,12 +249,12 @@ public class HtmlResponseWriterTest extends TestCase {
         String value = writer.toString();
         assertEquals("&lt;" + "a" + "&gt;", value);
     }
-    
+
     public void testWriteText_SingleQuart() throws Exception {
         HtmlResponseWriter responseWriter = new HtmlResponseWriter();
         SPrintWriter writer = new SPrintWriter();
         responseWriter.setWriter(writer);
-        
+
         responseWriter.writeText("abc'def", null);
         String value = writer.toString();
 
@@ -265,7 +265,7 @@ public class HtmlResponseWriterTest extends TestCase {
         HtmlResponseWriter responseWriter = new HtmlResponseWriter();
         SPrintWriter writer = new SPrintWriter();
         responseWriter.setWriter(writer);
-        
+
         responseWriter.writeText("'''''", null);
         String value = writer.toString();
 
@@ -572,38 +572,18 @@ public class HtmlResponseWriterTest extends TestCase {
     }
 
     public void testWriteURIAttribute() throws Exception {
-        assertEquals("url", writeURIAttributeTest("url"));
-        assertEquals("/a/b.html", writeURIAttributeTest("/a/b.html"));
-        assertEquals("url?a=b", writeURIAttributeTest("url?a=b"));
-        assertEquals("url?a=b%3Fc=d", writeURIAttributeTest("url?a=b?c=d"));
-        assertEquals("ur%25l?a=b", writeURIAttributeTest("ur%l?a=b"));
-        assertEquals("url?a=b&amp;c=d", writeURIAttributeTest("url?a=b&c=d"));
-        assertEquals("#", writeURIAttributeTest("#"));
-        assertEquals("http://hoge.foo/bar#", writeURIAttributeTest("http://hoge.foo/bar#"));
-
-        final Character japaneseA = new Character((char) 12354);
-        assertEquals("url?a=%E3%81%82", writeURIAttributeTest("url?a="
-                + japaneseA));
-        assertEquals("%E3%81%82?a=1", writeURIAttributeTest(japaneseA + "?a=1"));
-    }
-
-    private String writeURIAttributeTest(String input) throws IOException {
-        HtmlResponseWriter responseWriter = new HtmlResponseWriter();
+        HtmlResponseWriter responseWriter = new HtmlResponseWriter() {
+            protected String encodeURIAttribute(String url) throws IOException {
+                return url + "_add";
+            }
+        };
         SPrintWriter writer = new SPrintWriter();
         responseWriter.setWriter(writer);
-        responseWriter.setCharacterEncoding("UTF-8");
 
-        responseWriter.startElement("span", null);
-        responseWriter.writeURIAttribute("a", input, null);
+        responseWriter.startElement("z", null);
+        responseWriter.writeURIAttribute("aaa", "bbb", null);
 
-        String value = writer.toString();
-        final String prefix = "<span a=\"";
-        final String suffix = "\"";
-        assertEquals(true, value.startsWith(prefix));
-        assertEquals(true, value.endsWith(suffix));
-        value = value.substring(prefix.length());
-        value = value.substring(0, value.length() - suffix.length());
-        return value;
+        assertEquals("<z aaa=\"bbb_add\"", writer.toString());
     }
 
     public void testWriteText_ScriptBody() throws Exception {
@@ -619,7 +599,7 @@ public class HtmlResponseWriterTest extends TestCase {
         assertEquals("script body is not escaped", "<script><>\"&</script>",
                 value);
     }
-    
+
     public void testWriteText_ScriptBodyUpperCase() throws Exception {
         HtmlResponseWriter responseWriter = new HtmlResponseWriter();
         SPrintWriter writer = new SPrintWriter();
@@ -636,16 +616,32 @@ public class HtmlResponseWriterTest extends TestCase {
 
     public void testEncodeURIAttribute() throws Exception {
         HtmlResponseWriter responseWriter = new HtmlResponseWriter();
-        assertEquals("a", responseWriter.encodeURIAttribute("a"));
+
         assertEquals("url", responseWriter.encodeURIAttribute("url"));
         assertEquals("/a/b.html", responseWriter
                 .encodeURIAttribute("/a/b.html"));
-        assertEquals("a?1=2", responseWriter.encodeURIAttribute("a?1=2"));
-        assertEquals("a?1=2&amp;3=4", responseWriter
-                .encodeURIAttribute("a?1=2&3=4"));
+        assertEquals("url?a=b", responseWriter.encodeURIAttribute("url?a=b"));
+        assertEquals("url?a=b%3Fc=d", responseWriter
+                .encodeURIAttribute("url?a=b?c=d"));
+        assertEquals("ur%25l?a=b", responseWriter
+                .encodeURIAttribute("ur%l?a=b"));
+        assertEquals("url?a=b&amp;c=d", responseWriter
+                .encodeURIAttribute("url?a=b&c=d"));
         assertEquals("a?1=%20", responseWriter.encodeURIAttribute("a?1= "));
-        assertEquals("a?1=2%3F3=4", responseWriter
-                .encodeURIAttribute("a?1=2?3=4"));
+
+        final Character japaneseA = new Character((char) 12354);
+        assertEquals("url?a=%E3%81%82", responseWriter
+                .encodeURIAttribute("url?a=" + japaneseA));
+        assertEquals("%E3%81%82?a=1", responseWriter
+                .encodeURIAttribute(japaneseA + "?a=1"));
+
+        assertEquals("#", responseWriter.encodeURIAttribute("#"));
+        assertEquals("/a.html#aaa", responseWriter
+                .encodeURIAttribute("/a.html#aaa"));
+        assertEquals("http://hoge.foo/bar#", responseWriter
+                .encodeURIAttribute("http://hoge.foo/bar#"));
+        assertEquals("/a.html?1=2&amp;3=4#aaa", responseWriter
+                .encodeURIAttribute("/a.html?1=2&3=4#aaa"));
     }
 
     public void testLeaningURLEncoder() throws Exception {
@@ -659,9 +655,12 @@ public class HtmlResponseWriterTest extends TestCase {
         assertEquals("%2B", URLEncoder.encode("+", "UTF-8"));
         assertEquals("%24", URLEncoder.encode("$", "UTF-8"));
         assertEquals("%2C", URLEncoder.encode(",", "UTF-8"));
+        assertEquals("%23", URLEncoder.encode("#", "UTF-8"));
+
         assertEquals("-", URLEncoder.encode("-", "UTF-8"));
         assertEquals("_", URLEncoder.encode("_", "UTF-8"));
         assertEquals(".", URLEncoder.encode(".", "UTF-8"));
+
         assertEquals("%21", URLEncoder.encode("!", "UTF-8"));
         assertEquals("%7E", URLEncoder.encode("~", "UTF-8"));
         assertEquals("*", URLEncoder.encode("*", "UTF-8"));

@@ -31,9 +31,8 @@ import org.seasar.framework.util.AssertionUtil;
  * @author manhole
  * @author shot
  * @author yone
- * 
- * TODO handle "javascript: xxxx" attribute (really necessary?)
  */
+// TODO handle "javascript: xxxx" attribute (really necessary?)
 public class HtmlResponseWriter extends ResponseWriter {
 
     private static final String DEFAULT_CHARACTER_ENCODING = "UTF-8";
@@ -42,8 +41,16 @@ public class HtmlResponseWriter extends ResponseWriter {
             .asList(new String[] { "area", "br", "base", "col", "hr", "img",
                     "input", "link", "meta", "param" });
 
-    private final char[] reserved = { ';', '/', '?', ':', '@', '&', '=', '+',
-            '$', ',' , '#' };
+    private static final char[] reserved = { ';', '/', '?', ':', '@', '&', '=',
+            '+', '$', ',' };
+
+    private static final char[] unescape;
+
+    static {
+        unescape = new char[reserved.length + 1];
+        System.arraycopy(reserved, 0, unescape, 0, reserved.length);
+        unescape[unescape.length - 1] = '#';
+    }
 
     private Writer writer;
 
@@ -159,11 +166,11 @@ public class HtmlResponseWriter extends ResponseWriter {
         writeText(new String(text, off, len), null);
     }
 
-    protected String htmlSpecialChars(String s) {
+    protected String htmlSpecialChars(final String s) {
         return htmlSpecialChars(s, true);
     }
 
-    private String htmlSpecialChars(String s, boolean quote) {
+    private String htmlSpecialChars(final String s, final boolean quote) {
         char[] chars = s.toCharArray();
         StringBuffer sb = new StringBuffer();
         for (int i = 0; i < chars.length; i++) {
@@ -191,11 +198,11 @@ public class HtmlResponseWriter extends ResponseWriter {
 
     public ResponseWriter cloneWithWriter(Writer writer) {
         AssertionUtil.assertNotNull("writer", writer);
-        HtmlResponseWriter newResponseWriter = new HtmlResponseWriter();
-        newResponseWriter.setWriter(writer);
-        newResponseWriter.setContentType(getContentType());
-        newResponseWriter.setCharacterEncoding(getCharacterEncoding());
-        return newResponseWriter;
+        HtmlResponseWriter clone = new HtmlResponseWriter();
+        clone.setWriter(writer);
+        clone.setContentType(getContentType());
+        clone.setCharacterEncoding(getCharacterEncoding());
+        return clone;
     }
 
     public void write(char[] cbuf, int off, int len) throws IOException {
@@ -279,7 +286,7 @@ public class HtmlResponseWriter extends ResponseWriter {
         final int length = chars.length;
         forLoop: for (int i = 0; i < length; i++) {
             final char c = chars[i];
-            if (ArrayUtil.contains(reserved, c)) {
+            if (ArrayUtil.contains(unescape, c)) {
                 sb.append(c);
                 if ('?' == c) {
                     if (i < length) {
@@ -350,4 +357,5 @@ public class HtmlResponseWriter extends ResponseWriter {
     public String toString() {
         return writer.toString();
     }
+
 }

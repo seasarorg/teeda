@@ -17,7 +17,6 @@ package org.seasar.teeda.core.render.html.support;
 
 import junit.framework.TestCase;
 
-import org.seasar.teeda.core.render.html.support.UrlBuilder;
 import org.seasar.teeda.core.unit.UrlDiff;
 
 /**
@@ -49,8 +48,22 @@ public class UrlBuilderTest extends TestCase {
         assertEquals(actual, true, urlDiff.isIdentical());
     }
 
-    public void testBuildWithParamsWhenBaseContainsQueryString()
-            throws Exception {
+    public void testBuildWithQueryString() throws Exception {
+        // ## Arrange ##
+        UrlBuilder urlBuilder = new UrlBuilder();
+        urlBuilder.setBase("?b=c");
+
+        // ## Act ##
+        urlBuilder.add("1", "2");
+        urlBuilder.add("3", "4");
+        String actual = urlBuilder.build();
+
+        // ## Assert ##
+        UrlDiff urlDiff = new UrlDiff("?b=c&1=2&3=4", actual);
+        assertEquals(actual, true, urlDiff.isIdentical());
+    }
+
+    public void testBuildWithParamsAndQueryString() throws Exception {
         // ## Arrange ##
         UrlBuilder urlBuilder = new UrlBuilder();
         urlBuilder.setBase("a?b=c");
@@ -62,6 +75,20 @@ public class UrlBuilderTest extends TestCase {
 
         // ## Assert ##
         assertEquals("a?b=c&1=2&3=4", actual);
+    }
+
+    public void testBuildWithParamsAndQueryStringAndFragment() throws Exception {
+        // ## Arrange ##
+        UrlBuilder urlBuilder = new UrlBuilder();
+        urlBuilder.setBase("a?b=c#fff");
+
+        // ## Act ##
+        urlBuilder.add("1", "2");
+        urlBuilder.add("3", "4");
+        String actual = urlBuilder.build();
+
+        // ## Assert ##
+        assertEquals("a?b=c&1=2&3=4#fff", actual);
     }
 
     public void testBuildWithParams_SameKey() throws Exception {
@@ -76,6 +103,22 @@ public class UrlBuilderTest extends TestCase {
 
         // ## Assert ##
         UrlDiff urlDiff = new UrlDiff("a?1=2&1=4", actual);
+        assertEquals(actual, true, urlDiff.isIdentical());
+    }
+
+    public void testBuildFullUrl() throws Exception {
+        // ## Arrange ##
+        UrlBuilder urlBuilder = new UrlBuilder();
+        urlBuilder.setBase("http://aaaa.bbb/cc/d.html#ee");
+
+        // ## Act ##
+        urlBuilder.add("1", "2");
+        urlBuilder.add("1", "4");
+        String actual = urlBuilder.build();
+
+        // ## Assert ##
+        UrlDiff urlDiff = new UrlDiff("http://aaaa.bbb/cc/d.html?1=2&1=4#ee",
+                actual);
         assertEquals(actual, true, urlDiff.isIdentical());
     }
 

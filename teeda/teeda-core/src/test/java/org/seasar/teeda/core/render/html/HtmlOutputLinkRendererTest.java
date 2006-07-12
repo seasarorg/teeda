@@ -15,9 +15,10 @@
  */
 package org.seasar.teeda.core.render.html;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+
 import javax.faces.component.UIParameter;
-import javax.faces.component.html.HtmlOutputLink;
-import javax.faces.context.FacesContext;
 import javax.faces.render.Renderer;
 import javax.faces.render.RendererTest;
 
@@ -141,6 +142,26 @@ public class HtmlOutputLinkRendererTest extends RendererTest {
         assertEquals("<a href=\"url\"></a>", getResponseText());
     }
 
+    public void testEncode_anchor1() throws Exception {
+        htmlOutputLink.setValue("aaa.html#foo");
+
+        encodeByRenderer(renderer, htmlOutputLink);
+
+        assertEquals("<a href=\"aaa.html#foo\"></a>", getResponseText());
+    }
+
+    public void testEncode_anchor2() throws Exception {
+        htmlOutputLink.setValue("aaa.html#foo");
+        UIParameter param = new UIParameter();
+        param.setName("a");
+        param.setValue("b#c");
+        htmlOutputLink.getChildren().add(param);
+
+        encodeByRenderer(renderer, htmlOutputLink);
+
+        assertEquals("<a href=\"aaa.html?a=b%23c#foo\"></a>", getResponseText());
+    }
+
     public void testEncode_HrefIsJapanese() throws Exception {
         // japanese "a"
         htmlOutputLink.setValue("/" + new Character((char) 12354) + ".html");
@@ -177,7 +198,7 @@ public class HtmlOutputLinkRendererTest extends RendererTest {
                 getResponseText());
     }
 
-    public void testEncodeBegin_BaseHrefHasQueryString() throws Exception {
+    public void testEncode_BaseHrefHasQueryString() throws Exception {
         htmlOutputLink.setValue("url.html?1=2");
 
         UIParameter param = new UIParameter();
@@ -284,19 +305,58 @@ public class HtmlOutputLinkRendererTest extends RendererTest {
         return renderer;
     }
 
-    private static class MockHtmlOutputLink extends HtmlOutputLink {
-
-        private Renderer renderer_ = null;
-
-        public void setRenderer(Renderer renderer) {
-            renderer_ = renderer;
+    public void testLearningURI() throws Exception {
+        {
+            URI uri = new URI("aaa.html");
+            assertEquals(null, uri.getHost());
+            assertEquals("aaa.html", uri.getPath());
+            assertEquals(null, uri.getFragment());
+            assertEquals(-1, uri.getPort());
+            assertEquals(null, uri.getAuthority());
+            assertEquals(null, uri.getScheme());
+            assertEquals(null, uri.getQuery());
         }
-
-        protected Renderer getRenderer(FacesContext context) {
-            if (renderer_ != null) {
-                return renderer_;
+        {
+            URI uri = new URI("http://teeda.seasar.org/ja/index.html#example");
+            assertEquals("teeda.seasar.org", uri.getHost());
+            assertEquals("/ja/index.html", uri.getPath());
+            assertEquals("example", uri.getFragment());
+            assertEquals(-1, uri.getPort());
+            assertEquals("teeda.seasar.org", uri.getAuthority());
+            assertEquals("http", uri.getScheme());
+            assertEquals(null, uri.getQuery());
+        }
+        {
+            URI uri = new URI("http://aaaa/ja/index.html#example");
+            assertEquals("aaaa", uri.getHost());
+            assertEquals("/ja/index.html", uri.getPath());
+            assertEquals("example", uri.getFragment());
+            assertEquals(-1, uri.getPort());
+            assertEquals("aaaa", uri.getAuthority());
+            assertEquals("http", uri.getScheme());
+            assertEquals(null, uri.getQuery());
+        }
+        {
+            try {
+                new URI("a.html#example#aaa");
+                fail();
+            } catch (URISyntaxException e) {
             }
-            return super.getRenderer(context);
+        }
+        {
+            URI uri = new URI("a.html?a=b&c=d#example");
+            assertEquals("example", uri.getFragment());
+            assertEquals("a=b&c=d", uri.getQuery());
+        }
+        {
+            URI uri = new URI("a.html#example?a=b&c=d");
+            assertEquals(null, uri.getQuery());
+            assertEquals("example?a=b&c=d", uri.getFragment());
+        }
+        {
+            URI uri = new URI("http://あああ/い/あ.html");
+            assertEquals("/い/あ.html", uri.getPath());
+            //assertEquals("あああ", uri.getHost());
         }
     }
 

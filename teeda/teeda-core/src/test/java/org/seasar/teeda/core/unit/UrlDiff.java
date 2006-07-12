@@ -22,38 +22,39 @@ import org.seasar.teeda.core.render.html.support.UrlString;
  */
 public class UrlDiff {
 
-    private boolean isIdentical_;
+    private Boolean identical;
 
-    private String url1_;
+    private String url1;
 
-    private String url2_;
+    private String url2;
 
-    public UrlDiff(String url1, String url2) {
+    public UrlDiff(final String url1, final String url2) {
         if (url1 == null) {
             throw new NullPointerException("url1");
         }
         if (url2 == null) {
             throw new NullPointerException("url2");
         }
-        url1_ = url1;
-        url2_ = url2;
+        this.url1 = url1;
+        this.url2 = url2;
     }
 
     public boolean isIdentical() {
-        compare();
-        return isIdentical_;
+        if (identical == null) {
+            identical = Boolean.valueOf(compare());
+        }
+        return identical.booleanValue();
     }
 
-    protected void compare() {
-        if (url1_.equals(url2_)) {
-            isIdentical_ = true;
-            return;
+    protected boolean compare() {
+        if (url1.equals(url2)) {
+            return true;
         }
-        UrlString urlString1 = new UrlString();
-        urlString1.parse(url1_);
-        UrlString urlString2 = new UrlString();
-        urlString2.parse(url2_);
-        isIdentical_ = urlString1.isIdentical(urlString2);
+        final UrlString urlString1 = new UrlString();
+        urlString1.parse(url1);
+        final UrlString urlString2 = new UrlString();
+        urlString2.parse(url2);
+        return urlString1.isIdentical(urlString2);
     }
 
 }
