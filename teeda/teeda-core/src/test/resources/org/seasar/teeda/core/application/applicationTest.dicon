@@ -3,23 +3,20 @@
 	"http://www.seasar.org/dtd/components21.dtd">
 <components namespace="jsf">
 
-	<component name="valueBindingContext" class="org.seasar.teeda.core.el.impl.ValueBindingContextImpl">
-		<property name="valueBindingName">"org.seasar.teeda.core.el.impl.ValueBindingImpl"</property>
-	</component>
+	<component name="valueBindingFactory" class="org.seasar.teeda.core.el.impl.ValueBindingFactoryImpl"/>
 
-	<component name="methodBindingContext" class="org.seasar.teeda.core.el.impl.MethodBindingContextImpl">
-		<property name="methodBindingName">"org.seasar.teeda.core.el.impl.MethodBindingImpl"</property>
+	<component name="methodBindingFactory" class="org.seasar.teeda.core.el.impl.MethodBindingFactoryImpl">
 		<initMethod name="setValueBindingContext">
-			<arg>valueBindingContext</arg>
+			<arg>valueBindingFactory</arg>
 		</initMethod>
 	</component>
 
 	<component class="org.seasar.teeda.core.application.ApplicationImpl" autoBinding="none">
-		<initMethod name="setValueBindingContext">
-			<arg>valueBindingContext</arg>
+		<initMethod name="setValueBindingFactory">
+			<arg>valueBindingFactory</arg>
 		</initMethod>
-		<initMethod name="setMethodBindingContext">
-			<arg>methodBindingContext</arg>
+		<initMethod name="setMethodBindingFactory">
+			<arg>methodBindingFactory</arg>
 		</initMethod>
 	</component>
 

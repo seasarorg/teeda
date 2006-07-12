@@ -13,22 +13,20 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.core.el;
+package org.seasar.teeda.core.util;
 
-import javax.faces.application.Application;
-import javax.faces.el.MethodBinding;
+import java.io.IOException;
+
+import javax.faces.context.ExternalContext;
 
 /**
- * @author shot
+ * @author higa
+ *  
  */
-public interface MethodBindingContext {
+public interface ErrorPageManager {
 
-    public void setMethodBindingName(String methodBindingName);
+    public void addErrorPage(Class exceptionType, String location);
 
-    public String getMethodBindingName();
-
-    public void setValueBindingContext(ValueBindingContext valueBindingContext);
-
-    public MethodBinding createMethodBinding(Application application,
-            String ref, Class[] params);
+    public boolean handleException(Throwable exception,
+            ExternalContext extContext) throws IOException;
 }

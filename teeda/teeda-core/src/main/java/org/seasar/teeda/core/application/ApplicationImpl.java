@@ -42,8 +42,8 @@ import javax.faces.validator.Validator;
 
 import org.seasar.framework.util.AssertionUtil;
 import org.seasar.framework.util.StringUtil;
-import org.seasar.teeda.core.el.MethodBindingContext;
-import org.seasar.teeda.core.el.ValueBindingContext;
+import org.seasar.teeda.core.el.MethodBindingFactory;
+import org.seasar.teeda.core.el.ValueBindingFactory;
 import org.seasar.teeda.core.exception.ConverterInstantiateFailureException;
 import org.seasar.teeda.core.exception.NoMethodBindingContextException;
 import org.seasar.teeda.core.exception.NoValueBindingContextException;
@@ -90,9 +90,9 @@ public class ApplicationImpl extends Application implements
 
     private Collection supportedLocales = Collections.EMPTY_SET;
 
-    private ValueBindingContext vbContext = null;
+    private ValueBindingFactory vbFactory = null;
 
-    private MethodBindingContext mbContext = null;
+    private MethodBindingFactory mbFactory = null;
 
     private ComponentLookupStrategy componentLookupStrategy;
 
@@ -428,35 +428,37 @@ public class ApplicationImpl extends Application implements
     public MethodBinding createMethodBinding(String ref, Class[] params)
             throws ReferenceSyntaxException {
         AssertionUtil.assertNotNull("ref is null", ref);
-        if (mbContext == null) {
+        if (mbFactory == null) {
             throw new NoMethodBindingContextException(ref, params);
         }
-        return mbContext.createMethodBinding(this, ref, params);
+        return mbFactory.createMethodBinding(this, ref, params);
     }
 
     public ValueBinding createValueBinding(String ref)
             throws ReferenceSyntaxException {
         AssertionUtil.assertNotNull("ref is null", ref);
-        if (vbContext == null) {
+        if (vbFactory == null) {
             throw new NoValueBindingContextException(ref);
         }
-        return vbContext.createValueBinding(this, ref);
+        return vbFactory.createValueBinding(this, ref);
     }
 
-    public void setValueBindingContext(ValueBindingContext vbContext) {
-        this.vbContext = vbContext;
+    public void setValueBindingFactory(
+            ValueBindingFactory vbContextFactory) {
+        this.vbFactory = vbContextFactory;
     }
 
-    public void setMethodBindingContext(MethodBindingContext mbContext) {
-        this.mbContext = mbContext;
+    public void setMethodBindingFactory(
+            MethodBindingFactory mbContextFactory) {
+        this.mbFactory = mbContextFactory;
     }
 
-    public ValueBindingContext getValueBindingContext() {
-        return vbContext;
+    public ValueBindingFactory getValueBindingFactory() {
+        return vbFactory;
     }
 
-    public MethodBindingContext getMethodBindingContext() {
-        return mbContext;
+    public MethodBindingFactory getMethodBindingFactory() {
+        return mbFactory;
     }
 
     public ComponentLookupStrategy getComponentLookupStrategy() {

@@ -31,8 +31,8 @@ import org.seasar.framework.container.impl.ComponentDefImpl;
 import org.seasar.framework.container.impl.PropertyDefImpl;
 import org.seasar.teeda.core.application.impl.DefaultComponentLookupStrategy;
 import org.seasar.teeda.core.el.ELParser;
-import org.seasar.teeda.core.el.ValueBindingContext;
-import org.seasar.teeda.core.el.impl.ValueBindingContextImpl;
+import org.seasar.teeda.core.el.ValueBindingFactory;
+import org.seasar.teeda.core.el.impl.ValueBindingFactoryImpl;
 import org.seasar.teeda.core.el.impl.commons.CommonsELParser;
 import org.seasar.teeda.core.el.impl.commons.CommonsExpressionProcessorImpl;
 import org.seasar.teeda.core.exception.IllegalClassTypeException;
@@ -246,14 +246,12 @@ public class ApplicationImplTest extends TeedaTestCase {
     }
 
     public void testCreateValueBinding() throws Exception {
-        ValueBindingContext ctx = new ValueBindingContextImpl();
+        ValueBindingFactory ctx = new ValueBindingFactoryImpl();
         ELParser parser = new CommonsELParser();
         parser.setExpressionProcessor(new CommonsExpressionProcessorImpl());
         ctx.setELParser(parser);
-        ctx
-                .setValueBindingName("org.seasar.teeda.core.el.impl.ValueBindingImpl");
         ApplicationImpl app = createApplication();
-        app.setValueBindingContext(ctx);
+        app.setValueBindingFactory(ctx);
         MockVariableResolver resolver = getVariableResolver();
         A a = new A();
         a.setName("AAA");

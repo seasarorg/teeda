@@ -13,7 +13,7 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.core;
+package org.seasar.teeda.core.util;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -23,7 +23,7 @@ import javax.faces.context.ExternalContext;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.seasar.teeda.core.util.ServletExternalContextUtil;
+import org.seasar.teeda.core.JsfConstants;
 
 /**
  * @author higa

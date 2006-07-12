@@ -9,24 +9,26 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.core;
+package org.seasar.teeda.core.el;
 
-import java.io.IOException;
-
-import javax.faces.context.ExternalContext;
+import javax.faces.application.Application;
+import javax.faces.el.ValueBinding;
 
 /**
- * @author higa
- *  
+ * @author shot
  */
-public interface ErrorPageManager {
+public interface ValueBindingFactory {
 
-    public void addErrorPage(Class exceptionType, String location);
+    public ValueBinding createValueBinding(Application application,
+            String expression);
 
-    public boolean handleException(Throwable exception,
-            ExternalContext extContext) throws IOException;
+    public ELParser getELParser();
+
+    public void setELParser(ELParser parser);
+
+    public void clearCache();
 }

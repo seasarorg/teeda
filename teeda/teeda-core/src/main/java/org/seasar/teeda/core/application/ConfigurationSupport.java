@@ -9,14 +9,14 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
 package org.seasar.teeda.core.application;
 
-import org.seasar.teeda.core.el.MethodBindingContext;
-import org.seasar.teeda.core.el.ValueBindingContext;
+import org.seasar.teeda.core.el.MethodBindingFactory;
+import org.seasar.teeda.core.el.ValueBindingFactory;
 
 /**
  * @author shot
@@ -29,11 +29,13 @@ public interface ConfigurationSupport {
     public void addConverterConfiguration(Class targetClass,
             ConverterConfiguration converterConfig);
 
-    public void setValueBindingContext(ValueBindingContext vbContext);
+    public void setValueBindingFactory(
+            ValueBindingFactory vbContextFactory);
 
-    public ValueBindingContext getValueBindingContext();
+    public ValueBindingFactory getValueBindingFactory();
 
-    public void setMethodBindingContext(MethodBindingContext mbContext);
+    public void setMethodBindingFactory(
+            MethodBindingFactory mbContextFactory);
 
-    public MethodBindingContext getMethodBindingContext();
+    public MethodBindingFactory getMethodBindingFactory();
 }

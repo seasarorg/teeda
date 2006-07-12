@@ -28,10 +28,10 @@ import javax.faces.event.ActionEvent;
 import javax.faces.event.ActionListener;
 
 import org.seasar.framework.log.Logger;
-import org.seasar.teeda.core.ErrorPageManager;
-import org.seasar.teeda.core.NullErrorPageManagerImpl;
+import org.seasar.teeda.core.util.ErrorPageManager;
 import org.seasar.teeda.core.util.InvokeUtil;
 import org.seasar.teeda.core.util.NavigationHandlerUtil;
+import org.seasar.teeda.core.util.NullErrorPageManagerImpl;
 import org.seasar.teeda.core.util.UIParameterUtil;
 
 /**
