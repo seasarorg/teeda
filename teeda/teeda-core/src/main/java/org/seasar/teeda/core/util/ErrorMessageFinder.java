@@ -15,21 +15,25 @@
  */
 package org.seasar.teeda.core.util;
 
-import javax.faces.application.FacesMessage;
+import java.util.Iterator;
 
-import org.seasar.teeda.core.unit.TeedaTestCase;
+import javax.faces.context.FacesContext;
 
 /**
  * @author manhole
  * @author shot
  */
-public class ErrorMessageFinderUtilTest extends TeedaTestCase {
+public class ErrorMessageFinder {
 
-    public void testIsEmpty() throws Exception {
-        ErrorMessageFinder finder = new ErrorMessageFinder();
-        assertEquals(false, finder.isErrorMessage());
-        getFacesContext().addMessage("hoge", new FacesMessage());
-        assertEquals(true, finder.isErrorMessage());
+    private boolean errorMessage;
+
+    public ErrorMessageFinder() {
+    }
+
+    public boolean isErrorMessage() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        Iterator it = context.getMessages();
+        return it.hasNext();
     }
 
 }
