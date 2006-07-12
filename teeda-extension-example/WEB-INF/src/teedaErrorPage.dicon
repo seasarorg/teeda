@@ -3,7 +3,7 @@
 	"http://www.seasar.org/dtd/components21.dtd">
 <components namespace="teedaErrorPage" >
 
-	<component class="org.seasar.teeda.core.ServletErrorPageManagerImpl">
+	<component class="org.seasar.teeda.core.util.ServletErrorPageManagerImpl">
 		<!--
 		<initMethod name="addErrorPage">
 			<arg>@java.lang.Throwable@class</arg>
