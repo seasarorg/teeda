@@ -22,7 +22,7 @@ import org.seasar.teeda.core.config.faces.element.NavigationCaseElement;
 import org.seasar.teeda.core.config.faces.element.NavigationRuleElement;
 
 /**
- * @author Shinpei Ohtani(aka shot)
+ * @author shot
  */
 public class NavigationRuleElementImpl implements NavigationRuleElement {
 

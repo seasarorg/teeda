@@ -22,7 +22,7 @@ import javax.servlet.jsp.el.VariableResolver;
 import org.seasar.teeda.core.util.VariableResolverUtil;
 
 /**
- * @author Shinpei Ohtani
+ * @author shot
  * A bridge from javax.servlet.jsp.el.VariableResolver to JSF VariableResolver
  */
 public class ELVariableResolver implements VariableResolver {

@@ -22,7 +22,7 @@ import org.seasar.teeda.core.config.faces.element.ApplicationElement;
 import org.seasar.teeda.core.config.faces.element.LocaleConfigElement;
 
 /**
- * @author Shinpei Ohtani(aka shot)
+ * @author shot
  * 
  */
 public class ApplicationElementImpl implements ApplicationElement {

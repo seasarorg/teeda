@@ -18,7 +18,7 @@ package org.seasar.teeda.core.config.faces.element.impl;
 import org.seasar.teeda.core.config.faces.element.NavigationCaseElement;
 
 /**
- * @author Shinpei Ohtani(aka shot)
+ * @author shot
  */
 public class NavigationCaseElementImpl implements NavigationCaseElement {
 

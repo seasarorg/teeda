@@ -18,7 +18,7 @@ package javax.faces.component;
 import org.seasar.framework.util.AssertionUtil;
 
 /**
- * @author Shinpei Ohtani
+ * @author shot
  */
 public class UIColumn extends UIComponentBase {
 

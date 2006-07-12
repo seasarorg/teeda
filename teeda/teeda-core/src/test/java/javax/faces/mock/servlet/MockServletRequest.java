@@ -20,7 +20,7 @@ import java.util.Locale;
 import javax.servlet.ServletRequest;
 
 /**
- * @author Shinpei Ohtani
+ * @author shot
  */
 public interface MockServletRequest extends ServletRequest {
 

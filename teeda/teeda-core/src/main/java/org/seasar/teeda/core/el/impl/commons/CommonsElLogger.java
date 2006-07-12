@@ -18,7 +18,7 @@ package org.seasar.teeda.core.el.impl.commons;
 import org.apache.commons.el.Logger;
 
 /**
- * @author Shinpei Ohtani
+ * @author shot
  */
 public class CommonsElLogger {
 

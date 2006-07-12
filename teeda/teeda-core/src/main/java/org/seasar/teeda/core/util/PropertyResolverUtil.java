@@ -19,7 +19,7 @@ import javax.faces.application.Application;
 import javax.faces.el.PropertyResolver;
 
 /**
- * @author Shinpei Ohtani
+ * @author shot
  */
 public class PropertyResolverUtil {
 

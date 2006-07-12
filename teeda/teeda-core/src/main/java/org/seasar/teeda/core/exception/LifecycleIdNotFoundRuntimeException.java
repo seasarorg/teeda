@@ -17,7 +17,7 @@ package org.seasar.teeda.core.exception;
 
 /**
  * @author higa
- * @author Shinpei Ohtani
+ * @author shot
  *  
  */
 public class LifecycleIdNotFoundRuntimeException extends ExtendFacesException {

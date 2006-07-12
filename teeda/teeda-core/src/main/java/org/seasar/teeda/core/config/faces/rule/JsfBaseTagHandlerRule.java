@@ -19,7 +19,7 @@ import org.seasar.framework.xml.TagHandlerRule;
 import org.seasar.teeda.core.config.faces.handler.SimpleStringTagHandler;
 
 /**
- * @author Shinpei Ohtani
+ * @author shot
  */
 public abstract class JsfBaseTagHandlerRule extends TagHandlerRule {
 

@@ -21,7 +21,7 @@ import org.seasar.teeda.core.scope.Scope;
 import org.seasar.teeda.core.scope.ScopeSaver;
 
 /**
- * @author Shinpei Ohtani
+ * @author shot
  */
 public interface ManagedBeanScopeSaver {
 

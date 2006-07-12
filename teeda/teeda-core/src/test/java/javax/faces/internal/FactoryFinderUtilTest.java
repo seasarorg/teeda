@@ -29,7 +29,7 @@ import org.seasar.teeda.core.mock.MockApplicationFactory;
 import org.seasar.teeda.core.mock.MockApplicationFactory2;
 
 /**
- * @author Shinpei Ohtani
+ * @author shot
  */
 public class FactoryFinderUtilTest extends TestCase {
 

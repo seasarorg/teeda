@@ -21,7 +21,7 @@ import org.seasar.teeda.core.el.ExpressionProcessor;
 import org.seasar.teeda.core.el.Replacer;
 
 /**
- * @author Shinpei Ohtani
+ * @author shot
  */
 public class BinaryOperatorExpressionReplacer implements Replacer {
 

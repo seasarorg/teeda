@@ -16,7 +16,7 @@
 package org.seasar.teeda.core.config.faces.element;
 
 /**
- * @author Shinpei Ohtani(aka shot)
+ * @author shot
  */
 public interface RendererElement extends JsfConfigElement {
 

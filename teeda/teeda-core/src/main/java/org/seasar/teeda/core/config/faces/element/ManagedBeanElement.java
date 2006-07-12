@@ -18,7 +18,7 @@ package org.seasar.teeda.core.config.faces.element;
 import java.util.List;
 
 /**
- * @author Shinpei Ohtani(aka shot)
+ * @author shot
  */
 public interface ManagedBeanElement extends JsfConfigElement,
         ListEntriesHolder, MapEntriesHolder {

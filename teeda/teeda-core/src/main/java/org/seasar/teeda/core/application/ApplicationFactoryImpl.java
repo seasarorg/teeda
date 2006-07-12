@@ -21,7 +21,7 @@ import javax.faces.application.ApplicationFactory;
 import org.seasar.teeda.core.util.DIContainerUtil;
 
 /**
- * @author Shinpei Ohtani
+ * @author shot
  */
 public class ApplicationFactoryImpl extends ApplicationFactory {
 

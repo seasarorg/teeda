@@ -16,7 +16,7 @@
 package org.seasar.teeda.core.el;
 
 /**
- * @author Shinpei Ohtani
+ * @author shot
  */
 public interface ELParser {
 

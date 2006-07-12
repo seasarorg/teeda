@@ -18,7 +18,7 @@ package org.seasar.teeda.core.config.faces.element.impl;
 import org.seasar.teeda.core.config.faces.element.MapEntryElement;
 
 /**
- * @author Shinpei Ohtani(aka shot)
+ * @author shot
  */
 public class MapEntryElementImpl implements MapEntryElement {
 

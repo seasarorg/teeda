@@ -34,7 +34,7 @@ import org.seasar.framework.mock.servlet.MockRequestDispatcherImpl;
 import org.seasar.framework.util.EnumerationAdapter;
 
 /**
- * @author Shinpei Ohtani
+ * @author shot
  */
 public class MockServletRequestImpl implements MockServletRequest {
 

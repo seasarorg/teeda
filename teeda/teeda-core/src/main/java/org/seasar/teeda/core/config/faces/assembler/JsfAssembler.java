@@ -16,7 +16,7 @@
 package org.seasar.teeda.core.config.faces.assembler;
 
 /**
- * @author Shinpei Ohtani(aka shot)
+ * @author shot
  */
 public interface JsfAssembler {
     public void assemble();

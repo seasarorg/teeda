@@ -26,7 +26,7 @@ import org.seasar.teeda.core.config.faces.element.FactoryElement;
 import org.seasar.teeda.core.util.IteratorUtil;
 
 /**
- * @author Shinpei Ohtani(aka shot)
+ * @author shot
  */
 public class DefaultFactoryAssembler extends FactoryAssembler {
 

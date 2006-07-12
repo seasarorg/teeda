@@ -23,7 +23,7 @@ import org.seasar.teeda.core.config.faces.element.ConverterElement;
 import org.seasar.teeda.core.config.faces.element.PropertyElement;
 
 /**
- * @author Shinpei Ohtani(aka shot)
+ * @author shot
  */
 public class ConverterElementImpl implements ConverterElement {
 

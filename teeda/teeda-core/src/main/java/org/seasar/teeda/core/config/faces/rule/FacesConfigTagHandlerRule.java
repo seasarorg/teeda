@@ -41,7 +41,7 @@ import org.seasar.teeda.core.config.faces.handler.SuggestedValueTagHandler;
 import org.seasar.teeda.core.config.faces.handler.ValidatorTagHandler;
 
 /**
- * @author Shinpei Ohtani(aka shot)
+ * @author shot
  * 
  * Rule for faces-config tag handling. 
  */

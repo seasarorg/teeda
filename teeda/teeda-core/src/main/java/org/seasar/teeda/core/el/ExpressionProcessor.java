@@ -21,7 +21,7 @@ import javax.faces.el.PropertyNotFoundException;
 import javax.faces.el.ReferenceSyntaxException;
 
 /**
- * @author Shinpei Ohtani
+ * @author shot
  */
 public interface ExpressionProcessor {
 

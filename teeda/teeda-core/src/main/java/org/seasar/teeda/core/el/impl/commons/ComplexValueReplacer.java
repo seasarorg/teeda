@@ -33,7 +33,7 @@ import org.seasar.teeda.core.util.ApplicationUtil;
 import org.seasar.teeda.core.util.PropertyResolverUtil;
 
 /**
- * @author Shinpei Ohtani
+ * @author shot
  */
 public class ComplexValueReplacer implements Replacer {
 

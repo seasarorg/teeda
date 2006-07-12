@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * @author Shinpei Ohtani(aka shot)
+ * @author shot
  */
 public interface LocaleConfigElement extends JsfConfigElement {
 

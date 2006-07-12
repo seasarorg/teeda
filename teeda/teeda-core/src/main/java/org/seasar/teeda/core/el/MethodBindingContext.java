@@ -19,7 +19,7 @@ import javax.faces.application.Application;
 import javax.faces.el.MethodBinding;
 
 /**
- * @author Shinpei Ohtani
+ * @author shot
  */
 public interface MethodBindingContext {
 

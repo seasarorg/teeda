@@ -22,7 +22,7 @@ import org.apache.commons.el.Coercions;
 import org.apache.commons.el.Logger;
 
 /**
- * @author Shinpei Ohtani
+ * @author shot
  */
 public class CoercionsUtil {
 

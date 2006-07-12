@@ -18,7 +18,7 @@ package org.seasar.teeda.core.managedbean;
 import org.seasar.teeda.core.exception.ExtendFacesException;
 
 /**
- * @author Shinpei Ohtani
+ * @author shot
  */
 public class IllegalManagedBeanScopeException extends ExtendFacesException {
 

@@ -21,7 +21,7 @@ import java.util.List;
 import org.seasar.teeda.core.config.faces.element.FactoryElement;
 
 /**
- * @author Shinpei Ohtani(aka shot)
+ * @author shot
  * 
  */
 public class FactoryElementImpl implements FactoryElement {

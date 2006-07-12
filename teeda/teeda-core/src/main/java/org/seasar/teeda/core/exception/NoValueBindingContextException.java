@@ -16,7 +16,7 @@
 package org.seasar.teeda.core.exception;
 
 /**
- * @author Shinpei Ohtani
+ * @author shot
  */
 public class NoValueBindingContextException extends ExtendFacesException {
 

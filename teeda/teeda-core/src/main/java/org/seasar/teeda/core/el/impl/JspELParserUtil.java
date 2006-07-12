@@ -20,7 +20,7 @@ import javax.faces.el.ReferenceSyntaxException;
 import org.seasar.framework.exception.EmptyRuntimeException;
 
 /**
- * @author Shinpei Ohtani
+ * @author shot
  */
 public class JspELParserUtil {
 

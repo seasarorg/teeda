@@ -32,7 +32,7 @@ import org.seasar.teeda.core.exception.IllegalClassTypeException;
 import org.seasar.teeda.core.util.ClassUtil;
 
 /**
- * @author Shinpei Ohtani
+ * @author shot
  */
 public class MethodBindingContextImpl implements MethodBindingContext {
 

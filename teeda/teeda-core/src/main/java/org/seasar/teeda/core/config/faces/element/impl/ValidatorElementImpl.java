@@ -23,7 +23,7 @@ import org.seasar.teeda.core.config.faces.element.PropertyElement;
 import org.seasar.teeda.core.config.faces.element.ValidatorElement;
 
 /**
- * @author Shinpei Ohtani(aka shot)
+ * @author shot
  */
 public class ValidatorElementImpl implements ValidatorElement {
 
