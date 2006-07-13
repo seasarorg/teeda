@@ -31,8 +31,39 @@
 <br/>
 <h2><i>Teeda Changes</i></h2>
 
+<h2><a name="beta5">Teeda 1.0 beta5</a></h2>
+<pre style="background-color:white">
+Release Notes - Teeda - Version 1.0-beta-5
+
+** Bug
+    * [TEEDA-2] - javax/faces/Messages_ja.propertiesの重複
+    * [TEEDA-4] - dataTable内でcommandLinkが効かない
+    * [TEEDA-5] - TeedaTestCaseのFacesContextにてresponseCompleteが未サポート
+    * [TEEDA-6] - Kumuの$i等のショートカットが効かない
+    * [TEEDA-11] - CommandLinkでverbatimタグ以下が表示されない
+    * [TEEDA-15] - TomahawkのdataScrollerでExceptionが発生する
+    * [TEEDA-16] - [Seasar-user:3935] [S2JSF] 1.1.0 Beta1 の m:rendered の動作について
+    * [TEEDA-17] - ラジオボタンのオン・オフが保持されない（オフのみかも）
+    * [TEEDA-21] - インターネットへつながっていない環境で例外が出る
+
+** Improvement
+    * [TEEDA-7] - RendererAutoRegister(仮)を作る
+    * [TEEDA-12] - [Seasar-user:3959] 要素のistyleやformat属性がレンダされない
+    * [TEEDA-18] - 返り値がJSON形式の場合はeval結果を引数にcallbackしてほしい
+    * [TEEDA-20] - h:message, h:messagesでhtmlタグを出力したい
+
+** New Feature
+    * [TEEDA-3] -  [Seasar-user:3942][Teeda-Ajax] 空の値で呼び出したとき
+
+** Task
+    * [TEEDA-13] - ValidatorTagでf:paramを処理する
+    * [TEEDA-14] - ConverterTagを作成する
+    * [TEEDA-19] - TeedaAjaxにおけるAction呼び出し時にAction名にアンダーバー使用を可能とする。
+</pre>
+<hr>
+
 <h2><a name="beta4">Teeda 1.0 beta4</a></h2>
-<h3><a name="core">Teeda Core</a></h3>
+<h3><a name="beta4_core">Teeda Core</a></h3>
 <ul>
 	<li>redirectが効かない点を修正しました。</li>
 	<li>UIComponentBaseでrestoreがうまくいかない点を修正しました。</li>
@@ -43,12 +74,12 @@
 	<li>Portletで動作での挙動が不安定な点を修正しました。</li>
 </ul>
 
-<h3><a name="core">Teeda Extension</a></h3>
+<h3><a name="beta4_extension">Teeda Extension</a></h3>
 <ul>
 	<li>特になし</li>
 </ul>
 
-<h3><a name="core">Teeda Ajax</a></h3>
+<h3><a name="beta4_ajax">Teeda Ajax</a></h3>
 <ul>
 	<li>Ajaxからのコンポーネント呼び出し方法を修正しました。</li>
 </ul>
@@ -56,7 +87,7 @@
 <hr>
 
 <h2><a name="beta3">Teeda 1.0 beta3</a></h2>
-<h3><a name="core">Teeda Core</a></h3>
+<h3><a name="beta3_core">Teeda Core</a></h3>
 <ul>
 	<li>PortletがTeeda上で動作するよう修正しました。</li>
 	<li>コンポーネントツリーをセッションで管理しないように修正しました。</li>
@@ -67,13 +98,13 @@
 	<li>正規表現用のConverter新規作成しました。</li>
 </ul>
 
-<h3><a name="core">Teeda Extension</a></h3>
+<h3><a name="beta3_extension">Teeda Extension</a></h3>
 <ul>
 	<li>HTMLレイアウト機能新規作成しました。</li>
 	<li>定数Validator機能追加しました。（次のバージョンで機能拡張のため、仕様変更します）</li>
 </ul>
 
-<h3><a name="core">Teeda Ajax</a></h3>
+<h3><a name="beta3_ajax">Teeda Ajax</a></h3>
 <ul>
 	<li>Ajax機能新規作成しました。</li>
 	<li>S2管理のコンポーネントがObjectを返してきた場合のみJSON形式に変更するよう修正しました。</li>
