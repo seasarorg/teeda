@@ -4,9 +4,9 @@
 	<classpathentry kind="src" path="src/main/resources"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/junit-3.8.1.jar"/>
-	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/teeda-ajax-1.0-beta-5.jar"/>
-	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/teeda-core-1.0-beta-5.jar"/>
-	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/teeda-extension-1.0-beta-5.jar"/>
+	<classpathentry sourcepath="/teeda" kind="lib" path="src/main/webapp/WEB-INF/lib/teeda-ajax-1.0-beta-5.jar"/>
+	<classpathentry sourcepath="/teeda" kind="lib" path="src/main/webapp/WEB-INF/lib/teeda-core-1.0-beta-5.jar"/>
+	<classpathentry sourcepath="/teeda" kind="lib" path="src/main/webapp/WEB-INF/lib/teeda-extension-1.0-beta-5.jar"/>
 	<classpathentry kind="var" path="TOMCAT_HOME/common/lib/servlet-api.jar"/>
 	<classpathentry kind="var" path="TOMCAT_HOME/common/lib/jasper-runtime.jar"/>
 	<classpathentry kind="var" path="TOMCAT_HOME/common/lib/jsp-api.jar"/>
