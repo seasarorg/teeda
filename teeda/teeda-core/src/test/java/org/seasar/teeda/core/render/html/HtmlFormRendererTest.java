@@ -23,6 +23,7 @@ import javax.faces.render.RendererTest;
 
 import org.custommonkey.xmlunit.Diff;
 import org.seasar.teeda.core.mock.MockFacesContext;
+import org.seasar.teeda.core.mock.MockHtmlForm;
 import org.seasar.teeda.core.mock.MockViewHandlerImpl;
 
 /**

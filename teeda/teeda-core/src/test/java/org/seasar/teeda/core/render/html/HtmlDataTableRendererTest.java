@@ -29,6 +29,9 @@ import org.seasar.teeda.core.el.impl.ValueBindingImpl;
 import org.seasar.teeda.core.el.impl.commons.CommonsELParser;
 import org.seasar.teeda.core.el.impl.commons.CommonsExpressionProcessorImpl;
 import org.seasar.teeda.core.mock.MockFacesContext;
+import org.seasar.teeda.core.mock.MockHtmlDataTable;
+import org.seasar.teeda.core.mock.MockHtmlOutputText;
+import org.seasar.teeda.core.mock.MockHtmlPanelGroup;
 import org.seasar.teeda.core.unit.TestUtil;
 
 /**

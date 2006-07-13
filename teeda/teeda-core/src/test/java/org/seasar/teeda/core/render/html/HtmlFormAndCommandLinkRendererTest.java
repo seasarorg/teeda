@@ -19,6 +19,8 @@ import javax.faces.component.UIParameter;
 import javax.faces.render.AbstractRendererTest;
 
 import org.seasar.teeda.core.mock.MockFacesContext;
+import org.seasar.teeda.core.mock.MockHtmlCommandLink;
+import org.seasar.teeda.core.mock.MockHtmlForm;
 
 /**
  * @author manhole

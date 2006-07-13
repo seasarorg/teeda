@@ -13,18 +13,18 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.core.render.html;
+package org.seasar.teeda.core.mock;
 
-import javax.faces.component.html.HtmlPanelGroup;
+import javax.faces.component.html.HtmlOutputLink;
 import javax.faces.context.FacesContext;
 import javax.faces.render.Renderer;
 
 /**
  * @author manhole
  */
-public class MockHtmlPanelGroup extends HtmlPanelGroup {
+public class MockHtmlOutputLink extends HtmlOutputLink {
 
-    private Renderer renderer;
+    private Renderer renderer = null;
 
     public void setRenderer(Renderer renderer) {
         this.renderer = renderer;

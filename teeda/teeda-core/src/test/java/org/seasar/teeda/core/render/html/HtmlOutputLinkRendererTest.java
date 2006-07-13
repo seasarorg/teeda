@@ -25,6 +25,8 @@ import javax.faces.render.RendererTest;
 import org.custommonkey.xmlunit.Diff;
 import org.seasar.teeda.core.mock.MockExternalContextImpl;
 import org.seasar.teeda.core.mock.MockFacesContext;
+import org.seasar.teeda.core.mock.MockHtmlOutputLink;
+import org.seasar.teeda.core.mock.MockHtmlOutputText;
 
 /**
  * @author manhole

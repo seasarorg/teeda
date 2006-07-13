@@ -178,7 +178,11 @@ public class TForEach extends UIComponentBase implements NamingContainer {
                 items[i] = item;
             }
         } else {
-            Class itemClass = itemsClass.getComponentType();
+            final Class itemClass = itemsClass.getComponentType();
+            if (itemClass == null) {
+                // TODO 
+                throw new IllegalStateException();
+            }
             final BeanDesc itemBeanDesc = BeanDescFactory
                     .getBeanDesc(itemClass);
             for (int i = 0; i < rowSize; ++i) {
@@ -191,7 +195,6 @@ public class TForEach extends UIComponentBase implements NamingContainer {
                 items[i] = item;
             }
         }
-
         itemsPd.setValue(page, items);
     }
 

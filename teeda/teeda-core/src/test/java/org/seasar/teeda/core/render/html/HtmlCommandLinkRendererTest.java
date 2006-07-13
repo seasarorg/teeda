@@ -32,6 +32,8 @@ import org.seasar.framework.mock.servlet.MockServletContextImpl;
 import org.seasar.teeda.core.exception.TagNotFoundRuntimeException;
 import org.seasar.teeda.core.mock.MockExternalContext;
 import org.seasar.teeda.core.mock.MockFacesContext;
+import org.seasar.teeda.core.mock.MockHtmlCommandLink;
+import org.seasar.teeda.core.mock.MockHtmlForm;
 import org.seasar.teeda.core.unit.ExceptionAssert;
 
 /**

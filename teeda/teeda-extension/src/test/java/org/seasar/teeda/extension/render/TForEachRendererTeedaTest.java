@@ -15,6 +15,7 @@
  */
 package org.seasar.teeda.extension.render;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.faces.component.UIForm;
@@ -28,11 +29,11 @@ import org.seasar.teeda.core.el.ELParser;
 import org.seasar.teeda.core.el.impl.ValueBindingImpl;
 import org.seasar.teeda.core.el.impl.commons.CommonsELParser;
 import org.seasar.teeda.core.el.impl.commons.CommonsExpressionProcessorImpl;
+import org.seasar.teeda.core.mock.MockHtmlInputText;
+import org.seasar.teeda.core.mock.MockHtmlOutputText;
 import org.seasar.teeda.core.mock.MockUIViewRoot;
 import org.seasar.teeda.core.render.html.HtmlInputTextRenderer;
 import org.seasar.teeda.core.render.html.HtmlOutputTextRenderer;
-import org.seasar.teeda.core.render.html.MockHtmlInputText;
-import org.seasar.teeda.core.render.html.MockHtmlOutputText;
 
 /**
  * @author manhole
@@ -94,6 +95,43 @@ public class TForEachRendererTeedaTest extends AbstractRendererTeedaTest {
         assertEquals("112233", getResponseText());
     }
 
+    public void testEncode_FooMap1() throws Exception {
+        // ## Arrange ##
+        final FacesContext context = getFacesContext();
+
+        final String pageName = "fooPage";
+        FooMapPage page = new FooMapPage();
+        container.register(page, pageName);
+        forEach.setPageName(pageName);
+        forEach.setItemsName("barItems");
+
+        // items
+        {
+            Map[] items = new Map[3];
+            items[0] = new HashMap();
+            items[1] = new HashMap();
+            items[2] = new HashMap();
+            items[0].put("aaa", "1");
+            items[1].put("aaa", "2");
+            items[2].put("aaa", "3");
+            page.setBarItems(items);
+        }
+
+        {
+            MockHtmlOutputText text = new MockHtmlOutputText();
+            text.setRenderer(outputTextRenderer);
+            text.setValueBinding("value",
+                    createValueBinding("#{fooPage.bar.aaa}"));
+            forEach.getChildren().add(text);
+        }
+
+        // ## Act ##
+        encodeComponent(context, forEach);
+
+        // ## Assert ##
+        assertEquals("123", getResponseText());
+    }
+
     public void testEncode_Foo2() throws Exception {
         // ## Arrange ##
         final FacesContext context = getFacesContext();
@@ -150,6 +188,47 @@ public class TForEachRendererTeedaTest extends AbstractRendererTeedaTest {
             items[0] = new Fuga("a", "1");
             items[1] = new Fuga("b", "2");
             items[2] = new Fuga("c", "3");
+            page.setFugaItems(items);
+        }
+
+        {
+            MockHtmlOutputText text = new MockHtmlOutputText();
+            text.setRenderer(outputTextRenderer);
+            text
+                    .setValueBinding("value",
+                            createValueBinding("#{hogePage.aaa}"));
+            forEach.getChildren().add(text);
+        }
+
+        // ## Act ##
+        encodeComponent(context, forEach);
+
+        // ## Assert ##
+        assertEquals("abc", getResponseText());
+    }
+
+    public void testEncode_HogeMap1() throws Exception {
+        // ## Arrange ##
+        final FacesContext context = getFacesContext();
+
+        final String pageName = "hogePage";
+        final HogeMapPage page = new HogeMapPage();
+        container.register(page, pageName);
+        forEach.setPageName(pageName);
+        forEach.setItemsName("fugaItems");
+
+        // items
+        {
+            Map[] items = new Map[3];
+            items[0] = new HashMap();
+            items[1] = new HashMap();
+            items[2] = new HashMap();
+            items[0].put("aaa", "a");
+            items[0].put("bbb", "1");
+            items[1].put("aaa", "b");
+            items[1].put("bbb", "2");
+            items[2].put("aaa", "c");
+            items[2].put("bbb", "3");
             page.setFugaItems(items);
         }
 
@@ -374,6 +453,30 @@ public class TForEachRendererTeedaTest extends AbstractRendererTeedaTest {
 
     }
 
+    public static class FooMapPage {
+
+        private Map bar;
+
+        private Map[] barItems;
+
+        public Map[] getBarItems() {
+            return barItems;
+        }
+
+        public void setBarItems(Map[] hogeItems) {
+            this.barItems = hogeItems;
+        }
+
+        public Map getBar() {
+            return bar;
+        }
+
+        public void setBar(Map bar) {
+            this.bar = bar;
+        }
+
+    }
+
     public static class Bar {
 
         public Bar() {
@@ -407,6 +510,39 @@ public class TForEachRendererTeedaTest extends AbstractRendererTeedaTest {
         }
 
         public void setFugaItems(Fuga[] hogeItems) {
+            this.fugaItems = hogeItems;
+        }
+
+        private String aaa;
+
+        private String bbb;
+
+        public String getAaa() {
+            return aaa;
+        }
+
+        public void setAaa(String aaa) {
+            this.aaa = aaa;
+        }
+
+        public String getBbb() {
+            return bbb;
+        }
+
+        public void setBbb(String bbb) {
+            this.bbb = bbb;
+        }
+    }
+
+    public static class HogeMapPage {
+
+        private Map[] fugaItems;
+
+        public Map[] getFugaItems() {
+            return fugaItems;
+        }
+
+        public void setFugaItems(Map[] hogeItems) {
             this.fugaItems = hogeItems;
         }
 

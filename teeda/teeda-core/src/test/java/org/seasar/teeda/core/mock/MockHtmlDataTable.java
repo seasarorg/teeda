@@ -13,16 +13,16 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.core.render.html;
+package org.seasar.teeda.core.mock;
 
-import javax.faces.component.html.HtmlCommandLink;
+import javax.faces.component.html.HtmlDataTable;
 import javax.faces.context.FacesContext;
 import javax.faces.render.Renderer;
 
 /**
  * @author manhole
  */
-public class MockHtmlCommandLink extends HtmlCommandLink {
+public class MockHtmlDataTable extends HtmlDataTable {
 
     private Renderer renderer;
 

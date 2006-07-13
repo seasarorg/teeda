@@ -25,6 +25,7 @@ import junitx.framework.ObjectAssert;
 
 import org.custommonkey.xmlunit.Diff;
 import org.seasar.teeda.core.mock.MockFacesContext;
+import org.seasar.teeda.core.mock.MockHtmlCommandButton;
 import org.seasar.teeda.core.mock.MockUIComponentBaseWithNamingContainer;
 
 /**

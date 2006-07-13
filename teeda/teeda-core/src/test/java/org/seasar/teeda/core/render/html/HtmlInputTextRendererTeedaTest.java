@@ -25,6 +25,7 @@ import org.seasar.teeda.core.el.ELParser;
 import org.seasar.teeda.core.el.impl.ValueBindingImpl;
 import org.seasar.teeda.core.el.impl.commons.CommonsELParser;
 import org.seasar.teeda.core.el.impl.commons.CommonsExpressionProcessorImpl;
+import org.seasar.teeda.core.mock.MockHtmlInputText;
 import org.seasar.teeda.core.mock.MockUIViewRoot;
 
 /**

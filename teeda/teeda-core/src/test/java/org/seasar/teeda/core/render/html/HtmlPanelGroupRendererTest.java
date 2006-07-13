@@ -19,6 +19,8 @@ import javax.faces.render.Renderer;
 import javax.faces.render.RendererTest;
 
 import org.custommonkey.xmlunit.Diff;
+import org.seasar.teeda.core.mock.MockHtmlOutputText;
+import org.seasar.teeda.core.mock.MockHtmlPanelGroup;
 
 /**
  * @author manhole
