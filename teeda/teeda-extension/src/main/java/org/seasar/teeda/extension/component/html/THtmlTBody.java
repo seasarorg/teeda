@@ -17,6 +17,9 @@ package org.seasar.teeda.extension.component.html;
 
 import org.seasar.teeda.extension.component.TForEach;
 
+/**
+ * @author manhole
+ */
 public class THtmlTBody extends TForEach {
 
     public static final String COMPONENT_TYPE = "org.seasar.teeda.extension.THtmlTBody";

@@ -1,17 +1,39 @@
 <html>
 <head>
+<script>
+<!--
+function editOn(span) {
+	var input = span.nextSibling.nextSibling;
+	input.value = span.innerHTML;
+	span.style.display = "none";
+	input.style.display = "inline";
+	input.focus();
+}
+function editOff(input) {
+	var span = input.previousSibling.previousSibling;
+	span.innerHTML = input.value;
+	input.style.display = "none";
+	span.style.display = "inline";
+}
+//-->
+</script>
 <style>
-	.gridHeader {
-		background-color: green;
-		color: white;
-		font-weight: bold;
-	}
-	.gridTable {
-		background-color: black;
-	}
-	.gridCell {
-		background-color: white;
-	}
+.gridHeader {
+	background-color: green;
+	color: white;
+	font-weight: bold;
+}
+.gridTable {
+	background-color: black;
+}
+.gridCell {
+	background-color: white;
+	height: 18px;
+}
+.teeda_editable {
+	border-width: 0px;
+	background-color: #FFC0CB;
+}
 </style>
 </head>
 <body>
@@ -86,43 +108,64 @@
 				<table cellspacing="1" cellpadding="0" class="gridTable">
 					<tbody>
 						<tr>
-							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>TD3_1</nobr></div></td>
+							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>
+								<span onclick="editOn(this);">TD3_1</span>
+								<input type="text" id="gridText" name="someGridXY:0:gridText" value="TD3_1" onblur="editOff(this);" class="teeda_editable" style="display:none;" />
+							</nobr></div></td>
 							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>TD4_1</nobr></div></td>
 							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>TD5_1</nobr></div></td>
 							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>TD6_1</nobr></div></td>
 						</tr>
 						<tr>
-							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>TD3_2</nobr></div></td>
+							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>
+								<span onclick="editOn(this);">TD3_2</span>
+								<input type="text" id="gridText" name="someGridXY:1:gridText" value="TD3_2" onblur="editOff(this);" class="teeda_editable" style="display:none;" />
+							</nobr></div></td>
 							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>TD4_2</nobr></div></td>
 							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>TD5_2</nobr></div></td>
 							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>TD6_2</nobr></div></td>
 						</tr>
 						<tr>
-							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>TD3_3</nobr></div></td>
+							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>
+								<span onclick="editOn(this);">TD3_3</span>
+								<input type="text" id="gridText" name="someGridXY:2:gridText" value="TD3_3" onblur="editOff(this);" class="teeda_editable" style="display:none;" />
+							</nobr></div></td>
 							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>TD4_3</nobr></div></td>
 							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>TD5_3</nobr></div></td>
 							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>TD6_3</nobr></div></td>
 						</tr>
 						<tr>
-							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>TD3_4</nobr></div></td>
+							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>
+								<span onclick="editOn(this);">TD3_4</span>
+								<input type="text" id="gridText" name="someGridXY:3:gridText" value="TD3_4" onblur="editOff(this);" class="teeda_editable" style="display:none;" />
+							</nobr></div></td>
 							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>TD4_4</nobr></div></td>
 							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>TD5_4</nobr></div></td>
 							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>TD6_4</nobr></div></td>
 						</tr>
 						<tr>
-							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>TD3_5</nobr></div></td>
+							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>
+								<span onclick="editOn(this);">TD3_5</span>
+								<input type="text" id="gridText" name="someGridXY:4:gridText" value="TD3_5" onblur="editOff(this);" class="teeda_editable" style="display:none;" />
+							</nobr></div></td>
 							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>TD4_5</nobr></div></td>
 							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>TD5_5</nobr></div></td>
 							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>TD6_5</nobr></div></td>
 						</tr>
 						<tr>
-							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>TD3_6</nobr></div></td>
+							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>
+								<span onclick="editOn(this);">TD3_6</span>
+								<input type="text" id="gridText" name="someGridXY:5:gridText" value="TD3_6" onblur="editOff(this);" class="teeda_editable" style="display:none;" />
+							</nobr></div></td>
 							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>TD4_6</nobr></div></td>
 							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>TD5_6</nobr></div></td>
 							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>TD6_6</nobr></div></td>
 						</tr>
 						<tr>
-							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>TD3_7</nobr></div></td>
+							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>
+								<span onclick="editOn(this);">TD3_7</span>
+								<input type="text" id="gridText" name="someGridXY:6:gridText" value="TD3_7" onblur="editOff(this);" class="teeda_editable" style="display:none;" />
+							</nobr></div></td>
 							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>TD4_7</nobr></div></td>
 							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>TD5_7</nobr></div></td>
 							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>TD6_7</nobr></div></td>

@@ -13,29 +13,31 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.extension.component.html;
+package org.seasar.teeda.extension.taglib;
 
-import javax.faces.component.UIComponentBase;
+import javax.faces.component.UIComponent;
+
+import org.seasar.teeda.core.taglib.UIComponentTagBase;
+import org.seasar.teeda.extension.component.html.THtmlGridTd;
 
 /**
  * @author manhole
  */
-public class THtmlGridTr extends UIComponentBase {
+public class TGridInputTextTag extends UIComponentTagBase {
 
-    public static final String COMPONENT_TYPE = "org.seasar.teeda.extension.HtmlGridTr";
-
-    public String getFamily() {
-        return THtmlGrid.COMPONENT_FAMILY;
+    public TGridInputTextTag() {
     }
 
-    private String height;
-
-    public String getHeight() {
-        return height;
+    public String getComponentType() {
+        return THtmlGridTd.COMPONENT_TYPE;
     }
 
-    public void setHeight(String width) {
-        this.height = width;
+    public String getRendererType() {
+        return null;
+    }
+
+    protected void setProperties(UIComponent component) {
+        super.setProperties(component);
     }
 
 }

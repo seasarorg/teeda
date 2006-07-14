@@ -180,7 +180,8 @@ public class RendererTest extends AbstractRendererTest {
         return s;
     }
 
-    protected Diff diff(final String expected, final String actual) throws SAXException, IOException, ParserConfigurationException {
+    protected Diff diff(final String expected, final String actual)
+            throws SAXException, IOException, ParserConfigurationException {
         Document cDoc = XMLUnit.buildDocument(XMLUnit.getControlParser(),
                 new StringReader(expected));
         Document tDoc = XMLUnit.buildDocument(XMLUnit.getTestParser(),

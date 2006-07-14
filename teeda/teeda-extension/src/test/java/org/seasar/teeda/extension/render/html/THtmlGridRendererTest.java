@@ -39,9 +39,11 @@ import org.seasar.teeda.extension.component.html.THtmlGridBody;
 import org.seasar.teeda.extension.component.html.THtmlGridColumn;
 import org.seasar.teeda.extension.component.html.THtmlGridColumnGroup;
 import org.seasar.teeda.extension.component.html.THtmlGridHeader;
+import org.seasar.teeda.extension.component.html.THtmlGridInputText;
 import org.seasar.teeda.extension.component.html.THtmlGridTd;
 import org.seasar.teeda.extension.component.html.THtmlGridTh;
 import org.seasar.teeda.extension.component.html.THtmlGridTr;
+import org.seasar.teeda.extension.render.html.THtmlGridInputTextRendererTest.THtmlGridInputTextRenderer;
 
 /**
  * @author manhole
@@ -54,13 +56,17 @@ public class THtmlGridRendererTest extends RendererTest {
 
     private MockHtmlGrid htmlGrid;
 
-    private HtmlOutputTextRenderer outputTextRenderer = new HtmlOutputTextRenderer();
+    private HtmlOutputTextRenderer outputTextRenderer;
+
+    private THtmlGridInputTextRenderer gridInputTextRenderer;
 
     protected void setUp() throws Exception {
         super.setUp();
         renderer = (THtmlGridRenderer) createRenderer();
         outputTextRenderer = new HtmlOutputTextRenderer();
         outputTextRenderer.setRenderAttributes(getRenderAttributes());
+        gridInputTextRenderer = new THtmlGridInputTextRenderer();
+        gridInputTextRenderer.setRenderAttributes(getRenderAttributes());
         htmlGrid = new MockHtmlGrid();
         htmlGrid.setRenderer(renderer);
     }
@@ -356,12 +362,22 @@ public class THtmlGridRendererTest extends RendererTest {
             for (int i = 1; i <= 6; i++) {
                 THtmlGridTd td = new THtmlGridTd();
                 addChild(tr, td);
-                MockHtmlOutputText text = new MockHtmlOutputText();
-                text.setRenderer(outputTextRenderer);
-                ValueBinding vb = new ValueBindingImpl(getFacesContext()
-                        .getApplication(), "#{some.td" + i + "}", parser);
-                text.setValueBinding("value", vb);
-                addChild(td, text);
+                if (i == 3) {
+                    MockHtmlGridInputText gridInputText = new MockHtmlGridInputText();
+                    gridInputText.setId("gridText");
+                    gridInputText.setRenderer(gridInputTextRenderer);
+                    ValueBinding vb = new ValueBindingImpl(getFacesContext()
+                            .getApplication(), "#{some.td" + i + "}", parser);
+                    gridInputText.setValueBinding("value", vb);
+                    addChild(td, gridInputText);
+                } else {
+                    MockHtmlOutputText text = new MockHtmlOutputText();
+                    text.setRenderer(outputTextRenderer);
+                    ValueBinding vb = new ValueBindingImpl(getFacesContext()
+                            .getApplication(), "#{some.td" + i + "}", parser);
+                    text.setValueBinding("value", vb);
+                    addChild(td, text);
+                }
             }
         }
 
@@ -373,7 +389,6 @@ public class THtmlGridRendererTest extends RendererTest {
                 "testEncode_LeftFixed_Header_Body_XY.html", "UTF-8");
         final String expected = extract(readText);
         Diff diff = diff(expected, getResponseText());
-        System.out.println(getResponseText());
         assertEquals(diff.toString(), true, diff.identical());
     }
 
@@ -383,7 +398,37 @@ public class THtmlGridRendererTest extends RendererTest {
         return renderer;
     }
 
-    public class MockHtmlGrid extends THtmlGrid {
+    public static class MockHtmlGrid extends THtmlGrid {
+
+        private Renderer renderer;
+
+        private String clientId;
+
+        public void setRenderer(Renderer renderer) {
+            this.renderer = renderer;
+        }
+
+        protected Renderer getRenderer(FacesContext context) {
+            if (renderer != null) {
+                return renderer;
+            }
+            return super.getRenderer(context);
+        }
+
+        public String getClientId(FacesContext context) {
+            if (clientId != null) {
+                return clientId;
+            }
+            return super.getClientId(context);
+        }
+
+        public void setClientId(String clientId) {
+            this.clientId = clientId;
+        }
+
+    }
+
+    public static class MockHtmlGridInputText extends THtmlGridInputText {
 
         private Renderer renderer;
 

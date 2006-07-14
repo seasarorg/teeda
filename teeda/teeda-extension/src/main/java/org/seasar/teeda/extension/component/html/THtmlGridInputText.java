@@ -15,47 +15,17 @@
  */
 package org.seasar.teeda.extension.component.html;
 
-import javax.faces.component.UIComponentBase;
+import javax.faces.component.UIInput;
 
 /**
  * @author manhole
  */
-public class THtmlGridColumn extends UIComponentBase {
+public class THtmlGridInputText extends UIInput {
 
-    public static final String COMPONENT_TYPE = "org.seasar.teeda.extension.HtmlGridColumn";
-
-    private String span = "1";
-
-    private String width = "100";
-
-    private String styleClass;
+    public static final String COMPONENT_TYPE = "org.seasar.teeda.extension.HtmlGridInputText";
 
     public String getFamily() {
         return THtmlGrid.COMPONENT_FAMILY;
-    }
-
-    public String getSpan() {
-        return span;
-    }
-
-    public void setSpan(String span) {
-        this.span = span;
-    }
-
-    public String getWidth() {
-        return width;
-    }
-
-    public void setWidth(String width) {
-        this.width = width;
-    }
-
-    public String getStyleClass() {
-        return styleClass;
-    }
-
-    public void setStyleClass(String styleClass) {
-        this.styleClass = styleClass;
     }
 
 }
