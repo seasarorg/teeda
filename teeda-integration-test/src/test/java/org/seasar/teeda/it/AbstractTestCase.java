@@ -45,6 +45,8 @@ import org.seasar.teeda.core.util.SocketUtil;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
+import com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException;
+import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.WebResponse;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 
@@ -57,8 +59,9 @@ public abstract class AbstractTestCase extends TestCase {
 
     private static String baseUrl_ = "http://localhost:" + port_ + "/";
 
-    protected static Test setUpTestSuite(
-            final Class testClass) {
+    private static final String ENCODING = "UTF-8";
+
+    protected static Test setUpTestSuite(final Class testClass) {
         if (testClass == null) {
             throw new NullPointerException("testClass");
         }
@@ -67,8 +70,7 @@ public abstract class AbstractTestCase extends TestCase {
         return setUpTestSuite(testSuite, pomFile);
     }
 
-    protected static Test setUpTestSuite(
-            TestSuite testSuite, File pomFile) {
+    protected static Test setUpTestSuite(TestSuite testSuite, File pomFile) {
         JettyServerSetup jettySetup = new JettyServerSetup(testSuite);
         jettySetup.setPort(port_);
         File webapp = new File(pomFile.getParentFile(),
@@ -87,13 +89,13 @@ public abstract class AbstractTestCase extends TestCase {
 
     protected String getBody(HtmlPage page) throws UnsupportedEncodingException {
         WebResponse webResponse = page.getWebResponse();
-        String body = new String(webResponse.getResponseBody(), page
-                .getPageEncoding());
+        final String pageEncoding = page.getPageEncoding();
+        String body = new String(webResponse.getResponseBody(), pageEncoding);
         return body;
     }
 
     protected String readText(String fileName) {
-        return TestUtil.readText(getClass(), fileName, "UTF-8");
+        return TestUtil.readText(getClass(), fileName, ENCODING);
     }
 
     protected URL getFileAsUrl(String s) {
@@ -124,6 +126,19 @@ public abstract class AbstractTestCase extends TestCase {
         chain.addDifferenceListener(new RegexpDifferenceListener());
         diff.overrideDifferenceListener(chain);
         return diff;
+    }
+
+    protected HtmlPage getHtmlPage(WebClient webClient, URL url)
+            throws IOException {
+        try {
+            return (HtmlPage) webClient.getPage(url);
+        } catch (FailingHttpStatusCodeException e) {
+            final WebResponse response = e.getResponse();
+            final byte[] bodyBytes = response.getResponseBody();
+            final String body = new String(bodyBytes, ENCODING);
+            System.out.println(body);
+            throw e;
+        }
     }
 
 }
