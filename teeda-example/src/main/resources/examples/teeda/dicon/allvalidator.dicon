@@ -5,4 +5,5 @@
 	<component name="lengthValidator1" class="javax.faces.validator.LengthValidator">
 		<property name="maximum">10</property>
 	</component>
+	<component name="lengthValidator2" class="org.seasar.teeda.extension.validator.TLengthValidator" ></component>
 </components>
