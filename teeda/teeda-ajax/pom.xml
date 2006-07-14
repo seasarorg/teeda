@@ -31,14 +31,14 @@
     <dependency>
       <groupId>org.seasar.teeda</groupId>
       <artifactId>teeda-core</artifactId>
-      <version>1.0-beta-6-SNAPSHOT-SNAPSHOT</version>
+      <version>1.0-beta-6-SNAPSHOT</version>
       <type>jar</type>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.seasar.teeda</groupId>
       <artifactId>teeda-core</artifactId>
-      <version>1.0-beta-6-SNAPSHOT-SNAPSHOT</version>
+      <version>1.0-beta-6-SNAPSHOT</version>
       <type>test-jar</type>
     </dependency>
   </dependencies>
