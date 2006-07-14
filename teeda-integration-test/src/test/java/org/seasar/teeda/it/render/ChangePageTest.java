@@ -44,13 +44,14 @@ public class ChangePageTest extends AbstractTestCase {
 
         // ## Act ##
         // ## Assert ##
-        HtmlPage page1 = (HtmlPage) webClient.getPage(url);
+        HtmlPage page1 = getHtmlPage(webClient, url);
 
         final String body = getBody(page1).trim();
         System.out.println(body);
         assertEquals("changePage1.jsp", page1.getTitleText());
 
-        HtmlForm form = (HtmlForm) page1.getHtmlElementById("changingPagesForm1");
+        HtmlForm form = (HtmlForm) page1
+                .getHtmlElementById("changingPagesForm1");
         HtmlSubmitInput button = (HtmlSubmitInput) form
                 .getHtmlElementById("button1");
         HtmlPage page2 = (HtmlPage) button.click();

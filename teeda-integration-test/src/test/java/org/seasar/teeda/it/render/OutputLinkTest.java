@@ -44,7 +44,7 @@ public class OutputLinkTest extends AbstractTestCase {
         WebClient webClient = new WebClient();
 
         // ## Act ##
-        HtmlPage page = (HtmlPage) webClient.getPage(url);
+        HtmlPage page = getHtmlPage(webClient, url);
 
         // ## Assert ##
         final String body = getBody(page).trim();
@@ -62,7 +62,7 @@ public class OutputLinkTest extends AbstractTestCase {
         System.out.println(url);
 
         WebClient webClient = new WebClient();
-        HtmlPage page1 = (HtmlPage) webClient.getPage(url);
+        HtmlPage page1 = getHtmlPage(webClient, url);
 
         HtmlAnchor link = (HtmlAnchor) page1.getHtmlElementById("link1");
 
@@ -83,7 +83,7 @@ public class OutputLinkTest extends AbstractTestCase {
         MyWebClient webClient = new MyWebClient();
 
         // ## Act ##
-        HtmlPage page = (HtmlPage) webClient.getPage(url);
+        HtmlPage page = getHtmlPage(webClient, url);
 
         // ## Assert ##
         final String body = getBody(page).trim();
@@ -106,7 +106,7 @@ public class OutputLinkTest extends AbstractTestCase {
         MyWebClient webClient = new MyWebClient();
 
         // ## Act ##
-        HtmlPage page = (HtmlPage) webClient.getPage(url);
+        HtmlPage page = getHtmlPage(webClient, url);
 
         // ## Assert ##
         final String body = getBody(page).trim();

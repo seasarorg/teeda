@@ -44,7 +44,7 @@ public class GraphicImageTest extends AbstractTestCase {
         WebClient webClient = new WebClient();
 
         // ## Act ##
-        HtmlPage page = (HtmlPage) webClient.getPage(url);
+        HtmlPage page = getHtmlPage(webClient, url);
 
         // ## Assert ##
         final String body1 = getBody(page).trim();

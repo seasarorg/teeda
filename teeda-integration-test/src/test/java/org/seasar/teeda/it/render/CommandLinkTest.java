@@ -17,10 +17,10 @@ package org.seasar.teeda.it.render;
 
 import java.net.URL;
 
+import junit.framework.Test;
+
 import org.custommonkey.xmlunit.Diff;
 import org.seasar.teeda.it.AbstractTestCase;
-
-import junit.framework.Test;
 
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlAnchor;
@@ -45,13 +45,13 @@ public class CommandLinkTest extends AbstractTestCase {
 
         // ## Act ##
         // ## Assert ##
-        HtmlPage page1 = (HtmlPage) webClient.getPage(url);
+        HtmlPage page1 = getHtmlPage(webClient, url);
         final String body = getBody(page1).trim();
         System.out.println(body);
         assertEquals("commandLink.jsp", page1.getTitleText());
 
         HtmlTextInput input1 = (HtmlTextInput) page1
-            .getHtmlElementById("text1");
+                .getHtmlElementById("text1");
         assertEquals("123", input1.getValueAttribute());
 
         final String expected = readText("testRender.html");
@@ -64,7 +64,7 @@ public class CommandLinkTest extends AbstractTestCase {
         System.out.println(getBody(page2).trim());
 
         HtmlTextInput input2 = (HtmlTextInput) page2
-            .getHtmlElementById("text1");
+                .getHtmlElementById("text1");
         assertEquals("123 + 1", "124", input2.getValueAttribute());
     }
 

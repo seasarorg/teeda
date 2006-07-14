@@ -35,7 +35,7 @@ public class TeedaIntegrationTests extends TestCase {
 
     public static Test suite() throws Exception {
         final Class testClass = TeedaIntegrationTests.class;
-        File pomFile = MavenUtil.getProjectPomFile(testClass);
+        final File pomFile = MavenUtil.getProjectPomFile(testClass);
         final File project = pomFile.getParentFile();
         final String startingDirectory = new File(project,
                 "target/test-classes").getCanonicalPath().replace('\\', '/');
@@ -44,10 +44,10 @@ public class TeedaIntegrationTests extends TestCase {
         DirectoryWalker walker = new DirectoryWalker(startingDirectory);
         walker.getFiles(new FileFilter() {
 
-            public boolean accept(File pathname) {
+            public boolean accept(final File pathname) {
                 final String name = FileUtil.getCanonicalPath(pathname)
                         .replace('\\', '/');
-                if (name.endsWith("Test.class")) {
+                if (name.endsWith("Test.class") && (-1 == name.indexOf("$"))) {
                     final int pos = name.lastIndexOf(startingDirectory);
                     String className = name.substring(pos
                             + startingDirectory.length());

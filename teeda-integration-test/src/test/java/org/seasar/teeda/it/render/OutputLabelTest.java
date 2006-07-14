@@ -43,7 +43,7 @@ public class OutputLabelTest extends AbstractTestCase {
         WebClient webClient = new WebClient();
 
         // ## Act ##
-        HtmlPage page = (HtmlPage) webClient.getPage(url);
+        HtmlPage page = getHtmlPage(webClient, url);
 
         // ## Assert ##
         final String body = getBody(page).trim();

@@ -22,7 +22,6 @@ import java.util.Date;
 
 import junit.framework.Test;
 
-import org.custommonkey.xmlunit.Diff;
 import org.seasar.teeda.it.AbstractTestCase;
 
 import com.gargoylesoftware.htmlunit.WebClient;
@@ -53,7 +52,7 @@ public class ConverterTest extends AbstractTestCase {
 
         // ## Act ##
         // ## Assert ##
-        HtmlPage page1 = (HtmlPage) webClient.getPage(url);
+        HtmlPage page1 = getHtmlPage(webClient, url);
 
         final String body = getBody(page1).trim();
         System.out.println(body);
@@ -70,7 +69,7 @@ public class ConverterTest extends AbstractTestCase {
         input1.setValueAttribute("20061231");
         HtmlSubmitInput submit = (HtmlSubmitInput) page1
                 .getHtmlElementById("button1");
-        
+
         HtmlPage page2 = (HtmlPage) submit.click();
         System.out.println(getBody(page2).trim());
         HtmlTextInput input2 = (HtmlTextInput) page2

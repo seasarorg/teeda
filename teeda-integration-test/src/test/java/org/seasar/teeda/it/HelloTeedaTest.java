@@ -44,7 +44,7 @@ public class HelloTeedaTest extends AbstractTestCase {
         WebClient webClient = new WebClient();
 
         // ## Act ##
-        HtmlPage page = (HtmlPage) webClient.getPage(url);
+        HtmlPage page = getHtmlPage(webClient, url);
 
         // ## Assert ##
         final String body = getBody(page).trim();
@@ -70,14 +70,14 @@ public class HelloTeedaTest extends AbstractTestCase {
         WebClient webClient = new WebClient();
 
         // ## Act ##
-        HtmlPage page = (HtmlPage) webClient.getPage(url);
+        HtmlPage page = getHtmlPage(webClient, url);
 
         // ## Assert ##
         final String body = getBody(page).trim();
         System.out.println(body);
         StringAssert.assertContains("こんにちは、てぃーだ!", body);
         StringAssert.assertContains("こんにちは、てぃーだ!", page.getWebResponse()
-            .getContentAsString());
+                .getContentAsString());
 
         HtmlSpan span = (HtmlSpan) page.getHtmlElementById("hello");
         System.out.println(span);

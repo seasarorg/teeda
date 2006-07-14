@@ -17,9 +17,9 @@ package org.seasar.teeda.it.render;
 
 import java.net.URL;
 
-import org.seasar.teeda.it.AbstractTestCase;
-
 import junit.framework.Test;
+
+import org.seasar.teeda.it.AbstractTestCase;
 
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
@@ -44,7 +44,7 @@ public class InputSecretTest extends AbstractTestCase {
 
         // ## Act ##
         // ## Assert ##
-        HtmlPage page1 = (HtmlPage) webClient.getPage(url);
+        HtmlPage page1 = getHtmlPage(webClient, url);
 
         final String body = getBody(page1).trim();
         System.out.println(body);

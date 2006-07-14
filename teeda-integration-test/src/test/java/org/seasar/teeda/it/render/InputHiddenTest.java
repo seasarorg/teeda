@@ -47,7 +47,7 @@ public class InputHiddenTest extends AbstractTestCase {
 
         // ## Act ##
         // ## Assert ##
-        HtmlPage page1 = (HtmlPage) webClient.getPage(url);
+        HtmlPage page1 = getHtmlPage(webClient, url);
 
         final String body1 = getBody(page1).trim();
         System.out.println(body1);

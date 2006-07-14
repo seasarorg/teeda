@@ -17,9 +17,9 @@ package org.seasar.teeda.it.render;
 
 import java.net.URL;
 
-import org.seasar.teeda.it.AbstractTestCase;
-
 import junit.framework.Test;
+
+import org.seasar.teeda.it.AbstractTestCase;
 
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
@@ -42,7 +42,7 @@ public class OutputTextDITest extends AbstractTestCase {
         WebClient webClient = new WebClient();
 
         // ## Act ##
-        HtmlPage page = (HtmlPage) webClient.getPage(url);
+        HtmlPage page = getHtmlPage(webClient, url);
 
         // ## Assert ##
         final String body = getBody(page).trim();

@@ -45,7 +45,7 @@ public class RenderedTest extends AbstractTestCase {
 
         // ## Act ##
         // ## Assert ##
-        HtmlPage page = (HtmlPage) webClient.getPage(url);
+        HtmlPage page = getHtmlPage(webClient, url);
         final String body1 = getBody(page).trim();
         System.out.println(body1);
         //        assertEquals("rendered.jsp", page.getTitleText());

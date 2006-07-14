@@ -45,7 +45,7 @@ public class CommandButtonTest extends AbstractTestCase {
 
         // ## Act ##
         // ## Assert ##
-        HtmlPage page1 = (HtmlPage) webClient.getPage(url);
+        HtmlPage page1 = getHtmlPage(webClient, url);
 
         final String body = getBody(page1).trim();
         System.out.println(body);
