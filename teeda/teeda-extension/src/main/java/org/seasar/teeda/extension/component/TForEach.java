@@ -41,7 +41,7 @@ public class TForEach extends UIComponentBase implements NamingContainer {
 
     public static final String COMPONENT_FAMILY = "org.seasar.teeda.extension.ForEach";
 
-    private static final String DEFAULT_RENDERERTYPE = "org.seasar.teeda.extension.ForEach";
+    private static final String DEFAULT_RENDERER_TYPE = "org.seasar.teeda.extension.ForEach";
 
     private static final String INDEX_SUFFIX = "Index";
 
@@ -52,7 +52,7 @@ public class TForEach extends UIComponentBase implements NamingContainer {
     private ComponentStates componentStates = new ComponentStates();
 
     public TForEach() {
-        setRendererType(DEFAULT_RENDERERTYPE);
+        setRendererType(DEFAULT_RENDERER_TYPE);
     }
 
     public void setId(String id) {
