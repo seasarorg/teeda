@@ -28,7 +28,6 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.internal.IgnoreComponent;
 import javax.faces.internal.UIComponentUtil;
 
-import org.seasar.framework.util.AssertionUtil;
 import org.seasar.framework.util.NumberConversionUtil;
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
@@ -43,7 +42,7 @@ import org.seasar.teeda.extension.util.JavaScriptContext;
 
 /**
  * @author shot
- *
+ * 
  */
 public class THtmlInputCommaTextRenderer extends HtmlInputTextRenderer {
 
@@ -55,8 +54,7 @@ public class THtmlInputCommaTextRenderer extends HtmlInputTextRenderer {
 
     public void encodeEnd(FacesContext context, UIComponent component)
             throws IOException {
-        AssertionUtil.assertNotNull("FacesContext", context);
-        AssertionUtil.assertNotNull("UIComponent", component);
+        assertNotNull(context, component);
         if (!component.isRendered()) {
             return;
         }

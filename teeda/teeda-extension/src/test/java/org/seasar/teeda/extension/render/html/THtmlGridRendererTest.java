@@ -43,7 +43,6 @@ import org.seasar.teeda.extension.component.html.THtmlGridInputText;
 import org.seasar.teeda.extension.component.html.THtmlGridTd;
 import org.seasar.teeda.extension.component.html.THtmlGridTh;
 import org.seasar.teeda.extension.component.html.THtmlGridTr;
-import org.seasar.teeda.extension.render.html.THtmlGridInputTextRendererTest.THtmlGridInputTextRenderer;
 
 /**
  * @author manhole

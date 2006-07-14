@@ -19,18 +19,13 @@ import java.io.IOException;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.context.ResponseWriter;
 import javax.faces.render.Renderer;
 import javax.faces.render.RendererTest;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.custommonkey.xmlunit.Diff;
-import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.mock.MockUIComponentBaseWithNamingContainer;
-import org.seasar.teeda.core.render.html.AbstractHtmlRenderer;
 import org.seasar.teeda.core.render.html.HtmlOutputTextRenderer;
-import org.seasar.teeda.core.util.RendererUtil;
-import org.seasar.teeda.core.util.ValueHolderUtil;
 import org.seasar.teeda.extension.component.html.THtmlGridInputText;
 import org.xml.sax.SAXException;
 
@@ -156,57 +151,6 @@ public class THtmlGridInputTextRendererTest extends RendererTest {
             this.clientId = clientId;
         }
 
-    }
-
-    private boolean addChild(UIComponent parent, UIComponent child) {
-        return parent.getChildren().add(child);
-    }
-
-    public static class THtmlGridInputTextRenderer extends AbstractHtmlRenderer {
-        public void encodeEnd(FacesContext context, UIComponent component)
-                throws IOException {
-            assertNotNull(context, component);
-            if (!component.isRendered()) {
-                return;
-            }
-            encodeHtmlGridInputTextEnd(context, (THtmlGridInputText) component);
-        }
-
-        protected void encodeHtmlGridInputTextEnd(FacesContext context,
-                THtmlGridInputText gridInputText) throws IOException {
-            ResponseWriter writer = context.getResponseWriter();
-            writer.startElement(JsfConstants.SPAN_ELEM, gridInputText);
-            RendererUtil.renderAttribute(writer, JsfConstants.ONCLICK_ATTR,
-                    "editOn(this);");
-            final String value = ValueHolderUtil.getValueForRender(context,
-                    gridInputText);
-            writer.writeText(value, null);
-            // TODO
-            //            if (gridInputText.isEscape()) {
-            //                writer.writeText(value, null);
-            //            } else {
-            //                writer.write(value);
-            //            }
-            writer.endElement(JsfConstants.SPAN_ELEM);
-
-            writer.startElement(JsfConstants.INPUT_ELEM, gridInputText);
-            RendererUtil.renderAttribute(writer, JsfConstants.TYPE_ATTR,
-                    JsfConstants.TEXT_VALUE);
-            RendererUtil.renderIdAttributeIfNecessary(writer, gridInputText,
-                    getIdForRender(context, gridInputText));
-            RendererUtil.renderAttribute(writer, JsfConstants.NAME_ATTR,
-                    gridInputText.getClientId(context));
-            RendererUtil.renderAttribute(writer, JsfConstants.ONBLUR_ATTR,
-                    "editOff(this);");
-            RendererUtil.renderAttribute(writer, JsfConstants.CLASS_ATTR,
-                    "teeda_editable");
-            RendererUtil.renderAttribute(writer, JsfConstants.STYLE_ATTR,
-                    "display:none;");
-            RendererUtil
-                    .renderAttribute(writer, JsfConstants.VALUE_ATTR, value);
-            renderAttributes(gridInputText, writer);
-            writer.endElement(JsfConstants.INPUT_ELEM);
-        }
     }
 
 }

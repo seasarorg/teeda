@@ -22,10 +22,18 @@ import javax.faces.component.UIInput;
  */
 public class THtmlGridInputText extends UIInput {
 
+    public static final String COMPONENT_FAMILY = UIInput.COMPONENT_FAMILY;
+
     public static final String COMPONENT_TYPE = "org.seasar.teeda.extension.HtmlGridInputText";
 
+    public static final String DEFAULT_RENDERER_TYPE = "org.seasar.teeda.extension.GridInputText";
+
+    public THtmlGridInputText() {
+        setRendererType(DEFAULT_RENDERER_TYPE);
+    }
+
     public String getFamily() {
-        return THtmlGrid.COMPONENT_FAMILY;
+        return THtmlGridInputText.COMPONENT_FAMILY;
     }
 
 }

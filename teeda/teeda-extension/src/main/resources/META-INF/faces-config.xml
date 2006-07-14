@@ -83,6 +83,14 @@
 	</component>
 	<component>
 		<component-type>
+			org.seasar.teeda.extension.HtmlGridInputText
+		</component-type>
+		<component-class>
+			org.seasar.teeda.extension.component.html.THtmlGridInputText
+		</component-class>
+	</component>
+	<component>
+		<component-type>
 			org.seasar.jsf.HtmlInputCommaText
 		</component-type>
 		<component-class>

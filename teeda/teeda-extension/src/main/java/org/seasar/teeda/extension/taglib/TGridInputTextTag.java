@@ -18,7 +18,7 @@ package org.seasar.teeda.extension.taglib;
 import javax.faces.component.UIComponent;
 
 import org.seasar.teeda.core.taglib.UIComponentTagBase;
-import org.seasar.teeda.extension.component.html.THtmlGridTd;
+import org.seasar.teeda.extension.component.html.THtmlGridInputText;
 
 /**
  * @author manhole
@@ -29,11 +29,11 @@ public class TGridInputTextTag extends UIComponentTagBase {
     }
 
     public String getComponentType() {
-        return THtmlGridTd.COMPONENT_TYPE;
+        return THtmlGridInputText.COMPONENT_TYPE;
     }
 
     public String getRendererType() {
-        return null;
+        return THtmlGridInputText.DEFAULT_RENDERER_TYPE;
     }
 
     protected void setProperties(UIComponent component) {

@@ -44,9 +44,9 @@ import org.seasar.teeda.extension.component.html.THtmlGridTr;
  */
 public class THtmlGridRenderer extends AbstractHtmlRenderer {
 
-    public static final String COMPONENT_FAMILY = "org.seasar.teeda.extension.Grid";
+    public static final String COMPONENT_FAMILY = THtmlGrid.COMPONENT_FAMILY;
 
-    public static final String RENDERER_TYPE = "org.seasar.teeda.extension.HtmlGrid";
+    public static final String RENDERER_TYPE = THtmlGrid.DEFAULT_RENDERER_TYPE;
 
     public void encodeBegin(FacesContext context, UIComponent component)
             throws IOException {

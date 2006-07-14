@@ -37,7 +37,11 @@ public class THtmlGrid extends UIComponentBase implements NamingContainer {
 
     public static final String COMPONENT_TYPE = "org.seasar.teeda.extension.HtmlGrid";
 
-    public static final String DEFAULT_RENDERER_TYPE = "org.seasar.teeda.extension.HtmlGrid";
+    public static final String DEFAULT_RENDERER_TYPE = "org.seasar.teeda.extension.Grid";
+
+    public THtmlGrid() {
+        setRendererType(DEFAULT_RENDERER_TYPE);
+    }
 
     public String getFamily() {
         return COMPONENT_FAMILY;
