@@ -24,6 +24,7 @@ import javax.faces.render.RendererTest;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.custommonkey.xmlunit.Diff;
+import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.mock.MockUIComponentBaseWithNamingContainer;
 import org.seasar.teeda.core.render.html.HtmlOutputTextRenderer;
 import org.seasar.teeda.extension.component.html.THtmlGridInputText;
@@ -114,6 +115,34 @@ public class THtmlGridInputTextRendererTest extends RendererTest {
             throws SAXException, IOException, ParserConfigurationException {
         return super.diff("<dummy>" + expected + "</dummy>", "<dummy>" + actual
                 + "</dummy>");
+    }
+
+    public void testDecode_None() throws Exception {
+        // ## Arrange ##
+        gridInputText.setClientId("key");
+
+        MockFacesContext context = getFacesContext();
+
+        // ## Act ##
+        renderer.decode(context, gridInputText);
+
+        // ## Assert ##
+        assertEquals(null, gridInputText.getSubmittedValue());
+    }
+
+    public void testDecode_Success() throws Exception {
+        // ## Arrange ##
+        gridInputText.setClientId("key");
+
+        MockFacesContext context = getFacesContext();
+        context.getExternalContext().getRequestParameterMap().put("key",
+                "12345");
+
+        // ## Act ##
+        renderer.decode(context, gridInputText);
+
+        // ## Assert ##
+        assertEquals("12345", gridInputText.getSubmittedValue());
     }
 
     protected Renderer createRenderer() {

@@ -23,6 +23,7 @@ import javax.faces.context.ResponseWriter;
 
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.html.AbstractHtmlRenderer;
+import org.seasar.teeda.core.util.DecodeUtil;
 import org.seasar.teeda.core.util.RendererUtil;
 import org.seasar.teeda.core.util.ValueHolderUtil;
 import org.seasar.teeda.extension.component.html.THtmlGridInputText;
@@ -79,4 +80,15 @@ public class THtmlGridInputTextRenderer extends AbstractHtmlRenderer {
         renderAttributes(gridInputText, writer);
         writer.endElement(JsfConstants.INPUT_ELEM);
     }
+
+    public void decode(FacesContext context, UIComponent component) {
+        assertNotNull(context, component);
+        decodeHtmlGridInputText(context, (THtmlGridInputText) component);
+    }
+
+    protected void decodeHtmlGridInputText(FacesContext context,
+            THtmlGridInputText gridInputText) {
+        DecodeUtil.decode(context, gridInputText);
+    }
+
 }
