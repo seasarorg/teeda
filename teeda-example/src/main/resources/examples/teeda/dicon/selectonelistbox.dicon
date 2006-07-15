@@ -2,11 +2,12 @@
 <!DOCTYPE components PUBLIC "-//SEASAR2.1//DTD S2Container//EN"
 	"http://www.seasar.org/dtd/components24.dtd">
 <components>
-	<component name="selectOneMenu" class="examples.teeda.dto.SelectOneMenuDto" instance="request"/>
-	<component name="selectOneMenuBbbItems" class="java.util.ArrayList">
+	<component name="selectOneListbox" class="examples.teeda.dto.SelectOneListboxDto" instance="request"/>
+	<component name="selectOneListboxBbbItems" class="java.util.ArrayList">
 		<initMethod name="add" >
 			<arg>
 				<component class="javax.faces.model.SelectItem">
+					<property name="value">""</property>
 					<property name="label">"Please select"</property>
 				</component>
 			</arg>
@@ -40,41 +41,6 @@
 				<component class="javax.faces.model.SelectItem">
 					<property name="value">4</property>
 					<property name="label">"Four"</property>
-				</component>
-			</arg>
-		</initMethod>
-	</component>
-
-	<component name="selectOneMenuCccItems" class="java.util.ArrayList">
-		<initMethod name="add" >
-			<arg>
-				<component class="examples.teeda.entity.Department">
-					<property name="deptno">10</property>
-					<property name="dname">"ACOUNTING"</property>
-				</component>
-			</arg>
-		</initMethod>
-		<initMethod name="add" >
-			<arg>
-				<component class="examples.teeda.entity.Department">
-					<property name="deptno">20</property>
-					<property name="dname">"RESEARCH"</property>
-				</component>
-			</arg>
-		</initMethod>
-		<initMethod name="add" >
-			<arg>
-				<component class="examples.teeda.entity.Department">
-					<property name="deptno">30</property>
-					<property name="dname">"SALES"</property>
-				</component>
-			</arg>
-		</initMethod>
-		<initMethod name="add" >
-			<arg>
-				<component class="examples.teeda.entity.Department">
-					<property name="deptno">40</property>
-					<property name="dname">"OPERATIONS"</property>
 				</component>
 			</arg>
 		</initMethod>

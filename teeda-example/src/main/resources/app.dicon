@@ -13,6 +13,7 @@
 	<include path="examples/teeda/dicon/allconverter.dicon"/>
 	<include path="examples/teeda/dicon/allvalidator.dicon"/>
 	<include path="examples/teeda/dicon/selectonemenu.dicon"/>
+	<include path="examples/teeda/dicon/selectonelistbox.dicon"/>
 
 	<component name="teeda_errorFinder" class="org.seasar.teeda.core.util.ErrorMessageFinder" instance="application"/>
 
