@@ -119,6 +119,28 @@ public class ValueBindingImplTest extends TeedaTestCase {
         assertEquals(Boolean.TRUE, o);
     }
 
+    public void testGetValueSimple7() {
+        List list = new ArrayList();
+        D d = new D(list);
+        MockVariableResolver variableResolver = getVariableResolver();
+        variableResolver.putValue("d", d);
+        ValueBinding vb = new ValueBindingImpl(getApplication(), "#{d.blank}",
+                createELParser());
+        Object o = vb.getValue(getFacesContext());
+        assertTrue(((Boolean) o).booleanValue());
+
+    }
+
+    public void testGetValueSimple8() {
+        List list = new ArrayList();
+        MockVariableResolver variableResolver = getVariableResolver();
+        variableResolver.putValue("list", list);
+        ValueBinding vb = new ValueBindingImpl(getApplication(), "#{empty list}",
+                createELParser());
+        Object o = vb.getValue(getFacesContext());
+        assertTrue(((Boolean) o).booleanValue());
+    }
+
     public void testGetMapValue1() {
         Map map = new HashMap();
         map.put("hoge", "foo");
@@ -524,6 +546,10 @@ public class ValueBindingImplTest extends TeedaTestCase {
 
         public List getList() {
             return list_;
+        }
+        
+        public boolean isBlank() {
+            return list_.isEmpty();
         }
     }
 
