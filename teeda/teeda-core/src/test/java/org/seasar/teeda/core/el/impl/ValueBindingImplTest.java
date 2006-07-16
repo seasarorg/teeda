@@ -131,16 +131,6 @@ public class ValueBindingImplTest extends TeedaTestCase {
 
     }
 
-    public void testGetValueSimple8() {
-        List list = new ArrayList();
-        MockVariableResolver variableResolver = getVariableResolver();
-        variableResolver.putValue("list", list);
-        ValueBinding vb = new ValueBindingImpl(getApplication(), "#{empty list}",
-                createELParser());
-        Object o = vb.getValue(getFacesContext());
-        assertTrue(((Boolean) o).booleanValue());
-    }
-
     public void testGetMapValue1() {
         Map map = new HashMap();
         map.put("hoge", "foo");
@@ -193,6 +183,27 @@ public class ValueBindingImplTest extends TeedaTestCase {
         vb.setValue(getFacesContext(), "ccc");
         o = vb.getValue(getFacesContext());
         assertEquals("ccc", o);
+    }
+
+    public void testGetListValue2() {
+        List list = new ArrayList();
+        MockVariableResolver variableResolver = getVariableResolver();
+        variableResolver.putValue("list", list);
+        ValueBinding vb = new ValueBindingImpl(getApplication(), "#{empty list}",
+                createELParser());
+        Object o = vb.getValue(getFacesContext());
+        assertTrue(((Boolean) o).booleanValue());
+    }
+
+    public void testGetListValue3() {
+        List list = new ArrayList();
+        list.add("a");
+        MockVariableResolver variableResolver = getVariableResolver();
+        variableResolver.putValue("list", list);
+        ValueBinding vb = new ValueBindingImpl(getApplication(), "#{!empty list}",
+                createELParser());
+        Object o = vb.getValue(getFacesContext());
+        assertTrue(((Boolean) o).booleanValue());
     }
 
     public void testGetExpressionalValue1() {
