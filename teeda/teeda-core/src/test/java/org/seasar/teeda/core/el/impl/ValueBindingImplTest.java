@@ -189,19 +189,37 @@ public class ValueBindingImplTest extends TeedaTestCase {
         List list = new ArrayList();
         MockVariableResolver variableResolver = getVariableResolver();
         variableResolver.putValue("list", list);
-        ValueBinding vb = new ValueBindingImpl(getApplication(), "#{empty list}",
-                createELParser());
+        ValueBinding vb = new ValueBindingImpl(getApplication(),
+                "#{empty list}", createELParser());
         Object o = vb.getValue(getFacesContext());
         assertTrue(((Boolean) o).booleanValue());
     }
 
     public void testGetListValue3() {
+        ValueBinding vb = new ValueBindingImpl(getApplication(),
+                "#{empty list}", createELParser());
+        Object o = vb.getValue(getFacesContext());
+        assertTrue(((Boolean) o).booleanValue());
+    }
+
+    public void testGetListValue4() {
         List list = new ArrayList();
         list.add("a");
         MockVariableResolver variableResolver = getVariableResolver();
         variableResolver.putValue("list", list);
-        ValueBinding vb = new ValueBindingImpl(getApplication(), "#{!empty list}",
-                createELParser());
+        ValueBinding vb = new ValueBindingImpl(getApplication(),
+                "#{!empty list}", createELParser());
+        Object o = vb.getValue(getFacesContext());
+        assertTrue(((Boolean) o).booleanValue());
+    }
+
+    public void testGetListValue5() {
+        List list = new ArrayList();
+        list.add("a");
+        MockVariableResolver variableResolver = getVariableResolver();
+        variableResolver.putValue("list", list);
+        ValueBinding vb = new ValueBindingImpl(getApplication(),
+                "#{not empty list}", createELParser());
         Object o = vb.getValue(getFacesContext());
         assertTrue(((Boolean) o).booleanValue());
     }
@@ -558,7 +576,7 @@ public class ValueBindingImplTest extends TeedaTestCase {
         public List getList() {
             return list_;
         }
-        
+
         public boolean isBlank() {
             return list_.isEmpty();
         }
