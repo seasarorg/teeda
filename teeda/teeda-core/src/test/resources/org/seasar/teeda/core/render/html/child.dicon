@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+<!DOCTYPE components PUBLIC "-//SEASAR2.1//DTD S2Container//EN"
+	"http://www.seasar.org/dtd/components21.dtd">
+<components>
+	<include path="org/seasar/teeda/core/render/html/convention.dicon" />
+	<include path="org/seasar/teeda/core/render/html/parent.dicon" />
+	<component name="a.b" class="org.seasar.teeda.core.render.html.HtmlRenderKitImplTest$MockRenderer2" />
+	<component name="b.c" class="org.seasar.teeda.core.render.html.HtmlRenderKitImplTest$MockRenderer3" />
+</components>

@@ -40,6 +40,8 @@ public class HtmlRenderKitImpl extends AbstractRenderKit {
 
     private static String DEFAULT_CONTENTTYPE = "text/html";
 
+    private static final String RENDERER_SUFFIX = "_RENDERER_FACES_CONFIG";
+
     private ResponseStateManager responseStateManager;
 
     private S2Container container;
@@ -53,17 +55,42 @@ public class HtmlRenderKitImpl extends AbstractRenderKit {
         AssertionUtil.assertNotNull("family", family);
         AssertionUtil.assertNotNull("renderType", renderType);
         AssertionUtil.assertNotNull("renderer", renderer);
-        String key = HtmlRenderKitKeyGenerateUtil.getGeneratedKey(family,
-                renderType);
-        getContainer().register(renderer, key);
+        String rendererKey = HtmlRenderKitKeyGenerateUtil.getGeneratedKey(
+                family, renderType)
+                + RENDERER_SUFFIX;
+        if (getContainer().hasComponentDef(rendererKey)) {
+            RendererHolder holder = (RendererHolder) getContainer()
+                    .getComponent(rendererKey);
+            holder.setRenderer(renderer);
+        } else {
+            RendererHolder holder = new RendererHolder();
+            holder.setRenderer(renderer);
+            holder.setRendererKey(rendererKey);
+            getContainer().register(holder, rendererKey);
+        }
     }
 
     public Renderer getRenderer(String family, String renderType) {
         AssertionUtil.assertNotNull("family", family);
         AssertionUtil.assertNotNull("renderType", renderType);
-        String key = HtmlRenderKitKeyGenerateUtil.getGeneratedKey(family,
-                renderType);
-        return (Renderer) componentLookupStrategy.getComponentByName(key);
+        String rendererKey = HtmlRenderKitKeyGenerateUtil.getGeneratedKey(
+                family, renderType);
+        Renderer renderer = getRendererFromFacesConfig(rendererKey);
+        if (renderer == null) {
+            renderer = getRendererFromContainer(rendererKey);
+        }
+        return renderer;
+    }
+
+    protected Renderer getRendererFromFacesConfig(String rendererKey) {
+        String key = rendererKey + RENDERER_SUFFIX;
+        RendererHolder holder = (RendererHolder) componentLookupStrategy
+                .getComponentByName(key);
+        return (holder != null) ? holder.getRenderer() : null;
+    }
+
+    protected Renderer getRendererFromContainer(String rendererKey) {
+        return (Renderer) getContainer().getRoot().getComponent(rendererKey);
     }
 
     public ResponseStream createResponseStream(final OutputStream out) {
@@ -132,4 +159,26 @@ public class HtmlRenderKitImpl extends AbstractRenderKit {
         this.componentLookupStrategy = componentLookupStrategy;
     }
 
+    public static class RendererHolder {
+
+        private String rendererKey;
+
+        private Renderer renderer;
+
+        public Renderer getRenderer() {
+            return renderer;
+        }
+
+        public void setRenderer(Renderer renderer) {
+            this.renderer = renderer;
+        }
+
+        public String getRendererKey() {
+            return rendererKey;
+        }
+
+        public void setRendererKey(String rendererKey) {
+            this.rendererKey = rendererKey;
+        }
+    }
 }

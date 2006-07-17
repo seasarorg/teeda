@@ -28,6 +28,7 @@ import org.seasar.framework.util.SPrintWriter;
 import org.seasar.teeda.core.application.impl.DefaultComponentLookupStrategy;
 import org.seasar.teeda.core.context.html.HtmlResponseWriter;
 import org.seasar.teeda.core.mock.MockRenderer;
+import org.seasar.teeda.core.render.html.support.HtmlRenderKitKeyGenerateUtil;
 import org.seasar.teeda.core.unit.TeedaTestCase;
 
 /**
@@ -37,9 +38,7 @@ import org.seasar.teeda.core.unit.TeedaTestCase;
 public class HtmlRenderKitImplTest extends TeedaTestCase {
 
     public void testAddRenderer() throws Exception {
-        HtmlRenderKitImpl renderKit = new HtmlRenderKitImpl();
-        renderKit
-                .setComponentLookupStrategy(new DefaultComponentLookupStrategy());
+        HtmlRenderKitImpl renderKit = createHtmlRenderKitImpl();
 
         renderKit.setContainer(getContainer());
         try {
@@ -68,10 +67,7 @@ public class HtmlRenderKitImplTest extends TeedaTestCase {
     }
 
     public void testGetRenderer() throws Exception {
-        HtmlRenderKitImpl renderKit = new HtmlRenderKitImpl();
-        renderKit
-                .setComponentLookupStrategy(new DefaultComponentLookupStrategy());
-
+        HtmlRenderKitImpl renderKit = createHtmlRenderKitImpl();
         renderKit.setContainer(getContainer());
         MockRenderer mock = new MockRenderer();
         renderKit.addRenderer("a", "b", mock);
@@ -94,7 +90,7 @@ public class HtmlRenderKitImplTest extends TeedaTestCase {
     }
 
     public void testCreateOutStream() throws Exception {
-        HtmlRenderKitImpl renderKit = new HtmlRenderKitImpl();
+        HtmlRenderKitImpl renderKit = createHtmlRenderKitImpl();
         MockOutputStream out = new MockOutputStream();
         ResponseStream stream = renderKit.createResponseStream(out);
         stream.write(0);
@@ -105,7 +101,7 @@ public class HtmlRenderKitImplTest extends TeedaTestCase {
     }
 
     public void testCreateResponseWriter2() throws Exception {
-        HtmlRenderKitImpl renderKit = new HtmlRenderKitImpl();
+        HtmlRenderKitImpl renderKit = createHtmlRenderKitImpl();
         ResponseWriter w = renderKit.createResponseWriter(new SPrintWriter(),
                 "text/html, hoge, foo", "Windows-31J");
         assertNotNull(w);
@@ -117,11 +113,70 @@ public class HtmlRenderKitImplTest extends TeedaTestCase {
 
     public void testCreateResponseWriter_ReturnsDefaultContentTypeWhenContentTypeListNoMatch()
             throws Exception {
-        HtmlRenderKitImpl renderKit = new HtmlRenderKitImpl();
+        HtmlRenderKitImpl renderKit = createHtmlRenderKitImpl();
         ResponseWriter w = renderKit.createResponseWriter(new SPrintWriter(),
                 "a, b", "Windows-31J");
         assertEquals("[text/html] is Default ContentType", "text/html", w
                 .getContentType());
+    }
+
+    public void testAddRenderer_withFacesConfig() throws Exception {
+        HtmlRenderKitImpl renderKit = createHtmlRenderKitImpl();
+        renderKit.addRenderer("a", "b", new MockRenderer());
+        Renderer renderer = renderKit.getRenderer("a", "b");
+        assertNotNull(renderer);
+        assertFalse(renderer.getRendersChildren());
+        renderKit.addRenderer("a", "b", new MockRenderer() {
+
+            public boolean getRendersChildren() {
+                return true;
+            }
+
+        });
+        renderer = renderKit.getRenderer("a", "b");
+        assertNotNull(renderer);
+        assertTrue(renderer.getRendersChildren());
+    }
+
+    public void testAddRenderer_withS2Register() throws Exception {
+        HtmlRenderKitImpl renderKit = createHtmlRenderKitImpl();
+        getContainer().register(new MockRenderer().getClass(),
+                HtmlRenderKitKeyGenerateUtil.getGeneratedKey("a", "b"));
+        Renderer renderer = renderKit.getRenderer("a", "b");
+        assertNotNull(renderer);
+        assertTrue(renderer instanceof MockRenderer);
+    }
+
+    public void testAddRenderer_withDicon1() throws Exception {
+        include("child.dicon");
+        HtmlRenderKitImpl renderKit = createHtmlRenderKitImpl();
+        Renderer renderer = renderKit.getRenderer("a", "b");
+        assertNotNull(renderer);
+        assertTrue(renderer instanceof MockRenderer2);
+        renderer = renderKit.getRenderer("b", "c");
+        assertNotNull(renderer);
+        assertTrue(renderer instanceof MockRenderer3);
+        renderer = renderKit.getRenderer("c", "d");
+        assertNotNull(renderer);
+        assertTrue(renderer instanceof MockRenderer4);
+    }
+
+    public void testAddRenderer_withFacesConfigAndDicon() throws Exception {
+        include("child.dicon");
+        HtmlRenderKitImpl renderKit = createHtmlRenderKitImpl();
+        renderKit.addRenderer("b", "c", new MockRenderer5());
+        Renderer renderer = renderKit.getRenderer("b", "c");
+        assertNotNull(renderer);
+        assertTrue(renderer instanceof MockRenderer5);
+        assertTrue(renderer.getRendersChildren());
+    }
+
+    private HtmlRenderKitImpl createHtmlRenderKitImpl() {
+        HtmlRenderKitImpl renderKit = new HtmlRenderKitImpl();
+        renderKit.setContainer(getContainer());
+        renderKit
+                .setComponentLookupStrategy(new DefaultComponentLookupStrategy());
+        return renderKit;
     }
 
     private static class MockOutputStream extends OutputStream {
@@ -136,4 +191,29 @@ public class HtmlRenderKitImplTest extends TeedaTestCase {
             return list;
         }
     }
+
+    public static class MockRenderer1 extends MockRenderer {
+
+    }
+
+    public static class MockRenderer2 extends MockRenderer {
+
+    }
+
+    public static class MockRenderer3 extends MockRenderer {
+
+    }
+
+    public static class MockRenderer4 extends MockRenderer {
+
+    }
+
+    public static class MockRenderer5 extends MockRenderer {
+
+        public boolean getRendersChildren() {
+            return true;
+        }
+
+    }
+
 }
