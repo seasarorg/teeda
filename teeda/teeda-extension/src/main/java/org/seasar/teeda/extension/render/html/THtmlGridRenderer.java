@@ -17,16 +17,15 @@ package org.seasar.teeda.extension.render.html;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
+import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.html.AbstractHtmlRenderer;
 import org.seasar.teeda.core.util.RendererUtil;
@@ -47,6 +46,17 @@ public class THtmlGridRenderer extends AbstractHtmlRenderer {
     public static final String COMPONENT_FAMILY = THtmlGrid.COMPONENT_FAMILY;
 
     public static final String RENDERER_TYPE = THtmlGrid.DEFAULT_RENDERER_TYPE;
+
+    private static final String GRID_TABLE_CLASS_NAME = "gridTable";
+
+    private static final String GRID_HEADER_CLASS_NAME = "gridHeader";
+
+    private static final String GRID_CELL_CLASS_NAME = "gridCell";
+
+    private static final String LEFT_FIXED_CLASS_NAME = "teeda_leftFixed";
+
+    private static final String GRID_ATTRIBUTE = THtmlGrid.class.getName()
+            + ".GRID_ATTRIBUTE";
 
     public void encodeBegin(FacesContext context, UIComponent component)
             throws IOException {
@@ -177,7 +187,7 @@ public class THtmlGridRenderer extends AbstractHtmlRenderer {
         RendererUtil
                 .renderAttribute(writer, JsfConstants.CELLPADDING_ATTR, "0");
         RendererUtil.renderAttribute(writer, JsfConstants.CLASS_ATTR,
-                "gridTable");
+                GRID_TABLE_CLASS_NAME);
     }
 
     private void encodeGridLeftHeaderTr(final FacesContext context,
@@ -247,7 +257,7 @@ public class THtmlGridRenderer extends AbstractHtmlRenderer {
         writer.startElement(JsfConstants.TH_ELEM, th);
         writer.startElement(JsfConstants.DIV_ELEM, th);
         RendererUtil.renderAttribute(writer, JsfConstants.CLASS_ATTR,
-                "gridHeader");
+                GRID_HEADER_CLASS_NAME);
         RendererUtil.renderAttribute(writer, JsfConstants.STYLE_ATTR,
                 "overflow:hidden; width:" + attribute.getColumnWidth(columnNo)
                         + "px;");
@@ -272,7 +282,7 @@ public class THtmlGridRenderer extends AbstractHtmlRenderer {
             RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR,
                     getIdForRender(context, htmlGrid) + "LeftBody");
             RendererUtil.renderAttribute(writer, JsfConstants.STYLE_ATTR,
-                    "overflow:hidden; height:" + attribute.leftBodyHeight
+                    "overflow:hidden; height:" + attribute.getLeftBodyHeight()
                             + "px;");
 
             writer.startElement(JsfConstants.TABLE_ELEM, body);
@@ -308,8 +318,9 @@ public class THtmlGridRenderer extends AbstractHtmlRenderer {
         RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR,
                 getIdForRender(context, htmlGrid) + "RightBody");
         RendererUtil.renderAttribute(writer, JsfConstants.STYLE_ATTR,
-                "overflow:scroll; width:" + attribute.rightBodyWidth
-                        + "px; height:" + attribute.rightBodyHeight + "px;");
+                "overflow:scroll; width:" + attribute.getRightBodyWidth()
+                        + "px; height:" + attribute.getRightBodyHeight()
+                        + "px;");
         RendererUtil
                 .renderAttribute(
                         writer,
@@ -390,7 +401,7 @@ public class THtmlGridRenderer extends AbstractHtmlRenderer {
         writer.startElement(JsfConstants.TD_ELEM, td);
         writer.startElement(JsfConstants.DIV_ELEM, td);
         RendererUtil.renderAttribute(writer, JsfConstants.CLASS_ATTR,
-                "gridCell");
+                GRID_CELL_CLASS_NAME);
         RendererUtil.renderAttribute(writer, JsfConstants.STYLE_ATTR,
                 "overflow:hidden; width:" + attribute.getColumnWidth(columnNo)
                         + "px;");
@@ -401,90 +412,86 @@ public class THtmlGridRenderer extends AbstractHtmlRenderer {
         writer.endElement(JsfConstants.TD_ELEM);
     }
 
-    static final String GRID_ATTRIBUTE = THtmlGrid.class.getName()
-            + ".GRID_ATTRIBUTE";
-
     private THtmlGridRenderer.GridAttribute getGridAttribute(THtmlGrid htmlGrid) {
         THtmlGridRenderer.GridAttribute attribute = (THtmlGridRenderer.GridAttribute) htmlGrid
                 .getAttributes().get(GRID_ATTRIBUTE);
         if (attribute == null) {
             attribute = new GridAttribute();
-            {
-                final String width = htmlGrid.getWidth();
-                if (width != null) {
-                    attribute.setTableWidth(toDigit(width));
-                }
-                final String height = htmlGrid.getHeight();
-                if (height != null) {
-                    attribute.setTableHeight(toDigit(height));
-                }
-            }
-
-            int columnNo = 1;
-            for (final Iterator itGrid = getRenderedChildrenIterator(htmlGrid); itGrid
-                    .hasNext();) {
-                final UIComponent child = (UIComponent) itGrid.next();
-                if (child instanceof THtmlGridColumnGroup) {
-                    THtmlGridColumnGroup columnGroup = (THtmlGridColumnGroup) child;
-                    for (final Iterator itColGroup = getRenderedChildrenIterator(columnGroup); itColGroup
-                            .hasNext();) {
-                        final UIComponent element = (UIComponent) itColGroup
-                                .next();
-                        if (element instanceof THtmlGridColumn) {
-                            final THtmlGridColumn col = (THtmlGridColumn) element;
-                            // TODO check
-                            final int span = Integer.parseInt(col.getSpan());
-                            final int width = toDigit(col.getWidth());
-                            final String styleClass = col.getStyleClass();
-                            if (styleClass != null
-                                    && -1 < styleClass
-                                            .indexOf("teeda_leftFixed")) {
-                                attribute.setLeftFixCols(span);
-                                // TODO check
-                                attribute.setLeftWidth(width * span
-                                        + attribute.getLeftWidth());
-                            }
-                            for (int i = 0; i < span; i++) {
-                                attribute.setColumnWidth(columnNo + i, width);
-                            }
-                            columnNo += span;
-                        }
-                    }
-                }
-            }
-            for (final Iterator itGrid = getRenderedChildrenIterator(htmlGrid); itGrid
-                    .hasNext();) {
-                final UIComponent gridChild = (UIComponent) itGrid.next();
-                if (gridChild instanceof THtmlGridHeader) {
-                    for (final Iterator itHeader = getRenderedChildrenIterator(gridChild); itHeader
-                            .hasNext();) {
-                        final UIComponent headerChild = (UIComponent) itHeader
-                                .next();
-                        if (headerChild instanceof THtmlGridTr) {
-                            final THtmlGridTr tr = (THtmlGridTr) headerChild;
-                            final String height = tr.getHeight();
-                            if (height != null) {
-                                attribute.setHeaderHeight(toDigit(height)
-                                        + attribute.getHeaderHeight());
-                            }
-                        }
-                    }
-                }
-            }
-
-            // TODO
-            attribute.rightHeaderWidth = attribute.tableWidth
-                    - attribute.leftWidth - attribute.scrollBarWidth;
-            attribute.leftBodyHeight = attribute.tableHeight
-                    - attribute.headerHeight - attribute.scrollBarWidth;
-            attribute.rightBodyHeight = attribute.tableHeight
-                    - attribute.headerHeight;
-            attribute.rightBodyWidth = attribute.tableWidth
-                    - attribute.leftWidth;
-
+            setupTableSize(htmlGrid, attribute);
+            setupWidth(htmlGrid, attribute);
+            setupHeight(htmlGrid, attribute);
             htmlGrid.getAttributes().put(GRID_ATTRIBUTE, attribute);
         }
         return attribute;
+    }
+
+    private void setupTableSize(THtmlGrid htmlGrid,
+            THtmlGridRenderer.GridAttribute attribute) {
+        final String width = htmlGrid.getWidth();
+        if (width != null) {
+            attribute.setTableWidth(toDigit(width));
+        }
+        final String height = htmlGrid.getHeight();
+        if (height != null) {
+            attribute.setTableHeight(toDigit(height));
+        }
+    }
+
+    private void setupWidth(THtmlGrid htmlGrid,
+            THtmlGridRenderer.GridAttribute attribute) {
+        int columnNo = 0;
+        for (final Iterator itGrid = getRenderedChildrenIterator(htmlGrid); itGrid
+                .hasNext();) {
+            final UIComponent child = (UIComponent) itGrid.next();
+            if (child instanceof THtmlGridColumnGroup) {
+                THtmlGridColumnGroup columnGroup = (THtmlGridColumnGroup) child;
+                for (final Iterator itColGroup = getRenderedChildrenIterator(columnGroup); itColGroup
+                        .hasNext();) {
+                    final UIComponent element = (UIComponent) itColGroup.next();
+                    if (element instanceof THtmlGridColumn) {
+                        final THtmlGridColumn col = (THtmlGridColumn) element;
+                        // TODO check
+                        final int span = Integer.parseInt(col.getSpan());
+                        final int width = toDigit(col.getWidth());
+                        final String styleClass = col.getStyleClass();
+                        if (StringUtil.contains(styleClass,
+                                LEFT_FIXED_CLASS_NAME)) {
+                            attribute.setLeftFixCols(span);
+                            // TODO check
+                            attribute.setLeftWidth(width * span
+                                    + attribute.getLeftWidth());
+                        }
+                        for (int i = 0; i < span; i++) {
+                            columnNo++;
+                            attribute.setColumnWidth(columnNo, width);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private void setupHeight(THtmlGrid htmlGrid,
+            THtmlGridRenderer.GridAttribute attribute) {
+        for (final Iterator itGrid = getRenderedChildrenIterator(htmlGrid); itGrid
+                .hasNext();) {
+            final UIComponent gridChild = (UIComponent) itGrid.next();
+            if (gridChild instanceof THtmlGridHeader) {
+                for (final Iterator itHeader = getRenderedChildrenIterator(gridChild); itHeader
+                        .hasNext();) {
+                    final UIComponent headerChild = (UIComponent) itHeader
+                            .next();
+                    if (headerChild instanceof THtmlGridTr) {
+                        final THtmlGridTr tr = (THtmlGridTr) headerChild;
+                        final String height = tr.getHeight();
+                        if (height != null) {
+                            attribute.setHeaderHeight(toDigit(height)
+                                    + attribute.getHeaderHeight());
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private int toDigit(String s) {
@@ -521,7 +528,7 @@ public class THtmlGridRenderer extends AbstractHtmlRenderer {
 
         private static final long serialVersionUID = 1L;
 
-        // Windows XP default...
+        // TODO Windows XP default...
         private int scrollBarWidth = 16;
 
         private int tableWidth;
@@ -529,14 +536,6 @@ public class THtmlGridRenderer extends AbstractHtmlRenderer {
         private int tableHeight;
 
         private int headerHeight;
-
-        private int rightHeaderWidth;
-
-        private int leftBodyHeight;
-
-        private int rightBodyHeight;
-
-        private int rightBodyWidth;
 
         private int leftFixCols;
 
@@ -565,11 +564,7 @@ public class THtmlGridRenderer extends AbstractHtmlRenderer {
         }
 
         public int getLeftBodyHeight() {
-            return leftBodyHeight;
-        }
-
-        public void setLeftBodyHeight(int leftBodyHeight) {
-            this.leftBodyHeight = leftBodyHeight;
+            return tableHeight - headerHeight - scrollBarWidth;
         }
 
         public int getLeftFixCols() {
@@ -589,27 +584,15 @@ public class THtmlGridRenderer extends AbstractHtmlRenderer {
         }
 
         public int getRightBodyHeight() {
-            return rightBodyHeight;
-        }
-
-        public void setRightBodyHeight(int rightBodyHeight) {
-            this.rightBodyHeight = rightBodyHeight;
+            return tableHeight - headerHeight;
         }
 
         public int getRightBodyWidth() {
-            return rightBodyWidth;
-        }
-
-        public void setRightBodyWidth(int rightBodyWidth) {
-            this.rightBodyWidth = rightBodyWidth;
+            return tableWidth - leftWidth;
         }
 
         public int getRightHeaderWidth() {
-            return rightHeaderWidth;
-        }
-
-        public void setRightHeaderWidth(int rightHeaderWidth) {
-            this.rightHeaderWidth = rightHeaderWidth;
+            return tableWidth - leftWidth - scrollBarWidth;
         }
 
         public int getScrollBarWidth() {
@@ -636,17 +619,6 @@ public class THtmlGridRenderer extends AbstractHtmlRenderer {
             this.tableWidth = tableWidth;
         }
 
-    }
-
-    List getBodyItems(final FacesContext context, final THtmlGrid htmlGrid) {
-        final Object value = htmlGrid.getValue();
-        if (value == null) {
-            return Collections.EMPTY_LIST;
-        }
-        if (!(value instanceof List)) {
-            throw new ClassCastException(value.getClass().getName());
-        }
-        return (List) value;
     }
 
 }

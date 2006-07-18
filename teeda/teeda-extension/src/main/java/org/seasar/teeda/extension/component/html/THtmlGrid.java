@@ -15,7 +15,6 @@
  */
 package org.seasar.teeda.extension.component.html;
 
-import java.util.Collections;
 import java.util.List;
 
 import javax.faces.component.ComponentUtil_;
@@ -38,6 +37,8 @@ public class THtmlGrid extends UIComponentBase implements NamingContainer {
     public static final String COMPONENT_TYPE = "org.seasar.teeda.extension.HtmlGrid";
 
     public static final String DEFAULT_RENDERER_TYPE = "org.seasar.teeda.extension.Grid";
+
+    private static final Object[] EMPTY_ITEMS = new Object[0];
 
     public THtmlGrid() {
         setRendererType(DEFAULT_RENDERER_TYPE);
@@ -99,20 +100,23 @@ public class THtmlGrid extends UIComponentBase implements NamingContainer {
         this.height = width;
     }
 
-    List getItems() {
+    Object[] getItems() {
         final Object value = getValue();
         if (value == null) {
-            return Collections.EMPTY_LIST;
+            return EMPTY_ITEMS;
         }
-        if (!(value instanceof List)) {
-            throw new ClassCastException(value.getClass().getName());
+        if (value instanceof List) {
+            return ((List) value).toArray();
         }
-        return (List) value;
+        if (value.getClass().isArray()) {
+            return (Object[]) value;
+        }
+        throw new IllegalStateException(value.getClass().getName());
     }
 
     public void enterRow(final FacesContext context, final int rowIndex) {
         setRowIndex(rowIndex);
-        final Object rowBean = getItems().get(getRowIndex());
+        final Object rowBean = getItems()[rowIndex];
         final String itemName = getNaturalId();
         context.getExternalContext().getRequestMap().put(itemName, rowBean);
         componentStates.restoreDescendantState(context, this);
@@ -177,7 +181,7 @@ public class THtmlGrid extends UIComponentBase implements NamingContainer {
     }
 
     public int getRowSize() {
-        return getItems().size();
+        return getItems().length;
     }
 
 }

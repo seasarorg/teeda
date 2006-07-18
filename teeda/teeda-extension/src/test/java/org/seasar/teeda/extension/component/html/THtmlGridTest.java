@@ -28,17 +28,33 @@ import javax.faces.el.VariableResolver;
  */
 public class THtmlGridTest extends UIComponentBaseTest {
 
-    public void testGetItems() throws Exception {
+    public void testGetItems1() throws Exception {
+        // ## Arrange ##
+        THtmlGrid htmlGrid = createTHtmlGrid();
+        final Object[] someItems = new String[] { "v1", "v2", "v3" };
+        htmlGrid.setValue(someItems);
+
+        // ## Act ##
+        final Object[] items = htmlGrid.getItems();
+
+        // ## Assert ##
+        assertEquals(someItems, items);
+    }
+
+    public void testGetItems2() throws Exception {
         // ## Arrange ##
         THtmlGrid htmlGrid = createTHtmlGrid();
         final List someItems = Arrays.asList(new String[] { "v1", "v2", "v3" });
         htmlGrid.setValue(someItems);
 
         // ## Act ##
-        final List items = htmlGrid.getItems();
+        final Object[] items = htmlGrid.getItems();
 
         // ## Assert ##
-        assertEquals(someItems, items);
+        assertEquals(someItems.size(), items.length);
+        assertEquals(someItems.get(0), items[0]);
+        assertEquals(someItems.get(1), items[1]);
+        assertEquals(someItems.get(2), items[2]);
     }
 
     public void testEnterRow() throws Exception {
