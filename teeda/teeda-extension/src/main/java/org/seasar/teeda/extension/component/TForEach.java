@@ -20,14 +20,13 @@ import java.lang.reflect.Array;
 import javax.faces.component.NamingContainer;
 import javax.faces.component.UIComponentBase;
 import javax.faces.context.FacesContext;
+import javax.faces.el.VariableResolver;
 import javax.faces.internal.ComponentStates;
 import javax.faces.internal.NamingContainerUtil;
 
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.PropertyDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
-import org.seasar.framework.container.S2Container;
-import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
 import org.seasar.framework.util.ClassUtil;
 import org.seasar.teeda.extension.ExtensionConstants;
 
@@ -133,7 +132,7 @@ public class TForEach extends UIComponentBase implements NamingContainer {
         if (!isRendered()) {
             return;
         }
-        Object page = getPage();
+        Object page = getPage(context);
         BeanDesc beanDesc = BeanDescFactory.getBeanDesc(page.getClass());
         if (beanDesc.hasPropertyDesc(getItemName())) {
             PropertyDesc itemPd = beanDesc.getPropertyDesc(getItemName());
@@ -156,7 +155,7 @@ public class TForEach extends UIComponentBase implements NamingContainer {
         if (!isRendered()) {
             return;
         }
-        final Object page = getPage();
+        final Object page = getPage(context);
         final BeanDesc pageBeanDesc = BeanDescFactory.getBeanDesc(page
                 .getClass());
         final PropertyDesc itemsPd = pageBeanDesc
@@ -221,9 +220,10 @@ public class TForEach extends UIComponentBase implements NamingContainer {
         componentStates.restoreDescendantState(context, this);
     }
 
-    public Object getPage() {
-        S2Container container = SingletonS2ContainerFactory.getContainer();
-        return container.getComponent(getPageName());
+    public Object getPage(final FacesContext context) {
+        final VariableResolver variableResolver = context.getApplication()
+                .getVariableResolver();
+        return variableResolver.resolveVariable(context, getPageName());
     }
 
     public Object saveState(FacesContext context) {

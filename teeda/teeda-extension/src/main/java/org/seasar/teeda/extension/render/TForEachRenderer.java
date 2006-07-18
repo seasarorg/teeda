@@ -50,7 +50,7 @@ public class TForEachRenderer extends Renderer {
             return;
         }
         TForEach forEach = (TForEach) component;
-        Object page = forEach.getPage();
+        Object page = forEach.getPage(context);
         BeanDesc beanDesc = BeanDescFactory.getBeanDesc(page.getClass());
         PropertyDesc pd = beanDesc.getPropertyDesc(forEach.getItemsName());
         Object[] items = getItems(page, pd);
