@@ -22,6 +22,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import javax.faces.component.UIComponent;
+import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
@@ -37,6 +38,7 @@ import org.seasar.teeda.extension.component.html.THtmlGridHeader;
 import org.seasar.teeda.extension.component.html.THtmlGridTd;
 import org.seasar.teeda.extension.component.html.THtmlGridTh;
 import org.seasar.teeda.extension.component.html.THtmlGridTr;
+import org.seasar.teeda.extension.util.JavaScriptContext;
 
 /**
  * @author manhole
@@ -58,6 +60,9 @@ public class THtmlGridRenderer extends AbstractHtmlRenderer {
     private static final String GRID_ATTRIBUTE = THtmlGrid.class.getName()
             + ".GRID_ATTRIBUTE";
 
+    private static final String ALREADY_WRITE = THtmlGrid.class.getName()
+            + ".ALREADY_WRITE";
+
     public void encodeBegin(FacesContext context, UIComponent component)
             throws IOException {
         assertNotNull(context, component);
@@ -70,6 +75,7 @@ public class THtmlGridRenderer extends AbstractHtmlRenderer {
     protected void encodeHtmlGridBegin(final FacesContext context,
             final THtmlGrid htmlGrid) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
+        writeJavascript(context, htmlGrid, writer);
         writer.startElement(JsfConstants.TABLE_ELEM, htmlGrid);
         RendererUtil.renderIdAttributeIfNecessary(writer, htmlGrid,
                 getIdForRender(context, htmlGrid));
@@ -78,6 +84,19 @@ public class THtmlGridRenderer extends AbstractHtmlRenderer {
                 .renderAttribute(writer, JsfConstants.CELLSPACING_ATTR, "0");
         RendererUtil
                 .renderAttribute(writer, JsfConstants.CELLPADDING_ATTR, "0");
+    }
+
+    private void writeJavascript(FacesContext context, THtmlGrid htmlGrid,
+            ResponseWriter writer) throws IOException {
+        final UIViewRoot viewRoot = context.getViewRoot();
+        final Map attributes = viewRoot.getAttributes();
+        if (attributes.containsKey(ALREADY_WRITE)) {
+            return;
+        }
+        JavaScriptContext scriptContext = new JavaScriptContext();
+        scriptContext.loadScript(THtmlGrid.class.getName());
+        writer.write(scriptContext.getResult());
+        attributes.put(ALREADY_WRITE, Boolean.TRUE);
     }
 
     public void encodeChildren(FacesContext context, UIComponent component)
@@ -93,7 +112,8 @@ public class THtmlGridRenderer extends AbstractHtmlRenderer {
             THtmlGrid htmlGrid) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
         THtmlGridRenderer.GridAttribute attribute = getGridAttribute(htmlGrid);
-        for (Iterator it = getRenderedChildrenIterator(htmlGrid); it.hasNext();) {
+        for (final Iterator it = getRenderedChildrenIterator(htmlGrid); it
+                .hasNext();) {
             final UIComponent child = (UIComponent) it.next();
             if (child instanceof THtmlGridHeader) {
                 encodeGridHeader(context, htmlGrid, (THtmlGridHeader) child,
@@ -101,7 +121,8 @@ public class THtmlGridRenderer extends AbstractHtmlRenderer {
                 break;
             }
         }
-        for (Iterator it = getRenderedChildrenIterator(htmlGrid); it.hasNext();) {
+        for (final Iterator it = getRenderedChildrenIterator(htmlGrid); it
+                .hasNext();) {
             final UIComponent child = (UIComponent) it.next();
             if (child instanceof THtmlGridBody) {
                 encodeGridBody(context, htmlGrid, (THtmlGridBody) child,

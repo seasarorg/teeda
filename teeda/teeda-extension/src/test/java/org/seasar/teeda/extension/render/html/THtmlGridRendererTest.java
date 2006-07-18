@@ -15,6 +15,7 @@
  */
 package org.seasar.teeda.extension.render.html;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,6 +26,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
 import javax.faces.render.Renderer;
 import javax.faces.render.RendererTest;
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.custommonkey.xmlunit.Diff;
 import org.seasar.teeda.core.el.ELParser;
@@ -43,6 +45,7 @@ import org.seasar.teeda.extension.component.html.THtmlGridInputText;
 import org.seasar.teeda.extension.component.html.THtmlGridTd;
 import org.seasar.teeda.extension.component.html.THtmlGridTh;
 import org.seasar.teeda.extension.component.html.THtmlGridTr;
+import org.xml.sax.SAXException;
 
 /**
  * @author manhole
@@ -88,9 +91,19 @@ public class THtmlGridRendererTest extends RendererTest {
         encodeByRenderer(renderer, htmlGrid);
 
         // ## Assert ##
+        final String responseText = getResponseText();
+        final String afterText = afterText(responseText, "</script>");
         assertEquals(
                 "<table border=\"0\" cellspacing=\"0\" cellpadding=\"0\"></table>",
-                getResponseText());
+                afterText);
+    }
+
+    private String afterText(final String s1, String s2) {
+        final int pos = s1.indexOf(s2);
+        if (pos == -1) {
+            return s1;
+        }
+        return s1.substring(pos + s2.length()).trim();
     }
 
     public void ignore_testEncode_HeaderNoValue() throws Exception {
@@ -395,6 +408,12 @@ public class THtmlGridRendererTest extends RendererTest {
         THtmlGridRenderer renderer = new THtmlGridRenderer();
         renderer.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
         return renderer;
+    }
+
+    protected Diff diff(final String expected, final String actual)
+            throws SAXException, IOException, ParserConfigurationException {
+        return super.diff("<dummy>" + expected + "</dummy>", "<dummy>" + actual
+                + "</dummy>");
     }
 
     public static class MockHtmlGrid extends THtmlGrid {

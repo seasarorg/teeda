@@ -33,7 +33,7 @@ public class JavaScriptContext {
     public void loadScript(String scriptPath) {
         String text = TextUtil.readText(ResourceUtil.getResourcePath(
                 scriptPath, "js"));
-        scripts.append(text);
+        scripts.append(text.trim());
     }
 
     public void clear() {
