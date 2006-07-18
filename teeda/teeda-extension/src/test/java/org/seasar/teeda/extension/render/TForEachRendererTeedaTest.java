@@ -317,7 +317,7 @@ public class TForEachRendererTeedaTest extends AbstractRendererTeedaTest {
         final FooPage page = new FooPage();
         {
             final String pageName = "fooPage";
-            container.register(page, pageName);
+            getVariableResolver().putValue(pageName, page);
             forEach.setPageName(pageName);
             forEach.setItemsName("barItems");
             forEach.setId("forEach");
