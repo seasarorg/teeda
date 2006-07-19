@@ -55,10 +55,10 @@ public class TagProcessorAssemblerImpl implements TagProcessorAssembler {
     protected void assembleTagProcessor(ElementProcessor parentProcessor,
             HtmlNode node, PageDesc pageDesc, ActionDesc actionDesc) {
         if (node instanceof TextNode) {
-            assembleTagProcessor(parentProcessor, (TextNodeImpl) node);
+            assembleTagProcessor(parentProcessor, (TextNode) node);
         } else {
-            assembleTagProcessor(parentProcessor, (ElementNodeImpl) node,
-                    pageDesc, actionDesc);
+            assembleTagProcessor(parentProcessor, (ElementNode) node, pageDesc,
+                    actionDesc);
         }
     }
 
