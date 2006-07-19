@@ -15,24 +15,33 @@
  */
 package org.seasar.teeda.extension.component;
 
+import javax.faces.component.UIComponent;
 import javax.faces.component.UIComponentBaseTest;
 
 /**
  * @author higa
- *
+ * @author manhole
  */
 public class TForEachTest extends UIComponentBaseTest {
 
     public void testGetItemName() throws Exception {
-        TForEach component = new TForEach();
+        TForEach component = createTForEach();
         component.setItemsName("fooItems");
         assertEquals("foo", component.getItemName());
     }
 
     public void testGetItemIndex() throws Exception {
-        TForEach component = new TForEach();
+        TForEach component = createTForEach();
         component.setItemsName("fooItems");
         assertEquals("fooIndex", component.getIndexName());
+    }
+
+    private TForEach createTForEach() {
+        return (TForEach) createUIComponent();
+    }
+
+    protected UIComponent createUIComponent() {
+        return new TForEach();
     }
 
 }

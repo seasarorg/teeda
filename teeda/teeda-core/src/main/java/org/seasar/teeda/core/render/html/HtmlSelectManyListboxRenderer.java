@@ -31,6 +31,7 @@ import javax.faces.model.SelectItemGroup;
 import org.seasar.framework.util.ArrayIterator;
 import org.seasar.framework.util.ArrayUtil;
 import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.core.render.AbstractRenderer;
 import org.seasar.teeda.core.util.DecodeUtil;
 import org.seasar.teeda.core.util.RendererUtil;
 import org.seasar.teeda.core.util.ValueHolderUtil;
@@ -38,7 +39,7 @@ import org.seasar.teeda.core.util.ValueHolderUtil;
 /**
  * @author manhole
  */
-public class HtmlSelectManyListboxRenderer extends AbstractHtmlRenderer {
+public class HtmlSelectManyListboxRenderer extends AbstractRenderer {
 
     public static final String COMPONENT_FAMILY = "javax.faces.SelectMany";
 

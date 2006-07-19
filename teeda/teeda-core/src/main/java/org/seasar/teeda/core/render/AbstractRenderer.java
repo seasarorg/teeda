@@ -13,7 +13,7 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.core.render.html;
+package org.seasar.teeda.core.render;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -36,8 +36,7 @@ import org.seasar.framework.util.AssertionUtil;
 import org.seasar.framework.util.FieldUtil;
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
-import org.seasar.teeda.core.render.ComponentIdLookupStrategy;
-import org.seasar.teeda.core.render.DefaultComponentIdLookupStrategy;
+import org.seasar.teeda.core.render.html.RenderAttributes;
 import org.seasar.teeda.core.util.LoopIterator;
 import org.seasar.teeda.core.util.RenderedComponentIterator;
 import org.seasar.teeda.core.util.RendererUtil;
@@ -45,13 +44,13 @@ import org.seasar.teeda.core.util.RendererUtil;
 /**
  * @author manhole
  */
-public abstract class AbstractHtmlRenderer extends Renderer {
+public abstract class AbstractRenderer extends Renderer {
 
     private ComponentIdLookupStrategy idLookupStartegy;
 
     private RenderAttributes renderAttributes;
 
-    public AbstractHtmlRenderer() {
+    public AbstractRenderer() {
         idLookupStartegy = new DefaultComponentIdLookupStrategy();
     }
 

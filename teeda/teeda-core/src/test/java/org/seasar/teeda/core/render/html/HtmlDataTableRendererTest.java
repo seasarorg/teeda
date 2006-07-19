@@ -644,19 +644,6 @@ public class HtmlDataTableRendererTest extends RendererTest {
                 + "<tr><td>col1</td></tr>" + "</tfoot>", getResponseText());
     }
 
-    public void testSplitByComma() throws Exception {
-        // ## Arrange ##
-        // ## Act ##
-        String[] result = renderer.splitByComma("a, b  ,c , d");
-
-        // ## Assert ##
-        assertEquals(4, result.length);
-        assertEquals("a", result[0]);
-        assertEquals("b", result[1]);
-        assertEquals("c", result[2]);
-        assertEquals("d", result[3]);
-    }
-
     public void testEncodeChildren1() throws Exception {
         htmlDataTable.setValue(new String[] { "a", "b", "c" });
         htmlDataTable.setVar("fooVar");

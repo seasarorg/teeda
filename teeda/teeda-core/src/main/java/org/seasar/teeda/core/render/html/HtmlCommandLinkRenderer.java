@@ -33,6 +33,7 @@ import javax.faces.event.ActionEvent;
 
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.exception.TagNotFoundRuntimeException;
+import org.seasar.teeda.core.render.AbstractRenderer;
 import org.seasar.teeda.core.util.ExternalContextUtil;
 import org.seasar.teeda.core.util.FacesContextUtil;
 import org.seasar.teeda.core.util.HtmlFormRendererUtil;
@@ -43,7 +44,7 @@ import org.seasar.teeda.core.util.RendererUtil;
  * @author manhole
  * @author shot
  */
-public class HtmlCommandLinkRenderer extends AbstractHtmlRenderer {
+public class HtmlCommandLinkRenderer extends AbstractRenderer {
 
     public static final String COMPONENT_FAMILY = "javax.faces.Command";
 

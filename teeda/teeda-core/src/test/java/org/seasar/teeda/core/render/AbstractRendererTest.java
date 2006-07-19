@@ -13,23 +13,29 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.extension.component.html;
+package org.seasar.teeda.core.render;
 
-import javax.faces.component.UIComponent;
-
-import org.seasar.teeda.extension.component.TForEachTest;
+import javax.faces.render.RendererTest;
 
 /**
  * @author manhole
  */
-public class THtmlGridTest extends TForEachTest {
+public class AbstractRendererTest extends RendererTest {
 
-    private THtmlGrid createTHtmlGrid() {
-        return (THtmlGrid) createUIComponent();
-    }
+    private AbstractRenderer renderer = new AbstractRenderer() {
+    };
 
-    protected UIComponent createUIComponent() {
-        return new THtmlGrid();
+    public void testSplitByComma() throws Exception {
+        // ## Arrange ##
+        // ## Act ##
+        String[] result = renderer.splitByComma("a, b  ,c , d");
+
+        // ## Assert ##
+        assertEquals(4, result.length);
+        assertEquals("a", result[0]);
+        assertEquals("b", result[1]);
+        assertEquals("c", result[2]);
+        assertEquals("d", result[3]);
     }
 
 }

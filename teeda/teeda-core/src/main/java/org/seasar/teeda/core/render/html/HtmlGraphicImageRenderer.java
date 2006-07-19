@@ -23,13 +23,14 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
 import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.core.render.AbstractRenderer;
 import org.seasar.teeda.core.util.FacesContextUtil;
 import org.seasar.teeda.core.util.RendererUtil;
 
 /**
  * @author manhole
  */
-public class HtmlGraphicImageRenderer extends AbstractHtmlRenderer {
+public class HtmlGraphicImageRenderer extends AbstractRenderer {
 
     public static final String COMPONENT_FAMILY = "javax.faces.Graphic";
 

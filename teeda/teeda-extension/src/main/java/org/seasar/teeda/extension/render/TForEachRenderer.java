@@ -23,19 +23,19 @@ import java.util.Map;
 import javax.faces.component.NamingContainer;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.render.Renderer;
 
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.PropertyDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.framework.util.AssertionUtil;
+import org.seasar.teeda.core.render.AbstractRenderer;
 import org.seasar.teeda.extension.component.TForEach;
 
 /**
  * @author higa
  * @author manhole
  */
-public class TForEachRenderer extends Renderer {
+public class TForEachRenderer extends AbstractRenderer {
 
     public static final String COMPONENT_FAMILY = "org.seasar.teeda.extension.ForEach";
 
@@ -57,11 +57,10 @@ public class TForEachRenderer extends Renderer {
         final String itemName = forEach.getItemName();
         final String indexName = forEach.getIndexName();
         for (int i = 0; i < items.length; ++i) {
-            forEach.setRowIndex(i);
-            forEach.restoreDescendantState(context);
+            forEach.enterRow(context, i);
             processItem(beanDesc, page, items[i], itemName, i, indexName);
             super.encodeChildren(context, component);
-            forEach.saveDescendantComponentStates(context);
+            forEach.leaveRow(context);
         }
     }
 
@@ -143,10 +142,9 @@ public class TForEachRenderer extends Renderer {
         final int rowSize = getRowSize(context, forEach);
         forEach.setRowSize(rowSize);
         for (int i = 0; i < rowSize; i++) {
-            forEach.setRowIndex(i);
-            forEach.restoreDescendantState(context);
+            forEach.enterRow(context, i);
             decodeChildren(context, component);
-            forEach.saveDescendantComponentStates(context);
+            forEach.leaveRow(context);
         }
     }
 

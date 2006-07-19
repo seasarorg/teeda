@@ -27,13 +27,14 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
 import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.core.render.AbstractRenderer;
 import org.seasar.teeda.core.util.LoopIterator;
 import org.seasar.teeda.core.util.RendererUtil;
 
 /**
  * @author manhole
  */
-public class HtmlDataTableRenderer extends AbstractHtmlRenderer {
+public class HtmlDataTableRenderer extends AbstractRenderer {
 
     public static final String COMPONENT_FAMILY = "javax.faces.Data";
 

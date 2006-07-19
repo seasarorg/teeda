@@ -15,12 +15,7 @@
  */
 package org.seasar.teeda.extension.component.html;
 
-import java.util.List;
-
-import javax.faces.component.ComponentUtil_;
 import javax.faces.component.NamingContainer;
-import javax.faces.context.FacesContext;
-import javax.faces.internal.ComponentStates;
 
 import org.seasar.teeda.extension.component.TForEach;
 
@@ -29,15 +24,11 @@ import org.seasar.teeda.extension.component.TForEach;
  */
 public class THtmlGrid extends TForEach implements NamingContainer {
 
-    //    private static final String GRID = "Grid";
-
     public static final String COMPONENT_FAMILY = "org.seasar.teeda.extension.Grid";
 
     public static final String COMPONENT_TYPE = "org.seasar.teeda.extension.HtmlGrid";
 
     public static final String DEFAULT_RENDERER_TYPE = "org.seasar.teeda.extension.Grid";
-
-    private static final Object[] EMPTY_ITEMS = new Object[0];
 
     public THtmlGrid() {
         setRendererType(DEFAULT_RENDERER_TYPE);
@@ -47,22 +38,9 @@ public class THtmlGrid extends TForEach implements NamingContainer {
         return COMPONENT_FAMILY;
     }
 
-    private Object value;
-
     private String width;
 
     private String height;
-
-    public Object getValue() {
-        if (value != null) {
-            return value;
-        }
-        return ComponentUtil_.getValueBindingValue(this, "value");
-    }
-
-    public void setValue(Object value) {
-        this.value = value;
-    }
 
     public String getWidth() {
         return width;
@@ -79,50 +57,5 @@ public class THtmlGrid extends TForEach implements NamingContainer {
     public void setHeight(String width) {
         this.height = width;
     }
-
-    Object[] getItems() {
-        final Object value = getValue();
-        if (value == null) {
-            return EMPTY_ITEMS;
-        }
-        if (value instanceof List) {
-            return ((List) value).toArray();
-        }
-        if (value.getClass().isArray()) {
-            return (Object[]) value;
-        }
-        throw new IllegalStateException(value.getClass().getName());
-    }
-
-    public void enterRow(final FacesContext context, final int rowIndex) {
-        setRowIndex(rowIndex);
-        //        final Object rowBean = getItems()[rowIndex];
-        //        final String itemName = getNaturalId();
-        //        context.getExternalContext().getRequestMap().put(itemName, rowBean);
-        componentStates.restoreDescendantState(context, this);
-    }
-
-    public void leaveRow(FacesContext context) {
-        // final String itemName = getNaturalId();
-        //context.getExternalContext().getRequestMap().remove(itemName);
-        componentStates.saveDescendantComponentStates(context, this);
-    }
-
-    //    private String getNaturalId() {
-    //        final String id = getId();
-    //        final int pos = id.lastIndexOf(GRID);
-    //        if (-1 == pos) {
-    //            throw new IllegalStateException(
-    //                    "Grid component should contain \"Grid\" in it's id");
-    //        }
-    //        final String naturalId = id.substring(0, pos);
-    //        return naturalId;
-    //    }
-
-    private ComponentStates componentStates = new ComponentStates();
-
-    //    public int getRowSize() {
-    //        return getItems().length;
-    //    }
 
 }

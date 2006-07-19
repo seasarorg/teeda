@@ -141,10 +141,9 @@ public class TForEach extends UIComponentBase implements NamingContainer {
             itemPd.setValue(page, item);
         }
         for (int i = 0; i < rowSize; ++i) {
-            setRowIndex(i);
-            restoreDescendantState(context);
+            enterRow(context, i);
             super.processValidators(context);
-            saveDescendantComponentStates(context);
+            leaveRow(context);
         }
     }
 
@@ -171,9 +170,9 @@ public class TForEach extends UIComponentBase implements NamingContainer {
                 setRowIndex(i);
                 final Object item = ClassUtil.newInstance(itemClass);
                 itemPd.setValue(page, item);
-                restoreDescendantState(context);
+                enterRow(context, i);
                 super.processUpdates(context);
-                saveDescendantComponentStates(context);
+                leaveRow(context);
                 items[i] = item;
             }
         } else {
@@ -185,10 +184,9 @@ public class TForEach extends UIComponentBase implements NamingContainer {
             final BeanDesc itemBeanDesc = BeanDescFactory
                     .getBeanDesc(itemClass);
             for (int i = 0; i < rowSize; ++i) {
-                setRowIndex(i);
-                restoreDescendantState(context);
+                enterRow(context, i);
                 super.processUpdates(context);
-                saveDescendantComponentStates(context);
+                leaveRow(context);
                 final Object item = ClassUtil.newInstance(itemClass);
                 pageToItem(page, pageBeanDesc, item, itemBeanDesc);
                 items[i] = item;
@@ -212,12 +210,13 @@ public class TForEach extends UIComponentBase implements NamingContainer {
         }
     }
 
-    public void saveDescendantComponentStates(FacesContext context) {
-        componentStates.saveDescendantComponentStates(context, this);
+    public void enterRow(final FacesContext context, final int rowIndex) {
+        setRowIndex(rowIndex);
+        componentStates.restoreDescendantState(context, this);
     }
 
-    public void restoreDescendantState(FacesContext context) {
-        componentStates.restoreDescendantState(context, this);
+    public void leaveRow(FacesContext context) {
+        componentStates.saveDescendantComponentStates(context, this);
     }
 
     public Object getPage(final FacesContext context) {

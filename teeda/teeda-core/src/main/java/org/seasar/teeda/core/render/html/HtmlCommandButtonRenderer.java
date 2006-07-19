@@ -26,12 +26,13 @@ import javax.faces.event.ActionEvent;
 
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.core.render.AbstractRenderer;
 import org.seasar.teeda.core.util.RendererUtil;
 
 /**
  * @author manhole
  */
-public class HtmlCommandButtonRenderer extends AbstractHtmlRenderer {
+public class HtmlCommandButtonRenderer extends AbstractRenderer {
 
     public static final String COMPONENT_FAMILY = "javax.faces.Command";
 

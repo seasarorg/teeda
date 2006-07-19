@@ -26,12 +26,13 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.internal.UIComponentUtil;
 
 import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.core.render.AbstractRenderer;
 import org.seasar.teeda.core.util.RendererUtil;
 
 /**
  * @author manhole
  */
-public abstract class AbstractHtmlMessagesRenderer extends AbstractHtmlRenderer {
+public abstract class AbstractHtmlMessagesRenderer extends AbstractRenderer {
 
     protected void renderOneMessage(FacesContext context,
             UIComponent component, FacesMessage facesMassage,

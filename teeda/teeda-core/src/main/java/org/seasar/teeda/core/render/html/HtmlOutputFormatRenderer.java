@@ -29,13 +29,14 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
 import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.core.render.AbstractRenderer;
 import org.seasar.teeda.core.util.RendererUtil;
 import org.seasar.teeda.core.util.ValueHolderUtil;
 
 /**
  * @author manhole
  */
-public class HtmlOutputFormatRenderer extends AbstractHtmlRenderer {
+public class HtmlOutputFormatRenderer extends AbstractRenderer {
 
     public static final String COMPONENT_FAMILY = "javax.faces.Output";
 
