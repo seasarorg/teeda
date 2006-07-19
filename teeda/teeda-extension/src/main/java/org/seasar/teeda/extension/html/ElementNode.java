@@ -18,6 +18,10 @@ package org.seasar.teeda.extension.html;
 import java.util.Iterator;
 import java.util.Map;
 
+/**
+ * @author higa
+ * @author manhole
+ */
 public interface ElementNode extends HtmlNode {
 
     String getTagName();
@@ -51,4 +55,11 @@ public interface ElementNode extends HtmlNode {
     String getStartTagString();
 
     String getEndTagString();
+
+    void setParent(ElementNode elementNode);
+
+    ElementNode getParent();
+
+    void removeChild(HtmlNode node);
+
 }

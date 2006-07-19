@@ -14,6 +14,8 @@ public class ElementNodeImpl implements ElementNode {
 
     private String tagName;
 
+    private ElementNode parent;
+
     private Map properties;
 
     private List children = new ArrayList();
@@ -58,7 +60,16 @@ public class ElementNodeImpl implements ElementNode {
 
     public void addElement(ElementNode elementNode) {
         processText();
+        renewParent(elementNode);
         addChild(elementNode);
+    }
+
+    private void renewParent(ElementNode elementNode) {
+        final ElementNode oldParent = elementNode.getParent();
+        if (oldParent != null) {
+            oldParent.removeChild(elementNode);
+        }
+        elementNode.setParent(this);
     }
 
     protected void processText() {
@@ -120,4 +131,17 @@ public class ElementNodeImpl implements ElementNode {
         buf.append(getEndTagString());
         return buf.toString();
     }
+
+    public ElementNode getParent() {
+        return parent;
+    }
+
+    public void setParent(ElementNode elementNode) {
+        parent = elementNode;
+    }
+
+    public void removeChild(HtmlNode node) {
+        children.remove(node);
+    }
+
 }
