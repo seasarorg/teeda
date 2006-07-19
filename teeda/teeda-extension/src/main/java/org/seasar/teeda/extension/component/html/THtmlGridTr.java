@@ -16,6 +16,8 @@
 package org.seasar.teeda.extension.component.html;
 
 import javax.faces.component.UIComponentBase;
+import javax.faces.context.FacesContext;
+import javax.faces.el.ValueBinding;
 
 /**
  * @author manhole
@@ -30,12 +32,60 @@ public class THtmlGridTr extends UIComponentBase {
 
     private String height;
 
+    private String style = null;
+
+    private String styleClass = null;
+
     public String getHeight() {
-        return height;
+        if (height != null) {
+            return height;
+        }
+        ValueBinding vb = getValueBinding("height");
+        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void setHeight(String width) {
         this.height = width;
     }
 
+    public void setStyle(String style) {
+        this.style = style;
+    }
+
+    public String getStyle() {
+        if (style != null) {
+            return style;
+        }
+        ValueBinding vb = getValueBinding("style");
+        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+    }
+
+    public void setStyleClass(String styleClass) {
+        this.styleClass = styleClass;
+    }
+
+    public String getStyleClass() {
+        if (styleClass != null) {
+            return styleClass;
+        }
+        ValueBinding vb = getValueBinding("styleClass");
+        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+    }
+
+    public Object saveState(FacesContext context) {
+        Object[] values = new Object[4];
+        values[0] = super.saveState(context);
+        values[1] = height;
+        values[2] = style;
+        values[3] = styleClass;
+        return values;
+    }
+
+    public void restoreState(FacesContext context, Object state) {
+        Object values[] = (Object[]) state;
+        super.restoreState(context, values[0]);
+        height = (String) values[1];
+        style = (String) values[2];
+        styleClass = (String) values[3];
+    }
 }

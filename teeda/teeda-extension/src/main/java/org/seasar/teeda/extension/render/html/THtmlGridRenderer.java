@@ -17,6 +17,7 @@ package org.seasar.teeda.extension.render.html;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -26,6 +27,9 @@ import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
+import org.seasar.framework.beans.BeanDesc;
+import org.seasar.framework.beans.PropertyDesc;
+import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.html.AbstractHtmlRenderer;
@@ -289,6 +293,22 @@ public class THtmlGridRenderer extends AbstractHtmlRenderer {
         writer.endElement(JsfConstants.TH_ELEM);
     }
 
+    private static final Object[] EMPTY_ITEMS = new Object[0];
+
+    protected Object[] getItems(Object page, PropertyDesc pd) {
+        Object o = pd.getValue(page);
+        if (o == null) {
+            return EMPTY_ITEMS;
+        }
+        if (o instanceof Collection) {
+            return ((Collection) o).toArray();
+        }
+        if (o.getClass().isArray()) {
+            return (Object[]) o;
+        }
+        throw new IllegalStateException(o.getClass().toString());
+    }
+
     private void encodeGridBody(final FacesContext context, THtmlGrid htmlGrid,
             final THtmlGridBody body, final ResponseWriter writer,
             final THtmlGridRenderer.GridAttribute attribute) throws IOException {
@@ -296,6 +316,13 @@ public class THtmlGridRenderer extends AbstractHtmlRenderer {
         writer.startElement(JsfConstants.TD_ELEM, body);
         RendererUtil.renderAttribute(writer, JsfConstants.STYLE_ATTR,
                 "vertical-align:top;");
+
+        Object page = htmlGrid.getPage(context);
+        BeanDesc beanDesc = BeanDescFactory.getBeanDesc(page.getClass());
+        PropertyDesc pd = beanDesc.getPropertyDesc(htmlGrid.getItemsName());
+        Object[] items = getItems(page, pd);
+        final String itemName = htmlGrid.getItemName();
+        final String indexName = htmlGrid.getIndexName();
 
         // encodeLeftBody
         if (attribute.hasLeftFixCols()) {
@@ -310,9 +337,9 @@ public class THtmlGridRenderer extends AbstractHtmlRenderer {
             renderInnerTableAttributes(writer);
             writer.startElement(JsfConstants.TBODY_ELEM, body);
 
-            final int rowSize = htmlGrid.getRowSize();
-            for (int i = 0; i < rowSize; i++) {
+            for (int i = 0; i < items.length; ++i) {
                 htmlGrid.enterRow(context, i);
+                processItem(beanDesc, page, items[i], itemName, i, indexName);
                 for (Iterator it = getRenderedChildrenIterator(body); it
                         .hasNext();) {
                     final UIComponent child = (UIComponent) it.next();
@@ -323,6 +350,20 @@ public class THtmlGridRenderer extends AbstractHtmlRenderer {
                 }
                 htmlGrid.leaveRow(context);
             }
+
+            //            final int rowSize = htmlGrid.getRowSize();
+            //            for (int i = 0; i < rowSize; i++) {
+            //                htmlGrid.enterRow(context, i);
+            //                for (Iterator it = getRenderedChildrenIterator(body); it
+            //                        .hasNext();) {
+            //                    final UIComponent child = (UIComponent) it.next();
+            //                    if (child instanceof THtmlGridTr) {
+            //                        encodeGridLeftBodyTr(context, (THtmlGridTr) child,
+            //                                writer, attribute);
+            //                    }
+            //                }
+            //                htmlGrid.leaveRow(context);
+            //            }
 
             writer.endElement(JsfConstants.TBODY_ELEM);
             writer.endElement(JsfConstants.TABLE_ELEM);
@@ -356,9 +397,23 @@ public class THtmlGridRenderer extends AbstractHtmlRenderer {
         renderInnerTableAttributes(writer);
         writer.startElement(JsfConstants.TBODY_ELEM, body);
 
-        final int rowSize = htmlGrid.getRowSize();
-        for (int i = 0; i < rowSize; i++) {
+        //        final int rowSize = htmlGrid.getRowSize();
+        //        for (int i = 0; i < rowSize; i++) {
+        //            htmlGrid.enterRow(context, i);
+        //            for (final Iterator it = getRenderedChildrenIterator(body); it
+        //                    .hasNext();) {
+        //                final UIComponent child = (UIComponent) it.next();
+        //                if (child instanceof THtmlGridTr) {
+        //                    encodeGridRightBodyTr(context, (THtmlGridTr) child, writer,
+        //                            attribute);
+        //                }
+        //            }
+        //            htmlGrid.leaveRow(context);
+        //        }
+
+        for (int i = 0; i < items.length; ++i) {
             htmlGrid.enterRow(context, i);
+            processItem(beanDesc, page, items[i], itemName, i, indexName);
             for (final Iterator it = getRenderedChildrenIterator(body); it
                     .hasNext();) {
                 final UIComponent child = (UIComponent) it.next();
@@ -377,10 +432,64 @@ public class THtmlGridRenderer extends AbstractHtmlRenderer {
         writer.endElement(JsfConstants.TR_ELEM);
     }
 
+    public void processItem(BeanDesc beanDesc, Object page, Object item,
+            String itemName, int index, String indexName) {
+        setValue(beanDesc, page, indexName, new Integer(index));
+        if (item == null) {
+            return;
+        }
+        setValue(beanDesc, page, itemName, item);
+        if (item instanceof Map) {
+            processMapItem(beanDesc, page, (Map) item);
+        } else {
+            processBeanItem(beanDesc, page, item);
+        }
+    }
+
+    protected void setValue(BeanDesc beanDesc, Object page,
+            String propertyName, Object value) {
+        if (beanDesc.hasPropertyDesc(propertyName)) {
+            PropertyDesc pd = beanDesc.getPropertyDesc(propertyName);
+            if (pd.hasWriteMethod()) {
+                pd.setValue(page, value);
+            }
+        }
+    }
+
+    protected Object getValue(BeanDesc beanDesc, Object page,
+            String propertyName) {
+        if (beanDesc.hasPropertyDesc(propertyName)) {
+            PropertyDesc pd = beanDesc.getPropertyDesc(propertyName);
+            if (pd.hasReadMethod()) {
+                return pd.getValue(page);
+            }
+        }
+        return null;
+    }
+
+    public void processMapItem(BeanDesc beanDesc, Object page, Map item) {
+        for (Iterator i = item.keySet().iterator(); i.hasNext();) {
+            String name = (String) i.next();
+            Object value = item.get(name);
+            setValue(beanDesc, page, name, value);
+        }
+    }
+
+    public void processBeanItem(BeanDesc beanDesc, Object page, Object item) {
+        BeanDesc itemBeanDesc = BeanDescFactory.getBeanDesc(item.getClass());
+        for (int i = 0; i < itemBeanDesc.getPropertyDescSize(); i++) {
+            PropertyDesc pd = itemBeanDesc.getPropertyDesc(i);
+            String name = pd.getPropertyName();
+            Object value = getValue(itemBeanDesc, item, name);
+            setValue(beanDesc, page, name, value);
+        }
+    }
+
     private void encodeGridLeftBodyTr(final FacesContext context,
             final THtmlGridTr tr, final ResponseWriter writer,
             final THtmlGridRenderer.GridAttribute attribute) throws IOException {
         writer.startElement(JsfConstants.TR_ELEM, tr);
+        renderStyleClass(tr, writer);
         int columnNo = 0;
         for (final Iterator it = getRenderedChildrenIterator(tr); it.hasNext();) {
             final UIComponent child = (UIComponent) it.next();
@@ -400,6 +509,7 @@ public class THtmlGridRenderer extends AbstractHtmlRenderer {
             final THtmlGridTr tr, final ResponseWriter writer,
             final THtmlGridRenderer.GridAttribute attribute) throws IOException {
         writer.startElement(JsfConstants.TR_ELEM, tr);
+        renderStyleClass(tr, writer);
         int columnNo = 0;
         for (final Iterator it = getRenderedChildrenIterator(tr); it.hasNext();) {
             final UIComponent child = (UIComponent) it.next();
@@ -542,6 +652,15 @@ public class THtmlGridRenderer extends AbstractHtmlRenderer {
                 child.processDecodes(context);
             }
             htmlGrid.leaveRow(context);
+        }
+    }
+
+    private void renderStyleClass(final THtmlGridTr tr,
+            final ResponseWriter writer) throws IOException {
+        final String styleClass = tr.getStyleClass();
+        if (styleClass != null) {
+            RendererUtil.renderAttribute(writer, JsfConstants.STYLE_CLASS_ATTR,
+                    styleClass);
         }
     }
 

@@ -19,18 +19,17 @@ import java.util.List;
 
 import javax.faces.component.ComponentUtil_;
 import javax.faces.component.NamingContainer;
-import javax.faces.component.UIComponentBase;
 import javax.faces.context.FacesContext;
 import javax.faces.internal.ComponentStates;
 
-import org.seasar.framework.util.AssertionUtil;
+import org.seasar.teeda.extension.component.TForEach;
 
 /**
  * @author manhole
  */
-public class THtmlGrid extends UIComponentBase implements NamingContainer {
+public class THtmlGrid extends TForEach implements NamingContainer {
 
-    private static final String GRID = "Grid";
+    //    private static final String GRID = "Grid";
 
     public static final String COMPONENT_FAMILY = "org.seasar.teeda.extension.Grid";
 
@@ -48,30 +47,11 @@ public class THtmlGrid extends UIComponentBase implements NamingContainer {
         return COMPONENT_FAMILY;
     }
 
-    private int rowIndex;
-
     private Object value;
 
     private String width;
 
     private String height;
-
-    public String getClientId(FacesContext context) {
-        String clientId = super.getClientId(context);
-        int rowIndex = getRowIndex();
-        if (rowIndex == -1) {
-            return clientId;
-        }
-        return clientId + NamingContainer.SEPARATOR_CHAR + rowIndex;
-    }
-
-    private int getRowIndex() {
-        return rowIndex;
-    }
-
-    private void setRowIndex(int rowIndex) {
-        this.rowIndex = rowIndex;
-    }
 
     public Object getValue() {
         if (value != null) {
@@ -116,72 +96,33 @@ public class THtmlGrid extends UIComponentBase implements NamingContainer {
 
     public void enterRow(final FacesContext context, final int rowIndex) {
         setRowIndex(rowIndex);
-        final Object rowBean = getItems()[rowIndex];
-        final String itemName = getNaturalId();
-        context.getExternalContext().getRequestMap().put(itemName, rowBean);
+        //        final Object rowBean = getItems()[rowIndex];
+        //        final String itemName = getNaturalId();
+        //        context.getExternalContext().getRequestMap().put(itemName, rowBean);
         componentStates.restoreDescendantState(context, this);
     }
 
     public void leaveRow(FacesContext context) {
-        final String itemName = getNaturalId();
-        context.getExternalContext().getRequestMap().remove(itemName);
+        // final String itemName = getNaturalId();
+        //context.getExternalContext().getRequestMap().remove(itemName);
         componentStates.saveDescendantComponentStates(context, this);
     }
 
-    private String getNaturalId() {
-        final String id = getId();
-        final int pos = id.lastIndexOf(GRID);
-        if (-1 == pos) {
-            throw new IllegalStateException(
-                    "Grid component should contain \"Grid\" in it's id");
-        }
-        final String naturalId = id.substring(0, pos);
-        return naturalId;
-    }
+    //    private String getNaturalId() {
+    //        final String id = getId();
+    //        final int pos = id.lastIndexOf(GRID);
+    //        if (-1 == pos) {
+    //            throw new IllegalStateException(
+    //                    "Grid component should contain \"Grid\" in it's id");
+    //        }
+    //        final String naturalId = id.substring(0, pos);
+    //        return naturalId;
+    //    }
 
     private ComponentStates componentStates = new ComponentStates();
 
-    public void processDecodes(final FacesContext context) {
-        AssertionUtil.assertNotNull("context", context);
-        if (!isRendered()) {
-            return;
-        }
-        final int rowSize = getRowSize();
-        for (int i = 0; i < rowSize; i++) {
-            enterRow(context, i);
-            super.processDecodes(context);
-            leaveRow(context);
-        }
-    }
-
-    public void processValidators(final FacesContext context) {
-        AssertionUtil.assertNotNull("context", context);
-        if (!isRendered()) {
-            return;
-        }
-        final int rowSize = getRowSize();
-        for (int i = 0; i < rowSize; i++) {
-            enterRow(context, i);
-            super.processValidators(context);
-            leaveRow(context);
-        }
-    }
-
-    public void processUpdates(final FacesContext context) {
-        AssertionUtil.assertNotNull("context", context);
-        if (!isRendered()) {
-            return;
-        }
-        final int rowSize = getRowSize();
-        for (int i = 0; i < rowSize; i++) {
-            enterRow(context, i);
-            super.processUpdates(context);
-            leaveRow(context);
-        }
-    }
-
-    public int getRowSize() {
-        return getItems().length;
-    }
+    //    public int getRowSize() {
+    //        return getItems().length;
+    //    }
 
 }

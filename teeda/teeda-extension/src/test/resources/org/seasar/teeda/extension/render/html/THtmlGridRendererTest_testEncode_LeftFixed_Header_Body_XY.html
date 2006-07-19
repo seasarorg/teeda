@@ -10,12 +10,17 @@
 	background-color: black;
 }
 .gridCell {
-	background-color: white;
 	height: 18px;
 }
 .teeda_editable {
 	border-width: 0px;
 	background-color: #FFC0CB;
+}
+.row_odd {
+	background-color: white;
+}
+.row_even {
+	background-color: #FFDEAD;
 }
 </style>
 </head>
@@ -70,31 +75,31 @@ function editOff(input) {
 			<div id="someGridXYLeftBody" style="overflow:hidden; height:122px;">
 				<table cellspacing="1" cellpadding="0" class="gridTable">
 					<tbody>
-						<tr>
+						<tr class="row_odd">
 							<td><div class="gridCell" style="overflow:hidden; width:40px;"><nobr>TD1_1</nobr></div></td>
 							<td><div class="gridCell" style="overflow:hidden; width:40px;"><nobr>TD2_1</nobr></div></td>
 						</tr>
-						<tr>
+						<tr class="row_even">
 							<td><div class="gridCell" style="overflow:hidden; width:40px;"><nobr>TD1_2</nobr></div></td>
 							<td><div class="gridCell" style="overflow:hidden; width:40px;"><nobr>TD2_2</nobr></div></td>
 						</tr>
-						<tr>
+						<tr class="row_odd">
 							<td><div class="gridCell" style="overflow:hidden; width:40px;"><nobr>TD1_3</nobr></div></td>
 							<td><div class="gridCell" style="overflow:hidden; width:40px;"><nobr>TD2_3</nobr></div></td>
 						</tr>
-						<tr>
+						<tr class="row_even">
 							<td><div class="gridCell" style="overflow:hidden; width:40px;"><nobr>TD1_4</nobr></div></td>
 							<td><div class="gridCell" style="overflow:hidden; width:40px;"><nobr>TD2_4</nobr></div></td>
 						</tr>
-						<tr>
+						<tr class="row_odd">
 							<td><div class="gridCell" style="overflow:hidden; width:40px;"><nobr>TD1_5</nobr></div></td>
 							<td><div class="gridCell" style="overflow:hidden; width:40px;"><nobr>TD2_5</nobr></div></td>
 						</tr>
-						<tr>
+						<tr class="row_even">
 							<td><div class="gridCell" style="overflow:hidden; width:40px;"><nobr>TD1_6</nobr></div></td>
 							<td><div class="gridCell" style="overflow:hidden; width:40px;"><nobr>TD2_6</nobr></div></td>
 						</tr>
-						<tr>
+						<tr class="row_odd">
 							<td><div class="gridCell" style="overflow:hidden; width:40px;"><nobr>TD1_7</nobr></div></td>
 							<td><div class="gridCell" style="overflow:hidden; width:40px;"><nobr>TD2_7</nobr></div></td>
 						</tr>
@@ -107,7 +112,7 @@ function editOff(input) {
 				onscroll="document.all.someGridXYRightHeader.scrollLeft=this.scrollLeft; document.all.someGridXYLeftBody.scrollTop=this.scrollTop;">
 				<table cellspacing="1" cellpadding="0" class="gridTable">
 					<tbody>
-						<tr>
+						<tr class="row_odd">
 							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>
 								<span onclick="editOn(this);">TD3_1</span><input type="text" id="gridText" name="someGridXY:0:gridText" value="TD3_1" onblur="editOff(this);" class="teeda_editable" style="display:none;" />
 							</nobr></div></td>
@@ -115,7 +120,7 @@ function editOff(input) {
 							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>TD5_1</nobr></div></td>
 							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>TD6_1</nobr></div></td>
 						</tr>
-						<tr>
+						<tr class="row_even">
 							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>
 								<span onclick="editOn(this);">TD3_2</span><input type="text" id="gridText" name="someGridXY:1:gridText" value="TD3_2" onblur="editOff(this);" class="teeda_editable" style="display:none;" />
 							</nobr></div></td>
@@ -123,7 +128,7 @@ function editOff(input) {
 							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>TD5_2</nobr></div></td>
 							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>TD6_2</nobr></div></td>
 						</tr>
-						<tr>
+						<tr class="row_odd">
 							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>
 								<span onclick="editOn(this);">TD3_3</span><input type="text" id="gridText" name="someGridXY:2:gridText" value="TD3_3" onblur="editOff(this);" class="teeda_editable" style="display:none;" />
 							</nobr></div></td>
@@ -131,7 +136,7 @@ function editOff(input) {
 							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>TD5_3</nobr></div></td>
 							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>TD6_3</nobr></div></td>
 						</tr>
-						<tr>
+						<tr class="row_even">
 							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>
 								<span onclick="editOn(this);">TD3_4</span><input type="text" id="gridText" name="someGridXY:3:gridText" value="TD3_4" onblur="editOff(this);" class="teeda_editable" style="display:none;" />
 							</nobr></div></td>
@@ -139,7 +144,7 @@ function editOff(input) {
 							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>TD5_4</nobr></div></td>
 							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>TD6_4</nobr></div></td>
 						</tr>
-						<tr>
+						<tr class="row_odd">
 							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>
 								<span onclick="editOn(this);">TD3_5</span><input type="text" id="gridText" name="someGridXY:4:gridText" value="TD3_5" onblur="editOff(this);" class="teeda_editable" style="display:none;" />
 							</nobr></div></td>
@@ -147,7 +152,7 @@ function editOff(input) {
 							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>TD5_5</nobr></div></td>
 							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>TD6_5</nobr></div></td>
 						</tr>
-						<tr>
+						<tr class="row_even">
 							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>
 								<span onclick="editOn(this);">TD3_6</span><input type="text" id="gridText" name="someGridXY:5:gridText" value="TD3_6" onblur="editOff(this);" class="teeda_editable" style="display:none;" />
 							</nobr></div></td>
@@ -155,7 +160,7 @@ function editOff(input) {
 							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>TD5_6</nobr></div></td>
 							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>TD6_6</nobr></div></td>
 						</tr>
-						<tr>
+						<tr class="row_odd">
 							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>
 								<span onclick="editOn(this);">TD3_7</span><input type="text" id="gridText" name="someGridXY:6:gridText" value="TD3_7" onblur="editOff(this);" class="teeda_editable" style="display:none;" />
 							</nobr></div></td>

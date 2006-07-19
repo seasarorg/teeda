@@ -17,9 +17,7 @@ package org.seasar.teeda.extension.render.html;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -45,6 +43,7 @@ import org.seasar.teeda.extension.component.html.THtmlGridInputText;
 import org.seasar.teeda.extension.component.html.THtmlGridTd;
 import org.seasar.teeda.extension.component.html.THtmlGridTh;
 import org.seasar.teeda.extension.component.html.THtmlGridTr;
+import org.seasar.teeda.extension.render.html.THtmlGridRendererTest.FooPage.FooItem;
 import org.xml.sax.SAXException;
 
 /**
@@ -213,17 +212,21 @@ public class THtmlGridRendererTest extends RendererTest {
         htmlGrid.setId("someGridXY");
         htmlGrid.setWidth(String.valueOf(300));
         htmlGrid.setHeight(String.valueOf(400));
+        htmlGrid.setItemsName("someItems");
+
+        FooPage fooPage = new FooPage();
+        {
+            final String pageName = "fooPage";
+            getVariableResolver().putValue(pageName, fooPage);
+            htmlGrid.setPageName(pageName);
+        }
 
         // items
         {
-            final List someItems = new ArrayList();
-            {
-                Map m = new HashMap();
-                m.put("td1", "td1");
-                m.put("td2", "td2");
-                someItems.add(m);
-            }
-            htmlGrid.setValue(someItems);
+            FooItem item = new FooItem();
+            item.setTd1("td1");
+            item.setTd2("td2");
+            fooPage.setSomeItems(new FooItem[] { item });
         }
 
         // colgroup
@@ -280,7 +283,7 @@ public class THtmlGridRendererTest extends RendererTest {
                 MockHtmlOutputText text = new MockHtmlOutputText();
                 text.setRenderer(outputTextRenderer);
                 ValueBinding vb = new ValueBindingImpl(getFacesContext()
-                        .getApplication(), "#{some.td1}", parser);
+                        .getApplication(), "#{fooPage.td1}", parser);
                 text.setValueBinding("value", vb);
                 addChild(td, text);
             }
@@ -290,7 +293,7 @@ public class THtmlGridRendererTest extends RendererTest {
                 MockHtmlOutputText text = new MockHtmlOutputText();
                 text.setRenderer(outputTextRenderer);
                 ValueBinding vb = new ValueBindingImpl(getFacesContext()
-                        .getApplication(), "#{some.td2}", parser);
+                        .getApplication(), "#{fooPage.td2}", parser);
                 text.setValueBinding("value", vb);
                 addChild(td, text);
             }
@@ -312,18 +315,36 @@ public class THtmlGridRendererTest extends RendererTest {
         htmlGrid.setId("someGridXY");
         htmlGrid.setWidth(String.valueOf(170));
         htmlGrid.setHeight(String.valueOf(150));
+        htmlGrid.setItemsName("someItems");
+
+        FooPage fooPage = new FooPage();
+        {
+            final String pageName = "fooPage";
+            getVariableResolver().putValue(pageName, fooPage);
+            htmlGrid.setPageName(pageName);
+        }
 
         // items
         {
             final List items = new ArrayList();
             for (int i = 1; i <= 7; i++) {
-                final Map m = new HashMap();
-                for (int j = 1; j <= 6; j++) {
-                    m.put("td" + j, "TD" + j + "_" + i);
-                }
-                items.add(m);
+                FooItem fooItem = new FooItem();
+                fooItem.setTd1("TD1_" + i);
+                fooItem.setTd2("TD2_" + i);
+                fooItem.setTd3("TD3_" + i);
+                fooItem.setTd4("TD4_" + i);
+                fooItem.setTd5("TD5_" + i);
+                fooItem.setTd6("TD6_" + i);
+                //                final Map m = new HashMap();
+                //                for (int j = 1; j <= 6; j++) {
+                //                    m.put("td" + j, "TD" + j + "_" + i);
+                //                }
+                //                items.add(m);
+                items.add(fooItem);
             }
-            htmlGrid.setValue(items);
+            fooPage.setSomeItems((FooItem[]) items.toArray(new FooItem[items
+                    .size()]));
+            //htmlGrid.setValue(items);
         }
 
         // colgroup
@@ -371,6 +392,13 @@ public class THtmlGridRendererTest extends RendererTest {
 
             THtmlGridTr tr = new THtmlGridTr();
             addChild(tbody, tr);
+            {
+                ValueBinding vb = new ValueBindingImpl(getFacesContext()
+                        .getApplication(), "#{fooPage.styleClass}", parser);
+                tr.setValueBinding("styleClass", vb);
+                fooPage.addStyleClass("row_odd");
+                fooPage.addStyleClass("row_even");
+            }
             for (int i = 1; i <= 6; i++) {
                 THtmlGridTd td = new THtmlGridTd();
                 addChild(tr, td);
@@ -379,14 +407,14 @@ public class THtmlGridRendererTest extends RendererTest {
                     gridInputText.setId("gridText");
                     gridInputText.setRenderer(gridInputTextRenderer);
                     ValueBinding vb = new ValueBindingImpl(getFacesContext()
-                            .getApplication(), "#{some.td" + i + "}", parser);
+                            .getApplication(), "#{fooPage.td" + i + "}", parser);
                     gridInputText.setValueBinding("value", vb);
                     addChild(td, gridInputText);
                 } else {
                     MockHtmlOutputText text = new MockHtmlOutputText();
                     text.setRenderer(outputTextRenderer);
                     ValueBinding vb = new ValueBindingImpl(getFacesContext()
-                            .getApplication(), "#{some.td" + i + "}", parser);
+                            .getApplication(), "#{fooPage.td" + i + "}", parser);
                     text.setValueBinding("value", vb);
                     addChild(td, text);
                 }
@@ -401,6 +429,7 @@ public class THtmlGridRendererTest extends RendererTest {
                 "testEncode_LeftFixed_Header_Body_XY.html", "UTF-8");
         final String expected = extract(readText);
         Diff diff = diff(expected, getResponseText());
+        System.out.println(getResponseText());
         assertEquals(diff.toString(), true, diff.identical());
     }
 
@@ -474,6 +503,174 @@ public class THtmlGridRendererTest extends RendererTest {
             this.clientId = clientId;
         }
 
+    }
+
+    public static class FooPage {
+
+        private int someIndex;
+
+        private FooItem[] someItems;
+
+        public FooItem[] getSomeItems() {
+            return someItems;
+        }
+
+        public void setSomeItems(FooItem[] fooItems) {
+            this.someItems = fooItems;
+        }
+
+        public String getRowStyleClass() {
+            return null;
+        }
+
+        public static class FooItem {
+
+            private String td1;
+
+            private String td2;
+
+            private String td3;
+
+            private String td4;
+
+            private String td5;
+
+            private String td6;
+
+            public String getTd1() {
+                return td1;
+            }
+
+            public void setTd1(String td1) {
+                this.td1 = td1;
+            }
+
+            public String getTd2() {
+                return td2;
+            }
+
+            public void setTd2(String td2) {
+                this.td2 = td2;
+            }
+
+            public String getTd3() {
+                return td3;
+            }
+
+            public void setTd3(String td3) {
+                this.td3 = td3;
+            }
+
+            public String getTd4() {
+                return td4;
+            }
+
+            public void setTd4(String td4) {
+                this.td4 = td4;
+            }
+
+            public String getTd5() {
+                return td5;
+            }
+
+            public void setTd5(String td5) {
+                this.td5 = td5;
+            }
+
+            public String getTd6() {
+                return td6;
+            }
+
+            public void setTd6(String td6) {
+                this.td6 = td6;
+            }
+        }
+
+        public int getSomeIndex() {
+            return someIndex;
+        }
+
+        public void setSomeIndex(int someIndex) {
+            this.someIndex = someIndex;
+        }
+
+        public String getStyleClass() {
+            if (styleClasses.isEmpty()) {
+                return null;
+            }
+            if (styleClasses.size() <= index) {
+                index = 0;
+            }
+            return (String) styleClasses.get(getSomeIndex() % 2);
+        }
+
+        private List styleClasses = new ArrayList();
+
+        private int index;
+
+        public void addStyleClass(String styleClass) {
+            styleClasses.add(styleClass);
+        }
+
+        private String td1;
+
+        private String td2;
+
+        private String td3;
+
+        private String td4;
+
+        private String td5;
+
+        private String td6;
+
+        public String getTd1() {
+            return td1;
+        }
+
+        public void setTd1(String td1) {
+            this.td1 = td1;
+        }
+
+        public String getTd2() {
+            return td2;
+        }
+
+        public void setTd2(String td2) {
+            this.td2 = td2;
+        }
+
+        public String getTd3() {
+            return td3;
+        }
+
+        public void setTd3(String td3) {
+            this.td3 = td3;
+        }
+
+        public String getTd4() {
+            return td4;
+        }
+
+        public void setTd4(String td4) {
+            this.td4 = td4;
+        }
+
+        public String getTd5() {
+            return td5;
+        }
+
+        public void setTd5(String td5) {
+            this.td5 = td5;
+        }
+
+        public String getTd6() {
+            return td6;
+        }
+
+        public void setTd6(String td6) {
+            this.td6 = td6;
+        }
     }
 
     private boolean addChild(UIComponent parent, UIComponent child) {
