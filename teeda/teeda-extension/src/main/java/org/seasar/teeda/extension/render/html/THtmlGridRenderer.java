@@ -22,7 +22,6 @@ import java.util.Iterator;
 import java.util.Map;
 
 import javax.faces.component.UIComponent;
-import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
@@ -77,7 +76,7 @@ public class THtmlGridRenderer extends TForEachRenderer {
     protected void encodeHtmlGridBegin(final FacesContext context,
             final THtmlGrid htmlGrid) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
-        writeJavascript(context, htmlGrid, writer);
+        renderJavascript(context, htmlGrid, writer);
         writer.startElement(JsfConstants.TABLE_ELEM, htmlGrid);
         RendererUtil.renderIdAttributeIfNecessary(writer, htmlGrid,
                 getIdForRender(context, htmlGrid));
@@ -88,17 +87,19 @@ public class THtmlGridRenderer extends TForEachRenderer {
                 .renderAttribute(writer, JsfConstants.CELLPADDING_ATTR, "0");
     }
 
-    private void writeJavascript(FacesContext context, THtmlGrid htmlGrid,
+    private void renderJavascript(FacesContext context, THtmlGrid htmlGrid,
             ResponseWriter writer) throws IOException {
-        final UIViewRoot viewRoot = context.getViewRoot();
-        final Map attributes = viewRoot.getAttributes();
-        if (attributes.containsKey(ALREADY_WRITE)) {
-            return;
+        if (shouldRenderJavascript(context, htmlGrid)) {
+            JavaScriptContext scriptContext = new JavaScriptContext();
+            scriptContext.loadScript(THtmlGrid.class.getName());
+            writer.write(scriptContext.getResult());
         }
-        JavaScriptContext scriptContext = new JavaScriptContext();
-        scriptContext.loadScript(THtmlGrid.class.getName());
-        writer.write(scriptContext.getResult());
-        attributes.put(ALREADY_WRITE, Boolean.TRUE);
+    }
+
+    // TODO
+    private boolean shouldRenderJavascript(FacesContext context,
+            THtmlGrid htmlGrid) {
+        return true;
     }
 
     public void encodeChildren(FacesContext context, UIComponent component)

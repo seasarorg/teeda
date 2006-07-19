@@ -18,13 +18,12 @@ package org.seasar.teeda.extension.taglib;
 import javax.faces.component.UIComponent;
 
 import org.seasar.teeda.core.JsfConstants;
-import org.seasar.teeda.core.taglib.UIComponentTagBase;
 import org.seasar.teeda.extension.component.html.THtmlGrid;
 
 /**
  * @author manhole
  */
-public class TGridTag extends UIComponentTagBase {
+public class TGridTag extends TForEachTag {
 
     public TGridTag() {
     }

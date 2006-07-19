@@ -162,13 +162,22 @@ public class TForEach extends UIComponentBase implements NamingContainer {
                 .getClass());
         final PropertyDesc itemsPd = pageBeanDesc
                 .getPropertyDesc(getItemsName());
+        if (!itemsPd.hasWriteMethod()) {
+            throw new IllegalStateException("class ["
+                    + pageBeanDesc.getBeanClass().getName()
+                    + "] should have writeMethod for ["
+                    + itemsPd.getPropertyName() + "]");
+        }
         final Class itemsClass = itemsPd.getPropertyType();
-        final Object[] items = (Object[]) Array.newInstance(itemsClass
-                .getComponentType(), rowSize);
+        final Class itemClass = itemsClass.getComponentType();
+        if (itemClass == null) {
+            throw new IllegalStateException("class [" + itemsClass.getName()
+                    + "] should be array type.");
+        }
+        final Object[] items = (Object[]) Array.newInstance(itemClass, rowSize);
         if (pageBeanDesc.hasPropertyDesc(getItemName())) {
             final PropertyDesc itemPd = pageBeanDesc
                     .getPropertyDesc(getItemName());
-            final Class itemClass = itemPd.getPropertyType();
             for (int i = 0; i < rowSize; ++i) {
                 setRowIndex(i);
                 final Object item = ClassUtil.newInstance(itemClass);
@@ -179,11 +188,6 @@ public class TForEach extends UIComponentBase implements NamingContainer {
                 items[i] = item;
             }
         } else {
-            final Class itemClass = itemsClass.getComponentType();
-            if (itemClass == null) {
-                // TODO 
-                throw new IllegalStateException();
-            }
             final BeanDesc itemBeanDesc = BeanDescFactory
                     .getBeanDesc(itemClass);
             for (int i = 0; i < rowSize; ++i) {
