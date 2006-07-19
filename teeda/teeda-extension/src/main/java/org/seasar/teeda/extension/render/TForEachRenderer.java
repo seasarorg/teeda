@@ -16,7 +16,6 @@
 package org.seasar.teeda.extension.render;
 
 import java.io.IOException;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -41,19 +40,16 @@ public class TForEachRenderer extends AbstractRenderer {
 
     public static final String RENDERER_TYPE = "org.seasar.teeda.extension.ForEach";
 
-    private static final Object[] EMPTY_ITEMS = new Object[0];
-
     public void encodeChildren(FacesContext context, UIComponent component)
             throws IOException {
         assertNotNull(context, component);
         if (!component.isRendered()) {
             return;
         }
-        TForEach forEach = (TForEach) component;
-        Object page = forEach.getPage(context);
-        BeanDesc beanDesc = BeanDescFactory.getBeanDesc(page.getClass());
-        PropertyDesc pd = beanDesc.getPropertyDesc(forEach.getItemsName());
-        Object[] items = getItems(page, pd);
+        final TForEach forEach = (TForEach) component;
+        final Object page = forEach.getPage(context);
+        final BeanDesc beanDesc = BeanDescFactory.getBeanDesc(page.getClass());
+        final Object[] items = forEach.getItems(context);
         final String itemName = forEach.getItemName();
         final String indexName = forEach.getIndexName();
         for (int i = 0; i < items.length; ++i) {
@@ -67,20 +63,6 @@ public class TForEachRenderer extends AbstractRenderer {
     protected void assertNotNull(FacesContext context, UIComponent component) {
         AssertionUtil.assertNotNull("context", context);
         AssertionUtil.assertNotNull("component", component);
-    }
-
-    protected Object[] getItems(Object page, PropertyDesc pd) {
-        Object o = pd.getValue(page);
-        if (o == null) {
-            return EMPTY_ITEMS;
-        }
-        if (o instanceof Collection) {
-            return ((Collection) o).toArray();
-        }
-        if (o.getClass().isArray()) {
-            return (Object[]) o;
-        }
-        throw new IllegalStateException(o.getClass().toString());
     }
 
     public void processItem(BeanDesc beanDesc, Object page, Object item,

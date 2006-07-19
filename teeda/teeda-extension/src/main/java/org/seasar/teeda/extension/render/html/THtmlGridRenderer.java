@@ -27,7 +27,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
 import org.seasar.framework.beans.BeanDesc;
-import org.seasar.framework.beans.PropertyDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
@@ -293,9 +292,7 @@ public class THtmlGridRenderer extends TForEachRenderer {
 
         final Object page = htmlGrid.getPage(context);
         final BeanDesc beanDesc = BeanDescFactory.getBeanDesc(page.getClass());
-        final PropertyDesc pd = beanDesc.getPropertyDesc(htmlGrid
-                .getItemsName());
-        final Object[] items = getItems(page, pd);
+        final Object[] items = htmlGrid.getItems(context);
         final String itemName = htmlGrid.getItemName();
         final String indexName = htmlGrid.getIndexName();
 

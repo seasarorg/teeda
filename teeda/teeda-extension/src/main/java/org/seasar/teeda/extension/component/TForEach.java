@@ -16,6 +16,7 @@
 package org.seasar.teeda.extension.component;
 
 import java.lang.reflect.Array;
+import java.util.Collection;
 
 import javax.faces.component.NamingContainer;
 import javax.faces.component.UIComponentBase;
@@ -42,13 +43,21 @@ public class TForEach extends UIComponentBase implements NamingContainer {
 
     private static final String DEFAULT_RENDERER_TYPE = "org.seasar.teeda.extension.ForEach";
 
+    private static final Object[] EMPTY_ITEMS = new Object[0];
+
     private static final String INDEX_SUFFIX = "Index";
+
+    private static final int INITIAL_ROW_INDEX = -1;
+
+    private int rowIndex = INITIAL_ROW_INDEX;
+
+    private int rowSize;
+
+    private ComponentStates componentStates = new ComponentStates();
 
     private String pageName;
 
     private String itemsName;
-
-    private ComponentStates componentStates = new ComponentStates();
 
     public TForEach() {
         setRendererType(DEFAULT_RENDERER_TYPE);
@@ -67,12 +76,6 @@ public class TForEach extends UIComponentBase implements NamingContainer {
         }
         return clientId + NamingContainer.SEPARATOR_CHAR + rowIndex;
     }
-
-    private static final int INITIAL_ROW_INDEX = -1;
-
-    private int rowIndex = INITIAL_ROW_INDEX;
-
-    private int rowSize;
 
     private int getRowIndex() {
         return rowIndex;
@@ -246,6 +249,23 @@ public class TForEach extends UIComponentBase implements NamingContainer {
 
     public void setRowSize(int rowCount) {
         this.rowSize = rowCount;
+    }
+
+    public Object[] getItems(FacesContext context) {
+        final Object page = getPage(context);
+        final BeanDesc beanDesc = BeanDescFactory.getBeanDesc(page.getClass());
+        final PropertyDesc pd = beanDesc.getPropertyDesc(getItemsName());
+        final Object items = pd.getValue(page);
+        if (items == null) {
+            return EMPTY_ITEMS;
+        }
+        if (items instanceof Collection) {
+            return ((Collection) items).toArray();
+        }
+        if (items.getClass().isArray()) {
+            return (Object[]) items;
+        }
+        throw new IllegalStateException(items.getClass().toString());
     }
 
 }
