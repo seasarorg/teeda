@@ -69,7 +69,7 @@ public class HtmlOutputLinkRenderer extends AbstractRenderer {
                                 encoding));
             }
         }
-        String href = context.getExternalContext().encodeResourceURL(
+        final String href = context.getExternalContext().encodeResourceURL(
                 urlBuilder.build());
 
         writer.startElement(JsfConstants.ANCHOR_ELEM, htmlOutputLink);
