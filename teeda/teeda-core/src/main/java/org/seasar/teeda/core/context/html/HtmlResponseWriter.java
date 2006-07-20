@@ -56,7 +56,7 @@ public class HtmlResponseWriter extends ResponseWriter {
 
     private String contentType;
 
-    private String characterEncoding;
+    private String characterEncoding = DEFAULT_CHARACTER_ENCODING;
 
     private boolean startTagOpening;
 
@@ -170,7 +170,8 @@ public class HtmlResponseWriter extends ResponseWriter {
         return htmlSpecialChars(s, true, true);
     }
 
-    private String htmlSpecialChars(final String s, final boolean quote, final boolean amp) {
+    private String htmlSpecialChars(final String s, final boolean quote,
+            final boolean amp) {
         char[] chars = s.toCharArray();
         StringBuffer sb = new StringBuffer();
         for (int i = 0; i < chars.length; i++) {
@@ -263,7 +264,7 @@ public class HtmlResponseWriter extends ResponseWriter {
 
     public String getCharacterEncoding() {
         if (characterEncoding == null) {
-            return DEFAULT_CHARACTER_ENCODING;
+            characterEncoding = DEFAULT_CHARACTER_ENCODING;
         }
         return characterEncoding;
     }
@@ -280,11 +281,12 @@ public class HtmlResponseWriter extends ResponseWriter {
         this.writer = writer;
     }
 
-    protected String encodeURIAttribute(String url) throws IOException {
-        char[] chars = url.toCharArray();
+    protected String encodeURIAttribute(final String url) throws IOException {
+        final char[] chars = url.toCharArray();
         final StringBuffer sb = new StringBuffer(url.length() + 100);
         final int length = chars.length;
-        forLoop: for (int i = 0; i < length; i++) {
+        final String encoding = getCharacterEncoding();
+        for (int i = 0; i < length; i++) {
             final char c = chars[i];
             if (ArrayUtil.contains(unescape, c)) {
                 sb.append(c);
@@ -292,11 +294,10 @@ public class HtmlResponseWriter extends ResponseWriter {
                     if (i < length) {
                         sb.append(encodeQueryString(url.substring(i + 1)));
                     }
-                    break forLoop;
+                    break;
                 }
             } else {
-                sb.append(URLEncoder.encode(String.valueOf(c),
-                        getCharacterEncoding()));
+                sb.append(URLEncoder.encode(String.valueOf(c), encoding));
             }
         }
         return new String(sb);
