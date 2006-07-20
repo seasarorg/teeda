@@ -18,9 +18,9 @@ package org.seasar.teeda.core.unit;
 import java.io.InputStream;
 import java.io.Reader;
 
+import org.seasar.framework.exception.ResourceNotFoundRuntimeException;
 import org.seasar.framework.util.InputStreamReaderUtil;
 import org.seasar.framework.util.ReaderUtil;
-import org.seasar.framework.util.ResourceNotFoundRuntimeException;
 import org.seasar.framework.util.ResourceUtil;
 
 /**
