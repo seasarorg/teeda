@@ -66,6 +66,19 @@ public class HtmlCommandButtonRendererTest extends RendererTest {
                 getResponseText());
     }
 
+    public void testEncode_WithValue2() throws Exception {
+        // ## Arrange ##
+        htmlCommandButton.setValue("&nbsp;abc");
+
+        // ## Act ##
+        encodeByRenderer(renderer, htmlCommandButton);
+
+        // ## Assert ##
+        assertEquals(
+                "<input type=\"submit\" name=\"_id0\" value=\"&nbsp;abc\" />",
+                getResponseText());
+    }
+
     public void testEncode_RenderFalse() throws Exception {
         // ## Arrange ##
         htmlCommandButton.setRendered(false);

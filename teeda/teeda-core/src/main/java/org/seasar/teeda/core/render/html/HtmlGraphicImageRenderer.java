@@ -52,7 +52,7 @@ public class HtmlGraphicImageRenderer extends AbstractRenderer {
         RendererUtil.renderIdAttributeIfNecessary(writer, htmlGraphicImage,
                 getIdForRender(context, htmlGraphicImage));
         final String url = getUrl(context, htmlGraphicImage);
-        RendererUtil.renderAttribute(writer, JsfConstants.SRC_ATTR, url);
+        writer.writeURIAttribute(JsfConstants.SRC_ATTR, url, null);
         renderAttributes(htmlGraphicImage, writer);
         writer.endElement(JsfConstants.IMG_ELEM);
     }

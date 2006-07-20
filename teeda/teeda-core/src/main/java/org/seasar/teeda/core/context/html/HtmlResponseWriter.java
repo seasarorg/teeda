@@ -167,10 +167,10 @@ public class HtmlResponseWriter extends ResponseWriter {
     }
 
     protected String htmlSpecialChars(final String s) {
-        return htmlSpecialChars(s, true);
+        return htmlSpecialChars(s, true, true);
     }
 
-    private String htmlSpecialChars(final String s, final boolean quote) {
+    private String htmlSpecialChars(final String s, final boolean quote, final boolean amp) {
         char[] chars = s.toCharArray();
         StringBuffer sb = new StringBuffer();
         for (int i = 0; i < chars.length; i++) {
@@ -179,7 +179,7 @@ public class HtmlResponseWriter extends ResponseWriter {
                 sb.append("&lt;");
             } else if (c == '>') {
                 sb.append("&gt;");
-            } else if (c == '&') {
+            } else if (amp && c == '&') {
                 sb.append("&amp;");
             } else if (c == '"') {
                 sb.append("&quot;");
@@ -193,7 +193,7 @@ public class HtmlResponseWriter extends ResponseWriter {
     }
 
     protected String escapeAttribute(String s) {
-        return htmlSpecialChars(s, false);
+        return htmlSpecialChars(s, false, false);
     }
 
     public ResponseWriter cloneWithWriter(Writer writer) {
