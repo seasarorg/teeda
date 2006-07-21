@@ -16,8 +16,10 @@
 package org.seasar.teeda.extension.html.impl;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -29,9 +31,15 @@ import org.seasar.teeda.extension.html.HtmlNode;
 import org.seasar.teeda.extension.html.HtmlParser;
 import org.xml.sax.InputSource;
 
+/**
+ * @author higa
+ * @author manhole
+ */
 public class HtmlParserImpl implements HtmlParser {
 
     private Map dtdPaths = new HashMap();
+
+    private List elementNodeTagName = new ArrayList();
 
     public HtmlNode parse(InputStream is) {
         SAXParser parser = SAXParserFactoryUtil.newSAXParser();
@@ -42,11 +50,15 @@ public class HtmlParserImpl implements HtmlParser {
 
     protected HtmlNodeHandler createHtmlNodeHandler() {
         HtmlNodeHandler htmlNodeHandler = new HtmlNodeHandler();
-        for(Iterator itr = dtdPaths.entrySet().iterator(); itr.hasNext();) {
+        for (Iterator itr = dtdPaths.entrySet().iterator(); itr.hasNext();) {
             Map.Entry entry = (Entry) itr.next();
             String publicId = (String) entry.getKey();
             String dtdPath = (String) entry.getValue();
             htmlNodeHandler.registerDtdPath(publicId, dtdPath);
+        }
+        for (final Iterator it = elementNodeTagName.iterator(); it.hasNext();) {
+            final String tagName = (String) it.next();
+            htmlNodeHandler.addElementNodeTagName(tagName);
         }
         return htmlNodeHandler;
     }
@@ -58,4 +70,9 @@ public class HtmlParserImpl implements HtmlParser {
     public void clearDtdPath() {
         dtdPaths.clear();
     }
+
+    public void addElementNodeTagName(String tagName) {
+        elementNodeTagName.add(tagName);
+    }
+
 }

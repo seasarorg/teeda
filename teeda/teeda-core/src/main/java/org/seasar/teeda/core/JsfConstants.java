@@ -109,6 +109,10 @@ public interface JsfConstants {
 
     String BR_ELEM = "br";
 
+    String COL_ELEM = "col";
+
+    String COLGROUP_ELEM = "colgroup";
+
     String DIV_ELEM = "div";
 
     String FORM_ELEM = "form";

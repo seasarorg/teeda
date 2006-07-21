@@ -18,7 +18,6 @@ package org.seasar.teeda.extension.html.factory;
 import java.util.Map;
 
 import org.seasar.teeda.core.JsfConstants;
-import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.PageDesc;
@@ -26,39 +25,18 @@ import org.seasar.teeda.extension.html.PageDesc;
 /**
  * @author manhole
  */
-public class GridFactory extends AbstractElementProcessorFactory {
-
-    private static final String TAG_NAME = "grid";
+public class GridInputTextFactory extends AbstractGridChildrenFactory {
 
     public boolean isMatch(ElementNode elementNode, PageDesc pageDesc,
             ActionDesc actionDesc) {
-        if (pageDesc == null) {
+        if (!super.isMatch(elementNode, pageDesc, actionDesc)) {
             return false;
         }
-        if (!JsfConstants.TABLE_ELEM.equalsIgnoreCase(elementNode.getTagName())) {
+        if (!JsfConstants.TEXT_VALUE.equalsIgnoreCase(elementNode
+                .getProperty(JsfConstants.TYPE_ATTR))) {
             return false;
         }
-        final String id = elementNode.getId();
-        if (id == null) {
-            return false;
-        }
-        if (id.endsWith("Grid") || id.endsWith("GridX") || id.endsWith("GridY")
-                || id.endsWith("GridXY")) {
-        } else {
-            return false;
-        }
-        final String itemsName = getItemsName(id);
-        if (pageDesc.hasItemsProperty(itemsName)) {
-            return true;
-        }
-        return false;
-    }
-
-    private String getItemsName(final String id) {
-        final int pos = id.lastIndexOf("Grid");
-        final String itemsName = id.substring(0, pos)
-                + ExtensionConstants.ITEMS_SUFFIX;
-        return itemsName;
+        return pageDesc.hasProperty(elementNode.getId());
     }
 
     protected void customizeProperties(Map properties, ElementNode elementNode,
@@ -66,18 +44,16 @@ public class GridFactory extends AbstractElementProcessorFactory {
         super
                 .customizeProperties(properties, elementNode, pageDesc,
                         actionDesc);
-        final String id = elementNode.getId();
-        properties.put(ExtensionConstants.PAGE_NAME_ATTR, pageDesc
-                .getPageName());
-        properties.put(ExtensionConstants.ITEMS_NAME_ATTR, getItemsName(id));
+        properties.put(JsfConstants.VALUE_ATTR, getBindingExpression(pageDesc
+                .getPageName(), elementNode.getId()));
+    }
+
+    protected String getHtmlTagName() {
+        return JsfConstants.INPUT_ELEM;
     }
 
     protected String getTagName() {
-        return TAG_NAME;
-    }
-
-    protected String getUri() {
-        return ExtensionConstants.TEEDA_EXTENSION_URI;
+        return "gridInputText";
     }
 
 }

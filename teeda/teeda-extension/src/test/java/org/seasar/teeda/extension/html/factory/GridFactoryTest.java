@@ -44,34 +44,49 @@ public class GridFactoryTest extends TeedaTestCase {
         factory = new GridFactory();
     }
 
-    public void testIsMatch1() throws Exception {
+    public void testIsMatch_Ok() throws Exception {
         Map properties = new HashMap();
-        properties.put("id", "fooGridXY");
+        properties.put("id", "hogeGridXY");
         ElementNode elementNode = new ElementNodeImpl("table", properties);
         PageDesc pageDesc = new PageDescImpl(FooPage.class, "fooPage");
         assertEquals(true, factory.isMatch(elementNode, pageDesc, null));
     }
 
-    public void testIsMatch2() throws Exception {
+    public void testIsMatch_NoId() throws Exception {
         Map properties = new HashMap();
-        ElementNode elementNode2 = new ElementNodeImpl("hoge", properties);
+        ElementNode elementNode = new ElementNodeImpl("table", properties);
         PageDesc pageDesc = new PageDescImpl(FooPage.class, "fooPage");
-        assertEquals(false, factory.isMatch(elementNode2, pageDesc, null));
+        assertEquals(false, factory.isMatch(elementNode, pageDesc, null));
     }
 
-    public void testIsMatch3() throws Exception {
+    public void testIsMatch_BadId() throws Exception {
         Map properties = new HashMap();
-        properties.put("id", "xxx");
-        ElementNode elementNode3 = new ElementNodeImpl("input", properties);
+        ElementNode elementNode = new ElementNodeImpl("table", properties);
         PageDesc pageDesc = new PageDescImpl(FooPage.class, "fooPage");
-        assertEquals(false, factory.isMatch(elementNode3, pageDesc, null));
+        assertEquals(false, factory.isMatch(elementNode, pageDesc, null));
     }
 
-    public void testIsMatch4() throws Exception {
+    public void testIsMatch_BadElement() throws Exception {
+        Map properties = new HashMap();
+        properties.put("id", "hogeGridXY");
+        ElementNode elementNode = new ElementNodeImpl("input", properties);
+        PageDesc pageDesc = new PageDescImpl(FooPage.class, "fooPage");
+        assertEquals(false, factory.isMatch(elementNode, pageDesc, null));
+    }
+
+    public void testIsMatch_NoPageDesc() throws Exception {
+        Map properties = new HashMap();
+        properties.put("id", "hogeGridXY");
+        ElementNode elementNode = new ElementNodeImpl("table", properties);
+        assertEquals(false, factory.isMatch(elementNode, null, null));
+    }
+
+    public void testIsMatch_NoItemsProperty() throws Exception {
         Map properties = new HashMap();
         properties.put("id", "fooGridXY");
         ElementNode elementNode = new ElementNodeImpl("table", properties);
-        assertEquals(false, factory.isMatch(elementNode, null, null));
+        PageDesc pageDesc = new PageDescImpl(FooPage.class, "fooPage");
+        assertEquals(false, factory.isMatch(elementNode, pageDesc, null));
     }
 
     public void testCreateFactory() throws Exception {

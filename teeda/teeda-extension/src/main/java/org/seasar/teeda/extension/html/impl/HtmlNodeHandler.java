@@ -15,12 +15,15 @@
  */
 package org.seasar.teeda.extension.html.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 
 import org.seasar.framework.util.ResourceUtil;
 import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.HtmlNode;
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
@@ -35,6 +38,10 @@ public class HtmlNodeHandler extends DefaultHandler {
     private HtmlNode root;
 
     private Map dtdPaths = new HashMap();
+
+    private List elementNodeTagName = new ArrayList();
+
+    private Stack forceElementNodeStack = new Stack();
 
     private static final String XHTML_DTD_RESOURCES_PATH = "org/seasar/teeda/extension/resource/xhtml1/";
 
@@ -56,16 +63,28 @@ public class HtmlNodeHandler extends DefaultHandler {
             push(n);
         } else {
             ElementNodeImpl parent = peek();
-            if (attributes.getValue(JsfConstants.ID_ATTR) != null) {
+            if (isElementNode(parent, attributes)) {
                 ElementNodeImpl elementNode = new ElementNodeImpl(qName, props);
                 parent.addElement(elementNode);
                 push(elementNode);
+                if (elementNodeTagName.contains(qName)) {
+                    forceElementNodeStack.push(elementNode);
+                }
             } else {
                 parent.addText(HtmlNodeUtil.getStartTagString(qName, props));
                 parent.incrementChildTextSize();
             }
         }
+    }
 
+    private boolean isElementNode(ElementNode parent, Attributes attributes) {
+        if (attributes.getValue(JsfConstants.ID_ATTR) != null) {
+            return true;
+        }
+        if (!forceElementNodeStack.isEmpty()) {
+            return true;
+        }
+        return false;
     }
 
     public InputSource resolveEntity(String publicId, String systemId)
@@ -106,6 +125,10 @@ public class HtmlNodeHandler extends DefaultHandler {
         if (current.getChildTextSize() == 0) {
             current.endElement();
             pop();
+            if (!forceElementNodeStack.isEmpty()
+                    && current == forceElementNodeStack.peek()) {
+                forceElementNodeStack.pop();
+            }
         } else {
             current.addText(HtmlNodeUtil.getEndTagString(qName));
             current.decrementChildTextSize();
@@ -142,4 +165,9 @@ public class HtmlNodeHandler extends DefaultHandler {
         dtdPaths.put("-//W3C//ENTITIES Special for XHTML//EN",
                 XHTML_DTD_RESOURCES_PATH + "xhtml-special.ent");
     }
+
+    public void addElementNodeTagName(String tagName) {
+        elementNodeTagName.add(tagName);
+    }
+
 }
