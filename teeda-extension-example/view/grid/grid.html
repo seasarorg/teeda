@@ -1,0 +1,56 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>ForEach</title>
+<style>
+.gridHeader {
+	background-color: green;
+	color: white;
+	font-weight: bold;
+	overflow: hidden;
+}
+.gridTable {
+	background-color: black;
+}
+.gridCell {
+	background-color: white;
+	overflow: hidden;
+	height: 25px;
+	padding: 0px;
+	margin: 0px;
+}
+</style>
+</head>
+<body>
+Grid
+<form id="gridForm">
+<table id="fooGrid" width="300px" height="200px">
+	<colgroup>
+		<col span="2" width="60px" styleClass="teeda_leftFixed" />
+		<col span="4" width="70px" />
+	</colgroup>
+	<thead>
+		<tr height="50px">
+			<th>aaa</th>
+			<th>bbb</th>
+			<th>ccc</th>
+			<th>ddd</th>
+			<th>eee</th>
+			<th>fff</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td><span id="aaa" /></td>
+			<td><span id="bbb" /></td>
+			<td><span id="ccc" /></td>
+			<td><input type="text" id="ddd" /></td>
+			<td><span id="eee" /></td>
+			<td><span id="fff" /></td>
+		</tr>
+	</tbody>
+</table>
+<input type="submit" />
+</form>
+</body>
+</html>
