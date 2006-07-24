@@ -288,7 +288,7 @@ Kumu = Kumu.extend(Kumu, {
     }
     xmlHttp.open("GET", filename, false);
     xmlHttp.send(null);
-    Kumu.eval(xmlHttp.responseText);
+    eval(xmlHttp.responseText);
   },
   
   dynamicLoad : function(){
