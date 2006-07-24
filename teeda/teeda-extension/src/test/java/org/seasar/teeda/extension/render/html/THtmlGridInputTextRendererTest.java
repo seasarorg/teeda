@@ -70,8 +70,10 @@ public class THtmlGridInputTextRendererTest extends RendererTest {
         encodeByRenderer(renderer, gridInputText);
 
         // ## Assert ##
-        final String expected = "<span onclick=\"editOn(this);\"></span>"
-                + "<input type=\"text\" name=\"_id0\" value=\"\" onblur=\"editOff(this);\" class=\"teeda_editable\" style=\"display:none;\" />";
+        final String expected = "<div onclick=\"editOn(this);\">"
+                + "<span></span>"
+                + "<input type=\"text\" name=\"_id0\" value=\"\" onblur=\"editOff(this);\" class=\"gridCellEdit\" style=\"display:none;\" />"
+                + "</div>";
         System.out.println(getResponseText());
         Diff diff = diff(expected, getResponseText());
         assertEquals(diff.toString(), true, diff.identical());
@@ -85,8 +87,10 @@ public class THtmlGridInputTextRendererTest extends RendererTest {
         encodeByRenderer(renderer, gridInputText);
 
         // ## Assert ##
-        final String expected = "<span onclick=\"editOn(this);\">abc</span>"
-                + "<input type=\"text\" name=\"_id0\" value=\"abc\" onblur=\"editOff(this);\" class=\"teeda_editable\" style=\"display:none;\" />";
+        final String expected = "<div onclick=\"editOn(this);\">"
+                + "<span>abc</span>"
+                + "<input type=\"text\" name=\"_id0\" value=\"abc\" onblur=\"editOff(this);\" class=\"gridCellEdit\" style=\"display:none;\" />"
+                + "</div>";
         System.out.println(getResponseText());
         Diff diff = diff(expected, getResponseText());
         assertEquals(diff.toString(), true, diff.identical());
@@ -104,8 +108,10 @@ public class THtmlGridInputTextRendererTest extends RendererTest {
         encodeByRenderer(renderer, gridInputText);
 
         // ## Assert ##
-        final String expected = "<span onclick=\"editOn(this);\"></span>"
-                + "<input type=\"text\" id=\"a\" name=\"b:a\" value=\"\" onblur=\"editOff(this);\" class=\"teeda_editable\" style=\"display:none;\" />";
+        final String expected = "<div onclick=\"editOn(this);\">"
+                + "<span></span>"
+                + "<input type=\"text\" id=\"a\" name=\"b:a\" value=\"\" onblur=\"editOff(this);\" class=\"gridCellEdit\" style=\"display:none;\" />"
+                + "</div>";
         System.out.println(getResponseText());
         Diff diff = diff(expected, getResponseText());
         assertEquals(diff.toString(), true, diff.identical());

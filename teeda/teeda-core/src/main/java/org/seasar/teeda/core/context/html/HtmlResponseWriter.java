@@ -152,11 +152,9 @@ public class HtmlResponseWriter extends ResponseWriter {
         AssertionUtil.assertNotNull("text", text);
         Writer writer = getWriter();
         closeStartTagIfOpening(writer);
-        String str = null;
+        String str = text.toString();
         if (shouldEscape) {
-            str = htmlSpecialChars(text.toString());
-        } else {
-            str = text.toString();
+            str = htmlSpecialChars(str);
         }
         writer.write(str);
     }
@@ -177,7 +175,7 @@ public class HtmlResponseWriter extends ResponseWriter {
         for (int i = 0; i < chars.length; i++) {
             char c = chars[i];
             // &nbsp; 0xA0
-            if ((int)c == '\u00A0') {
+            if (c == '\u00A0') {
                 sb.append("&nbsp;");
             } else if (c == '<') {
                 sb.append("&lt;");

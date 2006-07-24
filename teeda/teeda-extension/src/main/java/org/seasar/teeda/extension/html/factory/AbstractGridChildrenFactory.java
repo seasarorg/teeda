@@ -15,9 +15,6 @@
  */
 package org.seasar.teeda.extension.html.factory;
 
-import java.util.Map;
-
-import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.PageDesc;
@@ -25,12 +22,9 @@ import org.seasar.teeda.extension.html.PageDesc;
 /**
  * @author manhole
  */
-public abstract class AbstractGridChildrenFactory extends
-        AbstractElementProcessorFactory {
+public abstract class AbstractGridChildrenFactory extends AbstractGridFactory {
 
     public static final String gridFactory_BINDING = "bindingType=must";
-
-    private GridFactory gridFactory;
 
     public boolean isMatch(ElementNode elementNode, PageDesc pageDesc,
             ActionDesc actionDesc) {
@@ -44,28 +38,23 @@ public abstract class AbstractGridChildrenFactory extends
 
     private boolean isGridChild(ElementNode elementNode, PageDesc pageDesc,
             ActionDesc actionDesc) {
-        for (ElementNode node = elementNode.getParent(); node != null; node = node
-                .getParent()) {
-            if (gridFactory.isMatch(node, pageDesc, actionDesc)) {
-                return true;
-            }
+        final ElementNode gridNode = getGridNode(elementNode, pageDesc,
+                actionDesc);
+        if (gridNode != null) {
+            return true;
         }
         return false;
     }
 
-    protected void customizeProperties(Map properties, ElementNode elementNode,
+    protected ElementNode getGridNode(ElementNode elementNode,
             PageDesc pageDesc, ActionDesc actionDesc) {
-        super
-                .customizeProperties(properties, elementNode, pageDesc,
-                        actionDesc);
-    }
-
-    protected String getUri() {
-        return ExtensionConstants.TEEDA_EXTENSION_URI;
-    }
-
-    public void setGridFactory(GridFactory gridFactory) {
-        this.gridFactory = gridFactory;
+        for (ElementNode node = elementNode.getParent(); node != null; node = node
+                .getParent()) {
+            if (isMatchGrid(node, pageDesc, actionDesc)) {
+                return node;
+            }
+        }
+        return null;
     }
 
 }

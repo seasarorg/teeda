@@ -22,6 +22,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.custommonkey.xmlunit.Diff;
 import org.custommonkey.xmlunit.XMLUnit;
+import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.mock.NullFacesContext;
 import org.seasar.teeda.core.mock.NullRenderer;
 import org.seasar.teeda.core.mock.NullUIComponent;
@@ -183,9 +184,9 @@ public class RendererTest extends AbstractRendererTest {
     protected Diff diff(final String expected, final String actual)
             throws SAXException, IOException, ParserConfigurationException {
         Document cDoc = XMLUnit.buildDocument(XMLUnit.getControlParser(),
-                new StringReader(expected));
+                new StringReader(revertEntity(expected)));
         Document tDoc = XMLUnit.buildDocument(XMLUnit.getTestParser(),
-                new StringReader(actual));
+                new StringReader(revertEntity(actual)));
         HtmlDomUtil.removeBlankTextNode(cDoc.getChildNodes());
         HtmlDomUtil.removeBlankTextNode(tDoc.getChildNodes());
         Diff diff = new Diff(cDoc, tDoc);
@@ -195,6 +196,11 @@ public class RendererTest extends AbstractRendererTest {
         chain.addDifferenceListener(new RegexpDifferenceListener());
         diff.overrideDifferenceListener(chain);
         return diff;
+    }
+
+    private String revertEntity(String s) {
+        s = StringUtil.replace(s, "&nbsp;", " ");
+        return s;
     }
 
 }

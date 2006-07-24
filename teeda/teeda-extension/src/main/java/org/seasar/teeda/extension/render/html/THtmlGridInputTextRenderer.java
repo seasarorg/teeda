@@ -37,6 +37,8 @@ public class THtmlGridInputTextRenderer extends AbstractRenderer {
 
     public static final String RENDERER_TYPE = THtmlGridInputText.DEFAULT_RENDERER_TYPE;
 
+    private static final String GRID_CELL_EDIT_CLASS_NAME = "gridCellEdit";
+
     public void encodeEnd(FacesContext context, UIComponent component)
             throws IOException {
         assertNotNull(context, component);
@@ -49,13 +51,14 @@ public class THtmlGridInputTextRenderer extends AbstractRenderer {
     protected void encodeHtmlGridInputTextEnd(FacesContext context,
             THtmlGridInputText gridInputText) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
-        writer.startElement(JsfConstants.SPAN_ELEM, gridInputText);
+        writer.startElement(JsfConstants.DIV_ELEM, gridInputText);
         RendererUtil.renderAttribute(writer, JsfConstants.ONCLICK_ATTR,
                 "editOn(this);");
+        writer.startElement(JsfConstants.SPAN_ELEM, gridInputText);
         final String value = ValueHolderUtil.getValueForRender(context,
                 gridInputText);
         writer.writeText(value, null);
-        // TODO
+        // TODO escape
         //            if (gridInputText.isEscape()) {
         //                writer.writeText(value, null);
         //            } else {
@@ -73,12 +76,14 @@ public class THtmlGridInputTextRenderer extends AbstractRenderer {
         RendererUtil.renderAttribute(writer, JsfConstants.ONBLUR_ATTR,
                 "editOff(this);");
         RendererUtil.renderAttribute(writer, JsfConstants.CLASS_ATTR,
-                "teeda_editable");
+                GRID_CELL_EDIT_CLASS_NAME);
         RendererUtil.renderAttribute(writer, JsfConstants.STYLE_ATTR,
                 "display:none;");
         RendererUtil.renderAttribute(writer, JsfConstants.VALUE_ATTR, value);
         renderAttributes(gridInputText, writer);
         writer.endElement(JsfConstants.INPUT_ELEM);
+        writer.write("&nbsp;");
+        writer.endElement(JsfConstants.DIV_ELEM);
     }
 
     public void decode(FacesContext context, UIComponent component) {
