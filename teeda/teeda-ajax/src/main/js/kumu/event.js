@@ -14,171 +14,188 @@
  * governing permissions and limitations under the License.
  */
 if (typeof(Kumu) == 'undefined') {
-    Kumu = {};
+  Kumu = {};
 }
 
 if (typeof(Kumu.Event) == 'undefined') {
-    Kumu.Event = {};
+  Kumu.Event = {};
 }
 
-var KumuEventConf;
+KumuEventConf = false;
 
 Kumu.extend(Kumu.Event, {
-	
-	nodeCache : {},
-
-  	caches: false,
-	
-  	elementsById : function(id){
-  		if(!(id instanceof String) && typeof id != "string"){
-  			return [id];
-		}  		
-		var nodes = [];
-		var elem = $i(id);
-		if(!this.nodeCache[id]){
-			this.nodeCache[id] = []; 
-		}
-		while(elem){
-			if(!elem["cached"]){
-				nodes.push(elem);
-			}
-			elem.id = "";
-			elem = $i(id);
-		}
-		this.nodeCache[id] = this.nodeCache[id].concat(nodes);
-		this.nodeCache[id].map(function(n){
-				n.id = id;
-				n.cached = true;
-			} );
-		return this.nodeCache[id];
-	},
-	
-	stopEvent : function(event) {
-    	if (event.preventDefault) { 
-      		event.preventDefault(); 
-      		event.stopPropagation(); 
-    	} else {
-      		event.returnValue = false;
-	        event.cancelBubble = true;
-    	}
-  	},
-  
-  	_cached: function(element, name, observer, useCapture) {
-    	if (!this.caches){
-    		 this.caches = [];
-    	}
-    	if (element.addEventListener) {
-      		this.caches.push([element, name, observer, useCapture]);
-      		element.addEventListener(name, observer, useCapture);
-    	} else if (element.attachEvent) {
-      		this.caches.push([element, name, observer, useCapture]);
-      		element.attachEvent('on' + name, observer);
-    	}
-	},
-  
-	unloadEvent: function() {
-    	if (!this.caches){
-    		 return;
-    	}
-    	for (var i = 0; i < this.caches.length; i++) {
-      		this.removeEvent.apply(this, this.caches[i]);
-      		this.caches[i][0] = null;
-    	}
-    	this.caches = false;
-  	},
-
-	addEvent : function(element, name, observer, useCapture) {
-    	var nodes = this.elementsById(element);
-    	useCapture = useCapture || false;
-	    if (name == 'keypress' && (navigator.appVersion.match(/Konqueror|Safari|KHTML/) 
-    	 || ele.attachevent)){
-		      name = 'keydown';
-    	}
-    	nodes.map(function(node){
-    		this._cached(node, name, observer, useCapture);
-    	}.bindScope(this));
-    	
-  	},
-
- 	removeEvent : function(element, name, observer, useCapture) {
-    	var element = $i(element);
-    	useCapture = useCapture || false;
     
-    	if (name == 'keypress' && ((navigator.appVersion.indexOf('AppleWebKit') > 0) || element.detachevent)){
-      		name = 'keydown';
-    	}
-    
-	    if (element.removeEventListener) {
-    	  	element.removeEventListener(name, observer, useCapture);
-    	} else if (element.detachEvent) {
-      		element.detachEvent('on' + name, observer);
-    	}
-  	},
-  	
-  	regist : function(o){
-		for(var v in o){
-			o[v].__name = v;
-			o[v].registEvent();
-    	}
-  	},
-  	  	
-  	loadEvent : function(){
-  		if(KumuEventConf){
-			this.regist(KumuEventConf);
+  process : {},  
+  
+  _nodeCache : {},
+  
+  _elementsById : function(id){
+    if(!(id instanceof String) && typeof id != "string"){
+      return [id];
+    }
+
+    var nodes = [];
+    var elem = $i(id);
+    if(!this._nodeCache[id]){
+      this._nodeCache[id] = []; 
+    }
+    while(elem){
+      if(!elem["cached"]){
+        nodes.push(elem);
+      }
+      elem.id = "";
+      elem = $i(id);
+    }
+    this._nodeCache[id] = this._nodeCache[id].concat(nodes);
+    this._nodeCache[id].map(function(n){
+      n.id = id;
+      n.cached = true;
+    } );
+    return this._nodeCache[id];
+  },
+  
+  stopEvent : function(event) {
+    if (event.preventDefault) { 
+      event.preventDefault(); 
+      event.stopPropagation(); 
+    } else {
+      event.returnValue = false;
+      event.cancelBubble = true;
+    }
+  },
+  
+  unloadEvent: function() {
+    if (!this.process){
+      return;
+    }
+    var p = this.process;
+    for (var v in p){
+      if(p[v]){
+        for(var z in p[v]){
+          if(p[v][z]){
+            for(var i = 0; i < p[v][z].length; i++){
+              p[v][z][i].remove();
+            }
+          }
+        }
+      }
+    }
+    this.p = {};
+  },
+
+  addEvent : function(element, name, observer, useCapture) {
+    var nodes = this._elementsById(element);
+    useCapture = useCapture || false;
+    if (name == 'keypress' && (navigator.appVersion.match(/Konqueror|Safari|KHTML/) 
+     || ele.attachevent)){
+      name = 'keydown';
+    }
+    nodes.map(function(node){
+      var nodeFunc = observer.state();
+      var p = {
+        node : node,
+        eventName : name,
+        command : nodeFunc,
+        add : function(){
+          if (node.addEventListener) {
+            node.addEventListener(name, nodeFunc, useCapture);
+          } else if (node.attachEvent) {
+            node.attachEvent('on' + name, nodeFunc);
+          }
+        },
+        remove : function(){
+          if (node.removeEventListener) {
+  	        node.removeEventListener(name, nodeFunc, useCapture);
+    	  } else if (node.detachEvent) {
+            node.detachEvent('on' + name, nodeFunc);
+          }
+        },
+        cancel : function(c){
+        	nodeFunc.cancel(c);
+		},
+		clear : function(){
+		    this.remove();
+			Kumu.Event.process[node][name] = null;
 		}
-  	},
-	
-  	addOnLoadEvent : function(func){
-		this.addEvent(window, 'load', func, false);
-  	}
-	
+      };
+      if(this.process[node]){
+        if(this.process[node][name]){
+      	  this.process[node][name].push(p);
+        }else{
+      	  this.process[node][name] = [];
+      	  this.process[node][name].push(p);
+        }
+      }else{
+        this.process[node] = {};
+        this.process[node][name] = [];
+        this.process[node][name].push(p);
+      }
+      p.add();
+    }.bindScope(this));
+  },
+ 
+  regist : function(o){
+    for(var v in o){
+      o[v].__name = v;
+      o[v].registEvent();
+    }
+  },
+    
+  loadEvent : function(){
+    if(KumuEventConf){
+      this.regist(KumuEventConf);
+    }
+  },
+  
+  addOnLoadEvent : function(func){
+    this.addEvent(window, 'load', func, false);
+  },
+  
+  addOnUnLoadEvent : function(func){
+    this.addEvent(window, 'unload', func, false);
+  }
+  
 });
 
 Function.prototype.registEventToElement = function(element, scope){
-    if(!scope){
-       	scope = {};
-    }
-    var ret;
-    if(this.__name){
-    	ret = this.__name;
-    }else{
-		var str = this.toString();
-    	var ret = str.match(/[0-9A-Za-z_]+\(/).toString();
-    	ret = ret.substring(0,ret.length-1);
-    }
-    var arr = Kumu.separate(ret);
-	var callback = this.bindScopeAsEventListener(scope, element);
- 	Kumu.Event.addEvent(element, arr[0], callback, false);
+  if(!scope){
+     scope = {};
+  }
+  var ret;
+  if(this.__name){
+    ret = this.__name;
+  }else{
+    ret = this.getName();
+  }
+  var arr = Kumu.separate(ret);
+  var callback = this.bindScopeAsEventListener(scope, element);
+   Kumu.Event.addEvent(element, arr[0], callback, false);
 }
 
 Function.prototype.registEvent = function(scope){
-    if(!scope){
-       	scope = {};
-    }
-    
-    var ret;
-    if(this.__name){
-    	ret = this.__name;
-    }else{
-		var str = this.toString();
-    	var ret = str.match(/[0-9A-Za-z_]+\(/).toString();
-    	ret = ret.substring(0,ret.length-1);
-    }
-    var arr = Kumu.separate(ret);
-    var callback = this.bindScopeAsEventListener(scope, arr[1]);
- 	Kumu.Event.addEvent(arr[1],  arr[0], callback, false);
+  if(!scope){
+     scope = {};
+  }
+  var ret;
+  if(this.__name){
+    ret = this.__name;
+  }else{
+    ret = this.getName();
+  }
+  var arr = Kumu.separate(ret);
+  var callback = this.bindScopeAsEventListener(scope, arr[1]);
+  Kumu.Event.addEvent(arr[1],  arr[0], callback, false);
 }
 
 Function.prototype.registOnLoad = function(scope){
-    this.__name = 'window_load';
-    this.registEvent(scope);
+  this.__name = 'window_load';
+  this.registEvent(scope);
 }
 
 Function.prototype.registOnUnLoad = function(scope){
-    this.__name = 'window_unload';
-    this.registEvent(scope);
+  this.__name = 'window_unload';
+  this.registEvent(scope);
 }
 
-
-Kumu.Event.addEvent(window, 'load', Kumu.Event.loadEvent.bindScope(Kumu.Event), false);
-Kumu.Event.addEvent(window, 'unload', Kumu.Event.unloadEvent.bindScope(Kumu.Event), false);
+Kumu.Event.addOnLoadEvent(Kumu.Event.loadEvent.bindScope(Kumu.Event));
+Kumu.Event.addOnUnLoadEvent(Kumu.Event.unloadEvent.bindScope(Kumu.Event));
