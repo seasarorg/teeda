@@ -1,0 +1,128 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Ajax Table Sample</title>
+<script language="javascript" src="../js/kumu/kumu.js"></script>
+<script type="text/javascript">
+Kumu.dynamicLoad('ajax','sortable_table');
+
+var table = false;
+function ajaxRenderBean_ajaxAction(json) {
+  clearTable();
+  Kumu.Ajax.render(json);
+  table = new Kumu.Html.SortableTable('sortable_table',[], true);
+}
+
+function clearTable(){
+  Kumu.Ajax.removeRender('dataList');
+  if(table){
+    table.destroy();
+    table = false;
+  }  
+}
+</script>
+<style>
+h1 {
+    font-size: 2em;
+    color: #4B4545;
+    text-align: center;
+}
+
+table.datagrid {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table.datagrid thead th { 
+    text-align: left;
+    background-color: #4B4545;
+    background-repeat: no-repeat;
+    background-position: right center;
+    color: white;
+    font-weight: bold;
+    padding: .3em .7em;
+    font-size: .9em;
+    padding-right: 5px;
+    background-repeat: no-repeat;
+    background-position: 95% right;
+}
+
+table.datagrid thead th a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.0em;
+    background-repeat: no-repeat;
+    background-position: center right;
+    padding-right: 15px;
+}
+
+table.datagrid thead th.over {
+    background-color: #746B6B;
+    cursor: pointer;
+}
+
+table.datagrid tbody th {
+    font-weight: bold;
+}
+
+table.datagrid tbody td, table.datagrid tbody th {
+    text-align: left;
+    padding: .3em .7em;
+    border-bottom: 1px solid #eee;
+}
+
+table.datagrid tbody tr.alternate td, table.datagrid tbody tr.alternate th {
+    background-color: #f1f1f1;
+}
+
+table.datagrid tfoot td, table.datagrid tfoot th { 
+    background-color: #FFFEE3;
+    color: #4B4545;
+    padding: .5em;
+    font-weight: bold;
+    border-top: 2px solid #4B4545;
+}
+
+table.datagrid tfoot th { text-align: left; }
+
+table.datagrid tfoot td {  }
+
+.invisible { display: none; }
+</style>
+</head>
+<body>
+<h1>Ajax Tables from Scratch with Kumu</h1>
+<p>
+<p>
+create date  : <span id="date"></span>
+
+<table id="sortable_table" class="datagrid">
+  <thead>
+    <tr>
+
+      <th>Domain Name</th>
+      <th>Creation Date</th>
+      <th>Expiry Date</th>
+      <th>Organization Name</th>
+    </tr>
+  </thead>
+  <tfoot class="invisible">
+    <tr>
+      <td colspan="0"></td>
+    </tr>
+  </tfoot>
+  <tbody>
+    <tr id='dataList' style="display:none">
+      <td id="domainName">増えるわかめちゃんTest</td>
+      <td id="creationDate">Test</td>
+      <td id="expireDate">Test</td>
+      <td id="organizationName">Test</td>
+    </tr>
+
+  </tbody>
+</table>
+<input type="button" value="create" onclick="Kumu.Ajax.executeTeedaAjax(ajaxRenderBean_ajaxAction);">
+<input type="button" value="clear" onclick="clearTable();">
+</body>
+</html>
