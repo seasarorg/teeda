@@ -1,6 +1,6 @@
 package examples.teeda.web.grid;
 
-public class GridPage {
+public class MultiRowGridPage {
 
     private FooItem[] fooItems;
 
