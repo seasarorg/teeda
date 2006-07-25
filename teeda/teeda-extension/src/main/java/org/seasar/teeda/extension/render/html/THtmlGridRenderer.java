@@ -438,13 +438,11 @@ public class THtmlGridRenderer extends TForEachRenderer {
     private THtmlGridRenderer.GridAttribute getGridAttribute(THtmlGrid htmlGrid) {
         THtmlGridRenderer.GridAttribute attribute = (THtmlGridRenderer.GridAttribute) htmlGrid
                 .getAttributes().get(GRID_ATTRIBUTE);
-        if (attribute == null) {
-            attribute = new GridAttribute();
-            setupTableSize(htmlGrid, attribute);
-            setupWidth(htmlGrid, attribute);
-            setupHeight(htmlGrid, attribute);
-            htmlGrid.getAttributes().put(GRID_ATTRIBUTE, attribute);
-        }
+        attribute = new GridAttribute();
+        setupTableSize(htmlGrid, attribute);
+        setupWidth(htmlGrid, attribute);
+        setupHeight(htmlGrid, attribute);
+        htmlGrid.getAttributes().put(GRID_ATTRIBUTE, attribute);
         return attribute;
     }
 
@@ -479,7 +477,8 @@ public class THtmlGridRenderer extends TForEachRenderer {
                         final String styleClass = col.getStyleClass();
                         if (StringUtil.contains(styleClass,
                                 LEFT_FIXED_CLASS_NAME)) {
-                            attribute.setLeftFixCols(span);
+                            attribute.setLeftFixCols(span
+                                    + attribute.getLeftFixCols());
                             // TODO check
                             attribute.setLeftWidth(width * span
                                     + attribute.getLeftWidth());
