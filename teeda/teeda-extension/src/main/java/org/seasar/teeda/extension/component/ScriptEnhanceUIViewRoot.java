@@ -55,7 +55,10 @@ public class ScriptEnhanceUIViewRoot extends UIViewRoot {
     }
 
     public boolean containsScript(String scriptId) {
-        return scripts.containsKey(scriptId);
+        Map requestMap = FacesContext.getCurrentInstance().getExternalContext()
+                .getRequestMap();
+        return requestMap.containsKey(scriptId)
+                && scripts.containsKey(scriptId);
     }
 
     public void clearScripts() {
@@ -64,6 +67,9 @@ public class ScriptEnhanceUIViewRoot extends UIViewRoot {
 
     public void clearScript(String scriptId) {
         scripts.remove(scriptId);
+        Map requestMap = FacesContext.getCurrentInstance().getExternalContext()
+                .getRequestMap();
+        requestMap.remove(scriptId);
     }
 
     public void restoreState(FacesContext context, Object state) {

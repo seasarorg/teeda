@@ -42,7 +42,7 @@ import org.seasar.teeda.extension.util.JavaScriptContext;
 
 /**
  * @author shot
- * 
+ *
  */
 public class THtmlInputCommaTextRenderer extends HtmlInputTextRenderer {
 
@@ -73,11 +73,11 @@ public class THtmlInputCommaTextRenderer extends HtmlInputTextRenderer {
         ResponseWriter writer = context.getResponseWriter();
         UIViewRoot root = context.getViewRoot();
         ScriptEnhanceUIViewRoot sRoot = (ScriptEnhanceUIViewRoot) root;
-        String scriptPath = htmlInputCommaText.getClass().getName();
-        if (!sRoot.containsScript(scriptPath)) {
+        String scriptKey = htmlInputCommaText.getClass().getName();
+        if (!sRoot.containsScript(scriptKey)) {
             JavaScriptContext scriptContext = new JavaScriptContext();
-            scriptContext.loadScript(scriptPath);
-            sRoot.addScript(scriptPath, scriptContext);
+            scriptContext.loadScript(scriptKey);
+            sRoot.addScript(scriptKey, scriptContext);
             writer.write(sRoot.getAllScripts());
         }
 
@@ -124,6 +124,12 @@ public class THtmlInputCommaTextRenderer extends HtmlInputTextRenderer {
         renderRemain(htmlInputCommaText, writer);
 
         writer.endElement(JsfConstants.INPUT_ELEM);
+        markJavaScriptRendererd(context, scriptKey);
+    }
+
+    protected void markJavaScriptRendererd(FacesContext context,
+            String scriptKey) {
+        context.getExternalContext().getRequestMap().put(scriptKey, scriptKey);
     }
 
     protected void renderRemain(THtmlInputCommaText htmlInputCommaText,
