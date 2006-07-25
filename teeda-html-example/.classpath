@@ -20,7 +20,7 @@
 	<classpathentry kind="lib" path="WEB-INF/lib/poi-2.5.1-final-20040804.jar"/>
 	<classpathentry sourcepath="WEB-INF/lib/sources/s2-extension-2.4.0-beta-4-SNAPSHOT-sources.jar" kind="lib" path="WEB-INF/lib/s2-extension-2.4.0-beta-4-SNAPSHOT.jar"/>
 	<classpathentry sourcepath="WEB-INF/lib/sources/s2-framework-2.4.0-beta-4-SNAPSHOT-sources.jar" kind="lib" path="WEB-INF/lib/s2-framework-2.4.0-beta-4-SNAPSHOT.jar"/>
-	<classpathentry kind="lib" path="WEB-INF/lib/teeda-core-1.0-beta-6-SNAPSHOT.jar"/>
-	<classpathentry kind="lib" path="WEB-INF/lib/teeda-extension-1.0-beta-6-SNAPSHOT.jar"/>
+	<classpathentry sourcepath="/teeda" kind="lib" path="WEB-INF/lib/teeda-core-1.0-beta-6-SNAPSHOT.jar"/>
+	<classpathentry sourcepath="/teeda" kind="lib" path="WEB-INF/lib/teeda-extension-1.0-beta-6-SNAPSHOT.jar"/>
 	<classpathentry kind="output" path="WEB-INF/classes"/>
 </classpath>
