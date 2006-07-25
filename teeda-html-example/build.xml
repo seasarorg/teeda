@@ -1,4 +1,4 @@
-<project name="teeda-extension-example" default="dist" basedir=".">
+<project name="teeda-html-example" default="dist" basedir=".">
 
 	<property name="ver" value="EA1"/>
 
@@ -7,8 +7,8 @@
 			<fileset dir="target"/>
 		</delete>
 		<mkdir dir="target"/>
-		<zip zipfile="target/teeda-extension-example-${ver}.zip">
-			<zipfileset prefix="teeda-extension-example" dir=".">
+		<zip zipfile="target/teeda-html-example-${ver}.zip">
+			<zipfileset prefix="teeda-html-example" dir=".">
 				<exclude name="target/**"/>
 				<exclude name="**/.settings/**"/>
 				<exclude name="build.xml"/>
