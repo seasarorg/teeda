@@ -40,9 +40,9 @@
 
 	<component class="org.seasar.teeda.core.el.impl.commons.CommonsExpressionProcessorImpl" />
 
-	<component name="valueBindingContext" class="org.seasar.teeda.core.el.impl.ValueBindingFactoryImpl"/>
+	<component class="org.seasar.teeda.core.el.impl.ValueBindingFactoryImpl"/>
 
-	<component name="methodBindingContext" class="org.seasar.teeda.core.el.impl.MethodBindingFactoryImpl"/>
+	<component class="org.seasar.teeda.core.el.impl.MethodBindingFactoryImpl"/>
 
 	<!-- Applications -->
 	<component class="org.seasar.teeda.core.application.ApplicationImpl">

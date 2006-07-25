@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -19,6 +19,7 @@ import java.io.ByteArrayInputStream;
 
 import junit.framework.TestCase;
 
+import org.seasar.framework.exception.IORuntimeException;
 import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.HtmlNode;
 import org.seasar.teeda.extension.html.TextNode;
@@ -97,4 +98,16 @@ public class HtmlParserImplTest extends TestCase {
         }
     }
 
+    public void testEncodingCustomizeFail() throws Exception {
+        // ## Arrange ##
+        HtmlParserImpl parser = new HtmlParserImpl();
+        parser.setEncoding("no_such_encoding");
+        try {
+            ByteArrayInputStream is = new ByteArrayInputStream(
+                    "<z><y id=\"y\"><x /></y><y><x /></y></z>".getBytes());
+            parser.parse(is);
+            fail();
+        } catch (IORuntimeException expected) {
+        }
+    }
 }

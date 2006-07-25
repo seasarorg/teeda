@@ -16,6 +16,7 @@
 package org.seasar.teeda.extension.html.impl;
 
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -25,6 +26,7 @@ import java.util.Map.Entry;
 
 import javax.xml.parsers.SAXParser;
 
+import org.seasar.framework.util.InputStreamReaderUtil;
 import org.seasar.framework.util.SAXParserFactoryUtil;
 import org.seasar.framework.util.SAXParserUtil;
 import org.seasar.teeda.extension.html.HtmlNode;
@@ -34,6 +36,7 @@ import org.xml.sax.InputSource;
 /**
  * @author higa
  * @author manhole
+ * @author shot
  */
 public class HtmlParserImpl implements HtmlParser {
 
@@ -41,10 +44,14 @@ public class HtmlParserImpl implements HtmlParser {
 
     private List elementNodeTagName = new ArrayList();
 
+    private String encoding = "Windows-31j";
+
     public HtmlNode parse(InputStream is) {
         SAXParser parser = SAXParserFactoryUtil.newSAXParser();
         HtmlNodeHandler handler = createHtmlNodeHandler();
-        SAXParserUtil.parse(parser, new InputSource(is), handler);
+        InputStreamReader reader = InputStreamReaderUtil.create(is,
+                getEncoding());
+        SAXParserUtil.parse(parser, new InputSource(reader), handler);
         return handler.getRoot();
     }
 
@@ -73,6 +80,14 @@ public class HtmlParserImpl implements HtmlParser {
 
     public void addElementNodeTagName(String tagName) {
         elementNodeTagName.add(tagName);
+    }
+
+    public String getEncoding() {
+        return encoding;
+    }
+
+    public void setEncoding(String encoding) {
+        this.encoding = encoding;
     }
 
 }

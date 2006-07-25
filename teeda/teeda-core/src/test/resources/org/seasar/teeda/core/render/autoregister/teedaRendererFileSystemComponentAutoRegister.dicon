@@ -2,7 +2,7 @@
 <!DOCTYPE components PUBLIC "-//SEASAR2.1//DTD S2Container//EN"
 	"http://www.seasar.org/dtd/components21.dtd">
 <components namespace="child" >
-	<include path="org/seasar/teeda/core/render/autoregister/convention.dicon" />
+	<component class="org.seasar.framework.convention.impl.NamingConventionImpl"/>
 	<component class="org.seasar.teeda.core.render.autoregister.TeedaRendererFileSystemComponentAutoRegister">
 		<initMethod name="addClassPattern">
 			<arg>"org.seasar.teeda.core.render.autoregister.sub"</arg>
