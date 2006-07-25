@@ -44,6 +44,12 @@
 	</managed-bean>
 
 	<managed-bean>
+		<managed-bean-name>addExtBean</managed-bean-name>
+		<managed-bean-class>examples.teeda.bean.AddExtBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
 		<managed-bean-name>addBean</managed-bean-name>
 		<managed-bean-class>examples.teeda.bean.AddBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
