@@ -38,8 +38,4 @@ public class SelectOneListboxDto {
         this.ccc = ccc;
     }
 
-    public String doAction() {
-        return null;
-    }
-
 }
