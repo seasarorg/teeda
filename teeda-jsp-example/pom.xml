@@ -11,18 +11,18 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.seasar.teeda</groupId>
-  <artifactId>teeda-example</artifactId>
+  <artifactId>teeda-jsp-example</artifactId>
   <packaging>war</packaging>
   <name>Teeda Example</name>
   <description></description>
   <url>http://teeda.seasar.org/</url>
   <scm>
-    <connection>scm:svn:https://www.seasar.org/svn/teeda/trunk/teeda-example/</connection>
-    <developerConnection>scm:svn:https://www.seasar.org/svn/teeda/trunk/teeda-example/</developerConnection>
+    <connection>scm:svn:https://www.seasar.org/svn/teeda/trunk/teeda-jsp-example/</connection>
+    <developerConnection>scm:svn:https://www.seasar.org/svn/teeda/trunk/teeda-jsp-example/</developerConnection>
     <url>http://www.seasar.org/websvn/listing.php?repname=teeda</url>
   </scm>
   <build>
-    <finalName>teeda-example</finalName>
+    <finalName>teeda-jsp-example</finalName>
   </build>
   <dependencies>
     <dependency>
