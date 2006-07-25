@@ -33,7 +33,7 @@ import org.seasar.teeda.extension.html.processor.ElementProcessorImpl;
  */
 public class SelectOneListboxFactory extends AbstractElementProcessorFactory {
 
-    private static final String TAG_NAME = "selectManyListbox";
+    private static final String TAG_NAME = "selectOneListbox";
 
     private static final String TAG_NAME_SELECT_ITEMS = "selectItems";
 
