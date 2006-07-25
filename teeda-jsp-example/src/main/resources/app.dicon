@@ -21,6 +21,8 @@
 		instance="application"
 	/>
 
+	<component name="javax.faces.ViewRoot" class="org.seasar.teeda.extension.component.ScriptEnhanceUIViewRoot" instance="prototype" />
+
 	<component
 		class="org.seasar.teeda.core.render.autoregister.TeedaRendererJarComponentAutoRegister"
 	>
