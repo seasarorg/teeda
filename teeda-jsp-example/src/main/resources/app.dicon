@@ -15,6 +15,23 @@
 	<include path="examples/teeda/dicon/selectonemenu.dicon"/>
 	<include path="examples/teeda/dicon/selectonelistbox.dicon"/>
 
-	<component name="teeda_errorFinder" class="org.seasar.teeda.core.util.ErrorMessageFinder" instance="application"/>
+	<component
+		name="teeda_errorFinder"
+		class="org.seasar.teeda.core.util.ErrorMessageFinder"
+		instance="application"
+	/>
+
+	<component
+		class="org.seasar.teeda.core.render.autoregister.TeedaRendererJarComponentAutoRegister"
+	>
+		<property name="referenceClass">
+			@org.seasar.teeda.extension.render.html.HtmlTextRenderer@class
+		</property>
+		<property name="jarFileNames">"teeda-extension.*"</property>
+		<initMethod name="addClassPattern">
+			<arg>"org.seasar.teeda.extension.render"</arg>
+			<arg>"..*Renderer"</arg>
+		</initMethod>
+	</component>
 
 </components>
