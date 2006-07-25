@@ -17,6 +17,7 @@ package org.seasar.teeda.extension.html.impl;
 
 import org.seasar.framework.unit.S2FrameworkTestCase;
 import org.seasar.framework.util.ResourceUtil;
+import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.HtmlNode;
 
 /**
@@ -87,6 +88,23 @@ public class HtmlNodeHandlerTest extends S2FrameworkTestCase {
         assertEquals("3",
                 "<body><div><span value=\"Hello\"></span></div></body>", t
                         .getValue());
+    }
+
+    public void fixme_testParseSelect() throws Exception {
+        String path = convertPath("select.xhtml");
+        HtmlParserImpl parser = new HtmlParserImpl();
+        HtmlNode node = parser.parse(ResourceUtil.getResourceAsStream(path));
+        System.out.println(node.toString());
+        ElementNodeImpl n = (ElementNodeImpl) node;
+        System.out.println(n.getChildSize());
+        for (int i = 0; i < n.getChildSize(); i++) {
+            HtmlNode child = n.getChild(i);
+            if (child instanceof ElementNode) {
+                ElementNode cn = (ElementNode) child;
+                if (cn.getTagName().equalsIgnoreCase("option")) {
+                }
+            }
+        }
     }
 
 }

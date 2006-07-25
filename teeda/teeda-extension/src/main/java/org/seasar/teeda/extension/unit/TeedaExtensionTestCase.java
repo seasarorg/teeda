@@ -15,6 +15,9 @@
  */
 package org.seasar.teeda.extension.unit;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.seasar.teeda.core.unit.TeedaTestCase;
 import org.seasar.teeda.extension.config.taglib.element.TagElement;
 import org.seasar.teeda.extension.config.taglib.element.TaglibElement;
@@ -33,6 +36,8 @@ public abstract class TeedaExtensionTestCase extends TeedaTestCase {
 
     private MockTaglibManager taglibManager;
 
+    private Map taglibMap;
+
     protected PageContextImpl getPageContext() {
         return pageContext;
     }
@@ -42,11 +47,14 @@ public abstract class TeedaExtensionTestCase extends TeedaTestCase {
         pageContext = new PageContextImpl();
         pageContext.initialize(getServlet(), getRequest(), getResponse(), null);
         taglibManager = createTaglibManager();
+        taglibMap = new HashMap();
     }
 
     protected void tearDownContainer() throws Throwable {
         super.tearDownContainer();
         pageContext = null;
+        taglibManager = null;
+        taglibMap = null;
     }
 
     protected MockTaglibManager createTaglibManager() {
@@ -59,12 +67,19 @@ public abstract class TeedaExtensionTestCase extends TeedaTestCase {
 
     protected void registerTaglibElement(String tagLibUri, String tagName,
             Class tagClass) {
-        TaglibElement taglib = new TaglibElementImpl();
-        taglib.setUri(tagLibUri);
+        TaglibElement taglib = null;
+        if (taglibMap.containsKey(tagLibUri)) {
+            taglib = (TaglibElement) taglibMap.get(tagLibUri);
+        } else {
+            taglib = new TaglibElementImpl();
+            taglib.setUri(tagLibUri);
+            taglibMap.put(tagLibUri, taglib);
+        }
         TagElement tagElement = new TagElementImpl();
         tagElement.setName(tagName);
         tagElement.setTagClass(tagClass);
         taglib.addTagElement(tagElement);
         taglibManager.addTaglibElement(taglib);
     }
+
 }

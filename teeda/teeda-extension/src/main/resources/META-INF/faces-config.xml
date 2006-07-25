@@ -105,5 +105,13 @@
 			org.seasar.teeda.extension.component.TForEach
 		</component-class>
 	</component>
+	<component>
+		<component-type>
+			javax.faces.SelectItems
+		</component-type>
+		<component-class>
+			org.seasar.teeda.extension.component.TUISelectItems
+		</component-class>
+	</component>
 
 </faces-config>

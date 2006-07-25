@@ -15,15 +15,13 @@
  */
 package org.seasar.teeda.extension.html.impl;
 
-import org.seasar.framework.unit.S2FrameworkTestCase;
 import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.core.taglib.core.SelectItemsTag;
 import org.seasar.teeda.core.taglib.html.CommandButtonTag;
 import org.seasar.teeda.core.taglib.html.InputTextTag;
 import org.seasar.teeda.core.taglib.html.OutputTextTag;
-import org.seasar.teeda.extension.config.taglib.element.TagElement;
-import org.seasar.teeda.extension.config.taglib.element.TaglibElement;
-import org.seasar.teeda.extension.config.taglib.element.impl.TagElementImpl;
-import org.seasar.teeda.extension.config.taglib.element.impl.TaglibElementImpl;
+import org.seasar.teeda.core.taglib.html.SelectOneListboxTag;
+import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.html.ElementProcessor;
 import org.seasar.teeda.extension.html.ElementProcessorFactory;
 import org.seasar.teeda.extension.html.HtmlDesc;
@@ -33,13 +31,15 @@ import org.seasar.teeda.extension.html.TextProcessor;
 import org.seasar.teeda.extension.html.factory.CommandButtonFactory;
 import org.seasar.teeda.extension.html.factory.InputTextFactory;
 import org.seasar.teeda.extension.html.factory.OutputTextFactory;
+import org.seasar.teeda.extension.html.factory.SelectOneListboxFactory;
 import org.seasar.teeda.extension.mock.MockTaglibManager;
+import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 
 /**
  * @author higa
  *
  */
-public class TagProcessorAssembleImplTest extends S2FrameworkTestCase {
+public class TagProcessorAssembleImplTest extends TeedaExtensionTestCase {
 
     public void testAssembleElementNodeAsText() throws Exception {
         String path = convertPath("emptyHtmlTag.html");
@@ -161,14 +161,9 @@ public class TagProcessorAssembleImplTest extends S2FrameworkTestCase {
         PageDescImpl pageDesc = new PageDescImpl(FooPage.class, "fooPage");
         ActionDescImpl actionDesc = new ActionDescImpl(FooAction.class,
                 "fooAction");
-        MockTaglibManager taglibManager = new MockTaglibManager();
-        TaglibElement jsfHtml = new TaglibElementImpl();
-        jsfHtml.setUri(JsfConstants.JSF_HTML_URI);
-        TagElement inputTextTagElement = new TagElementImpl();
-        inputTextTagElement.setName("inputText");
-        inputTextTagElement.setTagClass(InputTextTag.class);
-        jsfHtml.addTagElement(inputTextTagElement);
-        taglibManager.addTaglibElement(jsfHtml);
+        registerTaglibElement(JsfConstants.JSF_HTML_URI, "inputText",
+                InputTextTag.class);
+        MockTaglibManager taglibManager = getTaglibManager();
         InputTextFactory factory = new InputTextFactory();
         factory.setTaglibManager(taglibManager);
         TagProcessorAssemblerImpl assembler = new TagProcessorAssemblerImpl();
@@ -195,14 +190,9 @@ public class TagProcessorAssembleImplTest extends S2FrameworkTestCase {
         PageDescImpl pageDesc = new PageDescImpl(FooPage.class, "fooPage");
         ActionDescImpl actionDesc = new ActionDescImpl(FooAction.class,
                 "fooAction");
-        MockTaglibManager taglibManager = new MockTaglibManager();
-        TaglibElement jsfHtml = new TaglibElementImpl();
-        jsfHtml.setUri(JsfConstants.JSF_HTML_URI);
-        TagElement tagElement = new TagElementImpl();
-        tagElement.setName("commandButton");
-        tagElement.setTagClass(CommandButtonTag.class);
-        jsfHtml.addTagElement(tagElement);
-        taglibManager.addTaglibElement(jsfHtml);
+        registerTaglibElement(JsfConstants.JSF_HTML_URI, "commandButton",
+                CommandButtonTag.class);
+        MockTaglibManager taglibManager = getTaglibManager();
         CommandButtonFactory factory = new CommandButtonFactory();
         factory.setTaglibManager(taglibManager);
         TagProcessorAssemblerImpl assembler = new TagProcessorAssemblerImpl();
@@ -225,14 +215,9 @@ public class TagProcessorAssembleImplTest extends S2FrameworkTestCase {
         PageDescImpl pageDesc = new PageDescImpl(FooPage.class, "fooPage");
         ActionDescImpl actionDesc = new ActionDescImpl(FooAction.class,
                 "fooAction");
-        MockTaglibManager taglibManager = new MockTaglibManager();
-        TaglibElement jsfHtml = new TaglibElementImpl();
-        jsfHtml.setUri(JsfConstants.JSF_HTML_URI);
-        TagElement tagElement = new TagElementImpl();
-        tagElement.setName("outputText");
-        tagElement.setTagClass(OutputTextTag.class);
-        jsfHtml.addTagElement(tagElement);
-        taglibManager.addTaglibElement(jsfHtml);
+        registerTaglibElement(JsfConstants.JSF_HTML_URI, "outputText",
+                OutputTextTag.class);
+        MockTaglibManager taglibManager = getTaglibManager();
         OutputTextFactory factory = new OutputTextFactory();
         factory.setTaglibManager(taglibManager);
         TagProcessorAssemblerImpl assembler = new TagProcessorAssemblerImpl();
@@ -246,6 +231,36 @@ public class TagProcessorAssembleImplTest extends S2FrameworkTestCase {
         assertTrue(viewRoot.getChild(1) instanceof ElementProcessor);
         ElementProcessor ep = (ElementProcessor) viewRoot.getChild(1);
         assertEquals(0, ep.getChildSize());
+        textProcessor = (TextProcessor) viewRoot.getChild(2);
+        assertEquals("</body></html>", textProcessor.getValue());
+    }
+
+    public void testSelectOneListbox() throws Exception {
+        String path = convertPath("selectOneListbox.html");
+        HtmlDescCacheImpl cache = createHtmlDescCacheImpl();
+        HtmlDesc htmlDesc = cache.createHtmlDesc(path);
+        PageDescImpl pageDesc = new PageDescImpl(FooPage.class, "fooPage");
+        ActionDescImpl actionDesc = new ActionDescImpl(FooAction.class,
+                "fooAction");
+        registerTaglibElement(JsfConstants.JSF_HTML_URI, "selectOneListbox",
+                SelectOneListboxTag.class);
+        registerTaglibElement(ExtensionConstants.TEEDA_EXTENSION_URI,
+                "selectItems", SelectItemsTag.class);
+        MockTaglibManager taglibManager = getTaglibManager();
+        SelectOneListboxFactory factory = new SelectOneListboxFactory();
+        factory.setTaglibManager(taglibManager);
+        TagProcessorAssemblerImpl assembler = new TagProcessorAssemblerImpl();
+        assembler.setFactories(new ElementProcessorFactory[] { factory });
+        TagProcessor root = assembler.assemble(htmlDesc, pageDesc, actionDesc);
+        assertTrue(root instanceof ElementProcessor);
+        ElementProcessor viewRoot = (ElementProcessor) root;
+        assertEquals(3, viewRoot.getChildSize());
+        TextProcessor textProcessor = (TextProcessor) viewRoot.getChild(0);
+        assertEquals("<html><body>", textProcessor.getValue());
+        assertTrue(viewRoot.getChild(1) instanceof ElementProcessor);
+        ElementProcessor ep = (ElementProcessor) viewRoot.getChild(1);
+        assertEquals(1, ep.getChildSize());
+        System.out.println(ep.getProperty("value"));
         textProcessor = (TextProcessor) viewRoot.getChild(2);
         assertEquals("</body></html>", textProcessor.getValue());
     }

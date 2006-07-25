@@ -14,7 +14,7 @@
 	<component class="org.seasar.teeda.extension.html.impl.HtmlDescCacheImpl"/>
 	<component class="org.seasar.teeda.extension.html.impl.PageDescCacheImpl"/>
 	<component class="org.seasar.teeda.extension.html.impl.ActionDescCacheImpl"/>
-	
+
 	<component
 		name="commandButtonFactory"
 		class="org.seasar.teeda.extension.html.factory.CommandButtonFactory"
@@ -100,6 +100,9 @@
 		name="inputTextFactory"
 		class="org.seasar.teeda.extension.html.factory.InputTextFactory"
 	/>
+	<component
+		name="selectOneListboxFactory"
+		class="org.seasar.teeda.extension.html.factory.SelectOneListboxFactory"/>
 
 	<component class="org.seasar.teeda.extension.html.impl.TagProcessorAssemblerImpl"/>
 	<component class="org.seasar.teeda.extension.html.impl.TagProcessorCacheImpl"/>
