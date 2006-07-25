@@ -9,14 +9,19 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
 package org.seasar.teeda.extension.unit;
 
 import org.seasar.teeda.core.unit.TeedaTestCase;
+import org.seasar.teeda.extension.config.taglib.element.TagElement;
+import org.seasar.teeda.extension.config.taglib.element.TaglibElement;
+import org.seasar.teeda.extension.config.taglib.element.impl.TagElementImpl;
+import org.seasar.teeda.extension.config.taglib.element.impl.TaglibElementImpl;
 import org.seasar.teeda.extension.jsp.PageContextImpl;
+import org.seasar.teeda.extension.mock.MockTaglibManager;
 
 /**
  * @author higa
@@ -26,6 +31,8 @@ public abstract class TeedaExtensionTestCase extends TeedaTestCase {
 
     private PageContextImpl pageContext;
 
+    private MockTaglibManager taglibManager;
+
     protected PageContextImpl getPageContext() {
         return pageContext;
     }
@@ -34,10 +41,30 @@ public abstract class TeedaExtensionTestCase extends TeedaTestCase {
         super.setUpContainer();
         pageContext = new PageContextImpl();
         pageContext.initialize(getServlet(), getRequest(), getResponse(), null);
+        taglibManager = createTaglibManager();
     }
 
     protected void tearDownContainer() throws Throwable {
         super.tearDownContainer();
         pageContext = null;
+    }
+
+    protected MockTaglibManager createTaglibManager() {
+        return new MockTaglibManager();
+    }
+
+    protected MockTaglibManager getTaglibManager() {
+        return taglibManager;
+    }
+
+    protected void registerTaglibElement(String tagLibUri, String tagName,
+            Class tagClass) {
+        TaglibElement taglib = new TaglibElementImpl();
+        taglib.setUri(tagLibUri);
+        TagElement tagElement = new TagElementImpl();
+        tagElement.setName(tagName);
+        tagElement.setTagClass(tagClass);
+        taglib.addTagElement(tagElement);
+        taglibManager.addTaglibElement(taglib);
     }
 }
