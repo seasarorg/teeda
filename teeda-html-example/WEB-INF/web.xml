@@ -11,7 +11,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
 -->
@@ -44,7 +44,7 @@
             See JSF Specification 2.5.2
         </description>
     </context-param>
-    
+
     <context-param>
         <param-name>javax.faces.DEFAULT_SUFFIX</param-name>
         <param-value>.html</param-value>
@@ -65,7 +65,7 @@
         <filter-class>org.seasar.extension.filter.EncodingFilter</filter-class>
         <init-param>
             <param-name>encoding</param-name>
-            <param-value>Windows-31j</param-value>
+            <param-value>UTF-8</param-value>
         </init-param>
     </filter>
 
@@ -95,7 +95,7 @@
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
         <load-on-startup>2</load-on-startup>
     </servlet>
-    
+
     <servlet>
         <servlet-name>s2servlet</servlet-name>
         <servlet-class>org.seasar.framework.container.servlet.S2ContainerServlet</servlet-class>
@@ -112,11 +112,11 @@
         <url-pattern>/s2servlet</url-pattern>
     </servlet-mapping>
 
-<!--    
+<!--
     <session-config>
         <session-timeout>1</session-timeout>
     </session-config>
--->    
+-->
 
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
