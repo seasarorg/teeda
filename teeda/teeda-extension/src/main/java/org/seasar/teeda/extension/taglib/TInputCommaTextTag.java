@@ -70,9 +70,11 @@ public class TInputCommaTextTag extends InputTextTag {
         setComponentProperty(component, ExtensionConstants.FRACTION_ATTR,
                 getFraction());
         setComponentProperty(component,
-                ExtensionConstants.GROUPING_SEPARATOR_ATTR, getHeight());
+                ExtensionConstants.GROUPING_SEPARATOR_ATTR,
+                getGroupingSeparator());
         setComponentProperty(component,
-                ExtensionConstants.FRACTION_SEPARATOR_ATTR, getHeight());
+                ExtensionConstants.FRACTION_SEPARATOR_ATTR,
+                getFractionSeparator());
     }
 
 }

@@ -16,6 +16,7 @@
 package org.seasar.teeda.extension.render.html;
 
 import java.io.IOException;
+import java.text.NumberFormat;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
@@ -28,6 +29,7 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.internal.IgnoreComponent;
 import javax.faces.internal.UIComponentUtil;
 
+import org.seasar.framework.util.BigDecimalConversionUtil;
 import org.seasar.framework.util.NumberConversionUtil;
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
@@ -80,7 +82,6 @@ public class THtmlInputCommaTextRenderer extends HtmlInputTextRenderer {
             sRoot.addScript(scriptKey, scriptContext);
             writer.write(sRoot.getAllScripts());
         }
-
         writer.startElement(JsfConstants.INPUT_ELEM, htmlInputCommaText);
         RendererUtil.renderAttribute(writer, JsfConstants.TYPE_ATTR,
                 JsfConstants.TEXT_VALUE);
@@ -88,16 +89,18 @@ public class THtmlInputCommaTextRenderer extends HtmlInputTextRenderer {
                 getIdForRender(context, htmlInputCommaText));
         RendererUtil.renderAttribute(writer, JsfConstants.NAME_ATTR,
                 htmlInputCommaText.getClientId(context));
-
         String value = ValueHolderUtil.getValueForRender(context,
                 htmlInputCommaText);
+        if (!StringUtil.isEmpty(value)) {
+            //TODO BigDecimal only?
+            value = convertToFormattedValue(context, BigDecimalConversionUtil
+                    .toBigDecimal(value));
+        }
         RendererUtil.renderAttribute(writer, JsfConstants.VALUE_ATTR, value);
         if (htmlInputCommaText.isDisabled()) {
             renderDisabledAttribute(writer);
         }
-
         Locale locale = context.getViewRoot().getLocale();
-
         String fraction = htmlInputCommaText.getFraction();
         if (StringUtil.isEmpty(fraction)) {
             fraction = DEFAULT_FRACTION;
@@ -241,6 +244,15 @@ public class THtmlInputCommaTextRenderer extends HtmlInputTextRenderer {
             return property;
         }
         return property + ";";
+    }
+
+    //TODO move to S2 util.
+    private static String convertToFormattedValue(FacesContext context,
+            Object value) {
+        Locale locale = context.getViewRoot().getLocale();
+        NumberFormat format = NumberFormat.getInstance(locale);
+        String n = format.format(value);
+        return n;
     }
 
 }

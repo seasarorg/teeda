@@ -21,6 +21,7 @@ import java.util.Map;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
+import javax.faces.component.UIForm;
 import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.el.EvaluationException;
@@ -33,6 +34,7 @@ import org.seasar.framework.beans.PropertyDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.framework.util.ArrayUtil;
 import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.core.exception.TagNotFoundRuntimeException;
 
 /**
  * @author manhole
@@ -82,7 +84,6 @@ public class UIComponentUtil {
 
     public static void callValidators(FacesContext context, UIInput input,
             Object convertedValue) {
-
         Validator[] validators = input.getValidators();
         for (int i = 0; i < validators.length; ++i) {
             Validator validator = validators[i];
@@ -144,7 +145,19 @@ public class UIComponentUtil {
         return map;
     }
 
+    public static UIForm findParentForm(UIComponent component) {
+        UIComponent parent = component.getParent();
+        while (parent != null && !(parent instanceof UIForm)) {
+            parent = parent.getParent();
+        }
+        if (parent == null) {
+            throw new TagNotFoundRuntimeException("form");
+        }
+        return (UIForm) parent;
+    }
+
     private static boolean isPublicNoParameterMethod(Method m) {
         return ModifierUtil.isPublic(m) && m.getParameterTypes().length == 0;
     }
+
 }

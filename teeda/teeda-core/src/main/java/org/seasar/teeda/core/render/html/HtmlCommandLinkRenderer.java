@@ -30,9 +30,9 @@ import javax.faces.component.html.HtmlCommandLink;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.event.ActionEvent;
+import javax.faces.internal.UIComponentUtil;
 
 import org.seasar.teeda.core.JsfConstants;
-import org.seasar.teeda.core.exception.TagNotFoundRuntimeException;
 import org.seasar.teeda.core.render.AbstractRenderer;
 import org.seasar.teeda.core.util.ExternalContextUtil;
 import org.seasar.teeda.core.util.FacesContextUtil;
@@ -78,7 +78,7 @@ public class HtmlCommandLinkRenderer extends AbstractRenderer {
     protected void encodeHtmlCommandLinkWithJavaScript(FacesContext context,
             ResponseWriter writer, HtmlCommandLink commandLink)
             throws IOException {
-        UIForm parentForm = findParentForm(commandLink);
+        UIForm parentForm = UIComponentUtil.findParentForm(commandLink);
         final String formId = getIdForRender(context, parentForm);
 
         RendererUtil.renderAttribute(writer, JsfConstants.HREF_ATTR, "#");
@@ -137,7 +137,7 @@ public class HtmlCommandLinkRenderer extends AbstractRenderer {
         } else {
             hrefBuf.append("&");
         }
-        UIForm parentForm = findParentForm(commandLink);
+        UIForm parentForm = UIComponentUtil.findParentForm(commandLink);
 
         final String formSubmitKey = HtmlFormRendererUtil.getFormSubmitKey(
                 context, parentForm);
@@ -213,17 +213,6 @@ public class HtmlCommandLinkRenderer extends AbstractRenderer {
         writer.endElement(JsfConstants.ANCHOR_ELEM);
     }
 
-    private UIForm findParentForm(UIComponent component) {
-        UIComponent parent = component.getParent();
-        while (parent != null && !(parent instanceof UIForm)) {
-            parent = parent.getParent();
-        }
-        if (parent == null) {
-            throw new TagNotFoundRuntimeException("form");
-        }
-        return (UIForm) parent;
-    }
-
     public void decode(FacesContext context, UIComponent component) {
         assertNotNull(context, component);
         decodeHtmlCommandLink(context, (HtmlCommandLink) component);
@@ -234,7 +223,7 @@ public class HtmlCommandLinkRenderer extends AbstractRenderer {
         Map paramMap = context.getExternalContext().getRequestParameterMap();
         String clientId = commandLink.getClientId(context);
 
-        UIForm parentForm = findParentForm(commandLink);
+        UIForm parentForm = UIComponentUtil.findParentForm(commandLink);
         String formId = getIdForRender(context, parentForm);
         String hiddenFieldName = getHiddenFieldName(formId);
         String entry = (String) paramMap.get(hiddenFieldName);

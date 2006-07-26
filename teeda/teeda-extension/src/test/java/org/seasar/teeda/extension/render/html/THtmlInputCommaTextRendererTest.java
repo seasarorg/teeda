@@ -136,7 +136,7 @@ public class THtmlInputCommaTextRendererTest extends RendererTest {
         htmlInputCommaText.getAttributes().put("tabindex", "x");
         htmlInputCommaText.getAttributes().put("title", "y");
         htmlInputCommaText.getAttributes().put("id", "A");
-        htmlInputCommaText.getAttributes().put("value", "B");
+        htmlInputCommaText.getAttributes().put("value", "123");
         htmlInputCommaText.getAttributes().put("fraction", "4");
 
         MockFacesContext context = getFacesContext();
@@ -146,7 +146,7 @@ public class THtmlInputCommaTextRendererTest extends RendererTest {
         encodeByRenderer(renderer, context, htmlInputCommaText);
 
         Diff diff = new Diff(
-                "<input type=\"text\" id=\"A\" name=\"A\" value=\"B\" disabled=\"disabled\" "
+                "<input type=\"text\" id=\"A\" name=\"A\" value=\"123\" disabled=\"disabled\" "
                         + "onfocus=\"k;removeComma(this, ',');\" "
                         + "onblur=\"g;convertByKey(this);addComma(this, '4', ',', '.');\" "
                         + "onkeydown=\"l;return keycheckForNumber(event);\" "
