@@ -15,43 +15,51 @@
  */
 package examples.teeda.bean;
 
+import java.math.BigDecimal;
+
 /**
  * @author shot
  */
 public class AddExtBean {
 
-    private double arg1;
+    private BigDecimal arg1;
 
-    private double arg2;
+    private BigDecimal arg2;
 
-    private double result;
+    private BigDecimal result;
 
-    public double getArg1() {
+    public BigDecimal getArg1() {
         return arg1;
     }
 
-    public double getArg2() {
+    public BigDecimal getArg2() {
         return arg2;
     }
 
-    public double getResult() {
+    public BigDecimal getResult() {
         return result;
     }
 
-    public void setArg1(double arg1) {
+    public void setArg1(BigDecimal arg1) {
         this.arg1 = arg1;
     }
 
-    public void setArg2(double arg2) {
+    public void setArg2(BigDecimal arg2) {
         this.arg2 = arg2;
     }
 
-    public void setResult(double result) {
+    public void setResult(BigDecimal result) {
         this.result = result;
     }
 
     public String calculate() {
-        result = arg1 + arg2;
+        if (arg1 == null) {
+            arg1 = new BigDecimal("0");
+        }
+        if (arg2 == null) {
+            arg2 = new BigDecimal("0");
+        }
+        result = arg1.add(arg2);
         return null;
     }
 }
