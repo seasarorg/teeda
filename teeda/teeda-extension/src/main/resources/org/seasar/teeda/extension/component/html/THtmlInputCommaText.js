@@ -56,20 +56,21 @@ function checkFraction(obj, length, decimalSeparator) {
 }
 
 function convertByKey(o) {
-  if(o.value.match(/[m]/) != null) {
-   o.value=o.value.replace(/[m]/g, "000");
+  if(o.value.match(/[mM]/) != null) {
+   o.value=o.value.replace(/[mM]/g, "000");
   }
-  if(o.value.match(/[b]/) != null) {
-   o.value=o.value.replace(/[b]/g, "000000");
+  if(o.value.match(/[bB]/) != null) {
+   o.value=o.value.replace(/[bB]/g, "000000");
   }
-  if(o.value.match(/[t]/) != null) {
-   o.value=o.value.replace(/[t]/g, "000000000");
+  if(o.value.match(/[tT]/) != null) {
+   o.value=o.value.replace(/[tT]/g, "000000000");
   }
-  if(o.value.match(/([^0-9mbt\-\.\,])/)!=null) {
+  if(o.value.match(/([^0-9mbtMBT\-\.\,])/)!=null) {
    o.value=o.value.replace(/([^0-9mbt\-\.\,]|[^mbtMBT])/g,"");
    return true;
   }
 }
+
 function keycheckForNumber(e) {
  return isAllowedUnit(e) || isNumber(e) || isBackspace(e) || isPeriod(e) || isMovable(e) || isMinus(e) || isEnter(e) || isComma(e);
 }
