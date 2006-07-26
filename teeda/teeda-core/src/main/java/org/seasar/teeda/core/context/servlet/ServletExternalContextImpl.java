@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -50,7 +50,8 @@ import org.seasar.teeda.core.util.ServletExternalContextUtil;
 /**
  * @author shot
  */
-public class ServletExternalContextImpl extends ExternalContext implements Releaseable {
+public class ServletExternalContextImpl extends ExternalContext implements
+        Releaseable {
 
     private static Logger logger = Logger
             .getLogger(ServletExternalContextImpl.class);
@@ -105,7 +106,11 @@ public class ServletExternalContextImpl extends ExternalContext implements Relea
     }
 
     public void dispatch(String path) throws IOException {
-        ServletExternalContextUtil.dispatch(path, request, response);
+        try {
+            ServletExternalContextUtil.dispatch(path, request, response);
+        } finally {
+            //TODO add JavaScript handle scope destroy.
+        }
     }
 
     public String encodeActionURL(String url) {

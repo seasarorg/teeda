@@ -44,7 +44,7 @@ public class HtmlParserImpl implements HtmlParser {
 
     private List elementNodeTagName = new ArrayList();
 
-    private String encoding = "Windows-31j";
+    private String encoding = "UTF-8";
 
     public HtmlNode parse(InputStream is) {
         SAXParser parser = SAXParserFactoryUtil.newSAXParser();

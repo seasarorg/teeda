@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -64,8 +64,10 @@ public class HtmlViewHandler extends ViewHandlerImpl {
     private PageDescCache pageDescCache;
 
     private ActionDescCache actionDescCache;
-    
+
     private PagePersistence pagePersistence;
+
+    private String encoding = "UTF-8";
 
     public void setTagProcessorCache(TagProcessorCache tagProcessorCache) {
         this.tagProcessorCache = tagProcessorCache;
@@ -108,8 +110,10 @@ public class HtmlViewHandler extends ViewHandlerImpl {
                 .getRequest();
         HttpServletResponse response = (HttpServletResponse) externalContext
                 .getResponse();
+        response.setCharacterEncoding(encoding);
         PageContext pageContext = createPageContext(request, response);
-        setupResponseWriter(pageContext, null, response.getCharacterEncoding());
+        //TODO handle encoding
+        setupResponseWriter(pageContext, null, encoding);
         if (invokeInitialize(context, path) != null) {
             return;
         }
@@ -193,4 +197,5 @@ public class HtmlViewHandler extends ViewHandlerImpl {
         return (RenderKitFactory) FactoryFinder
                 .getFactory(FactoryFinder.RENDER_KIT_FACTORY);
     }
+
 }
