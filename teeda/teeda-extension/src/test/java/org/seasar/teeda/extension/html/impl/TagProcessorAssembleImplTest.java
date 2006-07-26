@@ -31,7 +31,7 @@ import org.seasar.teeda.extension.html.TextProcessor;
 import org.seasar.teeda.extension.html.factory.CommandButtonFactory;
 import org.seasar.teeda.extension.html.factory.InputTextFactory;
 import org.seasar.teeda.extension.html.factory.OutputTextFactory;
-import org.seasar.teeda.extension.html.factory.SelectOneListboxFactory;
+import org.seasar.teeda.extension.html.factory.SelectOneMenuFactory;
 import org.seasar.teeda.extension.mock.MockTaglibManager;
 import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 
@@ -236,18 +236,18 @@ public class TagProcessorAssembleImplTest extends TeedaExtensionTestCase {
     }
 
     public void testSelectOneListbox() throws Exception {
-        String path = convertPath("selectOneListbox.html");
+        String path = convertPath("selectOneMenu.html");
         HtmlDescCacheImpl cache = createHtmlDescCacheImpl();
         HtmlDesc htmlDesc = cache.createHtmlDesc(path);
         PageDescImpl pageDesc = new PageDescImpl(FooPage.class, "fooPage");
         ActionDescImpl actionDesc = new ActionDescImpl(FooAction.class,
                 "fooAction");
-        registerTaglibElement(JsfConstants.JSF_HTML_URI, "selectOneListbox",
+        registerTaglibElement(JsfConstants.JSF_HTML_URI, "selectOneMenu",
                 SelectOneListboxTag.class);
         registerTaglibElement(ExtensionConstants.TEEDA_EXTENSION_URI,
                 "selectItems", SelectItemsTag.class);
         MockTaglibManager taglibManager = getTaglibManager();
-        SelectOneListboxFactory factory = new SelectOneListboxFactory();
+        SelectOneMenuFactory factory = new SelectOneMenuFactory();
         factory.setTaglibManager(taglibManager);
         TagProcessorAssemblerImpl assembler = new TagProcessorAssemblerImpl();
         assembler.setFactories(new ElementProcessorFactory[] { factory });

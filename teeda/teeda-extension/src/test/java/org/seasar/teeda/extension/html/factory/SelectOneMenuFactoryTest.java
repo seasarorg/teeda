@@ -35,13 +35,13 @@ import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 /**
  * @author shot
  */
-public class SelectOneListboxFactoryTest extends TeedaExtensionTestCase {
+public class SelectOneMenuFactoryTest extends TeedaExtensionTestCase {
 
     private MockTaglibManager taglibManager;
 
     protected void setUp() throws Exception {
         super.setUp();
-        registerTaglibElement(JsfConstants.JSF_HTML_URI, "selectOneListbox",
+        registerTaglibElement(JsfConstants.JSF_HTML_URI, "selectOneMenu",
                 SelectOneListboxTag.class);
         registerTaglibElement(ExtensionConstants.TEEDA_EXTENSION_URI,
                 "selectItems", TSelectItemsTag.class);
@@ -49,7 +49,7 @@ public class SelectOneListboxFactoryTest extends TeedaExtensionTestCase {
     }
 
     public void testIsMatch() throws Exception {
-        SelectOneListboxFactory selectFactory = new SelectOneListboxFactory();
+        SelectOneMenuFactory selectFactory = new SelectOneMenuFactory();
         Map map = new HashMap();
         map.put("id", "hogeItems");
         ElementNodeImpl elementNode = new ElementNodeImpl("select", map);
@@ -60,7 +60,7 @@ public class SelectOneListboxFactoryTest extends TeedaExtensionTestCase {
 
     public void testCreateProcessor() throws Exception {
         // ## Arrange ##
-        SelectOneListboxFactory factory = new SelectOneListboxFactory();
+        SelectOneMenuFactory factory = new SelectOneMenuFactory();
         factory.setTaglibManager(taglibManager);
         Map properties = new HashMap();
         properties.put("id", "hogeItems");

@@ -31,13 +31,13 @@ import org.seasar.teeda.extension.html.processor.ElementProcessorImpl;
  * @author shot
  *
  */
-public class SelectOneListboxFactory extends AbstractElementProcessorFactory {
+public class SelectOneMenuFactory extends AbstractElementProcessorFactory {
 
-    private static final String TAG_NAME = "selectOneListbox";
+    private static final String TAG_NAME = "selectOneMenu";
 
     private static final String TAG_NAME_SELECT_ITEMS = "selectItems";
 
-    public SelectOneListboxFactory() {
+    public SelectOneMenuFactory() {
     }
 
     public boolean isMatch(ElementNode elementNode, PageDesc pageDesc,
