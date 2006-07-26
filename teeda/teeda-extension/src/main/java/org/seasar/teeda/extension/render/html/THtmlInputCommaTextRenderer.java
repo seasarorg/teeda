@@ -158,7 +158,7 @@ public class THtmlInputCommaTextRenderer extends HtmlInputTextRenderer {
     protected void renderOnfocus(THtmlInputCommaText htmlInputCommaText,
             ResponseWriter writer, String groupingSeparator) throws IOException {
         String onfocus = appendSemiColonIfNeed(htmlInputCommaText.getOnfocus());
-        String target = "removeComma(this, " + groupingSeparator + ");";
+        String target = "removeComma(this, '" + groupingSeparator + "');";
         if (!onfocus.endsWith(target)) {
             onfocus = onfocus + target;
             RendererUtil.renderAttribute(writer, JsfConstants.ONFOCUS_ATTR,

@@ -56,11 +56,12 @@ public class THtmlInputCommaTextRendererTest extends RendererTest {
         // ## Act ##
         encodeByRenderer(renderer, context, htmlInputCommaText);
 
+        System.out.print(getResponseText());
         // ## Assert ##
         assertEquals(
-                "<input type=\"text\" name=\"_id0\" value=\"\" onfocus=\"removeComma(this);\" " +
-                "onblur=\"convertByKey(this);addComma(this, '0', ',', '.');\" onkeydown=\"return keycheckForNumber(event);\" " +
-                "onkeypress=\"return keycheckForNumber(event);\" onkeyup=\"convertByKey(this);\" style=\"ime-mode:disabled;\" />",
+                "<input type=\"text\" name=\"_id0\" value=\"\" onfocus=\"removeComma(this, ',');\" "
+                        + "onblur=\"convertByKey(this);addComma(this, '0', ',', '.');\" onkeydown=\"return keycheckForNumber(event);\" "
+                        + "onkeypress=\"return keycheckForNumber(event);\" onkeyup=\"convertByKey(this);\" style=\"ime-mode:disabled;\" />",
                 getResponseText());
     }
 
@@ -78,9 +79,9 @@ public class THtmlInputCommaTextRendererTest extends RendererTest {
 
         // ## Assert ##
         assertEquals(
-                "<input type=\"text\" name=\"_id0\" value=\"\" onfocus=\"removeComma(this);\" " +
-                "onblur=\"convertByKey(this);addComma(this, '4', ',', '.');\" onkeydown=\"return keycheckForNumber(event);\" " +
-                "onkeypress=\"return keycheckForNumber(event);\" onkeyup=\"convertByKey(this);\" style=\"ime-mode:disabled;\" />",
+                "<input type=\"text\" name=\"_id0\" value=\"\" onfocus=\"removeComma(this, ',');\" "
+                        + "onblur=\"convertByKey(this);addComma(this, '4', ',', '.');\" onkeydown=\"return keycheckForNumber(event);\" "
+                        + "onkeypress=\"return keycheckForNumber(event);\" onkeyup=\"convertByKey(this);\" style=\"ime-mode:disabled;\" />",
                 getResponseText());
     }
 
@@ -98,9 +99,9 @@ public class THtmlInputCommaTextRendererTest extends RendererTest {
 
         // ## Assert ##
         assertEquals(
-                "<input type=\"text\" name=\"_id0\" value=\"\" onfocus=\"removeComma(this);\" " +
-                "onblur=\"convertByKey(this);addComma(this, '4', '.', ',');\" onkeydown=\"return keycheckForNumber(event);\" " +
-                "onkeypress=\"return keycheckForNumber(event);\" onkeyup=\"convertByKey(this);\" style=\"ime-mode:disabled;\" />",
+                "<input type=\"text\" name=\"_id0\" value=\"\" onfocus=\"removeComma(this, '.');\" "
+                        + "onblur=\"convertByKey(this);addComma(this, '4', '.', ',');\" onkeydown=\"return keycheckForNumber(event);\" "
+                        + "onkeypress=\"return keycheckForNumber(event);\" onkeyup=\"convertByKey(this);\" style=\"ime-mode:disabled;\" />",
                 getResponseText());
     }
 
@@ -110,7 +111,7 @@ public class THtmlInputCommaTextRendererTest extends RendererTest {
                 new JavaScriptContext());
         htmlInputCommaText.getAttributes().put("accesskey", "a");
         htmlInputCommaText.getAttributes().put("alt", "b");
-        htmlInputCommaText.getAttributes().put("dir","c");
+        htmlInputCommaText.getAttributes().put("dir", "c");
         htmlInputCommaText.getAttributes().put("disabled", Boolean.TRUE);
         htmlInputCommaText.getAttributes().put("lang", "e");
         htmlInputCommaText.getAttributes().put("maxlength", new Integer(5));
@@ -128,7 +129,7 @@ public class THtmlInputCommaTextRendererTest extends RendererTest {
         htmlInputCommaText.getAttributes().put("onmouseover", "r");
         htmlInputCommaText.getAttributes().put("onmouseup", "s");
         htmlInputCommaText.getAttributes().put("onselect", "t");
-        htmlInputCommaText.getAttributes().put("readonly" , Boolean.TRUE);
+        htmlInputCommaText.getAttributes().put("readonly", Boolean.TRUE);
         htmlInputCommaText.getAttributes().put("size", new Integer(2));
         htmlInputCommaText.getAttributes().put("style", "w");
         htmlInputCommaText.getAttributes().put("styleClass", "u");
@@ -145,17 +146,16 @@ public class THtmlInputCommaTextRendererTest extends RendererTest {
         encodeByRenderer(renderer, context, htmlInputCommaText);
 
         Diff diff = new Diff(
-                "<input type=\"text\" id=\"A\" name=\"A\" value=\"B\" disabled=\"disabled\" " +
-                "onfocus=\"k;removeComma(this);\" " +
-                "onblur=\"g;convertByKey(this);addComma(this, '4', ',', '.');\" " +
-                "onkeydown=\"l;return keycheckForNumber(event);\" " +
-                "onkeypress=\"m;return keycheckForNumber(event);\" onkeyup=\"n;convertByKey(this);\" " +
-                "style=\"w;ime-mode:disabled;\" title=\"y\" onchange=\"h\" dir=\"c\" readonly=\"true\" " +
-                "class=\"u\" accesskey=\"a\" ondblclick=\"j\" size=\"2\" onmouseover=\"r\" " +
-                "tabindex=\"x\" maxlength=\"5\" lang=\"e\" onclick=\"i\" alt=\"b\" " +
-                "onmouseout=\"q\" onmousedown=\"o\" label=\"A\" onselect=\"t\" onmouseup=\"s\" " +
-                "onmousemove=\"p\" />",
-                getResponseText());
+                "<input type=\"text\" id=\"A\" name=\"A\" value=\"B\" disabled=\"disabled\" "
+                        + "onfocus=\"k;removeComma(this, ',');\" "
+                        + "onblur=\"g;convertByKey(this);addComma(this, '4', ',', '.');\" "
+                        + "onkeydown=\"l;return keycheckForNumber(event);\" "
+                        + "onkeypress=\"m;return keycheckForNumber(event);\" onkeyup=\"n;convertByKey(this);\" "
+                        + "style=\"w;ime-mode:disabled;\" title=\"y\" onchange=\"h\" dir=\"c\" readonly=\"true\" "
+                        + "class=\"u\" accesskey=\"a\" ondblclick=\"j\" size=\"2\" onmouseover=\"r\" "
+                        + "tabindex=\"x\" maxlength=\"5\" lang=\"e\" onclick=\"i\" alt=\"b\" "
+                        + "onmouseout=\"q\" onmousedown=\"o\" label=\"A\" onselect=\"t\" onmouseup=\"s\" "
+                        + "onmousemove=\"p\" />", getResponseText());
 
         assertEquals(diff.toString(), true, diff.identical());
     }
@@ -175,9 +175,9 @@ public class THtmlInputCommaTextRendererTest extends RendererTest {
 
         // ## Assert ##
         assertEquals(
-                "<input type=\"text\" name=\"_id0\" value=\"\" onfocus=\"removeComma(this);\" " +
-                "onblur=\"hoge();convertByKey(this);addComma(this, '4', ',', '.');\" onkeydown=\"return keycheckForNumber(event);\" " +
-                "onkeypress=\"return keycheckForNumber(event);\" onkeyup=\"convertByKey(this);\" style=\"ime-mode:disabled;\" />",
+                "<input type=\"text\" name=\"_id0\" value=\"\" onfocus=\"removeComma(this, ',');\" "
+                        + "onblur=\"hoge();convertByKey(this);addComma(this, '4', ',', '.');\" onkeydown=\"return keycheckForNumber(event);\" "
+                        + "onkeypress=\"return keycheckForNumber(event);\" onkeyup=\"convertByKey(this);\" style=\"ime-mode:disabled;\" />",
                 getResponseText());
     }
 
@@ -203,9 +203,11 @@ public class THtmlInputCommaTextRendererTest extends RendererTest {
         htmlInputCommaText.setOnblur("hoge();");
         root.setLocale(Locale.JAPAN);
         FacesContext context = getFacesContext();
-        MockExternalContext extContext = (MockExternalContext) context.getExternalContext();
+        MockExternalContext extContext = (MockExternalContext) context
+                .getExternalContext();
         extContext.setRequestPathInfo("/path1/hoge");
-        FacesConfigOptions.setJavascriptNotPermittedPath(new String[]{"/not_path1"});
+        FacesConfigOptions
+                .setJavascriptNotPermittedPath(new String[] { "/not_path1" });
         context.setViewRoot(root);
 
         // ## Act ##
