@@ -27,6 +27,7 @@ import org.seasar.teeda.core.taglib.html.InputTagBase;
  */
 public class TSelectBooleanCheckboxTag extends InputTagBase {
 
+    //TODO need to create Factory for support.
     private String checked;
 
     public String getComponentType() {
