@@ -58,7 +58,7 @@ public class PageDescImplTest extends S2FrameworkTestCase {
 
     public void testHasMethod() throws Exception {
         PageDescImpl pd = new PageDescImpl(FooPage.class, "fooPage");
-        assertTrue(pd.hasMethod("doBbb"));
+        assertTrue(pd.hasMethod("doBar"));
         assertFalse(pd.hasMethod("doXxx"));
         assertFalse(pd.hasMethod(null));
     }

@@ -9,10 +9,9 @@ import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.HtmlNode;
 import org.seasar.teeda.extension.html.PageDesc;
 
-public class SelectOneCheckboxFactory extends AbstractElementProcessorFactory {
+public class SelectManyCheckboxFactory extends AbstractElementProcessorFactory {
 
-    //TODO fix this
-    private static final String TAG_NAME = "selectOneCheckbox";
+    private static final String TAG_NAME = "selectManyCheckbox";
 
     protected String getTagName() {
         return TAG_NAME;

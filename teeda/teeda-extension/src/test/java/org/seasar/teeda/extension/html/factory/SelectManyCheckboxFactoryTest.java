@@ -27,23 +27,23 @@ import org.seasar.teeda.extension.html.impl.ActionDescImpl;
 import org.seasar.teeda.extension.html.impl.ElementNodeImpl;
 import org.seasar.teeda.extension.html.impl.PageDescImpl;
 import org.seasar.teeda.extension.mock.MockTaglibManager;
-import org.seasar.teeda.extension.taglib.TSelectBooleanCheckboxTag;
+import org.seasar.teeda.extension.taglib.TSelectManyCheckboxTag;
 import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 
-public class SelectOneCheckboxFactoryTest extends TeedaExtensionTestCase {
+public class SelectManyCheckboxFactoryTest extends TeedaExtensionTestCase {
 
     private MockTaglibManager taglibManager;
 
     protected void setUp() throws Exception {
         super.setUp();
         registerTaglibElement(ExtensionConstants.TEEDA_EXTENSION_URI,
-                "selectOneCheckbox", TSelectBooleanCheckboxTag.class);
+                "selectManyCheckbox", TSelectManyCheckboxTag.class);
         taglibManager = getTaglibManager();
     }
 
     //<span id="hoge"><input type="checkbox" name="hoge"/></span>
     public void testIsMatch_ok1() throws Exception {
-        SelectOneCheckboxFactory selectFactory = new SelectOneCheckboxFactory();
+        SelectManyCheckboxFactory selectFactory = new SelectManyCheckboxFactory();
         Map map = new HashMap();
         map.put("id", "hoge");
         ElementNodeImpl parent = new ElementNodeImpl("span", map);
@@ -61,7 +61,7 @@ public class SelectOneCheckboxFactoryTest extends TeedaExtensionTestCase {
 
     //<span id="hoge"><input type="checkbox" name="hoge"/><input type="radio" name="hoge"/></span>
     public void testIsMatch_ok2() throws Exception {
-        SelectOneCheckboxFactory selectFactory = new SelectOneCheckboxFactory();
+        SelectManyCheckboxFactory selectFactory = new SelectManyCheckboxFactory();
         Map map = new HashMap();
         map.put("id", "hoge");
         ElementNodeImpl parent = new ElementNodeImpl("span", map);
@@ -87,7 +87,7 @@ public class SelectOneCheckboxFactoryTest extends TeedaExtensionTestCase {
 
     //<span><input type="checkbox" name="hoge"/></span>
     public void testIsMatch_ng1() throws Exception {
-        SelectOneCheckboxFactory selectFactory = new SelectOneCheckboxFactory();
+        SelectManyCheckboxFactory selectFactory = new SelectManyCheckboxFactory();
         Map map = new HashMap();
         ElementNodeImpl parent = new ElementNodeImpl("span", map);
 
@@ -104,7 +104,7 @@ public class SelectOneCheckboxFactoryTest extends TeedaExtensionTestCase {
 
     //<span id="hoge"><input type="checkbox" /></span>
     public void testIsMatch_ng2() throws Exception {
-        SelectOneCheckboxFactory selectFactory = new SelectOneCheckboxFactory();
+        SelectManyCheckboxFactory selectFactory = new SelectManyCheckboxFactory();
         Map map = new HashMap();
         map.put("id", "hoge");
         ElementNodeImpl parent = new ElementNodeImpl("span", map);
@@ -121,7 +121,7 @@ public class SelectOneCheckboxFactoryTest extends TeedaExtensionTestCase {
 
     //<span id="hoge"><input type="checkbox" name="foo"/></span>
     public void testIsMatch_ng3() throws Exception {
-        SelectOneCheckboxFactory selectFactory = new SelectOneCheckboxFactory();
+        SelectManyCheckboxFactory selectFactory = new SelectManyCheckboxFactory();
         Map map = new HashMap();
         map.put("id", "hoge");
         ElementNodeImpl parent = new ElementNodeImpl("span", map);
@@ -139,7 +139,7 @@ public class SelectOneCheckboxFactoryTest extends TeedaExtensionTestCase {
 
     //<span id="hoge"><input type="text" name="hoge"/></span>
     public void testIsMatch_ng4() throws Exception {
-        SelectOneCheckboxFactory selectFactory = new SelectOneCheckboxFactory();
+        SelectManyCheckboxFactory selectFactory = new SelectManyCheckboxFactory();
         Map map = new HashMap();
         map.put("id", "hoge");
         ElementNodeImpl parent = new ElementNodeImpl("span", map);
@@ -157,7 +157,7 @@ public class SelectOneCheckboxFactoryTest extends TeedaExtensionTestCase {
 
     //<span id="hoge"><input type="checkbox" name="hoge"/><span /></span>
     public void testIsMatch_ng5() throws Exception {
-        SelectOneCheckboxFactory selectFactory = new SelectOneCheckboxFactory();
+        SelectManyCheckboxFactory selectFactory = new SelectManyCheckboxFactory();
         Map map = new HashMap();
         map.put("id", "hoge");
         ElementNodeImpl parent = new ElementNodeImpl("span", map);
@@ -179,7 +179,7 @@ public class SelectOneCheckboxFactoryTest extends TeedaExtensionTestCase {
 
     public void testCreateProcessor() throws Exception {
         // ## Arrange ##
-        SelectOneCheckboxFactory factory = new SelectOneCheckboxFactory();
+        SelectManyCheckboxFactory factory = new SelectManyCheckboxFactory();
         factory.setTaglibManager(taglibManager);
         Map properties = new HashMap();
         properties.put("id", "hoge");
@@ -200,7 +200,7 @@ public class SelectOneCheckboxFactoryTest extends TeedaExtensionTestCase {
                 pageDesc, actionDesc);
         // ## Assert ##
         assertNotNull("1", parentProcessor);
-        assertEquals("2", TSelectBooleanCheckboxTag.class, parentProcessor
+        assertEquals("2", TSelectManyCheckboxTag.class, parentProcessor
                 .getTagClass());
         assertEquals("3", "#{fooPage.hoge}", parentProcessor
                 .getProperty("value"));

@@ -8,6 +8,12 @@ public class FooPage {
 
     private String aaa;
 
+    private int bbb;
+    
+    private int[] ccc;
+    
+    private List bbbItems;
+    
     private List cccItems;
 
     private String dddItems;
@@ -37,6 +43,34 @@ public class FooPage {
         this.cccItems = cccItems;
     }
 
+    public String doBar() {
+        return null;
+    }
+
+    public int getBbb() {
+        return bbb;
+    }
+
+    public void setBbb(int bbb) {
+        this.bbb = bbb;
+    }
+
+    public List getBbbItems() {
+        return bbbItems;
+    }
+
+    public void setBbbItems(List bbbItems) {
+        this.bbbItems = bbbItems;
+    }
+
+    public int[] getCcc() {
+        return ccc;
+    }
+
+    public void setCcc(int[] ccc) {
+        this.ccc = ccc;
+    }
+    
     public String getDddItems() {
         return dddItems;
     }
@@ -45,7 +79,4 @@ public class FooPage {
         this.dddItems = dddItems;
     }
 
-    public String doBbb() {
-        return null;
-    }
 }

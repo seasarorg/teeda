@@ -29,9 +29,13 @@ import org.seasar.teeda.extension.html.TextProcessor;
 import org.seasar.teeda.extension.html.factory.CommandButtonFactory;
 import org.seasar.teeda.extension.html.factory.InputTextFactory;
 import org.seasar.teeda.extension.html.factory.OutputTextFactory;
+import org.seasar.teeda.extension.html.factory.SelectManyCheckboxFactory;
 import org.seasar.teeda.extension.html.factory.SelectOneMenuFactory;
+import org.seasar.teeda.extension.html.factory.SelectOneRadioFactory;
 import org.seasar.teeda.extension.mock.MockTaglibManager;
+import org.seasar.teeda.extension.taglib.TSelectManyCheckboxTag;
 import org.seasar.teeda.extension.taglib.TSelectOneMenuTag;
+import org.seasar.teeda.extension.taglib.TSelectOneRadioTag;
 import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 
 /**
@@ -256,12 +260,68 @@ public class TagProcessorAssembleImplTest extends TeedaExtensionTestCase {
         assertEquals("<html><body>", textProcessor.getValue());
         assertTrue(viewRoot.getChild(1) instanceof ElementProcessor);
         ElementProcessor ep = (ElementProcessor) viewRoot.getChild(1);
+        assertEquals("#{fooPage.bbb}", ep.getProperty("value"));
+        assertEquals("#{fooPage.bbbItems}", ep.getProperty("items"));
+        textProcessor = (TextProcessor) viewRoot.getChild(2);
+        assertEquals("</body></html>", textProcessor.getValue());
+    }
+
+    public void testSelectOneRadio() throws Exception {
+        String path = convertPath("selectOneRadio.html");
+        HtmlDescCacheImpl cache = createHtmlDescCacheImpl();
+        HtmlDesc htmlDesc = cache.createHtmlDesc(path);
+        PageDescImpl pageDesc = new PageDescImpl(FooPage.class, "fooPage");
+        ActionDescImpl actionDesc = new ActionDescImpl(FooAction.class,
+                "fooAction");
+        registerTaglibElement(ExtensionConstants.TEEDA_EXTENSION_URI,
+                "selectOneRadio", TSelectOneRadioTag.class);
+        MockTaglibManager taglibManager = getTaglibManager();
+        SelectOneRadioFactory factory = new SelectOneRadioFactory();
+        factory.setTaglibManager(taglibManager);
+        TagProcessorAssemblerImpl assembler = new TagProcessorAssemblerImpl();
+        assembler.setFactories(new ElementProcessorFactory[] { factory });
+        TagProcessor root = assembler.assemble(htmlDesc, pageDesc, actionDesc);
+        assertTrue(root instanceof ElementProcessor);
+        ElementProcessor viewRoot = (ElementProcessor) root;
+        assertEquals(3, viewRoot.getChildSize());
+        TextProcessor textProcessor = (TextProcessor) viewRoot.getChild(0);
+        assertEquals("<html><body>", textProcessor.getValue());
+        assertTrue(viewRoot.getChild(1) instanceof ElementProcessor);
+        ElementProcessor ep = (ElementProcessor) viewRoot.getChild(1);
+        assertEquals("#{fooPage.bbb}", ep.getProperty("value"));
+        assertEquals("#{fooPage.bbbItems}", ep.getProperty("items"));
+        textProcessor = (TextProcessor) viewRoot.getChild(2);
+        assertEquals("</body></html>", textProcessor.getValue());
+    }
+
+    public void testSelectManyCheckbox() throws Exception {
+        String path = convertPath("selectManyCheckbox.html");
+        HtmlDescCacheImpl cache = createHtmlDescCacheImpl();
+        HtmlDesc htmlDesc = cache.createHtmlDesc(path);
+        PageDescImpl pageDesc = new PageDescImpl(FooPage.class, "fooPage");
+        ActionDescImpl actionDesc = new ActionDescImpl(FooAction.class,
+                "fooAction");
+        registerTaglibElement(ExtensionConstants.TEEDA_EXTENSION_URI,
+                "selectManyCheckbox", TSelectManyCheckboxTag.class);
+        MockTaglibManager taglibManager = getTaglibManager();
+        SelectManyCheckboxFactory factory = new SelectManyCheckboxFactory();
+        factory.setTaglibManager(taglibManager);
+        TagProcessorAssemblerImpl assembler = new TagProcessorAssemblerImpl();
+        assembler.setFactories(new ElementProcessorFactory[] { factory });
+        TagProcessor root = assembler.assemble(htmlDesc, pageDesc, actionDesc);
+        assertTrue(root instanceof ElementProcessor);
+        ElementProcessor viewRoot = (ElementProcessor) root;
+        assertEquals(3, viewRoot.getChildSize());
+        TextProcessor textProcessor = (TextProcessor) viewRoot.getChild(0);
+        assertEquals("<html><body>", textProcessor.getValue());
+        assertTrue(viewRoot.getChild(1) instanceof ElementProcessor);
+        ElementProcessor ep = (ElementProcessor) viewRoot.getChild(1);
         assertEquals("#{fooPage.ccc}", ep.getProperty("value"));
         assertEquals("#{fooPage.cccItems}", ep.getProperty("items"));
         textProcessor = (TextProcessor) viewRoot.getChild(2);
         assertEquals("</body></html>", textProcessor.getValue());
     }
-
+    
     protected HtmlDescCacheImpl createHtmlDescCacheImpl() {
         HtmlDescCacheImpl cache = new HtmlDescCacheImpl();
         cache.setServletContext(getServletContext());
