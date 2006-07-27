@@ -22,7 +22,7 @@ import org.seasar.teeda.extension.html.HtmlNode;
 
 /**
  * @author higa
- *
+ * @author shot
  */
 public class HtmlNodeHandlerTest extends S2FrameworkTestCase {
 
@@ -90,21 +90,44 @@ public class HtmlNodeHandlerTest extends S2FrameworkTestCase {
                         .getValue());
     }
 
-    public void fixme_testParseSelect() throws Exception {
+    public void testParseSelect() throws Exception {
         String path = convertPath("select.xhtml");
         HtmlParserImpl parser = new HtmlParserImpl();
         HtmlNode node = parser.parse(ResourceUtil.getResourceAsStream(path));
-        System.out.println(node.toString());
+        assertEquals(
+                "1",
+                node.toString(),
+                "<html><body><select id=\"ccc\"><option value=\"0\">aaa</option></select></body></html>");
         ElementNodeImpl n = (ElementNodeImpl) node;
-        System.out.println(n.getChildSize());
-        for (int i = 0; i < n.getChildSize(); i++) {
-            HtmlNode child = n.getChild(i);
-            if (child instanceof ElementNode) {
-                ElementNode cn = (ElementNode) child;
-                if (cn.getTagName().equalsIgnoreCase("option")) {
-                }
-            }
-        }
+        assertTrue(n.getChildSize() == 3);
+    }
+
+    public void testParseInputRadio() throws Exception {
+        String path = convertPath("inputRadio.xhtml");
+        HtmlParserImpl parser = new HtmlParserImpl();
+        HtmlNode node = parser.parse(ResourceUtil.getResourceAsStream(path));
+        System.out.println(node.toString());
+        assertEquals("1", node.toString(),
+                "<html><body><input type=\"radio\" name=\"aaa\" /></body></html>");
+        ElementNodeImpl n = (ElementNodeImpl) node;
+        assertTrue(n.getChildSize() == 3);
+        ElementNode child = (ElementNode) n.getChild(1);
+        assertEquals("input", child.getTagName());
+        assertEquals("radio", child.getProperty("type"));
+    }
+
+    public void testParseInputCheckbox() throws Exception {
+        String path = convertPath("inputCheckbox.xhtml");
+        HtmlParserImpl parser = new HtmlParserImpl();
+        HtmlNode node = parser.parse(ResourceUtil.getResourceAsStream(path));
+        System.out.println(node.toString());
+        assertEquals("1", node.toString(),
+                "<html><body><input type=\"checkbox\" name=\"aaa\" /></body></html>");
+        ElementNodeImpl n = (ElementNodeImpl) node;
+        assertTrue(n.getChildSize() == 3);
+        ElementNode child = (ElementNode) n.getChild(1);
+        assertEquals("input", child.getTagName());
+        assertEquals("checkbox", child.getProperty("type"));
     }
 
 }

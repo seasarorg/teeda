@@ -18,7 +18,6 @@ package org.seasar.teeda.extension.html.factory;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.taglib.html.SelectOneListboxTag;
 import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.html.ActionDesc;
@@ -29,7 +28,6 @@ import org.seasar.teeda.extension.html.impl.ActionDescImpl;
 import org.seasar.teeda.extension.html.impl.ElementNodeImpl;
 import org.seasar.teeda.extension.html.impl.PageDescImpl;
 import org.seasar.teeda.extension.mock.MockTaglibManager;
-import org.seasar.teeda.extension.taglib.TSelectItemsTag;
 import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 
 /**
@@ -41,10 +39,8 @@ public class SelectOneMenuFactoryTest extends TeedaExtensionTestCase {
 
     protected void setUp() throws Exception {
         super.setUp();
-        registerTaglibElement(JsfConstants.JSF_HTML_URI, "selectOneMenu",
-                SelectOneListboxTag.class);
         registerTaglibElement(ExtensionConstants.TEEDA_EXTENSION_URI,
-                "selectItems", TSelectItemsTag.class);
+                "selectOneMenu", SelectOneListboxTag.class);
         taglibManager = getTaglibManager();
     }
 
@@ -77,11 +73,8 @@ public class SelectOneMenuFactoryTest extends TeedaExtensionTestCase {
                 .getTagClass());
         assertEquals("3", "#{fooPage.hoge}", parentProcessor
                 .getProperty("value"));
-
-        ElementProcessor child = (ElementProcessor) parentProcessor.getChild(0);
-        assertNotNull("4", child);
-        assertEquals("5", TSelectItemsTag.class, child.getTagClass());
-        assertEquals("6", "#{fooPage.hogeItems}", child.getProperty("value"));
+        assertEquals("4", "#{fooPage.hogeItems}", parentProcessor
+                .getProperty("items"));
     }
 
 }

@@ -15,17 +15,13 @@
  */
 package org.seasar.teeda.extension.html.factory;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.seasar.teeda.core.JsfConstants;
-import org.seasar.teeda.core.util.BindingUtil;
 import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ElementNode;
-import org.seasar.teeda.extension.html.ElementProcessor;
 import org.seasar.teeda.extension.html.PageDesc;
-import org.seasar.teeda.extension.html.processor.ElementProcessorImpl;
 
 /**
  * @author shot
@@ -34,8 +30,6 @@ import org.seasar.teeda.extension.html.processor.ElementProcessorImpl;
 public class SelectOneMenuFactory extends AbstractElementProcessorFactory {
 
     private static final String TAG_NAME = "selectOneMenu";
-
-    private static final String TAG_NAME_SELECT_ITEMS = "selectItems";
 
     public SelectOneMenuFactory() {
     }
@@ -53,28 +47,6 @@ public class SelectOneMenuFactory extends AbstractElementProcessorFactory {
         return false;
     }
 
-    protected ElementProcessor createProcessor(ElementNode elementNode,
-            PageDesc pageDesc, ActionDesc actionDesc, String uri, String tagName) {
-        String items = elementNode.getId();
-        Class tagClass = getTagClass(uri, tagName);
-        Map props = createProperties(elementNode, pageDesc, actionDesc);
-        ElementProcessor parentProcessor = new ElementProcessorImpl(tagClass,
-                props);
-        if (!pageDesc.hasItemsProperty(items)) {
-            return parentProcessor;
-        }
-        Map childProps = new HashMap();
-        Class childTagClass = getTagClass(
-                ExtensionConstants.TEEDA_EXTENSION_URI, TAG_NAME_SELECT_ITEMS);
-        ElementProcessor childProcessor = new ElementProcessorImpl(
-                childTagClass, childProps);
-        String pageName = pageDesc.getPageName();
-        childProps.put(JsfConstants.VALUE_ATTR, BindingUtil.getExpression(
-                pageName, items));
-        parentProcessor.addElement(childProcessor);
-        return parentProcessor;
-    }
-
     protected void customizeProperties(Map properties, ElementNode elementNode,
             PageDesc pageDesc, ActionDesc actionDesc) {
         super
@@ -86,6 +58,8 @@ public class SelectOneMenuFactory extends AbstractElementProcessorFactory {
                 - ExtensionConstants.ITEMS_SUFFIX.length());
         properties.put(JsfConstants.VALUE_ATTR, getBindingExpression(pageName,
                 target));
+        properties.put("items", getBindingExpression(pageName, id));
+
     }
 
     protected String getTagName() {
@@ -93,7 +67,7 @@ public class SelectOneMenuFactory extends AbstractElementProcessorFactory {
     }
 
     protected String getUri() {
-        return JsfConstants.JSF_HTML_URI;
+        return ExtensionConstants.TEEDA_EXTENSION_URI;
     }
 
     public boolean isLeaf() {

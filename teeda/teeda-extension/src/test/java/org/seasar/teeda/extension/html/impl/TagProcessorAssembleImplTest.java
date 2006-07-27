@@ -16,11 +16,9 @@
 package org.seasar.teeda.extension.html.impl;
 
 import org.seasar.teeda.core.JsfConstants;
-import org.seasar.teeda.core.taglib.core.SelectItemsTag;
 import org.seasar.teeda.core.taglib.html.CommandButtonTag;
 import org.seasar.teeda.core.taglib.html.InputTextTag;
 import org.seasar.teeda.core.taglib.html.OutputTextTag;
-import org.seasar.teeda.core.taglib.html.SelectOneListboxTag;
 import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.html.ElementProcessor;
 import org.seasar.teeda.extension.html.ElementProcessorFactory;
@@ -33,6 +31,7 @@ import org.seasar.teeda.extension.html.factory.InputTextFactory;
 import org.seasar.teeda.extension.html.factory.OutputTextFactory;
 import org.seasar.teeda.extension.html.factory.SelectOneMenuFactory;
 import org.seasar.teeda.extension.mock.MockTaglibManager;
+import org.seasar.teeda.extension.taglib.TSelectOneMenuTag;
 import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 
 /**
@@ -235,17 +234,15 @@ public class TagProcessorAssembleImplTest extends TeedaExtensionTestCase {
         assertEquals("</body></html>", textProcessor.getValue());
     }
 
-    public void testSelectOneListbox() throws Exception {
+    public void testSelectOneMenu() throws Exception {
         String path = convertPath("selectOneMenu.html");
         HtmlDescCacheImpl cache = createHtmlDescCacheImpl();
         HtmlDesc htmlDesc = cache.createHtmlDesc(path);
         PageDescImpl pageDesc = new PageDescImpl(FooPage.class, "fooPage");
         ActionDescImpl actionDesc = new ActionDescImpl(FooAction.class,
                 "fooAction");
-        registerTaglibElement(JsfConstants.JSF_HTML_URI, "selectOneMenu",
-                SelectOneListboxTag.class);
         registerTaglibElement(ExtensionConstants.TEEDA_EXTENSION_URI,
-                "selectItems", SelectItemsTag.class);
+                "selectOneMenu", TSelectOneMenuTag.class);
         MockTaglibManager taglibManager = getTaglibManager();
         SelectOneMenuFactory factory = new SelectOneMenuFactory();
         factory.setTaglibManager(taglibManager);
@@ -259,8 +256,8 @@ public class TagProcessorAssembleImplTest extends TeedaExtensionTestCase {
         assertEquals("<html><body>", textProcessor.getValue());
         assertTrue(viewRoot.getChild(1) instanceof ElementProcessor);
         ElementProcessor ep = (ElementProcessor) viewRoot.getChild(1);
-        assertEquals(1, ep.getChildSize());
-        System.out.println(ep.getProperty("value"));
+        assertEquals("#{fooPage.ccc}", ep.getProperty("value"));
+        assertEquals("#{fooPage.cccItems}", ep.getProperty("items"));
         textProcessor = (TextProcessor) viewRoot.getChild(2);
         assertEquals("</body></html>", textProcessor.getValue());
     }

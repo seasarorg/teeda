@@ -63,7 +63,7 @@ public class HtmlNodeHandler extends DefaultHandler {
             push(n);
         } else {
             ElementNodeImpl parent = peek();
-            if (isElementNode(parent, attributes)) {
+            if (isElementNode(parent, qName, attributes)) {
                 ElementNodeImpl elementNode = new ElementNodeImpl(qName, props);
                 parent.addElement(elementNode);
                 push(elementNode);
@@ -77,14 +77,29 @@ public class HtmlNodeHandler extends DefaultHandler {
         }
     }
 
-    private boolean isElementNode(ElementNode parent, Attributes attributes) {
+    private boolean isElementNode(ElementNode parent, String qName,
+            Attributes attributes) {
         if (attributes.getValue(JsfConstants.ID_ATTR) != null) {
             return true;
         }
         if (!forceElementNodeStack.isEmpty()) {
             return true;
         }
+        if (qName.equals(JsfConstants.INPUT_ELEM)
+                && isTypeRadioOrCheckbox(attributes)
+                && attributes.getValue(JsfConstants.NAME_ATTR) != null) {
+            return true;
+        }
         return false;
+    }
+
+    private boolean isTypeRadioOrCheckbox(Attributes attributes) {
+        String value = attributes.getValue(JsfConstants.TYPE_ATTR);
+        if (value == null) {
+            return false;
+        }
+        return value.equalsIgnoreCase(JsfConstants.RADIO_VALUE)
+                || value.equalsIgnoreCase(JsfConstants.CHECKBOX_VALUE);
     }
 
     public InputSource resolveEntity(String publicId, String systemId)

@@ -16,29 +16,33 @@
 package org.seasar.teeda.extension.taglib;
 
 import javax.faces.component.UIComponent;
-import javax.faces.el.ReferenceSyntaxException;
+import javax.faces.component.html.HtmlSelectBooleanCheckbox;
 
 import org.seasar.teeda.core.JsfConstants;
-import org.seasar.teeda.core.taglib.core.SelectItemsTag;
-import org.seasar.teeda.core.util.BindingUtil;
-import org.seasar.teeda.extension.component.TUISelectItems;
+import org.seasar.teeda.core.taglib.html.InputTagBase;
 
 /**
+ * @author higa
  * @author shot
  */
-public class TSelectItemsTag extends SelectItemsTag {
+public class TSelectBooleanCheckboxTag extends InputTagBase {
+
+    private String checked;
 
     public String getComponentType() {
-        return TUISelectItems.COMPONENT_TYPE;
+        return HtmlSelectBooleanCheckbox.COMPONENT_TYPE;
+    }
+
+    public String getRendererType() {
+        return "javax.faces.Checkbox";
+    }
+
+    public void setChecked(String checked) {
+        this.checked = checked;
     }
 
     protected void setProperties(UIComponent component) {
         super.setProperties(component);
-        TUISelectItems items = (TUISelectItems) component;
-        String value = getValue();
-        if (!isValueReference(value)) {
-            throw new ReferenceSyntaxException();
-        }
-        BindingUtil.setValueBinding(items, JsfConstants.VALUE_ATTR, value);
+        setComponentProperty(component, JsfConstants.CHECKED_ATTR, checked);
     }
 }
