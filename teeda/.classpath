@@ -31,11 +31,11 @@
 	<classpathentry kind="lib" path="lib/geronimo-servlet_2.4_spec-1.0.jar"/>
 	<classpathentry kind="lib" path="lib/portlet-api-1.0.jar"/>
 	<classpathentry kind="lib" path="lib/rhino-1.6r2.jar"/>
+	<classpathentry kind="lib" path="lib/s2-extension-2.4.0-beta-4.jar"/>
+	<classpathentry kind="lib" path="lib/s2-framework-2.4.0-beta-4.jar"/>
 	<classpathentry kind="src" path="teeda-spike/src/main/java"/>
 	<classpathentry kind="src" path="teeda-spike/src/main/resources"/>
 	<classpathentry kind="src" path="teeda-spike/src/test/java"/>
 	<classpathentry kind="src" path="teeda-spike/src/test/resources"/>
-	<classpathentry sourcepath="lib/sources/s2-extension-2.4.0-beta-4-SNAPSHOT-sources.jar" kind="lib" path="lib/s2-extension-2.4.0-beta-4-SNAPSHOT.jar"/>
-	<classpathentry sourcepath="lib/sources/s2-framework-2.4.0-beta-4-SNAPSHOT-sources.jar" kind="lib" path="lib/s2-framework-2.4.0-beta-4-SNAPSHOT.jar"/>
 	<classpathentry kind="output" path="build/teeda-core/classes"/>
 </classpath>
