@@ -2,5 +2,5 @@
 <!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container 2.4//EN" 
 	"http://www.seasar.org/dtd/components24.dtd">
 <components>
-	<include path="hotdeploy.dicon"/>
+	<include condition="#ENV == 'ut'" path="teeda-html-example-hotdeploy.dicon"/>
 </components>

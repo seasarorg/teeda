@@ -3,5 +3,7 @@
 	"http://www.seasar.org/dtd/components24.dtd">
 <components>
 	<include path="convention.dicon"/>
+	<include path="aop.dicon"/>
 	<include path="teedaExtension.dicon"/>
+	<include condition="#ENV != 'ut'" path="teeda-html-example-cooldeploy.dicon"/>
 </components>
