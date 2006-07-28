@@ -6,23 +6,18 @@
 >
   <parent>
     <groupId>org.seasar.teeda</groupId>
-    <artifactId>teeda-project</artifactId>
+    <artifactId>teeda-integration-test-project</artifactId>
     <version>1.0-beta-6-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.seasar.teeda</groupId>
-  <artifactId>teeda-integration-test</artifactId>
+  <artifactId>teeda-core-test</artifactId>
   <packaging>war</packaging>
   <name>Teeda Integration Test</name>
   <description></description>
   <url>http://teeda.seasar.org/</url>
-  <scm>
-    <connection>scm:svn:https://www.seasar.org/svn/teeda/trunk/teeda-integration-test/</connection>
-    <developerConnection>scm:svn:https://www.seasar.org/svn/teeda/trunk/teeda-integration-test/</developerConnection>
-    <url>http://www.seasar.org/websvn/listing.php?repname=teeda</url>
-  </scm>
   <build>
-    <finalName>teeda-integration-test</finalName>
+    <finalName>teeda-core-test</finalName>
     <pluginManagement>
       <plugins>
         <plugin>
@@ -34,136 +29,9 @@
             </includes>
           </configuration>
         </plugin>
-        <plugin>
-          <artifactId>maven-eclipse-plugin</artifactId>
-          <configuration>
-            <outputDirectory>build/classes</outputDirectory>
-            <downloadSources>true</downloadSources>
-          </configuration>
-        </plugin>
       </plugins>
     </pluginManagement>
   </build>
-  <repositories>
-    <repository>
-      <id>maven.seasar.org</id>
-      <name>The Seasar Foundation Maven2 Repository</name>
-      <url>http://maven.seasar.org/maven2</url>
-    </repository>
-  </repositories>
   <dependencies>
-    <!--
-    <dependency>
-      <groupId>org.seasar.container</groupId>
-      <artifactId>s2-extension</artifactId>
-      <version>2.4.0-beta-4</version>
-      <type>jar</type>
-    </dependency>
-    -->
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.2</version>
-      <type>jar</type>
-    </dependency>
-    <dependency>
-      <groupId>org.seasar.teeda</groupId>
-      <artifactId>teeda-core</artifactId>
-      <version>1.0-beta-6-SNAPSHOT</version>
-      <type>jar</type>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.geronimo.specs</groupId>
-      <artifactId>geronimo-servlet_2.4_spec</artifactId>
-      <version>1.0</version>
-      <type>jar</type>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.geronimo.specs</groupId>
-      <artifactId>geronimo-jsp_2.0_spec</artifactId>
-      <version>1.0</version>
-      <type>jar</type>
-    </dependency>
-    <dependency>
-      <groupId>log4j</groupId>
-      <artifactId>log4j</artifactId>
-      <version>1.2.13</version>
-      <type>jar</type>
-    </dependency>
-    <dependency>
-      <groupId>htmlunit</groupId>
-      <artifactId>htmlunit</artifactId>
-      <version>1.9</version>
-      <type>jar</type>
-      <scope>test</scope>
-      <exclusions>
-        <exclusion>
-          <artifactId>jsr173</artifactId>
-          <groupId>javax.xml</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>pull-parser</artifactId>
-          <groupId>pull-parser</groupId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>jetty</groupId>
-      <artifactId>jetty</artifactId>
-      <version>4.2.9</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>tomcat</groupId>
-      <artifactId>jasper-compiler</artifactId>
-      <version>4.0.6</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>tomcat</groupId>
-      <artifactId>jasper-runtime</artifactId>
-      <version>4.0.6</version>
-    </dependency>
-    <!-- for jasper -->
-    <dependency>
-      <groupId>com.sun</groupId>
-      <artifactId>tools</artifactId>
-      <version>1.4.2</version>
-      <scope>system</scope>
-      <systemPath>${java.home}/../lib/tools.jar</systemPath>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.maven</groupId>
-      <artifactId>maven-embedder</artifactId>
-      <version>2.0</version>
-      <type>jar</type>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>junit-addons</groupId>
-      <artifactId>junit-addons</artifactId>
-      <version>1.4</version>
-      <type>jar</type>
-      <scope>test</scope>
-      <exclusions>
-        <exclusion>
-          <groupId>junit-addons</groupId>
-          <artifactId>junit-addons-runner</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <!-- for junit-addons -->
-    <dependency>
-      <groupId>jaxen</groupId>
-      <artifactId>jaxen</artifactId>
-      <version>1.1-beta-8</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.seasar.teeda</groupId>
-      <artifactId>teeda-core</artifactId>
-      <version>1.0-beta-6-SNAPSHOT</version>
-      <type>test-jar</type>
-    </dependency>
   </dependencies>
 </project>
