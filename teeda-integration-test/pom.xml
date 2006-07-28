@@ -35,7 +35,7 @@
     </pluginManagement>
   </build>
   <modules>
-    <module>teeda-core</module>
+    <module>teeda-core-test</module>
   </modules>
   <repositories>
     <repository>
