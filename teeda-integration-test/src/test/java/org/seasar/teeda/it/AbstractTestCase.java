@@ -30,7 +30,7 @@ import junit.framework.TestSuite;
 
 import org.custommonkey.xmlunit.Diff;
 import org.custommonkey.xmlunit.XMLUnit;
-import org.seasar.framework.util.ResourceNotFoundRuntimeException;
+import org.seasar.framework.exception.ResourceNotFoundRuntimeException;
 import org.seasar.framework.util.ResourceUtil;
 import org.seasar.teeda.core.unit.JettyServerSetup;
 import org.seasar.teeda.core.unit.TestUtil;
