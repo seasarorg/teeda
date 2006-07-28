@@ -1,5 +1,7 @@
 package examples.teeda.web.grid;
 
+import java.math.BigDecimal;
+
 public class GridPage {
 
     private FooItem[] fooItems;
@@ -16,36 +18,43 @@ public class GridPage {
     public FooItem[] getFooItems() {
         if (fooItems == null) {
             fooItems = new FooItem[7];
-            fooItems[0] = createItem("a1", "b1", "c1", "d1", "e1", "f1");
-            fooItems[1] = createItem("a2", "b2", "c2", "d2", "e2", "f2");
-            fooItems[2] = createItem("a3", "b3", "c3", "d3", "e3", "f3");
-            fooItems[3] = createItem("a4", "b4", "c4", "d4", "e4", "f4");
-            fooItems[4] = createItem("a5", "b5", "c5", "d5", "e5", "f5");
-            fooItems[5] = createItem("a6", "b6", "c6", "d6", "e6", "f6");
-            fooItems[6] = createItem("a7", "b7", "c7", "d7", "e7", "f7");
+            fooItems[0] = createItem("a1", "b1", "c1", "d1", new BigDecimal(
+                "11"), "f1");
+            fooItems[1] = createItem("a2", "b2", "c2", "d2", new BigDecimal(
+                "2222"), "f2");
+            fooItems[2] = createItem("a3", "b3", "c3", "d3", new BigDecimal(
+                "33333"), "f3");
+            fooItems[3] = createItem("a4", "b4", "c4", "d4", new BigDecimal(
+                "44"), "f4");
+            fooItems[4] = createItem("a5", "b5", "c5", "d5",
+                new BigDecimal("5"), "f5");
+            fooItems[5] = createItem("a6", "b6", "c6", "d6", new BigDecimal(
+                "-6"), "f6");
+            fooItems[6] = createItem("a7", "b7", "c7", "d7",
+                new BigDecimal("0"), "f7");
         } else {
             FooItem[] newItems = new FooItem[7];
             newItems[0] = createItem("a1", "b1", "c1", fooItems[0].getDdd(),
-                "e1", "f1");
+                fooItems[0].getEee(), "f1");
             newItems[1] = createItem("a2", "b2", "c2", fooItems[1].getDdd(),
-                "e2", "f2");
+                fooItems[1].getEee(), "f2");
             newItems[2] = createItem("a3", "b3", "c3", fooItems[2].getDdd(),
-                "e3", "f3");
+                fooItems[2].getEee(), "f3");
             newItems[3] = createItem("a4", "b4", "c4", fooItems[3].getDdd(),
-                "e4", "f4");
+                fooItems[3].getEee(), "f4");
             newItems[4] = createItem("a5", "b5", "c5", fooItems[4].getDdd(),
-                "e5", "f5");
+                fooItems[4].getEee(), "f5");
             newItems[5] = createItem("a6", "b6", "c6", fooItems[5].getDdd(),
-                "e6", "f6");
+                fooItems[5].getEee(), "f6");
             newItems[6] = createItem("a7", "b7", "c7", fooItems[6].getDdd(),
-                "e7", "f7");
+                fooItems[6].getEee(), "f7");
             fooItems = newItems;
         }
         return fooItems;
     }
 
     private FooItem createItem(String aaa, String bbb, String ccc, String ddd,
-        String eee, String fff) {
+        BigDecimal eee, String fff) {
         final FooItem item = new FooItem();
         item.setAaa(aaa);
         item.setBbb(bbb);
@@ -66,7 +75,7 @@ public class GridPage {
         private String bbb;
         private String ccc;
         private String ddd;
-        private String eee;
+        private BigDecimal eee;
         private String fff;
 
         public String getBbb() {
@@ -101,11 +110,11 @@ public class GridPage {
             this.ddd = ddd;
         }
 
-        public String getEee() {
+        public BigDecimal getEee() {
             return eee;
         }
 
-        public void setEee(String eee) {
+        public void setEee(BigDecimal eee) {
             this.eee = eee;
         }
 
@@ -122,7 +131,7 @@ public class GridPage {
     private String bbb;
     private String ccc;
     private String ddd;
-    private String eee;
+    private BigDecimal eee;
     private String fff;
 
     public String getBbb() {
@@ -157,11 +166,11 @@ public class GridPage {
         this.ddd = ddd;
     }
 
-    public String getEee() {
+    public BigDecimal getEee() {
         return eee;
     }
 
-    public void setEee(String eee) {
+    public void setEee(BigDecimal eee) {
         this.eee = eee;
     }
 
