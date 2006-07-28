@@ -37,6 +37,12 @@ public class THtmlGridInputTextRenderer extends AbstractRenderer {
 
     public static final String RENDERER_TYPE = "org.seasar.teeda.extension.GridInputText";
 
+    static final String DISPLAY_NONE = "display:none;";
+
+    static final String EDIT_ON = "editOn(this);";
+
+    static final String EDIT_OFF = "editOff(this);";
+
     static final String GRID_CELL_EDIT_CLASS_NAME = "gridCellEdit";
 
     public void encodeEnd(FacesContext context, UIComponent component)
@@ -53,27 +59,33 @@ public class THtmlGridInputTextRenderer extends AbstractRenderer {
 
     protected void encodeHtmlGridInputTextEnd(final FacesContext context,
             final UIComponent gridInputText) throws IOException {
-        beforeInput(context, gridInputText);
+        renderStartDiv(context, gridInputText);
+        final String value = getValue(context, gridInputText);
+        renderSpan(context, gridInputText, value);
         renderInput(context, gridInputText);
-        afterInput(context, gridInputText);
+        renderEndDiv(context, gridInputText);
     }
 
-    protected void afterInput(final FacesContext context,
+    protected void renderStartDiv(final FacesContext context,
+            final UIComponent gridInputText) throws IOException {
+        final ResponseWriter writer = context.getResponseWriter();
+        writer.startElement(JsfConstants.DIV_ELEM, gridInputText);
+        RendererUtil
+                .renderAttribute(writer, JsfConstants.ONCLICK_ATTR, EDIT_ON);
+    }
+
+    protected void renderEndDiv(final FacesContext context,
             final UIComponent gridInputText) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
         writer.write("&nbsp;");
         writer.endElement(JsfConstants.DIV_ELEM);
     }
 
-    protected ResponseWriter beforeInput(final FacesContext context,
-            final UIComponent gridInputText) throws IOException {
+    protected void renderSpan(final FacesContext context,
+            final UIComponent gridInputText, final String value)
+            throws IOException {
 
         final ResponseWriter writer = context.getResponseWriter();
-        writer.startElement(JsfConstants.DIV_ELEM, gridInputText);
-        RendererUtil.renderAttribute(writer, JsfConstants.ONCLICK_ATTR,
-                "editOn(this);");
-        final String value = ValueHolderUtil.getValueForRender(context,
-                gridInputText);
         writer.startElement(JsfConstants.SPAN_ELEM, gridInputText);
         writer.writeText(value, null);
         // TODO escape
@@ -83,19 +95,18 @@ public class THtmlGridInputTextRenderer extends AbstractRenderer {
         //                writer.write(value);
         //            }
         writer.endElement(JsfConstants.SPAN_ELEM);
-        return writer;
     }
 
-    static final String DISPLAY_NONE = "display:none;";
-
-    static final String EDIT_OFF = "editOff(this);";
+    protected String getValue(final FacesContext context,
+            final UIComponent gridInputText) {
+        return ValueHolderUtil.getValueForRender(context, gridInputText);
+    }
 
     protected void renderInput(final FacesContext context,
             final UIComponent gridInputText) throws IOException {
 
         final ResponseWriter writer = context.getResponseWriter();
-        final String value = ValueHolderUtil.getValueForRender(context,
-                gridInputText);
+        final String value = getValue(context, gridInputText);
         writer.startElement(JsfConstants.INPUT_ELEM, gridInputText);
         RendererUtil.renderAttribute(writer, JsfConstants.TYPE_ATTR,
                 JsfConstants.TEXT_VALUE);

@@ -115,8 +115,8 @@ public class THtmlInputCommaTextRenderer extends HtmlInputTextRenderer {
         markJavaScriptRendererd(context, scriptKey);
     }
 
-    private String getValue(FacesContext context,
-            THtmlInputCommaText htmlInputCommaText) {
+    protected String getValue(FacesContext context,
+            UIComponent htmlInputCommaText) {
         final String value = ValueHolderUtil.getValueForRender(context,
                 htmlInputCommaText);
         if (StringUtil.isEmpty(value)) {

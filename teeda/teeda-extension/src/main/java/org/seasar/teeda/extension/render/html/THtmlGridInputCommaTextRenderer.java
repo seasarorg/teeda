@@ -36,9 +36,11 @@ public class THtmlGridInputCommaTextRenderer extends
     protected void encodeHtmlInputCommaTextEnd(FacesContext context,
             THtmlInputCommaText htmlInputCommaText) throws IOException {
 
-        gridInputTextRenderer.beforeInput(context, htmlInputCommaText);
+        gridInputTextRenderer.renderStartDiv(context, htmlInputCommaText);
+        gridInputTextRenderer.renderSpan(context, htmlInputCommaText, getValue(
+                context, htmlInputCommaText));
         super.encodeHtmlInputCommaTextEnd(context, htmlInputCommaText);
-        gridInputTextRenderer.afterInput(context, htmlInputCommaText);
+        gridInputTextRenderer.renderEndDiv(context, htmlInputCommaText);
     }
 
     protected String createOnblurAttribute(
