@@ -44,13 +44,13 @@ import org.seasar.teeda.extension.util.JavaScriptContext;
 
 /**
  * @author shot
- *
+ * @author manhole
  */
 public class THtmlInputCommaTextRenderer extends HtmlInputTextRenderer {
 
     public static final String COMPONENT_FAMILY = "javax.faces.Input";
 
-    public static final String RENDERER_TYPE = "org.seasar.jsf.HtmlInputCommaText";
+    public static final String RENDERER_TYPE = THtmlInputCommaText.DEFAULT_RENDERER_TYPE;
 
     private static final String DEFAULT_FRACTION = "0";
 
@@ -75,7 +75,7 @@ public class THtmlInputCommaTextRenderer extends HtmlInputTextRenderer {
         ResponseWriter writer = context.getResponseWriter();
         UIViewRoot root = context.getViewRoot();
         ScriptEnhanceUIViewRoot sRoot = (ScriptEnhanceUIViewRoot) root;
-        String scriptKey = htmlInputCommaText.getClass().getName();
+        final String scriptKey = THtmlInputCommaText.class.getName();
         if (!sRoot.containsScript(scriptKey)) {
             JavaScriptContext scriptContext = new JavaScriptContext();
             scriptContext.loadScript(scriptKey);
@@ -89,33 +89,17 @@ public class THtmlInputCommaTextRenderer extends HtmlInputTextRenderer {
                 getIdForRender(context, htmlInputCommaText));
         RendererUtil.renderAttribute(writer, JsfConstants.NAME_ATTR,
                 htmlInputCommaText.getClientId(context));
-        String value = ValueHolderUtil.getValueForRender(context,
-                htmlInputCommaText);
-        if (!StringUtil.isEmpty(value)) {
-            //TODO BigDecimal only?
-            value = convertToFormattedValue(context, BigDecimalConversionUtil
-                    .toBigDecimal(value));
-        }
+        final String value = getValue(context, htmlInputCommaText);
         RendererUtil.renderAttribute(writer, JsfConstants.VALUE_ATTR, value);
         if (htmlInputCommaText.isDisabled()) {
             renderDisabledAttribute(writer);
         }
-        Locale locale = context.getViewRoot().getLocale();
-        String fraction = htmlInputCommaText.getFraction();
-        if (StringUtil.isEmpty(fraction)) {
-            fraction = DEFAULT_FRACTION;
-        }
-
-        String groupingSeparator = htmlInputCommaText.getGroupingSeparator();
-        if (StringUtil.isEmpty(groupingSeparator)) {
-            groupingSeparator = NumberConversionUtil
-                    .findGroupingSeparator(locale);
-        }
-        String fractionSeparator = htmlInputCommaText.getFractionSeparator();
-        if (StringUtil.isEmpty(fractionSeparator)) {
-            fractionSeparator = NumberConversionUtil
-                    .findDecimalSeparator(locale);
-        }
+        final Locale locale = context.getViewRoot().getLocale();
+        final String fraction = getFraction(htmlInputCommaText);
+        final String groupingSeparator = getGroupingSeparator(
+                htmlInputCommaText, locale);
+        final String fractionSeparator = getFractionSeparator(
+                htmlInputCommaText, locale);
         renderOnfocus(htmlInputCommaText, writer, groupingSeparator);
         renderOnblur(htmlInputCommaText, writer, fraction, groupingSeparator,
                 fractionSeparator);
@@ -123,11 +107,56 @@ public class THtmlInputCommaTextRenderer extends HtmlInputTextRenderer {
         renderOnkeypress(htmlInputCommaText, writer);
         renderOnkeyup(htmlInputCommaText, writer);
         renderStyle(htmlInputCommaText, writer);
+        renderStyleClass(htmlInputCommaText, writer);
 
         renderRemain(htmlInputCommaText, writer);
 
         writer.endElement(JsfConstants.INPUT_ELEM);
         markJavaScriptRendererd(context, scriptKey);
+    }
+
+    private String getValue(FacesContext context,
+            THtmlInputCommaText htmlInputCommaText) {
+        final String value = ValueHolderUtil.getValueForRender(context,
+                htmlInputCommaText);
+        if (StringUtil.isEmpty(value)) {
+            return value;
+        }
+        //TODO BigDecimal only?
+        try {
+            return convertToFormattedValue(context, BigDecimalConversionUtil
+                    .toBigDecimal(value));
+        } catch (NumberFormatException e) {
+            return null;
+        }
+    }
+
+    private String getGroupingSeparator(THtmlInputCommaText htmlInputCommaText,
+            final Locale locale) {
+        String groupingSeparator = htmlInputCommaText.getGroupingSeparator();
+        if (StringUtil.isEmpty(groupingSeparator)) {
+            groupingSeparator = NumberConversionUtil
+                    .findGroupingSeparator(locale);
+        }
+        return groupingSeparator;
+    }
+
+    private String getFractionSeparator(THtmlInputCommaText htmlInputCommaText,
+            Locale locale) {
+        String fractionSeparator = htmlInputCommaText.getFractionSeparator();
+        if (StringUtil.isEmpty(fractionSeparator)) {
+            fractionSeparator = NumberConversionUtil
+                    .findDecimalSeparator(locale);
+        }
+        return fractionSeparator;
+    }
+
+    private String getFraction(THtmlInputCommaText htmlInputCommaText) {
+        String fraction = htmlInputCommaText.getFraction();
+        if (StringUtil.isEmpty(fraction)) {
+            fraction = DEFAULT_FRACTION;
+        }
+        return fraction;
     }
 
     protected void markJavaScriptRendererd(FacesContext context,
@@ -140,8 +169,8 @@ public class THtmlInputCommaTextRenderer extends HtmlInputTextRenderer {
         IgnoreComponent ignore = buildIgnoreComponent();
         Map map = UIComponentUtil.getAllAttributesAndProperties(
                 htmlInputCommaText, ignore);
-        for (Iterator itr = map.entrySet().iterator(); itr.hasNext();) {
-            Map.Entry entry = (Map.Entry) itr.next();
+        for (final Iterator it = map.entrySet().iterator(); it.hasNext();) {
+            Map.Entry entry = (Map.Entry) it.next();
             String name = (String) entry.getKey();
             Object value = entry.getValue();
             RendererUtil.renderAttribute(writer, name, value, name);
@@ -150,12 +179,35 @@ public class THtmlInputCommaTextRenderer extends HtmlInputTextRenderer {
 
     protected void renderStyle(THtmlInputCommaText htmlInputCommaText,
             ResponseWriter writer) throws IOException {
-        String style = appendSemiColonIfNeed(htmlInputCommaText.getStyle());
-        if (!style.endsWith("ime-mode:disabled;")) {
-            style = style + "ime-mode:disabled;";
+        String style = createStyleAttribute(htmlInputCommaText);
+        if (StringUtil.isNotBlank(style)) {
             RendererUtil
                     .renderAttribute(writer, JsfConstants.STYLE_ATTR, style);
         }
+    }
+
+    protected String createStyleAttribute(THtmlInputCommaText htmlInputCommaText) {
+        final String style = appendSemiColonIfNeed(htmlInputCommaText
+                .getStyle());
+        final String s = "ime-mode:disabled;";
+        if (StringUtil.contains(style, s)) {
+            return style;
+        }
+        return style + s;
+    }
+
+    protected void renderStyleClass(THtmlInputCommaText htmlInputCommaText,
+            ResponseWriter writer) throws IOException {
+        final String styleClass = createStyleClassAttribute(htmlInputCommaText);
+        if (StringUtil.isNotBlank(styleClass)) {
+            RendererUtil.renderAttribute(writer, JsfConstants.STYLE_CLASS_ATTR,
+                    styleClass);
+        }
+    }
+
+    protected String createStyleClassAttribute(
+            THtmlInputCommaText htmlInputCommaText) {
+        return htmlInputCommaText.getStyleClass();
     }
 
     protected void renderOnfocus(THtmlInputCommaText htmlInputCommaText,
@@ -164,6 +216,8 @@ public class THtmlInputCommaTextRenderer extends HtmlInputTextRenderer {
         String target = "removeComma(this, '" + groupingSeparator + "');";
         if (!onfocus.endsWith(target)) {
             onfocus = onfocus + target;
+        }
+        if (StringUtil.isNotBlank(onfocus)) {
             RendererUtil.renderAttribute(writer, JsfConstants.ONFOCUS_ATTR,
                     onfocus);
         }
@@ -172,16 +226,26 @@ public class THtmlInputCommaTextRenderer extends HtmlInputTextRenderer {
     protected void renderOnblur(THtmlInputCommaText htmlInputCommaText,
             ResponseWriter writer, String fraction, String groupingSeparator,
             String fractionSeparator) throws IOException {
-        String onblur = appendSemiColonIfNeed(htmlInputCommaText.getOnblur());
-        if (!onblur.endsWith("convertByKey(this);addComma(this, '" + fraction
-                + "', '" + groupingSeparator + "', '" + fractionSeparator
-                + "');")) {
-            onblur = onblur + "convertByKey(this);addComma(this, '" + fraction
-                    + "', '" + groupingSeparator + "', '" + fractionSeparator
-                    + "');";
+        final String onblur = createOnblurAttribute(htmlInputCommaText,
+                fraction, groupingSeparator, fractionSeparator);
+        if (StringUtil.isNotBlank(onblur)) {
             RendererUtil.renderAttribute(writer, JsfConstants.ONBLUR_ATTR,
                     onblur);
         }
+    }
+
+    protected String createOnblurAttribute(
+            THtmlInputCommaText htmlInputCommaText, String fraction,
+            String groupingSeparator, String fractionSeparator) {
+        final String onblur = appendSemiColonIfNeed(htmlInputCommaText
+                .getOnblur());
+        final String s = "convertByKey(this);addComma(this, '" + fraction
+                + "', '" + groupingSeparator + "', '" + fractionSeparator
+                + "');";
+        if (StringUtil.contains(onblur, s)) {
+            return onblur;
+        }
+        return onblur + s;
     }
 
     protected void renderOnkeydown(THtmlInputCommaText htmlInputCommaText,
@@ -200,8 +264,9 @@ public class THtmlInputCommaTextRenderer extends HtmlInputTextRenderer {
 
     private void renderKeycheckEvent(ResponseWriter writer,
             String attributeName, String target) throws IOException {
-        if (!target.endsWith("return keycheckForNumber(event);")) {
-            target = target + "return keycheckForNumber(event);";
+        final String script = "return keycheckForNumber(event);";
+        if (!target.endsWith(script)) {
+            target = target + script;
             RendererUtil.renderAttribute(writer, attributeName, target);
         }
     }
@@ -209,8 +274,9 @@ public class THtmlInputCommaTextRenderer extends HtmlInputTextRenderer {
     protected void renderOnkeyup(THtmlInputCommaText htmlInputCommaText,
             ResponseWriter writer) throws IOException {
         String onkeyup = appendSemiColonIfNeed(htmlInputCommaText.getOnkeyup());
-        if (!onkeyup.endsWith("convertByKey(this);")) {
-            onkeyup = onkeyup + "convertByKey(this);";
+        final String script = "convertByKey(this);";
+        if (!onkeyup.endsWith(script)) {
+            onkeyup = onkeyup + script;
             RendererUtil.renderAttribute(writer, JsfConstants.ONKEYUP_ATTR,
                     onkeyup);
         }
@@ -222,6 +288,7 @@ public class THtmlInputCommaTextRenderer extends HtmlInputTextRenderer {
         ignore.addIgnoreComponentName(JsfConstants.TYPE_ATTR);
         ignore.addIgnoreComponentName(JsfConstants.VALUE_ATTR);
         ignore.addIgnoreComponentName(JsfConstants.STYLE_ATTR);
+        ignore.addIgnoreComponentName(JsfConstants.STYLE_CLASS_ATTR);
         ignore.addIgnoreComponentName(JsfConstants.ONFOCUS_ATTR);
         ignore.addIgnoreComponentName(JsfConstants.ONBLUR_ATTR);
         ignore.addIgnoreComponentName(JsfConstants.ONKEYDOWN_ATTR);

@@ -16,6 +16,7 @@
 package org.seasar.teeda.extension.component.html;
 
 import javax.faces.component.UIComponentBase;
+import javax.faces.context.FacesContext;
 
 /**
  * @author manhole
@@ -56,6 +57,23 @@ public class THtmlGridColumn extends UIComponentBase {
 
     public void setStyleClass(String styleClass) {
         this.styleClass = styleClass;
+    }
+
+    public Object saveState(FacesContext context) {
+        Object[] values = new Object[4];
+        values[0] = super.saveState(context);
+        values[1] = span;
+        values[2] = width;
+        values[3] = styleClass;
+        return values;
+    }
+
+    public void restoreState(FacesContext context, Object state) {
+        Object values[] = (Object[]) state;
+        super.restoreState(context, values[0]);
+        span = (String) values[1];
+        width = (String) values[2];
+        styleClass = (String) values[3];
     }
 
 }

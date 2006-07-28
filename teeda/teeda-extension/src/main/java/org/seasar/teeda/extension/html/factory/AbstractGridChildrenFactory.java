@@ -15,6 +15,7 @@
  */
 package org.seasar.teeda.extension.html.factory;
 
+import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.PageDesc;
@@ -22,39 +23,21 @@ import org.seasar.teeda.extension.html.PageDesc;
 /**
  * @author manhole
  */
-public abstract class AbstractGridChildrenFactory extends AbstractGridFactory {
-
-    public static final String gridFactory_BINDING = "bindingType=must";
+public abstract class AbstractGridChildrenFactory extends
+        AbstractElementProcessorFactory {
 
     public boolean isMatch(ElementNode elementNode, PageDesc pageDesc,
             ActionDesc actionDesc) {
         if (!getHtmlTagName().equalsIgnoreCase(elementNode.getTagName())) {
             return false;
         }
-        return isGridChild(elementNode, pageDesc, actionDesc);
+        return GridFactoryUtil.isGridChild(elementNode, pageDesc, actionDesc);
     }
 
     protected abstract String getHtmlTagName();
 
-    private boolean isGridChild(ElementNode elementNode, PageDesc pageDesc,
-            ActionDesc actionDesc) {
-        final ElementNode gridNode = getGridNode(elementNode, pageDesc,
-                actionDesc);
-        if (gridNode != null) {
-            return true;
-        }
-        return false;
-    }
-
-    protected ElementNode getGridNode(ElementNode elementNode,
-            PageDesc pageDesc, ActionDesc actionDesc) {
-        for (ElementNode node = elementNode.getParent(); node != null; node = node
-                .getParent()) {
-            if (isMatchGrid(node, pageDesc, actionDesc)) {
-                return node;
-            }
-        }
-        return null;
+    protected String getUri() {
+        return ExtensionConstants.TEEDA_EXTENSION_URI;
     }
 
 }

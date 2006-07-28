@@ -25,13 +25,13 @@ import org.seasar.teeda.extension.html.PageDesc;
 /**
  * @author manhole
  */
-public class GridFactory extends AbstractGridFactory {
+public class GridFactory extends AbstractElementProcessorFactory {
 
     private static final String TAG_NAME = "grid";
 
     public boolean isMatch(ElementNode elementNode, PageDesc pageDesc,
             ActionDesc actionDesc) {
-        return isMatchGrid(elementNode, pageDesc, actionDesc);
+        return GridFactoryUtil.isMatchGrid(elementNode, pageDesc, actionDesc);
     }
 
     protected void customizeProperties(Map properties, ElementNode elementNode,
@@ -42,11 +42,15 @@ public class GridFactory extends AbstractGridFactory {
         properties.put(ExtensionConstants.PAGE_NAME_ATTR, pageDesc
                 .getPageName());
         final String id = elementNode.getId();
-        properties.put(ExtensionConstants.ITEMS_NAME_ATTR, getItemsName(id));
+        properties.put(ExtensionConstants.ITEMS_NAME_ATTR, GridFactoryUtil
+                .getItemsName(id));
     }
 
     protected String getTagName() {
         return TAG_NAME;
     }
 
+    protected String getUri() {
+        return ExtensionConstants.TEEDA_EXTENSION_URI;
+    }
 }

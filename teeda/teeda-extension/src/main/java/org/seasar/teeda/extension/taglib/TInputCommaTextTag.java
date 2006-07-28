@@ -33,12 +33,21 @@ public class TInputCommaTextTag extends InputTextTag {
 
     private String fractionSeparator;
 
+    private String rendererType;
+
     public String getComponentType() {
         return THtmlInputCommaText.COMPONENT_TYPE;
     }
 
     public String getRendererType() {
-        return THtmlInputCommaText.DEFAULT_RENDERER_TYPE;
+        if (rendererType == null) {
+            rendererType = THtmlInputCommaText.DEFAULT_RENDERER_TYPE;
+        }
+        return rendererType;
+    }
+
+    public void setRendererType(String rendererType) {
+        this.rendererType = rendererType;
     }
 
     public String getFraction() {

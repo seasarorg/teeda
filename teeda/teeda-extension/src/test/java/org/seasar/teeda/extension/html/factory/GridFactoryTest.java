@@ -37,7 +37,7 @@ import org.seasar.teeda.extension.taglib.TGridTag;
  */
 public class GridFactoryTest extends TeedaTestCase {
 
-    private AbstractGridFactory factory;
+    private GridFactory factory;
 
     protected void setUp() throws Exception {
         super.setUp();

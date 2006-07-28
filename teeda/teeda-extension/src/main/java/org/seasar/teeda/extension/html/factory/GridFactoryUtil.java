@@ -24,27 +24,22 @@ import org.seasar.teeda.extension.html.PageDesc;
 /**
  * @author manhole
  */
-public abstract class AbstractGridFactory extends
-        AbstractElementProcessorFactory {
+public class GridFactoryUtil {
 
-    static final String GRID = "Grid";
+    private static final String GRID = "Grid";
 
-    static final String GRID_X = "GridX";
+    private static final String GRID_X = "GridX";
 
-    static final String GRID_Y = "GridY";
+    private static final String GRID_Y = "GridY";
 
-    static final String GRID_XY = "GridXY";
+    private static final String GRID_XY = "GridXY";
 
-    protected String getNaturalName(final String id) {
-        final int pos = id.lastIndexOf(GRID);
+    static String getNaturalName(final String id) {
+        final int pos = id.lastIndexOf(GridFactoryUtil.GRID);
         return id.substring(0, pos);
     }
 
-    protected String getUri() {
-        return ExtensionConstants.TEEDA_EXTENSION_URI;
-    }
-
-    protected boolean isMatchGrid(ElementNode elementNode, PageDesc pageDesc,
+    static boolean isMatchGrid(ElementNode elementNode, PageDesc pageDesc,
             ActionDesc actionDesc) {
         if (pageDesc == null) {
             return false;
@@ -56,8 +51,10 @@ public abstract class AbstractGridFactory extends
         if (id == null) {
             return false;
         }
-        if (id.endsWith(GRID) || id.endsWith(GRID_X) || id.endsWith(GRID_Y)
-                || id.endsWith(GRID_XY)) {
+        if (id.endsWith(GridFactoryUtil.GRID)
+                || id.endsWith(GridFactoryUtil.GRID_X)
+                || id.endsWith(GridFactoryUtil.GRID_Y)
+                || id.endsWith(GridFactoryUtil.GRID_XY)) {
         } else {
             return false;
         }
@@ -68,10 +65,31 @@ public abstract class AbstractGridFactory extends
         return false;
     }
 
-    protected String getItemsName(final String id) {
+    static String getItemsName(final String id) {
         final String naturalName = getNaturalName(id);
         final String itemsName = naturalName + ExtensionConstants.ITEMS_SUFFIX;
         return itemsName;
+    }
+
+    static boolean isGridChild(ElementNode elementNode, PageDesc pageDesc,
+            ActionDesc actionDesc) {
+        final ElementNode gridNode = findParentGridNode(elementNode, pageDesc,
+                actionDesc);
+        if (gridNode != null) {
+            return true;
+        }
+        return false;
+    }
+
+    static ElementNode findParentGridNode(ElementNode elementNode, PageDesc pageDesc,
+            ActionDesc actionDesc) {
+        for (ElementNode node = elementNode.getParent(); node != null; node = node
+                .getParent()) {
+            if (isMatchGrid(node, pageDesc, actionDesc)) {
+                return node;
+            }
+        }
+        return null;
     }
 
 }

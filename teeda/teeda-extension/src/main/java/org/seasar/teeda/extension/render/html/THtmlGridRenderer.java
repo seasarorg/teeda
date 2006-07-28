@@ -56,7 +56,7 @@ public class THtmlGridRenderer extends TForEachRenderer {
 
     private static final String GRID_CELL_CLASS_NAME = "gridCell";
 
-    private static final String LEFT_FIXED_CLASS_NAME = "teeda_leftFixed";
+    private static final String LEFT_FIXED_CLASS_NAME = "T_leftFixed";
 
     private static final String GRID_ATTRIBUTE = THtmlGrid.class.getName()
             + ".GRID_ATTRIBUTE";
@@ -424,15 +424,33 @@ public class THtmlGridRenderer extends TForEachRenderer {
         writer.startElement(JsfConstants.TD_ELEM, td);
         writer.startElement(JsfConstants.DIV_ELEM, td);
         RendererUtil.renderAttribute(writer, JsfConstants.CLASS_ATTR,
-                GRID_CELL_CLASS_NAME);
+                createTdStyleClassAttribute(td));
         RendererUtil.renderAttribute(writer, JsfConstants.STYLE_ATTR,
-                "overflow:hidden; width:" + attribute.getColumnWidth(columnNo)
-                        + "px;");
+                createTdStyleAttribute(td, attribute, columnNo));
         writer.startElement(JsfConstants.NOBR_ELEM, td);
         encodeDescendantComponent(context, td);
         writer.endElement(JsfConstants.NOBR_ELEM);
         writer.endElement(JsfConstants.DIV_ELEM);
         writer.endElement(JsfConstants.TD_ELEM);
+    }
+
+    private String createTdStyleClassAttribute(THtmlGridTd td) {
+        final String styleClass = td.getStyleClass();
+        if (StringUtil.isBlank(styleClass)) {
+            return GRID_CELL_CLASS_NAME;
+        }
+        return GRID_CELL_CLASS_NAME + " " + styleClass;
+    }
+
+    private String createTdStyleAttribute(THtmlGridTd td,
+            final THtmlGridRenderer.GridAttribute attribute, final int columnNo) {
+        final String style = td.getStyle();
+        final String s = "overflow:hidden; width:"
+                + attribute.getColumnWidth(columnNo) + "px;";
+        if (StringUtil.isBlank(style)) {
+            return s;
+        }
+        return s + " " + style;
     }
 
     private THtmlGridRenderer.GridAttribute getGridAttribute(THtmlGrid htmlGrid) {

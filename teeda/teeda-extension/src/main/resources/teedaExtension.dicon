@@ -33,10 +33,6 @@
 		class="org.seasar.teeda.extension.html.factory.FormFactory"
 	/>
 	<component
-		name="inputCommaTextFactory"
-		class="org.seasar.teeda.extension.html.factory.InputCommaTextFactory"
-	/>
-	<component
 		name="inputHiddenFactory"
 		class="org.seasar.teeda.extension.html.factory.InputHiddenFactory"
 	/>
@@ -70,19 +66,19 @@
 	/>
 
 	<component
-		name="GridBodyFactory"
+		name="gridBodyFactory"
 		class="org.seasar.teeda.extension.html.factory.GridBodyFactory"
 	/>
 	<component
-		name="GridColFactory"
+		name="gridColFactory"
 		class="org.seasar.teeda.extension.html.factory.GridColFactory"
 	/>
 	<component
-		name="GridColGroupFactory"
+		name="gridColGroupFactory"
 		class="org.seasar.teeda.extension.html.factory.GridColGroupFactory"
 	/>
 	<component
-		name="GridHeaderFactory"
+		name="gridHeaderFactory"
 		class="org.seasar.teeda.extension.html.factory.GridHeaderFactory"
 	/>
 	<component
@@ -90,16 +86,24 @@
 		class="org.seasar.teeda.extension.html.factory.GridTrFactory"
 	/>
 	<component
-		name="GridTdFactory"
+		name="gridTdFactory"
 		class="org.seasar.teeda.extension.html.factory.GridTdFactory"
 	/>
 	<component
-		name="GridThFactory"
+		name="gridThFactory"
 		class="org.seasar.teeda.extension.html.factory.GridThFactory"
 	/>
 	<component
-		name="GridInputTextFactory"
+		name="gridInputCommaTextFactory"
+		class="org.seasar.teeda.extension.html.factory.GridInputCommaTextFactory"
+	/>
+	<component
+		name="gridInputTextFactory"
 		class="org.seasar.teeda.extension.html.factory.GridInputTextFactory"
+	/>
+	<component
+		name="inputCommaTextFactory"
+		class="org.seasar.teeda.extension.html.factory.InputCommaTextFactory"
 	/>
 	<component
 		name="inputTextFactory"
@@ -107,7 +111,8 @@
 	/>
 	<component
 		name="selectOneListboxFactory"
-		class="org.seasar.teeda.extension.html.factory.SelectOneMenuFactory"/>
+		class="org.seasar.teeda.extension.html.factory.SelectOneMenuFactory"
+	/>
 
 	<component class="org.seasar.teeda.extension.html.impl.TagProcessorAssemblerImpl"/>
 	<component class="org.seasar.teeda.extension.html.impl.TagProcessorCacheImpl"/>

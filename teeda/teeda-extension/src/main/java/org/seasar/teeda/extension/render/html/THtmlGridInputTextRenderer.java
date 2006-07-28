@@ -37,7 +37,7 @@ public class THtmlGridInputTextRenderer extends AbstractRenderer {
 
     public static final String RENDERER_TYPE = THtmlGridInputText.DEFAULT_RENDERER_TYPE;
 
-    private static final String GRID_CELL_EDIT_CLASS_NAME = "gridCellEdit";
+    static final String GRID_CELL_EDIT_CLASS_NAME = "gridCellEdit";
 
     public void encodeEnd(FacesContext context, UIComponent component)
             throws IOException {
@@ -45,18 +45,36 @@ public class THtmlGridInputTextRenderer extends AbstractRenderer {
         if (!component.isRendered()) {
             return;
         }
-        encodeHtmlGridInputTextEnd(context, (THtmlGridInputText) component);
+        if (!(component instanceof THtmlGridInputText)) {
+            throw new ClassCastException(component.getClass().getName());
+        }
+        encodeHtmlGridInputTextEnd(context, component);
     }
 
-    protected void encodeHtmlGridInputTextEnd(FacesContext context,
-            THtmlGridInputText gridInputText) throws IOException {
-        ResponseWriter writer = context.getResponseWriter();
+    protected void encodeHtmlGridInputTextEnd(final FacesContext context,
+            final UIComponent gridInputText) throws IOException {
+        beforeInput(context, gridInputText);
+        renderInput(context, gridInputText);
+        afterInput(context, gridInputText);
+    }
+
+    protected void afterInput(final FacesContext context,
+            final UIComponent gridInputText) throws IOException {
+        final ResponseWriter writer = context.getResponseWriter();
+        writer.write("&nbsp;");
+        writer.endElement(JsfConstants.DIV_ELEM);
+    }
+
+    protected ResponseWriter beforeInput(final FacesContext context,
+            final UIComponent gridInputText) throws IOException {
+
+        final ResponseWriter writer = context.getResponseWriter();
         writer.startElement(JsfConstants.DIV_ELEM, gridInputText);
         RendererUtil.renderAttribute(writer, JsfConstants.ONCLICK_ATTR,
                 "editOn(this);");
-        writer.startElement(JsfConstants.SPAN_ELEM, gridInputText);
         final String value = ValueHolderUtil.getValueForRender(context,
                 gridInputText);
+        writer.startElement(JsfConstants.SPAN_ELEM, gridInputText);
         writer.writeText(value, null);
         // TODO escape
         //            if (gridInputText.isEscape()) {
@@ -65,7 +83,19 @@ public class THtmlGridInputTextRenderer extends AbstractRenderer {
         //                writer.write(value);
         //            }
         writer.endElement(JsfConstants.SPAN_ELEM);
+        return writer;
+    }
 
+    static final String DISPLAY_NONE = "display:none;";
+
+    static final String EDIT_OFF = "editOff(this);";
+
+    protected void renderInput(final FacesContext context,
+            final UIComponent gridInputText) throws IOException {
+
+        final ResponseWriter writer = context.getResponseWriter();
+        final String value = ValueHolderUtil.getValueForRender(context,
+                gridInputText);
         writer.startElement(JsfConstants.INPUT_ELEM, gridInputText);
         RendererUtil.renderAttribute(writer, JsfConstants.TYPE_ATTR,
                 JsfConstants.TEXT_VALUE);
@@ -73,17 +103,15 @@ public class THtmlGridInputTextRenderer extends AbstractRenderer {
                 getIdForRender(context, gridInputText));
         RendererUtil.renderAttribute(writer, JsfConstants.NAME_ATTR,
                 gridInputText.getClientId(context));
-        RendererUtil.renderAttribute(writer, JsfConstants.ONBLUR_ATTR,
-                "editOff(this);");
+        RendererUtil
+                .renderAttribute(writer, JsfConstants.ONBLUR_ATTR, EDIT_OFF);
         RendererUtil.renderAttribute(writer, JsfConstants.CLASS_ATTR,
                 GRID_CELL_EDIT_CLASS_NAME);
         RendererUtil.renderAttribute(writer, JsfConstants.STYLE_ATTR,
-                "display:none;");
+                DISPLAY_NONE);
         RendererUtil.renderAttribute(writer, JsfConstants.VALUE_ATTR, value);
         renderAttributes(gridInputText, writer);
         writer.endElement(JsfConstants.INPUT_ELEM);
-        writer.write("&nbsp;");
-        writer.endElement(JsfConstants.DIV_ELEM);
     }
 
     public void decode(FacesContext context, UIComponent component) {

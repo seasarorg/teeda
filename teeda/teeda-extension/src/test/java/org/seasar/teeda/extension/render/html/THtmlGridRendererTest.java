@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
 import javax.faces.render.Renderer;
 import javax.faces.render.RendererTest;
@@ -34,15 +33,15 @@ import org.seasar.teeda.core.el.impl.commons.CommonsExpressionProcessorImpl;
 import org.seasar.teeda.core.mock.MockHtmlOutputText;
 import org.seasar.teeda.core.render.html.HtmlOutputTextRenderer;
 import org.seasar.teeda.core.unit.TestUtil;
-import org.seasar.teeda.extension.component.html.THtmlGrid;
 import org.seasar.teeda.extension.component.html.THtmlGridBody;
 import org.seasar.teeda.extension.component.html.THtmlGridColumn;
 import org.seasar.teeda.extension.component.html.THtmlGridColumnGroup;
 import org.seasar.teeda.extension.component.html.THtmlGridHeader;
-import org.seasar.teeda.extension.component.html.THtmlGridInputText;
 import org.seasar.teeda.extension.component.html.THtmlGridTd;
 import org.seasar.teeda.extension.component.html.THtmlGridTh;
 import org.seasar.teeda.extension.component.html.THtmlGridTr;
+import org.seasar.teeda.extension.mock.MockHtmlGrid;
+import org.seasar.teeda.extension.mock.MockHtmlGridInputText;
 import org.seasar.teeda.extension.render.html.THtmlGridRendererTest.FooPage.FooItem;
 import org.xml.sax.SAXException;
 
@@ -355,7 +354,7 @@ public class THtmlGridRendererTest extends RendererTest {
                 THtmlGridColumn col = new THtmlGridColumn();
                 col.setSpan(String.valueOf(2));
                 col.setWidth(String.valueOf(40));
-                col.setStyleClass("teeda_leftFixed");
+                col.setStyleClass("T_leftFixed");
                 addChild(columnGroup, col);
             }
             {
@@ -472,7 +471,7 @@ public class THtmlGridRendererTest extends RendererTest {
                 THtmlGridColumn col = new THtmlGridColumn();
                 col.setSpan(String.valueOf(1));
                 col.setWidth(String.valueOf(40));
-                col.setStyleClass("teeda_leftFixed");
+                col.setStyleClass("T_leftFixed");
                 addChild(columnGroup, col);
             }
             {
@@ -599,66 +598,6 @@ public class THtmlGridRendererTest extends RendererTest {
             throws SAXException, IOException, ParserConfigurationException {
         return super.diff("<dummy>" + expected + "</dummy>", "<dummy>" + actual
                 + "</dummy>");
-    }
-
-    public static class MockHtmlGrid extends THtmlGrid {
-
-        private Renderer renderer;
-
-        private String clientId;
-
-        public void setRenderer(Renderer renderer) {
-            this.renderer = renderer;
-        }
-
-        protected Renderer getRenderer(FacesContext context) {
-            if (renderer != null) {
-                return renderer;
-            }
-            return super.getRenderer(context);
-        }
-
-        public String getClientId(FacesContext context) {
-            if (clientId != null) {
-                return clientId;
-            }
-            return super.getClientId(context);
-        }
-
-        public void setClientId(String clientId) {
-            this.clientId = clientId;
-        }
-
-    }
-
-    public static class MockHtmlGridInputText extends THtmlGridInputText {
-
-        private Renderer renderer;
-
-        private String clientId;
-
-        public void setRenderer(Renderer renderer) {
-            this.renderer = renderer;
-        }
-
-        protected Renderer getRenderer(FacesContext context) {
-            if (renderer != null) {
-                return renderer;
-            }
-            return super.getRenderer(context);
-        }
-
-        public String getClientId(FacesContext context) {
-            if (clientId != null) {
-                return clientId;
-            }
-            return super.getClientId(context);
-        }
-
-        public void setClientId(String clientId) {
-            this.clientId = clientId;
-        }
-
     }
 
     public static class FooPage {

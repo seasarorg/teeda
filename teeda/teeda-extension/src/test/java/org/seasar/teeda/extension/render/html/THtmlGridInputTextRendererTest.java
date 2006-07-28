@@ -18,7 +18,6 @@ package org.seasar.teeda.extension.render.html;
 import java.io.IOException;
 
 import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
 import javax.faces.render.Renderer;
 import javax.faces.render.RendererTest;
 import javax.xml.parsers.ParserConfigurationException;
@@ -27,7 +26,7 @@ import org.custommonkey.xmlunit.Diff;
 import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.mock.MockUIComponentBaseWithNamingContainer;
 import org.seasar.teeda.core.render.html.HtmlOutputTextRenderer;
-import org.seasar.teeda.extension.component.html.THtmlGridInputText;
+import org.seasar.teeda.extension.mock.MockHtmlGridInputText;
 import org.xml.sax.SAXException;
 
 /**
@@ -156,36 +155,6 @@ public class THtmlGridInputTextRendererTest extends RendererTest {
         renderer.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
         renderer.setRenderAttributes(getRenderAttributes());
         return renderer;
-    }
-
-    public class MockHtmlGridInputText extends THtmlGridInputText {
-
-        private Renderer renderer;
-
-        private String clientId;
-
-        public void setRenderer(Renderer renderer) {
-            this.renderer = renderer;
-        }
-
-        protected Renderer getRenderer(FacesContext context) {
-            if (renderer != null) {
-                return renderer;
-            }
-            return super.getRenderer(context);
-        }
-
-        public String getClientId(FacesContext context) {
-            if (clientId != null) {
-                return clientId;
-            }
-            return super.getClientId(context);
-        }
-
-        public void setClientId(String clientId) {
-            this.clientId = clientId;
-        }
-
     }
 
 }

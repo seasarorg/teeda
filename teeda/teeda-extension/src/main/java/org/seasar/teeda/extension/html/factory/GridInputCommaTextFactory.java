@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -17,26 +17,23 @@ package org.seasar.teeda.extension.html.factory;
 
 import java.util.Map;
 
-import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.PageDesc;
+import org.seasar.teeda.extension.render.html.THtmlGridInputCommaTextRenderer;
 
 /**
  * @author manhole
  */
-public class GridTrFactory extends AbstractGridChildrenFactory {
+public class GridInputCommaTextFactory extends InputCommaTextFactory {
 
-    private static final String ROW_STYLE_CLASS = "Row"
-            + StringUtil.capitalize(JsfConstants.STYLE_CLASS_ATTR);
-
-    protected String getHtmlTagName() {
-        return JsfConstants.TR_ELEM;
-    }
-
-    protected String getTagName() {
-        return "gridTr";
+    public boolean isMatch(ElementNode elementNode, PageDesc pageDesc,
+            ActionDesc actionDesc) {
+        if (!super.isMatch(elementNode, pageDesc, actionDesc)) {
+            return false;
+        }
+        return GridFactoryUtil.isGridChild(elementNode, pageDesc, actionDesc);
     }
 
     protected void customizeProperties(Map properties, ElementNode elementNode,
@@ -44,16 +41,8 @@ public class GridTrFactory extends AbstractGridChildrenFactory {
         super
                 .customizeProperties(properties, elementNode, pageDesc,
                         actionDesc);
-        final ElementNode gridNode = GridFactoryUtil.findParentGridNode(
-                elementNode, pageDesc, actionDesc);
-        final String naturalName = GridFactoryUtil.getNaturalName(gridNode
-                .getId());
-        final String attrName = naturalName + ROW_STYLE_CLASS;
-        if (!pageDesc.hasProperty(attrName)) {
-            return;
-        }
-        properties.put(JsfConstants.STYLE_CLASS_ATTR, getBindingExpression(
-                pageDesc.getPageName(), attrName));
+        properties.put(JsfConstants.RENDERER_TYPE_ATTR,
+                THtmlGridInputCommaTextRenderer.RENDERER_TYPE);
     }
 
 }

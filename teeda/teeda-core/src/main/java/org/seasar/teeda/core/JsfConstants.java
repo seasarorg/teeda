@@ -323,6 +323,8 @@ public interface JsfConstants {
 
     String REL_ATTR = "rel";
 
+    String RENDERER_TYPE_ATTR = "rendererType";
+
     String REQUIRED_ATTR = "required";
 
     String REV_ATTR = "rev";
@@ -386,6 +388,8 @@ public interface JsfConstants {
     String ACTION_ATTR = "action";
 
     String FRACTION_ATTR = "fraction";
+
+    //  --  --
 
     String DEFAULT_RENDERKIT_CLASS = HtmlRenderKitImpl.class.getName();
 

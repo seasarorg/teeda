@@ -27,6 +27,7 @@ import org.seasar.teeda.core.mock.MockExternalContext;
 import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.extension.component.ScriptEnhanceUIViewRoot;
 import org.seasar.teeda.extension.component.html.THtmlInputCommaText;
+import org.seasar.teeda.extension.mock.MockHtmlInputCommaText;
 import org.seasar.teeda.extension.util.JavaScriptContext;
 
 /**
@@ -47,7 +48,7 @@ public class THtmlInputCommaTextRendererTest extends RendererTest {
 
     public void testEncodeEnd_withoutJsAndValue() throws Exception {
         ScriptEnhanceUIViewRoot root = new ScriptEnhanceUIViewRoot();
-        root.addScript(htmlInputCommaText.getClass().getName(),
+        root.addScript(THtmlInputCommaText.class.getName(),
                 new JavaScriptContext());
         root.setLocale(Locale.JAPAN);
         FacesContext context = getFacesContext();
@@ -67,7 +68,7 @@ public class THtmlInputCommaTextRendererTest extends RendererTest {
 
     public void testEncodeEnd_withFraction() throws Exception {
         ScriptEnhanceUIViewRoot root = new ScriptEnhanceUIViewRoot();
-        root.addScript(htmlInputCommaText.getClass().getName(),
+        root.addScript(THtmlInputCommaText.class.getName(),
                 new JavaScriptContext());
         htmlInputCommaText.setFraction("4");
         root.setLocale(Locale.JAPAN);
@@ -78,6 +79,7 @@ public class THtmlInputCommaTextRendererTest extends RendererTest {
         encodeByRenderer(renderer, context, htmlInputCommaText);
 
         // ## Assert ##
+        System.out.println(getResponseText());
         assertEquals(
                 "<input type=\"text\" name=\"_id0\" value=\"\" onfocus=\"removeComma(this, ',');\" "
                         + "onblur=\"convertByKey(this);addComma(this, '4', ',', '.');\" onkeydown=\"return keycheckForNumber(event);\" "
@@ -87,7 +89,7 @@ public class THtmlInputCommaTextRendererTest extends RendererTest {
 
     public void testEncodeEnd_withAnotherLocale() throws Exception {
         ScriptEnhanceUIViewRoot root = new ScriptEnhanceUIViewRoot();
-        root.addScript(htmlInputCommaText.getClass().getName(),
+        root.addScript(THtmlInputCommaText.class.getName(),
                 new JavaScriptContext());
         htmlInputCommaText.setFraction("4");
         root.setLocale(Locale.GERMANY);
@@ -107,7 +109,7 @@ public class THtmlInputCommaTextRendererTest extends RendererTest {
 
     public void testEncode_WithAllAttributes() throws Exception {
         ScriptEnhanceUIViewRoot root = new ScriptEnhanceUIViewRoot();
-        root.addScript(htmlInputCommaText.getClass().getName(),
+        root.addScript(THtmlInputCommaText.class.getName(),
                 new JavaScriptContext());
         htmlInputCommaText.getAttributes().put("accesskey", "a");
         htmlInputCommaText.getAttributes().put("alt", "b");
@@ -162,7 +164,7 @@ public class THtmlInputCommaTextRendererTest extends RendererTest {
 
     public void testEncodeEnd_withAnotherOnblur() throws Exception {
         ScriptEnhanceUIViewRoot root = new ScriptEnhanceUIViewRoot();
-        root.addScript(htmlInputCommaText.getClass().getName(),
+        root.addScript(THtmlInputCommaText.class.getName(),
                 new JavaScriptContext());
         htmlInputCommaText.setFraction("4");
         htmlInputCommaText.setOnblur("hoge();");
@@ -225,23 +227,6 @@ public class THtmlInputCommaTextRendererTest extends RendererTest {
         THtmlInputCommaTextRenderer renderer = new THtmlInputCommaTextRenderer();
         renderer.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
         return renderer;
-    }
-
-    private static class MockHtmlInputCommaText extends THtmlInputCommaText {
-
-        private Renderer renderer;
-
-        public Renderer getRenderer(FacesContext context) {
-            if (this.renderer != null) {
-                return this.renderer;
-            }
-            return super.getRenderer(context);
-        }
-
-        public void setRenderer(Renderer renderer) {
-            this.renderer = renderer;
-        }
-
     }
 
 }

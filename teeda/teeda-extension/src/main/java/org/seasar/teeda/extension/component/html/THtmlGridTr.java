@@ -32,9 +32,9 @@ public class THtmlGridTr extends UIComponentBase {
 
     private String height;
 
-    private String style = null;
+    private String style;
 
-    private String styleClass = null;
+    private String styleClass;
 
     public String getHeight() {
         if (height != null) {

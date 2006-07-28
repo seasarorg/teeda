@@ -16,6 +16,7 @@
 package org.seasar.teeda.extension.component.html;
 
 import javax.faces.component.NamingContainer;
+import javax.faces.context.FacesContext;
 
 import org.seasar.teeda.extension.component.TForEach;
 
@@ -58,4 +59,18 @@ public class THtmlGrid extends TForEach implements NamingContainer {
         this.height = width;
     }
 
+    public Object saveState(FacesContext context) {
+        Object[] values = new Object[3];
+        values[0] = super.saveState(context);
+        values[1] = width;
+        values[2] = height;
+        return values;
+    }
+
+    public void restoreState(FacesContext context, Object state) {
+        Object values[] = (Object[]) state;
+        super.restoreState(context, values[0]);
+        width = (String) values[1];
+        height = (String) values[2];
+    }
 }
