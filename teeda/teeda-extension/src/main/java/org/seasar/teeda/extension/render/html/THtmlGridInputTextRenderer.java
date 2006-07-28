@@ -18,6 +18,7 @@ package org.seasar.teeda.extension.render.html;
 import java.io.IOException;
 
 import javax.faces.component.UIComponent;
+import javax.faces.component.html.HtmlInputText;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
@@ -26,16 +27,15 @@ import org.seasar.teeda.core.render.AbstractRenderer;
 import org.seasar.teeda.core.util.DecodeUtil;
 import org.seasar.teeda.core.util.RendererUtil;
 import org.seasar.teeda.core.util.ValueHolderUtil;
-import org.seasar.teeda.extension.component.html.THtmlGridInputText;
 
 /**
  * @author manhole
  */
 public class THtmlGridInputTextRenderer extends AbstractRenderer {
 
-    public static final String COMPONENT_FAMILY = THtmlGridInputText.COMPONENT_FAMILY;
+    public static final String COMPONENT_FAMILY = HtmlInputText.COMPONENT_FAMILY;
 
-    public static final String RENDERER_TYPE = THtmlGridInputText.DEFAULT_RENDERER_TYPE;
+    public static final String RENDERER_TYPE = "org.seasar.teeda.extension.GridInputText";
 
     static final String GRID_CELL_EDIT_CLASS_NAME = "gridCellEdit";
 
@@ -45,7 +45,7 @@ public class THtmlGridInputTextRenderer extends AbstractRenderer {
         if (!component.isRendered()) {
             return;
         }
-        if (!(component instanceof THtmlGridInputText)) {
+        if (!(component instanceof HtmlInputText)) {
             throw new ClassCastException(component.getClass().getName());
         }
         encodeHtmlGridInputTextEnd(context, component);
@@ -116,11 +116,11 @@ public class THtmlGridInputTextRenderer extends AbstractRenderer {
 
     public void decode(FacesContext context, UIComponent component) {
         assertNotNull(context, component);
-        decodeHtmlGridInputText(context, (THtmlGridInputText) component);
+        decodeHtmlGridInputText(context, (HtmlInputText) component);
     }
 
     protected void decodeHtmlGridInputText(FacesContext context,
-            THtmlGridInputText gridInputText) {
+            HtmlInputText gridInputText) {
         DecodeUtil.decode(context, gridInputText);
     }
 

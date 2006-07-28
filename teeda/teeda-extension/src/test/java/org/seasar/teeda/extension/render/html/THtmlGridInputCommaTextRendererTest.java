@@ -15,15 +15,97 @@
  */
 package org.seasar.teeda.extension.render.html;
 
-import junit.framework.TestCase;
+import java.io.IOException;
+
+import javax.faces.render.Renderer;
+import javax.faces.render.RendererTest;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.custommonkey.xmlunit.Diff;
+import org.seasar.teeda.core.render.html.HtmlOutputTextRenderer;
+import org.seasar.teeda.extension.component.ScriptEnhanceUIViewRoot;
+import org.seasar.teeda.extension.mock.MockHtmlInputCommaText;
+import org.xml.sax.SAXException;
 
 /**
  * @author manhole
  */
-public class THtmlGridInputCommaTextRendererTest extends TestCase {
+public class THtmlGridInputCommaTextRendererTest extends RendererTest {
 
-    public void test1() throws Exception {
-        // TODO testing
+    private THtmlGridInputCommaTextRenderer renderer;
+
+    private MockHtmlInputCommaText gridInputText;
+
+    private HtmlOutputTextRenderer outputTextRenderer = new HtmlOutputTextRenderer();
+
+    protected void setUp() throws Exception {
+        super.setUp();
+        renderer = (THtmlGridInputCommaTextRenderer) createRenderer();
+        outputTextRenderer = new HtmlOutputTextRenderer();
+        outputTextRenderer.setRenderAttributes(getRenderAttributes());
+        gridInputText = new MockHtmlInputCommaText();
+        gridInputText.setRenderer(renderer);
+
+        ScriptEnhanceUIViewRoot root = new ScriptEnhanceUIViewRoot();
+        getFacesContext().setViewRoot(root);
+    }
+
+    public void testEncode_RenderFalse() throws Exception {
+        // ## Arrange ##
+        gridInputText.setRendered(false);
+
+        // ## Act ##
+        encodeByRenderer(renderer, gridInputText);
+
+        // ## Assert ##
+        assertEquals("", getResponseText());
+    }
+
+    public void testEncode_NoValue() throws Exception {
+        // ## Arrange ##
+
+        // ## Act ##
+        encodeByRenderer(renderer, gridInputText);
+
+        // ## Assert ##
+        final String expected = "<div onclick=\"editOn(this);\">"
+                + "<span></span>"
+                + "<input type=\"text\" name=\"_id0\" value=\"\""
+                + " onfocus=\"removeComma(this, ',');\""
+                + " onblur=\"convertByKey(this);addComma(this, '0', ',', '.');editOff(this);\""
+                + " onkeydown=\"return keycheckForNumber(event);\""
+                + " onkeypress=\"return keycheckForNumber(event);\""
+                + " onkeyup=\"convertByKey(this);\""
+                + " style=\"ime-mode:disabled;display:none;\""
+                + " class=\"gridCellEdit\" />" + "</div>";
+        final String responseText = getResponseText();
+        final String actual = removeScriptElement(responseText);
+
+        System.out.println(actual);
+        Diff diff = diff(expected, actual);
+        assertEquals(diff.toString(), true, diff.identical());
+    }
+
+    private String removeScriptElement(final String responseText) {
+        final int start = responseText.indexOf("<script");
+        final int end = responseText.indexOf("</script>")
+                + "</script>".length();
+        String a = responseText.substring(0, start).trim()
+                + responseText.substring(end).trim();
+        return a;
+    }
+
+    protected Diff diff(final String expected, final String actual)
+            throws SAXException, IOException, ParserConfigurationException {
+        return super.diff("<dummy>" + expected + "</dummy>", "<dummy>" + actual
+                + "</dummy>");
+    }
+
+    protected Renderer createRenderer() {
+        THtmlGridInputCommaTextRenderer renderer = new THtmlGridInputCommaTextRenderer();
+        renderer.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
+        renderer.setRenderAttributes(getRenderAttributes());
+        return renderer;
     }
 
 }

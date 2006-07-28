@@ -203,4 +203,12 @@ public class RendererTest extends AbstractRendererTest {
         return s;
     }
 
+    protected String afterText(final String s1, String s2) {
+        final int pos = s1.indexOf(s2);
+        if (pos == -1) {
+            return s1;
+        }
+        return s1.substring(pos + s2.length()).trim();
+    }
+
 }

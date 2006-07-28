@@ -24,9 +24,9 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.custommonkey.xmlunit.Diff;
 import org.seasar.teeda.core.mock.MockFacesContext;
+import org.seasar.teeda.core.mock.MockHtmlInputText;
 import org.seasar.teeda.core.mock.MockUIComponentBaseWithNamingContainer;
 import org.seasar.teeda.core.render.html.HtmlOutputTextRenderer;
-import org.seasar.teeda.extension.mock.MockHtmlGridInputText;
 import org.xml.sax.SAXException;
 
 /**
@@ -38,7 +38,7 @@ public class THtmlGridInputTextRendererTest extends RendererTest {
 
     private THtmlGridInputTextRenderer renderer;
 
-    private MockHtmlGridInputText gridInputText;
+    private MockHtmlInputText gridInputText;
 
     private HtmlOutputTextRenderer outputTextRenderer = new HtmlOutputTextRenderer();
 
@@ -47,7 +47,7 @@ public class THtmlGridInputTextRendererTest extends RendererTest {
         renderer = (THtmlGridInputTextRenderer) createRenderer();
         outputTextRenderer = new HtmlOutputTextRenderer();
         outputTextRenderer.setRenderAttributes(getRenderAttributes());
-        gridInputText = new MockHtmlGridInputText();
+        gridInputText = new MockHtmlInputText();
         gridInputText.setRenderer(renderer);
     }
 

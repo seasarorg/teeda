@@ -30,6 +30,7 @@ import org.seasar.teeda.core.el.ELParser;
 import org.seasar.teeda.core.el.impl.ValueBindingImpl;
 import org.seasar.teeda.core.el.impl.commons.CommonsELParser;
 import org.seasar.teeda.core.el.impl.commons.CommonsExpressionProcessorImpl;
+import org.seasar.teeda.core.mock.MockHtmlInputText;
 import org.seasar.teeda.core.mock.MockHtmlOutputText;
 import org.seasar.teeda.core.render.html.HtmlOutputTextRenderer;
 import org.seasar.teeda.core.unit.TestUtil;
@@ -41,7 +42,6 @@ import org.seasar.teeda.extension.component.html.THtmlGridTd;
 import org.seasar.teeda.extension.component.html.THtmlGridTh;
 import org.seasar.teeda.extension.component.html.THtmlGridTr;
 import org.seasar.teeda.extension.mock.MockHtmlGrid;
-import org.seasar.teeda.extension.mock.MockHtmlGridInputText;
 import org.seasar.teeda.extension.render.html.THtmlGridRendererTest.FooPage.FooItem;
 import org.xml.sax.SAXException;
 
@@ -90,18 +90,25 @@ public class THtmlGridRendererTest extends RendererTest {
 
         // ## Assert ##
         final String responseText = getResponseText();
+        assertEquals(1, containCount(responseText, "</script>"));
         final String afterText = afterText(responseText, "</script>");
         assertEquals(
                 "<table border=\"0\" cellspacing=\"0\" cellpadding=\"0\"></table>",
                 afterText);
     }
 
-    private String afterText(final String s1, String s2) {
-        final int pos = s1.indexOf(s2);
-        if (pos == -1) {
-            return s1;
+    private int containCount(final String responseText, final String s) {
+        int pos = 0;
+        int count = 0;
+        while (true) {
+            pos = responseText.indexOf(s, pos);
+            if (pos == -1) {
+                break;
+            }
+            pos++;
+            count++;
         }
-        return s1.substring(pos + s2.length()).trim();
+        return count;
     }
 
     public void ignore_testEncode_HeaderNoValue() throws Exception {
@@ -402,7 +409,7 @@ public class THtmlGridRendererTest extends RendererTest {
                 THtmlGridTd td = new THtmlGridTd();
                 addChild(tr, td);
                 if (i == 3) {
-                    MockHtmlGridInputText gridInputText = new MockHtmlGridInputText();
+                    MockHtmlInputText gridInputText = new MockHtmlInputText();
                     gridInputText.setId("gridText");
                     gridInputText.setRenderer(gridInputTextRenderer);
                     ValueBinding vb = new ValueBindingImpl(getFacesContext()
@@ -533,7 +540,7 @@ public class THtmlGridRendererTest extends RendererTest {
                     THtmlGridTd td = new THtmlGridTd();
                     addChild(tr, td);
                     if (i == 2) {
-                        MockHtmlGridInputText gridInputText = new MockHtmlGridInputText();
+                        MockHtmlInputText gridInputText = new MockHtmlInputText();
                         gridInputText.setId("gridText");
                         gridInputText.setRenderer(gridInputTextRenderer);
                         ValueBinding vb = new ValueBindingImpl(

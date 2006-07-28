@@ -15,29 +15,19 @@
  */
 package org.seasar.teeda.extension.taglib;
 
-import javax.faces.component.UIComponent;
-
-import org.seasar.teeda.core.taglib.UIComponentTagBase;
-import org.seasar.teeda.extension.component.html.THtmlGridInputText;
+import org.seasar.teeda.core.taglib.html.InputTextTag;
+import org.seasar.teeda.extension.render.html.THtmlGridInputTextRenderer;
 
 /**
  * @author manhole
  */
-public class TGridInputTextTag extends UIComponentTagBase {
+public class TGridInputTextTag extends InputTextTag {
 
     public TGridInputTextTag() {
     }
 
-    public String getComponentType() {
-        return THtmlGridInputText.COMPONENT_TYPE;
-    }
-
     public String getRendererType() {
-        return THtmlGridInputText.DEFAULT_RENDERER_TYPE;
-    }
-
-    protected void setProperties(UIComponent component) {
-        super.setProperties(component);
+        return THtmlGridInputTextRenderer.RENDERER_TYPE;
     }
 
 }

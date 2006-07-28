@@ -19,6 +19,7 @@ import java.io.IOException;
 
 import javax.faces.context.FacesContext;
 
+import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.extension.component.html.THtmlInputCommaText;
 
 /**
@@ -55,9 +56,13 @@ public class THtmlGridInputCommaTextRenderer extends
 
     protected String createStyleClassAttribute(
             THtmlInputCommaText htmlInputCommaText) {
-        final String s = super.createStyleClassAttribute(htmlInputCommaText)
-                + " " + THtmlGridInputTextRenderer.GRID_CELL_EDIT_CLASS_NAME;
-        return s.trim();
+        final String styleClass = super
+                .createStyleClassAttribute(htmlInputCommaText);
+        if (StringUtil.isNotBlank(styleClass)) {
+            return styleClass + " "
+                    + THtmlGridInputTextRenderer.GRID_CELL_EDIT_CLASS_NAME;
+        }
+        return THtmlGridInputTextRenderer.GRID_CELL_EDIT_CLASS_NAME;
     }
 
 }
