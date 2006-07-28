@@ -52,12 +52,14 @@
     </repository>
   </repositories>
   <dependencies>
+    <!--
     <dependency>
       <groupId>org.seasar.container</groupId>
       <artifactId>s2-extension</artifactId>
       <version>2.4.0-beta-4</version>
       <type>jar</type>
     </dependency>
+    -->
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
