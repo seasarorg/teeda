@@ -47,7 +47,7 @@ public class TeedaIntegrationTests extends TestCase {
             public boolean accept(final File pathname) {
                 final String name = FileUtil.getCanonicalPath(pathname)
                         .replace('\\', '/');
-                if (name.endsWith("Test.class") && (-1 == name.indexOf("$"))) {
+                if (isTestClass(name)) {
                     final int pos = name.lastIndexOf(startingDirectory);
                     String className = name.substring(pos
                             + startingDirectory.length());
@@ -63,6 +63,10 @@ public class TeedaIntegrationTests extends TestCase {
                     return true;
                 }
                 return false;
+            }
+
+            private boolean isTestClass(final String name) {
+                return name.endsWith("Test.class") && (-1 == name.indexOf("$"));
             }
         });
         return AbstractTestCase.setUpTestSuite(suite, pomFile);

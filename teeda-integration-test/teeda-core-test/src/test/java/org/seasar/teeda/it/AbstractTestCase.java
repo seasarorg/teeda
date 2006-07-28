@@ -28,6 +28,15 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.apache.maven.artifact.resolver.ArtifactNotFoundException;
+import org.apache.maven.artifact.resolver.ArtifactResolutionException;
+import org.apache.maven.embedder.MavenEmbedder;
+import org.apache.maven.embedder.MavenEmbedderConsoleLogger;
+import org.apache.maven.embedder.MavenEmbedderException;
+import org.apache.maven.embedder.MavenEmbedderLogger;
+import org.apache.maven.model.Build;
+import org.apache.maven.project.MavenProject;
+import org.apache.maven.project.ProjectBuildingException;
 import org.custommonkey.xmlunit.Diff;
 import org.custommonkey.xmlunit.XMLUnit;
 import org.seasar.framework.exception.ResourceNotFoundRuntimeException;
@@ -61,7 +70,8 @@ public abstract class AbstractTestCase extends TestCase {
 
     private static final String ENCODING = "UTF-8";
 
-    protected static Test setUpTestSuite(final Class testClass) {
+    protected static Test setUpTestSuite(final Class testClass)
+            throws Exception {
         if (testClass == null) {
             throw new NullPointerException("testClass");
         }
@@ -70,11 +80,29 @@ public abstract class AbstractTestCase extends TestCase {
         return setUpTestSuite(testSuite, pomFile);
     }
 
-    protected static Test setUpTestSuite(TestSuite testSuite, File pomFile) {
+    protected static Test setUpTestSuite(final TestSuite testSuite,
+            final File pomFile) throws MavenEmbedderException,
+            ArtifactResolutionException, ArtifactNotFoundException,
+            ProjectBuildingException {
+
+        MavenEmbedder maven = new MavenEmbedder();
+        maven.setClassLoader(Thread.currentThread().getContextClassLoader());
+        MavenEmbedderLogger mavenLogger = new MavenEmbedderConsoleLogger();
+        mavenLogger.setThreshold(MavenEmbedderLogger.LEVEL_ERROR);
+        maven.setLogger(mavenLogger);
+        maven.start();
+
+        MavenProject mavenProject = maven.readProjectWithDependencies(pomFile);
+        final Build build = mavenProject.getBuild();
+        // xxxx/target
+        final String buildDirectory = build.getDirectory();
+        final String finalName = build.getFinalName();
+
+        maven.stop();
+
         JettyServerSetup jettySetup = new JettyServerSetup(testSuite);
         jettySetup.setPort(port_);
-        File webapp = new File(pomFile.getParentFile(),
-                "target/teeda-integration-test");
+        File webapp = new File(buildDirectory, finalName);
         jettySetup.setWebapp(webapp);
 
         WebApplicationTestSetup webApplicationTestSetup = new WebApplicationTestSetup(
