@@ -38,7 +38,7 @@ public class HtmlOutputTextTeedaTest extends UIOutputTeedaTest {
         // ## Act ##
         Object state = htmlOutputText1.saveState(context);
         HtmlOutputText htmlOutputText2 = createHtmlOutputText();
-        htmlOutputText2.restoreState(context, state);
+        htmlOutputText2.restoreState(context, serializeAndDeserialize(state));
 
         // ## Assert ##
         assertEquals(htmlOutputText1.isEscape(), htmlOutputText2.isEscape());
