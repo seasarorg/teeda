@@ -30,10 +30,10 @@ public class UIParameterTeedaTest extends UIComponentBaseTeedaTest {
         param1.setName("name");
         param1.setValue("value");
         MockFacesContext context = getFacesContext();
-        Object state = param1.saveState(context);
+        final Object state = param1.saveState(context);
 
         UIParameter param2 = createUIParameter();
-        param2.restoreState(context, state);
+        param2.restoreState(context, serializeAndDeserialize(state));
 
         assertEquals(param1.getName(), param2.getName());
         assertEquals(param1.getValue(), param2.getValue());

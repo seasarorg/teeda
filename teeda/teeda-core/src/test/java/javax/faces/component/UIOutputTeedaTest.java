@@ -15,11 +15,6 @@
  */
 package javax.faces.component;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.Locale;
 
 import javax.faces.context.FacesContext;
@@ -52,21 +47,6 @@ public class UIOutputTeedaTest extends UIComponentBaseTeedaTest {
                 .getConverter();
         assertEquals(Locale.GERMAN, converter.getLocale());
         assertEquals(output1.getValue(), output2.getValue());
-    }
-
-    protected Object serializeAndDeserialize(final Object input)
-            throws IOException, ClassNotFoundException {
-
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        ObjectOutputStream oos = new ObjectOutputStream(baos);
-        oos.writeObject(input);
-        oos.close();
-
-        ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
-        ObjectInputStream ois = new ObjectInputStream(bais);
-        final Object object = ois.readObject();
-        ois.close();
-        return object;
     }
 
     private UIOutput createUIOutput() {

@@ -44,11 +44,11 @@ public class UICommandTeedaTest extends UIComponentBaseTeedaTest {
         FacesContext context = getFacesContext();
 
         // ## Act ##
-        Object state = command1.saveState(context);
+        final Object state = command1.saveState(context);
         assertTrue(state instanceof Serializable);
 
         UICommand command2 = createUICommand();
-        command2.restoreState(context, state);
+        command2.restoreState(context, serializeAndDeserialize(state));
 
         // ## Assert ##
         assertEquals(command1.getActionListeners().length, command2

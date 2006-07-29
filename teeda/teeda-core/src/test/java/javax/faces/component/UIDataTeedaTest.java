@@ -21,6 +21,7 @@ import javax.faces.component.html.HtmlInputText;
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
 
+import junitx.framework.ArrayAssert;
 import junitx.framework.ObjectAssert;
 
 import org.seasar.teeda.core.el.ELParser;
@@ -183,10 +184,10 @@ public class UIDataTeedaTest extends UIComponentBaseTeedaTest {
 
         // ## Act ##
         FacesContext context = getFacesContext();
-        Object state = data1.saveState(context);
+        final Object state = data1.saveState(context);
 
         UIData data2 = createUIData();
-        data2.restoreState(context, state);
+        data2.restoreState(context, serializeAndDeserialize(state));
 
         // ## Assert ##
         assertEquals(data1.getFirst(), data2.getFirst());
@@ -194,10 +195,10 @@ public class UIDataTeedaTest extends UIComponentBaseTeedaTest {
         assertEquals(data1.getRowData(), data2.getRowData());
         assertEquals(data1.getRowIndex(), data2.getRowIndex());
         assertEquals(data1.getRows(), data2.getRows());
-        assertEquals(data1.getValue(), data2.getValue());
+        ArrayAssert.assertEquals((String[]) data1.getValue(), (String[]) data2
+                .getValue());
         assertEquals(data1.getVar(), data2.getVar());
         assertEquals(data1.isRowAvailable(), data2.isRowAvailable());
-
     }
 
     private UIData createUIData() {

@@ -31,10 +31,10 @@ public class UIFormTeedaTest extends UIComponentBaseTeedaTest {
 
         // ## Act ##
         FacesContext context = getFacesContext();
-        Object state = form1.saveState(context);
+        final Object state = form1.saveState(context);
 
         UIForm form2 = createUIForm();
-        form2.restoreState(context, state);
+        form2.restoreState(context, serializeAndDeserialize(state));
 
         // ## Assert ##
         assertEquals("'setSubmitted' should not be saved.", false, form2

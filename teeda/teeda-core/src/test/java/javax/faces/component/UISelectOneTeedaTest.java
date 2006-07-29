@@ -20,6 +20,11 @@ package javax.faces.component;
  */
 public class UISelectOneTeedaTest extends UIInputTeedaTest {
 
+    public void testSaveAndRestoreState() throws Exception {
+        super.testSaveAndRestoreState();
+        // TODO test
+    }
+
     protected UIComponent createUIComponent() {
         return new UISelectOne();
     }

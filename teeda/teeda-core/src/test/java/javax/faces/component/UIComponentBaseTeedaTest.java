@@ -15,6 +15,11 @@
  */
 package javax.faces.component;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 import javax.faces.context.FacesContext;
@@ -120,11 +125,11 @@ public class UIComponentBaseTeedaTest extends AbstractUIComponentTeedaTest {
         UIViewRoot viewRoot = new UIViewRoot();
         viewRoot.setRenderKitId(RenderKitFactory.HTML_BASIC_RENDER_KIT);
         context.setViewRoot(viewRoot);
-        Object state = component1.saveState(context);
+        final Object state = component1.saveState(context);
         assertTrue(state instanceof Serializable);
 
         UIComponentBase component2 = createUIComponentBase();
-        component2.restoreState(context, state);
+        component2.restoreState(context, serializeAndDeserialize(state));
 
         assertEquals(component1.getAttributes().size(), component2
                 .getAttributes().size());
@@ -159,7 +164,7 @@ public class UIComponentBaseTeedaTest extends AbstractUIComponentTeedaTest {
         assertTrue(state instanceof Serializable);
 
         UIComponentBase component2 = createUIComponentBase();
-        component2.restoreState(context, state);
+        component2.restoreState(context, serializeAndDeserialize(state));
 
         // ## Assert ##
         assertEquals(0, component2.getChildCount());
@@ -172,6 +177,21 @@ public class UIComponentBaseTeedaTest extends AbstractUIComponentTeedaTest {
 
     protected UIComponent createUIComponent() {
         return new MockUIComponentBase();
+    }
+
+    protected Object serializeAndDeserialize(final Object input)
+            throws IOException, ClassNotFoundException {
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ObjectOutputStream oos = new ObjectOutputStream(baos);
+        oos.writeObject(input);
+        oos.close();
+
+        ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
+        ObjectInputStream ois = new ObjectInputStream(bais);
+        final Object object = ois.readObject();
+        ois.close();
+        return object;
     }
 
 }
