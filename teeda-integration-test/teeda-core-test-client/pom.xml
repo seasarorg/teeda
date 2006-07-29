@@ -40,11 +40,6 @@
             <phase>initialize</phase>
             <configuration>
               <tasks>
-                <!-- target -->
-                <property name="project.build.sourceDirectory" location="${project.build.sourceDirectory}"/>
-                <property name="project.build.testSourceDirectory" location="${project.build.testSourceDirectory}"/>
-                
-                
                 <ant
                   antfile="build-copysource.xml"
                   target="setup-sources"
@@ -56,7 +51,28 @@
               <goal>run</goal>
             </goals>
           </execution>
+          <execution>
+            <id>clean-sources</id>
+            <phase>clean</phase>
+            <configuration>
+              <tasks>
+                <echo>**********************</echo>
+                <ant
+                  antfile="build-copysource.xml"
+                  target="clean-sources"
+                  inheritRefs="true"
+                />
+              </tasks>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
         </executions>
+        <configuration>
+                <property name="basedir" location="${basedir}"/>
+        
+        </configuration>
       </plugin>
     </plugins>
      </build>

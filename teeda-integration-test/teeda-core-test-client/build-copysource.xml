@@ -1,76 +1,71 @@
 <project name="teeda-core-test-client" default="setup-sources" basedir=".">
 
 	<property name="ver" value="1.0-beta-6-SNAPSHOT"/>
-	<property name="source_project" location="../teeda-core-test"/>
-	<property name="src.main.java" location="${project.build.sourceDirectory}"/>
-	<property name="src.main.resources" location="${project.build.sourceDirectory}/../resources"/>
-	<property name="src.main.webapp" location="${project.build.sourceDirectory}/../webapp"/>
-	<property name="src.test.java" location="${project.build.testSourceDirectory}"/>
-	<property name="src.test.resources" location="${project.build.testSourceDirectory}/../resources"/>
+	<property name="source_project" location="${basedir}/../teeda-core-test"/>
+	<property name="src.main" location="${basedir}/src/main"/>
+	<property name="src.main.java" location="${src.main}/java"/>
+	<property name="src.main.resources" location="${src.main}/resources"/>
+	<property name="src.main.webapp" location="${src.main}/webapp"/>
+	<property name="src.test" location="${basedir}/src/test"/>
+	<property name="src.test.java" location="${src.test}/java"/>
+	<property name="src.test.resources" location="${src.test}/resources"/>
 
-	<property name="src.override" location="${src.main.java}../../override"/>
+	<property name="src.override" location="${src.main.java}../../../override"/>
 
-	<property name="src.override.main.java" location="${src.override}/src/java"/>
-	<property name="src.override.main.resources" location="${project.build.sourceDirectory}/../resources"/>
-	<property name="src.override.main.webapp" location="${project.build.sourceDirectory}/../webapp"/>
-	<property name="src.override.test.java" location="${project.build.testSourceDirectory}"/>
-	<property name="src.override.test.resources" location="${project.build.testSourceDirectory}/../resources"/>
+	<property name="src.override.main.java" location="${src.override}/main/java"/>
+	<property name="src.override.main.resources" location="${src.override}/main/resources"/>
+	<property name="src.override.main.webapp" location="${src.override}/main/webapp"/>
+	<property name="src.override.test.java" location="${src.override}/test/java"/>
+	<property name="src.override.test.resources" location="${src.override}/test/resources"/>
 
 	<target name="setup-sources">
+		<echo>basedir=${basedir}</echo>
 		<echo>source_project=${source_project}</echo>
+		<echo>src.main=${src.main}</echo>
+		<echo>src.test=${src.test}</echo>
 		<echo>src.main.java=${src.main.java}</echo>
 		<echo>src.main.resources=${src.main.resources}</echo>
 		<echo>src.main.webapp=${src.main.webapp}</echo>
 		<echo>src.test.java=${src.test.java}</echo>
-		<echo>src.test.resources=${src.main.resources}</echo>
-		<copy todir="${src.main.java}" failonerror="false">
+		<echo>src.test.resources=${src.test.resources}</echo>
+
+		<echo>src.override=${src.override}</echo>
+		<echo>src.override.main.java=${src.override.main.java}</echo>
+		<echo>src.override.main.resources=${src.override.main.resources}</echo>
+		<echo>src.override.main.webapp=${src.override.main.webapp}</echo>
+		<echo>src.override.test.java=${src.override.test.java}</echo>
+		<echo>src.override.test.resources=${src.override.test.resources}</echo>
+
+		<copy todir="${src.main.java}" failonerror="false" overwrite="true">
 			<fileset dir="${source_project}/src/main/java"/>
 		</copy>
-		<copy todir="${src.main.resources}" failonerror="false">
+		<copy todir="${src.main.resources}" failonerror="false" overwrite="true">
 			<fileset dir="${source_project}/src/main/resources"/>
 		</copy>
-		<copy todir="${src.main.webapp}" failonerror="false">
+		<copy todir="${src.main.webapp}" failonerror="false" overwrite="true">
 			<fileset dir="${source_project}/src/main/webapp"/>
 		</copy>
-		<copy todir="${src.test.java}" failonerror="false">
+		<copy todir="${src.test.java}" failonerror="false" overwrite="true">
 			<fileset dir="${source_project}/src/test/java"/>
 		</copy>
-		<copy todir="${src.test.resources}" failonerror="false">
+		<copy todir="${src.test.resources}" failonerror="false" overwrite="true">
 			<fileset dir="${source_project}/src/test/resources"/>
 		</copy>
-		<copy todir="${src.test.resources}" failonerror="false">
+		<copy todir="${src.test.resources}" failonerror="false" overwrite="true">
 			<fileset dir="${source_project}/src/test/resources"/>
 		</copy>
 
 
 	</target>
 
-	<target name="dist">
-		<mkdir dir="target"/>
-		<zip zipfile="target/teeda-${ver}.zip">
-			<zipfileset prefix="teeda" dir=".">
-				<exclude name="**/target/**"/>
-				<exclude name="**/.settings/**"/>
-				<exclude name="**/cobertura.ser"/>
-			</zipfileset>
-			<zipfileset prefix="teeda" dir="teeda-core/target">
-				<include name="teeda-core-${ver}.jar"/>
-				<include name="teeda-core-${ver}-sources.jar"/>
-			</zipfileset>
-			<zipfileset prefix="teeda" dir="teeda-extension/target">
-				<include name="teeda-extension-${ver}.jar"/>
-				<include name="teeda-extension-${ver}-sources.jar"/>
-			</zipfileset>
-			<zipfileset prefix="teeda" dir="teeda-ajax/target">
-				<include name="teeda-ajax-${ver}.jar"/>
-				<include name="teeda-ajax-${ver}-sources.jar"/>
-			</zipfileset>
-			<zipfileset prefix="teeda/resources" dir="teeda-core/src/test/resources">
-				<include name="teeda.dicon"/>
-				<include name="teedaErrorPage.dicon"/>
-				<include name="log4j.properties"/>
-			</zipfileset>
-		</zip>
+	<target name="clean-sources">
+		<delete includeEmptyDirs="true" failonerror="false">
+			<fileset dir="${src.main.java}"/>
+			<fileset dir="${src.main.resources}"/>
+			<fileset dir="${src.main.webapp}"/>
+			<fileset dir="${src.test.java}"/>
+			<fileset dir="${src.test.resources}"/>
+		</delete>
 	</target>
 
 </project>
