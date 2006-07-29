@@ -86,6 +86,12 @@
 	</managed-bean>
 
 	<managed-bean>
+		<managed-bean-name>inputCommaTextBean</managed-bean-name>
+		<managed-bean-class>examples.teeda.bean.InputCommaTextBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
 		<managed-bean-name>gridBean</managed-bean-name>
 		<managed-bean-class>examples.teeda.bean.GridBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
