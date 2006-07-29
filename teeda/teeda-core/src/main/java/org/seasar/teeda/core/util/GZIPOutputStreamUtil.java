@@ -26,13 +26,17 @@ import org.seasar.framework.exception.IORuntimeException;
  */
 public class GZIPOutputStreamUtil {
 
-    /**
-     * @param out
-     * @return
-     */
-    public static OutputStream getOutputStream(OutputStream out) {
+    public static GZIPOutputStream getOutputStream(OutputStream out) {
         try {
             return new GZIPOutputStream(out);
+        } catch (IOException e) {
+            throw new IORuntimeException(e);
+        }
+    }
+
+    public static void finish(GZIPOutputStream out) {
+        try {
+            out.finish();
         } catch (IOException e) {
             throw new IORuntimeException(e);
         }

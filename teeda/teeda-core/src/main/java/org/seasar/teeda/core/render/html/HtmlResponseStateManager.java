@@ -28,24 +28,26 @@ import org.seasar.teeda.core.util.StateManagerUtil;
 
 /**
  * @author shot
+ * @author manhole
  */
 public class HtmlResponseStateManager extends AbstractResponseStateManager {
 
     public HtmlResponseStateManager() {
     }
 
-    public void writeState(FacesContext context, SerializedView serializedView)
-            throws IOException {
-        ResponseWriter writer = context.getResponseWriter();
+    public void writeState(final FacesContext context,
+            final SerializedView serializedView) throws IOException {
+        final ResponseWriter writer = context.getResponseWriter();
         writer.startElement(JsfConstants.INPUT_ELEM, null);
         writer.writeAttribute(JsfConstants.TYPE_ATTR,
                 JsfConstants.HIDDEN_VALUE, null);
         writer.writeAttribute(JsfConstants.NAME_ATTR, VIEW_STATE_PARAM, null);
         writer.writeAttribute(JsfConstants.ID_ATTR, VIEW_STATE_PARAM, null);
 
-        Object value = null;
-        if (StateManagerUtil.isSavingStateInClient(context)) {
-            value = getEncodeConverter().getAsEncodeString(serializedView);
+        final Object value;
+        if (isSavingStateInClient(context)) {
+            value = getEncodeConverter().getAsEncodeString(
+                    new StructureAndState(serializedView));
         } else {
             value = serializedView.getStructure();
         }
@@ -55,30 +57,39 @@ public class HtmlResponseStateManager extends AbstractResponseStateManager {
         writeViewId(writer, context);
     }
 
-    public Object getComponentStateToRestore(FacesContext context) {
-        Map requestMap = context.getExternalContext().getRequestMap();
-        Object state = requestMap.get(FACES_VIEW_STATE);
+    boolean isSavingStateInClient(final FacesContext context) {
+        return StateManagerUtil.isSavingStateInClient(context);
+    }
+
+    public Object getComponentStateToRestore(final FacesContext context) {
+        final Map requestMap = context.getExternalContext().getRequestMap();
+        final Object state = requestMap.get(FACES_VIEW_STATE);
         requestMap.remove(FACES_VIEW_STATE);
         return state;
     }
 
-    public Object getTreeStructureToRestore(FacesContext context, String viewId) {
-        Map paramMap = context.getExternalContext().getRequestParameterMap();
-        String viewState = (String) paramMap.get(VIEW_STATE_PARAM);
+    public Object getTreeStructureToRestore(final FacesContext context,
+            final String viewId) {
+        final Map paramMap = context.getExternalContext()
+                .getRequestParameterMap();
+        final String viewState = (String) paramMap.get(VIEW_STATE_PARAM);
         if (viewState == null) {
             return null;
         }
-        Object structure = null;
-        if (StateManagerUtil.isSavingStateInClient(context)) {
-            structure = getEncodeConverter().getAsDecodeObject(viewState);
+        if (isSavingStateInClient(context)) {
+            StructureAndState structureAndState = (StructureAndState) getEncodeConverter()
+                    .getAsDecodeObject(viewState);
+            context.getExternalContext().getRequestMap().put(
+                    AbstractResponseStateManager.FACES_VIEW_STATE,
+                    structureAndState.getState());
+            return structureAndState.getStructure();
         } else {
-            structure = viewState;
+            return viewState;
         }
-        return structure;
     }
 
-    protected void writeViewId(ResponseWriter writer, FacesContext context)
-            throws IOException {
+    protected void writeViewId(final ResponseWriter writer,
+            final FacesContext context) throws IOException {
         writer.startElement(JsfConstants.INPUT_ELEM, null);
         writer.writeAttribute(JsfConstants.TYPE_ATTR,
                 JsfConstants.HIDDEN_VALUE, null);

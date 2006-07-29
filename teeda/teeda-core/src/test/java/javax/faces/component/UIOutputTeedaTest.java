@@ -15,10 +15,15 @@
  */
 package javax.faces.component;
 
-import junitx.framework.ObjectAssert;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.Locale;
 
-import org.seasar.teeda.core.mock.MockConverter;
-import org.seasar.teeda.core.mock.MockFacesContext;
+import javax.faces.context.FacesContext;
+import javax.faces.convert.DateTimeConverter;
 
 /**
  * @author manhole
@@ -29,17 +34,39 @@ public class UIOutputTeedaTest extends UIComponentBaseTeedaTest {
         super.testSaveAndRestoreState();
 
         UIOutput output1 = createUIOutput();
-        output1.setConverter(new MockConverter());
-        output1.setValue("foo value");
-        MockFacesContext context = getFacesContext();
-        Object state = output1.saveState(context);
+        {
+            final DateTimeConverter dateTimeConverter = new DateTimeConverter();
+            dateTimeConverter.setLocale(Locale.GERMAN);
+            output1.setConverter(dateTimeConverter);
+            output1.setValue("foo value");
+        }
+        final FacesContext context = getFacesContext();
 
-        UIOutput output2 = createUIOutput();
-        output2.restoreState(context, state);
+        final Object decoded = serializeAndDeserialize(output1
+                .saveState(context));
 
-        ObjectAssert.assertInstanceOf(MockConverter.class, output2
-                .getConverter());
+        final UIOutput output2 = createUIOutput();
+        output2.restoreState(context, decoded);
+
+        final DateTimeConverter converter = (DateTimeConverter) output2
+                .getConverter();
+        assertEquals(Locale.GERMAN, converter.getLocale());
         assertEquals(output1.getValue(), output2.getValue());
+    }
+
+    protected Object serializeAndDeserialize(final Object input)
+            throws IOException, ClassNotFoundException {
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ObjectOutputStream oos = new ObjectOutputStream(baos);
+        oos.writeObject(input);
+        oos.close();
+
+        ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
+        ObjectInputStream ois = new ObjectInputStream(bais);
+        final Object object = ois.readObject();
+        ois.close();
+        return object;
     }
 
     private UIOutput createUIOutput() {

@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.faces.context.FacesContext;
+import javax.faces.convert.DateTimeConverter;
 import javax.faces.internal.SerializableStateHolder;
 import javax.faces.render.Renderer;
 
@@ -250,7 +251,7 @@ public class UIComponentBaseOnlyTest extends TestCase {
         }
     }
 
-    public void testSaveAndRestoreAttachedState() {
+    public void testSaveAndRestoreAttachedState_StateHolder1() {
         MockStateHolder holder = new MockStateHolder();
         holder.setValue("321");
         FacesContext context = new MockFacesContextImpl();
@@ -262,6 +263,23 @@ public class UIComponentBaseOnlyTest extends TestCase {
             MockStateHolder restored = (MockStateHolder) UIComponentBase
                     .restoreAttachedState(context, state);
             assertEquals("321", restored.getValue());
+        } finally {
+            context.release();
+        }
+    }
+
+    public void testSaveAndRestoreAttachedState_StateHolder2() {
+        DateTimeConverter holder = new DateTimeConverter();
+        holder.setTimeStyle("abc");
+        FacesContext context = new MockFacesContextImpl();
+        try {
+            Object state = UIComponentBase.saveAttachedState(context, holder);
+
+            ObjectAssert.assertInstanceOf(Serializable.class, state);
+
+            DateTimeConverter restored = (DateTimeConverter) UIComponentBase
+                    .restoreAttachedState(context, state);
+            assertEquals("abc", restored.getTimeStyle());
         } finally {
             context.release();
         }

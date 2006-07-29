@@ -20,10 +20,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.OutputStream;
+import java.util.zip.GZIPOutputStream;
 
-import javax.faces.application.StateManager.SerializedView;
-import javax.faces.context.FacesContext;
 import javax.faces.internal.FacesConfigOptions;
 
 import org.seasar.framework.util.Base64Util;
@@ -40,53 +38,40 @@ import org.seasar.teeda.core.util.OutputStreamUtil;
 public class Base64EncodeConverter implements EncodeConverter {
 
     public String getAsEncodeString(Object target) {
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        OutputStream out = null;
+        final ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        GZIPOutputStream gzipOut = null;
         ObjectOutputStream oos = null;
         try {
             if (isCompressRequested()) {
-                out = GZIPOutputStreamUtil.getOutputStream(bos);
-                oos = ObjectOutputStreamUtil.getOutputStream(out);
+                gzipOut = GZIPOutputStreamUtil.getOutputStream(bos);
+                oos = ObjectOutputStreamUtil.getOutputStream(gzipOut);
+                ObjectOutputStreamUtil.writeObject(oos, target);
+                GZIPOutputStreamUtil.finish(gzipOut);
             } else {
                 oos = ObjectOutputStreamUtil.getOutputStream(bos);
-            }
-            if (target instanceof SerializedView) {
-                SerializedView view = (SerializedView) target;
-                ObjectOutputStreamUtil.writeObject(oos, view.getStructure());
-                ObjectOutputStreamUtil.writeObject(oos, view.getState());
-            } else {
                 ObjectOutputStreamUtil.writeObject(oos, target);
             }
             return Base64Util.encode(bos.toByteArray());
         } finally {
-            if (oos != null) {
-                ObjectOutputStreamUtil.reset(oos);
-                OutputStreamUtil.close(oos);
-            }
-            OutputStreamUtil.close(out);
+            OutputStreamUtil.close(oos);
+            OutputStreamUtil.close(gzipOut);
             OutputStreamUtil.close(bos);
         }
     }
 
     public Object getAsDecodeObject(String state) {
-        byte[] bytes = Base64Util.decode(state);
-        InputStream bis = null;
+        final byte[] bytes = Base64Util.decode(state);
+        final InputStream bis = new ByteArrayInputStream(bytes);
         InputStream is = null;
-        Object structure = null;
-        Object viewState = null;
         ObjectInputStream ois = null;
         try {
-            bis = new ByteArrayInputStream(bytes);
             if (isCompressRequested()) {
                 is = GZIPInputStreamUtil.getInputStream(bis);
                 ois = ObjectInputStreamUtil.getInputStream(is);
             } else {
                 ois = ObjectInputStreamUtil.getInputStream(bis);
             }
-            structure = ObjectInputStreamUtil.readObject(ois);
-            viewState = ObjectInputStreamUtil.readObject(ois);
-            storeViewState(viewState);
-            return structure;
+            return ObjectInputStreamUtil.readObject(ois);
         } finally {
             InputStreamUtil.close(ois);
             InputStreamUtil.close(is);
@@ -98,9 +83,4 @@ public class Base64EncodeConverter implements EncodeConverter {
         return FacesConfigOptions.getCompressState();
     }
 
-    protected void storeViewState(Object viewState) {
-        FacesContext context = FacesContext.getCurrentInstance();
-        context.getExternalContext().getRequestMap().put(
-                AbstractResponseStateManager.FACES_VIEW_STATE, viewState);
-    }
 }

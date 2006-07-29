@@ -71,14 +71,14 @@ public class UIOutput extends UIComponentBase implements ValueHolder {
     public void restoreState(FacesContext context, Object state) {
         Object[] values = (Object[]) state;
         super.restoreState(context, values[0]);
-        converter = (Converter) values[1];
+        converter = (Converter) restoreAttachedState(context, values[1]);
         value = values[2];
     }
 
     public Object saveState(FacesContext context) {
         Object[] values = new Object[4];
         values[0] = super.saveState(context);
-        values[1] = converter;
+        values[1] = saveAttachedState(context, converter);
         values[2] = value;
         return values;
     }

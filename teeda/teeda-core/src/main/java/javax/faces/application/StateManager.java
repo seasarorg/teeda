@@ -67,21 +67,21 @@ public abstract class StateManager {
 
         private static final long serialVersionUID = 1L;
 
-        private Object structure_ = null;
+        private Object structure = null;
 
-        private Object state_ = null;
+        private Object state = null;
 
         public SerializedView(Object structure, Object state) {
-            structure_ = structure;
-            state_ = state;
+            this.structure = structure;
+            this.state = state;
         }
 
         public Object getState() {
-            return state_;
+            return state;
         }
 
         public Object getStructure() {
-            return structure_;
+            return structure;
         }
     }
 

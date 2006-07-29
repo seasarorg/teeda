@@ -30,18 +30,24 @@ import org.seasar.teeda.core.unit.TeedaTestCase;
 public class HtmlResponseStateManagerTest extends TeedaTestCase {
 
     public void testWriteState_getEncodeInClient() throws Exception {
-        // # Arrange #
-        getFacesContext().getViewRoot().setViewId("hoge");
-        getServletContext().setInitParameter(
-                StateManager.STATE_SAVING_METHOD_PARAM_NAME,
-                StateManager.STATE_SAVING_METHOD_CLIENT);
+        // ## Arrange ##
+        setupStateSavingInClient();
+        getFacesContext().getViewRoot().setViewId("hogeViewId");
         StateManager stateManager = getApplication().getStateManager();
-        MockEncodeConverter converter = new MockEncodeConverter();
-        HtmlResponseStateManager manager = new HtmlResponseStateManager();
-        manager.setEncodeConverter(converter);
-        SerializedView view = stateManager.new SerializedView("a", "b");
+        NullEncodeConverter converter = new NullEncodeConverter() {
+            public String getAsEncodeString(Object target) {
+                return "encodedString";
+            }
+        };
+        HtmlResponseStateManager responseStateManager = new HtmlResponseStateManager();
+        responseStateManager.setEncodeConverter(converter);
+        SerializedView serializedView = stateManager.new SerializedView(
+                "bbbStructure", "cccState");
 
-        manager.writeState(getFacesContext(), view);
+        // ## Act ##
+        responseStateManager.writeState(getFacesContext(), serializedView);
+
+        // ## Assert ##
 
         // doesnt work well.
         // Diff diff = new Diff("<input type=\"hidden\"
@@ -51,44 +57,49 @@ public class HtmlResponseStateManagerTest extends TeedaTestCase {
         // getResponseText());
         // assertEquals(diff.toString(), true, diff.identical());
         assertEquals(
-                "<input type=\"hidden\" name=\"javax.faces.ViewState\" id=\"javax.faces.ViewState\" value=\"b\" />"
-                        + "<input type=\"hidden\" name=\"javax.faces.ViewState\" id=\"javax.faces.ViewState\" value=\"hoge\" />",
+                "<input type=\"hidden\" name=\"javax.faces.ViewState\" id=\"javax.faces.ViewState\" value=\"encodedString\" />"
+                        + "<input type=\"hidden\" name=\"javax.faces.ViewState\" id=\"javax.faces.ViewState\" value=\"hogeViewId\" />",
                 getResponseText());
     }
 
     public void testWriteState_getEncodeInServer() throws Exception {
-        // # Arrange #
-        getFacesContext().getViewRoot().setViewId("foo");
-        getServletContext().setInitParameter(
-                StateManager.STATE_SAVING_METHOD_PARAM_NAME,
-                StateManager.STATE_SAVING_METHOD_SERVER);
+        // ## Arrange ##
+        setupStateSavingInServer();
+        getFacesContext().getViewRoot().setViewId("fooViewId");
         StateManager stateManager = getApplication().getStateManager();
-        MockEncodeConverter converter = new MockEncodeConverter();
-        HtmlResponseStateManager manager = new HtmlResponseStateManager();
-        manager.setEncodeConverter(converter);
-        SerializedView view = stateManager.new SerializedView("a", "b");
+        NullEncodeConverter converter = new NullEncodeConverter();
+        HtmlResponseStateManager responseStateManager = new HtmlResponseStateManager();
+        responseStateManager.setEncodeConverter(converter);
+        SerializedView view = stateManager.new SerializedView("aaaStructure",
+                "b");
 
-        manager.writeState(getFacesContext(), view);
+        // ## Act ##
+        responseStateManager.writeState(getFacesContext(), view);
 
+        // ## Assert ##
         assertEquals(
-                "<input type=\"hidden\" name=\"javax.faces.ViewState\" id=\"javax.faces.ViewState\" value=\"a\" />"
-                        + "<input type=\"hidden\" name=\"javax.faces.ViewState\" id=\"javax.faces.ViewState\" value=\"foo\" />",
+                "<input type=\"hidden\" name=\"javax.faces.ViewState\" id=\"javax.faces.ViewState\" value=\"aaaStructure\" />"
+                        + "<input type=\"hidden\" name=\"javax.faces.ViewState\" id=\"javax.faces.ViewState\" value=\"fooViewId\" />",
                 getResponseText());
     }
 
-    public void testComponentStateToRestore1() throws Exception {
+    public void testGetComponentStateToRestore1() throws Exception {
         getExternalContext().getRequestMap().put(
                 AbstractResponseStateManager.FACES_VIEW_STATE, "hoge");
-        HtmlResponseStateManager manager = new HtmlResponseStateManager();
-        Object o = manager.getComponentStateToRestore(getFacesContext());
+
+        HtmlResponseStateManager responseStateManager = new HtmlResponseStateManager();
+        Object o = responseStateManager
+                .getComponentStateToRestore(getFacesContext());
+
         assertEquals("hoge", o);
         assertNull(getExternalContext().getRequestMap().get(
                 AbstractResponseStateManager.FACES_VIEW_STATE));
     }
 
     public void testGetComponentStateToRestore2() throws Exception {
-        HtmlResponseStateManager manager = new HtmlResponseStateManager();
-        Object o = manager.getComponentStateToRestore(getFacesContext());
+        HtmlResponseStateManager responseStateManager = new HtmlResponseStateManager();
+        Object o = responseStateManager
+                .getComponentStateToRestore(getFacesContext());
         assertNull(o);
     }
 
@@ -99,46 +110,75 @@ public class HtmlResponseStateManagerTest extends TeedaTestCase {
 
     public void testGetTreeStructureToRestore_getDecodedInClient()
             throws Exception {
-        // # Arrange #
-        getServletContext().setInitParameter(
-                StateManager.STATE_SAVING_METHOD_PARAM_NAME,
-                StateManager.STATE_SAVING_METHOD_CLIENT);
-        StateManager stateManager = getApplication().getStateManager();
-        SerializedView view = stateManager.new SerializedView("a", "b");
-        MockEncodeConverter converter = new MockEncodeConverter(view);
+        setupStateSavingInClient();
+        final Object[] args = new Object[1];
+        NullEncodeConverter converter = new NullEncodeConverter() {
+            public Object getAsDecodeObject(String state) {
+                args[0] = state;
+                return new StructureAndState("aaaStructure", "b");
+            }
+        };
         getFacesContext().getExternalContext().getRequestParameterMap().put(
-                AbstractResponseStateManager.VIEW_STATE_PARAM, "c");
-        HtmlResponseStateManager manager = new HtmlResponseStateManager();
-        manager.setEncodeConverter(converter);
+                AbstractResponseStateManager.VIEW_STATE_PARAM, "fooStateParam");
+        HtmlResponseStateManager responseStateManager = new HtmlResponseStateManager();
+        assertEquals(true, responseStateManager
+                .isSavingStateInClient(getFacesContext()));
+        responseStateManager.setEncodeConverter(converter);
 
-        // # Act #
-        Object o = manager.getTreeStructureToRestore(getFacesContext(), "hoge");
+        // ## Act ##
+        final Object restoredStructure = responseStateManager
+                .getTreeStructureToRestore(getFacesContext(), "hogeViewId");
 
-        // # Assert #
-        assertNotNull(o);
-        assertEquals("a", o);
+        // ## Assert ##
+        assertNotNull(restoredStructure);
+        assertEquals("aaaStructure", restoredStructure);
+        assertEquals(args[0], "fooStateParam");
     }
 
     public void testGetTreeStructureToRestore_getDecodedInServer()
             throws Exception {
-        // # Arrange #
-        getServletContext().setInitParameter(
-                StateManager.STATE_SAVING_METHOD_PARAM_NAME,
-                StateManager.STATE_SAVING_METHOD_SERVER);
-        StateManager stateManager = getApplication().getStateManager();
-        SerializedView view = stateManager.new SerializedView("a", "b");
-        MockEncodeConverter converter = new MockEncodeConverter(view);
-        getFacesContext().getExternalContext().getRequestParameterMap().put(
-                AbstractResponseStateManager.VIEW_STATE_PARAM, "c");
-        HtmlResponseStateManager manager = new HtmlResponseStateManager();
-        manager.setEncodeConverter(converter);
+        // ## Arrange ##
+        setupStateSavingInServer();
+        getFacesContext().getExternalContext().getRequestParameterMap()
+                .put(AbstractResponseStateManager.VIEW_STATE_PARAM,
+                        "cccServerState");
+        HtmlResponseStateManager responseStateManager = new HtmlResponseStateManager();
+        assertEquals(false, responseStateManager
+                .isSavingStateInClient(getFacesContext()));
+        NullEncodeConverter converter = new NullEncodeConverter();
+        responseStateManager.setEncodeConverter(converter);
 
-        // # Act #
-        Object o = manager.getTreeStructureToRestore(getFacesContext(), "hoge");
+        // ## Act ##
+        Object o = responseStateManager.getTreeStructureToRestore(
+                getFacesContext(), "hoge");
 
-        // # Assert #
+        // ## Assert ##
         assertNotNull(o);
-        assertEquals("c", o);
+        assertEquals("cccServerState", o);
+    }
+
+    public void testGetStructureAndStateToRestore_InClient() throws Exception {
+        // ## Arrange ##
+        setupStateSavingInClient();
+        getFacesContext().getExternalContext().getRequestParameterMap().put(
+                AbstractResponseStateManager.VIEW_STATE_PARAM, "fooStateParam");
+        NullEncodeConverter converter = new NullEncodeConverter() {
+            public Object getAsDecodeObject(String state) {
+                return new StructureAndState("111_Structure", "222_State");
+            }
+        };
+        final HtmlResponseStateManager responseStateManager = new HtmlResponseStateManager();
+        responseStateManager.setEncodeConverter(converter);
+
+        // ## Act ##
+        final Object restoredStructure = responseStateManager
+                .getTreeStructureToRestore(getFacesContext(), "hogeViewId");
+        final Object restoredState = responseStateManager
+                .getComponentStateToRestore(getFacesContext());
+
+        // ## Assert ##
+        assertEquals("111_Structure", restoredStructure);
+        assertEquals("222_State", restoredState);
     }
 
     public void testWriteViewId() throws Exception {
@@ -153,27 +193,29 @@ public class HtmlResponseStateManagerTest extends TeedaTestCase {
         assertEquals(diff.toString(), true, diff.identical());
     }
 
-    private static class MockEncodeConverter implements EncodeConverter {
+    private void setupStateSavingInServer() {
+        getServletContext().setInitParameter(
+                StateManager.STATE_SAVING_METHOD_PARAM_NAME,
+                StateManager.STATE_SAVING_METHOD_SERVER);
+    }
 
-        private SerializedView view_;
+    private void setupStateSavingInClient() {
+        getServletContext().setInitParameter(
+                StateManager.STATE_SAVING_METHOD_PARAM_NAME,
+                StateManager.STATE_SAVING_METHOD_CLIENT);
+    }
 
-        public MockEncodeConverter() {
-        }
+    private static class NullEncodeConverter implements EncodeConverter {
 
-        public MockEncodeConverter(SerializedView view) {
-            view_ = view;
+        public NullEncodeConverter() {
         }
 
         public String getAsEncodeString(Object target) {
-            if (view_ != null) {
-                return (String) view_.getState();
-            } else {
-                return (String) ((SerializedView) target).getState();
-            }
+            return null;
         }
 
         public Object getAsDecodeObject(String state) {
-            return view_.getStructure();
+            return null;
         }
 
     }

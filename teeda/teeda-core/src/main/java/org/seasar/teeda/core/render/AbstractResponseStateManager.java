@@ -30,14 +30,14 @@ public abstract class AbstractResponseStateManager extends ResponseStateManager 
             .getPackage()
             + ".FACES_VIEW_STATE";
 
-    private EncodeConverter encodeConverter_;
+    private EncodeConverter encodeConverter;
 
-    public void setEncodeConverter(EncodeConverter decoder) {
-        encodeConverter_ = decoder;
+    public void setEncodeConverter(EncodeConverter encodeConverter) {
+        this.encodeConverter = encodeConverter;
     }
 
     public EncodeConverter getEncodeConverter() {
-        return encodeConverter_;
+        return encodeConverter;
     }
 
 }

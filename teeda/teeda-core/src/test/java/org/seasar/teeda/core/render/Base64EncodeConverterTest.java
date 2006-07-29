@@ -15,14 +15,17 @@
  */
 package org.seasar.teeda.core.render;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.Serializable;
-import java.util.Map;
+import java.util.zip.GZIPInputStream;
+import java.util.zip.GZIPOutputStream;
 
-import javax.faces.application.StateManager;
 import javax.faces.application.StateManager.SerializedView;
 import javax.faces.internal.FacesConfigOptions;
 
-import org.seasar.teeda.core.JsfConstants;
+import org.seasar.framework.util.InputStreamUtil;
+import org.seasar.teeda.core.render.html.StructureAndState;
 import org.seasar.teeda.core.unit.TeedaTestCase;
 
 /**
@@ -31,28 +34,57 @@ import org.seasar.teeda.core.unit.TeedaTestCase;
 public class Base64EncodeConverterTest extends TeedaTestCase {
 
     public void testEncodeAndDecode() throws Exception {
-        AAA target1 = new AAA("aaa");
-        AAA target2 = new AAA("bbb");
-        StateManager s = getApplication().getStateManager();
-        SerializedView sView = s.new SerializedView(target1, target2);
-        Base64EncodeConverter converter = new Base64EncodeConverter();
-        String encodedString = converter.getAsEncodeString(sView);
-        AAA aaa = (AAA) converter.getAsDecodeObject(encodedString);
-        assertEquals("aaa", aaa.getName());
+        Base64EncodeConverter encodeConverter = new Base64EncodeConverter();
+        final String encoded = encodeConverter.getAsEncodeString(new Integer(
+                7650));
+        final Object decoded = encodeConverter.getAsDecodeObject(encoded);
+        assertEquals(new Integer(7650), decoded);
     }
 
-    // EOFException?
-    public void fixme_testEncodeAndDecode_compressed() throws Exception {
-        getServletContext().setInitParameter(JsfConstants.COMPRESS_STATE_ATTR,
-                "true");
-        AAA target1 = new AAA("aaa");
-        AAA target2 = new AAA("bbb");
-        StateManager s = getApplication().getStateManager();
-        SerializedView sView = s.new SerializedView(target1, target2);
-        Base64EncodeConverter converter = new Base64EncodeConverter();
-        String encodedString = converter.getAsEncodeString(sView);
-        AAA aaa = (AAA) converter.getAsDecodeObject(encodedString);
+    public void testEncodeAndDecode_NoCompressed() throws Exception {
+        // ## Arrange ##
+        SerializedView serializedView = getApplication().getStateManager().new SerializedView(
+                new AAA("aaaStructure"), new AAA("bbbState"));
+        Base64EncodeConverter converter = new Base64EncodeConverter() {
+            protected boolean isCompressRequested() {
+                return false;
+            }
+        };
+
+        // ## Act ##  
+        final String encodedString = converter
+                .getAsEncodeString(new StructureAndState(serializedView));
+        final StructureAndState decoded = (StructureAndState) converter
+                .getAsDecodeObject(encodedString);
+
+        // ## Assert ##
+        AAA aaa = (AAA) decoded.getStructure();
+        AAA bbb = (AAA) decoded.getState();
+        assertEquals("aaaStructure", aaa.getName());
+        assertEquals("bbbState", bbb.getName());
+    }
+
+    public void testEncodeAndDecode_Compressed() throws Exception {
+        // ## Arrange ##
+        SerializedView serializedView = getApplication().getStateManager().new SerializedView(
+                new AAA("aaa"), new AAA("bbb"));
+        Base64EncodeConverter converter = new Base64EncodeConverter() {
+            protected boolean isCompressRequested() {
+                return true;
+            }
+        };
+
+        // ## Act ##
+        final String encodedString = converter
+                .getAsEncodeString(new StructureAndState(serializedView));
+        final StructureAndState decoded = (StructureAndState) converter
+                .getAsDecodeObject(encodedString);
+
+        // ## Assert ##
+        AAA aaa = (AAA) decoded.getStructure();
+        AAA bbb = (AAA) decoded.getState();
         assertEquals("aaa", aaa.getName());
+        assertEquals("bbb", bbb.getName());
     }
 
     public void testIsCompressRequested() throws Exception {
@@ -64,24 +96,31 @@ public class Base64EncodeConverterTest extends TeedaTestCase {
         assertFalse(converter.isCompressRequested());
     }
 
-    public void testStoreViewState() throws Exception {
-        Base64EncodeConverter converter = new Base64EncodeConverter();
-        converter.storeViewState("hoge");
+    public void testLearningGZIP() throws Exception {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        GZIPOutputStream gzipOut = new GZIPOutputStream(baos);
+        gzipOut.write("12345".getBytes());
+        gzipOut.finish(); // important.
+        final byte[] out = baos.toByteArray();
 
-        Map reqMap = getFacesContext().getExternalContext().getRequestMap();
-        Object o = reqMap.get(AbstractResponseStateManager.FACES_VIEW_STATE);
-        assertEquals("hoge", o);
+        ByteArrayInputStream bais = new ByteArrayInputStream(out);
+        GZIPInputStream gzipIn = new GZIPInputStream(bais);
+        final byte[] read = InputStreamUtil.getBytes(gzipIn);
+        assertEquals("12345", new String(read));
     }
 
     public static class AAA implements Serializable {
-        private String name_;
+
+        private static final long serialVersionUID = 1L;
+
+        private String name;
 
         public AAA(String name) {
-            name_ = name;
+            this.name = name;
         }
 
         public String getName() {
-            return name_;
+            return name;
         }
     }
 }
