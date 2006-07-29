@@ -11,12 +11,8 @@
 	<property name="src.test.resources" location="${src.test}/resources"/>
 
 	<property name="src.override" location="${src.main.java}../../../override"/>
-
-	<property name="src.override.main.java" location="${src.override}/main/java"/>
-	<property name="src.override.main.resources" location="${src.override}/main/resources"/>
-	<property name="src.override.main.webapp" location="${src.override}/main/webapp"/>
-	<property name="src.override.test.java" location="${src.override}/test/java"/>
-	<property name="src.override.test.resources" location="${src.override}/test/resources"/>
+	<property name="src.override.main" location="${src.override}/main"/>
+	<property name="src.override.test" location="${src.override}/test"/>
 
 	<target name="setup-sources">
 		<echo>basedir=${basedir}</echo>
@@ -30,11 +26,9 @@
 		<echo>src.test.resources=${src.test.resources}</echo>
 
 		<echo>src.override=${src.override}</echo>
-		<echo>src.override.main.java=${src.override.main.java}</echo>
-		<echo>src.override.main.resources=${src.override.main.resources}</echo>
-		<echo>src.override.main.webapp=${src.override.main.webapp}</echo>
-		<echo>src.override.test.java=${src.override.test.java}</echo>
-		<echo>src.override.test.resources=${src.override.test.resources}</echo>
+
+		<echo>src.override.main=${src.override.main}</echo>
+		<echo>src.override.test=${src.override.test}</echo>
 
 		<copy todir="${src.main.java}" failonerror="false" overwrite="true">
 			<fileset dir="${source_project}/src/main/java"/>
@@ -55,16 +49,19 @@
 			<fileset dir="${source_project}/src/test/resources"/>
 		</copy>
 
+		<copy todir="${src.main}" failonerror="false" overwrite="true">
+			<fileset dir="${src.override.main}"/>
+		</copy>
+		<copy todir="${src.test}" failonerror="false" overwrite="true">
+			<fileset dir="${src.override.test}"/>
+		</copy>
 
 	</target>
 
 	<target name="clean-sources">
 		<delete includeEmptyDirs="true" failonerror="false">
-			<fileset dir="${src.main.java}"/>
-			<fileset dir="${src.main.resources}"/>
-			<fileset dir="${src.main.webapp}"/>
-			<fileset dir="${src.test.java}"/>
-			<fileset dir="${src.test.resources}"/>
+			<fileset dir="${src.main}"/>
+			<fileset dir="${src.test}"/>
 		</delete>
 	</target>
 

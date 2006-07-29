@@ -1,0 +1,21 @@
+<html>
+<head>
+<title>inputTextarea.jsp</title>
+</head>
+<body>
+	<form 
+		id="inputTextareaForm" 
+		name="inputTextareaForm" 
+		action="/faces/render/inputTextarea.jsp" 
+		method="post" 
+		enctype="application/x-www-form-urlencoded"
+	>
+		<textarea id="textareaA" name="inputTextareaForm:textareaA"></textarea>
+		<span id="outputA"></span>
+		<input type="submit" id="submitA" name="inputTextareaForm:submitA" />
+		<input type="hidden" name="javax.faces.ViewState" id="javax.faces.ViewState" value=".*" />
+		<input type="hidden" name="org.seasar.teeda.core.render.AbstractResponseStateManager.VIEW_ID" id="org.seasar.teeda.core.render.AbstractResponseStateManager.VIEW_ID" value="/render/inputTextarea.jsp" />
+		<input type="hidden" name="inputTextareaForm/render/inputTextarea.jsp" value="inputTextareaForm" />
+	</form>
+</body>
+</html>

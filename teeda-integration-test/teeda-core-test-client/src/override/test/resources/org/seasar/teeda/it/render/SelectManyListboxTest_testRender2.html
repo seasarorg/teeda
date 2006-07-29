@@ -1,0 +1,29 @@
+<html>
+<head>
+<title>selectManyListbox2.jsp</title>
+</head>
+<body>
+	<form 
+		id="selectManyListboxForm" 
+		name="selectManyListboxForm" 
+		action="/faces/render/selectManyListbox2.jsp" 
+		method="post" 
+		enctype="application/x-www-form-urlencoded"
+	>
+		<select id="aaa" name="selectManyListboxForm:aaa" multiple="multiple" size="4">
+			<option value="1">One</option>
+			<option value="2" selected="selected">Two</option>
+			<option value="3">Three</option>
+			<option value="4" disabled="disabled">Four</option>
+		</select>
+		<span id="selectedString">[2]</span>
+		<input type="submit" id="submit1" name="selectManyListboxForm:submit1" />
+		<input type="hidden" name="javax.faces.ViewState" id="javax.faces.ViewState" value=".*" />
+		<input type="hidden" name="org.seasar.teeda.core.render.AbstractResponseStateManager.VIEW_ID" id="org.seasar.teeda.core.render.AbstractResponseStateManager.VIEW_ID" value="/render/selectManyListbox2.jsp" />
+		<input type="hidden" 
+			name="selectManyListboxForm/render/selectManyListbox2.jsp" 
+			value="selectManyListboxForm" 
+		/>
+	</form>
+</body>
+</html>

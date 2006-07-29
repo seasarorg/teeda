@@ -13,7 +13,7 @@
   <groupId>org.seasar.teeda</groupId>
   <artifactId>teeda-core-test</artifactId>
   <packaging>war</packaging>
-  <name>Teeda Integration Test</name>
+  <name>Teeda Integration Test (STATE_SAVING_METHOD=server)</name>
   <description></description>
   <url>http://teeda.seasar.org/</url>
   <build>

@@ -13,7 +13,7 @@
   <groupId>org.seasar.teeda</groupId>
   <artifactId>teeda-integration-test-project</artifactId>
   <packaging>pom</packaging>
-  <name>Teeda Integration Test</name>
+  <name>Teeda Integration Test Project</name>
   <description></description>
   <url>http://teeda.seasar.org/</url>
   <scm>
@@ -36,6 +36,7 @@
   </build>
   <modules>
     <module>teeda-core-test</module>
+    <module>teeda-core-test-client</module>
   </modules>
   <repositories>
     <repository>

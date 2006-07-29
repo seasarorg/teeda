@@ -13,7 +13,7 @@
   <groupId>org.seasar.teeda</groupId>
   <artifactId>teeda-core-test-client</artifactId>
   <packaging>war</packaging>
-  <name>Teeda Integration Test</name>
+  <name>Teeda Integration Test (STATE_SAVING_METHOD=clinet)</name>
   <description></description>
   <url>http://teeda.seasar.org/</url>
   <build>
@@ -56,7 +56,6 @@
             <phase>clean</phase>
             <configuration>
               <tasks>
-                <echo>**********************</echo>
                 <ant
                   antfile="build-copysource.xml"
                   target="clean-sources"
@@ -70,8 +69,7 @@
           </execution>
         </executions>
         <configuration>
-                <property name="basedir" location="${basedir}"/>
-        
+          <property name="basedir" location="${basedir}"/>
         </configuration>
       </plugin>
     </plugins>
