@@ -15,7 +15,7 @@
  */
 package javax.faces.component.html;
 
-import javax.faces.component.UICommandTeedaTest;
+import javax.faces.component.UICommandTest;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 
@@ -24,7 +24,7 @@ import org.seasar.teeda.core.mock.MockValueBinding;
 /**
  * @author manhole
  */
-public class HtmlCommandButtonTest extends UICommandTeedaTest {
+public class HtmlCommandButtonTest extends UICommandTest {
 
     public void testSetGetAccesskey() throws Exception {
         HtmlCommandButton component = createHtmlCommandButton();
