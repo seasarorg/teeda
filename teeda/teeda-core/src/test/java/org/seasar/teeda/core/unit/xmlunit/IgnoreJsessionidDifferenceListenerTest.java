@@ -95,4 +95,18 @@ public class IgnoreJsessionidDifferenceListenerTest extends TestCase {
         assertEquals(diff.toString(), false, diff.identical());
     }
 
+    public void testAction() throws Exception {
+        // ## Arrange ##
+        Diff diff = new Diff("<form action=\"bbb.gif\" />",
+                "<form action=\"bbb.gif;jsessionid=g8fpaqxqoql3\" />");
+
+        // ## Act ##
+        diff
+                .overrideDifferenceListener(new IgnoreJsessionidDifferenceListener());
+
+        // ## Assert ##
+        assertEquals(diff.toString(), true, diff.similar());
+        assertEquals(diff.toString(), false, diff.identical());
+    }
+
 }
