@@ -18,7 +18,7 @@ package javax.faces.component;
 /**
  * @author manhole
  */
-public class UIPanelTest extends UIComponentBaseTeedaTest {
+public class UIPanelTest extends UIComponentBaseTest {
 
     protected UIComponent createUIComponent() {
         return new UIPanel();
