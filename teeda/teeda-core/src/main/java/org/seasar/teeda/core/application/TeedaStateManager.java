@@ -16,8 +16,6 @@
 package org.seasar.teeda.core.application;
 
 import javax.faces.application.StateManager;
-import javax.faces.component.UIViewRoot;
-import javax.faces.context.FacesContext;
 
 /**
  * @author shot
@@ -28,28 +26,17 @@ public abstract class TeedaStateManager extends StateManager {
             .getName()
             + ".SERIALIZED_VIEW";
 
-    private TreeStructureManager treeStructureManager_;
-
-    protected abstract void restoreComponentStateFromClient(
-            FacesContext context, UIViewRoot viewRoot, String renderKitId);
-
-    protected abstract void restoreComponentStateFromServer(
-            FacesContext context, UIViewRoot viewRoot);
-
-    protected abstract UIViewRoot restoreTreeStructureFromClient(
-            FacesContext context, String viewId, String renderKitId);
-
-    protected abstract UIViewRoot restoreTreeStructureFromServer(
-            FacesContext context, String viewId);
+    private TreeStructureManager treeStructureManager;
 
     public TreeStructureManager getTreeStructureManager() {
-        return treeStructureManager_;
+        return treeStructureManager;
     }
 
     public void setTreeStructureManager(
             TreeStructureManager treeStructureManager) {
-        treeStructureManager_ = treeStructureManager;
+        this.treeStructureManager = treeStructureManager;
     }
 
     public abstract void removeSerializedView(String viewId);
+
 }

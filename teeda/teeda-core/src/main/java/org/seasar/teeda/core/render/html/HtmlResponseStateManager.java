@@ -38,6 +38,13 @@ public class HtmlResponseStateManager extends AbstractResponseStateManager {
     public void writeState(final FacesContext context,
             final SerializedView serializedView) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
+        writeSerializedView(context, serializedView, writer);
+        writeViewId(writer, context.getViewRoot().getViewId());
+    }
+
+    private void writeSerializedView(final FacesContext context,
+            final SerializedView serializedView, final ResponseWriter writer)
+            throws IOException {
         writer.startElement(JsfConstants.INPUT_ELEM, null);
         writer.writeAttribute(JsfConstants.TYPE_ATTR,
                 JsfConstants.HIDDEN_VALUE, null);
@@ -53,8 +60,6 @@ public class HtmlResponseStateManager extends AbstractResponseStateManager {
         }
         writer.writeAttribute(JsfConstants.VALUE_ATTR, value, null);
         writer.endElement(JsfConstants.INPUT_ELEM);
-
-        writeViewId(writer, context);
     }
 
     boolean isSavingStateInClient(final FacesContext context) {
@@ -72,11 +77,15 @@ public class HtmlResponseStateManager extends AbstractResponseStateManager {
             final String viewId) {
         final Map paramMap = context.getExternalContext()
                 .getRequestParameterMap();
+        final String viewIdParam = (String) paramMap.get(VIEW_ID);
         final String viewState = (String) paramMap.get(VIEW_STATE_PARAM);
-        if (viewState == null) {
+        if (viewState == null || viewIdParam == null) {
             return null;
         }
         if (isSavingStateInClient(context)) {
+            if (!viewIdParam.equals(viewId)) {
+                return null;
+            }
             StructureAndState structureAndState = (StructureAndState) getEncodeConverter()
                     .getAsDecodeObject(viewState);
             context.getExternalContext().getRequestMap().put(
@@ -88,15 +97,14 @@ public class HtmlResponseStateManager extends AbstractResponseStateManager {
         }
     }
 
-    protected void writeViewId(final ResponseWriter writer,
-            final FacesContext context) throws IOException {
+    protected void writeViewId(final ResponseWriter writer, final String viewId)
+            throws IOException {
         writer.startElement(JsfConstants.INPUT_ELEM, null);
         writer.writeAttribute(JsfConstants.TYPE_ATTR,
                 JsfConstants.HIDDEN_VALUE, null);
-        writer.writeAttribute(JsfConstants.NAME_ATTR, VIEW_STATE_PARAM, null);
-        writer.writeAttribute(JsfConstants.ID_ATTR, VIEW_STATE_PARAM, null);
-        writer.writeAttribute(JsfConstants.VALUE_ATTR, context.getViewRoot()
-                .getViewId(), null);
+        writer.writeAttribute(JsfConstants.NAME_ATTR, VIEW_ID, null);
+        writer.writeAttribute(JsfConstants.ID_ATTR, VIEW_ID, null);
+        writer.writeAttribute(JsfConstants.VALUE_ATTR, viewId, null);
         writer.endElement(JsfConstants.INPUT_ELEM);
     }
 

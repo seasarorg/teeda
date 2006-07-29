@@ -30,6 +30,10 @@ public abstract class AbstractResponseStateManager extends ResponseStateManager 
             .getPackage()
             + ".FACES_VIEW_STATE";
 
+    public static final String VIEW_ID = AbstractResponseStateManager.class
+            .getName()
+            + ".VIEW_ID";
+
     private EncodeConverter encodeConverter;
 
     public void setEncodeConverter(EncodeConverter encodeConverter) {

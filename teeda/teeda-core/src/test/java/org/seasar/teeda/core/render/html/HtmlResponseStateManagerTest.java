@@ -15,6 +15,8 @@
  */
 package org.seasar.teeda.core.render.html;
 
+import java.util.Map;
+
 import javax.faces.application.StateManager;
 import javax.faces.application.StateManager.SerializedView;
 import javax.faces.context.ResponseWriter;
@@ -58,8 +60,11 @@ public class HtmlResponseStateManagerTest extends TeedaTestCase {
         // assertEquals(diff.toString(), true, diff.identical());
         assertEquals(
                 "<input type=\"hidden\" name=\"javax.faces.ViewState\" id=\"javax.faces.ViewState\" value=\"encodedString\" />"
-                        + "<input type=\"hidden\" name=\"javax.faces.ViewState\" id=\"javax.faces.ViewState\" value=\"hogeViewId\" />",
-                getResponseText());
+                        + "<input type=\"hidden\" name=\""
+                        + AbstractResponseStateManager.VIEW_ID
+                        + "\" id=\""
+                        + AbstractResponseStateManager.VIEW_ID
+                        + "\" value=\"hogeViewId\" />", getResponseText());
     }
 
     public void testWriteState_getEncodeInServer() throws Exception {
@@ -79,8 +84,11 @@ public class HtmlResponseStateManagerTest extends TeedaTestCase {
         // ## Assert ##
         assertEquals(
                 "<input type=\"hidden\" name=\"javax.faces.ViewState\" id=\"javax.faces.ViewState\" value=\"aaaStructure\" />"
-                        + "<input type=\"hidden\" name=\"javax.faces.ViewState\" id=\"javax.faces.ViewState\" value=\"fooViewId\" />",
-                getResponseText());
+                        + "<input type=\"hidden\" name=\""
+                        + AbstractResponseStateManager.VIEW_ID
+                        + "\" id=\""
+                        + AbstractResponseStateManager.VIEW_ID
+                        + "\" value=\"fooViewId\" />", getResponseText());
     }
 
     public void testGetComponentStateToRestore1() throws Exception {
@@ -118,8 +126,13 @@ public class HtmlResponseStateManagerTest extends TeedaTestCase {
                 return new StructureAndState("aaaStructure", "b");
             }
         };
-        getFacesContext().getExternalContext().getRequestParameterMap().put(
-                AbstractResponseStateManager.VIEW_STATE_PARAM, "fooStateParam");
+        final Map requestParameterMap = getFacesContext().getExternalContext()
+                .getRequestParameterMap();
+        requestParameterMap.put(AbstractResponseStateManager.VIEW_STATE_PARAM,
+                "fooStateParam");
+        requestParameterMap.put(AbstractResponseStateManager.VIEW_ID,
+                "hogeViewId");
+
         HtmlResponseStateManager responseStateManager = new HtmlResponseStateManager();
         assertEquals(true, responseStateManager
                 .isSavingStateInClient(getFacesContext()));
@@ -139,9 +152,12 @@ public class HtmlResponseStateManagerTest extends TeedaTestCase {
             throws Exception {
         // ## Arrange ##
         setupStateSavingInServer();
-        getFacesContext().getExternalContext().getRequestParameterMap()
-                .put(AbstractResponseStateManager.VIEW_STATE_PARAM,
-                        "cccServerState");
+        final Map requestParameterMap = getFacesContext().getExternalContext()
+                .getRequestParameterMap();
+        requestParameterMap.put(AbstractResponseStateManager.VIEW_STATE_PARAM,
+                "cccServerState");
+        requestParameterMap.put(AbstractResponseStateManager.VIEW_ID, "hoge");
+
         HtmlResponseStateManager responseStateManager = new HtmlResponseStateManager();
         assertEquals(false, responseStateManager
                 .isSavingStateInClient(getFacesContext()));
@@ -160,8 +176,12 @@ public class HtmlResponseStateManagerTest extends TeedaTestCase {
     public void testGetStructureAndStateToRestore_InClient() throws Exception {
         // ## Arrange ##
         setupStateSavingInClient();
-        getFacesContext().getExternalContext().getRequestParameterMap().put(
-                AbstractResponseStateManager.VIEW_STATE_PARAM, "fooStateParam");
+        final Map requestParameterMap = getFacesContext().getExternalContext()
+                .getRequestParameterMap();
+        requestParameterMap.put(AbstractResponseStateManager.VIEW_STATE_PARAM,
+                "fooStateParam");
+        requestParameterMap.put(AbstractResponseStateManager.VIEW_ID,
+                "hogeViewId");
         NullEncodeConverter converter = new NullEncodeConverter() {
             public Object getAsDecodeObject(String state) {
                 return new StructureAndState("111_Structure", "222_State");
@@ -182,14 +202,13 @@ public class HtmlResponseStateManagerTest extends TeedaTestCase {
     }
 
     public void testWriteViewId() throws Exception {
-        getFacesContext().getViewRoot().setViewId("hoge");
         ResponseWriter writer = getFacesContext().getResponseWriter();
-        HtmlResponseStateManager manager = new HtmlResponseStateManager();
-        manager.writeViewId(writer, getFacesContext());
-        Diff diff = new Diff("<input type=\"hidden\""
-                + " name=\"javax.faces.ViewState\""
-                + " id=\"javax.faces.ViewState\"" + " value=\"hoge\" />",
-                getResponseText());
+        HtmlResponseStateManager responseStateManager = new HtmlResponseStateManager();
+        responseStateManager.writeViewId(writer, "hoge");
+        Diff diff = new Diff("<input type=\"hidden\"" + " name=\""
+                + AbstractResponseStateManager.VIEW_ID + "\"" + " id=\""
+                + AbstractResponseStateManager.VIEW_ID + "\""
+                + " value=\"hoge\" />", getResponseText());
         assertEquals(diff.toString(), true, diff.identical());
     }
 

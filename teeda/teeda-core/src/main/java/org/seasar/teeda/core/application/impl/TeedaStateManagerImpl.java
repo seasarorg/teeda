@@ -36,16 +36,17 @@ public class TeedaStateManagerImpl extends TeedaStateManager implements
         Serializable {
 
     static final long serialVersionUID = 0L;
-    
-    private Map serializedViews = new HashMap();
+
+    private final Map serializedViews = new HashMap();
 
     public TeedaStateManagerImpl() {
     }
 
-    public synchronized UIViewRoot restoreView(FacesContext context,
-            String viewId, String renderKitId) {
+    public synchronized UIViewRoot restoreView(final FacesContext context,
+            final String viewId, final String renderKitId) {
         assertRenderKitIdNotNull(renderKitId);
-        UIViewRoot viewRoot = restoreTreeStructure(context, viewId, renderKitId);
+        final UIViewRoot viewRoot = restoreTreeStructure(context, viewId,
+                renderKitId);
         if (viewRoot != null) {
             viewRoot.setViewId(viewId);
             restoreComponentState(context, viewRoot, renderKitId);
@@ -53,9 +54,9 @@ public class TeedaStateManagerImpl extends TeedaStateManager implements
         return viewRoot;
     }
 
-    public synchronized SerializedView saveSerializedView(FacesContext context)
-            throws IllegalStateException {
-        UIViewRoot viewRoot = context.getViewRoot();
+    public synchronized SerializedView saveSerializedView(
+            final FacesContext context) throws IllegalStateException {
+        final UIViewRoot viewRoot = context.getViewRoot();
         if (isSavingStateInClient(context)) {
             return createSerializedView(context);
         }
@@ -66,44 +67,44 @@ public class TeedaStateManagerImpl extends TeedaStateManager implements
         return null;
     }
 
-    protected SerializedView createSerializedView(FacesContext context) {
-        Object struct = getTreeStructureToSave(context);
-        Object state = getComponentStateToSave(context);
+    protected SerializedView createSerializedView(final FacesContext context) {
+        final Object struct = getTreeStructureToSave(context);
+        final Object state = getComponentStateToSave(context);
         return new SerializedView(struct, state);
     }
-    
-    public synchronized void removeSerializedView(String viewId) {
+
+    public synchronized void removeSerializedView(final String viewId) {
         serializedViews.remove(viewId);
     }
 
-    public synchronized void writeState(FacesContext context,
-            SerializedView serializedView) throws IOException {
+    public synchronized void writeState(final FacesContext context,
+            final SerializedView serializedView) throws IOException {
         if (isSavingStateInClient(context)) {
-            UIViewRoot viewRoot = context.getViewRoot();
-            ResponseStateManager responseStateManager = ResponseStateManagerUtil
-                    .getResponseStateManager(context, viewRoot.getRenderKitId());
+            final UIViewRoot viewRoot = context.getViewRoot();
+            final ResponseStateManager responseStateManager = getResponseStateManager(
+                    context, viewRoot.getRenderKitId());
             responseStateManager.writeState(context, serializedView);
         }
     }
 
-    protected Object getComponentStateToSave(FacesContext context) {
-        UIViewRoot viewRoot = context.getViewRoot();
+    protected Object getComponentStateToSave(final FacesContext context) {
+        final UIViewRoot viewRoot = context.getViewRoot();
         if (viewRoot.isTransient()) {
             return null;
         }
         return viewRoot.processSaveState(context);
     }
 
-    protected Object getTreeStructureToSave(FacesContext context) {
-        UIViewRoot viewRoot = context.getViewRoot();
+    protected Object getTreeStructureToSave(final FacesContext context) {
+        final UIViewRoot viewRoot = context.getViewRoot();
         if (viewRoot.isTransient()) {
             return null;
         }
         return getTreeStructureManager().buildTreeStructure(viewRoot);
     }
 
-    protected void restoreComponentState(FacesContext context,
-            UIViewRoot viewRoot, String renderKitId) {
+    protected void restoreComponentState(final FacesContext context,
+            final UIViewRoot viewRoot, final String renderKitId) {
         assertRenderKitIdNotNull(renderKitId);
         if (viewRoot.getRenderKitId() == null) {
             viewRoot.setRenderKitId(renderKitId);
@@ -115,8 +116,8 @@ public class TeedaStateManagerImpl extends TeedaStateManager implements
         }
     }
 
-    protected UIViewRoot restoreTreeStructure(FacesContext context,
-            String viewId, String renderKitId) {
+    protected UIViewRoot restoreTreeStructure(final FacesContext context,
+            final String viewId, final String renderKitId) {
         assertRenderKitIdNotNull(renderKitId);
         if (isSavingStateInClient(context)) {
             return restoreTreeStructureFromClient(context, viewId, renderKitId);
@@ -124,33 +125,35 @@ public class TeedaStateManagerImpl extends TeedaStateManager implements
         return restoreTreeStructureFromServer(context, viewId);
     }
 
-    protected void restoreComponentStateFromClient(FacesContext context,
-            UIViewRoot viewRoot, String renderKitId) {
-        ResponseStateManager responseStateManager = ResponseStateManagerUtil
-                .getResponseStateManager(context, renderKitId);
-        Object state = responseStateManager.getComponentStateToRestore(context);
+    protected void restoreComponentStateFromClient(final FacesContext context,
+            final UIViewRoot viewRoot, final String renderKitId) {
+        final ResponseStateManager responseStateManager = getResponseStateManager(
+                context, renderKitId);
+        final Object state = responseStateManager
+                .getComponentStateToRestore(context);
         viewRoot.processRestoreState(context, state);
     }
 
-    protected void restoreComponentStateFromServer(FacesContext context,
-            UIViewRoot viewRoot) {
-        SerializedView serializedView = getSerializedViewFromServer(viewRoot
+    protected void restoreComponentStateFromServer(final FacesContext context,
+            final UIViewRoot viewRoot) {
+        final SerializedView serializedView = getSerializedViewFromServer(viewRoot
                 .getViewId());
         if (serializedView == null) {
             return;
         }
-        Object state = serializedView.getState();
+        final Object state = serializedView.getState();
         if (state == null) {
             return;
         }
         viewRoot.processRestoreState(context, state);
     }
 
-    protected UIViewRoot restoreTreeStructureFromClient(FacesContext context,
-            String viewId, String renderKitId) {
-        ResponseStateManager responseStateManager = ResponseStateManagerUtil
-                .getResponseStateManager(context, renderKitId);
-        TreeStructure struct = (TreeStructure) responseStateManager
+    protected UIViewRoot restoreTreeStructureFromClient(
+            final FacesContext context, final String viewId,
+            final String renderKitId) {
+        final ResponseStateManager responseStateManager = getResponseStateManager(
+                context, renderKitId);
+        final TreeStructure struct = (TreeStructure) responseStateManager
                 .getTreeStructureToRestore(context, viewId);
         if (struct == null) {
             return null;
@@ -159,33 +162,41 @@ public class TeedaStateManagerImpl extends TeedaStateManager implements
                 struct);
     }
 
-    protected UIViewRoot restoreTreeStructureFromServer(FacesContext context,
-            String viewId) {
-        SerializedView serializedView = getSerializedViewFromServer(viewId);
+    protected UIViewRoot restoreTreeStructureFromServer(
+            final FacesContext context, final String viewId) {
+        final SerializedView serializedView = getSerializedViewFromServer(viewId);
         if (serializedView == null) {
             return null;
         }
-        TreeStructure struct = (TreeStructure) serializedView.getStructure();
+        final TreeStructure struct = (TreeStructure) serializedView
+                .getStructure();
         return (UIViewRoot) getTreeStructureManager().restoreTreeStructure(
                 struct);
     }
 
-    private static void assertRenderKitIdNotNull(String renderKitId) {
+    private static void assertRenderKitIdNotNull(final String renderKitId) {
         if (renderKitId == null) {
             throw new IllegalArgumentException();
         }
     }
 
-    protected SerializedView getSerializedViewFromServer(String viewId) {
+    protected SerializedView getSerializedViewFromServer(final String viewId) {
         return (SerializedView) serializedViews.get(viewId);
     }
 
-    protected boolean hasSerializedViewInServer(String viewId) {
+    protected boolean hasSerializedViewInServer(final String viewId) {
         return serializedViews.containsKey(viewId);
     }
 
-    protected void saveSerializedViewToServer(String viewId,
-            SerializedView serializedView) {
+    protected void saveSerializedViewToServer(final String viewId,
+            final SerializedView serializedView) {
         serializedViews.put(viewId, serializedView);
     }
+
+    private ResponseStateManager getResponseStateManager(
+            final FacesContext context, final String renderKitId) {
+        return ResponseStateManagerUtil.getResponseStateManager(context,
+                renderKitId);
+    }
+
 }
