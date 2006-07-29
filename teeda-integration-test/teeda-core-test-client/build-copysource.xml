@@ -8,11 +8,13 @@
 	<property name="src.test.java" location="${project.build.testSourceDirectory}"/>
 	<property name="src.test.resources" location="${project.build.testSourceDirectory}/../resources"/>
 
-	<property name="src.main.override.java" location="${project.build.sourceDirectory}"/>
-	<property name="src.main.override.resources" location="${project.build.sourceDirectory}/../resources"/>
-	<property name="src.main.override.webapp" location="${project.build.sourceDirectory}/../webapp"/>
-	<property name="src.test.override.java" location="${project.build.testSourceDirectory}"/>
-	<property name="src.test.override.resources" location="${project.build.testSourceDirectory}/../resources"/>
+	<property name="src.override" location="${src.main.java}../../override"/>
+
+	<property name="src.override.main.java" location="${src.override}/src/java"/>
+	<property name="src.override.main.resources" location="${project.build.sourceDirectory}/../resources"/>
+	<property name="src.override.main.webapp" location="${project.build.sourceDirectory}/../webapp"/>
+	<property name="src.override.test.java" location="${project.build.testSourceDirectory}"/>
+	<property name="src.override.test.resources" location="${project.build.testSourceDirectory}/../resources"/>
 
 	<target name="setup-sources">
 		<echo>source_project=${source_project}</echo>
