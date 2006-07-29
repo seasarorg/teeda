@@ -162,6 +162,7 @@ public abstract class AbstractTestCase extends TestCase {
             return (HtmlPage) webClient.getPage(url);
         } catch (FailingHttpStatusCodeException e) {
             final WebResponse response = e.getResponse();
+            e.printStackTrace();
             final byte[] bodyBytes = response.getResponseBody();
             final String body = new String(bodyBytes, ENCODING);
             System.out.println(body);

@@ -19,8 +19,6 @@ import java.net.URL;
 
 import junit.framework.Test;
 
-import org.seasar.framework.container.S2Container;
-import org.seasar.framework.container.factory.S2ContainerFactory;
 import org.seasar.teeda.it.AbstractTestCase;
 
 import com.gargoylesoftware.htmlunit.WebClient;
@@ -34,11 +32,6 @@ public class ErrorPageTest extends AbstractTestCase {
 
     public static Test suite() throws Exception {
         return setUpTestSuite(ErrorPageTest.class);
-    }
-
-    public void test1() throws Exception {
-        S2Container container = S2ContainerFactory.create("app.dicon");
-        container.init();
     }
 
     public void testRender() throws Exception {
