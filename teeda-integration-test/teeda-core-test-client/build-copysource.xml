@@ -1,0 +1,74 @@
+<project name="teeda-core-test-client" default="setup-sources" basedir=".">
+
+	<property name="ver" value="1.0-beta-6-SNAPSHOT"/>
+	<property name="source_project" location="../teeda-core-test"/>
+	<property name="src.main.java" location="${project.build.sourceDirectory}"/>
+	<property name="src.main.resources" location="${project.build.sourceDirectory}/../resources"/>
+	<property name="src.main.webapp" location="${project.build.sourceDirectory}/../webapp"/>
+	<property name="src.test.java" location="${project.build.testSourceDirectory}"/>
+	<property name="src.test.resources" location="${project.build.testSourceDirectory}/../resources"/>
+
+	<property name="src.main.override.java" location="${project.build.sourceDirectory}"/>
+	<property name="src.main.override.resources" location="${project.build.sourceDirectory}/../resources"/>
+	<property name="src.main.override.webapp" location="${project.build.sourceDirectory}/../webapp"/>
+	<property name="src.test.override.java" location="${project.build.testSourceDirectory}"/>
+	<property name="src.test.override.resources" location="${project.build.testSourceDirectory}/../resources"/>
+
+	<target name="setup-sources">
+		<echo>source_project=${source_project}</echo>
+		<echo>src.main.java=${src.main.java}</echo>
+		<echo>src.main.resources=${src.main.resources}</echo>
+		<echo>src.main.webapp=${src.main.webapp}</echo>
+		<echo>src.test.java=${src.test.java}</echo>
+		<echo>src.test.resources=${src.main.resources}</echo>
+		<copy todir="${src.main.java}" failonerror="false">
+			<fileset dir="${source_project}/src/main/java"/>
+		</copy>
+		<copy todir="${src.main.resources}" failonerror="false">
+			<fileset dir="${source_project}/src/main/resources"/>
+		</copy>
+		<copy todir="${src.main.webapp}" failonerror="false">
+			<fileset dir="${source_project}/src/main/webapp"/>
+		</copy>
+		<copy todir="${src.test.java}" failonerror="false">
+			<fileset dir="${source_project}/src/test/java"/>
+		</copy>
+		<copy todir="${src.test.resources}" failonerror="false">
+			<fileset dir="${source_project}/src/test/resources"/>
+		</copy>
+		<copy todir="${src.test.resources}" failonerror="false">
+			<fileset dir="${source_project}/src/test/resources"/>
+		</copy>
+
+
+	</target>
+
+	<target name="dist">
+		<mkdir dir="target"/>
+		<zip zipfile="target/teeda-${ver}.zip">
+			<zipfileset prefix="teeda" dir=".">
+				<exclude name="**/target/**"/>
+				<exclude name="**/.settings/**"/>
+				<exclude name="**/cobertura.ser"/>
+			</zipfileset>
+			<zipfileset prefix="teeda" dir="teeda-core/target">
+				<include name="teeda-core-${ver}.jar"/>
+				<include name="teeda-core-${ver}-sources.jar"/>
+			</zipfileset>
+			<zipfileset prefix="teeda" dir="teeda-extension/target">
+				<include name="teeda-extension-${ver}.jar"/>
+				<include name="teeda-extension-${ver}-sources.jar"/>
+			</zipfileset>
+			<zipfileset prefix="teeda" dir="teeda-ajax/target">
+				<include name="teeda-ajax-${ver}.jar"/>
+				<include name="teeda-ajax-${ver}-sources.jar"/>
+			</zipfileset>
+			<zipfileset prefix="teeda/resources" dir="teeda-core/src/test/resources">
+				<include name="teeda.dicon"/>
+				<include name="teedaErrorPage.dicon"/>
+				<include name="log4j.properties"/>
+			</zipfileset>
+		</zip>
+	</target>
+
+</project>
