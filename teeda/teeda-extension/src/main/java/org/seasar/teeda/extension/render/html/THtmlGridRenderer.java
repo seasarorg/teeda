@@ -27,7 +27,9 @@ import javax.faces.context.ResponseWriter;
 
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
+import org.seasar.framework.util.ResourceUtil;
 import org.seasar.framework.util.StringUtil;
+import org.seasar.framework.util.TextUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.util.RendererUtil;
 import org.seasar.teeda.extension.component.html.THtmlGrid;
@@ -39,7 +41,6 @@ import org.seasar.teeda.extension.component.html.THtmlGridTd;
 import org.seasar.teeda.extension.component.html.THtmlGridTh;
 import org.seasar.teeda.extension.component.html.THtmlGridTr;
 import org.seasar.teeda.extension.render.TForEachRenderer;
-import org.seasar.teeda.extension.util.JavaScriptContext;
 
 /**
  * @author manhole
@@ -90,9 +91,10 @@ public class THtmlGridRenderer extends TForEachRenderer {
     private void renderJavascript(FacesContext context, THtmlGrid htmlGrid,
             ResponseWriter writer) throws IOException {
         if (shouldRenderJavascript(context, htmlGrid)) {
-            JavaScriptContext scriptContext = new JavaScriptContext();
-            scriptContext.loadScript(THtmlGrid.class.getName());
-            writer.write(scriptContext.getResult());
+            final String resourcePath = ResourceUtil.getResourcePath(
+                    THtmlGrid.class.getName(), "js");
+            final String scriptBody = TextUtil.readText(resourcePath).trim();
+            renderJavaScriptElement(writer, scriptBody);
         }
     }
 

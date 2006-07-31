@@ -1,0 +1,19 @@
+<form 
+	id="fooForm" 
+	name="fooForm" 
+	method="post" 
+	enctype="application/x-www-form-urlencoded"
+	action="/aaaViewId">
+<a 
+	href="#" 
+	onclick="var f = document.forms['fooForm']; f['fooForm:__link_clicked__'].value = 'fooForm:_id0'; f['a'].value = '1'; if (f.onsubmit) { f.onsubmit(); } f.submit(); return false;">
+</a>
+<input type="hidden" name="fooForm/aaaViewId" value="fooForm" />
+<input type="hidden" name="fooForm:__link_clicked__" />
+<input type="hidden" name="a" />
+<script language="JavaScript" type="text/javascript">
+<!--
+var f = document.forms['fooForm']; f['fooForm:__link_clicked__'].value = 'null'; f['a'].value = 'null';
+//-->
+</script>
+</form>

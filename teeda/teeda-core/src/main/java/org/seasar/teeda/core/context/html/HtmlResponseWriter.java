@@ -74,7 +74,6 @@ public class HtmlResponseWriter extends ResponseWriter {
         } else {
             shouldEscape = true;
         }
-
         startTagOpening = true;
     }
 

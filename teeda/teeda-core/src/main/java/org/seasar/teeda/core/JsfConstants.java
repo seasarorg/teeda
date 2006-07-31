@@ -75,6 +75,8 @@ public interface JsfConstants {
 
     // -- value --
 
+    String BUTTON_VALUE = "button";
+
     String CHECKBOX_VALUE = "checkbox";
 
     String COLGROUP_VALUE = "colgroup";
@@ -84,6 +86,8 @@ public interface JsfConstants {
     String HIDDEN_VALUE = "hidden";
 
     String IMAGE_VALUE = "image";
+
+    String JAVASCRIPT_VALUE = "JavaScript";
 
     String MULTIPLE_VALUE = "multiple";
 
@@ -95,13 +99,13 @@ public interface JsfConstants {
 
     String RESET_VALUE = "reset";
 
-    String TABLE_VALUE = "table";
-
-    String TEXT_VALUE = "text";
-
     String SUBMIT_VALUE = "submit";
 
-    String BUTTON_VALUE = "button";
+    String TABLE_VALUE = "table";
+
+    String TEXT_JAVASCRIPT_VALUE = "text/javascript";
+
+    String TEXT_VALUE = "text";
 
     // -- element --
 
@@ -130,6 +134,8 @@ public interface JsfConstants {
     String OPTGROUP_ELEM = "optgroup";
 
     String OPTION_ELEM = "option";
+
+    String SCRIPT_ELEM = "script";
 
     String SELECT_ELEM = "select";
 
@@ -270,6 +276,8 @@ public interface JsfConstants {
     String LAYOUT_ATTR = "layout";
 
     String LANG_ATTR = "lang";
+
+    String LANGUAGE_ATTR = "language";
 
     String LONGDESC_ATTR = "longdesc";
 

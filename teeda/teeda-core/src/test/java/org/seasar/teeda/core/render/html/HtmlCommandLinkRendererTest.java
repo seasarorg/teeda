@@ -204,6 +204,32 @@ public class HtmlCommandLinkRendererTest extends RendererTest {
                 + " return false;" + "\"></a>", getResponseText());
     }
 
+    public void testEncode_WithNullParameter() throws Exception {
+        // ## Arrange ##
+        htmlCommandLink.setId("a");
+
+        MockHtmlForm form = new MockHtmlForm();
+        form.setRenderer(new HtmlFormRenderer());
+        form.setId("b");
+        form.getChildren().add(htmlCommandLink);
+
+        UIParameter param = new UIParameter();
+        param.setName("c");
+        param.setValue(null);
+        htmlCommandLink.getChildren().add(param);
+
+        // ## Act ##
+        encodeByRenderer(renderer, htmlCommandLink);
+
+        // ## Assert ##
+        assertEquals("<a" + " id=\"a\"" + " href=\"#\"" + " onclick=\""
+                + "var f = document.forms['b'];"
+                + " f['b:__link_clicked__'].value = 'b:a';"
+                + " f['c'].value = 'null';"
+                + " if (f.onsubmit) { f.onsubmit(); }" + " f.submit();"
+                + " return false;" + "\"></a>", getResponseText());
+    }
+
     public void testEncode_WithUnknownAttribute() throws Exception {
         // ## Arrange ##
         htmlCommandLink.setValue("abc");
@@ -281,7 +307,7 @@ public class HtmlCommandLinkRendererTest extends RendererTest {
         assertEquals(diff.toString(), true, diff.identical());
     }
 
-    public void testEncodeWithoutJavascript() throws Exception {
+    public void testEncode_WithoutJavascript() throws Exception {
         // ## Arrange ##
         htmlCommandLink.setId("hoge");
         MockHtmlForm form = new MockHtmlForm();

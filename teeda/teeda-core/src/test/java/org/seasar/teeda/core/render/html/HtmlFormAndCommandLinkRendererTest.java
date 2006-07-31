@@ -15,12 +15,18 @@
  */
 package org.seasar.teeda.core.render.html;
 
+import java.io.IOException;
+
 import javax.faces.component.UIParameter;
 import javax.faces.render.AbstractRendererTest;
+import javax.xml.parsers.ParserConfigurationException;
 
+import org.custommonkey.xmlunit.Diff;
 import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.mock.MockHtmlCommandLink;
 import org.seasar.teeda.core.mock.MockHtmlForm;
+import org.seasar.teeda.core.unit.TestUtil;
+import org.xml.sax.SAXException;
 
 /**
  * @author manhole
@@ -49,7 +55,7 @@ public class HtmlFormAndCommandLinkRendererTest extends AbstractRendererTest {
         commandLinkRenderer.setRenderAttributes(getRenderAttributes());
     }
 
-    public void test1() throws Exception {
+    public void testEncode_WithCommandLink() throws Exception {
         // ## Arrange ##
         MockHtmlCommandLink htmlCommandLink = new MockHtmlCommandLink();
         htmlCommandLink.setRenderer(commandLinkRenderer);
@@ -61,40 +67,57 @@ public class HtmlFormAndCommandLinkRendererTest extends AbstractRendererTest {
         MockFacesContext context = getFacesContext();
         context.getViewRoot().setViewId("/aa");
 
-        // <input type="hidden" name="fooForm:__link_clicked__" />
-
         // ## Act ##
         formRenderer.encodeBegin(context, htmlForm);
         formRenderer.encodeChildren(context, htmlForm);
         formRenderer.encodeEnd(context, htmlForm);
 
         // ## Assert ##
-        assertEquals(
-                "<form id=\"fooForm\" name=\"fooForm\" method=\"post\""
-                        + " enctype=\"application/x-www-form-urlencoded\""
-                        + " action=\"/aa\">"
-                        + "<a"
-                        + " id=\"fooLink\""
-                        + " href=\"#\""
-                        + " onclick=\""
-                        + "var f = document.forms['fooForm'];"
-                        + " f['fooForm:__link_clicked__'].value = 'fooForm:fooLink';"
-                        + " if (f.onsubmit) { f.onsubmit(); }"
-                        + " f.submit();"
-                        + " return false;"
-                        + "\"></a>"
-                        + "<input type=\"hidden\" name=\"fooForm/aa\" value=\"fooForm\" />"
-                        + "<input type=\"hidden\" name=\"fooForm:__link_clicked__\" />"
-                        + "</form>", getResponseText());
+        System.out.println(getResponseText());
+        final String readText = TestUtil.readText(getClass(),
+                "testEncode_WithCommandLink.html", "UTF-8");
+        final Diff diff = diff(readText, getResponseText());
+        assertEquals(diff.toString(), true, diff.identical());
     }
 
-    public void testWithUIParameters() throws Exception {
+    public void testEncode_WithParameter() throws Exception {
+        // ## Arrange ##
+        MockFacesContext context = getFacesContext();
+        context.getViewRoot().setViewId("/aaaViewId");
+        htmlForm.setId("fooForm");
+
+        MockHtmlCommandLink commandLink = new MockHtmlCommandLink();
+        commandLink.setRenderer(commandLinkRenderer);
+        {
+            UIParameter param = new UIParameter();
+            param.setName("a");
+            param.setValue("1");
+            commandLink.getChildren().add(param);
+
+            htmlForm.getChildren().add(commandLink);
+        }
+
+        // ## Act ##
+        htmlForm.encodeBegin(context);
+        commandLink.encodeBegin(context);
+        commandLink.encodeChildren(context);
+        commandLink.encodeEnd(context);
+        htmlForm.encodeEnd(context);
+
+        // ## Assert ##
+        final String readText = TestUtil.readText(getClass(),
+                "testEncode_WithParameter.html", "UTF-8");
+        final Diff diff = diff(readText, getResponseText());
+        assertEquals(diff.toString(), true, diff.identical());
+    }
+
+    public void testEncode_WithParameters() throws Exception {
         // ## Arrange ##
         MockHtmlCommandLink htmlCommandLink = new MockHtmlCommandLink();
         htmlCommandLink.setRenderer(commandLinkRenderer);
         htmlCommandLink.setId("fooLink");
 
-        htmlForm.setId("fooForm");
+        htmlForm.setId("barForm");
         htmlForm.getChildren().add(htmlCommandLink);
         {
             UIParameter param = new UIParameter();
@@ -112,35 +135,23 @@ public class HtmlFormAndCommandLinkRendererTest extends AbstractRendererTest {
         MockFacesContext context = getFacesContext();
         context.getViewRoot().setViewId("/abc");
 
-        // <input type="hidden" name="fooForm:__link_clicked__" />
-
         // ## Act ##
         formRenderer.encodeBegin(context, htmlForm);
         formRenderer.encodeChildren(context, htmlForm);
         formRenderer.encodeEnd(context, htmlForm);
 
         // ## Assert ##
-        assertEquals(
-                "<form id=\"fooForm\" name=\"fooForm\" method=\"post\""
-                        + " enctype=\"application/x-www-form-urlencoded\""
-                        + " action=\"/abc\">"
-                        + "<a"
-                        + " id=\"fooLink\""
-                        + " href=\"#\""
-                        + " onclick=\""
-                        + "var f = document.forms['fooForm'];"
-                        + " f['fooForm:__link_clicked__'].value = 'fooForm:fooLink';"
-                        + " f['x'].value = '1';"
-                        + " f['y'].value = '2';"
-                        + " if (f.onsubmit) { f.onsubmit(); }"
-                        + " f.submit();"
-                        + " return false;"
-                        + "\"></a>"
-                        + "<input type=\"hidden\" name=\"fooForm/abc\" value=\"fooForm\" />"
-                        + "<input type=\"hidden\" name=\"fooForm:__link_clicked__\" />"
-                        + "<input type=\"hidden\" name=\"x\" />"
-                        + "<input type=\"hidden\" name=\"y\" />" + "</form>",
-                getResponseText());
+        System.out.println(getResponseText());
+        final String readText = TestUtil.readText(getClass(),
+                "testEncode_WithParameters.html", "UTF-8");
+        final Diff diff = diff(readText, getResponseText());
+        assertEquals(diff.toString(), true, diff.identical());
+    }
+
+    protected Diff diff(final String expected, final String actual)
+            throws SAXException, IOException, ParserConfigurationException {
+        return super.diff("<dummy>" + expected + "</dummy>", "<dummy>" + actual
+                + "</dummy>");
     }
 
 }

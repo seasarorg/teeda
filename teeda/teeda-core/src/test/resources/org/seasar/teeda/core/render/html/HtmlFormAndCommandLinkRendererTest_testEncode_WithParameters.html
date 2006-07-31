@@ -1,0 +1,21 @@
+<form 
+	id="barForm" 
+	name="barForm" 
+	method="post" 
+	enctype="application/x-www-form-urlencoded"
+	action="/abc">
+<a
+	id="fooLink"
+	href="#"
+	onclick="var f = document.forms['barForm']; f['barForm:__link_clicked__'].value = 'barForm:fooLink'; f['x'].value = '1'; f['y'].value = '2'; if (f.onsubmit) { f.onsubmit(); } f.submit(); return false;">
+</a>
+<input type="hidden" name="barForm/abc" value="barForm" />
+<input type="hidden" name="barForm:__link_clicked__" />
+<input type="hidden" name="x" />
+<input type="hidden" name="y" />
+<script language="JavaScript" type="text/javascript">
+<!--
+var f = document.forms['barForm']; f['barForm:__link_clicked__'].value = 'null'; f['x'].value = 'null'; f['y'].value = 'null';
+//-->
+</script>
+</form>

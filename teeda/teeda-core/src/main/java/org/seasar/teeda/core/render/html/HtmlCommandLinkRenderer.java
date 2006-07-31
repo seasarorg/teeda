@@ -97,14 +97,15 @@ public class HtmlCommandLinkRenderer extends AbstractRenderer {
 
         HtmlFormRenderer.setHiddenParameter(parentForm, hiddenFieldName, null);
 
-        for (Iterator it = commandLink.getChildren().iterator(); it.hasNext();) {
-            UIComponent child = (UIComponent) it.next();
+        for (final Iterator it = commandLink.getChildren().iterator(); it
+                .hasNext();) {
+            final UIComponent child = (UIComponent) it.next();
             if (child instanceof UIParameter) {
-                UIParameter p = ((UIParameter) child);
-                String name = p.getName();
-                Object value = p.getValue();
+                final UIParameter p = ((UIParameter) child);
+                final String name = p.getName();
+                final Object value = p.getValue();
                 sb.append(" f['" + name + "'].value = '");
-                sb.append(value);
+                sb.append(String.valueOf(value));
                 sb.append("';");
                 HtmlFormRenderer.setHiddenParameter(parentForm, name, null);
             }

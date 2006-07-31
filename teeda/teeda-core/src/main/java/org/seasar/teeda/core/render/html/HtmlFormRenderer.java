@@ -84,12 +84,12 @@ public class HtmlFormRenderer extends AbstractRenderer {
         if (!component.isRendered()) {
             return;
         }
-        context.getApplication().getViewHandler().writeState(context);
         encodeHtmlFormEnd(context, (HtmlForm) component);
     }
 
     protected void encodeHtmlFormEnd(FacesContext context, HtmlForm htmlForm)
             throws IOException {
+        context.getApplication().getViewHandler().writeState(context);
         ResponseWriter writer = context.getResponseWriter();
         renderFormSubmitMarker(context, htmlForm, writer);
         renderForCommandLink(context, htmlForm, writer);
@@ -98,24 +98,24 @@ public class HtmlFormRenderer extends AbstractRenderer {
 
     protected void renderForCommandLink(FacesContext context,
             HtmlForm htmlForm, ResponseWriter writer) throws IOException {
-        for (Iterator it = getHiddenParameters(htmlForm).entrySet().iterator(); it
+        final Map hiddenParameters = getHiddenParameters(htmlForm);
+        final StringBuffer sb = new StringBuffer(100);
+        for (final Iterator it = hiddenParameters.entrySet().iterator(); it
                 .hasNext();) {
-            Map.Entry entry = (Entry) it.next();
-            String name = (String) entry.getKey();
-            Object value = entry.getValue();
+            final Map.Entry entry = (Entry) it.next();
+            final String name = (String) entry.getKey();
+            final Object value = entry.getValue();
             renderHidden(htmlForm, writer, name, value);
+            if (sb.length() == 0) {
+                sb.append("var f = document.forms['"
+                        + getIdForRender(context, htmlForm) + "'];");
+            }
+            sb.append(" f['" + name + "'].value = '" + String.valueOf(value)
+                    + "';");
         }
+        final String body = new String(sb);
+        renderJavaScriptElement(writer, body);
         htmlForm.getAttributes().remove(HIDDEN_PARAMETER_KEY);
-    }
-
-    private void renderHidden(HtmlForm htmlForm, ResponseWriter writer,
-            String name, Object value) throws IOException {
-        writer.startElement(JsfConstants.INPUT_ELEM, htmlForm);
-        RendererUtil.renderAttribute(writer, JsfConstants.TYPE_ATTR,
-                JsfConstants.HIDDEN_VALUE);
-        RendererUtil.renderAttribute(writer, JsfConstants.NAME_ATTR, name);
-        RendererUtil.renderAttribute(writer, JsfConstants.VALUE_ATTR, value);
-        writer.endElement(JsfConstants.INPUT_ELEM);
     }
 
     public static void setHiddenParameter(UIForm form, String name, Object value) {
@@ -136,8 +136,7 @@ public class HtmlFormRenderer extends AbstractRenderer {
     private void renderFormSubmitMarker(FacesContext context,
             HtmlForm htmlForm, ResponseWriter writer) throws IOException {
         final String clientId = htmlForm.getClientId(context);
-        final String key = HtmlFormRendererUtil.getFormSubmitKey(context,
-                htmlForm);
+        final String key = getFormSubmitKey(context, htmlForm);
         renderHidden(htmlForm, writer, key, clientId);
     }
 
@@ -148,12 +147,26 @@ public class HtmlFormRenderer extends AbstractRenderer {
 
     protected void decodeHtmlForm(FacesContext context, HtmlForm htmlForm) {
         Map reqParam = context.getExternalContext().getRequestParameterMap();
-        String key = HtmlFormRendererUtil.getFormSubmitKey(context, htmlForm);
+        String key = getFormSubmitKey(context, htmlForm);
         if (reqParam.containsKey(key)) {
             htmlForm.setSubmitted(true);
         } else {
             htmlForm.setSubmitted(false);
         }
+    }
+
+    private void renderHidden(HtmlForm htmlForm, ResponseWriter writer,
+            String name, Object value) throws IOException {
+        writer.startElement(JsfConstants.INPUT_ELEM, htmlForm);
+        RendererUtil.renderAttribute(writer, JsfConstants.TYPE_ATTR,
+                JsfConstants.HIDDEN_VALUE);
+        RendererUtil.renderAttribute(writer, JsfConstants.NAME_ATTR, name);
+        RendererUtil.renderAttribute(writer, JsfConstants.VALUE_ATTR, value);
+        writer.endElement(JsfConstants.INPUT_ELEM);
+    }
+
+    private String getFormSubmitKey(FacesContext context, HtmlForm htmlForm) {
+        return HtmlFormRendererUtil.getFormSubmitKey(context, htmlForm);
     }
 
 }

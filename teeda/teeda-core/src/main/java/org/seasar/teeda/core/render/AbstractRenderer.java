@@ -219,6 +219,24 @@ public abstract class AbstractRenderer extends Renderer {
         this.renderAttributes = renderAttributes;
     }
 
+    protected void renderJavaScriptElement(final ResponseWriter writer,
+            final String scirptBody) throws IOException {
+        if (StringUtil.isBlank(scirptBody)) {
+            return;
+        }
+        writer.startElement(JsfConstants.SCRIPT_ELEM, null);
+        writer.writeAttribute(JsfConstants.LANGUAGE_ATTR,
+                JsfConstants.JAVASCRIPT_VALUE, null);
+        writer.writeAttribute(JsfConstants.TYPE_ATTR,
+                JsfConstants.TEXT_JAVASCRIPT_VALUE, null);
+        writer.write("<!--");
+        writer.write(JsfConstants.LINE_SP);
+        writer.write(scirptBody);
+        writer.write(JsfConstants.LINE_SP);
+        writer.write("//-->");
+        writer.endElement(JsfConstants.SCRIPT_ELEM);
+    }
+
     private static class RendererMetaData {
 
         private String componentFamily;

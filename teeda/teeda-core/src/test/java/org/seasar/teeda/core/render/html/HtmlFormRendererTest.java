@@ -45,6 +45,7 @@ public class HtmlFormRendererTest extends RendererTest {
         htmlForm = new MockHtmlForm();
         htmlForm.setRenderer(renderer);
         htmlForm.setEnctype(null);
+
     }
 
     public void testEncode_NoValue() throws Exception {
