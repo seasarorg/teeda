@@ -31,6 +31,13 @@ public class TextTrimmingDifferenceListenerTest extends TestCase {
         assertEquals(myDiff.toString(), true, myDiff.identical());
     }
 
+    public void testIgnoreSpace8() throws Exception {
+        Diff myDiff = new Diff("<a>\r\n1\r\n\t</a>", "<a> 1 </a>");
+        myDiff.overrideDifferenceListener(new TextTrimmingDifferenceListener());
+        assertEquals(myDiff.toString(), true, myDiff.similar());
+        assertEquals(myDiff.toString(), true, myDiff.identical());
+    }
+
     public void testIgnoreSpace2() throws Exception {
         Diff myDiff = new Diff("<a> </a>", "<a>  </a>");
         myDiff.overrideDifferenceListener(new TextTrimmingDifferenceListener());

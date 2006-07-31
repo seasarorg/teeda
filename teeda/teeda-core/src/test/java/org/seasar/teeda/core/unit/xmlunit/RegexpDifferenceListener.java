@@ -17,6 +17,7 @@ package org.seasar.teeda.core.unit.xmlunit;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 import org.custommonkey.xmlunit.Difference;
 import org.custommonkey.xmlunit.DifferenceConstants;
@@ -38,11 +39,15 @@ public class RegexpDifferenceListener implements DifferenceListener {
             String cNodeDetailValue = cNodeDetail.getValue();
             String tNodeDetailValue = tNodeDetail.getValue();
 
-            Pattern pattern = Pattern.compile(cNodeDetailValue);
-            Matcher matcher = pattern.matcher(tNodeDetailValue);
-            if (matcher.matches()) {
-                System.out.println("recover:TEXT_VALUE || ATTR_VALUE (Regexp)");
-                return DifferenceListener.RETURN_IGNORE_DIFFERENCE_NODES_SIMILAR;
+            try {
+                Pattern pattern = Pattern.compile(cNodeDetailValue);
+                Matcher matcher = pattern.matcher(tNodeDetailValue);
+                if (matcher.matches()) {
+                    System.out
+                            .println("recover:TEXT_VALUE || ATTR_VALUE (Regexp)");
+                    return DifferenceListener.RETURN_IGNORE_DIFFERENCE_NODES_SIMILAR;
+                }
+            } catch (PatternSyntaxException e) {
             }
         }
         return DifferenceListener.RETURN_ACCEPT_DIFFERENCE;
