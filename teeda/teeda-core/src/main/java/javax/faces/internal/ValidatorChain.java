@@ -21,6 +21,7 @@ import java.util.List;
 
 import javax.faces.component.StateHolder;
 import javax.faces.component.UIComponent;
+import javax.faces.component.UIComponentBase;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
@@ -28,6 +29,7 @@ import javax.faces.validator.ValidatorException;
 /**
  * @author Satoshi Kimura
  * @author shot
+ * @author manhole
  */
 public class ValidatorChain implements Validator, StateHolder {
 
@@ -35,11 +37,11 @@ public class ValidatorChain implements Validator, StateHolder {
     private boolean transientValue = false;
 
     private List validators = new LinkedList();
-    
+
     public int getValidatorSize() {
         return validators.size();
     }
-    
+
     public Validator getValidator(int index) {
         return (Validator) validators.get(index);
     }
@@ -60,28 +62,12 @@ public class ValidatorChain implements Validator, StateHolder {
     }
 
     public Object saveState(FacesContext context) {
-        Object values[] = new Object[validators.size() + 1];
-        for (int i = 0; i < validators.size(); i++) {
-            Object validator = validators.get(i);
-            if (validator instanceof StateHolder) {
-                values[i] = ((StateHolder) validator).saveState(context);
-            } else {
-                values[i] = null;
-            }
-        }
-        values[values.length - 1] = validators;
-        return values;
+        return UIComponentBase.saveAttachedState(context, validators);
     }
 
     public void restoreState(FacesContext context, Object state) {
-        Object values[] = (Object[]) state;
-        validators = (List) values[values.length - 1];
-        for (int i = 0; i < validators.size(); i++) {
-            Object validator = validators.get(i);
-            if (validator instanceof StateHolder) {
-                ((StateHolder) validator).restoreState(context, values[i]);
-            }
-        }
+        validators = (List) UIComponentBase
+                .restoreAttachedState(context, state);
     }
 
     public boolean isTransient() {

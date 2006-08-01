@@ -15,7 +15,12 @@
  */
 package org.seasar.teeda.core.unit;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Reader;
 
 import org.seasar.framework.exception.ResourceNotFoundRuntimeException;
@@ -41,6 +46,30 @@ public class TestUtil {
         }
         Reader reader = InputStreamReaderUtil.create(is, encoding);
         return ReaderUtil.readText(reader);
+    }
+
+    public static Object serializeAndDeserialize(final Object input)
+            throws IOException, ClassNotFoundException {
+        final byte[] serialized = serialize(input);
+        final Object output = deserialize(serialized);
+        return output;
+    }
+
+    private static Object deserialize(final byte[] byteArray)
+            throws IOException, ClassNotFoundException {
+        final ByteArrayInputStream bais = new ByteArrayInputStream(byteArray);
+        final ObjectInputStream ois = new ObjectInputStream(bais);
+        final Object output = ois.readObject();
+        ois.close();
+        return output;
+    }
+
+    private static byte[] serialize(final Object input) throws IOException {
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        final ObjectOutputStream oos = new ObjectOutputStream(baos);
+        oos.writeObject(input);
+        oos.close();
+        return baos.toByteArray();
     }
 
 }

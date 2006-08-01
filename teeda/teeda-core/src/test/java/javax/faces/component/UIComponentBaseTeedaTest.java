@@ -15,11 +15,7 @@
  */
 package javax.faces.component;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 import javax.faces.context.FacesContext;
@@ -35,6 +31,7 @@ import org.seasar.teeda.core.mock.MockUIComponentBase;
 import org.seasar.teeda.core.mock.MockUIComponentBaseWithNamingContainer;
 import org.seasar.teeda.core.mock.NullApplication;
 import org.seasar.teeda.core.mock.NullELParser;
+import org.seasar.teeda.core.unit.TestUtil;
 
 /**
  * @author manhole
@@ -181,17 +178,7 @@ public class UIComponentBaseTeedaTest extends AbstractUIComponentTeedaTest {
 
     protected Object serializeAndDeserialize(final Object input)
             throws IOException, ClassNotFoundException {
-
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        ObjectOutputStream oos = new ObjectOutputStream(baos);
-        oos.writeObject(input);
-        oos.close();
-
-        ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
-        ObjectInputStream ois = new ObjectInputStream(bais);
-        final Object object = ois.readObject();
-        ois.close();
-        return object;
+        return TestUtil.serializeAndDeserialize(input);
     }
 
 }

@@ -18,14 +18,17 @@ package javax.faces.internal;
 import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.internal.ValidatorChain;
+import javax.faces.validator.DoubleRangeValidator;
+import javax.faces.validator.LengthValidator;
 import javax.faces.validator.Validator;
 
 import org.seasar.teeda.core.mock.MockUIComponent;
 import org.seasar.teeda.core.unit.TeedaTestCase;
+import org.seasar.teeda.core.unit.TestUtil;
 
 /**
  * @author shot
+ * @author manhole
  */
 public class ValidatorChainTest extends TeedaTestCase {
 
@@ -49,15 +52,43 @@ public class ValidatorChainTest extends TeedaTestCase {
         chain.add(v2);
         MockUIComponent component = new MockUIComponent();
         component.setId("aaa");
-        
+
         // ## Act ##
         chain.validate(getFacesContext(), component, new Integer(2));
-        
+
         // ## Assert ##
         assertTrue(calls[0]);
         assertTrue(calls[1]);
     }
-    
-    
-    
+
+    public void testSaveAndRestoreState() throws Exception {
+        final ValidatorChain chain1 = new ValidatorChain();
+        {
+            final LengthValidator lengthValidator = new LengthValidator();
+            lengthValidator.setMaximum(33);
+            chain1.add(lengthValidator);
+
+            final DoubleRangeValidator doubleRangeValidator = new DoubleRangeValidator();
+            doubleRangeValidator.setMinimum(10);
+            doubleRangeValidator.setMaximum(21);
+            chain1.add(doubleRangeValidator);
+        }
+        final FacesContext context = getFacesContext();
+        final Object saved = chain1.saveState(context);
+        final Object decoded = TestUtil.serializeAndDeserialize(saved);
+
+        final ValidatorChain chain2 = new ValidatorChain();
+        chain2.restoreState(context, decoded);
+
+        assertEquals(2, chain2.getValidatorSize());
+        final LengthValidator lengthValidator = (LengthValidator) chain2
+                .getValidator(0);
+        assertEquals(33, lengthValidator.getMaximum());
+
+        final DoubleRangeValidator doubleRangeValidator = (DoubleRangeValidator) chain2
+                .getValidator(1);
+        assertEquals(10.0, doubleRangeValidator.getMinimum(), 0);
+        assertEquals(21.0, doubleRangeValidator.getMaximum(), 0);
+    }
+
 }

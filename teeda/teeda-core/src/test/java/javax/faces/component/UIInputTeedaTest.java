@@ -21,7 +21,9 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.internal.ValidatorResource;
 import javax.faces.render.RenderKitFactory;
+import javax.faces.validator.DoubleRangeValidator;
 import javax.faces.validator.LengthValidator;
+import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
 import org.seasar.teeda.core.mock.MockValueBinding;
@@ -37,8 +39,35 @@ public class UIInputTeedaTest extends UIOutputTeedaTest {
 
     public void testSaveAndRestoreState() throws Exception {
         super.testSaveAndRestoreState();
-        createUIInput();
-        // TODO test
+
+        UIInput input1 = createUIInput();
+        {
+            final LengthValidator lengthValidator = new LengthValidator();
+            lengthValidator.setMaximum(33);
+            input1.addValidator(lengthValidator);
+
+            final DoubleRangeValidator doubleRangeValidator = new DoubleRangeValidator();
+            doubleRangeValidator.setMinimum(10);
+            doubleRangeValidator.setMaximum(21);
+            input1.addValidator(doubleRangeValidator);
+        }
+        final FacesContext context = getFacesContext();
+        final Object decoded = serializeAndDeserialize(input1
+                .saveState(context));
+
+        final UIInput input2 = createUIInput();
+        input2.restoreState(context, decoded);
+
+        final Validator[] validators = input2.getValidators();
+        assertEquals(2, validators.length);
+        final LengthValidator lengthValidator = (LengthValidator) validators[0];
+        assertEquals(33, lengthValidator.getMaximum());
+
+        final DoubleRangeValidator doubleRangeValidator = (DoubleRangeValidator) validators[1];
+        assertEquals(10.0, doubleRangeValidator.getMinimum(), 0);
+        assertEquals(21.0, doubleRangeValidator.getMaximum(), 0);
+
+        assertEquals(input1.getValue(), input2.getValue());
     }
 
     public final void testHandleValidationException() throws Exception {
