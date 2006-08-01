@@ -58,7 +58,7 @@ public class HtmlFormRenderer extends AbstractRenderer {
 
     protected void encodeHtmlFormBegin(FacesContext context, HtmlForm htmlForm)
             throws IOException {
-        ResponseWriter writer = context.getResponseWriter();
+        final ResponseWriter writer = context.getResponseWriter();
         writer.startElement(JsfConstants.FORM_ELEM, htmlForm);
         RendererUtil.renderIdAttributeIfNecessary(writer, htmlForm,
                 getIdForRender(context, htmlForm));
@@ -69,9 +69,10 @@ public class HtmlFormRenderer extends AbstractRenderer {
         renderAttributes(htmlForm, writer);
 
         // action attribute
-        ViewHandler viewHandler = FacesContextUtil.getViewHandler(context);
-        String viewId = context.getViewRoot().getViewId();
-        String url = viewHandler.getActionURL(context, viewId);
+        final ViewHandler viewHandler = FacesContextUtil
+                .getViewHandler(context);
+        final String viewId = context.getViewRoot().getViewId();
+        final String url = viewHandler.getActionURL(context, viewId);
         if (url != null) {
             writer.writeURIAttribute(JsfConstants.ACTION_ATTR, context
                     .getExternalContext().encodeActionURL(url), null);
