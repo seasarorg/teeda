@@ -11,9 +11,14 @@
 		enctype="application/x-www-form-urlencoded"
 	>
 		<input type="text" id="text1" name="commandLinkForm:text1" value="123" />
-		<a id="link1" href="#" onclick=".*">foo</a>
+		<a id="link1" href="#" onclick="var f = document.forms['commandLinkForm']; f['commandLinkForm:__link_clicked__'].value = 'commandLinkForm:link1'; if (f.onsubmit) { f.onsubmit(); } f.submit(); return false;">foo</a>
 		<input type="hidden" name="commandLinkForm/render/commandLink.jsp" value="commandLinkForm" />
 		<input type="hidden" name="commandLinkForm:__link_clicked__" />
+		<script language="JavaScript" type="text/javascript">
+<!--
+var f = document.forms['commandLinkForm']; f['commandLinkForm:__link_clicked__'].value = 'null';
+//-->
+		</script>
 	</form>
 </body>
 </html>
