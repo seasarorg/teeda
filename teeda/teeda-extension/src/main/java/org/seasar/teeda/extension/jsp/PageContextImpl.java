@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -75,13 +75,15 @@ public class PageContextImpl extends PageContext {
 
     private Stack bodyContentStack = new Stack();
 
+    private String encoding;
+
     public PageContextImpl() {
     }
 
     public void initialize(Servlet servlet, ServletRequest request,
-            ServletResponse response, String errorPageURL)
+            ServletResponse response, String errorPageURL, String encoding)
             throws IllegalStateException, IllegalArgumentException, IOException {
-
+        this.encoding = encoding;
         initialize(servlet, request, response, errorPageURL, true,
                 JspConstants.DEFAULT_BUFFER_SIZE, true);
     }
@@ -90,7 +92,6 @@ public class PageContextImpl extends PageContext {
             ServletResponse response, String errorPageURL,
             boolean needsSession, int bufferSize, boolean autoFlush)
             throws IOException, IllegalStateException, IllegalArgumentException {
-
         this.servlet = servlet;
         this.config = servlet.getServletConfig();
         this.context = config.getServletContext();
@@ -100,11 +101,10 @@ public class PageContextImpl extends PageContext {
         this.autoFlush = autoFlush;
         this.request = request;
         this.response = response;
-
         if (request instanceof HttpServletRequest && needsSession) {
             this.session = ((HttpServletRequest) request).getSession();
         }
-        out = new JspWriterImpl(response, bufferSize, autoFlush);
+        out = new JspWriterImpl(response, bufferSize, autoFlush, encoding);
         setAttribute(OUT, out);
         setAttribute(REQUEST, request);
         setAttribute(RESPONSE, response);
@@ -140,6 +140,7 @@ public class PageContextImpl extends PageContext {
         session = null;
         out = null;
         attributes.clear();
+        encoding = null;
     }
 
     public Object getAttribute(String name) {

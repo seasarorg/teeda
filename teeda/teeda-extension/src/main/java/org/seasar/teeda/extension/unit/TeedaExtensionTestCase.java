@@ -45,7 +45,8 @@ public abstract class TeedaExtensionTestCase extends TeedaTestCase {
     protected void setUpContainer() throws Throwable {
         super.setUpContainer();
         pageContext = new PageContextImpl();
-        pageContext.initialize(getServlet(), getRequest(), getResponse(), null);
+        pageContext.initialize(getServlet(), getRequest(), getResponse(), null,
+                "UTF-8");
         taglibManager = createTaglibManager();
         taglibMap = new HashMap();
     }

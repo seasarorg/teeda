@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -37,6 +37,8 @@ public class JspWriterImpl extends JspWriter {
 
     private boolean closed = false;
 
+    private String encoding;
+
     public JspWriterImpl() {
         super(JspConstants.DEFAULT_BUFFER_SIZE, true);
     }
@@ -50,6 +52,12 @@ public class JspWriterImpl extends JspWriter {
         this.response = response;
         cb = new char[size];
         nextChar = 0;
+    }
+
+    public JspWriterImpl(ServletResponse response, int size, boolean autoFlush,
+            String encoding) {
+        this(response, size, autoFlush);
+        this.encoding = encoding;
     }
 
     protected final void flushBuffer() throws IOException {
@@ -67,10 +75,12 @@ public class JspWriterImpl extends JspWriter {
 
     protected void initOut() throws IOException {
         if (out == null) {
-            String encoding = response.getCharacterEncoding();
-            if (encoding != null) {
-                out = new OutputStreamWriter(response.getOutputStream(),
-                        encoding);
+            String enc = encoding;
+            if (enc == null) {
+                enc = response.getCharacterEncoding();
+            }
+            if (enc != null) {
+                out = new OutputStreamWriter(response.getOutputStream(), enc);
             } else {
                 out = response.getWriter();
             }

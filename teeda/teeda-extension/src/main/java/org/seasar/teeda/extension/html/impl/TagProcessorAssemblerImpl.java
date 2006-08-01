@@ -9,13 +9,14 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
 package org.seasar.teeda.extension.html.impl;
 
 import org.seasar.teeda.extension.html.ActionDesc;
+import org.seasar.teeda.extension.html.DocumentNode;
 import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.ElementProcessor;
 import org.seasar.teeda.extension.html.ElementProcessorFactory;
@@ -29,7 +30,7 @@ import org.seasar.teeda.extension.html.processor.ViewProcessor;
 
 /**
  * @author higa
- * 
+ *
  */
 public class TagProcessorAssemblerImpl implements TagProcessorAssembler {
 
@@ -56,6 +57,9 @@ public class TagProcessorAssemblerImpl implements TagProcessorAssembler {
             HtmlNode node, PageDesc pageDesc, ActionDesc actionDesc) {
         if (node instanceof TextNode) {
             assembleTagProcessor(parentProcessor, (TextNode) node);
+        } else if (node instanceof DocumentNode) {
+            assembleTagProcessor(parentProcessor, (DocumentNode) node,
+                    pageDesc, actionDesc);
         } else {
             assembleTagProcessor(parentProcessor, (ElementNode) node, pageDesc,
                     actionDesc);
@@ -65,6 +69,18 @@ public class TagProcessorAssemblerImpl implements TagProcessorAssembler {
     protected void assembleTagProcessor(ElementProcessor parentProcessor,
             TextNode textNode) {
         parentProcessor.addText(textNode.getValue());
+    }
+
+    protected void assembleTagProcessor(ElementProcessor parentProcessor,
+            DocumentNode node, PageDesc pageDesc, ActionDesc actionDesc) {
+        String docType = node.getDocType();
+        if (docType != null) {
+            parentProcessor.addText(docType);
+        }
+        for (int i = 0; i < node.getChildSize(); i++) {
+            HtmlNode child = node.getChild(i);
+            assembleTagProcessor(parentProcessor, child, pageDesc, actionDesc);
+        }
     }
 
     protected void assembleTagProcessor(ElementProcessor parentProcessor,

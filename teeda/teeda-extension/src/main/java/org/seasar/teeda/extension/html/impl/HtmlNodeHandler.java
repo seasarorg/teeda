@@ -23,6 +23,7 @@ import java.util.Stack;
 
 import org.seasar.framework.util.ResourceUtil;
 import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.extension.html.DocumentNode;
 import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.HtmlNode;
 import org.xml.sax.Attributes;
@@ -53,16 +54,23 @@ public class HtmlNodeHandler extends DefaultHandler {
         return root;
     }
 
+    public void startDocument() throws SAXException {
+        super.startDocument();
+        DocumentNode docNode = new DocumentNodeImpl();
+        nodeStack.push(docNode);
+    }
+
     public void startElement(String namespaceURI, String localName,
             String qName, Attributes attributes) {
-
         Map props = HtmlNodeUtil.convertMap(attributes);
         if (root == null) {
-            ElementNodeImpl n = new ElementNodeImpl(qName, props);
+            ElementNode n = new ElementNodeImpl(qName, props);
             root = n;
+            DocumentNode docNode = (DocumentNode) nodeStack.peek();
+            docNode.addChild(n);
             push(n);
         } else {
-            ElementNodeImpl parent = peek();
+            ElementNode parent = peek();
             if (isElementNode(parent, qName, attributes)) {
                 ElementNodeImpl elementNode = new ElementNodeImpl(qName, props);
                 parent.addElement(elementNode);
@@ -114,29 +122,31 @@ public class HtmlNodeHandler extends DefaultHandler {
         return new InputSource(ResourceUtil.getResourceAsStream(dtdPath));
     }
 
-    protected ElementNodeImpl peek() {
-        return (ElementNodeImpl) nodeStack.peek();
+    protected ElementNode peek() {
+        return (ElementNode) nodeStack.peek();
     }
 
-    protected ElementNodeImpl pop() {
-        return (ElementNodeImpl) nodeStack.pop();
+    protected ElementNode pop() {
+        return (ElementNode) nodeStack.pop();
     }
 
-    protected void push(ElementNodeImpl node) {
+    protected void push(ElementNode node) {
         nodeStack.push(node);
     }
 
     public void characters(char[] buffer, int start, int length) {
         if (root == null) {
+            DocumentNode docNode = (DocumentNode) nodeStack.peek();
+            docNode.addText(new String(buffer, start, length));
             return;
         }
         String text = new String(buffer, start, length);
-        ElementNodeImpl tagNode = peek();
+        ElementNode tagNode = peek();
         tagNode.addText(text);
     }
 
     public void endElement(String namespaceURI, String localName, String qName) {
-        ElementNodeImpl current = peek();
+        ElementNode current = peek();
         if (current.getChildTextSize() == 0) {
             current.endElement();
             pop();
@@ -148,6 +158,12 @@ public class HtmlNodeHandler extends DefaultHandler {
             current.addText(HtmlNodeUtil.getEndTagString(qName));
             current.decrementChildTextSize();
         }
+    }
+
+    public void endDocument() throws SAXException {
+        super.endDocument();
+        DocumentNode docNode = (DocumentNode) nodeStack.pop();
+        root = docNode;
     }
 
     public void error(SAXParseException e) throws SAXException {

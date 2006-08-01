@@ -15,6 +15,7 @@
  */
 package org.seasar.teeda.extension.html.impl;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -24,14 +25,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import javax.xml.parsers.SAXParser;
-
+import org.apache.xerces.parsers.SAXParser;
+import org.seasar.framework.exception.IORuntimeException;
+import org.seasar.framework.exception.SAXRuntimeException;
 import org.seasar.framework.util.InputStreamReaderUtil;
-import org.seasar.framework.util.SAXParserFactoryUtil;
-import org.seasar.framework.util.SAXParserUtil;
 import org.seasar.teeda.extension.html.HtmlNode;
 import org.seasar.teeda.extension.html.HtmlParser;
 import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 /**
  * @author higa
@@ -47,12 +48,19 @@ public class HtmlParserImpl implements HtmlParser {
     private String encoding = "UTF-8";
 
     public HtmlNode parse(InputStream is) {
-        SAXParser parser = SAXParserFactoryUtil.newSAXParser();
-        HtmlNodeHandler handler = createHtmlNodeHandler();
-        InputStreamReader reader = InputStreamReaderUtil.create(is,
-                getEncoding());
-        SAXParserUtil.parse(parser, new InputSource(reader), handler);
-        return handler.getRoot();
+        try {
+            SAXParser parser = new TeedaSAXParser();
+            HtmlNodeHandler handler = createHtmlNodeHandler();
+            InputStreamReader reader = InputStreamReaderUtil.create(is,
+                    getEncoding());
+            parser.setContentHandler(handler);
+            parser.parse(new InputSource(reader));
+            return handler.getRoot();
+        } catch (SAXException e) {
+            throw new SAXRuntimeException(e);
+        } catch (IOException e) {
+            throw new IORuntimeException(e);
+        }
     }
 
     protected HtmlNodeHandler createHtmlNodeHandler() {

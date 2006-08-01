@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -130,7 +130,8 @@ public class RenderAttributesImpl implements RenderAttributes {
         case HSSFCell.CELL_TYPE_NUMERIC:
             final double numericCellValue = cell.getNumericCellValue();
             if (isInt(numericCellValue)) {
-                return new BigDecimal((int) numericCellValue);
+                int num = (int) numericCellValue;
+                return new BigDecimal(Integer.toString(num));
             }
             return new BigDecimal(Double.toString(numericCellValue));
         case HSSFCell.CELL_TYPE_STRING:
