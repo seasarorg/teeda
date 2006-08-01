@@ -2,9 +2,6 @@
 <classpath>
 	<classpathentry kind="src" path="WEB-INF/src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="var" path="TOMCAT_HOME/common/lib/servlet-api.jar"/>
-	<classpathentry kind="var" path="TOMCAT_HOME/common/lib/jasper-runtime.jar"/>
-	<classpathentry kind="var" path="TOMCAT_HOME/common/lib/jsp-api.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/aopalliance-1.0.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/commons-beanutils-1.6.1.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/commons-collections-3.1.jar"/>
@@ -22,5 +19,9 @@
 	<classpathentry sourcepath="/teeda" kind="lib" path="WEB-INF/lib/teeda-extension-1.0-beta-6-SNAPSHOT.jar"/>
 	<classpathentry sourcepath="WEB-INF/lib/sources/s2-extension-2.4.0-beta-4-sources.jar" kind="lib" path="WEB-INF/lib/s2-extension-2.4.0-beta-4.jar"/>
 	<classpathentry sourcepath="WEB-INF/lib/sources/s2-framework-2.4.0-beta-4-sources.jar" kind="lib" path="WEB-INF/lib/s2-framework-2.4.0-beta-4.jar"/>
+	<classpathentry sourcepath="/xerces-2/src" kind="lib" path="WEB-INF/lib/xercesImpl-2.6.2.jar"/>
+	<classpathentry kind="lib" path="WEB-INF/lib/xmlParserAPIs-2.6.2.jar"/>
+	<classpathentry kind="var" path="TOMCAT_HOME/common/lib/servlet.jar"/>
+	<classpathentry kind="var" path="TOMCAT_HOME/common/lib/jasper-runtime.jar"/>
 	<classpathentry kind="output" path="WEB-INF/classes"/>
 </classpath>
