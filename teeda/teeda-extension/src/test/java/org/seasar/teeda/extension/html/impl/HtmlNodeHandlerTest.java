@@ -17,6 +17,7 @@ package org.seasar.teeda.extension.html.impl;
 
 import org.seasar.framework.unit.S2FrameworkTestCase;
 import org.seasar.framework.util.ResourceUtil;
+import org.seasar.teeda.extension.html.DocumentNode;
 import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.HtmlNode;
 
@@ -29,9 +30,10 @@ public class HtmlNodeHandlerTest extends S2FrameworkTestCase {
     public void testParse() throws Exception {
         String path = convertPath("HtmlNodeHandler.xhtml");
         HtmlParserImpl parser = new HtmlParserImpl();
-        HtmlNode node = parser.parse(ResourceUtil.getResourceAsStream(path));
-        assertEquals("1", "<html><body>Hello</body></html>", node.toString());
-        ElementNodeImpl n = (ElementNodeImpl) node;
+        HtmlNode root = parser.parse(ResourceUtil.getResourceAsStream(path));
+        assertEquals("1", "<html><body>Hello</body></html>", root.toString());
+        DocumentNode docRoot = (DocumentNode) root;
+        ElementNodeImpl n = (ElementNodeImpl) docRoot.getChild(0);
         assertEquals("2", 1, n.getChildSize());
         TextNodeImpl t = (TextNodeImpl) n.getChild(0);
         assertEquals("3", "<body>Hello</body>", t.getValue());
@@ -40,11 +42,12 @@ public class HtmlNodeHandlerTest extends S2FrameworkTestCase {
     public void testParseUsingId() throws Exception {
         String path = convertPath("HtmlNodeHandler2.xhtml");
         HtmlParserImpl parser = new HtmlParserImpl();
-        HtmlNode node = parser.parse(ResourceUtil.getResourceAsStream(path));
+        HtmlNode root = parser.parse(ResourceUtil.getResourceAsStream(path));
         assertEquals("1",
-                "<html><body>Hello<span id=\"aaa\" />World</body></html>", node
+                "<html><body>Hello<span id=\"aaa\" />World</body></html>", root
                         .toString());
-        ElementNodeImpl n = (ElementNodeImpl) node;
+        DocumentNode docRoot = (DocumentNode) root;
+        ElementNodeImpl n = (ElementNodeImpl) docRoot.getChild(0);
         assertEquals("2", 3, n.getChildSize());
         TextNodeImpl t = (TextNodeImpl) n.getChild(0);
         assertEquals("3", "<body>Hello", t.getValue());
@@ -57,12 +60,13 @@ public class HtmlNodeHandlerTest extends S2FrameworkTestCase {
     public void testParseUsingIdNest() throws Exception {
         String path = convertPath("HtmlNodeHandler3.xhtml");
         HtmlParserImpl parser = new HtmlParserImpl();
-        HtmlNode node = parser.parse(ResourceUtil.getResourceAsStream(path));
+        HtmlNode root = parser.parse(ResourceUtil.getResourceAsStream(path));
         assertEquals(
                 "1",
                 "<html><div id=\"aaa\">Hello<span id=\"bbb\" />World</div></html>",
-                node.toString());
-        ElementNodeImpl n = (ElementNodeImpl) node;
+                root.toString());
+        DocumentNode docRoot = (DocumentNode) root;
+        ElementNodeImpl n = (ElementNodeImpl) docRoot.getChild(0);
         assertEquals("2", 1, n.getChildSize());
         ElementNodeImpl n2 = (ElementNodeImpl) n.getChild(0);
         assertEquals("3", 3, n2.getChildSize());
@@ -77,12 +81,13 @@ public class HtmlNodeHandlerTest extends S2FrameworkTestCase {
     public void testParseIfDtdIsXhtmlStrict() throws Exception {
         String path = convertPath("HtmlNodeHandler4.xhtml");
         HtmlParserImpl parser = new HtmlParserImpl();
-        HtmlNode node = parser.parse(ResourceUtil.getResourceAsStream(path));
+        HtmlNode root = parser.parse(ResourceUtil.getResourceAsStream(path));
         assertEquals(
                 "1",
-                "<html xmlns=\"http://www.w3.org/1999/xhtml\"><body><div><span value=\"Hello\"></span></div></body></html>",
-                node.toString());
-        ElementNodeImpl n = (ElementNodeImpl) node;
+                "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n<html xmlns=\"http://www.w3.org/1999/xhtml\"><body><div><span value=\"Hello\"></span></div></body></html>",
+                root.toString());
+        DocumentNode docRoot = (DocumentNode) root;
+        ElementNodeImpl n = (ElementNodeImpl) docRoot.getChild(0);
         assertEquals("2", 1, n.getChildSize());
         TextNodeImpl t = (TextNodeImpl) n.getChild(0);
         assertEquals("3",
@@ -93,23 +98,25 @@ public class HtmlNodeHandlerTest extends S2FrameworkTestCase {
     public void testParseSelect() throws Exception {
         String path = convertPath("select.xhtml");
         HtmlParserImpl parser = new HtmlParserImpl();
-        HtmlNode node = parser.parse(ResourceUtil.getResourceAsStream(path));
+        HtmlNode root = parser.parse(ResourceUtil.getResourceAsStream(path));
         assertEquals(
                 "1",
-                node.toString(),
+                root.toString(),
                 "<html><body><select id=\"ccc\"><option value=\"0\">aaa</option></select></body></html>");
-        ElementNodeImpl n = (ElementNodeImpl) node;
+        DocumentNode docRoot = (DocumentNode) root;
+        ElementNodeImpl n = (ElementNodeImpl) docRoot.getChild(0);
         assertTrue(n.getChildSize() == 3);
     }
 
     public void testParseInputRadio() throws Exception {
         String path = convertPath("inputRadio.xhtml");
         HtmlParserImpl parser = new HtmlParserImpl();
-        HtmlNode node = parser.parse(ResourceUtil.getResourceAsStream(path));
-        System.out.println(node.toString());
-        assertEquals("1", node.toString(),
+        HtmlNode root = parser.parse(ResourceUtil.getResourceAsStream(path));
+        System.out.println(root.toString());
+        assertEquals("1", root.toString(),
                 "<html><body><input type=\"radio\" name=\"aaa\" /></body></html>");
-        ElementNodeImpl n = (ElementNodeImpl) node;
+        DocumentNode docRoot = (DocumentNode) root;
+        ElementNodeImpl n = (ElementNodeImpl) docRoot.getChild(0);
         assertTrue(n.getChildSize() == 3);
         ElementNode child = (ElementNode) n.getChild(1);
         assertEquals("input", child.getTagName());
@@ -119,11 +126,12 @@ public class HtmlNodeHandlerTest extends S2FrameworkTestCase {
     public void testParseInputCheckbox() throws Exception {
         String path = convertPath("inputCheckbox.xhtml");
         HtmlParserImpl parser = new HtmlParserImpl();
-        HtmlNode node = parser.parse(ResourceUtil.getResourceAsStream(path));
-        System.out.println(node.toString());
-        assertEquals("1", node.toString(),
+        HtmlNode root = parser.parse(ResourceUtil.getResourceAsStream(path));
+        System.out.println(root.toString());
+        assertEquals("1", root.toString(),
                 "<html><body><input type=\"checkbox\" name=\"aaa\" /></body></html>");
-        ElementNodeImpl n = (ElementNodeImpl) node;
+        DocumentNode docRoot = (DocumentNode) root;
+        ElementNodeImpl n = (ElementNodeImpl) docRoot.getChild(0);
         assertTrue(n.getChildSize() == 3);
         ElementNode child = (ElementNode) n.getChild(1);
         assertEquals("input", child.getTagName());

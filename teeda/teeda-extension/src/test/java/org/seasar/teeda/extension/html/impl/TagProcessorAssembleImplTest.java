@@ -71,6 +71,7 @@ public class TagProcessorAssembleImplTest extends TeedaExtensionTestCase {
         ElementProcessor viewRoot = (ElementProcessor) root;
         assertEquals("2", 1, viewRoot.getChildSize());
         TextProcessor textProcessor = (TextProcessor) viewRoot.getChild(0);
+        System.out.println(textProcessor.getValue());
         assertEquals("3", "<html><body>Hello</body></html>", textProcessor
                 .getValue());
     }
@@ -154,6 +155,46 @@ public class TagProcessorAssembleImplTest extends TeedaExtensionTestCase {
         assertEquals("2", 1, viewRoot.getChildSize());
         TextProcessor textProcessor = (TextProcessor) viewRoot.getChild(0);
         assertEquals("3", "<html><body id=\"aaa\">Hello</body></html>",
+                textProcessor.getValue());
+    }
+
+    public void testAssembleElementNodeAsText8() throws Exception {
+        String path = convertPath("allText6.html");
+        HtmlDescCacheImpl cache = createHtmlDescCacheImpl();
+        HtmlDesc htmlDesc = cache.createHtmlDesc(path);
+        PageDescImpl pageDesc = new PageDescImpl(FooPage.class, "fooPage");
+        ActionDescImpl actionDesc = new ActionDescImpl(FooAction.class,
+                "fooAction");
+        TagProcessorAssembler assembler = new TagProcessorAssemblerImpl();
+        TagProcessor root = assembler.assemble(htmlDesc, pageDesc, actionDesc);
+        assertTrue("1", root instanceof ElementProcessor);
+        ElementProcessor viewRoot = (ElementProcessor) root;
+        assertEquals("2", 1, viewRoot.getChildSize());
+        TextProcessor textProcessor = (TextProcessor) viewRoot.getChild(0);
+        System.out.println(textProcessor.getValue());
+        assertEquals(
+                "3",
+                "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n<html xmlns=\"http://www.w3.org/1999/xhtml\"><body>Hello</body></html>",
+                textProcessor.getValue());
+    }
+
+    public void testAssembleElementNodeAsText9() throws Exception {
+        String path = convertPath("allText7.html");
+        HtmlDescCacheImpl cache = createHtmlDescCacheImpl();
+        HtmlDesc htmlDesc = cache.createHtmlDesc(path);
+        PageDescImpl pageDesc = new PageDescImpl(FooPage.class, "fooPage");
+        ActionDescImpl actionDesc = new ActionDescImpl(FooAction.class,
+                "fooAction");
+        TagProcessorAssembler assembler = new TagProcessorAssemblerImpl();
+        TagProcessor root = assembler.assemble(htmlDesc, pageDesc, actionDesc);
+        assertTrue("1", root instanceof ElementProcessor);
+        ElementProcessor viewRoot = (ElementProcessor) root;
+        assertEquals("2", 1, viewRoot.getChildSize());
+        TextProcessor textProcessor = (TextProcessor) viewRoot.getChild(0);
+        System.out.println(textProcessor.getValue());
+        assertEquals(
+                "3",
+                "<?xml version=\"1.0\" encoding=\"UTF-8\"?><!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n<html xmlns=\"http://www.w3.org/1999/xhtml\"><body>Hello</body></html>",
                 textProcessor.getValue());
     }
 
@@ -321,7 +362,7 @@ public class TagProcessorAssembleImplTest extends TeedaExtensionTestCase {
         textProcessor = (TextProcessor) viewRoot.getChild(2);
         assertEquals("</body></html>", textProcessor.getValue());
     }
-    
+
     protected HtmlDescCacheImpl createHtmlDescCacheImpl() {
         HtmlDescCacheImpl cache = new HtmlDescCacheImpl();
         cache.setServletContext(getServletContext());

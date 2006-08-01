@@ -20,6 +20,7 @@ import java.io.ByteArrayInputStream;
 import junit.framework.TestCase;
 
 import org.seasar.framework.exception.IORuntimeException;
+import org.seasar.teeda.extension.html.DocumentNode;
 import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.HtmlNode;
 import org.seasar.teeda.extension.html.TextNode;
@@ -39,15 +40,17 @@ public class HtmlParserImplTest extends TestCase {
         final HtmlNode root = parser.parse(is);
 
         // ## Assert ##
-        assertEquals(true, root instanceof ElementNode);
-        ElementNode z = (ElementNode) root;
+        assertEquals(true, root instanceof DocumentNode);
+        DocumentNode docRoot = (DocumentNode) root;
+        assertEquals(1, docRoot.getChildSize());
+        final ElementNode z = (ElementNode) docRoot.getChild(0);
         assertEquals(1, z.getChildSize());
-        final ElementNode y = (ElementNode) z.getChild(0);
-
-        assertEquals(1, y.getChildSize());
-        final HtmlNode x = y.getChild(0);
+        final HtmlNode y = z.getChild(0);
+        assertEquals(true, y instanceof ElementNode);
+        ElementNode yn = (ElementNode) y;
+        assertEquals(1, yn.getChildSize());
+        HtmlNode x = yn.getChild(0);
         assertEquals(true, x instanceof TextNode);
-
         assertEquals("<z><y id=\"y\"><x></x></y></z>", root.toString());
     }
 
@@ -62,14 +65,15 @@ public class HtmlParserImplTest extends TestCase {
         final HtmlNode root = parser.parse(is);
 
         // ## Assert ##
-        assertEquals(true, root instanceof ElementNode);
-        ElementNode z = (ElementNode) root;
-        assertEquals(1, z.getChildSize());
-        final ElementNode y = (ElementNode) z.getChild(0);
+        assertEquals(true, root instanceof DocumentNode);
+        DocumentNode docRoot = (DocumentNode) root;
+        assertEquals(1, docRoot.getChildSize());
 
-        assertEquals(1, y.getChildSize());
-        final HtmlNode x = y.getChild(0);
-        assertEquals(true, x instanceof ElementNode);
+        final ElementNode z = (ElementNode) docRoot.getChild(0);
+        assertEquals(1, z.getChildSize());
+
+        final HtmlNode y = z.getChild(0);
+        assertEquals(true, y instanceof ElementNode);
     }
 
     public void testForceElementNode2() throws Exception {
@@ -83,8 +87,10 @@ public class HtmlParserImplTest extends TestCase {
         final HtmlNode root = parser.parse(is);
 
         // ## Assert ##
-        assertEquals(true, root instanceof ElementNode);
-        ElementNode z = (ElementNode) root;
+        assertEquals(true, root instanceof DocumentNode);
+        DocumentNode docRoot = (DocumentNode) root;
+        assertEquals(1, docRoot.getChildSize());
+        ElementNode z = (ElementNode) docRoot.getChild(0);
         assertEquals(2, z.getChildSize());
         {
             final ElementNode y = (ElementNode) z.getChild(0);
@@ -110,4 +116,70 @@ public class HtmlParserImplTest extends TestCase {
         } catch (IORuntimeException expected) {
         }
     }
+
+    public void testWriteXmlDeclarationAndDocType() throws Exception {
+        // ## Arrange ##
+        HtmlParserImpl parser = new HtmlParserImpl();
+
+        // ## Act ##
+        String str = "<?xml version=\"1.0\"?>"
+                + "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">"
+                + "<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"ja\" lang=\"ja\"><z id=\"&nbsp;aaa&nbsp;\"><y id=\"y\">&nbsp;aaa&nbsp;<x /></y></z></html>";
+        ByteArrayInputStream is = new ByteArrayInputStream(str.getBytes());
+        final HtmlNode root = parser.parse(is);
+
+        // ## Assert ##
+        assertEquals(true, root instanceof DocumentNode);
+        DocumentNode docType = (DocumentNode) root;
+        assertEquals(1, docType.getChildSize());
+        final ElementNode html = (ElementNode) docType.getChild(0);
+        assertEquals(1, html.getChildSize());
+        final HtmlNode z = html.getChild(0);
+        assertTrue(z instanceof ElementNode);
+        ElementNode zm = (ElementNode) z;
+        HtmlNode y = zm.getChild(0);
+        assertTrue(y instanceof ElementNode);
+        ElementNode ym = (ElementNode) y;
+        HtmlNode x = ym.getChild(0);
+        assertTrue(x instanceof TextNode);
+        assertEquals(
+                "<?xml version=\"1.0\"?><!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n"
+                        + "<html xml:lang=\"ja\" lang=\"ja\" xmlns=\"http://www.w3.org/1999/xhtml\">"
+                        + "<z id=\"&nbsp;aaa&nbsp;\"><y id=\"y\">&nbsp;aaa&nbsp;<x></x></y></z></html>",
+                root.toString());
+    }
+
+    public void testWriteComment() throws Exception {
+        // ## Arrange ##
+        HtmlParserImpl parser = new HtmlParserImpl();
+
+        // ## Act ##
+        String str = "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n"
+                + "<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"ja\" lang=\"ja\">"
+                + "<z id=\"&nbsp;aaa&nbsp;\"><y id=\"y\">&nbsp;aaa&nbsp;<!-- hogefoobar --><x /></y></z></html>";
+        ByteArrayInputStream is = new ByteArrayInputStream(str.getBytes());
+        final HtmlNode root = parser.parse(is);
+
+        // ## Assert ##
+        assertEquals(true, root instanceof DocumentNode);
+        DocumentNode docType = (DocumentNode) root;
+        assertEquals(1, docType.getChildSize());
+        final ElementNode html = (ElementNode) docType.getChild(0);
+        assertEquals(1, html.getChildSize());
+        final HtmlNode z = html.getChild(0);
+        assertTrue(z instanceof ElementNode);
+        ElementNode zm = (ElementNode) z;
+        HtmlNode y = zm.getChild(0);
+        assertTrue(y instanceof ElementNode);
+        ElementNode ym = (ElementNode) y;
+        HtmlNode x = ym.getChild(0);
+        assertTrue(x instanceof TextNode);
+        System.out.println(root.toString());
+        assertEquals(
+                "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n"
+                        + "<html xml:lang=\"ja\" lang=\"ja\" xmlns=\"http://www.w3.org/1999/xhtml\">"
+                        + "<z id=\"&nbsp;aaa&nbsp;\"><y id=\"y\">&nbsp;aaa&nbsp;<!-- hogefoobar --><x></x></y></z></html>",
+                root.toString());
+    }
+
 }
