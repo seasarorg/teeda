@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -38,6 +38,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.seasar.framework.mock.servlet.MockHttpServletRequest;
+import org.seasar.framework.mock.servlet.MockHttpServletResponse;
 import org.seasar.teeda.core.unit.TeedaTestCase;
 
 public class ServletExternalContextUtilTest extends TeedaTestCase {
@@ -52,6 +53,14 @@ public class ServletExternalContextUtilTest extends TeedaTestCase {
         ServletExternalContextUtil.setCharacterEncoding(request2);
         assertEquals(MockServletRequest.DEFAULT_CHARACTER_ENCODING, request2
                 .getCharacterEncoding());
+    }
+
+    public void testSetCharacterEncoding2() {
+        MockHttpServletResponse response = getResponse();
+        response.setContentType("text/html; charset=Windows-31J");
+        boolean b = ServletExternalContextUtil.setCharacterEncoding(response);
+        assertTrue(b);
+        assertEquals("Windows-31J", response.getCharacterEncoding());
     }
 
     public void testIsHttpServletRequest() {

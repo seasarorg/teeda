@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -56,7 +56,7 @@ public class ServletExternalContextUtil {
     }
 
     public static void setCharacterEncoding(ServletRequest request) {
-        Method characterEncodingMethod = getCharacterEncodingMethod();
+        Method characterEncodingMethod = getCharacterEncodingMethodFromRequest();
         if (characterEncodingMethod == null) {
             return;
         }
@@ -76,6 +76,23 @@ public class ServletExternalContextUtil {
         }
         MethodUtil.invoke(characterEncodingMethod, httpServletRequest,
                 new Object[] { encoding });
+    }
+
+    public static boolean setCharacterEncoding(ServletResponse response) {
+        Method characterEncodingMethod = getCharacterEncodingMethodFromResponse();
+        if (characterEncodingMethod == null
+                && (!isHttpServletResponse(response))) {
+            return false;
+        }
+        HttpServletResponse httpServletResponse = (HttpServletResponse) response;
+        String contentType = httpServletResponse.getContentType();
+        String encoding = getEncodingFromContentType(contentType);
+        if (encoding == null) {
+            return false;
+        }
+        MethodUtil.invoke(characterEncodingMethod, httpServletResponse,
+                new Object[] { encoding });
+        return true;
     }
 
     public static boolean isHttpServletRequest(ServletRequest request) {
@@ -143,9 +160,20 @@ public class ServletExternalContextUtil {
         FacesContext.getCurrentInstance().responseComplete();
     }
 
-    private static Method getCharacterEncodingMethod() {
+    private static Method getCharacterEncodingMethodFromRequest() {
         try {
             Class clazz = ServletRequest.class;
+            return clazz.getMethod("setCharacterEncoding",
+                    new Class[] { String.class });
+        } catch (Exception e) {
+            logger.log(e);
+            return null;
+        }
+    }
+
+    private static Method getCharacterEncodingMethodFromResponse() {
+        try {
+            Class clazz = ServletResponse.class;
             return clazz.getMethod("setCharacterEncoding",
                     new Class[] { String.class });
         } catch (Exception e) {

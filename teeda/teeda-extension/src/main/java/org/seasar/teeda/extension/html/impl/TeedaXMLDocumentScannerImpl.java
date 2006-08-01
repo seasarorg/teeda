@@ -17,145 +17,23 @@ package org.seasar.teeda.extension.html.impl;
 
 import java.io.IOException;
 
-import org.apache.xerces.impl.XMLDocumentScannerImpl;
-import org.apache.xerces.util.XMLChar;
-import org.apache.xerces.util.XMLResourceIdentifierImpl;
-import org.apache.xerces.util.XMLStringBuffer;
+import org.apache.xerces.impl.XMLNSDocumentScannerImpl;
 import org.apache.xerces.xni.XMLString;
 import org.apache.xerces.xni.XNIException;
 
 /**
  * @author shot
- *
  */
-public class TeedaXMLDocumentScannerImpl extends XMLDocumentScannerImpl {
+public class TeedaXMLDocumentScannerImpl extends XMLNSDocumentScannerImpl {
 
-    protected static final boolean DEBUG_ATTR_NORMALIZATION = true;
+    //TODO testing
+    protected static final boolean DEBUG_ATTR_NORMALIZATION = false;
 
-    private XMLStringBuffer fStringBuffer = new XMLStringBuffer();
-
-    private XMLStringBuffer fStringBuffer2 = new XMLStringBuffer();
-
-    private XMLStringBuffer fStringBuffer3 = new XMLStringBuffer();
-
-    protected XMLResourceIdentifierImpl fResourceIdentifier = new XMLResourceIdentifierImpl();
-
-    /**
-     * Scans an attribute value and normalizes whitespace converting all
-     * whitespace characters to space characters.
-     *
-     * [10] AttValue ::= '"' ([^<&"] | Reference)* '"' | "'" ([^<&'] | Reference)* "'"
-     *
-     * @param value The XMLString to fill in with the value.
-     * @param nonNormalizedValue The XMLString to fill in with the
-     *                           non-normalized value.
-     * @param atName The name of the attribute being parsed (for error msgs).
-     * @param checkEntities true if undeclared entities should be reported as VC violation,
-     *                      false if undeclared entities should be reported as WFC violation.
-     * @param eleName The name of element to which this attribute belongs.
-     *
-     * <strong>Note:</strong> This method uses fStringBuffer2, anything in it
-     * at the time of calling is lost.
-     **/
     protected void scanAttributeValue(XMLString value,
             XMLString nonNormalizedValue, String atName, boolean checkEntities,
             String eleName) throws IOException, XNIException {
-        // quote
-        int quote = fEntityScanner.peekChar();
-        if (quote != '\'' && quote != '"') {
-            reportFatalError("OpenQuoteExpected", new Object[] { eleName,
-                    atName });
-        }
-
-        fEntityScanner.scanChar();
-        int entityDepth = fEntityDepth;
-
-        int c = fEntityScanner.scanLiteral(quote, value);
-        if (DEBUG_ATTR_NORMALIZATION) {
-            System.out
-                    .println("** scanLiteral -> \"" + value.toString() + "\"");
-        }
-        fStringBuffer2.clear();
-        fStringBuffer2.append(value);
-        normalizeWhitespace(value);
-        if (DEBUG_ATTR_NORMALIZATION) {
-            System.out.println("** normalizeWhitespace -> \""
-                    + value.toString() + "\"");
-        }
-        if (c != quote) {
-            fScanningAttribute = true;
-            fStringBuffer.clear();
-            do {
-                fStringBuffer.append(value);
-                if (DEBUG_ATTR_NORMALIZATION) {
-                    System.out.println("** value2: \""
-                            + fStringBuffer.toString() + "\"");
-                }
-                if (c == '<') {
-                    reportFatalError("LessthanInAttValue", new Object[] {
-                            eleName, atName });
-                    fEntityScanner.scanChar();
-                    if (entityDepth == fEntityDepth) {
-                        fStringBuffer2.append((char) c);
-                    }
-                } else if (c == '%' || c == ']') {
-                    fEntityScanner.scanChar();
-                    fStringBuffer.append((char) c);
-                    if (entityDepth == fEntityDepth) {
-                        fStringBuffer2.append((char) c);
-                    }
-                    if (DEBUG_ATTR_NORMALIZATION) {
-                        System.out.println("** valueF: \""
-                                + fStringBuffer.toString() + "\"");
-                    }
-                } else if (c == '\n' || c == '\r') {
-                    fEntityScanner.scanChar();
-                    fStringBuffer.append(' ');
-                    if (entityDepth == fEntityDepth) {
-                        fStringBuffer2.append('\n');
-                    }
-                } else if (c != -1 && XMLChar.isHighSurrogate(c)) {
-                    fStringBuffer3.clear();
-                    if (scanSurrogates(fStringBuffer3)) {
-                        fStringBuffer.append(fStringBuffer3);
-                        if (entityDepth == fEntityDepth) {
-                            fStringBuffer2.append(fStringBuffer3);
-                        }
-                        if (DEBUG_ATTR_NORMALIZATION) {
-                            System.out.println("** valueI: \""
-                                    + fStringBuffer.toString() + "\"");
-                        }
-                    }
-                } else if (c != -1 && isInvalidLiteral(c)) {
-                    reportFatalError("InvalidCharInAttValue", new Object[] {
-                            eleName, atName, Integer.toString(c, 16) });
-                    fEntityScanner.scanChar();
-                    if (entityDepth == fEntityDepth) {
-                        fStringBuffer2.append((char) c);
-                    }
-                }
-                c = fEntityScanner.scanLiteral(quote, value);
-                if (entityDepth == fEntityDepth) {
-                    fStringBuffer2.append(value);
-                }
-                normalizeWhitespace(value);
-            } while (c != quote || entityDepth != fEntityDepth);
-            fStringBuffer.append(value);
-            if (DEBUG_ATTR_NORMALIZATION) {
-                System.out.println("** valueN: \"" + fStringBuffer.toString()
-                        + "\"");
-            }
-            value.setValues(fStringBuffer);
-            fScanningAttribute = false;
-        }
-        nonNormalizedValue.setValues(fStringBuffer2);
-
-        // quote
-        int cquote = fEntityScanner.scanChar();
-        if (cquote != quote) {
-            reportFatalError("CloseQuoteExpected", new Object[] { eleName,
-                    atName });
-        }
+        super.scanAttributeValue(value, nonNormalizedValue, atName,
+                checkEntities, eleName);
+        value.setValues(nonNormalizedValue);
     }
-
 }

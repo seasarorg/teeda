@@ -15,7 +15,6 @@ public class TeedaSAXParser extends SAXParser {
                 "http://apache.org/xml/features/scanner/notify-builtin-refs",
                 true);
         setFeature("http://xml.org/sax/features/namespace-prefixes", true);
-        setFeature("http://apache.org/xml/features/allow-java-encodings", true);
     }
 
 }

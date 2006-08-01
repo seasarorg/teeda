@@ -15,9 +15,9 @@
  */
 package org.seasar.teeda.extension.html.impl;
 
-import org.apache.xerces.impl.dtd.XMLDTDValidator;
 import org.apache.xerces.parsers.XML11Configuration;
 import org.apache.xerces.xni.XMLDocumentHandler;
+import org.apache.xerces.xni.parser.XMLComponent;
 
 /**
  * @author shot
@@ -25,11 +25,11 @@ import org.apache.xerces.xni.XMLDocumentHandler;
  */
 public class TeedaXMLConfiguration extends XML11Configuration {
 
+    //TODO testing
     public TeedaXMLConfiguration() {
-        fNonNSScanner = new TeedaXMLDocumentScannerImpl();
-        fNonNSDTDValidator = new XMLDTDValidator();
-        addComponent(fNonNSScanner);
-        addComponent(fNonNSDTDValidator);
+        fNamespaceScanner = new TeedaXMLDocumentScannerImpl();
+        fProperties.put(DOCUMENT_SCANNER, fNamespaceScanner);
+        addComponent((XMLComponent) fNamespaceScanner);
     }
 
     protected void configurePipeline() {

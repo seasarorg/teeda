@@ -41,6 +41,7 @@ import org.seasar.framework.container.servlet.S2ContainerServlet;
 import org.seasar.teeda.core.application.ViewHandlerImpl;
 import org.seasar.teeda.core.util.DIContainerUtil;
 import org.seasar.teeda.core.util.ExternalContextUtil;
+import org.seasar.teeda.core.util.ServletExternalContextUtil;
 import org.seasar.teeda.extension.exception.JspRuntimeException;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ActionDescCache;
@@ -106,11 +107,11 @@ public class HtmlViewHandler extends ViewHandlerImpl {
     protected void renderView(FacesContext context, String path)
             throws IOException {
         ExternalContext externalContext = context.getExternalContext();
-        HttpServletRequest request = (HttpServletRequest) externalContext
-                .getRequest();
-        request.setCharacterEncoding(encoding);
-        HttpServletResponse response = (HttpServletResponse) externalContext
-                .getResponse();
+        HttpServletRequest request = ServletExternalContextUtil
+                .getRequest(externalContext);
+        HttpServletResponse response = ServletExternalContextUtil
+                .getResponse(externalContext);
+
         //TODO handle encoding.if Servlet2.3 encode from var. if Servlet2.4 or later, encode from response.
         //response.setCharacterEncoding(encoding);
         PageContext pageContext = createPageContext(request, response);
