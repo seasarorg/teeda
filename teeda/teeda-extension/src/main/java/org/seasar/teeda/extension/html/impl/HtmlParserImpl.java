@@ -54,6 +54,7 @@ public class HtmlParserImpl implements HtmlParser {
             InputStreamReader reader = InputStreamReaderUtil.create(is,
                     getEncoding());
             parser.setContentHandler(handler);
+            parser.setEntityResolver(handler);
             parser.parse(new InputSource(reader));
             return handler.getRoot();
         } catch (SAXException e) {
