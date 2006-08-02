@@ -327,110 +327,31 @@ public class THtmlGridRendererTest extends RendererTest {
         htmlGrid.setScrollHorizontal(true);
         htmlGrid.setScrollVertical(true);
 
-        FooPage fooPage = new FooPage();
-        {
-            final String pageName = "fooPage";
-            getVariableResolver().putValue(pageName, fooPage);
-            htmlGrid.setPageName(pageName);
-        }
-
-        // items
-        {
-            final List items = new ArrayList();
-            for (int i = 1; i <= 7; i++) {
-                FooItem fooItem = new FooItem();
-                fooItem.setTd1("TD1_" + i);
-                fooItem.setTd2("TD2_" + i);
-                fooItem.setTd3("TD3_" + i);
-                fooItem.setTd4("TD4_" + i);
-                fooItem.setTd5("TD5_" + i);
-                fooItem.setTd6("TD6_" + i);
-                items.add(fooItem);
-            }
-            fooPage.setSomeItems((FooItem[]) items.toArray(new FooItem[items
-                    .size()]));
-        }
-
-        // colgroup
-        {
-            THtmlGridColumnGroup columnGroup = new THtmlGridColumnGroup();
-            addChild(htmlGrid, columnGroup);
-            {
-                THtmlGridColumn col = new THtmlGridColumn();
-                col.setSpan(String.valueOf(2));
-                col.setWidth(String.valueOf(40));
-                col.setStyleClass("T_leftFixed");
-                addChild(columnGroup, col);
-            }
-            {
-                THtmlGridColumn col = new THtmlGridColumn();
-                col.setSpan(String.valueOf(5));
-                col.setWidth(String.valueOf(30));
-                addChild(columnGroup, col);
-            }
-        }
-
-        // thead
-        {
-            THtmlGridHeader thead = new THtmlGridHeader();
-            htmlGrid.getChildren().add(thead);
-
-            THtmlGridTr tr = new THtmlGridTr();
-            tr.setHeight(String.valueOf(12));
-            addChild(thead, tr);
-            for (int i = 1; i <= 6; i++) {
-                THtmlGridTh th = new THtmlGridTh();
-                addChild(tr, th);
-                MockHtmlOutputText text = new MockHtmlOutputText();
-                text.setRenderer(outputTextRenderer);
-                text.setValue("th" + i);
-                addChild(th, text);
-            }
-        }
-        final ELParser parser = new CommonsELParser();
-        parser.setExpressionProcessor(new CommonsExpressionProcessorImpl());
-        // tbody
-        {
-            THtmlGridBody tbody = new THtmlGridBody();
-            addChild(htmlGrid, tbody);
-
-            THtmlGridTr tr = new THtmlGridTr();
-            addChild(tbody, tr);
-            {
-                ValueBinding vb = new ValueBindingImpl(getFacesContext()
-                        .getApplication(), "#{fooPage.styleClass}", parser);
-                tr.setValueBinding("styleClass", vb);
-                fooPage.addStyleClass("row_odd");
-                fooPage.addStyleClass("row_even");
-            }
-            for (int i = 1; i <= 6; i++) {
-                THtmlGridTd td = new THtmlGridTd();
-                addChild(tr, td);
-                if (i == 3) {
-                    MockHtmlInputText gridInputText = new MockHtmlInputText();
-                    gridInputText.setId("gridText");
-                    gridInputText.setRenderer(gridInputTextRenderer);
-                    ValueBinding vb = new ValueBindingImpl(getFacesContext()
-                            .getApplication(), "#{fooPage.td" + i + "}", parser);
-                    gridInputText.setValueBinding("value", vb);
-                    addChild(td, gridInputText);
-                } else {
-                    MockHtmlOutputText text = new MockHtmlOutputText();
-                    text.setRenderer(outputTextRenderer);
-                    ValueBinding vb = new ValueBindingImpl(getFacesContext()
-                            .getApplication(), "#{fooPage.td" + i + "}", parser);
-                    text.setValueBinding("value", vb);
-                    addChild(td, text);
-                }
-            }
-        }
-
-        // ## Act ##
-        encodeByRenderer(renderer, htmlGrid);
+        act();
 
         // ## Assert ##
         final String readText = TestUtil.readText(getClass(),
                 "testEncode_LeftFixed_Header_Body_XY.html", "UTF-8");
+        final String expected = extract(readText);
+        Diff diff = diff(expected, getResponseText());
+        System.out.println(getResponseText());
+        assertEquals(diff.toString(), true, diff.identical());
+    }
+
+    public void testEncode_LeftFixed_Header_Body_X() throws Exception {
+        // ## Arrange ##
+        htmlGrid.setId("someGridX");
+        htmlGrid.setWidth(String.valueOf(170));
+        htmlGrid.setHeight(String.valueOf(150));
+        htmlGrid.setItemsName("someItems");
+        htmlGrid.setScrollHorizontal(true);
+        htmlGrid.setScrollVertical(false);
+
+        act();
+
+        // ## Assert ##
+        final String readText = TestUtil.readText(getClass(),
+                "testEncode_LeftFixed_Header_Body_X.html", "UTF-8");
         final String expected = extract(readText);
         Diff diff = diff(expected, getResponseText());
         System.out.println(getResponseText());
@@ -446,6 +367,19 @@ public class THtmlGridRendererTest extends RendererTest {
         htmlGrid.setScrollHorizontal(false);
         htmlGrid.setScrollVertical(true);
 
+        act();
+
+        // ## Assert ##
+        final String readText = TestUtil.readText(getClass(),
+                "testEncode_LeftFixed_Header_Body_Y.html", "UTF-8");
+        final String expected = extract(readText);
+        Diff diff = diff(expected, getResponseText());
+        System.out.println(getResponseText());
+        assertEquals(diff.toString(), true, diff.identical());
+    }
+
+    private void act() throws IOException {
+        // ## Arrange ##
         FooPage fooPage = new FooPage();
         {
             final String pageName = "fooPage";
@@ -546,14 +480,6 @@ public class THtmlGridRendererTest extends RendererTest {
 
         // ## Act ##
         encodeByRenderer(renderer, htmlGrid);
-
-        // ## Assert ##
-        final String readText = TestUtil.readText(getClass(),
-                "testEncode_LeftFixed_Header_Body_Y.html", "UTF-8");
-        final String expected = extract(readText);
-        Diff diff = diff(expected, getResponseText());
-        System.out.println(getResponseText());
-        assertEquals(diff.toString(), true, diff.identical());
     }
 
     public void testEncode_XY_MultiRow() throws Exception {

@@ -53,9 +53,9 @@ public class THtmlGrid extends TForEach implements NamingContainer {
 
     private String width;
 
-    private boolean scrollVertical;
+    private Boolean scrollVertical;
 
-    private boolean scrollHorizontal;
+    private Boolean scrollHorizontal;
 
     private String height;
 
@@ -76,10 +76,12 @@ public class THtmlGrid extends TForEach implements NamingContainer {
     }
 
     public Object saveState(FacesContext context) {
-        Object[] values = new Object[3];
+        Object[] values = new Object[5];
         values[0] = super.saveState(context);
         values[1] = width;
         values[2] = height;
+        values[3] = scrollHorizontal;
+        values[4] = scrollVertical;
         return values;
     }
 
@@ -88,22 +90,30 @@ public class THtmlGrid extends TForEach implements NamingContainer {
         super.restoreState(context, values[0]);
         width = (String) values[1];
         height = (String) values[2];
+        scrollHorizontal = (Boolean) values[3];
+        scrollVertical = (Boolean) values[4];
     }
 
     public boolean isScrollHorizontal() {
-        return scrollHorizontal;
+        if (scrollHorizontal != null) {
+            return scrollHorizontal.booleanValue();
+        }
+        return false;
     }
 
     public void setScrollHorizontal(boolean scrollHorizontal) {
-        this.scrollHorizontal = scrollHorizontal;
+        this.scrollHorizontal = Boolean.valueOf(scrollHorizontal);
     }
 
     public boolean isScrollVertical() {
-        return scrollVertical;
+        if (scrollVertical != null) {
+            return scrollVertical.booleanValue();
+        }
+        return false;
     }
 
     public void setScrollVertical(boolean scrollVertical) {
-        this.scrollVertical = scrollVertical;
+        this.scrollVertical = Boolean.valueOf(scrollVertical);
     }
 
 }

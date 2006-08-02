@@ -306,9 +306,11 @@ public class THtmlGridRenderer extends TForEachRenderer {
             writer.startElement(JsfConstants.DIV_ELEM, body);
             RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR,
                     getIdForRender(context, htmlGrid) + "LeftBody");
-            RendererUtil.renderAttribute(writer, JsfConstants.STYLE_ATTR,
-                    "overflow:hidden; height:" + attribute.getLeftBodyHeight()
-                            + "px;");
+            if (htmlGrid.isScrollVertical()) {
+                RendererUtil.renderAttribute(writer, JsfConstants.STYLE_ATTR,
+                        "overflow:hidden; height:"
+                                + attribute.getLeftBodyHeight() + "px;");
+            }
 
             writer.startElement(JsfConstants.TABLE_ELEM, body);
             renderInnerTableAttributes(writer);
@@ -342,25 +344,35 @@ public class THtmlGridRenderer extends TForEachRenderer {
         writer.startElement(JsfConstants.DIV_ELEM, body);
         RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR,
                 getIdForRender(context, htmlGrid) + "RightBody");
-        if (htmlGrid.isScrollHorizontal()) {
+        if (htmlGrid.isScrollHorizontal() && htmlGrid.isScrollVertical()) {
             RendererUtil.renderAttribute(writer, JsfConstants.STYLE_ATTR,
                     "overflow:scroll; width:" + attribute.getRightBodyWidth()
                             + "px; height:" + attribute.getRightBodyHeight()
                             + "px;");
+            RendererUtil
+                    .renderAttribute(
+                            writer,
+                            JsfConstants.ONSCROLL_ATTR,
+                            "document.all."
+                                    + htmlGrid.getId()
+                                    + "RightHeader.scrollLeft=this.scrollLeft; document.all."
+                                    + htmlGrid.getId()
+                                    + "LeftBody.scrollTop=this.scrollTop;");
+        } else if (htmlGrid.isScrollHorizontal()) {
+            RendererUtil.renderAttribute(writer, JsfConstants.STYLE_ATTR,
+                    "overflow-x:scroll; width:" + attribute.getRightBodyWidth()
+                            + "px;");
+            RendererUtil.renderAttribute(writer, JsfConstants.ONSCROLL_ATTR,
+                    "document.all." + htmlGrid.getId()
+                            + "RightHeader.scrollLeft=this.scrollLeft;");
         } else if (htmlGrid.isScrollVertical()) {
             RendererUtil.renderAttribute(writer, JsfConstants.STYLE_ATTR,
                     "overflow-y:scroll;" + " height:"
                             + attribute.getRightBodyHeight() + "px;");
+            RendererUtil.renderAttribute(writer, JsfConstants.ONSCROLL_ATTR,
+                    "document.all." + htmlGrid.getId()
+                            + "LeftBody.scrollTop=this.scrollTop;");
         }
-        RendererUtil
-                .renderAttribute(
-                        writer,
-                        JsfConstants.ONSCROLL_ATTR,
-                        "document.all."
-                                + htmlGrid.getId()
-                                + "RightHeader.scrollLeft=this.scrollLeft; document.all."
-                                + htmlGrid.getId()
-                                + "LeftBody.scrollTop=this.scrollTop;");
 
         writer.startElement(JsfConstants.TABLE_ELEM, body);
         renderInnerTableAttributes(writer);
@@ -621,7 +633,6 @@ public class THtmlGridRenderer extends TForEachRenderer {
         }
 
         public int getLeftBodyHeight() {
-            // FIXME
             if (htmlGrid.isScrollHorizontal()) {
                 return tableHeight - headerHeight - scrollBarWidth;
             }
@@ -653,7 +664,10 @@ public class THtmlGridRenderer extends TForEachRenderer {
         }
 
         public int getRightHeaderWidth() {
-            return tableWidth - leftWidth - scrollBarWidth;
+            if (htmlGrid.isScrollVertical()) {
+                return tableWidth - leftWidth - scrollBarWidth;
+            }
+            return tableWidth - leftWidth;
         }
 
         public int getScrollBarWidth() {
