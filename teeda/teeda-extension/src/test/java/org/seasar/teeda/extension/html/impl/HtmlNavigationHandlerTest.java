@@ -49,7 +49,8 @@ public class HtmlNavigationHandlerTest extends TeedaTestCase {
         taglibManager.addTaglibElement(jsfHtml);
 
         NamingConventionImpl convention = new NamingConventionImpl();
-        String rootPath = "/" + ClassUtil.getPackageName(getClass()).replace('.', '/');
+        String rootPath = "/"
+                + ClassUtil.getPackageName(getClass()).replace('.', '/');
         convention.setViewRootPath(rootPath);
         convention.setViewExtension(".html");
         PageDescCacheImpl pageDescCache = new PageDescCacheImpl();
@@ -80,5 +81,10 @@ public class HtmlNavigationHandlerTest extends TeedaTestCase {
         // ## Assert ##
         assertNotNull(getExternalContext().getSessionMap().get(
                 SessionPagePersistence.class.getName()));
+    }
+
+    public void testCalcPathFromOutcome() throws Exception {
+        assertEquals("/view/add/addResult.html", HtmlNavigationHandler
+                .calcPathFromOutcom("/view/add/addInput.html", "addResult"));
     }
 }

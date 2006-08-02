@@ -20,7 +20,6 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
 import org.seasar.teeda.core.application.NavigationHandlerImpl;
-import org.seasar.teeda.extension.html.HtmlPathCache;
 import org.seasar.teeda.extension.html.PagePersistence;
 
 /**
@@ -31,14 +30,8 @@ public class HtmlNavigationHandler extends NavigationHandlerImpl {
 
     private PagePersistence pagePersistence;
 
-    private HtmlPathCache htmlPathCache;
-
     public void setPagePersistence(PagePersistence pagePersistence) {
         this.pagePersistence = pagePersistence;
-    }
-
-    public void setHtmlPathCache(HtmlPathCache htmlPathCache) {
-        this.htmlPathCache = htmlPathCache;
     }
 
     protected void redirect(FacesContext context,
@@ -54,13 +47,17 @@ public class HtmlNavigationHandler extends NavigationHandlerImpl {
         if (context.getResponseComplete() || context.getRenderResponse()) {
             return;
         }
-        String path = htmlPathCache.getPath(outcome);
-        if (path == null) {
-            return;
-        }
+        String viewId = context.getViewRoot().getViewId();
+        String path = calcPathFromOutcom(viewId, outcome);
         ViewHandler viewHandler = context.getApplication().getViewHandler();
         String redirectPath = getRedirectActionPath(context, viewHandler, path);
         redirect(context, context.getExternalContext(), redirectPath, path);
+    }
+
+    protected static String calcPathFromOutcom(String viewId, String outcome) {
+        int pos = viewId.lastIndexOf('/');
+        int pos2 = viewId.lastIndexOf('.');
+        return viewId.substring(0, pos + 1) + outcome + viewId.substring(pos2);
     }
 
 }
