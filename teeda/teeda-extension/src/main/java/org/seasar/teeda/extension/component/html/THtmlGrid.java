@@ -31,6 +31,18 @@ public class THtmlGrid extends TForEach implements NamingContainer {
 
     public static final String DEFAULT_RENDERER_TYPE = "org.seasar.teeda.extension.Grid";
 
+    public static final String GRID = "Grid";
+
+    public static final String GRID_X = "GridX";
+
+    public static final String GRID_Y = "GridY";
+
+    public static final String GRID_XY = "GridXY";
+
+    public static final String SCROLL_HORIZONTAL = "scrollHorizontal";
+
+    public static final String SCROLL_VERTICAL = "scrollVertical";
+
     public THtmlGrid() {
         setRendererType(DEFAULT_RENDERER_TYPE);
     }
@@ -40,6 +52,10 @@ public class THtmlGrid extends TForEach implements NamingContainer {
     }
 
     private String width;
+
+    private boolean scrollVertical;
+
+    private boolean scrollHorizontal;
 
     private String height;
 
@@ -73,4 +89,21 @@ public class THtmlGrid extends TForEach implements NamingContainer {
         width = (String) values[1];
         height = (String) values[2];
     }
+
+    public boolean isScrollHorizontal() {
+        return scrollHorizontal;
+    }
+
+    public void setScrollHorizontal(boolean scrollHorizontal) {
+        this.scrollHorizontal = scrollHorizontal;
+    }
+
+    public boolean isScrollVertical() {
+        return scrollVertical;
+    }
+
+    public void setScrollVertical(boolean scrollVertical) {
+        this.scrollVertical = scrollVertical;
+    }
+
 }

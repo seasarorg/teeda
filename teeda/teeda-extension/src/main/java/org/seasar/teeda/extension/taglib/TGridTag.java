@@ -28,6 +28,10 @@ public class TGridTag extends TForEachTag {
     public TGridTag() {
     }
 
+    private String scrollVertical;
+
+    private String scrollHorizontal;
+
     public String getComponentType() {
         return THtmlGrid.COMPONENT_TYPE;
     }
@@ -40,6 +44,26 @@ public class TGridTag extends TForEachTag {
         super.setProperties(component);
         setComponentProperty(component, JsfConstants.WIDTH_ATTR, getWidth());
         setComponentProperty(component, JsfConstants.HEIGHT_ATTR, getHeight());
+        setComponentProperty(component, THtmlGrid.SCROLL_HORIZONTAL,
+                getScrollHorizontal());
+        setComponentProperty(component, THtmlGrid.SCROLL_VERTICAL,
+                getScrollVertical());
+    }
+
+    public String getScrollHorizontal() {
+        return scrollHorizontal;
+    }
+
+    public void setScrollHorizontal(String scrollHorizontal) {
+        this.scrollHorizontal = scrollHorizontal;
+    }
+
+    public String getScrollVertical() {
+        return scrollVertical;
+    }
+
+    public void setScrollVertical(String scrollVertical) {
+        this.scrollVertical = scrollVertical;
     }
 
 }

@@ -18,6 +18,7 @@ package org.seasar.teeda.extension.html.factory;
 import java.util.Map;
 
 import org.seasar.teeda.extension.ExtensionConstants;
+import org.seasar.teeda.extension.component.html.THtmlGrid;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.PageDesc;
@@ -44,6 +45,10 @@ public class GridFactory extends AbstractElementProcessorFactory {
         final String id = elementNode.getId();
         properties.put(ExtensionConstants.ITEMS_NAME_ATTR, GridFactoryUtil
                 .getItemsName(id));
+        properties.put(THtmlGrid.SCROLL_HORIZONTAL, String
+                .valueOf(GridFactoryUtil.isScrollHorizontal(id)));
+        properties.put(THtmlGrid.SCROLL_VERTICAL, String
+                .valueOf(GridFactoryUtil.isScrollVertical(id)));
     }
 
     protected String getTagName() {

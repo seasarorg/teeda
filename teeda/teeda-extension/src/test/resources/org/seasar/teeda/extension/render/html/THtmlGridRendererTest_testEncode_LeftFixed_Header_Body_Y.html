@@ -25,7 +25,7 @@
 </style>
 </head>
 <body>
-GridXY
+GridY
 <!-- BEGIN -->
 <script language="JavaScript" type="text/javascript">
 <!--
@@ -65,7 +65,7 @@ function getFirstChildByTagName(fromNode, elemName) {
 }
 //-->
 </script>
-<table id="someGridXY" border="0" cellspacing="0" cellpadding="0">
+<table id="someGridY" border="0" cellspacing="0" cellpadding="0">
 	<tr>
 		<td>
 			<table cellspacing="1" cellpadding="0" class="gridTable">
@@ -78,7 +78,7 @@ function getFirstChildByTagName(fromNode, elemName) {
 			</table>
 		</td>
 		<td>
-			<div id="someGridXYRightHeader" style="overflow:hidden; width:74px;">
+			<div id="someGridYRightHeader">
 				<table cellspacing="1" cellpadding="0" class="gridTable">
 					<thead>
 						<tr>
@@ -94,7 +94,7 @@ function getFirstChildByTagName(fromNode, elemName) {
 	</tr>
 	<tr>
 		<td style="vertical-align:top;">
-			<div id="someGridXYLeftBody" style="overflow:hidden; height:122px;">
+			<div id="someGridYLeftBody" style="overflow:hidden; height:108px;">
 				<table cellspacing="1" cellpadding="0" class="gridTable">
 					<tbody>
 						<tr class="row_odd">
@@ -130,14 +130,14 @@ function getFirstChildByTagName(fromNode, elemName) {
 			</div>
 		</td>
 		<td style="vertical-align:top;">
-			<div id="someGridXYRightBody" style="overflow:scroll; width:90px; height:138px;"
-				onscroll="document.all.someGridXYRightHeader.scrollLeft=this.scrollLeft; document.all.someGridXYLeftBody.scrollTop=this.scrollTop;">
+			<div id="someGridYRightBody" style="overflow-y:scroll; height:108px;"
+				onscroll="document.all.someGridYRightHeader.scrollLeft=this.scrollLeft; document.all.someGridYLeftBody.scrollTop=this.scrollTop;">
 				<table cellspacing="1" cellpadding="0" class="gridTable">
 					<tbody>
 						<tr class="row_odd">
 							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>
 								<div onclick="editOn(this);">
-								<span>TD3_1</span><input type="text" id="gridText" name="someGridXY:0:gridText" value="TD3_1" onblur="editOff(this);" class="gridCellEdit" style="display:none;" />
+								<span>TD3_1</span><input type="text" id="gridText" name="someGridY:0:gridText" value="TD3_1" onblur="editOff(this);" class="gridCellEdit" style="display:none;" />
 								</div>
 							</nobr></div></td>
 							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>TD4_1</nobr></div></td>
@@ -147,7 +147,7 @@ function getFirstChildByTagName(fromNode, elemName) {
 						<tr class="row_even">
 							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>
 								<div onclick="editOn(this);">
-								<span>TD3_2</span><input type="text" id="gridText" name="someGridXY:1:gridText" value="TD3_2" onblur="editOff(this);" class="gridCellEdit" style="display:none;" />
+								<span>TD3_2</span><input type="text" id="gridText" name="someGridY:1:gridText" value="TD3_2" onblur="editOff(this);" class="gridCellEdit" style="display:none;" />
 								</div>
 							</nobr></div></td>
 							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>TD4_2</nobr></div></td>
@@ -157,7 +157,7 @@ function getFirstChildByTagName(fromNode, elemName) {
 						<tr class="row_odd">
 							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>
 								<div onclick="editOn(this);">
-								<span>TD3_3</span><input type="text" id="gridText" name="someGridXY:2:gridText" value="TD3_3" onblur="editOff(this);" class="gridCellEdit" style="display:none;" />
+								<span>TD3_3</span><input type="text" id="gridText" name="someGridY:2:gridText" value="TD3_3" onblur="editOff(this);" class="gridCellEdit" style="display:none;" />
 								</div>
 							</nobr></div></td>
 							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>TD4_3</nobr></div></td>
@@ -167,7 +167,7 @@ function getFirstChildByTagName(fromNode, elemName) {
 						<tr class="row_even">
 							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>
 								<div onclick="editOn(this);">
-								<span>TD3_4</span><input type="text" id="gridText" name="someGridXY:3:gridText" value="TD3_4" onblur="editOff(this);" class="gridCellEdit" style="display:none;" />
+								<span>TD3_4</span><input type="text" id="gridText" name="someGridY:3:gridText" value="TD3_4" onblur="editOff(this);" class="gridCellEdit" style="display:none;" />
 								</div>
 							</nobr></div></td>
 							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>TD4_4</nobr></div></td>
@@ -177,7 +177,7 @@ function getFirstChildByTagName(fromNode, elemName) {
 						<tr class="row_odd">
 							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>
 								<div onclick="editOn(this);">
-								<span>TD3_5</span><input type="text" id="gridText" name="someGridXY:4:gridText" value="TD3_5" onblur="editOff(this);" class="gridCellEdit" style="display:none;" />
+								<span>TD3_5</span><input type="text" id="gridText" name="someGridY:4:gridText" value="TD3_5" onblur="editOff(this);" class="gridCellEdit" style="display:none;" />
 								</div>
 							</nobr></div></td>
 							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>TD4_5</nobr></div></td>
@@ -187,7 +187,7 @@ function getFirstChildByTagName(fromNode, elemName) {
 						<tr class="row_even">
 							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>
 								<div onclick="editOn(this);">
-								<span>TD3_6</span><input type="text" id="gridText" name="someGridXY:5:gridText" value="TD3_6" onblur="editOff(this);" class="gridCellEdit" style="display:none;" />
+								<span>TD3_6</span><input type="text" id="gridText" name="someGridY:5:gridText" value="TD3_6" onblur="editOff(this);" class="gridCellEdit" style="display:none;" />
 								</div>
 							</nobr></div></td>
 							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>TD4_6</nobr></div></td>
@@ -198,7 +198,7 @@ function getFirstChildByTagName(fromNode, elemName) {
 							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>
 								<div onclick="editOn(this);">
 								<span>TD3_7</span>
-								<input type="text" id="gridText" name="someGridXY:6:gridText" value="TD3_7" onblur="editOff(this);" class="gridCellEdit" style="display:none;" />
+								<input type="text" id="gridText" name="someGridY:6:gridText" value="TD3_7" onblur="editOff(this);" class="gridCellEdit" style="display:none;" />
 								</div>
 							</nobr></div></td>
 							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>TD4_7</nobr></div></td>

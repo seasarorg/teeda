@@ -185,9 +185,11 @@ public class THtmlGridRenderer extends TForEachRenderer {
         writer.startElement(JsfConstants.DIV_ELEM, header);
         RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR,
                 getIdForRender(context, htmlGrid) + "RightHeader");
-        RendererUtil.renderAttribute(writer, JsfConstants.STYLE_ATTR,
-                "overflow:hidden; width:" + attribute.getRightHeaderWidth()
-                        + "px;");
+        if (htmlGrid.isScrollHorizontal()) {
+            RendererUtil.renderAttribute(writer, JsfConstants.STYLE_ATTR,
+                    "overflow:hidden; width:" + attribute.getRightHeaderWidth()
+                            + "px;");
+        }
 
         writer.startElement(JsfConstants.TABLE_ELEM, header);
         renderInnerTableAttributes(writer);
@@ -340,10 +342,16 @@ public class THtmlGridRenderer extends TForEachRenderer {
         writer.startElement(JsfConstants.DIV_ELEM, body);
         RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR,
                 getIdForRender(context, htmlGrid) + "RightBody");
-        RendererUtil.renderAttribute(writer, JsfConstants.STYLE_ATTR,
-                "overflow:scroll; width:" + attribute.getRightBodyWidth()
-                        + "px; height:" + attribute.getRightBodyHeight()
-                        + "px;");
+        if (htmlGrid.isScrollHorizontal()) {
+            RendererUtil.renderAttribute(writer, JsfConstants.STYLE_ATTR,
+                    "overflow:scroll; width:" + attribute.getRightBodyWidth()
+                            + "px; height:" + attribute.getRightBodyHeight()
+                            + "px;");
+        } else if (htmlGrid.isScrollVertical()) {
+            RendererUtil.renderAttribute(writer, JsfConstants.STYLE_ATTR,
+                    "overflow-y:scroll;" + " height:"
+                            + attribute.getRightBodyHeight() + "px;");
+        }
         RendererUtil
                 .renderAttribute(
                         writer,
@@ -458,7 +466,8 @@ public class THtmlGridRenderer extends TForEachRenderer {
     private THtmlGridRenderer.GridAttribute getGridAttribute(THtmlGrid htmlGrid) {
         THtmlGridRenderer.GridAttribute attribute = (THtmlGridRenderer.GridAttribute) htmlGrid
                 .getAttributes().get(GRID_ATTRIBUTE);
-        attribute = new GridAttribute();
+        attribute = new GridAttribute(htmlGrid);
+
         setupTableSize(htmlGrid, attribute);
         setupWidth(htmlGrid, attribute);
         setupHeight(htmlGrid, attribute);
@@ -583,6 +592,12 @@ public class THtmlGridRenderer extends TForEachRenderer {
 
         private Map columnWidths = new HashMap();
 
+        private THtmlGrid htmlGrid;
+
+        public GridAttribute(THtmlGrid htmlGrid) {
+            this.htmlGrid = htmlGrid;
+        }
+
         public int getColumnWidth(int no) {
             return ((Integer) columnWidths.get(new Integer(no))).intValue();
         }
@@ -606,7 +621,11 @@ public class THtmlGridRenderer extends TForEachRenderer {
         }
 
         public int getLeftBodyHeight() {
-            return tableHeight - headerHeight - scrollBarWidth;
+            // FIXME
+            if (htmlGrid.isScrollHorizontal()) {
+                return tableHeight - headerHeight - scrollBarWidth;
+            }
+            return tableHeight - headerHeight;
         }
 
         public int getLeftFixCols() {
