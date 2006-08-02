@@ -77,6 +77,8 @@
     <filter-mapping>
         <filter-name>hotdeployfilter</filter-name>
         <url-pattern>/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
     </filter-mapping>
 
     <filter-mapping>
