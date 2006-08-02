@@ -16,13 +16,10 @@
 package org.seasar.teeda.extension.html.impl;
 
 import java.io.File;
-import java.util.List;
-import java.util.Map;
 
 import org.seasar.framework.unit.S2FrameworkTestCase;
 import org.seasar.framework.util.ClassUtil;
 import org.seasar.framework.util.ResourceUtil;
-import org.seasar.teeda.core.application.navigation.NavigationContext;
 import org.seasar.teeda.core.application.navigation.NavigationResource;
 
 /**
@@ -30,7 +27,7 @@ import org.seasar.teeda.core.application.navigation.NavigationResource;
  *
  */
 public class ActionDescImplTest extends S2FrameworkTestCase {
-	
+
     public void tearDown() {
         NavigationResource.removeAll();
     }
@@ -43,25 +40,13 @@ public class ActionDescImplTest extends S2FrameworkTestCase {
     }
 
     public void testIsModified() throws Exception {
-        File file = ResourceUtil.getResourceAsFile(
-                ClassUtil.getResourcePath(FooAction.class));
-        ActionDescImpl ad = new ActionDescImpl(FooAction.class, "fooAction", file);
+        File file = ResourceUtil.getResourceAsFile(ClassUtil
+                .getResourcePath(FooAction.class));
+        ActionDescImpl ad = new ActionDescImpl(FooAction.class, "fooAction",
+                file);
         assertFalse("1", ad.isModified());
         Thread.sleep(1000);
         file.setLastModified(System.currentTimeMillis());
         assertTrue("2", ad.isModified());
-    }
-    
-    public void testNavigation() throws Exception {
-        register(FooPage.class);
-        register(Foo2Action.class);
-        new ActionDescImpl(Foo2Action.class, "foo2Action");
-        Map m = NavigationResource.getNavigationContexts();
-        assertNotNull(m);
-        List l = (List) m.get("/view/foo2.html");
-        assertNotNull(l);
-        assertEquals(1, l.size());
-        NavigationContext nc = (NavigationContext) l.get(0);
-        assertEquals("/view/foo2.html", nc.getFromViewId());
     }
 }

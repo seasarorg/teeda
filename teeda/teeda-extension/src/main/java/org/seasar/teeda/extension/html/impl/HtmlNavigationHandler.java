@@ -15,10 +15,12 @@
  */
 package org.seasar.teeda.extension.html.impl;
 
+import javax.faces.application.ViewHandler;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
 import org.seasar.teeda.core.application.NavigationHandlerImpl;
+import org.seasar.teeda.extension.html.HtmlPathCache;
 import org.seasar.teeda.extension.html.PagePersistence;
 
 /**
@@ -29,13 +31,36 @@ public class HtmlNavigationHandler extends NavigationHandlerImpl {
 
     private PagePersistence pagePersistence;
 
+    private HtmlPathCache htmlPathCache;
+
     public void setPagePersistence(PagePersistence pagePersistence) {
         this.pagePersistence = pagePersistence;
     }
 
-    protected void redirect(FacesContext context, ExternalContext externalContext, String redirectPath, String newViewId) {
+    public void setHtmlPathCache(HtmlPathCache htmlPathCache) {
+        this.htmlPathCache = htmlPathCache;
+    }
+
+    protected void redirect(FacesContext context,
+            ExternalContext externalContext, String redirectPath,
+            String newViewId) {
         pagePersistence.save(context, newViewId);
         super.redirect(context, externalContext, redirectPath, newViewId);
+    }
+
+    public void handleNavigation(FacesContext context, String fromAction,
+            String outcome) {
+        super.handleNavigation(context, fromAction, outcome);
+        if (context.getResponseComplete() || context.getRenderResponse()) {
+            return;
+        }
+        String path = htmlPathCache.getPath(outcome);
+        if (path == null) {
+            return;
+        }
+        ViewHandler viewHandler = context.getApplication().getViewHandler();
+        String redirectPath = getRedirectActionPath(context, viewHandler, path);
+        redirect(context, context.getExternalContext(), redirectPath, path);
     }
 
 }

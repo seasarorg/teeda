@@ -18,7 +18,6 @@ package org.seasar.teeda.extension.html.impl;
 import java.io.File;
 import java.util.Set;
 
-import org.seasar.teeda.extension.annotation.handler.NavigationAnnotationHandlerFactory;
 import org.seasar.teeda.extension.html.ActionDesc;
 
 /**
@@ -54,8 +53,6 @@ public class ActionDescImpl implements ActionDesc {
 
     protected void setup(Class actionClass) {
         methodNames = ActionDescUtil.getActionMethodNames(actionClass);
-        NavigationAnnotationHandlerFactory.getAnnotationHandler()
-                .registerNavigationsByAction(actionName, actionClass);
     }
 
     public boolean hasMethod(String name) {

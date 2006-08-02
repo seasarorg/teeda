@@ -13,17 +13,25 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.extension.annotation.handler;
+package org.seasar.teeda.extension.html.impl;
 
+import junit.framework.TestCase;
 
 /**
  * @author higa
+ *
  */
-public interface NavigationAnnotationHandler {
+public class HtmlPathCacheImplTest extends TestCase {
 
-    void registerNavigationsByPage(String pageName, Class clazz);
-    
-    void registerNavigationsByAction(String actionName, Class clazz);
-    
-    void removeAll();
+    private HtmlPathCacheImpl pathCache = new HtmlPathCacheImpl();
+
+    public void testGetName() throws Exception {
+        assertEquals("aaa", pathCache.getName("/view/hoge/aaa.html"));
+        try {
+            pathCache.getName("aaa.html");
+            fail();
+        } catch (IllegalArgumentException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
 }

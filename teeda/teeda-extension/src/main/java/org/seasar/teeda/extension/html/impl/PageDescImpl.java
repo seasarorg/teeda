@@ -24,7 +24,6 @@ import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.PropertyDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.teeda.extension.ExtensionConstants;
-import org.seasar.teeda.extension.annotation.handler.NavigationAnnotationHandlerFactory;
 import org.seasar.teeda.extension.annotation.handler.ValidatorAnnotationHandlerFactory;
 import org.seasar.teeda.extension.html.PageDesc;
 
@@ -76,8 +75,6 @@ public class PageDescImpl implements PageDesc {
         methodNames = ActionDescUtil.getActionMethodNames(pageClass);
         ValidatorAnnotationHandlerFactory.getAnnotationHandler()
                 .registerValidators(pageName, pageClass);
-        NavigationAnnotationHandlerFactory.getAnnotationHandler()
-                .registerNavigationsByPage(pageName, pageClass);
     }
 
     protected boolean isItemsProperty(PropertyDesc pd) {

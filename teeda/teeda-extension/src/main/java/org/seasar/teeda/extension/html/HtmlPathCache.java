@@ -13,20 +13,17 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.extension.annotation.handler;
-
-import junit.framework.TestCase;
+package org.seasar.teeda.extension.html;
 
 /**
  * @author higa
  * 
  */
-public class NavigationAnnotationHandlerFactoryTest extends TestCase {
+public interface HtmlPathCache {
 
-    public void testGetAnnotationHandler() throws Exception {
-        NavigationAnnotationHandler handler = NavigationAnnotationHandlerFactory
-                .getAnnotationHandler();
-        assertEquals(ConstantNavigationAnnotationHandler.class, handler
-                .getClass());
-    }
+    String getName(String path);
+
+    void setPath(String name, String path);
+
+    String getPath(String name);
 }

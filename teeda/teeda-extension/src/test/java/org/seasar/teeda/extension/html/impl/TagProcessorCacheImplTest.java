@@ -54,6 +54,8 @@ public class TagProcessorCacheImplTest extends S2FrameworkTestCase {
         htmlDescCache.setServletContext(getServletContext());
 
         TagProcessorCacheImpl tagProcessorCache = new TagProcessorCacheImpl();
+        HtmlPathCacheImpl htmlPathCache = new HtmlPathCacheImpl();
+        tagProcessorCache.setHtmlPathCache(htmlPathCache);
         tagProcessorCache.setHtmlDescCache(htmlDescCache);
         tagProcessorCache.setPageDescCache(pageDescCache);
         tagProcessorCache.setActionDescCache(actionDescCache);
@@ -62,13 +64,13 @@ public class TagProcessorCacheImplTest extends S2FrameworkTestCase {
 
         TagProcessor processor = tagProcessorCache.updateTagProcessor(path);
 
-        assertNotNull("1", processor);
-        assertSame("2", processor, tagProcessorCache.updateTagProcessor(path));
+        assertNotNull(processor);
+        assertSame(processor, tagProcessorCache.updateTagProcessor(path));
         File file = ResourceUtil.getResourceAsFile(ClassUtil
                 .getResourcePath(FooPage.class));
         Thread.sleep(1000);
         file.setLastModified(System.currentTimeMillis());
-        assertNotSame("3", processor, tagProcessorCache
-                .updateTagProcessor(path));
+        assertNotSame(processor, tagProcessorCache.updateTagProcessor(path));
+        assertEquals(path, htmlPathCache.getPath("foo"));
     }
 }

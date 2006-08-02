@@ -11,6 +11,7 @@
 	<component class="org.seasar.teeda.extension.html.impl.HtmlParserImpl">
 		<initMethod name="addElementNodeTagName"><arg>"table"</arg></initMethod>
 	</component>
+	<component class="org.seasar.teeda.extension.html.impl.HtmlPathCacheImpl"/>
 	<component class="org.seasar.teeda.extension.html.impl.HtmlDescCacheImpl"/>
 	<component class="org.seasar.teeda.extension.html.impl.PageDescCacheImpl"/>
 	<component class="org.seasar.teeda.extension.html.impl.ActionDescCacheImpl"/>

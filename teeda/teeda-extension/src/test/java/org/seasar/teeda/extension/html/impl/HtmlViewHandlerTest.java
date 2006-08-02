@@ -101,6 +101,7 @@ public class HtmlViewHandlerTest extends TeedaExtensionTestCase {
         TagProcessorAssemblerImpl assembler = new TagProcessorAssemblerImpl();
         assembler.setFactories(new ElementProcessorFactory[] { formFactory });
         TagProcessorCacheImpl tagProcessorCache = new TagProcessorCacheImpl();
+        tagProcessorCache.setHtmlPathCache(new HtmlPathCacheImpl());
         tagProcessorCache.setHtmlDescCache(htmlDescCache);
         tagProcessorCache.setPageDescCache(pageDescCache);
         tagProcessorCache.setActionDescCache(actionDescCache);
