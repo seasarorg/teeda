@@ -135,6 +135,9 @@ Kumu.Ajax = {
     var url = ajaxComponent.url;
     var parameters = "";
     var params = ajaxComponent.params;
+    if(!params){
+      params = {};
+    }
     var method = 'GET';
     if(params.method){
       method = params.method.toUpperCase();
@@ -253,6 +256,9 @@ Kumu.Ajax = {
   },
 
   _setJSONData : function(node, data){
+    if(node.style.display == 'none'){
+      node.style.display = '';
+    }
     node.innerHTML = data;
   },
 

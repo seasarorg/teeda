@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<script language="JavaScript" type="text/javascript" src="../../../main/js/kumu/kumu.js"></script>
+<script>
+var o = {
+  'test' : 'てすと',
+  'test1' : 'てすと1',
+  'test2' : [
+  {
+    'no':1,
+    'name' : 'name1'
+  }, 
+  {
+    'no':2,
+    'name' : 'name2'
+  }, 
+  {
+    'no':3,
+    'name' : 'name3'
+  }, 
+  {
+    'no':4,
+    'name' : 'name4'
+  }, 
+  {
+    'no':5,
+    'name' : 'name5'
+  }]
+}
+
+//指定したid名の要素にinnerHTMLで値をセットする関数を作成
+function functionFactory(name){
+  return new Function(name, '$i(\''+name+'\').innerHTML = '+name).multiple();
+}
+
+function render3(test2){
+  var target = $i('test2');
+  test2.map(function(obj){
+    var no = obj.no;
+    var name = obj.name;
+    var li  = document.createElement('li');
+    li.innerHTML = no+':'+name;
+    target.appendChild(li);    
+  });
+}
+
+var render = Kumu.group(functionFactory('test'), functionFactory('test1'), render3.multiple());
+
+</script>
+
+<title>JSON Rendering Sample</title>
+</head>
+<body>
+<div id="test">Test</div>
+<div id="test1">Test1</div>
+<ul id="test2">
+</ul>
+<input type="button" value="Render" onclick="render(o);"> 
+</body>
+</html>

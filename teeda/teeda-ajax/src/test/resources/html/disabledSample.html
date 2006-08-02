@@ -1,0 +1,36 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-31j">
+<script language="JavaScript" type="text/javascript" src="../../../main/js/kumu/kumu.js"></script>
+<title>Disabled Sample</title>
+<script>
+Kumu.dynamicLoad('disabled');
+  DisabledConf = {
+    time : 50000,
+    expectForm : ['test2'],
+    submitMessage : function(){
+      alert('送信中です');
+    },
+    expectAnchor : ['a2'],
+    anchorMessage : function(){
+      alert('遷移中です');
+    }
+  }
+</script>
+</head>
+<body>
+<a id="a1" href="http://www.seasar.org/">テストリンク1</a>
+<a id="a2" href="http://www.seasar.org/">テストリンク2</a>
+
+<form id="test1" action="http://www.seasar.org/">
+  <input type="submit" value="サブミットテスト1">  
+  <input type="submit" value="javascriptサブミットテスト1" onclick="document.forms[0].submit();"> 
+</form>
+<form id="test2" action="http://www.seasar.org/">
+  <input type="submit" value="サブミットテスト2">  
+  <input type="submit" value="javascriptサブミットテスト2" onclick="document.forms[1].submit();"> 
+</form>
+
+</body>
+</html>
