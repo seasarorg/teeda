@@ -189,6 +189,9 @@ public class PortletExternalContextImpl extends ExternalContext {
 
     public String encodeResourceURL(String url) {
         AssertionUtil.assertNotNull("url is null.", url);
+        if (url.indexOf("://") == -1 && !url.startsWith("/")) {
+            return url;
+        } 
         return portletResponse.encodeURL(url);
     }
 
