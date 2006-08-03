@@ -23,7 +23,6 @@ import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ActionDescCache;
 import org.seasar.teeda.extension.html.HtmlDesc;
 import org.seasar.teeda.extension.html.HtmlDescCache;
-import org.seasar.teeda.extension.html.HtmlPathCache;
 import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.PageDescCache;
 import org.seasar.teeda.extension.html.TagProcessor;
@@ -38,8 +37,6 @@ public class TagProcessorCacheImpl implements TagProcessorCache {
 
     private Map cache = new HashMap();
 
-    private HtmlPathCache htmlPathCache;
-
     private HtmlDescCache htmlDescCache;
 
     private PageDescCache pageDescCache;
@@ -49,10 +46,6 @@ public class TagProcessorCacheImpl implements TagProcessorCache {
     private TagProcessorAssembler assembler;
 
     private TeedaStateManager stateManager;
-
-    public void setHtmlPathCache(HtmlPathCache htmlPathCache) {
-        this.htmlPathCache = htmlPathCache;
-    }
 
     public void setHtmlDescCache(HtmlDescCache htmlDescCache) {
         this.htmlDescCache = htmlDescCache;
@@ -77,10 +70,6 @@ public class TagProcessorCacheImpl implements TagProcessorCache {
     public synchronized TagProcessor updateTagProcessor(String viewId) {
         boolean created = false;
         HtmlDesc htmlDesc = htmlDescCache.getHtmlDesc(viewId);
-        if (htmlDesc == null) {
-            String name = htmlPathCache.getName(viewId);
-            htmlPathCache.setPath(name, viewId);
-        }
         if (htmlDesc == null || htmlDesc.isModified()) {
             htmlDesc = htmlDescCache.createHtmlDesc(viewId);
             if (htmlDesc != null) {

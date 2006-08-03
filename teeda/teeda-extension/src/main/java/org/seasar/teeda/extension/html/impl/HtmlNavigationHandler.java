@@ -19,6 +19,7 @@ import javax.faces.application.ViewHandler;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
+import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.application.NavigationHandlerImpl;
 import org.seasar.teeda.extension.html.PagePersistence;
 
@@ -63,7 +64,21 @@ public class HtmlNavigationHandler extends NavigationHandlerImpl {
         }
         int pos = viewId.lastIndexOf('/');
         int pos2 = viewId.lastIndexOf('.');
-        return viewId.substring(0, pos + 1) + outcome + viewId.substring(pos2);
+        String pathFirst = viewId.substring(0, pos + 1);
+        String pathLast = viewId.substring(pos2);
+        String[] names = StringUtil.split(outcome, "$");
+        if (names.length == 1) {
+            return pathFirst + outcome + pathLast;
+        }
+        StringBuffer buf = new StringBuffer();
+        for (int i = 0; i < names.length; i++) {
+            buf.append(StringUtil.decapitalize(names[i]));
+            if (i != names.length - 1) {
+                buf.append("/");
+            }
+        }
+        pos = viewId.indexOf('/', 1);
+        pathFirst = viewId.substring(0, pos + 1);
+        return pathFirst + buf + pathLast;
     }
-
 }
