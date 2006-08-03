@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -24,7 +24,7 @@ import org.seasar.teeda.extension.html.PagePersistence;
 
 /**
  * @author higa
- * 
+ *
  */
 public class HtmlNavigationHandler extends NavigationHandlerImpl {
 
@@ -48,13 +48,19 @@ public class HtmlNavigationHandler extends NavigationHandlerImpl {
             return;
         }
         String viewId = context.getViewRoot().getViewId();
-        String path = calcPathFromOutcom(viewId, outcome);
+        String path = calcPathFromOutcome(viewId, outcome);
+        if (path == null) {
+            return;
+        }
         ViewHandler viewHandler = context.getApplication().getViewHandler();
         String redirectPath = getRedirectActionPath(context, viewHandler, path);
         redirect(context, context.getExternalContext(), redirectPath, path);
     }
 
-    protected static String calcPathFromOutcom(String viewId, String outcome) {
+    protected static String calcPathFromOutcome(String viewId, String outcome) {
+        if (outcome == null) {
+            return null;
+        }
         int pos = viewId.lastIndexOf('/');
         int pos2 = viewId.lastIndexOf('.');
         return viewId.substring(0, pos + 1) + outcome + viewId.substring(pos2);
