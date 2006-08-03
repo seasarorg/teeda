@@ -1,6 +1,6 @@
-<form 
-	id="fooForm" 
-	name="fooForm" 
+<form
+	id="fooForm"
+	name="fooForm"
 	method="post"
 	enctype="application/x-www-form-urlencoded"
 	action="/aa">
@@ -13,7 +13,7 @@
 <input type="hidden" name="fooForm:__link_clicked__" />
 <script language="JavaScript" type="text/javascript">
 <!--
-var f = document.forms['fooForm']; f['fooForm:__link_clicked__'].value = 'null';
+function addEventForCommandLink(obj, eventName, fn){var prev = obj[eventName]; obj[eventName] = prev ? function() { fn() ; prev() } : fn;}addEventForCommandLink( window, 'onload', function() {var f = document.forms['fooForm']; f['fooForm:__link_clicked__'].value = 'null';});
 //-->
 </script>
 </form>

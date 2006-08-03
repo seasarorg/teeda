@@ -28,6 +28,7 @@ import javax.faces.component.html.HtmlForm;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
+import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.AbstractRenderer;
 import org.seasar.teeda.core.util.FacesContextUtil;
@@ -115,13 +116,28 @@ public class HtmlFormRenderer extends AbstractRenderer {
                     + "';");
         }
         final String body = new String(sb);
-        renderJavaScriptElement(writer, body);
+        renderJavaScriptForCommandLink(writer, body);
         htmlForm.getAttributes().remove(HIDDEN_PARAMETER_KEY);
     }
 
-    public static void setHiddenParameter(UIForm form, String name, Object value) {
+    protected void renderJavaScriptForCommandLink(ResponseWriter writer,
+            String scirptBody) throws IOException {
+        if (StringUtil.isEmpty(scirptBody)) {
+            return;
+        }
+        StringBuffer buf = new StringBuffer(512);
+        buf.append("function addEventForCommandLink(obj, eventName, fn){");
+        buf
+                .append("var prev = obj[eventName]; obj[eventName] = prev ? function() { fn() ; prev() } : fn;}");
+        buf.append("addEventForCommandLink( window, \'onload\', function() {");
+        buf.append(scirptBody);
+        buf.append("});");
+        renderJavaScriptElement(writer, buf.toString());
+    }
+
+    public static void setHiddenParameter(UIForm form, String key, Object value) {
         Map map = getHiddenParameters(form);
-        map.put(name, value);
+        map.put(key, value);
     }
 
     public static Map getHiddenParameters(UIForm form) {
@@ -132,6 +148,11 @@ public class HtmlFormRenderer extends AbstractRenderer {
             attributes.put(HIDDEN_PARAMETER_KEY, map);
         }
         return map;
+    }
+
+    public static void clearHiddenParameters(UIForm form, String key) {
+        Map map = getHiddenParameters(form);
+        map.remove(key);
     }
 
     private void renderFormSubmitMarker(FacesContext context,

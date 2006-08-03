@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -22,8 +22,20 @@ import javax.faces.render.Renderer;
 import javax.faces.render.RendererTest;
 
 import org.custommonkey.xmlunit.Diff;
+import org.seasar.framework.mock.servlet.MockHttpServletRequest;
+import org.seasar.framework.mock.servlet.MockHttpServletRequestImpl;
+import org.seasar.framework.mock.servlet.MockHttpServletResponse;
+import org.seasar.framework.mock.servlet.MockHttpServletResponseImpl;
+import org.seasar.framework.mock.servlet.MockServletContext;
+import org.seasar.framework.mock.servlet.MockServletContextImpl;
+import org.seasar.teeda.core.application.ViewHandlerImpl;
+import org.seasar.teeda.core.config.webapp.element.WebappConfig;
+import org.seasar.teeda.core.config.webapp.element.impl.WebappConfigImpl;
+import org.seasar.teeda.core.mock.MockExternalContext;
+import org.seasar.teeda.core.mock.MockExternalContextImpl;
 import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.mock.MockHtmlForm;
+import org.seasar.teeda.core.mock.MockStateManager;
 import org.seasar.teeda.core.mock.MockViewHandlerImpl;
 
 /**
@@ -31,7 +43,6 @@ import org.seasar.teeda.core.mock.MockViewHandlerImpl;
  */
 public class HtmlFormRendererTest extends RendererTest {
 
-    // TODO render hidden fields for CommandLink
     // TODO ViewHandler#getActionURL
     // TODO ExternalContext#encodeActionURL
 
@@ -56,6 +67,7 @@ public class HtmlFormRendererTest extends RendererTest {
         encodeByRenderer(renderer, htmlForm);
 
         // ## Assert ##
+        System.out.println(getResponseText());
         assertEquals(
                 "<form name=\"_id0\" method=\"post\" enctype=\"application/x-www-form-urlencoded\" action=\"/aa\">"
                         + "<input type=\"hidden\" name=\"_id0/aa\" value=\"_id0\" />"
@@ -209,6 +221,64 @@ public class HtmlFormRendererTest extends RendererTest {
 
     public void testGetRendersChildren() throws Exception {
         assertEquals(false, renderer.getRendersChildren());
+    }
+
+    public void testEncode_HiddenValue() throws Exception {
+        // ## Arrange ##
+        MockFacesContext context = getFacesContext();
+        context.getViewRoot().setViewId("/aa");
+        HtmlFormRenderer.setHiddenParameter(htmlForm, "hoge", "foo");
+        try {
+            // ## Act ##
+            encodeByRenderer(renderer, htmlForm);
+
+            // ## Assert ##
+            String readText = "<form name=\"_id0\" method=\"post\" "
+                    + "enctype=\"application/x-www-form-urlencoded\" "
+                    + "action=\"/aa\"><input type=\"hidden\" name=\"_id0/aa\" "
+                    + "value=\"_id0\" /><input type=\"hidden\" name=\"hoge\" value=\"foo\" />"
+                    + "<script language=\"JavaScript\" type=\"text/javascript\">"
+                    + "<!--\n"
+                    + "function addEventForCommandLink(obj, eventName, fn){"
+                    + "var prev = obj[eventName]; obj[eventName] = prev ? function() { fn() ; prev() } : fn;}"
+                    + "addEventForCommandLink( window, \'onload\', "
+                    + "function() {var f = document.forms[\'_id0\']; f[\'hoge\'].value = \'foo\';});\n"
+                    + "//--></script></form>";
+
+            final Diff diff = diff(readText, getResponseText());
+            assertEquals(diff.toString(), true, diff.identical());
+        } finally {
+            HtmlFormRenderer.clearHiddenParameters(htmlForm, "hoge");
+        }
+    }
+
+    public void testEncode_encodeActionURL() throws Exception {
+        // ## Arrange ##
+        MockFacesContext context = getFacesContext();
+        MockServletContext servletContext = new MockServletContextImpl("/aaa");
+        MockHttpServletRequest req = new MockHttpServletRequestImpl(
+                servletContext, "/bbb");
+        MockHttpServletResponse res = new MockHttpServletResponseImpl(req);
+        MockExternalContext extContext = new MockExternalContextImpl(
+                servletContext, req, res);
+        context.setExternalContext(extContext);
+        ViewHandlerImpl handler = new ViewHandlerImpl();
+        context.getApplication().setViewHandler(handler);
+        context.getViewRoot().setViewId("/cc");
+        MockStateManager sm = new MockStateManager();
+        context.getApplication().setStateManager(sm);
+
+        WebappConfigImpl webAppConfig = new WebappConfigImpl();
+        extContext.getApplicationMap().put(WebappConfig.class.getName(),
+                webAppConfig);
+
+        // ## Act ##
+        encodeByRenderer(renderer, htmlForm);
+
+        // ## Assert ##
+        String readText = "<form name=\"_id0\" method=\"post\" enctype=\"application/x-www-form-urlencoded\" action=\"/aaa/cc\"><input type=\"hidden\" name=\"_id0/cc\" value=\"_id0\" /></form>";
+        final Diff diff = diff(readText, getResponseText());
+        assertEquals(diff.toString(), true, diff.identical());
     }
 
     private HtmlFormRenderer createHtmlFormRenderer() {

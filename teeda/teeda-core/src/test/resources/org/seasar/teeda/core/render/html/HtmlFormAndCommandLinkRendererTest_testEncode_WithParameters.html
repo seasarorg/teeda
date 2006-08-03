@@ -1,7 +1,7 @@
-<form 
-	id="barForm" 
-	name="barForm" 
-	method="post" 
+<form
+	id="barForm"
+	name="barForm"
+	method="post"
 	enctype="application/x-www-form-urlencoded"
 	action="/abc">
 <a
@@ -15,7 +15,7 @@
 <input type="hidden" name="y" />
 <script language="JavaScript" type="text/javascript">
 <!--
-var f = document.forms['barForm']; f['barForm:__link_clicked__'].value = 'null'; f['x'].value = 'null'; f['y'].value = 'null';
+function addEventForCommandLink(obj, eventName, fn){var prev = obj[eventName]; obj[eventName] = prev ? function() { fn() ; prev() } : fn;}addEventForCommandLink( window, 'onload', function() {var f = document.forms['barForm']; f['barForm:__link_clicked__'].value = 'null'; f['x'].value = 'null'; f['y'].value = 'null';});
 //-->
 </script>
 </form>
