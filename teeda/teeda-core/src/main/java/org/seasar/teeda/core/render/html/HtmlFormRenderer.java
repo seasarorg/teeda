@@ -37,9 +37,11 @@ import org.seasar.teeda.core.util.RendererUtil;
 
 /**
  * @author manhole
+ * @author shot
  */
 public class HtmlFormRenderer extends AbstractRenderer {
 
+    //TODO need to avoid hidden parameter that is not used by commandlink.
     public static final String COMPONENT_FAMILY = "javax.faces.Form";
 
     public static final String RENDERER_TYPE = "javax.faces.Form";
