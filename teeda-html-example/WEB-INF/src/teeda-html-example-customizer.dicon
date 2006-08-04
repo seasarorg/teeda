@@ -5,9 +5,6 @@
 	<component name="defaultCustomizer" class="org.seasar.framework.container.autoregister.AspectCustomizer">
 		<property name="interceptorName">"aop.traceInterceptor"</property>
 	</component>
-	<component name="actionSupportCustomizer" class="org.seasar.framework.container.autoregister.AspectCustomizer">
-		<property name="interceptorName">"aop.actionSupportInterceptor"</property>
-	</component>
 	<component name="commandAspectCustomizer" class="org.seasar.framework.container.autoregister.AspectCustomizer">
 		<property name="interceptorName">"aop.traceInterceptor"</property>
 		<property name="interceptorName">"aop.actionSupportInterceptor"</property>
@@ -16,9 +13,6 @@
 	<component name="actionCustomizer" class="org.seasar.framework.container.autoregister.CustomizerChain">
 		<initMethod name="addCustomizer">
 			<arg>commandAspectCustomizer</arg>
-		</initMethod>
-		<initMethod name="addCustomizer">
-			<arg>actionSupportCustomizer</arg>
 		</initMethod>
 	</component>
 	<component name="daoCustomizer" class="org.seasar.framework.container.autoregister.CustomizerChain">
