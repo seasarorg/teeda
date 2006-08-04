@@ -6,5 +6,7 @@
 		class="org.seasar.framework.aop.interceptors.TraceInterceptor"/>
 	<component name="traceThrowsInterceptor"
 		class="org.seasar.framework.aop.interceptors.TraceThrowsInterceptor"/>
+	<component name="classLoaderAwareTraceInterceptor"
+		class="org.seasar.framework.aop.interceptors.ClassLoaderAwareTraceInterceptor"/>
 	<component name="actionSupportInterceptor" class="org.seasar.teeda.extension.interceptor.ActionSupportInterceptor" />
 </components>

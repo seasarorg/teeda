@@ -3,10 +3,10 @@
 	"http://www.seasar.org/dtd/components21.dtd">
 <components>
 	<component name="defaultCustomizer" class="org.seasar.framework.container.autoregister.AspectCustomizer">
-		<property name="interceptorName">"aop.traceInterceptor"</property>
+		<property name="interceptorName">"aop.classLoaderAwareTraceInterceptor"</property>
 	</component>
 	<component name="commandAspectCustomizer" class="org.seasar.framework.container.autoregister.AspectCustomizer">
-		<property name="interceptorName">"aop.traceInterceptor"</property>
+		<property name="interceptorName">"aop.classLoaderAwareTraceInterceptor"</property>
 		<property name="interceptorName">"aop.actionSupportInterceptor"</property>
 		<property name="pointcut">"do.*, initialize"</property>
 	</component>
@@ -39,7 +39,7 @@
 	</component>
 	<component name="pageCustomizer" class="org.seasar.framework.container.autoregister.CustomizerChain">
 		<initMethod name="addCustomizer">
-			<arg>commandAspectCustomizer</arg>
+			<arg>defaultCustomizer</arg>
 		</initMethod>
 	</component>
 	<component name="serviceCustomizer" class="org.seasar.framework.container.autoregister.CustomizerChain">
