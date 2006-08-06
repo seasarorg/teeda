@@ -73,6 +73,8 @@ public interface JsfConstants {
 
     String SCOPE_REQUEST = "request";
 
+    String SCOPE_DISPATCH = "teeda_dispatch_scope";
+    
     // -- value --
 
     String BUTTON_VALUE = "button";

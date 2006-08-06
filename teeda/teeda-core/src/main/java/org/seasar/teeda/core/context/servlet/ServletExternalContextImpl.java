@@ -45,6 +45,7 @@ import org.seasar.framework.container.external.servlet.ServletRequestParameterVa
 import org.seasar.framework.log.Logger;
 import org.seasar.framework.util.AssertionUtil;
 import org.seasar.teeda.core.context.Releaseable;
+import org.seasar.teeda.core.scope.impl.DispatchScopeFactory;
 import org.seasar.teeda.core.util.ServletExternalContextUtil;
 
 /**
@@ -109,7 +110,7 @@ public class ServletExternalContextImpl extends ExternalContext implements
         try {
             ServletExternalContextUtil.dispatch(path, request, response);
         } finally {
-            //TODO add JavaScript handle scope destroy.
+            DispatchScopeFactory.destroy();
         }
     }
 

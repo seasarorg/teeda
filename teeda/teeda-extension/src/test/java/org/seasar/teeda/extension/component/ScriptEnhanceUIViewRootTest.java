@@ -18,6 +18,7 @@ package org.seasar.teeda.extension.component;
 import java.util.Map;
 
 import org.seasar.teeda.core.mock.MockFacesContext;
+import org.seasar.teeda.core.scope.impl.DispatchScopeFactory;
 import org.seasar.teeda.core.unit.TeedaTestCase;
 import org.seasar.teeda.extension.util.JavaScriptContext;
 
@@ -25,7 +26,7 @@ import org.seasar.teeda.extension.util.JavaScriptContext;
  * @author shot
  */
 public class ScriptEnhanceUIViewRootTest extends TeedaTestCase {
-
+    
     public void testAddScript() throws Exception {
         ScriptEnhanceUIViewRoot root = new ScriptEnhanceUIViewRoot();
         root.addScript("a", new JavaScriptContext() {
@@ -46,8 +47,6 @@ public class ScriptEnhanceUIViewRootTest extends TeedaTestCase {
         ScriptEnhanceUIViewRoot root = new ScriptEnhanceUIViewRoot();
         assertFalse(root.containsScript("a"));
         root.addScript("a", new JavaScriptContext());
-        assertFalse(root.containsScript("a"));
-        getFacesContext().getExternalContext().getRequestMap().put("a", "a");
         assertTrue(root.containsScript("a"));
     }
 

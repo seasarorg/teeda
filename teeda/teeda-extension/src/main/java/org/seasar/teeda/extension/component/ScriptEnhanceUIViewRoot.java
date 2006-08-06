@@ -22,6 +22,8 @@ import java.util.Map;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 
+import org.seasar.teeda.core.scope.impl.DispatchScope;
+import org.seasar.teeda.core.scope.impl.DispatchScopeFactory;
 import org.seasar.teeda.extension.util.JavaScriptContext;
 
 /**
@@ -30,21 +32,26 @@ import org.seasar.teeda.extension.util.JavaScriptContext;
  */
 public class ScriptEnhanceUIViewRoot extends UIViewRoot {
 
-    private Map scripts = null;
+    private static final String SCRIPTS_KEY = ScriptEnhanceUIViewRoot.class
+            .getName()
+            + ".SCRIPTS_KEY";
 
+    private Map scriptsMap = new HashMap();
+    
     public ScriptEnhanceUIViewRoot() {
-        scripts = new HashMap();
     }
 
-    public void addScript(String scriptId, JavaScriptContext context) {
+    public void addScript(String scriptId, JavaScriptContext jsContext) {
+        Map scripts = getScriptsMap();
         if (!scripts.containsKey(scriptId)) {
-            scripts.put(scriptId, context);
+            scripts.put(scriptId, jsContext);
         }
+        scriptsMap.putAll(scripts);
     }
-
+    
     public String getAllScripts() {
         StringBuffer buf = new StringBuffer();
-        for (Iterator itr = scripts.entrySet().iterator(); itr.hasNext();) {
+        for (Iterator itr = scriptsMap.entrySet().iterator(); itr.hasNext();) {
             Map.Entry entry = (Map.Entry) itr.next();
             JavaScriptContext context = (JavaScriptContext) entry.getValue();
             if (context.hasContext()) {
@@ -55,34 +62,34 @@ public class ScriptEnhanceUIViewRoot extends UIViewRoot {
     }
 
     public boolean containsScript(String scriptId) {
-        Map requestMap = FacesContext.getCurrentInstance().getExternalContext()
-                .getRequestMap();
-        return requestMap.containsKey(scriptId)
-                && scripts.containsKey(scriptId);
-    }
-
-    public void clearScripts() {
-        scripts.clear();
-    }
-
-    public void clearScript(String scriptId) {
-        scripts.remove(scriptId);
-        Map requestMap = FacesContext.getCurrentInstance().getExternalContext()
-                .getRequestMap();
-        requestMap.remove(scriptId);
+        return getScriptsMap().containsKey(scriptId);
     }
 
     public void restoreState(FacesContext context, Object state) {
         Object values[] = (Object[]) state;
         super.restoreState(context, values[0]);
-        scripts = (Map) values[1];
+        scriptsMap = (Map) values[1];
     }
 
     public Object saveState(FacesContext context) {
         Object values[] = new Object[2];
         values[0] = super.saveState(context);
-        values[1] = scripts;
+        values[1] = scriptsMap;
         return values;
+    }
+
+    protected Map getScriptsMap() {
+        DispatchScope dispatchScope = getDispatchScope();
+        Map scripts = (Map) dispatchScope.get(SCRIPTS_KEY);
+        if(scripts == null) {
+            scripts = new HashMap();
+            dispatchScope.put(SCRIPTS_KEY, scripts);
+        }
+        return scripts;
+    }
+    
+    protected DispatchScope getDispatchScope() {
+        return DispatchScopeFactory.getDispatchScope();
     }
 
 }
