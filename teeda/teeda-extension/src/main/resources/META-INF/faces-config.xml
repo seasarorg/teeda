@@ -10,7 +10,7 @@
 
 	<component>
 		<component-type>
-			org.seasar.jsf.Text
+			org.seasar.teeda.extension.Text
 		</component-type>
 		<component-class>
 			org.seasar.teeda.extension.component.UIText
@@ -83,7 +83,7 @@
 	</component>
 	<component>
 		<component-type>
-			org.seasar.jsf.HtmlInputCommaText
+			org.seasar.teeda.extension.HtmlInputCommaText
 		</component-type>
 		<component-class>
 			org.seasar.teeda.extension.component.html.THtmlInputCommaText

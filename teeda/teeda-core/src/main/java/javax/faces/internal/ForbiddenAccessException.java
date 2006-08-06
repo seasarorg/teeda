@@ -13,20 +13,19 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.core.el.impl;
+package javax.faces.internal;
 
-import javax.faces.context.FacesContext;
-
-import org.seasar.teeda.core.el.FacesResolver;
+import javax.faces.FacesException;
 
 /**
- * @author higa
- *
+ * @author shot
  */
-public class RequestScopeResolver implements FacesResolver {
+public class ForbiddenAccessException extends FacesException {
 
-    public Object resolveVariable(FacesContext context) {
-        return context.getExternalContext().getRequestMap();
+    private static final long serialVersionUID = 1L;
+
+    public ForbiddenAccessException(String message) {
+        super(message);
     }
 
 }

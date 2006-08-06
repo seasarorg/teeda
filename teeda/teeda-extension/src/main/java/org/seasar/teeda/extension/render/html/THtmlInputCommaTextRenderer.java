@@ -122,7 +122,6 @@ public class THtmlInputCommaTextRenderer extends HtmlInputTextRenderer {
         if (StringUtil.isEmpty(value)) {
             return value;
         }
-        //TODO BigDecimal only?
         try {
             return convertToFormattedValue(context, BigDecimalConversionUtil
                     .toBigDecimal(value));

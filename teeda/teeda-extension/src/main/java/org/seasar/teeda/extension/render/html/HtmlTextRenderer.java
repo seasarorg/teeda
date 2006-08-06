@@ -32,7 +32,7 @@ public class HtmlTextRenderer extends Renderer {
 
     public static final String COMPONENT_FAMILY = "javax.faces.Output";
 
-    public static final String RENDERER_TYPE = "org.seasar.jsf.Text";
+    public static final String RENDERER_TYPE = "org.seasar.teeda.extension.Text";
 
     public void encodeBegin(FacesContext facesContext, UIComponent component)
             throws IOException {

@@ -24,11 +24,11 @@ import javax.faces.context.FacesContext;
  */
 public class UIText extends UIComponentBase {
 
-    public static final String COMPONENT_TYPE = "org.seasar.jsf.Text";
+    public static final String COMPONENT_TYPE = "org.seasar.teeda.extension.Text";
 
     public static final String COMPONENT_FAMILY = "javax.faces.Output";
 
-    public static final String DEFAULT_RENDERER_TYPE = "org.seasar.jsf.Text";
+    public static final String DEFAULT_RENDERER_TYPE = "org.seasar.teeda.extension.Text";
 
     private String value;
 

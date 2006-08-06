@@ -24,11 +24,11 @@ import javax.faces.context.FacesContext;
  */
 public class THtmlInputCommaText extends HtmlInputText {
 
-    public static final String COMPONENT_TYPE = "org.seasar.jsf.HtmlInputCommaText";
+    public static final String COMPONENT_TYPE = "org.seasar.teeda.extension.HtmlInputCommaText";
 
     public static final String COMPONENT_FAMILY = "javax.faces.Input";
 
-    public static final String DEFAULT_RENDERER_TYPE = "org.seasar.jsf.HtmlInputCommaText";
+    public static final String DEFAULT_RENDERER_TYPE = "org.seasar.teeda.extension.HtmlInputCommaText";
 
     private String fraction;
 

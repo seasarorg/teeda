@@ -19,8 +19,10 @@ import java.io.IOException;
 
 import javax.faces.FacesException;
 import javax.faces.FactoryFinder;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.FacesContextFactory;
+import javax.faces.internal.ForbiddenAccessException;
 import javax.faces.internal.WebAppUtil;
 import javax.faces.lifecycle.Lifecycle;
 import javax.faces.lifecycle.LifecycleFactory;
@@ -75,6 +77,11 @@ public final class FacesServlet implements Servlet {
         ServletContext servletContext = config.getServletContext();
         FacesContext context = facesContextFactory.getFacesContext(
                 servletContext, request, response, lifecycle);
+        ExternalContext externalContext = context.getExternalContext();
+        String requestPathInfo = externalContext.getRequestPathInfo();
+        if(requestPathInfo != null && requestPathInfo.startsWith("/WEB-INF")) {
+            throw new ForbiddenAccessException("Forbidden access to " + requestPathInfo);
+        }
         try {
             lifecycle.execute(context);
             lifecycle.render(context);

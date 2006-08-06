@@ -28,8 +28,7 @@ import org.seasar.teeda.extension.component.html.THtmlInputCommaText;
 public class THtmlGridInputCommaTextRenderer extends
         THtmlInputCommaTextRenderer {
 
-    //public static final String RENDERER_TYPE = "org.seasar.teeda.extension.GridInputCommaText";
-    public static final String RENDERER_TYPE = "org.seasar.jsf.HtmlGridInputCommaText";
+    public static final String RENDERER_TYPE = "org.seasar.teeda.extension.HtmlGridInputCommaText";
 
     private THtmlGridInputTextRenderer gridInputTextRenderer = new THtmlGridInputTextRenderer();
 
