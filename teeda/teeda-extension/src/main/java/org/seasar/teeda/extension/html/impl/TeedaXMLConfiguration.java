@@ -27,9 +27,10 @@ public class TeedaXMLConfiguration extends XML11Configuration {
 
     //TODO testing
     public TeedaXMLConfiguration() {
-        fNamespaceScanner = new TeedaXMLDocumentScannerImpl();
-        fProperties.put(DOCUMENT_SCANNER, fNamespaceScanner);
-        addComponent((XMLComponent) fNamespaceScanner);
+        TeedaXMLDocumentScannerImpl scanner = new TeedaXMLDocumentScannerImpl();
+        setProperty(DOCUMENT_SCANNER, scanner);
+        addComponent((XMLComponent) scanner);
+        fNamespaceScanner = scanner;
     }
 
     protected void configurePipeline() {
