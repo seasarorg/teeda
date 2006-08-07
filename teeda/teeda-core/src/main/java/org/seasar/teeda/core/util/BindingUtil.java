@@ -86,6 +86,16 @@ public class BindingUtil {
         return vb.getValue(context);
     }
 
+    public static String resolveBindingNoException(String value) {
+        Object ret = null;
+        try {
+            ret = resolveBinding(value);
+        } catch (Exception ignore) {
+            return null;
+        }
+        return (ret != null) ? ret.toString() : null;
+    }
+
     public static Object getBindingValue(UIComponent component,
             String propertyName) {
         ValueBinding binding = component.getValueBinding(propertyName);

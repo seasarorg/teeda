@@ -27,7 +27,7 @@ public interface ExtensionConstants {
 
     String GROUPING_SEPARATOR_ATTR = "groupingSeparator";
 
-    String FRACTION_SEPARATOR_ATTR = "fractioonSeparator";
+    String FRACTION_SEPARATOR_ATTR = "fractionSeparator";
 
     String VALIDATOR_STACK_ATTR = "javax.faces.webapp.VALIDATOR_STORE_ATTR";
 
@@ -44,6 +44,12 @@ public interface ExtensionConstants {
     String MESSAGE_SUFFIX = "Message";
 
     String FORM_SUFFIX = "Form";
+
+    String FRACTION_SUFFIX = "Fraction";
+
+    String GROUPING_SEPARATOR_SUFFIX = "GroupingSeparator";
+
+    String FRACTION_SEPARATOR_SUFFIX = "FractionSeparator";
 
     String DO_PREFIX = "do";
 

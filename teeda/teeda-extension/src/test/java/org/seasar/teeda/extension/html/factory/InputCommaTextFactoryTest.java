@@ -61,7 +61,7 @@ public class InputCommaTextFactoryTest extends TeedaTestCase {
         props.put("type", "text");
         props.put("class", "T_Currency");
         ElementNode elementNode = new ElementNodeImpl("input", props);
-        PageDesc pageDesc = new PageDescImpl(FooPage.class, "fooPage");
+        PageDesc pageDesc = new PageDescImpl(AaaPage.class, "aaaPage");
         ActionDesc actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
 
         // ## Act ##
@@ -70,6 +70,9 @@ public class InputCommaTextFactoryTest extends TeedaTestCase {
         // ## Assert ##
         assertNotNull("1", processor);
         assertEquals("2", TInputCommaTextTag.class, processor.getTagClass());
-        assertEquals("3", "#{fooPage.aaa}", processor.getProperty("value"));
+        assertEquals("3", "#{aaaPage.aaa}", processor.getProperty("value"));
+        assertEquals("4", "#{aaaPage.aaaFraction}", processor.getProperty("fraction"));
+        assertEquals("5", "#{aaaPage.aaaFractionSeparator}", processor.getProperty("fractionSeparator"));
+        assertEquals("6", "#{aaaPage.aaaGroupingSeparator}", processor.getProperty("groupingSeparator"));
     }
 }

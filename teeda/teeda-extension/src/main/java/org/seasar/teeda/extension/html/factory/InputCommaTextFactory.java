@@ -15,6 +15,8 @@
  */
 package org.seasar.teeda.extension.html.factory;
 
+import java.util.Map;
+
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.html.ActionDesc;
@@ -35,6 +37,20 @@ public class InputCommaTextFactory extends InputTextFactory {
         return super.isMatch(elementNode, pageDesc, actionDesc)
                 && ExtensionConstants.TEEDA_CURRENY_STYLE_CLASS
                         .equalsIgnoreCase(classProperty);
+    }
+
+    //TODO not this way. should get value from Page(from to do so, PageDesc should give init value.)
+    protected void customizeProperties(Map properties, ElementNode elementNode,
+            PageDesc pageDesc, ActionDesc actionDesc) {
+        super
+                .customizeProperties(properties, elementNode, pageDesc,
+                        actionDesc);
+        properties.put(ExtensionConstants.FRACTION_ATTR, getBindingExpression(pageDesc
+                .getPageName(), elementNode.getId() + ExtensionConstants.FRACTION_SUFFIX));
+        properties.put(ExtensionConstants.FRACTION_SEPARATOR_ATTR, getBindingExpression(pageDesc
+                .getPageName(), elementNode.getId() + ExtensionConstants.FRACTION_SEPARATOR_SUFFIX));
+        properties.put(ExtensionConstants.GROUPING_SEPARATOR_ATTR, getBindingExpression(pageDesc
+                .getPageName(), elementNode.getId() + ExtensionConstants.GROUPING_SEPARATOR_SUFFIX));
     }
 
     protected String getTagName() {

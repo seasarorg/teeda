@@ -18,6 +18,7 @@ package org.seasar.teeda.extension.taglib;
 import javax.faces.component.UIComponent;
 
 import org.seasar.teeda.core.taglib.html.InputTextTag;
+import org.seasar.teeda.core.util.BindingUtil;
 import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.component.html.THtmlInputCommaText;
 
@@ -76,14 +77,23 @@ public class TInputCommaTextTag extends InputTextTag {
 
     protected void setProperties(UIComponent component) {
         super.setProperties(component);
-        setComponentProperty(component, ExtensionConstants.FRACTION_ATTR,
-                getFraction());
+        String f = getFraction();
+        if (isValueReference(f)) {
+            f = BindingUtil.resolveBindingNoException(f);
+        }
+        setComponentProperty(component, ExtensionConstants.FRACTION_ATTR, f);
+        String gs = getGroupingSeparator();
+        if (isValueReference(gs)) {
+            gs = BindingUtil.resolveBindingNoException(gs);
+        }
         setComponentProperty(component,
-                ExtensionConstants.GROUPING_SEPARATOR_ATTR,
-                getGroupingSeparator());
+                ExtensionConstants.GROUPING_SEPARATOR_ATTR, gs);
+        String fs = getFractionSeparator();
+        if (isValueReference(fs)) {
+            fs = BindingUtil.resolveBindingNoException(fs);
+        }
         setComponentProperty(component,
-                ExtensionConstants.FRACTION_SEPARATOR_ATTR,
-                getFractionSeparator());
+                ExtensionConstants.FRACTION_SEPARATOR_ATTR, fs);
     }
 
 }
