@@ -7,12 +7,18 @@
 	</component>
 	<component name="commandAspectCustomizer" class="org.seasar.framework.container.autoregister.AspectCustomizer">
 		<property name="interceptorName">"aop.classLoaderAwareTraceInterceptor"</property>
-		<property name="interceptorName">"aop.actionSupportInterceptor"</property>
+		<property name="pointcut">"do.*, initialize"</property>
+	</component>
+	<component name="actionSupportAspectCustomizer" class="org.seasar.framework.container.autoregister.AspectCustomizer">
+		<property name="interceptorName">"app_aop.actionSupportInterceptor"</property>
 		<property name="pointcut">"do.*, initialize"</property>
 	</component>
 	<component name="actionCustomizer" class="org.seasar.framework.container.autoregister.CustomizerChain">
 		<initMethod name="addCustomizer">
 			<arg>commandAspectCustomizer</arg>
+		</initMethod>
+		<initMethod name="addCustomizer">
+			<arg>actionSupportAspectCustomizer</arg>
 		</initMethod>
 	</component>
 	<component name="daoCustomizer" class="org.seasar.framework.container.autoregister.CustomizerChain">
