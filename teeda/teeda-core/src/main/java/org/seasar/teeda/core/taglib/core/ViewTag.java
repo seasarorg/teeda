@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -25,6 +25,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+import javax.faces.internal.PageContextUtil;
 import javax.faces.internal.ValueBindingUtil;
 import javax.faces.webapp.UIComponentBodyTag;
 import javax.servlet.http.HttpSession;
@@ -35,6 +36,7 @@ import javax.servlet.jsp.tagext.BodyContent;
 import org.seasar.framework.util.AssertionUtil;
 import org.seasar.framework.util.LocaleUtil;
 import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.core.util.ContentTypeUtil;
 
 /**
  * @author yone
@@ -71,9 +73,11 @@ public class ViewTag extends UIComponentBodyTag {
         rc = super.doStartTag();
         FacesContext context = FacesContext.getCurrentInstance();
         AssertionUtil.assertNotNull("FacesContext", context);
-
+        String encoding = PageContextUtil.getCharacterEncoding(pageContext);
         pageContext.getResponse().setLocale(context.getViewRoot().getLocale());
-
+        pageContext.getResponse().setContentType(
+                ContentTypeUtil.getDefaultContentType() + "; charset="
+                        + encoding);
         ResponseWriter writer = context.getResponseWriter();
         AssertionUtil.assertNotNull("ResponseWriter", writer);
         try {

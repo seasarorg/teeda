@@ -75,4 +75,7 @@ public class PageContextUtil {
                 .setAttribute(InternalConstants.CURRENT_VIEW_ROOT, component);
     }
 
+    public static String getCharacterEncoding(PageContext pageContext) {
+        return pageContext.getRequest().getCharacterEncoding();
+    }
 }

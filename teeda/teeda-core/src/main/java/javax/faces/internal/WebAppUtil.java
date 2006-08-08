@@ -34,8 +34,6 @@ import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.jsp.PageContext;
 
-import org.seasar.teeda.core.JsfConstants;
-
 /**
  * @author shot
  *
@@ -84,8 +82,8 @@ public class WebAppUtil {
 
     public static void setCreatedFacetNames(UIComponent component,
             List createdComponents) {
-        component.getAttributes().put(InternalConstants.JSP_CREATED_FACET_NAMES,
-                createdComponents);
+        component.getAttributes().put(
+                InternalConstants.JSP_CREATED_FACET_NAMES, createdComponents);
     }
 
     public static void removeCreatedFacetNames(UIComponent component) {
@@ -102,17 +100,13 @@ public class WebAppUtil {
 
         PageContextOutWriter writer = new PageContextOutWriter(pageContext);
         String encoding = pageContext.getRequest().getCharacterEncoding();
-
         FacesContext context = FacesContext.getCurrentInstance();
-        String contentTypeList = getContentType(context);
-        if (contentTypeList == null) {
-            contentTypeList = JsfConstants.HTML_CONTENT_TYPE;
-        }
-        return renderKit
-                .createResponseWriter(writer, contentTypeList, encoding);
+        String acceptContentTypes = getAcceptHeader(context);
+        return renderKit.createResponseWriter(writer, acceptContentTypes,
+                encoding);
     }
 
-    private static String getContentType(FacesContext context) {
+    private static String getAcceptHeader(FacesContext context) {
         return (String) context.getExternalContext().getRequestHeaderMap().get(
                 "Accept");
     }

@@ -28,6 +28,16 @@ public class AaaPage {
 
     private String aaaGroupingSeparator = ",";
 
+    private boolean bbb;
+
+    public boolean isBbb() {
+        return bbb;
+    }
+
+    public void setBbb(boolean bbb) {
+        this.bbb = bbb;
+    }
+
     public String getAaaGroupingSeparator() {
         return aaaGroupingSeparator;
     }

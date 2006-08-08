@@ -30,15 +30,13 @@ import org.seasar.teeda.core.application.ComponentLookupStrategy;
 import org.seasar.teeda.core.context.html.HtmlResponseWriter;
 import org.seasar.teeda.core.render.AbstractRenderKit;
 import org.seasar.teeda.core.render.html.support.HtmlRenderKitKeyGenerateUtil;
-import org.seasar.teeda.core.util.HtmlRenderKitUtil;
+import org.seasar.teeda.core.util.ContentTypeUtil;
 
 /**
  * @author shot
  * @author manhole
  */
 public class HtmlRenderKitImpl extends AbstractRenderKit {
-
-    private static String DEFAULT_CONTENTTYPE = "text/html";
 
     private static final String RENDERER_SUFFIX = "_RENDERER_FACES_CONFIG";
 
@@ -124,10 +122,7 @@ public class HtmlRenderKitImpl extends AbstractRenderKit {
             String contentTypeList, String characterEncoding) {
         HtmlResponseWriter htmlResponseWriter = new HtmlResponseWriter();
         htmlResponseWriter.setWriter(writer);
-        String contentType = HtmlRenderKitUtil.getContentType(contentTypeList);
-        if (contentType == null) {
-            contentType = DEFAULT_CONTENTTYPE;
-        }
+        String contentType = ContentTypeUtil.getContentType(contentTypeList);
         htmlResponseWriter.setContentType(contentType);
         htmlResponseWriter.setCharacterEncoding(characterEncoding);
         return htmlResponseWriter;
