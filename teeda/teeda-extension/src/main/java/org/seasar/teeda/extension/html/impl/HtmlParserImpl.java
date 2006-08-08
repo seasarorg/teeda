@@ -29,6 +29,7 @@ import org.apache.xerces.parsers.SAXParser;
 import org.seasar.framework.exception.IORuntimeException;
 import org.seasar.framework.exception.SAXRuntimeException;
 import org.seasar.framework.util.InputStreamReaderUtil;
+import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.extension.html.HtmlNode;
 import org.seasar.teeda.extension.html.HtmlParser;
 import org.xml.sax.InputSource;
@@ -45,7 +46,7 @@ public class HtmlParserImpl implements HtmlParser {
 
     private List elementNodeTagName = new ArrayList();
 
-    private String encoding = "UTF-8";
+    private String encoding = JsfConstants.DEFAULT_ENCODING;
 
     public HtmlNode parse(InputStream is) {
         try {

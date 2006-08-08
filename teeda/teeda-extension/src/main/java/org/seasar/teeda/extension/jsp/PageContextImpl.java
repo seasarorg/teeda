@@ -75,15 +75,12 @@ public class PageContextImpl extends PageContext {
 
     private Stack bodyContentStack = new Stack();
 
-    private String encoding;
-
     public PageContextImpl() {
     }
 
     public void initialize(Servlet servlet, ServletRequest request,
-            ServletResponse response, String errorPageURL, String encoding)
+            ServletResponse response, String errorPageURL)
             throws IllegalStateException, IllegalArgumentException, IOException {
-        this.encoding = encoding;
         initialize(servlet, request, response, errorPageURL, true,
                 JspConstants.DEFAULT_BUFFER_SIZE, true);
     }
@@ -104,7 +101,8 @@ public class PageContextImpl extends PageContext {
         if (request instanceof HttpServletRequest && needsSession) {
             this.session = ((HttpServletRequest) request).getSession();
         }
-        out = new JspWriterImpl(response, bufferSize, autoFlush, encoding);
+        out = new JspWriterImpl(response, bufferSize, autoFlush, request
+                .getCharacterEncoding());
         setAttribute(OUT, out);
         setAttribute(REQUEST, request);
         setAttribute(RESPONSE, response);
@@ -140,7 +138,6 @@ public class PageContextImpl extends PageContext {
         session = null;
         out = null;
         attributes.clear();
-        encoding = null;
     }
 
     public Object getAttribute(String name) {

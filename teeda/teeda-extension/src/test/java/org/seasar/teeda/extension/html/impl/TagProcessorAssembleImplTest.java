@@ -366,6 +366,7 @@ public class TagProcessorAssembleImplTest extends TeedaExtensionTestCase {
     protected HtmlDescCacheImpl createHtmlDescCacheImpl() {
         HtmlDescCacheImpl cache = new HtmlDescCacheImpl();
         cache.setServletContext(getServletContext());
+        cache.setContainer(getContainer());
         HtmlParserImpl htmlParser = new HtmlParserImpl();
         cache.setHtmlParser(htmlParser);
         return cache;

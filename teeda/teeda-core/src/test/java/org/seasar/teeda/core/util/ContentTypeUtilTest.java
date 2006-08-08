@@ -63,4 +63,15 @@ public class ContentTypeUtilTest extends TeedaTestCase {
                 .getContentType("hoge, */*, foo"));
     }
 
+    public void testGetContentType2() throws Exception {
+        assertEquals("text/html", ContentTypeUtil
+                .getContentType("application/xml, text/html"));
+        assertEquals(
+                "text/html",
+                ContentTypeUtil
+                        .getContentType("application/xhtml+xml, application/xml,text/html"));
+        assertEquals("text/html", ContentTypeUtil.getContentType(" text/html"));
+        assertNotSame("text/html", ContentTypeUtil
+                .getContentType("application/xml"));
+    }
 }

@@ -22,9 +22,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 
+import org.seasar.framework.container.S2Container;
 import org.seasar.framework.util.FileInputStreamUtil;
 import org.seasar.framework.util.InputStreamUtil;
+import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.extension.html.HtmlDesc;
 import org.seasar.teeda.extension.html.HtmlDescCache;
 import org.seasar.teeda.extension.html.HtmlNode;
@@ -41,6 +44,16 @@ public class HtmlDescCacheImpl implements HtmlDescCache {
     private ServletContext servletContext;
 
     private HtmlParser htmlParser;
+
+    private S2Container container;
+
+    public S2Container getContainer() {
+        return container;
+    }
+
+    public void setContainer(S2Container container) {
+        this.container = container;
+    }
 
     public void setServletContext(ServletContext servletContext) {
         this.servletContext = servletContext;
@@ -82,6 +95,13 @@ public class HtmlDescCacheImpl implements HtmlDescCache {
 
     private HtmlDesc createHtmlDesc(InputStream is, File file) {
         HtmlNode htmlNode = null;
+        HttpServletRequest request = (HttpServletRequest) container.getRoot()
+                .getExternalContext().getRequest();
+        String encoding = request.getCharacterEncoding();
+        if (encoding == null) {
+            encoding = JsfConstants.DEFAULT_ENCODING;
+        }
+        htmlParser.setEncoding(encoding);
         try {
             htmlNode = htmlParser.parse(is);
         } finally {

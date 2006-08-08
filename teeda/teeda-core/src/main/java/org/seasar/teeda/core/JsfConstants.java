@@ -74,7 +74,7 @@ public interface JsfConstants {
     String SCOPE_REQUEST = "request";
 
     String SCOPE_DISPATCH = "teeda_dispatch_scope";
-    
+
     // -- value --
 
     String BUTTON_VALUE = "button";
@@ -462,5 +462,7 @@ public interface JsfConstants {
     String COMPONENT_FAMILY = "COMPONENT_FAMILY";
 
     String RENDERER_TYPE = "RENDERER_TYPE";
+
+    String DEFAULT_ENCODING = "UTF-8";
 
 }

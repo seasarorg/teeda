@@ -27,6 +27,7 @@ import org.apache.xerces.xni.XMLString;
 import org.apache.xerces.xni.XNIException;
 import org.apache.xerces.xni.parser.XMLDocumentFilter;
 import org.apache.xerces.xni.parser.XMLDocumentSource;
+import org.seasar.teeda.core.JsfConstants;
 
 /**
  * @author shot
@@ -38,7 +39,7 @@ public class TeedaXMLDocumentFilterImpl implements XMLDocumentFilter {
 
     private XMLDocumentHandler orgHandler;
 
-    private String xmlEncoding = "UTF-8";
+    private String xmlEncoding = JsfConstants.DEFAULT_ENCODING;
 
     public TeedaXMLDocumentFilterImpl() {
     }

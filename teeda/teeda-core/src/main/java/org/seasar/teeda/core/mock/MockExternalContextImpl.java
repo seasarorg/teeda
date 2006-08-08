@@ -177,7 +177,7 @@ public class MockExternalContextImpl extends MockExternalContext {
     }
 
     public Map getRequestHeaderMap() {
-        throw new UnsupportedOperationException();
+        return Collections.EMPTY_MAP;
     }
 
     public Map getRequestHeaderValuesMap() {

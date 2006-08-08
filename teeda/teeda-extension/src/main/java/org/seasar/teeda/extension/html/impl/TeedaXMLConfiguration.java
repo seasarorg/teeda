@@ -25,7 +25,6 @@ import org.apache.xerces.xni.parser.XMLComponent;
  */
 public class TeedaXMLConfiguration extends XML11Configuration {
 
-    //TODO testing
     public TeedaXMLConfiguration() {
         TeedaXMLDocumentScannerImpl scanner = new TeedaXMLDocumentScannerImpl();
         setProperty(DOCUMENT_SCANNER, scanner);

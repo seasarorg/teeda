@@ -106,7 +106,7 @@ public class WebAppUtil {
                 encoding);
     }
 
-    private static String getAcceptHeader(FacesContext context) {
+    public static String getAcceptHeader(FacesContext context) {
         return (String) context.getExternalContext().getRequestHeaderMap().get(
                 "Accept");
     }

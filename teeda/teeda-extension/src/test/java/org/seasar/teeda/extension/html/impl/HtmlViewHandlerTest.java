@@ -93,6 +93,7 @@ public class HtmlViewHandlerTest extends TeedaExtensionTestCase {
 
         HtmlDescCacheImpl htmlDescCache = new HtmlDescCacheImpl();
         htmlDescCache.setServletContext(getServletContext());
+        htmlDescCache.setContainer(getContainer());
         HtmlParserImpl parser = new HtmlParserImpl();
         htmlDescCache.setHtmlParser(parser);
 

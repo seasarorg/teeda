@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -26,6 +26,7 @@ import javax.faces.context.ResponseWriter;
 
 import org.seasar.framework.util.ArrayUtil;
 import org.seasar.framework.util.AssertionUtil;
+import org.seasar.teeda.core.JsfConstants;
 
 /**
  * @author manhole
@@ -34,8 +35,6 @@ import org.seasar.framework.util.AssertionUtil;
  */
 // TODO handle "javascript: xxxx" attribute (really necessary?)
 public class HtmlResponseWriter extends ResponseWriter {
-
-    private static final String DEFAULT_CHARACTER_ENCODING = "UTF-8";
 
     private static List EMPTY_ELEMENTS = Arrays
             .asList(new String[] { "area", "br", "base", "col", "hr", "img",
@@ -56,7 +55,7 @@ public class HtmlResponseWriter extends ResponseWriter {
 
     private String contentType;
 
-    private String characterEncoding = DEFAULT_CHARACTER_ENCODING;
+    private String characterEncoding;
 
     private boolean startTagOpening;
 
@@ -264,7 +263,7 @@ public class HtmlResponseWriter extends ResponseWriter {
 
     public String getCharacterEncoding() {
         if (characterEncoding == null) {
-            characterEncoding = DEFAULT_CHARACTER_ENCODING;
+            characterEncoding = JsfConstants.DEFAULT_ENCODING;
         }
         return characterEncoding;
     }

@@ -34,10 +34,12 @@ public class ContentTypeUtil {
         String[] strs = StringUtil.split(contentTypeList, ",");
         String[] contentTypes = removeSemiColon(strs);
         for (int i = 0; i < contentTypes.length; i++) {
-            String type = contentTypes[i].trim();
-            if (isHtmlContentType(type)) {
+            if (isHtmlContentType(contentTypes[i].trim())) {
                 return JsfConstants.HTML_CONTENT_TYPE;
-            } else if (isXmlContentType(type)) {
+            }
+        }
+        for (int i = 0; i < contentTypes.length; i++) {
+            if (isXmlContentType(contentTypes[i].trim())) {
                 return JsfConstants.XHTML_CONTENT_TYPE;
             }
         }

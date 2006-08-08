@@ -68,8 +68,6 @@ public class HtmlViewHandler extends ViewHandlerImpl {
 
     private PagePersistence pagePersistence;
 
-    private String encoding = "UTF-8";
-
     public void setTagProcessorCache(TagProcessorCache tagProcessorCache) {
         this.tagProcessorCache = tagProcessorCache;
     }
@@ -94,7 +92,6 @@ public class HtmlViewHandler extends ViewHandlerImpl {
 
     public void renderView(FacesContext context, UIViewRoot viewRoot)
             throws IOException {
-
         ExternalContext externalContext = context.getExternalContext();
         String path = ExternalContextUtil.getViewId(externalContext);
         if (path.equals(viewRoot.getViewId())) {
@@ -111,12 +108,8 @@ public class HtmlViewHandler extends ViewHandlerImpl {
                 .getRequest(externalContext);
         HttpServletResponse response = ServletExternalContextUtil
                 .getResponse(externalContext);
-
-        //TODO handle encoding.if Servlet2.3 encode from var. if Servlet2.4 or later, encode from response.
-        //response.setCharacterEncoding(encoding);
         PageContext pageContext = createPageContext(request, response);
-
-        setupResponseWriter(pageContext, null, encoding);
+        setupResponseWriter(pageContext, null, request.getCharacterEncoding());
         if (invokeInitialize(context, path) != null) {
             return;
         }
@@ -181,8 +174,7 @@ public class HtmlViewHandler extends ViewHandlerImpl {
     protected PageContext createPageContext(HttpServletRequest request,
             HttpServletResponse response) throws IOException {
         PageContextImpl pageContext = new PageContextImpl();
-        pageContext.initialize(getServlet(), request, response, null,
-                getEncoding());
+        pageContext.initialize(getServlet(), request, response, null);
         return pageContext;
     }
 
@@ -200,14 +192,6 @@ public class HtmlViewHandler extends ViewHandlerImpl {
     protected RenderKitFactory getRenderKitFactory() {
         return (RenderKitFactory) FactoryFinder
                 .getFactory(FactoryFinder.RENDER_KIT_FACTORY);
-    }
-
-    public String getEncoding() {
-        return encoding;
-    }
-
-    public void setEncoding(String encoding) {
-        this.encoding = encoding;
     }
 
 }

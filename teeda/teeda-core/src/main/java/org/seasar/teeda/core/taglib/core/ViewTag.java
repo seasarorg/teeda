@@ -27,6 +27,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.internal.PageContextUtil;
 import javax.faces.internal.ValueBindingUtil;
+import javax.faces.internal.WebAppUtil;
 import javax.faces.webapp.UIComponentBodyTag;
 import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.JspException;
@@ -75,9 +76,10 @@ public class ViewTag extends UIComponentBodyTag {
         AssertionUtil.assertNotNull("FacesContext", context);
         String encoding = PageContextUtil.getCharacterEncoding(pageContext);
         pageContext.getResponse().setLocale(context.getViewRoot().getLocale());
+        String acceptContentTypes = WebAppUtil.getAcceptHeader(context);
+        String contentType = ContentTypeUtil.getContentType(acceptContentTypes);
         pageContext.getResponse().setContentType(
-                ContentTypeUtil.getDefaultContentType() + "; charset="
-                        + encoding);
+                contentType + "; charset=" + encoding);
         ResponseWriter writer = context.getResponseWriter();
         AssertionUtil.assertNotNull("ResponseWriter", writer);
         try {

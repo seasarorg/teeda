@@ -52,6 +52,7 @@ public class TagProcessorCacheImplTest extends S2FrameworkTestCase {
         HtmlParserImpl htmlParser = new HtmlParserImpl();
         htmlDescCache.setHtmlParser(htmlParser);
         htmlDescCache.setServletContext(getServletContext());
+        htmlDescCache.setContainer(getContainer());
 
         TagProcessorCacheImpl tagProcessorCache = new TagProcessorCacheImpl();
         tagProcessorCache.setHtmlDescCache(htmlDescCache);

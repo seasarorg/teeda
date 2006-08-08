@@ -33,6 +33,7 @@ public class HtmlDescCacheImplTest extends S2FrameworkTestCase {
         HtmlParserImpl htmlParser = new HtmlParserImpl();
         cache.setHtmlParser(htmlParser);
         cache.setServletContext(getServletContext());
+        cache.setContainer(getContainer());
         HtmlDesc htmlDesc = cache.createHtmlDesc(path);
         assertNotNull("1", htmlDesc);
         assertFalse("2", htmlDesc.isModified());
