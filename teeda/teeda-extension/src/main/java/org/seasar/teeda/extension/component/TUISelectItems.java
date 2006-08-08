@@ -117,6 +117,7 @@ public class TUISelectItems extends UISelectItems {
                         si.setLabel(itemLabelValue.toString());
                     }
                     list.add(si);
+                    super.setValue(value);
                 }
             }
         } else if (value instanceof Map) {
