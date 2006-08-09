@@ -71,7 +71,7 @@ public class ApplicationImpl extends Application implements
         ConfigurationSupport {
 
     private static Map wellKnownConverters = new HashMap();
-    
+
     private ActionListener listener = null;
 
     private Locale locale = null;
@@ -113,14 +113,14 @@ public class ApplicationImpl extends Application implements
     static {
         registerWellKnownConverters();
     }
-    
+
     public ApplicationImpl() {
     }
-    
+
     protected static Converter getWellKnownConverter(Class clazz) {
         return (Converter) wellKnownConverters.get(clazz);
     }
-    
+
     protected static void registerWellKnownConverters() {
         Converter converter = new BooleanConverter();
         wellKnownConverters.put(Boolean.class, converter);
@@ -150,7 +150,7 @@ public class ApplicationImpl extends Application implements
         wellKnownConverters.put(Date.class, converter);
         converter = new TimestampConverter();
         wellKnownConverters.put(Timestamp.class, converter);
-        
+
     }
 
     public ActionListener getActionListener() {
@@ -501,13 +501,11 @@ public class ApplicationImpl extends Application implements
         return vbFactory.createValueBinding(this, ref);
     }
 
-    public void setValueBindingFactory(
-            ValueBindingFactory vbContextFactory) {
+    public void setValueBindingFactory(ValueBindingFactory vbContextFactory) {
         this.vbFactory = vbContextFactory;
     }
 
-    public void setMethodBindingFactory(
-            MethodBindingFactory mbContextFactory) {
+    public void setMethodBindingFactory(MethodBindingFactory mbContextFactory) {
         this.mbFactory = mbContextFactory;
     }
 
