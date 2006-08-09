@@ -15,9 +15,11 @@
  */
 package org.seasar.teeda.core.application;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -31,7 +33,16 @@ import javax.faces.application.StateManager;
 import javax.faces.application.ViewHandler;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.convert.BooleanConverter;
+import javax.faces.convert.ByteConverter;
+import javax.faces.convert.CharacterConverter;
 import javax.faces.convert.Converter;
+import javax.faces.convert.DateTimeConverter;
+import javax.faces.convert.DoubleConverter;
+import javax.faces.convert.FloatConverter;
+import javax.faces.convert.IntegerConverter;
+import javax.faces.convert.LongConverter;
+import javax.faces.convert.ShortConverter;
 import javax.faces.el.MethodBinding;
 import javax.faces.el.PropertyResolver;
 import javax.faces.el.ReferenceSyntaxException;
@@ -42,6 +53,7 @@ import javax.faces.validator.Validator;
 
 import org.seasar.framework.util.AssertionUtil;
 import org.seasar.framework.util.StringUtil;
+import org.seasar.teeda.core.convert.TimestampConverter;
 import org.seasar.teeda.core.el.MethodBindingFactory;
 import org.seasar.teeda.core.el.ValueBindingFactory;
 import org.seasar.teeda.core.exception.ConverterInstantiateFailureException;
@@ -58,6 +70,8 @@ import org.seasar.teeda.core.util.PropertyUtil;
 public class ApplicationImpl extends Application implements
         ConfigurationSupport {
 
+    private static Map wellKnownConverters = new HashMap();
+    
     private ActionListener listener = null;
 
     private Locale locale = null;
@@ -96,7 +110,47 @@ public class ApplicationImpl extends Application implements
 
     private ComponentLookupStrategy componentLookupStrategy;
 
+    static {
+        registerWellKnownConverters();
+    }
+    
     public ApplicationImpl() {
+    }
+    
+    protected static Converter getWellKnownConverter(Class clazz) {
+        return (Converter) wellKnownConverters.get(clazz);
+    }
+    
+    protected static void registerWellKnownConverters() {
+        Converter converter = new BooleanConverter();
+        wellKnownConverters.put(Boolean.class, converter);
+        wellKnownConverters.put(boolean.class, converter);
+        converter = new ByteConverter();
+        wellKnownConverters.put(Byte.class, converter);
+        wellKnownConverters.put(byte.class, converter);
+        converter = new ShortConverter();
+        wellKnownConverters.put(Short.class, converter);
+        wellKnownConverters.put(short.class, converter);
+        converter = new IntegerConverter();
+        wellKnownConverters.put(Integer.class, converter);
+        wellKnownConverters.put(int.class, converter);
+        converter = new LongConverter();
+        wellKnownConverters.put(Long.class, converter);
+        wellKnownConverters.put(long.class, converter);
+        converter = new FloatConverter();
+        wellKnownConverters.put(Float.class, converter);
+        wellKnownConverters.put(float.class, converter);
+        converter = new DoubleConverter();
+        wellKnownConverters.put(Double.class, converter);
+        wellKnownConverters.put(double.class, converter);
+        converter = new CharacterConverter();
+        wellKnownConverters.put(Character.class, converter);
+        wellKnownConverters.put(char.class, converter);
+        converter = new DateTimeConverter();
+        wellKnownConverters.put(Date.class, converter);
+        converter = new TimestampConverter();
+        wellKnownConverters.put(Timestamp.class, converter);
+        
     }
 
     public ActionListener getActionListener() {
@@ -311,7 +365,11 @@ public class ApplicationImpl extends Application implements
     }
 
     private Converter doCreateConverterByTargetClass(Class targetClass) {
-        Converter converter = createConverterByTargetClass(targetClass);
+        Converter converter = getWellKnownConverter(targetClass);
+        if (converter != null) {
+            return converter;
+        }
+        converter = createConverterByTargetClass(targetClass);
         if (converter == null) {
             converter = createConverterByInterface(targetClass);
         }

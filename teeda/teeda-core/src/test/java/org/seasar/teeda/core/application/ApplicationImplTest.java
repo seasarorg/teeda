@@ -21,7 +21,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
-import javax.faces.convert.DateTimeConverter;
+import javax.faces.convert.IntegerConverter;
 import javax.faces.el.ValueBinding;
 import javax.faces.validator.Validator;
 
@@ -183,11 +183,9 @@ public class ApplicationImplTest extends TeedaTestCase {
 
     public void testCreateCoverterForPrimitive() {
         ApplicationImpl app = createApplication();
-        app.addConverter(Integer.class,
-                "org.seasar.teeda.core.mock.MockConverter");
         Converter c = app.createConverter(Integer.TYPE);
         assertNotNull(c);
-        assertTrue(c instanceof MockConverter);
+        assertTrue(c instanceof IntegerConverter);
     }
 
     public void testAddValidator1() {
@@ -234,15 +232,19 @@ public class ApplicationImplTest extends TeedaTestCase {
         assertEquals(3, ((HogeConverter) c).getNum());
     }
 
-    public void testCreateConverter_notCreatedFromDI() throws Exception {
-        // ## Arrange ##
-        ComponentDef componentDef = new ComponentDefImpl(
-                DateTimeConverter.class);
-        componentDef.setComponentName("java.util.Date");
-        getContainer().register(componentDef);
-        ApplicationImpl app = createApplication();
-        // ## Act & Assert ##
-        assertNull(app.createConverter(Date.class));
+//    public void testCreateConverter_notCreatedFromDI() throws Exception {
+//        // ## Arrange ##
+//        ComponentDef componentDef = new ComponentDefImpl(
+//                DateTimeConverter.class);
+//        componentDef.setComponentName("java.util.Date");
+//        getContainer().register(componentDef);
+//        ApplicationImpl app = createApplication();
+//        // ## Act & Assert ##
+//        assertNull(app.createConverter(Date.class));
+//    }
+    
+    public void testGetWellKnownConverter() throws Exception {
+        assertEquals(IntegerConverter.class, ApplicationImpl.getWellKnownConverter(int.class).getClass());
     }
 
     public void testCreateValueBinding() throws Exception {
@@ -284,10 +286,10 @@ public class ApplicationImplTest extends TeedaTestCase {
 
     public void testCreateConverter_duplicateConverter1() throws Exception {
         ApplicationImpl app = createApplication();
-        app.addConverter(Date.class, A1Converter.class.getName());
-        app.addConverter(Date.class, A2Converter.class.getName());
+        app.addConverter(getClass(), A1Converter.class.getName());
+        app.addConverter(getClass(), A2Converter.class.getName());
 
-        Converter c = app.createConverter(Date.class);
+        Converter c = app.createConverter(getClass());
         assertNotNull(c);
         assertTrue(c instanceof A1Converter);
     }
@@ -297,9 +299,9 @@ public class ApplicationImplTest extends TeedaTestCase {
                 .getName());
         getContainer().register(cDef);
         ApplicationImpl app = createApplication();
-        app.addConverter(Date.class, A2Converter.class.getName());
+        app.addConverter(getClass(), A2Converter.class.getName());
 
-        Converter c = app.createConverter(Date.class);
+        Converter c = app.createConverter(getClass());
         assertNotNull(c);
         assertTrue(c instanceof A1Converter);
 
