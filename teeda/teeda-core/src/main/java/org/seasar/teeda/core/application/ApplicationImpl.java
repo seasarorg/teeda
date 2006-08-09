@@ -15,6 +15,8 @@
  */
 package org.seasar.teeda.core.application;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -33,6 +35,8 @@ import javax.faces.application.StateManager;
 import javax.faces.application.ViewHandler;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.convert.BigDecimalConverter;
+import javax.faces.convert.BigIntegerConverter;
 import javax.faces.convert.BooleanConverter;
 import javax.faces.convert.ByteConverter;
 import javax.faces.convert.CharacterConverter;
@@ -143,6 +147,10 @@ public class ApplicationImpl extends Application implements
         converter = new DoubleConverter();
         wellKnownConverters.put(Double.class, converter);
         wellKnownConverters.put(double.class, converter);
+        converter = new BigIntegerConverter();
+        wellKnownConverters.put(BigInteger.class, converter);
+        converter = new BigDecimalConverter();
+        wellKnownConverters.put(BigDecimal.class, converter);
         converter = new CharacterConverter();
         wellKnownConverters.put(Character.class, converter);
         wellKnownConverters.put(char.class, converter);
