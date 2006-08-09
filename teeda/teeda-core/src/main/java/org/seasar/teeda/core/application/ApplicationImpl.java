@@ -56,6 +56,7 @@ import javax.faces.event.ActionListener;
 import javax.faces.validator.Validator;
 
 import org.seasar.framework.util.AssertionUtil;
+import org.seasar.framework.util.DateConversionUtil;
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.convert.TimestampConverter;
 import org.seasar.teeda.core.el.MethodBindingFactory;
@@ -154,10 +155,14 @@ public class ApplicationImpl extends Application implements
         converter = new CharacterConverter();
         wellKnownConverters.put(Character.class, converter);
         wellKnownConverters.put(char.class, converter);
-        converter = new DateTimeConverter();
-        wellKnownConverters.put(Date.class, converter);
-        converter = new TimestampConverter();
-        wellKnownConverters.put(Timestamp.class, converter);
+        DateTimeConverter dateTimeConverter = new DateTimeConverter();
+        dateTimeConverter.setPattern(DateConversionUtil.getY4Pattern(Locale
+                .getDefault()));
+        wellKnownConverters.put(Date.class, dateTimeConverter);
+        TimestampConverter timestampConverter = new TimestampConverter();
+        timestampConverter.setPattern(DateConversionUtil.getY4Pattern(Locale
+                .getDefault()));
+        wellKnownConverters.put(Timestamp.class, timestampConverter);
 
     }
 
