@@ -18,6 +18,9 @@ package org.seasar.teeda.extension.html.impl;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.core.config.faces.element.JsfConfigElement;
+
 import junit.framework.TestCase;
 
 /**
@@ -104,4 +107,16 @@ public class ElementNodeImplTest extends TestCase {
         assertEquals(parent2, child.getParent());
     }
 
+    public void testGetId() throws Exception {
+        HashMap map = new HashMap();
+        map.put(JsfConstants.ID_ATTR, "aaa-1");
+        ElementNodeImpl n1 = new ElementNodeImpl("hoge", map);
+        assertEquals("aaa", n1.getId());
+
+        HashMap map2 = new HashMap();
+        map2.put(JsfConstants.ID_ATTR, "aaa");
+        ElementNodeImpl n2 = new ElementNodeImpl("hoge", map2);
+        assertEquals("aaa", n2.getId());
+
+    }
 }

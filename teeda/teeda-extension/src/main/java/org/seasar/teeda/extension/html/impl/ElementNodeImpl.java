@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.HtmlNode;
@@ -24,10 +25,25 @@ public class ElementNodeImpl implements ElementNode {
 
     private int childTextSize;
 
+    private String normalizedId;
+    
     public ElementNodeImpl(String tagName, Map properties) {
         this.tagName = tagName;
         this.properties = properties;
         initializeBuffer();
+        this.normalizedId = normalizeId();
+    }
+
+    protected String normalizeId() {
+        String id = getId();
+        if(StringUtil.isEmpty(id)) {
+            return null;
+        }
+        int indexOf = id.indexOf("-");
+        if(indexOf <= 0) {
+            return null;
+        }
+        return id.substring(0, indexOf);
     }
 
     protected void initializeBuffer() {
@@ -39,6 +55,9 @@ public class ElementNodeImpl implements ElementNode {
     }
 
     public String getId() {
+        if(normalizedId != null) {
+            return normalizedId;
+        }
         return getProperty(JsfConstants.ID_ATTR);
     }
 
