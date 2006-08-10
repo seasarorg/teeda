@@ -5,9 +5,6 @@ import java.util.List;
 
 public class SelectOnePage {
 
-	// public static final String SELECT_SELECTRESULTPAGE =
-	// "select_selectOneResultPage";
-
 	private List aaaItems;
 
 	private int aaa;
@@ -45,4 +42,7 @@ public class SelectOnePage {
 		this.aaa = aaa;
 	}
 
+	public String doAction() {
+		return null;
+	}
 }
