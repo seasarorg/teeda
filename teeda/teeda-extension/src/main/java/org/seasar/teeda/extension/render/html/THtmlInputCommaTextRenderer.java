@@ -54,6 +54,8 @@ public class THtmlInputCommaTextRenderer extends HtmlInputTextRenderer {
 
     private static final String DEFAULT_FRACTION = "0";
 
+    private static final String JS_NAMESPACE_PREFIX = "Teeda.THtmlInputCommaText.";
+
     public void encodeEnd(FacesContext context, UIComponent component)
             throws IOException {
         assertNotNull(context, component);
@@ -212,7 +214,8 @@ public class THtmlInputCommaTextRenderer extends HtmlInputTextRenderer {
     protected void renderOnfocus(THtmlInputCommaText htmlInputCommaText,
             ResponseWriter writer, String groupingSeparator) throws IOException {
         String onfocus = appendSemiColonIfNeed(htmlInputCommaText.getOnfocus());
-        String target = "removeComma(this, '" + groupingSeparator + "');";
+        String target = JS_NAMESPACE_PREFIX + "removeComma(this, '"
+                + groupingSeparator + "');";
         if (!onfocus.endsWith(target)) {
             onfocus = onfocus + target;
         }
@@ -238,9 +241,9 @@ public class THtmlInputCommaTextRenderer extends HtmlInputTextRenderer {
             String groupingSeparator, String fractionSeparator) {
         final String onblur = appendSemiColonIfNeed(htmlInputCommaText
                 .getOnblur());
-        final String s = "convertByKey(this);addComma(this, '" + fraction
-                + "', '" + groupingSeparator + "', '" + fractionSeparator
-                + "');";
+        final String s = JS_NAMESPACE_PREFIX + "convertByKey(this);"
+                + JS_NAMESPACE_PREFIX + "addComma(this, '" + fraction + "', '"
+                + groupingSeparator + "', '" + fractionSeparator + "');";
         if (StringUtil.contains(onblur, s)) {
             return onblur;
         }
@@ -263,7 +266,8 @@ public class THtmlInputCommaTextRenderer extends HtmlInputTextRenderer {
 
     private void renderKeycheckEvent(ResponseWriter writer,
             String attributeName, String target) throws IOException {
-        final String script = "return keycheckForNumber(event);";
+        final String script = "return " + JS_NAMESPACE_PREFIX
+                + "keycheckForNumber(event);";
         if (!target.endsWith(script)) {
             target = target + script;
             RendererUtil.renderAttribute(writer, attributeName, target);
@@ -273,7 +277,7 @@ public class THtmlInputCommaTextRenderer extends HtmlInputTextRenderer {
     protected void renderOnkeyup(THtmlInputCommaText htmlInputCommaText,
             ResponseWriter writer) throws IOException {
         String onkeyup = appendSemiColonIfNeed(htmlInputCommaText.getOnkeyup());
-        final String script = "convertByKey(this);";
+        final String script = JS_NAMESPACE_PREFIX + "convertByKey(this);";
         if (!onkeyup.endsWith(script)) {
             onkeyup = onkeyup + script;
             RendererUtil.renderAttribute(writer, JsfConstants.ONKEYUP_ATTR,

@@ -60,9 +60,9 @@ public class THtmlInputCommaTextRendererTest extends RendererTest {
         System.out.print(getResponseText());
         // ## Assert ##
         assertEquals(
-                "<input type=\"text\" name=\"_id0\" value=\"\" onfocus=\"removeComma(this, ',');\" "
-                        + "onblur=\"convertByKey(this);addComma(this, '0', ',', '.');\" onkeydown=\"return keycheckForNumber(event);\" "
-                        + "onkeypress=\"return keycheckForNumber(event);\" onkeyup=\"convertByKey(this);\" style=\"ime-mode:disabled;\" />",
+                "<input type=\"text\" name=\"_id0\" value=\"\" onfocus=\"Teeda.THtmlInputCommaText.removeComma(this, ',');\" "
+                        + "onblur=\"Teeda.THtmlInputCommaText.convertByKey(this);Teeda.THtmlInputCommaText.addComma(this, '0', ',', '.');\" onkeydown=\"return Teeda.THtmlInputCommaText.keycheckForNumber(event);\" "
+                        + "onkeypress=\"return Teeda.THtmlInputCommaText.keycheckForNumber(event);\" onkeyup=\"Teeda.THtmlInputCommaText.convertByKey(this);\" style=\"ime-mode:disabled;\" />",
                 getResponseText());
     }
 
@@ -81,9 +81,9 @@ public class THtmlInputCommaTextRendererTest extends RendererTest {
         // ## Assert ##
         System.out.println(getResponseText());
         assertEquals(
-                "<input type=\"text\" name=\"_id0\" value=\"\" onfocus=\"removeComma(this, ',');\" "
-                        + "onblur=\"convertByKey(this);addComma(this, '4', ',', '.');\" onkeydown=\"return keycheckForNumber(event);\" "
-                        + "onkeypress=\"return keycheckForNumber(event);\" onkeyup=\"convertByKey(this);\" style=\"ime-mode:disabled;\" />",
+                "<input type=\"text\" name=\"_id0\" value=\"\" onfocus=\"Teeda.THtmlInputCommaText.removeComma(this, ',');\" "
+                        + "onblur=\"Teeda.THtmlInputCommaText.convertByKey(this);Teeda.THtmlInputCommaText.addComma(this, '4', ',', '.');\" onkeydown=\"return Teeda.THtmlInputCommaText.keycheckForNumber(event);\" "
+                        + "onkeypress=\"return Teeda.THtmlInputCommaText.keycheckForNumber(event);\" onkeyup=\"Teeda.THtmlInputCommaText.convertByKey(this);\" style=\"ime-mode:disabled;\" />",
                 getResponseText());
     }
 
@@ -101,9 +101,9 @@ public class THtmlInputCommaTextRendererTest extends RendererTest {
 
         // ## Assert ##
         assertEquals(
-                "<input type=\"text\" name=\"_id0\" value=\"\" onfocus=\"removeComma(this, '.');\" "
-                        + "onblur=\"convertByKey(this);addComma(this, '4', '.', ',');\" onkeydown=\"return keycheckForNumber(event);\" "
-                        + "onkeypress=\"return keycheckForNumber(event);\" onkeyup=\"convertByKey(this);\" style=\"ime-mode:disabled;\" />",
+                "<input type=\"text\" name=\"_id0\" value=\"\" onfocus=\"Teeda.THtmlInputCommaText.removeComma(this, '.');\" "
+                        + "onblur=\"Teeda.THtmlInputCommaText.convertByKey(this);Teeda.THtmlInputCommaText.addComma(this, '4', '.', ',');\" onkeydown=\"return Teeda.THtmlInputCommaText.keycheckForNumber(event);\" "
+                        + "onkeypress=\"return Teeda.THtmlInputCommaText.keycheckForNumber(event);\" onkeyup=\"Teeda.THtmlInputCommaText.convertByKey(this);\" style=\"ime-mode:disabled;\" />",
                 getResponseText());
     }
 
@@ -149,10 +149,10 @@ public class THtmlInputCommaTextRendererTest extends RendererTest {
 
         Diff diff = new Diff(
                 "<input type=\"text\" id=\"A\" name=\"A\" value=\"123\" disabled=\"disabled\" "
-                        + "onfocus=\"k;removeComma(this, ',');\" "
-                        + "onblur=\"g;convertByKey(this);addComma(this, '4', ',', '.');\" "
-                        + "onkeydown=\"l;return keycheckForNumber(event);\" "
-                        + "onkeypress=\"m;return keycheckForNumber(event);\" onkeyup=\"n;convertByKey(this);\" "
+                        + "onfocus=\"k;Teeda.THtmlInputCommaText.removeComma(this, ',');\" "
+                        + "onblur=\"g;Teeda.THtmlInputCommaText.convertByKey(this);Teeda.THtmlInputCommaText.addComma(this, '4', ',', '.');\" "
+                        + "onkeydown=\"l;return Teeda.THtmlInputCommaText.keycheckForNumber(event);\" "
+                        + "onkeypress=\"m;return Teeda.THtmlInputCommaText.keycheckForNumber(event);\" onkeyup=\"n;Teeda.THtmlInputCommaText.convertByKey(this);\" "
                         + "style=\"w;ime-mode:disabled;\" title=\"y\" onchange=\"h\" dir=\"c\" readonly=\"true\" "
                         + "class=\"u\" accesskey=\"a\" ondblclick=\"j\" size=\"2\" onmouseover=\"r\" "
                         + "tabindex=\"x\" maxlength=\"5\" lang=\"e\" onclick=\"i\" alt=\"b\" "
@@ -177,9 +177,9 @@ public class THtmlInputCommaTextRendererTest extends RendererTest {
 
         // ## Assert ##
         assertEquals(
-                "<input type=\"text\" name=\"_id0\" value=\"\" onfocus=\"removeComma(this, ',');\" "
-                        + "onblur=\"hoge();convertByKey(this);addComma(this, '4', ',', '.');\" onkeydown=\"return keycheckForNumber(event);\" "
-                        + "onkeypress=\"return keycheckForNumber(event);\" onkeyup=\"convertByKey(this);\" style=\"ime-mode:disabled;\" />",
+                "<input type=\"text\" name=\"_id0\" value=\"\" onfocus=\"Teeda.THtmlInputCommaText.removeComma(this, ',');\" "
+                        + "onblur=\"hoge();Teeda.THtmlInputCommaText.convertByKey(this);Teeda.THtmlInputCommaText.addComma(this, '4', ',', '.');\" onkeydown=\"return Teeda.THtmlInputCommaText.keycheckForNumber(event);\" "
+                        + "onkeypress=\"return Teeda.THtmlInputCommaText.keycheckForNumber(event);\" onkeyup=\"Teeda.THtmlInputCommaText.convertByKey(this);\" style=\"ime-mode:disabled;\" />",
                 getResponseText());
     }
 
@@ -216,7 +216,8 @@ public class THtmlInputCommaTextRendererTest extends RendererTest {
         encodeByRenderer(renderer, context, htmlInputCommaText);
 
         // ## Assert ##
-        assertFalse(getResponseText().matches("removeComma(this);"));
+        assertFalse(getResponseText().matches(
+                "Teeda.THtmlInputCommaText.removeComma(this);"));
     }
 
     private THtmlInputCommaTextRenderer createHtmlInputCommaTextRenderer() {

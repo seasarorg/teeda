@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -73,11 +73,11 @@ public class THtmlGridInputCommaTextRendererTest extends RendererTest {
         final String expected = "<div onclick=\"Teeda.THtmlGrid.editOn(this);\">"
                 + "<span></span>"
                 + "<input type=\"text\" name=\"_id0\" value=\"\""
-                + " onfocus=\"removeComma(this, ',');\""
-                + " onblur=\"convertByKey(this);addComma(this, '0', ',', '.');Teeda.THtmlGrid.editOff(this);\""
-                + " onkeydown=\"return keycheckForNumber(event);\""
-                + " onkeypress=\"return keycheckForNumber(event);\""
-                + " onkeyup=\"convertByKey(this);\""
+                + " onfocus=\"Teeda.THtmlInputCommaText.removeComma(this, ',');\""
+                + " onblur=\"Teeda.THtmlInputCommaText.convertByKey(this);Teeda.THtmlInputCommaText.addComma(this, '0', ',', '.');Teeda.THtmlGrid.editOff(this);\""
+                + " onkeydown=\"return Teeda.THtmlInputCommaText.keycheckForNumber(event);\""
+                + " onkeypress=\"return Teeda.THtmlInputCommaText.keycheckForNumber(event);\""
+                + " onkeyup=\"Teeda.THtmlInputCommaText.convertByKey(this);\""
                 + " style=\"ime-mode:disabled;display:none;\""
                 + " class=\"gridCellEdit\" />" + "</div>";
         final String responseText = getResponseText();
@@ -138,14 +138,15 @@ public class THtmlGridInputCommaTextRendererTest extends RendererTest {
                 + " lang=\"e\""
                 + " class=\"u gridCellEdit\""
                 + " style=\"w;ime-mode:disabled;display:none;\""
-                + " onfocus=\"k;removeComma(this, ',');\""
-                + " onblur=\"g;convertByKey(this);addComma(this, '2', ',', '.');Teeda.THtmlGrid.editOff(this);\""
-                + " onkeydown=\"l;return keycheckForNumber(event);\""
-                + " onkeypress=\"m;return keycheckForNumber(event);\""
-                + " onkeyup=\"n;convertByKey(this);\"" + " onchange=\"h\""
-                + " readonly=\"true\"" + " ondblclick=\"j\"" + " size=\"3\""
-                + " onmouseover=\"r\" " + "tabindex=\"x\"" + " maxlength=\"5\""
-                + " onclick=\"i\"" + " onmouseout=\"q\"" + " onmousedown=\"o\""
+                + " onfocus=\"k;Teeda.THtmlInputCommaText.removeComma(this, ',');\""
+                + " onblur=\"g;Teeda.THtmlInputCommaText.convertByKey(this);Teeda.THtmlInputCommaText.addComma(this, '2', ',', '.');Teeda.THtmlGrid.editOff(this);\""
+                + " onkeydown=\"l;return Teeda.THtmlInputCommaText.keycheckForNumber(event);\""
+                + " onkeypress=\"m;return Teeda.THtmlInputCommaText.keycheckForNumber(event);\""
+                + " onkeyup=\"n;Teeda.THtmlInputCommaText.convertByKey(this);\""
+                + " onchange=\"h\"" + " readonly=\"true\""
+                + " ondblclick=\"j\"" + " size=\"3\"" + " onmouseover=\"r\" "
+                + "tabindex=\"x\"" + " maxlength=\"5\"" + " onclick=\"i\""
+                + " onmouseout=\"q\"" + " onmousedown=\"o\""
                 + " onselect=\"t\"" + " onmouseup=\"s\"" + " onmousemove=\"p\""
                 + " title=\"y\"" + " />" + "</div>";
         Diff diff = diff(expected, actual);
