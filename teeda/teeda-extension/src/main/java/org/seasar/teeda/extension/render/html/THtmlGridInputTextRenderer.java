@@ -39,9 +39,9 @@ public class THtmlGridInputTextRenderer extends AbstractRenderer {
 
     static final String DISPLAY_NONE = "display:none;";
 
-    static final String EDIT_ON = "editOn(this);";
+    static final String EDIT_ON = "Teeda.THtmlGrid.editOn(this);";
 
-    static final String EDIT_OFF = "editOff(this);";
+    static final String EDIT_OFF = "Teeda.THtmlGrid.editOff(this);";
 
     static final String GRID_CELL_EDIT_CLASS_NAME = "gridCellEdit";
 

@@ -28,40 +28,51 @@
 <!-- BEGIN -->
 <script language="JavaScript" type="text/javascript">
 <!--
-function editOn(div) {
-	var span = getFirstChildByTagName(div, "span");
-	var input = getFirstChildByTagName(div, "input");
-	input.value = span.innerHTML;
-	span.style.display = "none";
-	input.style.display = "inline";
-	input.focus();
+if (typeof(Teeda) == 'undefined') {
+  Teeda = {};
 }
-function editOff(input) {
-	var span = getFirstChildByTagName(input.parentNode, "span");
-	span.innerHTML = input.value;
-	input.style.display = "none";
-	span.style.display = "inline";
+if (typeof(Teeda.THtmlGrid) == 'undefined') {
+  Teeda.THtmlGrid = {};
 }
-function getFirstChildByTagName(fromNode, elemName) {
-	if (!fromNode.hasChildNodes()) {
-		return null;
-	}
-	var children = fromNode.childNodes;
-	var len = children.length;
-	for (var i = 0; i < len; i++) {
-		var child = children.item(i);
-		if (!child.tagName) {
-			continue;
-		}
-		if (elemName == child.tagName.toLowerCase()) {
-			return child;
-		}
-		var ret = getFirstChildByTagName(child, elemName);
-		if (ret != null) {
-			return ret;
-		}
-	}
-}
+Teeda.THtmlGrid = {
+  getFirstChildByTagName: function (fromNode, elemName) {
+    var self = Teeda.THtmlGrid;
+    if (!fromNode.hasChildNodes()) {
+      return null;
+    }
+    var children = fromNode.childNodes;
+    var len = children.length;
+    for (var i = 0; i < len; i++) {
+      var child = children.item(i);
+      if (!child.tagName) {
+        continue;
+      }
+      if (elemName == child.tagName.toLowerCase()) {
+        return child;
+      }
+      var ret = self.getFirstChildByTagName(child, elemName);
+      if (ret) {
+        return ret;
+      }
+    }
+  },
+  editOn : function(div) {
+    var self = Teeda.THtmlGrid;
+    var span = self.getFirstChildByTagName(div, 'span');
+    var input = self.getFirstChildByTagName(div, 'input');
+    input.value = span.innerHTML;
+    span.style.display = 'none';
+    input.style.display = 'inline';
+    input.focus();
+  },
+  editOff: function (input) {
+    var self = Teeda.THtmlGrid;
+    var span = self.getFirstChildByTagName(input.parentNode, 'span');
+    span.innerHTML = input.value;
+    input.style.display = 'none';
+    span.style.display = 'inline';
+  }
+};
 //-->
 </script>
 <table id="someGridXY" border="0" cellspacing="0" cellpadding="0">
@@ -135,8 +146,8 @@ function getFirstChildByTagName(fromNode, elemName) {
 					<tbody>
 						<tr class="row_odd">
 							<td><div class="gridCell" style="overflow:hidden; width:50px;"><nobr>
-								<div onclick="editOn(this);">
-								<span>TD2_1</span><input type="text" id="gridText" name="someGridXY:0:gridText" value="TD2_1" onblur="editOff(this);" class="gridCellEdit" style="display:none;" />
+								<div onclick="Teeda.THtmlGrid.editOn(this);">
+								<span>TD2_1</span><input type="text" id="gridText" name="someGridXY:0:gridText" value="TD2_1" onblur="Teeda.THtmlGrid.editOff(this);" class="gridCellEdit" style="display:none;" />
 								</div>
 							</nobr></div></td>
 							<td><div class="gridCell" style="overflow:hidden; width:50px;"><nobr>TD3_1</nobr></div></td>
@@ -147,8 +158,8 @@ function getFirstChildByTagName(fromNode, elemName) {
 						</tr>
 						<tr class="row_even">
 							<td><div class="gridCell" style="overflow:hidden; width:50px;"><nobr>
-								<div onclick="editOn(this);">
-								<span>TD2_2</span><input type="text" id="gridText" name="someGridXY:1:gridText" value="TD2_2" onblur="editOff(this);" class="gridCellEdit" style="display:none;" />
+								<div onclick="Teeda.THtmlGrid.editOn(this);">
+								<span>TD2_2</span><input type="text" id="gridText" name="someGridXY:1:gridText" value="TD2_2" onblur="Teeda.THtmlGrid.editOff(this);" class="gridCellEdit" style="display:none;" />
 								</div>
 							</nobr></div></td>
 							<td><div class="gridCell" style="overflow:hidden; width:50px;"><nobr>TD3_2</nobr></div></td>
@@ -159,8 +170,8 @@ function getFirstChildByTagName(fromNode, elemName) {
 						</tr>
 						<tr class="row_odd">
 							<td><div class="gridCell" style="overflow:hidden; width:50px;"><nobr>
-								<div onclick="editOn(this);">
-								<span>TD2_3</span><input type="text" id="gridText" name="someGridXY:2:gridText" value="TD2_3" onblur="editOff(this);" class="gridCellEdit" style="display:none;" />
+								<div onclick="Teeda.THtmlGrid.editOn(this);">
+								<span>TD2_3</span><input type="text" id="gridText" name="someGridXY:2:gridText" value="TD2_3" onblur="Teeda.THtmlGrid.editOff(this);" class="gridCellEdit" style="display:none;" />
 								</div>
 							</nobr></div></td>
 							<td><div class="gridCell" style="overflow:hidden; width:50px;"><nobr>TD3_3</nobr></div></td>
@@ -171,8 +182,8 @@ function getFirstChildByTagName(fromNode, elemName) {
 						</tr>
 						<tr class="row_even">
 							<td><div class="gridCell" style="overflow:hidden; width:50px;"><nobr>
-								<div onclick="editOn(this);">
-								<span>TD2_4</span><input type="text" id="gridText" name="someGridXY:3:gridText" value="TD2_4" onblur="editOff(this);" class="gridCellEdit" style="display:none;" />
+								<div onclick="Teeda.THtmlGrid.editOn(this);">
+								<span>TD2_4</span><input type="text" id="gridText" name="someGridXY:3:gridText" value="TD2_4" onblur="Teeda.THtmlGrid.editOff(this);" class="gridCellEdit" style="display:none;" />
 								</div>
 							</nobr></div></td>
 							<td><div class="gridCell" style="overflow:hidden; width:50px;"><nobr>TD3_4</nobr></div></td>

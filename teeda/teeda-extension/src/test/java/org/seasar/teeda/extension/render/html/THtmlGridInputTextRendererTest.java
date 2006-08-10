@@ -69,9 +69,9 @@ public class THtmlGridInputTextRendererTest extends RendererTest {
         encodeByRenderer(renderer, gridInputText);
 
         // ## Assert ##
-        final String expected = "<div onclick=\"editOn(this);\">"
+        final String expected = "<div onclick=\"Teeda.THtmlGrid.editOn(this);\">"
                 + "<span></span>"
-                + "<input type=\"text\" name=\"_id0\" value=\"\" onblur=\"editOff(this);\" class=\"gridCellEdit\" style=\"display:none;\" />"
+                + "<input type=\"text\" name=\"_id0\" value=\"\" onblur=\"Teeda.THtmlGrid.editOff(this);\" class=\"gridCellEdit\" style=\"display:none;\" />"
                 + "</div>";
         System.out.println(getResponseText());
         Diff diff = diff(expected, getResponseText());
@@ -86,9 +86,9 @@ public class THtmlGridInputTextRendererTest extends RendererTest {
         encodeByRenderer(renderer, gridInputText);
 
         // ## Assert ##
-        final String expected = "<div onclick=\"editOn(this);\">"
+        final String expected = "<div onclick=\"Teeda.THtmlGrid.editOn(this);\">"
                 + "<span>abc</span>"
-                + "<input type=\"text\" name=\"_id0\" value=\"abc\" onblur=\"editOff(this);\" class=\"gridCellEdit\" style=\"display:none;\" />"
+                + "<input type=\"text\" name=\"_id0\" value=\"abc\" onblur=\"Teeda.THtmlGrid.editOff(this);\" class=\"gridCellEdit\" style=\"display:none;\" />"
                 + "</div>";
         System.out.println(getResponseText());
         Diff diff = diff(expected, getResponseText());
@@ -107,9 +107,9 @@ public class THtmlGridInputTextRendererTest extends RendererTest {
         encodeByRenderer(renderer, gridInputText);
 
         // ## Assert ##
-        final String expected = "<div onclick=\"editOn(this);\">"
+        final String expected = "<div onclick=\"Teeda.THtmlGrid.editOn(this);\">"
                 + "<span></span>"
-                + "<input type=\"text\" id=\"a\" name=\"b:a\" value=\"\" onblur=\"editOff(this);\" class=\"gridCellEdit\" style=\"display:none;\" />"
+                + "<input type=\"text\" id=\"a\" name=\"b:a\" value=\"\" onblur=\"Teeda.THtmlGrid.editOff(this);\" class=\"gridCellEdit\" style=\"display:none;\" />"
                 + "</div>";
         System.out.println(getResponseText());
         Diff diff = diff(expected, getResponseText());

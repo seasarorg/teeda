@@ -70,11 +70,11 @@ public class THtmlGridInputCommaTextRendererTest extends RendererTest {
         encodeByRenderer(renderer, gridInputText);
 
         // ## Assert ##
-        final String expected = "<div onclick=\"editOn(this);\">"
+        final String expected = "<div onclick=\"Teeda.THtmlGrid.editOn(this);\">"
                 + "<span></span>"
                 + "<input type=\"text\" name=\"_id0\" value=\"\""
                 + " onfocus=\"removeComma(this, ',');\""
-                + " onblur=\"convertByKey(this);addComma(this, '0', ',', '.');editOff(this);\""
+                + " onblur=\"convertByKey(this);addComma(this, '0', ',', '.');Teeda.THtmlGrid.editOff(this);\""
                 + " onkeydown=\"return keycheckForNumber(event);\""
                 + " onkeypress=\"return keycheckForNumber(event);\""
                 + " onkeyup=\"convertByKey(this);\""
@@ -127,7 +127,7 @@ public class THtmlGridInputCommaTextRendererTest extends RendererTest {
         final String responseText = getResponseText();
         final String actual = removeScriptElement(responseText);
         System.out.println(actual);
-        String expected = "<div onclick=\"editOn(this);\">"
+        String expected = "<div onclick=\"Teeda.THtmlGrid.editOn(this);\">"
                 + "<span>1,234,567</span>"
                 + "<input type=\"text\" id=\"AA\" name=\"AA\" value=\"1,234,567\""
                 + " accesskey=\"a\""
@@ -139,7 +139,7 @@ public class THtmlGridInputCommaTextRendererTest extends RendererTest {
                 + " class=\"u gridCellEdit\""
                 + " style=\"w;ime-mode:disabled;display:none;\""
                 + " onfocus=\"k;removeComma(this, ',');\""
-                + " onblur=\"g;convertByKey(this);addComma(this, '2', ',', '.');editOff(this);\""
+                + " onblur=\"g;convertByKey(this);addComma(this, '2', ',', '.');Teeda.THtmlGrid.editOff(this);\""
                 + " onkeydown=\"l;return keycheckForNumber(event);\""
                 + " onkeypress=\"m;return keycheckForNumber(event);\""
                 + " onkeyup=\"n;convertByKey(this);\"" + " onchange=\"h\""
