@@ -172,10 +172,7 @@ public class HtmlResponseWriter extends ResponseWriter {
         StringBuffer sb = new StringBuffer();
         for (int i = 0; i < chars.length; i++) {
             char c = chars[i];
-            // &nbsp; 0xA0
-            if (c == '\u00A0') {
-                sb.append("&nbsp;");
-            } else if (c == '<') {
+            if (c == '<') {
                 sb.append("&lt;");
             } else if (c == '>') {
                 sb.append("&gt;");
