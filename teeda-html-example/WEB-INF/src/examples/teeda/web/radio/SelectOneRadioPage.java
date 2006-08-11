@@ -48,4 +48,7 @@ public class SelectOneRadioPage {
 		this.aaaItems = aaaItems;
 	}
 
+	public String doAction() {
+		return null;
+	}
 }
