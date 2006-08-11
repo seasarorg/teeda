@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -19,6 +19,7 @@ import javax.faces.component.UISelectItem;
 import javax.faces.component.UISelectItems;
 import javax.faces.component.html.HtmlSelectOneRadio;
 import javax.faces.context.FacesContext;
+import javax.faces.convert.IntegerConverter;
 import javax.faces.model.SelectItem;
 import javax.faces.model.SelectItemGroup;
 import javax.faces.render.Renderer;
@@ -469,6 +470,20 @@ public class HtmlSelectOneRadioRendererTest extends RendererTest {
 
     public void testGetRendersChildren() throws Exception {
         assertEquals(false, renderer.getRendersChildren());
+    }
+
+    public void testGetConvertedValue() throws Exception {
+        try {
+            htmlSelectOneRadio.setConverter(new IntegerConverter());
+            Object o = renderer.getConvertedValue(getFacesContext(),
+                    htmlSelectOneRadio, "2");
+            assertNotNull(o);
+            Integer i = (Integer) o;
+            assertTrue(i.intValue() == 2);
+            assertTrue(true);
+        } catch (IllegalArgumentException e) {
+            fail();
+        }
     }
 
     private HtmlSelectOneRadioRenderer createHtmlSelectOneRadioRenderer() {

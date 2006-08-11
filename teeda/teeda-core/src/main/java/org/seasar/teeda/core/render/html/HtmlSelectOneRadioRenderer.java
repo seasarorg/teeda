@@ -18,8 +18,10 @@ package org.seasar.teeda.core.render.html;
 import java.io.IOException;
 
 import javax.faces.component.UIComponent;
+import javax.faces.component.UIOutput;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+import javax.faces.convert.ConverterException;
 import javax.faces.model.SelectItem;
 
 import org.seasar.teeda.core.JsfConstants;
@@ -69,6 +71,14 @@ public class HtmlSelectOneRadioRenderer extends HtmlSelectManyCheckboxRenderer {
     public void decode(FacesContext context, UIComponent component) {
         assertNotNull(context, component);
         DecodeUtil.decode(context, component);
+    }
+
+    public Object getConvertedValue(FacesContext context,
+            UIComponent component, Object submittedValue)
+            throws ConverterException {
+        assertNotNull(context, component);
+        return RendererUtil.getConvertedUIOutputValue(context,
+                (UIOutput) component, submittedValue);
     }
 
 }

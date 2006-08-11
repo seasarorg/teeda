@@ -29,7 +29,6 @@ import org.seasar.teeda.extension.html.PageDesc;
  */
 public class SelectManyCheckboxFactory extends AbstractElementProcessorFactory {
 
-    //TODO fixme. Do after isEdit().
     private static final String TAG_NAME = "selectManyCheckbox";
 
     protected String getTagName() {
