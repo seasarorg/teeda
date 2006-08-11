@@ -105,5 +105,12 @@
 			org.seasar.teeda.extension.component.TUISelectItems
 		</component-class>
 	</component>
-
+	<component>
+		<component-type>
+			org.seasar.teeda.extension.Condition
+		</component-type>
+		<component-class>
+			org.seasar.teeda.extension.component.TCondition
+		</component-class>
+	</component>
 </faces-config>

@@ -33,15 +33,15 @@ import org.seasar.teeda.extension.html.impl.ActionDescImpl;
 import org.seasar.teeda.extension.html.impl.ElementNodeImpl;
 import org.seasar.teeda.extension.html.impl.PageDescImpl;
 import org.seasar.teeda.extension.mock.MockTaglibManager;
-import org.seasar.teeda.extension.taglib.TInputCommaTextTag;
+import org.seasar.teeda.extension.taglib.TConditionTag;
 
 /**
  * @author shot
  */
-public class IsEditFactoryTest extends TestCase {
+public class ConditionFactoryTest extends TestCase {
 
     public void testIsMatch() throws Exception {
-        IsEditFactory factory = new IsEditFactory();
+        ConditionFactory factory = new ConditionFactory();
         Map props = new HashMap();
         props.put("id", "isBbb");
         ElementNode elementNode = new ElementNodeImpl("div", props);
@@ -59,37 +59,23 @@ public class IsEditFactoryTest extends TestCase {
         ElementNode elementNode3 = new ElementNodeImpl("div", props3);
         PageDesc pageDesc3 = new PageDescImpl(AaaPage.class, "aaaPage");
         assertFalse(factory.isMatch(elementNode3, pageDesc3, null));
-
-        //        assertFalse(factory.isMatch(elementNode2, pageDesc, null));
-        //        Map props2 = new HashMap();
-        //        props2.put("id", "aaa");
-        //        props2.put("type", "text");
-        //        ElementNode elementNode3 = new ElementNodeImpl("input", props2);
-        //        assertFalse(factory.isMatch(elementNode3, pageDesc, null));
-        //        Map props3 = new HashMap();
-        //        props3.put("id", "xxx");
-        //        props3.put("type", "text");
-        //        ElementNode elementNode4 = new ElementNodeImpl("input", props3);
-        //        assertFalse(factory.isMatch(elementNode4, pageDesc, null));
     }
 
-    public void testCreateFactory() throws Exception {
+    public void testCreateFactory1() throws Exception {
         // ## Arrange ##
         MockTaglibManager taglibManager = new MockTaglibManager();
-        TaglibElement jsfHtml = new TaglibElementImpl();
-        jsfHtml.setUri(ExtensionConstants.TEEDA_EXTENSION_URI);
+        TaglibElement tdaExt = new TaglibElementImpl();
+        tdaExt.setUri(ExtensionConstants.TEEDA_EXTENSION_URI);
         TagElement tagElement = new TagElementImpl();
-        tagElement.setName("inputCommaText");
-        tagElement.setTagClass(TInputCommaTextTag.class);
-        jsfHtml.addTagElement(tagElement);
-        taglibManager.addTaglibElement(jsfHtml);
-        InputCommaTextFactory factory = new InputCommaTextFactory();
+        tagElement.setName("condition");
+        tagElement.setTagClass(TConditionTag.class);
+        tdaExt.addTagElement(tagElement);
+        taglibManager.addTaglibElement(tdaExt);
+        ConditionFactory factory = new ConditionFactory();
         factory.setTaglibManager(taglibManager);
         Map props = new HashMap();
-        props.put("id", "aaa");
-        props.put("type", "text");
-        props.put("class", "T_Currency");
-        ElementNode elementNode = new ElementNodeImpl("input", props);
+        props.put("id", "isBbb");
+        ElementNode elementNode = new ElementNodeImpl("div", props);
         PageDesc pageDesc = new PageDescImpl(AaaPage.class, "aaaPage");
         ActionDesc actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
 
@@ -98,14 +84,37 @@ public class IsEditFactoryTest extends TestCase {
                 pageDesc, actionDesc);
         // ## Assert ##
         assertNotNull("1", processor);
-        assertEquals("2", TInputCommaTextTag.class, processor.getTagClass());
-        assertEquals("3", "#{aaaPage.aaa}", processor.getProperty("value"));
-        assertEquals("4", "#{aaaPage.aaaFraction}", processor
-                .getProperty("fraction"));
-        assertEquals("5", "#{aaaPage.aaaFractionSeparator}", processor
-                .getProperty("fractionSeparator"));
-        assertEquals("6", "#{aaaPage.aaaGroupingSeparator}", processor
-                .getProperty("groupingSeparator"));
+        assertEquals("2", TConditionTag.class, processor.getTagClass());
+        assertEquals("3", "#{aaaPage.bbb == true}", processor
+                .getProperty("rendered"));
+    }
+
+    public void testCreateFactory2() throws Exception {
+        // ## Arrange ##
+        MockTaglibManager taglibManager = new MockTaglibManager();
+        TaglibElement tdaExt = new TaglibElementImpl();
+        tdaExt.setUri(ExtensionConstants.TEEDA_EXTENSION_URI);
+        TagElement tagElement = new TagElementImpl();
+        tagElement.setName("condition");
+        tagElement.setTagClass(TConditionTag.class);
+        tdaExt.addTagElement(tagElement);
+        taglibManager.addTaglibElement(tdaExt);
+        ConditionFactory factory = new ConditionFactory();
+        factory.setTaglibManager(taglibManager);
+        Map props = new HashMap();
+        props.put("id", "isNotBbb");
+        ElementNode elementNode = new ElementNodeImpl("div", props);
+        PageDesc pageDesc = new PageDescImpl(AaaPage.class, "aaaPage");
+        ActionDesc actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
+
+        // ## Act ##
+        ElementProcessor processor = factory.createProcessor(elementNode,
+                pageDesc, actionDesc);
+        // ## Assert ##
+        assertNotNull("1", processor);
+        assertEquals("2", TConditionTag.class, processor.getTagClass());
+        assertEquals("3", "#{aaaPage.bbb == false}", processor
+                .getProperty("rendered"));
     }
 
 }

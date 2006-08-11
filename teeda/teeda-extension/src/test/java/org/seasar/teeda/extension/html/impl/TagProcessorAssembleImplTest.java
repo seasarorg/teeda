@@ -28,12 +28,14 @@ import org.seasar.teeda.extension.html.TagProcessor;
 import org.seasar.teeda.extension.html.TagProcessorAssembler;
 import org.seasar.teeda.extension.html.TextProcessor;
 import org.seasar.teeda.extension.html.factory.CommandButtonFactory;
+import org.seasar.teeda.extension.html.factory.ConditionFactory;
 import org.seasar.teeda.extension.html.factory.InputTextFactory;
 import org.seasar.teeda.extension.html.factory.OutputTextFactory;
 import org.seasar.teeda.extension.html.factory.SelectManyCheckboxFactory;
 import org.seasar.teeda.extension.html.factory.SelectOneMenuFactory;
 import org.seasar.teeda.extension.html.factory.SelectOneRadioFactory;
 import org.seasar.teeda.extension.mock.MockTaglibManager;
+import org.seasar.teeda.extension.taglib.TConditionTag;
 import org.seasar.teeda.extension.taglib.TSelectManyCheckboxTag;
 import org.seasar.teeda.extension.taglib.TSelectOneMenuTag;
 import org.seasar.teeda.extension.taglib.TSelectOneRadioTag;
@@ -363,6 +365,36 @@ public class TagProcessorAssembleImplTest extends TeedaExtensionTestCase {
         assertEquals("#{fooPage.cccItems}", ep.getProperty("items"));
         textProcessor = (TextProcessor) viewRoot.getChild(2);
         assertEquals("</body></html>", textProcessor.getValue());
+    }
+
+    public void testCondition() throws Exception {
+        String path = convertPath("condition.html");
+        HtmlDescCacheImpl cache = createHtmlDescCacheImpl();
+        HtmlDesc htmlDesc = cache.createHtmlDesc(path);
+        PageDescImpl pageDesc = new PageDescImpl(BarPage.class, "barPage");
+        ActionDescImpl actionDesc = new ActionDescImpl(FooAction.class,
+                "fooAction");
+        registerTaglibElement(ExtensionConstants.TEEDA_EXTENSION_URI,
+                "condition", TConditionTag.class);
+        registerTaglibElement(JsfConstants.JSF_HTML_URI, "outputText",
+                OutputTextTag.class);
+        MockTaglibManager taglibManager = getTaglibManager();
+        ConditionFactory factory = new ConditionFactory();
+        factory.setTaglibManager(taglibManager);
+        OutputTextFactory factory2 = new OutputTextFactory();
+        factory2.setTaglibManager(taglibManager);
+        TagProcessorAssemblerImpl assembler = new TagProcessorAssemblerImpl();
+        assembler.setFactories(new ElementProcessorFactory[] { factory,
+                factory2 });
+        TagProcessor root = assembler.assemble(htmlDesc, pageDesc, actionDesc);
+        assertTrue(root instanceof ElementProcessor);
+        ElementProcessor viewRoot = (ElementProcessor) root;
+        assertEquals(3, viewRoot.getChildSize());
+        TextProcessor textProcessor = (TextProcessor) viewRoot.getChild(0);
+        assertEquals("<html><body>", textProcessor.getValue());
+        assertTrue(viewRoot.getChild(1) instanceof ElementProcessor);
+        ElementProcessor ep = (ElementProcessor) viewRoot.getChild(1);
+        assertEquals("#{barPage.aaa == true}", ep.getProperty("rendered"));
     }
 
     protected HtmlDescCacheImpl createHtmlDescCacheImpl() {

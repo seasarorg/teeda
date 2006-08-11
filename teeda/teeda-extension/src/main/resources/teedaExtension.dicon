@@ -113,6 +113,10 @@
 		name="selectOneListboxFactory"
 		class="org.seasar.teeda.extension.html.factory.SelectOneMenuFactory"
 	/>
+	<component
+		name="conditionFactory"
+		class="org.seasar.teeda.extension.html.factory.ConditionFactory"
+	/>
 
 	<component class="org.seasar.teeda.extension.html.impl.TagProcessorAssemblerImpl"/>
 	<component class="org.seasar.teeda.extension.html.impl.TagProcessorCacheImpl"/>

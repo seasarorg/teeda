@@ -34,7 +34,22 @@
 			<rtexprvalue>false</rtexprvalue>
 		</attribute>
 	</tag>
-
+	<tag>
+		<name>condition</name>
+		<tag-class>org.seasar.teeda.extension.taglib.TConditionTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>rendered</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
+	</tag>
 	<tag>
 		<name>grid</name>
 		<tag-class>org.seasar.teeda.extension.taglib.TGridTag</tag-class>
@@ -372,7 +387,6 @@
 			<rtexprvalue>false</rtexprvalue>
 		</attribute>
 	</tag>
-
 	<tag>
 		<name>validator</name>
         <tag-class>org.seasar.teeda.extension.taglib.TValidatorTag</tag-class>
@@ -399,7 +413,6 @@
 			<rtexprvalue>false</rtexprvalue>
 		</attribute>
 	</tag>
-
 	<tag>
 		<name>converter</name>
         <tag-class>org.seasar.teeda.extension.taglib.TConverterTag</tag-class>

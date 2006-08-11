@@ -19,6 +19,7 @@ import java.util.Map;
 
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.PageDesc;
@@ -26,9 +27,10 @@ import org.seasar.teeda.extension.html.PageDesc;
 /**
  * @author shot
  */
-public class IsEditFactory extends AbstractElementProcessorFactory {
+public class ConditionFactory extends AbstractElementProcessorFactory {
 
-    private static final String TAG_NAME = "outputText";
+    //TODO write tld
+    private static final String TAG_NAME = "condition";
 
     private static final String IS_PARAM_PREFIX = "is";
 
@@ -53,18 +55,19 @@ public class IsEditFactory extends AbstractElementProcessorFactory {
         String pageName = pageDesc.getPageName();
         String s = null;
         String expression = null;
-        if (StringUtil.startsWithIgnoreCase(id, IS_PARAM_PREFIX)) {
+        if (StringUtil.startsWithIgnoreCase(id, IS_PARAM_PREFIX)
+                && !StringUtil.startsWithIgnoreCase(id, ISNOT_PARAM_PREFIX)) {
             s = id.substring(IS_PARAM_PREFIX.length());
             s = StringUtil.decapitalize(s);
             s = s + " == true";
             expression = getBindingExpression(pageName, s);
         } else if (StringUtil.startsWithIgnoreCase(id, ISNOT_PARAM_PREFIX)) {
             s = id.substring(ISNOT_PARAM_PREFIX.length());
-            s = StringUtil.capitalize(s);
+            s = StringUtil.decapitalize(s);
             s = s + " == false";
             expression = getBindingExpression(pageName, s);
         }
-        properties.put(JsfConstants.RENDERER_TYPE_ATTR, expression);
+        properties.put("rendered", expression);
     }
 
     protected String getTagName() {
@@ -72,11 +75,12 @@ public class IsEditFactory extends AbstractElementProcessorFactory {
     }
 
     protected String getUri() {
-        return JsfConstants.JSF_HTML_URI;
+        return ExtensionConstants.TEEDA_EXTENSION_URI;
     }
 
     private boolean isIdMatch(String id) {
         return (StringUtil.startsWithIgnoreCase(id, IS_PARAM_PREFIX) || StringUtil
                 .startsWithIgnoreCase(id, ISNOT_PARAM_PREFIX));
     }
+
 }
