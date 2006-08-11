@@ -23,6 +23,7 @@ import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.html.ElementProcessor;
 import org.seasar.teeda.extension.html.ElementProcessorFactory;
 import org.seasar.teeda.extension.html.HtmlDesc;
+import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.TagProcessor;
 import org.seasar.teeda.extension.html.TagProcessorAssembler;
 import org.seasar.teeda.extension.html.TextProcessor;
@@ -149,7 +150,8 @@ public class TagProcessorAssembleImplTest extends TeedaExtensionTestCase {
         HtmlDescCacheImpl cache = createHtmlDescCacheImpl();
         HtmlDesc htmlDesc = cache.createHtmlDesc(path);
         TagProcessorAssembler assembler = new TagProcessorAssemblerImpl();
-        TagProcessor root = assembler.assemble(htmlDesc, null, null);
+        TagProcessor root = assembler.assemble(htmlDesc, new MockPageDesc(),
+                null);
         assertTrue("1", root instanceof ElementProcessor);
         ElementProcessor viewRoot = (ElementProcessor) root;
         assertEquals("2", 1, viewRoot.getChildSize());
@@ -370,5 +372,33 @@ public class TagProcessorAssembleImplTest extends TeedaExtensionTestCase {
         HtmlParserImpl htmlParser = new HtmlParserImpl();
         cache.setHtmlParser(htmlParser);
         return cache;
+    }
+
+    private static class MockPageDesc implements PageDesc {
+
+        public String getPageName() {
+            return null;
+        }
+
+        public boolean hasIdProperty(String id) {
+            return false;
+        }
+
+        public boolean hasItemsProperty(String name) {
+            return false;
+        }
+
+        public boolean hasMethod(String name) {
+            return false;
+        }
+
+        public boolean hasProperty(String name) {
+            return false;
+        }
+
+        public boolean isModified() {
+            return false;
+        }
+
     }
 }
