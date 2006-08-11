@@ -52,14 +52,14 @@ public class UrlBuilder {
         final URI uri = URI.create(base);
         if (uri.getScheme() != null) {
             sb.append(uri.getScheme());
-            sb.append(":");
-            if (-1 < uri.getPort()) {
-                sb.append(uri.getPort());
-            }
-            sb.append("//");
+            sb.append("://");
         }
         if (uri.getHost() != null) {
             sb.append(uri.getHost());
+        }
+        if (-1 < uri.getPort()) {
+            sb.append(":");
+            sb.append(uri.getPort());
         }
 
         if (uri.getPath() != null) {
