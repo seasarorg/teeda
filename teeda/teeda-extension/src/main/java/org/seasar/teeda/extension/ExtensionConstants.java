@@ -37,6 +37,8 @@ public interface ExtensionConstants {
 
     String ITEMS_NAME_ATTR = "itemsName";
 
+    String ITEMS_ATTR = "items";
+
     String ITEMS_SUFFIX = "Items";
 
     String GO_PREFIX = "go";

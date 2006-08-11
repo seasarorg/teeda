@@ -41,7 +41,6 @@ public class SelectManyCheckboxFactoryTest extends TeedaExtensionTestCase {
         taglibManager = getTaglibManager();
     }
 
-    //<span id="hoge"><input type="checkbox" name="hoge"/></span>
     public void testIsMatch_ok1() throws Exception {
         SelectManyCheckboxFactory selectFactory = new SelectManyCheckboxFactory();
         Map map = new HashMap();
@@ -59,7 +58,6 @@ public class SelectManyCheckboxFactoryTest extends TeedaExtensionTestCase {
         assertTrue(selectFactory.isMatch(parent, pageDesc, actionDesc));
     }
 
-    //<span id="hoge"><input type="checkbox" name="hoge"/><input type="radio" name="hoge"/></span>
     public void testIsMatch_ok2() throws Exception {
         SelectManyCheckboxFactory selectFactory = new SelectManyCheckboxFactory();
         Map map = new HashMap();
@@ -85,7 +83,6 @@ public class SelectManyCheckboxFactoryTest extends TeedaExtensionTestCase {
         assertTrue(selectFactory.isMatch(parent, pageDesc, actionDesc));
     }
 
-    //<span><input type="checkbox" name="hoge"/></span>
     public void testIsMatch_ng1() throws Exception {
         SelectManyCheckboxFactory selectFactory = new SelectManyCheckboxFactory();
         Map map = new HashMap();
@@ -102,7 +99,6 @@ public class SelectManyCheckboxFactoryTest extends TeedaExtensionTestCase {
         assertFalse(selectFactory.isMatch(parent, pageDesc, actionDesc));
     }
 
-    //<span id="hoge"><input type="checkbox" /></span>
     public void testIsMatch_ng2() throws Exception {
         SelectManyCheckboxFactory selectFactory = new SelectManyCheckboxFactory();
         Map map = new HashMap();
@@ -119,7 +115,6 @@ public class SelectManyCheckboxFactoryTest extends TeedaExtensionTestCase {
         assertFalse(selectFactory.isMatch(parent, pageDesc, actionDesc));
     }
 
-    //<span id="hoge"><input type="checkbox" name="foo"/></span>
     public void testIsMatch_ng3() throws Exception {
         SelectManyCheckboxFactory selectFactory = new SelectManyCheckboxFactory();
         Map map = new HashMap();
@@ -137,7 +132,6 @@ public class SelectManyCheckboxFactoryTest extends TeedaExtensionTestCase {
         assertFalse(selectFactory.isMatch(parent, pageDesc, actionDesc));
     }
 
-    //<span id="hoge"><input type="text" name="hoge"/></span>
     public void testIsMatch_ng4() throws Exception {
         SelectManyCheckboxFactory selectFactory = new SelectManyCheckboxFactory();
         Map map = new HashMap();
@@ -155,7 +149,6 @@ public class SelectManyCheckboxFactoryTest extends TeedaExtensionTestCase {
         assertFalse(selectFactory.isMatch(parent, pageDesc, actionDesc));
     }
 
-    //<span id="hoge"><input type="checkbox" name="hoge"/><span /></span>
     public void testIsMatch_ng5() throws Exception {
         SelectManyCheckboxFactory selectFactory = new SelectManyCheckboxFactory();
         Map map = new HashMap();
@@ -168,7 +161,6 @@ public class SelectManyCheckboxFactoryTest extends TeedaExtensionTestCase {
         ElementNodeImpl child = new ElementNodeImpl("input", map2);
         parent.addElement(child);
 
-        //it's unacceptable.
         ElementNodeImpl child2 = new ElementNodeImpl("span", new HashMap());
         parent.addElement(child2);
 

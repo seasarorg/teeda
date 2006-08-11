@@ -80,8 +80,8 @@ public class SelectManyCheckboxFactory extends AbstractElementProcessorFactory {
         String id = elementNode.getId();
         properties.put(JsfConstants.VALUE_ATTR, getBindingExpression(pageName,
                 id));
-        properties.put("items", getBindingExpression(pageName,
-                (id + ExtensionConstants.ITEMS_SUFFIX)));
+        properties.put(ExtensionConstants.ITEMS_ATTR, getBindingExpression(
+                pageName, (id + ExtensionConstants.ITEMS_SUFFIX)));
     }
 
     public boolean isLeaf() {

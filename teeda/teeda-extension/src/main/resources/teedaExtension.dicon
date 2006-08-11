@@ -4,129 +4,94 @@
 <components>
 	<include path="convention.dicon" />
 	<include path="teeda.dicon" />
-
-	<component class="org.seasar.teeda.extension.config.taglib.impl.ServletContextTaglibManagerImpl"/>
-	<component class="org.seasar.teeda.extension.config.taglib.impl.TaglibElementBuilderImpl"/>
-
-	<component class="org.seasar.teeda.extension.html.impl.HtmlParserImpl">
-		<initMethod name="addElementNodeTagName"><arg>"table"</arg></initMethod>
+	<component
+		class="org.seasar.teeda.extension.config.taglib.impl.ServletContextTaglibManagerImpl" />
+	<component
+		class="org.seasar.teeda.extension.config.taglib.impl.TaglibElementBuilderImpl" />
+	<component
+		class="org.seasar.teeda.extension.html.impl.HtmlParserImpl">
+		<initMethod name="addElementNodeTagName">
+			<arg>"table"</arg>
+		</initMethod>
 	</component>
-	<component class="org.seasar.teeda.extension.html.impl.HtmlDescCacheImpl"/>
-	<component class="org.seasar.teeda.extension.html.impl.PageDescCacheImpl"/>
-	<component class="org.seasar.teeda.extension.html.impl.ActionDescCacheImpl"/>
+	<component
+		class="org.seasar.teeda.extension.html.impl.HtmlDescCacheImpl" />
+	<component
+		class="org.seasar.teeda.extension.html.impl.PageDescCacheImpl" />
+	<component
+		class="org.seasar.teeda.extension.html.impl.ActionDescCacheImpl" />
+	<component name="selectManyCheckboxFactory"
+		class="org.seasar.teeda.extension.html.factory.SelectManyCheckboxFactory" />
+	<component name="selectOneRadioFactory"
+		class="org.seasar.teeda.extension.html.factory.SelectOneRadioFactory" />
+	<component name="commandButtonFactory"
+		class="org.seasar.teeda.extension.html.factory.CommandButtonFactory" />
+	<component name="forEachFactory"
+		class="org.seasar.teeda.extension.html.factory.ForEachFactory" />
+	<component name="formFactory"
+		class="org.seasar.teeda.extension.html.factory.FormFactory" />
+	<component name="inputHiddenFactory"
+		class="org.seasar.teeda.extension.html.factory.InputHiddenFactory" />
+	<component name="inputSecretFactory"
+		class="org.seasar.teeda.extension.html.factory.InputSecretFactory" />
+	<component name="inputTextareaFactory"
+		class="org.seasar.teeda.extension.html.factory.InputTextareaFactory" />
+	<component name="messageFactory"
+		class="org.seasar.teeda.extension.html.factory.MessageFactory" />
+	<component name="messagesFactory"
+		class="org.seasar.teeda.extension.html.factory.MessagesFactory" />
+	<component name="outputLinkFactory"
+		class="org.seasar.teeda.extension.html.factory.OutputLinkFactory" />
+	<component name="outputTextFactory"
+		class="org.seasar.teeda.extension.html.factory.OutputTextFactory" />
+	<component name="gridFactory"
+		class="org.seasar.teeda.extension.html.factory.GridFactory" />
+	<component name="gridBodyFactory"
+		class="org.seasar.teeda.extension.html.factory.GridBodyFactory" />
+	<component name="gridColFactory"
+		class="org.seasar.teeda.extension.html.factory.GridColFactory" />
+	<component name="gridColGroupFactory"
+		class="org.seasar.teeda.extension.html.factory.GridColGroupFactory" />
+	<component name="gridHeaderFactory"
+		class="org.seasar.teeda.extension.html.factory.GridHeaderFactory" />
+	<component name="gridTrFactory"
+		class="org.seasar.teeda.extension.html.factory.GridTrFactory" />
+	<component name="gridTdFactory"
+		class="org.seasar.teeda.extension.html.factory.GridTdFactory" />
+	<component name="gridThFactory"
+		class="org.seasar.teeda.extension.html.factory.GridThFactory" />
+	<component name="gridInputCommaTextFactory"
+		class="org.seasar.teeda.extension.html.factory.GridInputCommaTextFactory" />
+	<component name="gridInputTextFactory"
+		class="org.seasar.teeda.extension.html.factory.GridInputTextFactory" />
+	<component name="inputCommaTextFactory"
+		class="org.seasar.teeda.extension.html.factory.InputCommaTextFactory" />
+	<component name="inputTextFactory"
+		class="org.seasar.teeda.extension.html.factory.InputTextFactory" />
+	<component name="selectOneListboxFactory"
+		class="org.seasar.teeda.extension.html.factory.SelectOneMenuFactory" />
+	<component name="conditionFactory"
+		class="org.seasar.teeda.extension.html.factory.ConditionFactory" />
 
 	<component
-		name="selectOneRadioFactory"
-		class="org.seasar.teeda.extension.html.factory.SelectOneRadioFactory"
-	/>
-
+		class="org.seasar.teeda.extension.html.impl.TagProcessorAssemblerImpl" />
 	<component
-		name="commandButtonFactory"
-		class="org.seasar.teeda.extension.html.factory.CommandButtonFactory"
-	/>
+		class="org.seasar.teeda.extension.html.impl.TagProcessorCacheImpl" />
 	<component
-		name="forEachFactory"
-		class="org.seasar.teeda.extension.html.factory.ForEachFactory"
-	/>
+		class="org.seasar.teeda.extension.html.impl.SessionPagePersistence" />
+	<component name="viewHandler"
+		class="org.seasar.teeda.extension.html.impl.HtmlViewHandler" />
+	<component name="navigationHandler"
+		class="org.seasar.teeda.extension.html.impl.HtmlNavigationHandler" />
 	<component
-		name="formFactory"
-		class="org.seasar.teeda.extension.html.factory.FormFactory"
-	/>
+		class="org.seasar.teeda.core.application.ApplicationImpl" />
 	<component
-		name="inputHiddenFactory"
-		class="org.seasar.teeda.extension.html.factory.InputHiddenFactory"
-	/>
+		class="org.seasar.teeda.core.render.html.HtmlRenderKitImpl" />
 	<component
-		name="inputSecretFactory"
-		class="org.seasar.teeda.extension.html.factory.InputSecretFactory"
-	/>
-	<component
-		name="inputTextareaFactory"
-		class="org.seasar.teeda.extension.html.factory.InputTextareaFactory"
-	/>
-	<component
-		name="messageFactory"
-		class="org.seasar.teeda.extension.html.factory.MessageFactory"
-	/>
-	<component
-		name="messagesFactory"
-		class="org.seasar.teeda.extension.html.factory.MessagesFactory"
-	/>
-	<component
-		name="outputLinkFactory"
-		class="org.seasar.teeda.extension.html.factory.OutputLinkFactory"
-	/>
-	<component
-		name="outputTextFactory"
-		class="org.seasar.teeda.extension.html.factory.OutputTextFactory"
-	/>
-	<component
-		name="gridFactory"
-		class="org.seasar.teeda.extension.html.factory.GridFactory"
-	/>
-
-	<component
-		name="gridBodyFactory"
-		class="org.seasar.teeda.extension.html.factory.GridBodyFactory"
-	/>
-	<component
-		name="gridColFactory"
-		class="org.seasar.teeda.extension.html.factory.GridColFactory"
-	/>
-	<component
-		name="gridColGroupFactory"
-		class="org.seasar.teeda.extension.html.factory.GridColGroupFactory"
-	/>
-	<component
-		name="gridHeaderFactory"
-		class="org.seasar.teeda.extension.html.factory.GridHeaderFactory"
-	/>
-	<component
-		name="gridTrFactory"
-		class="org.seasar.teeda.extension.html.factory.GridTrFactory"
-	/>
-	<component
-		name="gridTdFactory"
-		class="org.seasar.teeda.extension.html.factory.GridTdFactory"
-	/>
-	<component
-		name="gridThFactory"
-		class="org.seasar.teeda.extension.html.factory.GridThFactory"
-	/>
-	<component
-		name="gridInputCommaTextFactory"
-		class="org.seasar.teeda.extension.html.factory.GridInputCommaTextFactory"
-	/>
-	<component
-		name="gridInputTextFactory"
-		class="org.seasar.teeda.extension.html.factory.GridInputTextFactory"
-	/>
-	<component
-		name="inputCommaTextFactory"
-		class="org.seasar.teeda.extension.html.factory.InputCommaTextFactory"
-	/>
-	<component
-		name="inputTextFactory"
-		class="org.seasar.teeda.extension.html.factory.InputTextFactory"
-	/>
-	<component
-		name="selectOneListboxFactory"
-		class="org.seasar.teeda.extension.html.factory.SelectOneMenuFactory"
-	/>
-	<component
-		name="conditionFactory"
-		class="org.seasar.teeda.extension.html.factory.ConditionFactory"
-	/>
-
-	<component class="org.seasar.teeda.extension.html.impl.TagProcessorAssemblerImpl"/>
-	<component class="org.seasar.teeda.extension.html.impl.TagProcessorCacheImpl"/>
-	<component class="org.seasar.teeda.extension.html.impl.SessionPagePersistence"/>
-	<component name="viewHandler" class="org.seasar.teeda.extension.html.impl.HtmlViewHandler"/>
-	<component name="navigationHandler" class="org.seasar.teeda.extension.html.impl.HtmlNavigationHandler"/>
-	<component class="org.seasar.teeda.core.application.ApplicationImpl"/>
-	<component class="org.seasar.teeda.core.render.html.HtmlRenderKitImpl"/>
-	<component class="org.seasar.framework.container.autoregister.JarComponentAutoRegister">
-		<property name="instanceDef">@org.seasar.framework.container.deployer.InstanceDefFactory@PROTOTYPE</property>
+		class="org.seasar.framework.container.autoregister.JarComponentAutoRegister">
+		<property name="instanceDef">
+			@org.seasar.framework.container.deployer.InstanceDefFactory@PROTOTYPE
+		</property>
 		<property name="jarFileNames">"teeda-extension.*"</property>
 		<initMethod name="addClassPattern">
 			<arg>"org.seasar.teeda.extension.validator"</arg>
@@ -134,9 +99,12 @@
 		</initMethod>
 	</component>
 
-	<component name="javax.faces.ViewRoot" class="org.seasar.teeda.extension.component.ScriptEnhanceUIViewRoot" instance="prototype" />
+	<component name="javax.faces.ViewRoot"
+		class="org.seasar.teeda.extension.component.ScriptEnhanceUIViewRoot"
+		instance="prototype" />
 
-	<component class="org.seasar.teeda.core.render.autoregister.TeedaRendererJarComponentAutoRegister">
+	<component
+		class="org.seasar.teeda.core.render.autoregister.TeedaRendererJarComponentAutoRegister">
 		<property name="referenceClass">
 			@org.seasar.teeda.extension.render.html.HtmlTextRenderer@class
 		</property>
