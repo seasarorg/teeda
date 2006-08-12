@@ -41,7 +41,8 @@ public class UrlBuilderTest extends TestCase {
         // ## Act ##
         urlBuilder.add("1", "2");
         urlBuilder.add("3", "4");
-        String actual = urlBuilder.build();
+        final String actual = urlBuilder.build();
+        System.out.println(actual);
 
         // ## Assert ##
         UrlDiff urlDiff = new UrlDiff("a?1=2&3=4", actual);
@@ -56,7 +57,8 @@ public class UrlBuilderTest extends TestCase {
         // ## Act ##
         urlBuilder.add("1", "2");
         urlBuilder.add("3", "4");
-        String actual = urlBuilder.build();
+        final String actual = urlBuilder.build();
+        System.out.println(actual);
 
         // ## Assert ##
         UrlDiff urlDiff = new UrlDiff("?b=c&1=2&3=4", actual);
@@ -71,7 +73,8 @@ public class UrlBuilderTest extends TestCase {
         // ## Act ##
         urlBuilder.add("1", "2");
         urlBuilder.add("3", "4");
-        String actual = urlBuilder.build();
+        final String actual = urlBuilder.build();
+        System.out.println(actual);
 
         // ## Assert ##
         assertEquals("a?b=c&1=2&3=4", actual);
@@ -85,7 +88,8 @@ public class UrlBuilderTest extends TestCase {
         // ## Act ##
         urlBuilder.add("1", "2");
         urlBuilder.add("3", "4");
-        String actual = urlBuilder.build();
+        final String actual = urlBuilder.build();
+        System.out.println(actual);
 
         // ## Assert ##
         assertEquals("a?b=c&1=2&3=4#fff", actual);
@@ -99,11 +103,26 @@ public class UrlBuilderTest extends TestCase {
         // ## Act ##
         urlBuilder.add("1", "2");
         urlBuilder.add("1", "4");
-        String actual = urlBuilder.build();
+        final String actual = urlBuilder.build();
+        System.out.println(actual);
 
         // ## Assert ##
         UrlDiff urlDiff = new UrlDiff("a?1=2&1=4", actual);
         assertEquals(actual, true, urlDiff.isIdentical());
+    }
+
+    public void testBuildContainsPort() throws Exception {
+        // ## Arrange ##
+        UrlBuilder urlBuilder = new UrlBuilder();
+        urlBuilder.setBase("http://foohost:9901/a.html");
+
+        // ## Act ##
+        urlBuilder.add("1", "2");
+        final String actual = urlBuilder.build();
+        System.out.println(actual);
+
+        // ## Assert ##
+        assertEquals("http://foohost:9901/a.html?1=2", actual);
     }
 
     public void testBuildFullUrl() throws Exception {
@@ -114,7 +133,8 @@ public class UrlBuilderTest extends TestCase {
         // ## Act ##
         urlBuilder.add("1", "2");
         urlBuilder.add("1", "4");
-        String actual = urlBuilder.build();
+        final String actual = urlBuilder.build();
+        System.out.println(actual);
 
         // ## Assert ##
         UrlDiff urlDiff = new UrlDiff("http://aaaa.bbb/cc/d.html?1=2&1=4#ee",
