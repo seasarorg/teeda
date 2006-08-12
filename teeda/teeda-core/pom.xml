@@ -58,6 +58,12 @@
       <artifactId>s2-framework</artifactId>
       <version>2.4.0-beta-5-SNAPSHOT</version>
       <type>jar</type>
+      <exclusions>
+        <exclusion>
+          <artifactId>servlet-api</artifactId>
+          <groupId>javax.servlet</groupId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.seasar.container</groupId>
