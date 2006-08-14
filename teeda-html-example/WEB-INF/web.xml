@@ -89,10 +89,18 @@
         <url-pattern>*.html</url-pattern>
     </filter-mapping>
 
+	<!--
     <listener>
         <listener-class>org.seasar.teeda.core.webapp.TeedaConfigureListener</listener-class>
     </listener>
+	-->
 
+	<!-- Teeda initialize servlet -->
+    <servlet>
+        <servlet-name>teedaServlet</servlet-name>
+        <servlet-class>org.seasar.teeda.core.webapp.TeedaServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
 
     <!-- facesServlet -->
     <servlet>
@@ -101,27 +109,21 @@
         <load-on-startup>2</load-on-startup>
     </servlet>
 
-    <servlet>
-        <servlet-name>s2servlet</servlet-name>
-        <servlet-class>org.seasar.framework.container.servlet.S2ContainerServlet</servlet-class>
-        <load-on-startup>1</load-on-startup>
-    </servlet>
-
     <servlet-mapping>
         <servlet-name>facesServlet</servlet-name>
         <url-pattern>*.html</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>
-        <servlet-name>s2servlet</servlet-name>
-        <url-pattern>/s2servlet</url-pattern>
+        <servlet-name>teedaServlet</servlet-name>
+        <url-pattern>/teedaServlet</url-pattern>
     </servlet-mapping>
 
-<!--
+	<!--
     <session-config>
         <session-timeout>1</session-timeout>
     </session-config>
--->
+	-->
 
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
