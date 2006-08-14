@@ -25,4 +25,10 @@ public class AddInputPage {
 	public void setArg2(int arg2) {
 		this.arg2 = arg2;
 	}
+
+	public String initialize() {
+		arg1 = 0;
+		arg2 = 0;
+		return null;
+	}
 }
