@@ -35,7 +35,7 @@ public class FacesConfigBuilderImpl implements FacesConfigBuilder {
     public FacesConfigBuilderImpl() {
     }
 
-    public FacesConfig createFacesConfigs() {
+    public FacesConfig buildFacesConfigs() {
         List configs = new LinkedList();
         for (Iterator itr = configurators_.iterator(); itr.hasNext();) {
             FacesConfigurator configurator = (FacesConfigurator) itr.next();

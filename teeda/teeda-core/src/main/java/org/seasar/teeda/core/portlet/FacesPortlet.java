@@ -134,7 +134,7 @@ public class FacesPortlet extends GenericPortlet {
             FacesConfigBuilder facesConfigBuilder = (FacesConfigBuilder) DIContainerUtil
                     .getComponent(FacesConfigBuilder.class);
 
-            FacesConfig facesConfig = facesConfigBuilder.createFacesConfigs();
+            FacesConfig facesConfig = facesConfigBuilder.buildFacesConfigs();
 
             AssemblerAssembler assembler = (AssemblerAssembler) DIContainerUtil
                     .getComponent(AssemblerAssembler.class);

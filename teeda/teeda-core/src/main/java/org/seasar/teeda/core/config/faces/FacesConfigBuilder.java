@@ -22,7 +22,7 @@ import org.seasar.teeda.core.config.faces.element.FacesConfig;
  */
 public interface FacesConfigBuilder {
 
-    public FacesConfig createFacesConfigs();
+    public FacesConfig buildFacesConfigs();
 
     public void addFacesConfigurator(FacesConfigurator configurator);
 }
