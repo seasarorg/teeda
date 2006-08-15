@@ -20,10 +20,6 @@
 		class="org.seasar.teeda.extension.html.impl.PageDescCacheImpl" />
 	<component
 		class="org.seasar.teeda.extension.html.impl.ActionDescCacheImpl" />
-	<component name="selectManyCheckboxFactory"
-		class="org.seasar.teeda.extension.html.factory.SelectManyCheckboxFactory" />
-	<component name="selectOneRadioFactory"
-		class="org.seasar.teeda.extension.html.factory.SelectOneRadioFactory" />
 	<component name="commandButtonFactory"
 		class="org.seasar.teeda.extension.html.factory.CommandButtonFactory" />
 	<component name="forEachFactory"
@@ -68,7 +64,11 @@
 		class="org.seasar.teeda.extension.html.factory.InputCommaTextFactory" />
 	<component name="inputTextFactory"
 		class="org.seasar.teeda.extension.html.factory.InputTextFactory" />
-	<component name="selectOneListboxFactory"
+	<component name="selectManyCheckboxFactory"
+		class="org.seasar.teeda.extension.html.factory.SelectManyCheckboxFactory" />
+	<component name="selectOneRadioFactory"
+		class="org.seasar.teeda.extension.html.factory.SelectOneRadioFactory" />
+	<component name="selectOneMenuFactory"
 		class="org.seasar.teeda.extension.html.factory.SelectOneMenuFactory" />
 	<component name="conditionFactory"
 		class="org.seasar.teeda.extension.html.factory.ConditionFactory" />
