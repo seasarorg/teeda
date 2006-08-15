@@ -169,7 +169,7 @@ public class HtmlResponseWriter extends ResponseWriter {
     private String htmlSpecialChars(final String s, final boolean quote,
             final boolean amp) {
         char[] chars = s.toCharArray();
-        StringBuffer sb = new StringBuffer();
+        StringBuffer sb = new StringBuffer(chars.length + 50);
         for (int i = 0; i < chars.length; i++) {
             char c = chars[i];
             if (c == '<') {

@@ -162,6 +162,8 @@ public class THtmlGridRenderer extends TForEachRenderer {
         // encodeLeftHeader
         if (attribute.hasLeftFixCols()) {
             writer.startElement(JsfConstants.TABLE_ELEM, header);
+            RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR,
+                    getIdForRender(context, htmlGrid) + "LeftHeaderTable");
             renderInnerTableAttributes(writer);
 
             writer.startElement(JsfConstants.THEAD_ELEM, header);
@@ -192,6 +194,8 @@ public class THtmlGridRenderer extends TForEachRenderer {
         }
 
         writer.startElement(JsfConstants.TABLE_ELEM, header);
+        RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR,
+                getIdForRender(context, htmlGrid) + "RightHeaderTable");
         renderInnerTableAttributes(writer);
         writer.startElement(JsfConstants.THEAD_ELEM, header);
         for (final Iterator it = getRenderedChildrenIterator(header); it
@@ -313,6 +317,8 @@ public class THtmlGridRenderer extends TForEachRenderer {
             }
 
             writer.startElement(JsfConstants.TABLE_ELEM, body);
+            RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR,
+                    getIdForRender(context, htmlGrid) + "LeftBodyTable");
             renderInnerTableAttributes(writer);
             writer.startElement(JsfConstants.TBODY_ELEM, body);
 
@@ -375,6 +381,8 @@ public class THtmlGridRenderer extends TForEachRenderer {
         }
 
         writer.startElement(JsfConstants.TABLE_ELEM, body);
+        RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR,
+                getIdForRender(context, htmlGrid) + "RightBodyTable");
         renderInnerTableAttributes(writer);
         writer.startElement(JsfConstants.TBODY_ELEM, body);
 
@@ -445,12 +453,14 @@ public class THtmlGridRenderer extends TForEachRenderer {
             throws IOException {
         writer.startElement(JsfConstants.TD_ELEM, td);
         writer.startElement(JsfConstants.DIV_ELEM, td);
-        RendererUtil.renderAttribute(writer, JsfConstants.CLASS_ATTR,
-                createTdStyleClassAttribute(td));
-        RendererUtil.renderAttribute(writer, JsfConstants.STYLE_ATTR,
-                createTdStyleAttribute(td, attribute, columnNo));
+        writer.writeAttribute(JsfConstants.CLASS_ATTR,
+                createTdStyleClassAttribute(td), JsfConstants.CLASS_ATTR);
+        writer.writeAttribute(JsfConstants.STYLE_ATTR, createTdStyleAttribute(
+                td, attribute, columnNo), JsfConstants.STYLE_ATTR);
         writer.startElement(JsfConstants.NOBR_ELEM, td);
+
         encodeDescendantComponent(context, td);
+
         writer.endElement(JsfConstants.NOBR_ELEM);
         writer.endElement(JsfConstants.DIV_ELEM);
         writer.endElement(JsfConstants.TD_ELEM);
@@ -476,14 +486,10 @@ public class THtmlGridRenderer extends TForEachRenderer {
     }
 
     private THtmlGridRenderer.GridAttribute getGridAttribute(THtmlGrid htmlGrid) {
-        THtmlGridRenderer.GridAttribute attribute = (THtmlGridRenderer.GridAttribute) htmlGrid
-                .getAttributes().get(GRID_ATTRIBUTE);
-        attribute = new GridAttribute(htmlGrid);
-
+        THtmlGridRenderer.GridAttribute attribute = new GridAttribute(htmlGrid);
         setupTableSize(htmlGrid, attribute);
         setupWidth(htmlGrid, attribute);
         setupHeight(htmlGrid, attribute);
-        htmlGrid.getAttributes().put(GRID_ATTRIBUTE, attribute);
         return attribute;
     }
 

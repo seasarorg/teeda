@@ -78,7 +78,7 @@ Teeda.THtmlGrid = {
 <table id="someGridXY" border="0" cellspacing="0" cellpadding="0">
 	<tr>
 		<td>
-			<table cellspacing="1" cellpadding="0" class="gridTable">
+			<table id="someGridXYLeftHeaderTable" cellspacing="1" cellpadding="0" class="gridTable">
 				<thead>
 					<tr>
 						<th><div class="gridHeader" style="overflow:hidden; width:40px;"><nobr>th1</nobr></div></th>
@@ -91,7 +91,7 @@ Teeda.THtmlGrid = {
 		</td>
 		<td>
 			<div id="someGridXYRightHeader" style="overflow:hidden; width:114px;">
-				<table cellspacing="1" cellpadding="0" class="gridTable">
+				<table id="someGridXYRightHeaderTable" cellspacing="1" cellpadding="0" class="gridTable">
 					<thead>
 						<tr>
 							<th><div class="gridHeader" style="overflow:hidden; width:50px;"><nobr>th2</nobr></div></th>
@@ -109,7 +109,7 @@ Teeda.THtmlGrid = {
 	<tr>
 		<td style="vertical-align:top;">
 			<div id="someGridXYLeftBody" style="overflow:hidden; height:110px;">
-				<table cellspacing="1" cellpadding="0" class="gridTable">
+				<table id="someGridXYLeftBodyTable" cellspacing="1" cellpadding="0" class="gridTable">
 					<tbody>
 						<tr class="row_odd">
 							<td><div class="gridCell" style="overflow:hidden; width:40px;"><nobr>TD1_1</nobr></div></td>
@@ -142,7 +142,7 @@ Teeda.THtmlGrid = {
 		<td style="vertical-align:top;">
 			<div id="someGridXYRightBody" style="overflow:scroll; width:130px; height:126px;"
 				onscroll="document.all.someGridXYRightHeader.scrollLeft=this.scrollLeft; document.all.someGridXYLeftBody.scrollTop=this.scrollTop;">
-				<table cellspacing="1" cellpadding="0" class="gridTable">
+				<table id="someGridXYRightBodyTable" cellspacing="1" cellpadding="0" class="gridTable">
 					<tbody>
 						<tr class="row_odd">
 							<td><div class="gridCell" style="overflow:hidden; width:50px;"><nobr>
