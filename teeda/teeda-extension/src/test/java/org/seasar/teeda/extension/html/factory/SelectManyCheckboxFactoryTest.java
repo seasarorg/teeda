@@ -169,6 +169,17 @@ public class SelectManyCheckboxFactoryTest extends TeedaExtensionTestCase {
         assertFalse(selectFactory.isMatch(parent, pageDesc, actionDesc));
     }
 
+    public void testIsMatch_ng6() throws Exception {
+        SelectManyCheckboxFactory selectFactory = new SelectManyCheckboxFactory();
+        Map map = new HashMap();
+        map.put("id", "hoge");
+        ElementNodeImpl parent = new ElementNodeImpl("span", map);
+
+        PageDesc pageDesc = new PageDescImpl(FooPage.class, "fooPage");
+        ActionDesc actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
+        assertFalse(selectFactory.isMatch(parent, pageDesc, actionDesc));
+    }
+
     public void testCreateProcessor() throws Exception {
         // ## Arrange ##
         SelectManyCheckboxFactory factory = new SelectManyCheckboxFactory();

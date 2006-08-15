@@ -52,6 +52,9 @@ public class SelectManyCheckboxFactory extends AbstractElementProcessorFactory {
         if (!pageDesc.hasItemsProperty(items)) {
             return false;
         }
+        if (elementNode.getChildSize() == 0) {
+            return false;
+        }
         for (int i = 0; i < elementNode.getChildSize(); i++) {
             HtmlNode child = elementNode.getChild(i);
             if (child instanceof ElementNode) {
