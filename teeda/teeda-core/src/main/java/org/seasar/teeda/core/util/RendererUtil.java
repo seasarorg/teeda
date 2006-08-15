@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -21,6 +21,7 @@ import java.util.Map;
 
 import javax.faces.FacesException;
 import javax.faces.application.FacesMessage;
+import javax.faces.component.ComponentUtil_;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
 import javax.faces.component.UIOutput;
@@ -55,7 +56,7 @@ public class RendererUtil {
             final String attributeName = attributeNames[i];
             /*
              * don't use UIComponent#containsKey method.
-             * 
+             *
              * because when attributeName matches a property of this
              * UIComponent, containsKey returns false. See
              * UIComponent#getAttributes API document.
@@ -267,10 +268,7 @@ public class RendererUtil {
             return converter;
         }
         final Class valueType = getValueType(context, component);
-        if (valueType == null) {
-            return null;
-        }
-        if (String.class.equals(valueType) || Object.class.equals(valueType)) {
+        if (ComponentUtil_.isPerformNoConversion(valueType)) {
             return null;
         }
         try {

@@ -58,7 +58,8 @@ public class SelectOneMenuFactory extends AbstractElementProcessorFactory {
                 - ExtensionConstants.ITEMS_SUFFIX.length());
         properties.put(JsfConstants.VALUE_ATTR, getBindingExpression(pageName,
                 target));
-        properties.put("items", getBindingExpression(pageName, id));
+        properties.put(ExtensionConstants.ITEMS_ATTR, getBindingExpression(
+                pageName, id));
 
     }
 
