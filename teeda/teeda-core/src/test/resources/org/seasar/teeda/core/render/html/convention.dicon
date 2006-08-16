@@ -3,7 +3,5 @@
 	"http://www.seasar.org/dtd/components21.dtd">
 <components>
 	<component class="org.seasar.framework.convention.impl.NamingConventionImpl">
-		<!-- change here -->
-		<property name="rootPackageName">"org.seasar.teeda"</property>
 	</component>
 </components>
