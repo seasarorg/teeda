@@ -130,7 +130,8 @@ public abstract class AbstractRendererTest extends TestCase {
         return s;
     }
 
-    protected Diff diff(final String expected, final String actual) throws SAXException, IOException, ParserConfigurationException {
+    protected Diff diff(final String expected, final String actual)
+            throws SAXException, IOException, ParserConfigurationException {
         Document cDoc = XMLUnit.buildDocument(XMLUnit.getControlParser(),
                 new StringReader(revertEntity(expected)));
         Document tDoc = XMLUnit.buildDocument(XMLUnit.getTestParser(),
@@ -151,7 +152,7 @@ public abstract class AbstractRendererTest extends TestCase {
         return s;
     }
 
-    protected String afterText(final String s1, String s2) {
+    protected String afterText(final String s1, final String s2) {
         final int pos = s1.indexOf(s2);
         if (pos == -1) {
             return s1;

@@ -229,11 +229,13 @@ public abstract class AbstractRenderer extends Renderer {
                 JsfConstants.JAVASCRIPT_VALUE, null);
         writer.writeAttribute(JsfConstants.TYPE_ATTR,
                 JsfConstants.TEXT_JAVASCRIPT_VALUE, null);
+        writer.write(JsfConstants.LINE_SP);
         writer.write("<!--");
         writer.write(JsfConstants.LINE_SP);
         writer.write(scirptBody);
         writer.write(JsfConstants.LINE_SP);
         writer.write("//-->");
+        writer.write(JsfConstants.LINE_SP);
         writer.endElement(JsfConstants.SCRIPT_ELEM);
     }
 

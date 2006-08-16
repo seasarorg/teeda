@@ -36,7 +36,7 @@ if (typeof(Teeda.THtmlGrid) == 'undefined') {
   Teeda.THtmlGrid = {};
 }
 Teeda.THtmlGrid = {
-  getFirstChildByTagName: function (fromNode, elemName) {
+  _getFirstChildByTagName: function (fromNode, elemName) {
     var self = Teeda.THtmlGrid;
     if (!fromNode.hasChildNodes()) {
       return null;
@@ -51,7 +51,7 @@ Teeda.THtmlGrid = {
       if (elemName == child.tagName.toLowerCase()) {
         return child;
       }
-      var ret = self.getFirstChildByTagName(child, elemName);
+      var ret = self._getFirstChildByTagName(child, elemName);
       if (ret) {
         return ret;
       }
@@ -59,19 +59,56 @@ Teeda.THtmlGrid = {
   },
   editOn : function(div) {
     var self = Teeda.THtmlGrid;
-    var span = self.getFirstChildByTagName(div, 'span');
-    var input = self.getFirstChildByTagName(div, 'input');
+    var span = self._getFirstChildByTagName(div, 'span');
+    var input = self._getFirstChildByTagName(div, 'input');
     input.value = span.innerHTML;
     span.style.display = 'none';
     input.style.display = 'inline';
     input.focus();
   },
-  editOff: function (input) {
+  editOff : function (input) {
     var self = Teeda.THtmlGrid;
-    var span = self.getFirstChildByTagName(input.parentNode, 'span');
+    var span = self._getFirstChildByTagName(input.parentNode, 'span');
     span.innerHTML = input.value;
     input.style.display = 'none';
     span.style.display = 'inline';
+  },
+  _adjustWidth : function (headerTable, bodyTable) {
+    var self = Teeda.THtmlGrid;
+    var headerRowLength = headerTable.rows.length;
+    var bodyRowLength = bodyTable.rows.length;
+    if (headerRowLength <= 0 || bodyRowLength <= 0 || bodyRowLength < headerRowLength) {
+      return;
+    }
+    for (var rowCount = 0; rowCount < bodyRowLength; rowCount++) {
+      var headerCells = headerTable.rows[rowCount % headerRowLength].cells;
+      var bodyCells = bodyTable.rows[rowCount].cells;
+      var headerCellsLength = headerCells.length;
+      var bodyCellsLength = bodyCells.length;
+      if (headerCellsLength != bodyCellsLength) {
+        return;
+      }
+      for (var cellCount = 0; cellCount < headerCellsLength; cellCount++) {
+        var headerDiv = headerCells[cellCount].firstChild;
+        var bodyDiv = bodyCells[cellCount].firstChild;
+        var originalWidth = headerDiv.style.width.replace(/px/,"");
+        var headerCellWidth = headerDiv.offsetWidth;
+        var bodyCellWidth = bodyDiv.offsetWidth;
+        var longer = Math.max(headerCellWidth, bodyCellWidth);
+        longer = Math.max(longer, originalWidth);
+        headerDiv.style.width = longer;
+        bodyDiv.style.width = longer;
+      }
+    }
+  },
+  adjustGridSize : function (gridId) {
+    var self = Teeda.THtmlGrid;
+    var leftHeaderTable = document.getElementById(gridId + 'LeftHeaderTable');
+    var leftBodyTable = document.getElementById(gridId + 'LeftBodyTable');
+    var rightHeaderTable = document.getElementById(gridId + 'RightHeaderTable');
+    var rightBodyTable = document.getElementById(gridId + 'RightBodyTable');
+    self._adjustWidth(leftHeaderTable, leftBodyTable);
+    self._adjustWidth(rightHeaderTable, rightBodyTable);
   }
 };
 //-->
@@ -109,32 +146,32 @@ Teeda.THtmlGrid = {
 				<table id="someGridYLeftBodyTable" cellspacing="1" cellpadding="0" class="gridTable">
 					<tbody>
 						<tr class="row_odd">
-							<td><div class="gridCell" style="overflow:hidden; width:40px;"><nobr>TD1_1</nobr></div></td>
-							<td><div class="gridCell" style="overflow:hidden; width:40px;"><nobr>TD2_1</nobr></div></td>
+							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD1_1</nobr></div></td>
+							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD2_1</nobr></div></td>
 						</tr>
 						<tr class="row_even">
-							<td><div class="gridCell" style="overflow:hidden; width:40px;"><nobr>TD1_2</nobr></div></td>
-							<td><div class="gridCell" style="overflow:hidden; width:40px;"><nobr>TD2_2</nobr></div></td>
+							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD1_2</nobr></div></td>
+							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD2_2</nobr></div></td>
 						</tr>
 						<tr class="row_odd">
-							<td><div class="gridCell" style="overflow:hidden; width:40px;"><nobr>TD1_3</nobr></div></td>
-							<td><div class="gridCell" style="overflow:hidden; width:40px;"><nobr>TD2_3</nobr></div></td>
+							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD1_3</nobr></div></td>
+							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD2_3</nobr></div></td>
 						</tr>
 						<tr class="row_even">
-							<td><div class="gridCell" style="overflow:hidden; width:40px;"><nobr>TD1_4</nobr></div></td>
-							<td><div class="gridCell" style="overflow:hidden; width:40px;"><nobr>TD2_4</nobr></div></td>
+							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD1_4</nobr></div></td>
+							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD2_4</nobr></div></td>
 						</tr>
 						<tr class="row_odd">
-							<td><div class="gridCell" style="overflow:hidden; width:40px;"><nobr>TD1_5</nobr></div></td>
-							<td><div class="gridCell" style="overflow:hidden; width:40px;"><nobr>TD2_5</nobr></div></td>
+							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD1_5</nobr></div></td>
+							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD2_5</nobr></div></td>
 						</tr>
 						<tr class="row_even">
-							<td><div class="gridCell" style="overflow:hidden; width:40px;"><nobr>TD1_6</nobr></div></td>
-							<td><div class="gridCell" style="overflow:hidden; width:40px;"><nobr>TD2_6</nobr></div></td>
+							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD1_6</nobr></div></td>
+							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD2_6</nobr></div></td>
 						</tr>
 						<tr class="row_odd">
-							<td><div class="gridCell" style="overflow:hidden; width:40px;"><nobr>TD1_7</nobr></div></td>
-							<td><div class="gridCell" style="overflow:hidden; width:40px;"><nobr>TD2_7</nobr></div></td>
+							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD1_7</nobr></div></td>
+							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD2_7</nobr></div></td>
 						</tr>
 					</tbody>
 				</table>
@@ -146,75 +183,75 @@ Teeda.THtmlGrid = {
 				<table id="someGridYRightBodyTable" cellspacing="1" cellpadding="0" class="gridTable">
 					<tbody>
 						<tr class="row_odd">
-							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>
+							<td><div class="gridCell" style="overflow:hidden;"><nobr>
 								<div onclick="Teeda.THtmlGrid.editOn(this);">
 								<span>TD3_1</span><input type="text" id="gridText" name="someGridY:0:gridText" value="TD3_1" onblur="Teeda.THtmlGrid.editOff(this);" class="gridCellEdit" style="display:none;" />
 								</div>
 							</nobr></div></td>
-							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>TD4_1</nobr></div></td>
-							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>TD5_1</nobr></div></td>
-							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>TD6_1</nobr></div></td>
+							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD4_1</nobr></div></td>
+							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD5_1</nobr></div></td>
+							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD6_1</nobr></div></td>
 						</tr>
 						<tr class="row_even">
-							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>
+							<td><div class="gridCell" style="overflow:hidden;"><nobr>
 								<div onclick="Teeda.THtmlGrid.editOn(this);">
 								<span>TD3_2</span><input type="text" id="gridText" name="someGridY:1:gridText" value="TD3_2" onblur="Teeda.THtmlGrid.editOff(this);" class="gridCellEdit" style="display:none;" />
 								</div>
 							</nobr></div></td>
-							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>TD4_2</nobr></div></td>
-							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>TD5_2</nobr></div></td>
-							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>TD6_2</nobr></div></td>
+							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD4_2</nobr></div></td>
+							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD5_2</nobr></div></td>
+							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD6_2</nobr></div></td>
 						</tr>
 						<tr class="row_odd">
-							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>
+							<td><div class="gridCell" style="overflow:hidden;"><nobr>
 								<div onclick="Teeda.THtmlGrid.editOn(this);">
 								<span>TD3_3</span><input type="text" id="gridText" name="someGridY:2:gridText" value="TD3_3" onblur="Teeda.THtmlGrid.editOff(this);" class="gridCellEdit" style="display:none;" />
 								</div>
 							</nobr></div></td>
-							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>TD4_3</nobr></div></td>
-							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>TD5_3</nobr></div></td>
-							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>TD6_3</nobr></div></td>
+							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD4_3</nobr></div></td>
+							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD5_3</nobr></div></td>
+							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD6_3</nobr></div></td>
 						</tr>
 						<tr class="row_even">
-							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>
+							<td><div class="gridCell" style="overflow:hidden;"><nobr>
 								<div onclick="Teeda.THtmlGrid.editOn(this);">
 								<span>TD3_4</span><input type="text" id="gridText" name="someGridY:3:gridText" value="TD3_4" onblur="Teeda.THtmlGrid.editOff(this);" class="gridCellEdit" style="display:none;" />
 								</div>
 							</nobr></div></td>
-							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>TD4_4</nobr></div></td>
-							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>TD5_4</nobr></div></td>
-							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>TD6_4</nobr></div></td>
+							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD4_4</nobr></div></td>
+							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD5_4</nobr></div></td>
+							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD6_4</nobr></div></td>
 						</tr>
 						<tr class="row_odd">
-							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>
+							<td><div class="gridCell" style="overflow:hidden;"><nobr>
 								<div onclick="Teeda.THtmlGrid.editOn(this);">
 								<span>TD3_5</span><input type="text" id="gridText" name="someGridY:4:gridText" value="TD3_5" onblur="Teeda.THtmlGrid.editOff(this);" class="gridCellEdit" style="display:none;" />
 								</div>
 							</nobr></div></td>
-							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>TD4_5</nobr></div></td>
-							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>TD5_5</nobr></div></td>
-							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>TD6_5</nobr></div></td>
+							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD4_5</nobr></div></td>
+							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD5_5</nobr></div></td>
+							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD6_5</nobr></div></td>
 						</tr>
 						<tr class="row_even">
-							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>
+							<td><div class="gridCell" style="overflow:hidden;"><nobr>
 								<div onclick="Teeda.THtmlGrid.editOn(this);">
 								<span>TD3_6</span><input type="text" id="gridText" name="someGridY:5:gridText" value="TD3_6" onblur="Teeda.THtmlGrid.editOff(this);" class="gridCellEdit" style="display:none;" />
 								</div>
 							</nobr></div></td>
-							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>TD4_6</nobr></div></td>
-							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>TD5_6</nobr></div></td>
-							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>TD6_6</nobr></div></td>
+							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD4_6</nobr></div></td>
+							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD5_6</nobr></div></td>
+							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD6_6</nobr></div></td>
 						</tr>
 						<tr class="row_odd">
-							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>
+							<td><div class="gridCell" style="overflow:hidden;"><nobr>
 								<div onclick="Teeda.THtmlGrid.editOn(this);">
 								<span>TD3_7</span>
 								<input type="text" id="gridText" name="someGridY:6:gridText" value="TD3_7" onblur="Teeda.THtmlGrid.editOff(this);" class="gridCellEdit" style="display:none;" />
 								</div>
 							</nobr></div></td>
-							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>TD4_7</nobr></div></td>
-							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>TD5_7</nobr></div></td>
-							<td><div class="gridCell" style="overflow:hidden; width:30px;"><nobr>TD6_7</nobr></div></td>
+							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD4_7</nobr></div></td>
+							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD5_7</nobr></div></td>
+							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD6_7</nobr></div></td>
 						</tr>
 					</tbody>
 				</table>
@@ -222,6 +259,11 @@ Teeda.THtmlGrid = {
 		</td>
 	</tr>
 </table>
+<script language="JavaScript" type="text/javascript">
+<!--
+Teeda.THtmlGrid.adjustGridSize('someGridY');document.getElementById('someGridYRightHeader').style.width = 74;document.getElementById('someGridYRightBody').style.width = 90;
+//-->
+</script>
 <!-- END -->
 </body>
 </html>

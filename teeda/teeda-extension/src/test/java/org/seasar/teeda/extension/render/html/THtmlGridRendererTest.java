@@ -33,6 +33,7 @@ import org.seasar.teeda.core.el.impl.commons.CommonsExpressionProcessorImpl;
 import org.seasar.teeda.core.mock.MockHtmlInputText;
 import org.seasar.teeda.core.mock.MockHtmlOutputText;
 import org.seasar.teeda.core.render.html.HtmlOutputTextRenderer;
+import org.seasar.teeda.core.unit.ExceptionAssert;
 import org.seasar.teeda.core.unit.TestUtil;
 import org.seasar.teeda.extension.component.html.THtmlGridBody;
 import org.seasar.teeda.extension.component.html.THtmlGridColumn;
@@ -82,19 +83,43 @@ public class THtmlGridRendererTest extends RendererTest {
         assertEquals("", getResponseText());
     }
 
+    public void testEncode_NoId() throws Exception {
+        // ## Arrange ##
+
+        // ## Act ##
+        // ## Assert ##
+        try {
+            encodeByRenderer(renderer, htmlGrid);
+        } catch (IllegalStateException e) {
+            ExceptionAssert.assertMessageExist(e);
+        }
+    }
+
     public void testEncode_NoValue() throws Exception {
         // ## Arrange ##
+        htmlGrid.setId("aa");
 
         // ## Act ##
         encodeByRenderer(renderer, htmlGrid);
 
         // ## Assert ##
         final String responseText = getResponseText();
-        assertEquals(1, containCount(responseText, "</script>"));
+        System.out.println(responseText);
+        assertEquals(2, containCount(responseText, "</script>"));
         final String afterText = afterText(responseText, "</script>");
+        final String a = deleteAfter(afterText, "</table>");
+
         assertEquals(
-                "<table border=\"0\" cellspacing=\"0\" cellpadding=\"0\"></table>",
-                afterText);
+                "<table id=\"aa\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\"></table>",
+                a);
+    }
+
+    private String deleteAfter(final String s1, final String s2) {
+        final int pos = s1.indexOf(s2);
+        if (-1 < pos) {
+            return s1.substring(0, pos + s2.length());
+        }
+        return s1;
     }
 
     private int containCount(final String responseText, final String s) {

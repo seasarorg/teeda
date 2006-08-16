@@ -31,6 +31,8 @@ import org.seasar.framework.util.ResourceUtil;
 import org.seasar.framework.util.StringUtil;
 import org.seasar.framework.util.TextUtil;
 import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.core.scope.impl.DispatchScope;
+import org.seasar.teeda.core.scope.impl.DispatchScopeFactory;
 import org.seasar.teeda.core.util.RendererUtil;
 import org.seasar.teeda.extension.component.html.THtmlGrid;
 import org.seasar.teeda.extension.component.html.THtmlGridBody;
@@ -59,6 +61,16 @@ public class THtmlGridRenderer extends TForEachRenderer {
 
     private static final String LEFT_FIXED_CLASS_NAME = "T_leftFixed";
 
+    private static final String LEFT_HEADER_TABLE = "LeftHeaderTable";
+
+    private static final String RIGHT_HEADER = "RightHeader";
+
+    private static final String RIGHT_HEADER_TABLE = RIGHT_HEADER + "Table";
+
+    private static final String RIGHT_BODY = "RightBody";
+
+    private static final String RIGHT_BODY_TABLE = RIGHT_BODY + "Table";
+
     private static final String GRID_ATTRIBUTE = THtmlGrid.class.getName()
             + ".GRID_ATTRIBUTE";
 
@@ -76,8 +88,12 @@ public class THtmlGridRenderer extends TForEachRenderer {
 
     protected void encodeHtmlGridBegin(final FacesContext context,
             final THtmlGrid htmlGrid) throws IOException {
+        if (StringUtil.isBlank(htmlGrid.getId())) {
+            throw new IllegalStateException(
+                    "THtmlGrid should have 'id' attribute");
+        }
         final ResponseWriter writer = context.getResponseWriter();
-        renderJavascript(context, htmlGrid, writer);
+        renderJavaScript(context, htmlGrid, writer);
         writer.startElement(JsfConstants.TABLE_ELEM, htmlGrid);
         RendererUtil.renderIdAttributeIfNecessary(writer, htmlGrid,
                 getIdForRender(context, htmlGrid));
@@ -88,19 +104,26 @@ public class THtmlGridRenderer extends TForEachRenderer {
                 .renderAttribute(writer, JsfConstants.CELLPADDING_ATTR, "0");
     }
 
-    private void renderJavascript(FacesContext context, THtmlGrid htmlGrid,
+    private void renderJavaScript(FacesContext context, THtmlGrid htmlGrid,
             ResponseWriter writer) throws IOException {
-        if (shouldRenderJavascript(context, htmlGrid)) {
+        if (shouldRenderJavaScript(context, htmlGrid)) {
             final String resourcePath = ResourceUtil.getResourcePath(
                     THtmlGrid.class.getName(), "js");
             final String scriptBody = TextUtil.readText(resourcePath).trim();
             renderJavaScriptElement(writer, scriptBody);
+            DispatchScopeFactory.getDispatchScope().put(ALREADY_WRITE,
+                    ALREADY_WRITE);
         }
     }
 
-    // TODO
-    private boolean shouldRenderJavascript(FacesContext context,
+    // TODO test
+    private boolean shouldRenderJavaScript(FacesContext context,
             THtmlGrid htmlGrid) {
+        final DispatchScope dispatchScope = DispatchScopeFactory
+                .getDispatchScope();
+        if (dispatchScope.contains(ALREADY_WRITE)) {
+            return false;
+        }
         return true;
     }
 
@@ -116,7 +139,8 @@ public class THtmlGridRenderer extends TForEachRenderer {
     protected void encodeHtmlGridChildren(FacesContext context,
             THtmlGrid htmlGrid) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
-        THtmlGridRenderer.GridAttribute attribute = getGridAttribute(htmlGrid);
+        THtmlGridRenderer.GridAttribute attribute = getGridAttribute(context,
+                htmlGrid);
         for (final Iterator it = getRenderedChildrenIterator(htmlGrid); it
                 .hasNext();) {
             final UIComponent child = (UIComponent) it.next();
@@ -150,6 +174,23 @@ public class THtmlGridRenderer extends TForEachRenderer {
             throws IOException {
         ResponseWriter writer = context.getResponseWriter();
         writer.endElement(JsfConstants.TABLE_ELEM);
+        THtmlGridRenderer.GridAttribute attribute = getGridAttribute(context,
+                htmlGrid);
+        encodeGridAdjustJavaScript(context, htmlGrid, writer, attribute);
+    }
+
+    // TODO
+    private void encodeGridAdjustJavaScript(FacesContext context,
+            THtmlGrid htmlGrid, ResponseWriter writer, GridAttribute attribute)
+            throws IOException {
+        final StringBuffer scirptBody = new StringBuffer(200);
+        final String id = getIdForRender(context, htmlGrid);
+        scirptBody.append("Teeda.THtmlGrid.adjustGridSize('" + id + "');");
+        scirptBody.append("document.getElementById('" + id + RIGHT_HEADER
+                + "').style.width = " + attribute.getRightHeaderWidth() + ";");
+        scirptBody.append("document.getElementById('" + id + RIGHT_BODY
+                + "').style.width = " + attribute.getRightBodyWidth() + ";");
+        renderJavaScriptElement(writer, new String(scirptBody));
     }
 
     private void encodeGridHeader(final FacesContext context,
@@ -159,11 +200,12 @@ public class THtmlGridRenderer extends TForEachRenderer {
         writer.startElement(JsfConstants.TR_ELEM, header);
         writer.startElement(JsfConstants.TD_ELEM, header);
 
+        final String id = getIdForRender(context, htmlGrid);
         // encodeLeftHeader
         if (attribute.hasLeftFixCols()) {
             writer.startElement(JsfConstants.TABLE_ELEM, header);
-            RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR,
-                    getIdForRender(context, htmlGrid) + "LeftHeaderTable");
+            RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR, id
+                    + LEFT_HEADER_TABLE);
             renderInnerTableAttributes(writer);
 
             writer.startElement(JsfConstants.THEAD_ELEM, header);
@@ -185,17 +227,17 @@ public class THtmlGridRenderer extends TForEachRenderer {
 
         // encodeRightHeader
         writer.startElement(JsfConstants.DIV_ELEM, header);
-        RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR,
-                getIdForRender(context, htmlGrid) + "RightHeader");
+
+        RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR, id
+                + RIGHT_HEADER);
         if (htmlGrid.isScrollHorizontal()) {
             RendererUtil.renderAttribute(writer, JsfConstants.STYLE_ATTR,
-                    "overflow:hidden; width:" + attribute.getRightHeaderWidth()
-                            + "px;");
+                    "overflow:hidden;");
         }
 
         writer.startElement(JsfConstants.TABLE_ELEM, header);
-        RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR,
-                getIdForRender(context, htmlGrid) + "RightHeaderTable");
+        RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR, id
+                + RIGHT_HEADER_TABLE);
         renderInnerTableAttributes(writer);
         writer.startElement(JsfConstants.THEAD_ELEM, header);
         for (final Iterator it = getRenderedChildrenIterator(header); it
@@ -349,11 +391,10 @@ public class THtmlGridRenderer extends TForEachRenderer {
         // encodeRightBody
         writer.startElement(JsfConstants.DIV_ELEM, body);
         RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR,
-                getIdForRender(context, htmlGrid) + "RightBody");
+                getIdForRender(context, htmlGrid) + RIGHT_BODY);
         if (htmlGrid.isScrollHorizontal() && htmlGrid.isScrollVertical()) {
             RendererUtil.renderAttribute(writer, JsfConstants.STYLE_ATTR,
-                    "overflow:scroll; width:" + attribute.getRightBodyWidth()
-                            + "px; height:" + attribute.getRightBodyHeight()
+                    "overflow:scroll; height:" + attribute.getRightBodyHeight()
                             + "px;");
             RendererUtil
                     .renderAttribute(
@@ -366,8 +407,7 @@ public class THtmlGridRenderer extends TForEachRenderer {
                                     + "LeftBody.scrollTop=this.scrollTop;");
         } else if (htmlGrid.isScrollHorizontal()) {
             RendererUtil.renderAttribute(writer, JsfConstants.STYLE_ATTR,
-                    "overflow-x:scroll; width:" + attribute.getRightBodyWidth()
-                            + "px;");
+                    "overflow-x:scroll;");
             RendererUtil.renderAttribute(writer, JsfConstants.ONSCROLL_ATTR,
                     "document.all." + htmlGrid.getId()
                             + "RightHeader.scrollLeft=this.scrollLeft;");
@@ -382,7 +422,7 @@ public class THtmlGridRenderer extends TForEachRenderer {
 
         writer.startElement(JsfConstants.TABLE_ELEM, body);
         RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR,
-                getIdForRender(context, htmlGrid) + "RightBodyTable");
+                getIdForRender(context, htmlGrid) + RIGHT_BODY_TABLE);
         renderInnerTableAttributes(writer);
         writer.startElement(JsfConstants.TBODY_ELEM, body);
 
@@ -477,19 +517,28 @@ public class THtmlGridRenderer extends TForEachRenderer {
     private String createTdStyleAttribute(THtmlGridTd td,
             final THtmlGridRenderer.GridAttribute attribute, final int columnNo) {
         final String style = td.getStyle();
-        final String s = "overflow:hidden; width:"
-                + attribute.getColumnWidth(columnNo) + "px;";
+        final String s = "overflow:hidden;";
         if (StringUtil.isBlank(style)) {
             return s;
         }
         return s + " " + style;
     }
 
-    private THtmlGridRenderer.GridAttribute getGridAttribute(THtmlGrid htmlGrid) {
-        THtmlGridRenderer.GridAttribute attribute = new GridAttribute(htmlGrid);
+    private THtmlGridRenderer.GridAttribute getGridAttribute(
+            final FacesContext context, final THtmlGrid htmlGrid) {
+        final DispatchScope dispatchScope = DispatchScopeFactory
+                .getDispatchScope();
+        final String key = GRID_ATTRIBUTE + htmlGrid.getClientId(context);
+        THtmlGridRenderer.GridAttribute attribute = (GridAttribute) dispatchScope
+                .get(key);
+        if (attribute != null) {
+            return attribute;
+        }
+        attribute = new GridAttribute(htmlGrid);
         setupTableSize(htmlGrid, attribute);
         setupWidth(htmlGrid, attribute);
         setupHeight(htmlGrid, attribute);
+        dispatchScope.put(key, attribute);
         return attribute;
     }
 
