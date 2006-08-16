@@ -30,21 +30,21 @@
     <developer>
       <id>shot</id>
       <name>Shinpei Ohtani</name>
-      <email>shinpei.ohtani@gmail.com</email>
+      <email>shinpei.ohtani_at_gmail.com</email>
       <url>http://d.hatena.ne.jp/shot6/</url>
       <timezone>+9</timezone>
     </developer>
     <developer>
       <id>higa</id>
       <name>HIGA Yasuo</name>
-      <email></email>
+      <email>higa_at_isid.co.jp</email>
       <url>http://d.hatena.ne.jp/higayasuo/</url>
       <timezone>+9</timezone>
     </developer>
     <developer>
       <id>manhole</id>
       <name>HONMA Hirotaka</name>
-      <email>manholex@gmail.com</email>
+      <email>manholex_at_gmail.com</email>
       <organization>ARK Systems Co., Ltd.</organization>
       <organizationUrl>http://www.arksystems.co.jp/</organizationUrl>
       <timezone>+9</timezone>
@@ -61,7 +61,7 @@
     <developer>
       <id>yone</id>
       <name>Masaaki Yonebayashi</name>
-      <email>yone098@gmail.com</email>
+      <email>yone098_at_gmail.com</email>
       <organization>Abby Co., Ltd.</organization>
       <organizationUrl>http://www.abby.co.jp/</organizationUrl>
       <timezone>+9</timezone>
@@ -94,7 +94,7 @@
     <developer>
       <id>shinsuke</id>
       <name>Shinsuke Sugaya</name>
-      <email>shinsuke@yahoo.co.jp</email>
+      <email>shinsuke_at_yahoo.co.jp</email>
       <url>http://d.hatena.ne.jp/shinsuke_sugaya/</url>
       <organization/>
       <organizationUrl/>
