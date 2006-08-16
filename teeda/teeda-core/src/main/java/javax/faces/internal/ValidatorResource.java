@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -20,7 +20,6 @@ import java.util.Map;
 
 import javax.faces.validator.Validator;
 
-
 /**
  * @author shot
  * @author higa
@@ -28,7 +27,7 @@ import javax.faces.validator.Validator;
 public class ValidatorResource {
 
     private static Map validators_ = new HashMap();
-    
+
     protected ValidatorResource() {
     }
 
@@ -36,7 +35,8 @@ public class ValidatorResource {
         return (Validator) validators_.get(expression);
     }
 
-    public static synchronized void addValidator(String expression, Validator validator) {
+    public static synchronized void addValidator(String expression,
+            Validator validator) {
         Validator previous = getValidator(expression);
         if (previous == null) {
             validators_.put(expression, validator);
@@ -48,7 +48,6 @@ public class ValidatorResource {
             chain.add(validator);
             validators_.put(expression, chain);
         }
-        
     }
 
     public static synchronized void removeValidator(String expression) {

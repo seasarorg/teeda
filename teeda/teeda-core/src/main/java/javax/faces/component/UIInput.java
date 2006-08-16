@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -30,6 +30,7 @@ import javax.faces.event.AbortProcessingException;
 import javax.faces.event.FacesEvent;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.event.ValueChangeListener;
+import javax.faces.internal.ConverterResource;
 import javax.faces.internal.FacesMessageUtil;
 import javax.faces.internal.UIInputUtil;
 import javax.faces.internal.ValidatorResource;
@@ -274,35 +275,70 @@ public class UIInput extends UIOutput implements EditableValueHolder {
 
     protected Object getConvertedValue(FacesContext context,
             Object submittedValue) throws ConverterException {
-        Object value = null;
+        Object value = submittedValue;
         try {
+            value = convertFromAnnotation(context, submittedValue);
+            if (value != null) {
+                return value;
+            }
             Renderer renderer = getRenderer(context);
             if (renderer != null) {
-                value = renderer.getConvertedValue(context, this,
-                        submittedValue);
-            } else if (submittedValue instanceof String) {
-                Converter converter = getConverterWithType(context);
-                if (converter != null) {
-                    value = converter.getAsObject(context, this,
-                            (String) submittedValue);
-                } else {
-                    value = submittedValue;
-                }
+                value = convertFromRenderer(context, submittedValue, renderer);
             } else {
-                value = submittedValue;
+                value = convertFromType(context, submittedValue);
             }
         } catch (ConverterException e) {
-            FacesMessage facesMessage = e.getFacesMessage();
-            if (facesMessage != null) {
-                context.addMessage(getClientId(context), facesMessage);
-            } else {
-                Object[] args = new Object[] { getId() };
-                FacesMessageUtil.addErrorMessage(context, this,
-                        CONVERSION_MESSAGE_ID, args);
-            }
-            setValid(false);
+            handleConverterException(context, e);
         }
         return value;
+    }
+
+    private void handleConverterException(FacesContext context,
+            ConverterException e) {
+        setValid(false);
+        FacesMessage facesMessage = e.getFacesMessage();
+        if (facesMessage != null) {
+            context.addMessage(getClientId(context), facesMessage);
+        } else {
+            Object[] args = new Object[] { getId() };
+            FacesMessageUtil.addErrorMessage(context, this,
+                    CONVERSION_MESSAGE_ID, args);
+        }
+    }
+
+    protected Object convertFromAnnotation(FacesContext context,
+            Object submittedValue) {
+        ValueBinding vb = getValueBinding("value");
+        if (vb != null) {
+            String expression = vb.getExpressionString();
+            Converter converter = ConverterResource.getConverter(expression);
+            if (converter != null) {
+                try {
+                    return converter.getAsObject(context, this,
+                            (String) submittedValue);
+                } catch (ConverterException e) {
+                    handleConverterException(context, e);
+                }
+            }
+        }
+        return null;
+    }
+
+    protected Object convertFromRenderer(FacesContext context,
+            Object submittedValue, Renderer renderer) throws ConverterException {
+        return renderer.getConvertedValue(context, this, submittedValue);
+    }
+
+    protected Object convertFromType(FacesContext context, Object submittedValue)
+            throws ConverterException {
+        if (submittedValue instanceof String) {
+            Converter converter = getConverterWithType(context);
+            if (converter != null) {
+                return converter.getAsObject(context, this,
+                        (String) submittedValue);
+            }
+        }
+        return submittedValue;
     }
 
     protected void validateValue(FacesContext context, Object newValue) {
@@ -438,7 +474,7 @@ public class UIInput extends UIOutput implements EditableValueHolder {
         }
     }
 
-    private void validateFromAddedValidator(FacesContext context, Object value) {
+    protected void validateFromAddedValidator(FacesContext context, Object value) {
         if (validators == null) {
             return;
         }
@@ -452,7 +488,7 @@ public class UIInput extends UIOutput implements EditableValueHolder {
         }
     }
 
-    private void validateFromBinding(FacesContext context, Object value) {
+    protected void validateFromBinding(FacesContext context, Object value) {
         if (validatorBinding == null) {
             return;
         }
@@ -470,7 +506,7 @@ public class UIInput extends UIOutput implements EditableValueHolder {
         }
     }
 
-    private void validateFromAnnotation(FacesContext context, Object value) {
+    protected void validateFromAnnotation(FacesContext context, Object value) {
         ValueBinding vb = getValueBinding("value");
         if (vb != null) {
             String expression = vb.getExpressionString();

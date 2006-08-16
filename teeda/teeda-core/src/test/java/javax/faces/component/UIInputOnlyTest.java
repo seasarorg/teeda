@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -23,10 +23,12 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
+import javax.faces.convert.IntegerConverter;
 import javax.faces.el.EvaluationException;
 import javax.faces.el.PropertyNotFoundException;
 import javax.faces.event.FacesEvent;
 import javax.faces.event.ValueChangeEvent;
+import javax.faces.internal.ConverterResource;
 import javax.faces.render.Renderer;
 import javax.faces.validator.ValidatorException;
 
@@ -839,6 +841,36 @@ public class UIInputOnlyTest extends TestCase {
         assertEquals(true, messages.hasNext());
         messages.next();
         assertEquals(false, messages.hasNext());
+    }
+
+    public final void testGetConvertedValue() throws Exception {
+        // ## Arrange ##
+        UIViewRoot root = new UIViewRoot();
+        UIInput input = new UIInput();
+        input.setParent(root);
+        input.setSubmittedValue("1000");
+        input.setValid(true);
+        ConverterResource.addConverter("#{a.b}", new IntegerConverter() {
+
+            public Object getAsObject(FacesContext context,
+                    UIComponent component, String value)
+                    throws ConverterException {
+                return new Integer(value);
+            }
+
+        });
+        input.setValueBinding("value", new MockValueBinding() {
+            public String getExpressionString() {
+                return "#{a.b}";
+            }
+
+        });
+
+        // ## Act ##
+        input.validate(getFacesContext());
+
+        // ## Assert ##
+        assertEquals(new Integer(1000), input.getValue());
     }
 
     private MockFacesContext getFacesContext() {

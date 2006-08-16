@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -24,12 +24,13 @@ import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.PropertyDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.teeda.extension.ExtensionConstants;
+import org.seasar.teeda.extension.annotation.handler.ConverterAnnotationHandlerFactory;
 import org.seasar.teeda.extension.annotation.handler.ValidatorAnnotationHandlerFactory;
 import org.seasar.teeda.extension.html.PageDesc;
 
 /**
  * @author higa
- * 
+ *
  */
 public class PageDescImpl implements PageDesc {
 
@@ -73,8 +74,14 @@ public class PageDescImpl implements PageDesc {
             }
         }
         methodNames = ActionDescUtil.getActionMethodNames(pageClass);
+        handleAnnotations(pageClass);
+    }
+
+    protected void handleAnnotations(Class pageClass) {
         ValidatorAnnotationHandlerFactory.getAnnotationHandler()
-                .registerValidators(pageName, pageClass);
+                .registerValidators(getPageName(), pageClass);
+        ConverterAnnotationHandlerFactory.getAnnotationHandler()
+                .registerConverters(getPageName(), pageClass);
     }
 
     protected boolean isItemsProperty(PropertyDesc pd) {

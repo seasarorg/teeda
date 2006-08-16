@@ -66,7 +66,7 @@ public class HtmlNavigationHandler extends NavigationHandlerImpl {
         int pos2 = viewId.lastIndexOf('.');
         String pathFirst = viewId.substring(0, pos + 1);
         String pathLast = viewId.substring(pos2);
-        String[] names = StringUtil.split(outcome, "$");
+        String[] names = StringUtil.split(outcome, "_");
         if (names.length == 1) {
             return pathFirst + outcome + pathLast;
         }

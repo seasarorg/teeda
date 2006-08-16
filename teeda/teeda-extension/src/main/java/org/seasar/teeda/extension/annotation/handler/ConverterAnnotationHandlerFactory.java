@@ -19,33 +19,32 @@ import org.seasar.framework.exception.ClassNotFoundRuntimeException;
 import org.seasar.framework.util.ClassUtil;
 
 /**
- * @author higa
  * @author shot
  */
-public class ValidatorAnnotationHandlerFactory {
+public class ConverterAnnotationHandlerFactory {
 
-    private static final String TIGER_ANNOTATION_HANDLER_CLASS_NAME = "org.seasar.teeda.extension.annotation.handler.TigerValidatorAnnotationHandler";
+    private static final String TIGER_ANNOTATION_HANDLER_CLASS_NAME = "org.seasar.teeda.extension.annotation.handler.TigerConverterAnnotationHandler";
 
-    private static ValidatorAnnotationHandler annotationHandler;
+    private static ConverterAnnotationHandler annotationHandler;
 
     static {
-        Class clazz = ConstantValidatorAnnotationHandler.class;
+        Class clazz = ConstantConverterAnnotationHandler.class;
         try {
             clazz = ClassUtil.forName(TIGER_ANNOTATION_HANDLER_CLASS_NAME);
         } catch (ClassNotFoundRuntimeException ignore) {
         }
-        annotationHandler = (ValidatorAnnotationHandler) ClassUtil
+        annotationHandler = (ConverterAnnotationHandler) ClassUtil
                 .newInstance(clazz);
     }
 
-    protected ValidatorAnnotationHandlerFactory() {
+    protected ConverterAnnotationHandlerFactory() {
     }
 
-    public static ValidatorAnnotationHandler getAnnotationHandler() {
+    public static ConverterAnnotationHandler getAnnotationHandler() {
         return annotationHandler;
     }
 
-    public static void setAnnotationHandler(ValidatorAnnotationHandler handler) {
+    public static void setAnnotationHandler(ConverterAnnotationHandler handler) {
         annotationHandler = handler;
     }
 }
