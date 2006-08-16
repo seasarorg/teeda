@@ -16,8 +16,8 @@
 package org.seasar.teeda.extension.annotation.handler;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import javax.faces.validator.Validator;
@@ -25,10 +25,10 @@ import javax.faces.validator.Validator;
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.PropertyDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
-import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
-import org.seasar.framework.exception.EmptyRuntimeException;
+import org.seasar.framework.container.S2Container;
+import org.seasar.framework.container.util.ConstantAnnotationUtil;
+import org.seasar.framework.convention.NamingConvention;
 import org.seasar.framework.util.FieldUtil;
-import org.seasar.framework.util.OgnlUtil;
 import org.seasar.framework.util.StringUtil;
 
 /**
@@ -38,57 +38,38 @@ import org.seasar.framework.util.StringUtil;
 public class ConstantValidatorAnnotationHandler extends
         AbstractValidatorAnnotationHandler {
 
-    private static final String VALIDATOR_SUFFIX = "_VALIDATOR";
-    
-    private static final String VALIDATOR_NAME_SUFFIX = "Validator";
-
-    private static final String VALIDATOR = "validator";
-
     public void registerValidators(String componentName, Class clazz) {
         removeValidators(componentName);
+        S2Container container = getContainer();
+        NamingConvention namingConvention = (NamingConvention) container
+                .getComponent(NamingConvention.class);
+        String suffix = namingConvention.getValidatorSuffix();
         BeanDesc beanDesc = BeanDescFactory.getBeanDesc(clazz);
-        for (int i = 0; i < beanDesc.getPropertyDescSize(); ++i) {
-            PropertyDesc pd = beanDesc.getPropertyDesc(i);
-            if (!beanDesc.hasField(pd.getPropertyName() + VALIDATOR_SUFFIX)) {
+        Field[] fields = clazz.getDeclaredFields();
+        for (int i = 0; i < fields.length; ++i) {
+            Field field = fields[i];
+            int mod = field.getModifiers();
+            if (!Modifier.isStatic(mod) || !Modifier.isFinal(mod)
+                    || !field.getName().endsWith(suffix)) {
                 continue;
             }
-            Field field = beanDesc.getField(pd.getPropertyName()
-                    + VALIDATOR_SUFFIX);
+            String[] names = StringUtil.split(field.getName(), "_");
+            if (names.length != 2 || !beanDesc.hasPropertyDesc(names[0])
+                    || !container.hasComponentDef(names[1])) {
+                continue;
+            }
+            Validator validator = (Validator) container.getComponent(names[1]);
             String s = (String) FieldUtil.get(field, null);
-            if (StringUtil.isEmpty(s)) {
-                continue;
-            }
-            Object o = OgnlUtil.getValue(OgnlUtil.parseExpression(s),
-                    SingletonS2ContainerFactory.getContainer());
-            if (o instanceof List) {
-                List l = (List) o;
-                for (int j = 0; j < l.size(); ++j) {
-                    Map m = (Map) l.get(j);
-                    registerValidator(componentName, pd.getPropertyName(), m);
-                }
-            } else if (o instanceof Map) {
-                Map m = (Map) o;
-                registerValidator(componentName, pd.getPropertyName(), m);
-            } else {
-                throw new IllegalStateException(s);
-            }
+            Map m = ConstantAnnotationUtil.convertExpressionToMap(s);
+            copyProperties(validator, m);
+            registerValidator(componentName, names[0], validator);
         }
-    }
-
-    protected void registerValidator(String componentName, String propertyName,
-            Map m) {
-        String validatorName = (String) m.remove(VALIDATOR);
-        if (validatorName == null) {
-            throw new EmptyRuntimeException("validatorName");
-        }
-        validatorName = validatorName + VALIDATOR_NAME_SUFFIX;
-        Validator validator = (Validator) SingletonS2ContainerFactory
-                .getContainer().getComponent(validatorName);
-        copyProperties(validator, m);
-        registerValidator(componentName, propertyName, validator);
     }
 
     protected void copyProperties(Validator validator, Map m) {
+        if (m == null) {
+            return;
+        }
         BeanDesc beanDesc = BeanDescFactory.getBeanDesc(validator.getClass());
         for (Iterator i = m.keySet().iterator(); i.hasNext();) {
             String key = (String) i.next();

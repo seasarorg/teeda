@@ -24,8 +24,9 @@ import java.util.Set;
 import javax.faces.internal.ValidatorResource;
 import javax.faces.validator.Validator;
 
+import org.seasar.framework.container.S2Container;
+import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
 import org.seasar.teeda.core.util.BindingUtil;
-
 
 /**
  * @author shot
@@ -39,7 +40,8 @@ public abstract class AbstractValidatorAnnotationHandler implements
     public void registerValidator(String componentName, String propertyName,
             Validator validator) {
 
-        String expression = BindingUtil.getExpression(componentName, propertyName);
+        String expression = BindingUtil.getExpression(componentName,
+                propertyName);
         ValidatorResource.addValidator(expression, validator);
         Set expressions = (Set) expressionsMap.get(componentName);
         if (expressions == null) {
@@ -60,9 +62,9 @@ public abstract class AbstractValidatorAnnotationHandler implements
         }
         expressionsMap.remove(componentName);
     }
-    
+
     public void removeAll() {
-        for (Iterator i = expressionsMap.keySet().iterator(); i.hasNext(); ) {
+        for (Iterator i = expressionsMap.keySet().iterator(); i.hasNext();) {
             String componentName = (String) i.next();
             removeValidators(componentName);
         }
@@ -74,5 +76,9 @@ public abstract class AbstractValidatorAnnotationHandler implements
             return 0;
         }
         return expressions.size();
+    }
+
+    protected S2Container getContainer() {
+        return SingletonS2ContainerFactory.getContainer();
     }
 }

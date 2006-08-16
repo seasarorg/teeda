@@ -8,6 +8,7 @@ import org.seasar.framework.container.ComponentDef;
 import org.seasar.framework.container.deployer.InstanceDefFactory;
 import org.seasar.framework.container.impl.ComponentDefImpl;
 import org.seasar.teeda.core.unit.TeedaTestCase;
+import org.seasar.teeda.extension.validator.TRequiredValidator;
 
 public class ConstantValidatorAnnotationHandlerTest extends TeedaTestCase {
 
@@ -16,40 +17,49 @@ public class ConstantValidatorAnnotationHandlerTest extends TeedaTestCase {
     }
 
     public void testRegisterValidator_single() throws Exception {
-        ComponentDef cd = new ComponentDefImpl(LengthValidator.class, "lengthValidator");
+        ComponentDef cd = new ComponentDefImpl(LengthValidator.class,
+                "lengthValidator");
         cd.setInstanceDef(InstanceDefFactory.PROTOTYPE);
         getContainer().register(cd);
         ConstantValidatorAnnotationHandler handler = new ConstantValidatorAnnotationHandler();
         handler.registerValidators("hogeBean", HogeBean.class);
-        LengthValidator validator = (LengthValidator) ValidatorResource.getValidator("#{hogeBean.name}");
+        LengthValidator validator = (LengthValidator) ValidatorResource
+                .getValidator("#{hogeBean.name}");
         assertEquals(2, validator.getMinimum());
         assertEquals(5, validator.getMaximum());
     }
-    
+
     public void testRegisterValidator_multi() throws Exception {
-        ComponentDef cd = new ComponentDefImpl(LengthValidator.class, "lengthValidator");
+        ComponentDef cd = new ComponentDefImpl(LengthValidator.class,
+                "lengthValidator");
+        cd.setInstanceDef(InstanceDefFactory.PROTOTYPE);
+        getContainer().register(cd);
+        cd = new ComponentDefImpl(TRequiredValidator.class,
+                "TRequiredValidator");
         cd.setInstanceDef(InstanceDefFactory.PROTOTYPE);
         getContainer().register(cd);
         ConstantValidatorAnnotationHandler handler = new ConstantValidatorAnnotationHandler();
         handler.registerValidators("hogeBean", HogeBean.class);
-        ValidatorChain chain = (ValidatorChain) ValidatorResource.getValidator("#{hogeBean.aaa}");
+        ValidatorChain chain = (ValidatorChain) ValidatorResource
+                .getValidator("#{hogeBean.aaa}");
         assertNotNull(chain);
         assertEquals(2, chain.getValidatorSize());
         LengthValidator validator = (LengthValidator) chain.getValidator(0);
         assertEquals(2, validator.getMinimum());
         assertEquals(5, validator.getMaximum());
-        validator = (LengthValidator) chain.getValidator(1);
-        assertEquals(1, validator.getMinimum());
-        assertEquals(4, validator.getMaximum());
+        assertEquals(TRequiredValidator.class, chain.getValidator(1).getClass());
     }
-    
+
     public static class HogeBean {
         private String name = null;
+
         private String aaa;
 
-        public static final String name_VALIDATOR = "#{'validator':'length', 'minimum':2, 'maximum':5}";
-        
-        public static final String aaa_VALIDATOR = "{#{'validator':'length', 'minimum':2, 'maximum':5},#{'validator':'length', 'minimum':1, 'maximum':4}}";
+        public static final String name_lengthValidator = "minimum=2, maximum=5";
+
+        public static final String aaa_lengthValidator = "minimum=2, maximum=5";
+
+        public static final String aaa_TRequiredValidator = null;
 
         public String getName() {
             return name;
