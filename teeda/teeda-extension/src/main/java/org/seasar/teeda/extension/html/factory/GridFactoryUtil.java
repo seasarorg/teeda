@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -17,7 +17,6 @@ package org.seasar.teeda.extension.html.factory;
 
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.extension.ExtensionConstants;
-import org.seasar.teeda.extension.component.html.THtmlGrid;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.PageDesc;
@@ -28,7 +27,7 @@ import org.seasar.teeda.extension.html.PageDesc;
 public class GridFactoryUtil {
 
     static String getNaturalName(final String id) {
-        final int pos = id.lastIndexOf(THtmlGrid.GRID);
+        final int pos = id.lastIndexOf(ExtensionConstants.GRID);
         return id.substring(0, pos);
     }
 
@@ -56,17 +55,17 @@ public class GridFactoryUtil {
     }
 
     static boolean isNoScroll(final String id) {
-        return id.endsWith(THtmlGrid.GRID);
+        return id.endsWith(ExtensionConstants.GRID);
     }
 
     static boolean isScrollHorizontal(final String id) {
-        return id.endsWith(THtmlGrid.GRID_X)
-                || id.endsWith(THtmlGrid.GRID_XY);
+        return id.endsWith(ExtensionConstants.GRID_X)
+                || id.endsWith(ExtensionConstants.GRID_XY);
     }
 
     static boolean isScrollVertical(final String id) {
-        return id.endsWith(THtmlGrid.GRID_Y)
-                || id.endsWith(THtmlGrid.GRID_XY);
+        return id.endsWith(ExtensionConstants.GRID_Y)
+                || id.endsWith(ExtensionConstants.GRID_XY);
     }
 
     static String getItemsName(final String id) {

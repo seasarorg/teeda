@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -18,6 +18,7 @@ package org.seasar.teeda.extension.taglib;
 import javax.faces.component.UIComponent;
 
 import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.component.html.THtmlGrid;
 
 /**
@@ -44,9 +45,9 @@ public class TGridTag extends TForEachTag {
         super.setProperties(component);
         setComponentProperty(component, JsfConstants.WIDTH_ATTR, getWidth());
         setComponentProperty(component, JsfConstants.HEIGHT_ATTR, getHeight());
-        setComponentProperty(component, THtmlGrid.SCROLL_HORIZONTAL,
+        setComponentProperty(component, ExtensionConstants.SCROLL_HORIZONTAL,
                 getScrollHorizontal());
-        setComponentProperty(component, THtmlGrid.SCROLL_VERTICAL,
+        setComponentProperty(component, ExtensionConstants.SCROLL_VERTICAL,
                 getScrollVertical());
     }
 

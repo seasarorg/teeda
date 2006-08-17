@@ -57,4 +57,16 @@ public interface ExtensionConstants {
 
     String TEEDA_CURRENY_STYLE_CLASS = "T_currency";
 
+    String GRID = "Grid";
+
+    String GRID_X = "GridX";
+
+    String GRID_Y = "GridY";
+
+    String GRID_XY = "GridXY";
+
+    String SCROLL_HORIZONTAL = "scrollHorizontal";
+
+    String SCROLL_VERTICAL = "scrollVertical";
+
 }

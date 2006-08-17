@@ -31,18 +31,6 @@ public class THtmlGrid extends TForEach implements NamingContainer {
 
     public static final String DEFAULT_RENDERER_TYPE = "org.seasar.teeda.extension.Grid";
 
-    public static final String GRID = "Grid";
-
-    public static final String GRID_X = "GridX";
-
-    public static final String GRID_Y = "GridY";
-
-    public static final String GRID_XY = "GridXY";
-
-    public static final String SCROLL_HORIZONTAL = "scrollHorizontal";
-
-    public static final String SCROLL_VERTICAL = "scrollVertical";
-
     public THtmlGrid() {
         setRendererType(DEFAULT_RENDERER_TYPE);
     }

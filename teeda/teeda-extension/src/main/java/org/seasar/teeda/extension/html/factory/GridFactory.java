@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -18,7 +18,6 @@ package org.seasar.teeda.extension.html.factory;
 import java.util.Map;
 
 import org.seasar.teeda.extension.ExtensionConstants;
-import org.seasar.teeda.extension.component.html.THtmlGrid;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.PageDesc;
@@ -45,9 +44,9 @@ public class GridFactory extends AbstractElementProcessorFactory {
         final String id = elementNode.getId();
         properties.put(ExtensionConstants.ITEMS_NAME_ATTR, GridFactoryUtil
                 .getItemsName(id));
-        properties.put(THtmlGrid.SCROLL_HORIZONTAL, String
+        properties.put(ExtensionConstants.SCROLL_HORIZONTAL, String
                 .valueOf(GridFactoryUtil.isScrollHorizontal(id)));
-        properties.put(THtmlGrid.SCROLL_VERTICAL, String
+        properties.put(ExtensionConstants.SCROLL_VERTICAL, String
                 .valueOf(GridFactoryUtil.isScrollVertical(id)));
     }
 
