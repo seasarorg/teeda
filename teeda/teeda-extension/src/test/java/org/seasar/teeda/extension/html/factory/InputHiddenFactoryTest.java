@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -20,7 +20,6 @@ import java.util.Map;
 
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.taglib.html.InputHiddenTag;
-import org.seasar.teeda.core.unit.TeedaTestCase;
 import org.seasar.teeda.extension.config.taglib.element.TagElement;
 import org.seasar.teeda.extension.config.taglib.element.TaglibElement;
 import org.seasar.teeda.extension.config.taglib.element.impl.TagElementImpl;
@@ -30,34 +29,33 @@ import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.ElementProcessor;
 import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.impl.ActionDescImpl;
-import org.seasar.teeda.extension.html.impl.ElementNodeImpl;
-import org.seasar.teeda.extension.html.impl.PageDescImpl;
 import org.seasar.teeda.extension.mock.MockTaglibManager;
+import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 
 /**
  * @author higa
  */
-public class InputHiddenFactoryTest extends TeedaTestCase {
+public class InputHiddenFactoryTest extends TeedaExtensionTestCase {
 
     public void testIsMatch() throws Exception {
         InputHiddenFactory factory = new InputHiddenFactory();
         Map props = new HashMap();
         props.put("id", "aaa");
         props.put("type", "hidden");
-        ElementNode elementNode = new ElementNodeImpl("input", props);
-        PageDesc pageDesc = new PageDescImpl(FooPage.class, "fooPage");
+        ElementNode elementNode = createElementNode("input", props);
+        PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         assertTrue(factory.isMatch(elementNode, pageDesc, null));
-        ElementNode elementNode2 = new ElementNodeImpl("hoge", props);
+        ElementNode elementNode2 = createElementNode("hoge", props);
         assertFalse(factory.isMatch(elementNode2, pageDesc, null));
         Map props2 = new HashMap();
         props2.put("id", "aaa");
         props2.put("type", "text");
-        ElementNode elementNode3 = new ElementNodeImpl("input", props2);
+        ElementNode elementNode3 = createElementNode("input", props2);
         assertFalse(factory.isMatch(elementNode3, pageDesc, null));
         Map props3 = new HashMap();
         props3.put("id", "xxx");
         props3.put("type", "text");
-        ElementNode elementNode4 = new ElementNodeImpl("input", props3);
+        ElementNode elementNode4 = createElementNode("input", props3);
         assertFalse(factory.isMatch(elementNode4, pageDesc, null));
     }
 
@@ -76,8 +74,8 @@ public class InputHiddenFactoryTest extends TeedaTestCase {
         Map props = new HashMap();
         props.put("id", "aaa");
         props.put("type", "hidden");
-        ElementNode elementNode = new ElementNodeImpl("input", props);
-        PageDesc pageDesc = new PageDescImpl(FooPage.class, "fooPage");
+        ElementNode elementNode = createElementNode("input", props);
+        PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         ActionDesc actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
 
         // ## Act ##

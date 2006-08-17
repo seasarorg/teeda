@@ -17,7 +17,6 @@ package org.seasar.teeda.core.render.autoregister;
 
 import java.lang.reflect.Field;
 
-import javax.faces.internal.ModifierUtil;
 import javax.faces.render.Renderer;
 
 import org.seasar.framework.beans.BeanDesc;
@@ -27,6 +26,7 @@ import org.seasar.framework.container.autoregister.JarComponentAutoRegister;
 import org.seasar.framework.container.factory.AnnotationHandler;
 import org.seasar.framework.container.factory.AnnotationHandlerFactory;
 import org.seasar.framework.util.ClassUtil;
+import org.seasar.framework.util.ModifierUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.html.support.HtmlRenderKitKeyGenerateUtil;
 

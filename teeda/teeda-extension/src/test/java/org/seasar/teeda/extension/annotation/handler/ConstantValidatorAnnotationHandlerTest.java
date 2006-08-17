@@ -22,7 +22,8 @@ public class ConstantValidatorAnnotationHandlerTest extends TeedaTestCase {
         cd.setInstanceDef(InstanceDefFactory.PROTOTYPE);
         getContainer().register(cd);
         ConstantValidatorAnnotationHandler handler = new ConstantValidatorAnnotationHandler();
-        handler.registerValidators("hogeBean", HogeBean.class);
+        getContainer().register(HogeBean.class, "hogeBean");
+        handler.registerValidators("hogeBean");
         LengthValidator validator = (LengthValidator) ValidatorResource
                 .getValidator("#{hogeBean.name}");
         assertEquals(2, validator.getMinimum());
@@ -39,7 +40,8 @@ public class ConstantValidatorAnnotationHandlerTest extends TeedaTestCase {
         cd.setInstanceDef(InstanceDefFactory.PROTOTYPE);
         getContainer().register(cd);
         ConstantValidatorAnnotationHandler handler = new ConstantValidatorAnnotationHandler();
-        handler.registerValidators("hogeBean", HogeBean.class);
+        getContainer().register(HogeBean.class, "hogeBean");
+        handler.registerValidators("hogeBean");
         ValidatorChain chain = (ValidatorChain) ValidatorResource
                 .getValidator("#{hogeBean.aaa}");
         assertNotNull(chain);

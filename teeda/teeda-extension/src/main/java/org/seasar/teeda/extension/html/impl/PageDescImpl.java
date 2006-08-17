@@ -74,14 +74,15 @@ public class PageDescImpl implements PageDesc {
             }
         }
         methodNames = ActionDescUtil.getActionMethodNames(pageClass);
-        handleAnnotations(pageClass);
+        String pageName = getPageName();
+        handleAnnotations(pageName);
     }
 
-    protected void handleAnnotations(Class pageClass) {
+    protected void handleAnnotations(String pageName) {
         ValidatorAnnotationHandlerFactory.getAnnotationHandler()
-                .registerValidators(getPageName(), pageClass);
+                .registerValidators(pageName);
         ConverterAnnotationHandlerFactory.getAnnotationHandler()
-                .registerConverters(getPageName(), pageClass);
+                .registerConverters(pageName);
     }
 
     protected boolean isItemsProperty(PropertyDesc pd) {

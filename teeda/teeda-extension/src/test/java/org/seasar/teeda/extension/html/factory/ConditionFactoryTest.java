@@ -18,7 +18,6 @@ package org.seasar.teeda.extension.html.factory;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.seasar.framework.unit.S2FrameworkTestCase;
 import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.config.taglib.element.TagElement;
 import org.seasar.teeda.extension.config.taglib.element.TaglibElement;
@@ -29,34 +28,39 @@ import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.ElementProcessor;
 import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.impl.ActionDescImpl;
-import org.seasar.teeda.extension.html.impl.ElementNodeImpl;
-import org.seasar.teeda.extension.html.impl.PageDescImpl;
 import org.seasar.teeda.extension.mock.MockTaglibManager;
 import org.seasar.teeda.extension.taglib.TConditionTag;
+import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 
 /**
  * @author shot
  */
-public class ConditionFactoryTest extends S2FrameworkTestCase {
+public class ConditionFactoryTest extends TeedaExtensionTestCase {
 
     public void testIsMatch() throws Exception {
         ConditionFactory factory = new ConditionFactory();
         Map props = new HashMap();
         props.put("id", "isBbb");
-        ElementNode elementNode = new ElementNodeImpl("div", props);
-        PageDesc pageDesc = new PageDescImpl(AaaPage.class, "aaaPage");
+        ElementNode elementNode = createElementNode("div", props);
+        PageDesc pageDesc = createPageDesc(AaaPage.class, "aaaPage");
         assertTrue(factory.isMatch(elementNode, pageDesc, null));
+    }
 
+    public void testIsMatch2() throws Exception {
+        ConditionFactory factory = new ConditionFactory();
         Map props2 = new HashMap();
         props2.put("id", "isNotBbb");
-        ElementNode elementNode2 = new ElementNodeImpl("div", props2);
-        PageDesc pageDesc2 = new PageDescImpl(AaaPage.class, "aaaPage");
+        ElementNode elementNode2 = createElementNode("div", props2);
+        PageDesc pageDesc2 = createPageDesc(AaaPage.class, "aaaPage");
         assertTrue(factory.isMatch(elementNode2, pageDesc2, null));
+    }
 
+    public void testIsMatch3() throws Exception {
+        ConditionFactory factory = new ConditionFactory();
         Map props3 = new HashMap();
         props3.put("id", "ssNotBbb");
-        ElementNode elementNode3 = new ElementNodeImpl("div", props3);
-        PageDesc pageDesc3 = new PageDescImpl(AaaPage.class, "aaaPage");
+        ElementNode elementNode3 = createElementNode("div", props3);
+        PageDesc pageDesc3 = createPageDesc(AaaPage.class, "aaaPage");
         assertFalse(factory.isMatch(elementNode3, pageDesc3, null));
     }
 
@@ -74,8 +78,8 @@ public class ConditionFactoryTest extends S2FrameworkTestCase {
         factory.setTaglibManager(taglibManager);
         Map props = new HashMap();
         props.put("id", "isBbb");
-        ElementNode elementNode = new ElementNodeImpl("div", props);
-        PageDesc pageDesc = new PageDescImpl(AaaPage.class, "aaaPage");
+        ElementNode elementNode = createElementNode("div", props);
+        PageDesc pageDesc = createPageDesc(AaaPage.class, "aaaPage");
         ActionDesc actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
 
         // ## Act ##
@@ -102,8 +106,8 @@ public class ConditionFactoryTest extends S2FrameworkTestCase {
         factory.setTaglibManager(taglibManager);
         Map props = new HashMap();
         props.put("id", "isNotBbb");
-        ElementNode elementNode = new ElementNodeImpl("div", props);
-        PageDesc pageDesc = new PageDescImpl(AaaPage.class, "aaaPage");
+        ElementNode elementNode = createElementNode("div", props);
+        PageDesc pageDesc = createPageDesc(AaaPage.class, "aaaPage");
         ActionDesc actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
 
         // ## Act ##

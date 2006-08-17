@@ -24,8 +24,6 @@ import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.ElementProcessor;
 import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.impl.ActionDescImpl;
-import org.seasar.teeda.extension.html.impl.ElementNodeImpl;
-import org.seasar.teeda.extension.html.impl.PageDescImpl;
 import org.seasar.teeda.extension.mock.MockTaglibManager;
 import org.seasar.teeda.extension.taglib.TSelectOneRadioTag;
 import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
@@ -46,15 +44,15 @@ public class SelectOneRadioFactoryTest extends TeedaExtensionTestCase {
         SelectOneRadioFactory selectFactory = new SelectOneRadioFactory();
         Map map = new HashMap();
         map.put("id", "hoge");
-        ElementNodeImpl parent = new ElementNodeImpl("span", map);
+        ElementNode parent = createElementNode("span", map);
 
         Map map2 = new HashMap();
         map2.put("name", "hoge");
         map2.put("type", "radio");
-        ElementNodeImpl child = new ElementNodeImpl("input", map2);
+        ElementNode child = createElementNode("input", map2);
         parent.addElement(child);
 
-        PageDesc pageDesc = new PageDescImpl(FooPage.class, "fooPage");
+        PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         ActionDesc actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
         assertTrue(selectFactory.isMatch(parent, pageDesc, actionDesc));
     }
@@ -64,23 +62,23 @@ public class SelectOneRadioFactoryTest extends TeedaExtensionTestCase {
         SelectOneRadioFactory selectFactory = new SelectOneRadioFactory();
         Map map = new HashMap();
         map.put("id", "hoge");
-        ElementNodeImpl parent = new ElementNodeImpl("span", map);
+        ElementNode parent = createElementNode("span", map);
 
         Map map2 = new HashMap();
         map2.put("name", "hoge");
         map2.put("type", "radio");
         map2.put("value", "aaa");
-        ElementNodeImpl child = new ElementNodeImpl("input", map2);
+        ElementNode child = createElementNode("input", map2);
         parent.addElement(child);
 
         Map map3 = new HashMap();
         map3.put("name", "hoge");
         map3.put("type", "radio");
         map3.put("value", "bbb");
-        ElementNodeImpl child2 = new ElementNodeImpl("input", map3);
+        ElementNode child2 = createElementNode("input", map3);
         parent.addElement(child2);
 
-        PageDesc pageDesc = new PageDescImpl(FooPage.class, "fooPage");
+        PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         ActionDesc actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
         assertTrue(selectFactory.isMatch(parent, pageDesc, actionDesc));
     }
@@ -89,15 +87,15 @@ public class SelectOneRadioFactoryTest extends TeedaExtensionTestCase {
     public void testIsMatch_ng1() throws Exception {
         SelectOneRadioFactory selectFactory = new SelectOneRadioFactory();
         Map map = new HashMap();
-        ElementNodeImpl parent = new ElementNodeImpl("span", map);
+        ElementNode parent = createElementNode("span", map);
 
         Map map2 = new HashMap();
         map2.put("name", "hoge");
         map2.put("type", "radio");
-        ElementNodeImpl child = new ElementNodeImpl("input", map2);
+        ElementNode child = createElementNode("input", map2);
         parent.addElement(child);
 
-        PageDesc pageDesc = new PageDescImpl(FooPage.class, "fooPage");
+        PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         ActionDesc actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
         assertFalse(selectFactory.isMatch(parent, pageDesc, actionDesc));
     }
@@ -107,14 +105,14 @@ public class SelectOneRadioFactoryTest extends TeedaExtensionTestCase {
         SelectOneRadioFactory selectFactory = new SelectOneRadioFactory();
         Map map = new HashMap();
         map.put("id", "hoge");
-        ElementNodeImpl parent = new ElementNodeImpl("span", map);
+        ElementNode parent = createElementNode("span", map);
 
         Map map2 = new HashMap();
         map2.put("type", "radio");
-        ElementNodeImpl child = new ElementNodeImpl("input", map2);
+        ElementNode child = createElementNode("input", map2);
         parent.addElement(child);
 
-        PageDesc pageDesc = new PageDescImpl(FooPage.class, "fooPage");
+        PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         ActionDesc actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
         assertFalse(selectFactory.isMatch(parent, pageDesc, actionDesc));
     }
@@ -124,15 +122,15 @@ public class SelectOneRadioFactoryTest extends TeedaExtensionTestCase {
         SelectOneRadioFactory selectFactory = new SelectOneRadioFactory();
         Map map = new HashMap();
         map.put("id", "hoge");
-        ElementNodeImpl parent = new ElementNodeImpl("span", map);
+        ElementNode parent = createElementNode("span", map);
 
         Map map2 = new HashMap();
         map2.put("name", "foo");
         map2.put("type", "radio");
-        ElementNodeImpl child = new ElementNodeImpl("input", map2);
+        ElementNode child = createElementNode("input", map2);
         parent.addElement(child);
 
-        PageDesc pageDesc = new PageDescImpl(FooPage.class, "fooPage");
+        PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         ActionDesc actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
         assertFalse(selectFactory.isMatch(parent, pageDesc, actionDesc));
     }
@@ -142,15 +140,15 @@ public class SelectOneRadioFactoryTest extends TeedaExtensionTestCase {
         SelectOneRadioFactory selectFactory = new SelectOneRadioFactory();
         Map map = new HashMap();
         map.put("id", "hoge");
-        ElementNodeImpl parent = new ElementNodeImpl("span", map);
+        ElementNode parent = createElementNode("span", map);
 
         Map map2 = new HashMap();
         map2.put("name", "hoge");
         map2.put("type", "text");
-        ElementNodeImpl child = new ElementNodeImpl("input", map2);
+        ElementNode child = createElementNode("input", map2);
         parent.addElement(child);
 
-        PageDesc pageDesc = new PageDescImpl(FooPage.class, "fooPage");
+        PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         ActionDesc actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
         assertFalse(selectFactory.isMatch(parent, pageDesc, actionDesc));
     }
@@ -160,19 +158,19 @@ public class SelectOneRadioFactoryTest extends TeedaExtensionTestCase {
         SelectOneRadioFactory selectFactory = new SelectOneRadioFactory();
         Map map = new HashMap();
         map.put("id", "hoge");
-        ElementNodeImpl parent = new ElementNodeImpl("span", map);
+        ElementNode parent = createElementNode("span", map);
 
         Map map2 = new HashMap();
         map2.put("id", "hoge");
         map2.put("type", "text");
-        ElementNodeImpl child = new ElementNodeImpl("input", map2);
+        ElementNode child = createElementNode("input", map2);
         parent.addElement(child);
 
         //it's unacceptable.
-        ElementNodeImpl child2 = new ElementNodeImpl("span", new HashMap());
+        ElementNode child2 = createElementNode("span", new HashMap());
         parent.addElement(child2);
 
-        PageDesc pageDesc = new PageDescImpl(FooPage.class, "fooPage");
+        PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         ActionDesc actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
         assertFalse(selectFactory.isMatch(parent, pageDesc, actionDesc));
     }
@@ -183,16 +181,16 @@ public class SelectOneRadioFactoryTest extends TeedaExtensionTestCase {
         factory.setTaglibManager(taglibManager);
         Map properties = new HashMap();
         properties.put("id", "hoge");
-        ElementNode elementNode = new ElementNodeImpl("span", properties);
+        ElementNode elementNode = createElementNode("span", properties);
 
         Map map2 = new HashMap();
         map2.put("name", "hoge");
         map2.put("type", "radio");
         map2.put("value", "aaa");
-        ElementNodeImpl childNode = new ElementNodeImpl("input", map2);
+        ElementNode childNode = createElementNode("input", map2);
         elementNode.addElement(childNode);
 
-        PageDesc pageDesc = new PageDescImpl(FooPage.class, "fooPage");
+        PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         ActionDesc actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
 
         // ## Act ##

@@ -37,7 +37,8 @@ public class ConstantConverterAnnotationHandlerTest extends TeedaTestCase {
         cd.setInstanceDef(InstanceDefFactory.PROTOTYPE);
         getContainer().register(cd);
         ConstantConverterAnnotationHandler handler = new ConstantConverterAnnotationHandler();
-        handler.registerConverters("hogeBean", HogeBean.class);
+        getContainer().register(HogeBean.class, "hogeBean");
+        handler.registerConverters("hogeBean");
         FooConverter converter = (FooConverter) ConverterResource
                 .getConverter("#{hogeBean.aaa}");
         assertEquals("bar", converter.getBbb());
@@ -47,7 +48,7 @@ public class ConstantConverterAnnotationHandlerTest extends TeedaTestCase {
 
         private int aaa = 0;
 
-        public static final String aaa_CONVERTER = "#{'converter':'foo', 'bbb' : 'bar'}";
+        public static final String aaa_fooConverter = "bbb=bar";
 
         public int getAaa() {
             return aaa;

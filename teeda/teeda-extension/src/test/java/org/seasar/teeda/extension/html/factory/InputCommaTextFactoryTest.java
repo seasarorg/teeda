@@ -3,7 +3,6 @@ package org.seasar.teeda.extension.html.factory;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.seasar.teeda.core.unit.TeedaTestCase;
 import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.config.taglib.element.TagElement;
 import org.seasar.teeda.extension.config.taglib.element.TaglibElement;
@@ -15,11 +14,11 @@ import org.seasar.teeda.extension.html.ElementProcessor;
 import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.impl.ActionDescImpl;
 import org.seasar.teeda.extension.html.impl.ElementNodeImpl;
-import org.seasar.teeda.extension.html.impl.PageDescImpl;
 import org.seasar.teeda.extension.mock.MockTaglibManager;
 import org.seasar.teeda.extension.taglib.TInputCommaTextTag;
+import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 
-public class InputCommaTextFactoryTest extends TeedaTestCase {
+public class InputCommaTextFactoryTest extends TeedaExtensionTestCase {
 
     public void testIsMatch() throws Exception {
         InputCommaTextFactory factory = new InputCommaTextFactory();
@@ -28,7 +27,7 @@ public class InputCommaTextFactoryTest extends TeedaTestCase {
         props.put("type", "text");
         props.put("class", "T_currency");
         ElementNode elementNode = new ElementNodeImpl("input", props);
-        PageDesc pageDesc = new PageDescImpl(FooPage.class, "fooPage");
+        PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         assertTrue(factory.isMatch(elementNode, pageDesc, null));
         ElementNode elementNode2 = new ElementNodeImpl("hoge", props);
         assertFalse(factory.isMatch(elementNode2, pageDesc, null));
@@ -61,7 +60,7 @@ public class InputCommaTextFactoryTest extends TeedaTestCase {
         props.put("type", "text");
         props.put("class", "T_Currency");
         ElementNode elementNode = new ElementNodeImpl("input", props);
-        PageDesc pageDesc = new PageDescImpl(AaaPage.class, "aaaPage");
+        PageDesc pageDesc = createPageDesc(AaaPage.class, "aaaPage");
         ActionDesc actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
 
         // ## Act ##
@@ -71,8 +70,11 @@ public class InputCommaTextFactoryTest extends TeedaTestCase {
         assertNotNull("1", processor);
         assertEquals("2", TInputCommaTextTag.class, processor.getTagClass());
         assertEquals("3", "#{aaaPage.aaa}", processor.getProperty("value"));
-        assertEquals("4", "#{aaaPage.aaaFraction}", processor.getProperty("fraction"));
-        assertEquals("5", "#{aaaPage.aaaFractionSeparator}", processor.getProperty("fractionSeparator"));
-        assertEquals("6", "#{aaaPage.aaaGroupingSeparator}", processor.getProperty("groupingSeparator"));
+        assertEquals("4", "#{aaaPage.aaaFraction}", processor
+                .getProperty("fraction"));
+        assertEquals("5", "#{aaaPage.aaaFractionSeparator}", processor
+                .getProperty("fractionSeparator"));
+        assertEquals("6", "#{aaaPage.aaaGroupingSeparator}", processor
+                .getProperty("groupingSeparator"));
     }
 }

@@ -25,7 +25,6 @@ import org.seasar.teeda.extension.html.ElementProcessor;
 import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.impl.ActionDescImpl;
 import org.seasar.teeda.extension.html.impl.ElementNodeImpl;
-import org.seasar.teeda.extension.html.impl.PageDescImpl;
 import org.seasar.teeda.extension.mock.MockTaglibManager;
 import org.seasar.teeda.extension.taglib.TSelectManyCheckboxTag;
 import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
@@ -53,7 +52,7 @@ public class SelectManyCheckboxFactoryTest extends TeedaExtensionTestCase {
         ElementNodeImpl child = new ElementNodeImpl("input", map2);
         parent.addElement(child);
 
-        PageDesc pageDesc = new PageDescImpl(FooPage.class, "fooPage");
+        PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         ActionDesc actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
         assertTrue(selectFactory.isMatch(parent, pageDesc, actionDesc));
     }
@@ -78,7 +77,7 @@ public class SelectManyCheckboxFactoryTest extends TeedaExtensionTestCase {
         ElementNodeImpl child2 = new ElementNodeImpl("input", map3);
         parent.addElement(child2);
 
-        PageDesc pageDesc = new PageDescImpl(FooPage.class, "fooPage");
+        PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         ActionDesc actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
         assertTrue(selectFactory.isMatch(parent, pageDesc, actionDesc));
     }
@@ -94,7 +93,7 @@ public class SelectManyCheckboxFactoryTest extends TeedaExtensionTestCase {
         ElementNodeImpl child = new ElementNodeImpl("input", map2);
         parent.addElement(child);
 
-        PageDesc pageDesc = new PageDescImpl(FooPage.class, "fooPage");
+        PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         ActionDesc actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
         assertFalse(selectFactory.isMatch(parent, pageDesc, actionDesc));
     }
@@ -110,7 +109,7 @@ public class SelectManyCheckboxFactoryTest extends TeedaExtensionTestCase {
         ElementNodeImpl child = new ElementNodeImpl("input", map2);
         parent.addElement(child);
 
-        PageDesc pageDesc = new PageDescImpl(FooPage.class, "fooPage");
+        PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         ActionDesc actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
         assertFalse(selectFactory.isMatch(parent, pageDesc, actionDesc));
     }
@@ -127,7 +126,7 @@ public class SelectManyCheckboxFactoryTest extends TeedaExtensionTestCase {
         ElementNodeImpl child = new ElementNodeImpl("input", map2);
         parent.addElement(child);
 
-        PageDesc pageDesc = new PageDescImpl(FooPage.class, "fooPage");
+        PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         ActionDesc actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
         assertFalse(selectFactory.isMatch(parent, pageDesc, actionDesc));
     }
@@ -144,7 +143,7 @@ public class SelectManyCheckboxFactoryTest extends TeedaExtensionTestCase {
         ElementNodeImpl child = new ElementNodeImpl("input", map2);
         parent.addElement(child);
 
-        PageDesc pageDesc = new PageDescImpl(FooPage.class, "fooPage");
+        PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         ActionDesc actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
         assertFalse(selectFactory.isMatch(parent, pageDesc, actionDesc));
     }
@@ -164,7 +163,7 @@ public class SelectManyCheckboxFactoryTest extends TeedaExtensionTestCase {
         ElementNodeImpl child2 = new ElementNodeImpl("span", new HashMap());
         parent.addElement(child2);
 
-        PageDesc pageDesc = new PageDescImpl(FooPage.class, "fooPage");
+        PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         ActionDesc actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
         assertFalse(selectFactory.isMatch(parent, pageDesc, actionDesc));
     }
@@ -175,7 +174,7 @@ public class SelectManyCheckboxFactoryTest extends TeedaExtensionTestCase {
         map.put("id", "hoge");
         ElementNodeImpl parent = new ElementNodeImpl("span", map);
 
-        PageDesc pageDesc = new PageDescImpl(FooPage.class, "fooPage");
+        PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         ActionDesc actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
         assertFalse(selectFactory.isMatch(parent, pageDesc, actionDesc));
     }
@@ -195,7 +194,7 @@ public class SelectManyCheckboxFactoryTest extends TeedaExtensionTestCase {
         ElementNodeImpl childNode = new ElementNodeImpl("input", map2);
         elementNode.addElement(childNode);
 
-        PageDesc pageDesc = new PageDescImpl(FooPage.class, "fooPage");
+        PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         ActionDesc actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
 
         // ## Act ##

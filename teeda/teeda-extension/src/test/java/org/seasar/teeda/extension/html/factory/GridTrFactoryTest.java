@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -17,16 +17,14 @@ package org.seasar.teeda.extension.html.factory;
 
 import java.util.HashMap;
 
-import org.seasar.teeda.core.unit.TeedaTestCase;
 import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.PageDesc;
-import org.seasar.teeda.extension.html.impl.ElementNodeImpl;
-import org.seasar.teeda.extension.html.impl.PageDescImpl;
+import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 
 /**
  * @author manhole
  */
-public class GridTrFactoryTest extends TeedaTestCase {
+public class GridTrFactoryTest extends TeedaExtensionTestCase {
 
     private GridTrFactory factory;
 
@@ -35,15 +33,15 @@ public class GridTrFactoryTest extends TeedaTestCase {
     protected void setUp() throws Exception {
         super.setUp();
         include("GridTrFactory.dicon");
-        pageDesc = new PageDescImpl(FooPage.class, "fooPage");
+        pageDesc = createPageDesc(FooPage.class, "fooPage");
     }
 
     public void testTrIsMatch1() throws Exception {
         // ## Arrange ##
         final HashMap gridProp = new HashMap();
         gridProp.put("id", "hogeGrid");
-        ElementNode grid = new ElementNodeImpl("table", gridProp);
-        ElementNode elementNode = new ElementNodeImpl("tr", new HashMap());
+        ElementNode grid = createElementNode("table", gridProp);
+        ElementNode elementNode = createElementNode("tr", new HashMap());
         grid.addElement(elementNode);
 
         // ## Act ##
@@ -54,9 +52,9 @@ public class GridTrFactoryTest extends TeedaTestCase {
     public void testTrIsMatch2() throws Exception {
         // ## Arrange ##
         final HashMap gridProp = new HashMap();
-        ElementNode grid = new ElementNodeImpl("table", gridProp);
+        ElementNode grid = createElementNode("table", gridProp);
 
-        ElementNode elementNode = new ElementNodeImpl("tr", new HashMap());
+        ElementNode elementNode = createElementNode("tr", new HashMap());
         grid.addElement(elementNode);
 
         // ## Act ##

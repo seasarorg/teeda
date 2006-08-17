@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -18,7 +18,6 @@ package org.seasar.teeda.extension.html.factory;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.seasar.teeda.core.unit.TeedaTestCase;
 import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.config.taglib.element.TagElement;
 import org.seasar.teeda.extension.config.taglib.element.TaglibElement;
@@ -27,15 +26,14 @@ import org.seasar.teeda.extension.config.taglib.element.impl.TaglibElementImpl;
 import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.ElementProcessor;
 import org.seasar.teeda.extension.html.PageDesc;
-import org.seasar.teeda.extension.html.impl.ElementNodeImpl;
-import org.seasar.teeda.extension.html.impl.PageDescImpl;
 import org.seasar.teeda.extension.mock.MockTaglibManager;
 import org.seasar.teeda.extension.taglib.TGridTag;
+import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 
 /**
  * @author manhole
  */
-public class GridFactoryTest extends TeedaTestCase {
+public class GridFactoryTest extends TeedaExtensionTestCase {
 
     private GridFactory factory;
 
@@ -47,45 +45,45 @@ public class GridFactoryTest extends TeedaTestCase {
     public void testIsMatch_Ok() throws Exception {
         Map properties = new HashMap();
         properties.put("id", "hogeGridXY");
-        ElementNode elementNode = new ElementNodeImpl("table", properties);
-        PageDesc pageDesc = new PageDescImpl(FooPage.class, "fooPage");
+        ElementNode elementNode = createElementNode("table", properties);
+        PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         assertEquals(true, factory.isMatch(elementNode, pageDesc, null));
     }
 
     public void testIsMatch_NoId() throws Exception {
         Map properties = new HashMap();
-        ElementNode elementNode = new ElementNodeImpl("table", properties);
-        PageDesc pageDesc = new PageDescImpl(FooPage.class, "fooPage");
+        ElementNode elementNode = createElementNode("table", properties);
+        PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         assertEquals(false, factory.isMatch(elementNode, pageDesc, null));
     }
 
     public void testIsMatch_BadId() throws Exception {
         Map properties = new HashMap();
-        ElementNode elementNode = new ElementNodeImpl("table", properties);
-        PageDesc pageDesc = new PageDescImpl(FooPage.class, "fooPage");
+        ElementNode elementNode = createElementNode("table", properties);
+        PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         assertEquals(false, factory.isMatch(elementNode, pageDesc, null));
     }
 
     public void testIsMatch_BadElement() throws Exception {
         Map properties = new HashMap();
         properties.put("id", "hogeGridXY");
-        ElementNode elementNode = new ElementNodeImpl("input", properties);
-        PageDesc pageDesc = new PageDescImpl(FooPage.class, "fooPage");
+        ElementNode elementNode = createElementNode("input", properties);
+        PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         assertEquals(false, factory.isMatch(elementNode, pageDesc, null));
     }
 
     public void testIsMatch_NoPageDesc() throws Exception {
         Map properties = new HashMap();
         properties.put("id", "hogeGridXY");
-        ElementNode elementNode = new ElementNodeImpl("table", properties);
+        ElementNode elementNode = createElementNode("table", properties);
         assertEquals(false, factory.isMatch(elementNode, null, null));
     }
 
     public void testIsMatch_NoItemsProperty() throws Exception {
         Map properties = new HashMap();
         properties.put("id", "fooGridXY");
-        ElementNode elementNode = new ElementNodeImpl("table", properties);
-        PageDesc pageDesc = new PageDescImpl(FooPage.class, "fooPage");
+        ElementNode elementNode = createElementNode("table", properties);
+        PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         assertEquals(false, factory.isMatch(elementNode, pageDesc, null));
     }
 
@@ -103,8 +101,8 @@ public class GridFactoryTest extends TeedaTestCase {
         factory.setTaglibManager(taglibManager);
         Map properties = new HashMap();
         properties.put("id", "hogeGridXY");
-        ElementNode elementNode = new ElementNodeImpl("table", properties);
-        PageDesc pageDesc = new PageDescImpl(FooPage.class, "fooPage");
+        ElementNode elementNode = createElementNode("table", properties);
+        PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
 
         // ## Act ##
         ElementProcessor processor = factory.createProcessor(elementNode,

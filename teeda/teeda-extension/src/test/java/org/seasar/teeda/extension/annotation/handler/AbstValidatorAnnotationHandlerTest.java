@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -24,7 +24,7 @@ import org.seasar.teeda.extension.validator.TByteLengthValidator;
 
 /**
  * @author higa
- * 
+ *
  */
 public class AbstValidatorAnnotationHandlerTest extends TestCase {
 
@@ -39,12 +39,12 @@ public class AbstValidatorAnnotationHandlerTest extends TestCase {
         handler.registerValidator("aaa", "ccc", new DoubleRangeValidator());
         assertNotNull(ValidatorResource.getValidator("#{aaa.bbb}"));
         assertEquals(2, handler.getExpressionSize("aaa"));
-        
+
         handler.removeValidators("aaa");
         assertNull(ValidatorResource.getValidator("#{aaa.bbb}"));
         assertEquals(0, handler.getExpressionSize("aaa"));
     }
-    
+
     public void testRemoveAll() throws Exception {
         MockAnnotationHandler handler = new MockAnnotationHandler();
         handler.registerValidator("aaa", "bbb", new TByteLengthValidator());
@@ -54,10 +54,11 @@ public class AbstValidatorAnnotationHandlerTest extends TestCase {
         assertNull(ValidatorResource.getValidator("#{aaa.bbb}"));
         assertEquals(0, handler.getExpressionSize("aaa"));
     }
-    
-    public static class MockAnnotationHandler extends AbstractValidatorAnnotationHandler {
 
-        public void registerValidators(String componentName, Class clazz) {
+    public static class MockAnnotationHandler extends
+            AbstractValidatorAnnotationHandler {
+
+        public void registerValidators(String componentName) {
         }
     }
 }

@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -20,7 +20,6 @@ import java.util.Map;
 
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.taglib.html.OutputTextTag;
-import org.seasar.teeda.core.unit.TeedaTestCase;
 import org.seasar.teeda.extension.config.taglib.element.TagElement;
 import org.seasar.teeda.extension.config.taglib.element.TaglibElement;
 import org.seasar.teeda.extension.config.taglib.element.impl.TagElementImpl;
@@ -31,20 +30,20 @@ import org.seasar.teeda.extension.html.ElementProcessor;
 import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.impl.ActionDescImpl;
 import org.seasar.teeda.extension.html.impl.ElementNodeImpl;
-import org.seasar.teeda.extension.html.impl.PageDescImpl;
 import org.seasar.teeda.extension.mock.MockTaglibManager;
+import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 
 /**
  * @author shot
  */
-public class OutputTextFactoryTest extends TeedaTestCase {
+public class OutputTextFactoryTest extends TeedaExtensionTestCase {
 
     public void testIsMatch() throws Exception {
         OutputTextFactory factory = new OutputTextFactory();
         Map properties = new HashMap();
         properties.put("id", "aaa");
         ElementNode elementNode = new ElementNodeImpl("span", properties);
-        PageDesc pageDesc = new PageDescImpl(FooPage.class, "fooPage");
+        PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         assertTrue("1", factory.isMatch(elementNode, pageDesc, null));
 
         ElementNode elementNode2 = new ElementNodeImpl("foo", properties);
@@ -71,7 +70,7 @@ public class OutputTextFactoryTest extends TeedaTestCase {
         Map properties = new HashMap();
         properties.put("id", "aaa");
         ElementNode elementNode = new ElementNodeImpl("span", properties);
-        PageDesc pageDesc = new PageDescImpl(FooPage.class, "fooPage");
+        PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         ActionDesc actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
 
         // ## Act ##

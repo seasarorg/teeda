@@ -20,7 +20,7 @@ package org.seasar.teeda.extension.annotation.handler;
  */
 public interface ConverterAnnotationHandler {
 
-    void registerConverters(String componentName, Class clazz);
+    void registerConverters(String componentName);
 
     void removeAll();
 

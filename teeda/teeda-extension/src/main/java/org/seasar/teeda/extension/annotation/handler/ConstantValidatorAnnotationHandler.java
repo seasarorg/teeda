@@ -9,14 +9,13 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
 package org.seasar.teeda.extension.annotation.handler;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -25,6 +24,7 @@ import javax.faces.validator.Validator;
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.PropertyDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
+import org.seasar.framework.container.ComponentDef;
 import org.seasar.framework.container.S2Container;
 import org.seasar.framework.container.util.ConstantAnnotationUtil;
 import org.seasar.framework.convention.NamingConvention;
@@ -38,19 +38,21 @@ import org.seasar.framework.util.StringUtil;
 public class ConstantValidatorAnnotationHandler extends
         AbstractValidatorAnnotationHandler {
 
-    public void registerValidators(String componentName, Class clazz) {
+    public void registerValidators(String componentName) {
         removeValidators(componentName);
         S2Container container = getContainer();
         NamingConvention namingConvention = (NamingConvention) container
                 .getComponent(NamingConvention.class);
         String suffix = namingConvention.getValidatorSuffix();
-        BeanDesc beanDesc = BeanDescFactory.getBeanDesc(clazz);
-        Field[] fields = clazz.getDeclaredFields();
+        ComponentDef componentDef = container.getComponentDef(componentName);
+        Class componentClass = componentDef.getComponentClass();
+        BeanDesc beanDesc = BeanDescFactory.getBeanDesc(componentClass);
+        Field[] fields = componentClass.getDeclaredFields();
         for (int i = 0; i < fields.length; ++i) {
             Field field = fields[i];
-            int mod = field.getModifiers();
-            if (!Modifier.isStatic(mod) || !Modifier.isFinal(mod)
-                    || !field.getName().endsWith(suffix)) {
+            boolean isConstantAnnotation = ConstantAnnotationUtil
+                    .isConstantAnnotation(field);
+            if (!isConstantAnnotation || !field.getName().endsWith(suffix)) {
                 continue;
             }
             String[] names = StringUtil.split(field.getName(), "_");

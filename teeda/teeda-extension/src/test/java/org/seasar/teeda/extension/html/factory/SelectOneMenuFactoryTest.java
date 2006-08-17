@@ -25,8 +25,6 @@ import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.ElementProcessor;
 import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.impl.ActionDescImpl;
-import org.seasar.teeda.extension.html.impl.ElementNodeImpl;
-import org.seasar.teeda.extension.html.impl.PageDescImpl;
 import org.seasar.teeda.extension.mock.MockTaglibManager;
 import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 
@@ -48,8 +46,8 @@ public class SelectOneMenuFactoryTest extends TeedaExtensionTestCase {
         SelectOneMenuFactory selectFactory = new SelectOneMenuFactory();
         Map map = new HashMap();
         map.put("id", "hogeItems");
-        ElementNodeImpl elementNode = new ElementNodeImpl("select", map);
-        PageDesc pageDesc = new PageDescImpl(FooPage.class, "fooPage");
+        ElementNode elementNode = createElementNode("select", map);
+        PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         ActionDesc actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
         assertTrue(selectFactory.isMatch(elementNode, pageDesc, actionDesc));
     }
@@ -60,8 +58,8 @@ public class SelectOneMenuFactoryTest extends TeedaExtensionTestCase {
         factory.setTaglibManager(taglibManager);
         Map properties = new HashMap();
         properties.put("id", "hogeItems");
-        ElementNode elementNode = new ElementNodeImpl("span", properties);
-        PageDesc pageDesc = new PageDescImpl(FooPage.class, "fooPage");
+        ElementNode elementNode = createElementNode("span", properties);
+        PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         ActionDesc actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
 
         // ## Act ##

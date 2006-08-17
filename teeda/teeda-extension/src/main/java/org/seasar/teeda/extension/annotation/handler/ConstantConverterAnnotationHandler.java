@@ -17,7 +17,6 @@ package org.seasar.teeda.extension.annotation.handler;
 
 import java.lang.reflect.Field;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import javax.faces.convert.Converter;
@@ -25,10 +24,10 @@ import javax.faces.convert.Converter;
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.PropertyDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
-import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
-import org.seasar.framework.exception.EmptyRuntimeException;
+import org.seasar.framework.container.ComponentDef;
+import org.seasar.framework.container.S2Container;
+import org.seasar.framework.container.util.ConstantAnnotationUtil;
 import org.seasar.framework.util.FieldUtil;
-import org.seasar.framework.util.OgnlUtil;
 import org.seasar.framework.util.StringUtil;
 
 /**
@@ -37,53 +36,34 @@ import org.seasar.framework.util.StringUtil;
 public class ConstantConverterAnnotationHandler extends
         AbstractConverterAnnotationHandler {
 
-    private static final String CONVERTER_SUFFIX = "_CONVERTER";
+    private static final String CONVERTER_SUFFIX = "Converter";
 
-    private static final String CONVERTER_NAME_SUFFIX = "Converter";
-
-    private static final String CONVERTER = "converter";
-
-    public void registerConverters(String componentName, Class clazz) {
+    //TODO namingConvention needs to support converter(like validator)?
+    public void registerConverters(String componentName) {
+        S2Container container = getContainer();
+        ComponentDef componentDef = container.getComponentDef(componentName);
+        Class clazz = componentDef.getComponentClass();
         BeanDesc beanDesc = BeanDescFactory.getBeanDesc(clazz);
-        for (int i = 0; i < beanDesc.getPropertyDescSize(); ++i) {
-            PropertyDesc pd = beanDesc.getPropertyDesc(i);
-            if (!beanDesc.hasField(pd.getPropertyName() + CONVERTER_SUFFIX)) {
+        Field[] fields = clazz.getDeclaredFields();
+        for (int i = 0; i < fields.length; ++i) {
+            Field field = fields[i];
+            boolean isConstantAnnotation = ConstantAnnotationUtil
+                    .isConstantAnnotation(field);
+            if (!isConstantAnnotation
+                    || !field.getName().endsWith(CONVERTER_SUFFIX)) {
                 continue;
             }
-            Field field = beanDesc.getField(pd.getPropertyName()
-                    + CONVERTER_SUFFIX);
+            String[] names = StringUtil.split(field.getName(), "_");
+            if (names.length != 2 || !beanDesc.hasPropertyDesc(names[0])
+                    || !container.hasComponentDef(names[1])) {
+                continue;
+            }
+            Converter converter = (Converter) container.getComponent(names[1]);
             String s = (String) FieldUtil.get(field, null);
-            if (StringUtil.isEmpty(s)) {
-                continue;
-            }
-            Object o = OgnlUtil.getValue(OgnlUtil.parseExpression(s),
-                    SingletonS2ContainerFactory.getContainer());
-            if (o instanceof List) {
-                List l = (List) o;
-                for (int j = 0; j < l.size(); ++j) {
-                    Map m = (Map) l.get(j);
-                    registerConverter(componentName, pd.getPropertyName(), m);
-                }
-            } else if (o instanceof Map) {
-                Map m = (Map) o;
-                registerConverter(componentName, pd.getPropertyName(), m);
-            } else {
-                throw new IllegalStateException(s);
-            }
+            Map m = ConstantAnnotationUtil.convertExpressionToMap(s);
+            copyProperties(converter, m);
+            registerConverter(componentName, names[0], converter);
         }
-    }
-
-    protected void registerConverter(String componentName, String propertyName,
-            Map m) {
-        String converterName = (String) m.remove(CONVERTER);
-        if (converterName == null) {
-            throw new EmptyRuntimeException("converterName");
-        }
-        converterName = converterName + CONVERTER_NAME_SUFFIX;
-        Converter converter = (Converter) SingletonS2ContainerFactory
-                .getContainer().getComponent(converterName);
-        copyProperties(converter, m);
-        registerConverter(componentName, propertyName, converter);
     }
 
     protected void copyProperties(Converter converter, Map m) {

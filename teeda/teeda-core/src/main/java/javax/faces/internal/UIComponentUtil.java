@@ -33,6 +33,7 @@ import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.PropertyDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.framework.util.ArrayUtil;
+import org.seasar.framework.util.ModifierUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.exception.TagNotFoundRuntimeException;
 

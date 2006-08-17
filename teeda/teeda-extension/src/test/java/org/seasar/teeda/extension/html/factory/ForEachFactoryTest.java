@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -18,7 +18,6 @@ package org.seasar.teeda.extension.html.factory;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.seasar.teeda.core.unit.TeedaTestCase;
 import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.config.taglib.element.TagElement;
 import org.seasar.teeda.extension.config.taglib.element.TaglibElement;
@@ -27,27 +26,26 @@ import org.seasar.teeda.extension.config.taglib.element.impl.TaglibElementImpl;
 import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.ElementProcessor;
 import org.seasar.teeda.extension.html.PageDesc;
-import org.seasar.teeda.extension.html.impl.ElementNodeImpl;
-import org.seasar.teeda.extension.html.impl.PageDescImpl;
 import org.seasar.teeda.extension.mock.MockTaglibManager;
 import org.seasar.teeda.extension.taglib.TForEachTag;
+import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 
 /**
  * @author higa
  */
-public class ForEachFactoryTest extends TeedaTestCase {
+public class ForEachFactoryTest extends TeedaExtensionTestCase {
 
     public void testIsMatch() throws Exception {
         ForEachFactory factory = new ForEachFactory();
         Map properties = new HashMap();
         properties.put("id", "hogeItems");
-        ElementNode elementNode = new ElementNodeImpl("div", properties);
-        PageDesc pageDesc = new PageDescImpl(FooPage.class, "fooPage");
+        ElementNode elementNode = createElementNode("div", properties);
+        PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         assertTrue(factory.isMatch(elementNode, pageDesc, null));
-        ElementNode elementNode2 = new ElementNodeImpl("hoge", properties);
+        ElementNode elementNode2 = createElementNode("hoge", properties);
         assertFalse(factory.isMatch(elementNode2, pageDesc, null));
         properties.put("id", "xxx");
-        ElementNode elementNode3 = new ElementNodeImpl("input", properties);
+        ElementNode elementNode3 = createElementNode("input", properties);
         assertFalse(factory.isMatch(elementNode3, pageDesc, null));
     }
 
@@ -65,8 +63,8 @@ public class ForEachFactoryTest extends TeedaTestCase {
         factory.setTaglibManager(taglibManager);
         Map properties = new HashMap();
         properties.put("id", "hogeItems");
-        ElementNode elementNode = new ElementNodeImpl("div", properties);
-        PageDesc pageDesc = new PageDescImpl(FooPage.class, "fooPage");
+        ElementNode elementNode = createElementNode("div", properties);
+        PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
 
         // ## Act ##
         ElementProcessor processor = factory.createProcessor(elementNode,

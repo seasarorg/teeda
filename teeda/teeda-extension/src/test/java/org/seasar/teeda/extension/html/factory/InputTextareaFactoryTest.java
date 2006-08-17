@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -20,7 +20,6 @@ import java.util.Map;
 
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.taglib.html.InputTextareaTag;
-import org.seasar.teeda.core.unit.TeedaTestCase;
 import org.seasar.teeda.extension.config.taglib.element.TagElement;
 import org.seasar.teeda.extension.config.taglib.element.TaglibElement;
 import org.seasar.teeda.extension.config.taglib.element.impl.TagElementImpl;
@@ -30,25 +29,24 @@ import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.ElementProcessor;
 import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.impl.ActionDescImpl;
-import org.seasar.teeda.extension.html.impl.ElementNodeImpl;
-import org.seasar.teeda.extension.html.impl.PageDescImpl;
 import org.seasar.teeda.extension.mock.MockTaglibManager;
+import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 
 /**
  * @author shot
  */
-public class InputTextareaFactoryTest extends TeedaTestCase {
+public class InputTextareaFactoryTest extends TeedaExtensionTestCase {
 
     public void testIsMatch() throws Exception {
         InputTextareaFactory factory = new InputTextareaFactory();
         Map props = new HashMap();
         props.put("id", "aaa");
-        ElementNode elementNode = new ElementNodeImpl("textarea", props);
-        PageDesc pageDesc = new PageDescImpl(FooPage.class, "fooPage");
+        ElementNode elementNode = createElementNode("textarea", props);
+        PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         assertTrue(factory.isMatch(elementNode, pageDesc, null));
-        ElementNode elementNode2 = new ElementNodeImpl("hoge", props);
+        ElementNode elementNode2 = createElementNode("hoge", props);
         assertFalse(factory.isMatch(elementNode2, pageDesc, null));
-        ElementNode elementNode3 = new ElementNodeImpl("textarea", new HashMap());
+        ElementNode elementNode3 = createElementNode("textarea", new HashMap());
         assertFalse(factory.isMatch(elementNode3, pageDesc, null));
     }
 
@@ -67,8 +65,8 @@ public class InputTextareaFactoryTest extends TeedaTestCase {
         Map props = new HashMap();
         props.put("id", "aaa");
         props.put("type", "password");
-        ElementNode elementNode = new ElementNodeImpl("textarea", props);
-        PageDesc pageDesc = new PageDescImpl(FooPage.class, "fooPage");
+        ElementNode elementNode = createElementNode("textarea", props);
+        PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         ActionDesc actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
 
         // ## Act ##

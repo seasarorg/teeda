@@ -18,6 +18,8 @@ package org.seasar.teeda.extension.annotation.handler;
 import javax.faces.convert.Converter;
 import javax.faces.internal.ConverterResource;
 
+import org.seasar.framework.container.S2Container;
+import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
 import org.seasar.teeda.core.util.BindingUtil;
 
 /**
@@ -35,6 +37,10 @@ public abstract class AbstractConverterAnnotationHandler implements
 
     public void removeAll() {
         ConverterResource.removeAll();
+    }
+
+    protected S2Container getContainer() {
+        return SingletonS2ContainerFactory.getContainer();
     }
 
 }

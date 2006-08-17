@@ -15,6 +15,7 @@
  */
 package org.seasar.teeda.extension.unit;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,6 +24,10 @@ import org.seasar.teeda.extension.config.taglib.element.TagElement;
 import org.seasar.teeda.extension.config.taglib.element.TaglibElement;
 import org.seasar.teeda.extension.config.taglib.element.impl.TagElementImpl;
 import org.seasar.teeda.extension.config.taglib.element.impl.TaglibElementImpl;
+import org.seasar.teeda.extension.html.ElementNode;
+import org.seasar.teeda.extension.html.PageDesc;
+import org.seasar.teeda.extension.html.impl.ElementNodeImpl;
+import org.seasar.teeda.extension.html.impl.PageDescImpl;
 import org.seasar.teeda.extension.jsp.PageContextImpl;
 import org.seasar.teeda.extension.mock.MockTaglibManager;
 
@@ -80,6 +85,21 @@ public abstract class TeedaExtensionTestCase extends TeedaTestCase {
         tagElement.setTagClass(tagClass);
         taglib.addTagElement(tagElement);
         taglibManager.addTaglibElement(taglib);
+    }
+
+    protected ElementNode createElementNode(String tagName, Map props) {
+        return new ElementNodeImpl(tagName, props);
+    }
+
+    protected PageDesc createPageDesc(Class pageClass, String pageName) {
+        return createPageDesc(pageClass, pageName, null);
+    }
+
+    protected PageDesc createPageDesc(Class pageClass, String pageName,
+            File file) {
+        getContainer().register(pageClass, pageName);
+        PageDesc pd = new PageDescImpl(pageClass, pageName, file);
+        return pd;
     }
 
 }
