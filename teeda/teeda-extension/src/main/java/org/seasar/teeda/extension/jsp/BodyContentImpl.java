@@ -28,7 +28,7 @@ import org.seasar.teeda.extension.exception.StreamClosedException;
 
 public class BodyContentImpl extends BodyContent {
 
-    private static final int DEFAULT_BUFFER_SIZE = 512;
+    private static final int DEFAULT_BUFFER_SIZE = JspConstants.DEFAULT_BUFFER_SIZE;
 
     private char[] cb;
 
@@ -58,12 +58,13 @@ public class BodyContentImpl extends BodyContent {
     }
 
     protected void reallocBufferIfNeed(int len) {
-        if (len < cb.length - nextChar) {
+        int available = cb.length - nextChar;
+        if (len < available) {
             return;
         }
         char[] tmp = null;
-        if (len <= DEFAULT_BUFFER_SIZE) {
-            tmp = new char[cb.length + DEFAULT_BUFFER_SIZE];
+        if (len <= cb.length * 3 + available) {
+            tmp = new char[cb.length * 4];
         } else {
             tmp = new char[cb.length + len];
         }
