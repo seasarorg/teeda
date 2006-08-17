@@ -31,7 +31,7 @@ import org.seasar.teeda.core.unit.TeedaTestCase;
  */
 public class ConstantConverterAnnotationHandlerTest extends TeedaTestCase {
 
-    public void testRegisterValidator_single() throws Exception {
+    public void testRegisterConverter1() throws Exception {
         ComponentDef cd = new ComponentDefImpl(FooConverter.class,
                 "fooConverter");
         cd.setInstanceDef(InstanceDefFactory.PROTOTYPE);
@@ -44,11 +44,28 @@ public class ConstantConverterAnnotationHandlerTest extends TeedaTestCase {
         assertEquals("bar", converter.getBbb());
     }
 
+    public void testRegisterConverter2() throws Exception {
+        ComponentDef cd = new ComponentDefImpl(FooConverter.class,
+                "fooConverter");
+        cd.setInstanceDef(InstanceDefFactory.PROTOTYPE);
+        getContainer().register(cd);
+        ConstantConverterAnnotationHandler handler = new ConstantConverterAnnotationHandler();
+        getContainer().register(HogeBean.class, "hogeBean");
+        handler.registerConverters("hogeBean");
+        FooConverter converter = (FooConverter) ConverterResource
+                .getConverter("#{hogeBean.bbb}");
+        assertNotNull(converter);
+    }
+
     public static class HogeBean {
 
         private int aaa = 0;
 
+        private boolean bbb = false;
+
         public static final String aaa_fooConverter = "bbb=bar";
+
+        public static final String bbb_fooConverter = null;
 
         public int getAaa() {
             return aaa;
@@ -57,6 +74,15 @@ public class ConstantConverterAnnotationHandlerTest extends TeedaTestCase {
         public void setAaa(int aaa) {
             this.aaa = aaa;
         }
+
+        public boolean isBbb() {
+            return bbb;
+        }
+
+        public void setBbb(boolean bbb) {
+            this.bbb = bbb;
+        }
+
     }
 
     public static class FooConverter implements Converter {

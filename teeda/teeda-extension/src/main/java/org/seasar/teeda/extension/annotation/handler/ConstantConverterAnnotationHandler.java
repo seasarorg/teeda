@@ -67,6 +67,9 @@ public class ConstantConverterAnnotationHandler extends
     }
 
     protected void copyProperties(Converter converter, Map m) {
+        if (m == null) {
+            return;
+        }
         BeanDesc beanDesc = BeanDescFactory.getBeanDesc(converter.getClass());
         for (Iterator i = m.keySet().iterator(); i.hasNext();) {
             String key = (String) i.next();

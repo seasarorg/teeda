@@ -131,4 +131,13 @@
 		</initMethod>
 	</component>
 
+	<component class="org.seasar.framework.container.autoregister.JarComponentAutoRegister">
+		<property name="instanceDef">@org.seasar.framework.container.deployer.InstanceDefFactory@PROTOTYPE</property>
+		<property name="jarFileNames">"teeda-core.*"</property>
+		<initMethod name="addClassPattern">
+			<arg>"javax.faces.convert"</arg>
+			<arg>"..*Converter"</arg>
+		</initMethod>
+	</component>
+
 </components>
