@@ -2,9 +2,9 @@ package examples.teeda.web.add;
 
 public class AddInputPage {
 
-	public static final String arg1_VALIDATOR = "#{'validator':'length','minimum':3}";
+	public static final String arg1_lengthValidator = "minimum=3";
 
-	public static final String arg2_VALIDATOR = "#{'validator':'length','minimum':3}";
+	public static final String arg2_lengthValidator = "minimum=3";
 
 	private int arg1;
 
