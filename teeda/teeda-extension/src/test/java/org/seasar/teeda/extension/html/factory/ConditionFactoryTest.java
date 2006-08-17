@@ -18,8 +18,7 @@ package org.seasar.teeda.extension.html.factory;
 import java.util.HashMap;
 import java.util.Map;
 
-import junit.framework.TestCase;
-
+import org.seasar.framework.unit.S2FrameworkTestCase;
 import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.config.taglib.element.TagElement;
 import org.seasar.teeda.extension.config.taglib.element.TaglibElement;
@@ -38,7 +37,7 @@ import org.seasar.teeda.extension.taglib.TConditionTag;
 /**
  * @author shot
  */
-public class ConditionFactoryTest extends TestCase {
+public class ConditionFactoryTest extends S2FrameworkTestCase {
 
     public void testIsMatch() throws Exception {
         ConditionFactory factory = new ConditionFactory();

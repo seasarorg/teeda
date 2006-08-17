@@ -72,7 +72,7 @@ public class PageDescImplTest extends S2FrameworkTestCase {
 
     public void testValidator() throws Exception {
         ComponentDef cd = new ComponentDefImpl(TRequiredValidator.class,
-                "requiredValidator");
+                "TRequiredValidator");
         register(cd);
         new PageDescImpl(HogePage.class, "hogePage");
         assertNotNull(ValidatorResource.getValidator("#{hogePage.aaa}"));
