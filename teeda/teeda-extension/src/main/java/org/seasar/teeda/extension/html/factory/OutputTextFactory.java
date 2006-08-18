@@ -33,13 +33,17 @@ public class OutputTextFactory extends AbstractElementProcessorFactory {
     public OutputTextFactory() {
     }
 
-    public boolean isMatch(ElementNode elementNode, PageDesc pageDesc, ActionDesc actionDesc) {
+    public boolean isMatch(ElementNode elementNode, PageDesc pageDesc,
+            ActionDesc actionDesc) {
         if (!JsfConstants.SPAN_ELEM.equalsIgnoreCase(elementNode.getTagName())) {
             return false;
         }
-        return pageDesc != null && pageDesc.hasProperty(elementNode.getId());
+        if (pageDesc == null) {
+            return false;
+        }
+        return pageDesc.hasProperty(elementNode.getId());
     }
-    
+
     public boolean isLeaf() {
         return true;
     }

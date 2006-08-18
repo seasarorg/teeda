@@ -36,7 +36,10 @@ public class InputTextareaFactory extends AbstractElementProcessorFactory {
                 .getTagName())) {
             return false;
         }
-        return pageDesc != null && pageDesc.hasProperty(elementNode.getId());
+        if (pageDesc == null) {
+            return false;
+        }
+        return pageDesc.hasProperty(elementNode.getId());
     }
 
     protected void customizeProperties(Map properties, ElementNode elementNode,

@@ -40,8 +40,11 @@ public class SelectOneMenuFactory extends AbstractElementProcessorFactory {
                 .equalsIgnoreCase(elementNode.getTagName())) {
             return false;
         }
+        if (pageDesc == null) {
+            return false;
+        }
         String items = elementNode.getId();
-        if (pageDesc != null && pageDesc.hasItemsProperty(items)) {
+        if (pageDesc.hasItemsProperty(items)) {
             return (elementNode.getProperty(JsfConstants.MULTIPLE_ATTR) == null);
         }
         return false;

@@ -36,6 +36,9 @@ public class GridInputTextFactory extends AbstractGridChildrenFactory {
                 .getProperty(JsfConstants.TYPE_ATTR))) {
             return false;
         }
+        if (pageDesc == null) {
+            return false;
+        }
         return pageDesc.hasProperty(elementNode.getId());
     }
 
