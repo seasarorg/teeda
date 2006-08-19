@@ -161,41 +161,36 @@ public class FormLearningTest extends AbstractTestCase {
         // ## Assert ##
         HtmlPage page = (HtmlPage) webClient.getPage(url);
 
-        final HtmlForm form1 = (HtmlForm) new HtmlUnitXPath(".//form[1]")
-                .selectSingleNode(page);
-        final HtmlForm form2 = (HtmlForm) new HtmlUnitXPath(".//form[2]")
-                .selectSingleNode(page);
-        assertEquals("aaaForm", form1.getId());
-        try {
-            assertEquals("bbbForm", form2.getId());
-            fail("HtmlUnit's bug ??");
-        } catch (NullPointerException e) {
+        {
+            final HtmlForm form1 = (HtmlForm) new HtmlUnitXPath(".//form[1]")
+                    .selectSingleNode(page);
+            final HtmlForm form2 = (HtmlForm) new HtmlUnitXPath(".//form[2]")
+                    .selectSingleNode(page);
+            assertEquals("aaaForm", form1.getId());
+            try {
+                assertEquals("bbbForm", form2.getId());
+                fail();
+            } catch (NullPointerException e) {
+            }
         }
-
-        //        {
-        //            final HtmlSubmitInput input1 = (HtmlSubmitInput) new HtmlUnitXPath(
-        //                    ".//input[1]").selectSingleNode(page);
-        //            final HtmlSubmitInput input2 = (HtmlSubmitInput) new HtmlUnitXPath(
-        //                    ".//input[2]").selectSingleNode(page);
-        //            assertEquals("aaaSubmit", input1.getId());
-        //            try {
-        //                assertEquals("bbbSubmit", input2.getId());
-        //                fail("HtmlUnit's bug ??");
-        //            } catch (NullPointerException e) {
-        //            }
-        //        }
-        //        {
-        //            final HtmlSpan input1 = (HtmlSpan) new HtmlUnitXPath(".//span[1]")
-        //                    .selectSingleNode(page);
-        //            final HtmlSpan input2 = (HtmlSpan) new HtmlUnitXPath(".//span[2]")
-        //                    .selectSingleNode(page);
-        //            assertEquals("aaaSpan", input1.getId());
-        //            try {
-        //                assertEquals("bbbSpan", input2.getId());
-        //                fail("HtmlUnit's bug ??");
-        //            } catch (NullPointerException e) {
-        //            }
-        //        }
+        {
+            final List form1 = (List) new HtmlUnitXPath(".//form[1]")
+                    .selectNodes(page);
+            assertEquals(2, form1.size());
+        }
+        {
+            final HtmlForm form1 = (HtmlForm) new HtmlUnitXPath("//div[2]/form")
+                    .selectSingleNode(page);
+            assertEquals("bbbForm", form1.getId());
+        }
+        {
+            final HtmlForm form1 = (HtmlForm) new HtmlUnitXPath(
+                    "/descendant::form[1] ").selectSingleNode(page);
+            final HtmlForm form2 = (HtmlForm) new HtmlUnitXPath(
+                    "/descendant::form[2] ").selectSingleNode(page);
+            assertEquals("aaaForm", form1.getId());
+            assertEquals("bbbForm", form2.getId());
+        }
     }
 
 }
