@@ -38,7 +38,7 @@ import javax.faces.el.VariableResolver;
 import javax.faces.event.ActionListener;
 import javax.faces.validator.Validator;
 
-import org.seasar.teeda.core.util.ClassUtil;
+import org.seasar.framework.util.ClassUtil;
 
 /**
  * @author shot

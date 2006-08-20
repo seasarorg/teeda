@@ -15,6 +15,8 @@
  */
 package org.seasar.teeda.core.el;
 
+import java.io.Serializable;
+
 import javax.faces.context.FacesContext;
 import javax.faces.el.EvaluationException;
 import javax.faces.el.PropertyNotFoundException;
@@ -23,7 +25,7 @@ import javax.faces.el.ReferenceSyntaxException;
 /**
  * @author shot
  */
-public interface ExpressionProcessor {
+public interface ExpressionProcessor extends Serializable {
 
     public void processExpression(Object o, Class type);
 

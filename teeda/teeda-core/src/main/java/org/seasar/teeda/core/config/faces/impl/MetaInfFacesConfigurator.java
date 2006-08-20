@@ -24,13 +24,14 @@ import java.util.List;
 
 import org.seasar.framework.container.factory.ResourceResolver;
 import org.seasar.framework.log.Logger;
+import org.seasar.framework.util.ClassLoaderUtil;
 import org.seasar.framework.util.InputStreamUtil;
 import org.seasar.framework.util.URLUtil;
 import org.seasar.framework.xml.SaxHandlerParser;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.config.faces.AbstractFacesConfigurator;
 import org.seasar.teeda.core.config.faces.element.FacesConfig;
-import org.seasar.teeda.core.util.ClassLoaderUtil;
+import org.seasar.teeda.core.util.IteratorUtil;
 
 /**
  * @author shot
@@ -103,9 +104,9 @@ public class MetaInfFacesConfigurator extends AbstractFacesConfigurator {
         }
 
         private void initialize(String path) {
-            ClassLoader loader = ClassLoaderUtil.getClassLoader(this);
+            ClassLoader loader = ClassLoaderUtil.getClassLoader(this.getClass());
             List list = new LinkedList();
-            for (Iterator itr = ClassLoaderUtil.getResources(loader,
+            for (Iterator itr = IteratorUtil.getResourcesIterator(loader,
                     JsfConstants.FACES_CONFIG_RESOURCES); itr.hasNext();) {
                 URL url = (URL) itr.next();
                 if (url.toExternalForm().indexOf(path) != -1) {

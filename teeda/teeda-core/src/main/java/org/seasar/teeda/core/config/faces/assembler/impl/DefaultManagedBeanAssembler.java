@@ -20,13 +20,13 @@ import java.util.Map;
 
 import org.seasar.framework.container.ComponentDef;
 import org.seasar.framework.container.impl.ComponentDefImpl;
+import org.seasar.framework.util.ClassUtil;
 import org.seasar.teeda.core.config.faces.assembler.ManagedBeanAssembler;
 import org.seasar.teeda.core.config.faces.element.ManagedBeanElement;
 import org.seasar.teeda.core.exception.ManagedBeanDuplicateRegisterException;
 import org.seasar.teeda.core.managedbean.ManagedBeanFactory;
 import org.seasar.teeda.core.scope.Scope;
 import org.seasar.teeda.core.scope.ScopeManager;
-import org.seasar.teeda.core.util.ClassUtil;
 import org.seasar.teeda.core.util.DIContainerUtil;
 import org.seasar.teeda.core.util.IteratorUtil;
 
@@ -71,7 +71,7 @@ public class DefaultManagedBeanAssembler extends ManagedBeanAssembler {
     protected void registerManagedBean(ComponentDef componentDef, Scope scope) {
         getManagedBeanFactory().registerManagedBean(componentDef, scope);
     }
-    
+
     protected ManagedBeanFactory getManagedBeanFactory() {
         return this.managedBeanFactory;
     }
@@ -81,8 +81,7 @@ public class DefaultManagedBeanAssembler extends ManagedBeanAssembler {
     }
 
     private void assertNotRegisteredYet(String managedBeanName) {
-        Object managedBean = managedBeanFactory
-                .getManagedBean(managedBeanName);
+        Object managedBean = managedBeanFactory.getManagedBean(managedBeanName);
         if (managedBean != null) {
             throw new ManagedBeanDuplicateRegisterException(managedBeanName);
         }

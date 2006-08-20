@@ -20,28 +20,19 @@ import junit.framework.TestCase;
 /**
  * @author shot
  */
-public class PropertyUtilTest extends TestCase {
-
-    /**
-     * Constructor for PropertyUtilTest.
-     * 
-     * @param name
-     */
-    public PropertyUtilTest(String name) {
-        super(name);
-    }
+public class PropertyDescUtilTest extends TestCase {
 
     public void testGetProperty() throws Exception {
-        assertEquals(String.class, PropertyUtil.getProperty(new A().getClass(),
+        assertEquals(String.class, PropertyDescUtil.getProperty(new A().getClass(),
                 "name"));
-        assertEquals(int.class, PropertyUtil.getProperty(new A().getClass(),
+        assertEquals(int.class, PropertyDescUtil.getProperty(new A().getClass(),
                 "num"));
     }
 
     public void testSetValue() throws Exception {
         A a = new A();
-        PropertyUtil.setValue(a, "name", "hoge");
-        PropertyUtil.setValue(a, "num", "5");
+        PropertyDescUtil.setValue(a, "name", "hoge");
+        PropertyDescUtil.setValue(a, "num", "5");
         assertEquals("hoge", a.getName());
         assertEquals(5, a.getNum());
     }

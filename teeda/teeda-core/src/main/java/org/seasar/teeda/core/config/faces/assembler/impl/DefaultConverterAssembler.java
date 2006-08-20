@@ -17,13 +17,13 @@ package org.seasar.teeda.core.config.faces.assembler.impl;
 
 import java.util.Map;
 
+import org.seasar.framework.util.ClassUtil;
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.application.ConfigurationSupport;
 import org.seasar.teeda.core.application.ConverterConfiguration;
 import org.seasar.teeda.core.config.faces.assembler.ConverterAssembler;
 import org.seasar.teeda.core.config.faces.assembler.ConverterChildAssembler;
 import org.seasar.teeda.core.config.faces.element.ConverterElement;
-import org.seasar.teeda.core.util.ClassUtil;
 
 /**
  * @author shot

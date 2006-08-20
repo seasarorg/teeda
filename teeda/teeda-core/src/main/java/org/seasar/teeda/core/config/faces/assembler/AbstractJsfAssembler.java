@@ -18,7 +18,7 @@ package org.seasar.teeda.core.config.faces.assembler;
 import java.util.Collection;
 import java.util.Iterator;
 
-import org.seasar.teeda.core.util.ClassUtil;
+import org.seasar.framework.util.ClassUtil;
 import org.seasar.teeda.core.util.IteratorUtil;
 
 /**

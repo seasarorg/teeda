@@ -25,8 +25,8 @@ import javax.faces.webapp.UIComponentTag;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
+import org.seasar.framework.util.ClassUtil;
 import org.seasar.teeda.core.exception.NoEditableValueHolderRuntimeException;
-import org.seasar.teeda.core.util.ClassUtil;
 
 /**
  * @author yone

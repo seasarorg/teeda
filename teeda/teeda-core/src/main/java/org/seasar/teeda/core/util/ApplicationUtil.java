@@ -19,6 +19,7 @@ import javax.faces.application.Application;
 import javax.faces.application.ApplicationFactory;
 import javax.faces.context.FacesContext;
 
+import org.seasar.framework.util.ClassUtil;
 import org.seasar.teeda.core.exception.IllegalClassTypeException;
 
 /**

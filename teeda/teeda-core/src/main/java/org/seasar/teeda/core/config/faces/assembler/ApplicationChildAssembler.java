@@ -17,7 +17,7 @@ package org.seasar.teeda.core.config.faces.assembler;
 
 import javax.faces.application.Application;
 
-import org.seasar.teeda.core.util.ClassUtil;
+import org.seasar.teeda.core.util.MarshalUtil;
 
 /**
  * @author shot
@@ -47,7 +47,7 @@ public abstract class ApplicationChildAssembler implements JsfAssembler {
     }
 
     protected Object createMarshalInstance(Class clazz, Object previous) {
-        return ClassUtil.createMarshalInstance(targetName_, clazz, previous);
+        return MarshalUtil.createMarshalInstance(targetName_, clazz, previous);
     }
 
     protected final Application getApplication() {

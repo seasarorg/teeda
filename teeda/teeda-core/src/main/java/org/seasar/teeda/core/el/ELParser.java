@@ -15,10 +15,12 @@
  */
 package org.seasar.teeda.core.el;
 
+import java.io.Serializable;
+
 /**
  * @author shot
  */
-public interface ELParser {
+public interface ELParser extends Serializable {
 
     public Object parse(String expression);
 

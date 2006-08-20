@@ -21,6 +21,7 @@ import java.util.Map;
 import javax.faces.application.ApplicationFactory;
 import javax.faces.convert.Converter;
 
+import org.seasar.framework.util.ClassUtil;
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.application.ApplicationImpl;
 import org.seasar.teeda.core.application.ConfigurationSupport;
@@ -33,7 +34,6 @@ import org.seasar.teeda.core.config.faces.element.impl.PropertyElementImpl;
 import org.seasar.teeda.core.mock.MockApplication;
 import org.seasar.teeda.core.mock.MockConverter;
 import org.seasar.teeda.core.unit.TeedaTestCase;
-import org.seasar.teeda.core.util.ClassUtil;
 import org.seasar.teeda.core.util.FactoryFinderUtil;
 
 /**

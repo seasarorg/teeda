@@ -491,7 +491,7 @@ public class ValueBindingImplTest extends TeedaTestCase {
         // ## Arrange ##
         FacesContext context = getFacesContext();
         final NullELParser parser = new NullELParser();
-        assertEquals(false, parser instanceof Serializable);
+        assertEquals(true, parser instanceof Serializable);
         getContainer().register(parser);
         ValueBindingImpl vb1 = new ValueBindingImpl(context.getApplication(),
                 "fooo", parser);

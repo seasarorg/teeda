@@ -32,7 +32,6 @@ import org.seasar.teeda.core.el.ValueBindingBase;
 import org.seasar.teeda.core.managedbean.ManagedBeanFactory;
 import org.seasar.teeda.core.managedbean.ManagedBeanScopeSaver;
 import org.seasar.teeda.core.scope.Scope;
-import org.seasar.teeda.core.util.DIContainerUtil;
 import org.seasar.teeda.core.util.PropertyResolverUtil;
 import org.seasar.teeda.core.util.VariableResolverUtil;
 
@@ -202,6 +201,7 @@ public class ValueBindingImpl extends ValueBindingBase {
     public Object saveState(FacesContext context) {
         Object[] state = new Object[2];
         state[0] = expressionString;
+        state[1] = parser;
         return state;
     }
 
@@ -209,7 +209,7 @@ public class ValueBindingImpl extends ValueBindingBase {
         Object[] state = (Object[]) obj;
         application = context.getApplication();
         expressionString = (String) state[0];
-        parser = (ELParser) DIContainerUtil.getComponent(ELParser.class);
+        parser = (ELParser) state[1];
         expression = parser.parse(expressionString);
     }
 

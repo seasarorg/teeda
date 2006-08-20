@@ -26,7 +26,7 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.Tag;
 import javax.servlet.jsp.tagext.TagSupport;
 
-import org.seasar.teeda.core.util.ClassUtil;
+import org.seasar.framework.util.ClassUtil;
 
 /**
  * @author shot
@@ -77,7 +77,8 @@ public class ActionListenerTag extends TagSupport {
         String className = type;
         if (UIComponentTag.isValueReference(type)) {
             FacesContext context = FacesContext.getCurrentInstance();
-            ValueBinding vb = ValueBindingUtil.createValueBinding(context, type);
+            ValueBinding vb = ValueBindingUtil
+                    .createValueBinding(context, type);
             className = (String) vb.getValue(context);
         }
         return className;

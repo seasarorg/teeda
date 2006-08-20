@@ -32,14 +32,14 @@ import org.seasar.teeda.core.el.ValueBindingFactory;
 /**
  * @author shot
  */
-public class ValueBindingFactoryImpl implements
-        ValueBindingFactory {
+public class ValueBindingFactoryImpl implements ValueBindingFactory {
 
     private Map cache = Collections.synchronizedMap(new HashMap());
 
     private ELParser parser;
 
     public ValueBindingFactoryImpl() {
+        this.parser = ELParserFactory.createELParser();
     }
 
     public void setELParser(ELParser parser) {
@@ -74,7 +74,7 @@ public class ValueBindingFactoryImpl implements
     protected ValueBinding getRestoredValueBinding(StateHolder holder,
             String expression) {
         FacesContext context = FacesContext.getCurrentInstance();
-        holder.restoreState(context, new Object[] { expression });
+        holder.restoreState(context, new Object[] { expression, getELParser() });
         return (ValueBinding) holder;
     }
 

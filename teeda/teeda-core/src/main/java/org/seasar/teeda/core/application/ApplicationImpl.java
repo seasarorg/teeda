@@ -56,6 +56,7 @@ import javax.faces.event.ActionListener;
 import javax.faces.validator.Validator;
 
 import org.seasar.framework.util.AssertionUtil;
+import org.seasar.framework.util.ClassUtil;
 import org.seasar.framework.util.DateConversionUtil;
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.convert.TimestampConverter;
@@ -65,9 +66,8 @@ import org.seasar.teeda.core.exception.ConverterInstantiateFailureException;
 import org.seasar.teeda.core.exception.NoMethodBindingContextException;
 import org.seasar.teeda.core.exception.NoValueBindingContextException;
 import org.seasar.teeda.core.util.ApplicationUtil;
-import org.seasar.teeda.core.util.ClassUtil;
 import org.seasar.teeda.core.util.IteratorUtil;
-import org.seasar.teeda.core.util.PropertyUtil;
+import org.seasar.teeda.core.util.PropertyDescUtil;
 
 /**
  * @author shot
@@ -404,7 +404,7 @@ public class ApplicationImpl extends Application implements
             ConverterConfiguration config = (ConverterConfiguration) itr.next();
             if (config != null) {
                 String propertyName = config.getPropertyName();
-                PropertyUtil.setValue(converter, propertyName, config
+                PropertyDescUtil.setValue(converter, propertyName, config
                         .getDefaultValue());
             }
         }

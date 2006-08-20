@@ -22,7 +22,7 @@ import org.seasar.framework.beans.factory.BeanDescFactory;
 /**
  * @author shot
  */
-public class PropertyUtil {
+public class PropertyDescUtil {
 
     public static Class getProperty(Class clazz, String propertyName) {
         BeanDesc beanDesc = BeanDescFactory.getBeanDesc(clazz);

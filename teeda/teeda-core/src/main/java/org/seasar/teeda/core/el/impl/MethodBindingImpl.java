@@ -32,7 +32,6 @@ import org.seasar.teeda.core.el.ValueBindingBase;
 import org.seasar.teeda.core.exception.ExtendEvaluationException;
 import org.seasar.teeda.core.exception.ExtendMethodNotFoundExceptin;
 import org.seasar.teeda.core.exception.MethodNotAccessibleException;
-import org.seasar.teeda.core.util.DIContainerUtil;
 
 /**
  * @author shot
@@ -126,7 +125,11 @@ public class MethodBindingImpl extends MethodBinding implements StateHolder {
     }
 
     public Object saveState(FacesContext context) {
-        return new Object[] { vb_.saveState(context), classes_, };
+        Object[] state = new Object[3];
+        state[0] = vb_.saveState(context);
+        state[1] = classes_;
+        state[2] = parser_;
+        return state;
     }
 
     public void restoreState(FacesContext context, Object state) {
@@ -134,8 +137,7 @@ public class MethodBindingImpl extends MethodBinding implements StateHolder {
         vb_ = new ValueBindingImpl();
         vb_.restoreState(context, obj[0]);
         classes_ = (Class[]) obj[1];
-        parser_ = (ELParser) DIContainerUtil
-                .getComponentNoException(ELParser.class);
+        parser_ = (ELParser) obj[2];
     }
 
     private Object[] getBaseAndProperty(FacesContext context)

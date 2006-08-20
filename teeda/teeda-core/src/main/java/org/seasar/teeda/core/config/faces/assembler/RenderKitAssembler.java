@@ -18,8 +18,8 @@ package org.seasar.teeda.core.config.faces.assembler;
 import java.util.Collections;
 import java.util.Map;
 
+import org.seasar.framework.util.ClassUtil;
 import org.seasar.teeda.core.config.faces.element.RenderKitElement;
-import org.seasar.teeda.core.util.ClassUtil;
 
 /**
  * @author shot

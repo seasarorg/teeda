@@ -182,7 +182,7 @@ public class MethodBindingImplTest extends TeedaTestCase {
                 parser);
         FacesContext context = getFacesContext();
 
-        assertEquals(false, parser instanceof Serializable);
+        assertEquals(true, parser instanceof Serializable);
 
         // ## Act ##
         // ## Assert ##

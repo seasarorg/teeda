@@ -15,12 +15,16 @@
  */
 package org.seasar.teeda.core.util;
 
+import java.io.IOException;
 import java.util.Collection;
+import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.Map;
 
 import org.apache.commons.collections.iterators.IteratorChain;
+import org.seasar.framework.exception.IORuntimeException;
 import org.seasar.framework.util.EmptyIterator;
+import org.seasar.framework.util.EnumerationIterator;
 
 public class IteratorUtil {
 
@@ -51,4 +55,14 @@ public class IteratorUtil {
         chain.addIterator(map2.keySet().iterator());
         return chain;
     }
+    
+    public static Iterator getResourcesIterator(ClassLoader loader, String path) {
+        try {
+            Enumeration e = loader.getResources(path);
+            return new EnumerationIterator(e);
+        } catch (IOException e) {
+            throw new IORuntimeException(e);
+        }
+    }
+
 }

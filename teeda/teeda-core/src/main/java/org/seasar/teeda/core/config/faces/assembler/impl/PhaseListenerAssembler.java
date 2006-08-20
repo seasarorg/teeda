@@ -19,8 +19,8 @@ import java.util.List;
 
 import javax.faces.event.PhaseListener;
 
+import org.seasar.framework.util.ClassUtil;
 import org.seasar.teeda.core.config.faces.assembler.LifecycleChildAssembler;
-import org.seasar.teeda.core.util.ClassUtil;
 
 /**
  * @author shot

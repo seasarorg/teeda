@@ -9,37 +9,23 @@
 	<!-- FacesConfig configurator -->
 	<component class="org.seasar.teeda.core.config.faces.impl.FacesConfigBuilderImpl">
 		<initMethod name="addFacesConfigurator">
-			<arg>coreConfigurator</arg>
+			<arg><component class="org.seasar.teeda.core.config.faces.impl.CoreFacesConfigurator" autoBinding="none" /></arg>
 		</initMethod>
 		<initMethod name="addFacesConfigurator">
-			<arg>metaInfConfigurator</arg>
+			<arg><component class="org.seasar.teeda.core.config.faces.impl.MetaInfFacesConfigurator" autoBinding="none" /></arg>
 		</initMethod>
 		<initMethod name="addFacesConfigurator">
-			<arg>configFilesConfigurator</arg>
+			<arg><component class="org.seasar.teeda.core.config.faces.impl.ConfigFilesFacesConfigurator" autoBinding="none"/></arg>
 		</initMethod>
 		<initMethod name="addFacesConfigurator">
-			<arg>applicationConfigurator</arg>
+			<arg><component class="org.seasar.teeda.core.config.faces.impl.ApplicationFacesConfigurator" autoBinding="none" /></arg>
 		</initMethod>
 	</component>
 
-	<component name="coreConfigurator" class="org.seasar.teeda.core.config.faces.impl.CoreFacesConfigurator" autoBinding="none" />
-
-	<component name="metaInfConfigurator" class="org.seasar.teeda.core.config.faces.impl.MetaInfFacesConfigurator" autoBinding="none" />
-
-	<component name="configFilesConfigurator" class="org.seasar.teeda.core.config.faces.impl.ConfigFilesFacesConfigurator" autoBinding="none"/>
-
-	<component name="applicationConfigurator" class="org.seasar.teeda.core.config.faces.impl.ApplicationFacesConfigurator" autoBinding="none" />
-
 	<!-- FacesConfig Assembler -->
-	<component class="org.seasar.teeda.core.config.faces.assembler.impl.DefaultAssembleProvider"/>
-
 	<component class="org.seasar.teeda.core.config.faces.assembler.AssemblerAssembler" />
 
 	<!-- ValueBinding relates -->
-	<component class="org.seasar.teeda.core.el.impl.commons.CommonsELParser" />
-
-	<component class="org.seasar.teeda.core.el.impl.commons.CommonsExpressionProcessorImpl" />
-
 	<component class="org.seasar.teeda.core.el.impl.ValueBindingFactoryImpl"/>
 
 	<component class="org.seasar.teeda.core.el.impl.MethodBindingFactoryImpl"/>

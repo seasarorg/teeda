@@ -29,7 +29,7 @@ import javax.faces.event.ActionListener;
 
 import org.seasar.framework.log.Logger;
 import org.seasar.teeda.core.util.ErrorPageManager;
-import org.seasar.teeda.core.util.InvokeUtil;
+import org.seasar.teeda.core.util.MethodBindingUtil;
 import org.seasar.teeda.core.util.NavigationHandlerUtil;
 import org.seasar.teeda.core.util.NullErrorPageManagerImpl;
 import org.seasar.teeda.core.util.UIParameterUtil;
@@ -58,7 +58,7 @@ public class ActionListenerImpl implements ActionListener {
         if (mb != null) {
             fromAction = mb.getExpressionString();
             try {
-                outcome = InvokeUtil.invoke(mb, context);
+                outcome = MethodBindingUtil.invoke(mb, context);
             } catch (EvaluationException ex) {
                 Throwable cause = ex.getCause();
                 ErrorPageManager manager = getErrorPageManager();
