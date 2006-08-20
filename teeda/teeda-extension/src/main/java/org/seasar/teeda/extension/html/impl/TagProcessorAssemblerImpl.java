@@ -15,7 +15,6 @@
  */
 package org.seasar.teeda.extension.html.impl;
 
-import org.seasar.teeda.extension.exception.PageNotFoundRuntimeException;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.DocumentNode;
 import org.seasar.teeda.extension.html.ElementNode;
@@ -86,9 +85,6 @@ public class TagProcessorAssemblerImpl implements TagProcessorAssembler {
 
     protected void assembleTagProcessor(ElementProcessor parentProcessor,
             ElementNode elementNode, PageDesc pageDesc, ActionDesc actionDesc) {
-        if (pageDesc == null) {
-            throw new PageNotFoundRuntimeException();
-        }
         for (int i = 0; i < factories.length; ++i) {
             ElementProcessorFactory factory = factories[i];
             if (factory.isMatch(elementNode, pageDesc, actionDesc)) {
