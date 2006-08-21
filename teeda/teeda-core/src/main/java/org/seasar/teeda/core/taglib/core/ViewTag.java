@@ -34,7 +34,6 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.jstl.core.Config;
 import javax.servlet.jsp.tagext.BodyContent;
 
-import org.seasar.framework.exception.IORuntimeException;
 import org.seasar.framework.util.AssertionUtil;
 import org.seasar.framework.util.LocaleUtil;
 import org.seasar.teeda.core.JsfConstants;
@@ -97,11 +96,6 @@ public class ViewTag extends UIComponentBodyTag {
         FacesContext context = FacesContext.getCurrentInstance();
         AssertionUtil.assertNotNull("FacesContext", context);
         ResponseWriter responseWriter = context.getResponseWriter();
-        try {
-            responseWriter.flush();
-        } catch (IOException e) {
-            throw new IORuntimeException(e);
-        }
         StateManager stateManager = context.getApplication().getStateManager();
         SerializedView view = null;
         int beginIndex = 0;
