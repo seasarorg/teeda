@@ -26,6 +26,7 @@ import javax.faces.context.ResponseWriter;
 
 import org.seasar.framework.util.ArrayUtil;
 import org.seasar.framework.util.AssertionUtil;
+import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
 
 /**
@@ -59,7 +60,9 @@ public class HtmlResponseWriter extends ResponseWriter {
 
     private boolean startTagOpening;
 
-    private boolean shouldEscape = true;
+    private boolean shouldEscape = DEFAULT_ESCAPE;
+
+    private static final boolean DEFAULT_ESCAPE = true;
 
     public void startElement(String name, UIComponent componentForElement)
             throws IOException {
@@ -68,6 +71,7 @@ public class HtmlResponseWriter extends ResponseWriter {
         closeStartTagIfOpening(writer);
         writer.write("<");
         writer.write(name);
+        // TODO need "style" element ?
         if ("script".equalsIgnoreCase(name)) {
             shouldEscape = false;
         } else {
@@ -97,7 +101,7 @@ public class HtmlResponseWriter extends ResponseWriter {
         } else {
             writer.write("</" + name + ">");
         }
-        shouldEscape = true;
+        shouldEscape = DEFAULT_ESCAPE;
     }
 
     protected boolean isEmptyElement(String name) {
@@ -116,7 +120,11 @@ public class HtmlResponseWriter extends ResponseWriter {
         writer.write(" ");
         writer.write(name);
         writer.write("=\"");
-        writer.write(escapeAttribute(strValue));
+        if (StringUtil.startsWithIgnoreCase(strValue, "javascript:")) {
+            writer.write(strValue);
+        } else {
+            writer.write(escapeAttribute(strValue));
+        }
         writer.write("\"");
     }
 
@@ -166,21 +174,21 @@ public class HtmlResponseWriter extends ResponseWriter {
         return htmlSpecialChars(s, true, true);
     }
 
-    private String htmlSpecialChars(final String s, final boolean quote,
-            final boolean amp) {
-        char[] chars = s.toCharArray();
-        StringBuffer sb = new StringBuffer(chars.length + 50);
+    private String htmlSpecialChars(final String s,
+            final boolean escapeSingleQuote, final boolean escapeAmp) {
+        final char[] chars = s.toCharArray();
+        final StringBuffer sb = new StringBuffer(chars.length + 50);
         for (int i = 0; i < chars.length; i++) {
             char c = chars[i];
             if (c == '<') {
                 sb.append("&lt;");
             } else if (c == '>') {
                 sb.append("&gt;");
-            } else if (amp && c == '&') {
+            } else if (escapeAmp && c == '&') {
                 sb.append("&amp;");
             } else if (c == '"') {
                 sb.append("&quot;");
-            } else if (quote && c == '\'') {
+            } else if (escapeSingleQuote && c == '\'') {
                 sb.append("&#39;");
             } else {
                 sb.append(c);
