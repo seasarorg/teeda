@@ -541,7 +541,8 @@ public class HtmlResponseWriterTest extends TestCase {
                 "javascript:document.write('<b>foo</b>');", null);
 
         final String value = writer.toString();
-        assertEquals("<span aa=\"javascript:document.write('<b>foo</b>');\"",
+        assertEquals(
+                "<span aa=\"javascript:document.write('&lt;b&gt;foo&lt;/b&gt;');\"",
                 value);
     }
 
@@ -598,6 +599,21 @@ public class HtmlResponseWriterTest extends TestCase {
         responseWriter.writeURIAttribute("aaa", "bbb", null);
 
         assertEquals("<z aaa=\"bbb_add\"", writer.toString());
+    }
+
+    public void testWriteURIAttribute_JavaScript() throws Exception {
+        final HtmlResponseWriter responseWriter = new HtmlResponseWriter();
+        final SPrintWriter writer = new SPrintWriter();
+        responseWriter.setWriter(writer);
+
+        responseWriter.startElement("span", null);
+        responseWriter.writeURIAttribute("aa",
+                "javascript:document.write('<b>foo</b>');", null);
+
+        final String value = writer.toString();
+        assertEquals(
+                "<span aa=\"javascript:document.write('&lt;b&gt;foo&lt;/b&gt;');\"",
+                value);
     }
 
     public void testWriteText_ScriptBody() throws Exception {

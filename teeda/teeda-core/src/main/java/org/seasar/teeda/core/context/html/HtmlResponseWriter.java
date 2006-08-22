@@ -37,7 +37,7 @@ import org.seasar.teeda.core.JsfConstants;
 // TODO handle "javascript: xxxx" attribute (really necessary?)
 public class HtmlResponseWriter extends ResponseWriter {
 
-    private static List EMPTY_ELEMENTS = Arrays
+    private static final List EMPTY_ELEMENTS = Arrays
             .asList(new String[] { "area", "br", "base", "col", "hr", "img",
                     "input", "link", "meta", "param" });
 
@@ -64,10 +64,10 @@ public class HtmlResponseWriter extends ResponseWriter {
 
     private static final boolean DEFAULT_ESCAPE = true;
 
-    public void startElement(String name, UIComponent componentForElement)
+    public void startElement(final String name, final UIComponent componentForElement)
             throws IOException {
         AssertionUtil.assertNotNull("name", name);
-        Writer writer = getWriter();
+        final Writer writer = getWriter();
         closeStartTagIfOpening(writer);
         writer.write("<");
         writer.write(name);
@@ -80,16 +80,16 @@ public class HtmlResponseWriter extends ResponseWriter {
         startTagOpening = true;
     }
 
-    protected void closeStartTagIfOpening(Writer writer) throws IOException {
+    protected void closeStartTagIfOpening(final Writer writer) throws IOException {
         if (startTagOpening) {
             writer.write(">");
             startTagOpening = false;
         }
     }
 
-    public void endElement(String name) throws IOException {
+    public void endElement(final String name) throws IOException {
         AssertionUtil.assertNotNull("name", name);
-        Writer writer = getWriter();
+        final Writer writer = getWriter();
         if (startTagOpening) {
             if (isEmptyElement(name)) {
                 writer.write(" />");
@@ -104,59 +104,59 @@ public class HtmlResponseWriter extends ResponseWriter {
         shouldEscape = DEFAULT_ESCAPE;
     }
 
-    protected boolean isEmptyElement(String name) {
+    protected boolean isEmptyElement(final String name) {
         return EMPTY_ELEMENTS.contains(name);
     }
 
-    public void writeAttribute(String name, Object value, String property)
+    public void writeAttribute(final String name, final Object value, final String property)
             throws IOException {
         AssertionUtil.assertNotNull("name", name);
         if (!startTagOpening) {
             throw new IllegalStateException(
                     "there is no currently open element");
         }
-        String strValue = (value == null) ? "" : value.toString();
-        Writer writer = getWriter();
+        final String strValue = (value == null) ? "" : value.toString();
+        final Writer writer = getWriter();
+        writer.write(" ");
+        writer.write(name);
+        writer.write("=\"");
+        writer.write(escapeAttribute(strValue));
+        writer.write("\"");
+    }
+
+    public void writeURIAttribute(final String name, final Object value, final String property)
+            throws IOException {
+        AssertionUtil.assertNotNull("name", name);
+        if (!startTagOpening) {
+            throw new IllegalStateException(
+                    "there is no currently open element");
+        }
+        final Writer writer = getWriter();
+        final String strValue = value.toString();
+
         writer.write(" ");
         writer.write(name);
         writer.write("=\"");
         if (StringUtil.startsWithIgnoreCase(strValue, "javascript:")) {
-            writer.write(strValue);
-        } else {
             writer.write(escapeAttribute(strValue));
+        } else {
+            writer.write(encodeURIAttribute(strValue));
         }
         writer.write("\"");
     }
 
-    public void writeURIAttribute(String name, Object value, String property)
-            throws IOException {
-        AssertionUtil.assertNotNull("name", name);
-        if (!startTagOpening) {
-            throw new IllegalStateException(
-                    "there is no currently open element");
-        }
-        Writer writer = getWriter();
-        String strValue = encodeURIAttribute(value.toString());
-
-        writer.write(" ");
-        writer.write(name);
-        writer.write("=\"");
-        writer.write(strValue);
-        writer.write("\"");
-    }
-
-    public void writeComment(Object comment) throws IOException {
+    public void writeComment(final Object comment) throws IOException {
         AssertionUtil.assertNotNull("comment", comment);
-        Writer writer = getWriter();
+        final Writer writer = getWriter();
         closeStartTagIfOpening(writer);
         writer.write("<!--");
         writer.write(comment.toString());
         writer.write("-->");
     }
 
-    public void writeText(Object text, String property) throws IOException {
+    public void writeText(final Object text, final String property) throws IOException {
         AssertionUtil.assertNotNull("text", text);
-        Writer writer = getWriter();
+        final Writer writer = getWriter();
         closeStartTagIfOpening(writer);
         String str = text.toString();
         if (shouldEscape) {
@@ -165,7 +165,7 @@ public class HtmlResponseWriter extends ResponseWriter {
         writer.write(str);
     }
 
-    public void writeText(char text[], int off, int len) throws IOException {
+    public void writeText(final char text[], final int off, final int len) throws IOException {
         AssertionUtil.assertNotNull("text", text);
         writeText(new String(text, off, len), null);
     }
@@ -179,16 +179,16 @@ public class HtmlResponseWriter extends ResponseWriter {
         final char[] chars = s.toCharArray();
         final StringBuffer sb = new StringBuffer(chars.length + 50);
         for (int i = 0; i < chars.length; i++) {
-            char c = chars[i];
+            final char c = chars[i];
             if (c == '<') {
                 sb.append("&lt;");
             } else if (c == '>') {
                 sb.append("&gt;");
-            } else if (escapeAmp && c == '&') {
+            } else if (escapeAmp && (c == '&')) {
                 sb.append("&amp;");
             } else if (c == '"') {
                 sb.append("&quot;");
-            } else if (escapeSingleQuote && c == '\'') {
+            } else if (escapeSingleQuote && (c == '\'')) {
                 sb.append("&#39;");
             } else {
                 sb.append(c);
@@ -197,56 +197,56 @@ public class HtmlResponseWriter extends ResponseWriter {
         return new String(sb);
     }
 
-    protected String escapeAttribute(String s) {
+    protected String escapeAttribute(final String s) {
         return htmlSpecialChars(s, false, false);
     }
 
-    public ResponseWriter cloneWithWriter(Writer writer) {
+    public ResponseWriter cloneWithWriter(final Writer writer) {
         AssertionUtil.assertNotNull("writer", writer);
-        HtmlResponseWriter clone = new HtmlResponseWriter();
+        final HtmlResponseWriter clone = new HtmlResponseWriter();
         clone.setWriter(writer);
         clone.setContentType(getContentType());
         clone.setCharacterEncoding(getCharacterEncoding());
         return clone;
     }
 
-    public void write(char[] cbuf, int off, int len) throws IOException {
-        Writer writer = getWriter();
+    public void write(final char[] cbuf, final int off, final int len) throws IOException {
+        final Writer writer = getWriter();
         closeStartTagIfOpening(writer);
         writer.write(cbuf, off, len);
     }
 
-    public void write(char[] cbuf) throws IOException {
-        Writer writer = getWriter();
+    public void write(final char[] cbuf) throws IOException {
+        final Writer writer = getWriter();
         closeStartTagIfOpening(writer);
         writer.write(cbuf);
     }
 
-    public void write(int c) throws IOException {
-        Writer writer = getWriter();
+    public void write(final int c) throws IOException {
+        final Writer writer = getWriter();
         closeStartTagIfOpening(writer);
         writer.write(c);
     }
 
-    public void write(String str) throws IOException {
-        Writer writer = getWriter();
+    public void write(final String str) throws IOException {
+        final Writer writer = getWriter();
         closeStartTagIfOpening(writer);
         writer.write(str);
     }
 
-    public void write(String str, int off, int len) throws IOException {
-        Writer writer = getWriter();
+    public void write(final String str, final int off, final int len) throws IOException {
+        final Writer writer = getWriter();
         closeStartTagIfOpening(writer);
         writer.write(str, off, len);
     }
 
     public void flush() throws IOException {
-        Writer writer = getWriter();
+        final Writer writer = getWriter();
         closeStartTagIfOpening(writer);
     }
 
     public void close() throws IOException {
-        Writer writer = getWriter();
+        final Writer writer = getWriter();
         closeStartTagIfOpening(writer);
         writer.close();
     }
@@ -262,7 +262,7 @@ public class HtmlResponseWriter extends ResponseWriter {
         return contentType;
     }
 
-    public void setContentType(String contentType) {
+    public void setContentType(final String contentType) {
         this.contentType = contentType;
     }
 
@@ -273,7 +273,7 @@ public class HtmlResponseWriter extends ResponseWriter {
         return characterEncoding;
     }
 
-    public void setCharacterEncoding(String characterEncoding) {
+    public void setCharacterEncoding(final String characterEncoding) {
         this.characterEncoding = characterEncoding;
     }
 
@@ -281,7 +281,7 @@ public class HtmlResponseWriter extends ResponseWriter {
         return writer;
     }
 
-    public void setWriter(Writer writer) {
+    public void setWriter(final Writer writer) {
         this.writer = writer;
     }
 
@@ -307,12 +307,12 @@ public class HtmlResponseWriter extends ResponseWriter {
         return new String(sb);
     }
 
-    public String encodeQueryString(String s) throws IOException {
-        char[] chars = s.toCharArray();
-        StringBuffer sb = new StringBuffer();
+    public String encodeQueryString(final String s) throws IOException {
+        final char[] chars = s.toCharArray();
+        final StringBuffer sb = new StringBuffer();
         final String encoding = getCharacterEncoding();
         for (int i = 0; i < chars.length; i++) {
-            char c = chars[i];
+            final char c = chars[i];
             switch (c) {
             case ' ': // 32
                 sb.append("%20");
