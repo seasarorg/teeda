@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"
+>
+  <parent>
+    <groupId>org.seasar.teeda</groupId>
+    <artifactId>teeda-project</artifactId>
+    <version>1.0-beta-6-SNAPSHOT</version>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.seasar.teeda</groupId>
+  <artifactId>teeda-html-example</artifactId>
+  <packaging>war</packaging>
+  <name>Teeda HTML Example</name>
+  <description></description>
+  <url>http://teeda.seasar.org/</url>
+  <scm>
+    <connection>scm:svn:https://www.seasar.org/svn/teeda/trunk/teeda-html-example/</connection>
+    <developerConnection>scm:svn:https://www.seasar.org/svn/teeda/trunk/teeda-html-example/</developerConnection>
+    <url>http://www.seasar.org/websvn/listing.php?repname=teeda</url>
+  </scm>
+  <build>
+    <finalName>teeda-html-example</finalName>
+  </build>
+  <dependencies>
+    <dependency>
+      <groupId>org.seasar.teeda</groupId>
+      <artifactId>teeda-extension</artifactId>
+      <version>1.0-beta-6-SNAPSHOT</version>
+      <type>jar</type>
+    </dependency>
+    <dependency>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+      <version>1.2.13</version>
+      <type>jar</type>
+    </dependency>
+  </dependencies>
+</project>
