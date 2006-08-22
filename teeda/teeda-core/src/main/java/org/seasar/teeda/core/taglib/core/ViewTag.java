@@ -53,7 +53,7 @@ public class ViewTag extends UIComponentBodyTag {
         super();
     }
 
-    public void setLocale(String locale) {
+    public void setLocale(final String locale) {
         this.locale = locale;
     }
 
@@ -70,55 +70,51 @@ public class ViewTag extends UIComponentBodyTag {
     }
 
     public int doStartTag() throws JspException {
-        int rc = 0;
-        rc = super.doStartTag();
-        FacesContext context = FacesContext.getCurrentInstance();
+        final int rc = super.doStartTag();
+        final FacesContext context = FacesContext.getCurrentInstance();
         AssertionUtil.assertNotNull("FacesContext", context);
-        String encoding = PageContextUtil.getCharacterEncoding(pageContext);
+        final String encoding = PageContextUtil
+                .getCharacterEncoding(pageContext);
         pageContext.getResponse().setLocale(context.getViewRoot().getLocale());
-        String acceptContentTypes = WebAppUtil.getAcceptHeader(context);
-        String contentType = ContentTypeUtil.getContentType(acceptContentTypes);
+        final String acceptContentTypes = WebAppUtil.getAcceptHeader(context);
+        final String contentType = ContentTypeUtil
+                .getContentType(acceptContentTypes);
         pageContext.getResponse().setContentType(
                 contentType + "; charset=" + encoding);
-        ResponseWriter writer = context.getResponseWriter();
+        final ResponseWriter writer = context.getResponseWriter();
         AssertionUtil.assertNotNull("ResponseWriter", writer);
         try {
             writer.startDocument();
-        } catch (IOException e) {
+        } catch (final IOException e) {
             throw new JspException(e.getMessage());
         }
         return rc;
     }
 
     public int doAfterBody() throws JspException {
-        BodyContent bodyContent = null;
-        String content = null;
-        FacesContext context = FacesContext.getCurrentInstance();
+        final FacesContext context = FacesContext.getCurrentInstance();
         AssertionUtil.assertNotNull("FacesContext", context);
         ResponseWriter responseWriter = context.getResponseWriter();
-        StateManager stateManager = context.getApplication().getStateManager();
-        SerializedView view = null;
-        int beginIndex = 0;
-        int markerIndex = 0;
-        int markerLen = JsfConstants.STATE_MARKER.length();
-        int contentLen = 0;
+        final StateManager stateManager = context.getApplication()
+                .getStateManager();
 
         responseWriter = responseWriter.cloneWithWriter(getPreviousOut());
 
         context.setResponseWriter(responseWriter);
-        bodyContent = getBodyContent();
+        final BodyContent bodyContent = getBodyContent();
         if (bodyContent == null) {
             throw new JspException(
                     "BodyContent is null for tag with handler class:"
-                            + this.getClass().getName());
+                            + getClass().getName());
         }
-        content = bodyContent.getString();
+        final String content = bodyContent.getString();
 
+        final SerializedView view;
         try {
             view = stateManager.saveSerializedView(context);
-        } catch (IllegalStateException ise) {
+        } catch (final IllegalStateException ise) {
             throw new JspException(ise);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             throw new JspException("Error while saving state in session:"
                     + e.getMessage(), e);
         }
@@ -126,7 +122,10 @@ public class ViewTag extends UIComponentBodyTag {
             if (view == null) {
                 getPreviousOut().write(content);
             } else {
-                contentLen = content.length();
+                int beginIndex = 0;
+                int markerIndex = 0;
+                final int markerLen = JsfConstants.STATE_MARKER.length();
+                final int contentLen = content.length();
                 // see ViewHandlerImpl#writeState
                 do {
                     markerIndex = content.indexOf(JsfConstants.STATE_MARKER,
@@ -139,9 +138,9 @@ public class ViewTag extends UIComponentBodyTag {
                         stateManager.writeState(context, view);
                         beginIndex = markerIndex + markerLen;
                     }
-                } while (-1 != markerIndex && beginIndex < contentLen);
+                } while ((-1 != markerIndex) && (beginIndex < contentLen));
             }
-        } catch (IOException ioe) {
+        } catch (final IOException ioe) {
             throw new JspException("Error while saving state in client:"
                     + ioe.getMessage(), ioe);
         }
@@ -149,14 +148,14 @@ public class ViewTag extends UIComponentBodyTag {
     }
 
     public int doEndTag() throws JspException {
-        int rc = super.doEndTag();
-        FacesContext context = FacesContext.getCurrentInstance();
+        final int rc = super.doEndTag();
+        final FacesContext context = FacesContext.getCurrentInstance();
         AssertionUtil.assertNotNull("FacesContext", context);
-        ResponseWriter writer = context.getResponseWriter();
+        final ResponseWriter writer = context.getResponseWriter();
         AssertionUtil.assertNotNull("ResponseWriter", writer);
         try {
             writer.endDocument();
-        } catch (IOException e) {
+        } catch (final IOException e) {
             throw new JspException(e.getMessage(), e);
         }
 
@@ -168,10 +167,10 @@ public class ViewTag extends UIComponentBodyTag {
         return rc;
     }
 
-    protected void setProperties(UIComponent component) {
+    protected void setProperties(final UIComponent component) {
         super.setProperties(component);
         final String localeStr = getLocale();
-        FacesContext context = FacesContext.getCurrentInstance();
+        final FacesContext context = FacesContext.getCurrentInstance();
         Locale locale = (Locale) ValueBindingUtil.getValue(context, localeStr);
         if (locale == null) {
             locale = LocaleUtil.getLocale(localeStr);
