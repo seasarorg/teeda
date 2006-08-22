@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tomcatProjectProperties>
-    <rootDir>/</rootDir>
+    <rootDir>/src/main/webapp</rootDir>
     <exportSource>false</exportSource>
-    <reloadable>false</reloadable>
-    <redirectLogger>false</redirectLogger>
+    <reloadable>true</reloadable>
+    <redirectLogger>true</redirectLogger>
     <updateXml>true</updateXml>
     <warLocation></warLocation>
     <extraInfo></extraInfo>
