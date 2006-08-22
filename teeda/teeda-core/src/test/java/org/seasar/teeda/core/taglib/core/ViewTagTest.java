@@ -202,9 +202,10 @@ public class ViewTagTest extends TeedaTestCase {
     public void testDoAfterBody_WriteException() throws Exception {
         // # Arrange #
         ViewTag tag = new ViewTag();
+        final IOException toThrowException = new IOException("TestException");
         MockJspWriter writer = new MockJspWriter() {
             public void write(String s) throws IOException {
-                throw new IOException("TestException");
+                throw toThrowException;
             }
         };
         tag.setBodyContent(new MockBodyContent(writer));
@@ -214,8 +215,8 @@ public class ViewTagTest extends TeedaTestCase {
             fail();
         } catch (JspException e) {
             // # Assert #
-            ExceptionAssert.assertMessageExist(e);
-            //System.out.println(e.getMessage());
+            final Throwable cause = e.getRootCause();
+            assertSame(toThrowException, cause);
         }
     }
 
@@ -263,10 +264,11 @@ public class ViewTagTest extends TeedaTestCase {
 
     public void testDoEndTag_WriteException() throws Exception {
         // # Arrange #
-        ViewTag tag = new ViewTag();
+        final ViewTag tag = new ViewTag();
+        final IOException toThrowException = new IOException("TestException");
         MockResponseWriter writer = new MockResponseWriter() {
             public void endDocument() throws IOException {
-                throw new IOException("TestException");
+                throw toThrowException;
             }
         };
         getFacesContext().setResponseWriter(writer);
@@ -284,10 +286,10 @@ public class ViewTagTest extends TeedaTestCase {
             // # Act #
             tag.doEndTag();
             fail();
-        } catch (JspException e) {
+        } catch (final JspException e) {
             // # Assert #
-            ExceptionAssert.assertMessageExist(e);
-            //System.out.println(e.getMessage());
+            final Throwable cause = e.getRootCause();
+            assertSame(toThrowException, cause);
         }
     }
 

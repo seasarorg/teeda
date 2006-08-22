@@ -157,7 +157,7 @@ public class ViewTag extends UIComponentBodyTag {
         try {
             writer.endDocument();
         } catch (IOException e) {
-            throw new JspException(e.getMessage());
+            throw new JspException(e.getMessage(), e);
         }
 
         HttpSession session = null;
