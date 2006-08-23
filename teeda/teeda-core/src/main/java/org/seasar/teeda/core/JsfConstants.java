@@ -465,4 +465,7 @@ public interface JsfConstants {
 
     String DEFAULT_ENCODING = "UTF-8";
 
+    String TRUE = "true";
+
+    String FALSE = "false";
 }
