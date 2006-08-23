@@ -2,8 +2,7 @@
 <!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container 2.4//EN"
 	"http://www.seasar.org/dtd/components24.dtd">
 <components>
-	<include path="convention.dicon"/>
-	<include path="teeda.dicon"/>
-	<include path="org/seasar/teeda/dicon/bundle.dicon"/>
-	<include path="org/seasar/teeda/dicon/test.dicon"/>
+	<component name="appMessages" class="org.seasar.teeda.core.util.MessageBundle">
+		<arg>"appMessages"</arg>
+	</component>
 </components>
