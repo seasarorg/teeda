@@ -92,12 +92,12 @@ public class MessageBundle implements Map {
         return getResourceBundleMap().keySet();
     }
 
-    public Object put(Object arg0, Object arg1) {
-        return getResourceBundleMap().put(arg0, arg1);
+    public Object put(Object key, Object value) {
+        return getResourceBundleMap().put(key, value);
     }
 
-    public void putAll(Map arg0) {
-        getResourceBundleMap().putAll(arg0);
+    public void putAll(Map t) {
+        getResourceBundleMap().putAll(t);
     }
 
     public Object remove(Object key) {
