@@ -2,6 +2,10 @@ package examples.teeda.web.add;
 
 public class Add2Page {
 
+	public static final String arg1_lengthValidator = "minimum=3";
+
+	public static final String arg2_lengthValidator = "minimum=3";
+
 	private int arg1;
 
 	private int arg2;
