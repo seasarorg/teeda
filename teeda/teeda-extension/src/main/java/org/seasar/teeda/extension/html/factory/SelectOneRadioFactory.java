@@ -87,7 +87,7 @@ public class SelectOneRadioFactory extends AbstractElementProcessorFactory {
         properties.put(JsfConstants.VALUE_ATTR, getBindingExpression(pageName,
                 id));
         String items = id + ExtensionConstants.ITEMS_SUFFIX;
-        properties.put("items", getBindingExpression(pageName, items));
+        properties.put(ExtensionConstants.ITEMS_ATTR, getBindingExpression(pageName, items));
     }
 
     public boolean isLeaf() {

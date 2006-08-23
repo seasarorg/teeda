@@ -39,7 +39,7 @@ public class TUISelectItems extends UISelectItems {
 
     private String itemValue = "value";
 
-    private String nullLabel;
+    private String nullLabel = "nullLabel";
 
     public String getItemLabel() {
         return itemLabel;
@@ -71,11 +71,6 @@ public class TUISelectItems extends UISelectItems {
             return value;
         }
         List list = new ArrayList();
-        if (nullLabel != null) {
-            SelectItem si = new SelectItem();
-            si.setLabel(nullLabel);
-            list.add(si);
-        }
         if (value instanceof Collection) {
             for (Iterator it = ((Collection) value).iterator(); it.hasNext();) {
                 Object item = it.next();
@@ -84,6 +79,12 @@ public class TUISelectItems extends UISelectItems {
                 } else if (item instanceof Map) {
                     Map map = (Map) item;
                     SelectItem si = new SelectItem();
+                    String nullLabelValue = (String) map.get(nullLabel);
+                    if (nullLabelValue != null) {
+                        si.setLabel(nullLabelValue);
+                        list.add(si);
+                        continue;
+                    }
                     Object itemValueValue = map.get(itemValue);
                     if (itemValueValue != null) {
                         si.setValue(itemValueValue);
@@ -98,16 +99,24 @@ public class TUISelectItems extends UISelectItems {
                     list.add(si);
                 } else {
                     SelectItem si = new SelectItem();
-                    BeanDesc beanDesc = BeanDescFactory.getBeanDesc(item
-                            .getClass());
-                    PropertyDesc pd = beanDesc.getPropertyDesc(itemValue);
+                    BeanDesc bd = BeanDescFactory.getBeanDesc(item.getClass());
+                    if (bd.hasPropertyDesc(nullLabel)) {
+                        PropertyDesc pd = bd.getPropertyDesc(nullLabel);
+                        String nullLabelValue = (String) pd.getValue(item);
+                        if (nullLabelValue != null) {
+                            si.setLabel(nullLabelValue);
+                            list.add(si);
+                            continue;
+                        }
+                    }
+                    PropertyDesc pd = bd.getPropertyDesc(itemValue);
                     Object itemValueValue = pd.getValue(item);
                     if (itemValueValue != null) {
                         si.setValue(itemValueValue);
                     }
                     Object itemLabelValue = null;
-                    if (beanDesc.hasPropertyDesc(itemLabel)) {
-                        pd = beanDesc.getPropertyDesc(itemLabel);
+                    if (bd.hasPropertyDesc(itemLabel)) {
+                        pd = bd.getPropertyDesc(itemLabel);
                         itemLabelValue = pd.getValue(item);
                     }
                     if (itemLabelValue == null) {
@@ -117,27 +126,10 @@ public class TUISelectItems extends UISelectItems {
                         si.setLabel(itemLabelValue.toString());
                     }
                     list.add(si);
-                    super.setValue(value);
                 }
-            }
-        } else if (value instanceof Map) {
-            for (Iterator i = ((Map) value).entrySet().iterator(); i.hasNext();) {
-                Map.Entry entry = (Map.Entry) i.next();
-                SelectItem si = new SelectItem();
-                Object itemValueValue = entry.getValue();
-                if (itemValueValue != null) {
-                    si.setValue(itemValueValue);
-                }
-                Object itemLabelValue = entry.getKey();
-                if (itemLabelValue == null) {
-                    itemLabelValue = itemValueValue;
-                }
-                if (itemLabelValue != null) {
-                    si.setLabel(itemLabelValue.toString());
-                }
-                list.add(si);
             }
         }
+        super.setValue(list);
         return list;
     }
 
