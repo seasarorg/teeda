@@ -325,7 +325,8 @@ public class ViewHandlerImpl extends ViewHandler {
             ExternalContext externalContext) {
         // Portlet: RenderRequest does not have getCharacterEncoding()
         if (externalContext.getResponse() instanceof ServletResponse) {
-            ServletResponse res = (ServletResponse) externalContext.getResponse();
+            ServletResponse res = (ServletResponse) externalContext
+                    .getResponse();
             if (ServletExternalContextUtil.isHttpServletResponse(res)) {
                 HttpServletResponse httpRes = ServletExternalContextUtil
                         .getResponse(externalContext);

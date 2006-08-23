@@ -15,6 +15,8 @@
  */
 package org.seasar.teeda.core.lifecycle.impl;
 
+import java.util.Locale;
+
 import javax.faces.FacesException;
 import javax.faces.application.ViewHandler;
 import javax.faces.component.UIViewRoot;
@@ -45,23 +47,12 @@ public class RestoreViewPhase extends AbstractPhase implements Postback {
     public RestoreViewPhase() {
     }
 
-    protected void executePhase(FacesContext context) throws FacesException {
-        ExternalContext externalContext = context.getExternalContext();
-        String viewId = null;
-        // PortletSupport
-        if (PortletUtil.isPortlet(context)) {
-            PortletRequest request = (PortletRequest) externalContext
-                    .getRequest();
-            viewId = request.getParameter(FacesPortlet.VIEW_ID);
-        } else {
-            viewId = ExternalContextUtil.getViewId(externalContext);
-        }
-        ViewHandler viewHandler = FacesContextUtil.getViewHandler(context);
-        UIViewRoot viewRoot = viewHandler.restoreView(context, viewId);
-        if (viewRoot == null) {
-            viewRoot = viewHandler.createView(context, viewId);
-        }
-        String previousViewId = getViewIdFromSession(externalContext);
+    protected void executePhase(final FacesContext context)
+            throws FacesException {
+        final ExternalContext externalContext = context.getExternalContext();
+        final String viewId = getViewId(context, externalContext);
+        final UIViewRoot viewRoot = getViewRoot(context, viewId);
+        final String previousViewId = getViewIdFromSession(externalContext);
         context.setViewRoot(viewRoot);
         saveViewIdToSession(externalContext, viewId);
         initializeChildren(context, viewRoot);
@@ -71,12 +62,40 @@ public class RestoreViewPhase extends AbstractPhase implements Postback {
         setPostback(externalContext, viewId.equals(previousViewId));
     }
 
-    protected String getViewIdFromSession(ExternalContext externalContext) {
+    private UIViewRoot getViewRoot(final FacesContext context,
+            final String viewId) {
+        final ViewHandler viewHandler = FacesContextUtil
+                .getViewHandler(context);
+        UIViewRoot viewRoot = viewHandler.restoreView(context, viewId);
+        if (viewRoot != null) {
+            final Locale locale = viewHandler.calculateLocale(context);
+            if (locale != null) {
+                viewRoot.setLocale(locale);
+            }
+        } else {
+            viewRoot = viewHandler.createView(context, viewId);
+        }
+        return viewRoot;
+    }
+
+    private String getViewId(final FacesContext context,
+            final ExternalContext externalContext) {
+        // PortletSupport
+        if (PortletUtil.isPortlet(context)) {
+            final PortletRequest request = (PortletRequest) externalContext
+                    .getRequest();
+            return request.getParameter(FacesPortlet.VIEW_ID);
+        } else {
+            return ExternalContextUtil.getViewId(externalContext);
+        }
+    }
+
+    protected String getViewIdFromSession(final ExternalContext externalContext) {
         return (String) externalContext.getSessionMap().get(VIEW_ID_ATTR);
     }
 
-    protected void saveViewIdToSession(ExternalContext externalContext,
-            String viewId) {
+    protected void saveViewIdToSession(final ExternalContext externalContext,
+            final String viewId) {
         externalContext.getSessionMap().put(VIEW_ID_ATTR, viewId);
     }
 
@@ -84,15 +103,16 @@ public class RestoreViewPhase extends AbstractPhase implements Postback {
         return PhaseId.RESTORE_VIEW;
     }
 
-    protected void setPostback(ExternalContext externalContext, boolean postback) {
+    protected void setPostback(final ExternalContext externalContext,
+            final boolean postback) {
         externalContext.getRequestMap().put(POSTBACK_ATTR,
                 new Boolean(postback));
     }
 
     public boolean isPostBack() {
-        FacesContext context = FacesContext.getCurrentInstance();
-        ExternalContext externalContext = context.getExternalContext();
-        Boolean postBack = (Boolean) externalContext.getRequestMap().get(
+        final FacesContext context = FacesContext.getCurrentInstance();
+        final ExternalContext externalContext = context.getExternalContext();
+        final Boolean postBack = (Boolean) externalContext.getRequestMap().get(
                 POSTBACK_ATTR);
         return postBack.booleanValue();
     }

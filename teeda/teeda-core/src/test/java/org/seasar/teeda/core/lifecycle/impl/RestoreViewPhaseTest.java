@@ -15,15 +15,55 @@
  */
 package org.seasar.teeda.core.lifecycle.impl;
 
+import java.util.Arrays;
+import java.util.Locale;
+
+import javax.faces.application.Application;
+import javax.faces.component.UIViewRoot;
+import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseId;
 
-import junit.framework.TestCase;
+import org.seasar.framework.mock.servlet.MockHttpServletRequest;
+import org.seasar.teeda.core.application.ViewHandlerImpl;
+import org.seasar.teeda.core.mock.MockFacesContext;
+import org.seasar.teeda.core.mock.MockUIViewRoot;
+import org.seasar.teeda.core.unit.TeedaTestCase;
 
-public class RestoreViewPhaseTest extends TestCase {
+public class RestoreViewPhaseTest extends TeedaTestCase {
 
     // TODO test
     public void testGetCurrentPhaseId() throws Exception {
         assertEquals(PhaseId.RESTORE_VIEW, new RestoreViewPhase()
                 .getCurrentPhaseId());
     }
+
+    public void testRestoredViewRootHasClientLocale() throws Exception {
+        // ## Arrange ##
+        final MockFacesContext context = getFacesContext();
+        final RestoreViewPhase phase = new RestoreViewPhase();
+
+        final MockHttpServletRequest request = context.getMockExternalContext()
+                .getMockHttpServletRequest();
+        // viewId = "/hello.html"
+        request.setLocale(Locale.ITALY);
+
+        final MockUIViewRoot mockUIViewRoot = new MockUIViewRoot();
+        mockUIViewRoot.setLocale(Locale.CANADA);
+        final Application application = context.getApplication();
+        application.setViewHandler(new ViewHandlerImpl() {
+            public UIViewRoot restoreView(FacesContext context, String viewId) {
+                return mockUIViewRoot;
+            }
+        });
+        application.setSupportedLocales(Arrays.asList(new Locale[] {
+                Locale.ITALY, Locale.CANADA }));
+
+        // ## Act ##
+        phase.executePhase(context);
+
+        // ## Assert ##
+        assertSame(mockUIViewRoot, context.getViewRoot());
+        assertEquals(Locale.ITALY, context.getViewRoot().getLocale());
+    }
+
 }

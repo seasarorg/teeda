@@ -26,6 +26,8 @@ import javax.faces.context.FacesContext;
  */
 public class MockStateManager extends StateManager {
 
+    private static final long serialVersionUID = 1L;
+
     public static final boolean MOCK_SAVING_STATE_CLIENT = true;
 
     public static final boolean MOCK_SAVING_STATE_SERVER = false;

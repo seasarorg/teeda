@@ -23,7 +23,7 @@ import org.seasar.framework.util.AssertionUtil;
 
 /**
  * @author higa
- * 
+ * @author manhole
  */
 public class ExternalContextUtil {
 
@@ -34,16 +34,22 @@ public class ExternalContextUtil {
         String viewId = externalContext.getRequestPathInfo();
         if (viewId == null) {
             viewId = externalContext.getRequestServletPath();
-            String defaultSuffix = externalContext
-                    .getInitParameter(ViewHandler.DEFAULT_SUFFIX_PARAM_NAME);
-            String suffix = defaultSuffix != null ? defaultSuffix
-                    : ViewHandler.DEFAULT_SUFFIX;
-            int dot = viewId.lastIndexOf('.');
+            final int dot = viewId.lastIndexOf('.');
             if (dot >= 0) {
+                final String suffix = getSuffix(externalContext);
                 viewId = viewId.substring(0, dot) + suffix;
             }
         }
         return viewId;
+    }
+
+    private static String getSuffix(ExternalContext externalContext) {
+        final String defaultSuffix = externalContext
+                .getInitParameter(ViewHandler.DEFAULT_SUFFIX_PARAM_NAME);
+        if (defaultSuffix != null) {
+            return defaultSuffix;
+        }
+        return ViewHandler.DEFAULT_SUFFIX;
     }
 
     public static String encodeActionURL(FacesContext context, String url) {

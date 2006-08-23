@@ -25,6 +25,7 @@ import java.util.Vector;
 
 import javax.faces.application.ViewHandler;
 import javax.faces.component.UIViewRoot;
+import javax.faces.context.FacesContext;
 import javax.faces.render.RenderKitFactory;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.Servlet;
@@ -43,6 +44,7 @@ import org.seasar.teeda.core.mock.MockApplicationImpl;
 import org.seasar.teeda.core.mock.MockExternalContext;
 import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.mock.MockFacesContextImpl;
+import org.seasar.teeda.core.mock.MockStateManager;
 import org.seasar.teeda.core.mock.MockUIViewRoot;
 import org.seasar.teeda.core.unit.TeedaTestCase;
 
@@ -411,7 +413,33 @@ public class ViewHandlerImplTest extends TeedaTestCase {
         }
     }
 
-    // TODO test renderView, restoreView, writeState
+    public void testRestoreView_callStateManager() throws Exception {
+        // ## Arrange ##
+        final boolean[] calls = { false };
+        final MockFacesContext facesContext = getFacesContext();
+        final UIViewRoot viewRoot = facesContext.getViewRoot();
+        final MockStateManager mockStateManager = new MockStateManager() {
+            public UIViewRoot restoreView(final FacesContext context,
+                    final String viewId, final String renderKitId) {
+                calls[0] = true;
+                assertEquals(facesContext, context);
+                assertEquals("fooViewId", viewId);
+                return viewRoot;
+            }
+        };
+        getApplication().setStateManager(mockStateManager);
+        ViewHandlerImpl viewHandler = new ViewHandlerImpl();
+
+        // ## Act ##
+        final UIViewRoot restoredViewRoot = viewHandler.restoreView(
+                facesContext, "fooViewId");
+
+        // ## Assert ##
+        assertEquals(true, calls[0]);
+        assertSame(viewRoot, restoredViewRoot);
+    }
+
+    // TODO test renderView, writeState
 
     // need getLocales() return Enumeration.
     private static class MockTeedaHttpServletRequestImpl extends
