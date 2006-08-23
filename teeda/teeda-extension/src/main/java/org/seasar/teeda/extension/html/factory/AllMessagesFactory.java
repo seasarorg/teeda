@@ -50,6 +50,7 @@ public class AllMessagesFactory extends AbstractElementProcessorFactory {
                 .customizeProperties(properties, elementNode, pageDesc,
                         actionDesc);
         properties.put(JsfConstants.GLOBAL_ONLY_ATTR, JsfConstants.FALSE);
+        properties.put(JsfConstants.SHOW_SUMMARY_ATTR, JsfConstants.FALSE);
         properties.put(JsfConstants.SHOW_DETAIL_ATTR, JsfConstants.TRUE);
     }
 

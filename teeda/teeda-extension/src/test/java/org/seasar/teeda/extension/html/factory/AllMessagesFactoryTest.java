@@ -75,6 +75,8 @@ public class AllMessagesFactoryTest extends TeedaExtensionTestCase {
         assertEquals(MessagesTag.class, processor.getTagClass());
         assertEquals("false", processor
                 .getProperty(JsfConstants.GLOBAL_ONLY_ATTR));
+        assertEquals("false", processor
+                .getProperty(JsfConstants.SHOW_SUMMARY_ATTR));
         assertEquals("true", processor
                 .getProperty(JsfConstants.SHOW_DETAIL_ATTR));
     }
