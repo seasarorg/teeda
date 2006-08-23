@@ -36,6 +36,8 @@
 		class="org.seasar.teeda.extension.html.factory.MessageFactory" />
 	<component name="messagesFactory"
 		class="org.seasar.teeda.extension.html.factory.MessagesFactory" />
+	<component name="allMessagesFactory"
+		class="org.seasar.teeda.extension.html.factory.AllMessagesFactory" />
 	<component name="outputLinkFactory"
 		class="org.seasar.teeda.extension.html.factory.OutputLinkFactory" />
 	<component name="outputTextFactory"

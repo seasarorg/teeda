@@ -26,11 +26,11 @@ import org.seasar.teeda.extension.html.PageDesc;
  * @author higa
  *  
  */
-public class MessagesFactory extends AbstractElementProcessorFactory {
+public class AllMessagesFactory extends AbstractElementProcessorFactory {
 
     private static final String TAG_NAME = "messages";
 
-    private static final String MESSAGES = "messages";
+    private static final String ALL_MESSAGES = "allMessages";
 
     public boolean isMatch(ElementNode elementNode, PageDesc pageDesc,
             ActionDesc actionDesc) {
@@ -41,7 +41,7 @@ public class MessagesFactory extends AbstractElementProcessorFactory {
         if (id == null) {
             return false;
         }
-        return id.equals(MESSAGES);
+        return id.equals(ALL_MESSAGES);
     }
 
     protected void customizeProperties(Map properties, ElementNode elementNode,
@@ -49,7 +49,8 @@ public class MessagesFactory extends AbstractElementProcessorFactory {
         super
                 .customizeProperties(properties, elementNode, pageDesc,
                         actionDesc);
-        properties.put(JsfConstants.GLOBAL_ONLY_ATTR, JsfConstants.TRUE);
+        properties.put(JsfConstants.GLOBAL_ONLY_ATTR, JsfConstants.FALSE);
+        properties.put(JsfConstants.SHOW_DETAIL_ATTR, JsfConstants.TRUE);
     }
 
     protected String getTagName() {
