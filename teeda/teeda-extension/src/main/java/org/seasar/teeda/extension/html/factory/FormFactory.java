@@ -15,6 +15,7 @@
  */
 package org.seasar.teeda.extension.html.factory;
 
+import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.html.ActionDesc;
@@ -38,7 +39,8 @@ public class FormFactory extends AbstractElementProcessorFactory {
         if (id == null) {
             return false;
         }
-        return id.endsWith(ExtensionConstants.FORM_SUFFIX);
+        return StringUtil
+                .endsWithIgnoreCase(id, ExtensionConstants.FORM_SUFFIX);
     }
 
     protected String getTagName() {

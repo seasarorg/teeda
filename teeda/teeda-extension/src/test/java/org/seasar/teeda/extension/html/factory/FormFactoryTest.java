@@ -47,6 +47,9 @@ public class FormFactoryTest extends TeedaExtensionTestCase {
         assertFalse(factory.isMatch(elementNode2, null, null));
         ElementNode elementNode3 = createElementNode("form", new HashMap());
         assertFalse(factory.isMatch(elementNode3, null, null));
+        properties.put("id", "form");
+        ElementNode elementNode4 = createElementNode("form", properties);
+        assertTrue(factory.isMatch(elementNode4, null, null));
     }
 
     public void testCreateFactory() throws Exception {
