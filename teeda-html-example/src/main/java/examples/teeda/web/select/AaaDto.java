@@ -6,6 +6,16 @@ public class AaaDto {
 
 	private int value;
 
+	private String nullLabel;
+	
+	public String getNullLabel() {
+		return nullLabel;
+	}
+
+	public void setNullLabel(String nullLabel) {
+		this.nullLabel = nullLabel;
+	}
+
 	public String getLabel() {
 		return label;
 	}
