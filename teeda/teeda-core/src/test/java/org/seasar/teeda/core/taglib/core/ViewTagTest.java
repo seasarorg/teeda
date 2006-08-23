@@ -26,7 +26,6 @@ import javax.servlet.jsp.tagext.BodyTag;
 import javax.servlet.jsp.tagext.Tag;
 
 import org.seasar.framework.mock.servlet.MockHttpServletResponse;
-import org.seasar.framework.util.LocaleUtil;
 import org.seasar.teeda.core.mock.MockBodyContent;
 import org.seasar.teeda.core.mock.MockFacesContextImpl;
 import org.seasar.teeda.core.mock.MockJspWriter;
@@ -56,26 +55,12 @@ public class ViewTagTest extends TeedaTestCase {
         assertEquals(null, tag.getRendererType());
     }
 
-    public void testSetProperties_default() throws Exception {
-        // # Arrange #
-        MockPageContext pageContext = new MockPageContext();
-        pageContext.setRequest(getRequest());
-        UIViewRoot viewRoot = createUIViewRoot();
-        ViewTag tag = new ViewTag();
-        tag.setPageContext(pageContext);
-
-        // # Act #
-        tag.setProperties(viewRoot);
-
-        // # Assert #
-        assertEquals(LocaleUtil.getLocale(null), viewRoot.getLocale());
-    }
-
     public void testSetProperties_locale() throws Exception {
         // # Arrange #
         MockPageContext pageContext = new MockPageContext();
         pageContext.setRequest(getRequest());
         UIViewRoot viewRoot = createUIViewRoot();
+        viewRoot.setLocale(Locale.CANADA);
         ViewTag tag = new ViewTag();
         tag.setPageContext(pageContext);
 
@@ -85,6 +70,22 @@ public class ViewTagTest extends TeedaTestCase {
 
         // # Assert #
         assertEquals(Locale.FRENCH, viewRoot.getLocale());
+    }
+
+    public void testSetProperties_nullLocale() throws Exception {
+        // # Arrange #
+        MockPageContext pageContext = new MockPageContext();
+        pageContext.setRequest(getRequest());
+        UIViewRoot viewRoot = createUIViewRoot();
+        viewRoot.setLocale(Locale.CANADA);
+        ViewTag tag = new ViewTag();
+        tag.setPageContext(pageContext);
+
+        // # Act #
+        tag.setProperties(viewRoot);
+
+        // # Assert #
+        assertEquals(Locale.CANADA, viewRoot.getLocale());
     }
 
     public void testDoStartTag() throws Exception {

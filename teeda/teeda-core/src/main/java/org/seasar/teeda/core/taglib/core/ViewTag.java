@@ -172,10 +172,12 @@ public class ViewTag extends UIComponentBodyTag {
         final String localeStr = getLocale();
         final FacesContext context = FacesContext.getCurrentInstance();
         Locale locale = (Locale) ValueBindingUtil.getValue(context, localeStr);
-        if (locale == null) {
+        if (locale == null && localeStr != null) {
             locale = LocaleUtil.getLocale(localeStr);
         }
-        ((UIViewRoot) component).setLocale(locale);
+        if (locale != null) {
+            ((UIViewRoot) component).setLocale(locale);
+        }
         Config.set(pageContext.getRequest(), Config.FMT_LOCALE, locale);
     }
 
