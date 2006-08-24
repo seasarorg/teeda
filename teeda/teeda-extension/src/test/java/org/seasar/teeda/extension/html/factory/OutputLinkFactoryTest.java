@@ -19,6 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.core.taglib.core.ParamTag;
 import org.seasar.teeda.core.taglib.html.OutputLinkTag;
 import org.seasar.teeda.extension.config.taglib.element.TagElement;
 import org.seasar.teeda.extension.config.taglib.element.TaglibElement;
@@ -63,11 +64,20 @@ public class OutputLinkFactoryTest extends TeedaExtensionTestCase {
         tagElement.setTagClass(OutputLinkTag.class);
         jsfHtml.addTagElement(tagElement);
         taglibManager.addTaglibElement(jsfHtml);
+
+        TaglibElement jsfCore = new TaglibElementImpl();
+        jsfCore.setUri(JsfConstants.JSF_CORE_URI);
+        TagElement paramTagElement = new TagElementImpl();
+        paramTagElement.setName("param");
+        paramTagElement.setTagClass(ParamTag.class);
+        jsfCore.addTagElement(paramTagElement);
+        taglibManager.addTaglibElement(jsfCore);
+
         OutputLinkFactory factory = new OutputLinkFactory();
         factory.setTaglibManager(taglibManager);
         Map properties = new HashMap();
         properties.put("id", "goHoge");
-        properties.put("href", "hoge.html");
+        properties.put("href", "hoge.html?aaa=111&bbb=222");
         ElementNode elementNode = createElementNode("a", properties);
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         ActionDesc actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
@@ -76,8 +86,15 @@ public class OutputLinkFactoryTest extends TeedaExtensionTestCase {
         ElementProcessor processor = factory.createProcessor(elementNode,
                 pageDesc, actionDesc);
         // ## Assert ##
-        assertNotNull("1", processor);
-        assertEquals("2", OutputLinkTag.class, processor.getTagClass());
-        assertEquals("3", "hoge.html", processor.getProperty("value"));
+        assertNotNull(processor);
+        assertEquals(OutputLinkTag.class, processor.getTagClass());
+        assertEquals("hoge.html?bbb=222", processor.getProperty("value"));
+        assertEquals(1, processor.getChildSize());
+
+        ElementProcessor paramProcessor = (ElementProcessor) processor
+                .getChild(0);
+        assertEquals(ParamTag.class, paramProcessor.getTagClass());
+        assertEquals("aaa", paramProcessor.getProperty("name"));
+        assertEquals("#{fooPage.aaa}", paramProcessor.getProperty("value"));
     }
 }

@@ -23,6 +23,8 @@ public interface ElementProcessor extends TagProcessor {
 
     String getProperty(String name);
 
+    void setProperty(String name, String value);
+
     Iterator getPropertyNameIterator();
 
     int getChildSize();

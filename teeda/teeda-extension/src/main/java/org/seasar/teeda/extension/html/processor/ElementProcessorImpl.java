@@ -67,6 +67,10 @@ public class ElementProcessorImpl implements ElementProcessor {
         return (String) properties.get(name);
     }
 
+    public void setProperty(String name, String value) {
+        properties.put(name, value);
+    }
+
     public Iterator getPropertyNameIterator() {
         return properties.keySet().iterator();
     }

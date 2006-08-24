@@ -66,7 +66,13 @@ public abstract class AbstractElementProcessorFactory implements
             PageDesc pageDesc, ActionDesc actionDesc, String uri, String tagName) {
         Class tagClass = getTagClass(uri, tagName);
         Map props = createProperties(elementNode, pageDesc, actionDesc);
-        return new ElementProcessorImpl(tagClass, props);
+        ElementProcessor processor = new ElementProcessorImpl(tagClass, props);
+        customizeProcessor(processor, elementNode, pageDesc, actionDesc);
+        return processor;
+    }
+
+    protected void customizeProcessor(ElementProcessor processor,
+            ElementNode elementNode, PageDesc pageDesc, ActionDesc actionDesc) {
     }
 
     protected Map createProperties(ElementNode elementNode, PageDesc pageDesc,

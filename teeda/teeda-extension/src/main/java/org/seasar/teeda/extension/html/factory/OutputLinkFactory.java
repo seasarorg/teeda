@@ -15,13 +15,17 @@
  */
 package org.seasar.teeda.extension.html.factory;
 
+import java.util.HashMap;
 import java.util.Map;
 
+import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ElementNode;
+import org.seasar.teeda.extension.html.ElementProcessor;
 import org.seasar.teeda.extension.html.PageDesc;
+import org.seasar.teeda.extension.html.processor.ElementProcessorImpl;
 
 /**
  * @author higa
@@ -30,6 +34,8 @@ import org.seasar.teeda.extension.html.PageDesc;
 public class OutputLinkFactory extends AbstractElementProcessorFactory {
 
     private static final String TAG_NAME = "outputLink";
+
+    private static final String PARAM_TAG_NAME = "param";
 
     public boolean isMatch(ElementNode elementNode, PageDesc pageDesc,
             ActionDesc actionDesc) {
@@ -51,6 +57,50 @@ public class OutputLinkFactory extends AbstractElementProcessorFactory {
                         actionDesc);
         renameProperty(properties, JsfConstants.HREF_ATTR,
                 JsfConstants.VALUE_ATTR);
+    }
+
+    protected void customizeProcessor(ElementProcessor processor,
+            ElementNode elementNode, PageDesc pageDesc, ActionDesc actionDesc) {
+        super.customizeProcessor(processor, elementNode, pageDesc, actionDesc);
+        String value = processor.getProperty(JsfConstants.VALUE_ATTR);
+        if (value == null) {
+            return;
+        }
+        int index = value.lastIndexOf('?');
+        if (index < 0) {
+            return;
+        }
+        StringBuffer buf = new StringBuffer(50);
+        String queryString = value.substring(index + 1);
+        String[] entries = StringUtil.split(queryString, "&");
+        for (int i = 0; i < entries.length; ++i) {
+            String entry = entries[i];
+            String[] elems = StringUtil.split(entry, " =");
+            if (pageDesc.hasProperty(elems[0])) {
+                appendParam(processor, pageDesc, elems[0]);
+            } else {
+                buf.append(entry);
+                buf.append("&");
+            }
+        }
+        value = value.substring(0, index);
+        if (buf.length() != 0) {
+            buf.setLength(buf.length() - 1);
+            value = value + "?" + buf.toString();
+        }
+        processor.setProperty(JsfConstants.VALUE_ATTR, value);
+    }
+
+    protected void appendParam(ElementProcessor processor, PageDesc pageDesc,
+            String name) {
+        Class tagClass = getTagClass(JsfConstants.JSF_CORE_URI, PARAM_TAG_NAME);
+        Map props = new HashMap();
+        props.put(JsfConstants.NAME_ATTR, name);
+        props.put(JsfConstants.VALUE_ATTR, getBindingExpression(pageDesc
+                .getPageName(), name));
+        ElementProcessor paramProcessor = new ElementProcessorImpl(tagClass,
+                props);
+        processor.addElement(paramProcessor);
     }
 
     protected String getTagName() {
