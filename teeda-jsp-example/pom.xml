@@ -13,7 +13,7 @@
   <groupId>org.seasar.teeda</groupId>
   <artifactId>teeda-jsp-example</artifactId>
   <packaging>war</packaging>
-  <name>Teeda Example</name>
+  <name>Teeda JSP Example</name>
   <description></description>
   <url>http://teeda.seasar.org/</url>
   <scm>
