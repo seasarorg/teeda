@@ -25,6 +25,7 @@ import javax.faces.component.UIViewRoot;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+import javax.faces.internal.PageContextOutWriter;
 import javax.faces.render.RenderKit;
 import javax.faces.render.RenderKitFactory;
 import javax.servlet.Servlet;
@@ -185,7 +186,7 @@ public class HtmlViewHandler extends ViewHandlerImpl {
         RenderKit renderKit = renderFactory.getRenderKit(context, context
                 .getViewRoot().getRenderKitId());
         ResponseWriter writer = renderKit.createResponseWriter(
-                new PageContextWriter(pageContext), contentType, encoding);
+                new PageContextOutWriter(pageContext), contentType, encoding);
         context.setResponseWriter(writer);
     }
 
