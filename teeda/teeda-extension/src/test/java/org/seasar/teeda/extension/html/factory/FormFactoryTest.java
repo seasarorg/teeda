@@ -37,7 +37,7 @@ import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
  */
 public class FormFactoryTest extends TeedaExtensionTestCase {
 
-    public void testIsMatch() throws Exception {
+    public void testIsMatch1() throws Exception {
         FormFactory factory = new FormFactory();
         Map properties = new HashMap();
         properties.put("id", "hogeForm");
@@ -50,6 +50,14 @@ public class FormFactoryTest extends TeedaExtensionTestCase {
         properties.put("id", "form");
         ElementNode elementNode4 = createElementNode("form", properties);
         assertTrue(factory.isMatch(elementNode4, null, null));
+    }
+
+    public void testIsMatch2() throws Exception {
+        FormFactory factory = new FormFactory();
+        Map properties = new HashMap();
+        properties.put("id", "form");
+        ElementNode elementNode = createElementNode("form", properties);
+        assertTrue(factory.isMatch(elementNode, null, null));
     }
 
     public void testCreateFactory() throws Exception {

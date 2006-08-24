@@ -43,7 +43,6 @@ import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 
 /**
  * @author higa
- *
  */
 public class HtmlViewHandlerTest extends TeedaExtensionTestCase {
 
