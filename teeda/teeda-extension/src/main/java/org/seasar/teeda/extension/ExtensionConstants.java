@@ -21,8 +21,13 @@ package org.seasar.teeda.extension;
  */
 public interface ExtensionConstants {
 
+    //URI
     String TEEDA_EXTENSION_URI = "http://www.seasar.org/teeda/extension";
 
+    //Elements
+    String BODY_ELEM = "body";
+
+    //Attributes
     String FRACTION_ATTR = "fraction";
 
     String GROUPING_SEPARATOR_ATTR = "groupingSeparator";
@@ -39,9 +44,16 @@ public interface ExtensionConstants {
 
     String ITEMS_ATTR = "items";
 
-    String ITEMS_SUFFIX = "Items";
+    String KEY_ATTR = "key";
 
+    String PROPERTIES_NAME_ATTR = "propertiesName";
+
+    //Suffix and prefix
     String GO_PREFIX = "go";
+
+    String DO_PREFIX = "do";
+
+    String ITEMS_SUFFIX = "Items";
 
     String MESSAGE_SUFFIX = "Message";
 
@@ -52,8 +64,6 @@ public interface ExtensionConstants {
     String GROUPING_SEPARATOR_SUFFIX = "GroupingSeparator";
 
     String FRACTION_SEPARATOR_SUFFIX = "FractionSeparator";
-
-    String DO_PREFIX = "do";
 
     String TEEDA_CURRENY_STYLE_CLASS = "T_currency";
 
@@ -69,5 +79,4 @@ public interface ExtensionConstants {
 
     String SCROLL_VERTICAL = "scrollVertical";
 
-    String BODY_ELEM = "body";
 }
