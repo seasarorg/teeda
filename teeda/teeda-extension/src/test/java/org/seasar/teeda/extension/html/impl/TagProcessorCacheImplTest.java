@@ -18,17 +18,18 @@ package org.seasar.teeda.extension.html.impl;
 import java.io.File;
 
 import org.seasar.framework.convention.impl.NamingConventionImpl;
-import org.seasar.framework.unit.S2FrameworkTestCase;
 import org.seasar.framework.util.ClassUtil;
 import org.seasar.framework.util.ResourceUtil;
 import org.seasar.teeda.core.application.impl.TeedaStateManagerImpl;
+import org.seasar.teeda.extension.html.HtmlParser;
 import org.seasar.teeda.extension.html.TagProcessor;
+import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 
 /**
  * @author higa
  *
  */
-public class TagProcessorCacheImplTest extends S2FrameworkTestCase {
+public class TagProcessorCacheImplTest extends TeedaExtensionTestCase {
 
     public void testUpdateTagProcessor() throws Exception {
         NamingConventionImpl convention = new NamingConventionImpl();
@@ -49,7 +50,7 @@ public class TagProcessorCacheImplTest extends S2FrameworkTestCase {
         register(FooAction.class, "fooAction");
 
         HtmlDescCacheImpl htmlDescCache = new HtmlDescCacheImpl();
-        HtmlParserImpl htmlParser = new HtmlParserImpl();
+        HtmlParser htmlParser = getHtmlParser();
         htmlDescCache.setHtmlParser(htmlParser);
         htmlDescCache.setServletContext(getServletContext());
         htmlDescCache.setContainer(getContainer());

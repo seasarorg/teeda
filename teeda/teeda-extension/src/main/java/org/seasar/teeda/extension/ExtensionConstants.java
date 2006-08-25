@@ -69,4 +69,5 @@ public interface ExtensionConstants {
 
     String SCROLL_VERTICAL = "scrollVertical";
 
+    String BODY_ELEM = "body";
 }

@@ -7,7 +7,6 @@
 <!-- =========== FULL CONFIGURATION FILE ================================== -->
 
 <faces-config>
-
 	<component>
 		<component-type>
 			org.seasar.teeda.extension.Text
@@ -16,7 +15,14 @@
 			org.seasar.teeda.extension.component.UIText
 		</component-class>
 	</component>
-
+	<component>
+		<component-type>
+			org.seasar.teeda.extension.Body
+		</component-type>
+		<component-class>
+			org.seasar.teeda.extension.component.UIBody
+		</component-class>
+	</component>
 	<component>
 		<component-type>
 			org.seasar.teeda.extension.HtmlGrid

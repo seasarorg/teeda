@@ -17,22 +17,22 @@ package org.seasar.teeda.extension.html.impl;
 
 import java.io.ByteArrayInputStream;
 
-import junit.framework.TestCase;
-
 import org.seasar.framework.exception.IORuntimeException;
 import org.seasar.teeda.extension.html.DocumentNode;
 import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.HtmlNode;
+import org.seasar.teeda.extension.html.HtmlParser;
 import org.seasar.teeda.extension.html.TextNode;
+import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 
 /**
  * @author manhole
  */
-public class HtmlParserImplTest extends TestCase {
+public class HtmlParserImplTest extends TeedaExtensionTestCase {
 
     public void testBasic() throws Exception {
         // ## Arrange ##
-        HtmlParserImpl parser = new HtmlParserImpl();
+        HtmlParser parser = getHtmlParser();
 
         // ## Act ##
         ByteArrayInputStream is = new ByteArrayInputStream(
@@ -56,8 +56,9 @@ public class HtmlParserImplTest extends TestCase {
 
     public void testForceElementNode1() throws Exception {
         // ## Arrange ##
-        HtmlParserImpl parser = new HtmlParserImpl();
-        parser.addElementNodeTagName("y");
+        HtmlNodeHandler handler = new HtmlNodeHandler();
+        HtmlParser parser = getHtmlParser();
+        handler.addForceElementNodeTagName("y");
 
         // ## Act ##
         ByteArrayInputStream is = new ByteArrayInputStream(
@@ -78,8 +79,10 @@ public class HtmlParserImplTest extends TestCase {
 
     public void testForceElementNode2() throws Exception {
         // ## Arrange ##
-        HtmlParserImpl parser = new HtmlParserImpl();
-        parser.addElementNodeTagName("y");
+        HtmlParser parser = getHtmlParser();
+        HtmlNodeHandler handler = (HtmlNodeHandler) getContainer()
+                .getComponent(HtmlNodeHandler.class);
+        handler.addForceElementNodeTagName("y");
 
         // ## Act ##
         ByteArrayInputStream is = new ByteArrayInputStream(
@@ -119,7 +122,7 @@ public class HtmlParserImplTest extends TestCase {
 
     public void testWriteXmlDeclarationAndDocType() throws Exception {
         // ## Arrange ##
-        HtmlParserImpl parser = new HtmlParserImpl();
+        HtmlParser parser = getHtmlParser();
 
         // ## Act ##
         String str = "<?xml version=\"1.0\"?>"
@@ -151,7 +154,7 @@ public class HtmlParserImplTest extends TestCase {
 
     public void testWriteComment() throws Exception {
         // ## Arrange ##
-        HtmlParserImpl parser = new HtmlParserImpl();
+        HtmlParser parser = getHtmlParser();
 
         // ## Act ##
         String str = "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n"

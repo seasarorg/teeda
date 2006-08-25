@@ -10,16 +10,19 @@
 		class="org.seasar.teeda.extension.config.taglib.impl.TaglibElementBuilderImpl" />
 	<component
 		class="org.seasar.teeda.extension.html.impl.HtmlParserImpl">
-		<initMethod name="addElementNodeTagName">
-			<arg>"table"</arg>
-		</initMethod>
 	</component>
+	<component class="org.seasar.teeda.extension.html.impl.HtmlNodeHandler" instance="prototype" />
+	<component class="org.seasar.teeda.extension.html.impl.InputTypeCheckboxElementNodeDecision"/>
+	<component class="org.seasar.teeda.extension.html.impl.InputTypeRadioElementNodeDecision"/>
+	<component class="org.seasar.teeda.extension.html.impl.BodyElementNodeDecision"/>
 	<component
 		class="org.seasar.teeda.extension.html.impl.HtmlDescCacheImpl" />
 	<component
 		class="org.seasar.teeda.extension.html.impl.PageDescCacheImpl" />
 	<component
 		class="org.seasar.teeda.extension.html.impl.ActionDescCacheImpl" />
+	<component name="bodyFactory"
+		class="org.seasar.teeda.extension.html.factory.BodyFactory" />
 	<component name="commandButtonFactory"
 		class="org.seasar.teeda.extension.html.factory.CommandButtonFactory" />
 	<component name="forEachFactory"

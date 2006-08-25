@@ -36,6 +36,7 @@ import org.seasar.teeda.extension.config.taglib.element.TaglibElement;
 import org.seasar.teeda.extension.config.taglib.element.impl.TagElementImpl;
 import org.seasar.teeda.extension.config.taglib.element.impl.TaglibElementImpl;
 import org.seasar.teeda.extension.html.ElementProcessorFactory;
+import org.seasar.teeda.extension.html.HtmlParser;
 import org.seasar.teeda.extension.html.factory.FormFactory;
 import org.seasar.teeda.extension.mock.MockTaglibManager;
 import org.seasar.teeda.extension.render.html.HtmlTextRenderer;
@@ -93,7 +94,7 @@ public class HtmlViewHandlerTest extends TeedaExtensionTestCase {
         HtmlDescCacheImpl htmlDescCache = new HtmlDescCacheImpl();
         htmlDescCache.setServletContext(getServletContext());
         htmlDescCache.setContainer(getContainer());
-        HtmlParserImpl parser = new HtmlParserImpl();
+        HtmlParser parser = getHtmlParser();
         htmlDescCache.setHtmlParser(parser);
 
         FormFactory formFactory = new FormFactory();

@@ -26,7 +26,6 @@ import javax.faces.context.FacesContext;
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.PropertyDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
-import org.seasar.framework.util.AssertionUtil;
 import org.seasar.teeda.core.render.AbstractRenderer;
 import org.seasar.teeda.extension.component.TForEach;
 
@@ -58,11 +57,6 @@ public class TForEachRenderer extends AbstractRenderer {
             super.encodeChildren(context, component);
             forEach.leaveRow(context);
         }
-    }
-
-    protected void assertNotNull(FacesContext context, UIComponent component) {
-        AssertionUtil.assertNotNull("context", context);
-        AssertionUtil.assertNotNull("component", component);
     }
 
     public void processItem(BeanDesc beanDesc, Object page, Object item,
@@ -147,7 +141,7 @@ public class TForEachRenderer extends AbstractRenderer {
                         int index = Integer.parseInt(num);
                         rowSize = Math.max(rowSize, index);
                     } catch (NumberFormatException e) {
-                        // TODO 
+                        // TODO
                         e.printStackTrace();
                     }
                 }

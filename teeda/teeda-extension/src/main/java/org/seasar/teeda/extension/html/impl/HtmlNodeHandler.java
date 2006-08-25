@@ -25,6 +25,7 @@ import org.seasar.framework.util.ResourceUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.extension.html.DocumentNode;
 import org.seasar.teeda.extension.html.ElementNode;
+import org.seasar.teeda.extension.html.ElementNodeDecision;
 import org.seasar.teeda.extension.html.HtmlNode;
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
@@ -40,9 +41,11 @@ public class HtmlNodeHandler extends DefaultHandler {
 
     private Map dtdPaths = new HashMap();
 
-    private List elementNodeTagName = new ArrayList();
+    private List forceElementNodeTagName = new ArrayList();
 
     private Stack forceElementNodeStack = new Stack();
+
+    private ElementNodeDecision[] decisions = new ElementNodeDecision[0];
 
     private static final String XHTML_DTD_RESOURCES_PATH = "org/seasar/teeda/extension/resource/xhtml1/";
 
@@ -75,7 +78,7 @@ public class HtmlNodeHandler extends DefaultHandler {
                 ElementNodeImpl elementNode = new ElementNodeImpl(qName, props);
                 parent.addElement(elementNode);
                 push(elementNode);
-                if (elementNodeTagName.contains(qName)) {
+                if (forceElementNodeTagName.contains(qName)) {
                     forceElementNodeStack.push(elementNode);
                 }
             } else {
@@ -93,21 +96,13 @@ public class HtmlNodeHandler extends DefaultHandler {
         if (!forceElementNodeStack.isEmpty()) {
             return true;
         }
-        if (qName.equals(JsfConstants.INPUT_ELEM)
-                && isTypeRadioOrCheckbox(attributes)
-                && attributes.getValue(JsfConstants.NAME_ATTR) != null) {
-            return true;
+        for (int i = 0; i < decisions.length; i++) {
+            ElementNodeDecision dec = decisions[i];
+            if (dec.isElementNode(parent, qName, attributes)) {
+                return true;
+            }
         }
         return false;
-    }
-
-    private boolean isTypeRadioOrCheckbox(Attributes attributes) {
-        String value = attributes.getValue(JsfConstants.TYPE_ATTR);
-        if (value == null) {
-            return false;
-        }
-        return value.equalsIgnoreCase(JsfConstants.RADIO_VALUE)
-                || value.equalsIgnoreCase(JsfConstants.CHECKBOX_VALUE);
     }
 
     public InputSource resolveEntity(String publicId, String systemId)
@@ -197,8 +192,12 @@ public class HtmlNodeHandler extends DefaultHandler {
                 XHTML_DTD_RESOURCES_PATH + "xhtml-special.ent");
     }
 
-    public void addElementNodeTagName(String tagName) {
-        elementNodeTagName.add(tagName);
+    public void addForceElementNodeTagName(String tagName) {
+        forceElementNodeTagName.add(tagName);
+    }
+
+    public void setElementNodeDecisions(ElementNodeDecision[] decisions) {
+        this.decisions = decisions;
     }
 
 }

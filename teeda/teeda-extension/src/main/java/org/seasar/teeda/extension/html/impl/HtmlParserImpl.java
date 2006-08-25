@@ -18,10 +18,8 @@ package org.seasar.teeda.extension.html.impl;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -30,6 +28,7 @@ import org.seasar.framework.exception.IORuntimeException;
 import org.seasar.framework.exception.SAXRuntimeException;
 import org.seasar.framework.util.InputStreamReaderUtil;
 import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.core.util.DIContainerUtil;
 import org.seasar.teeda.extension.html.HtmlNode;
 import org.seasar.teeda.extension.html.HtmlParser;
 import org.xml.sax.InputSource;
@@ -43,8 +42,6 @@ import org.xml.sax.SAXException;
 public class HtmlParserImpl implements HtmlParser {
 
     private Map dtdPaths = new HashMap();
-
-    private List elementNodeTagName = new ArrayList();
 
     private String encoding = JsfConstants.DEFAULT_ENCODING;
 
@@ -66,16 +63,13 @@ public class HtmlParserImpl implements HtmlParser {
     }
 
     protected HtmlNodeHandler createHtmlNodeHandler() {
-        HtmlNodeHandler htmlNodeHandler = new HtmlNodeHandler();
+        HtmlNodeHandler htmlNodeHandler = (HtmlNodeHandler) DIContainerUtil
+                .getComponent(HtmlNodeHandler.class);
         for (Iterator itr = dtdPaths.entrySet().iterator(); itr.hasNext();) {
             Map.Entry entry = (Entry) itr.next();
             String publicId = (String) entry.getKey();
             String dtdPath = (String) entry.getValue();
             htmlNodeHandler.registerDtdPath(publicId, dtdPath);
-        }
-        for (final Iterator it = elementNodeTagName.iterator(); it.hasNext();) {
-            final String tagName = (String) it.next();
-            htmlNodeHandler.addElementNodeTagName(tagName);
         }
         return htmlNodeHandler;
     }
@@ -86,10 +80,6 @@ public class HtmlParserImpl implements HtmlParser {
 
     public void clearDtdPath() {
         dtdPaths.clear();
-    }
-
-    public void addElementNodeTagName(String tagName) {
-        elementNodeTagName.add(tagName);
     }
 
     public String getEncoding() {

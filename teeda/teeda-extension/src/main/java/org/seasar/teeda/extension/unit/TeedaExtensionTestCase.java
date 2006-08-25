@@ -25,8 +25,15 @@ import org.seasar.teeda.extension.config.taglib.element.TaglibElement;
 import org.seasar.teeda.extension.config.taglib.element.impl.TagElementImpl;
 import org.seasar.teeda.extension.config.taglib.element.impl.TaglibElementImpl;
 import org.seasar.teeda.extension.html.ElementNode;
+import org.seasar.teeda.extension.html.ElementNodeDecision;
+import org.seasar.teeda.extension.html.HtmlParser;
 import org.seasar.teeda.extension.html.PageDesc;
+import org.seasar.teeda.extension.html.impl.BodyElementNodeDecision;
 import org.seasar.teeda.extension.html.impl.ElementNodeImpl;
+import org.seasar.teeda.extension.html.impl.HtmlNodeHandler;
+import org.seasar.teeda.extension.html.impl.HtmlParserImpl;
+import org.seasar.teeda.extension.html.impl.InputTypeCheckboxElementNodeDecision;
+import org.seasar.teeda.extension.html.impl.InputTypeRadioElementNodeDecision;
 import org.seasar.teeda.extension.html.impl.PageDescImpl;
 import org.seasar.teeda.extension.jsp.PageContextImpl;
 import org.seasar.teeda.extension.mock.MockTaglibManager;
@@ -43,6 +50,8 @@ public abstract class TeedaExtensionTestCase extends TeedaTestCase {
 
     private Map taglibMap;
 
+    private HtmlParserImpl parser;
+
     protected PageContextImpl getPageContext() {
         return pageContext;
     }
@@ -53,6 +62,13 @@ public abstract class TeedaExtensionTestCase extends TeedaTestCase {
         pageContext.initialize(getServlet(), getRequest(), getResponse(), null);
         taglibManager = createTaglibManager();
         taglibMap = new HashMap();
+        parser = new HtmlParserImpl();
+        HtmlNodeHandler htmlNodeHandler = new HtmlNodeHandler();
+        ElementNodeDecision[] decisions = { new BodyElementNodeDecision(),
+                new InputTypeRadioElementNodeDecision(),
+                new InputTypeCheckboxElementNodeDecision() };
+        htmlNodeHandler.setElementNodeDecisions(decisions);
+        getContainer().register(htmlNodeHandler);
     }
 
     protected void tearDownContainer() throws Throwable {
@@ -102,4 +118,7 @@ public abstract class TeedaExtensionTestCase extends TeedaTestCase {
         return pd;
     }
 
+    protected HtmlParser getHtmlParser() {
+        return parser;
+    }
 }

@@ -17,20 +17,21 @@ package org.seasar.teeda.extension.html.impl;
 
 import java.io.File;
 
-import org.seasar.framework.unit.S2FrameworkTestCase;
 import org.seasar.framework.util.ResourceUtil;
 import org.seasar.teeda.extension.html.HtmlDesc;
+import org.seasar.teeda.extension.html.HtmlParser;
+import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 
 /**
  * @author higa
  *
  */
-public class HtmlDescCacheImplTest extends S2FrameworkTestCase {
+public class HtmlDescCacheImplTest extends TeedaExtensionTestCase {
 
     public void testCreateAndGetHtmlDesc() throws Exception {
         String path = convertPath("HtmlNodeHandler.xhtml");
         HtmlDescCacheImpl cache = new HtmlDescCacheImpl();
-        HtmlParserImpl htmlParser = new HtmlParserImpl();
+        HtmlParser htmlParser = getHtmlParser();
         cache.setHtmlParser(htmlParser);
         cache.setServletContext(getServletContext());
         cache.setContainer(getContainer());

@@ -23,6 +23,7 @@ import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.html.ElementProcessor;
 import org.seasar.teeda.extension.html.ElementProcessorFactory;
 import org.seasar.teeda.extension.html.HtmlDesc;
+import org.seasar.teeda.extension.html.HtmlParser;
 import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.TagProcessor;
 import org.seasar.teeda.extension.html.TagProcessorAssembler;
@@ -401,7 +402,7 @@ public class TagProcessorAssembleImplTest extends TeedaExtensionTestCase {
         HtmlDescCacheImpl cache = new HtmlDescCacheImpl();
         cache.setServletContext(getServletContext());
         cache.setContainer(getContainer());
-        HtmlParserImpl htmlParser = new HtmlParserImpl();
+        HtmlParser htmlParser = getHtmlParser();
         cache.setHtmlParser(htmlParser);
         return cache;
     }
