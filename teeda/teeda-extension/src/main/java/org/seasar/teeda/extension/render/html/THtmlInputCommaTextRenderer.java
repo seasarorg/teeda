@@ -17,36 +17,29 @@ package org.seasar.teeda.extension.render.html;
 
 import java.io.IOException;
 import java.text.NumberFormat;
-import java.util.Iterator;
 import java.util.Locale;
-import java.util.Map;
 
 import javax.faces.component.UIComponent;
-import javax.faces.component.UIViewRoot;
 import javax.faces.component.html.HtmlInputText;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.internal.IgnoreComponent;
-import javax.faces.internal.UIComponentUtil;
 
 import org.seasar.framework.util.BigDecimalConversionUtil;
 import org.seasar.framework.util.NumberConversionUtil;
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
-import org.seasar.teeda.core.render.html.HtmlInputTextRenderer;
-import org.seasar.teeda.core.util.JavaScriptPermissionUtil;
 import org.seasar.teeda.core.util.RendererUtil;
 import org.seasar.teeda.core.util.ValueHolderUtil;
 import org.seasar.teeda.extension.ExtensionConstants;
-import org.seasar.teeda.extension.component.ScriptEnhanceUIViewRoot;
 import org.seasar.teeda.extension.component.html.THtmlInputCommaText;
-import org.seasar.teeda.extension.util.JavaScriptContext;
 
 /**
  * @author shot
  * @author manhole
  */
-public class THtmlInputCommaTextRenderer extends HtmlInputTextRenderer {
+public class THtmlInputCommaTextRenderer extends
+        AbstractInputExtendTextRenderer {
 
     public static final String COMPONENT_FAMILY = "javax.faces.Input";
 
@@ -56,46 +49,11 @@ public class THtmlInputCommaTextRenderer extends HtmlInputTextRenderer {
 
     private static final String JS_NAMESPACE_PREFIX = "Teeda.THtmlInputCommaText.";
 
-    public void encodeEnd(FacesContext context, UIComponent component)
-            throws IOException {
-        assertNotNull(context, component);
-        if (!component.isRendered()) {
-            return;
-        }
-        UIViewRoot root = context.getViewRoot();
-        if (root instanceof ScriptEnhanceUIViewRoot
-                && JavaScriptPermissionUtil.isJavaScriptPermitted(context)) {
-            encodeHtmlInputCommaTextEnd(context,
-                    (THtmlInputCommaText) component);
-        } else {
-            encodeHtmlInputTextEnd(context, (HtmlInputText) component);
-        }
-    }
-
-    protected void encodeHtmlInputCommaTextEnd(FacesContext context,
-            THtmlInputCommaText htmlInputCommaText) throws IOException {
+    protected void doEncodeEndCustomize(FacesContext context,
+            HtmlInputText htmlInputText) throws IOException {
+        assertHtmlInputCommaText(htmlInputText);
+        THtmlInputCommaText htmlInputCommaText = (THtmlInputCommaText) htmlInputText;
         ResponseWriter writer = context.getResponseWriter();
-        UIViewRoot root = context.getViewRoot();
-        ScriptEnhanceUIViewRoot sRoot = (ScriptEnhanceUIViewRoot) root;
-        final String scriptKey = THtmlInputCommaText.class.getName();
-        if (!sRoot.containsScript(scriptKey)) {
-            JavaScriptContext scriptContext = new JavaScriptContext();
-            scriptContext.loadScript(scriptKey);
-            sRoot.addScript(scriptKey, scriptContext);
-            writer.write(sRoot.getAllScripts());
-        }
-        writer.startElement(JsfConstants.INPUT_ELEM, htmlInputCommaText);
-        RendererUtil.renderAttribute(writer, JsfConstants.TYPE_ATTR,
-                JsfConstants.TEXT_VALUE);
-        RendererUtil.renderIdAttributeIfNecessary(writer, htmlInputCommaText,
-                getIdForRender(context, htmlInputCommaText));
-        RendererUtil.renderAttribute(writer, JsfConstants.NAME_ATTR,
-                htmlInputCommaText.getClientId(context));
-        final String value = getValue(context, htmlInputCommaText);
-        RendererUtil.renderAttribute(writer, JsfConstants.VALUE_ATTR, value);
-        if (htmlInputCommaText.isDisabled()) {
-            renderDisabledAttribute(writer);
-        }
         final Locale locale = context.getViewRoot().getLocale();
         final String fraction = getFraction(htmlInputCommaText);
         final String groupingSeparator = getGroupingSeparator(
@@ -110,11 +68,12 @@ public class THtmlInputCommaTextRenderer extends HtmlInputTextRenderer {
         renderOnkeyup(htmlInputCommaText, writer);
         renderStyle(htmlInputCommaText, writer);
         renderStyleClass(htmlInputCommaText, writer);
+    }
 
-        renderRemain(htmlInputCommaText, writer);
-
-        writer.endElement(JsfConstants.INPUT_ELEM);
-        markJavaScriptRendererd(context, scriptKey);
+    protected static void assertHtmlInputCommaText(HtmlInputText htmlInputText) {
+        if (!(htmlInputText instanceof THtmlInputCommaText)) {
+            throw new IllegalStateException();
+        }
     }
 
     protected String getValue(FacesContext context,
@@ -158,24 +117,6 @@ public class THtmlInputCommaTextRenderer extends HtmlInputTextRenderer {
             fraction = DEFAULT_FRACTION;
         }
         return fraction;
-    }
-
-    protected void markJavaScriptRendererd(FacesContext context,
-            String scriptKey) {
-        context.getExternalContext().getRequestMap().put(scriptKey, scriptKey);
-    }
-
-    protected void renderRemain(THtmlInputCommaText htmlInputCommaText,
-            ResponseWriter writer) throws IOException {
-        IgnoreComponent ignore = buildIgnoreComponent();
-        Map map = UIComponentUtil.getAllAttributesAndProperties(
-                htmlInputCommaText, ignore);
-        for (final Iterator it = map.entrySet().iterator(); it.hasNext();) {
-            Map.Entry entry = (Map.Entry) it.next();
-            String name = (String) entry.getKey();
-            Object value = entry.getValue();
-            RendererUtil.renderAttribute(writer, name, value, name);
-        }
     }
 
     protected void renderStyle(THtmlInputCommaText htmlInputCommaText,
@@ -286,10 +227,7 @@ public class THtmlInputCommaTextRenderer extends HtmlInputTextRenderer {
     }
 
     protected IgnoreComponent buildIgnoreComponent() {
-        IgnoreComponent ignore = new IgnoreComponent();
-        ignore.addIgnoreComponentName(JsfConstants.ID_ATTR);
-        ignore.addIgnoreComponentName(JsfConstants.TYPE_ATTR);
-        ignore.addIgnoreComponentName(JsfConstants.VALUE_ATTR);
+        IgnoreComponent ignore = super.buildIgnoreComponent();
         ignore.addIgnoreComponentName(JsfConstants.STYLE_ATTR);
         ignore.addIgnoreComponentName(JsfConstants.STYLE_CLASS_ATTR);
         ignore.addIgnoreComponentName(JsfConstants.ONFOCUS_ATTR);
@@ -306,16 +244,6 @@ public class THtmlInputCommaTextRenderer extends HtmlInputTextRenderer {
         return ignore;
     };
 
-    private static String appendSemiColonIfNeed(String property) {
-        if (property == null) {
-            return "";
-        }
-        if (property.endsWith(";")) {
-            return property;
-        }
-        return property + ";";
-    }
-
     //TODO move to S2 util.
     private static String convertToFormattedValue(FacesContext context,
             Object value) {
@@ -323,6 +251,10 @@ public class THtmlInputCommaTextRenderer extends HtmlInputTextRenderer {
         NumberFormat format = NumberFormat.getInstance(locale);
         String n = format.format(value);
         return n;
+    }
+
+    protected String getScriptKey() {
+        return THtmlInputCommaText.class.getName();
     }
 
 }
