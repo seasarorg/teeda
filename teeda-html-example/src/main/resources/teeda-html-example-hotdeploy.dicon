@@ -17,11 +17,10 @@
 	<component class="org.seasar.framework.container.hotdeploy.creator.ConverterOndemandCreator"/>
 	<component class="org.seasar.framework.container.hotdeploy.OndemandBehavior">
 		<initMethod name="addProject">
-			<arg>
-				<component class="org.seasar.framework.container.hotdeploy.impl.OndemandProjectImpl">
-					<property name="rootPackageName">"examples.teeda"</property>
-				</component>
-			</arg>
+			<arg>project</arg>
 		</initMethod>
+	</component>
+	<component name="project" class="org.seasar.framework.container.hotdeploy.impl.OndemandProjectImpl">
+		<property name="rootPackageName">"examples.teeda"</property>
 	</component>
 </components>
