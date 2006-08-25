@@ -11,7 +11,11 @@
 	<component
 		class="org.seasar.teeda.extension.html.impl.HtmlParserImpl">
 	</component>
-	<component class="org.seasar.teeda.extension.html.impl.HtmlNodeHandler" instance="prototype" />
+	<component class="org.seasar.teeda.extension.html.impl.HtmlNodeHandler" instance="prototype">
+		<initMethod name="addForceElementNodeTagName">
+			<arg>"table"</arg>
+		</initMethod>
+	</component>
 	<component class="org.seasar.teeda.extension.html.impl.InputTypeCheckboxElementNodeDecision"/>
 	<component class="org.seasar.teeda.extension.html.impl.InputTypeRadioElementNodeDecision"/>
 	<component class="org.seasar.teeda.extension.html.impl.BodyElementNodeDecision"/>

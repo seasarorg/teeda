@@ -17,11 +17,9 @@ package org.seasar.teeda.extension.render.html;
 
 import java.io.IOException;
 
-import javax.faces.component.html.HtmlInputText;
 import javax.faces.context.FacesContext;
 
 import org.seasar.framework.util.StringUtil;
-import org.seasar.teeda.extension.component.html.THtmlGrid;
 import org.seasar.teeda.extension.component.html.THtmlInputCommaText;
 
 /**
@@ -34,14 +32,13 @@ public class THtmlGridInputCommaTextRenderer extends
 
     private THtmlGridInputTextRenderer gridInputTextRenderer = new THtmlGridInputTextRenderer();
 
-    protected void encodeInputExtendTextEnd(FacesContext context,
-            HtmlInputText htmlInputText) throws IOException {
-        assertHtmlInputCommaText(htmlInputText);
-        THtmlInputCommaText htmlInputCommaText = (THtmlInputCommaText) htmlInputText;
+    protected void encodeHtmlInputCommaTextEnd(FacesContext context,
+            THtmlInputCommaText htmlInputCommaText) throws IOException {
+
         gridInputTextRenderer.renderStartDiv(context, htmlInputCommaText);
         gridInputTextRenderer.renderSpan(context, htmlInputCommaText, getValue(
                 context, htmlInputCommaText));
-        super.encodeInputExtendTextEnd(context, htmlInputText);
+        super.encodeHtmlInputCommaTextEnd(context, htmlInputCommaText);
         gridInputTextRenderer.renderEndDiv(context, htmlInputCommaText);
     }
 
@@ -67,10 +64,6 @@ public class THtmlGridInputCommaTextRenderer extends
                     + THtmlGridInputTextRenderer.GRID_CELL_EDIT_CLASS_NAME;
         }
         return THtmlGridInputTextRenderer.GRID_CELL_EDIT_CLASS_NAME;
-    }
-
-    protected String getScriptKey() {
-        return THtmlGrid.class.getName();
     }
 
 }
