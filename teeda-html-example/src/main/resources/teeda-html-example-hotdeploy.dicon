@@ -3,7 +3,6 @@
 	"http://www.seasar.org/dtd/components21.dtd">
 <components>
 	<include path="convention.dicon"/>
-	<include path="teeda-html-example-customizer.dicon"/>
 	<include path="teeda-html-example-creator.dicon"/>
 	<component class="org.seasar.framework.container.hotdeploy.HotdeployBehavior"/>
 </components>
