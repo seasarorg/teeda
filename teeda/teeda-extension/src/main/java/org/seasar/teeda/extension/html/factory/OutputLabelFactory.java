@@ -17,8 +17,10 @@ package org.seasar.teeda.extension.html.factory;
 
 import java.util.Map;
 
-import org.seasar.framework.container.ComponentDef;
-import org.seasar.framework.container.S2Container;
+import javax.faces.internal.FacesConfigOptions;
+
+import org.seasar.framework.convention.NamingConvention;
+import org.seasar.framework.util.ClassUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.html.ActionDesc;
@@ -34,7 +36,7 @@ public class OutputLabelFactory extends AbstractElementProcessorFactory {
 
     private static final String LABEL = "label";
 
-    private S2Container container;
+    private NamingConvention namingConvention;
 
     public OutputLabelFactory() {
     }
@@ -53,21 +55,21 @@ public class OutputLabelFactory extends AbstractElementProcessorFactory {
         super
                 .customizeProperties(properties, elementNode, pageDesc,
                         actionDesc);
-        properties.put(ExtensionConstants.KEY_ATTR, elementNode.getId());
         String pageName = pageDesc.getPageName();
-        if (!container.getRoot().hasComponentDef(pageName)) {
-            return;
+        Class c = namingConvention.fromComponentNameToClass(pageName);
+        String path = namingConvention.fromPageNameToPath(pageName);
+        String defaultSuffix = FacesConfigOptions.getDefaultSuffix();
+        if (path.endsWith(defaultSuffix)) {
+            path = path.substring(0, path.lastIndexOf(defaultSuffix));
         }
-        ComponentDef componentDef = container.getRoot().getComponentDef(
-                pageName);
-        Class clazz = componentDef.getComponentClass();
-        String className = clazz.getName();
-        int index = className.lastIndexOf(".");
-        if (index < 0) {
-            return;
+        int lastIndex = path.lastIndexOf('/');
+        if (lastIndex > 0) {
+            path = path.substring(lastIndex + 1);
         }
-        String packageName = className.substring(0, index);
+        String packageName = ClassUtil.getPackageName(c);
         String propertiesName = packageName + "." + LABEL;
+        String key = path + "." + elementNode.getId();
+        properties.put(ExtensionConstants.KEY_ATTR, key);
         properties.put(ExtensionConstants.PROPERTIES_NAME_ATTR, propertiesName);
     }
 
@@ -79,12 +81,12 @@ public class OutputLabelFactory extends AbstractElementProcessorFactory {
         return ExtensionConstants.TEEDA_EXTENSION_URI;
     }
 
-    public S2Container getContainer() {
-        return container;
+    public NamingConvention getNamingConvention() {
+        return namingConvention;
     }
 
-    public void setContainer(S2Container container) {
-        this.container = container;
+    public void setNamingConvention(NamingConvention namingConvention) {
+        this.namingConvention = namingConvention;
     }
 
 }

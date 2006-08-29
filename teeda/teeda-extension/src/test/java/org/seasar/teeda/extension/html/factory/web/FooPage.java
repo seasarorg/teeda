@@ -1,4 +1,4 @@
-package org.seasar.teeda.extension.html.factory;
+package org.seasar.teeda.extension.html.factory.web;
 
 import java.util.List;
 

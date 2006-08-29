@@ -24,6 +24,8 @@ import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.ElementProcessor;
 import org.seasar.teeda.extension.html.PageDesc;
+import org.seasar.teeda.extension.html.factory.web.FooAction;
+import org.seasar.teeda.extension.html.factory.web.FooPage;
 import org.seasar.teeda.extension.html.impl.ActionDescImpl;
 import org.seasar.teeda.extension.mock.MockTaglibManager;
 import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;

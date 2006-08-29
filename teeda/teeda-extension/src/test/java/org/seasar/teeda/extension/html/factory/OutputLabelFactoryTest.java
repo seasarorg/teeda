@@ -20,12 +20,17 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import javax.faces.internal.FacesConfigOptions;
+
+import org.seasar.framework.convention.impl.NamingConventionImpl;
 import org.seasar.framework.util.ResourceBundleUtil;
 import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.ElementProcessor;
 import org.seasar.teeda.extension.html.PageDesc;
+import org.seasar.teeda.extension.html.factory.web.FooAction;
+import org.seasar.teeda.extension.html.factory.web.FooPage;
 import org.seasar.teeda.extension.html.impl.ActionDescImpl;
 import org.seasar.teeda.extension.html.impl.ElementNodeImpl;
 import org.seasar.teeda.extension.taglib.TOutputLabelTag;
@@ -49,13 +54,17 @@ public class OutputLabelFactoryTest extends TeedaExtensionTestCase {
         registerTaglibElement(ExtensionConstants.TEEDA_EXTENSION_URI,
                 "outputLabel", TOutputLabelTag.class);
         OutputLabelFactory factory = new OutputLabelFactory();
-        factory.setContainer(getContainer());
+        NamingConventionImpl namingConvention = new NamingConventionImpl();
+        namingConvention
+                .addRootPackageName("org.seasar.teeda.extension.html.factory");
+        factory.setNamingConvention(namingConvention);
         factory.setTaglibManager(getTaglibManager());
         Map properties = new HashMap();
         properties.put("id", "aaa");
         ElementNode elementNode = new ElementNodeImpl("label", properties);
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         ActionDesc actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
+        FacesConfigOptions.setDefaultSuffix(".html");
 
         // ## Act ##
         ElementProcessor processor = factory.createProcessor(elementNode,
@@ -63,12 +72,12 @@ public class OutputLabelFactoryTest extends TeedaExtensionTestCase {
         // ## Assert ##
         assertNotNull("1", processor);
         assertEquals("2", TOutputLabelTag.class, processor.getTagClass());
-        assertEquals("3", "aaa", processor.getProperty("key"));
-        assertEquals("4", "org.seasar.teeda.extension.html.factory.label",
+        assertEquals("3", "foo.aaa", processor.getProperty("key"));
+        assertEquals("4", "org.seasar.teeda.extension.html.factory.web.label",
                 processor.getProperty("propertiesName"));
-        ResourceBundle bundle = ResourceBundleUtil
-                .getBundle("org.seasar.teeda.extension.html.factory.label",
-                        Locale.ENGLISH);
+        ResourceBundle bundle = ResourceBundleUtil.getBundle(
+                "org.seasar.teeda.extension.html.factory.web.label",
+                Locale.ENGLISH);
         assertEquals("AAA", bundle.getString("aaa"));
 
     }
