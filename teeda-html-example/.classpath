@@ -23,6 +23,5 @@
 	<classpathentry sourcepath="/seasar2" kind="lib" path="src/main/webapp/WEB-INF/lib/s2-framework-2.4.0-rc-2-SNAPSHOT.jar"/>
 	<classpathentry kind="var" path="TOMCAT_HOME/common/lib/servlet-api.jar"/>
 	<classpathentry kind="var" path="TOMCAT_HOME/common/lib/jasper-runtime.jar"/>
-	<classpathentry output="work" kind="src" path="work"/>
 	<classpathentry kind="output" path="src/main/webapp/WEB-INF/classes"/>
 </classpath>
