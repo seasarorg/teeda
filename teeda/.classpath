@@ -35,7 +35,6 @@
 	<classpathentry kind="src" path="teeda-spike/src/main/resources"/>
 	<classpathentry kind="src" path="teeda-spike/src/test/java"/>
 	<classpathentry kind="src" path="teeda-spike/src/test/resources"/>
-	<classpathentry sourcepath="lib/sources/s2-extension-2.4.0-rc-2-SNAPSHOT-sources.jar" kind="lib" path="lib/s2-extension-2.4.0-rc-2-SNAPSHOT.jar"/>
-	<classpathentry sourcepath="lib/sources/s2-framework-2.4.0-rc-2-SNAPSHOT.jar" kind="lib" path="lib/s2-framework-2.4.0-rc-2-SNAPSHOT.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/seasar2"/>
 	<classpathentry kind="output" path="build/teeda-core/classes"/>
 </classpath>
