@@ -22,8 +22,8 @@ import java.util.regex.Pattern;
 
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
+import org.seasar.framework.container.ComponentCustomizer;
 import org.seasar.framework.container.ComponentDef;
-import org.seasar.framework.container.autoregister.ComponentCustomizer;
 import org.seasar.framework.container.impl.MetaDefImpl;
 
 /**
