@@ -21,7 +21,6 @@ import javax.faces.component.html.HtmlInputText;
 import javax.faces.context.FacesContext;
 
 import org.seasar.framework.util.StringUtil;
-import org.seasar.teeda.extension.component.html.THtmlGrid;
 import org.seasar.teeda.extension.component.html.THtmlInputCommaText;
 
 /**
@@ -70,7 +69,7 @@ public class THtmlGridInputCommaTextRenderer extends
     }
 
     protected String getScriptKey() {
-        return THtmlGrid.class.getName();
+        return THtmlInputCommaText.class.getName();
     }
 
 }

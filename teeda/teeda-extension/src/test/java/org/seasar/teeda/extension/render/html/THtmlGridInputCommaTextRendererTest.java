@@ -22,7 +22,11 @@ import javax.faces.render.Renderer;
 import javax.faces.render.RendererTest;
 import javax.xml.parsers.ParserConfigurationException;
 
+import junitx.framework.StringAssert;
+
 import org.custommonkey.xmlunit.Diff;
+import org.seasar.framework.util.ResourceUtil;
+import org.seasar.framework.util.TextUtil;
 import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.render.html.HtmlOutputTextRenderer;
 import org.seasar.teeda.extension.component.ScriptEnhanceUIViewRoot;
@@ -81,10 +85,26 @@ public class THtmlGridInputCommaTextRendererTest extends RendererTest {
                 + " style=\"ime-mode:disabled;display:none;\""
                 + " class=\"gridCellEdit\" />" + "</div>";
         final String responseText = getResponseText();
+        final String resourcePath = ResourceUtil
+                .getResourcePath(
+                        "org.seasar.teeda.extension.component.html.THtmlInputCommaText",
+                        "js");
+        final String scriptBody = TextUtil.readText(resourcePath).trim();
+        StringAssert.assertContains(scriptBody, responseText);
+
         final String actual = removeScriptElement(responseText);
         System.out.println(actual);
         Diff diff = diff(expected, actual);
         assertEquals(diff.toString(), true, diff.identical());
+    }
+
+    public void testContains() throws Exception {
+        // ## Arrange ##
+
+        // ## Act ##
+
+        // ## Assert ##
+
     }
 
     public void testEncode_WithAllAttributes() throws Exception {
@@ -144,8 +164,8 @@ public class THtmlGridInputCommaTextRendererTest extends RendererTest {
                 + " onkeypress=\"m;return Teeda.THtmlInputCommaText.keycheckForNumber(event);\""
                 + " onkeyup=\"n;Teeda.THtmlInputCommaText.convertByKey(this);\""
                 + " onchange=\"h\"" + " readonly=\"true\""
-                + " ondblclick=\"j\"" + " size=\"3\"" + " onmouseover=\"r\" "
-                + "tabindex=\"x\"" + " maxlength=\"5\"" + " onclick=\"i\""
+                + " ondblclick=\"j\"" + " size=\"3\"" + " onmouseover=\"r\""
+                + " tabindex=\"x\"" + " maxlength=\"5\"" + " onclick=\"i\""
                 + " onmouseout=\"q\"" + " onmousedown=\"o\""
                 + " onselect=\"t\"" + " onmouseup=\"s\"" + " onmousemove=\"p\""
                 + " title=\"y\"" + " />" + "</div>";
