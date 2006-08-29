@@ -78,7 +78,22 @@ public class CommandButtonFactory extends AbstractElementProcessorFactory {
             properties.put(JsfConstants.ACTION_ATTR, getBindingExpression(
                     baseName, id));
         }
-
+        String onclick = elementNode.getProperty(JsfConstants.ONCLICK_ATTR);
+        if (!StringUtil.isEmpty(onclick)) {
+            int start = onclick.indexOf("location.href");
+            if (start >= 0) {
+                int end = onclick.indexOf(";");
+                if (end < 0) {
+                    onclick = "";
+                } else {
+                    int end2 = onclick.indexOf(";", start);
+                    String prefix = onclick.substring(0, start);
+                    String suffix = onclick.substring(end2 + 1);
+                    onclick = prefix + suffix;
+                }
+            }
+        }
+        properties.put(JsfConstants.ONCLICK_ATTR, onclick);
     }
 
     protected String getTagName() {

@@ -5,10 +5,6 @@ import java.util.Map;
 
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.taglib.html.CommandButtonTag;
-import org.seasar.teeda.extension.config.taglib.element.TagElement;
-import org.seasar.teeda.extension.config.taglib.element.TaglibElement;
-import org.seasar.teeda.extension.config.taglib.element.impl.TagElementImpl;
-import org.seasar.teeda.extension.config.taglib.element.impl.TaglibElementImpl;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.ElementProcessor;
@@ -65,15 +61,9 @@ public class CommandButtonFactoryTest extends TeedaExtensionTestCase {
 
     public void testCreateFactory() throws Exception {
         // ## Arrange ##
-        MockTaglibManager taglibManager = new MockTaglibManager();
-        TaglibElement jsfHtml = new TaglibElementImpl();
-        jsfHtml.setUri(JsfConstants.JSF_HTML_URI);
-        TagElement tagElement = new TagElementImpl();
-        tagElement.setName("commandButton");
-        tagElement.setTagClass(CommandButtonTag.class);
-        jsfHtml.addTagElement(tagElement);
-        taglibManager.addTaglibElement(jsfHtml);
-
+        registerTaglibElement(JsfConstants.JSF_HTML_URI, "commandButton",
+                CommandButtonTag.class);
+        MockTaglibManager taglibManager = getTaglibManager();
         CommandButtonFactory factory = new CommandButtonFactory();
         factory.setTaglibManager(taglibManager);
         Map properties = new HashMap();
@@ -106,4 +96,77 @@ public class CommandButtonFactoryTest extends TeedaExtensionTestCase {
                 pageDesc, actionDesc);
         assertEquals("nextPage", processor3.getProperty("action"));
     }
+
+    public void testCreateFactory_locationHrefRemove1() throws Exception {
+        // ## Arrange ##
+        registerTaglibElement(JsfConstants.JSF_HTML_URI, "commandButton",
+                CommandButtonTag.class);
+        MockTaglibManager taglibManager = getTaglibManager();
+        CommandButtonFactory factory = new CommandButtonFactory();
+        factory.setTaglibManager(taglibManager);
+        Map properties = new HashMap();
+        properties.put("id", "doBbb");
+        properties.put("type", "submit");
+        properties.put("onclick", "location.href='hoge.html'");
+        ElementNode elementNode = createElementNode("input", properties);
+        PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
+        ActionDesc actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
+
+        ElementProcessor processor = factory.createProcessor(elementNode,
+                pageDesc, actionDesc);
+        // ## Assert ##
+        assertNotNull(processor);
+        assertEquals(CommandButtonTag.class, processor.getTagClass());
+        assertEquals("#{fooPage.doBbb}", processor.getProperty("action"));
+        assertEquals("", processor.getProperty("onclick"));
+    }
+
+    public void testCreateFactory_locationHrefRemove2() throws Exception {
+        // ## Arrange ##
+        registerTaglibElement(JsfConstants.JSF_HTML_URI, "commandButton",
+                CommandButtonTag.class);
+        MockTaglibManager taglibManager = getTaglibManager();
+        CommandButtonFactory factory = new CommandButtonFactory();
+        factory.setTaglibManager(taglibManager);
+        Map properties = new HashMap();
+        properties.put("id", "doBbb");
+        properties.put("type", "submit");
+        properties.put("onclick", "location.href='hoge.html';foo();");
+        ElementNode elementNode = createElementNode("input", properties);
+        PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
+        ActionDesc actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
+
+        ElementProcessor processor = factory.createProcessor(elementNode,
+                pageDesc, actionDesc);
+        // ## Assert ##
+        assertNotNull(processor);
+        assertEquals(CommandButtonTag.class, processor.getTagClass());
+        assertEquals("#{fooPage.doBbb}", processor.getProperty("action"));
+        assertEquals("foo();", processor.getProperty("onclick"));
+    }
+
+    public void testCreateFactory_locationHrefRemove3() throws Exception {
+        // ## Arrange ##
+        registerTaglibElement(JsfConstants.JSF_HTML_URI, "commandButton",
+                CommandButtonTag.class);
+        MockTaglibManager taglibManager = getTaglibManager();
+        CommandButtonFactory factory = new CommandButtonFactory();
+        factory.setTaglibManager(taglibManager);
+        Map properties = new HashMap();
+        properties.put("id", "doBbb");
+        properties.put("type", "submit");
+        properties.put("onclick", "hoge();location.href='foo.html';bar();");
+        ElementNode elementNode = createElementNode("input", properties);
+        PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
+        ActionDesc actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
+
+        ElementProcessor processor = factory.createProcessor(elementNode,
+                pageDesc, actionDesc);
+        // ## Assert ##
+        assertNotNull(processor);
+        assertEquals(CommandButtonTag.class, processor.getTagClass());
+        assertEquals("#{fooPage.doBbb}", processor.getProperty("action"));
+        assertEquals("hoge();bar();", processor.getProperty("onclick"));
+    }
+
 }
