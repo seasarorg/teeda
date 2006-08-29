@@ -53,6 +53,7 @@ public class TOutputLabelTag extends OutputLabelTag {
 
     protected void setProperties(UIComponent component) {
         super.setProperties(component);
+        //TODO cache for locale is needed.
         if (key != null && propertiesName != null) {
             FacesContext context = getFacesContext();
             ViewHandler viewHandler = context.getApplication().getViewHandler();

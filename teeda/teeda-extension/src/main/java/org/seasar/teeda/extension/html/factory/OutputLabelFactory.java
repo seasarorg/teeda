@@ -20,12 +20,12 @@ import java.util.Map;
 import javax.faces.internal.FacesConfigOptions;
 
 import org.seasar.framework.convention.NamingConvention;
-import org.seasar.framework.util.ClassUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.PageDesc;
+import org.seasar.teeda.extension.util.NamingConventionUtil;
 
 /**
  * @author shot
@@ -56,7 +56,8 @@ public class OutputLabelFactory extends AbstractElementProcessorFactory {
                 .customizeProperties(properties, elementNode, pageDesc,
                         actionDesc);
         String pageName = pageDesc.getPageName();
-        Class c = namingConvention.fromComponentNameToClass(pageName);
+        String packageName = NamingConventionUtil.getPackageName(
+                namingConvention, pageName);
         String path = namingConvention.fromPageNameToPath(pageName);
         String defaultSuffix = FacesConfigOptions.getDefaultSuffix();
         if (path.endsWith(defaultSuffix)) {
@@ -66,7 +67,6 @@ public class OutputLabelFactory extends AbstractElementProcessorFactory {
         if (lastIndex > 0) {
             path = path.substring(lastIndex + 1);
         }
-        String packageName = ClassUtil.getPackageName(c);
         String propertiesName = packageName + "." + LABEL;
         String key = path + "." + elementNode.getId();
         properties.put(ExtensionConstants.KEY_ATTR, key);

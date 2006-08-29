@@ -27,6 +27,8 @@ public interface ExtensionConstants {
     //Elements
     String BODY_ELEM = "body";
 
+    String TITLE_ELEM = "title";
+
     //Attributes
     String FRACTION_ATTR = "fraction";
 

@@ -27,6 +27,8 @@
 		class="org.seasar.teeda.extension.html.impl.ActionDescCacheImpl" />
 	<component name="bodyFactory"
 		class="org.seasar.teeda.extension.html.factory.BodyFactory" />
+	<component name="titleFactory"
+		class="org.seasar.teeda.extension.html.factory.TitleFactory" />
 	<component name="outputLabelFactory"
 		class="org.seasar.teeda.extension.html.factory.OutputLabelFactory" />
 	<component name="commandButtonFactory"
