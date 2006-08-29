@@ -5,7 +5,10 @@ if (typeof(Teeda.THtmlGrid) == 'undefined') {
   Teeda.THtmlGrid = {};
 }
 Teeda.THtmlGrid = {
-  _getFirstChildByTagName: function (fromNode, elemName) {
+  _trim : function (s) {
+    return s.replace(/^\s+|\s+$/g, '');
+  },
+  _getFirstChildByTagName : function (fromNode, elemName) {
     var self = Teeda.THtmlGrid;
     if (!fromNode.hasChildNodes()) {
       return null;
@@ -28,9 +31,11 @@ Teeda.THtmlGrid = {
   },
   editOn : function(div) {
     var self = Teeda.THtmlGrid;
+    var ascendantDiv = div.parentNode.parentNode;
+    ascendantDiv.style.width = ascendantDiv.offsetWidth;
     var span = self._getFirstChildByTagName(div, 'span');
     var input = self._getFirstChildByTagName(div, 'input');
-    input.value = span.innerHTML;
+    input.value = self._trim(span.innerHTML);
     span.style.display = 'none';
     input.style.display = 'inline';
     input.focus();
@@ -49,7 +54,7 @@ Teeda.THtmlGrid = {
     if (headerRowLength <= 0 || bodyRowLength <= 0 || bodyRowLength < headerRowLength) {
       return;
     }
-    for (var rowCount = 0; rowCount < bodyRowLength; rowCount++) {
+    for (var rowCount = 0; rowCount < headerRowLength; rowCount++) {
       var headerCells = headerTable.rows[rowCount % headerRowLength].cells;
       var bodyCells = bodyTable.rows[rowCount].cells;
       var headerCellsLength = headerCells.length;
