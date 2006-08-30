@@ -25,6 +25,7 @@ import javax.faces.context.FacesContext;
 import org.seasar.framework.util.ResourceBundleUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.taglib.html.OutputLabelTag;
+import org.seasar.teeda.core.util.FacesContextUtil;
 
 /**
  * @author shot
@@ -51,17 +52,25 @@ public class TOutputLabelTag extends OutputLabelTag {
         this.propertiesName = propertiesName;
     }
 
+    public void release() {
+        super.release();
+        key = null;
+        propertiesName = null;
+    }
+
     protected void setProperties(UIComponent component) {
         super.setProperties(component);
         //TODO cache for locale is needed.
         if (key != null && propertiesName != null) {
             FacesContext context = getFacesContext();
-            ViewHandler viewHandler = context.getApplication().getViewHandler();
+            ViewHandler viewHandler = FacesContextUtil.getViewHandler(context);
             Locale locale = viewHandler.calculateLocale(context);
             ResourceBundle bundle = ResourceBundleUtil.getBundle(
                     propertiesName, locale);
-            String value = bundle.getString(key);
-            setComponentProperty(component, JsfConstants.VALUE_ATTR, value);
+            if (bundle != null) {
+                String value = bundle.getString(key);
+                setComponentProperty(component, JsfConstants.VALUE_ATTR, value);
+            }
         }
     }
 

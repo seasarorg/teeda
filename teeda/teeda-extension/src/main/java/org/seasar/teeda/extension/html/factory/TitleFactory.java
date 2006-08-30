@@ -25,6 +25,8 @@ import org.seasar.teeda.extension.html.PageDesc;
  */
 public class TitleFactory extends OutputLabelFactory {
 
+    private static final String TAG_NAME = "title";
+
     public boolean isMatch(ElementNode elementNode, PageDesc pageDesc,
             ActionDesc actionDesc) {
         if (!ExtensionConstants.TITLE_ELEM.equalsIgnoreCase(elementNode
@@ -37,6 +39,10 @@ public class TitleFactory extends OutputLabelFactory {
 
     public boolean isLeaf() {
         return true;
+    }
+
+    protected String getTagName() {
+        return TAG_NAME;
     }
 
 }
