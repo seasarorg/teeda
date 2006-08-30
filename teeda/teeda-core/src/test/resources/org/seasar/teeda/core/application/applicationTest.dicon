@@ -3,7 +3,7 @@
 	"http://www.seasar.org/dtd/components21.dtd">
 <components namespace="jsf">
 
-	<component name="valueBindingFactory" class="org.seasar.teeda.core.el.impl.ValueBindingFactoryImpl"/>
+	<component name="valueBindingFactory" class="org.seasar.teeda.core.el.impl.ValueBindingFactoryImpl" autoBinding="none" />
 
 	<component name="methodBindingFactory" class="org.seasar.teeda.core.el.impl.MethodBindingFactoryImpl">
 		<initMethod name="setValueBindingContext">

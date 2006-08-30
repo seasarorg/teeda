@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -68,6 +68,7 @@ public class GraphicImageTagTest extends TestCase {
         tag.setStyleClass("styleclass");
         tag.setTitle("title");
         tag.setUsemap("mapName");
+        tag.setWidth("width");
 
         // # Act #
         tag.setProperties(component);
@@ -96,16 +97,17 @@ public class GraphicImageTagTest extends TestCase {
         assertEquals("styleclass", component.getStyleClass());
         assertEquals("title", component.getTitle());
         assertEquals("mapName", component.getUsemap());
+        assertEquals("width", component.getWidth());
     }
 
     public void testRelease() throws Exception {
         // # Arrange #
         GraphicImageTag tag = new GraphicImageTag();
         tag.setUrl("url");
-        
+
         // # Act #
         tag.release();
-        
+
         // # Assert #
         assertEquals(null, tag.getUrl());
     }
