@@ -29,6 +29,6 @@ public class NamingConventionUtil {
     public static String getPackageName(NamingConvention namingConvention,
             String pageName) {
         Class c = namingConvention.fromComponentNameToClass(pageName);
-        return ClassUtil.getPackageName(c);
+        return (c != null) ? ClassUtil.getPackageName(c) : null;
     }
 }

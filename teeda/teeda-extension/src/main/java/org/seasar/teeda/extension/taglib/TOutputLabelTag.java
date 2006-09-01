@@ -16,7 +16,7 @@
 package org.seasar.teeda.extension.taglib;
 
 import java.util.Locale;
-import java.util.ResourceBundle;
+import java.util.Map;
 
 import javax.faces.application.ViewHandler;
 import javax.faces.component.UIComponent;
@@ -89,21 +89,16 @@ public class TOutputLabelTag extends OutputLabelTag {
         Locale locale = viewHandler.calculateLocale(context);
         String value = null;
         if (key != null && propertiesName != null) {
-            ResourceBundle bundle = ResourceBundleUtil.getBundle(
-                    propertiesName, locale);
-            if (bundle != null) {
-                value = bundle.getString(key);
-                if (value == null) {
-                    value = bundle.getString(defaultKey);
-                }
+            Map map = ResourceBundleUtil.convertMap(propertiesName, locale);
+            value = (String) map.get(key);
+            if (value == null) {
+                value = (String) map.get(defaultKey);
             }
         }
         if (value == null) {
-            ResourceBundle bundle = ResourceBundleUtil.getBundle(
-                    defaultPropertiesName, locale);
-            if(bundle != null) {
-                value = bundle.getString(defaultKey);
-            }
+            Map map = ResourceBundleUtil.convertMap(defaultPropertiesName,
+                    locale);
+            value = (String) map.get(defaultKey);
         }
         if (value != null) {
             setComponentProperty(component, JsfConstants.VALUE_ATTR, value);

@@ -1,4 +1,4 @@
-package org.seasar.teeda.extension.html.factory.web;
+package org.seasar.teeda.extension.html.factory.web.foo;
 
 public class FooAction {
 

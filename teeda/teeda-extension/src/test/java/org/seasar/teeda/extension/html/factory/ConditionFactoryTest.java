@@ -28,7 +28,7 @@ import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.ElementProcessor;
 import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.factory.web.AaaPage;
-import org.seasar.teeda.extension.html.factory.web.FooAction;
+import org.seasar.teeda.extension.html.factory.web.foo.FooAction;
 import org.seasar.teeda.extension.html.impl.ActionDescImpl;
 import org.seasar.teeda.extension.mock.MockTaglibManager;
 import org.seasar.teeda.extension.taglib.TConditionTag;
