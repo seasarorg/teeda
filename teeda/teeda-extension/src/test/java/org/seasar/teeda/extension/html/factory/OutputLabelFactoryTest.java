@@ -79,6 +79,8 @@ public class OutputLabelFactoryTest extends TeedaExtensionTestCase {
                 "org.seasar.teeda.extension.html.factory.web.label",
                 Locale.ENGLISH);
         assertEquals("AAA", bundle.getString("aaa"));
-
+        assertEquals(processor.getProperty("defaultPropertiesName"),
+                "org.seasar.teeda.extension.html.factory.web.label");
+        assertEquals(processor.getProperty("defaultKey"), "aaa");
     }
 }

@@ -34,7 +34,11 @@ public class TOutputLabelTag extends OutputLabelTag {
 
     private String key;
 
+    private String defaultKey;
+
     private String propertiesName;
+
+    private String defaultPropertiesName;
 
     public String getKey() {
         return key;
@@ -52,25 +56,57 @@ public class TOutputLabelTag extends OutputLabelTag {
         this.propertiesName = propertiesName;
     }
 
+    public String getDefaultPropertiesName() {
+        return defaultPropertiesName;
+    }
+
+    public void setDefaultPropertiesName(String defaultPropertiesName) {
+        this.defaultPropertiesName = defaultPropertiesName;
+    }
+
     public void release() {
         super.release();
         key = null;
         propertiesName = null;
+        defaultPropertiesName = null;
+        defaultKey = null;
+    }
+
+    public String getDefaultKey() {
+        return defaultKey;
+    }
+
+    public void setDefaultKey(String defaultKey) {
+        this.defaultKey = defaultKey;
     }
 
     protected void setProperties(UIComponent component) {
         super.setProperties(component);
         //TODO cache for locale is needed.
+        //TODO change ResourceBundle to HotdeployResourceBundle
+        FacesContext context = getFacesContext();
+        ViewHandler viewHandler = FacesContextUtil.getViewHandler(context);
+        Locale locale = viewHandler.calculateLocale(context);
+        String value = null;
         if (key != null && propertiesName != null) {
-            FacesContext context = getFacesContext();
-            ViewHandler viewHandler = FacesContextUtil.getViewHandler(context);
-            Locale locale = viewHandler.calculateLocale(context);
             ResourceBundle bundle = ResourceBundleUtil.getBundle(
                     propertiesName, locale);
             if (bundle != null) {
-                String value = bundle.getString(key);
-                setComponentProperty(component, JsfConstants.VALUE_ATTR, value);
+                value = bundle.getString(key);
+                if (value == null) {
+                    value = bundle.getString(defaultKey);
+                }
             }
+        }
+        if (value == null) {
+            ResourceBundle bundle = ResourceBundleUtil.getBundle(
+                    defaultPropertiesName, locale);
+            if(bundle != null) {
+                value = bundle.getString(defaultKey);
+            }
+        }
+        if (value != null) {
+            setComponentProperty(component, JsfConstants.VALUE_ATTR, value);
         }
     }
 

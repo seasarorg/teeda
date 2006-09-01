@@ -48,7 +48,11 @@ public interface ExtensionConstants {
 
     String KEY_ATTR = "key";
 
+    String DEFAULT_KEY = "defaultKey";
+
     String PROPERTIES_NAME_ATTR = "propertiesName";
+
+    String DEFAULT_PROPERTIES_NAME_ATTR = "defaultPropertiesName";
 
     //Suffix and prefix
     String GO_PREFIX = "go";

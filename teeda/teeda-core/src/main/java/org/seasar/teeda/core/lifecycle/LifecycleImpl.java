@@ -26,7 +26,6 @@ import javax.faces.event.PhaseListener;
 import javax.faces.lifecycle.Lifecycle;
 
 import org.seasar.framework.util.ArrayUtil;
-import org.seasar.teeda.core.util.ServletExternalContextUtil;
 
 /**
  * @author higa
@@ -37,11 +36,9 @@ public class LifecycleImpl extends Lifecycle {
     private static final String EXECUTED_ATTR = LifecycleImpl.class.getName()
             + ".EXECUTED";
 
-    private static final String REDIRECTED_TIME_ATTR = LifecycleImpl.class
-            .getName()
-            + ".REDIRECTED_TIME";
+    private static final String POSTBACK_ATTR = "postback";
 
-    private static final long REDIRECT_WAIT_TIME = 2000;
+    private static final String FACESCONTEXT_ATTR = "facesContext";
 
     private PhaseListener[] phaseListeners = new PhaseListener[0];
 
@@ -61,26 +58,20 @@ public class LifecycleImpl extends Lifecycle {
     }
 
     public void execute(FacesContext context) throws FacesException {
+        ExternalContext extContext = context.getExternalContext();
+        Map requestMap = extContext.getRequestMap();
+        requestMap.put(FACESCONTEXT_ATTR, context);
         try {
             restoreViewPhase.execute(context);
             Postback postback = NullPostback.getCurrentInstance();
             if (restoreViewPhase instanceof Postback) {
                 postback = (Postback) restoreViewPhase;
+                requestMap.put(POSTBACK_ATTR, Boolean.valueOf(postback
+                        .isPostBack()));
             }
             if (isFinished(context)) {
                 return;
             }
-            ExternalContext extContext = context.getExternalContext();
-            Map sessionMap = extContext.getSessionMap();
-            Long redirectedTime = (Long) sessionMap.get(REDIRECTED_TIME_ATTR);
-            if (redirectedTime != null) {
-                sessionMap.remove(REDIRECTED_TIME_ATTR);
-                if (System.currentTimeMillis() - redirectedTime.longValue() < REDIRECT_WAIT_TIME) {
-                    context.renderResponse();
-                    return;
-                }
-            }
-            Map requestMap = extContext.getRequestMap();
             if (requestMap.containsKey(EXECUTED_ATTR)) {
                 context.renderResponse();
                 return;
@@ -103,10 +94,6 @@ public class LifecycleImpl extends Lifecycle {
                 return;
             }
             invokeApplicationPhase.execute(context);
-            if (isGetRedirect(context)) {
-                sessionMap.put(REDIRECTED_TIME_ATTR, new Long(System
-                        .currentTimeMillis()));
-            }
         } catch (EvaluationException ex) {
             Throwable cause = ex.getCause();
             if (cause instanceof RuntimeException) {
@@ -116,15 +103,9 @@ public class LifecycleImpl extends Lifecycle {
             } else {
                 throw ex;
             }
+        } finally {
+            requestMap.remove(FACESCONTEXT_ATTR);
         }
-    }
-
-    protected boolean isGetRedirect(FacesContext context) {
-        if (!context.getResponseComplete()) {
-            return false;
-        }
-        ExternalContext extContext = context.getExternalContext();
-        return ServletExternalContextUtil.isGetRedirect(extContext);
     }
 
     public void render(FacesContext context) throws FacesException {

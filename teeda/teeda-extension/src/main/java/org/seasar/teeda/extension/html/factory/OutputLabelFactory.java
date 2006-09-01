@@ -71,6 +71,18 @@ public class OutputLabelFactory extends AbstractElementProcessorFactory {
         String key = path + "." + elementNode.getId();
         properties.put(ExtensionConstants.KEY_ATTR, key);
         properties.put(ExtensionConstants.PROPERTIES_NAME_ATTR, propertiesName);
+
+        String subAppRoot = namingConvention.getSubApplicationRootPackageName();
+        String defaultPropertiesName = null;
+        if (packageName.lastIndexOf(subAppRoot) > 0) {
+            defaultPropertiesName = packageName.substring(0, packageName
+                    .lastIndexOf(subAppRoot)
+                    + subAppRoot.length())
+                    + "." + LABEL;
+            properties.put(ExtensionConstants.DEFAULT_PROPERTIES_NAME_ATTR,
+                    defaultPropertiesName);
+            properties.put(ExtensionConstants.DEFAULT_KEY, elementNode.getId());
+        }
     }
 
     protected String getTagName() {
