@@ -63,7 +63,7 @@ public class DumpComponentTreeInterceptor extends AbstractInterceptor {
         logger_.debug(writer.toString());
     }
 
-    void dumpTree(PrintWriter writer, FacesContext context) {
+    protected void dumpTree(PrintWriter writer, FacesContext context) {
         UIViewRoot viewRoot = context.getViewRoot();
         writer
                 .println("[tree] " + viewRoot + " viewId="
@@ -71,7 +71,7 @@ public class DumpComponentTreeInterceptor extends AbstractInterceptor {
         dumpTree(writer, viewRoot, 1);
     }
 
-    void dumpTree(PrintWriter writer, UIComponent component, int depth) {
+    protected void dumpTree(PrintWriter writer, UIComponent component, int depth) {
         for (Iterator it = component.getFacetsAndChildren(); it.hasNext();) {
             UIComponent child = (UIComponent) it.next();
             writer.print("[tree] ");
@@ -79,12 +79,12 @@ public class DumpComponentTreeInterceptor extends AbstractInterceptor {
                 writer.print("  ");
             }
             printComponent(writer, child);
-            writer.println("");
+            writer.println();
             dumpTree(writer, child, depth + 1);
         }
     }
 
-    private void printComponent(PrintWriter writer, UIComponent child) {
+    protected void printComponent(PrintWriter writer, UIComponent child) {
         if (child instanceof HtmlCommandLink) {
             HtmlCommandLink commandLink = (HtmlCommandLink) child;
             writer.print(commandLink);
