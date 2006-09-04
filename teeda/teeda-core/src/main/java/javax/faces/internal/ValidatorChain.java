@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -52,9 +52,6 @@ public class ValidatorChain implements Validator, StateHolder {
 
     public void validate(FacesContext context, UIComponent component,
             Object value) throws ValidatorException {
-        if (value == null) {
-            return;
-        }
         for (Iterator iterator = validators.iterator(); iterator.hasNext();) {
             Validator validator = (Validator) iterator.next();
             validator.validate(context, component, value);

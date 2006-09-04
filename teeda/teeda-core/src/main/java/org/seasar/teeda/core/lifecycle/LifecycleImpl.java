@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -38,8 +38,6 @@ public class LifecycleImpl extends Lifecycle {
 
     private static final String POSTBACK_ATTR = "postback";
 
-    private static final String FACESCONTEXT_ATTR = "facesContext";
-
     private PhaseListener[] phaseListeners = new PhaseListener[0];
 
     private Phase restoreViewPhase;
@@ -60,7 +58,6 @@ public class LifecycleImpl extends Lifecycle {
     public void execute(FacesContext context) throws FacesException {
         ExternalContext extContext = context.getExternalContext();
         Map requestMap = extContext.getRequestMap();
-        requestMap.put(FACESCONTEXT_ATTR, context);
         try {
             restoreViewPhase.execute(context);
             Postback postback = NullPostback.getCurrentInstance();
@@ -103,8 +100,6 @@ public class LifecycleImpl extends Lifecycle {
             } else {
                 throw ex;
             }
-        } finally {
-            requestMap.remove(FACESCONTEXT_ATTR);
         }
     }
 

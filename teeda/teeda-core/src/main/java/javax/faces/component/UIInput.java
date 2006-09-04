@@ -351,8 +351,8 @@ public class UIInput extends UIOutput implements EditableValueHolder {
         if (isValid() && !UIInputUtil.isEmpty(newValue)) {
             validateFromAddedValidator(context, newValue);
             validateFromBinding(context, newValue);
-            validateFromAnnotation(context, newValue);
         }
+        validateFromAnnotation(context, newValue);
     }
 
     protected boolean compareValues(Object previous, Object value) {
