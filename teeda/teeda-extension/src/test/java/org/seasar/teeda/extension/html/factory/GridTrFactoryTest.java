@@ -19,7 +19,7 @@ import java.util.HashMap;
 
 import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.PageDesc;
-import org.seasar.teeda.extension.html.factory.web.foo.FooPage;
+import org.seasar.teeda.extension.html.factory.sub.web.foo.FooPage;
 import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 
 /**
