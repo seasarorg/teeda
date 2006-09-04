@@ -13,15 +13,13 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.extension.annotation.backport175;
+package org.seasar.teeda.extension.annotation.validator;
 
 /**
  * @author shot
- * @org.seasar.teeda.extension.annotation.backport175.ValidatorTarget(id=javax.faces.LongRange)
+ * @org.seasar.teeda.extension.annotation.backport175.ValidatorTarget(id=teeda.core.RegularExpression)
  */
-public interface LongRangeValidator {
+public interface RegularExpressionValidator {
 
-	long minimum();
-	
-	long maximum();
+	String pattern();
 }

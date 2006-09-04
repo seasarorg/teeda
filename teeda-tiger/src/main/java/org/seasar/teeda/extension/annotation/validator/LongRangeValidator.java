@@ -13,15 +13,15 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.extension.annotation.backport175;
+package org.seasar.teeda.extension.annotation.validator;
 
 /**
  * @author shot
- * @org.seasar.teeda.extension.annotation.backport175.ValidatorTarget(id=teeda.core.ByteLength)
+ * @org.seasar.teeda.extension.annotation.backport175.ValidatorTarget(id=javax.faces.LongRange)
  */
-public interface ByteLengthValidator {
+public interface LongRangeValidator {
 
-	int minimum();
+	long minimum();
 	
-	int maximum();
+	long maximum();
 }

@@ -13,15 +13,19 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.extension.annotation.backport175;
+package org.seasar.teeda.extension.annotation.validator;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
- * @author shot
- * @org.seasar.teeda.extension.annotation.backport175.ValidatorTarget(id=javax.faces.Length)
+ * @author higa
+ * 
  */
-public interface LengthValidator {
-
-	int minimum();
-	
-	int maximum();
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.ANNOTATION_TYPE)
+public @interface Validator {
+	String value() default "";
 }
