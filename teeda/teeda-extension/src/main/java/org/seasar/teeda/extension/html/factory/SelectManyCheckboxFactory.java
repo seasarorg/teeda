@@ -55,14 +55,13 @@ public class SelectManyCheckboxFactory extends AbstractElementProcessorFactory {
         if (!pageDesc.hasItemsProperty(items)) {
             return false;
         }
-        if (elementNode.getChildSize() == 0) {
-            return false;
-        }
+        int elementNodeCount = 0;
         for (int i = 0; i < elementNode.getChildSize(); i++) {
             HtmlNode child = elementNode.getChild(i);
             if (child instanceof ElementNode) {
+                elementNodeCount++;
                 ElementNode node = (ElementNode) child;
-                String childTagName = node.getTagName();
+                final String childTagName = node.getTagName();
                 if (!JsfConstants.INPUT_ELEM.equalsIgnoreCase(childTagName)
                         || !JsfConstants.CHECKBOX_VALUE.equalsIgnoreCase(node
                                 .getProperty(JsfConstants.TYPE_ATTR))) {
@@ -73,6 +72,9 @@ public class SelectManyCheckboxFactory extends AbstractElementProcessorFactory {
                     return false;
                 }
             }
+        }
+        if (elementNodeCount == 0) {
+            return false;
         }
         return true;
     }

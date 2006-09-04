@@ -177,6 +177,23 @@ public class SelectOneRadioFactoryTest extends TeedaExtensionTestCase {
         assertFalse(selectFactory.isMatch(parent, pageDesc, actionDesc));
     }
 
+    /*
+     * 子要素はtext node以外であること
+     */
+    public void testIsMatch_ng6() throws Exception {
+        SelectOneRadioFactory selectFactory = new SelectOneRadioFactory();
+        Map map = new HashMap();
+        map.put("id", "hoge");
+        ElementNode parent = createElementNode("span", map);
+
+        parent.addText("aaaaa");
+        parent.endElement();
+
+        PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
+        ActionDesc actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
+        assertFalse(selectFactory.isMatch(parent, pageDesc, actionDesc));
+    }
+
     public void testCreateProcessor() throws Exception {
         // ## Arrange ##
         SelectOneRadioFactory factory = new SelectOneRadioFactory();

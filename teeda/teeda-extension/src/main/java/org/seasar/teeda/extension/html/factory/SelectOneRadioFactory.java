@@ -55,12 +55,11 @@ public class SelectOneRadioFactory extends AbstractElementProcessorFactory {
         if (!pageDesc.hasItemsProperty(items)) {
             return false;
         }
-        if (elementNode.getChildSize() == 0) {
-            return false;
-        }
+        int elementNodeCount = 0;
         for (int i = 0; i < elementNode.getChildSize(); i++) {
             HtmlNode child = elementNode.getChild(i);
             if (child instanceof ElementNode) {
+                elementNodeCount++;
                 ElementNode node = (ElementNode) child;
                 String childTagName = node.getTagName();
                 if (!JsfConstants.INPUT_ELEM.equalsIgnoreCase(childTagName)
@@ -73,6 +72,9 @@ public class SelectOneRadioFactory extends AbstractElementProcessorFactory {
                     return false;
                 }
             }
+        }
+        if (elementNodeCount == 0) {
+            return false;
         }
         return true;
     }
@@ -87,7 +89,8 @@ public class SelectOneRadioFactory extends AbstractElementProcessorFactory {
         properties.put(JsfConstants.VALUE_ATTR, getBindingExpression(pageName,
                 id));
         String items = id + ExtensionConstants.ITEMS_SUFFIX;
-        properties.put(ExtensionConstants.ITEMS_ATTR, getBindingExpression(pageName, items));
+        properties.put(ExtensionConstants.ITEMS_ATTR, getBindingExpression(
+                pageName, items));
     }
 
     public boolean isLeaf() {
