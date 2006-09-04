@@ -2,38 +2,38 @@ package examples.teeda.web.add;
 
 public class AddResultPage {
 
-	private int arg1;
+	private Integer arg1;
 
-	private int arg2;
+	private Integer arg2;
 
-	private int result;
+	private Integer result;
 
-	public int getArg1() {
+	public Integer getArg1() {
 		return arg1;
 	}
 
-	public void setArg1(int arg1) {
+	public void setArg1(Integer arg1) {
 		this.arg1 = arg1;
 	}
 
-	public int getArg2() {
+	public Integer getArg2() {
 		return arg2;
 	}
 
-	public void setArg2(int arg2) {
+	public void setArg2(Integer arg2) {
 		this.arg2 = arg2;
 	}
 
-	public int getResult() {
+	public Integer getResult() {
 		return result;
 	}
 
-	public void setResult(int result) {
+	public void setResult(Integer result) {
 		this.result = result;
 	}
 
 	public String initialize() {
-		result = arg1 + arg2;
+		result = new Integer(arg1.intValue() + arg2.intValue());
 		return null;
 	}
 }
