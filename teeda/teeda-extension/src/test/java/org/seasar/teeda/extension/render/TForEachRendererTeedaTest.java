@@ -248,6 +248,33 @@ public class TForEachRendererTeedaTest extends AbstractRendererTeedaTest {
         assertEquals("abc", getResponseText());
     }
 
+    public void testEncode_StringArray() throws Exception {
+        // ## Arrange ##
+        final FacesContext context = getFacesContext();
+
+        final String pageName = "fooPage";
+        final StringArrayPage page = new StringArrayPage();
+        container.register(page, pageName);
+        forEach.setPageName(pageName);
+        forEach.setItemsName("aaaItems");
+
+        // items
+        page.setAaaItems(new String[] { "3", "1", "2", "4" });
+
+        {
+            MockHtmlOutputText text = new MockHtmlOutputText();
+            text.setRenderer(outputTextRenderer);
+            text.setValueBinding("value", createValueBinding("#{fooPage.aaa}"));
+            forEach.getChildren().add(text);
+        }
+
+        // ## Act ##
+        encodeComponent(context, forEach);
+
+        // ## Assert ##
+        assertEquals("3124", getResponseText());
+    }
+
     private ValueBinding createValueBinding(final String el) {
         final FacesContext context = getFacesContext();
         ELParser parser = new CommonsELParser();
@@ -602,4 +629,27 @@ public class TForEachRendererTeedaTest extends AbstractRendererTeedaTest {
         }
 
     }
+
+    public static class StringArrayPage {
+        private String aaa;
+
+        private String[] aaaItems;
+
+        public String getAaa() {
+            return aaa;
+        }
+
+        public void setAaa(String aaa) {
+            this.aaa = aaa;
+        }
+
+        public String[] getAaaItems() {
+            return aaaItems;
+        }
+
+        public void setAaaItems(String[] aaaItems) {
+            this.aaaItems = aaaItems;
+        }
+    }
+
 }
