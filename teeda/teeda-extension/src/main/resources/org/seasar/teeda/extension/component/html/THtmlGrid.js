@@ -81,7 +81,11 @@ Teeda.THtmlGrid = {
     var leftBodyTable = document.getElementById(gridId + 'LeftBodyTable');
     var rightHeaderTable = document.getElementById(gridId + 'RightHeaderTable');
     var rightBodyTable = document.getElementById(gridId + 'RightBodyTable');
-    self._adjustWidth(leftHeaderTable, leftBodyTable);
-    self._adjustWidth(rightHeaderTable, rightBodyTable);
+    if (leftHeaderTable && leftBodyTable) {
+      self._adjustWidth(leftHeaderTable, leftBodyTable);
+    }
+    if (rightHeaderTable && rightBodyTable) {
+      self._adjustWidth(rightHeaderTable, rightBodyTable);
+    }
   }
 };
