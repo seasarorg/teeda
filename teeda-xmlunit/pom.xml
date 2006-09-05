@@ -9,7 +9,7 @@
   <artifactId>teeda-xmlunit</artifactId>
   <packaging>jar</packaging>
   <name>Teeda XMLUnit Extension</name>
-  <version>0.1.0</version>
+  <version>0.1.1-SNAPSHOT</version>
   <description></description>
   <url>http://teeda.seasar.org/</url>
   <build>
