@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+  <parent>
+    <groupId>org.seasar.teeda</groupId>
+    <artifactId>teeda-project</artifactId>
+    <version>1.0-beta-6-SNAPSHOT</version>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>teeda-xmlunit</artifactId>
+  <packaging>jar</packaging>
+  <name>Teeda Core</name>
+  <description></description>
+  <url>http://teeda.seasar.org/</url>
+  <build>
+    <plugins>
+    </plugins>
+  </build>
+  <dependencies>
+    <dependency>
+      <groupId>xmlunit</groupId>
+      <artifactId>xmlunit</artifactId>
+      <version>1.0</version>
+      <type>jar</type>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.2</version>
+      <type>jar</type>
+      <scope>compile</scope>
+    </dependency>
+  </dependencies>
+</project>
