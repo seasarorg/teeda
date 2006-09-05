@@ -276,12 +276,12 @@ public class ViewHandlerImpl extends ViewHandler {
     protected String convertViewIdIfNeed(FacesContext context) {
         WebappConfig webappConfig = getWebappConfig(context);
         ExternalContext externalContext = context.getExternalContext();
-        String urlPattern = getUrlPattern(webappConfig, context);
         String viewId = context.getViewRoot().getViewId();
         // PortletSupport
         if (PortletUtil.isPortlet(context)) {
             return viewId;
         }
+        String urlPattern = getUrlPattern(webappConfig, context);
         if (urlPattern != null && isExtensionMapping(urlPattern)) {
             String defaultSuffix = externalContext
                     .getInitParameter(ViewHandler.DEFAULT_SUFFIX_PARAM_NAME);
