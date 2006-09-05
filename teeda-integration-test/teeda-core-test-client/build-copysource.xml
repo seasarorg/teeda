@@ -1,6 +1,5 @@
 <project name="teeda-core-test-client" default="setup-sources" basedir=".">
 
-	<property name="ver" value="1.0-beta-6-SNAPSHOT"/>
 	<property name="source_project" location="${basedir}/../teeda-core-test"/>
 	<property name="src.main" location="${basedir}/src/main"/>
 	<property name="src.main.java" location="${src.main}/java"/>
