@@ -33,5 +33,12 @@
     </pluginManagement>
   </build>
   <dependencies>
+    <dependency>
+      <groupId>org.seasar.teeda</groupId>
+      <artifactId>teeda-integration-test-driver</artifactId>
+      <version>1.0-beta-6-SNAPSHOT</version>
+      <type>jar</type>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 </project>
