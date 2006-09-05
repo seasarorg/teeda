@@ -36,5 +36,6 @@
 	<classpathentry kind="src" path="teeda-spike/src/test/java"/>
 	<classpathentry kind="src" path="teeda-spike/src/test/resources"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/seasar2"/>
+	<classpathentry sourcepath="lib/sources/teeda-xmlunit-0.1-sources.jar" kind="lib" path="lib/teeda-xmlunit-0.1.jar"/>
 	<classpathentry kind="output" path="build/teeda-core/classes"/>
 </classpath>
