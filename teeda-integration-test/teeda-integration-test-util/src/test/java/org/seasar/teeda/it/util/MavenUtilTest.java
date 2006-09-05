@@ -20,7 +20,6 @@ import java.io.IOException;
 
 import junit.framework.TestCase;
 
-import org.seasar.framework.exception.IORuntimeException;
 import org.seasar.framework.util.ResourceUtil;
 
 /**
@@ -31,12 +30,11 @@ public class MavenUtilTest extends TestCase {
     public void testGetSeleniumDriverWar() throws Exception {
         File project = getProjectFile("teeda-integration-test");
         File pom = new File(project, "pom.xml");
-        File seleniumDriverWar = MavenUtil.getArtifactFromPom(pom,
-            "s2-framework");
-        System.out.println(seleniumDriverWar);
-        assertNotNull(seleniumDriverWar);
-        assertEquals(true, seleniumDriverWar.exists());
-        String name = seleniumDriverWar.getName();
+        File artifactFile = MavenUtil.getArtifactFromPom(pom, "s2-framework");
+        System.out.println(artifactFile);
+        assertNotNull(artifactFile);
+        assertEquals(true, artifactFile.exists());
+        String name = artifactFile.getName();
         assertEquals(name, true, name.startsWith("s2-framework"));
         assertEquals(name, true, name.endsWith(".jar"));
     }
@@ -52,30 +50,26 @@ public class MavenUtilTest extends TestCase {
         assertEquals(buildDir, resourceDir);
     }
 
-    private File getProjectFile(String projectName) {
-        try {
-            File project = null;
-            for (File current = ResourceUtil.getResourceAsFile("."); current != null; current = current
-                .getParentFile()) {
-                if (projectName.equals(current.getName())) {
-                    if (pomExists(current)) {
-                        project = current;
-                        break;
-                    }
-                }
-                File brother = new File(current, projectName);
-                if (pomExists(brother)) {
-                    project = brother;
+    private File getProjectFile(String projectName) throws IOException {
+        File project = null;
+        for (File current = ResourceUtil.getResourceAsFile("."); current != null; current = current
+            .getParentFile()) {
+            if (projectName.equals(current.getName())) {
+                if (pomExists(current)) {
+                    project = current;
                     break;
                 }
             }
-            if (project == null) {
-                return null;
+            File brother = new File(current, projectName);
+            if (pomExists(brother)) {
+                project = brother;
+                break;
             }
-            return project.getCanonicalFile();
-        } catch (IOException e) {
-            throw new IORuntimeException(e);
         }
+        if (project == null) {
+            return null;
+        }
+        return project.getCanonicalFile();
     }
 
     private boolean pomExists(File f) {
