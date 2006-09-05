@@ -456,6 +456,9 @@ public class TForEachRendererTeedaTest extends AbstractRendererTeedaTest {
         return renderer;
     }
 
+    /*
+     * Dtoが持つフィールドをPageは持たない
+     */
     public static class FooPage {
 
         private Bar bar;
@@ -528,6 +531,9 @@ public class TForEachRendererTeedaTest extends AbstractRendererTeedaTest {
         }
     }
 
+    /*
+     * Dtoが持つフィールドをPageも持つ。
+     */
     public static class HogePage {
 
         private Fuga[] fugaItems;
