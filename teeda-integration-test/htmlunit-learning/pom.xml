@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"
+>
+  <parent>
+    <groupId>org.seasar.teeda.it</groupId>
+    <artifactId>teeda-integration-test-project</artifactId>
+    <version>1.0-beta-6-SNAPSHOT</version>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>htmlunit-learning</artifactId>
+  <packaging>jar</packaging>
+  <name>htmlunit learning</name>
+  <description></description>
+  <url>http://teeda.seasar.org/</url>
+  <build>
+  </build>
+  <dependencies>
+    <dependency>
+      <groupId>org.seasar.teeda.it</groupId>
+      <artifactId>teeda-integration-test-util</artifactId>
+      <version>1.0-beta-6-SNAPSHOT</version>
+      <type>jar</type>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+</project>
