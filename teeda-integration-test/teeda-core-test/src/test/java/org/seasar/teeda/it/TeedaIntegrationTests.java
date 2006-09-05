@@ -24,7 +24,7 @@ import junit.framework.TestSuite;
 
 import org.seasar.framework.util.ClassUtil;
 import org.seasar.framework.util.FileUtil;
-import org.seasar.teeda.core.util.MavenUtil;
+import org.seasar.teeda.it.util.MavenUtil;
 
 import com.gargoylesoftware.base.util.DirectoryWalker;
 
