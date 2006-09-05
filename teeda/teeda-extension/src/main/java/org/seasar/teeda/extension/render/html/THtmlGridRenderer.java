@@ -186,10 +186,16 @@ public class THtmlGridRenderer extends TForEachRenderer {
         final StringBuffer scirptBody = new StringBuffer(200);
         final String id = getIdForRender(context, htmlGrid);
         scirptBody.append("Teeda.THtmlGrid.adjustGridSize('" + id + "');");
-        scirptBody.append("document.getElementById('" + id + RIGHT_HEADER
-                + "').style.width = " + attribute.getRightHeaderWidth() + ";");
-        scirptBody.append("document.getElementById('" + id + RIGHT_BODY
-                + "').style.width = " + attribute.getRightBodyWidth() + ";");
+        // 横方向にscrollするときは全体の横幅を自動調整する
+        if (htmlGrid.isScrollHorizontal()) {
+            scirptBody.append("document.getElementById('" + id + RIGHT_HEADER
+                    + "').style.width = " + attribute.getRightHeaderWidth()
+                    + ";");
+            scirptBody
+                    .append("document.getElementById('" + id + RIGHT_BODY
+                            + "').style.width = "
+                            + attribute.getRightBodyWidth() + ";");
+        }
         renderJavaScriptElement(writer, new String(scirptBody));
     }
 

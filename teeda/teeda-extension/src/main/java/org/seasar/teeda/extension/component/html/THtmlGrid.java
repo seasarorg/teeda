@@ -82,6 +82,7 @@ public class THtmlGrid extends TForEach implements NamingContainer {
         scrollVertical = (Boolean) values[4];
     }
 
+    // gridX, XY
     public boolean isScrollHorizontal() {
         if (scrollHorizontal != null) {
             return scrollHorizontal.booleanValue();
@@ -93,6 +94,7 @@ public class THtmlGrid extends TForEach implements NamingContainer {
         this.scrollHorizontal = Boolean.valueOf(scrollHorizontal);
     }
 
+    // gridY, XY
     public boolean isScrollVertical() {
         if (scrollVertical != null) {
             return scrollVertical.booleanValue();
