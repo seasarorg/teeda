@@ -10,7 +10,7 @@
     <version>1.0-beta-6-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
-  <groupId>org.seasar.teeda</groupId>
+  <groupId>org.seasar.teeda.it</groupId>
   <artifactId>teeda-integration-test-project</artifactId>
   <packaging>pom</packaging>
   <name>Teeda Integration Test Project</name>
@@ -35,7 +35,7 @@
     </pluginManagement>
   </build>
   <modules>
-    <module>teeda-integration-test-driver</module>
+    <module>teeda-integration-test-util</module>
     <module>teeda-core-test</module>
     <module>teeda-core-test-client</module>
   </modules>

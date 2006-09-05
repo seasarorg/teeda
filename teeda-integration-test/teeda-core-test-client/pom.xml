@@ -5,12 +5,11 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"
 >
   <parent>
-    <groupId>org.seasar.teeda</groupId>
+    <groupId>org.seasar.teeda.it</groupId>
     <artifactId>teeda-integration-test-project</artifactId>
     <version>1.0-beta-6-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
-  <groupId>org.seasar.teeda</groupId>
   <artifactId>teeda-core-test-client</artifactId>
   <packaging>war</packaging>
   <name>Teeda Integration Test (STATE_SAVING_METHOD=clinet)</name>
@@ -76,8 +75,8 @@
   </build>
   <dependencies>
     <dependency>
-      <groupId>org.seasar.teeda</groupId>
-      <artifactId>teeda-integration-test-driver</artifactId>
+      <groupId>org.seasar.teeda.it</groupId>
+      <artifactId>teeda-integration-test-util</artifactId>
       <version>1.0-beta-6-SNAPSHOT</version>
       <type>jar</type>
       <scope>test</scope>
