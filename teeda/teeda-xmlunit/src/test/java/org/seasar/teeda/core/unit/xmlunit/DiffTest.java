@@ -15,7 +15,11 @@
  */
 package org.seasar.teeda.core.unit.xmlunit;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.io.StringReader;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -25,7 +29,6 @@ import junit.framework.TestCase;
 import org.custommonkey.xmlunit.Diff;
 import org.custommonkey.xmlunit.DifferenceListener;
 import org.custommonkey.xmlunit.XMLUnit;
-import org.seasar.teeda.core.unit.TestUtil;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -49,10 +52,10 @@ public class DiffTest extends TestCase {
 
     public void test1() throws Exception {
         // ## Arrange ##
-        final String a = TestUtil.readText(getClass(),
-                "SelectManyListboxTest_expected.html", "UTF-8");
-        final String b = TestUtil.readText(getClass(),
-                "SelectManyListboxTest_actual.html", "UTF-8");
+        final String a = readText(getClass(),
+            "SelectManyListboxTest_expected.html", "UTF-8");
+        final String b = readText(getClass(),
+            "SelectManyListboxTest_actual.html", "UTF-8");
 
         Diff diff = createDiff(a, b);
         diff.overrideDifferenceListener(differenceListener_);
@@ -63,11 +66,11 @@ public class DiffTest extends TestCase {
     }
 
     private Diff createDiff(final String c, final String t)
-            throws SAXException, IOException, ParserConfigurationException {
+        throws SAXException, IOException, ParserConfigurationException {
         Document cDoc = XMLUnit.buildDocument(XMLUnit.getControlParser(),
-                new StringReader(c));
+            new StringReader(c));
         Document tDoc = XMLUnit.buildDocument(XMLUnit.getTestParser(),
-                new StringReader(t));
+            new StringReader(t));
         HtmlDomUtil.removeBlankTextNode(cDoc.getChildNodes());
         HtmlDomUtil.removeBlankTextNode(tDoc.getChildNodes());
         return new Diff(cDoc, tDoc);
@@ -75,7 +78,7 @@ public class DiffTest extends TestCase {
 
     public void testDomLearning1() throws Exception {
         Document document = XMLUnit.buildDocument(XMLUnit.getControlParser(),
-                new StringReader("<a> <b/><b/></a>"));
+            new StringReader("<a> <b/><b/></a>"));
         {
             NodeList childNodes = document.getChildNodes();
             assertEquals(1, childNodes.getLength());
@@ -111,7 +114,7 @@ public class DiffTest extends TestCase {
 
     public void testDomLearning2() throws Exception {
         Document document = XMLUnit.buildDocument(XMLUnit.getControlParser(),
-                new StringReader("<a>\n\t<b/> <b/> </a>"));
+            new StringReader("<a>\n\t<b/> <b/> </a>"));
         HtmlDomUtil.removeBlankTextNode(document.getChildNodes());
         {
             NodeList childNodes = document.getChildNodes();
@@ -128,7 +131,7 @@ public class DiffTest extends TestCase {
 
     public void testDomLearning3() throws Exception {
         Document document = XMLUnit.buildDocument(XMLUnit.getControlParser(),
-                new StringReader("<a> <b> <c/> <c/> </b> </a>"));
+            new StringReader("<a> <b> <c/> <c/> </b> </a>"));
         HtmlDomUtil.removeBlankTextNode(document.getChildNodes());
         {
             NodeList childNodes = document.getChildNodes();
@@ -148,4 +151,34 @@ public class DiffTest extends TestCase {
         }
     }
 
+    String readText(Class clazz, String fileName, String encoding)
+        throws IOException {
+        final String pathByClass = clazz.getName().replace('.', '/') + "_"
+            + fileName;
+        final ClassLoader classLoader = Thread.currentThread()
+            .getContextClassLoader();
+        InputStream is = classLoader.getResourceAsStream(pathByClass);
+        if (is == null) {
+            String pathByPackage = clazz.getPackage().getName().replace('.',
+                '/')
+                + "/" + fileName;
+            is = classLoader.getResourceAsStream(pathByPackage);
+        }
+        return readText(new InputStreamReader(is, encoding));
+    }
+
+    String readText(Reader reader) throws IOException {
+        final BufferedReader in = new BufferedReader(reader);
+        final StringBuffer out = new StringBuffer(100);
+        try {
+            char[] buf = new char[2048];
+            int n;
+            while ((n = in.read(buf)) >= 0) {
+                out.append(buf, 0, n);
+            }
+        } finally {
+            in.close();
+        }
+        return out.toString();
+    }
 }

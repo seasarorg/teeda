@@ -1,18 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
-  <parent>
-    <groupId>org.seasar.teeda</groupId>
-    <artifactId>teeda-project</artifactId>
-    <version>1.0-beta-6-SNAPSHOT</version>
-  </parent>
   <modelVersion>4.0.0</modelVersion>
+  <groupId>org.seasar.teeda</groupId>
   <artifactId>teeda-xmlunit</artifactId>
   <packaging>jar</packaging>
-  <name>Teeda Core</name>
+  <name>Teeda XMLUnit Extension</name>
+  <version>0.1</version>
   <description></description>
   <url>http://teeda.seasar.org/</url>
   <build>
+    <defaultGoal>validate</defaultGoal>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <configuration>
+            <source>1.4</source>
+            <target>1.4</target>
+            <encoding>UTF-8</encoding>
+          </configuration>
+        </plugin>
+        <plugin>
+          <artifactId>maven-deploy-plugin</artifactId>
+          <configuration>
+            <updateReleaseInfo>true</updateReleaseInfo>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
     <plugins>
+      <plugin>
+        <artifactId>maven-source-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>source-jar</id>
+            <phase>package</phase>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
   </build>
   <dependencies>
@@ -31,4 +59,12 @@
       <scope>compile</scope>
     </dependency>
   </dependencies>
+  <distributionManagement>
+    <repository>
+      <uniqueVersion>false</uniqueVersion>
+      <id>maven.seasar.org</id>
+      <name>The Seasar Foundation Maven2 Repository</name>
+      <url>scp://www.seasar.org/home/groups/teeda/maven/maven2</url>
+    </repository>
+  </distributionManagement>
 </project>

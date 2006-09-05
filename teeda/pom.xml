@@ -291,6 +291,13 @@
       <version>1.6r2</version>
       <type>jar</type>
     </dependency>
+    <dependency>
+      <groupId>org.seasar.teeda</groupId>
+      <artifactId>teeda-xmlunit</artifactId>
+      <version>0.1</version>
+      <type>jar</type>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
   <reporting>
     <plugins>

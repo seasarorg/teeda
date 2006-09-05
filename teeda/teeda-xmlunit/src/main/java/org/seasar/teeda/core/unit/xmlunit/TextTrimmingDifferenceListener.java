@@ -22,7 +22,6 @@ import org.custommonkey.xmlunit.Difference;
 import org.custommonkey.xmlunit.DifferenceConstants;
 import org.custommonkey.xmlunit.DifferenceListener;
 import org.custommonkey.xmlunit.NodeDetail;
-import org.seasar.framework.util.StringUtil;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -48,13 +47,12 @@ public class TextTrimmingDifferenceListener implements DifferenceListener {
             // 17
             String cNodeValue = cNode.getNodeValue();
             String tNodeValue = tNode.getNodeValue();
-            if (StringUtil.isBlank(cNodeValue)
-                    && StringUtil.isBlank(tNodeValue)) {
+            if (isBlank(cNodeValue) && isBlank(tNodeValue)) {
                 System.out.println("recover:NODE_TYPE");
                 return DifferenceListener.RETURN_IGNORE_DIFFERENCE_NODES_IDENTICAL;
             }
         } else if (DifferenceConstants.HAS_CHILD_NODES.getId() == difference
-                .getId()) {
+            .getId()) {
             // 18
             NodeList cChildNodes = cNode.getChildNodes();
             NodeList tChildNodes = tNode.getChildNodes();
@@ -81,13 +79,13 @@ public class TextTrimmingDifferenceListener implements DifferenceListener {
                 return DifferenceListener.RETURN_IGNORE_DIFFERENCE_NODES_IDENTICAL;
             }
             if (Node.TEXT_NODE == cNode.getNodeType()
-                    || Node.TEXT_NODE == tNode.getNodeType()) {
+                || Node.TEXT_NODE == tNode.getNodeType()) {
                 System.out
-                        .println("recover:HAS_CHILD_NODES (one is TEXT_NODE)");
+                    .println("recover:HAS_CHILD_NODES (one is TEXT_NODE)");
                 return DifferenceListener.RETURN_IGNORE_DIFFERENCE_NODES_IDENTICAL;
             }
         } else if (DifferenceConstants.CHILD_NODELIST_LENGTH.getId() == difference
-                .getId()) {
+            .getId()) {
             // 19
             NodeList cChildNodes = cNode.getChildNodes();
             NodeList tChildNodes = tNode.getChildNodes();
@@ -106,7 +104,7 @@ public class TextTrimmingDifferenceListener implements DifferenceListener {
                     }
                     String node1Value = node1.getNodeValue();
                     String node2Value = node2.getNodeValue();
-                    if (!(StringUtil.equals(node1Value, node2Value))) {
+                    if (!(equals(node1Value, node2Value))) {
                         equal = false;
                     }
                 }
@@ -116,7 +114,7 @@ public class TextTrimmingDifferenceListener implements DifferenceListener {
                 }
             }
         } else if (DifferenceConstants.CHILD_NODELIST_SEQUENCE.getId() == difference
-                .getId()) {
+            .getId()) {
             // 20
 
             // System.out.println(cNodeDetail.getValue());
@@ -149,6 +147,22 @@ public class TextTrimmingDifferenceListener implements DifferenceListener {
     }
 
     public void skippedComparison(Node node1, Node node2) {
+    }
+
+    boolean equals(String target1, String target2) {
+        return (target1 == null) ? (target2 == null) : target1.equals(target2);
+    }
+
+    boolean isBlank(String str) {
+        if (str == null || str.length() == 0) {
+            return true;
+        }
+        for (int i = 0; i < str.length(); i++) {
+            if (!Character.isWhitespace(str.charAt(i))) {
+                return false;
+            }
+        }
+        return true;
     }
 
 }
