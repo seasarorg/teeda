@@ -24,7 +24,7 @@
           <artifactId>maven-surefire-plugin</artifactId>
           <configuration>
             <includes>
-              <include>**/TeedaIntegrationTests.java</include>
+              <include>**/AllCoreTests.java</include>
             </includes>
           </configuration>
         </plugin>

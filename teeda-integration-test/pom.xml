@@ -38,6 +38,8 @@
     <module>teeda-integration-test-util</module>
     <module>teeda-core-test</module>
     <module>teeda-core-test-client</module>
+    <module>teeda-html-test</module>
+    <module>htmlunit-learning</module>
   </modules>
   <repositories>
     <repository>
@@ -85,23 +87,7 @@
       <version>1.2.13</version>
       <type>jar</type>
     </dependency>
-    <dependency>
-      <groupId>htmlunit</groupId>
-      <artifactId>htmlunit</artifactId>
-      <version>1.9</version>
-      <type>jar</type>
-      <scope>test</scope>
-      <exclusions>
-        <exclusion>
-          <artifactId>jsr173</artifactId>
-          <groupId>javax.xml</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>pull-parser</artifactId>
-          <groupId>pull-parser</groupId>
-        </exclusion>
-      </exclusions>
-    </dependency>
+
     <dependency>
       <groupId>jetty</groupId>
       <artifactId>jetty</artifactId>
@@ -152,6 +138,7 @@
       <artifactId>teeda-core</artifactId>
       <version>1.0-beta-6-SNAPSHOT</version>
       <type>test-jar</type>
+      <scope>compile</scope>
     </dependency>
   </dependencies>
 </project>

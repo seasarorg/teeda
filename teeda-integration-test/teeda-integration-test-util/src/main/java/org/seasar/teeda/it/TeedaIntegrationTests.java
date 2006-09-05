@@ -17,11 +17,15 @@ package org.seasar.teeda.it;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.io.IOException;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.apache.maven.artifact.resolver.ArtifactNotFoundException;
+import org.apache.maven.artifact.resolver.ArtifactResolutionException;
+import org.apache.maven.embedder.MavenEmbedderException;
+import org.apache.maven.project.ProjectBuildingException;
 import org.seasar.framework.util.ClassUtil;
 import org.seasar.framework.util.FileUtil;
 import org.seasar.teeda.it.util.MavenUtil;
@@ -31,14 +35,15 @@ import com.gargoylesoftware.base.util.DirectoryWalker;
 /**
  * @author manhole
  */
-public class TeedaIntegrationTests extends TestCase {
+public class TeedaIntegrationTests {
 
-    public static Test suite() throws Exception {
-        final Class testClass = TeedaIntegrationTests.class;
+    public static Test createSuite(final Class testClass) throws IOException,
+        MavenEmbedderException, ArtifactResolutionException,
+        ArtifactNotFoundException, ProjectBuildingException {
         final File pomFile = MavenUtil.getProjectPomFile(testClass);
         final File project = pomFile.getParentFile();
         final String startingDirectory = new File(project,
-                "target/test-classes").getCanonicalPath().replace('\\', '/');
+            "target/test-classes").getCanonicalPath().replace('\\', '/');
 
         final TestSuite suite = new TestSuite();
         DirectoryWalker walker = new DirectoryWalker(startingDirectory);
@@ -46,16 +51,16 @@ public class TeedaIntegrationTests extends TestCase {
 
             public boolean accept(final File pathname) {
                 final String name = FileUtil.getCanonicalPath(pathname)
-                        .replace('\\', '/');
+                    .replace('\\', '/');
                 if (isTestClass(name)) {
                     final int pos = name.lastIndexOf(startingDirectory);
                     String className = name.substring(pos
-                            + startingDirectory.length());
+                        + startingDirectory.length());
                     if (className.startsWith("/")) {
                         className = className.substring(1);
                     }
                     className = className.substring(0, className.length()
-                            - ".class".length());
+                        - ".class".length());
                     className = className.replace('/', '.');
                     System.out.println("found testClass: " + className);
                     Class clazz = ClassUtil.forName(className);
