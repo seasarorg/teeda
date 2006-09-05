@@ -13,7 +13,7 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.core.unit;
+package org.seasar.teeda.it.unit;
 
 import java.io.File;
 
@@ -52,13 +52,13 @@ public class JettyServerSetup extends TestSetup {
     private Server startJetty() throws Exception {
         Server server = new Server();
         SocketListener listener = new SocketListener(new InetAddrPort(
-                getHost(), getPort()));
+            getHost(), getPort()));
         server.addListener(listener);
 
         File webapp = getWebapp();
         System.out.println("webapp:" + webapp);
         WebApplicationContext context = new WebApplicationContext(webapp
-                .getCanonicalPath());
+            .getCanonicalPath());
         context.setContextPath(getContextPath());
         server.addContext(context);
 

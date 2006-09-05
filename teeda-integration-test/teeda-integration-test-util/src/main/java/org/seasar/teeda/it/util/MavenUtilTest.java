@@ -13,7 +13,7 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.core.util;
+package org.seasar.teeda.it.util;
 
 import java.io.File;
 import java.io.IOException;
@@ -32,7 +32,7 @@ public class MavenUtilTest extends TestCase {
         File project = getProjectFile("teeda-integration-test");
         File pom = new File(project, "pom.xml");
         File seleniumDriverWar = MavenUtil.getArtifactFromPom(pom,
-                "s2-framework");
+            "s2-framework");
         System.out.println(seleniumDriverWar);
         assertNotNull(seleniumDriverWar);
         assertEquals(true, seleniumDriverWar.exists());
@@ -56,7 +56,7 @@ public class MavenUtilTest extends TestCase {
         try {
             File project = null;
             for (File current = ResourceUtil.getResourceAsFile("."); current != null; current = current
-                    .getParentFile()) {
+                .getParentFile()) {
                 if (projectName.equals(current.getName())) {
                     if (pomExists(current)) {
                         project = current;

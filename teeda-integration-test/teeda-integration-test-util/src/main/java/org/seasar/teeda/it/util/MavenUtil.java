@@ -13,7 +13,7 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.core.util;
+package org.seasar.teeda.it.util;
 
 import java.io.File;
 import java.io.IOException;
@@ -38,7 +38,7 @@ public class MavenUtil {
     public static File getArtifactFromPom(File pom, String artifactId) {
         MavenEmbedder maven = new MavenEmbedder();
         ClassLoader classLoader = Thread.currentThread()
-                .getContextClassLoader();
+            .getContextClassLoader();
         maven.setClassLoader(classLoader);
         MavenEmbedderConsoleLogger logger = new MavenEmbedderConsoleLogger();
         logger.setThreshold(MavenEmbedderLogger.LEVEL_ERROR);
@@ -48,7 +48,7 @@ public class MavenUtil {
             MavenProject mavenProject = maven.readProjectWithDependencies(pom);
             Artifact targetArtifact = null;
             for (Iterator it = mavenProject.getArtifacts().iterator(); it
-                    .hasNext();) {
+                .hasNext();) {
                 Artifact artifact = (Artifact) it.next();
                 if (artifactId.equals(artifact.getArtifactId())) {
                     targetArtifact = artifact;
@@ -56,10 +56,10 @@ public class MavenUtil {
             }
             if (targetArtifact == null) {
                 throw new RuntimeException("[" + artifactId
-                        + "] not found. from " + pom);
+                    + "] not found. from " + pom);
             }
             File targetArtifactFile = targetArtifact.getFile()
-                    .getCanonicalFile();
+                .getCanonicalFile();
             maven.stop();
             return targetArtifactFile;
         } catch (MavenEmbedderException e) {

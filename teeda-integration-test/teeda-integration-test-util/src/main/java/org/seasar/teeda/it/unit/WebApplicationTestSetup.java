@@ -1,4 +1,19 @@
-package org.seasar.teeda.core.unit;
+/*
+ * Copyright 2004-2006 the Seasar Foundation and the Others.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+package org.seasar.teeda.it.unit;
 
 import java.io.File;
 import java.util.Arrays;
@@ -23,6 +38,9 @@ import org.apache.maven.project.MavenProject;
 import org.apache.maven.project.ProjectBuildingException;
 import org.codehaus.plexus.util.dag.CycleDetectedException;
 
+/**
+ * @author manhole
+ */
 public class WebApplicationTestSetup extends TestSetup {
 
     private File pomFile_;
@@ -37,9 +55,9 @@ public class WebApplicationTestSetup extends TestSetup {
     }
 
     protected void buildWebapp() throws MavenEmbedderException,
-            ProjectBuildingException, ArtifactResolutionException,
-            ArtifactNotFoundException, CycleDetectedException,
-            LifecycleExecutionException, BuildFailureException {
+        ProjectBuildingException, ArtifactResolutionException,
+        ArtifactNotFoundException, CycleDetectedException,
+        LifecycleExecutionException, BuildFailureException {
 
         MavenEmbedder maven = new MavenEmbedder();
         maven.setClassLoader(Thread.currentThread().getContextClassLoader());
@@ -54,16 +72,16 @@ public class WebApplicationTestSetup extends TestSetup {
 
         MavenProject mavenProject = maven.readProjectWithDependencies(pomFile);
         EventMonitor eventMonitor = new DefaultEventMonitor(
-                new PlexusLoggerAdapter(mavenLogger));
+            new PlexusLoggerAdapter(mavenLogger));
 
         Properties prop = new Properties();
         prop.put("maven.test.skip", "true");
 
-        maven.execute(mavenProject, Arrays.asList(new String[] {
-                "resources:resources", "compiler:compile",
+        maven.execute(mavenProject, Arrays
+            .asList(new String[] { "resources:resources", "compiler:compile",
                 "resources:testResources", "compiler:testCompile",
                 "war:exploded" }), eventMonitor, new ConsoleDownloadMonitor(),
-                prop, projectDirectory);
+            prop, projectDirectory);
         maven.stop();
     }
 
