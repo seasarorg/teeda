@@ -26,6 +26,13 @@
             <updateReleaseInfo>true</updateReleaseInfo>
           </configuration>
         </plugin>
+        <plugin>
+          <artifactId>maven-eclipse-plugin</artifactId>
+          <configuration>
+            <outputDirectory>build/classes</outputDirectory>
+            <downloadSources>true</downloadSources>
+          </configuration>
+        </plugin>
       </plugins>
     </pluginManagement>
     <plugins>
