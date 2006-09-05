@@ -19,7 +19,6 @@ import javax.faces.component.UIComponent;
 
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.exception.NoValueReferenceRuntimeException;
-import org.seasar.teeda.core.taglib.html.InputTagBase;
 import org.seasar.teeda.core.util.BindingUtil;
 import org.seasar.teeda.extension.component.TUISelectItems;
 
@@ -27,7 +26,7 @@ import org.seasar.teeda.extension.component.TUISelectItems;
  * @author higa
  * @author shot
  */
-public abstract class TSelectTagBase extends InputTagBase {
+public abstract class TSelectTagBase extends TInputTagBase {
 
     private String border;
 
