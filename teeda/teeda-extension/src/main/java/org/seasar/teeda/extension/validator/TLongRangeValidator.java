@@ -99,6 +99,9 @@ public class TLongRangeValidator extends LongRangeValidator {
 
     public void setTarget(String target) {
         this.target = target;
+        if (StringUtil.isEmpty(target)) {
+            return;
+        }
         targets = StringUtil.split(target, ", ");
     }
 

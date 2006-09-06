@@ -114,6 +114,9 @@ public class TRegularExpressionValidator implements Validator, StateHolder {
 
     public void setTarget(String target) {
         this.target = target;
+        if (StringUtil.isEmpty(target)) {
+            return;
+        }
         targets = StringUtil.split(target, ", ");
     }
 

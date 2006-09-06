@@ -101,6 +101,9 @@ public class TByteLengthValidator extends LengthValidator {
 
     public void setTarget(String target) {
         this.target = target;
+        if (StringUtil.isEmpty(target)) {
+            return;
+        }
         targets = StringUtil.split(target, ", ");
     }
 
