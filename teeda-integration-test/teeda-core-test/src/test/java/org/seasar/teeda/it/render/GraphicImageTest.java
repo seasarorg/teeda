@@ -61,4 +61,23 @@ public class GraphicImageTest extends AbstractTestCase {
         assertEquals(diff.toString(), true, diff.similar());
     }
 
+    public void testRender_borderAttribute() throws Exception {
+        // ## Arrange ##
+        URL url = getUrl("faces/render/graphicImageBorderAttribute.jsp");
+        System.out.println(url);
+
+        WebClient webClient = new WebClient();
+
+        // ## Act ##
+        HtmlPage page = getHtmlPage(webClient, url);
+
+        // ## Assert ##
+        final String body1 = getBody(page).trim();
+        System.out.println(body1);
+
+        final String expected = readText("testRenderBorderAttribute.html");
+        Diff diff = diff(expected, body1);
+        assertEquals(diff.toString(), true, diff.similar());
+    }
+
 }
