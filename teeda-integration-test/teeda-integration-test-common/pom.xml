@@ -11,7 +11,7 @@
     <relativePath>../pom.xml</relativePath>
   </parent>
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>teeda-integration-test-util</artifactId>
+  <artifactId>teeda-integration-test-common</artifactId>
   <packaging>jar</packaging>
   <name>Teeda Integration Test Driver</name>
   <description></description>
@@ -53,7 +53,7 @@
     <dependency>
       <groupId>org.seasar.teeda</groupId>
       <artifactId>teeda-xmlunit</artifactId>
-      <version>0.1</version>
+      <version>0.1.0</version>
       <type>jar</type>
       <scope>compile</scope>
     </dependency>

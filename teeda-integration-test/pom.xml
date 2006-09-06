@@ -35,7 +35,7 @@
     </pluginManagement>
   </build>
   <modules>
-    <module>teeda-integration-test-util</module>
+    <module>teeda-integration-test-common</module>
     <module>teeda-core-test</module>
     <module>teeda-core-test-client</module>
     <module>teeda-html-test</module>
