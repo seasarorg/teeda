@@ -17,6 +17,7 @@ package org.seasar.teeda.extension.util;
 
 import javax.faces.context.FacesContext;
 
+import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
 
 /**
@@ -38,7 +39,11 @@ public class ValidatorUtil {
             return true;
         }
         for (int i = 0; i < forValues.length; ++i) {
-            if (command.equals(forValues[i].trim())) {
+            String t = forValues[i].trim();
+            if (StringUtil.isEmpty(t)) {
+                continue;
+            }
+            if (command.equals(t)) {
                 return true;
             }
         }
