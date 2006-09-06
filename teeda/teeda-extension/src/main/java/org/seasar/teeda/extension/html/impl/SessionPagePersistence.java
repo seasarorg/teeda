@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -37,7 +37,7 @@ public class SessionPagePersistence implements PagePersistence {
     private static final long serialVersionUID = 1L;
 
     private int pageSize = 10;
-    
+
     private PageDescCache pageDescCache;
 
     public int getPageSize() {
@@ -55,14 +55,15 @@ public class SessionPagePersistence implements PagePersistence {
     public void save(FacesContext context, String viewId) {
         ExternalContext extCtx = context.getExternalContext();
         Map sessionMap = extCtx.getSessionMap();
-        PersistenceData pd = (PersistenceData) sessionMap.get(getClass().getName());
+        PersistenceData pd = (PersistenceData) sessionMap.get(getClass()
+                .getName());
         if (pd == null) {
             pd = new PersistenceData(pageSize);
             sessionMap.put(getClass().getName(), pd);
         }
         pd.set(viewId, getPageData(context.getViewRoot().getViewId()));
     }
-    
+
     protected Map getPageData(String viewId) {
         PageDesc pageDesc = pageDescCache.getPageDesc(viewId);
         if (pageDesc == null) {
@@ -71,13 +72,13 @@ public class SessionPagePersistence implements PagePersistence {
         Object page = DIContainerUtil.getComponent(pageDesc.getPageName());
         return convertPageData(page);
     }
-    
+
     public static Map convertPageData(Object page) {
         Map map = new HashMap();
         BeanDesc beanDesc = BeanDescFactory.getBeanDesc(page.getClass());
         for (int i = 0; i < beanDesc.getPropertyDescSize(); ++i) {
             PropertyDesc pd = beanDesc.getPropertyDesc(i);
-            if (!pd.hasReadMethod() || !isValueType(pd.getPropertyType())) {
+            if (!pd.hasReadMethod() || !isPersistenceInputValueType(pd.getPropertyType())) {
                 continue;
             }
             Object value = pd.getValue(page);
@@ -85,18 +86,21 @@ public class SessionPagePersistence implements PagePersistence {
         }
         return map;
     }
-    
-    protected static boolean isValueType(Class clazz) {
+
+    protected static boolean isPersistenceInputValueType(Class clazz) {
         if (clazz.isPrimitive()) {
             return true;
         }
-        return clazz.equals(String.class) || clazz.equals(Boolean.class) || Number.class.isAssignableFrom(clazz) || Date.class.isAssignableFrom(clazz);
+        return clazz.equals(String.class) || clazz.equals(Boolean.class)
+                || Number.class.isAssignableFrom(clazz)
+                || Date.class.isAssignableFrom(clazz);
     }
 
     public void restore(FacesContext context, String viewId) {
         ExternalContext extCtx = context.getExternalContext();
         Map sessionMap = extCtx.getSessionMap();
-        PersistenceData pd = (PersistenceData) sessionMap.get(getClass().getName());
+        PersistenceData pd = (PersistenceData) sessionMap.get(getClass()
+                .getName());
         if (pd == null) {
             return;
         }
@@ -109,15 +113,15 @@ public class SessionPagePersistence implements PagePersistence {
     }
 
     public static class PersistenceData implements Serializable {
-        
+
         private static final long serialVersionUID = 1L;
 
         private SLinkedList list = new SLinkedList();
-        
+
         private Map map = new HashMap();
-        
+
         private int pageSize;
-        
+
         public PersistenceData(int pageSize) {
             this.pageSize = pageSize;
         }
@@ -127,7 +131,7 @@ public class SessionPagePersistence implements PagePersistence {
             list.addFirst(viewId);
             return (Map) map.get(viewId);
         }
-        
+
         public synchronized void set(String viewId, Map data) {
             if (map.size() >= pageSize) {
                 String vid = (String) list.removeLast();
@@ -137,7 +141,7 @@ public class SessionPagePersistence implements PagePersistence {
             list.addFirst(viewId);
             map.put(viewId, data);
         }
-        
+
         public synchronized int getSize() {
             return map.size();
         }

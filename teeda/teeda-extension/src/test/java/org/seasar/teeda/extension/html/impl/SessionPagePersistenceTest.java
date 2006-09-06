@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -54,12 +54,13 @@ public class SessionPagePersistenceTest extends TeedaTestCase {
         assertEquals(timestamp, map.get("timestamp"));
         assertNull(map.get("list"));
     }
-    
+
     public void testSaveAndRestore() throws Exception {
         SessionPagePersistence spp = new SessionPagePersistence();
         spp.setPageSize(2);
         NamingConventionImpl convention = new NamingConventionImpl();
-        String rootPath = "/" + ClassUtil.getPackageName(getClass()).replace('.', '/');
+        String rootPath = "/"
+                + ClassUtil.getPackageName(getClass()).replace('.', '/');
         convention.setViewRootPath(rootPath);
         convention.setViewExtension(".html");
         PageDescCacheImpl cache = new PageDescCacheImpl();
@@ -80,77 +81,97 @@ public class SessionPagePersistenceTest extends TeedaTestCase {
         spp.save(context, path2);
         ExternalContext extCtx = context.getExternalContext();
         Map sessionMap = extCtx.getSessionMap();
-        PersistenceData pd = (PersistenceData) sessionMap.get(SessionPagePersistence.class.getName());
+        PersistenceData pd = (PersistenceData) sessionMap
+                .get(SessionPagePersistence.class.getName());
         assertNotNull(pd);
         assertEquals(1, pd.getSize());
-        
-        
+
         context.getViewRoot().setViewId(path2);
         spp.save(context, path3);
         assertEquals(2, pd.getSize());
-        
+
         Foo3Page foo3Page = (Foo3Page) getComponent(Foo3Page.class);
         foo3Page.setAaa("123");
         context.getViewRoot().setViewId(path3);
         spp.save(context, path);
         assertEquals(2, pd.getSize());
         assertNull(pd.get(path2));
-        
+
         spp.restore(context, path);
         Map requestMap = extCtx.getRequestMap();
         assertEquals("123", requestMap.get("aaa"));
     }
-    
+
     public static class Hoge {
         private int int1;
+
         private Integer int2;
+
         private boolean bool1;
+
         private Boolean bool2;
+
         private String str;
+
         private Timestamp timestamp;
+
         private List list;
+
         public boolean isBool1() {
             return bool1;
         }
+
         public void setBool1(boolean bool1) {
             this.bool1 = bool1;
         }
+
         public Boolean getBool2() {
             return bool2;
         }
+
         public void setBool2(Boolean bool2) {
             this.bool2 = bool2;
         }
+
         public int getInt1() {
             return int1;
         }
+
         public void setInt1(int int1) {
             this.int1 = int1;
         }
+
         public Integer getInt2() {
             return int2;
         }
+
         public void setInt2(Integer int2) {
             this.int2 = int2;
         }
+
         public List getList() {
             return list;
         }
+
         public void setList(List list) {
             this.list = list;
         }
+
         public String getStr() {
             return str;
         }
+
         public void setStr(String str) {
             this.str = str;
         }
+
         public Timestamp getTimestamp() {
             return timestamp;
         }
+
         public void setTimestamp(Timestamp timestamp) {
             this.timestamp = timestamp;
         }
-        
+
     }
 }
