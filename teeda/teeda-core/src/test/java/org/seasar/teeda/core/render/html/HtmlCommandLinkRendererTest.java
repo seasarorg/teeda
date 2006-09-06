@@ -251,6 +251,28 @@ public class HtmlCommandLinkRendererTest extends RendererTest {
                 + " return false;" + "\" c=\"d\">abc</a>", getResponseText());
     }
 
+    public void testEncode_WithTarget() throws Exception {
+        // ## Arrange ##
+        MockHtmlForm form = new MockHtmlForm();
+        form.setRenderer(new HtmlFormRenderer());
+        form.setId("frm");
+        form.getChildren().add(htmlCommandLink);
+        htmlCommandLink.setTarget("_blank");
+        htmlCommandLink.setId("x");
+        htmlCommandLink.setValue("aaa");
+        
+        // ## Act ##
+        encodeByRenderer(renderer, htmlCommandLink);
+
+        // ## Assert ##
+        assertEquals("<a id=\"x\" href=\"#\""
+                + " onclick=\"var f = document.forms['frm'];"
+                + " f['frm:__link_clicked__'].value = 'frm:x';"
+                + " f.target = '_blank';"
+                + " if (f.onsubmit) { f.onsubmit(); } f.submit();"
+                + " return false;\" target=\"_blank\">aaa</a>", getResponseText());
+    }
+    
     public void testEncode_WithAllAttributes() throws Exception {
         MockHtmlForm form = new MockHtmlForm();
         form.setRenderer(new HtmlFormRenderer());
@@ -293,6 +315,7 @@ public class HtmlCommandLinkRendererTest extends RendererTest {
         Diff diff = new Diff("<a" + " id=\"A\"" + " href=\"#\"" + " onclick=\""
                 + "var f = document.forms['zz'];"
                 + " f['zz:__link_clicked__'].value = 'zz:A';"
+                + " f.target = 'y';"
                 + " if (f.onsubmit) { f.onsubmit(); }" + " f.submit();"
                 + " return false;\"" + " accesskey=\"a\"" + " charset=\"b\""
                 + " coords=\"c\"" + " dir=\"d\"" + " hreflang=\"e\""
@@ -317,6 +340,7 @@ public class HtmlCommandLinkRendererTest extends RendererTest {
         UIParameter param = new UIParameter();
         param.setName("bar");
         param.setValue("1111");
+        
         htmlCommandLink.getChildren().add(param);
         htmlCommandLink.setValue("value");
         MockFacesContext context = getFacesContext();

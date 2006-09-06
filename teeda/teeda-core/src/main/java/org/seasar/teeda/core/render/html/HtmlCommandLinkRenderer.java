@@ -110,6 +110,13 @@ public class HtmlCommandLinkRenderer extends AbstractRenderer {
                 HtmlFormRenderer.setHiddenParameter(parentForm, name, null);
             }
         }
+        
+        final String target = commandLink.getTarget();
+        if (target != null && target.trim().length() > 0) {
+            sb.append(" f.target = '");
+            sb.append(target);
+            sb.append("';");
+        }
 
         sb.append(" if (f.onsubmit) { f.onsubmit(); }");
         sb.append(" f.submit();");
