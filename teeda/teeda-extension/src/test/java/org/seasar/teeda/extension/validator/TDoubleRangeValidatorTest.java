@@ -30,7 +30,7 @@ public class TDoubleRangeValidatorTest extends TeedaTestCase {
     //TODO test more
     public void testValidate_normal() throws Exception {
         TDoubleRangeValidator validator = new TDoubleRangeValidator();
-        validator.setFor("aaa");
+        validator.setTarget("aaa");
         validator.setMaximum(3);
         validator.setMinimum(1);
         MockUIComponent component = new MockUIComponent();
@@ -45,7 +45,7 @@ public class TDoubleRangeValidatorTest extends TeedaTestCase {
 
     public void testValidate_targetCommandPointed() throws Exception {
         TDoubleRangeValidator validator = new TDoubleRangeValidator();
-        validator.setFor("aaa");
+        validator.setTarget("aaa");
         validator.setMaximum(3);
         validator.setMinimum(1);
         MockUIComponent component = new MockUIComponent();
@@ -62,7 +62,7 @@ public class TDoubleRangeValidatorTest extends TeedaTestCase {
 
     public void testValidate_targetCommandNotPointed() throws Exception {
         TDoubleRangeValidator validator = new TDoubleRangeValidator();
-        validator.setFor("aaa");
+        validator.setTarget("aaa");
         validator.setMaximum(3);
         validator.setMinimum(1);
         MockUIComponent component = new MockUIComponent();
@@ -79,10 +79,10 @@ public class TDoubleRangeValidatorTest extends TeedaTestCase {
 
     public void testSaveAndRestore() throws Exception {
         TDoubleRangeValidator validator = new TDoubleRangeValidator();
-        validator.setFor("aaa");
+        validator.setTarget("aaa");
         Object state = validator.saveState(getFacesContext());
         validator = new TDoubleRangeValidator();
         validator.restoreState(getFacesContext(), state);
-        assertEquals("aaa", validator.getFor());
+        assertEquals("aaa", validator.getTarget());
     }
 }

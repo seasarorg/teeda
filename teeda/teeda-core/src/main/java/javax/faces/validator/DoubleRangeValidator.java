@@ -22,6 +22,7 @@ import javax.faces.internal.FacesMessageUtil;
 import javax.faces.internal.UIComponentUtil;
 
 import org.seasar.framework.util.AssertionUtil;
+import org.seasar.framework.util.DoubleConversionUtil;
 
 /**
  * @author shot
@@ -36,25 +37,22 @@ public class DoubleRangeValidator implements Validator, StateHolder {
 
     public static final String TYPE_MESSAGE_ID = "javax.faces.validator.DoubleRangeValidator.TYPE";
 
-    private Double maximum = null;
+    private double maximum = Double.MAX_VALUE;
 
-    private Double minimum = null;
+    private double minimum = Double.MIN_VALUE;
 
     private boolean transientValue = false;
 
     public DoubleRangeValidator() {
-        super();
     }
 
     public DoubleRangeValidator(double maximum) {
-        super();
-        this.maximum = new Double(maximum);
+        this.maximum = maximum;
     }
 
     public DoubleRangeValidator(double maximum, double minimum) {
-        super();
-        this.maximum = new Double(maximum);
-        this.minimum = new Double(minimum);
+        this.maximum = maximum;
+        this.minimum = minimum;
     }
 
     public boolean equals(Object obj) {
@@ -63,33 +61,19 @@ public class DoubleRangeValidator implements Validator, StateHolder {
         }
 
         DoubleRangeValidator v = (DoubleRangeValidator) obj;
-
-        if ((maximum != null && v.maximum == null)
-                && (maximum == null && v.maximum != null)) {
-            return false;
-        }
-
-        if ((minimum != null && v.minimum == null)
-                && (minimum == null && v.minimum != null)) {
-            return false;
-        }
-
-        return (this.getMaximum() == v.getMaximum() && this.getMinimum() == v
-                .getMinimum());
+        return maximum == v.maximum && minimum == v.minimum;
     }
 
     public int hashCode() {
-        Double max = maximum != null ? maximum : new Double(1);
-        Double min = minimum != null ? minimum : new Double(1);
-        return max.hashCode() * min.hashCode() * 17;
+        return (int) maximum * (int) minimum * 17;
     }
 
     public double getMaximum() {
-        return (maximum != null) ? maximum.doubleValue() : Double.MAX_VALUE;
+        return maximum;
     }
 
     public double getMinimum() {
-        return (minimum != null) ? minimum.doubleValue() : Double.MIN_VALUE;
+        return minimum;
     }
 
     public boolean isTransient() {
@@ -98,23 +82,23 @@ public class DoubleRangeValidator implements Validator, StateHolder {
 
     public void restoreState(FacesContext context, Object state) {
         Object[] obj = (Object[]) state;
-        maximum = (Double) obj[0];
-        minimum = (Double) obj[1];
+        maximum = ((Double) obj[0]).doubleValue();
+        minimum = ((Double) obj[1]).doubleValue();
     }
 
     public Object saveState(FacesContext context) {
         Object[] obj = new Object[2];
-        obj[0] = maximum;
-        obj[1] = minimum;
+        obj[0] = new Double(maximum);
+        obj[1] = new Double(minimum);
         return obj;
     }
 
     public void setMaximum(double maximum) {
-        this.maximum = new Double(maximum);
+        this.maximum = maximum;
     }
 
     public void setMinimum(double minimum) {
-        this.minimum = new Double(minimum);
+        this.minimum = minimum;
     }
 
     public void setTransient(boolean transientValue) {
@@ -132,45 +116,39 @@ public class DoubleRangeValidator implements Validator, StateHolder {
 
         double doubleValue;
         try {
-            doubleValue = parseDoubleValue(value);
+            doubleValue = DoubleConversionUtil.toDouble(value).doubleValue();
 
-            if (maximum != null && minimum != null) {
-
-                double minValue = minimum.doubleValue();
-                double maxValue = maximum.doubleValue();
-
-                if (doubleValue < minValue || doubleValue > maxValue) {
-                    Object[] args = { minimum, maximum,
+            if (maximum != Double.MAX_VALUE && minimum != Double.MIN_VALUE) {
+                if (doubleValue < minimum || doubleValue > maximum) {
+                    Object[] args = { new Double(minimum), new Double(maximum),
                             UIComponentUtil.getLabel(component) };
                     throw new ValidatorException(FacesMessageUtil.getMessage(
-                            context, getNotInRangeMessageId(), args));
+                            context, getNotInRangeMessageId(), args),
+                            getNotInRangeMessageId(), args);
                 }
 
-            } else if (minimum != null) {
-
-                double minValue = minimum.doubleValue();
-                if (doubleValue < minValue) {
-                    Object[] args = { minimum,
+            } else if (minimum != Double.MIN_VALUE) {
+                if (doubleValue < minimum) {
+                    Object[] args = { new Double(minimum),
                             UIComponentUtil.getLabel(component) };
                     throw new ValidatorException(FacesMessageUtil.getMessage(
-                            context, getMinimumMessageId(), args));
+                            context, getMinimumMessageId(), args),
+                            getMinimumMessageId(), args);
                 }
 
-            } else if (maximum != null) {
-
-                double maxValue = maximum.doubleValue();
-                if (doubleValue > maxValue) {
-                    Object[] args = { maximum,
+            } else if (maximum != Double.MAX_VALUE) {
+                if (doubleValue > maximum) {
+                    Object[] args = { new Double(maximum),
                             UIComponentUtil.getLabel(component) };
                     throw new ValidatorException(FacesMessageUtil.getMessage(
-                            context, getMaximumMessageId(), args));
+                            context, getMaximumMessageId(), args),
+                            getMaximumMessageId(), args);
                 }
             }
-
         } catch (NumberFormatException e) {
             Object[] args = { UIComponentUtil.getLabel(component) };
             throw new ValidatorException(FacesMessageUtil.getMessage(context,
-                    getTypeMessageId(), args));
+                    getTypeMessageId(), args), getTypeMessageId(), args);
         }
 
     }
@@ -190,17 +168,4 @@ public class DoubleRangeValidator implements Validator, StateHolder {
     protected String getTypeMessageId() {
         return TYPE_MESSAGE_ID;
     }
-
-    private static double parseDoubleValue(Object obj)
-            throws NumberFormatException {
-
-        double value;
-        if (obj instanceof Number) {
-            value = ((Number) obj).doubleValue();
-        } else {
-            value = Double.parseDouble(obj.toString());
-        }
-        return value;
-    }
-
 }

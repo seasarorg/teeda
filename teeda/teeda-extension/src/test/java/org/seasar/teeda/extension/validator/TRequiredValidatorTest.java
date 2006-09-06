@@ -28,7 +28,7 @@ public class TRequiredValidatorTest extends TeedaTestCase {
         mock.setId("aaa");
         mock.getAttributes().put("label", "abc");
         TRequiredValidator validator = new TRequiredValidator();
-        validator.setFor("aaa, bbb");
+        validator.setTarget("aaa, bbb");
         getFacesContext().getExternalContext().getRequestMap().put(
                 JsfConstants.SUBMIT_VALUE, "aaa");
         try {
@@ -42,12 +42,12 @@ public class TRequiredValidatorTest extends TeedaTestCase {
 
     public void testSaveAndRestore() throws Exception {
         TRequiredValidator validator = new TRequiredValidator();
-        validator.setFor("aaa");
+        validator.setTarget("aaa");
         validator.setMessageId("hoge");
         Object state = validator.saveState(getFacesContext());
         validator = new TRequiredValidator();
         validator.restoreState(getFacesContext(), state);
-        assertEquals("aaa", validator.getFor());
+        assertEquals("aaa", validator.getTarget());
         assertEquals("hoge", validator.getMessageId());
     }
 

@@ -39,7 +39,7 @@ public class LengthValidatorTest extends TeedaTestCase {
 
     public void testGetMaximum_maxNotSet() throws Exception {
         LengthValidator validator = new LengthValidator();
-        assertEquals(0, validator.getMaximum());
+        assertEquals(-1, validator.getMaximum());
     }
 
     public void testGetMaximum_getMax() throws Exception {
@@ -49,7 +49,7 @@ public class LengthValidatorTest extends TeedaTestCase {
 
     public void testGetMinimum_minNotSet() throws Exception {
         LengthValidator validator = new LengthValidator();
-        assertEquals(0, validator.getMinimum());
+        assertEquals(-1, validator.getMinimum());
     }
 
     public void testGetMinimum_getMin() throws Exception {

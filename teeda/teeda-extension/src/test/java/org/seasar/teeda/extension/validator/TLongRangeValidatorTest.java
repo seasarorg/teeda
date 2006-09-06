@@ -30,7 +30,7 @@ public class TLongRangeValidatorTest extends TeedaTestCase {
 
     public void testValidate_normal() throws Exception {
         TLongRangeValidator validator = new TLongRangeValidator();
-        validator.setFor("aaa");
+        validator.setTarget("aaa");
         validator.setMaximum(3);
         validator.setMinimum(1);
         MockUIComponent component = new MockUIComponent();
@@ -45,7 +45,7 @@ public class TLongRangeValidatorTest extends TeedaTestCase {
 
     public void testValidate_targetCommandPointed() throws Exception {
         TLongRangeValidator validator = new TLongRangeValidator();
-        validator.setFor("aaa");
+        validator.setTarget("aaa");
         validator.setMaximum(3);
         validator.setMinimum(1);
         MockUIComponent component = new MockUIComponent();
@@ -62,7 +62,7 @@ public class TLongRangeValidatorTest extends TeedaTestCase {
 
     public void testValidate_targetCommandNotPointed() throws Exception {
         TLongRangeValidator validator = new TLongRangeValidator();
-        validator.setFor("aaa");
+        validator.setTarget("aaa");
         validator.setMaximum(3);
         validator.setMinimum(1);
         MockUIComponent component = new MockUIComponent();
@@ -79,7 +79,7 @@ public class TLongRangeValidatorTest extends TeedaTestCase {
 
     public void testValidate_withMessageId() throws Exception {
         TLongRangeValidator validator = new TLongRangeValidator();
-        validator.setFor("aaa");
+        validator.setTarget("aaa");
         validator.setMaximum(3);
         validator.setMinimum(1);
         validator.setMaximumMessageId("a");
@@ -96,7 +96,7 @@ public class TLongRangeValidatorTest extends TeedaTestCase {
 
     public void testSaveAndRestore() throws Exception {
         TLongRangeValidator validator = new TLongRangeValidator();
-        validator.setFor("aaa");
+        validator.setTarget("aaa");
         validator.setMaximumMessageId("a");
         validator.setMinimumMessageId("b");
         validator.setNotInRangeMessageId("c");
@@ -104,7 +104,7 @@ public class TLongRangeValidatorTest extends TeedaTestCase {
         Object state = validator.saveState(getFacesContext());
         validator = new TLongRangeValidator();
         validator.restoreState(getFacesContext(), state);
-        assertEquals("aaa", validator.getFor());
+        assertEquals("aaa", validator.getTarget());
         assertEquals("a", validator.getMaximumMessageId());
         assertEquals("b", validator.getMinimumMessageId());
         assertEquals("c", validator.getNotInRangeMessageId());

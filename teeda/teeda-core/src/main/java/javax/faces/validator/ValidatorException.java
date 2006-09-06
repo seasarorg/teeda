@@ -27,6 +27,10 @@ public class ValidatorException extends FacesException {
 
     private FacesMessage facesMessage = null;
 
+    private String messageId;
+
+    private Object[] args;
+
     public ValidatorException(FacesMessage facesMessage) {
         this(facesMessage, null);
     }
@@ -36,8 +40,29 @@ public class ValidatorException extends FacesException {
         this.facesMessage = facesMessage;
     }
 
+    public ValidatorException(FacesMessage facesMessage, String messageId,
+            Object[] args) {
+        this(facesMessage);
+        this.messageId = messageId;
+        this.args = args;
+    }
+
+    public ValidatorException(FacesMessage facesMessage, Throwable cause,
+            String messageId, Object[] args) {
+        this(facesMessage, cause);
+        this.messageId = messageId;
+        this.args = args;
+    }
+
     public FacesMessage getFacesMessage() {
         return facesMessage;
     }
 
+    public String getMessageId() {
+        return messageId;
+    }
+
+    public Object[] getArgs() {
+        return args;
+    }
 }

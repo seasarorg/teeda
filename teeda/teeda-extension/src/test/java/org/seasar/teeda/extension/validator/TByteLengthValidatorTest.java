@@ -83,7 +83,7 @@ public class TByteLengthValidatorTest extends TeedaTestCase {
         MockUIComponent mock = new MockUIComponent();
         mock.setId("aaa");
         TByteLengthValidator validator = new TByteLengthValidator();
-        validator.setFor("aaa");
+        validator.setTarget("aaa");
         validator.setMinimum(4);
         getFacesContext().getExternalContext().getRequestMap().put(
                 JsfConstants.SUBMITTED_COMMAND, "aaa");
@@ -99,7 +99,7 @@ public class TByteLengthValidatorTest extends TeedaTestCase {
         MockUIComponent mock = new MockUIComponent();
         mock.setId("aaa");
         TByteLengthValidator validator = new TByteLengthValidator();
-        validator.setFor("aaa");
+        validator.setTarget("aaa");
         validator.setMinimum(4);
         getFacesContext().getExternalContext().getRequestMap().put(
                 JsfConstants.SUBMITTED_COMMAND, "bbb");
@@ -132,14 +132,14 @@ public class TByteLengthValidatorTest extends TeedaTestCase {
     public void testSaveAndRestore() throws Exception {
         TByteLengthValidator validator = new TByteLengthValidator();
         validator.setCharSet("Shift_JIS");
-        validator.setFor("aaa");
+        validator.setTarget("aaa");
         validator.setMaximumMessageId("max");
         validator.setMinimumMessageId("min");
         Object state = validator.saveState(getFacesContext());
         validator = new TByteLengthValidator();
         validator.restoreState(getFacesContext(), state);
         assertEquals("Shift_JIS", validator.getCharSet());
-        assertEquals("aaa", validator.getFor());
+        assertEquals("aaa", validator.getTarget());
         assertEquals("max", validator.getMaximumMessageId());
         assertEquals("min", validator.getMinimumMessageId());
     }

@@ -35,9 +35,9 @@ public class LengthValidator implements Validator, StateHolder {
 
     public static final String MINIMUM_MESSAGE_ID = "javax.faces.validator.LengthValidator.MINIMUM";
 
-    private Integer maximum = null;
+    private int maximum = -1;
 
-    private Integer minimum = null;
+    private int minimum = -1;
 
     private boolean transientValue = false;
 
@@ -47,13 +47,13 @@ public class LengthValidator implements Validator, StateHolder {
 
     public LengthValidator(int maximum) {
         super();
-        this.maximum = new Integer(maximum);
+        this.maximum = maximum;
     }
 
     public LengthValidator(int maximum, int minimum) {
         super();
-        this.maximum = new Integer(maximum);
-        this.minimum = new Integer(minimum);
+        this.maximum = maximum;
+        this.minimum = minimum;
     }
 
     public boolean equals(Object obj) {
@@ -62,41 +62,27 @@ public class LengthValidator implements Validator, StateHolder {
         }
 
         LengthValidator v = (LengthValidator) obj;
-        if ((maximum != null && v.maximum == null)
-                && (maximum == null && v.maximum != null)) {
-            return false;
-        }
-
-        if ((minimum != null && v.minimum == null)
-                && (minimum == null && v.minimum != null)) {
-            return false;
-        }
-
-        return (this.getMaximum() == v.getMaximum() && this.getMinimum() == v
-                .getMinimum());
-
+        return maximum == v.maximum && minimum == v.minimum;
     }
 
     public int hashCode() {
-        Integer max = maximum != null ? maximum : new Integer(1);
-        Integer min = minimum != null ? minimum : new Integer(1);
-        return max.hashCode() * min.hashCode() * 17;
+        return maximum * minimum * 17;
     }
 
     public int getMaximum() {
-        return (maximum != null) ? maximum.intValue() : 0;
+        return maximum;
     }
 
     public int getMinimum() {
-        return (minimum != null) ? minimum.intValue() : 0;
+        return minimum;
     }
 
     public void setMaximum(int maximum) {
-        this.maximum = new Integer(maximum);
+        this.maximum = maximum;
     }
 
     public void setMinimum(int minimum) {
-        this.minimum = new Integer(minimum);
+        this.minimum = minimum;
     }
 
     public boolean isTransient() {
@@ -113,16 +99,18 @@ public class LengthValidator implements Validator, StateHolder {
         }
 
         int length = getConvertedValueLength(value);
-        if (minimum != null && length < minimum.intValue()) {
-            Object[] args = { minimum, UIComponentUtil.getLabel(component) };
+        if (minimum > -1 && length < minimum) {
+            Object[] args = { new Integer(minimum),
+                    UIComponentUtil.getLabel(component) };
             throw new ValidatorException(FacesMessageUtil.getMessage(context,
-                    getMinimumMessageId(), args));
+                    getMinimumMessageId(), args), getMinimumMessageId(), args);
         }
 
-        if (maximum != null && length > maximum.intValue()) {
-            Object[] args = { maximum, UIComponentUtil.getLabel(component) };
+        if (maximum > -1 && length > maximum) {
+            Object[] args = { new Integer(maximum),
+                    UIComponentUtil.getLabel(component) };
             throw new ValidatorException(FacesMessageUtil.getMessage(context,
-                    getMaximumMessageId(), args));
+                    getMaximumMessageId(), args), getMaximumMessageId(), args);
         }
     }
 
@@ -132,15 +120,15 @@ public class LengthValidator implements Validator, StateHolder {
 
     public Object saveState(FacesContext context) {
         Object[] values = new Object[2];
-        values[0] = maximum;
-        values[1] = minimum;
+        values[0] = new Integer(maximum);
+        values[1] = new Integer(minimum);
         return values;
     }
 
     public void restoreState(FacesContext context, Object state) {
         Object[] values = (Object[]) state;
-        maximum = (Integer) values[0];
-        minimum = (Integer) values[1];
+        maximum = ((Integer) values[0]).intValue();
+        minimum = ((Integer) values[1]).intValue();
     }
 
     protected int getConvertedValueLength(Object value) {

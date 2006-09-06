@@ -57,7 +57,7 @@ public class TRegularExpressionValidatorTest extends TeedaTestCase {
         MockUIComponent component = new MockUIComponent();
         component.setId("aaa");
         TRegularExpressionValidator validator = new TRegularExpressionValidator();
-        validator.setFor("aaa");
+        validator.setTarget("aaa");
         getFacesContext().getExternalContext().getRequestMap().put(
                 JsfConstants.SUBMITTED_COMMAND, "aaa");
         validator.setPattern("^[1-9][a-z]");
@@ -73,7 +73,7 @@ public class TRegularExpressionValidatorTest extends TeedaTestCase {
         MockUIComponent component = new MockUIComponent();
         component.setId("aaa");
         TRegularExpressionValidator validator = new TRegularExpressionValidator();
-        validator.setFor("aaa");
+        validator.setTarget("aaa");
         getFacesContext().getExternalContext().getRequestMap().put(
                 JsfConstants.SUBMITTED_COMMAND, "bbb");
         validator.setPattern("^[1-9][a-z]");
@@ -102,13 +102,13 @@ public class TRegularExpressionValidatorTest extends TeedaTestCase {
 
     public void testSaveAndRestore() throws Exception {
         TRegularExpressionValidator validator = new TRegularExpressionValidator();
-        validator.setFor("aaa");
+        validator.setTarget("aaa");
         validator.setPattern("^[1-9]");
         validator.setMessageId("bbb");
         Object state = validator.saveState(getFacesContext());
         validator = new TRegularExpressionValidator();
         validator.restoreState(getFacesContext(), state);
-        assertEquals("aaa", validator.getFor());
+        assertEquals("aaa", validator.getTarget());
         assertEquals("^[1-9]", validator.getPattern());
         assertEquals("bbb", validator.getMessageId());
     }

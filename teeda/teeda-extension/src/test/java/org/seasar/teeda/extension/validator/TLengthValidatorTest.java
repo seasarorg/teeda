@@ -30,7 +30,7 @@ public class TLengthValidatorTest extends TeedaTestCase {
 
     public void testValidate_normal() throws Exception {
         TLengthValidator validator = new TLengthValidator();
-        validator.setFor("aaa");
+        validator.setTarget("aaa");
         validator.setMaximum(3);
         validator.setMinimum(1);
         MockUIComponent component = new MockUIComponent();
@@ -45,7 +45,7 @@ public class TLengthValidatorTest extends TeedaTestCase {
 
     public void testValidate_targetCommandPointed() throws Exception {
         TLengthValidator validator = new TLengthValidator();
-        validator.setFor("aaa");
+        validator.setTarget("aaa");
         validator.setMaximum(3);
         validator.setMinimum(1);
         MockUIComponent component = new MockUIComponent();
@@ -62,7 +62,7 @@ public class TLengthValidatorTest extends TeedaTestCase {
 
     public void testValidate_targetCommandNotPointed() throws Exception {
         TLengthValidator validator = new TLengthValidator();
-        validator.setFor("aaa");
+        validator.setTarget("aaa");
         validator.setMaximum(3);
         validator.setMinimum(1);
         MockUIComponent component = new MockUIComponent();
@@ -97,13 +97,13 @@ public class TLengthValidatorTest extends TeedaTestCase {
 
     public void testSaveAndRestore() throws Exception {
         TLengthValidator validator = new TLengthValidator();
-        validator.setFor("aaa");
+        validator.setTarget("aaa");
         validator.setMaximumMessageId("max");
         validator.setMinimumMessageId("min");
         Object state = validator.saveState(getFacesContext());
         validator = new TLengthValidator();
         validator.restoreState(getFacesContext(), state);
-        assertEquals("aaa", validator.getFor());
+        assertEquals("aaa", validator.getTarget());
         assertEquals("max", validator.getMaximumMessageId());
         assertEquals("min", validator.getMinimumMessageId());
     }

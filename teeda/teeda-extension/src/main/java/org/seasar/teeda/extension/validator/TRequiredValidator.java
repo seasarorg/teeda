@@ -42,9 +42,9 @@ public class TRequiredValidator implements Validator, StateHolder {
 
     private boolean transientValue = false;
 
-    private String forValue;
+    private String target;
 
-    private String[] forValues;
+    private String[] targets;
 
     private String messageId;
 
@@ -52,7 +52,7 @@ public class TRequiredValidator implements Validator, StateHolder {
             Object value) throws FacesException {
         AssertionUtil.assertNotNull("context", context);
         AssertionUtil.assertNotNull("component", component);
-        if (!ValidatorUtil.isTargetCommand(context, forValues)) {
+        if (!ValidatorUtil.isTargetCommand(context, targets)) {
             return;
         }
         if (UIInputUtil.isEmpty(value)) {
@@ -61,7 +61,7 @@ public class TRequiredValidator implements Validator, StateHolder {
                     : REQUIRED_MESSAGE_ID;
             FacesMessage message = FacesMessageUtil.getMessage(context, msgId,
                     args);
-            throw new ExtendValidatorException(message, new String[]{msgId});
+            throw new ExtendValidatorException(message, new String[] { msgId });
         }
     }
 
@@ -73,17 +73,17 @@ public class TRequiredValidator implements Validator, StateHolder {
         this.transientValue = transientValue;
     }
 
-    public String getFor() {
-        return forValue;
+    public String getTarget() {
+        return target;
     }
 
-    public void setFor(String forValue) {
-        this.forValue = forValue;
-        forValues = StringUtil.split(forValue, ", ");
+    public void setTarget(String target) {
+        this.target = target;
+        targets = StringUtil.split(target, ", ");
     }
 
     public String getMessageId() {
-        return messageId;
+        return !StringUtil.isEmpty(messageId) ? messageId : REQUIRED_MESSAGE_ID;
     }
 
     public void setMessageId(String messageId) {
@@ -92,14 +92,14 @@ public class TRequiredValidator implements Validator, StateHolder {
 
     public Object saveState(FacesContext context) {
         Object[] values = new Object[2];
-        values[0] = forValue;
+        values[0] = target;
         values[1] = messageId;
         return values;
     }
 
     public void restoreState(FacesContext context, Object state) {
         Object[] values = (Object[]) state;
-        setFor((String) values[0]);
+        setTarget((String) values[0]);
         messageId = (String) values[1];
     }
 }

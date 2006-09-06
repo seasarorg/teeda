@@ -45,9 +45,9 @@ public class TRegularExpressionValidator implements Validator, StateHolder {
 
     private String pattern;
 
-    private String forValue;
+    private String target;
 
-    private String[] forValues;
+    private String[] targets;
 
     private String messageId;
 
@@ -61,7 +61,7 @@ public class TRegularExpressionValidator implements Validator, StateHolder {
         if (value == null) {
             return;
         }
-        if (!ValidatorUtil.isTargetCommand(context, forValues)) {
+        if (!ValidatorUtil.isTargetCommand(context, targets)) {
             return;
         }
         String strValue = value.toString();
@@ -87,7 +87,7 @@ public class TRegularExpressionValidator implements Validator, StateHolder {
     public Object saveState(FacesContext context) {
         Object[] state = new Object[3];
         state[0] = pattern;
-        state[1] = forValue;
+        state[1] = target;
         state[2] = messageId;
         return state;
     }
@@ -95,8 +95,8 @@ public class TRegularExpressionValidator implements Validator, StateHolder {
     public void restoreState(FacesContext context, Object obj) {
         Object[] state = (Object[]) obj;
         pattern = (String) state[0];
-        forValue = (String) state[1];
-        setFor(forValue);
+        target = (String) state[1];
+        setTarget(target);
         messageId = (String) state[2];
     }
 
@@ -108,17 +108,18 @@ public class TRegularExpressionValidator implements Validator, StateHolder {
         this.pattern = pattern;
     }
 
-    public String getFor() {
-        return forValue;
+    public String getTarget() {
+        return target;
     }
 
-    public void setFor(String forValue) {
-        this.forValue = forValue;
-        forValues = StringUtil.split(forValue, ", ");
+    public void setTarget(String target) {
+        this.target = target;
+        targets = StringUtil.split(target, ", ");
     }
 
     public String getMessageId() {
-        return messageId;
+        return !StringUtil.isEmpty(messageId) ? messageId
+                : REGULAR_EXPRRESSION_MESSAGE_ID;
     }
 
     public void setMessageId(String messageId) {

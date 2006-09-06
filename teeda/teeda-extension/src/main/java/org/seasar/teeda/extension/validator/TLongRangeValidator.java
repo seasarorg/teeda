@@ -31,9 +31,9 @@ import org.seasar.teeda.extension.util.ValidatorUtil;
  */
 public class TLongRangeValidator extends LongRangeValidator {
 
-    private String forValue;
+    private String target;
 
-    private String[] forValues;
+    private String[] targets;
 
     private String maximumMessageId;
 
@@ -59,7 +59,7 @@ public class TLongRangeValidator extends LongRangeValidator {
             Object value) throws FacesException {
         AssertionUtil.assertNotNull("context", context);
         AssertionUtil.assertNotNull("component", component);
-        if (!ValidatorUtil.isTargetCommand(context, forValues)) {
+        if (!ValidatorUtil.isTargetCommand(context, targets)) {
             return;
         }
         try {
@@ -74,7 +74,7 @@ public class TLongRangeValidator extends LongRangeValidator {
     public Object saveState(FacesContext context) {
         Object[] state = new Object[6];
         state[0] = super.saveState(context);
-        state[1] = forValue;
+        state[1] = target;
         state[2] = maximumMessageId;
         state[3] = minimumMessageId;
         state[4] = notInRangeMessageId;
@@ -85,40 +85,41 @@ public class TLongRangeValidator extends LongRangeValidator {
     public void restoreState(FacesContext context, Object obj) {
         Object[] state = (Object[]) obj;
         super.restoreState(context, state[0]);
-        forValue = (String) state[1];
-        setFor(forValue);
+        target = (String) state[1];
+        setTarget(target);
         maximumMessageId = (String) state[2];
         minimumMessageId = (String) state[3];
         notInRangeMessageId = (String) state[4];
         typeMessageId = (String) state[5];
     }
 
-    public String getFor() {
-        return forValue;
+    public String getTarget() {
+        return target;
     }
 
-    public void setFor(String forValue) {
-        this.forValue = forValue;
-        forValues = StringUtil.split(forValue, ", ");
+    public void setTarget(String target) {
+        this.target = target;
+        targets = StringUtil.split(target, ", ");
     }
 
     public String getMaximumMessageId() {
-        return (maximumMessageId != null) ? maximumMessageId
+        return !StringUtil.isEmpty(maximumMessageId) ? maximumMessageId
                 : MAXIMUM_MESSAGE_ID;
     }
 
     public String getMinimumMessageId() {
-        return (minimumMessageId != null) ? minimumMessageId
+        return !StringUtil.isEmpty(minimumMessageId) ? minimumMessageId
                 : MINIMUM_MESSAGE_ID;
     }
 
     public String getNotInRangeMessageId() {
-        return (notInRangeMessageId != null) ? notInRangeMessageId
+        return !StringUtil.isEmpty(notInRangeMessageId) ? notInRangeMessageId
                 : NOT_IN_RANGE_MESSAGE_ID;
     }
 
     public String getTypeMessageId() {
-        return (typeMessageId != null) ? typeMessageId : TYPE_MESSAGE_ID;
+        return !StringUtil.isEmpty(typeMessageId) ? typeMessageId
+                : TYPE_MESSAGE_ID;
     }
 
     public void setMaximumMessageId(String maximumMessageId) {

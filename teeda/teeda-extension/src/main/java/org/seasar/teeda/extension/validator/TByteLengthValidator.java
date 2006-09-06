@@ -44,9 +44,9 @@ public class TByteLengthValidator extends LengthValidator {
 
     private String charSet = null;
 
-    private String forValue;
+    private String target;
 
-    private String[] forValues;
+    private String[] targets;
 
     private String minimumMessageId;
 
@@ -56,7 +56,7 @@ public class TByteLengthValidator extends LengthValidator {
             Object value) throws FacesException {
         AssertionUtil.assertNotNull("context", context);
         AssertionUtil.assertNotNull("component", component);
-        if (!ValidatorUtil.isTargetCommand(context, forValues)) {
+        if (!ValidatorUtil.isTargetCommand(context, targets)) {
             return;
         }
         try {
@@ -95,20 +95,20 @@ public class TByteLengthValidator extends LengthValidator {
         this.charSet = charSet;
     }
 
-    public String getFor() {
-        return forValue;
+    public String getTarget() {
+        return target;
     }
 
-    public void setFor(String forValue) {
-        this.forValue = forValue;
-        forValues = StringUtil.split(forValue, ", ");
+    public void setTarget(String target) {
+        this.target = target;
+        targets = StringUtil.split(target, ", ");
     }
 
     public Object saveState(FacesContext context) {
         Object[] values = new Object[5];
         values[0] = super.saveState(context);
         values[1] = charSet;
-        values[2] = forValue;
+        values[2] = target;
         values[3] = maximumMessageId;
         values[4] = minimumMessageId;
         return values;
@@ -118,8 +118,8 @@ public class TByteLengthValidator extends LengthValidator {
         Object[] state = (Object[]) obj;
         super.restoreState(context, state[0]);
         charSet = (String) state[1];
-        forValue = (String) state[2];
-        setFor(forValue);
+        target = (String) state[2];
+        setTarget(target);
         maximumMessageId = (String) state[3];
         minimumMessageId = (String) state[4];
     }
@@ -130,12 +130,12 @@ public class TByteLengthValidator extends LengthValidator {
     }
 
     public String getMaximumMessageId() {
-        return (maximumMessageId != null) ? maximumMessageId
+        return !StringUtil.isEmpty(maximumMessageId) ? maximumMessageId
                 : MAXIMUM_MESSAGE_ID;
     }
 
     public String getMinimumMessageId() {
-        return (minimumMessageId != null) ? minimumMessageId
+        return !StringUtil.isEmpty(minimumMessageId) ? minimumMessageId
                 : MINIMUM_MESSAGE_ID;
     }
 
@@ -146,5 +146,4 @@ public class TByteLengthValidator extends LengthValidator {
     public void setMaximumMessageId(String maximumMessageId) {
         this.maximumMessageId = maximumMessageId;
     }
-
 }
