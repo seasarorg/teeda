@@ -120,6 +120,9 @@ public class HtmlCommandLinkRenderer extends AbstractRenderer {
 
         sb.append(" if (f.onsubmit) { f.onsubmit(); }");
         sb.append(" f.submit();");
+        if (target != null && target.trim().length() > 0) {
+            sb.append(" f.target = '';");
+        }
         sb.append(" return false;");
         RendererUtil.renderAttribute(writer, JsfConstants.ONCLICK_ATTR, sb
                 .toString());

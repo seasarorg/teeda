@@ -270,6 +270,7 @@ public class HtmlCommandLinkRendererTest extends RendererTest {
                 + " f['frm:__link_clicked__'].value = 'frm:x';"
                 + " f.target = '_blank';"
                 + " if (f.onsubmit) { f.onsubmit(); } f.submit();"
+                + " f.target = '';"
                 + " return false;\" target=\"_blank\">aaa</a>", getResponseText());
     }
     
@@ -317,6 +318,7 @@ public class HtmlCommandLinkRendererTest extends RendererTest {
                 + " f['zz:__link_clicked__'].value = 'zz:A';"
                 + " f.target = 'y';"
                 + " if (f.onsubmit) { f.onsubmit(); }" + " f.submit();"
+                + " f.target = '';"
                 + " return false;\"" + " accesskey=\"a\"" + " charset=\"b\""
                 + " coords=\"c\"" + " dir=\"d\"" + " hreflang=\"e\""
                 + " lang=\"f\"" + " onblur=\"g\"" + " ondblclick=\"i\""
