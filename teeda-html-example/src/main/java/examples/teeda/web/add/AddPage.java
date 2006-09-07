@@ -2,9 +2,9 @@ package examples.teeda.web.add;
 
 public class AddPage {
 
-	public static final String arg1_TRequiredValidator = "target=doCalculate";
+	public static final String arg1_TRequiredValidator = null;
 
-	public static final String arg2_TRequiredValidator = "target=doCalculate";
+	public static final String arg2_TRequiredValidator = null;
 
 	private int arg1;
 
