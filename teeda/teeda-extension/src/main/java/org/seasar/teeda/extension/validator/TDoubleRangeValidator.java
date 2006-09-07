@@ -43,6 +43,8 @@ public class TDoubleRangeValidator extends DoubleRangeValidator {
 
     private String typeMessageId;
 
+    private boolean convert = true;
+
     public TDoubleRangeValidator() {
         super();
     }
@@ -139,5 +141,30 @@ public class TDoubleRangeValidator extends DoubleRangeValidator {
 
     public void setTypeMessageId(String typeMessageId) {
         this.typeMessageId = typeMessageId;
+    }
+
+    public boolean isConvert() {
+        return convert;
+    }
+
+    public void setConvert(boolean convert) {
+        this.convert = convert;
+    }
+
+    protected Object[] convertArgs(Object[] args) {
+        return (isConvert()) ? convert(args) : args;
+    }
+
+    protected Object[] convert(Object[] args) {
+        Object[] ret = new Object[args.length];
+        for (int i = 0; i < args.length; i++) {
+            if (args[i] instanceof Double) {
+                double d = ((Double) args[i]).doubleValue();
+                ret[i] = String.valueOf(d);
+            } else {
+                ret[i] = args[i];
+            }
+        }
+        return ret;
     }
 }

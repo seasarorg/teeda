@@ -15,6 +15,7 @@
  */
 package javax.faces.validator;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.component.StateHolder;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -59,7 +60,6 @@ public class DoubleRangeValidator implements Validator, StateHolder {
         if (!(obj instanceof DoubleRangeValidator)) {
             return false;
         }
-
         DoubleRangeValidator v = (DoubleRangeValidator) obj;
         return maximum == v.maximum && minimum == v.minimum;
     }
@@ -109,46 +109,45 @@ public class DoubleRangeValidator implements Validator, StateHolder {
             Object value) throws ValidatorException {
         AssertionUtil.assertNotNull("context", context);
         AssertionUtil.assertNotNull("component", component);
-
         if (value == null) {
             return;
         }
-
         double doubleValue;
         try {
             doubleValue = DoubleConversionUtil.toDouble(value).doubleValue();
-
             if (maximum != Double.MAX_VALUE && minimum != Double.MIN_VALUE) {
                 if (doubleValue < minimum || doubleValue > maximum) {
                     Object[] args = { new Double(minimum), new Double(maximum),
                             UIComponentUtil.getLabel(component) };
-                    throw new ValidatorException(FacesMessageUtil.getMessage(
-                            context, getNotInRangeMessageId(), args),
+                    FacesMessage message = FacesMessageUtil.getMessage(context,
+                            getNotInRangeMessageId(), convertArgs(args));
+                    throw new ValidatorException(message,
                             getNotInRangeMessageId(), args);
                 }
-
             } else if (minimum != Double.MIN_VALUE) {
                 if (doubleValue < minimum) {
                     Object[] args = { new Double(minimum),
                             UIComponentUtil.getLabel(component) };
-                    throw new ValidatorException(FacesMessageUtil.getMessage(
-                            context, getMinimumMessageId(), args),
+                    FacesMessage message = FacesMessageUtil.getMessage(context,
+                            getMinimumMessageId(), convertArgs(args));
+                    throw new ValidatorException(message,
                             getMinimumMessageId(), args);
                 }
-
             } else if (maximum != Double.MAX_VALUE) {
                 if (doubleValue > maximum) {
                     Object[] args = { new Double(maximum),
                             UIComponentUtil.getLabel(component) };
-                    throw new ValidatorException(FacesMessageUtil.getMessage(
-                            context, getMaximumMessageId(), args),
+                    FacesMessage message = FacesMessageUtil.getMessage(context,
+                            getMaximumMessageId(), convertArgs(args));
+                    throw new ValidatorException(message,
                             getMaximumMessageId(), args);
                 }
             }
         } catch (NumberFormatException e) {
             Object[] args = { UIComponentUtil.getLabel(component) };
-            throw new ValidatorException(FacesMessageUtil.getMessage(context,
-                    getTypeMessageId(), args), getTypeMessageId(), args);
+            FacesMessage message = FacesMessageUtil.getMessage(context,
+                    getTypeMessageId(), args);
+            throw new ValidatorException(message, getTypeMessageId(), args);
         }
 
     }
@@ -167,5 +166,9 @@ public class DoubleRangeValidator implements Validator, StateHolder {
 
     protected String getTypeMessageId() {
         return TYPE_MESSAGE_ID;
+    }
+
+    protected Object[] convertArgs(Object[] args) {
+        return args;
     }
 }
