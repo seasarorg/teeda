@@ -38,7 +38,7 @@ public class ResourceBundleDescImplTest extends TestCase {
         String packageName = ClassUtil.getPackageName(this.getClass());
         ResourceBundleDescImpl rbd = new ResourceBundleDescImpl(packageName
                 + ".aaa", Locale.JAPANESE);
-        assertNotNull(rbd.getProperties(this.getClass().getClassLoader()));
+        assertNotNull(rbd.getBundle());
     }
 
     public void testIsModified() throws Exception {

@@ -24,7 +24,6 @@ public interface ComponentLookupStrategy {
 
     public Object getComponentByClass(Class componentClazz);
 
-    public void setNamespace(String namespace);
+    public void addNamespace(String namespace);
 
-    public String getNamespace();
 }

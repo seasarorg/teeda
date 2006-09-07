@@ -16,7 +16,8 @@
 package org.seasar.teeda.extension.html;
 
 import java.util.Locale;
-import java.util.Properties;
+
+import org.seasar.teeda.extension.util.MessageResourceBundle;
 
 /**
  * @author shot
@@ -27,5 +28,5 @@ public interface ResourceBundleDesc {
 
     String getPropertiesName();
 
-    Properties getProperties(ClassLoader classLoader);
+    MessageResourceBundle getBundle();
 }

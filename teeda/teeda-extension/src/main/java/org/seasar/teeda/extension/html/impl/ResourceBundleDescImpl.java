@@ -17,6 +17,7 @@ package org.seasar.teeda.extension.html.impl;
 
 import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.InputStream;
 import java.util.Locale;
 import java.util.Properties;
 
@@ -26,6 +27,7 @@ import org.seasar.framework.util.PropertiesUtil;
 import org.seasar.framework.util.ResourceUtil;
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.extension.html.ResourceBundleDesc;
+import org.seasar.teeda.extension.util.MessageResourceBundle;
 
 /**
  * @author shot
@@ -42,8 +44,10 @@ public class ResourceBundleDescImpl implements ResourceBundleDesc {
 
     private String propertiesName;
 
-    private Properties properties;
-
+    private String defaultPropertiesName;
+    
+    private MessageResourceBundle bundle;
+    
     private static final String PROPERTIES_SUFFIX = ".properties";
 
     public ResourceBundleDescImpl(String baseName, Locale locale) {
@@ -69,34 +73,43 @@ public class ResourceBundleDescImpl implements ResourceBundleDesc {
 
     protected File createFile() {
         final String basePropName = StringUtil.replace(baseName, ".", "/");
+        this.defaultPropertiesName = basePropName + PROPERTIES_SUFFIX;
         String propertiesName = basePropName + "_" + locale.toString()
                 + PROPERTIES_SUFFIX;
         File file = ResourceUtil.getResourceAsFile(propertiesName);
         if (!file.exists()) {
-            propertiesName = basePropName + PROPERTIES_SUFFIX;
+            propertiesName = this.defaultPropertiesName;
             file = ResourceUtil.getResourceAsFile(propertiesName);
         }
         this.propertiesName = propertiesName;
         return file;
     }
 
-    public Properties getProperties(ClassLoader classLoader) {
-        if (properties != null) {
-            return properties;
+    public MessageResourceBundle getBundle() {
+        if (bundle != null) {
+            return bundle;
         }
-        if (StringUtil.isEmpty(propertiesName)) {
+        Properties prop = getProperties(propertiesName);
+        Properties parentProp = getProperties(defaultPropertiesName);
+        this.bundle = new MessageResourceBundle(prop, parentProp);
+        return this.bundle;
+    }
+
+    protected Properties getProperties(String propName) {
+        if (StringUtil.isEmpty(propName)) {
             return null;
         }
-        BufferedInputStream bs = new BufferedInputStream(classLoader
-                .getResourceAsStream(propertiesName));
+        InputStream is = ResourceUtil.getResourceAsStreamNoException(propName);
+        if(is == null) {
+            return null;
+        }
+        BufferedInputStream bs = new BufferedInputStream(is);
         try {
             Properties properties = new Properties();
             PropertiesUtil.load(properties, bs);
-            this.properties = properties;
             return properties;
         } finally {
             InputStreamUtil.close(bs);
         }
     }
-
 }

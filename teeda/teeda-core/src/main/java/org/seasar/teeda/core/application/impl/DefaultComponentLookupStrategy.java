@@ -15,6 +15,10 @@
  */
 package org.seasar.teeda.core.application.impl;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.application.ComponentLookupStrategy;
@@ -25,8 +29,11 @@ import org.seasar.teeda.core.util.DIContainerUtil;
  */
 public class DefaultComponentLookupStrategy implements ComponentLookupStrategy {
 
-    private String namespace = JsfConstants.TEEDA_NAMESPACE;
+    private List namespaces = new ArrayList();
 
+    public DefaultComponentLookupStrategy() {
+        namespaces.add(JsfConstants.TEEDA_NAMESPACE);
+    }
     public Object getComponentByName(String componentName) {
         if (StringUtil.isEmpty(componentName)) {
             throw new IllegalArgumentException();
@@ -36,7 +43,14 @@ public class DefaultComponentLookupStrategy implements ComponentLookupStrategy {
         if (component != null) {
             return component;
         }
-        return getComponentByDefaultNamespace(componentName);
+        for(Iterator itr = namespaces.iterator();itr.hasNext();) {
+            String namespace = (String) itr.next();
+            component = getComponentByDefaultNamespace(namespace, componentName);
+            if(component != null) {
+                return component;
+            }
+        }
+        return null;
     }
 
     public Object getComponentByClass(Class componentClazz) {
@@ -46,16 +60,14 @@ public class DefaultComponentLookupStrategy implements ComponentLookupStrategy {
         return DIContainerUtil.getComponentNoException(componentClazz);
     }
 
-    public void setNamespace(String namespace) {
-        this.namespace = namespace;
+    public void addNamespace(String namespace) {
+        if(!StringUtil.isEmpty(namespace)) {
+            this.namespaces.add(namespace);
+        }
     }
 
-    public String getNamespace() {
-        return namespace;
-    }
-
-    private Object getComponentByDefaultNamespace(String componentName) {
-        return DIContainerUtil.getComponentNoException(getNamespace()
+    private Object getComponentByDefaultNamespace(String namespace, String componentName) {
+        return DIContainerUtil.getComponentNoException(namespace
                 + JsfConstants.NS_SEP + componentName);
     }
 }

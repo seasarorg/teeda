@@ -44,16 +44,16 @@ public class HotdeployResourceBundle {
         AssertionUtil.assertNotNull("classLoader", classLoader);
         final ResourceBundleDesc resourceBundleDesc = (ResourceBundleDesc) cache
                 .get(baseName);
-        Properties prop = null;
+        MessageResourceBundle bundle = null;
         if (resourceBundleDesc == null || resourceBundleDesc.isModified(locale)) {
             ResourceBundleDesc rbd = new ResourceBundleDescImpl(baseName,
                     locale);
-            prop = rbd.getProperties(classLoader);
+            bundle = rbd.getBundle();
             cache.put(baseName, rbd);
         } else {
-            prop = resourceBundleDesc.getProperties(classLoader);
+            bundle = resourceBundleDesc.getBundle();
         }
-        return new MessageResourceBundle(prop);
+        return bundle;
     }
 
     public static void clear() {

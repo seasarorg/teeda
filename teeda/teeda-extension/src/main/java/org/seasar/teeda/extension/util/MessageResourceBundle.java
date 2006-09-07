@@ -24,11 +24,17 @@ public class MessageResourceBundle {
 
     private Properties prop;
 
-    public MessageResourceBundle(Properties prop) {
+    private Properties parent;
+
+    public MessageResourceBundle(Properties prop, Properties parent) {
         this.prop = prop;
+        this.parent = parent;
     }
 
     public String get(String key) {
-        return prop.getProperty(key);
+        if(prop.containsKey(key)) {
+            return prop.getProperty(key);
+        }
+        return (parent != null) ? parent.getProperty(key) : null;
     }
 }

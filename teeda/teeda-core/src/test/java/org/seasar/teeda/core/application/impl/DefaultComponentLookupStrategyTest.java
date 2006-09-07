@@ -48,6 +48,17 @@ public class DefaultComponentLookupStrategyTest extends TeedaTestCase {
         assertTrue(o instanceof Hoge);
     }
     
+    public void testNamespace() throws Exception{
+        S2Container container = new S2ContainerImpl();
+        container.setNamespace("aaa");
+        container.register(Hoge.class);
+        getContainer().include(container);
+        DefaultComponentLookupStrategy st = new DefaultComponentLookupStrategy();
+        st.addNamespace("aaa");
+        Object o = st.getComponentByClass(Hoge.class);
+        assertTrue(o instanceof Hoge);
+    }
+    
     public static class Hoge {
         
     }
