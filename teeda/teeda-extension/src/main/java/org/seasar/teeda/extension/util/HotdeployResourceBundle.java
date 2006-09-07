@@ -15,105 +15,49 @@
  */
 package org.seasar.teeda.extension.util;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.Properties;
 
-import org.seasar.framework.util.StringUtil;
+import org.seasar.framework.util.AssertionUtil;
+import org.seasar.teeda.extension.html.ResourceBundleDesc;
+import org.seasar.teeda.extension.html.impl.ResourceBundleDescImpl;
 
 /**
  * @author shot
  */
 public class HotdeployResourceBundle {
 
-    //TODO impl this.
+    //TODO testing
     private static Map cache = new HashMap();
 
-    public static ResourceBundle getBundle(String baseName, Locale locale,
-            ClassLoader classLoader) {
+    public static MessageResourceBundle getBundle(String baseName,
+            Locale locale, ClassLoader classLoader) {
         return getBundleInternal(baseName, locale, classLoader);
     }
 
-    private static ResourceBundle getBundleInternal(String baseName,
+    private static MessageResourceBundle getBundleInternal(String baseName,
             Locale locale, ClassLoader classLoader) {
-        ResourceBundleKey key = new ResourceBundleKey(baseName, locale);
-        ResourceBundleDesc resourceBundleDesc = (ResourceBundleDesc) cache
-                .get(key);
-        if (resourceBundleDesc != null) {
-            if (resourceBundleDesc.isModified()) {
-
-            }
+        AssertionUtil.assertNotNull("baseName", baseName);
+        AssertionUtil.assertNotNull("locale", locale);
+        AssertionUtil.assertNotNull("classLoader", classLoader);
+        final ResourceBundleDesc resourceBundleDesc = (ResourceBundleDesc) cache
+                .get(baseName);
+        Properties prop = null;
+        if (resourceBundleDesc == null || resourceBundleDesc.isModified(locale)) {
+            ResourceBundleDesc rbd = new ResourceBundleDescImpl(baseName,
+                    locale);
+            prop = rbd.getProperties(classLoader);
+            cache.put(baseName, rbd);
+        } else {
+            prop = resourceBundleDesc.getProperties(classLoader);
         }
-        ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale,
-                classLoader);
-        return bundle;
+        return new MessageResourceBundle(prop);
     }
 
-    public static class ResourceBundleKey {
-        private String baseName;
-
-        private Locale locale;
-
-        public ResourceBundleKey(String baseName, Locale locale) {
-            this.baseName = baseName;
-            this.locale = locale;
-        }
-
-        public String getBaseName() {
-            return baseName;
-        }
-
-        public Locale getLocale() {
-            return locale;
-        }
-
+    public static void clear() {
+        cache.clear();
     }
 
-    public static class ResourceBundleDesc {
-
-        private String baseName;
-
-        private Locale locale;
-
-        private File file;
-
-        private long lastModified;
-
-        private static final String PROPERTIES_SUFFIX = ".properties";
-
-        public ResourceBundleDesc(String baseName, Locale locale) {
-            this.baseName = baseName;
-            this.locale = locale;
-            String propertiesName = StringUtil.replace(baseName, ".", "/")
-                    + "_" + locale.toString() + PROPERTIES_SUFFIX;
-            this.file = new File(propertiesName);
-            if (!file.exists()) {
-                propertiesName = StringUtil.replace(baseName, ".", "/")
-                        + PROPERTIES_SUFFIX;
-                this.file = new File(propertiesName);
-            }
-        }
-
-        public String getBaseName() {
-            return baseName;
-        }
-
-        public File getFile() {
-            return file;
-        }
-
-        public boolean isModified() {
-            if (file == null) {
-                return false;
-            }
-            return file.lastModified() > lastModified;
-        }
-
-        public Locale getLocale() {
-            return locale;
-        }
-
-    }
 }
