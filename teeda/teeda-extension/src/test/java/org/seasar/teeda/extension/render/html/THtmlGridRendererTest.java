@@ -282,7 +282,7 @@ public class THtmlGridRendererTest extends RendererTest {
         // ## Arrange ##
         htmlGrid.setId("someGridY");
         htmlGrid.setWidth(String.valueOf(170));
-        htmlGrid.setHeight(String.valueOf(120));
+        htmlGrid.setHeight(String.valueOf(150));
         htmlGrid.setItemsName("someItems");
         htmlGrid.setScrollHorizontal(false);
         htmlGrid.setScrollVertical(true);
@@ -292,6 +292,26 @@ public class THtmlGridRendererTest extends RendererTest {
         // ## Assert ##
         final String readText = TestUtil.readText(getClass(),
                 "testEncode_LeftFixed_Header_Body_Y.html", "UTF-8");
+        final String expected = extract(readText);
+        Diff diff = diff(expected, getResponseText());
+        System.out.println(getResponseText());
+        assertEquals(diff.toString(), true, diff.identical());
+    }
+
+    public void testEncode_LeftFixed_Header_Body() throws Exception {
+        // ## Arrange ##
+        htmlGrid.setId("someGrid");
+        htmlGrid.setWidth(String.valueOf(170));
+        htmlGrid.setHeight(String.valueOf(150));
+        htmlGrid.setItemsName("someItems");
+        htmlGrid.setScrollHorizontal(false);
+        htmlGrid.setScrollVertical(false);
+
+        actLeftFixed();
+
+        // ## Assert ##
+        final String readText = TestUtil.readText(getClass(),
+                "testEncode_LeftFixed_Header_Body.html", "UTF-8");
         final String expected = extract(readText);
         Diff diff = diff(expected, getResponseText());
         System.out.println(getResponseText());
@@ -436,6 +456,26 @@ public class THtmlGridRendererTest extends RendererTest {
         // ## Assert ##
         final String readText = TestUtil.readText(getClass(),
                 "testEncode_Header_Body_Y.html", "UTF-8");
+        final String expected = extract(readText);
+        Diff diff = diff(expected, getResponseText());
+        System.out.println(getResponseText());
+        assertEquals(diff.toString(), true, diff.identical());
+    }
+
+    public void testEncode_Header_Body() throws Exception {
+        // ## Arrange ##
+        htmlGrid.setId("someGrid");
+        htmlGrid.setWidth(String.valueOf(170));
+        htmlGrid.setHeight(String.valueOf(120));
+        htmlGrid.setItemsName("someItems");
+        htmlGrid.setScrollHorizontal(false);
+        htmlGrid.setScrollVertical(false);
+
+        actNoLeftFixed();
+
+        // ## Assert ##
+        final String readText = TestUtil.readText(getClass(),
+                "testEncode_Header_Body.html", "UTF-8");
         final String expected = extract(readText);
         Diff diff = diff(expected, getResponseText());
         System.out.println(getResponseText());

@@ -61,7 +61,9 @@ public class THtmlGridRenderer extends TForEachRenderer {
 
     private static final String LEFT_FIXED_CLASS_NAME = "T_leftFixed";
 
-    private static final String LEFT_HEADER_TABLE = "LeftHeaderTable";
+    private static final String LEFT_HEADER = "LeftHeader";
+
+    private static final String LEFT_HEADER_TABLE = LEFT_HEADER + "Table";
 
     private static final String RIGHT_HEADER = "RightHeader";
 
@@ -70,6 +72,10 @@ public class THtmlGridRenderer extends TForEachRenderer {
     private static final String RIGHT_BODY = "RightBody";
 
     private static final String RIGHT_BODY_TABLE = RIGHT_BODY + "Table";
+
+    private static final String LEFT_BODY = "LeftBody";
+
+    private static final String LEFT_BODY_TABLE = LEFT_BODY + "Table";
 
     private static final String GRID_ATTRIBUTE = THtmlGrid.class.getName()
             + ".GRID_ATTRIBUTE";
@@ -179,7 +185,6 @@ public class THtmlGridRenderer extends TForEachRenderer {
         encodeGridAdjustJavaScript(context, htmlGrid, writer, attribute);
     }
 
-    // TODO
     private void encodeGridAdjustJavaScript(FacesContext context,
             THtmlGrid htmlGrid, ResponseWriter writer, GridAttribute attribute)
             throws IOException {
@@ -207,6 +212,7 @@ public class THtmlGridRenderer extends TForEachRenderer {
         writer.startElement(JsfConstants.TD_ELEM, header);
 
         final String id = getIdForRender(context, htmlGrid);
+
         // encodeLeftHeader
         if (attribute.hasLeftFixCols()) {
             writer.startElement(JsfConstants.TABLE_ELEM, header);
@@ -352,12 +358,13 @@ public class THtmlGridRenderer extends TForEachRenderer {
         final Object[] items = htmlGrid.getItems(context);
         final String itemName = htmlGrid.getItemName();
         final String indexName = htmlGrid.getIndexName();
+        final String id = getIdForRender(context, htmlGrid);
 
         // encodeLeftBody
         if (attribute.hasLeftFixCols()) {
             writer.startElement(JsfConstants.DIV_ELEM, body);
-            RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR,
-                    getIdForRender(context, htmlGrid) + "LeftBody");
+            RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR, id
+                    + LEFT_BODY);
             if (htmlGrid.isScrollVertical()) {
                 RendererUtil.renderAttribute(writer, JsfConstants.STYLE_ATTR,
                         "overflow:hidden; height:"
@@ -365,8 +372,8 @@ public class THtmlGridRenderer extends TForEachRenderer {
             }
 
             writer.startElement(JsfConstants.TABLE_ELEM, body);
-            RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR,
-                    getIdForRender(context, htmlGrid) + "LeftBodyTable");
+            RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR, id
+                    + LEFT_BODY_TABLE);
             renderInnerTableAttributes(writer);
             writer.startElement(JsfConstants.TBODY_ELEM, body);
 
@@ -396,40 +403,40 @@ public class THtmlGridRenderer extends TForEachRenderer {
 
         // encodeRightBody
         writer.startElement(JsfConstants.DIV_ELEM, body);
-        RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR,
-                getIdForRender(context, htmlGrid) + RIGHT_BODY);
+        RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR, id
+                + RIGHT_BODY);
         if (htmlGrid.isScrollHorizontal() && htmlGrid.isScrollVertical()) {
             RendererUtil.renderAttribute(writer, JsfConstants.STYLE_ATTR,
                     "overflow:scroll; height:" + attribute.getRightBodyHeight()
                             + "px;");
-            String v = "document.all." + htmlGrid.getId()
+            String onscroll = "document.all." + id
                     + "RightHeader.scrollLeft=this.scrollLeft;";
             if (attribute.hasLeftFixCols()) {
-                v = v + " document.all." + htmlGrid.getId()
+                onscroll = onscroll + " document.all." + id
                         + "LeftBody.scrollTop=this.scrollTop;";
             }
-            RendererUtil.renderAttribute(writer, JsfConstants.ONSCROLL_ATTR, v);
+            RendererUtil.renderAttribute(writer, JsfConstants.ONSCROLL_ATTR,
+                    onscroll);
         } else if (htmlGrid.isScrollHorizontal()) {
             RendererUtil.renderAttribute(writer, JsfConstants.STYLE_ATTR,
                     "overflow-x:scroll;");
             RendererUtil.renderAttribute(writer, JsfConstants.ONSCROLL_ATTR,
-                    "document.all." + htmlGrid.getId()
+                    "document.all." + id
                             + "RightHeader.scrollLeft=this.scrollLeft;");
         } else if (htmlGrid.isScrollVertical()) {
             RendererUtil.renderAttribute(writer, JsfConstants.STYLE_ATTR,
-                    "overflow-y:scroll;" + " height:"
+                    "overflow-y:scroll; height:"
                             + attribute.getRightBodyHeight() + "px;");
             if (attribute.hasLeftFixCols()) {
                 RendererUtil.renderAttribute(writer,
-                        JsfConstants.ONSCROLL_ATTR, "document.all."
-                                + htmlGrid.getId()
+                        JsfConstants.ONSCROLL_ATTR, "document.all." + id
                                 + "LeftBody.scrollTop=this.scrollTop;");
             }
         }
 
         writer.startElement(JsfConstants.TABLE_ELEM, body);
-        RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR,
-                getIdForRender(context, htmlGrid) + RIGHT_BODY_TABLE);
+        RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR, id
+                + RIGHT_BODY_TABLE);
         renderInnerTableAttributes(writer);
         writer.startElement(JsfConstants.TBODY_ELEM, body);
 
