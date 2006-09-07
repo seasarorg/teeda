@@ -13,13 +13,19 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.extension.annotation.validator;
+package org.seasar.teeda.extension.annotation.handler;
+
+import junit.framework.TestCase;
 
 /**
- * @author shot
- * @org.seasar.teeda.extension.annotation.backport175.ValidatorTarget(id=teeda.core.RegularExpression)
+ * @author higa
+ * 
  */
-public interface RegularExpressionValidator {
+public class TigerValidatorAnnotationHandlerFactoryTest extends TestCase {
 
-	String pattern();
+	public void testGetAnnotationHandler() throws Exception {
+		ValidatorAnnotationHandler handler = ValidatorAnnotationHandlerFactory
+				.getAnnotationHandler();
+		assertEquals(TigerValidatorAnnotationHandler.class, handler.getClass());
+	}
 }

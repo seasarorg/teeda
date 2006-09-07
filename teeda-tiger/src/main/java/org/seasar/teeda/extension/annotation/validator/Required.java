@@ -15,13 +15,20 @@
  */
 package org.seasar.teeda.extension.annotation.validator;
 
-/**
- * @author shot
- * @org.seasar.teeda.extension.annotation.backport175.ValidatorTarget(id=javax.faces.DoubleRange)
- */
-public interface DoubleRangeValidator {
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-	double minimum();
-	
-	double maximum();
+/**
+ * @author higa
+ */
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.FIELD)
+@Validator("TRequiredValidator")
+public @interface Required {
+
+	String target() default "";
+
+	String messageId() default "";
 }

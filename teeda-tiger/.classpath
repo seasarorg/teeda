@@ -3,5 +3,8 @@
 	<classpathentry kind="src" path="src/main/java"/>
 	<classpathentry output="target/test-classes" kind="src" path="src/test/java"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/seasar2"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/teeda"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/s2-tiger"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

@@ -15,13 +15,31 @@
  */
 package org.seasar.teeda.extension.annotation.validator;
 
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
 /**
  * @author shot
- * @org.seasar.teeda.extension.annotation.backport175.ValidatorTarget(id=teeda.core.ByteLength)
+ * @author higa
  */
-public interface ByteLengthValidator {
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.FIELD)
+@Validator("TDoubleRangeValidator")
+public @interface DoubleRange {
 
-	int minimum();
-	
-	int maximum();
+	double minimum() default Double.MIN_VALUE;
+
+	double maximum() default Double.MAX_VALUE;
+
+	String target() default "";
+
+	String maximumMessageId() default "";
+
+	String minimumMessageId() default "";
+
+	String notInRangeMessageId() default "";
+
+	String typeMessageId() default "";
 }

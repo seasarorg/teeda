@@ -15,13 +15,31 @@
  */
 package org.seasar.teeda.extension.annotation.validator;
 
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
 /**
  * @author shot
- * @org.seasar.teeda.extension.annotation.backport175.ValidatorTarget(id=javax.faces.LongRange)
+ * @author higa
  */
-public interface LongRangeValidator {
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.FIELD)
+@Validator("TLongRangeValidator")
+public @interface LongRange {
 
-	long minimum();
-	
-	long maximum();
+	long minimum() default Long.MIN_VALUE;
+
+	long maximum() default Long.MAX_VALUE;
+
+	String target() default "";
+
+	String maximumMessageId() default "";
+
+	String minimumMessageId() default "";
+
+	String notInRangeMessageId() default "";
+
+	String typeMessageId() default "";
 }

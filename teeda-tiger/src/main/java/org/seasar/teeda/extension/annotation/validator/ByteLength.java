@@ -15,10 +15,27 @@
  */
 package org.seasar.teeda.extension.annotation.validator;
 
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
 /**
  * @author shot
+ * @author higa
  */
-public interface ValidatorTarget {
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.FIELD)
+@Validator("TByteLengthValidator")
+public @interface ByteLength {
 
-	String id();
+	int minimum() default -1;
+
+	int maximum() default -1;
+
+	String target() default "";
+
+	String minimumMessageId() default "";
+
+	String maximumMessageId() default "";
 }
