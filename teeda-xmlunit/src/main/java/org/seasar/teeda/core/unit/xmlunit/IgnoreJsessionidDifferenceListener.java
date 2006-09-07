@@ -22,21 +22,23 @@ import org.w3c.dom.Node;
 
 /**
  * @author manhole
+ * @author YOKOTA Takehiko
  */
 public class IgnoreJsessionidDifferenceListener implements DifferenceListener {
 
     public int differenceFound(Difference difference) {
         if (DifferenceConstants.ATTR_VALUE.getId() == difference.getId()) {
             String nodeName = difference.getControlNodeDetail().getNode()
-                    .getNodeName();
+                .getNodeName();
             if ("href".equalsIgnoreCase(nodeName)
-                    || "src".equalsIgnoreCase(nodeName)
-                    || "action".equalsIgnoreCase(nodeName)) {
+                || "src".equalsIgnoreCase(nodeName)
+                || "action".equalsIgnoreCase(nodeName)) {
                 String controlNodeValue = difference.getControlNodeDetail()
-                        .getValue();
+                    .getValue();
                 String testNodeValue = difference.getTestNodeDetail()
-                        .getValue();
-                if (controlNodeValue.equals(removeJsessionid(testNodeValue))) {
+                    .getValue();
+                if (removeJsessionid(controlNodeValue).equals(
+                    removeJsessionid(testNodeValue))) {
                     System.out.println("recover: jsessionid");
                     return DifferenceListener.RETURN_IGNORE_DIFFERENCE_NODES_SIMILAR;
                 }
