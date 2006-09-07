@@ -74,13 +74,14 @@ public class TDoubleRangeValidator extends DoubleRangeValidator {
     }
 
     public Object saveState(FacesContext context) {
-        Object[] state = new Object[6];
+        Object[] state = new Object[7];
         state[0] = super.saveState(context);
         state[1] = target;
         state[2] = maximumMessageId;
         state[3] = minimumMessageId;
         state[4] = notInRangeMessageId;
         state[5] = typeMessageId;
+        state[6] = new Boolean(convert);
         return state;
     }
 
@@ -93,6 +94,7 @@ public class TDoubleRangeValidator extends DoubleRangeValidator {
         minimumMessageId = (String) state[3];
         notInRangeMessageId = (String) state[4];
         typeMessageId = (String) state[5];
+        convert = ((Boolean) state[6]).booleanValue();
     }
 
     public String getTarget() {

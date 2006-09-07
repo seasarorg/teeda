@@ -101,6 +101,7 @@ public class TLongRangeValidatorTest extends TeedaTestCase {
         validator.setMinimumMessageId("b");
         validator.setNotInRangeMessageId("c");
         validator.setTypeMessageId("d");
+        validator.setConvert(false);
         Object state = validator.saveState(getFacesContext());
         validator = new TLongRangeValidator();
         validator.restoreState(getFacesContext(), state);
@@ -109,6 +110,7 @@ public class TLongRangeValidatorTest extends TeedaTestCase {
         assertEquals("b", validator.getMinimumMessageId());
         assertEquals("c", validator.getNotInRangeMessageId());
         assertEquals("d", validator.getTypeMessageId());
+        assertFalse(validator.isConvert());
     }
 
 }

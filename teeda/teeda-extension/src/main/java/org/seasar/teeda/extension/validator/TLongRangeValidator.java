@@ -43,6 +43,8 @@ public class TLongRangeValidator extends LongRangeValidator {
 
     private String typeMessageId;
 
+    private boolean convert = true;
+
     public TLongRangeValidator() {
         super();
     }
@@ -72,13 +74,14 @@ public class TLongRangeValidator extends LongRangeValidator {
     }
 
     public Object saveState(FacesContext context) {
-        Object[] state = new Object[6];
+        Object[] state = new Object[7];
         state[0] = super.saveState(context);
         state[1] = target;
         state[2] = maximumMessageId;
         state[3] = minimumMessageId;
         state[4] = notInRangeMessageId;
         state[5] = typeMessageId;
+        state[6] = new Boolean(convert);
         return state;
     }
 
@@ -91,6 +94,7 @@ public class TLongRangeValidator extends LongRangeValidator {
         minimumMessageId = (String) state[3];
         notInRangeMessageId = (String) state[4];
         typeMessageId = (String) state[5];
+        convert = ((Boolean) state[6]).booleanValue();
     }
 
     public String getTarget() {
@@ -139,6 +143,31 @@ public class TLongRangeValidator extends LongRangeValidator {
 
     public void setTypeMessageId(String typeMessageId) {
         this.typeMessageId = typeMessageId;
+    }
+
+    public boolean isConvert() {
+        return convert;
+    }
+
+    public void setConvert(boolean convert) {
+        this.convert = convert;
+    }
+
+    protected Object[] convertArgs(Object[] args) {
+        return (isConvert()) ? convert(args) : args;
+    }
+
+    protected Object[] convert(Object[] args) {
+        Object[] ret = new Object[args.length];
+        for (int i = 0; i < args.length; i++) {
+            if (args[i] instanceof Long) {
+                long l = ((Long) args[i]).longValue();
+                ret[i] = String.valueOf(l);
+            } else {
+                ret[i] = args[i];
+            }
+        }
+        return ret;
     }
 
 }

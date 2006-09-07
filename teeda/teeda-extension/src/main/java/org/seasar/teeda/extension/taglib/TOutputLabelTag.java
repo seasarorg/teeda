@@ -95,7 +95,7 @@ public class TOutputLabelTag extends OutputLabelTag {
                 value = (String) map.get(defaultKey);
             }
         }
-        if (value == null) {
+        if (value == null && defaultPropertiesName != null) {
             Map map = ResourceBundleUtil.convertMap(defaultPropertiesName,
                     locale);
             value = (String) map.get(defaultKey);

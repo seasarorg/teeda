@@ -80,9 +80,15 @@ public class TDoubleRangeValidatorTest extends TeedaTestCase {
     public void testSaveAndRestore() throws Exception {
         TDoubleRangeValidator validator = new TDoubleRangeValidator();
         validator.setTarget("aaa");
+        validator.setMaximumMessageId("bbb");
+        validator.setMinimumMessageId("ccc");
+        validator.setConvert(false);
         Object state = validator.saveState(getFacesContext());
         validator = new TDoubleRangeValidator();
         validator.restoreState(getFacesContext(), state);
         assertEquals("aaa", validator.getTarget());
+        assertEquals("bbb", validator.getMaximumMessageId());
+        assertEquals("ccc", validator.getMinimumMessageId());
+        assertFalse(validator.isConvert());
     }
 }

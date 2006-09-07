@@ -17,15 +17,13 @@ package org.seasar.teeda.extension.html.factory;
 
 import java.util.Map;
 
-import javax.faces.internal.FacesConfigOptions;
-
 import org.seasar.framework.convention.NamingConvention;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.PageDesc;
-import org.seasar.teeda.extension.util.NamingConventionUtil;
+import org.seasar.teeda.extension.util.LabelUtil;
 
 /**
  * @author shot
@@ -33,8 +31,6 @@ import org.seasar.teeda.extension.util.NamingConventionUtil;
 public class OutputLabelFactory extends AbstractElementProcessorFactory {
 
     private static final String TAG_NAME = "outputLabel";
-
-    private static final String LABEL = "label";
 
     private NamingConvention namingConvention;
 
@@ -56,33 +52,17 @@ public class OutputLabelFactory extends AbstractElementProcessorFactory {
                 .customizeProperties(properties, elementNode, pageDesc,
                         actionDesc);
         String pageName = pageDesc.getPageName();
-        String packageName = NamingConventionUtil.getPackageName(
-                namingConvention, pageName);
-        String path = namingConvention.fromPageNameToPath(pageName);
-        String defaultSuffix = FacesConfigOptions.getDefaultSuffix();
-        if (path.endsWith(defaultSuffix)) {
-            path = path.substring(0, path.lastIndexOf(defaultSuffix));
-        }
-        int lastIndex = path.lastIndexOf('/');
-        if (lastIndex > 0) {
-            path = path.substring(lastIndex + 1);
-        }
-        String propertiesName = packageName + "." + LABEL;
-        String key = path + "." + elementNode.getId();
+        String propertiesName = LabelUtil.getPropertiesName(namingConvention,
+                pageName);
+        String key = LabelUtil.getLabelKeySuffix(namingConvention, pageName)
+                + "." + elementNode.getId();
         properties.put(ExtensionConstants.KEY_ATTR, key);
         properties.put(ExtensionConstants.PROPERTIES_NAME_ATTR, propertiesName);
-
-        String subAppRoot = namingConvention.getSubApplicationRootPackageName();
-        String defaultPropertiesName = null;
-        if (packageName.lastIndexOf(subAppRoot) > 0) {
-            defaultPropertiesName = packageName.substring(0, packageName
-                    .lastIndexOf(subAppRoot)
-                    + subAppRoot.length())
-                    + "." + LABEL;
-            properties.put(ExtensionConstants.DEFAULT_PROPERTIES_NAME_ATTR,
-                    defaultPropertiesName);
-            properties.put(ExtensionConstants.DEFAULT_KEY, elementNode.getId());
-        }
+        properties.put(ExtensionConstants.DEFAULT_KEY, elementNode.getId());
+        String defaultPropertiesName = LabelUtil
+                .getDefaultApplicationPropertiesName(namingConvention, pageName);
+        properties.put(ExtensionConstants.DEFAULT_PROPERTIES_NAME_ATTR,
+                defaultPropertiesName);
     }
 
     protected String getTagName() {

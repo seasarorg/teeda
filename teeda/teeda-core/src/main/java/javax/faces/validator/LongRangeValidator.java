@@ -16,6 +16,7 @@
 package javax.faces.validator;
 
 import javax.faces.FacesException;
+import javax.faces.application.FacesMessage;
 import javax.faces.component.StateHolder;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -63,7 +64,6 @@ public class LongRangeValidator implements Validator, StateHolder {
         if (value == null) {
             return;
         }
-
         long longValue = 0;
         try {
             longValue = LongConversionUtil.toLong(value).longValue();
@@ -72,26 +72,27 @@ public class LongRangeValidator implements Validator, StateHolder {
                 if (longValue < minimum || longValue > maximum) {
                     Object[] args = { new Long(minimum), new Long(maximum),
                             UIComponentUtil.getLabel(component) };
-                    throw new ValidatorException(FacesMessageUtil.getMessage(
-                            context, getNotInRangeMessageId(), args),
+                    FacesMessage message = FacesMessageUtil.getMessage(context,
+                            getNotInRangeMessageId(), convertArgs(args));
+                    throw new ValidatorException(message,
                             getNotInRangeMessageId(), args);
                 }
-
             } else if (minimum > Long.MIN_VALUE) {
                 if (longValue < minimum) {
                     Object[] args = { new Long(minimum),
                             UIComponentUtil.getLabel(component) };
-                    throw new ValidatorException(FacesMessageUtil.getMessage(
-                            context, getMinimumMessageId(), args),
+                    FacesMessage message = FacesMessageUtil.getMessage(context,
+                            getMinimumMessageId(), convertArgs(args));
+                    throw new ValidatorException(message,
                             getMinimumMessageId(), args);
                 }
-
             } else if (maximum < Long.MAX_VALUE) {
                 if (longValue > maximum) {
                     Object[] args = { new Long(maximum),
                             UIComponentUtil.getLabel(component) };
-                    throw new ValidatorException(FacesMessageUtil.getMessage(
-                            context, getMaximumMessageId(), args),
+                    FacesMessage message = FacesMessageUtil.getMessage(context,
+                            getMaximumMessageId(), convertArgs(args));
+                    throw new ValidatorException(message,
                             getMaximumMessageId(), args);
                 }
             }
@@ -166,5 +167,9 @@ public class LongRangeValidator implements Validator, StateHolder {
 
     protected String getTypeMessageId() {
         return TYPE_MESSAGE_ID;
+    }
+
+    protected Object[] convertArgs(Object[] args) {
+        return args;
     }
 }
