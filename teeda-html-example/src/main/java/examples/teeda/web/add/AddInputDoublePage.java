@@ -4,11 +4,11 @@ public class AddInputDoublePage {
 
 	public static final String arg1_TRequiredValidator = null;
 
-	public static final String arg1_TDoubleRangeValidator = "maximum=99.9999, maximumMessageId=examples.teeda.web.add.AddInputDouble.DoubleRangeValidator.MAXIMUM";
+	public static final String arg1_TDoubleRangeValidator = "maximum=99.9999";
 
 	public static final String arg2_TRequiredValidator = null;
 
-	public static final String arg2_TDoubleRangeValidator = "maximum=99.9999, maximumMessageId=examples.teeda.web.add.AddInputDouble.DoubleRangeValidator.MAXIMUM";
+	public static final String arg2_TDoubleRangeValidator = "maximum=99.9999";
 
 	private Double arg1;
 
