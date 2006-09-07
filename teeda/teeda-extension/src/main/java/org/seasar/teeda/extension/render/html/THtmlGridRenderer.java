@@ -402,15 +402,13 @@ public class THtmlGridRenderer extends TForEachRenderer {
             RendererUtil.renderAttribute(writer, JsfConstants.STYLE_ATTR,
                     "overflow:scroll; height:" + attribute.getRightBodyHeight()
                             + "px;");
-            RendererUtil
-                    .renderAttribute(
-                            writer,
-                            JsfConstants.ONSCROLL_ATTR,
-                            "document.all."
-                                    + htmlGrid.getId()
-                                    + "RightHeader.scrollLeft=this.scrollLeft; document.all."
-                                    + htmlGrid.getId()
-                                    + "LeftBody.scrollTop=this.scrollTop;");
+            String v = "document.all." + htmlGrid.getId()
+                    + "RightHeader.scrollLeft=this.scrollLeft;";
+            if (attribute.hasLeftFixCols()) {
+                v = v + " document.all." + htmlGrid.getId()
+                        + "LeftBody.scrollTop=this.scrollTop;";
+            }
+            RendererUtil.renderAttribute(writer, JsfConstants.ONSCROLL_ATTR, v);
         } else if (htmlGrid.isScrollHorizontal()) {
             RendererUtil.renderAttribute(writer, JsfConstants.STYLE_ATTR,
                     "overflow-x:scroll;");
@@ -421,9 +419,12 @@ public class THtmlGridRenderer extends TForEachRenderer {
             RendererUtil.renderAttribute(writer, JsfConstants.STYLE_ATTR,
                     "overflow-y:scroll;" + " height:"
                             + attribute.getRightBodyHeight() + "px;");
-            RendererUtil.renderAttribute(writer, JsfConstants.ONSCROLL_ATTR,
-                    "document.all." + htmlGrid.getId()
-                            + "LeftBody.scrollTop=this.scrollTop;");
+            if (attribute.hasLeftFixCols()) {
+                RendererUtil.renderAttribute(writer,
+                        JsfConstants.ONSCROLL_ATTR, "document.all."
+                                + htmlGrid.getId()
+                                + "LeftBody.scrollTop=this.scrollTop;");
+            }
         }
 
         writer.startElement(JsfConstants.TABLE_ELEM, body);

@@ -25,7 +25,7 @@
 </style>
 </head>
 <body>
-GridXY
+GridY
 <!-- BEGIN -->
 <script language="JavaScript" type="text/javascript">
 <!--
@@ -122,11 +122,11 @@ Teeda.THtmlGrid = {
 };
 //-->
 </script>
-<table id="someGridXY" border="0" cellspacing="0" cellpadding="0">
+<table id="someGridY" border="0" cellspacing="0" cellpadding="0">
 	<tr>
 		<td>
-			<div id="someGridXYRightHeader" style="overflow:hidden;">
-				<table id="someGridXYRightHeaderTable" cellspacing="1" cellpadding="0" class="gridTable">
+			<div id="someGridYRightHeader">
+				<table id="someGridYRightHeaderTable" cellspacing="1" cellpadding="0" class="gridTable">
 					<thead>
 						<tr>
 							<th><div class="gridHeader" style="overflow:hidden; width:40px;"><nobr>th1</nobr></div></th>
@@ -143,16 +143,15 @@ Teeda.THtmlGrid = {
 	</tr>
 	<tr>
 		<td style="vertical-align:top;">
-			<div id="someGridXYRightBody" style="overflow:scroll; height:138px;"
-				onscroll="document.all.someGridXYRightHeader.scrollLeft=this.scrollLeft;">
-				<table id="someGridXYRightBodyTable" cellspacing="1" cellpadding="0" class="gridTable">
+			<div id="someGridYRightBody" style="overflow-y:scroll; height:108px;">
+				<table id="someGridYRightBodyTable" cellspacing="1" cellpadding="0" class="gridTable">
 					<tbody>
 						<tr class="row_odd">
 							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD1_1</nobr></div></td>
 							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD2_1</nobr></div></td>
 							<td><div class="gridCell" style="overflow:hidden;"><nobr>
 								<div onclick="Teeda.THtmlGrid.editOn(this);">
-								<span>TD3_1</span><input type="text" id="gridText" name="someGridXY:0:gridText" value="TD3_1" onblur="Teeda.THtmlGrid.editOff(this);" class="gridCellEdit" style="display:none;" />
+								<span>TD3_1</span><input type="text" id="gridText" name="someGridY:0:gridText" value="TD3_1" onblur="Teeda.THtmlGrid.editOff(this);" class="gridCellEdit" style="display:none;" />
 								</div>
 							</nobr></div></td>
 							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD4_1</nobr></div></td>
@@ -164,7 +163,7 @@ Teeda.THtmlGrid = {
 							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD2_2</nobr></div></td>
 							<td><div class="gridCell" style="overflow:hidden;"><nobr>
 								<div onclick="Teeda.THtmlGrid.editOn(this);">
-								<span>TD3_2</span><input type="text" id="gridText" name="someGridXY:1:gridText" value="TD3_2" onblur="Teeda.THtmlGrid.editOff(this);" class="gridCellEdit" style="display:none;" />
+								<span>TD3_2</span><input type="text" id="gridText" name="someGridY:1:gridText" value="TD3_2" onblur="Teeda.THtmlGrid.editOff(this);" class="gridCellEdit" style="display:none;" />
 								</div>
 							</nobr></div></td>
 							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD4_2</nobr></div></td>
@@ -176,7 +175,7 @@ Teeda.THtmlGrid = {
 							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD2_3</nobr></div></td>
 							<td><div class="gridCell" style="overflow:hidden;"><nobr>
 								<div onclick="Teeda.THtmlGrid.editOn(this);">
-								<span>TD3_3</span><input type="text" id="gridText" name="someGridXY:2:gridText" value="TD3_3" onblur="Teeda.THtmlGrid.editOff(this);" class="gridCellEdit" style="display:none;" />
+								<span>TD3_3</span><input type="text" id="gridText" name="someGridY:2:gridText" value="TD3_3" onblur="Teeda.THtmlGrid.editOff(this);" class="gridCellEdit" style="display:none;" />
 								</div>
 							</nobr></div></td>
 							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD4_3</nobr></div></td>
@@ -188,7 +187,7 @@ Teeda.THtmlGrid = {
 							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD2_4</nobr></div></td>
 							<td><div class="gridCell" style="overflow:hidden;"><nobr>
 								<div onclick="Teeda.THtmlGrid.editOn(this);">
-								<span>TD3_4</span><input type="text" id="gridText" name="someGridXY:3:gridText" value="TD3_4" onblur="Teeda.THtmlGrid.editOff(this);" class="gridCellEdit" style="display:none;" />
+								<span>TD3_4</span><input type="text" id="gridText" name="someGridY:3:gridText" value="TD3_4" onblur="Teeda.THtmlGrid.editOff(this);" class="gridCellEdit" style="display:none;" />
 								</div>
 							</nobr></div></td>
 							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD4_4</nobr></div></td>
@@ -200,7 +199,7 @@ Teeda.THtmlGrid = {
 							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD2_5</nobr></div></td>
 							<td><div class="gridCell" style="overflow:hidden;"><nobr>
 								<div onclick="Teeda.THtmlGrid.editOn(this);">
-								<span>TD3_5</span><input type="text" id="gridText" name="someGridXY:4:gridText" value="TD3_5" onblur="Teeda.THtmlGrid.editOff(this);" class="gridCellEdit" style="display:none;" />
+								<span>TD3_5</span><input type="text" id="gridText" name="someGridY:4:gridText" value="TD3_5" onblur="Teeda.THtmlGrid.editOff(this);" class="gridCellEdit" style="display:none;" />
 								</div>
 							</nobr></div></td>
 							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD4_5</nobr></div></td>
@@ -212,7 +211,7 @@ Teeda.THtmlGrid = {
 							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD2_6</nobr></div></td>
 							<td><div class="gridCell" style="overflow:hidden;"><nobr>
 								<div onclick="Teeda.THtmlGrid.editOn(this);">
-								<span>TD3_6</span><input type="text" id="gridText" name="someGridXY:5:gridText" value="TD3_6" onblur="Teeda.THtmlGrid.editOff(this);" class="gridCellEdit" style="display:none;" />
+								<span>TD3_6</span><input type="text" id="gridText" name="someGridY:5:gridText" value="TD3_6" onblur="Teeda.THtmlGrid.editOff(this);" class="gridCellEdit" style="display:none;" />
 								</div>
 							</nobr></div></td>
 							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD4_6</nobr></div></td>
@@ -225,7 +224,7 @@ Teeda.THtmlGrid = {
 							<td><div class="gridCell" style="overflow:hidden;"><nobr>
 								<div onclick="Teeda.THtmlGrid.editOn(this);">
 								<span>TD3_7</span>
-								<input type="text" id="gridText" name="someGridXY:6:gridText" value="TD3_7" onblur="Teeda.THtmlGrid.editOff(this);" class="gridCellEdit" style="display:none;" />
+								<input type="text" id="gridText" name="someGridY:6:gridText" value="TD3_7" onblur="Teeda.THtmlGrid.editOff(this);" class="gridCellEdit" style="display:none;" />
 								</div>
 							</nobr></div></td>
 							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD4_7</nobr></div></td>
@@ -240,7 +239,7 @@ Teeda.THtmlGrid = {
 </table>
 <script language="JavaScript" type="text/javascript">
 <!--
-Teeda.THtmlGrid.adjustGridSize('someGridXY');document.getElementById('someGridXYRightHeader').style.width = 154;document.getElementById('someGridXYRightBody').style.width = 170;
+Teeda.THtmlGrid.adjustGridSize('someGridY');
 //-->
 </script>
 <!-- END -->
