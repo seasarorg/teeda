@@ -59,6 +59,8 @@ public interface ExtensionConstants {
 
     String DO_PREFIX = "do";
 
+    String JUMP_PREFIX = "jump";
+
     String ITEMS_SUFFIX = "Items";
 
     String MESSAGE_SUFFIX = "Message";

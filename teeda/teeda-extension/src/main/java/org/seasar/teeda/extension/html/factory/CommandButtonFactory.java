@@ -56,6 +56,9 @@ public class CommandButtonFactory extends AbstractElementProcessorFactory {
                 return true;
             }
         }
+        if (id.startsWith(ExtensionConstants.JUMP_PREFIX)) {
+            return true;
+        }
         return false;
     }
 
@@ -68,6 +71,11 @@ public class CommandButtonFactory extends AbstractElementProcessorFactory {
         if (id.startsWith(ExtensionConstants.GO_PREFIX)) {
             String next = StringUtil.decapitalize(id.substring(2));
             properties.put(JsfConstants.ACTION_ATTR, next);
+        } else if (id.startsWith(ExtensionConstants.JUMP_PREFIX)) {
+            String next = StringUtil.decapitalize(id
+                    .substring(ExtensionConstants.JUMP_PREFIX.length()));
+            properties.put(JsfConstants.ACTION_ATTR, next);
+            properties.put(JsfConstants.IMMEDIATE_ATTR, JsfConstants.TRUE);
         } else {
             String baseName = null;
             if (pageDesc != null && pageDesc.hasMethod(id)) {

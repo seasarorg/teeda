@@ -24,6 +24,9 @@ import java.util.Set;
 import javax.faces.internal.ValidatorResource;
 import javax.faces.validator.Validator;
 
+import org.seasar.framework.beans.BeanDesc;
+import org.seasar.framework.beans.PropertyDesc;
+import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.framework.container.S2Container;
 import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
 import org.seasar.teeda.core.util.BindingUtil;
@@ -79,5 +82,22 @@ public abstract class AbstractValidatorAnnotationHandler implements
 
     protected S2Container getContainer() {
         return SingletonS2ContainerFactory.getContainer();
+    }
+
+    protected void copyProperties(Validator validator, Map m) {
+        if (m == null) {
+            return;
+        }
+        BeanDesc beanDesc = BeanDescFactory.getBeanDesc(validator.getClass());
+        for (Iterator i = m.keySet().iterator(); i.hasNext();) {
+            String key = (String) i.next();
+            if (!beanDesc.hasPropertyDesc(key)) {
+                continue;
+            }
+            PropertyDesc pd = beanDesc.getPropertyDesc(key);
+            if (pd.hasWriteMethod()) {
+                pd.setValue(validator, m.get(key));
+            }
+        }
     }
 }

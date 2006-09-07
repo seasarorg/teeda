@@ -49,6 +49,18 @@ public class CommandButtonFactoryTest extends TeedaExtensionTestCase {
         assertFalse(factory.isMatch(elementNode2, null, null));
     }
 
+    public void testIsMatch_jump() throws Exception {
+        CommandButtonFactory factory = new CommandButtonFactory();
+        Map properties = new HashMap();
+        properties.put("type", "submit");
+        properties.put("id", "jumpNextPage");
+        ElementNode elementNode = createElementNode("input", properties);
+        assertTrue(factory.isMatch(elementNode, null, null));
+
+        ElementNode elementNode2 = createElementNode("hoge", properties);
+        assertFalse(factory.isMatch(elementNode2, null, null));
+    }
+
     public void testIsMatch_button() throws Exception {
         CommandButtonFactory factory = new CommandButtonFactory();
         Map properties = new HashMap();
@@ -97,6 +109,15 @@ public class CommandButtonFactoryTest extends TeedaExtensionTestCase {
         ElementProcessor processor3 = factory.createProcessor(elementNode3,
                 pageDesc, actionDesc);
         assertEquals("nextPage", processor3.getProperty("action"));
+
+        Map properties4 = new HashMap();
+        properties4.put("id", "jumpNextPage");
+        properties4.put("type", "submit");
+        ElementNode elementNode4 = createElementNode("input", properties4);
+        ElementProcessor processor4 = factory.createProcessor(elementNode4,
+                pageDesc, actionDesc);
+        assertEquals("nextPage", processor4.getProperty("action"));
+        assertEquals("true", processor4.getProperty("immediate"));
     }
 
     public void testCreateFactory_locationHrefRemove1() throws Exception {

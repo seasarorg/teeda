@@ -16,13 +16,11 @@
 package org.seasar.teeda.extension.annotation.handler;
 
 import java.lang.reflect.Field;
-import java.util.Iterator;
 import java.util.Map;
 
 import javax.faces.validator.Validator;
 
 import org.seasar.framework.beans.BeanDesc;
-import org.seasar.framework.beans.PropertyDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.framework.container.ComponentDef;
 import org.seasar.framework.container.S2Container;
@@ -65,23 +63,6 @@ public class ConstantValidatorAnnotationHandler extends
             Map m = ConstantAnnotationUtil.convertExpressionToMap(s);
             copyProperties(validator, m);
             registerValidator(componentName, names[0], validator);
-        }
-    }
-
-    protected void copyProperties(Validator validator, Map m) {
-        if (m == null) {
-            return;
-        }
-        BeanDesc beanDesc = BeanDescFactory.getBeanDesc(validator.getClass());
-        for (Iterator i = m.keySet().iterator(); i.hasNext();) {
-            String key = (String) i.next();
-            if (!beanDesc.hasPropertyDesc(key)) {
-                continue;
-            }
-            PropertyDesc pd = beanDesc.getPropertyDesc(key);
-            if (pd.hasWriteMethod()) {
-                pd.setValue(validator, m.get(key));
-            }
         }
     }
 }
