@@ -16,14 +16,13 @@
 package org.seasar.teeda.extension.annotation.handler;
 
 import java.lang.reflect.Field;
-import java.util.Iterator;
 import java.util.Map;
 
 import javax.faces.convert.Converter;
 
 import org.seasar.framework.beans.BeanDesc;
-import org.seasar.framework.beans.PropertyDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
+import org.seasar.framework.beans.util.BeanUtil;
 import org.seasar.framework.container.ComponentDef;
 import org.seasar.framework.container.S2Container;
 import org.seasar.framework.container.util.ConstantAnnotationUtil;
@@ -61,25 +60,8 @@ public class ConstantConverterAnnotationHandler extends
             Converter converter = (Converter) container.getComponent(names[1]);
             String s = (String) FieldUtil.get(field, null);
             Map m = ConstantAnnotationUtil.convertExpressionToMap(s);
-            copyProperties(converter, m);
+            BeanUtil.copyProperties(m, converter);
             registerConverter(componentName, names[0], converter);
-        }
-    }
-
-    protected void copyProperties(Converter converter, Map m) {
-        if (m == null) {
-            return;
-        }
-        BeanDesc beanDesc = BeanDescFactory.getBeanDesc(converter.getClass());
-        for (Iterator i = m.keySet().iterator(); i.hasNext();) {
-            String key = (String) i.next();
-            if (!beanDesc.hasPropertyDesc(key)) {
-                continue;
-            }
-            PropertyDesc pd = beanDesc.getPropertyDesc(key);
-            if (pd.hasWriteMethod()) {
-                pd.setValue(converter, m.get(key));
-            }
         }
     }
 }

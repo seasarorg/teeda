@@ -22,6 +22,7 @@ import javax.faces.validator.Validator;
 
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
+import org.seasar.framework.beans.util.BeanUtil;
 import org.seasar.framework.container.ComponentDef;
 import org.seasar.framework.container.S2Container;
 import org.seasar.framework.container.util.ConstantAnnotationUtil;
@@ -41,16 +42,23 @@ public class ConstantValidatorAnnotationHandler extends
         S2Container container = getContainer();
         NamingConvention namingConvention = (NamingConvention) container
                 .getComponent(NamingConvention.class);
-        String suffix = namingConvention.getValidatorSuffix();
         ComponentDef componentDef = container.getComponentDef(componentName);
         Class componentClass = componentDef.getComponentClass();
+        processFields(container, componentClass, componentName,
+                namingConvention);
+    }
+
+    protected void processFields(S2Container container, Class componentClass,
+            String componentName, NamingConvention namingConvention) {
         BeanDesc beanDesc = BeanDescFactory.getBeanDesc(componentClass);
         Field[] fields = componentClass.getDeclaredFields();
         for (int i = 0; i < fields.length; ++i) {
             Field field = fields[i];
             boolean isConstantAnnotation = ConstantAnnotationUtil
                     .isConstantAnnotation(field);
-            if (!isConstantAnnotation || !field.getName().endsWith(suffix)) {
+            if (!isConstantAnnotation
+                    || !field.getName().endsWith(
+                            namingConvention.getValidatorSuffix())) {
                 continue;
             }
             String[] names = StringUtil.split(field.getName(), "_");
@@ -61,7 +69,7 @@ public class ConstantValidatorAnnotationHandler extends
             Validator validator = (Validator) container.getComponent(names[1]);
             String s = (String) FieldUtil.get(field, null);
             Map m = ConstantAnnotationUtil.convertExpressionToMap(s);
-            copyProperties(validator, m);
+            BeanUtil.copyProperties(m, validator);
             registerValidator(componentName, names[0], validator);
         }
     }
