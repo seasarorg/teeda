@@ -17,27 +17,22 @@ package org.seasar.teeda.extension.util;
 
 import java.util.Properties;
 
+import junit.framework.TestCase;
+
 /**
  * @author shot
  */
-public class MessageResourceBundle {
+public class MessageResourceBundleTest extends TestCase {
 
-    private Properties prop;
-
-    private Properties parent;
-
-    public MessageResourceBundle(Properties prop, Properties parent) {
-        this.prop = prop;
-        this.parent = parent;
-    }
-
-    public String get(String key) {
-        if (key == null) {
-            return null;
-        }
-        if (prop.containsKey(key)) {
-            return prop.getProperty(key);
-        }
-        return (parent != null) ? parent.getProperty(key) : null;
+    public void test1() throws Exception {
+        Properties prop = new Properties();
+        prop.setProperty("a", "A");
+        Properties parent = new Properties();
+        parent.setProperty("b", "B");
+        MessageResourceBundle bundle = new MessageResourceBundle(prop, parent);
+        assertEquals("A", bundle.get("a"));
+        assertEquals("B", bundle.get("b"));
+        assertEquals(null, bundle.get("c"));
+        assertEquals(null, bundle.get(null));
     }
 }

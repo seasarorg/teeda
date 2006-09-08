@@ -121,4 +121,5 @@ public abstract class TeedaExtensionTestCase extends TeedaTestCase {
     protected HtmlParser getHtmlParser() {
         return parser;
     }
+
 }

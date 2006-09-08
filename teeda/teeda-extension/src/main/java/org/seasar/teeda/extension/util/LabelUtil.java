@@ -28,7 +28,7 @@ public class LabelUtil {
 
     public static String getPropertiesName(NamingConvention nc, String pageName) {
         String packageName = NamingConventionUtil.getPackageName(nc, pageName);
-        return packageName + "." + LABEL;
+        return (packageName != null) ? packageName + "." + LABEL : null;
     }
 
     public static String getLabelKeySuffix(NamingConvention nc, String pageName) {
@@ -58,48 +58,4 @@ public class LabelUtil {
         return defaultPropertiesName;
     }
 
-    /*
-     *
-
-     protected void customizeProperties(Map properties, ElementNode elementNode,
-     PageDesc pageDesc, ActionDesc actionDesc) {
-     super
-     .customizeProperties(properties, elementNode, pageDesc,
-     actionDesc);
-     String pageName = pageDesc.getPageName();
-     String packageName = NamingConventionUtil.getPackageName(
-     namingConvention, pageName);
-     String path = namingConvention.fromPageNameToPath(pageName);
-     String defaultSuffix = FacesConfigOptions.getDefaultSuffix();
-     if (path.endsWith(defaultSuffix)) {
-     path = path.substring(0, path.lastIndexOf(defaultSuffix));
-     }
-     int lastIndex = path.lastIndexOf('/');
-     if (lastIndex > 0) {
-     path = path.substring(lastIndex + 1);
-     }
-     String propertiesName = packageName + "." + LABEL;
-     String key = path + "." + elementNode.getId();
-     properties.put(ExtensionConstants.KEY_ATTR, key);
-     properties.put(ExtensionConstants.PROPERTIES_NAME_ATTR, propertiesName);
-
-     String subAppRoot = namingConvention.getSubApplicationRootPackageName();
-     String defaultPropertiesName = null;
-     if (packageName.lastIndexOf(subAppRoot) > 0) {
-     defaultPropertiesName = packageName.substring(0, packageName
-     .lastIndexOf(subAppRoot)
-     + subAppRoot.length())
-     + "." + LABEL;
-     properties.put(ExtensionConstants.DEFAULT_PROPERTIES_NAME_ATTR,
-     defaultPropertiesName);
-     properties.put(ExtensionConstants.DEFAULT_KEY, elementNode.getId());
-     }
-     }
-
-
-
-
-     *
-     *
-     */
 }

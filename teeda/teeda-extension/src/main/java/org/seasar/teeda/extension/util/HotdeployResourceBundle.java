@@ -18,7 +18,6 @@ package org.seasar.teeda.extension.util;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Properties;
 
 import org.seasar.framework.util.AssertionUtil;
 import org.seasar.teeda.extension.html.ResourceBundleDesc;
@@ -29,8 +28,13 @@ import org.seasar.teeda.extension.html.impl.ResourceBundleDescImpl;
  */
 public class HotdeployResourceBundle {
 
-    //TODO testing
     private static Map cache = new HashMap();
+
+    public static MessageResourceBundle getBundle(String baseName, Locale locale) {
+        final ClassLoader classLoader = Thread.currentThread()
+                .getContextClassLoader();
+        return getBundle(baseName, locale, classLoader);
+    }
 
     public static MessageResourceBundle getBundle(String baseName,
             Locale locale, ClassLoader classLoader) {

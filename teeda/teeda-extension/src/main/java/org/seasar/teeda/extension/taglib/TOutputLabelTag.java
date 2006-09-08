@@ -15,17 +15,10 @@
  */
 package org.seasar.teeda.extension.taglib;
 
-import java.util.Locale;
-import java.util.Map;
-
-import javax.faces.application.ViewHandler;
 import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
 
-import org.seasar.framework.util.ResourceBundleUtil;
-import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.taglib.html.OutputLabelTag;
-import org.seasar.teeda.core.util.FacesContextUtil;
+import org.seasar.teeda.extension.component.html.THtmlOutputLabel;
 
 /**
  * @author shot
@@ -39,6 +32,14 @@ public class TOutputLabelTag extends OutputLabelTag {
     private String propertiesName;
 
     private String defaultPropertiesName;
+
+    public String getComponentType() {
+        return THtmlOutputLabel.COMPONENT_TYPE;
+    }
+
+    public String getRendererType() {
+        return THtmlOutputLabel.DEFAULT_RENDERER_TYPE;
+    }
 
     public String getKey() {
         return key;
@@ -82,27 +83,11 @@ public class TOutputLabelTag extends OutputLabelTag {
 
     protected void setProperties(UIComponent component) {
         super.setProperties(component);
-        //TODO cache for locale is needed.
-        //TODO change ResourceBundle to HotdeployResourceBundle
-        FacesContext context = getFacesContext();
-        ViewHandler viewHandler = FacesContextUtil.getViewHandler(context);
-        Locale locale = viewHandler.calculateLocale(context);
-        String value = null;
-        if (key != null && propertiesName != null) {
-            Map map = ResourceBundleUtil.convertMap(propertiesName, locale);
-            value = (String) map.get(key);
-            if (value == null) {
-                value = (String) map.get(defaultKey);
-            }
-        }
-        if (value == null && defaultPropertiesName != null) {
-            Map map = ResourceBundleUtil.convertMap(defaultPropertiesName,
-                    locale);
-            value = (String) map.get(defaultKey);
-        }
-        if (value != null) {
-            setComponentProperty(component, JsfConstants.VALUE_ATTR, value);
-        }
+        setComponentProperty(component, "key", key);
+        setComponentProperty(component, "defaultKey", defaultKey);
+        setComponentProperty(component, "propertiesName", propertiesName);
+        setComponentProperty(component, "defaultPropertiesName",
+                defaultPropertiesName);
     }
 
 }

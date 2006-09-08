@@ -45,9 +45,9 @@ public class ResourceBundleDescImpl implements ResourceBundleDesc {
     private String propertiesName;
 
     private String defaultPropertiesName;
-    
+
     private MessageResourceBundle bundle;
-    
+
     private static final String PROPERTIES_SUFFIX = ".properties";
 
     public ResourceBundleDescImpl(String baseName, Locale locale) {
@@ -76,10 +76,10 @@ public class ResourceBundleDescImpl implements ResourceBundleDesc {
         this.defaultPropertiesName = basePropName + PROPERTIES_SUFFIX;
         String propertiesName = basePropName + "_" + locale.toString()
                 + PROPERTIES_SUFFIX;
-        File file = ResourceUtil.getResourceAsFile(propertiesName);
-        if (!file.exists()) {
+        File file = ResourceUtil.getResourceAsFileNoException(propertiesName);
+        if (file == null || !file.exists()) {
             propertiesName = this.defaultPropertiesName;
-            file = ResourceUtil.getResourceAsFile(propertiesName);
+            file = ResourceUtil.getResourceAsFileNoException(propertiesName);
         }
         this.propertiesName = propertiesName;
         return file;
@@ -100,7 +100,7 @@ public class ResourceBundleDescImpl implements ResourceBundleDesc {
             return null;
         }
         InputStream is = ResourceUtil.getResourceAsStreamNoException(propName);
-        if(is == null) {
+        if (is == null) {
             return null;
         }
         BufferedInputStream bs = new BufferedInputStream(is);
