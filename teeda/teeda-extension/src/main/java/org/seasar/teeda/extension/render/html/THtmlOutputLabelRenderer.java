@@ -41,9 +41,9 @@ import org.seasar.teeda.extension.util.MessageResourceBundle;
  */
 public class THtmlOutputLabelRenderer extends AbstractRenderer {
 
-    public static final String RENDERER_TYPE = "org.seasar.teeda.extension.Label";
-
     public static final String COMPONENT_FAMILY = "javax.faces.Output";
+
+    public static final String RENDERER_TYPE = "org.seasar.teeda.extension.Label";
 
     public void encodeBegin(FacesContext context, UIComponent component)
             throws IOException {

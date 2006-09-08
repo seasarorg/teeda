@@ -67,8 +67,8 @@ public class FacesMessageUtil {
                 messageId, args);
     }
 
-    protected static FacesMessage getMessage(FacesContext context,
-            Locale locale, Severity severity, String messageId, Object[] args) {
+    public static FacesMessage getMessage(FacesContext context, Locale locale,
+            Severity severity, String messageId, Object[] args) {
 
         ResourceBundle bundle = getResourceBundle(context, locale);
         String summary = getBundleString(bundle, messageId);
@@ -77,11 +77,13 @@ public class FacesMessageUtil {
             ResourceBundle defaultBundle = getDefaultBundle(context, locale);
             summary = getBundleString(defaultBundle, messageId);
             if (summary != null) {
-                detail = getBundleString(defaultBundle, messageId + DETAIL_SUFFIX);
+                detail = getBundleString(defaultBundle, messageId
+                        + DETAIL_SUFFIX);
             } else {
                 detail = getBundleString(bundle, messageId + DETAIL_SUFFIX);
                 if (detail == null) {
-                    detail = getBundleString(defaultBundle, messageId + DETAIL_SUFFIX);
+                    detail = getBundleString(defaultBundle, messageId
+                            + DETAIL_SUFFIX);
                 }
             }
         }

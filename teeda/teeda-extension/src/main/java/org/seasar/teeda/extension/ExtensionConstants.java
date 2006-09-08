@@ -29,6 +29,8 @@ public interface ExtensionConstants {
 
     String TITLE_ELEM = "title";
 
+    String INFO_MESSAGE_ELEM = "infoMessages";
+
     //Attributes
     String FRACTION_ATTR = "fraction";
 
