@@ -6,5 +6,5 @@
 	<include path="aop.dicon"/>
 	<include path="app_aop.dicon"/>
 	<include path="teedaExtension.dicon"/>
-	<include condition="#ENV != 'ut'" path="teeda-html-example-cooldeploy.dicon"/>
+	<include condition="#ENV != 'ut'" path="cooldeploy.dicon"/>
 </components>

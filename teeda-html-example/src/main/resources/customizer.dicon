@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE components PUBLIC "-//SEASAR2.1//DTD S2Container//EN"
-	"http://www.seasar.org/dtd/components21.dtd">
+<!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container 2.4//EN" 
+	"http://www.seasar.org/dtd/components24.dtd">
 <components>
 	<component name="defaultCustomizer" class="org.seasar.framework.container.customizer.AspectCustomizer">
 		<property name="interceptorName">"aop.classLoaderAwareTraceInterceptor"</property>
@@ -13,6 +13,7 @@
 		<property name="interceptorName">"app_aop.actionSupportInterceptor"</property>
 		<property name="pointcut">"do.*, initialize"</property>
 	</component>
+
 	<component name="actionCustomizer" class="org.seasar.framework.container.customizer.CustomizerChain">
 		<initMethod name="addCustomizer">
 			<arg>commandAspectCustomizer</arg>
@@ -58,5 +59,7 @@
 	<component name="validatorCustomizer" class="org.seasar.framework.container.customizer.CustomizerChain">
 	</component>
 	<component name="converterCustomizer" class="org.seasar.framework.container.customizer.CustomizerChain">
+	</component>
+	<component name="connectorCustomizer" class="org.seasar.framework.container.customizer.CustomizerChain">
 	</component>
 </components>
