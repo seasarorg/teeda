@@ -15,6 +15,8 @@
  */
 package org.seasar.teeda.extension.convert;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -23,6 +25,10 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.ConverterException;
 import javax.faces.convert.DateTimeConverter;
+import javax.faces.internal.ConvertUtil;
+
+import org.seasar.framework.util.DateConversionUtil;
+import org.seasar.framework.util.StringUtil;
 
 /**
  * @author shot
@@ -33,31 +39,81 @@ public class TDateTimeConverter extends DateTimeConverter {
 
     private static final int LAST_CENTURY = 1900;
 
-    private static final int CURRENT_CENTURY = 2000;
+    private static int defaultCenturyStart = 0;
+
+    static {
+        defaultCenturyStart = GregorianCalendar.getInstance()
+                .get(Calendar.YEAR) - 80;
+    }
 
     public Object getAsObject(FacesContext context, UIComponent component,
             String value) throws ConverterException {
         Date date = (Date) super.getAsObject(context, component, value);
+        if (date == null) {
+            return null;
+        }
+        String pattern = getPattern();
+        String delim = DateConversionUtil.findDelimiter(value);
+        if (delim == null) {
+            Object[] args = ConvertUtil.createExceptionMessageArgs(component,
+                    value);
+            throw ConvertUtil.wrappedByConverterException(this, context, args);
+        }
+        final SimpleDateFormat formatter = DateConversionUtil.getDateFormat(
+                value, getLocale());
+        if (pattern == null) {
+            pattern = formatter.toLocalizedPattern();
+        }
+        final boolean isY4Pattern = (pattern.indexOf("yyyy") >= 0);
+        final boolean isY2Pattern = (!isY4Pattern && StringUtil.startsWith(
+                pattern, "yy"));
+        if (!isY2Pattern) {
+            return date;
+        }
+        date = adjustDate(date);
         if (threshold == null) {
             return date;
         }
-        Calendar calendar = GregorianCalendar.getInstance();
-        calendar.setTime(date);
-        final int year = calendar.get(Calendar.YEAR);
-        final String yearString = String.valueOf(year);
-        final int length = yearString.length();
-        if (length == 4) {
-            final int t = threshold.intValue();
-            final int len1 = String.valueOf(t).length();
-            final int y = Math.abs(year - CURRENT_CENTURY);
-            final int len2 = String.valueOf(y).length();
-            int res = year;
-            if (t <= y && len1 == len2) {
-                res = LAST_CENTURY + y;
-            }
-            calendar.set(Calendar.YEAR, res);
+        if (delim != null) {
+            setPattern("yyyy" + delim + "MM" + delim + "dd");
         }
-        return calendar.getTime();
+        int start = getPattern().indexOf("yyyy");
+        value = getAsString(context, component, date);
+        String target = value.substring(start + 2, start + 4);
+        int len1 = target.length();
+        int yy = Integer.valueOf(target).intValue();
+        final int t = threshold.intValue();
+        final int len2 = String.valueOf(t).length();
+        if (t <= yy && len1 == len2) {
+            value = String.valueOf(LAST_CENTURY + yy)
+                    + value.substring(4, value.length());
+        }
+        try {
+            return formatter.parse(value);
+        } catch (ParseException e) {
+            Object[] args = ConvertUtil.createExceptionMessageArgs(component,
+                    value);
+            throw ConvertUtil.wrappedByConverterException(this, context, args,
+                    e);
+        }
+
+    }
+
+    public Date adjustDate(Date date) {
+        int n = getCalculatedDate(date);
+        if (n >= defaultCenturyStart) {
+            Calendar calendar = GregorianCalendar.getInstance();
+            calendar.setTime(date);
+            calendar.set(Calendar.YEAR, n + 100);
+            date = calendar.getTime();
+        }
+        return date;
+    }
+
+    protected int getCalculatedDate(Date date) {
+        final SimpleDateFormat formatter = new SimpleDateFormat("yy");
+        String yy = formatter.format(date);
+        return LAST_CENTURY + Integer.valueOf(yy).intValue();
     }
 
     public String getAsString(FacesContext context, UIComponent component,

@@ -128,4 +128,13 @@
 		</initMethod>
 	</component>
 
+	<component class="org.seasar.framework.container.autoregister.JarComponentAutoRegister">
+		<property name="instanceDef">@org.seasar.framework.container.deployer.InstanceDefFactory@PROTOTYPE</property>
+		<property name="jarFileNames">"teeda-extension.*"</property>
+		<initMethod name="addClassPattern">
+			<arg>"org.seasar.teeda.extension.convert"</arg>
+			<arg>"..*Converter"</arg>
+		</initMethod>
+	</component>
+
 </components>

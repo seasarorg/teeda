@@ -165,7 +165,8 @@ public class TDateTimeConverterTest extends AbstractConverterTestCase {
         Date date = (Date) converter.getAsObject(context,
                 new NullUIComponent(), dateValue);
 
-        Date dateTarget = createDateTarget(pattern, defaultLocale, dateValue);
+        Date dateTarget = createDateTarget("yyyy/MM/dd", defaultLocale,
+                "2026/08/01");
         assertEquals(date, dateTarget);
     }
 
@@ -175,10 +176,28 @@ public class TDateTimeConverterTest extends AbstractConverterTestCase {
         converter.setLocale(defaultLocale);
         converter.setTimeZone(defaultTimeZone);
         converter.setThreshold(new Integer(69));
-        final String pattern = "yyyy/MM/dd";
+        final String pattern = "yy/MM/dd";
         converter.setPattern(pattern);
 
-        String dateValue = "2070/08/01";
+        String dateValue = "69/08/01";
+        Date date = (Date) converter.getAsObject(context,
+                new NullUIComponent(), dateValue);
+
+        Date dateTarget = createDateTarget("yyyy/MM/dd", defaultLocale,
+                "1969/08/01");
+        assertEquals(dateTarget, date);
+    }
+
+    public void testGetAsObject8() throws Exception {
+        TDateTimeConverter converter = (TDateTimeConverter) createConverter();
+        FacesContext context = getFacesContext();
+        converter.setLocale(defaultLocale);
+        converter.setTimeZone(defaultTimeZone);
+        converter.setThreshold(new Integer(69));
+        final String pattern = "yy/MM/dd";
+        converter.setPattern(pattern);
+
+        String dateValue = "70/08/01";
         Date date = (Date) converter.getAsObject(context,
                 new NullUIComponent(), dateValue);
 
@@ -186,7 +205,7 @@ public class TDateTimeConverterTest extends AbstractConverterTestCase {
         assertEquals(date, dateTarget);
     }
 
-    public void testGetAsObject8() throws Exception {
+    public void testGetAsObject9() throws Exception {
         TDateTimeConverter converter = (TDateTimeConverter) createConverter();
         FacesContext context = getFacesContext();
         converter.setLocale(defaultLocale);
@@ -200,7 +219,44 @@ public class TDateTimeConverterTest extends AbstractConverterTestCase {
                 new NullUIComponent(), dateValue);
 
         Date dateTarget = createDateTarget(pattern, defaultLocale, "2170/08/01");
-        assertEquals(date, dateTarget);
+        assertEquals(dateTarget, date);
+    }
+
+    public void testGetAsObject11() throws Exception {
+        TDateTimeConverter converter = (TDateTimeConverter) createConverter();
+        FacesContext context = getFacesContext();
+        converter.setLocale(defaultLocale);
+        converter.setTimeZone(defaultTimeZone);
+        converter.setThreshold(new Integer(69));
+        final String pattern = "yy/MM/dd";
+        converter.setPattern(pattern);
+
+        String dateValue = "27/08/01";
+        Date date = (Date) converter.getAsObject(context,
+                new NullUIComponent(), dateValue);
+
+        Date dateTarget = createDateTarget("yy/MM/dd", defaultLocale,
+                "2027/08/01");
+        System.out.println(date);
+        System.out.println(dateTarget);
+        assertEquals(dateTarget, date);
+    }
+
+    public void testGetAsObject_noDelimIsNotPermitted() throws Exception {
+        FacesContext context = getFacesContext();
+        TDateTimeConverter converter = new TDateTimeConverter();
+
+        converter.setTimeZone(TimeZone.getDefault());
+        converter.setPattern("yyyyMMdd");
+        converter.setLocale(defaultLocale);
+        converter.setThreshold(new Integer(69));
+        try {
+            converter.getAsObject(context, new MockUIComponent(), "20050804");
+            fail();
+        } catch (ConverterException e) {
+            // TODO somehow need catching ConverterException
+            assertTrue(true);
+        }
     }
 
     public void testGetAsString() {
@@ -245,9 +301,6 @@ public class TDateTimeConverterTest extends AbstractConverterTestCase {
         String val4 = formatter.format(date4);
 
         assertNotSame(value4, val4);
-        System.out.println(value4);
-        System.out.println(val4);
-
     }
 
     public void testIsTransient() {
