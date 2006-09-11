@@ -16,6 +16,9 @@
 package javax.faces.internal;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
@@ -25,6 +28,8 @@ import javax.faces.application.FacesMessage.Severity;
 import javax.faces.component.ComponentUtil_;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+
+import org.seasar.framework.util.AssertionUtil;
 
 /**
  * @author shot
@@ -36,24 +41,119 @@ public class FacesMessageUtil {
 
     private static final String DETAIL_SUFFIX = "_detail";
 
+    private static final FacesMessage[] EMPTY_MESSAGES = new FacesMessage[0];
+
     private FacesMessageUtil() {
+    }
+
+    public static FacesMessage[] getWarnMessages() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        FacesMessage.Severity severity = FacesMessage.SEVERITY_WARN;
+        return getTargetFacesMessages(context, severity);
+    }
+
+    public static FacesMessage[] getInfoMessages() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        FacesMessage.Severity severity = FacesMessage.SEVERITY_INFO;
+        return getTargetFacesMessages(context, severity);
+    }
+
+    public static FacesMessage[] getErrorMessages() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        FacesMessage.Severity severity = FacesMessage.SEVERITY_ERROR;
+        return getTargetFacesMessages(context, severity);
+    }
+
+    public static FacesMessage[] getFatalMessages() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        FacesMessage.Severity severity = FacesMessage.SEVERITY_FATAL;
+        return getTargetFacesMessages(context, severity);
+    }
+
+    public static FacesMessage[] getTargetFacesMessages(FacesContext context,
+            Severity severity) {
+        return getTargetFacesMessages(context,
+                new FacesMessage.Severity[] { severity });
+    }
+
+    public static FacesMessage[] getTargetFacesMessages(FacesContext context,
+            Severity[] severities) {
+        AssertionUtil.assertNotNull("context", context);
+        if (severities == null || severities.length == 0) {
+            return EMPTY_MESSAGES;
+        }
+        Iterator it = context.getMessages();
+        if (!it.hasNext()) {
+            return EMPTY_MESSAGES;
+        }
+        List list = new ArrayList();
+        for (; it.hasNext();) {
+            FacesMessage facesMessage = (FacesMessage) it.next();
+            Severity severity = facesMessage.getSeverity();
+            for (int i = 0; i < severities.length; i++) {
+                if (!severity.equals(severities[i])) {
+                    continue;
+                }
+                list.add(facesMessage);
+            }
+        }
+        if (list.size() == 0) {
+            return EMPTY_MESSAGES;
+        }
+        return (FacesMessage[]) list.toArray(new FacesMessage[list.size()]);
+    }
+
+    public static void addWarnMessage(FacesContext context,
+            UIComponent component, String messageId) {
+        addWarnMessage(context, component, messageId, null);
+    }
+
+    public static void addWarnMessage(FacesContext context,
+            UIComponent component, String messageId, Object[] args) {
+        addTargetSeverityMessage(context, component, messageId, args,
+                FacesMessage.SEVERITY_WARN);
+    }
+
+    public static void addInfoMessage(FacesContext context,
+            UIComponent component, String messageId) {
+        addInfoMessage(context, component, messageId, null);
+    }
+
+    public static void addInfoMessage(FacesContext context,
+            UIComponent component, String messageId, Object[] args) {
+        addTargetSeverityMessage(context, component, messageId, args,
+                FacesMessage.SEVERITY_INFO);
     }
 
     public static void addErrorMessage(FacesContext context,
             UIComponent component, String messageId) {
-        String clientId = component.getClientId(context);
-        Locale locale = ComponentUtil_.getLocale(context);
-        FacesMessage message = getMessage(context, locale,
-                FacesMessage.SEVERITY_ERROR, messageId, null);
-        context.addMessage(clientId, message);
+        addErrorMessage(context, component, messageId, null);
     }
 
     public static void addErrorMessage(FacesContext context,
             UIComponent component, String messageId, Object[] args) {
+        addTargetSeverityMessage(context, component, messageId, args,
+                FacesMessage.SEVERITY_ERROR);
+    }
+
+    public static void addFatalMessage(FacesContext context,
+            UIComponent component, String messageId) {
+        addFatalMessage(context, component, messageId, null);
+    }
+
+    public static void addFatalMessage(FacesContext context,
+            UIComponent component, String messageId, Object[] args) {
+        addTargetSeverityMessage(context, component, messageId, args,
+                FacesMessage.SEVERITY_FATAL);
+    }
+
+    private static void addTargetSeverityMessage(FacesContext context,
+            UIComponent component, String messageId, Object[] args,
+            Severity severity) {
         String clientId = component.getClientId(context);
         Locale locale = ComponentUtil_.getLocale(context);
-        FacesMessage message = getMessage(context, locale,
-                FacesMessage.SEVERITY_ERROR, messageId, args);
+        FacesMessage message = getMessage(context, locale, severity, messageId,
+                args);
         context.addMessage(clientId, message);
     }
 

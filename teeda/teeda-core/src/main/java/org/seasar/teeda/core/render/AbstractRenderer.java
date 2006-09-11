@@ -157,7 +157,7 @@ public abstract class AbstractRenderer extends Renderer {
         }
     }
 
-    private boolean isRenderAttributeName(final String key) {
+    protected boolean isRenderAttributeName(final String key) {
         return -1 == key.indexOf('.');
     }
 

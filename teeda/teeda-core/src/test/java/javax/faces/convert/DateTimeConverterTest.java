@@ -145,6 +145,23 @@ public class DateTimeConverterTest extends AbstractConverterTestCase {
         }
     }
 
+    public void testGetAsObject6() throws Exception {
+        DateTimeConverter converter = (DateTimeConverter) createConverter();
+        FacesContext context = getFacesContext();
+        converter.setLocale(defaultLocale);
+        converter.setTimeZone(defaultTimeZone);
+
+        final String pattern = "yy/MM/dd";
+        converter.setPattern(pattern);
+
+        String dateValue = "26/08/01";
+        Date date = (Date) converter.getAsObject(context,
+                new NullUIComponent(), dateValue);
+
+        Date dateTarget = createDateTarget(pattern, defaultLocale, dateValue);
+        assertEquals(date, dateTarget);
+    }
+
     public void testGetAsString() {
         Converter converter = createConverter();
         FacesContext context = getFacesContext();
