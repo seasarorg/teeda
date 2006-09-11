@@ -110,6 +110,10 @@
 			<arg>"org.seasar.teeda.extension.validator"</arg>
 			<arg>"..*Validator"</arg>
 		</initMethod>
+		<initMethod name="addIgnoreClassPattern">
+			<arg>"org.seasar.teeda.extension.validator"</arg>
+			<arg>"Abstract..*Validator"</arg>
+		</initMethod>
 	</component>
 
 	<component name="javax.faces.ViewRoot"
