@@ -95,6 +95,8 @@ public class TDateTimeConverter extends DateTimeConverter {
                     value);
             throw ConvertUtil.wrappedByConverterException(this, context, args,
                     e);
+        } finally {
+            setPattern(pattern);
         }
 
     }

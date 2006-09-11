@@ -48,7 +48,7 @@ public class TByteLengthValidatorTest extends TeedaTestCase {
             validator.validate(getFacesContext(), mock, "hogehoge");
             fail();
         } catch (ValidatorException expected) {
-            assertNotNull(expected.getMessage());
+            assertNotNull(expected);
             success();
         }
     }
@@ -64,7 +64,7 @@ public class TByteLengthValidatorTest extends TeedaTestCase {
             validator.validate(getFacesContext(), mock, "あ");
             fail();
         } catch (ValidatorException expected) {
-            assertNotNull(expected.getMessage());
+            assertNotNull(expected);
             success();
         }
     }
@@ -91,7 +91,7 @@ public class TByteLengthValidatorTest extends TeedaTestCase {
             validator.validate(getFacesContext(), new MockUIComponent(), "111");
             fail();
         } catch (ValidatorException expected) {
-            assertNotNull(expected.getMessage());
+            assertNotNull(expected);
         }
     }
 
