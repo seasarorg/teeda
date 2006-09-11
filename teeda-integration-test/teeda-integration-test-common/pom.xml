@@ -13,12 +13,19 @@
   <modelVersion>4.0.0</modelVersion>
   <artifactId>teeda-integration-test-common</artifactId>
   <packaging>jar</packaging>
-  <name>Teeda Integration Test Driver</name>
+  <name>Teeda Integration Test Common</name>
   <description></description>
   <url>http://teeda.seasar.org/</url>
   <build>
   </build>
   <dependencies>
+    <dependency>
+      <groupId>org.seasar.teeda</groupId>
+      <artifactId>teeda-core</artifactId>
+      <version>1.0-beta-6-SNAPSHOT</version>
+      <type>test-jar</type>
+      <scope>compile</scope>
+    </dependency>
     <dependency>
       <groupId>jetty</groupId>
       <artifactId>jetty</artifactId>
@@ -49,6 +56,12 @@
           <groupId>pull-parser</groupId>
         </exclusion>
       </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.seasar.teeda</groupId>
+      <artifactId>teeda-core</artifactId>
+      <version>1.0-beta-6-SNAPSHOT</version>
+      <type>jar</type>
     </dependency>
     <dependency>
       <groupId>org.seasar.teeda</groupId>
