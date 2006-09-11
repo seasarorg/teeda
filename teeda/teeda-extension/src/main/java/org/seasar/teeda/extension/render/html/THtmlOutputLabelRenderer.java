@@ -45,6 +45,12 @@ public class THtmlOutputLabelRenderer extends AbstractRenderer {
 
     public static final String RENDERER_TYPE = "org.seasar.teeda.extension.Label";
 
+    private static final IgnoreComponent IGNORE_COMPONENT;
+
+    static {
+        IGNORE_COMPONENT = buildIgnoreComponent();
+    }
+
     public void encodeBegin(FacesContext context, UIComponent component)
             throws IOException {
         assertNotNull(context, component);
@@ -114,8 +120,7 @@ public class THtmlOutputLabelRenderer extends AbstractRenderer {
 
     protected void renderRemain(THtmlOutputLabel label, ResponseWriter writer)
             throws IOException {
-        IgnoreComponent ignore = buildIgnoreComponent();
-        Map map = UIComponentUtil.getAllAttributesAndProperties(label, ignore);
+        Map map = UIComponentUtil.getAllAttributesAndProperties(label, IGNORE_COMPONENT);
         for (final Iterator it = map.entrySet().iterator(); it.hasNext();) {
             Map.Entry entry = (Map.Entry) it.next();
             String name = (String) entry.getKey();
@@ -124,7 +129,7 @@ public class THtmlOutputLabelRenderer extends AbstractRenderer {
         }
     }
 
-    protected IgnoreComponent buildIgnoreComponent() {
+    protected static IgnoreComponent buildIgnoreComponent() {
         IgnoreComponent ignore = new IgnoreComponent();
         ignore.addIgnoreComponentName(JsfConstants.FOR_ATTR);
         ignore.addIgnoreComponentName(JsfConstants.ID_ATTR);
