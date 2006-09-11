@@ -30,12 +30,12 @@ public class MavenUtilTest extends TestCase {
     public void testGetSeleniumDriverWar() throws Exception {
         File project = getProjectFile("teeda-integration-test");
         File pom = new File(project, "pom.xml");
-        File artifactFile = MavenUtil.getArtifactFromPom(pom, "s2-framework");
+        File artifactFile = MavenUtil.getArtifactFromPom(pom, "junit");
         System.out.println(artifactFile);
         assertNotNull(artifactFile);
         assertEquals(true, artifactFile.exists());
         String name = artifactFile.getName();
-        assertEquals(name, true, name.startsWith("s2-framework"));
+        assertEquals(name, true, name.startsWith("junit"));
         assertEquals(name, true, name.endsWith(".jar"));
     }
 
