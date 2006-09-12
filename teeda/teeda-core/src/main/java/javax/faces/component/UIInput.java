@@ -281,9 +281,6 @@ public class UIInput extends UIOutput implements EditableValueHolder {
             if (value != null) {
                 return value;
             }
-            if (value == null && FacesMessageUtil.getErrorMessages().length > 0) {
-                return null;
-            }
             Renderer renderer = getRenderer(context);
             if (renderer != null) {
                 value = convertFromRenderer(context, submittedValue, renderer);
