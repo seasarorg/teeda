@@ -15,9 +15,15 @@
  */
 package javax.faces.component;
 
+import java.util.Iterator;
+
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import javax.faces.convert.IntegerConverter;
 import javax.faces.el.MethodBinding;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.event.ValueChangeListener;
+import javax.faces.internal.ConverterResource;
 import javax.faces.validator.Validator;
 
 import org.seasar.teeda.core.mock.MockMethodBinding;
@@ -253,6 +259,31 @@ public class UIInputTest extends UIOutputTest {
         assertEquals(null, input.getValue());
     }
 
+    public void testGetConvertedValue() throws Exception {
+        final String clientId = "aaa";
+        UIInput input = new UIInput() {
+            public String getClientId(FacesContext context) {
+                return clientId;
+            }
+        };
+        FacesContext context = getFacesContext();
+        MockValueBinding vb = new MockValueBinding("aaa");
+        vb.setExpressionString("bbb");
+        input.setValueBinding("value", vb);
+        ConverterResource.addConverter("bbb", new IntegerConverter());
+        Object submittedValue = "sss";
+        assertNotNull(input.getConvertedValue(context, submittedValue));
+        assertTrue(context.getMessages() != null);
+        Iterator itr = context.getMessages();
+        int c = 0;
+        while(itr.hasNext()) {
+            FacesMessage fm = (FacesMessage) itr.next();
+            assertNotNull(fm);
+            c++;
+        }
+        assertTrue(c == 1);
+    }
+    
     private UIInput createUIInput() {
         return (UIInput) createUIComponent();
     }

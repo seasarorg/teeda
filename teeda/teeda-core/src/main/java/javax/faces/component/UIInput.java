@@ -313,12 +313,8 @@ public class UIInput extends UIOutput implements EditableValueHolder {
             String expression = vb.getExpressionString();
             Converter converter = ConverterResource.getConverter(expression);
             if (converter != null) {
-                try {
-                    return converter.getAsObject(context, this,
-                            (String) submittedValue);
-                } catch (ConverterException e) {
-                    handleConverterException(context, e);
-                }
+                return converter.getAsObject(context, this,
+                        (String) submittedValue);
             }
         }
         return null;

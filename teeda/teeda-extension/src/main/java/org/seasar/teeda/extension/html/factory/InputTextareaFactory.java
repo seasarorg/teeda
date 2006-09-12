@@ -49,6 +49,10 @@ public class InputTextareaFactory extends AbstractElementProcessorFactory {
                         actionDesc);
         properties.put(JsfConstants.VALUE_ATTR, getBindingExpression(pageDesc
                 .getPageName(), elementNode.getId()));
+        String title = elementNode.getProperty(JsfConstants.TITLE_ATTR);
+        if (title != null) {
+            properties.put(JsfConstants.LABEL_ATTR, title);
+        }
     }
 
     protected String getTagName() {
