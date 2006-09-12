@@ -28,7 +28,7 @@ import org.seasar.teeda.core.unit.TeedaTestCase;
  */
 public class TGreaterEqualValidatorTest extends TeedaTestCase {
 
-    public void testValidate1() throws Exception {
+    public void testValidate_invalid() throws Exception {
         TGreaterEqualValidator validator = new TGreaterEqualValidator();
         FacesContext context = getFacesContext();
         UIViewRoot root = new UIViewRoot();
@@ -55,4 +55,57 @@ public class TGreaterEqualValidatorTest extends TeedaTestCase {
             success();
         }
     }
+    
+    public void testValidate_valueIsEqual() throws Exception {
+        TGreaterEqualValidator validator = new TGreaterEqualValidator();
+        FacesContext context = getFacesContext();
+        UIViewRoot root = new UIViewRoot();
+        UIInput child1 = new UIInput();
+        child1.setId("aaa");
+        child1.setValue(new Integer(234));
+        UIInput child2 = new UIInput();
+        child2.setId("bbb");
+        root.getChildren().add(child1);
+        root.getChildren().add(child2);
+
+        getApplication().addConverter(Integer.class,
+                IntegerConverter.class.getName());
+
+        Integer value = new Integer("234");
+        validator.setTargetId("aaa");
+
+        try {
+            validator.validate(context, child2, value);
+            success();
+        } catch (ValidatorException expected) {
+            fail();
+        }
+    }
+    
+    public void testValidate_valid() throws Exception {
+        TGreaterEqualValidator validator = new TGreaterEqualValidator();
+        FacesContext context = getFacesContext();
+        UIViewRoot root = new UIViewRoot();
+        UIInput child1 = new UIInput();
+        child1.setId("aaa");
+        child1.setValue(new Integer(234));
+        UIInput child2 = new UIInput();
+        child2.setId("bbb");
+        root.getChildren().add(child1);
+        root.getChildren().add(child2);
+        
+        getApplication().addConverter(Integer.class,
+                IntegerConverter.class.getName());
+        
+        Integer value = new Integer("235");
+        validator.setTargetId("aaa");
+        
+        try {
+            validator.validate(context, child2, value);
+            success();
+        } catch (ValidatorException expected) {
+            fail();
+        }
+    }
+
 }
