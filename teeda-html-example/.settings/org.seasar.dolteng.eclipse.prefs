@@ -1,4 +1,8 @@
-#Tue Aug 22 15:48:53 JST 2006
-DefaultDaoPackage=
-DefaultEntityPackage=
+#Mon Sep 11 12:46:25 JST 2006
+DefaultDaoPackage=examples.teeda.dao
+DefaultDtoPackage=examples.teeda.dto
+DefaultEntityPackage=examples.teeda.entity
+DefaultWebPackage=examples.teeda.web
+NecessaryDicons=convention.dicon
+WebContentsRoot=/src/main/webapp
 eclipse.preferences.version=1
