@@ -32,6 +32,11 @@ import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.PageDescCache;
 import org.seasar.teeda.extension.html.PagePersistence;
 
+/**
+ * @author higa
+ * @author shot
+ * @author manhole
+ */
 public class SessionPagePersistence implements PagePersistence {
 
     private static final long serialVersionUID = 1L;
@@ -78,7 +83,8 @@ public class SessionPagePersistence implements PagePersistence {
         BeanDesc beanDesc = BeanDescFactory.getBeanDesc(page.getClass());
         for (int i = 0; i < beanDesc.getPropertyDescSize(); ++i) {
             PropertyDesc pd = beanDesc.getPropertyDesc(i);
-            if (!pd.hasReadMethod() || !isPersistenceInputValueType(pd.getPropertyType())) {
+            if (!pd.hasReadMethod()
+                    || !isPersistenceInputValueType(pd.getPropertyType())) {
                 continue;
             }
             Object value = pd.getValue(page);
@@ -93,7 +99,7 @@ public class SessionPagePersistence implements PagePersistence {
         }
         return clazz.equals(String.class) || clazz.equals(Boolean.class)
                 || Number.class.isAssignableFrom(clazz)
-                || Date.class.isAssignableFrom(clazz);
+                || Date.class.isAssignableFrom(clazz) || clazz.isArray();
     }
 
     public void restore(FacesContext context, String viewId) {

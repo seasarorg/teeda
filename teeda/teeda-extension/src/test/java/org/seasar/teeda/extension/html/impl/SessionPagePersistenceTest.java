@@ -18,6 +18,7 @@ package org.seasar.teeda.extension.html.impl;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,14 +27,16 @@ import javax.faces.context.FacesContext;
 
 import org.seasar.framework.convention.impl.NamingConventionImpl;
 import org.seasar.framework.util.ClassUtil;
-import org.seasar.teeda.core.unit.TeedaTestCase;
+import org.seasar.teeda.extension.html.PageDesc;
+import org.seasar.teeda.extension.html.PageDescCache;
 import org.seasar.teeda.extension.html.impl.SessionPagePersistence.PersistenceData;
+import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 
 /**
  * @author higa
- *
+ * @author manhole
  */
-public class SessionPagePersistenceTest extends TeedaTestCase {
+public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
 
     public void testConvertPageData() throws Exception {
         Hoge hoge = new Hoge();
@@ -52,6 +55,8 @@ public class SessionPagePersistenceTest extends TeedaTestCase {
         assertEquals(Boolean.TRUE, map.get("bool2"));
         assertEquals("str", map.get("str"));
         assertEquals(timestamp, map.get("timestamp"));
+        // TODO https://www.seasar.org/issues/browse/TEEDA-88
+        // でListも対応する際に、このassertは逆転する。
         assertNull(map.get("list"));
     }
 
@@ -100,6 +105,52 @@ public class SessionPagePersistenceTest extends TeedaTestCase {
         spp.restore(context, path);
         Map requestMap = extCtx.getRequestMap();
         assertEquals("123", requestMap.get("aaa"));
+    }
+
+    public void testSaveAndRestore_array() throws Exception {
+        // ## Assert ##
+        final String fromViewId = "/fromViewId";
+        final String toViewId = "/fooViewId";
+        final MockPageDescCache pageDescCache = new MockPageDescCache();
+        final PageDesc fromPageDesc = createPageDesc(FromPage.class, fromViewId);
+        pageDescCache.putPageDesc(fromViewId, fromPageDesc);
+        final SessionPagePersistence pagePersistence = new SessionPagePersistence();
+        pagePersistence.setPageDescCache(pageDescCache);
+        final FacesContext context = getFacesContext();
+        context.getViewRoot().setViewId(fromViewId);
+
+        final FromPage fromPage = (FromPage) getComponent(FromPage.class);
+        fromPage.setAaaaa(new String[] { "a", "bb", "c" });
+        final Map requestMap = context.getExternalContext().getRequestMap();
+        assertNull(requestMap.get("aaaaa"));
+
+        // ## Act ##
+        pagePersistence.save(context, toViewId);
+        pagePersistence.restore(context, toViewId);
+
+        // ## Assert ##
+        final String[] aaaaa = (String[]) requestMap.get("aaaaa");
+        assertNotNull(aaaaa);
+        assertEquals(3, aaaaa.length);
+        assertEquals("a", aaaaa[0]);
+        assertEquals("bb", aaaaa[1]);
+        assertEquals("c", aaaaa[2]);
+    }
+
+    private static class MockPageDescCache implements PageDescCache {
+        Map cache = new HashMap();
+
+        public void putPageDesc(String viewId, Object PageDesc) {
+            cache.put(viewId, PageDesc);
+        }
+
+        public PageDesc getPageDesc(String viewId) {
+            return (PageDesc) cache.get(viewId);
+        }
+
+        public PageDesc createPageDesc(String viewId) {
+            return null;
+        }
     }
 
     public static class Hoge {
@@ -172,6 +223,17 @@ public class SessionPagePersistenceTest extends TeedaTestCase {
         public void setTimestamp(Timestamp timestamp) {
             this.timestamp = timestamp;
         }
+    }
 
+    public static class FromPage {
+        private String[] aaaaa;
+
+        public String[] getAaaaa() {
+            return aaaaa;
+        }
+
+        public void setAaaaa(String[] aaaaa) {
+            this.aaaaa = aaaaa;
+        }
     }
 }
