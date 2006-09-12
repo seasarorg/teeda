@@ -52,18 +52,20 @@ public class UrlBuilder {
         final URI uri = URI.create(base);
         if (uri.getScheme() != null) {
             sb.append(uri.getScheme());
-            sb.append("://");
-        }
-        if (uri.getHost() != null) {
-            sb.append(uri.getHost());
-        }
-        if (-1 < uri.getPort()) {
             sb.append(":");
-            sb.append(uri.getPort());
+        }
+        // [scheme:]scheme-specific-part[#fragment]
+        // [scheme:][//authority][path][?query][#fragment]
+        // server-based-authority=[user-info@]host[:port]
+        if (uri.getAuthority() != null) {
+            sb.append("//");
+            sb.append(uri.getAuthority());
         }
 
         if (uri.getPath() != null) {
             sb.append(uri.getPath());
+        } else if (uri.getSchemeSpecificPart() != null) {
+            sb.append(uri.getSchemeSpecificPart());
         }
         boolean questionAppeared = false;
         if (uri.getQuery() != null) {

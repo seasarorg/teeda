@@ -125,6 +125,34 @@ public class UrlBuilderTest extends TestCase {
         assertEquals("http://foohost:9901/a.html?1=2", actual);
     }
 
+    public void testBuildContainsUserInfo() throws Exception {
+        // ## Arrange ##
+        UrlBuilder urlBuilder = new UrlBuilder();
+        urlBuilder.setBase("http://user-info@foohost/a.html");
+
+        // ## Act ##
+        urlBuilder.add("1", "2");
+        final String actual = urlBuilder.build();
+        System.out.println(actual);
+
+        // ## Assert ##
+        assertEquals("http://user-info@foohost/a.html?1=2", actual);
+    }
+
+    public void testBuildContainsUserInfoAndPort() throws Exception {
+        // ## Arrange ##
+        UrlBuilder urlBuilder = new UrlBuilder();
+        urlBuilder.setBase("http://user-info@foohost:9901/a.html");
+
+        // ## Act ##
+        urlBuilder.add("1", "2");
+        final String actual = urlBuilder.build();
+        System.out.println(actual);
+
+        // ## Assert ##
+        assertEquals("http://user-info@foohost:9901/a.html?1=2", actual);
+    }
+
     public void testBuildFullUrl() throws Exception {
         // ## Arrange ##
         UrlBuilder urlBuilder = new UrlBuilder();
@@ -139,6 +167,42 @@ public class UrlBuilderTest extends TestCase {
         // ## Assert ##
         UrlDiff urlDiff = new UrlDiff("http://aaaa.bbb/cc/d.html?1=2&1=4#ee",
                 actual);
+        assertEquals(actual, true, urlDiff.isIdentical());
+    }
+
+    public void testBuildMailTo() throws Exception {
+        // ## Arrange ##
+        UrlBuilder urlBuilder = new UrlBuilder();
+        urlBuilder.setBase("mailto:test@test.com");
+
+        String actual = urlBuilder.build();
+
+        // ## Assert ##
+        UrlDiff urlDiff = new UrlDiff("mailto:test@test.com", actual);
+        assertEquals(actual, true, urlDiff.isIdentical());
+    }
+
+    public void testBuildNews() throws Exception {
+        // ## Arrange ##
+        UrlBuilder urlBuilder = new UrlBuilder();
+        urlBuilder.setBase("news:comp.lang.java");
+
+        String actual = urlBuilder.build();
+
+        // ## Assert ##
+        UrlDiff urlDiff = new UrlDiff("news:comp.lang.java", actual);
+        assertEquals(actual, true, urlDiff.isIdentical());
+    }
+
+    public void testBuildUrn() throws Exception {
+        // ## Arrange ##
+        UrlBuilder urlBuilder = new UrlBuilder();
+        urlBuilder.setBase("urn:isbn:096139210x");
+
+        String actual = urlBuilder.build();
+
+        // ## Assert ##
+        UrlDiff urlDiff = new UrlDiff("urn:isbn:096139210x", actual);
         assertEquals(actual, true, urlDiff.isIdentical());
     }
 
