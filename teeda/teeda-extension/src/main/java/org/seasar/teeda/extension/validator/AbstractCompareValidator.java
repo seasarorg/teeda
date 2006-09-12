@@ -37,7 +37,7 @@ public abstract class AbstractCompareValidator implements Validator,
 
     private String targetId = null;
 
-    private boolean bTransient = false;
+    private boolean transientValue = false;
 
     public String getTargetId() {
         return targetId;
@@ -48,11 +48,11 @@ public abstract class AbstractCompareValidator implements Validator,
     }
 
     public boolean isTransient() {
-        return bTransient;
+        return transientValue;
     }
 
     public void setTransient(boolean transientValue) {
-        this.bTransient = transientValue;
+        this.transientValue = transientValue;
     }
 
     public Object saveState(FacesContext context) {
