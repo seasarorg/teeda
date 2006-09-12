@@ -20,10 +20,6 @@ import java.util.Map;
 
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.taglib.html.InputTextareaTag;
-import org.seasar.teeda.extension.config.taglib.element.TagElement;
-import org.seasar.teeda.extension.config.taglib.element.TaglibElement;
-import org.seasar.teeda.extension.config.taglib.element.impl.TagElementImpl;
-import org.seasar.teeda.extension.config.taglib.element.impl.TaglibElementImpl;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.ElementProcessor;
@@ -54,19 +50,15 @@ public class InputTextareaFactoryTest extends TeedaExtensionTestCase {
 
     public void testCreateFactory() throws Exception {
         // ## Arrange ##
-        MockTaglibManager taglibManager = new MockTaglibManager();
-        TaglibElement jsfHtml = new TaglibElementImpl();
-        jsfHtml.setUri(JsfConstants.JSF_HTML_URI);
-        TagElement tagElement = new TagElementImpl();
-        tagElement.setName("inputTextarea");
-        tagElement.setTagClass(InputTextareaTag.class);
-        jsfHtml.addTagElement(tagElement);
-        taglibManager.addTaglibElement(jsfHtml);
+        registerTaglibElement(JsfConstants.JSF_HTML_URI, "inputTextarea",
+                InputTextareaTag.class);
+        MockTaglibManager taglibManager = getTaglibManager();
         InputTextareaFactory factory = new InputTextareaFactory();
         factory.setTaglibManager(taglibManager);
         Map props = new HashMap();
         props.put("id", "aaa");
         props.put("type", "password");
+        props.put("title", "aaa");
         ElementNode elementNode = createElementNode("textarea", props);
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         ActionDesc actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
@@ -78,6 +70,7 @@ public class InputTextareaFactoryTest extends TeedaExtensionTestCase {
         assertNotNull("1", processor);
         assertEquals("2", InputTextareaTag.class, processor.getTagClass());
         assertEquals("3", "#{fooPage.aaa}", processor.getProperty("value"));
+        assertEquals("4", "aaa", processor.getProperty("label"));
     }
 
 }

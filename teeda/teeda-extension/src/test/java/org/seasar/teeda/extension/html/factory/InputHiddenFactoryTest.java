@@ -20,10 +20,6 @@ import java.util.Map;
 
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.taglib.html.InputHiddenTag;
-import org.seasar.teeda.extension.config.taglib.element.TagElement;
-import org.seasar.teeda.extension.config.taglib.element.TaglibElement;
-import org.seasar.teeda.extension.config.taglib.element.impl.TagElementImpl;
-import org.seasar.teeda.extension.config.taglib.element.impl.TaglibElementImpl;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.ElementProcessor;
@@ -63,19 +59,15 @@ public class InputHiddenFactoryTest extends TeedaExtensionTestCase {
 
     public void testCreateFactory() throws Exception {
         // ## Arrange ##
-        MockTaglibManager taglibManager = new MockTaglibManager();
-        TaglibElement jsfHtml = new TaglibElementImpl();
-        jsfHtml.setUri(JsfConstants.JSF_HTML_URI);
-        TagElement tagElement = new TagElementImpl();
-        tagElement.setName("inputHidden");
-        tagElement.setTagClass(InputHiddenTag.class);
-        jsfHtml.addTagElement(tagElement);
-        taglibManager.addTaglibElement(jsfHtml);
+        registerTaglibElement(JsfConstants.JSF_HTML_URI, "inputHidden",
+                InputHiddenTag.class);
+        MockTaglibManager taglibManager = getTaglibManager();
         InputHiddenFactory factory = new InputHiddenFactory();
         factory.setTaglibManager(taglibManager);
         Map props = new HashMap();
         props.put("id", "aaa");
         props.put("type", "hidden");
+        props.put("title", "aaa");
         ElementNode elementNode = createElementNode("input", props);
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         ActionDesc actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
@@ -87,5 +79,6 @@ public class InputHiddenFactoryTest extends TeedaExtensionTestCase {
         assertNotNull("1", processor);
         assertEquals("2", InputHiddenTag.class, processor.getTagClass());
         assertEquals("3", "#{fooPage.aaa}", processor.getProperty("value"));
+        assertEquals("4", "aaa", processor.getProperty("label"));
     }
 }
