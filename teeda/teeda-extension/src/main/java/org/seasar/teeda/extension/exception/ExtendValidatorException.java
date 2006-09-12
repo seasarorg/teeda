@@ -26,6 +26,7 @@ public class ExtendValidatorException extends ValidatorException {
 
     private static final long serialVersionUID = 1L;
 
+    // FIXME これ、消せそう
     private FacesMessage facesMessage = null;
 
     private String[] messsageIds = null;
@@ -50,6 +51,7 @@ public class ExtendValidatorException extends ValidatorException {
         this.messsageIds = messageIds;
     }
 
+    // FIXME 消しても良さそうだよ?
     public FacesMessage getFacesMessage() {
         return facesMessage;
     }

@@ -100,6 +100,15 @@ public class HtmlFormRenderer extends AbstractRenderer {
         writer.endElement(JsfConstants.FORM_ELEM);
     }
 
+    /*
+     * CommandLinkと連携するためのJavaScriptを出力します。
+     * CommandLinkではパラメータ(f:param)をformのhiddenへセットするため、
+     * ここでhiddenの器を用意します。
+     * 
+     * また、ここで用意したhidden値がhistory back(ブラウザの戻るボタン)の際に
+     * 再現されてしまうため、onloadのタイミングでJavaScriptを用いてhidden値を
+     * クリアします。
+     */
     protected void renderForCommandLink(FacesContext context,
             HtmlForm htmlForm, ResponseWriter writer) throws IOException {
         final Map hiddenParameters = getHiddenParameters(htmlForm);
@@ -127,7 +136,8 @@ public class HtmlFormRenderer extends AbstractRenderer {
         if (StringUtil.isEmpty(scirptBody)) {
             return;
         }
-        StringBuffer buf = new StringBuffer(512);
+        // bodyにセットされているonloadを失わないようにする
+        final StringBuffer buf = new StringBuffer(512);
         buf.append("function addEventForCommandLink(obj, eventName, fn){");
         buf
                 .append("var prev = obj[eventName]; obj[eventName] = prev ? function() { fn() ; prev() } : fn;}");
