@@ -24,7 +24,7 @@ import org.seasar.teeda.extension.html.PageDesc;
 
 /**
  * @author higa
- *
+ * @author shot
  */
 public class InputTextFactory extends AbstractElementProcessorFactory {
 
@@ -52,9 +52,10 @@ public class InputTextFactory extends AbstractElementProcessorFactory {
                         actionDesc);
         properties.put(JsfConstants.VALUE_ATTR, getBindingExpression(pageDesc
                 .getPageName(), elementNode.getId()));
-
-        //TODO
-        properties.put(JsfConstants.LABEL_ATTR, null);
+        String title = elementNode.getProperty(JsfConstants.TITLE_ATTR);
+        if (title != null) {
+            properties.put(JsfConstants.LABEL_ATTR, title);
+        }
     }
 
     protected String getTagName() {
