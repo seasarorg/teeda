@@ -22,6 +22,7 @@ import javax.faces.context.FacesContext;
 
 /**
  * @author shot
+ * @author yone
  */
 public class DispatchScopeFactory {
 
@@ -43,16 +44,26 @@ public class DispatchScopeFactory {
 
     private static boolean initialized() {
         Map requestMap = getRequestMap();
+        if (requestMap == null) {
+            return false;
+        }
         return requestMap.containsKey(DISPATCH_SCOPE_KEY);
     }
 
     public static void destroy() {
+        Map requestMap = getRequestMap();
+        if (requestMap == null) {
+            return;
+        }
         getRequestMap().remove(DISPATCH_SCOPE_KEY);
         create();
     }
 
-    private static Map getRequestMap() {
+    protected static Map getRequestMap() {
         FacesContext context = FacesContext.getCurrentInstance();
+        if (context == null) {
+            return null;
+        }
         ExternalContext externalContext = context.getExternalContext();
         return externalContext.getRequestMap();
     }
