@@ -15,6 +15,8 @@
  */
 package org.seasar.teeda.spike;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.text.MessageFormat;
 import java.util.Locale;
 
@@ -25,11 +27,53 @@ import junit.framework.TestCase;
  */
 public class MessageFormatTest extends TestCase {
 
-    public void test1() throws Exception {
-        String message = "aaa{0,number,00.0000}, {1}";
-        Locale locale = Locale.getDefault();
-        Object[] args = {new Double(99.9999), "hoge"};
-        String format = new MessageFormat(message, locale).format(args);
-        assertEquals("aaa99.9999, hoge", format);
+    // messageにフォーマットを指定すれば、Doubleは丸まらない
+    public void testDouble_Format() throws Exception {
+        final String message = "{0,number,00.0000}";
+        final Locale locale = Locale.getDefault();
+        final Object[] args = { new Double(99.9999) };
+        final String format = new MessageFormat(message, locale).format(args);
+        assertEquals("99.9999", format);
     }
+
+    // messageにフォーマットを指定しないと、文字列が丸まってしまう。
+    public void testDouble_NoFormat() throws Exception {
+        final Locale locale = Locale.getDefault();
+        final Object[] args = { new Double(99.9999) };
+        final String message = "{0}";
+        final String format = new MessageFormat(message, locale).format(args);
+        assertEquals("100", format);
+    }
+
+    // 入力をBigDecimalにしたところで、やはり丸まってしまう
+    public void testBigDecimal_NoFormat() throws Exception {
+        final Locale locale = Locale.getDefault();
+        final Object[] args = { new BigDecimal("99.9999") };
+        final String message = "{0}";
+        final String format = new MessageFormat(message, locale).format(args);
+        assertEquals("100", format);
+    }
+
+    public void testToString() throws Exception {
+        assertEquals("1.0E19", new Double(9999999999999999999.999999999999999)
+                .toString());
+        assertEquals("9999999999999999999.999999999999999", new BigDecimal(
+                "9999999999999999999.999999999999999").toString());
+    }
+
+    public void test1() throws Exception {
+        {
+            final DecimalFormat decimalFormat = new DecimalFormat("###.###");
+            final Number parsed = decimalFormat.parse("123.456");
+            System.out.println(parsed);
+            System.out.println(parsed.getClass());
+        }
+        {
+            final DecimalFormat decimalFormat = new DecimalFormat("##.000");
+            final Number parsed = decimalFormat.parse("123.4567");
+            System.out.println(parsed);
+            System.out.println(parsed.getClass());
+        }
+    }
+
 }
