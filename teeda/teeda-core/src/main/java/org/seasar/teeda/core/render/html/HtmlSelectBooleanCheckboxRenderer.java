@@ -93,10 +93,10 @@ public class HtmlSelectBooleanCheckboxRenderer extends AbstractRenderer {
     }
 
     private boolean isChecked(FacesContext context, UIComponent component) {
-        Map reqParam = context.getExternalContext().getRequestParameterMap();
+        Map paramMap = context.getExternalContext().getRequestParameterMap();
         String clientId = component.getClientId(context);
-        if (reqParam.containsKey(clientId)) {
-            String value = (String) reqParam.get(clientId);
+        if (paramMap.containsKey(clientId)) {
+            String value = (String) paramMap.get(clientId);
             return "on".equalsIgnoreCase(value)
                     || "yes".equalsIgnoreCase(value) || isChecked(value);
         }

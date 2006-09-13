@@ -180,9 +180,9 @@ public class HtmlFormRenderer extends AbstractRenderer {
     }
 
     protected void decodeHtmlForm(FacesContext context, HtmlForm htmlForm) {
-        Map reqParam = context.getExternalContext().getRequestParameterMap();
+        Map paramMap = context.getExternalContext().getRequestParameterMap();
         String key = getFormSubmitKey(context, htmlForm);
-        if (reqParam.containsKey(key)) {
+        if (paramMap.containsKey(key)) {
             htmlForm.setSubmitted(true);
         } else {
             htmlForm.setSubmitted(false);
