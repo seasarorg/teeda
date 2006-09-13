@@ -41,6 +41,8 @@ public class SessionPagePersistence implements PagePersistence {
 
     private static final long serialVersionUID = 1L;
 
+    private static final String PREVIOUS_VIEW_ID = "previousViewId";
+
     private int pageSize = 10;
 
     private PageDescCache pageDescCache;
@@ -66,7 +68,8 @@ public class SessionPagePersistence implements PagePersistence {
             pd = new PersistenceData(pageSize);
             sessionMap.put(getClass().getName(), pd);
         }
-        pd.set(viewId, getPageData(context.getViewRoot().getViewId()));
+        String previousViewId = context.getViewRoot().getViewId();
+        pd.set(viewId, getPageData(previousViewId));
     }
 
     protected Map getPageData(String viewId) {
@@ -75,10 +78,10 @@ public class SessionPagePersistence implements PagePersistence {
             return null;
         }
         Object page = DIContainerUtil.getComponent(pageDesc.getPageName());
-        return convertPageData(page);
+        return convertPageData(page, viewId);
     }
 
-    public static Map convertPageData(Object page) {
+    public static Map convertPageData(Object page, String viewId) {
         Map map = new HashMap();
         BeanDesc beanDesc = BeanDescFactory.getBeanDesc(page.getClass());
         for (int i = 0; i < beanDesc.getPropertyDescSize(); ++i) {
@@ -90,6 +93,7 @@ public class SessionPagePersistence implements PagePersistence {
             Object value = pd.getValue(page);
             map.put(pd.getPropertyName(), value);
         }
+        map.put(PREVIOUS_VIEW_ID, viewId);
         return map;
     }
 

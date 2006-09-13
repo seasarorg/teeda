@@ -48,7 +48,7 @@ public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
         Timestamp timestamp = new Timestamp(new Date().getTime());
         hoge.setTimestamp(timestamp);
         hoge.setList(new ArrayList());
-        Map map = SessionPagePersistence.convertPageData(hoge);
+        Map map = SessionPagePersistence.convertPageData(hoge, "aaa");
         assertEquals(new Integer(1), map.get("int1"));
         assertEquals(new Integer(2), map.get("int2"));
         assertEquals(Boolean.TRUE, map.get("bool1"));
