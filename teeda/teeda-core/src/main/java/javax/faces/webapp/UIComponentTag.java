@@ -123,15 +123,7 @@ public abstract class UIComponentTag implements Tag {
     }
 
     public int doStartTag() throws JspException {
-        context = PageContextUtil.getCurrentFacesContextAttribute(pageContext);
-        if (context == null) {
-            context = FacesContext.getCurrentInstance();
-            if (context == null) {
-                throw new JspException("Cannot find FacesContext");
-            }
-            PageContextUtil.setCurrentFacesContextAttribute(pageContext,
-                    context);
-        }
+        setupFacesContext();
         setupResponseWriter();
         UIComponentTag parentTag = getParentUIComponentTag(pageContext);
         Map requestMap = context.getExternalContext().getRequestMap();
@@ -185,6 +177,18 @@ public abstract class UIComponentTag implements Tag {
         }
         pushUIComponentTag();
         return getDoStartValue();
+    }
+
+    public void setupFacesContext() throws JspException {
+        context = PageContextUtil.getCurrentFacesContextAttribute(pageContext);
+        if (context == null) {
+            context = FacesContext.getCurrentInstance();
+            if (context == null) {
+                throw new JspException("Cannot find FacesContext");
+            }
+            PageContextUtil.setCurrentFacesContextAttribute(pageContext,
+                    context);
+        }
     }
 
     public int doEndTag() throws JspException {

@@ -209,6 +209,7 @@ public class ElementProcessorImpl implements ElementProcessor {
         }
         tag.setPageContext(pageContext);
         setProperties(tag);
+        tag.setupFacesContext();
         tag.findComponent(context);
         tag.pushUIComponentTag();
         try {
