@@ -57,15 +57,32 @@ public class ConstantConverterAnnotationHandlerTest extends TeedaTestCase {
         assertNotNull(converter);
     }
 
+    public void testRegisterConverter3() throws Exception {
+        ComponentDef cd = new ComponentDefImpl(FooConverter.class,
+                "fooConverter");
+        cd.setInstanceDef(InstanceDefFactory.PROTOTYPE);
+        getContainer().register(cd);
+        ConstantConverterAnnotationHandler handler = new ConstantConverterAnnotationHandler();
+        getContainer().register(HogeBean.class, "hogeBean");
+        handler.registerConverters("hogeBean");
+        FooConverter converter = (FooConverter) ConverterResource
+                .getConverter("#{hogeBean.ccc_ddd}");
+        assertEquals("bar2", converter.getBbb());
+    }
+
     public static class HogeBean {
 
         private int aaa = 0;
 
         private boolean bbb = false;
 
+        private int ccc_ddd = 0;
+
         public static final String aaa_fooConverter = "bbb=bar";
 
         public static final String bbb_fooConverter = null;
+
+        public static final String ccc_ddd_fooConverter = "bbb=bar2";
 
         public int getAaa() {
             return aaa;
@@ -81,6 +98,14 @@ public class ConstantConverterAnnotationHandlerTest extends TeedaTestCase {
 
         public void setBbb(boolean bbb) {
             this.bbb = bbb;
+        }
+
+        public int getCcc_ddd() {
+            return ccc_ddd;
+        }
+
+        public void setCcc_ddd(int ccc_ddd) {
+            this.ccc_ddd = ccc_ddd;
         }
 
     }

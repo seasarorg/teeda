@@ -27,7 +27,6 @@ import org.seasar.framework.container.ComponentDef;
 import org.seasar.framework.container.S2Container;
 import org.seasar.framework.container.util.ConstantAnnotationUtil;
 import org.seasar.framework.util.FieldUtil;
-import org.seasar.framework.util.StringUtil;
 
 /**
  * @author shot
@@ -52,16 +51,21 @@ public class ConstantConverterAnnotationHandler extends
                     || !field.getName().endsWith(CONVERTER_SUFFIX)) {
                 continue;
             }
-            String[] names = StringUtil.split(field.getName(), "_");
-            if (names.length != 2 || !beanDesc.hasPropertyDesc(names[0])
-                    || !container.hasComponentDef(names[1])) {
+            String fieldString = field.getName();
+            int index = fieldString.lastIndexOf("_");
+            String fieldName = fieldString.substring(0, index);
+            String convertorName = fieldString.substring(index + 1);
+            if (!beanDesc.hasPropertyDesc(fieldName)
+                    || !container.hasComponentDef(convertorName)) {
                 continue;
             }
-            Converter converter = (Converter) container.getComponent(names[1]);
+
+            Converter converter = (Converter) container
+                    .getComponent(convertorName);
             String s = (String) FieldUtil.get(field, null);
             Map m = ConstantAnnotationUtil.convertExpressionToMap(s);
             BeanUtil.copyProperties(m, converter);
-            registerConverter(componentName, names[0], converter);
+            registerConverter(componentName, fieldName, converter);
         }
     }
 }

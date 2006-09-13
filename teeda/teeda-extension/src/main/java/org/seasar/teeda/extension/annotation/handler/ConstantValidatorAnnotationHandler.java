@@ -28,7 +28,6 @@ import org.seasar.framework.container.S2Container;
 import org.seasar.framework.container.util.ConstantAnnotationUtil;
 import org.seasar.framework.convention.NamingConvention;
 import org.seasar.framework.util.FieldUtil;
-import org.seasar.framework.util.StringUtil;
 
 /**
  * @author shot
@@ -61,16 +60,20 @@ public class ConstantValidatorAnnotationHandler extends
                             namingConvention.getValidatorSuffix())) {
                 continue;
             }
-            String[] names = StringUtil.split(field.getName(), "_");
-            if (names.length != 2 || !beanDesc.hasPropertyDesc(names[0])
-                    || !container.hasComponentDef(names[1])) {
+            String fieldString = field.getName();
+            int index = fieldString.lastIndexOf("_");
+            String fieldName = fieldString.substring(0, index);
+            String validatorName = fieldString.substring(index + 1);
+            if (!beanDesc.hasPropertyDesc(fieldName)
+                    || !container.hasComponentDef(validatorName)) {
                 continue;
             }
-            Validator validator = (Validator) container.getComponent(names[1]);
+            Validator validator = (Validator) container
+                    .getComponent(validatorName);
             String s = (String) FieldUtil.get(field, null);
             Map m = ConstantAnnotationUtil.convertExpressionToMap(s);
             BeanUtil.copyProperties(m, validator);
-            registerValidator(componentName, names[0], validator);
+            registerValidator(componentName, fieldName, validator);
         }
     }
 }

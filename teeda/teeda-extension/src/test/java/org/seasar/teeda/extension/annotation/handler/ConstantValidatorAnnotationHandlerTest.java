@@ -52,16 +52,34 @@ public class ConstantValidatorAnnotationHandlerTest extends TeedaTestCase {
         assertEquals(TRequiredValidator.class, chain.getValidator(1).getClass());
     }
 
+    public void testRegisterValidator_underbar() throws Exception {
+        ComponentDef cd = new ComponentDefImpl(LengthValidator.class,
+                "lengthValidator");
+        cd.setInstanceDef(InstanceDefFactory.PROTOTYPE);
+        getContainer().register(cd);
+        ConstantValidatorAnnotationHandler handler = new ConstantValidatorAnnotationHandler();
+        getContainer().register(HogeBean.class, "hogeBean");
+        handler.registerValidators("hogeBean");
+        LengthValidator validator = (LengthValidator) ValidatorResource
+                .getValidator("#{hogeBean.bbb_ccc}");
+        assertEquals(3, validator.getMinimum());
+        assertEquals(8, validator.getMaximum());
+    }
+
     public static class HogeBean {
         private String name = null;
 
         private String aaa;
+
+        private String bbb_ccc;
 
         public static final String name_lengthValidator = "minimum=2, maximum=5";
 
         public static final String aaa_lengthValidator = "minimum=2, maximum=5";
 
         public static final String aaa_TRequiredValidator = null;
+
+        public static final String bbb_ccc_lengthValidator = "minimum=3, maximum=8";
 
         public String getName() {
             return name;
@@ -77,6 +95,14 @@ public class ConstantValidatorAnnotationHandlerTest extends TeedaTestCase {
 
         public void setAaa(String aaa) {
             this.aaa = aaa;
+        }
+
+        public String getBbb_ccc() {
+            return bbb_ccc;
+        }
+
+        public void setBbb_ccc(String bbb_ccc) {
+            this.bbb_ccc = bbb_ccc;
         }
     }
 }
