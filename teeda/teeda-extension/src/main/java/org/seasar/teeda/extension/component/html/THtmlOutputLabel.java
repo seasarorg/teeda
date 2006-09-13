@@ -105,7 +105,6 @@ public class THtmlOutputLabel extends HtmlOutputLabel {
         defaultKey = (String) values[2];
         propertiesName = (String) values[3];
         defaultPropertiesName = (String) values[4];
-
     }
 
 }

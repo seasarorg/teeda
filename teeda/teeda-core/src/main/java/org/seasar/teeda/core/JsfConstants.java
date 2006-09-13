@@ -301,6 +301,8 @@ public interface JsfConstants {
 
     String ONFOCUS_ATTR = "onfocus";
 
+    String ONLOAD_ATTR = "onload";
+
     String ONMOUSEDOWN_ATTR = "onmousedown";
 
     String ONMOUSEUP_ATTR = "onmouseup";
@@ -324,6 +326,8 @@ public interface JsfConstants {
     String ONSELECT_ATTR = "onselect";
 
     String ONSUBMIT_ATTR = "onsubmit";
+
+    String ONUNLOAD_ATTR = "onunload";
 
     String PAGE_DIRECTION_ATTR = "pageDirection";
 

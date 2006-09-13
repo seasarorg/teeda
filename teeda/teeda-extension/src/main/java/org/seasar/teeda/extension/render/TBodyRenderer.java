@@ -24,9 +24,13 @@ import java.util.Map;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+import javax.faces.internal.IgnoreComponent;
+import javax.faces.internal.UIComponentUtil;
 
 import org.seasar.framework.util.AssertionUtil;
+import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.AbstractRenderer;
+import org.seasar.teeda.core.util.RendererUtil;
 import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.component.UIBody;
 
@@ -43,11 +47,25 @@ public class TBodyRenderer extends AbstractRenderer {
             .getName()
             + "_KEY_LISTENER_STACK";
 
+    private static final IgnoreComponent IGNORE_COMPONENT;
+
+    static {
+        IGNORE_COMPONENT = buildIgnoreComponent();
+    }
+
     public void encodeBegin(FacesContext context, UIComponent component)
             throws IOException {
         assertNotNull(context, component);
         final ResponseWriter writer = context.getResponseWriter();
         writer.startElement(ExtensionConstants.BODY_ELEM, component);
+        Map map = UIComponentUtil.getAllAttributesAndProperties(component,
+                IGNORE_COMPONENT);
+        for (final Iterator it = map.entrySet().iterator(); it.hasNext();) {
+            Map.Entry entry = (Map.Entry) it.next();
+            String name = (String) entry.getKey();
+            Object value = entry.getValue();
+            RendererUtil.renderAttribute(writer, name, value, name);
+        }
     }
 
     public static void addRendererListener(UIBody body,
@@ -76,6 +94,12 @@ public class TBodyRenderer extends AbstractRenderer {
             }
         }
         writer.endElement(ExtensionConstants.BODY_ELEM);
+    }
+
+    protected static IgnoreComponent buildIgnoreComponent() {
+        IgnoreComponent ignore = new IgnoreComponent();
+        ignore.addIgnoreComponentName(JsfConstants.ID_ATTR);
+        return ignore;
     }
 
 }

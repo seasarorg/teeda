@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -27,9 +27,6 @@ import javax.faces.event.ActionEvent;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.webapp.UIComponentTag;
 
-import org.seasar.framework.beans.BeanDesc;
-import org.seasar.framework.beans.PropertyDesc;
-import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.el.SimpleMethodBinding;
 import org.seasar.teeda.core.exception.NoEditableValueHolderRuntimeException;
@@ -894,28 +891,8 @@ public abstract class UIComponentTagBase extends UIComponentTag {
 
     protected void setComponentProperty(UIComponent component,
             String propertyName, String value) {
-        if (value == null) {
-            return;
-        }
-        if (BindingUtil.isValueReference(value)) {
-            BindingUtil.setValueBinding(component, propertyName, value);
-        } else {
-            setBeanProperty(component, propertyName, value);
-        }
-    }
-
-    protected void setBeanProperty(UIComponent component, String propertyName,
-            String value) {
-
-        BeanDesc beanDesc = BeanDescFactory.getBeanDesc(component.getClass());
-        if (beanDesc.hasPropertyDesc(propertyName)) {
-            PropertyDesc pd = beanDesc.getPropertyDesc(propertyName);
-            if (pd.hasWriteMethod()) {
-                pd.setValue(component, value);
-            }
-        } else {
-            component.getAttributes().put(propertyName, value);
-        }
+        UIComponentTagPropertyUtil.setComponentProperty(component, propertyName,
+                value);
     }
 
     protected void setConverterProperty(UIComponent component, String value) {

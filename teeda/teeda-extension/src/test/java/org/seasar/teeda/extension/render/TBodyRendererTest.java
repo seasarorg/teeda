@@ -37,6 +37,15 @@ public class TBodyRendererTest extends RendererTest {
         assertEquals("<body></body>", getResponseText());
     }
 
+    public void test_renderOther() throws Exception {
+        TBodyRenderer renderer = new TBodyRenderer();
+        UIBody body = new UIBody();
+        body.setId("aaa");
+        body.setOnload("hoge");
+        encodeByRenderer(renderer, body);
+        assertEquals("<body onload=\"hoge\"></body>", getResponseText());
+    }
+
     public void test_simple2() throws Exception {
         TBodyRenderer renderer = new TBodyRenderer();
         UIBody component = new UIBody();
