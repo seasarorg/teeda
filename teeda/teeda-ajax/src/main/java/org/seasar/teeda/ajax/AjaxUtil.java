@@ -15,6 +15,7 @@
  */
 package org.seasar.teeda.ajax;
 
+import java.lang.reflect.Array;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
@@ -82,11 +83,13 @@ public class AjaxUtil {
             appendArray(buf, (Object[]) o);
         } else if (o instanceof Map) {
             appendMap(buf, (Map) o);
+        } else if (o.getClass().isArray()) {
+            appendArray(buf, o);
         } else {
             appendBean(buf, o);
         }
     }
-
+    
     public static void appendFloat(StringBuffer buf, Float f) {
         if (f.isNaN() || f.isInfinite()) {
             throw new IllegalArgumentException(f.toString());
@@ -149,6 +152,20 @@ public class AjaxUtil {
             buf.setLength(buf.length() - 1);
         }
         buf.append(AjaxConstants.END_BRACE);
+    }
+    
+    public static void appendArray(StringBuffer buf, Object o) {
+        int length = Array.getLength(o);
+        buf.append(AjaxConstants.START_BRACKET);
+        for(int i = 0; i < length; i++) {
+            Object value = Array.get(o, i);
+            append(buf, value);
+            buf.append(AjaxConstants.COMMA);
+        }
+        if (length > 0) {
+            buf.setLength(buf.length() - 1);
+        }
+        buf.append(AjaxConstants.END_BRACKET);   
     }
 
     public static String quote(String str) {

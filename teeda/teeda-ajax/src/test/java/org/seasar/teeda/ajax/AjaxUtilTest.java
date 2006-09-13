@@ -26,16 +26,16 @@ public class AjaxUtilTest extends S2FrameworkTestCase {
     public void testToString_null() throws Exception {
         assertEquals("null", AjaxUtil.toJson(null));
     }
-    
+
     public void testToJson_boolean() throws Exception {
         assertEquals("true", AjaxUtil.toJson(Boolean.TRUE));
         assertEquals("false", AjaxUtil.toJson(Boolean.FALSE));
     }
-    
+
     public void testToJson_string() throws Exception {
         assertEquals("\"a\"", AjaxUtil.toJson("a"));
     }
-    
+
     public void testToJson_float() throws Exception {
         assertEquals("1.0", AjaxUtil.toJson(new Float(1.0f)));
         try {
@@ -45,7 +45,7 @@ public class AjaxUtilTest extends S2FrameworkTestCase {
             System.out.println(e);
         }
     }
-    
+
     public void testToJson_double() throws Exception {
         assertEquals("1.0", AjaxUtil.toJson(new Double(1.0d)));
         try {
@@ -55,24 +55,25 @@ public class AjaxUtilTest extends S2FrameworkTestCase {
             System.out.println(e);
         }
     }
-    
+
     public void testToJson_number() throws Exception {
         assertEquals("100", AjaxUtil.toJson(new Integer(100)));
     }
-    
+
     public void testToJson_array() throws Exception {
         assertEquals("[]", AjaxUtil.toJson(new Object[0]));
-        assertEquals("[1]", AjaxUtil.toJson(new Integer[]{new Integer(1)}));
-        assertEquals("[1,2]", AjaxUtil.toJson(new Integer[]{new Integer(1),new Integer(2)}));
+        assertEquals("[1]", AjaxUtil.toJson(new Integer[] { new Integer(1) }));
+        assertEquals("[1,2]", AjaxUtil.toJson(new Integer[] { new Integer(1),
+                new Integer(2) }));
     }
-    
+
     public void testToJson_collection() throws Exception {
         assertEquals("[]", AjaxUtil.toJson(new ArrayList()));
         ArrayList list = new ArrayList();
         list.add(new Integer(1));
         assertEquals("[1]", AjaxUtil.toJson(list));
     }
-    
+
     public void testToJson_map() throws Exception {
         assertEquals("{}", AjaxUtil.toJson(new HashMap()));
         HashMap map = new HashMap();
@@ -83,19 +84,34 @@ public class AjaxUtilTest extends S2FrameworkTestCase {
         map.put("bbb", new HashMap());
         assertEquals("{aaa:1,bbb:{}}", AjaxUtil.toJson(map));
     }
-    
+
+    public void testToJson_PrimitiveArray() throws Exception {
+        assertEquals("[1]", AjaxUtil.toJson(new int[] { 1 }));
+        assertEquals("[1,2,3]", AjaxUtil.toJson(new int[] { 1, 2, 3 }));
+        assertEquals("[true]", AjaxUtil.toJson(new boolean[] { true }));
+        assertEquals("[true,false,true]", AjaxUtil.toJson(new boolean[] { true,
+                false, true }));
+        assertEquals("[1.11]", AjaxUtil.toJson(new double[] { 1.11 }));
+        assertEquals("[1.11,2.22,3.33]", AjaxUtil.toJson(new double[] { 1.11,
+                2.22, 3.33 }));
+
+        assertEquals(
+                "{bbb:[11,22,33],ccc:[true,false,true],ddd:[1.11,2.22,3.33]}",
+                AjaxUtil.toJson(new Test2()));
+    }
+
     public void testToJson_bean() throws Exception {
         String s = AjaxUtil.toJson(new MyBean());
         System.out.println(s);
         assertTrue(s.indexOf("aaa:null") > 0);
         assertTrue(s.indexOf("bbb:null") > 0);
-        
+
         MyBean bean = new MyBean();
         bean.setBbb(new MyBean());
         s = AjaxUtil.toJson(bean);
         System.out.println(s);
     }
-    
+
     public void testQuote() throws Exception {
         assertEquals("\"a\"", AjaxUtil.quote("a"));
         assertEquals("\"\\t\"", AjaxUtil.quote("\t"));
@@ -105,18 +121,19 @@ public class AjaxUtilTest extends S2FrameworkTestCase {
         assertEquals("\"\\\\\"", AjaxUtil.quote("\\"));
         assertEquals("\"\\/\"", AjaxUtil.quote("/"));
     }
-    
+
     public void testSetContentType() throws Exception {
         MockHttpServletResponse response = getResponse();
         AjaxUtil.setContentType(response, null);
         assertEquals(AjaxConstants.CONTENT_TYPE_JSON, response.getContentType());
-        
+
         response.setContentType(null);
         AjaxUtil.setContentType(response, "{\"value\":2,\"name\":\"a\"}");
         assertEquals(AjaxConstants.CONTENT_TYPE_JSON, response.getContentType());
-        
+
         response.setContentType(null);
-        AjaxUtil.setContentType(response, "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
+        AjaxUtil.setContentType(response,
+                "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
         assertEquals(AjaxConstants.CONTENT_TYPE_XML, response.getContentType());
 
         response.setContentType(null);
@@ -127,21 +144,73 @@ public class AjaxUtilTest extends S2FrameworkTestCase {
         AjaxUtil.setContentType(response, "aaaaa");
         assertEquals(AjaxConstants.CONTENT_TYPE_TEXT, response.getContentType());
     }
-    
+
     public static class MyBean {
         private String aaa;
+
         private MyBean bbb;
+
         public String getAaa() {
             return aaa;
         }
+
         public void setAaa(String aaa) {
             this.aaa = aaa;
         }
+
         public MyBean getBbb() {
             return bbb;
         }
+
         public void setBbb(MyBean bbb) {
             this.bbb = bbb;
+        }
+    }
+
+    public static class Test1 {
+        private String aaa = "hoge";
+
+        private int bbb = 100;
+
+        private boolean ccc = true;
+
+        private double ddd = 3.14;
+
+        public String getAaa() {
+            return aaa;
+        }
+
+        public int getBbb() {
+            return bbb;
+        }
+
+        public boolean isCcc() {
+            return ccc;
+        }
+
+        public double getDdd() {
+            return ddd;
+        }
+    }
+
+    public static class Test2 {
+
+        private int[] bbb = { 11, 22, 33 };
+
+        private boolean[] ccc = { true, false, true };
+
+        private double[] ddd = { 1.11, 2.22, 3.33 };
+
+        public int[] getBbb() {
+            return bbb;
+        }
+
+        public boolean[] getCcc() {
+            return ccc;
+        }
+
+        public double[] getDdd() {
+            return ddd;
         }
     }
 }
