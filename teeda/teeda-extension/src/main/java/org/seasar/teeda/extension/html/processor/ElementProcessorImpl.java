@@ -20,6 +20,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.faces.context.FacesContext;
+import javax.faces.webapp.UIComponentTag;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.BodyContent;
@@ -183,6 +185,46 @@ public class ElementProcessorImpl implements ElementProcessor {
         for (int i = 0; i < getChildSize(); i++) {
             TagProcessor child = getChild(i);
             child.process(pageContext, parentTag);
+        }
+    }
+
+    public void composeComponentTree(FacesContext context,
+            PageContext pageContext, UIComponentTag parentTag)
+            throws JspException {
+
+        UIComponentTag tag = (UIComponentTag) ClassUtil.newInstance(tagClass);
+        try {
+            composeComponentTree(context, pageContext, tag, parentTag);
+        } finally {
+            tag.release();
+        }
+    }
+
+    protected void composeComponentTree(FacesContext context,
+            PageContext pageContext, UIComponentTag tag, Tag parentTag)
+            throws JspException {
+
+        if (parentTag != null) {
+            tag.setParent(parentTag);
+        }
+        tag.setPageContext(pageContext);
+        setProperties(tag);
+        tag.findComponent(context);
+        tag.pushUIComponentTag();
+        try {
+            composeComponentTreeChildren(context, pageContext, tag);
+        } finally {
+            tag.popUIComponentTag();
+        }
+    }
+
+    protected void composeComponentTreeChildren(FacesContext context,
+            PageContext pageContext, UIComponentTag parentTag)
+            throws JspException {
+
+        for (int i = 0; i < getChildSize(); i++) {
+            TagProcessor child = getChild(i);
+            child.composeComponentTree(context, pageContext, parentTag);
         }
     }
 

@@ -17,7 +17,7 @@ package javax.faces.internal;
 
 import java.util.List;
 
-import javax.faces.component.UIComponent;
+import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 import javax.servlet.jsp.PageContext;
 
@@ -63,14 +63,13 @@ public class PageContextUtil {
                 context);
     }
 
-    public static UIComponent getCurrentViewRootAttribute(
-            PageContext pageContext) {
-        return (UIComponent) pageContext
+    public static UIViewRoot getCurrentViewRootAttribute(PageContext pageContext) {
+        return (UIViewRoot) pageContext
                 .getAttribute(InternalConstants.CURRENT_VIEW_ROOT);
     }
 
     public static void setCurrentViewRootAttribute(PageContext pageContext,
-            UIComponent component) {
+            UIViewRoot component) {
         pageContext
                 .setAttribute(InternalConstants.CURRENT_VIEW_ROOT, component);
     }

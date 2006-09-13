@@ -15,6 +15,8 @@
  */
 package org.seasar.teeda.extension.html.processor;
 
+import javax.faces.context.FacesContext;
+import javax.faces.webapp.UIComponentTag;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.Tag;
@@ -47,6 +49,21 @@ public class TextProcessorImpl implements TextProcessor {
             tag.setValue(value);
             tag.doStartTag();
             tag.doEndTag();
+        } finally {
+            tag.release();
+        }
+    }
+
+    public void composeComponentTree(FacesContext context,
+            PageContext pageContext, UIComponentTag parentTag)
+            throws JspException {
+
+        TextTag tag = new TextTag();
+        try {
+            tag.setParent(parentTag);
+            tag.setPageContext(pageContext);
+            tag.setValue(value);
+            tag.findComponent(context);
         } finally {
             tag.release();
         }

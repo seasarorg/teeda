@@ -132,4 +132,66 @@ public class HtmlViewHandlerTest extends TeedaExtensionTestCase {
         assertTrue(fooPage.isInitialized());
         assertEquals("123", getExternalContext().getRequestMap().get("aaa"));
     }
+
+    public void testCreateView() throws Exception {
+        MockTaglibManager taglibManager = new MockTaglibManager();
+        TaglibElement jsfHtml = new TaglibElementImpl();
+        jsfHtml.setUri(JsfConstants.JSF_HTML_URI);
+        TagElement tagElement = new TagElementImpl();
+        tagElement.setName("form");
+        tagElement.setTagClass(FormTag.class);
+        jsfHtml.addTagElement(tagElement);
+        taglibManager.addTaglibElement(jsfHtml);
+
+        NamingConventionImpl convention = new NamingConventionImpl();
+        String rootPath = "/"
+                + ClassUtil.getPackageName(getClass()).replace('.', '/');
+        convention.setViewRootPath(rootPath);
+        convention.setViewExtension(".html");
+        PageDescCacheImpl pageDescCache = new PageDescCacheImpl();
+        pageDescCache.setNamingConvention(convention);
+        pageDescCache.setContainer(getContainer());
+        register(FooPage.class, "fooPage");
+        String path = rootPath + "/foo.html";
+
+        ActionDescCacheImpl actionDescCache = new ActionDescCacheImpl();
+        actionDescCache.setNamingConvention(convention);
+        actionDescCache.setContainer(getContainer());
+        register(FooAction.class, "fooAction");
+
+        HtmlDescCacheImpl htmlDescCache = new HtmlDescCacheImpl();
+        htmlDescCache.setServletContext(getServletContext());
+        htmlDescCache.setContainer(getContainer());
+        HtmlParser parser = getHtmlParser();
+        htmlDescCache.setHtmlParser(parser);
+
+        FormFactory formFactory = new FormFactory();
+        formFactory.setTaglibManager(taglibManager);
+        TagProcessorAssemblerImpl assembler = new TagProcessorAssemblerImpl();
+        assembler.setFactories(new ElementProcessorFactory[] { formFactory });
+        TagProcessorCacheImpl tagProcessorCache = new TagProcessorCacheImpl();
+        tagProcessorCache.setHtmlDescCache(htmlDescCache);
+        tagProcessorCache.setPageDescCache(pageDescCache);
+        tagProcessorCache.setActionDescCache(actionDescCache);
+        tagProcessorCache.setAssembler(assembler);
+        TeedaStateManager stateManager = new TeedaStateManagerImpl();
+        stateManager.setTreeStructureManager(new TreeStructureManagerImpl());
+        tagProcessorCache.setStateManager(stateManager);
+        getApplication().setStateManager(stateManager);
+
+        HtmlViewHandler viewHandler = new HtmlViewHandler();
+        viewHandler.setTagProcessorCache(tagProcessorCache);
+        viewHandler.setPageDescCache(pageDescCache);
+        viewHandler.setActionDescCache(actionDescCache);
+        SessionPagePersistence spp = new SessionPagePersistence();
+        spp.setPageDescCache(pageDescCache);
+        viewHandler.setPagePersistence(spp);
+        getFacesContext().getViewRoot().setViewId(path);
+
+        tagProcessorCache.updateTagProcessor(path);
+        UIViewRoot root = viewHandler.createView(getFacesContext(), path);
+        assertNotNull(root);
+
+        assertTrue(root.getChildCount() > 0);
+    }
 }

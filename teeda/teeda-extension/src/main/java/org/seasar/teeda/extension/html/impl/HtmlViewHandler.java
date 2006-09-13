@@ -30,6 +30,7 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.internal.PageContextOutWriter;
+import javax.faces.internal.PageContextUtil;
 import javax.faces.render.RenderKit;
 import javax.faces.render.RenderKitFactory;
 import javax.servlet.Servlet;
@@ -43,6 +44,7 @@ import javax.servlet.jsp.PageContext;
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.framework.container.servlet.S2ContainerServlet;
+import org.seasar.framework.exception.IORuntimeException;
 import org.seasar.teeda.core.application.ViewHandlerImpl;
 import org.seasar.teeda.core.util.DIContainerUtil;
 import org.seasar.teeda.core.util.ExternalContextUtil;
@@ -93,6 +95,31 @@ public class HtmlViewHandler extends ViewHandlerImpl {
         tagProcessorCache.updateTagProcessor(viewId);
         pagePersistence.restore(context, viewId);
         return super.restoreView(context, viewId);
+    }
+
+    public UIViewRoot createView(FacesContext context, String viewId) {
+        UIViewRoot viewRoot = super.createView(context, viewId);
+        TagProcessor processor = tagProcessorCache.getTagProcessor(viewId);
+        if (processor != null) {
+            ExternalContext externalContext = context.getExternalContext();
+            HttpServletRequest request = ServletExternalContextUtil
+                    .getRequest(externalContext);
+            HttpServletResponse response = ServletExternalContextUtil
+                    .getResponse(externalContext);
+            try {
+                PageContext pageContext = createPageContext(request, response);
+                PageContextUtil.setCurrentFacesContextAttribute(pageContext,
+                        context);
+                PageContextUtil.setCurrentViewRootAttribute(pageContext,
+                        viewRoot);
+                processor.composeComponentTree(context, pageContext, null);
+            } catch (JspException e) {
+                throw new JspRuntimeException(e);
+            } catch (IOException e) {
+                throw new IORuntimeException(e);
+            }
+        }
+        return viewRoot;
     }
 
     public void renderView(FacesContext context, UIViewRoot viewRoot)

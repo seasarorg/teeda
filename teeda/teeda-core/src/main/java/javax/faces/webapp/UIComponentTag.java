@@ -140,7 +140,8 @@ public abstract class UIComponentTag implements Tag {
             componentIds = new HashMap();
             requestMap.put(InternalConstants.GLOBAL_ID_VIEW, componentIds);
         } else {
-            componentIds = (Map) requestMap.get(InternalConstants.GLOBAL_ID_VIEW);
+            componentIds = (Map) requestMap
+                    .get(InternalConstants.GLOBAL_ID_VIEW);
         }
         component = findComponent(context);
 
@@ -228,8 +229,7 @@ public abstract class UIComponentTag implements Tag {
         component.encodeEnd(context);
     }
 
-    protected UIComponent findComponent(FacesContext context)
-            throws JspException {
+    public UIComponent findComponent(FacesContext context) throws JspException {
         if (component != null) {
             return component;
         }
@@ -263,7 +263,7 @@ public abstract class UIComponentTag implements Tag {
     }
 
     private UIComponent findComponentSpecially(FacesContext context) {
-        UIComponent parentComponent = PageContextUtil
+        UIViewRoot parentComponent = PageContextUtil
                 .getCurrentViewRootAttribute(pageContext);
         if (parentComponent == null) {
             parentComponent = context.getViewRoot();
@@ -402,7 +402,7 @@ public abstract class UIComponentTag implements Tag {
         return (createdComponents != null) ? createdComponents.size() : 0;
     }
 
-    private void popUIComponentTag() {
+    public void popUIComponentTag() {
         List list = PageContextUtil.getComponentTagStackAttribute(pageContext);
         if (list != null) {
             list.remove(list.size() - 1);
@@ -412,7 +412,7 @@ public abstract class UIComponentTag implements Tag {
         }
     }
 
-    private void pushUIComponentTag() {
+    public void pushUIComponentTag() {
         List list = PageContextUtil.getComponentTagStackAttribute(pageContext);
         if (list == null) {
             list = new ArrayList();
@@ -476,7 +476,12 @@ public abstract class UIComponentTag implements Tag {
         if (id == null) {
             FacesContext context = PageContextUtil
                     .getCurrentFacesContextAttribute(pageContext);
-            return context.getViewRoot().createUniqueId();
+            UIViewRoot viewRoot = context.getViewRoot();
+            if (viewRoot == null) {
+                viewRoot = PageContextUtil
+                        .getCurrentViewRootAttribute(pageContext);
+            }
+            return viewRoot.createUniqueId();
         } else {
             return id;
         }
