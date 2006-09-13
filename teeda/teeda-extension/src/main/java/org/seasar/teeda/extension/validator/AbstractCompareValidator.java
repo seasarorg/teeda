@@ -39,6 +39,8 @@ public abstract class AbstractCompareValidator implements Validator,
 
     private boolean transientValue = false;
 
+    private String messageId = null;
+
     public String getTargetId() {
         return targetId;
     }
@@ -64,6 +66,14 @@ public abstract class AbstractCompareValidator implements Validator,
     public void restoreState(FacesContext context, Object state) {
         Object values[] = (Object[]) state;
         targetId = (String) values[0];
+    }
+
+    public String getMessageId() {
+        return messageId;
+    }
+
+    public void setMessageId(String messageId) {
+        this.messageId = messageId;
     }
 
     public void validate(FacesContext context, UIComponent component,

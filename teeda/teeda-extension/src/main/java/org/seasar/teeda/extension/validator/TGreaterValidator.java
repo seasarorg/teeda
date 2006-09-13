@@ -27,7 +27,7 @@ import javax.faces.validator.ValidatorException;
  */
 public class TGreaterValidator extends AbstractCompareValidator {
 
-    public static final String GE_MESSAGE_ID = "org.seasar.teeda.extension.validator.TGreaterEqualValidator.GR";
+    public static final String GR_MESSAGE_ID = "org.seasar.teeda.extension.validator.TGreaterValidator.GR";
 
     protected void doValidate(FacesContext context, UIComponent component,
             Object value, UIComponent targetComponent, Object targetValue)
@@ -38,10 +38,16 @@ public class TGreaterValidator extends AbstractCompareValidator {
         if (isLessEqual(value, targetValue)) {
             Object[] args = { UIComponentUtil.getLabel(targetComponent),
                     UIComponentUtil.getLabel(component) };
+            String messageId = getMessageId();
             FacesMessage message = FacesMessageUtil.getMessage(context,
-                    GE_MESSAGE_ID, args);
-            throw new ValidatorException(message, GE_MESSAGE_ID, args);
+                    messageId, args);
+            throw new ValidatorException(message, messageId, args);
         }
+    }
+
+    public String getMessageId() {
+        String msg = super.getMessageId();
+        return (msg != null) ? msg : GR_MESSAGE_ID;
     }
 
     private boolean isLessEqual(Object value, Object targetValue) {

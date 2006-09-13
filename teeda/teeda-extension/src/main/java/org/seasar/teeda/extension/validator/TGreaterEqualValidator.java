@@ -36,14 +36,24 @@ public class TGreaterEqualValidator extends AbstractCompareValidator {
         if (targetValue == null) {
             return;
         }
-        if (!(value instanceof Comparable)
-                || ((Comparable) value).compareTo(targetValue) < 0) {
-
+        if (isLessThan(value, targetValue)) {
             Object[] args = { UIComponentUtil.getLabel(targetComponent),
                     UIComponentUtil.getLabel(component) };
+            String messaId = getMessageId();
             FacesMessage message = FacesMessageUtil.getMessage(context,
-                    GE_MESSAGE_ID, args);
-            throw new ValidatorException(message, GE_MESSAGE_ID, args);
+                    messaId, args);
+            throw new ValidatorException(message, messaId, args);
         }
     }
+
+    public String getMessageId() {
+        String msg = super.getMessageId();
+        return (msg != null) ? msg : GE_MESSAGE_ID;
+    }
+
+    private boolean isLessThan(Object value, Object targetValue) {
+        return (!(value instanceof Comparable))
+                || ((Comparable) value).compareTo(targetValue) < 0;
+    }
+
 }

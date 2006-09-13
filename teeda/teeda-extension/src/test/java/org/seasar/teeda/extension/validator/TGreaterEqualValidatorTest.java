@@ -55,8 +55,8 @@ public class TGreaterEqualValidatorTest extends TeedaTestCase {
             success();
         }
     }
-    
-    public void testValidate_valueIsEqual() throws Exception {
+
+    public void testValidate_equalValueIsOk() throws Exception {
         TGreaterEqualValidator validator = new TGreaterEqualValidator();
         FacesContext context = getFacesContext();
         UIViewRoot root = new UIViewRoot();
@@ -81,7 +81,7 @@ public class TGreaterEqualValidatorTest extends TeedaTestCase {
             fail();
         }
     }
-    
+
     public void testValidate_valid() throws Exception {
         TGreaterEqualValidator validator = new TGreaterEqualValidator();
         FacesContext context = getFacesContext();
@@ -93,13 +93,13 @@ public class TGreaterEqualValidatorTest extends TeedaTestCase {
         child2.setId("bbb");
         root.getChildren().add(child1);
         root.getChildren().add(child2);
-        
+
         getApplication().addConverter(Integer.class,
                 IntegerConverter.class.getName());
-        
+
         Integer value = new Integer("235");
         validator.setTargetId("aaa");
-        
+
         try {
             validator.validate(context, child2, value);
             success();
