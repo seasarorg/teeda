@@ -128,9 +128,9 @@ public class TNumberLengthValidator implements Validator {
             }
             final String s = num.toString();
             final Locale locale = context.getViewRoot().getLocale();
-            final String dcimalSeparator = NumberConversionUtil
+            final String decimalSeparator = NumberConversionUtil
                     .findDecimalSeparator(locale);
-            final int pos = s.indexOf(dcimalSeparator);
+            final int pos = s.indexOf(decimalSeparator);
             if (-1 < pos) {
                 digits.setIntegral(s.substring(0, pos).length());
                 digits.setFraction(s.substring(pos + 1).length());
