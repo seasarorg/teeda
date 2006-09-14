@@ -99,6 +99,7 @@ public class TBodyRenderer extends AbstractRenderer {
     protected static IgnoreComponent buildIgnoreComponent() {
         IgnoreComponent ignore = new IgnoreComponent();
         ignore.addIgnoreComponentName(JsfConstants.ID_ATTR);
+        ignore.addIgnoreComponentName("javax.faces.webapp.COMPONENT_IDS");
         return ignore;
     }
 
