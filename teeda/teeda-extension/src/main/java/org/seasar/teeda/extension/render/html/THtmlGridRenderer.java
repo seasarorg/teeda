@@ -332,6 +332,7 @@ public class THtmlGridRenderer extends TForEachRenderer {
             final THtmlGridRenderer.GridAttribute attribute, final int columnNo)
             throws IOException {
         writer.startElement(JsfConstants.TH_ELEM, th);
+        renderGridHeaderThAttributes(context, th, writer);
         writer.startElement(JsfConstants.DIV_ELEM, th);
         RendererUtil.renderAttribute(writer, JsfConstants.CLASS_ATTR,
                 GRID_HEADER_CLASS_NAME);
@@ -343,6 +344,28 @@ public class THtmlGridRenderer extends TForEachRenderer {
         writer.endElement(JsfConstants.NOBR_ELEM);
         writer.endElement(JsfConstants.DIV_ELEM);
         writer.endElement(JsfConstants.TH_ELEM);
+    }
+
+    private void renderGridHeaderThAttributes(final FacesContext context,
+            final THtmlGridTh th, final ResponseWriter writer)
+            throws IOException {
+        RendererUtil.renderIdAttributeIfNecessary(writer, th, getIdForRender(
+                context, th));
+        final String styleClass = th.getStyleClass();
+        if (styleClass != null) {
+            RendererUtil.renderAttribute(writer, JsfConstants.STYLE_CLASS_ATTR,
+                    styleClass);
+        }
+        final String title = th.getTitle();
+        if (title != null) {
+            RendererUtil
+                    .renderAttribute(writer, JsfConstants.TITLE_ATTR, title);
+        }
+        final String style = th.getStyle();
+        if (style != null) {
+            RendererUtil
+                    .renderAttribute(writer, JsfConstants.STYLE_ATTR, style);
+        }
     }
 
     private void encodeGridBody(final FacesContext context, THtmlGrid htmlGrid,
