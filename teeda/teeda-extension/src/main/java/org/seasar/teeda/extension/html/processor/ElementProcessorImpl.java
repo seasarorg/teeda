@@ -201,8 +201,8 @@ public class ElementProcessorImpl implements ElementProcessor {
     }
 
     protected void composeComponentTree(FacesContext context,
-            PageContext pageContext, UIComponentTag tag, Tag parentTag)
-            throws JspException {
+            PageContext pageContext, UIComponentTag tag,
+            UIComponentTag parentTag) throws JspException {
 
         if (parentTag != null) {
             tag.setParent(parentTag);

@@ -180,6 +180,9 @@ public abstract class UIComponentTag implements Tag {
     }
 
     public void setupFacesContext() throws JspException {
+        if (context != null) {
+            return;
+        }
         context = PageContextUtil.getCurrentFacesContextAttribute(pageContext);
         if (context == null) {
             context = FacesContext.getCurrentInstance();
@@ -377,8 +380,7 @@ public abstract class UIComponentTag implements Tag {
     private UIComponent createChild(FacesContext context, UIComponent parent,
             String componentId) {
         UIComponent component = createComponent(context, componentId);
-        UIComponentTag parentTag = getParentUIComponentTag(pageContext);
-        parent.getChildren().add(parentTag.getIndex(), component);
+        parent.getChildren().add(component);
         created = true;
         return component;
     }
@@ -400,10 +402,6 @@ public abstract class UIComponentTag implements Tag {
             }
         }
         return null;
-    }
-
-    private int getIndex() {
-        return (createdComponents != null) ? createdComponents.size() : 0;
     }
 
     public void popUIComponentTag() {
