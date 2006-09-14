@@ -11,14 +11,21 @@
 	<component
 		class="org.seasar.teeda.extension.html.impl.HtmlParserImpl">
 	</component>
-	<component class="org.seasar.teeda.extension.html.impl.HtmlNodeHandler" instance="prototype">
+	<component class="org.seasar.teeda.extension.html.impl.HtmlNodeHandler" instance="prototype" autoBinding="none" >
 		<initMethod name="addForceElementNodeTagName">
 			<arg>"table"</arg>
 		</initMethod>
+		<initMethod name="addElementNodeDecision">
+			<arg><component class="org.seasar.teeda.extension.html.impl.InputTypeCheckboxElementNodeDecision"/></arg>
+		</initMethod>
+		<initMethod name="addElementNodeDecision">
+			<arg><component class="org.seasar.teeda.extension.html.impl.InputTypeRadioElementNodeDecision"/></arg>
+		</initMethod>
+		<initMethod name="addElementNodeDecision">
+			<arg><component class="org.seasar.teeda.extension.html.impl.BodyElementNodeDecision"/></arg>
+		</initMethod>
 	</component>
-	<component class="org.seasar.teeda.extension.html.impl.InputTypeCheckboxElementNodeDecision"/>
-	<component class="org.seasar.teeda.extension.html.impl.InputTypeRadioElementNodeDecision"/>
-	<component class="org.seasar.teeda.extension.html.impl.BodyElementNodeDecision"/>
+
 	<component
 		class="org.seasar.teeda.extension.html.impl.HtmlDescCacheImpl" />
 	<component
@@ -27,6 +34,14 @@
 		class="org.seasar.teeda.extension.html.impl.ActionDescCacheImpl" />
 	<component name="bodyFactory"
 		class="org.seasar.teeda.extension.html.factory.BodyFactory" />
+	<component name="selectManyCheckboxFactory"
+		class="org.seasar.teeda.extension.html.factory.SelectManyCheckboxFactory" />
+	<component name="selectOneRadioFactory"
+		class="org.seasar.teeda.extension.html.factory.SelectOneRadioFactory" />
+	<component name="selectOneMenuFactory"
+		class="org.seasar.teeda.extension.html.factory.SelectOneMenuFactory" />
+	<component name="conditionFactory"
+		class="org.seasar.teeda.extension.html.factory.ConditionFactory" />
 	<component name="titleFactory"
 		class="org.seasar.teeda.extension.html.factory.TitleFactory" />
 	<component name="outputLabelFactory"
@@ -75,14 +90,6 @@
 		class="org.seasar.teeda.extension.html.factory.InputCommaTextFactory" />
 	<component name="inputTextFactory"
 		class="org.seasar.teeda.extension.html.factory.InputTextFactory" />
-	<component name="selectManyCheckboxFactory"
-		class="org.seasar.teeda.extension.html.factory.SelectManyCheckboxFactory" />
-	<component name="selectOneRadioFactory"
-		class="org.seasar.teeda.extension.html.factory.SelectOneRadioFactory" />
-	<component name="selectOneMenuFactory"
-		class="org.seasar.teeda.extension.html.factory.SelectOneMenuFactory" />
-	<component name="conditionFactory"
-		class="org.seasar.teeda.extension.html.factory.ConditionFactory" />
 	<component name="outputTextFactory"
 		class="org.seasar.teeda.extension.html.factory.OutputTextFactory" />
 

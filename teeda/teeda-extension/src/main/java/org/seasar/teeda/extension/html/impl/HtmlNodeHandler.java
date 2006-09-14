@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 
+import org.seasar.framework.util.ArrayUtil;
 import org.seasar.framework.util.ResourceUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.extension.html.DocumentNode;
@@ -198,6 +199,11 @@ public class HtmlNodeHandler extends DefaultHandler {
 
     public void setElementNodeDecisions(ElementNodeDecision[] decisions) {
         this.decisions = decisions;
+    }
+
+    public void addElementNodeDecision(ElementNodeDecision decision) {
+        this.decisions = (ElementNodeDecision[]) ArrayUtil.add(decisions,
+                decision);
     }
 
 }

@@ -23,10 +23,10 @@
 	</component>
 
 	<!-- FacesConfig Assembler -->
-	<component class="org.seasar.teeda.core.config.faces.assembler.AssemblerAssembler" />
+	<component class="org.seasar.teeda.core.config.faces.assembler.AssemblerAssembler" autoBinding="none" />
 
 	<!-- ValueBinding relates -->
-	<component class="org.seasar.teeda.core.el.impl.ValueBindingFactoryImpl"/>
+	<component class="org.seasar.teeda.core.el.impl.ValueBindingFactoryImpl" autoBinding="none" />
 
 	<component class="org.seasar.teeda.core.el.impl.MethodBindingFactoryImpl"/>
 

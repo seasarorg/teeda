@@ -33,9 +33,14 @@ public class InputCommaTextFactory extends InputTextFactory {
     public boolean isMatch(ElementNode elementNode, PageDesc pageDesc,
             ActionDesc actionDesc) {
         String classProperty = elementNode.getProperty(JsfConstants.CLASS_ATTR);
-        return super.isMatch(elementNode, pageDesc, actionDesc)
-                && ExtensionConstants.TEEDA_CURRENY_STYLE_CLASS
-                        .equalsIgnoreCase(classProperty);
+        boolean isInputTextMatch = super.isMatch(elementNode, pageDesc,
+                actionDesc);
+        if (!isInputTextMatch) {
+            return false;
+        }
+        return (classProperty != null)
+                && (ExtensionConstants.TEEDA_CURRENY_STYLE_CLASS
+                        .startsWith(classProperty));
     }
 
     protected void customizeProperties(Map properties, ElementNode elementNode,
