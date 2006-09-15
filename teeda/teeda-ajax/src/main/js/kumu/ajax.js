@@ -43,6 +43,8 @@ Kumu.Ajax = {
     "Msxml2.XMLHTTP.3.0",
     "Msxml2.XMLHTTP"
   ),
+  
+  URL : 'teeda.ajax',
 
   DEBUG : false,
 
@@ -54,7 +56,7 @@ Kumu.Ajax = {
     var self = Kumu.Ajax;
     this.name = self.AJAX_COMPONENT_NAME;
     this.responseType = null;
-    this.url = "teeda.ajax";
+    this.url = self.URL;
     this.params = null;
     this.doAction = function(ajaxResponse){}
   },
