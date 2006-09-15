@@ -233,17 +233,16 @@ public class HtmlFormRendererTest extends RendererTest {
             encodeByRenderer(renderer, htmlForm);
 
             // ## Assert ##
+            // ## Assert ##
             String readText = "<form name=\"_id0\" method=\"post\" "
                     + "enctype=\"application/x-www-form-urlencoded\" "
                     + "action=\"/aa\"><input type=\"hidden\" name=\"_id0/aa\" "
                     + "value=\"_id0\" /><input type=\"hidden\" name=\"hoge\" value=\"foo\" />"
-                    + "<script language=\"JavaScript\" type=\"text/javascript\">"
+                    + "<script language=\"JavaScript\" type=\"text/javascript\">\n"
                     + "<!--\n"
-                    + "function addEventForCommandLink(obj, eventName, fn){"
-                    + "var prev = obj[eventName]; obj[eventName] = prev ? function() { fn() ; prev() } : fn;}"
-                    + "addEventForCommandLink( window, \'onload\', "
-                    + "function() {var f = document.forms[\'_id0\']; f[\'hoge\'].value = \'foo\';});\n"
-                    + "//--></script></form>";
+                    + "function clear__5Fid0(){var f = document.forms['_id0']; f.elements['hoge'].value='null'; f.target='';} clear__5Fid0();\n"
+                    + "//-->\n</script>" + "</form>";
+
 
             final Diff diff = diff(readText, getResponseText());
             assertEquals(diff.toString(), true, diff.identical());

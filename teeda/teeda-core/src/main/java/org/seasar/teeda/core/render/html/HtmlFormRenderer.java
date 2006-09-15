@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.Map.Entry;
 
 import javax.faces.application.ViewHandler;
@@ -28,16 +29,17 @@ import javax.faces.component.html.HtmlForm;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
-import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.AbstractRenderer;
 import org.seasar.teeda.core.util.FacesContextUtil;
 import org.seasar.teeda.core.util.HtmlFormRendererUtil;
+import org.seasar.teeda.core.util.JavaScriptUtil;
 import org.seasar.teeda.core.util.RendererUtil;
 
 /**
  * @author manhole
  * @author shot
+ * @author yone
  */
 public class HtmlFormRenderer extends AbstractRenderer {
 
@@ -100,51 +102,24 @@ public class HtmlFormRenderer extends AbstractRenderer {
         writer.endElement(JsfConstants.FORM_ELEM);
     }
 
-    /*
-     * CommandLinkと連携するためのJavaScriptを出力します。
-     * CommandLinkではパラメータ(f:param)をformのhiddenへセットするため、
-     * ここでhiddenの器を用意します。
-     * 
-     * また、ここで用意したhidden値がhistory back(ブラウザの戻るボタン)の際に
-     * 再現されてしまうため、onloadのタイミングでJavaScriptを用いてhidden値を
-     * クリアします。
-     */
     protected void renderForCommandLink(FacesContext context,
             HtmlForm htmlForm, ResponseWriter writer) throws IOException {
         final Map hiddenParameters = getHiddenParameters(htmlForm);
-        final StringBuffer sb = new StringBuffer(100);
+        boolean hasCommandLink = false;
         for (final Iterator it = hiddenParameters.entrySet().iterator(); it
                 .hasNext();) {
+            hasCommandLink = true;
             final Map.Entry entry = (Entry) it.next();
             final String name = (String) entry.getKey();
             final Object value = entry.getValue();
             renderHidden(htmlForm, writer, name, value);
-            if (sb.length() == 0) {
-                sb.append("var f = document.forms['"
-                        + getIdForRender(context, htmlForm) + "'];");
-            }
-            sb.append(" f['" + name + "'].value = '" + String.valueOf(value)
-                    + "';");
         }
-        final String body = new String(sb);
-        renderJavaScriptForCommandLink(writer, body);
+        if (hasCommandLink) {
+            final String target = htmlForm.getTarget();
+            renderClearHiddenCommandFormParamsFunction(writer, getIdForRender(
+                    context, htmlForm), hiddenParameters.entrySet(), target);
+        }
         htmlForm.getAttributes().remove(HIDDEN_PARAMETER_KEY);
-    }
-
-    protected void renderJavaScriptForCommandLink(ResponseWriter writer,
-            String scirptBody) throws IOException {
-        if (StringUtil.isEmpty(scirptBody)) {
-            return;
-        }
-        // bodyにセットされているonloadを失わないようにする
-        final StringBuffer buf = new StringBuffer(512);
-        buf.append("function addEventForCommandLink(obj, eventName, fn){");
-        buf
-                .append("var prev = obj[eventName]; obj[eventName] = prev ? function() { fn() ; prev() } : fn;}");
-        buf.append("addEventForCommandLink( window, \'onload\', function() {");
-        buf.append(scirptBody);
-        buf.append("});");
-        renderJavaScriptElement(writer, buf.toString());
     }
 
     public static void setHiddenParameter(UIForm form, String key, Object value) {
@@ -203,4 +178,38 @@ public class HtmlFormRenderer extends AbstractRenderer {
         return HtmlFormRendererUtil.getFormSubmitKey(context, htmlForm);
     }
 
+    protected void renderClearHiddenCommandFormParamsFunction(
+            ResponseWriter writer, String formName, Set hiddenFormParams,
+            String formTarget) throws IOException {
+        String functionName = JavaScriptUtil
+                .getClearHiddenCommandFormParamsFunctionName(formName);
+        StringBuffer buf = new StringBuffer(512);
+        buf.append("function ");
+        buf.append(functionName);
+        buf.append("(){");
+        if (hiddenFormParams != null) {
+            buf.append("var f = document.forms['");
+            buf.append(formName);
+            buf.append("'];");
+            for (Iterator it = hiddenFormParams.iterator(); it.hasNext();) {
+                final Map.Entry entry = (Entry) it.next();
+                final String name = (String) entry.getKey();
+                buf.append(" f.elements['");
+                buf.append(name);
+                buf.append("'].value='null';");
+            }
+        }
+        buf.append(" f.target=");
+        if (formTarget == null || formTarget.length() == 0) {
+            buf.append("'';");
+        } else {
+            buf.append("'");
+            buf.append(formTarget);
+            buf.append("';");
+        }
+        buf.append("} ");
+        buf.append(functionName);
+        buf.append("();");
+        renderJavaScriptElement(writer, buf.toString());
+    }
 }

@@ -38,6 +38,7 @@ import org.seasar.teeda.core.util.ExternalContextUtil;
 import org.seasar.teeda.core.util.FacesContextUtil;
 import org.seasar.teeda.core.util.HtmlFormRendererUtil;
 import org.seasar.teeda.core.util.JavaScriptPermissionUtil;
+import org.seasar.teeda.core.util.JavaScriptUtil;
 import org.seasar.teeda.core.util.RendererUtil;
 
 /**
@@ -84,6 +85,11 @@ public class HtmlCommandLinkRenderer extends AbstractRenderer {
         RendererUtil.renderAttribute(writer, JsfConstants.HREF_ATTR, "#");
 
         StringBuffer sb = new StringBuffer();
+        final String formName = parentForm.getClientId(context);
+        final String functionName = JavaScriptUtil
+                .getClearHiddenCommandFormParamsFunctionName(formName)
+                + "();";
+        sb.append(functionName);
         sb.append("var f = document.forms['");
         sb.append(formId);
         sb.append("'];");
@@ -110,7 +116,7 @@ public class HtmlCommandLinkRenderer extends AbstractRenderer {
                 HtmlFormRenderer.setHiddenParameter(parentForm, name, null);
             }
         }
-        
+
         final String target = commandLink.getTarget();
         if (target != null && target.trim().length() > 0) {
             sb.append(" f.target = '");
@@ -120,9 +126,8 @@ public class HtmlCommandLinkRenderer extends AbstractRenderer {
 
         sb.append(" if (f.onsubmit) { f.onsubmit(); }");
         sb.append(" f.submit();");
-        if (target != null && target.trim().length() > 0) {
-            sb.append(" f.target = '';");
-        }
+        //TODO
+        sb.append(functionName);
         sb.append(" return false;");
         RendererUtil.renderAttribute(writer, JsfConstants.ONCLICK_ATTR, sb
                 .toString());

@@ -7,13 +7,13 @@
 <a
 	id="fooLink"
 	href="#"
-	onclick="var f = document.forms['fooForm']; f['fooForm:__link_clicked__'].value = 'fooForm:fooLink'; if (f.onsubmit) { f.onsubmit(); } f.submit(); return false;">
+	onclick="clear_fooForm();var f = document.forms['fooForm']; f['fooForm:__link_clicked__'].value = 'fooForm:fooLink'; if (f.onsubmit) { f.onsubmit(); } f.submit();clear_fooForm(); return false;">
 </a>
 <input type="hidden" name="fooForm/aa" value="fooForm" />
 <input type="hidden" name="fooForm:__link_clicked__" />
 <script language="JavaScript" type="text/javascript">
 <!--
-function addEventForCommandLink(obj, eventName, fn){var prev = obj[eventName]; obj[eventName] = prev ? function() { fn() ; prev() } : fn;}addEventForCommandLink( window, 'onload', function() {var f = document.forms['fooForm']; f['fooForm:__link_clicked__'].value = 'null';});
+function clear_fooForm(){var f = document.forms['fooForm']; f.elements['fooForm:__link_clicked__'].value='null'; f.target='';} clear_fooForm();
 //-->
 </script>
 </form>

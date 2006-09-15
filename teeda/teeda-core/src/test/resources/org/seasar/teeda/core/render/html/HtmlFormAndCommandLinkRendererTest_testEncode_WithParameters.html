@@ -7,7 +7,7 @@
 <a
 	id="fooLink"
 	href="#"
-	onclick="var f = document.forms['barForm']; f['barForm:__link_clicked__'].value = 'barForm:fooLink'; f['x'].value = '1'; f['y'].value = '2'; if (f.onsubmit) { f.onsubmit(); } f.submit(); return false;">
+	onclick="clear_barForm();var f = document.forms['barForm']; f['barForm:__link_clicked__'].value = 'barForm:fooLink'; f['x'].value = '1'; f['y'].value = '2'; if (f.onsubmit) { f.onsubmit(); } f.submit();clear_barForm(); return false;">
 </a>
 <input type="hidden" name="barForm/abc" value="barForm" />
 <input type="hidden" name="barForm:__link_clicked__" />
@@ -15,7 +15,7 @@
 <input type="hidden" name="y" />
 <script language="JavaScript" type="text/javascript">
 <!--
-function addEventForCommandLink(obj, eventName, fn){var prev = obj[eventName]; obj[eventName] = prev ? function() { fn() ; prev() } : fn;}addEventForCommandLink( window, 'onload', function() {var f = document.forms['barForm']; f['barForm:__link_clicked__'].value = 'null'; f['x'].value = 'null'; f['y'].value = 'null';});
+function clear_barForm(){var f = document.forms['barForm']; f.elements['barForm:__link_clicked__'].value='null'; f.elements['x'].value='null'; f.elements['y'].value='null'; f.target='';} clear_barForm();
 //-->
 </script>
 </form>

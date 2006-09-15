@@ -79,9 +79,11 @@ public class HtmlCommandLinkRendererTest extends RendererTest {
         MockFacesContext context = getFacesContext();
         assertEquals("a", form.getClientId(context));
         assertEquals("<a" + " href=\"#\"" + " onclick=\""
+                + "clear_a();"
                 + "var f = document.forms['a'];"
                 + " f['a:__link_clicked__'].value = 'a:_id0';"
                 + " if (f.onsubmit) { f.onsubmit(); }" + " f.submit();"
+                + "clear_a();"
                 + " return false;" + "\"></a>", getResponseText());
     }
 
@@ -99,9 +101,11 @@ public class HtmlCommandLinkRendererTest extends RendererTest {
 
         // ## Assert ##
         assertEquals("<a" + " href=\"#\"" + " onclick=\""
+                + "clear_b();"
                 + "var f = document.forms['b'];"
                 + " f['b:__link_clicked__'].value = 'b:_id0';"
                 + " if (f.onsubmit) { f.onsubmit(); }" + " f.submit();"
+                + "clear_b();"
                 + " return false;" + "\">abc</a>", getResponseText());
     }
 
@@ -136,11 +140,13 @@ public class HtmlCommandLinkRendererTest extends RendererTest {
 
         // ## Assert ##
         assertEquals("<a" + " id=\"a\"" + " href=\"#\"" + " onclick=\""
+                + "clear_b();"
                 + "var f = document.forms['b'];"
                 + " f['b:__link_clicked__'].value = 'b:a';"
                 +
                 // " f['a'].value = '1';" +
                 " if (f.onsubmit) { f.onsubmit(); }" + " f.submit();"
+                + "clear_b();"
                 + " return false;" + "\"></a>", getResponseText());
     }
 
@@ -163,10 +169,13 @@ public class HtmlCommandLinkRendererTest extends RendererTest {
 
         // ## Assert ##
         assertEquals("<a" + " id=\"a\"" + " href=\"#\"" + " onclick=\""
+                + "clear_b();"
                 + "var f = document.forms['b'];"
                 + " f['b:__link_clicked__'].value = 'b:a';"
                 + " f['c'].value = '1';" + " if (f.onsubmit) { f.onsubmit(); }"
-                + " f.submit();" + " return false;" + "\"></a>",
+                + " f.submit();" 
+                + "clear_b();"
+                + " return false;" + "\"></a>",
                 getResponseText());
     }
 
@@ -197,10 +206,12 @@ public class HtmlCommandLinkRendererTest extends RendererTest {
 
         // ## Assert ##
         assertEquals("<a" + " id=\"a\"" + " href=\"#\"" + " onclick=\""
+                + "clear_b();"
                 + "var f = document.forms['b'];"
                 + " f['b:__link_clicked__'].value = 'b:a';"
                 + " f['c'].value = '1';" + " f['d'].value = '2';"
                 + " if (f.onsubmit) { f.onsubmit(); }" + " f.submit();"
+                + "clear_b();"
                 + " return false;" + "\"></a>", getResponseText());
     }
 
@@ -223,10 +234,12 @@ public class HtmlCommandLinkRendererTest extends RendererTest {
 
         // ## Assert ##
         assertEquals("<a" + " id=\"a\"" + " href=\"#\"" + " onclick=\""
+                + "clear_b();"
                 + "var f = document.forms['b'];"
                 + " f['b:__link_clicked__'].value = 'b:a';"
                 + " f['c'].value = 'null';"
                 + " if (f.onsubmit) { f.onsubmit(); }" + " f.submit();"
+                + "clear_b();"
                 + " return false;" + "\"></a>", getResponseText());
     }
 
@@ -245,9 +258,11 @@ public class HtmlCommandLinkRendererTest extends RendererTest {
 
         // ## Assert ##
         assertEquals("<a" + " href=\"#\"" + " onclick=\""
+                + "clear_b();"
                 + "var f = document.forms['b'];"
                 + " f['b:__link_clicked__'].value = 'b:_id0';"
                 + " if (f.onsubmit) { f.onsubmit(); }" + " f.submit();"
+                + "clear_b();"
                 + " return false;" + "\" c=\"d\">abc</a>", getResponseText());
     }
 
@@ -266,11 +281,13 @@ public class HtmlCommandLinkRendererTest extends RendererTest {
 
         // ## Assert ##
         assertEquals("<a id=\"x\" href=\"#\""
-                + " onclick=\"var f = document.forms['frm'];"
+                + " onclick=\""
+                + "clear_frm();"
+                + "var f = document.forms['frm'];"
                 + " f['frm:__link_clicked__'].value = 'frm:x';"
                 + " f.target = '_blank';"
                 + " if (f.onsubmit) { f.onsubmit(); } f.submit();"
-                + " f.target = '';"
+                + "clear_frm();"
                 + " return false;\" target=\"_blank\">aaa</a>", getResponseText());
     }
     
@@ -314,11 +331,12 @@ public class HtmlCommandLinkRendererTest extends RendererTest {
         encodeByRenderer(renderer, htmlCommandLink);
 
         Diff diff = new Diff("<a" + " id=\"A\"" + " href=\"#\"" + " onclick=\""
+                + "clear_zz();"                
                 + "var f = document.forms['zz'];"
                 + " f['zz:__link_clicked__'].value = 'zz:A';"
                 + " f.target = 'y';"
                 + " if (f.onsubmit) { f.onsubmit(); }" + " f.submit();"
-                + " f.target = '';"
+                + "clear_zz();"
                 + " return false;\"" + " accesskey=\"a\"" + " charset=\"b\""
                 + " coords=\"c\"" + " dir=\"d\"" + " hreflang=\"e\""
                 + " lang=\"f\"" + " onblur=\"g\"" + " ondblclick=\"i\""
