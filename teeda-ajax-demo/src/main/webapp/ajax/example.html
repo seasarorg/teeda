@@ -9,15 +9,20 @@ function org(response){
     createOptionsFromOrg(response, document.frm.menuOrg);
 }
 function sampleAjaxOrg(food) {
-    Kumu.Ajax.executeTeedaAjax(org, { "component" : "exampleBean", "action" : "ajaxOrg", "food" : food });
+    Kumu.Ajax.executeTeedaAjax(org, { "component" : "exampleBean", "action" : "ajaxOrg", "food" : food }, Kumu.Ajax.RESPONSE_TYPE_TEXT);
 }
 function json(response){
+    createOptionsFromJSON(response, document.frm.menuJson);
+}
+function exampleBean_newTest(response){
     createOptionsFromJSON(response, document.frm.menuJson);
 }
 function sampleAjaxJson(food) {
     // for disp response data
     Kumu.Ajax.DEBUG = true;
-    Kumu.Ajax.executeTeedaAjax(json, { "component" : "exampleBean", "action" : "ajaxJson", "food" : food });
+//    Kumu.Ajax.executeTeedaAjax(json, { "component" : "exampleBean", "action" : "ajaxJson", "food" : food , "method" : "POST"});
+//    Kumu.Ajax.executeTeedaAjax(json, { "component" : "exampleBean", "action" : "ajaxJson", "food" : food });
+    Kumu.Ajax.executeTeedaAjax(exampleBean_newTest, [food, "arg1", "arg2"]);
 }
 function xml(response){
     createOptionsFromXml(response, document.frm.menuXml);
@@ -26,7 +31,7 @@ function sampleAjaxXml(food) {
     // for disp response data
     Kumu.Ajax.DEBUG = true;
     // for xml type 3rd param
-    Kumu.Ajax.executeTeedaAjax(xml, { "component" : "exampleBean", "action" : "ajaxXml", "food" : food }, Kumu.Ajax.AJAX_RESPONSE_TYPE_XML);
+    Kumu.Ajax.executeTeedaAjax(xml, { "component" : "exampleBean", "action" : "ajaxXml", "food" : food }, Kumu.Ajax.RESPONSE_TYPE_XML);
 }
 //-->
 </script>

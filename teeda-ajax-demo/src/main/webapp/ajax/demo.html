@@ -30,13 +30,13 @@ function createOpt(opt, json){
 // exec zipBean#getAddress see ajax.dicon
 function zipBean_getAddress(response){
     if(!response) return;
-    var json = eval('('+response+')');
-    createOpt(document.frm.address, json);
+    createOpt(document.frm.address, response);
 }
 function demo(zipcode){
     clearData(document.frm.address);
     if(zipcode == "" || zipcode.match(/[^0-9]/g) || zipcode.length < 3) return;
     // execute Ajax
+    Kumu.Ajax.URL = 'hoge.ajax';
     Kumu.Ajax.executeTeedaAjax(zipBean_getAddress, {"zipcode" : zipcode});
 }
 //-->

@@ -22,8 +22,7 @@ function createOptionsFromOrg(data, opt) {
 function createOptionsFromJSON(data, opt) {
     clearOptions(opt);
     if (!data) return;
-    var json = eval('(' + data + ')');
-    createOptionsFromJson(opt, json);
+    createOptionsFromJson(opt, data);
 }
 
 function createOptionsFromXml(data, opt) {
