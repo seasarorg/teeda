@@ -25,9 +25,9 @@ import javax.faces.validator.ValidatorException;
 /**
  * @author shot
  */
-public class TLesserEqualValidator extends AbstractCompareValidator {
+public class TLessEqualValidator extends AbstractCompareValidator {
 
-    public static final String LE_MESSAGE_ID = "org.seasar.teeda.extension.validator.TLesserEqualValidator.LE";
+    public static final String LE_MESSAGE_ID = "org.seasar.teeda.extension.validator.TLessEqualValidator.LE";
 
     protected void doValidate(FacesContext context, UIComponent component,
             Object value, UIComponent targetComponent, Object targetValue)

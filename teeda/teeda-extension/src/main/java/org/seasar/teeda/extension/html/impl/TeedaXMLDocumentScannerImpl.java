@@ -26,7 +26,6 @@ import org.apache.xerces.xni.XNIException;
  */
 public class TeedaXMLDocumentScannerImpl extends XMLNSDocumentScannerImpl {
 
-    //TODO testing
     protected static final boolean DEBUG_ATTR_NORMALIZATION = false;
 
     protected void scanAttributeValue(XMLString value,

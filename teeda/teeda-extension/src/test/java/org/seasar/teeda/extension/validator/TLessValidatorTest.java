@@ -26,10 +26,10 @@ import org.seasar.teeda.core.unit.TeedaTestCase;
 /**
  * @author shot
  */
-public class TLesserEqualValidatorTest extends TeedaTestCase {
+public class TLessValidatorTest extends TeedaTestCase {
 
     public void testValidate_invalid() throws Exception {
-        TLesserEqualValidator validator = new TLesserEqualValidator();
+        TLessValidator validator = new TLessValidator();
         FacesContext context = getFacesContext();
         UIViewRoot root = new UIViewRoot();
         UIInput child1 = new UIInput();
@@ -56,8 +56,8 @@ public class TLesserEqualValidatorTest extends TeedaTestCase {
         }
     }
 
-    public void testValidate_equalValueIsOk() throws Exception {
-        TLesserEqualValidator validator = new TLesserEqualValidator();
+    public void testValidate_equalValueIsInvalid() throws Exception {
+        TLessValidator validator = new TLessValidator();
         FacesContext context = getFacesContext();
         UIViewRoot root = new UIViewRoot();
         UIInput child1 = new UIInput();
@@ -76,14 +76,16 @@ public class TLesserEqualValidatorTest extends TeedaTestCase {
 
         try {
             validator.validate(context, child2, value);
-            success();
-        } catch (ValidatorException expected) {
             fail();
+        } catch (ValidatorException expected) {
+            assertNotNull(expected);
+            System.out.println(expected.getMessage());
+            success();
         }
     }
 
     public void testValidate_valid() throws Exception {
-        TLesserEqualValidator validator = new TLesserEqualValidator();
+        TLessValidator validator = new TLessValidator();
         FacesContext context = getFacesContext();
         UIViewRoot root = new UIViewRoot();
         UIInput child1 = new UIInput();
