@@ -39,6 +39,7 @@ import javax.faces.render.RenderKit;
 import javax.faces.render.Renderer;
 
 import org.seasar.framework.log.Logger;
+import org.seasar.framework.util.ArrayUtil;
 import org.seasar.framework.util.IntegerConversionUtil;
 import org.seasar.teeda.core.JsfConstants;
 

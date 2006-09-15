@@ -91,7 +91,7 @@ public class UrlString {
             String key = (String) it.next();
             String[] myValues = getParameters(key);
             String[] otherValues = otherUrl.getParameters(key);
-            if (!org.seasar.teeda.core.util.ArrayUtil.equalsIgnoreSequence(
+            if (!org.seasar.framework.util.ArrayUtil.equalsIgnoreSequence(
                     myValues, otherValues)) {
                 return false;
             }

@@ -24,8 +24,8 @@ import javax.faces.el.ValueBinding;
 import javax.faces.internal.FacesMessageUtil;
 import javax.faces.internal.SelectItemsIterator;
 
+import org.seasar.framework.util.ArrayUtil;
 import org.seasar.framework.util.AssertionUtil;
-import org.seasar.teeda.core.util.ArrayUtil;
 
 /**
  * @author shot

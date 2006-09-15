@@ -24,7 +24,6 @@
 	<classpathentry kind="lib" path="lib/ognl-2.6.7.jar"/>
 	<classpathentry kind="lib" path="lib/poi-2.5.1-final-20040804.jar"/>
 	<classpathentry kind="lib" path="lib/xmlunit-1.0.jar"/>
-	<classpathentry kind="lib" path="lib/junit-addons-1.4.jar"/>
 	<classpathentry sourcepath="lib/sources/xercesImpl-2.6.2-sources.jar" kind="lib" path="lib/xercesImpl-2.6.2.jar"/>
 	<classpathentry kind="lib" path="lib/xmlParserAPIs-2.6.2.jar"/>
 	<classpathentry kind="lib" path="lib/geronimo-jsp_2.0_spec-1.0.jar"/>
