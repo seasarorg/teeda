@@ -30,6 +30,7 @@ import org.seasar.teeda.core.render.DefaultComponentIdLookupStrategy;
 import org.seasar.teeda.core.render.html.HtmlFormRenderer;
 import org.seasar.teeda.core.render.html.support.RenderAttributesImpl;
 import org.seasar.teeda.core.taglib.html.FormTag;
+import org.seasar.teeda.core.util.PostbackUtil;
 import org.seasar.teeda.extension.component.UIText;
 import org.seasar.teeda.extension.config.taglib.element.TagElement;
 import org.seasar.teeda.extension.config.taglib.element.TaglibElement;
@@ -65,7 +66,7 @@ public class HtmlViewHandlerTest extends TeedaExtensionTestCase {
         app.addComponent(HtmlForm.COMPONENT_TYPE, HtmlForm.class.getName());
     }
 
-    public void testRenderView() throws Exception {
+    public void testRestoreAndRenderView() throws Exception {
         MockTaglibManager taglibManager = new MockTaglibManager();
         TaglibElement jsfHtml = new TaglibElementImpl();
         jsfHtml.setUri(JsfConstants.JSF_HTML_URI);
@@ -123,13 +124,20 @@ public class HtmlViewHandlerTest extends TeedaExtensionTestCase {
         fooPage.setAaa("123");
         pageDescCache.createPageDesc(path);
         spp.save(getFacesContext(), path);
+        assertFalse(fooPage.isInitialized());
+        PostbackUtil.setPostback(getExternalContext().getRequestMap(), true);
         viewHandler.restoreView(getFacesContext(), path);
-        viewHandler.renderView(getFacesContext(), path);
+        assertFalse(fooPage.isPrerendered());
+        PostbackUtil.setPostback(getExternalContext().getRequestMap(), false);
+        viewHandler.restoreView(getFacesContext(), path);
+        assertTrue(fooPage.isInitialized());
+        fooPage.setInitialized(false);
 
+        viewHandler.renderView(getFacesContext(), path);
+        assertTrue(fooPage.isPrerendered());
         assertEquals(
                 "<html><body><form id=\"fooForm\" name=\"fooForm\" method=\"post\" enctype=\"application/x-www-form-urlencoded\" action=\"/org/seasar/teeda/extension/html/impl/foo.html\"><input type=\"hidden\" name=\"fooForm/org/seasar/teeda/extension/html/impl/foo.html\" value=\"fooForm\" /></form></body></html>",
                 getResponseText());
-        assertTrue(fooPage.isInitialized());
         assertEquals("123", getExternalContext().getRequestMap().get("aaa"));
     }
 

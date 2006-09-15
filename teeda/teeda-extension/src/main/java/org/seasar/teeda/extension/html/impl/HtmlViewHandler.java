@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Map;
 import java.util.TimeZone;
 
 import javax.faces.FactoryFinder;
@@ -48,6 +49,7 @@ import org.seasar.framework.exception.IORuntimeException;
 import org.seasar.teeda.core.application.ViewHandlerImpl;
 import org.seasar.teeda.core.util.DIContainerUtil;
 import org.seasar.teeda.core.util.ExternalContextUtil;
+import org.seasar.teeda.core.util.PostbackUtil;
 import org.seasar.teeda.core.util.ServletExternalContextUtil;
 import org.seasar.teeda.extension.exception.JspRuntimeException;
 import org.seasar.teeda.extension.html.ActionDesc;
@@ -66,6 +68,8 @@ import org.seasar.teeda.extension.jsp.PageContextImpl;
 public class HtmlViewHandler extends ViewHandlerImpl {
 
     private static final String INITIALIZE = "initialize";
+
+    private static final String PRERENDER = "prerender";
 
     private TagProcessorCache tagProcessorCache;
 
@@ -94,6 +98,12 @@ public class HtmlViewHandler extends ViewHandlerImpl {
     public UIViewRoot restoreView(FacesContext context, String viewId) {
         tagProcessorCache.updateTagProcessor(viewId);
         pagePersistence.restore(context, viewId);
+        Map requestMap = context.getExternalContext().getRequestMap();
+        if (!PostbackUtil.isPostback(requestMap)) {
+            if (invoke(context, viewId, INITIALIZE) != null) {
+                context.renderResponse();
+            }
+        }
         return super.restoreView(context, viewId);
     }
 
@@ -143,7 +153,7 @@ public class HtmlViewHandler extends ViewHandlerImpl {
         prepareResponse(response);
         PageContext pageContext = createPageContext(request, response);
         setupResponseWriter(pageContext, null, request.getCharacterEncoding());
-        if (invokeInitialize(context, path) != null) {
+        if (invoke(context, path, PRERENDER) != null) {
             return;
         }
         TagProcessor tagProcessor = tagProcessorCache.getTagProcessor(path);
@@ -155,24 +165,23 @@ public class HtmlViewHandler extends ViewHandlerImpl {
         pageContext.getOut().flush();
     }
 
-    protected String invokeInitialize(FacesContext context, String path)
-            throws IOException {
+    protected String invoke(FacesContext context, String path, String methodName) {
         PageDesc pageDesc = pageDescCache.getPageDesc(path);
         Object target = null;
         String next = null;
-        if (pageDesc != null && pageDesc.hasMethod(INITIALIZE)) {
+        if (pageDesc != null && pageDesc.hasMethod(methodName)) {
             target = DIContainerUtil.getComponent(pageDesc.getPageName());
         }
         if (target == null) {
             ActionDesc actionDesc = actionDescCache.getActionDesc(path);
-            if (actionDesc != null && actionDesc.hasMethod(INITIALIZE)) {
+            if (actionDesc != null && actionDesc.hasMethod(methodName)) {
                 target = DIContainerUtil.getComponent(actionDesc
                         .getActionName());
             }
         }
         if (target != null) {
             BeanDesc beanDesc = BeanDescFactory.getBeanDesc(target.getClass());
-            next = (String) beanDesc.invoke(target, INITIALIZE, null);
+            next = (String) beanDesc.invoke(target, methodName, null);
             if (next != null) {
                 navigate(context, next);
             }
@@ -180,8 +189,7 @@ public class HtmlViewHandler extends ViewHandlerImpl {
         return next;
     }
 
-    protected void navigate(FacesContext context, String path)
-            throws IOException {
+    protected void navigate(FacesContext context, String path) {
         Application app = context.getApplication();
         NavigationHandler nh = app.getNavigationHandler();
         nh.handleNavigation(context, null, path);
@@ -189,7 +197,11 @@ public class HtmlViewHandler extends ViewHandlerImpl {
             return;
         }
         ViewHandler vh = app.getViewHandler();
-        vh.renderView(context, context.getViewRoot());
+        try {
+            vh.renderView(context, context.getViewRoot());
+        } catch (IOException e) {
+            throw new IORuntimeException(e);
+        }
     }
 
     protected Servlet getServlet() {

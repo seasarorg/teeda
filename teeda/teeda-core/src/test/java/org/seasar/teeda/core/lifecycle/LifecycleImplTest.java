@@ -19,6 +19,7 @@ import javax.faces.FacesException;
 import javax.faces.context.FacesContext;
 
 import org.seasar.teeda.core.unit.TeedaTestCase;
+import org.seasar.teeda.core.util.PostbackUtil;
 
 /**
  * @author shot
@@ -63,16 +64,12 @@ public class LifecycleImplTest extends TeedaTestCase {
 
     }
 
-    public static class MockRestoreViewPhase implements Phase, Postback {
+    public static class MockRestoreViewPhase implements Phase {
 
         public void execute(FacesContext context) throws FacesException {
             context.responseComplete();
+            PostbackUtil.setPostback(context.getExternalContext()
+                    .getRequestMap(), true);
         }
-
-        public boolean isPostBack() {
-            return true;
-        }
-
     }
-
 }

@@ -26,6 +26,7 @@ import javax.faces.event.PhaseListener;
 import javax.faces.lifecycle.Lifecycle;
 
 import org.seasar.framework.util.ArrayUtil;
+import org.seasar.teeda.core.util.PostbackUtil;
 
 /**
  * @author higa
@@ -35,8 +36,6 @@ public class LifecycleImpl extends Lifecycle {
 
     private static final String EXECUTED_ATTR = LifecycleImpl.class.getName()
             + ".EXECUTED";
-
-    private static final String POSTBACK_ATTR = "postback";
 
     private PhaseListener[] phaseListeners = new PhaseListener[0];
 
@@ -60,12 +59,7 @@ public class LifecycleImpl extends Lifecycle {
         Map requestMap = extContext.getRequestMap();
         try {
             restoreViewPhase.execute(context);
-            Postback postback = NullPostback.getCurrentInstance();
-            if (restoreViewPhase instanceof Postback) {
-                postback = (Postback) restoreViewPhase;
-                requestMap.put(POSTBACK_ATTR, Boolean.valueOf(postback
-                        .isPostBack()));
-            }
+            boolean postback = PostbackUtil.isPostback(requestMap);
             if (isFinished(context)) {
                 return;
             }
@@ -80,7 +74,7 @@ public class LifecycleImpl extends Lifecycle {
                         .getViewRoot());
                 return;
             }
-            if (postback.isPostBack() || hasEvent(context)) {
+            if (postback || hasEvent(context)) {
                 processValidationPhase.execute(context);
                 if (isFinished(context)) {
                     return;
@@ -179,19 +173,5 @@ public class LifecycleImpl extends Lifecycle {
 
     public Phase getUpdateModelValuesPhase() {
         return updateModelValuesPhase;
-    }
-
-    private static final class NullPostback implements Postback {
-
-        private static final NullPostback instance = new NullPostback();
-
-        public static NullPostback getCurrentInstance() {
-            return instance;
-        }
-
-        public boolean isPostBack() {
-            return false;
-        }
-
     }
 }

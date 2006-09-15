@@ -13,10 +13,19 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.core.lifecycle;
+package org.seasar.teeda.core.util;
 
-public interface Postback {
+import java.util.HashMap;
+import java.util.Map;
 
-    public boolean isPostBack();
+import junit.framework.TestCase;
 
+public class PostbackUtilTest extends TestCase {
+
+    public void testAll() throws Exception {
+        Map requestMap = new HashMap();
+        assertFalse(PostbackUtil.isPostback(requestMap));
+        PostbackUtil.setPostback(requestMap, true);
+        assertTrue(PostbackUtil.isPostback(requestMap));
+    }
 }

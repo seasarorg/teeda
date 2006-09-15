@@ -6,14 +6,16 @@ public class FooPage {
 
     private boolean initialized = false;
 
+    private boolean prerendered = false;
+
     private String aaa;
 
     private int bbb;
-    
+
     private int[] ccc;
-    
+
     private List bbbItems;
-    
+
     private List cccItems;
 
     private String dddItems;
@@ -25,6 +27,19 @@ public class FooPage {
 
     public boolean isInitialized() {
         return initialized;
+    }
+
+    public void setInitialized(boolean initialized) {
+        this.initialized = initialized;
+    }
+
+    public String prerender() {
+        prerendered = true;
+        return null;
+    }
+
+    public boolean isPrerendered() {
+        return prerendered;
     }
 
     public String getAaa() {
@@ -70,7 +85,7 @@ public class FooPage {
     public void setCcc(int[] ccc) {
         this.ccc = ccc;
     }
-    
+
     public String getDddItems() {
         return dddItems;
     }
