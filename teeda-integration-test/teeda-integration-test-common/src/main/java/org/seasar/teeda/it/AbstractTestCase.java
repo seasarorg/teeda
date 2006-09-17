@@ -17,6 +17,7 @@ package org.seasar.teeda.it;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Reader;
 import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
@@ -126,23 +127,6 @@ public abstract class AbstractTestCase extends TestCase {
         return body;
     }
 
-    protected String readText(final String fileName) {
-        return readText(getClass(), fileName, ENCODING);
-    }
-
-    protected URL getFileAsUrl(final String s) {
-        final String fileNameByClass = getClass().getName().replace('.', '/')
-            + "_" + s;
-        if (ResourceUtil.isExist(fileNameByClass)) {
-            return ResourceUtil.getResource(fileNameByClass);
-        } else {
-            final String fileNameByPackage = getClass().getPackage().getName()
-                .replace('.', '/')
-                + "/" + s;
-            return ResourceUtil.getResource(fileNameByPackage);
-        }
-    }
-
     protected Diff diff(final String expected, final String actual)
         throws SAXException, IOException, ParserConfigurationException {
         final Document cDoc = XMLUnit.buildDocument(XMLUnit.getControlParser(),
@@ -174,19 +158,32 @@ public abstract class AbstractTestCase extends TestCase {
         }
     }
 
-    protected String readText(final Class clazz, final String fileName,
-        final String encoding) {
+    protected String readText(final String fileName) {
+        return readText(getClass(), fileName, ENCODING);
+    }
+
+    protected URL getFileAsUrl(final String fileName) {
+        final String path = resolvePath(getClass(), fileName);
+        return ResourceUtil.getResource(path);
+    }
+
+    protected String resolvePath(final Class clazz, final String fileName) {
         final String pathByClass = clazz.getName().replace('.', '/') + "_"
             + fileName;
-        java.io.InputStream is = null;
         if (ResourceUtil.isExist(pathByClass)) {
-            is = ResourceUtil.getResourceAsStream(pathByClass);
+            return pathByClass;
         } else {
             final String pathByPackage = clazz.getPackage().getName().replace(
                 '.', '/')
                 + "/" + fileName;
-            is = ResourceUtil.getResourceAsStream(pathByPackage);
+            return pathByPackage;
         }
+    }
+
+    protected String readText(final Class clazz, final String fileName,
+        final String encoding) {
+        final String path = resolvePath(getClass(), fileName);
+        final InputStream is = ResourceUtil.getResourceAsStream(path);
         final Reader reader = InputStreamReaderUtil.create(is, encoding);
         return ReaderUtil.readText(reader);
     }

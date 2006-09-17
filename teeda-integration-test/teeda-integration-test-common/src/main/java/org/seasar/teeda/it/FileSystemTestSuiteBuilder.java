@@ -35,12 +35,12 @@ import com.gargoylesoftware.base.util.DirectoryWalker;
 /**
  * @author manhole
  */
-public class TeedaIntegrationTests {
+public class FileSystemTestSuiteBuilder {
 
-    public static Test createSuite(final Class testClass) throws IOException,
+    public Test build(final Class referenceClass) throws IOException,
         MavenEmbedderException, ArtifactResolutionException,
         ArtifactNotFoundException, ProjectBuildingException {
-        final File pomFile = MavenUtil.getProjectPomFile(testClass);
+        final File pomFile = MavenUtil.getProjectPomFile(referenceClass);
         final File project = pomFile.getParentFile();
         final String startingDirectory = new File(project,
             "target/test-classes").getCanonicalPath().replace('\\', '/');
