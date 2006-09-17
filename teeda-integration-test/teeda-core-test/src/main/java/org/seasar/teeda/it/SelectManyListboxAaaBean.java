@@ -15,7 +15,7 @@
  */
 package org.seasar.teeda.it;
 
-import org.seasar.teeda.core.util.ArrayUtil;
+import org.seasar.framework.util.ArrayUtil;
 
 /**
  * @author manhole

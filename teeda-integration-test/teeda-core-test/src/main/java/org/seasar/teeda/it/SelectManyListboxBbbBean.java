@@ -20,7 +20,7 @@ import java.util.List;
 
 import javax.faces.model.SelectItem;
 
-import org.seasar.teeda.core.util.ArrayUtil;
+import org.seasar.framework.util.ArrayUtil;
 
 /**
  * @author manhole
