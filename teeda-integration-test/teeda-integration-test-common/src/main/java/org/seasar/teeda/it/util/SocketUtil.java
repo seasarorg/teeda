@@ -30,18 +30,18 @@ public class SocketUtil {
         try {
             ss = new ServerSocket(0);
             return ss.getLocalPort();
-        } catch (IOException e) {
+        } catch (final IOException e) {
             throw new IORuntimeException(e);
         } finally {
             closeServerSocketNoException(ss);
         }
     }
 
-    static void closeServerSocketNoException(ServerSocket serverSocket) {
+    static void closeServerSocketNoException(final ServerSocket serverSocket) {
         if (serverSocket != null) {
             try {
                 serverSocket.close();
-            } catch (IOException e) {
+            } catch (final IOException e) {
                 e.printStackTrace();
             }
         }

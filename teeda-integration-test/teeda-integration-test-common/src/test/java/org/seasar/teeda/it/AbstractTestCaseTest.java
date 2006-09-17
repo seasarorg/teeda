@@ -23,35 +23,35 @@ import org.custommonkey.xmlunit.Diff;
 public class AbstractTestCaseTest extends AbstractTestCase {
 
     public void testDiff1() throws Exception {
-        Diff diff = diff("<a> <b></b> </a>", "<a><b></b></a>");
+        final Diff diff = diff("<a> <b></b> </a>", "<a><b></b></a>");
         assertEquals(diff.toString(), true, diff.similar());
     }
 
     public void testDiff2() throws Exception {
-        Diff diff = diff("<a> <b></b> </a>", "<a><b></b></a>");
+        final Diff diff = diff("<a> <b></b> </a>", "<a><b></b></a>");
         assertEquals(diff.toString(), true, diff.similar());
     }
 
     public void testDiff3() throws Exception {
-        Diff diff = diff("<a href=\"a.jsp\">a</a>",
+        final Diff diff = diff("<a href=\"a.jsp\">a</a>",
             "<a href=\"a.jsp;jsessionid=aaaa\">a</a>");
         assertEquals(diff.toString(), true, diff.similar());
     }
 
     public void testDiff4() throws Exception {
-        Diff diff = diff("<a href=\"a.jsp?1=2\">a</a>",
+        final Diff diff = diff("<a href=\"a.jsp?1=2\">a</a>",
             "<a href=\"a.jsp;jsessionid=aaaa?1=2\">a</a>");
         assertEquals(diff.toString(), true, diff.similar());
     }
 
     public void testDiff5() throws Exception {
-        Diff diff = diff("<a href=\"a.jsp?1=2\">a</a>",
+        final Diff diff = diff("<a href=\"a.jsp?1=2\">a</a>",
             "<a href=\"a.jsp?1=2;jsessionid=aaaa\">a</a>");
         assertEquals(diff.toString(), true, diff.similar());
     }
 
     public void testDiff6() throws Exception {
-        Diff diff = diff("<a href=\"a.jsp.*\">a</a>",
+        final Diff diff = diff("<a href=\"a.jsp.*\">a</a>",
             "<a href=\"a.jsp?1234=5555\">a</a>");
         assertEquals(diff.toString(), true, diff.similar());
     }

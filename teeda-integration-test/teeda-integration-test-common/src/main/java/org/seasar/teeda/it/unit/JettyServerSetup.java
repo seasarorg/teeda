@@ -39,7 +39,7 @@ public class JettyServerSetup extends TestSetup {
 
     private String host_ = "localhost";
 
-    public JettyServerSetup(Test test) {
+    public JettyServerSetup(final Test test) {
         super(test);
     }
 
@@ -49,12 +49,12 @@ public class JettyServerSetup extends TestSetup {
     }
 
     private Server startJetty() throws Exception {
-        Server server = new Server();
-        SelectChannelConnector connector = new SelectChannelConnector();
+        final Server server = new Server();
+        final SelectChannelConnector connector = new SelectChannelConnector();
         connector.setPort(getPort());
         connector.setHost(getHost());
         server.addConnector(connector);
-        WebAppContext handler = new WebAppContext();
+        final WebAppContext handler = new WebAppContext();
         handler.setContextPath(getContextPath());
         final File webapp = getWebapp();
         System.out.println("webapp:" + webapp);
@@ -63,7 +63,7 @@ public class JettyServerSetup extends TestSetup {
         try {
             System.out.println("### Jetty start ###");
             server.start();
-        } catch (Exception e) {
+        } catch (final Exception e) {
             e.printStackTrace();
             throw e;
         }
@@ -85,7 +85,7 @@ public class JettyServerSetup extends TestSetup {
         return webapp_;
     }
 
-    public void setWebapp(File webapp) {
+    public void setWebapp(final File webapp) {
         webapp_ = webapp;
     }
 
@@ -93,7 +93,7 @@ public class JettyServerSetup extends TestSetup {
         return port_;
     }
 
-    public void setPort(int port) {
+    public void setPort(final int port) {
         port_ = port;
     }
 
@@ -101,7 +101,7 @@ public class JettyServerSetup extends TestSetup {
         return contextPath_;
     }
 
-    public void setContextPath(String contextPath) {
+    public void setContextPath(final String contextPath) {
         contextPath_ = contextPath;
     }
 
@@ -109,7 +109,7 @@ public class JettyServerSetup extends TestSetup {
         return host_;
     }
 
-    public void setHost(String host) {
+    public void setHost(final String host) {
         host_ = host;
     }
 
@@ -117,7 +117,7 @@ public class JettyServerSetup extends TestSetup {
         return server_;
     }
 
-    public void setServer(Server server) {
+    public void setServer(final Server server) {
         server_ = server;
     }
 
@@ -127,7 +127,7 @@ public class JettyServerSetup extends TestSetup {
         return name_;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         name_ = name;
     }
 

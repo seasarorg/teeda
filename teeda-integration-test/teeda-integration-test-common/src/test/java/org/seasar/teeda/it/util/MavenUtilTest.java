@@ -28,20 +28,20 @@ import org.seasar.framework.util.ResourceUtil;
 public class MavenUtilTest extends TestCase {
 
     public void testGetSeleniumDriverWar() throws Exception {
-        File project = getProjectFile("teeda-integration-test");
-        File pom = new File(project, "pom.xml");
-        File artifactFile = MavenUtil.getArtifactFromPom(pom, "junit");
+        final File project = getProjectFile("teeda-integration-test");
+        final File pom = new File(project, "pom.xml");
+        final File artifactFile = MavenUtil.getArtifactFromPom(pom, "junit");
         System.out.println(artifactFile);
         assertNotNull(artifactFile);
         assertEquals(true, artifactFile.exists());
-        String name = artifactFile.getName();
+        final String name = artifactFile.getName();
         assertEquals(name, true, name.startsWith("junit"));
         assertEquals(name, true, name.endsWith(".jar"));
     }
 
     public void no_testResourceUtilSpike() throws Exception {
-        File buildDir = ResourceUtil.getBuildDir(getClass());
-        File resourceDir = ResourceUtil.getResourceAsFile(".");
+        final File buildDir = ResourceUtil.getBuildDir(getClass());
+        final File resourceDir = ResourceUtil.getResourceAsFile(".");
         // with Maven2, each path end with "target/test-classes"
         // but with Eclipse, former ends with "target/test-classes"
         // and latter latter ends with "target/classes"
@@ -50,7 +50,7 @@ public class MavenUtilTest extends TestCase {
         assertEquals(buildDir, resourceDir);
     }
 
-    private File getProjectFile(String projectName) throws IOException {
+    private File getProjectFile(final String projectName) throws IOException {
         File project = null;
         for (File current = ResourceUtil.getResourceAsFile("."); current != null; current = current
             .getParentFile()) {
@@ -60,7 +60,7 @@ public class MavenUtilTest extends TestCase {
                     break;
                 }
             }
-            File brother = new File(current, projectName);
+            final File brother = new File(current, projectName);
             if (pomExists(brother)) {
                 project = brother;
                 break;
@@ -72,7 +72,7 @@ public class MavenUtilTest extends TestCase {
         return project.getCanonicalFile();
     }
 
-    private boolean pomExists(File f) {
+    private boolean pomExists(final File f) {
         return new File(f, "pom.xml").exists();
     }
 

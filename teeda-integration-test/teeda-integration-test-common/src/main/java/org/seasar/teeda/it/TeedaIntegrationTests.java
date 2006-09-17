@@ -46,14 +46,14 @@ public class TeedaIntegrationTests {
             "target/test-classes").getCanonicalPath().replace('\\', '/');
 
         final TestSuite suite = new TestSuite();
-        DirectoryWalker walker = new DirectoryWalker(startingDirectory);
+        final DirectoryWalker walker = new DirectoryWalker(startingDirectory);
         walker.getFiles(new FileFilter() {
 
             public boolean accept(final File pathname) {
                 final String name;
                 try {
                     name = pathname.getCanonicalPath().replace('\\', '/');
-                } catch (IOException e) {
+                } catch (final IOException e) {
                     throw new IORuntimeException(e);
                 }
                 if (isTestClass(name)) {
@@ -67,7 +67,7 @@ public class TeedaIntegrationTests {
                         - ".class".length());
                     className = className.replace('/', '.');
                     System.out.println("found testClass: " + className);
-                    Class clazz = ClassUtil.forName(className);
+                    final Class clazz = ClassUtil.forName(className);
                     suite.addTestSuite(clazz);
                     return true;
                 }

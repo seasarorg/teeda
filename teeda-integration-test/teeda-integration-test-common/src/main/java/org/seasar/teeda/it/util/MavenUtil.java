@@ -35,21 +35,23 @@ import org.seasar.framework.util.ResourceUtil;
  */
 public class MavenUtil {
 
-    public static File getArtifactFromPom(File pom, String artifactId) {
-        MavenEmbedder maven = new MavenEmbedder();
-        ClassLoader classLoader = Thread.currentThread()
+    public static File getArtifactFromPom(final File pom,
+        final String artifactId) {
+        final MavenEmbedder maven = new MavenEmbedder();
+        final ClassLoader classLoader = Thread.currentThread()
             .getContextClassLoader();
         maven.setClassLoader(classLoader);
-        MavenEmbedderConsoleLogger logger = new MavenEmbedderConsoleLogger();
+        final MavenEmbedderConsoleLogger logger = new MavenEmbedderConsoleLogger();
         logger.setThreshold(MavenEmbedderLogger.LEVEL_ERROR);
         maven.setLogger(logger);
         try {
             maven.start();
-            MavenProject mavenProject = maven.readProjectWithDependencies(pom);
+            final MavenProject mavenProject = maven
+                .readProjectWithDependencies(pom);
             Artifact targetArtifact = null;
-            for (Iterator it = mavenProject.getArtifacts().iterator(); it
+            for (final Iterator it = mavenProject.getArtifacts().iterator(); it
                 .hasNext();) {
-                Artifact artifact = (Artifact) it.next();
+                final Artifact artifact = (Artifact) it.next();
                 if (artifactId.equals(artifact.getArtifactId())) {
                     targetArtifact = artifact;
                 }
@@ -58,27 +60,27 @@ public class MavenUtil {
                 throw new RuntimeException("[" + artifactId
                     + "] not found. from " + pom);
             }
-            File targetArtifactFile = targetArtifact.getFile()
+            final File targetArtifactFile = targetArtifact.getFile()
                 .getCanonicalFile();
             maven.stop();
             return targetArtifactFile;
-        } catch (MavenEmbedderException e) {
+        } catch (final MavenEmbedderException e) {
             throw new RuntimeException(e);
-        } catch (IOException e) {
+        } catch (final IOException e) {
             throw new RuntimeException(e);
-        } catch (ArtifactResolutionException e) {
+        } catch (final ArtifactResolutionException e) {
             throw new RuntimeException(e);
-        } catch (ArtifactNotFoundException e) {
+        } catch (final ArtifactNotFoundException e) {
             throw new RuntimeException(e);
-        } catch (ProjectBuildingException e) {
+        } catch (final ProjectBuildingException e) {
             throw new RuntimeException(e);
         }
     }
 
     public static File getProjectPomFile(final Class clazz) {
-        File file = ResourceUtil.getBuildDir(clazz);
+        final File file = ResourceUtil.getBuildDir(clazz);
         for (File f = file; f != null; f = f.getParentFile()) {
-            File pomFile = new File(f, "pom.xml");
+            final File pomFile = new File(f, "pom.xml");
             if (pomFile.exists()) {
                 return pomFile;
             }

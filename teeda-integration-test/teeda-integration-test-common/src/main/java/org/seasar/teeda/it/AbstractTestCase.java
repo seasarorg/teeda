@@ -65,9 +65,9 @@ import com.gargoylesoftware.htmlunit.html.HtmlPage;
  */
 public abstract class AbstractTestCase extends TestCase {
 
-    private static int port_ = SocketUtil.findFreePort();
+    private static final int port_ = SocketUtil.findFreePort();
 
-    private static String baseUrl_ = "http://localhost:" + port_ + "/";
+    private static final String baseUrl_ = "http://localhost:" + port_ + "/";
 
     private static final String ENCODING = "UTF-8";
 
@@ -76,8 +76,8 @@ public abstract class AbstractTestCase extends TestCase {
         if (testClass == null) {
             throw new NullPointerException("testClass");
         }
-        TestSuite testSuite = new TestSuite(testClass);
-        File pomFile = MavenUtil.getProjectPomFile(testClass);
+        final TestSuite testSuite = new TestSuite(testClass);
+        final File pomFile = MavenUtil.getProjectPomFile(testClass);
         return setUpTestSuite(testSuite, pomFile);
     }
 
@@ -86,14 +86,15 @@ public abstract class AbstractTestCase extends TestCase {
         ArtifactResolutionException, ArtifactNotFoundException,
         ProjectBuildingException {
 
-        MavenEmbedder maven = new MavenEmbedder();
+        final MavenEmbedder maven = new MavenEmbedder();
         maven.setClassLoader(Thread.currentThread().getContextClassLoader());
-        MavenEmbedderLogger mavenLogger = new MavenEmbedderConsoleLogger();
+        final MavenEmbedderLogger mavenLogger = new MavenEmbedderConsoleLogger();
         mavenLogger.setThreshold(MavenEmbedderLogger.LEVEL_ERROR);
         maven.setLogger(mavenLogger);
         maven.start();
 
-        MavenProject mavenProject = maven.readProjectWithDependencies(pomFile);
+        final MavenProject mavenProject = maven
+            .readProjectWithDependencies(pomFile);
         final Build build = mavenProject.getBuild();
         // xxxx/target
         final String buildDirectory = build.getDirectory();
@@ -101,22 +102,23 @@ public abstract class AbstractTestCase extends TestCase {
 
         maven.stop();
 
-        JettyServerSetup jettySetup = new JettyServerSetup(testSuite);
+        final JettyServerSetup jettySetup = new JettyServerSetup(testSuite);
         jettySetup.setPort(port_);
-        File webapp = new File(buildDirectory, finalName);
+        final File webapp = new File(buildDirectory, finalName);
         jettySetup.setWebapp(webapp);
 
-        WebApplicationTestSetup webApplicationTestSetup = new WebApplicationTestSetup(
+        final WebApplicationTestSetup webApplicationTestSetup = new WebApplicationTestSetup(
             jettySetup);
         webApplicationTestSetup.setPomFile(pomFile);
         return webApplicationTestSetup;
     }
 
-    protected URL getUrl(String path) throws MalformedURLException {
+    protected URL getUrl(final String path) throws MalformedURLException {
         return new URL(baseUrl_ + path);
     }
 
-    protected String getBody(HtmlPage page) throws UnsupportedEncodingException {
+    protected String getBody(final HtmlPage page)
+        throws UnsupportedEncodingException {
         final WebResponse webResponse = page.getWebResponse();
         final String pageEncoding = page.getPageEncoding();
         final String body = new String(webResponse.getResponseBody(),
@@ -124,11 +126,11 @@ public abstract class AbstractTestCase extends TestCase {
         return body;
     }
 
-    protected String readText(String fileName) {
+    protected String readText(final String fileName) {
         return readText(getClass(), fileName, ENCODING);
     }
 
-    protected URL getFileAsUrl(String s) {
+    protected URL getFileAsUrl(final String s) {
         final String fileNameByClass = getClass().getName().replace('.', '/')
             + "_" + s;
         if (ResourceUtil.isExist(fileNameByClass)) {
@@ -143,14 +145,14 @@ public abstract class AbstractTestCase extends TestCase {
 
     protected Diff diff(final String expected, final String actual)
         throws SAXException, IOException, ParserConfigurationException {
-        Document cDoc = XMLUnit.buildDocument(XMLUnit.getControlParser(),
+        final Document cDoc = XMLUnit.buildDocument(XMLUnit.getControlParser(),
             new StringReader(expected));
-        Document tDoc = XMLUnit.buildDocument(XMLUnit.getTestParser(),
+        final Document tDoc = XMLUnit.buildDocument(XMLUnit.getTestParser(),
             new StringReader(actual));
         HtmlDomUtil.removeBlankTextNode(cDoc.getChildNodes());
         HtmlDomUtil.removeBlankTextNode(tDoc.getChildNodes());
-        Diff diff = new Diff(cDoc, tDoc);
-        DifferenceListenerChain chain = new DifferenceListenerChain();
+        final Diff diff = new Diff(cDoc, tDoc);
+        final DifferenceListenerChain chain = new DifferenceListenerChain();
         chain.addDifferenceListener(new TextTrimmingDifferenceListener());
         chain.addDifferenceListener(new IgnoreJsessionidDifferenceListener());
         chain.addDifferenceListener(new RegexpDifferenceListener());
@@ -158,11 +160,11 @@ public abstract class AbstractTestCase extends TestCase {
         return diff;
     }
 
-    protected HtmlPage getHtmlPage(WebClient webClient, URL url)
+    protected HtmlPage getHtmlPage(final WebClient webClient, final URL url)
         throws IOException {
         try {
             return (HtmlPage) webClient.getPage(url);
-        } catch (FailingHttpStatusCodeException e) {
+        } catch (final FailingHttpStatusCodeException e) {
             final WebResponse response = e.getResponse();
             e.printStackTrace();
             final byte[] bodyBytes = response.getResponseBody();
@@ -172,18 +174,20 @@ public abstract class AbstractTestCase extends TestCase {
         }
     }
 
-    protected String readText(Class clazz, String fileName, String encoding) {
-        String pathByClass = clazz.getName().replace('.', '/') + "_" + fileName;
+    protected String readText(final Class clazz, final String fileName,
+        final String encoding) {
+        final String pathByClass = clazz.getName().replace('.', '/') + "_"
+            + fileName;
         java.io.InputStream is = null;
         if (ResourceUtil.isExist(pathByClass)) {
             is = ResourceUtil.getResourceAsStream(pathByClass);
         } else {
-            String pathByPackage = clazz.getPackage().getName().replace('.',
-                '/')
+            final String pathByPackage = clazz.getPackage().getName().replace(
+                '.', '/')
                 + "/" + fileName;
             is = ResourceUtil.getResourceAsStream(pathByPackage);
         }
-        Reader reader = InputStreamReaderUtil.create(is, encoding);
+        final Reader reader = InputStreamReaderUtil.create(is, encoding);
         return ReaderUtil.readText(reader);
     }
 

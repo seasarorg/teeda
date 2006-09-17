@@ -32,8 +32,9 @@ public class MyWebClient extends WebClient {
 
     private WebRequestSettings webRequestSettings_;
 
-    public Page getPage(WebWindow webWindow, WebRequestSettings parameters)
-        throws IOException, FailingHttpStatusCodeException {
+    public Page getPage(final WebWindow webWindow,
+        final WebRequestSettings parameters) throws IOException,
+        FailingHttpStatusCodeException {
         webRequestSettings_ = parameters;
         return super.getPage(webWindow, parameters);
     }
@@ -42,10 +43,10 @@ public class MyWebClient extends WebClient {
         return webRequestSettings_;
     }
 
-    public KeyValuePair getRequestParameter(String key) {
-        for (Iterator it = webRequestSettings_.getRequestParameters()
+    public KeyValuePair getRequestParameter(final String key) {
+        for (final Iterator it = webRequestSettings_.getRequestParameters()
             .iterator(); it.hasNext();) {
-            KeyValuePair pair = (KeyValuePair) it.next();
+            final KeyValuePair pair = (KeyValuePair) it.next();
             if (key.equals(pair.getKey())) {
                 return pair;
             }

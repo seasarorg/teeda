@@ -45,7 +45,7 @@ public class WebApplicationTestSetup extends TestSetup {
 
     private File pomFile_;
 
-    public WebApplicationTestSetup(Test test) {
+    public WebApplicationTestSetup(final Test test) {
         super(test);
     }
 
@@ -59,9 +59,9 @@ public class WebApplicationTestSetup extends TestSetup {
         ArtifactNotFoundException, CycleDetectedException,
         LifecycleExecutionException, BuildFailureException {
 
-        MavenEmbedder maven = new MavenEmbedder();
+        final MavenEmbedder maven = new MavenEmbedder();
         maven.setClassLoader(Thread.currentThread().getContextClassLoader());
-        MavenEmbedderLogger mavenLogger = new MavenEmbedderConsoleLogger();
+        final MavenEmbedderLogger mavenLogger = new MavenEmbedderConsoleLogger();
         mavenLogger.setThreshold(MavenEmbedderLogger.LEVEL_ERROR);
         maven.setLogger(mavenLogger);
         maven.start();
@@ -70,11 +70,12 @@ public class WebApplicationTestSetup extends TestSetup {
         System.out.println("pomFile:" + pomFile);
         final File projectDirectory = pomFile.getParentFile();
 
-        MavenProject mavenProject = maven.readProjectWithDependencies(pomFile);
-        EventMonitor eventMonitor = new DefaultEventMonitor(
+        final MavenProject mavenProject = maven
+            .readProjectWithDependencies(pomFile);
+        final EventMonitor eventMonitor = new DefaultEventMonitor(
             new PlexusLoggerAdapter(mavenLogger));
 
-        Properties prop = new Properties();
+        final Properties prop = new Properties();
         prop.put("maven.test.skip", "true");
 
         maven.execute(mavenProject, Arrays
@@ -92,7 +93,7 @@ public class WebApplicationTestSetup extends TestSetup {
         return pomFile_;
     }
 
-    public void setPomFile(File pomFile) {
+    public void setPomFile(final File pomFile) {
         pomFile_ = pomFile;
     }
 
@@ -102,7 +103,7 @@ public class WebApplicationTestSetup extends TestSetup {
         return name_;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         name_ = name;
     }
 
