@@ -20,10 +20,9 @@ import java.io.File;
 import junit.extensions.TestSetup;
 import junit.framework.Test;
 
-import org.mortbay.http.SocketListener;
 import org.mortbay.jetty.Server;
-import org.mortbay.jetty.servlet.WebApplicationContext;
-import org.mortbay.util.InetAddrPort;
+import org.mortbay.jetty.nio.SelectChannelConnector;
+import org.mortbay.jetty.webapp.WebAppContext;
 
 /**
  * @author manhole
@@ -51,17 +50,16 @@ public class JettyServerSetup extends TestSetup {
 
     private Server startJetty() throws Exception {
         Server server = new Server();
-        SocketListener listener = new SocketListener(new InetAddrPort(
-            getHost(), getPort()));
-        server.addListener(listener);
-
-        File webapp = getWebapp();
+        SelectChannelConnector connector = new SelectChannelConnector();
+        connector.setPort(getPort());
+        connector.setHost(getHost());
+        server.addConnector(connector);
+        WebAppContext handler = new WebAppContext();
+        handler.setContextPath(getContextPath());
+        final File webapp = getWebapp();
         System.out.println("webapp:" + webapp);
-        WebApplicationContext context = new WebApplicationContext(webapp
-            .getCanonicalPath());
-        context.setContextPath(getContextPath());
-        server.addContext(context);
-
+        handler.setWar(webapp.getCanonicalPath());
+        server.addHandler(handler);
         try {
             System.out.println("### Jetty start ###");
             server.start();
@@ -77,7 +75,7 @@ public class JettyServerSetup extends TestSetup {
         super.tearDown();
     }
 
-    private void stopJetty() throws InterruptedException {
+    private void stopJetty() throws Exception {
         System.out.println("### Jetty stop ###");
         server_.stop();
         System.out.println("stopped.");

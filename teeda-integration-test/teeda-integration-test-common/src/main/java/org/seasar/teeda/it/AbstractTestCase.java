@@ -17,6 +17,7 @@ package org.seasar.teeda.it;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Reader;
 import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
@@ -39,9 +40,9 @@ import org.apache.maven.project.MavenProject;
 import org.apache.maven.project.ProjectBuildingException;
 import org.custommonkey.xmlunit.Diff;
 import org.custommonkey.xmlunit.XMLUnit;
-import org.seasar.framework.exception.ResourceNotFoundRuntimeException;
+import org.seasar.framework.util.InputStreamReaderUtil;
+import org.seasar.framework.util.ReaderUtil;
 import org.seasar.framework.util.ResourceUtil;
-import org.seasar.teeda.core.unit.TestUtil;
 import org.seasar.teeda.core.unit.xmlunit.DifferenceListenerChain;
 import org.seasar.teeda.core.unit.xmlunit.HtmlDomUtil;
 import org.seasar.teeda.core.unit.xmlunit.IgnoreJsessionidDifferenceListener;
@@ -71,7 +72,7 @@ public abstract class AbstractTestCase extends TestCase {
     private static final String ENCODING = "UTF-8";
 
     protected static Test setUpTestSuite(final Class testClass)
-            throws Exception {
+        throws Exception {
         if (testClass == null) {
             throw new NullPointerException("testClass");
         }
@@ -81,9 +82,9 @@ public abstract class AbstractTestCase extends TestCase {
     }
 
     protected static Test setUpTestSuite(final TestSuite testSuite,
-            final File pomFile) throws MavenEmbedderException,
-            ArtifactResolutionException, ArtifactNotFoundException,
-            ProjectBuildingException {
+        final File pomFile) throws MavenEmbedderException,
+        ArtifactResolutionException, ArtifactNotFoundException,
+        ProjectBuildingException {
 
         MavenEmbedder maven = new MavenEmbedder();
         maven.setClassLoader(Thread.currentThread().getContextClassLoader());
@@ -106,7 +107,7 @@ public abstract class AbstractTestCase extends TestCase {
         jettySetup.setWebapp(webapp);
 
         WebApplicationTestSetup webApplicationTestSetup = new WebApplicationTestSetup(
-                jettySetup);
+            jettySetup);
         webApplicationTestSetup.setPomFile(pomFile);
         return webApplicationTestSetup;
     }
@@ -119,33 +120,33 @@ public abstract class AbstractTestCase extends TestCase {
         final WebResponse webResponse = page.getWebResponse();
         final String pageEncoding = page.getPageEncoding();
         final String body = new String(webResponse.getResponseBody(),
-                pageEncoding);
+            pageEncoding);
         return body;
     }
 
     protected String readText(String fileName) {
-        return TestUtil.readText(getClass(), fileName, ENCODING);
+        return readText(getClass(), fileName, ENCODING);
     }
 
     protected URL getFileAsUrl(String s) {
-        String fileNameByClass = getClass().getName().replace('.', '/') + "_"
-                + s;
-        try {
+        final String fileNameByClass = getClass().getName().replace('.', '/')
+            + "_" + s;
+        if (ResourceUtil.isExist(fileNameByClass)) {
             return ResourceUtil.getResource(fileNameByClass);
-        } catch (ResourceNotFoundRuntimeException e) {
-            String fileNameByPackage = getClass().getPackage().getName()
-                    .replace('.', '/')
-                    + "/" + s;
+        } else {
+            final String fileNameByPackage = getClass().getPackage().getName()
+                .replace('.', '/')
+                + "/" + s;
             return ResourceUtil.getResource(fileNameByPackage);
         }
     }
 
     protected Diff diff(final String expected, final String actual)
-            throws SAXException, IOException, ParserConfigurationException {
+        throws SAXException, IOException, ParserConfigurationException {
         Document cDoc = XMLUnit.buildDocument(XMLUnit.getControlParser(),
-                new StringReader(expected));
+            new StringReader(expected));
         Document tDoc = XMLUnit.buildDocument(XMLUnit.getTestParser(),
-                new StringReader(actual));
+            new StringReader(actual));
         HtmlDomUtil.removeBlankTextNode(cDoc.getChildNodes());
         HtmlDomUtil.removeBlankTextNode(tDoc.getChildNodes());
         Diff diff = new Diff(cDoc, tDoc);
@@ -158,7 +159,7 @@ public abstract class AbstractTestCase extends TestCase {
     }
 
     protected HtmlPage getHtmlPage(WebClient webClient, URL url)
-            throws IOException {
+        throws IOException {
         try {
             return (HtmlPage) webClient.getPage(url);
         } catch (FailingHttpStatusCodeException e) {
@@ -169,6 +170,21 @@ public abstract class AbstractTestCase extends TestCase {
             System.out.println(body);
             throw e;
         }
+    }
+
+    protected String readText(Class clazz, String fileName, String encoding) {
+        String pathByClass = clazz.getName().replace('.', '/') + "_" + fileName;
+        java.io.InputStream is = null;
+        if (ResourceUtil.isExist(pathByClass)) {
+            is = ResourceUtil.getResourceAsStream(pathByClass);
+        } else {
+            String pathByPackage = clazz.getPackage().getName().replace('.',
+                '/')
+                + "/" + fileName;
+            is = ResourceUtil.getResourceAsStream(pathByPackage);
+        }
+        Reader reader = InputStreamReaderUtil.create(is, encoding);
+        return ReaderUtil.readText(reader);
     }
 
 }

@@ -26,8 +26,8 @@ import org.apache.maven.artifact.resolver.ArtifactNotFoundException;
 import org.apache.maven.artifact.resolver.ArtifactResolutionException;
 import org.apache.maven.embedder.MavenEmbedderException;
 import org.apache.maven.project.ProjectBuildingException;
+import org.seasar.framework.exception.IORuntimeException;
 import org.seasar.framework.util.ClassUtil;
-import org.seasar.framework.util.FileUtil;
 import org.seasar.teeda.it.util.MavenUtil;
 
 import com.gargoylesoftware.base.util.DirectoryWalker;
@@ -50,8 +50,12 @@ public class TeedaIntegrationTests {
         walker.getFiles(new FileFilter() {
 
             public boolean accept(final File pathname) {
-                final String name = FileUtil.getCanonicalPath(pathname)
-                    .replace('\\', '/');
+                final String name;
+                try {
+                    name = pathname.getCanonicalPath().replace('\\', '/');
+                } catch (IOException e) {
+                    throw new IORuntimeException(e);
+                }
                 if (isTestClass(name)) {
                     final int pos = name.lastIndexOf(startingDirectory);
                     String className = name.substring(pos
