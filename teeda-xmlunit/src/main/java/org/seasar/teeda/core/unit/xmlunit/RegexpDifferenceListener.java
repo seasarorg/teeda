@@ -32,7 +32,7 @@ public class RegexpDifferenceListener implements DifferenceListener {
 
     public int differenceFound(Difference difference) {
         if (DifferenceConstants.TEXT_VALUE.getId() == difference.getId()
-                || DifferenceConstants.ATTR_VALUE.getId() == difference.getId()) {
+            || DifferenceConstants.ATTR_VALUE.getId() == difference.getId()) {
             // 14, 3
             NodeDetail cNodeDetail = difference.getControlNodeDetail();
             NodeDetail tNodeDetail = difference.getTestNodeDetail();
@@ -44,7 +44,7 @@ public class RegexpDifferenceListener implements DifferenceListener {
                 Matcher matcher = pattern.matcher(tNodeDetailValue);
                 if (matcher.matches()) {
                     System.out
-                            .println("recover:TEXT_VALUE || ATTR_VALUE (Regexp)");
+                        .println("recover:TEXT_VALUE || ATTR_VALUE (Regexp)");
                     return DifferenceListener.RETURN_IGNORE_DIFFERENCE_NODES_SIMILAR;
                 }
             } catch (PatternSyntaxException e) {
@@ -53,7 +53,7 @@ public class RegexpDifferenceListener implements DifferenceListener {
         return DifferenceListener.RETURN_ACCEPT_DIFFERENCE;
     }
 
-    public void skippedComparison(Node node1, Node node2) {
+    public void skippedComparison(Node control, Node test) {
     }
 
 }

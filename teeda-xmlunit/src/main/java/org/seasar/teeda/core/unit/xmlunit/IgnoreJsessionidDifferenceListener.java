@@ -63,7 +63,7 @@ public class IgnoreJsessionidDifferenceListener implements DifferenceListener {
         return removed;
     }
 
-    public void skippedComparison(Node node1, Node node2) {
+    public void skippedComparison(Node control, Node test) {
     }
 
 }

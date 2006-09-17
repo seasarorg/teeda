@@ -146,7 +146,7 @@ public class TextTrimmingDifferenceListener implements DifferenceListener {
         return l;
     }
 
-    public void skippedComparison(Node node1, Node node2) {
+    public void skippedComparison(Node control, Node test) {
     }
 
     boolean equals(String target1, String target2) {
