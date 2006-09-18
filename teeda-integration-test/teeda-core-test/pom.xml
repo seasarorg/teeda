@@ -33,9 +33,9 @@
   </build>
   <dependencies>
     <dependency>
-      <groupId>org.seasar.teeda.it</groupId>
-      <artifactId>teeda-integration-test-common</artifactId>
-      <version>1.0-beta-6-SNAPSHOT</version>
+      <groupId>org.seasar.teeda</groupId>
+      <artifactId>teeda-webunit</artifactId>
+      <version>0.1.0-SNAPSHOT</version>
       <type>jar</type>
       <scope>test</scope>
     </dependency>
