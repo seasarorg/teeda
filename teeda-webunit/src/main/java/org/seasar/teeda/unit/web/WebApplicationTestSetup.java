@@ -55,6 +55,10 @@ public class WebApplicationTestSetup extends TestSetup {
         buildWebapp();
     }
 
+    protected void tearDown() throws Exception {
+        super.tearDown();
+    }
+
     protected void buildWebapp() throws MavenEmbedderException,
         ProjectBuildingException, ArtifactResolutionException,
         ArtifactNotFoundException, CycleDetectedException,

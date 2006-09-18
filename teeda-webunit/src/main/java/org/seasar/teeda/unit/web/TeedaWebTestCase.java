@@ -50,7 +50,6 @@ import org.seasar.teeda.core.unit.xmlunit.IgnoreJsessionidDifferenceListener;
 import org.seasar.teeda.core.unit.xmlunit.RegexpDifferenceListener;
 import org.seasar.teeda.core.unit.xmlunit.TextTrimmingDifferenceListener;
 import org.seasar.teeda.util.MavenUtil;
-import org.seasar.teeda.util.SocketUtil;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
@@ -63,8 +62,6 @@ import com.gargoylesoftware.htmlunit.html.HtmlPage;
  * @author manhole
  */
 public abstract class TeedaWebTestCase extends TestCase {
-
-    private static final int port_ = SocketUtil.findFreePort();
 
     private static final String ENCODING = "UTF-8";
 
@@ -99,7 +96,7 @@ public abstract class TeedaWebTestCase extends TestCase {
         maven.stop();
 
         final JettyServerSetup jettySetup = new JettyServerSetup(testSuite);
-        jettySetup.setPort(port_);
+        jettySetup.setPort(WebTestEnvironment.getPort());
         final File webapp = new File(buildDirectory, finalName);
         jettySetup.setWebapp(webapp);
 
@@ -184,7 +181,11 @@ public abstract class TeedaWebTestCase extends TestCase {
     }
 
     protected String getBaseUrl() {
-        return "http://localhost:" + port_ + "/";
+        return "http://localhost:" + getPort() + "/";
+    }
+
+    protected int getPort() {
+        return WebTestEnvironment.getPort();
     }
 
 }
