@@ -68,8 +68,6 @@ public abstract class AbstractTestCase extends TestCase {
 
     private static final int port_ = SocketUtil.findFreePort();
 
-    private static final String baseUrl_ = "http://localhost:" + port_ + "/";
-
     private static final String ENCODING = "UTF-8";
 
     protected static Test setUpTestSuite(final Class testClass)
@@ -115,7 +113,7 @@ public abstract class AbstractTestCase extends TestCase {
     }
 
     protected URL getUrl(final String path) throws MalformedURLException {
-        return new URL(baseUrl_ + path);
+        return new URL(getBaseUrl() + path);
     }
 
     protected String getBody(final HtmlPage page)
@@ -186,6 +184,10 @@ public abstract class AbstractTestCase extends TestCase {
         final InputStream is = ResourceUtil.getResourceAsStream(path);
         final Reader reader = InputStreamReaderUtil.create(is, encoding);
         return ReaderUtil.readText(reader);
+    }
+
+    protected String getBaseUrl() {
+        return "http://localhost:" + port_ + "/";
     }
 
 }
