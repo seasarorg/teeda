@@ -62,6 +62,7 @@ public class GridPage {
 		item.setDdd(ddd);
 		item.setEee(eee);
 		item.setFff(fff);
+		item.setGgg("GGGGGG");
 		return item;
 	}
 
@@ -82,6 +83,16 @@ public class GridPage {
 		private BigDecimal eee;
 
 		private String fff;
+
+		private String ggg;
+
+		public String getGgg() {
+			return ggg;
+		}
+
+		public void setGgg(String ggg) {
+			this.ggg = ggg;
+		}
 
 		public String getBbb() {
 			return bbb;
@@ -143,6 +154,16 @@ public class GridPage {
 	private BigDecimal eee;
 
 	private String fff;
+
+	private String ggg;
+
+	public String getGgg() {
+		return ggg;
+	}
+
+	public void setGgg(String ggg) {
+		this.ggg = ggg;
+	}
 
 	public String getBbb() {
 		return bbb;
