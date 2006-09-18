@@ -50,8 +50,10 @@ public class InputTextFactory extends AbstractElementProcessorFactory {
         super
                 .customizeProperties(properties, elementNode, pageDesc,
                         actionDesc);
-        properties.put(JsfConstants.VALUE_ATTR, getBindingExpression(pageDesc
-                .getPageName(), elementNode.getId()));
+        if (pageDesc != null) {
+            properties.put(JsfConstants.VALUE_ATTR, getBindingExpression(
+                    pageDesc.getPageName(), elementNode.getId()));
+        }
         String title = elementNode.getProperty(JsfConstants.TITLE_ATTR);
         if (title != null) {
             properties.put(JsfConstants.LABEL_ATTR, title);

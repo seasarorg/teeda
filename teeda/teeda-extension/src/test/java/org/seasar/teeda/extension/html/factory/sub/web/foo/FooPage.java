@@ -14,6 +14,10 @@ public class FooPage {
         return null;
     }
 
+    public String getAaaStyleClass() {
+        return "mystyle";
+    }
+
     public String doBbb() {
         return null;
     }
@@ -40,5 +44,9 @@ public class FooPage {
 
     public void setHogeItems(List hogeItems) {
         this.hogeItems = hogeItems;
+    }
+
+    public String getHogeRowStyleClass() {
+        return "mystyle";
     }
 }

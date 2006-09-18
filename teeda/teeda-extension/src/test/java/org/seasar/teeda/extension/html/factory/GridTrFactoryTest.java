@@ -17,9 +17,13 @@ package org.seasar.teeda.extension.html.factory;
 
 import java.util.HashMap;
 
+import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.html.ElementNode;
+import org.seasar.teeda.extension.html.ElementProcessor;
 import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooPage;
+import org.seasar.teeda.extension.taglib.TGridTag;
+import org.seasar.teeda.extension.taglib.TGridTrTag;
 import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 
 /**
@@ -63,4 +67,53 @@ public class GridTrFactoryTest extends TeedaExtensionTestCase {
         assertEquals(false, factory.isMatch(elementNode, pageDesc, null));
     }
 
+    public void testCustomizeDynamicProperties() throws Exception {
+        // ## Arrange ##
+        registerTaglibElement(ExtensionConstants.TEEDA_EXTENSION_URI, "grid",
+                TGridTag.class);
+        registerTaglibElement(ExtensionConstants.TEEDA_EXTENSION_URI, "gridTr",
+                TGridTrTag.class);
+        factory.setTaglibManager(getTaglibManager());
+        final HashMap gridProp = new HashMap();
+        gridProp.put("id", "hogeGrid");
+        ElementNode grid = createElementNode("table", gridProp);
+
+        final HashMap trProp = new HashMap();
+        trProp.put("styleClass", "hoge");
+        ElementNode elementNode = createElementNode("tr", trProp);
+        grid.addElement(elementNode);
+
+        // ## Act ##
+        ElementProcessor processor = factory.createProcessor(elementNode,
+                pageDesc, null);
+
+        // ## Assert ##
+        assertEquals("#{fooPage.hogeRowStyleClass}", processor
+                .getProperty("styleClass"));
+    }
+
+    public void testCustomizeDynamicProperties2() throws Exception {
+        // ## Arrange ##
+        registerTaglibElement(ExtensionConstants.TEEDA_EXTENSION_URI, "grid",
+                TGridTag.class);
+        registerTaglibElement(ExtensionConstants.TEEDA_EXTENSION_URI, "gridTr",
+                TGridTrTag.class);
+        factory.setTaglibManager(getTaglibManager());
+        final HashMap gridProp = new HashMap();
+        gridProp.put("id", "hogeGrid");
+        ElementNode grid = createElementNode("table", gridProp);
+
+        final HashMap trProp = new HashMap();
+        //trProp.put("styleClass", "hoge");
+        ElementNode elementNode = createElementNode("tr", trProp);
+        grid.addElement(elementNode);
+
+        // ## Act ##
+        ElementProcessor processor = factory.createProcessor(elementNode,
+                pageDesc, null);
+
+        // ## Assert ##
+        assertEquals("#{fooPage.hogeRowStyleClass}", processor
+                .getProperty("styleClass"));
+    }
 }

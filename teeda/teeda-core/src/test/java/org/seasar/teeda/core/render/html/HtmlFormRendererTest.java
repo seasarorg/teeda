@@ -172,7 +172,8 @@ public class HtmlFormRendererTest extends RendererTest {
                 + " onmousemove=\"l\"" + " onmouseout=\"m\""
                 + " onmouseover=\"n\"" + " onmouseup=\"o\"" + " onreset=\"p\""
                 + " onsubmit=\"q\"" + " style=\"r\"" + " class=\"s\""
-                + " target=\"t\"" + " title=\"u\"" + " action=\"/xyz\">"
+                + " target=\"t\"" + " title=\"u\""
+                + " action=\"/xyz?newwindow=true\">"
                 + "<input type=\"hidden\" name=\"AA/xyz\" value=\"AA\" />"
                 + "</form>", getResponseText());
         assertEquals(diff.toString(), true, diff.identical());
@@ -243,7 +244,6 @@ public class HtmlFormRendererTest extends RendererTest {
                     + "function clear__5Fid0(){var f = document.forms['_id0']; f.elements['hoge'].value='null'; f.target='';} clear__5Fid0();\n"
                     + "//-->\n</script>" + "</form>";
 
-
             final Diff diff = diff(readText, getResponseText());
             assertEquals(diff.toString(), true, diff.identical());
         } finally {
@@ -272,11 +272,13 @@ public class HtmlFormRendererTest extends RendererTest {
                 webAppConfig);
 
         // ## Act ##
+        htmlForm.setTarget("_blank");
         encodeByRenderer(renderer, htmlForm);
 
         // ## Assert ##
-        String readText = "<form name=\"_id0\" method=\"post\" enctype=\"application/x-www-form-urlencoded\" action=\"/aaa/cc\"><input type=\"hidden\" name=\"_id0/cc\" value=\"_id0\" /></form>";
+        String readText = "<form name=\"_id0\" method=\"post\" enctype=\"application/x-www-form-urlencoded\" target=\"_blank\" action=\"/aaa/cc?newwindow=true\"><input type=\"hidden\" name=\"_id0/cc\" value=\"_id0\" /></form>";
         final Diff diff = diff(readText, getResponseText());
+        //assertEquals(readText, getResponseText());
         assertEquals(diff.toString(), true, diff.identical());
     }
 

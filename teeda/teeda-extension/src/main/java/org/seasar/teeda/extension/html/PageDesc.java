@@ -23,6 +23,8 @@ public interface PageDesc {
 
     boolean hasItemsProperty(String name);
 
+    boolean hasDynamicProperty(String name);
+
     boolean hasMethod(String name);
 
     boolean isModified();

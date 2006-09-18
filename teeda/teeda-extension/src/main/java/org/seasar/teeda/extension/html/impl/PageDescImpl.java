@@ -40,6 +40,8 @@ public class PageDescImpl implements PageDesc {
 
     private Set itemsPropertyNames = new HashSet();
 
+    private Set dynamicPropertyNames = new HashSet();
+
     private Set methodNames;
 
     private File file;
@@ -72,6 +74,9 @@ public class PageDescImpl implements PageDesc {
             } else {
                 propertyNames.add(pd.getPropertyName());
             }
+            if (isDynamicProperty(pd)) {
+                dynamicPropertyNames.add(pd.getPropertyName());
+            }
         }
         methodNames = ActionDescUtil.getActionMethodNames(pageClass);
         String pageName = getPageName();
@@ -93,12 +98,20 @@ public class PageDescImpl implements PageDesc {
         return clazz.isArray() || Collection.class.isAssignableFrom(clazz);
     }
 
+    protected boolean isDynamicProperty(PropertyDesc pd) {
+        return pd.hasReadMethod() && pd.getPropertyType() == String.class;
+    }
+
     public boolean hasProperty(String name) {
         return propertyNames.contains(name);
     }
 
     public boolean hasItemsProperty(String name) {
         return itemsPropertyNames.contains(name);
+    }
+
+    public boolean hasDynamicProperty(String name) {
+        return dynamicPropertyNames.contains(name);
     }
 
     public boolean hasMethod(String name) {

@@ -421,6 +421,10 @@ public class TagProcessorAssembleImplTest extends TeedaExtensionTestCase {
             return false;
         }
 
+        public boolean hasDynamicProperty(String name) {
+            return false;
+        }
+
         public boolean hasMethod(String name) {
             return false;
         }

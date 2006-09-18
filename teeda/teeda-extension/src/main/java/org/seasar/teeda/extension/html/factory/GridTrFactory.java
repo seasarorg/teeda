@@ -17,7 +17,6 @@ package org.seasar.teeda.extension.html.factory;
 
 import java.util.Map;
 
-import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ElementNode;
@@ -28,8 +27,7 @@ import org.seasar.teeda.extension.html.PageDesc;
  */
 public class GridTrFactory extends AbstractGridChildrenFactory {
 
-    private static final String ROW_STYLE_CLASS = "Row"
-            + StringUtil.capitalize(JsfConstants.STYLE_CLASS_ATTR);
+    private static final String ROW = "Row";
 
     protected String getHtmlTagName() {
         return JsfConstants.TR_ELEM;
@@ -39,21 +37,18 @@ public class GridTrFactory extends AbstractGridChildrenFactory {
         return "gridTr";
     }
 
-    protected void customizeProperties(Map properties, ElementNode elementNode,
-            PageDesc pageDesc, ActionDesc actionDesc) {
-        super
-                .customizeProperties(properties, elementNode, pageDesc,
-                        actionDesc);
+    protected void customizeDynamicProperties(Map properties,
+            ElementNode elementNode, PageDesc pageDesc, ActionDesc actionDesc) {
         final ElementNode gridNode = GridFactoryUtil.findParentGridNode(
                 elementNode, pageDesc, actionDesc);
         final String naturalName = GridFactoryUtil.getNaturalName(gridNode
                 .getId());
-        final String attrName = naturalName + ROW_STYLE_CLASS;
-        if (!pageDesc.hasProperty(attrName)) {
-            return;
-        }
-        properties.put(JsfConstants.STYLE_CLASS_ATTR, getBindingExpression(
-                pageDesc.getPageName(), attrName));
+        final String base = naturalName + ROW;
+        customizeDynamicProperties(base, properties, elementNode, pageDesc,
+                actionDesc);
+        customizeDynamicPropertyIfNotExists(base,
+                JsfConstants.STYLE_CLASS_ATTR, properties, elementNode,
+                pageDesc, actionDesc);
     }
 
 }

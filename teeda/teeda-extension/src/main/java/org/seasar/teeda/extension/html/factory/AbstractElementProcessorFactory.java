@@ -15,8 +15,10 @@
  */
 package org.seasar.teeda.extension.html.factory;
 
+import java.util.Iterator;
 import java.util.Map;
 
+import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.util.BindingUtil;
 import org.seasar.teeda.extension.config.taglib.TaglibManager;
@@ -86,6 +88,53 @@ public abstract class AbstractElementProcessorFactory implements
             PageDesc pageDesc, ActionDesc actionDesc) {
         renameProperty(properties, JsfConstants.CLASS_ATTR,
                 JsfConstants.STYLE_CLASS_ATTR);
+        customizeDynamicProperties(properties, elementNode, pageDesc,
+                actionDesc);
+    }
+
+    protected void customizeDynamicProperties(Map properties,
+            ElementNode elementNode, PageDesc pageDesc, ActionDesc actionDesc) {
+        customizeDynamicProperties((String) properties
+                .get(JsfConstants.ID_ATTR), properties, elementNode, pageDesc,
+                actionDesc);
+    }
+
+    protected void customizeDynamicProperties(String base, Map properties,
+            ElementNode elementNode, PageDesc pageDesc, ActionDesc actionDesc) {
+        if (base == null) {
+            return;
+        }
+        for (Iterator i = properties.keySet().iterator(); i.hasNext();) {
+            String key = (String) i.next();
+            if (base.equals(key)) {
+                continue;
+            }
+            customizeDynamicProperty(base, key, properties, elementNode,
+                    pageDesc, actionDesc);
+        }
+    }
+
+    protected void customizeDynamicProperty(String base, String name,
+            Map properties, ElementNode elementNode, PageDesc pageDesc,
+            ActionDesc actionDesc) {
+        if (pageDesc == null) {
+            return;
+        }
+        String propName = base + StringUtil.capitalize(name);
+        if (pageDesc.hasDynamicProperty(propName)) {
+            properties.put(name, getBindingExpression(pageDesc.getPageName(),
+                    propName));
+        }
+    }
+
+    protected void customizeDynamicPropertyIfNotExists(String base,
+            String name, Map properties, ElementNode elementNode,
+            PageDesc pageDesc, ActionDesc actionDesc) {
+
+        if (!properties.containsKey(name)) {
+            customizeDynamicProperty(base, name, properties, elementNode,
+                    pageDesc, actionDesc);
+        }
     }
 
     protected void renameProperty(Map properties, String from, String to) {

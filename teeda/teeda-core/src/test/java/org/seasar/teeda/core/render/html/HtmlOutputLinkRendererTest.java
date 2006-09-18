@@ -278,7 +278,7 @@ public class HtmlOutputLinkRendererTest extends RendererTest {
 
         encodeByRenderer(renderer, htmlOutputLink);
 
-        Diff diff = new Diff("<a" + " id=\"a\"" + " href=\"b\""
+        Diff diff = new Diff("<a" + " id=\"a\"" + " href=\"b?newwindow=true\""
                 + " accesskey=\"c\"" + " charset=\"d\"" + " coords=\"e\""
                 + " dir=\"f\"" + " hreflang=\"g\"" + " lang=\"h\""
                 + " onblur=\"i\"" + " onclick=\"j\"" + " ondblclick=\"k\""
@@ -362,4 +362,14 @@ public class HtmlOutputLinkRendererTest extends RendererTest {
         }
     }
 
+    public void testNewwindow() throws Exception {
+        htmlOutputLink.setValue("url.html");
+        htmlOutputLink.setTarget("_blank");
+
+        encodeByRenderer(renderer, htmlOutputLink);
+
+        assertEquals(
+                "<a href=\"url.html?newwindow=true\" target=\"_blank\"></a>",
+                getResponseText());
+    }
 }

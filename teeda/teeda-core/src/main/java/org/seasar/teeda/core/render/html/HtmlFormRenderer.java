@@ -16,6 +16,7 @@
 package org.seasar.teeda.core.render.html;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -28,9 +29,11 @@ import javax.faces.component.UIForm;
 import javax.faces.component.html.HtmlForm;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+import javax.faces.internal.WindowIdUtil;
 
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.AbstractRenderer;
+import org.seasar.teeda.core.render.html.support.UrlBuilder;
 import org.seasar.teeda.core.util.FacesContextUtil;
 import org.seasar.teeda.core.util.HtmlFormRendererUtil;
 import org.seasar.teeda.core.util.JavaScriptUtil;
@@ -79,8 +82,17 @@ public class HtmlFormRenderer extends AbstractRenderer {
         final String viewId = context.getViewRoot().getViewId();
         final String url = viewHandler.getActionURL(context, viewId);
         if (url != null) {
+            UrlBuilder urlBuilder = new UrlBuilder();
+            urlBuilder.setBase(url);
+            final String encoding = writer.getCharacterEncoding();
+            if (WindowIdUtil.isNewWindowTarget(htmlForm.getTarget())) {
+                urlBuilder.add(URLEncoder.encode(WindowIdUtil.NEWWINDOW,
+                        encoding), URLEncoder.encode(JsfConstants.TRUE,
+                        encoding));
+            }
             writer.writeURIAttribute(JsfConstants.ACTION_ATTR, context
-                    .getExternalContext().encodeActionURL(url), null);
+                    .getExternalContext().encodeActionURL(urlBuilder.build()),
+                    null);
         }
     }
 

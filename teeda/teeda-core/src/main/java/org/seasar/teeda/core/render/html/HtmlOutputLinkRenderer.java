@@ -24,6 +24,7 @@ import javax.faces.component.UIParameter;
 import javax.faces.component.html.HtmlOutputLink;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+import javax.faces.internal.WindowIdUtil;
 
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.AbstractRenderer;
@@ -68,6 +69,10 @@ public class HtmlOutputLinkRenderer extends AbstractRenderer {
                         URLEncoder.encode(parameter.getValue().toString(),
                                 encoding));
             }
+        }
+        if (WindowIdUtil.isNewWindowTarget(htmlOutputLink.getTarget())) {
+            urlBuilder.add(URLEncoder.encode(WindowIdUtil.NEWWINDOW, encoding),
+                    URLEncoder.encode(JsfConstants.TRUE, encoding));
         }
         final String href = context.getExternalContext().encodeResourceURL(
                 urlBuilder.build());

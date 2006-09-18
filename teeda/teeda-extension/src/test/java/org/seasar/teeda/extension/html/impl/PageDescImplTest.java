@@ -55,6 +55,15 @@ public class PageDescImplTest extends TeedaExtensionTestCase {
         assertFalse(pd.hasItemsProperty(null));
     }
 
+    public void testHasDynamicProperty() throws Exception {
+        PageDescImpl pd = (PageDescImpl) createPageDesc(FooPage.class,
+                "fooPage");
+        assertTrue(pd.hasDynamicProperty("aaa"));
+        assertFalse(pd.hasDynamicProperty("bbb"));
+        assertFalse(pd.hasDynamicProperty("xxx"));
+        assertFalse(pd.hasDynamicProperty(null));
+    }
+
     public void testHasMethod() throws Exception {
         PageDescImpl pd = (PageDescImpl) createPageDesc(FooPage.class,
                 "fooPage");
