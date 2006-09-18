@@ -29,6 +29,7 @@ public class TeedaXMLConfiguration extends XML11Configuration {
         TeedaXMLDocumentScannerImpl scanner = new TeedaXMLDocumentScannerImpl();
         setProperty(DOCUMENT_SCANNER, scanner);
         addComponent((XMLComponent) scanner);
+        fEntityManager.setEntityHandler(scanner);
         fNamespaceScanner = scanner;
     }
 
@@ -48,4 +49,5 @@ public class TeedaXMLConfiguration extends XML11Configuration {
         filter.setDocumentHandler(orgHandler);
         setDocumentHandler(filter);
     }
+
 }
