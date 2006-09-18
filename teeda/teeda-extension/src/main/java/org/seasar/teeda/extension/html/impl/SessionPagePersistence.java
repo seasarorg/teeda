@@ -15,7 +15,6 @@
  */
 package org.seasar.teeda.extension.html.impl;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,7 +25,7 @@ import javax.faces.context.FacesContext;
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.PropertyDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
-import org.seasar.framework.util.SLinkedList;
+import org.seasar.framework.util.Mru;
 import org.seasar.teeda.core.util.DIContainerUtil;
 import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.PageDescCache;
@@ -62,14 +61,13 @@ public class SessionPagePersistence implements PagePersistence {
     public void save(FacesContext context, String viewId) {
         ExternalContext extCtx = context.getExternalContext();
         Map sessionMap = extCtx.getSessionMap();
-        PersistenceData pd = (PersistenceData) sessionMap.get(getClass()
-                .getName());
-        if (pd == null) {
-            pd = new PersistenceData(pageSize);
-            sessionMap.put(getClass().getName(), pd);
+        Mru mru = (Mru) sessionMap.get(getClass().getName());
+        if (mru == null) {
+            mru = new Mru(pageSize);
+            sessionMap.put(getClass().getName(), mru);
         }
         String previousViewId = context.getViewRoot().getViewId();
-        pd.set(viewId, getPageData(previousViewId));
+        mru.put(viewId, getPageData(previousViewId));
     }
 
     protected Map getPageData(String viewId) {
@@ -109,51 +107,15 @@ public class SessionPagePersistence implements PagePersistence {
     public void restore(FacesContext context, String viewId) {
         ExternalContext extCtx = context.getExternalContext();
         Map sessionMap = extCtx.getSessionMap();
-        PersistenceData pd = (PersistenceData) sessionMap.get(getClass()
-                .getName());
-        if (pd == null) {
+        Mru mru = (Mru) sessionMap.get(getClass().getName());
+        if (mru == null) {
             return;
         }
-        Map pageData = pd.get(viewId);
+        Map pageData = (Map) mru.get(viewId);
         if (pageData == null) {
             return;
         }
         Map requestMap = extCtx.getRequestMap();
         requestMap.putAll(pageData);
-    }
-
-    public static class PersistenceData implements Serializable {
-
-        private static final long serialVersionUID = 1L;
-
-        private SLinkedList list = new SLinkedList();
-
-        private Map map = new HashMap();
-
-        private int pageSize;
-
-        public PersistenceData(int pageSize) {
-            this.pageSize = pageSize;
-        }
-
-        public synchronized Map get(String viewId) {
-            list.remove(viewId);
-            list.addFirst(viewId);
-            return (Map) map.get(viewId);
-        }
-
-        public synchronized void set(String viewId, Map data) {
-            if (map.size() >= pageSize) {
-                String vid = (String) list.removeLast();
-                map.remove(vid);
-            }
-            list.remove(viewId);
-            list.addFirst(viewId);
-            map.put(viewId, data);
-        }
-
-        public synchronized int getSize() {
-            return map.size();
-        }
     }
 }

@@ -15,9 +15,11 @@
  */
 package javax.faces.internal;
 
+import java.util.Map;
 import java.util.Random;
 
 import org.seasar.framework.util.StringUtil;
+import org.seasar.teeda.core.JsfConstants;
 
 /**
  * @author higa
@@ -26,6 +28,8 @@ import org.seasar.framework.util.StringUtil;
 public class WindowIdUtil {
 
     public static final String NEWWINDOW = "newwindow";
+
+    public static final String TEEDA_WID = "TEEDA_WID";
 
     private static final String BLANK = "_blank";
 
@@ -61,5 +65,10 @@ public class WindowIdUtil {
             return false;
         }
         return BLANK.equals(target) || target.charAt(0) != '_';
+    }
+
+    public static boolean needNewWindow(final Map parameterMap) {
+        final String newwindow = (String) parameterMap.get(NEWWINDOW);
+        return JsfConstants.TRUE.equals(newwindow);
     }
 }

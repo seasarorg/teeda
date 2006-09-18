@@ -16,6 +16,7 @@
 package org.seasar.teeda.core.lifecycle.impl;
 
 import java.util.Locale;
+import java.util.Map;
 
 import javax.faces.FacesException;
 import javax.faces.application.ViewHandler;
@@ -23,8 +24,12 @@ import javax.faces.component.UIViewRoot;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseId;
+import javax.faces.internal.WindowIdUtil;
 import javax.portlet.PortletRequest;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 
+import org.seasar.framework.util.Mru;
 import org.seasar.teeda.core.lifecycle.AbstractPhase;
 import org.seasar.teeda.core.portlet.FacesPortlet;
 import org.seasar.teeda.core.util.ExternalContextUtil;
@@ -37,22 +42,35 @@ import org.seasar.teeda.core.util.PostbackUtil;
  */
 public class RestoreViewPhase extends AbstractPhase {
 
-    private static final String VIEW_ID_ATTR = RestoreViewPhase.class.getName()
-            + ".VIEW_ID";
+    private static final String VIEW_ID_MRU_ATTR = RestoreViewPhase.class
+            .getName()
+            + ".VIEW_ID_MRU";
+
+    private int viewIdMruSize = 16;
 
     public RestoreViewPhase() {
+    }
+
+    public int getViewIdMruSize() {
+        return viewIdMruSize;
+    }
+
+    public void setViewIdMruSize(int viewIdMruSize) {
+        this.viewIdMruSize = viewIdMruSize;
     }
 
     protected void executePhase(final FacesContext context)
             throws FacesException {
         final ExternalContext externalContext = context.getExternalContext();
         final String viewId = getViewId(context, externalContext);
-        final String previousViewId = getViewIdFromSession(externalContext);
+        final String wid = setupWindowId(externalContext);
+        final Map sessionMap = externalContext.getSessionMap();
+        final String previousViewId = getViewIdFromSession(sessionMap, wid);
         PostbackUtil.setPostback(externalContext.getRequestMap(), viewId
                 .equals(previousViewId));
         final UIViewRoot viewRoot = getViewRoot(context, viewId);
         context.setViewRoot(viewRoot);
-        saveViewIdToSession(externalContext, viewId);
+        saveViewIdToSession(sessionMap, wid, viewId);
         initializeChildren(context, viewRoot);
         if (externalContext.getRequestParameterMap().isEmpty()) {
             context.renderResponse();
@@ -87,13 +105,52 @@ public class RestoreViewPhase extends AbstractPhase {
         }
     }
 
-    protected String getViewIdFromSession(final ExternalContext externalContext) {
-        return (String) externalContext.getSessionMap().get(VIEW_ID_ATTR);
+    protected String setupWindowId(final ExternalContext externalContext)
+            throws FacesException {
+
+        String wid = null;
+        if (WindowIdUtil
+                .needNewWindow(externalContext.getRequestParameterMap())) {
+            wid = WindowIdUtil.createWindowId();
+            Object response = externalContext.getResponse();
+            if (response instanceof HttpServletResponse) {
+                HttpServletResponse res = (HttpServletResponse) response;
+                Cookie cookie = new Cookie(WindowIdUtil.TEEDA_WID, wid);
+                res.addCookie(cookie);
+            }
+        } else {
+            final Map cookieMap = externalContext.getRequestCookieMap();
+            if (cookieMap == null) {
+                return null;
+            }
+            Cookie cookie = (Cookie) cookieMap.get(WindowIdUtil.TEEDA_WID);
+            if (cookie != null) {
+                wid = cookie.getValue();
+            }
+        }
+        return wid;
     }
 
-    protected void saveViewIdToSession(final ExternalContext externalContext,
-            final String viewId) {
-        externalContext.getSessionMap().put(VIEW_ID_ATTR, viewId);
+    protected String getViewIdFromSession(final Map sessionMap,
+            final String windowId) {
+        Mru mru = getViewIdMruFromSession(sessionMap);
+        return (String) mru.get(windowId);
+    }
+
+    protected Mru getViewIdMruFromSession(final Map sessionMap) {
+        Mru mru = (Mru) sessionMap.get(VIEW_ID_MRU_ATTR);
+        if (mru == null) {
+            mru = new Mru(viewIdMruSize);
+            sessionMap.put(VIEW_ID_MRU_ATTR, mru);
+        }
+        return mru;
+    }
+
+    protected void saveViewIdToSession(final Map sessionMap,
+            final String windowId, final String viewId) {
+
+        Mru mru = getViewIdMruFromSession(sessionMap);
+        mru.put(windowId, viewId);
     }
 
     protected PhaseId getCurrentPhaseId() {

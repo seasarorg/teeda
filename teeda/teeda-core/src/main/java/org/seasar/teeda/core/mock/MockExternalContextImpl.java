@@ -54,7 +54,7 @@ public class MockExternalContextImpl extends MockExternalContext {
 
     private Map requestParameterMap_;
 
-    private Map requestCookieMap_;
+    private Map requestCookieMap_ = new HashMap();
 
     private Map sessionMap_;
 
@@ -76,7 +76,7 @@ public class MockExternalContextImpl extends MockExternalContext {
     }
 
     public void addRequestCookieMap(Cookie cookie) {
-        requestParameterMap_.put(cookie.getName(), cookie);
+        requestCookieMap_.put(cookie.getName(), cookie);
     }
 
     public void setRequestCookieMap(Map map) {

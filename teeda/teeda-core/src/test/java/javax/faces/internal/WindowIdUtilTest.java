@@ -15,7 +15,8 @@
  */
 package javax.faces.internal;
 
-import javax.faces.internal.WindowIdUtil;
+import java.util.HashMap;
+import java.util.Map;
 
 import junit.framework.TestCase;
 
@@ -39,5 +40,14 @@ public class WindowIdUtilTest extends TestCase {
         assertTrue(WindowIdUtil.isNewWindowTarget("hoge"));
         assertFalse(WindowIdUtil.isNewWindowTarget("_self"));
         assertFalse(WindowIdUtil.isNewWindowTarget(""));
+    }
+
+    public void testNeedNewWindow() throws Exception {
+        Map parameterMap = new HashMap();
+        assertFalse(WindowIdUtil.needNewWindow(parameterMap));
+        parameterMap.put(WindowIdUtil.NEWWINDOW, "false");
+        assertFalse(WindowIdUtil.needNewWindow(parameterMap));
+        parameterMap.put(WindowIdUtil.NEWWINDOW, "true");
+        assertTrue(WindowIdUtil.needNewWindow(parameterMap));
     }
 }

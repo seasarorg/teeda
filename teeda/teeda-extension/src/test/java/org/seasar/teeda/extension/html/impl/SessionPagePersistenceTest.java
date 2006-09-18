@@ -27,9 +27,9 @@ import javax.faces.context.FacesContext;
 
 import org.seasar.framework.convention.impl.NamingConventionImpl;
 import org.seasar.framework.util.ClassUtil;
+import org.seasar.framework.util.Mru;
 import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.PageDescCache;
-import org.seasar.teeda.extension.html.impl.SessionPagePersistence.PersistenceData;
 import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 
 /**
@@ -86,21 +86,20 @@ public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
         spp.save(context, path2);
         ExternalContext extCtx = context.getExternalContext();
         Map sessionMap = extCtx.getSessionMap();
-        PersistenceData pd = (PersistenceData) sessionMap
-                .get(SessionPagePersistence.class.getName());
-        assertNotNull(pd);
-        assertEquals(1, pd.getSize());
+        Mru mru = (Mru) sessionMap.get(SessionPagePersistence.class.getName());
+        assertNotNull(mru);
+        assertEquals(1, mru.getSize());
 
         context.getViewRoot().setViewId(path2);
         spp.save(context, path3);
-        assertEquals(2, pd.getSize());
+        assertEquals(2, mru.getSize());
 
         Foo3Page foo3Page = (Foo3Page) getComponent(Foo3Page.class);
         foo3Page.setAaa("123");
         context.getViewRoot().setViewId(path3);
         spp.save(context, path);
-        assertEquals(2, pd.getSize());
-        assertNull(pd.get(path2));
+        assertEquals(2, mru.getSize());
+        assertNull(mru.get(path2));
 
         spp.restore(context, path);
         Map requestMap = extCtx.getRequestMap();
