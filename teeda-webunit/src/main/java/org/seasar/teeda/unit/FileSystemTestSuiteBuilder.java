@@ -16,8 +16,11 @@
 package org.seasar.teeda.unit;
 
 import java.io.File;
-import java.io.FileFilter;
 import java.io.IOException;
+import java.lang.reflect.Modifier;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -26,12 +29,12 @@ import org.apache.maven.artifact.resolver.ArtifactNotFoundException;
 import org.apache.maven.artifact.resolver.ArtifactResolutionException;
 import org.apache.maven.embedder.MavenEmbedderException;
 import org.apache.maven.project.ProjectBuildingException;
-import org.seasar.framework.exception.IORuntimeException;
+import org.seasar.framework.util.ClassTraversal;
 import org.seasar.framework.util.ClassUtil;
+import org.seasar.framework.util.ResourceUtil;
+import org.seasar.framework.util.ClassTraversal.ClassHandler;
 import org.seasar.teeda.unit.web.TeedaWebTestCase;
 import org.seasar.teeda.util.MavenUtil;
-
-import com.gargoylesoftware.base.util.DirectoryWalker;
 
 /**
  * @author manhole
@@ -41,45 +44,54 @@ public class FileSystemTestSuiteBuilder {
     public Test build(final Class referenceClass) throws IOException,
         MavenEmbedderException, ArtifactResolutionException,
         ArtifactNotFoundException, ProjectBuildingException {
-        final File pomFile = MavenUtil.getProjectPomFile(referenceClass);
-        final File project = pomFile.getParentFile();
-        final String startingDirectory = new File(project,
-            "target/test-classes").getCanonicalPath().replace('\\', '/');
 
         final TestSuite suite = new TestSuite();
-        final DirectoryWalker walker = new DirectoryWalker(startingDirectory);
-        walker.getFiles(new FileFilter() {
+        final List testClasses = collectTestClass(ResourceUtil
+            .getBuildDir(referenceClass));
+        for (final Iterator it = testClasses.iterator(); it.hasNext();) {
+            final Class testClass = (Class) it.next();
+            suite.addTestSuite(testClass);
+        }
 
-            public boolean accept(final File pathname) {
-                final String name;
-                try {
-                    name = pathname.getCanonicalPath().replace('\\', '/');
-                } catch (final IOException e) {
-                    throw new IORuntimeException(e);
-                }
-                if (isTestClass(name)) {
-                    final int pos = name.lastIndexOf(startingDirectory);
-                    String className = name.substring(pos
-                        + startingDirectory.length());
-                    if (className.startsWith("/")) {
-                        className = className.substring(1);
-                    }
-                    className = className.substring(0, className.length()
-                        - ".class".length());
-                    className = className.replace('/', '.');
-                    System.out.println("found testClass: " + className);
-                    final Class clazz = ClassUtil.forName(className);
-                    suite.addTestSuite(clazz);
-                    return true;
-                }
+        final File pomFile = MavenUtil.getProjectPomFile(referenceClass);
+        return TeedaWebTestCase.setUpTestSuite(suite, pomFile);
+    }
+
+    public List collectTestClass(final File startingDirectory) {
+        final TestClassHandler testClassHandler = new TestClassHandler();
+        ClassTraversal.forEach(startingDirectory, testClassHandler);
+        return testClassHandler.testClasses;
+    }
+
+    static class TestClassHandler implements ClassHandler {
+        private List testClasses = new ArrayList();
+
+        public void processClass(String packageName, String shortClassName) {
+            if (!isTestClassNaming(shortClassName)) {
+                return;
+            }
+            final String className = ClassUtil.concatName(packageName,
+                shortClassName);
+            final Class clazz = ClassUtil.forName(className);
+            if (!isTestClass(clazz)) {
+                return;
+            }
+            System.out.println("found testClass: " + className);
+            testClasses.add(clazz);
+        }
+
+        protected boolean isTestClassNaming(final String name) {
+            return name.endsWith("Test") && (-1 == name.indexOf("$"));
+        }
+
+        protected boolean isTestClass(Class clazz) {
+            final int modifiers = clazz.getModifiers();
+            if (Modifier.isInterface(modifiers)
+                || Modifier.isAbstract(modifiers)) {
                 return false;
             }
-
-            private boolean isTestClass(final String name) {
-                return name.endsWith("Test.class") && (-1 == name.indexOf("$"));
-            }
-        });
-        return TeedaWebTestCase.setUpTestSuite(suite, pomFile);
+            return true;
+        };
     }
 
 }
