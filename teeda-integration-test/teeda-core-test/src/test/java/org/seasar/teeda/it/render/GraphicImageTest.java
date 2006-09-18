@@ -21,7 +21,7 @@ import junit.framework.Test;
 import junitx.framework.StringAssert;
 
 import org.custommonkey.xmlunit.Diff;
-import org.seasar.teeda.it.AbstractTestCase;
+import org.seasar.teeda.unit.web.TeedaWebTestCase;
 
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlImage;
@@ -30,7 +30,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlPage;
 /**
  * @author manhole
  */
-public class GraphicImageTest extends AbstractTestCase {
+public class GraphicImageTest extends TeedaWebTestCase {
 
     public static Test suite() throws Exception {
         return setUpTestSuite(GraphicImageTest.class);

@@ -17,7 +17,7 @@ package org.seasar.teeda.it.learning.server;
 
 import junit.framework.Test;
 
-import org.seasar.teeda.it.AbstractTestCase;
+import org.seasar.teeda.unit.web.TeedaWebTestCase;
 
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlAnchor;
@@ -27,7 +27,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlPage;
 /**
  * @author manhole
  */
-public class LinkTest extends AbstractTestCase {
+public class LinkTest extends TeedaWebTestCase {
 
     public static Test suite() throws Exception {
         return setUpTestSuite(LinkTest.class);

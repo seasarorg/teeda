@@ -22,7 +22,7 @@ import java.util.Date;
 
 import junit.framework.Test;
 
-import org.seasar.teeda.it.AbstractTestCase;
+import org.seasar.teeda.unit.web.TeedaWebTestCase;
 
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
@@ -33,7 +33,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlTextInput;
 /**
  * @author yone
  */
-public class ConverterTest extends AbstractTestCase {
+public class ConverterTest extends TeedaWebTestCase {
 
     private static final DateFormat df1_ = new SimpleDateFormat("yyyyMMdd");
 

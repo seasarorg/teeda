@@ -20,13 +20,13 @@ package org.seasar.teeda.it;
  */
 public class HelloDIBean {
 
-	private String message = "Hello DI";
-	
-	public String getHello() {
-		return message;
-	}
-	
-	public void setHello(String message) {
-		this.message = message;
-	}
+    private String message = "Hello DI";
+
+    public String getHello() {
+        return message;
+    }
+
+    public void setHello(String message) {
+        this.message = message;
+    }
 }

@@ -20,7 +20,7 @@ import java.net.URL;
 import junit.framework.Test;
 
 import org.custommonkey.xmlunit.Diff;
-import org.seasar.teeda.it.AbstractTestCase;
+import org.seasar.teeda.unit.web.TeedaWebTestCase;
 
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlLabel;
@@ -29,7 +29,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlPage;
 /**
  * @author yone
  */
-public class OutputLabelInGridTest extends AbstractTestCase {
+public class OutputLabelInGridTest extends TeedaWebTestCase {
 
     public static Test suite() throws Exception {
         return setUpTestSuite(OutputLabelInGridTest.class);

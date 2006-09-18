@@ -22,6 +22,7 @@ import junitx.framework.StringAssert;
 
 import org.custommonkey.xmlunit.Diff;
 import org.seasar.teeda.core.unit.xmlunit.TextTrimmingDifferenceListener;
+import org.seasar.teeda.unit.web.TeedaWebTestCase;
 
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
@@ -30,7 +31,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlSpan;
 /**
  * @author manhole
  */
-public class HelloTeedaTest extends AbstractTestCase {
+public class HelloTeedaTest extends TeedaWebTestCase {
 
     public static Test suite() throws Exception {
         return setUpTestSuite(HelloTeedaTest.class);

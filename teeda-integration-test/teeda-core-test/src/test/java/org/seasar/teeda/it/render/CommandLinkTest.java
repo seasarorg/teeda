@@ -20,7 +20,7 @@ import java.net.URL;
 import junit.framework.Test;
 
 import org.custommonkey.xmlunit.Diff;
-import org.seasar.teeda.it.AbstractTestCase;
+import org.seasar.teeda.unit.web.TeedaWebTestCase;
 
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlAnchor;
@@ -30,7 +30,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlTextInput;
 /**
  * @author manhole
  */
-public class CommandLinkTest extends AbstractTestCase {
+public class CommandLinkTest extends TeedaWebTestCase {
 
     public static Test suite() throws Exception {
         return setUpTestSuite(CommandLinkTest.class);

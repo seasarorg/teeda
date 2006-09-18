@@ -13,14 +13,15 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.it;
+package org.seasar.teeda.unit.web;
 
 import org.custommonkey.xmlunit.Diff;
+import org.seasar.teeda.unit.web.TeedaWebTestCase;
 
 /**
  * @author manhole
  */
-public class AbstractTestCaseTest extends AbstractTestCase {
+public class TeedaWebTestCaseTest extends TeedaWebTestCase {
 
     public void testDiff1() throws Exception {
         final Diff diff = diff("<a> <b></b> </a>", "<a><b></b></a>");

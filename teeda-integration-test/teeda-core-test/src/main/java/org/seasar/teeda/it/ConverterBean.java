@@ -23,7 +23,7 @@ import java.util.Date;
 public class ConverterBean {
 
     private Date date1 = new Date();
-    
+
     public Date getDate1() {
         return date1;
     }
@@ -31,5 +31,5 @@ public class ConverterBean {
     public void setDate1(Date date1) {
         this.date1 = date1;
     }
-    
+
 }

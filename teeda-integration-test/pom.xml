@@ -38,13 +38,17 @@
     <module>teeda-core-test</module>
     <module>teeda-core-test-client</module>
     <module>teeda-html-test</module>
-    <module>htmlunit-learning</module>
   </modules>
   <repositories>
     <repository>
       <id>maven.seasar.org</id>
       <name>The Seasar Foundation Maven2 Repository</name>
       <url>http://maven.seasar.org/maven2</url>
+    </repository>
+    <repository>
+      <id>jwebunit.sourceforge.net</id>
+      <name>jWebUnit Maven2 Repository</name>
+      <url>http://jwebunit.sourceforge.net/m2-repo</url>
     </repository>
   </repositories>
   <dependencies>

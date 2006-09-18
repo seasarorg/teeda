@@ -20,7 +20,7 @@ import java.net.URL;
 import junit.framework.Test;
 import junitx.framework.StringAssert;
 
-import org.seasar.teeda.it.AbstractTestCase;
+import org.seasar.teeda.unit.web.TeedaWebTestCase;
 
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
@@ -29,7 +29,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlSpan;
 /**
  * @author manhole
  */
-public class OutputTextTest extends AbstractTestCase {
+public class OutputTextTest extends TeedaWebTestCase {
 
     public static Test suite() throws Exception {
         return setUpTestSuite(OutputTextTest.class);

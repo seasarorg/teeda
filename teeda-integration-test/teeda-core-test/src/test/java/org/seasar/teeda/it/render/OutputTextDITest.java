@@ -19,7 +19,7 @@ import java.net.URL;
 
 import junit.framework.Test;
 
-import org.seasar.teeda.it.AbstractTestCase;
+import org.seasar.teeda.unit.web.TeedaWebTestCase;
 
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
@@ -28,7 +28,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlSpan;
 /**
  * @author yone
  */
-public class OutputTextDITest extends AbstractTestCase {
+public class OutputTextDITest extends TeedaWebTestCase {
 
     public static Test suite() throws Exception {
         return setUpTestSuite(OutputTextDITest.class);

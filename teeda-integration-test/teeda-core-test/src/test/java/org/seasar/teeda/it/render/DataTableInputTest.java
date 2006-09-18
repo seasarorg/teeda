@@ -21,7 +21,7 @@ import junit.framework.Test;
 
 import org.custommonkey.xmlunit.Diff;
 import org.jaxen.JaxenException;
-import org.seasar.teeda.it.AbstractTestCase;
+import org.seasar.teeda.unit.web.TeedaWebTestCase;
 
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlForm;
@@ -33,7 +33,7 @@ import com.gargoylesoftware.htmlunit.html.xpath.HtmlUnitXPath;
 /**
  * @author manhole
  */
-public class DataTableInputTest extends AbstractTestCase {
+public class DataTableInputTest extends TeedaWebTestCase {
 
     public static Test suite() throws Exception {
         return setUpTestSuite(DataTableInputTest.class);

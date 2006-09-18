@@ -18,9 +18,10 @@ package org.seasar.teeda.it;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 
-import org.apache.xerces.xni.XNIException;
-
 import junit.framework.Test;
+
+import org.apache.xerces.xni.XNIException;
+import org.seasar.teeda.unit.web.TeedaWebTestCase;
 
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
@@ -28,7 +29,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlPage;
 /**
  * @author manhole
  */
-public class FirstTest extends AbstractTestCase {
+public class FirstTest extends TeedaWebTestCase {
 
     public static Test suite() throws Exception {
         return setUpTestSuite(FirstTest.class);
@@ -58,7 +59,7 @@ public class FirstTest extends AbstractTestCase {
         Exception cause = e.getException();
         if (cause instanceof InvocationTargetException) {
             Throwable targetException = ((InvocationTargetException) cause)
-                .getTargetException();
+                    .getTargetException();
             targetException.printStackTrace();
             if (targetException instanceof XNIException) {
                 printXNIException((XNIException) targetException);

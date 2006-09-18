@@ -19,7 +19,7 @@ import java.net.URL;
 
 import junit.framework.Test;
 
-import org.seasar.teeda.it.AbstractTestCase;
+import org.seasar.teeda.unit.web.TeedaWebTestCase;
 
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlForm;
@@ -29,7 +29,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlSubmitInput;
 /**
  * @author shot
  */
-public class ChangePageTest extends AbstractTestCase {
+public class ChangePageTest extends TeedaWebTestCase {
 
     public static Test suite() throws Exception {
         return setUpTestSuite(ChangePageTest.class);

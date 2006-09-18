@@ -17,9 +17,9 @@ package org.seasar.teeda.it.learning.server;
 
 import java.net.URL;
 
-import org.seasar.teeda.it.AbstractTestCase;
-
 import junit.framework.Test;
+
+import org.seasar.teeda.unit.web.TeedaWebTestCase;
 
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlForm;
@@ -30,7 +30,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlSubmitInput;
 /**
  * @author manhole
  */
-public class FormTest extends AbstractTestCase {
+public class FormTest extends TeedaWebTestCase {
 
     public static Test suite() throws Exception {
         return setUpTestSuite(FormTest.class);
@@ -44,6 +44,7 @@ public class FormTest extends AbstractTestCase {
 
         // ## Act ##
         HtmlPage page1 = (HtmlPage) webClient.getPage(url);
+        assertEquals("form submit 1", page1.getTitleText());
         HtmlForm form = (HtmlForm) page1.getHtmlElementById("myFormId");
         HtmlSubmitInput button = (HtmlSubmitInput) form
                 .getHtmlElementById("doSubmitId");
@@ -64,6 +65,7 @@ public class FormTest extends AbstractTestCase {
 
         // ## Act ##
         HtmlPage page1 = (HtmlPage) webClient.getPage(url);
+        assertEquals("form submit param", page1.getTitleText());
         HtmlForm form = (HtmlForm) page1.getHtmlElementById("myFormId");
         HtmlInput a = (HtmlInput) form.getHtmlElementById("a");
         a.setNodeValue("a_value");
@@ -73,6 +75,7 @@ public class FormTest extends AbstractTestCase {
 
         // ## Assert ##
         assertEquals(url, page2.getWebResponse().getUrl());
+        assertEquals("form submit param", page2.getTitleText());
     }
 
 }

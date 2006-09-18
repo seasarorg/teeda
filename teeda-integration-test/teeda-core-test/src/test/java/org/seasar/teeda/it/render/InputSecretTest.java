@@ -19,7 +19,7 @@ import java.net.URL;
 
 import junit.framework.Test;
 
-import org.seasar.teeda.it.AbstractTestCase;
+import org.seasar.teeda.unit.web.TeedaWebTestCase;
 
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
@@ -29,7 +29,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlSubmitInput;
 /**
  * @author manhole
  */
-public class InputSecretTest extends AbstractTestCase {
+public class InputSecretTest extends TeedaWebTestCase {
 
     public static Test suite() throws Exception {
         return setUpTestSuite(InputSecretTest.class);

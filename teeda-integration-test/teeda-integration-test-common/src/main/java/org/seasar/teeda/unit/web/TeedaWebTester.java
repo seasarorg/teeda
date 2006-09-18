@@ -13,20 +13,25 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.it;
+package org.seasar.teeda.unit.web;
+
+import net.sourceforge.jwebunit.IJWebUnitDialog;
+import net.sourceforge.jwebunit.WebTester;
+import net.sourceforge.jwebunit.htmlunit.HtmlUnitDialog;
 
 /**
- * @author shot
+ * @author manhole
  */
-public class HelloBean {
+public class TeedaWebTester extends WebTester {
 
-    private String message = "Hello OutputText2";
-
-    public String getHello() {
-        return message;
+    public IJWebUnitDialog initializeDialog() {
+        return new TeedaHtmlUnitDialog();
     }
 
-    public void setHello(String message) {
-        this.message = message;
+    static class TeedaHtmlUnitDialog extends HtmlUnitDialog {
+        public String getPageSource() {
+            return super.getPageSource();
+        }
     }
+
 }

@@ -19,7 +19,7 @@ import java.net.URL;
 
 import junit.framework.Test;
 
-import org.seasar.teeda.it.AbstractTestCase;
+import org.seasar.teeda.unit.web.TeedaWebTestCase;
 
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
@@ -30,7 +30,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlTextInput;
 /**
  * @author manhole
  */
-public class DateTimeTest extends AbstractTestCase {
+public class DateTimeTest extends TeedaWebTestCase {
 
     public static Test suite() throws Exception {
         return setUpTestSuite(DateTimeTest.class);

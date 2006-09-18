@@ -13,7 +13,7 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.it;
+package org.seasar.teeda.unit;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -28,7 +28,8 @@ import org.apache.maven.embedder.MavenEmbedderException;
 import org.apache.maven.project.ProjectBuildingException;
 import org.seasar.framework.exception.IORuntimeException;
 import org.seasar.framework.util.ClassUtil;
-import org.seasar.teeda.it.util.MavenUtil;
+import org.seasar.teeda.unit.web.TeedaWebTestCase;
+import org.seasar.teeda.util.MavenUtil;
 
 import com.gargoylesoftware.base.util.DirectoryWalker;
 
@@ -78,7 +79,7 @@ public class FileSystemTestSuiteBuilder {
                 return name.endsWith("Test.class") && (-1 == name.indexOf("$"));
             }
         });
-        return AbstractTestCase.setUpTestSuite(suite, pomFile);
+        return TeedaWebTestCase.setUpTestSuite(suite, pomFile);
     }
 
 }

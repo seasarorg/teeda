@@ -13,7 +13,7 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.it;
+package org.seasar.teeda.unit.web;
 
 import java.io.File;
 import java.io.IOException;
@@ -49,10 +49,8 @@ import org.seasar.teeda.core.unit.xmlunit.HtmlDomUtil;
 import org.seasar.teeda.core.unit.xmlunit.IgnoreJsessionidDifferenceListener;
 import org.seasar.teeda.core.unit.xmlunit.RegexpDifferenceListener;
 import org.seasar.teeda.core.unit.xmlunit.TextTrimmingDifferenceListener;
-import org.seasar.teeda.it.unit.JettyServerSetup;
-import org.seasar.teeda.it.unit.WebApplicationTestSetup;
-import org.seasar.teeda.it.util.MavenUtil;
-import org.seasar.teeda.it.util.SocketUtil;
+import org.seasar.teeda.util.MavenUtil;
+import org.seasar.teeda.util.SocketUtil;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
@@ -64,14 +62,13 @@ import com.gargoylesoftware.htmlunit.html.HtmlPage;
 /**
  * @author manhole
  */
-public abstract class AbstractTestCase extends TestCase {
+public abstract class TeedaWebTestCase extends TestCase {
 
     private static final int port_ = SocketUtil.findFreePort();
 
     private static final String ENCODING = "UTF-8";
 
-    protected static Test setUpTestSuite(final Class testClass)
-        throws Exception {
+    public static Test setUpTestSuite(final Class testClass) throws Exception {
         if (testClass == null) {
             throw new NullPointerException("testClass");
         }
@@ -80,7 +77,7 @@ public abstract class AbstractTestCase extends TestCase {
         return setUpTestSuite(testSuite, pomFile);
     }
 
-    protected static Test setUpTestSuite(final TestSuite testSuite,
+    public static Test setUpTestSuite(final TestSuite testSuite,
         final File pomFile) throws MavenEmbedderException,
         ArtifactResolutionException, ArtifactNotFoundException,
         ProjectBuildingException {
