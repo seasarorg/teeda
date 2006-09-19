@@ -46,12 +46,11 @@ public class InputCommaTextFactoryTest extends TeedaExtensionTestCase {
         assertFalse(factory.isMatch(elementNode4, pageDesc, null));
 
         Map props4 = new HashMap();
-        props4.put("id", "xxx");
+        props4.put("id", "aaa");
         props4.put("type", "text");
-        props4.put("type", "T_currency hoge");
+        props4.put("class", "T_currency hoge");
         ElementNode elementNode5 = new ElementNodeImpl("input", props4);
-        assertFalse(factory.isMatch(elementNode5, pageDesc, null));
-
+        assertTrue(factory.isMatch(elementNode5, pageDesc, null));
     }
 
     public void testCreateFactory() throws Exception {

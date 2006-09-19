@@ -39,8 +39,8 @@ public class InputCommaTextFactory extends InputTextFactory {
             return false;
         }
         return (classProperty != null)
-                && (ExtensionConstants.TEEDA_CURRENY_STYLE_CLASS
-                        .startsWith(classProperty));
+                && (classProperty
+                        .startsWith(ExtensionConstants.TEEDA_CURRENY_STYLE_CLASS));
     }
 
     protected void customizeProperties(Map properties, ElementNode elementNode,
