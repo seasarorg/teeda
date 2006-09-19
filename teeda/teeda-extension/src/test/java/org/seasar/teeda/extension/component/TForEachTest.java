@@ -15,8 +15,15 @@
  */
 package org.seasar.teeda.extension.component;
 
+import java.util.List;
+
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIComponentBaseTest;
+import javax.faces.context.FacesContext;
+import javax.faces.el.EvaluationException;
+import javax.faces.el.VariableResolver;
+
+import org.seasar.teeda.core.mock.MockFacesContext;
 
 /**
  * @author higa
@@ -36,6 +43,22 @@ public class TForEachTest extends UIComponentBaseTest {
         assertEquals("fooIndex", component.getIndexName());
     }
 
+    public void testProcessUpdate() throws Exception {
+        TForEach forEach = new TForEach();
+        final Hoge hoge = new Hoge();
+        hoge.setName("aaa");
+        MockFacesContext context = getFacesContext();
+        context.getApplication().setVariableResolver(new VariableResolver() {
+            public Object resolveVariable(FacesContext context, String name)
+                    throws EvaluationException {
+                return hoge;
+            }
+        });
+        forEach.setItemsName("nameItems");
+        forEach.processUpdates(context);
+        assertNull(hoge.getNameItems());
+    }
+
     private TForEach createTForEach() {
         return (TForEach) createUIComponent();
     }
@@ -44,4 +67,26 @@ public class TForEachTest extends UIComponentBaseTest {
         return new TForEach();
     }
 
+    public static class Hoge {
+        private String name;
+        
+        private List nameItems;
+
+        public List getNameItems() {
+            return nameItems;
+        }
+
+        public void setNameItems(List nameItems) {
+            this.nameItems = nameItems;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+    }
 }

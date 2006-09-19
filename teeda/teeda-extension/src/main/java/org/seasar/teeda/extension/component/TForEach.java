@@ -28,6 +28,7 @@ import javax.faces.internal.NamingContainerUtil;
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.PropertyDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
+import org.seasar.framework.log.Logger;
 import org.seasar.framework.util.ClassUtil;
 import org.seasar.teeda.extension.ExtensionConstants;
 
@@ -58,6 +59,8 @@ public class TForEach extends UIComponentBase implements NamingContainer {
     private String pageName;
 
     private String itemsName;
+
+    private static Logger logger = Logger.getLogger(TForEach.class);
 
     public TForEach() {
         setRendererType(DEFAULT_RENDERER_TYPE);
@@ -171,8 +174,9 @@ public class TForEach extends UIComponentBase implements NamingContainer {
         final Class itemsClass = itemsPd.getPropertyType();
         final Class itemClass = itemsClass.getComponentType();
         if (itemClass == null) {
-            throw new IllegalStateException("class [" + itemsClass.getName()
-                    + "] should be array type.");
+            logger.debug("class [" + itemsClass.getName()
+                    + "] should be array type, so no update.");
+            return;
         }
         final Object[] items = (Object[]) Array.newInstance(itemClass, rowSize);
         if (pageBeanDesc.hasPropertyDesc(getItemName())) {
