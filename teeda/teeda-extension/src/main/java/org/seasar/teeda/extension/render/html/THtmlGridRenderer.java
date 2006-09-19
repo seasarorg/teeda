@@ -336,9 +336,14 @@ public class THtmlGridRenderer extends TForEachRenderer {
         writer.startElement(JsfConstants.DIV_ELEM, th);
         RendererUtil.renderAttribute(writer, JsfConstants.CLASS_ATTR,
                 GRID_HEADER_CLASS_NAME);
-        RendererUtil.renderAttribute(writer, JsfConstants.STYLE_ATTR,
-                "overflow:hidden; width:" + attribute.getColumnWidth(columnNo)
-                        + "px;");
+        final Integer columnWidth = attribute.getColumnWidth(columnNo);
+        if (columnWidth != null) {
+            RendererUtil.renderAttribute(writer, JsfConstants.STYLE_ATTR,
+                    "overflow:hidden; width:" + columnWidth + "px;");
+        } else {
+            RendererUtil.renderAttribute(writer, JsfConstants.STYLE_ATTR,
+                    "overflow:hidden;");
+        }
         writer.startElement(JsfConstants.NOBR_ELEM, th);
         encodeDescendantComponent(context, th);
         writer.endElement(JsfConstants.NOBR_ELEM);
@@ -606,19 +611,26 @@ public class THtmlGridRenderer extends TForEachRenderer {
                         final THtmlGridColumn col = (THtmlGridColumn) element;
                         // TODO check
                         final int span = Integer.parseInt(col.getSpan());
-                        final int width = toDigit(col.getWidth());
                         final String styleClass = col.getStyleClass();
                         if (StringUtil.contains(styleClass,
                                 LEFT_FIXED_CLASS_NAME)) {
                             attribute.setLeftFixCols(span
                                     + attribute.getLeftFixCols());
-                            // TODO check
-                            attribute.setLeftWidth(width * span
-                                    + attribute.getLeftWidth());
                         }
-                        for (int i = 0; i < span; i++) {
-                            columnNo++;
-                            attribute.setColumnWidth(columnNo, width);
+                        final String widthStr = col.getWidth();
+                        if (widthStr != null) {
+                            final int width = toDigit(widthStr);
+                            if (StringUtil.contains(styleClass,
+                                    LEFT_FIXED_CLASS_NAME)) {
+                                // TODO check
+                                attribute.setLeftWidth(width * span
+                                        + attribute.getLeftWidth());
+                            }
+                            for (int i = 0; i < span; i++) {
+                                columnNo++;
+                                attribute.setColumnWidth(columnNo, new Integer(
+                                        width));
+                            }
                         }
                     }
                 }
@@ -702,12 +714,12 @@ public class THtmlGridRenderer extends TForEachRenderer {
             this.htmlGrid = htmlGrid;
         }
 
-        public int getColumnWidth(int no) {
-            return ((Integer) columnWidths.get(new Integer(no))).intValue();
+        public Integer getColumnWidth(int no) {
+            return (Integer) columnWidths.get(new Integer(no));
         }
 
-        public void setColumnWidth(int no, int width) {
-            columnWidths.put(new Integer(no), new Integer(width));
+        public void setColumnWidth(int no, Integer width) {
+            columnWidths.put(new Integer(no), width);
         }
 
         public boolean hasLeftFixCols() {

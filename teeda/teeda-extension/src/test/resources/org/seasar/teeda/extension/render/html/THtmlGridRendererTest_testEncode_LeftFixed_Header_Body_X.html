@@ -96,11 +96,14 @@ Teeda.THtmlGrid = {
       for (var cellCount = 0; cellCount < headerCellsLength; cellCount++) {
         var headerDiv = headerCells[cellCount].firstChild;
         var bodyDiv = bodyCells[cellCount].firstChild;
-        var originalWidth = headerDiv.style.width.replace(/px/,"");
         var headerCellWidth = headerDiv.offsetWidth;
         var bodyCellWidth = bodyDiv.offsetWidth;
         var longer = Math.max(headerCellWidth, bodyCellWidth);
-        longer = Math.max(longer, originalWidth);
+        var originalWidth = headerDiv.style.width;
+        if (originalWidth) {
+          originalWidth = headerDiv.style.width.replace(/px/,"");
+          longer = Math.max(longer, originalWidth);
+        }
         headerDiv.style.width = longer;
         bodyDiv.style.width = longer;
       }

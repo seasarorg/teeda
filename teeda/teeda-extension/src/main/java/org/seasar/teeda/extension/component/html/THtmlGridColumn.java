@@ -27,7 +27,7 @@ public class THtmlGridColumn extends UIComponentBase {
 
     private String span = "1";
 
-    private String width = "100";
+    private String width;
 
     private String styleClass;
 
