@@ -62,9 +62,12 @@ Teeda.THtmlGrid = {
   },
   editOn : function(div) {
     var self = Teeda.THtmlGrid;
+    var span = self._getFirstChildByTagName(div, 'span');
+    if (span.style.display == 'none') {
+      return;
+    }
     var ascendantDiv = div.parentNode.parentNode;
     ascendantDiv.style.width = ascendantDiv.offsetWidth;
-    var span = self._getFirstChildByTagName(div, 'span');
     var input = self._getFirstChildByTagName(div, 'input');
     input.value = self._trim(span.innerHTML);
     span.style.display = 'none';
@@ -129,7 +132,7 @@ Teeda.THtmlGrid = {
 	<tr>
 		<td>
 			<div id="someGridYRightHeader">
-				<table id="someGridYRightHeaderTable" cellspacing="1" cellpadding="0" class="gridTable">
+				<table id="someGridYRightHeaderTable" cellspacing="0" cellpadding="0" class="gridTable">
 					<thead>
 						<tr>
 							<th><div class="gridHeader" style="overflow:hidden; width:40px;"><nobr>th1</nobr></div></th>
@@ -147,7 +150,7 @@ Teeda.THtmlGrid = {
 	<tr>
 		<td style="vertical-align:top;">
 			<div id="someGridYRightBody" style="overflow-y:scroll; height:108px;">
-				<table id="someGridYRightBodyTable" cellspacing="1" cellpadding="0" class="gridTable">
+				<table id="someGridYRightBodyTable" cellspacing="0" cellpadding="0" class="gridTable">
 					<tbody>
 						<tr class="row_odd">
 							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD1_1</nobr></div></td>

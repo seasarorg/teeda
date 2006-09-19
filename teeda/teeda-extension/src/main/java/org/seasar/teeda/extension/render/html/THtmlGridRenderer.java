@@ -674,9 +674,8 @@ public class THtmlGridRenderer extends TForEachRenderer {
 
     private void renderInnerTableAttributes(final ResponseWriter writer)
             throws IOException {
-        // FIXME honma https://www.seasar.org/issues/browse/TEEDA-109
         RendererUtil
-                .renderAttribute(writer, JsfConstants.CELLSPACING_ATTR, "1");
+                .renderAttribute(writer, JsfConstants.CELLSPACING_ATTR, "0");
         RendererUtil
                 .renderAttribute(writer, JsfConstants.CELLPADDING_ATTR, "0");
         RendererUtil.renderAttribute(writer, JsfConstants.CLASS_ATTR,

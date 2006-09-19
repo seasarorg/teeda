@@ -61,9 +61,12 @@ Teeda.THtmlGrid = {
   },
   editOn : function(div) {
     var self = Teeda.THtmlGrid;
+    var span = self._getFirstChildByTagName(div, 'span');
+    if (span.style.display == 'none') {
+      return;
+    }
     var ascendantDiv = div.parentNode.parentNode;
     ascendantDiv.style.width = ascendantDiv.offsetWidth;
-    var span = self._getFirstChildByTagName(div, 'span');
     var input = self._getFirstChildByTagName(div, 'input');
     input.value = self._trim(span.innerHTML);
     span.style.display = 'none';
@@ -127,7 +130,7 @@ Teeda.THtmlGrid = {
 <table id="someGridXY" border="0" cellspacing="0" cellpadding="0">
 	<tr>
 		<td>
-			<table id="someGridXYLeftHeaderTable" cellspacing="1" cellpadding="0" class="gridTable">
+			<table id="someGridXYLeftHeaderTable" cellspacing="0" cellpadding="0" class="gridTable">
 				<thead>
 					<tr>
 						<th><div class="gridHeader" style="overflow:hidden; width:40px;"><nobr>th1</nobr></div></th>
@@ -140,7 +143,7 @@ Teeda.THtmlGrid = {
 		</td>
 		<td>
 			<div id="someGridXYRightHeader" style="overflow:hidden;">
-				<table id="someGridXYRightHeaderTable" cellspacing="1" cellpadding="0" class="gridTable">
+				<table id="someGridXYRightHeaderTable" cellspacing="0" cellpadding="0" class="gridTable">
 					<thead>
 						<tr>
 							<th><div class="gridHeader" style="overflow:hidden; width:50px;"><nobr>th2</nobr></div></th>
@@ -158,7 +161,7 @@ Teeda.THtmlGrid = {
 	<tr>
 		<td style="vertical-align:top;">
 			<div id="someGridXYLeftBody" style="overflow:hidden; height:110px;">
-				<table id="someGridXYLeftBodyTable" cellspacing="1" cellpadding="0" class="gridTable">
+				<table id="someGridXYLeftBodyTable" cellspacing="0" cellpadding="0" class="gridTable">
 					<tbody>
 						<tr class="row_odd">
 							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD1_1</nobr></div></td>
@@ -191,7 +194,7 @@ Teeda.THtmlGrid = {
 		<td style="vertical-align:top;">
 			<div id="someGridXYRightBody" style="overflow:scroll; height:126px;"
 				onscroll="document.all.someGridXYRightHeader.scrollLeft=this.scrollLeft; document.all.someGridXYLeftBody.scrollTop=this.scrollTop;">
-				<table id="someGridXYRightBodyTable" cellspacing="1" cellpadding="0" class="gridTable">
+				<table id="someGridXYRightBodyTable" cellspacing="0" cellpadding="0" class="gridTable">
 					<tbody>
 						<tr class="row_odd">
 							<td><div class="gridCell" style="overflow:hidden;"><nobr>

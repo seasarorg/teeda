@@ -62,9 +62,12 @@ Teeda.THtmlGrid = {
   },
   editOn : function(div) {
     var self = Teeda.THtmlGrid;
+    var span = self._getFirstChildByTagName(div, 'span');
+    if (span.style.display == 'none') {
+      return;
+    }
     var ascendantDiv = div.parentNode.parentNode;
     ascendantDiv.style.width = ascendantDiv.offsetWidth;
-    var span = self._getFirstChildByTagName(div, 'span');
     var input = self._getFirstChildByTagName(div, 'input');
     input.value = self._trim(span.innerHTML);
     span.style.display = 'none';
@@ -128,7 +131,7 @@ Teeda.THtmlGrid = {
 <table id="someGridX" border="0" cellspacing="0" cellpadding="0">
 	<tr>
 		<td>
-			<table id="someGridXLeftHeaderTable" cellspacing="1" cellpadding="0" class="gridTable">
+			<table id="someGridXLeftHeaderTable" cellspacing="0" cellpadding="0" class="gridTable">
 				<thead>
 					<tr>
 						<th><div class="gridHeader" style="overflow:hidden; width:40px;"><nobr>th1</nobr></div></th>
@@ -139,7 +142,7 @@ Teeda.THtmlGrid = {
 		</td>
 		<td>
 			<div id="someGridXRightHeader" style="overflow:hidden;">
-				<table id="someGridXRightHeaderTable" cellspacing="1" cellpadding="0" class="gridTable">
+				<table id="someGridXRightHeaderTable" cellspacing="0" cellpadding="0" class="gridTable">
 					<thead>
 						<tr>
 							<th><div class="gridHeader" style="overflow:hidden; width:30px;"><nobr>th3</nobr></div></th>
@@ -155,7 +158,7 @@ Teeda.THtmlGrid = {
 	<tr>
 		<td style="vertical-align:top;">
 			<div id="someGridXLeftBody">
-				<table id="someGridXLeftBodyTable" cellspacing="1" cellpadding="0" class="gridTable">
+				<table id="someGridXLeftBodyTable" cellspacing="0" cellpadding="0" class="gridTable">
 					<tbody>
 						<tr class="row_odd">
 							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD1_1</nobr></div></td>
@@ -192,7 +195,7 @@ Teeda.THtmlGrid = {
 		<td style="vertical-align:top;">
 			<div id="someGridXRightBody" style="overflow-x:scroll;"
 				onscroll="document.all.someGridXRightHeader.scrollLeft=this.scrollLeft;">
-				<table id="someGridXRightBodyTable" cellspacing="1" cellpadding="0" class="gridTable">
+				<table id="someGridXRightBodyTable" cellspacing="0" cellpadding="0" class="gridTable">
 					<tbody>
 						<tr class="row_odd">
 							<td><div class="gridCell" style="overflow:hidden;"><nobr>
