@@ -13,7 +13,7 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.unit;
+package org.seasar.teeda.unit.web;
 
 import java.io.File;
 import java.io.IOException;
@@ -33,13 +33,12 @@ import org.seasar.framework.util.ClassTraversal;
 import org.seasar.framework.util.ClassUtil;
 import org.seasar.framework.util.ResourceUtil;
 import org.seasar.framework.util.ClassTraversal.ClassHandler;
-import org.seasar.teeda.unit.web.TeedaWebTestCase;
 import org.seasar.teeda.util.MavenUtil;
 
 /**
  * @author manhole
  */
-public class FileSystemTestSuiteBuilder {
+public class FileSystemWebTestBuilder {
 
     public Test build(final Class referenceClass) throws IOException,
         MavenEmbedderException, ArtifactResolutionException,
@@ -54,7 +53,7 @@ public class FileSystemTestSuiteBuilder {
         }
 
         final File pomFile = MavenUtil.getProjectPomFile(referenceClass);
-        return TeedaWebTestCase.setUpTestSuite(suite, pomFile);
+        return TeedaWebTestCase.setUpTest(suite, pomFile);
     }
 
     public List collectTestClass(final File startingDirectory) {

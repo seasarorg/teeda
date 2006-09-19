@@ -13,7 +13,7 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.unit;
+package org.seasar.teeda.unit.web;
 
 import java.io.File;
 import java.util.Iterator;
@@ -22,17 +22,18 @@ import java.util.List;
 import junit.framework.TestCase;
 
 import org.seasar.framework.util.ResourceUtil;
+import org.seasar.teeda.unit.web.FileSystemWebTestBuilder;
 
 /**
  * @author manhole
  */
-public class FileSystemTestSuiteBuilderTest extends TestCase {
+public class FileSystemWebTestBuilderTest extends TestCase {
 
     public void testCollectTestClass() throws Exception {
         // ## Arrange ##
         final File buildDir = ResourceUtil
-            .getBuildDir(FileSystemTestSuiteBuilderTest.class);
-        final FileSystemTestSuiteBuilder builder = new FileSystemTestSuiteBuilder();
+            .getBuildDir(FileSystemWebTestBuilderTest.class);
+        final FileSystemWebTestBuilder builder = new FileSystemWebTestBuilder();
 
         // ## Act ##
         final List testClasses = builder.collectTestClass(buildDir);
@@ -41,7 +42,7 @@ public class FileSystemTestSuiteBuilderTest extends TestCase {
         boolean found = false;
         for (Iterator it = testClasses.iterator(); it.hasNext();) {
             final Class clazz = (Class) it.next();
-            if (clazz == FileSystemTestSuiteBuilderTest.class) {
+            if (clazz == FileSystemWebTestBuilderTest.class) {
                 found = true;
             }
         }
@@ -49,9 +50,9 @@ public class FileSystemTestSuiteBuilderTest extends TestCase {
     }
 
     public void testIsTestClass() throws Exception {
-        final FileSystemTestSuiteBuilder.TestClassHandler handler = new FileSystemTestSuiteBuilder.TestClassHandler();
+        final FileSystemWebTestBuilder.TestClassHandler handler = new FileSystemWebTestBuilder.TestClassHandler();
         assertEquals(true, handler
-            .isTestClass(FileSystemTestSuiteBuilderTest.class));
+            .isTestClass(FileSystemWebTestBuilderTest.class));
         assertEquals(false, handler.isTestClass(ATest.class));
         assertEquals(false, handler.isTestClass(BTest.class));
         assertEquals(true, handler.isTestClass(CTest.class));

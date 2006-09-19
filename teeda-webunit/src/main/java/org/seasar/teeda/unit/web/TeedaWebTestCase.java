@@ -65,16 +65,16 @@ public abstract class TeedaWebTestCase extends TestCase {
 
     private static final String ENCODING = "UTF-8";
 
-    public static Test setUpTestSuite(final Class testClass) throws Exception {
+    public static Test setUpTest(final Class testClass) throws Exception {
         if (testClass == null) {
             throw new NullPointerException("testClass");
         }
         final TestSuite testSuite = new TestSuite(testClass);
         final File pomFile = MavenUtil.getProjectPomFile(testClass);
-        return setUpTestSuite(testSuite, pomFile);
+        return setUpTest(testSuite, pomFile);
     }
 
-    public static Test setUpTestSuite(final TestSuite testSuite,
+    public static Test setUpTest(final TestSuite testSuite,
         final File pomFile) throws MavenEmbedderException,
         ArtifactResolutionException, ArtifactNotFoundException,
         ProjectBuildingException {
