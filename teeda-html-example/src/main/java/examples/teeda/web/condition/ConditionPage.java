@@ -8,13 +8,13 @@ package examples.teeda.web.condition;
  */
 public class ConditionPage {
 
-	private boolean aaa = true;
+	private Boolean aaa = Boolean.TRUE;
 
 	private String bbb = "BBB";
 
 	private String ccc = "CCC";
 
-	public boolean isAaa() {
+	public Boolean isAaa() {
 		return aaa;
 	}
 
@@ -26,7 +26,7 @@ public class ConditionPage {
 		return ccc;
 	}
 
-	public void setAaa(boolean aaa) {
+	public void setAaa(Boolean aaa) {
 		this.aaa = aaa;
 	}
 
