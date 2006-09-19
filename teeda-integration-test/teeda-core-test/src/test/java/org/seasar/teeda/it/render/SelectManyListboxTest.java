@@ -33,7 +33,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlSubmitInput;
 public class SelectManyListboxTest extends TeedaWebTestCase {
 
     public static Test suite() throws Exception {
-        return setUpTestSuite(SelectManyListboxTest.class);
+        return setUpTest(SelectManyListboxTest.class);
     }
 
     public void testRender1() throws Exception {

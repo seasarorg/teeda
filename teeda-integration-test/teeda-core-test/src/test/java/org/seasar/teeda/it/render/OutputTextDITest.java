@@ -31,7 +31,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlSpan;
 public class OutputTextDITest extends TeedaWebTestCase {
 
     public static Test suite() throws Exception {
-        return setUpTestSuite(OutputTextDITest.class);
+        return setUpTest(OutputTextDITest.class);
     }
 
     public void testOutputText() throws Exception {

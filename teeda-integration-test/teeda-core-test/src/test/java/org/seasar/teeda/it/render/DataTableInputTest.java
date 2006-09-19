@@ -36,7 +36,7 @@ import com.gargoylesoftware.htmlunit.html.xpath.HtmlUnitXPath;
 public class DataTableInputTest extends TeedaWebTestCase {
 
     public static Test suite() throws Exception {
-        return setUpTestSuite(DataTableInputTest.class);
+        return setUpTest(DataTableInputTest.class);
     }
 
     public void testRender4() throws Exception {

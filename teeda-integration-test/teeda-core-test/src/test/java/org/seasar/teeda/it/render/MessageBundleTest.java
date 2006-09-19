@@ -31,7 +31,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlSpan;
 public class MessageBundleTest extends TeedaWebTestCase {
 
     public static Test suite() throws Exception {
-        return setUpTestSuite(MessageBundleTest.class);
+        return setUpTest(MessageBundleTest.class);
     }
 
     public void testRender1() throws Exception {

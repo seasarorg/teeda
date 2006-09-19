@@ -31,7 +31,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlPage;
 public class DataTableTest extends TeedaWebTestCase {
 
     public static Test suite() throws Exception {
-        return setUpTestSuite(DataTableTest.class);
+        return setUpTest(DataTableTest.class);
     }
 
     public void testRender1() throws Exception {

@@ -30,7 +30,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlPage;
 public class LinkTest extends TeedaWebTestCase {
 
     public static Test suite() throws Exception {
-        return setUpTestSuite(LinkTest.class);
+        return setUpTest(LinkTest.class);
     }
 
     public void testLink() throws Exception {

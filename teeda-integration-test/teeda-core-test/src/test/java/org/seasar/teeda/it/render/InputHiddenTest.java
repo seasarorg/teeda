@@ -35,7 +35,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlTextInput;
 public class InputHiddenTest extends TeedaWebTestCase {
 
     public static Test suite() throws Exception {
-        return setUpTestSuite(InputHiddenTest.class);
+        return setUpTest(InputHiddenTest.class);
     }
 
     public void testRender() throws Exception {

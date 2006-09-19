@@ -33,7 +33,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlSubmitInput;
 public class FormTest extends TeedaWebTestCase {
 
     public static Test suite() throws Exception {
-        return setUpTestSuite(FormTest.class);
+        return setUpTest(FormTest.class);
     }
 
     public void testFormSubmit() throws Exception {

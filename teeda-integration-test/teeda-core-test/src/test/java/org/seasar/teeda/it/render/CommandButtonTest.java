@@ -33,7 +33,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlTextInput;
 public class CommandButtonTest extends TeedaWebTestCase {
 
     public static Test suite() throws Exception {
-        return setUpTestSuite(CommandButtonTest.class);
+        return setUpTest(CommandButtonTest.class);
     }
 
     public void testRender() throws Exception {

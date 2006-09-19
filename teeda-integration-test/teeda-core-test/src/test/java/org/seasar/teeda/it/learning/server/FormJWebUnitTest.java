@@ -26,7 +26,7 @@ import org.seasar.teeda.unit.web.TeedaWebTestCase;
 public class FormJWebUnitTest extends TeedaWebTestCase {
 
     public static Test suite() throws Exception {
-        return setUpTestSuite(FormJWebUnitTest.class);
+        return setUpTest(FormJWebUnitTest.class);
     }
 
     public void testFormSubmitByName() throws Exception {

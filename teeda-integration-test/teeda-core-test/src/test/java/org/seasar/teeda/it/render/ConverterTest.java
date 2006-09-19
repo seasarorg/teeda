@@ -40,7 +40,7 @@ public class ConverterTest extends TeedaWebTestCase {
     private static final DateFormat df2_ = new SimpleDateFormat("yyyy/MM/dd");
 
     public static Test suite() throws Exception {
-        return setUpTestSuite(ConverterTest.class);
+        return setUpTest(ConverterTest.class);
     }
 
     public void testRender() throws Exception {

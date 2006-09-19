@@ -33,7 +33,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlPage;
 public class GraphicImageTest extends TeedaWebTestCase {
 
     public static Test suite() throws Exception {
-        return setUpTestSuite(GraphicImageTest.class);
+        return setUpTest(GraphicImageTest.class);
     }
 
     public void testRender() throws Exception {

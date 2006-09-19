@@ -31,7 +31,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlSpan;
 public class HelloPageTest extends TeedaWebTestCase {
 
     public static Test suite() throws Exception {
-        return setUpTestSuite(HelloPageTest.class);
+        return setUpTest(HelloPageTest.class);
     }
 
     public void testRender() throws Exception {

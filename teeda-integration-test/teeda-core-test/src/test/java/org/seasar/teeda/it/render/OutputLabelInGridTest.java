@@ -32,7 +32,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlPage;
 public class OutputLabelInGridTest extends TeedaWebTestCase {
 
     public static Test suite() throws Exception {
-        return setUpTestSuite(OutputLabelInGridTest.class);
+        return setUpTest(OutputLabelInGridTest.class);
     }
 
     public void testOutputLabelInGrid() throws Exception {

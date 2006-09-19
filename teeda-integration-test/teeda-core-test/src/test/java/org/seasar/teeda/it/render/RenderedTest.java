@@ -33,7 +33,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlTextInput;
 public class RenderedTest extends TeedaWebTestCase {
 
     public static Test suite() throws Exception {
-        return setUpTestSuite(RenderedTest.class);
+        return setUpTest(RenderedTest.class);
     }
 
     public void testRender() throws Exception {

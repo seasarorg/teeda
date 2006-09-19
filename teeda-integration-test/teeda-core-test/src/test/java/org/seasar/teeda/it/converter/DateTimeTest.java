@@ -33,7 +33,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlTextInput;
 public class DateTimeTest extends TeedaWebTestCase {
 
     public static Test suite() throws Exception {
-        return setUpTestSuite(DateTimeTest.class);
+        return setUpTest(DateTimeTest.class);
     }
 
     public void testRender() throws Exception {

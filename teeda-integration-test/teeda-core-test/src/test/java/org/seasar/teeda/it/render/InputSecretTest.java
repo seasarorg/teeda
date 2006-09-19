@@ -32,7 +32,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlSubmitInput;
 public class InputSecretTest extends TeedaWebTestCase {
 
     public static Test suite() throws Exception {
-        return setUpTestSuite(InputSecretTest.class);
+        return setUpTest(InputSecretTest.class);
     }
 
     public void testRender() throws Exception {

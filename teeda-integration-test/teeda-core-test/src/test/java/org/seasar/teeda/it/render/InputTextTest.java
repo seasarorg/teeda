@@ -34,7 +34,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlTextInput;
 public class InputTextTest extends TeedaWebTestCase {
 
     public static Test suite() throws Exception {
-        return setUpTestSuite(InputTextTest.class);
+        return setUpTest(InputTextTest.class);
     }
 
     public void testRender() throws Exception {

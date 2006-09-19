@@ -31,7 +31,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlSubmitInput;
 public class ErrorPageTest extends TeedaWebTestCase {
 
     public static Test suite() throws Exception {
-        return setUpTestSuite(ErrorPageTest.class);
+        return setUpTest(ErrorPageTest.class);
     }
 
     public void testRender() throws Exception {

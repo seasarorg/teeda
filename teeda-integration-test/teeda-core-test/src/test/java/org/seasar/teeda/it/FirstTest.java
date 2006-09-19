@@ -32,7 +32,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlPage;
 public class FirstTest extends TeedaWebTestCase {
 
     public static Test suite() throws Exception {
-        return setUpTestSuite(FirstTest.class);
+        return setUpTest(FirstTest.class);
     }
 
     public void testA() throws Exception {

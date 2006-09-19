@@ -31,7 +31,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlPage;
 public class SubviewTest extends TeedaWebTestCase {
 
     public static Test suite() throws Exception {
-        return setUpTestSuite(SubviewTest.class);
+        return setUpTest(SubviewTest.class);
     }
 
     public void testRender1() throws Exception {
