@@ -31,9 +31,12 @@ Teeda.THtmlGrid = {
   },
   editOn : function(div) {
     var self = Teeda.THtmlGrid;
+    var span = self._getFirstChildByTagName(div, 'span');
+    if (span.style.display == 'none') {
+      return;
+    }
     var ascendantDiv = div.parentNode.parentNode;
     ascendantDiv.style.width = ascendantDiv.offsetWidth;
-    var span = self._getFirstChildByTagName(div, 'span');
     var input = self._getFirstChildByTagName(div, 'input');
     input.value = self._trim(span.innerHTML);
     span.style.display = 'none';
