@@ -29,7 +29,7 @@ import javax.faces.internal.WindowIdUtil;
 import javax.servlet.http.Cookie;
 
 import org.seasar.framework.mock.servlet.MockHttpServletRequest;
-import org.seasar.framework.util.Mru;
+import org.seasar.framework.util.LruHashMap;
 import org.seasar.teeda.core.application.ViewHandlerImpl;
 import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.mock.MockUIViewRoot;
@@ -74,24 +74,24 @@ public class RestoreViewPhaseTest extends TeedaTestCase {
 
     public void testGetViewIdMruFromSession() throws Exception {
         final RestoreViewPhase phase = new RestoreViewPhase();
-        phase.setViewIdMruSize(3);
+        phase.setViewIdLruSize(3);
         final Map sessionMap = new HashMap();
-        Mru mru = phase.getViewIdMruFromSession(sessionMap);
-        mru.put("aaa", "111");
-        mru.put("bbb", "222");
-        mru.put("ccc", "333");
-        mru.get("aaa");
-        Iterator i = mru.getKeyIterator();
-        assertEquals("aaa", i.next());
-        assertEquals("ccc", i.next());
+        LruHashMap lru = phase.getViewIdLruFromSession(sessionMap);
+        lru.put("aaa", "111");
+        lru.put("bbb", "222");
+        lru.put("ccc", "333");
+        lru.get("aaa");
+        Iterator i = lru.keySet().iterator();
         assertEquals("bbb", i.next());
-        mru.put("ddd", "444");
-        assertNull(mru.get("bbb"));
+        assertEquals("ccc", i.next());
+        assertEquals("aaa", i.next());
+        lru.put("ddd", "444");
+        assertNull(lru.get("bbb"));
     }
 
     public void testSetupWindowId() throws Exception {
         final RestoreViewPhase phase = new RestoreViewPhase();
-        phase.setViewIdMruSize(3);
+        phase.setViewIdLruSize(3);
         assertNull(phase.setupWindowId(getExternalContext()));
 
         getExternalContext().getRequestParameterMap().put(

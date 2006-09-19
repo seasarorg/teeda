@@ -25,7 +25,7 @@ import javax.faces.context.FacesContext;
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.PropertyDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
-import org.seasar.framework.util.Mru;
+import org.seasar.framework.util.LruHashMap;
 import org.seasar.teeda.core.util.DIContainerUtil;
 import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.PageDescCache;
@@ -61,13 +61,13 @@ public class SessionPagePersistence implements PagePersistence {
     public void save(FacesContext context, String viewId) {
         ExternalContext extCtx = context.getExternalContext();
         Map sessionMap = extCtx.getSessionMap();
-        Mru mru = (Mru) sessionMap.get(getClass().getName());
-        if (mru == null) {
-            mru = new Mru(pageSize);
-            sessionMap.put(getClass().getName(), mru);
+        LruHashMap lru = (LruHashMap) sessionMap.get(getClass().getName());
+        if (lru == null) {
+            lru = new LruHashMap(pageSize);
+            sessionMap.put(getClass().getName(), lru);
         }
         String previousViewId = context.getViewRoot().getViewId();
-        mru.put(viewId, getPageData(previousViewId));
+        lru.put(viewId, getPageData(previousViewId));
     }
 
     protected Map getPageData(String viewId) {
@@ -107,11 +107,11 @@ public class SessionPagePersistence implements PagePersistence {
     public void restore(FacesContext context, String viewId) {
         ExternalContext extCtx = context.getExternalContext();
         Map sessionMap = extCtx.getSessionMap();
-        Mru mru = (Mru) sessionMap.get(getClass().getName());
-        if (mru == null) {
+        LruHashMap lru = (LruHashMap) sessionMap.get(getClass().getName());
+        if (lru == null) {
             return;
         }
-        Map pageData = (Map) mru.get(viewId);
+        Map pageData = (Map) lru.get(viewId);
         if (pageData == null) {
             return;
         }
