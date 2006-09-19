@@ -28,10 +28,13 @@ import javax.faces.convert.DateTimeConverter;
  *
  */
 public class TimestampConverter extends DateTimeConverter {
-    
+
     public Object getAsObject(FacesContext context, UIComponent component,
             String value) {
         Date date = (Date) super.getAsObject(context, component, value);
+        if (date == null) {
+            return null;
+        }
         Timestamp timeStamp = new Timestamp(date.getTime());
         return timeStamp;
     }

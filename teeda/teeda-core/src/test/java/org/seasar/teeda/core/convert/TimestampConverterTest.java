@@ -68,6 +68,20 @@ public class TimestampConverterTest extends TeedaTestCase {
         assertEquals(timeStamp, timestampTarget);
     }
 
+    public void testGetAsObject3() throws Exception {
+        TimestampConverter converter = (TimestampConverter) createConverter();
+        FacesContext context = getFacesContext();
+        converter.setLocale(Locale.getDefault());
+        converter.setTimeZone(TimeZone.getDefault());
+
+        final String pattern = "yyyy/MM/dd hh:mm:ss";
+        converter.setPattern(pattern);
+
+        String dateValue = null;
+        assertNull(converter.getAsObject(context, new NullUIComponent(),
+                dateValue));
+    }
+
     private Timestamp createTimestampTarget(String pattern, Locale locale,
             String date) throws ParseException {
         DateFormat formatter = new SimpleDateFormat(pattern, locale);
