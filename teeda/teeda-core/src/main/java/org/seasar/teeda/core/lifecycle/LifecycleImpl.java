@@ -26,6 +26,7 @@ import javax.faces.event.PhaseListener;
 import javax.faces.lifecycle.Lifecycle;
 
 import org.seasar.framework.util.ArrayUtil;
+import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.util.PostbackUtil;
 
 /**
@@ -57,6 +58,7 @@ public class LifecycleImpl extends Lifecycle {
     public void execute(FacesContext context) throws FacesException {
         ExternalContext extContext = context.getExternalContext();
         Map requestMap = extContext.getRequestMap();
+        requestMap.put(JsfConstants.FACES_CONTEXT, context);
         try {
             restoreViewPhase.execute(context);
             boolean postback = PostbackUtil.isPostback(requestMap);

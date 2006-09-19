@@ -56,6 +56,17 @@ public class LifecycleImplTest extends TeedaTestCase {
                 .getRequestMap().get("postback"));
     }
 
+    public void setUpExecute_facesContextDI() throws Exception {
+        lifecycle = new LifecycleImpl();
+        lifecycle.setRestoreViewPhase(new MockRestoreViewPhase());
+    }
+
+    public void testExecute_facesContextDI() throws Exception {
+        lifecycle.execute(getFacesContext());
+        assertSame(getFacesContext(), getExternalContext().getRequestMap().get(
+                "facesContext"));
+    }
+
     public static class MockRestoreViewPhaseWithoutPostback implements Phase {
 
         public void execute(FacesContext context) throws FacesException {
