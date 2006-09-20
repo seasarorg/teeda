@@ -19,42 +19,42 @@ public class GridPage {
 		if (fooItems == null) {
 			fooItems = new FooItem[7];
 			fooItems[0] = createItem("a1", "b1", "c1", "d1", new BigDecimal(
-					"11111111"), "f1");
+					"11111111"), "f1", "g1");
 			fooItems[1] = createItem("a2", "b2", "c2", "d2", new BigDecimal(
-					"2222"), "f2");
+					"2222"), "f2", "g2");
 			fooItems[2] = createItem("a3", "b3", "c3", "d3", new BigDecimal(
-					"33333"), "f3");
+					"33333"), "f3", "g3");
 			fooItems[3] = createItem("a4", "b4", "c4", "d4", new BigDecimal(
-					"44"), "f4");
+					"44"), "f4", "g4");
 			fooItems[4] = createItem("a5", "b5", "c5", "d5",
-					new BigDecimal("5"), "f5");
+					new BigDecimal("5"), "f5", "g5");
 			fooItems[5] = createItem("a6", "b6", "c6", "d6", new BigDecimal(
-					"-6"), "f6");
+					"-6"), "f6", "g6");
 			fooItems[6] = createItem("a7", "b7", "c7", "d7",
-					new BigDecimal("0"), "f7");
+					new BigDecimal("0"), "f7", "g7");
 		} else {
 			FooItem[] newItems = new FooItem[7];
 			newItems[0] = createItem("a1", "b1", "c1", fooItems[0].getDdd(),
-					fooItems[0].getEee(), "f1");
+					fooItems[0].getEee(), "f1", "g1");
 			newItems[1] = createItem("a2", "b2", "c2", fooItems[1].getDdd(),
-					fooItems[1].getEee(), "f2");
+					fooItems[1].getEee(), "f2", "g2");
 			newItems[2] = createItem("a3", "b3", "c3", fooItems[2].getDdd(),
-					fooItems[2].getEee(), "f3");
+					fooItems[2].getEee(), "f3", "g3");
 			newItems[3] = createItem("a4", "b4", "c4", fooItems[3].getDdd(),
-					fooItems[3].getEee(), "f4");
+					fooItems[3].getEee(), "f4", "g4");
 			newItems[4] = createItem("a5", "b5", "c5", fooItems[4].getDdd(),
-					fooItems[4].getEee(), "f5");
+					fooItems[4].getEee(), "f5", "g5");
 			newItems[5] = createItem("a6", "b6", "c6", fooItems[5].getDdd(),
-					fooItems[5].getEee(), "f6");
+					fooItems[5].getEee(), "f6", "g6");
 			newItems[6] = createItem("a7", "b7", "c7", fooItems[6].getDdd(),
-					fooItems[6].getEee(), "f7");
+					fooItems[6].getEee(), "f7", "g7");
 			fooItems = newItems;
 		}
 		return fooItems;
 	}
 
 	private FooItem createItem(String aaa, String bbb, String ccc, String ddd,
-			BigDecimal eee, String fff) {
+			BigDecimal eee, String fff, String ggg) {
 		final FooItem item = new FooItem();
 		item.setAaa(aaa);
 		item.setBbb(bbb);
@@ -62,7 +62,7 @@ public class GridPage {
 		item.setDdd(ddd);
 		item.setEee(eee);
 		item.setFff(fff);
-		item.setGgg("GGGGGG");
+		item.setGgg(ggg);
 		return item;
 	}
 
