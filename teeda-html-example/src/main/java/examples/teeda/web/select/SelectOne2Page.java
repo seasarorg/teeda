@@ -9,21 +9,23 @@ public class SelectOne2Page {
 
 	private List aaaItems;
 
-	private int aaa;
+	// public static final String aaa_TRequiredValidator = null;
 
-	public String initialize() {
+	private Integer aaa = new Integer(1);
+
+	public String prerender() {
 		aaaItems = new ArrayList();
 		Map map1 = new HashMap();
 		map1.put("label", "AAAA");
-		map1.put("value", new Integer(0));
+		map1.put("value", new Integer(1));
 		aaaItems.add(map1);
 		Map map2 = new HashMap();
 		map2.put("label", "BBBB");
-		map2.put("value", new Integer(1));
+		map2.put("value", new Integer(2));
 		aaaItems.add(map2);
 		Map map3 = new HashMap();
 		map3.put("label", "CCCC");
-		map3.put("value", new Integer(2));
+		map3.put("value", new Integer(3));
 		aaaItems.add(map3);
 		return null;
 	}
@@ -36,11 +38,11 @@ public class SelectOne2Page {
 		this.aaaItems = aaaItems;
 	}
 
-	public int getAaa() {
+	public Integer getAaa() {
 		return aaa;
 	}
 
-	public void setAaa(int aaa) {
+	public void setAaa(Integer aaa) {
 		this.aaa = aaa;
 	}
 
