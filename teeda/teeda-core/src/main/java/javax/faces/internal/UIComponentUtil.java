@@ -17,7 +17,9 @@ package javax.faces.internal;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
@@ -142,7 +144,15 @@ public class UIComponentUtil {
                         .getValue(component));
             }
         }
-        map.putAll(component.getAttributes());
+        for (Iterator itr = component.getAttributes().entrySet().iterator(); itr
+                .hasNext();) {
+            Map.Entry entry = (Entry) itr.next();
+            if (ArrayUtil.contains(ignore.getIgnoreComponentNames(), entry
+                    .getKey())) {
+                continue;
+            }
+            map.put(entry.getKey(), entry.getValue());
+        }
         return map;
     }
 
