@@ -60,7 +60,8 @@ public class SelectOneMenuTagTest extends TeedaTestCase {
         tag.setImmediate("true");
         tag.setRequired("true");
         tag.setValidator("#{mock.validator}");
-        tag.setValue("value");
+        String value = "#{hogePage.aaa}";
+        tag.setValue(value);
         tag.setValueChangeListener("#{mock.listener}");
         tag.setAccesskey("accesskey");
         tag.setDir("dir");
@@ -98,7 +99,8 @@ public class SelectOneMenuTagTest extends TeedaTestCase {
         assertTrue(component.getValidator() instanceof MockMethodBinding);
         assertEquals("#{mock.validator}", component.getValidator()
                 .getExpressionString());
-        assertEquals("value", component.getValue());
+        assertEquals(value, component.getValueBinding("value")
+                .getExpressionString());
         assertTrue(component.getValueChangeListener() instanceof MockMethodBinding);
         assertEquals("#{mock.listener}", component.getValueChangeListener()
                 .getExpressionString());

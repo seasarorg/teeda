@@ -21,8 +21,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.component.UISelectItems;
 import javax.faces.context.FacesContext;
+import javax.faces.internal.FacesMessageUtil;
 import javax.faces.model.SelectItem;
 
 import org.seasar.framework.beans.BeanDesc;
@@ -35,11 +37,13 @@ import org.seasar.framework.beans.factory.BeanDescFactory;
  */
 public class TUISelectItems extends UISelectItems {
 
+    private static final String NULL_LABEL_MESSAGE_CODE = "org.seasar.teeda.extension.component.TSelect.NULL_LABEL";
+
     private String itemLabel = "label";
 
     private String itemValue = "value";
 
-    private String nullLabel = "nullLabel";
+    private boolean required = false;
 
     public String getItemLabel() {
         return itemLabel;
@@ -57,12 +61,12 @@ public class TUISelectItems extends UISelectItems {
         this.itemValue = itemValue;
     }
 
-    public String getNullLabel() {
-        return nullLabel;
+    public boolean isRequired() {
+        return required;
     }
 
-    public void setNullLabel(String nullLabel) {
-        this.nullLabel = nullLabel;
+    public void setRequired(boolean required) {
+        this.required = required;
     }
 
     public Object getValue() {
@@ -71,6 +75,14 @@ public class TUISelectItems extends UISelectItems {
             return value;
         }
         List list = new ArrayList();
+        if (!required) {
+            SelectItem si = new SelectItem();
+            si.setValue("");
+            FacesMessage mes = FacesMessageUtil.getMessage(FacesContext
+                    .getCurrentInstance(), NULL_LABEL_MESSAGE_CODE, null);
+            si.setLabel(mes.getSummary());
+            list.add(si);
+        }
         if (value instanceof Collection) {
             for (Iterator it = ((Collection) value).iterator(); it.hasNext();) {
                 Object item = it.next();
@@ -79,12 +91,6 @@ public class TUISelectItems extends UISelectItems {
                 } else if (item instanceof Map) {
                     Map map = (Map) item;
                     SelectItem si = new SelectItem();
-                    String nullLabelValue = (String) map.get(nullLabel);
-                    if (nullLabelValue != null) {
-                        si.setLabel(nullLabelValue);
-                        list.add(si);
-                        continue;
-                    }
                     Object itemValueValue = map.get(itemValue);
                     if (itemValueValue != null) {
                         si.setValue(itemValueValue);
@@ -100,15 +106,6 @@ public class TUISelectItems extends UISelectItems {
                 } else {
                     SelectItem si = new SelectItem();
                     BeanDesc bd = BeanDescFactory.getBeanDesc(item.getClass());
-                    if (bd.hasPropertyDesc(nullLabel)) {
-                        PropertyDesc pd = bd.getPropertyDesc(nullLabel);
-                        String nullLabelValue = (String) pd.getValue(item);
-                        if (nullLabelValue != null) {
-                            si.setLabel(nullLabelValue);
-                            list.add(si);
-                            continue;
-                        }
-                    }
                     PropertyDesc pd = bd.getPropertyDesc(itemValue);
                     Object itemValueValue = pd.getValue(item);
                     if (itemValueValue != null) {
@@ -129,7 +126,6 @@ public class TUISelectItems extends UISelectItems {
                 }
             }
         }
-        super.setValue(list);
         return list;
     }
 
@@ -138,7 +134,7 @@ public class TUISelectItems extends UISelectItems {
         values[0] = super.saveState(context);
         values[1] = itemValue;
         values[2] = itemLabel;
-        values[3] = nullLabel;
+        values[3] = Boolean.valueOf(required);
         return values;
     }
 
@@ -147,6 +143,6 @@ public class TUISelectItems extends UISelectItems {
         super.restoreState(context, values[0]);
         itemValue = (String) values[1];
         itemLabel = (String) values[2];
-        nullLabel = (String) values[3];
+        required = ((Boolean) values[3]).booleanValue();
     }
 }

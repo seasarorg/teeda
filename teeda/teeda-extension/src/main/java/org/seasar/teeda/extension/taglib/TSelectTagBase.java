@@ -16,11 +16,17 @@
 package org.seasar.teeda.extension.taglib;
 
 import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.el.ValueBinding;
+import javax.faces.internal.ValidatorChain;
+import javax.faces.internal.ValidatorResource;
+import javax.faces.validator.Validator;
 
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.exception.NoValueReferenceRuntimeException;
 import org.seasar.teeda.core.util.BindingUtil;
 import org.seasar.teeda.extension.component.TUISelectItems;
+import org.seasar.teeda.extension.validator.TRequiredValidator;
 
 /**
  * @author higa
@@ -41,8 +47,6 @@ public abstract class TSelectTagBase extends TInputTagBase {
     private String itemValue;
 
     private String layout;
-
-    private String nullLabel;
 
     public void setBorder(String border) {
         this.border = border;
@@ -72,10 +76,6 @@ public abstract class TSelectTagBase extends TInputTagBase {
         this.layout = layout;
     }
 
-    public void setNullLabel(String nullLabel) {
-        this.nullLabel = nullLabel;
-    }
-
     public void release() {
         super.release();
         border = null;
@@ -85,7 +85,6 @@ public abstract class TSelectTagBase extends TInputTagBase {
         itemLabel = null;
         itemValue = null;
         layout = null;
-        nullLabel = null;
     }
 
     protected void setProperties(UIComponent component) {
@@ -108,10 +107,32 @@ public abstract class TSelectTagBase extends TInputTagBase {
             if (itemLabel != null) {
                 child.setItemLabel(itemLabel);
             }
-            if (nullLabel != null) {
-                child.setNullLabel(nullLabel);
-            }
+            child.setRequired(isRequired());
             component.getChildren().add(child);
         }
+    }
+
+    protected boolean isRequired() {
+        String v = getValue();
+        if (v != null && isValueReference(v)) {
+            FacesContext ctx = FacesContext.getCurrentInstance();
+            ValueBinding vb = ctx.getApplication().createValueBinding(v);
+            if (vb.getType(ctx).isPrimitive()) {
+                return true;
+            }
+            Validator validator = ValidatorResource.getValidator(v);
+            if (validator instanceof TRequiredValidator) {
+                return true;
+            }
+            if (validator instanceof ValidatorChain) {
+                ValidatorChain chain = (ValidatorChain) validator;
+                for (int i = 0; i < chain.getValidatorSize(); ++i) {
+                    if (chain.getValidator(i) instanceof TRequiredValidator) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 }

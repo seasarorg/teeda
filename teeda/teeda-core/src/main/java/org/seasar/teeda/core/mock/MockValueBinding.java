@@ -27,17 +27,15 @@ public class MockValueBinding extends ValueBinding implements StateHolder {
 
     private boolean transientValue_ = false;
 
-    private Class type_;
-
-    private String ref_;
+    private Class type_ = String.class;
 
     private String exprStr_;
-    
+
     public MockValueBinding() {
     }
 
-    public MockValueBinding(String ref) {
-        ref_ = ref;
+    public MockValueBinding(String exprStr) {
+        setExpressionString(exprStr);
     }
 
     public Object getValue(FacesContext context) throws EvaluationException,
@@ -86,5 +84,4 @@ public class MockValueBinding extends ValueBinding implements StateHolder {
     public void setExpressionString(String exprStr) {
         exprStr_ = exprStr;
     }
-    
 }

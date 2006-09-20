@@ -853,7 +853,7 @@
             <rtexprvalue>false</rtexprvalue>
         </attribute>
         <attribute>
-            <name>nullLabel</name>
+            <name>required</name>
             <required>false</required>
             <rtexprvalue>false</rtexprvalue>
         </attribute>

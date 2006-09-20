@@ -57,22 +57,23 @@ public class UISelectOneTest extends UIInputTest {
         return selectOne;
     }
 
-    public void testValidateValue_NotAvailable() throws Exception {
-        // ## Arrange ##
-        UISelectOne selectOne = arrangeForValidateTest();
-        MockFacesContext context = getFacesContext();
+    /*
+     public void testValidateValue_NotAvailable() throws Exception {
+     // ## Arrange ##
+     UISelectOne selectOne = arrangeForValidateTest();
+     MockFacesContext context = getFacesContext();
 
-        // ## Act ##
-        selectOne.validateValue(context, "c");
+     // ## Act ##
+     selectOne.validateValue(context, "c");
 
-        // ## Assert ##
-        assertEquals(false, selectOne.isValid());
-        Iterator messages = context.getMessages();
-        assertEquals(true, messages.hasNext());
-        messages.next();
-        assertEquals(false, messages.hasNext());
-    }
-
+     // ## Assert ##
+     assertEquals(false, selectOne.isValid());
+     Iterator messages = context.getMessages();
+     assertEquals(true, messages.hasNext());
+     messages.next();
+     assertEquals(false, messages.hasNext());
+     }
+     */
     private UISelectOne createUISelectOne() {
         return (UISelectOne) createUIComponent();
     }

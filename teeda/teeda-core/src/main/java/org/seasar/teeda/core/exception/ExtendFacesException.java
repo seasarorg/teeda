@@ -17,7 +17,7 @@ package org.seasar.teeda.core.exception;
 
 import javax.faces.FacesException;
 
-import org.seasar.teeda.core.util.MessageFormatterUtil;
+import org.seasar.framework.message.MessageFormatter;
 
 /**
  * @author shot
@@ -53,10 +53,8 @@ public class ExtendFacesException extends FacesException {
         super(cause);
         messageCode_ = messageCode;
         args_ = args;
-        simpleMessage_ = MessageFormatterUtil.getSimpleMessage(messageCode_,
-                args_);
-        message_ = MessageFormatterUtil.getFormattedMessage(messageCode_,
-                simpleMessage_);
+        simpleMessage_ = MessageFormatter.getSimpleMessage(messageCode_, args_);
+        message_ = MessageFormatter.getFormattedMessage(messageCode_, simpleMessage_);
     }
 
     public final String getMessageCode() {

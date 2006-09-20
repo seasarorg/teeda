@@ -22,13 +22,13 @@ import java.util.Map;
 
 import javax.faces.model.SelectItem;
 
-import junit.framework.TestCase;
+import org.seasar.teeda.core.unit.TeedaTestCase;
 
 /**
  * @author shot
  * 
  */
-public class TUISelectItemsTest extends TestCase {
+public class TUISelectItemsTest extends TeedaTestCase {
 
     public void testGetValue_selectItems() throws Exception {
         TUISelectItems items = new TUISelectItems();
@@ -53,6 +53,10 @@ public class TUISelectItemsTest extends TestCase {
         List list2 = (List) items.getValue();
         assertNotNull(list2);
         SelectItem si = (SelectItem) list2.get(0);
+        System.out.println(si.getLabel());
+        assertNotNull(si.getLabel());
+        assertEquals("", si.getValue());
+        si = (SelectItem) list2.get(1);
         assertEquals("aaa", si.getLabel());
         assertEquals("1", si.getValue());
     }
@@ -67,38 +71,31 @@ public class TUISelectItemsTest extends TestCase {
         items.setValue(list);
         List list2 = (List) items.getValue();
         assertNotNull(list2);
+        SelectItem si = (SelectItem) list2.get(1);
+        assertEquals("aaa", si.getLabel());
+        assertEquals("1", si.getValue());
+    }
+
+    public void testGetValue_required() throws Exception {
+        List list = new ArrayList();
+        HogeDto h1 = new HogeDto();
+        h1.setLabel("aaa");
+        h1.setValue("1");
+        list.add(h1);
+        TUISelectItems items = new TUISelectItems();
+        items.setRequired(true);
+        items.setValue(list);
+        List list2 = (List) items.getValue();
+        assertNotNull(list2);
         SelectItem si = (SelectItem) list2.get(0);
         assertEquals("aaa", si.getLabel());
         assertEquals("1", si.getValue());
     }
 
-    public void testGetValue_nullLabel() throws Exception {
-        List list = new ArrayList();
-        HogeDto h1 = new HogeDto();
-        h1.setNullLabel("nnnn");
-        list.add(h1);
-        TUISelectItems items = new TUISelectItems();
-        items.setValue(list);
-        List list2 = (List) items.getValue();
-        assertNotNull(list2);
-        SelectItem si = (SelectItem) list2.get(0);
-        assertEquals("nnnn", si.getLabel());
-    }
-    
     public static class HogeDto {
         private String label;
 
         private String value;
-
-        private String nullLabel;
-
-        public String getNullLabel() {
-            return nullLabel;
-        }
-
-        public void setNullLabel(String nullLabel) {
-            this.nullLabel = nullLabel;
-        }
 
         public String getLabel() {
             return label;
