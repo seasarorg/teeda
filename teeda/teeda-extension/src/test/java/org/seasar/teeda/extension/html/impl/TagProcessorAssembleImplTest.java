@@ -110,8 +110,8 @@ public class TagProcessorAssembleImplTest extends TeedaExtensionTestCase {
         ElementProcessor viewRoot = (ElementProcessor) root;
         assertEquals("2", 1, viewRoot.getChildSize());
         TextProcessor textProcessor = (TextProcessor) viewRoot.getChild(0);
-        assertEquals("3", "<html><body id=\"xxx\" /></html>", textProcessor
-                .getValue());
+        assertEquals("3", "<html><body id=\"xxx\"></body></html>",
+                textProcessor.getValue());
     }
 
     public void testAssembleElementNodeAsText5() throws Exception {
@@ -127,7 +127,8 @@ public class TagProcessorAssembleImplTest extends TeedaExtensionTestCase {
         ElementProcessor viewRoot = (ElementProcessor) root;
         assertEquals("2", 1, viewRoot.getChildSize());
         TextProcessor textProcessor = (TextProcessor) viewRoot.getChild(0);
-        assertEquals("3", "<html><body><span id=\"xxx\" />Hello</body></html>",
+        assertEquals("3",
+                "<html><body><span id=\"xxx\"></span>Hello</body></html>",
                 textProcessor.getValue());
     }
 
@@ -227,7 +228,8 @@ public class TagProcessorAssembleImplTest extends TeedaExtensionTestCase {
                 .getChild(1);
         assertEquals("4", 1, elementProcessor.getChildSize());
         textProcessor = (TextProcessor) elementProcessor.getChild(0);
-        assertEquals("5", "<hoge id=\"xxx\" />Hello", textProcessor.getValue());
+        assertEquals("5", "<hoge id=\"xxx\"></hoge>Hello", textProcessor
+                .getValue());
         textProcessor = (TextProcessor) viewRoot.getChild(2);
         assertEquals("6", "</body></html>", textProcessor.getValue());
     }

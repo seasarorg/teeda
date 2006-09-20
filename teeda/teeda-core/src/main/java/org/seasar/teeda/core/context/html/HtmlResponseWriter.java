@@ -18,8 +18,6 @@ package org.seasar.teeda.core.context.html;
 import java.io.IOException;
 import java.io.Writer;
 import java.net.URLEncoder;
-import java.util.Arrays;
-import java.util.List;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.ResponseWriter;
@@ -28,6 +26,7 @@ import org.seasar.framework.util.ArrayUtil;
 import org.seasar.framework.util.AssertionUtil;
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.core.util.EmptyElementUtil;
 
 /**
  * @author manhole
@@ -36,10 +35,6 @@ import org.seasar.teeda.core.JsfConstants;
  */
 // TODO handle "javascript: xxxx" attribute (really necessary?)
 public class HtmlResponseWriter extends ResponseWriter {
-
-    private static final List EMPTY_ELEMENTS = Arrays
-            .asList(new String[] { "area", "br", "base", "col", "hr", "img",
-                    "input", "link", "meta", "param" });
 
     private static final char[] reserved = { ';', '/', '?', ':', '@', '&', '=',
             '+', '$', ',' };
@@ -64,8 +59,8 @@ public class HtmlResponseWriter extends ResponseWriter {
 
     private static final boolean DEFAULT_ESCAPE = true;
 
-    public void startElement(final String name, final UIComponent componentForElement)
-            throws IOException {
+    public void startElement(final String name,
+            final UIComponent componentForElement) throws IOException {
         AssertionUtil.assertNotNull("name", name);
         final Writer writer = getWriter();
         closeStartTagIfOpening(writer);
@@ -80,7 +75,8 @@ public class HtmlResponseWriter extends ResponseWriter {
         startTagOpening = true;
     }
 
-    protected void closeStartTagIfOpening(final Writer writer) throws IOException {
+    protected void closeStartTagIfOpening(final Writer writer)
+            throws IOException {
         if (startTagOpening) {
             writer.write(">");
             startTagOpening = false;
@@ -91,7 +87,7 @@ public class HtmlResponseWriter extends ResponseWriter {
         AssertionUtil.assertNotNull("name", name);
         final Writer writer = getWriter();
         if (startTagOpening) {
-            if (isEmptyElement(name)) {
+            if (EmptyElementUtil.isEmptyElement(name)) {
                 writer.write(" />");
             } else {
                 writer.write(">");
@@ -104,12 +100,8 @@ public class HtmlResponseWriter extends ResponseWriter {
         shouldEscape = DEFAULT_ESCAPE;
     }
 
-    protected boolean isEmptyElement(final String name) {
-        return EMPTY_ELEMENTS.contains(name);
-    }
-
-    public void writeAttribute(final String name, final Object value, final String property)
-            throws IOException {
+    public void writeAttribute(final String name, final Object value,
+            final String property) throws IOException {
         AssertionUtil.assertNotNull("name", name);
         if (!startTagOpening) {
             throw new IllegalStateException(
@@ -124,8 +116,8 @@ public class HtmlResponseWriter extends ResponseWriter {
         writer.write("\"");
     }
 
-    public void writeURIAttribute(final String name, final Object value, final String property)
-            throws IOException {
+    public void writeURIAttribute(final String name, final Object value,
+            final String property) throws IOException {
         AssertionUtil.assertNotNull("name", name);
         if (!startTagOpening) {
             throw new IllegalStateException(
@@ -154,7 +146,8 @@ public class HtmlResponseWriter extends ResponseWriter {
         writer.write("-->");
     }
 
-    public void writeText(final Object text, final String property) throws IOException {
+    public void writeText(final Object text, final String property)
+            throws IOException {
         AssertionUtil.assertNotNull("text", text);
         final Writer writer = getWriter();
         closeStartTagIfOpening(writer);
@@ -165,7 +158,8 @@ public class HtmlResponseWriter extends ResponseWriter {
         writer.write(str);
     }
 
-    public void writeText(final char text[], final int off, final int len) throws IOException {
+    public void writeText(final char text[], final int off, final int len)
+            throws IOException {
         AssertionUtil.assertNotNull("text", text);
         writeText(new String(text, off, len), null);
     }
@@ -210,7 +204,8 @@ public class HtmlResponseWriter extends ResponseWriter {
         return clone;
     }
 
-    public void write(final char[] cbuf, final int off, final int len) throws IOException {
+    public void write(final char[] cbuf, final int off, final int len)
+            throws IOException {
         final Writer writer = getWriter();
         closeStartTagIfOpening(writer);
         writer.write(cbuf, off, len);
@@ -234,7 +229,8 @@ public class HtmlResponseWriter extends ResponseWriter {
         writer.write(str);
     }
 
-    public void write(final String str, final int off, final int len) throws IOException {
+    public void write(final String str, final int off, final int len)
+            throws IOException {
         final Writer writer = getWriter();
         closeStartTagIfOpening(writer);
         writer.write(str, off, len);

@@ -18,10 +18,9 @@ package org.seasar.teeda.extension.html.impl;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.seasar.teeda.core.JsfConstants;
-import org.seasar.teeda.core.config.faces.element.JsfConfigElement;
-
 import junit.framework.TestCase;
+
+import org.seasar.teeda.core.JsfConstants;
 
 /**
  * @author higa
@@ -31,25 +30,25 @@ public class ElementNodeImplTest extends TestCase {
 
     public void testToString() throws Exception {
         ElementNodeImpl n1 = new ElementNodeImpl("hoge", new HashMap());
-        assertEquals("1", "<hoge />", n1.toString());
+        assertEquals("<hoge></hoge>", n1.toString());
 
         Map props2 = new HashMap();
         props2.put("id", "aaa");
         ElementNodeImpl n2 = new ElementNodeImpl("hoge", props2);
-        assertEquals("2", "<hoge id=\"aaa\" />", n2.toString());
+        assertEquals("<hoge id=\"aaa\"></hoge>", n2.toString());
 
         Map props3 = new HashMap();
         props3.put("id", "aaa");
         props3.put("type", "text");
         ElementNodeImpl n3 = new ElementNodeImpl("input", props3);
-        System.out.println(n3);
+        assertEquals("<input type=\"text\" id=\"aaa\" />", n3.toString());
 
         Map props4 = new HashMap();
         props4.put("id", "aaa");
         ElementNodeImpl n4 = new ElementNodeImpl("hoge", props4);
         n4.addText("abc");
         n4.endElement();
-        assertEquals("4", "<hoge id=\"aaa\">abc</hoge>", n4.toString());
+        assertEquals("<hoge id=\"aaa\">abc</hoge>", n4.toString());
 
         Map props5 = new HashMap();
         props5.put("id", "aaa");
@@ -57,7 +56,7 @@ public class ElementNodeImplTest extends TestCase {
         n5.addText("abc");
         n5.addText("def");
         n5.endElement();
-        assertEquals("5", "<hoge id=\"aaa\">abcdef</hoge>", n5.toString());
+        assertEquals("<hoge id=\"aaa\">abcdef</hoge>", n5.toString());
 
         Map props6 = new HashMap();
         props6.put("id", "aaa");
@@ -69,8 +68,9 @@ public class ElementNodeImplTest extends TestCase {
         n6.addElement(n62);
         n6.addText("def");
         n6.endElement();
-        assertEquals("6", "<hoge id=\"aaa\">abc<hoge2 id=\"bbb\" />def</hoge>",
-                n6.toString());
+        assertEquals(
+                "<hoge id=\"aaa\">abc<hoge2 id=\"bbb\"></hoge2>def</hoge>", n6
+                        .toString());
     }
 
     public void testGetParent1() throws Exception {

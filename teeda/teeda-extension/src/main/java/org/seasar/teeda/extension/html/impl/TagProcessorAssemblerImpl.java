@@ -106,7 +106,7 @@ public class TagProcessorAssemblerImpl implements TagProcessorAssembler {
     protected void assembleElementNodeAsText(ElementProcessor parentProcessor,
             ElementNode elementNode, PageDesc pageDesc, ActionDesc actionDesc) {
         if (elementNode.getChildSize() == 0) {
-            parentProcessor.addText(elementNode.getEmptyTagString());
+            parentProcessor.addText(elementNode.getCompleteTagString());
         } else {
             parentProcessor.addText(elementNode.getStartTagString());
             assembleElementNodeChildren(parentProcessor, elementNode, pageDesc,

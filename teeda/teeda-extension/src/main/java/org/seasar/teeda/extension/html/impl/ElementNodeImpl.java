@@ -126,8 +126,8 @@ public class ElementNodeImpl implements ElementNode {
         --childTextSize;
     }
 
-    public String getEmptyTagString() {
-        return HtmlNodeUtil.getEmptyTagString(tagName, properties);
+    public String getCompleteTagString() {
+        return HtmlNodeUtil.getCompleteTagString(tagName, properties);
     }
 
     public String getStartTagString() {
@@ -140,7 +140,7 @@ public class ElementNodeImpl implements ElementNode {
 
     public String toString() {
         if (getChildSize() == 0) {
-            return getEmptyTagString();
+            return getCompleteTagString();
         }
         StringBuffer buf = new StringBuffer(512);
         buf.append(getStartTagString());

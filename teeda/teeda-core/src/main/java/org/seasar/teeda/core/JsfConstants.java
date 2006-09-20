@@ -113,6 +113,12 @@ public interface JsfConstants {
 
     String ANCHOR_ELEM = "a";
 
+    String AREA_ELEM = "area";
+
+    String BASE_ELEM = "base";
+
+    String BASEFONT_ELEM = "basefont";
+
     String BR_ELEM = "br";
 
     String COL_ELEM = "col";
@@ -123,19 +129,31 @@ public interface JsfConstants {
 
     String FORM_ELEM = "form";
 
+    String FRAME_ELEM = "frame";
+
+    String HR_ELEM = "hr";
+
     String IMG_ELEM = "img";
 
     String INPUT_ELEM = "input";
 
+    String ISINDEX_ELEM = "isindex";
+
     String LABEL_ELEM = "label";
 
     String LI_ELEM = "li";
+
+    String LINK_ELEM = "link";
+
+    String META_ELEM = "meta";
 
     String NOBR_ELEM = "nobr";
 
     String OPTGROUP_ELEM = "optgroup";
 
     String OPTION_ELEM = "option";
+
+    String PARAM_ELEM = "param";
 
     String SCRIPT_ELEM = "script";
 

@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import org.seasar.teeda.core.util.EmptyElementUtil;
 import org.xml.sax.Attributes;
 
 public class HtmlNodeUtil {
@@ -21,8 +22,13 @@ public class HtmlNodeUtil {
         return map;
     }
 
-    public static String getEmptyTagString(String tagName, Map properties) {
-        return getStartTagString0(tagName, properties) + " />";
+    public static String getCompleteTagString(String tagName, Map properties) {
+        if (EmptyElementUtil.isEmptyElement(tagName)) {
+            return getStartTagString0(tagName, properties) + " />";
+        } else {
+            return getStartTagString0(tagName, properties) + ">"
+                    + getEndTagString(tagName);
+        }
     }
 
     public static String getStartTagString(String tagName, Map properties) {

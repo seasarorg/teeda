@@ -45,8 +45,8 @@ public class HtmlNodeHandlerTest extends TeedaExtensionTestCase {
         HtmlParser parser = getHtmlParser();
         HtmlNode root = parser.parse(ResourceUtil.getResourceAsStream(path));
         assertEquals("1",
-                "<html><body>Hello<span id=\"aaa\" />World</body></html>", root
-                        .toString());
+                "<html><body>Hello<span id=\"aaa\"></span>World</body></html>",
+                root.toString());
         DocumentNode docRoot = (DocumentNode) root;
         ElementNodeImpl n = (ElementNodeImpl) docRoot.getChild(0);
         ElementNode body = (ElementNode) n.getChild(0);
@@ -54,7 +54,7 @@ public class HtmlNodeHandlerTest extends TeedaExtensionTestCase {
         TextNodeImpl t = (TextNodeImpl) body.getChild(0);
         assertEquals("3", "Hello", t.getValue());
         ElementNodeImpl n2 = (ElementNodeImpl) body.getChild(1);
-        assertEquals("4", "<span id=\"aaa\" />", n2.toString());
+        assertEquals("4", "<span id=\"aaa\"></span>", n2.toString());
         TextNodeImpl t2 = (TextNodeImpl) body.getChild(2);
         assertEquals("5", "World", t2.getValue());
     }
@@ -65,7 +65,7 @@ public class HtmlNodeHandlerTest extends TeedaExtensionTestCase {
         HtmlNode root = parser.parse(ResourceUtil.getResourceAsStream(path));
         assertEquals(
                 "1",
-                "<html><div id=\"aaa\">Hello<span id=\"bbb\" />World</div></html>",
+                "<html><div id=\"aaa\">Hello<span id=\"bbb\"></span>World</div></html>",
                 root.toString());
         DocumentNode docRoot = (DocumentNode) root;
         ElementNodeImpl n = (ElementNodeImpl) docRoot.getChild(0);
@@ -75,7 +75,7 @@ public class HtmlNodeHandlerTest extends TeedaExtensionTestCase {
         TextNodeImpl t = (TextNodeImpl) n2.getChild(0);
         assertEquals("4", "Hello", t.getValue());
         ElementNodeImpl n3 = (ElementNodeImpl) n2.getChild(1);
-        assertEquals("5", "<span id=\"bbb\" />", n3.toString());
+        assertEquals("5", "<span id=\"bbb\"></span>", n3.toString());
         TextNodeImpl t2 = (TextNodeImpl) n2.getChild(2);
         assertEquals("6", "World", t2.getValue());
     }

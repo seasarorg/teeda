@@ -50,7 +50,7 @@ public interface ElementNode extends HtmlNode {
 
     void decrementChildTextSize();
 
-    String getEmptyTagString();
+    String getCompleteTagString();
 
     String getStartTagString();
 

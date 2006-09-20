@@ -18,8 +18,6 @@ package org.seasar.teeda.extension.html.impl;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.seasar.teeda.extension.html.impl.HtmlNodeUtil;
-
 import junit.framework.TestCase;
 
 /**
@@ -27,31 +25,27 @@ import junit.framework.TestCase;
  *
  */
 public class HtmlNodeUtilTest extends TestCase {
-	
-    public void testGetEmptyTagString() throws Exception {
-        assertEquals("1", "<hoge />", HtmlNodeUtil.getEmptyTagString("hoge", new HashMap()));
-        
+
+    public void testGetCompleteTagString() throws Exception {
+        assertEquals("<hoge></hoge>", HtmlNodeUtil.getCompleteTagString("hoge",
+                new HashMap()));
+
         Map props = new HashMap();
-        props.put("id", "aaa");
-        assertEquals("2", "<hoge id=\"aaa\" />",
-                HtmlNodeUtil.getEmptyTagString("hoge", props));
-        
-        
-        Map props2 = new HashMap();
-        props2.put("id", "aaa");
-        props2.put("type", "text");
-        System.out.println(HtmlNodeUtil.getEmptyTagString("input", props2));
+        props.put("type", "text");
+        assertEquals("2", "<input type=\"text\" />", HtmlNodeUtil
+                .getCompleteTagString("input", props));
     }
-    
+
     public void testStartTagString() throws Exception {
-        assertEquals("1", "<hoge>", HtmlNodeUtil.getStartTagString("hoge", new HashMap()));
-        
+        assertEquals("1", "<hoge>", HtmlNodeUtil.getStartTagString("hoge",
+                new HashMap()));
+
         Map props = new HashMap();
         props.put("id", "aaa");
-        assertEquals("2", "<hoge id=\"aaa\">",
-                HtmlNodeUtil.getStartTagString("hoge", props));
+        assertEquals("2", "<hoge id=\"aaa\">", HtmlNodeUtil.getStartTagString(
+                "hoge", props));
     }
-    
+
     public void testEndTagString() throws Exception {
         assertEquals("1", "</hoge>", HtmlNodeUtil.getEndTagString("hoge"));
     }
