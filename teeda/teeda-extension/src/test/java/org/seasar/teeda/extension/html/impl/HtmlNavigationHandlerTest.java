@@ -30,6 +30,8 @@ import org.seasar.teeda.extension.config.taglib.element.TagElement;
 import org.seasar.teeda.extension.config.taglib.element.TaglibElement;
 import org.seasar.teeda.extension.config.taglib.element.impl.TagElementImpl;
 import org.seasar.teeda.extension.config.taglib.element.impl.TaglibElementImpl;
+import org.seasar.teeda.extension.html.impl.page.Foo2Page;
+import org.seasar.teeda.extension.html.impl.page.FooPage;
 import org.seasar.teeda.extension.mock.MockTaglibManager;
 
 /**

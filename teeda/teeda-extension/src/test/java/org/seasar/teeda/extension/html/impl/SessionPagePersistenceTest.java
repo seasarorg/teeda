@@ -25,11 +25,15 @@ import java.util.Map;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
+import org.seasar.framework.convention.NamingConvention;
 import org.seasar.framework.convention.impl.NamingConventionImpl;
 import org.seasar.framework.util.ClassUtil;
 import org.seasar.framework.util.LruHashMap;
 import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.PageDescCache;
+import org.seasar.teeda.extension.html.impl.page.Foo2Page;
+import org.seasar.teeda.extension.html.impl.page.Foo3Page;
+import org.seasar.teeda.extension.html.impl.page.FooPage;
 import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 
 /**
@@ -48,7 +52,19 @@ public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
         Timestamp timestamp = new Timestamp(new Date().getTime());
         hoge.setTimestamp(timestamp);
         hoge.setList(new ArrayList());
-        Map map = SessionPagePersistence.convertPageData(hoge, "aaa");
+        SessionPagePersistence persistence = new SessionPagePersistence();
+        persistence.setNamingConvention(new NamingConventionImpl() {
+
+            public Class fromComponentNameToClass(String componentName) {
+                return Hoge.class;
+            }
+
+            public String fromPathToPageName(String path) {
+                return "hoge";
+            }
+
+        });
+        Map map = persistence.convertPageData(hoge, "bbb", "aaa");
         assertEquals(new Integer(1), map.get("int1"));
         assertEquals(new Integer(2), map.get("int2"));
         assertEquals(Boolean.TRUE, map.get("bool1"));
@@ -57,17 +73,19 @@ public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
         assertEquals(timestamp, map.get("timestamp"));
         // TODO https://www.seasar.org/issues/browse/TEEDA-88
         // でListも対応する際に、このassertは逆転する。
-        assertNull(map.get("list"));
+        assertNotNull(map.get("list"));
     }
 
     public void testSaveAndRestore() throws Exception {
         SessionPagePersistence spp = new SessionPagePersistence();
         spp.setPageSize(2);
         NamingConventionImpl convention = new NamingConventionImpl();
+        convention.addRootPackageName("org.seasar.teeda.extension.html.impl");
         String rootPath = "/"
                 + ClassUtil.getPackageName(getClass()).replace('.', '/');
         convention.setViewRootPath(rootPath);
         convention.setViewExtension(".html");
+        spp.setNamingConvention(convention);
         PageDescCacheImpl cache = new PageDescCacheImpl();
         cache.setNamingConvention(convention);
         cache.setContainer(getContainer());
@@ -107,20 +125,37 @@ public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
         assertEquals("123", requestMap.get("aaa"));
     }
 
-    public void testSaveAndRestore_array() throws Exception {
+    public void testSaveAndRestore1() throws Exception {
         // ## Assert ##
         final String fromViewId = "/fromViewId";
         final String toViewId = "/fooViewId";
         final MockPageDescCache pageDescCache = new MockPageDescCache();
         final PageDesc fromPageDesc = createPageDesc(FromPage.class, fromViewId);
+        final PageDesc toPageDesc = createPageDesc(ToPage.class, toViewId);
         pageDescCache.putPageDesc(fromViewId, fromPageDesc);
+        pageDescCache.putPageDesc(toViewId, toPageDesc);
         final SessionPagePersistence pagePersistence = new SessionPagePersistence();
+        final NamingConvention namingConvention = new NamingConventionImpl() {
+            public Class fromComponentNameToClass(String componentName) {
+                return ToPage.class;
+            }
+
+            public String fromPathToPageName(String path) {
+                return toViewId;
+            }
+
+        };
+        pagePersistence.setNamingConvention(namingConvention);
         pagePersistence.setPageDescCache(pageDescCache);
         final FacesContext context = getFacesContext();
         context.getViewRoot().setViewId(fromViewId);
 
         final FromPage fromPage = (FromPage) getComponent(FromPage.class);
         fromPage.setAaaaa(new String[] { "a", "bb", "c" });
+        fromPage.setB(true);
+        fromPage.setFromOnly("from");
+        fromPage.setName("ccc");
+        fromPage.setNum(2);
         final Map requestMap = context.getExternalContext().getRequestMap();
         assertNull(requestMap.get("aaaaa"));
 
@@ -135,6 +170,60 @@ public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
         assertEquals("a", aaaaa[0]);
         assertEquals("bb", aaaaa[1]);
         assertEquals("c", aaaaa[2]);
+        assertTrue(((Boolean) requestMap.get("b")).booleanValue() == true);
+        assertNull(requestMap.get("fromOnly"));
+        assertEquals("ccc", requestMap.get("name"));
+        assertTrue(((Integer) requestMap.get("num")).intValue() == 2);
+    }
+
+    public void testSaveAndRestore2() throws Exception {
+        // ## Assert ##
+        final String fromViewId = "/fromViewId";
+        final String toViewId = "/fooViewId";
+        final MockPageDescCache pageDescCache = new MockPageDescCache();
+        final PageDesc fromPageDesc = createPageDesc(From2Page.class,
+                fromViewId);
+        final PageDesc toPageDesc = createPageDesc(To2Page.class, toViewId);
+        pageDescCache.putPageDesc(fromViewId, fromPageDesc);
+        pageDescCache.putPageDesc(toViewId, toPageDesc);
+        final SessionPagePersistence pagePersistence = new SessionPagePersistence();
+        final NamingConvention namingConvention = new NamingConventionImpl() {
+            public Class fromComponentNameToClass(String componentName) {
+                return To2Page.class;
+            }
+
+            public String fromPathToPageName(String path) {
+                return toViewId;
+            }
+
+        };
+        pagePersistence.setNamingConvention(namingConvention);
+        pagePersistence.setPageDescCache(pageDescCache);
+        final FacesContext context = getFacesContext();
+        context.getViewRoot().setViewId(fromViewId);
+
+        final From2Page fromPage = (From2Page) getComponent(From2Page.class);
+        fromPage.setAaaaa(new String[] { "a", "bb", "c" });
+        fromPage.setB(true);
+        fromPage.setName("ccc");
+        fromPage.setNum(2);
+        final Map requestMap = context.getExternalContext().getRequestMap();
+        assertNull(requestMap.get("aaaaa"));
+
+        // ## Act ##
+        pagePersistence.save(context, toViewId);
+        pagePersistence.restore(context, toViewId);
+
+        // ## Assert ##
+        final String[] aaaaa = (String[]) requestMap.get("aaaaa");
+        assertNotNull(aaaaa);
+        assertEquals(3, aaaaa.length);
+        assertEquals("a", aaaaa[0]);
+        assertEquals("bb", aaaaa[1]);
+        assertEquals("c", aaaaa[2]);
+        assertTrue(((Boolean) requestMap.get("b")).booleanValue() == true);
+        assertEquals("ccc", requestMap.get("name"));
+        assertTrue(((Integer) requestMap.get("num")).intValue() == 2);
     }
 
     private static class MockPageDescCache implements PageDescCache {
@@ -228,6 +317,46 @@ public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
     public static class FromPage {
         private String[] aaaaa;
 
+        private String name;
+
+        private int num;
+
+        private boolean b;
+
+        private String fromOnly;
+
+        public String getFromOnly() {
+            return fromOnly;
+        }
+
+        public void setFromOnly(String fromOnly) {
+            this.fromOnly = fromOnly;
+        }
+
+        public boolean isB() {
+            return b;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public int getNum() {
+            return num;
+        }
+
+        public void setB(boolean b) {
+            this.b = b;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public void setNum(int num) {
+            this.num = num;
+        }
+
         public String[] getAaaaa() {
             return aaaaa;
         }
@@ -236,4 +365,107 @@ public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
             this.aaaaa = aaaaa;
         }
     }
+
+    public static class ToPage {
+        private String[] aaaaa;
+
+        private String name;
+
+        private int num;
+
+        private boolean b;
+
+        private String toOnly = "toOnly";
+
+        public String getToOnly() {
+            return toOnly;
+        }
+
+        public void setToOnly(String toOnly) {
+            this.toOnly = toOnly;
+        }
+
+        public boolean isB() {
+            return b;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public int getNum() {
+            return num;
+        }
+
+        public void setB(boolean b) {
+            this.b = b;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public void setNum(int num) {
+            this.num = num;
+        }
+
+        public String[] getAaaaa() {
+            return aaaaa;
+        }
+
+        public void setAaaaa(String[] aaaaa) {
+            this.aaaaa = aaaaa;
+        }
+    }
+
+    public static abstract class AbstractAaaPage {
+        private String[] aaaaa;
+
+        private String name;
+
+        private int num;
+
+        private boolean b;
+
+        public boolean isB() {
+            return b;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public int getNum() {
+            return num;
+        }
+
+        public void setB(boolean b) {
+            this.b = b;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public void setNum(int num) {
+            this.num = num;
+        }
+
+        public String[] getAaaaa() {
+            return aaaaa;
+        }
+
+        public void setAaaaa(String[] aaaaa) {
+            this.aaaaa = aaaaa;
+        }
+    }
+
+    public static class From2Page extends AbstractAaaPage {
+
+    }
+
+    public static class To2Page extends AbstractAaaPage {
+
+    }
+
 }

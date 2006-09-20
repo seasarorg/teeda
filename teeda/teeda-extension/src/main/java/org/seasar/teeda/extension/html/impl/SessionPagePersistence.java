@@ -15,8 +15,10 @@
  */
 package org.seasar.teeda.extension.html.impl;
 
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import javax.faces.context.ExternalContext;
@@ -25,6 +27,7 @@ import javax.faces.context.FacesContext;
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.PropertyDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
+import org.seasar.framework.convention.NamingConvention;
 import org.seasar.framework.util.LruHashMap;
 import org.seasar.teeda.core.util.DIContainerUtil;
 import org.seasar.teeda.extension.html.PageDesc;
@@ -45,6 +48,8 @@ public class SessionPagePersistence implements PagePersistence {
     private int pageSize = 10;
 
     private PageDescCache pageDescCache;
+
+    private NamingConvention namingConvention;
 
     public int getPageSize() {
         return pageSize;
@@ -67,41 +72,55 @@ public class SessionPagePersistence implements PagePersistence {
             sessionMap.put(getClass().getName(), lru);
         }
         String previousViewId = context.getViewRoot().getViewId();
-        lru.put(viewId, getPageData(previousViewId));
+        lru.put(viewId, getPageData(viewId, previousViewId));
     }
 
-    protected Map getPageData(String viewId) {
-        PageDesc pageDesc = pageDescCache.getPageDesc(viewId);
+    protected Map getPageData(String viewId, String previousViewId) {
+        PageDesc pageDesc = pageDescCache.getPageDesc(previousViewId);
         if (pageDesc == null) {
             return null;
         }
         Object page = DIContainerUtil.getComponent(pageDesc.getPageName());
-        return convertPageData(page, viewId);
+        return convertPageData(page, viewId, previousViewId);
     }
 
-    public static Map convertPageData(Object page, String viewId) {
+    public Map convertPageData(Object page, String viewId, String previousViewId) {
         Map map = new HashMap();
         BeanDesc beanDesc = BeanDescFactory.getBeanDesc(page.getClass());
+        String pageName = namingConvention.fromPathToPageName(viewId);
+        Class c = namingConvention.fromComponentNameToClass(pageName);
+        BeanDesc nextBeanDesc = BeanDescFactory.getBeanDesc(c);
+        List list = getNextPageProperties(nextBeanDesc);
         for (int i = 0; i < beanDesc.getPropertyDescSize(); ++i) {
             PropertyDesc pd = beanDesc.getPropertyDesc(i);
             if (!pd.hasReadMethod()
-                    || !isPersistenceInputValueType(pd.getPropertyType())) {
+                    || !hasSameProperties(list, pd.getPropertyName())) {
                 continue;
             }
             Object value = pd.getValue(page);
             map.put(pd.getPropertyName(), value);
         }
-        map.put(PREVIOUS_VIEW_ID, viewId);
+        map.put(PREVIOUS_VIEW_ID, previousViewId);
         return map;
     }
 
-    protected static boolean isPersistenceInputValueType(Class clazz) {
-        if (clazz.isPrimitive()) {
-            return true;
+    protected boolean hasSameProperties(List list, String propertyName) {
+        for (Iterator itr = list.iterator(); itr.hasNext();) {
+            String name = (String) itr.next();
+            if (propertyName.equals(name)) {
+                return true;
+            }
         }
-        return clazz.equals(String.class) || clazz.equals(Boolean.class)
-                || Number.class.isAssignableFrom(clazz)
-                || Date.class.isAssignableFrom(clazz) || clazz.isArray();
+        return false;
+    }
+
+    protected static List getNextPageProperties(BeanDesc beanDesc) {
+        List list = new ArrayList();
+        for (int i = 0; i < beanDesc.getPropertyDescSize(); ++i) {
+            PropertyDesc pd = beanDesc.getPropertyDesc(i);
+            list.add(pd.getPropertyName());
+        }
+        return list;
     }
 
     public void restore(FacesContext context, String viewId) {
@@ -118,4 +137,13 @@ public class SessionPagePersistence implements PagePersistence {
         Map requestMap = extCtx.getRequestMap();
         requestMap.putAll(pageData);
     }
+
+    public NamingConvention getNamingConvention() {
+        return namingConvention;
+    }
+
+    public void setNamingConvention(NamingConvention namingConvention) {
+        this.namingConvention = namingConvention;
+    }
+
 }

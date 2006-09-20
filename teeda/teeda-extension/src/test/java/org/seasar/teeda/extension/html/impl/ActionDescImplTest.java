@@ -21,6 +21,7 @@ import org.seasar.framework.unit.S2FrameworkTestCase;
 import org.seasar.framework.util.ClassUtil;
 import org.seasar.framework.util.ResourceUtil;
 import org.seasar.teeda.core.application.navigation.NavigationResource;
+import org.seasar.teeda.extension.html.impl.page.FooAction;
 
 /**
  * @author higa

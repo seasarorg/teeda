@@ -39,6 +39,8 @@ import org.seasar.teeda.extension.config.taglib.element.impl.TaglibElementImpl;
 import org.seasar.teeda.extension.html.ElementProcessorFactory;
 import org.seasar.teeda.extension.html.HtmlParser;
 import org.seasar.teeda.extension.html.factory.FormFactory;
+import org.seasar.teeda.extension.html.impl.page.FooAction;
+import org.seasar.teeda.extension.html.impl.page.FooPage;
 import org.seasar.teeda.extension.mock.MockTaglibManager;
 import org.seasar.teeda.extension.render.html.HtmlTextRenderer;
 import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
@@ -80,6 +82,7 @@ public class HtmlViewHandlerTest extends TeedaExtensionTestCase {
         String rootPath = "/"
                 + ClassUtil.getPackageName(getClass()).replace('.', '/');
         convention.setViewRootPath(rootPath);
+        convention.addRootPackageName(ClassUtil.getPackageName(getClass()));
         convention.setViewExtension(".html");
         PageDescCacheImpl pageDescCache = new PageDescCacheImpl();
         pageDescCache.setNamingConvention(convention);
@@ -117,6 +120,7 @@ public class HtmlViewHandlerTest extends TeedaExtensionTestCase {
         viewHandler.setPageDescCache(pageDescCache);
         viewHandler.setActionDescCache(actionDescCache);
         SessionPagePersistence spp = new SessionPagePersistence();
+        spp.setNamingConvention(convention);
         spp.setPageDescCache(pageDescCache);
         viewHandler.setPagePersistence(spp);
         getFacesContext().getViewRoot().setViewId(path);

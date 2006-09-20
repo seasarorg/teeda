@@ -24,6 +24,7 @@ import org.seasar.framework.container.impl.ComponentDefImpl;
 import org.seasar.framework.util.ClassUtil;
 import org.seasar.framework.util.ResourceUtil;
 import org.seasar.teeda.core.application.navigation.NavigationResource;
+import org.seasar.teeda.extension.html.impl.page.FooPage;
 import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 import org.seasar.teeda.extension.validator.TRequiredValidator;
 

@@ -35,6 +35,8 @@ import org.seasar.teeda.extension.html.factory.OutputTextFactory;
 import org.seasar.teeda.extension.html.factory.SelectManyCheckboxFactory;
 import org.seasar.teeda.extension.html.factory.SelectOneMenuFactory;
 import org.seasar.teeda.extension.html.factory.SelectOneRadioFactory;
+import org.seasar.teeda.extension.html.impl.page.FooAction;
+import org.seasar.teeda.extension.html.impl.page.FooPage;
 import org.seasar.teeda.extension.mock.MockTaglibManager;
 import org.seasar.teeda.extension.taglib.TConditionTag;
 import org.seasar.teeda.extension.taglib.TSelectManyCheckboxTag;

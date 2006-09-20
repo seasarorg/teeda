@@ -19,6 +19,7 @@ import org.seasar.framework.convention.impl.NamingConventionImpl;
 import org.seasar.framework.unit.S2FrameworkTestCase;
 import org.seasar.framework.util.ClassUtil;
 import org.seasar.teeda.extension.html.ActionDesc;
+import org.seasar.teeda.extension.html.impl.page.FooAction;
 
 /**
  * @author higa

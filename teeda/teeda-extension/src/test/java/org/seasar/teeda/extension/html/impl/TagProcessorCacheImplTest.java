@@ -23,6 +23,8 @@ import org.seasar.framework.util.ResourceUtil;
 import org.seasar.teeda.core.application.impl.TeedaStateManagerImpl;
 import org.seasar.teeda.extension.html.HtmlParser;
 import org.seasar.teeda.extension.html.TagProcessor;
+import org.seasar.teeda.extension.html.impl.page.FooAction;
+import org.seasar.teeda.extension.html.impl.page.FooPage;
 import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 
 /**

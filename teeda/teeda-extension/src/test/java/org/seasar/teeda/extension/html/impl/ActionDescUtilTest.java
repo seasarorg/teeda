@@ -17,6 +17,8 @@ package org.seasar.teeda.extension.html.impl;
 
 import java.util.Set;
 
+import org.seasar.teeda.extension.html.impl.page.FooAction;
+
 import junit.framework.TestCase;
 
 /**
