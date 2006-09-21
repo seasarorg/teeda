@@ -27,14 +27,14 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.internal.IgnoreComponent;
 import javax.faces.internal.UIComponentUtil;
 
+import org.seasar.framework.message.MessageResourceBundleFactory;
+import org.seasar.framework.message.MessageResourceBundle;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.AbstractRenderer;
 import org.seasar.teeda.core.util.FacesContextUtil;
 import org.seasar.teeda.core.util.RendererUtil;
 import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.component.html.THtmlOutputLabel;
-import org.seasar.teeda.extension.util.HotdeployResourceBundle;
-import org.seasar.teeda.extension.util.MessageResourceBundle;
 
 /**
  * @author shot
@@ -76,7 +76,7 @@ public class THtmlOutputLabelRenderer extends AbstractRenderer {
         final String propertiesName = label.getPropertiesName();
         final String defaultKey = label.getDefaultKey();
         if (propertiesName != null) {
-            MessageResourceBundle bundle = HotdeployResourceBundle.getBundle(
+            MessageResourceBundle bundle = MessageResourceBundleFactory.getBundle(
                     propertiesName, locale);
             value = (String) bundle.get(key);
             if (value == null) {
@@ -87,7 +87,7 @@ public class THtmlOutputLabelRenderer extends AbstractRenderer {
             final String defaultPropertiesName = label
                     .getDefaultPropertiesName();
             if (defaultPropertiesName != null) {
-                MessageResourceBundle bundle = HotdeployResourceBundle
+                MessageResourceBundle bundle = MessageResourceBundleFactory
                         .getBundle(defaultPropertiesName, locale);
                 value = (String) bundle.get(defaultKey);
             }

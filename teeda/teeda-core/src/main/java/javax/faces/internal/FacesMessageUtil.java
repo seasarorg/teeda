@@ -20,8 +20,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
-import java.util.MissingResourceException;
-import java.util.ResourceBundle;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.application.FacesMessage.Severity;
@@ -29,6 +27,8 @@ import javax.faces.component.ComponentUtil_;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 
+import org.seasar.framework.message.MessageResourceBundle;
+import org.seasar.framework.message.MessageResourceBundleFactory;
 import org.seasar.framework.util.AssertionUtil;
 
 /**
@@ -170,20 +170,19 @@ public class FacesMessageUtil {
     public static FacesMessage getMessage(FacesContext context, Locale locale,
             Severity severity, String messageId, Object[] args) {
 
-        ResourceBundle bundle = getResourceBundle(context, locale);
-        String summary = getBundleString(bundle, messageId);
-        String detail = getBundleString(bundle, messageId + DETAIL_SUFFIX);
+        MessageResourceBundle bundle = getBundle(context, locale);
+        String summary = bundle.get(messageId);
+        String detail = bundle.get(messageId + DETAIL_SUFFIX);
         if (summary == null) {
-            ResourceBundle defaultBundle = getDefaultBundle(context, locale);
-            summary = getBundleString(defaultBundle, messageId);
+            MessageResourceBundle defaultBundle = getDefaultBundle(context,
+                    locale);
+            summary = defaultBundle.get(messageId);
             if (summary != null) {
-                detail = getBundleString(defaultBundle, messageId
-                        + DETAIL_SUFFIX);
+                detail = defaultBundle.get(messageId + DETAIL_SUFFIX);
             } else {
-                detail = getBundleString(bundle, messageId + DETAIL_SUFFIX);
+                detail = bundle.get(messageId + DETAIL_SUFFIX);
                 if (detail == null) {
-                    detail = getBundleString(defaultBundle, messageId
-                            + DETAIL_SUFFIX);
+                    detail = defaultBundle.get(messageId + DETAIL_SUFFIX);
                 }
             }
         }
@@ -196,9 +195,9 @@ public class FacesMessageUtil {
         return new FacesMessage(severity, summary, detail);
     }
 
-    private static ResourceBundle getResourceBundle(FacesContext context,
+    private static MessageResourceBundle getBundle(FacesContext context,
             Locale locale) {
-        ResourceBundle bundle = null;
+        MessageResourceBundle bundle = null;
         String appBundleName = context.getApplication().getMessageBundle();
         if (appBundleName != null) {
             bundle = getBundle(context, locale, appBundleName);
@@ -210,34 +209,16 @@ public class FacesMessageUtil {
         return bundle;
     }
 
-    private static ResourceBundle getDefaultBundle(FacesContext context,
+    private static MessageResourceBundle getDefaultBundle(FacesContext context,
             Locale locale) {
         return getBundle(context, locale, FacesMessage.FACES_MESSAGES);
     }
 
-    private static ResourceBundle getBundle(FacesContext context,
+    private static MessageResourceBundle getBundle(FacesContext context,
             Locale locale, String bundleName) {
 
-        ResourceBundle bundle = null;
-        ClassLoader loader = ClassLoaderUtil.getClassLoader(context);
-        try {
-            bundle = ResourceBundle.getBundle(bundleName, locale, loader);
-        } catch (MissingResourceException e) {
-            context.getExternalContext().log(
-                    "ResourceBundle " + bundleName + " could not be found.");
-        }
-        return bundle;
-    }
-
-    private static String getBundleString(ResourceBundle bundle, String key) {
-        if (bundle == null) {
-            return null;
-        }
-        try {
-            return bundle.getString(key);
-        } catch (MissingResourceException ignore) {
-            return null;
-        }
+        return MessageResourceBundleFactory.getNullableBundle(bundleName,
+                locale);
     }
 
     private static String getFormattedMessage(String message, Locale locale,

@@ -89,6 +89,9 @@ public class SessionPagePersistence implements PagePersistence {
         BeanDesc beanDesc = BeanDescFactory.getBeanDesc(page.getClass());
         String pageName = namingConvention.fromPathToPageName(viewId);
         Class c = namingConvention.fromComponentNameToClass(pageName);
+        if (c == null) {
+            return map;
+        }
         BeanDesc nextBeanDesc = BeanDescFactory.getBeanDesc(c);
         List list = getNextPageProperties(nextBeanDesc);
         for (int i = 0; i < beanDesc.getPropertyDescSize(); ++i) {
