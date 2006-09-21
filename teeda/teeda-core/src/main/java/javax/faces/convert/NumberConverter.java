@@ -28,6 +28,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.internal.ConvertUtil;
 
 import org.seasar.framework.util.AssertionUtil;
+import org.seasar.framework.util.NumberConversionUtil;
 
 /**
  * @author shot
@@ -89,6 +90,8 @@ public class NumberConverter implements Converter, StateHolder {
             return null;
         }
         Locale locale = getLocale(context);
+        value = NumberConversionUtil.removeDelimeter(value, locale);
+
         NumberFormat formatter = getNumberFormat(locale);
         formatter.setParseIntegerOnly(isIntegerOnly());
         try {
