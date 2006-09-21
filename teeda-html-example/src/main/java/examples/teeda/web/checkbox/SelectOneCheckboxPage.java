@@ -15,7 +15,7 @@ public class SelectOneCheckboxPage {
 
 	private List aaaItems;
 
-	public String initialize() {
+	public String prerender() {
 		aaaItems = new ArrayList();
 		AaaDto dto1 = new AaaDto();
 		dto1.setValue(0);
