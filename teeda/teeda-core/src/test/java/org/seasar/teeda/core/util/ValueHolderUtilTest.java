@@ -22,11 +22,15 @@ import javax.faces.component.UIOutput;
 import javax.faces.component.UISelectMany;
 import javax.faces.component.ValueHolder;
 import javax.faces.context.FacesContext;
+import javax.faces.convert.DoubleConverter;
+import javax.faces.convert.NumberConverter;
+import javax.faces.internal.ConverterResource;
 
 import junit.framework.TestCase;
 import junitx.framework.ArrayAssert;
 import junitx.framework.ObjectAssert;
 
+import org.seasar.teeda.core.mock.MockValueBinding;
 import org.seasar.teeda.core.mock.NullFacesContext;
 import org.seasar.teeda.core.unit.ExceptionAssert;
 
@@ -42,7 +46,13 @@ public class ValueHolderUtilTest extends TestCase {
                 editableValueHolder);
 
         FacesContext context = new NullFacesContext();
+        editableValueHolder.setValueBinding("value", new MockValueBinding() {
 
+            public String getExpressionString() {
+                return "#{hoge}";
+            }
+
+        });
         // ## Act & Assert ##
         assertEquals("", ValueHolderUtil.getValueForRender(context,
                 editableValueHolder));
@@ -60,6 +70,13 @@ public class ValueHolderUtilTest extends TestCase {
         ObjectAssert
                 .assertNotInstanceOf(EditableValueHolder.class, valueHolder);
         ObjectAssert.assertInstanceOf(ValueHolder.class, valueHolder);
+        valueHolder.setValueBinding("value", new MockValueBinding() {
+
+            public String getExpressionString() {
+                return "#{hoge}";
+            }
+
+        });
 
         FacesContext context = new NullFacesContext();
 
@@ -69,6 +86,35 @@ public class ValueHolderUtilTest extends TestCase {
         valueHolder.setValue("abc");
         assertEquals("abc", ValueHolderUtil.getValueForRender(context,
                 valueHolder));
+    }
+
+    public void testGetValueForRender_getFromConverterResource()
+            throws Exception {
+        // ## Arrange ##
+        UIInput editableValueHolder = new UIInput();
+        ObjectAssert.assertInstanceOf(EditableValueHolder.class,
+                editableValueHolder);
+
+        FacesContext context = new NullFacesContext();
+        editableValueHolder.setValueBinding("value", new MockValueBinding() {
+
+            public String getExpressionString() {
+                return "#{hoge}";
+            }
+
+        });
+        ConverterResource.addConverter("#{hoge}", new NumberConverter());
+        editableValueHolder.setConverter(new DoubleConverter());
+
+        // ## Act & Assert ##
+        assertEquals("", ValueHolderUtil.getValueForRender(context,
+                editableValueHolder));
+        editableValueHolder.setValue("123.12");
+        assertEquals("123.12", ValueHolderUtil.getValueForRender(context,
+                editableValueHolder));
+        editableValueHolder.setSubmittedValue("bbbb");
+        assertEquals("bbbb", ValueHolderUtil.getValueForRender(context,
+                editableValueHolder));
     }
 
     public void testGetValueForRender_NotValueHolder() throws Exception {

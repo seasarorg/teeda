@@ -22,6 +22,8 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.ValueHolder;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
+import javax.faces.el.ValueBinding;
+import javax.faces.internal.ConverterResource;
 
 import org.seasar.teeda.core.exception.NoValueHolderRuntimeException;
 
@@ -55,7 +57,15 @@ public class ValueHolderUtil {
         }
         ValueHolder vh = (ValueHolder) component;
         Object value = vh.getValue();
-        Converter converter = vh.getConverter();
+        Converter converter = null;
+        ValueBinding vb = component.getValueBinding("value");
+        if (vb != null) {
+            String expression = vb.getExpressionString();
+            converter = ConverterResource.getConverter(expression);
+        }
+        if (converter == null) {
+            converter = vh.getConverter();
+        }
         return UIValueUtil.getValueAsString(context, component, value,
                 converter);
     }
