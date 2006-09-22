@@ -36,6 +36,7 @@ import org.seasar.teeda.core.util.ExternalContextUtil;
 import org.seasar.teeda.core.util.FacesContextUtil;
 import org.seasar.teeda.core.util.PortletUtil;
 import org.seasar.teeda.core.util.PostbackUtil;
+import org.seasar.teeda.core.util.ServletExternalContextUtil;
 
 /**
  * @author shot
@@ -67,7 +68,8 @@ public class RestoreViewPhase extends AbstractPhase {
         final Map sessionMap = externalContext.getSessionMap();
         final String previousViewId = getViewIdFromSession(sessionMap, wid);
         PostbackUtil.setPostback(externalContext.getRequestMap(), viewId
-                .equals(previousViewId));
+                .equals(previousViewId)
+                && ServletExternalContextUtil.isPost(externalContext));
         final UIViewRoot viewRoot = getViewRoot(context, viewId);
         context.setViewRoot(viewRoot);
         saveViewIdToSession(sessionMap, wid, viewId);

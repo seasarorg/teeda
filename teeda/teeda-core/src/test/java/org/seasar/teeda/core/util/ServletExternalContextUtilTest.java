@@ -97,6 +97,28 @@ public class ServletExternalContextUtilTest extends TeedaTestCase {
         assertEquals("Windows-31J", encoding);
     }
 
+    public void testIsPost_GET() throws Exception {
+        // ## Arrange ##
+        final MockHttpServletRequest request = getRequest();
+        request.setMethod("GET");
+
+        // ## Act ##
+        // ## Assert ##
+        assertEquals(false, ServletExternalContextUtil.isPost(getFacesContext()
+                .getExternalContext()));
+    }
+
+    public void testIsPost_POST() throws Exception {
+        // ## Arrange ##
+        final MockHttpServletRequest request = getRequest();
+        request.setMethod("POST");
+
+        // ## Act ##
+        // ## Assert ##
+        assertEquals(true, ServletExternalContextUtil.isPost(getFacesContext()
+                .getExternalContext()));
+    }
+
     private static class EmptyHttpServletRequest implements HttpServletRequest {
 
         public String getAuthType() {

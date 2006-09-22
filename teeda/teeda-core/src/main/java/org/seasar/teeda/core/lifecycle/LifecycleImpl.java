@@ -55,13 +55,13 @@ public class LifecycleImpl extends Lifecycle {
     public LifecycleImpl() {
     }
 
-    public void execute(FacesContext context) throws FacesException {
-        ExternalContext extContext = context.getExternalContext();
-        Map requestMap = extContext.getRequestMap();
+    public void execute(final FacesContext context) throws FacesException {
+        final ExternalContext extContext = context.getExternalContext();
+        final Map requestMap = extContext.getRequestMap();
         requestMap.put(JsfConstants.FACES_CONTEXT, context);
         try {
             restoreViewPhase.execute(context);
-            boolean postback = PostbackUtil.isPostback(requestMap);
+            final boolean postback = PostbackUtil.isPostback(requestMap);
             if (isFinished(context)) {
                 return;
             }
@@ -87,8 +87,8 @@ public class LifecycleImpl extends Lifecycle {
                 return;
             }
             invokeApplicationPhase.execute(context);
-        } catch (EvaluationException ex) {
-            Throwable cause = ex.getCause();
+        } catch (final EvaluationException ex) {
+            final Throwable cause = ex.getCause();
             if (cause instanceof RuntimeException) {
                 throw (RuntimeException) cause;
             } else if (cause instanceof Error) {
@@ -99,23 +99,23 @@ public class LifecycleImpl extends Lifecycle {
         }
     }
 
-    public void render(FacesContext context) throws FacesException {
+    public void render(final FacesContext context) throws FacesException {
         if (context.getResponseComplete()) {
             return;
         }
         renderResponsePhase.execute(context);
     }
 
-    protected boolean isFinished(FacesContext context) throws FacesException {
+    protected boolean isFinished(final FacesContext context) throws FacesException {
         return context.getResponseComplete() || context.getRenderResponse();
     }
 
-    public void addPhaseListener(PhaseListener listener) {
+    public void addPhaseListener(final PhaseListener listener) {
         phaseListeners = (PhaseListener[]) ArrayUtil.add(phaseListeners,
                 listener);
     }
 
-    public void removePhaseListener(PhaseListener listener) {
+    public void removePhaseListener(final PhaseListener listener) {
         phaseListeners = (PhaseListener[]) ArrayUtil.remove(phaseListeners,
                 listener);
     }
@@ -124,32 +124,32 @@ public class LifecycleImpl extends Lifecycle {
         return phaseListeners;
     }
 
-    protected boolean hasEvent(FacesContext context) {
-        UIViewRoot viewRoot = context.getViewRoot();
+    protected boolean hasEvent(final FacesContext context) {
+        final UIViewRoot viewRoot = context.getViewRoot();
         return viewRoot.getEventSize() > 0;
     }
 
-    public void setRestoreViewPhase(Phase restoreViewPhase) {
+    public void setRestoreViewPhase(final Phase restoreViewPhase) {
         this.restoreViewPhase = restoreViewPhase;
     }
 
-    public void setApplyRequestValuesPhase(AbstractPhase applyRequestValuesPhase) {
+    public void setApplyRequestValuesPhase(final AbstractPhase applyRequestValuesPhase) {
         this.applyRequestValuesPhase = applyRequestValuesPhase;
     }
 
-    public void setInvokeApplicationPhase(Phase invokeApplicationPhase) {
+    public void setInvokeApplicationPhase(final Phase invokeApplicationPhase) {
         this.invokeApplicationPhase = invokeApplicationPhase;
     }
 
-    public void setRenderResponsePhase(Phase renderPhase) {
+    public void setRenderResponsePhase(final Phase renderPhase) {
         renderResponsePhase = renderPhase;
     }
 
-    public void setProcessValidationsPhase(Phase processValidationPhase) {
+    public void setProcessValidationsPhase(final Phase processValidationPhase) {
         this.processValidationPhase = processValidationPhase;
     }
 
-    public void setUpdateModelValuesPhase(Phase updateModelValuesPhase) {
+    public void setUpdateModelValuesPhase(final Phase updateModelValuesPhase) {
         this.updateModelValuesPhase = updateModelValuesPhase;
     }
 

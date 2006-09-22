@@ -195,4 +195,8 @@ public class ServletExternalContextUtil {
         return getRequest(externalContext).getMethod().equals("GET");
     }
 
+    public static boolean isPost(ExternalContext externalContext) {
+        return getRequest(externalContext).getMethod().equals("POST");
+    }
+
 }
