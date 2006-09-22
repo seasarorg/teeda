@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tomcatProjectProperties>
     <rootDir>/src/main/webapp</rootDir>
-    <exportSource>false</exportSource>
+    <exportSource>true</exportSource>
     <reloadable>false</reloadable>
     <redirectLogger>true</redirectLogger>
     <updateXml>true</updateXml>
-    <warLocation></warLocation>
+    <warLocation>D:\teeda-html-example.war</warLocation>
     <extraInfo></extraInfo>
     <webPath>/teeda-html-example</webPath>
 </tomcatProjectProperties>
