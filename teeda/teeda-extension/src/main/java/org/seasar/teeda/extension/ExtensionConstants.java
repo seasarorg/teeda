@@ -50,11 +50,17 @@ public interface ExtensionConstants {
 
     String KEY_ATTR = "key";
 
-    String DEFAULT_KEY = "defaultKey";
-
     String PROPERTIES_NAME_ATTR = "propertiesName";
 
     String DEFAULT_PROPERTIES_NAME_ATTR = "defaultPropertiesName";
+
+    String PATTERN_ATTR = "pattern";
+
+    String LENGTH_ATTR = "length";
+
+    String THRESHOD_ATTR = "threshold";
+
+    String DEFAULT_KEY = "defaultKey";
 
     //Suffix and prefix
     String GO_PREFIX = "go";
@@ -77,6 +83,8 @@ public interface ExtensionConstants {
 
     String TEEDA_CURRENY_STYLE_CLASS = "T_currency";
 
+    String TEEDA_DATE_STYLE_CLASS = "T_date";
+
     String GRID = "Grid";
 
     String GRID_X = "GridX";
@@ -88,5 +96,11 @@ public interface ExtensionConstants {
     String SCROLL_HORIZONTAL = "scrollHorizontal";
 
     String SCROLL_VERTICAL = "scrollVertical";
+
+    String PATTERN_SUFFIX = "Pattern";
+
+    String LENGTH_SUFFIX = "Length";
+
+    String THRESHOLD_SUFFIX = "Threshold";
 
 }

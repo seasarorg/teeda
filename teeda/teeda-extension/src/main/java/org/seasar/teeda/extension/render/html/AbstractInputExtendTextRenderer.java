@@ -27,6 +27,7 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.internal.IgnoreComponent;
 import javax.faces.internal.UIComponentUtil;
 
+import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.html.HtmlInputTextRenderer;
 import org.seasar.teeda.core.util.JavaScriptPermissionUtil;
@@ -130,7 +131,7 @@ public abstract class AbstractInputExtendTextRenderer extends
     };
 
     protected static String appendSemiColonIfNeed(String property) {
-        if (property == null) {
+        if (StringUtil.isEmpty(property)) {
             return "";
         }
         if (property.endsWith(";")) {
