@@ -62,6 +62,9 @@ public class OutputLinkFactory extends AbstractElementProcessorFactory {
     protected void customizeProcessor(ElementProcessor processor,
             ElementNode elementNode, PageDesc pageDesc, ActionDesc actionDesc) {
         super.customizeProcessor(processor, elementNode, pageDesc, actionDesc);
+        if (pageDesc == null) {
+            return;
+        }
         String value = processor.getProperty(JsfConstants.VALUE_ATTR);
         if (value == null) {
             return;
