@@ -31,7 +31,6 @@ import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooAction;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooPage;
 import org.seasar.teeda.extension.html.impl.ActionDescImpl;
-import org.seasar.teeda.extension.html.impl.ElementNodeImpl;
 import org.seasar.teeda.extension.mock.MockTaglibManager;
 import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 
@@ -44,16 +43,16 @@ public class OutputTextFactoryTest extends TeedaExtensionTestCase {
         OutputTextFactory factory = new OutputTextFactory();
         Map properties = new HashMap();
         properties.put("id", "aaa");
-        ElementNode elementNode = new ElementNodeImpl("span", properties);
+        ElementNode elementNode = createElementNode("span", properties);
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         assertTrue("1", factory.isMatch(elementNode, pageDesc, null));
 
-        ElementNode elementNode2 = new ElementNodeImpl("foo", properties);
+        ElementNode elementNode2 = createElementNode("foo", properties);
         assertFalse("2", factory.isMatch(elementNode2, pageDesc, null));
 
         Map properties2 = new HashMap();
         properties2.put("href", "bbb");
-        ElementNode elementNode3 = new ElementNodeImpl("span", properties2);
+        ElementNode elementNode3 = createElementNode("span", properties2);
         assertFalse("3", factory.isMatch(elementNode3, pageDesc, null));
     }
 
@@ -71,7 +70,7 @@ public class OutputTextFactoryTest extends TeedaExtensionTestCase {
         factory.setTaglibManager(taglibManager);
         Map properties = new HashMap();
         properties.put("id", "aaa");
-        ElementNode elementNode = new ElementNodeImpl("span", properties);
+        ElementNode elementNode = createElementNode("span", properties);
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         ActionDesc actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
 

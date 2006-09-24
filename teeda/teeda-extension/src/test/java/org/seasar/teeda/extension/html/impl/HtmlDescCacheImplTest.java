@@ -29,7 +29,7 @@ import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 public class HtmlDescCacheImplTest extends TeedaExtensionTestCase {
 
     public void testCreateAndGetHtmlDesc() throws Exception {
-        String path = convertPath("HtmlNodeHandler.xhtml");
+        String path = convertPath("HtmlNodeHandler.html");
         HtmlDescCacheImpl cache = new HtmlDescCacheImpl();
         HtmlParser htmlParser = getHtmlParser();
         cache.setHtmlParser(htmlParser);

@@ -94,6 +94,8 @@
 		class="org.seasar.teeda.extension.html.factory.InputTextFactory" />
 	<component name="outputTextFactory"
 		class="org.seasar.teeda.extension.html.factory.OutputTextFactory" />
+	<component name="genericFactory"
+		class="org.seasar.teeda.extension.html.factory.GenericFactory" />
 
 	<component
 		class="org.seasar.teeda.extension.html.impl.TagProcessorAssemblerImpl" />

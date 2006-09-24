@@ -25,5 +25,7 @@ public interface TaglibManager {
 
     TaglibElement getTaglibElement(String uri);
 
+    boolean hasTaglibElement(String uri);
+
     void addTaglibElement(TaglibElement taglibElement);
 }

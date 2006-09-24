@@ -23,7 +23,9 @@ import java.util.Stack;
 
 import org.seasar.framework.util.ArrayUtil;
 import org.seasar.framework.util.ResourceUtil;
+import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.html.DocumentNode;
 import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.ElementNodeDecision;
@@ -68,15 +70,18 @@ public class HtmlNodeHandler extends DefaultHandler {
             String qName, Attributes attributes) {
         Map props = HtmlNodeUtil.convertMap(attributes);
         if (root == null) {
-            ElementNode n = new ElementNodeImpl(qName, props);
+            ElementNode n = new ElementNodeImpl(namespaceURI, localName, qName,
+                    props);
             root = n;
             DocumentNode docNode = (DocumentNode) nodeStack.peek();
             docNode.addChild(n);
             push(n);
         } else {
             ElementNode parent = peek();
-            if (isElementNode(parent, qName, attributes)) {
-                ElementNodeImpl elementNode = new ElementNodeImpl(qName, props);
+            if (isElementNode(parent, namespaceURI, localName, qName,
+                    attributes)) {
+                ElementNodeImpl elementNode = new ElementNodeImpl(namespaceURI,
+                        localName, qName, props);
                 parent.addElement(elementNode);
                 push(elementNode);
                 if (forceElementNodeTagName.contains(qName)) {
@@ -89,9 +94,13 @@ public class HtmlNodeHandler extends DefaultHandler {
         }
     }
 
-    private boolean isElementNode(ElementNode parent, String qName,
-            Attributes attributes) {
+    private boolean isElementNode(ElementNode parent, String namespaceURI,
+            String localName, String qName, Attributes attributes) {
         if (attributes.getValue(JsfConstants.ID_ATTR) != null) {
+            return true;
+        }
+        if (!StringUtil.isEmpty(namespaceURI)
+                && !namespaceURI.equals(ExtensionConstants.XHTML_URI)) {
             return true;
         }
         if (!forceElementNodeStack.isEmpty()) {

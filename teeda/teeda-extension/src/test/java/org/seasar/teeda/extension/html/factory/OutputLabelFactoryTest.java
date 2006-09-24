@@ -32,7 +32,6 @@ import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooAction;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooPage;
 import org.seasar.teeda.extension.html.impl.ActionDescImpl;
-import org.seasar.teeda.extension.html.impl.ElementNodeImpl;
 import org.seasar.teeda.extension.taglib.TOutputLabelTag;
 import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 
@@ -61,7 +60,7 @@ public class OutputLabelFactoryTest extends TeedaExtensionTestCase {
         factory.setTaglibManager(getTaglibManager());
         Map properties = new HashMap();
         properties.put("id", "aaa");
-        ElementNode elementNode = new ElementNodeImpl("label", properties);
+        ElementNode elementNode = createElementNode("label", properties);
         PageDesc pageDesc = createPageDesc(FooPage.class, "foo_fooPage");
         ActionDesc actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
         FacesConfigOptions.setDefaultSuffix(".html");

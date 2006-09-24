@@ -50,12 +50,12 @@ public class SelectManyCheckboxFactoryTest extends TeedaExtensionTestCase {
         SelectManyCheckboxFactory selectFactory = new SelectManyCheckboxFactory();
         Map map = new HashMap();
         map.put("id", "hoge");
-        ElementNodeImpl parent = new ElementNodeImpl("span", map);
+        ElementNodeImpl parent = new ElementNodeImpl(null, null, "span", map);
 
         Map map2 = new HashMap();
         map2.put("name", "hoge");
         map2.put("type", "checkbox");
-        ElementNodeImpl child = new ElementNodeImpl("input", map2);
+        ElementNodeImpl child = new ElementNodeImpl(null, null, "input", map2);
         parent.addElement(child);
 
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
@@ -67,20 +67,20 @@ public class SelectManyCheckboxFactoryTest extends TeedaExtensionTestCase {
         SelectManyCheckboxFactory selectFactory = new SelectManyCheckboxFactory();
         Map map = new HashMap();
         map.put("id", "hoge");
-        ElementNodeImpl parent = new ElementNodeImpl("span", map);
+        ElementNodeImpl parent = new ElementNodeImpl(null, null, "span", map);
 
         Map map2 = new HashMap();
         map2.put("name", "hoge");
         map2.put("type", "checkbox");
         map2.put("value", "aaa");
-        ElementNodeImpl child = new ElementNodeImpl("input", map2);
+        ElementNodeImpl child = new ElementNodeImpl(null, null, "input", map2);
         parent.addElement(child);
 
         Map map3 = new HashMap();
         map3.put("name", "hoge");
         map3.put("type", "checkbox");
         map3.put("value", "bbb");
-        ElementNodeImpl child2 = new ElementNodeImpl("input", map3);
+        ElementNodeImpl child2 = new ElementNodeImpl(null, null, "input", map3);
         parent.addElement(child2);
 
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
@@ -94,12 +94,12 @@ public class SelectManyCheckboxFactoryTest extends TeedaExtensionTestCase {
     public void testIsMatch_ng1() throws Exception {
         SelectManyCheckboxFactory selectFactory = new SelectManyCheckboxFactory();
         Map map = new HashMap();
-        ElementNodeImpl parent = new ElementNodeImpl("span", map);
+        ElementNodeImpl parent = new ElementNodeImpl(null, null, "span", map);
 
         Map map2 = new HashMap();
         map2.put("name", "hoge");
         map2.put("type", "checkbox");
-        ElementNodeImpl child = new ElementNodeImpl("input", map2);
+        ElementNodeImpl child = new ElementNodeImpl(null, null, "input", map2);
         parent.addElement(child);
 
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
@@ -114,11 +114,11 @@ public class SelectManyCheckboxFactoryTest extends TeedaExtensionTestCase {
         SelectManyCheckboxFactory selectFactory = new SelectManyCheckboxFactory();
         Map map = new HashMap();
         map.put("id", "hoge");
-        ElementNodeImpl parent = new ElementNodeImpl("span", map);
+        ElementNodeImpl parent = new ElementNodeImpl(null, null, "span", map);
 
         Map map2 = new HashMap();
         map2.put("type", "checkbox");
-        ElementNodeImpl child = new ElementNodeImpl("input", map2);
+        ElementNodeImpl child = new ElementNodeImpl(null, null, "input", map2);
         parent.addElement(child);
 
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
@@ -133,12 +133,12 @@ public class SelectManyCheckboxFactoryTest extends TeedaExtensionTestCase {
         SelectManyCheckboxFactory selectFactory = new SelectManyCheckboxFactory();
         Map map = new HashMap();
         map.put("id", "hoge");
-        ElementNodeImpl parent = new ElementNodeImpl("span", map);
+        ElementNodeImpl parent = new ElementNodeImpl(null, null, "span", map);
 
         Map map2 = new HashMap();
         map2.put("name", "foo");
         map2.put("type", "checkbox");
-        ElementNodeImpl child = new ElementNodeImpl("input", map2);
+        ElementNodeImpl child = new ElementNodeImpl(null, null, "input", map2);
         parent.addElement(child);
 
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
@@ -153,12 +153,12 @@ public class SelectManyCheckboxFactoryTest extends TeedaExtensionTestCase {
         SelectManyCheckboxFactory selectFactory = new SelectManyCheckboxFactory();
         Map map = new HashMap();
         map.put("id", "hoge");
-        ElementNodeImpl parent = new ElementNodeImpl("span", map);
+        ElementNodeImpl parent = new ElementNodeImpl(null, null, "span", map);
 
         Map map2 = new HashMap();
         map2.put("name", "hoge");
         map2.put("type", "text");
-        ElementNodeImpl child = new ElementNodeImpl("input", map2);
+        ElementNodeImpl child = new ElementNodeImpl(null, null, "input", map2);
         parent.addElement(child);
 
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
@@ -174,15 +174,16 @@ public class SelectManyCheckboxFactoryTest extends TeedaExtensionTestCase {
         SelectManyCheckboxFactory selectFactory = new SelectManyCheckboxFactory();
         Map map = new HashMap();
         map.put("id", "hoge");
-        ElementNodeImpl parent = new ElementNodeImpl("span", map);
+        ElementNodeImpl parent = new ElementNodeImpl(null, null, "span", map);
 
         Map map2 = new HashMap();
         map2.put("id", "hoge");
         map2.put("type", "text");
-        ElementNodeImpl child = new ElementNodeImpl("input", map2);
+        ElementNodeImpl child = new ElementNodeImpl(null, null, "input", map2);
         parent.addElement(child);
 
-        ElementNodeImpl child2 = new ElementNodeImpl("span", new HashMap());
+        ElementNodeImpl child2 = new ElementNodeImpl(null, null, "span",
+                new HashMap());
         parent.addElement(child2);
 
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
@@ -197,7 +198,7 @@ public class SelectManyCheckboxFactoryTest extends TeedaExtensionTestCase {
         SelectManyCheckboxFactory selectFactory = new SelectManyCheckboxFactory();
         Map map = new HashMap();
         map.put("id", "hoge");
-        ElementNodeImpl parent = new ElementNodeImpl("span", map);
+        ElementNodeImpl parent = new ElementNodeImpl(null, null, "span", map);
 
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         ActionDesc actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
@@ -211,7 +212,7 @@ public class SelectManyCheckboxFactoryTest extends TeedaExtensionTestCase {
         SelectManyCheckboxFactory selectFactory = new SelectManyCheckboxFactory();
         Map map = new HashMap();
         map.put("id", "hoge");
-        ElementNodeImpl parent = new ElementNodeImpl("span", map);
+        ElementNodeImpl parent = new ElementNodeImpl(null, null, "span", map);
         parent.addText("aaaaa");
         parent.endElement();
 
@@ -226,13 +227,15 @@ public class SelectManyCheckboxFactoryTest extends TeedaExtensionTestCase {
         factory.setTaglibManager(taglibManager);
         Map properties = new HashMap();
         properties.put("id", "hoge");
-        ElementNode elementNode = new ElementNodeImpl("span", properties);
+        ElementNode elementNode = new ElementNodeImpl(null, null, "span",
+                properties);
 
         Map map2 = new HashMap();
         map2.put("name", "hoge");
         map2.put("type", "checkbox");
         map2.put("value", "aaa");
-        ElementNodeImpl childNode = new ElementNodeImpl("input", map2);
+        ElementNodeImpl childNode = new ElementNodeImpl(null, null, "input",
+                map2);
         elementNode.addElement(childNode);
 
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");

@@ -30,7 +30,8 @@ public class InputTypeRadioElementNodeDecisionTest extends TestCase {
 
     public void testIsElementNode1() throws Exception {
         InputTypeRadioElementNodeDecision dec = new InputTypeRadioElementNodeDecision();
-        ElementNode node = new ElementNodeImpl("input", new HashMap());
+        ElementNode node = new ElementNodeImpl(null, null, "input",
+                new HashMap());
         MockAttributes attributes = new MockAttributes();
         attributes.addValue("type", "radio");
         attributes.addValue("name", "aaa");
@@ -39,7 +40,8 @@ public class InputTypeRadioElementNodeDecisionTest extends TestCase {
 
     public void testIsElementNode2() throws Exception {
         InputTypeRadioElementNodeDecision dec = new InputTypeRadioElementNodeDecision();
-        ElementNode node = new ElementNodeImpl("input", new HashMap());
+        ElementNode node = new ElementNodeImpl(null, null, "input",
+                new HashMap());
         MockAttributes attributes = new MockAttributes();
         attributes.addValue("name", "aaa");
         assertFalse(dec.isElementNode(node, "input", attributes));
@@ -47,7 +49,8 @@ public class InputTypeRadioElementNodeDecisionTest extends TestCase {
 
     public void testIsElementNode3() throws Exception {
         InputTypeRadioElementNodeDecision dec = new InputTypeRadioElementNodeDecision();
-        ElementNode node = new ElementNodeImpl("input", new HashMap());
+        ElementNode node = new ElementNodeImpl(null, null, "input",
+                new HashMap());
         MockAttributes attributes = new MockAttributes();
         attributes.addValue("type", "radio");
         assertFalse(dec.isElementNode(node, "input", attributes));
@@ -55,7 +58,7 @@ public class InputTypeRadioElementNodeDecisionTest extends TestCase {
 
     public void testIsElementNode4() throws Exception {
         InputTypeRadioElementNodeDecision dec = new InputTypeRadioElementNodeDecision();
-        ElementNode node = new ElementNodeImpl("aaa", new HashMap());
+        ElementNode node = new ElementNodeImpl(null, null, "aaa", new HashMap());
         MockAttributes attributes = new MockAttributes();
         attributes.addValue("name", "aaa");
         attributes.addValue("type", "radio");
@@ -64,7 +67,8 @@ public class InputTypeRadioElementNodeDecisionTest extends TestCase {
 
     public void testIsElementNode5() throws Exception {
         InputTypeRadioElementNodeDecision dec = new InputTypeRadioElementNodeDecision();
-        ElementNode node = new ElementNodeImpl("input", new HashMap());
+        ElementNode node = new ElementNodeImpl(null, null, "input",
+                new HashMap());
         MockAttributes attributes = new MockAttributes();
         attributes.addValue("name", "aaa");
         attributes.addValue("type", "text");

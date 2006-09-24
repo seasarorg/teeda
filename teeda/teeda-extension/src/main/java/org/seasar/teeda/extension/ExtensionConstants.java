@@ -21,6 +21,8 @@ package org.seasar.teeda.extension;
  */
 public interface ExtensionConstants {
 
+    String XHTML_URI = "http://www.w3.org/1999/xhtml";
+
     //URI
     String TEEDA_EXTENSION_URI = "http://www.seasar.org/teeda/extension";
 

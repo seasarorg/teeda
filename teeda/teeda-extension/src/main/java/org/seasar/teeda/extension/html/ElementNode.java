@@ -24,6 +24,10 @@ import java.util.Map;
  */
 public interface ElementNode extends HtmlNode {
 
+    String getNamespaceURI();
+
+    String getLocalName();
+
     String getTagName();
 
     String getId();

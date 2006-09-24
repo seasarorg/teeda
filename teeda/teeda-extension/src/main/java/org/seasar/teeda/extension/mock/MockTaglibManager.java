@@ -34,6 +34,10 @@ public class MockTaglibManager implements TaglibManager {
         return taglibElement;
     }
 
+    public boolean hasTaglibElement(String uri) {
+        return taglibElements.containsKey(uri);
+    }
+
     public void addTaglibElement(TaglibElement taglibElement) {
         taglibElements.put(taglibElement.getUri(), taglibElement);
     }

@@ -104,7 +104,12 @@ public abstract class TeedaExtensionTestCase extends TeedaTestCase {
     }
 
     protected ElementNode createElementNode(String tagName, Map props) {
-        return new ElementNodeImpl(tagName, props);
+        return createElementNode(null, null, tagName, props);
+    }
+
+    protected ElementNode createElementNode(String namespaceURI,
+            String localName, String tagName, Map props) {
+        return new ElementNodeImpl(namespaceURI, localName, tagName, props);
     }
 
     protected PageDesc createPageDesc(Class pageClass, String pageName) {

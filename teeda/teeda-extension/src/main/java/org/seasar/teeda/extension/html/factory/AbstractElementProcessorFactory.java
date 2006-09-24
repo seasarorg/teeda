@@ -50,8 +50,16 @@ public abstract class AbstractElementProcessorFactory implements
 
     public ElementProcessor createProcessor(ElementNode elementNode,
             PageDesc pageDesc, ActionDesc actionDesc) {
-        return createProcessor(elementNode, pageDesc, actionDesc, getUri(),
-                getTagName());
+
+        String uri = getUri();
+        if (StringUtil.isEmpty(uri)) {
+            uri = elementNode.getNamespaceURI();
+        }
+        String tagName = getTagName();
+        if (StringUtil.isEmpty(tagName)) {
+            tagName = elementNode.getLocalName();
+        }
+        return createProcessor(elementNode, pageDesc, actionDesc, uri, tagName);
     }
 
     public boolean isLeaf() {
@@ -62,6 +70,10 @@ public abstract class AbstractElementProcessorFactory implements
         TaglibElement taglibElement = taglibManager.getTaglibElement(uri);
         TagElement tagElement = taglibElement.getTagElement(tagName);
         return tagElement.getTagClass();
+    }
+
+    protected boolean hasTaglibElement(String uri) {
+        return taglibManager.hasTaglibElement(uri);
     }
 
     protected ElementProcessor createProcessor(ElementNode elementNode,

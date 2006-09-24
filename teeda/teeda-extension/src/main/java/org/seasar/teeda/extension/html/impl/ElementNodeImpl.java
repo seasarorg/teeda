@@ -13,6 +13,10 @@ import org.seasar.teeda.extension.html.HtmlNode;
 
 public class ElementNodeImpl implements ElementNode {
 
+    private String namespaceURI;
+
+    private String localName;
+
     private String tagName;
 
     private ElementNode parent;
@@ -26,8 +30,11 @@ public class ElementNodeImpl implements ElementNode {
     private int childTextSize;
 
     private String normalizedId;
-    
-    public ElementNodeImpl(String tagName, Map properties) {
+
+    public ElementNodeImpl(String namespaceURI, String localName,
+            String tagName, Map properties) {
+        this.namespaceURI = namespaceURI;
+        this.localName = localName;
         this.tagName = tagName;
         this.properties = properties;
         initializeBuffer();
@@ -36,11 +43,11 @@ public class ElementNodeImpl implements ElementNode {
 
     protected String normalizeId() {
         String id = getId();
-        if(StringUtil.isEmpty(id)) {
+        if (StringUtil.isEmpty(id)) {
             return null;
         }
         int indexOf = id.indexOf("-");
-        if(indexOf <= 0) {
+        if (indexOf <= 0) {
             return null;
         }
         return id.substring(0, indexOf);
@@ -50,12 +57,20 @@ public class ElementNodeImpl implements ElementNode {
         buffer = new StringBuffer(100);
     }
 
+    public String getNamespaceURI() {
+        return namespaceURI;
+    }
+
+    public String getLocalName() {
+        return localName;
+    }
+
     public String getTagName() {
         return tagName;
     }
 
     public String getId() {
-        if(normalizedId != null) {
+        if (normalizedId != null) {
             return normalizedId;
         }
         return getProperty(JsfConstants.ID_ATTR);
