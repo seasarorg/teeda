@@ -25,16 +25,21 @@ import java.io.ObjectStreamClass;
  */
 public class TeedaObjectInputStream extends ObjectInputStream {
 
-    public TeedaObjectInputStream(InputStream is) throws IOException {
+    public TeedaObjectInputStream(final InputStream is) throws IOException {
         super(is);
     }
 
-    protected Class resolveClass(ObjectStreamClass clazz) throws IOException,
+    protected Class resolveClass(final ObjectStreamClass clazz) throws IOException,
             ClassNotFoundException {
         String clazzName = clazz.getName();
+        if (clazzName.indexOf("$$") > 0) {
+            clazzName = clazzName.substring(0, clazzName.indexOf("$$"));
+        }
+        System.out.println("[TeedaObjectInputStream]"
+                + Thread.currentThread().getContextClassLoader());
         try {
             return Class.forName(clazzName);
-        } catch (ClassNotFoundException e) {
+        } catch (final ClassNotFoundException e) {
             return super.resolveClass(clazz);
         }
     }

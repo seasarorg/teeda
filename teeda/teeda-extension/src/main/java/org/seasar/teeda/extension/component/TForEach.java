@@ -178,18 +178,28 @@ public class TForEach extends UIComponentBase implements NamingContainer {
                     + "] should be array type, so no update.");
             return;
         }
-        final Object[] items = (Object[]) Array.newInstance(itemClass, rowSize);
+        /*
+         * Pageに値がある場合は、Pageのを使う。
+         * Pageに無い場合はnewする。
+         */
+        // TODO testing
+        Object[] items = (Object[]) itemsPd.getValue(page);
+        if (items == null) {
+            items = (Object[]) Array.newInstance(itemClass, rowSize);
+            for (int i = 0; i < items.length; i++) {
+                items[i] = ClassUtil.newInstance(itemClass);
+            }
+        }
         if (pageBeanDesc.hasPropertyDesc(getItemName())) {
+            // FIXME これ、動かない気がする...
             final PropertyDesc itemPd = pageBeanDesc
                     .getPropertyDesc(getItemName());
             for (int i = 0; i < rowSize; ++i) {
                 setRowIndex(i);
-                final Object item = ClassUtil.newInstance(itemClass);
-                itemPd.setValue(page, item);
+                itemPd.setValue(page, items[i]);
                 enterRow(context, i);
                 super.processUpdates(context);
                 leaveRow(context);
-                items[i] = item;
             }
         } else {
             final BeanDesc itemBeanDesc = BeanDescFactory
@@ -198,9 +208,7 @@ public class TForEach extends UIComponentBase implements NamingContainer {
                 enterRow(context, i);
                 super.processUpdates(context);
                 leaveRow(context);
-                final Object item = ClassUtil.newInstance(itemClass);
-                pageToItem(page, pageBeanDesc, item, itemBeanDesc);
-                items[i] = item;
+                pageToItem(page, pageBeanDesc, items[i], itemBeanDesc);
             }
         }
         itemsPd.setValue(page, items);
@@ -216,8 +224,14 @@ public class TForEach extends UIComponentBase implements NamingContainer {
             }
             final PropertyDesc pagePd = pageBeanDesc
                     .getPropertyDesc(propertyName);
-            final Object value = pagePd.getValue(page);
-            itemPd.setValue(item, value);
+            final Object pageValue = pagePd.getValue(page);
+            /*
+             * 画面からSubmitされてこない場合はPageのプロパティはnullのまま。
+             */
+            // TODO testing
+            if (pageValue != null) {
+                itemPd.setValue(item, pageValue);
+            }
         }
     }
 

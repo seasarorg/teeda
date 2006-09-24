@@ -42,7 +42,8 @@ public class InputHiddenFactory extends AbstractElementProcessorFactory {
         if (pageDesc == null) {
             return false;
         }
-        return pageDesc.hasProperty(elementNode.getId());
+        final String id = elementNode.getId();
+        return pageDesc.hasProperty(id) || pageDesc.hasItemsProperty(id);
     }
 
     protected void customizeProperties(Map properties, ElementNode elementNode,

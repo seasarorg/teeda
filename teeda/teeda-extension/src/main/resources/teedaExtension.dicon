@@ -107,6 +107,8 @@
 		class="org.seasar.teeda.extension.html.impl.HtmlViewHandler" />
 	<component name="navigationHandler"
 		class="org.seasar.teeda.extension.html.impl.HtmlNavigationHandler" />
+	<component name="propertyResolver" class="org.seasar.teeda.extension.el.ExtensionPropertyResolver" />
+		
 	<component
 		class="org.seasar.teeda.core.application.ApplicationImpl" />
 	<component
