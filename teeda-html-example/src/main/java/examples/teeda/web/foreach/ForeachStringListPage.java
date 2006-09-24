@@ -3,7 +3,7 @@ package examples.teeda.web.foreach;
 import java.util.Arrays;
 import java.util.List;
 
-public class ForeachListPage {
+public class ForeachStringListPage {
 
     private String aaa;
 

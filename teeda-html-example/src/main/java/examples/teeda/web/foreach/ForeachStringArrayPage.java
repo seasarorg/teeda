@@ -1,6 +1,6 @@
 package examples.teeda.web.foreach;
 
-public class ForeachArrayPage {
+public class ForeachStringArrayPage {
 
     private String aaa;
 
