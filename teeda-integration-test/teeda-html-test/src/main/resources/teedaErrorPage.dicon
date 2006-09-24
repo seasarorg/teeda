@@ -6,8 +6,8 @@
 	<component class="org.seasar.teeda.core.util.ServletErrorPageManagerImpl">
 		<!--
 		<initMethod name="addErrorPage">
-			<arg>@org.seasar.teeda.it.errorpage.ErrorPageException@class</arg>
-			<arg>"/faces/errorpage/errorPage.jsp"</arg>
+			<arg>@java.lang.Throwable@class</arg>
+			<arg>"/aaa/bbb.html"</arg>
 		</initMethod>
 		-->
 	</component>

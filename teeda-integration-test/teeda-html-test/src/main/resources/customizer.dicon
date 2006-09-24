@@ -7,11 +7,11 @@
 	</component>
 	<component name="commandAspectCustomizer" class="org.seasar.framework.container.customizer.AspectCustomizer">
 		<property name="interceptorName">"aop.classLoaderAwareTraceInterceptor"</property>
-		<property name="pointcut">"do.*, initialize"</property>
+		<property name="pointcut">"do.*, initialize, prerender"</property>
 	</component>
 	<component name="actionSupportAspectCustomizer" class="org.seasar.framework.container.customizer.AspectCustomizer">
 		<property name="interceptorName">"app_aop.actionSupportInterceptor"</property>
-		<property name="pointcut">"do.*, initialize"</property>
+		<property name="pointcut">"do.*, initialize, prerender"</property>
 	</component>
 
 	<component name="actionCustomizer" class="org.seasar.framework.container.customizer.CustomizerChain">
