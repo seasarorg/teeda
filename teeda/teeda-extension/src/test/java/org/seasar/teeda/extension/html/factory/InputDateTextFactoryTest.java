@@ -12,7 +12,6 @@ import org.seasar.teeda.extension.html.factory.sub.web.AaaPage;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooAction;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooPage;
 import org.seasar.teeda.extension.html.impl.ActionDescImpl;
-import org.seasar.teeda.extension.html.impl.ElementNodeImpl;
 import org.seasar.teeda.extension.mock.MockTaglibManager;
 import org.seasar.teeda.extension.taglib.TInputDateTextTag;
 import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
@@ -25,27 +24,27 @@ public class InputDateTextFactoryTest extends TeedaExtensionTestCase {
         props.put("id", "aaa");
         props.put("type", "text");
         props.put("class", "T_date");
-        ElementNode elementNode = new ElementNodeImpl("input", props);
+        ElementNode elementNode = createElementNode("input", props);
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         assertTrue(factory.isMatch(elementNode, pageDesc, null));
-        ElementNode elementNode2 = new ElementNodeImpl("hoge", props);
+        ElementNode elementNode2 = createElementNode("hoge", props);
         assertFalse(factory.isMatch(elementNode2, pageDesc, null));
         Map props2 = new HashMap();
         props2.put("id", "aaa");
         props2.put("type", "text");
-        ElementNode elementNode3 = new ElementNodeImpl("input", props2);
+        ElementNode elementNode3 = createElementNode("input", props2);
         assertFalse(factory.isMatch(elementNode3, pageDesc, null));
         Map props3 = new HashMap();
         props3.put("id", "xxx");
         props3.put("type", "text");
-        ElementNode elementNode4 = new ElementNodeImpl("input", props3);
+        ElementNode elementNode4 = createElementNode("input", props3);
         assertFalse(factory.isMatch(elementNode4, pageDesc, null));
 
         Map props4 = new HashMap();
         props4.put("id", "aaa");
         props4.put("type", "text");
         props4.put("class", "T_date hoge");
-        ElementNode elementNode5 = new ElementNodeImpl("input", props4);
+        ElementNode elementNode5 = createElementNode("input", props4);
         assertTrue(factory.isMatch(elementNode5, pageDesc, null));
     }
 
@@ -60,7 +59,7 @@ public class InputDateTextFactoryTest extends TeedaExtensionTestCase {
         props.put("id", "aaa");
         props.put("type", "text");
         props.put("class", "T_date");
-        ElementNode elementNode = new ElementNodeImpl("input", props);
+        ElementNode elementNode = createElementNode("input", props);
         PageDesc pageDesc = createPageDesc(AaaPage.class, "aaaPage");
         ActionDesc actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
 
