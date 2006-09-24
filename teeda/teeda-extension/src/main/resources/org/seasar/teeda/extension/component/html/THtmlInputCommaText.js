@@ -21,7 +21,6 @@ Teeda.THtmlInputCommaText = {
     if(length > 0) {
       o = Teeda.THtmlInputCommaText.checkFraction(obj, length, decimalSeparator);
     }
-
     var regGroup = new RegExp(groupingSeparator, 'g');
     var regDecimal = new RegExp(decimalSeparator, 'g');
     o.value = o.value.replace(regGroup, '');
@@ -75,7 +74,11 @@ Teeda.THtmlInputCommaText = {
      return true;
     }
   },
-  keycheckForNumber : function(e) {
+  keycheckForNumber : function(e, obj, length, decimalSeparator) {
+    var b = Teeda.THtmlInputCommaText.checkEnter(e);
+    if(b) {
+      Teeda.THtmlInputCommaText.checkFraction(obj, length, decimalSeparator);
+    }
     return Teeda.THtmlInputCommaText.isAllowedUnit(e) || Teeda.THtmlInputCommaText.isNumber(e) || Teeda.THtmlInputCommaText.isBackspace(e) || Teeda.THtmlInputCommaText.isPeriod(e) || Teeda.THtmlInputCommaText.isMovable(e) || Teeda.THtmlInputCommaText.isMinus(e) || Teeda.THtmlInputCommaText.isEnter(e) || Teeda.THtmlInputCommaText.isComma(e);
   },
   getKeyCode : function(e) {
@@ -116,5 +119,11 @@ Teeda.THtmlInputCommaText = {
   isComma : function(e) {
     var c = Teeda.THtmlInputCommaText.getKeyCode(e);
     return (c == 44 ||c == 188);
+  },
+  checkEnter : function(e) {
+    if(Teeda.THtmlInputCommaText.isEnter(e)) {
+      return true;
+    }
+    return false;
   }
 };

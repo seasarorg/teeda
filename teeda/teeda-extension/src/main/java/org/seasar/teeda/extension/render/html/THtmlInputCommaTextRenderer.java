@@ -63,8 +63,9 @@ public class THtmlInputCommaTextRenderer extends
         renderOnfocus(htmlInputCommaText, writer, groupingSeparator);
         renderOnblur(htmlInputCommaText, writer, fraction, groupingSeparator,
                 fractionSeparator);
-        renderOnkeydown(htmlInputCommaText, writer);
-        renderOnkeypress(htmlInputCommaText, writer);
+        renderOnkeydown(htmlInputCommaText, writer, fraction, fractionSeparator);
+        renderOnkeypress(htmlInputCommaText, writer, fraction,
+                fractionSeparator);
         renderOnkeyup(htmlInputCommaText, writer);
         renderStyle(htmlInputCommaText, writer);
         renderStyleClass(htmlInputCommaText, writer);
@@ -183,7 +184,7 @@ public class THtmlInputCommaTextRenderer extends
         final String onblur = appendSemiColonIfNeed(htmlInputCommaText
                 .getOnblur());
         final String s = JS_NAMESPACE_PREFIX + "convertByKey(this);"
-                + JS_NAMESPACE_PREFIX + "addComma(this, '" + fraction + "', '"
+                + JS_NAMESPACE_PREFIX + "addComma(this, " + fraction + ", '"
                 + groupingSeparator + "', '" + fractionSeparator + "');";
         if (StringUtil.contains(onblur, s)) {
             return onblur;
@@ -192,23 +193,29 @@ public class THtmlInputCommaTextRenderer extends
     }
 
     protected void renderOnkeydown(THtmlInputCommaText htmlInputCommaText,
-            ResponseWriter writer) throws IOException {
+            ResponseWriter writer, String fraction, String fractionSeparator)
+            throws IOException {
         String onkeydown = appendSemiColonIfNeed(htmlInputCommaText
                 .getOnkeydown());
-        renderKeycheckEvent(writer, JsfConstants.ONKEYDOWN_ATTR, onkeydown);
+        renderKeycheckEvent(writer, JsfConstants.ONKEYDOWN_ATTR, onkeydown,
+                fraction, fractionSeparator);
     }
 
     protected void renderOnkeypress(THtmlInputCommaText htmlInputCommaText,
-            ResponseWriter writer) throws IOException {
+            ResponseWriter writer, String fraction, String fractionSeparator)
+            throws IOException {
         String onkeypress = appendSemiColonIfNeed(htmlInputCommaText
                 .getOnkeypress());
-        renderKeycheckEvent(writer, JsfConstants.ONKEYPRESS_ATTR, onkeypress);
+        renderKeycheckEvent(writer, JsfConstants.ONKEYPRESS_ATTR, onkeypress,
+                fraction, fractionSeparator);
     }
 
     private void renderKeycheckEvent(ResponseWriter writer,
-            String attributeName, String target) throws IOException {
+            String attributeName, String target, String fraction,
+            String fractionSeparator) throws IOException {
         final String script = "return " + JS_NAMESPACE_PREFIX
-                + "keycheckForNumber(event);";
+                + "keycheckForNumber(event, this, " + fraction + ", '"
+                + fractionSeparator + "');";
         if (!target.endsWith(script)) {
             target = target + script;
             RendererUtil.renderAttribute(writer, attributeName, target);
