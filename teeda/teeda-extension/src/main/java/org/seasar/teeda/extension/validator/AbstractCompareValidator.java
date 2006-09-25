@@ -58,14 +58,16 @@ public abstract class AbstractCompareValidator implements Validator,
     }
 
     public Object saveState(FacesContext context) {
-        Object values[] = new Object[1];
+        Object values[] = new Object[2];
         values[0] = targetId;
+        values[1] = messageId;
         return values;
     }
 
     public void restoreState(FacesContext context, Object state) {
         Object values[] = (Object[]) state;
         targetId = (String) values[0];
+        messageId = (String) values[1];
     }
 
     public String getMessageId() {
