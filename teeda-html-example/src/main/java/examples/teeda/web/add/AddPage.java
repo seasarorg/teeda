@@ -2,6 +2,10 @@ package examples.teeda.web.add;
 
 public class AddPage {
 
+	public static final String arg1_TGreaterThanConstantValidator = null;
+
+	public static final String arg2_TGreaterThanConstantValidator = null;
+
 	private int arg1;
 
 	private int arg2;
