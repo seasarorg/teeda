@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -29,14 +29,12 @@ public class TeedaObjectInputStream extends ObjectInputStream {
         super(is);
     }
 
-    protected Class resolveClass(final ObjectStreamClass clazz) throws IOException,
-            ClassNotFoundException {
+    protected Class resolveClass(final ObjectStreamClass clazz)
+            throws IOException, ClassNotFoundException {
         String clazzName = clazz.getName();
         if (clazzName.indexOf("$$") > 0) {
             clazzName = clazzName.substring(0, clazzName.indexOf("$$"));
         }
-        System.out.println("[TeedaObjectInputStream]"
-                + Thread.currentThread().getContextClassLoader());
         try {
             return Class.forName(clazzName);
         } catch (final ClassNotFoundException e) {
