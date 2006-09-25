@@ -58,7 +58,7 @@ public class THtmlInputDateTextRendererTest extends RendererTest {
         // ## Assert ##
         assertEquals(
                 "<input type=\"text\" name=\"_id0\" value=\"\" "
-                        + "onfocus=\"Teeda.THtmlInputDateText.removeDelimeter(this, '/');\" "
+                        + "onfocus=\"Teeda.THtmlInputDateText.removeDelimeter(this, '/', 6);\" "
                         + "onblur=\"Teeda.THtmlInputDateText.convertByKey(this);Teeda.THtmlInputDateText.addDelimeter(this, 'yyyy/MM/dd', 6, 71, '/');\" "
                         + "onkeydown=\"return Teeda.THtmlInputDateText.keycheckForNumber(event);\" "
                         + "onkeypress=\"return Teeda.THtmlInputDateText.keycheckForNumber(event);\" "
@@ -82,7 +82,7 @@ public class THtmlInputDateTextRendererTest extends RendererTest {
         System.out.println(getResponseText());
         assertEquals(
                 "<input type=\"text\" name=\"_id0\" value=\"\" "
-                        + "onfocus=\"Teeda.THtmlInputDateText.removeDelimeter(this, '/');\" "
+                        + "onfocus=\"Teeda.THtmlInputDateText.removeDelimeter(this, '/', 4);\" "
                         + "onblur=\"Teeda.THtmlInputDateText.convertByKey(this);Teeda.THtmlInputDateText.addDelimeter(this, 'yyyy/MM', 4, 71, '/');\" "
                         + "onkeydown=\"return Teeda.THtmlInputDateText.keycheckForNumber(event);\" "
                         + "onkeypress=\"return Teeda.THtmlInputDateText.keycheckForNumber(event);\" "
@@ -105,7 +105,7 @@ public class THtmlInputDateTextRendererTest extends RendererTest {
         // ## Assert ##
         assertEquals(
                 "<input type=\"text\" name=\"_id0\" value=\"\" "
-                        + "onfocus=\"Teeda.THtmlInputDateText.removeDelimeter(this, '.');\" "
+                        + "onfocus=\"Teeda.THtmlInputDateText.removeDelimeter(this, '.', 6);\" "
                         + "onblur=\"Teeda.THtmlInputDateText.convertByKey(this);Teeda.THtmlInputDateText.addDelimeter(this, 'dd.MM.yyyy', 6, 71, '.');\" "
                         + "onkeydown=\"return Teeda.THtmlInputDateText.keycheckForNumber(event);\" "
                         + "onkeypress=\"return Teeda.THtmlInputDateText.keycheckForNumber(event);\" "
@@ -153,18 +153,6 @@ public class THtmlInputDateTextRendererTest extends RendererTest {
         encodeByRenderer(renderer, context, htmlInputDateText);
 
         System.out.println(getResponseText());
-        //        assertEquals(
-        //                "<input type=\"text\" id=\"A\" name=\"A\" value=\"123\" "
-        //                        + "disabled=\"disabled\" onfocus=\"k;Teeda.THtmlInputDateText.removeDelimeter(this, '/');\" "
-        //                        + "onblur=\"g;Teeda.THtmlInputDateText.convertByKey(this);Teeda.THtmlInputDateText.addDelimeter(this, 'yyyy/MM/dd', 6, 71, '/');\" "
-        //                        + "onkeydown=\"l;return Teeda.THtmlInputDateText.keycheckForNumber(event);\" "
-        //                        + "onkeypress=\"m;return Teeda.THtmlInputDateText.keycheckForNumber(event);\" "
-        //                        + "onkeypress=\"n;return Teeda.THtmlInputDateText.keycheckForNumber(event);\" "
-        //                        + "style=\"w;ime-mode:disabled;\" class=\"u\" tabindex=\"x\" maxlength=\"5\" "
-        //                        + "title=\"y\" lang=\"e\" onclick=\"i\" alt=\"b\" onmouseout=\"q\" dir=\"c\" onchange=\"h\" "
-        //                        + "onmousedown=\"o\" readonly=\"true\" accesskey=\"a\" label=\"A\" onselect=\"t\" ondblclick=\"j\" "
-        //                        + "onmouseup=\"s\" size=\"2\" onmousemove=\"p\" onmouseover=\"r\" />",
-        //                getResponseText());
     }
 
     public void testEncodeEnd_withAnotherOnblur() throws Exception {
@@ -185,7 +173,7 @@ public class THtmlInputDateTextRendererTest extends RendererTest {
         // ## Assert ##
         assertEquals(
                 "<input type=\"text\" name=\"_id0\" value=\"\" "
-                        + "onfocus=\"Teeda.THtmlInputDateText.removeDelimeter(this, '/');\" "
+                        + "onfocus=\"Teeda.THtmlInputDateText.removeDelimeter(this, '/', 6);\" "
                         + "onblur=\"Teeda.THtmlInputDateText.convertByKey(this);Teeda.THtmlInputDateText.addDelimeter(this, 'yyyy/MM', 6, 10, '/');\" "
                         + "onkeydown=\"return Teeda.THtmlInputDateText.keycheckForNumber(event);\" "
                         + "onkeypress=\"return Teeda.THtmlInputDateText.keycheckForNumber(event);\" "

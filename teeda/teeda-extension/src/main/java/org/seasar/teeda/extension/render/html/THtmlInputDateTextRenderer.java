@@ -60,7 +60,7 @@ public class THtmlInputDateTextRenderer extends AbstractInputExtendTextRenderer 
         final String delim = DateConversionUtil
                 .findDelimiterFromPattern(pattern);
 
-        renderOnfocus(htmlInputDateText, writer, delim);
+        renderOnfocus(htmlInputDateText, writer, delim, length);
         renderOnblur(htmlInputDateText, writer, pattern, length, threshold,
                 delim);
         renderOnkeydown(htmlInputDateText, writer);
@@ -127,10 +127,11 @@ public class THtmlInputDateTextRenderer extends AbstractInputExtendTextRenderer 
     }
 
     protected void renderOnfocus(THtmlInputDateText htmlInputDateText,
-            ResponseWriter writer, String delim) throws IOException {
+            ResponseWriter writer, String delim, String length)
+            throws IOException {
         String onfocus = appendSemiColonIfNeed(htmlInputDateText.getOnfocus());
         String target = JS_NAMESPACE_PREFIX + "removeDelimeter(this, '" + delim
-                + "');";
+                + "', " + length + ");";
         if (!onfocus.endsWith(target)) {
             onfocus = onfocus + target;
         }

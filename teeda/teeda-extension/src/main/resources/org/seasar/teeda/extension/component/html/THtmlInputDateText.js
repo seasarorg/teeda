@@ -5,12 +5,17 @@ if (typeof(Teeda.THtmlInputDateText) == 'undefined') {
   Teeda.THtmlInputDateText = {};
 }
 Teeda.THtmlInputDateText = {
-  removeDelimeter : function(obj, delimeter) {
-    if (!obj.value) {
+  removeDelimeter : function(obj, delimeter, worklen) {
+    var o = obj.value;
+    if (!o) {
       return;
     }
     reg = new RegExp(delimeter, 'g');
-    obj.value = obj.value.replace(reg, '');
+    o = o.replace(reg, '');
+    if(o.length > worklen) {
+      o = o.substring(o.length - worklen);
+    }
+    obj.value = o;
     if (document.all) {
       tRNG = obj.createTextRange();
       tRNG.select();
