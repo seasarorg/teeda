@@ -17,6 +17,7 @@ package org.seasar.teeda.extension.html.impl;
 
 import java.io.ByteArrayInputStream;
 
+import org.custommonkey.xmlunit.Diff;
 import org.seasar.framework.exception.IORuntimeException;
 import org.seasar.teeda.extension.html.DocumentNode;
 import org.seasar.teeda.extension.html.ElementNode;
@@ -145,11 +146,12 @@ public class HtmlParserImplTest extends TeedaExtensionTestCase {
         ElementNode ym = (ElementNode) y;
         HtmlNode x = ym.getChild(0);
         assertTrue(x instanceof TextNode);
-        assertEquals(
+        Diff diff = new Diff(
                 "<?xml version=\"1.0\"?><!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n"
                         + "<html xml:lang=\"ja\" lang=\"ja\" xmlns=\"http://www.w3.org/1999/xhtml\">"
                         + "<z id=\"&nbsp;aaa&nbsp;\"><y id=\"y\">&nbsp;aaa&nbsp;<x></x></y></z></html>",
                 root.toString());
+        assertTrue(diff.identical());
     }
 
     public void testWriteComment() throws Exception {
@@ -178,11 +180,13 @@ public class HtmlParserImplTest extends TeedaExtensionTestCase {
         HtmlNode x = ym.getChild(0);
         assertTrue(x instanceof TextNode);
         System.out.println(root.toString());
-        assertEquals(
+
+        Diff diff = new Diff(
                 "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n"
                         + "<html xml:lang=\"ja\" lang=\"ja\" xmlns=\"http://www.w3.org/1999/xhtml\">"
                         + "<z id=\"&nbsp;aaa&nbsp;\"><y id=\"y\">&nbsp;aaa&nbsp;<!-- hogefoobar --><x></x></y></z></html>",
                 root.toString());
+        assertTrue(diff.identical());
     }
 
 }

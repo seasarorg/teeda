@@ -15,6 +15,7 @@
  */
 package org.seasar.teeda.extension.html.impl;
 
+import org.custommonkey.xmlunit.Diff;
 import org.seasar.framework.util.ResourceUtil;
 import org.seasar.teeda.extension.html.DocumentNode;
 import org.seasar.teeda.extension.html.ElementNode;
@@ -84,10 +85,10 @@ public class HtmlNodeHandlerTest extends TeedaExtensionTestCase {
         String path = convertPath("HtmlNodeHandler4.html");
         HtmlParser parser = getHtmlParser();
         HtmlNode root = parser.parse(ResourceUtil.getResourceAsStream(path));
-        assertEquals(
-                "1",
+        Diff diff = new Diff(
                 "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n<html xmlns=\"http://www.w3.org/1999/xhtml\"><body><div><span value=\"Hello\"></span></div></body></html>",
                 root.toString());
+        assertTrue("1", diff.identical());
         DocumentNode docRoot = (DocumentNode) root;
         ElementNodeImpl n = (ElementNodeImpl) docRoot.getChild(0);
         assertEquals("2", 1, n.getChildSize());

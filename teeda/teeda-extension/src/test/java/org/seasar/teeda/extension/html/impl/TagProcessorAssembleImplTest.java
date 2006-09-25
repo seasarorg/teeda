@@ -15,6 +15,7 @@
  */
 package org.seasar.teeda.extension.html.impl;
 
+import org.custommonkey.xmlunit.Diff;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.taglib.html.CommandButtonTag;
 import org.seasar.teeda.core.taglib.html.InputTextTag;
@@ -180,10 +181,11 @@ public class TagProcessorAssembleImplTest extends TeedaExtensionTestCase {
         assertEquals("2", 1, viewRoot.getChildSize());
         TextProcessor textProcessor = (TextProcessor) viewRoot.getChild(0);
         System.out.println(textProcessor.getValue());
-        assertEquals(
-                "3",
-                "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n<html xmlns=\"http://www.w3.org/1999/xhtml\"><body>Hello</body></html>",
+        Diff diff = new Diff(
+                "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">"
+                        + "<html xmlns=\"http://www.w3.org/1999/xhtml\"><body>Hello</body></html>",
                 textProcessor.getValue());
+        assertTrue(diff.identical());
     }
 
     public void testAssembleElementNodeAsText9() throws Exception {
@@ -200,10 +202,12 @@ public class TagProcessorAssembleImplTest extends TeedaExtensionTestCase {
         assertEquals("2", 1, viewRoot.getChildSize());
         TextProcessor textProcessor = (TextProcessor) viewRoot.getChild(0);
         System.out.println(textProcessor.getValue());
-        assertEquals(
-                "3",
-                "<?xml version=\"1.0\" encoding=\"UTF-8\"?><!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n<html xmlns=\"http://www.w3.org/1999/xhtml\"><body>Hello</body></html>",
+        Diff diff = new Diff(
+                "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
+                        + "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n"
+                        + "<html xmlns=\"http://www.w3.org/1999/xhtml\"><body>Hello</body></html>",
                 textProcessor.getValue());
+        assertTrue(diff.identical());
     }
 
     public void testAssembleElementNode() throws Exception {

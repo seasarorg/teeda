@@ -41,6 +41,8 @@ public class TeedaXMLDocumentFilterImpl implements XMLDocumentFilter {
 
     private String xmlEncoding = JsfConstants.DEFAULT_ENCODING;
 
+    private static final String SEP = System.getProperty("line.separator");
+
     public TeedaXMLDocumentFilterImpl() {
     }
 
@@ -80,7 +82,8 @@ public class TeedaXMLDocumentFilterImpl implements XMLDocumentFilter {
             }
             buf.append(" \"").append(systemId).append("\"");
         }
-        buf.append(">\n");
+        buf.append(">");
+        buf.append(SEP);
         final String docTypeDecl = new String(buf);
         orgHandler.characters(new XMLString(docTypeDecl.toCharArray(), 0,
                 docTypeDecl.length()), augs);
@@ -159,6 +162,7 @@ public class TeedaXMLDocumentFilterImpl implements XMLDocumentFilter {
             xmlEncoding = encoding;
         }
         buf.append("?>");
+        buf.append(SEP);
         String xml = buf.toString();
         orgHandler.characters(
                 new XMLString(xml.toCharArray(), 0, xml.length()), augs);
