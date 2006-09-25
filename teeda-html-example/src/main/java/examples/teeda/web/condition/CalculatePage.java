@@ -13,7 +13,7 @@ public class CalculatePage {
 
 	private Integer arg2;
 
-	private boolean calType = false;
+	private boolean calType = true;
 
 	private Integer result;
 
