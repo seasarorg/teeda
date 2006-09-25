@@ -15,9 +15,11 @@
  */
 package org.seasar.teeda.unit.web;
 
+import junit.framework.Assert;
 import net.sourceforge.jwebunit.IJWebUnitDialog;
 import net.sourceforge.jwebunit.WebTester;
-import net.sourceforge.jwebunit.htmlunit.HtmlUnitDialog;
+
+import com.gargoylesoftware.htmlunit.html.HtmlElement;
 
 /**
  * @author manhole
@@ -28,10 +30,14 @@ public class TeedaWebTester extends WebTester {
         return new TeedaHtmlUnitDialog();
     }
 
-    static class TeedaHtmlUnitDialog extends HtmlUnitDialog {
-        public String getPageSource() {
-            return super.getPageSource();
-        }
+    public void assertTextEquals(final String elementId, final String text) {
+        final TeedaHtmlUnitDialog dialog = getTeedaHtmlUnitDialog();
+        final HtmlElement element = dialog.getElement(elementId);
+        Assert.assertEquals(text, element.asText());
+    }
+
+    private TeedaHtmlUnitDialog getTeedaHtmlUnitDialog() {
+        return (TeedaHtmlUnitDialog) getDialog();
     }
 
 }

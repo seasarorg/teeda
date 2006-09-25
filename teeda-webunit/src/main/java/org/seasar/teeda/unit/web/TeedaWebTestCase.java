@@ -74,10 +74,9 @@ public abstract class TeedaWebTestCase extends TestCase {
         return setUpTest(testSuite, pomFile);
     }
 
-    public static Test setUpTest(final TestSuite testSuite,
-        final File pomFile) throws MavenEmbedderException,
-        ArtifactResolutionException, ArtifactNotFoundException,
-        ProjectBuildingException {
+    public static Test setUpTest(final TestSuite testSuite, final File pomFile)
+        throws MavenEmbedderException, ArtifactResolutionException,
+        ArtifactNotFoundException, ProjectBuildingException {
 
         final MavenEmbedder maven = new MavenEmbedder();
         maven.setClassLoader(Thread.currentThread().getContextClassLoader());
@@ -160,16 +159,23 @@ public abstract class TeedaWebTestCase extends TestCase {
     }
 
     protected String resolvePath(final Class clazz, final String fileName) {
-        final String pathByClass = clazz.getName().replace('.', '/') + "_"
-            + fileName;
-        if (ResourceUtil.isExist(pathByClass)) {
-            return pathByClass;
-        } else {
-            final String pathByPackage = clazz.getPackage().getName().replace(
-                '.', '/')
-                + "/" + fileName;
-            return pathByPackage;
+        final String classNamePath = clazz.getName().replace('.', '/');
+        {
+            final String pathByClass = classNamePath + "_" + fileName;
+            if (ResourceUtil.isExist(pathByClass)) {
+                return pathByClass;
+            }
         }
+        {
+            final String pathByClass = classNamePath + "-" + fileName;
+            if (ResourceUtil.isExist(pathByClass)) {
+                return pathByClass;
+            }
+        }
+        final String pathByPackage = clazz.getPackage().getName().replace('.',
+            '/')
+            + "/" + fileName;
+        return pathByPackage;
     }
 
     protected String readText(final Class clazz, final String fileName,
