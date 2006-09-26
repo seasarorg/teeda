@@ -30,10 +30,24 @@ public class TeedaWebTester extends WebTester {
         return new TeedaHtmlUnitDialog();
     }
 
-    public void assertTextEquals(final String elementId, final String text) {
+    public void assertTextEquals(final String id, final String text) {
+        final HtmlElement element = getElement(id);
+        final String actual = element.asText();
+        Assert.assertEquals(text, actual);
+    }
+
+    public void assertAttributeEquals(final String id,
+        final String attributeName, final String attributeValue) {
+        final HtmlElement element = getElement(id);
+        final String actual = element.getAttributeValue(attributeName);
+        Assert.assertEquals(attributeValue, actual);
+    }
+
+    private HtmlElement getElement(final String id) {
         final TeedaHtmlUnitDialog dialog = getTeedaHtmlUnitDialog();
-        final HtmlElement element = dialog.getElement(elementId);
-        Assert.assertEquals(text, element.asText());
+        final HtmlElement element = dialog.getElement(id);
+        Assert.assertNotNull(element);
+        return element;
     }
 
     private TeedaHtmlUnitDialog getTeedaHtmlUnitDialog() {

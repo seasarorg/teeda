@@ -45,7 +45,7 @@ public class FileSystemWebTestBuilder {
         ArtifactNotFoundException, ProjectBuildingException {
 
         final TestSuite suite = new TestSuite();
-        final List testClasses = collectTestClass(ResourceUtil
+        final List testClasses = collectTestClasses(ResourceUtil
             .getBuildDir(referenceClass));
         for (final Iterator it = testClasses.iterator(); it.hasNext();) {
             final Class testClass = (Class) it.next();
@@ -56,7 +56,7 @@ public class FileSystemWebTestBuilder {
         return TeedaWebTestCase.setUpTest(suite, pomFile);
     }
 
-    public List collectTestClass(final File startingDirectory) {
+    public List collectTestClasses(final File startingDirectory) {
         final TestClassHandler testClassHandler = new TestClassHandler();
         ClassTraversal.forEach(startingDirectory, testClassHandler);
         return testClassHandler.testClasses;

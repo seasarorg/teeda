@@ -99,6 +99,38 @@ public class TeedaWebTesterTest extends TeedaWebTestCase {
         tester.assertTextEquals("aaa", "Teeda!");
     }
 
+    public void testAttribute() throws Exception {
+        // ## Arrange ##
+        final String relativeUrl = getFileAsRelativeUrl("attribute.html");
+
+        // ## Act ##
+        tester.beginAt(relativeUrl);
+        tester.dumpHtml();
+
+        // ## Assert ##
+        tester.assertAttributeEquals("aaa", "x", "xxx");
+        tester.assertAttributeEquals("aaa", "y", "z");
+        boolean ok = true;
+        try {
+            tester.assertAttributeEquals("aaa", "y", "123");
+            ok = false;
+        } catch (AssertionFailedError e) {
+        }
+        assertEquals(true, ok);
+        try {
+            tester.assertAttributeEquals("aaa", "ggg", "123");
+            ok = false;
+        } catch (AssertionFailedError e) {
+        }
+        assertEquals(true, ok);
+        try {
+            tester.assertAttributeEquals("unknown", "ggg", "123");
+            ok = false;
+        } catch (AssertionFailedError e) {
+        }
+        assertEquals(true, ok);
+    }
+
     private String getFileAsRelativeUrl(final String file) {
         final URL url = getFileAsUrl(file);
         final String fullUrl = url.toString();

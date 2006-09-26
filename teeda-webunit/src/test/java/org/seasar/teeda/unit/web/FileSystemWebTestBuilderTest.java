@@ -36,7 +36,7 @@ public class FileSystemWebTestBuilderTest extends TestCase {
         final FileSystemWebTestBuilder builder = new FileSystemWebTestBuilder();
 
         // ## Act ##
-        final List testClasses = builder.collectTestClass(buildDir);
+        final List testClasses = builder.collectTestClasses(buildDir);
 
         // ## Assert ##
         boolean found = false;
