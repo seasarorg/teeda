@@ -80,8 +80,11 @@ public class THtmlGridRenderer extends TForEachRenderer {
     private static final String GRID_ATTRIBUTE = THtmlGrid.class.getName()
             + ".GRID_ATTRIBUTE";
 
-    private static final String ALREADY_WRITE = THtmlGrid.class.getName()
-            + ".ALREADY_WRITE";
+    private static final String GRID_JS = THtmlGrid.class.getName()
+            + ".GRID_JS";
+
+    private static final String APPEND_EVENT_JS = THtmlGrid.class.getName()
+            + ".APPEND_EVENT_JS";
 
     public void encodeBegin(FacesContext context, UIComponent component)
             throws IOException {
@@ -117,8 +120,7 @@ public class THtmlGridRenderer extends TForEachRenderer {
                     THtmlGrid.class.getName(), "js");
             final String scriptBody = TextUtil.readText(resourcePath).trim();
             renderJavaScriptElement(writer, scriptBody);
-            DispatchScopeFactory.getDispatchScope().put(ALREADY_WRITE,
-                    ALREADY_WRITE);
+            DispatchScopeFactory.getDispatchScope().put(GRID_JS, GRID_JS);
         }
     }
 
@@ -127,7 +129,7 @@ public class THtmlGridRenderer extends TForEachRenderer {
             THtmlGrid htmlGrid) {
         final DispatchScope dispatchScope = DispatchScopeFactory
                 .getDispatchScope();
-        if (dispatchScope.contains(ALREADY_WRITE)) {
+        if (dispatchScope.contains(GRID_JS)) {
             return false;
         }
         return true;
@@ -188,20 +190,35 @@ public class THtmlGridRenderer extends TForEachRenderer {
     private void encodeGridAdjustJavaScript(FacesContext context,
             THtmlGrid htmlGrid, ResponseWriter writer, GridAttribute attribute)
             throws IOException {
-        final StringBuffer scirptBody = new StringBuffer(200);
+        final StringBuffer scriptBody = new StringBuffer(200);
         final String id = getIdForRender(context, htmlGrid);
-        scirptBody.append("Teeda.THtmlGrid.adjustGridSize('" + id + "');");
+        final DispatchScope dispatchScope = DispatchScopeFactory
+                .getDispatchScope();
+        if (dispatchScope.get(APPEND_EVENT_JS) == null) {
+            final String resourcePath = ResourceUtil.getResourcePath(
+                    THtmlGrid.class.getPackage().getName() + ".AppendEventFor",
+                    "js");
+            final String a = TextUtil.readText(resourcePath).trim();
+            scriptBody.append(a);
+            scriptBody.append(JsfConstants.LINE_SP);
+            dispatchScope.put(APPEND_EVENT_JS, APPEND_EVENT_JS);
+        }
+
+        scriptBody
+                .append("appendEventFor(window, 'onload', function() { Teeda.THtmlGrid.adjustGridSize('"
+                        + id + "');");
         // 横方向にscrollするときは全体の横幅を自動調整する
         if (htmlGrid.isScrollHorizontal()) {
-            scirptBody.append("document.getElementById('" + id + RIGHT_HEADER
+            scriptBody.append("document.getElementById('" + id + RIGHT_HEADER
                     + "').style.width = " + attribute.getRightHeaderWidth()
                     + ";");
-            scirptBody
+            scriptBody
                     .append("document.getElementById('" + id + RIGHT_BODY
                             + "').style.width = "
                             + attribute.getRightBodyWidth() + ";");
         }
-        renderJavaScriptElement(writer, new String(scirptBody));
+        scriptBody.append(" });");
+        renderJavaScriptElement(writer, new String(scriptBody));
     }
 
     private void encodeGridHeader(final FacesContext context,

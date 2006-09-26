@@ -276,7 +276,15 @@ Teeda.THtmlGrid = {
 </table>
 <script language="JavaScript" type="text/javascript">
 <!--
-Teeda.THtmlGrid.adjustGridSize('someGridXY');document.getElementById('someGridXYRightHeader').style.width = 74;document.getElementById('someGridXYRightBody').style.width = 90;
+function appendEventFor(targetObj, eventName, fn){
+  var prev = targetObj[eventName];
+  if (prev) {
+    targetObj[eventName] = function() { prev(); fn(); }
+  } else {
+    targetObj[eventName] = fn();
+  }
+}
+appendEventFor(window, 'onload', function() { Teeda.THtmlGrid.adjustGridSize('someGridXY');document.getElementById('someGridXYRightHeader').style.width = 74;document.getElementById('someGridXYRightBody').style.width = 90; });
 //-->
 </script>
 <!-- END -->
