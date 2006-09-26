@@ -33,6 +33,9 @@ public class ForeachTest extends TeedaWebTestCase {
         // ## Arrange ##
         TeedaWebTester tester = new TeedaWebTester();
         tester.getTestContext().setBaseUrl(getBaseUrl());
+
+        // ## Act ##
+        // ## Assert ##
         tester.beginAt("view/foreach/foreach.html");
         tester.dumpHtml();
         tester.assertTableEquals("foreachTable",

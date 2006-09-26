@@ -15,41 +15,31 @@
  */
 package org.seasar.teeda.it.render;
 
-import java.net.URL;
-
 import junit.framework.Test;
 
 import org.seasar.teeda.unit.web.TeedaWebTestCase;
-
-import com.gargoylesoftware.htmlunit.WebClient;
-import com.gargoylesoftware.htmlunit.html.HtmlPage;
-import com.gargoylesoftware.htmlunit.html.HtmlSpan;
+import org.seasar.teeda.unit.web.TeedaWebTester;
 
 /**
  * @author manhole
  */
-public class HelloPageTest extends TeedaWebTestCase {
+public class HelloTest extends TeedaWebTestCase {
 
     public static Test suite() throws Exception {
-        return setUpTest(HelloPageTest.class);
+        return setUpTest(HelloTest.class);
     }
 
     public void testRender() throws Exception {
         // ## Arrange ##
-        URL url = getUrl("view/hello/hello.html");
-        System.out.println(url);
-
-        WebClient webClient = new WebClient();
+        TeedaWebTester tester = new TeedaWebTester();
+        tester.getTestContext().setBaseUrl(getBaseUrl());
 
         // ## Act ##
+        tester.beginAt("view/hello/hello.html");
+        tester.dumpHtml();
+
         // ## Assert ##
-        HtmlPage page1 = getHtmlPage(webClient, url);
-
-        final String body = getBody(page1).trim();
-        System.out.println(body);
-
-        HtmlSpan span = (HtmlSpan) page1.getHtmlElementById("aaa");
-        assertEquals("Teeda Extension Tests", span.asText());
+        tester.assertTextEquals("aaa", "Teeda Extension Tests");
     }
 
 }
