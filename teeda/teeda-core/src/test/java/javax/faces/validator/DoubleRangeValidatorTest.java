@@ -22,14 +22,11 @@ import javax.faces.component.html.HtmlInputText;
 import javax.faces.context.FacesContext;
 
 import org.seasar.teeda.core.mock.MockFacesContext;
-import org.seasar.teeda.core.mock.MockFacesContextImpl;
-import org.seasar.teeda.core.mock.MockUIComponent;
-import org.seasar.teeda.core.unit.TeedaTestCase;
 
 /**
  * @author shot
  */
-public class DoubleRangeValidatorTest extends TeedaTestCase {
+public class DoubleRangeValidatorTest extends AbstractValidatorTest {
 
     public void testConstants() throws Exception {
         assertEquals("javax.faces.validator.DoubleRangeValidator.MAXIMUM",
@@ -74,35 +71,6 @@ public class DoubleRangeValidatorTest extends TeedaTestCase {
     public void testGetMinimum_notSetMin() throws Exception {
         DoubleRangeValidator validator = new DoubleRangeValidator();
         assertTrue(Double.MIN_VALUE == validator.getMinimum());
-    }
-
-    public void testValidate_facesContextIsNull() throws Exception {
-        DoubleRangeValidator validator = new DoubleRangeValidator();
-        try {
-            validator.validate(null, new MockUIComponent(), "");
-            fail();
-        } catch (NullPointerException expected) {
-            success();
-        }
-    }
-
-    public void testValidate_componentIsNull() throws Exception {
-        DoubleRangeValidator validator = new DoubleRangeValidator();
-        try {
-            validator.validate(new MockFacesContextImpl(), null, "");
-            fail();
-        } catch (NullPointerException expected) {
-            success();
-        }
-    }
-
-    public void testValidate_valueIsNull() throws Exception {
-        DoubleRangeValidator validator = new DoubleRangeValidator();
-        validator.validate(new MockFacesContextImpl(), new MockUIComponent(),
-                null);
-
-        // assume nothing happen
-        success();
     }
 
     public void testValidate_lessThanMinWhenBothMaxMinNotNull()
@@ -179,7 +147,8 @@ public class DoubleRangeValidatorTest extends TeedaTestCase {
         }
     }
 
-    public void testValidate_lessThanMinWhenMinNotNullWithLabel() throws Exception {
+    public void testValidate_lessThanMinWhenMinNotNullWithLabel()
+            throws Exception {
         getApplication().setMessageBundle("javax.faces.component.TestMessages");
         HtmlInputText component = new HtmlInputText();
         component.setLabel("hoge");
@@ -208,7 +177,8 @@ public class DoubleRangeValidatorTest extends TeedaTestCase {
         }
     }
 
-    public void testValidate_moreThanMaxWhenMaxNotNullWithLabel() throws Exception {
+    public void testValidate_moreThanMaxWhenMaxNotNullWithLabel()
+            throws Exception {
         getApplication().setMessageBundle("javax.faces.component.TestMessages");
         HtmlInputText component = new HtmlInputText();
         component.setLabel("hoge");
@@ -332,5 +302,9 @@ public class DoubleRangeValidatorTest extends TeedaTestCase {
         root.setLocale(locale);
         context.setViewRoot(root);
         return context;
+    }
+
+    protected Validator createValidator() {
+        return new DoubleRangeValidator();
     }
 }

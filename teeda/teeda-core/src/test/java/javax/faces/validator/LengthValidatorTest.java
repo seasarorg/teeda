@@ -21,12 +21,11 @@ import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 
 import org.seasar.teeda.core.mock.MockFacesContext;
-import org.seasar.teeda.core.unit.TeedaTestCase;
 
 /**
  * @author shot
  */
-public class LengthValidatorTest extends TeedaTestCase {
+public class LengthValidatorTest extends AbstractValidatorTest {
 
     //TODO more test for label
     public void testConstants() throws Exception {
@@ -55,26 +54,6 @@ public class LengthValidatorTest extends TeedaTestCase {
     public void testGetMinimum_getMin() throws Exception {
         LengthValidator validator = new LengthValidator(5, 2);
         assertEquals(2, validator.getMinimum());
-    }
-
-    public void testValidate_facesContextIsNull() throws Exception {
-        LengthValidator validator = new LengthValidator(5, 2);
-        try {
-            validator.validate(null, getFacesContext().getViewRoot(), "hoge");
-            fail();
-        } catch (NullPointerException expected) {
-            success();
-        }
-    }
-
-    public void testValidate_componentIsNull() throws Exception {
-        LengthValidator validator = new LengthValidator(5, 2);
-        try {
-            validator.validate(getFacesContext(), null, "hoge");
-            fail();
-        } catch (NullPointerException expected) {
-            success();
-        }
     }
 
     public void testValidate_lengthLessThanMin() throws Exception {
@@ -112,6 +91,10 @@ public class LengthValidatorTest extends TeedaTestCase {
         root.setLocale(locale);
         context.setViewRoot(root);
         return context;
+    }
+
+    protected Validator createValidator() {
+        return new LengthValidator();
     }
 
 }

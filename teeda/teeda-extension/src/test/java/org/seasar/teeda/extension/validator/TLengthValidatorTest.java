@@ -15,18 +15,19 @@
  */
 package org.seasar.teeda.extension.validator;
 
+import javax.faces.validator.AbstractValidatorTest;
+import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.mock.MockUIComponent;
-import org.seasar.teeda.core.unit.TeedaTestCase;
 import org.seasar.teeda.extension.exception.ExtendValidatorException;
 
 /**
  * @author shot
  *
  */
-public class TLengthValidatorTest extends TeedaTestCase {
+public class TLengthValidatorTest extends AbstractValidatorTest {
 
     public void testValidate_normal() throws Exception {
         TLengthValidator validator = new TLengthValidator();
@@ -106,6 +107,10 @@ public class TLengthValidatorTest extends TeedaTestCase {
         assertEquals("aaa", validator.getTarget());
         assertEquals("max", validator.getMaximumMessageId());
         assertEquals("min", validator.getMinimumMessageId());
+    }
+
+    protected Validator createValidator() {
+        return new TLengthValidator();
     }
 
 }

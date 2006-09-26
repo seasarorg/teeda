@@ -21,11 +21,8 @@ import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 
 import org.seasar.teeda.core.mock.MockFacesContext;
-import org.seasar.teeda.core.mock.MockFacesContextImpl;
-import org.seasar.teeda.core.mock.MockUIComponent;
-import org.seasar.teeda.core.unit.TeedaTestCase;
 
-public class LongRangeValidatorTest extends TeedaTestCase {
+public class LongRangeValidatorTest extends AbstractValidatorTest {
 
     //TODO more test for label
     public void testConstants() throws Exception {
@@ -70,35 +67,6 @@ public class LongRangeValidatorTest extends TeedaTestCase {
     public void testGetMinimum_notSetMin() throws Exception {
         LongRangeValidator validator = new LongRangeValidator();
         assertTrue(Long.MIN_VALUE == validator.getMinimum());
-    }
-
-    public void testValidate_facesContextIsNull() throws Exception {
-        LongRangeValidator validator = new LongRangeValidator();
-        try {
-            validator.validate(null, new MockUIComponent(), "");
-            fail();
-        } catch (NullPointerException expected) {
-            success();
-        }
-    }
-
-    public void testValidate_componentIsNull() throws Exception {
-        LongRangeValidator validator = new LongRangeValidator();
-        try {
-            validator.validate(new MockFacesContextImpl(), null, "");
-            fail();
-        } catch (NullPointerException expected) {
-            success();
-        }
-    }
-
-    public void testValidate_valueIsNull() throws Exception {
-        LongRangeValidator validator = new LongRangeValidator();
-        validator.validate(new MockFacesContextImpl(), new MockUIComponent(),
-                null);
-
-        // assume nothing happen
-        success();
     }
 
     public void testValidate_lessThanMinWhenBothMaxMinNotNull()
@@ -250,6 +218,10 @@ public class LongRangeValidatorTest extends TeedaTestCase {
         root.setLocale(locale);
         context.setViewRoot(root);
         return context;
+    }
+
+    protected Validator createValidator() {
+        return new LongRangeValidator();
     }
 
 }

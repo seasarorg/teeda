@@ -17,16 +17,17 @@ package org.seasar.teeda.extension.validator;
 
 import java.math.BigDecimal;
 
+import javax.faces.validator.AbstractValidatorTest;
+import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.mock.MockUIComponent;
-import org.seasar.teeda.core.unit.TeedaTestCase;
 
 /**
  * @author shot
  */
-public class TGreaterThanConstantValidatorTest extends TeedaTestCase {
+public class TGreaterThanConstantValidatorTest extends AbstractValidatorTest {
 
     public void test1() throws Exception {
         TGreaterThanConstantValidator validator = new TGreaterThanConstantValidator();
@@ -78,6 +79,10 @@ public class TGreaterThanConstantValidatorTest extends TeedaTestCase {
             System.out.println(expected.getFacesMessage().getDetail());
             success();
         }
+    }
+
+    protected Validator createValidator() {
+        return new TGreaterThanConstantValidator();
     }
 
 }

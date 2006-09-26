@@ -1,5 +1,6 @@
 package org.seasar.teeda.extension.validator;
 
+import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
 import org.seasar.teeda.core.JsfConstants;
@@ -66,4 +67,27 @@ public class TRequiredValidatorTest extends TeedaTestCase {
         }
     }
 
+    public void testValidate_facesContextIsNull() throws Exception {
+        Validator validator = createValidator();
+        try {
+            validator.validate(null, getFacesContext().getViewRoot(), "hoge");
+            fail();
+        } catch (NullPointerException expected) {
+            success();
+        }
+    }
+
+    public void testValidate_componentIsNull() throws Exception {
+        Validator validator = createValidator();
+        try {
+            validator.validate(getFacesContext(), null, "hoge");
+            fail();
+        } catch (NullPointerException expected) {
+            success();
+        }
+    }
+
+    protected Validator createValidator() {
+        return new TRequiredValidator();
+    }
 }

@@ -22,6 +22,7 @@ import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
 import org.seasar.framework.exception.EmptyRuntimeException;
+import org.seasar.framework.util.AssertionUtil;
 import org.seasar.teeda.core.util.ValueHolderUtil;
 
 /**
@@ -80,6 +81,8 @@ public abstract class AbstractCompareValidator implements Validator,
 
     public void validate(FacesContext context, UIComponent component,
             Object value) throws ValidatorException {
+        AssertionUtil.assertNotNull("context", context);
+        AssertionUtil.assertNotNull("component", component);
         if (value == null) {
             return;
         }

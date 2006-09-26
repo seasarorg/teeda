@@ -15,17 +15,18 @@
  */
 package org.seasar.teeda.extension.validator;
 
+import javax.faces.validator.AbstractValidatorTest;
+import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.mock.MockUIComponent;
-import org.seasar.teeda.core.unit.TeedaTestCase;
 import org.seasar.teeda.extension.exception.ExtendValidatorException;
 
 /**
  * @author shot
  */
-public class TRegularExpressionValidatorTest extends TeedaTestCase {
+public class TRegularExpressionValidatorTest extends AbstractValidatorTest {
 
     public void testValidate_validationError() throws Exception {
         MockUIComponent component = new MockUIComponent();
@@ -111,5 +112,9 @@ public class TRegularExpressionValidatorTest extends TeedaTestCase {
         assertEquals("aaa", validator.getTarget());
         assertEquals("^[1-9]", validator.getPattern());
         assertEquals("bbb", validator.getMessageId());
+    }
+
+    protected Validator createValidator() {
+        return new TRegularExpressionValidator();
     }
 }

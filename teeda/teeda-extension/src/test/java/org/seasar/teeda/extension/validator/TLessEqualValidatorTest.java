@@ -19,14 +19,14 @@ import javax.faces.component.UIInput;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.IntegerConverter;
+import javax.faces.validator.AbstractValidatorTest;
+import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
-
-import org.seasar.teeda.core.unit.TeedaTestCase;
 
 /**
  * @author shot
  */
-public class TLessEqualValidatorTest extends TeedaTestCase {
+public class TLessEqualValidatorTest extends AbstractValidatorTest {
 
     public void testValidate_invalid() throws Exception {
         TLessEqualValidator validator = new TLessEqualValidator();
@@ -106,6 +106,10 @@ public class TLessEqualValidatorTest extends TeedaTestCase {
         } catch (ValidatorException expected) {
             fail();
         }
+    }
+
+    protected Validator createValidator() {
+        return new TLessEqualValidator();
     }
 
 }

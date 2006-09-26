@@ -19,16 +19,18 @@ import java.math.BigDecimal;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.validator.AbstractValidatorTest;
+import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
 import org.seasar.teeda.core.mock.MockUIComponent;
 import org.seasar.teeda.core.unit.ExceptionAssert;
-import org.seasar.teeda.core.unit.TeedaTestCase;
 
 /**
  * @author manhole
+ * @author shot
  */
-public class TNumberLengthValidatorTest extends TeedaTestCase {
+public class TNumberLengthValidatorTest extends AbstractValidatorTest {
 
     // NG:整数部が最大桁数より大きい
     public void testValidate_IntegralGreater() throws Exception {
@@ -415,6 +417,10 @@ public class TNumberLengthValidatorTest extends TeedaTestCase {
             assertEquals(1, digits.getIntegral());
             assertEquals(6, digits.getFraction());
         }
+    }
+
+    protected Validator createValidator() {
+        return new TNumberLengthValidator();
     }
 
 }

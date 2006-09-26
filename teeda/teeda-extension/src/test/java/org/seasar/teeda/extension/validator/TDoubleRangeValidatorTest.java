@@ -15,17 +15,18 @@
  */
 package org.seasar.teeda.extension.validator;
 
+import javax.faces.validator.AbstractValidatorTest;
+import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.mock.MockUIComponent;
-import org.seasar.teeda.core.unit.TeedaTestCase;
 
 /**
  * @author shot
  *
  */
-public class TDoubleRangeValidatorTest extends TeedaTestCase {
+public class TDoubleRangeValidatorTest extends AbstractValidatorTest {
 
     //TODO test more
     public void testValidate_normal() throws Exception {
@@ -90,5 +91,9 @@ public class TDoubleRangeValidatorTest extends TeedaTestCase {
         assertEquals("bbb", validator.getMaximumMessageId());
         assertEquals("ccc", validator.getMinimumMessageId());
         assertFalse(validator.isConvert());
+    }
+
+    protected Validator createValidator() {
+        return new TDoubleRangeValidator();
     }
 }
