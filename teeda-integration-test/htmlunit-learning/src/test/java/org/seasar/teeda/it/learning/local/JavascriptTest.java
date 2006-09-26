@@ -19,8 +19,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.seasar.teeda.it.AbstractTestCase;
-import org.seasar.teeda.it.MyWebClient;
+import org.seasar.teeda.unit.web.MyWebClient;
+import org.seasar.teeda.unit.web.TeedaWebTestCase;
 
 import com.gargoylesoftware.htmlunit.CollectingAlertHandler;
 import com.gargoylesoftware.htmlunit.KeyValuePair;
@@ -32,7 +32,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlPage;
 /**
  * @author manhole
  */
-public class JavascriptTest extends AbstractTestCase {
+public class JavascriptTest extends TeedaWebTestCase {
 
     public void testOnloadAlert() throws Exception {
         // ## Arrange ##

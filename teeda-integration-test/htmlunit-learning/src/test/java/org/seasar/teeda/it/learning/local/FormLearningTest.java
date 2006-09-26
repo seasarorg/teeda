@@ -19,7 +19,7 @@ import java.net.URL;
 import java.util.List;
 
 import org.jaxen.XPath;
-import org.seasar.teeda.it.AbstractTestCase;
+import org.seasar.teeda.unit.web.TeedaWebTestCase;
 
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlForm;
@@ -30,7 +30,7 @@ import com.gargoylesoftware.htmlunit.html.xpath.HtmlUnitXPath;
 /**
  * @author manhole
  */
-public class FormLearningTest extends AbstractTestCase {
+public class FormLearningTest extends TeedaWebTestCase {
 
     public void testFormSubmit() throws Exception {
         // ## Arrange ##
@@ -44,7 +44,7 @@ public class FormLearningTest extends AbstractTestCase {
         HtmlForm form = page1.getFormByName("myFormName");
 
         HtmlSubmitInput button = (HtmlSubmitInput) form
-                .getInputByName("doSubmitName");
+            .getInputByName("doSubmitName");
         HtmlPage page2 = (HtmlPage) button.click();
 
         // ## Assert ##
@@ -64,7 +64,7 @@ public class FormLearningTest extends AbstractTestCase {
         HtmlForm form = (HtmlForm) page1.getHtmlElementById("myFormId");
 
         HtmlSubmitInput button = (HtmlSubmitInput) form
-                .getHtmlElementById("doSubmitId");
+            .getHtmlElementById("doSubmitId");
         HtmlPage page2 = (HtmlPage) button.click();
 
         // ## Assert ##
@@ -85,7 +85,7 @@ public class FormLearningTest extends AbstractTestCase {
         HtmlForm form = (HtmlForm) xpath.selectSingleNode(page1);
 
         HtmlSubmitInput button = (HtmlSubmitInput) form
-                .getHtmlElementById("doSubmitId");
+            .getHtmlElementById("doSubmitId");
         HtmlPage page2 = (HtmlPage) button.click();
 
         // ## Assert ##
@@ -124,9 +124,9 @@ public class FormLearningTest extends AbstractTestCase {
         HtmlPage page = (HtmlPage) webClient.getPage(url);
 
         final HtmlForm form1 = (HtmlForm) new HtmlUnitXPath(".//form[1]")
-                .selectSingleNode(page);
+            .selectSingleNode(page);
         final HtmlForm form2 = (HtmlForm) new HtmlUnitXPath(".//form[2]")
-                .selectSingleNode(page);
+            .selectSingleNode(page);
         assertEquals("aaaForm", form1.getId());
         assertEquals("bbbForm", form2.getId());
     }
@@ -163,9 +163,9 @@ public class FormLearningTest extends AbstractTestCase {
 
         {
             final HtmlForm form1 = (HtmlForm) new HtmlUnitXPath(".//form[1]")
-                    .selectSingleNode(page);
+                .selectSingleNode(page);
             final HtmlForm form2 = (HtmlForm) new HtmlUnitXPath(".//form[2]")
-                    .selectSingleNode(page);
+                .selectSingleNode(page);
             assertEquals("aaaForm", form1.getId());
             try {
                 assertEquals("bbbForm", form2.getId());
@@ -175,19 +175,19 @@ public class FormLearningTest extends AbstractTestCase {
         }
         {
             final List form1 = (List) new HtmlUnitXPath(".//form[1]")
-                    .selectNodes(page);
+                .selectNodes(page);
             assertEquals(2, form1.size());
         }
         {
             final HtmlForm form1 = (HtmlForm) new HtmlUnitXPath("//div[2]/form")
-                    .selectSingleNode(page);
+                .selectSingleNode(page);
             assertEquals("bbbForm", form1.getId());
         }
         {
             final HtmlForm form1 = (HtmlForm) new HtmlUnitXPath(
-                    "/descendant::form[1] ").selectSingleNode(page);
+                "/descendant::form[1] ").selectSingleNode(page);
             final HtmlForm form2 = (HtmlForm) new HtmlUnitXPath(
-                    "/descendant::form[2] ").selectSingleNode(page);
+                "/descendant::form[2] ").selectSingleNode(page);
             assertEquals("aaaForm", form1.getId());
             assertEquals("bbbForm", form2.getId());
         }
