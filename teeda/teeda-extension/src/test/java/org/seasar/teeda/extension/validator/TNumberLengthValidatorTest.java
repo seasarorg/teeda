@@ -23,6 +23,7 @@ import javax.faces.validator.AbstractValidatorTest;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
+import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.mock.MockUIComponent;
 import org.seasar.teeda.core.unit.ExceptionAssert;
 
@@ -171,6 +172,7 @@ public class TNumberLengthValidatorTest extends AbstractValidatorTest {
         validator.setFractionMin(3);
         final MockUIComponent component = new MockUIComponent();
         component.setId("a");
+        component.getAttributes().put("label", "fooLabel");
         try {
             validator.validate(getFacesContext(), component, new BigDecimal(
                     "123.4"));
@@ -179,6 +181,7 @@ public class TNumberLengthValidatorTest extends AbstractValidatorTest {
             final FacesMessage facesMessage = e.getFacesMessage();
             System.out.println(facesMessage.getSummary());
             System.out.println(facesMessage.getDetail());
+            assertEquals(true, StringUtil.contains(facesMessage.getDetail(), "fooLabel"));
             assertEquals(TNumberLengthValidator.BOTH_MESSAGE_ID, e
                     .getMessageId());
             ExceptionAssert.assertMessageExist(e);

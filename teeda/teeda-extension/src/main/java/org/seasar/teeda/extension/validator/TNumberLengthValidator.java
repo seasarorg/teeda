@@ -23,6 +23,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.internal.FacesMessageUtil;
+import javax.faces.internal.UIComponentUtil;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
@@ -70,21 +71,21 @@ public class TNumberLengthValidator implements Validator {
         final boolean fractionSuccess = validateFraction(digits);
 
         if (!integralSuccess && !fractionSuccess) {
-            final Object[] args = { value.toString(), new Integer(integralMin),
-                    new Integer(integralMax), new Integer(fractionMin),
-                    new Integer(fractionMax) };
+            final Object[] args = { UIComponentUtil.getLabel(component),
+                    new Integer(integralMin), new Integer(integralMax),
+                    new Integer(fractionMin), new Integer(fractionMax) };
             final FacesMessage message = FacesMessageUtil.getMessage(context,
                     BOTH_MESSAGE_ID, args);
             throw new ValidatorException(message, BOTH_MESSAGE_ID, args);
         } else if (!integralSuccess) {
-            final Object[] args = { value.toString(), new Integer(integralMin),
-                    new Integer(integralMax) };
+            final Object[] args = { UIComponentUtil.getLabel(component),
+                    new Integer(integralMin), new Integer(integralMax) };
             final FacesMessage message = FacesMessageUtil.getMessage(context,
                     INTEGRAL_MESSAGE_ID, args);
             throw new ValidatorException(message, INTEGRAL_MESSAGE_ID, args);
         } else if (!fractionSuccess) {
-            final Object[] args = { value.toString(), new Integer(fractionMin),
-                    new Integer(fractionMax) };
+            final Object[] args = { UIComponentUtil.getLabel(component),
+                    new Integer(fractionMin), new Integer(fractionMax) };
             final FacesMessage message = FacesMessageUtil.getMessage(context,
                     FRACTION_MESSAGE_ID, args);
             throw new ValidatorException(message, FRACTION_MESSAGE_ID, args);
