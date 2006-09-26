@@ -3,6 +3,6 @@ function appendEventFor(targetObj, eventName, fn){
   if (prev) {
     targetObj[eventName] = function() { prev(); fn(); }
   } else {
-    targetObj[eventName] = fn();
+    targetObj[eventName] = fn;
   }
 }

@@ -281,7 +281,7 @@ function appendEventFor(targetObj, eventName, fn){
   if (prev) {
     targetObj[eventName] = function() { prev(); fn(); }
   } else {
-    targetObj[eventName] = fn();
+    targetObj[eventName] = fn;
   }
 }
 appendEventFor(window, 'onload', function() { Teeda.THtmlGrid.adjustGridSize('someGridX');document.getElementById('someGridXRightHeader').style.width = 90;document.getElementById('someGridXRightBody').style.width = 90; });
