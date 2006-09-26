@@ -38,8 +38,15 @@ public class AttributeTest extends TeedaWebTestCase {
 
         // ## Act ##
         // ## Assert ##
-        tester.assertAttributeEquals("aaa", "bbb", "BBBBB");
-        tester.assertAttributeEquals("aaa", "ccc", "CC");
+        // htmlにしかないので、htmlの値がそのまま出る
+        tester.assertAttributeEquals("aaa", "class", "fooClass");
+        // Pageとhtmlにあるので、Pageから出る
+        tester.assertAttributeEquals("aaa", "style", "barStyle");
+
+        // TODO 未知のタグを出力する
+        // bbbの方はPageから取れたら取りたいかも。
+        //tester.assertAttributeEquals("aaa", "bbb", "BBBBB");
+        //tester.assertAttributeEquals("aaa", "ccc", "CC");
     }
 
 }

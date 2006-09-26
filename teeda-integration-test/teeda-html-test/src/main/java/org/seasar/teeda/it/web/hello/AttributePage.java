@@ -22,7 +22,7 @@ public class AttributePage {
 
     private String aaa = "AAAAA";
     private String aaaBbb = "BBBBB";
-    final String aaaStyle = "ddd";
+    final String aaaStyle = "barStyle";
 
     public String getAaa() {
         return aaa;
