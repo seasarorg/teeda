@@ -15,7 +15,10 @@
  */
 package org.seasar.teeda.extension.html.impl;
 
+import javax.xml.parsers.DocumentBuilderFactory;
+
 import org.custommonkey.xmlunit.Diff;
+import org.custommonkey.xmlunit.XMLUnit;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.taglib.html.CommandButtonTag;
 import org.seasar.teeda.core.taglib.html.InputTextTag;
@@ -38,6 +41,7 @@ import org.seasar.teeda.extension.html.factory.SelectOneMenuFactory;
 import org.seasar.teeda.extension.html.factory.SelectOneRadioFactory;
 import org.seasar.teeda.extension.html.impl.page.FooAction;
 import org.seasar.teeda.extension.html.impl.page.FooPage;
+import org.seasar.teeda.extension.mock.MockDocumentBuilderFactory;
 import org.seasar.teeda.extension.mock.MockTaglibManager;
 import org.seasar.teeda.extension.taglib.TConditionTag;
 import org.seasar.teeda.extension.taglib.TSelectManyCheckboxTag;
@@ -47,9 +51,27 @@ import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 
 /**
  * @author higa
- *
+ * @author shot
  */
 public class TagProcessorAssembleImplTest extends TeedaExtensionTestCase {
+
+    private DocumentBuilderFactory controlDocumentBuilderFactory;
+
+    private DocumentBuilderFactory testDocumentBuilderFactory;
+
+    protected void setUp() throws Exception {
+        controlDocumentBuilderFactory = XMLUnit
+                .getControlDocumentBuilderFactory();
+        testDocumentBuilderFactory = XMLUnit.getTestDocumentBuilderFactory();
+        XMLUnit
+                .setControlDocumentBuilderFactory(new MockDocumentBuilderFactory());
+        XMLUnit.setTestDocumentBuilderFactory(new MockDocumentBuilderFactory());
+    }
+
+    protected void tearDown() throws Exception {
+        XMLUnit.setControlDocumentBuilderFactory(controlDocumentBuilderFactory);
+        XMLUnit.setTestDocumentBuilderFactory(testDocumentBuilderFactory);
+    }
 
     public void testAssembleElementNodeAsText() throws Exception {
         String path = convertPath("emptyHtmlTag.html");

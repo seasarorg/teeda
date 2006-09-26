@@ -15,12 +15,17 @@
  */
 package org.seasar.teeda.extension.html.impl;
 
+import javax.xml.parsers.DocumentBuilderFactory;
+
 import org.custommonkey.xmlunit.Diff;
+import org.custommonkey.xmlunit.XMLUnit;
 import org.seasar.framework.util.ResourceUtil;
+import org.seasar.teeda.core.unit.xmlunit.TextTrimmingDifferenceListener;
 import org.seasar.teeda.extension.html.DocumentNode;
 import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.HtmlNode;
 import org.seasar.teeda.extension.html.HtmlParser;
+import org.seasar.teeda.extension.mock.MockDocumentBuilderFactory;
 import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 
 /**
@@ -28,6 +33,24 @@ import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
  * @author shot
  */
 public class HtmlNodeHandlerTest extends TeedaExtensionTestCase {
+
+    private DocumentBuilderFactory controlDocumentBuilderFactory;
+
+    private DocumentBuilderFactory testDocumentBuilderFactory;
+
+    protected void setUp() throws Exception {
+        controlDocumentBuilderFactory = XMLUnit
+                .getControlDocumentBuilderFactory();
+        testDocumentBuilderFactory = XMLUnit.getTestDocumentBuilderFactory();
+        XMLUnit
+                .setControlDocumentBuilderFactory(new MockDocumentBuilderFactory());
+        XMLUnit.setTestDocumentBuilderFactory(new MockDocumentBuilderFactory());
+    }
+
+    protected void tearDown() throws Exception {
+        XMLUnit.setControlDocumentBuilderFactory(controlDocumentBuilderFactory);
+        XMLUnit.setTestDocumentBuilderFactory(testDocumentBuilderFactory);
+    }
 
     public void testParse() throws Exception {
         String path = convertPath("HtmlNodeHandler.html");
@@ -85,9 +108,11 @@ public class HtmlNodeHandlerTest extends TeedaExtensionTestCase {
         String path = convertPath("HtmlNodeHandler4.html");
         HtmlParser parser = getHtmlParser();
         HtmlNode root = parser.parse(ResourceUtil.getResourceAsStream(path));
+        System.out.println(root.toString());
         Diff diff = new Diff(
-                "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n<html xmlns=\"http://www.w3.org/1999/xhtml\"><body><div><span value=\"Hello\"></span></div></body></html>",
+                "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\r\n<html xmlns=\"http://www.w3.org/1999/xhtml\"><body><div><span value=\"Hello\"></span></div></body></html>",
                 root.toString());
+        diff.overrideDifferenceListener(new TextTrimmingDifferenceListener());
         assertTrue("1", diff.identical());
         DocumentNode docRoot = (DocumentNode) root;
         ElementNodeImpl n = (ElementNodeImpl) docRoot.getChild(0);

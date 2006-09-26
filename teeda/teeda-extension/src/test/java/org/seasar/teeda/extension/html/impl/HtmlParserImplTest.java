@@ -17,19 +17,42 @@ package org.seasar.teeda.extension.html.impl;
 
 import java.io.ByteArrayInputStream;
 
+import javax.xml.parsers.DocumentBuilderFactory;
+
 import org.custommonkey.xmlunit.Diff;
+import org.custommonkey.xmlunit.XMLUnit;
 import org.seasar.framework.exception.IORuntimeException;
 import org.seasar.teeda.extension.html.DocumentNode;
 import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.HtmlNode;
 import org.seasar.teeda.extension.html.HtmlParser;
 import org.seasar.teeda.extension.html.TextNode;
+import org.seasar.teeda.extension.mock.MockDocumentBuilderFactory;
 import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 
 /**
  * @author manhole
+ * @author shot
  */
 public class HtmlParserImplTest extends TeedaExtensionTestCase {
+
+    private DocumentBuilderFactory controlDocumentBuilderFactory;
+
+    private DocumentBuilderFactory testDocumentBuilderFactory;
+
+    protected void setUp() throws Exception {
+        controlDocumentBuilderFactory = XMLUnit
+                .getControlDocumentBuilderFactory();
+        testDocumentBuilderFactory = XMLUnit.getTestDocumentBuilderFactory();
+        XMLUnit
+                .setControlDocumentBuilderFactory(new MockDocumentBuilderFactory());
+        XMLUnit.setTestDocumentBuilderFactory(new MockDocumentBuilderFactory());
+    }
+
+    protected void tearDown() throws Exception {
+        XMLUnit.setControlDocumentBuilderFactory(controlDocumentBuilderFactory);
+        XMLUnit.setTestDocumentBuilderFactory(testDocumentBuilderFactory);
+    }
 
     public void testBasic() throws Exception {
         // ## Arrange ##
