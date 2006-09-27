@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -17,31 +17,24 @@ package org.seasar.teeda.it.web.hello;
 
 /**
  * @author manhole
+ * @author shot
  */
 public class AttributePage {
 
-    private String aaa = "AAAAA";
-    private String aaaBbb = "BBBBB";
-    final String aaaStyle = "barStyle";
+	private String aaa = "AAAAA";
 
-    public String getAaa() {
-        return aaa;
-    }
+	final String aaaStyle = "barStyle";
 
-    public void setAaa(String name) {
-        this.aaa = name;
-    }
+	public String getAaa() {
+		return aaa;
+	}
 
-    public String getAaaBbb() {
-        return aaaBbb;
-    }
+	public void setAaa(String name) {
+		this.aaa = name;
+	}
 
-    public void setAaaBbb(String bbb) {
-        this.aaaBbb = bbb;
-    }
-
-    public String getAaaStyle() {
-        return aaaStyle;
-    }
+	public String getAaaStyle() {
+		return aaaStyle;
+	}
 
 }
