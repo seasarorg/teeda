@@ -92,7 +92,7 @@ public class ComponentAttributesMap implements Map, Serializable {
     }
 
     public void putAll(Map map) {
-        for (Iterator itr = map.keySet().iterator(); itr.hasNext();) {
+        for (Iterator itr = map.entrySet().iterator(); itr.hasNext();) {
             Map.Entry entry = (Map.Entry) itr.next();
             put(entry.getKey(), entry.getValue());
         }

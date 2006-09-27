@@ -15,6 +15,9 @@
  */
 package javax.faces.internal;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import junit.framework.TestCase;
 
 import org.seasar.teeda.core.mock.MockUIComponent;
@@ -156,6 +159,15 @@ public class ComponentAttributesMapTest extends TestCase {
         } catch (ClassCastException cce) {
             ExceptionAssert.assertMessageExist(cce);
         }
+    }
+
+    public void testPutAll() throws Exception {
+        MockUIComponent c = new MockUIComponent();
+        ComponentAttributesMap map = new ComponentAttributesMap(c);
+        Map m = new HashMap();
+        m.put("a", "A");
+        map.putAll(m);
+        assertEquals("A", map.get("a"));
     }
 
     // TODO more tests
