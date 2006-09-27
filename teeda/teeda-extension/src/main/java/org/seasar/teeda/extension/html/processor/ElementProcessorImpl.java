@@ -16,10 +16,12 @@
 package org.seasar.teeda.extension.html.processor;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.webapp.UIComponentTag;
 import javax.servlet.jsp.JspException;
@@ -127,7 +129,7 @@ public class ElementProcessorImpl implements ElementProcessor {
             tag.setParent(parentTag);
         }
         tag.setPageContext(pageContext);
-        setProperties(tag);
+        setupProperties(tag);
         if (tag instanceof BodyTag) {
             processBodyTag(pageContext, (BodyTag) tag);
         } else if (tag instanceof IterationTag) {
@@ -208,9 +210,10 @@ public class ElementProcessorImpl implements ElementProcessor {
             tag.setParent(parentTag);
         }
         tag.setPageContext(pageContext);
-        setProperties(tag);
+        Map ignoredProps = setupProperties(tag);
         tag.setupFacesContext();
-        tag.findComponent(context);
+        UIComponent component = tag.findComponent(context);
+        component.getAttributes().putAll(ignoredProps);
         tag.pushUIComponentTag();
         try {
             composeComponentTreeChildren(context, pageContext, tag);
@@ -229,19 +232,22 @@ public class ElementProcessorImpl implements ElementProcessor {
         }
     }
 
-    protected void setProperties(Tag tag) {
+    protected Map setupProperties(Tag tag) {
+        Map ignoredProperties = new HashMap();
         BeanDesc beanDesc = BeanDescFactory.getBeanDesc(tag.getClass());
         for (Iterator i = getPropertyNameIterator(); i.hasNext();) {
             String propertyName = (String) i.next();
-            if (!beanDesc.hasPropertyDesc(propertyName)) {
-                continue;
-            }
             String value = getProperty(propertyName);
             if (StringUtil.isEmpty(value)) {
                 continue;
             }
-            PropertyDesc pd = beanDesc.getPropertyDesc(propertyName);
-            pd.setValue(tag, value);
+            if (beanDesc.hasPropertyDesc(propertyName)) {
+                PropertyDesc pd = beanDesc.getPropertyDesc(propertyName);
+                pd.setValue(tag, value);
+            } else {
+                ignoredProperties.put(propertyName, value);
+            }
         }
+        return ignoredProperties;
     }
 }
