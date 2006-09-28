@@ -64,10 +64,12 @@ public class SimpleStringTagHandler extends JsfTagHandler {
                         logger.log(ignore);
                         break;
                     } finally {
-                        if (logger.isDebugEnabled()) {
-                            logger.debug("<" + tagName + ">" + context + "</"
-                                    + tagName + ">");
-                        }
+                        /*
+                         if (logger.isDebugEnabled()) {
+                         logger.debug("<" + tagName + ">" + context + "</"
+                         + tagName + ">");
+                         }
+                         */
                     }
                 }
             }
