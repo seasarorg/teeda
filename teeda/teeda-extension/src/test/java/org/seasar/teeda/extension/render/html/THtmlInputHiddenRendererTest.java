@@ -16,7 +16,9 @@
 package org.seasar.teeda.extension.render.html;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +29,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.render.Renderer;
 import javax.faces.render.RendererTest;
 
+import org.apache.commons.collections.map.HashedMap;
 import org.custommonkey.xmlunit.Diff;
 import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.mock.MockUIComponentBaseWithNamingContainer;
@@ -41,6 +44,13 @@ public class THtmlInputHiddenRendererTest extends RendererTest {
     private THtmlInputHiddenRenderer renderer;
 
     private MockTHtmlInputHidden htmlInputHidden;
+
+    protected void setUp() throws Exception {
+        super.setUp();
+        renderer = (THtmlInputHiddenRenderer) createRenderer();
+        htmlInputHidden = new MockTHtmlInputHidden();
+        htmlInputHidden.setRenderer(renderer);
+    }
 
     public void testEncode_RenderFalse() throws Exception {
         // ## Arrange ##
@@ -193,7 +203,7 @@ public class THtmlInputHiddenRendererTest extends RendererTest {
         assertEquals(null, dto.zzz);
     }
 
-    public void testEncodeAndDecode_ArrayValue() throws Exception {
+    public void testEncodeAndDecode_DtoArray() throws Exception {
         // ## Arrange ##
         final HiddenDto[] dtos = new HiddenDto[3];
         {
@@ -255,7 +265,7 @@ public class THtmlInputHiddenRendererTest extends RendererTest {
         }
     }
 
-    public void testEncodeAndDecode_ListValue() throws Exception {
+    public void testEncodeAndDecode_DtoList() throws Exception {
         // ## Arrange ##
         final List dtos = new ArrayList();
         {
@@ -304,8 +314,150 @@ public class THtmlInputHiddenRendererTest extends RendererTest {
         }
     }
 
-    public void testGetAndSetValue_Array() throws Exception {
+    public void testEncodeAndDecode_MapArray() throws Exception {
+        // ## Arrange ##
+        final Map[] dtos = new Map[2];
+        final List list = new ArrayList();
+        {
+            final Map map = new HashedMap();
+            map.put("A", "aa1");
+            map.put("B", Boolean.TRUE);
+            map.put("C", new BigInteger("5525"));
+            list.add(map);
+        }
+        {
+            final Map map = new HashedMap();
+            map.put("A", "aa2");
+            map.put("B", Boolean.FALSE);
+            map.put("C", new BigInteger("6636"));
+            list.add(map);
+        }
+        list.toArray(dtos);
+        htmlInputHidden.setValue(dtos);
 
+        // ## Act ##
+        encodeByRenderer(renderer, htmlInputHidden);
+
+        // ## Assert ##
+        final String responseText = getResponseText();
+        final Pattern pattern = Pattern.compile("(.+?)value=\"(.+?)\"(.+?)");
+        final Matcher matcher = pattern.matcher(responseText);
+        assertEquals(true, matcher.matches());
+        assertEquals(3, matcher.groupCount());
+        assertEquals("<input type=\"hidden\" name=\"_id0\" ", matcher.group(1));
+        assertEquals(" />", matcher.group(3));
+        final String serializedValue = matcher.group(2);
+        final Object deserialized = renderer.getConvertedValue(
+                getFacesContext(), htmlInputHidden, serializedValue);
+        final Map[] deserializedDtos = (Map[]) deserialized;
+        assertEquals(2, deserializedDtos.length);
+        {
+            final Map map = deserializedDtos[0];
+            assertEquals("aa1", map.get("A"));
+            assertEquals(Boolean.TRUE, map.get("B"));
+            assertEquals(new BigInteger("5525"), map.get("C"));
+        }
+        {
+            final Map map = deserializedDtos[1];
+            assertEquals("aa2", map.get("A"));
+            assertEquals(Boolean.FALSE, map.get("B"));
+            assertEquals(new BigInteger("6636"), map.get("C"));
+        }
+    }
+
+    public void testEncodeAndDecode_MapList() throws Exception {
+        // ## Arrange ##
+        final List dtos = new ArrayList();
+        {
+            final Map map = new HashedMap();
+            map.put("A", "aa1");
+            map.put("B", Boolean.TRUE);
+            map.put("C", new BigInteger("5525"));
+            dtos.add(map);
+        }
+        {
+            final Map map = new HashedMap();
+            map.put("A", "aa2");
+            map.put("B", Boolean.FALSE);
+            map.put("C", new BigInteger("6636"));
+            dtos.add(map);
+        }
+        htmlInputHidden.setValue(dtos);
+
+        // ## Act ##
+        encodeByRenderer(renderer, htmlInputHidden);
+
+        // ## Assert ##
+        final String responseText = getResponseText();
+        final Pattern pattern = Pattern.compile("value=\"(.+?)\"");
+        final Matcher matcher = pattern.matcher(responseText);
+        assertEquals(true, matcher.find());
+        final String serializedValue = matcher.group(1);
+        final Object deserialized = renderer.getConvertedValue(
+                getFacesContext(), htmlInputHidden, serializedValue);
+        final List deserializedList = (List) deserialized;
+        assertEquals(2, deserializedList.size());
+        {
+            final Map map = (Map) deserializedList.get(0);
+            assertEquals("aa1", map.get("A"));
+            assertEquals(Boolean.TRUE, map.get("B"));
+            assertEquals(new BigInteger("5525"), map.get("C"));
+        }
+        {
+            final Map map = (Map) deserializedList.get(1);
+            assertEquals("aa2", map.get("A"));
+            assertEquals(Boolean.FALSE, map.get("B"));
+            assertEquals(new BigInteger("6636"), map.get("C"));
+        }
+    }
+
+    public void testEncodeAndDecode_StringArray() throws Exception {
+        // ## Arrange ##
+        final String[] dtos = new String[] { "a", "bb", "ccc" };
+        htmlInputHidden.setValue(dtos);
+
+        // ## Act ##
+        encodeByRenderer(renderer, htmlInputHidden);
+
+        // ## Assert ##
+        final String responseText = getResponseText();
+        final Pattern pattern = Pattern.compile("value=\"(.+?)\"");
+        final Matcher matcher = pattern.matcher(responseText);
+        assertEquals(true, matcher.find());
+        final String serializedValue = matcher.group(1);
+        final Object deserialized = renderer.getConvertedValue(
+                getFacesContext(), htmlInputHidden, serializedValue);
+        final String[] deserializedArray = (String[]) deserialized;
+        assertEquals(3, deserializedArray.length);
+        assertEquals("a", deserializedArray[0]);
+        assertEquals("bb", deserializedArray[1]);
+        assertEquals("ccc", deserializedArray[2]);
+    }
+
+    public void testEncodeAndDecode_StringList() throws Exception {
+        // ## Arrange ##
+        final List dtos = Arrays.asList(new String[] { "a", "bb", "ccc" });
+        htmlInputHidden.setValue(dtos);
+
+        // ## Act ##
+        encodeByRenderer(renderer, htmlInputHidden);
+
+        // ## Assert ##
+        final String responseText = getResponseText();
+        final Pattern pattern = Pattern.compile("(.+?)value=\"(.+?)\"(.+?)");
+        final Matcher matcher = pattern.matcher(responseText);
+        assertEquals(true, matcher.matches());
+        assertEquals(3, matcher.groupCount());
+        assertEquals("<input type=\"hidden\" name=\"_id0\" ", matcher.group(1));
+        assertEquals(" />", matcher.group(3));
+        final String serializedValue = matcher.group(2);
+        final Object deserialized = renderer.getConvertedValue(
+                getFacesContext(), htmlInputHidden, serializedValue);
+        final List deserializedList = (List) deserialized;
+        assertEquals(3, deserializedList.size());
+        assertEquals("a", deserializedList.get(0));
+        assertEquals("bb", deserializedList.get(1));
+        assertEquals("ccc", deserializedList.get(2));
     }
 
     public static class HiddenDto {
@@ -357,13 +509,6 @@ public class THtmlInputHiddenRendererTest extends RendererTest {
             this.zzz = ccc;
         }
 
-    }
-
-    protected void setUp() throws Exception {
-        super.setUp();
-        renderer = (THtmlInputHiddenRenderer) createRenderer();
-        htmlInputHidden = new MockTHtmlInputHidden();
-        htmlInputHidden.setRenderer(renderer);
     }
 
     protected Renderer createRenderer() {

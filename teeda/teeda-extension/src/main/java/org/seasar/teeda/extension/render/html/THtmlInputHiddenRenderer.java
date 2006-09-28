@@ -18,6 +18,7 @@ package org.seasar.teeda.extension.render.html;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -93,43 +94,56 @@ public class THtmlInputHiddenRenderer extends AbstractRenderer {
         }
         final Class clazz = value.getClass();
         if (value instanceof List) {
-            final THtmlInputHidden.ComponentHolder holder = new ComponentHolder();
-            final List mapList = new ArrayList();
-            boolean first = true;
-            for (final Iterator it = ((List) value).iterator(); it.hasNext();) {
-                final Object bean = it.next();
-                final Map map = new HashMap();
-                copyToMap(bean, map);
-                mapList.add(map);
-                if (first) {
-                    first = false;
-                    holder.setComponentClassName(bean.getClass().getName());
+            final List valueList = ((List) value);
+            final ComponentHolder holder = new ComponentHolder();
+            final List list = new ArrayList();
+            if (!valueList.isEmpty()) {
+                final Class componentClass = valueList.get(0).getClass();
+                holder.setComponentClassName(componentClass.getName());
+                if (isNoEscapeType(componentClass)) {
+                    list.addAll(valueList);
+                } else {
+                    for (final Iterator it = valueList.iterator(); it.hasNext();) {
+                        final Object bean = it.next();
+                        final Map map = new HashMap();
+                        copyToMap(bean, map);
+                        list.add(map);
+                    }
                 }
             }
-            holder.setValue(mapList);
+            holder.setValue(list);
             return serialize(holder);
         } else if (clazz.isArray()) {
-            final THtmlInputHidden.ComponentHolder holder = new ComponentHolder();
-            final Object[] values = (Object[]) value;
-            final List mapList = new ArrayList();
-            boolean first = true;
-            for (int i = 0; i < values.length; i++) {
-                final Object bean = values[i];
-                final Map map = new HashMap();
-                copyToMap(bean, map);
-                mapList.add(map);
-                if (first) {
-                    first = false;
-                    holder.setComponentClassName(bean.getClass().getName());
+            final Object[] valueArray = (Object[]) value;
+            final ComponentHolder holder = new ComponentHolder();
+            holder.setArrayClassName(clazz.getComponentType().getName());
+            final List list = new ArrayList();
+            if (0 < valueArray.length) {
+                final Class componentClass = valueArray[0].getClass();
+                holder.setComponentClassName(componentClass.getName());
+                if (isNoEscapeType(componentClass)) {
+                    list.addAll(Arrays.asList(valueArray));
+                } else {
+                    for (int i = 0; i < valueArray.length; i++) {
+                        final Object bean = valueArray[i];
+                        final Map map = new HashMap();
+                        copyToMap(bean, map);
+                        list.add(map);
+                    }
                 }
             }
-            holder.setValue(mapList);
-            holder.setComponentClassName(clazz.getComponentType().getName());
-            holder.setArrayClassName(clazz.getComponentType().getName());
+            holder.setValue(list);
             return serialize(holder);
         }
         throw new IllegalArgumentException(
                 "value type of THtmlInputHidden should be Array or List");
+    }
+
+    // TODO 他の型についても追加する。Integerとか。
+    // いっそのこと、パッケージ名が"java."で始まったらOKにしてみる?
+    private boolean isNoEscapeType(Class clazz) {
+        return String.class.isAssignableFrom(clazz)
+                || Map.class.isAssignableFrom(clazz);
     }
 
     public void decode(final FacesContext context, final UIComponent component) {
@@ -142,45 +156,45 @@ public class THtmlInputHiddenRenderer extends AbstractRenderer {
         DecodeUtil.decode(context, htmlInputHidden);
     }
 
-    protected void copyToMap(final Object bean, final Map map) {
-        final BeanDesc beanDesc = BeanDescFactory.getBeanDesc(bean.getClass());
+    protected void copyToMap(final Object from, final Map to) {
+        final BeanDesc beanDesc = BeanDescFactory.getBeanDesc(from.getClass());
         final int size = beanDesc.getPropertyDescSize();
         for (int i = 0; i < size; ++i) {
             final PropertyDesc pd = beanDesc.getPropertyDesc(i);
             if (pd.hasReadMethod() && pd.hasWriteMethod()) {
-                final Object value = pd.getValue(bean);
-                map.put(pd.getPropertyName(), value);
+                final Object value = pd.getValue(from);
+                to.put(pd.getPropertyName(), value);
             }
         }
     }
 
-    protected void copyToBean(final Map map, final Object bean) {
-        final BeanDesc beanDesc = BeanDescFactory.getBeanDesc(bean.getClass());
+    protected void copyToBean(final Map from, final Object to) {
+        final BeanDesc beanDesc = BeanDescFactory.getBeanDesc(to.getClass());
         final int size = beanDesc.getPropertyDescSize();
         for (int i = 0; i < size; ++i) {
             final PropertyDesc pd = beanDesc.getPropertyDesc(i);
             if (pd.hasReadMethod() && pd.hasWriteMethod()) {
                 final String propertyName = pd.getPropertyName();
-                if (!map.containsKey(propertyName)) {
+                if (!from.containsKey(propertyName)) {
                     continue;
                 }
-                final Object value = map.get(propertyName);
+                final Object value = from.get(propertyName);
                 if (value == null) {
                     continue;
                 }
                 if (ClassUtil.isAssignableFrom(pd.getPropertyType(), value
                         .getClass())) {
-                    pd.setValue(bean, value);
+                    pd.setValue(to, value);
                 }
             }
         }
     }
 
-    String serialize(final Object target) {
+    private String serialize(final Object target) {
         return encodeConverter.getAsEncodeString(target);
     }
 
-    Object deserialize(final String value) {
+    private Object deserialize(final String value) {
         return encodeConverter.getAsDecodeObject(value);
     }
 
@@ -188,7 +202,6 @@ public class THtmlInputHiddenRenderer extends AbstractRenderer {
         this.encodeConverter = encodeConverter;
     }
 
-    // TODO Auto-generated method stub
     public Object getConvertedValue(final FacesContext context,
             final UIComponent component, final Object submittedValue)
             throws ConverterException {
@@ -196,29 +209,41 @@ public class THtmlInputHiddenRenderer extends AbstractRenderer {
         final ComponentHolder holder = (ComponentHolder) deserialize((String) submittedValue);
         final String arrayClassName = holder.getArrayClassName();
         final String componentClassName = holder.getComponentClassName();
+        final Class componentClass = ClassUtil.forName(componentClassName);
         final List restoredList = holder.getValue();
-        final int size = restoredList.size();
         if (arrayClassName != null) {
             final Class arrayClass = ClassUtil.forName(arrayClassName);
             final Object[] array = (Object[]) Array.newInstance(arrayClass,
-                    size);
-            for (int i = 0; i < size; i++) {
-                final Object bean = ClassUtil.newInstance(componentClassName);
-                final Map map = (Map) restoredList.get(i);
-                copyToBean(map, bean);
-                array[i] = bean;
+                    restoredList.size());
+            if (isNoEscapeType(componentClass)) {
+                restoredList.toArray(array);
+                return array;
             }
+            final List beanList = mapListToBeanList(componentClass,
+                    restoredList);
+            beanList.toArray(array);
             return array;
         } else {
-            final List list = new ArrayList();
-            for (int i = 0; i < size; i++) {
-                final Object bean = ClassUtil.newInstance(componentClassName);
-                final Map map = (Map) restoredList.get(i);
-                copyToBean(map, bean);
-                list.add(bean);
+            if (isNoEscapeType(componentClass)) {
+                return restoredList;
             }
-            return list;
+            final List beanList = mapListToBeanList(componentClass,
+                    restoredList);
+            return beanList;
         }
+    }
+
+    private List mapListToBeanList(final Class componentClass,
+            final List restoredList) {
+        final int size = restoredList.size();
+        final List list = new ArrayList();
+        for (int i = 0; i < size; i++) {
+            final Object bean = ClassUtil.newInstance(componentClass);
+            final Map map = (Map) restoredList.get(i);
+            copyToBean(map, bean);
+            list.add(bean);
+        }
+        return list;
     }
 
 }
