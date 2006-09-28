@@ -54,6 +54,8 @@
 		class="org.seasar.teeda.extension.html.factory.ForEachFactory" />
 	<component name="formFactory"
 		class="org.seasar.teeda.extension.html.factory.FormFactory" />
+	<component name="tInputHiddenFactory"
+		class="org.seasar.teeda.extension.html.factory.TInputHiddenFactory" />
 	<component name="inputHiddenFactory"
 		class="org.seasar.teeda.extension.html.factory.InputHiddenFactory" />
 	<component name="inputSecretFactory"

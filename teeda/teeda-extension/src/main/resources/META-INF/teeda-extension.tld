@@ -1609,7 +1609,7 @@
             <type>java.lang.String</type>
         </attribute>
     </tag>
-       <tag>
+    <tag>
         <name>selectBooleanCheckbox</name>
         <tag-class>org.seasar.teeda.extension.taglib.TSelectBooleanCheckboxTag</tag-class>
         <body-content>JSP</body-content>
@@ -1804,4 +1804,42 @@
         	<rtexprvalue>false</rtexprvalue>
         </attribute>
     </tag>
+    
+    <tag>
+        <name>inputHidden</name>
+        <tag-class>org.seasar.teeda.extension.taglib.TInputHiddenTag</tag-class>
+        <body-content>JSP</body-content>
+        <attribute>
+            <name>id</name>
+            <required>false</required>
+            <rtexprvalue>false</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <name>rendered</name>
+            <required>false</required>
+            <rtexprvalue>false</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <name>binding</name>
+            <required>false</required>
+            <rtexprvalue>false</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <name>value</name>
+            <required>false</required>
+            <rtexprvalue>false</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <name>required</name>
+            <required>false</required>
+            <rtexprvalue>false</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
+
+    
 </taglib>
