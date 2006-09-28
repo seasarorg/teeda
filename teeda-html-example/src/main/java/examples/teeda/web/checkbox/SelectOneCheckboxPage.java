@@ -3,49 +3,35 @@
  */
 package examples.teeda.web.checkbox;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author shot
  */
 public class SelectOneCheckboxPage {
 
-	private int aaa = 2;
+	private boolean aaa;
 
-	private List aaaItems;
+	private Map map;
 
 	public String prerender() {
-		aaaItems = new ArrayList();
-		AaaDto dto1 = new AaaDto();
-		dto1.setValue(0);
-		dto1.setLabel("AAAA");
-		aaaItems.add(dto1);
-		AaaDto dto2 = new AaaDto();
-		dto2.setValue(1);
-		dto2.setLabel("BBBB");
-		aaaItems.add(dto2);
-		AaaDto dto3 = new AaaDto();
-		dto3.setValue(2);
-		dto3.setLabel("CCCC");
-		aaaItems.add(dto3);
+		map = new HashMap();
+		map.put(new Boolean(true), "YES");
+		map.put(new Boolean(false), "NO");
 		return null;
 	}
 
-	public int getAaa() {
+	public boolean isAaa() {
 		return aaa;
 	}
 
-	public void setAaa(int aaa) {
+	public void setAaa(boolean aaa) {
 		this.aaa = aaa;
 	}
 
-	public List getAaaItems() {
-		return aaaItems;
-	}
-
-	public void setAaaItems(List aaaItems) {
-		this.aaaItems = aaaItems;
+	public String getBbb() {
+		return (String) map.get(new Boolean(isAaa()));
 	}
 
 	public String doAction() {
