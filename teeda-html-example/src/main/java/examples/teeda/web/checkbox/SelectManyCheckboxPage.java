@@ -11,6 +11,8 @@ import java.util.List;
  */
 public class SelectManyCheckboxPage {
 
+	public static final String aaa_TRequiredValidator = null;
+	
 	private int[] aaa = { 2 };
 
 	private List aaaItems;
