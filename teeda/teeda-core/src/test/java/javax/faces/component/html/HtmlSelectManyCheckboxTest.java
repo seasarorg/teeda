@@ -15,10 +15,21 @@
  */
 package javax.faces.component.html;
 
+import java.util.Iterator;
+
+import javax.faces.FacesException;
+import javax.faces.FactoryFinder;
+import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UISelectManyTest;
 import javax.faces.context.FacesContext;
+import javax.faces.internal.ValidatorResource;
+import javax.faces.render.RenderKitFactory;
+import javax.faces.validator.Validator;
+import javax.faces.validator.ValidatorException;
 
+import org.seasar.teeda.core.mock.MockFacesContext;
+import org.seasar.teeda.core.mock.MockRenderKitImpl;
 import org.seasar.teeda.core.mock.MockValueBinding;
 
 /**
@@ -490,7 +501,7 @@ public class HtmlSelectManyCheckboxTest extends UISelectManyTest {
         component.setLabel("label1");
         assertEquals("label1", component.getLabel());
     }
-    
+
     public void testSetGetLabel_ValueBinding() throws Exception {
         HtmlSelectManyCheckbox component = createHtmlSelectManyCheckbox();
         MockValueBinding vb = new MockValueBinding();
@@ -498,7 +509,40 @@ public class HtmlSelectManyCheckboxTest extends UISelectManyTest {
         vb.setValue(context, "bar label");
         component.setValueBinding("label", vb);
         assertEquals("bar label", component.getLabel());
-        assertEquals("bar label", component.getValueBinding("label").getValue(context));
+        assertEquals("bar label", component.getValueBinding("label").getValue(
+                context));
+    }
+
+    public void testValidate() throws Exception {
+        FactoryFinder.setFactory(FactoryFinder.RENDER_KIT_FACTORY,
+                "org.seasar.teeda.core.mock.MockRenderKitFactory");
+        RenderKitFactory factory = (RenderKitFactory) FactoryFinder
+                .getFactory(FactoryFinder.RENDER_KIT_FACTORY);
+        factory.addRenderKit("hoge", new MockRenderKitImpl());
+        MockFacesContext facesContext = getFacesContext();
+        facesContext.getViewRoot().setRenderKitId("hoge");
+        HtmlSelectManyCheckbox component = createHtmlSelectManyCheckbox();
+        component.setValid(true);
+        component.setValueBinding("value", new MockValueBinding("#{a.b}"));
+        final FacesMessage m = new FacesMessage("aaa");
+        ValidatorResource.addValidator("#{a.b}", new Validator() {
+
+            public void validate(FacesContext context, UIComponent component,
+                    Object value) throws FacesException {
+                throw new ValidatorException(m);
+            }
+
+        });
+        facesContext.getExternalContext().getRequestMap().put("postback",
+                new Boolean(true));
+        try {
+            component.validate(facesContext);
+        } catch (ValidatorException e) {
+            fail();
+        }
+        Iterator messages = facesContext.getMessages();
+        FacesMessage fm = (FacesMessage) messages.next();
+        assertEquals("aaa", fm.getSummary());
     }
 
     private HtmlSelectManyCheckbox createHtmlSelectManyCheckbox() {

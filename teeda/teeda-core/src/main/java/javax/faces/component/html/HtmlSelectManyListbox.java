@@ -23,6 +23,7 @@ import javax.faces.internal.FacesMessageUtil;
 import javax.faces.internal.UIComponentUtil;
 
 import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.core.util.PostbackUtil;
 import org.seasar.teeda.core.util.RendererUtil;
 import org.seasar.teeda.core.util.UIValueUtil;
 
@@ -449,6 +450,10 @@ public class HtmlSelectManyListbox extends UISelectMany {
         }
         if (!empty) {
             UIComponentUtil.callValidators(context, this, convertedValue);
+        }
+        if (PostbackUtil.isPostback(context.getExternalContext()
+                .getRequestMap())) {
+            validateFromAnnotation(context, convertedValue);
         }
         if (!isValid()) {
             return;
