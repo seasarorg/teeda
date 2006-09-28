@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * @author manhole
  */
-public class ForeachPage {
+public class ForeachArrayPage {
 
     private FooDto[] fooItems;
 

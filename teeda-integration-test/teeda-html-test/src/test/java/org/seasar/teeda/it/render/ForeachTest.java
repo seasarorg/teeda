@@ -36,19 +36,41 @@ public class ForeachTest extends TeedaWebTestCase {
 
         // ## Act ##
         // ## Assert ##
-        tester.beginAt("view/foreach/foreach.html");
+        tester.beginAt("view/foreach/foreachArray.html");
         tester.dumpHtml();
-        tester.assertTableEquals("foreachTable",
-            new String[][] { { "1", "aa1", "bb1" }, { "2", "aa2", "bb2" },
-                { "3", "aa3", "bb3" } });
+        final String[][] table = new String[][] { { "1", "aa1", "bb1" },
+            { "2", "aa2", "bb2" }, { "3", "aa3", "bb3" } };
+
+        tester.assertTableEquals("foreachTable", table);
         tester.clickButton("doSomething");
 
         // --------
 
         tester.dumpHtml();
-        tester.assertTableEquals("foreachTable",
-            new String[][] { { "1", "aa1", "bb1" }, { "2", "aa2", "bb2" },
-                { "3", "aa3", "bb3" } });
+        // inputになっていない"fooNo"項目が再度表示されていること
+        tester.assertTableEquals("foreachTable", table);
+    }
+
+    public void testInputList() throws Exception {
+        // ## Arrange ##
+        TeedaWebTester tester = new TeedaWebTester();
+        tester.getTestContext().setBaseUrl(getBaseUrl());
+
+        // ## Act ##
+        // ## Assert ##
+        tester.beginAt("view/foreach/foreachList.html");
+        tester.dumpHtml();
+        final String[][] table = new String[][] { { "1", "aa1", "bb1" },
+            { "2", "aa2", "bb2" }, { "3", "aa3", "bb3" } };
+
+        tester.assertTableEquals("foreachTable", table);
+        tester.clickButton("doSomething");
+
+        // --------
+
+        tester.dumpHtml();
+        // inputになっていない"fooNo"項目が再度表示されていること
+        tester.assertTableEquals("foreachTable", table);
     }
 
 }
