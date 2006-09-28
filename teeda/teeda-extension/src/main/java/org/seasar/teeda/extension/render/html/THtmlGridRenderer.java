@@ -349,45 +349,54 @@ public class THtmlGridRenderer extends TForEachRenderer {
             final THtmlGridRenderer.GridAttribute attribute, final int columnNo)
             throws IOException {
         writer.startElement(JsfConstants.TH_ELEM, th);
-        renderGridHeaderThAttributes(context, th, writer);
-        writer.startElement(JsfConstants.DIV_ELEM, th);
-        RendererUtil.renderAttribute(writer, JsfConstants.CLASS_ATTR,
-                GRID_HEADER_CLASS_NAME);
-        final Integer columnWidth = attribute.getColumnWidth(columnNo);
-        if (columnWidth != null) {
-            RendererUtil.renderAttribute(writer, JsfConstants.STYLE_ATTR,
-                    "overflow:hidden; width:" + columnWidth + "px;");
-        } else {
-            RendererUtil.renderAttribute(writer, JsfConstants.STYLE_ATTR,
-                    "overflow:hidden;");
-        }
-        writer.startElement(JsfConstants.NOBR_ELEM, th);
-        encodeDescendantComponent(context, th);
-        writer.endElement(JsfConstants.NOBR_ELEM);
-        writer.endElement(JsfConstants.DIV_ELEM);
-        writer.endElement(JsfConstants.TH_ELEM);
-    }
-
-    private void renderGridHeaderThAttributes(final FacesContext context,
-            final THtmlGridTh th, final ResponseWriter writer)
-            throws IOException {
         RendererUtil.renderIdAttributeIfNecessary(writer, th, getIdForRender(
                 context, th));
-        final String styleClass = th.getStyleClass();
-        if (styleClass != null) {
-            RendererUtil.renderAttribute(writer, JsfConstants.STYLE_CLASS_ATTR,
-                    styleClass);
-        }
         final String title = th.getTitle();
         if (title != null) {
             RendererUtil
                     .renderAttribute(writer, JsfConstants.TITLE_ATTR, title);
         }
-        final String style = th.getStyle();
-        if (style != null) {
-            RendererUtil
-                    .renderAttribute(writer, JsfConstants.STYLE_ATTR, style);
+
+        writer.startElement(JsfConstants.DIV_ELEM, th);
+        RendererUtil.renderAttribute(writer, JsfConstants.CLASS_ATTR,
+                createThStyleClassAttribute(th, attribute, columnNo));
+        RendererUtil.renderAttribute(writer, JsfConstants.STYLE_ATTR,
+                createThStyleAttribute(th, attribute, columnNo));
+
+        writer.startElement(JsfConstants.NOBR_ELEM, th);
+        encodeDescendantComponent(context, th);
+
+        writer.endElement(JsfConstants.NOBR_ELEM);
+        writer.endElement(JsfConstants.DIV_ELEM);
+        writer.endElement(JsfConstants.TH_ELEM);
+    }
+
+    private String createThStyleClassAttribute(final THtmlGridTh th,
+            final GridAttribute attribute, final int columnNo) {
+        final StringBuffer sb = new StringBuffer(50);
+        sb.append(GRID_HEADER_CLASS_NAME);
+        final String styleClass = th.getStyleClass();
+        if (StringUtil.isNotBlank(styleClass)) {
+            sb.append(" ");
+            sb.append(styleClass);
         }
+        return new String(sb);
+    }
+
+    private String createThStyleAttribute(final THtmlGridTh th,
+            final GridAttribute attribute, final int columnNo) {
+        final Integer columnWidth = attribute.getColumnWidth(columnNo);
+        final StringBuffer sb = new StringBuffer(50);
+        sb.append("overflow:hidden;");
+        if (columnWidth != null) {
+            sb.append(" width:" + columnWidth + "px;");
+        }
+        final String style = th.getStyle();
+        if (StringUtil.isNotBlank(style)) {
+            sb.append(" ");
+            sb.append(style);
+        }
+        return new String(sb);
     }
 
     private void encodeGridBody(final FacesContext context, THtmlGrid htmlGrid,
