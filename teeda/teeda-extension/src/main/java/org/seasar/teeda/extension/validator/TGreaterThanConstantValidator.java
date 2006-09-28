@@ -15,8 +15,6 @@
  */
 package org.seasar.teeda.extension.validator;
 
-import java.math.BigDecimal;
-
 import javax.faces.FacesException;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.StateHolder;
@@ -28,6 +26,7 @@ import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
 import org.seasar.framework.util.AssertionUtil;
+import org.seasar.framework.util.NumberConversionUtil;
 
 /**
  * @author shot
@@ -49,15 +48,13 @@ public class TGreaterThanConstantValidator implements Validator, StateHolder {
         if (value == null) {
             return;
         }
-        Object target = getTarget();
         if (target == null) {
             return;
         }
-        if (isLessEqual(value, target)) {
-            if (!(target instanceof BigDecimal)) {
-                target = new BigDecimal(target.toString());
-            }
-            Object[] args = { target, UIComponentUtil.getLabel(component) };
+        Object t = NumberConversionUtil.convertNumber(value.getClass(),
+                getTarget());
+        if (isLessEqual(value, t)) {
+            Object[] args = { t, UIComponentUtil.getLabel(component) };
             String messaId = getMessageId();
             FacesMessage message = FacesMessageUtil.getMessage(context,
                     messaId, args);

@@ -261,6 +261,9 @@ public class UIInput extends UIOutput implements EditableValueHolder {
             return;
         }
         Object convertedValue = getConvertedValue(context, submittedValue);
+        if(!isValid()) { 
+            return;
+        }
         validateValue(context, convertedValue);
         if (!isValid()) {
             return;

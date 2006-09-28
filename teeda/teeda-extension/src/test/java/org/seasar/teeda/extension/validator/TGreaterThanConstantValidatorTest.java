@@ -81,6 +81,35 @@ public class TGreaterThanConstantValidatorTest extends AbstractValidatorTest {
         }
     }
 
+    public void test5() throws Exception {
+        TGreaterThanConstantValidator validator = new TGreaterThanConstantValidator();
+        BigDecimal bd = new BigDecimal("1111");
+        validator.setTarget(bd);
+        MockUIComponent component = new MockUIComponent();
+        component.getAttributes().put(JsfConstants.LABEL_ATTR, "value");
+        try {
+            validator.validate(getFacesContext(), component, new Long(1111));
+            fail();
+        } catch (ValidatorException expected) {
+            System.out.println(expected.getFacesMessage().getDetail());
+            success();
+        }
+    }
+
+    public void test6() throws Exception {
+        TGreaterThanConstantValidator validator = new TGreaterThanConstantValidator();
+        validator.setTarget(new Integer(1000000));
+        MockUIComponent component = new MockUIComponent();
+        component.getAttributes().put(JsfConstants.LABEL_ATTR, "value");
+        try {
+            validator.validate(getFacesContext(), component, new Long(1111));
+            fail();
+        } catch (ValidatorException expected) {
+            System.out.println(expected.getFacesMessage().getDetail());
+            success();
+        }
+    }
+
     protected Validator createValidator() {
         return new TGreaterThanConstantValidator();
     }
