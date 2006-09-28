@@ -19,6 +19,7 @@ import junit.framework.Test;
 import net.sourceforge.jwebunit.WebTester;
 
 import org.seasar.teeda.unit.web.TeedaWebTestCase;
+import org.seasar.teeda.unit.web.TeedaWebTester;
 
 /**
  * @author manhole
@@ -30,7 +31,7 @@ public class FormJWebUnitTest extends TeedaWebTestCase {
     }
 
     public void testFormSubmitByName() throws Exception {
-        final WebTester webTester = new WebTester();
+        final WebTester webTester = new TeedaWebTester();
         webTester.getTestContext().setBaseUrl(getBaseUrl());
         webTester.beginAt("learning/FormTest_formSubmit1.html");
         webTester.dumpHtml();
