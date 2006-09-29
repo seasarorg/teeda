@@ -12,6 +12,23 @@
   <version>0.1.1-SNAPSHOT</version>
   <description></description>
   <url>http://teeda.seasar.org/</url>
+  <inceptionYear>2006</inceptionYear>
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <scm>
+    <connection>scm:svn:https://www.seasar.org/svn/teeda/trunk/teeda-xmlunit/</connection>
+    <developerConnection>scm:svn:https://www.seasar.org/svn/teeda/trunk/teeda-xmlunit/</developerConnection>
+    <url>http://www.seasar.org/websvn/listing.php?repname=teeda</url>
+  </scm>
+  <organization>
+    <name>The Seasar Foundation</name>
+    <url>http://www.seasar.org/</url>
+  </organization>
   <build>
     <defaultGoal>validate</defaultGoal>
     <pluginManagement>
