@@ -18,6 +18,7 @@ package org.seasar.teeda.unit.web;
 import java.net.URL;
 
 import junit.framework.AssertionFailedError;
+import net.sourceforge.jwebunit.html.Table;
 
 import org.seasar.framework.util.ResourceUtil;
 
@@ -129,6 +130,38 @@ public class TeedaWebTesterTest extends TeedaWebTestCase {
         } catch (AssertionFailedError e) {
         }
         assertEquals(true, ok);
+    }
+
+    public void testTable() throws Exception {
+        // ## Arrange ##
+        final String relativeUrl = getFileAsRelativeUrl("table1.html");
+
+        // ## Act ##
+        tester.beginAt(relativeUrl);
+        tester.dumpHtml();
+
+        // ## Assert ##
+        // jwebunitのAPIでは、summary属性からもtableを取得できる
+        final Table tableById = tester.getTable("aaa");
+        final Table tableBySummary = tester.getTable("bbb");
+        tableById.assertEquals(tableBySummary);
+
+        //            assertEquals(null, tester.getTableById("bbb"));
+        //            tester.getTable("aaa").assertEquals(tester.getTableById("aaa"));
+    }
+
+    public void testSetTextById() throws Exception {
+        // ## Arrange ##
+        final String relativeUrl = getFileAsRelativeUrl("textfield.html");
+
+        // ## Act ##
+        tester.beginAt(relativeUrl);
+        tester.dumpHtml();
+
+        // ## Assert ##
+        tester.assertAttributeEquals("aaaId", "value", "aaaValue");
+        tester.setTextById("aaaId", "foo");
+        tester.assertAttributeEquals("aaaId", "value", "foo");
     }
 
     private String getFileAsRelativeUrl(final String file) {

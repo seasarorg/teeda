@@ -50,13 +50,19 @@ class TeedaHtmlUnitDialog extends HtmlUnitDialog {
         }
     }
 
-    public HtmlElement getElement(final String id) {
+    /*
+     * スーパークラスのgetElementメソッドがprivateであるため。
+     */
+    public HtmlElement getElementById(final String id) {
         final Method method = getMethod2();
         final HtmlElement page = (HtmlElement) MethodUtil.invoke(method, this,
             new String[] { id });
         return page;
     }
 
+    /*
+     * スーパークラスの同メソッドがprivateであるため。
+     */
     public HtmlPage getCurrentPage() {
         final Method method = getMethod1();
         final HtmlPage page = (HtmlPage) MethodUtil.invoke(method, this, null);
