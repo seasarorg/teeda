@@ -52,7 +52,8 @@ public class HtmlMessageRenderer extends AbstractHtmlMessagesRenderer {
         }
         UIComponent forComponent = htmlMessage.findComponent(forAttr);
         if (forComponent == null) {
-            throw new FacesException("forComponent");
+            throw new FacesException("forComponent [" + forAttr
+                    + "] is null. [id=" + htmlMessage.getId() + "]");
         }
 
         final String clientId = forComponent.getClientId(context);
