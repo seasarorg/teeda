@@ -66,7 +66,7 @@ public class HtmlOutputLinkRenderer extends AbstractRenderer {
                 UIParameter parameter = (UIParameter) child;
                 urlBuilder.add(
                         URLEncoder.encode(parameter.getName(), encoding),
-                        URLEncoder.encode(parameter.getValue().toString(),
+                        URLEncoder.encode(toBlankIfNull(parameter.getValue()),
                                 encoding));
             }
         }
@@ -82,6 +82,13 @@ public class HtmlOutputLinkRenderer extends AbstractRenderer {
                 getIdForRender(context, htmlOutputLink));
         writer.writeURIAttribute(JsfConstants.HREF_ATTR, href, null);
         renderAttributes(htmlOutputLink, writer);
+    }
+
+    private String toBlankIfNull(final Object value) {
+        if (value == null) {
+            return "";
+        }
+        return value.toString();
     }
 
     public void encodeEnd(FacesContext context, UIComponent component)
