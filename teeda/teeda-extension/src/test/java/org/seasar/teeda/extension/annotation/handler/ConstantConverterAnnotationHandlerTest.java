@@ -21,6 +21,8 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 import javax.faces.internal.ConverterResource;
 
+import org.seasar.extension.dxo.converter.ConversionContext;
+import org.seasar.extension.dxo.converter.impl.AbstractConverter;
 import org.seasar.framework.container.ComponentDef;
 import org.seasar.framework.container.deployer.InstanceDefFactory;
 import org.seasar.framework.container.impl.ComponentDefImpl;
@@ -36,6 +38,11 @@ public class ConstantConverterAnnotationHandlerTest extends TeedaTestCase {
                 "fooConverter");
         cd.setInstanceDef(InstanceDefFactory.PROTOTYPE);
         getContainer().register(cd);
+        ComponentDef cd2 = new ComponentDefImpl(BarDxoConverter.class,
+                "barDxoConverter");
+        cd2.setInstanceDef(InstanceDefFactory.PROTOTYPE);
+        getContainer().register(cd2);
+
         ConstantConverterAnnotationHandler handler = new ConstantConverterAnnotationHandler();
         getContainer().register(HogeBean.class, "hogeBean");
         handler.registerConverters("hogeBean");
@@ -49,6 +56,11 @@ public class ConstantConverterAnnotationHandlerTest extends TeedaTestCase {
                 "fooConverter");
         cd.setInstanceDef(InstanceDefFactory.PROTOTYPE);
         getContainer().register(cd);
+        ComponentDef cd2 = new ComponentDefImpl(BarDxoConverter.class,
+                "barDxoConverter");
+        cd2.setInstanceDef(InstanceDefFactory.PROTOTYPE);
+        getContainer().register(cd2);
+
         ConstantConverterAnnotationHandler handler = new ConstantConverterAnnotationHandler();
         getContainer().register(HogeBean.class, "hogeBean");
         handler.registerConverters("hogeBean");
@@ -62,6 +74,11 @@ public class ConstantConverterAnnotationHandlerTest extends TeedaTestCase {
                 "fooConverter");
         cd.setInstanceDef(InstanceDefFactory.PROTOTYPE);
         getContainer().register(cd);
+        ComponentDef cd2 = new ComponentDefImpl(BarDxoConverter.class,
+                "barDxoConverter");
+        cd2.setInstanceDef(InstanceDefFactory.PROTOTYPE);
+        getContainer().register(cd2);
+
         ConstantConverterAnnotationHandler handler = new ConstantConverterAnnotationHandler();
         getContainer().register(HogeBean.class, "hogeBean");
         handler.registerConverters("hogeBean");
@@ -81,6 +98,8 @@ public class ConstantConverterAnnotationHandlerTest extends TeedaTestCase {
         public static final String aaa_fooConverter = "bbb=bar";
 
         public static final String bbb_fooConverter = null;
+
+        public static final String bbb_barDxoConverter = null;
 
         public static final String ccc_ddd_fooConverter = "bbb=bar2";
 
@@ -134,4 +153,10 @@ public class ConstantConverterAnnotationHandlerTest extends TeedaTestCase {
 
     }
 
+    public static class BarDxoConverter extends AbstractConverter {
+        public Object convert(Object source, Class destClass,
+                ConversionContext context) {
+            return null;
+        }
+    }
 }

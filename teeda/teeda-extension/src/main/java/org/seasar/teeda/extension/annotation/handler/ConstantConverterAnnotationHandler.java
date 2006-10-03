@@ -54,14 +54,17 @@ public class ConstantConverterAnnotationHandler extends
             String fieldString = field.getName();
             int index = fieldString.lastIndexOf("_");
             String fieldName = fieldString.substring(0, index);
-            String convertorName = fieldString.substring(index + 1);
+            String converterName = fieldString.substring(index + 1);
             if (!beanDesc.hasPropertyDesc(fieldName)
-                    || !container.hasComponentDef(convertorName)) {
+                    || !container.hasComponentDef(converterName)) {
                 continue;
             }
 
-            Converter converter = (Converter) container
-                    .getComponent(convertorName);
+            ComponentDef cd = container.getComponentDef(converterName);
+            if (!Converter.class.isAssignableFrom(cd.getComponentClass())) {
+                continue;
+            }
+            Converter converter = (Converter) cd.getComponent();
             String s = (String) FieldUtil.get(field, null);
             Map m = ConstantAnnotationUtil.convertExpressionToMap(s);
             BeanUtil.copyProperties(m, converter);
