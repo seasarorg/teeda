@@ -16,7 +16,8 @@
 package org.seasar.teeda.extension.render.html;
 
 import java.io.IOException;
-import java.text.NumberFormat;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.Locale;
 
 import javax.faces.component.UIComponent;
@@ -77,16 +78,28 @@ public class THtmlInputCommaTextRenderer extends
         }
     }
 
-    protected String getValue(FacesContext context,
-            UIComponent htmlInputCommaText) {
+    protected String getValue(FacesContext context, UIComponent component) {
         final String value = ValueHolderUtil.getValueForRender(context,
-                htmlInputCommaText);
+                component);
         if (StringUtil.isEmpty(value)) {
             return value;
         }
+        THtmlInputCommaText htmlInputCommaText = (THtmlInputCommaText) component;
         try {
-            return convertToFormattedValue(context, BigDecimalConversionUtil
-                    .toBigDecimal(value));
+            final Locale locale = context.getViewRoot().getLocale();
+            final String fraction = getFractionSeparator(htmlInputCommaText, locale);
+            final DecimalFormat df = new DecimalFormat();
+            int pos = value.indexOf(fraction);
+            if (pos < 0) {
+                BigDecimal bd = BigDecimalConversionUtil.toBigDecimal(value);
+                return df.format(bd);
+            } else {
+                String intPart = value.substring(0, pos);
+                String fractPart = value.substring(pos);
+                BigDecimal bd = BigDecimalConversionUtil.toBigDecimal(intPart);
+                String s = df.format(bd);
+                return s + fractPart;
+            }
         } catch (NumberFormatException e) {
             return null;
         }
@@ -250,15 +263,6 @@ public class THtmlInputCommaTextRenderer extends
                 .addIgnoreComponentName(ExtensionConstants.FRACTION_SEPARATOR_ATTR);
         return ignore;
     };
-
-    //TODO move to S2 util.
-    private static String convertToFormattedValue(FacesContext context,
-            Object value) {
-        Locale locale = context.getViewRoot().getLocale();
-        NumberFormat format = NumberFormat.getInstance(locale);
-        String n = format.format(value);
-        return n;
-    }
 
     protected String getScriptKey() {
         return THtmlInputCommaText.class.getName();
