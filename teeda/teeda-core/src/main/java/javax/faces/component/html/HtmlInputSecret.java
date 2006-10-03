@@ -443,7 +443,7 @@ public class HtmlInputSecret extends UIInput {
             return label;
         }
         ValueBinding vb = getValueBinding(JsfConstants.LABEL_ATTR);
-        return vb != null ? (String) vb.getValue(getFacesContext()) : getId();
+        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public Object saveState(FacesContext context) {

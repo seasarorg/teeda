@@ -156,7 +156,7 @@ public class THtmlInputCommaTextRendererTest extends RendererTest {
                         + "style=\"w;ime-mode:disabled;\" title=\"y\" onchange=\"h\" dir=\"c\" readonly=\"true\" "
                         + "class=\"u\" accesskey=\"a\" ondblclick=\"j\" size=\"2\" onmouseover=\"r\" "
                         + "tabindex=\"x\" maxlength=\"5\" lang=\"e\" onclick=\"i\" alt=\"b\" "
-                        + "onmouseout=\"q\" onmousedown=\"o\" label=\"A\" onselect=\"t\" onmouseup=\"s\" "
+                        + "onmouseout=\"q\" onmousedown=\"o\" onselect=\"t\" onmouseup=\"s\" "
                         + "onmousemove=\"p\" />", getResponseText());
 
         assertEquals(diff.toString(), true, diff.identical());

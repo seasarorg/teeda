@@ -154,7 +154,6 @@ public class THtmlGridInputCommaTextRendererTest extends RendererTest {
                 + " alt=\"b\""
                 + " dir=\"c\""
                 + " disabled=\"disabled\""
-                + " label=\"AA\""
                 + " lang=\"e\""
                 + " class=\"u gridCellEdit\""
                 + " style=\"w;ime-mode:disabled;display:none;\""

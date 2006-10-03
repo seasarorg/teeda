@@ -18,8 +18,6 @@ package org.seasar.teeda.extension.html.factory;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.seasar.teeda.core.JsfConstants;
-import org.seasar.teeda.core.taglib.html.InputTextTag;
 import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ElementNode;
@@ -69,9 +67,10 @@ public class SelectBooleanCheckboxFactoryTest extends TeedaExtensionTestCase {
                 pageDesc, actionDesc);
         // ## Assert ##
         assertNotNull("1", processor);
-        assertEquals("2", TSelectBooleanCheckboxTag.class, processor.getTagClass());
+        assertEquals("2", TSelectBooleanCheckboxTag.class, processor
+                .getTagClass());
         assertEquals("3", "#{fooPage.aaa}", processor.getProperty("value"));
-        assertEquals("4", "arg1", processor.getProperty("label"));
+        assertEquals("4", null, processor.getProperty("label"));
     }
 
 }

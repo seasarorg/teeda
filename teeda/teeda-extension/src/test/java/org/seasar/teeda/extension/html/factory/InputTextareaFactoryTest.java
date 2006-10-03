@@ -70,7 +70,7 @@ public class InputTextareaFactoryTest extends TeedaExtensionTestCase {
         assertNotNull("1", processor);
         assertEquals("2", InputTextareaTag.class, processor.getTagClass());
         assertEquals("3", "#{fooPage.aaa}", processor.getProperty("value"));
-        assertEquals("4", "aaa", processor.getProperty("label"));
+        assertEquals("4", null, processor.getProperty("label"));
     }
 
 }

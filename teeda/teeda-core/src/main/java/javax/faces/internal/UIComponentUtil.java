@@ -82,6 +82,11 @@ public class UIComponentUtil {
         if (label != null) {
             return label;
         }
+        String title = (String) component.getAttributes().get(
+                JsfConstants.TITLE_ATTR);
+        if (title != null) {
+            return title;
+        }
         return component.getId();
     }
 

@@ -427,7 +427,7 @@ public class HtmlSelectManyListbox extends UISelectMany {
             return label;
         }
         ValueBinding vb = getValueBinding(JsfConstants.LABEL_ATTR);
-        return vb != null ? (String) vb.getValue(getFacesContext()) : getId();
+        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
     public void validate(FacesContext context) {
