@@ -79,12 +79,12 @@ public class HtmlCommandLinkRenderer extends AbstractRenderer {
     protected void encodeHtmlCommandLinkWithJavaScript(FacesContext context,
             ResponseWriter writer, HtmlCommandLink commandLink)
             throws IOException {
-        UIForm parentForm = UIComponentUtil.findParentForm(commandLink);
+        final UIForm parentForm = UIComponentUtil.findParentForm(commandLink);
         final String formId = getIdForRender(context, parentForm);
 
         RendererUtil.renderAttribute(writer, JsfConstants.HREF_ATTR, "#");
 
-        StringBuffer sb = new StringBuffer();
+        final StringBuffer sb = new StringBuffer();
         final String formName = parentForm.getClientId(context);
         final String functionName = JavaScriptUtil
                 .getClearHiddenCommandFormParamsFunctionName(formName)
@@ -220,10 +220,10 @@ public class HtmlCommandLinkRenderer extends AbstractRenderer {
         if (!component.isRendered()) {
             return;
         }
-        encodeHtmlOutputLinkEnd(context, (HtmlCommandLink) component);
+        encodeHtmlCommandLinkEnd(context, (HtmlCommandLink) component);
     }
 
-    protected void encodeHtmlOutputLinkEnd(FacesContext context,
+    protected void encodeHtmlCommandLinkEnd(FacesContext context,
             HtmlCommandLink commandLink) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
         writer.endElement(JsfConstants.ANCHOR_ELEM);
