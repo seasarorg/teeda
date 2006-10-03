@@ -43,8 +43,6 @@ public class SessionPagePersistence implements PagePersistence {
 
     private static final long serialVersionUID = 1L;
 
-    private static final String PREVIOUS_VIEW_ID = "previousViewId";
-
     private int pageSize = 10;
 
     private PageDescCache pageDescCache;
@@ -103,7 +101,6 @@ public class SessionPagePersistence implements PagePersistence {
             Object value = pd.getValue(page);
             map.put(pd.getPropertyName(), value);
         }
-        map.put(PREVIOUS_VIEW_ID, previousViewId);
         return map;
     }
 

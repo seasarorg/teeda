@@ -31,15 +31,14 @@ import javax.faces.model.SelectItemGroup;
 import org.seasar.framework.util.ArrayIterator;
 import org.seasar.framework.util.ArrayUtil;
 import org.seasar.teeda.core.JsfConstants;
-import org.seasar.teeda.core.render.AbstractRenderer;
-import org.seasar.teeda.core.util.DecodeUtil;
+import org.seasar.teeda.core.render.AbstractInputRenderer;
 import org.seasar.teeda.core.util.RendererUtil;
 import org.seasar.teeda.core.util.ValueHolderUtil;
 
 /**
  * @author manhole
  */
-public class HtmlSelectManyListboxRenderer extends AbstractRenderer {
+public class HtmlSelectManyListboxRenderer extends AbstractInputRenderer {
 
     public static final String COMPONENT_FAMILY = "javax.faces.SelectMany";
 
@@ -165,7 +164,7 @@ public class HtmlSelectManyListboxRenderer extends AbstractRenderer {
 
     public void decode(FacesContext context, UIComponent component) {
         assertNotNull(context, component);
-        DecodeUtil.decodeMany(context, component);
+        getDecoder().decodeMany(context, component);
     }
 
     public Object getConvertedValue(FacesContext context,

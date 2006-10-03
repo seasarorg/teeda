@@ -47,6 +47,8 @@ public class RestoreViewPhase extends AbstractPhase {
             .getName()
             + ".VIEW_ID_LRU";
 
+    private static final String PREVIOUS_VIEW_ID = "previousViewId";
+
     private int viewIdLruSize = 16;
 
     public RestoreViewPhase() {
@@ -62,24 +64,35 @@ public class RestoreViewPhase extends AbstractPhase {
 
     protected void executePhase(final FacesContext context)
             throws FacesException {
-        final ExternalContext externalContext = context.getExternalContext();
-        final String viewId = getViewId(context, externalContext);
-        final String wid = setupWindowId(externalContext);
-        final Map sessionMap = externalContext.getSessionMap();
-        final String previousViewId = getViewIdFromSession(sessionMap, wid);
-        PostbackUtil.setPostback(externalContext.getRequestMap(), viewId
-                .equals(previousViewId)
-                && ServletExternalContextUtil.isPost(externalContext));
-        final UIViewRoot viewRoot = getViewRoot(context, viewId);
+        final RestoreValueHolder holder = setUpRestoreViewPhase(context);
+        final String viewId = holder.getCurrentViewId();
+        final String wid = holder.getWid();
+
+        final UIViewRoot viewRoot = composeViewRoot(context, viewId);
         context.setViewRoot(viewRoot);
-        saveViewIdToSession(sessionMap, wid, viewId);
+
+        final ExternalContext externalContext = context.getExternalContext();
+        saveViewIdToSession(externalContext.getSessionMap(), wid, viewId);
         initializeChildren(context, viewRoot);
         if (externalContext.getRequestParameterMap().isEmpty()) {
             context.renderResponse();
         }
     }
 
-    private UIViewRoot getViewRoot(final FacesContext context,
+    protected RestoreValueHolder setUpRestoreViewPhase(
+            final FacesContext context) {
+        RestoreValueHolder holder = new RestoreValueHolder(context);
+        final ExternalContext externalContext = context.getExternalContext();
+        final String viewId = holder.getCurrentViewId();
+        final String previousViewId = holder.getPreviousViewId();
+        Map requestMap = externalContext.getRequestMap();
+        requestMap.put(PREVIOUS_VIEW_ID, previousViewId);
+        PostbackUtil.setPostback(requestMap, viewId.equals(previousViewId)
+                && ServletExternalContextUtil.isPost(externalContext));
+        return holder;
+    }
+
+    private UIViewRoot composeViewRoot(final FacesContext context,
             final String viewId) {
         final ViewHandler viewHandler = FacesContextUtil
                 .getViewHandler(context);
@@ -156,4 +169,36 @@ public class RestoreViewPhase extends AbstractPhase {
     protected PhaseId getCurrentPhaseId() {
         return PhaseId.RESTORE_VIEW;
     }
+
+    private class RestoreValueHolder {
+
+        private String currentViewId;
+
+        private String wid;
+
+        private String previousViewId;
+
+        public RestoreValueHolder(FacesContext context) {
+            final ExternalContext externalContext = context
+                    .getExternalContext();
+            this.currentViewId = getViewId(context, externalContext);
+            this.wid = setupWindowId(externalContext);
+            this.previousViewId = getViewIdFromSession(externalContext
+                    .getSessionMap(), this.wid);
+        }
+
+        public String getCurrentViewId() {
+            return currentViewId;
+        }
+
+        public String getWid() {
+            return wid;
+        }
+
+        public String getPreviousViewId() {
+            return previousViewId;
+        }
+
+    }
+
 }

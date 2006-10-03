@@ -34,9 +34,8 @@ import org.seasar.framework.beans.PropertyDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.framework.util.ClassUtil;
 import org.seasar.teeda.core.JsfConstants;
-import org.seasar.teeda.core.render.AbstractRenderer;
+import org.seasar.teeda.core.render.AbstractInputRenderer;
 import org.seasar.teeda.core.render.EncodeConverter;
-import org.seasar.teeda.core.util.DecodeUtil;
 import org.seasar.teeda.core.util.RendererUtil;
 import org.seasar.teeda.extension.component.html.THtmlInputHidden;
 import org.seasar.teeda.extension.component.html.THtmlInputHidden.ComponentHolder;
@@ -44,7 +43,7 @@ import org.seasar.teeda.extension.component.html.THtmlInputHidden.ComponentHolde
 /**
  * @author manhole
  */
-public class THtmlInputHiddenRenderer extends AbstractRenderer {
+public class THtmlInputHiddenRenderer extends AbstractInputRenderer {
 
     public static final String COMPONENT_FAMILY = THtmlInputHidden.COMPONENT_FAMILY;
 
@@ -153,7 +152,7 @@ public class THtmlInputHiddenRenderer extends AbstractRenderer {
 
     protected void decodeHtmlInputHidden(final FacesContext context,
             final THtmlInputHidden htmlInputHidden) {
-        DecodeUtil.decode(context, htmlInputHidden);
+        getDecoder().decode(context, htmlInputHidden);
     }
 
     protected void copyToMap(final Object from, final Map to) {

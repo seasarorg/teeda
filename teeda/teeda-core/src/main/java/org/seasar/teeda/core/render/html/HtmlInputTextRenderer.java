@@ -23,15 +23,14 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
 import org.seasar.teeda.core.JsfConstants;
-import org.seasar.teeda.core.render.AbstractRenderer;
-import org.seasar.teeda.core.util.DecodeUtil;
+import org.seasar.teeda.core.render.AbstractInputRenderer;
 import org.seasar.teeda.core.util.RendererUtil;
 import org.seasar.teeda.core.util.ValueHolderUtil;
 
 /**
  * @author manhole
  */
-public class HtmlInputTextRenderer extends AbstractRenderer {
+public class HtmlInputTextRenderer extends AbstractInputRenderer {
 
     public static final String COMPONENT_FAMILY = "javax.faces.Input";
 
@@ -71,7 +70,7 @@ public class HtmlInputTextRenderer extends AbstractRenderer {
 
     protected void decodeHtmlInputText(FacesContext context,
             HtmlInputText htmlInputText) {
-        DecodeUtil.decode(context, htmlInputText);
+        getDecoder().decode(context, htmlInputText);
     }
 
 }

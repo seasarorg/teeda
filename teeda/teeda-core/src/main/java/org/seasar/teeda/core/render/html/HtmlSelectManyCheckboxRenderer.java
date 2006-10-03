@@ -20,7 +20,6 @@ import java.util.Iterator;
 
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIOutput;
-import javax.faces.component.html.HtmlSelectManyCheckbox;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.convert.ConverterException;
@@ -33,15 +32,14 @@ import org.seasar.framework.util.ArrayIterator;
 import org.seasar.framework.util.ArrayUtil;
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
-import org.seasar.teeda.core.render.AbstractRenderer;
-import org.seasar.teeda.core.util.DecodeUtil;
+import org.seasar.teeda.core.render.AbstractInputRenderer;
 import org.seasar.teeda.core.util.RendererUtil;
 import org.seasar.teeda.core.util.ValueHolderUtil;
 
 /**
  * @author manhole
  */
-public class HtmlSelectManyCheckboxRenderer extends AbstractRenderer {
+public class HtmlSelectManyCheckboxRenderer extends AbstractInputRenderer {
 
     public static final String COMPONENT_FAMILY = "javax.faces.SelectMany";
 
@@ -195,7 +193,7 @@ public class HtmlSelectManyCheckboxRenderer extends AbstractRenderer {
 
     public void decode(FacesContext context, UIComponent component) {
         assertNotNull(context, component);
-        DecodeUtil.decodeMany(context, ((HtmlSelectManyCheckbox) component));
+        getDecoder().decodeMany(context, component);
     }
 
     public Object getConvertedValue(FacesContext context,

@@ -25,7 +25,6 @@ import javax.faces.convert.ConverterException;
 import javax.faces.model.SelectItem;
 
 import org.seasar.teeda.core.JsfConstants;
-import org.seasar.teeda.core.util.DecodeUtil;
 import org.seasar.teeda.core.util.RendererUtil;
 import org.seasar.teeda.core.util.ValueHolderUtil;
 
@@ -70,7 +69,7 @@ public class HtmlSelectOneRadioRenderer extends HtmlSelectManyCheckboxRenderer {
 
     public void decode(FacesContext context, UIComponent component) {
         assertNotNull(context, component);
-        DecodeUtil.decode(context, component);
+        getDecoder().decode(context, component);
     }
 
     public Object getConvertedValue(FacesContext context,
