@@ -34,6 +34,7 @@ import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.scope.impl.DispatchScope;
 import org.seasar.teeda.core.scope.impl.DispatchScopeFactory;
 import org.seasar.teeda.core.util.RendererUtil;
+import org.seasar.teeda.extension.component.UIBody;
 import org.seasar.teeda.extension.component.html.THtmlGrid;
 import org.seasar.teeda.extension.component.html.THtmlGridBody;
 import org.seasar.teeda.extension.component.html.THtmlGridColumn;
@@ -42,6 +43,8 @@ import org.seasar.teeda.extension.component.html.THtmlGridHeader;
 import org.seasar.teeda.extension.component.html.THtmlGridTd;
 import org.seasar.teeda.extension.component.html.THtmlGridTh;
 import org.seasar.teeda.extension.component.html.THtmlGridTr;
+import org.seasar.teeda.extension.render.RendererListener;
+import org.seasar.teeda.extension.render.TBodyRenderer;
 import org.seasar.teeda.extension.render.TForEachRenderer;
 
 /**
@@ -73,9 +76,13 @@ public class THtmlGridRenderer extends TForEachRenderer {
 
     private static final String RIGHT_BODY_TABLE = RIGHT_BODY + "Table";
 
+    private static final String RIGHT_BODY_SOURCE = RIGHT_BODY + "Source";
+
     private static final String LEFT_BODY = "LeftBody";
 
     private static final String LEFT_BODY_TABLE = LEFT_BODY + "Table";
+
+    private static final String LEFT_BODY_SOURCE = LEFT_BODY + "Source";
 
     private static final String GRID_ATTRIBUTE = THtmlGrid.class.getName()
             + ".GRID_ATTRIBUTE";
@@ -85,6 +92,8 @@ public class THtmlGridRenderer extends TForEachRenderer {
 
     private static final String APPEND_EVENT_JS = THtmlGrid.class.getName()
             + ".APPEND_EVENT_JS";
+
+    private int firstRenderRowCount = 50;
 
     public void encodeBegin(FacesContext context, UIComponent component)
             throws IOException {
@@ -209,14 +218,15 @@ public class THtmlGridRenderer extends TForEachRenderer {
                         + id + "');");
         // 横方向にscrollするときは全体の横幅を自動調整する
         if (htmlGrid.isScrollHorizontal()) {
-            scriptBody.append("document.getElementById('" + id + RIGHT_HEADER
+            scriptBody.append(" document.getElementById('" + id + RIGHT_HEADER
                     + "').style.width = " + attribute.getRightHeaderWidth()
                     + ";");
             scriptBody
-                    .append("document.getElementById('" + id + RIGHT_BODY
+                    .append(" document.getElementById('" + id + RIGHT_BODY
                             + "').style.width = "
                             + attribute.getRightBodyWidth() + ";");
         }
+        scriptBody.append(" Teeda.THtmlGrid.loadGridRows('" + id + "');");
         scriptBody.append(" });");
         renderJavaScriptElement(writer, new String(scriptBody));
     }
@@ -410,6 +420,8 @@ public class THtmlGridRenderer extends TForEachRenderer {
         final Object page = htmlGrid.getPage(context);
         final BeanDesc beanDesc = BeanDescFactory.getBeanDesc(page.getClass());
         final Object[] items = htmlGrid.getItems(context);
+        final int renderRowLength = Math.min(firstRenderRowCount, items.length);
+
         final String itemName = htmlGrid.getItemName();
         final String indexName = htmlGrid.getIndexName();
         final String id = getIdForRender(context, htmlGrid);
@@ -430,8 +442,7 @@ public class THtmlGridRenderer extends TForEachRenderer {
                     + LEFT_BODY_TABLE);
             renderInnerTableAttributes(writer);
             writer.startElement(JsfConstants.TBODY_ELEM, body);
-
-            for (int i = 0; i < items.length; ++i) {
+            for (int i = 0; i < renderRowLength; ++i) {
                 htmlGrid.enterRow(context, i);
                 processItem(beanDesc, page, items[i], itemName, i, indexName);
                 for (Iterator it = getRenderedChildrenIterator(body); it
@@ -444,7 +455,6 @@ public class THtmlGridRenderer extends TForEachRenderer {
                 }
                 htmlGrid.leaveRow(context);
             }
-
             writer.endElement(JsfConstants.TBODY_ELEM);
             writer.endElement(JsfConstants.TABLE_ELEM);
             writer.endElement(JsfConstants.DIV_ELEM);
@@ -494,7 +504,7 @@ public class THtmlGridRenderer extends TForEachRenderer {
         renderInnerTableAttributes(writer);
         writer.startElement(JsfConstants.TBODY_ELEM, body);
 
-        for (int i = 0; i < items.length; ++i) {
+        for (int i = 0; i < renderRowLength; ++i) {
             htmlGrid.enterRow(context, i);
             processItem(beanDesc, page, items[i], itemName, i, indexName);
             for (final Iterator it = getRenderedChildrenIterator(body); it
@@ -513,6 +523,96 @@ public class THtmlGridRenderer extends TForEachRenderer {
         writer.endElement(JsfConstants.DIV_ELEM);
         writer.endElement(JsfConstants.TD_ELEM);
         writer.endElement(JsfConstants.TR_ELEM);
+
+        if (renderRowLength < items.length) {
+            final UIBody uiBody = TBodyRenderer.findParentBody(htmlGrid);
+            final GridPostRendererListener rendererListener = new GridPostRendererListener();
+            rendererListener.attribute = attribute;
+            rendererListener.htmlGrid = htmlGrid;
+            rendererListener.id = id;
+            rendererListener.body = body;
+            rendererListener.renderRowLength = renderRowLength;
+            rendererListener.beanDesc = beanDesc;
+            rendererListener.page = page;
+            rendererListener.items = items;
+            TBodyRenderer.addRendererListener(uiBody, rendererListener);
+        }
+    }
+
+    class GridPostRendererListener implements RendererListener {
+
+        GridAttribute attribute;
+
+        THtmlGrid htmlGrid;
+
+        String id;
+
+        THtmlGridBody body;
+
+        int renderRowLength;
+
+        BeanDesc beanDesc;
+
+        Object page;
+
+        Object[] items;
+
+        public void renderBeforeBodyEnd(FacesContext context)
+                throws IOException {
+            final ResponseWriter writer = context.getResponseWriter();
+            final String itemName = htmlGrid.getItemName();
+            final String indexName = htmlGrid.getIndexName();
+
+            // leftBody
+            if (attribute.hasLeftFixCols()) {
+                writer.startElement(JsfConstants.TABLE_ELEM, body);
+                RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR, id
+                        + LEFT_BODY_SOURCE);
+                RendererUtil.renderAttribute(writer, JsfConstants.STYLE_ATTR,
+                        "display:none;");
+
+                writer.startElement(JsfConstants.TBODY_ELEM, body);
+                for (int i = renderRowLength; i < items.length; ++i) {
+                    htmlGrid.enterRow(context, i);
+                    processItem(beanDesc, page, items[i], itemName, i,
+                            indexName);
+                    for (Iterator it = getRenderedChildrenIterator(body); it
+                            .hasNext();) {
+                        final UIComponent child = (UIComponent) it.next();
+                        if (child instanceof THtmlGridTr) {
+                            encodeGridLeftBodyTr(context, (THtmlGridTr) child,
+                                    writer, attribute);
+                        }
+                    }
+                    htmlGrid.leaveRow(context);
+                }
+                writer.endElement(JsfConstants.TBODY_ELEM);
+                writer.endElement(JsfConstants.TABLE_ELEM);
+            }
+
+            // rightBody
+            writer.startElement(JsfConstants.TABLE_ELEM, body);
+            RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR, id
+                    + RIGHT_BODY_SOURCE);
+            RendererUtil.renderAttribute(writer, JsfConstants.STYLE_ATTR,
+                    "display:none;");
+            writer.startElement(JsfConstants.TBODY_ELEM, body);
+            for (int i = renderRowLength; i < items.length; ++i) {
+                htmlGrid.enterRow(context, i);
+                processItem(beanDesc, page, items[i], itemName, i, indexName);
+                for (final Iterator it = getRenderedChildrenIterator(body); it
+                        .hasNext();) {
+                    final UIComponent child = (UIComponent) it.next();
+                    if (child instanceof THtmlGridTr) {
+                        encodeGridRightBodyTr(context, (THtmlGridTr) child,
+                                writer, attribute);
+                    }
+                }
+                htmlGrid.leaveRow(context);
+            }
+            writer.endElement(JsfConstants.TBODY_ELEM);
+            writer.endElement(JsfConstants.TABLE_ELEM);
+        }
     }
 
     private void encodeGridLeftBodyTr(final FacesContext context,

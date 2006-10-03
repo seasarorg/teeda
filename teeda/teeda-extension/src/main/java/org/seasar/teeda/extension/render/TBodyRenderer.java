@@ -29,6 +29,7 @@ import javax.faces.internal.UIComponentUtil;
 
 import org.seasar.framework.util.AssertionUtil;
 import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.core.exception.TagNotFoundRuntimeException;
 import org.seasar.teeda.core.render.AbstractRenderer;
 import org.seasar.teeda.core.util.RendererUtil;
 import org.seasar.teeda.extension.ExtensionConstants;
@@ -101,6 +102,17 @@ public class TBodyRenderer extends AbstractRenderer {
         ignore.addIgnoreComponentName(JsfConstants.ID_ATTR);
         ignore.addIgnoreComponentName("javax.faces.webapp.COMPONENT_IDS");
         return ignore;
+    }
+
+    public static UIBody findParentBody(final UIComponent component) {
+        UIComponent parent = component.getParent();
+        while (parent != null && !(parent instanceof UIBody)) {
+            parent = parent.getParent();
+        }
+        if (parent == null) {
+            throw new TagNotFoundRuntimeException("body");
+        }
+        return (UIBody) parent;
     }
 
 }

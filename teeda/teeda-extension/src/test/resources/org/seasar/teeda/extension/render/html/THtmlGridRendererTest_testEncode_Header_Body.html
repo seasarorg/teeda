@@ -124,6 +124,30 @@ Teeda.THtmlGrid = {
     if (rightHeaderTable && rightBodyTable) {
       self._adjustWidth(rightHeaderTable, rightBodyTable);
     }
+  },
+  _loadGridRowsFor : function (srcTable, destTable) {
+    var destTbody = destTable.tBodies[0];
+    var srcTbody = srcTable.tBodies[0];
+    var srcRows = srcTbody.rows;
+    var len = srcRows.length;
+    for (var i = 0; i < len; i++) {
+      var row = srcRows[0];
+      destTbody.appendChild(row);
+    }
+    srcTable.parentNode.removeChild(srcTable);
+  },
+  loadGridRows : function (gridId) {
+    var self = Teeda.THtmlGrid;
+    var leftSrcTable = document.getElementById(gridId + 'LeftBodySource');
+    var leftDestTable = document.getElementById(gridId + 'LeftBodyTable');
+    var rightSrcTable = document.getElementById(gridId + 'RightBodySource');
+    var rightDestTable = document.getElementById(gridId + 'RightBodyTable');
+    if (leftSrcTable && leftDestTable) {
+      self._loadGridRowsFor(leftSrcTable, leftDestTable);
+    }
+    if (rightSrcTable && rightDestTable) {
+      self._loadGridRowsFor(rightSrcTable, rightDestTable);
+    }
   }
 };
 //-->
@@ -253,7 +277,7 @@ function appendEventFor(targetObj, eventName, fn){
     targetObj[eventName] = fn;
   }
 }
-appendEventFor(window, 'onload', function() { Teeda.THtmlGrid.adjustGridSize('someGrid'); });
+appendEventFor(window, 'onload', function() { Teeda.THtmlGrid.adjustGridSize('someGrid'); Teeda.THtmlGrid.loadGridRows('someGrid'); });
 //-->
 </script>
 <!-- END -->
