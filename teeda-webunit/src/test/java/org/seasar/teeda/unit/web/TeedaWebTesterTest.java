@@ -152,7 +152,7 @@ public class TeedaWebTesterTest extends TeedaWebTestCase {
 
     public void testSetTextById() throws Exception {
         // ## Arrange ##
-        final String relativeUrl = getFileAsRelativeUrl("textfield.html");
+        final String relativeUrl = getFileAsRelativeUrl("inputText.html");
 
         // ## Act ##
         tester.beginAt(relativeUrl);
@@ -162,6 +162,20 @@ public class TeedaWebTesterTest extends TeedaWebTestCase {
         tester.assertAttributeEquals("aaaId", "value", "aaaValue");
         tester.setTextById("aaaId", "foo");
         tester.assertAttributeEquals("aaaId", "value", "foo");
+    }
+
+    public void testSetTextByIdForTextarea() throws Exception {
+        // ## Arrange ##
+        final String relativeUrl = getFileAsRelativeUrl("inputTextarea.html");
+
+        // ## Act ##
+        tester.beginAt(relativeUrl);
+        tester.dumpHtml();
+
+        // ## Assert ##
+        tester.assertTextEquals("aaaId", "aaaValue");
+        tester.setTextById("aaaId", "foo");
+        tester.assertTextEquals("aaaId", "foo");
     }
 
     private String getFileAsRelativeUrl(final String file) {

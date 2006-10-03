@@ -21,6 +21,7 @@ import net.sourceforge.jwebunit.WebTester;
 
 import com.gargoylesoftware.htmlunit.html.HtmlElement;
 import com.gargoylesoftware.htmlunit.html.HtmlInput;
+import com.gargoylesoftware.htmlunit.html.HtmlTextArea;
 
 /**
  * @author manhole
@@ -45,11 +46,29 @@ public class TeedaWebTester extends WebTester {
     }
 
     /*
-     * input type="text"へテキストをセットする。
+     * inputへテキストをセットする。
      */
     public void setTextById(final String id, final String value) {
-        final HtmlInput input = getHtmlInputById(id);
-        input.setValueAttribute(value);
+        final HtmlElement element = getElementById(id);
+        if (element instanceof HtmlInput) {
+            final HtmlInput input = (HtmlInput) element;
+            input.setValueAttribute(value);
+        } else if (element instanceof HtmlTextArea) {
+            final HtmlTextArea textArea = (HtmlTextArea) element;
+            textArea.setText(value);
+        } else {
+            Assert.fail("element [" + id
+                + "] is not HtmlElement nor HtmlTextArea: " + element);
+        }
+    }
+
+    protected HtmlInput getHtmlInputByIdNoException(final String id) {
+        final HtmlElement element = getElementByIdNoException(id);
+        if (element instanceof HtmlInput) {
+            System.out.println(element);
+            return (HtmlInput) element;
+        }
+        return null;
     }
 
     protected HtmlInput getHtmlInputById(final String id) {
