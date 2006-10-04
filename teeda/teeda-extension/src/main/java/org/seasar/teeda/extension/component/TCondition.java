@@ -57,4 +57,22 @@ public class TCondition extends UIComponentBase {
         }
     }
 
+    public void processValidators(FacesContext context) {
+        AssertionUtil.assertNotNull("context", context);
+        UIComponent component = null;
+        for (Iterator itr = getFacetsAndChildren(); itr.hasNext();) {
+            component = (UIComponent) itr.next();
+            component.processValidators(context);
+        }
+    }
+
+    public void processUpdates(FacesContext context) {
+        AssertionUtil.assertNotNull("context", context);
+        UIComponent component = null;
+        for (Iterator itr = getFacetsAndChildren(); itr.hasNext();) {
+            component = (UIComponent) itr.next();
+            component.processUpdates(context);
+        }
+    }
+
 }

@@ -27,7 +27,7 @@ import org.seasar.teeda.core.unit.TeedaTestCase;
  */
 public class TConditionTest extends TeedaTestCase {
 
-    public void test1() throws Exception {
+    public void test_DecodeShouldBeCalled() throws Exception {
         final boolean[] calls = new boolean[] { false };
         MockRenderKit renderKit = getRenderKit();
         renderKit.addRenderer("org.seasar.teeda.extension.Condition",
@@ -42,4 +42,5 @@ public class TConditionTest extends TeedaTestCase {
         component.processDecodes(getFacesContext());
         assertTrue(calls[0]);
     }
+
 }

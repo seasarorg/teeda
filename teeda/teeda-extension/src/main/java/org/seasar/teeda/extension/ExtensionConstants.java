@@ -15,6 +15,8 @@
  */
 package org.seasar.teeda.extension;
 
+import javax.faces.component.NamingContainer;
+
 /**
  * @author shot
  *
@@ -104,5 +106,8 @@ public interface ExtensionConstants {
     String LENGTH_SUFFIX = "Length";
 
     String THRESHOLD_SUFFIX = "Threshold";
+
+    //other
+    String NAME_SEPARATOR = String.valueOf(NamingContainer.SEPARATOR_CHAR);
 
 }
