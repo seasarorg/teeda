@@ -15,6 +15,10 @@ public class AddHogePage {
 
 	private boolean show;
 
+	public AddHogePage() {
+		System.out.println("a");
+	}
+
 	public String doRead() {
 		setShow(true);
 		return null;
