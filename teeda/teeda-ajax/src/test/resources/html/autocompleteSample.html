@@ -1,0 +1,56 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<script language="javascript" src="../../../main/js/kumu/kumu.js"></script>
+<script language="javascript" src="../../../main/js/kumu/autocomplete.js"></script>
+<style>
+  #demo_ {
+    width: 350px;
+    background: #fff;
+  }
+  #demo_ ul {
+    border:1px solid #888;
+    margin:0;
+    padding:0;
+    width:100%;
+    list-style-type:none;
+  }
+  #demo_ ul li {
+    margin:0;
+    padding:3px;
+  }
+  
+  #demo_ ul li.selected { 
+    background-color: #ffb; 
+  }
+  
+</style>
+
+</head>
+<body>
+<marquee width="146" behavior="alternate" scrolldelay="140"><font
+	color="blue">Ajax Complete Demo</font></marquee>
+<br />
+<form name="frm">
+<hr />
+<table border="1">
+	<tr>
+		<td><font size="2px;">Auto Complete Sample</font></td>
+	</tr>
+	<tr>
+		<td valign="top" align="center">
+			<input kumu="autocomplete" autocomplete="off" type="text" name="data" id="demo" maxlength="7" style="width:70px;" />
+		<div id="demo_" style="width:70px;"/>
+		</td>
+	</tr>
+</table>
+<script>
+	new Kumu.Html.AutoComplete("demo","demo_", {url:'test.json'});
+	//Componentの呼び出し時には
+	//optionにcomponent、actionを設定する
+	//new Kumu.Html.AutoComplete("demo","demo_", {component:'test', action:'testAction'});
+</script>
+<hr />
+</form>
+</body>
+</html>

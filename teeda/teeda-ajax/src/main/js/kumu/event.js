@@ -25,6 +25,16 @@ KumuEventConf = false;
 
 Kumu.extend(Kumu.Event, {
     
+  KEY_BACKSPACE: 8,
+  KEY_TAB:       9,
+  KEY_RETURN:   13,
+  KEY_ESC:      27,
+  KEY_LEFT:     37,
+  KEY_UP:       38,
+  KEY_RIGHT:    39,
+  KEY_DOWN:     40,
+  KEY_DELETE:   46,
+
   process : {},  
   
   _nodeCache : {},
@@ -87,7 +97,7 @@ Kumu.extend(Kumu.Event, {
     var nodes = this._elementsById(element);
     useCapture = useCapture || false;
     if (name == 'keypress' && (navigator.appVersion.match(/Konqueror|Safari|KHTML/) 
-     || ele.attachevent)){
+     || element.attachevent)){
       name = 'keydown';
     }
     nodes.map(function(node){
