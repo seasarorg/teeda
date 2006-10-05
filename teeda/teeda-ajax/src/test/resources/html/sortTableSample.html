@@ -1,0 +1,134 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Ajax Table Sample</title>
+<script language="javascript" src="../../../main/js/kumu/kumu.js"></script>
+<!-- 
+<script language="javascript" src="../js/kumu/event.js"></script>
+<script language="javascript" src="../js/kumu/sortable_table.js"></script>
+-->
+<script type="text/javascript">
+Kumu.dynamicLoad('sortable_table');
+new Kumu.Html.SortableTable('sortable_table');
+</script>
+
+<style>
+h1 {
+    font-size: 2em;
+    color: #4B4545;
+    text-align: center;
+}
+
+table.datagrid {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table.datagrid thead th { 
+    text-align: left;
+    background-color: #4B4545;
+    background-repeat: no-repeat;
+    background-position: right center;
+    color: white;
+    font-weight: bold;
+    padding: .3em .7em;
+    font-size: .9em;
+    padding-right: 5px;
+    background-repeat: no-repeat;
+    background-position: 95% right;
+}
+
+table.datagrid thead th a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.0em;
+    background-repeat: no-repeat;
+    background-position: center right;
+    padding-right: 15px;
+}
+
+table.datagrid thead th.over {
+    background-color: #746B6B;
+    cursor: pointer;
+}
+
+table.datagrid tbody th {
+    font-weight: bold;
+}
+
+table.datagrid tbody td, table.datagrid tbody th {
+    text-align: left;
+    padding: .3em .7em;
+    border-bottom: 1px solid #eee;
+}
+
+table.datagrid tbody tr.alternate td, table.datagrid tbody tr.alternate th {
+    background-color: #f1f1f1;
+}
+
+table.datagrid tfoot td, table.datagrid tfoot th { 
+    background-color: #FFFEE3;
+    color: #4B4545;
+    padding: .5em;
+    font-weight: bold;
+    border-top: 2px solid #4B4545;
+}
+
+table.datagrid tfoot th { text-align: left; }
+
+table.datagrid tfoot td {  }
+
+.invisible { display: none; }
+</style>
+</head>
+<body>
+<h1>Ajax Tables from Scratch with Kumu</h1>
+<p>
+<p>
+create date  : <span id="date"> </span>
+
+<table id="sortable_table" class="datagrid">
+  <thead>
+    <tr>
+      <th>Domain Name</th>
+      <th>Creation Date</th>
+      <th>Expiry Date</th>
+      <th>Organization Name</th>
+    </tr>
+  </thead>
+  <tfoot class="invisible">
+    <tr>
+      <td colspan="0"></td>
+    </tr>
+  </tfoot>
+  <tbody>
+    <tr id='dataList'>
+      <td id="domainName">増えるわかめちゃんTest1</td>
+      <td id="creationDate">1</td>
+      <td id="expireDate">Test1</td>
+      <td id="organizationName">Test1</td>
+    </tr>
+    <tr id='dataList'>
+      <td id="domainName">増えるわかめちゃんTest2</td>
+      <td id="creationDate">2</td>
+      <td id="expireDate">Test2</td>
+      <td id="organizationName">Test2</td>
+    </tr>
+    <tr id='dataList'>
+      <td id="domainName">増えるわかめちゃんTest3</td>
+      <td id="creationDate">3</td>
+      <td id="expireDate">Test3</td>
+      <td id="organizationName">Test3</td>
+    </tr>
+    <tr id='dataList'>
+      <td id="domainName">増えるわかめちゃんTest4</td>
+      <td id="creationDate">4</td>
+      <td id="expireDate">Test4</td>
+      <td id="organizationName">Test4</td>
+    </tr>
+  </tbody>
+</table>
+
+</body>
+</html>
