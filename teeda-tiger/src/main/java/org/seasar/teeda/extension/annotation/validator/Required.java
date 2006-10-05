@@ -24,7 +24,7 @@ import java.lang.annotation.Target;
  * @author higa
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.FIELD)
+@Target( { ElementType.FIELD, ElementType.METHOD })
 @Validator("TRequiredValidator")
 public @interface Required {
 
