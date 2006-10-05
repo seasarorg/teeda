@@ -158,5 +158,13 @@ public class ConstantConverterAnnotationHandlerTest extends TeedaTestCase {
                 ConversionContext context) {
             return null;
         }
+
+        public Class getDestClass() {
+            return null;
+        }
+
+        public Class[] getSourceClasses() {
+            return null;
+        }
     }
 }
