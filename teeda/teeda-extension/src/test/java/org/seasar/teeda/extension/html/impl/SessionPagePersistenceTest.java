@@ -64,7 +64,7 @@ public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
             }
 
         });
-        Map map = persistence.convertPageData(hoge, "bbb", "aaa");
+        Map map = persistence.convertPageData(hoge, "bbb");
         assertEquals(new Integer(1), map.get("int1"));
         assertEquals(new Integer(2), map.get("int2"));
         assertEquals(Boolean.TRUE, map.get("bool1"));
