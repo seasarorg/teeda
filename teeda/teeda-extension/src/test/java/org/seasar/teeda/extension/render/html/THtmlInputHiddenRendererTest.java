@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -29,7 +29,6 @@ import javax.faces.component.UIComponent;
 import javax.faces.render.Renderer;
 import javax.faces.render.RendererTest;
 
-import org.apache.commons.collections.map.HashedMap;
 import org.custommonkey.xmlunit.Diff;
 import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.mock.MockUIComponentBaseWithNamingContainer;
@@ -157,52 +156,6 @@ public class THtmlInputHiddenRendererTest extends RendererTest {
         assertEquals(false, renderer.getRendersChildren());
     }
 
-    public void testCopyToMap() throws Exception {
-        // ## Arrange ##
-        final HiddenDto dto = new HiddenDto();
-        dto.setAaa("x");
-        dto.setBbb(new Integer(321));
-        dto.setCcc(new BigDecimal("12.3"));
-        dto.xxx = "x";
-        dto.yyy = "x";
-        dto.zzz = "x";
-
-        // ## Act ##
-        final Map map = new HashMap();
-        renderer.copyToMap(dto, map);
-
-        // ## Assert ##
-        assertEquals("x", map.get("aaa"));
-        assertEquals(new Integer(321), map.get("bbb"));
-        assertEquals(new BigDecimal("12.3"), map.get("ccc"));
-        assertEquals(null, map.get("xxx"));
-        assertEquals(null, map.get("yyy"));
-        assertEquals(null, map.get("zzz"));
-    }
-
-    public void testCopyToBean() throws Exception {
-        // ## Arrange ##
-        final Map map = new HashMap();
-        map.put("aaa", "AAA");
-        map.put("bbb", new Integer(1234));
-        map.put("ccc", new BigDecimal("10.002"));
-        map.put("xxx", "x");
-        map.put("yyy", "y");
-        map.put("zzz", "z");
-
-        // ## Act ##
-        final HiddenDto dto = new HiddenDto();
-        renderer.copyToBean(map, dto);
-
-        // ## Assert ##
-        assertEquals("AAA", dto.getAaa());
-        assertEquals(new Integer(1234), dto.getBbb());
-        assertEquals(new BigDecimal("10.002"), dto.getCcc());
-        assertEquals(null, dto.xxx);
-        assertEquals(null, dto.yyy);
-        assertEquals(null, dto.zzz);
-    }
-
     public void testEncodeAndDecode_DtoArray() throws Exception {
         // ## Arrange ##
         final HiddenDto[] dtos = new HiddenDto[3];
@@ -319,14 +272,14 @@ public class THtmlInputHiddenRendererTest extends RendererTest {
         final Map[] dtos = new Map[2];
         final List list = new ArrayList();
         {
-            final Map map = new HashedMap();
+            final Map map = new HashMap();
             map.put("A", "aa1");
             map.put("B", Boolean.TRUE);
             map.put("C", new BigInteger("5525"));
             list.add(map);
         }
         {
-            final Map map = new HashedMap();
+            final Map map = new HashMap();
             map.put("A", "aa2");
             map.put("B", Boolean.FALSE);
             map.put("C", new BigInteger("6636"));
@@ -369,14 +322,14 @@ public class THtmlInputHiddenRendererTest extends RendererTest {
         // ## Arrange ##
         final List dtos = new ArrayList();
         {
-            final Map map = new HashedMap();
+            final Map map = new HashMap();
             map.put("A", "aa1");
             map.put("B", Boolean.TRUE);
             map.put("C", new BigInteger("5525"));
             dtos.add(map);
         }
         {
-            final Map map = new HashedMap();
+            final Map map = new HashMap();
             map.put("A", "aa2");
             map.put("B", Boolean.FALSE);
             map.put("C", new BigInteger("6636"));
@@ -474,7 +427,7 @@ public class THtmlInputHiddenRendererTest extends RendererTest {
         // read only
         private String yyy;
 
-        // write only 
+        // write only
         private String zzz;
 
         public String getAaa() {

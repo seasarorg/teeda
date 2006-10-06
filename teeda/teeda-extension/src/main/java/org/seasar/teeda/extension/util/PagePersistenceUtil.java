@@ -17,6 +17,7 @@ package org.seasar.teeda.extension.util;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Map;
 
 /**
  * @author shot
@@ -30,6 +31,7 @@ public class PagePersistenceUtil {
         return clazz.equals(String.class) || clazz.equals(Boolean.class)
                 || Number.class.isAssignableFrom(clazz)
                 || Date.class.isAssignableFrom(clazz)
-                || Calendar.class.isAssignableFrom(clazz);
+                || Calendar.class.isAssignableFrom(clazz)
+                || Map.class.isAssignableFrom(clazz);
     }
 }
