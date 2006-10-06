@@ -59,7 +59,7 @@ public class OutputLabelFactoryTest extends TeedaExtensionTestCase {
         factory.setNamingConvention(namingConvention);
         factory.setTaglibManager(getTaglibManager());
         Map properties = new HashMap();
-        properties.put("id", "aaa");
+        properties.put("id", "aaaLabel");
         ElementNode elementNode = createElementNode("label", properties);
         PageDesc pageDesc = createPageDesc(FooPage.class, "foo_fooPage");
         ActionDesc actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
@@ -81,6 +81,6 @@ public class OutputLabelFactoryTest extends TeedaExtensionTestCase {
         assertEquals("AAA", bundle.getString("aaa"));
         assertEquals(processor.getProperty("defaultPropertiesName"),
                 "org.seasar.teeda.extension.html.factory.sub.web.label");
-        assertEquals(processor.getProperty("defaultKey"), "aaa");
+        assertEquals("aaa", processor.getProperty("defaultKey"));
     }
 }

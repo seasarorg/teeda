@@ -18,6 +18,7 @@ package org.seasar.teeda.extension.html.factory;
 import java.util.Map;
 
 import org.seasar.framework.convention.NamingConvention;
+import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.html.ActionDesc;
@@ -58,11 +59,12 @@ public class OutputLabelFactory extends AbstractElementProcessorFactory {
         String pageName = pageDesc.getPageName();
         String propertiesName = LabelUtil.getPropertiesName(namingConvention,
                 pageName);
+        String id = StringUtil.trimSuffix(elementNode.getId(), "Label");
         String key = LabelUtil.getLabelKeySuffix(namingConvention, pageName)
-                + "." + elementNode.getId();
+                + "." + id;
         properties.put(ExtensionConstants.KEY_ATTR, key);
         properties.put(ExtensionConstants.PROPERTIES_NAME_ATTR, propertiesName);
-        properties.put(ExtensionConstants.DEFAULT_KEY, elementNode.getId());
+        properties.put(ExtensionConstants.DEFAULT_KEY, id);
         String defaultPropertiesName = LabelUtil
                 .getDefaultApplicationPropertiesName(namingConvention, pageName);
         properties.put(ExtensionConstants.DEFAULT_PROPERTIES_NAME_ATTR,
