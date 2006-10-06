@@ -6,20 +6,20 @@ if (typeof(Teeda.THtmlTree) == 'undefined') {
 }
 Teeda.THtmlTree = {
 
-  Teeda.THtmlTree.COOKIE_DELIM : ";",
-  Teeda.THtmlTree.COOKIE_KEYVAL : "=",
-  Teeda.THtmlTree.ATTRIB_DELIM : ";",
-  Teeda.THtmlTree.ATTRIB_KEYVAL : "=",
+  Teeda.THtmlTree.COOKIE_DELIM  : ';',
+  Teeda.THtmlTree.COOKIE_KEYVAL : '=',
+  Teeda.THtmlTree.ATTRIB_DELIM  : ';',
+  Teeda.THtmlTree.ATTRIB_KEYVAL : '=',
 
   treeNavClick : function(spanId, navImageId, image1, image2, nodeImgId, expandImg, collapseImg, cookieName, nodeId) {
     var navSpan = document.getElementById(spanId);
     var displayStyle = navSpan.style.display;
     if (displayStyle == 'none') {
       displayStyle = 'block'
-      Teeda.THtmlTree.setCookieAttrib(cookieName, nodeId, "x");
+      Teeda.THtmlTree.setCookieAttrib(cookieName, nodeId, 'x');
     } else {
       displayStyle = 'none';
-      Teeda.THtmlTree.setCookieAttrib(cookieName, nodeId, "c");
+      Teeda.THtmlTree.setCookieAttrib(cookieName, nodeId, 'c');
     }
     navSpan.style.display = displayStyle;
     if (navImageId != '') {
@@ -68,7 +68,7 @@ Teeda.THtmlTree = {
   getCookie : function (cookieName){
     var attribMap = new Array();
     var cookie = Teeda.THtmlTree.getRawCookie(cookieName);
-    if (typeof( cookie ) != "undefined"  && cookie != null) {
+    if (typeof( cookie ) != 'undefined'  && cookie != null) {
       var attribArray = cookie.split(Teeda.THtmlTree.ATTRIB_DELIM);
       for (var i=0;i<attribArray.length;i++) {
           var index = attribArray[i].indexOf(Teeda.THtmlTree.ATTRIB_KEYVAL);
@@ -80,13 +80,13 @@ Teeda.THtmlTree = {
     return attribMap;
   },
   setCookie : function (cookieName, attribMap){
-    var attrib = "";
+    var attrib = '';
     for (var name in attribMap) {
         var value = attribMap[name];
-        if (typeof( value ) != "undefined" && value != null && value != "" && typeof(value) != "function") {
+        if (typeof( value ) != 'undefined' && value != null && value != '' && typeof(value) != 'function') {
             if (name.indexOf(Teeda.THtmlTree.ATTRIB_KEYVAL) < 0 && value.indexOf(Teeda.THtmlTree.ATTRIB_KEYVAL) < 0 &&
                 name.indexOf(Teeda.THtmlTree.ATTRIB_DELIM) < 0 && value.indexOf(Teeda.THtmlTree.ATTRIB_DELIM) < 0) {
-                attrib += ((attrib == "") ? "" : Teeda.THtmlTree.ATTRIB_DELIM);
+                attrib += ((attrib == '') ? '' : Teeda.THtmlTree.ATTRIB_DELIM);
                 attrib += (name + Teeda.THtmlTree.ATTRIB_KEYVAL + value);
              }
         }

@@ -15,9 +15,14 @@
  */
 package org.seasar.teeda.extension.util;
 
+import java.util.Locale;
+
 import javax.faces.internal.FacesConfigOptions;
 
 import org.seasar.framework.convention.NamingConvention;
+import org.seasar.framework.message.MessageResourceBundle;
+import org.seasar.framework.message.MessageResourceBundleFactory;
+import org.seasar.teeda.core.util.ViewHandlerUtil;
 
 /**
  * @author shot
@@ -25,6 +30,28 @@ import org.seasar.framework.convention.NamingConvention;
 public class LabelUtil {
 
     public static final String LABEL = "label";
+
+    public static String getLabelValue(String key, String propertiesName,
+            String defaultKey, String defaultPropertiesName) {
+        final Locale locale = ViewHandlerUtil.getLocale();
+        String value = null;
+        if (propertiesName != null) {
+            MessageResourceBundle bundle = MessageResourceBundleFactory
+                    .getBundle(propertiesName, locale);
+            value = (String) bundle.get(key);
+            if (value == null) {
+                value = (String) bundle.get(defaultKey);
+            }
+        }
+        if (value == null) {
+            if (defaultPropertiesName != null) {
+                MessageResourceBundle bundle = MessageResourceBundleFactory
+                        .getBundle(defaultPropertiesName, locale);
+                value = (String) bundle.get(defaultKey);
+            }
+        }
+        return value;
+    }
 
     public static String getPropertiesName(NamingConvention nc, String pageName) {
         String packageName = NamingConventionUtil.getPackageName(nc, pageName);

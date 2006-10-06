@@ -9,11 +9,13 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
 package org.seasar.teeda.core.util;
+
+import java.util.Locale;
 
 import javax.faces.application.ViewHandler;
 import javax.faces.context.FacesContext;
@@ -22,21 +24,30 @@ import org.seasar.framework.util.AssertionUtil;
 
 /**
  * @author shot
- * 
  */
 public class ViewHandlerUtil {
 
     private ViewHandlerUtil() {
     }
-    
+
     public static String getActionURL(FacesContext context) {
         AssertionUtil.assertNotNull("FacesContext", context);
         return getActionURL(context, context.getViewRoot().getViewId());
     }
-    
+
     public static String getActionURL(FacesContext context, String viewId) {
         AssertionUtil.assertNotNull("FacesContext", context);
         ViewHandler handler = FacesContextUtil.getViewHandler(context);
         return handler.getActionURL(context, viewId);
     }
+
+    public static Locale getLocale() {
+        return getLocale(FacesContext.getCurrentInstance());
+    }
+
+    public static Locale getLocale(FacesContext context) {
+        ViewHandler viewHandler = FacesContextUtil.getViewHandler(context);
+        return viewHandler.calculateLocale(context);
+    }
+
 }
