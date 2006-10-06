@@ -37,6 +37,10 @@ public class OutputLabelFactory extends AbstractElementProcessorFactory {
     public OutputLabelFactory() {
     }
 
+    public boolean isLeaf() {
+        return true;
+    }
+
     public boolean isMatch(ElementNode elementNode, PageDesc pageDesc,
             ActionDesc actionDesc) {
         if (!JsfConstants.LABEL_ELEM.equalsIgnoreCase(elementNode.getTagName())) {
