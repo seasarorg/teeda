@@ -15,12 +15,8 @@
  */
 package org.seasar.teeda.extension.html.impl;
 
-import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -33,6 +29,7 @@ import javax.faces.context.FacesContext;
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.PropertyDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
+import org.seasar.framework.beans.util.BeanUtil;
 import org.seasar.framework.convention.NamingConvention;
 import org.seasar.framework.util.ClassUtil;
 import org.seasar.framework.util.LruHashMap;
@@ -40,6 +37,9 @@ import org.seasar.teeda.core.util.DIContainerUtil;
 import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.PageDescCache;
 import org.seasar.teeda.extension.html.PagePersistence;
+import org.seasar.teeda.extension.util.ComponentHolder;
+import org.seasar.teeda.extension.util.ComponentHolderBuilderUtil;
+import org.seasar.teeda.extension.util.PagePersistenceUtil;
 
 /**
  * @author higa
@@ -89,7 +89,7 @@ public class SessionPagePersistence implements PagePersistence {
         return convertPageData(page, viewId);
     }
 
-    public Map convertPageData(Object page, String viewId) {
+    protected Map convertPageData(Object page, String viewId) {
         Map map = new HashMap();
         Class pageClass = page.getClass();
         BeanDesc beanDesc = BeanDescFactory.getBeanDesc(pageClass);
@@ -100,23 +100,17 @@ public class SessionPagePersistence implements PagePersistence {
             return map;
         }
         BeanDesc nextPageBeanDesc = BeanDescFactory.getBeanDesc(nextPageClass);
-        List list = getNextPageProperties(nextPageBeanDesc);
+        List nextPageProperties = getNextPageProperties(nextPageBeanDesc);
         for (int i = 0; i < beanDesc.getPropertyDescSize(); ++i) {
             PropertyDesc pd = beanDesc.getPropertyDesc(i);
             if (!pd.hasReadMethod()
-                    || !hasSameProperties(list, pd.getPropertyName())) {
+                    || !hasSameProperties(nextPageProperties, pd
+                            .getPropertyName())) {
                 continue;
             }
-            Object value = pd.getValue(page);
-            ComponentHolder holder = null;
-            if (value != null) {
-                Class valueClass = value.getClass();
-                if (value instanceof List) {
-                    holder = buildListTypeHolder(((List) value));
-                } else if (valueClass.isArray()) {
-                    holder = buildArrayTypeHolder(valueClass, (Object[]) value);
-                }
-            }
+            final Object value = pd.getValue(page);
+            final ComponentHolder holder = ComponentHolderBuilderUtil
+                    .build(value);
             if (holder != null) {
                 map.put(pd.getPropertyName(), holder);
             } else {
@@ -124,94 +118,6 @@ public class SessionPagePersistence implements PagePersistence {
             }
         }
         return map;
-    }
-
-    protected ComponentHolder buildListTypeHolder(final List valueList) {
-        final ComponentHolder holder = new ComponentHolder();
-        final List list = new ArrayList();
-        if (!valueList.isEmpty()) {
-            final Class componentClass = valueList.get(0).getClass();
-            holder.setComponentClassName(componentClass.getName());
-            if (isNoEscapeType(componentClass)) {
-                list.addAll(valueList);
-            } else {
-                for (final Iterator itr = valueList.iterator(); itr.hasNext();) {
-                    final Object bean = itr.next();
-                    final Map m = new HashMap();
-                    copyToMap(bean, m);
-                    list.add(m);
-                }
-            }
-        }
-        holder.setValue(list);
-        return holder;
-    }
-
-    protected ComponentHolder buildArrayTypeHolder(final Class valueClass,
-            final Object[] valueArray) {
-        final ComponentHolder holder = new ComponentHolder();
-        holder.setArrayClassName(valueClass.getComponentType().getName());
-        final List list = new ArrayList();
-        if (0 < valueArray.length) {
-            final Class componentClass = valueArray[0].getClass();
-            holder.setComponentClassName(componentClass.getName());
-            if (isNoEscapeType(componentClass)) {
-                list.addAll(Arrays.asList(valueArray));
-            } else {
-                for (int i = 0; i < valueArray.length; i++) {
-                    final Object bean = valueArray[i];
-                    final Map m = new HashMap();
-                    copyToMap(bean, m);
-                    list.add(m);
-                }
-            }
-        }
-        holder.setValue(list);
-        return holder;
-    }
-
-    private boolean isNoEscapeType(Class clazz) {
-        if (clazz.isPrimitive()) {
-            return true;
-        }
-        return clazz.equals(String.class) || clazz.equals(Boolean.class)
-                || Number.class.isAssignableFrom(clazz)
-                || Date.class.isAssignableFrom(clazz)
-                || Calendar.class.isAssignableFrom(clazz);
-    }
-
-    protected void copyToMap(final Object from, final Map to) {
-        final BeanDesc beanDesc = BeanDescFactory.getBeanDesc(from.getClass());
-        final int size = beanDesc.getPropertyDescSize();
-        for (int i = 0; i < size; ++i) {
-            final PropertyDesc pd = beanDesc.getPropertyDesc(i);
-            if (pd.hasReadMethod() && pd.hasWriteMethod()) {
-                final Object value = pd.getValue(from);
-                to.put(pd.getPropertyName(), value);
-            }
-        }
-    }
-
-    protected void copyToBean(final Map from, final Object to) {
-        final BeanDesc beanDesc = BeanDescFactory.getBeanDesc(to.getClass());
-        final int size = beanDesc.getPropertyDescSize();
-        for (int i = 0; i < size; ++i) {
-            final PropertyDesc pd = beanDesc.getPropertyDesc(i);
-            if (pd.hasReadMethod() && pd.hasWriteMethod()) {
-                final String propertyName = pd.getPropertyName();
-                if (!from.containsKey(propertyName)) {
-                    continue;
-                }
-                final Object value = from.get(propertyName);
-                if (value == null) {
-                    continue;
-                }
-                if (ClassUtil.isAssignableFrom(pd.getPropertyType(), value
-                        .getClass())) {
-                    pd.setValue(to, value);
-                }
-            }
-        }
     }
 
     protected boolean hasSameProperties(List list, String propertyName) {
@@ -240,12 +146,16 @@ public class SessionPagePersistence implements PagePersistence {
         if (lru == null) {
             return;
         }
-        Map pageData = (Map) lru.get(viewId);
-        if (pageData == null) {
+        Map savedData = (Map) lru.get(viewId);
+        if (savedData == null) {
             return;
         }
-        final Map map = new HashMap();
-        for (Iterator itr = pageData.entrySet().iterator(); itr.hasNext();) {
+        Map requestMap = extCtx.getRequestMap();
+        restorePageDataMap(savedData, requestMap);
+    }
+
+    protected void restorePageDataMap(Map from, Map to) {
+        for (Iterator itr = from.entrySet().iterator(); itr.hasNext();) {
             Map.Entry entry = (Entry) itr.next();
             String key = (String) entry.getKey();
             Object value = entry.getValue();
@@ -261,29 +171,27 @@ public class SessionPagePersistence implements PagePersistence {
                     final Class arrayClass = ClassUtil.forName(arrayClassName);
                     final Object[] array = (Object[]) Array.newInstance(
                             arrayClass, restoredList.size());
-                    if (isNoEscapeType(componentClass)) {
+                    if (PagePersistenceUtil.isPersistenceType(componentClass)) {
                         restoredList.toArray(array);
                     } else {
                         final List beanList = mapListToBeanList(componentClass,
                                 restoredList);
                         beanList.toArray(array);
                     }
-                    map.put(key, array);
+                    to.put(key, array);
                 } else {
-                    if (isNoEscapeType(componentClass)) {
-                        map.put(key, restoredList);
+                    if (PagePersistenceUtil.isPersistenceType(componentClass)) {
+                        to.put(key, restoredList);
                     } else {
                         final List beanList = mapListToBeanList(componentClass,
                                 restoredList);
-                        map.put(key, beanList);
+                        to.put(key, beanList);
                     }
                 }
             } else {
-                map.put(key, value);
+                to.put(key, value);
             }
         }
-        Map requestMap = extCtx.getRequestMap();
-        requestMap.putAll(map);
     }
 
     private List mapListToBeanList(final Class componentClass,
@@ -292,8 +200,13 @@ public class SessionPagePersistence implements PagePersistence {
         final List list = new ArrayList();
         for (int i = 0; i < size; i++) {
             final Object bean = ClassUtil.newInstance(componentClass);
-            final Map map = (Map) restoredList.get(i);
-            copyToBean(map, bean);
+            final Object o = restoredList.get(i);
+            if (!(o instanceof Map)) {
+                throw new IllegalArgumentException(
+                        "restoredList should be included map.");
+            }
+            final Map map = (Map) o;
+            BeanUtil.copyProperties(map, bean);
             list.add(bean);
         }
         return list;
@@ -305,48 +218,6 @@ public class SessionPagePersistence implements PagePersistence {
 
     public void setNamingConvention(NamingConvention namingConvention) {
         this.namingConvention = namingConvention;
-    }
-
-    public static class ComponentHolder implements Serializable {
-
-        private static final long serialVersionUID = 1L;
-
-        /*
-         * 個々の要素の型
-         */
-        private String componentClassName;
-
-        /*
-         * 配列型の場合に配列型
-         */
-        private String arrayClassName;
-
-        private List value;
-
-        public List getValue() {
-            return value;
-        }
-
-        public void setValue(List value) {
-            this.value = value;
-        }
-
-        public String getComponentClassName() {
-            return componentClassName;
-        }
-
-        public void setComponentClassName(String componentClassName) {
-            this.componentClassName = componentClassName;
-        }
-
-        public String getArrayClassName() {
-            return arrayClassName;
-        }
-
-        public void setArrayClassName(String holderClassName) {
-            this.arrayClassName = holderClassName;
-        }
-
     }
 
 }

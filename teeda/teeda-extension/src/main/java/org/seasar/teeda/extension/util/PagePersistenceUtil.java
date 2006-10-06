@@ -13,21 +13,23 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.extension.component.html;
+package org.seasar.teeda.extension.util;
 
-import javax.faces.component.UIInput;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
- * @author manhole
+ * @author shot
  */
-public class THtmlInputHidden extends UIInput {
+public class PagePersistenceUtil {
 
-    public static final String COMPONENT_TYPE = "org.seasar.teeda.extension.HtmlInputHidden";
-
-    public static final String DEFAULT_RENDERER_TYPE = "org.seasar.teeda.extension.Hidden";
-
-    public THtmlInputHidden() {
-        setRendererType(DEFAULT_RENDERER_TYPE);
+    public static boolean isPersistenceType(Class clazz) {
+        if (clazz.isPrimitive()) {
+            return true;
+        }
+        return clazz.equals(String.class) || clazz.equals(Boolean.class)
+                || Number.class.isAssignableFrom(clazz)
+                || Date.class.isAssignableFrom(clazz)
+                || Calendar.class.isAssignableFrom(clazz);
     }
-
 }
