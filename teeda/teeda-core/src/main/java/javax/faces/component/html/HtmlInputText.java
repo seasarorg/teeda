@@ -93,6 +93,8 @@ public class HtmlInputText extends UIInput {
 
     private String label = null;
 
+    private String autocomplete;
+
     public HtmlInputText() {
         setRendererType(DEFAULT_RENDERER_TYPE);
     }
@@ -429,8 +431,20 @@ public class HtmlInputText extends UIInput {
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
+    public void setAutocomplete(String autocomplete) {
+        this.autocomplete = autocomplete;
+    }
+
+    public String getAutocomplete() {
+        if (autocomplete != null) {
+            return autocomplete;
+        }
+        ValueBinding vb = getValueBinding(JsfConstants.AUTOCOMPLETE_ATTR);
+        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+    }
+
     public Object saveState(FacesContext context) {
-        Object values[] = new Object[28];
+        Object values[] = new Object[29];
         values[0] = super.saveState(context);
         values[1] = accesskey;
         values[2] = alt;
@@ -459,6 +473,7 @@ public class HtmlInputText extends UIInput {
         values[25] = tabindex;
         values[26] = title;
         values[27] = label;
+        values[28] = autocomplete;
         return ((Object) (values));
     }
 
@@ -492,5 +507,7 @@ public class HtmlInputText extends UIInput {
         tabindex = (String) values[25];
         title = (String) values[26];
         label = (String) values[27];
+        autocomplete = (String) values[28];
     }
+
 }

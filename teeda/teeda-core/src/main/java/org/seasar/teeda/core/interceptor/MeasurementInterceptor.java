@@ -15,30 +15,38 @@
  */
 package org.seasar.teeda.core.interceptor;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 import org.aopalliance.intercept.MethodInvocation;
 import org.seasar.framework.aop.interceptors.AbstractInterceptor;
 import org.seasar.framework.log.Logger;
 
 /**
  * @author shot
- * 
  */
 public class MeasurementInterceptor extends AbstractInterceptor {
 
     private static final long serialVersionUID = 1L;
 
-    private static final Logger logger_ = Logger
+    private static final Logger logger = Logger
             .getLogger(MeasurementInterceptor.class);
+
+    private static final SimpleDateFormat formatter = new SimpleDateFormat(
+            "yyyy/MM/dd hh:mm:ss SSS zzz", Locale.getDefault());
 
     public Object invoke(MethodInvocation invocation) throws Throwable {
         long start = System.currentTimeMillis();
+        String startDate = formatter.format(new Date());
+        logger.debug("[measurement] start date = " + startDate);
         try {
             return invocation.proceed();
         } finally {
-            if (logger_.isDebugEnabled()) {
-                logger_.debug("perform ms:"
-                        + new Long(System.currentTimeMillis() - start));
-            }
+            logger.debug("[measurement] perform ms:"
+                    + new Long(System.currentTimeMillis() - start));
+            String endDate = formatter.format(new Date());
+            logger.debug("[measurement] end date = " + endDate);
         }
 
     }

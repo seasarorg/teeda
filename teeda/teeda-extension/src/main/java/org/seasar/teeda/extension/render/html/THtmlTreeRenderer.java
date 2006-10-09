@@ -83,6 +83,8 @@ public class THtmlTreeRenderer extends AbstractRenderer {
 
     private static final int LAST = 8;
 
+    private static final String NAMESPACE = "Teeda.THtmlTree.";
+
     public boolean getRendersChildren() {
         return true;
     }
@@ -443,11 +445,11 @@ public class THtmlTreeRenderer extends AbstractRenderer {
 
             image.setParent(tree);
             if (node.getChildCount() > 0) {
-                String onClick = new StringBuffer().append("treeNavClick('")
-                        .append(spanId).append("', '").append(
-                                image.getClientId(context)).append("', '")
-                        .append(navSrc).append("', '").append(altSrc).append(
-                                "', '").append(nodeImageId).append("', '")
+                String onClick = new StringBuffer().append(NAMESPACE).append(
+                        "treeNavClick('").append(spanId).append("', '").append(
+                        image.getClientId(context)).append("', '").append(
+                        navSrc).append("', '").append(altSrc).append("', '")
+                        .append(nodeImageId).append("', '")
                         .append(expandImgSrc).append("', '").append(
                                 collapseImgSrc).append("', '").append(
                                 tree.getId()).append("', '").append(nodeId)

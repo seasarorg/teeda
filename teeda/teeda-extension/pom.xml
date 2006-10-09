@@ -78,5 +78,18 @@
       <type>jar</type>
       <scope>provided</scope>
     </dependency>
+    <dependency>
+      <groupId>junit-addons</groupId>
+      <artifactId>junit-addons</artifactId>
+      <version>1.4</version>
+      <type>jar</type>
+      <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>junit-addons</groupId>
+          <artifactId>junit-addons-runner</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
   </dependencies>
 </project>

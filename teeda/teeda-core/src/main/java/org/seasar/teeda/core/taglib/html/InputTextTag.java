@@ -26,6 +26,8 @@ import org.seasar.teeda.core.JsfConstants;
  */
 public class InputTextTag extends InputTagBase {
 
+    private String autocomplete;
+
     public String getComponentType() {
         return HtmlInputText.COMPONENT_TYPE;
     }
@@ -38,14 +40,20 @@ public class InputTextTag extends InputTagBase {
         super.setProperties(component);
 
         setComponentProperty(component, JsfConstants.ALT_ATTR, getAlt());
-        setComponentProperty(component, JsfConstants.MAXLENGTH_ATTR, getMaxlength());
-        setComponentProperty(component, JsfConstants.ONCHANGE_ATTR, getOnchange());
-        setComponentProperty(component, JsfConstants.ONSELECT_ATTR, getOnselect());
+        setComponentProperty(component, JsfConstants.MAXLENGTH_ATTR,
+                getMaxlength());
+        setComponentProperty(component, JsfConstants.ONCHANGE_ATTR,
+                getOnchange());
+        setComponentProperty(component, JsfConstants.ONSELECT_ATTR,
+                getOnselect());
         setComponentProperty(component, JsfConstants.SIZE_ATTR, getSize());
+        setComponentProperty(component, JsfConstants.AUTOCOMPLETE_ATTR,
+                autocomplete);
     }
 
     public void release() {
         super.release();
+        autocomplete = null;
     }
 
 }

@@ -60,6 +60,8 @@ public class HtmlInputTextRenderer extends AbstractInputRenderer {
                 .getValueForRender(context, htmlInputText);
         RendererUtil.renderAttribute(writer, JsfConstants.VALUE_ATTR, value);
         renderAttributes(htmlInputText, writer);
+        RendererUtil.renderAttribute(writer, JsfConstants.AUTOCOMPLETE_ATTR,
+                htmlInputText.getAutocomplete());
         writer.endElement(JsfConstants.INPUT_ELEM);
     }
 

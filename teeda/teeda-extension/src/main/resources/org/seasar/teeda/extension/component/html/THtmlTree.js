@@ -6,10 +6,10 @@ if (typeof(Teeda.THtmlTree) == 'undefined') {
 }
 Teeda.THtmlTree = {
 
-  Teeda.THtmlTree.COOKIE_DELIM  : ';',
-  Teeda.THtmlTree.COOKIE_KEYVAL : '=',
-  Teeda.THtmlTree.ATTRIB_DELIM  : ';',
-  Teeda.THtmlTree.ATTRIB_KEYVAL : '=',
+  COOKIE_DELIM  : ';',
+  COOKIE_KEYVAL : '=',
+  ATTRIB_DELIM  : ';',
+  ATTRIB_KEYVAL : '=',
 
   treeNavClick : function(spanId, navImageId, image1, image2, nodeImgId, expandImg, collapseImg, cookieName, nodeId) {
     var navSpan = document.getElementById(spanId);
@@ -40,13 +40,14 @@ Teeda.THtmlTree = {
     }
   },
   getRawCookie : function (name) {
-    var search = name + Teeda.THtmlTree.COOKIE_KEYVAL;
+    var self = Teeda.THtmlTree;
+    var search = name + self.COOKIE_KEYVAL;
     if (document.cookie){
       if (document.cookie.length > 0) {
         offset = document.cookie.indexOf(search);
         if (offset != -1) {
           offset += search.length;
-          end = document.cookie.indexOf(Teeda.THtmlTree.COOKIE_DELIM, offset);
+          end = document.cookie.indexOf(self.COOKIE_DELIM, offset);
           if (end == -1) {
             end = document.cookie.length;
           }
@@ -57,21 +58,24 @@ Teeda.THtmlTree = {
     return null;
   },
   setCookieAttrib : function (cookieName, attribName, attribValue){
+    var self = Teeda.THtmlTree;
     var attribMap = Teeda.THtmlTree.getCookie(cookieName);
     attribMap[attribName] = attribValue;
-    Teeda.THtmlTree.setCookie(cookieName,attribMap);
+    self.setCookie(cookieName,attribMap);
   },
   getCookieAttrib : function (cookieName, attribName){
-    var attribMap = Teeda.THtmlTree.getCookie(cookieName);
+    var self = Teeda.THtmlTree;
+    var attribMap = self.getCookie(cookieName);
     return attribMap[attribName];
   },
   getCookie : function (cookieName){
+    var self = Teeda.THtmlTree;
     var attribMap = new Array();
-    var cookie = Teeda.THtmlTree.getRawCookie(cookieName);
+    var cookie = self.getRawCookie(cookieName);
     if (typeof( cookie ) != 'undefined'  && cookie != null) {
-      var attribArray = cookie.split(Teeda.THtmlTree.ATTRIB_DELIM);
+      var attribArray = cookie.split(self.ATTRIB_DELIM);
       for (var i=0;i<attribArray.length;i++) {
-          var index = attribArray[i].indexOf(Teeda.THtmlTree.ATTRIB_KEYVAL);
+          var index = attribArray[i].indexOf(self.ATTRIB_KEYVAL);
           var name =  attribArray[i].substring(0,index);
           var value = attribArray[i].substring(index+1);
           attribMap[name] = value;
@@ -80,18 +84,19 @@ Teeda.THtmlTree = {
     return attribMap;
   },
   setCookie : function (cookieName, attribMap){
+    var self = Teeda.THtmlTree;
     var attrib = '';
     for (var name in attribMap) {
         var value = attribMap[name];
         if (typeof( value ) != 'undefined' && value != null && value != '' && typeof(value) != 'function') {
-            if (name.indexOf(Teeda.THtmlTree.ATTRIB_KEYVAL) < 0 && value.indexOf(Teeda.THtmlTree.ATTRIB_KEYVAL) < 0 &&
-                name.indexOf(Teeda.THtmlTree.ATTRIB_DELIM) < 0 && value.indexOf(Teeda.THtmlTree.ATTRIB_DELIM) < 0) {
-                attrib += ((attrib == '') ? '' : Teeda.THtmlTree.ATTRIB_DELIM);
-                attrib += (name + Teeda.THtmlTree.ATTRIB_KEYVAL + value);
+            if (name.indexOf(self.ATTRIB_KEYVAL) < 0 && value.indexOf(self.ATTRIB_KEYVAL) < 0 &&
+                name.indexOf(self.ATTRIB_DELIM) < 0 && value.indexOf(self.ATTRIB_DELIM) < 0) {
+                attrib += ((attrib == '') ? '' : self.ATTRIB_DELIM);
+                attrib += (name + self.ATTRIB_KEYVAL + value);
              }
         }
     }
-    document.cookie = cookieName + Teeda.THtmlTree.COOKIE_KEYVAL + escape(attrib);
+    document.cookie = cookieName + self.COOKIE_KEYVAL + escape(attrib);
   }
 
 };

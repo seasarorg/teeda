@@ -421,6 +421,8 @@ public interface JsfConstants {
 
     String FRACTION_ATTR = "fraction";
 
+    String AUTOCOMPLETE_ATTR = "autocomplete";
+
     //  --  --
 
     String DEFAULT_RENDERKIT_CLASS = HtmlRenderKitImpl.class.getName();

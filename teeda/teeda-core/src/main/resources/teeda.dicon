@@ -67,6 +67,8 @@
 
 	<component name="translator" class="org.seasar.teeda.core.scope.impl.S2ScopeTranslator" />
 
+	<component name="measurementInterceptor" class="org.seasar.teeda.core.interceptor.MeasurementInterceptor"/>
+	
 	<!-- Lifecycle -->
 	<component class="org.seasar.teeda.core.lifecycle.LifecycleImpl">
 		<property name="restoreViewPhase">restoreViewPhase</property>
@@ -75,6 +77,7 @@
 		<property name="updateModelValuesPhase">updateModelValuesPhase</property>
 		<property name="invokeApplicationPhase">invokeApplicationPhase</property>
 		<property name="renderResponsePhase">renderResponsePhase</property>
+		<aspect pointcut="render">measurementInterceptor</aspect>
 	</component>
 
 	<component name="restoreViewPhase" class="org.seasar.teeda.core.lifecycle.impl.RestoreViewPhase"/>
