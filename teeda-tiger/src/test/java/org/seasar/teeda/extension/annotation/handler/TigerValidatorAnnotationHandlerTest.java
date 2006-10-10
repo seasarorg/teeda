@@ -51,6 +51,14 @@ public class TigerValidatorAnnotationHandlerTest extends TeedaTestCase {
 		assertEquals(TRequiredValidator.class, validator.getClass());
 	}
 
+	public void testRegisterValidator_setterMethod() throws Exception {
+		TigerValidatorAnnotationHandler handler = new TigerValidatorAnnotationHandler();
+		handler.registerValidators("hogeBean");
+		TRequiredValidator validator = (TRequiredValidator) ValidatorResource
+				.getValidator("#{hogeBean.ccc}");
+		assertNotNull(validator);
+	}
+
 	public static class HogeBean {
 
 		@Length(minimum = 2, maximum = 5)
@@ -63,6 +71,8 @@ public class TigerValidatorAnnotationHandlerTest extends TeedaTestCase {
 		public static final String bbb_TRequiredValidator = null;
 
 		private String bbb;
+
+		private String ccc;
 
 		public String getName() {
 			return name;
@@ -93,6 +103,22 @@ public class TigerValidatorAnnotationHandlerTest extends TeedaTestCase {
 		 */
 		public void setBbb(String bbb) {
 			this.bbb = bbb;
+		}
+
+		/**
+		 * @return Returns the ccc.
+		 */
+		public String getCcc() {
+			return ccc;
+		}
+
+		/**
+		 * @param ccc
+		 *            The ccc to set.
+		 */
+		@Required
+		public void setCcc(String ccc) {
+			this.ccc = ccc;
 		}
 
 	}

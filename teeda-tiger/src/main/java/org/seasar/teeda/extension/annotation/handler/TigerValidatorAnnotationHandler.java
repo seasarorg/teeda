@@ -22,6 +22,8 @@ import java.util.Map;
 
 import javax.faces.validator.Validator;
 
+import org.seasar.framework.beans.BeanDesc;
+import org.seasar.framework.beans.PropertyDesc;
 import org.seasar.framework.beans.util.BeanUtil;
 import org.seasar.framework.container.S2Container;
 import org.seasar.framework.convention.NamingConvention;
@@ -39,26 +41,45 @@ public class TigerValidatorAnnotationHandler extends
 	protected Class<? extends Annotation> metaAnnotationType = org.seasar.teeda.extension.annotation.validator.Validator.class;
 
 	protected void processFields(S2Container container, Class componentClass,
-			String componentName, NamingConvention namingConvention) {
+			String componentName, NamingConvention namingConvention,
+			BeanDesc beanDesc) {
 		for (Field field : componentClass.getDeclaredFields()) {
 			for (Annotation annotation : field.getDeclaredAnnotations()) {
-				Class<? extends Annotation> annotationType = annotation
-						.annotationType();
-				Annotation metaAnnotation = annotationType
-						.getAnnotation(metaAnnotationType);
-				if (metaAnnotation == null) {
-					continue;
-				}
-				String vname = getValidatorName(metaAnnotation,
-						namingConvention);
-				Validator validator = (Validator) container.getComponent(vname);
-				Map props = AnnotationUtil.getProperties(annotation);
-				BeanUtil.copyProperties(props, validator);
-				registerValidator(componentName, field.getName(), validator);
+				processAnnotation(container, componentName, field.getName(),
+						namingConvention, annotation);
 			}
 		}
 		super.processFields(container, componentClass, componentName,
-				namingConvention);
+				namingConvention, beanDesc);
+	}
+
+	protected void processAnnotation(S2Container container,
+			String componentName, String propertyName,
+			NamingConvention namingConvention, Annotation annotation) {
+		Class<? extends Annotation> annotationType = annotation
+				.annotationType();
+		Annotation metaAnnotation = annotationType
+				.getAnnotation(metaAnnotationType);
+		if (metaAnnotation == null) {
+			return;
+		}
+		String vname = getValidatorName(metaAnnotation, namingConvention);
+		Validator validator = (Validator) container.getComponent(vname);
+		Map props = AnnotationUtil.getProperties(annotation);
+		BeanUtil.copyProperties(props, validator);
+		registerValidator(componentName, propertyName, validator);
+	}
+
+	protected void processSetterMethod(S2Container container,
+			Class componentClass, String componentName,
+			NamingConvention namingConvention, BeanDesc beanDesc,
+			PropertyDesc propertyDesc) {
+		Annotation[] annotations = propertyDesc.getWriteMethod()
+				.getDeclaredAnnotations();
+		for (Annotation annotation : annotations) {
+			processAnnotation(container, componentName, propertyDesc
+					.getPropertyName(), namingConvention, annotation);
+		}
 	}
 
 	protected String getValidatorName(Annotation annotation,
