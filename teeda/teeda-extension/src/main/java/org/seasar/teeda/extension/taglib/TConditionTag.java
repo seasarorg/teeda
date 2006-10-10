@@ -15,6 +15,9 @@
  */
 package org.seasar.teeda.extension.taglib;
 
+import javax.faces.component.UIComponent;
+import javax.faces.component.html.HtmlInputHidden;
+
 import org.seasar.teeda.core.taglib.UIComponentTagBase;
 import org.seasar.teeda.extension.component.TCondition;
 
@@ -32,6 +35,17 @@ public class TConditionTag extends UIComponentTagBase {
 
     public String getRendererType() {
         return "org.seasar.teeda.extension.Condition";
+    }
+
+    protected void setProperties(UIComponent component) {
+        super.setProperties(component);
+        TCondition condition = (TCondition) component;
+        boolean rendered = condition.isRendered();
+        HtmlInputHidden hidden = new HtmlInputHidden();
+        hidden.setId(condition.getId() + "-teeda-hidden");
+        hidden.setRendered(rendered);
+        hidden.setValue(new Boolean(rendered));
+        condition.getChildren().add(hidden);
     }
 
 }

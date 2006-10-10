@@ -16,8 +16,10 @@
 package org.seasar.teeda.extension.render;
 
 import java.io.IOException;
+import java.util.Iterator;
 
 import javax.faces.component.UIComponent;
+import javax.faces.component.html.HtmlInputHidden;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
@@ -34,6 +36,21 @@ public class TConditionRenderer extends AbstractRenderer {
     public static final String COMPONENT_FAMILY = "org.seasar.teeda.extension.Condition";
 
     public static final String RENDERER_TYPE = "org.seasar.teeda.extension.Condition";
+
+    public void decode(FacesContext context, UIComponent component) {
+        super.decode(context, component);
+        TCondition condition = (TCondition) component;
+        for(Iterator itr = condition.getChildren().iterator(); itr.hasNext();) {
+            UIComponent c = (UIComponent) itr.next();
+            if(c instanceof HtmlInputHidden) {
+                String hiddenId = c.getId();
+                if(hiddenId.equals(condition.getId() + "-teeda-hidden")) {
+                    boolean rendered = c.isRendered();
+                    condition.setRendered(rendered);
+                }
+            }
+        }
+    }
 
     public void encodeBegin(FacesContext context, UIComponent component)
             throws IOException {
