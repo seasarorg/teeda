@@ -166,6 +166,9 @@ public class NullComponentDefImpl implements ComponentDef {
     public void addAspectDef(AspectDef aspectDef) {
     }
 
+    public void addAspectDef(int index, AspectDef aspectDef) {
+    }
+
     public int getAspectDefSize() {
         return 0;
     }
