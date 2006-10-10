@@ -10,12 +10,22 @@ public class FooPage {
 
     private List hogeItems;
 
+    private String ccc;
+
     public String getAaa() {
         return null;
     }
 
     public String getAaaStyleClass() {
         return "mystyle";
+    }
+
+    public String getCcc() {
+        return ccc;
+    }
+
+    public void setCcc(String ccc) {
+        this.ccc = ccc;
     }
 
     public String doBbb() {

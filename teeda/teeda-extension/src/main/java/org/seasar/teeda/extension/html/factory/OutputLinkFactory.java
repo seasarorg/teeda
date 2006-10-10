@@ -37,6 +37,8 @@ public class OutputLinkFactory extends AbstractElementProcessorFactory {
 
     private static final String PARAM_TAG_NAME = "param";
 
+    private static final String FIXED_PREFIX = "fixed_";
+
     public boolean isMatch(ElementNode elementNode, PageDesc pageDesc,
             ActionDesc actionDesc) {
         if (!JsfConstants.ANCHOR_ELEM
@@ -78,12 +80,17 @@ public class OutputLinkFactory extends AbstractElementProcessorFactory {
         String[] entries = StringUtil.split(queryString, "&");
         for (int i = 0; i < entries.length; ++i) {
             String entry = entries[i];
-            String[] elems = StringUtil.split(entry, " =");
-            if (pageDesc.hasProperty(elems[0])) {
-                appendParam(processor, pageDesc, elems[0]);
-            } else {
-                buf.append(entry);
+            if (entry.startsWith(FIXED_PREFIX)) {
+                buf.append(entry.substring(FIXED_PREFIX.length()));
                 buf.append("&");
+            } else {
+                String[] elems = StringUtil.split(entry, " =");
+                if (pageDesc.hasProperty(elems[0])) {
+                    appendParam(processor, pageDesc, elems[0]);
+                } else {
+                    buf.append(entry);
+                    buf.append("&");
+                }
             }
         }
         value = value.substring(0, index);

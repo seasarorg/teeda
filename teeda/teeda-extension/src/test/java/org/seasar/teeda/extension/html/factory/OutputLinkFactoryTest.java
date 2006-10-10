@@ -79,7 +79,7 @@ public class OutputLinkFactoryTest extends TeedaExtensionTestCase {
         factory.setTaglibManager(taglibManager);
         Map properties = new HashMap();
         properties.put("id", "goHoge");
-        properties.put("href", "hoge.html?aaa=111&bbb=222");
+        properties.put("href", "hoge.html?aaa=111&bbb=222&fixed_ccc=1");
         ElementNode elementNode = createElementNode("a", properties);
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         ActionDesc actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
@@ -90,7 +90,7 @@ public class OutputLinkFactoryTest extends TeedaExtensionTestCase {
         // ## Assert ##
         assertNotNull(processor);
         assertEquals(OutputLinkTag.class, processor.getTagClass());
-        assertEquals("hoge.html?bbb=222", processor.getProperty("value"));
+        assertEquals("hoge.html?bbb=222&ccc=1", processor.getProperty("value"));
         assertEquals(1, processor.getChildSize());
 
         ElementProcessor paramProcessor = (ElementProcessor) processor
