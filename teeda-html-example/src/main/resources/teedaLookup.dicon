@@ -4,5 +4,5 @@
 <components>
 	<component class="org.seasar.teeda.core.render.DefaultComponentIdLookupStrategy" />
 	<component class="org.seasar.teeda.core.application.impl.DefaultComponentLookupStrategy" />
-	<component class="org.seasar.teeda.extension.render.html.support.AdjustableDecoder" />
+	<component class="org.seasar.teeda.extension.render.AdjustableDecoder" />
 </components>
