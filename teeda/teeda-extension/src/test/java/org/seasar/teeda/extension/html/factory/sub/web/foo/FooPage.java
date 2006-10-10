@@ -59,4 +59,9 @@ public class FooPage {
     public String getHogeRowStyleClass() {
         return "mystyle";
     }
+
+    public String getHogeRowStyle() {
+        return "mystyle";
+    }
+
 }
