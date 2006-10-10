@@ -15,32 +15,16 @@
  */
 package org.seasar.teeda.core.render;
 
-import java.util.Map;
-
-import javax.faces.component.EditableValueHolder;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-
-import org.seasar.framework.util.AssertionUtil;
-import org.seasar.teeda.core.exception.NoEditableValueHolderRuntimeException;
 
 /**
  * @author shot
  */
-public abstract class AbstractInputRenderer extends AbstractRenderer {
+public interface Decoder {
 
-    private Decoder decoder;
+    void decode(FacesContext context, UIComponent component);
 
-    public AbstractInputRenderer() {
-        decoder = new DefaultDecoder();
-    }
-
-    public Decoder getDecoder() {
-        return decoder;
-    }
-
-    public void setDecoder(Decoder decoder) {
-        this.decoder = decoder;
-    }
+    void decodeMany(FacesContext context, UIComponent component);
 
 }
