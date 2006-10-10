@@ -51,9 +51,15 @@ public class TForEachRenderer extends AbstractRenderer {
         final Object[] items = forEach.getItems(context);
         final String itemName = forEach.getItemName();
         final String indexName = forEach.getIndexName();
-        for (int i = 0; i < items.length; ++i) {
+        int rowSize = forEach.getRowSize();
+        if (rowSize == 0) {
+            rowSize = items.length;
+        }
+        for (int i = 0; i < rowSize; ++i) {
             forEach.enterRow(context, i);
-            processItem(beanDesc, page, items[i], itemName, i, indexName);
+            if (i < items.length) {
+                processItem(beanDesc, page, items[i], itemName, i, indexName);
+            }
             super.encodeChildren(context, component);
             forEach.leaveRow(context);
         }
