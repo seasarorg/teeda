@@ -21,6 +21,7 @@ import java.util.Map;
 import javax.faces.validator.Validator;
 
 import org.seasar.framework.beans.BeanDesc;
+import org.seasar.framework.beans.PropertyDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.framework.beans.util.BeanUtil;
 import org.seasar.framework.container.ComponentDef;
@@ -43,13 +44,16 @@ public class ConstantValidatorAnnotationHandler extends
                 .getComponent(NamingConvention.class);
         ComponentDef componentDef = container.getComponentDef(componentName);
         Class componentClass = componentDef.getComponentClass();
+        BeanDesc beanDesc = BeanDescFactory.getBeanDesc(componentClass);
         processFields(container, componentClass, componentName,
-                namingConvention);
+                namingConvention, beanDesc);
+        processSetterMethods(container, componentClass, componentName,
+                namingConvention, beanDesc);
     }
 
     protected void processFields(S2Container container, Class componentClass,
-            String componentName, NamingConvention namingConvention) {
-        BeanDesc beanDesc = BeanDescFactory.getBeanDesc(componentClass);
+            String componentName, NamingConvention namingConvention,
+            BeanDesc beanDesc) {
         Field[] fields = componentClass.getDeclaredFields();
         for (int i = 0; i < fields.length; ++i) {
             Field field = fields[i];
@@ -75,5 +79,23 @@ public class ConstantValidatorAnnotationHandler extends
             BeanUtil.copyProperties(m, validator);
             registerValidator(componentName, fieldName, validator);
         }
+    }
+
+    protected void processSetterMethods(S2Container container,
+            Class componentClass, String componentName,
+            NamingConvention namingConvention, BeanDesc beanDesc) {
+        for (int i = 0; i < beanDesc.getPropertyDescSize(); ++i) {
+            PropertyDesc pd = beanDesc.getPropertyDesc(i);
+            if (pd.hasWriteMethod()) {
+                processSetterMethod(container, componentClass, componentName,
+                        namingConvention, beanDesc, pd);
+            }
+        }
+    }
+
+    protected void processSetterMethod(S2Container container,
+            Class componentClass, String componentName,
+            NamingConvention namingConvention, BeanDesc beanDesc,
+            PropertyDesc propertyDesc) {
     }
 }
