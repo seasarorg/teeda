@@ -17,19 +17,19 @@ package org.seasar.teeda.core.util;
 
 import java.util.Map;
 
+import org.seasar.teeda.core.JsfConstants;
+
 /**
  * @author higa
  * 
  */
 public class PostbackUtil {
 
-    public static final String POSTBACK = "postback";
-
     protected PostbackUtil() {
     }
 
     public static boolean isPostback(Map requestMap) {
-        Boolean postback = (Boolean) requestMap.get(POSTBACK);
+        Boolean postback = (Boolean) requestMap.get(JsfConstants.POSTBACK);
         if (postback == null) {
             return false;
         }
@@ -37,6 +37,7 @@ public class PostbackUtil {
     }
 
     public static void setPostback(Map requestMap, boolean postback) {
-        requestMap.put(POSTBACK, Boolean.valueOf(postback));
+        requestMap.put(JsfConstants.POSTBACK, Boolean.valueOf(postback));
     }
+
 }

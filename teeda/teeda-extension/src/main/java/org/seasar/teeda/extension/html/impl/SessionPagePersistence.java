@@ -33,6 +33,7 @@ import org.seasar.framework.beans.util.BeanUtil;
 import org.seasar.framework.convention.NamingConvention;
 import org.seasar.framework.util.ClassUtil;
 import org.seasar.framework.util.LruHashMap;
+import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.util.DIContainerUtil;
 import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.PageDescCache;
@@ -130,11 +131,21 @@ public class SessionPagePersistence implements PagePersistence {
         return false;
     }
 
-    protected static List getNextPageProperties(BeanDesc beanDesc) {
-        List list = new ArrayList();
+    /*
+     * postbackとpreviousViewIdはPage間で引き継がない
+     */
+    protected List getNextPageProperties(final BeanDesc beanDesc) {
+        final List list = new ArrayList();
         for (int i = 0; i < beanDesc.getPropertyDescSize(); ++i) {
-            PropertyDesc pd = beanDesc.getPropertyDesc(i);
-            list.add(pd.getPropertyName());
+            final PropertyDesc pd = beanDesc.getPropertyDesc(i);
+            final String propertyName = pd.getPropertyName();
+            if (JsfConstants.POSTBACK.equals(propertyName)) {
+                continue;
+            }
+            if (JsfConstants.PREVIOUS_VIEW_ID.equals(propertyName)) {
+                continue;
+            }
+            list.add(propertyName);
         }
         return list;
     }

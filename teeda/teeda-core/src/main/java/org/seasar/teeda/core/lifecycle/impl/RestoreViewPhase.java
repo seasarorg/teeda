@@ -30,6 +30,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
 import org.seasar.framework.util.LruHashMap;
+import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.lifecycle.AbstractPhase;
 import org.seasar.teeda.core.portlet.FacesPortlet;
 import org.seasar.teeda.core.util.ExternalContextUtil;
@@ -46,8 +47,6 @@ public class RestoreViewPhase extends AbstractPhase {
     private static final String VIEW_ID_LRU_ATTR = RestoreViewPhase.class
             .getName()
             + ".VIEW_ID_LRU";
-
-    private static final String PREVIOUS_VIEW_ID = "previousViewId";
 
     private int viewIdLruSize = 16;
 
@@ -87,7 +86,7 @@ public class RestoreViewPhase extends AbstractPhase {
         final String viewId = holder.getCurrentViewId();
         final String previousViewId = holder.getPreviousViewId();
         Map requestMap = externalContext.getRequestMap();
-        requestMap.put(PREVIOUS_VIEW_ID, previousViewId);
+        requestMap.put(JsfConstants.PREVIOUS_VIEW_ID, previousViewId);
         PostbackUtil.setPostback(requestMap, viewId.equals(previousViewId)
                 && ServletExternalContextUtil.isPost(externalContext));
         return holder;

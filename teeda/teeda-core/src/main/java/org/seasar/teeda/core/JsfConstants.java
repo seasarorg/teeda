@@ -492,4 +492,8 @@ public interface JsfConstants {
     String TRUE = "true";
 
     String FALSE = "false";
+
+    public static final String POSTBACK = "postback";
+
+    public static final String PREVIOUS_VIEW_ID = "previousViewId";
 }

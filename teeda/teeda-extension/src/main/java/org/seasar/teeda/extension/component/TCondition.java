@@ -15,13 +15,7 @@
  */
 package org.seasar.teeda.extension.component;
 
-import java.util.Iterator;
-
-import javax.faces.component.UIComponent;
 import javax.faces.component.UIComponentBase;
-import javax.faces.context.FacesContext;
-
-import org.seasar.framework.util.AssertionUtil;
 
 /**
  * @author shot
@@ -40,39 +34,6 @@ public class TCondition extends UIComponentBase {
 
     public String getFamily() {
         return COMPONENT_FAMILY;
-    }
-
-    public void processDecodes(FacesContext context) {
-        AssertionUtil.assertNotNull("context", context);
-        UIComponent component = null;
-        for (Iterator itr = getFacetsAndChildren(); itr.hasNext();) {
-            component = (UIComponent) itr.next();
-            component.processDecodes(context);
-        }
-        try {
-            decode(context);
-        } catch (RuntimeException e) {
-            context.renderResponse();
-            throw e;
-        }
-    }
-
-    public void processValidators(FacesContext context) {
-        AssertionUtil.assertNotNull("context", context);
-        UIComponent component = null;
-        for (Iterator itr = getFacetsAndChildren(); itr.hasNext();) {
-            component = (UIComponent) itr.next();
-            component.processValidators(context);
-        }
-    }
-
-    public void processUpdates(FacesContext context) {
-        AssertionUtil.assertNotNull("context", context);
-        UIComponent component = null;
-        for (Iterator itr = getFacetsAndChildren(); itr.hasNext();) {
-            component = (UIComponent) itr.next();
-            component.processUpdates(context);
-        }
     }
 
 }

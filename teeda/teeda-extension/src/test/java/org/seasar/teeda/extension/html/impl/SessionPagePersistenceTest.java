@@ -156,6 +156,8 @@ public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
         fromPage.setFromOnly("from");
         fromPage.setName("ccc");
         fromPage.setNum(2);
+        fromPage.setPostback(true);
+        fromPage.setPreviousViewId("/aaaViewId");
         final Map requestMap = context.getExternalContext().getRequestMap();
         assertNull(requestMap.get("aaaaa"));
 
@@ -174,6 +176,8 @@ public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
         assertNull(requestMap.get("fromOnly"));
         assertEquals("ccc", requestMap.get("name"));
         assertTrue(((Integer) requestMap.get("num")).intValue() == 2);
+        assertEquals(null, requestMap.get("previousViewId"));
+        assertEquals(null, requestMap.get("postback"));
     }
 
     public void testSaveAndRestore2() throws Exception {
@@ -323,6 +327,10 @@ public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
 
         private boolean b;
 
+        private boolean postback;
+
+        private String previousViewId;
+
         private String fromOnly;
 
         public String getFromOnly() {
@@ -364,6 +372,22 @@ public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
         public void setAaaaa(String[] aaaaa) {
             this.aaaaa = aaaaa;
         }
+
+        public boolean isPostback() {
+            return postback;
+        }
+
+        public void setPostback(boolean postback) {
+            this.postback = postback;
+        }
+
+        public String getPreviousViewId() {
+            return previousViewId;
+        }
+
+        public void setPreviousViewId(String previousViewId) {
+            this.previousViewId = previousViewId;
+        }
     }
 
     public static class ToPage {
@@ -374,6 +398,10 @@ public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
         private int num;
 
         private boolean b;
+
+        private boolean postback;
+
+        private String previousViewId;
 
         private String toOnly = "toOnly";
 
@@ -416,6 +444,23 @@ public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
         public void setAaaaa(String[] aaaaa) {
             this.aaaaa = aaaaa;
         }
+
+        public boolean isPostback() {
+            return postback;
+        }
+
+        public void setPostback(boolean postback) {
+            this.postback = postback;
+        }
+
+        public String getPreviousViewId() {
+            return previousViewId;
+        }
+
+        public void setPreviousViewId(String previousViewId) {
+            this.previousViewId = previousViewId;
+        }
+
     }
 
     public static abstract class AbstractAaaPage {
