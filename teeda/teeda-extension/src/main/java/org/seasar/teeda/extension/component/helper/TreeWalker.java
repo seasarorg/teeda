@@ -27,7 +27,6 @@ public interface TreeWalker {
 
     public String getRootNodeId();
 
-    public void setTree(UITreeData treeData);
+    public void walkBegin(UITreeData treeData);
 
-    public void reset();
 }

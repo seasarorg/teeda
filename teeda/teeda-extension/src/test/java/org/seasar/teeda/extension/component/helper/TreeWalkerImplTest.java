@@ -17,13 +17,24 @@ package org.seasar.teeda.extension.component.helper;
 
 import junit.framework.TestCase;
 
+import org.seasar.teeda.extension.component.html.THtmlTree;
+
 /**
  * @author shot
  */
 public class TreeWalkerImplTest extends TestCase {
 
-    public void testNext() throws Exception {
+    public void testNext_emptyTree() throws Exception {
+        THtmlTree tree = new THtmlTree();
         TreeWalkerImpl walker = new TreeWalkerImpl();
+        walker.setTree(tree);
+        assertTrue(walker.next());
+    }
 
+    public void testNext_oneNode() throws Exception {
+        THtmlTree tree = new THtmlTree();
+        TreeWalkerImpl walker = new TreeWalkerImpl();
+        walker.setTree(tree);
+        assertTrue(walker.next());
     }
 }

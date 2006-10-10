@@ -17,6 +17,7 @@ package org.seasar.teeda.core.util;
 
 import java.io.IOException;
 import java.lang.reflect.Array;
+import java.util.Iterator;
 import java.util.Map;
 
 import javax.faces.FacesException;
@@ -40,6 +41,7 @@ import javax.faces.render.Renderer;
 
 import org.seasar.framework.log.Logger;
 import org.seasar.framework.util.ArrayUtil;
+import org.seasar.framework.util.AssertionUtil;
 import org.seasar.framework.util.IntegerConversionUtil;
 import org.seasar.teeda.core.JsfConstants;
 
@@ -294,6 +296,34 @@ public class RendererUtil {
             return valueType.getComponentType();
         } else {
             return valueType;
+        }
+    }
+
+    public static void renderChild(FacesContext context, UIComponent child)
+            throws IOException {
+        AssertionUtil.assertNotNull("context", context);
+        AssertionUtil.assertNotNull("child", child);
+        if (!child.isRendered()) {
+            return;
+        }
+        child.encodeBegin(context);
+        if (child.getRendersChildren()) {
+            child.encodeChildren(context);
+        } else {
+            renderChildren(context, child);
+        }
+        child.encodeEnd(context);
+    }
+
+    public static void renderChildren(FacesContext context,
+            UIComponent component) throws IOException {
+        AssertionUtil.assertNotNull("context", context);
+        AssertionUtil.assertNotNull("child", component);
+        if (component.getChildCount() > 0) {
+            for (Iterator it = component.getChildren().iterator(); it.hasNext();) {
+                UIComponent child = (UIComponent) it.next();
+                renderChild(context, child);
+            }
         }
     }
 

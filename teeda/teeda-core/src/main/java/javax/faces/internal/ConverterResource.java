@@ -20,23 +20,12 @@ import java.util.Map;
 
 import javax.faces.convert.Converter;
 
-import org.seasar.framework.util.Disposable;
-import org.seasar.framework.util.DisposableUtil;
-
 /**
  * @author shot
  */
 public class ConverterResource {
 
     private static Map converters = new HashMap();
-
-    static {
-        DisposableUtil.add(new Disposable() {
-            public void dispose() {
-                removeAll();
-            }
-        });
-    };
 
     protected ConverterResource() {
     }

@@ -15,12 +15,18 @@
  */
 package org.seasar.teeda.extension.component;
 
+import java.io.IOException;
+
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 
+import org.seasar.teeda.core.mock.NullRenderer;
 import org.seasar.teeda.core.unit.TeedaTestCase;
 import org.seasar.teeda.extension.component.helper.TreeModel;
 import org.seasar.teeda.extension.component.helper.TreeModelImpl;
 import org.seasar.teeda.extension.component.helper.TreeNodeImpl;
+import org.seasar.teeda.extension.component.helper.TreeState;
+import org.seasar.teeda.extension.component.helper.TreeStateImpl;
 
 /**
  * @author shot
@@ -42,8 +48,7 @@ public class UITreeDataTest extends TeedaTestCase {
         assertNotNull(treemodel.getNodeById("0"));
     }
 
-    public void testGetDataModel() throws Exception {
-        FacesContext context = getFacesContext();
+    public void testGetDataModel_valueIsTreeModel() throws Exception {
         UITreeData tree = new UITreeData();
         assertNull(tree.getDataModel());
         TreeNodeImpl node = new TreeNodeImpl("0", "a", false);
@@ -52,18 +57,63 @@ public class UITreeDataTest extends TeedaTestCase {
         assertNotNull(tree.getDataModel());
         assertNotNull(tree.getDataModel().getNodeById("0"));
         assertEquals(node, tree.getDataModel().getNodeById("0"));
-
-        //        TreeNodeImpl node2 = new TreeNodeImpl("1", "a", false);
-        //        tree.setValue(node2);
-        //        tree.encodeBegin(context);
-        //        assertNotNull(tree.getDataModel());
-        //        assertEquals(node2, tree.getDataModel().getNodeById("1"));
-        //
-        //        try {
-        //            tree.setValue("illegal");
-        //            fail();
-        //        } catch (Exception expected) {
-        //            success();
-        //        }
     }
+
+    public void testGetDataModel_valueIsTreeNode() throws Exception {
+        UITreeData tree = new UITreeData();
+        assertNull(tree.getDataModel());
+        TreeNodeImpl node = new TreeNodeImpl("0", "a", false);
+        tree.setValue(node);
+        assertNotNull(tree.getDataModel());
+        assertNotNull(tree.getDataModel().getNodeById("0"));
+        assertEquals(node, tree.getDataModel().getNodeById("0"));
+    }
+
+    public void testEncodeBegin() throws Exception {
+        FacesContext context = getFacesContext();
+        final boolean[] calls = new boolean[] { false };
+        getRenderKit().addRenderer("org.seasar.teeda.extension.Tree",
+                "org.seasar.teeda.extension.Tree", new NullRenderer() {
+
+                    public void encodeBegin(FacesContext context,
+                            UIComponent component) throws IOException {
+                        super.encodeBegin(context, component);
+                        calls[0] = true;
+                    }
+
+                });
+        UITreeData tree = new UITreeData();
+        tree.encodeBegin(context);
+        assertTrue(calls[0]);
+    }
+
+    public void testEncodeEnd() throws Exception {
+        FacesContext context = getFacesContext();
+        final boolean[] calls = new boolean[] { false };
+        getRenderKit().addRenderer("org.seasar.teeda.extension.Tree",
+                "org.seasar.teeda.extension.Tree", new NullRenderer() {
+
+                    public void encodeEnd(FacesContext context,
+                            UIComponent component) throws IOException {
+                        super.encodeBegin(context, component);
+                        calls[0] = true;
+                    }
+
+                });
+        UITreeData tree = new UITreeData();
+        TreeNodeImpl node = new TreeNodeImpl("0", "a", false);
+        TreeStateImpl state = new TreeStateImpl();
+        state.setSelected("0");
+        TreeModelImpl model = new TreeModelImpl(node);
+        model.setTreeState(state);
+        tree.setValue(model);
+
+        tree.encodeEnd(context);
+
+        TreeModel m = tree.getDataModel();
+        assertNotNull(m);
+        TreeState treeState = m.getTreeState();
+        assertEquals(true, treeState.isSelected("0"));
+    }
+
 }

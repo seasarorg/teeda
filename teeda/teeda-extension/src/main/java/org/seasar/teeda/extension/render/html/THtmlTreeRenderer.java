@@ -33,6 +33,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.servlet.http.Cookie;
 
+import org.seasar.framework.util.ClassUtil;
 import org.seasar.framework.util.ResourceUtil;
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
@@ -61,10 +62,6 @@ public class THtmlTreeRenderer extends AbstractRenderer {
 
     private static final String ENCODING = "UTF-8";
 
-    private static final String ATTRIB_DELIM = ";";
-
-    private static final String ATTRIB_KEYVAL = "=";
-
     private static final String NODE_STATE_EXPANDED = "x";
 
     private static final String NODE_STATE_CLOSED = "c";
@@ -89,31 +86,6 @@ public class THtmlTreeRenderer extends AbstractRenderer {
         return true;
     }
 
-    private void restoreStateFromCookies(FacesContext context,
-            UIComponent component) {
-        THtmlTree tree = (THtmlTree) component;
-        TreeState state = tree.getDataModel().getTreeState();
-        Map cookieMap = context.getExternalContext().getRequestCookieMap();
-        Cookie treeCookie = (Cookie) cookieMap.get(component.getId());
-        if (treeCookie == null || treeCookie.getValue() == null) {
-            return;
-        }
-        Map attrMap = getCookieAttr(treeCookie);
-        for (Iterator i = attrMap.keySet().iterator(); i.hasNext();) {
-            String nodeId = (String) i.next();
-            String nodeState = (String) attrMap.get(nodeId);
-            if (NODE_STATE_EXPANDED.equals(nodeState)) {
-                if (!state.isNodeExpanded(nodeId)) {
-                    state.toggleExpanded(nodeId);
-                }
-            } else if (NODE_STATE_CLOSED.equals(nodeState)) {
-                if (state.isNodeExpanded(nodeId)) {
-                    state.toggleExpanded(nodeId);
-                }
-            }
-        }
-    }
-
     public void decode(FacesContext context, UIComponent component) {
         super.decode(context, component);
         // see if one of the nav nodes was clicked, if so, then toggle appropriate node
@@ -126,7 +98,6 @@ public class THtmlTreeRenderer extends AbstractRenderer {
                     .getRequestParameterMap().get(
                             tree.getId() + ExtensionConstants.NAME_SEPARATOR
                                     + NAV_COMMAND);
-
             if (nodeId == null || nodeId.equals("")) {
                 return;
             }
@@ -170,8 +141,7 @@ public class THtmlTreeRenderer extends AbstractRenderer {
         boolean showRootNode = tree.isShowRootNode();
         TreeState state = tree.getDataModel().getTreeState();
         TreeWalker walker = tree.getDataModel().getTreeWalker();
-        walker.reset();
-        walker.setTree(tree);
+        walker.walkBegin(tree);
         walker.setCheckState(!clientSideToggle); // walk all nodes in client mode
         if (showRootNode) {
             // encode the tree (starting with the root node)
@@ -291,9 +261,9 @@ public class THtmlTreeRenderer extends AbstractRenderer {
         // render node
         out.startElement(JsfConstants.TD_ELEM, tree);
         if (nodeImgFacet != null) {
-            renderChild(context, nodeImgFacet);
+            RendererUtil.renderChild(context, nodeImgFacet);
         }
-        renderChild(context, nodeTypeFacet);
+        RendererUtil.renderChild(context, nodeTypeFacet);
         out.endElement(JsfConstants.TD_ELEM);
     }
 
@@ -400,13 +370,12 @@ public class THtmlTreeRenderer extends AbstractRenderer {
         }
 
         //      add the appropriate image for the nav control
-        UIGraphic image = new HtmlGraphicImage();
+        HtmlGraphicImage image = new HtmlGraphicImage();
         image.setId(IMAGE_PREFIX);
         image.setUrl(navSrcUrl);
-        Map imageAttrs = image.getAttributes();
-        imageAttrs.put(JsfConstants.WIDTH_ATTR, "19");
-        imageAttrs.put(JsfConstants.HEIGHT_ATTR, "18");
-        imageAttrs.put(JsfConstants.BORDER_ATTR, "0");
+        image.setWidth("19");
+        image.setHeight("18");
+        image.setBorder(0);
 
         if (clientSideToggle) {
             /**
@@ -454,13 +423,10 @@ public class THtmlTreeRenderer extends AbstractRenderer {
                                 collapseImgSrc).append("', '").append(
                                 tree.getId()).append("', '").append(nodeId)
                         .append("');").toString();
-
-                imageAttrs.put(JsfConstants.ONCLICK_ATTR, onClick);
-                imageAttrs.put(JsfConstants.STYLE_ATTR,
-                        "cursor:hand;cursor:pointer");
+                image.setOnclick(onClick);
+                image.setStyle("cursor:hand;cursor:pointer");
             }
-            renderChild(context, image);
-
+            RendererUtil.renderChild(context, image);
         } else {
             if (node.getChildCount() > 0) {
                 // set up the expand control and remove whatever children (if any) this control had previously
@@ -475,9 +441,9 @@ public class THtmlTreeRenderer extends AbstractRenderer {
                 expandControl.getChildren().add(param);
                 expandControl.getChildren().add(image);
 
-                renderChild(context, expandControl);
+                RendererUtil.renderChild(context, expandControl);
             } else {
-                renderChild(context, image);
+                RendererUtil.renderChild(context, image);
             }
         }
         out.endElement(JsfConstants.TD_ELEM);
@@ -489,12 +455,15 @@ public class THtmlTreeRenderer extends AbstractRenderer {
         return THtmlTree.class.getName();
     }
 
+    //TODO fix me
     private String getGifImageSrc(String imageName) {
-        return getImageSrc(imageName, "gif");
+        //return getImageSrc(imageName, "gif");
+        return imageName;
     }
 
     private String getImageSrc(String imageName, String extension) {
-        final String path = "/" + StringUtil.replace(getScriptKey(), ".", "/");
+        final String packageName = ClassUtil.getPackageName(THtmlTree.class);
+        final String path = "/" + StringUtil.replace(packageName, ".", "/");
         String resourcePath = ResourceUtil.getResourcePath(path + "/"
                 + imageName, extension);
         return resourcePath;
@@ -512,13 +481,38 @@ public class THtmlTreeRenderer extends AbstractRenderer {
         }
     }
 
+    private void restoreStateFromCookies(FacesContext context,
+            UIComponent component) {
+        THtmlTree tree = (THtmlTree) component;
+        TreeState state = tree.getDataModel().getTreeState();
+        Map cookieMap = context.getExternalContext().getRequestCookieMap();
+        Cookie treeCookie = (Cookie) cookieMap.get(component.getId());
+        if (treeCookie == null || treeCookie.getValue() == null) {
+            return;
+        }
+        Map attrMap = getCookieAttr(treeCookie);
+        for (Iterator i = attrMap.keySet().iterator(); i.hasNext();) {
+            String nodeId = (String) i.next();
+            String nodeState = (String) attrMap.get(nodeId);
+            if (NODE_STATE_EXPANDED.equals(nodeState)) {
+                if (!state.isNodeExpanded(nodeId)) {
+                    state.toggleExpanded(nodeId);
+                }
+            } else if (NODE_STATE_CLOSED.equals(nodeState)) {
+                if (state.isNodeExpanded(nodeId)) {
+                    state.toggleExpanded(nodeId);
+                }
+            }
+        }
+    }
+
     private Map getCookieAttr(Cookie cookie) {
         Map attribMap = new HashMap();
         try {
             String cookieValue = URLDecoder.decode(cookie.getValue(), ENCODING);
-            String[] attribArray = cookieValue.split(ATTRIB_DELIM);
+            String[] attribArray = cookieValue.split(";");
             for (int j = 0; j < attribArray.length; j++) {
-                int index = attribArray[j].indexOf(ATTRIB_KEYVAL);
+                int index = attribArray[j].indexOf("=");
                 String name = attribArray[j].substring(0, index);
                 String value = attribArray[j].substring(index + 1);
                 attribMap.put(name, value);
@@ -527,30 +521,6 @@ public class THtmlTreeRenderer extends AbstractRenderer {
             throw new RuntimeException("Error parsing tree cookies", e);
         }
         return attribMap;
-    }
-
-    private static void renderChild(FacesContext facesContext, UIComponent child)
-            throws IOException {
-        if (!child.isRendered()) {
-            return;
-        }
-        child.encodeBegin(facesContext);
-        if (child.getRendersChildren()) {
-            child.encodeChildren(facesContext);
-        } else {
-            renderChildren(facesContext, child);
-        }
-        child.encodeEnd(facesContext);
-    }
-
-    private static void renderChildren(FacesContext facesContext,
-            UIComponent component) throws IOException {
-        if (component.getChildCount() > 0) {
-            for (Iterator it = component.getChildren().iterator(); it.hasNext();) {
-                UIComponent child = (UIComponent) it.next();
-                renderChild(facesContext, child);
-            }
-        }
     }
 
 }

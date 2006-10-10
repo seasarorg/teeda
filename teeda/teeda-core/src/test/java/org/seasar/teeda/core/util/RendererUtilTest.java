@@ -15,14 +15,15 @@
  */
 package org.seasar.teeda.core.util;
 
+import java.io.IOException;
 import java.lang.reflect.Array;
 
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIOutput;
 import javax.faces.component.UIViewRoot;
+import javax.faces.context.FacesContext;
 import javax.faces.convert.IntegerConverter;
 
-import junit.framework.TestCase;
 import junitx.framework.ArrayAssert;
 
 import org.seasar.teeda.core.mock.MockConverter;
@@ -30,11 +31,12 @@ import org.seasar.teeda.core.mock.MockFacesContextImpl;
 import org.seasar.teeda.core.mock.MockUIComponent;
 import org.seasar.teeda.core.mock.MockUIComponentBase;
 import org.seasar.teeda.core.mock.MockValueBinding;
+import org.seasar.teeda.core.unit.TeedaTestCase;
 
 /**
  * @author manhole
  */
-public class RendererUtilTest extends TestCase {
+public class RendererUtilTest extends TeedaTestCase {
 
     public void testShouldRenderIdAttribute_True() throws Exception {
         // ## Arrange ##
@@ -149,6 +151,90 @@ public class RendererUtilTest extends TestCase {
         ArrayAssert.assertEquals(new int[] { 1, 2, 3 }, result);
     }
 
-    // TODO more tests
+    public void testRenderChild1() throws Exception {
+        FacesContext context = getFacesContext();
+        final boolean[] calls = new boolean[] { false, false, false };
+        MockUIComponent child = new MockUIComponent() {
+
+            public void encodeBegin(FacesContext context) throws IOException {
+                calls[0] = true;
+            }
+
+            public void encodeChildren(FacesContext context) throws IOException {
+                calls[1] = true;
+            }
+
+            public void encodeEnd(FacesContext context) throws IOException {
+                calls[2] = true;
+            }
+
+            public boolean getRendersChildren() {
+                return true;
+            }
+
+        };
+        RendererUtil.renderChild(context, child);
+        assertTrue(calls[0]);
+        assertTrue(calls[1]);
+        assertTrue(calls[2]);
+    }
+
+    public void testRenderChild2() throws Exception {
+        FacesContext context = getFacesContext();
+        final boolean[] calls = new boolean[] { false, false, false };
+        MockUIComponent child = new MockUIComponent() {
+
+            public void encodeBegin(FacesContext context) throws IOException {
+                calls[0] = true;
+            }
+
+            public void encodeChildren(FacesContext context) throws IOException {
+                calls[1] = true;
+            }
+
+            public void encodeEnd(FacesContext context) throws IOException {
+                calls[2] = true;
+            }
+
+            public boolean getRendersChildren() {
+                return false;
+            }
+
+        };
+        RendererUtil.renderChild(context, child);
+        assertTrue(calls[0]);
+        assertFalse(calls[1]);
+        assertTrue(calls[2]);
+    }
+
+    public void testRenderChildlen1() throws Exception {
+        FacesContext context = getFacesContext();
+        final boolean[] calls = new boolean[] { false, false, false };
+        MockUIComponent child = new MockUIComponent() {
+
+            public void encodeBegin(FacesContext context) throws IOException {
+                calls[0] = true;
+            }
+
+            public void encodeChildren(FacesContext context) throws IOException {
+                calls[1] = true;
+            }
+
+            public void encodeEnd(FacesContext context) throws IOException {
+                calls[2] = true;
+            }
+
+            public boolean getRendersChildren() {
+                return true;
+            }
+
+        };
+        MockUIComponent parent = new MockUIComponent();
+        parent.getChildren().add(child);
+        RendererUtil.renderChildren(context, parent);
+        assertTrue(calls[0]);
+        assertTrue(calls[1]);
+        assertTrue(calls[2]);
+    }
 
 }

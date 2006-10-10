@@ -46,6 +46,7 @@ public class GraphicImageTag extends UIComponentTagBase {
                 getLongdesc());
         setComponentProperty(component, JsfConstants.USEMAP_ATTR, getUsemap());
         setComponentProperty(component, JsfConstants.WIDTH_ATTR, getWidth());
+        setComponentProperty(component, JsfConstants.BORDER_ATTR, getBorder());
     }
 
     public void release() {

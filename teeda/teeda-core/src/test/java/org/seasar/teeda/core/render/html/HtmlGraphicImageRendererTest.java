@@ -113,31 +113,15 @@ public class HtmlGraphicImageRendererTest extends RendererTest {
      * https://www.seasar.org/issues/browse/JSF-24 のため確認。
      * 動作するようだ。
      */
-    public void testEncode_WithUnknownAttribute_Border() throws Exception {
+    public void testEncode_border() throws Exception {
         htmlGraphicImage.setId("a");
-        htmlGraphicImage.getAttributes().put("border", "20");
-
-        encodeByRenderer(renderer, htmlGraphicImage);
-
-        final Diff diff = diff("<img id=\"a\" src=\"\" border=\"20\" />",
-                getResponseText());
-        assertEquals(diff.toString(), true, diff.identical());
-    }
-
-    /*
-     * https://www.seasar.org/issues/browse/JSF-24 のため確認。
-     * 動作するようだ。
-     */
-    public void testEncode_WithUnknownAttribute_BorderInteger()
-            throws Exception {
-        htmlGraphicImage.setId("a");
-        htmlGraphicImage.getAttributes().put("border", new Integer(0));
+        htmlGraphicImage.setBorder(10);
 
         encodeByRenderer(renderer, htmlGraphicImage);
 
         final String responseText = getResponseText();
         System.out.println(responseText);
-        final Diff diff = diff("<img id=\"a\" src=\"\" border=\"0\" />",
+        final Diff diff = diff("<img id=\"a\" src=\"\" border=\"10\" />",
                 responseText);
         assertEquals(diff.toString(), true, diff.identical());
     }

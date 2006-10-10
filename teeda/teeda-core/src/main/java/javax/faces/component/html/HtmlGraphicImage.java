@@ -30,6 +30,8 @@ public class HtmlGraphicImage extends UIGraphic {
 
     private static final boolean DEFAULT_ISMAP = false;
 
+    private static final int DEFAULTBORDER = Integer.MIN_VALUE;
+
     private String alt = null;
 
     private String dir = null;
@@ -71,6 +73,8 @@ public class HtmlGraphicImage extends UIGraphic {
     private String usemap = null;
 
     private String width = null;
+
+    private Integer border;
 
     public HtmlGraphicImage() {
         setRendererType(DEFAULT_RENDERER_TYPE);
@@ -330,8 +334,22 @@ public class HtmlGraphicImage extends UIGraphic {
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
+    public void setBorder(int border) {
+        this.border = new Integer(border);
+    }
+
+    public int getBorder() {
+        if (border != null) {
+            return border.intValue();
+        }
+        ValueBinding vb = getValueBinding("border");
+        Integer v = vb != null ? (Integer) vb.getValue(getFacesContext())
+                : null;
+        return v != null ? v.intValue() : DEFAULTBORDER;
+    }
+
     public Object saveState(FacesContext context) {
-        Object values[] = new Object[22];
+        Object values[] = new Object[23];
         values[0] = super.saveState(context);
         values[1] = alt;
         values[2] = dir;
@@ -354,6 +372,7 @@ public class HtmlGraphicImage extends UIGraphic {
         values[19] = title;
         values[20] = usemap;
         values[21] = width;
+        values[22] = border;
         return ((Object) (values));
     }
 
@@ -381,6 +400,7 @@ public class HtmlGraphicImage extends UIGraphic {
         title = (String) values[19];
         usemap = (String) values[20];
         width = (String) values[21];
+        border = (Integer) values[22];
     }
 
 }

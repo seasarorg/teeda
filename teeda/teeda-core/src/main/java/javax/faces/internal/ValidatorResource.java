@@ -20,9 +20,6 @@ import java.util.Map;
 
 import javax.faces.validator.Validator;
 
-import org.seasar.framework.util.Disposable;
-import org.seasar.framework.util.DisposableUtil;
-
 /**
  * @author shot
  * @author higa
@@ -30,14 +27,6 @@ import org.seasar.framework.util.DisposableUtil;
 public class ValidatorResource {
 
     private static Map validators_ = new HashMap();
-
-    static {
-        DisposableUtil.add(new Disposable() {
-            public void dispose() {
-                removeAll();
-            }
-        });
-    };
 
     protected ValidatorResource() {
     }

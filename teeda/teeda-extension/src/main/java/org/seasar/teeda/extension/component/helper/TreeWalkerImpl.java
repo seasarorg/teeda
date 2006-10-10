@@ -38,10 +38,6 @@ public class TreeWalkerImpl implements TreeWalker {
 
     private boolean startedWalking = false;
 
-    public void setTree(UITreeData tree) {
-        this.tree = tree;
-    }
-
     public boolean isCheckState() {
         return checkState;
     }
@@ -123,9 +119,18 @@ public class TreeWalkerImpl implements TreeWalker {
         return ROOT_NODE_ID;
     }
 
-    public void reset() {
+    protected void reset() {
         nodeStack.empty();
         idStack.empty();
         startedWalking = false;
+    }
+
+    protected void setTree(UITreeData tree) {
+        this.tree = tree;
+    }
+
+    public void walkBegin(UITreeData treeData) {
+        reset();
+        setTree(treeData);
     }
 }

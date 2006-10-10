@@ -22,7 +22,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.faces.application.FacesMessage;
-import javax.faces.application.FacesMessage.Severity;
 import javax.faces.component.ComponentUtil_;
 import javax.faces.component.EditableValueHolder;
 import javax.faces.component.NamingContainer;
@@ -33,7 +32,6 @@ import javax.faces.el.ValueBinding;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.FacesEvent;
-import javax.faces.event.FacesListener;
 import javax.faces.event.PhaseId;
 import javax.faces.internal.FacesMessageUtil;
 import javax.faces.internal.SavedState;
@@ -46,6 +44,7 @@ import org.seasar.teeda.extension.component.helper.TreeState;
 import org.seasar.teeda.extension.component.helper.TreeStateImpl;
 import org.seasar.teeda.extension.component.helper.TreeWalker;
 import org.seasar.teeda.extension.event.ToggleEvent;
+import org.seasar.teeda.extension.event.TreeEventWrapper;
 
 /**
  * @author shot
@@ -96,19 +95,29 @@ public class UITreeData extends UIComponentBase implements NamingContainer {
     }
 
     public void encodeBegin(FacesContext context) throws IOException {
-        if (!keepSaved(context)) {
-            saveMap = new HashMap();
-        }
+        saveMap = new HashMap();
         model = null;
         super.encodeBegin(context);
     }
 
     public void encodeEnd(FacesContext context) throws IOException {
         super.encodeEnd(context);
-        TreeState state = getDataModel().getTreeState();
-        if (state == null) {
-            state = new TreeStateImpl();
+        TreeModel model = getDataModel();
+        if (model == null) {
+            throw new IllegalStateException();
         }
+        TreeState state = model.getTreeState();
+        if (state == null) {
+            state = createTreeState();
+        }
+        setRestoredState(state);
+    }
+
+    protected TreeState createTreeState() {
+        return new TreeStateImpl();
+    }
+
+    protected void setRestoredState(TreeState state) {
         restoredState = (!state.isTransient()) ? state : null;
     }
 
@@ -258,9 +267,9 @@ public class UITreeData extends UIComponentBase implements NamingContainer {
             if (value instanceof TreeModel) {
                 model = (TreeModel) value;
             } else if (value instanceof TreeNode) {
-                model = new TreeModelImpl((TreeNode) value);
+                model = wrapTreeNode((TreeNode) value);
             } else {
-                throw new IllegalArgumentException(
+                throw new IllegalStateException(
                         "Value must be a TreeModel or TreeNode");
             }
         }
@@ -268,6 +277,10 @@ public class UITreeData extends UIComponentBase implements NamingContainer {
             model.setTreeState(restoredState);
         }
         return model;
+    }
+
+    protected TreeModel wrapTreeNode(TreeNode node) {
+        return new TreeModelImpl(node);
     }
 
     public void expandAll() {
@@ -280,10 +293,9 @@ public class UITreeData extends UIComponentBase implements NamingContainer {
 
     private void toggleAll(boolean expanded) {
         TreeWalker walker = getDataModel().getTreeWalker();
-        walker.reset();
-        TreeState state = getDataModel().getTreeState();
+        walker.walkBegin(this);
         walker.setCheckState(false);
-        walker.setTree(this);
+        TreeState state = getDataModel().getTreeState();
         while (walker.next()) {
             String id = getNodeId();
             if ((expanded && !state.isNodeExpanded(id))
@@ -304,8 +316,7 @@ public class UITreeData extends UIComponentBase implements NamingContainer {
     protected void processNodes(FacesContext context, PhaseId phaseId) {
         UIComponent facet = null;
         TreeWalker walker = getDataModel().getTreeWalker();
-        walker.reset();
-        walker.setTree(this);
+        walker.walkBegin(this);
         while (walker.next()) {
             TreeNode node = getNode();
             facet = getFacet(node.getType());
@@ -365,77 +376,14 @@ public class UITreeData extends UIComponentBase implements NamingContainer {
             }
             state.restore(holder);
         }
-        List kids = component.getChildren();
-        for (int i = 0; i < kids.size(); i++) {
-            restoreDescendantState((UIComponent) kids.get(i), context);
+        List child = component.getChildren();
+        for (int i = 0; i < child.size(); i++) {
+            restoreDescendantState((UIComponent) child.get(i), context);
         }
         Map facets = component.getFacets();
         for (Iterator i = facets.values().iterator(); i.hasNext();) {
             restoreDescendantState((UIComponent) i.next(), context);
         }
-    }
-
-    private static class TreeEventWrapper extends FacesEvent {
-
-        private static final long serialVersionUID = 1L;
-
-        private FacesEvent originalEvent;
-
-        private String nodeId;
-
-        public TreeEventWrapper(FacesEvent facesEvent, String nodeId,
-                UIComponent component) {
-            super(component);
-            originalEvent = facesEvent;
-            this.nodeId = nodeId;
-        }
-
-        public PhaseId getPhaseId() {
-            return originalEvent.getPhaseId();
-        }
-
-        public void setPhaseId(PhaseId phaseId) {
-            originalEvent.setPhaseId(phaseId);
-        }
-
-        public void queue() {
-            originalEvent.queue();
-        }
-
-        public String toString() {
-            return originalEvent.toString();
-        }
-
-        public boolean isAppropriateListener(FacesListener faceslistener) {
-            return false;
-        }
-
-        public void processListener(FacesListener faceslistener) {
-            throw new UnsupportedOperationException();
-        }
-
-        public FacesEvent getOriginalEvent() {
-            return originalEvent;
-        }
-
-        public String getOriginalNodeId() {
-            return nodeId;
-        }
-    }
-
-    private boolean keepSaved(FacesContext context) {
-        for (Iterator itr = saveMap.keySet().iterator(); itr.hasNext();) {
-            String clientId = (String) itr.next();
-            for (Iterator messages = context.getMessages(clientId); messages
-                    .hasNext();) {
-                FacesMessage message = (FacesMessage) messages.next();
-                Severity severity = message.getSeverity();
-                if (severity.compareTo(FacesMessage.SEVERITY_ERROR) >= 0) {
-                    return true;
-                }
-            }
-        }
-        return false;
     }
 
     public void toggleExpanded() {
