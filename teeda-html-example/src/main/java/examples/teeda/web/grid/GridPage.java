@@ -15,6 +15,13 @@ public class GridPage {
 		return "row_odd";
 	}
 
+	public String getFooRowStyle() {
+		if (fooIndex % 2 == 0) {
+			return "color : red";
+		}
+		return "color : blue";
+	}
+
 	public FooItem[] getFooItems() {
 		if (fooItems == null) {
 			fooItems = new FooItem[7];
