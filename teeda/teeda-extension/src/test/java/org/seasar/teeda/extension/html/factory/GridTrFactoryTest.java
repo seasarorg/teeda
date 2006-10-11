@@ -117,6 +117,5 @@ public class GridTrFactoryTest extends TeedaExtensionTestCase {
         // ## Assert ##
         assertEquals("#{fooPage.hogeRowStyleClass}", processor
                 .getProperty("styleClass"));
-        assertEquals("#{fooPage.hogeRowStyle}", processor.getProperty("style"));
     }
 }
