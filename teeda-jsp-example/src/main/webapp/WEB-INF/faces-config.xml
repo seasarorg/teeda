@@ -97,6 +97,12 @@
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 
+	<managed-bean>
+		<managed-bean-name>treeBean</managed-bean-name>
+		<managed-bean-class>examples.teeda.bean.TreeBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
 	<navigation-rule>
 		<from-view-id>/changePage/changePage1.jsp</from-view-id>
 		<navigation-case>
