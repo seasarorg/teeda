@@ -80,6 +80,7 @@ public class GridTrFactoryTest extends TeedaExtensionTestCase {
 
         final HashMap trProp = new HashMap();
         trProp.put("styleClass", "hoge");
+        trProp.put("style", "bar");
         ElementNode elementNode = createElementNode("tr", trProp);
         grid.addElement(elementNode);
 
@@ -90,6 +91,7 @@ public class GridTrFactoryTest extends TeedaExtensionTestCase {
         // ## Assert ##
         assertEquals("#{fooPage.hogeRowStyleClass}", processor
                 .getProperty("styleClass"));
+        assertEquals("#{fooPage.hogeRowStyle}", processor.getProperty("style"));
     }
 
     public void testCustomizeDynamicProperties2() throws Exception {
@@ -115,5 +117,6 @@ public class GridTrFactoryTest extends TeedaExtensionTestCase {
         // ## Assert ##
         assertEquals("#{fooPage.hogeRowStyleClass}", processor
                 .getProperty("styleClass"));
+        assertEquals("#{fooPage.hogeRowStyle}", processor.getProperty("style"));
     }
 }

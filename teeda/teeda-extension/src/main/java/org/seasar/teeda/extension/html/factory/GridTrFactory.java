@@ -49,6 +49,8 @@ public class GridTrFactory extends AbstractGridChildrenFactory {
         customizeDynamicPropertyIfNotExists(base,
                 JsfConstants.STYLE_CLASS_ATTR, properties, elementNode,
                 pageDesc, actionDesc);
+        customizeDynamicPropertyIfNotExists(base, JsfConstants.STYLE_ATTR,
+                properties, elementNode, pageDesc, actionDesc);
     }
 
 }

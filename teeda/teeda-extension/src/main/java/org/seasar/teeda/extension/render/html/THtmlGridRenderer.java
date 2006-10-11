@@ -625,6 +625,7 @@ public class THtmlGridRenderer extends TForEachRenderer {
             final THtmlGridRenderer.GridAttribute attribute) throws IOException {
         writer.startElement(JsfConstants.TR_ELEM, tr);
         renderStyleClass(tr, writer);
+        renderStyle(tr, writer);
         int columnNo = 0;
         for (final Iterator it = getRenderedChildrenIterator(tr); it.hasNext();) {
             final UIComponent child = (UIComponent) it.next();
@@ -645,6 +646,7 @@ public class THtmlGridRenderer extends TForEachRenderer {
             final THtmlGridRenderer.GridAttribute attribute) throws IOException {
         writer.startElement(JsfConstants.TR_ELEM, tr);
         renderStyleClass(tr, writer);
+        renderStyle(tr, writer);
         int columnNo = 0;
         for (final Iterator it = getRenderedChildrenIterator(tr); it.hasNext();) {
             final UIComponent child = (UIComponent) it.next();
@@ -819,6 +821,15 @@ public class THtmlGridRenderer extends TForEachRenderer {
         if (styleClass != null) {
             RendererUtil.renderAttribute(writer, JsfConstants.STYLE_CLASS_ATTR,
                     styleClass);
+        }
+    }
+
+    private void renderStyle(final THtmlGridTr tr, final ResponseWriter writer)
+            throws IOException {
+        final String style = tr.getStyle();
+        if (style != null) {
+            RendererUtil
+                    .renderAttribute(writer, JsfConstants.STYLE_ATTR, style);
         }
     }
 
