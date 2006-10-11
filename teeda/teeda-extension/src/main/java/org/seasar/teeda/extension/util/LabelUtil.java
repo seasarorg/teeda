@@ -20,6 +20,8 @@ import java.util.Locale;
 import javax.faces.internal.FacesConfigOptions;
 
 import org.seasar.framework.convention.NamingConvention;
+import org.seasar.framework.exception.ResourceNotFoundRuntimeException;
+import org.seasar.framework.log.Logger;
 import org.seasar.framework.message.MessageResourceBundle;
 import org.seasar.framework.message.MessageResourceBundleFactory;
 import org.seasar.teeda.core.util.ViewHandlerUtil;
@@ -31,26 +33,40 @@ public class LabelUtil {
 
     public static final String LABEL = "label";
 
+    private static final Logger logger = Logger.getLogger(LabelUtil.class);
+
     public static String getLabelValue(String key, String propertiesName,
             String defaultKey, String defaultPropertiesName) {
         final Locale locale = ViewHandlerUtil.getLocale();
         String value = null;
         if (propertiesName != null) {
-            MessageResourceBundle bundle = MessageResourceBundleFactory
-                    .getBundle(propertiesName, locale);
-            value = (String) bundle.get(key);
+            MessageResourceBundle bundle = getBundleNoException(propertiesName,
+                    locale);
+            value = (bundle != null) ? (String) bundle.get(key) : null;
             if (value == null) {
                 value = (String) bundle.get(defaultKey);
             }
         }
         if (value == null) {
             if (defaultPropertiesName != null) {
-                MessageResourceBundle bundle = MessageResourceBundleFactory
-                        .getBundle(defaultPropertiesName, locale);
-                value = (String) bundle.get(defaultKey);
+                MessageResourceBundle bundle = getBundleNoException(
+                        defaultPropertiesName, locale);
+                value = (bundle != null) ? (String) bundle.get(defaultKey)
+                        : null;
             }
         }
         return value;
+    }
+
+    private static MessageResourceBundle getBundleNoException(
+            String propertiesName, Locale locale) {
+        try {
+            return MessageResourceBundleFactory.getBundle(propertiesName,
+                    locale);
+        } catch (ResourceNotFoundRuntimeException ignore) {
+            logger.debug("bundle : " + propertiesName + " not found.");
+            return null;
+        }
     }
 
     public static String getPropertiesName(NamingConvention nc, String pageName) {
