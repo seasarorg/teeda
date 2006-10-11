@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -25,7 +25,7 @@ import org.seasar.teeda.extension.html.PageDesc;
 
 /**
  * @author higa
- *  
+ *
  */
 public class TInputHiddenFactory extends AbstractElementProcessorFactory {
 
@@ -44,8 +44,12 @@ public class TInputHiddenFactory extends AbstractElementProcessorFactory {
             return false;
         }
         final String id = elementNode.getId();
-        return id.endsWith(ExtensionConstants.ITEMS_SUFFIX) && pageDesc != null
-                && pageDesc.hasItemsProperty(id);
+        if (!id.endsWith(ExtensionConstants.SAVE_SUFFIX)) {
+            return false;
+        }
+        final String items = id.substring(0, id
+                .indexOf(ExtensionConstants.SAVE_SUFFIX));
+        return (pageDesc != null) && (pageDesc.hasItemsProperty(items));
     }
 
     protected void customizeProperties(Map properties, ElementNode elementNode,
@@ -53,8 +57,11 @@ public class TInputHiddenFactory extends AbstractElementProcessorFactory {
         super
                 .customizeProperties(properties, elementNode, pageDesc,
                         actionDesc);
+        String id = elementNode.getId();
+        String items = id.substring(0, id
+                .indexOf(ExtensionConstants.SAVE_SUFFIX));
         properties.put(JsfConstants.VALUE_ATTR, getBindingExpression(pageDesc
-                .getPageName(), elementNode.getId()));
+                .getPageName(), items));
     }
 
     protected String getTagName() {

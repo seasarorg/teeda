@@ -89,6 +89,8 @@ public interface ExtensionConstants {
 
     String TEEDA_DATE_STYLE_CLASS = "T_date";
 
+    String SAVE_SUFFIX = "Save";
+
     String GRID = "Grid";
 
     String GRID_X = "GridX";
