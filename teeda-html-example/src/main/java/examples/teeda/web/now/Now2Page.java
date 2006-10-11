@@ -4,12 +4,12 @@ import java.util.Date;
 
 public class Now2Page {
 
-	public static final String now_dateTimeConverter = "pattern='yyyy/MM'";
-	
 	public static final String now_TRequiredValidator = null;
-	
+
+	public static final String now_dateTimeConverter = "pattern='yyyy/MM'";
+
 	private String nowPattern = "yyyy/MM";
-	
+
 	private Date now;
 
 	public Date getNow() {
