@@ -51,4 +51,26 @@ public class TreeNodeImplTest extends TestCase {
         assertTrue(parent.isLeaf());
     }
 
+    public void testCompare1() throws Exception {
+        TreeNodeImpl node = new TreeNodeImpl("a", "b", true);
+        TreeNodeImpl otherNode = new TreeNodeImpl("b", "c", false);
+        otherNode.addChild(new TreeNodeImpl("c", "d", true));
+        assertTrue(node.compareTo(otherNode) == 1);
+    }
+
+    public void testCompare2() throws Exception {
+        TreeNodeImpl node = new TreeNodeImpl("b", "c", false);
+        node.addChild(new TreeNodeImpl("c", "d", true));
+        TreeNodeImpl node2 = new TreeNodeImpl("a", "b", true);
+        assertTrue(node.compareTo(node2) == -1);
+    }
+
+    public void testCompare3() throws Exception {
+        TreeNodeImpl node = new TreeNodeImpl("b", "c", true);
+        node.setDescription("a");
+        TreeNodeImpl node2 = new TreeNodeImpl("a", "b", true);
+        node.setDescription("b");
+        assertTrue(node.compareTo(node2) == 0);
+    }
+
 }
