@@ -30,10 +30,12 @@ import org.seasar.teeda.core.config.faces.element.ManagedBeanElement;
 import org.seasar.teeda.core.config.faces.element.NavigationRuleElement;
 import org.seasar.teeda.core.config.faces.element.ReferencedBeanElement;
 import org.seasar.teeda.core.config.faces.element.RenderKitElement;
+import org.seasar.teeda.core.config.faces.element.RendererElement;
 import org.seasar.teeda.core.config.faces.element.ValidatorElement;
 
 /**
  * @author shot
+ * @author yone
  */
 public class FacesConfigImpl implements FacesConfig {
 
@@ -93,7 +95,18 @@ public class FacesConfigImpl implements FacesConfig {
     }
 
     public void addRenderKitElement(RenderKitElement renderKit) {
-        renderKits_.put(renderKit.getRenderKitId(), renderKit);
+        final String renderKitId = renderKit.getRenderKitId();
+        RenderKitElement renderKitElement = (RenderKitElement) renderKits_
+                .get(renderKitId);
+        if (renderKitElement == null) {
+            renderKits_.put(renderKitId, renderKit);
+        } else {
+            List elements = renderKit.getRendererElements();
+            for (int i = 0, size = elements.size(); i < size; i++) {
+                RendererElement element = (RendererElement) elements.get(i);
+                renderKitElement.addRendererElement(element);
+            }
+        }
     }
 
     public void addLifecycleElement(LifecycleElement lifecycle) {
