@@ -59,13 +59,13 @@ public class THtmlInputDateTextRenderer extends AbstractInputExtendTextRenderer 
         }
         final String delim = DateConversionUtil
                 .findDelimiterFromPattern(pattern);
-
-        renderOnfocus(htmlInputDateText, writer, delim, length);
-        renderOnblur(htmlInputDateText, writer, pattern, length, threshold,
-                delim);
-        renderOnkeydown(htmlInputDateText, writer);
-        renderOnkeypress(htmlInputDateText, writer);
-        renderOnkeyup(htmlInputDateText, writer);
+        InputDateValueHolder holder = new InputDateValueHolder(pattern, length,
+                threshold, delim);
+        renderOnfocus(htmlInputDateText, writer, holder);
+        renderOnblur(htmlInputDateText, writer, holder);
+        renderOnkeydown(htmlInputDateText, writer, holder);
+        renderOnkeypress(htmlInputDateText, writer, holder);
+        renderOnkeyup(htmlInputDateText, writer, holder);
         renderStyle(htmlInputDateText, writer);
         renderStyleClass(htmlInputDateText, writer);
     }
@@ -127,8 +127,10 @@ public class THtmlInputDateTextRenderer extends AbstractInputExtendTextRenderer 
     }
 
     protected void renderOnfocus(THtmlInputDateText htmlInputDateText,
-            ResponseWriter writer, String delim, String length)
+            ResponseWriter writer, InputDateValueHolder holder)
             throws IOException {
+        final String delim = holder.getDelim();
+        final String length = holder.getLength();
         String onfocus = appendSemiColonIfNeed(htmlInputDateText.getOnfocus());
         String target = JS_NAMESPACE_PREFIX + "removeDelimeter(this, '" + delim
                 + "', " + length + ");";
@@ -142,10 +144,9 @@ public class THtmlInputDateTextRenderer extends AbstractInputExtendTextRenderer 
     }
 
     protected void renderOnblur(THtmlInputDateText htmlInputDateText,
-            ResponseWriter writer, String patern, String length,
-            String threshold, String delim) throws IOException {
-        final String onblur = createOnblurAttribute(htmlInputDateText, patern,
-                length, threshold, delim);
+            ResponseWriter writer, InputDateValueHolder holder)
+            throws IOException {
+        final String onblur = createOnblurAttribute(htmlInputDateText, holder);
         if (StringUtil.isNotBlank(onblur)) {
             RendererUtil.renderAttribute(writer, JsfConstants.ONBLUR_ATTR,
                     onblur);
@@ -153,8 +154,11 @@ public class THtmlInputDateTextRenderer extends AbstractInputExtendTextRenderer 
     }
 
     protected String createOnblurAttribute(
-            THtmlInputDateText htmlInputDateText, String pattern,
-            String length, String threshold, String delim) {
+            THtmlInputDateText htmlInputDateText, InputDateValueHolder holder) {
+        final String pattern = holder.getPattern();
+        final String length = holder.getLength();
+        final String threshold = holder.getThreshold();
+        final String delim = holder.getDelim();
         final String onblur = appendSemiColonIfNeed(htmlInputDateText
                 .getOnblur());
         final String s = JS_NAMESPACE_PREFIX + "convertByKey(this);"
@@ -167,29 +171,40 @@ public class THtmlInputDateTextRenderer extends AbstractInputExtendTextRenderer 
     }
 
     protected void renderOnkeydown(THtmlInputDateText htmlInputDateText,
-            ResponseWriter writer) throws IOException {
+            ResponseWriter writer, InputDateValueHolder holder)
+            throws IOException {
         String onkeydown = appendSemiColonIfNeed(htmlInputDateText
                 .getOnkeydown());
-        renderKeycheckEvent(writer, JsfConstants.ONKEYDOWN_ATTR, onkeydown);
+        renderKeycheckEvent(writer, JsfConstants.ONKEYDOWN_ATTR, onkeydown,
+                holder);
     }
 
     protected void renderOnkeypress(THtmlInputDateText htmlInputDateText,
-            ResponseWriter writer) throws IOException {
+            ResponseWriter writer, InputDateValueHolder holder)
+            throws IOException {
         String onkeypress = appendSemiColonIfNeed(htmlInputDateText
                 .getOnkeypress());
-        renderKeycheckEvent(writer, JsfConstants.ONKEYPRESS_ATTR, onkeypress);
+        renderKeycheckEvent(writer, JsfConstants.ONKEYPRESS_ATTR, onkeypress,
+                holder);
     }
 
     protected void renderOnkeyup(THtmlInputDateText htmlInputDateText,
-            ResponseWriter writer) throws IOException {
+            ResponseWriter writer, InputDateValueHolder holder)
+            throws IOException {
         String onkeyup = appendSemiColonIfNeed(htmlInputDateText.getOnkeyup());
-        renderKeycheckEvent(writer, JsfConstants.ONKEYPRESS_ATTR, onkeyup);
+        renderKeycheckEvent(writer, JsfConstants.ONKEYUP_ATTR, onkeyup, holder);
     }
 
     private void renderKeycheckEvent(ResponseWriter writer,
-            String attributeName, String target) throws IOException {
+            String attributeName, String target, InputDateValueHolder holder)
+            throws IOException {
+        final String pattern = holder.getPattern();
+        final String length = holder.getLength();
+        final String threshold = holder.getThreshold();
+        final String delim = holder.getDelim();
         final String script = "return " + JS_NAMESPACE_PREFIX
-                + "keycheckForNumber(event);";
+                + "keycheckForNumber(event, this, '" + pattern + "', " + length
+                + ", " + threshold + ", '" + delim + "');";
         if (!target.endsWith(script)) {
             target = target + script;
             RendererUtil.renderAttribute(writer, attributeName, target);
@@ -214,6 +229,42 @@ public class THtmlInputDateTextRenderer extends AbstractInputExtendTextRenderer 
 
     protected String getScriptKey() {
         return THtmlInputDateText.class.getName();
+    }
+
+    protected static class InputDateValueHolder {
+
+        private String pattern;
+
+        private String length;
+
+        private String threshold;
+
+        private String delim;
+
+        public InputDateValueHolder(String pattern, String length,
+                String threshold, String delim) {
+            this.pattern = pattern;
+            this.length = length;
+            this.threshold = threshold;
+            this.delim = delim;
+        }
+
+        public String getDelim() {
+            return delim;
+        }
+
+        public String getLength() {
+            return length;
+        }
+
+        public String getPattern() {
+            return pattern;
+        }
+
+        public String getThreshold() {
+            return threshold;
+        }
+
     }
 
 }

@@ -82,8 +82,13 @@ Teeda.THtmlInputDateText = {
      return true;
     }
   },
-  keycheckForNumber : function(e) {
-    return Teeda.THtmlInputDateText.isNumber(e) || Teeda.THtmlInputDateText.isSlash(e) || Teeda.THtmlInputDateText.isHiphen(e) || Teeda.THtmlInputDateText.isBackspace(e) || Teeda.THtmlInputDateText.isMovable(e) || Teeda.THtmlInputDateText.isEnter(e);
+  keycheckForNumber : function(e, obj, format, worklen, threshold, delim) {
+    var self = Teeda.THtmlInputDateText;
+    var b = self.checkEnter(e);
+    if(b) {
+      self.addDelimeter(obj, format, worklen, threshold, delim);
+    }
+    return self.isNumber(e) || self.isSlash(e) || self.isHiphen(e) || self.isBackspace(e) || self.isMovable(e) || self.isEnter(e);
   },
   getKeyCode : function(e) {
     var c = e.keyCode;
@@ -115,5 +120,11 @@ Teeda.THtmlInputDateText = {
   isEnter : function(e) {
     var c = Teeda.THtmlInputDateText.getKeyCode(e);
     return (c == 13);
+  },
+  checkEnter : function(e) {
+    if(Teeda.THtmlInputDateText.isEnter(e)) {
+      return true;
+    }
+    return false;
   }
 };
