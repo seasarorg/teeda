@@ -122,4 +122,49 @@ public class FacesConfigWrapperImplTest extends TestCase {
         }
     }
 
+    public void testRenderKitElements_NoSetRenderKitId_SameFacesConfig()
+            throws Exception {
+        // ## Arrange ##
+        List configs = new ArrayList();
+        RenderKitElementImpl renderKitElement1 = new RenderKitElementImpl();
+        RendererElementImpl rendererElement1 = new RendererElementImpl();
+        final String renderKitId = renderKitElement1.getRenderKitId();
+        rendererElement1.setComponentFamily("family1");
+        rendererElement1.setRendererType("type1");
+        rendererElement1.setRendererClass("class1");
+        renderKitElement1.addRendererElement(rendererElement1);
+
+        RenderKitElementImpl renderKitElement2 = new RenderKitElementImpl();
+        RendererElementImpl rendererElement2 = new RendererElementImpl();
+        rendererElement2.setComponentFamily("family2");
+        rendererElement2.setRendererType("type2");
+        rendererElement2.setRendererClass("class2");
+        renderKitElement2.addRendererElement(rendererElement2);
+
+        FacesConfigImpl facesConfig = new FacesConfigImpl();
+        facesConfig.addRenderKitElement(renderKitElement1);
+        facesConfig.addRenderKitElement(renderKitElement2);
+
+        configs.add(facesConfig);
+
+        FacesConfigWrapperImpl configWrapper = new FacesConfigWrapperImpl(
+                configs);
+
+        // ## Act ##
+        Map renderKitElements = configWrapper.getRenderKitElements();
+        RenderKitElement renderKit = (RenderKitElement) renderKitElements
+                .get(renderKitId);
+
+        // ## Assert ##
+        List rendererElements = renderKit.getRendererElements();
+        assertEquals(2, rendererElements.size());
+        RendererElement element1 = (RendererElement) rendererElements.get(0);
+        assertEquals("family1", element1.getComponentFamily());
+        assertEquals("type1", element1.getRendererType());
+        assertEquals("class1", element1.getRendererClass());
+        RendererElement element2 = (RendererElement) rendererElements.get(1);
+        assertEquals("family2", element2.getComponentFamily());
+        assertEquals("type2", element2.getRendererType());
+        assertEquals("class2", element2.getRendererClass());
+    }
 }
