@@ -57,7 +57,7 @@ public class HtmlGraphicImageRenderer extends AbstractRenderer {
         writer.endElement(JsfConstants.IMG_ELEM);
     }
 
-    private String getUrl(FacesContext context,
+    protected String getUrl(FacesContext context,
             HtmlGraphicImage htmlGraphicImage) {
         String url = htmlGraphicImage.getUrl();
         if (url == null) {

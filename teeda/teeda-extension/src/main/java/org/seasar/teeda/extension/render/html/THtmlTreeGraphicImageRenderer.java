@@ -15,10 +15,16 @@
  */
 package org.seasar.teeda.extension.render.html;
 
-import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
+import java.io.IOException;
 
+import javax.faces.component.UIComponent;
+import javax.faces.component.html.HtmlGraphicImage;
+import javax.faces.context.FacesContext;
+import javax.faces.context.ResponseWriter;
+
+import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.html.HtmlGraphicImageRenderer;
+import org.seasar.teeda.core.util.RendererUtil;
 
 /**
  * @author shot
@@ -31,6 +37,19 @@ public class THtmlTreeGraphicImageRenderer extends HtmlGraphicImageRenderer {
 
     protected String getIdForRender(FacesContext context, UIComponent component) {
         return component.getClientId(context);
+    }
+
+    protected void encodeHtmlGraphicImageEnd(FacesContext context,
+            HtmlGraphicImage htmlGraphicImage) throws IOException {
+        ResponseWriter writer = context.getResponseWriter();
+        writer.startElement(JsfConstants.IMG_ELEM, htmlGraphicImage);
+        RendererUtil.renderIdAttributeIfNecessary(writer, htmlGraphicImage,
+                getIdForRender(context, htmlGraphicImage));
+        final String url = getUrl(context, htmlGraphicImage);
+        writer.writeURIAttribute(JsfConstants.SRC_ATTR, url, null);
+        renderAttributes(htmlGraphicImage, writer,
+                HtmlGraphicImageRenderer.class);
+        writer.endElement(JsfConstants.IMG_ELEM);
     }
 
 }

@@ -127,7 +127,12 @@ public abstract class AbstractRenderer extends Renderer {
 
     protected void renderAttributes(UIComponent component, ResponseWriter writer)
             throws IOException {
-        final String[] names = getRenderAttributeNames(getClass());
+        renderAttributes(component, writer, getClass());
+    }
+
+    protected void renderAttributes(UIComponent component,
+            ResponseWriter writer, Class clazz) throws IOException {
+        final String[] names = getRenderAttributeNames(clazz);
         RendererUtil.renderAttributes(writer, component, names);
         renderAttributes(component.getAttributes(), writer);
     }
