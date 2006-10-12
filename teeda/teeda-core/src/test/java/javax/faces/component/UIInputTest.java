@@ -39,6 +39,16 @@ import org.seasar.teeda.core.unit.ExceptionAssert;
  */
 public class UIInputTest extends UIOutputTest {
 
+    public void testValue() throws Exception {
+        UIInput input = createUIInput();
+        input.setValue("");
+        MockValueBinding vb = new MockValueBinding();
+        vb.setValue(getFacesContext(), "hoge");
+        input.setValueBinding("value", vb);
+        Object value = input.getValue();
+        assertNull(value);
+    }
+
     public final void testSetGetSubmittedValue() {
         UIInput input = createUIInput();
         input.setSubmittedValue("aaa");
@@ -276,14 +286,14 @@ public class UIInputTest extends UIOutputTest {
         assertTrue(context.getMessages() != null);
         Iterator itr = context.getMessages();
         int c = 0;
-        while(itr.hasNext()) {
+        while (itr.hasNext()) {
             FacesMessage fm = (FacesMessage) itr.next();
             assertNotNull(fm);
             c++;
         }
         assertTrue(c == 1);
     }
-    
+
     private UIInput createUIInput() {
         return (UIInput) createUIComponent();
     }

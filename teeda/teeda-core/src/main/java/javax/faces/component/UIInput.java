@@ -96,6 +96,13 @@ public class UIInput extends UIOutput implements EditableValueHolder {
         this.submittedValue = submittedValue;
     }
 
+    public Object getValue() {
+        if (isLocalValueSet()) {
+            return getLocalValue();
+        }
+        return super.getValue();
+    }
+
     public void setValue(Object value) {
         if ("".equals(value)) {
             value = null;
@@ -261,7 +268,7 @@ public class UIInput extends UIOutput implements EditableValueHolder {
             return;
         }
         Object convertedValue = getConvertedValue(context, submittedValue);
-        if(!isValid()) { 
+        if (!isValid()) {
             return;
         }
         validateValue(context, convertedValue);
