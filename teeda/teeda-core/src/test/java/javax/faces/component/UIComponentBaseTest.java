@@ -563,7 +563,7 @@ public class UIComponentBaseTest extends AbstractUIComponentTest {
         List restoredList = (List) UIComponentBase.restoreAttachedState(
                 context, restoreList);
         assertNotNull(restoredList);
-        assertTrue(restoredList.size() == 0);
+        assertTrue(restoredList.size() == 1);
     }
 
     private static class MockFacesListener1 implements FacesListener {

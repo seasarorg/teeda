@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -43,6 +43,16 @@ public class AttachedObjectStateWrapperTest extends TestCase {
         Object o = wrapper.restore(context);
         assertTrue(o instanceof StateHolderBean);
         assertEquals("a", ((StateHolderBean) o).getStr());
+    }
+
+    public void testRestoreStateHolder_restoredStateIsNull() throws Exception {
+        FacesContext context = new MockFacesContextImpl();
+        StateHolderBean2 target = new StateHolderBean2();
+        AttachedObjectStateWrapper wrapper = new AttachedObjectStateWrapper(
+                context, target);
+        Object o = wrapper.restore(context);
+        assertNotNull(o);
+        assertTrue(o instanceof StateHolderBean2);
     }
 
     private static class SerializableBean implements Serializable {
@@ -89,4 +99,26 @@ public class AttachedObjectStateWrapperTest extends TestCase {
             return str_;
         }
     }
+
+    private static class StateHolderBean2 implements StateHolder {
+
+        public StateHolderBean2() {
+        }
+
+        public boolean isTransient() {
+            return false;
+        }
+
+        public void setTransient(boolean transientValue) {
+        }
+
+        public Object saveState(FacesContext context) {
+            return null;
+        }
+
+        public void restoreState(FacesContext context, Object state) {
+        }
+
+    }
+
 }

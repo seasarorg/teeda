@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -20,16 +20,21 @@ import java.io.Serializable;
 import javax.faces.component.StateHolder;
 import javax.faces.context.FacesContext;
 
+import org.seasar.framework.log.Logger;
+
 /**
  * @author shot
  * @author manhole
- * 
+ *
  * A Helper class for UIComponentBase.saveAttachedState
- * 
+ *
  * This class might be changed without notice. Please do not use it
  * excluding the JSF specification part.
  */
 public class AttachedObjectStateWrapper implements Serializable {
+
+    private static final Logger logger = Logger
+            .getLogger(AttachedObjectStateWrapper.class);
 
     private static final long serialVersionUID = 3256726169255885111L;
 
@@ -51,17 +56,16 @@ public class AttachedObjectStateWrapper implements Serializable {
                 isSavedStateHolder = true;
             }
         } else {
-            if (obj instanceof Serializable) {
-                savedState = obj;
+            if (!(obj instanceof Serializable)) {
+                logger.debug("class : " + className
+                        + " should be serializable.");
             }
+            savedState = obj;
         }
     }
 
     public Object restore(FacesContext context) throws IllegalStateException {
         Object result = null;
-        if (savedState == null) {
-            return null;
-        }
         if (!isSavedStateHolder) {
             result = savedState;
         } else if (isSavedStateHolder) {
@@ -76,7 +80,7 @@ public class AttachedObjectStateWrapper implements Serializable {
             } catch (IllegalAccessException e) {
                 throw new IllegalStateException(e.getMessage());
             }
-            if (result instanceof StateHolder) {
+            if (savedState != null && result instanceof StateHolder) {
                 ((StateHolder) result).restoreState(context, savedState);
             }
         }
