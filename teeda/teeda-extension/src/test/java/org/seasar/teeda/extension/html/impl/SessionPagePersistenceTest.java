@@ -52,6 +52,7 @@ public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
         Timestamp timestamp = new Timestamp(new Date().getTime());
         hoge.setTimestamp(timestamp);
         hoge.setList(new ArrayList());
+        hoge.setStrArray(new String[0]);
         SessionPagePersistence persistence = new SessionPagePersistence();
         persistence.setNamingConvention(new NamingConventionImpl() {
 
@@ -74,6 +75,7 @@ public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
         // TODO https://www.seasar.org/issues/browse/TEEDA-88
         // でListも対応する際に、このassertは逆転する。
         assertNotNull(map.get("list"));
+        assertNotNull(map.get("strArray"));
     }
 
     public void testSaveAndRestore() throws Exception {
@@ -266,6 +268,8 @@ public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
 
         private List list;
 
+        private String[] strArray;
+
         public boolean isBool1() {
             return bool1;
         }
@@ -320,6 +324,20 @@ public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
 
         public void setTimestamp(Timestamp timestamp) {
             this.timestamp = timestamp;
+        }
+
+        /**
+         * @return Returns the strArray.
+         */
+        public String[] getStrArray() {
+            return strArray;
+        }
+
+        /**
+         * @param strArray The strArray to set.
+         */
+        public void setStrArray(String[] strArray) {
+            this.strArray = strArray;
         }
     }
 
