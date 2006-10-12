@@ -29,7 +29,7 @@ import junitx.framework.ListAssert;
  */
 public class ComponentHolderBuilderUtilTest extends TestCase {
 
-    public void _testBuild_listString() throws Exception {
+    public void testBuild_listString() throws Exception {
         List value = new ArrayList();
         value.add("aaa");
         value.add("bbb");
@@ -37,6 +37,15 @@ public class ComponentHolderBuilderUtilTest extends TestCase {
         ComponentHolder holder = ComponentHolderBuilderUtil.build(value);
         assertNotNull(holder);
         ListAssert.assertEquals(value, holder.getValue());
+        System.out.println(holder.getComponentClassName());
+    }
+
+    public void testBuild_listNull() throws Exception {
+        List value = new ArrayList();
+        ComponentHolder holder = ComponentHolderBuilderUtil.build(value);
+        assertNotNull(holder);
+        ListAssert.assertEquals(value, holder.getValue());
+        System.out.println(holder.getComponentClassName());
     }
 
     public void testBuild_listDto() throws Exception {

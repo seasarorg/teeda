@@ -211,6 +211,9 @@ public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
         fromPage.setB(true);
         fromPage.setName("ccc");
         fromPage.setNum(2);
+        String[][] ccc = new String[1][1];
+        ccc[0][0] = "bar";
+        fromPage.setCcc(ccc);
         final Map requestMap = context.getExternalContext().getRequestMap();
         assertNull(requestMap.get("aaaaa"));
 
@@ -228,6 +231,8 @@ public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
         assertTrue(((Boolean) requestMap.get("b")).booleanValue() == true);
         assertEquals("ccc", requestMap.get("name"));
         assertTrue(((Integer) requestMap.get("num")).intValue() == 2);
+        assertNotNull(requestMap.get("ccc"));
+        assertTrue(requestMap.get("ccc") instanceof String[][]);
     }
 
     private static class MockPageDescCache implements PageDescCache {
@@ -471,6 +476,16 @@ public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
         private int num;
 
         private boolean b;
+
+        private String[][] ccc;
+
+        public String[][] getCcc() {
+            return ccc;
+        }
+
+        public void setCcc(String[][] ccc) {
+            this.ccc = ccc;
+        }
 
         public boolean isB() {
             return b;

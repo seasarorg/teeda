@@ -28,10 +28,10 @@ public class PagePersistenceUtil {
         if (clazz.isPrimitive()) {
             return true;
         }
-        return clazz.equals(String.class) || clazz.equals(Boolean.class)
+        return clazz == String.class || clazz == Boolean.class
                 || Number.class.isAssignableFrom(clazz)
                 || Date.class.isAssignableFrom(clazz)
                 || Calendar.class.isAssignableFrom(clazz)
-                || Map.class.isAssignableFrom(clazz);
+                || Map.class.isAssignableFrom(clazz) || clazz.isArray();
     }
 }

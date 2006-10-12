@@ -371,6 +371,7 @@ public class THtmlTreeRenderer extends AbstractRenderer {
 
         //      add the appropriate image for the nav control
         HtmlGraphicImage image = new HtmlGraphicImage();
+        image.setId(IMAGE_PREFIX);
         image.setRendererType(THtmlTreeGraphicImageRenderer.RENDERER_TYPE);
         //image.setId(IMAGE_PREFIX);
         image.setUrl(navSrcUrl);

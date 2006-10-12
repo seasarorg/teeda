@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -24,25 +24,19 @@ import javax.faces.component.NamingContainer;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 
+import org.seasar.framework.util.AssertionUtil;
+import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.render.DefaultDecoder;
-
 
 /**
  * @author shot
- * 
+ *
  */
 public class AdjustableDecoder extends DefaultDecoder {
 
     protected String getClientId(UIComponent component, FacesContext context) {
         String clientId = component.getClientId(context);
-        int sepIndex = clientId.lastIndexOf(NamingContainer.SEPARATOR_CHAR) + 1;
-        String prefix = clientId.substring(0, sepIndex);
-        String s = clientId.substring(sepIndex);
-        if (s.indexOf("-") < 0) {
-            return clientId;
-        } else {
-            return prefix + s.substring(0, s.indexOf("-"));
-        }
+        return getAdjustedValue(clientId);
     }
 
     protected Map getRequestParameterMap(FacesContext context) {
@@ -61,13 +55,30 @@ public class AdjustableDecoder extends DefaultDecoder {
         for (Iterator itr = paramMap.entrySet().iterator(); itr.hasNext();) {
             Map.Entry entry = (Entry) itr.next();
             String key = (String) entry.getKey();
-            if(key.lastIndexOf("-") > 0) {
-                String s = key.substring(0, key.lastIndexOf("-"));
-                map.put(s, entry.getValue());
-            } else {
-                map.put(key, entry.getValue());
-            }
+            key = getAdjustedValue(key);
+            map.put(key, entry.getValue());
         }
         return map;
+    }
+
+    protected static String getAdjustedValue(String clientId) {
+        AssertionUtil.assertNotNull("clientId", clientId);
+        if (clientId.indexOf("-") < 0) {
+            return clientId;
+        }
+        String[] ids = StringUtil.split(clientId, String
+                .valueOf(NamingContainer.SEPARATOR_CHAR));
+        StringBuffer buf = new StringBuffer();
+        for (int i = 0; i < ids.length; i++) {
+            String s = ids[i];
+            int index = s.indexOf("-");
+            if (index >= 0) {
+                s = s.substring(0, index);
+            }
+            buf.append(s);
+            buf.append(NamingContainer.SEPARATOR_CHAR);
+        }
+        buf.setLength(buf.length() - 1);
+        return buf.toString();
     }
 }

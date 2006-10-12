@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -27,7 +27,6 @@ import junitx.framework.ArrayAssert;
 import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.mock.MockUIComponent;
 import org.seasar.teeda.core.unit.TeedaTestCase;
-import org.seasar.teeda.extension.render.AdjustableDecoder;
 
 /**
  * @author shot
@@ -45,6 +44,28 @@ public class AdjustableDecoderTest extends TeedaTestCase {
         assertEquals("a", c.getSubmittedValue());
     }
 
+    public void testDecode_clientIdWithHiphen2() throws Exception {
+        MockUIComponent2 c = new MockUIComponent2();
+        c.setClientId("form:aaa-2:AAA");
+        MockFacesContext context = getFacesContext();
+        context.getExternalContext().getRequestParameterMap().put(
+                "form:aaa:AAA", "a");
+        AdjustableDecoder decoder = new AdjustableDecoder();
+        decoder.decode(context, c);
+        assertEquals("a", c.getSubmittedValue());
+    }
+
+    public void testDecode_clientIdWithHiphen3() throws Exception {
+        MockUIComponent2 c = new MockUIComponent2();
+        c.setClientId("teeda-hidden");
+        MockFacesContext context = getFacesContext();
+        context.getExternalContext().getRequestParameterMap().put(
+                "teeda-hidden", "a");
+        AdjustableDecoder decoder = new AdjustableDecoder();
+        decoder.decode(context, c);
+        assertEquals("a", c.getSubmittedValue());
+    }
+
     public void testDecode_requestParamKeyWithHiphen() throws Exception {
         MockUIComponent2 c = new MockUIComponent2();
         c.setClientId("form:aaa");
@@ -56,12 +77,35 @@ public class AdjustableDecoderTest extends TeedaTestCase {
         assertEquals("b", c.getSubmittedValue());
     }
 
+    public void testDecode_requestParamKeyWithHiphen2() throws Exception {
+        MockUIComponent2 c = new MockUIComponent2();
+        c.setClientId("form:aaa:bbb");
+        MockFacesContext context = getFacesContext();
+        context.getExternalContext().getRequestParameterMap().put(
+                "form:aaa-2:bbb", "b");
+        AdjustableDecoder decoder = new AdjustableDecoder();
+        decoder.decode(context, c);
+        assertEquals("b", c.getSubmittedValue());
+    }
+
     public void testDecode_clientIdAndRequestParamWithHiphen() throws Exception {
         MockUIComponent2 c = new MockUIComponent2();
         c.setClientId("form:aaa-3");
         MockFacesContext context = getFacesContext();
         context.getExternalContext().getRequestParameterMap().put("form:aaa-4",
                 "C");
+        AdjustableDecoder decoder = new AdjustableDecoder();
+        decoder.decode(context, c);
+        assertEquals("C", c.getSubmittedValue());
+    }
+
+    public void testDecode_clientIdAndRequestParamWithHiphen2()
+            throws Exception {
+        MockUIComponent2 c = new MockUIComponent2();
+        c.setClientId("form:aaa-3:bbb-4:ccc");
+        MockFacesContext context = getFacesContext();
+        context.getExternalContext().getRequestParameterMap().put(
+                "form:aaa-4:bbb-5:ccc-6", "C");
         AdjustableDecoder decoder = new AdjustableDecoder();
         decoder.decode(context, c);
         assertEquals("C", c.getSubmittedValue());

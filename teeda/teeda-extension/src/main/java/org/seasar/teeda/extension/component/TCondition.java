@@ -15,7 +15,15 @@
  */
 package org.seasar.teeda.extension.component;
 
+import java.util.Iterator;
+
+import javax.faces.component.UIComponent;
 import javax.faces.component.UIComponentBase;
+import javax.faces.component.html.HtmlInputHidden;
+import javax.faces.context.FacesContext;
+
+import org.seasar.framework.util.AssertionUtil;
+import org.seasar.teeda.extension.ExtensionConstants;
 
 /**
  * @author shot
@@ -34,6 +42,30 @@ public class TCondition extends UIComponentBase {
 
     public String getFamily() {
         return COMPONENT_FAMILY;
+    }
+
+    public void processDecodes(FacesContext context) {
+        AssertionUtil.assertNotNull("context", context);
+        Object rendered = null;
+        for (Iterator itr = getChildren().iterator(); itr.hasNext();) {
+            UIComponent c = (UIComponent) itr.next();
+            if (c instanceof HtmlInputHidden) {
+                HtmlInputHidden hidden = (HtmlInputHidden) c;
+                String hiddenId = c.getId();
+                if (hiddenId.equals(getId()
+                        + ExtensionConstants.TEEDA_HIDDEN_SUFFIX)) {
+                    hidden.decode(context);
+                    rendered = hidden.getSubmittedValue();
+                    break;
+                }
+            }
+        }
+        if ("true".equals(rendered)) {
+            for (Iterator children = getFacetsAndChildren(); children.hasNext();) {
+                UIComponent component = (UIComponent) children.next();
+                component.processDecodes(context);
+            }
+        }
     }
 
 }

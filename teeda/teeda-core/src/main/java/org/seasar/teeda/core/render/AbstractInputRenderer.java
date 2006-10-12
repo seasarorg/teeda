@@ -15,19 +15,12 @@
  */
 package org.seasar.teeda.core.render;
 
-import java.util.Map;
-
-import javax.faces.component.EditableValueHolder;
-import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
-
-import org.seasar.framework.util.AssertionUtil;
-import org.seasar.teeda.core.exception.NoEditableValueHolderRuntimeException;
-
 /**
  * @author shot
  */
 public abstract class AbstractInputRenderer extends AbstractRenderer {
+
+    public static final String decoder_BINDING = "bindingType=may";
 
     private Decoder decoder;
 

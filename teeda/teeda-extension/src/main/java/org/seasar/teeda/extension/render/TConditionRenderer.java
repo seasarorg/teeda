@@ -26,6 +26,7 @@ import javax.faces.context.ResponseWriter;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.AbstractRenderer;
 import org.seasar.teeda.core.util.RendererUtil;
+import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.component.TCondition;
 
 /**
@@ -37,25 +38,22 @@ public class TConditionRenderer extends AbstractRenderer {
 
     public static final String RENDERER_TYPE = "org.seasar.teeda.extension.Condition";
 
-    public void decode(FacesContext context, UIComponent component) {
-        super.decode(context, component);
-        TCondition condition = (TCondition) component;
-        for(Iterator itr = condition.getChildren().iterator(); itr.hasNext();) {
-            UIComponent c = (UIComponent) itr.next();
-            if(c instanceof HtmlInputHidden) {
-                String hiddenId = c.getId();
-                if(hiddenId.equals(condition.getId() + "-teeda-hidden")) {
-                    boolean rendered = c.isRendered();
-                    condition.setRendered(rendered);
-                }
-            }
-        }
-    }
-
     public void encodeBegin(FacesContext context, UIComponent component)
             throws IOException {
         super.encodeBegin(context, component);
-        if (!component.isRendered()) {
+        boolean rendered = component.isRendered();
+        for (Iterator itr = component.getChildren().iterator(); itr.hasNext();) {
+            UIComponent c = (UIComponent) itr.next();
+            if (c instanceof HtmlInputHidden) {
+                String hiddenId = c.getId();
+                if (hiddenId.equals(component.getId()
+                        + ExtensionConstants.TEEDA_HIDDEN_SUFFIX)) {
+                    ((HtmlInputHidden) c).setValue(new Boolean(rendered));
+                    break;
+                }
+            }
+        }
+        if (!rendered) {
             return;
         }
         TCondition condition = (TCondition) component;

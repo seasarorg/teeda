@@ -109,6 +109,8 @@ public interface ExtensionConstants {
 
     String THRESHOLD_SUFFIX = "Threshold";
 
+    String TEEDA_HIDDEN_SUFFIX = "TeedaHidden";
+
     //other
     String NAME_SEPARATOR = String.valueOf(NamingContainer.SEPARATOR_CHAR);
 

@@ -17,6 +17,7 @@ package org.seasar.teeda.extension.html.impl;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -109,6 +110,12 @@ public class SessionPagePersistence implements PagePersistence {
                             .getPropertyName())) {
                 continue;
             }
+            if (!pd.getPropertyType().isArray()
+                    && !Collection.class.isAssignableFrom(pd.getPropertyType())
+                    && !PagePersistenceUtil.isPersistenceType(pd
+                            .getPropertyType())) {
+                continue;
+            }
             final Object value = pd.getValue(page);
             final ComponentHolder holder = ComponentHolderBuilderUtil
                     .build(value);
@@ -175,6 +182,9 @@ public class SessionPagePersistence implements PagePersistence {
                 final String arrayClassName = holder.getArrayClassName();
                 final String componentClassName = holder
                         .getComponentClassName();
+                if (componentClassName == null) {
+                    continue;
+                }
                 final Class componentClass = ClassUtil
                         .forName(componentClassName);
                 final List restoredList = holder.getValue();
