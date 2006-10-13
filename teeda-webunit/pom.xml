@@ -7,7 +7,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.seasar.teeda</groupId>
   <artifactId>teeda-webunit</artifactId>
-  <version>0.1.0-SNAPSHOT</version>
+  <version>0.1.0</version>
   <packaging>jar</packaging>
   <name>Teeda WebUnit</name>
   <description></description>
@@ -23,7 +23,7 @@
   <scm>
     <connection>scm:svn:https://www.seasar.org/svn/teeda/trunk/teeda-webunit/</connection>
     <developerConnection>scm:svn:https://www.seasar.org/svn/teeda/trunk/teeda-webunit/</developerConnection>
-    <url>http://www.seasar.org/websvn/listing.php?repname=teeda</url>
+    <url>http://svn.seasar.org/browse/trunk/teeda-webunit/?root=teeda</url>
   </scm>
   <organization>
     <name>The Seasar Foundation</name>
