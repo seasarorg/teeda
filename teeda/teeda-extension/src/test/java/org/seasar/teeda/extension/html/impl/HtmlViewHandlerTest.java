@@ -69,6 +69,7 @@ public class HtmlViewHandlerTest extends TeedaExtensionTestCase {
     }
 
     public void testRestoreAndRenderView() throws Exception {
+        getExternalContext().getRequestParameterMap().put("redirect", "true");
         MockTaglibManager taglibManager = new MockTaglibManager();
         TaglibElement jsfHtml = new TaglibElementImpl();
         jsfHtml.setUri(JsfConstants.JSF_HTML_URI);

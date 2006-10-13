@@ -122,6 +122,7 @@ public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
         assertEquals(2, lru.size());
         assertNull(lru.get(path2));
 
+        getExternalContext().getRequestParameterMap().put("redirect", "true");
         spp.restore(context, path);
         Map requestMap = extCtx.getRequestMap();
         assertEquals("123", requestMap.get("aaa"));
@@ -165,6 +166,7 @@ public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
 
         // ## Act ##
         pagePersistence.save(context, toViewId);
+        getExternalContext().getRequestParameterMap().put("redirect", "true");
         pagePersistence.restore(context, toViewId);
 
         // ## Assert ##
@@ -221,6 +223,7 @@ public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
 
         // ## Act ##
         pagePersistence.save(context, toViewId);
+        getExternalContext().getRequestParameterMap().put("redirect", "true");
         pagePersistence.restore(context, toViewId);
 
         // ## Assert ##
