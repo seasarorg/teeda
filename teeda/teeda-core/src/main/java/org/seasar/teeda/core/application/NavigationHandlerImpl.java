@@ -36,8 +36,11 @@ import org.seasar.teeda.core.util.PortletUtil;
 
 /**
  * @author shot
+ * @author higa
  */
 public class NavigationHandlerImpl extends NavigationHandler {
+
+    private static final String REDIRECT_PARAM = "redirect=true";
 
     public void handleNavigation(FacesContext context, String fromAction,
             String outcome) {
@@ -64,7 +67,16 @@ public class NavigationHandlerImpl extends NavigationHandler {
 
     protected String getRedirectActionPath(FacesContext context,
             ViewHandler viewHandler, String newViewId) {
-        return viewHandler.getActionURL(context, newViewId);
+        return addRedirectParameter(viewHandler
+                .getActionURL(context, newViewId));
+    }
+
+    protected static String addRedirectParameter(String path) {
+        int index = path.lastIndexOf('?');
+        if (index < 0) {
+            return path + "?" + REDIRECT_PARAM;
+        }
+        return path + "&" + REDIRECT_PARAM;
     }
 
     protected void redirect(FacesContext context,
@@ -87,16 +99,16 @@ public class NavigationHandlerImpl extends NavigationHandler {
         context.renderResponse();
     }
 
-    protected boolean isRedirect(FacesContext context, NavigationCaseContext caseContext) {
-        if(PortletUtil.isPortlet(context)) {
-           return false; 
+    protected boolean isRedirect(FacesContext context,
+            NavigationCaseContext caseContext) {
+        if (PortletUtil.isPortlet(context)) {
+            return false;
         }
         return caseContext.isRedirect();
     }
 
-    protected NavigationCaseContext getNavigationCaseContext(
-            String fromAction, String outcome,
-            String viewId) {
+    protected NavigationCaseContext getNavigationCaseContext(String fromAction,
+            String outcome, String viewId) {
         //exact match
         List navigationList = getExactMatchNavigationCases(viewId);
         NavigationCaseContext navigationCaseContext = getNavigationCaseContextInternal(
@@ -139,8 +151,7 @@ public class NavigationHandlerImpl extends NavigationHandler {
     }
 
     protected List getWildCardMatchNavigationCases(String viewId) {
-        Map map = NavigationResource
-                .getWildCardMatchNavigationContexts();
+        Map map = NavigationResource.getWildCardMatchNavigationContexts();
         if (map != null) {
             for (Iterator itr = map.keySet().iterator(); itr.hasNext();) {
                 String key = (String) itr.next();
@@ -154,8 +165,7 @@ public class NavigationHandlerImpl extends NavigationHandler {
     }
 
     protected List getDefaultNavigationCases(String viewId) {
-        Map map = NavigationResource
-                .getDefaultMatchNavigationContexts();
+        Map map = NavigationResource.getDefaultMatchNavigationContexts();
         if (map != null) {
             return (List) map.get("*");
         }

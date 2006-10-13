@@ -18,7 +18,6 @@ package org.seasar.teeda.core.application;
 import java.io.IOException;
 
 import javax.faces.component.ActionSource;
-import javax.faces.component.UICommand;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.el.EvaluationException;
@@ -32,25 +31,21 @@ import org.seasar.teeda.core.util.ErrorPageManager;
 import org.seasar.teeda.core.util.MethodBindingUtil;
 import org.seasar.teeda.core.util.NavigationHandlerUtil;
 import org.seasar.teeda.core.util.NullErrorPageManagerImpl;
-import org.seasar.teeda.core.util.UIParameterUtil;
 
 /**
  * @author higa
  */
 public class ActionListenerImpl implements ActionListener {
 
-    //TODO testing
     private static Logger logger = Logger.getLogger(ActionListenerImpl.class);
 
-    private ErrorPageManager errorPageManager_ = new NullErrorPageManagerImpl();
+    public static final String errorManager_BINDING = "bindingType=may";
+
+    private ErrorPageManager errorPageManager = new NullErrorPageManagerImpl();
 
     public void processAction(ActionEvent actionEvent)
             throws AbortProcessingException {
         FacesContext context = FacesContext.getCurrentInstance();
-        if (actionEvent.getComponent() instanceof UICommand) {
-            UICommand command = (UICommand) actionEvent.getComponent();
-            UIParameterUtil.saveParametersToRequest(command, context);
-        }
         ActionSource actionSource = (ActionSource) actionEvent.getComponent();
         MethodBinding mb = actionSource.getAction();
         String fromAction = null;
@@ -59,12 +54,12 @@ public class ActionListenerImpl implements ActionListener {
             fromAction = mb.getExpressionString();
             try {
                 outcome = MethodBindingUtil.invoke(mb, context);
+                processAfterInvoke(context, fromAction, outcome);
             } catch (EvaluationException ex) {
                 Throwable cause = ex.getCause();
-                ErrorPageManager manager = getErrorPageManager();
                 try {
                     ExternalContext extContext = context.getExternalContext();
-                    if (manager.handleException(cause, extContext)) {
+                    if (errorPageManager.handleException(cause, extContext)) {
                         context.responseComplete();
                     } else {
                         throw ex;
@@ -79,12 +74,16 @@ public class ActionListenerImpl implements ActionListener {
         context.renderResponse();
     }
 
+    protected void processAfterInvoke(FacesContext context, String fromAction,
+            String outcome) {
+    }
+
     public ErrorPageManager getErrorPageManager() {
-        return errorPageManager_;
+        return errorPageManager;
     }
 
     public void setErrorPageManager(ErrorPageManager errorPageManager) {
-        errorPageManager_ = errorPageManager;
+        this.errorPageManager = errorPageManager;
     }
 
 }

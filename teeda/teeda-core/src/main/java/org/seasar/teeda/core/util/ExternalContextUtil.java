@@ -56,4 +56,10 @@ public class ExternalContextUtil {
         AssertionUtil.assertNotNull("FacesContext", context);
         return context.getExternalContext().encodeActionURL(url);
     }
+
+    public static boolean isRedirect(ExternalContext externalContext) {
+        AssertionUtil.assertNotNull("externalContext", externalContext);
+        return "true".equals(externalContext.getRequestParameterMap().get(
+                "redirect"));
+    }
 }

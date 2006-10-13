@@ -112,7 +112,8 @@ public class NavigationHandlerImplTest extends TeedaTestCase {
         PortletExternalContextImpl extContext = new PortletExternalContextImpl(
                 portletContext, new MockPortletRequestImpl(portletContext),
                 new MockPortletRenderResponseImpl());
-        PortletFacesContextImpl context = new PortletFacesContextImpl(extContext);
+        PortletFacesContextImpl context = new PortletFacesContextImpl(
+                extContext);
         UIViewRoot root = new UIViewRoot();
         root.setViewId("id");
         context.setViewRoot(root);
@@ -241,6 +242,14 @@ public class NavigationHandlerImplTest extends TeedaTestCase {
 
         // ## Assert ##
         assertEquals("/logout.jsp", context.getViewRoot().getViewId());
+
+    }
+
+    public void testAddRedirectParameter() {
+        assertEquals("/logout.jsp?redirect=true", NavigationHandlerImpl
+                .addRedirectParameter("/logout.jsp"));
+        assertEquals("/logout.jsp?aaa=111&redirect=true", NavigationHandlerImpl
+                .addRedirectParameter("/logout.jsp?aaa=111"));
 
     }
 

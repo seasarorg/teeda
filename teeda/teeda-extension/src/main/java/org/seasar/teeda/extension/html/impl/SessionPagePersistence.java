@@ -36,6 +36,7 @@ import org.seasar.framework.util.ClassUtil;
 import org.seasar.framework.util.LruHashMap;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.util.DIContainerUtil;
+import org.seasar.teeda.core.util.ExternalContextUtil;
 import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.PageDescCache;
 import org.seasar.teeda.extension.html.PagePersistence;
@@ -159,8 +160,10 @@ public class SessionPagePersistence implements PagePersistence {
 
     public void restore(FacesContext context, String viewId) {
         ExternalContext extCtx = context.getExternalContext();
-        Map sessionMap = extCtx.getSessionMap();
-        LruHashMap lru = (LruHashMap) sessionMap.get(getClass().getName());
+        if (!ExternalContextUtil.isRedirect(extCtx)) {
+            return;
+        }
+        Map lru = getLru(extCtx);
         if (lru == null) {
             return;
         }
@@ -170,6 +173,11 @@ public class SessionPagePersistence implements PagePersistence {
         }
         Map requestMap = extCtx.getRequestMap();
         restorePageDataMap(savedData, requestMap);
+    }
+
+    protected Map getLru(ExternalContext extCtx) {
+        Map sessionMap = extCtx.getSessionMap();
+        return (Map) sessionMap.get(getClass().getName());
     }
 
     protected void restorePageDataMap(Map from, Map to) {
@@ -241,4 +249,20 @@ public class SessionPagePersistence implements PagePersistence {
         this.namingConvention = namingConvention;
     }
 
+    public void removeSubApplicationPages(FacesContext context) {
+        String subAppPath = getSubApplicationPath(context);
+        ExternalContext extCtx = context.getExternalContext();
+        Map lru = getLru(extCtx);
+        for (Iterator i = lru.keySet().iterator(); i.hasNext();) {
+            String path = (String) i.next();
+            if (path.startsWith(subAppPath)) {
+                lru.remove(path);
+            }
+        }
+    }
+
+    protected static String getSubApplicationPath(FacesContext context) {
+        String viewId = context.getViewRoot().getViewId();
+        return viewId.substring(0, viewId.lastIndexOf("/"));
+    }
 }

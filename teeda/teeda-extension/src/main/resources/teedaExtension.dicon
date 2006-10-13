@@ -111,6 +111,8 @@
 		class="org.seasar.teeda.extension.html.impl.HtmlViewHandler" />
 	<component name="navigationHandler"
 		class="org.seasar.teeda.extension.html.impl.HtmlNavigationHandler" />
+	<component name="actionListener"
+		class="org.seasar.teeda.extension.html.impl.HtmlActionListener" />
 		
 	<component
 		class="org.seasar.teeda.core.application.ApplicationImpl" />

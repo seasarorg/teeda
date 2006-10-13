@@ -237,6 +237,25 @@ public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
         assertTrue(requestMap.get("ccc") instanceof String[][]);
     }
 
+    public void testGetSubApplicationPath() throws Exception {
+        getFacesContext().getViewRoot().setViewId("/view/emp/empConfirm.html");
+        assertEquals("/view/emp", SessionPagePersistence
+                .getSubApplicationPath(getFacesContext()));
+    }
+
+    public void testRemoveSubApplicationPages() throws Exception {
+        LruHashMap lru = new LruHashMap(10);
+        lru.put("/view/dept/deptList.html", "hoge");
+        lru.put("/view/emp/empList.html", "hoge");
+        Map sessionMap = getExternalContext().getSessionMap();
+        sessionMap.put(SessionPagePersistence.class.getName(), lru);
+        getFacesContext().getViewRoot().setViewId("/view/emp/empConfirm.html");
+        SessionPagePersistence pagePersistence = new SessionPagePersistence();
+        pagePersistence.removeSubApplicationPages(getFacesContext());
+        assertNull(lru.get("/view/emp/empList.html"));
+        assertNotNull(lru.get("/view/dept/deptList.html"));
+    }
+
     private static class MockPageDescCache implements PageDescCache {
         Map cache = new HashMap();
 
