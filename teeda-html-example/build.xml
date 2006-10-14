@@ -1,6 +1,6 @@
 <project name="teeda-html-example" default="dist" basedir=".">
 
-	<property name="ver" value="beta-4"/>
+	<property name="ver" value="rc-1"/>
 
 	<target name="dist">
 		<delete includeemptydirs="true" failonerror="false">

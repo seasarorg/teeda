@@ -5,7 +5,7 @@
     <reloadable>false</reloadable>
     <redirectLogger>true</redirectLogger>
     <updateXml>true</updateXml>
-    <warLocation>D:\teeda-html-example.war</warLocation>
+    <warLocation>C:\teeda-html-example.war</warLocation>
     <extraInfo></extraInfo>
     <webPath>/teeda-html-example</webPath>
 </tomcatProjectProperties>
