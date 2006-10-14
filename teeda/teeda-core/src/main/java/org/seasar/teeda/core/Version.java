@@ -24,12 +24,12 @@ public class Version {
 
     private static final String MINOR_VERSION = "0";
 
-    private static final String BETA_VERSION = "7";
+    private static final String BETA_VERSION = "";
 
-    private static boolean isBeta = true;
+    private static boolean isBeta = false;
 
     public static String getVersion() {
-        return MAJOR_VERSION + "." + MINOR_VERSION + "-" + getBetaVersion();
+        return MAJOR_VERSION + "." + MINOR_VERSION + "-rc-1";
     }
 
     public static String getBetaVersion() {
