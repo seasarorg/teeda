@@ -6,6 +6,8 @@ public class AddExtPage {
 
 	public static final String arg1_numberConverter = "pattern='#.0000', type='currency'";
 
+	public static final String arg1_TNumberLengthValidator = "integralMax=12,fractionMax=2";
+
 	public static final String arg2_numberConverter = "pattern='#.00', type='currency'";
 
 	public static final String result_numberConverter = "pattern='#.0000', type='currency'";
