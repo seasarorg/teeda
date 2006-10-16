@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -20,6 +20,7 @@ import java.util.Locale;
 
 import javax.faces.FacesException;
 import javax.faces.application.FacesMessage;
+import javax.faces.component.StateHolder;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.internal.FacesMessageUtil;
@@ -33,12 +34,12 @@ import org.seasar.framework.util.NumberConversionUtil;
 /**
  * @author manhole
  */
-public class TNumberLengthValidator implements Validator {
+public class TNumberLengthValidator implements Validator, StateHolder {
 
     /*
      * String型で"ab.cd"と入ってきた場合も、このバリデータでは桁数しか見ない。
      * 数値であって欲しい場合はプロパティの型をBigDecimalにしておく
-     * 
+     *
      */
 
     static final String INTEGRAL_MESSAGE_ID = "org.seasar.teeda.extension.validator.TNumberLengthValidator.INTEGRAL";
@@ -56,6 +57,8 @@ public class TNumberLengthValidator implements Validator {
     private int fractionMin = Integer.MIN_VALUE;
 
     private int fractionMax = Integer.MAX_VALUE;
+
+    private boolean transientValue = false;
 
     public void validate(final FacesContext context,
             final UIComponent component, final Object value)
@@ -195,6 +198,31 @@ public class TNumberLengthValidator implements Validator {
         public void setIntegral(int integral) {
             this.integral = integral;
         }
+    }
+
+    public void restoreState(FacesContext context, Object state) {
+        Object[] values = (Object[]) state;
+        integralMin = ((Integer) values[0]).intValue();
+        integralMax = ((Integer) values[1]).intValue();
+        fractionMin = ((Integer) values[2]).intValue();
+        fractionMax = ((Integer) values[3]).intValue();
+    }
+
+    public Object saveState(FacesContext context) {
+        Object[] state = new Object[4];
+        state[0] = new Integer(integralMin);
+        state[1] = new Integer(integralMax);
+        state[2] = new Integer(fractionMin);
+        state[3] = new Integer(fractionMax);
+        return state;
+    }
+
+    public boolean isTransient() {
+        return transientValue;
+    }
+
+    public void setTransient(boolean transientValue) {
+        this.transientValue = transientValue;
     }
 
 }

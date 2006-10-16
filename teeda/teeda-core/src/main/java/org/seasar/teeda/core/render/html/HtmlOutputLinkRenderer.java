@@ -53,12 +53,20 @@ public class HtmlOutputLinkRenderer extends AbstractRenderer {
     protected void encodeHtmlOutputLinkBegin(FacesContext context,
             HtmlOutputLink htmlOutputLink) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
+        final String encoding = writer.getCharacterEncoding();
+        final String href = buildHref(context, htmlOutputLink, encoding);
+        writer.startElement(JsfConstants.ANCHOR_ELEM, htmlOutputLink);
+        RendererUtil.renderIdAttributeIfNecessary(writer, htmlOutputLink,
+                getIdForRender(context, htmlOutputLink));
+        writer.writeURIAttribute(JsfConstants.HREF_ATTR, href, null);
+        renderAttributes(htmlOutputLink, writer);
+    }
 
+    protected String buildHref(FacesContext context,
+            HtmlOutputLink htmlOutputLink, String encoding) throws IOException {
         UrlBuilder urlBuilder = new UrlBuilder();
         urlBuilder.setBase(ValueHolderUtil.getValueForRender(context,
                 htmlOutputLink));
-
-        final String encoding = writer.getCharacterEncoding();
         for (Iterator it = htmlOutputLink.getChildren().iterator(); it
                 .hasNext();) {
             UIComponent child = (UIComponent) it.next();
@@ -74,14 +82,8 @@ public class HtmlOutputLinkRenderer extends AbstractRenderer {
             urlBuilder.add(URLEncoder.encode(WindowIdUtil.NEWWINDOW, encoding),
                     URLEncoder.encode(JsfConstants.TRUE, encoding));
         }
-        final String href = context.getExternalContext().encodeResourceURL(
+        return context.getExternalContext().encodeResourceURL(
                 urlBuilder.build());
-
-        writer.startElement(JsfConstants.ANCHOR_ELEM, htmlOutputLink);
-        RendererUtil.renderIdAttributeIfNecessary(writer, htmlOutputLink,
-                getIdForRender(context, htmlOutputLink));
-        writer.writeURIAttribute(JsfConstants.HREF_ATTR, href, null);
-        renderAttributes(htmlOutputLink, writer);
     }
 
     private String toBlankIfNull(final Object value) {

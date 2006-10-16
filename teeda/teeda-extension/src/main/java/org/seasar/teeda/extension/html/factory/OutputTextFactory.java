@@ -18,6 +18,7 @@ package org.seasar.teeda.extension.html.factory;
 import java.util.Map;
 
 import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.PageDesc;
@@ -62,7 +63,7 @@ public class OutputTextFactory extends AbstractElementProcessorFactory {
     }
 
     protected String getUri() {
-        return JsfConstants.JSF_HTML_URI;
+        return ExtensionConstants.TEEDA_EXTENSION_URI;
     }
 
 }

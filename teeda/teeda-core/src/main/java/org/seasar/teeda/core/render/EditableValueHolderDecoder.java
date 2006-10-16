@@ -15,25 +15,22 @@
  */
 package org.seasar.teeda.core.render;
 
+import javax.faces.component.EditableValueHolder;
+import javax.faces.component.UIComponent;
+
+import org.seasar.teeda.core.exception.NoEditableValueHolderRuntimeException;
+
 /**
  * @author shot
  */
-public abstract class AbstractInputRenderer extends AbstractRenderer {
+public class EditableValueHolderDecoder extends AbstractDecoder {
 
-    public static final String decoder_BINDING = "bindingType=may";
-
-    private Decoder decoder;
-
-    public AbstractInputRenderer() {
-        decoder = new EditableValueHolderDecoder();
-    }
-
-    public Decoder getDecoder() {
-        return decoder;
-    }
-
-    public void setDecoder(Decoder decoder) {
-        this.decoder = decoder;
+    protected ValueHolderWrapper createValueHolderWrapper(UIComponent component) {
+        if (!(component instanceof EditableValueHolder)) {
+            throw new NoEditableValueHolderRuntimeException(component
+                    .getClass());
+        }
+        return new ValueHolderWrapper((EditableValueHolder)component);
     }
 
 }

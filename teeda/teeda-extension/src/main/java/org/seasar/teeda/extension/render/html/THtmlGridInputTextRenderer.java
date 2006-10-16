@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -86,7 +86,9 @@ public class THtmlGridInputTextRenderer extends AbstractInputRenderer {
 
         final ResponseWriter writer = context.getResponseWriter();
         writer.startElement(JsfConstants.SPAN_ELEM, gridInputText);
-        writer.writeText(value, null);
+        if (value != null) {
+            writer.writeText(value, null);
+        }
         // TODO escape
         //            if (gridInputText.isEscape()) {
         //                writer.writeText(value, null);

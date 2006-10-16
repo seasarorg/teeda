@@ -13,27 +13,23 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.core.render;
+package org.seasar.teeda.extension.render;
+
+import javax.faces.component.UIComponent;
+import javax.faces.component.ValueHolder;
+
+import org.seasar.teeda.core.render.AbstractDecoder;
 
 /**
  * @author shot
  */
-public abstract class AbstractInputRenderer extends AbstractRenderer {
+public class ValueHolderDecoder extends AbstractDecoder {
 
-    public static final String decoder_BINDING = "bindingType=may";
-
-    private Decoder decoder;
-
-    public AbstractInputRenderer() {
-        decoder = new EditableValueHolderDecoder();
-    }
-
-    public Decoder getDecoder() {
-        return decoder;
-    }
-
-    public void setDecoder(Decoder decoder) {
-        this.decoder = decoder;
+    protected ValueHolderWrapper createValueHolderWrapper(UIComponent component) {
+        if(!(component instanceof ValueHolder)) {
+            throw new IllegalStateException();
+        }
+        return new ValueHolderWrapper((ValueHolder)component);
     }
 
 }

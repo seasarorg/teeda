@@ -18,8 +18,7 @@ package org.seasar.teeda.extension.html.factory;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.seasar.teeda.core.JsfConstants;
-import org.seasar.teeda.core.taglib.html.OutputTextTag;
+import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.config.taglib.element.TagElement;
 import org.seasar.teeda.extension.config.taglib.element.TaglibElement;
 import org.seasar.teeda.extension.config.taglib.element.impl.TagElementImpl;
@@ -32,6 +31,7 @@ import org.seasar.teeda.extension.html.factory.sub.web.foo.FooAction;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooPage;
 import org.seasar.teeda.extension.html.impl.ActionDescImpl;
 import org.seasar.teeda.extension.mock.MockTaglibManager;
+import org.seasar.teeda.extension.taglib.TOutputTextTag;
 import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 
 /**
@@ -60,10 +60,10 @@ public class OutputTextFactoryTest extends TeedaExtensionTestCase {
         // ## Arrange ##
         MockTaglibManager taglibManager = new MockTaglibManager();
         TaglibElement jsfHtml = new TaglibElementImpl();
-        jsfHtml.setUri(JsfConstants.JSF_HTML_URI);
+        jsfHtml.setUri(ExtensionConstants.TEEDA_EXTENSION_URI);
         TagElement tagElement = new TagElementImpl();
         tagElement.setName("outputText");
-        tagElement.setTagClass(OutputTextTag.class);
+        tagElement.setTagClass(TOutputTextTag.class);
         jsfHtml.addTagElement(tagElement);
         taglibManager.addTaglibElement(jsfHtml);
         OutputTextFactory factory = new OutputTextFactory();
@@ -79,7 +79,7 @@ public class OutputTextFactoryTest extends TeedaExtensionTestCase {
                 pageDesc, actionDesc);
         // ## Assert ##
         assertNotNull("1", processor);
-        assertEquals("2", OutputTextTag.class, processor.getTagClass());
+        assertEquals("2", TOutputTextTag.class, processor.getTagClass());
         assertEquals("3", "#{fooPage.aaa}", processor.getProperty("value"));
 
     }

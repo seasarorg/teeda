@@ -9,31 +9,21 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.core.render;
+package org.seasar.teeda.extension.taglib;
+
+import org.seasar.teeda.core.taglib.html.OutputLinkTag;
 
 /**
  * @author shot
  */
-public abstract class AbstractInputRenderer extends AbstractRenderer {
+public class TOutputLinkTag extends OutputLinkTag {
 
-    public static final String decoder_BINDING = "bindingType=may";
-
-    private Decoder decoder;
-
-    public AbstractInputRenderer() {
-        decoder = new EditableValueHolderDecoder();
-    }
-
-    public Decoder getDecoder() {
-        return decoder;
-    }
-
-    public void setDecoder(Decoder decoder) {
-        this.decoder = decoder;
+    public String getRendererType() {
+        return "org.seasar.teeda.extension.Link";
     }
 
 }

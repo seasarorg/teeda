@@ -127,12 +127,7 @@ public abstract class AbstractRenderer extends Renderer {
 
     protected void renderAttributes(UIComponent component, ResponseWriter writer)
             throws IOException {
-        renderAttributes(component, writer, getClass());
-    }
-
-    protected void renderAttributes(UIComponent component,
-            ResponseWriter writer, Class clazz) throws IOException {
-        final String[] names = getRenderAttributeNames(clazz);
+        final String[] names = getRenderAttributeNames(getClass());
         RendererUtil.renderAttributes(writer, component, names);
         renderAttributes(component.getAttributes(), writer);
     }
@@ -281,7 +276,7 @@ public abstract class AbstractRenderer extends Renderer {
             rmd = new RendererMetaData();
             for (Class clazz = rendererClass; !clazz.equals(Object.class); clazz = clazz
                     .getSuperclass()) {
-                final String componentFamily = getComponentFamily(rendererClass);
+                final String componentFamily = getComponentFamily(clazz);
                 if (componentFamily == null) {
                     continue;
                 }
@@ -289,7 +284,7 @@ public abstract class AbstractRenderer extends Renderer {
             }
             for (Class clazz = rendererClass; !clazz.equals(Object.class); clazz = clazz
                     .getSuperclass()) {
-                final String rendererType = getRendererType(rendererClass);
+                final String rendererType = getRendererType(clazz);
                 if (rendererType == null) {
                     continue;
                 }

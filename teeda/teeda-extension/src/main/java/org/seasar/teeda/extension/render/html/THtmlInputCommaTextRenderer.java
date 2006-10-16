@@ -79,15 +79,20 @@ public class THtmlInputCommaTextRenderer extends
     }
 
     protected String getValue(FacesContext context, UIComponent component) {
-        final String value = ValueHolderUtil.getValueForRender(context,
-                component);
+        String value = ValueHolderUtil.getValueForRender(context, component);
         if (StringUtil.isEmpty(value)) {
             return value;
         }
         THtmlInputCommaText htmlInputCommaText = (THtmlInputCommaText) component;
         try {
             final Locale locale = context.getViewRoot().getLocale();
-            final String fraction = getFractionSeparator(htmlInputCommaText, locale);
+            final String fraction = getFractionSeparator(htmlInputCommaText,
+                    locale);
+            final String groupingSeparator = getGroupingSeparator(
+                    htmlInputCommaText, locale);
+            if (value.indexOf(groupingSeparator) > 0) {
+                value = StringUtil.replace(value, groupingSeparator, "");
+            }
             final DecimalFormat df = new DecimalFormat();
             int pos = value.indexOf(fraction);
             if (pos < 0) {

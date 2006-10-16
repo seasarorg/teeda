@@ -22,7 +22,6 @@ import org.custommonkey.xmlunit.XMLUnit;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.taglib.html.CommandButtonTag;
 import org.seasar.teeda.core.taglib.html.InputTextTag;
-import org.seasar.teeda.core.taglib.html.OutputTextTag;
 import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.html.ElementProcessor;
 import org.seasar.teeda.extension.html.ElementProcessorFactory;
@@ -44,6 +43,7 @@ import org.seasar.teeda.extension.html.impl.page.FooPage;
 import org.seasar.teeda.extension.mock.MockDocumentBuilderFactory;
 import org.seasar.teeda.extension.mock.MockTaglibManager;
 import org.seasar.teeda.extension.taglib.TConditionTag;
+import org.seasar.teeda.extension.taglib.TOutputTextTag;
 import org.seasar.teeda.extension.taglib.TSelectManyCheckboxTag;
 import org.seasar.teeda.extension.taglib.TSelectOneMenuTag;
 import org.seasar.teeda.extension.taglib.TSelectOneRadioTag;
@@ -294,8 +294,8 @@ public class TagProcessorAssembleImplTest extends TeedaExtensionTestCase {
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         ActionDescImpl actionDesc = new ActionDescImpl(FooAction.class,
                 "fooAction");
-        registerTaglibElement(JsfConstants.JSF_HTML_URI, "outputText",
-                OutputTextTag.class);
+        registerTaglibElement(ExtensionConstants.TEEDA_EXTENSION_URI,
+                "outputText", TOutputTextTag.class);
         MockTaglibManager taglibManager = getTaglibManager();
         OutputTextFactory factory = new OutputTextFactory();
         factory.setTaglibManager(taglibManager);
@@ -407,8 +407,8 @@ public class TagProcessorAssembleImplTest extends TeedaExtensionTestCase {
                 "fooAction");
         registerTaglibElement(ExtensionConstants.TEEDA_EXTENSION_URI,
                 "condition", TConditionTag.class);
-        registerTaglibElement(JsfConstants.JSF_HTML_URI, "outputText",
-                OutputTextTag.class);
+        registerTaglibElement(ExtensionConstants.TEEDA_EXTENSION_URI,
+                "outputText", TOutputTextTag.class);
         MockTaglibManager taglibManager = getTaglibManager();
         ConditionFactory factory = new ConditionFactory();
         factory.setTaglibManager(taglibManager);

@@ -20,7 +20,7 @@ import java.util.Map;
 
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.taglib.core.ParamTag;
-import org.seasar.teeda.core.taglib.html.OutputLinkTag;
+import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.config.taglib.element.TagElement;
 import org.seasar.teeda.extension.config.taglib.element.TaglibElement;
 import org.seasar.teeda.extension.config.taglib.element.impl.TagElementImpl;
@@ -33,6 +33,7 @@ import org.seasar.teeda.extension.html.factory.sub.web.foo.FooAction;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooPage;
 import org.seasar.teeda.extension.html.impl.ActionDescImpl;
 import org.seasar.teeda.extension.mock.MockTaglibManager;
+import org.seasar.teeda.extension.taglib.TOutputLinkTag;
 import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 
 /**
@@ -60,10 +61,10 @@ public class OutputLinkFactoryTest extends TeedaExtensionTestCase {
         // ## Arrange ##
         MockTaglibManager taglibManager = new MockTaglibManager();
         TaglibElement jsfHtml = new TaglibElementImpl();
-        jsfHtml.setUri(JsfConstants.JSF_HTML_URI);
+        jsfHtml.setUri(ExtensionConstants.TEEDA_EXTENSION_URI);
         TagElement tagElement = new TagElementImpl();
         tagElement.setName("outputLink");
-        tagElement.setTagClass(OutputLinkTag.class);
+        tagElement.setTagClass(TOutputLinkTag.class);
         jsfHtml.addTagElement(tagElement);
         taglibManager.addTaglibElement(jsfHtml);
 
@@ -89,7 +90,7 @@ public class OutputLinkFactoryTest extends TeedaExtensionTestCase {
                 pageDesc, actionDesc);
         // ## Assert ##
         assertNotNull(processor);
-        assertEquals(OutputLinkTag.class, processor.getTagClass());
+        assertEquals(TOutputLinkTag.class, processor.getTagClass());
         assertEquals("hoge.html?bbb=222&ccc=1", processor.getProperty("value"));
         assertEquals(1, processor.getChildSize());
 
