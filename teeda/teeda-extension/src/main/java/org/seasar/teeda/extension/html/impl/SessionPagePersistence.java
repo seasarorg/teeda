@@ -160,11 +160,12 @@ public class SessionPagePersistence implements PagePersistence {
 
     public void restore(FacesContext context, String viewId) {
         ExternalContext extCtx = context.getExternalContext();
-        if (!ExternalContextUtil.isRedirect(extCtx)) {
-            return;
-        }
         Map lru = getLru(extCtx);
         if (lru == null) {
+            return;
+        }
+        if (!ExternalContextUtil.isRedirect(extCtx)) {
+            lru.remove(viewId);
             return;
         }
         Map savedData = (Map) lru.get(viewId);

@@ -16,9 +16,12 @@
 package org.seasar.teeda.extension.html.impl;
 
 import java.io.File;
+import java.util.Map;
 import java.util.Set;
 
+import org.seasar.teeda.extension.annotation.handler.TakeOverDescAnnotationHandlerFactory;
 import org.seasar.teeda.extension.html.ActionDesc;
+import org.seasar.teeda.extension.html.TakeOverDesc;
 
 /**
  * @author higa
@@ -29,6 +32,8 @@ public class ActionDescImpl implements ActionDesc {
     private String actionName;
 
     private Set methodNames;
+
+    private Map takeOverDescs;
 
     private File file;
 
@@ -53,6 +58,8 @@ public class ActionDescImpl implements ActionDesc {
 
     protected void setup(Class actionClass) {
         methodNames = ActionDescUtil.getActionMethodNames(actionClass);
+        takeOverDescs = TakeOverDescAnnotationHandlerFactory
+                .getAnnotationHandler().getTakeOverDescs(actionName);
     }
 
     public boolean hasMethod(String name) {
@@ -67,5 +74,16 @@ public class ActionDescImpl implements ActionDesc {
             return true;
         }
         return file.lastModified() > lastModified;
+    }
+
+    public TakeOverDesc getTakeOverDesc(String methodName) {
+        if (!hasTakeOverDesc(methodName)) {
+            throw new IllegalArgumentException(methodName);
+        }
+        return (TakeOverDesc) takeOverDescs.get(methodName);
+    }
+
+    public boolean hasTakeOverDesc(String methodName) {
+        return takeOverDescs.containsKey(methodName);
     }
 }

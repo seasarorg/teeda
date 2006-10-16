@@ -30,7 +30,6 @@ import org.seasar.teeda.extension.html.ElementProcessor;
 import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooAction;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooPage;
-import org.seasar.teeda.extension.html.impl.ActionDescImpl;
 import org.seasar.teeda.extension.mock.MockTaglibManager;
 import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 
@@ -78,7 +77,7 @@ public class FormFactoryTest extends TeedaExtensionTestCase {
         properties.put("id", "fooForm");
         ElementNode elementNode = createElementNode("form", properties);
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
-        ActionDesc actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
+        ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
 
         // ## Act ##
         ElementProcessor processor = factory.createProcessor(elementNode,

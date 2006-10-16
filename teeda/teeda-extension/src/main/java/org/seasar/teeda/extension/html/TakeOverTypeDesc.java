@@ -15,21 +15,13 @@
  */
 package org.seasar.teeda.extension.html;
 
-public interface PageDesc {
+public interface TakeOverTypeDesc {
 
-    String getPageName();
+    String NEVER_NAME = "never";
 
-    boolean hasProperty(String name);
+    String INCLUDE_NAME = "include";
 
-    boolean hasItemsProperty(String name);
+    String EXCLUDE_NAME = "exclude";
 
-    boolean hasDynamicProperty(String name);
-
-    boolean hasMethod(String name);
-
-    boolean hasTakeOverDesc(String methodName);
-
-    TakeOverDesc getTakeOverDesc(String methodName);
-
-    boolean isModified();
+    String getName();
 }

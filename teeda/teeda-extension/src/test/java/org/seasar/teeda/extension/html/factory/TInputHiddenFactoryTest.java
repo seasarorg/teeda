@@ -25,7 +25,6 @@ import org.seasar.teeda.extension.html.ElementProcessor;
 import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooAction;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooPage;
-import org.seasar.teeda.extension.html.impl.ActionDescImpl;
 import org.seasar.teeda.extension.mock.MockTaglibManager;
 import org.seasar.teeda.extension.taglib.TInputHiddenTag;
 import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
@@ -51,7 +50,7 @@ public class TInputHiddenFactoryTest extends TeedaExtensionTestCase {
         map.put("id", "hogeItemsSave");
         ElementNode elementNode = createElementNode("input", map);
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
-        ActionDesc actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
+        ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
         assertTrue(factory.isMatch(elementNode, pageDesc, actionDesc));
     }
 
@@ -64,7 +63,7 @@ public class TInputHiddenFactoryTest extends TeedaExtensionTestCase {
         properties.put("id", "hogeItemsSave");
         ElementNode elementNode = createElementNode("input", properties);
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
-        ActionDesc actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
+        ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
 
         // ## Act ##
         ElementProcessor parentProcessor = factory.createProcessor(elementNode,

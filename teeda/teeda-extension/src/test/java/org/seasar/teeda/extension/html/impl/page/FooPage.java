@@ -58,6 +58,8 @@ public class FooPage {
         this.cccItems = cccItems;
     }
 
+    public static final String doBar_TAKE_OVER = "properties='aaa, bbb'";
+
     public String doBar() {
         return null;
     }

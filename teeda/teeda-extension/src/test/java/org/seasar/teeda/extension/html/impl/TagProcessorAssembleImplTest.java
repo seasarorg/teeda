@@ -23,6 +23,7 @@ import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.taglib.html.CommandButtonTag;
 import org.seasar.teeda.core.taglib.html.InputTextTag;
 import org.seasar.teeda.extension.ExtensionConstants;
+import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ElementProcessor;
 import org.seasar.teeda.extension.html.ElementProcessorFactory;
 import org.seasar.teeda.extension.html.HtmlDesc;
@@ -30,6 +31,7 @@ import org.seasar.teeda.extension.html.HtmlParser;
 import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.TagProcessor;
 import org.seasar.teeda.extension.html.TagProcessorAssembler;
+import org.seasar.teeda.extension.html.TakeOverDesc;
 import org.seasar.teeda.extension.html.TextProcessor;
 import org.seasar.teeda.extension.html.factory.CommandButtonFactory;
 import org.seasar.teeda.extension.html.factory.ConditionFactory;
@@ -78,8 +80,7 @@ public class TagProcessorAssembleImplTest extends TeedaExtensionTestCase {
         HtmlDescCacheImpl cache = createHtmlDescCacheImpl();
         HtmlDesc htmlDesc = cache.createHtmlDesc(path);
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
-        ActionDescImpl actionDesc = new ActionDescImpl(FooAction.class,
-                "fooAction");
+        ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
         TagProcessorAssembler assembler = new TagProcessorAssemblerImpl();
         TagProcessor root = assembler.assemble(htmlDesc, pageDesc, actionDesc);
         assertTrue("1", root instanceof ElementProcessor);
@@ -92,8 +93,7 @@ public class TagProcessorAssembleImplTest extends TeedaExtensionTestCase {
         HtmlDescCacheImpl cache = createHtmlDescCacheImpl();
         HtmlDesc htmlDesc = cache.createHtmlDesc(path);
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
-        ActionDescImpl actionDesc = new ActionDescImpl(FooAction.class,
-                "fooAction");
+        ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
         TagProcessorAssembler assembler = new TagProcessorAssemblerImpl();
         TagProcessor root = assembler.assemble(htmlDesc, pageDesc, actionDesc);
         assertTrue("1", root instanceof ElementProcessor);
@@ -110,8 +110,7 @@ public class TagProcessorAssembleImplTest extends TeedaExtensionTestCase {
         HtmlDescCacheImpl cache = createHtmlDescCacheImpl();
         HtmlDesc htmlDesc = cache.createHtmlDesc(path);
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
-        ActionDescImpl actionDesc = new ActionDescImpl(FooAction.class,
-                "fooAction");
+        ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
         TagProcessorAssembler assembler = new TagProcessorAssemblerImpl();
         TagProcessor root = assembler.assemble(htmlDesc, pageDesc, actionDesc);
         assertTrue("1", root instanceof ElementProcessor);
@@ -127,8 +126,7 @@ public class TagProcessorAssembleImplTest extends TeedaExtensionTestCase {
         HtmlDescCacheImpl cache = createHtmlDescCacheImpl();
         HtmlDesc htmlDesc = cache.createHtmlDesc(path);
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
-        ActionDescImpl actionDesc = new ActionDescImpl(FooAction.class,
-                "fooAction");
+        ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
         TagProcessorAssembler assembler = new TagProcessorAssemblerImpl();
         TagProcessor root = assembler.assemble(htmlDesc, pageDesc, actionDesc);
         assertTrue("1", root instanceof ElementProcessor);
@@ -144,8 +142,7 @@ public class TagProcessorAssembleImplTest extends TeedaExtensionTestCase {
         HtmlDescCacheImpl cache = createHtmlDescCacheImpl();
         HtmlDesc htmlDesc = cache.createHtmlDesc(path);
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
-        ActionDescImpl actionDesc = new ActionDescImpl(FooAction.class,
-                "fooAction");
+        ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
         TagProcessorAssembler assembler = new TagProcessorAssemblerImpl();
         TagProcessor root = assembler.assemble(htmlDesc, pageDesc, actionDesc);
         assertTrue("1", root instanceof ElementProcessor);
@@ -162,8 +159,7 @@ public class TagProcessorAssembleImplTest extends TeedaExtensionTestCase {
         HtmlDescCacheImpl cache = createHtmlDescCacheImpl();
         HtmlDesc htmlDesc = cache.createHtmlDesc(path);
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
-        ActionDescImpl actionDesc = new ActionDescImpl(FooAction.class,
-                "fooAction");
+        ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
         TagProcessorAssembler assembler = new TagProcessorAssemblerImpl();
         TagProcessor root = assembler.assemble(htmlDesc, pageDesc, actionDesc);
         assertTrue("1", root instanceof ElementProcessor);
@@ -194,8 +190,7 @@ public class TagProcessorAssembleImplTest extends TeedaExtensionTestCase {
         HtmlDescCacheImpl cache = createHtmlDescCacheImpl();
         HtmlDesc htmlDesc = cache.createHtmlDesc(path);
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
-        ActionDescImpl actionDesc = new ActionDescImpl(FooAction.class,
-                "fooAction");
+        ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
         TagProcessorAssembler assembler = new TagProcessorAssemblerImpl();
         TagProcessor root = assembler.assemble(htmlDesc, pageDesc, actionDesc);
         assertTrue("1", root instanceof ElementProcessor);
@@ -215,8 +210,7 @@ public class TagProcessorAssembleImplTest extends TeedaExtensionTestCase {
         HtmlDescCacheImpl cache = createHtmlDescCacheImpl();
         HtmlDesc htmlDesc = cache.createHtmlDesc(path);
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
-        ActionDescImpl actionDesc = new ActionDescImpl(FooAction.class,
-                "fooAction");
+        ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
         TagProcessorAssembler assembler = new TagProcessorAssemblerImpl();
         TagProcessor root = assembler.assemble(htmlDesc, pageDesc, actionDesc);
         assertTrue("1", root instanceof ElementProcessor);
@@ -237,8 +231,7 @@ public class TagProcessorAssembleImplTest extends TeedaExtensionTestCase {
         HtmlDescCacheImpl cache = createHtmlDescCacheImpl();
         HtmlDesc htmlDesc = cache.createHtmlDesc(path);
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
-        ActionDescImpl actionDesc = new ActionDescImpl(FooAction.class,
-                "fooAction");
+        ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
         registerTaglibElement(JsfConstants.JSF_HTML_URI, "inputText",
                 InputTextTag.class);
         MockTaglibManager taglibManager = getTaglibManager();
@@ -267,8 +260,7 @@ public class TagProcessorAssembleImplTest extends TeedaExtensionTestCase {
         HtmlDescCacheImpl cache = createHtmlDescCacheImpl();
         HtmlDesc htmlDesc = cache.createHtmlDesc(path);
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
-        ActionDescImpl actionDesc = new ActionDescImpl(FooAction.class,
-                "fooAction");
+        ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
         registerTaglibElement(JsfConstants.JSF_HTML_URI, "commandButton",
                 CommandButtonTag.class);
         MockTaglibManager taglibManager = getTaglibManager();
@@ -292,8 +284,7 @@ public class TagProcessorAssembleImplTest extends TeedaExtensionTestCase {
         HtmlDescCacheImpl cache = createHtmlDescCacheImpl();
         HtmlDesc htmlDesc = cache.createHtmlDesc(path);
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
-        ActionDescImpl actionDesc = new ActionDescImpl(FooAction.class,
-                "fooAction");
+        ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
         registerTaglibElement(ExtensionConstants.TEEDA_EXTENSION_URI,
                 "outputText", TOutputTextTag.class);
         MockTaglibManager taglibManager = getTaglibManager();
@@ -319,8 +310,7 @@ public class TagProcessorAssembleImplTest extends TeedaExtensionTestCase {
         HtmlDescCacheImpl cache = createHtmlDescCacheImpl();
         HtmlDesc htmlDesc = cache.createHtmlDesc(path);
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
-        ActionDescImpl actionDesc = new ActionDescImpl(FooAction.class,
-                "fooAction");
+        ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
         registerTaglibElement(ExtensionConstants.TEEDA_EXTENSION_URI,
                 "selectOneMenu", TSelectOneMenuTag.class);
         MockTaglibManager taglibManager = getTaglibManager();
@@ -347,8 +337,7 @@ public class TagProcessorAssembleImplTest extends TeedaExtensionTestCase {
         HtmlDescCacheImpl cache = createHtmlDescCacheImpl();
         HtmlDesc htmlDesc = cache.createHtmlDesc(path);
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
-        ActionDescImpl actionDesc = new ActionDescImpl(FooAction.class,
-                "fooAction");
+        ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
         registerTaglibElement(ExtensionConstants.TEEDA_EXTENSION_URI,
                 "selectOneRadio", TSelectOneRadioTag.class);
         MockTaglibManager taglibManager = getTaglibManager();
@@ -375,8 +364,7 @@ public class TagProcessorAssembleImplTest extends TeedaExtensionTestCase {
         HtmlDescCacheImpl cache = createHtmlDescCacheImpl();
         HtmlDesc htmlDesc = cache.createHtmlDesc(path);
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
-        ActionDescImpl actionDesc = new ActionDescImpl(FooAction.class,
-                "fooAction");
+        ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
         registerTaglibElement(ExtensionConstants.TEEDA_EXTENSION_URI,
                 "selectManyCheckbox", TSelectManyCheckboxTag.class);
         MockTaglibManager taglibManager = getTaglibManager();
@@ -403,8 +391,7 @@ public class TagProcessorAssembleImplTest extends TeedaExtensionTestCase {
         HtmlDescCacheImpl cache = createHtmlDescCacheImpl();
         HtmlDesc htmlDesc = cache.createHtmlDesc(path);
         PageDesc pageDesc = createPageDesc(BarPage.class, "barPage");
-        ActionDescImpl actionDesc = new ActionDescImpl(FooAction.class,
-                "fooAction");
+        ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
         registerTaglibElement(ExtensionConstants.TEEDA_EXTENSION_URI,
                 "condition", TConditionTag.class);
         registerTaglibElement(ExtensionConstants.TEEDA_EXTENSION_URI,
@@ -464,6 +451,14 @@ public class TagProcessorAssembleImplTest extends TeedaExtensionTestCase {
         }
 
         public boolean isModified() {
+            return false;
+        }
+
+        public TakeOverDesc getTakeOverDesc(String methodName) {
+            return null;
+        }
+
+        public boolean hasTakeOverDesc(String methodName) {
             return false;
         }
 

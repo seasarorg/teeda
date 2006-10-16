@@ -25,7 +25,6 @@ import org.seasar.teeda.extension.html.ElementProcessor;
 import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooAction;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooPage;
-import org.seasar.teeda.extension.html.impl.ActionDescImpl;
 import org.seasar.teeda.extension.mock.MockTaglibManager;
 import org.seasar.teeda.extension.taglib.TSelectOneRadioTag;
 import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
@@ -55,7 +54,7 @@ public class SelectOneRadioFactoryTest extends TeedaExtensionTestCase {
         parent.addElement(child);
 
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
-        ActionDesc actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
+        ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
         assertTrue(selectFactory.isMatch(parent, pageDesc, actionDesc));
     }
 
@@ -81,7 +80,7 @@ public class SelectOneRadioFactoryTest extends TeedaExtensionTestCase {
         parent.addElement(child2);
 
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
-        ActionDesc actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
+        ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
         assertTrue(selectFactory.isMatch(parent, pageDesc, actionDesc));
     }
 
@@ -98,7 +97,7 @@ public class SelectOneRadioFactoryTest extends TeedaExtensionTestCase {
         parent.addElement(child);
 
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
-        ActionDesc actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
+        ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
         assertFalse(selectFactory.isMatch(parent, pageDesc, actionDesc));
     }
 
@@ -115,7 +114,7 @@ public class SelectOneRadioFactoryTest extends TeedaExtensionTestCase {
         parent.addElement(child);
 
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
-        ActionDesc actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
+        ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
         assertFalse(selectFactory.isMatch(parent, pageDesc, actionDesc));
     }
 
@@ -133,7 +132,7 @@ public class SelectOneRadioFactoryTest extends TeedaExtensionTestCase {
         parent.addElement(child);
 
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
-        ActionDesc actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
+        ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
         assertFalse(selectFactory.isMatch(parent, pageDesc, actionDesc));
     }
 
@@ -151,7 +150,7 @@ public class SelectOneRadioFactoryTest extends TeedaExtensionTestCase {
         parent.addElement(child);
 
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
-        ActionDesc actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
+        ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
         assertFalse(selectFactory.isMatch(parent, pageDesc, actionDesc));
     }
 
@@ -173,7 +172,7 @@ public class SelectOneRadioFactoryTest extends TeedaExtensionTestCase {
         parent.addElement(child2);
 
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
-        ActionDesc actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
+        ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
         assertFalse(selectFactory.isMatch(parent, pageDesc, actionDesc));
     }
 
@@ -190,7 +189,7 @@ public class SelectOneRadioFactoryTest extends TeedaExtensionTestCase {
         parent.endElement();
 
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
-        ActionDesc actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
+        ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
         assertFalse(selectFactory.isMatch(parent, pageDesc, actionDesc));
     }
 
@@ -210,7 +209,7 @@ public class SelectOneRadioFactoryTest extends TeedaExtensionTestCase {
         elementNode.addElement(childNode);
 
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
-        ActionDesc actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
+        ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
 
         // ## Act ##
         ElementProcessor parentProcessor = factory.createProcessor(elementNode,

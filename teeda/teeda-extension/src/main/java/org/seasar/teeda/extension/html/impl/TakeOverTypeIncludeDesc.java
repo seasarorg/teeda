@@ -13,23 +13,17 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.extension.html;
+package org.seasar.teeda.extension.html.impl;
 
-public interface PageDesc {
+import org.seasar.teeda.extension.html.TakeOverTypeDesc;
 
-    String getPageName();
+/**
+ * @author higa
+ * 
+ */
+public class TakeOverTypeIncludeDesc implements TakeOverTypeDesc {
 
-    boolean hasProperty(String name);
-
-    boolean hasItemsProperty(String name);
-
-    boolean hasDynamicProperty(String name);
-
-    boolean hasMethod(String name);
-
-    boolean hasTakeOverDesc(String methodName);
-
-    TakeOverDesc getTakeOverDesc(String methodName);
-
-    boolean isModified();
+    public String getName() {
+        return INCLUDE_NAME;
+    }
 }

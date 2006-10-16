@@ -11,7 +11,6 @@ import org.seasar.teeda.extension.html.ElementProcessor;
 import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooAction;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooPage;
-import org.seasar.teeda.extension.html.impl.ActionDescImpl;
 import org.seasar.teeda.extension.mock.MockTaglibManager;
 import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 
@@ -52,7 +51,7 @@ public class InputSecretFactoryTest extends TeedaExtensionTestCase {
         props.put("title", "aaa");
         ElementNode elementNode = createElementNode("input", props);
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
-        ActionDesc actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
+        ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
 
         // ## Act ##
         ElementProcessor processor = factory.createProcessor(elementNode,

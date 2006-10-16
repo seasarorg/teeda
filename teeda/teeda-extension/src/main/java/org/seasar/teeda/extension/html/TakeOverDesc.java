@@ -15,21 +15,13 @@
  */
 package org.seasar.teeda.extension.html;
 
-public interface PageDesc {
+/**
+ * @author higa
+ * 
+ */
+public interface TakeOverDesc {
 
-    String getPageName();
+    TakeOverTypeDesc getTakeOverTypeDesc();
 
-    boolean hasProperty(String name);
-
-    boolean hasItemsProperty(String name);
-
-    boolean hasDynamicProperty(String name);
-
-    boolean hasMethod(String name);
-
-    boolean hasTakeOverDesc(String methodName);
-
-    TakeOverDesc getTakeOverDesc(String methodName);
-
-    boolean isModified();
+    String[] getProperties();
 }

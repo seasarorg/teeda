@@ -24,10 +24,12 @@ import org.seasar.teeda.extension.config.taglib.element.TagElement;
 import org.seasar.teeda.extension.config.taglib.element.TaglibElement;
 import org.seasar.teeda.extension.config.taglib.element.impl.TagElementImpl;
 import org.seasar.teeda.extension.config.taglib.element.impl.TaglibElementImpl;
+import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.ElementNodeDecision;
 import org.seasar.teeda.extension.html.HtmlParser;
 import org.seasar.teeda.extension.html.PageDesc;
+import org.seasar.teeda.extension.html.impl.ActionDescImpl;
 import org.seasar.teeda.extension.html.impl.BodyElementNodeDecision;
 import org.seasar.teeda.extension.html.impl.ElementNodeImpl;
 import org.seasar.teeda.extension.html.impl.HtmlNodeHandler;
@@ -121,6 +123,17 @@ public abstract class TeedaExtensionTestCase extends TeedaTestCase {
         getContainer().register(pageClass, pageName);
         PageDesc pd = new PageDescImpl(pageClass, pageName, file);
         return pd;
+    }
+
+    protected ActionDesc createActionDesc(Class actionClass, String actionName) {
+        return createActionDesc(actionClass, actionName, null);
+    }
+
+    protected ActionDesc createActionDesc(Class actionClass, String actionName,
+            File file) {
+        getContainer().register(actionClass, actionName);
+        ActionDesc ad = new ActionDescImpl(actionClass, actionName, file);
+        return ad;
     }
 
     protected HtmlParser getHtmlParser() {

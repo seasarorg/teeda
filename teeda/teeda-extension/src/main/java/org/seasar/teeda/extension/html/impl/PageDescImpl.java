@@ -18,6 +18,7 @@ package org.seasar.teeda.extension.html.impl;
 import java.io.File;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import org.seasar.framework.beans.BeanDesc;
@@ -25,8 +26,10 @@ import org.seasar.framework.beans.PropertyDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.annotation.handler.ConverterAnnotationHandlerFactory;
+import org.seasar.teeda.extension.annotation.handler.TakeOverDescAnnotationHandlerFactory;
 import org.seasar.teeda.extension.annotation.handler.ValidatorAnnotationHandlerFactory;
 import org.seasar.teeda.extension.html.PageDesc;
+import org.seasar.teeda.extension.html.TakeOverDesc;
 
 /**
  * @author higa
@@ -43,6 +46,8 @@ public class PageDescImpl implements PageDesc {
     private Set dynamicPropertyNames = new HashSet();
 
     private Set methodNames;
+
+    private Map takeOverDescs;
 
     private File file;
 
@@ -88,6 +93,8 @@ public class PageDescImpl implements PageDesc {
                 .registerValidators(pageName);
         ConverterAnnotationHandlerFactory.getAnnotationHandler()
                 .registerConverters(pageName);
+        takeOverDescs = TakeOverDescAnnotationHandlerFactory
+                .getAnnotationHandler().getTakeOverDescs(pageName);
     }
 
     protected boolean isItemsProperty(PropertyDesc pd) {
@@ -116,6 +123,17 @@ public class PageDescImpl implements PageDesc {
 
     public boolean hasMethod(String name) {
         return methodNames.contains(name);
+    }
+
+    public TakeOverDesc getTakeOverDesc(String methodName) {
+        if (!hasTakeOverDesc(methodName)) {
+            throw new IllegalArgumentException(methodName);
+        }
+        return (TakeOverDesc) takeOverDescs.get(methodName);
+    }
+
+    public boolean hasTakeOverDesc(String methodName) {
+        return takeOverDescs.containsKey(methodName);
     }
 
     public boolean isModified() {

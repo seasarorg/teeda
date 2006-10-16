@@ -17,24 +17,26 @@ package org.seasar.teeda.extension.html.impl;
 
 import java.io.File;
 
-import org.seasar.framework.unit.S2FrameworkTestCase;
 import org.seasar.framework.util.ClassUtil;
 import org.seasar.framework.util.ResourceUtil;
 import org.seasar.teeda.core.application.navigation.NavigationResource;
+import org.seasar.teeda.extension.html.ActionDesc;
+import org.seasar.teeda.extension.html.TakeOverDesc;
 import org.seasar.teeda.extension.html.impl.page.FooAction;
+import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 
 /**
  * @author higa
  *
  */
-public class ActionDescImplTest extends S2FrameworkTestCase {
+public class ActionDescImplTest extends TeedaExtensionTestCase {
 
     public void tearDown() {
         NavigationResource.removeAll();
     }
 
     public void testHasMethod() throws Exception {
-        ActionDescImpl ad = new ActionDescImpl(FooAction.class, "fooAction");
+        ActionDesc ad = createActionDesc(FooAction.class, "fooAction");
         assertTrue("1", ad.hasMethod("doAaa"));
         assertFalse("2", ad.hasMethod("xxx"));
         assertFalse("3", ad.hasMethod(null));
@@ -43,11 +45,21 @@ public class ActionDescImplTest extends S2FrameworkTestCase {
     public void testIsModified() throws Exception {
         File file = ResourceUtil.getResourceAsFile(ClassUtil
                 .getResourcePath(FooAction.class));
-        ActionDescImpl ad = new ActionDescImpl(FooAction.class, "fooAction",
-                file);
+        ActionDesc ad = createActionDesc(FooAction.class, "fooAction", file);
         assertFalse("1", ad.isModified());
         Thread.sleep(1000);
         file.setLastModified(System.currentTimeMillis());
         assertTrue("2", ad.isModified());
+    }
+
+    public void testGetTakeOverDesc() throws Exception {
+        ActionDesc ad = createActionDesc(FooAction.class, "fooAction");
+        TakeOverDesc tod = ad.getTakeOverDesc("doAaa");
+        assertNotNull(tod);
+        assertEquals(TakeOverTypeDescFactory.INCLUDE, tod.getTakeOverTypeDesc());
+        String[] props = tod.getProperties();
+        assertEquals(2, props.length);
+        assertEquals("aaa", props[0]);
+        assertEquals("bbb", props[1]);
     }
 }

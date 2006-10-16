@@ -15,7 +15,6 @@ import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.factory.sub.web.AaaPage;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooAction;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooPage;
-import org.seasar.teeda.extension.html.impl.ActionDescImpl;
 import org.seasar.teeda.extension.mock.MockTaglibManager;
 import org.seasar.teeda.extension.taglib.TInputCommaTextTag;
 import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
@@ -70,7 +69,7 @@ public class InputCommaTextFactoryTest extends TeedaExtensionTestCase {
         props.put("class", "T_Currency");
         ElementNode elementNode = createElementNode("input", props);
         PageDesc pageDesc = createPageDesc(AaaPage.class, "aaaPage");
-        ActionDesc actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
+        ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
 
         // ## Act ##
         ElementProcessor processor = factory.createProcessor(elementNode,

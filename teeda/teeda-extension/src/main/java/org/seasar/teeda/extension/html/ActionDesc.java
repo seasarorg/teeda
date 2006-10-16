@@ -21,5 +21,9 @@ public interface ActionDesc {
 
     boolean hasMethod(String name);
 
+    boolean hasTakeOverDesc(String methodName);
+
+    TakeOverDesc getTakeOverDesc(String methodName);
+
     boolean isModified();
 }

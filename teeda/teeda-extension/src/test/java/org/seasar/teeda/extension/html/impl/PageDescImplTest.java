@@ -23,7 +23,8 @@ import org.seasar.framework.container.ComponentDef;
 import org.seasar.framework.container.impl.ComponentDefImpl;
 import org.seasar.framework.util.ClassUtil;
 import org.seasar.framework.util.ResourceUtil;
-import org.seasar.teeda.core.application.navigation.NavigationResource;
+import org.seasar.teeda.extension.html.PageDesc;
+import org.seasar.teeda.extension.html.TakeOverDesc;
 import org.seasar.teeda.extension.html.impl.page.FooPage;
 import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 import org.seasar.teeda.extension.validator.TRequiredValidator;
@@ -34,22 +35,15 @@ import org.seasar.teeda.extension.validator.TRequiredValidator;
  */
 public class PageDescImplTest extends TeedaExtensionTestCase {
 
-    protected void tearDown() {
-        ValidatorResource.removeAll();
-        NavigationResource.removeAll();
-    }
-
     public void testHasProperty() throws Exception {
-        PageDescImpl pd = (PageDescImpl) createPageDesc(FooPage.class,
-                "fooPage");
+        PageDesc pd = createPageDesc(FooPage.class, "fooPage");
         assertTrue(pd.hasProperty("aaa"));
         assertFalse(pd.hasProperty("xxx"));
         assertFalse(pd.hasProperty(null));
     }
 
     public void testHasItemsProperty() throws Exception {
-        PageDescImpl pd = (PageDescImpl) createPageDesc(FooPage.class,
-                "fooPage");
+        PageDesc pd = createPageDesc(FooPage.class, "fooPage");
         assertTrue(pd.hasItemsProperty("cccItems"));
         assertFalse(pd.hasItemsProperty("dddItems"));
         assertFalse(pd.hasItemsProperty("xxx"));
@@ -57,8 +51,7 @@ public class PageDescImplTest extends TeedaExtensionTestCase {
     }
 
     public void testHasDynamicProperty() throws Exception {
-        PageDescImpl pd = (PageDescImpl) createPageDesc(FooPage.class,
-                "fooPage");
+        PageDesc pd = createPageDesc(FooPage.class, "fooPage");
         assertTrue(pd.hasDynamicProperty("aaa"));
         assertFalse(pd.hasDynamicProperty("bbb"));
         assertFalse(pd.hasDynamicProperty("xxx"));
@@ -66,8 +59,7 @@ public class PageDescImplTest extends TeedaExtensionTestCase {
     }
 
     public void testHasMethod() throws Exception {
-        PageDescImpl pd = (PageDescImpl) createPageDesc(FooPage.class,
-                "fooPage");
+        PageDesc pd = createPageDesc(FooPage.class, "fooPage");
         assertTrue(pd.hasMethod("doBar"));
         assertFalse(pd.hasMethod("doXxx"));
         assertFalse(pd.hasMethod(null));
@@ -76,8 +68,7 @@ public class PageDescImplTest extends TeedaExtensionTestCase {
     public void testIsModified() throws Exception {
         File file = ResourceUtil.getResourceAsFile(ClassUtil
                 .getResourcePath(FooPage.class));
-        PageDescImpl pd = (PageDescImpl) createPageDesc(FooPage.class,
-                "fooPage", file);
+        PageDesc pd = createPageDesc(FooPage.class, "fooPage", file);
         assertFalse("1", pd.isModified());
         Thread.sleep(1000);
         file.setLastModified(System.currentTimeMillis());
@@ -90,5 +81,16 @@ public class PageDescImplTest extends TeedaExtensionTestCase {
         register(cd);
         createPageDesc(HogePage.class, "hogePage");
         assertNotNull(ValidatorResource.getValidator("#{hogePage.aaa}"));
+    }
+
+    public void testGetTakeOverDesc() throws Exception {
+        PageDesc pd = createPageDesc(FooPage.class, "fooPage");
+        TakeOverDesc tod = pd.getTakeOverDesc("doBar");
+        assertNotNull(tod);
+        assertEquals(TakeOverTypeDescFactory.INCLUDE, tod.getTakeOverTypeDesc());
+        String[] props = tod.getProperties();
+        assertEquals(2, props.length);
+        assertEquals("aaa", props[0]);
+        assertEquals("bbb", props[1]);
     }
 }

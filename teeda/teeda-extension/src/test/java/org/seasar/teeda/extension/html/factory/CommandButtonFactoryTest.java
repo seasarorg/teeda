@@ -11,7 +11,6 @@ import org.seasar.teeda.extension.html.ElementProcessor;
 import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooAction;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooPage;
-import org.seasar.teeda.extension.html.impl.ActionDescImpl;
 import org.seasar.teeda.extension.mock.MockTaglibManager;
 import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 
@@ -36,7 +35,7 @@ public class CommandButtonFactoryTest extends TeedaExtensionTestCase {
         properties.put("id", "doBbb");
         ElementNode elementNode = createElementNode("input", properties);
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
-        ActionDesc actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
+        ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
         assertTrue(factory.isMatch(elementNode, pageDesc, null));
         assertTrue(factory.isMatch(elementNode, pageDesc, actionDesc));
 
@@ -85,7 +84,7 @@ public class CommandButtonFactoryTest extends TeedaExtensionTestCase {
         properties.put("type", "submit");
         ElementNode elementNode = createElementNode("input", properties);
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
-        ActionDesc actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
+        ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
 
         ElementProcessor processor = factory.createProcessor(elementNode,
                 pageDesc, actionDesc);
@@ -133,7 +132,7 @@ public class CommandButtonFactoryTest extends TeedaExtensionTestCase {
         properties.put("onclick", "location.href='hoge.html'");
         ElementNode elementNode = createElementNode("input", properties);
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
-        ActionDesc actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
+        ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
 
         ElementProcessor processor = factory.createProcessor(elementNode,
                 pageDesc, actionDesc);
@@ -157,7 +156,7 @@ public class CommandButtonFactoryTest extends TeedaExtensionTestCase {
         properties.put("onclick", "location.href='hoge.html';foo();");
         ElementNode elementNode = createElementNode("input", properties);
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
-        ActionDesc actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
+        ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
 
         ElementProcessor processor = factory.createProcessor(elementNode,
                 pageDesc, actionDesc);
@@ -181,7 +180,7 @@ public class CommandButtonFactoryTest extends TeedaExtensionTestCase {
         properties.put("onclick", "hoge();location.href='foo.html';bar();");
         ElementNode elementNode = createElementNode("input", properties);
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
-        ActionDesc actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
+        ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
 
         ElementProcessor processor = factory.createProcessor(elementNode,
                 pageDesc, actionDesc);

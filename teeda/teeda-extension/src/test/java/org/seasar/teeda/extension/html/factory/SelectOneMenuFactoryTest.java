@@ -26,7 +26,6 @@ import org.seasar.teeda.extension.html.ElementProcessor;
 import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooAction;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooPage;
-import org.seasar.teeda.extension.html.impl.ActionDescImpl;
 import org.seasar.teeda.extension.mock.MockTaglibManager;
 import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 
@@ -50,7 +49,7 @@ public class SelectOneMenuFactoryTest extends TeedaExtensionTestCase {
         map.put("id", "hogeItems");
         ElementNode elementNode = createElementNode("select", map);
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
-        ActionDesc actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
+        ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
         assertTrue(selectFactory.isMatch(elementNode, pageDesc, actionDesc));
     }
 
@@ -62,7 +61,7 @@ public class SelectOneMenuFactoryTest extends TeedaExtensionTestCase {
         properties.put("id", "hogeItems");
         ElementNode elementNode = createElementNode("span", properties);
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
-        ActionDesc actionDesc = new ActionDescImpl(FooAction.class, "fooAction");
+        ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
 
         // ## Act ##
         ElementProcessor parentProcessor = factory.createProcessor(elementNode,
