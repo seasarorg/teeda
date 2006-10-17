@@ -1,6 +1,6 @@
 <project name="teeda" default="dist" basedir=".">
 
-	<property name="ver" value="1.0-rc-1"/>
+	<property name="ver" value="1.0-rc-2-SNAPSHOT"/>
 
 	<target name="dist">
 		<mkdir dir="target"/>
