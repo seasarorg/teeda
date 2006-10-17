@@ -476,11 +476,11 @@ public class THtmlGridRenderer extends TForEachRenderer {
             RendererUtil.renderAttribute(writer, JsfConstants.STYLE_ATTR,
                     "overflow:scroll; height:" + attribute.getRightBodyHeight()
                             + "px;");
-            String onscroll = "document.all." + id
-                    + "RightHeader.scrollLeft=this.scrollLeft;";
+            String onscroll = "document.getElementById('" + id
+                    + "RightHeader').scrollLeft=this.scrollLeft;";
             if (attribute.hasLeftFixCols()) {
-                onscroll = onscroll + " document.all." + id
-                        + "LeftBody.scrollTop=this.scrollTop;";
+                onscroll = onscroll + " document.getElementById('" + id
+                        + "LeftBody').scrollTop=this.scrollTop;";
             }
             RendererUtil.renderAttribute(writer, JsfConstants.ONSCROLL_ATTR,
                     onscroll);
@@ -488,16 +488,16 @@ public class THtmlGridRenderer extends TForEachRenderer {
             RendererUtil.renderAttribute(writer, JsfConstants.STYLE_ATTR,
                     "overflow-x:scroll;");
             RendererUtil.renderAttribute(writer, JsfConstants.ONSCROLL_ATTR,
-                    "document.all." + id
-                            + "RightHeader.scrollLeft=this.scrollLeft;");
+                    "document.getElementById('" + id
+                            + "RightHeader').scrollLeft=this.scrollLeft;");
         } else if (htmlGrid.isScrollVertical()) {
             RendererUtil.renderAttribute(writer, JsfConstants.STYLE_ATTR,
                     "overflow-y:scroll; height:"
                             + attribute.getRightBodyHeight() + "px;");
             if (attribute.hasLeftFixCols()) {
                 RendererUtil.renderAttribute(writer,
-                        JsfConstants.ONSCROLL_ATTR, "document.all." + id
-                                + "LeftBody.scrollTop=this.scrollTop;");
+                        JsfConstants.ONSCROLL_ATTR, "document.getElementById('"
+                                + id + "LeftBody').scrollTop=this.scrollTop;");
             }
         }
 
