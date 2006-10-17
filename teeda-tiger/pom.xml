@@ -7,7 +7,7 @@
   <groupId>org.seasar.teeda</groupId>
   <artifactId>teeda-tiger</artifactId>
   <packaging>jar</packaging>
-  <version>1.0-beta-7-SNAPSHOT</version>
+  <version>1.0-rc-2-SNAPSHOT</version>
   <name>Teeda Tiger</name>
   <url>http://teeda.seasar.org</url>
   <issueManagement>
@@ -128,8 +128,21 @@
     <dependency>
       <groupId>org.seasar.teeda</groupId>
       <artifactId>teeda-extension</artifactId>
-      <version>1.0-beta-7-SNAPSHOT</version>
+      <version>1.0-rc-2-SNAPSHOT</version>
       <type>jar</type>
+    </dependency>
+    <dependency>
+      <groupId>junit-addons</groupId>
+      <artifactId>junit-addons</artifactId>
+      <version>1.4</version>
+      <type>jar</type>
+      <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>junit-addons</groupId>
+          <artifactId>junit-addons-runner</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
   </dependencies>
   <distributionManagement>
