@@ -33,6 +33,14 @@ import org.seasar.teeda.core.unit.TeedaTestCase;
  */
 public class Base64EncodeConverterTest extends TeedaTestCase {
 
+    public void testDecode_blank() throws Exception {
+        Base64EncodeConverter converter = new Base64EncodeConverter();
+        final String encoded = converter.getAsEncodeString("");
+        System.out.println(encoded);
+        final Object decoded = converter.getAsDecodeObject(encoded);
+        System.out.println(decoded);
+    }
+
     public void testEncodeAndDecode() throws Exception {
         Base64EncodeConverter encodeConverter = new Base64EncodeConverter();
         final String encoded = encodeConverter.getAsEncodeString(new Integer(

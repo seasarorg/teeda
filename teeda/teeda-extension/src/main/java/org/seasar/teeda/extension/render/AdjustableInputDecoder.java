@@ -15,18 +15,13 @@
  */
 package org.seasar.teeda.extension.render;
 
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.Map.Entry;
 
-import javax.faces.component.NamingContainer;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 
-import org.seasar.framework.util.AssertionUtil;
-import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.render.EditableValueHolderDecoder;
+import org.seasar.teeda.extension.util.AdjustValueHolderUtil;
 
 /**
  * @author shot
@@ -36,49 +31,18 @@ public class AdjustableInputDecoder extends EditableValueHolderDecoder {
 
     protected String getClientId(UIComponent component, FacesContext context) {
         String clientId = component.getClientId(context);
-        return getAdjustedValue(clientId);
+        return AdjustValueHolderUtil.getAdjustedValue(clientId);
     }
 
     protected Map getRequestParameterMap(FacesContext context) {
         Map paramMap = context.getExternalContext().getRequestParameterMap();
-        return adjustParamMap(paramMap);
+        return AdjustValueHolderUtil.adjustParamMap(paramMap);
     }
 
     protected Map getRequestParameterValuesMap(FacesContext context) {
         Map paramMap = context.getExternalContext()
                 .getRequestParameterValuesMap();
-        return adjustParamMap(paramMap);
+        return AdjustValueHolderUtil.adjustParamMap(paramMap);
     }
 
-    protected Map adjustParamMap(Map paramMap) {
-        Map map = new HashMap();
-        for (Iterator itr = paramMap.entrySet().iterator(); itr.hasNext();) {
-            Map.Entry entry = (Entry) itr.next();
-            String key = (String) entry.getKey();
-            key = getAdjustedValue(key);
-            map.put(key, entry.getValue());
-        }
-        return map;
-    }
-
-    protected static String getAdjustedValue(String clientId) {
-        AssertionUtil.assertNotNull("clientId", clientId);
-        if (clientId.indexOf("-") < 0) {
-            return clientId;
-        }
-        String[] ids = StringUtil.split(clientId, String
-                .valueOf(NamingContainer.SEPARATOR_CHAR));
-        StringBuffer buf = new StringBuffer();
-        for (int i = 0; i < ids.length; i++) {
-            String s = ids[i];
-            int index = s.indexOf("-");
-            if (index >= 0) {
-                s = s.substring(0, index);
-            }
-            buf.append(s);
-            buf.append(NamingContainer.SEPARATOR_CHAR);
-        }
-        buf.setLength(buf.length() - 1);
-        return buf.toString();
-    }
 }

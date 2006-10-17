@@ -28,6 +28,7 @@ import javax.faces.convert.ConverterException;
 
 import org.seasar.framework.beans.util.BeanUtil;
 import org.seasar.framework.util.ClassUtil;
+import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.AbstractInputRenderer;
 import org.seasar.teeda.core.render.EncodeConverter;
@@ -123,7 +124,11 @@ public class THtmlInputHiddenRenderer extends AbstractInputRenderer {
             final UIComponent component, final Object submittedValue)
             throws ConverterException {
         assertNotNull(context, component);
-        final ComponentHolder holder = (ComponentHolder) deserialize((String) submittedValue);
+        String s = (String) submittedValue;
+        if(s.equals("")) {
+            return "";
+        }
+        final ComponentHolder holder = (ComponentHolder) deserialize(s);
         final String arrayClassName = holder.getArrayClassName();
         final String componentClassName = holder.getComponentClassName();
         final Class componentClass = ClassUtil.forName(componentClassName);

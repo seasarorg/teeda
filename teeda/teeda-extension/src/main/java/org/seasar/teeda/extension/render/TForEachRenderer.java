@@ -28,6 +28,7 @@ import org.seasar.framework.beans.PropertyDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.teeda.core.render.AbstractRenderer;
 import org.seasar.teeda.extension.component.TForEach;
+import org.seasar.teeda.extension.util.AdjustValueHolderUtil;
 
 /**
  * @author higa
@@ -52,8 +53,9 @@ public class TForEachRenderer extends AbstractRenderer {
         final String itemName = forEach.getItemName();
         final String indexName = forEach.getIndexName();
         int rowSize = forEach.getRowSize();
-        if (rowSize == 0) {
-            rowSize = items.length;
+        int len = (items != null) ? items.length : 0;
+        if (len > rowSize) {
+            rowSize = len;
         }
         for (int i = 0; i < rowSize; ++i) {
             forEach.enterRow(context, i);
@@ -131,10 +133,12 @@ public class TForEachRenderer extends AbstractRenderer {
     }
 
     private int getRowSize(FacesContext context, final TForEach forEach) {
-        final Map reqParam = context.getExternalContext()
+        final Map paramMap = context.getExternalContext()
                 .getRequestParameterMap();
-        final String namingPrefix = forEach.getClientId(context)
-                + NamingContainer.SEPARATOR_CHAR;
+        final Map reqParam = AdjustValueHolderUtil.adjustParamMap(paramMap);
+        final String clientId = AdjustValueHolderUtil.getAdjustedValue(forEach
+                .getClientId(context));
+        final String namingPrefix = clientId + NamingContainer.SEPARATOR_CHAR;
         int rowSize = -1;
         for (final Iterator it = reqParam.keySet().iterator(); it.hasNext();) {
             final String name = (String) it.next();

@@ -18,11 +18,13 @@ package org.seasar.teeda.extension.render;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.faces.context.FacesContext;
 import javax.faces.render.Renderer;
 import javax.faces.render.RendererTest;
 
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
+import org.seasar.teeda.extension.component.TForEach;
 
 /**
  * @author higa
@@ -30,6 +32,24 @@ import org.seasar.framework.beans.factory.BeanDescFactory;
  */
 public class TForEachRendererTest extends RendererTest {
 
+    public void testDecode() throws Exception {
+        TForEachRenderer renderer = new TForEachRenderer();
+        FacesContext context = getFacesContext();
+        Map param = context.getExternalContext().getRequestParameterMap();
+        param.put("hogeItems-1:0:aaa", "aaa");
+        param.put("hogeItems-1:1:aaa", "bbb");
+        param.put("hogeItems-1:2:aaa", "ccc");
+        TForEach t = new TForEach() {
+
+            public String getClientId(FacesContext context) {
+                return "hogeItems";
+            }
+            
+        };
+        renderer.decode(context, t);
+        assertTrue(t.getRowSize() == 3);
+    }
+    
     public void testProcessMapItem() throws Exception {
         TForEachRenderer renderer = new TForEachRenderer();
         Map item = new HashMap();
