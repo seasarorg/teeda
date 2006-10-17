@@ -17,13 +17,13 @@ package org.seasar.teeda.extension.component;
 
 import java.util.Iterator;
 
+import javax.faces.component.ComponentUtil_;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIComponentBase;
-import javax.faces.component.html.HtmlInputHidden;
 import javax.faces.context.FacesContext;
+import javax.faces.event.PhaseId;
 
 import org.seasar.framework.util.AssertionUtil;
-import org.seasar.teeda.extension.ExtensionConstants;
 
 /**
  * @author shot
@@ -36,6 +36,8 @@ public class TCondition extends UIComponentBase {
 
     private static final String DEFAULT_RENDERER_TYPE = "org.seasar.teeda.extension.Condition";
 
+    private boolean submitted = true;
+
     public TCondition() {
         super.setRendererType(DEFAULT_RENDERER_TYPE);
     }
@@ -44,28 +46,44 @@ public class TCondition extends UIComponentBase {
         return COMPONENT_FAMILY;
     }
 
-    public void processDecodes(FacesContext context) {
-        AssertionUtil.assertNotNull("context", context);
-        Object rendered = null;
-        for (Iterator itr = getChildren().iterator(); itr.hasNext();) {
-            UIComponent c = (UIComponent) itr.next();
-            if (c instanceof HtmlInputHidden) {
-                HtmlInputHidden hidden = (HtmlInputHidden) c;
-                String hiddenId = c.getId();
-                if (hiddenId.equals(getId()
-                        + ExtensionConstants.TEEDA_HIDDEN_SUFFIX)) {
-                    hidden.decode(context);
-                    rendered = hidden.getSubmittedValue();
-                    break;
-                }
-            }
-        }
-        if ("true".equals(rendered)) {
-            for (Iterator children = getFacetsAndChildren(); children.hasNext();) {
-                UIComponent component = (UIComponent) children.next();
-                component.processDecodes(context);
-            }
-        }
+    /**
+     * @return Returns the submitted.
+     */
+    public boolean isSubmitted() {
+        return submitted;
     }
 
+    /**
+     * @param submitted The submitted to set.
+     */
+    public void setSubmitted(boolean submitted) {
+        this.submitted = submitted;
+    }
+
+    public void processDecodes(FacesContext context) {
+        AssertionUtil.assertNotNull("context", context);
+        decode(context);
+        processAppropriateAction(context, PhaseId.APPLY_REQUEST_VALUES);
+    }
+
+    public void processUpdates(FacesContext context) {
+        AssertionUtil.assertNotNull("context", context);
+        processAppropriateAction(context, PhaseId.UPDATE_MODEL_VALUES);
+    }
+
+    public void processValidators(FacesContext context) {
+        AssertionUtil.assertNotNull("context", context);
+        processAppropriateAction(context, PhaseId.PROCESS_VALIDATIONS);
+    }
+
+    protected void processAppropriateAction(FacesContext context, PhaseId phase) {
+        if (!isSubmitted()) {
+            return;
+        }
+        for (Iterator children = getFacetsAndChildren(); children.hasNext();) {
+            UIComponent component = (UIComponent) children.next();
+            ComponentUtil_.processAppropriatePhaseAction(context, component,
+                    phase);
+        }
+    }
 }

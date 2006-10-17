@@ -38,6 +38,33 @@ public class TConditionRenderer extends AbstractRenderer {
 
     public static final String RENDERER_TYPE = "org.seasar.teeda.extension.Condition";
 
+    public void decode(FacesContext context, UIComponent component) {
+        assertNotNull(context, component);
+        decodeTCondition(context, (TCondition) component);
+    }
+
+    protected void decodeTCondition(FacesContext context, TCondition condition) {
+        Object submitted = null;
+        for (Iterator itr = condition.getChildren().iterator(); itr.hasNext();) {
+            UIComponent c = (UIComponent) itr.next();
+            if (c instanceof HtmlInputHidden) {
+                HtmlInputHidden hidden = (HtmlInputHidden) c;
+                String hiddenId = c.getId();
+                if (hiddenId.equals(condition.getId()
+                        + ExtensionConstants.TEEDA_HIDDEN_SUFFIX)) {
+                    hidden.decode(context);
+                    submitted = hidden.getSubmittedValue();
+                    break;
+                }
+            }
+        }
+        if ("true".equals(submitted)) {
+            condition.setSubmitted(true);
+        } else {
+            condition.setSubmitted(false);
+        }
+    }
+    
     public void encodeBegin(FacesContext context, UIComponent component)
             throws IOException {
         super.encodeBegin(context, component);
