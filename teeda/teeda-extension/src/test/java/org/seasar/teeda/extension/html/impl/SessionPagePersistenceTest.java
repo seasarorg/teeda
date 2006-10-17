@@ -21,10 +21,13 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
+import org.seasar.framework.beans.BeanDesc;
+import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.framework.convention.NamingConvention;
 import org.seasar.framework.convention.impl.NamingConventionImpl;
 import org.seasar.framework.util.ClassUtil;
@@ -42,7 +45,7 @@ import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
  */
 public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
 
-    public void testConvertPageData() throws Exception {
+    public void testConvertDefaultPageData() throws Exception {
         Hoge hoge = new Hoge();
         hoge.setInt1(1);
         hoge.setInt2(new Integer(2));
@@ -65,8 +68,75 @@ public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
             }
 
         });
-        Map map = persistence.convertPageData(hoge, "bbb");
+        BeanDesc beanDesc = BeanDescFactory.getBeanDesc(Hoge.class);
+        Set nextPageProperties = persistence.getNextPageProperties(null);
+        Map map = persistence.convertDefaultPageData(getFacesContext(),
+                beanDesc, hoge, nextPageProperties);
         assertEquals(new Integer(1), map.get("int1"));
+        assertEquals(new Integer(2), map.get("int2"));
+        assertEquals(Boolean.TRUE, map.get("bool1"));
+        assertEquals(Boolean.TRUE, map.get("bool2"));
+        assertEquals("str", map.get("str"));
+        assertEquals(timestamp, map.get("timestamp"));
+        // TODO https://www.seasar.org/issues/browse/TEEDA-88
+        // でListも対応する際に、このassertは逆転する。
+        assertNotNull(map.get("list"));
+        assertNotNull(map.get("strArray"));
+    }
+
+    public void testConvertIncludePageData() throws Exception {
+        Hoge hoge = new Hoge();
+        hoge.setInt1(1);
+        hoge.setInt2(new Integer(2));
+        SessionPagePersistence persistence = new SessionPagePersistence();
+        persistence.setNamingConvention(new NamingConventionImpl() {
+
+            public Class fromComponentNameToClass(String componentName) {
+                return Hoge.class;
+            }
+
+            public String fromPathToPageName(String path) {
+                return "hoge";
+            }
+
+        });
+        BeanDesc beanDesc = BeanDescFactory.getBeanDesc(Hoge.class);
+        Set nextPageProperties = persistence.getNextPageProperties(null);
+        Map map = persistence.convertIncludePageData(getFacesContext(),
+                beanDesc, hoge, new String[] { "int1" }, nextPageProperties);
+        assertEquals(new Integer(1), map.get("int1"));
+        assertNull(map.get("int2"));
+        assertEquals(1, map.size());
+    }
+
+    public void testConvertExcludePageData() throws Exception {
+        Hoge hoge = new Hoge();
+        hoge.setInt1(1);
+        hoge.setInt2(new Integer(2));
+        hoge.setBool1(true);
+        hoge.setBool2(Boolean.TRUE);
+        hoge.setStr("str");
+        Timestamp timestamp = new Timestamp(new Date().getTime());
+        hoge.setTimestamp(timestamp);
+        hoge.setList(new ArrayList());
+        hoge.setStrArray(new String[0]);
+        SessionPagePersistence persistence = new SessionPagePersistence();
+        persistence.setNamingConvention(new NamingConventionImpl() {
+
+            public Class fromComponentNameToClass(String componentName) {
+                return Hoge.class;
+            }
+
+            public String fromPathToPageName(String path) {
+                return "hoge";
+            }
+
+        });
+        BeanDesc beanDesc = BeanDescFactory.getBeanDesc(Hoge.class);
+        Set nextPageProperties = persistence.getNextPageProperties(null);
+        Map map = persistence.convertExcludePageData(getFacesContext(),
+                beanDesc, hoge, new String[] { "int1" }, nextPageProperties);
+        assertNull(map.get("int1"));
         assertEquals(new Integer(2), map.get("int2"));
         assertEquals(Boolean.TRUE, map.get("bool1"));
         assertEquals(Boolean.TRUE, map.get("bool2"));
@@ -88,19 +158,23 @@ public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
         convention.setViewRootPath(rootPath);
         convention.setViewExtension(".html");
         spp.setNamingConvention(convention);
-        PageDescCacheImpl cache = new PageDescCacheImpl();
-        cache.setNamingConvention(convention);
-        cache.setContainer(getContainer());
-        spp.setPageDescCache(cache);
+        PageDescCacheImpl pageDescCache = new PageDescCacheImpl();
+        pageDescCache.setNamingConvention(convention);
+        pageDescCache.setContainer(getContainer());
+        spp.setPageDescCache(pageDescCache);
+        ActionDescCacheImpl actionDescCache = new ActionDescCacheImpl();
+        actionDescCache.setNamingConvention(convention);
+        actionDescCache.setContainer(getContainer());
+        spp.setActionDescCache(actionDescCache);
         register(FooPage.class, "fooPage");
         register(Foo2Page.class, "foo2Page");
         register(Foo3Page.class, "foo3Page");
         String path = rootPath + "/foo.html";
         String path2 = rootPath + "/foo2.html";
         String path3 = rootPath + "/foo3.html";
-        cache.createPageDesc(path);
-        cache.createPageDesc(path2);
-        cache.createPageDesc(path3);
+        pageDescCache.createPageDesc(path);
+        pageDescCache.createPageDesc(path2);
+        pageDescCache.createPageDesc(path3);
         FacesContext context = getFacesContext();
         context.getViewRoot().setViewId(path);
         spp.save(context, path2);
@@ -150,6 +224,10 @@ public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
         };
         pagePersistence.setNamingConvention(namingConvention);
         pagePersistence.setPageDescCache(pageDescCache);
+        ActionDescCacheImpl actionDescCache = new ActionDescCacheImpl();
+        actionDescCache.setNamingConvention(namingConvention);
+        actionDescCache.setContainer(getContainer());
+        pagePersistence.setActionDescCache(actionDescCache);
         final FacesContext context = getFacesContext();
         context.getViewRoot().setViewId(fromViewId);
 
@@ -207,6 +285,10 @@ public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
         };
         pagePersistence.setNamingConvention(namingConvention);
         pagePersistence.setPageDescCache(pageDescCache);
+        ActionDescCacheImpl actionDescCache = new ActionDescCacheImpl();
+        actionDescCache.setNamingConvention(namingConvention);
+        actionDescCache.setContainer(getContainer());
+        pagePersistence.setActionDescCache(actionDescCache);
         final FacesContext context = getFacesContext();
         context.getViewRoot().setViewId(fromViewId);
 

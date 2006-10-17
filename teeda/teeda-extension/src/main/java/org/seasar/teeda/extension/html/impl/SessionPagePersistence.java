@@ -19,9 +19,11 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.Map.Entry;
 
 import javax.faces.context.ExternalContext;
@@ -32,14 +34,19 @@ import org.seasar.framework.beans.PropertyDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.framework.beans.util.BeanUtil;
 import org.seasar.framework.convention.NamingConvention;
+import org.seasar.framework.util.ArrayUtil;
 import org.seasar.framework.util.ClassUtil;
 import org.seasar.framework.util.LruHashMap;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.util.DIContainerUtil;
 import org.seasar.teeda.core.util.ExternalContextUtil;
+import org.seasar.teeda.extension.html.ActionDesc;
+import org.seasar.teeda.extension.html.ActionDescCache;
 import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.PageDescCache;
 import org.seasar.teeda.extension.html.PagePersistence;
+import org.seasar.teeda.extension.html.TakeOverDesc;
+import org.seasar.teeda.extension.html.TakeOverTypeDesc;
 import org.seasar.teeda.extension.util.ComponentHolder;
 import org.seasar.teeda.extension.util.ComponentHolderBuilderUtil;
 import org.seasar.teeda.extension.util.PagePersistenceUtil;
@@ -57,6 +64,8 @@ public class SessionPagePersistence implements PagePersistence {
 
     private PageDescCache pageDescCache;
 
+    private ActionDescCache actionDescCache;
+
     private NamingConvention namingConvention;
 
     public int getPageSize() {
@@ -71,6 +80,20 @@ public class SessionPagePersistence implements PagePersistence {
         this.pageDescCache = pageDescCache;
     }
 
+    /**
+     * @return Returns the actionDescCache.
+     */
+    public ActionDescCache getActionDescCache() {
+        return actionDescCache;
+    }
+
+    /**
+     * @param actionDescCache The actionDescCache to set.
+     */
+    public void setActionDescCache(ActionDescCache actionDescCache) {
+        this.actionDescCache = actionDescCache;
+    }
+
     public void save(FacesContext context, String viewId) {
         ExternalContext extCtx = context.getExternalContext();
         Map sessionMap = extCtx.getSessionMap();
@@ -80,70 +103,43 @@ public class SessionPagePersistence implements PagePersistence {
             sessionMap.put(getClass().getName(), lru);
         }
         String previousViewId = context.getViewRoot().getViewId();
-        lru.put(viewId, getPageData(viewId, previousViewId));
+        lru.put(viewId, getPageData(context, viewId, previousViewId));
     }
 
-    protected Map getPageData(String viewId, String previousViewId) {
+    protected Map getPageData(FacesContext context, String viewId,
+            String previousViewId) {
         PageDesc pageDesc = pageDescCache.getPageDesc(previousViewId);
         if (pageDesc == null) {
             return null;
         }
         Object page = DIContainerUtil.getComponent(pageDesc.getPageName());
-        return convertPageData(page, viewId);
+        return convertPageData(context, page, viewId, previousViewId, pageDesc);
     }
 
-    protected Map convertPageData(Object page, String viewId) {
-        Map map = new HashMap();
+    protected Map convertPageData(FacesContext context, Object page,
+            String viewId, String previousViewId, PageDesc pageDesc) {
         Class pageClass = page.getClass();
         BeanDesc beanDesc = BeanDescFactory.getBeanDesc(pageClass);
-        String nextPageName = namingConvention.fromPathToPageName(viewId);
-        Class nextPageClass = namingConvention
-                .fromComponentNameToClass(nextPageName);
-        if (nextPageClass == null) {
-            return map;
+        Set nextPageProperties = getNextPageProperties(viewId);
+        if (nextPageProperties.isEmpty()) {
+            return new HashMap();
         }
-        BeanDesc nextPageBeanDesc = BeanDescFactory.getBeanDesc(nextPageClass);
-        List nextPageProperties = getNextPageProperties(nextPageBeanDesc);
-        for (int i = 0; i < beanDesc.getPropertyDescSize(); ++i) {
-            PropertyDesc pd = beanDesc.getPropertyDesc(i);
-            if (!pd.hasReadMethod()
-                    || !hasSameProperties(nextPageProperties, pd
-                            .getPropertyName())) {
-                continue;
-            }
-            if (!pd.getPropertyType().isArray()
-                    && !Collection.class.isAssignableFrom(pd.getPropertyType())
-                    && !PagePersistenceUtil.isPersistenceType(pd
-                            .getPropertyType())) {
-                continue;
-            }
-            final Object value = pd.getValue(page);
-            final ComponentHolder holder = ComponentHolderBuilderUtil
-                    .build(value);
-            if (holder != null) {
-                map.put(pd.getPropertyName(), holder);
-            } else {
-                map.put(pd.getPropertyName(), value);
-            }
-        }
-        return map;
-    }
-
-    protected boolean hasSameProperties(List list, String propertyName) {
-        for (Iterator itr = list.iterator(); itr.hasNext();) {
-            String name = (String) itr.next();
-            if (propertyName.equals(name)) {
-                return true;
-            }
-        }
-        return false;
+        return convertPageData(context, beanDesc, viewId, pageDesc, page,
+                nextPageProperties);
     }
 
     /*
      * postbackとpreviousViewIdはPage間で引き継がない
      */
-    protected List getNextPageProperties(final BeanDesc beanDesc) {
-        final List list = new ArrayList();
+    protected Set getNextPageProperties(final String viewId) {
+        final Set set = new HashSet();
+        String nextPageName = namingConvention.fromPathToPageName(viewId);
+        Class nextPageClass = namingConvention
+                .fromComponentNameToClass(nextPageName);
+        if (nextPageClass == null) {
+            return set;
+        }
+        BeanDesc beanDesc = BeanDescFactory.getBeanDesc(nextPageClass);
         for (int i = 0; i < beanDesc.getPropertyDescSize(); ++i) {
             final PropertyDesc pd = beanDesc.getPropertyDesc(i);
             final String propertyName = pd.getPropertyName();
@@ -153,9 +149,112 @@ public class SessionPagePersistence implements PagePersistence {
             if (JsfConstants.PREVIOUS_VIEW_ID.equals(propertyName)) {
                 continue;
             }
-            list.add(propertyName);
+            set.add(propertyName);
         }
-        return list;
+        return set;
+    }
+
+    protected Map convertPageData(FacesContext context, BeanDesc beanDesc,
+            String viewId, PageDesc pageDesc, Object page,
+            Set nextPageProperties) {
+        String methodName = PagePersistenceUtil.getActionMethodName(context);
+        ActionDesc actionDesc = actionDescCache.getActionDesc(viewId);
+        if (methodName != null && actionDesc != null
+                && actionDesc.hasTakeOverDesc(methodName)) {
+            return convertPageData(context, beanDesc, actionDesc
+                    .getTakeOverDesc(methodName), page, nextPageProperties);
+        }
+        if (methodName != null && pageDesc != null
+                && pageDesc.hasTakeOverDesc(methodName)) {
+            return convertPageData(context, beanDesc, pageDesc
+                    .getTakeOverDesc(methodName), page, nextPageProperties);
+        }
+        return convertDefaultPageData(context, beanDesc, page,
+                nextPageProperties);
+    }
+
+    protected Map convertPageData(FacesContext context, BeanDesc beanDesc,
+            TakeOverDesc takeOverDesc, Object page, Set nextPageProperties) {
+        TakeOverTypeDesc takeOverTypeDesc = takeOverDesc.getTakeOverTypeDesc();
+        if (takeOverTypeDesc.equals(TakeOverTypeDescFactory.NEVER)) {
+            return new HashMap();
+        }
+        if (takeOverTypeDesc.equals(TakeOverTypeDescFactory.INCLUDE)
+                && takeOverDesc.getProperties().length != 0) {
+            return convertIncludePageData(context, beanDesc, page, takeOverDesc
+                    .getProperties(), nextPageProperties);
+        }
+        if (takeOverTypeDesc.equals(TakeOverTypeDescFactory.EXCLUDE)
+                && takeOverDesc.getProperties().length != 0) {
+            return convertExcludePageData(context, beanDesc, page, takeOverDesc
+                    .getProperties(), nextPageProperties);
+        }
+        return convertDefaultPageData(context, beanDesc, page,
+                nextPageProperties);
+    }
+
+    protected Map convertIncludePageData(FacesContext context,
+            BeanDesc beanDesc, Object page, String[] properties,
+            Set nextPageProperties) {
+        Map map = new HashMap();
+        for (int i = 0; i < properties.length; ++i) {
+            String propertyName = properties[i];
+            PropertyDesc pd = beanDesc.getPropertyDesc(propertyName);
+            if (!pd.hasReadMethod()
+                    || !nextPageProperties.contains(pd.getPropertyName())) {
+                continue;
+            }
+            putValue(map, page, pd);
+        }
+        return map;
+    }
+
+    protected Map convertExcludePageData(FacesContext context,
+            BeanDesc beanDesc, Object page, String[] properties,
+            Set nextPageProperties) {
+        Map map = new HashMap();
+        for (int i = 0; i < beanDesc.getPropertyDescSize(); ++i) {
+            PropertyDesc pd = beanDesc.getPropertyDesc(i);
+            if (!pd.hasReadMethod()
+                    || !nextPageProperties.contains(pd.getPropertyName())) {
+                continue;
+            }
+            if (ArrayUtil.contains(properties, pd.getPropertyName())) {
+                continue;
+            }
+            putValue(map, page, pd);
+        }
+        return map;
+    }
+
+    protected Map convertDefaultPageData(FacesContext context,
+            BeanDesc beanDesc, Object page, Set nextPageProperties) {
+        Map map = new HashMap();
+        for (int i = 0; i < beanDesc.getPropertyDescSize(); ++i) {
+            PropertyDesc pd = beanDesc.getPropertyDesc(i);
+            if (!pd.hasReadMethod()
+                    || !nextPageProperties.contains(pd.getPropertyName())) {
+                continue;
+            }
+            if (!pd.getPropertyType().isArray()
+                    && !Collection.class.isAssignableFrom(pd.getPropertyType())
+                    && !PagePersistenceUtil.isPersistenceType(pd
+                            .getPropertyType())) {
+                continue;
+            }
+            putValue(map, page, pd);
+        }
+        return map;
+    }
+
+    protected void putValue(Map map, Object page, PropertyDesc pd) {
+        final Object value = pd.getValue(page);
+        final ComponentHolder holder = ComponentHolderBuilderUtil.build(value);
+        if (holder != null) {
+            map.put(pd.getPropertyName(), holder);
+        } else {
+            map.put(pd.getPropertyName(), value);
+        }
     }
 
     public void restore(FacesContext context, String viewId) {

@@ -123,6 +123,7 @@ public class HtmlViewHandlerTest extends TeedaExtensionTestCase {
         SessionPagePersistence spp = new SessionPagePersistence();
         spp.setNamingConvention(convention);
         spp.setPageDescCache(pageDescCache);
+        spp.setActionDescCache(actionDescCache);
         viewHandler.setPagePersistence(spp);
         getFacesContext().getViewRoot().setViewId(path);
         FooPage fooPage = (FooPage) getComponent(FooPage.class);
