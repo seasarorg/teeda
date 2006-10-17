@@ -108,6 +108,9 @@ public class HtmlResponseWriter extends ResponseWriter {
                     "there is no currently open element");
         }
         final String strValue = (value == null) ? "" : value.toString();
+        if (isDisabledFalse(name, strValue)) {
+            return;
+        }
         final Writer writer = getWriter();
         writer.write(" ");
         writer.write(name);
@@ -357,6 +360,11 @@ public class HtmlResponseWriter extends ResponseWriter {
 
     public String toString() {
         return writer.toString();
+    }
+    
+    protected boolean isDisabledFalse(String name, String value) {
+        return (JsfConstants.DISABLED_ATTR.equalsIgnoreCase(name) && !"true"
+                .equalsIgnoreCase(value));
     }
 
 }

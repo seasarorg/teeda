@@ -565,6 +565,45 @@ public class HtmlResponseWriterTest extends TestCase {
             ExceptionAssert.assertMessageExist(ise);
         }
     }
+    
+    public void testWriteAttributeDisabledTrue() throws Exception {
+        HtmlResponseWriter responseWriter = new HtmlResponseWriter();
+        SPrintWriter writer = new SPrintWriter();
+        responseWriter.setWriter(writer);
+
+        responseWriter.startElement("input", null);
+        responseWriter.writeAttribute("type", "button", null);
+        responseWriter.writeAttribute("disabled", "true", null);
+
+        String value = writer.toString();
+        assertEquals("<input type=\"button\" disabled=\"true\"", value);
+    }
+    
+    public void testWriteAttributeDisabledFalse() throws Exception {
+        HtmlResponseWriter responseWriter = new HtmlResponseWriter();
+        SPrintWriter writer = new SPrintWriter();
+        responseWriter.setWriter(writer);
+
+        responseWriter.startElement("input", null);
+        responseWriter.writeAttribute("type", "button", null);
+        responseWriter.writeAttribute("disabled", "false", null);
+
+        String value = writer.toString();
+        assertEquals("<input type=\"button\"", value);
+    }
+    
+    public void testWriteAttributeDisabledNull() throws Exception {
+        HtmlResponseWriter responseWriter = new HtmlResponseWriter();
+        SPrintWriter writer = new SPrintWriter();
+        responseWriter.setWriter(writer);
+
+        responseWriter.startElement("input", null);
+        responseWriter.writeAttribute("type", "button", null);
+        responseWriter.writeAttribute("disabled", null, null);
+
+        String value = writer.toString();
+        assertEquals("<input type=\"button\"", value);
+    }
 
     public void testWriteURIAttribute_NameIsNull() throws Exception {
         final HtmlResponseWriter responseWriter = new HtmlResponseWriter();
