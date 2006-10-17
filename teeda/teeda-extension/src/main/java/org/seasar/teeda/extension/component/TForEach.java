@@ -210,6 +210,20 @@ public class TForEach extends UIComponentBase implements NamingContainer {
                 leaveRow(context);
                 pageToItem(page, pageBeanDesc, items[i], itemBeanDesc);
             }
+            /*
+             * TODO さしあたり、こちら側のifのみ修正する。
+             * https://www.seasar.org/issues/browse/TEEDA-139
+             */
+            for (int i = 0; i < itemBeanDesc.getPropertyDescSize(); i++) {
+                final PropertyDesc itemPd = itemBeanDesc.getPropertyDesc(i);
+                final String propertyName = itemPd.getPropertyName();
+                if (!pageBeanDesc.hasPropertyDesc(propertyName)) {
+                    continue;
+                }
+                final PropertyDesc pagePd = pageBeanDesc
+                        .getPropertyDesc(propertyName);
+                pagePd.setValue(page, null);
+            }
         }
         itemsPd.setValue(page, items);
     }

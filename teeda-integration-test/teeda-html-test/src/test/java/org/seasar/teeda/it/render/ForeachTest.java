@@ -73,4 +73,42 @@ public class ForeachTest extends TeedaWebTestCase {
         tester.assertTableEquals("foreachTable", table);
     }
 
+    /*
+     * https://www.seasar.org/issues/browse/TEEDA-139
+     * 
+     * 同じitemsを複数回ForEachした際に、復元のために使っているPageのプロパティに
+     * 前にForEachした際の最後の要素の値が残ってしまっているため、
+     * 最後の要素の値がレンダされてしまっていた。
+     */
+    public void testMulti() throws Exception {
+        // ## Arrange ##
+        TeedaWebTester tester = new TeedaWebTester();
+        tester.getTestContext().setBaseUrl(getBaseUrl());
+
+        // ## Act ##
+        // ## Assert ##
+        tester.beginAt("view/foreach/foreachMulti.html");
+        tester.dumpHtml();
+
+        tester.assertTextFieldEquals("fooItems-aaa:0:aaa", "aa1");
+        tester.assertTextFieldEquals("fooItems-aaa:1:aaa", "aa2");
+        tester.assertTextFieldEquals("fooItems-aaa:2:aaa", "aa3");
+        tester.assertTextFieldEquals("fooItems-bbb:0:bbb", "bb1");
+        tester.assertTextFieldEquals("fooItems-bbb:1:bbb", "bb2");
+        tester.assertTextFieldEquals("fooItems-bbb:2:bbb", "bb3");
+
+        tester.clickButton("doSomething");
+
+        tester.dumpHtml();
+        /*
+         * "aa1", "aa2", "aa3"が、すべて"aa3"になってしまっていた。
+         */
+        tester.assertTextFieldEquals("fooItems-aaa:0:aaa", "aa1");
+        tester.assertTextFieldEquals("fooItems-aaa:1:aaa", "aa2");
+        tester.assertTextFieldEquals("fooItems-aaa:2:aaa", "aa3");
+        tester.assertTextFieldEquals("fooItems-bbb:0:bbb", "bb1");
+        tester.assertTextFieldEquals("fooItems-bbb:1:bbb", "bb2");
+        tester.assertTextFieldEquals("fooItems-bbb:2:bbb", "bb3");
+    }
+
 }
