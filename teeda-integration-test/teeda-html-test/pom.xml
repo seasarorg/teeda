@@ -7,7 +7,7 @@
   <parent>
     <groupId>org.seasar.teeda.it</groupId>
     <artifactId>teeda-integration-test-project</artifactId>
-    <version>1.0-beta-7-SNAPSHOT</version>
+    <version>1.0-rc-2-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>teeda-html-test</artifactId>
@@ -34,15 +34,8 @@
   <dependencies>
     <dependency>
       <groupId>org.seasar.teeda</groupId>
-      <artifactId>teeda-webunit</artifactId>
-      <version>0.1.0-SNAPSHOT</version>
-      <type>jar</type>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.seasar.teeda</groupId>
       <artifactId>teeda-extension</artifactId>
-      <version>1.0-beta-7-SNAPSHOT</version>
+      <version>1.0-rc-2-SNAPSHOT</version>
       <type>jar</type>
     </dependency>
   </dependencies>
