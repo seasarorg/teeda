@@ -116,6 +116,31 @@ public class THtmlGridInputTextRendererTest extends RendererTest {
         assertEquals(diff.toString(), true, diff.identical());
     }
 
+    public void testEncode_WithAttributes() throws Exception {
+        // ## Arrange ##
+        gridInputText.setValue("abc");
+        gridInputText.setOnchange("achange");
+        gridInputText.setOnblur("ablur");
+        gridInputText.setOnfocus("afocus");
+
+        // ## Act ##
+        encodeByRenderer(renderer, gridInputText);
+
+        // ## Assert ##
+        final String expected = "<div onclick=\"Teeda.THtmlGrid.editOn(this);\">"
+                + "<span>abc</span>"
+                + "<input type=\"text\" name=\"_id0\" value=\"abc\""
+                + " onblur=\"Teeda.THtmlGrid.editOff(this); ablur\""
+                + " onchange=\"achange\""
+                + " onfocus=\"afocus\""
+                + " class=\"gridCellEdit\""
+                + " style=\"display:none;\" />"
+                + "</div>";
+        System.out.println(getResponseText());
+        Diff diff = diff(expected, getResponseText());
+        assertEquals(diff.toString(), true, diff.identical());
+    }
+
     protected Diff diff(final String expected, final String actual)
             throws SAXException, IOException, ParserConfigurationException {
         return super.diff("<dummy>" + expected + "</dummy>", "<dummy>" + actual

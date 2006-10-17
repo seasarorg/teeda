@@ -26,7 +26,7 @@ import org.seasar.framework.util.AssertionUtil;
  */
 public class IgnoreComponent {
 
-    private List ignoreComponentNameList;
+    private final List ignoreComponentNameList;
 
     public IgnoreComponent() {
         ignoreComponentNameList = new ArrayList();
@@ -37,7 +37,7 @@ public class IgnoreComponent {
         return ignoreComponentNameList.toArray();
     }
 
-    public void addIgnoreComponentName(String componentName) {
+    public void addIgnoreComponentName(final String componentName) {
         AssertionUtil.assertNotNull("ignorerable", componentName);
         ignoreComponentNameList.add(componentName);
     }
@@ -63,9 +63,11 @@ public class IgnoreComponent {
         addIgnoreComponentName("rendered");
         addIgnoreComponentName("rendererType");
         addIgnoreComponentName("rendersChildren");
+        addIgnoreComponentName("valid");
         addIgnoreComponentName("validator");
         addIgnoreComponentName("validators");
         addIgnoreComponentName("valueChangeListener");
         addIgnoreComponentName("valueChangeListeners");
     }
+
 }
