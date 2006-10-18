@@ -8,6 +8,8 @@ public class AddResultPage {
 
 	private Integer result;
 
+	public static final String jumpAddInput_TAKE_OVER = "type=never";
+
 	public Integer getArg1() {
 		return arg1;
 	}

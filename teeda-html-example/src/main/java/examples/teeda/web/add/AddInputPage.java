@@ -33,8 +33,6 @@ public class AddInputPage {
 	}
 
 	public String initialize() {
-		arg1 = null;
-		arg2 = null;
 		return null;
 	}
 }
