@@ -88,6 +88,7 @@ public class InputTextTagTest extends TeedaTestCase {
         tag.setStyleClass("styleclass");
         tag.setTabindex("13");
         tag.setTitle("title");
+        tag.setAutocomplete("on");
 
         // # Act #
         tag.setProperties(component);
@@ -130,6 +131,7 @@ public class InputTextTagTest extends TeedaTestCase {
         assertEquals("styleclass", component.getStyleClass());
         assertEquals("13", component.getTabindex());
         assertEquals("title", component.getTitle());
+        assertEquals("on", component.getAutocomplete());
     }
 
     public void testRelease() throws Exception {
@@ -140,6 +142,7 @@ public class InputTextTagTest extends TeedaTestCase {
         tag.setValidator("hoge");
         tag.setValueChangeListener("#{mock.listener}");
         tag.setReadonly("true");
+        tag.setAutocomplete("off");
         
         // # Act #
         tag.release();
@@ -150,6 +153,7 @@ public class InputTextTagTest extends TeedaTestCase {
         assertEquals(null, tag.getValidator());
         assertEquals(null, tag.getValueChangeListener());
         assertEquals(null, tag.getReadonly());
+        assertEquals(null, tag.getAutocomplete());
     }
 
     private HtmlInputText createHtmlInputText() {
