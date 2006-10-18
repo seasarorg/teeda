@@ -21,6 +21,7 @@ public class ConstantTakeOverDescAnnotationHandlerTest extends TeedaTestCase {
         assertTrue(map.containsKey("doHoge"));
         assertTrue(map.containsKey("doHoge2"));
         assertTrue(map.containsKey("jumpHoge3"));
+        assertFalse(map.containsKey("notAllowedPrefixMethod"));
         assertFalse(map.containsKey("xxx"));
         TakeOverDesc tod = (TakeOverDesc) map.get("doHoge");
         assertEquals(TakeOverTypeDescFactory.INCLUDE, tod.getTakeOverTypeDesc());
@@ -47,6 +48,8 @@ public class ConstantTakeOverDescAnnotationHandlerTest extends TeedaTestCase {
         public static final String doHoge2_TAKE_OVER = "type=never";
 
         public static final String jumpHoge3_TAKE_OVER = "type=never";
+
+        public static final String notAllowedPrefixMethod_TAKE_OVER = "type=never";
 
         public String doHoge() {
             return null;

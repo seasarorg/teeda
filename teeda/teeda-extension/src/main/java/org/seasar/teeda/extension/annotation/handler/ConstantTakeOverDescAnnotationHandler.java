@@ -24,6 +24,7 @@ import org.seasar.framework.container.ComponentDef;
 import org.seasar.framework.container.S2Container;
 import org.seasar.framework.container.util.ConstantAnnotationUtil;
 import org.seasar.framework.util.FieldUtil;
+import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.html.TakeOverDesc;
 
 /**
@@ -51,9 +52,11 @@ public class ConstantTakeOverDescAnnotationHandler extends
             }
             String methodName = fieldName.substring(0, fieldName.length()
                     - TAKE_OVER_SUFFIX.length());
-            //            if (!beanDesc.hasMethod(methodName)) {
-            //                continue;
-            //            }
+            if (!beanDesc.hasMethod(methodName)
+                    && !methodName.startsWith(ExtensionConstants.GO_PREFIX)
+                    && !methodName.startsWith(ExtensionConstants.JUMP_PREFIX)) {
+                continue;
+            }
             String s = FieldUtil.getString(field);
             Map m = ConstantAnnotationUtil.convertExpressionToMap(s);
             String type = (String) m.get("type");
