@@ -39,7 +39,6 @@ import org.seasar.framework.util.ClassUtil;
 import org.seasar.framework.util.LruHashMap;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.util.DIContainerUtil;
-import org.seasar.teeda.core.util.ExternalContextUtil;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ActionDescCache;
 import org.seasar.teeda.extension.html.PageDesc;
@@ -68,32 +67,6 @@ public class SessionPagePersistence implements PagePersistence {
 
     private NamingConvention namingConvention;
 
-    public int getPageSize() {
-        return pageSize;
-    }
-
-    public void setPageSize(int pageSize) {
-        this.pageSize = pageSize;
-    }
-
-    public void setPageDescCache(PageDescCache pageDescCache) {
-        this.pageDescCache = pageDescCache;
-    }
-
-    /**
-     * @return Returns the actionDescCache.
-     */
-    public ActionDescCache getActionDescCache() {
-        return actionDescCache;
-    }
-
-    /**
-     * @param actionDescCache The actionDescCache to set.
-     */
-    public void setActionDescCache(ActionDescCache actionDescCache) {
-        this.actionDescCache = actionDescCache;
-    }
-
     public void save(FacesContext context, String viewId) {
         ExternalContext extCtx = context.getExternalContext();
         Map sessionMap = extCtx.getSessionMap();
@@ -104,6 +77,26 @@ public class SessionPagePersistence implements PagePersistence {
         }
         String previousViewId = context.getViewRoot().getViewId();
         lru.put(viewId, getPageData(context, viewId, previousViewId));
+    }
+
+    public void restore(FacesContext context, String viewId) {
+        ExternalContext extCtx = context.getExternalContext();
+        Map lru = getLru(extCtx);
+        if (lru == null) {
+            return;
+        }
+        /*
+         if (!ExternalContextUtil.isRedirect(extCtx)) {
+         lru.remove(viewId);
+         return;
+         }
+         */
+        Map savedData = (Map) lru.get(viewId);
+        if (savedData == null) {
+            return;
+        }
+        Map requestMap = extCtx.getRequestMap();
+        restorePageDataMap(savedData, requestMap);
     }
 
     protected Map getPageData(FacesContext context, String viewId,
@@ -257,24 +250,6 @@ public class SessionPagePersistence implements PagePersistence {
         }
     }
 
-    public void restore(FacesContext context, String viewId) {
-        ExternalContext extCtx = context.getExternalContext();
-        Map lru = getLru(extCtx);
-        if (lru == null) {
-            return;
-        }
-        if (!ExternalContextUtil.isRedirect(extCtx)) {
-            lru.remove(viewId);
-            return;
-        }
-        Map savedData = (Map) lru.get(viewId);
-        if (savedData == null) {
-            return;
-        }
-        Map requestMap = extCtx.getRequestMap();
-        restorePageDataMap(savedData, requestMap);
-    }
-
     protected Map getLru(ExternalContext extCtx) {
         Map sessionMap = extCtx.getSessionMap();
         return (Map) sessionMap.get(getClass().getName());
@@ -359,6 +334,26 @@ public class SessionPagePersistence implements PagePersistence {
                 lru.remove(path);
             }
         }
+    }
+
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
+    }
+
+    public void setPageDescCache(PageDescCache pageDescCache) {
+        this.pageDescCache = pageDescCache;
+    }
+
+    public ActionDescCache getActionDescCache() {
+        return actionDescCache;
+    }
+
+    public void setActionDescCache(ActionDescCache actionDescCache) {
+        this.actionDescCache = actionDescCache;
     }
 
     protected static String getSubApplicationPath(FacesContext context) {

@@ -20,6 +20,7 @@ public class ConstantTakeOverDescAnnotationHandlerTest extends TeedaTestCase {
         Map map = handler.getTakeOverDescs("hogeBean");
         assertTrue(map.containsKey("doHoge"));
         assertTrue(map.containsKey("doHoge2"));
+        assertTrue(map.containsKey("jumpHoge3"));
         assertFalse(map.containsKey("xxx"));
         TakeOverDesc tod = (TakeOverDesc) map.get("doHoge");
         assertEquals(TakeOverTypeDescFactory.INCLUDE, tod.getTakeOverTypeDesc());
@@ -32,6 +33,11 @@ public class ConstantTakeOverDescAnnotationHandlerTest extends TeedaTestCase {
         assertEquals(TakeOverTypeDescFactory.NEVER, tod.getTakeOverTypeDesc());
         props = tod.getProperties();
         assertEquals(0, props.length);
+
+        tod = (TakeOverDesc) map.get("jumpHoge3");
+        assertEquals(TakeOverTypeDescFactory.NEVER, tod.getTakeOverTypeDesc());
+        props = tod.getProperties();
+        assertEquals(0, props.length);
     }
 
     public static class HogeBean {
@@ -39,6 +45,8 @@ public class ConstantTakeOverDescAnnotationHandlerTest extends TeedaTestCase {
         public static final String doHoge_TAKE_OVER = "properties='aaa, bbb'";
 
         public static final String doHoge2_TAKE_OVER = "type=never";
+
+        public static final String jumpHoge3_TAKE_OVER = "type=never";
 
         public String doHoge() {
             return null;
