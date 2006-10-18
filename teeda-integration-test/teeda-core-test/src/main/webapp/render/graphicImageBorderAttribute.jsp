@@ -7,8 +7,7 @@
 </head>
 <body>
 <f:view>
-	<h:graphicImage id="imageA" value="/image/item_large_b.gif" title="image title">
-		<f:attribute name="border" value="0"/>
+	<h:graphicImage id="imageA" value="/image/item_large_b.gif" title="image title" border="0">
 	</h:graphicImage>
 </f:view>
 </body>
