@@ -22,7 +22,6 @@ import javax.faces.context.FacesContext;
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.application.NavigationHandlerImpl;
 import org.seasar.teeda.extension.html.PagePersistence;
-import org.seasar.teeda.extension.util.PagePersistenceUtil;
 
 /**
  * @author higa
@@ -45,7 +44,6 @@ public class HtmlNavigationHandler extends NavigationHandlerImpl {
 
     public void handleNavigation(FacesContext context, String fromAction,
             String outcome) {
-        PagePersistenceUtil.setupActionMethodName(context, fromAction, outcome);
         super.handleNavigation(context, fromAction, outcome);
         if (context.getResponseComplete() || context.getRenderResponse()) {
             return;

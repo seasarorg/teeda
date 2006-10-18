@@ -150,7 +150,8 @@ public class SessionPagePersistence implements PagePersistence {
     protected Map convertPageData(FacesContext context, BeanDesc beanDesc,
             String viewId, PageDesc pageDesc, Object page,
             Set nextPageProperties) {
-        String methodName = PagePersistenceUtil.getActionMethodName(context);
+        String methodName = (String) context.getExternalContext()
+                .getRequestMap().get(JsfConstants.SUBMITTED_COMMAND);
         ActionDesc actionDesc = actionDescCache.getActionDesc(viewId);
         if (methodName != null && actionDesc != null
                 && actionDesc.hasTakeOverDesc(methodName)) {

@@ -19,10 +19,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
 
-import javax.faces.context.FacesContext;
-
-import org.seasar.framework.util.StringUtil;
-
 /**
  * @author shot
  * @author higa
@@ -44,27 +40,4 @@ public class PagePersistenceUtil {
                 || Map.class.isAssignableFrom(clazz) || clazz.isArray();
     }
 
-    public static void setupActionMethodName(FacesContext context,
-            String fromAction, String outcome) {
-        context.getExternalContext().getRequestMap().put(ACTION_METHOD_KEY,
-                calcActionMethodName(fromAction, outcome));
-    }
-
-    public static String getActionMethodName(FacesContext context) {
-        return (String) context.getExternalContext().getRequestMap().get(
-                ACTION_METHOD_KEY);
-    }
-
-    protected static String calcActionMethodName(String fromAction,
-            String outcome) {
-        if (fromAction != null) {
-            int index = fromAction.lastIndexOf('.');
-            if (index < 0) {
-                throw new IllegalArgumentException(fromAction);
-            }
-            return fromAction.substring(index + 1, fromAction.length() - 1)
-                    .trim();
-        }
-        return "go" + StringUtil.capitalize(outcome);
-    }
 }
