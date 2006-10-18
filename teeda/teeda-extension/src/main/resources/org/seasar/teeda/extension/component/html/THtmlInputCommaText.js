@@ -18,7 +18,7 @@ Teeda.THtmlInputCommaText = {
   },
   addComma : function(obj, length, groupingSeparator, decimalSeparator) {
     var o = obj;
-    if(length > 0) {
+    if(length >= 0) {
       o = Teeda.THtmlInputCommaText.checkFraction(obj, length, decimalSeparator);
     }
     var regGroup = new RegExp(groupingSeparator, 'g');
@@ -43,18 +43,25 @@ Teeda.THtmlInputCommaText = {
     }
     if (vals.length == 1) {
       o.value = sign + val1;
+    } else if (length == 0) {
+      o.value = sign + val1;
     } else {
       o.value = sign + val1 + decimalSeparator + vals[1];
     }
   },
   checkFraction : function(obj, length, decimalSeparator) {
     var vals = obj.value.split(decimalSeparator);
-    if(vals.length == 2) {
+    var len = vals.length;
+    if(len == 2) {
       var integer = vals[0];
       var fraction = vals[1];
       if(fraction.length > length) {
         fraction = fraction.substring(0, length);
-        obj.value = integer + decimalSeparator + fraction;
+        if(fraction != "") {
+          obj.value = integer + decimalSeparator + fraction;
+        } else {
+          obj.value = integer;
+        }
       }
     }
     return obj;
