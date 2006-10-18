@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -34,6 +34,14 @@ public class InputTextTag extends InputTagBase {
 
     public String getRendererType() {
         return "javax.faces.Text";
+    }
+
+    public String getAutocomplete() {
+        return autocomplete;
+    }
+
+    public void setAutocomplete(String autocomplete) {
+        this.autocomplete = autocomplete;
     }
 
     protected void setProperties(UIComponent component) {
