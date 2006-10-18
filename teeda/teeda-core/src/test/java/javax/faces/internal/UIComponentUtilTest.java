@@ -20,7 +20,11 @@ import java.util.Map;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIComponentBase;
 import javax.faces.component.html.HtmlInputText;
+import javax.faces.internal.web.foo.FooPage;
 
+import org.seasar.framework.convention.NamingConvention;
+import org.seasar.framework.convention.impl.NamingConventionImpl;
+import org.seasar.framework.util.ClassUtil;
 import org.seasar.teeda.core.mock.MockUIComponentBase;
 import org.seasar.teeda.core.unit.TeedaTestCase;
 
@@ -81,10 +85,29 @@ public class UIComponentUtilTest extends TeedaTestCase {
         assertEquals("bbb", UIComponentUtil.getLabel(component));
     }
 
-    public void testGetLabel_idReturned() {
-        UIComponent component = new HtmlInputText();
+    public void testGetLabel_labelProperties() {
+        NamingConventionImpl nc = (NamingConventionImpl) getContainer()
+                .getComponent(NamingConvention.class);
+        nc.addRootPackageName(ClassUtil.getPackageName(getClass()));
+        register(FooPage.class, "foo_fooPage");
+        FacesConfigOptions.setDefaultSuffix(".html");
+        getFacesContext().getViewRoot().setViewId(
+                nc.getViewRootPath() + "/foo/foo.html");
+        MockHtmlInputText component = new MockHtmlInputText();
         component.setId("aaa");
-        assertEquals("aaa", UIComponentUtil.getLabel(component));
+        assertEquals("AAA", UIComponentUtil.getLabel(component));
+    }
+
+    public void testGetLabel_idReturned() {
+        NamingConventionImpl nc = (NamingConventionImpl) getContainer()
+                .getComponent(NamingConvention.class);
+        nc.addRootPackageName(ClassUtil.getPackageName(getClass()));
+        getFacesContext().getViewRoot().setViewId(
+                nc.getViewRootPath() + "/foo/foo.html");
+        FacesConfigOptions.setDefaultSuffix(".html");
+        UIComponent component = new HtmlInputText();
+        component.setId("xxx");
+        assertEquals("xxx", UIComponentUtil.getLabel(component));
     }
 
     public void testGetAllAttributesAndProperties() throws Exception {
@@ -100,7 +123,8 @@ public class UIComponentUtilTest extends TeedaTestCase {
         IgnoreComponent ignore = new IgnoreComponent();
         ignore.addIgnoreComponentName("hoge");
         ignore.addIgnoreComponentName("id");
-        Map map = UIComponentUtil.getAllAttributesAndProperties(component, ignore);
+        Map map = UIComponentUtil.getAllAttributesAndProperties(component,
+                ignore);
         assertTrue(map.size() == 0);
     }
 

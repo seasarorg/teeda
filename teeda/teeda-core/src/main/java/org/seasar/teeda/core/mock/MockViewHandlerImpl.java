@@ -27,7 +27,7 @@ import javax.faces.context.FacesContext;
  */
 public class MockViewHandlerImpl extends MockViewHandler {
 
-    private Locale locale_;
+    private Locale locale_ = Locale.getDefault();
 
     public Locale calculateLocale(FacesContext context) {
         return locale_;

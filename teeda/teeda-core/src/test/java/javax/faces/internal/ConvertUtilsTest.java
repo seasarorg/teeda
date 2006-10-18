@@ -3,12 +3,12 @@ package javax.faces.internal;
 import javax.faces.component.html.HtmlInputText;
 import javax.faces.convert.IntegerConverter;
 
-import junit.framework.TestCase;
 import junitx.framework.ArrayAssert;
 
 import org.seasar.teeda.core.mock.MockUIComponent;
+import org.seasar.teeda.core.unit.TeedaTestCase;
 
-public class ConvertUtilsTest extends TestCase {
+public class ConvertUtilsTest extends TeedaTestCase {
 
     public void testCreateConversionMessage() throws Exception {
         IntegerConverter converter = new IntegerConverter();
@@ -20,8 +20,8 @@ public class ConvertUtilsTest extends TestCase {
             throws Exception {
         MockUIComponent component = new MockUIComponent();
         component.setId("aaa");
-        Object[] args = ConvertUtil.createExceptionMessageArgs(component,
-                "bbb");
+        Object[] args = ConvertUtil
+                .createExceptionMessageArgs(component, "bbb");
         ArrayAssert.assertEquals(new String[] { "aaa", "bbb" }, args);
     }
 
@@ -29,8 +29,8 @@ public class ConvertUtilsTest extends TestCase {
         HtmlInputText component = new HtmlInputText();
         component.setId("aaa");
         component.setLabel("ccc");
-        Object[] args = ConvertUtil.createExceptionMessageArgs(component,
-                "bbb");
+        Object[] args = ConvertUtil
+                .createExceptionMessageArgs(component, "bbb");
         ArrayAssert.assertEquals(new String[] { "ccc", "bbb" }, args);
     }
 

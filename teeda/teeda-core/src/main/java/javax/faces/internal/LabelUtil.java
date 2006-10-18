@@ -13,15 +13,16 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.extension.util;
+package javax.faces.internal;
 
 import java.util.Locale;
 
-import javax.faces.internal.FacesConfigOptions;
+import javax.faces.context.FacesContext;
 
 import org.seasar.framework.convention.NamingConvention;
 import org.seasar.framework.message.MessageResourceBundle;
 import org.seasar.framework.message.MessageResourceBundleFactory;
+import org.seasar.teeda.core.util.DIContainerUtil;
 import org.seasar.teeda.core.util.ViewHandlerUtil;
 
 /**
@@ -30,6 +31,30 @@ import org.seasar.teeda.core.util.ViewHandlerUtil;
 public class LabelUtil {
 
     public static final String LABEL = "label";
+
+    public static String getLabelValue(String defaultKey) {
+        if (defaultKey == null) {
+            return null;
+        }
+        int index = defaultKey.lastIndexOf('-');
+        if (index > 0) {
+            defaultKey = defaultKey.substring(0, index);
+        }
+        String viewId = FacesContext.getCurrentInstance().getViewRoot()
+                .getViewId();
+        if (viewId == null) {
+            return null;
+        }
+        NamingConvention nc = (NamingConvention) DIContainerUtil
+                .getComponent(NamingConvention.class);
+        String pageName = nc.fromPathToPageName(viewId);
+        String key = getLabelKeySuffix(nc, pageName) + defaultKey;
+        String propertiesName = getPropertiesName(nc, pageName);
+        String defaultPropertiesName = getDefaultApplicationPropertiesName(nc,
+                pageName);
+        return getLabelValue(key, propertiesName, defaultKey,
+                defaultPropertiesName);
+    }
 
     public static String getLabelValue(String key, String propertiesName,
             String defaultKey, String defaultPropertiesName) {

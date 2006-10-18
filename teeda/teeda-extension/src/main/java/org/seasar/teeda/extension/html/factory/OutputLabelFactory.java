@@ -17,6 +17,8 @@ package org.seasar.teeda.extension.html.factory;
 
 import java.util.Map;
 
+import javax.faces.internal.LabelUtil;
+
 import org.seasar.framework.convention.NamingConvention;
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
@@ -24,7 +26,6 @@ import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.PageDesc;
-import org.seasar.teeda.extension.util.LabelUtil;
 
 /**
  * @author shot
