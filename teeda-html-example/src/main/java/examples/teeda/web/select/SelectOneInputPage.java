@@ -13,9 +13,21 @@ import java.util.Map;
  */
 public class SelectOneInputPage {
 
+	public static final String bbb_lengthValidator = "minimum=3";
+
 	private Integer aaa;
 
 	private List aaaItems;
+
+	private Integer bbb;
+
+	public Integer getBbb() {
+		return bbb;
+	}
+
+	public void setBbb(Integer bbb) {
+		this.bbb = bbb;
+	}
 
 	public String initialize() {
 		aaaItems = new ArrayList();
