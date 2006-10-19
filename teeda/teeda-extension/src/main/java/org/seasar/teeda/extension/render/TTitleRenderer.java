@@ -20,6 +20,7 @@ import java.io.IOException;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+import javax.faces.internal.LabelUtil;
 
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
@@ -62,8 +63,18 @@ public class TTitleRenderer extends AbstractRenderer {
         if (!StringUtil.isEmpty(lang)) {
             writer.writeAttribute(JsfConstants.LANG_ATTR, lang, null);
         }
-        String value = ValueHolderUtil.getValueForRender(context, title);
-        writer.writeText(value, null);
+        final String key = title.getKey();
+        final String propertiesName = title.getPropertiesName();
+        final String defaultKey = title.getDefaultKey();
+        final String defaultPropertiesName = title.getDefaultPropertiesName();
+        String value = LabelUtil.getLabelValue(key, propertiesName, defaultKey,
+                defaultPropertiesName);
+        if (value == null) {
+            value = ValueHolderUtil.getValueForRender(context, title);
+        }
+        if (value != null) {
+            writer.writeText(value, null);
+        }
     }
 
     public void encodeEnd(FacesContext context, UIComponent component)

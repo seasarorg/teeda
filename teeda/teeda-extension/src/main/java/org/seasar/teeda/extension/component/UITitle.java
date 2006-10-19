@@ -17,6 +17,7 @@ package org.seasar.teeda.extension.component;
 
 import javax.faces.component.UIOutput;
 import javax.faces.context.FacesContext;
+import javax.faces.el.ValueBinding;
 
 /**
  * @author shot
@@ -32,6 +33,14 @@ public class UITitle extends UIOutput {
     private String lang;
 
     private String dir;
+
+    private String key;
+
+    private String defaultKey;
+
+    private String propertiesName;
+
+    private String defaultPropertiesName;
 
     public UITitle() {
         setRendererType(DEFAULT_RENDERER_TYPE);
@@ -57,11 +66,63 @@ public class UITitle extends UIOutput {
         this.lang = lang;
     }
 
+    public String getDefaultKey() {
+        if (defaultKey != null) {
+            return defaultKey;
+        }
+        ValueBinding vb = getValueBinding("defaultKey");
+        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+    }
+
+    public String getDefaultPropertiesName() {
+        if (defaultPropertiesName != null) {
+            return defaultPropertiesName;
+        }
+        ValueBinding vb = getValueBinding("defaultPropertiesName");
+        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+    }
+
+    public String getKey() {
+        if (key != null) {
+            return key;
+        }
+        ValueBinding vb = getValueBinding("key");
+        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+    }
+
+    public String getPropertiesName() {
+        if (propertiesName != null) {
+            return propertiesName;
+        }
+        ValueBinding vb = getValueBinding("propertiesName");
+        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+    }
+
+    public void setDefaultKey(String defaultKey) {
+        this.defaultKey = defaultKey;
+    }
+
+    public void setDefaultPropertiesName(String defaultPropertiesName) {
+        this.defaultPropertiesName = defaultPropertiesName;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    public void setPropertiesName(String propertiesName) {
+        this.propertiesName = propertiesName;
+    }
+
     public Object saveState(FacesContext context) {
-        Object values[] = new Object[3];
+        Object values[] = new Object[7];
         values[0] = super.saveState(context);
         values[1] = dir;
         values[2] = lang;
+        values[3] = key;
+        values[4] = defaultKey;
+        values[5] = propertiesName;
+        values[6] = defaultPropertiesName;
         return ((Object) (values));
     }
 
@@ -70,6 +131,10 @@ public class UITitle extends UIOutput {
         super.restoreState(context, values[0]);
         dir = (String) values[1];
         lang = (String) values[2];
+        key = (String) values[3];
+        defaultKey = (String) values[4];
+        propertiesName = (String) values[5];
+        defaultPropertiesName = (String) values[6];
     }
 
 }
