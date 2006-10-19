@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package examples.teeda.web.error;
 
@@ -8,4 +8,7 @@ package examples.teeda.web.error;
  */
 public class WebAppRuntimeException extends RuntimeException {
 
+	public WebAppRuntimeException(String message) {
+		super(message);
+	}
 }

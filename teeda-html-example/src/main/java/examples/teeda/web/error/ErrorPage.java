@@ -1,9 +1,8 @@
 package examples.teeda.web.error;
 
-
 public class ErrorPage {
 
 	public String doHoge() {
-		throw new WebAppRuntimeException();
+		throw new WebAppRuntimeException("ErrorPage throws exception.");
 	}
 }
