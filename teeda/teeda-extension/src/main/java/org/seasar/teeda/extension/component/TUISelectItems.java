@@ -75,7 +75,7 @@ public class TUISelectItems extends UISelectItems {
             return value;
         }
         List list = new ArrayList();
-        if (!required) {
+        if (!required && value != null) {
             SelectItem si = new SelectItem();
             si.setValue("");
             FacesMessage mes = FacesMessageUtil.getMessage(FacesContext

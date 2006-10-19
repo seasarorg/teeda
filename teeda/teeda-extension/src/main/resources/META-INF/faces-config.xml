@@ -151,4 +151,12 @@
 			org.seasar.teeda.extension.component.html.THtmlInputHidden
 		</component-class>
 	</component>
+	<component>
+		<component-type>
+			org.seasar.teeda.extension.HtmlSelectOneMenu
+		</component-type>
+		<component-class>
+			org.seasar.teeda.extension.component.html.THtmlSelectOneMenu
+		</component-class>
+	</component>
 </faces-config>

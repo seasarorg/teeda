@@ -1,0 +1,56 @@
+/*
+ * Copyright 2004-2006 the Seasar Foundation and the Others.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+package org.seasar.teeda.extension.component.html;
+
+import java.util.Iterator;
+import java.util.List;
+
+import javax.faces.component.UIComponent;
+import javax.faces.component.html.HtmlSelectOneMenu;
+import javax.faces.context.FacesContext;
+
+import org.seasar.teeda.extension.component.TUISelectItems;
+
+/**
+ * @author shot
+ */
+public class THtmlSelectOneMenu extends HtmlSelectOneMenu {
+
+    public static final String COMPONENT_TYPE = "org.seasar.teeda.extension.HtmlSelectOneMenu";
+
+    public void validate(FacesContext context) {
+        super.validate(context);
+        final String id = this.getId() + "Save";
+        final UIComponent parent = getParent();
+        Object value = null;
+        for(Iterator children = parent.getChildren().iterator();children.hasNext();){
+            UIComponent child = (UIComponent) children.next();
+            String childId = child.getId();
+            if(id.equals(childId) && child instanceof THtmlInputHidden) {
+                value = ((THtmlInputHidden)child).getValue();
+                break;
+            }
+        }
+        if(value != null) {
+            if(value.getClass().isArray() || value instanceof List) {
+                TUISelectItems items = new TUISelectItems();
+                items.setValue(value);
+                this.getChildren().add(items);
+            }
+        }
+    }
+
+}

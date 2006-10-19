@@ -15,13 +15,13 @@
  */
 package org.seasar.teeda.extension.taglib;
 
-import javax.faces.component.html.HtmlSelectOneMenu;
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
 import javax.faces.internal.ValidatorChain;
 import javax.faces.internal.ValidatorResource;
 import javax.faces.validator.Validator;
 
+import org.seasar.teeda.extension.component.html.THtmlSelectOneMenu;
 import org.seasar.teeda.extension.validator.TRequiredValidator;
 
 /**
@@ -33,7 +33,8 @@ public class TSelectOneMenuTag extends TSelectTagBase {
     private static final String RENDERER_TYPE = "javax.faces.Menu";
 
     public String getComponentType() {
-        return HtmlSelectOneMenu.COMPONENT_TYPE;
+        //return HtmlSelectOneMenu.COMPONENT_TYPE;
+        return THtmlSelectOneMenu.COMPONENT_TYPE;
     }
 
     public String getRendererType() {
