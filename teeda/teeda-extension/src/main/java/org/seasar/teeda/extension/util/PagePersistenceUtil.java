@@ -25,10 +25,6 @@ import java.util.Map;
  */
 public class PagePersistenceUtil {
 
-    private static final String ACTION_METHOD_KEY = PagePersistenceUtil.class
-            .getName()
-            + ".ACTION_METHOD";
-
     public static boolean isPersistenceType(Class clazz) {
         if (clazz.isPrimitive()) {
             return true;

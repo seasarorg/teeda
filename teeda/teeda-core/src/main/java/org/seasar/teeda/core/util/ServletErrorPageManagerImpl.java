@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -27,7 +27,7 @@ import org.seasar.teeda.core.JsfConstants;
 
 /**
  * @author higa
- * 
+ *
  */
 public class ServletErrorPageManagerImpl implements ErrorPageManager {
 
@@ -72,7 +72,7 @@ public class ServletErrorPageManagerImpl implements ErrorPageManager {
         return location;
     }
 
-    private void setErrorPageAttributesToServletError(ServletRequest request) {
+    protected void setErrorPageAttributesToServletError(ServletRequest request) {
         request.setAttribute(JsfConstants.SERVLET_ERROR_EXCEPTION, request
                 .getAttribute(JsfConstants.ERROR_EXCEPTION));
         request.setAttribute(JsfConstants.SERVLET_ERROR_EXCEPTION_TYPE, request

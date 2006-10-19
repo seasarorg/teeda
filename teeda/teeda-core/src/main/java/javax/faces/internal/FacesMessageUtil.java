@@ -76,6 +76,17 @@ public class FacesMessageUtil {
                 new FacesMessage.Severity[] { severity });
     }
 
+    public static FacesMessage[] getAllMessages() {
+        final FacesContext context = FacesContext.getCurrentInstance();
+        return getAllMessages(context);
+    }
+
+    public static FacesMessage[] getAllMessages(FacesContext context) {
+        return getTargetFacesMessages(context, new FacesMessage.Severity[] {
+                FacesMessage.SEVERITY_FATAL, FacesMessage.SEVERITY_ERROR,
+                FacesMessage.SEVERITY_INFO, FacesMessage.SEVERITY_WARN });
+    }
+
     public static FacesMessage[] getTargetFacesMessages(FacesContext context,
             Severity[] severities) {
         AssertionUtil.assertNotNull("context", context);

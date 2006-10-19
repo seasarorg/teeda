@@ -19,10 +19,12 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
@@ -32,6 +34,7 @@ import org.seasar.framework.convention.NamingConvention;
 import org.seasar.framework.convention.impl.NamingConventionImpl;
 import org.seasar.framework.util.ClassUtil;
 import org.seasar.framework.util.LruHashMap;
+import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.PageDescCache;
 import org.seasar.teeda.extension.html.impl.page.Foo2Page;
@@ -228,8 +231,10 @@ public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
         actionDescCache.setNamingConvention(namingConvention);
         actionDescCache.setContainer(getContainer());
         pagePersistence.setActionDescCache(actionDescCache);
-        final FacesContext context = getFacesContext();
+        final MockFacesContext context = getFacesContext();
         context.getViewRoot().setViewId(fromViewId);
+        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                "aaa", "bbb"));
 
         final FromPage fromPage = (FromPage) getComponent(FromPage.class);
         fromPage.setAaaaa(new String[] { "a", "bb", "c" });
@@ -245,6 +250,7 @@ public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
         // ## Act ##
         pagePersistence.save(context, toViewId);
         getExternalContext().getRequestParameterMap().put("redirect", "true");
+        context.removeMessages();
         pagePersistence.restore(context, toViewId);
 
         // ## Assert ##
@@ -260,6 +266,10 @@ public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
         assertTrue(((Integer) requestMap.get("num")).intValue() == 2);
         assertEquals(null, requestMap.get("previousViewId"));
         assertEquals(null, requestMap.get("postback"));
+        Iterator itr = context.getMessages(null);
+        assertNotNull(itr);
+        FacesMessage message = (FacesMessage) itr.next();
+        assertEquals("aaa", message.getSummary());
     }
 
     public void testSaveAndRestore2() throws Exception {

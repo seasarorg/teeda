@@ -26,8 +26,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.faces.internal.FacesMessageUtil;
 
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.PropertyDesc;
@@ -67,36 +69,53 @@ public class SessionPagePersistence implements PagePersistence {
 
     private NamingConvention namingConvention;
 
+    private static final String ERROR_MESSAGE_PERSISTE_KEY = "Teeda.FacesMessages";
+
     public void save(FacesContext context, String viewId) {
-        ExternalContext extCtx = context.getExternalContext();
-        Map sessionMap = extCtx.getSessionMap();
+        final ExternalContext extCtx = context.getExternalContext();
+        final Map sessionMap = extCtx.getSessionMap();
+        final String previousViewId = context.getViewRoot().getViewId();
         LruHashMap lru = (LruHashMap) sessionMap.get(getClass().getName());
         if (lru == null) {
             lru = new LruHashMap(pageSize);
             sessionMap.put(getClass().getName(), lru);
         }
-        String previousViewId = context.getViewRoot().getViewId();
-        lru.put(viewId, getPageData(context, viewId, previousViewId));
+        final Map pageData = getPageData(context, viewId, previousViewId);
+        if (pageData != null) {
+            saveFacesMessage(context, pageData);
+        }
+        lru.put(viewId, pageData);
     }
 
     public void restore(FacesContext context, String viewId) {
-        ExternalContext extCtx = context.getExternalContext();
-        Map lru = getLru(extCtx);
+        final ExternalContext extCtx = context.getExternalContext();
+        final Map lru = getLru(extCtx);
         if (lru == null) {
             return;
         }
-        /*
-         if (!ExternalContextUtil.isRedirect(extCtx)) {
-         lru.remove(viewId);
-         return;
-         }
-         */
-        Map savedData = (Map) lru.get(viewId);
+        final Map savedData = (Map) lru.get(viewId);
         if (savedData == null) {
             return;
         }
-        Map requestMap = extCtx.getRequestMap();
+        final Map requestMap = extCtx.getRequestMap();
         restorePageDataMap(savedData, requestMap);
+        restoreFacesMessages(savedData, context);
+    }
+
+    protected void saveFacesMessage(FacesContext from, Map to) {
+        final FacesMessage[] messages = FacesMessageUtil.getAllMessages(from);
+        to.put(ERROR_MESSAGE_PERSISTE_KEY, messages);
+    }
+
+    protected void restoreFacesMessages(Map from, FacesContext to) {
+        final FacesMessage[] messages = (FacesMessage[]) from
+                .remove(ERROR_MESSAGE_PERSISTE_KEY);
+        if (messages == null) {
+            return;
+        }
+        for (int i = 0; i < messages.length; i++) {
+            to.addMessage(null, messages[i]);
+        }
     }
 
     protected Map getPageData(FacesContext context, String viewId,
@@ -329,6 +348,9 @@ public class SessionPagePersistence implements PagePersistence {
         String subAppPath = getSubApplicationPath(context);
         ExternalContext extCtx = context.getExternalContext();
         Map lru = getLru(extCtx);
+        if (lru == null) {
+            return;
+        }
         for (Iterator i = lru.keySet().iterator(); i.hasNext();) {
             String path = (String) i.next();
             if (path.startsWith(subAppPath)) {

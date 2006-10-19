@@ -61,6 +61,20 @@ public class FacesMessageUtilTest extends TeedaTestCase {
         assertEquals("d1", ems[0].getSummary());
     }
 
+    public void testGetAllMesssages() throws Exception {
+        MockFacesContext context = getFacesContext();
+        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
+                "a1", "a2"));
+        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                "b1", "b2"));
+        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                "c1", "c2"));
+        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL,
+                "d1", "d2"));
+        FacesMessage[] ems = FacesMessageUtil.getAllMessages();
+        assertTrue(ems.length == 4);
+    }
+
     public void testGetSimpleErrorMessage() {
         getApplication().setMessageBundle("javax.faces.component.TestMessages");
         MockFacesContext context = getFacesContext();
