@@ -64,7 +64,7 @@ public class LabelUtil {
             MessageResourceBundle bundle = MessageResourceBundleFactory
                     .getNullableBundle(propertiesName, locale);
             value = (bundle != null) ? (String) bundle.get(key) : null;
-            if (value == null) {
+            if (value == null && bundle != null) {
                 value = (String) bundle.get(defaultKey);
             }
         }
