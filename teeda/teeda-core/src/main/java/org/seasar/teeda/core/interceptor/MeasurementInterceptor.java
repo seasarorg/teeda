@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -39,14 +39,17 @@ public class MeasurementInterceptor extends AbstractInterceptor {
     public Object invoke(MethodInvocation invocation) throws Throwable {
         long start = System.currentTimeMillis();
         String startDate = formatter.format(new Date());
-        logger.debug("[measurement] start date = " + startDate);
+        final Class clazz = invocation.getThis().getClass();
+        logger.debug("[measurement] start date = " + startDate + "("
+                + clazz.getName() + ")");
         try {
             return invocation.proceed();
         } finally {
             logger.debug("[measurement] perform ms:"
                     + new Long(System.currentTimeMillis() - start));
             String endDate = formatter.format(new Date());
-            logger.debug("[measurement] end date = " + endDate);
+            logger.debug("[measurement] end date = " + endDate + "("
+                    + clazz.getName() + ")");
         }
 
     }
