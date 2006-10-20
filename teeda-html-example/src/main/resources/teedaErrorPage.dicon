@@ -3,7 +3,7 @@
 	"http://www.seasar.org/dtd/components24.dtd">
 <components namespace="teedaErrorPage" >
 
-	<component class="org.seasar.teeda.core.util.ServletErrorPageManagerImpl">
+	<component class="org.seasar.teeda.extension.util.TeedaExtensionErrorPageManagerImpl">
 		<initMethod name="addErrorPage">
 			<arg>@examples.teeda.web.error.WebAppRuntimeException@class</arg>
 			<arg>"/view/error/errorResult.html"</arg>
