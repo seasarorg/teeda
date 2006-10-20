@@ -154,6 +154,9 @@ public class SessionPagePersistence implements PagePersistence {
         BeanDesc beanDesc = BeanDescFactory.getBeanDesc(nextPageClass);
         for (int i = 0; i < beanDesc.getPropertyDescSize(); ++i) {
             final PropertyDesc pd = beanDesc.getPropertyDesc(i);
+            if (!pd.hasWriteMethod()) {
+                continue;
+            }
             final String propertyName = pd.getPropertyName();
             if (JsfConstants.POSTBACK.equals(propertyName)) {
                 continue;
