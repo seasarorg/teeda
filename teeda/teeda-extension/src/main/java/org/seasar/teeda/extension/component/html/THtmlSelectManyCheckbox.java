@@ -19,7 +19,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.faces.component.UIComponent;
-import javax.faces.component.html.HtmlSelectOneMenu;
+import javax.faces.component.html.HtmlSelectManyCheckbox;
 import javax.faces.context.FacesContext;
 
 import org.seasar.teeda.extension.component.TUISelectItems;
@@ -28,14 +28,14 @@ import org.seasar.teeda.extension.util.AdjustValueHolderUtil;
 /**
  * @author shot
  */
-public class THtmlSelectOneMenu extends HtmlSelectOneMenu {
+public class THtmlSelectManyCheckbox extends HtmlSelectManyCheckbox {
 
-    public static final String COMPONENT_TYPE = "org.seasar.teeda.extension.HtmlSelectOneMenu";
+    public static final String COMPONENT_TYPE = "org.seasar.teeda.extension.THtmlSelectManyCheckbox";
 
     public void validate(FacesContext context) {
         super.validate(context);
         final String id = AdjustValueHolderUtil.getAdjustedValue(this.getId());
-        final String saveId = id + "Save";
+        final String saveId = id + "ItemsSave";
         final UIComponent parent = getParent();
         Object value = null;
         for (Iterator children = parent.getChildren().iterator(); children
@@ -60,6 +60,7 @@ public class THtmlSelectOneMenu extends HtmlSelectOneMenu {
                 if (items == null) {
                     items = new TUISelectItems();
                 }
+                items.setRequired(true);
                 items.setValue(value);
                 this.getChildren().add(items);
             }

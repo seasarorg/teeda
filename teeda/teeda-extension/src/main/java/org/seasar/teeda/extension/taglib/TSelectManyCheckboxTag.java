@@ -9,24 +9,24 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
 package org.seasar.teeda.extension.taglib;
 
-import javax.faces.component.html.HtmlSelectManyCheckbox;
+import org.seasar.teeda.extension.component.html.THtmlSelectManyCheckbox;
 
 /**
  * @author higa
  * @author shot
  */
 public class TSelectManyCheckboxTag extends TSelectTagBase {
-	
-	private static final String RENDERER_TYPE = "javax.faces.Checkbox";
-	
-	public String getComponentType() {
-        return HtmlSelectManyCheckbox.COMPONENT_TYPE;
+
+    private static final String RENDERER_TYPE = "javax.faces.Checkbox";
+
+    public String getComponentType() {
+        return THtmlSelectManyCheckbox.COMPONENT_TYPE;
     }
 
     public String getRendererType() {

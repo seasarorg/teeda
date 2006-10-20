@@ -24,6 +24,10 @@ import junit.framework.TestCase;
 import junitx.framework.ArrayAssert;
 import junitx.framework.ListAssert;
 
+import org.seasar.framework.beans.BeanDesc;
+import org.seasar.framework.beans.PropertyDesc;
+import org.seasar.framework.beans.factory.BeanDescFactory;
+
 /**
  * @author shot
  */
@@ -77,13 +81,26 @@ public class ComponentHolderBuilderUtilTest extends TestCase {
         }
     }
 
-    public void _testBuild_array() throws Exception {
+    public void testBuild_array() throws Exception {
         Object[] value = new Object[] { "aaa", "bbb", "ccc" };
         ComponentHolder holder = ComponentHolderBuilderUtil.build(value);
         assertNotNull(holder);
         Object[] o = holder.getValue().toArray(
                 new Object[holder.getValue().size()]);
         ArrayAssert.assertEquals(value, o);
+    }
+
+    public void testBuild_promitiveArray() throws Exception {
+        BeanDesc bd = BeanDescFactory.getBeanDesc(HogeDto.class);
+        PropertyDesc pd = bd.getPropertyDesc("array");
+        Object value = pd.getValue(new HogeDto());
+        ComponentHolder holder = ComponentHolderBuilderUtil.build(value);
+        assertNotNull(holder);
+        Object[] o = holder.getValue().toArray(
+                new Object[holder.getValue().size()]);
+        Integer[] expected = new Integer[] { new Integer(1), new Integer(2),
+                new Integer(3) };
+        ArrayAssert.assertEquals(expected, o);
     }
 
     public void testBuild_arrayDto() throws Exception {
@@ -117,6 +134,16 @@ public class ComponentHolderBuilderUtilTest extends TestCase {
 
     public static class HogeDto {
         private String name;
+
+        private int[] array = new int[] { 1, 2, 3 };
+
+        public int[] getArray() {
+            return array;
+        }
+
+        public void setArray(int[] array) {
+            this.array = array;
+        }
 
         public String getName() {
             return name;

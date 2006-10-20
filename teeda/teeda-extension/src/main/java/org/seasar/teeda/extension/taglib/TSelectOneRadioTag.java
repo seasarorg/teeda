@@ -15,7 +15,7 @@
  */
 package org.seasar.teeda.extension.taglib;
 
-import javax.faces.component.html.HtmlSelectOneRadio;
+import org.seasar.teeda.extension.component.html.THtmlSelectOneRadio;
 
 /**
  * @author shot
@@ -26,7 +26,7 @@ public class TSelectOneRadioTag extends TSelectTagBase {
     private static final String RENDERER_TYPE = "javax.faces.Radio";
 
     public String getComponentType() {
-        return HtmlSelectOneRadio.COMPONENT_TYPE;
+        return THtmlSelectOneRadio.COMPONENT_TYPE;
     }
 
     public String getRendererType() {

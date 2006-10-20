@@ -15,6 +15,7 @@
  */
 package org.seasar.teeda.extension.util;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -23,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.seasar.framework.beans.util.BeanUtil;
+import org.seasar.framework.util.NumberConversionUtil;
 
 /**
  * @author shot
@@ -41,7 +43,20 @@ public class ComponentHolderBuilderUtil {
         if (value instanceof List) {
             holder = buildListTypeHolder(((List) value));
         } else if (valueClass.isArray()) {
-            holder = buildArrayTypeHolder(valueClass, (Object[]) value);
+            final int length = Array.getLength(value);
+            final Class valueType = value.getClass().getComponentType();
+            if (valueType.isPrimitive()) {
+                List list = new ArrayList();
+                for (int i = 0; i < length; i++) {
+                    final Object target = Array.get(value, i);
+                    final Object wrappedValue = NumberConversionUtil
+                            .convertPrimitiveWrapper(valueType, target);
+                    list.add(i, wrappedValue);
+                }
+                holder = buildListTypeHolder(list);
+            } else {
+                holder = buildArrayTypeHolder(valueClass, (Object[]) value);
+            }
         }
         return holder;
     }
