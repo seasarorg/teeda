@@ -493,7 +493,10 @@ public interface JsfConstants {
 
     String FALSE = "false";
 
-    public static final String POSTBACK = "postback";
+    String POSTBACK = "postback";
 
-    public static final String PREVIOUS_VIEW_ID = "previousViewId";
+    String PREVIOUS_VIEW_ID = "previousViewId";
+    
+    String ERROR_MESSAGE_PERSISTE_KEY = "Teeda.FacesMessages";
+
 }

@@ -59,10 +59,7 @@ public class TeedaExtensionErrorPageManagerImpl extends
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             return true;
         }
-        request.setAttribute(JsfConstants.ERROR_EXCEPTION, exception);
-        request.setAttribute(JsfConstants.ERROR_EXCEPTION_TYPE, exception
-                .getClass());
-        request.setAttribute(JsfConstants.ERROR_MESSAGE, message);
+        ServletExternalContextUtil.storeErrorInfoToAttribute(request, exception);
         PagePersistence pagePersistence = (PagePersistence) DIContainerUtil
                 .getComponentNoException(PagePersistence.class);
         pagePersistence.removeSubApplicationPages(context);

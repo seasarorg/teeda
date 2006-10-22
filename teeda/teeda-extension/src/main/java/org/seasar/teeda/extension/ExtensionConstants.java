@@ -111,6 +111,8 @@ public interface ExtensionConstants {
 
     String TEEDA_HIDDEN_SUFFIX = "TeedaHidden";
 
+    String TAKE_OVER_SUFFIX = "_TAKE_OVER";
+
     //other
     String NAME_SEPARATOR = String.valueOf(NamingContainer.SEPARATOR_CHAR);
 

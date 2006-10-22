@@ -45,6 +45,7 @@ import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 /**
  * @author higa
  * @author manhole
+ * @author shot
  */
 public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
 

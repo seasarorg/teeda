@@ -30,6 +30,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.internal.FacesMessageUtil;
+import javax.faces.internal.UICommandUtil;
 
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.PropertyDesc;
@@ -41,6 +42,7 @@ import org.seasar.framework.util.ClassUtil;
 import org.seasar.framework.util.LruHashMap;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.util.DIContainerUtil;
+import org.seasar.teeda.extension.exception.PageNotFoundRuntimeException;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ActionDescCache;
 import org.seasar.teeda.extension.html.PageDesc;
@@ -81,9 +83,7 @@ public class SessionPagePersistence implements PagePersistence {
             sessionMap.put(getClass().getName(), lru);
         }
         final Map pageData = getPageData(context, viewId, previousViewId);
-        if (pageData != null) {
-            saveFacesMessage(context, pageData);
-        }
+        FacesMessageUtil.saveFacesMessagesToMap(context, pageData);
         lru.put(viewId, pageData);
     }
 
@@ -99,7 +99,7 @@ public class SessionPagePersistence implements PagePersistence {
         }
         final Map requestMap = extCtx.getRequestMap();
         restorePageDataMap(savedData, requestMap);
-        restoreFacesMessages(savedData, context);
+        FacesMessageUtil.restoreFacesMessagesFromMap(savedData, context);
     }
 
     protected void saveFacesMessage(FacesContext from, Map to) {
@@ -125,6 +125,9 @@ public class SessionPagePersistence implements PagePersistence {
             return null;
         }
         Object page = DIContainerUtil.getComponent(pageDesc.getPageName());
+        if (page == null) {
+            throw new PageNotFoundRuntimeException();
+        }
         return convertPageData(context, page, viewId, previousViewId, pageDesc);
     }
 
@@ -172,8 +175,7 @@ public class SessionPagePersistence implements PagePersistence {
     protected Map convertPageData(FacesContext context, BeanDesc beanDesc,
             String viewId, PageDesc pageDesc, Object page,
             Set nextPageProperties) {
-        String methodName = (String) context.getExternalContext()
-                .getRequestMap().get(JsfConstants.SUBMITTED_COMMAND);
+        String methodName = UICommandUtil.getSubmittedCommand(context);
         ActionDesc actionDesc = actionDescCache.getActionDesc(viewId);
         if (methodName != null && actionDesc != null
                 && actionDesc.hasTakeOverDesc(methodName)) {

@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.application.FacesMessage.Severity;
@@ -30,6 +31,7 @@ import javax.faces.context.FacesContext;
 import org.seasar.framework.message.MessageResourceBundle;
 import org.seasar.framework.message.MessageResourceBundleFactory;
 import org.seasar.framework.util.AssertionUtil;
+import org.seasar.teeda.core.JsfConstants;
 
 /**
  * @author shot
@@ -238,6 +240,28 @@ public class FacesMessageUtil {
             return message;
         }
         return new MessageFormat(message, locale).format(args);
+    }
+
+    public static void saveFacesMessagesToMap(FacesContext from, Map to) {
+        if(to == null) {
+            return;
+        }
+        final FacesMessage[] messages = FacesMessageUtil.getAllMessages(from);
+        to.put(JsfConstants.ERROR_MESSAGE_PERSISTE_KEY, messages);
+    }
+    
+    public static void restoreFacesMessagesFromMap(Map from, FacesContext to) {
+        if(from == null) {
+            return;
+        }
+        final FacesMessage[] messages = (FacesMessage[]) from
+                .remove(JsfConstants.ERROR_MESSAGE_PERSISTE_KEY);
+        if (messages == null) {
+            return;
+        }
+        for (int i = 0; i < messages.length; i++) {
+            to.addMessage(null, messages[i]);
+        }
     }
 
 }

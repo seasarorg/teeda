@@ -36,6 +36,7 @@ import org.seasar.framework.log.Logger;
 import org.seasar.framework.util.AssertionUtil;
 import org.seasar.framework.util.EnumerationIterator;
 import org.seasar.framework.util.MethodUtil;
+import org.seasar.teeda.core.JsfConstants;
 
 /**
  * @author shot
@@ -199,4 +200,16 @@ public class ServletExternalContextUtil {
         return getRequest(externalContext).getMethod().equals("POST");
     }
 
+    public static void storeErrorInfoToAttribute(final ServletRequest request,
+            final Throwable exception) {
+        AssertionUtil.assertNotNull("request", request);
+        AssertionUtil.assertNotNull("exception", exception);
+        request.setAttribute(JsfConstants.ERROR_EXCEPTION, exception);
+        request.setAttribute(JsfConstants.ERROR_EXCEPTION_TYPE, exception
+                .getClass());
+        request
+                .setAttribute(JsfConstants.ERROR_MESSAGE, exception
+                        .getMessage());
+
+    }
 }

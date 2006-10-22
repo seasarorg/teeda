@@ -25,6 +25,7 @@ import javax.faces.event.ActionEvent;
 import javax.faces.event.ActionListener;
 import javax.faces.event.FacesEvent;
 import javax.faces.event.PhaseId;
+import javax.faces.internal.UICommandUtil;
 
 import org.seasar.teeda.core.JsfConstants;
 
@@ -161,12 +162,8 @@ public class UICommand extends UIComponentBase implements ActionSource {
             } else {
                 event.setPhaseId(PhaseId.INVOKE_APPLICATION);
             }
-            String id = getId();
-            if (id != null) {
-                Map requestMap = FacesContext.getCurrentInstance()
-                        .getExternalContext().getRequestMap();
-                requestMap.put(JsfConstants.SUBMITTED_COMMAND, id);
-            }
+            final FacesContext facesContext = getFacesContext();
+            UICommandUtil.setSubmittedCommand(facesContext, this);
         }
         super.queueEvent(event);
     }

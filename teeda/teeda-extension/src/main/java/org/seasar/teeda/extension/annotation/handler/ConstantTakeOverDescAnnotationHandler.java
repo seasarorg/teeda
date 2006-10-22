@@ -34,8 +34,6 @@ import org.seasar.teeda.extension.html.TakeOverDesc;
 public class ConstantTakeOverDescAnnotationHandler extends
         AbstractTakeOverDescAnnotationHandler {
 
-    private static final String TAKE_OVER_SUFFIX = "_TAKE_OVER";
-
     protected Map getTakeOverDescs(S2Container container,
             ComponentDef componentDef, Class componentClass,
             String componentName, BeanDesc beanDesc) {
@@ -47,11 +45,12 @@ public class ConstantTakeOverDescAnnotationHandler extends
             boolean isConstantAnnotation = ConstantAnnotationUtil
                     .isConstantAnnotation(field);
             String fieldName = field.getName();
-            if (!isConstantAnnotation || !fieldName.endsWith(TAKE_OVER_SUFFIX)) {
+            if (!isConstantAnnotation
+                    || !fieldName.endsWith(ExtensionConstants.TAKE_OVER_SUFFIX)) {
                 continue;
             }
             String methodName = fieldName.substring(0, fieldName.length()
-                    - TAKE_OVER_SUFFIX.length());
+                    - ExtensionConstants.TAKE_OVER_SUFFIX.length());
             if (!beanDesc.hasMethod(methodName)
                     && !methodName.startsWith(ExtensionConstants.GO_PREFIX)
                     && !methodName.startsWith(ExtensionConstants.JUMP_PREFIX)) {

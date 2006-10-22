@@ -52,12 +52,7 @@ public class ServletErrorPageManagerImpl implements ErrorPageManager {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             return true;
         }
-        request.setAttribute(JsfConstants.ERROR_EXCEPTION, exception);
-        request.setAttribute(JsfConstants.ERROR_EXCEPTION_TYPE, exception
-                .getClass());
-        request
-                .setAttribute(JsfConstants.ERROR_MESSAGE, exception
-                        .getMessage());
+        ServletExternalContextUtil.storeErrorInfoToAttribute(request, exception);
         extContext.dispatch(location);
         return true;
     }
