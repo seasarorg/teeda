@@ -44,8 +44,7 @@ public class LabelUtilTest extends TeedaTestCase {
         nc.setViewRootPath("/view");
         nc.setViewExtension(".html");
         FacesConfigOptions.setDefaultSuffix(".html");
-        getFacesContext().getViewRoot().setViewId(
-                nc.getViewRootPath() + "/foo/foo.html");
+        getFacesContext().getViewRoot().setViewId("/foo/foo.html");
         assertNull(LabelUtil.getLabelValue("/foo/bar.html"));
     }
 
