@@ -16,14 +16,19 @@
 package org.seasar.teeda.extension.taglib;
 
 import org.seasar.teeda.core.taglib.html.OutputTextTag;
+import org.seasar.teeda.extension.component.html.THtmlOutputText;
 
 /**
  * @author shot
  */
 public class TOutputTextTag extends OutputTextTag {
 
+    public String getComponentType() {
+        return THtmlOutputText.COMPONENT_TYPE;
+    }
+
     public String getRendererType() {
-        return "org.seasar.teeda.extension.OutputText";
+        return THtmlOutputText.DEFAULT_RENDERER_TYPE;
     }
 
 }
