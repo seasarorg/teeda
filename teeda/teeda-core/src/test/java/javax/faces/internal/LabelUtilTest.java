@@ -39,6 +39,16 @@ public class LabelUtilTest extends TeedaTestCase {
         assertEquals("AAA", LabelUtil.getLabelValue("aaa-input"));
     }
 
+    public void testGetLabelValue_viewRootPathIsInvalid() throws Exception {
+        NamingConventionImpl nc = new NamingConventionImpl();
+        nc.setViewRootPath("/view");
+        nc.setViewExtension(".html");
+        FacesConfigOptions.setDefaultSuffix(".html");
+        getFacesContext().getViewRoot().setViewId(
+                nc.getViewRootPath() + "/foo/foo.html");
+        assertNull(LabelUtil.getLabelValue("/foo/bar.html"));
+    }
+
     public void testGetPropertiesName() throws Exception {
         NamingConventionImpl nc = (NamingConventionImpl) getContainer()
                 .getComponent(NamingConvention.class);

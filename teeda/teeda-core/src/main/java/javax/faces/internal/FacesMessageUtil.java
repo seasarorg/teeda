@@ -243,15 +243,15 @@ public class FacesMessageUtil {
     }
 
     public static void saveFacesMessagesToMap(FacesContext from, Map to) {
-        if(to == null) {
+        if (to == null) {
             return;
         }
         final FacesMessage[] messages = FacesMessageUtil.getAllMessages(from);
         to.put(JsfConstants.ERROR_MESSAGE_PERSISTE_KEY, messages);
     }
-    
+
     public static void restoreFacesMessagesFromMap(Map from, FacesContext to) {
-        if(from == null) {
+        if (from == null) {
             return;
         }
         final FacesMessage[] messages = (FacesMessage[]) from
@@ -264,4 +264,9 @@ public class FacesMessageUtil {
         }
     }
 
+    public static boolean hasMessages(FacesContext context) {
+        AssertionUtil.assertNotNull("context", context);
+        final Iterator itr = context.getMessages();
+        return itr.hasNext();
+    }
 }

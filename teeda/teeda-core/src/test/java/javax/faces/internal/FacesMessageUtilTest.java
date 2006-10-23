@@ -197,4 +197,20 @@ public class FacesMessageUtilTest extends TeedaTestCase {
         assertEquals("bbb", targetFacesMessages[1].getSummary());
     }
 
+    public void testHasMessages_noMessage() throws Exception {
+        MockFacesContext context = getFacesContext();
+        //        FacesMessage facesMessage = new FacesMessage(
+        //                FacesMessage.SEVERITY_ERROR, "aaa", null);
+        //        context.addMessage(null, facesMessage);
+        assertFalse(FacesMessageUtil.hasMessages(context));
+    }
+
+    public void testHasMessages_hasMessage() throws Exception {
+        MockFacesContext context = getFacesContext();
+        FacesMessage facesMessage = new FacesMessage(
+                FacesMessage.SEVERITY_ERROR, "aaa", null);
+        context.addMessage(null, facesMessage);
+        assertTrue(FacesMessageUtil.hasMessages(context));
+    }
+
 }

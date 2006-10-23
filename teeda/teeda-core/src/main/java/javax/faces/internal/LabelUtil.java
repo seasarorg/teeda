@@ -47,6 +47,9 @@ public class LabelUtil {
         }
         NamingConvention nc = (NamingConvention) DIContainerUtil
                 .getComponent(NamingConvention.class);
+        if (nc.isValidViewRootPath(viewId)) {
+            return null;
+        }
         String pageName = nc.fromPathToPageName(viewId);
         String key = getLabelKeySuffix(nc, pageName) + defaultKey;
         String propertiesName = getPropertiesName(nc, pageName);
