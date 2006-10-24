@@ -22,7 +22,25 @@ import org.seasar.teeda.extension.component.html.THtmlTree;
  * @author shot
  * 
  */
-class THtmlTreeNavigationImage {
+public class THtmlTreeNavigationImageLocator {
+
+    private static final String NAV_MINUS_LINE_LAST_GIF = "nav-minus-line-last.gif";
+
+    private static final String NAV_PLUS_LINE_LAST_GIF = "nav-plus-line-last.gif";
+
+    private static final String NAV_MINUS_LINE_MIDDLE_GIF = "nav-minus-line-middle.gif";
+
+    private static final String NAV_PLUS_LINE_MIDDLE_GIF = "nav-plus-line-middle.gif";
+
+    private static final String NAV_MINUS_GIF = "nav-minus.gif";
+
+    private static final String NAV_PLUS_GIF = "nav-plus.gif";
+
+    private static final String LINE_LAST_GIF = "line-last.gif";
+
+    private static final String LINE_MIDDLE_GIF = "line-middle.gif";
+
+    private static final String SPACER_GIF = "spacer.gif";
 
     private static final int NOTHING = 0;
 
@@ -40,7 +58,7 @@ class THtmlTreeNavigationImage {
 
     private boolean renderLineBackground = false;
 
-    public void decide(THtmlTree tree) {
+    public void setUpImageSources(THtmlTree tree) {
         final TreeNode node = tree.getNode();
         final String nodeId = tree.getNodeId();
         final boolean showLines = tree.isShowLines();
@@ -60,39 +78,39 @@ class THtmlTreeNavigationImage {
         switch (bitMask) {
         case (NOTHING):
         case (LAST):
-            navSrc = "spacer.gif";
+            navSrc = SPACER_GIF;
             break;
         case (LINES):
-            navSrc = "line-middle.gif";
+            navSrc = LINE_MIDDLE_GIF;
             break;
         case (LINES + LAST):
-            navSrc = "line-last.gif";
+            navSrc = LINE_LAST_GIF;
             break;
         case (CHILDREN):
         case (CHILDREN + LAST):
-            navSrc = "nav-plus.gif";
-            altSrc = "nav-minus.gif";
+            navSrc = NAV_PLUS_GIF;
+            altSrc = NAV_MINUS_GIF;
             break;
         case (CHILDREN + LINES):
-            navSrc = "nav-plus-line-middle.gif";
-            altSrc = "nav-minus-line-middle.gif";
+            navSrc = NAV_PLUS_LINE_MIDDLE_GIF;
+            altSrc = NAV_MINUS_LINE_MIDDLE_GIF;
             break;
         case (CHILDREN + LINES + LAST):
-            navSrc = "nav-plus-line-last.gif";
-            altSrc = "nav-minus-line-last.gif";
+            navSrc = NAV_PLUS_LINE_LAST_GIF;
+            altSrc = NAV_MINUS_LINE_LAST_GIF;
             break;
         case (CHILDREN + EXPANDED):
         case (CHILDREN + EXPANDED + LAST):
-            navSrc = "nav-minus.gif";
-            altSrc = "nav-plus.gif";
+            navSrc = NAV_MINUS_GIF;
+            altSrc = NAV_PLUS_GIF;
             break;
         case (CHILDREN + EXPANDED + LINES):
-            navSrc = "nav-minus-line-middle.gif";
-            altSrc = "nav-plus-line-middle.gif";
+            navSrc = NAV_MINUS_LINE_MIDDLE_GIF;
+            altSrc = NAV_PLUS_LINE_MIDDLE_GIF;
             break;
         case (CHILDREN + EXPANDED + LINES + LAST):
-            navSrc = "nav-minus-line-last.gif";
-            altSrc = "nav-plus-line-last.gif";
+            navSrc = NAV_MINUS_LINE_LAST_GIF;
+            altSrc = NAV_PLUS_LINE_LAST_GIF;
             break;
         case (EXPANDED + LINES):
         case (EXPANDED + LINES + LAST):
@@ -104,8 +122,7 @@ class THtmlTreeNavigationImage {
                             + "] + with an illogical state.  "
                             + "Node is expanded but it is also considered a leaf (a leaf cannot be considered expanded.");
         default:
-            // catch all for any other combinations
-            throw new IllegalArgumentException("Invalid bit mask of " + bitMask);
+            throw new IllegalArgumentException("Invalid argument");
         }
         renderLineBackground = (bitMask & LINES) != 0 && (bitMask & LAST) == 0;
     }

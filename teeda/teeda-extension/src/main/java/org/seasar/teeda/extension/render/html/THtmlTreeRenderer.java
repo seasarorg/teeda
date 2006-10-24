@@ -256,10 +256,10 @@ public class THtmlTreeRenderer extends AbstractRenderer {
         UIComponent nodeTypeFacet = tree.getFacet(node.getType());
         UIComponent nodeImgFacet = null;
 
-        THtmlTreeNavigationImage imageDecision = new THtmlTreeNavigationImage();
-        imageDecision.decide(tree);
-        String navSrc = imageDecision.getNavSrc();
-        String altSrc = imageDecision.getAltSrc();
+        THtmlTreeNavigationImageLocator imageLocator = new THtmlTreeNavigationImageLocator();
+        imageLocator.setUpImageSources(tree);
+        String navSrc = imageLocator.getNavSrc();
+        String altSrc = imageLocator.getAltSrc();
 
         // adjust navSrc and altSrc so that the images can be retrieved using the extensions filter
         String navSrcUrl = getGifImageSrc(navSrc);
@@ -272,7 +272,7 @@ public class THtmlTreeRenderer extends AbstractRenderer {
         out.writeAttribute(JsfConstants.HEIGHT_ATTR, "100%", null);
         out.writeAttribute("valign", "top", null);
 
-        if (imageDecision.shouldRenderLineBackground()) {
+        if (imageLocator.shouldRenderLineBackground()) {
             out.writeURIAttribute("background",
                     getGifImageSrc("line-trunk.gif"), null);
         }

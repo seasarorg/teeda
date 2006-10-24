@@ -30,6 +30,7 @@ import javax.servlet.jsp.tagext.BodyContent;
 import javax.servlet.jsp.tagext.BodyTag;
 import javax.servlet.jsp.tagext.IterationTag;
 import javax.servlet.jsp.tagext.Tag;
+import javax.servlet.jsp.tagext.TagSupport;
 
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.PropertyDesc;
@@ -190,16 +191,30 @@ public class ElementProcessorImpl implements ElementProcessor {
         }
     }
 
-    public void composeComponentTree(FacesContext context,
-            PageContext pageContext, UIComponentTag parentTag)
+    public void composeComponentTree(final FacesContext context,
+            final PageContext pageContext, final UIComponentTag parentTag)
             throws JspException {
-
-        UIComponentTag tag = (UIComponentTag) ClassUtil.newInstance(tagClass);
-        try {
-            composeComponentTree(context, pageContext, tag, parentTag);
-        } finally {
-            tag.release();
+        final Tag tag = (Tag) ClassUtil.newInstance(tagClass);
+        if (tag instanceof UIComponentTag) {
+            try {
+                final UIComponentTag componentTag = (UIComponentTag) tag;
+                composeComponentTree(context, pageContext, componentTag,
+                        parentTag);
+            } finally {
+                tag.release();
+            }
+        } else {
+            setUpTag(pageContext, tag, parentTag);
         }
+    }
+
+    protected void setUpTag(final PageContext pageContext, final Tag tag,
+            final UIComponentTag parentTag) throws JspException {
+        if(parentTag != null) {
+            tag.setParent(parentTag);
+        }
+        tag.setPageContext(pageContext);
+        setupProperties(tag);
     }
 
     protected void composeComponentTree(FacesContext context,

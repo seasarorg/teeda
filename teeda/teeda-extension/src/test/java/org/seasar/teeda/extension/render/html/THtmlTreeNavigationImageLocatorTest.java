@@ -25,22 +25,22 @@ import org.seasar.teeda.extension.component.html.THtmlTree;
  * @author shot
  * 
  */
-public class THtmlTreeNavigationImageTest extends TestCase {
+public class THtmlTreeNavigationImageLocatorTest extends TestCase {
 
     public void testDecide_leaf() throws Exception {
-        THtmlTreeNavigationImage i1 = new THtmlTreeNavigationImage();
+        THtmlTreeNavigationImageLocator i1 = new THtmlTreeNavigationImageLocator();
         MockHtmlTree tree = new MockHtmlTree();
         TreeNode node = new TreeNodeImpl("0", "aaa", true);
         tree.setNode(node);
         tree.setShowLines(false);
         tree.setLastChild(false);
-        i1.decide(tree);
+        i1.setUpImageSources(tree);
         assertEquals("spacer.gif", i1.getNavSrc());
         assertNull(i1.getAltSrc());
     }
 
     public void testDecide_childrenAndNodeIsNotExpanded() throws Exception {
-        THtmlTreeNavigationImage i1 = new THtmlTreeNavigationImage();
+        THtmlTreeNavigationImageLocator i1 = new THtmlTreeNavigationImageLocator();
         MockHtmlTree tree = new MockHtmlTree();
         TreeNode node = new TreeNodeImpl("0", "aaa", false);
         node.addChild(new TreeNodeImpl("0:1", "bbb", true));
@@ -48,13 +48,13 @@ public class THtmlTreeNavigationImageTest extends TestCase {
         tree.setShowLines(false);
         tree.setLastChild(false);
         tree.setNodeExpanded(false);
-        i1.decide(tree);
+        i1.setUpImageSources(tree);
         assertEquals("nav-plus.gif", i1.getNavSrc());
         assertEquals("nav-minus.gif", i1.getAltSrc());
     }
 
     public void testDecide_childrenAndNodeExpanded() throws Exception {
-        THtmlTreeNavigationImage i1 = new THtmlTreeNavigationImage();
+        THtmlTreeNavigationImageLocator i1 = new THtmlTreeNavigationImageLocator();
         MockHtmlTree tree = new MockHtmlTree();
         TreeNode node = new TreeNodeImpl("0", "aaa", false);
         node.addChild(new TreeNodeImpl("0:1", "bbb", true));
@@ -62,13 +62,13 @@ public class THtmlTreeNavigationImageTest extends TestCase {
         tree.setShowLines(false);
         tree.setLastChild(false);
         tree.setNodeExpanded(true);
-        i1.decide(tree);
+        i1.setUpImageSources(tree);
         assertEquals("nav-minus.gif", i1.getNavSrc());
         assertEquals("nav-plus.gif", i1.getAltSrc());
     }
 
     public void testDecide_childrenAndNodeExpandedAndIsLastChild() throws Exception {
-        THtmlTreeNavigationImage i1 = new THtmlTreeNavigationImage();
+        THtmlTreeNavigationImageLocator i1 = new THtmlTreeNavigationImageLocator();
         MockHtmlTree tree = new MockHtmlTree();
         TreeNode node = new TreeNodeImpl("0", "aaa", false);
         node.addChild(new TreeNodeImpl("0:1", "bbb", true));
@@ -76,13 +76,13 @@ public class THtmlTreeNavigationImageTest extends TestCase {
         tree.setShowLines(false);
         tree.setLastChild(true);
         tree.setNodeExpanded(true);
-        i1.decide(tree);
+        i1.setUpImageSources(tree);
         assertEquals("nav-minus.gif", i1.getNavSrc());
         assertEquals("nav-plus.gif", i1.getAltSrc());
     }
 
     public void testDecide_childrenAndNodeExpandedAndIsLastChildAndLastLine() throws Exception {
-        THtmlTreeNavigationImage i1 = new THtmlTreeNavigationImage();
+        THtmlTreeNavigationImageLocator i1 = new THtmlTreeNavigationImageLocator();
         MockHtmlTree tree = new MockHtmlTree();
         TreeNode node = new TreeNodeImpl("0", "aaa", false);
         node.addChild(new TreeNodeImpl("0:1", "bbb", true));
@@ -90,7 +90,7 @@ public class THtmlTreeNavigationImageTest extends TestCase {
         tree.setShowLines(true);
         tree.setLastChild(true);
         tree.setNodeExpanded(true);
-        i1.decide(tree);
+        i1.setUpImageSources(tree);
         assertEquals("nav-minus-line-last.gif", i1.getNavSrc());
         assertEquals("nav-plus-line-last.gif", i1.getAltSrc());
     }
