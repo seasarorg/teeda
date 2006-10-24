@@ -34,6 +34,7 @@ import org.seasar.teeda.extension.component.TreeState;
 import org.seasar.teeda.extension.component.TreeWalker;
 import org.seasar.teeda.extension.component.html.THtmlTree;
 import org.seasar.teeda.extension.util.JavaScriptContext;
+import org.seasar.teeda.extension.util.TreeNavigationImageLocator;
 
 public class THtmlTreeRenderer extends AbstractRenderer {
 
@@ -52,6 +53,10 @@ public class THtmlTreeRenderer extends AbstractRenderer {
     private static final String IMAGE_PREFIX = "t2";
 
     private static final String NAMESPACE = "Teeda.THtmlTree.";
+
+    private TreeNavigationImageLocator imageLocator;
+
+    public static final String imageLocator_BINDING = "bindingType=may";
 
     public boolean getRendersChildren() {
         return true;
@@ -193,8 +198,12 @@ public class THtmlTreeRenderer extends AbstractRenderer {
         final boolean showLines = tree.isShowLines();
         for (int i = (showRootNode ? 0 : 1); i < (pathInfo.length - 1); i++) {
             final boolean lastChild = tree.isLastChild((String) pathInfo[i]);
-            String lineSrc = (!lastChild && showLines) ? getGifImageSrc("line-trunk.gif")
-                    : getGifImageSrc("spacer.gif");
+            final boolean shouldShowLineBackground = (!lastChild && showLines);
+            final String contextPath = context.getExternalContext()
+                    .getRequestContextPath();
+            String lineSrc = contextPath
+                    + imageLocator
+                            .getLineBackgroundSrc(shouldShowLineBackground);
             out.startElement(JsfConstants.TD_ELEM, tree);
             out.writeAttribute(JsfConstants.WIDTH_ATTR, "19", null);
             out.writeAttribute(JsfConstants.HEIGHT_ATTR, "100%", null);
@@ -237,6 +246,8 @@ public class THtmlTreeRenderer extends AbstractRenderer {
 
     private UIComponent encodeNavigation(FacesContext context,
             ResponseWriter out, THtmlTree tree) throws IOException {
+        final String contextPath = context.getExternalContext()
+                .getRequestContextPath();
         TreeNode node = tree.getNode();
         String nodeId = tree.getNodeId();
         String spanId = TOGGLE_SPAN + ":" + tree.getId() + ":" + nodeId;
@@ -244,30 +255,24 @@ public class THtmlTreeRenderer extends AbstractRenderer {
         UIComponent nodeTypeFacet = tree.getFacet(node.getType());
         UIComponent nodeImgFacet = null;
 
-        THtmlTreeNavigationImageLocator imageLocator = new THtmlTreeNavigationImageLocator();
-        imageLocator.setUpImageSources(tree);
+        imageLocator.setUpImageLocation(tree);
         String navSrc = imageLocator.getNavSrc();
         String altSrc = imageLocator.getAltSrc();
-
-        // adjust navSrc and altSrc so that the images can be retrieved using the extensions filter
-        String navSrcUrl = getGifImageSrc(navSrc);
-        navSrc = getGifImageSrc(navSrc);
-        altSrc = getGifImageSrc(altSrc);
 
         // render nav cell
         out.startElement(JsfConstants.TD_ELEM, tree);
         out.writeAttribute(JsfConstants.WIDTH_ATTR, "19", null);
         out.writeAttribute(JsfConstants.HEIGHT_ATTR, "100%", null);
         out.writeAttribute("valign", "top", null);
-
         if (imageLocator.shouldRenderLineBackground()) {
-            out.writeURIAttribute("background",
-                    getGifImageSrc("line-trunk.gif"), null);
+            final String img = contextPath
+                    + imageLocator.getLineBackgroundSrc(true);
+            out.writeURIAttribute("background", img, null);
         }
         HtmlGraphicImage image = new HtmlGraphicImage();
         image.setId(IMAGE_PREFIX);
         image.setRendererType(THtmlTreeGraphicImageRenderer.RENDERER_TYPE);
-        image.setUrl(navSrcUrl);
+        image.setUrl(navSrc);
         image.setWidth("19");
         image.setHeight("18");
         image.setBorder(0);
@@ -303,7 +308,6 @@ public class THtmlTreeRenderer extends AbstractRenderer {
                     nodeImgFacet = collapseFacet;
                 }
             }
-
             image.setParent(tree);
             if (node.getChildCount() > 0) {
                 StringBuffer buf = new StringBuffer();
@@ -325,7 +329,10 @@ public class THtmlTreeRenderer extends AbstractRenderer {
                 buf.append("', '");
                 buf.append(tree.getId());
                 buf.append("', '");
-                buf.append(nodeId).append("');");
+                buf.append(nodeId);
+                buf.append("', '");
+                buf.append(contextPath);
+                buf.append("');");
                 image.setOnclick(buf.toString());
                 image.setStyle("cursor:hand;cursor:pointer");
             }
@@ -339,9 +346,12 @@ public class THtmlTreeRenderer extends AbstractRenderer {
         return THtmlTree.class.getName();
     }
 
-    //TODO fix me
-    private String getGifImageSrc(String imageName) {
-        return imageName;
+    public TreeNavigationImageLocator getImageLocator() {
+        return imageLocator;
+    }
+
+    public void setImageLocator(TreeNavigationImageLocator imageLocator) {
+        this.imageLocator = imageLocator;
     }
 
 }

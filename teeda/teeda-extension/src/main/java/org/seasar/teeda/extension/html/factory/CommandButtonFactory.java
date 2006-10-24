@@ -19,6 +19,7 @@ import java.util.Map;
 
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.core.util.BindingUtil;
 import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ElementNode;
@@ -87,7 +88,10 @@ public class CommandButtonFactory extends AbstractElementProcessorFactory {
                     baseName, id));
         }
         String onclick = elementNode.getProperty(JsfConstants.ONCLICK_ATTR);
-        if (!StringUtil.isEmpty(onclick)) {
+        String dynamicOnclick = (String) properties
+                .get(JsfConstants.ONCLICK_ATTR);
+        if (!StringUtil.isEmpty(onclick)
+                && !BindingUtil.isValueReference(dynamicOnclick)) {
             int start = onclick.indexOf("location.href");
             if (start >= 0) {
                 int end = onclick.indexOf(";");
@@ -100,8 +104,8 @@ public class CommandButtonFactory extends AbstractElementProcessorFactory {
                     onclick = prefix + suffix;
                 }
             }
+            properties.put(JsfConstants.ONCLICK_ATTR, onclick);
         }
-        properties.put(JsfConstants.ONCLICK_ATTR, onclick);
     }
 
     protected String getTagName() {

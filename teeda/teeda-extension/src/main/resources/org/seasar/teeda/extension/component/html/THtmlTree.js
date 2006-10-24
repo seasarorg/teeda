@@ -6,7 +6,7 @@ if (typeof(Teeda.THtmlTree) == 'undefined') {
 }
 Teeda.THtmlTree = {
 
-  treeNavClick : function(spanId, navImageId, image1, image2, nodeImgId, expandImg, collapseImg, cookieName, nodeId) {
+  treeNavClick : function(spanId, navImageId, image1, image2, nodeImgId, expandImg, collapseImg, cookieName, nodeId, contextPath) {
     var navSpan = document.getElementById(spanId);
     var displayStyle = navSpan.style.display;
     if (displayStyle == 'none') {
@@ -18,9 +18,9 @@ Teeda.THtmlTree = {
     if (navImageId != '') {
       var navImage = document.getElementById(navImageId);
       if (navImage.src.indexOf(image1) >= 0) {
-        navImage.src = image2;
+        navImage.src = contextPath + '/' + image2;
       } else {
-        navImage.src = image1;
+        navImage.src = contextPath + '/' + image1;
       }
     }
     if (nodeImgId != '') {

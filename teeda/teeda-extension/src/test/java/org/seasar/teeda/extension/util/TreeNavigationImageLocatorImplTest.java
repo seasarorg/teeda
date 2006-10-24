@@ -13,34 +13,36 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.extension.render.html;
+package org.seasar.teeda.extension.util;
 
 import junit.framework.TestCase;
 
 import org.seasar.teeda.extension.component.TreeNode;
 import org.seasar.teeda.extension.component.TreeNodeImpl;
 import org.seasar.teeda.extension.component.html.THtmlTree;
+import org.seasar.teeda.extension.util.TreeNavigationImageLocator;
+import org.seasar.teeda.extension.util.TreeNavigationImageLocatorImpl;
 
 /**
  * @author shot
  * 
  */
-public class THtmlTreeNavigationImageLocatorTest extends TestCase {
+public class TreeNavigationImageLocatorImplTest extends TestCase {
 
     public void testDecide_leaf() throws Exception {
-        THtmlTreeNavigationImageLocator i1 = new THtmlTreeNavigationImageLocator();
+        TreeNavigationImageLocator i1 = new TreeNavigationImageLocatorImpl();
         MockHtmlTree tree = new MockHtmlTree();
         TreeNode node = new TreeNodeImpl("0", "aaa", true);
         tree.setNode(node);
         tree.setShowLines(false);
         tree.setLastChild(false);
-        i1.setUpImageSources(tree);
+        i1.setUpImageLocation(tree);
         assertEquals("spacer.gif", i1.getNavSrc());
         assertNull(i1.getAltSrc());
     }
 
     public void testDecide_childrenAndNodeIsNotExpanded() throws Exception {
-        THtmlTreeNavigationImageLocator i1 = new THtmlTreeNavigationImageLocator();
+        TreeNavigationImageLocator i1 = new TreeNavigationImageLocatorImpl();
         MockHtmlTree tree = new MockHtmlTree();
         TreeNode node = new TreeNodeImpl("0", "aaa", false);
         node.addChild(new TreeNodeImpl("0:1", "bbb", true));
@@ -48,13 +50,13 @@ public class THtmlTreeNavigationImageLocatorTest extends TestCase {
         tree.setShowLines(false);
         tree.setLastChild(false);
         tree.setNodeExpanded(false);
-        i1.setUpImageSources(tree);
+        i1.setUpImageLocation(tree);
         assertEquals("nav-plus.gif", i1.getNavSrc());
         assertEquals("nav-minus.gif", i1.getAltSrc());
     }
 
     public void testDecide_childrenAndNodeExpanded() throws Exception {
-        THtmlTreeNavigationImageLocator i1 = new THtmlTreeNavigationImageLocator();
+        TreeNavigationImageLocator i1 = new TreeNavigationImageLocatorImpl();
         MockHtmlTree tree = new MockHtmlTree();
         TreeNode node = new TreeNodeImpl("0", "aaa", false);
         node.addChild(new TreeNodeImpl("0:1", "bbb", true));
@@ -62,13 +64,13 @@ public class THtmlTreeNavigationImageLocatorTest extends TestCase {
         tree.setShowLines(false);
         tree.setLastChild(false);
         tree.setNodeExpanded(true);
-        i1.setUpImageSources(tree);
+        i1.setUpImageLocation(tree);
         assertEquals("nav-minus.gif", i1.getNavSrc());
         assertEquals("nav-plus.gif", i1.getAltSrc());
     }
 
     public void testDecide_childrenAndNodeExpandedAndIsLastChild() throws Exception {
-        THtmlTreeNavigationImageLocator i1 = new THtmlTreeNavigationImageLocator();
+        TreeNavigationImageLocator i1 = new TreeNavigationImageLocatorImpl();
         MockHtmlTree tree = new MockHtmlTree();
         TreeNode node = new TreeNodeImpl("0", "aaa", false);
         node.addChild(new TreeNodeImpl("0:1", "bbb", true));
@@ -76,13 +78,13 @@ public class THtmlTreeNavigationImageLocatorTest extends TestCase {
         tree.setShowLines(false);
         tree.setLastChild(true);
         tree.setNodeExpanded(true);
-        i1.setUpImageSources(tree);
+        i1.setUpImageLocation(tree);
         assertEquals("nav-minus.gif", i1.getNavSrc());
         assertEquals("nav-plus.gif", i1.getAltSrc());
     }
 
     public void testDecide_childrenAndNodeExpandedAndIsLastChildAndLastLine() throws Exception {
-        THtmlTreeNavigationImageLocator i1 = new THtmlTreeNavigationImageLocator();
+        TreeNavigationImageLocator i1 = new TreeNavigationImageLocatorImpl();
         MockHtmlTree tree = new MockHtmlTree();
         TreeNode node = new TreeNodeImpl("0", "aaa", false);
         node.addChild(new TreeNodeImpl("0:1", "bbb", true));
@@ -90,7 +92,7 @@ public class THtmlTreeNavigationImageLocatorTest extends TestCase {
         tree.setShowLines(true);
         tree.setLastChild(true);
         tree.setNodeExpanded(true);
-        i1.setUpImageSources(tree);
+        i1.setUpImageLocation(tree);
         assertEquals("nav-minus-line-last.gif", i1.getNavSrc());
         assertEquals("nav-plus-line-last.gif", i1.getAltSrc());
     }

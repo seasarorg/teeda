@@ -17,7 +17,6 @@ package org.seasar.teeda.extension.component.html;
 
 import javax.faces.component.html.HtmlOutputText;
 import javax.faces.context.FacesContext;
-import javax.faces.internal.FacesMessageUtil;
 import javax.faces.internal.ValueBindingUtil;
 
 /**
@@ -36,13 +35,8 @@ public class THtmlOutputText extends HtmlOutputText {
     }
 
     public void processUpdates(FacesContext context) {
-        if(!FacesMessageUtil.hasMessages(context)) {
-            Object value = ValueBindingUtil.getValue(context, "value");
-            if(value != null) {
-                this.setValue(value);
-            }
-        }
+        Object value = ValueBindingUtil.getValue(context, "value");
+        this.setValue(value);
     }
 
-    
 }

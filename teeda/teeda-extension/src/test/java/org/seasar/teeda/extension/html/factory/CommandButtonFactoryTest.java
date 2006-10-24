@@ -9,6 +9,7 @@ import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.ElementProcessor;
 import org.seasar.teeda.extension.html.PageDesc;
+import org.seasar.teeda.extension.html.factory.sub.web.foo.Foo2Page;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooAction;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooPage;
 import org.seasar.teeda.extension.mock.MockTaglibManager;
@@ -189,6 +190,31 @@ public class CommandButtonFactoryTest extends TeedaExtensionTestCase {
         assertEquals(CommandButtonTag.class, processor.getTagClass());
         assertEquals("#{fooPage.doBbb}", processor.getProperty("action"));
         assertEquals("hoge();bar();", processor.getProperty("onclick"));
+    }
+
+    public void testCreateFactory_onclickIsDynamicProperty() throws Exception {
+        // ## Arrange ##
+        registerTaglibElement(JsfConstants.JSF_HTML_URI, "commandButton",
+                CommandButtonTag.class);
+        MockTaglibManager taglibManager = getTaglibManager();
+        CommandButtonFactory factory = new CommandButtonFactory();
+        factory.setTaglibManager(taglibManager);
+        Map properties = new HashMap();
+        properties.put("id", "doBbb");
+        properties.put("type", "submit");
+        properties.put("onclick", "hoge");
+        ElementNode elementNode = createElementNode("input", properties);
+        PageDesc pageDesc = createPageDesc(Foo2Page.class, "fooPage");
+        ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
+
+        ElementProcessor processor = factory.createProcessor(elementNode,
+                pageDesc, actionDesc);
+        // ## Assert ##
+        assertNotNull(processor);
+        assertEquals(CommandButtonTag.class, processor.getTagClass());
+        assertEquals("#{fooPage.doBbb}", processor.getProperty("action"));
+        assertEquals("#{fooPage.doBbbOnclick}", processor.getProperty("onclick"));
+        System.out.println(processor.getProperty("onclick"));
     }
 
 }

@@ -13,7 +13,7 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.extension.render.html;
+package org.seasar.teeda.extension.util;
 
 import org.seasar.teeda.extension.component.TreeNode;
 import org.seasar.teeda.extension.component.html.THtmlTree;
@@ -22,7 +22,13 @@ import org.seasar.teeda.extension.component.html.THtmlTree;
  * @author shot
  * 
  */
-public class THtmlTreeNavigationImageLocator {
+public class TreeNavigationImageLocatorImpl implements TreeNavigationImageLocator {
+
+    private static final String LINE_TRUNK_GIF = "line-trunk.gif";
+
+    public static final String imageRoot_BINDING = "bindingType=may";
+    
+    private String imageRoot = "";
 
     private static final String NAV_MINUS_LINE_LAST_GIF = "nav-minus-line-last.gif";
 
@@ -58,21 +64,24 @@ public class THtmlTreeNavigationImageLocator {
 
     private boolean renderLineBackground = false;
 
-    public void setUpImageSources(THtmlTree tree) {
+    public TreeNavigationImageLocatorImpl() {
+    }
+
+    public void setUpImageLocation(THtmlTree tree) {
         final TreeNode node = tree.getNode();
         final String nodeId = tree.getNodeId();
         final boolean showLines = tree.isShowLines();
         int bitMask = NOTHING;
-        if(!node.isLeaf()) {
+        if (!node.isLeaf()) {
             bitMask += CHILDREN;
         }
         if (bitMask == CHILDREN && tree.isNodeExpanded()) {
             bitMask += EXPANDED;
         }
-        if(tree.isLastChild(nodeId)) {
+        if (tree.isLastChild(nodeId)) {
             bitMask += LAST;
         }
-        if(showLines) {
+        if (showLines) {
             bitMask += LINES;
         }
         switch (bitMask) {
@@ -124,6 +133,12 @@ public class THtmlTreeNavigationImageLocator {
         default:
             throw new IllegalArgumentException("Invalid argument");
         }
+        if (navSrc != null) {
+            navSrc = imageRoot + navSrc;
+        }
+        if (altSrc != null) {
+            altSrc = imageRoot + altSrc;
+        }
         renderLineBackground = (bitMask & LINES) != 0 && (bitMask & LAST) == 0;
     }
 
@@ -137,6 +152,15 @@ public class THtmlTreeNavigationImageLocator {
 
     public String getNavSrc() {
         return navSrc;
+    }
+
+    public void setImageRoot(String imageRoot) {
+        this.imageRoot = imageRoot;
+    }
+
+    public String getLineBackgroundSrc(boolean shouldShowLineBackground) {
+        final String img = (shouldShowLineBackground) ? LINE_TRUNK_GIF : SPACER_GIF;
+        return imageRoot + img;
     }
 
 }
