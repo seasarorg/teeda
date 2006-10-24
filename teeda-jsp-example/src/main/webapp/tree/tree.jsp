@@ -13,10 +13,10 @@
 		<f:facet name="folder-A">
 			<h:panelGroup>
 				<f:facet name="expand">
-					<te:graphicImage style="border: 0px" value="yellow-folder-open.png" rendered="#{t.nodeExpanded}"/>
+					<te:graphicImage style="border: 0px" value="../img/yellow-folder-open.png" rendered="#{t.nodeExpanded}"/>
 				</f:facet>
 				<f:facet name="collapse">
-                	<te:graphicImage style="border: 0px" value="yellow-folder-closed.png" rendered="#{!t.nodeExpanded}"/>
+                	<te:graphicImage style="border: 0px" value="../img/yellow-folder-closed.png" rendered="#{!t.nodeExpanded}"/>
 				</f:facet>
 				<h:outputText value="#{node.description}"/>
 			</h:panelGroup>
@@ -24,10 +24,10 @@
 		<f:facet name="folder-B">
 			<h:panelGroup>
 				<f:facet name="expand">
-					<te:graphicImage style="border: 0px" value="yellow-folder-open.png" rendered="#{t.nodeExpanded}"/>
+					<te:graphicImage style="border: 0px" value="../img/yellow-folder-open.png" rendered="#{t.nodeExpanded}"/>
 				</f:facet>
 				<f:facet name="collapse">
-					<te:graphicImage style="border: 0px" value="yellow-folder-closed.png" rendered="#{!t.nodeExpanded}"/>
+					<te:graphicImage style="border: 0px" value="../img/yellow-folder-closed.png" rendered="#{!t.nodeExpanded}"/>
 				</f:facet>
 				<h:outputText value="#{node.description}" />
 				<h:outputText value=" (#{node.childCount})" rendered="#{!empty node.children}"/>
@@ -36,7 +36,7 @@
 		<f:facet name="document">
 			<h:panelGroup>
 				<h:commandLink immediate="true" >
-					<te:graphicImage style="border: 0px" value="document.png" />
+					<te:graphicImage style="border: 0px" value="../img/document.png" />
 					<h:outputText value="#{node.description}"/>
 				</h:commandLink>
 			</h:panelGroup>
