@@ -37,12 +37,6 @@ import javax.faces.internal.FacesMessageUtil;
 import javax.faces.internal.SavedState;
 
 import org.seasar.framework.util.AssertionUtil;
-import org.seasar.teeda.extension.component.helper.TreeModel;
-import org.seasar.teeda.extension.component.helper.TreeModelImpl;
-import org.seasar.teeda.extension.component.helper.TreeNode;
-import org.seasar.teeda.extension.component.helper.TreeState;
-import org.seasar.teeda.extension.component.helper.TreeStateImpl;
-import org.seasar.teeda.extension.component.helper.TreeWalker;
 import org.seasar.teeda.extension.event.ToggleEvent;
 import org.seasar.teeda.extension.event.TreeEventWrapper;
 
@@ -273,7 +267,7 @@ public class UITreeData extends UIComponentBase implements NamingContainer {
                         "Value must be a TreeModel or TreeNode");
             }
         }
-        if (restoredState != null) {
+        if (restoredState != null && model != null) {
             model.setTreeState(restoredState);
         }
         return model;
@@ -315,11 +309,16 @@ public class UITreeData extends UIComponentBase implements NamingContainer {
 
     protected void processNodes(FacesContext context, PhaseId phaseId) {
         UIComponent facet = null;
-        TreeWalker walker = getDataModel().getTreeWalker();
+        TreeModel dataModel = getDataModel();
+        if(dataModel == null) {
+            return;
+        }
+        TreeWalker walker = dataModel.getTreeWalker();
         walker.walkBegin(this);
         while (walker.next()) {
             TreeNode node = getNode();
-            facet = getFacet(node.getType());
+            String type = node.getType();
+            facet = getFacet(type);
             if (facet == null) {
                 continue;
             }

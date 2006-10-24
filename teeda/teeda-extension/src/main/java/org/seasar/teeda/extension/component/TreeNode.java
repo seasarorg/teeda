@@ -13,25 +13,33 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.extension.component.helper;
+package org.seasar.teeda.extension.component;
 
 import java.io.Serializable;
+import java.util.List;
 
-public interface TreeState extends Serializable {
+public interface TreeNode extends Serializable {
 
-    public boolean isNodeExpanded(String nodeId);
+    public boolean isLeaf();
 
-    public void toggleExpanded(String nodeId);
+    public void setLeaf(boolean leaf);
 
-    public void expandPath(String[] nodePath);
+    public void addChild(TreeNode node);
 
-    public void collapsePath(String[] nodePath);
+    public List getChildren();
 
-    public boolean isTransient();
+    public String getType();
 
-    public void setTransient(boolean trans);
+    public void setType(String type);
 
-    public void setSelected(String nodeId);
+    public String getDescription();
 
-    public boolean isSelected(String nodeId);
+    public void setDescription(String description);
+
+    public void setIdentifier(String identifier);
+
+    public String getIdentifier();
+
+    public int getChildCount();
+
 }

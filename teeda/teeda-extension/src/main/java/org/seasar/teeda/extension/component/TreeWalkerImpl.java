@@ -13,13 +13,12 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.extension.component.helper;
+package org.seasar.teeda.extension.component;
 
 import java.util.Stack;
 
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.extension.ExtensionConstants;
-import org.seasar.teeda.extension.component.UITreeData;
 
 /*
  * parent node="0", first child="0:0", second child="0:1"

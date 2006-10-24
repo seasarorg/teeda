@@ -15,7 +15,7 @@
  */
 package org.seasar.teeda.extension.render.html;
 
-import org.seasar.teeda.extension.component.helper.TreeNode;
+import org.seasar.teeda.extension.component.TreeNode;
 import org.seasar.teeda.extension.component.html.THtmlTree;
 
 /**

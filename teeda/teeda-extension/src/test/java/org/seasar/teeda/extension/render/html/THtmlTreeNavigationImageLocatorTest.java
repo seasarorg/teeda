@@ -17,8 +17,8 @@ package org.seasar.teeda.extension.render.html;
 
 import junit.framework.TestCase;
 
-import org.seasar.teeda.extension.component.helper.TreeNode;
-import org.seasar.teeda.extension.component.helper.TreeNodeImpl;
+import org.seasar.teeda.extension.component.TreeNode;
+import org.seasar.teeda.extension.component.TreeNodeImpl;
 import org.seasar.teeda.extension.component.html.THtmlTree;
 
 /**

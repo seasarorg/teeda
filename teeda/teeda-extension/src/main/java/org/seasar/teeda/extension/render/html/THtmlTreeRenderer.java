@@ -16,11 +16,6 @@
 package org.seasar.teeda.extension.render.html;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 
 import javax.faces.application.ViewHandler;
 import javax.faces.component.UIComponent;
@@ -29,15 +24,14 @@ import javax.faces.component.UIViewRoot;
 import javax.faces.component.html.HtmlGraphicImage;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
-import javax.servlet.http.Cookie;
 
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.AbstractRenderer;
 import org.seasar.teeda.core.util.RendererUtil;
 import org.seasar.teeda.extension.component.ScriptEnhanceUIViewRoot;
-import org.seasar.teeda.extension.component.helper.TreeNode;
-import org.seasar.teeda.extension.component.helper.TreeState;
-import org.seasar.teeda.extension.component.helper.TreeWalker;
+import org.seasar.teeda.extension.component.TreeNode;
+import org.seasar.teeda.extension.component.TreeState;
+import org.seasar.teeda.extension.component.TreeWalker;
 import org.seasar.teeda.extension.component.html.THtmlTree;
 import org.seasar.teeda.extension.util.JavaScriptContext;
 
@@ -50,8 +44,6 @@ public class THtmlTreeRenderer extends AbstractRenderer {
     protected static final String TOGGLE_SPAN = "teeda.extension.tree.TOGGLE_SPAN";
 
     protected static final String ROOT_NODE_ID = "0";
-
-    private static final String ENCODING = "UTF-8";
 
     private static final String NODE_STATE_EXPANDED = "x";
 
@@ -67,10 +59,6 @@ public class THtmlTreeRenderer extends AbstractRenderer {
 
     public void decode(FacesContext context, UIComponent component) {
         super.decode(context, component);
-        final THtmlTree tree = (THtmlTree) component;
-        if (tree.isClientSideToggle() && tree.isPreserveToggle()) {
-            restoreStateFromCookies(context, component);
-        }
     }
 
     public void encodeBegin(FacesContext context, UIComponent component)
@@ -354,48 +342,6 @@ public class THtmlTreeRenderer extends AbstractRenderer {
     //TODO fix me
     private String getGifImageSrc(String imageName) {
         return imageName;
-    }
-
-    private void restoreStateFromCookies(FacesContext context,
-            UIComponent component) {
-        THtmlTree tree = (THtmlTree) component;
-        TreeState state = tree.getDataModel().getTreeState();
-        Map cookieMap = context.getExternalContext().getRequestCookieMap();
-        Cookie treeCookie = (Cookie) cookieMap.get(component.getId());
-        if (treeCookie == null || treeCookie.getValue() == null) {
-            return;
-        }
-        Map attrMap = getCookieAttr(treeCookie);
-        for (Iterator i = attrMap.keySet().iterator(); i.hasNext();) {
-            String nodeId = (String) i.next();
-            String nodeState = (String) attrMap.get(nodeId);
-            if (NODE_STATE_EXPANDED.equals(nodeState)) {
-                if (!state.isNodeExpanded(nodeId)) {
-                    state.toggleExpanded(nodeId);
-                }
-            } else if (NODE_STATE_CLOSED.equals(nodeState)) {
-                if (state.isNodeExpanded(nodeId)) {
-                    state.toggleExpanded(nodeId);
-                }
-            }
-        }
-    }
-
-    private Map getCookieAttr(Cookie cookie) {
-        Map attribMap = new HashMap();
-        try {
-            String cookieValue = URLDecoder.decode(cookie.getValue(), ENCODING);
-            String[] attribArray = cookieValue.split(";");
-            for (int j = 0; j < attribArray.length; j++) {
-                int index = attribArray[j].indexOf("=");
-                String name = attribArray[j].substring(0, index);
-                String value = attribArray[j].substring(index + 1);
-                attribMap.put(name, value);
-            }
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException("Error parsing tree cookies", e);
-        }
-        return attribMap;
     }
 
 }

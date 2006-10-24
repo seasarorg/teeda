@@ -22,11 +22,6 @@ import javax.faces.context.FacesContext;
 
 import org.seasar.teeda.core.mock.NullRenderer;
 import org.seasar.teeda.core.unit.TeedaTestCase;
-import org.seasar.teeda.extension.component.helper.TreeModel;
-import org.seasar.teeda.extension.component.helper.TreeModelImpl;
-import org.seasar.teeda.extension.component.helper.TreeNodeImpl;
-import org.seasar.teeda.extension.component.helper.TreeState;
-import org.seasar.teeda.extension.component.helper.TreeStateImpl;
 
 /**
  * @author shot
