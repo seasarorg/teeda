@@ -32,6 +32,7 @@ import org.seasar.teeda.core.el.impl.commons.CommonsELParser;
 import org.seasar.teeda.core.el.impl.commons.CommonsExpressionProcessorImpl;
 import org.seasar.teeda.core.mock.MockHtmlInputText;
 import org.seasar.teeda.core.mock.MockHtmlOutputText;
+import org.seasar.teeda.core.render.html.HtmlInputTextRenderer;
 import org.seasar.teeda.core.render.html.HtmlOutputTextRenderer;
 import org.seasar.teeda.core.unit.ExceptionAssert;
 import org.seasar.teeda.core.unit.TestUtil;
@@ -59,15 +60,19 @@ public class THtmlGridRendererTest extends RendererTest {
 
     private HtmlOutputTextRenderer outputTextRenderer;
 
-    private THtmlGridInputTextRenderer gridInputTextRenderer;
+    private HtmlInputTextRenderer inputTextRenderer;
+
+    //private THtmlGridInputTextRenderer gridInputTextRenderer;
 
     protected void setUp() throws Exception {
         super.setUp();
         renderer = (THtmlGridRenderer) createRenderer();
         outputTextRenderer = new HtmlOutputTextRenderer();
         outputTextRenderer.setRenderAttributes(getRenderAttributes());
-        gridInputTextRenderer = new THtmlGridInputTextRenderer();
-        gridInputTextRenderer.setRenderAttributes(getRenderAttributes());
+        inputTextRenderer = new HtmlInputTextRenderer();
+        inputTextRenderer.setRenderAttributes(getRenderAttributes());
+        //gridInputTextRenderer = new THtmlGridInputTextRenderer();
+        //gridInputTextRenderer.setRenderAttributes(getRenderAttributes());
         htmlGrid = new MockHtmlGrid();
         htmlGrid.setRenderer(renderer);
     }
@@ -247,7 +252,7 @@ public class THtmlGridRendererTest extends RendererTest {
         htmlGrid.setScrollHorizontal(true);
         htmlGrid.setScrollVertical(true);
 
-        actLeftFixed();
+        actLeftFixed(7);
 
         // ## Assert ##
         final String readText = TestUtil.readText(getClass(),
@@ -267,7 +272,7 @@ public class THtmlGridRendererTest extends RendererTest {
         htmlGrid.setScrollHorizontal(true);
         htmlGrid.setScrollVertical(false);
 
-        actLeftFixed();
+        actLeftFixed(7);
 
         // ## Assert ##
         final String readText = TestUtil.readText(getClass(),
@@ -287,7 +292,7 @@ public class THtmlGridRendererTest extends RendererTest {
         htmlGrid.setScrollHorizontal(false);
         htmlGrid.setScrollVertical(true);
 
-        actLeftFixed();
+        actLeftFixed(7);
 
         // ## Assert ##
         final String readText = TestUtil.readText(getClass(),
@@ -307,7 +312,7 @@ public class THtmlGridRendererTest extends RendererTest {
         htmlGrid.setScrollHorizontal(false);
         htmlGrid.setScrollVertical(false);
 
-        actLeftFixed();
+        actLeftFixed(7);
 
         // ## Assert ##
         final String readText = TestUtil.readText(getClass(),
@@ -318,7 +323,7 @@ public class THtmlGridRendererTest extends RendererTest {
         assertEquals(diff.toString(), true, diff.identical());
     }
 
-    private void actLeftFixed() throws IOException {
+    private void actLeftFixed(final int itemSize) throws IOException {
         // ## Arrange ##
         final FooPage fooPage = new FooPage();
         {
@@ -330,7 +335,7 @@ public class THtmlGridRendererTest extends RendererTest {
         // items
         {
             final List items = new ArrayList();
-            for (int i = 1; i <= 7; i++) {
+            for (int i = 1; i <= itemSize; i++) {
                 FooItem fooItem = new FooItem();
                 fooItem.setTd1("TD1_" + i);
                 fooItem.setTd2("TD2_" + i);
@@ -402,7 +407,7 @@ public class THtmlGridRendererTest extends RendererTest {
                 if (i == 3) {
                     MockHtmlInputText gridInputText = new MockHtmlInputText();
                     gridInputText.setId("gridText");
-                    gridInputText.setRenderer(gridInputTextRenderer);
+                    gridInputText.setRenderer(inputTextRenderer);
                     ValueBinding vb = new ValueBindingImpl(getFacesContext()
                             .getApplication(), "#{fooPage.td" + i + "}", parser);
                     gridInputText.setValueBinding("value", vb);
@@ -565,7 +570,7 @@ public class THtmlGridRendererTest extends RendererTest {
                 if (i == 3) {
                     MockHtmlInputText gridInputText = new MockHtmlInputText();
                     gridInputText.setId("gridText");
-                    gridInputText.setRenderer(gridInputTextRenderer);
+                    gridInputText.setRenderer(inputTextRenderer);
                     ValueBinding vb = new ValueBindingImpl(getFacesContext()
                             .getApplication(), "#{fooPage.td" + i + "}", parser);
                     gridInputText.setValueBinding("value", vb);
@@ -690,7 +695,7 @@ public class THtmlGridRendererTest extends RendererTest {
                     if (i == 2) {
                         MockHtmlInputText gridInputText = new MockHtmlInputText();
                         gridInputText.setId("gridText");
-                        gridInputText.setRenderer(gridInputTextRenderer);
+                        gridInputText.setRenderer(inputTextRenderer);
                         ValueBinding vb = new ValueBindingImpl(
                                 getFacesContext().getApplication(),
                                 "#{fooPage.td" + i + "}", parser);
@@ -741,6 +746,28 @@ public class THtmlGridRendererTest extends RendererTest {
         Diff diff = diff(expected, getResponseText());
         System.out.println(getResponseText());
         assertEquals(diff.toString(), true, diff.identical());
+    }
+
+    public void no_testMany() throws Exception {
+        // ## Arrange ##
+        final int itemSize = 6000;
+        renderer.setFirstRenderRowCount(itemSize);
+        htmlGrid.setId("someGridXY");
+        htmlGrid.setWidth(String.valueOf(170));
+        htmlGrid.setHeight(String.valueOf(150));
+        htmlGrid.setItemsName("someItems");
+        htmlGrid.setScrollHorizontal(true);
+        htmlGrid.setScrollVertical(true);
+        final long start = System.currentTimeMillis();
+
+        actLeftFixed(itemSize);
+
+        // ## Assert ##
+        final long end = System.currentTimeMillis();
+        System.out.println(itemSize + "件で" + (end - start) + "ミリ秒");
+        final byte[] bytes = getResponseText().getBytes("UTF-8");
+        final int bytesLen = bytes.length;
+        System.out.println(bytesLen + "バイト (" + bytesLen / 1024 + "K)");
     }
 
     protected Renderer createRenderer() {

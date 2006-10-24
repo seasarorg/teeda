@@ -833,6 +833,10 @@ public class THtmlGridRenderer extends TForEachRenderer {
         }
     }
 
+    public void setFirstRenderRowCount(int firstRenderRowCount) {
+        this.firstRenderRowCount = firstRenderRowCount;
+    }
+
     private static class GridAttribute implements Serializable {
 
         private static final long serialVersionUID = 1L;

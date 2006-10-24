@@ -86,10 +86,12 @@
 		class="org.seasar.teeda.extension.html.factory.GridTdFactory" />
 	<component name="gridThFactory"
 		class="org.seasar.teeda.extension.html.factory.GridThFactory" />
+	<!--
 	<component name="gridInputCommaTextFactory"
 		class="org.seasar.teeda.extension.html.factory.GridInputCommaTextFactory" />
 	<component name="gridInputTextFactory"
 		class="org.seasar.teeda.extension.html.factory.GridInputTextFactory" />
+	-->
 	<component name="inputDateTextFactory"
 		class="org.seasar.teeda.extension.html.factory.InputDateTextFactory" />
 	<component name="inputCommaTextFactory"
