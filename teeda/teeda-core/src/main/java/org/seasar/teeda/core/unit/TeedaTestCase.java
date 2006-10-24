@@ -131,7 +131,6 @@ public abstract class TeedaTestCase extends S2FrameworkTestCase {
         lifecycle.addPhaseListener(phaseListener);
         initFactories();
         setFactories();
-        setWarmDeploy(false);
     }
 
     protected void initFactories() {
