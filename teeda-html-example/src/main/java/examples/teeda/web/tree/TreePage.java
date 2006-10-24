@@ -15,8 +15,8 @@
  */
 package examples.teeda.web.tree;
 
-import org.seasar.teeda.extension.component.helper.TreeNode;
-import org.seasar.teeda.extension.component.helper.TreeNodeImpl;
+import org.seasar.teeda.extension.component.TreeNode;
+import org.seasar.teeda.extension.component.TreeNodeImpl;
 
 /**
  * @author shot
@@ -25,7 +25,7 @@ public class TreePage {
 
 	private TreeNode tree;
 
-	public String initialize() {
+	public String prerender() {
 		tree = new TreeNodeImpl("folder-B", "ROOT", false);
 		TreeNodeImpl personNode = new TreeNodeImpl("folder-A", "AAA", false);
 		TreeNodeImpl document = new TreeNodeImpl("document", "BBB", true);
@@ -34,6 +34,10 @@ public class TreePage {
 		return null;
 	}
 
+	public String doHoge() {
+		return null;
+	}
+	
 	public TreeNode getTree() {
 		return tree;
 	}
