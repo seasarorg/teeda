@@ -87,10 +87,12 @@ public abstract class TeedaTestCase extends S2FrameworkTestCase {
     private MockStateManager stateManager;
 
     public TeedaTestCase() {
+        setWarmDeploy(false);
     }
 
     public TeedaTestCase(String name) {
         super(name);
+        setWarmDeploy(false);
     }
 
     protected void setUpContainer() throws Throwable {
