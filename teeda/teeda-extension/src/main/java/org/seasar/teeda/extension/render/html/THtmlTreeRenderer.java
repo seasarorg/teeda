@@ -22,30 +22,23 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import javax.faces.component.NamingContainer;
-import javax.faces.component.UICommand;
+import javax.faces.application.ViewHandler;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIGraphic;
-import javax.faces.component.UIParameter;
 import javax.faces.component.UIViewRoot;
 import javax.faces.component.html.HtmlGraphicImage;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.servlet.http.Cookie;
 
-import org.seasar.framework.util.ClassUtil;
-import org.seasar.framework.util.ResourceUtil;
-import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.AbstractRenderer;
 import org.seasar.teeda.core.util.RendererUtil;
-import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.component.ScriptEnhanceUIViewRoot;
 import org.seasar.teeda.extension.component.helper.TreeNode;
 import org.seasar.teeda.extension.component.helper.TreeState;
 import org.seasar.teeda.extension.component.helper.TreeWalker;
 import org.seasar.teeda.extension.component.html.THtmlTree;
-import org.seasar.teeda.extension.event.ToggleEvent;
 import org.seasar.teeda.extension.util.JavaScriptContext;
 
 public class THtmlTreeRenderer extends AbstractRenderer {
@@ -58,8 +51,6 @@ public class THtmlTreeRenderer extends AbstractRenderer {
 
     protected static final String ROOT_NODE_ID = "0";
 
-    private static final String NAV_COMMAND = "teeda.extension.tree.NAV_COMMAND";
-
     private static final String ENCODING = "UTF-8";
 
     private static final String NODE_STATE_EXPANDED = "x";
@@ -67,18 +58,6 @@ public class THtmlTreeRenderer extends AbstractRenderer {
     private static final String NODE_STATE_CLOSED = "c";
 
     private static final String IMAGE_PREFIX = "t2";
-
-    private static final String TOGGLE_ID = "t2g";
-
-    private static final int NOTHING = 0;
-
-    private static final int CHILDREN = 1;
-
-    private static final int EXPANDED = 2;
-
-    private static final int LINES = 4;
-
-    private static final int LAST = 8;
 
     private static final String NAMESPACE = "Teeda.THtmlTree.";
 
@@ -88,20 +67,9 @@ public class THtmlTreeRenderer extends AbstractRenderer {
 
     public void decode(FacesContext context, UIComponent component) {
         super.decode(context, component);
-        // see if one of the nav nodes was clicked, if so, then toggle appropriate node
-        String nodeId = null;
-        THtmlTree tree = (THtmlTree) component;
+        final THtmlTree tree = (THtmlTree) component;
         if (tree.isClientSideToggle() && tree.isPreserveToggle()) {
             restoreStateFromCookies(context, component);
-        } else {
-            nodeId = (String) context.getExternalContext()
-                    .getRequestParameterMap().get(
-                            tree.getId() + ExtensionConstants.NAME_SEPARATOR
-                                    + NAV_COMMAND);
-            if (nodeId == null || nodeId.equals("")) {
-                return;
-            }
-            component.queueEvent(new ToggleEvent(component, nodeId));
         }
     }
 
@@ -144,12 +112,10 @@ public class THtmlTreeRenderer extends AbstractRenderer {
         walker.walkBegin(tree);
         walker.setCheckState(!clientSideToggle); // walk all nodes in client mode
         if (showRootNode) {
-            // encode the tree (starting with the root node)
             if (walker.next()) {
                 encodeTree(context, writer, tree, walker);
             }
         } else {
-            // skip the root node
             walker.next();
             TreeNode rootNode = tree.getNode();
 
@@ -166,18 +132,19 @@ public class THtmlTreeRenderer extends AbstractRenderer {
                 }
             }
         }
-
-        // reset the current node id once we're done encoding everything
-        tree.setNodeId(null);
-
+        resetCurrentNode(tree);
         if (isOuterSpanUsed) {
-            writer.endElement("span");
+            writer.endElement(JsfConstants.SPAN_ELEM);
         }
+    }
+
+    protected void resetCurrentNode(THtmlTree tree) {
+        tree.setNodeId(null);
     }
 
     protected void encodeTree(FacesContext context, ResponseWriter out,
             THtmlTree tree, TreeWalker walker) throws IOException {
-        boolean clientSideToggle = tree.isClientSideToggle();
+        final boolean clientSideToggle = tree.isClientSideToggle();
 
         // encode the current node
         beforeNodeEncode(context, out, tree);
@@ -190,7 +157,6 @@ public class THtmlTreeRenderer extends AbstractRenderer {
                     + tree.getNodeId();
             out.startElement(JsfConstants.SPAN_ELEM, tree);
             out.writeAttribute(JsfConstants.ID_ATTR, spanId, null);
-
             if (tree.isNodeExpanded()) {
                 RendererUtil.renderAttribute(out, JsfConstants.STYLE_ATTR,
                         "display:block");
@@ -212,33 +178,33 @@ public class THtmlTreeRenderer extends AbstractRenderer {
 
     protected void encodeCurrentNode(FacesContext context, ResponseWriter out,
             THtmlTree tree) throws IOException {
-        TreeNode node = tree.getNode();
-
-        // set configurable values
-        boolean showRootNode = tree.isShowRootNode();
         boolean showNav = tree.isShowNav();
-        boolean showLines = tree.isShowLines();
         boolean clientSideToggle = tree.isClientSideToggle();
-
+        TreeNode node = tree.getNode();
         if (clientSideToggle) {
-            // we must show the nav icons if client side toggle is enabled (regardless of what user says)
             showNav = true;
         }
-
         UIComponent nodeTypeFacet = tree.getFacet(node.getType());
         UIComponent nodeImgFacet = null;
-
         if (nodeTypeFacet == null) {
             throw new IllegalArgumentException(
                     "Unable to locate facet with the name: " + node.getType());
         }
+        renderPadding(context, out, tree);
+        if (showNav) {
+            nodeImgFacet = encodeNavigation(context, out, tree);
+        }
+        renderEachNode(context, out, tree, nodeImgFacet, nodeTypeFacet);
+    }
 
-        // render node padding
-        String[] pathInfo = tree.getPathInformation(tree.getNodeId());
-        int paddingLevel = pathInfo.length - 1;
-
-        for (int i = (showRootNode ? 0 : 1); i < paddingLevel; i++) {
-            boolean lastChild = tree.isLastChild((String) pathInfo[i]);
+    protected void renderPadding(FacesContext context, ResponseWriter out,
+            THtmlTree tree) throws IOException {
+        final String nodeId = tree.getNodeId();
+        final String[] pathInfo = tree.getPathInformation(nodeId);
+        final boolean showRootNode = tree.isShowRootNode();
+        final boolean showLines = tree.isShowLines();
+        for (int i = (showRootNode ? 0 : 1); i < (pathInfo.length - 1); i++) {
+            final boolean lastChild = tree.isLastChild((String) pathInfo[i]);
             String lineSrc = (!lastChild && showLines) ? getGifImageSrc("line-trunk.gif")
                     : getGifImageSrc("spacer.gif");
             out.startElement(JsfConstants.TD_ELEM, tree);
@@ -253,12 +219,11 @@ public class THtmlTreeRenderer extends AbstractRenderer {
             out.endElement(JsfConstants.IMG_ELEM);
             out.endElement(JsfConstants.TD_ELEM);
         }
+    }
 
-        if (showNav) {
-            nodeImgFacet = encodeNavigation(context, out, tree);
-        }
-
-        // render node
+    protected void renderEachNode(FacesContext context, ResponseWriter out,
+            THtmlTree tree, UIComponent nodeImgFacet, UIComponent nodeTypeFacet)
+            throws IOException {
         out.startElement(JsfConstants.TD_ELEM, tree);
         if (nodeImgFacet != null) {
             RendererUtil.renderChild(context, nodeImgFacet);
@@ -287,71 +252,14 @@ public class THtmlTreeRenderer extends AbstractRenderer {
         TreeNode node = tree.getNode();
         String nodeId = tree.getNodeId();
         String spanId = TOGGLE_SPAN + ":" + tree.getId() + ":" + nodeId;
-        boolean showLines = tree.isShowLines();
         boolean clientSideToggle = tree.isClientSideToggle();
         UIComponent nodeTypeFacet = tree.getFacet(node.getType());
-        String navSrc = null;
-        String altSrc = null;
         UIComponent nodeImgFacet = null;
 
-        int bitMask = NOTHING;
-        bitMask += (node.isLeaf()) ? NOTHING : CHILDREN;
-        if (bitMask == CHILDREN) // if there are no children, ignore expand state -> more flexible with dynamic tree-structures
-            bitMask += (tree.isNodeExpanded()) ? EXPANDED : NOTHING;
-        bitMask += (tree.isLastChild(tree.getNodeId())) ? LAST : NOTHING;
-        bitMask += (showLines) ? LINES : NOTHING;
-
-        switch (bitMask) {
-        case (NOTHING):
-        case (LAST):
-            navSrc = "spacer.gif";
-            break;
-        case (LINES):
-            navSrc = "line-middle.gif";
-            break;
-        case (LINES + LAST):
-            navSrc = "line-last.gif";
-            break;
-        case (CHILDREN):
-        case (CHILDREN + LAST):
-            navSrc = "nav-plus.gif";
-            altSrc = "nav-minus.gif";
-            break;
-        case (CHILDREN + LINES):
-            navSrc = "nav-plus-line-middle.gif";
-            altSrc = "nav-minus-line-middle.gif";
-            break;
-        case (CHILDREN + LINES + LAST):
-            navSrc = "nav-plus-line-last.gif";
-            altSrc = "nav-minus-line-last.gif";
-            break;
-        case (CHILDREN + EXPANDED):
-        case (CHILDREN + EXPANDED + LAST):
-            navSrc = "nav-minus.gif";
-            altSrc = "nav-plus.gif";
-            break;
-        case (CHILDREN + EXPANDED + LINES):
-            navSrc = "nav-minus-line-middle.gif";
-            altSrc = "nav-plus-line-middle.gif";
-            break;
-        case (CHILDREN + EXPANDED + LINES + LAST):
-            navSrc = "nav-minus-line-last.gif";
-            altSrc = "nav-plus-line-last.gif";
-            break;
-        // unacceptable bitmask combinations
-        case (EXPANDED + LINES):
-        case (EXPANDED + LINES + LAST):
-        case (EXPANDED):
-        case (EXPANDED + LAST):
-            throw new IllegalStateException(
-                    "Encountered a node ["
-                            + nodeId
-                            + "] + with an illogical state.  "
-                            + "Node is expanded but it is also considered a leaf (a leaf cannot be considered expanded.");
-        default:
-            // catch all for any other combinations
-            throw new IllegalArgumentException("Invalid bit mask of " + bitMask);
-        }
+        THtmlTreeNavigationImage imageDecision = new THtmlTreeNavigationImage();
+        imageDecision.decide(tree);
+        String navSrc = imageDecision.getNavSrc();
+        String altSrc = imageDecision.getAltSrc();
 
         // adjust navSrc and altSrc so that the images can be retrieved using the extensions filter
         String navSrcUrl = getGifImageSrc(navSrc);
@@ -364,26 +272,18 @@ public class THtmlTreeRenderer extends AbstractRenderer {
         out.writeAttribute(JsfConstants.HEIGHT_ATTR, "100%", null);
         out.writeAttribute("valign", "top", null);
 
-        if ((bitMask & LINES) != 0 && (bitMask & LAST) == 0) {
+        if (imageDecision.shouldRenderLineBackground()) {
             out.writeURIAttribute("background",
                     getGifImageSrc("line-trunk.gif"), null);
         }
-
-        //      add the appropriate image for the nav control
         HtmlGraphicImage image = new HtmlGraphicImage();
         image.setId(IMAGE_PREFIX);
         image.setRendererType(THtmlTreeGraphicImageRenderer.RENDERER_TYPE);
-        //image.setId(IMAGE_PREFIX);
         image.setUrl(navSrcUrl);
         image.setWidth("19");
         image.setHeight("18");
         image.setBorder(0);
-
         if (clientSideToggle) {
-            /**
-             * With client side toggle, user has the option to specify open/closed images for the node (in addition to
-             * the navigtion ones provided by the component.)
-             */
             String expandImgSrc = "";
             String collapseImgSrc = "";
             String nodeImageId = "";
@@ -391,8 +291,10 @@ public class THtmlTreeRenderer extends AbstractRenderer {
             UIComponent expandFacet = nodeTypeFacet.getFacet("expand");
             if (expandFacet != null) {
                 UIGraphic expandImg = (UIGraphic) expandFacet;
-                expandImgSrc = context.getApplication().getViewHandler()
-                        .getResourceURL(context, expandImg.getUrl());
+                final ViewHandler vh = context.getApplication()
+                        .getViewHandler();
+                final String uri = expandImg.getUrl();
+                expandImgSrc = vh.getResourceURL(context, uri);
                 if (expandImg.isRendered()) {
                     expandImg.setId(IMAGE_PREFIX + NODE_STATE_EXPANDED);
                     expandImg.setParent(tree);
@@ -416,40 +318,32 @@ public class THtmlTreeRenderer extends AbstractRenderer {
 
             image.setParent(tree);
             if (node.getChildCount() > 0) {
-                String onClick = new StringBuffer().append(NAMESPACE).append(
-                        "treeNavClick('").append(spanId).append("', '").append(
-                        image.getClientId(context)).append("', '").append(
-                        navSrc).append("', '").append(altSrc).append("', '")
-                        .append(nodeImageId).append("', '")
-                        .append(expandImgSrc).append("', '").append(
-                                collapseImgSrc).append("', '").append(
-                                tree.getId()).append("', '").append(nodeId)
-                        .append("');").toString();
-                image.setOnclick(onClick);
+                StringBuffer buf = new StringBuffer();
+                buf.append(NAMESPACE);
+                buf.append("treeNavClick('");
+                buf.append(spanId);
+                buf.append("', '");
+                buf.append(image.getClientId(context));
+                buf.append("', '");
+                buf.append(navSrc);
+                buf.append("', '");
+                buf.append(altSrc);
+                buf.append("', '");
+                buf.append(nodeImageId);
+                buf.append("', '");
+                buf.append(expandImgSrc);
+                buf.append("', '");
+                buf.append(collapseImgSrc);
+                buf.append("', '");
+                buf.append(tree.getId());
+                buf.append("', '");
+                buf.append(nodeId).append("');");
+                image.setOnclick(buf.toString());
                 image.setStyle("cursor:hand;cursor:pointer");
             }
             RendererUtil.renderChild(context, image);
-        } else {
-            if (node.getChildCount() > 0) {
-                // set up the expand control and remove whatever children (if any) this control had previously
-                UICommand expandControl = tree.getExpandControl();
-                expandControl.getChildren().clear();
-                expandControl.setId(TOGGLE_ID);
-
-                UIParameter param = new UIParameter();
-                param.setName(tree.getId() + NamingContainer.SEPARATOR_CHAR
-                        + NAV_COMMAND);
-                param.setValue(tree.getNodeId());
-                expandControl.getChildren().add(param);
-                expandControl.getChildren().add(image);
-
-                RendererUtil.renderChild(context, expandControl);
-            } else {
-                RendererUtil.renderChild(context, image);
-            }
         }
         out.endElement(JsfConstants.TD_ELEM);
-
         return nodeImgFacet;
     }
 
@@ -459,28 +353,7 @@ public class THtmlTreeRenderer extends AbstractRenderer {
 
     //TODO fix me
     private String getGifImageSrc(String imageName) {
-        //return getImageSrc(imageName, "gif");
         return imageName;
-    }
-
-    private String getImageSrc(String imageName, String extension) {
-        final String packageName = ClassUtil.getPackageName(THtmlTree.class);
-        final String path = "/" + StringUtil.replace(packageName, ".", "/");
-        String resourcePath = ResourceUtil.getResourcePath(path + "/"
-                + imageName, extension);
-        return resourcePath;
-    }
-
-    protected boolean getBoolean(UIComponent component, String attributeName,
-            boolean defaultValue) {
-        Boolean booleanAttr = (Boolean) component.getAttributes().get(
-                attributeName);
-
-        if (booleanAttr == null) {
-            return defaultValue;
-        } else {
-            return booleanAttr.booleanValue();
-        }
     }
 
     private void restoreStateFromCookies(FacesContext context,
