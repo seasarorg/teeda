@@ -199,6 +199,7 @@
     <profile>
       <id>example</id>
       <build>
+        <defaultGoal>package</defaultGoal>
         <plugins>
           <plugin>
             <artifactId>maven-antrun-plugin</artifactId>
