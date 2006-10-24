@@ -59,8 +59,8 @@ public class GridTest extends TeedaWebTestCase {
             { "a4", "b4", "c4" } });
         // JavaScriptやhidden値があるため、assertTableMatchとする
         tester.assertTableMatch("fooGridRightBodyTable", new String[][] {
-            { "d1", "11,111,111", "f1" }, { "d2", "2,222 2,222", "f2" },
-            { "d3", "33,333 33,333", "f3" }, { "d4", "44 44", "f4" } });
+            { "d1", "11,111,111", "f1" }, { "d2", "2,222", "f2" },
+            { "d3", "33,333", "f3" }, { "d4", "44", "f4" } });
     }
 
 }
