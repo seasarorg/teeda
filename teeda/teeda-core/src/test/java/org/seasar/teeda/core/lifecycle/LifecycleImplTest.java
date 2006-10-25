@@ -15,10 +15,15 @@
  */
 package org.seasar.teeda.core.lifecycle;
 
+import java.io.IOException;
+
 import javax.faces.FacesException;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
+import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.unit.TeedaTestCase;
+import org.seasar.teeda.core.util.ErrorPageManager;
 import org.seasar.teeda.core.util.PostbackUtil;
 
 /**
@@ -65,6 +70,52 @@ public class LifecycleImplTest extends TeedaTestCase {
         lifecycle.execute(getFacesContext());
         assertSame(getFacesContext(), getExternalContext().getRequestMap().get(
                 "facesContext"));
+    }
+
+    public void setUpExecute_handleRuntimeException() throws Exception {
+        lifecycle = new LifecycleImpl();
+        lifecycle.setRestoreViewPhase(new MockErrorViewPhase());
+    }
+
+    public void testExecute_handleRuntimeException() throws Exception {
+        lifecycle.setErrorPageManager(new ErrorPageManager() {
+            public void addErrorPage(Class exceptionType, String location) {
+            }
+            public boolean handleException(Throwable exception,
+                    ExternalContext extContext) throws IOException {
+                return true;
+            }
+        });
+        final MockFacesContext context = getFacesContext();
+        lifecycle.execute(context);
+        assertTrue(context.getResponseComplete());
+    }
+
+    public void setUpRender_handleRuntimeException() throws Exception {
+        lifecycle = new LifecycleImpl();
+        lifecycle.setRenderResponsePhase(new MockErrorViewPhase());
+    }
+
+    public void testRender_handleRuntimeException() throws Exception {
+        lifecycle.setErrorPageManager(new ErrorPageManager() {
+            public void addErrorPage(Class exceptionType, String location) {
+            }
+            public boolean handleException(Throwable exception,
+                    ExternalContext extContext) throws IOException {
+                return true;
+            }
+        });
+        final MockFacesContext context = getFacesContext();
+        lifecycle.execute(context);
+        assertTrue(context.getResponseComplete());
+    }
+    
+    public static class MockErrorViewPhase implements Phase {
+
+        public void execute(FacesContext context) throws FacesException {
+            throw new RuntimeException();
+        }
+
     }
 
     public static class MockRestoreViewPhaseWithoutPostback implements Phase {

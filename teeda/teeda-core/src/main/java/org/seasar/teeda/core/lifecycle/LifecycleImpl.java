@@ -15,6 +15,7 @@
  */
 package org.seasar.teeda.core.lifecycle;
 
+import java.io.IOException;
 import java.util.Map;
 
 import javax.faces.FacesException;
@@ -27,6 +28,7 @@ import javax.faces.lifecycle.Lifecycle;
 
 import org.seasar.framework.util.ArrayUtil;
 import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.core.util.ErrorPageManager;
 import org.seasar.teeda.core.util.PostbackUtil;
 
 /**
@@ -51,6 +53,8 @@ public class LifecycleImpl extends Lifecycle {
     private Phase processValidationPhase;
 
     private Phase updateModelValuesPhase;
+
+    private ErrorPageManager errorPageManager;
 
     public LifecycleImpl() {
     }
@@ -87,15 +91,31 @@ public class LifecycleImpl extends Lifecycle {
                 return;
             }
             invokeApplicationPhase.execute(context);
-        } catch (final EvaluationException ex) {
-            final Throwable cause = ex.getCause();
+        } catch (final EvaluationException e) {
+            final Throwable cause = e.getCause();
             if (cause instanceof RuntimeException) {
                 throw (RuntimeException) cause;
             } else if (cause instanceof Error) {
                 throw (Error) cause;
             } else {
-                throw ex;
+                throw e;
             }
+        } catch (final Exception e) {
+            handleException(context, e);
+        }
+    }
+
+    protected void handleException(final FacesContext context, final Exception e) {
+        final ErrorPageManager manager = getErrorPageManager();
+        final ExternalContext externalContext = context.getExternalContext();
+        try {
+            if (manager.handleException(e, externalContext)) {
+                context.responseComplete();
+            } else {
+                throw (RuntimeException) e;
+            }
+        } catch (IOException ioe) {
+            throw new FacesException(ioe.getMessage(), ioe);
         }
     }
 
@@ -103,10 +123,17 @@ public class LifecycleImpl extends Lifecycle {
         if (context.getResponseComplete()) {
             return;
         }
-        renderResponsePhase.execute(context);
+        try {
+            renderResponsePhase.execute(context);
+        } catch(FacesException e) {
+            throw e;
+        } catch(Exception e) {
+            handleException(context, e);
+        }
     }
 
-    protected boolean isFinished(final FacesContext context) throws FacesException {
+    protected boolean isFinished(final FacesContext context)
+            throws FacesException {
         return context.getResponseComplete() || context.getRenderResponse();
     }
 
@@ -133,7 +160,8 @@ public class LifecycleImpl extends Lifecycle {
         this.restoreViewPhase = restoreViewPhase;
     }
 
-    public void setApplyRequestValuesPhase(final AbstractPhase applyRequestValuesPhase) {
+    public void setApplyRequestValuesPhase(
+            final AbstractPhase applyRequestValuesPhase) {
         this.applyRequestValuesPhase = applyRequestValuesPhase;
     }
 
@@ -175,5 +203,13 @@ public class LifecycleImpl extends Lifecycle {
 
     public Phase getUpdateModelValuesPhase() {
         return updateModelValuesPhase;
+    }
+
+    public ErrorPageManager getErrorPageManager() {
+        return errorPageManager;
+    }
+
+    public void setErrorPageManager(ErrorPageManager errorPageManager) {
+        this.errorPageManager = errorPageManager;
     }
 }

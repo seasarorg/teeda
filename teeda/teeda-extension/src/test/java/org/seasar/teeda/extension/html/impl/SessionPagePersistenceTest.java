@@ -339,6 +339,15 @@ public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
                 .getSubApplicationPath(getFacesContext()));
     }
 
+    public void testGetSubApplicationPath_facesContextIsNull() throws Exception {
+        try {
+            new SessionPagePersistence().removeSubApplicationPages(null);
+        } catch (Exception e) {
+            fail();
+        }
+        success();
+    }
+
     public void testRemoveSubApplicationPages() throws Exception {
         LruHashMap lru = new LruHashMap(10);
         lru.put("/view/dept/deptList.html", "hoge");

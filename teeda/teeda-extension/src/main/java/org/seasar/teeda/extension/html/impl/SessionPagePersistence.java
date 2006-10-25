@@ -27,6 +27,7 @@ import java.util.Set;
 import java.util.Map.Entry;
 
 import javax.faces.application.FacesMessage;
+import javax.faces.component.UIViewRoot;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.internal.FacesMessageUtil;
@@ -73,10 +74,14 @@ public class SessionPagePersistence implements PagePersistence {
 
     private static final String ERROR_MESSAGE_PERSISTE_KEY = "Teeda.FacesMessages";
 
-    public void save(FacesContext context, String viewId) {
+    public void save(final FacesContext context, final String viewId) {
+        if (context == null) {
+            return;
+        }
         final ExternalContext extCtx = context.getExternalContext();
         final Map sessionMap = extCtx.getSessionMap();
-        final String previousViewId = context.getViewRoot().getViewId();
+        final UIViewRoot viewRoot = context.getViewRoot();
+        final String previousViewId = (viewRoot != null) ? viewRoot.getViewId() : null;
         LruHashMap lru = (LruHashMap) sessionMap.get(getClass().getName());
         if (lru == null) {
             lru = new LruHashMap(pageSize);
@@ -87,7 +92,10 @@ public class SessionPagePersistence implements PagePersistence {
         lru.put(viewId, pageData);
     }
 
-    public void restore(FacesContext context, String viewId) {
+    public void restore(final FacesContext context, final String viewId) {
+        if(context == null) {
+            return;
+        }
         final ExternalContext extCtx = context.getExternalContext();
         final Map lru = getLru(extCtx);
         if (lru == null) {
@@ -118,6 +126,7 @@ public class SessionPagePersistence implements PagePersistence {
         }
     }
 
+    //TODO not use previousViewId?
     protected Map getPageData(FacesContext context, String viewId,
             String previousViewId) {
         PageDesc pageDesc = pageDescCache.getPageDesc(previousViewId);
@@ -349,21 +358,27 @@ public class SessionPagePersistence implements PagePersistence {
         this.namingConvention = namingConvention;
     }
 
-    public void removeSubApplicationPages(FacesContext context) {
-        String subAppPath = getSubApplicationPath(context);
-        ExternalContext extCtx = context.getExternalContext();
-        Map lru = getLru(extCtx);
+    public void removeSubApplicationPages(final FacesContext context) {
+        if (context == null) {
+            return;
+        }
+        final ExternalContext extCtx = context.getExternalContext();
+        final Map lru = getLru(extCtx);
         if (lru == null) {
             return;
         }
-        List list = new ArrayList();
+        final List list = new ArrayList();
+        final String subAppPath = getSubApplicationPath(context);
+        if(subAppPath == null) {
+            return;
+        }
         for (Iterator i = lru.keySet().iterator(); i.hasNext();) {
             String path = (String) i.next();
             if (path.startsWith(subAppPath)) {
                 list.add(path);
             }
         }
-        String[] paths = (String[]) list.toArray(new String[list.size()]);
+        final String[] paths = (String[]) list.toArray(new String[list.size()]);
         for (int i = 0; i < paths.length; i++) {
             lru.remove(paths[i]);
         }
@@ -389,8 +404,12 @@ public class SessionPagePersistence implements PagePersistence {
         this.actionDescCache = actionDescCache;
     }
 
-    protected static String getSubApplicationPath(FacesContext context) {
-        String viewId = context.getViewRoot().getViewId();
+    protected static String getSubApplicationPath(final FacesContext context) {
+        final UIViewRoot root = context.getViewRoot();
+        if(root == null) {
+            return null;
+        }
+        String viewId = root.getViewId();
         return viewId.substring(0, viewId.lastIndexOf("/"));
     }
 }
