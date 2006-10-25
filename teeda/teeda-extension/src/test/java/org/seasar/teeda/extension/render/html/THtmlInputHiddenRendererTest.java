@@ -15,6 +15,7 @@
  */
 package org.seasar.teeda.extension.render.html;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -34,6 +35,7 @@ import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.mock.MockUIComponentBaseWithNamingContainer;
 import org.seasar.teeda.core.render.Base64EncodeConverter;
 import org.seasar.teeda.extension.mock.MockTHtmlInputHidden;
+import org.seasar.teeda.extension.util.ComponentHolder;
 
 /**
  * @author manhole
@@ -411,6 +413,17 @@ public class THtmlInputHiddenRendererTest extends RendererTest {
         assertEquals("a", deserializedList.get(0));
         assertEquals("bb", deserializedList.get(1));
         assertEquals("ccc", deserializedList.get(2));
+    }
+
+    public void testGetConvertedValue() throws Exception {
+        THtmlInputHiddenRenderer renderer = (THtmlInputHiddenRenderer) createRenderer();
+        ComponentHolder holder = new ComponentHolder();
+        holder.setComponentClassName(null);
+        holder.setValue(new ArrayList());
+        Base64EncodeConverter converter = new Base64EncodeConverter();
+        String s = converter.getAsEncodeString(holder);
+        renderer
+                .getConvertedValue(getFacesContext(), htmlInputHidden, s);
     }
 
     public static class HiddenDto {

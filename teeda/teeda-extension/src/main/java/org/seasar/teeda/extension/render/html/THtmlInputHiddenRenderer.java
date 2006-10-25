@@ -131,6 +131,9 @@ public class THtmlInputHiddenRenderer extends AbstractInputRenderer {
         final ComponentHolder holder = (ComponentHolder) deserialize(s);
         final String arrayClassName = holder.getArrayClassName();
         final String componentClassName = holder.getComponentClassName();
+        if(componentClassName == null) {
+            return null;
+        }
         final Class componentClass = ClassUtil.forName(componentClassName);
         final List restoredList = holder.getValue();
         if (arrayClassName != null) {

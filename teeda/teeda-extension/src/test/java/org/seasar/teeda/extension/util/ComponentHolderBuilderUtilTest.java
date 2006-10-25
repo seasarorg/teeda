@@ -90,6 +90,13 @@ public class ComponentHolderBuilderUtilTest extends TestCase {
         ArrayAssert.assertEquals(value, o);
     }
 
+    public void testBuild_arrayEmpty() throws Exception {
+        HogeDto[] value = new HogeDto[] { new HogeDto() };
+        ComponentHolder holder = ComponentHolderBuilderUtil.build(value);
+        assertNotNull(holder);
+        assertEquals(HogeDto.class.getName(), holder.getComponentClassName());
+    }
+
     public void testBuild_promitiveArray() throws Exception {
         BeanDesc bd = BeanDescFactory.getBeanDesc(HogeDto.class);
         PropertyDesc pd = bd.getPropertyDesc("array");

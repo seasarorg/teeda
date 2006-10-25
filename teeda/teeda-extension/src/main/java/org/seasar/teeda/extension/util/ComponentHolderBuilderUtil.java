@@ -87,7 +87,14 @@ public class ComponentHolderBuilderUtil {
         final ComponentHolder holder = new ComponentHolder();
         holder.setArrayClassName(valueClass.getComponentType().getName());
         final List list = new ArrayList();
-        if (0 < valueArray.length) {
+        boolean ensureArrayZeroExist = false;
+        try {
+            Object o = valueArray[0];
+            ensureArrayZeroExist = true;
+        } catch (ArrayIndexOutOfBoundsException ignore) {
+            ensureArrayZeroExist = false;
+        }
+        if (valueArray.length >= 0 && ensureArrayZeroExist) {
             final Class componentClass = valueArray[0].getClass();
             holder.setComponentClassName(componentClass.getName());
             if (PagePersistenceUtil.isPersistenceType(componentClass)) {
