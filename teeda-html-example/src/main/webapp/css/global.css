@@ -1,0 +1,153 @@
+* {
+    font-size : 12px;
+}
+
+.gridHeader {
+    height           : 20px;
+    border           : solid #CCCCCC 1px;
+    background-color : green;
+    color            : white;
+    font-weight      : bold;
+    overflow         : hidden;
+}
+
+.gridTable {
+}
+
+.gridTable th div.doubleHeight {
+    height           : 30px;
+}
+
+.gridTable th div.doubleAdjust {
+    height           : 30px;
+    line-height      : 28px;
+}
+
+
+.gridCell {
+    height           : 20px;
+    border           : solid #CCCCCC 1px;
+    text-align       : center;
+    line-height      : 18px;
+}
+
+.gridCell input {
+    text-align       : center;
+}
+
+.gridCellEdit {
+    margin           : 0px;
+    padding          : 2px;
+    height           : 90%;
+    width            : 100%;
+    border           : solid #CCCCCC 1px;
+/*    background-color : #FFC0CB;  */
+    line-height      : 100%;
+    display          : block;
+}
+
+.editStatusAdd {
+/*    color            : #FF0000; */
+}
+
+.editStatusUpdate {
+/*    color            : #0000FF; */
+}
+
+.editStatusDelete {
+    background-color : #EEEEEE;
+/*    display          : none; */
+}
+
+.editStatusDelete col {
+    display: none;
+}
+
+.eGridLayer {
+    vertical-align : top;
+}
+
+.eGridLeftHeader {
+    overflow   : hidden;
+}
+
+.eGridRightHeader {
+    width      : 400px;
+    overflow   : hidden;
+}
+
+.eGridLeftBody {
+    overflow   : hidden;
+}
+
+.eGridRightBody {
+    height     : 100px;
+    width      : 419px;
+    overflow   : scroll;
+}
+
+.eGridHeader {
+    height           : 20px;
+    border           : solid #CCCCCC 1px;
+    background-color : green;
+    color            : white;
+    font-weight      : bold;
+    overflow         : hidden;
+}
+
+.eGridTable {
+}
+
+.eGridCell {
+    height     : 20px;
+    border     : solid #CCCCCC 1px;
+    text-align : center;
+}
+
+.eGridCell span.editStatusUpdate {
+    color            : #0000FF;
+}
+
+.eGridCell input {
+    height           : 90%;
+    width            : 100%;
+    border           : solid #CCCCCC 1px;
+    margin           : 0px;
+    padding          : 0px;
+    display          : block;
+/*    line-height      : 100%; */
+/*    background-color : #E8E8FF; */
+}
+
+.eGridCellEdit {
+    height           : 20px;
+    border           : double #CCCCCC 3px;
+}
+
+.center {
+    text-align       : center; /* dummy */
+}
+
+input.cellBlur {
+    height           : 100%;
+    width            : 100%;
+    border           : none;
+    margin           : 0px;
+    padding          : 0px;
+    display          : block;
+/*    line-height      : 100%; */
+/*    background-color : #E8E8FF; */
+}
+
+input.cellFocus {
+    height           : 100%;
+    width            : 100%;
+    border           : none;
+    margin           : 0px;
+    padding          : 0px;
+    text-align       : left;
+    display          : block;
+/*    line-height      : 100%;  */
+    background-color : #FFC0CB;
+}
+
