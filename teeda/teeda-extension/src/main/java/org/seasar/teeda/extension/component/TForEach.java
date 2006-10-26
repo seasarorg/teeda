@@ -16,7 +16,12 @@
 package org.seasar.teeda.extension.component;
 
 import java.lang.reflect.Array;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
+import java.util.Locale;
 
 import javax.faces.component.NamingContainer;
 import javax.faces.component.UIComponentBase;
@@ -29,7 +34,9 @@ import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.PropertyDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.framework.log.Logger;
+import org.seasar.framework.util.AssertionUtil;
 import org.seasar.framework.util.ClassUtil;
+import org.seasar.framework.util.NumberConversionUtil;
 import org.seasar.teeda.extension.ExtensionConstants;
 
 /**
@@ -143,7 +150,7 @@ public class TForEach extends UIComponentBase implements NamingContainer {
         if (beanDesc.hasPropertyDesc(getItemName())) {
             PropertyDesc itemPd = beanDesc.getPropertyDesc(getItemName());
             final Class itemType = itemPd.getPropertyType();
-            final Object item = ClassUtil.newInstance(itemType);
+            final Object item = createNewInstance(context, itemType);
             itemPd.setValue(page, item);
         }
         for (int i = 0; i < rowSize; ++i) {
@@ -153,6 +160,38 @@ public class TForEach extends UIComponentBase implements NamingContainer {
         }
     }
 
+    //fix for https://www.seasar.org/issues/browse/TEEDA-146
+    protected Object createNewInstance(FacesContext context, Class itemType) {
+        AssertionUtil.assertNotNull("itemType", itemType);
+        Object o = null;
+        if(itemType.isPrimitive()) {
+            itemType = ClassUtil.getWrapperClassIfPrimitive(itemType);
+        }
+        if (itemType == Integer.class) {
+            return new Integer("0");
+        } else if (itemType == Long.class) {
+            return new Long("0");
+        } else if (itemType == Double.class) {
+            return new Double("0");
+        } else if (itemType == Float.class) {
+            return new Float("0");
+        } else if (itemType == Short.class) {
+            return new Short("0");
+        } else if (itemType == BigDecimal.class) {
+            return new BigDecimal("0");
+        } else if (itemType == BigInteger.class) {
+            return new BigInteger("0");
+        } else if (itemType == Boolean.class) {
+            return Boolean.FALSE;
+        } else if (itemType == Calendar.class) {
+            final Locale locale = context.getViewRoot().getLocale();
+            return Calendar.getInstance(locale);
+        } else {
+            o = ClassUtil.newInstance(itemType);
+            return o;
+        }
+    }
+    
     public void processUpdates(FacesContext context) {
         if (context == null) {
             throw new NullPointerException("context");
@@ -187,7 +226,7 @@ public class TForEach extends UIComponentBase implements NamingContainer {
         if (items == null) {
             items = (Object[]) Array.newInstance(itemClass, rowSize);
             for (int i = 0; i < items.length; i++) {
-                items[i] = ClassUtil.newInstance(itemClass);
+                items[i] = createNewInstance(context, itemClass);
             }
         }
         if (pageBeanDesc.hasPropertyDesc(getItemName())) {

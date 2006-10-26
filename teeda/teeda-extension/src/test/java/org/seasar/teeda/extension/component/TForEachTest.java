@@ -23,6 +23,9 @@ import javax.faces.context.FacesContext;
 import javax.faces.el.EvaluationException;
 import javax.faces.el.VariableResolver;
 
+import org.seasar.framework.beans.BeanDesc;
+import org.seasar.framework.beans.PropertyDesc;
+import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.teeda.core.mock.MockFacesContext;
 
 /**
@@ -59,6 +62,39 @@ public class TForEachTest extends UIComponentBaseTest {
         assertNull(hoge.getNameItems());
     }
 
+    public void testProcessValidators_ItemTypeWithoutDefaultConstructor()
+            throws Exception {
+        TForEach forEach = new TForEach();
+        final Foo foo = new Foo(
+                new Integer[] { new Integer(1), new Integer(2) });
+        MockFacesContext context = getFacesContext();
+        context.getApplication().setVariableResolver(new VariableResolver() {
+            public Object resolveVariable(FacesContext context, String name)
+                    throws EvaluationException {
+                return foo;
+            }
+        });
+        forEach.setItemsName("numItems");
+        forEach.processValidators(context);
+        assertEquals(new Integer(0), foo.getNum());
+    }
+
+    public void testProcessValidators_ItemTypeWithoutDefaultConstructorPrimitive()
+            throws Exception {
+        TForEach forEach = new TForEach();
+        final Foo2 foo2 = new Foo2(new int[] { 1, 2 });
+        MockFacesContext context = getFacesContext();
+        context.getApplication().setVariableResolver(new VariableResolver() {
+            public Object resolveVariable(FacesContext context, String name)
+                    throws EvaluationException {
+                return foo2;
+            }
+        });
+        forEach.setItemsName("numItems");
+        forEach.processValidators(context);
+        assertTrue(foo2.getNum() == 0);
+    }
+
     private TForEach createTForEach() {
         return (TForEach) createUIComponent();
     }
@@ -69,7 +105,7 @@ public class TForEachTest extends UIComponentBaseTest {
 
     public static class Hoge {
         private String name;
-        
+
         private List nameItems;
 
         public List getNameItems() {
@@ -89,4 +125,64 @@ public class TForEachTest extends UIComponentBaseTest {
         }
 
     }
+
+    public static class Foo {
+        private Integer num;
+
+        private Integer[] numItems;
+
+        public Foo() {
+        }
+
+        public Foo(Integer[] numItems) {
+            this.numItems = numItems;
+        }
+
+        public Integer getNum() {
+            return num;
+        }
+
+        public void setNum(Integer num) {
+            this.num = num;
+        }
+
+        public Integer[] getNumItems() {
+            return numItems;
+        }
+
+        public void setNumItems(Integer[] numItems) {
+            this.numItems = numItems;
+        }
+
+    }
+
+    public static class Foo2 {
+        int num;
+
+        int[] numItems;
+
+        public Foo2() {
+        }
+
+        public Foo2(int[] numItems) {
+            this.numItems = numItems;
+        }
+
+        public int getNum() {
+            return num;
+        }
+
+        public void setNum(int num) {
+            this.num = num;
+        }
+
+        public int[] getNumItems() {
+            return numItems;
+        }
+
+        public void setNumItems(int[] numItems) {
+            this.numItems = numItems;
+        }
+    }
+
 }
