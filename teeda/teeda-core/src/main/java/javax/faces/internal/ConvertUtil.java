@@ -21,7 +21,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 
-
 /**
  * @author shot
  * 
@@ -55,11 +54,22 @@ public class ConvertUtil {
     public static ConverterException wrappedByConverterException(
             Converter converter, FacesContext context, Object[] args,
             Throwable t) {
-
-        String conversionMessage = createConversionMessage(converter);
-        FacesMessage facesMessage = FacesMessageUtil.getMessage(context,
-                conversionMessage, args);
+        FacesMessage facesMessage = null;
+        for (Class c = converter.getClass(); c != null && c != Object.class; c = c
+                .getSuperclass()) {
+            String conversionMessage = createConversionMessage(c);
+            facesMessage = FacesMessageUtil.getMessage(context,
+                    conversionMessage, args);
+            if (facesMessage.getSummary() != null
+                    || facesMessage.getDetail() != null) {
+                break;
+            }
+        }
         return new ConverterException(facesMessage, t);
+    }
+
+    public static String createConversionMessage(Class c) {
+        return c.getName() + ".CONVERSION";
     }
 
     public static String createConversionMessage(Converter converter) {
