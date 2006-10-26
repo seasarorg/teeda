@@ -10,7 +10,7 @@ public class FooDto {
 
 	private BigDecimal ccc;
 
-	private Integer editStatus;
+	private int editStatus;
 
 	private Integer bbbEditStatus;
 
@@ -47,13 +47,13 @@ public class FooDto {
 		this.ccc = ccc;
 	}
 
-	public Integer getEditStatus() {
+	public int getEditStatus() {
 		return editStatus;
 	}
 
-	public void setEditStatus(Integer editStatus) {
+	public void setEditStatus(int editStatus) {
 		this.editStatus = editStatus;
-		System.out.println("[editStatus] " + editStatus.intValue());
+		System.out.println("[editStatus] " + editStatus);
 	}
 
 	public Integer getBbbEditStatus() {
@@ -64,15 +64,15 @@ public class FooDto {
 		this.bbbEditStatus = bbbEditStatus;
 	}
 
-	public String toString() {
-		StringBuffer buff = new StringBuffer();
-		buff.append("aaa=" + this.aaa);
-		buff.append(",bbb=" + this.bbb);
-		buff.append(",ccc=" + this.ccc);
-		buff.append(",editStatus=" + this.editStatus.intValue());
-		buff.append(",bbbEditStatus=" + this.bbbEditStatus.intValue());
-
-		return buff.toString();
-	}
+//	public String toString() {
+//		StringBuffer buff = new StringBuffer();
+//		buff.append("aaa=" + this.aaa);
+//		buff.append(",bbb=" + this.bbb);
+//		buff.append(",ccc=" + this.ccc);
+//		buff.append(",editStatus=" + this.editStatus);
+//		buff.append(",bbbEditStatus=" + this.bbbEditStatus.intValue());
+//
+//		return buff.toString();
+//	}
 
 }

@@ -69,7 +69,7 @@ public class ForeachGridEditPage extends AbstractForeachGridPage {
 		boolean isExist = false;
 		for (int i = 0; i < this.fooItems.length; i++) {
 			FooDto dto = this.fooItems[i];
-			if ((dto.getEditStatus().intValue() == PageUtil.EDIT_DELETE)
+			if ((dto.getEditStatus() == PageUtil.EDIT_DELETE)
 					&& (dto.getAaa() != null)
 					&& (this.bar.intValue() == dto.getAaa().intValue())) {
 				isExist = true;
@@ -84,7 +84,7 @@ public class ForeachGridEditPage extends AbstractForeachGridPage {
 
 			FooDto dto = new FooDto();
 			dto.setAaa(this.bar);
-			dto.setEditStatus(new Integer(PageUtil.EDIT_ADD));
+			dto.setEditStatus(PageUtil.EDIT_ADD);
 			newArray[size] = dto;
 
 			this.fooItems = newArray;
@@ -103,7 +103,7 @@ public class ForeachGridEditPage extends AbstractForeachGridPage {
 			FooDto dto = this.fooItems[i];
 			if ((dto.getAaa() != null)
 					&& (this.bar.intValue() == dto.getAaa().intValue())) {
-				dto.setEditStatus(new Integer(PageUtil.EDIT_DELETE));
+				dto.setEditStatus(PageUtil.EDIT_DELETE);
 			}
 		}
 		return null;

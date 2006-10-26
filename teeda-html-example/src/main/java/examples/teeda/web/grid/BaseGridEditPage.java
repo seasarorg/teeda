@@ -101,7 +101,7 @@ public class BaseGridEditPage {
         }
 
 //        Integer editStatus = dto.getEditStatus();
-        int editStatus = dto.getEditStatus().intValue();
+        int editStatus = dto.getEditStatus();
         String cssClass = PageUtil.getStyleClass(editStatus);
 
         return cssClass;
@@ -118,7 +118,7 @@ public class BaseGridEditPage {
             return null;
         }
 
-        int editStatus = dto.getEditStatus().intValue();
+        int editStatus = dto.getEditStatus();
 //        Integer editStatus = dto.getEditStatus();
         String style = PageUtil.getStyle(editStatus);
 

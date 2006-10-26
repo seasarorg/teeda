@@ -64,7 +64,7 @@ public class GridEditPage extends BaseGridEditPage {
 		System.arraycopy(super.fooItems, 0, newArray, 0, size);
 
 		FooDto dto = new FooDto();
-		dto.setEditStatus(new Integer(PageUtil.EDIT_ADD));
+		dto.setEditStatus(PageUtil.EDIT_ADD);
 		newArray[size] = dto;
 
 		this.fooItems = newArray;
@@ -83,7 +83,7 @@ public class GridEditPage extends BaseGridEditPage {
 		}
 
 		FooDto dto = this.fooItems[this.fooIndexSelect.intValue()];
-		dto.setEditStatus(new Integer(PageUtil.EDIT_DELETE));
+		dto.setEditStatus(PageUtil.EDIT_DELETE);
 
 		// 実際に配列を削除する場合
 		// List fooList = new ArrayList(Arrays.asList(this.fooItems));
