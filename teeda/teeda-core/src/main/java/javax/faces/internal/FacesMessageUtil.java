@@ -173,9 +173,6 @@ public class FacesMessageUtil {
     public static FacesMessage getMessage(FacesContext context,
             String messageId, Object[] args) {
         Locale locale = ComponentUtil_.getLocale(context);
-        if (locale == null) {
-            locale = Locale.getDefault();
-        }
         return getMessage(context, locale, FacesMessage.SEVERITY_ERROR,
                 messageId, args);
     }

@@ -94,7 +94,7 @@ public class ComponentUtil_ {
     public static Locale getLocale(FacesContext context) {
         AssertionUtil.assertNotNull("context", context);
         final UIViewRoot viewRoot = context.getViewRoot();
-        return (viewRoot != null) ? viewRoot.getLocale() : Locale.getDefault();
+        return (viewRoot != null) ? viewRoot.getLocale() : null;
     }
 
     public static boolean isLocaleShort(String locale) {
