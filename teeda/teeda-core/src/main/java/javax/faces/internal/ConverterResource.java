@@ -36,10 +36,7 @@ public class ConverterResource {
 
     public static synchronized void addConverter(String expression,
             Converter converter) {
-        Converter previous = getConverter(expression);
-        if (previous == null) {
-            converters.put(expression, converter);
-        }
+        converters.put(expression, converter);
     }
 
     public static synchronized void removeConverter(String expression) {
