@@ -24,6 +24,7 @@ import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.ElementProcessor;
 import org.seasar.teeda.extension.html.PageDesc;
+import org.seasar.teeda.extension.html.factory.sub.web.foo.Foo2Page;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooAction;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooPage;
 import org.seasar.teeda.extension.mock.MockTaglibManager;
@@ -56,4 +57,27 @@ public class AbsElementProcessorFactoryTest extends TeedaExtensionTestCase {
 
         factory.createProcessor(elementNode, null, null);
     }
+
+    public void testCustomizeDynamicProperties_styeClass() throws Exception {
+        // ## Arrange ##
+        registerTaglibElement(JsfConstants.JSF_HTML_URI, "inputText",
+                InputTextTag.class);
+        MockTaglibManager taglibManager = getTaglibManager();
+        InputTextFactory factory = new InputTextFactory();
+        factory.setTaglibManager(taglibManager);
+        Map properties = new HashMap();
+        properties.put("id", "ccc");
+        properties.put("type", "text");
+        properties.put("class", "hoge");
+        ElementNode elementNode = createElementNode("input", properties);
+        PageDesc pageDesc = createPageDesc(Foo2Page.class, "fooPage");
+        ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
+
+        ElementProcessor processor = factory.createProcessor(elementNode,
+                pageDesc, actionDesc);
+        assertEquals("#{fooPage.cccClass}", processor.getProperty("styleClass"));
+
+        factory.createProcessor(elementNode, null, null);
+    }
+
 }

@@ -132,10 +132,17 @@ public abstract class AbstractElementProcessorFactory implements
         if (pageDesc == null) {
             return;
         }
+        final String pageName = pageDesc.getPageName();
+        if (name.equals(JsfConstants.STYLE_CLASS_ATTR)
+                && !StringUtil.isEmpty(base)) {
+            String s = base + StringUtil.capitalize(JsfConstants.CLASS_ATTR);
+            if (pageDesc.hasDynamicProperty(s)) {
+                properties.put(name, getBindingExpression(pageName, s));
+            }
+        }
         String propName = base + StringUtil.capitalize(name);
         if (pageDesc.hasDynamicProperty(propName)) {
-            properties.put(name, getBindingExpression(pageDesc.getPageName(),
-                    propName));
+            properties.put(name, getBindingExpression(pageName, propName));
         }
     }
 

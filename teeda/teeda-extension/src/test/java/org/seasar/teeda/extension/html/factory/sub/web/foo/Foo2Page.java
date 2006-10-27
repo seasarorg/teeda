@@ -12,6 +12,10 @@ public class Foo2Page {
 
     private String ccc;
 
+    public String getCccClass() {
+        return "mystyle";
+    }
+
     public String getAaa() {
         return null;
     }
