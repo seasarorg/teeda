@@ -8,7 +8,7 @@ public class GridPage {
 
 	private int fooIndex;
 
-	public String getFooRowStyleClass() {
+	public String getFooRowClass() {
 		if (fooIndex % 2 == 0) {
 			return "row_even";
 		}
