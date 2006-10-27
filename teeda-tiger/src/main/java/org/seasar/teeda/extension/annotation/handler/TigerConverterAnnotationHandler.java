@@ -20,7 +20,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Map;
 
-import javax.faces.validator.Validator;
+import javax.faces.convert.Converter;
 
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.PropertyDesc;
@@ -34,10 +34,10 @@ import org.seasar.framework.util.tiger.AnnotationUtil;
 /**
  * @author higa
  */
-public class TigerValidatorAnnotationHandler extends
-		ConstantValidatorAnnotationHandler {
+public class TigerConverterAnnotationHandler extends
+		ConstantConverterAnnotationHandler {
 
-	protected Class<? extends Annotation> metaAnnotationType = org.seasar.teeda.extension.annotation.validator.Validator.class;
+	protected Class<? extends Annotation> metaAnnotationType = org.seasar.teeda.extension.annotation.convert.Converter.class;
 
 	protected void processField(S2Container container, Class componentClass,
 			String componentName, NamingConvention namingConvention,
@@ -59,18 +59,21 @@ public class TigerValidatorAnnotationHandler extends
 		if (metaAnnotation == null) {
 			return;
 		}
-		String vname = getValidatorName(metaAnnotation);
-		Validator validator = (Validator) container.getComponent(vname);
+		String converterName = getConverterName(metaAnnotation);
+		Converter converter = getConverter(container, converterName);
+		if (converter == null) {
+			return;
+		}
 		Map props = AnnotationUtil.getProperties(annotation);
-		BeanUtil.copyProperties(props, validator);
-		registerValidator(componentName, propertyName, validator);
+		BeanUtil.copyProperties(props, converter);
+		registerConverter(componentName, propertyName, converter);
 	}
 
-	protected void processSetterMethod(S2Container container,
+	protected void processGetterMethod(S2Container container,
 			Class componentClass, String componentName,
 			NamingConvention namingConvention, BeanDesc beanDesc,
 			PropertyDesc propertyDesc) {
-		Annotation[] annotations = propertyDesc.getWriteMethod()
+		Annotation[] annotations = propertyDesc.getReadMethod()
 				.getDeclaredAnnotations();
 		for (Annotation annotation : annotations) {
 			processAnnotation(container, componentName, propertyDesc
@@ -78,7 +81,7 @@ public class TigerValidatorAnnotationHandler extends
 		}
 	}
 
-	protected String getValidatorName(Annotation annotation) {
+	protected String getConverterName(Annotation annotation) {
 		Class<? extends Annotation> annoType = annotation.annotationType();
 		Method m = ClassUtil.getMethod(annoType, "value", null);
 		return (String) MethodUtil.invoke(m, annotation, null);

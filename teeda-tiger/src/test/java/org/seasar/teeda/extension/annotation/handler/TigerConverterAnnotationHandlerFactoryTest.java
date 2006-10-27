@@ -13,19 +13,19 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.extension.annotation.validator;
+package org.seasar.teeda.extension.annotation.handler;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import junit.framework.TestCase;
 
 /**
  * @author higa
  * 
  */
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.ANNOTATION_TYPE)
-public @interface Validator {
-	String value();
+public class TigerConverterAnnotationHandlerFactoryTest extends TestCase {
+
+	public void testGetAnnotationHandler() throws Exception {
+		ConverterAnnotationHandler handler = ConverterAnnotationHandlerFactory
+				.getAnnotationHandler();
+		assertEquals(TigerConverterAnnotationHandler.class, handler.getClass());
+	}
 }

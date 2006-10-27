@@ -13,7 +13,7 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.extension.annotation.validator;
+package org.seasar.teeda.extension.annotation.convert;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -22,10 +22,15 @@ import java.lang.annotation.Target;
 
 /**
  * @author higa
- * 
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.ANNOTATION_TYPE)
-public @interface Validator {
-	String value();
+@Target( { ElementType.FIELD, ElementType.METHOD })
+@Converter("TDateTimeConverter")
+public @interface DateTimeConverter {
+
+	String type() default "both";
+
+	String dateStyle() default "";
+
+	String pattern() default "";
 }
