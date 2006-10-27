@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -29,6 +29,7 @@ public class TreePage {
 		tree = new TreeNodeImpl("folder-B", "ROOT", false);
 		TreeNodeImpl personNode = new TreeNodeImpl("folder-A", "AAA", false);
 		TreeNodeImpl document = new TreeNodeImpl("document", "BBB", true);
+		document.setValue("../hello/hello.html");
 		personNode.getChildren().add(document);
 		tree.getChildren().add(personNode);
 		return null;
@@ -37,7 +38,7 @@ public class TreePage {
 	public String doHoge() {
 		return null;
 	}
-	
+
 	public TreeNode getTree() {
 		return tree;
 	}
