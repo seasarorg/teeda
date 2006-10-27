@@ -9,17 +9,13 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
 package org.seasar.teeda.extension.taglib;
 
-import javax.faces.component.UIComponent;
-import javax.faces.component.html.HtmlInputHidden;
-
 import org.seasar.teeda.core.taglib.html.OutputTextTag;
-import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.component.html.THtmlOutputText;
 
 /**
@@ -33,16 +29,6 @@ public class TOutputTextTag extends OutputTextTag {
 
     public String getRendererType() {
         return THtmlOutputText.DEFAULT_RENDERER_TYPE;
-    }
-
-    protected void setProperties(UIComponent component) {
-        super.setProperties(component);
-        THtmlOutputText outputText = (THtmlOutputText) component;
-        HtmlInputHidden hidden = new HtmlInputHidden();
-        hidden
-                .setId(outputText.getId()
-                        + ExtensionConstants.TEEDA_HIDDEN_SUFFIX);
-        outputText.getChildren().add(hidden);
     }
 
 }

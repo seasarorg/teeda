@@ -31,7 +31,7 @@ import org.seasar.teeda.core.el.impl.commons.CommonsELParser;
 import org.seasar.teeda.core.el.impl.commons.CommonsExpressionProcessorImpl;
 import org.seasar.teeda.core.mock.MockConverter;
 import org.seasar.teeda.core.mock.MockFacesContext;
-import org.seasar.teeda.extension.component.html.THtmlOutputText;
+import org.seasar.teeda.core.mock.MockHtmlOutputText;
 
 /**
  * @author shot
@@ -40,12 +40,12 @@ public class THtmlOutputTextRendererTest extends RendererTest {
 
     private THtmlOutputTextRenderer renderer;
 
-    private MockTHtmlOutputText htmlOutputText;
+    private MockHtmlOutputText htmlOutputText;
 
     protected void setUp() throws Exception {
         super.setUp();
         renderer = createTHtmlOutputTextRenderer();
-        htmlOutputText = new MockTHtmlOutputText();
+        htmlOutputText = new MockHtmlOutputText();
         htmlOutputText.setRenderer(renderer);
     }
 
@@ -200,7 +200,7 @@ public class THtmlOutputTextRendererTest extends RendererTest {
         // ## Arrange ##
         htmlOutputText.setValue("abc");
 
-        MockTHtmlOutputText child = new MockTHtmlOutputText();
+        MockHtmlOutputText child = new MockHtmlOutputText();
         child.setRenderer(renderer);
         child.setValue("d");
         htmlOutputText.getChildren().add(child);
@@ -209,7 +209,7 @@ public class THtmlOutputTextRendererTest extends RendererTest {
         encodeByRenderer(renderer, htmlOutputText);
 
         // ## Assert ##
-        assertEquals("abcd", getResponseText());
+        assertEquals("abc", getResponseText());
     }
 
     public void testEncode_Converter() throws Exception {
@@ -247,7 +247,7 @@ public class THtmlOutputTextRendererTest extends RendererTest {
     }
 
     public void testGetRendersChildren() throws Exception {
-        assertEquals(true, renderer.getRendersChildren());
+        assertEquals(false, renderer.getRendersChildren());
     }
 
     public void testValueBinding() throws Exception {
@@ -276,20 +276,4 @@ public class THtmlOutputTextRendererTest extends RendererTest {
         return renderer;
     }
 
-    public static class MockTHtmlOutputText extends THtmlOutputText {
-
-        private Renderer renderer;
-
-        public void setRenderer(Renderer renderer) {
-            this.renderer = renderer;
-        }
-
-        protected Renderer getRenderer(FacesContext context) {
-            if (renderer != null) {
-                return renderer;
-            }
-            return super.getRenderer(context);
-        }
-
-    }
 }
