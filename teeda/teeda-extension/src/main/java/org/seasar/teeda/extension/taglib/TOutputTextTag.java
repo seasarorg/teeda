@@ -15,7 +15,11 @@
  */
 package org.seasar.teeda.extension.taglib;
 
+import javax.faces.component.UIComponent;
+import javax.faces.component.html.HtmlInputHidden;
+
 import org.seasar.teeda.core.taglib.html.OutputTextTag;
+import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.component.html.THtmlOutputText;
 
 /**
@@ -29,6 +33,16 @@ public class TOutputTextTag extends OutputTextTag {
 
     public String getRendererType() {
         return THtmlOutputText.DEFAULT_RENDERER_TYPE;
+    }
+
+    protected void setProperties(UIComponent component) {
+        super.setProperties(component);
+        THtmlOutputText outputText = (THtmlOutputText) component;
+        HtmlInputHidden hidden = new HtmlInputHidden();
+        hidden
+                .setId(outputText.getId()
+                        + ExtensionConstants.TEEDA_HIDDEN_SUFFIX);
+        outputText.getChildren().add(hidden);
     }
 
 }
