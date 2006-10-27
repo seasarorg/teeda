@@ -362,11 +362,7 @@
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>taglist-maven-plugin</artifactId>
         <configuration>
-          <tags>
-            <tag>FIXME</tag>
-            <tag>TODO</tag>
-            <tag>XXX</tag>
-          </tags>
+          <tags>FIXME, TODO, XXX</tags>
         </configuration>
       </plugin>
       <plugin>
