@@ -36,9 +36,9 @@ public interface TreeNode extends Serializable {
 
     public void setDescription(String description);
 
-    public void setIdentifier(String identifier);
+    public void setValue(String value);
 
-    public String getIdentifier();
+    public String getValue();
 
     public int getChildCount();
 

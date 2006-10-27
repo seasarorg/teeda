@@ -30,7 +30,7 @@ public class TreeNodeImpl implements TreeNode, Comparable {
 
     private boolean leaf;
 
-    private String identifier;
+    private String value;
 
     public TreeNodeImpl() {
     }
@@ -39,11 +39,11 @@ public class TreeNodeImpl implements TreeNode, Comparable {
         this(type, description, null, leaf);
     }
 
-    public TreeNodeImpl(String type, String description, String identifier,
+    public TreeNodeImpl(String type, String description, String value,
             boolean leaf) {
         this.type = type;
         this.description = description;
-        this.identifier = identifier;
+        this.value = value;
         this.leaf = leaf;
     }
 
@@ -75,12 +75,12 @@ public class TreeNodeImpl implements TreeNode, Comparable {
         return description;
     }
 
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
+    public void setValue(String value) {
+        this.value = value;
     }
 
-    public String getIdentifier() {
-        return identifier;
+    public String getValue() {
+        return value;
     }
 
     public int getChildCount() {
