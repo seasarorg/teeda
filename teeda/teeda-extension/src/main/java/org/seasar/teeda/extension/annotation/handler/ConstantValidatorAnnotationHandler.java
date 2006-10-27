@@ -56,29 +56,35 @@ public class ConstantValidatorAnnotationHandler extends
             BeanDesc beanDesc) {
         Field[] fields = componentClass.getDeclaredFields();
         for (int i = 0; i < fields.length; ++i) {
-            Field field = fields[i];
-            boolean isConstantAnnotation = ConstantAnnotationUtil
-                    .isConstantAnnotation(field);
-            if (!isConstantAnnotation
-                    || !field.getName().endsWith(
-                            namingConvention.getValidatorSuffix())) {
-                continue;
-            }
-            String fieldString = field.getName();
-            int index = fieldString.lastIndexOf("_");
-            String fieldName = fieldString.substring(0, index);
-            String validatorName = fieldString.substring(index + 1);
-            if (!beanDesc.hasPropertyDesc(fieldName)
-                    || !container.hasComponentDef(validatorName)) {
-                continue;
-            }
-            Validator validator = (Validator) container
-                    .getComponent(validatorName);
-            String s = (String) FieldUtil.get(field, null);
-            Map m = ConstantAnnotationUtil.convertExpressionToMap(s);
-            BeanUtil.copyProperties(m, validator);
-            registerValidator(componentName, fieldName, validator);
+            processField(container, componentClass, componentName,
+                    namingConvention, beanDesc, fields[i]);
         }
+    }
+
+    protected void processField(S2Container container, Class componentClass,
+            String componentName, NamingConvention namingConvention,
+            BeanDesc beanDesc, Field field) {
+
+        boolean isConstantAnnotation = ConstantAnnotationUtil
+                .isConstantAnnotation(field);
+        if (!isConstantAnnotation
+                || !field.getName().endsWith(
+                        namingConvention.getValidatorSuffix())) {
+            return;
+        }
+        String fieldString = field.getName();
+        int index = fieldString.lastIndexOf("_");
+        String fieldName = fieldString.substring(0, index);
+        String validatorName = fieldString.substring(index + 1);
+        if (!beanDesc.hasPropertyDesc(fieldName)
+                || !container.hasComponentDef(validatorName)) {
+            return;
+        }
+        Validator validator = (Validator) container.getComponent(validatorName);
+        String s = FieldUtil.getString(field, null);
+        Map m = ConstantAnnotationUtil.convertExpressionToMap(s);
+        BeanUtil.copyProperties(m, validator);
+        registerValidator(componentName, fieldName, validator);
     }
 
     protected void processSetterMethods(S2Container container,
