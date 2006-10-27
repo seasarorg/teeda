@@ -15,7 +15,6 @@
  */
 package org.seasar.teeda.extension.render.html;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -27,6 +26,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.el.EvaluationException;
+import javax.faces.el.VariableResolver;
 import javax.faces.render.Renderer;
 import javax.faces.render.RendererTest;
 
@@ -39,6 +41,7 @@ import org.seasar.teeda.extension.util.ComponentHolder;
 
 /**
  * @author manhole
+ * @author shot
  */
 public class THtmlInputHiddenRendererTest extends RendererTest {
 
@@ -158,6 +161,7 @@ public class THtmlInputHiddenRendererTest extends RendererTest {
         assertEquals(false, renderer.getRendersChildren());
     }
 
+    //from this test, other tests that fail should be modified.
     public void testEncodeAndDecode_DtoArray() throws Exception {
         // ## Arrange ##
         final HiddenDto[] dtos = new HiddenDto[3];
@@ -183,7 +187,18 @@ public class THtmlInputHiddenRendererTest extends RendererTest {
             dtos[2] = dto;
         }
         htmlInputHidden.setValue(dtos);
+        htmlInputHidden.setId("hogeItemsSave");
 
+        MockFacesContext context = getFacesContext();
+        final Hoge hoge = new Hoge();
+        context.getApplication().setVariableResolver(new VariableResolver() {
+
+            public Object resolveVariable(FacesContext context, String name)
+                    throws EvaluationException {
+                return hoge;
+            }
+
+        });
         // ## Act ##
         encodeByRenderer(renderer, htmlInputHidden);
 
@@ -193,11 +208,13 @@ public class THtmlInputHiddenRendererTest extends RendererTest {
         final Matcher matcher = pattern.matcher(responseText);
         assertEquals(true, matcher.matches());
         assertEquals(3, matcher.groupCount());
-        assertEquals("<input type=\"hidden\" name=\"_id0\" ", matcher.group(1));
+        assertEquals(
+                "<input type=\"hidden\" id=\"hogeItemsSave\" name=\"hogeItemsSave\" ",
+                matcher.group(1));
         assertEquals(" />", matcher.group(3));
         final String serializedValue = matcher.group(2);
-        final Object deserialized = renderer.getConvertedValue(
-                getFacesContext(), htmlInputHidden, serializedValue);
+        final Object deserialized = renderer.getConvertedValue(context,
+                htmlInputHidden, serializedValue);
         final HiddenDto[] deserializedDto = (HiddenDto[]) deserialized;
         assertEquals(3, deserializedDto.length);
         {
@@ -422,8 +439,7 @@ public class THtmlInputHiddenRendererTest extends RendererTest {
         holder.setValue(new ArrayList());
         Base64EncodeConverter converter = new Base64EncodeConverter();
         String s = converter.getAsEncodeString(holder);
-        renderer
-                .getConvertedValue(getFacesContext(), htmlInputHidden, s);
+        renderer.getConvertedValue(getFacesContext(), htmlInputHidden, s);
     }
 
     public static class HiddenDto {
@@ -485,4 +501,16 @@ public class THtmlInputHiddenRendererTest extends RendererTest {
         return renderer;
     }
 
+    public static class Hoge {
+        private HiddenDto[] hogeItems;
+
+        public HiddenDto[] getHogeItems() {
+            return hogeItems;
+        }
+
+        public void setHogeItems(HiddenDto[] hogeItems) {
+            this.hogeItems = hogeItems;
+        }
+
+    }
 }

@@ -26,13 +26,16 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.convert.ConverterException;
 
+import org.seasar.framework.beans.BeanDesc;
+import org.seasar.framework.beans.PropertyDesc;
+import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.framework.beans.util.BeanUtil;
 import org.seasar.framework.util.ClassUtil;
-import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.AbstractInputRenderer;
 import org.seasar.teeda.core.render.EncodeConverter;
 import org.seasar.teeda.core.util.RendererUtil;
+import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.component.html.THtmlInputHidden;
 import org.seasar.teeda.extension.util.ComponentHolder;
 import org.seasar.teeda.extension.util.ComponentHolderBuilderUtil;
@@ -124,14 +127,15 @@ public class THtmlInputHiddenRenderer extends AbstractInputRenderer {
             final UIComponent component, final Object submittedValue)
             throws ConverterException {
         assertNotNull(context, component);
+        THtmlInputHidden hidden = (THtmlInputHidden) component;
         String s = (String) submittedValue;
-        if(s.equals("")) {
+        if (s.equals("")) {
             return "";
         }
         final ComponentHolder holder = (ComponentHolder) deserialize(s);
         final String arrayClassName = holder.getArrayClassName();
         final String componentClassName = holder.getComponentClassName();
-        if(componentClassName == null) {
+        if (componentClassName == null) {
             return null;
         }
         final Class componentClass = ClassUtil.forName(componentClassName);
@@ -147,14 +151,33 @@ public class THtmlInputHiddenRenderer extends AbstractInputRenderer {
                         restoredList);
                 beanList.toArray(array);
             }
+            restoreItems(context, hidden, array);
             return array;
         } else {
+            List retList = null;
             if (PagePersistenceUtil.isPersistenceType(componentClass)) {
-                return restoredList;
+                retList = restoredList;
+            } else {
+                retList = mapListToBeanList(componentClass, restoredList);
             }
-            final List beanList = mapListToBeanList(componentClass,
-                    restoredList);
-            return beanList;
+            restoreItems(context, hidden, retList);
+            return retList;
+        }
+    }
+
+    protected void restoreItems(FacesContext context, THtmlInputHidden hidden,
+            Object items) {
+        Object page = hidden.getPage(context);
+        BeanDesc beanDesc = BeanDescFactory.getBeanDesc(page.getClass());
+        final String id = hidden.getId();
+        String itemsName = id;
+        if (id.endsWith(ExtensionConstants.SAVE_SUFFIX)) {
+            itemsName = id.substring(0,
+                    (id.length() - ExtensionConstants.SAVE_SUFFIX.length()));
+        }
+        PropertyDesc propertyDesc = beanDesc.getPropertyDesc(itemsName);
+        if (propertyDesc != null) {
+            propertyDesc.setValue(page, items);
         }
     }
 

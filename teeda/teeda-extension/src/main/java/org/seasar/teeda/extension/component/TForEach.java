@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -20,7 +20,6 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Calendar;
 import java.util.Collection;
-import java.util.Date;
 import java.util.Locale;
 
 import javax.faces.component.NamingContainer;
@@ -36,7 +35,6 @@ import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.framework.log.Logger;
 import org.seasar.framework.util.AssertionUtil;
 import org.seasar.framework.util.ClassUtil;
-import org.seasar.framework.util.NumberConversionUtil;
 import org.seasar.teeda.extension.ExtensionConstants;
 
 /**
@@ -164,7 +162,7 @@ public class TForEach extends UIComponentBase implements NamingContainer {
     protected Object createNewInstance(FacesContext context, Class itemType) {
         AssertionUtil.assertNotNull("itemType", itemType);
         Object o = null;
-        if(itemType.isPrimitive()) {
+        if (itemType.isPrimitive()) {
             itemType = ClassUtil.getWrapperClassIfPrimitive(itemType);
         }
         if (itemType == Integer.class) {
@@ -191,7 +189,7 @@ public class TForEach extends UIComponentBase implements NamingContainer {
             return o;
         }
     }
-    
+
     public void processUpdates(FacesContext context) {
         if (context == null) {
             throw new NullPointerException("context");

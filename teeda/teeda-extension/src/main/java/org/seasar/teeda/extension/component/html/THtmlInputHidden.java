@@ -16,6 +16,8 @@
 package org.seasar.teeda.extension.component.html;
 
 import javax.faces.component.UIInput;
+import javax.faces.context.FacesContext;
+import javax.faces.el.VariableResolver;
 
 /**
  * @author manhole
@@ -26,8 +28,38 @@ public class THtmlInputHidden extends UIInput {
 
     public static final String DEFAULT_RENDERER_TYPE = "org.seasar.teeda.extension.Hidden";
 
+    private String pageName;
+
     public THtmlInputHidden() {
         setRendererType(DEFAULT_RENDERER_TYPE);
+    }
+
+    public Object getPage(final FacesContext context) {
+        final VariableResolver variableResolver = context.getApplication()
+                .getVariableResolver();
+        final String pageName = getPageName();
+        return variableResolver.resolveVariable(context, pageName);
+    }
+
+    public String getPageName() {
+        return pageName;
+    }
+
+    public void setPageName(String pageName) {
+        this.pageName = pageName;
+    }
+
+    public Object saveState(FacesContext context) {
+        Object[] values = new Object[2];
+        values[0] = super.saveState(context);
+        values[1] = pageName;
+        return values;
+    }
+
+    public void restoreState(FacesContext context, Object state) {
+        Object values[] = (Object[]) state;
+        super.restoreState(context, values[0]);
+        pageName = (String) values[1];
     }
 
 }
