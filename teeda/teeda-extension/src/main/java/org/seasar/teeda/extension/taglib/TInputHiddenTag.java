@@ -15,8 +15,6 @@
  */
 package org.seasar.teeda.extension.taglib;
 
-import javax.faces.component.UIComponent;
-
 import org.seasar.teeda.core.taglib.html.InputTagBase;
 import org.seasar.teeda.extension.component.html.THtmlInputHidden;
 
@@ -25,8 +23,6 @@ import org.seasar.teeda.extension.component.html.THtmlInputHidden;
  */
 public class TInputHiddenTag extends InputTagBase {
 
-    private String pageName;
-
     public String getComponentType() {
         return THtmlInputHidden.COMPONENT_TYPE;
     }
@@ -34,24 +30,4 @@ public class TInputHiddenTag extends InputTagBase {
     public String getRendererType() {
         return THtmlInputHidden.DEFAULT_RENDERER_TYPE;
     }
-
-    protected void setProperties(UIComponent component) {
-        super.setProperties(component);
-        THtmlInputHidden hidden = (THtmlInputHidden) component;
-        hidden.setPageName(pageName);
-    }
-
-    public void release() {
-        super.release();
-        pageName = null;
-    }
-
-    public String getPageName() {
-        return pageName;
-    }
-
-    public void setPageName(String pageName) {
-        this.pageName = pageName;
-    }
-
 }

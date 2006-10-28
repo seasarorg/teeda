@@ -62,9 +62,6 @@ public class TInputHiddenFactory extends AbstractElementProcessorFactory {
                 .indexOf(ExtensionConstants.SAVE_SUFFIX));
         properties.put(JsfConstants.VALUE_ATTR, getBindingExpression(pageDesc
                 .getPageName(), items));
-        properties.put(ExtensionConstants.PAGE_NAME_ATTR, pageDesc
-                .getPageName());
-
     }
 
     protected String getTagName() {
