@@ -26,16 +26,12 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.convert.ConverterException;
 
-import org.seasar.framework.beans.BeanDesc;
-import org.seasar.framework.beans.PropertyDesc;
-import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.framework.beans.util.BeanUtil;
 import org.seasar.framework.util.ClassUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.AbstractInputRenderer;
 import org.seasar.teeda.core.render.EncodeConverter;
 import org.seasar.teeda.core.util.RendererUtil;
-import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.component.html.THtmlInputHidden;
 import org.seasar.teeda.extension.util.ComponentHolder;
 import org.seasar.teeda.extension.util.ComponentHolderBuilderUtil;
@@ -127,7 +123,6 @@ public class THtmlInputHiddenRenderer extends AbstractInputRenderer {
             final UIComponent component, final Object submittedValue)
             throws ConverterException {
         assertNotNull(context, component);
-        THtmlInputHidden hidden = (THtmlInputHidden) component;
         String s = (String) submittedValue;
         if (s.equals("")) {
             return "";
@@ -151,7 +146,7 @@ public class THtmlInputHiddenRenderer extends AbstractInputRenderer {
                         restoredList);
                 beanList.toArray(array);
             }
-            restoreItems(context, hidden, array);
+            //restoreItems(context, hidden, array);
             return array;
         } else {
             List retList = null;
@@ -160,27 +155,28 @@ public class THtmlInputHiddenRenderer extends AbstractInputRenderer {
             } else {
                 retList = mapListToBeanList(componentClass, restoredList);
             }
-            restoreItems(context, hidden, retList);
+            //restoreItems(context, hidden, retList);
             return retList;
         }
     }
 
-    protected void restoreItems(FacesContext context, THtmlInputHidden hidden,
-            Object items) {
-        Object page = hidden.getPage(context);
-        BeanDesc beanDesc = BeanDescFactory.getBeanDesc(page.getClass());
-        final String id = hidden.getId();
-        String itemsName = id;
-        if (id.endsWith(ExtensionConstants.SAVE_SUFFIX)) {
-            itemsName = id.substring(0,
-                    (id.length() - ExtensionConstants.SAVE_SUFFIX.length()));
-        }
-        PropertyDesc propertyDesc = beanDesc.getPropertyDesc(itemsName);
-        if (propertyDesc != null) {
-            propertyDesc.setValue(page, items);
-        }
-    }
-
+    /*
+     protected void restoreItems(FacesContext context, THtmlInputHidden hidden,
+     Object items) {
+     Object page = hidden.getPage(context);
+     BeanDesc beanDesc = BeanDescFactory.getBeanDesc(page.getClass());
+     final String id = hidden.getId();
+     String itemsName = id;
+     if (id.endsWith(ExtensionConstants.SAVE_SUFFIX)) {
+     itemsName = id.substring(0,
+     (id.length() - ExtensionConstants.SAVE_SUFFIX.length()));
+     }
+     PropertyDesc propertyDesc = beanDesc.getPropertyDesc(itemsName);
+     if (propertyDesc != null) {
+     propertyDesc.setValue(page, items);
+     }
+     }
+     */
     private List mapListToBeanList(final Class componentClass,
             final List restoredList) {
         final int size = restoredList.size();
