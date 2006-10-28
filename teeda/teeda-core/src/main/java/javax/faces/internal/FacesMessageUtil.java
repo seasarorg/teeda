@@ -17,6 +17,7 @@ package javax.faces.internal;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -239,12 +240,13 @@ public class FacesMessageUtil {
         return new MessageFormat(message, locale).format(args);
     }
 
-    public static void saveFacesMessagesToMap(FacesContext from, Map to) {
+    public static Map saveFacesMessagesToMap(FacesContext from, Map to) {
         if (to == null) {
-            return;
+            to = new HashMap();
         }
         final FacesMessage[] messages = FacesMessageUtil.getAllMessages(from);
         to.put(JsfConstants.ERROR_MESSAGE_PERSISTE_KEY, messages);
+        return to;
     }
 
     public static void restoreFacesMessagesFromMap(Map from, FacesContext to) {

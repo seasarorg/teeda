@@ -87,8 +87,8 @@ public class SessionPagePersistence implements PagePersistence {
             lru = new LruHashMap(pageSize);
             sessionMap.put(getClass().getName(), lru);
         }
-        final Map pageData = getPageData(context, viewId, previousViewId);
-        FacesMessageUtil.saveFacesMessagesToMap(context, pageData);
+        Map pageData = getPageData(context, viewId, previousViewId);
+        pageData = FacesMessageUtil.saveFacesMessagesToMap(context, pageData);
         lru.put(viewId, pageData);
     }
 
