@@ -255,6 +255,18 @@ public class THtmlInputHiddenRendererTest extends RendererTest {
             dtos.add(dto);
         }
         htmlInputHidden.setValue(dtos);
+        htmlInputHidden.setId("fooItemsSave");
+
+        MockFacesContext context = getFacesContext();
+        final Foo foo = new Foo();
+        context.getApplication().setVariableResolver(new VariableResolver() {
+
+            public Object resolveVariable(FacesContext context, String name)
+                    throws EvaluationException {
+                return foo;
+            }
+
+        });
 
         // ## Act ##
         encodeByRenderer(renderer, htmlInputHidden);
@@ -265,7 +277,9 @@ public class THtmlInputHiddenRendererTest extends RendererTest {
         final Matcher matcher = pattern.matcher(responseText);
         assertEquals(true, matcher.matches());
         assertEquals(3, matcher.groupCount());
-        assertEquals("<input type=\"hidden\" name=\"_id0\" ", matcher.group(1));
+        assertEquals(
+                "<input type=\"hidden\" id=\"fooItemsSave\" name=\"fooItemsSave\" ",
+                matcher.group(1));
         assertEquals(" />", matcher.group(3));
         final String serializedValue = matcher.group(2);
         final Object deserialized = renderer.getConvertedValue(
@@ -306,6 +320,18 @@ public class THtmlInputHiddenRendererTest extends RendererTest {
         }
         list.toArray(dtos);
         htmlInputHidden.setValue(dtos);
+        htmlInputHidden.setId("hogeItemsSave");
+
+        MockFacesContext context = getFacesContext();
+        final Hoge2 hoge2 = new Hoge2();
+        context.getApplication().setVariableResolver(new VariableResolver() {
+
+            public Object resolveVariable(FacesContext context, String name)
+                    throws EvaluationException {
+                return hoge2;
+            }
+
+        });
 
         // ## Act ##
         encodeByRenderer(renderer, htmlInputHidden);
@@ -316,7 +342,9 @@ public class THtmlInputHiddenRendererTest extends RendererTest {
         final Matcher matcher = pattern.matcher(responseText);
         assertEquals(true, matcher.matches());
         assertEquals(3, matcher.groupCount());
-        assertEquals("<input type=\"hidden\" name=\"_id0\" ", matcher.group(1));
+        assertEquals(
+                "<input type=\"hidden\" id=\"hogeItemsSave\" name=\"hogeItemsSave\" ",
+                matcher.group(1));
         assertEquals(" />", matcher.group(3));
         final String serializedValue = matcher.group(2);
         final Object deserialized = renderer.getConvertedValue(
@@ -355,6 +383,18 @@ public class THtmlInputHiddenRendererTest extends RendererTest {
             dtos.add(map);
         }
         htmlInputHidden.setValue(dtos);
+        htmlInputHidden.setId("fooItemsSave");
+
+        MockFacesContext context = getFacesContext();
+        final Foo foo = new Foo();
+        context.getApplication().setVariableResolver(new VariableResolver() {
+
+            public Object resolveVariable(FacesContext context, String name)
+                    throws EvaluationException {
+                return foo;
+            }
+
+        });
 
         // ## Act ##
         encodeByRenderer(renderer, htmlInputHidden);
@@ -387,6 +427,18 @@ public class THtmlInputHiddenRendererTest extends RendererTest {
         // ## Arrange ##
         final String[] dtos = new String[] { "a", "bb", "ccc" };
         htmlInputHidden.setValue(dtos);
+        htmlInputHidden.setId("hogeItemsSave");
+
+        MockFacesContext context = getFacesContext();
+        final Hoge3 hoge3 = new Hoge3();
+        context.getApplication().setVariableResolver(new VariableResolver() {
+
+            public Object resolveVariable(FacesContext context, String name)
+                    throws EvaluationException {
+                return hoge3;
+            }
+
+        });
 
         // ## Act ##
         encodeByRenderer(renderer, htmlInputHidden);
@@ -410,6 +462,17 @@ public class THtmlInputHiddenRendererTest extends RendererTest {
         // ## Arrange ##
         final List dtos = Arrays.asList(new String[] { "a", "bb", "ccc" });
         htmlInputHidden.setValue(dtos);
+        htmlInputHidden.setId("fooItemsSave");
+        MockFacesContext context = getFacesContext();
+        final Foo foo = new Foo();
+        context.getApplication().setVariableResolver(new VariableResolver() {
+
+            public Object resolveVariable(FacesContext context, String name)
+                    throws EvaluationException {
+                return foo;
+            }
+
+        });
 
         // ## Act ##
         encodeByRenderer(renderer, htmlInputHidden);
@@ -420,7 +483,9 @@ public class THtmlInputHiddenRendererTest extends RendererTest {
         final Matcher matcher = pattern.matcher(responseText);
         assertEquals(true, matcher.matches());
         assertEquals(3, matcher.groupCount());
-        assertEquals("<input type=\"hidden\" name=\"_id0\" ", matcher.group(1));
+        assertEquals(
+                "<input type=\"hidden\" id=\"fooItemsSave\" name=\"fooItemsSave\" ",
+                matcher.group(1));
         assertEquals(" />", matcher.group(3));
         final String serializedValue = matcher.group(2);
         final Object deserialized = renderer.getConvertedValue(
@@ -513,4 +578,44 @@ public class THtmlInputHiddenRendererTest extends RendererTest {
         }
 
     }
+
+    public static class Hoge2 {
+        private Map[] hogeItems;
+
+        public Map[] getHogeItems() {
+            return hogeItems;
+        }
+
+        public void setHogeItems(Map[] hogeItems) {
+            this.hogeItems = hogeItems;
+        }
+
+    }
+
+    public static class Hoge3 {
+        private String[] hogeItems;
+
+        public String[] getHogeItems() {
+            return hogeItems;
+        }
+
+        public void setHogeItems(String[] hogeItems) {
+            this.hogeItems = hogeItems;
+        }
+
+    }
+
+    public static class Foo {
+        private List fooItems;
+
+        public List getFooItems() {
+            return fooItems;
+        }
+
+        public void setFooItems(List hogeItems) {
+            this.fooItems = hogeItems;
+        }
+
+    }
+
 }
