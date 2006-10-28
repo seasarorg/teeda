@@ -232,7 +232,8 @@ public class DateTimeConverter implements Converter, StateHolder {
     }
 
     protected boolean isDefaultStyle() {
-        return STYLE_DEFAULT.equalsIgnoreCase(getDateStyle())
+        return TYPE_DATE.equalsIgnoreCase(getType())
+                && STYLE_DEFAULT.equalsIgnoreCase(getDateStyle())
                 && STYLE_DEFAULT.equalsIgnoreCase(getTimeStyle());
     }
 
