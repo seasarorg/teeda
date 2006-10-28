@@ -448,7 +448,7 @@ public class UIInput extends UIOutput implements EditableValueHolder {
                 values[9]);
     }
 
-    private void executeValidate(FacesContext context) {
+    protected void executeValidate(FacesContext context) {
         try {
             validate(context);
         } catch (RuntimeException e) {
@@ -474,7 +474,7 @@ public class UIInput extends UIOutput implements EditableValueHolder {
         }
     }
 
-    private void renderResponseIfNotValid(FacesContext context) {
+    protected void renderResponseIfNotValid(FacesContext context) {
         if (!isValid()) {
             context.renderResponse();
         }

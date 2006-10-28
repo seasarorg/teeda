@@ -19,6 +19,8 @@ import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.el.VariableResolver;
 
+import org.seasar.framework.util.AssertionUtil;
+
 /**
  * @author manhole
  */
@@ -47,6 +49,27 @@ public class THtmlInputHidden extends UIInput {
 
     public void setPageName(String pageName) {
         this.pageName = pageName;
+    }
+
+    public void processValidators(FacesContext context) {
+        AssertionUtil.assertNotNull("context", context);
+        if (!isRendered()) {
+            return;
+        }
+        super.processValidators(context);
+        if (!isImmediate()) {
+            executeValidate(context);
+        }
+        try {
+            updateModel(context);
+        } catch (RuntimeException e) {
+            context.renderResponse();
+            throw e;
+        }
+    }
+
+    public void processUpdates(FacesContext context) {
+        AssertionUtil.assertNotNull("context", context);
     }
 
     public Object saveState(FacesContext context) {
