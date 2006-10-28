@@ -45,7 +45,7 @@ public class TigerConverterAnnotationHandlerTest extends TeedaTestCase {
 		TDateTimeConverter converter = (TDateTimeConverter) ConverterResource
 				.getConverter("#{hogeBean.ccc}");
 		assertNotNull(converter);
-		assertEquals("both", converter.getType());
+		assertEquals("date", converter.getType());
 	}
 
 	public static class HogeBean {

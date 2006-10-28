@@ -28,7 +28,7 @@ import java.lang.annotation.Target;
 @Converter("TDateTimeConverter")
 public @interface DateTimeConverter {
 
-	String type() default "both";
+	String type() default "";
 
 	String dateStyle() default "";
 
