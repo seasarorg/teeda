@@ -62,7 +62,7 @@ public class HtmlInputSecretRenderer extends AbstractInputRenderer {
             value = "";
         }
         RendererUtil.renderAttribute(writer, JsfConstants.VALUE_ATTR, value);
-        renderAttributes(htmlInputSecret, writer);
+        renderRemainAttributes(htmlInputSecret, writer);
         writer.endElement(JsfConstants.INPUT_ELEM);
     }
 

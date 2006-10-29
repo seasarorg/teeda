@@ -71,7 +71,7 @@ public class THtmlInputHiddenRenderer extends AbstractInputRenderer {
 
         final String value = getValueForRender(context, htmlInputHidden);
         RendererUtil.renderAttribute(writer, JsfConstants.VALUE_ATTR, value);
-        renderAttributes(htmlInputHidden, writer);
+        renderRemainAttributes(htmlInputHidden, writer);
 
         writer.endElement(JsfConstants.INPUT_ELEM);
     }

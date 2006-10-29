@@ -74,7 +74,7 @@ public class HtmlFormRenderer extends AbstractRenderer {
                 .getClientId(context));
         RendererUtil.renderAttribute(writer, JsfConstants.METHOD_ATTR,
                 JsfConstants.POST_VALUE);
-        renderAttributes(htmlForm, writer);
+        renderRemainAttributes(htmlForm, writer);
 
         // action attribute
         final ViewHandler viewHandler = FacesContextUtil

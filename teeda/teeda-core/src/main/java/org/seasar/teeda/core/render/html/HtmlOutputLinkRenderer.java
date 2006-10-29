@@ -59,7 +59,7 @@ public class HtmlOutputLinkRenderer extends AbstractRenderer {
         RendererUtil.renderIdAttributeIfNecessary(writer, htmlOutputLink,
                 getIdForRender(context, htmlOutputLink));
         writer.writeURIAttribute(JsfConstants.HREF_ATTR, href, null);
-        renderAttributes(htmlOutputLink, writer);
+        renderRemainAttributes(htmlOutputLink, writer);
     }
 
     protected String buildHref(FacesContext context,

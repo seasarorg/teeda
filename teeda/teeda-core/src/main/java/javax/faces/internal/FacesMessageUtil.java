@@ -263,6 +263,14 @@ public class FacesMessageUtil {
         }
     }
 
+    public static boolean hasMessagesByClientId(FacesContext context,
+            UIComponent component) {
+        AssertionUtil.assertNotNull("context", context);
+        final String clientId = component.getClientId(context);
+        final Iterator itr = context.getMessages(clientId);
+        return itr.hasNext();
+    }
+
     public static boolean hasMessages(FacesContext context) {
         AssertionUtil.assertNotNull("context", context);
         final Iterator itr = context.getMessages();

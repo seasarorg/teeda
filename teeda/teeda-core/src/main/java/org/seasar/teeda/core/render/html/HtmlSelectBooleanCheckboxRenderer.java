@@ -67,7 +67,7 @@ public class HtmlSelectBooleanCheckboxRenderer extends AbstractRenderer {
         if (isChecked(value)) {
             renderCheckedAttribute(writer);
         }
-        renderAttributes(htmlSelectBooleanCheckbox, writer);
+        renderRemainAttributes(htmlSelectBooleanCheckbox, writer);
         writer.endElement(JsfConstants.INPUT_ELEM);
     }
 

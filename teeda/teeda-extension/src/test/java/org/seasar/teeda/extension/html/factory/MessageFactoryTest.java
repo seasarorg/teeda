@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.seasar.teeda.core.JsfConstants;
-import org.seasar.teeda.core.taglib.html.MessageTag;
+import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.config.taglib.element.TagElement;
 import org.seasar.teeda.extension.config.taglib.element.TaglibElement;
 import org.seasar.teeda.extension.config.taglib.element.impl.TagElementImpl;
@@ -31,10 +31,12 @@ import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooAction;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooPage;
 import org.seasar.teeda.extension.mock.MockTaglibManager;
+import org.seasar.teeda.extension.taglib.TMessageTag;
 import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 
 /**
  * @author higa
+ * @author shot
  */
 public class MessageFactoryTest extends TeedaExtensionTestCase {
 
@@ -54,10 +56,10 @@ public class MessageFactoryTest extends TeedaExtensionTestCase {
         // ## Arrange ##
         MockTaglibManager taglibManager = new MockTaglibManager();
         TaglibElement jsfHtml = new TaglibElementImpl();
-        jsfHtml.setUri(JsfConstants.JSF_HTML_URI);
+        jsfHtml.setUri(ExtensionConstants.TEEDA_EXTENSION_URI);
         TagElement tagElement = new TagElementImpl();
         tagElement.setName("message");
-        tagElement.setTagClass(MessageTag.class);
+        tagElement.setTagClass(TMessageTag.class);
         jsfHtml.addTagElement(tagElement);
         taglibManager.addTaglibElement(jsfHtml);
         MessageFactory factory = new MessageFactory();
@@ -73,7 +75,7 @@ public class MessageFactoryTest extends TeedaExtensionTestCase {
                 pageDesc, actionDesc);
         // ## Assert ##
         assertNotNull(processor);
-        assertEquals(MessageTag.class, processor.getTagClass());
+        assertEquals(TMessageTag.class, processor.getTagClass());
         assertEquals("aaa", processor.getProperty(JsfConstants.FOR_ATTR));
     }
 }

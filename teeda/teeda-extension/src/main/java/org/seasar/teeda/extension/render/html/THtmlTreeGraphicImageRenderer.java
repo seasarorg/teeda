@@ -47,7 +47,7 @@ public class THtmlTreeGraphicImageRenderer extends HtmlGraphicImageRenderer {
                 getIdForRender(context, htmlGraphicImage));
         final String url = getUrl(context, htmlGraphicImage);
         writer.writeURIAttribute(JsfConstants.SRC_ATTR, url, null);
-        renderAttributes(htmlGraphicImage, writer);
+        renderRemainAttributes(htmlGraphicImage, writer);
         writer.endElement(JsfConstants.IMG_ELEM);
     }
 

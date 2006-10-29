@@ -60,7 +60,7 @@ public class HtmlOutputTextRenderer extends AbstractRenderer {
             startSpan = true;
             RendererUtil.renderIdAttributeIfNecessary(writer, htmlOutputText,
                     getIdForRender(context, htmlOutputText));
-            renderAttributes(htmlOutputText, writer);
+            renderRemainAttributes(htmlOutputText, writer);
         }
         String value = ValueHolderUtil.getValueForRender(context,
                 htmlOutputText);
@@ -83,7 +83,7 @@ public class HtmlOutputTextRenderer extends AbstractRenderer {
             startSpan = true;
             RendererUtil.renderIdAttributeIfNecessary(writer, uiOutput,
                     getIdForRender(context, uiOutput));
-            renderAttributes(uiOutput, writer);
+            renderRemainAttributes(uiOutput, writer);
         }
         String value = ValueHolderUtil.getValueForRender(context, uiOutput);
         Boolean b = (Boolean) uiOutput.getAttributes().get(

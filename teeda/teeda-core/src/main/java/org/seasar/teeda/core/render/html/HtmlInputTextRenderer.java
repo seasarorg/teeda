@@ -21,6 +21,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.html.HtmlInputText;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+import javax.faces.internal.FacesMessageUtil;
 
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.AbstractInputRenderer;
@@ -55,13 +56,15 @@ public class HtmlInputTextRenderer extends AbstractInputRenderer {
                 getIdForRender(context, htmlInputText));
         RendererUtil.renderAttribute(writer, JsfConstants.NAME_ATTR,
                 htmlInputText.getClientId(context));
-
         String value = ValueHolderUtil
                 .getValueForRender(context, htmlInputText);
         RendererUtil.renderAttribute(writer, JsfConstants.VALUE_ATTR, value);
-        renderAttributes(htmlInputText, writer);
         RendererUtil.renderAttribute(writer, JsfConstants.AUTOCOMPLETE_ATTR,
                 htmlInputText.getAutocomplete());
+        if (FacesMessageUtil.hasMessagesByClientId(context, htmlInputText)) {
+            colorErrorComponent(context, htmlInputText);
+        }
+        renderRemainAttributes(htmlInputText, writer);
         writer.endElement(JsfConstants.INPUT_ELEM);
     }
 

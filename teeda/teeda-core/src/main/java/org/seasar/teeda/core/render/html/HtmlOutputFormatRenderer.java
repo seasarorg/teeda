@@ -60,7 +60,7 @@ public class HtmlOutputFormatRenderer extends AbstractRenderer {
             startSpan = true;
             RendererUtil.renderIdAttributeIfNecessary(writer, htmlOutputFormat,
                     getIdForRender(context, htmlOutputFormat));
-            renderAttributes(htmlOutputFormat, writer);
+            renderRemainAttributes(htmlOutputFormat, writer);
         }
         String value = getFormattedValue(context, htmlOutputFormat);
         if (htmlOutputFormat.isEscape()) {

@@ -125,7 +125,7 @@ public abstract class AbstractRenderer extends Renderer {
         }
     }
 
-    protected void renderAttributes(UIComponent component, ResponseWriter writer)
+    protected void renderRemainAttributes(UIComponent component, ResponseWriter writer)
             throws IOException {
         final String[] names = getRenderAttributeNames(getClass());
         RendererUtil.renderAttributes(writer, component, names);

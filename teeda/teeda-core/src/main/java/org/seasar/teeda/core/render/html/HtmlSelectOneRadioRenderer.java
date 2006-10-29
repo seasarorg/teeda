@@ -50,7 +50,7 @@ public class HtmlSelectOneRadioRenderer extends HtmlSelectManyCheckboxRenderer {
                 htmlSelectManyCheckbox.getClientId(context));
         final Object value = selectItem.getValue();
         RendererUtil.renderAttribute(writer, JsfConstants.VALUE_ATTR, value);
-        renderAttributes(htmlSelectManyCheckbox, writer);
+        renderRemainAttributes(htmlSelectManyCheckbox, writer);
         if (isChecked(selectedValues, value.toString())) {
             renderCheckedAttribute(writer);
         }

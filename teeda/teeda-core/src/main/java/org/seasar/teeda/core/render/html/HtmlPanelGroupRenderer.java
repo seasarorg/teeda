@@ -51,7 +51,7 @@ public class HtmlPanelGroupRenderer extends AbstractRenderer {
             writer.startElement(JsfConstants.SPAN_ELEM, htmlPanelGroup);
             RendererUtil.renderIdAttributeIfNecessary(writer, htmlPanelGroup,
                     getIdForRender(context, htmlPanelGroup));
-            renderAttributes(htmlPanelGroup, writer);
+            renderRemainAttributes(htmlPanelGroup, writer);
         }
     }
 

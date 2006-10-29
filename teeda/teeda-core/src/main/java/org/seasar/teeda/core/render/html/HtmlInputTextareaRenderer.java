@@ -53,7 +53,7 @@ public class HtmlInputTextareaRenderer extends AbstractInputRenderer {
                 getIdForRender(context, htmlInputTextarea));
         RendererUtil.renderAttribute(writer, JsfConstants.NAME_ATTR,
                 htmlInputTextarea.getClientId(context));
-        renderAttributes(htmlInputTextarea, writer);
+        renderRemainAttributes(htmlInputTextarea, writer);
 
         String value = ValueHolderUtil.getValueForRender(context,
                 htmlInputTextarea);

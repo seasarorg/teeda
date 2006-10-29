@@ -18,8 +18,7 @@ package org.seasar.teeda.extension.html.factory;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.seasar.teeda.core.JsfConstants;
-import org.seasar.teeda.core.taglib.html.InputTextTag;
+import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.ElementProcessor;
@@ -28,6 +27,7 @@ import org.seasar.teeda.extension.html.factory.sub.web.foo.Foo2Page;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooAction;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooPage;
 import org.seasar.teeda.extension.mock.MockTaglibManager;
+import org.seasar.teeda.extension.taglib.TInputTextTag;
 import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 
 /**
@@ -37,8 +37,8 @@ public class AbsElementProcessorFactoryTest extends TeedaExtensionTestCase {
 
     public void testCustomizeDynamicProperties() throws Exception {
         // ## Arrange ##
-        registerTaglibElement(JsfConstants.JSF_HTML_URI, "inputText",
-                InputTextTag.class);
+        registerTaglibElement(ExtensionConstants.TEEDA_EXTENSION_URI,
+                "inputText", TInputTextTag.class);
         MockTaglibManager taglibManager = getTaglibManager();
         InputTextFactory factory = new InputTextFactory();
         factory.setTaglibManager(taglibManager);
@@ -60,8 +60,8 @@ public class AbsElementProcessorFactoryTest extends TeedaExtensionTestCase {
 
     public void testCustomizeDynamicProperties_styeClass() throws Exception {
         // ## Arrange ##
-        registerTaglibElement(JsfConstants.JSF_HTML_URI, "inputText",
-                InputTextTag.class);
+        registerTaglibElement(ExtensionConstants.TEEDA_EXTENSION_URI,
+                "inputText", TInputTextTag.class);
         MockTaglibManager taglibManager = getTaglibManager();
         InputTextFactory factory = new InputTextFactory();
         factory.setTaglibManager(taglibManager);

@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -276,11 +276,11 @@ public abstract class UIComponentBase extends UIComponent {
         return result;
     }
 
-    private static boolean containsSameId(UIComponent base, String id) {
+    protected boolean containsSameId(UIComponent base, String id) {
         return id.equals(base.getId());
     }
 
-    private static UIComponent getComponentRoot(UIComponent base) {
+    protected UIComponent getComponentRoot(UIComponent base) {
         UIComponent parent;
         for (parent = base; parent.getParent() != null; parent = parent
                 .getParent()) {

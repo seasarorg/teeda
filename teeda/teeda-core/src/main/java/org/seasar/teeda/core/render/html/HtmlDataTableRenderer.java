@@ -55,7 +55,7 @@ public class HtmlDataTableRenderer extends AbstractRenderer {
         writer.startElement(JsfConstants.TABLE_ELEM, htmlDataTable);
         RendererUtil.renderIdAttributeIfNecessary(writer, htmlDataTable,
                 getIdForRender(context, htmlDataTable));
-        renderAttributes(htmlDataTable, writer);
+        renderRemainAttributes(htmlDataTable, writer);
 
         final List columns = new ArrayList();
         boolean isColumnHeaderExist = false;

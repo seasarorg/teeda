@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.seasar.teeda.core.JsfConstants;
-import org.seasar.teeda.core.taglib.html.InputTextTag;
+import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.ElementProcessor;
@@ -27,6 +27,7 @@ import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooAction;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooPage;
 import org.seasar.teeda.extension.mock.MockTaglibManager;
+import org.seasar.teeda.extension.taglib.TInputTextTag;
 import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 
 /**
@@ -51,8 +52,8 @@ public class InputTextFactoryTest extends TeedaExtensionTestCase {
 
     public void testCreateFactory() throws Exception {
         // ## Arrange ##
-        registerTaglibElement(JsfConstants.JSF_HTML_URI, "inputText",
-                InputTextTag.class);
+        registerTaglibElement(ExtensionConstants.TEEDA_EXTENSION_URI,
+                "inputText", TInputTextTag.class);
         MockTaglibManager taglibManager = getTaglibManager();
         InputTextFactory factory = new InputTextFactory();
         factory.setTaglibManager(taglibManager);
@@ -69,7 +70,7 @@ public class InputTextFactoryTest extends TeedaExtensionTestCase {
                 pageDesc, actionDesc);
         // ## Assert ##
         assertNotNull("1", processor);
-        assertEquals("2", InputTextTag.class, processor.getTagClass());
+        assertEquals("2", TInputTextTag.class, processor.getTagClass());
         assertEquals("3", "#{fooPage.aaa}", processor.getProperty("value"));
         assertEquals("4", null, processor.getProperty("label"));
     }

@@ -73,7 +73,7 @@ public class HtmlCommandButtonRenderer extends AbstractRenderer {
             RendererUtil.renderAttribute(writer, JsfConstants.VALUE_ATTR,
                     htmlCommandButton.getValue());
         }
-        renderAttributes(htmlCommandButton, writer);
+        renderRemainAttributes(htmlCommandButton, writer);
         writer.endElement(JsfConstants.INPUT_ELEM);
     }
 

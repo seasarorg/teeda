@@ -132,7 +132,7 @@ public class HtmlCommandLinkRenderer extends AbstractRenderer {
         RendererUtil.renderAttribute(writer, JsfConstants.ONCLICK_ATTR, sb
                 .toString());
 
-        renderAttributes(commandLink, writer);
+        renderRemainAttributes(commandLink, writer);
 
         Object value = commandLink.getValue();
         if (value != null) {

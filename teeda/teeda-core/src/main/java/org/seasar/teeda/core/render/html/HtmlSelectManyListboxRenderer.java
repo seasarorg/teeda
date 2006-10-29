@@ -70,7 +70,7 @@ public class HtmlSelectManyListboxRenderer extends AbstractInputRenderer {
                 .getClientId(context));
         renderMultiple(context, component, writer);
         renderSize(context, component, writer);
-        renderAttributes(component, writer);
+        renderRemainAttributes(component, writer);
         final String[] selectedValues = getValuesForRender(context, component);
         renderSelectItems(context, component, writer, it, selectedValues);
 

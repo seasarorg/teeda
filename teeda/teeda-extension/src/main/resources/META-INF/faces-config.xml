@@ -191,4 +191,12 @@
 			org.seasar.teeda.extension.component.html.THtmlTree
 		</component-class>
 	</component>
+	<component>
+		<component-type>
+			org.seasar.teeda.extension.HtmlMessage
+		</component-type>
+		<component-class>
+			org.seasar.teeda.extension.component.html.THtmlMessage
+		</component-class>
+	</component>
 </faces-config>

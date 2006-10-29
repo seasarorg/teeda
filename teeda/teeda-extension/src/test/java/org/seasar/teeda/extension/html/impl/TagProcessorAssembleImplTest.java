@@ -21,7 +21,6 @@ import org.custommonkey.xmlunit.Diff;
 import org.custommonkey.xmlunit.XMLUnit;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.taglib.html.CommandButtonTag;
-import org.seasar.teeda.core.taglib.html.InputTextTag;
 import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ElementProcessor;
@@ -45,6 +44,7 @@ import org.seasar.teeda.extension.html.impl.page.FooPage;
 import org.seasar.teeda.extension.mock.MockDocumentBuilderFactory;
 import org.seasar.teeda.extension.mock.MockTaglibManager;
 import org.seasar.teeda.extension.taglib.TConditionTag;
+import org.seasar.teeda.extension.taglib.TInputTextTag;
 import org.seasar.teeda.extension.taglib.TOutputTextTag;
 import org.seasar.teeda.extension.taglib.TSelectManyCheckboxTag;
 import org.seasar.teeda.extension.taglib.TSelectOneMenuTag;
@@ -232,8 +232,8 @@ public class TagProcessorAssembleImplTest extends TeedaExtensionTestCase {
         HtmlDesc htmlDesc = cache.createHtmlDesc(path);
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
-        registerTaglibElement(JsfConstants.JSF_HTML_URI, "inputText",
-                InputTextTag.class);
+        registerTaglibElement(ExtensionConstants.TEEDA_EXTENSION_URI,
+                "inputText", TInputTextTag.class);
         MockTaglibManager taglibManager = getTaglibManager();
         InputTextFactory factory = new InputTextFactory();
         factory.setTaglibManager(taglibManager);
