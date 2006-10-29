@@ -15,14 +15,13 @@
  */
 package org.seasar.teeda.extension.component.html;
 
-import javax.faces.component.html.HtmlInputText;
 import javax.faces.context.FacesContext;
 
 /**
  * @author shot
  *
  */
-public class THtmlInputCommaText extends HtmlInputText {
+public class THtmlInputCommaText extends THtmlInputText {
 
     public static final String COMPONENT_TYPE = "org.seasar.teeda.extension.HtmlInputCommaText";
 

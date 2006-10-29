@@ -24,23 +24,25 @@ import javax.faces.component.UIViewRoot;
 import javax.faces.component.html.HtmlInputText;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+import javax.faces.internal.FacesMessageUtil;
 import javax.faces.internal.IgnoreComponent;
 import javax.faces.internal.UIComponentUtil;
 
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
-import org.seasar.teeda.core.render.html.HtmlInputTextRenderer;
 import org.seasar.teeda.core.util.JavaScriptPermissionUtil;
 import org.seasar.teeda.core.util.RendererUtil;
 import org.seasar.teeda.core.util.ValueHolderUtil;
+import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.component.ScriptEnhanceUIViewRoot;
+import org.seasar.teeda.extension.component.html.THtmlInputText;
 import org.seasar.teeda.extension.util.JavaScriptContext;
 
 /**
  * @author shot
  */
 public abstract class AbstractInputExtendTextRenderer extends
-        HtmlInputTextRenderer {
+        THtmlInputTextRenderer {
 
     public void encodeEnd(FacesContext context, UIComponent component)
             throws IOException {
@@ -51,21 +53,25 @@ public abstract class AbstractInputExtendTextRenderer extends
         UIViewRoot root = context.getViewRoot();
         if (root instanceof ScriptEnhanceUIViewRoot
                 && JavaScriptPermissionUtil.isJavaScriptPermitted(context)) {
-            encodeInputExtendTextEnd(context, (HtmlInputText) component);
+            THtmlInputText input = (THtmlInputText) component;
+            if (FacesMessageUtil.hasMessagesByClientId(context, input)) {
+                colorErrorComponent(context, input);
+            }
+            encodeInputExtendTextEnd(context, input);
         } else {
             encodeHtmlInputTextEnd(context, (HtmlInputText) component);
         }
     }
 
     protected void encodeInputExtendTextEnd(FacesContext context,
-            HtmlInputText htmlInputText) throws IOException {
+            THtmlInputText htmlInputText) throws IOException {
         doEncodeEndStart(context, htmlInputText);
         doEncodeEndCustomize(context, htmlInputText);
         doEncodeEndEnd(context, htmlInputText);
     }
 
     protected void doEncodeEndStart(FacesContext context,
-            HtmlInputText htmlInputText) throws IOException {
+            THtmlInputText htmlInputText) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
         UIViewRoot root = context.getViewRoot();
         ScriptEnhanceUIViewRoot sRoot = (ScriptEnhanceUIViewRoot) root;
@@ -91,10 +97,10 @@ public abstract class AbstractInputExtendTextRenderer extends
     }
 
     protected abstract void doEncodeEndCustomize(FacesContext context,
-            HtmlInputText htmlInputText) throws IOException;
+            THtmlInputText htmlInputText) throws IOException;
 
     protected void doEncodeEndEnd(FacesContext context,
-            HtmlInputText htmlInputText) throws IOException {
+            THtmlInputText htmlInputText) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
         renderRemain(htmlInputText, writer);
         writer.endElement(JsfConstants.INPUT_ELEM);
@@ -109,7 +115,7 @@ public abstract class AbstractInputExtendTextRenderer extends
 
     }
 
-    protected void renderRemain(HtmlInputText htmlInputText,
+    protected void renderRemain(THtmlInputText htmlInputText,
             ResponseWriter writer) throws IOException {
         IgnoreComponent ignore = buildIgnoreComponent();
         Map map = UIComponentUtil.getAllAttributesAndProperties(htmlInputText,
@@ -127,6 +133,7 @@ public abstract class AbstractInputExtendTextRenderer extends
         ignore.addIgnoreComponentName(JsfConstants.ID_ATTR);
         ignore.addIgnoreComponentName(JsfConstants.TYPE_ATTR);
         ignore.addIgnoreComponentName(JsfConstants.VALUE_ATTR);
+        ignore.addIgnoreComponentName(ExtensionConstants.ERROR_STYLE_CLASS);
         return ignore;
     };
 

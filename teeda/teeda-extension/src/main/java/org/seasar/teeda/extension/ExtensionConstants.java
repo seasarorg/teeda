@@ -66,6 +66,8 @@ public interface ExtensionConstants {
 
     String DEFAULT_KEY = "defaultKey";
 
+    String ERROR_STYLE_CLASS = "errorStyleClass";
+    
     //Suffix and prefix
     String GO_PREFIX = "go";
 

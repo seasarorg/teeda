@@ -21,7 +21,6 @@ import java.text.DecimalFormat;
 import java.util.Locale;
 
 import javax.faces.component.UIComponent;
-import javax.faces.component.html.HtmlInputText;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.internal.IgnoreComponent;
@@ -34,6 +33,7 @@ import org.seasar.teeda.core.util.RendererUtil;
 import org.seasar.teeda.core.util.ValueHolderUtil;
 import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.component.html.THtmlInputCommaText;
+import org.seasar.teeda.extension.component.html.THtmlInputText;
 
 /**
  * @author shot
@@ -51,7 +51,7 @@ public class THtmlInputCommaTextRenderer extends
     private static final String JS_NAMESPACE_PREFIX = "Teeda.THtmlInputCommaText.";
 
     protected void doEncodeEndCustomize(FacesContext context,
-            HtmlInputText htmlInputText) throws IOException {
+            THtmlInputText htmlInputText) throws IOException {
         assertHtmlInputCommaText(htmlInputText);
         THtmlInputCommaText htmlInputCommaText = (THtmlInputCommaText) htmlInputText;
         ResponseWriter writer = context.getResponseWriter();
@@ -72,7 +72,7 @@ public class THtmlInputCommaTextRenderer extends
         renderStyleClass(htmlInputCommaText, writer);
     }
 
-    protected static void assertHtmlInputCommaText(HtmlInputText htmlInputText) {
+    protected static void assertHtmlInputCommaText(THtmlInputText htmlInputText) {
         if (!(htmlInputText instanceof THtmlInputCommaText)) {
             throw new IllegalStateException();
         }

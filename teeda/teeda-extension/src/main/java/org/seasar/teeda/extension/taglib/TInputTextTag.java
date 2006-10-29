@@ -15,21 +15,43 @@
  */
 package org.seasar.teeda.extension.taglib;
 
-import javax.faces.component.html.HtmlInputText;
+import javax.faces.component.UIComponent;
 
 import org.seasar.teeda.core.taglib.html.InputTextTag;
+import org.seasar.teeda.extension.ExtensionConstants;
+import org.seasar.teeda.extension.component.html.THtmlInputText;
 
 /**
  * @author shot
  */
 public class TInputTextTag extends InputTextTag {
 
+    private String errorStyleClass;
+
+    public String getErrorStyleClass() {
+        return errorStyleClass;
+    }
+
+    public void setErrorStyleClass(String errorStyleClass) {
+        this.errorStyleClass = errorStyleClass;
+    }
+
     public String getComponentType() {
-        return HtmlInputText.COMPONENT_TYPE;
+        return THtmlInputText.COMPONENT_TYPE;
     }
 
     public String getRendererType() {
-        return "org.seasar.teeda.extension.HtmlInputText";
+        return THtmlInputText.DEFAULT_RENDERER_TYPE;
     }
 
+    protected void setProperties(UIComponent component) {
+        super.setProperties(component);
+        setComponentProperty(component, ExtensionConstants.ERROR_STYLE_CLASS,
+                getErrorStyleClass());
+    }
+
+    public void release() {
+        super.release();
+        errorStyleClass = null;
+    }
 }

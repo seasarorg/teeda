@@ -17,11 +17,11 @@ package org.seasar.teeda.extension.render.html;
 
 import java.io.IOException;
 
-import javax.faces.component.html.HtmlInputText;
 import javax.faces.context.FacesContext;
 
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.extension.component.html.THtmlInputCommaText;
+import org.seasar.teeda.extension.component.html.THtmlInputText;
 
 /**
  * @author manhole
@@ -34,7 +34,7 @@ public class THtmlGridInputCommaTextRenderer extends
     private THtmlGridInputTextRenderer gridInputTextRenderer = new THtmlGridInputTextRenderer();
 
     protected void encodeInputExtendTextEnd(FacesContext context,
-            HtmlInputText htmlInputText) throws IOException {
+            THtmlInputText htmlInputText) throws IOException {
         assertHtmlInputCommaText(htmlInputText);
         THtmlInputCommaText htmlInputCommaText = (THtmlInputCommaText) htmlInputText;
         gridInputTextRenderer.renderStartDiv(context, htmlInputCommaText);

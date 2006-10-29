@@ -29,6 +29,7 @@ import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.util.RendererUtil;
 import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.component.html.THtmlInputDateText;
+import org.seasar.teeda.extension.component.html.THtmlInputText;
 
 /**
  * @author shot
@@ -44,7 +45,7 @@ public class THtmlInputDateTextRenderer extends AbstractInputExtendTextRenderer 
     private static final String JS_NAMESPACE_PREFIX = "Teeda.THtmlInputDateText.";
 
     protected void doEncodeEndCustomize(FacesContext context,
-            HtmlInputText htmlInputText) throws IOException {
+            THtmlInputText htmlInputText) throws IOException {
         assertHtmlInputDateText(htmlInputText);
         THtmlInputDateText htmlInputDateText = (THtmlInputDateText) htmlInputText;
         ResponseWriter writer = context.getResponseWriter();

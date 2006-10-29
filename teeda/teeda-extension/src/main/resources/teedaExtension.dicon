@@ -150,6 +150,10 @@
 			<arg>"org.seasar.teeda.extension.render"</arg>
 			<arg>"..*Renderer"</arg>
 		</initMethod>
+		<initMethod name="addIgnoreClassPattern">
+			<arg>"org.seasar.teeda.extension.render"</arg>
+			<arg>"Abstract..*Renderer"</arg>
+		</initMethod>
 	</component>
 
 	<component class="org.seasar.framework.container.autoregister.JarComponentAutoRegister">

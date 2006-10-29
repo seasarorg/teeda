@@ -15,13 +15,12 @@
  */
 package org.seasar.teeda.extension.component.html;
 
-import javax.faces.component.html.HtmlInputText;
 import javax.faces.context.FacesContext;
 
 /**
  * @author shot
  */
-public class THtmlInputDateText extends HtmlInputText {
+public class THtmlInputDateText extends THtmlInputText {
 
     public static final String COMPONENT_TYPE = "org.seasar.teeda.extension.HtmlInputDateText";
 

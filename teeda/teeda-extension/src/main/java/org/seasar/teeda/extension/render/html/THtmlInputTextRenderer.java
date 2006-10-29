@@ -21,6 +21,7 @@ import javax.faces.context.FacesContext;
 
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.render.html.HtmlInputTextRenderer;
+import org.seasar.teeda.extension.component.html.THtmlInputText;
 
 /**
  * @author shot
@@ -30,25 +31,11 @@ public class THtmlInputTextRenderer extends HtmlInputTextRenderer {
     public static final String COMPONENT_FAMILY = HtmlInputText.COMPONENT_FAMILY;
 
     public static final String RENDERER_TYPE = "org.seasar.teeda.extension.HtmlInputText";
-
-    private static final String VALIDATION_FAIL_CSS = "onTeedaError";
-
-    public static final String errorCss_BINDING = "bindingType=may";
-
-    private String errorCss = VALIDATION_FAIL_CSS;
-    
-    public void setErrorCss(String errorCss) {
-        this.errorCss = errorCss;
-    }
-    
-    public String getErrorCss() {
-        return errorCss;
-    }
-    
+        
     protected void colorErrorComponent(FacesContext context, UIInput input) {
-        HtmlInputText inputText = (HtmlInputText) input;
+        THtmlInputText inputText = (THtmlInputText) input;
         String styleClass = inputText.getStyleClass();
-        final String errorCss = getErrorCss();
+        final String errorCss = inputText.getErrorStyleClass();
         if(StringUtil.isEmpty(errorCss)) {
             return;
         }
