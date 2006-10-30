@@ -19,7 +19,7 @@ import javax.faces.context.FacesContext;
 
 import org.seasar.teeda.core.util.DIContainerUtil;
 import org.seasar.teeda.extension.component.html.THtmlSelectOneMenu;
-import org.seasar.teeda.extension.util.NullLabelHelper;
+import org.seasar.teeda.extension.util.NullLabelStrategy;
 
 /**
  * @author higa
@@ -43,8 +43,8 @@ public class TSelectOneMenuTag extends TSelectTagBase {
         if (context == null) {
             context = FacesContext.getCurrentInstance();
         }
-        NullLabelHelper helper = (NullLabelHelper) DIContainerUtil
-                .getComponentNoException(NullLabelHelper.class);
+        NullLabelStrategy helper = (NullLabelStrategy) DIContainerUtil
+                .getComponentNoException(NullLabelStrategy.class);
         return helper.isRequired(context, v);
     }
 

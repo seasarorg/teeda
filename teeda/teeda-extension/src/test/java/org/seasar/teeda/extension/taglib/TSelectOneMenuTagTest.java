@@ -26,7 +26,7 @@ import org.seasar.teeda.core.mock.MockApplicationImpl;
 import org.seasar.teeda.core.mock.MockValueBinding;
 import org.seasar.teeda.core.unit.TeedaTestCase;
 import org.seasar.teeda.extension.component.TUISelectItems;
-import org.seasar.teeda.extension.util.NullLabelHelperImpl;
+import org.seasar.teeda.extension.util.NullLabelStrategyImpl;
 import org.seasar.teeda.extension.validator.TRequiredValidator;
 
 /**
@@ -35,7 +35,7 @@ import org.seasar.teeda.extension.validator.TRequiredValidator;
 public class TSelectOneMenuTagTest extends TeedaTestCase {
 
     protected void setUp() throws Exception {
-        NullLabelHelperImpl helper = new NullLabelHelperImpl();
+        NullLabelStrategyImpl helper = new NullLabelStrategyImpl();
         SingletonS2ContainerFactory.getContainer().register(helper);
     }
 

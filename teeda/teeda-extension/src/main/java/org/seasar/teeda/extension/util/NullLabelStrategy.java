@@ -20,7 +20,7 @@ import javax.faces.context.FacesContext;
 /**
  * @author shot
  */
-public interface NullLabelHelper {
+public interface NullLabelStrategy {
 
     boolean isRequired(FacesContext context, String value);
 

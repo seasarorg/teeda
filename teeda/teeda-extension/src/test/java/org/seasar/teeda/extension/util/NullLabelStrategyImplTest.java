@@ -31,16 +31,16 @@ import org.seasar.teeda.extension.validator.TRequiredValidator;
  * @author shot
  *
  */
-public class NullLabelHelperImplTest extends TeedaTestCase {
+public class NullLabelStrategyImplTest extends TeedaTestCase {
 
     public void testIsRequired_forced() throws Exception {
-        NullLabelHelperImpl helper = new NullLabelHelperImpl();
+        NullLabelStrategyImpl helper = new NullLabelStrategyImpl();
         helper.setForceNullLabel(Boolean.TRUE);
         assertTrue(helper.isRequired(getFacesContext(), "aaa"));
     }
 
     public void testIsRequired_noForce() throws Exception {
-        NullLabelHelperImpl helper = new NullLabelHelperImpl();
+        NullLabelStrategyImpl helper = new NullLabelStrategyImpl();
         MockApplication application = getApplication();
         application.setValueBinding(new MockValueBinding() {
 
@@ -54,7 +54,7 @@ public class NullLabelHelperImplTest extends TeedaTestCase {
     }
 
     public void testIsRequired_noForce2() throws Exception {
-        NullLabelHelperImpl helper = new NullLabelHelperImpl();
+        NullLabelStrategyImpl helper = new NullLabelStrategyImpl();
         MockApplication application = getApplication();
         application.setValueBinding(new MockValueBinding() {
 
@@ -69,7 +69,7 @@ public class NullLabelHelperImplTest extends TeedaTestCase {
     }
 
     public void testIsRequired_noForce3() throws Exception {
-        NullLabelHelperImpl helper = new NullLabelHelperImpl();
+        NullLabelStrategyImpl helper = new NullLabelStrategyImpl();
         MockApplication application = getApplication();
         application.setValueBinding(new MockValueBinding() {
 
@@ -86,7 +86,7 @@ public class NullLabelHelperImplTest extends TeedaTestCase {
     }
 
     public void testIsRequired_noForce4_noMatch() throws Exception {
-        NullLabelHelperImpl helper = new NullLabelHelperImpl();
+        NullLabelStrategyImpl helper = new NullLabelStrategyImpl();
         MockApplication application = getApplication();
         application.setValueBinding(new MockValueBinding() {
 

@@ -27,7 +27,7 @@ import org.seasar.teeda.extension.validator.TRequiredValidator;
 /**
  * @author shot
  */
-public class NullLabelHelperImpl implements NullLabelHelper {
+public class NullLabelStrategyImpl implements NullLabelStrategy {
 
     private Boolean forceNullLabel;
 
