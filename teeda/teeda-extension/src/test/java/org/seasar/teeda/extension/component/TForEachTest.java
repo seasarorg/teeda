@@ -9,23 +9,22 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
 package org.seasar.teeda.extension.component;
 
+import java.util.Iterator;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIComponentBaseTest;
 import javax.faces.context.FacesContext;
 import javax.faces.el.EvaluationException;
 import javax.faces.el.VariableResolver;
 
-import org.seasar.framework.beans.BeanDesc;
-import org.seasar.framework.beans.PropertyDesc;
-import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.teeda.core.mock.MockFacesContext;
 
 /**
@@ -93,6 +92,34 @@ public class TForEachTest extends UIComponentBaseTest {
         forEach.setItemsName("numItems");
         forEach.processValidators(context);
         assertTrue(foo2.getNum() == 0);
+    }
+
+    public void testProcessValidators_rowAdd() throws Exception {
+        TForEach forEach = new TForEach() {
+            public String getClientId(FacesContext context) {
+                return "hogeItems";
+            }
+        };
+        forEach.setRowSize(1);
+        final Hoge hoge = new Hoge();
+        hoge.setName("aaa");
+        MockFacesContext context = getFacesContext();
+        context.getApplication().setVariableResolver(new VariableResolver() {
+            public Object resolveVariable(FacesContext context, String name)
+                    throws EvaluationException {
+                return hoge;
+            }
+        });
+        forEach.setItemsName("nameItems");
+        context.addMessage("hogeItems:0", new FacesMessage("a", "b"));
+
+        forEach.processValidators(context);
+
+        Iterator messages = context.getMessages("hogeItems:0");
+        assertNotNull(messages);
+        FacesMessage fm = (FacesMessage) messages.next();
+        assertNotNull(fm);
+        System.out.println(fm.getDetail());
     }
 
     private TForEach createTForEach() {

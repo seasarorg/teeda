@@ -24,7 +24,6 @@ import javax.faces.component.UIViewRoot;
 import javax.faces.component.html.HtmlInputText;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
-import javax.faces.internal.FacesMessageUtil;
 import javax.faces.internal.IgnoreComponent;
 import javax.faces.internal.UIComponentUtil;
 
@@ -54,9 +53,6 @@ public abstract class AbstractInputExtendTextRenderer extends
         if (root instanceof ScriptEnhanceUIViewRoot
                 && JavaScriptPermissionUtil.isJavaScriptPermitted(context)) {
             THtmlInputText input = (THtmlInputText) component;
-            if (FacesMessageUtil.hasMessagesByClientId(context, input)) {
-                colorErrorComponent(context, input);
-            }
             encodeInputExtendTextEnd(context, input);
         } else {
             encodeHtmlInputTextEnd(context, (HtmlInputText) component);

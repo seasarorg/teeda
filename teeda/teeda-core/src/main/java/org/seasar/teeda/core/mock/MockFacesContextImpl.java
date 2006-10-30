@@ -83,7 +83,7 @@ public class MockFacesContextImpl extends MockFacesContext {
     }
 
     public Iterator getClientIdsWithMessages() {
-        return null;
+        return messages.keySet().iterator();
     }
 
     public ExternalContext getExternalContext() {

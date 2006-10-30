@@ -23,6 +23,7 @@ import java.util.Locale;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+import javax.faces.internal.FacesMessageUtil;
 import javax.faces.internal.IgnoreComponent;
 
 import org.seasar.framework.util.BigDecimalConversionUtil;
@@ -69,7 +70,7 @@ public class THtmlInputCommaTextRenderer extends
                 fractionSeparator);
         renderOnkeyup(htmlInputCommaText, writer);
         renderStyle(htmlInputCommaText, writer);
-        renderStyleClass(htmlInputCommaText, writer);
+        renderStyleClass(context, htmlInputCommaText, writer);
     }
 
     protected static void assertHtmlInputCommaText(THtmlInputText htmlInputText) {
@@ -157,12 +158,17 @@ public class THtmlInputCommaTextRenderer extends
         return style + s;
     }
 
-    protected void renderStyleClass(THtmlInputCommaText htmlInputCommaText,
-            ResponseWriter writer) throws IOException {
-        final String styleClass = createStyleClassAttribute(htmlInputCommaText);
-        if (StringUtil.isNotBlank(styleClass)) {
-            RendererUtil.renderAttribute(writer, JsfConstants.STYLE_CLASS_ATTR,
-                    styleClass);
+    protected void renderStyleClass(FacesContext context,
+            THtmlInputCommaText htmlInputCommaText, ResponseWriter writer)
+            throws IOException {
+        if (FacesMessageUtil.hasMessagesByClientId(context, htmlInputCommaText)) {
+            colorErrorComponent(context, htmlInputCommaText);
+        } else {
+            final String styleClass = createStyleClassAttribute(htmlInputCommaText);
+            if (StringUtil.isNotBlank(styleClass)) {
+                RendererUtil.renderAttribute(writer,
+                        JsfConstants.STYLE_CLASS_ATTR, styleClass);
+            }
         }
     }
 

@@ -15,12 +15,18 @@
  */
 package org.seasar.teeda.extension.render.html;
 
+import java.io.IOException;
+
 import javax.faces.component.UIInput;
 import javax.faces.component.html.HtmlInputText;
 import javax.faces.context.FacesContext;
+import javax.faces.context.ResponseWriter;
 
+import org.seasar.framework.util.AssertionUtil;
 import org.seasar.framework.util.StringUtil;
+import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.html.HtmlInputTextRenderer;
+import org.seasar.teeda.core.util.RendererUtil;
 import org.seasar.teeda.extension.component.html.THtmlInputText;
 
 /**
@@ -32,8 +38,11 @@ public class THtmlInputTextRenderer extends HtmlInputTextRenderer {
 
     public static final String RENDERER_TYPE = THtmlInputText.DEFAULT_RENDERER_TYPE;
 
-    protected void colorErrorComponent(FacesContext context, UIInput input) {
-        THtmlInputText inputText = (THtmlInputText) input;
+    protected void colorErrorComponent(FacesContext context, UIInput input)
+            throws IOException {
+        AssertionUtil.assertNotNull("context", context);
+        final ResponseWriter writer = context.getResponseWriter();
+        final THtmlInputText inputText = (THtmlInputText) input;
         String styleClass = inputText.getStyleClass();
         final String errorCss = inputText.getErrorStyleClass();
         if (StringUtil.isEmpty(errorCss)) {
@@ -47,7 +56,8 @@ public class THtmlInputTextRenderer extends HtmlInputTextRenderer {
         } else {
             styleClass = errorCss;
         }
-        inputText.setStyleClass(styleClass);
+        RendererUtil.renderAttribute(writer, JsfConstants.STYLE_CLASS_ATTR,
+                styleClass);
     }
 
 }

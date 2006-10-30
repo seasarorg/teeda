@@ -20,13 +20,16 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.Locale;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.component.NamingContainer;
 import javax.faces.component.UIComponentBase;
 import javax.faces.context.FacesContext;
 import javax.faces.el.VariableResolver;
 import javax.faces.internal.ComponentStates;
+import javax.faces.internal.FacesMessageUtil;
 import javax.faces.internal.NamingContainerUtil;
 
 import org.seasar.framework.beans.BeanDesc;
@@ -153,9 +156,41 @@ public class TForEach extends UIComponentBase implements NamingContainer {
         }
         for (int i = 0; i < rowSize; ++i) {
             enterRow(context, i);
-            super.processValidators(context);
+            processEachRowValidation(context, i);
             leaveRow(context);
         }
+    }
+
+    protected void processEachRowValidation(final FacesContext context, int row) {
+        final String parentClientId = getClientId(context);
+        super.processValidators(context);
+        if (FacesMessageUtil.hasMessages(context)) {
+            modifyValidationErrorMessageIfNeed(context, parentClientId, row);
+        }
+    }
+
+    protected void modifyValidationErrorMessageIfNeed(
+            final FacesContext context, final String parentClientId,
+            final int row) {
+        for (Iterator itr = context.getClientIdsWithMessages(); itr.hasNext();) {
+            String clientId = (String) itr.next();
+            if (!clientId.startsWith(parentClientId)) {
+                continue;
+            }
+            for (Iterator messages = context.getMessages(clientId); messages
+                    .hasNext();) {
+                FacesMessage fm = (FacesMessage) messages.next();
+                String summary = fm.getSummary();
+                String detail = fm.getDetail();
+                if (summary != null) {
+                    fm.setSummary(summary + "(line : " + (row + 1) + ")");
+                }
+                if (detail != null) {
+                    fm.setDetail(detail + "(line : " + (row + 1) + ")");
+                }
+            }
+        }
+
     }
 
     //fix for https://www.seasar.org/issues/browse/TEEDA-146
