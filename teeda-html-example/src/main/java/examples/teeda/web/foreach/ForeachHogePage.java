@@ -25,6 +25,10 @@ public class ForeachHogePage extends AbstractForeachHogePage {
 
 	public static final String num1_lengthValidator = "minimum=3";
 
+	public static final String aaa_lengthValidator = "minimum=3";
+
+	public static final String bbb_lengthValidator = "minimum=3";
+
 	public String initialize() {
 		List l = new ArrayList();
 		{
