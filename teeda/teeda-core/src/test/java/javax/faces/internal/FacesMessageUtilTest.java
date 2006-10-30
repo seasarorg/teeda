@@ -20,6 +20,7 @@ import java.util.Locale;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIViewRoot;
+import javax.faces.context.FacesContext;
 
 import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.mock.MockUIComponent;
@@ -211,6 +212,21 @@ public class FacesMessageUtilTest extends TeedaTestCase {
                 FacesMessage.SEVERITY_ERROR, "aaa", null);
         context.addMessage(null, facesMessage);
         assertTrue(FacesMessageUtil.hasMessages(context));
+    }
+
+    public void testHasMessagesByClientId_hasMessage() throws Exception {
+        MockFacesContext context = getFacesContext();
+        FacesMessage facesMessage = new FacesMessage(
+                FacesMessage.SEVERITY_ERROR, "aaa", null);
+        context.addMessage("hoge", facesMessage);
+        MockUIComponent c = new MockUIComponent() {
+
+            public String getClientId(FacesContext context) {
+                return "hoge";
+            }
+
+        };
+        assertTrue(FacesMessageUtil.hasMessagesByClientId(context, c));
     }
 
 }

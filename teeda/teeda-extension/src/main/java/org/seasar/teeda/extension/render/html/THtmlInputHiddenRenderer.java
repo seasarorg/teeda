@@ -146,7 +146,6 @@ public class THtmlInputHiddenRenderer extends AbstractInputRenderer {
                         restoredList);
                 beanList.toArray(array);
             }
-            //restoreItems(context, hidden, array);
             return array;
         } else {
             List retList = null;
@@ -155,28 +154,10 @@ public class THtmlInputHiddenRenderer extends AbstractInputRenderer {
             } else {
                 retList = mapListToBeanList(componentClass, restoredList);
             }
-            //restoreItems(context, hidden, retList);
             return retList;
         }
     }
 
-    /*
-     protected void restoreItems(FacesContext context, THtmlInputHidden hidden,
-     Object items) {
-     Object page = hidden.getPage(context);
-     BeanDesc beanDesc = BeanDescFactory.getBeanDesc(page.getClass());
-     final String id = hidden.getId();
-     String itemsName = id;
-     if (id.endsWith(ExtensionConstants.SAVE_SUFFIX)) {
-     itemsName = id.substring(0,
-     (id.length() - ExtensionConstants.SAVE_SUFFIX.length()));
-     }
-     PropertyDesc propertyDesc = beanDesc.getPropertyDesc(itemsName);
-     if (propertyDesc != null) {
-     propertyDesc.setValue(page, items);
-     }
-     }
-     */
     private List mapListToBeanList(final Class componentClass,
             final List restoredList) {
         final int size = restoredList.size();
