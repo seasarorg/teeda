@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -23,6 +23,19 @@ import org.seasar.teeda.extension.component.html.THtmlInputCommaText;
 public class MockHtmlInputCommaText extends THtmlInputCommaText {
 
     private Renderer renderer;
+
+    private String clientId;
+
+    public String getClientId(FacesContext context) {
+        if (clientId != null) {
+            return clientId;
+        }
+        return super.getClientId(context);
+    }
+
+    public void setClientId(String clientId) {
+        this.clientId = clientId;
+    }
 
     public Renderer getRenderer(FacesContext context) {
         if (this.renderer != null) {

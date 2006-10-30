@@ -17,6 +17,7 @@ package org.seasar.teeda.extension.render.html;
 
 import java.util.Locale;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.internal.FacesConfigOptions;
 import javax.faces.render.Renderer;
@@ -218,6 +219,29 @@ public class THtmlInputCommaTextRendererTest extends RendererTest {
         // ## Assert ##
         assertFalse(getResponseText().matches(
                 "Teeda.THtmlInputCommaText.removeComma(this);"));
+    }
+
+    public void testEncodeEnd_withErrorStyle() throws Exception {
+        ScriptEnhanceUIViewRoot root = new ScriptEnhanceUIViewRoot();
+        root.addScript(THtmlInputCommaText.class.getName(),
+                new JavaScriptContext());
+        root.setLocale(Locale.JAPAN);
+        FacesContext context = getFacesContext();
+        context.setViewRoot(root);
+        htmlInputCommaText.setClientId("aaa");
+        htmlInputCommaText.setErrorStyleClass("hoge");
+        context.addMessage("aaa", new FacesMessage("bbb"));
+
+        // ## Act ##
+        encodeByRenderer(renderer, context, htmlInputCommaText);
+
+        System.out.print(getResponseText());
+        // ## Assert ##
+        assertEquals(
+                "<input type=\"text\" name=\"aaa\" value=\"\" onfocus=\"Teeda.THtmlInputCommaText.removeComma(this, ',');\" "
+                        + "onblur=\"Teeda.THtmlInputCommaText.convertByKey(this);Teeda.THtmlInputCommaText.addComma(this, 0, ',', '.');\" onkeydown=\"return Teeda.THtmlInputCommaText.keycheckForNumber(event, this, 0, '.');\" "
+                        + "onkeypress=\"return Teeda.THtmlInputCommaText.keycheckForNumber(event, this, 0, '.');\" onkeyup=\"Teeda.THtmlInputCommaText.convertByKey(this);\" style=\"ime-mode:disabled;\" class=\"hoge\" />",
+                getResponseText());
     }
 
     private THtmlInputCommaTextRenderer createHtmlInputCommaTextRenderer() {
