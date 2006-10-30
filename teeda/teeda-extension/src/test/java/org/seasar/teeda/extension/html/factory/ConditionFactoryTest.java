@@ -19,27 +19,29 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.seasar.teeda.extension.ExtensionConstants;
-import org.seasar.teeda.extension.config.taglib.element.TagElement;
-import org.seasar.teeda.extension.config.taglib.element.TaglibElement;
-import org.seasar.teeda.extension.config.taglib.element.impl.TagElementImpl;
-import org.seasar.teeda.extension.config.taglib.element.impl.TaglibElementImpl;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.ElementProcessor;
 import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.factory.sub.web.AaaPage;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooAction;
-import org.seasar.teeda.extension.mock.MockTaglibManager;
 import org.seasar.teeda.extension.taglib.TConditionTag;
-import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 
 /**
  * @author shot
  */
-public class ConditionFactoryTest extends TeedaExtensionTestCase {
+public class ConditionFactoryTest extends ElementProcessorFactoryTestCase {
+
+    protected AbstractElementProcessorFactory createFactory() {
+        return new ConditionFactory();
+    }
+
+    protected void registerTagElements() {
+        registerTagElement(ExtensionConstants.TEEDA_EXTENSION_URI, "condition",
+                TConditionTag.class);
+    }
 
     public void testIsMatch() throws Exception {
-        ConditionFactory factory = new ConditionFactory();
         Map props = new HashMap();
         props.put("id", "isBbb");
         ElementNode elementNode = createElementNode("div", props);
@@ -48,7 +50,6 @@ public class ConditionFactoryTest extends TeedaExtensionTestCase {
     }
 
     public void testIsMatch2() throws Exception {
-        ConditionFactory factory = new ConditionFactory();
         Map props2 = new HashMap();
         props2.put("id", "isNotBbb");
         ElementNode elementNode2 = createElementNode("div", props2);
@@ -57,7 +58,6 @@ public class ConditionFactoryTest extends TeedaExtensionTestCase {
     }
 
     public void testIsMatch3() throws Exception {
-        ConditionFactory factory = new ConditionFactory();
         Map props3 = new HashMap();
         props3.put("id", "ssNotBbb");
         ElementNode elementNode3 = createElementNode("div", props3);
@@ -67,16 +67,6 @@ public class ConditionFactoryTest extends TeedaExtensionTestCase {
 
     public void testCreateFactory1() throws Exception {
         // ## Arrange ##
-        MockTaglibManager taglibManager = new MockTaglibManager();
-        TaglibElement tdaExt = new TaglibElementImpl();
-        tdaExt.setUri(ExtensionConstants.TEEDA_EXTENSION_URI);
-        TagElement tagElement = new TagElementImpl();
-        tagElement.setName("condition");
-        tagElement.setTagClass(TConditionTag.class);
-        tdaExt.addTagElement(tagElement);
-        taglibManager.addTaglibElement(tdaExt);
-        ConditionFactory factory = new ConditionFactory();
-        factory.setTaglibManager(taglibManager);
         Map props = new HashMap();
         props.put("id", "isBbb");
         ElementNode elementNode = createElementNode("div", props);
@@ -95,16 +85,6 @@ public class ConditionFactoryTest extends TeedaExtensionTestCase {
 
     public void testCreateFactory2() throws Exception {
         // ## Arrange ##
-        MockTaglibManager taglibManager = new MockTaglibManager();
-        TaglibElement tdaExt = new TaglibElementImpl();
-        tdaExt.setUri(ExtensionConstants.TEEDA_EXTENSION_URI);
-        TagElement tagElement = new TagElementImpl();
-        tagElement.setName("condition");
-        tagElement.setTagClass(TConditionTag.class);
-        tdaExt.addTagElement(tagElement);
-        taglibManager.addTaglibElement(tdaExt);
-        ConditionFactory factory = new ConditionFactory();
-        factory.setTaglibManager(taglibManager);
         Map props = new HashMap();
         props.put("id", "isNotBbb");
         ElementNode elementNode = createElementNode("div", props);
@@ -120,5 +100,4 @@ public class ConditionFactoryTest extends TeedaExtensionTestCase {
         assertEquals("3", "#{aaaPage.bbb == false}", processor
                 .getProperty("rendered"));
     }
-
 }

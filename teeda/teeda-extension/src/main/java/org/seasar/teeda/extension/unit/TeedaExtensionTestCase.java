@@ -16,7 +16,6 @@
 package org.seasar.teeda.extension.unit;
 
 import java.io.File;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.seasar.teeda.core.unit.TeedaTestCase;
@@ -46,13 +45,11 @@ import org.seasar.teeda.extension.mock.MockTaglibManager;
  */
 public abstract class TeedaExtensionTestCase extends TeedaTestCase {
 
-    private PageContextImpl pageContext;
+    protected PageContextImpl pageContext;
 
-    private MockTaglibManager taglibManager;
+    protected MockTaglibManager taglibManager;
 
-    private Map taglibMap;
-
-    private HtmlParserImpl parser;
+    protected HtmlParserImpl parser;
 
     protected PageContextImpl getPageContext() {
         return pageContext;
@@ -63,7 +60,6 @@ public abstract class TeedaExtensionTestCase extends TeedaTestCase {
         pageContext = new PageContextImpl();
         pageContext.initialize(getServlet(), getRequest(), getResponse(), null);
         taglibManager = createTaglibManager();
-        taglibMap = new HashMap();
         parser = new HtmlParserImpl();
         HtmlNodeHandler htmlNodeHandler = new HtmlNodeHandler();
         ElementNodeDecision[] decisions = { new BodyElementNodeDecision(),
@@ -77,7 +73,6 @@ public abstract class TeedaExtensionTestCase extends TeedaTestCase {
         super.tearDownContainer();
         pageContext = null;
         taglibManager = null;
-        taglibMap = null;
     }
 
     protected MockTaglibManager createTaglibManager() {
@@ -88,21 +83,19 @@ public abstract class TeedaExtensionTestCase extends TeedaTestCase {
         return taglibManager;
     }
 
-    protected void registerTaglibElement(String tagLibUri, String tagName,
-            Class tagClass) {
-        TaglibElement taglib = null;
-        if (taglibMap.containsKey(tagLibUri)) {
-            taglib = (TaglibElement) taglibMap.get(tagLibUri);
+    protected void registerTagElement(String uri, String tagName, Class tagClass) {
+        TaglibElement taglibElement;
+        if (!taglibManager.hasTaglibElement(uri)) {
+            taglibElement = new TaglibElementImpl();
+            taglibElement.setUri(uri);
+            taglibManager.addTaglibElement(taglibElement);
         } else {
-            taglib = new TaglibElementImpl();
-            taglib.setUri(tagLibUri);
-            taglibMap.put(tagLibUri, taglib);
+            taglibElement = taglibManager.getTaglibElement(uri);
         }
         TagElement tagElement = new TagElementImpl();
         tagElement.setName(tagName);
         tagElement.setTagClass(tagClass);
-        taglib.addTagElement(tagElement);
-        taglibManager.addTaglibElement(taglib);
+        taglibElement.addTagElement(tagElement);
     }
 
     protected ElementNode createElementNode(String tagName, Map props) {

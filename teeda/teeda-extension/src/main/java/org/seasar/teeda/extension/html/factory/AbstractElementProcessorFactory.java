@@ -92,6 +92,9 @@ public abstract class AbstractElementProcessorFactory implements
     protected Map createProperties(ElementNode elementNode, PageDesc pageDesc,
             ActionDesc actionDesc) {
         Map props = elementNode.copyProperties();
+        if (pageDesc == null) {
+            return props;
+        }
         customizeProperties(props, elementNode, pageDesc, actionDesc);
         return props;
     }

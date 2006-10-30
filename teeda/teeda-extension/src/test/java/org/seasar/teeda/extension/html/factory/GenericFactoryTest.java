@@ -32,7 +32,7 @@ import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 public class GenericFactoryTest extends TeedaExtensionTestCase {
 
     public void testIsMatch() throws Exception {
-        registerTaglibElement(JsfConstants.JSF_HTML_URI, "inputText",
+        registerTagElement(JsfConstants.JSF_HTML_URI, "inputText",
                 InputTextTag.class);
         GenericFactory factory = new GenericFactory();
         factory.setTaglibManager(getTaglibManager());
@@ -46,7 +46,7 @@ public class GenericFactoryTest extends TeedaExtensionTestCase {
 
     public void testCreateFactory() throws Exception {
         // ## Arrange ##
-        registerTaglibElement(JsfConstants.JSF_HTML_URI, "inputText",
+        registerTagElement(JsfConstants.JSF_HTML_URI, "inputText",
                 InputTextTag.class);
         GenericFactory factory = new GenericFactory();
         factory.setTaglibManager(getTaglibManager());

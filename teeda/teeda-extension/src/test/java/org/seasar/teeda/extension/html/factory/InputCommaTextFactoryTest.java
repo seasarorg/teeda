@@ -4,10 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.seasar.teeda.extension.ExtensionConstants;
-import org.seasar.teeda.extension.config.taglib.element.TagElement;
-import org.seasar.teeda.extension.config.taglib.element.TaglibElement;
-import org.seasar.teeda.extension.config.taglib.element.impl.TagElementImpl;
-import org.seasar.teeda.extension.config.taglib.element.impl.TaglibElementImpl;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.ElementProcessor;
@@ -15,14 +11,20 @@ import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.factory.sub.web.AaaPage;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooAction;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooPage;
-import org.seasar.teeda.extension.mock.MockTaglibManager;
 import org.seasar.teeda.extension.taglib.TInputCommaTextTag;
-import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 
-public class InputCommaTextFactoryTest extends TeedaExtensionTestCase {
+public class InputCommaTextFactoryTest extends ElementProcessorFactoryTestCase {
+
+    protected AbstractElementProcessorFactory createFactory() {
+        return new InputCommaTextFactory();
+    }
+
+    protected void registerTagElements() {
+        registerTagElement(ExtensionConstants.TEEDA_EXTENSION_URI,
+                "inputCommaText", TInputCommaTextTag.class);
+    }
 
     public void testIsMatch() throws Exception {
-        InputCommaTextFactory factory = new InputCommaTextFactory();
         Map props = new HashMap();
         props.put("id", "aaa");
         props.put("type", "text");
@@ -53,16 +55,6 @@ public class InputCommaTextFactoryTest extends TeedaExtensionTestCase {
 
     public void testCreateFactory() throws Exception {
         // ## Arrange ##
-        MockTaglibManager taglibManager = new MockTaglibManager();
-        TaglibElement jsfHtml = new TaglibElementImpl();
-        jsfHtml.setUri(ExtensionConstants.TEEDA_EXTENSION_URI);
-        TagElement tagElement = new TagElementImpl();
-        tagElement.setName("inputCommaText");
-        tagElement.setTagClass(TInputCommaTextTag.class);
-        jsfHtml.addTagElement(tagElement);
-        taglibManager.addTaglibElement(jsfHtml);
-        InputCommaTextFactory factory = new InputCommaTextFactory();
-        factory.setTaglibManager(taglibManager);
         Map props = new HashMap();
         props.put("id", "aaa");
         props.put("type", "text");

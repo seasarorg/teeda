@@ -11,13 +11,19 @@ import org.seasar.teeda.extension.html.ElementProcessor;
 import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooAction;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooPage;
-import org.seasar.teeda.extension.mock.MockTaglibManager;
-import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 
-public class InputSecretFactoryTest extends TeedaExtensionTestCase {
+public class InputSecretFactoryTest extends ElementProcessorFactoryTestCase {
+
+    protected AbstractElementProcessorFactory createFactory() {
+        return new InputSecretFactory();
+    }
+
+    protected void registerTagElements() {
+        registerTagElement(JsfConstants.JSF_HTML_URI, "inputSecret",
+                InputSecretTag.class);
+    }
 
     public void testIsMatch() throws Exception {
-        InputSecretFactory factory = new InputSecretFactory();
         Map props = new HashMap();
         props.put("id", "aaa");
         props.put("type", "password");
@@ -40,11 +46,6 @@ public class InputSecretFactoryTest extends TeedaExtensionTestCase {
 
     public void testCreateFactory() throws Exception {
         // ## Arrange ##
-        registerTaglibElement(JsfConstants.JSF_HTML_URI, "inputSecret",
-                InputSecretTag.class);
-        MockTaglibManager taglibManager = getTaglibManager();
-        InputSecretFactory factory = new InputSecretFactory();
-        factory.setTaglibManager(taglibManager);
         Map props = new HashMap();
         props.put("id", "aaa");
         props.put("type", "password");
@@ -62,5 +63,4 @@ public class InputSecretFactoryTest extends TeedaExtensionTestCase {
         assertEquals("3", "#{fooPage.aaa}", processor.getProperty("value"));
         assertEquals("4", null, processor.getProperty("label"));
     }
-
 }

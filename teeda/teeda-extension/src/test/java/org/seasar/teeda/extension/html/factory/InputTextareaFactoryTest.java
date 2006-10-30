@@ -26,16 +26,22 @@ import org.seasar.teeda.extension.html.ElementProcessor;
 import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooAction;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooPage;
-import org.seasar.teeda.extension.mock.MockTaglibManager;
-import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 
 /**
  * @author shot
  */
-public class InputTextareaFactoryTest extends TeedaExtensionTestCase {
+public class InputTextareaFactoryTest extends ElementProcessorFactoryTestCase {
+
+    protected AbstractElementProcessorFactory createFactory() {
+        return new InputTextareaFactory();
+    }
+
+    protected void registerTagElements() {
+        registerTagElement(JsfConstants.JSF_HTML_URI, "inputTextarea",
+                InputTextareaTag.class);
+    }
 
     public void testIsMatch() throws Exception {
-        InputTextareaFactory factory = new InputTextareaFactory();
         Map props = new HashMap();
         props.put("id", "aaa");
         ElementNode elementNode = createElementNode("textarea", props);
@@ -49,11 +55,6 @@ public class InputTextareaFactoryTest extends TeedaExtensionTestCase {
 
     public void testCreateFactory() throws Exception {
         // ## Arrange ##
-        registerTaglibElement(JsfConstants.JSF_HTML_URI, "inputTextarea",
-                InputTextareaTag.class);
-        MockTaglibManager taglibManager = getTaglibManager();
-        InputTextareaFactory factory = new InputTextareaFactory();
-        factory.setTaglibManager(taglibManager);
         Map props = new HashMap();
         props.put("id", "aaa");
         props.put("type", "password");
@@ -71,5 +72,4 @@ public class InputTextareaFactoryTest extends TeedaExtensionTestCase {
         assertEquals("3", "#{fooPage.aaa}", processor.getProperty("value"));
         assertEquals("4", null, processor.getProperty("label"));
     }
-
 }

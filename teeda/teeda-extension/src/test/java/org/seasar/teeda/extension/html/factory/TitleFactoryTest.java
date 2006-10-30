@@ -18,16 +18,25 @@ package org.seasar.teeda.extension.html.factory;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.html.ElementNode;
-import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
+import org.seasar.teeda.extension.taglib.TTitleTag;
 
 /**
  * @author shot
  */
-public class TitleFactoryTest extends TeedaExtensionTestCase {
+public class TitleFactoryTest extends ElementProcessorFactoryTestCase {
+
+    protected AbstractElementProcessorFactory createFactory() {
+        return new TitleFactory();
+    }
+
+    protected void registerTagElements() {
+        registerTagElement(ExtensionConstants.TEEDA_EXTENSION_URI, "title",
+                TTitleTag.class);
+    }
 
     public void testIsMatch() throws Exception {
-        TitleFactory factory = new TitleFactory();
         Map props = new HashMap();
         props.put("id", "aaa");
         ElementNode elementNode = createElementNode("title", props);

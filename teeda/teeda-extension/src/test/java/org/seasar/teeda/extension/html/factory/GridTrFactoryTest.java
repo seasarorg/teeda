@@ -24,20 +24,27 @@ import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooPage;
 import org.seasar.teeda.extension.taglib.TGridTag;
 import org.seasar.teeda.extension.taglib.TGridTrTag;
-import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 
 /**
  * @author manhole
  */
-public class GridTrFactoryTest extends TeedaExtensionTestCase {
-
-    private GridTrFactory factory;
+public class GridTrFactoryTest extends ElementProcessorFactoryTestCase {
 
     private PageDesc pageDesc;
 
+    protected AbstractElementProcessorFactory createFactory() {
+        return new GridTrFactory();
+    }
+
+    protected void registerTagElements() {
+        registerTagElement(ExtensionConstants.TEEDA_EXTENSION_URI, "gridTr",
+                TGridTrTag.class);
+        registerTagElement(ExtensionConstants.TEEDA_EXTENSION_URI, "grid",
+                TGridTag.class);
+    }
+
     protected void setUp() throws Exception {
         super.setUp();
-        include("GridTrFactory.dicon");
         pageDesc = createPageDesc(FooPage.class, "fooPage");
     }
 
@@ -69,11 +76,6 @@ public class GridTrFactoryTest extends TeedaExtensionTestCase {
 
     public void testCustomizeDynamicProperties() throws Exception {
         // ## Arrange ##
-        registerTaglibElement(ExtensionConstants.TEEDA_EXTENSION_URI, "grid",
-                TGridTag.class);
-        registerTaglibElement(ExtensionConstants.TEEDA_EXTENSION_URI, "gridTr",
-                TGridTrTag.class);
-        factory.setTaglibManager(getTaglibManager());
         final HashMap gridProp = new HashMap();
         gridProp.put("id", "hogeGrid");
         ElementNode grid = createElementNode("table", gridProp);
@@ -96,11 +98,6 @@ public class GridTrFactoryTest extends TeedaExtensionTestCase {
 
     public void testCustomizeDynamicProperties2() throws Exception {
         // ## Arrange ##
-        registerTaglibElement(ExtensionConstants.TEEDA_EXTENSION_URI, "grid",
-                TGridTag.class);
-        registerTaglibElement(ExtensionConstants.TEEDA_EXTENSION_URI, "gridTr",
-                TGridTrTag.class);
-        factory.setTaglibManager(getTaglibManager());
         final HashMap gridProp = new HashMap();
         gridProp.put("id", "hogeGrid");
         ElementNode grid = createElementNode("table", gridProp);

@@ -25,14 +25,21 @@ import org.seasar.teeda.extension.html.ElementProcessor;
 import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooAction;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooPage;
-import org.seasar.teeda.extension.mock.MockTaglibManager;
 import org.seasar.teeda.extension.taglib.TSelectBooleanCheckboxTag;
-import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 
-public class SelectBooleanCheckboxFactoryTest extends TeedaExtensionTestCase {
+public class SelectBooleanCheckboxFactoryTest extends
+        ElementProcessorFactoryTestCase {
+
+    protected AbstractElementProcessorFactory createFactory() {
+        return new SelectBooleanCheckboxFactory();
+    }
+
+    protected void registerTagElements() {
+        registerTagElement(ExtensionConstants.TEEDA_EXTENSION_URI,
+                "selectBooleanCheckbox", TSelectBooleanCheckboxTag.class);
+    }
 
     public void testIsMatch() throws Exception {
-        SelectBooleanCheckboxFactory factory = new SelectBooleanCheckboxFactory();
         Map properties = new HashMap();
         properties.put("id", "aaa");
         properties.put("type", "checkbox");
@@ -48,11 +55,6 @@ public class SelectBooleanCheckboxFactoryTest extends TeedaExtensionTestCase {
 
     public void testCreateFactory() throws Exception {
         // ## Arrange ##
-        registerTaglibElement(ExtensionConstants.TEEDA_EXTENSION_URI,
-                "selectBooleanCheckbox", TSelectBooleanCheckboxTag.class);
-        MockTaglibManager taglibManager = getTaglibManager();
-        SelectBooleanCheckboxFactory factory = new SelectBooleanCheckboxFactory();
-        factory.setTaglibManager(taglibManager);
         Map properties = new HashMap();
         properties.put("id", "aaa");
         properties.put("type", "checkbox");
@@ -71,5 +73,4 @@ public class SelectBooleanCheckboxFactoryTest extends TeedaExtensionTestCase {
         assertEquals("3", "#{fooPage.aaa}", processor.getProperty("value"));
         assertEquals("4", null, processor.getProperty("label"));
     }
-
 }

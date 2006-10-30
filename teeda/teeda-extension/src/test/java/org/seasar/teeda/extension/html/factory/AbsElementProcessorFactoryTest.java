@@ -37,8 +37,8 @@ public class AbsElementProcessorFactoryTest extends TeedaExtensionTestCase {
 
     public void testCustomizeDynamicProperties() throws Exception {
         // ## Arrange ##
-        registerTaglibElement(ExtensionConstants.TEEDA_EXTENSION_URI,
-                "inputText", TInputTextTag.class);
+        registerTagElement(ExtensionConstants.TEEDA_EXTENSION_URI, "inputText",
+                TInputTextTag.class);
         MockTaglibManager taglibManager = getTaglibManager();
         InputTextFactory factory = new InputTextFactory();
         factory.setTaglibManager(taglibManager);
@@ -60,8 +60,8 @@ public class AbsElementProcessorFactoryTest extends TeedaExtensionTestCase {
 
     public void testCustomizeDynamicProperties_styeClass() throws Exception {
         // ## Arrange ##
-        registerTaglibElement(ExtensionConstants.TEEDA_EXTENSION_URI,
-                "inputText", TInputTextTag.class);
+        registerTagElement(ExtensionConstants.TEEDA_EXTENSION_URI, "inputText",
+                TInputTextTag.class);
         MockTaglibManager taglibManager = getTaglibManager();
         InputTextFactory factory = new InputTextFactory();
         factory.setTaglibManager(taglibManager);

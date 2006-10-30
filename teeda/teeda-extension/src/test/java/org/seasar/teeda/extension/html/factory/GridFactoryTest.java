@@ -19,28 +19,24 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.seasar.teeda.extension.ExtensionConstants;
-import org.seasar.teeda.extension.config.taglib.element.TagElement;
-import org.seasar.teeda.extension.config.taglib.element.TaglibElement;
-import org.seasar.teeda.extension.config.taglib.element.impl.TagElementImpl;
-import org.seasar.teeda.extension.config.taglib.element.impl.TaglibElementImpl;
 import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.ElementProcessor;
 import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooPage;
-import org.seasar.teeda.extension.mock.MockTaglibManager;
 import org.seasar.teeda.extension.taglib.TGridTag;
-import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 
 /**
  * @author manhole
  */
-public class GridFactoryTest extends TeedaExtensionTestCase {
+public class GridFactoryTest extends ElementProcessorFactoryTestCase {
 
-    private GridFactory factory;
+    protected AbstractElementProcessorFactory createFactory() {
+        return new GridFactory();
+    }
 
-    protected void setUp() throws Exception {
-        super.setUp();
-        factory = new GridFactory();
+    protected void registerTagElements() {
+        registerTagElement(ExtensionConstants.TEEDA_EXTENSION_URI, "grid",
+                TGridTag.class);
     }
 
     public void testIsMatch_Ok() throws Exception {
@@ -90,16 +86,6 @@ public class GridFactoryTest extends TeedaExtensionTestCase {
 
     public void testCreateFactory() throws Exception {
         // ## Arrange ##
-        MockTaglibManager taglibManager = new MockTaglibManager();
-        TaglibElement taglibElem = new TaglibElementImpl();
-        taglibElem.setUri(ExtensionConstants.TEEDA_EXTENSION_URI);
-        TagElement tagElement = new TagElementImpl();
-        tagElement.setName("grid");
-        tagElement.setTagClass(TGridTag.class);
-        taglibElem.addTagElement(tagElement);
-        taglibManager.addTaglibElement(taglibElem);
-
-        factory.setTaglibManager(taglibManager);
         Map properties = new HashMap();
         properties.put("id", "hogeGridXY");
         ElementNode elementNode = createElementNode("table", properties);
@@ -113,5 +99,4 @@ public class GridFactoryTest extends TeedaExtensionTestCase {
         assertNotNull(processor);
         assertEquals(TGridTag.class, processor.getTagClass());
     }
-
 }

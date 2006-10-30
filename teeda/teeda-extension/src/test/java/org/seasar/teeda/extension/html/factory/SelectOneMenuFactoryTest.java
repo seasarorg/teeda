@@ -18,7 +18,6 @@ package org.seasar.teeda.extension.html.factory;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.seasar.teeda.core.taglib.html.SelectOneListboxTag;
 import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ElementNode;
@@ -26,37 +25,33 @@ import org.seasar.teeda.extension.html.ElementProcessor;
 import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooAction;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooPage;
-import org.seasar.teeda.extension.mock.MockTaglibManager;
-import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
+import org.seasar.teeda.extension.taglib.TSelectOneMenuTag;
 
 /**
  * @author shot
  */
-public class SelectOneMenuFactoryTest extends TeedaExtensionTestCase {
+public class SelectOneMenuFactoryTest extends ElementProcessorFactoryTestCase {
 
-    private MockTaglibManager taglibManager;
+    protected AbstractElementProcessorFactory createFactory() {
+        return new SelectOneMenuFactory();
+    }
 
-    protected void setUp() throws Exception {
-        super.setUp();
-        registerTaglibElement(ExtensionConstants.TEEDA_EXTENSION_URI,
-                "selectOneMenu", SelectOneListboxTag.class);
-        taglibManager = getTaglibManager();
+    protected void registerTagElements() {
+        registerTagElement(ExtensionConstants.TEEDA_EXTENSION_URI,
+                "selectOneMenu", TSelectOneMenuTag.class);
     }
 
     public void testIsMatch() throws Exception {
-        SelectOneMenuFactory selectFactory = new SelectOneMenuFactory();
         Map map = new HashMap();
         map.put("id", "hogeItems");
         ElementNode elementNode = createElementNode("select", map);
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
-        assertTrue(selectFactory.isMatch(elementNode, pageDesc, actionDesc));
+        assertTrue(factory.isMatch(elementNode, pageDesc, actionDesc));
     }
 
     public void testCreateProcessor() throws Exception {
         // ## Arrange ##
-        SelectOneMenuFactory factory = new SelectOneMenuFactory();
-        factory.setTaglibManager(taglibManager);
         Map properties = new HashMap();
         properties.put("id", "hogeItems");
         ElementNode elementNode = createElementNode("span", properties);
@@ -68,7 +63,7 @@ public class SelectOneMenuFactoryTest extends TeedaExtensionTestCase {
                 pageDesc, actionDesc);
         // ## Assert ##
         assertNotNull("1", parentProcessor);
-        assertEquals("2", SelectOneListboxTag.class, parentProcessor
+        assertEquals("2", TSelectOneMenuTag.class, parentProcessor
                 .getTagClass());
         assertEquals("3", "#{fooPage.hoge}", parentProcessor
                 .getProperty("value"));

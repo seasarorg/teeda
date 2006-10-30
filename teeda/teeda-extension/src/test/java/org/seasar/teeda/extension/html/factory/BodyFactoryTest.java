@@ -17,16 +17,25 @@ package org.seasar.teeda.extension.html.factory;
 
 import java.util.HashMap;
 
+import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.html.ElementNode;
-import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
+import org.seasar.teeda.extension.taglib.TBodyTag;
 
 /**
  * @author shot
  */
-public class BodyFactoryTest extends TeedaExtensionTestCase {
+public class BodyFactoryTest extends ElementProcessorFactoryTestCase {
+
+    protected AbstractElementProcessorFactory createFactory() {
+        return new BodyFactory();
+    }
+
+    protected void registerTagElements() {
+        registerTagElement(ExtensionConstants.TEEDA_EXTENSION_URI, "body",
+                TBodyTag.class);
+    }
 
     public void testIsMatch() throws Exception {
-        BodyFactory factory = new BodyFactory();
         ElementNode elementNode = createElementNode("body", new HashMap());
         assertTrue(factory.isMatch(elementNode, null, null));
 

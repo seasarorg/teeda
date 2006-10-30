@@ -20,28 +20,30 @@ import java.util.Map;
 
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.extension.ExtensionConstants;
-import org.seasar.teeda.extension.config.taglib.element.TagElement;
-import org.seasar.teeda.extension.config.taglib.element.TaglibElement;
-import org.seasar.teeda.extension.config.taglib.element.impl.TagElementImpl;
-import org.seasar.teeda.extension.config.taglib.element.impl.TaglibElementImpl;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.ElementProcessor;
 import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooAction;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooPage;
-import org.seasar.teeda.extension.mock.MockTaglibManager;
 import org.seasar.teeda.extension.taglib.TMessageTag;
-import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 
 /**
  * @author higa
  * @author shot
  */
-public class MessageFactoryTest extends TeedaExtensionTestCase {
+public class MessageFactoryTest extends ElementProcessorFactoryTestCase {
+
+    protected AbstractElementProcessorFactory createFactory() {
+        return new MessageFactory();
+    }
+
+    protected void registerTagElements() {
+        registerTagElement(ExtensionConstants.TEEDA_EXTENSION_URI, "message",
+                TMessageTag.class);
+    }
 
     public void testIsMatch() throws Exception {
-        MessageFactory factory = new MessageFactory();
         Map properties = new HashMap();
         properties.put("id", "aaaMessage");
         ElementNode elementNode = createElementNode("span", properties);
@@ -54,16 +56,6 @@ public class MessageFactoryTest extends TeedaExtensionTestCase {
 
     public void testCreateFactory() throws Exception {
         // ## Arrange ##
-        MockTaglibManager taglibManager = new MockTaglibManager();
-        TaglibElement jsfHtml = new TaglibElementImpl();
-        jsfHtml.setUri(ExtensionConstants.TEEDA_EXTENSION_URI);
-        TagElement tagElement = new TagElementImpl();
-        tagElement.setName("message");
-        tagElement.setTagClass(TMessageTag.class);
-        jsfHtml.addTagElement(tagElement);
-        taglibManager.addTaglibElement(jsfHtml);
-        MessageFactory factory = new MessageFactory();
-        factory.setTaglibManager(taglibManager);
         Map properties = new HashMap();
         properties.put("id", "aaaMessage");
         ElementNode elementNode = createElementNode("span", properties);

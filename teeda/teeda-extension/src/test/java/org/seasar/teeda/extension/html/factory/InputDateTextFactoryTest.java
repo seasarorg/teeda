@@ -11,14 +11,20 @@ import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.factory.sub.web.AaaPage;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooAction;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooPage;
-import org.seasar.teeda.extension.mock.MockTaglibManager;
 import org.seasar.teeda.extension.taglib.TInputDateTextTag;
-import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 
-public class InputDateTextFactoryTest extends TeedaExtensionTestCase {
+public class InputDateTextFactoryTest extends ElementProcessorFactoryTestCase {
+
+    protected AbstractElementProcessorFactory createFactory() {
+        return new InputDateTextFactory();
+    }
+
+    protected void registerTagElements() {
+        registerTagElement(ExtensionConstants.TEEDA_EXTENSION_URI,
+                "inputDateText", TInputDateTextTag.class);
+    }
 
     public void testIsMatch() throws Exception {
-        InputDateTextFactory factory = new InputDateTextFactory();
         Map props = new HashMap();
         props.put("id", "aaa");
         props.put("type", "text");
@@ -49,11 +55,6 @@ public class InputDateTextFactoryTest extends TeedaExtensionTestCase {
 
     public void testCreateFactory() throws Exception {
         // ## Arrange ##
-        registerTaglibElement(ExtensionConstants.TEEDA_EXTENSION_URI,
-                "inputDateText", TInputDateTextTag.class);
-        MockTaglibManager taglibManager = getTaglibManager();
-        InputDateTextFactory factory = new InputDateTextFactory();
-        factory.setTaglibManager(taglibManager);
         Map props = new HashMap();
         props.put("id", "aaa");
         props.put("type", "text");

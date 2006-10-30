@@ -18,7 +18,6 @@ package org.seasar.teeda.extension.html.factory;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ElementNode;
@@ -26,17 +25,23 @@ import org.seasar.teeda.extension.html.ElementProcessor;
 import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooAction;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooPage;
-import org.seasar.teeda.extension.mock.MockTaglibManager;
 import org.seasar.teeda.extension.taglib.TInputTextTag;
-import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 
 /**
  * @author higa
  */
-public class InputTextFactoryTest extends TeedaExtensionTestCase {
+public class InputTextFactoryTest extends ElementProcessorFactoryTestCase {
+
+    protected AbstractElementProcessorFactory createFactory() {
+        return new InputTextFactory();
+    }
+
+    protected void registerTagElements() {
+        registerTagElement(ExtensionConstants.TEEDA_EXTENSION_URI, "inputText",
+                TInputTextTag.class);
+    }
 
     public void testIsMatch() throws Exception {
-        InputTextFactory factory = new InputTextFactory();
         Map properties = new HashMap();
         properties.put("id", "aaa");
         properties.put("type", "text");
@@ -52,11 +57,6 @@ public class InputTextFactoryTest extends TeedaExtensionTestCase {
 
     public void testCreateFactory() throws Exception {
         // ## Arrange ##
-        registerTaglibElement(ExtensionConstants.TEEDA_EXTENSION_URI,
-                "inputText", TInputTextTag.class);
-        MockTaglibManager taglibManager = getTaglibManager();
-        InputTextFactory factory = new InputTextFactory();
-        factory.setTaglibManager(taglibManager);
         Map properties = new HashMap();
         properties.put("id", "aaa");
         properties.put("type", "text");

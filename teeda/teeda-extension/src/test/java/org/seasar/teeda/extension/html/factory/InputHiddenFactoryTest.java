@@ -26,16 +26,22 @@ import org.seasar.teeda.extension.html.ElementProcessor;
 import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooAction;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooPage;
-import org.seasar.teeda.extension.mock.MockTaglibManager;
-import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 
 /**
  * @author higa
  */
-public class InputHiddenFactoryTest extends TeedaExtensionTestCase {
+public class InputHiddenFactoryTest extends ElementProcessorFactoryTestCase {
+
+    protected AbstractElementProcessorFactory createFactory() {
+        return new InputHiddenFactory();
+    }
+
+    protected void registerTagElements() {
+        registerTagElement(JsfConstants.JSF_HTML_URI, "inputHidden",
+                InputHiddenTag.class);
+    }
 
     public void testIsMatch() throws Exception {
-        InputHiddenFactory factory = new InputHiddenFactory();
         Map props = new HashMap();
         props.put("id", "aaa");
         props.put("type", "hidden");
@@ -58,11 +64,6 @@ public class InputHiddenFactoryTest extends TeedaExtensionTestCase {
 
     public void testCreateFactory() throws Exception {
         // ## Arrange ##
-        registerTaglibElement(JsfConstants.JSF_HTML_URI, "inputHidden",
-                InputHiddenTag.class);
-        MockTaglibManager taglibManager = getTaglibManager();
-        InputHiddenFactory factory = new InputHiddenFactory();
-        factory.setTaglibManager(taglibManager);
         Map props = new HashMap();
         props.put("id", "aaa");
         props.put("type", "hidden");

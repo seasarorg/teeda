@@ -25,26 +25,23 @@ import org.seasar.teeda.extension.html.ElementProcessor;
 import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooAction;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooPage;
-import org.seasar.teeda.extension.mock.MockTaglibManager;
 import org.seasar.teeda.extension.taglib.TInputHiddenTag;
-import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 
 /**
  * @author shot
  */
-public class TInputHiddenFactoryTest extends TeedaExtensionTestCase {
+public class TInputHiddenFactoryTest extends ElementProcessorFactoryTestCase {
 
-    private MockTaglibManager taglibManager;
+    protected AbstractElementProcessorFactory createFactory() {
+        return new TInputHiddenFactory();
+    }
 
-    protected void setUp() throws Exception {
-        super.setUp();
-        registerTaglibElement(ExtensionConstants.TEEDA_EXTENSION_URI,
+    protected void registerTagElements() {
+        registerTagElement(ExtensionConstants.TEEDA_EXTENSION_URI,
                 "inputHidden", TInputHiddenTag.class);
-        taglibManager = getTaglibManager();
     }
 
     public void testIsMatch() throws Exception {
-        TInputHiddenFactory factory = new TInputHiddenFactory();
         Map map = new HashMap();
         map.put("type", "hidden");
         map.put("id", "hogeItemsSave");
@@ -56,8 +53,6 @@ public class TInputHiddenFactoryTest extends TeedaExtensionTestCase {
 
     public void testCreateProcessor() throws Exception {
         // ## Arrange ##
-        TInputHiddenFactory factory = new TInputHiddenFactory();
-        factory.setTaglibManager(taglibManager);
         Map properties = new HashMap();
         properties.put("type", "hidden");
         properties.put("id", "hogeItemsSave");

@@ -12,13 +12,19 @@ import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.Foo2Page;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooAction;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooPage;
-import org.seasar.teeda.extension.mock.MockTaglibManager;
-import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 
-public class CommandButtonFactoryTest extends TeedaExtensionTestCase {
+public class CommandButtonFactoryTest extends ElementProcessorFactoryTestCase {
+
+    protected AbstractElementProcessorFactory createFactory() {
+        return new CommandButtonFactory();
+    }
+
+    protected void registerTagElements() {
+        registerTagElement(JsfConstants.JSF_HTML_URI, "commandButton",
+                CommandButtonTag.class);
+    }
 
     public void testIsMatch_go() throws Exception {
-        CommandButtonFactory factory = new CommandButtonFactory();
         Map properties = new HashMap();
         properties.put("type", "submit");
         properties.put("id", "goNextPage");
@@ -30,7 +36,6 @@ public class CommandButtonFactoryTest extends TeedaExtensionTestCase {
     }
 
     public void testIsMatch_do() throws Exception {
-        CommandButtonFactory factory = new CommandButtonFactory();
         Map properties = new HashMap();
         properties.put("type", "submit");
         properties.put("id", "doBbb");
@@ -50,7 +55,6 @@ public class CommandButtonFactoryTest extends TeedaExtensionTestCase {
     }
 
     public void testIsMatch_jump() throws Exception {
-        CommandButtonFactory factory = new CommandButtonFactory();
         Map properties = new HashMap();
         properties.put("type", "submit");
         properties.put("id", "jumpNextPage");
@@ -62,7 +66,6 @@ public class CommandButtonFactoryTest extends TeedaExtensionTestCase {
     }
 
     public void testIsMatch_button() throws Exception {
-        CommandButtonFactory factory = new CommandButtonFactory();
         Map properties = new HashMap();
         properties.put("type", "button");
         properties.put("id", "goNextPage");
@@ -75,11 +78,6 @@ public class CommandButtonFactoryTest extends TeedaExtensionTestCase {
 
     public void testCreateFactory() throws Exception {
         // ## Arrange ##
-        registerTaglibElement(JsfConstants.JSF_HTML_URI, "commandButton",
-                CommandButtonTag.class);
-        MockTaglibManager taglibManager = getTaglibManager();
-        CommandButtonFactory factory = new CommandButtonFactory();
-        factory.setTaglibManager(taglibManager);
         Map properties = new HashMap();
         properties.put("id", "doBbb");
         properties.put("type", "submit");
@@ -122,11 +120,6 @@ public class CommandButtonFactoryTest extends TeedaExtensionTestCase {
 
     public void testCreateFactory_locationHrefRemove1() throws Exception {
         // ## Arrange ##
-        registerTaglibElement(JsfConstants.JSF_HTML_URI, "commandButton",
-                CommandButtonTag.class);
-        MockTaglibManager taglibManager = getTaglibManager();
-        CommandButtonFactory factory = new CommandButtonFactory();
-        factory.setTaglibManager(taglibManager);
         Map properties = new HashMap();
         properties.put("id", "doBbb");
         properties.put("type", "submit");
@@ -146,11 +139,6 @@ public class CommandButtonFactoryTest extends TeedaExtensionTestCase {
 
     public void testCreateFactory_locationHrefRemove2() throws Exception {
         // ## Arrange ##
-        registerTaglibElement(JsfConstants.JSF_HTML_URI, "commandButton",
-                CommandButtonTag.class);
-        MockTaglibManager taglibManager = getTaglibManager();
-        CommandButtonFactory factory = new CommandButtonFactory();
-        factory.setTaglibManager(taglibManager);
         Map properties = new HashMap();
         properties.put("id", "doBbb");
         properties.put("type", "submit");
@@ -170,11 +158,6 @@ public class CommandButtonFactoryTest extends TeedaExtensionTestCase {
 
     public void testCreateFactory_locationHrefRemove3() throws Exception {
         // ## Arrange ##
-        registerTaglibElement(JsfConstants.JSF_HTML_URI, "commandButton",
-                CommandButtonTag.class);
-        MockTaglibManager taglibManager = getTaglibManager();
-        CommandButtonFactory factory = new CommandButtonFactory();
-        factory.setTaglibManager(taglibManager);
         Map properties = new HashMap();
         properties.put("id", "doBbb");
         properties.put("type", "submit");
@@ -194,11 +177,6 @@ public class CommandButtonFactoryTest extends TeedaExtensionTestCase {
 
     public void testCreateFactory_onclickIsDynamicProperty() throws Exception {
         // ## Arrange ##
-        registerTaglibElement(JsfConstants.JSF_HTML_URI, "commandButton",
-                CommandButtonTag.class);
-        MockTaglibManager taglibManager = getTaglibManager();
-        CommandButtonFactory factory = new CommandButtonFactory();
-        factory.setTaglibManager(taglibManager);
         Map properties = new HashMap();
         properties.put("id", "doBbb");
         properties.put("type", "submit");
@@ -213,7 +191,8 @@ public class CommandButtonFactoryTest extends TeedaExtensionTestCase {
         assertNotNull(processor);
         assertEquals(CommandButtonTag.class, processor.getTagClass());
         assertEquals("#{fooPage.doBbb}", processor.getProperty("action"));
-        assertEquals("#{fooPage.doBbbOnclick}", processor.getProperty("onclick"));
+        assertEquals("#{fooPage.doBbbOnclick}", processor
+                .getProperty("onclick"));
         System.out.println(processor.getProperty("onclick"));
     }
 

@@ -19,27 +19,29 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.seasar.teeda.extension.ExtensionConstants;
-import org.seasar.teeda.extension.config.taglib.element.TagElement;
-import org.seasar.teeda.extension.config.taglib.element.TaglibElement;
-import org.seasar.teeda.extension.config.taglib.element.impl.TagElementImpl;
-import org.seasar.teeda.extension.config.taglib.element.impl.TaglibElementImpl;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.ElementProcessor;
 import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooAction;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooPage;
-import org.seasar.teeda.extension.mock.MockTaglibManager;
 import org.seasar.teeda.extension.taglib.TOutputTextTag;
-import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 
 /**
  * @author shot
  */
-public class OutputTextFactoryTest extends TeedaExtensionTestCase {
+public class OutputTextFactoryTest extends ElementProcessorFactoryTestCase {
+
+    protected AbstractElementProcessorFactory createFactory() {
+        return new OutputTextFactory();
+    }
+
+    protected void registerTagElements() {
+        registerTagElement(ExtensionConstants.TEEDA_EXTENSION_URI,
+                "outputText", TOutputTextTag.class);
+    }
 
     public void testIsMatch() throws Exception {
-        OutputTextFactory factory = new OutputTextFactory();
         Map properties = new HashMap();
         properties.put("id", "aaa");
         ElementNode elementNode = createElementNode("span", properties);
@@ -57,16 +59,6 @@ public class OutputTextFactoryTest extends TeedaExtensionTestCase {
 
     public void testCreateProcessor() throws Exception {
         // ## Arrange ##
-        MockTaglibManager taglibManager = new MockTaglibManager();
-        TaglibElement jsfHtml = new TaglibElementImpl();
-        jsfHtml.setUri(ExtensionConstants.TEEDA_EXTENSION_URI);
-        TagElement tagElement = new TagElementImpl();
-        tagElement.setName("outputText");
-        tagElement.setTagClass(TOutputTextTag.class);
-        jsfHtml.addTagElement(tagElement);
-        taglibManager.addTaglibElement(jsfHtml);
-        OutputTextFactory factory = new OutputTextFactory();
-        factory.setTaglibManager(taglibManager);
         Map properties = new HashMap();
         properties.put("id", "aaa");
         ElementNode elementNode = createElementNode("span", properties);
@@ -80,6 +72,5 @@ public class OutputTextFactoryTest extends TeedaExtensionTestCase {
         assertNotNull("1", processor);
         assertEquals("2", TOutputTextTag.class, processor.getTagClass());
         assertEquals("3", "#{fooPage.aaa}", processor.getProperty("value"));
-
     }
 }

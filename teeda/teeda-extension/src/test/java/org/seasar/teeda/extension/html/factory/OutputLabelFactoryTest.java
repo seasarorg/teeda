@@ -32,15 +32,22 @@ import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooAction;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooPage;
 import org.seasar.teeda.extension.taglib.TOutputLabelTag;
-import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 
 /**
  * @author shot
  */
-public class OutputLabelFactoryTest extends TeedaExtensionTestCase {
+public class OutputLabelFactoryTest extends ElementProcessorFactoryTestCase {
+
+    protected AbstractElementProcessorFactory createFactory() {
+        return new OutputLabelFactory();
+    }
+
+    protected void registerTagElements() {
+        registerTagElement(ExtensionConstants.TEEDA_EXTENSION_URI,
+                "outputLabel", TOutputLabelTag.class);
+    }
 
     public void testIsMatch() throws Exception {
-        OutputLabelFactory factory = new OutputLabelFactory();
         Map props = new HashMap();
         props.put("id", "aaa");
         ElementNode elementNode = createElementNode("label", props);
@@ -49,14 +56,10 @@ public class OutputLabelFactoryTest extends TeedaExtensionTestCase {
 
     public void testCreateProcessor() throws Exception {
         // ## Arrange ##
-        registerTaglibElement(ExtensionConstants.TEEDA_EXTENSION_URI,
-                "outputLabel", TOutputLabelTag.class);
-        OutputLabelFactory factory = new OutputLabelFactory();
         NamingConventionImpl namingConvention = new NamingConventionImpl();
         namingConvention
                 .addRootPackageName("org.seasar.teeda.extension.html.factory.sub");
-        factory.setNamingConvention(namingConvention);
-        factory.setTaglibManager(getTaglibManager());
+        ((OutputLabelFactory) factory).setNamingConvention(namingConvention);
         Map properties = new HashMap();
         properties.put("id", "aaaLabel");
         ElementNode elementNode = createElementNode("label", properties);

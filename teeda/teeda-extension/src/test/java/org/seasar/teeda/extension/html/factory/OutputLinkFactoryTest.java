@@ -21,27 +21,30 @@ import java.util.Map;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.taglib.core.ParamTag;
 import org.seasar.teeda.extension.ExtensionConstants;
-import org.seasar.teeda.extension.config.taglib.element.TagElement;
-import org.seasar.teeda.extension.config.taglib.element.TaglibElement;
-import org.seasar.teeda.extension.config.taglib.element.impl.TagElementImpl;
-import org.seasar.teeda.extension.config.taglib.element.impl.TaglibElementImpl;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.ElementProcessor;
 import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooAction;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooPage;
-import org.seasar.teeda.extension.mock.MockTaglibManager;
 import org.seasar.teeda.extension.taglib.TOutputLinkTag;
-import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 
 /**
  * @author higa
  */
-public class OutputLinkFactoryTest extends TeedaExtensionTestCase {
+public class OutputLinkFactoryTest extends ElementProcessorFactoryTestCase {
+
+    protected AbstractElementProcessorFactory createFactory() {
+        return new OutputLinkFactory();
+    }
+
+    protected void registerTagElements() {
+        registerTagElement(ExtensionConstants.TEEDA_EXTENSION_URI,
+                "outputLink", TOutputLinkTag.class);
+        registerTagElement(JsfConstants.JSF_CORE_URI, "param", ParamTag.class);
+    }
 
     public void testIsMatch() throws Exception {
-        OutputLinkFactory factory = new OutputLinkFactory();
         Map properties = new HashMap();
         properties.put("id", "goHoge");
         properties.put("href", "hoge.html");
@@ -58,25 +61,6 @@ public class OutputLinkFactoryTest extends TeedaExtensionTestCase {
 
     public void testCreateFactory() throws Exception {
         // ## Arrange ##
-        MockTaglibManager taglibManager = new MockTaglibManager();
-        TaglibElement jsfHtml = new TaglibElementImpl();
-        jsfHtml.setUri(ExtensionConstants.TEEDA_EXTENSION_URI);
-        TagElement tagElement = new TagElementImpl();
-        tagElement.setName("outputLink");
-        tagElement.setTagClass(TOutputLinkTag.class);
-        jsfHtml.addTagElement(tagElement);
-        taglibManager.addTaglibElement(jsfHtml);
-
-        TaglibElement jsfCore = new TaglibElementImpl();
-        jsfCore.setUri(JsfConstants.JSF_CORE_URI);
-        TagElement paramTagElement = new TagElementImpl();
-        paramTagElement.setName("param");
-        paramTagElement.setTagClass(ParamTag.class);
-        jsfCore.addTagElement(paramTagElement);
-        taglibManager.addTaglibElement(jsfCore);
-
-        OutputLinkFactory factory = new OutputLinkFactory();
-        factory.setTaglibManager(taglibManager);
         Map properties = new HashMap();
         properties.put("id", "goHoge");
         properties.put("href", "hoge.html?aaa=111&bbb=222&fixed_ccc=1");

@@ -20,26 +20,28 @@ import java.util.Map;
 
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.taglib.html.MessagesTag;
-import org.seasar.teeda.extension.config.taglib.element.TagElement;
-import org.seasar.teeda.extension.config.taglib.element.TaglibElement;
-import org.seasar.teeda.extension.config.taglib.element.impl.TagElementImpl;
-import org.seasar.teeda.extension.config.taglib.element.impl.TaglibElementImpl;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.ElementProcessor;
 import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooAction;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooPage;
-import org.seasar.teeda.extension.mock.MockTaglibManager;
-import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 
 /**
  * @author higa
  */
-public class AllMessagesFactoryTest extends TeedaExtensionTestCase {
+public class AllMessagesFactoryTest extends ElementProcessorFactoryTestCase {
+
+    protected AbstractElementProcessorFactory createFactory() {
+        return new AllMessagesFactory();
+    }
+
+    protected void registerTagElements() {
+        registerTagElement(JsfConstants.JSF_HTML_URI, "messages",
+                MessagesTag.class);
+    }
 
     public void testIsMatch() throws Exception {
-        AllMessagesFactory factory = new AllMessagesFactory();
         Map properties = new HashMap();
         properties.put("id", "allMessages");
         ElementNode elementNode = createElementNode("span", properties);
@@ -52,16 +54,6 @@ public class AllMessagesFactoryTest extends TeedaExtensionTestCase {
 
     public void testCreateFactory() throws Exception {
         // ## Arrange ##
-        MockTaglibManager taglibManager = new MockTaglibManager();
-        TaglibElement jsfHtml = new TaglibElementImpl();
-        jsfHtml.setUri(JsfConstants.JSF_HTML_URI);
-        TagElement tagElement = new TagElementImpl();
-        tagElement.setName("messages");
-        tagElement.setTagClass(MessagesTag.class);
-        jsfHtml.addTagElement(tagElement);
-        taglibManager.addTaglibElement(jsfHtml);
-        AllMessagesFactory factory = new AllMessagesFactory();
-        factory.setTaglibManager(taglibManager);
         Map properties = new HashMap();
         properties.put("id", "allMessages");
         ElementNode elementNode = createElementNode("span", properties);

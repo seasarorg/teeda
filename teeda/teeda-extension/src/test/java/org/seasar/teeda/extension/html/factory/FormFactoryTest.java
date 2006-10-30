@@ -20,26 +20,27 @@ import java.util.Map;
 
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.taglib.html.FormTag;
-import org.seasar.teeda.extension.config.taglib.element.TagElement;
-import org.seasar.teeda.extension.config.taglib.element.TaglibElement;
-import org.seasar.teeda.extension.config.taglib.element.impl.TagElementImpl;
-import org.seasar.teeda.extension.config.taglib.element.impl.TaglibElementImpl;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.ElementProcessor;
 import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooAction;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooPage;
-import org.seasar.teeda.extension.mock.MockTaglibManager;
-import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 
 /**
  * @author higa
  */
-public class FormFactoryTest extends TeedaExtensionTestCase {
+public class FormFactoryTest extends ElementProcessorFactoryTestCase {
+
+    protected AbstractElementProcessorFactory createFactory() {
+        return new FormFactory();
+    }
+
+    protected void registerTagElements() {
+        registerTagElement(JsfConstants.JSF_HTML_URI, "form", FormTag.class);
+    }
 
     public void testIsMatch1() throws Exception {
-        FormFactory factory = new FormFactory();
         Map properties = new HashMap();
         properties.put("id", "hogeForm");
         ElementNode elementNode = createElementNode("form", properties);
@@ -54,7 +55,6 @@ public class FormFactoryTest extends TeedaExtensionTestCase {
     }
 
     public void testIsMatch2() throws Exception {
-        FormFactory factory = new FormFactory();
         Map properties = new HashMap();
         properties.put("id", "form");
         ElementNode elementNode = createElementNode("form", properties);
@@ -63,16 +63,6 @@ public class FormFactoryTest extends TeedaExtensionTestCase {
 
     public void testCreateFactory() throws Exception {
         // ## Arrange ##
-        MockTaglibManager taglibManager = new MockTaglibManager();
-        TaglibElement jsfHtml = new TaglibElementImpl();
-        jsfHtml.setUri(JsfConstants.JSF_HTML_URI);
-        TagElement tagElement = new TagElementImpl();
-        tagElement.setName("form");
-        tagElement.setTagClass(FormTag.class);
-        jsfHtml.addTagElement(tagElement);
-        taglibManager.addTaglibElement(jsfHtml);
-        FormFactory factory = new FormFactory();
-        factory.setTaglibManager(taglibManager);
         Map properties = new HashMap();
         properties.put("id", "fooForm");
         ElementNode elementNode = createElementNode("form", properties);

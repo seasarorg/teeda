@@ -25,24 +25,21 @@ import org.seasar.teeda.extension.html.ElementProcessor;
 import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooAction;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooPage;
-import org.seasar.teeda.extension.mock.MockTaglibManager;
 import org.seasar.teeda.extension.taglib.TSelectOneRadioTag;
-import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 
-public class SelectOneRadioFactoryTest extends TeedaExtensionTestCase {
+public class SelectOneRadioFactoryTest extends ElementProcessorFactoryTestCase {
 
-    private MockTaglibManager taglibManager;
+    protected AbstractElementProcessorFactory createFactory() {
+        return new SelectOneRadioFactory();
+    }
 
-    protected void setUp() throws Exception {
-        super.setUp();
-        registerTaglibElement(ExtensionConstants.TEEDA_EXTENSION_URI,
+    protected void registerTagElements() {
+        registerTagElement(ExtensionConstants.TEEDA_EXTENSION_URI,
                 "selectOneRadio", TSelectOneRadioTag.class);
-        taglibManager = getTaglibManager();
     }
 
     //<span id="hoge"><input type="radio" name="hoge"/></span>
     public void testIsMatch_ok1() throws Exception {
-        SelectOneRadioFactory selectFactory = new SelectOneRadioFactory();
         Map map = new HashMap();
         map.put("id", "hoge");
         ElementNode parent = createElementNode("span", map);
@@ -55,12 +52,11 @@ public class SelectOneRadioFactoryTest extends TeedaExtensionTestCase {
 
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
-        assertTrue(selectFactory.isMatch(parent, pageDesc, actionDesc));
+        assertTrue(factory.isMatch(parent, pageDesc, actionDesc));
     }
 
     //<span id="hoge"><input type="radio" name="hoge"/><input type="radio" name="hoge"/></span>
     public void testIsMatch_ok2() throws Exception {
-        SelectOneRadioFactory selectFactory = new SelectOneRadioFactory();
         Map map = new HashMap();
         map.put("id", "hoge");
         ElementNode parent = createElementNode("span", map);
@@ -81,12 +77,11 @@ public class SelectOneRadioFactoryTest extends TeedaExtensionTestCase {
 
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
-        assertTrue(selectFactory.isMatch(parent, pageDesc, actionDesc));
+        assertTrue(factory.isMatch(parent, pageDesc, actionDesc));
     }
 
     //<span><input type="radio" name="hoge"/></span>
     public void testIsMatch_ng1() throws Exception {
-        SelectOneRadioFactory selectFactory = new SelectOneRadioFactory();
         Map map = new HashMap();
         ElementNode parent = createElementNode("span", map);
 
@@ -98,12 +93,11 @@ public class SelectOneRadioFactoryTest extends TeedaExtensionTestCase {
 
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
-        assertFalse(selectFactory.isMatch(parent, pageDesc, actionDesc));
+        assertFalse(factory.isMatch(parent, pageDesc, actionDesc));
     }
 
     //<span id="hoge"><input type="radio" /></span>
     public void testIsMatch_ng2() throws Exception {
-        SelectOneRadioFactory selectFactory = new SelectOneRadioFactory();
         Map map = new HashMap();
         map.put("id", "hoge");
         ElementNode parent = createElementNode("span", map);
@@ -115,12 +109,11 @@ public class SelectOneRadioFactoryTest extends TeedaExtensionTestCase {
 
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
-        assertFalse(selectFactory.isMatch(parent, pageDesc, actionDesc));
+        assertFalse(factory.isMatch(parent, pageDesc, actionDesc));
     }
 
     //<span id="hoge"><input type="radio" name="foo"/></span>
     public void testIsMatch_ng3() throws Exception {
-        SelectOneRadioFactory selectFactory = new SelectOneRadioFactory();
         Map map = new HashMap();
         map.put("id", "hoge");
         ElementNode parent = createElementNode("span", map);
@@ -133,12 +126,11 @@ public class SelectOneRadioFactoryTest extends TeedaExtensionTestCase {
 
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
-        assertFalse(selectFactory.isMatch(parent, pageDesc, actionDesc));
+        assertFalse(factory.isMatch(parent, pageDesc, actionDesc));
     }
 
     //<span id="hoge"><input type="text" name="hoge"/></span>
     public void testIsMatch_ng4() throws Exception {
-        SelectOneRadioFactory selectFactory = new SelectOneRadioFactory();
         Map map = new HashMap();
         map.put("id", "hoge");
         ElementNode parent = createElementNode("span", map);
@@ -151,12 +143,11 @@ public class SelectOneRadioFactoryTest extends TeedaExtensionTestCase {
 
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
-        assertFalse(selectFactory.isMatch(parent, pageDesc, actionDesc));
+        assertFalse(factory.isMatch(parent, pageDesc, actionDesc));
     }
 
     //<span id="hoge"><input type="radio" name="hoge"/><span /></span>
     public void testIsMatch_ng5() throws Exception {
-        SelectOneRadioFactory selectFactory = new SelectOneRadioFactory();
         Map map = new HashMap();
         map.put("id", "hoge");
         ElementNode parent = createElementNode("span", map);
@@ -173,14 +164,13 @@ public class SelectOneRadioFactoryTest extends TeedaExtensionTestCase {
 
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
-        assertFalse(selectFactory.isMatch(parent, pageDesc, actionDesc));
+        assertFalse(factory.isMatch(parent, pageDesc, actionDesc));
     }
 
     /*
      * 子要素はtext node以外であること
      */
     public void testIsMatch_ng6() throws Exception {
-        SelectOneRadioFactory selectFactory = new SelectOneRadioFactory();
         Map map = new HashMap();
         map.put("id", "hoge");
         ElementNode parent = createElementNode("span", map);
@@ -190,13 +180,11 @@ public class SelectOneRadioFactoryTest extends TeedaExtensionTestCase {
 
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
-        assertFalse(selectFactory.isMatch(parent, pageDesc, actionDesc));
+        assertFalse(factory.isMatch(parent, pageDesc, actionDesc));
     }
 
     public void testCreateProcessor() throws Exception {
         // ## Arrange ##
-        SelectOneRadioFactory factory = new SelectOneRadioFactory();
-        factory.setTaglibManager(taglibManager);
         Map properties = new HashMap();
         properties.put("id", "hoge");
         ElementNode elementNode = createElementNode("span", properties);
@@ -223,5 +211,4 @@ public class SelectOneRadioFactoryTest extends TeedaExtensionTestCase {
         assertEquals("4", "#{fooPage.hogeItems}", parentProcessor
                 .getProperty("items"));
     }
-
 }

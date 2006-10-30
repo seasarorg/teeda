@@ -19,25 +19,27 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.seasar.teeda.extension.ExtensionConstants;
-import org.seasar.teeda.extension.config.taglib.element.TagElement;
-import org.seasar.teeda.extension.config.taglib.element.TaglibElement;
-import org.seasar.teeda.extension.config.taglib.element.impl.TagElementImpl;
-import org.seasar.teeda.extension.config.taglib.element.impl.TaglibElementImpl;
 import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.ElementProcessor;
 import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooPage;
-import org.seasar.teeda.extension.mock.MockTaglibManager;
 import org.seasar.teeda.extension.taglib.TForEachTag;
-import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 
 /**
  * @author higa
  */
-public class ForEachFactoryTest extends TeedaExtensionTestCase {
+public class ForEachFactoryTest extends ElementProcessorFactoryTestCase {
+
+    protected AbstractElementProcessorFactory createFactory() {
+        return new ForEachFactory();
+    }
+
+    protected void registerTagElements() {
+        registerTagElement(ExtensionConstants.TEEDA_EXTENSION_URI, "forEach",
+                TForEachTag.class);
+    }
 
     public void testIsMatch() throws Exception {
-        ForEachFactory factory = new ForEachFactory();
         Map properties = new HashMap();
         properties.put("id", "hogeItems");
         ElementNode elementNode = createElementNode("div", properties);
@@ -52,16 +54,6 @@ public class ForEachFactoryTest extends TeedaExtensionTestCase {
 
     public void testCreateFactory() throws Exception {
         // ## Arrange ##
-        MockTaglibManager taglibManager = new MockTaglibManager();
-        TaglibElement taglibElem = new TaglibElementImpl();
-        taglibElem.setUri(ExtensionConstants.TEEDA_EXTENSION_URI);
-        TagElement tagElement = new TagElementImpl();
-        tagElement.setName("forEach");
-        tagElement.setTagClass(TForEachTag.class);
-        taglibElem.addTagElement(tagElement);
-        taglibManager.addTaglibElement(taglibElem);
-        ForEachFactory factory = new ForEachFactory();
-        factory.setTaglibManager(taglibManager);
         Map properties = new HashMap();
         properties.put("id", "hogeItems");
         ElementNode elementNode = createElementNode("div", properties);

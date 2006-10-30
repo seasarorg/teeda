@@ -26,27 +26,25 @@ import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooAction;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooPage;
 import org.seasar.teeda.extension.html.impl.ElementNodeImpl;
-import org.seasar.teeda.extension.mock.MockTaglibManager;
 import org.seasar.teeda.extension.taglib.TSelectManyCheckboxTag;
-import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 
 /**
  * @author shot
  * @author manhole
  */
-public class SelectManyCheckboxFactoryTest extends TeedaExtensionTestCase {
+public class SelectManyCheckboxFactoryTest extends
+        ElementProcessorFactoryTestCase {
 
-    private MockTaglibManager taglibManager;
+    protected AbstractElementProcessorFactory createFactory() {
+        return new SelectManyCheckboxFactory();
+    }
 
-    protected void setUp() throws Exception {
-        super.setUp();
-        registerTaglibElement(ExtensionConstants.TEEDA_EXTENSION_URI,
+    protected void registerTagElements() {
+        registerTagElement(ExtensionConstants.TEEDA_EXTENSION_URI,
                 "selectManyCheckbox", TSelectManyCheckboxTag.class);
-        taglibManager = getTaglibManager();
     }
 
     public void testIsMatch_ok1() throws Exception {
-        SelectManyCheckboxFactory selectFactory = new SelectManyCheckboxFactory();
         Map map = new HashMap();
         map.put("id", "hoge");
         ElementNodeImpl parent = new ElementNodeImpl(null, null, "span", map);
@@ -59,11 +57,10 @@ public class SelectManyCheckboxFactoryTest extends TeedaExtensionTestCase {
 
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
-        assertTrue(selectFactory.isMatch(parent, pageDesc, actionDesc));
+        assertTrue(factory.isMatch(parent, pageDesc, actionDesc));
     }
 
     public void testIsMatch_ok2() throws Exception {
-        SelectManyCheckboxFactory selectFactory = new SelectManyCheckboxFactory();
         Map map = new HashMap();
         map.put("id", "hoge");
         ElementNodeImpl parent = new ElementNodeImpl(null, null, "span", map);
@@ -84,14 +81,13 @@ public class SelectManyCheckboxFactoryTest extends TeedaExtensionTestCase {
 
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
-        assertTrue(selectFactory.isMatch(parent, pageDesc, actionDesc));
+        assertTrue(factory.isMatch(parent, pageDesc, actionDesc));
     }
 
     /*
      * 親spanにidが無い
      */
     public void testIsMatch_ng1() throws Exception {
-        SelectManyCheckboxFactory selectFactory = new SelectManyCheckboxFactory();
         Map map = new HashMap();
         ElementNodeImpl parent = new ElementNodeImpl(null, null, "span", map);
 
@@ -103,14 +99,13 @@ public class SelectManyCheckboxFactoryTest extends TeedaExtensionTestCase {
 
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
-        assertFalse(selectFactory.isMatch(parent, pageDesc, actionDesc));
+        assertFalse(factory.isMatch(parent, pageDesc, actionDesc));
     }
 
     /*
      * 子inputにnameが無い
      */
     public void testIsMatch_ng2() throws Exception {
-        SelectManyCheckboxFactory selectFactory = new SelectManyCheckboxFactory();
         Map map = new HashMap();
         map.put("id", "hoge");
         ElementNodeImpl parent = new ElementNodeImpl(null, null, "span", map);
@@ -122,14 +117,13 @@ public class SelectManyCheckboxFactoryTest extends TeedaExtensionTestCase {
 
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
-        assertFalse(selectFactory.isMatch(parent, pageDesc, actionDesc));
+        assertFalse(factory.isMatch(parent, pageDesc, actionDesc));
     }
 
     /*
      * 親のidと子のnameは一致していること
      */
     public void testIsMatch_ng3() throws Exception {
-        SelectManyCheckboxFactory selectFactory = new SelectManyCheckboxFactory();
         Map map = new HashMap();
         map.put("id", "hoge");
         ElementNodeImpl parent = new ElementNodeImpl(null, null, "span", map);
@@ -142,14 +136,13 @@ public class SelectManyCheckboxFactoryTest extends TeedaExtensionTestCase {
 
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
-        assertFalse(selectFactory.isMatch(parent, pageDesc, actionDesc));
+        assertFalse(factory.isMatch(parent, pageDesc, actionDesc));
     }
 
     /*
      * 子のtypeはcheckboxであること
      */
     public void testIsMatch_ng4() throws Exception {
-        SelectManyCheckboxFactory selectFactory = new SelectManyCheckboxFactory();
         Map map = new HashMap();
         map.put("id", "hoge");
         ElementNodeImpl parent = new ElementNodeImpl(null, null, "span", map);
@@ -162,7 +155,7 @@ public class SelectManyCheckboxFactoryTest extends TeedaExtensionTestCase {
 
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
-        assertFalse(selectFactory.isMatch(parent, pageDesc, actionDesc));
+        assertFalse(factory.isMatch(parent, pageDesc, actionDesc));
     }
 
     /*
@@ -170,7 +163,6 @@ public class SelectManyCheckboxFactoryTest extends TeedaExtensionTestCase {
      * (name属性は親のidと同じ値であること)
      */
     public void testIsMatch_ng5() throws Exception {
-        SelectManyCheckboxFactory selectFactory = new SelectManyCheckboxFactory();
         Map map = new HashMap();
         map.put("id", "hoge");
         ElementNodeImpl parent = new ElementNodeImpl(null, null, "span", map);
@@ -187,28 +179,26 @@ public class SelectManyCheckboxFactoryTest extends TeedaExtensionTestCase {
 
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
-        assertFalse(selectFactory.isMatch(parent, pageDesc, actionDesc));
+        assertFalse(factory.isMatch(parent, pageDesc, actionDesc));
     }
 
     /*
      * 子要素があること
      */
     public void testIsMatch_ng6() throws Exception {
-        SelectManyCheckboxFactory selectFactory = new SelectManyCheckboxFactory();
         Map map = new HashMap();
         map.put("id", "hoge");
         ElementNodeImpl parent = new ElementNodeImpl(null, null, "span", map);
 
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
-        assertFalse(selectFactory.isMatch(parent, pageDesc, actionDesc));
+        assertFalse(factory.isMatch(parent, pageDesc, actionDesc));
     }
 
     /*
      * 子要素はtext node以外であること
      */
     public void testIsMatch_ng7() throws Exception {
-        SelectManyCheckboxFactory selectFactory = new SelectManyCheckboxFactory();
         Map map = new HashMap();
         map.put("id", "hoge");
         ElementNodeImpl parent = new ElementNodeImpl(null, null, "span", map);
@@ -217,13 +207,11 @@ public class SelectManyCheckboxFactoryTest extends TeedaExtensionTestCase {
 
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
-        assertFalse(selectFactory.isMatch(parent, pageDesc, actionDesc));
+        assertFalse(factory.isMatch(parent, pageDesc, actionDesc));
     }
 
     public void testCreateProcessor() throws Exception {
         // ## Arrange ##
-        SelectManyCheckboxFactory factory = new SelectManyCheckboxFactory();
-        factory.setTaglibManager(taglibManager);
         Map properties = new HashMap();
         properties.put("id", "hoge");
         ElementNode elementNode = new ElementNodeImpl(null, null, "span",
@@ -252,5 +240,4 @@ public class SelectManyCheckboxFactoryTest extends TeedaExtensionTestCase {
         assertEquals("4", "#{fooPage.hogeItems}", parentProcessor
                 .getProperty("items"));
     }
-
 }

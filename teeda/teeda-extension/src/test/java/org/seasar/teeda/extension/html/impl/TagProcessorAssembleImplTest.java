@@ -232,8 +232,8 @@ public class TagProcessorAssembleImplTest extends TeedaExtensionTestCase {
         HtmlDesc htmlDesc = cache.createHtmlDesc(path);
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
-        registerTaglibElement(ExtensionConstants.TEEDA_EXTENSION_URI,
-                "inputText", TInputTextTag.class);
+        registerTagElement(ExtensionConstants.TEEDA_EXTENSION_URI, "inputText",
+                TInputTextTag.class);
         MockTaglibManager taglibManager = getTaglibManager();
         InputTextFactory factory = new InputTextFactory();
         factory.setTaglibManager(taglibManager);
@@ -261,7 +261,7 @@ public class TagProcessorAssembleImplTest extends TeedaExtensionTestCase {
         HtmlDesc htmlDesc = cache.createHtmlDesc(path);
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
-        registerTaglibElement(JsfConstants.JSF_HTML_URI, "commandButton",
+        registerTagElement(JsfConstants.JSF_HTML_URI, "commandButton",
                 CommandButtonTag.class);
         MockTaglibManager taglibManager = getTaglibManager();
         CommandButtonFactory factory = new CommandButtonFactory();
@@ -285,7 +285,7 @@ public class TagProcessorAssembleImplTest extends TeedaExtensionTestCase {
         HtmlDesc htmlDesc = cache.createHtmlDesc(path);
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
-        registerTaglibElement(ExtensionConstants.TEEDA_EXTENSION_URI,
+        registerTagElement(ExtensionConstants.TEEDA_EXTENSION_URI,
                 "outputText", TOutputTextTag.class);
         MockTaglibManager taglibManager = getTaglibManager();
         OutputTextFactory factory = new OutputTextFactory();
@@ -311,7 +311,7 @@ public class TagProcessorAssembleImplTest extends TeedaExtensionTestCase {
         HtmlDesc htmlDesc = cache.createHtmlDesc(path);
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
-        registerTaglibElement(ExtensionConstants.TEEDA_EXTENSION_URI,
+        registerTagElement(ExtensionConstants.TEEDA_EXTENSION_URI,
                 "selectOneMenu", TSelectOneMenuTag.class);
         MockTaglibManager taglibManager = getTaglibManager();
         SelectOneMenuFactory factory = new SelectOneMenuFactory();
@@ -338,7 +338,7 @@ public class TagProcessorAssembleImplTest extends TeedaExtensionTestCase {
         HtmlDesc htmlDesc = cache.createHtmlDesc(path);
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
-        registerTaglibElement(ExtensionConstants.TEEDA_EXTENSION_URI,
+        registerTagElement(ExtensionConstants.TEEDA_EXTENSION_URI,
                 "selectOneRadio", TSelectOneRadioTag.class);
         MockTaglibManager taglibManager = getTaglibManager();
         SelectOneRadioFactory factory = new SelectOneRadioFactory();
@@ -365,7 +365,7 @@ public class TagProcessorAssembleImplTest extends TeedaExtensionTestCase {
         HtmlDesc htmlDesc = cache.createHtmlDesc(path);
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
-        registerTaglibElement(ExtensionConstants.TEEDA_EXTENSION_URI,
+        registerTagElement(ExtensionConstants.TEEDA_EXTENSION_URI,
                 "selectManyCheckbox", TSelectManyCheckboxTag.class);
         MockTaglibManager taglibManager = getTaglibManager();
         SelectManyCheckboxFactory factory = new SelectManyCheckboxFactory();
@@ -392,9 +392,9 @@ public class TagProcessorAssembleImplTest extends TeedaExtensionTestCase {
         HtmlDesc htmlDesc = cache.createHtmlDesc(path);
         PageDesc pageDesc = createPageDesc(BarPage.class, "barPage");
         ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
-        registerTaglibElement(ExtensionConstants.TEEDA_EXTENSION_URI,
-                "condition", TConditionTag.class);
-        registerTaglibElement(ExtensionConstants.TEEDA_EXTENSION_URI,
+        registerTagElement(ExtensionConstants.TEEDA_EXTENSION_URI, "condition",
+                TConditionTag.class);
+        registerTagElement(ExtensionConstants.TEEDA_EXTENSION_URI,
                 "outputText", TOutputTextTag.class);
         MockTaglibManager taglibManager = getTaglibManager();
         ConditionFactory factory = new ConditionFactory();
