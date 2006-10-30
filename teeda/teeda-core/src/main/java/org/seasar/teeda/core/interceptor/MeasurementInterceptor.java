@@ -39,7 +39,7 @@ public class MeasurementInterceptor extends AbstractInterceptor {
     public Object invoke(MethodInvocation invocation) throws Throwable {
         long start = System.currentTimeMillis();
         String startDate = formatter.format(new Date());
-        final Class clazz = invocation.getThis().getClass();
+        final Class clazz = getTargetClass(invocation);
         logger.debug("[measurement] start date = " + startDate + "("
                 + clazz.getName() + ")");
         try {

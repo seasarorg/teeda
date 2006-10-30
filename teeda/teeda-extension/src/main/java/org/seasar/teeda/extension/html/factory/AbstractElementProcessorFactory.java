@@ -138,6 +138,7 @@ public abstract class AbstractElementProcessorFactory implements
             String s = base + StringUtil.capitalize(JsfConstants.CLASS_ATTR);
             if (pageDesc.hasDynamicProperty(s)) {
                 properties.put(name, getBindingExpression(pageName, s));
+                return;
             }
         }
         String propName = base + StringUtil.capitalize(name);
