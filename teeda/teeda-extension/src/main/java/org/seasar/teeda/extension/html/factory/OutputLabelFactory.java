@@ -57,6 +57,9 @@ public class OutputLabelFactory extends AbstractElementProcessorFactory {
         super
                 .customizeProperties(properties, elementNode, pageDesc,
                         actionDesc);
+        if (pageDesc == null) {
+            return;
+        }
         String pageName = pageDesc.getPageName();
         String propertiesName = LabelUtil.getPropertiesName(namingConvention,
                 pageName);
