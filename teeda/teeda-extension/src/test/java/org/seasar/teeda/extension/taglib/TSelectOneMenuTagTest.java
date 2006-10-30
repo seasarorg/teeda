@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -21,16 +21,23 @@ import javax.faces.el.ReferenceSyntaxException;
 import javax.faces.el.ValueBinding;
 import javax.faces.internal.ValidatorResource;
 
+import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
 import org.seasar.teeda.core.mock.MockApplicationImpl;
 import org.seasar.teeda.core.mock.MockValueBinding;
 import org.seasar.teeda.core.unit.TeedaTestCase;
 import org.seasar.teeda.extension.component.TUISelectItems;
+import org.seasar.teeda.extension.util.NullLabelHelperImpl;
 import org.seasar.teeda.extension.validator.TRequiredValidator;
 
 /**
  * @author yone
  */
 public class TSelectOneMenuTagTest extends TeedaTestCase {
+
+    protected void setUp() throws Exception {
+        NullLabelHelperImpl helper = new NullLabelHelperImpl();
+        SingletonS2ContainerFactory.getContainer().register(helper);
+    }
 
     public void testSetProperties_required() throws Exception {
         // # Arrange #

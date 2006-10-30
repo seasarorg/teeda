@@ -59,7 +59,8 @@ public class TeedaInitializer {
         this.servletContext = servletContext;
     }
 
-    protected void initializeFacesConfigOptions(ServletContext servletContext) {
+    protected void initializeFacesConfigOptions(
+            final ServletContext servletContext) {
         FacesConfigOptions.setConfigFiles(servletContext
                 .getInitParameter(FacesServlet.CONFIG_FILES_ATTR));
         String savingMethod = servletContext
@@ -84,7 +85,7 @@ public class TeedaInitializer {
     }
 
     protected void initializeFacesConfigCustomOptions(
-            ServletContext servletContext) {
+            final ServletContext servletContext) {
         String javaScriptNotPermittedPath = servletContext
                 .getInitParameter(JsfConstants.JAVASCRIPT_NOT_PERMITTED_PATH);
         if (javaScriptNotPermittedPath != null) {
@@ -99,7 +100,7 @@ public class TeedaInitializer {
         }
     }
 
-    protected void buildWebAppConfig(ServletContext servletContext) {
+    protected void buildWebAppConfig(final ServletContext servletContext) {
         WebappConfigBuilder webAppConfigBuilder = (WebappConfigBuilder) DIContainerUtil
                 .getComponent(WebappConfigBuilder.class);
         InputStream is = null;
