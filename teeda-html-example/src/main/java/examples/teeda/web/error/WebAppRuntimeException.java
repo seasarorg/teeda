@@ -8,6 +8,9 @@ package examples.teeda.web.error;
  */
 public class WebAppRuntimeException extends RuntimeException {
 
+	public WebAppRuntimeException() {
+	}
+	
 	public WebAppRuntimeException(String message) {
 		super(message);
 	}
