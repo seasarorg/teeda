@@ -21,7 +21,6 @@ import java.util.Iterator;
 import javax.faces.FacesException;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
-import javax.faces.component.html.HtmlInputText;
 import javax.faces.component.html.HtmlMessage;
 import javax.faces.context.FacesContext;
 
@@ -61,29 +60,11 @@ public class HtmlMessageRenderer extends AbstractHtmlMessagesRenderer {
         if (!it.hasNext()) {
             return;
         }
-        colorForComponent(context, forComponent);
 
         FacesMessage facesMassage = (FacesMessage) it.next();
         String idForRender = getIdForRenderOrNull(context, htmlMessage);
         renderOneMessage(context, htmlMessage, facesMassage, idForRender,
                 htmlMessage.getAttributes());
-    }
-
-    protected void colorForComponent(FacesContext context,
-            UIComponent forComponent) {
-        if (forComponent instanceof HtmlInputText) {
-            HtmlInputText inputText = (HtmlInputText) forComponent;
-            String style = inputText.getStyle();
-            if (style != null) {
-                if (!style.endsWith(";")) {
-                    style += ";";
-                }
-                style += "background-color: red;";
-            } else {
-                style = "background-color: red;";
-            }
-            inputText.setStyle(style);
-        }
     }
 
     private String getIdForRenderOrNull(FacesContext context,
