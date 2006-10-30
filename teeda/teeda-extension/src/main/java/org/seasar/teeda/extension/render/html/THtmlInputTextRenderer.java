@@ -30,18 +30,21 @@ public class THtmlInputTextRenderer extends HtmlInputTextRenderer {
 
     public static final String COMPONENT_FAMILY = HtmlInputText.COMPONENT_FAMILY;
 
-    public static final String RENDERER_TYPE = "org.seasar.teeda.extension.HtmlInputText";
-        
+    public static final String RENDERER_TYPE = THtmlInputText.DEFAULT_RENDERER_TYPE;
+
     protected void colorErrorComponent(FacesContext context, UIInput input) {
         THtmlInputText inputText = (THtmlInputText) input;
         String styleClass = inputText.getStyleClass();
         final String errorCss = inputText.getErrorStyleClass();
-        if(StringUtil.isEmpty(errorCss)) {
+        if (StringUtil.isEmpty(errorCss)) {
+            return;
+        }
+        if (styleClass != null && styleClass.indexOf(errorCss) >= 0) {
             return;
         }
         if (styleClass != null) {
             styleClass = styleClass + " " + errorCss;
-        } else  {
+        } else {
             styleClass = errorCss;
         }
         inputText.setStyleClass(styleClass);
