@@ -16,15 +16,17 @@
 package org.seasar.teeda.core.render.html;
 
 import java.io.IOException;
+import java.util.Map;
 
 import javax.faces.component.EditableValueHolder;
 import javax.faces.component.UIComponent;
-import javax.faces.component.UIInput;
 import javax.faces.component.UIOutput;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.convert.ConverterException;
 
+import org.seasar.teeda.core.util.PostbackUtil;
 import org.seasar.teeda.core.util.RendererUtil;
 import org.seasar.teeda.core.util.ValueHolderUtil;
 
@@ -43,18 +45,14 @@ public class HtmlSelectOneListboxRenderer extends HtmlSelectManyListboxRenderer 
 
     protected String[] getValuesForRender(FacesContext context,
             UIComponent component) {
-        if (component instanceof EditableValueHolder) {
-            EditableValueHolder input = (EditableValueHolder) component;
-            final Object submittedValue = input.getSubmittedValue();
-            if (submittedValue != null) {
-                return new String[] { submittedValue.toString() };
-            } else {
-                return null;
-            }
+        final ExternalContext externalContext = context.getExternalContext();
+        final Map requestMap = externalContext.getRequestMap();
+        if(PostbackUtil.isPostback(requestMap)) {
+            String value = ValueHolderUtil.getValueForRender(context, component);
+            return new String[] { value };
+        } else {
+            return null;
         }
-        String value = ValueHolderUtil.getValueForRender(context, component);
-        // value is not null
-        return new String[] { value };
     }
 
     public void decode(FacesContext context, UIComponent component) {

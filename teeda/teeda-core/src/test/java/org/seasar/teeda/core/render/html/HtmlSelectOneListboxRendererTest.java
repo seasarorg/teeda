@@ -27,6 +27,7 @@ import javax.faces.render.RendererTest;
 import org.custommonkey.xmlunit.Diff;
 import org.seasar.framework.mock.servlet.MockHttpServletRequest;
 import org.seasar.teeda.core.mock.MockFacesContext;
+import org.seasar.teeda.core.util.PostbackUtil;
 
 /**
  * @author manhole
@@ -191,10 +192,12 @@ public class HtmlSelectOneListboxRendererTest extends RendererTest {
     }
 
     //https://www.seasar.org/issues/TEEDA-153
-    public void testEncode_Selected() throws Exception {
+    public void testEncode_SelectedIfPostbacked() throws Exception {
         // ## Arrange ##
-        //htmlSelectOneListbox.setValue("v2");
-        htmlSelectOneListbox.setSubmittedValue("v2");
+        PostbackUtil.setPostback(getFacesContext().getExternalContext()
+                .getRequestMap(), true);
+        htmlSelectOneListbox.setValue("v2");
+        //htmlSelectOneListbox.setSubmittedValue("v2");
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("v1");
@@ -215,6 +218,34 @@ public class HtmlSelectOneListboxRendererTest extends RendererTest {
         assertEquals("<select name=\"_id0\" size=\"2\">"
                 + "<option value=\"v1\">l1</option>"
                 + "<option value=\"v2\" selected=\"selected\">l2</option>"
+                + "</select>", getResponseText());
+    }
+
+    public void testEncode_SelectedIfInitialized() throws Exception {
+        // ## Arrange ##
+        PostbackUtil.setPostback(getFacesContext().getExternalContext()
+                .getRequestMap(), false);
+        htmlSelectOneListbox.setValue("v2");
+        {
+            UISelectItem selectItem = new UISelectItem();
+            selectItem.setItemValue("v1");
+            selectItem.setItemLabel("l1");
+            htmlSelectOneListbox.getChildren().add(selectItem);
+        }
+        {
+            UISelectItem selectItem = new UISelectItem();
+            selectItem.setItemValue("v2");
+            selectItem.setItemLabel("l2");
+            htmlSelectOneListbox.getChildren().add(selectItem);
+        }
+
+        // ## Act ##
+        encodeByRenderer(renderer, htmlSelectOneListbox);
+
+        // ## Assert ##
+        assertEquals("<select name=\"_id0\" size=\"2\">"
+                + "<option value=\"v1\">l1</option>"
+                + "<option value=\"v2\">l2</option>"
                 + "</select>", getResponseText());
     }
 
@@ -345,6 +376,8 @@ public class HtmlSelectOneListboxRendererTest extends RendererTest {
 
     //https://www.seasar.org/issues/TEEDA-153
     public void testEncode_WithAllAttributes() throws Exception {
+        PostbackUtil.setPostback(getFacesContext().getExternalContext()
+                .getRequestMap(), true);
         htmlSelectOneListbox.setAccesskey("a");
         htmlSelectOneListbox.setDir("b");
         htmlSelectOneListbox.setDisabled(true);
