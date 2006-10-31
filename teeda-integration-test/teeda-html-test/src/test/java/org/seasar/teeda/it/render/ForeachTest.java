@@ -29,7 +29,7 @@ public class ForeachTest extends TeedaWebTestCase {
         return setUpTest(ForeachTest.class);
     }
 
-    public void testRender() throws Exception {
+    public void testInputArray() throws Exception {
         // ## Arrange ##
         TeedaWebTester tester = new TeedaWebTester();
         tester.getTestContext().setBaseUrl(getBaseUrl());
@@ -109,6 +109,63 @@ public class ForeachTest extends TeedaWebTestCase {
         tester.assertTextFieldEquals("fooItems-bbb:0:bbb", "bb1");
         tester.assertTextFieldEquals("fooItems-bbb:1:bbb", "bb2");
         tester.assertTextFieldEquals("fooItems-bbb:2:bbb", "bb3");
+    }
+
+    /*
+     * https://www.seasar.org/issues/browse/TEEDA-149
+     * 
+     * ForEach内のレコードへ空白を入力できること。
+     */
+    public void testSubmitSpace() throws Exception {
+        // ## Arrange ##
+        TeedaWebTester tester = new TeedaWebTester();
+        tester.getTestContext().setBaseUrl(getBaseUrl());
+
+        // ## Act ##
+        // ## Assert ##
+        tester.beginAt("view/foreach/foreachArray.html");
+        tester.dumpHtml();
+        tester.assertTableEquals("foreachTable",
+            new String[][] { { "1", "aa1", "bb1" }, { "2", "aa2", "bb2" },
+                { "3", "aa3", "bb3" } });
+        tester.setTextField("fooItems:0:aaa", "");
+        tester.setTextField("fooItems:1:aaa", "a");
+        tester.setTextField("fooItems:2:bbb", "");
+        tester.clickButton("doSomething");
+
+        // --------
+
+        tester.dumpHtml();
+        // 空白を含め、入力した値が反映されていること
+        tester.assertTableEquals("foreachTable", new String[][] {
+            { "1", "", "bb1" }, { "2", "a", "bb2" }, { "3", "aa3", "" } });
+    }
+
+    /*
+     * https://www.seasar.org/issues/browse/TEEDA-150
+     * 
+     * ForEachのサイズが0に変更されたら、0サイズでレンダされること。
+     */
+    public void testSizeChange() throws Exception {
+        // ## Arrange ##
+        TeedaWebTester tester = new TeedaWebTester();
+        tester.getTestContext().setBaseUrl(getBaseUrl());
+
+        // ## Act ##
+        // ## Assert ##
+        tester.beginAt("view/foreach/foreachSize.html");
+        tester.dumpHtml();
+        tester.assertTableEquals("foreachTable", new String[][] {
+            { "0", "aa0", "0" }, { "1", "aa1", "10" }, { "2", "aa2", "20" } });
+        tester.assertTextFieldEquals("aaaForm:itemSize", "3");
+        tester.setTextField("aaaForm:itemSize", "0");
+        tester.clickButton("doChangeSize");
+
+        // --------
+
+        tester.dumpHtml();
+        tester.assertTextFieldEquals("aaaForm:itemSize", "0");
+        tester.assertTableEquals("foreachTable", new String[][] {});
     }
 
 }

@@ -22,6 +22,7 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.component.NamingContainer;
@@ -62,26 +63,26 @@ public class TForEach extends UIComponentBase implements NamingContainer {
 
     private int rowSize;
 
-    private ComponentStates componentStates = new ComponentStates();
+    private final ComponentStates componentStates = new ComponentStates();
 
     private String pageName;
 
     private String itemsName;
 
-    private static Logger logger = Logger.getLogger(TForEach.class);
+    private static final Logger logger = Logger.getLogger(TForEach.class);
 
     public TForEach() {
         setRendererType(DEFAULT_RENDERER_TYPE);
     }
 
-    public void setId(String id) {
+    public void setId(final String id) {
         super.setId(id);
         NamingContainerUtil.refreshDescendantComponentClientId(this);
     }
 
-    public String getClientId(FacesContext context) {
-        String clientId = super.getClientId(context);
-        int rowIndex = getRowIndex();
+    public String getClientId(final FacesContext context) {
+        final String clientId = super.getClientId(context);
+        final int rowIndex = getRowIndex();
         if (rowIndex == INITIAL_ROW_INDEX) {
             return clientId;
         }
@@ -92,7 +93,7 @@ public class TForEach extends UIComponentBase implements NamingContainer {
         return rowIndex;
     }
 
-    public void setRowIndex(int rowIndex) {
+    public void setRowIndex(final int rowIndex) {
         this.rowIndex = rowIndex;
     }
 
@@ -100,8 +101,8 @@ public class TForEach extends UIComponentBase implements NamingContainer {
         return itemsName;
     }
 
-    public void setItemsName(String itemsName) {
-        if (itemsName != null
+    public void setItemsName(final String itemsName) {
+        if ((itemsName != null)
                 && !itemsName.endsWith(ExtensionConstants.ITEMS_SUFFIX)) {
             throw new IllegalArgumentException(itemsName);
         }
@@ -117,7 +118,7 @@ public class TForEach extends UIComponentBase implements NamingContainer {
     }
 
     public String getIndexName() {
-        String itemName = getItemName();
+        final String itemName = getItemName();
         if (itemName == null) {
             return null;
         }
@@ -128,7 +129,7 @@ public class TForEach extends UIComponentBase implements NamingContainer {
         return pageName;
     }
 
-    public void setPageName(String pageName) {
+    public void setPageName(final String pageName) {
         this.pageName = pageName;
     }
 
@@ -139,17 +140,17 @@ public class TForEach extends UIComponentBase implements NamingContainer {
         return COMPONENT_FAMILY;
     }
 
-    public void processValidators(FacesContext context) {
+    public void processValidators(final FacesContext context) {
         if (context == null) {
             throw new NullPointerException("context");
         }
         if (!isRendered()) {
             return;
         }
-        Object page = getPage(context);
-        BeanDesc beanDesc = BeanDescFactory.getBeanDesc(page.getClass());
+        final Object page = getPage(context);
+        final BeanDesc beanDesc = BeanDescFactory.getBeanDesc(page.getClass());
         if (beanDesc.hasPropertyDesc(getItemName())) {
-            PropertyDesc itemPd = beanDesc.getPropertyDesc(getItemName());
+            final PropertyDesc itemPd = beanDesc.getPropertyDesc(getItemName());
             final Class itemType = itemPd.getPropertyType();
             final Object item = createNewInstance(context, itemType);
             itemPd.setValue(page, item);
@@ -161,7 +162,8 @@ public class TForEach extends UIComponentBase implements NamingContainer {
         }
     }
 
-    protected void processEachRowValidation(final FacesContext context, int row) {
+    protected void processEachRowValidation(final FacesContext context,
+            final int row) {
         final String parentClientId = getClientId(context);
         super.processValidators(context);
         if (FacesMessageUtil.hasMessages(context)) {
@@ -172,16 +174,17 @@ public class TForEach extends UIComponentBase implements NamingContainer {
     protected void modifyValidationErrorMessageIfNeed(
             final FacesContext context, final String parentClientId,
             final int row) {
-        for (Iterator itr = context.getClientIdsWithMessages(); itr.hasNext();) {
-            String clientId = (String) itr.next();
+        for (final Iterator itr = context.getClientIdsWithMessages(); itr
+                .hasNext();) {
+            final String clientId = (String) itr.next();
             if (!clientId.startsWith(parentClientId)) {
                 continue;
             }
-            for (Iterator messages = context.getMessages(clientId); messages
+            for (final Iterator messages = context.getMessages(clientId); messages
                     .hasNext();) {
-                FacesMessage fm = (FacesMessage) messages.next();
-                String summary = fm.getSummary();
-                String detail = fm.getDetail();
+                final FacesMessage fm = (FacesMessage) messages.next();
+                final String summary = fm.getSummary();
+                final String detail = fm.getDetail();
                 if (summary != null) {
                     fm.setSummary(summary + "(line : " + (row + 1) + ")");
                 }
@@ -194,7 +197,8 @@ public class TForEach extends UIComponentBase implements NamingContainer {
     }
 
     //fix for https://www.seasar.org/issues/browse/TEEDA-146
-    protected Object createNewInstance(FacesContext context, Class itemType) {
+    protected Object createNewInstance(final FacesContext context,
+            Class itemType) {
         AssertionUtil.assertNotNull("itemType", itemType);
         Object o = null;
         if (itemType.isPrimitive()) {
@@ -225,7 +229,7 @@ public class TForEach extends UIComponentBase implements NamingContainer {
         }
     }
 
-    public void processUpdates(FacesContext context) {
+    public void processUpdates(final FacesContext context) {
         if (context == null) {
             throw new NullPointerException("context");
         }
@@ -277,10 +281,20 @@ public class TForEach extends UIComponentBase implements NamingContainer {
             final BeanDesc itemBeanDesc = BeanDescFactory
                     .getBeanDesc(itemClass);
             for (int i = 0; i < rowSize; ++i) {
+                final Object item = items[i];
+                /*
+                 * https://www.seasar.org/issues/browse/TEEDA-149
+                 * 
+                 * Pageのフィールドへitemのデータを移しておく。
+                 * そうしないと、Pageのフィールドがnullのときに、
+                 * 画面から""が入力されたのか、そもそも入力されなかったのか
+                 * 判定できなくなるため。
+                 */
+                itemToPage(pageBeanDesc, page, item);
                 enterRow(context, i);
                 super.processUpdates(context);
                 leaveRow(context);
-                pageToItem(page, pageBeanDesc, items[i], itemBeanDesc);
+                pageToItem(page, pageBeanDesc, item, itemBeanDesc);
             }
             /*
              * TODO さしあたり、こちら側のifのみ修正する。
@@ -311,13 +325,8 @@ public class TForEach extends UIComponentBase implements NamingContainer {
             final PropertyDesc pagePd = pageBeanDesc
                     .getPropertyDesc(propertyName);
             final Object pageValue = pagePd.getValue(page);
-            /*
-             * 画面からSubmitされてこない場合はPageのプロパティはnullのまま。
-             */
-            // TODO testing
-            if (pageValue != null) {
-                itemPd.setValue(item, pageValue);
-            }
+            // https://www.seasar.org/issues/browse/TEEDA-149
+            itemPd.setValue(item, pageValue);
         }
     }
 
@@ -326,7 +335,7 @@ public class TForEach extends UIComponentBase implements NamingContainer {
         componentStates.restoreDescendantState(context, this);
     }
 
-    public void leaveRow(FacesContext context) {
+    public void leaveRow(final FacesContext context) {
         componentStates.saveDescendantComponentStates(context, this);
     }
 
@@ -336,16 +345,16 @@ public class TForEach extends UIComponentBase implements NamingContainer {
         return variableResolver.resolveVariable(context, getPageName());
     }
 
-    public Object saveState(FacesContext context) {
-        Object[] values = new Object[3];
+    public Object saveState(final FacesContext context) {
+        final Object[] values = new Object[3];
         values[0] = super.saveState(context);
         values[1] = pageName;
         values[2] = itemsName;
         return values;
     }
 
-    public void restoreState(FacesContext context, Object state) {
-        Object values[] = (Object[]) state;
+    public void restoreState(final FacesContext context, final Object state) {
+        final Object values[] = (Object[]) state;
         super.restoreState(context, values[0]);
         pageName = (String) values[1];
         itemsName = (String) values[2];
@@ -355,11 +364,11 @@ public class TForEach extends UIComponentBase implements NamingContainer {
         return rowSize;
     }
 
-    public void setRowSize(int rowCount) {
-        this.rowSize = rowCount;
+    public void setRowSize(final int rowCount) {
+        rowSize = rowCount;
     }
 
-    public Object[] getItems(FacesContext context) {
+    public Object[] getItems(final FacesContext context) {
         final Object page = getPage(context);
         final BeanDesc beanDesc = BeanDescFactory.getBeanDesc(page.getClass());
         final PropertyDesc pd = beanDesc.getPropertyDesc(getItemsName());
@@ -374,6 +383,69 @@ public class TForEach extends UIComponentBase implements NamingContainer {
             return (Object[]) items;
         }
         throw new IllegalStateException(items.getClass().toString());
+    }
+
+    public void processItem(final BeanDesc pageBeanDesc, final Object page,
+            final Object item, final int index) {
+        // 行番号をPageへセットする
+        setValue(pageBeanDesc, page, getIndexName(), new Integer(index));
+        itemToPage(pageBeanDesc, page, item);
+    }
+
+    private void itemToPage(final BeanDesc pageBeanDesc, final Object page,
+            final Object item) {
+        if (item == null) {
+            return;
+        }
+        final String itemName = getItemName();
+        setValue(pageBeanDesc, page, itemName, item);
+        if (item instanceof Map) {
+            processMapItem(pageBeanDesc, page, (Map) item);
+        } else {
+            processBeanItem(pageBeanDesc, page, item);
+        }
+    }
+
+    protected void processBeanItem(final BeanDesc beanDesc, final Object page,
+            final Object item) {
+        final BeanDesc itemBeanDesc = BeanDescFactory.getBeanDesc(item
+                .getClass());
+        for (int i = 0; i < itemBeanDesc.getPropertyDescSize(); i++) {
+            final PropertyDesc pd = itemBeanDesc.getPropertyDesc(i);
+            final String name = pd.getPropertyName();
+            final Object value = getValue(itemBeanDesc, item, name);
+            setValue(beanDesc, page, name, value);
+        }
+    }
+
+    protected void processMapItem(final BeanDesc beanDesc, final Object page,
+            final Map item) {
+        for (final Iterator i = item.keySet().iterator(); i.hasNext();) {
+            final String name = (String) i.next();
+            final Object value = item.get(name);
+            setValue(beanDesc, page, name, value);
+        }
+    }
+
+    protected Object getValue(final BeanDesc beanDesc, final Object page,
+            final String propertyName) {
+        if (beanDesc.hasPropertyDesc(propertyName)) {
+            final PropertyDesc pd = beanDesc.getPropertyDesc(propertyName);
+            if (pd.hasReadMethod()) {
+                return pd.getValue(page);
+            }
+        }
+        return null;
+    }
+
+    protected void setValue(final BeanDesc beanDesc, final Object page,
+            final String propertyName, final Object value) {
+        if (beanDesc.hasPropertyDesc(propertyName)) {
+            final PropertyDesc pd = beanDesc.getPropertyDesc(propertyName);
+            if (pd.hasWriteMethod()) {
+                pd.setValue(page, value);
+            }
+        }
     }
 
 }

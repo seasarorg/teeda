@@ -15,50 +15,19 @@
  */
 package org.seasar.teeda.it.web.foreach;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author manhole
  */
-public class ForeachArrayPage {
+public class ForeachArrayPage extends AbstractForeachPage {
 
     private FooDto[] fooItems;
 
-    public String doSomething() {
-        return null;
-    }
-
     public String initialize() {
-        List l = new ArrayList();
-        {
-            FooDto f = new FooDto();
-            f.setFooNo(new Integer(1));
-            f.setAaa("aa1");
-            f.setBbb("bb1");
-            l.add(f);
-        }
-        {
-            FooDto f = new FooDto();
-            f.setFooNo(new Integer(2));
-            f.setAaa("aa2");
-            f.setBbb("bb2");
-            l.add(f);
-        }
-        {
-            FooDto f = new FooDto();
-            f.setFooNo(new Integer(3));
-            f.setAaa("aa3");
-            f.setBbb("bb3");
-            l.add(f);
-        }
+        List l = createItems();
         fooItems = new FooDto[l.size()];
         l.toArray(fooItems);
-
-        return null;
-    }
-
-    public String prerender() {
         return null;
     }
 
@@ -78,31 +47,4 @@ public class ForeachArrayPage {
         this.fooItems = fooItems;
     }
 
-    private Integer fooNo;
-    private String aaa;
-    private String bbb;
-
-    public Integer getFooNo() {
-        return fooNo;
-    }
-
-    public void setFooNo(Integer no) {
-        this.fooNo = no;
-    }
-
-    public String getAaa() {
-        return aaa;
-    }
-
-    public void setAaa(String aaa) {
-        this.aaa = aaa;
-    }
-
-    public String getBbb() {
-        return bbb;
-    }
-
-    public void setBbb(String bbb) {
-        this.bbb = bbb;
-    }
 }

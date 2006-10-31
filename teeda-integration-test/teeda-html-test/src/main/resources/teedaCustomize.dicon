@@ -4,4 +4,13 @@
 <components>
 	<component class="org.seasar.teeda.core.render.DefaultComponentIdLookupStrategy" />
 	<component class="org.seasar.teeda.core.application.impl.DefaultComponentLookupStrategy" />
+	<component class="org.seasar.teeda.extension.render.AdjustableInputDecoder" />
+	<component class="org.seasar.teeda.extension.util.TreeNavigationImageLocatorImpl">
+		<property name="imageRoot">"/img/"</property>
+	</component>
+	<component class="org.seasar.teeda.extension.util.NullLabelStrategyImpl">
+		<!--
+		<property name="forceNullLabel">true</property>
+		-->
+	</component>
 </components>

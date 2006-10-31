@@ -15,15 +15,12 @@
  */
 package org.seasar.teeda.extension.render;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.faces.context.FacesContext;
 import javax.faces.render.Renderer;
 import javax.faces.render.RendererTest;
 
-import org.seasar.framework.beans.BeanDesc;
-import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.teeda.extension.component.TForEach;
 
 /**
@@ -44,105 +41,14 @@ public class TForEachRendererTest extends RendererTest {
             public String getClientId(FacesContext context) {
                 return "hogeItems";
             }
-            
+
         };
         renderer.decode(context, t);
         assertTrue(t.getRowSize() == 3);
     }
-    
-    public void testProcessMapItem() throws Exception {
-        TForEachRenderer renderer = new TForEachRenderer();
-        Map item = new HashMap();
-        item.put("aaa", "111");
-        item.put("bbb", "112");
-        BeanDesc beanDesc = BeanDescFactory.getBeanDesc(Hoge.class);
-        Hoge hoge = new Hoge();
-        renderer.processMapItem(beanDesc, hoge, item);
-        assertEquals("111", hoge.getAaa());
-    }
-
-    public void testProcessBeanItem() throws Exception {
-        TForEachRenderer renderer = new TForEachRenderer();
-        Hoge2 item = new Hoge2();
-        item.setAaa("111");
-        item.setBbb("112");
-        BeanDesc beanDesc = BeanDescFactory.getBeanDesc(Hoge.class);
-        Hoge page = new Hoge();
-        renderer.processBeanItem(beanDesc, page, item);
-        assertEquals("111", page.getAaa());
-    }
-
-    public void testProcessItem() throws Exception {
-        TForEachRenderer renderer = new TForEachRenderer();
-        Map item = new HashMap();
-        item.put("aaa", "111");
-        item.put("bbb", "112");
-        BeanDesc beanDesc = BeanDescFactory.getBeanDesc(Hoge.class);
-        Hoge page = new Hoge();
-        renderer.processItem(beanDesc, page, item, "foo", 1, "fooIndex");
-        assertEquals("111", page.getAaa());
-        assertSame(item, page.getFoo());
-        assertEquals(1, page.getFooIndex());
-    }
 
     protected Renderer createRenderer() {
         return new TForEachRenderer();
-    }
-
-    public static class Hoge {
-
-        private String aaa;
-
-        private Map foo;
-
-        private int fooIndex;
-
-        public String getAaa() {
-            return aaa;
-        }
-
-        public void setAaa(String aaa) {
-            this.aaa = aaa;
-        }
-
-        public Map getFoo() {
-            return foo;
-        }
-
-        public void setFoo(Map foo) {
-            this.foo = foo;
-        }
-
-        public int getFooIndex() {
-            return fooIndex;
-        }
-
-        public void setFooIndex(int fooIndex) {
-            this.fooIndex = fooIndex;
-        }
-    }
-
-    public static class Hoge2 {
-
-        private String aaa;
-
-        private String bbb;
-
-        public String getAaa() {
-            return aaa;
-        }
-
-        public void setAaa(String aaa) {
-            this.aaa = aaa;
-        }
-
-        public String getBbb() {
-            return bbb;
-        }
-
-        public void setBbb(String bbb) {
-            this.bbb = bbb;
-        }
     }
 
 }

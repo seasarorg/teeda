@@ -15,8 +15,10 @@
  */
 package org.seasar.teeda.extension.component;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
@@ -25,6 +27,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.el.EvaluationException;
 import javax.faces.el.VariableResolver;
 
+import org.seasar.framework.beans.BeanDesc;
+import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.teeda.core.mock.MockFacesContext;
 
 /**
@@ -122,6 +126,42 @@ public class TForEachTest extends UIComponentBaseTest {
         System.out.println(fm.getDetail());
     }
 
+    public void testProcessMapItem() throws Exception {
+        final TForEach forEach = createTForEach();
+        Map item = new HashMap();
+        item.put("aaa", "111");
+        item.put("bbb", "112");
+        BeanDesc beanDesc = BeanDescFactory.getBeanDesc(HogePage1.class);
+        HogePage1 hoge = new HogePage1();
+        forEach.processMapItem(beanDesc, hoge, item);
+        assertEquals("111", hoge.getAaa());
+    }
+
+    public void testProcessBeanItem() throws Exception {
+        final TForEach forEach = createTForEach();
+        HogePage2 item = new HogePage2();
+        item.setAaa("111");
+        item.setBbb("112");
+        BeanDesc beanDesc = BeanDescFactory.getBeanDesc(HogePage1.class);
+        HogePage1 page = new HogePage1();
+        forEach.processBeanItem(beanDesc, page, item);
+        assertEquals("111", page.getAaa());
+    }
+
+    public void testProcessItem() throws Exception {
+        final TForEach forEach = createTForEach();
+        Map item = new HashMap();
+        item.put("aaa", "111");
+        item.put("bbb", "112");
+        BeanDesc beanDesc = BeanDescFactory.getBeanDesc(HogePage1.class);
+        HogePage1 page = new HogePage1();
+        forEach.setItemsName("fooItems");
+        forEach.processItem(beanDesc, page, item, 1);
+        assertEquals("111", page.getAaa());
+        assertSame(item, page.getFoo());
+        assertEquals(1, page.getFooIndex());
+    }
+
     private TForEach createTForEach() {
         return (TForEach) createUIComponent();
     }
@@ -209,6 +249,62 @@ public class TForEachTest extends UIComponentBaseTest {
 
         public void setNumItems(int[] numItems) {
             this.numItems = numItems;
+        }
+    }
+
+    public static class HogePage1 {
+
+        private String aaa;
+
+        private Map foo;
+
+        private int fooIndex;
+
+        public String getAaa() {
+            return aaa;
+        }
+
+        public void setAaa(String aaa) {
+            this.aaa = aaa;
+        }
+
+        public Map getFoo() {
+            return foo;
+        }
+
+        public void setFoo(Map foo) {
+            this.foo = foo;
+        }
+
+        public int getFooIndex() {
+            return fooIndex;
+        }
+
+        public void setFooIndex(int fooIndex) {
+            this.fooIndex = fooIndex;
+        }
+    }
+
+    public static class HogePage2 {
+
+        private String aaa;
+
+        private String bbb;
+
+        public String getAaa() {
+            return aaa;
+        }
+
+        public void setAaa(String aaa) {
+            this.aaa = aaa;
+        }
+
+        public String getBbb() {
+            return bbb;
+        }
+
+        public void setBbb(String bbb) {
+            this.bbb = bbb;
         }
     }
 

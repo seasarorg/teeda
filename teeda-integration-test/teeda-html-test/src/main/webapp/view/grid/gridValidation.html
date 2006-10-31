@@ -1,19 +1,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>GridXY</title>
+<title>Grid Validation</title>
 <style>
 .gridHeader {
 	background-color: green;
 	color: white;
 	font-weight: bold;
 	overflow: hidden;
-}
-.ddd {
-	background-color: #B4CDCD;
-}
-td div.ddd {
-	color: black;
 }
 .gridTable {
 	background-color: black;
@@ -34,39 +28,34 @@ td div.ddd {
 </style>
 </head>
 <body>
-GridXY
-<span id="allMessages"/>
+Grid Validation
 <form id="gridForm">
+<span id="messages" />
+<span id="allMessages" />
 <input type="hidden" id="fooItemsSave" />
-<input type="text" id="itemSize" />
-<input type="submit" id="doChangeSize" value="件数を変更" />
-
-<table id="fooGridXY" width="300px" height="200px">
+<table id="fooGrid" width="300px" height="200px">
 	<colgroup>
-		<col span="2" width="60px" class="T_leftFixed" />
-		<col span="4" width="70px" />
+		<col span="1" width="50px" />
+		<col span="3" width="100px" />
 	</colgroup>
 	<thead>
 		<tr height="50px">
-			<th>aaa</th>
-			<th>bbb</th>
-			<th>ccc</th>
-			<th class="ddd">ddd</th>
-			<th>eee</th>
-			<th>fff</th>
+			<th>BBB</th>
+			<th>CCC</th>
+			<th>DDD</th>
+			<th>EEE</th>
 		</tr>
 	</thead>
 	<tbody>
 		<tr>
-			<td><span id="aaa" /></td>
 			<td><span id="bbb" /></td>
 			<td><span id="ccc" /></td>
-			<td class="ddd"><input type="text" id="ddd" /></td>
+			<td style="background-color: #B4CDCD;"><input type="text" id="ddd" /></td>
 			<td style="background-color: #BCEE68;"><input type="text" id="eee" /></td>
-			<td><span id="fff" /></td>
 		</tr>
 	</tbody>
 </table>
+<input type="submit" id="doSomething" />
 </form>
 </body>
 </html>

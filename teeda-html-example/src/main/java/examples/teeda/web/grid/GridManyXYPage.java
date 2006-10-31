@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class GridManyXYPage {
 
-    private int itemSize = 10;
+    private int itemSize;
 
     private FooItem[] fooItems;
 
@@ -21,9 +21,15 @@ public class GridManyXYPage {
         return "row_odd";
     }
 
-    public String prerender() {
+    public String initialize() {
+        itemSize = 10;
+        fooItems = createItems(itemSize);
+        return null;
+    }
+
+    private FooItem[] createItems(final int size) {
         final ArrayList items = new ArrayList();
-        for (int i = 0; i < itemSize; i++) {
+        for (int i = 0; i < size; i++) {
             final FooItem item = new FooItem();
             item.setAaa("a" + i);
             item.setBbb("b" + i);
@@ -35,12 +41,13 @@ public class GridManyXYPage {
             final FooItem fooItem = item;
             items.add(fooItem);
         }
-        fooItems = new FooItem[items.size()];
-        items.toArray(fooItems);
-        return null;
+        FooItem[] a = new FooItem[items.size()];
+        items.toArray(a);
+        return a;
     }
 
     public String doChangeSize() {
+        fooItems = createItems(itemSize);
         return null;
     }
 

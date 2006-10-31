@@ -420,13 +420,10 @@ public class THtmlGridRenderer extends TForEachRenderer {
         final Object page = htmlGrid.getPage(context);
         final BeanDesc beanDesc = BeanDescFactory.getBeanDesc(page.getClass());
         final Object[] items = htmlGrid.getItems(context);
-        int renderRowLength = Math.min(firstRenderRowCount, items.length);
-        if (renderRowLength == 0) {
-            renderRowLength = htmlGrid.getRowSize();
-        }
+        // TEEDA-150
+        final int rowSize = Math.min(firstRenderRowCount,
+                ((items != null) ? items.length : 0));
 
-        final String itemName = htmlGrid.getItemName();
-        final String indexName = htmlGrid.getIndexName();
         final String id = getIdForRender(context, htmlGrid);
 
         // encodeLeftBody
@@ -445,9 +442,11 @@ public class THtmlGridRenderer extends TForEachRenderer {
                     + LEFT_BODY_TABLE);
             renderInnerTableAttributes(writer);
             writer.startElement(JsfConstants.TBODY_ELEM, body);
-            for (int i = 0; i < renderRowLength; ++i) {
+            for (int i = 0; i < rowSize; ++i) {
                 htmlGrid.enterRow(context, i);
-                processItem(beanDesc, page, items[i], itemName, i, indexName);
+                if (i < items.length) {
+                    htmlGrid.processItem(beanDesc, page, items[i], i);
+                }
                 for (Iterator it = getRenderedChildrenIterator(body); it
                         .hasNext();) {
                     final UIComponent child = (UIComponent) it.next();
@@ -507,10 +506,10 @@ public class THtmlGridRenderer extends TForEachRenderer {
         renderInnerTableAttributes(writer);
         writer.startElement(JsfConstants.TBODY_ELEM, body);
 
-        for (int i = 0; i < renderRowLength; ++i) {
+        for (int i = 0; i < rowSize; ++i) {
             htmlGrid.enterRow(context, i);
             if (i < items.length) {
-                processItem(beanDesc, page, items[i], itemName, i, indexName);
+                htmlGrid.processItem(beanDesc, page, items[i], i);
             }
             for (final Iterator it = getRenderedChildrenIterator(body); it
                     .hasNext();) {
@@ -529,14 +528,14 @@ public class THtmlGridRenderer extends TForEachRenderer {
         writer.endElement(JsfConstants.TD_ELEM);
         writer.endElement(JsfConstants.TR_ELEM);
 
-        if (renderRowLength < items.length) {
+        if (rowSize < items.length) {
             final UIBody uiBody = TBodyRenderer.findParentBody(htmlGrid);
             final GridPostRendererListener rendererListener = new GridPostRendererListener();
             rendererListener.attribute = attribute;
             rendererListener.htmlGrid = htmlGrid;
             rendererListener.id = id;
             rendererListener.body = body;
-            rendererListener.renderRowLength = renderRowLength;
+            rendererListener.renderRowLength = rowSize;
             rendererListener.beanDesc = beanDesc;
             rendererListener.page = page;
             rendererListener.items = items;
@@ -565,8 +564,6 @@ public class THtmlGridRenderer extends TForEachRenderer {
         public void renderBeforeBodyEnd(FacesContext context)
                 throws IOException {
             final ResponseWriter writer = context.getResponseWriter();
-            final String itemName = htmlGrid.getItemName();
-            final String indexName = htmlGrid.getIndexName();
 
             // leftBody
             if (attribute.hasLeftFixCols()) {
@@ -579,8 +576,7 @@ public class THtmlGridRenderer extends TForEachRenderer {
                 writer.startElement(JsfConstants.TBODY_ELEM, body);
                 for (int i = renderRowLength; i < items.length; ++i) {
                     htmlGrid.enterRow(context, i);
-                    processItem(beanDesc, page, items[i], itemName, i,
-                            indexName);
+                    htmlGrid.processItem(beanDesc, page, items[i], i);
                     for (Iterator it = getRenderedChildrenIterator(body); it
                             .hasNext();) {
                         final UIComponent child = (UIComponent) it.next();
@@ -604,7 +600,7 @@ public class THtmlGridRenderer extends TForEachRenderer {
             writer.startElement(JsfConstants.TBODY_ELEM, body);
             for (int i = renderRowLength; i < items.length; ++i) {
                 htmlGrid.enterRow(context, i);
-                processItem(beanDesc, page, items[i], itemName, i, indexName);
+                htmlGrid.processItem(beanDesc, page, items[i], i);
                 for (final Iterator it = getRenderedChildrenIterator(body); it
                         .hasNext();) {
                     final UIComponent child = (UIComponent) it.next();

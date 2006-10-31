@@ -24,7 +24,6 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 
 import org.seasar.framework.beans.BeanDesc;
-import org.seasar.framework.beans.PropertyDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.teeda.core.render.AbstractRenderer;
 import org.seasar.teeda.extension.component.TForEach;
@@ -48,75 +47,22 @@ public class TForEachRenderer extends AbstractRenderer {
         }
         final TForEach forEach = (TForEach) component;
         final Object page = forEach.getPage(context);
-        final BeanDesc beanDesc = BeanDescFactory.getBeanDesc(page.getClass());
+        final BeanDesc pageBeanDesc = BeanDescFactory.getBeanDesc(page
+                .getClass());
         final Object[] items = forEach.getItems(context);
-        final String itemName = forEach.getItemName();
-        final String indexName = forEach.getIndexName();
-        int rowSize = forEach.getRowSize();
-        int len = (items != null) ? items.length : 0;
-        if (len > rowSize) {
-            rowSize = len;
-        }
+        /*
+         * https://www.seasar.org/issues/browse/TEEDA-150
+         * FIXME validationエラー時の対応は済んでいるので、ここでは単純に
+         * itemsのサイズを採るだけでOKになった。
+         */
+        final int rowSize = (items != null) ? items.length : 0;
         for (int i = 0; i < rowSize; ++i) {
             forEach.enterRow(context, i);
             if (i < items.length) {
-                processItem(beanDesc, page, items[i], itemName, i, indexName);
+                forEach.processItem(pageBeanDesc, page, items[i], i);
             }
             super.encodeChildren(context, component);
             forEach.leaveRow(context);
-        }
-    }
-
-    public void processItem(BeanDesc beanDesc, Object page, Object item,
-            String itemName, int index, String indexName) {
-        setValue(beanDesc, page, indexName, new Integer(index));
-        if (item == null) {
-            return;
-        }
-        setValue(beanDesc, page, itemName, item);
-        if (item instanceof Map) {
-            processMapItem(beanDesc, page, (Map) item);
-        } else {
-            processBeanItem(beanDesc, page, item);
-        }
-    }
-
-    protected void setValue(BeanDesc beanDesc, Object page,
-            String propertyName, Object value) {
-        if (beanDesc.hasPropertyDesc(propertyName)) {
-            PropertyDesc pd = beanDesc.getPropertyDesc(propertyName);
-            if (pd.hasWriteMethod()) {
-                pd.setValue(page, value);
-            }
-        }
-    }
-
-    protected Object getValue(BeanDesc beanDesc, Object page,
-            String propertyName) {
-        if (beanDesc.hasPropertyDesc(propertyName)) {
-            PropertyDesc pd = beanDesc.getPropertyDesc(propertyName);
-            if (pd.hasReadMethod()) {
-                return pd.getValue(page);
-            }
-        }
-        return null;
-    }
-
-    public void processMapItem(BeanDesc beanDesc, Object page, Map item) {
-        for (Iterator i = item.keySet().iterator(); i.hasNext();) {
-            String name = (String) i.next();
-            Object value = item.get(name);
-            setValue(beanDesc, page, name, value);
-        }
-    }
-
-    public void processBeanItem(BeanDesc beanDesc, Object page, Object item) {
-        BeanDesc itemBeanDesc = BeanDescFactory.getBeanDesc(item.getClass());
-        for (int i = 0; i < itemBeanDesc.getPropertyDescSize(); i++) {
-            PropertyDesc pd = itemBeanDesc.getPropertyDesc(i);
-            String name = pd.getPropertyName();
-            Object value = getValue(itemBeanDesc, item, name);
-            setValue(beanDesc, page, name, value);
         }
     }
 
