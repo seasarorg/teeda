@@ -17,7 +17,9 @@ package org.seasar.teeda.core.render.html;
 
 import java.io.IOException;
 
+import javax.faces.component.EditableValueHolder;
 import javax.faces.component.UIComponent;
+import javax.faces.component.UIInput;
 import javax.faces.component.UIOutput;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
@@ -41,6 +43,15 @@ public class HtmlSelectOneListboxRenderer extends HtmlSelectManyListboxRenderer 
 
     protected String[] getValuesForRender(FacesContext context,
             UIComponent component) {
+        if (component instanceof EditableValueHolder) {
+            EditableValueHolder input = (EditableValueHolder) component;
+            final Object submittedValue = input.getSubmittedValue();
+            if (submittedValue != null) {
+                return new String[] { submittedValue.toString() };
+            } else {
+                return null;
+            }
+        }
         String value = ValueHolderUtil.getValueForRender(context, component);
         // value is not null
         return new String[] { value };

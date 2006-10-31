@@ -68,7 +68,7 @@ public class CommandButtonFactory extends AbstractElementProcessorFactory {
         super
                 .customizeProperties(properties, elementNode, pageDesc,
                         actionDesc);
-        String id = elementNode.getId();
+        final String id = elementNode.getId();
         if (id.startsWith(ExtensionConstants.GO_PREFIX)) {
             String next = StringUtil.decapitalize(id.substring(2));
             properties.put(JsfConstants.ACTION_ATTR, next);

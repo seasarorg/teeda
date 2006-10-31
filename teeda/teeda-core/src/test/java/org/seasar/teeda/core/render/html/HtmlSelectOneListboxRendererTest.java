@@ -190,9 +190,11 @@ public class HtmlSelectOneListboxRendererTest extends RendererTest {
                 getResponseText());
     }
 
+    //https://www.seasar.org/issues/TEEDA-153
     public void testEncode_Selected() throws Exception {
         // ## Arrange ##
-        htmlSelectOneListbox.setValue("v2");
+        //htmlSelectOneListbox.setValue("v2");
+        htmlSelectOneListbox.setSubmittedValue("v2");
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("v1");
@@ -341,6 +343,7 @@ public class HtmlSelectOneListboxRendererTest extends RendererTest {
                 + "</optgroup>" + "</select>", getResponseText());
     }
 
+    //https://www.seasar.org/issues/TEEDA-153
     public void testEncode_WithAllAttributes() throws Exception {
         htmlSelectOneListbox.setAccesskey("a");
         htmlSelectOneListbox.setDir("b");
@@ -371,6 +374,7 @@ public class HtmlSelectOneListboxRendererTest extends RendererTest {
 
         htmlSelectOneListbox.setId("A");
         htmlSelectOneListbox.setValue("val");
+        htmlSelectOneListbox.setSubmittedValue("val");
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("val");
@@ -379,6 +383,7 @@ public class HtmlSelectOneListboxRendererTest extends RendererTest {
         }
         encodeByRenderer(renderer, htmlSelectOneListbox);
 
+        System.out.println(getResponseText());
         Diff diff = new Diff("<select id=\"A\"" + " name=\"A\""
                 + " size=\"4\" style=\"w\"" + " class=\"u\""
                 + " accesskey=\"a\"" + " dir=\"b\"" + " disabled=\"disabled\""

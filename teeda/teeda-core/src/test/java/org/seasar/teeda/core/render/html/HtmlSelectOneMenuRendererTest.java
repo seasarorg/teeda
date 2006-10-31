@@ -172,9 +172,10 @@ public class HtmlSelectOneMenuRendererTest extends RendererTest {
                 getResponseText());
     }
 
+    //https://www.seasar.org/issues/TEEDA-153
     public void testEncode_Selected() throws Exception {
         // ## Arrange ##
-        htmlSelectOneMenu.setValue("v2");
+        htmlSelectOneMenu.setSubmittedValue("v2");
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("v1");
@@ -323,6 +324,7 @@ public class HtmlSelectOneMenuRendererTest extends RendererTest {
                 + "</optgroup>" + "</select>", getResponseText());
     }
 
+    //https://www.seasar.org/issues/TEEDA-153
     public void testEncode_WithAllAttributes() throws Exception {
         htmlSelectOneMenu.setAccesskey("a");
         htmlSelectOneMenu.setDir("b");
@@ -351,7 +353,7 @@ public class HtmlSelectOneMenuRendererTest extends RendererTest {
         htmlSelectOneMenu.setTitle("y");
 
         htmlSelectOneMenu.setId("A");
-        htmlSelectOneMenu.setValue("val");
+        htmlSelectOneMenu.setSubmittedValue("val");
         {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("val");

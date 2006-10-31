@@ -36,7 +36,7 @@ public class MessageFactory extends AbstractElementProcessorFactory {
         if (!JsfConstants.SPAN_ELEM.equalsIgnoreCase(elementNode.getTagName())) {
             return false;
         }
-        String id = elementNode.getId();
+        final String id = elementNode.getId();
         if (id == null) {
             return false;
         }
@@ -48,7 +48,7 @@ public class MessageFactory extends AbstractElementProcessorFactory {
         super
                 .customizeProperties(properties, elementNode, pageDesc,
                         actionDesc);
-        String id = elementNode.getId();
+        final String id = elementNode.getId();
         properties.put(JsfConstants.FOR_ATTR, id.substring(0, id.length()
                 - ExtensionConstants.MESSAGE_SUFFIX.length()));
     }
