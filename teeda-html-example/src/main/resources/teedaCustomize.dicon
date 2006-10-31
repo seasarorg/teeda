@@ -8,9 +8,7 @@
 	<component class="org.seasar.teeda.extension.util.TreeNavigationImageLocatorImpl">
 		<property name="imageRoot">"/img/"</property>
 	</component>
-	<component class="org.seasar.teeda.extension.util.NullLabelHelperImpl">
-		<!--
-		<property name="forceNullLabel">true</property>
-		-->
+	<component class="org.seasar.teeda.extension.util.NullLabelStrategyImpl">
+		<property name="forceNullLabel">@org.seasar.teeda.extension.util.NullLabelStrategy@FORCE_NULL_LABEL</property>
 	</component>
 </components>
