@@ -22,6 +22,10 @@ import javax.faces.context.FacesContext;
  */
 public interface NullLabelStrategy {
 
+    public static final boolean FORCE_NULL_LABEL = false;
+    
+    public static final boolean FORCE_NO_NULL_LABEL = true;
+    
     boolean isRequired(FacesContext context, String value);
 
 }
