@@ -84,6 +84,9 @@ public class SelectOneRadioFactory extends AbstractElementProcessorFactory {
         super
                 .customizeProperties(properties, elementNode, pageDesc,
                         actionDesc);
+        if (pageDesc == null) {
+            return;
+        }
         String pageName = pageDesc.getPageName();
         String id = elementNode.getId();
         properties.put(JsfConstants.VALUE_ATTR, getBindingExpression(pageName,

@@ -50,6 +50,9 @@ public class InputSecretFactory extends AbstractElementProcessorFactory {
         super
                 .customizeProperties(properties, elementNode, pageDesc,
                         actionDesc);
+        if (pageDesc == null) {
+            return;
+        }
         properties.put(JsfConstants.VALUE_ATTR, getBindingExpression(pageDesc
                 .getPageName(), elementNode.getId()));
     }

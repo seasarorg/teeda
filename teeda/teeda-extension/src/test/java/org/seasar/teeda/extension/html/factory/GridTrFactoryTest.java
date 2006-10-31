@@ -48,6 +48,15 @@ public class GridTrFactoryTest extends ElementProcessorFactoryTestCase {
         pageDesc = createPageDesc(FooPage.class, "fooPage");
     }
 
+    public void testCreateProcessor_pageDescNull() throws Exception {
+        final HashMap gridProp = new HashMap();
+        gridProp.put("id", "hogeGrid");
+        ElementNode grid = createElementNode("table", gridProp);
+        ElementNode elementNode = createElementNode("tr", new HashMap());
+        grid.addElement(elementNode);
+        factory.createProcessor(elementNode, null, null);
+    }
+
     public void testTrIsMatch1() throws Exception {
         // ## Arrange ##
         final HashMap gridProp = new HashMap();

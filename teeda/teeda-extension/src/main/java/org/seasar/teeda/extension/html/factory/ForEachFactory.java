@@ -49,6 +49,9 @@ public class ForEachFactory extends AbstractElementProcessorFactory {
         super
                 .customizeProperties(properties, elementNode, pageDesc,
                         actionDesc);
+        if (pageDesc == null) {
+            return;
+        }
         String id = elementNode.getId();
         properties.put(ExtensionConstants.PAGE_NAME_ATTR, pageDesc
                 .getPageName());

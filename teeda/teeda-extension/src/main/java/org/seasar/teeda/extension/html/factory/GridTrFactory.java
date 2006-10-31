@@ -41,6 +41,9 @@ public class GridTrFactory extends AbstractGridChildrenFactory {
             ElementNode elementNode, PageDesc pageDesc, ActionDesc actionDesc) {
         final ElementNode gridNode = GridFactoryUtil.findParentGridNode(
                 elementNode, pageDesc, actionDesc);
+        if (gridNode == null) {
+            return;
+        }
         final String naturalName = GridFactoryUtil.getNaturalName(gridNode
                 .getId());
         final String base = naturalName + ROW;

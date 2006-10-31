@@ -24,6 +24,14 @@ public class CommandButtonFactoryTest extends ElementProcessorFactoryTestCase {
                 CommandButtonTag.class);
     }
 
+    public void testCreateProcessor_pageDescNull() throws Exception {
+        Map properties = new HashMap();
+        properties.put("type", "submit");
+        properties.put("id", "goNextPage");
+        ElementNode elementNode = createElementNode("input", properties);
+        factory.createProcessor(elementNode, null, null);
+    }
+
     public void testIsMatch_go() throws Exception {
         Map properties = new HashMap();
         properties.put("type", "submit");

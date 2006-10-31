@@ -57,6 +57,9 @@ public class TInputHiddenFactory extends AbstractElementProcessorFactory {
         super
                 .customizeProperties(properties, elementNode, pageDesc,
                         actionDesc);
+        if (pageDesc == null) {
+            return;
+        }
         String id = elementNode.getId();
         String items = id.substring(0, id
                 .indexOf(ExtensionConstants.SAVE_SUFFIX));

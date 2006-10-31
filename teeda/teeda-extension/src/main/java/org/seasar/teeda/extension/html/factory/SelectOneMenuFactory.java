@@ -55,6 +55,9 @@ public class SelectOneMenuFactory extends AbstractElementProcessorFactory {
         super
                 .customizeProperties(properties, elementNode, pageDesc,
                         actionDesc);
+        if (pageDesc == null) {
+            return;
+        }
         String pageName = pageDesc.getPageName();
         String id = elementNode.getId();
         String target = id.substring(0, id.length()

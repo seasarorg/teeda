@@ -48,6 +48,9 @@ public class InputDateTextFactory extends InputTextFactory {
         super
                 .customizeProperties(properties, elementNode, pageDesc,
                         actionDesc);
+        if (pageDesc == null) {
+            return;
+        }
         properties.put(ExtensionConstants.PATTERN_ATTR, getBindingExpression(
                 pageDesc.getPageName(), elementNode.getId()
                         + ExtensionConstants.PATTERN_SUFFIX));

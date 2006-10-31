@@ -39,6 +39,9 @@ public class GridFactory extends AbstractElementProcessorFactory {
         super
                 .customizeProperties(properties, elementNode, pageDesc,
                         actionDesc);
+        if (pageDesc == null) {
+            return;
+        }
         properties.put(ExtensionConstants.PAGE_NAME_ATTR, pageDesc
                 .getPageName());
         final String id = elementNode.getId();

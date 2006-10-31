@@ -43,6 +43,13 @@ public class MessageFactoryTest extends ElementProcessorFactoryTestCase {
                 TMessageTag.class);
     }
 
+    public void testCreateProcessor_pageDescNull() throws Exception {
+        Map properties = new HashMap();
+        properties.put("id", "aaaMessage");
+        ElementNode elementNode = createElementNode("span", properties);
+        factory.createProcessor(elementNode, null, null);
+    }
+
     public void testIsMatch() throws Exception {
         Map properties = new HashMap();
         properties.put("id", "aaaMessage");

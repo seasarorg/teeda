@@ -51,6 +51,9 @@ public class ConditionFactory extends AbstractElementProcessorFactory {
         super
                 .customizeProperties(properties, elementNode, pageDesc,
                         actionDesc);
+        if (pageDesc == null) {
+            return;
+        }
         String id = elementNode.getId();
         String pageName = pageDesc.getPageName();
         String s = null;
