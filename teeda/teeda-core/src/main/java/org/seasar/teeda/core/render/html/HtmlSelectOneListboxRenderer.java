@@ -18,7 +18,6 @@ package org.seasar.teeda.core.render.html;
 import java.io.IOException;
 import java.util.Map;
 
-import javax.faces.component.EditableValueHolder;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIOutput;
 import javax.faces.context.ExternalContext;

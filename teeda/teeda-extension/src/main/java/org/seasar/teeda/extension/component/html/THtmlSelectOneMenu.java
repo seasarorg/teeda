@@ -21,10 +21,7 @@ import java.util.List;
 import javax.faces.component.UIComponent;
 import javax.faces.component.html.HtmlSelectOneMenu;
 import javax.faces.context.FacesContext;
-import javax.faces.el.ValueBinding;
-import javax.faces.internal.FacesMessageUtil;
 
-import org.seasar.framework.util.AssertionUtil;
 import org.seasar.teeda.extension.component.TUISelectItems;
 import org.seasar.teeda.extension.util.AdjustValueHolderUtil;
 
@@ -66,26 +63,6 @@ public class THtmlSelectOneMenu extends HtmlSelectOneMenu {
                 items.setValue(value);
                 this.getChildren().add(items);
             }
-        }
-    }
-
-    public void updateModel(FacesContext context) {
-        AssertionUtil.assertNotNull("context", context);
-        if (!isValid() || !isLocalValueSet()) {
-            return;
-        }
-        final ValueBinding valueBinding = getValueBinding("value");
-        if (valueBinding == null) {
-            return;
-        }
-        try {
-            valueBinding.setValue(context, getLocalValue());
-        } catch (RuntimeException e) {
-            Object[] args = { getId() };
-            context.getExternalContext().log(e.getMessage(), e);
-            FacesMessageUtil.addErrorMessage(context, this,
-                    CONVERSION_MESSAGE_ID, args);
-            setValid(false);
         }
     }
 
