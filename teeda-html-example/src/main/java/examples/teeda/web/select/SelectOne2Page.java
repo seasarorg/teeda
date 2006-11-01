@@ -11,7 +11,7 @@ public class SelectOne2Page {
 
 	// public static final String aaa_TRequiredValidator = null;
 
-	private Integer aaa = new Integer(1);
+	private Integer aaa = new Integer(2);
 
 	public String prerender() {
 		aaaItems = new ArrayList();
