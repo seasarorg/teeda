@@ -21,9 +21,7 @@ import java.util.Map;
 import javax.faces.application.FacesMessage;
 
 import org.seasar.framework.beans.BeanDesc;
-import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.framework.beans.util.BeanUtil;
-import org.seasar.framework.container.ComponentDef;
 import org.seasar.framework.container.S2Container;
 import org.seasar.framework.container.util.ConstantAnnotationUtil;
 import org.seasar.framework.convention.NamingConvention;
@@ -35,17 +33,6 @@ import org.seasar.teeda.extension.ExtensionConstants;
  */
 public class ConstantFacesMessageAnnotationHandler extends
         AbstractFacesMessageAnnotationHandler {
-
-    public void registerFacesMessages(String componentName) {
-        final S2Container container = getContainer();
-        NamingConvention namingConvention = (NamingConvention) container
-                .getComponent(NamingConvention.class);
-        ComponentDef componentDef = container.getComponentDef(componentName);
-        Class componentClass = componentDef.getComponentClass();
-        BeanDesc beanDesc = BeanDescFactory.getBeanDesc(componentClass);
-        processFields(container, componentClass, componentName,
-                namingConvention, beanDesc);
-    }
 
     protected void processFields(S2Container container, Class componentClass,
             String componentName, NamingConvention namingConvention,

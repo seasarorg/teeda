@@ -20,8 +20,12 @@ import javax.faces.context.FacesContext;
 import javax.faces.internal.FacesMessageResource;
 import javax.faces.internal.FacesMessageUtil;
 
+import org.seasar.framework.beans.BeanDesc;
+import org.seasar.framework.beans.factory.BeanDescFactory;
+import org.seasar.framework.container.ComponentDef;
 import org.seasar.framework.container.S2Container;
 import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
+import org.seasar.framework.convention.NamingConvention;
 import org.seasar.teeda.core.util.BindingUtil;
 
 /**
@@ -30,12 +34,28 @@ import org.seasar.teeda.core.util.BindingUtil;
 public abstract class AbstractFacesMessageAnnotationHandler implements
         FacesMessageAnnotationHandler {
 
+    //TODO refactor needed because of too many args.
+    public void registerFacesMessages(String componentName) {
+        final S2Container container = getContainer();
+        NamingConvention namingConvention = (NamingConvention) container
+                .getComponent(NamingConvention.class);
+        ComponentDef componentDef = container.getComponentDef(componentName);
+        Class componentClass = componentDef.getComponentClass();
+        BeanDesc beanDesc = BeanDescFactory.getBeanDesc(componentClass);
+        processFields(container, componentClass, componentName,
+                namingConvention, beanDesc);
+    }
+
     protected void registerFacesMessage(String componentName,
             String propertyName, FacesMessage message) {
         String expression = BindingUtil.getExpression(componentName,
                 propertyName);
         FacesMessageResource.addFacesMessage(expression, message);
     }
+
+    protected abstract void processFields(S2Container container,
+            Class componentClass, String componentName,
+            NamingConvention namingConvention, BeanDesc beanDesc);
 
     protected FacesMessage createFacesMessage(String id) {
         FacesContext context = FacesContext.getCurrentInstance();
