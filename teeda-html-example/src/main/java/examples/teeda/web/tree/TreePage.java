@@ -28,9 +28,12 @@ public class TreePage {
 	public String prerender() {
 		tree = new TreeNodeImpl("folder-B", "ROOT", false);
 		TreeNodeImpl personNode = new TreeNodeImpl("folder-A", "AAA", false);
-		TreeNodeImpl document = new TreeNodeImpl("document", "BBB", true);
-		document.setValue("../hello/hello.html");
-		personNode.getChildren().add(document);
+		TreeNodeImpl document1 = new TreeNodeImpl("document", "BBB", true);
+		document1.setValue("../hello/hello.html");
+		TreeNodeImpl document2 = new TreeNodeImpl("document", "CCC", true);
+		document2.setValue("../start/index.html");
+		personNode.getChildren().add(document1);
+		personNode.getChildren().add(document2);
 		tree.getChildren().add(personNode);
 		return null;
 	}
