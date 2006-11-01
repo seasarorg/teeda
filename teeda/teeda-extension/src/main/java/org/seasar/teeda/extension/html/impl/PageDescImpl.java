@@ -26,6 +26,7 @@ import org.seasar.framework.beans.PropertyDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.annotation.handler.ConverterAnnotationHandlerFactory;
+import org.seasar.teeda.extension.annotation.handler.FacesMessageAnnotationHandlerFactory;
 import org.seasar.teeda.extension.annotation.handler.TakeOverDescAnnotationHandlerFactory;
 import org.seasar.teeda.extension.annotation.handler.ValidatorAnnotationHandlerFactory;
 import org.seasar.teeda.extension.html.PageDesc;
@@ -95,6 +96,8 @@ public class PageDescImpl implements PageDesc {
                 .registerConverters(pageName);
         takeOverDescs = TakeOverDescAnnotationHandlerFactory
                 .getAnnotationHandler().getTakeOverDescs(pageName);
+        FacesMessageAnnotationHandlerFactory.getAnnotationHandler()
+                .registerFacesMessages(pageName);
     }
 
     protected boolean isItemsProperty(PropertyDesc pd) {

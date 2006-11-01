@@ -263,10 +263,28 @@ public class FacesMessageUtil {
         }
     }
 
+    public static boolean hasClientId(FacesContext context,
+            UIComponent component) {
+        AssertionUtil.assertNotNull("context", context);
+        final String clientId = component.getClientId(context);
+        for (Iterator itr = context.getClientIdsWithMessages(); itr.hasNext();) {
+            String cId = (String) itr.next();
+            if (clientId.equals(cId)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static boolean hasMessagesByClientId(FacesContext context,
             UIComponent component) {
         AssertionUtil.assertNotNull("context", context);
         final String clientId = component.getClientId(context);
+        return hasMessagesByClientId(context, clientId);
+    }
+
+    public static boolean hasMessagesByClientId(FacesContext context,
+            String clientId) {
         final Iterator itr = context.getMessages(clientId);
         return itr.hasNext();
     }

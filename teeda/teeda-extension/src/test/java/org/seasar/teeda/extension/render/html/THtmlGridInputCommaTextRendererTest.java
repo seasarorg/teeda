@@ -168,7 +168,8 @@ public class THtmlGridInputCommaTextRendererTest extends RendererTest {
                 + " onmouseout=\"q\"" + " onmousedown=\"o\""
                 + " onselect=\"t\"" + " onmouseup=\"s\"" + " onmousemove=\"p\""
                 + " title=\"y\"" + " />" + "</div>";
-        System.out.println("====================================================================");
+        System.out
+                .println("====================================================================");
         System.out.println(expected);
         Diff diff = diff(expected, actual);
 

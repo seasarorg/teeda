@@ -16,20 +16,27 @@
 package org.seasar.teeda.extension.component;
 
 import java.lang.reflect.Array;
+import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
+import java.util.Map.Entry;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.component.NamingContainer;
 import javax.faces.component.UIComponentBase;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.el.VariableResolver;
 import javax.faces.internal.ComponentStates;
+import javax.faces.internal.FacesMessageResource;
 import javax.faces.internal.FacesMessageUtil;
 import javax.faces.internal.NamingContainerUtil;
 
@@ -39,6 +46,8 @@ import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.framework.log.Logger;
 import org.seasar.framework.util.AssertionUtil;
 import org.seasar.framework.util.ClassUtil;
+import org.seasar.framework.util.FieldUtil;
+import org.seasar.teeda.core.util.BindingUtil;
 import org.seasar.teeda.extension.ExtensionConstants;
 
 /**
@@ -155,25 +164,84 @@ public class TForEach extends UIComponentBase implements NamingContainer {
             final Object item = createNewInstance(context, itemType);
             itemPd.setValue(page, item);
         }
+        final String pageName = getPageName();
+        final String id = this.getId();
+        final String expression = BindingUtil.getExpression(pageName, id);
         for (int i = 0; i < rowSize; ++i) {
             enterRow(context, i);
-            processEachRowValidation(context, i);
+            super.processValidators(context);
+            final String parentClientId = getClientId(context);
+            if (!FacesMessageResource.hasMessages(expression)) {
+                processEachRowValidation(context, i, parentClientId);
+            }
             leaveRow(context);
         }
+        aggregateErrorMessageIfNeed(context, expression);
     }
 
     protected void processEachRowValidation(final FacesContext context,
-            final int row) {
-        final String parentClientId = getClientId(context);
-        super.processValidators(context);
+            final int row, String parentClientId) {
         if (FacesMessageUtil.hasMessages(context)) {
-            modifyValidationErrorMessageIfNeed(context, parentClientId, row);
+            appendLineInfoToErrorMessage(context, parentClientId, row);
         }
     }
 
-    protected void modifyValidationErrorMessageIfNeed(
-            final FacesContext context, final String parentClientId,
-            final int row) {
+    protected void aggregateErrorMessageIfNeed(FacesContext context,
+            String expression) {
+        if (FacesMessageResource.hasMessages(expression)) {
+            final String parentRowClientId = super.getClientId(context);
+            final FacesMessage aggregateMessage = FacesMessageResource
+                    .getFacesMessage(expression);
+            aggregateErrorMessage(aggregateMessage, context, parentRowClientId);
+        }
+    }
+
+    protected boolean aggregateErrorMessage(FacesMessage aggregateMessage,
+            FacesContext context, String parentClientId) {
+        boolean shouldAggregate = false;
+        Map map = new HashMap();
+        String saveClientId = null;
+        Set clientIds = new HashSet();
+        for (final Iterator itr = context.getClientIdsWithMessages(); itr
+                .hasNext();) {
+            final String clientId = (String) itr.next();
+            clientIds.add(clientId);
+            if (!clientId.startsWith(parentClientId)) {
+                Iterator messages = context.getMessages(clientId);
+                map.put(clientId, messages);
+                continue;
+            }
+            if (!shouldAggregate) {
+                saveClientId = clientId;
+                shouldAggregate = true;
+            }
+        }
+        if (shouldAggregate) {
+            BeanDesc bd = BeanDescFactory.getBeanDesc(context.getClass());
+            Field field = bd.getField("messages");
+            FieldUtil.set(field, context, null);
+            for (Iterator itr = map.entrySet().iterator(); itr.hasNext();) {
+                Map.Entry entry = (Entry) itr.next();
+                String clientId = (String) entry.getKey();
+                for (Iterator messages = (Iterator) entry.getValue(); messages
+                        .hasNext();) {
+                    FacesMessage fm = (FacesMessage) messages.next();
+                    context.addMessage(clientId, fm);
+                }
+            }
+            context.addMessage(saveClientId, aggregateMessage);
+            final ExternalContext externalContext = context
+                    .getExternalContext();
+            final Map requestMap = externalContext.getRequestMap();
+            requestMap.put(
+                    ExtensionConstants.TEEDA_EXTENSION_MESSAGE_CLIENTIDS,
+                    clientIds);
+        }
+        return shouldAggregate;
+    }
+
+    protected void appendLineInfoToErrorMessage(final FacesContext context,
+            final String parentClientId, final int row) {
         for (final Iterator itr = context.getClientIdsWithMessages(); itr
                 .hasNext();) {
             final String clientId = (String) itr.next();
@@ -185,6 +253,7 @@ public class TForEach extends UIComponentBase implements NamingContainer {
                 final FacesMessage fm = (FacesMessage) messages.next();
                 final String summary = fm.getSummary();
                 final String detail = fm.getDetail();
+                //TODO : maybe need to be flexible for line output.
                 if (summary != null) {
                     fm.setSummary(summary + "(line : " + (row + 1) + ")");
                 }
@@ -284,7 +353,7 @@ public class TForEach extends UIComponentBase implements NamingContainer {
                 final Object item = items[i];
                 /*
                  * https://www.seasar.org/issues/browse/TEEDA-149
-                 * 
+                 *
                  * Pageのフィールドへitemのデータを移しておく。
                  * そうしないと、Pageのフィールドがnullのときに、
                  * 画面から""が入力されたのか、そもそも入力されなかったのか

@@ -67,7 +67,7 @@ public interface ExtensionConstants {
     String DEFAULT_KEY = "defaultKey";
 
     String ERROR_STYLE_CLASS = "errorStyleClass";
-    
+
     //Suffix and prefix
     String GO_PREFIX = "go";
 
@@ -114,6 +114,10 @@ public interface ExtensionConstants {
     String TEEDA_HIDDEN_SUFFIX = "TeedaHidden";
 
     String TAKE_OVER_SUFFIX = "_TAKE_OVER";
+
+    String FACES_MESSAGE_AGGREGATION_SUFFIX = "_MESSAGE_AGGREGATION";
+
+    String TEEDA_EXTENSION_MESSAGE_CLIENTIDS = "org.seasar.teeda.extension.message.clientids";
 
     //other
     String NAME_SEPARATOR = String.valueOf(NamingContainer.SEPARATOR_CHAR);

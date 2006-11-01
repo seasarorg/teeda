@@ -23,7 +23,6 @@ import java.util.Locale;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
-import javax.faces.internal.FacesMessageUtil;
 import javax.faces.internal.IgnoreComponent;
 
 import org.seasar.framework.util.BigDecimalConversionUtil;
@@ -156,25 +155,6 @@ public class THtmlInputCommaTextRenderer extends
             return style;
         }
         return style + s;
-    }
-
-    protected void renderStyleClass(FacesContext context,
-            THtmlInputCommaText htmlInputCommaText, ResponseWriter writer)
-            throws IOException {
-        if (FacesMessageUtil.hasMessagesByClientId(context, htmlInputCommaText)) {
-            colorErrorComponent(context, htmlInputCommaText);
-        } else {
-            final String styleClass = createStyleClassAttribute(htmlInputCommaText);
-            if (StringUtil.isNotBlank(styleClass)) {
-                RendererUtil.renderAttribute(writer,
-                        JsfConstants.STYLE_CLASS_ATTR, styleClass);
-            }
-        }
-    }
-
-    protected String createStyleClassAttribute(
-            THtmlInputCommaText htmlInputCommaText) {
-        return htmlInputCommaText.getStyleClass();
     }
 
     protected void renderOnfocus(THtmlInputCommaText htmlInputCommaText,

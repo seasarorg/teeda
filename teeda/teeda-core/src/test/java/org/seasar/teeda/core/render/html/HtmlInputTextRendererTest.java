@@ -16,6 +16,7 @@
 package org.seasar.teeda.core.render.html;
 
 import javax.faces.component.UIComponent;
+import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
@@ -40,8 +41,12 @@ public class HtmlInputTextRendererTest extends RendererTest {
     protected void setUp() throws Exception {
         super.setUp();
         renderer = createHtmlInputTextRenderer();
-        htmlInputText = new MockHtmlInputText();
+        htmlInputText = (MockHtmlInputText) createUIInput();
         htmlInputText.setRenderer(renderer);
+    }
+
+    protected UIInput createUIInput() {
+        return new MockHtmlInputText();
     }
 
     public void testEncode_NoValue() throws Exception {

@@ -20,15 +20,28 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.faces.FactoryFinder;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIComponentBaseTest;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.el.EvaluationException;
 import javax.faces.el.VariableResolver;
+import javax.faces.internal.FacesMessageResource;
+import javax.faces.render.Renderer;
 
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
+import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
+import org.seasar.framework.container.impl.S2ContainerImpl;
+import org.seasar.framework.mock.servlet.MockHttpServletRequestImpl;
+import org.seasar.framework.mock.servlet.MockHttpServletResponseImpl;
+import org.seasar.framework.mock.servlet.MockServletContextImpl;
+import org.seasar.teeda.core.application.ApplicationFactoryImpl;
+import org.seasar.teeda.core.application.ApplicationImpl;
+import org.seasar.teeda.core.context.servlet.ServletExternalContextImpl;
+import org.seasar.teeda.core.context.servlet.ServletFacesContextImpl;
 import org.seasar.teeda.core.mock.MockFacesContext;
 
 /**
@@ -123,7 +136,100 @@ public class TForEachTest extends UIComponentBaseTest {
         assertNotNull(messages);
         FacesMessage fm = (FacesMessage) messages.next();
         assertNotNull(fm);
-        System.out.println(fm.getDetail());
+        assertEquals("b(line : 1)", fm.getDetail());
+    }
+
+    public void testProcessValidators_rowMultipleAdd() throws Exception {
+        TForEach forEach = new TForEach() {
+            public String getClientId(FacesContext context) {
+                return "hogeItems";
+            }
+        };
+        forEach.setRowSize(1);
+        final Hoge hoge = new Hoge();
+        hoge.setName("aaa");
+        MockFacesContext context = getFacesContext();
+        context.getApplication().setVariableResolver(new VariableResolver() {
+            public Object resolveVariable(FacesContext context, String name)
+                    throws EvaluationException {
+                return hoge;
+            }
+        });
+        forEach.setItemsName("nameItems");
+        context.addMessage("hogeItems:0", new FacesMessage("a", "b1"));
+        context.addMessage("hogeItems:0", new FacesMessage("a", "b2"));
+
+        forEach.processValidators(context);
+
+        Iterator messages = context.getMessages("hogeItems:0");
+        assertNotNull(messages);
+        FacesMessage fm1 = (FacesMessage) messages.next();
+        assertNotNull(fm1);
+        assertEquals("b1(line : 1)", fm1.getDetail());
+
+        FacesMessage fm2 = (FacesMessage) messages.next();
+        assertNotNull(fm2);
+        assertEquals("b2(line : 1)", fm2.getDetail());
+    }
+
+    protected void tearDown() throws Exception {
+        FacesMessageResource.removeAll();
+        FactoryFinder.releaseFactories();
+        SingletonS2ContainerFactory.destroy();
+    }
+
+    public void testProcessValidators_rowAdd_FacesMessageCompression()
+            throws Exception {
+        TForEach forEach = new TForEach() {
+            public String getClientId(FacesContext context) {
+                return "hogeItems";
+            }
+
+            protected Renderer getRenderer(FacesContext context) {
+                return new Renderer() {
+                };
+            }
+
+        };
+        forEach.setId("hogeItems");
+        forEach.setPageName("hoge");
+        forEach.setRowSize(1);
+        final Hoge2 hoge2 = new Hoge2();
+        hoge2.setName("aaa");
+        MockServletContextImpl servletContext = new MockServletContextImpl(
+                "s2-example");
+        MockHttpServletRequestImpl request = servletContext
+                .createRequest("/hello.html");
+        MockHttpServletResponseImpl response = new MockHttpServletResponseImpl(
+                request);
+        ExternalContext extContext = new ServletExternalContextImpl(
+                servletContext, request, response);
+        SingletonS2ContainerFactory.setContainer(new S2ContainerImpl());
+        SingletonS2ContainerFactory.getContainer().register(
+                ApplicationImpl.class);
+        FactoryFinder.setFactory(FactoryFinder.APPLICATION_FACTORY,
+                ApplicationFactoryImpl.class.getName());
+        ServletFacesContextImpl context = new ServletFacesContextImpl(
+                extContext);
+        context.getApplication().setVariableResolver(new VariableResolver() {
+            public Object resolveVariable(FacesContext context, String name)
+                    throws EvaluationException {
+                return hoge2;
+            }
+        });
+        forEach.setItemsName("nameItems");
+        context.addMessage("hogeItems:0", new FacesMessage("a", "b1"));
+        context.addMessage("hogeItems:0", new FacesMessage("a", "b2"));
+        FacesMessageResource.addFacesMessage("#{hoge.hogeItems}",
+                new FacesMessage("hoge", "foo"));
+
+        forEach.processValidators(context);
+
+        Iterator messages = context.getMessages("hogeItems:0");
+        assertNotNull(messages);
+        FacesMessage fm1 = (FacesMessage) messages.next();
+        assertNotNull(fm1);
+        assertEquals("foo", fm1.getDetail());
     }
 
     public void testProcessMapItem() throws Exception {
@@ -171,6 +277,32 @@ public class TForEachTest extends UIComponentBaseTest {
     }
 
     public static class Hoge {
+        private String name;
+
+        private List nameItems;
+
+        public List getNameItems() {
+            return nameItems;
+        }
+
+        public void setNameItems(List nameItems) {
+            this.nameItems = nameItems;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+    }
+
+    public static class Hoge2 {
+
+        public static final String nameItems_MESSAGE_AGGREGATION = "aaa";
+
         private String name;
 
         private List nameItems;

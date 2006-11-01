@@ -24,6 +24,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.html.HtmlMessage;
 import javax.faces.context.FacesContext;
 
+import org.seasar.framework.log.Logger;
 import org.seasar.teeda.core.util.RendererUtil;
 
 /**
@@ -34,6 +35,9 @@ public class HtmlMessageRenderer extends AbstractHtmlMessagesRenderer {
     public static final String COMPONENT_FAMILY = "javax.faces.Message";
 
     public static final String RENDERER_TYPE = "javax.faces.Message";
+
+    private static final Logger logger = Logger
+            .getLogger(HtmlMessageRenderer.class);
 
     public void encodeEnd(FacesContext context, UIComponent component)
             throws IOException {
@@ -52,8 +56,9 @@ public class HtmlMessageRenderer extends AbstractHtmlMessagesRenderer {
         }
         UIComponent forComponent = htmlMessage.findComponent(forAttr);
         if (forComponent == null) {
-            throw new FacesException("forComponent [" + forAttr
+            logger.debug("[HtmlMessage] forComponent [" + forAttr
                     + "] is null. [id=" + htmlMessage.getId() + "]");
+            return;
         }
         final String clientId = forComponent.getClientId(context);
         Iterator it = context.getMessages(clientId);

@@ -17,9 +17,15 @@ package org.seasar.teeda.extension.render.html;
 
 import java.io.IOException;
 
+import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
+import javax.faces.context.ResponseWriter;
+import javax.faces.internal.FacesMessageUtil;
 
+import org.seasar.framework.util.AssertionUtil;
 import org.seasar.framework.util.StringUtil;
+import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.core.util.RendererUtil;
 import org.seasar.teeda.extension.component.html.THtmlInputCommaText;
 import org.seasar.teeda.extension.component.html.THtmlInputText;
 
@@ -57,10 +63,34 @@ public class THtmlGridInputCommaTextRenderer extends
                 + THtmlGridInputTextRenderer.DISPLAY_NONE;
     }
 
-    protected String createStyleClassAttribute(
-            THtmlInputCommaText htmlInputCommaText) {
-        final String styleClass = super
-                .createStyleClassAttribute(htmlInputCommaText);
+    protected void colorErrorComponent(FacesContext context, UIInput input)
+            throws IOException {
+        AssertionUtil.assertNotNull("context", context);
+        THtmlInputText htmlInputText = (THtmlInputText) input;
+        final ResponseWriter writer = context.getResponseWriter();
+        final String clientId = htmlInputText.getClientId(context);
+        String styleClass = createStyleClassAttribute(htmlInputText);
+        if (FacesMessageUtil.hasMessagesByClientId(context, clientId)
+                || containsClientId(context, clientId)) {
+            final String errorCss = htmlInputText.getErrorStyleClass();
+            if (StringUtil.isEmpty(errorCss)) {
+                return;
+            }
+            if (styleClass != null && styleClass.indexOf(errorCss) >= 0) {
+                return;
+            }
+            if (styleClass != null) {
+                styleClass = styleClass + " " + errorCss;
+            } else {
+                styleClass = errorCss;
+            }
+        }
+        RendererUtil.renderAttribute(writer, JsfConstants.STYLE_CLASS_ATTR,
+                styleClass);
+    }
+
+    protected String createStyleClassAttribute(THtmlInputText htmlInputText) {
+        final String styleClass = htmlInputText.getStyleClass();
         if (StringUtil.isNotBlank(styleClass)) {
             return styleClass + " "
                     + THtmlGridInputTextRenderer.GRID_CELL_EDIT_CLASS_NAME;

@@ -13,7 +13,7 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.core.render.html;
+package org.seasar.teeda.extension.render.html;
 
 import java.io.IOException;
 import java.util.Iterator;
@@ -25,12 +25,13 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
 import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.core.render.html.HtmlMessagesRenderer;
 import org.seasar.teeda.core.util.RendererUtil;
 
 /**
- * @author manhole
+ * @author shot
  */
-public class HtmlMessagesRenderer extends AbstractHtmlMessagesRenderer {
+public class THtmlMessagesRenderer extends HtmlMessagesRenderer {
 
     public static final String COMPONENT_FAMILY = "javax.faces.Messages";
 

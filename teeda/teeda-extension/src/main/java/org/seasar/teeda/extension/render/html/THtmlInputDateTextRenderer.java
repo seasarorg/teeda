@@ -21,7 +21,6 @@ import java.util.Locale;
 import javax.faces.component.html.HtmlInputText;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
-import javax.faces.internal.FacesMessageUtil;
 import javax.faces.internal.IgnoreComponent;
 
 import org.seasar.framework.util.DateConversionUtil;
@@ -112,25 +111,6 @@ public class THtmlInputDateTextRenderer extends AbstractInputExtendTextRenderer 
             return style;
         }
         return style + s;
-    }
-
-    protected void renderStyleClass(FacesContext context,
-            THtmlInputDateText htmlInputDateText, ResponseWriter writer)
-            throws IOException {
-        if (FacesMessageUtil.hasMessagesByClientId(context, htmlInputDateText)) {
-            colorErrorComponent(context, htmlInputDateText);
-        } else {
-            final String styleClass = createStyleClassAttribute(htmlInputDateText);
-            if (StringUtil.isNotBlank(styleClass)) {
-                RendererUtil.renderAttribute(writer,
-                        JsfConstants.STYLE_CLASS_ATTR, styleClass);
-            }
-        }
-    }
-
-    protected String createStyleClassAttribute(
-            THtmlInputDateText htmlInputDateText) {
-        return htmlInputDateText.getStyleClass();
     }
 
     protected void renderOnfocus(THtmlInputDateText htmlInputDateText,
