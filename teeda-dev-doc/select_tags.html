@@ -1,0 +1,142 @@
+<html>
+<body>
+
+<form>
+
+	<h5>SelectBoolean/Checkbox</h5>
+	<input type="checkbox" name="_id0" value="true" />
+
+	<h5>SelectMany/Checkbox</h5>
+	<table>
+		<tr>
+			<td>
+				<label>
+					<input type="checkbox" name="_id0" value="v1" />l1
+				</label>
+			</td>
+			<td>
+				<label>
+					<input type="checkbox" name="_id0" value="v2" />l2
+				</label>
+			</td>
+		</tr>
+	</table>
+	
+	<h5>SelectMany/Listbox</h5>
+	<!--
+	リストボックスとして表現する
+
+	sizeが未指定の場合はoptionの数と同じにする
+		指定されたら指定された値にする
+	UISelectItemGroupの場合はoptgroupにする
+	必要に応じてdisabledをレンダする
+	値が同じ子にはselectedをレンダする
+
+	※size属性は、optgroupのlabel属性がある場合は+1した方が良い?
+		label属性があると、label属性値をレンダリングする1行が必要なため。
+	※※でもoptgroupのlabel属性を渡す口が無いような。。
+	-->
+	<select name="clientId" multiple size="8">
+		<option>a</option>
+		<option disabled>b</option>
+		<option selected>c</option>
+		<option>d</option>
+		<optgroup label="aaaaa">
+			<option>f</option>
+			<option>g</option>
+			<option>h</option>
+		</optgroup>
+	</select>
+	<select name="clientId" multiple size="4">
+		<option>a</option>
+		<option disabled>b</option>
+		<option selected>c</option>
+		<option>d</option>
+	</select>
+
+	<h5>SelectMany/Menu</h5>
+	<!--
+	ドロップダウンメニューとして表現する
+	sizeは1
+	SelectMany/Listboxとの違いは、sizeが必ず1になることだけ。
+	存在意義を疑う。
+	-->
+	<select name="clientId" multiple size="1">
+		<option>a</option>
+		<option disabled>b</option>
+		<option selected>c</option>
+		<option>d</option>
+		<optgroup label="aaaaa">
+			<option>f</option>
+			<option>g</option>
+			<option>h</option>
+		</optgroup>
+	</select>
+
+	<h5>SelectOne/Listbox</h5>
+	<!--
+	multipleではない
+	それ以外はSelectMany/Listboxと同じ
+	-->
+	<select name="clientId" size="7">
+		<option>a</option>
+		<option disabled>b</option>
+		<option selected>c</option>
+		<option>d</option>
+		<optgroup label="aaaaa">
+			<option>f</option>
+			<option>g</option>
+			<option>h</option>
+		</optgroup>
+	</select>
+
+	<h5>SelectOne/Menu</h5>
+	<!--
+	multipleではない (???)
+	それ以外はSelectMany/Menuと同じ
+	-->
+	<select name="clientId" size="1">
+		<option>a</option>
+		<option disabled>b</option>
+		<option selected>c</option>
+		<option>d</option>
+		<optgroup label="aaaaa">
+			<option>f</option>
+			<option>g</option>
+			<option>h</option>
+		</optgroup>
+	</select>
+
+	<h5>SelectOne/Radio</h5>
+	<table id="radioId">
+		<tr>
+			<td>
+				<label>
+				<input type="radio" name="radio/ClientId" value="v1">l1
+				</label>
+			</td>
+			<td>
+				<input type="radio" name="radio/ClientId" value="v2" disabled>l2
+			</td>
+			<td>
+				<input type="radio" name="radio/ClientId" value="v3" checked>l3
+			</td>
+		</tr>
+	</table>
+
+	<!-- ************** -->
+	<hr />
+
+	<select>
+		<option>a</option>
+		<option>b</option>
+		<option>c</option>
+		<option>d</option>
+	</select>
+
+<input type="checkbox" name="_id0" value="true" checked="true" />
+
+</form>
+
+</body>
+</html>
