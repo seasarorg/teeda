@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -28,75 +28,81 @@ import com.gargoylesoftware.htmlunit.html.HtmlTextArea;
  */
 public class TeedaWebTester extends WebTester {
 
-    public IJWebUnitDialog initializeDialog() {
-        return new TeedaHtmlUnitDialog();
-    }
+	public IJWebUnitDialog initializeDialog() {
+		return new TeedaHtmlUnitDialog();
+	}
 
-    public void assertTextEquals(final String id, final String text) {
-        final HtmlElement element = getElementById(id);
-        final String actual = element.asText();
-        Assert.assertEquals(text, actual);
-    }
+	public void assertFormElementPresentById(String formId) {
+		final HtmlElement element = getElementById(formId);
+		final String actual = element.asText();
+		Assert.assertNotNull(actual);
+	}
 
-    public void assertAttributeEquals(final String id,
-        final String attributeName, final String attributeValue) {
-        final HtmlElement element = getElementById(id);
-        final String actual = element.getAttributeValue(attributeName);
-        Assert.assertEquals(attributeValue, actual);
-    }
+	public void assertTextEquals(final String id, final String text) {
+		final HtmlElement element = getElementById(id);
+		final String actual = element.asText();
+		Assert.assertEquals(text, actual);
+	}
 
-    /*
-     * inputへテキストをセットする。
-     */
-    public void setTextById(final String id, final String value) {
-        final HtmlElement element = getElementById(id);
-        if (element instanceof HtmlInput) {
-            final HtmlInput input = (HtmlInput) element;
-            input.setValueAttribute(value);
-        } else if (element instanceof HtmlTextArea) {
-            final HtmlTextArea textArea = (HtmlTextArea) element;
-            textArea.setText(value);
-        } else {
-            Assert.fail("element [" + id
-                + "] is not HtmlElement nor HtmlTextArea: " + element);
-        }
-    }
+	public void assertAttributeEquals(final String id,
+			final String attributeName, final String attributeValue) {
+		final HtmlElement element = getElementById(id);
+		final String actual = element.getAttributeValue(attributeName);
+		Assert.assertEquals(attributeValue, actual);
+	}
 
-    protected HtmlInput getHtmlInputByIdNoException(final String id) {
-        final HtmlElement element = getElementByIdNoException(id);
-        if (element instanceof HtmlInput) {
-            System.out.println(element);
-            return (HtmlInput) element;
-        }
-        return null;
-    }
+	/*
+	 * inputへテキストをセットする。
+	 */
+	public void setTextById(final String id, final String value) {
+		final HtmlElement element = getElementById(id);
+		if (element instanceof HtmlInput) {
+			final HtmlInput input = (HtmlInput) element;
+			input.setValueAttribute(value);
+		} else if (element instanceof HtmlTextArea) {
+			final HtmlTextArea textArea = (HtmlTextArea) element;
+			textArea.setText(value);
+		} else {
+			Assert.fail("element [" + id
+					+ "] is not HtmlElement nor HtmlTextArea: " + element);
+		}
+	}
 
-    protected HtmlInput getHtmlInputById(final String id) {
-        final HtmlElement element = getElementById(id);
-        if (element instanceof HtmlInput) {
-            return (HtmlInput) element;
-        }
-        Assert.fail("element [" + id + "] is not HtmlInput: " + element);
-        throw new RuntimeException();
-    }
+	protected HtmlInput getHtmlInputByIdNoException(final String id) {
+		final HtmlElement element = getElementByIdNoException(id);
+		if (element instanceof HtmlInput) {
+			System.out.println(element);
+			return (HtmlInput) element;
+		}
+		return null;
+	}
 
-    /*
-     * elementが存在しない場合はfailする。
-     */
-    private HtmlElement getElementById(final String id) {
-        final HtmlElement element = getElementByIdNoException(id);
-        Assert.assertNotNull(element);
-        return element;
-    }
+	protected HtmlInput getHtmlInputById(final String id) {
+		final HtmlElement element = getElementById(id);
+		if (element instanceof HtmlInput) {
+			return (HtmlInput) element;
+		}
+		Assert.fail("element [" + id + "] is not HtmlInput: " + element);
+		throw new RuntimeException();
+	}
 
-    private HtmlElement getElementByIdNoException(final String id) {
-        final TeedaHtmlUnitDialog dialog = getTeedaHtmlUnitDialog();
-        final HtmlElement element = dialog.getElementById(id);
-        return element;
-    }
+	/*
+	 * elementが存在しない場合はfailする。
+	 */
+	private HtmlElement getElementById(final String id) {
+		final HtmlElement element = getElementByIdNoException(id);
+		Assert.assertNotNull(element);
+		return element;
+	}
 
-    private TeedaHtmlUnitDialog getTeedaHtmlUnitDialog() {
-        return (TeedaHtmlUnitDialog) getDialog();
-    }
+	private HtmlElement getElementByIdNoException(final String id) {
+		final TeedaHtmlUnitDialog dialog = getTeedaHtmlUnitDialog();
+		final HtmlElement element = dialog.getElementById(id);
+		return element;
+	}
+
+	private TeedaHtmlUnitDialog getTeedaHtmlUnitDialog() {
+		return (TeedaHtmlUnitDialog) getDialog();
+	}
 
 }
