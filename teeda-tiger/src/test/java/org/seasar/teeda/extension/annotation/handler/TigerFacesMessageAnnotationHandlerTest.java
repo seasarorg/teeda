@@ -18,9 +18,15 @@ public class TigerFacesMessageAnnotationHandlerTest extends TeedaTestCase {
 
 	public void setUp() throws Exception {
 		register(HogeBean.class, "hogeBean");
+		register(FooBean.class, "fooBean");
+		register(BarBean.class, "barBean");
 	}
 
-	public void testRegister() throws Exception {
+	protected void tearDown() throws Exception {
+		FacesMessageResource.removeAll();
+	}
+
+	public void testRegister_withoutId() throws Exception {
 		TigerFacesMessageAnnotationHandler handler = new TigerFacesMessageAnnotationHandler();
 		handler.registerFacesMessages("hogeBean");
 		FacesMessage facesMessage = FacesMessageResource
@@ -28,6 +34,26 @@ public class TigerFacesMessageAnnotationHandlerTest extends TeedaTestCase {
 		assertNotNull(facesMessage);
 		assertEquals("hoge", facesMessage.getSummary());
 		assertEquals("foo", facesMessage.getDetail());
+	}
+
+	public void testRegister_withId() throws Exception {
+		getApplication()
+				.setMessageBundle(
+						"org.seasar.teeda.extension.annotation.handler.TestMessagesTiger");
+		TigerFacesMessageAnnotationHandler handler = new TigerFacesMessageAnnotationHandler();
+		handler.registerFacesMessages("barBean");
+		FacesMessage facesMessage = FacesMessageResource
+				.getFacesMessage("#{barBean.aaaItems}");
+		assertNotNull(facesMessage);
+		assertEquals("HOGE", facesMessage.getSummary());
+	}
+
+	public void testRegister_noAnnotation() throws Exception {
+		TigerFacesMessageAnnotationHandler handler = new TigerFacesMessageAnnotationHandler();
+		handler.registerFacesMessages("fooBean");
+		FacesMessage facesMessage = FacesMessageResource
+				.getFacesMessage("#{fooBean.aaaItems}");
+		assertNull(facesMessage);
 	}
 
 	public static class HogeBean {
@@ -44,4 +70,33 @@ public class TigerFacesMessageAnnotationHandlerTest extends TeedaTestCase {
 		}
 
 	}
+
+	public static class FooBean {
+
+		private List aaaItems;
+
+		public List getAaaItems() {
+			return aaaItems;
+		}
+
+		public void setAaaItems(List aaaItems) {
+			this.aaaItems = aaaItems;
+		}
+	}
+
+	public static class BarBean {
+
+		@MessageAggregation(id = "hoge")
+		private List aaaItems;
+
+		public List getAaaItems() {
+			return aaaItems;
+		}
+
+		public void setAaaItems(List aaaItems) {
+			this.aaaItems = aaaItems;
+		}
+
+	}
+
 }
