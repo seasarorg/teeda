@@ -39,28 +39,28 @@ public class NullLabelStrategyImpl implements NullLabelStrategy {
         this.forceNullLabel = forceNullLabel;
     }
 
-    public boolean isRequired(FacesContext context, String value) {
+    public boolean isNullLabelRequired(FacesContext context, String value) {
         if (forceNullLabel != null) {
             return forceNullLabel.booleanValue();
         }
         final Application application = context.getApplication();
         ValueBinding vb = application.createValueBinding(value);
         if (vb.getType(context).isPrimitive()) {
-            return true;
+            return false;
         }
         Validator validator = ValidatorResource.getValidator(value);
         if (validator instanceof TRequiredValidator) {
-            return true;
+            return false;
         }
         if (validator instanceof ValidatorChain) {
             ValidatorChain chain = (ValidatorChain) validator;
             for (int i = 0; i < chain.getValidatorSize(); ++i) {
                 if (chain.getValidator(i) instanceof TRequiredValidator) {
-                    return true;
+                    return false;
                 }
             }
         }
-        return false;
+        return true;
     }
 
 }

@@ -43,7 +43,8 @@ public class TUISelectItems extends UISelectItems {
 
     private String itemValue = "value";
 
-    private boolean required = false;
+    //default : output nullLabel.
+    private boolean nullLabelRequired = true;
 
     public String getItemLabel() {
         return itemLabel;
@@ -61,12 +62,12 @@ public class TUISelectItems extends UISelectItems {
         this.itemValue = itemValue;
     }
 
-    public boolean isRequired() {
-        return required;
+    public boolean isNullLabelRequired() {
+        return nullLabelRequired;
     }
 
-    public void setRequired(boolean required) {
-        this.required = required;
+    public void setNullLabelRequired(boolean required) {
+        this.nullLabelRequired = required;
     }
 
     public Object getValue() {
@@ -75,7 +76,7 @@ public class TUISelectItems extends UISelectItems {
             return value;
         }
         List list = new ArrayList();
-        if (!required && value != null) {
+        if (nullLabelRequired && value != null) {
             SelectItem si = new SelectItem();
             si.setValue("");
             FacesMessage mes = FacesMessageUtil.getMessage(FacesContext
@@ -134,7 +135,7 @@ public class TUISelectItems extends UISelectItems {
         values[0] = super.saveState(context);
         values[1] = itemValue;
         values[2] = itemLabel;
-        values[3] = Boolean.valueOf(required);
+        values[3] = Boolean.valueOf(nullLabelRequired);
         return values;
     }
 
@@ -143,6 +144,6 @@ public class TUISelectItems extends UISelectItems {
         super.restoreState(context, values[0]);
         itemValue = (String) values[1];
         itemLabel = (String) values[2];
-        required = ((Boolean) values[3]).booleanValue();
+        nullLabelRequired = ((Boolean) values[3]).booleanValue();
     }
 }

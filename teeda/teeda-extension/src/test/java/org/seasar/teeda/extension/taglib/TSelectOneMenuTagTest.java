@@ -60,7 +60,7 @@ public class TSelectOneMenuTagTest extends TeedaTestCase {
         TUISelectItems child = (TUISelectItems) component.getChildren().get(0);
         assertEquals(items, child.getValueBinding("value")
                 .getExpressionString());
-        assertTrue(child.isRequired());
+        assertFalse(child.isNullLabelRequired());
     }
 
     public void testSetProperties_required_primitive() throws Exception {
@@ -84,7 +84,7 @@ public class TSelectOneMenuTagTest extends TeedaTestCase {
         TUISelectItems child = (TUISelectItems) component.getChildren().get(0);
         assertEquals(items, child.getValueBinding("value")
                 .getExpressionString());
-        assertTrue(child.isRequired());
+        assertFalse(child.isNullLabelRequired());
     }
 
     public void testSetProperties_notrequired() throws Exception {
@@ -107,7 +107,7 @@ public class TSelectOneMenuTagTest extends TeedaTestCase {
         TUISelectItems child = (TUISelectItems) component.getChildren().get(0);
         assertEquals(items, child.getValueBinding("value")
                 .getExpressionString());
-        assertFalse(child.isRequired());
+        assertTrue(child.isNullLabelRequired());
     }
 
     private HtmlSelectOneMenu createHtmlSelectOneMenu() {

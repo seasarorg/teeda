@@ -101,12 +101,12 @@ public abstract class TSelectTagBase extends TInputTagBase {
             if (itemLabel != null) {
                 child.setItemLabel(itemLabel);
             }
-            child.setRequired(isRequired());
+            child.setNullLabelRequired(isNullLabelRequired());
             component.getChildren().add(child);
         }
     }
 
-    protected boolean isRequired() {
-        return true;
+    protected boolean isNullLabelRequired() {
+        return false;
     }
 }

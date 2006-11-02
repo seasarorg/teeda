@@ -36,7 +36,7 @@ public class NullLabelStrategyImplTest extends TeedaTestCase {
     public void testIsRequired_forced() throws Exception {
         NullLabelStrategyImpl helper = new NullLabelStrategyImpl();
         helper.setForceNullLabel(Boolean.TRUE);
-        assertTrue(helper.isRequired(getFacesContext(), "aaa"));
+        assertTrue(helper.isNullLabelRequired(getFacesContext(), "aaa"));
     }
 
     public void testIsRequired_noForce() throws Exception {
@@ -50,7 +50,7 @@ public class NullLabelStrategyImplTest extends TeedaTestCase {
             }
 
         });
-        assertTrue(helper.isRequired(getFacesContext(), "aaa"));
+        assertFalse(helper.isNullLabelRequired(getFacesContext(), "aaa"));
     }
 
     public void testIsRequired_noForce2() throws Exception {
@@ -65,7 +65,7 @@ public class NullLabelStrategyImplTest extends TeedaTestCase {
 
         });
         ValidatorResource.addValidator("aaa", new TRequiredValidator());
-        assertTrue(helper.isRequired(getFacesContext(), "aaa"));
+        assertFalse(helper.isNullLabelRequired(getFacesContext(), "aaa"));
     }
 
     public void testIsRequired_noForce3() throws Exception {
@@ -82,7 +82,7 @@ public class NullLabelStrategyImplTest extends TeedaTestCase {
         ValidatorChain chain = new ValidatorChain();
         chain.add(new TRequiredValidator());
         ValidatorResource.addValidator("aaa", chain);
-        assertTrue(helper.isRequired(getFacesContext(), "aaa"));
+        assertFalse(helper.isNullLabelRequired(getFacesContext(), "aaa"));
     }
 
     public void testIsRequired_noForce4_noMatch() throws Exception {
@@ -99,7 +99,7 @@ public class NullLabelStrategyImplTest extends TeedaTestCase {
         ValidatorChain chain = new ValidatorChain();
         chain.add(new LengthValidator());
         ValidatorResource.addValidator("aaa", chain);
-        assertFalse(helper.isRequired(getFacesContext(), "aaa"));
+        assertTrue(helper.isNullLabelRequired(getFacesContext(), "aaa"));
     }
 
 }

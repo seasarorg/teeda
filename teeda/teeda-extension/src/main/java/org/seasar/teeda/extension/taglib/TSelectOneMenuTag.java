@@ -20,6 +20,7 @@ import javax.faces.context.FacesContext;
 import org.seasar.teeda.core.util.DIContainerUtil;
 import org.seasar.teeda.extension.component.html.THtmlSelectOneMenu;
 import org.seasar.teeda.extension.util.NullLabelStrategy;
+import org.seasar.teeda.extension.util.NullLabelStrategyImpl;
 
 /**
  * @author higa
@@ -29,6 +30,8 @@ public class TSelectOneMenuTag extends TSelectTagBase {
 
     private static final String RENDERER_TYPE = "javax.faces.Menu";
 
+    private static final NullLabelStrategy defaultNullLabelStrategy = new NullLabelStrategyImpl();
+
     public String getComponentType() {
         return THtmlSelectOneMenu.COMPONENT_TYPE;
     }
@@ -37,15 +40,18 @@ public class TSelectOneMenuTag extends TSelectTagBase {
         return RENDERER_TYPE;
     }
 
-    protected boolean isRequired() {
+    protected boolean isNullLabelRequired() {
         final String v = getValue();
         FacesContext context = getFacesContext();
         if (context == null) {
             context = FacesContext.getCurrentInstance();
         }
-        NullLabelStrategy helper = (NullLabelStrategy) DIContainerUtil
+        NullLabelStrategy strategy = (NullLabelStrategy) DIContainerUtil
                 .getComponentNoException(NullLabelStrategy.class);
-        return helper.isRequired(context, v);
+        if (strategy == null) {
+            strategy = defaultNullLabelStrategy;
+        }
+        return strategy.isNullLabelRequired(context, v);
     }
 
 }

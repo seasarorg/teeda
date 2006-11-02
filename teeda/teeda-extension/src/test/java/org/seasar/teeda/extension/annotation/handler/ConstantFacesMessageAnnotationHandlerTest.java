@@ -55,6 +55,17 @@ public class ConstantFacesMessageAnnotationHandlerTest extends TeedaTestCase {
         assertEquals("bar", fm.getDetail());
     }
 
+    public void testRegisterFacesMessage_allowNosuchFieldForGrid()
+            throws Exception {
+        ConstantFacesMessageAnnotationHandler handler = new ConstantFacesMessageAnnotationHandler();
+        getContainer().register(Hoge3Bean.class, "hoge3Bean");
+        handler.registerFacesMessages("hoge3Bean");
+        FacesMessage fm = FacesMessageResource
+                .getFacesMessage("#{hoge3Bean.hogeItems}");
+        assertEquals("foo", fm.getSummary());
+        assertEquals("bar", fm.getDetail());
+    }
+
     public static class HogeBean {
 
         public static final String aaaItems_MESSAGE_AGGREGATION = "id=aaa";
@@ -74,6 +85,22 @@ public class ConstantFacesMessageAnnotationHandlerTest extends TeedaTestCase {
     public static class Hoge2Bean {
 
         public static final String aaaItems_MESSAGE_AGGREGATION = "summary=foo, detail=bar";
+
+        private List aaaItems;
+
+        public List getAaaItems() {
+            return aaaItems;
+        }
+
+        public void setAaaItems(List aaaItems) {
+            this.aaaItems = aaaItems;
+        }
+
+    }
+
+    public static class Hoge3Bean {
+
+        public static final String hogeItems_MESSAGE_AGGREGATION = "summary=foo, detail=bar";
 
         private List aaaItems;
 

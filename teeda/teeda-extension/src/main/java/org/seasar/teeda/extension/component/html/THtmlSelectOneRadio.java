@@ -61,11 +61,15 @@ public class THtmlSelectOneRadio extends HtmlSelectOneRadio {
                 if (items == null) {
                     items = new TUISelectItems();
                 }
-                items.setRequired(true);
+                setNoNullLabel(items);
                 items.setValue(value);
                 this.getChildren().add(items);
             }
         }
+    }
+
+    private static void setNoNullLabel(TUISelectItems items) {
+        items.setNullLabelRequired(false);
     }
 
 }

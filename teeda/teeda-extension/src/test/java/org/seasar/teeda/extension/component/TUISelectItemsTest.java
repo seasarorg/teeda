@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -26,7 +26,7 @@ import org.seasar.teeda.core.unit.TeedaTestCase;
 
 /**
  * @author shot
- * 
+ *
  */
 public class TUISelectItemsTest extends TeedaTestCase {
 
@@ -43,20 +43,23 @@ public class TUISelectItemsTest extends TeedaTestCase {
     }
 
     public void testGetValue_dto() throws Exception {
-        List list = new ArrayList();
-        HogeDto h1 = new HogeDto();
-        h1.setLabel("aaa");
-        h1.setValue("1");
-        list.add(h1);
         TUISelectItems items = new TUISelectItems();
-        items.setValue(list);
-        List list2 = (List) items.getValue();
-        assertNotNull(list2);
-        SelectItem si = (SelectItem) list2.get(0);
+        {
+            List list = new ArrayList();
+            HogeDto h = new HogeDto();
+            h.setLabel("aaa");
+            h.setValue("1");
+            list.add(h);
+            items.setValue(list);
+        }
+        //Assert
+        List list = (List) items.getValue();
+        assertNotNull(list);
+        SelectItem si = (SelectItem) list.get(0);
         System.out.println(si.getLabel());
         assertNotNull(si.getLabel());
         assertEquals("", si.getValue());
-        si = (SelectItem) list2.get(1);
+        si = (SelectItem) list.get(1);
         assertEquals("aaa", si.getLabel());
         assertEquals("1", si.getValue());
     }
@@ -83,7 +86,7 @@ public class TUISelectItemsTest extends TeedaTestCase {
         h1.setValue("1");
         list.add(h1);
         TUISelectItems items = new TUISelectItems();
-        items.setRequired(true);
+        items.setNullLabelRequired(false);
         items.setValue(list);
         List list2 = (List) items.getValue();
         assertNotNull(list2);

@@ -53,9 +53,12 @@ public class ConstantFacesMessageAnnotationHandler extends
         }
         String fieldName = fieldString.substring(0, fieldString.length()
                 - ExtensionConstants.FACES_MESSAGE_AGGREGATION_SUFFIX.length());
-        if (!beanDesc.hasPropertyDesc(fieldName)) {
-            return;
-        }
+        //Gridのコンポーネントは、Pageに無いexpression(#{hogePage.aaaGrid})になるので、チェックをはずす
+        /*
+         if (!beanDesc.hasPropertyDesc(fieldName)) {
+         return;
+         }
+         */
         String s = (String) FieldUtil.get(field, null);
         Map m = ConstantAnnotationUtil.convertExpressionToMap(s);
         String id = (String) m.remove("id");
