@@ -25,6 +25,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlTextArea;
 
 /**
  * @author manhole
+ * @author shot
  */
 public class TeedaWebTester extends WebTester {
 
