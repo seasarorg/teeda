@@ -21,10 +21,9 @@ import java.util.Map;
 import javax.faces.application.FacesMessage;
 
 import org.seasar.framework.beans.BeanDesc;
+import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.framework.beans.util.BeanUtil;
-import org.seasar.framework.container.S2Container;
 import org.seasar.framework.container.util.ConstantAnnotationUtil;
-import org.seasar.framework.convention.NamingConvention;
 import org.seasar.framework.util.FieldUtil;
 import org.seasar.teeda.extension.ExtensionConstants;
 
@@ -34,19 +33,16 @@ import org.seasar.teeda.extension.ExtensionConstants;
 public class ConstantFacesMessageAnnotationHandler extends
         AbstractFacesMessageAnnotationHandler {
 
-    protected void processFields(S2Container container, Class componentClass,
-            String componentName, NamingConvention namingConvention,
-            BeanDesc beanDesc) {
+    protected void processFields(Class componentClass, String componentName) {
+        final BeanDesc beanDesc = BeanDescFactory.getBeanDesc(componentClass);
         final Field[] fields = componentClass.getDeclaredFields();
         for (int i = 0; i < fields.length; ++i) {
-            processField(container, componentClass, componentName,
-                    namingConvention, beanDesc, fields[i]);
+            processField(componentName, beanDesc, fields[i]);
         }
     }
 
-    protected void processField(S2Container container, Class componentClass,
-            String componentName, NamingConvention namingConvention,
-            BeanDesc beanDesc, Field field) {
+    protected void processField(String componentName, BeanDesc beanDesc,
+            Field field) {
         boolean isConstantAnnotation = ConstantAnnotationUtil
                 .isConstantAnnotation(field);
         final String fieldString = field.getName();

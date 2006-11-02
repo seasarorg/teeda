@@ -20,12 +20,10 @@ import javax.faces.context.FacesContext;
 import javax.faces.internal.FacesMessageResource;
 import javax.faces.internal.FacesMessageUtil;
 
-import org.seasar.framework.beans.BeanDesc;
-import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.framework.container.ComponentDef;
 import org.seasar.framework.container.S2Container;
 import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
-import org.seasar.framework.convention.NamingConvention;
+import org.seasar.framework.util.AssertionUtil;
 import org.seasar.teeda.core.util.BindingUtil;
 
 /**
@@ -34,16 +32,13 @@ import org.seasar.teeda.core.util.BindingUtil;
 public abstract class AbstractFacesMessageAnnotationHandler implements
         FacesMessageAnnotationHandler {
 
-    //TODO refactor needed because of too many args.
-    public void registerFacesMessages(String componentName) {
+    public void registerFacesMessages(final String componentName) {
+        AssertionUtil.assertNotNull("componentName", componentName);
         final S2Container container = getContainer();
-        NamingConvention namingConvention = (NamingConvention) container
-                .getComponent(NamingConvention.class);
-        ComponentDef componentDef = container.getComponentDef(componentName);
-        Class componentClass = componentDef.getComponentClass();
-        BeanDesc beanDesc = BeanDescFactory.getBeanDesc(componentClass);
-        processFields(container, componentClass, componentName,
-                namingConvention, beanDesc);
+        final ComponentDef componentDef = container
+                .getComponentDef(componentName);
+        final Class componentClass = componentDef.getComponentClass();
+        processFields(componentClass, componentName);
     }
 
     protected void registerFacesMessage(String componentName,
@@ -53,9 +48,8 @@ public abstract class AbstractFacesMessageAnnotationHandler implements
         FacesMessageResource.addFacesMessage(expression, message);
     }
 
-    protected abstract void processFields(S2Container container,
-            Class componentClass, String componentName,
-            NamingConvention namingConvention, BeanDesc beanDesc);
+    protected abstract void processFields(Class componentClass,
+            String componentName);
 
     protected FacesMessage createFacesMessage(String id) {
         FacesContext context = FacesContext.getCurrentInstance();
