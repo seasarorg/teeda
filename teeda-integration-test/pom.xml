@@ -28,7 +28,7 @@
           <artifactId>maven-eclipse-plugin</artifactId>
           <configuration>
             <outputDirectory>build/classes</outputDirectory>
-            <downloadSources>true</downloadSources>
+            <downloadSources>false</downloadSources>
           </configuration>
         </plugin>
       </plugins>
@@ -100,7 +100,7 @@
     <dependency>
       <groupId>org.seasar.teeda</groupId>
       <artifactId>teeda-webunit</artifactId>
-      <version>0.1.0</version>
+      <version>0.1.1-SNAPSHOT</version>
       <type>jar</type>
       <scope>test</scope>
     </dependency>
