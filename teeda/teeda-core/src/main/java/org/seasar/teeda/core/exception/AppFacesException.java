@@ -9,13 +9,14 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
 package org.seasar.teeda.core.exception;
 
 import javax.faces.FacesException;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.internal.FacesMessageUtil;
 
@@ -30,6 +31,10 @@ public class AppFacesException extends FacesException {
 
     private Object[] args;
 
+    private String message;
+
+    private FacesMessage facesMessage;
+
     public AppFacesException() {
     }
 
@@ -42,10 +47,18 @@ public class AppFacesException extends FacesException {
     }
 
     public AppFacesException(String messageCode, Object[] args, Throwable cause) {
-        super(FacesMessageUtil.getMessage(FacesContext.getCurrentInstance(),
-                messageCode, args).getDetail(), cause);
+        super(cause);
+        final FacesContext context = FacesContext.getCurrentInstance();
+        final FacesMessage facesMessage = FacesMessageUtil.getMessage(context,
+                messageCode, args);
+        String message = facesMessage.getDetail();
+        if (message == null) {
+            message = facesMessage.getSummary();
+        }
         this.messageCode = messageCode;
         this.args = args;
+        this.message = message;
+        this.facesMessage = facesMessage;
     }
 
     public final String getMessageCode() {
@@ -55,4 +68,17 @@ public class AppFacesException extends FacesException {
     public final Object[] getArgs() {
         return args;
     }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public FacesMessage getFacesMessage() {
+        return facesMessage;
+    }
+
+    public void setFacesMessage(FacesMessage facesMessage) {
+        this.facesMessage = facesMessage;
+    }
+
 }
