@@ -107,7 +107,10 @@ public class FacesMessage implements Serializable {
         this.summary = summary;
     }
 
-    public static class Severity extends Object implements Comparable {
+    public static class Severity extends Object implements Comparable,
+            Serializable {
+        private static final long serialVersionUID = 1L;
+
         private String type;
 
         private int ordinal;
