@@ -51,7 +51,7 @@ public class LabelUtil {
             return null;
         }
         String pageName = nc.fromPathToPageName(viewId);
-        String key = getLabelKeySuffix(nc, pageName) + defaultKey;
+        String key = getLabelKeySuffix(nc, pageName) + "." + defaultKey;
         String propertiesName = getPropertiesName(nc, pageName);
         String defaultPropertiesName = getDefaultApplicationPropertiesName(nc,
                 pageName);
