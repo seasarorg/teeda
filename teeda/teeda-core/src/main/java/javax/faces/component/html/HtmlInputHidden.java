@@ -16,9 +16,13 @@
 package javax.faces.component.html;
 
 import javax.faces.component.UIInput;
+import javax.faces.context.FacesContext;
+
+import org.seasar.framework.util.AssertionUtil;
 
 /**
  * @author shot
+ * @author higa
  */
 public class HtmlInputHidden extends UIInput {
 
@@ -30,4 +34,24 @@ public class HtmlInputHidden extends UIInput {
         setRendererType(DEFAULT_RENDERER_TYPE);
     }
 
+    public void processValidators(FacesContext context) {
+        AssertionUtil.assertNotNull("context", context);
+        if (!isRendered()) {
+            return;
+        }
+        super.processValidators(context);
+        if (!isImmediate()) {
+            executeValidate(context);
+        }
+        try {
+            updateModel(context);
+        } catch (RuntimeException e) {
+            context.renderResponse();
+            throw e;
+        }
+    }
+
+    public void processUpdates(FacesContext context) {
+        AssertionUtil.assertNotNull("context", context);
+    }
 }

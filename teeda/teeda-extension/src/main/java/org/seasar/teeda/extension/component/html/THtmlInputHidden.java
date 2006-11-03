@@ -15,15 +15,13 @@
  */
 package org.seasar.teeda.extension.component.html;
 
-import javax.faces.component.UIInput;
-import javax.faces.context.FacesContext;
-
-import org.seasar.framework.util.AssertionUtil;
+import javax.faces.component.html.HtmlInputHidden;
 
 /**
  * @author manhole
+ * @author higa
  */
-public class THtmlInputHidden extends UIInput {
+public class THtmlInputHidden extends HtmlInputHidden {
 
     public static final String COMPONENT_TYPE = "org.seasar.teeda.extension.HtmlInputHidden";
 
@@ -31,26 +29,5 @@ public class THtmlInputHidden extends UIInput {
 
     public THtmlInputHidden() {
         setRendererType(DEFAULT_RENDERER_TYPE);
-    }
-
-    public void processValidators(FacesContext context) {
-        AssertionUtil.assertNotNull("context", context);
-        if (!isRendered()) {
-            return;
-        }
-        super.processValidators(context);
-        if (!isImmediate()) {
-            executeValidate(context);
-        }
-        try {
-            updateModel(context);
-        } catch (RuntimeException e) {
-            context.renderResponse();
-            throw e;
-        }
-    }
-
-    public void processUpdates(FacesContext context) {
-        AssertionUtil.assertNotNull("context", context);
     }
 }
