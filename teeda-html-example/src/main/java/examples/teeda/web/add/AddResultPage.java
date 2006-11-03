@@ -34,8 +34,4 @@ public class AddResultPage {
 		this.result = result;
 	}
 
-	public String initialize() {
-		result = new Integer(arg1.intValue() + arg2.intValue());
-		return null;
-	}
 }

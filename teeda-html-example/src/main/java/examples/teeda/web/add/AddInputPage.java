@@ -14,6 +14,13 @@ public class AddInputPage {
 
 	private Integer arg2;
 
+	private Integer result;
+
+	public String doCalculate() {
+		result = new Integer(arg1.intValue() + arg2.intValue());
+		return "addResult";
+	}
+
 	public Integer getArg1() {
 		return arg1;
 	}
@@ -28,6 +35,14 @@ public class AddInputPage {
 
 	public void setArg2(Integer arg2) {
 		this.arg2 = arg2;
+	}
+
+	public Integer getResult() {
+		return result;
+	}
+
+	public void setResult(Integer result) {
+		this.result = result;
 	}
 
 }
