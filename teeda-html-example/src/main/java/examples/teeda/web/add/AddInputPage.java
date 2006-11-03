@@ -10,8 +10,6 @@ public class AddInputPage {
 
 	public static final String arg2_lengthValidator = "minimum=3";
 
-	public static final String arg1_integerConverter = null;
-
 	private Integer arg1;
 
 	private Integer arg2;
@@ -32,7 +30,4 @@ public class AddInputPage {
 		this.arg2 = arg2;
 	}
 
-	public String initialize() {
-		return null;
-	}
 }

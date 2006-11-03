@@ -4,20 +4,22 @@
 <title>Add</title>
 </head>
 <body>
-<span id="messages"/>
 <form id="addForm">
+<div>
+<span id="messages"></span>
+</div>
 <table>
 <tr>
 <td></td><td><input type="text" id="arg1"/></td>
-<td><span id="arg1Message"/></td>
+<td><span id="arg1Message"></span></td>
 </tr>
 <tr>
 <td> + </td>
 <td><input type="text" id="arg2"/></td>
-<td><span id="arg2Message"/></td>
+<td><span id="arg2Message"></span></td>
 </tr>
 </table>
-<input type="submit" value="calculate" id="goAddResult"/>
+<input type="button" value="calculate" id="goAddResult" onclick="location.href='./addResult.html'"/>
 </form>
 </body>
 </html>
