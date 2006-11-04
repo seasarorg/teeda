@@ -1,12 +1,12 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script language="JavaScript" type="text/javascript" src="../../../main/js/kumu/kumu.js"></script>
 <script>
 var o = {
-  'test' : '�Ă���',
-  'test1' : '�Ă���1',
+  'test' : 'てすと',
+  'test1' : 'てすと1',
   'test2' : [
   {
     'no':1,
@@ -30,7 +30,7 @@ var o = {
   }]
 }
 
-//�w�肵��id���̗v�f��innerHTML�Œl���Z�b�g����֐����쐬
+//指定したid名の要素にinnerHTMLで値をセットする関数を作成
 function functionFactory(name){
   return new Function(name, '$i(\''+name+'\').innerHTML = '+name).multiple();
 }
