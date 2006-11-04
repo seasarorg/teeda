@@ -30,12 +30,12 @@ import org.seasar.teeda.core.unit.TeedaTestCase;
 /**
  * @author shot
  */
-public class ActionThrowsInterceptorTest extends TeedaTestCase {
+public class AppFacesExceptionThrowsInterceptorTest extends TeedaTestCase {
 
     public void testHandleThrowable() throws Throwable {
         getApplication().setMessageBundle(
                 ClassUtil.getPackageName(this.getClass()) + ".TestMessages");
-        ActionThrowsInterceptor interceptor = new ActionThrowsInterceptor();
+        AppFacesExceptionThrowsInterceptor interceptor = new AppFacesExceptionThrowsInterceptor();
         AppFacesException ex = new AppFacesException("aaa");
         interceptor.handleThrowable(ex, new MethodInvocation() {
 

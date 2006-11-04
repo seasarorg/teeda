@@ -26,7 +26,7 @@ import org.seasar.teeda.core.exception.AppFacesException;
  * @author shot
  *
  */
-public class ActionThrowsInterceptor extends ThrowsInterceptor {
+public class AppFacesExceptionThrowsInterceptor extends ThrowsInterceptor {
 
     private static final long serialVersionUID = 1L;
 
