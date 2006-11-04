@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -21,6 +21,7 @@ import javax.faces.application.FacesMessage.Severity;
 
 import junit.framework.TestCase;
 
+import org.seasar.teeda.core.render.Base64EncodeConverter;
 import org.seasar.teeda.core.unit.ExceptionAssert;
 
 /**
@@ -129,4 +130,16 @@ public class FacesMessageTest extends TestCase {
         }
     }
 
+    public void testSerialize() throws Exception {
+        FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "a",
+                "b");
+        Base64EncodeConverter converter = new Base64EncodeConverter();
+        String str = converter.getAsEncodeString(fm);
+        Object obj = converter.getAsDecodeObject(str);
+        assertNotNull(obj);
+        assertTrue(obj instanceof FacesMessage);
+        FacesMessage f = (FacesMessage) obj;
+        assertEquals(FacesMessage.SEVERITY_ERROR.getOrdinal(), f.getSeverity()
+                .getOrdinal());
+    }
 }
