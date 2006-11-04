@@ -14,4 +14,7 @@
 	<component name="ajaxRenderBean" class="examples.teeda.ajax.AjaxRenderBean" instance="request">
 	    <meta name="teeda-ajax"/>
 	</component>
+	<component name="nameCheckBean" class="examples.teeda.ajax.NameCheckBean" instance="request">
+	    <meta name="teeda-ajax"/>
+	</component>
 </components>
