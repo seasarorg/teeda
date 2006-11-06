@@ -27,6 +27,8 @@ import javax.faces.validator.ValidatorException;
 
 import org.seasar.framework.util.AssertionUtil;
 import org.seasar.framework.util.NumberConversionUtil;
+import org.seasar.framework.util.StringUtil;
+import org.seasar.teeda.extension.util.ValidatorUtil;
 
 /**
  * @author shot
@@ -37,7 +39,13 @@ public class TGreaterThanConstantValidator implements Validator, StateHolder {
 
     private boolean transientValue = false;
 
+    //TODO targetプロパティは、他の拡張Validatorにあわせて、どのボタンが押されたかに使用すべき（すぐには修正できない）。
     private Object target = new Integer(0);
+
+    //どのボタンが押されたかを指定
+    private String targetCommand = null;
+
+    private String[] targetCommands;
 
     private String messageId = null;
 
@@ -49,6 +57,9 @@ public class TGreaterThanConstantValidator implements Validator, StateHolder {
             return;
         }
         if (target == null) {
+            return;
+        }
+        if (!ValidatorUtil.isTargetCommand(context, targetCommands)) {
             return;
         }
         Object t = NumberConversionUtil.convertNumber(value.getClass(),
@@ -84,9 +95,10 @@ public class TGreaterThanConstantValidator implements Validator, StateHolder {
     }
 
     public Object saveState(FacesContext context) {
-        Object values[] = new Object[2];
+        Object values[] = new Object[3];
         values[0] = messageId;
         values[1] = target;
+        values[2] = targetCommand;
         return values;
     }
 
@@ -94,6 +106,8 @@ public class TGreaterThanConstantValidator implements Validator, StateHolder {
         Object values[] = (Object[]) state;
         messageId = (String) values[0];
         target = values[1];
+        targetCommand = (String) values[2];
+        setTargetCommand(targetCommand);
     }
 
     public Object getTarget() {
@@ -102,5 +116,17 @@ public class TGreaterThanConstantValidator implements Validator, StateHolder {
 
     public void setTarget(Object target) {
         this.target = target;
+    }
+
+    public String getTargetCommand() {
+        return targetCommand;
+    }
+
+    public void setTargetCommand(String targetCommand) {
+        this.targetCommand = targetCommand;
+        if (StringUtil.isEmpty(targetCommand)) {
+            return;
+        }
+        targetCommands = StringUtil.split(targetCommand, ", ");
     }
 }

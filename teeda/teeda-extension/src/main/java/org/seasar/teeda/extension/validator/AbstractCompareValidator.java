@@ -23,7 +23,9 @@ import javax.faces.validator.ValidatorException;
 
 import org.seasar.framework.exception.EmptyRuntimeException;
 import org.seasar.framework.util.AssertionUtil;
+import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.util.ValueHolderUtil;
+import org.seasar.teeda.extension.util.ValidatorUtil;
 
 /**
  * @author higa
@@ -35,6 +37,10 @@ public abstract class AbstractCompareValidator implements Validator,
     public static final String MAXIMUM_MESSAGE_ID = "javax.faces.validator.LongRangeValidator.MAXIMUM";
 
     public static final String MINIMUM_MESSAGE_ID = "javax.faces.validator.LongRangeValidator.MINIMUM";
+
+    private String target = null;
+
+    private String[] targets;
 
     private String targetId = null;
 
@@ -59,9 +65,10 @@ public abstract class AbstractCompareValidator implements Validator,
     }
 
     public Object saveState(FacesContext context) {
-        Object values[] = new Object[2];
+        Object values[] = new Object[3];
         values[0] = targetId;
         values[1] = messageId;
+        values[2] = target;
         return values;
     }
 
@@ -69,6 +76,8 @@ public abstract class AbstractCompareValidator implements Validator,
         Object values[] = (Object[]) state;
         targetId = (String) values[0];
         messageId = (String) values[1];
+        target = (String) values[2];
+        setTarget(target);
     }
 
     public String getMessageId() {
@@ -79,11 +88,26 @@ public abstract class AbstractCompareValidator implements Validator,
         this.messageId = messageId;
     }
 
+    public String getTarget() {
+        return target;
+    }
+
+    public void setTarget(String target) {
+        this.target = target;
+        if (StringUtil.isEmpty(target)) {
+            return;
+        }
+        targets = StringUtil.split(target, ", ");
+    }
+
     public void validate(FacesContext context, UIComponent component,
             Object value) throws ValidatorException {
         AssertionUtil.assertNotNull("context", context);
         AssertionUtil.assertNotNull("component", component);
         if (value == null) {
+            return;
+        }
+        if (!ValidatorUtil.isTargetCommand(context, targets)) {
             return;
         }
         UIComponent targetComponent = getTargetComponent(component);
