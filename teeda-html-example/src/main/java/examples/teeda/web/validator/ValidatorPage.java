@@ -2,9 +2,23 @@ package examples.teeda.web.validator;
 
 public class ValidatorPage {
 
-	public static final String aaa_TLengthValidator = "target='doValidate, doValidate2', minimum=3";
+	public static final String aaa_TGreaterThanConstantValidator = "targetCommand='doValidate, doValidate2'";
+
+	public static final String bbb_TGreaterValidator = "target='doValidate,doValidate2', targetId=aaa";
+
+	public static final String bbb_TGreaterThanConstantValidator = "targetCommand='doValidate, doValidate2'";
 
 	private Integer aaa;
+
+	private Integer bbb;
+
+	public Integer getBbb() {
+		return bbb;
+	}
+
+	public void setBbb(Integer bbb) {
+		this.bbb = bbb;
+	}
 
 	public Integer getAaa() {
 		return aaa;
