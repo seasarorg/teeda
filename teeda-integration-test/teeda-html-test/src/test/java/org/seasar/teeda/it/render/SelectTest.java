@@ -38,6 +38,7 @@ public class SelectTest extends TeedaWebTestCase {
 		tester.beginAt("view/select/selectOneMenu.html");
 		tester.dumpHtml();
 
+		tester.assertSelectedOptionValueEquals("form:aaaItems", "1");
 		tester.selectOptionByValue("form:aaaItems", "2");
 		tester.submit("form:doAction");
 
