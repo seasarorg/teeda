@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -48,5 +48,14 @@ public class HtmlNodeUtilTest extends TestCase {
 
     public void testEndTagString() throws Exception {
         assertEquals("1", "</hoge>", HtmlNodeUtil.getEndTagString("hoge"));
+    }
+
+    public void testStartTagString_emptyElementSupport() throws Exception {
+        assertEquals("1", "<br />", HtmlNodeUtil.getStartTagString("br",
+                new HashMap()));
+        Map props = new HashMap();
+        props.put("clear", "none");
+        assertEquals("2", "<br clear=\"none\" />", HtmlNodeUtil
+                .getCompleteTagString("br", props));
     }
 }
