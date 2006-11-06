@@ -24,6 +24,7 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.convert.ConverterException;
+import javax.faces.el.ValueBinding;
 
 import org.seasar.teeda.core.util.PostbackUtil;
 import org.seasar.teeda.core.util.RendererUtil;
@@ -46,11 +47,19 @@ public class HtmlSelectOneListboxRenderer extends HtmlSelectManyListboxRenderer 
             UIComponent component) {
         final ExternalContext externalContext = context.getExternalContext();
         final Map requestMap = externalContext.getRequestMap();
-        if(PostbackUtil.isPostback(requestMap)) {
-            String value = ValueHolderUtil.getValueForRender(context, component);
+        String value = ValueHolderUtil.getValueForRender(context, component);
+        if (PostbackUtil.isPostback(requestMap)) {
             return new String[] { value };
         } else {
-            return null;
+            final ValueBinding vb = component.getValueBinding("value");
+            if (vb == null) {
+                return null;
+            }
+            Class type = vb.getType(context);
+            if (type.isPrimitive() && value.equals("0")) {
+                return null;
+            }
+            return new String[] { value };
         }
     }
 

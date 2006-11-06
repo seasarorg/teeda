@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -27,6 +27,7 @@ import javax.faces.render.RendererTest;
 import org.custommonkey.xmlunit.Diff;
 import org.seasar.framework.mock.servlet.MockHttpServletRequest;
 import org.seasar.teeda.core.mock.MockFacesContext;
+import org.seasar.teeda.core.mock.MockValueBinding;
 import org.seasar.teeda.core.util.PostbackUtil;
 
 /**
@@ -221,20 +222,21 @@ public class HtmlSelectOneListboxRendererTest extends RendererTest {
                 + "</select>", getResponseText());
     }
 
-    public void testEncode_SelectedIfInitialized() throws Exception {
-        // ## Arrange ##
-        PostbackUtil.setPostback(getFacesContext().getExternalContext()
-                .getRequestMap(), false);
-        htmlSelectOneListbox.setValue("v2");
+    public void testEncode_Selected_targetIsPrimitive() throws Exception {
+        MockValueBinding vb = new MockValueBinding();
+        vb.setValue(getFacesContext(), new Integer(2));
+        vb.setType(int.class);
+        htmlSelectOneListbox.setValue("2");
+        htmlSelectOneListbox.setValueBinding("value", vb);
         {
             UISelectItem selectItem = new UISelectItem();
-            selectItem.setItemValue("v1");
+            selectItem.setItemValue("1");
             selectItem.setItemLabel("l1");
             htmlSelectOneListbox.getChildren().add(selectItem);
         }
         {
             UISelectItem selectItem = new UISelectItem();
-            selectItem.setItemValue("v2");
+            selectItem.setItemValue("2");
             selectItem.setItemLabel("l2");
             htmlSelectOneListbox.getChildren().add(selectItem);
         }
@@ -244,8 +246,67 @@ public class HtmlSelectOneListboxRendererTest extends RendererTest {
 
         // ## Assert ##
         assertEquals("<select name=\"_id0\" size=\"2\">"
-                + "<option value=\"v1\">l1</option>"
-                + "<option value=\"v2\">l2</option>"
+                + "<option value=\"1\">l1</option>"
+                + "<option value=\"2\" selected=\"selected\">l2</option>"
+                + "</select>", getResponseText());
+    }
+
+    public void testEncode_Selected_primitiveZeroIgnored() throws Exception {
+        MockValueBinding vb = new MockValueBinding();
+        vb.setValue(getFacesContext(), new Integer(0));
+        vb.setType(int.class);
+        htmlSelectOneListbox.setValue("0");
+        htmlSelectOneListbox.setValueBinding("value", vb);
+        {
+            UISelectItem selectItem = new UISelectItem();
+            selectItem.setItemValue("0");
+            selectItem.setItemLabel("l1");
+            htmlSelectOneListbox.getChildren().add(selectItem);
+        }
+        {
+            UISelectItem selectItem = new UISelectItem();
+            selectItem.setItemValue("1");
+            selectItem.setItemLabel("l2");
+            htmlSelectOneListbox.getChildren().add(selectItem);
+        }
+
+        // ## Act ##
+        encodeByRenderer(renderer, htmlSelectOneListbox);
+
+        // ## Assert ##
+        assertEquals("<select name=\"_id0\" size=\"2\">"
+                + "<option value=\"0\">l1</option>"
+                + "<option value=\"1\">l2</option>" + "</select>",
+                getResponseText());
+    }
+
+    public void testEncode_SelectedIfInitialized() throws Exception {
+        // ## Arrange ##
+        MockValueBinding vb = new MockValueBinding();
+        vb.setValue(getFacesContext(), "2");
+        vb.setType(Integer.class);
+        htmlSelectOneListbox.setValue("2");
+        htmlSelectOneListbox.setValueBinding("value", vb);
+        {
+            UISelectItem selectItem = new UISelectItem();
+            selectItem.setItemValue("1");
+            selectItem.setItemLabel("l1");
+            htmlSelectOneListbox.getChildren().add(selectItem);
+        }
+        {
+            UISelectItem selectItem = new UISelectItem();
+            selectItem.setItemValue("2");
+            selectItem.setItemLabel("l2");
+            htmlSelectOneListbox.getChildren().add(selectItem);
+        }
+
+        // ## Act ##
+        encodeByRenderer(renderer, htmlSelectOneListbox);
+
+        // ## Assert ##
+        assertEquals("<select name=\"_id0\" size=\"2\">"
+                + "<option value=\"1\">l1</option>"
+                + "<option value=\"2\" selected=\"selected\">l2</option>"
                 + "</select>", getResponseText());
     }
 
