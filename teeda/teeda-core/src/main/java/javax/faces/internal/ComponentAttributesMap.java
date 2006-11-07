@@ -108,8 +108,11 @@ public class ComponentAttributesMap implements Map, Serializable {
 
     public Object get(Object key) {
         String k = (String) key;
+        PropertyDesc propertyDesc = null;
         if (beanDesc.hasPropertyDesc(k)) {
-            PropertyDesc propertyDesc = beanDesc.getPropertyDesc(k);
+            propertyDesc = beanDesc.getPropertyDesc(k);
+        }
+        if (propertyDesc != null && propertyDesc.hasReadMethod()) {
             Object value = getComponentProperty(propertyDesc);
             if (value != null) {
                 return value;
@@ -141,8 +144,10 @@ public class ComponentAttributesMap implements Map, Serializable {
             propertyDesc = beanDesc.getPropertyDesc(k);
         }
         Object returnValue = null;
-        if (propertyDesc != null && propertyDesc.hasReadMethod()) {
-            returnValue = getComponentProperty(propertyDesc);
+        if (propertyDesc != null && propertyDesc.hasWriteMethod()) {
+            if (propertyDesc.hasReadMethod()) {
+                returnValue = getComponentProperty(propertyDesc);
+            }
             setComponentProperty(propertyDesc, value);
         } else {
             returnValue = attributes.put(key, value);
@@ -155,18 +160,11 @@ public class ComponentAttributesMap implements Map, Serializable {
         beanDesc = BeanDescFactory.getBeanDesc(clazz);
     }
 
-    //TODO need throwing FacesException when invoke fail?
     private void setComponentProperty(PropertyDesc propertyDesc, Object value) {
-        if (propertyDesc.hasWriteMethod()) {
-            Method m = propertyDesc.getWriteMethod();
-            MethodUtil.invoke(m, component, new Object[] { value });
-        } else {
-            throw new IllegalArgumentException("component property ["
-                    + propertyDesc.getPropertyName() + "] is not writeable");
-        }
+        Method m = propertyDesc.getWriteMethod();
+        MethodUtil.invoke(m, component, new Object[] { value });
     }
 
-    //TODO need throwing FacesException?
     private Object getComponentProperty(PropertyDesc propertyDesc) {
         Method m = propertyDesc.getReadMethod();
         return MethodUtil.invoke(m, component, EMPTY_ARGS);

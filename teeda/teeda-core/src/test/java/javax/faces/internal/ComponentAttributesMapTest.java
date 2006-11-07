@@ -82,15 +82,13 @@ public class ComponentAttributesMapTest extends TestCase {
         assertEquals(true, map.containsKey("aaaa"));
     }
 
-    public void pending_testGetComponentWriteOnlyProperty() {
+    public void testGetComponentWriteOnlyProperty() {
         MyMockUIComponent component = new MyMockUIComponent();
         ComponentAttributesMap map = new ComponentAttributesMap(component);
         try {
-            map.get("barProperty");
-            fail();
+            assertNull(map.get("barProperty"));
         } catch (IllegalArgumentException iae) {
-            System.out.println(iae.getMessage());
-            ExceptionAssert.assertMessageExist(iae);
+            fail();
         }
     }
 
@@ -99,12 +97,12 @@ public class ComponentAttributesMapTest extends TestCase {
         ComponentAttributesMap map = new ComponentAttributesMap(component);
         try {
             map.put("fooProperty", "some value");
-            fail();
+            assertTrue(map.size() == 1);
         } catch (Exception e) {
-            ExceptionAssert.assertMessageExist(e);
+            fail();
         }
     }
-
+    
     private static class MyMockUIComponent extends MockUIComponent {
         // read only
         public String getFooProperty() {
