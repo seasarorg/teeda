@@ -65,6 +65,17 @@ public class TeedaWebTesterTest extends TeedaWebTestCase {
 		tester.assertTextEquals("aaa", "Teeda!");
 	}
 
+	public void testGetCurrentUri() throws Exception {
+		// ## Arrange ##
+		final String relativeUrl = getFileAsRelativeUrl("hello.html");
+
+		// ## Act ##
+		tester.beginAt(relativeUrl);
+		
+		assertTrue(tester.getCurrentUri().startsWith("file:/"));
+		assertTrue(tester.getCurrentUri().endsWith("hello.html"));
+	}
+
 	/*
 	 * htmlの先頭へBOMを付けるとUTF-8と認識するようなコードがWebResponseImplに あるが、ここで試した感じでは効いていない。
 	 * 

@@ -15,12 +15,15 @@
  */
 package org.seasar.teeda.unit.web;
 
+import java.net.URL;
+
 import junit.framework.Assert;
 import net.sourceforge.jwebunit.IJWebUnitDialog;
 import net.sourceforge.jwebunit.WebTester;
 
 import com.gargoylesoftware.htmlunit.html.HtmlElement;
 import com.gargoylesoftware.htmlunit.html.HtmlInput;
+import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.gargoylesoftware.htmlunit.html.HtmlTextArea;
 
 /**
@@ -87,6 +90,14 @@ public class TeedaWebTester extends WebTester {
 		throw new RuntimeException();
 	}
 
+	//should know current uri
+	public String getCurrentUri() {
+		final TeedaHtmlUnitDialog dialog = getTeedaHtmlUnitDialog();
+		final HtmlPage currentPage = dialog.getCurrentPage();
+		final URL url = currentPage.getWebResponse().getUrl();
+		return url.toString();
+	}
+	
 	/*
 	 * elementが存在しない場合はfailする。
 	 */
