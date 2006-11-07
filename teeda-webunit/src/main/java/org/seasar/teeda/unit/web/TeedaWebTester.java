@@ -22,6 +22,7 @@ import net.sourceforge.jwebunit.IJWebUnitDialog;
 import net.sourceforge.jwebunit.WebTester;
 
 import com.gargoylesoftware.htmlunit.html.HtmlElement;
+import com.gargoylesoftware.htmlunit.html.HtmlForm;
 import com.gargoylesoftware.htmlunit.html.HtmlInput;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.gargoylesoftware.htmlunit.html.HtmlTextArea;
@@ -32,89 +33,90 @@ import com.gargoylesoftware.htmlunit.html.HtmlTextArea;
  */
 public class TeedaWebTester extends WebTester {
 
-	public IJWebUnitDialog initializeDialog() {
-		return new TeedaHtmlUnitDialog();
-	}
+    public IJWebUnitDialog initializeDialog() {
+        return new TeedaHtmlUnitDialog();
+    }
 
-	public void assertFormElementPresentById(String formId) {
-		final HtmlElement element = getElementById(formId);
-		final String actual = element.asText();
-		Assert.assertNotNull(actual);
-	}
+    public void assertFormElementPresentById(String formId) {
+        final HtmlElement element = getElementById(formId);
+        Assert.assertTrue(element instanceof HtmlForm);
+        final String actual = element.asText();
+        Assert.assertNotNull(actual);
+    }
 
-	public void assertTextEquals(final String id, final String text) {
-		final HtmlElement element = getElementById(id);
-		final String actual = element.asText();
-		Assert.assertEquals(text, actual);
-	}
+    public void assertTextEquals(final String id, final String text) {
+        final HtmlElement element = getElementById(id);
+        final String actual = element.asText();
+        Assert.assertEquals(text, actual);
+    }
 
-	public void assertAttributeEquals(final String id,
-			final String attributeName, final String attributeValue) {
-		final HtmlElement element = getElementById(id);
-		final String actual = element.getAttributeValue(attributeName);
-		Assert.assertEquals(attributeValue, actual);
-	}
+    public void assertAttributeEquals(final String id,
+        final String attributeName, final String attributeValue) {
+        final HtmlElement element = getElementById(id);
+        final String actual = element.getAttributeValue(attributeName);
+        Assert.assertEquals(attributeValue, actual);
+    }
 
-	/*
-	 * inputへテキストをセットする。
-	 */
-	public void setTextById(final String id, final String value) {
-		final HtmlElement element = getElementById(id);
-		if (element instanceof HtmlInput) {
-			final HtmlInput input = (HtmlInput) element;
-			input.setValueAttribute(value);
-		} else if (element instanceof HtmlTextArea) {
-			final HtmlTextArea textArea = (HtmlTextArea) element;
-			textArea.setText(value);
-		} else {
-			Assert.fail("element [" + id
-					+ "] is not HtmlElement nor HtmlTextArea: " + element);
-		}
-	}
+    /*
+     * inputへテキストをセットする。
+     */
+    public void setTextById(final String id, final String value) {
+        final HtmlElement element = getElementById(id);
+        if (element instanceof HtmlInput) {
+            final HtmlInput input = (HtmlInput) element;
+            input.setValueAttribute(value);
+        } else if (element instanceof HtmlTextArea) {
+            final HtmlTextArea textArea = (HtmlTextArea) element;
+            textArea.setText(value);
+        } else {
+            Assert.fail("element [" + id
+                + "] is not HtmlElement nor HtmlTextArea: " + element);
+        }
+    }
 
-	protected HtmlInput getHtmlInputByIdNoException(final String id) {
-		final HtmlElement element = getElementByIdNoException(id);
-		if (element instanceof HtmlInput) {
-			System.out.println(element);
-			return (HtmlInput) element;
-		}
-		return null;
-	}
+    protected HtmlInput getHtmlInputByIdNoException(final String id) {
+        final HtmlElement element = getElementByIdNoException(id);
+        if (element instanceof HtmlInput) {
+            System.out.println(element);
+            return (HtmlInput) element;
+        }
+        return null;
+    }
 
-	protected HtmlInput getHtmlInputById(final String id) {
-		final HtmlElement element = getElementById(id);
-		if (element instanceof HtmlInput) {
-			return (HtmlInput) element;
-		}
-		Assert.fail("element [" + id + "] is not HtmlInput: " + element);
-		throw new RuntimeException();
-	}
+    protected HtmlInput getHtmlInputById(final String id) {
+        final HtmlElement element = getElementById(id);
+        if (element instanceof HtmlInput) {
+            return (HtmlInput) element;
+        }
+        Assert.fail("element [" + id + "] is not HtmlInput: " + element);
+        throw new RuntimeException();
+    }
 
-	//should know current uri
-	public String getCurrentUri() {
-		final TeedaHtmlUnitDialog dialog = getTeedaHtmlUnitDialog();
-		final HtmlPage currentPage = dialog.getCurrentPage();
-		final URL url = currentPage.getWebResponse().getUrl();
-		return url.toString();
-	}
-	
-	/*
-	 * elementが存在しない場合はfailする。
-	 */
-	private HtmlElement getElementById(final String id) {
-		final HtmlElement element = getElementByIdNoException(id);
-		Assert.assertNotNull(element);
-		return element;
-	}
+    //should know current uri
+    public String getCurrentUri() {
+        final TeedaHtmlUnitDialog dialog = getTeedaHtmlUnitDialog();
+        final HtmlPage currentPage = dialog.getCurrentPage();
+        final URL url = currentPage.getWebResponse().getUrl();
+        return url.toString();
+    }
 
-	private HtmlElement getElementByIdNoException(final String id) {
-		final TeedaHtmlUnitDialog dialog = getTeedaHtmlUnitDialog();
-		final HtmlElement element = dialog.getElementById(id);
-		return element;
-	}
+    /*
+     * elementが存在しない場合はfailする。
+     */
+    private HtmlElement getElementById(final String id) {
+        final HtmlElement element = getElementByIdNoException(id);
+        Assert.assertNotNull(element);
+        return element;
+    }
 
-	private TeedaHtmlUnitDialog getTeedaHtmlUnitDialog() {
-		return (TeedaHtmlUnitDialog) getDialog();
-	}
+    private HtmlElement getElementByIdNoException(final String id) {
+        final TeedaHtmlUnitDialog dialog = getTeedaHtmlUnitDialog();
+        final HtmlElement element = dialog.getElementById(id);
+        return element;
+    }
+
+    private TeedaHtmlUnitDialog getTeedaHtmlUnitDialog() {
+        return (TeedaHtmlUnitDialog) getDialog();
+    }
 
 }
