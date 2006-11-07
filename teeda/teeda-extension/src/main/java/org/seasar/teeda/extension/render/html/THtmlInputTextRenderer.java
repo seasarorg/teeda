@@ -43,6 +43,10 @@ public class THtmlInputTextRenderer extends HtmlInputTextRenderer {
 
     public static final String RENDERER_TYPE = THtmlInputText.DEFAULT_RENDERER_TYPE;
 
+    {
+        addIgnoreAttributeName("errorStyleClass");
+    }
+
     protected void renderStyleClass(FacesContext context,
             HtmlInputText htmlInputText, ResponseWriter writer)
             throws IOException {

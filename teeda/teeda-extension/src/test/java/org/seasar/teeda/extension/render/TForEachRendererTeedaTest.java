@@ -54,9 +54,7 @@ public class TForEachRendererTeedaTest extends AbstractRendererTeedaTest {
         super.setUp();
         renderer = createTForEachRenderer();
         outputTextRenderer = new HtmlOutputTextRenderer();
-        outputTextRenderer.setRenderAttributes(getRenderAttributes());
         inputTextRenderer = new HtmlInputTextRenderer();
-        inputTextRenderer.setRenderAttributes(getRenderAttributes());
         forEach = new MockTForEach();
         forEach.setRenderer(renderer);
     }

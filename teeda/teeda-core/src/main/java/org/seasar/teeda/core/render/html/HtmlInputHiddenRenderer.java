@@ -21,6 +21,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.html.HtmlInputHidden;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+import javax.faces.internal.IgnoreAttribute;
 
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.AbstractInputRenderer;
@@ -35,6 +36,12 @@ public class HtmlInputHiddenRenderer extends AbstractInputRenderer {
     public static final String COMPONENT_FAMILY = "javax.faces.Input";
 
     public static final String RENDERER_TYPE = "javax.faces.Hidden";
+
+    private final IgnoreAttribute ignoreComponent = new IgnoreAttribute();
+    {
+        ignoreComponent.addAttributeName(JsfConstants.ID_ATTR);
+        ignoreComponent.addAttributeName(JsfConstants.VALUE_ATTR);
+    }
 
     public void encodeEnd(FacesContext context, UIComponent component)
             throws IOException {
@@ -59,8 +66,7 @@ public class HtmlInputHiddenRenderer extends AbstractInputRenderer {
         String value = ValueHolderUtil.getValueForRender(context,
                 htmlInputHidden);
         RendererUtil.renderAttribute(writer, JsfConstants.VALUE_ATTR, value);
-        renderRemainAttributes(htmlInputHidden, writer);
-
+        renderRemainAttributes(htmlInputHidden, writer, ignoreComponent);
         writer.endElement(JsfConstants.INPUT_ELEM);
     }
 

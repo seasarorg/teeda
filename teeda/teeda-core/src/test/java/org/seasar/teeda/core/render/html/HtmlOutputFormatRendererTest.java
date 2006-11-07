@@ -19,13 +19,13 @@ import java.util.Locale;
 
 import javax.faces.component.UIParameter;
 import javax.faces.component.UIViewRoot;
-import javax.faces.component.html.HtmlOutputFormat;
 import javax.faces.context.FacesContext;
 import javax.faces.render.Renderer;
 import javax.faces.render.RendererTest;
 
 import org.custommonkey.xmlunit.Diff;
 import org.seasar.teeda.core.mock.MockFacesContext;
+import org.seasar.teeda.core.mock.MockHtmlOutputFormat;
 
 /**
  * @author manhole
@@ -213,24 +213,7 @@ public class HtmlOutputFormatRendererTest extends RendererTest {
     protected Renderer createRenderer() {
         HtmlOutputFormatRenderer renderer = new HtmlOutputFormatRenderer();
         renderer.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
-        renderer.setRenderAttributes(getRenderAttributes());
         return renderer;
-    }
-
-    private static class MockHtmlOutputFormat extends HtmlOutputFormat {
-
-        private Renderer renderer_ = null;
-
-        public void setRenderer(Renderer renderer) {
-            renderer_ = renderer;
-        }
-
-        protected Renderer getRenderer(FacesContext context) {
-            if (renderer_ != null) {
-                return renderer_;
-            }
-            return super.getRenderer(context);
-        }
     }
 
 }

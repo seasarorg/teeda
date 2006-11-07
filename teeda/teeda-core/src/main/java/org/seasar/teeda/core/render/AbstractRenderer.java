@@ -16,10 +16,11 @@
 package org.seasar.teeda.core.render;
 
 import java.io.IOException;
-import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 import java.util.Map.Entry;
 
 import javax.faces.component.UIComponent;
@@ -27,16 +28,18 @@ import javax.faces.component.UIOutput;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.convert.ConverterException;
+import javax.faces.internal.IgnoreAttribute;
 import javax.faces.internal.UIComponentUtil;
 import javax.faces.render.Renderer;
 
 import org.seasar.framework.beans.BeanDesc;
+import org.seasar.framework.beans.PropertyDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
+import org.seasar.framework.util.ArrayUtil;
 import org.seasar.framework.util.AssertionUtil;
-import org.seasar.framework.util.FieldUtil;
+import org.seasar.framework.util.ModifierUtil;
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
-import org.seasar.teeda.core.render.html.RenderAttributes;
 import org.seasar.teeda.core.util.LoopIterator;
 import org.seasar.teeda.core.util.RenderedComponentIterator;
 import org.seasar.teeda.core.util.RendererUtil;
@@ -47,8 +50,6 @@ import org.seasar.teeda.core.util.RendererUtil;
 public abstract class AbstractRenderer extends Renderer {
 
     private ComponentIdLookupStrategy idLookupStartegy;
-
-    private RenderAttributes renderAttributes;
 
     public AbstractRenderer() {
         idLookupStartegy = new DefaultComponentIdLookupStrategy();
@@ -125,26 +126,12 @@ public abstract class AbstractRenderer extends Renderer {
         }
     }
 
-    protected void renderRemainAttributes(UIComponent component, ResponseWriter writer)
+    protected void renderRemainAttributes(final UIComponent component,
+            final ResponseWriter writer, final IgnoreAttribute ignore)
             throws IOException {
-        final String[] names = getRenderAttributeNames(getClass());
-        RendererUtil.renderAttributes(writer, component, names);
-        renderAttributes(component.getAttributes(), writer);
+        final Map map = getAllAttributesAndProperties(component, ignore);
+        renderAttributes(map, writer);
     }
-
-    private String[] getRenderAttributeNames(final Class rendererClass) {
-        final RendererMetaData rendererMetaData = rendererMetaDataFactory
-                .getRendererMetaData(rendererClass);
-        final String[] names = renderAttributes.getAttributeNames(
-                rendererMetaData.getComponentFamily(), rendererMetaData
-                        .getRendererType());
-        if (names != null) {
-            return names;
-        }
-        return new String[0];
-    }
-
-    private RendererMetaDataFactory rendererMetaDataFactory = new RendererMetaDataFactory();
 
     protected void renderAttributes(Map attributes, ResponseWriter writer)
             throws IOException {
@@ -157,8 +144,48 @@ public abstract class AbstractRenderer extends Renderer {
         }
     }
 
+    protected Map getAllAttributesAndProperties(final UIComponent component,
+            final IgnoreAttribute ignore) {
+        final Map map = new HashMap();
+        final BeanDesc beanDesc = BeanDescFactory.getBeanDesc(component
+                .getClass());
+        for (int i = 0; i < beanDesc.getPropertyDescSize(); i++) {
+            PropertyDesc propertyDesc = beanDesc.getPropertyDesc(i);
+            Method m = propertyDesc.getReadMethod();
+            if (propertyDesc.hasReadMethod() && isPublicNoParameterMethod(m)) {
+                if (ArrayUtil.contains(ignore.getAttributeNames(),
+                        propertyDesc.getPropertyName())) {
+                    continue;
+                }
+                map.put(propertyDesc.getPropertyName(), propertyDesc
+                        .getValue(component));
+            }
+        }
+        for (Iterator itr = component.getAttributes().entrySet().iterator(); itr
+                .hasNext();) {
+            Map.Entry entry = (Entry) itr.next();
+            final String name = (String) entry.getKey();
+            if (!isRenderAttributeName(name)) {
+                continue;
+            }
+            if (ArrayUtil.contains(ignore.getAttributeNames(), name)) {
+                continue;
+            }
+            map.put(name, entry.getValue());
+        }
+        return map;
+    }
+
+    /*
+     * "."を含む名称は、FWなどが内部的に使っていることが多いため、
+     * Teedaとしては画面に出力しないことにする。
+     */
     protected boolean isRenderAttributeName(final String key) {
         return -1 == key.indexOf('.');
+    }
+
+    private boolean isPublicNoParameterMethod(Method m) {
+        return ModifierUtil.isPublic(m) && m.getParameterTypes().length == 0;
     }
 
     public void setComponentIdLookupStrategy(
@@ -170,11 +197,15 @@ public abstract class AbstractRenderer extends Renderer {
         return idLookupStartegy;
     }
 
-    protected boolean containsAttributeForRender(UIComponent component) {
+    protected boolean containsAttributeForRender(final UIComponent component,
+            final IgnoreAttribute ignore) {
         if (RendererUtil.shouldRenderIdAttribute(component)) {
             return true;
         }
-        final String[] names = getRenderAttributeNames(getClass());
+        final Map map = getAllAttributesAndProperties(component, ignore);
+        final Set keys = map.keySet();
+        final String[] names = new String[keys.size()];
+        keys.toArray(names);
         if (RendererUtil.containsAttributesForRender(component, names)) {
             return true;
         }
@@ -215,10 +246,6 @@ public abstract class AbstractRenderer extends Renderer {
                 JsfConstants.SELECTED_ATTR);
     }
 
-    public void setRenderAttributes(RenderAttributes renderAttributes) {
-        this.renderAttributes = renderAttributes;
-    }
-
     protected void renderJavaScriptElement(final ResponseWriter writer,
             final String scirptBody) throws IOException {
         if (StringUtil.isBlank(scirptBody)) {
@@ -237,85 +264,6 @@ public abstract class AbstractRenderer extends Renderer {
         writer.write("//-->");
         writer.write(JsfConstants.LINE_SP);
         writer.endElement(JsfConstants.SCRIPT_ELEM);
-    }
-
-    private static class RendererMetaData {
-
-        private String componentFamily;
-
-        private String rendererType;
-
-        public String getComponentFamily() {
-            return componentFamily;
-        }
-
-        public void setComponentFamily(String componentFamily) {
-            this.componentFamily = componentFamily;
-        }
-
-        public String getRendererType() {
-            return rendererType;
-        }
-
-        public void setRendererType(String rendererType) {
-            this.rendererType = rendererType;
-        }
-
-    }
-
-    private static class RendererMetaDataFactory {
-
-        private Map rendererMetaDataCache = new HashMap();
-
-        public RendererMetaData getRendererMetaData(final Class rendererClass) {
-            RendererMetaData rmd = (RendererMetaData) rendererMetaDataCache
-                    .get(rendererClass.getName());
-            if (rmd != null) {
-                return rmd;
-            }
-            rmd = new RendererMetaData();
-            for (Class clazz = rendererClass; !clazz.equals(Object.class); clazz = clazz
-                    .getSuperclass()) {
-                final String componentFamily = getComponentFamily(clazz);
-                if (componentFamily == null) {
-                    continue;
-                }
-                rmd.setComponentFamily(componentFamily);
-            }
-            for (Class clazz = rendererClass; !clazz.equals(Object.class); clazz = clazz
-                    .getSuperclass()) {
-                final String rendererType = getRendererType(clazz);
-                if (rendererType == null) {
-                    continue;
-                }
-                rmd.setRendererType(rendererType);
-            }
-            rendererMetaDataCache.put(rendererClass.getName(), rmd);
-            return rmd;
-        }
-
-        private String getComponentFamily(Class rendererClass) {
-            final BeanDesc beanDesc = BeanDescFactory
-                    .getBeanDesc(rendererClass);
-            if (!beanDesc.hasField(JsfConstants.COMPONENT_FAMILY)) {
-                return null;
-            }
-            final Field family = beanDesc
-                    .getField(JsfConstants.COMPONENT_FAMILY);
-            final String componentFamily = (String) FieldUtil.get(family, null);
-            return componentFamily;
-        }
-
-        private String getRendererType(Class rendererClass) {
-            final BeanDesc beanDesc = BeanDescFactory
-                    .getBeanDesc(rendererClass);
-            if (!beanDesc.hasField(JsfConstants.RENDERER_TYPE)) {
-                return null;
-            }
-            final Field type = beanDesc.getField(JsfConstants.RENDERER_TYPE);
-            final String rendererType = (String) FieldUtil.get(type, null);
-            return rendererType;
-        }
     }
 
 }

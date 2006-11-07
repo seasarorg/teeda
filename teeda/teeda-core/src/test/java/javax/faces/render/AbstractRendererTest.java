@@ -34,7 +34,6 @@ import org.seasar.teeda.core.mock.MockFacesContextImpl;
 import org.seasar.teeda.core.mock.MockVariableResolver;
 import org.seasar.teeda.core.render.ComponentIdLookupStrategy;
 import org.seasar.teeda.core.render.DefaultComponentIdLookupStrategy;
-import org.seasar.teeda.core.render.html.support.RenderAttributesImpl;
 import org.seasar.teeda.core.unit.xmlunit.DifferenceListenerChain;
 import org.seasar.teeda.core.unit.xmlunit.HtmlDomUtil;
 import org.seasar.teeda.core.unit.xmlunit.IgnoreJsessionidDifferenceListener;
@@ -51,15 +50,6 @@ public abstract class AbstractRendererTest extends TestCase {
     protected MockFacesContext mockFacesContext_;
 
     protected ComponentIdLookupStrategy idLookupStrategy_;
-
-    private static RenderAttributesImpl defaultRenderAttributes;
-
-    private RenderAttributesImpl renderAttributes = defaultRenderAttributes;
-
-    static {
-        defaultRenderAttributes = new RenderAttributesImpl();
-        defaultRenderAttributes.initialize();
-    }
 
     protected void setUp() throws Exception {
         super.setUp();
@@ -107,14 +97,6 @@ public abstract class AbstractRendererTest extends TestCase {
             renderer.encodeChildren(context, component);
         }
         renderer.encodeEnd(context, component);
-    }
-
-    protected RenderAttributesImpl getRenderAttributes() {
-        return renderAttributes;
-    }
-
-    protected void setRenderAttributes(RenderAttributesImpl renderAttributes) {
-        this.renderAttributes = renderAttributes;
     }
 
     protected String extract(final String s) {

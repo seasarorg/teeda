@@ -108,7 +108,6 @@ public class HtmlInputTextRendererTeedaTest extends AbstractRendererTeedaTest {
     protected Renderer createRenderer() {
         HtmlInputTextRenderer renderer = new HtmlInputTextRenderer();
         renderer.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
-        renderer.setRenderAttributes(getRenderAttributes());
         return renderer;
     }
 

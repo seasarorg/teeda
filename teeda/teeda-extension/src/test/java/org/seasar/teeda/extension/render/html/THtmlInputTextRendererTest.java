@@ -264,7 +264,6 @@ public class THtmlInputTextRendererTest extends RendererTest {
     protected Renderer createRenderer() {
         THtmlInputTextRenderer renderer = new THtmlInputTextRenderer();
         renderer.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
-        renderer.setRenderAttributes(getRenderAttributes());
         return renderer;
     }
 

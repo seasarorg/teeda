@@ -34,6 +34,7 @@ import org.seasar.teeda.core.mock.MockExternalContext;
 import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.mock.MockHtmlCommandLink;
 import org.seasar.teeda.core.mock.MockHtmlForm;
+import org.seasar.teeda.core.mock.MockMethodBinding;
 import org.seasar.teeda.core.unit.ExceptionAssert;
 
 /**
@@ -78,13 +79,12 @@ public class HtmlCommandLinkRendererTest extends RendererTest {
         // ## Assert ##
         MockFacesContext context = getFacesContext();
         assertEquals("a", form.getClientId(context));
-        assertEquals("<a" + " href=\"#\"" + " onclick=\""
-                + "clear_a();"
+        assertEquals("<a" + " href=\"#\"" + " onclick=\"" + "clear_a();"
                 + "var f = document.forms['a'];"
                 + " f['a:__link_clicked__'].value = 'a:_id0';"
                 + " if (f.onsubmit) { f.onsubmit(); }" + " f.submit();"
-                + "clear_a();"
-                + " return false;" + "\"></a>", getResponseText());
+                + "clear_a();" + " return false;" + "\"></a>",
+                getResponseText());
     }
 
     public void testEncode_WithValue() throws Exception {
@@ -100,13 +100,12 @@ public class HtmlCommandLinkRendererTest extends RendererTest {
         encodeByRenderer(renderer, htmlCommandLink);
 
         // ## Assert ##
-        assertEquals("<a" + " href=\"#\"" + " onclick=\""
-                + "clear_b();"
+        assertEquals("<a" + " href=\"#\"" + " onclick=\"" + "clear_b();"
                 + "var f = document.forms['b'];"
                 + " f['b:__link_clicked__'].value = 'b:_id0';"
                 + " if (f.onsubmit) { f.onsubmit(); }" + " f.submit();"
-                + "clear_b();"
-                + " return false;" + "\">abc</a>", getResponseText());
+                + "clear_b();" + " return false;" + "\">abc</a>",
+                getResponseText());
     }
 
     public void testEncode_RenderFalse() throws Exception {
@@ -140,14 +139,13 @@ public class HtmlCommandLinkRendererTest extends RendererTest {
 
         // ## Assert ##
         assertEquals("<a" + " id=\"a\"" + " href=\"#\"" + " onclick=\""
-                + "clear_b();"
-                + "var f = document.forms['b'];"
+                + "clear_b();" + "var f = document.forms['b'];"
                 + " f['b:__link_clicked__'].value = 'b:a';"
                 +
                 // " f['a'].value = '1';" +
                 " if (f.onsubmit) { f.onsubmit(); }" + " f.submit();"
-                + "clear_b();"
-                + " return false;" + "\"></a>", getResponseText());
+                + "clear_b();" + " return false;" + "\"></a>",
+                getResponseText());
     }
 
     public void testEncode_WithParameter() throws Exception {
@@ -169,13 +167,10 @@ public class HtmlCommandLinkRendererTest extends RendererTest {
 
         // ## Assert ##
         assertEquals("<a" + " id=\"a\"" + " href=\"#\"" + " onclick=\""
-                + "clear_b();"
-                + "var f = document.forms['b'];"
+                + "clear_b();" + "var f = document.forms['b'];"
                 + " f['b:__link_clicked__'].value = 'b:a';"
                 + " f['c'].value = '1';" + " if (f.onsubmit) { f.onsubmit(); }"
-                + " f.submit();" 
-                + "clear_b();"
-                + " return false;" + "\"></a>",
+                + " f.submit();" + "clear_b();" + " return false;" + "\"></a>",
                 getResponseText());
     }
 
@@ -206,13 +201,12 @@ public class HtmlCommandLinkRendererTest extends RendererTest {
 
         // ## Assert ##
         assertEquals("<a" + " id=\"a\"" + " href=\"#\"" + " onclick=\""
-                + "clear_b();"
-                + "var f = document.forms['b'];"
+                + "clear_b();" + "var f = document.forms['b'];"
                 + " f['b:__link_clicked__'].value = 'b:a';"
                 + " f['c'].value = '1';" + " f['d'].value = '2';"
                 + " if (f.onsubmit) { f.onsubmit(); }" + " f.submit();"
-                + "clear_b();"
-                + " return false;" + "\"></a>", getResponseText());
+                + "clear_b();" + " return false;" + "\"></a>",
+                getResponseText());
     }
 
     public void testEncode_WithNullParameter() throws Exception {
@@ -234,13 +228,37 @@ public class HtmlCommandLinkRendererTest extends RendererTest {
 
         // ## Assert ##
         assertEquals("<a" + " id=\"a\"" + " href=\"#\"" + " onclick=\""
-                + "clear_b();"
-                + "var f = document.forms['b'];"
+                + "clear_b();" + "var f = document.forms['b'];"
                 + " f['b:__link_clicked__'].value = 'b:a';"
                 + " f['c'].value = 'null';"
                 + " if (f.onsubmit) { f.onsubmit(); }" + " f.submit();"
-                + "clear_b();"
-                + " return false;" + "\"></a>", getResponseText());
+                + "clear_b();" + " return false;" + "\"></a>",
+                getResponseText());
+    }
+
+    public void testEncode_IgnoreAttributes() throws Exception {
+        // ## Arrange ##
+        htmlCommandLink.setId("aaa");
+
+        final MockHtmlForm form = new MockHtmlForm();
+        form.setRenderer(new HtmlFormRenderer());
+        form.setId("b");
+        form.getChildren().add(htmlCommandLink);
+
+        // この属性は出力されないこと
+        htmlCommandLink.setAction(new MockMethodBinding());
+        htmlCommandLink.setImmediate(true);
+
+        // ## Act ##
+        encodeByRenderer(renderer, htmlCommandLink);
+
+        // ## Assert ##
+        assertEquals("<a" + " id=\"aaa\"" + " href=\"#\"" + " onclick=\""
+                + "clear_b();" + "var f = document.forms['b'];"
+                + " f['b:__link_clicked__'].value = 'b:aaa';"
+                + " if (f.onsubmit) { f.onsubmit(); }" + " f.submit();"
+                + "clear_b();" + " return false;" + "\"></a>",
+                getResponseText());
     }
 
     public void testEncode_WithUnknownAttribute() throws Exception {
@@ -257,13 +275,12 @@ public class HtmlCommandLinkRendererTest extends RendererTest {
         encodeByRenderer(renderer, htmlCommandLink);
 
         // ## Assert ##
-        assertEquals("<a" + " href=\"#\"" + " onclick=\""
-                + "clear_b();"
+        assertEquals("<a" + " href=\"#\"" + " onclick=\"" + "clear_b();"
                 + "var f = document.forms['b'];"
                 + " f['b:__link_clicked__'].value = 'b:_id0';"
                 + " if (f.onsubmit) { f.onsubmit(); }" + " f.submit();"
-                + "clear_b();"
-                + " return false;" + "\" c=\"d\">abc</a>", getResponseText());
+                + "clear_b();" + " return false;" + "\" c=\"d\">abc</a>",
+                getResponseText());
     }
 
     public void testEncode_WithTarget() throws Exception {
@@ -275,22 +292,22 @@ public class HtmlCommandLinkRendererTest extends RendererTest {
         htmlCommandLink.setTarget("_blank");
         htmlCommandLink.setId("x");
         htmlCommandLink.setValue("aaa");
-        
+
         // ## Act ##
         encodeByRenderer(renderer, htmlCommandLink);
 
         // ## Assert ##
-        assertEquals("<a id=\"x\" href=\"#\""
-                + " onclick=\""
-                + "clear_frm();"
-                + "var f = document.forms['frm'];"
-                + " f['frm:__link_clicked__'].value = 'frm:x';"
-                + " f.target = '_blank';"
-                + " if (f.onsubmit) { f.onsubmit(); } f.submit();"
-                + "clear_frm();"
-                + " return false;\" target=\"_blank\">aaa</a>", getResponseText());
+        assertEquals(
+                "<a id=\"x\" href=\"#\"" + " onclick=\"" + "clear_frm();"
+                        + "var f = document.forms['frm'];"
+                        + " f['frm:__link_clicked__'].value = 'frm:x';"
+                        + " f.target = '_blank';"
+                        + " if (f.onsubmit) { f.onsubmit(); } f.submit();"
+                        + "clear_frm();"
+                        + " return false;\" target=\"_blank\">aaa</a>",
+                getResponseText());
     }
-    
+
     public void testEncode_WithAllAttributes() throws Exception {
         MockHtmlForm form = new MockHtmlForm();
         form.setRenderer(new HtmlFormRenderer());
@@ -331,22 +348,20 @@ public class HtmlCommandLinkRendererTest extends RendererTest {
         encodeByRenderer(renderer, htmlCommandLink);
 
         Diff diff = new Diff("<a" + " id=\"A\"" + " href=\"#\"" + " onclick=\""
-                + "clear_zz();"                
-                + "var f = document.forms['zz'];"
+                + "clear_zz();" + "var f = document.forms['zz'];"
                 + " f['zz:__link_clicked__'].value = 'zz:A';"
-                + " f.target = 'y';"
-                + " if (f.onsubmit) { f.onsubmit(); }" + " f.submit();"
-                + "clear_zz();"
-                + " return false;\"" + " accesskey=\"a\"" + " charset=\"b\""
-                + " coords=\"c\"" + " dir=\"d\"" + " hreflang=\"e\""
-                + " lang=\"f\"" + " onblur=\"g\"" + " ondblclick=\"i\""
-                + " onfocus=\"j\"" + " onkeydown=\"k\"" + " onkeypress=\"l\""
-                + " onkeyup=\"m\"" + " onmousedown=\"n\""
-                + " onmousemove=\"o\"" + " onmouseout=\"p\""
-                + " onmouseover=\"q\"" + " onmouseup=\"r\"" + " rel=\"s\""
-                + " rev=\"t\"" + " shape=\"u\"" + " style=\"v\""
-                + " class=\"w\"" + " tabindex=\"x\"" + " target=\"y\""
-                + " title=\"z\"" + " type=\"1\">B</a>", getResponseText());
+                + " f.target = 'y';" + " if (f.onsubmit) { f.onsubmit(); }"
+                + " f.submit();" + "clear_zz();" + " return false;\""
+                + " accesskey=\"a\"" + " charset=\"b\"" + " coords=\"c\""
+                + " dir=\"d\"" + " hreflang=\"e\"" + " lang=\"f\""
+                + " onblur=\"g\"" + " ondblclick=\"i\"" + " onfocus=\"j\""
+                + " onkeydown=\"k\"" + " onkeypress=\"l\"" + " onkeyup=\"m\""
+                + " onmousedown=\"n\"" + " onmousemove=\"o\""
+                + " onmouseout=\"p\"" + " onmouseover=\"q\""
+                + " onmouseup=\"r\"" + " rel=\"s\"" + " rev=\"t\""
+                + " shape=\"u\"" + " style=\"v\"" + " class=\"w\""
+                + " tabindex=\"x\"" + " target=\"y\"" + " title=\"z\""
+                + " type=\"1\">B</a>", getResponseText());
         assertEquals(diff.toString(), true, diff.identical());
     }
 
@@ -360,7 +375,7 @@ public class HtmlCommandLinkRendererTest extends RendererTest {
         UIParameter param = new UIParameter();
         param.setName("bar");
         param.setValue("1111");
-        
+
         htmlCommandLink.getChildren().add(param);
         htmlCommandLink.setValue("value");
         MockFacesContext context = getFacesContext();
@@ -509,7 +524,6 @@ public class HtmlCommandLinkRendererTest extends RendererTest {
     protected Renderer createRenderer() {
         HtmlCommandLinkRenderer renderer = new HtmlCommandLinkRenderer();
         renderer.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
-        renderer.setRenderAttributes(getRenderAttributes());
         return renderer;
     }
 

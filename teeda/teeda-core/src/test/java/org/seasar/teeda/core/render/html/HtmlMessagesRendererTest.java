@@ -590,7 +590,6 @@ public class HtmlMessagesRendererTest extends RendererTest {
     protected Renderer createRenderer() {
         HtmlMessagesRenderer renderer = new HtmlMessagesRenderer();
         renderer.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
-        renderer.setRenderAttributes(getRenderAttributes());
         return renderer;
     }
 

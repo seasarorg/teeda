@@ -25,6 +25,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.html.HtmlDataTable;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+import javax.faces.internal.IgnoreAttribute;
 
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.AbstractRenderer;
@@ -39,6 +40,25 @@ public class HtmlDataTableRenderer extends AbstractRenderer {
     public static final String COMPONENT_FAMILY = "javax.faces.Data";
 
     public static final String RENDERER_TYPE = "javax.faces.Table";
+
+    private final IgnoreAttribute ignoreComponent = new IgnoreAttribute();
+    {
+        ignoreComponent.addAttributeName(JsfConstants.ID_ATTR);
+        ignoreComponent.addAttributeName(JsfConstants.VALUE_ATTR);
+        ignoreComponent.addAttributeName("rowData");
+        ignoreComponent.addAttributeName("rowIndex");
+        ignoreComponent.addAttributeName("rows");
+        ignoreComponent.addAttributeName("first");
+        ignoreComponent.addAttributeName("rowCount");
+        ignoreComponent.addAttributeName("header");
+        ignoreComponent.addAttributeName("footer");
+        ignoreComponent.addAttributeName("headerClass");
+        ignoreComponent.addAttributeName("footerClass");
+        ignoreComponent.addAttributeName("rowAvailable");
+        ignoreComponent.addAttributeName("rowClasses");
+        ignoreComponent.addAttributeName("columnClasses");
+        ignoreComponent.addAttributeName("var");
+    }
 
     public void encodeBegin(FacesContext context, UIComponent component)
             throws IOException {
@@ -55,7 +75,7 @@ public class HtmlDataTableRenderer extends AbstractRenderer {
         writer.startElement(JsfConstants.TABLE_ELEM, htmlDataTable);
         RendererUtil.renderIdAttributeIfNecessary(writer, htmlDataTable,
                 getIdForRender(context, htmlDataTable));
-        renderRemainAttributes(htmlDataTable, writer);
+        renderRemainAttributes(htmlDataTable, writer, ignoreComponent);
 
         final List columns = new ArrayList();
         boolean isColumnHeaderExist = false;

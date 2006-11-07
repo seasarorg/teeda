@@ -17,8 +17,6 @@ package org.seasar.teeda.core.render.html;
 
 import javax.faces.component.UISelectItem;
 import javax.faces.component.UISelectItems;
-import javax.faces.component.html.HtmlSelectOneMenu;
-import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.faces.model.SelectItemGroup;
 import javax.faces.render.Renderer;
@@ -27,6 +25,7 @@ import javax.faces.render.RendererTest;
 import org.custommonkey.xmlunit.Diff;
 import org.seasar.framework.mock.servlet.MockHttpServletRequest;
 import org.seasar.teeda.core.mock.MockFacesContext;
+import org.seasar.teeda.core.mock.MockHtmlSelectOneMenu;
 import org.seasar.teeda.core.util.PostbackUtil;
 
 /**
@@ -43,6 +42,9 @@ public class HtmlSelectOneMenuRendererTest extends RendererTest {
         renderer = createHtmlSelectOneMenuRenderer();
         htmlSelectOneMenu = new MockHtmlSelectOneMenu();
         htmlSelectOneMenu.setRenderer(renderer);
+
+        // MockHtmlSelectOneMenuのプロパティ
+        renderer.addIgnoreAttributeName("setSubmittedValueCalls");
     }
 
     public void testEncode_NoChild() throws Exception {
@@ -226,8 +228,8 @@ public class HtmlSelectOneMenuRendererTest extends RendererTest {
         // ## Assert ##
         assertEquals("<select name=\"_id0\" size=\"1\">"
                 + "<option value=\"v1\">l1</option>"
-                + "<option value=\"v2\">l2</option>"
-                + "</select>", getResponseText());
+                + "<option value=\"v2\">l2</option>" + "</select>",
+                getResponseText());
     }
 
     public void testEncode_ItemDisabled() throws Exception {
@@ -452,47 +454,7 @@ public class HtmlSelectOneMenuRendererTest extends RendererTest {
     protected Renderer createRenderer() {
         HtmlSelectOneMenuRenderer renderer = new HtmlSelectOneMenuRenderer();
         renderer.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
-        renderer.setRenderAttributes(getRenderAttributes());
         return renderer;
-    }
-
-    private static class MockHtmlSelectOneMenu extends HtmlSelectOneMenu {
-        private Renderer renderer_;
-
-        private String clientId_;
-
-        private int setSubmittedValueCalls_;
-
-        public void setRenderer(Renderer renderer) {
-            renderer_ = renderer;
-        }
-
-        protected Renderer getRenderer(FacesContext context) {
-            if (renderer_ != null) {
-                return renderer_;
-            }
-            return super.getRenderer(context);
-        }
-
-        public String getClientId(FacesContext context) {
-            if (clientId_ != null) {
-                return clientId_;
-            }
-            return super.getClientId(context);
-        }
-
-        public void setClientId(String clientId) {
-            clientId_ = clientId;
-        }
-
-        public void setSubmittedValue(Object submittedValue) {
-            setSubmittedValueCalls_++;
-            super.setSubmittedValue(submittedValue);
-        }
-
-        public int getSetSubmittedValueCalls() {
-            return setSubmittedValueCalls_;
-        }
     }
 
 }

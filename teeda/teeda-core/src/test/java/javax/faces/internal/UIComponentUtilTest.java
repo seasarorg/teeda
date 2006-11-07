@@ -15,10 +15,7 @@
  */
 package javax.faces.internal;
 
-import java.util.Map;
-
 import javax.faces.component.UIComponent;
-import javax.faces.component.UIComponentBase;
 import javax.faces.component.html.HtmlInputText;
 import javax.faces.internal.web.foo.FooPage;
 
@@ -110,24 +107,6 @@ public class UIComponentUtilTest extends TeedaTestCase {
         assertEquals("xxx", UIComponentUtil.getLabel(component));
     }
 
-    public void testGetAllAttributesAndProperties() throws Exception {
-        MockNoComponent component = new MockNoComponent();
-        component.setHoge("aaa");
-        Map map = UIComponentUtil.getAllAttributesAndProperties(component);
-        assertEquals("aaa", map.get("hoge"));
-    }
-
-    public void testGetAllAttributesAndProperties_setIgnore() throws Exception {
-        MockNoComponent component = new MockNoComponent();
-        component.setHoge("aaa");
-        IgnoreComponent ignore = new IgnoreComponent();
-        ignore.addIgnoreComponentName("hoge");
-        ignore.addIgnoreComponentName("id");
-        Map map = UIComponentUtil.getAllAttributesAndProperties(component,
-                ignore);
-        assertTrue(map.size() == 0);
-    }
-
     public static class MockHtmlInputText extends HtmlInputText {
 
         private String label_;
@@ -141,21 +120,4 @@ public class UIComponentUtilTest extends TeedaTestCase {
         }
     }
 
-    public static class MockNoComponent extends UIComponentBase {
-
-        private String hoge;
-
-        public String getHoge() {
-            return hoge;
-        }
-
-        public void setHoge(String hoge) {
-            this.hoge = hoge;
-        }
-
-        public String getFamily() {
-            return "none";
-        }
-
-    }
 }

@@ -21,6 +21,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.html.HtmlPanelGroup;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+import javax.faces.internal.IgnoreAttribute;
 
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.AbstractRenderer;
@@ -34,6 +35,11 @@ public class HtmlPanelGroupRenderer extends AbstractRenderer {
     public static final String COMPONENT_FAMILY = "javax.faces.Panel";
 
     public static final String RENDERER_TYPE = "javax.faces.Group";
+
+    private final IgnoreAttribute ignoreComponent = new IgnoreAttribute();
+    {
+        ignoreComponent.addAttributeName(JsfConstants.ID_ATTR);
+    }
 
     public void encodeBegin(FacesContext context, UIComponent component)
             throws IOException {
@@ -51,12 +57,12 @@ public class HtmlPanelGroupRenderer extends AbstractRenderer {
             writer.startElement(JsfConstants.SPAN_ELEM, htmlPanelGroup);
             RendererUtil.renderIdAttributeIfNecessary(writer, htmlPanelGroup,
                     getIdForRender(context, htmlPanelGroup));
-            renderRemainAttributes(htmlPanelGroup, writer);
+            renderRemainAttributes(htmlPanelGroup, writer, ignoreComponent);
         }
     }
 
     private boolean isWriteSpan(HtmlPanelGroup htmlPanelGroup) {
-        return containsAttributeForRender(htmlPanelGroup);
+        return containsAttributeForRender(htmlPanelGroup, ignoreComponent);
     }
 
     public void encodeChildren(FacesContext context, UIComponent component)

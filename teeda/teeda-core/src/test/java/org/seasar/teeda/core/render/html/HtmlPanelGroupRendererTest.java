@@ -37,7 +37,6 @@ public class HtmlPanelGroupRendererTest extends RendererTest {
         super.setUp();
         renderer = createHtmlPanelGroupRenderer();
         textRenderer = new HtmlOutputTextRenderer();
-        textRenderer.setRenderAttributes(getRenderAttributes());
         htmlPanelGroup = new MockHtmlPanelGroup();
         htmlPanelGroup.setRenderer(renderer);
     }
@@ -194,7 +193,9 @@ public class HtmlPanelGroupRendererTest extends RendererTest {
         encodeByRenderer(renderer, htmlPanelGroup);
 
         // ## Assert ##
-        assertEquals("<span style=\"a\" class=\"b\"></span>", getResponseText());
+        Diff diff = new Diff("<span style=\"a\" class=\"b\"></span>",
+                getResponseText());
+        assertEquals(diff.toString(), true, diff.identical());
     }
 
     public void testEncode_WithAllAttributes() throws Exception {
@@ -223,7 +224,6 @@ public class HtmlPanelGroupRendererTest extends RendererTest {
     protected Renderer createRenderer() {
         HtmlPanelGroupRenderer renderer = new HtmlPanelGroupRenderer();
         renderer.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
-        renderer.setRenderAttributes(getRenderAttributes());
         return renderer;
     }
 

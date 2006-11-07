@@ -21,6 +21,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.html.HtmlOutputLabel;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+import javax.faces.internal.IgnoreAttribute;
 
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.AbstractRenderer;
@@ -35,6 +36,13 @@ public class HtmlOutputLabelRenderer extends AbstractRenderer {
     public static final String COMPONENT_FAMILY = "javax.faces.Output";
 
     public static final String RENDERER_TYPE = "javax.faces.Label";
+
+    private final IgnoreAttribute ignoreComponent = new IgnoreAttribute();
+    {
+        ignoreComponent.addAttributeName(JsfConstants.ID_ATTR);
+        ignoreComponent.addAttributeName(JsfConstants.VALUE_ATTR);
+        ignoreComponent.addAttributeName(JsfConstants.FOR_ATTR);
+    }
 
     public void encodeBegin(FacesContext context, UIComponent component)
             throws IOException {
@@ -64,7 +72,7 @@ public class HtmlOutputLabelRenderer extends AbstractRenderer {
             RendererUtil.renderAttribute(writer, JsfConstants.FOR_ATTR,
                     forClientId, null);
         }
-        renderRemainAttributes(htmlOutputLabel, writer);
+        renderRemainAttributes(htmlOutputLabel, writer, ignoreComponent);
         String value = ValueHolderUtil.getValueForRender(context,
                 htmlOutputLabel);
         writer.writeText(value, null);

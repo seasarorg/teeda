@@ -25,6 +25,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.convert.ConverterException;
+import javax.faces.internal.IgnoreAttribute;
 
 import org.seasar.framework.beans.util.BeanUtil;
 import org.seasar.framework.util.ClassUtil;
@@ -49,6 +50,12 @@ public class THtmlInputHiddenRenderer extends AbstractInputRenderer {
 
     private EncodeConverter encodeConverter;
 
+    private final IgnoreAttribute ignoreComponent = new IgnoreAttribute();
+    {
+        ignoreComponent.addAttributeName(JsfConstants.ID_ATTR);
+        ignoreComponent.addAttributeName(JsfConstants.VALUE_ATTR);
+    }
+
     public void encodeEnd(final FacesContext context,
             final UIComponent component) throws IOException {
         assertNotNull(context, component);
@@ -71,7 +78,7 @@ public class THtmlInputHiddenRenderer extends AbstractInputRenderer {
 
         final String value = getValueForRender(context, htmlInputHidden);
         RendererUtil.renderAttribute(writer, JsfConstants.VALUE_ATTR, value);
-        renderRemainAttributes(htmlInputHidden, writer);
+        renderRemainAttributes(htmlInputHidden, writer, ignoreComponent);
 
         writer.endElement(JsfConstants.INPUT_ELEM);
     }

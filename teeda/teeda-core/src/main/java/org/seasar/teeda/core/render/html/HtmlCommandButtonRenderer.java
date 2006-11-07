@@ -23,6 +23,7 @@ import javax.faces.component.html.HtmlCommandButton;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.event.ActionEvent;
+import javax.faces.internal.IgnoreAttribute;
 
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
@@ -37,6 +38,16 @@ public class HtmlCommandButtonRenderer extends AbstractRenderer {
     public static final String COMPONENT_FAMILY = "javax.faces.Command";
 
     public static final String RENDERER_TYPE = "javax.faces.Button";
+
+    private final IgnoreAttribute ignoreComponent = new IgnoreAttribute();
+    {
+        ignoreComponent.addAttributeName(JsfConstants.ID_ATTR);
+        ignoreComponent.addAttributeName(JsfConstants.TYPE_ATTR);
+        ignoreComponent.addAttributeName(JsfConstants.VALUE_ATTR);
+        ignoreComponent.addAttributeName(JsfConstants.IMAGE_ATTR);
+        ignoreComponent.addAttributeName(JsfConstants.ACTION_ATTR);
+        ignoreComponent.addAttributeName(JsfConstants.IMMEDIATE_ATTR);
+    }
 
     public void encodeEnd(FacesContext context, UIComponent component)
             throws IOException {
@@ -73,7 +84,8 @@ public class HtmlCommandButtonRenderer extends AbstractRenderer {
             RendererUtil.renderAttribute(writer, JsfConstants.VALUE_ATTR,
                     htmlCommandButton.getValue());
         }
-        renderRemainAttributes(htmlCommandButton, writer);
+        //renderRemainAttributes(htmlCommandButton, writer);
+        renderRemainAttributes(htmlCommandButton, writer, ignoreComponent);
         writer.endElement(JsfConstants.INPUT_ELEM);
     }
 

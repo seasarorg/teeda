@@ -148,6 +148,8 @@ public class HtmlInputTextRendererTest extends RendererTest {
         htmlInputText.setId("A");
         htmlInputText.setValue("B");
 
+        htmlInputText.setAutocomplete("C");
+
         encodeByRenderer(renderer, htmlInputText);
 
         Diff diff = new Diff(
@@ -163,8 +165,8 @@ public class HtmlInputTextRendererTest extends RendererTest {
                         + " onmouseover=\"r\"" + " onmouseup=\"s\""
                         + " onselect=\"t\"" + " readonly=\"true\""
                         + " size=\"2\"" + " style=\"w\"" + " class=\"u\""
-                        + " tabindex=\"x\"" + " title=\"y\"" + "/>",
-                getResponseText());
+                        + " tabindex=\"x\"" + " title=\"y\""
+                        + " autocomplete=\"C\"" + "/>", getResponseText());
         assertEquals(diff.toString(), true, diff.identical());
     }
 
@@ -242,7 +244,6 @@ public class HtmlInputTextRendererTest extends RendererTest {
     protected Renderer createRenderer() {
         HtmlInputTextRenderer renderer = new HtmlInputTextRenderer();
         renderer.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
-        renderer.setRenderAttributes(getRenderAttributes());
         return renderer;
     }
 

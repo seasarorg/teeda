@@ -44,7 +44,6 @@ public class HtmlFormAndCommandLinkRendererTest extends AbstractRendererTest {
         formRenderer = new HtmlFormRenderer();
         formRenderer
                 .setComponentIdLookupStrategy(getComponentIdLookupStrategy());
-        formRenderer.setRenderAttributes(getRenderAttributes());
         htmlForm = new MockHtmlForm();
         htmlForm.setRenderer(formRenderer);
         htmlForm.setEnctype(null);
@@ -52,7 +51,9 @@ public class HtmlFormAndCommandLinkRendererTest extends AbstractRendererTest {
         commandLinkRenderer = new HtmlCommandLinkRenderer();
         commandLinkRenderer
                 .setComponentIdLookupStrategy(getComponentIdLookupStrategy());
-        commandLinkRenderer.setRenderAttributes(getRenderAttributes());
+
+        // MockHtmlFormのプロパティ
+        formRenderer.addIgnoreAttributeName("setSubmittedCalls");
     }
 
     public void testEncode_WithCommandLink() throws Exception {

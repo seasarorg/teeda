@@ -15,13 +15,12 @@
  */
 package org.seasar.teeda.core.render.html;
 
-import javax.faces.component.html.HtmlSelectBooleanCheckbox;
-import javax.faces.context.FacesContext;
 import javax.faces.render.Renderer;
 import javax.faces.render.RendererTest;
 
 import org.custommonkey.xmlunit.Diff;
 import org.seasar.teeda.core.mock.MockFacesContext;
+import org.seasar.teeda.core.mock.MockHtmlSelectBooleanCheckbox;
 
 /**
  * @author manhole
@@ -37,6 +36,9 @@ public class HtmlSelectBooleanCheckboxRendererTest extends RendererTest {
         renderer = createHtmlSelectBooleanCheckboxRenderer();
         htmlSelectBooleanCheckbox = new MockHtmlSelectBooleanCheckbox();
         htmlSelectBooleanCheckbox.setRenderer(renderer);
+
+        // MockHtmlSelectBooleanCheckboxのプロパティ
+        renderer.addIgnoreAttributeName("setSubmittedValueCalls");
     }
 
     public void testEncode_NoValue() throws Exception {
@@ -240,48 +242,7 @@ public class HtmlSelectBooleanCheckboxRendererTest extends RendererTest {
     protected Renderer createRenderer() {
         HtmlSelectBooleanCheckboxRenderer renderer = new HtmlSelectBooleanCheckboxRenderer();
         renderer.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
-        renderer.setRenderAttributes(getRenderAttributes());
         return renderer;
-    }
-
-    private static class MockHtmlSelectBooleanCheckbox extends
-            HtmlSelectBooleanCheckbox {
-        private Renderer renderer_;
-
-        private String clientId_;
-
-        private int setSubmittedValueCalls_;
-
-        public void setRenderer(Renderer renderer) {
-            renderer_ = renderer;
-        }
-
-        protected Renderer getRenderer(FacesContext context) {
-            if (renderer_ != null) {
-                return renderer_;
-            }
-            return super.getRenderer(context);
-        }
-
-        public String getClientId(FacesContext context) {
-            if (clientId_ != null) {
-                return clientId_;
-            }
-            return super.getClientId(context);
-        }
-
-        public void setClientId(String clientId) {
-            clientId_ = clientId;
-        }
-
-        public void setSubmittedValue(Object submittedValue) {
-            setSubmittedValueCalls_++;
-            super.setSubmittedValue(submittedValue);
-        }
-
-        public int getSetSubmittedValueCalls() {
-            return setSubmittedValueCalls_;
-        }
     }
 
 }

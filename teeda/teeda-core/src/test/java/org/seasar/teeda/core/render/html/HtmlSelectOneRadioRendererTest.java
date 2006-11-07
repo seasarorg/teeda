@@ -17,8 +17,6 @@ package org.seasar.teeda.core.render.html;
 
 import javax.faces.component.UISelectItem;
 import javax.faces.component.UISelectItems;
-import javax.faces.component.html.HtmlSelectOneRadio;
-import javax.faces.context.FacesContext;
 import javax.faces.convert.IntegerConverter;
 import javax.faces.model.SelectItem;
 import javax.faces.model.SelectItemGroup;
@@ -28,6 +26,7 @@ import javax.faces.render.RendererTest;
 import org.custommonkey.xmlunit.Diff;
 import org.seasar.framework.mock.servlet.MockHttpServletRequest;
 import org.seasar.teeda.core.mock.MockFacesContext;
+import org.seasar.teeda.core.mock.MockHtmlSelectOneRadio;
 
 /**
  * @author manhole
@@ -43,6 +42,9 @@ public class HtmlSelectOneRadioRendererTest extends RendererTest {
         renderer = createHtmlSelectOneRadioRenderer();
         htmlSelectOneRadio = new MockHtmlSelectOneRadio();
         htmlSelectOneRadio.setRenderer(renderer);
+
+        // MockHtmlSelectOneRadioのプロパティ
+        renderer.addIgnoreAttributeName("setSubmittedValueCalls");
     }
 
     public void testEncode_NoChild() throws Exception {
@@ -493,47 +495,7 @@ public class HtmlSelectOneRadioRendererTest extends RendererTest {
     protected Renderer createRenderer() {
         HtmlSelectOneRadioRenderer renderer = new HtmlSelectOneRadioRenderer();
         renderer.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
-        renderer.setRenderAttributes(getRenderAttributes());
         return renderer;
-    }
-
-    private static class MockHtmlSelectOneRadio extends HtmlSelectOneRadio {
-        private Renderer renderer_;
-
-        private String clientId_;
-
-        private int setSubmittedValueCalls_;
-
-        public void setRenderer(Renderer renderer) {
-            renderer_ = renderer;
-        }
-
-        protected Renderer getRenderer(FacesContext context) {
-            if (renderer_ != null) {
-                return renderer_;
-            }
-            return super.getRenderer(context);
-        }
-
-        public String getClientId(FacesContext context) {
-            if (clientId_ != null) {
-                return clientId_;
-            }
-            return super.getClientId(context);
-        }
-
-        public void setClientId(String clientId) {
-            clientId_ = clientId;
-        }
-
-        public void setSubmittedValue(Object submittedValue) {
-            setSubmittedValueCalls_++;
-            super.setSubmittedValue(submittedValue);
-        }
-
-        public int getSetSubmittedValueCalls() {
-            return setSubmittedValueCalls_;
-        }
     }
 
 }

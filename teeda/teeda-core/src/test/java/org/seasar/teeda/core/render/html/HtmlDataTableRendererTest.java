@@ -49,7 +49,6 @@ public class HtmlDataTableRendererTest extends RendererTest {
         super.setUp();
         renderer = createHtmlDataTableRenderer();
         textRenderer = new HtmlOutputTextRenderer();
-        textRenderer.setRenderAttributes(getRenderAttributes());
         htmlDataTable = new MockHtmlDataTable();
         htmlDataTable.setRenderer(renderer);
     }
@@ -84,7 +83,7 @@ public class HtmlDataTableRendererTest extends RendererTest {
         renderer.encodeBegin(context, htmlDataTable);
 
         // ## Assert ##
-        assertEquals("<table style=\"s\" class=\"t\"", getResponseText());
+        assertEquals("<table class=\"t\" style=\"s\"", getResponseText());
     }
 
     public void testEncodeBegin_Id() throws Exception {
@@ -127,7 +126,6 @@ public class HtmlDataTableRendererTest extends RendererTest {
     public void testEncodeBegin_TableHeaderFacet() throws Exception {
         // ## Arrange ##
         MockHtmlOutputText facet = new MockHtmlOutputText();
-        textRenderer.setRenderAttributes(getRenderAttributes());
         facet.setRenderer(textRenderer);
         facet.setValue("a");
         htmlDataTable.setHeader(facet);
@@ -682,7 +680,6 @@ public class HtmlDataTableRendererTest extends RendererTest {
 
     public void testEncodeChildren_WithNestedChildren() throws Exception {
         HtmlPanelGroupRenderer htmlPanelGroupRenderer = new HtmlPanelGroupRenderer();
-        htmlPanelGroupRenderer.setRenderAttributes(getRenderAttributes());
         htmlDataTable.setValue(new String[] { "a", "b", "c" });
         htmlDataTable.setVar("fooVar");
         {
@@ -990,7 +987,9 @@ public class HtmlDataTableRendererTest extends RendererTest {
         final String readText = TestUtil.readText(getClass(),
                 "testEncode_WithAllAttributes.html", "UTF-8");
         final String expected = extract(readText);
-        Diff diff = diff(expected, getResponseText());
+        final String responseText = getResponseText();
+        System.out.println(responseText);
+        Diff diff = diff(expected, responseText);
         assertEquals(diff.toString(), true, diff.identical());
     }
 
@@ -1005,7 +1004,6 @@ public class HtmlDataTableRendererTest extends RendererTest {
     protected Renderer createRenderer() {
         HtmlDataTableRenderer renderer = new HtmlDataTableRenderer();
         renderer.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
-        renderer.setRenderAttributes(getRenderAttributes());
         return renderer;
     }
 

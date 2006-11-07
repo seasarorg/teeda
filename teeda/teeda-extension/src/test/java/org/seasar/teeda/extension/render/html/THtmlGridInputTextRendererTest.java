@@ -46,7 +46,6 @@ public class THtmlGridInputTextRendererTest extends RendererTest {
         super.setUp();
         renderer = (THtmlGridInputTextRenderer) createRenderer();
         outputTextRenderer = new HtmlOutputTextRenderer();
-        outputTextRenderer.setRenderAttributes(getRenderAttributes());
         gridInputText = new MockHtmlInputText();
         gridInputText.setRenderer(renderer);
     }
@@ -178,7 +177,6 @@ public class THtmlGridInputTextRendererTest extends RendererTest {
     protected Renderer createRenderer() {
         THtmlGridInputTextRenderer renderer = new THtmlGridInputTextRenderer();
         renderer.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
-        renderer.setRenderAttributes(getRenderAttributes());
         return renderer;
     }
 

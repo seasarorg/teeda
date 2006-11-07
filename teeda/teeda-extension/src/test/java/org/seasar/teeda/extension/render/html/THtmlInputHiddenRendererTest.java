@@ -561,7 +561,6 @@ public class THtmlInputHiddenRendererTest extends RendererTest {
     protected Renderer createRenderer() {
         THtmlInputHiddenRenderer renderer = new THtmlInputHiddenRenderer();
         renderer.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
-        renderer.setRenderAttributes(getRenderAttributes());
         renderer.setEncodeConverter(new Base64EncodeConverter());
         return renderer;
     }

@@ -22,6 +22,7 @@ import javax.faces.component.UIOutput;
 import javax.faces.component.html.HtmlOutputText;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+import javax.faces.internal.IgnoreAttribute;
 
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.AbstractRenderer;
@@ -36,6 +37,13 @@ public class HtmlOutputTextRenderer extends AbstractRenderer {
     public static final String COMPONENT_FAMILY = "javax.faces.Output";
 
     public static final String RENDERER_TYPE = "javax.faces.Text";
+
+    private final IgnoreAttribute ignoreComponent = new IgnoreAttribute();
+    {
+        ignoreComponent.addAttributeName(JsfConstants.ID_ATTR);
+        ignoreComponent.addAttributeName(JsfConstants.VALUE_ATTR);
+        ignoreComponent.addAttributeName(JsfConstants.ESCAPE_ATTR);
+    }
 
     public void encodeEnd(FacesContext context, UIComponent component)
             throws IOException {
@@ -55,12 +63,12 @@ public class HtmlOutputTextRenderer extends AbstractRenderer {
             HtmlOutputText htmlOutputText) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
         boolean startSpan = false;
-        if (containsAttributeForRender(htmlOutputText)) {
+        if (containsAttributeForRender(htmlOutputText, ignoreComponent)) {
             writer.startElement(JsfConstants.SPAN_ELEM, htmlOutputText);
             startSpan = true;
             RendererUtil.renderIdAttributeIfNecessary(writer, htmlOutputText,
                     getIdForRender(context, htmlOutputText));
-            renderRemainAttributes(htmlOutputText, writer);
+            renderRemainAttributes(htmlOutputText, writer, ignoreComponent);
         }
         String value = ValueHolderUtil.getValueForRender(context,
                 htmlOutputText);
@@ -78,12 +86,12 @@ public class HtmlOutputTextRenderer extends AbstractRenderer {
             throws IOException {
         ResponseWriter writer = context.getResponseWriter();
         boolean startSpan = false;
-        if (containsAttributeForRender(uiOutput)) {
+        if (containsAttributeForRender(uiOutput, ignoreComponent)) {
             writer.startElement(JsfConstants.SPAN_ELEM, uiOutput);
             startSpan = true;
             RendererUtil.renderIdAttributeIfNecessary(writer, uiOutput,
                     getIdForRender(context, uiOutput));
-            renderRemainAttributes(uiOutput, writer);
+            renderRemainAttributes(uiOutput, writer, ignoreComponent);
         }
         String value = ValueHolderUtil.getValueForRender(context, uiOutput);
         Boolean b = (Boolean) uiOutput.getAttributes().get(

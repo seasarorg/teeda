@@ -21,6 +21,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.html.HtmlGraphicImage;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+import javax.faces.internal.IgnoreAttribute;
 
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.AbstractRenderer;
@@ -35,6 +36,13 @@ public class HtmlGraphicImageRenderer extends AbstractRenderer {
     public static final String COMPONENT_FAMILY = "javax.faces.Graphic";
 
     public static final String RENDERER_TYPE = "javax.faces.Image";
+
+    private final IgnoreAttribute ignoreComponent = new IgnoreAttribute();
+    {
+        ignoreComponent.addAttributeName(JsfConstants.ID_ATTR);
+        ignoreComponent.addAttributeName(JsfConstants.VALUE_ATTR);
+        ignoreComponent.addAttributeName(JsfConstants.URL_ATTR);
+    }
 
     public void encodeEnd(FacesContext context, UIComponent component)
             throws IOException {
@@ -53,7 +61,7 @@ public class HtmlGraphicImageRenderer extends AbstractRenderer {
                 getIdForRender(context, htmlGraphicImage));
         final String url = getUrl(context, htmlGraphicImage);
         writer.writeURIAttribute(JsfConstants.SRC_ATTR, url, null);
-        renderRemainAttributes(htmlGraphicImage, writer);
+        renderRemainAttributes(htmlGraphicImage, writer, ignoreComponent);
         writer.endElement(JsfConstants.IMG_ELEM);
     }
 

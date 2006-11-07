@@ -17,8 +17,6 @@ package org.seasar.teeda.core.render.html;
 
 import javax.faces.component.UISelectItem;
 import javax.faces.component.UISelectItems;
-import javax.faces.component.html.HtmlSelectOneListbox;
-import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.faces.model.SelectItemGroup;
 import javax.faces.render.Renderer;
@@ -27,6 +25,7 @@ import javax.faces.render.RendererTest;
 import org.custommonkey.xmlunit.Diff;
 import org.seasar.framework.mock.servlet.MockHttpServletRequest;
 import org.seasar.teeda.core.mock.MockFacesContext;
+import org.seasar.teeda.core.mock.MockHtmlSelectOneListbox;
 import org.seasar.teeda.core.mock.MockValueBinding;
 import org.seasar.teeda.core.util.PostbackUtil;
 
@@ -44,6 +43,9 @@ public class HtmlSelectOneListboxRendererTest extends RendererTest {
         renderer = createHtmlSelectOneListboxRenderer();
         htmlSelectOneListbox = new MockHtmlSelectOneListbox();
         htmlSelectOneListbox.setRenderer(renderer);
+
+        // MockHtmlSelectOneListboxのプロパティ
+        renderer.addIgnoreAttributeName("setSubmittedValueCalls");
     }
 
     public void testEncode_NoChild() throws Exception {
@@ -540,47 +542,7 @@ public class HtmlSelectOneListboxRendererTest extends RendererTest {
     protected Renderer createRenderer() {
         HtmlSelectOneListboxRenderer renderer = new HtmlSelectOneListboxRenderer();
         renderer.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
-        renderer.setRenderAttributes(getRenderAttributes());
         return renderer;
-    }
-
-    private static class MockHtmlSelectOneListbox extends HtmlSelectOneListbox {
-        private Renderer renderer_;
-
-        private String clientId_;
-
-        private int setSubmittedValueCalls_;
-
-        public void setRenderer(Renderer renderer) {
-            renderer_ = renderer;
-        }
-
-        protected Renderer getRenderer(FacesContext context) {
-            if (renderer_ != null) {
-                return renderer_;
-            }
-            return super.getRenderer(context);
-        }
-
-        public String getClientId(FacesContext context) {
-            if (clientId_ != null) {
-                return clientId_;
-            }
-            return super.getClientId(context);
-        }
-
-        public void setClientId(String clientId) {
-            clientId_ = clientId;
-        }
-
-        public void setSubmittedValue(Object submittedValue) {
-            setSubmittedValueCalls_++;
-            super.setSubmittedValue(submittedValue);
-        }
-
-        public int getSetSubmittedValueCalls() {
-            return setSubmittedValueCalls_;
-        }
     }
 
 }

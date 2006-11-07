@@ -23,6 +23,7 @@ import javax.faces.component.UIOutput;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.convert.ConverterException;
+import javax.faces.internal.IgnoreAttribute;
 import javax.faces.internal.SelectItemsIterator;
 import javax.faces.internal.UIComponentUtil;
 import javax.faces.model.SelectItem;
@@ -44,6 +45,21 @@ public class HtmlSelectManyCheckboxRenderer extends AbstractInputRenderer {
     public static final String COMPONENT_FAMILY = "javax.faces.SelectMany";
 
     public static final String RENDERER_TYPE = "javax.faces.Checkbox";
+
+    private final IgnoreAttribute ignoreComponent = new IgnoreAttribute();
+    {
+        ignoreComponent.addAttributeName(JsfConstants.ID_ATTR);
+        ignoreComponent.addAttributeName(JsfConstants.VALUE_ATTR);
+        ignoreComponent.addAttributeName(JsfConstants.LAYOUT_ATTR);
+        ignoreComponent.addAttributeName(JsfConstants.DISABLED_ATTR);
+        ignoreComponent
+                .addAttributeName(JsfConstants.DISABLED_CLASS_ATTR);
+        ignoreComponent.addAttributeName(JsfConstants.ENABLED_CLASS_ATTR);
+        ignoreComponent.addAttributeName(JsfConstants.BORDER_ATTR);
+        ignoreComponent.addAttributeName(JsfConstants.STYLE_ATTR);
+        ignoreComponent.addAttributeName(JsfConstants.STYLE_CLASS_ATTR);
+        ignoreComponent.addAttributeName("selectedValues");
+    }
 
     public void encodeEnd(FacesContext context, UIComponent component)
             throws IOException {
@@ -171,7 +187,7 @@ public class HtmlSelectManyCheckboxRenderer extends AbstractInputRenderer {
                 htmlSelectManyCheckbox.getClientId(context));
         final Object value = selectItem.getValue();
         RendererUtil.renderAttribute(writer, JsfConstants.VALUE_ATTR, value);
-        renderRemainAttributes(htmlSelectManyCheckbox, writer);
+        renderRemainAttributes(htmlSelectManyCheckbox, writer, ignoreComponent);
         if (isChecked(selectedValues, value.toString())) {
             renderCheckedAttribute(writer);
         }
@@ -202,6 +218,10 @@ public class HtmlSelectManyCheckboxRenderer extends AbstractInputRenderer {
         assertNotNull(context, component);
         return RendererUtil.getConvertedUIOutputValues(context,
                 (UIOutput) component, submittedValue);
+    }
+
+    public void addIgnoreAttributeName(final String name) {
+        ignoreComponent.addAttributeName(name);
     }
 
 }

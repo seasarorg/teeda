@@ -21,6 +21,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.html.HtmlGraphicImage;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+import javax.faces.internal.IgnoreAttribute;
 
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.html.HtmlGraphicImageRenderer;
@@ -35,6 +36,14 @@ public class THtmlTreeGraphicImageRenderer extends HtmlGraphicImageRenderer {
 
     public static final String RENDERER_TYPE = "org.seasar.teeda.extension.tree.Image";
 
+    // FIXME UnitTestが無いので、どの属性が不要かわからない...
+    private final IgnoreAttribute ignoreComponent = new IgnoreAttribute();
+    {
+        //        ignoreComponent.addIgnoreComponentName(JsfConstants.ID_ATTR);
+        //        ignoreComponent.addIgnoreComponentName(JsfConstants.VALUE_ATTR);
+        //        ignoreComponent.addIgnoreComponentName(JsfConstants.URL_ATTR);
+    }
+
     protected String getIdForRender(FacesContext context, UIComponent component) {
         return component.getClientId(context);
     }
@@ -47,7 +56,7 @@ public class THtmlTreeGraphicImageRenderer extends HtmlGraphicImageRenderer {
                 getIdForRender(context, htmlGraphicImage));
         final String url = getUrl(context, htmlGraphicImage);
         writer.writeURIAttribute(JsfConstants.SRC_ATTR, url, null);
-        renderRemainAttributes(htmlGraphicImage, writer);
+        renderRemainAttributes(htmlGraphicImage, writer, ignoreComponent);
         writer.endElement(JsfConstants.IMG_ELEM);
     }
 

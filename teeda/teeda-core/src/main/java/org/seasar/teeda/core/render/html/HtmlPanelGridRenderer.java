@@ -22,6 +22,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.html.HtmlPanelGrid;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+import javax.faces.internal.IgnoreAttribute;
 
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.AbstractRenderer;
@@ -36,6 +37,17 @@ public class HtmlPanelGridRenderer extends AbstractRenderer {
     public static final String COMPONENT_FAMILY = "javax.faces.Panel";
 
     public static final String RENDERER_TYPE = "javax.faces.Grid";
+
+    private final IgnoreAttribute ignoreComponent = new IgnoreAttribute();
+    {
+        ignoreComponent.addAttributeName(JsfConstants.ID_ATTR);
+        ignoreComponent.addAttributeName(JsfConstants.HEADER_CLASS_ATTR);
+        ignoreComponent.addAttributeName(JsfConstants.FOOTER_CLASS_ATTR);
+        ignoreComponent.addAttributeName(JsfConstants.COLUMNS_ATTR);
+        ignoreComponent
+                .addAttributeName(JsfConstants.COLUMN_CLASSES_ATTR);
+        ignoreComponent.addAttributeName(JsfConstants.ROW_CLASSES_ATTR);
+    }
 
     public void encodeBegin(FacesContext context, UIComponent component)
             throws IOException {
@@ -52,7 +64,7 @@ public class HtmlPanelGridRenderer extends AbstractRenderer {
         writer.startElement(JsfConstants.TABLE_ELEM, htmlPanelGrid);
         RendererUtil.renderIdAttributeIfNecessary(writer, htmlPanelGrid,
                 getIdForRender(context, htmlPanelGrid));
-        renderRemainAttributes(htmlPanelGrid, writer);
+        renderRemainAttributes(htmlPanelGrid, writer, ignoreComponent);
 
         // thead
         {

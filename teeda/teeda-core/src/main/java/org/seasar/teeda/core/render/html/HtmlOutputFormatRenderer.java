@@ -27,6 +27,7 @@ import javax.faces.component.UIParameter;
 import javax.faces.component.html.HtmlOutputFormat;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+import javax.faces.internal.IgnoreAttribute;
 
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.AbstractRenderer;
@@ -42,6 +43,13 @@ public class HtmlOutputFormatRenderer extends AbstractRenderer {
 
     public static final String RENDERER_TYPE = "javax.faces.Format";
 
+    private final IgnoreAttribute ignoreComponent = new IgnoreAttribute();
+    {
+        ignoreComponent.addAttributeName(JsfConstants.ID_ATTR);
+        ignoreComponent.addAttributeName(JsfConstants.VALUE_ATTR);
+        ignoreComponent.addAttributeName(JsfConstants.ESCAPE_ATTR);
+    }
+
     public void encodeEnd(FacesContext context, UIComponent component)
             throws IOException {
         assertNotNull(context, component);
@@ -55,12 +63,12 @@ public class HtmlOutputFormatRenderer extends AbstractRenderer {
             HtmlOutputFormat htmlOutputFormat) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
         boolean startSpan = false;
-        if (containsAttributeForRender(htmlOutputFormat)) {
+        if (containsAttributeForRender(htmlOutputFormat, ignoreComponent)) {
             writer.startElement(JsfConstants.SPAN_ELEM, htmlOutputFormat);
             startSpan = true;
             RendererUtil.renderIdAttributeIfNecessary(writer, htmlOutputFormat,
                     getIdForRender(context, htmlOutputFormat));
-            renderRemainAttributes(htmlOutputFormat, writer);
+            renderRemainAttributes(htmlOutputFormat, writer, ignoreComponent);
         }
         String value = getFormattedValue(context, htmlOutputFormat);
         if (htmlOutputFormat.isEscape()) {

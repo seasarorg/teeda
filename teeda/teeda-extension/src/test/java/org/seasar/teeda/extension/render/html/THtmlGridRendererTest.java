@@ -68,9 +68,7 @@ public class THtmlGridRendererTest extends RendererTest {
         super.setUp();
         renderer = (THtmlGridRenderer) createRenderer();
         outputTextRenderer = new HtmlOutputTextRenderer();
-        outputTextRenderer.setRenderAttributes(getRenderAttributes());
         inputTextRenderer = new HtmlInputTextRenderer();
-        inputTextRenderer.setRenderAttributes(getRenderAttributes());
         //gridInputTextRenderer = new THtmlGridInputTextRenderer();
         //gridInputTextRenderer.setRenderAttributes(getRenderAttributes());
         htmlGrid = new MockHtmlGrid();

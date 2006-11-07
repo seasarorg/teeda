@@ -16,16 +16,13 @@
 package org.seasar.teeda.extension.render.html;
 
 import java.io.IOException;
-import java.util.Iterator;
-import java.util.Map;
 
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIViewRoot;
 import javax.faces.component.html.HtmlInputText;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
-import javax.faces.internal.IgnoreComponent;
-import javax.faces.internal.UIComponentUtil;
+import javax.faces.internal.IgnoreAttribute;
 
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
@@ -113,23 +110,16 @@ public abstract class AbstractInputExtendTextRenderer extends
 
     protected void renderRemain(THtmlInputText htmlInputText,
             ResponseWriter writer) throws IOException {
-        IgnoreComponent ignore = buildIgnoreComponent();
-        Map map = UIComponentUtil.getAllAttributesAndProperties(htmlInputText,
-                ignore);
-        for (final Iterator it = map.entrySet().iterator(); it.hasNext();) {
-            Map.Entry entry = (Map.Entry) it.next();
-            String name = (String) entry.getKey();
-            Object value = entry.getValue();
-            RendererUtil.renderAttribute(writer, name, value, name);
-        }
+        IgnoreAttribute ignore = buildIgnoreComponent();
+        renderRemainAttributes(htmlInputText, writer, ignore);
     }
 
-    protected IgnoreComponent buildIgnoreComponent() {
-        IgnoreComponent ignore = new IgnoreComponent();
-        ignore.addIgnoreComponentName(JsfConstants.ID_ATTR);
-        ignore.addIgnoreComponentName(JsfConstants.TYPE_ATTR);
-        ignore.addIgnoreComponentName(JsfConstants.VALUE_ATTR);
-        ignore.addIgnoreComponentName(ExtensionConstants.ERROR_STYLE_CLASS);
+    protected IgnoreAttribute buildIgnoreComponent() {
+        IgnoreAttribute ignore = new IgnoreAttribute();
+        ignore.addAttributeName(JsfConstants.ID_ATTR);
+        ignore.addAttributeName(JsfConstants.TYPE_ATTR);
+        ignore.addAttributeName(JsfConstants.VALUE_ATTR);
+        ignore.addAttributeName(ExtensionConstants.ERROR_STYLE_CLASS);
         return ignore;
     };
 

@@ -23,6 +23,7 @@ import javax.faces.component.UIOutput;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.convert.ConverterException;
+import javax.faces.internal.IgnoreAttribute;
 import javax.faces.internal.SelectItemsIterator;
 import javax.faces.internal.UIComponentUtil;
 import javax.faces.model.SelectItem;
@@ -43,6 +44,17 @@ public class HtmlSelectManyListboxRenderer extends AbstractInputRenderer {
     public static final String COMPONENT_FAMILY = "javax.faces.SelectMany";
 
     public static final String RENDERER_TYPE = "javax.faces.Listbox";
+
+    private final IgnoreAttribute ignoreComponent = new IgnoreAttribute();
+    {
+        ignoreComponent.addAttributeName(JsfConstants.ID_ATTR);
+        ignoreComponent.addAttributeName(JsfConstants.VALUE_ATTR);
+        ignoreComponent.addAttributeName(JsfConstants.SIZE_ATTR);
+        ignoreComponent.addAttributeName("selectedValues");
+        ignoreComponent
+                .addAttributeName(JsfConstants.DISABLED_CLASS_ATTR);
+        ignoreComponent.addAttributeName(JsfConstants.ENABLED_CLASS_ATTR);
+    }
 
     public void encodeEnd(FacesContext context, UIComponent component)
             throws IOException {
@@ -70,7 +82,7 @@ public class HtmlSelectManyListboxRenderer extends AbstractInputRenderer {
                 .getClientId(context));
         renderMultiple(context, component, writer);
         renderSize(context, component, writer);
-        renderRemainAttributes(component, writer);
+        renderRemainAttributes(component, writer, ignoreComponent);
         final String[] selectedValues = getValuesForRender(context, component);
         renderSelectItems(context, component, writer, it, selectedValues);
 
@@ -173,6 +185,10 @@ public class HtmlSelectManyListboxRenderer extends AbstractInputRenderer {
         assertNotNull(context, component);
         return RendererUtil.getConvertedUIOutputValues(context,
                 (UIOutput) component, submittedValue);
+    }
+
+    public void addIgnoreAttributeName(final String name) {
+        ignoreComponent.addAttributeName(name);
     }
 
 }

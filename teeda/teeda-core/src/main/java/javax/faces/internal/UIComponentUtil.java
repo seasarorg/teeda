@@ -15,12 +15,6 @@
  */
 package javax.faces.internal;
 
-import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Map.Entry;
-
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIForm;
@@ -31,11 +25,6 @@ import javax.faces.el.MethodBinding;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
-import org.seasar.framework.beans.BeanDesc;
-import org.seasar.framework.beans.PropertyDesc;
-import org.seasar.framework.beans.factory.BeanDescFactory;
-import org.seasar.framework.util.ArrayUtil;
-import org.seasar.framework.util.ModifierUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.exception.TagNotFoundRuntimeException;
 
@@ -43,11 +32,6 @@ import org.seasar.teeda.core.exception.TagNotFoundRuntimeException;
  * @author manhole
  */
 public class UIComponentUtil {
-
-    private static final IgnoreComponent DEFAULT_IGNORE = new IgnoreComponent();
-
-    private UIComponentUtil() {
-    }
 
     public static boolean isDisabled(UIComponent component) {
         return getPrimitiveBooleanAttribute(component,
@@ -133,38 +117,6 @@ public class UIComponentUtil {
         }
     }
 
-    public static Map getAllAttributesAndProperties(UIComponent component) {
-        return getAllAttributesAndProperties(component, DEFAULT_IGNORE);
-    }
-
-    public static Map getAllAttributesAndProperties(UIComponent component,
-            IgnoreComponent ignore) {
-        Map map = new HashMap();
-        BeanDesc beanDesc = BeanDescFactory.getBeanDesc(component.getClass());
-        for (int i = 0; i < beanDesc.getPropertyDescSize(); i++) {
-            PropertyDesc propertyDesc = beanDesc.getPropertyDesc(i);
-            Method m = propertyDesc.getReadMethod();
-            if (propertyDesc.hasReadMethod() && isPublicNoParameterMethod(m)) {
-                if (ArrayUtil.contains(ignore.getIgnoreComponentNames(),
-                        propertyDesc.getPropertyName())) {
-                    continue;
-                }
-                map.put(propertyDesc.getPropertyName(), propertyDesc
-                        .getValue(component));
-            }
-        }
-        for (Iterator itr = component.getAttributes().entrySet().iterator(); itr
-                .hasNext();) {
-            Map.Entry entry = (Entry) itr.next();
-            if (ArrayUtil.contains(ignore.getIgnoreComponentNames(), entry
-                    .getKey())) {
-                continue;
-            }
-            map.put(entry.getKey(), entry.getValue());
-        }
-        return map;
-    }
-
     public static UIForm findParentForm(UIComponent component) {
         UIComponent parent = component.getParent();
         while (parent != null && !(parent instanceof UIForm)) {
@@ -174,10 +126,6 @@ public class UIComponentUtil {
             throw new TagNotFoundRuntimeException("form");
         }
         return (UIForm) parent;
-    }
-
-    private static boolean isPublicNoParameterMethod(Method m) {
-        return ModifierUtil.isPublic(m) && m.getParameterTypes().length == 0;
     }
 
 }

@@ -43,7 +43,6 @@ public class TConditionRendererTest extends RendererTest {
         child.setId("bbb");
         child.setValue("B");
         HtmlOutputTextRenderer childRenderer = new HtmlOutputTextRenderer();
-        childRenderer.setRenderAttributes(getRenderAttributes());
         child.setRenderer(childRenderer);
         c.setId("isAaa");
         c.setRendered(true);

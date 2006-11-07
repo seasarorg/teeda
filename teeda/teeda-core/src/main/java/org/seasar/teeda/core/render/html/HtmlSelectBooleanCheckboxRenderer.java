@@ -22,6 +22,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.html.HtmlSelectBooleanCheckbox;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+import javax.faces.internal.IgnoreAttribute;
 
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.AbstractRenderer;
@@ -36,6 +37,13 @@ public class HtmlSelectBooleanCheckboxRenderer extends AbstractRenderer {
     public static final String COMPONENT_FAMILY = "javax.faces.SelectBoolean";
 
     public static final String RENDERER_TYPE = "javax.faces.Checkbox";
+
+    private final IgnoreAttribute ignoreComponent = new IgnoreAttribute();
+    {
+        ignoreComponent.addAttributeName(JsfConstants.ID_ATTR);
+        ignoreComponent.addAttributeName(JsfConstants.VALUE_ATTR);
+        ignoreComponent.addAttributeName(JsfConstants.SELECTED_ATTR);
+    }
 
     public void encodeEnd(FacesContext context, UIComponent component)
             throws IOException {
@@ -67,7 +75,8 @@ public class HtmlSelectBooleanCheckboxRenderer extends AbstractRenderer {
         if (isChecked(value)) {
             renderCheckedAttribute(writer);
         }
-        renderRemainAttributes(htmlSelectBooleanCheckbox, writer);
+        renderRemainAttributes(htmlSelectBooleanCheckbox, writer,
+                ignoreComponent);
         writer.endElement(JsfConstants.INPUT_ELEM);
     }
 
@@ -101,6 +110,10 @@ public class HtmlSelectBooleanCheckboxRenderer extends AbstractRenderer {
                     || "yes".equalsIgnoreCase(value) || isChecked(value);
         }
         return false;
+    }
+
+    public void addIgnoreAttributeName(final String name) {
+        ignoreComponent.addAttributeName(name);
     }
 
 }

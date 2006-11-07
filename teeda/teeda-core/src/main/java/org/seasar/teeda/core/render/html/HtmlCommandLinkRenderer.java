@@ -30,6 +30,7 @@ import javax.faces.component.html.HtmlCommandLink;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.event.ActionEvent;
+import javax.faces.internal.IgnoreAttribute;
 import javax.faces.internal.UIComponentUtil;
 
 import org.seasar.teeda.core.JsfConstants;
@@ -52,6 +53,15 @@ public class HtmlCommandLinkRenderer extends AbstractRenderer {
     public static final String RENDERER_TYPE = "javax.faces.Link";
 
     private static final String HIDDEN_FIELD_NAME_SUFFIX = "__link_clicked__";
+
+    private final IgnoreAttribute ignoreComponent = new IgnoreAttribute();
+    {
+        ignoreComponent.addAttributeName(JsfConstants.ID_ATTR);
+        ignoreComponent.addAttributeName(JsfConstants.VALUE_ATTR);
+        ignoreComponent.addAttributeName(JsfConstants.ONCLICK_ATTR);
+        ignoreComponent.addAttributeName(JsfConstants.ACTION_ATTR);
+        ignoreComponent.addAttributeName(JsfConstants.IMMEDIATE_ATTR);
+    }
 
     public void encodeBegin(FacesContext context, UIComponent component)
             throws IOException {
@@ -132,7 +142,8 @@ public class HtmlCommandLinkRenderer extends AbstractRenderer {
         RendererUtil.renderAttribute(writer, JsfConstants.ONCLICK_ATTR, sb
                 .toString());
 
-        renderRemainAttributes(commandLink, writer);
+        //renderRemainAttributes(commandLink, writer);
+        renderRemainAttributes(commandLink, writer, ignoreComponent);
 
         Object value = commandLink.getValue();
         if (value != null) {

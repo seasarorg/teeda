@@ -16,15 +16,12 @@
 package org.seasar.teeda.extension.render.html;
 
 import java.io.IOException;
-import java.util.Iterator;
-import java.util.Map;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
-import javax.faces.internal.IgnoreComponent;
+import javax.faces.internal.IgnoreAttribute;
 import javax.faces.internal.LabelUtil;
-import javax.faces.internal.UIComponentUtil;
 
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.AbstractRenderer;
@@ -41,7 +38,7 @@ public class THtmlOutputLabelRenderer extends AbstractRenderer {
 
     public static final String RENDERER_TYPE = "org.seasar.teeda.extension.Label";
 
-    private static final IgnoreComponent IGNORE_COMPONENT;
+    private static final IgnoreAttribute IGNORE_COMPONENT;
 
     static {
         IGNORE_COMPONENT = buildIgnoreComponent();
@@ -65,7 +62,7 @@ public class THtmlOutputLabelRenderer extends AbstractRenderer {
         String forAttr = label.getFor();
         RendererUtil.renderAttribute(writer, JsfConstants.FOR_ATTR, forAttr,
                 null);
-        renderRemain(label, writer);
+        renderRemainAttributes(label, writer, IGNORE_COMPONENT);
         final String key = label.getKey();
         final String propertiesName = label.getPropertiesName();
         final String defaultKey = label.getDefaultKey();
@@ -92,29 +89,17 @@ public class THtmlOutputLabelRenderer extends AbstractRenderer {
         writer.endElement(JsfConstants.LABEL_ELEM);
     }
 
-    protected void renderRemain(THtmlOutputLabel label, ResponseWriter writer)
-            throws IOException {
-        Map map = UIComponentUtil.getAllAttributesAndProperties(label,
-                IGNORE_COMPONENT);
-        for (final Iterator it = map.entrySet().iterator(); it.hasNext();) {
-            Map.Entry entry = (Map.Entry) it.next();
-            String name = (String) entry.getKey();
-            Object value = entry.getValue();
-            RendererUtil.renderAttribute(writer, name, value, name);
-        }
-    }
-
-    protected static IgnoreComponent buildIgnoreComponent() {
-        IgnoreComponent ignore = new IgnoreComponent();
-        ignore.addIgnoreComponentName(JsfConstants.FOR_ATTR);
-        ignore.addIgnoreComponentName(JsfConstants.ID_ATTR);
-        ignore.addIgnoreComponentName(JsfConstants.VALUE_ATTR);
-        ignore.addIgnoreComponentName(ExtensionConstants.KEY_ATTR);
-        ignore.addIgnoreComponentName(ExtensionConstants.PROPERTIES_NAME_ATTR);
-        ignore.addIgnoreComponentName(ExtensionConstants.PROPERTIES_NAME_ATTR);
-        ignore.addIgnoreComponentName(ExtensionConstants.DEFAULT_KEY);
+    protected static IgnoreAttribute buildIgnoreComponent() {
+        IgnoreAttribute ignore = new IgnoreAttribute();
+        ignore.addAttributeName(JsfConstants.FOR_ATTR);
+        ignore.addAttributeName(JsfConstants.ID_ATTR);
+        ignore.addAttributeName(JsfConstants.VALUE_ATTR);
+        ignore.addAttributeName(ExtensionConstants.KEY_ATTR);
+        ignore.addAttributeName(ExtensionConstants.PROPERTIES_NAME_ATTR);
+        ignore.addAttributeName(ExtensionConstants.PROPERTIES_NAME_ATTR);
+        ignore.addAttributeName(ExtensionConstants.DEFAULT_KEY);
         ignore
-                .addIgnoreComponentName(ExtensionConstants.DEFAULT_PROPERTIES_NAME_ATTR);
+                .addAttributeName(ExtensionConstants.DEFAULT_PROPERTIES_NAME_ATTR);
         return ignore;
     }
 }

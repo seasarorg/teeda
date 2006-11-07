@@ -48,7 +48,6 @@ public class THtmlGridInputCommaTextRendererTest extends RendererTest {
         super.setUp();
         renderer = (THtmlGridInputCommaTextRenderer) createRenderer();
         outputTextRenderer = new HtmlOutputTextRenderer();
-        outputTextRenderer.setRenderAttributes(getRenderAttributes());
         gridInputText = new MockHtmlInputCommaText();
         gridInputText.setRenderer(renderer);
 
@@ -194,7 +193,6 @@ public class THtmlGridInputCommaTextRendererTest extends RendererTest {
     protected Renderer createRenderer() {
         THtmlGridInputCommaTextRenderer renderer = new THtmlGridInputCommaTextRenderer();
         renderer.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
-        renderer.setRenderAttributes(getRenderAttributes());
         return renderer;
     }
 

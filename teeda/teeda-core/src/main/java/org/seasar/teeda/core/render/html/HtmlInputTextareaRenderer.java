@@ -21,6 +21,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.html.HtmlInputTextarea;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+import javax.faces.internal.IgnoreAttribute;
 
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.AbstractInputRenderer;
@@ -35,6 +36,12 @@ public class HtmlInputTextareaRenderer extends AbstractInputRenderer {
     public static final String COMPONENT_FAMILY = "javax.faces.Input";
 
     public static final String RENDERER_TYPE = "javax.faces.Textarea";
+
+    private final IgnoreAttribute ignoreComponent = new IgnoreAttribute();
+    {
+        ignoreComponent.addAttributeName(JsfConstants.ID_ATTR);
+        ignoreComponent.addAttributeName(JsfConstants.VALUE_ATTR);
+    }
 
     public void encodeEnd(FacesContext context, UIComponent component)
             throws IOException {
@@ -53,7 +60,7 @@ public class HtmlInputTextareaRenderer extends AbstractInputRenderer {
                 getIdForRender(context, htmlInputTextarea));
         RendererUtil.renderAttribute(writer, JsfConstants.NAME_ATTR,
                 htmlInputTextarea.getClientId(context));
-        renderRemainAttributes(htmlInputTextarea, writer);
+        renderRemainAttributes(htmlInputTextarea, writer, ignoreComponent);
 
         String value = ValueHolderUtil.getValueForRender(context,
                 htmlInputTextarea);

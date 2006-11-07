@@ -17,7 +17,6 @@ package org.seasar.teeda.core.render.html;
 
 import javax.faces.component.UISelectItem;
 import javax.faces.component.UISelectItems;
-import javax.faces.component.html.HtmlSelectManyMenu;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.faces.model.SelectItemGroup;
@@ -27,6 +26,7 @@ import javax.faces.render.RendererTest;
 import junitx.framework.ArrayAssert;
 
 import org.custommonkey.xmlunit.Diff;
+import org.seasar.teeda.core.mock.MockHtmlSelectManyMenu;
 
 /**
  * @author manhole
@@ -42,6 +42,9 @@ public class HtmlSelectManyMenuRendererTest extends RendererTest {
         renderer = createHtmlSelectManyMenuRenderer();
         htmlSelectManyMenu = new MockHtmlSelectManyMenu();
         htmlSelectManyMenu.setRenderer(renderer);
+
+        // MockHtmlSelectManyMenuのプロパティ
+        renderer.addIgnoreAttributeName("setSubmittedValueCalls");
     }
 
     public void testEncode_NoChild() throws Exception {
@@ -435,47 +438,7 @@ public class HtmlSelectManyMenuRendererTest extends RendererTest {
     protected Renderer createRenderer() {
         HtmlSelectManyMenuRenderer renderer = new HtmlSelectManyMenuRenderer();
         renderer.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
-        renderer.setRenderAttributes(getRenderAttributes());
         return renderer;
-    }
-
-    private static class MockHtmlSelectManyMenu extends HtmlSelectManyMenu {
-        private Renderer renderer_;
-
-        private String clientId_;
-
-        private int setSubmittedValueCalls_;
-
-        public void setRenderer(Renderer renderer) {
-            renderer_ = renderer;
-        }
-
-        protected Renderer getRenderer(FacesContext context) {
-            if (renderer_ != null) {
-                return renderer_;
-            }
-            return super.getRenderer(context);
-        }
-
-        public String getClientId(FacesContext context) {
-            if (clientId_ != null) {
-                return clientId_;
-            }
-            return super.getClientId(context);
-        }
-
-        public void setClientId(String clientId) {
-            clientId_ = clientId;
-        }
-
-        public void setSubmittedValue(Object submittedValue) {
-            setSubmittedValueCalls_++;
-            super.setSubmittedValue(submittedValue);
-        }
-
-        public int getSetSubmittedValueCalls() {
-            return setSubmittedValueCalls_;
-        }
     }
 
 }

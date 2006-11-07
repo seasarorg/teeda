@@ -21,6 +21,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.html.HtmlInputText;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+import javax.faces.internal.IgnoreAttribute;
 
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.AbstractInputRenderer;
@@ -35,6 +36,14 @@ public class HtmlInputTextRenderer extends AbstractInputRenderer {
     public static final String COMPONENT_FAMILY = "javax.faces.Input";
 
     public static final String RENDERER_TYPE = "javax.faces.Text";
+
+    private final IgnoreAttribute ignoreComponent = new IgnoreAttribute();
+    {
+        ignoreComponent.addAttributeName(JsfConstants.ID_ATTR);
+        ignoreComponent.addAttributeName(JsfConstants.VALUE_ATTR);
+        ignoreComponent.addAttributeName(JsfConstants.STYLE_CLASS_ATTR);
+        ignoreComponent.addAttributeName(JsfConstants.AUTOCOMPLETE_ATTR);
+    }
 
     public void encodeEnd(FacesContext context, UIComponent component)
             throws IOException {
@@ -61,7 +70,7 @@ public class HtmlInputTextRenderer extends AbstractInputRenderer {
         RendererUtil.renderAttribute(writer, JsfConstants.AUTOCOMPLETE_ATTR,
                 htmlInputText.getAutocomplete());
         renderStyleClass(context, htmlInputText, writer);
-        renderRemainAttributes(htmlInputText, writer);
+        renderRemainAttributes(htmlInputText, writer, ignoreComponent);
         writer.endElement(JsfConstants.INPUT_ELEM);
     }
 
@@ -81,6 +90,10 @@ public class HtmlInputTextRenderer extends AbstractInputRenderer {
     protected void decodeHtmlInputText(FacesContext context,
             HtmlInputText htmlInputText) {
         getDecoder().decode(context, htmlInputText);
+    }
+
+    public void addIgnoreAttributeName(final String name) {
+        ignoreComponent.addAttributeName(name);
     }
 
 }

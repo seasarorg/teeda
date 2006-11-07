@@ -39,7 +39,6 @@ public class HtmlPanelGridRendererTest extends RendererTest {
         super.setUp();
         renderer = createHtmlPanelGridRenderer();
         textRenderer = new HtmlOutputTextRenderer();
-        textRenderer.setRenderAttributes(getRenderAttributes());
         htmlPanelGrid = new MockHtmlPanelGrid();
         htmlPanelGrid.setRenderer(renderer);
     }
@@ -106,7 +105,7 @@ public class HtmlPanelGridRendererTest extends RendererTest {
         renderer.encodeBegin(getFacesContext(), htmlPanelGrid);
 
         // ## Assert ##
-        assertEquals("<table style=\"a\" class=\"b\"", getResponseText());
+        assertEquals("<table class=\"b\" style=\"a\"", getResponseText());
     }
 
     public void testEncode_NoValue() throws Exception {
@@ -432,7 +431,6 @@ public class HtmlPanelGridRendererTest extends RendererTest {
     protected Renderer createRenderer() {
         HtmlPanelGridRenderer renderer = new HtmlPanelGridRenderer();
         renderer.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
-        renderer.setRenderAttributes(getRenderAttributes());
         return renderer;
     }
 

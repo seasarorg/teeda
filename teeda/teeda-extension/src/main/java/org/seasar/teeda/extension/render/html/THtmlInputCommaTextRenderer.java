@@ -23,7 +23,7 @@ import java.util.Locale;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
-import javax.faces.internal.IgnoreComponent;
+import javax.faces.internal.IgnoreAttribute;
 
 import org.seasar.framework.util.BigDecimalConversionUtil;
 import org.seasar.framework.util.NumberConversionUtil;
@@ -237,21 +237,21 @@ public class THtmlInputCommaTextRenderer extends
         }
     }
 
-    protected IgnoreComponent buildIgnoreComponent() {
-        IgnoreComponent ignore = super.buildIgnoreComponent();
-        ignore.addIgnoreComponentName(JsfConstants.STYLE_ATTR);
-        ignore.addIgnoreComponentName(JsfConstants.STYLE_CLASS_ATTR);
-        ignore.addIgnoreComponentName(JsfConstants.ONFOCUS_ATTR);
-        ignore.addIgnoreComponentName(JsfConstants.ONBLUR_ATTR);
-        ignore.addIgnoreComponentName(JsfConstants.ONKEYDOWN_ATTR);
-        ignore.addIgnoreComponentName(JsfConstants.ONKEYPRESS_ATTR);
-        ignore.addIgnoreComponentName(JsfConstants.ONKEYUP_ATTR);
-        ignore.addIgnoreComponentName(JsfConstants.DISABLED_ATTR);
-        ignore.addIgnoreComponentName(ExtensionConstants.FRACTION_ATTR);
+    protected IgnoreAttribute buildIgnoreComponent() {
+        IgnoreAttribute ignore = super.buildIgnoreComponent();
+        ignore.addAttributeName(JsfConstants.STYLE_ATTR);
+        ignore.addAttributeName(JsfConstants.STYLE_CLASS_ATTR);
+        ignore.addAttributeName(JsfConstants.ONFOCUS_ATTR);
+        ignore.addAttributeName(JsfConstants.ONBLUR_ATTR);
+        ignore.addAttributeName(JsfConstants.ONKEYDOWN_ATTR);
+        ignore.addAttributeName(JsfConstants.ONKEYPRESS_ATTR);
+        ignore.addAttributeName(JsfConstants.ONKEYUP_ATTR);
+        ignore.addAttributeName(JsfConstants.DISABLED_ATTR);
+        ignore.addAttributeName(ExtensionConstants.FRACTION_ATTR);
         ignore
-                .addIgnoreComponentName(ExtensionConstants.GROUPING_SEPARATOR_ATTR);
+                .addAttributeName(ExtensionConstants.GROUPING_SEPARATOR_ATTR);
         ignore
-                .addIgnoreComponentName(ExtensionConstants.FRACTION_SEPARATOR_ATTR);
+                .addAttributeName(ExtensionConstants.FRACTION_SEPARATOR_ATTR);
         return ignore;
     };
 

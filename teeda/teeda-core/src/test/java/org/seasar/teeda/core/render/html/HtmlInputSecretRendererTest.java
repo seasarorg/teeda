@@ -204,7 +204,6 @@ public class HtmlInputSecretRendererTest extends RendererTest {
     protected Renderer createRenderer() {
         HtmlInputSecretRenderer renderer = new HtmlInputSecretRenderer();
         renderer.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
-        renderer.setRenderAttributes(getRenderAttributes());
         return renderer;
     }
 

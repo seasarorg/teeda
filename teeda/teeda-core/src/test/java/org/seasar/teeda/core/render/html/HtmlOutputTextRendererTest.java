@@ -272,7 +272,6 @@ public class HtmlOutputTextRendererTest extends RendererTest {
     protected Renderer createRenderer() {
         HtmlOutputTextRenderer renderer = new HtmlOutputTextRenderer();
         renderer.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
-        renderer.setRenderAttributes(getRenderAttributes());
         return renderer;
     }
 

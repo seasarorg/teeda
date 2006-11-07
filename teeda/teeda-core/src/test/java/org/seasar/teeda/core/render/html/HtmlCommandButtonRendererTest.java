@@ -26,6 +26,7 @@ import junitx.framework.ObjectAssert;
 import org.custommonkey.xmlunit.Diff;
 import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.mock.MockHtmlCommandButton;
+import org.seasar.teeda.core.mock.MockMethodBinding;
 import org.seasar.teeda.core.mock.MockUIComponentBaseWithNamingContainer;
 
 /**
@@ -139,6 +140,22 @@ public class HtmlCommandButtonRendererTest extends RendererTest {
 
         // ## Assert ##
         assertEquals("<input type=\"image\" id=\"a\" name=\"a\" src=\"bb\" />",
+                getResponseText());
+    }
+
+    public void testEncode_IgnoreAttributes() throws Exception {
+        // ## Arrange ##
+        htmlCommandButton.setId("a");
+
+        // この属性は出力されないこと
+        htmlCommandButton.setAction(new MockMethodBinding());
+        htmlCommandButton.setImmediate(true);
+
+        // ## Act ##
+        encodeByRenderer(renderer, htmlCommandButton);
+
+        // ## Assert ##
+        assertEquals("<input type=\"submit\" id=\"a\" name=\"a\" />",
                 getResponseText());
     }
 
@@ -302,7 +319,6 @@ public class HtmlCommandButtonRendererTest extends RendererTest {
     protected Renderer createRenderer() {
         HtmlCommandButtonRenderer renderer = new HtmlCommandButtonRenderer();
         renderer.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
-        renderer.setRenderAttributes(getRenderAttributes());
         return renderer;
     }
 

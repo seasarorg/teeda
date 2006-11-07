@@ -15,6 +15,10 @@
  */
 package org.seasar.teeda.core.render;
 
+import java.util.Map;
+
+import javax.faces.component.UIComponentBase;
+import javax.faces.internal.IgnoreAttribute;
 import javax.faces.render.RendererTest;
 
 /**
@@ -36,6 +40,34 @@ public class AbstractRendererTest extends RendererTest {
         assertEquals("b", result[1]);
         assertEquals("c", result[2]);
         assertEquals("d", result[3]);
+    }
+
+    public void testGetAllAttributesAndProperties_setIgnore() throws Exception {
+        MockNoComponent component = new MockNoComponent();
+        component.setHoge("aaa");
+        IgnoreAttribute ignore = new IgnoreAttribute();
+        ignore.addAttributeName("hoge");
+        ignore.addAttributeName("id");
+        Map map = renderer.getAllAttributesAndProperties(component, ignore);
+        assertTrue(map.size() == 0);
+    }
+
+    public static class MockNoComponent extends UIComponentBase {
+
+        private String hoge;
+
+        public String getHoge() {
+            return hoge;
+        }
+
+        public void setHoge(String hoge) {
+            this.hoge = hoge;
+        }
+
+        public String getFamily() {
+            return "none";
+        }
+
     }
 
 }

@@ -122,7 +122,6 @@ public class THtmlOutputLinkRendererTest extends RendererTest {
     protected Renderer createRenderer() {
         THtmlOutputLinkRenderer renderer = new THtmlOutputLinkRenderer();
         renderer.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
-        renderer.setRenderAttributes(getRenderAttributes());
         return renderer;
     }
 

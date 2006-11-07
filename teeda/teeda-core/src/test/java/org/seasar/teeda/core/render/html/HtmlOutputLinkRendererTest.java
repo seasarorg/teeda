@@ -43,7 +43,6 @@ public class HtmlOutputLinkRendererTest extends RendererTest {
         super.setUp();
         renderer = createHtmlOutputLinkRenderer();
         textRenderer = new HtmlOutputTextRenderer();
-        textRenderer.setRenderAttributes(getRenderAttributes());
         htmlOutputLink = new MockHtmlOutputLink();
         htmlOutputLink.setRenderer(renderer);
     }
@@ -303,7 +302,6 @@ public class HtmlOutputLinkRendererTest extends RendererTest {
     protected Renderer createRenderer() {
         HtmlOutputLinkRenderer renderer = new HtmlOutputLinkRenderer();
         renderer.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
-        renderer.setRenderAttributes(getRenderAttributes());
         return renderer;
     }
 

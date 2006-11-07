@@ -24,6 +24,7 @@ import javax.faces.component.UIParameter;
 import javax.faces.component.html.HtmlOutputLink;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+import javax.faces.internal.IgnoreAttribute;
 import javax.faces.internal.WindowIdUtil;
 
 import org.seasar.teeda.core.JsfConstants;
@@ -40,6 +41,12 @@ public class HtmlOutputLinkRenderer extends AbstractRenderer {
     public static final String COMPONENT_FAMILY = "javax.faces.Output";
 
     public static final String RENDERER_TYPE = "javax.faces.Link";
+
+    private final IgnoreAttribute ignoreComponent = new IgnoreAttribute();
+    {
+        ignoreComponent.addAttributeName(JsfConstants.ID_ATTR);
+        ignoreComponent.addAttributeName(JsfConstants.VALUE_ATTR);
+    }
 
     public void encodeBegin(FacesContext context, UIComponent component)
             throws IOException {
@@ -59,7 +66,7 @@ public class HtmlOutputLinkRenderer extends AbstractRenderer {
         RendererUtil.renderIdAttributeIfNecessary(writer, htmlOutputLink,
                 getIdForRender(context, htmlOutputLink));
         writer.writeURIAttribute(JsfConstants.HREF_ATTR, href, null);
-        renderRemainAttributes(htmlOutputLink, writer);
+        renderRemainAttributes(htmlOutputLink, writer, ignoreComponent);
     }
 
     protected String buildHref(FacesContext context,

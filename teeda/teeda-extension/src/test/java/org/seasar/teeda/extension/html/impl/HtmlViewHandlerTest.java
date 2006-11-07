@@ -28,7 +28,6 @@ import org.seasar.teeda.core.application.impl.TeedaStateManagerImpl;
 import org.seasar.teeda.core.application.impl.TreeStructureManagerImpl;
 import org.seasar.teeda.core.render.DefaultComponentIdLookupStrategy;
 import org.seasar.teeda.core.render.html.HtmlFormRenderer;
-import org.seasar.teeda.core.render.html.support.RenderAttributesImpl;
 import org.seasar.teeda.core.taglib.html.FormTag;
 import org.seasar.teeda.core.util.PostbackUtil;
 import org.seasar.teeda.extension.component.UIText;
@@ -57,9 +56,6 @@ public class HtmlViewHandlerTest extends TeedaExtensionTestCase {
         HtmlFormRenderer formRenderer = new HtmlFormRenderer();
         formRenderer
                 .setComponentIdLookupStrategy(new DefaultComponentIdLookupStrategy());
-        final RenderAttributesImpl renderAttributesImpl = new RenderAttributesImpl();
-        renderAttributesImpl.initialize();
-        formRenderer.setRenderAttributes(renderAttributesImpl);
         renderKit.addRenderer(HtmlForm.COMPONENT_FAMILY, "javax.faces.Form",
                 formRenderer);
         Application app = getApplication();

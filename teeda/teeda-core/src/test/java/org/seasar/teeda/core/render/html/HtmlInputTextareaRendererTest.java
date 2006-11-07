@@ -184,7 +184,6 @@ public class HtmlInputTextareaRendererTest extends RendererTest {
     protected Renderer createRenderer() {
         HtmlInputTextareaRenderer renderer = new HtmlInputTextareaRenderer();
         renderer.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
-        renderer.setRenderAttributes(getRenderAttributes());
         return renderer;
     }
 
