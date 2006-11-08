@@ -29,7 +29,7 @@ public class ErrorTest extends TeedaWebTestCase {
 		return setUpTest(ErrorTest.class);
 	}
 
-	public void testRender() throws Exception {
+	public void testErrorOnClickButton() throws Exception {
 		// ## Arrange ##
 		TeedaWebTester tester = new TeedaWebTester();
 		tester.getTestContext().setBaseUrl(getBaseUrl());
@@ -42,6 +42,32 @@ public class ErrorTest extends TeedaWebTestCase {
 
 		// ## Assert ##
 		assertTrue(tester.getCurrentUri().endsWith("errorResult.html"));
+	}
+
+	public void testErrorOnInitialize() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
+		tester.getTestContext().setBaseUrl(getBaseUrl());
+
+		// ## Act ##
+		tester.beginAt("view/error/errorOnInitialize.html");
+		tester.dumpHtml();
+
+		// ## Assert ##
+		assertTrue(tester.getCurrentUri().indexOf("errorResult.html") >= 0);
+	}
+
+	public void testErrorOnPrerender() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
+		tester.getTestContext().setBaseUrl(getBaseUrl());
+
+		// ## Act ##
+		tester.beginAt("view/error/errorOnPrerender.html");
+		tester.dumpHtml();
+
+		// ## Assert ##
+		assertTrue(tester.getCurrentUri().indexOf("errorResult.html") >= 0);
 	}
 
 }
