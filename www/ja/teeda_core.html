@@ -46,7 +46,7 @@
 	<li><a href="example.html">サンプル解説</a></li>
 </ul>
 
-<h3><a name="vs">Teeda Core vs Struts, MyFaces</a></h3>
+<h3><a name="vs">Teeda vs Struts, MyFaces</a></h3>
 <table border="1" width="500" summary="Teeda vs Struts, normal JSF">
 	<caption><font size="3">[ Teeda, Struts, 通常のJSFの機能比較 ]</font></caption>
 	<tr><th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th><th>Teeda</th><th>Struts</th><th>通常のJSF実装</th></tr>
@@ -63,6 +63,12 @@
 		<td>なし</td>
 	</tr>
 	<tr>
+		<td>HTMLテンプレート機能</td>
+		<td>あり</td>
+		<td>なし</td>
+		<td>なし</td>
+	</tr>
+	<tr>
 		<td>Ajax対応</td>
 		<td>Teeda Ajaxで実現</td>
 		<td>なし</td>
@@ -70,7 +76,7 @@
 	</tr>
 	<tr>
 		<td>初期化機能</td>
-		<td>前のページのアクションで指定（明示的に変更予定）</td>
+		<td>Teeda Extensionでinitializeメソッドを提供</td>
 		<td>Actionクラスで指定</td>
 		<td>前のページのアクションで指定</td>
 	</tr>
@@ -112,7 +118,7 @@
 	</tr>
 	<tr>
 		<td>レイアウト機能</td>
-		<td>なし（追加予定）</td>
+		<td>追加予定</td>
 		<td>Tilesにより実現</td>
 		<td>標準ではなし。（MyFacesではTilesとの連動機能あり）</td>
 	</tr>
