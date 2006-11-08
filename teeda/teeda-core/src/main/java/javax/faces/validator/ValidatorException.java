@@ -36,7 +36,7 @@ public class ValidatorException extends FacesException {
     }
 
     public ValidatorException(FacesMessage facesMessage, Throwable cause) {
-        super(facesMessage.getSummary(), cause);
+        super(facesMessage.getDetail(), cause);
         this.facesMessage = facesMessage;
     }
 

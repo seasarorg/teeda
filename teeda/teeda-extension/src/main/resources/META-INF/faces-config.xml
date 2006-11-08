@@ -7,6 +7,16 @@
 <!-- =========== FULL CONFIGURATION FILE ================================== -->
 
 <faces-config>
+    <render-kit>
+		<renderer>
+			<component-family>javax.faces.Command</component-family>
+			<renderer-type>javax.faces.Button</renderer-type>
+			<renderer-class>
+				org.seasar.teeda.extension.component.html.THtmlCommandButtonRenderer
+			</renderer-class>
+		</renderer>
+	</render-kit>
+	
 	<component>
 		<component-type>
 			org.seasar.teeda.extension.Text
@@ -205,6 +215,14 @@
 		</component-type>
 		<component-class>
 			org.seasar.teeda.extension.component.html.THtmlInputText
+		</component-class>
+	</component>
+	<component>
+		<component-type>
+			javax.faces.HtmlCommandButton
+		</component-type>
+		<component-class>
+			org.seasar.teeda.extension.component.html.THtmlCommandButton
 		</component-class>
 	</component>
 </faces-config>
