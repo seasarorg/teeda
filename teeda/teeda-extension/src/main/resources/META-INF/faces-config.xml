@@ -12,7 +12,7 @@
 			<component-family>javax.faces.Command</component-family>
 			<renderer-type>javax.faces.Button</renderer-type>
 			<renderer-class>
-				org.seasar.teeda.extension.component.html.THtmlCommandButtonRenderer
+				org.seasar.teeda.extension.render.html.THtmlCommandButtonRenderer
 			</renderer-class>
 		</renderer>
 	</render-kit>
