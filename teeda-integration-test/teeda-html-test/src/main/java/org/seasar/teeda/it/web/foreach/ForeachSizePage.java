@@ -5,101 +5,104 @@ import java.util.ArrayList;
 
 public class ForeachSizePage {
 
-    private int itemSize;
-    private FooItem[] fooItems;
-    private int fooIndex;
+	private int itemSize;
 
-    public String initialize() {
-        itemSize = 3;
-        fooItems = createItems(itemSize);
-        return null;
-    }
+	private FooItem[] fooItems;
 
-    private FooItem[] createItems(final int size) {
-        final ArrayList items = new ArrayList();
-        for (int i = 0; i < size; i++) {
-            final FooItem item = new FooItem();
-            item.setAaa("aa" + i);
-            item.setBbb(new BigDecimal(i * 10));
-            final FooItem fooItem = item;
-            items.add(fooItem);
-        }
-        FooItem[] a = new FooItem[items.size()];
-        items.toArray(a);
-        return a;
-    }
+	private int fooIndex;
 
-    public String doChangeSize() {
-        fooItems = createItems(itemSize);
-        return null;
-    }
+	public String initialize() {
+		itemSize = 3;
+		fooItems = createItems(itemSize);
+		return null;
+	}
 
-    public int getFooIndex() {
-        return fooIndex;
-    }
+	private FooItem[] createItems(final int size) {
+		final ArrayList items = new ArrayList();
+		for (int i = 0; i < size; i++) {
+			final FooItem item = new FooItem();
+			item.setAaa("aa" + i);
+			String s = String.valueOf((i * 10));
+			item.setBbb(new BigDecimal(s));
+			final FooItem fooItem = item;
+			items.add(fooItem);
+		}
+		FooItem[] a = new FooItem[items.size()];
+		items.toArray(a);
+		return a;
+	}
 
-    public void setFooIndex(int fooIndex) {
-        this.fooIndex = fooIndex;
-    }
+	public String doChangeSize() {
+		fooItems = createItems(itemSize);
+		return null;
+	}
 
-    public FooItem[] getFooItems() {
-        return fooItems;
-    }
+	public int getFooIndex() {
+		return fooIndex;
+	}
 
-    public void setFooItems(FooItem[] fooItems) {
-        this.fooItems = fooItems;
-    }
+	public void setFooIndex(int fooIndex) {
+		this.fooIndex = fooIndex;
+	}
 
-    public int getItemSize() {
-        return itemSize;
-    }
+	public FooItem[] getFooItems() {
+		return fooItems;
+	}
 
-    public void setItemSize(int itemSize) {
-        this.itemSize = itemSize;
-    }
+	public void setFooItems(FooItem[] fooItems) {
+		this.fooItems = fooItems;
+	}
 
-    public static class FooItem {
+	public int getItemSize() {
+		return itemSize;
+	}
 
-        private String aaa;
+	public void setItemSize(int itemSize) {
+		this.itemSize = itemSize;
+	}
 
-        private BigDecimal bbb;
+	public static class FooItem {
 
-        public String getAaa() {
-            return aaa;
-        }
+		private String aaa;
 
-        public void setAaa(String foo) {
-            this.aaa = foo;
-        }
+		private BigDecimal bbb;
 
-        public BigDecimal getBbb() {
-            return bbb;
-        }
+		public String getAaa() {
+			return aaa;
+		}
 
-        public void setBbb(BigDecimal eee) {
-            this.bbb = eee;
-        }
+		public void setAaa(String foo) {
+			this.aaa = foo;
+		}
 
-    }
+		public BigDecimal getBbb() {
+			return bbb;
+		}
 
-    private String aaa;
+		public void setBbb(BigDecimal eee) {
+			this.bbb = eee;
+		}
 
-    private BigDecimal bbb;
+	}
 
-    public String getAaa() {
-        return aaa;
-    }
+	private String aaa;
 
-    public void setAaa(String foo) {
-        this.aaa = foo;
-    }
+	private BigDecimal bbb;
 
-    public BigDecimal getBbb() {
-        return bbb;
-    }
+	public String getAaa() {
+		return aaa;
+	}
 
-    public void setBbb(BigDecimal eee) {
-        this.bbb = eee;
-    }
+	public void setAaa(String foo) {
+		this.aaa = foo;
+	}
+
+	public BigDecimal getBbb() {
+		return bbb;
+	}
+
+	public void setBbb(BigDecimal eee) {
+		this.bbb = eee;
+	}
 
 }
