@@ -103,8 +103,8 @@ Kumu.extend(Kumu.Html.Disabled, {
       if(DisabledConf.time){
         this.time = DisabledConf.time;
       }
-      if(DisabledConf.expectAnchor){
-        this.anchor = DisabledConf.expectAnchor;       
+      if(DisabledConf.excludeAnchor){
+        this.anchor = DisabledConf.excludeAnchor;       
       }
       if(DisabledConf.submitMessage){
         this.submitMessage = DisabledConf.submitMessage;       
@@ -112,8 +112,8 @@ Kumu.extend(Kumu.Html.Disabled, {
       if(DisabledConf.anchorMessage){
         this.anchorMessage = DisabledConf.anchorMessage;       
       }
-      if(DisabledConf.expectForm){
-        var ids  = DisabledConf.expectForm;
+      if(DisabledConf.excludeForm){
+        var ids  = DisabledConf.excludeForm;
         forms = Kumu.filter(function(f){
           if(f.id){
             for(var i = 0; i < ids.length; i++){

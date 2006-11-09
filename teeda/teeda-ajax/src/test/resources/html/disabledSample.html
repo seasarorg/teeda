@@ -8,11 +8,11 @@
 Kumu.dynamicLoad('disabled');
   DisabledConf = {
     time : 50000,
-    expectForm : ['test2'],
+    excludeForm : ['test2'],
     submitMessage : function(){
       alert('送信中です');
     },
-    expectAnchor : ['a2'],
+    excludeAnchor : ['a2'],
     anchorMessage : function(){
       alert('遷移中です');
     }
@@ -20,14 +20,14 @@ Kumu.dynamicLoad('disabled');
 </script>
 </head>
 <body>
-<a id="a1" href="http://www.seasar.org/">テストリンク1</a>
-<a id="a2" href="http://www.seasar.org/">テストリンク2</a>
+<a id="a1" href="https://www.seasar.org/issues/">テストリンク1</a>
+<a id="a2" href="https://www.seasar.org/issues/">テストリンク2</a>
 
-<form id="test1" action="http://www.seasar.org/">
+<form id="test1" action="https://www.seasar.org/issues/">
   <input type="submit" value="サブミットテスト1">  
   <input type="submit" value="javascriptサブミットテスト1" onclick="document.forms[0].submit();"> 
 </form>
-<form id="test2" action="http://www.seasar.org/">
+<form id="test2" action="https://www.seasar.org/issues/">
   <input type="submit" value="サブミットテスト2">  
   <input type="submit" value="javascriptサブミットテスト2" onclick="document.forms[1].submit();"> 
 </form>
