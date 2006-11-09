@@ -106,7 +106,7 @@ public class THtmlInputCommaTextRenderer extends
                 return s + fractPart;
             }
         } catch (NumberFormatException e) {
-            return null;
+            return value;
         }
     }
 

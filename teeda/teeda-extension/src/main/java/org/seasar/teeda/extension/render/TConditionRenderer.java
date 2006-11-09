@@ -60,8 +60,10 @@ public class TConditionRenderer extends AbstractRenderer {
         }
         if ("true".equals(submitted)) {
             condition.setSubmitted(true);
+            condition.setRendered(true);
         } else {
             condition.setSubmitted(false);
+            condition.setRendered(false);
         }
     }
     

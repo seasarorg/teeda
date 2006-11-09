@@ -32,7 +32,7 @@ import org.seasar.teeda.extension.util.ValidatorUtil;
  * @author shot
  */
 public abstract class AbstractCompareValidator implements Validator,
-        StateHolder {
+        StateHolder, ValidationTargetSelectable {
 
     public static final String MAXIMUM_MESSAGE_ID = "javax.faces.validator.LongRangeValidator.MAXIMUM";
 
@@ -107,12 +107,17 @@ public abstract class AbstractCompareValidator implements Validator,
         if (value == null) {
             return;
         }
-        if (!ValidatorUtil.isTargetCommand(context, targets)) {
+        if (!isTargetCommandValidation(context, targets)) {
             return;
         }
         UIComponent targetComponent = getTargetComponent(component);
         Object targetValue = ValueHolderUtil.getValue(targetComponent);
         doValidate(context, component, value, targetComponent, targetValue);
+    }
+
+    
+    public boolean isTargetCommandValidation(FacesContext context, String[] targets) {
+        return ValidatorUtil.isTargetCommand(context, targets);
     }
 
     protected UIComponent getTargetComponent(UIComponent component) {

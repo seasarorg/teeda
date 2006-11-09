@@ -34,7 +34,7 @@ import org.seasar.teeda.extension.util.ValidatorUtil;
  * @author higa
  * @author shot
  */
-public class TRequiredValidator implements Validator, StateHolder {
+public class TRequiredValidator implements Validator, StateHolder, ValidationTargetSelectable {
 
     public static final String VALIDATOR_ID = "javax.faces.Required";
 
@@ -52,7 +52,7 @@ public class TRequiredValidator implements Validator, StateHolder {
             Object value) throws FacesException {
         AssertionUtil.assertNotNull("context", context);
         AssertionUtil.assertNotNull("component", component);
-        if (!ValidatorUtil.isTargetCommand(context, targets)) {
+        if (!isTargetCommandValidation(context, targets)) {
             return;
         }
         if (UIInputUtil.isEmpty(value)) {
@@ -104,5 +104,9 @@ public class TRequiredValidator implements Validator, StateHolder {
         Object[] values = (Object[]) state;
         setTarget((String) values[0]);
         messageId = (String) values[1];
+    }
+
+    public boolean isTargetCommandValidation(FacesContext context, String[] targets) {
+        return ValidatorUtil.isTargetCommand(context, targets);
     }
 }

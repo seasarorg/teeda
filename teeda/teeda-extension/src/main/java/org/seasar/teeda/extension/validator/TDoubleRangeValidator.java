@@ -29,7 +29,8 @@ import org.seasar.teeda.extension.util.ValidatorUtil;
 /**
  * @author shot
  */
-public class TDoubleRangeValidator extends DoubleRangeValidator {
+public class TDoubleRangeValidator extends DoubleRangeValidator implements
+        ValidationTargetSelectable {
 
     private String target;
 
@@ -61,7 +62,7 @@ public class TDoubleRangeValidator extends DoubleRangeValidator {
             Object value) throws FacesException {
         AssertionUtil.assertNotNull("context", context);
         AssertionUtil.assertNotNull("component", component);
-        if (!ValidatorUtil.isTargetCommand(context, targets)) {
+        if (!isTargetCommandValidation(context, targets)) {
             return;
         }
         try {
@@ -168,5 +169,10 @@ public class TDoubleRangeValidator extends DoubleRangeValidator {
             }
         }
         return ret;
+    }
+
+    public boolean isTargetCommandValidation(FacesContext context,
+            String[] targets) {
+        return ValidatorUtil.isTargetCommand(context, targets);
     }
 }

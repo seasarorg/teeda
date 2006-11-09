@@ -29,7 +29,8 @@ import org.seasar.teeda.extension.util.ValidatorUtil;
 /**
  * @author shot
  */
-public class TLongRangeValidator extends LongRangeValidator {
+public class TLongRangeValidator extends LongRangeValidator implements
+        ValidationTargetSelectable {
 
     private String target;
 
@@ -61,7 +62,7 @@ public class TLongRangeValidator extends LongRangeValidator {
             Object value) throws FacesException {
         AssertionUtil.assertNotNull("context", context);
         AssertionUtil.assertNotNull("component", component);
-        if (!ValidatorUtil.isTargetCommand(context, targets)) {
+        if (!isTargetCommandValidation(context, targets)) {
             return;
         }
         try {
@@ -168,6 +169,11 @@ public class TLongRangeValidator extends LongRangeValidator {
             }
         }
         return ret;
+    }
+
+    public boolean isTargetCommandValidation(FacesContext context,
+            String[] targets) {
+        return ValidatorUtil.isTargetCommand(context, targets);
     }
 
 }

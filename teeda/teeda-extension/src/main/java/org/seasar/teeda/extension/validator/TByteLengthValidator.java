@@ -32,7 +32,8 @@ import org.seasar.teeda.extension.util.ValidatorUtil;
 /**
  * @author shot
  */
-public class TByteLengthValidator extends LengthValidator {
+public class TByteLengthValidator extends LengthValidator implements
+        ValidationTargetSelectable {
 
     public static final String VALIDATOR_ID = "teeda.core.ByteLength";
 
@@ -56,7 +57,7 @@ public class TByteLengthValidator extends LengthValidator {
             Object value) throws FacesException {
         AssertionUtil.assertNotNull("context", context);
         AssertionUtil.assertNotNull("component", component);
-        if (!ValidatorUtil.isTargetCommand(context, targets)) {
+        if (!isTargetCommandValidation(context, targets)) {
             return;
         }
         try {
@@ -148,5 +149,10 @@ public class TByteLengthValidator extends LengthValidator {
 
     public void setMaximumMessageId(String maximumMessageId) {
         this.maximumMessageId = maximumMessageId;
+    }
+
+    public boolean isTargetCommandValidation(FacesContext context,
+            String[] targets) {
+        return ValidatorUtil.isTargetCommand(context, targets);
     }
 }

@@ -30,11 +30,14 @@ import javax.faces.validator.ValidatorException;
 
 import org.seasar.framework.util.AssertionUtil;
 import org.seasar.framework.util.NumberConversionUtil;
+import org.seasar.framework.util.StringUtil;
+import org.seasar.teeda.extension.util.ValidatorUtil;
 
 /**
  * @author manhole
  */
-public class TNumberLengthValidator implements Validator, StateHolder {
+public class TNumberLengthValidator implements Validator, StateHolder,
+        ValidationTargetSelectable {
 
     /*
      * String型で"ab.cd"と入ってきた場合も、このバリデータでは桁数しか見ない。
@@ -60,6 +63,10 @@ public class TNumberLengthValidator implements Validator, StateHolder {
 
     private boolean transientValue = false;
 
+    private String target;
+
+    private String[] targets;
+
     public void validate(final FacesContext context,
             final UIComponent component, final Object value)
             throws FacesException {
@@ -68,7 +75,9 @@ public class TNumberLengthValidator implements Validator, StateHolder {
         if (value == null) {
             return;
         }
-
+        if (!isTargetCommandValidation(context, targets)) {
+            return;
+        }
         final Digits digits = getDigits(context, value);
         final boolean integralSuccess = validateIntegral(digits);
         final boolean fractionSuccess = validateFraction(digits);
@@ -206,14 +215,17 @@ public class TNumberLengthValidator implements Validator, StateHolder {
         integralMax = ((Integer) values[1]).intValue();
         fractionMin = ((Integer) values[2]).intValue();
         fractionMax = ((Integer) values[3]).intValue();
+        target = (String) values[4];
+        setTarget(target);
     }
 
     public Object saveState(FacesContext context) {
-        Object[] state = new Object[4];
+        Object[] state = new Object[5];
         state[0] = new Integer(integralMin);
         state[1] = new Integer(integralMax);
         state[2] = new Integer(fractionMin);
         state[3] = new Integer(fractionMax);
+        state[4] = target;
         return state;
     }
 
@@ -223,6 +235,23 @@ public class TNumberLengthValidator implements Validator, StateHolder {
 
     public void setTransient(boolean transientValue) {
         this.transientValue = transientValue;
+    }
+
+    public String getTarget() {
+        return target;
+    }
+
+    public void setTarget(String target) {
+        this.target = target;
+        if (StringUtil.isEmpty(target)) {
+            return;
+        }
+        targets = StringUtil.split(target, ", ");
+    }
+
+    public boolean isTargetCommandValidation(FacesContext context,
+            String[] targets) {
+        return ValidatorUtil.isTargetCommand(context, targets);
     }
 
 }

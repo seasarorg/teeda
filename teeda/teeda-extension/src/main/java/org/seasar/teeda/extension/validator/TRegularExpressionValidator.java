@@ -33,7 +33,7 @@ import org.seasar.teeda.extension.util.ValidatorUtil;
 /**
  * @author shot
  */
-public class TRegularExpressionValidator implements Validator, StateHolder {
+public class TRegularExpressionValidator implements Validator, StateHolder, ValidationTargetSelectable {
 
     public static final String VALIDATOR_ID = TRegularExpressionValidator.class
             .getName();
@@ -61,7 +61,7 @@ public class TRegularExpressionValidator implements Validator, StateHolder {
         if (value == null) {
             return;
         }
-        if (!ValidatorUtil.isTargetCommand(context, targets)) {
+        if (!isTargetCommandValidation(context, targets)) {
             return;
         }
         String strValue = value.toString();
@@ -127,6 +127,10 @@ public class TRegularExpressionValidator implements Validator, StateHolder {
 
     public void setMessageId(String messageId) {
         this.messageId = messageId;
+    }
+
+    public boolean isTargetCommandValidation(FacesContext context, String[] targets) {
+        return ValidatorUtil.isTargetCommand(context, targets);
     }
 
 }

@@ -30,7 +30,7 @@ public class TreeNodeImpl implements TreeNode, Comparable {
 
     private boolean leaf;
 
-    private String value;
+    private Object value;
 
     public TreeNodeImpl() {
     }
@@ -75,11 +75,11 @@ public class TreeNodeImpl implements TreeNode, Comparable {
         return description;
     }
 
-    public void setValue(String value) {
+    public void setValue(Object value) {
         this.value = value;
     }
 
-    public String getValue() {
+    public Object getValue() {
         return value;
     }
 

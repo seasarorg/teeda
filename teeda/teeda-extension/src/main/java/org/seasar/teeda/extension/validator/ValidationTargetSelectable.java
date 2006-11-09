@@ -13,33 +13,18 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.extension.component;
+package org.seasar.teeda.extension.validator;
 
-import java.io.Serializable;
-import java.util.List;
+import javax.faces.context.FacesContext;
 
-public interface TreeNode extends Serializable {
+/**
+ * @author shot
+ */
+public interface ValidationTargetSelectable {
 
-    public boolean isLeaf();
+    void setTarget(String target);
 
-    public void setLeaf(boolean leaf);
+    String getTarget();
 
-    public void addChild(TreeNode node);
-
-    public List getChildren();
-
-    public String getType();
-
-    public void setType(String type);
-
-    public String getDescription();
-
-    public void setDescription(String description);
-
-    public void setValue(Object value);
-
-    public Object getValue();
-
-    public int getChildCount();
-
+    boolean isTargetCommandValidation(FacesContext context, String[] targets);
 }
