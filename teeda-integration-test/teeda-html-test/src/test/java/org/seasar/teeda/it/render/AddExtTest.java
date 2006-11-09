@@ -23,27 +23,30 @@ import org.seasar.teeda.unit.web.TeedaWebTester;
 /**
  * @author shot
  */
-public class SelectTest extends TeedaWebTestCase {
+public class AddExtTest extends TeedaWebTestCase {
 
 	public static Test suite() throws Exception {
-		return setUpTest(SelectTest.class);
+		return setUpTest(AddExtTest.class);
 	}
 
-	public void testSelectValueAndSubmit() throws Exception {
+	public void testRender() throws Exception {
 		// ## Arrange ##
 		TeedaWebTester tester = new TeedaWebTester();
 		tester.getTestContext().setBaseUrl(getBaseUrl());
 
 		// ## Act ##
-		tester.beginAt("view/select/selectOneMenu.html");
+		tester.beginAt("view/add/addExt.html");
 		tester.dumpHtml();
 
-		tester.assertSelectedOptionValueEquals("form:aaaItems", "1");
-		tester.selectOptionByValue("form:aaaItems", "2");
-		tester.submit("form:doAction");
+		tester.setTextField("addForm:arg1", "1-1");
+		tester.setTextField("addForm:arg2", "2-2");
+
+		tester.submit("addForm:doCalculate");
+		tester.dumpHtml();
 
 		// ## Assert ##
-		tester.assertTextEquals("aaa", "2");
+		tester.assertTextEquals("arg1", "1-1");
+		tester.assertTextEquals("arg2", "2-2");
 	}
 
 }

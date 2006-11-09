@@ -23,10 +23,10 @@ import org.seasar.teeda.unit.web.TeedaWebTester;
 /**
  * @author shot
  */
-public class SelectTest extends TeedaWebTestCase {
+public class RadioTest extends TeedaWebTestCase {
 
 	public static Test suite() throws Exception {
-		return setUpTest(SelectTest.class);
+		return setUpTest(RadioTest.class);
 	}
 
 	public void testSelectValueAndSubmit() throws Exception {
@@ -35,15 +35,15 @@ public class SelectTest extends TeedaWebTestCase {
 		tester.getTestContext().setBaseUrl(getBaseUrl());
 
 		// ## Act ##
-		tester.beginAt("view/select/selectOneMenu.html");
+		tester.beginAt("view/radio/selectOneRadio.html");
 		tester.dumpHtml();
 
-		tester.assertSelectedOptionValueEquals("form:aaaItems", "1");
-		tester.selectOptionByValue("form:aaaItems", "2");
+		tester.assertRadioOptionSelected("form:aaa", "2");
+		tester.clickRadioOption("form:aaa", "1");
 		tester.submit("form:doAction");
 
 		// ## Assert ##
-		tester.assertTextEquals("aaa", "2");
+		tester.assertTextEquals("aaa-display", "1");
 	}
 
 }
