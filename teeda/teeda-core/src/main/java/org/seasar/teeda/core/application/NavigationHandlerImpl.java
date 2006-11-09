@@ -15,12 +15,10 @@
  */
 package org.seasar.teeda.core.application;
 
-import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import javax.faces.FacesException;
 import javax.faces.application.NavigationHandler;
 import javax.faces.application.ViewHandler;
 import javax.faces.component.UIViewRoot;
@@ -32,6 +30,7 @@ import org.seasar.teeda.core.application.navigation.NavigationCaseContext;
 import org.seasar.teeda.core.application.navigation.NavigationContext;
 import org.seasar.teeda.core.application.navigation.NavigationResource;
 import org.seasar.teeda.core.util.IteratorUtil;
+import org.seasar.teeda.core.util.NavigationHandlerUtil;
 import org.seasar.teeda.core.util.PortletUtil;
 
 /**
@@ -82,13 +81,7 @@ public class NavigationHandlerImpl extends NavigationHandler {
     protected void redirect(FacesContext context,
             ExternalContext externalContext, String redirectPath,
             String newViewId) {
-        try {
-            externalContext.redirect(externalContext
-                    .encodeActionURL(redirectPath));
-        } catch (IOException e) {
-            throw new FacesException(e.getMessage(), e);
-        }
-        context.responseComplete();
+        NavigationHandlerUtil.redirect(context, redirectPath);
     }
 
     protected void render(FacesContext context, ViewHandler viewHandler,

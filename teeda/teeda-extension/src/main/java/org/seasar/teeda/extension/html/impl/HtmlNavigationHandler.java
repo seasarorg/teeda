@@ -15,6 +15,8 @@
  */
 package org.seasar.teeda.extension.html.impl;
 
+import java.util.Map;
+
 import javax.faces.application.ViewHandler;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -29,6 +31,10 @@ import org.seasar.teeda.extension.html.PagePersistence;
  */
 public class HtmlNavigationHandler extends NavigationHandlerImpl {
 
+    private static final String REDIRECTING_PATH = HtmlNavigationHandler.class
+            .getName()
+            + ".REDIRECTING_PATH";
+
     private PagePersistence pagePersistence;
 
     public void setPagePersistence(PagePersistence pagePersistence) {
@@ -39,7 +45,24 @@ public class HtmlNavigationHandler extends NavigationHandlerImpl {
             ExternalContext externalContext, String redirectPath,
             String newViewId) {
         pagePersistence.save(context, newViewId);
+        setupRedirectingPath(externalContext, redirectPath);
         super.redirect(context, externalContext, redirectPath, newViewId);
+    }
+
+    protected void setupRedirectingPath(ExternalContext extCtx,
+            String redirectPath) {
+        Map sessionMap = extCtx.getSessionMap();
+        sessionMap.put(REDIRECTING_PATH, redirectPath);
+    }
+
+    public static void clearRedirectingPath(ExternalContext extCtx) {
+        Map sessionMap = extCtx.getSessionMap();
+        sessionMap.remove(REDIRECTING_PATH);
+    }
+
+    public static String getRedirectingPath(ExternalContext extCtx) {
+        Map sessionMap = extCtx.getSessionMap();
+        return (String) sessionMap.get(REDIRECTING_PATH);
     }
 
     public void handleNavigation(FacesContext context, String fromAction,

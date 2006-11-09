@@ -15,7 +15,11 @@
  */
 package org.seasar.teeda.core.util;
 
+import java.io.IOException;
+
+import javax.faces.FacesException;
 import javax.faces.application.NavigationHandler;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
 public class NavigationHandlerUtil {
@@ -28,5 +32,15 @@ public class NavigationHandlerUtil {
         NavigationHandler handler = context.getApplication()
                 .getNavigationHandler();
         handler.handleNavigation(context, fromAction, outCome);
+    }
+
+    public static void redirect(FacesContext context, String path) {
+        ExternalContext externalContext = context.getExternalContext();
+        try {
+            externalContext.redirect(externalContext.encodeActionURL(path));
+        } catch (IOException e) {
+            throw new FacesException(e.getMessage(), e);
+        }
+        context.responseComplete();
     }
 }
