@@ -44,9 +44,7 @@ public class TransactionTokenUtil {
     private static final String TOKENS = TransactionTokenUtil.class.getName()
             + ".TOKENS";
 
-    private static final String DO_ONCE = "doOnce";
-
-    private static final String DO_FINISH = "doFinish";
+    private static final String DO = "do";
 
     private static long previous;
 
@@ -57,7 +55,7 @@ public class TransactionTokenUtil {
         if (id == null) {
             return false;
         }
-        return id.startsWith(DO_ONCE) || id.equals(DO_FINISH);
+        return id.startsWith(DO);
     }
 
     public static synchronized String getToken(Map requestMap) {
