@@ -37,10 +37,13 @@ public class THtmlCommandButtonTest extends TeedaTestCase {
     }
 
     public void testBroadcase_ok() throws Exception {
-        String token = TransactionTokenUtil.generate(getFacesContext());
+        THtmlCommandButton button = new THtmlCommandButton();
+        TransactionTokenUtil.renderTokenIfNeed(getFacesContext(), button);
+        Map reqMap = getExternalContext().getRequestMap();
+        String token = TransactionTokenUtil.getToken(reqMap);
         Map paramMap = getExternalContext().getRequestParameterMap();
         paramMap.put(TransactionTokenUtil.TOKEN, token);
-        THtmlCommandButton button = new THtmlCommandButton();
+
         button.setId("doOnceSubmit");
         FacesEvent event = new ActionEvent(button);
         button.broadcast(event);
@@ -56,7 +59,6 @@ public class THtmlCommandButtonTest extends TeedaTestCase {
         button.broadcast(event);
         assertFalse(actionListener.called);
         assertTrue(getFacesContext().getRenderResponse());
-        assertTrue(getFacesContext().getMessages().hasNext());
     }
 
     private static class MyActionListener implements ActionListener {

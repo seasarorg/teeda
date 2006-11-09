@@ -15,11 +15,13 @@
  */
 package org.seasar.teeda.extension.util;
 
+import java.io.IOException;
 import java.security.MessageDigest;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import javax.faces.component.UIComponent;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
@@ -28,6 +30,7 @@ import org.seasar.framework.beans.PropertyDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.framework.util.MessageDigestUtil;
 import org.seasar.framework.util.StringUtil;
+import org.seasar.teeda.core.util.RendererUtil;
 
 /**
  * @author higa
@@ -57,7 +60,25 @@ public class TransactionTokenUtil {
         return id.startsWith(DO_ONCE) || id.equals(DO_FINISH);
     }
 
-    public static synchronized String generate(FacesContext context) {
+    public static synchronized String getToken(Map requestMap) {
+        return (String) requestMap.get(TOKEN);
+    }
+
+    public static synchronized void renderTokenIfNeed(FacesContext context,
+            UIComponent component) throws IOException {
+        ExternalContext extCtx = context.getExternalContext();
+        Map requestMap = extCtx.getRequestMap();
+        String token = (String) requestMap.get(TOKEN);
+        if (!StringUtil.isEmpty(token)) {
+            return;
+        }
+        token = generate(context);
+        requestMap.put(TOKEN, token);
+        RendererUtil.renderHidden(component, context.getResponseWriter(),
+                TOKEN, token);
+    }
+
+    protected static String generate(FacesContext context) {
         ExternalContext extCtx = context.getExternalContext();
         Object session = extCtx.getSession(true);
         BeanDesc beanDesc = BeanDescFactory.getBeanDesc(session.getClass());

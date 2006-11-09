@@ -130,7 +130,7 @@ public class HtmlFormRenderer extends AbstractRenderer {
             final Map.Entry entry = (Entry) it.next();
             final String name = (String) entry.getKey();
             final Object value = entry.getValue();
-            renderHidden(htmlForm, writer, name, value);
+            RendererUtil.renderHidden(htmlForm, writer, name, value);
         }
         if (hasCommandLink) {
             final String target = htmlForm.getTarget();
@@ -164,7 +164,7 @@ public class HtmlFormRenderer extends AbstractRenderer {
             HtmlForm htmlForm, ResponseWriter writer) throws IOException {
         final String clientId = htmlForm.getClientId(context);
         final String key = getFormSubmitKey(context, htmlForm);
-        renderHidden(htmlForm, writer, key, clientId);
+        RendererUtil.renderHidden(htmlForm, writer, key, clientId);
     }
 
     public void decode(FacesContext context, UIComponent component) {
@@ -180,16 +180,6 @@ public class HtmlFormRenderer extends AbstractRenderer {
         } else {
             htmlForm.setSubmitted(false);
         }
-    }
-
-    private void renderHidden(HtmlForm htmlForm, ResponseWriter writer,
-            String name, Object value) throws IOException {
-        writer.startElement(JsfConstants.INPUT_ELEM, htmlForm);
-        RendererUtil.renderAttribute(writer, JsfConstants.TYPE_ATTR,
-                JsfConstants.HIDDEN_VALUE);
-        RendererUtil.renderAttribute(writer, JsfConstants.NAME_ATTR, name);
-        RendererUtil.renderAttribute(writer, JsfConstants.VALUE_ATTR, value);
-        writer.endElement(JsfConstants.INPUT_ELEM);
     }
 
     private String getFormSubmitKey(FacesContext context, HtmlForm htmlForm) {

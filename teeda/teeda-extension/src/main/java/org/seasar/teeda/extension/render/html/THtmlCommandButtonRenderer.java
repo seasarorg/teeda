@@ -16,15 +16,11 @@
 package org.seasar.teeda.extension.render.html;
 
 import java.io.IOException;
-import java.util.Map;
 
 import javax.faces.component.UIComponent;
-import javax.faces.component.UIForm;
 import javax.faces.context.FacesContext;
-import javax.faces.internal.UIComponentUtil;
 
 import org.seasar.teeda.core.render.html.HtmlCommandButtonRenderer;
-import org.seasar.teeda.core.render.html.HtmlFormRenderer;
 import org.seasar.teeda.extension.util.TransactionTokenUtil;
 
 /**
@@ -42,13 +38,7 @@ public class THtmlCommandButtonRenderer extends HtmlCommandButtonRenderer {
         if (!TransactionTokenUtil.isDoOnce(component.getId())) {
             return;
         }
-        UIForm form = UIComponentUtil.findParentForm(component);
-        Map hiddenParams = HtmlFormRenderer.getHiddenParameters(form);
-        if (!hiddenParams.containsKey(TransactionTokenUtil.TOKEN)) {
-            hiddenParams.put(TransactionTokenUtil.TOKEN, TransactionTokenUtil
-                    .generate(context));
-        }
-
+        TransactionTokenUtil.renderTokenIfNeed(context, component);
     }
 
 }

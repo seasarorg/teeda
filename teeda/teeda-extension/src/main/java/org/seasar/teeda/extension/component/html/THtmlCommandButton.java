@@ -15,12 +15,10 @@
  */
 package org.seasar.teeda.extension.component.html;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.component.html.HtmlCommandButton;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.FacesEvent;
-import javax.faces.internal.FacesMessageUtil;
 
 import org.seasar.teeda.extension.util.TransactionTokenUtil;
 
@@ -30,19 +28,15 @@ import org.seasar.teeda.extension.util.TransactionTokenUtil;
  */
 public class THtmlCommandButton extends HtmlCommandButton {
 
-    private static final String MESSAGE_ID = THtmlCommandButton.class.getName()
-            + ".INVALID_TOKEN";
-
     public void broadcast(FacesEvent event) throws AbortProcessingException {
         if (TransactionTokenUtil.isDoOnce(getId())) {
             FacesContext context = FacesContext.getCurrentInstance();
-            if (!TransactionTokenUtil.verify(context)) {
-                FacesMessage message = FacesMessageUtil.getMessage(context,
-                        MESSAGE_ID, null);
-                context.addMessage(null, message);
+            if (TransactionTokenUtil.verify(context)) {
+                super.broadcast(event);
+            } else {
                 context.renderResponse();
-                return;
             }
+            return;
         }
         super.broadcast(event);
     }

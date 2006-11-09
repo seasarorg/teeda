@@ -33,7 +33,6 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.jstl.core.Config;
 
-import org.seasar.framework.exception.IORuntimeException;
 import org.seasar.framework.util.AssertionUtil;
 import org.seasar.framework.util.LocaleUtil;
 import org.seasar.teeda.core.util.ContentTypeUtil;
@@ -97,16 +96,16 @@ public class TViewTag extends UIComponentTag {
         JspWriter out = pageContext.getOut();
         try {
             out.flush();
-        } catch (IOException e) {
-            throw new IORuntimeException(e);
+        } catch (IOException ignore) {
+            //throw new IORuntimeException(e);
         }
         int rc = super.doEndTag();
         ResponseWriter responseWriter = context.getResponseWriter();
         AssertionUtil.assertNotNull("ResponseWriter", responseWriter);
         try {
             responseWriter.endDocument();
-        } catch (IOException e) {
-            throw new JspException(e.getMessage());
+        } catch (IOException ignore) {
+            //throw new JspException(e.getMessage());
         }
         HttpSession session = null;
         if ((session = pageContext.getSession()) != null) {

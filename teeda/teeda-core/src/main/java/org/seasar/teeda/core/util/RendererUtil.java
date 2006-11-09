@@ -327,4 +327,14 @@ public class RendererUtil {
         }
     }
 
+    public static void renderHidden(UIComponent component,
+            ResponseWriter writer, String name, Object value)
+            throws IOException {
+        writer.startElement(JsfConstants.INPUT_ELEM, component);
+        RendererUtil.renderAttribute(writer, JsfConstants.TYPE_ATTR,
+                JsfConstants.HIDDEN_VALUE);
+        RendererUtil.renderAttribute(writer, JsfConstants.NAME_ATTR, name);
+        RendererUtil.renderAttribute(writer, JsfConstants.VALUE_ATTR, value);
+        writer.endElement(JsfConstants.INPUT_ELEM);
+    }
 }

@@ -2,6 +2,8 @@ package org.seasar.teeda.extension.util;
 
 import java.util.Map;
 
+import javax.faces.component.UICommand;
+
 import org.seasar.teeda.core.unit.TeedaTestCase;
 
 public class TransactionTokenUtilTest extends TeedaTestCase {
@@ -21,5 +23,10 @@ public class TransactionTokenUtilTest extends TeedaTestCase {
         assertEquals(1, TransactionTokenUtil.getTokens(sessionMap).size());
         assertTrue(TransactionTokenUtil.verify(getFacesContext(), token2));
         assertNull(TransactionTokenUtil.getTokens(sessionMap));
+    }
+
+    public void testRenderTokenIfNeed() throws Exception {
+        TransactionTokenUtil.renderTokenIfNeed(getFacesContext(),
+                new UICommand());
     }
 }
