@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -24,6 +24,7 @@ import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
 import org.seasar.framework.util.StringUtil;
+import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.mock.MockUIComponent;
 import org.seasar.teeda.core.unit.ExceptionAssert;
 
@@ -181,7 +182,8 @@ public class TNumberLengthValidatorTest extends AbstractValidatorTest {
             final FacesMessage facesMessage = e.getFacesMessage();
             System.out.println(facesMessage.getSummary());
             System.out.println(facesMessage.getDetail());
-            assertEquals(true, StringUtil.contains(facesMessage.getDetail(), "fooLabel"));
+            assertEquals(true, StringUtil.contains(facesMessage.getDetail(),
+                    "fooLabel"));
             assertEquals(TNumberLengthValidator.BOTH_MESSAGE_ID, e
                     .getMessageId());
             ExceptionAssert.assertMessageExist(e);
@@ -419,6 +421,40 @@ public class TNumberLengthValidatorTest extends AbstractValidatorTest {
                     context, new BigDecimal("-1.123456"));
             assertEquals(1, digits.getIntegral());
             assertEquals(6, digits.getFraction());
+        }
+    }
+
+    public void testValidate_targetCommandPointed() throws Exception {
+        TNumberLengthValidator validator = new TNumberLengthValidator();
+        validator.setTarget("aaa");
+        validator.setIntegralMax(3);
+        validator.setIntegralMin(1);
+        MockUIComponent component = new MockUIComponent();
+        component.setId("aaa");
+        getFacesContext().getExternalContext().getRequestMap().put(
+                JsfConstants.SUBMITTED_COMMAND, "aaa");
+        try {
+            validator.validate(getFacesContext(), component, "abcde");
+            fail();
+        } catch (ValidatorException expected) {
+            assertNotNull(expected.getMessage());
+        }
+    }
+
+    public void testValidate_targetCommandNotPointed() throws Exception {
+        TNumberLengthValidator validator = new TNumberLengthValidator();
+        validator.setTarget("aaa");
+        validator.setIntegralMax(3);
+        validator.setIntegralMin(1);
+        MockUIComponent component = new MockUIComponent();
+        component.setId("aaa");
+        getFacesContext().getExternalContext().getRequestMap().put(
+                JsfConstants.SUBMITTED_COMMAND, "bbb");
+        try {
+            validator.validate(getFacesContext(), component, "4");
+            success();
+        } catch (ValidatorException expected) {
+            fail();
         }
     }
 
