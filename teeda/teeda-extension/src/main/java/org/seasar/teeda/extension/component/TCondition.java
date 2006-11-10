@@ -22,6 +22,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.UIComponentBase;
 import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseId;
+import javax.faces.internal.FacesMessageUtil;
 
 import org.seasar.framework.util.AssertionUtil;
 
@@ -36,10 +37,18 @@ public class TCondition extends UIComponentBase {
 
     private static final String DEFAULT_RENDERER_TYPE = "org.seasar.teeda.extension.Condition";
 
-    private boolean submitted = true;
+    private Boolean submitted = null;
 
     public TCondition() {
         super.setRendererType(DEFAULT_RENDERER_TYPE);
+    }
+
+    public boolean isRendered() {
+        if (FacesMessageUtil.hasMessages(getFacesContext())) {
+            return submitted.booleanValue();
+        } else {
+            return super.isRendered();
+        }
     }
 
     public String getFamily() {
@@ -50,14 +59,17 @@ public class TCondition extends UIComponentBase {
      * @return Returns the submitted.
      */
     public boolean isSubmitted() {
-        return submitted;
+        if (submitted == null) {
+            return true;
+        }
+        return submitted.booleanValue();
     }
 
     /**
      * @param submitted The submitted to set.
      */
-    public void setSubmitted(boolean submitted) {
-        this.submitted = submitted;
+    public void setSubmitted(boolean b) {
+        this.submitted = new Boolean(b);
     }
 
     public void processDecodes(FacesContext context) {
