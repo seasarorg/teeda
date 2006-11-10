@@ -9,13 +9,16 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
 package org.seasar.teeda.it.render;
 
 import junit.framework.Test;
+import net.sourceforge.jwebunit.html.Cell;
+import net.sourceforge.jwebunit.html.Row;
+import net.sourceforge.jwebunit.html.Table;
 
 import org.seasar.teeda.unit.web.TeedaWebTestCase;
 import org.seasar.teeda.unit.web.TeedaWebTester;
@@ -25,104 +28,134 @@ import org.seasar.teeda.unit.web.TeedaWebTester;
  */
 public class GridTest extends TeedaWebTestCase {
 
-    public static Test suite() throws Exception {
-        return setUpTest(GridTest.class);
-    }
+	public static Test suite() throws Exception {
+		return setUpTest(GridTest.class);
+	}
 
-    public void _testRender() throws Exception {
-        // ## Arrange ##
-        TeedaWebTester tester = new TeedaWebTester();
-        tester.getTestContext().setBaseUrl(getBaseUrl());
+	public void testRender() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
+		tester.getTestContext().setBaseUrl(getBaseUrl());
 
-        // ## Act ##
-        // ## Assert ##
-        tester.beginAt("view/grid/grid.html");
-        tester.dumpHtml();
-        _assertRenderTables(tester);
+		// ## Act ##
+		// ## Assert ##
+		tester.beginAt("view/grid/grid.html");
+		tester.dumpHtml();
+		_assertRenderTables(tester);
 
-        tester.clickButton("doSomething");
+		tester.clickButton("doSomething");
 
-        // --------
+		// --------
 
-        tester.dumpHtml();
-        // 値が再現されていること
-        _assertRenderTables(tester);
-    }
+		tester.dumpHtml();
+		// 値が再現されていること
+		_assertRenderTables(tester);
+	}
 
-    private void _assertRenderTables(TeedaWebTester tester) {
-        tester.assertTableEquals("fooGridLeftHeaderTable", new String[][] { {
-            "AAA", "BBB", "CCC" } });
-        tester.assertTableEquals("fooGridRightHeaderTable", new String[][] { {
-            "DDD", "EEE", "FFF" } });
-        tester.assertTableEquals("fooGridLeftBodyTable", new String[][] {
-            { "a1", "b1", "c1" }, { "a2", "b2", "c2" }, { "a3", "b3", "c3" },
-            { "a4", "b4", "c4" } });
-        // JavaScriptやhidden値があるため、assertTableMatchとする
-        tester.assertTableMatch("fooGridRightBodyTable", new String[][] {
-            { "d1", "11,111,111", "f1" }, { "d2", "2,222", "f2" },
-            { "d3", "33,333", "f3" }, { "d4", "44", "f4" } });
-    }
+	private void _assertRenderTables(TeedaWebTester tester) {
+		tester.assertTableEquals("fooGridLeftHeaderTable", new String[][] { {
+				"AAA", "BBB", "CCC" } });
+		tester.assertTableEquals("fooGridRightHeaderTable", new String[][] { {
+				"DDD", "EEE", "FFF" } });
+		tester.assertTableEquals("fooGridLeftBodyTable", new String[][] {
+				{ "a1", "b1", "c1" }, { "a2", "b2", "c2" },
+				{ "a3", "b3", "c3" }, { "a4", "b4", "c4" } });
+		// JavaScriptやhidden値があるため、assertTableMatchとする
+		tester.assertTableMatch("fooGridRightBodyTable", new String[][] {
+				{ "d1", "11,111,111", "f1" }, { "d2", "2,222", "f2" },
+				{ "d3", "33,333", "f3" }, { "d4", "44", "f4" } });
+	}
 
-    /*
-     * validationやconversionエラーが発生した際に、
-     * 値が消えてしまう問題。
-     */
-    public void _testValidation() throws Exception {
-        // ## Arrange ##
-        TeedaWebTester tester = new TeedaWebTester();
-        tester.getTestContext().setBaseUrl(getBaseUrl());
+	/*
+	 * validationやconversionエラーが発生した際に、 値が消えてしまう問題。
+	 */
+	public void testValidation() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
+		tester.getTestContext().setBaseUrl(getBaseUrl());
 
-        // ## Act ##
-        // ## Assert ##
-        tester.beginAt("view/grid/gridValidation.html");
-        tester.dumpHtml();
-        tester.assertTableEquals("fooGridRightBodyTable", new String[][] {
-            { "b1", "c1", "d1", "1" }, { "b2", "c2", "d2", "2" },
-            { "b3", "c3", "d3", "3" }, { "b4", "c4", "d4", "4" } });
+		// ## Act ##
+		// ## Assert ##
+		tester.beginAt("view/grid/gridValidation.html");
+		tester.dumpHtml();
+		tester.assertTableEquals("fooGridRightBodyTable", new String[][] {
+				{ "b1", "c1", "d1", "1" }, { "b2", "c2", "d2", "2" },
+				{ "b3", "c3", "d3", "3" }, { "b4", "c4", "d4", "4" } });
 
-        /*
-         * BigDecimalのプロパティへ文字列を入力することで、変換エラーを起こす。
-         */
-        tester.setTextField("gridForm:fooGrid:3:eee", "aaa");
-        //_assertTables(tester);
+		/*
+		 * BigDecimalのプロパティへ文字列を入力することで、変換エラーを起こす。
+		 */
+		tester.setTextField("gridForm:fooGrid:3:eee", "aaa");
+		// _assertTables(tester);
 
-        tester.clickButton("doSomething");
+		tester.clickButton("doSomething");
 
-        // --------
+		// --------
 
-        tester.dumpHtml();
-        tester.assertTableEquals("fooGridRightBodyTable", new String[][] {
-            { "b1", "c1", "d1", "1" }, { "b2", "c2", "d2", "2" },
-            { "b3", "c3", "d3", "3" }, { "b4", "c4", "d4", "aaa" } });
-        // 値が再現されていること
-        //_assertTables(tester);
-    }
+		tester.dumpHtml();
+		tester.assertTableEquals("fooGridRightBodyTable", new String[][] {
+				{ "b1", "c1", "d1", "1" }, { "b2", "c2", "d2", "2" },
+				{ "b3", "c3", "d3", "3" }, { "b4", "c4", "d4", "aaa" } });
+		// 値が再現されていること
+		// _assertTables(tester);
+	}
 
-    /*
-     * https://www.seasar.org/issues/browse/TEEDA-150
-     * 
-     * Gridのサイズが0に変更されたら、0サイズでレンダされること。
-     */
-    public void testSizeChange() throws Exception {
-        // ## Arrange ##
-        TeedaWebTester tester = new TeedaWebTester();
-        tester.getTestContext().setBaseUrl(getBaseUrl());
+	/*
+	 * https://www.seasar.org/issues/browse/TEEDA-150
+	 * 
+	 * Gridのサイズが0に変更されたら、0サイズでレンダされること。
+	 */
+	public void testSizeChange() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
+		tester.getTestContext().setBaseUrl(getBaseUrl());
 
-        // ## Act ##
-        // ## Assert ##
-        tester.beginAt("view/grid/gridSize.html");
-        tester.dumpHtml();
-        tester.assertTableEquals("fooGridRightBodyTable", new String[][] {
-            { "0", "aa0", "0" }, { "1", "aa1", "10" }, { "2", "aa2", "20" } });
-        tester.assertTextFieldEquals("gridForm:itemSize", "3");
-        tester.setTextField("gridForm:itemSize", "0");
-        tester.clickButton("doChangeSize");
+		// ## Act ##
+		// ## Assert ##
+		tester.beginAt("view/grid/gridSize.html");
+		tester.dumpHtml();
+		tester.assertTableEquals("fooGridRightBodyTable",
+				new String[][] { { "0", "aa0", "0" }, { "1", "aa1", "10" },
+						{ "2", "aa2", "20" } });
+		tester.assertTextFieldEquals("gridForm:itemSize", "3");
+		tester.setTextField("gridForm:itemSize", "0");
+		tester.clickButton("doChangeSize");
 
-        // --------
+		// --------
 
-        tester.dumpHtml();
-        tester.assertTextFieldEquals("gridForm:itemSize", "0");
-        tester.assertTableEquals("fooGridRightBodyTable", new String[][] {});
-    }
+		tester.dumpHtml();
+		tester.assertTextFieldEquals("gridForm:itemSize", "0");
+		tester.assertTableEquals("fooGridRightBodyTable", new String[][] {});
+	}
+
+	public void testMultiRowRender() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
+		tester.getTestContext().setBaseUrl(getBaseUrl());
+
+		// ## Act ##
+		// ## Assert ##
+		tester.beginAt("view/grid/multiRowGrid.html");
+		tester.dumpHtml();
+
+		Table table = tester.getTable("fooGridXYRightHeaderTable");
+		assertTrue(table.getRowCount() == 2);
+
+		Table expectedTable = new Table();
+
+		Row row1 = new Row();
+		Cell bbb = new Cell("bbb");
+		Cell ccc = new Cell("ccc", 1, 2);
+		row1.appendCell(bbb);
+		row1.appendCell(ccc);
+		expectedTable.appendRow(row1);
+
+		Row row2 = new Row();
+		Cell eee = new Cell("eee");
+		row2.appendCell(eee);
+		expectedTable.appendRow(row2);
+
+		tester.assertTableEquals("fooGridXYRightHeaderTable", expectedTable);
+	}
 
 }
