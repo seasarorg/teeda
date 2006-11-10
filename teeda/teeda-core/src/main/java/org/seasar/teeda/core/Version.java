@@ -29,7 +29,7 @@ public class Version {
     private static boolean isBeta = false;
 
     public static String getVersion() {
-        return MAJOR_VERSION + "." + MINOR_VERSION + "-rc-1";
+        return MAJOR_VERSION + "." + MINOR_VERSION;
     }
 
     public static String getBetaVersion() {

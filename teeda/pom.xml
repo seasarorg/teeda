@@ -9,7 +9,7 @@
   <artifactId>teeda-project</artifactId>
   <packaging>pom</packaging>
   <name>Teeda</name>
-  <version>1.0-rc-2-SNAPSHOT</version>
+  <version>1.0</version>
   <description></description>
   <url>http://teeda.seasar.org/</url>
   <ciManagement>
