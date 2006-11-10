@@ -22,6 +22,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.html.HtmlInputHidden;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+import javax.faces.internal.FacesMessageUtil;
 
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.AbstractRenderer;
@@ -60,17 +61,22 @@ public class TConditionRenderer extends AbstractRenderer {
         }
         if ("true".equals(submitted)) {
             condition.setSubmitted(true);
-            condition.setRendered(true);
         } else {
             condition.setSubmitted(false);
-            condition.setRendered(false);
         }
     }
-    
+
     public void encodeBegin(FacesContext context, UIComponent component)
             throws IOException {
         super.encodeBegin(context, component);
-        boolean rendered = component.isRendered();
+        boolean rendered = true;
+        if (FacesMessageUtil.hasMessages(context)) {
+            TCondition condition = (TCondition) component;
+            rendered = condition.isSubmitted();
+        } else {
+            rendered = component.isRendered();
+        }
+
         for (Iterator itr = component.getChildren().iterator(); itr.hasNext();) {
             UIComponent c = (UIComponent) itr.next();
             if (c instanceof HtmlInputHidden) {
