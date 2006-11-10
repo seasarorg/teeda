@@ -366,7 +366,10 @@ public class THtmlGridRenderer extends TForEachRenderer {
             RendererUtil
                     .renderAttribute(writer, JsfConstants.TITLE_ATTR, title);
         }
-
+        final String rowspan = th.getRowspan();
+        if (rowspan != null) {
+            RendererUtil.renderAttribute(writer, "rowspan", rowspan);
+        }
         writer.startElement(JsfConstants.DIV_ELEM, th);
         RendererUtil.renderAttribute(writer, JsfConstants.CLASS_ATTR,
                 createThStyleClassAttribute(th, attribute, columnNo));

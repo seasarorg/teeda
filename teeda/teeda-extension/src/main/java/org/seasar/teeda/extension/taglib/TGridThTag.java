@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -25,6 +25,8 @@ import org.seasar.teeda.extension.component.html.THtmlGridTh;
  */
 public class TGridThTag extends UIComponentTagBase {
 
+    private String rowspan;
+
     public TGridThTag() {
     }
 
@@ -38,6 +40,20 @@ public class TGridThTag extends UIComponentTagBase {
 
     protected void setProperties(UIComponent component) {
         super.setProperties(component);
+        setComponentProperty(component, "rowspan", rowspan);
+    }
+
+    public void release() {
+        super.release();
+        rowspan = null;
+    }
+
+    public String getRowspan() {
+        return rowspan;
+    }
+
+    public void setRowspan(String rowspan) {
+        this.rowspan = rowspan;
     }
 
 }
