@@ -35,7 +35,7 @@ public class TeedaWebTesterTest extends TeedaWebTestCase {
 		super.setUp();
 		tester = new TeedaWebTester();
 		baseUrl = ResourceUtil.getBuildDir(getClass()).toURL().toString();
-		tester.getTestContext().setBaseUrl(baseUrl);
+		tester.setBaseUrl(baseUrl);
 	}
 
 	public void testHello() throws Exception {
@@ -50,19 +50,19 @@ public class TeedaWebTesterTest extends TeedaWebTestCase {
 		tester.assertTitleEquals("Hello page.");
 
 		// これは完全一致で無くてもOK
-		tester.assertTextInElement("aaa", "eeda");
+		tester.assertTextInElementById("aaa", "eeda");
 
 		// これは完全一致ならOK
 		boolean ok = true;
 		try {
-			tester.assertTextEquals("aaa", "eeda");
+			tester.assertTextEqualsById("aaa", "eeda");
 			ok = false;
 		} catch (AssertionFailedError e) {
 			ok = true;
 			System.out.println(e.getMessage());
 		}
 		assertEquals(true, ok);
-		tester.assertTextEquals("aaa", "Teeda!");
+		tester.assertTextEqualsById("aaa", "Teeda!");
 	}
 
 	public void testGetCurrentUri() throws Exception {
@@ -95,19 +95,19 @@ public class TeedaWebTesterTest extends TeedaWebTestCase {
 		tester.assertTitleEquals("Hello page.");
 
 		// これは完全一致で無くてもOK
-		tester.assertTextInElement("aaa", "eeda");
+		tester.assertTextInElementById("aaa", "eeda");
 
 		// これは完全一致ならOK
 		boolean ok = true;
 		try {
-			tester.assertTextEquals("aaa", "eeda");
+			tester.assertTextEqualsById("aaa", "eeda");
 			ok = false;
 		} catch (AssertionFailedError e) {
 			ok = true;
 			System.out.println(e.getMessage());
 		}
 		assertEquals(true, ok);
-		tester.assertTextEquals("aaa", "Teeda!");
+		tester.assertTextEqualsById("aaa", "Teeda!");
 	}
 
 	public void testAttribute() throws Exception {
@@ -183,9 +183,9 @@ public class TeedaWebTesterTest extends TeedaWebTestCase {
 		tester.dumpHtml();
 
 		// ## Assert ##
-		tester.assertTextEquals("aaaId", "aaaValue");
+		tester.assertTextEqualsById("aaaId", "aaaValue");
 		tester.setTextById("aaaId", "foo");
-		tester.assertTextEquals("aaaId", "foo");
+		tester.assertTextEqualsById("aaaId", "foo");
 	}
 
 	public void testForm() throws Exception {
