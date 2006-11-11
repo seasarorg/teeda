@@ -15,8 +15,8 @@
  */
 package examples.teeda.bean;
 
-import org.seasar.teeda.extension.component.helper.TreeNode;
-import org.seasar.teeda.extension.component.helper.TreeNodeImpl;
+import org.seasar.teeda.extension.component.TreeNode;
+import org.seasar.teeda.extension.component.TreeNodeImpl;
 
 /**
  * @author shot

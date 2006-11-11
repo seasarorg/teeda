@@ -1,6 +1,6 @@
 <project name="teeda-jsp-example" default="dist" basedir=".">
 
-	<property name="ver" value="1.0-beta-6"/>
+	<property name="ver" value="1.0"/>
 
 	<target name="dist">
 		<mkdir dir="target"/>
