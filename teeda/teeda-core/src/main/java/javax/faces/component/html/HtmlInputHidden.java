@@ -17,6 +17,8 @@ package javax.faces.component.html;
 
 import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
+import javax.faces.el.ValueBinding;
+import javax.faces.internal.FacesMessageUtil;
 
 import org.seasar.framework.util.AssertionUtil;
 
@@ -44,14 +46,32 @@ public class HtmlInputHidden extends UIInput {
             executeValidate(context);
         }
         try {
-            updateModel(context);
+            updateModelImmediately(context);
         } catch (RuntimeException e) {
             context.renderResponse();
             throw e;
         }
     }
 
-    public void processUpdates(FacesContext context) {
+    public void updateModelImmediately(FacesContext context) {
         AssertionUtil.assertNotNull("context", context);
+        if (!isValid() || !isLocalValueSet()) {
+            return;
+        }
+        final ValueBinding valueBinding = getValueBinding("value");
+        if (valueBinding == null) {
+            return;
+        }
+        try {
+            valueBinding.setValue(context, getLocalValue());
+            //setValue(null);
+            //setLocalValueSet(false);
+        } catch (RuntimeException e) {
+            Object[] args = { getId() };
+            context.getExternalContext().log(e.getMessage(), e);
+            FacesMessageUtil.addErrorMessage(context, this,
+                    CONVERSION_MESSAGE_ID, args);
+            setValid(false);
+        }
     }
 }
