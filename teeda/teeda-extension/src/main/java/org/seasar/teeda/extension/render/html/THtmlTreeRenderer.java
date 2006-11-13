@@ -95,7 +95,7 @@ public class THtmlTreeRenderer extends AbstractRenderer {
         if (id != null && !id.startsWith(UIViewRoot.UNIQUE_ID_PREFIX)) {
             final String clientId = component.getClientId(context);
             isOuterSpanUsed = true;
-            writer.startElement(JsfConstants.SPAN_ELEM, component);
+            writer.startElement(JsfConstants.DIV_ELEM, component);
             writer.writeAttribute(JsfConstants.ID_ATTR, clientId, "id");
         }
         boolean clientSideToggle = tree.isClientSideToggle();
@@ -127,7 +127,7 @@ public class THtmlTreeRenderer extends AbstractRenderer {
         }
         resetCurrentNode(tree);
         if (isOuterSpanUsed) {
-            writer.endElement(JsfConstants.SPAN_ELEM);
+            writer.endElement(JsfConstants.DIV_ELEM);
         }
     }
 
@@ -148,7 +148,7 @@ public class THtmlTreeRenderer extends AbstractRenderer {
         if (clientSideToggle) {
             String spanId = TOGGLE_SPAN + ":" + tree.getId() + ":"
                     + tree.getNodeId();
-            out.startElement(JsfConstants.SPAN_ELEM, tree);
+            out.startElement(JsfConstants.DIV_ELEM, tree);
             out.writeAttribute(JsfConstants.ID_ATTR, spanId, null);
             if (tree.isNodeExpanded()) {
                 RendererUtil.renderAttribute(out, JsfConstants.STYLE_ATTR,
@@ -165,7 +165,7 @@ public class THtmlTreeRenderer extends AbstractRenderer {
             }
         }
         if (clientSideToggle) {
-            out.endElement(JsfConstants.SPAN_ELEM);
+            out.endElement(JsfConstants.DIV_ELEM);
         }
     }
 

@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -25,7 +25,7 @@ import javax.faces.context.FacesContext;
 
 /**
  * @author manhole
- * 
+ *
  * This class might be changed without notice. Please do not use it
  * excluding the JSF specification part.
  */
@@ -35,8 +35,7 @@ public class ComponentStates {
 
     public void restoreDescendantState(FacesContext context,
             UIComponent component) {
-        for (final Iterator it = component.getChildren().iterator(); it
-                .hasNext();) {
+        for (final Iterator it = component.getFacetsAndChildren(); it.hasNext();) {
             final UIComponent child = (UIComponent) it.next();
             NamingContainerUtil.refreshClientId(child);
             if (child instanceof EditableValueHolder) {
@@ -55,8 +54,7 @@ public class ComponentStates {
 
     public void saveDescendantComponentStates(FacesContext context,
             UIComponent component) {
-        for (final Iterator it = component.getChildren().iterator(); it
-                .hasNext();) {
+        for (final Iterator it = component.getFacetsAndChildren(); it.hasNext();) {
             final UIComponent child = (UIComponent) it.next();
             if (child instanceof EditableValueHolder) {
                 final EditableValueHolder holder = (EditableValueHolder) child;

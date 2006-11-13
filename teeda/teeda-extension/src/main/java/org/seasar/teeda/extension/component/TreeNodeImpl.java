@@ -39,7 +39,7 @@ public class TreeNodeImpl implements TreeNode, Comparable {
         this(type, description, null, leaf);
     }
 
-    public TreeNodeImpl(String type, String description, String value,
+    public TreeNodeImpl(String type, String description, Object value,
             boolean leaf) {
         this.type = type;
         this.description = description;
@@ -110,4 +110,5 @@ public class TreeNodeImpl implements TreeNode, Comparable {
     public void addChild(TreeNode node) {
         children.add(node);
     }
+
 }

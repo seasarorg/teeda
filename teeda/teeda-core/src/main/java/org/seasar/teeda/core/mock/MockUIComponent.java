@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -28,6 +28,7 @@ import javax.faces.el.ValueBinding;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.FacesEvent;
 import javax.faces.event.FacesListener;
+import javax.faces.internal.ComponentFacetAndChildrenIterator;
 import javax.faces.render.Renderer;
 
 public class MockUIComponent extends UIComponent {
@@ -57,9 +58,9 @@ public class MockUIComponent extends UIComponent {
     private Map valueBindingMap_ = new HashMap();
 
     private List children_ = new ArrayList();
-    
+
     private Map attributesMap_ = new HashMap();
-    
+
     public Map getAttributes() {
         return attributesMap_;
     }
@@ -145,7 +146,7 @@ public class MockUIComponent extends UIComponent {
     }
 
     public Iterator getFacetsAndChildren() {
-        return null;
+        return new ComponentFacetAndChildrenIterator(facets_, children_);
     }
 
     public void broadcast(FacesEvent event) throws AbortProcessingException {

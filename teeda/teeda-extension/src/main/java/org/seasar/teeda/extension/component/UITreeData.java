@@ -16,14 +16,10 @@
 package org.seasar.teeda.extension.component;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.component.ComponentUtil_;
-import javax.faces.component.EditableValueHolder;
 import javax.faces.component.NamingContainer;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIComponentBase;
@@ -33,8 +29,8 @@ import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.FacesEvent;
 import javax.faces.event.PhaseId;
+import javax.faces.internal.ComponentStates;
 import javax.faces.internal.FacesMessageUtil;
-import javax.faces.internal.SavedState;
 
 import org.seasar.framework.util.AssertionUtil;
 import org.seasar.teeda.extension.event.ToggleEvent;
@@ -61,7 +57,7 @@ public class UITreeData extends UIComponentBase implements NamingContainer {
 
     private String var;
 
-    private Map saveMap = new HashMap();
+    private ComponentStates states = new ComponentStates();
 
     private TreeState restoredState = null;
 
@@ -89,7 +85,7 @@ public class UITreeData extends UIComponentBase implements NamingContainer {
     }
 
     public void encodeBegin(FacesContext context) throws IOException {
-        saveMap = new HashMap();
+        states.clear();
         model = null;
         super.encodeBegin(context);
     }
@@ -144,7 +140,7 @@ public class UITreeData extends UIComponentBase implements NamingContainer {
             return;
         }
         model = null;
-        saveMap = new HashMap();
+        states.clear();
         setNodeId(null);
         decode(context);
         processNodes(context, PhaseId.APPLY_REQUEST_VALUES);
@@ -310,7 +306,7 @@ public class UITreeData extends UIComponentBase implements NamingContainer {
     protected void processNodes(FacesContext context, PhaseId phaseId) {
         UIComponent facet = null;
         TreeModel dataModel = getDataModel();
-        if(dataModel == null) {
+        if (dataModel == null) {
             return;
         }
         TreeWalker walker = dataModel.getTreeWalker();
@@ -328,61 +324,13 @@ public class UITreeData extends UIComponentBase implements NamingContainer {
     }
 
     private void saveDescendantState() {
-        FacesContext context = getFacesContext();
-        Iterator i = getFacets().values().iterator();
-        while (i.hasNext()) {
-            UIComponent facet = (UIComponent) i.next();
-            saveDescendantState(facet, context);
-        }
-    }
-
-    private void saveDescendantState(UIComponent component, FacesContext context) {
-        if (component instanceof EditableValueHolder) {
-            EditableValueHolder input = (EditableValueHolder) component;
-            String clientId = component.getClientId(context);
-            SavedState state = (SavedState) saveMap.get(clientId);
-            if (state == null) {
-                state = new SavedState();
-                saveMap.put(clientId, state);
-            }
-            state.save(input);
-        }
-        List kids = component.getChildren();
-        for (int i = 0; i < kids.size(); i++) {
-            saveDescendantState((UIComponent) kids.get(i), context);
-        }
+        final FacesContext context = getFacesContext();
+        states.saveDescendantComponentStates(context, this);
     }
 
     private void restoreDescendantState() {
-        FacesContext context = getFacesContext();
-        Iterator i = getFacets().values().iterator();
-        while (i.hasNext()) {
-            UIComponent facet = (UIComponent) i.next();
-            restoreDescendantState(facet, context);
-        }
-    }
-
-    private void restoreDescendantState(UIComponent component,
-            FacesContext context) {
-        String id = component.getId();
-        component.setId(id);
-        if (component instanceof EditableValueHolder) {
-            EditableValueHolder holder = (EditableValueHolder) component;
-            String clientId = component.getClientId(context);
-            SavedState state = (SavedState) saveMap.get(clientId);
-            if (state == null) {
-                state = new SavedState();
-            }
-            state.restore(holder);
-        }
-        List child = component.getChildren();
-        for (int i = 0; i < child.size(); i++) {
-            restoreDescendantState((UIComponent) child.get(i), context);
-        }
-        Map facets = component.getFacets();
-        for (Iterator i = facets.values().iterator(); i.hasNext();) {
-            restoreDescendantState((UIComponent) i.next(), context);
-        }
+        final FacesContext context = getFacesContext();
+        states.restoreDescendantState(context, this);
     }
 
     public void toggleExpanded() {
@@ -401,4 +349,5 @@ public class UITreeData extends UIComponentBase implements NamingContainer {
         return (getNodeId() != null) ? getDataModel().getTreeState()
                 .isSelected(getNodeId()) : false;
     }
+
 }
