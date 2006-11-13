@@ -224,6 +224,14 @@ public class TeedaWebTester {
 		}
 	}
 
+	public void assertCheckboxSelected(final String name) {
+		tester.assertCheckboxSelected(name);
+	}
+
+	public void assertCheckboxNotSelected(final String name) {
+		tester.assertCheckboxNotSelected(name);
+	}
+	
 	// setter/getters
 	public void setTextById(final String id, final String value) {
 		final HtmlElement element = getElementById(id);
@@ -239,6 +247,14 @@ public class TeedaWebTester {
 		}
 	}
 
+	public void checkCheckbox(final String name) {
+		tester.checkCheckbox(name);
+	}
+
+	public void checkCheckbox(final String name, final String value) {
+		tester.checkCheckbox(name, value);
+	}
+	
 	public void selectOptionValueByName(final String name, final String value) {
 		tester.selectOptionByValue(name, value);
 	}
@@ -273,6 +289,8 @@ public class TeedaWebTester {
 					throw new RuntimeException("checkCheckbox failed :" + e);
 				}
 			}
+		} else {
+			Assert.fail("element is not HtmlRadioButtonInput");
 		}
 	}
 
