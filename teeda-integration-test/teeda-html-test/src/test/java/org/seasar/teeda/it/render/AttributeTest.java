@@ -33,8 +33,7 @@ public class AttributeTest extends TeedaWebTestCase {
 	public void testRender() throws Exception {
 		// ## Arrange ##
 		TeedaWebTester tester = new TeedaWebTester();
-		tester.getTestContext().setBaseUrl(getBaseUrl());
-		tester.beginAt("view/hello/attribute.html");
+		tester.beginAt(getBaseUrl(), "view/hello/attribute.html");
 		tester.dumpHtml();
 
 		// ## Act ##

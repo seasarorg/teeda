@@ -32,17 +32,16 @@ public class ForeachTest extends TeedaWebTestCase {
     public void testInputArray() throws Exception {
         // ## Arrange ##
         TeedaWebTester tester = new TeedaWebTester();
-        tester.getTestContext().setBaseUrl(getBaseUrl());
 
         // ## Act ##
         // ## Assert ##
-        tester.beginAt("view/foreach/foreachArray.html");
+        tester.beginAt(getBaseUrl(), "view/foreach/foreachArray.html");
         tester.dumpHtml();
         final String[][] table = new String[][] { { "1", "aa1", "bb1" },
             { "2", "aa2", "bb2" }, { "3", "aa3", "bb3" } };
 
         tester.assertTableEquals("foreachTable", table);
-        tester.clickButton("doSomething");
+        tester.submitById("doSomething");
 
         // --------
 
@@ -54,17 +53,16 @@ public class ForeachTest extends TeedaWebTestCase {
     public void testInputList() throws Exception {
         // ## Arrange ##
         TeedaWebTester tester = new TeedaWebTester();
-        tester.getTestContext().setBaseUrl(getBaseUrl());
 
         // ## Act ##
         // ## Assert ##
-        tester.beginAt("view/foreach/foreachList.html");
+        tester.beginAt(getBaseUrl(), "view/foreach/foreachList.html");
         tester.dumpHtml();
         final String[][] table = new String[][] { { "1", "aa1", "bb1" },
             { "2", "aa2", "bb2" }, { "3", "aa3", "bb3" } };
 
         tester.assertTableEquals("foreachTable", table);
-        tester.clickButton("doSomething");
+        tester.submitById("doSomething");
 
         // --------
 
@@ -82,32 +80,31 @@ public class ForeachTest extends TeedaWebTestCase {
     public void testMulti() throws Exception {
         // ## Arrange ##
         TeedaWebTester tester = new TeedaWebTester();
-        tester.getTestContext().setBaseUrl(getBaseUrl());
 
         // ## Act ##
         // ## Assert ##
-        tester.beginAt("view/foreach/foreachMulti.html");
+        tester.beginAt(getBaseUrl(), "view/foreach/foreachMulti.html");
         tester.dumpHtml();
 
-        tester.assertTextFieldEquals("fooItems-aaa:0:aaa", "aa1");
-        tester.assertTextFieldEquals("fooItems-aaa:1:aaa", "aa2");
-        tester.assertTextFieldEquals("fooItems-aaa:2:aaa", "aa3");
-        tester.assertTextFieldEquals("fooItems-bbb:0:bbb", "bb1");
-        tester.assertTextFieldEquals("fooItems-bbb:1:bbb", "bb2");
-        tester.assertTextFieldEquals("fooItems-bbb:2:bbb", "bb3");
+        tester.assertTextEqualsByName("fooItems-aaa:0:aaa", "aa1");
+        tester.assertTextEqualsByName("fooItems-aaa:1:aaa", "aa2");
+        tester.assertTextEqualsByName("fooItems-aaa:2:aaa", "aa3");
+        tester.assertTextEqualsByName("fooItems-bbb:0:bbb", "bb1");
+        tester.assertTextEqualsByName("fooItems-bbb:1:bbb", "bb2");
+        tester.assertTextEqualsByName("fooItems-bbb:2:bbb", "bb3");
 
-        tester.clickButton("doSomething");
+        tester.submitById("doSomething");
 
         tester.dumpHtml();
         /*
          * "aa1", "aa2", "aa3"が、すべて"aa3"になってしまっていた。
          */
-        tester.assertTextFieldEquals("fooItems-aaa:0:aaa", "aa1");
-        tester.assertTextFieldEquals("fooItems-aaa:1:aaa", "aa2");
-        tester.assertTextFieldEquals("fooItems-aaa:2:aaa", "aa3");
-        tester.assertTextFieldEquals("fooItems-bbb:0:bbb", "bb1");
-        tester.assertTextFieldEquals("fooItems-bbb:1:bbb", "bb2");
-        tester.assertTextFieldEquals("fooItems-bbb:2:bbb", "bb3");
+        tester.assertTextEqualsByName("fooItems-aaa:0:aaa", "aa1");
+        tester.assertTextEqualsByName("fooItems-aaa:1:aaa", "aa2");
+        tester.assertTextEqualsByName("fooItems-aaa:2:aaa", "aa3");
+        tester.assertTextEqualsByName("fooItems-bbb:0:bbb", "bb1");
+        tester.assertTextEqualsByName("fooItems-bbb:1:bbb", "bb2");
+        tester.assertTextEqualsByName("fooItems-bbb:2:bbb", "bb3");
     }
 
     /*
@@ -118,19 +115,18 @@ public class ForeachTest extends TeedaWebTestCase {
     public void testSubmitSpace() throws Exception {
         // ## Arrange ##
         TeedaWebTester tester = new TeedaWebTester();
-        tester.getTestContext().setBaseUrl(getBaseUrl());
 
         // ## Act ##
         // ## Assert ##
-        tester.beginAt("view/foreach/foreachArray.html");
+        tester.beginAt(getBaseUrl(), "view/foreach/foreachArray.html");
         tester.dumpHtml();
         tester.assertTableEquals("foreachTable",
             new String[][] { { "1", "aa1", "bb1" }, { "2", "aa2", "bb2" },
                 { "3", "aa3", "bb3" } });
-        tester.setTextField("fooItems:0:aaa", "");
-        tester.setTextField("fooItems:1:aaa", "a");
-        tester.setTextField("fooItems:2:bbb", "");
-        tester.clickButton("doSomething");
+        tester.setTextByName("fooItems:0:aaa", "");
+        tester.setTextByName("fooItems:1:aaa", "a");
+        tester.setTextByName("fooItems:2:bbb", "");
+        tester.submitById("doSomething");
 
         // --------
 
@@ -148,20 +144,19 @@ public class ForeachTest extends TeedaWebTestCase {
     public void testSubmitSpace2() throws Exception {
         // ## Arrange ##
         TeedaWebTester tester = new TeedaWebTester();
-        tester.getTestContext().setBaseUrl(getBaseUrl());
 
         // ## Act ##
         // ## Assert ##
-        tester.beginAt("view/foreach/foreachArray2.html");
+        tester.beginAt(getBaseUrl(), "view/foreach/foreachArray2.html");
         tester.dumpHtml();
         tester.assertTableEquals("foreachTable",
             new String[][] { { "1", "aa1", "bb1" }, { "2", "aa2", "bb2" },
                 { "3", "aa3", "bb3" } });
-        tester.setTextField("fooItems:0:fooNo", "-321");
-        tester.setTextField("fooItems:2:fooNo", "");
-        tester.setTextField("fooItems:1:aaa", "a");
-        tester.setTextField("fooItems:2:bbb", "");
-        tester.clickButton("doSomething");
+        tester.setTextByName("fooItems:0:fooNo", "-321");
+        tester.setTextByName("fooItems:2:fooNo", "");
+        tester.setTextByName("fooItems:1:aaa", "a");
+        tester.setTextByName("fooItems:2:bbb", "");
+        tester.submitById("doSomething");
 
         // --------
 
@@ -180,32 +175,30 @@ public class ForeachTest extends TeedaWebTestCase {
     public void testSizeChange() throws Exception {
         // ## Arrange ##
         TeedaWebTester tester = new TeedaWebTester();
-        tester.getTestContext().setBaseUrl(getBaseUrl());
 
         // ## Act ##
         // ## Assert ##
-        tester.beginAt("view/foreach/foreachSize.html");
+        tester.beginAt(getBaseUrl(), "view/foreach/foreachSize.html");
         tester.dumpHtml();
         tester.assertTableEquals("foreachTable", new String[][] {
             { "0", "aa0", "0" }, { "1", "aa1", "10" }, { "2", "aa2", "20" } });
-        tester.assertTextFieldEquals("aaaForm:itemSize", "3");
-        tester.setTextField("aaaForm:itemSize", "0");
-        tester.clickButton("doChangeSize");
+        tester.assertTextEqualsByName("aaaForm:itemSize", "3");
+        tester.setTextByName("aaaForm:itemSize", "0");
+        tester.submitById("doChangeSize");
 
         // --------
 
         tester.dumpHtml();
-        tester.assertTextFieldEquals("aaaForm:itemSize", "0");
+        tester.assertTextEqualsByName("aaaForm:itemSize", "0");
         tester.assertTableEquals("foreachTable", new String[][] {});
     }
 
     public void testValidationError() throws Exception {
         // ## Arrange ##
         TeedaWebTester tester = new TeedaWebTester();
-        tester.getTestContext().setBaseUrl(getBaseUrl());
 
         // ## Act ##
-        tester.beginAt("view/foreach/foreachHoge.html");
+        tester.beginAt(getBaseUrl(), "view/foreach/foreachHoge.html");
         tester.dumpHtml();
         final String[][] table = new String[][] { { "1", "aa1", "bb1" },
             { "2", "aa2", "bb2" }, { "3", "aa3", "bb3" } };
@@ -213,16 +206,16 @@ public class ForeachTest extends TeedaWebTestCase {
         // assume form is found.
         tester.assertFormElementPresentById("aForm");
 
-        tester.setTextField("aForm:num1", "123");
-        tester.setTextField("aForm:num2", "223");
+        tester.setTextByName("aForm:num1", "123");
+        tester.setTextByName("aForm:num2", "223");
 
         tester.assertTableEquals("foreachTable", table);
 
-        tester.setTextField("aForm:fooItems:0:aaa", "");
-        tester.setTextField("aForm:fooItems:1:aaa", "a");
-        tester.setTextField("aForm:fooItems:2:bbb", "");
+        tester.setTextByName("aForm:fooItems:0:aaa", "");
+        tester.setTextByName("aForm:fooItems:1:aaa", "a");
+        tester.setTextByName("aForm:fooItems:2:bbb", "");
 
-        tester.clickButton("goForeachHoge2");
+        tester.submitById("goForeachHoge2");
 
         tester.dumpHtml();
         final String[][] tableExpected = new String[][] { { "1", "", "bb1" },

@@ -32,18 +32,17 @@ public class SelectTest extends TeedaWebTestCase {
 	public void testSelectValueAndSubmit() throws Exception {
 		// ## Arrange ##
 		TeedaWebTester tester = new TeedaWebTester();
-		tester.getTestContext().setBaseUrl(getBaseUrl());
 
 		// ## Act ##
-		tester.beginAt("view/select/selectOneMenu.html");
+		tester.beginAt(getBaseUrl(), "view/select/selectOneMenu.html");
 		tester.dumpHtml();
 
-		tester.assertSelectedOptionValueEquals("form:aaaItems", "1");
-		tester.selectOptionByValue("form:aaaItems", "2");
-		tester.submit("form:doAction");
+		tester.assertSelectedOptionValueEqualsByName("form:aaaItems", "1");
+		tester.selectOptionValueByName("form:aaaItems", "2");
+		tester.submitByName("form:doAction");
 
 		// ## Assert ##
-		tester.assertTextEquals("aaa", "2");
+		tester.assertTextEqualsById("aaa", "2");
 	}
 
 }

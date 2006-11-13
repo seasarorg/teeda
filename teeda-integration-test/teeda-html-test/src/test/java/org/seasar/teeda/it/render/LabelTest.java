@@ -32,16 +32,15 @@ public class LabelTest extends TeedaWebTestCase {
     public void testRender() throws Exception {
         // ## Arrange ##
         TeedaWebTester tester = new TeedaWebTester();
-        tester.getTestContext().setBaseUrl(getBaseUrl());
 
         // ## Act ##
-        tester.beginAt("view/label/label.html");
+        tester.beginAt(getBaseUrl(), "view/label/label.html");
         tester.dumpHtml();
 
         // ## Assert ##
-        tester.assertTextEquals("aaa", "AAA");
-        tester.assertTextEquals("bbb", "BBB");
-        tester.assertTextEquals("ccc", "CCC");
+        tester.assertTextEqualsById("aaa", "AAA");
+        tester.assertTextEqualsById("bbb", "BBB");
+        tester.assertTextEqualsById("ccc", "CCC");
     }
 
 }

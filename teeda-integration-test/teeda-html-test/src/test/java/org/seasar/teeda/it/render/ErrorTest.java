@@ -32,13 +32,12 @@ public class ErrorTest extends TeedaWebTestCase {
 	public void testErrorOnClickButton() throws Exception {
 		// ## Arrange ##
 		TeedaWebTester tester = new TeedaWebTester();
-		tester.getTestContext().setBaseUrl(getBaseUrl());
 
 		// ## Act ##
-		tester.beginAt("view/error/error.html");
+		tester.beginAt(getBaseUrl(), "view/error/error.html");
 		tester.dumpHtml();
 
-		tester.submit("errorForm:doHoge");
+		tester.submitById("doHoge");
 
 		// ## Assert ##
 		assertTrue(tester.getCurrentUri().endsWith("errorResult.html"));
@@ -47,10 +46,9 @@ public class ErrorTest extends TeedaWebTestCase {
 	public void testErrorOnInitialize() throws Exception {
 		// ## Arrange ##
 		TeedaWebTester tester = new TeedaWebTester();
-		tester.getTestContext().setBaseUrl(getBaseUrl());
 
 		// ## Act ##
-		tester.beginAt("view/error/errorOnInitialize.html");
+		tester.beginAt(getBaseUrl(), "view/error/errorOnInitialize.html");
 		tester.dumpHtml();
 
 		// ## Assert ##
@@ -60,10 +58,9 @@ public class ErrorTest extends TeedaWebTestCase {
 	public void testErrorOnPrerender() throws Exception {
 		// ## Arrange ##
 		TeedaWebTester tester = new TeedaWebTester();
-		tester.getTestContext().setBaseUrl(getBaseUrl());
 
 		// ## Act ##
-		tester.beginAt("view/error/errorOnPrerender.html");
+		tester.beginAt(getBaseUrl(), "view/error/errorOnPrerender.html");
 		tester.dumpHtml();
 
 		// ## Assert ##

@@ -23,29 +23,22 @@ import org.seasar.teeda.unit.web.TeedaWebTester;
 /**
  * @author shot
  */
-public class ConditionTest extends TeedaWebTestCase {
+public class LikejspTest extends TeedaWebTestCase {
 
 	public static Test suite() throws Exception {
-		return setUpTest(ConditionTest.class);
+		return setUpTest(LikejspTest.class);
 	}
 
-	public void testConditionRestoreWhenValidationError() throws Exception {
+	public void testRender() throws Exception {
 		// ## Arrange ##
 		TeedaWebTester tester = new TeedaWebTester();
 
 		// ## Act ##
-		tester.beginAt(getBaseUrl(), "view/condition/condition.html");
+		tester.beginAt(getBaseUrl(), "view/likejsp/likejsp.html?aaa=123");
 		tester.dumpHtml();
 
-		tester.assertElementPresentById("isAaa");
-		tester.assertElementNotPresentById("isNotAaa");
-		tester.setTextById("hoge", "1");
-
-		tester.submitById("doHoge-1");
-
 		// ## Assert ##
-		tester.assertElementPresentById("isAaa");
-		tester.assertElementNotPresentById("isNotAaa");
+		tester.assertTextPresent("123");
 	}
 
 }

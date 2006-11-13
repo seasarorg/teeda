@@ -37,53 +37,52 @@ public class PreviousViewIdTest extends TeedaWebTestCase {
     public void testRender() throws Exception {
         // ## Arrange ##
         TeedaWebTester tester = new TeedaWebTester();
-        tester.getTestContext().setBaseUrl(getBaseUrl());
 
         // ## Act ##
         // ## Assert ##
-        tester.beginAt("view/viewid/previousViewId1.html");
+        tester.beginAt(getBaseUrl(), "view/viewid/previousViewId1.html");
         tester.dumpHtml();
-        tester.assertTextEquals("previousViewId", "");
-        tester.assertTextEquals("postback", "false");
-        tester.clickButton("goPreviousViewId2");
+        tester.assertTextEqualsById("previousViewId", "");
+        tester.assertTextEqualsById("postback", "false");
+        tester.submitById("goPreviousViewId2");
 
         // --------
 
         tester.dumpHtml();
-        tester.assertTextEquals("previousViewId",
+        tester.assertTextEqualsById("previousViewId",
             "/view/viewid/previousViewId1.html");
-        tester.assertTextEquals("postback", "false");
-        tester.clickButton("goPreviousViewId3");
+        tester.assertTextEqualsById("postback", "false");
+        tester.submitById("goPreviousViewId3");
 
         // --------
 
         tester.dumpHtml();
-        tester.assertTextEquals("previousViewId",
+        tester.assertTextEqualsById("previousViewId",
             "/view/viewid/previousViewId2.html");
-        tester.assertTextEquals("postback", "false");
-        tester.clickButton("goPreviousViewId2");
+        tester.assertTextEqualsById("postback", "false");
+        tester.submitById("goPreviousViewId2");
 
         // --------
 
         tester.dumpHtml();
-        tester.assertTextEquals("previousViewId",
+        tester.assertTextEqualsById("previousViewId",
             "/view/viewid/previousViewId3.html");
-        tester.assertTextEquals("postback", "false");
-        tester.clickButton("goPreviousViewId3");
+        tester.assertTextEqualsById("postback", "false");
+        tester.submitById("goPreviousViewId3");
 
         // --------
 
-        tester.assertTextEquals("previousViewId",
+        tester.assertTextEqualsById("previousViewId",
             "/view/viewid/previousViewId2.html");
-        tester.assertTextEquals("postback", "false");
-        tester.clickButton("jumpPreviousViewId2");
+        tester.assertTextEqualsById("postback", "false");
+        tester.submitById("jumpPreviousViewId2");
 
         // --------
 
         tester.dumpHtml();
-        tester.assertTextEquals("previousViewId",
+        tester.assertTextEqualsById("previousViewId",
             "/view/viewid/previousViewId3.html");
-        tester.assertTextEquals("postback", "false");
+        tester.assertTextEqualsById("postback", "false");
     }
 
 }

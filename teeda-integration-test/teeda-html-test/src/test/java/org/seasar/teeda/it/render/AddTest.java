@@ -32,19 +32,18 @@ public class AddTest extends TeedaWebTestCase {
 	public void testRender() throws Exception {
 		// ## Arrange ##
 		TeedaWebTester tester = new TeedaWebTester();
-		tester.getTestContext().setBaseUrl(getBaseUrl());
 
 		// ## Act ##
-		tester.beginAt("view/add/add.html");
+		tester.beginAt(getBaseUrl(), "view/add/add.html");
 		tester.dumpHtml();
 
-		tester.setTextField("addForm:arg1", "123");
-		tester.setTextField("addForm:arg2", "123");
+		tester.setTextByName("addForm:arg1", "123");
+		tester.setTextByName("addForm:arg2", "123");
 
-		tester.submit("addForm:doCalculate");
+		tester.submitById("doCalculate");
 
 		// ## Assert ##
-		tester.assertTextEquals("result", "246");
+		tester.assertTextEqualsById("result", "246");
 	}
 
 }

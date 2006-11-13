@@ -34,16 +34,16 @@ public class ValidatorTest extends TeedaWebTestCase {
 	public void testValidatorTargetOn() throws Exception {
 		// ## Arrange ##
 		TeedaWebTester tester = new TeedaWebTester();
-		tester.getTestContext().setBaseUrl(getBaseUrl());
-		tester.getTestContext().setLocale(Locale.JAPAN);
+		tester.setLocale(Locale.JAPAN);
+		
 		// ## Act ##
-		tester.beginAt("view/validator/validator.html");
+		tester.beginAt(getBaseUrl(), "view/validator/validator.html");
 		tester.dumpHtml();
 
 		tester.setTextById("aaa", "0");
 		tester.setTextById("bbb", "0");
 
-		tester.submit("validatorForm:doValidate");
+		tester.submitByName("validatorForm:doValidate");
 
 		// ## Assert ##
 		tester.dumpHtml();
@@ -54,16 +54,16 @@ public class ValidatorTest extends TeedaWebTestCase {
 	public void testValidatorTargetOff() throws Exception {
 		// ## Arrange ##
 		TeedaWebTester tester = new TeedaWebTester();
-		tester.getTestContext().setBaseUrl(getBaseUrl());
-		tester.getTestContext().setLocale(Locale.JAPAN);
+		tester.setLocale(Locale.JAPAN);
+		
 		// ## Act ##
-		tester.beginAt("view/validator/validator.html");
+		tester.beginAt(getBaseUrl(), "view/validator/validator.html");
 		tester.dumpHtml();
 
 		tester.setTextById("aaa", "0");
 		tester.setTextById("bbb", "0");
 
-		tester.submit("validatorForm:doNoValidate");
+		tester.submitByName("validatorForm:doNoValidate");
 
 		// ## Assert ##
 		tester.dumpHtml();

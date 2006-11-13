@@ -32,34 +32,32 @@ public class PageTransitionTest extends TeedaWebTestCase {
 	public void testPageTransition_inSameUsecase() throws Exception {
 		// ## Arrange ##
 		TeedaWebTester tester = new TeedaWebTester();
-		tester.getTestContext().setBaseUrl(getBaseUrl());
 
 		// ## Act ##
-		tester.beginAt("view/transition/from/from.html");
+		tester.beginAt(getBaseUrl(), "view/transition/from/from.html");
 		tester.dumpHtml();
-		tester.clickButton("goTo");
+		tester.submitById("goTo");
 
 		// ## Assert ##
 		tester.dumpHtml();
 		assertTrue(tester.getCurrentUri().indexOf("transition/from/to.html") >= 0);
-		tester.assertTextEquals("previousViewId",
+		tester.assertTextEqualsById("previousViewId",
 				"/view/transition/from/from.html");
 	}
 
 	public void testPageTransition_inOtherUsecase() throws Exception {
 		// ## Arrange ##
 		TeedaWebTester tester = new TeedaWebTester();
-		tester.getTestContext().setBaseUrl(getBaseUrl());
 
 		// ## Act ##
-		tester.beginAt("view/transition/from/from.html");
+		tester.beginAt(getBaseUrl(), "view/transition/from/from.html");
 		tester.dumpHtml();
-		tester.clickButton("goTransition_To_to");
+		tester.submitById("goTransition_To_to");
 
 		// ## Assert ##
 		tester.dumpHtml();
 		assertTrue(tester.getCurrentUri().indexOf("transition/to/to.html") >= 0);
-		tester.assertTextEquals("previousViewId",
+		tester.assertTextEqualsById("previousViewId",
 				"/view/transition/from/from.html");
 	}
 

@@ -32,14 +32,13 @@ public class TitleTest extends TeedaWebTestCase {
     public void testRender() throws Exception {
         // ## Arrange ##
         TeedaWebTester tester = new TeedaWebTester();
-        tester.getTestContext().setBaseUrl(getBaseUrl());
 
         // ## Act ##
-        tester.beginAt("view/title/title.html");
+        tester.beginAt(getBaseUrl(), "view/title/title.html");
         tester.dumpHtml();
 
         // ## Assert ##
-        tester.assertTextEquals("aaa", "HOGE");
+        tester.assertTextEqualsById("aaa", "HOGE");
     }
 
 }

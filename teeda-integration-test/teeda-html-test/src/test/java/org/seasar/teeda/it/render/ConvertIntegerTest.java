@@ -25,83 +25,79 @@ import org.seasar.teeda.unit.web.TeedaWebTester;
  */
 public class ConvertIntegerTest extends TeedaWebTestCase {
 
-    public static Test suite() throws Exception {
-        return setUpTest(ConvertIntegerTest.class);
-    }
+	public static Test suite() throws Exception {
+		return setUpTest(ConvertIntegerTest.class);
+	}
 
-    public void testInputText() throws Exception {
-        // ## Arrange ##
-        TeedaWebTester tester = new TeedaWebTester();
-        tester.getTestContext().setBaseUrl(getBaseUrl());
+	public void testInputText() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
 
-        // ## Act ##
-        tester.beginAt("view/converter/inputText.html");
-        tester.dumpHtml();
-        tester.assertTitleMatch("inputText");
+		// ## Act ##
+		tester.beginAt(getBaseUrl(), "view/converter/inputText.html");
+		tester.dumpHtml();
+		tester.assertTitleMatch("inputText");
 
-        // ## Assert ##
-        tester.assertTextEquals("aaa", "123");
-        doAssert(tester);
-    }
+		// ## Assert ##
+		tester.assertTextEqualsById("aaa", "123");
+		doAssert(tester);
+	}
 
-    private void doAssert(TeedaWebTester tester) {
-        tester.setTextById("aaa", "a");
-        tester.setTextById("bbb", "b");
-        tester.setTextById("ccc", "c");
-        tester.setTextById("ddd", "d");
-        tester.submit();
-        tester.dumpHtml();
+	private void doAssert(TeedaWebTester tester) {
+		tester.setTextById("aaa", "a");
+		tester.setTextById("bbb", "b");
+		tester.setTextById("ccc", "c");
+		tester.setTextById("ddd", "d");
+		tester.submit();
+		tester.dumpHtml();
 
-        tester.assertMatchInElement("aaaMessage", "aaa");
-        tester.assertMatchInElement("bbbMessage", "bbbTitle");
-        tester.assertMatchInElement("cccMessage", "cccLabel");
-        tester.assertMatchInElement("dddMessage", "dddLabel");
-        tester.assertNoMatchInElement("dddMessage", "dddTitle");
-    }
+		tester.assertMatchInElementById("aaaMessage", "aaa");
+		tester.assertMatchInElementById("bbbMessage", "bbbTitle");
+		tester.assertMatchInElementById("cccMessage", "cccLabel");
+		tester.assertMatchInElementById("dddMessage", "dddLabel");
+		tester.assertNoMatchInElementById("dddMessage", "dddTitle");
+	}
 
-    public void testInputTextarea() throws Exception {
-        // ## Arrange ##
-        TeedaWebTester tester = new TeedaWebTester();
-        tester.getTestContext().setBaseUrl(getBaseUrl());
+	public void testInputTextarea() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
 
-        // ## Act ##
-        tester.beginAt("view/converter/inputTextarea.html");
-        tester.dumpHtml();
-        tester.assertTitleMatch("inputTextarea");
+		// ## Act ##
+		tester.beginAt(getBaseUrl(), "view/converter/inputTextarea.html");
+		tester.dumpHtml();
+		tester.assertTitleMatch("inputTextarea");
 
-        // ## Assert ##
-        tester.assertTextEquals("aaa", "123");
-        doAssert(tester);
-    }
+		// ## Assert ##
+		tester.assertTextEqualsById("aaa", "123");
+		doAssert(tester);
+	}
 
-    public void testInputHidden() throws Exception {
-        // ## Arrange ##
-        TeedaWebTester tester = new TeedaWebTester();
-        tester.getTestContext().setBaseUrl(getBaseUrl());
+	public void testInputHidden() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
 
-        // ## Act ##
-        tester.beginAt("view/converter/inputHidden.html");
-        tester.dumpHtml();
-        tester.assertTitleMatch("inputHidden");
+		// ## Act ##
+		tester.beginAt(getBaseUrl(), "view/converter/inputHidden.html");
+		tester.dumpHtml();
+		tester.assertTitleMatch("inputHidden");
 
-        // ## Assert ##
-        tester.assertTextEquals("aaa", "123");
-        doAssert(tester);
-    }
+		// ## Assert ##
+		tester.assertTextEqualsById("aaa", "123");
+		doAssert(tester);
+	}
 
-    public void testInputSecret() throws Exception {
-        // ## Arrange ##
-        TeedaWebTester tester = new TeedaWebTester();
-        tester.getTestContext().setBaseUrl(getBaseUrl());
+	public void testInputSecret() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
 
-        // ## Act ##
-        tester.beginAt("view/converter/inputSecret.html");
-        tester.dumpHtml();
-        tester.assertTitleMatch("inputSecret");
+		// ## Act ##
+		tester.beginAt(getBaseUrl(), "view/converter/inputSecret.html");
+		tester.dumpHtml();
+		tester.assertTitleMatch("inputSecret");
 
-        // ## Assert ##
-        tester.assertTextEquals("aaa", "");
-        doAssert(tester);
-    }
+		// ## Assert ##
+		tester.assertTextEqualsById("aaa", "");
+		doAssert(tester);
+	}
 
 }

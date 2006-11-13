@@ -23,29 +23,27 @@ import org.seasar.teeda.unit.web.TeedaWebTester;
 /**
  * @author shot
  */
-public class ConditionTest extends TeedaWebTestCase {
+public class SelectOneCheckboxTest extends TeedaWebTestCase {
 
 	public static Test suite() throws Exception {
-		return setUpTest(ConditionTest.class);
+		return setUpTest(SelectOneCheckboxTest.class);
 	}
 
-	public void testConditionRestoreWhenValidationError() throws Exception {
+	public void testSelectValueAndSubmit() throws Exception {
 		// ## Arrange ##
 		TeedaWebTester tester = new TeedaWebTester();
 
 		// ## Act ##
-		tester.beginAt(getBaseUrl(), "view/condition/condition.html");
+		tester.beginAt(getBaseUrl(), "view/checkbox/selectOneCheckbox.html");
 		tester.dumpHtml();
 
-		tester.assertElementPresentById("isAaa");
-		tester.assertElementNotPresentById("isNotAaa");
-		tester.setTextById("hoge", "1");
-
-		tester.submitById("doHoge-1");
+		tester.assertCheckboxSelected("form:aaa");
+		tester.checkCheckbox("form:aaa");
+		
+		tester.submitById("doAction");
 
 		// ## Assert ##
-		tester.assertElementPresentById("isAaa");
-		tester.assertElementNotPresentById("isNotAaa");
+		tester.assertCheckboxNotSelected("form:aaa");
 	}
 
 }

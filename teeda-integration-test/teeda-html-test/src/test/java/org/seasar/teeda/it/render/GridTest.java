@@ -35,15 +35,14 @@ public class GridTest extends TeedaWebTestCase {
 	public void testRender() throws Exception {
 		// ## Arrange ##
 		TeedaWebTester tester = new TeedaWebTester();
-		tester.getTestContext().setBaseUrl(getBaseUrl());
 
 		// ## Act ##
 		// ## Assert ##
-		tester.beginAt("view/grid/grid.html");
+		tester.beginAt(getBaseUrl(), "view/grid/grid.html");
 		tester.dumpHtml();
 		_assertRenderTables(tester);
 
-		tester.clickButton("doSomething");
+		tester.submitById("doSomething");
 
 		// --------
 
@@ -72,11 +71,10 @@ public class GridTest extends TeedaWebTestCase {
 	public void testValidation() throws Exception {
 		// ## Arrange ##
 		TeedaWebTester tester = new TeedaWebTester();
-		tester.getTestContext().setBaseUrl(getBaseUrl());
 
 		// ## Act ##
 		// ## Assert ##
-		tester.beginAt("view/grid/gridValidation.html");
+		tester.beginAt(getBaseUrl(), "view/grid/gridValidation.html");
 		tester.dumpHtml();
 		tester.assertTableEquals("fooGridRightBodyTable", new String[][] {
 				{ "b1", "c1", "d1", "1" }, { "b2", "c2", "d2", "2" },
@@ -85,10 +83,10 @@ public class GridTest extends TeedaWebTestCase {
 		/*
 		 * BigDecimalのプロパティへ文字列を入力することで、変換エラーを起こす。
 		 */
-		tester.setTextField("gridForm:fooGrid:3:eee", "aaa");
+		tester.setTextByName("gridForm:fooGrid:3:eee", "aaa");
 		// _assertTables(tester);
 
-		tester.clickButton("doSomething");
+		tester.submitById("doSomething");
 
 		// --------
 
@@ -108,34 +106,32 @@ public class GridTest extends TeedaWebTestCase {
 	public void testSizeChange() throws Exception {
 		// ## Arrange ##
 		TeedaWebTester tester = new TeedaWebTester();
-		tester.getTestContext().setBaseUrl(getBaseUrl());
 
 		// ## Act ##
 		// ## Assert ##
-		tester.beginAt("view/grid/gridSize.html");
+		tester.beginAt(getBaseUrl(), "view/grid/gridSize.html");
 		tester.dumpHtml();
 		tester.assertTableEquals("fooGridRightBodyTable",
 				new String[][] { { "0", "aa0", "0" }, { "1", "aa1", "10" },
 						{ "2", "aa2", "20" } });
-		tester.assertTextFieldEquals("gridForm:itemSize", "3");
-		tester.setTextField("gridForm:itemSize", "0");
-		tester.clickButton("doChangeSize");
+		tester.assertTextEqualsByName("gridForm:itemSize", "3");
+		tester.setTextByName("gridForm:itemSize", "0");
+		tester.submitById("doChangeSize");
 
 		// --------
 
 		tester.dumpHtml();
-		tester.assertTextFieldEquals("gridForm:itemSize", "0");
+		tester.assertTextEqualsByName("gridForm:itemSize", "0");
 		tester.assertTableEquals("fooGridRightBodyTable", new String[][] {});
 	}
 
 	public void testMultiRowRender() throws Exception {
 		// ## Arrange ##
 		TeedaWebTester tester = new TeedaWebTester();
-		tester.getTestContext().setBaseUrl(getBaseUrl());
 
 		// ## Act ##
 		// ## Assert ##
-		tester.beginAt("view/grid/multiRowGrid.html");
+		tester.beginAt(getBaseUrl(), "view/grid/multiRowGrid.html");
 		tester.dumpHtml();
 
 		Table table = tester.getTable("fooGridXYRightHeaderTable");

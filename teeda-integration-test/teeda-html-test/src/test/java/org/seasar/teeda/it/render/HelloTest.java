@@ -32,14 +32,14 @@ public class HelloTest extends TeedaWebTestCase {
     public void testRender() throws Exception {
         // ## Arrange ##
         TeedaWebTester tester = new TeedaWebTester();
-        tester.getTestContext().setBaseUrl(getBaseUrl());
+        //tester.getTestContext().setBaseUrl(getBaseUrl());
 
         // ## Act ##
-        tester.beginAt("view/hello/hello.html");
+        tester.beginAt(getBaseUrl(), "view/hello/hello.html");
         tester.dumpHtml();
 
         // ## Assert ##
-        tester.assertTextEquals("aaa", "Teeda Extension Tests");
+        tester.assertTextEqualsById("aaa", "Teeda Extension Tests");
     }
 
 }

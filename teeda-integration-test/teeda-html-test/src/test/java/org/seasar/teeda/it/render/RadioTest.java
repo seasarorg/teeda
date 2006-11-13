@@ -32,18 +32,17 @@ public class RadioTest extends TeedaWebTestCase {
 	public void testSelectValueAndSubmit() throws Exception {
 		// ## Arrange ##
 		TeedaWebTester tester = new TeedaWebTester();
-		tester.getTestContext().setBaseUrl(getBaseUrl());
 
 		// ## Act ##
-		tester.beginAt("view/radio/selectOneRadio.html");
+		tester.beginAt(getBaseUrl(), "view/radio/selectOneRadio.html");
 		tester.dumpHtml();
 
-		tester.assertRadioOptionSelected("form:aaa", "2");
-		tester.clickRadioOption("form:aaa", "1");
-		tester.submit("form:doAction");
+		tester.assertRadioOptionSelectedByName("form:aaa", "2");
+		tester.clickRadioOptionByName("form:aaa", "1");
+		tester.submitByName("form:doAction");
 
 		// ## Assert ##
-		tester.assertTextEquals("aaa-display", "1");
+		tester.assertTextEqualsById("aaa-display", "1");
 	}
 
 }
