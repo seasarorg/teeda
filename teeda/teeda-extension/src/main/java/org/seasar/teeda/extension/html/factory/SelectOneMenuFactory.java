@@ -43,8 +43,11 @@ public class SelectOneMenuFactory extends AbstractElementProcessorFactory {
         if (pageDesc == null) {
             return false;
         }
-        String items = elementNode.getId();
-        if (pageDesc.hasItemsProperty(items)) {
+        String id = elementNode.getId();
+        if (id.lastIndexOf(ExtensionConstants.ITEMS_SUFFIX) < 0) {
+            id = id + ExtensionConstants.ITEMS_SUFFIX;
+        }
+        if (pageDesc.hasItemsProperty(id)) {
             return (elementNode.getProperty(JsfConstants.MULTIPLE_ATTR) == null);
         }
         return false;
@@ -60,12 +63,18 @@ public class SelectOneMenuFactory extends AbstractElementProcessorFactory {
         }
         String pageName = pageDesc.getPageName();
         String id = elementNode.getId();
-        String target = id.substring(0, id.length()
+        String items = null;
+        if (id.lastIndexOf(ExtensionConstants.ITEMS_SUFFIX) >= 0) {
+            items = id;
+        } else {
+            items = id + ExtensionConstants.ITEMS_SUFFIX;
+        }
+        String target = items.substring(0, items.length()
                 - ExtensionConstants.ITEMS_SUFFIX.length());
         properties.put(JsfConstants.VALUE_ATTR, getBindingExpression(pageName,
                 target));
         properties.put(ExtensionConstants.ITEMS_ATTR, getBindingExpression(
-                pageName, id));
+                pageName, items));
 
     }
 

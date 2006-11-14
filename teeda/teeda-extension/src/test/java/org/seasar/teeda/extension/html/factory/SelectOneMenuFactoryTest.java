@@ -50,10 +50,40 @@ public class SelectOneMenuFactoryTest extends ElementProcessorFactoryTestCase {
         assertTrue(factory.isMatch(elementNode, pageDesc, actionDesc));
     }
 
+    public void testIsMatch_allowSimpleWay() throws Exception {
+        Map map = new HashMap();
+        map.put("id", "hoge");
+        ElementNode elementNode = createElementNode("select", map);
+        PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
+        ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
+        assertTrue(factory.isMatch(elementNode, pageDesc, actionDesc));
+    }
+
     public void testCreateProcessor() throws Exception {
         // ## Arrange ##
         Map properties = new HashMap();
         properties.put("id", "hogeItems");
+        ElementNode elementNode = createElementNode("span", properties);
+        PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
+        ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
+
+        // ## Act ##
+        ElementProcessor parentProcessor = factory.createProcessor(elementNode,
+                pageDesc, actionDesc);
+        // ## Assert ##
+        assertNotNull("1", parentProcessor);
+        assertEquals("2", TSelectOneMenuTag.class, parentProcessor
+                .getTagClass());
+        assertEquals("3", "#{fooPage.hoge}", parentProcessor
+                .getProperty("value"));
+        assertEquals("4", "#{fooPage.hogeItems}", parentProcessor
+                .getProperty("items"));
+    }
+
+    public void testCreateProcessor_allowSimpleWay() throws Exception {
+        // ## Arrange ##
+        Map properties = new HashMap();
+        properties.put("id", "hoge");
         ElementNode elementNode = createElementNode("span", properties);
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
