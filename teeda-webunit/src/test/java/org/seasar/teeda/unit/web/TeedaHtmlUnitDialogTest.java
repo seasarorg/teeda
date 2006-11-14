@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -27,32 +27,32 @@ import com.gargoylesoftware.htmlunit.html.HtmlPage;
  */
 public class TeedaHtmlUnitDialogTest extends TestCase {
 
-    public void testGetCurrentPageMethod() throws Exception {
-        // ## Arrange ##
-        TeedaHtmlUnitDialog dialog = new TeedaHtmlUnitDialog();
-        // ## Act ##
+	public void testGetCurrentPageMethod() throws Exception {
+		// ## Arrange ##
+		TeedaHtmlUnitDialog dialog = new TeedaHtmlUnitDialog();
+		// ## Act ##
 
-        final Method method = dialog.getMethod1();
-        // ## Assert ##
+		final Method method = dialog.getCurrentPageMethod();
+		// ## Assert ##
 
-        assertNotNull(method);
-        assertEquals("getCurrentPage", method.getName());
-        assertEquals(HtmlPage.class, method.getReturnType());
-        assertEquals(true, method.isAccessible());
-    }
+		assertNotNull(method);
+		assertEquals("getCurrentPage", method.getName());
+		assertEquals(HtmlPage.class, method.getReturnType());
+		assertEquals(true, method.isAccessible());
+	}
 
-    public void testGetElementMethod() throws Exception {
-        // ## Arrange ##
-        TeedaHtmlUnitDialog dialog = new TeedaHtmlUnitDialog();
-        // ## Act ##
+	public void testGetElementMethod() throws Exception {
+		// ## Arrange ##
+		TeedaHtmlUnitDialog dialog = new TeedaHtmlUnitDialog();
+		// ## Act ##
 
-        final Method method = dialog.getMethod2();
-        // ## Assert ##
+		final Method method = dialog.getElementMethod();
+		// ## Assert ##
 
-        assertNotNull(method);
-        assertEquals("getElement", method.getName());
-        assertEquals(HtmlElement.class, method.getReturnType());
-        assertEquals(true, method.isAccessible());
-    }
+		assertNotNull(method);
+		assertEquals("getElement", method.getName());
+		assertEquals(HtmlElement.class, method.getReturnType());
+		assertEquals(true, method.isAccessible());
+	}
 
 }
