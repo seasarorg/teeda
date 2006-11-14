@@ -38,8 +38,8 @@ public class SelectOneCheckboxTest extends TeedaWebTestCase {
 		tester.dumpHtml();
 
 		tester.assertCheckboxSelected("form:aaa");
-		tester.checkCheckbox("form:aaa");
-		
+		tester.uncheckCheckbox("form:aaa");
+
 		tester.submitById("doAction");
 
 		// ## Assert ##

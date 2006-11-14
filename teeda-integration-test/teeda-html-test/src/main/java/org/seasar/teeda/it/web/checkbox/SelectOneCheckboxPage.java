@@ -11,9 +11,14 @@ import java.util.Map;
  */
 public class SelectOneCheckboxPage {
 
-	private boolean aaa = true;
+	private boolean aaa;
 
 	private Map map;
+
+	public String initialize() {
+		aaa = true;
+		return null;
+	}
 
 	public String prerender() {
 		map = new HashMap();
