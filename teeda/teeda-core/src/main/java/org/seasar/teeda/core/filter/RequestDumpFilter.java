@@ -28,19 +28,71 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.seasar.framework.util.BooleanConversionUtil;
 import org.seasar.teeda.core.util.RequestDumpUtil;
 
 /**
  * @author manhole
  */
-public final class RequestDumpFilter implements Filter {
+public class RequestDumpFilter implements Filter {
 
     private static final Log log = LogFactory.getLog(RequestDumpFilter.class);
 
     private FilterConfig config = null;
 
+    private boolean beforeRequestParameter;
+
+    private boolean afterRequestParameter;
+
+    private boolean beforeRequestAttribute;
+
+    private boolean afterRequestAttribute;
+
+    private boolean beforeCookies;
+
+    private boolean afterCookies;
+
+    private boolean beforeRequestHeader;
+
+    private boolean afterRequestHeader;
+
+    private boolean beforeSessionAttribute;
+
+    private boolean afterSessionAttribute;
+
+    private boolean beforeContextAttribute;
+
+    private boolean afterContextAttribute;
+
     public void init(final FilterConfig filterConfig) throws ServletException {
         this.config = filterConfig;
+        beforeRequestParameter = getBooleanParameter(filterConfig,
+                "beforeRequestParameter", true);
+        afterRequestParameter = getBooleanParameter(filterConfig,
+                "afterRequestParameter", false);
+        beforeRequestAttribute = getBooleanParameter(filterConfig,
+                "beforeRequestAttribute", true);
+        afterRequestAttribute = getBooleanParameter(filterConfig,
+                "afterRequestAttribute", true);
+        beforeRequestHeader = getBooleanParameter(filterConfig,
+                "beforeRequestHeader", true);
+        afterRequestHeader = getBooleanParameter(filterConfig,
+                "afterRequestHeader", false);
+        beforeContextAttribute = getBooleanParameter(filterConfig,
+                "beforeContextAttribute", true);
+        afterContextAttribute = getBooleanParameter(filterConfig,
+                "afterContextAttribute", true);
+        beforeCookies = getBooleanParameter(filterConfig, "beforeCookies", true);
+        afterCookies = getBooleanParameter(filterConfig, "afterCookies", true);
+        beforeSessionAttribute = getBooleanParameter(filterConfig,
+                "beforeSessionAttribute", true);
+        afterSessionAttribute = getBooleanParameter(filterConfig,
+                "afterSessionAttribute", true);
+
+        final StringBuffer sb = new StringBuffer();
+        RequestDumpUtil.dumpContextProperties(sb, filterConfig
+                .getServletContext(), LF, INDENT);
+        log.debug(new String(sb));
     }
 
     public void destroy() {
@@ -57,45 +109,77 @@ public final class RequestDumpFilter implements Filter {
         if (config == null) {
             return;
         }
-        if (request instanceof HttpServletRequest) {
-            final HttpServletRequest hrequest = (HttpServletRequest) request;
-            log.debug(LF + LF
-                    + "** before *****************************************: "
-                    + gerServletPath(request) + LF + dumpRequest(hrequest));
-            try {
-                chain.doFilter(request, response);
-            } finally {
-                final StringBuffer sb = new StringBuffer();
-                RequestDumpUtil.dumpRequestAttributes(sb, hrequest, LF, INDENT);
-                RequestDumpUtil.dumpCookies(sb, hrequest, LF, INDENT);
-                RequestDumpUtil.dumpSessionAttributes(sb, hrequest, LF, INDENT);
-                RequestDumpUtil.dumpContextAttributes(sb, config
-                        .getServletContext(), LF, INDENT);
-                log
-                        .debug(LF
-                                + LF
-                                + "** after *****************************************: "
-                                + gerServletPath(request) + LF + sb.toString());
-            }
-        } else {
+        if (!(request instanceof HttpServletRequest)) {
             chain.doFilter(request, response);
+            return;
+        }
+        final HttpServletRequest hrequest = (HttpServletRequest) request;
+        dumpBefore(hrequest);
+        try {
+            chain.doFilter(request, response);
+        } finally {
+            dumpAfter(hrequest);
         }
     }
 
-    private String dumpRequest(final HttpServletRequest request) {
-        final StringBuffer sb = new StringBuffer();
+    private void dumpBefore(final HttpServletRequest request) {
         final ServletContext context = config.getServletContext();
+        final StringBuffer sb = new StringBuffer();
+        sb.append(LF);
+        sb.append(LF);
+        sb.append("** before *****************************************: ");
+        sb.append(gerServletPath(request));
+        sb.append(LF);
+        RequestDumpUtil.dumpRequestProperties(sb, request, LF, INDENT);
+        RequestDumpUtil.dumpSessionProperties(sb, request, LF, INDENT);
+        if (beforeRequestParameter) {
+            RequestDumpUtil.dumpRequestParameters(sb, request, LF, INDENT);
+        }
+        if (beforeRequestAttribute) {
+            RequestDumpUtil.dumpRequestAttributes(sb, request, LF, INDENT);
+        }
+        if (beforeCookies) {
+            RequestDumpUtil.dumpCookies(sb, request, LF, INDENT);
+        }
+        if (beforeRequestHeader) {
+            RequestDumpUtil.dumpRequestHeaders(sb, request, LF, INDENT);
+        }
+        if (beforeSessionAttribute) {
+            RequestDumpUtil.dumpSessionAttributes(sb, request, LF, INDENT);
+        }
+        if (beforeContextAttribute) {
+            RequestDumpUtil.dumpContextAttributes(sb, context, LF, INDENT);
+        }
+        log.debug(sb.toString());
+    }
 
-        RequestDumpUtil.dumpRequestAndContextProperties(sb, request, context,
-                LF, INDENT);
-        RequestDumpUtil.dumpRequestParameters(sb, request, LF, INDENT);
-        RequestDumpUtil.dumpRequestAttributes(sb, request, LF, INDENT);
-        RequestDumpUtil.dumpCookies(sb, request, LF, INDENT);
-        RequestDumpUtil.dumpRequestHeaders(sb, request, LF, INDENT);
-        RequestDumpUtil.dumpSessionAttributes(sb, request, LF, INDENT);
-        RequestDumpUtil.dumpContextAttributes(sb, context, LF, INDENT);
-
-        return sb.toString();
+    private void dumpAfter(final HttpServletRequest request) {
+        final StringBuffer sb = new StringBuffer();
+        sb.append(LF);
+        sb.append(LF);
+        sb.append("** after *****************************************: ");
+        sb.append(gerServletPath(request));
+        sb.append(LF);
+        if (afterRequestParameter) {
+            RequestDumpUtil.dumpRequestParameters(sb, request, LF, INDENT);
+        }
+        if (afterRequestAttribute) {
+            RequestDumpUtil.dumpRequestAttributes(sb, request, LF, INDENT);
+        }
+        if (afterCookies) {
+            RequestDumpUtil.dumpCookies(sb, request, LF, INDENT);
+        }
+        if (afterRequestHeader) {
+            RequestDumpUtil.dumpRequestHeaders(sb, request, LF, INDENT);
+        }
+        if (afterSessionAttribute) {
+            RequestDumpUtil.dumpSessionAttributes(sb, request, LF, INDENT);
+        }
+        if (afterContextAttribute) {
+            RequestDumpUtil.dumpContextAttributes(sb, config
+                    .getServletContext(), LF, INDENT);
+        }
+        log.debug(sb.toString());
     }
 
     private String gerServletPath(final ServletRequest request) {
@@ -107,12 +191,21 @@ public final class RequestDumpFilter implements Filter {
 
     public String toString() {
         if (config == null) {
-            return ("RequestDumperFilter()");
+            return ("RequestDumpFilter()");
         }
         final StringBuffer sb = new StringBuffer("RequestDumpFilter(");
         sb.append(config);
         sb.append(")");
         return (sb.toString());
+    }
+
+    private boolean getBooleanParameter(final FilterConfig filterConfig,
+            final String name, final boolean defaultValue) {
+        final String value = filterConfig.getInitParameter(name);
+        if (value == null) {
+            return defaultValue;
+        }
+        return BooleanConversionUtil.toPrimitiveBoolean(value);
     }
 
 }

@@ -47,15 +47,14 @@ public class RequestDumpUtil {
     }
 
     public static void dumpContextAttributes(final StringBuffer sb,
-            final ServletContext servletContext, final String lf,
-            final String indent) {
-        if (servletContext == null) {
+            final ServletContext context, final String lf, final String indent) {
+        if (context == null) {
             return;
         }
-        for (final Iterator it = toSortedSet(servletContext.getAttributeNames())
+        for (final Iterator it = toSortedSet(context.getAttributeNames())
                 .iterator(); it.hasNext();) {
             final String name = (String) it.next();
-            final Object attr = servletContext.getAttribute(name);
+            final Object attr = context.getAttribute(name);
             sb.append(indent);
             sb.append("[context]").append(name).append("=").append(attr);
             sb.append(lf);
@@ -65,9 +64,9 @@ public class RequestDumpUtil {
     public static void dumpCookies(final StringBuffer sb,
             final HttpServletRequest request, final String lf,
             final String indent) {
-        Cookie cookies[] = request.getCookies();
+        final Cookie cookies[] = request.getCookies();
         if (cookies == null) {
-            cookies = new Cookie[0];
+            return;
         }
         for (int i = 0; i < cookies.length; i++) {
             sb.append(indent);
@@ -132,11 +131,9 @@ public class RequestDumpUtil {
         }
     }
 
-    public static void dumpRequestAndContextProperties(final StringBuffer sb,
-            final HttpServletRequest request, final ServletContext context,
-            final String lf, final String indent) {
-
-        final HttpSession session = request.getSession(false);
+    public static void dumpRequestProperties(final StringBuffer sb,
+            final HttpServletRequest request, final String lf,
+            final String indent) {
 
         sb.append(indent);
         sb.append("Request class=" + request.getClass().getName()).append(
@@ -151,27 +148,11 @@ public class RequestDumpUtil {
         sb.append(lf);
         sb.append(indent);
 
-        if (session != null) {
-            sb.append(" Session SessionId=").append(session.getId());
-            sb.append(lf).append(indent);
-        }
-
         sb.append("REQUEST_URI=").append(request.getRequestURI());
         sb.append(", SERVLET_PATH=").append(request.getServletPath());
 
-        sb.append(lf).append(indent);
-
-        if (session != null) {
-            sb.append("Session :: CreationTime=").append(
-                    session.getCreationTime());
-            sb.append(", LastAccessedTime=").append(
-                    session.getLastAccessedTime());
-            sb.append(", MaxInactiveInterval=").append(
-                    session.getMaxInactiveInterval());
-
-            sb.append(lf).append(indent);
-        }
-
+        sb.append(lf);
+        sb.append(indent);
         sb.append("CharacterEncoding=" + request.getCharacterEncoding());
         sb.append(", ContentLength=").append(request.getContentLength());
         sb.append(", ContentType=").append(request.getContentType());
@@ -199,20 +180,6 @@ public class RequestDumpUtil {
         sb.append(", SERVER_NAME=").append(request.getServerName());
         sb.append(", SERVER_PORT=").append(request.getServerPort());
 
-        sb.append(lf);
-
-        // ServletContext
-        sb.append(indent);
-        sb.append("ContextRealPath=").append(context.getRealPath("/"));
-
-        sb.append(lf).append(indent);
-
-        sb.append("SERVER_SOFTWARE=").append(context.getServerInfo());
-        sb.append(", ServletContextName=").append(
-                context.getServletContextName());
-        sb.append(", MajorVersion=").append(context.getMajorVersion());
-        sb.append(", MinorVersion=").append(context.getMinorVersion());
-
         sb.append(lf).append(indent);
 
         sb.append("ContextPath=").append(request.getContextPath());
@@ -223,6 +190,37 @@ public class RequestDumpUtil {
 
         sb.append(lf);
 
+    }
+
+    public static void dumpContextProperties(final StringBuffer sb,
+            final ServletContext context, final String lf, final String indent) {
+        sb.append(indent);
+        sb.append("ContextRealPath=").append(context.getRealPath("/"));
+
+        sb.append(lf).append(indent);
+
+        sb.append("SERVER_SOFTWARE=").append(context.getServerInfo());
+        sb.append(", ServletContextName=").append(
+                context.getServletContextName());
+        sb.append(", MajorVersion=").append(context.getMajorVersion());
+        sb.append(", MinorVersion=").append(context.getMinorVersion());
+    }
+
+    public static void dumpSessionProperties(final StringBuffer sb,
+            final HttpServletRequest request, final String lf,
+            final String indent) {
+        final HttpSession session = request.getSession(false);
+        if (session == null) {
+            return;
+        }
+        sb.append(indent);
+        sb.append("Session SessionId=").append(session.getId());
+        sb.append(lf).append(indent);
+        sb.append("Session :: CreationTime=").append(session.getCreationTime());
+        sb.append(", LastAccessedTime=").append(session.getLastAccessedTime());
+        sb.append(", MaxInactiveInterval=").append(
+                session.getMaxInactiveInterval());
+        sb.append(lf);
     }
 
 }
