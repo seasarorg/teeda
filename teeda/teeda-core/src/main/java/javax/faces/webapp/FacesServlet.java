@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -24,6 +24,7 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.FacesContextFactory;
 import javax.faces.internal.ForbiddenAccessException;
+import javax.faces.internal.Sync;
 import javax.faces.internal.WebAppUtil;
 import javax.faces.lifecycle.Lifecycle;
 import javax.faces.lifecycle.LifecycleFactory;
@@ -88,12 +89,12 @@ public final class FacesServlet implements Servlet {
         }
         externalContext.getSession(true);
         Map sessionMap = externalContext.getSessionMap();
-        Object synch = sessionMap.get(SYNCH);
-        if (synch == null) {
-            synch = new Object();
-            sessionMap.put(SYNCH, synch);
+        Object sync = sessionMap.get(SYNCH);
+        if (sync == null) {
+            sync = new Sync();
+            sessionMap.put(SYNCH, sync);
         }
-        synchronized (synch) {
+        synchronized (sync) {
             try {
                 lifecycle.execute(context);
                 lifecycle.render(context);
