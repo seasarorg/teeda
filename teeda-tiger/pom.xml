@@ -7,7 +7,7 @@
   <groupId>org.seasar.teeda</groupId>
   <artifactId>teeda-tiger</artifactId>
   <packaging>jar</packaging>
-  <version>1.1</version>
+  <version>1.0.1</version>
   <name>Teeda Tiger</name>
   <url>http://teeda.seasar.org</url>
   <issueManagement>
