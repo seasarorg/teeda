@@ -2,7 +2,7 @@
 	<property name="ver" value="1.0.1"/>
 
 	<target name="dist">
-		<zip zipfile="target/TeedaTiger-${ver}.zip">
+		<zip zipfile="target/teeda-tiger-${ver}.zip">
 			<zipfileset prefix="teeda-tiger" dir=".">
 				<exclude name="**/target/**"/>
 				<exclude name="**/build**"/>
