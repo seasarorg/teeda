@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -30,7 +30,6 @@ import javax.servlet.jsp.tagext.BodyContent;
 import javax.servlet.jsp.tagext.BodyTag;
 import javax.servlet.jsp.tagext.IterationTag;
 import javax.servlet.jsp.tagext.Tag;
-import javax.servlet.jsp.tagext.TagSupport;
 
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.PropertyDesc;
@@ -42,7 +41,7 @@ import org.seasar.teeda.extension.html.TagProcessor;
 
 /**
  * @author higa
- *  
+ *
  */
 public class ElementProcessorImpl implements ElementProcessor {
 
@@ -210,7 +209,7 @@ public class ElementProcessorImpl implements ElementProcessor {
 
     protected void setUpTag(final PageContext pageContext, final Tag tag,
             final UIComponentTag parentTag) throws JspException {
-        if(parentTag != null) {
+        if (parentTag != null) {
             tag.setParent(parentTag);
         }
         tag.setPageContext(pageContext);

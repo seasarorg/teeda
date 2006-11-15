@@ -222,7 +222,7 @@ public class TForEach extends UIComponentBase implements NamingContainer {
             FieldUtil.set(field, context, null);
             for (Iterator itr = map.entrySet().iterator(); itr.hasNext();) {
                 Map.Entry entry = (Entry) itr.next();
-                String clientId = (String) entry.getKey();
+                //String clientId = (String) entry.getKey();
                 for (Iterator messages = (Iterator) entry.getValue(); messages
                         .hasNext();) {
                     FacesMessage fm = (FacesMessage) messages.next();
@@ -480,7 +480,8 @@ public class TForEach extends UIComponentBase implements NamingContainer {
         final BeanDesc itemBeanDesc = BeanDescFactory.getBeanDesc(item
                 .getClass());
         System.out.println("[item.getClass] : " + item.getClass());
-        System.out.println("[itemBeanDesc.getPropertyDescSize] : " + itemBeanDesc.getPropertyDescSize());
+        System.out.println("[itemBeanDesc.getPropertyDescSize] : "
+                + itemBeanDesc.getPropertyDescSize());
         for (int i = 0; i < itemBeanDesc.getPropertyDescSize(); i++) {
             final PropertyDesc pd = itemBeanDesc.getPropertyDesc(i);
             final String name = pd.getPropertyName();

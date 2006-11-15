@@ -115,7 +115,7 @@ Teeda.THtmlInputDateText = {
   },
   isMovable : function(e) {
     var c = Teeda.THtmlInputDateText.getKeyCode(e);
-    return (c >= 37 && c <= 40) || (c == 9);
+    return (c >= 35 && c <= 40) || (c == 9);
   },
   isEnter : function(e) {
     var c = Teeda.THtmlInputDateText.getKeyCode(e);

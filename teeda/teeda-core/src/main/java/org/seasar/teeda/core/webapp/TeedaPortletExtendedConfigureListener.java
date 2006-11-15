@@ -30,7 +30,7 @@ import org.seasar.framework.log.Logger;
 import org.seasar.framework.util.InputStreamUtil;
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
-import org.seasar.teeda.core.Version;
+import org.seasar.teeda.core.ProductInfo;
 import org.seasar.teeda.core.config.faces.FacesConfigBuilder;
 import org.seasar.teeda.core.config.faces.assembler.AssemblerAssembler;
 import org.seasar.teeda.core.config.faces.element.FacesConfig;
@@ -154,6 +154,6 @@ public class TeedaPortletExtendedConfigureListener extends
     }
 
     private void printVersion() {
-        logger.debug("Teeda version :" + Version.getVersion());
+        logger.debug("Teeda version :" + ProductInfo.getVersion());
     }
 }

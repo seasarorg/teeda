@@ -111,23 +111,29 @@ public class THtmlTreeRenderer extends AbstractRenderer {
         } else {
             walker.next();
             TreeNode rootNode = tree.getNode();
-
-            // now mark the root as expanded (so we don't stop there)
-            String rootNodeId = tree.getNodeId();
-            if (!state.isNodeExpanded(rootNodeId)) {
-                state.toggleExpanded(rootNodeId);
-            }
-
-            // now encode each of the nodes in the level immediately below the root
-            for (int i = 0; i < rootNode.getChildCount(); i++) {
-                if (walker.next()) {
-                    encodeTree(context, writer, tree, walker);
-                }
-            }
+            setRootNodeExpanded(tree, state);
+            encodeEachTreeNode(context, rootNode, walker, tree);
         }
         resetCurrentNode(tree);
         if (isOuterSpanUsed) {
             writer.endElement(JsfConstants.DIV_ELEM);
+        }
+    }
+
+    protected void setRootNodeExpanded(THtmlTree tree, TreeState state) {
+        String rootNodeId = tree.getNodeId();
+        if (!state.isNodeExpanded(rootNodeId)) {
+            state.toggleExpanded(rootNodeId);
+        }
+    }
+
+    protected void encodeEachTreeNode(FacesContext context, TreeNode rootNode,
+            TreeWalker walker, THtmlTree tree) throws IOException {
+        ResponseWriter writer = context.getResponseWriter();
+        for (int i = 0; i < rootNode.getChildCount(); i++) {
+            if (walker.next()) {
+                encodeTree(context, writer, tree, walker);
+            }
         }
     }
 

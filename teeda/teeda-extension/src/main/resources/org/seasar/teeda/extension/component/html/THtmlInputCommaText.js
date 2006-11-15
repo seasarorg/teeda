@@ -113,7 +113,7 @@ Teeda.THtmlInputCommaText = {
   },
   isMovable : function(e) {
     var c = Teeda.THtmlInputCommaText.getKeyCode(e);
-    return (c >= 37 && c <= 40) || (c == 9);
+    return (c >= 35 && c <= 40) || (c == 9);
   },
   isMinus : function(e) {
     var c = Teeda.THtmlInputCommaText.getKeyCode(e);

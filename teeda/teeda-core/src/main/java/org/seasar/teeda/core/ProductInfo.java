@@ -18,22 +18,23 @@ package org.seasar.teeda.core;
 /**
  * @author shot
  */
-public class Version {
+public class ProductInfo {
 
     private static final String MAJOR_VERSION = "1";
 
     private static final String MINOR_VERSION = "0";
 
-    private static final String BETA_VERSION = "";
+    private static final String LOCAL_VERSION = "2";
 
-    private static boolean isBeta = false;
+    private static boolean isSnapshot = false;
 
-    public static String getVersion() {
-        return MAJOR_VERSION + "." + MINOR_VERSION;
+    public static String getProductName() {
+        return "Teeda";
     }
 
-    public static String getBetaVersion() {
-        return (isBeta) ? "beta" + BETA_VERSION : "";
+    public static String getVersion() {
+        return MAJOR_VERSION + "." + MINOR_VERSION + "." + LOCAL_VERSION
+                + ((isSnapshot) ? "-SNAPSHOT" : "");
     }
 
 }

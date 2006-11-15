@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -21,34 +21,12 @@ package org.seasar.teeda.core;
 public interface TODO {
     /*
      * TODO for 1.0
-     *  - Test, test, test
-     *    -> JSF Specification part(UIComponent things!)
-     *    -> Teeda original part
-     *  - Make TeedaTestCase better, such as....
-     *    -> separate JSF-specified part and Teeda part.
-     *       (JSFTestCase and TeedaTestCase?)
-     *  - AbstractPhase.initializeChildren should be modified to use EditableValueHolder
-     *  - Test LifecycleImpl and Phase
-     *  - Support list-entries, map-entries to ManagedBean.
-     *    (Need to modify ManagedBeanFactoryImpl, and ManagedBeanAssembler) 
-     *  - MetaInfFacesConfigurator -> Support multiple jar file.
-     *  - Add DI Support for Converter, Validator, UIComponent, Renderer
-     *     -> Renderer not yet
-     *  - [Seasar-user:3230]
-     *  - [#7682] http://sourceforge.jp/tracker/index.php?func=detail&aid=7682&group_id=689&atid=6584
-     *  - [#7975] [Seasar-user:3127] http://sourceforge.jp/tracker/index.php?func=detail&aid=7975&group_id=689&atid=6584
-     *  - [#7974] [Seasar-user:3080] http://sourceforge.jp/tracker/index.php?func=detail&aid=7974&group_id=689&atid=6584
-     *  - [#7840] [Seasar-user:3083] http://sourceforge.jp/tracker/index.php?func=detail&aid=7840&group_id=689&atid=6584
-     *  - [Seasar-user:3253]
-     *  - Continuum
-     *  - To know navigation (from and outcome, and go to where), provide interceptor 
      *  - Security aspect interceptor for NavigationHandler(Thx Mr.Kameda)
      *  - Nobody wants NullPointer so we have to provide good exception when config are something wrong.
-     *  - Separate spike sources as teeda-spike.
-     * 
+     *
      * TODO for 1.1
-     *  - 
-     * 
+     *  -
+     *
      * DONE
      *  - Add copyright to all sources.
      *  - impl ResponseStateManager
@@ -60,8 +38,8 @@ public interface TODO {
      *  - Make Assemblers done.
      *  - change S2ScopeTranslator for Application scope.
      *  - use Clover or cobertura?
-     *  - Make JSF init-code complete. 
-     *  - StateManager 
+     *  - Make JSF init-code complete.
+     *  - StateManager
      *  - Renderers(Last 1! CommandLink)
      *  - Configure core-faces-config.xml for default setting.
      *  - impl StateManager
@@ -72,16 +50,35 @@ public interface TODO {
      *     -> Converter dobe
      *     -> Validator done
      *     -> UIComponent done
-     * 
+     *  - Test, test, test
+     *    -> JSF Specification part(UIComponent things!)
+     *    -> Teeda original part
+     *  - Make TeedaTestCase better, such as....
+     *    -> separate JSF-specified part and Teeda part.
+     *       (JSFTestCase and TeedaTestCase?)
+     *  - AbstractPhase.initializeChildren should be modified to use EditableValueHolder
+     *  - Test LifecycleImpl and Phase
+     *  - Support list-entries, map-entries to ManagedBean.
+     *    (Need to modify ManagedBeanFactoryImpl, and ManagedBeanAssembler)
+     *  - MetaInfFacesConfigurator -> Support multiple jar file.
+     *  - Add DI Support for Converter, Validator, UIComponent, Renderer
+     *     -> Renderer not yet
+     *  - [Seasar-user:3230]
+     *  - [#7682] http://sourceforge.jp/tracker/index.php?func=detail&aid=7682&group_id=689&atid=6584
+     *  - [#7975] [Seasar-user:3127] http://sourceforge.jp/tracker/index.php?func=detail&aid=7975&group_id=689&atid=6584
+     *  - [#7974] [Seasar-user:3080] http://sourceforge.jp/tracker/index.php?func=detail&aid=7974&group_id=689&atid=6584
+     *  - [#7840] [Seasar-user:3083] http://sourceforge.jp/tracker/index.php?func=detail&aid=7840&group_id=689&atid=6584
+     *  - [Seasar-user:3253]
+     *  - Continuum
+     *  - To know navigation (from and outcome, and go to where), provide interceptor
+     *  - Separate spike sources as teeda-spike.
+     *
      * PEND
      *  - Selenium integration
      *  - make it easy to get elements from FacesConfig by key(such as component, converter,
      *    validator, renderkit, and managed-bean)
      *  - Client side solution like commons-validator or aspect interceptor or what
      *  - Portlet support(need for specification)
-     * 
-     * 
-     * 
-     * 
+     *
      */
 }

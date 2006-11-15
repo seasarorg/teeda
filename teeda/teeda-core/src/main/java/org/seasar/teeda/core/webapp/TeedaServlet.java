@@ -18,6 +18,8 @@ package org.seasar.teeda.core.webapp;
 import javax.faces.FactoryFinder;
 
 import org.seasar.framework.container.servlet.S2ContainerServlet;
+import org.seasar.framework.log.Logger;
+import org.seasar.teeda.core.ProductInfo;
 
 /**
  * @author shot
@@ -26,12 +28,15 @@ public class TeedaServlet extends S2ContainerServlet {
 
     private static final long serialVersionUID = 1L;
 
+    private static Logger logger = Logger.getLogger(TeedaServlet.class);
+
     public TeedaServlet() {
         super();
     }
 
     public void init() {
         super.init();
+        logger.debug(printProductInfo());
         TeedaInitializer initializer = new TeedaInitializer();
         initializer.setServletContext(getServletContext());
         initializer.initializeFaces();
@@ -40,5 +45,9 @@ public class TeedaServlet extends S2ContainerServlet {
     public void destroy() {
         super.destroy();
         FactoryFinder.releaseFactories();
+    }
+
+    protected String printProductInfo() {
+        return ProductInfo.getProductName() + " : " + ProductInfo.getVersion();
     }
 }

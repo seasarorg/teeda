@@ -21,7 +21,7 @@ import javax.servlet.ServletContextEvent;
 
 import org.seasar.framework.container.servlet.S2ContainerListener;
 import org.seasar.framework.log.Logger;
-import org.seasar.teeda.core.Version;
+import org.seasar.teeda.core.ProductInfo;
 
 /**
  * @author shot
@@ -67,6 +67,6 @@ public class TeedaConfigureListener extends S2ContainerListener {
     }
 
     private void printVersion() {
-        logger.debug("Teeda version :" + Version.getVersion());
+        logger.debug("Teeda version :" + ProductInfo.getVersion());
     }
 }
