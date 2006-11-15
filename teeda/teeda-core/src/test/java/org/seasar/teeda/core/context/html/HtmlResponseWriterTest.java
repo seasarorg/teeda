@@ -17,6 +17,7 @@ package org.seasar.teeda.core.context.html;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 
 import javax.faces.context.ResponseWriter;
@@ -659,11 +660,10 @@ public class HtmlResponseWriterTest extends TestCase {
                 .encodeURIAttribute("url?a=b&c=d"));
         assertEquals("a?1=%20", responseWriter.encodeURIAttribute("a?1= "));
 
-        final Character japaneseA = new Character((char) 12354);
         assertEquals("url?a=%E3%81%82", responseWriter
-                .encodeURIAttribute("url?a=" + japaneseA));
+                .encodeURIAttribute("url?a=あ"));
         assertEquals("%E3%81%82?a=1", responseWriter
-                .encodeURIAttribute(japaneseA + "?a=1"));
+                .encodeURIAttribute("あ?a=1"));
 
         assertEquals("#", responseWriter.encodeURIAttribute("#"));
         assertEquals("/a.html#aaa", responseWriter
@@ -705,18 +705,23 @@ public class HtmlResponseWriterTest extends TestCase {
 
         assertEquals("+", URLEncoder.encode(" ", "UTF-8"));
 
-        final Character japaneseA = new Character((char) 12354);
-        assertEquals(12354, japaneseA.charValue());
-        assertEquals("3042", Integer.toHexString((int) japaneseA.charValue()));
-        assertEquals("%E3%81%82", URLEncoder.encode(japaneseA.toString(),
-                "UTF-8"));
-        assertEquals("%82%A0", URLEncoder.encode(japaneseA.toString(),
-                "Windows-31J"));
+        assertEquals("3042", Integer.toHexString('あ'));
+        assertEquals("%E3%81%82", URLEncoder.encode("あ", "UTF-8"));
+        assertEquals("%82%A0", URLEncoder.encode("あ", "Windows-31J"));
+    }
+
+    public void testLeaningURLDecoder() throws Exception {
+        assertEquals(
+                "https://hogehoge.co.jp/test/cgi-bin/test.cgi?cmd=login",
+                URLDecoder
+                        .decode(
+                                "https%3A//hogehoge.co.jp/test/cgi-bin/test.cgi%3Fcmd=login",
+                                "UTF-8"));
     }
 
     public void testLearningCharacter() throws Exception {
         assertEquals(true, Character.isLetter('A'));
-        assertEquals(true, Character.isLetter((char) 12354)); // japanese "a"
+        assertEquals(true, Character.isLetter('あ'));
 
         assertEquals(false, Character.isLetter('0'));
         assertEquals(false, Character.isLetter((char) 55893));
