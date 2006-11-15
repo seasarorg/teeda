@@ -24,6 +24,56 @@
 	<filter>
 		<filter-name>requestDumpFilter</filter-name>
 		<filter-class>org.seasar.teeda.core.filter.RequestDumpFilter</filter-class>
+		<!-- 
+        <init-param>
+            <param-name>beforeRequestParameter</param-name>
+            <param-value>false</param-value>
+        </init-param>
+        <init-param>
+            <param-name>afterRequestParameter</param-name>
+            <param-value>false</param-value>
+        </init-param>
+        <init-param>
+            <param-name>beforeRequestAttribute</param-name>
+            <param-value>false</param-value>
+        </init-param>
+        <init-param>
+            <param-name>afterRequestAttribute</param-name>
+            <param-value>false</param-value>
+        </init-param>
+        <init-param>
+            <param-name>beforeRequestHeader</param-name>
+            <param-value>false</param-value>
+        </init-param>
+        <init-param>
+            <param-name>afterRequestHeader</param-name>
+            <param-value>false</param-value>
+        </init-param>
+        <init-param>
+            <param-name>beforeContextAttribute</param-name>
+            <param-value>false</param-value>
+        </init-param>
+        <init-param>
+            <param-name>afterContextAttribute</param-name>
+            <param-value>false</param-value>
+        </init-param>
+        <init-param>
+            <param-name>beforeCookies</param-name>
+            <param-value>false</param-value>
+        </init-param>
+        <init-param>
+            <param-name>afterCookies</param-name>
+            <param-value>false</param-value>
+        </init-param>
+        <init-param>
+            <param-name>beforeSessionAttribute</param-name>
+            <param-value>false</param-value>
+        </init-param>
+        <init-param>
+            <param-name>afterSessionAttribute</param-name>
+            <param-value>false</param-value>
+        </init-param>
+		-->
 	</filter>
 	<filter>
 		<filter-name>encodingfilter</filter-name>
