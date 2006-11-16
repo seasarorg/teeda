@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -58,12 +58,8 @@ public class JspELParserUtil {
                     String prefix = str.substring(0, pos1);
                     String s = str.substring(pos1 + openBrace.length(), pos2);
                     String postfix = str.substring(pos2 + 1);
-                    if (str.indexOf("\\") != pos1 - 1
-                            && str.indexOf("'") != pos1 - 1
-                            && str.indexOf("'") != pos2 - 1) {
-                        str = prefix + JSP_OPEN_BRACE + s + JSP_CLOSE_BRACE
-                                + convertToJspExpression(postfix);
-                    }
+                    str = prefix + JSP_OPEN_BRACE + s + JSP_CLOSE_BRACE
+                            + convertToJspExpression(postfix);
                 } else if (pos2 >= 0 && pos2 <= pos1) {
                     String prefix = str.substring(0, pos2 + 1);
                     String s = str.substring(pos2 + 1);

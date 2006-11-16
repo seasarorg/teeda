@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -36,6 +36,34 @@ public class CommonsELParserTest extends TeedaTestCase {
         assertEquals("foo", obj);
     }
 
+    public void testParse_complex() {
+        getContainer().register(new Hoge(), "hoge");
+        ELParser parser = new CommonsELParser();
+        parser.setExpressionProcessor(new CommonsExpressionProcessorImpl());
+        Object o = parser.parse("func(#{hoge.name}, #{hoge.bar})");
+        MockApplication app = getApplication();
+        TeedaVariableResolver resolver = new TeedaVariableResolver();
+        resolver.setContainer(getContainer());
+        app.setVariableResolver(resolver);
+        Object obj = parser.getExpressionProcessor().evaluate(
+                getFacesContext(), o);
+        assertEquals("func(foo, bar)", obj);
+    }
+
+    public void testParse_noParse() {
+        getContainer().register(new Hoge(), "hoge");
+        ELParser parser = new CommonsELParser();
+        parser.setExpressionProcessor(new CommonsExpressionProcessorImpl());
+        Object o = parser.parse("''#{hoge.name}'', ''#{hoge.bar}''");
+        MockApplication app = getApplication();
+        TeedaVariableResolver resolver = new TeedaVariableResolver();
+        resolver.setContainer(getContainer());
+        app.setVariableResolver(resolver);
+        Object obj = parser.getExpressionProcessor().evaluate(
+                getFacesContext(), o);
+        assertEquals("''foo'', ''bar''", obj);
+    }
+
     public void testNullHandle() throws Exception {
         CommonsELParser parser = new CommonsELParser();
         CommonsExpressionProcessorImpl processor = new CommonsExpressionProcessorImpl();
@@ -47,10 +75,17 @@ public class CommonsELParserTest extends TeedaTestCase {
     }
 
     public static class Hoge {
-        public String name = "foo";
+
+        private String name = "foo";
+
+        private String bar = "bar";
 
         public String getName() {
             return name;
+        }
+
+        public String getBar() {
+            return bar;
         }
     }
 }

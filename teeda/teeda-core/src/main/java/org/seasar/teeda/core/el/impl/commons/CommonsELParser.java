@@ -29,6 +29,8 @@ import org.seasar.teeda.core.el.impl.JspELParserUtil;
  */
 public class CommonsELParser implements org.seasar.teeda.core.el.ELParser {
 
+    private static final long serialVersionUID = 1L;
+
     private ExpressionProcessor processor;
 
     public CommonsELParser() {
