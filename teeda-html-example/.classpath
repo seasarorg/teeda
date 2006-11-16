@@ -15,13 +15,13 @@
 	<classpathentry exported="true" kind="lib" path="src/main/webapp/WEB-INF/lib/log4j-1.2.13.jar"/>
 	<classpathentry exported="true" kind="lib" path="src/main/webapp/WEB-INF/lib/ognl-2.6.7.jar"/>
 	<classpathentry exported="true" kind="lib" path="src/main/webapp/WEB-INF/lib/poi-2.5.1-final-20040804.jar"/>
-	<classpathentry exported="true" kind="lib" path="src/main/webapp/WEB-INF/lib/xercesImpl-2.6.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="src/main/webapp/WEB-INF/lib/xmlParserAPIs-2.6.2.jar"/>
-	<classpathentry sourcepath="src/main/webapp/WEB-INF/lib/sources/s2-extension-2.4.2-sources.jar" kind="lib" path="src/main/webapp/WEB-INF/lib/s2-extension-2.4.2.jar"/>
-	<classpathentry sourcepath="src/main/webapp/WEB-INF/lib/sources/s2-framework-2.4.2-sources.jar" kind="lib" path="src/main/webapp/WEB-INF/lib/s2-framework-2.4.2.jar"/>
-	<classpathentry sourcepath="src/main/webapp/WEB-INF/lib/sources/teeda-ajax-1.0.1-sources.jar" kind="lib" path="src/main/webapp/WEB-INF/lib/teeda-ajax-1.0.1.jar"/>
-	<classpathentry sourcepath="src/main/webapp/WEB-INF/lib/sources/teeda-core-1.0.1-sources.jar" kind="lib" path="src/main/webapp/WEB-INF/lib/teeda-core-1.0.1.jar"/>
-	<classpathentry sourcepath="src/main/webapp/WEB-INF/lib/sources/teeda-extension-1.0.1-sources.jar" kind="lib" path="src/main/webapp/WEB-INF/lib/teeda-extension-1.0.1.jar"/>
+	<classpathentry sourcepath="/seasar2" kind="lib" path="src/main/webapp/WEB-INF/lib/s2-extension-2.4.2.jar"/>
+	<classpathentry sourcepath="/seasar2" kind="lib" path="src/main/webapp/WEB-INF/lib/s2-framework-2.4.2.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/teeda-ajax-1.0.2-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/teeda-core-1.0.2-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/teeda-extension-1.0.2-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/xercesImpl-2.8.1.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/xml-resolver-1.1.jar"/>
 	<classpathentry kind="var" path="TOMCAT_HOME/common/lib/servlet-api.jar"/>
 	<classpathentry kind="var" path="TOMCAT_HOME/common/lib/jasper-runtime.jar"/>
 	<classpathentry kind="output" path="src/main/webapp/WEB-INF/classes"/>
