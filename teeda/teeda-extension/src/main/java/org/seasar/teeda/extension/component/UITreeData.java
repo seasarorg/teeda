@@ -16,13 +16,14 @@
 package org.seasar.teeda.extension.component;
 
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.Map;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.component.ComponentUtil_;
 import javax.faces.component.NamingContainer;
 import javax.faces.component.UIComponent;
-import javax.faces.component.UIComponentBase;
+import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
 import javax.faces.event.AbortProcessingException;
@@ -33,13 +34,17 @@ import javax.faces.internal.ComponentStates;
 import javax.faces.internal.FacesMessageUtil;
 
 import org.seasar.framework.util.AssertionUtil;
+import org.seasar.framework.util.IntegerConversionUtil;
+import org.seasar.framework.util.StringUtil;
+import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.event.ToggleEvent;
 import org.seasar.teeda.extension.event.TreeEventWrapper;
 
 /**
  * @author shot
  */
-public class UITreeData extends UIComponentBase implements NamingContainer {
+public class UITreeData extends UIInput /*UIComponentBase*/implements
+        NamingContainer {
 
     public static final String COMPONENT_TYPE = "org.seasar.teeda.extension.Tree";
 
@@ -160,8 +165,62 @@ public class UITreeData extends UIComponentBase implements NamingContainer {
         if (!isRendered()) {
             return;
         }
+        final String ownClientId = super.getClientId(context);
+        final Map paramMap = context.getExternalContext()
+                .getRequestParameterMap();
+        final TreeNode parent = (TreeNode) getValue();
+        for (Iterator itr = paramMap.entrySet().iterator(); itr.hasNext();) {
+            Map.Entry entry = (Map.Entry) itr.next();
+            String key = (String) entry.getKey();
+            Object value = entry.getValue();
+            if (!key
+                    .startsWith(ownClientId + ExtensionConstants.NAME_SEPARATOR)) {
+                continue;
+            }
+            String remain = key
+                    .substring((ownClientId + ExtensionConstants.NAME_SEPARATOR)
+                            .length());
+            TreeNode node = parent;
+            int[] point = parseToTreePoint(remain);
+            for (int i = 1; i < point.length; i++) {
+                int n = point[i];
+                node = node.getChild(n);
+            }
+            node.setValue(value);
+        }
+        setValue(parent);
+        updateModel(context);
         processNodes(context, PhaseId.UPDATE_MODEL_VALUES);
         setNodeId(null);
+    }
+
+    public void updateModel(FacesContext context) {
+        AssertionUtil.assertNotNull("context", context);
+        if (!isValid() || !isLocalValueSet()) {
+            return;
+        }
+        final ValueBinding valueBinding = getValueBinding("value");
+        if (valueBinding == null) {
+            return;
+        }
+        try {
+            valueBinding.setValue(context, getValue());
+        } catch (RuntimeException e) {
+            Object[] args = { getId() };
+            context.getExternalContext().log(e.getMessage(), e);
+            FacesMessageUtil.addErrorMessage(context, this,
+                    CONVERSION_MESSAGE_ID, args);
+            setValid(false);
+        }
+    }
+
+    private int[] parseToTreePoint(String s) {
+        String[] strs = StringUtil.split(s, ExtensionConstants.NAME_SEPARATOR);
+        int[] ret = new int[strs.length - 1];
+        for (int i = 0; i < strs.length - 1; i++) {
+            ret[i] = IntegerConversionUtil.toPrimitiveInt(strs[i]);
+        }
+        return ret;
     }
 
     public String getClientId(FacesContext context) {
@@ -186,6 +245,7 @@ public class UITreeData extends UIComponentBase implements NamingContainer {
     public void setValue(Object value) {
         model = null;
         this.value = value;
+        setLocalValueSet(true);
     }
 
     public Object getValue() {

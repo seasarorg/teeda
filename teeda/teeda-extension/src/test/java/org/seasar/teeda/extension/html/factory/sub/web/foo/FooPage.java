@@ -2,6 +2,8 @@ package org.seasar.teeda.extension.html.factory.sub.web.foo;
 
 import java.util.List;
 
+import org.seasar.teeda.extension.component.TreeNode;
+
 public class FooPage {
 
     private int hogeNo;
@@ -11,6 +13,16 @@ public class FooPage {
     private List hogeItems;
 
     private String ccc;
+
+    private TreeNode tttt;
+
+    public TreeNode getTttt() {
+        return tttt;
+    }
+
+    public void setTttt(TreeNode tttt) {
+        this.tttt = tttt;
+    }
 
     public String getAaa() {
         return null;

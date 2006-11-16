@@ -114,11 +114,11 @@ public class THtmlInputHiddenRenderer extends AbstractInputRenderer {
         getDecoder().decode(context, htmlInputHidden);
     }
 
-    private String serialize(final Object target) {
+    protected String serialize(final Object target) {
         return encodeConverter.getAsEncodeString(target);
     }
 
-    private Object deserialize(final String value) {
+    protected Object deserialize(final String value) {
         return encodeConverter.getAsDecodeObject(value);
     }
 

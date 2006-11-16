@@ -19,6 +19,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
 
+import org.seasar.teeda.extension.component.TreeNode;
+
 /**
  * @author shot
  * @author higa
@@ -33,7 +35,8 @@ public class PagePersistenceUtil {
                 || Number.class.isAssignableFrom(clazz)
                 || Date.class.isAssignableFrom(clazz)
                 || Calendar.class.isAssignableFrom(clazz)
-                || Map.class.isAssignableFrom(clazz) || clazz.isArray();
+                || Map.class.isAssignableFrom(clazz) || clazz.isArray()
+                || clazz == TreeNode.class;
     }
 
 }

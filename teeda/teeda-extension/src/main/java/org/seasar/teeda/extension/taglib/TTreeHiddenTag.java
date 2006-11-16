@@ -13,35 +13,21 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.extension.component;
+package org.seasar.teeda.extension.taglib;
 
-import java.io.Serializable;
-import java.util.List;
+import org.seasar.teeda.core.taglib.html.InputTagBase;
+import org.seasar.teeda.extension.component.html.THtmlInputHidden;
 
-public interface TreeNode extends Serializable {
+/**
+ * @author shot
+ */
+public class TTreeHiddenTag extends InputTagBase {
 
-    public boolean isLeaf();
+    public String getComponentType() {
+        return THtmlInputHidden.COMPONENT_TYPE;
+    }
 
-    public void setLeaf(boolean leaf);
-
-    public void addChild(TreeNode node);
-
-    public List getChildren();
-
-    public String getType();
-
-    public void setType(String type);
-
-    public String getDescription();
-
-    public void setDescription(String description);
-
-    public void setValue(Object value);
-
-    public Object getValue();
-
-    public int getChildCount();
-
-    public TreeNode getChild(int index);
-
+    public String getRendererType() {
+        return "org.seasar.teeda.extension.TreeHidden";
+    }
 }

@@ -111,4 +111,8 @@ public class TreeNodeImpl implements TreeNode, Comparable {
         children.add(node);
     }
 
+    public TreeNode getChild(int index) {
+        return (TreeNode) children.get(index);
+    }
+
 }
