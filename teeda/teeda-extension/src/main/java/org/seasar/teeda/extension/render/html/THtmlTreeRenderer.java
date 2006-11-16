@@ -98,8 +98,8 @@ public class THtmlTreeRenderer extends AbstractRenderer {
             writer.startElement(JsfConstants.DIV_ELEM, component);
             writer.writeAttribute(JsfConstants.ID_ATTR, clientId, "id");
         }
-        boolean clientSideToggle = tree.isClientSideToggle();
-        boolean showRootNode = tree.isShowRootNode();
+        final boolean clientSideToggle = tree.isClientSideToggle();
+        final boolean showRootNode = tree.isShowRootNode();
         TreeState state = tree.getDataModel().getTreeState();
         TreeWalker walker = tree.getDataModel().getTreeWalker();
         walker.walkBegin(tree);
@@ -109,15 +109,18 @@ public class THtmlTreeRenderer extends AbstractRenderer {
                 encodeTree(context, writer, tree, walker);
             }
         } else {
-            walker.next();
-            TreeNode rootNode = tree.getNode();
+            skipRootTreeNode(walker);
             setRootNodeExpanded(tree, state);
-            encodeEachTreeNode(context, rootNode, walker, tree);
+            encodeEachTreeNode(context, walker, tree);
         }
         resetCurrentNode(tree);
         if (isOuterSpanUsed) {
             writer.endElement(JsfConstants.DIV_ELEM);
         }
+    }
+
+    protected void skipRootTreeNode(TreeWalker walker) {
+        walker.next();
     }
 
     protected void setRootNodeExpanded(THtmlTree tree, TreeState state) {
@@ -127,8 +130,9 @@ public class THtmlTreeRenderer extends AbstractRenderer {
         }
     }
 
-    protected void encodeEachTreeNode(FacesContext context, TreeNode rootNode,
-            TreeWalker walker, THtmlTree tree) throws IOException {
+    protected void encodeEachTreeNode(FacesContext context, TreeWalker walker,
+            THtmlTree tree) throws IOException {
+        TreeNode rootNode = tree.getNode();
         ResponseWriter writer = context.getResponseWriter();
         for (int i = 0; i < rootNode.getChildCount(); i++) {
             if (walker.next()) {
