@@ -134,6 +134,10 @@
 			<arg>"javax.faces.convert"</arg>
 			<arg>"..*Converter"</arg>
 		</initMethod>
+		<initMethod name="addClassPattern">
+			<arg>"org.seasar.teeda.core.convert"</arg>
+			<arg>"..*Converter"</arg>
+		</initMethod>
 	</component>
 
 </components>
