@@ -44,7 +44,8 @@ public class TCondition extends UIComponentBase {
     }
 
     public boolean isRendered() {
-        if (FacesMessageUtil.hasMessages(getFacesContext())) {
+        if (FacesMessageUtil.hasMessages(getFacesContext())
+                && submitted != null) {
             return submitted.booleanValue();
         } else {
             return super.isRendered();

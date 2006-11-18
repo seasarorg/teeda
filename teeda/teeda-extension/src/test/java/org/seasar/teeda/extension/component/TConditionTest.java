@@ -15,6 +15,9 @@
  */
 package org.seasar.teeda.extension.component;
 
+import javax.faces.application.FacesMessage;
+
+import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.unit.TeedaTestCase;
 
 /**
@@ -22,21 +25,12 @@ import org.seasar.teeda.core.unit.TeedaTestCase;
  */
 public class TConditionTest extends TeedaTestCase {
 
-    public void test_DecodeShouldBeCalled() throws Exception {
-        //        final boolean[] calls = new boolean[] { false };
-        //        MockRenderKit renderKit = getRenderKit();
-        //        renderKit.addRenderer("org.seasar.teeda.extension.Condition",
-        //                "org.seasar.teeda.extension.Condition", new MockRenderer() {
-        //                    public void decode(FacesContext context,
-        //                            UIComponent component) {
-        //                        calls[0] = true;
-        //                    }
-        //                });
-        //        TCondition component = new TCondition();
-        //        component.setRendered(true);
-        //        component.processDecodes(getFacesContext());
-        //        assertTrue(calls[0]);
-        assertTrue(true);
+    public void testIsRendered_submittedValueIsNullWhenInitValidationOccured()
+            throws Exception {
+        MockFacesContext context = getFacesContext();
+        context.addMessage(null, new FacesMessage());
+        TCondition c = new TCondition();
+        c.setRendered(true);
+        assertTrue(c.isRendered());
     }
-
 }

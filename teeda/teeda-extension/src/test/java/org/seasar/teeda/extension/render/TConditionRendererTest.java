@@ -15,17 +15,44 @@
  */
 package org.seasar.teeda.extension.render;
 
+import javax.faces.component.html.HtmlInputHidden;
+import javax.faces.context.FacesContext;
 import javax.faces.render.Renderer;
 import javax.faces.render.RendererTest;
 
 import org.seasar.teeda.core.mock.MockHtmlOutputText;
 import org.seasar.teeda.core.render.html.HtmlOutputTextRenderer;
+import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.component.TCondition;
 
 /**
  * @author shot
  */
 public class TConditionRendererTest extends RendererTest {
+
+    public void testDecode_noExpectedChildren() throws Exception {
+        Renderer r = createRenderer();
+        TCondition c = new TCondition();
+        r.decode(getFacesContext(), c);
+        assertFalse(c.isSubmitted());
+    }
+
+    public void testDecode_existsExpectedChildren() throws Exception {
+        Renderer r = createRenderer();
+        TCondition c = new TCondition();
+        c.setId("hoge");
+        HtmlInputHidden hidden = new HtmlInputHidden() {
+
+            public void decode(FacesContext context) {
+            }
+
+        };
+        hidden.setId("hoge" + ExtensionConstants.TEEDA_HIDDEN_SUFFIX);
+        hidden.setSubmittedValue("true");
+        c.getChildren().add(hidden);
+        r.decode(getFacesContext(), c);
+        assertTrue(c.isSubmitted());
+    }
 
     public void testEncode1() throws Exception {
         Renderer r = createRenderer();
