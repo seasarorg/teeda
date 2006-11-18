@@ -22,7 +22,6 @@ import org.apache.xerces.impl.XMLNSDocumentScannerImpl;
 import org.apache.xerces.impl.msg.XMLMessageFormatter;
 import org.apache.xerces.util.XMLChar;
 import org.apache.xerces.util.XMLStringBuffer;
-import org.apache.xerces.xni.Augmentations;
 import org.apache.xerces.xni.XMLResourceIdentifier;
 import org.apache.xerces.xni.XMLString;
 import org.apache.xerces.xni.XNIException;
@@ -31,8 +30,8 @@ import org.seasar.framework.util.StringUtil;
 
 /**
  * @author shot
- *
- * avoid ";" is required becauseof a.html?b=B&c=C format.
+ * 
+ * avoid ";" is required becauseof a.html?b=B&c=C format. 
  */
 public class TeedaXMLDocumentScannerImpl extends XMLNSDocumentScannerImpl {
 
@@ -47,7 +46,7 @@ public class TeedaXMLDocumentScannerImpl extends XMLNSDocumentScannerImpl {
 
     private XMLStringBuffer fStringBuffer3 = new XMLStringBuffer();
 
-    protected boolean scanAttributeValue(XMLString value,
+    protected void scanAttributeValue(XMLString value,
             XMLString nonNormalizedValue, String atName, boolean checkEntities,
             String eleName) throws IOException, XNIException {
         // quote
@@ -191,15 +190,14 @@ public class TeedaXMLDocumentScannerImpl extends XMLNSDocumentScannerImpl {
             reportFatalError("CloseQuoteExpected", new Object[] { eleName,
                     atName });
         }
-        return nonNormalizedValue.equals(value.ch, value.offset, value.length);
     }
 
     public void startEntity(String name, XMLResourceIdentifier identifier,
-            String encoding, Augmentations aug) throws XNIException {
+            String encoding) throws XNIException {
         if (name.indexOf(';') > 0) {
             name = StringUtil.replace(name, ";", "");
         }
-        super.startEntity(name, identifier, encoding, aug);
+        super.startEntity(name, identifier, encoding);
     }
 
 }
