@@ -22,12 +22,13 @@ import org.seasar.teeda.extension.component.html.THtmlTree;
  * @author shot
  * 
  */
-public class TreeNavigationImageLocatorImpl implements TreeNavigationImageLocator {
+public class TreeNavigationImageLocatorImpl implements
+        TreeNavigationImageLocator {
 
     private static final String LINE_TRUNK_GIF = "line-trunk.gif";
 
     public static final String imageRoot_BINDING = "bindingType=may";
-    
+
     private String imageRoot = "";
 
     private static final String NAV_MINUS_LINE_LAST_GIF = "nav-minus-line-last.gif";
@@ -64,6 +65,8 @@ public class TreeNavigationImageLocatorImpl implements TreeNavigationImageLocato
 
     private boolean renderLineBackground = false;
 
+    private boolean clickable = false;
+
     public TreeNavigationImageLocatorImpl() {
     }
 
@@ -88,38 +91,47 @@ public class TreeNavigationImageLocatorImpl implements TreeNavigationImageLocato
         case (NOTHING):
         case (LAST):
             navSrc = SPACER_GIF;
+            setClickable(false);
             break;
         case (LINES):
             navSrc = LINE_MIDDLE_GIF;
+            setClickable(false);
             break;
         case (LINES + LAST):
             navSrc = LINE_LAST_GIF;
+            setClickable(false);
             break;
         case (CHILDREN):
         case (CHILDREN + LAST):
             navSrc = NAV_PLUS_GIF;
             altSrc = NAV_MINUS_GIF;
+            setClickable(true);
             break;
         case (CHILDREN + LINES):
             navSrc = NAV_PLUS_LINE_MIDDLE_GIF;
             altSrc = NAV_MINUS_LINE_MIDDLE_GIF;
+            setClickable(true);
             break;
         case (CHILDREN + LINES + LAST):
             navSrc = NAV_PLUS_LINE_LAST_GIF;
             altSrc = NAV_MINUS_LINE_LAST_GIF;
+            setClickable(true);
             break;
         case (CHILDREN + EXPANDED):
         case (CHILDREN + EXPANDED + LAST):
             navSrc = NAV_MINUS_GIF;
             altSrc = NAV_PLUS_GIF;
+            setClickable(true);
             break;
         case (CHILDREN + EXPANDED + LINES):
             navSrc = NAV_MINUS_LINE_MIDDLE_GIF;
             altSrc = NAV_PLUS_LINE_MIDDLE_GIF;
+            setClickable(true);
             break;
         case (CHILDREN + EXPANDED + LINES + LAST):
             navSrc = NAV_MINUS_LINE_LAST_GIF;
             altSrc = NAV_PLUS_LINE_LAST_GIF;
+            setClickable(true);
             break;
         case (EXPANDED + LINES):
         case (EXPANDED + LINES + LAST):
@@ -159,8 +171,17 @@ public class TreeNavigationImageLocatorImpl implements TreeNavigationImageLocato
     }
 
     public String getLineBackgroundSrc(boolean shouldShowLineBackground) {
-        final String img = (shouldShowLineBackground) ? LINE_TRUNK_GIF : SPACER_GIF;
+        final String img = (shouldShowLineBackground) ? LINE_TRUNK_GIF
+                : SPACER_GIF;
         return imageRoot + img;
+    }
+
+    public boolean isClickable() {
+        return clickable;
+    }
+
+    public void setClickable(boolean clickable) {
+        this.clickable = clickable;
     }
 
 }

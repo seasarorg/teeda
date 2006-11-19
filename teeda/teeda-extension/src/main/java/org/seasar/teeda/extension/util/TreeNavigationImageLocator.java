@@ -16,4 +16,5 @@ public interface TreeNavigationImageLocator {
 
     String getNavSrc();
 
+    boolean isClickable();
 }

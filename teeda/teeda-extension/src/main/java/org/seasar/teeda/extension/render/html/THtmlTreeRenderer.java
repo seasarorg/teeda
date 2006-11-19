@@ -266,9 +266,9 @@ public class THtmlTreeRenderer extends AbstractRenderer {
         UIComponent nodeImgFacet = null;
 
         imageLocator.setUpImageLocation(tree);
-        String navSrc = imageLocator.getNavSrc();
-        String altSrc = imageLocator.getAltSrc();
-
+        final String navSrc = imageLocator.getNavSrc();
+        final String altSrc = imageLocator.getAltSrc();
+        final boolean isClickable = imageLocator.isClickable();
         // render nav cell
         out.startElement(JsfConstants.TD_ELEM, tree);
         out.writeAttribute(JsfConstants.WIDTH_ATTR, "19", null);
@@ -278,6 +278,10 @@ public class THtmlTreeRenderer extends AbstractRenderer {
             final String img = contextPath
                     + imageLocator.getLineBackgroundSrc(true);
             out.writeURIAttribute("background", img, null);
+        }
+        if (isClickable) {
+            out.startElement(JsfConstants.ANCHOR_ELEM, tree);
+            out.writeAttribute(JsfConstants.HREF_ATTR, "#", null);
         }
         HtmlGraphicImage image = new HtmlGraphicImage();
         image.setId(IMAGE_PREFIX);
@@ -347,6 +351,9 @@ public class THtmlTreeRenderer extends AbstractRenderer {
                 image.setStyle("cursor:hand;cursor:pointer");
             }
             RendererUtil.renderChild(context, image);
+        }
+        if (isClickable) {
+            out.endElement(JsfConstants.ANCHOR_ELEM);
         }
         out.endElement(JsfConstants.TD_ELEM);
         return nodeImgFacet;
