@@ -48,8 +48,6 @@ public class InputTextTag extends InputTagBase {
         super.setProperties(component);
 
         setComponentProperty(component, JsfConstants.ALT_ATTR, getAlt());
-        setComponentProperty(component, JsfConstants.MAXLENGTH_ATTR,
-                getMaxlength());
         setComponentProperty(component, JsfConstants.ONCHANGE_ATTR,
                 getOnchange());
         setComponentProperty(component, JsfConstants.ONSELECT_ATTR,

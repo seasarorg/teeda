@@ -38,6 +38,8 @@ public abstract class InputTagBase extends UIComponentTagBase {
 
     protected void setProperties(UIComponent component) {
         super.setProperties(component);
+        setComponentProperty(component, JsfConstants.MAXLENGTH_ATTR,
+                getMaxlength());
         setComponentProperty(component, JsfConstants.IMMEDIATE_ATTR,
                 getImmediate());
         setComponentProperty(component, JsfConstants.REQUIRED_ATTR,
