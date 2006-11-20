@@ -90,9 +90,6 @@ public class THtmlGridRenderer extends TForEachRenderer {
     private static final String GRID_JS = THtmlGrid.class.getName()
             + ".GRID_JS";
 
-    private static final String APPEND_EVENT_JS = THtmlGrid.class.getName()
-            + ".APPEND_EVENT_JS";
-
     private int firstRenderRowCount = 50;
 
     public void encodeBegin(FacesContext context, UIComponent component)
@@ -226,7 +223,7 @@ public class THtmlGridRenderer extends TForEachRenderer {
                             + "').style.width = "
                             + attribute.getRightBodyWidth() + ";");
         }
-        scriptBody.append(" Teeda.THtmlGrid.loadGridRows('" + id + "');");
+        //scriptBody.append(" Teeda.THtmlGrid.loadGridRows('" + id + "');");
         //scriptBody.append(" });");
         renderJavaScriptElement(writer, new String(scriptBody));
     }
@@ -616,6 +613,8 @@ public class THtmlGridRenderer extends TForEachRenderer {
             }
             writer.endElement(JsfConstants.TBODY_ELEM);
             writer.endElement(JsfConstants.TABLE_ELEM);
+            renderJavaScriptElement(writer, "Teeda.THtmlGrid.loadGridRows('"
+                    + id + "');");
         }
     }
 

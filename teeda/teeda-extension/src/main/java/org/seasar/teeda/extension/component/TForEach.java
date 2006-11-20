@@ -479,9 +479,6 @@ public class TForEach extends UIComponentBase implements NamingContainer {
             final Object item) {
         final BeanDesc itemBeanDesc = BeanDescFactory.getBeanDesc(item
                 .getClass());
-        System.out.println("[item.getClass] : " + item.getClass());
-        System.out.println("[itemBeanDesc.getPropertyDescSize] : "
-                + itemBeanDesc.getPropertyDescSize());
         for (int i = 0; i < itemBeanDesc.getPropertyDescSize(); i++) {
             final PropertyDesc pd = itemBeanDesc.getPropertyDesc(i);
             final String name = pd.getPropertyName();
