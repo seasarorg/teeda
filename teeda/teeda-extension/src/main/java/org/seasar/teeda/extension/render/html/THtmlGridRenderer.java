@@ -201,21 +201,21 @@ public class THtmlGridRenderer extends TForEachRenderer {
             throws IOException {
         final StringBuffer scriptBody = new StringBuffer(200);
         final String id = getIdForRender(context, htmlGrid);
-        final DispatchScope dispatchScope = DispatchScopeFactory
-                .getDispatchScope();
-        if (dispatchScope.get(APPEND_EVENT_JS) == null) {
-            final String resourcePath = ResourceUtil.getResourcePath(
-                    THtmlGrid.class.getPackage().getName() + ".AppendEventFor",
-                    "js");
-            final String a = TextUtil.readText(resourcePath).trim();
-            scriptBody.append(a);
-            scriptBody.append(JsfConstants.LINE_SP);
-            dispatchScope.put(APPEND_EVENT_JS, APPEND_EVENT_JS);
-        }
+        /*
+         final DispatchScope dispatchScope = DispatchScopeFactory
+         .getDispatchScope();
+         if (dispatchScope.get(APPEND_EVENT_JS) == null) {
+         final String resourcePath = ResourceUtil.getResourcePath(
+         THtmlGrid.class.getPackage().getName() + ".AppendEventFor",
+         "js");
+         final String a = TextUtil.readText(resourcePath).trim();
+         scriptBody.append(a);
+         scriptBody.append(JsfConstants.LINE_SP);
+         dispatchScope.put(APPEND_EVENT_JS, APPEND_EVENT_JS);
+         }
+         */
+        scriptBody.append("Teeda.THtmlGrid.adjustGridSize('" + id + "');");
 
-        scriptBody
-                .append("appendEventFor(window, 'onload', function() { Teeda.THtmlGrid.adjustGridSize('"
-                        + id + "');");
         // 横方向にscrollするときは全体の横幅を自動調整する
         if (htmlGrid.isScrollHorizontal()) {
             scriptBody.append(" document.getElementById('" + id + RIGHT_HEADER

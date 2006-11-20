@@ -95,14 +95,8 @@ Teeda.THtmlGrid = {
     }
   },
   _loadGridRowsFor : function (srcTable, destTable) {
-    var destTbody = destTable.tBodies[0];
     var srcTbody = srcTable.tBodies[0];
-    var srcRows = srcTbody.rows;
-    var len = srcRows.length;
-    for (var i = 0; i < len; i++) {
-      var row = srcRows[0];
-      destTbody.appendChild(row);
-    }
+    destTable.appendChild(srcTbody);
     srcTable.parentNode.removeChild(srcTable);
   },
   loadGridRows : function (gridId) {
