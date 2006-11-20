@@ -227,7 +227,7 @@ public class THtmlGridRenderer extends TForEachRenderer {
                             + attribute.getRightBodyWidth() + ";");
         }
         scriptBody.append(" Teeda.THtmlGrid.loadGridRows('" + id + "');");
-        scriptBody.append(" });");
+        //scriptBody.append(" });");
         renderJavaScriptElement(writer, new String(scriptBody));
     }
 
