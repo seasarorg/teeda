@@ -19,16 +19,15 @@ import java.io.Serializable;
 
 public interface TreeModel extends Serializable {
 
-    public String[] getPathInformation(String nodeId);
+    String[] getPathInformation(String nodeId);
 
-    public boolean isLastChild(String nodeId);
+    boolean isLastChild(String nodeId);
 
-    public TreeNode getNodeById(String nodeId);
+    TreeNode getNodeById(String nodeId);
 
-    public void setTreeState(TreeState state);
+    TreeWalker getTreeWalker();
 
-    public TreeState getTreeState();
+    boolean isNodeExpanded(String nodeId);
 
-    public TreeWalker getTreeWalker();
-
+    void toggleExpanded(String nodeId);
 }

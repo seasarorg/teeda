@@ -40,8 +40,6 @@ public class THtmlTree extends UITreeData {
 
     private Boolean showLines;
 
-    private Boolean clientSideToggle;
-
     private Boolean showRootNode;
 
     private Boolean preserveToggle;
@@ -54,7 +52,6 @@ public class THtmlTree extends UITreeData {
         setRendererType(DEFAULT_RENDERER_TYPE);
         expandControl = new HtmlCommandLink();
         expandControl.setParent(this);
-        clientSideToggle = Boolean.TRUE;
         preserveToggle = Boolean.TRUE;
         showRootNode = Boolean.TRUE;
         showNav = Boolean.TRUE;
@@ -67,11 +64,10 @@ public class THtmlTree extends UITreeData {
         values[1] = varNodeToggler;
         values[2] = showLines;
         values[3] = showNav;
-        values[4] = clientSideToggle;
-        values[5] = showRootNode;
-        values[6] = preserveToggle;
-        values[7] = javascriptLocation;
-        values[8] = imageLocation;
+        values[4] = showRootNode;
+        values[5] = preserveToggle;
+        values[6] = javascriptLocation;
+        values[7] = imageLocation;
         return (Object) values;
     }
 
@@ -81,11 +77,10 @@ public class THtmlTree extends UITreeData {
         setVarNodeToggler((String) values[1]);
         setShowLines(((Boolean) values[2]).booleanValue());
         setShowNav(((Boolean) values[3]).booleanValue());
-        setClientSideToggle(((Boolean) values[4]).booleanValue());
-        setShowRootNode(((Boolean) values[5]).booleanValue());
-        setPreserveToggle(((Boolean) values[6]).booleanValue());
-        setJavascriptLocation((String) values[7]);
-        setImageLocation((String) values[8]);
+        setShowRootNode(((Boolean) values[4]).booleanValue());
+        setPreserveToggle(((Boolean) values[5]).booleanValue());
+        setJavascriptLocation((String) values[6]);
+        setImageLocation((String) values[7]);
     }
 
     public void setNodeId(String nodeId) {
@@ -131,19 +126,6 @@ public class THtmlTree extends UITreeData {
         if (showLines != null)
             return showLines.booleanValue();
         ValueBinding vb = getValueBinding("showLines");
-        Boolean v = vb != null ? (Boolean) vb.getValue(getFacesContext())
-                : null;
-        return v == null || v.booleanValue();
-    }
-
-    public void setClientSideToggle(boolean clientSideToggle) {
-        this.clientSideToggle = Boolean.valueOf(clientSideToggle);
-    }
-
-    public boolean isClientSideToggle() {
-        if (clientSideToggle != null)
-            return clientSideToggle.booleanValue();
-        ValueBinding vb = getValueBinding("clientSideToggle");
         Boolean v = vb != null ? (Boolean) vb.getValue(getFacesContext())
                 : null;
         return v == null || v.booleanValue();

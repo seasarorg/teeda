@@ -15,12 +15,7 @@
  */
 package org.seasar.teeda.extension.component;
 
-
 public interface TreeWalker {
-
-    public boolean isCheckState();
-
-    public void setCheckState(boolean checkState);
 
     public boolean next();
 

@@ -26,7 +26,6 @@ import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
 import javax.faces.event.AbortProcessingException;
-import javax.faces.event.ActionEvent;
 import javax.faces.event.FacesEvent;
 import javax.faces.event.PhaseId;
 import javax.faces.internal.ComponentStates;
@@ -39,8 +38,7 @@ import org.seasar.teeda.extension.event.TreeEventWrapper;
 /**
  * @author shot
  */
-public class UITreeData extends UIInput /*UIComponentBase*/implements
-        NamingContainer {
+public class UITreeData extends UIInput implements NamingContainer {
 
     public static final String COMPONENT_TYPE = "org.seasar.teeda.extension.Tree";
 
@@ -60,8 +58,6 @@ public class UITreeData extends UIInput /*UIComponentBase*/implements
 
     private ComponentStates states = new ComponentStates();
 
-    private TreeState restoredState = null;
-
     public UITreeData() {
         setRendererType(DEFAULT_RENDERER_TYPE);
     }
@@ -71,10 +67,9 @@ public class UITreeData extends UIInput /*UIComponentBase*/implements
     }
 
     public Object saveState(FacesContext context) {
-        Object values[] = new Object[3];
+        Object values[] = new Object[2];
         values[0] = super.saveState(context);
         values[1] = var;
-        values[2] = restoredState;
         return values;
     }
 
@@ -82,7 +77,6 @@ public class UITreeData extends UIInput /*UIComponentBase*/implements
         Object values[] = (Object[]) state;
         super.restoreState(context, values[0]);
         var = (String) values[1];
-        restoredState = (TreeState) values[2];
     }
 
     public void encodeBegin(FacesContext context) throws IOException {
@@ -97,19 +91,6 @@ public class UITreeData extends UIInput /*UIComponentBase*/implements
         if (model == null) {
             throw new IllegalStateException();
         }
-        TreeState state = model.getTreeState();
-        if (state == null) {
-            state = createTreeState();
-        }
-        setRestoredState(state);
-    }
-
-    protected TreeState createTreeState() {
-        return new TreeStateImpl();
-    }
-
-    protected void setRestoredState(TreeState state) {
-        restoredState = (!state.isTransient()) ? state : null;
     }
 
     public void queueEvent(FacesEvent event) {
@@ -140,9 +121,6 @@ public class UITreeData extends UIInput /*UIComponentBase*/implements
         if (!isRendered()) {
             return;
         }
-        //TODO
-        //super.processDecodes(context);
-
         model = null;
         states.clear();
         setNodeId(null);
@@ -164,33 +142,6 @@ public class UITreeData extends UIInput /*UIComponentBase*/implements
         if (!isRendered()) {
             return;
         }
-        /*
-         final String ownClientId = super.getClientId(context);
-         final Map paramMap = context.getExternalContext()
-         .getRequestParameterMap();
-         final TreeNode parent = (TreeNode) getValue();
-         for (Iterator itr = paramMap.entrySet().iterator(); itr.hasNext();) {
-         Map.Entry entry = (Map.Entry) itr.next();
-         String key = (String) entry.getKey();
-         Object value = entry.getValue();
-         if (!key
-         .startsWith(ownClientId + ExtensionConstants.NAME_SEPARATOR)) {
-         continue;
-         }
-         String remain = key
-         .substring((ownClientId + ExtensionConstants.NAME_SEPARATOR)
-         .length());
-         TreeNode node = parent;
-         int[] point = parseToTreePoint(remain);
-         for (int i = 1; i < point.length; i++) {
-         int n = point[i];
-         node = node.getChild(n);
-         }
-         node.setValue(value);
-         }
-         setValue(parent);
-         updateModel(context);
-         */
         processNodes(context, PhaseId.UPDATE_MODEL_VALUES);
         setNodeId(null);
     }
@@ -315,9 +266,6 @@ public class UITreeData extends UIInput /*UIComponentBase*/implements
                         "Value must be a TreeModel or TreeNode");
             }
         }
-        if (restoredState != null && model != null) {
-            model.setTreeState(restoredState);
-        }
         return model;
     }
 
@@ -336,23 +284,14 @@ public class UITreeData extends UIInput /*UIComponentBase*/implements
     private void toggleAll(boolean expanded) {
         TreeWalker walker = getDataModel().getTreeWalker();
         walker.walkBegin(this);
-        walker.setCheckState(false);
-        TreeState state = getDataModel().getTreeState();
+        final TreeModel model = getDataModel();
         while (walker.next()) {
             String id = getNodeId();
-            if ((expanded && !state.isNodeExpanded(id))
-                    || (!expanded && state.isNodeExpanded(id))) {
-                state.toggleExpanded(id);
+            if ((expanded && !model.isNodeExpanded(id))
+                    || (!expanded && model.isNodeExpanded(id))) {
+                model.toggleExpanded(id);
             }
         }
-    }
-
-    public void expandPath(String[] nodePath) {
-        getDataModel().getTreeState().expandPath(nodePath);
-    }
-
-    public void collapsePath(String[] nodePath) {
-        getDataModel().getTreeState().collapsePath(nodePath);
     }
 
     protected void processNodes(FacesContext context, PhaseId phaseId) {
@@ -363,11 +302,6 @@ public class UITreeData extends UIInput /*UIComponentBase*/implements
         }
         TreeWalker walker = dataModel.getTreeWalker();
         walker.walkBegin(this);
-        /*
-         * TODO このloopが1度しか回らないのがおかしい。
-         * ツリーのROOTしかgetNode()で取り出されない。子どもも取り出されれば子どもがdecodeされると思うのだが、
-         * そもそも子どもが取り出されていないため、子ども配下にいるCheckboxは呼び出されない。
-         */
         while (walker.next()) {
             TreeNode node = getNode();
             String type = node.getType();
@@ -389,20 +323,11 @@ public class UITreeData extends UIInput /*UIComponentBase*/implements
     }
 
     public void toggleExpanded() {
-        getDataModel().getTreeState().toggleExpanded(getNodeId());
+        getDataModel().toggleExpanded(getNodeId());
     }
 
     public boolean isNodeExpanded() {
-        return getDataModel().getTreeState().isNodeExpanded(getNodeId());
-    }
-
-    public void setNodeSelected(ActionEvent event) {
-        getDataModel().getTreeState().setSelected(getNodeId());
-    }
-
-    public boolean isNodeSelected() {
-        return (getNodeId() != null) ? getDataModel().getTreeState()
-                .isSelected(getNodeId()) : false;
+        return getDataModel().isNodeExpanded(getNodeId());
     }
 
 }

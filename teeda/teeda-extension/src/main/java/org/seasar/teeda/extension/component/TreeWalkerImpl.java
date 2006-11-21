@@ -33,17 +33,7 @@ public class TreeWalkerImpl implements TreeWalker {
 
     private Stack idStack = new Stack();
 
-    private boolean checkState = true;
-
     private boolean startedWalking = false;
-
-    public boolean isCheckState() {
-        return checkState;
-    }
-
-    public void setCheckState(boolean checkState) {
-        this.checkState = checkState;
-    }
 
     public boolean next() {
         if (!startedWalking) {
@@ -70,23 +60,8 @@ public class TreeWalkerImpl implements TreeWalker {
             String nextNodeId = null;
             final String nodeId = tree.getNodeId();
             if (prevNodeId.equals(nodeId)) {
-                /**
-                 * We know there is at least one child b/c otherwise we would have popped the node after
-                 * checking isLeaf.  Basically we need to keep drilling down until we reach the deepest
-                 * node that is available for "walking."  Then we'll return to the parent and render its
-                 * siblings and walk back up the tree.
-                 */
                 nextNodeId = prevNodeId + ExtensionConstants.NAME_SEPARATOR
                         + "0";
-                // don't render any children if the node is not expanded
-                if (checkState) {
-                    //                    if (!tree.getDataModel().getTreeState().isNodeExpanded(
-                    //                            prevNodeId)) {
-                    //                        nodeStack.pop();
-                    //                        idStack.pop();
-                    //                        return next();
-                    //                    }
-                }
             } else {
                 // get the parent node
                 String currentNodeId = nodeId;

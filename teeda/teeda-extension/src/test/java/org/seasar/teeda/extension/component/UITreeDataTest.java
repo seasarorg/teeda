@@ -97,18 +97,13 @@ public class UITreeDataTest extends TeedaTestCase {
                 });
         UITreeData tree = new UITreeData();
         TreeNodeImpl node = new TreeNodeImpl("0", "a", false);
-        TreeStateImpl state = new TreeStateImpl();
-        state.setSelected("0");
         TreeModelImpl model = new TreeModelImpl(node);
-        model.setTreeState(state);
         tree.setValue(model);
 
         tree.encodeEnd(context);
 
         TreeModel m = tree.getDataModel();
         assertNotNull(m);
-        TreeState treeState = m.getTreeState();
-        assertEquals(true, treeState.isSelected("0"));
     }
 
 }

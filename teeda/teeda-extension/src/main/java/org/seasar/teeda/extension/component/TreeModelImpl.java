@@ -18,7 +18,9 @@ package org.seasar.teeda.extension.component;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.StringTokenizer;
 
 import org.seasar.framework.util.AssertionUtil;
@@ -30,18 +32,22 @@ public class TreeModelImpl implements TreeModel {
 
     private TreeNode root;
 
-    private TreeState treeState = new TreeStateImpl();
+    private Set expandedNodes = new HashSet();
 
     public TreeModelImpl(TreeNode root) {
         this.root = root;
     }
 
-    public TreeState getTreeState() {
-        return treeState;
+    public boolean isNodeExpanded(String nodeId) {
+        return expandedNodes.contains(nodeId);
     }
 
-    public void setTreeState(TreeState treeState) {
-        this.treeState = treeState;
+    public void toggleExpanded(String nodeId) {
+        if (expandedNodes.contains(nodeId)) {
+            expandedNodes.remove(nodeId);
+        } else {
+            expandedNodes.add(nodeId);
+        }
     }
 
     public String[] getPathInformation(String nodeId) {
@@ -101,7 +107,6 @@ public class TreeModelImpl implements TreeModel {
             if (node == null) {
                 node = root;
             } else {
-                // don't worry about invalid index, that exception will be caught later and dealt with
                 node = (TreeNode) node.getChildren().get(nodeIndex);
             }
         }

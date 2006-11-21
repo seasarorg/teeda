@@ -28,10 +28,12 @@ import javax.faces.context.ResponseWriter;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.AbstractRenderer;
 import org.seasar.teeda.core.util.RendererUtil;
+import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.component.ScriptEnhanceUIViewRoot;
+import org.seasar.teeda.extension.component.TreeModel;
 import org.seasar.teeda.extension.component.TreeNode;
-import org.seasar.teeda.extension.component.TreeState;
 import org.seasar.teeda.extension.component.TreeWalker;
+import org.seasar.teeda.extension.component.UITreeData;
 import org.seasar.teeda.extension.component.html.THtmlTree;
 import org.seasar.teeda.extension.util.JavaScriptContext;
 import org.seasar.teeda.extension.util.TreeNavigationImageLocator;
@@ -96,21 +98,20 @@ public class THtmlTreeRenderer extends AbstractRenderer {
             final String clientId = component.getClientId(context);
             isOuterSpanUsed = true;
             writer.startElement(JsfConstants.DIV_ELEM, component);
-            writer.writeAttribute(JsfConstants.ID_ATTR, clientId, "id");
+            writer.writeAttribute(JsfConstants.ID_ATTR, clientId,
+                    JsfConstants.ID_ATTR);
         }
-        final boolean clientSideToggle = tree.isClientSideToggle();
         final boolean showRootNode = tree.isShowRootNode();
-        TreeState state = tree.getDataModel().getTreeState();
+        TreeModel model = tree.getDataModel();
         TreeWalker walker = tree.getDataModel().getTreeWalker();
         walker.walkBegin(tree);
-        walker.setCheckState(!clientSideToggle); // walk all nodes in client mode
         if (showRootNode) {
             if (walker.next()) {
                 encodeTree(context, writer, tree, walker);
             }
         } else {
             skipRootTreeNode(walker);
-            setRootNodeExpanded(tree, state);
+            setRootNodeExpanded(tree, model);
             encodeEachTreeNode(context, walker, tree);
         }
         resetCurrentNode(tree);
@@ -123,10 +124,11 @@ public class THtmlTreeRenderer extends AbstractRenderer {
         walker.next();
     }
 
-    protected void setRootNodeExpanded(THtmlTree tree, TreeState state) {
+    protected void setRootNodeExpanded(final THtmlTree tree,
+            final TreeModel model) {
         String rootNodeId = tree.getNodeId();
-        if (!state.isNodeExpanded(rootNodeId)) {
-            state.toggleExpanded(rootNodeId);
+        if (!model.isNodeExpanded(rootNodeId)) {
+            model.toggleExpanded(rootNodeId);
         }
     }
 
@@ -147,26 +149,19 @@ public class THtmlTreeRenderer extends AbstractRenderer {
 
     protected void encodeTree(FacesContext context, ResponseWriter out,
             THtmlTree tree, TreeWalker walker) throws IOException {
-        final boolean clientSideToggle = tree.isClientSideToggle();
-
-        // encode the current node
         beforeNodeEncode(context, out, tree);
         encodeCurrentNode(context, out, tree);
         afterNodeEncode(context, out);
 
-        // if client side toggling is on, add a span to be used for displaying/hiding children
-        if (clientSideToggle) {
-            String spanId = TOGGLE_SPAN + ":" + tree.getId() + ":"
-                    + tree.getNodeId();
-            out.startElement(JsfConstants.DIV_ELEM, tree);
-            out.writeAttribute(JsfConstants.ID_ATTR, spanId, null);
-            if (tree.isNodeExpanded()) {
-                RendererUtil.renderAttribute(out, JsfConstants.STYLE_ATTR,
-                        "display:block");
-            } else {
-                RendererUtil.renderAttribute(out, JsfConstants.STYLE_ATTR,
-                        "display:none");
-            }
+        final String divId = getMarkerId(tree);
+        out.startElement(JsfConstants.DIV_ELEM, tree);
+        out.writeAttribute(JsfConstants.ID_ATTR, divId, null);
+        if (tree.isNodeExpanded()) {
+            RendererUtil.renderAttribute(out, JsfConstants.STYLE_ATTR,
+                    "display:block");
+        } else {
+            RendererUtil.renderAttribute(out, JsfConstants.STYLE_ATTR,
+                    "display:none");
         }
         TreeNode node = tree.getNode();
         for (int i = 0; i < node.getChildCount(); i++) {
@@ -174,19 +169,14 @@ public class THtmlTreeRenderer extends AbstractRenderer {
                 encodeTree(context, out, tree, walker);
             }
         }
-        if (clientSideToggle) {
-            out.endElement(JsfConstants.DIV_ELEM);
-        }
+        out.endElement(JsfConstants.DIV_ELEM);
     }
 
     protected void encodeCurrentNode(FacesContext context, ResponseWriter out,
             THtmlTree tree) throws IOException {
         boolean showNav = tree.isShowNav();
-        boolean clientSideToggle = tree.isClientSideToggle();
+        //showNav = true;
         TreeNode node = tree.getNode();
-        if (clientSideToggle) {
-            showNav = true;
-        }
         UIComponent nodeTypeFacet = tree.getFacet(node.getType());
         UIComponent nodeImgFacet = null;
         if (nodeTypeFacet == null) {
@@ -260,8 +250,7 @@ public class THtmlTreeRenderer extends AbstractRenderer {
                 .getRequestContextPath();
         TreeNode node = tree.getNode();
         String nodeId = tree.getNodeId();
-        String spanId = TOGGLE_SPAN + ":" + tree.getId() + ":" + nodeId;
-        boolean clientSideToggle = tree.isClientSideToggle();
+        String markerId = getMarkerId(tree);
         UIComponent nodeTypeFacet = tree.getFacet(node.getType());
         UIComponent nodeImgFacet = null;
 
@@ -290,68 +279,65 @@ public class THtmlTreeRenderer extends AbstractRenderer {
         image.setWidth("19");
         image.setHeight("18");
         image.setBorder(0);
-        if (clientSideToggle) {
-            String expandImgSrc = "";
-            String collapseImgSrc = "";
-            String nodeImageId = "";
+        String expandImgSrc = "";
+        String collapseImgSrc = "";
+        String nodeImageId = "";
 
-            UIComponent expandFacet = nodeTypeFacet.getFacet("expand");
-            if (expandFacet != null) {
-                UIGraphic expandImg = (UIGraphic) expandFacet;
-                final ViewHandler vh = context.getApplication()
-                        .getViewHandler();
-                final String uri = expandImg.getUrl();
-                expandImgSrc = vh.getResourceURL(context, uri);
-                if (expandImg.isRendered()) {
-                    expandImg.setId(IMAGE_PREFIX + NODE_STATE_EXPANDED);
-                    expandImg.setParent(tree);
-                    nodeImageId = expandImg.getClientId(context);
-                    nodeImgFacet = expandFacet;
-                }
+        UIComponent expandFacet = nodeTypeFacet.getFacet("expand");
+        if (expandFacet != null) {
+            UIGraphic expandImg = (UIGraphic) expandFacet;
+            final ViewHandler vh = context.getApplication().getViewHandler();
+            final String uri = expandImg.getUrl();
+            expandImgSrc = vh.getResourceURL(context, uri);
+            if (expandImg.isRendered()) {
+                expandImg.setId(IMAGE_PREFIX + NODE_STATE_EXPANDED);
+                expandImg.setParent(tree);
+                nodeImageId = expandImg.getClientId(context);
+                nodeImgFacet = expandFacet;
             }
-
-            UIComponent collapseFacet = nodeTypeFacet.getFacet("collapse");
-            if (collapseFacet != null) {
-                UIGraphic collapseImg = (UIGraphic) collapseFacet;
-                collapseImgSrc = context.getApplication().getViewHandler()
-                        .getResourceURL(context, collapseImg.getUrl());
-                if (collapseImg.isRendered()) {
-                    collapseImg.setId(IMAGE_PREFIX + NODE_STATE_CLOSED);
-                    collapseImg.setParent(tree);
-                    nodeImageId = collapseImg.getClientId(context);
-                    nodeImgFacet = collapseFacet;
-                }
-            }
-            image.setParent(tree);
-            if (node.getChildCount() > 0) {
-                StringBuffer buf = new StringBuffer();
-                buf.append(NAMESPACE);
-                buf.append("treeNavClick('");
-                buf.append(spanId);
-                buf.append("', '");
-                buf.append(image.getClientId(context));
-                buf.append("', '");
-                buf.append(navSrc);
-                buf.append("', '");
-                buf.append(altSrc);
-                buf.append("', '");
-                buf.append(nodeImageId);
-                buf.append("', '");
-                buf.append(expandImgSrc);
-                buf.append("', '");
-                buf.append(collapseImgSrc);
-                buf.append("', '");
-                buf.append(tree.getId());
-                buf.append("', '");
-                buf.append(nodeId);
-                buf.append("', '");
-                buf.append(contextPath);
-                buf.append("');");
-                image.setOnclick(buf.toString());
-                image.setStyle("cursor:hand;cursor:pointer");
-            }
-            RendererUtil.renderChild(context, image);
         }
+
+        UIComponent collapseFacet = nodeTypeFacet.getFacet("collapse");
+        if (collapseFacet != null) {
+            UIGraphic collapseImg = (UIGraphic) collapseFacet;
+            collapseImgSrc = context.getApplication().getViewHandler()
+                    .getResourceURL(context, collapseImg.getUrl());
+            if (collapseImg.isRendered()) {
+                collapseImg.setId(IMAGE_PREFIX + NODE_STATE_CLOSED);
+                collapseImg.setParent(tree);
+                nodeImageId = collapseImg.getClientId(context);
+                nodeImgFacet = collapseFacet;
+            }
+        }
+        image.setParent(tree);
+        if (node.getChildCount() > 0) {
+            StringBuffer buf = new StringBuffer();
+            buf.append(NAMESPACE);
+            buf.append("treeNavClick('");
+            buf.append(markerId);
+            buf.append("', '");
+            buf.append(image.getClientId(context));
+            buf.append("', '");
+            buf.append(navSrc);
+            buf.append("', '");
+            buf.append(altSrc);
+            buf.append("', '");
+            buf.append(nodeImageId);
+            buf.append("', '");
+            buf.append(expandImgSrc);
+            buf.append("', '");
+            buf.append(collapseImgSrc);
+            buf.append("', '");
+            buf.append(tree.getId());
+            buf.append("', '");
+            buf.append(nodeId);
+            buf.append("', '");
+            buf.append(contextPath);
+            buf.append("');");
+            image.setOnclick(buf.toString());
+            image.setStyle("cursor:hand;cursor:pointer");
+        }
+        RendererUtil.renderChild(context, image);
         if (isClickable) {
             out.endElement(JsfConstants.ANCHOR_ELEM);
         }
@@ -371,4 +357,8 @@ public class THtmlTreeRenderer extends AbstractRenderer {
         this.imageLocator = imageLocator;
     }
 
+    protected String getMarkerId(UITreeData tree) {
+        return TOGGLE_SPAN + ExtensionConstants.NAME_SEPARATOR + tree.getId()
+                + ExtensionConstants.NAME_SEPARATOR + tree.getNodeId();
+    }
 }
