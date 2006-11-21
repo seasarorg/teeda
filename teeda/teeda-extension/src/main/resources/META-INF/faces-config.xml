@@ -16,7 +16,7 @@
 			</renderer-class>
 		</renderer>
 	</render-kit>
-	
+
 	<component>
 		<component-type>
 			org.seasar.teeda.extension.Text
@@ -223,6 +223,14 @@
 		</component-type>
 		<component-class>
 			org.seasar.teeda.extension.component.html.THtmlCommandButton
+		</component-class>
+	</component>
+	<component>
+		<component-type>
+			org.seasar.teeda.extension.HtmlTreeHidden
+		</component-type>
+		<component-class>
+			org.seasar.teeda.extension.component.html.THtmlTreeHidden
 		</component-class>
 	</component>
 </faces-config>

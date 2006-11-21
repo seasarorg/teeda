@@ -16,7 +16,6 @@
 package org.seasar.teeda.extension.component;
 
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.Map;
 
 import javax.faces.application.FacesMessage;
@@ -34,9 +33,6 @@ import javax.faces.internal.ComponentStates;
 import javax.faces.internal.FacesMessageUtil;
 
 import org.seasar.framework.util.AssertionUtil;
-import org.seasar.framework.util.IntegerConversionUtil;
-import org.seasar.framework.util.StringUtil;
-import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.event.ToggleEvent;
 import org.seasar.teeda.extension.event.TreeEventWrapper;
 
@@ -144,6 +140,9 @@ public class UITreeData extends UIInput /*UIComponentBase*/implements
         if (!isRendered()) {
             return;
         }
+        //TODO
+        //super.processDecodes(context);
+
         model = null;
         states.clear();
         setNodeId(null);
@@ -165,31 +164,33 @@ public class UITreeData extends UIInput /*UIComponentBase*/implements
         if (!isRendered()) {
             return;
         }
-        final String ownClientId = super.getClientId(context);
-        final Map paramMap = context.getExternalContext()
-                .getRequestParameterMap();
-        final TreeNode parent = (TreeNode) getValue();
-        for (Iterator itr = paramMap.entrySet().iterator(); itr.hasNext();) {
-            Map.Entry entry = (Map.Entry) itr.next();
-            String key = (String) entry.getKey();
-            Object value = entry.getValue();
-            if (!key
-                    .startsWith(ownClientId + ExtensionConstants.NAME_SEPARATOR)) {
-                continue;
-            }
-            String remain = key
-                    .substring((ownClientId + ExtensionConstants.NAME_SEPARATOR)
-                            .length());
-            TreeNode node = parent;
-            int[] point = parseToTreePoint(remain);
-            for (int i = 1; i < point.length; i++) {
-                int n = point[i];
-                node = node.getChild(n);
-            }
-            node.setValue(value);
-        }
-        setValue(parent);
-        updateModel(context);
+        /*
+         final String ownClientId = super.getClientId(context);
+         final Map paramMap = context.getExternalContext()
+         .getRequestParameterMap();
+         final TreeNode parent = (TreeNode) getValue();
+         for (Iterator itr = paramMap.entrySet().iterator(); itr.hasNext();) {
+         Map.Entry entry = (Map.Entry) itr.next();
+         String key = (String) entry.getKey();
+         Object value = entry.getValue();
+         if (!key
+         .startsWith(ownClientId + ExtensionConstants.NAME_SEPARATOR)) {
+         continue;
+         }
+         String remain = key
+         .substring((ownClientId + ExtensionConstants.NAME_SEPARATOR)
+         .length());
+         TreeNode node = parent;
+         int[] point = parseToTreePoint(remain);
+         for (int i = 1; i < point.length; i++) {
+         int n = point[i];
+         node = node.getChild(n);
+         }
+         node.setValue(value);
+         }
+         setValue(parent);
+         updateModel(context);
+         */
         processNodes(context, PhaseId.UPDATE_MODEL_VALUES);
         setNodeId(null);
     }
@@ -212,15 +213,6 @@ public class UITreeData extends UIInput /*UIComponentBase*/implements
                     CONVERSION_MESSAGE_ID, args);
             setValid(false);
         }
-    }
-
-    private int[] parseToTreePoint(String s) {
-        String[] strs = StringUtil.split(s, ExtensionConstants.NAME_SEPARATOR);
-        int[] ret = new int[strs.length - 1];
-        for (int i = 0; i < strs.length - 1; i++) {
-            ret[i] = IntegerConversionUtil.toPrimitiveInt(strs[i]);
-        }
-        return ret;
     }
 
     public String getClientId(FacesContext context) {
@@ -273,9 +265,9 @@ public class UITreeData extends UIInput /*UIComponentBase*/implements
     }
 
     public void setNodeId(String nodeId) {
-        saveDescendantState();
-        this.nodeId = nodeId;
         FacesContext context = getFacesContext();
+        saveDescendantState(context);
+        this.nodeId = nodeId;
         TreeModel model = getDataModel();
         if (model == null) {
             return;
@@ -289,7 +281,7 @@ public class UITreeData extends UIInput /*UIComponentBase*/implements
             message.setSeverity(FacesMessage.SEVERITY_WARN);
             context.addMessage(getId(), message);
         }
-        restoreDescendantState();
+        restoreDescendantState(context);
         if (var != null) {
             Map requestMap = context.getExternalContext().getRequestMap();
             if (nodeId == null) {
@@ -371,6 +363,11 @@ public class UITreeData extends UIInput /*UIComponentBase*/implements
         }
         TreeWalker walker = dataModel.getTreeWalker();
         walker.walkBegin(this);
+        /*
+         * TODO このloopが1度しか回らないのがおかしい。
+         * ツリーのROOTしかgetNode()で取り出されない。子どもも取り出されれば子どもがdecodeされると思うのだが、
+         * そもそも子どもが取り出されていないため、子ども配下にいるCheckboxは呼び出されない。
+         */
         while (walker.next()) {
             TreeNode node = getNode();
             String type = node.getType();
@@ -383,14 +380,12 @@ public class UITreeData extends UIInput /*UIComponentBase*/implements
         }
     }
 
-    private void saveDescendantState() {
-        final FacesContext context = getFacesContext();
-        states.saveDescendantComponentStates(context, this);
+    public void restoreDescendantState(final FacesContext context) {
+        states.restoreDescendantState(context, this);
     }
 
-    private void restoreDescendantState() {
-        final FacesContext context = getFacesContext();
-        states.restoreDescendantState(context, this);
+    public void saveDescendantState(final FacesContext context) {
+        states.saveDescendantComponentStates(context, this);
     }
 
     public void toggleExpanded() {

@@ -80,12 +80,12 @@ public class TreeWalkerImpl implements TreeWalker {
                         + "0";
                 // don't render any children if the node is not expanded
                 if (checkState) {
-                    if (!tree.getDataModel().getTreeState().isNodeExpanded(
-                            prevNodeId)) {
-                        nodeStack.pop();
-                        idStack.pop();
-                        return next();
-                    }
+                    //                    if (!tree.getDataModel().getTreeState().isNodeExpanded(
+                    //                            prevNodeId)) {
+                    //                        nodeStack.pop();
+                    //                        idStack.pop();
+                    //                        return next();
+                    //                    }
                 }
             } else {
                 // get the parent node

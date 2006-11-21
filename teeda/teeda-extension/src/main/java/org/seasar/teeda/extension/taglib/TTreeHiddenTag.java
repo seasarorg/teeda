@@ -16,7 +16,7 @@
 package org.seasar.teeda.extension.taglib;
 
 import org.seasar.teeda.core.taglib.html.InputTagBase;
-import org.seasar.teeda.extension.component.html.THtmlInputHidden;
+import org.seasar.teeda.extension.component.html.THtmlTreeHidden;
 
 /**
  * @author shot
@@ -24,10 +24,10 @@ import org.seasar.teeda.extension.component.html.THtmlInputHidden;
 public class TTreeHiddenTag extends InputTagBase {
 
     public String getComponentType() {
-        return THtmlInputHidden.COMPONENT_TYPE;
+        return THtmlTreeHidden.COMPONENT_TYPE;
     }
 
     public String getRendererType() {
-        return "org.seasar.teeda.extension.TreeHidden";
+        return THtmlTreeHidden.DEFAULT_RENDERER_TYPE;
     }
 }

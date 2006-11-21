@@ -13,9 +13,8 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package javax.faces.component.html;
+package org.seasar.teeda.extension.component.html;
 
-import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
 import javax.faces.internal.FacesMessageUtil;
@@ -24,27 +23,19 @@ import org.seasar.framework.util.AssertionUtil;
 
 /**
  * @author shot
- * @author higa
  */
-public class HtmlInputHidden extends UIInput {
+public class THtmlTreeHidden extends THtmlInputHidden {
 
-    public static final String COMPONENT_TYPE = "javax.faces.HtmlInputHidden";
+    public static final String COMPONENT_TYPE = "org.seasar.teeda.extension.HtmlTreeHidden";
 
-    private static final String DEFAULT_RENDERER_TYPE = "javax.faces.Hidden";
+    public static final String DEFAULT_RENDERER_TYPE = "org.seasar.teeda.extension.TreeHidden";
 
-    public HtmlInputHidden() {
+    public THtmlTreeHidden() {
         setRendererType(DEFAULT_RENDERER_TYPE);
     }
 
-    public void processValidators(FacesContext context) {
-        AssertionUtil.assertNotNull("context", context);
-        if (!isRendered()) {
-            return;
-        }
-        super.processValidators(context);
-        if (!isImmediate()) {
-            executeValidate(context);
-        }
+    public void processDecodes(FacesContext context) {
+        super.processDecodes(context);
         try {
             updateModelImmediately(context);
         } catch (RuntimeException e) {
@@ -55,7 +46,7 @@ public class HtmlInputHidden extends UIInput {
 
     protected void updateModelImmediately(FacesContext context) {
         AssertionUtil.assertNotNull("context", context);
-        if (!isValid() || !isLocalValueSet()) {
+        if (!isValid()) {
             return;
         }
         final ValueBinding valueBinding = getValueBinding("value");
@@ -63,16 +54,18 @@ public class HtmlInputHidden extends UIInput {
             return;
         }
         try {
-            valueBinding.setValue(context, getLocalValue());
-            setValue(null);
-            setLocalValueSet(false);
-            setSubmittedValue(null);
-        } catch (RuntimeException e) {
-            Object[] args = { getId() };
+            final Object localValue = getLocalValue();
+            valueBinding.setValue(context, localValue);
+        } catch (final RuntimeException e) {
+            final Object[] args = { getId() };
             context.getExternalContext().log(e.getMessage(), e);
             FacesMessageUtil.addErrorMessage(context, this,
                     CONVERSION_MESSAGE_ID, args);
             setValid(false);
         }
+    }
+
+    public void processValidators(FacesContext context) {
+        AssertionUtil.assertNotNull("context", context);
     }
 }
