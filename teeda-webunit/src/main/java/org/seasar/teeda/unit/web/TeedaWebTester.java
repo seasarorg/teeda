@@ -57,16 +57,16 @@ public class TeedaWebTester {
         this(new WebTesterWrapper());
     }
 
-    public TeedaWebTester(WebTester tester) {
+    public TeedaWebTester(final WebTester tester) {
         this.tester = tester;
         tester.initializeDialog();
     }
 
-    public void beginAt(String relativeUrl) {
+    public void beginAt(final String relativeUrl) {
         tester.beginAt(relativeUrl);
     }
 
-    public void beginAt(String baseUrl, String relativeUrl) {
+    public void beginAt(final String baseUrl, final String relativeUrl) {
         tester.getTestContext().setBaseUrl(baseUrl);
         beginAt(relativeUrl);
     }
@@ -75,7 +75,7 @@ public class TeedaWebTester {
         tester.getTestContext().setBaseUrl(baseUrl);
     }
 
-    public void setLocale(Locale locale) {
+    public void setLocale(final Locale locale) {
         tester.getTestContext().setLocale(locale);
     }
 
@@ -94,12 +94,12 @@ public class TeedaWebTester {
     public void submitById(final String id) {
         try {
             final HtmlElement element = getElementById(id);
-            if (element instanceof HtmlButtonInput
-                || element instanceof HtmlSubmitInput) {
-                HtmlInput input = (HtmlInput) element;
+            if ((element instanceof HtmlButtonInput)
+                || (element instanceof HtmlSubmitInput)) {
+                final HtmlInput input = (HtmlInput) element;
                 input.click();
             }
-        } catch (Exception e) {
+        } catch (final Exception e) {
             throw new RuntimeException(e);
         }
     }
@@ -113,7 +113,7 @@ public class TeedaWebTester {
     }
 
     // Assertions
-    public void assertFormElementPresentById(String formId) {
+    public void assertFormElementPresentById(final String formId) {
         final HtmlElement element = getElementById(formId);
         Assert.assertTrue(element instanceof HtmlForm);
         final String actual = element.asText();
@@ -126,8 +126,16 @@ public class TeedaWebTester {
         Assert.assertEquals(expected, actual);
     }
 
+    public void assertTextPresent(final String text) {
+        tester.assertTextPresent(text);
+    }
+
     public void assertTitleEquals(final String title) {
         tester.assertTitleEquals(title);
+    }
+
+    public void assertTitleMatch(final String regexp) {
+        tester.assertTitleMatch(regexp);
     }
 
     public void assertTextEqualsByName(final String name, final String expected) {
@@ -142,7 +150,7 @@ public class TeedaWebTester {
         tester.assertTextInElement(id, text);
     }
 
-    public void assertAttributeEquals(final String id,
+    public void assertAttributeEqualsById(final String id,
         final String attributeName, final String attributeValue) {
         final HtmlElement element = getElementById(id);
         final String actual = element.getAttributeValue(attributeName);
@@ -157,10 +165,6 @@ public class TeedaWebTester {
         tester.assertElementNotPresent(id);
     }
 
-    public void assertTitleMatch(final String regexp) {
-        tester.assertTitleMatch(regexp);
-    }
-
     public void assertMatchInElementById(final String id, final String regexp) {
         tester.assertMatchInElement(id, regexp);
     }
@@ -169,19 +173,21 @@ public class TeedaWebTester {
         tester.assertNoMatchInElement(id, regexp);
     }
 
-    public void assertTextPresent(final String text) {
-        tester.assertTextPresent(text);
-    }
-
-    public void assertTableEquals(String id, String[][] expectedTables) {
+    public void assertTableEqualsById(final String id,
+        final String[][] expectedTables) {
+        // TODO 実際にはsummary属性も使われてしまっている
         tester.assertTableEquals(id, expectedTables);
     }
 
-    public void assertTableEquals(String id, Table expectedTables) {
+    public void assertTableEqualsById(final String id,
+        final Table expectedTables) {
+        // TODO 実際にはsummary属性も使われてしまっている
         tester.assertTableEquals(id, expectedTables);
     }
 
-    public void assertTableMatch(final String id, final String[][] expectedTable) {
+    public void assertTableMatchById(final String id,
+        final String[][] expectedTable) {
+        // TODO 実際にはsummary属性も使われてしまっている
         tester.assertTableMatch(id, expectedTable);
     }
 
@@ -194,7 +200,7 @@ public class TeedaWebTester {
         final String radioOption) {
         final HtmlElement element = getElementById(id);
         if (element instanceof HtmlRadioButtonInput) {
-            HtmlRadioButtonInput radio = (HtmlRadioButtonInput) element;
+            final HtmlRadioButtonInput radio = (HtmlRadioButtonInput) element;
             final String value = radio.getValueAttribute();
             Assert.assertEquals(radioOption, value);
         } else {
@@ -212,11 +218,11 @@ public class TeedaWebTester {
         final HtmlElement element = getElementById(id);
         final String[] values = new String[] { value };
         if (element instanceof HtmlSelect) {
-            HtmlSelect select = (HtmlSelect) element;
+            final HtmlSelect select = (HtmlSelect) element;
             final List selected = select.getSelectedOptions();
             Assert.assertEquals(values.length, selected.size());
             for (int i = 0; i < values.length; i++) {
-                HtmlOption option = (HtmlOption) selected.get(i);
+                final HtmlOption option = (HtmlOption) selected.get(i);
                 Assert.assertEquals(values[i], option.getValueAttribute());
             }
         } else {
@@ -224,11 +230,11 @@ public class TeedaWebTester {
         }
     }
 
-    public void assertCheckboxSelected(final String name) {
+    public void assertCheckboxSelectedByName(final String name) {
         tester.assertCheckboxSelected(name);
     }
 
-    public void assertCheckboxNotSelected(final String name) {
+    public void assertCheckboxNotSelectedByName(final String name) {
         tester.assertCheckboxNotSelected(name);
     }
 
@@ -247,19 +253,19 @@ public class TeedaWebTester {
         }
     }
 
-    public void checkCheckbox(final String name) {
+    public void checkCheckboxByName(final String name) {
         tester.checkCheckbox(name);
     }
 
-    public void checkCheckbox(final String name, final String value) {
+    public void checkCheckboxByName(final String name, final String value) {
         tester.checkCheckbox(name, value);
     }
 
-    public void uncheckCheckbox(final String name) {
+    public void uncheckCheckboxByName(final String name) {
         tester.uncheckCheckbox(name);
     }
 
-    public void uncheckCheckbox(final String name, final String value) {
+    public void uncheckCheckboxByName(final String name, final String value) {
         tester.uncheckCheckbox(name, value);
     }
 
@@ -275,7 +281,8 @@ public class TeedaWebTester {
         tester.setTextField(name, value);
     }
 
-    public Table getTable(final String id) {
+    public Table getTableById(final String id) {
+        // TODO 実際にはsummary属性も使われてしまっている
         return tester.getTable(id);
     }
 
@@ -286,13 +293,13 @@ public class TeedaWebTester {
 
     public void clickRadioOptionById(final String radioGroupId,
         final String radioOption) {
-        HtmlElement element = getElementById(radioGroupId);
+        final HtmlElement element = getElementById(radioGroupId);
         if (element instanceof HtmlRadioButtonInput) {
-            HtmlRadioButtonInput rb = (HtmlRadioButtonInput) element;
+            final HtmlRadioButtonInput rb = (HtmlRadioButtonInput) element;
             if (!rb.isChecked()) {
                 try {
                     rb.click();
-                } catch (IOException e) {
+                } catch (final IOException e) {
                     e.printStackTrace();
                     throw new RuntimeException("checkCheckbox failed :" + e);
                 }
@@ -370,7 +377,7 @@ public class TeedaWebTester {
 
         private static final long serialVersionUID = 1L;
 
-        private static String url = "https://www.seasar.org/issues/browse/TEEDA";
+        private static final String url = "https://www.seasar.org/issues/browse/TEEDA";
 
         public PleaseRegisterToJIRAException() {
             super("this method is not implemented yet. go to " + url);
