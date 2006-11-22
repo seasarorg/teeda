@@ -16,14 +16,18 @@
 package org.seasar.teeda.unit.web;
 
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 import net.sourceforge.jwebunit.htmlunit.HtmlUnitDialog;
 
 import org.seasar.framework.exception.IORuntimeException;
+import org.seasar.framework.exception.NoSuchFieldRuntimeException;
 import org.seasar.framework.exception.NoSuchMethodRuntimeException;
+import org.seasar.framework.util.FieldUtil;
 import org.seasar.framework.util.MethodUtil;
 
+import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.WebResponse;
 import com.gargoylesoftware.htmlunit.html.HtmlElement;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
@@ -33,64 +37,105 @@ import com.gargoylesoftware.htmlunit.html.HtmlPage;
  */
 class TeedaHtmlUnitDialog extends HtmlUnitDialog {
 
-	/*
-	 * WebTester#dumpHtml()がJWebUnitの実装では文字化けしてしまうため、 当クラスでオーバーライドする。
-	 */
-	public String getPageSource() {
-		final HtmlPage page = getCurrentPage();
-		final WebResponse webResponse = page.getWebResponse();
-		final String pageEncoding = page.getPageEncoding();
-		try {
-			final byte[] responseBody = webResponse.getResponseBody();
-			final String body = new String(responseBody, pageEncoding);
-			return body;
-		} catch (UnsupportedEncodingException e) {
-			throw new IORuntimeException(e);
-		}
-	}
+    private boolean throwExceptionOnFailingStatusCode;
 
-	/*
-	 * スーパークラスのgetElementメソッドがprivateであるため。
-	 */
-	public HtmlElement getElementById(final String id) {
-		final Method method = getElementMethod();
-		final HtmlElement page = (HtmlElement) MethodUtil.invoke(method, this,
-				new String[] { id });
-		return page;
-	}
+    //
+    //    public void beginAt(final String initialURL, final TestContext context)
+    //        throws TestingEngineResponseException {
+    //        super.beginAt(initialURL, context);
+    //        final WebClient webClient = getWebClient();
+    //        webClient
+    //            .setThrowExceptionOnFailingStatusCode(throwExceptionOnFailingStatusCode);
+    //    }
 
-	/*
-	 * スーパークラスの同メソッドがprivateであるため。
-	 */
-	public HtmlPage getCurrentPage() {
-		final Method method = getCurrentPageMethod();
-		final HtmlPage page = (HtmlPage) MethodUtil.invoke(method, this, null);
-		return page;
-	}
+    /*
+     * WebTester#dumpHtml()がJWebUnitの実装では文字化けしてしまうため、 当クラスでオーバーライドする。
+     */
+    public String getPageSource() {
+        final HtmlPage page = getCurrentPage();
+        final WebResponse webResponse = page.getWebResponse();
+        final String pageEncoding = page.getPageEncoding();
+        try {
+            final byte[] responseBody = webResponse.getResponseBody();
+            final String body = new String(responseBody, pageEncoding);
+            return body;
+        } catch (final UnsupportedEncodingException e) {
+            throw new IORuntimeException(e);
+        }
+    }
 
-	Method getCurrentPageMethod() {
-		final String methodName = "getCurrentPage";
-		final Class[] argTypes = new Class[] {};
-		return getHtmlUnitDialogMethod(methodName, argTypes);
-	}
+    /*
+     * スーパークラスのgetElementメソッドがprivateであるため。
+     */
+    public HtmlElement getElementById(final String id) {
+        final Method method = getElementMethod();
+        final HtmlElement page = (HtmlElement) MethodUtil.invoke(method, this,
+            new String[] { id });
+        return page;
+    }
 
-	Method getElementMethod() {
-		final String methodName = "getElement";
-		final Class[] argTypes = new Class[] { String.class };
-		return getHtmlUnitDialogMethod(methodName, argTypes);
-	}
+    /*
+     * スーパークラスの同メソッドがprivateであるため。
+     */
+    public HtmlPage getCurrentPage() {
+        final Method method = getCurrentPageMethod();
+        final HtmlPage page = (HtmlPage) MethodUtil.invoke(method, this, null);
+        return page;
+    }
 
-	private Method getHtmlUnitDialogMethod(final String methodName,
-			final Class[] argTypes) {
-		final Class clazz = HtmlUnitDialog.class;
-		try {
-			final Method method = clazz.getDeclaredMethod(methodName, argTypes);
-			method.setAccessible(true);
-			return method;
-		} catch (NoSuchMethodException e) {
-			throw new NoSuchMethodRuntimeException(clazz, methodName, argTypes,
-					e);
-		}
-	}
+    /*
+     * スーパークラスの"wc"フィールドがprivateであるため。
+     */
+    WebClient getWebClient() {
+        final Field field = getWebClientField();
+        final WebClient webClient = (WebClient) FieldUtil.get(field, this);
+        return webClient;
+    }
+
+    Method getCurrentPageMethod() {
+        final String methodName = "getCurrentPage";
+        final Class[] argTypes = new Class[] {};
+        return getHtmlUnitDialogMethod(methodName, argTypes);
+    }
+
+    Method getElementMethod() {
+        final String methodName = "getElement";
+        final Class[] argTypes = new Class[] { String.class };
+        return getHtmlUnitDialogMethod(methodName, argTypes);
+    }
+
+    Field getWebClientField() {
+        final String fieldName = "wc";
+        final Class clazz = HtmlUnitDialog.class;
+        try {
+            final Field field = clazz.getDeclaredField(fieldName);
+            field.setAccessible(true);
+            return field;
+        } catch (final NoSuchFieldException e) {
+            throw new NoSuchFieldRuntimeException(clazz, fieldName, e);
+        }
+    }
+
+    private Method getHtmlUnitDialogMethod(final String methodName,
+        final Class[] argTypes) {
+        final Class clazz = HtmlUnitDialog.class;
+        try {
+            final Method method = clazz.getDeclaredMethod(methodName, argTypes);
+            method.setAccessible(true);
+            return method;
+        } catch (final NoSuchMethodException e) {
+            throw new NoSuchMethodRuntimeException(clazz, methodName, argTypes,
+                e);
+        }
+    }
+
+    public boolean isThrowExceptionOnFailingStatusCode() {
+        return throwExceptionOnFailingStatusCode;
+    }
+
+    public void setThrowExceptionOnFailingStatusCode(
+        boolean throwExceptionOnFailingStatusCode) {
+        this.throwExceptionOnFailingStatusCode = throwExceptionOnFailingStatusCode;
+    }
 
 }

@@ -15,10 +15,12 @@
  */
 package org.seasar.teeda.unit.web;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 import junit.framework.TestCase;
 
+import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlElement;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 
@@ -27,32 +29,47 @@ import com.gargoylesoftware.htmlunit.html.HtmlPage;
  */
 public class TeedaHtmlUnitDialogTest extends TestCase {
 
-	public void testGetCurrentPageMethod() throws Exception {
-		// ## Arrange ##
-		TeedaHtmlUnitDialog dialog = new TeedaHtmlUnitDialog();
-		// ## Act ##
+    public void testGetCurrentPageMethod() throws Exception {
+        // ## Arrange ##
+        final TeedaHtmlUnitDialog dialog = new TeedaHtmlUnitDialog();
 
-		final Method method = dialog.getCurrentPageMethod();
-		// ## Assert ##
+        // ## Act ##
+        final Method method = dialog.getCurrentPageMethod();
 
-		assertNotNull(method);
-		assertEquals("getCurrentPage", method.getName());
-		assertEquals(HtmlPage.class, method.getReturnType());
-		assertEquals(true, method.isAccessible());
-	}
+        // ## Assert ##
 
-	public void testGetElementMethod() throws Exception {
-		// ## Arrange ##
-		TeedaHtmlUnitDialog dialog = new TeedaHtmlUnitDialog();
-		// ## Act ##
+        assertNotNull(method);
+        assertEquals("getCurrentPage", method.getName());
+        assertEquals(HtmlPage.class, method.getReturnType());
+        assertEquals(true, method.isAccessible());
+    }
 
-		final Method method = dialog.getElementMethod();
-		// ## Assert ##
+    public void testGetElementMethod() throws Exception {
+        // ## Arrange ##
+        final TeedaHtmlUnitDialog dialog = new TeedaHtmlUnitDialog();
 
-		assertNotNull(method);
-		assertEquals("getElement", method.getName());
-		assertEquals(HtmlElement.class, method.getReturnType());
-		assertEquals(true, method.isAccessible());
-	}
+        // ## Act ##
+        final Method method = dialog.getElementMethod();
+        // ## Assert ##
+
+        assertNotNull(method);
+        assertEquals("getElement", method.getName());
+        assertEquals(HtmlElement.class, method.getReturnType());
+        assertEquals(true, method.isAccessible());
+    }
+
+    public void testGetWebClientMethod() throws Exception {
+        // ## Arrange ##
+        final TeedaHtmlUnitDialog dialog = new TeedaHtmlUnitDialog();
+
+        // ## Act ##
+        final Field field = dialog.getWebClientField();
+
+        // ## Assert ##
+        assertNotNull(field);
+        assertEquals("wc", field.getName());
+        assertEquals(WebClient.class, field.getType());
+        assertEquals(true, field.isAccessible());
+    }
 
 }
