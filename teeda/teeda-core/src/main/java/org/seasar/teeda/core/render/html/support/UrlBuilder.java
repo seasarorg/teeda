@@ -104,4 +104,18 @@ public class UrlBuilder {
         p.addValue(value);
     }
 
+    /**
+     * @return Returns the base.
+     */
+    public String getBase() {
+        return base;
+    }
+
+    /**
+     * @return Returns the urlParameters.
+     */
+    public Map getUrlParameters() {
+        return urlParameters;
+    }
+
 }

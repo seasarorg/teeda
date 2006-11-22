@@ -18,8 +18,10 @@ package org.seasar.teeda.core.util;
 import javax.faces.application.ViewHandler;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.portlet.PortletRequest;
 
 import org.seasar.framework.util.AssertionUtil;
+import org.seasar.teeda.core.portlet.FacesPortlet;
 
 /**
  * @author higa
@@ -31,16 +33,27 @@ public class ExternalContextUtil {
     }
 
     public static String getViewId(ExternalContext externalContext) {
-        String viewId = externalContext.getRequestPathInfo();
-        if (viewId == null) {
-            viewId = externalContext.getRequestServletPath();
-            final int dot = viewId.lastIndexOf('.');
-            if (dot >= 0) {
-                final String suffix = getSuffix(externalContext);
-                viewId = viewId.substring(0, dot) + suffix;
+        // PortletSupport
+        if (PortletUtil.isPortlet(FacesContext.getCurrentInstance())) {
+            final PortletRequest request = (PortletRequest) externalContext
+                    .getRequest();
+            String viewId = (String) request.getAttribute(FacesPortlet.VIEW_ID);
+            if (viewId == null) {
+                viewId = request.getParameter(FacesPortlet.VIEW_ID);
             }
+            return viewId;
+        } else {
+            String viewId = externalContext.getRequestPathInfo();
+            if (viewId == null) {
+                viewId = externalContext.getRequestServletPath();
+                final int dot = viewId.lastIndexOf('.');
+                if (dot >= 0) {
+                    final String suffix = getSuffix(externalContext);
+                    viewId = viewId.substring(0, dot) + suffix;
+                }
+            }
+            return viewId;
         }
-        return viewId;
     }
 
     private static String getSuffix(ExternalContext externalContext) {

@@ -110,14 +110,7 @@ public class RestoreViewPhase extends AbstractPhase {
 
     private String getViewId(final FacesContext context,
             final ExternalContext externalContext) {
-        // PortletSupport
-        if (PortletUtil.isPortlet(context)) {
-            final PortletRequest request = (PortletRequest) externalContext
-                    .getRequest();
-            return request.getParameter(FacesPortlet.VIEW_ID);
-        } else {
-            return ExternalContextUtil.getViewId(externalContext);
-        }
+        return ExternalContextUtil.getViewId(externalContext);
     }
 
     protected String setupWindowId(final ExternalContext externalContext)
@@ -127,6 +120,7 @@ public class RestoreViewPhase extends AbstractPhase {
                 .needNewWindow(externalContext.getRequestParameterMap())) {
             wid = WindowIdUtil.createWindowId();
             Object response = externalContext.getResponse();
+            //TODO PortletSupport
             if (response instanceof HttpServletResponse) {
                 HttpServletResponse res = (HttpServletResponse) response;
                 Cookie cookie = new Cookie(WindowIdUtil.TEEDA_WID, wid);

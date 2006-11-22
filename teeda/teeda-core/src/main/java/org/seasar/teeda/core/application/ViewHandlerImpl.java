@@ -184,7 +184,10 @@ public class ViewHandlerImpl extends ViewHandler {
             context.getViewRoot().setViewId(viewId);
             externalContext.dispatch(viewId);
         } finally {
-            storeResponseCharacterEncoding(externalContext);
+            // PortletSupport
+            if (!PortletUtil.isPortlet(context)) {
+                storeResponseCharacterEncoding(externalContext);
+            }
         }
     }
 

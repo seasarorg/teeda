@@ -28,6 +28,7 @@
 	<classpathentry kind="lib" path="lib/geronimo-servlet_2.4_spec-1.0.jar"/>
 	<classpathentry kind="lib" path="lib/portlet-api-1.0.jar"/>
 	<classpathentry kind="lib" path="lib/rhino-1.6r2.jar"/>
+	<classpathentry kind="lib" path="lib/s2-portlet-1.0.6.jar"/>
 	<classpathentry kind="lib" path="lib/xercesImpl-2.6.2.jar"/>
 	<classpathentry kind="lib" path="lib/xmlParserAPIs-2.6.2.jar"/>
 	<classpathentry kind="src" path="teeda-spike/src/main/java"/>

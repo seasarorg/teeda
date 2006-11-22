@@ -15,6 +15,9 @@
  */
 package org.seasar.teeda.extension.render.html;
 
+import java.io.IOException;
+import java.net.URI;
+import java.net.URLEncoder;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -22,12 +25,18 @@ import java.util.Map.Entry;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIForm;
 import javax.faces.component.UIParameter;
+import javax.faces.component.html.HtmlOutputLink;
 import javax.faces.context.FacesContext;
 import javax.faces.internal.UIComponentUtil;
+import javax.faces.internal.WindowIdUtil;
 
 import org.seasar.framework.util.AssertionUtil;
 import org.seasar.framework.util.StringUtil;
+import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.html.HtmlOutputLinkRenderer;
+import org.seasar.teeda.core.render.html.support.PortletUrlBuilder;
+import org.seasar.teeda.core.util.PortletUtil;
+import org.seasar.teeda.core.util.ValueHolderUtil;
 import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.render.AdjustableOutputDecoder;
 
@@ -49,6 +58,36 @@ public class THtmlOutputLinkRenderer extends HtmlOutputLinkRenderer {
         final String formId = getIdForRender(context, parentForm);
         decoder.setParentFormId(formId);
         decoder.decode(context, component);
+    }
+
+    protected String buildHref(FacesContext context,
+            HtmlOutputLink htmlOutputLink, String encoding) throws IOException {
+        if (PortletUtil.isPortlet(context)) {
+            if (htmlOutputLink.getId().startsWith(ExtensionConstants.GO_PREFIX)) {
+                PortletUrlBuilder urlBuilder = new PortletUrlBuilder();
+                urlBuilder.setBase(ValueHolderUtil.getValueForRender(context,
+                        htmlOutputLink));
+                for (Iterator it = htmlOutputLink.getChildren().iterator(); it
+                        .hasNext();) {
+                    UIComponent child = (UIComponent) it.next();
+                    if (child instanceof UIParameter) {
+                        UIParameter parameter = (UIParameter) child;
+                        urlBuilder.add(URLEncoder.encode(parameter.getName(),
+                                encoding), URLEncoder.encode(
+                                toBlankIfNull(parameter.getValue()), encoding));
+                    }
+                }
+                //TODO newwindow on portal??
+                //                if (WindowIdUtil.isNewWindowTarget(htmlOutputLink.getTarget())) {
+                //                    urlBuilder.add(URLEncoder.encode(WindowIdUtil.NEWWINDOW, encoding),
+                //                            URLEncoder.encode(JsfConstants.TRUE, encoding));
+                //                }
+
+                return context.getExternalContext().encodeResourceURL(
+                        urlBuilder.build());
+            }
+        }
+        return super.buildHref(context, htmlOutputLink, encoding);
     }
 
     private static class OutputLinkDecoder extends AdjustableOutputDecoder {

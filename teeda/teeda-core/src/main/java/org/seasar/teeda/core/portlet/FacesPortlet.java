@@ -17,13 +17,18 @@ package org.seasar.teeda.core.portlet;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 import javax.faces.FactoryFinder;
+import javax.faces.application.FacesMessage;
 import javax.faces.application.StateManager;
 import javax.faces.application.ViewHandler;
-import javax.faces.component.EditableValueHolder;
-import javax.faces.component.UIComponent;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 import javax.faces.context.FacesContextFactory;
@@ -37,6 +42,7 @@ import javax.portlet.GenericPortlet;
 import javax.portlet.PortletContext;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -49,10 +55,7 @@ import org.seasar.teeda.core.config.faces.assembler.AssemblerAssembler;
 import org.seasar.teeda.core.config.faces.element.FacesConfig;
 import org.seasar.teeda.core.config.webapp.WebappConfigBuilder;
 import org.seasar.teeda.core.config.webapp.element.WebappConfig;
-import org.seasar.teeda.core.context.portlet.PortletExternalContextImpl;
-import org.seasar.teeda.core.context.portlet.PortletFacesContextImpl;
 import org.seasar.teeda.core.util.DIContainerUtil;
-import org.seasar.teeda.core.util.FacesContextUtil;
 
 /**
  * @author shinsuke
@@ -67,19 +70,57 @@ public class FacesPortlet extends GenericPortlet {
     public static final String VIEW_ID = FacesPortlet.class.getName()
             + ".VIEW_ID";
 
-    protected static final String CURRENT_FACES_CONTEXT = FacesPortlet.class
+    public static final String CURRENT_FACES_CONTEXT = FacesPortlet.class
             .getName()
             + ".CURRENT_FACES_CONTEXT";
 
-    public final String DEFULT_VIEW_PAGE = "view-page";
+    public final String DEFAULT_PAGE = FacesPortlet.class.getName()
+            + ".DEFAULT_PAGE";
 
-    public final String DEFULT_EDIT_PAGE = "edit-page";
+    public final String DEFAULT_VIEW_PAGE = "view-page";
 
-    public final String DEFULT_HELP_PAGE = "help-page";
+    public final String DEFAULT_EDIT_PAGE = "edit-page";
+
+    public final String DEFAULT_HELP_PAGE = "help-page";
 
     protected static final String FACES_INIT_DONE = FacesPortlet.class
             .getName()
             + ".FACES_INIT_DONE";
+
+    public static final String FACES_PORTLET_STATE_PREFIX = FacesPortlet.class
+            .getName()
+            + ".FACES_PORTLET_STATE_";
+
+    public static final String INIT_PARAMETER = FacesPortlet.class.getName()
+            + ".INIT";
+
+    public static final String INIT_VIEW_PARAMETER = FacesPortlet.class
+            .getName()
+            + ".INIT_VIEW";
+
+    public static final String INIT_EDIT_PARAMETER = FacesPortlet.class
+            .getName()
+            + ".INIT_EDIT";
+
+    public static final String INIT_HELP_PARAMETER = FacesPortlet.class
+            .getName()
+            + ".INIT_HELP";
+
+    private static final String PREVIOUS_PORTLET_MODE = FacesPortlet.class
+            .getName()
+            + ".PREVIOUS_PORTLET_MODE";
+
+    private static final String CURRENT_PORTLET_MODE = FacesPortlet.class
+            .getName()
+            + ".CURRENT_PORTLET_MODE";
+
+    private static final String EXCLUDED_ATTRIBUTE_LIST = FacesPortlet.class
+            .getName()
+            + ".EXCLUDED_ATTRIBUTE_LIST";
+
+    private static final String REDEPLOYED_PORTLET = FacesPortlet.class
+            .getName()
+            + ".REDEPLOYED_PORTLET";
 
     protected FacesContextFactory facesContextFactory;
 
@@ -98,9 +139,12 @@ public class FacesPortlet extends GenericPortlet {
         initializeFaces(getPortletContext());
 
         // Load default pages
-        defaultViewPage = getPortletConfig().getInitParameter(DEFULT_VIEW_PAGE);
-        defaultEditPage = getPortletConfig().getInitParameter(DEFULT_EDIT_PAGE);
-        defaultHelpPage = getPortletConfig().getInitParameter(DEFULT_HELP_PAGE);
+        defaultViewPage = getPortletConfig()
+                .getInitParameter(DEFAULT_VIEW_PAGE);
+        defaultEditPage = getPortletConfig()
+                .getInitParameter(DEFAULT_EDIT_PAGE);
+        defaultHelpPage = getPortletConfig()
+                .getInitParameter(DEFAULT_HELP_PAGE);
         if (null == defaultViewPage) {
             // A Faces Portlet is required to have at least the default page
             throw new PortletException(
@@ -199,6 +243,27 @@ public class FacesPortlet extends GenericPortlet {
         FactoryFinder.releaseFactories();
     }
 
+    protected void doEdit(RenderRequest request, RenderResponse response)
+            throws PortletException, IOException {
+        setContentType(request, response);
+        setDefaultPage(request, defaultEditPage);
+        renderFaces(request, response);
+    }
+
+    protected void doHelp(RenderRequest request, RenderResponse response)
+            throws PortletException, IOException {
+        setContentType(request, response);
+        setDefaultPage(request, defaultHelpPage);
+        renderFaces(request, response);
+    }
+
+    protected void doView(RenderRequest request, RenderResponse response)
+            throws PortletException, IOException {
+        setContentType(request, response);
+        setDefaultPage(request, defaultViewPage);
+        renderFaces(request, response);
+    }
+
     protected void setContentType(RenderRequest request, RenderResponse response) {
 
         if (response.getContentType() == null) {
@@ -212,107 +277,69 @@ public class FacesPortlet extends GenericPortlet {
         }
     }
 
-    protected void doEdit(RenderRequest request, RenderResponse response)
-            throws PortletException, IOException {
-        setContentType(request, response);
-        facesRender(request, response, defaultEditPage);
+    protected void setDefaultPage(PortletRequest request, String page) {
+        request.setAttribute(DEFAULT_PAGE, page);
     }
 
-    protected void doHelp(RenderRequest request, RenderResponse response)
-            throws PortletException, IOException {
-        setContentType(request, response);
-        facesRender(request, response, defaultHelpPage);
+    protected void setCurrentPortletMode(PortletRequest request) {
+        request.setAttribute(CURRENT_PORTLET_MODE, request.getPortletMode()
+                .toString());
     }
 
-    protected void doView(RenderRequest request, RenderResponse response)
-            throws PortletException, IOException {
-        setContentType(request, response);
-        facesRender(request, response, defaultViewPage);
-    }
-
-    protected void facesRender(RenderRequest request, RenderResponse response,
-            String page) throws PortletException, java.io.IOException {
+    protected void renderFaces(RenderRequest request, RenderResponse response)
+            throws PortletException, java.io.IOException {
         if (log.isDebugEnabled()) {
-            log
-                    .debug("called facesRender(RenderRequest, RenderResponse, String).");
+            log.debug("called renderFaces..");
         }
 
-        String viewId = request.getParameter(VIEW_ID);
-        if ((viewId == null) || sessionTimedOut(request)) {
-            nonFacesRequest(request, response, page);
-            storeResponseCharacterEncoding(request);
-            return;
-        }
+        setCurrentPortletMode(request);
 
-        PortletFacesContextImpl facesContext = (PortletFacesContextImpl) request
-                .getPortletSession().getAttribute(CURRENT_FACES_CONTEXT);
-
-        if (facesContext == null) {
-            if (log.isDebugEnabled()) {
-                log.debug("facesContext is null.  viewId=" + viewId);
-            }
-            nonFacesRequest(request, response, page);
-            storeResponseCharacterEncoding(request);
-            return;
-        }
-
-        try {
-            // TODO: not sure if this can happen.  Also double check this against spec section 2.1.3
-            if (facesContext.getResponseComplete()) {
-                return;
-            }
-
-            facesContext.setExternalContext(new PortletExternalContextImpl(
-                    getPortletContext(), request, response));
-            lifecycle.render(facesContext);
-
-            storeResponseCharacterEncoding(request);
-
-            request.getPortletSession().removeAttribute(CURRENT_FACES_CONTEXT);
-
-        } catch (Throwable e) {
-            handleExceptionFromLifecycle(e);
-        } finally {
-            facesContext.release();
-        }
-    }
-
-    protected void nonFacesRequest(RenderRequest request,
-            RenderResponse response, String view) throws PortletException {
         FacesContext facesContext = facesContextFactory.getFacesContext(
                 getPortletContext(), request, response, lifecycle);
 
-        ViewHandler viewHandler = FacesContextUtil.getViewHandler(facesContext);
-        UIViewRoot viewRoot = viewHandler.restoreView(facesContext, view);
-        if (viewRoot == null) {
-            viewRoot = viewHandler.createView(facesContext, view);
+        restoreFacesState(facesContext);
+        try {
+            lifecycle.render(facesContext);
+        } catch (Throwable e) {
+            handleException(e);
+        } finally {
+            facesContext.release();
+            request.getPortletSession().setAttribute(PREVIOUS_PORTLET_MODE,
+                    request.getPortletMode().toString());
+            request.getPortletSession().setAttribute(REDEPLOYED_PORTLET,
+                    Boolean.FALSE);
         }
-        facesContext.setViewRoot(viewRoot);
-        initializeChildren(facesContext, viewRoot);
 
-        lifecycle.render(facesContext);
-
-        facesContext.release();
-    }
-
-    protected void storeResponseCharacterEncoding(RenderRequest request) {
-        String characterEncoding = request
-                .getParameter(ViewHandler.CHARACTER_ENCODING_KEY);
-        if (characterEncoding != null) {
-            request.getPortletSession().setAttribute(
-                    ViewHandler.CHARACTER_ENCODING_KEY, characterEncoding);
-        }
     }
 
     public void processAction(ActionRequest request, ActionResponse response)
             throws PortletException, IOException {
         if (log.isDebugEnabled()) {
-            log.debug("called processAction(ActionRequest, ActionResponse).");
+            log.debug("called processAction..");
         }
 
         // check session timeout
-        if (sessionTimedOut(request))
+        if (checkTimeOut(request)) {
             return;
+        }
+
+        executeFaces(request, response);
+    }
+
+    protected void executeFaces(ActionRequest request, ActionResponse response)
+            throws PortletException, IOException {
+        setCurrentPortletMode(request);
+
+        // create excluded list
+        ArrayList excludedNameList = new ArrayList();
+        Enumeration enu = request.getAttributeNames();
+        while (enu.hasMoreElements()) {
+            excludedNameList.add(enu.nextElement());
+        }
+        // reserved names
+        excludedNameList.add(EXCLUDED_ATTRIBUTE_LIST);
+        excludedNameList.add(JsfConstants.FACES_CONTEXT);
+        request.setAttribute(EXCLUDED_ATTRIBUTE_LIST, excludedNameList);
 
         FacesContext facesContext = facesContextFactory.getFacesContext(
                 getPortletContext(), request, response, lifecycle);
@@ -321,24 +348,24 @@ public class FacesPortlet extends GenericPortlet {
             lifecycle.execute(facesContext);
 
             if (!facesContext.getResponseComplete()) {
-                response.setRenderParameter(VIEW_ID, facesContext.getViewRoot()
+                // response.setRenderParameter(VIEW_ID, facesContext.getViewRoot().getViewId());
+                request.setAttribute(VIEW_ID, facesContext.getViewRoot()
                         .getViewId());
+                saveFacesState(facesContext);
             }
 
-            // pass it to render..
-            response.setRenderParameter(ViewHandler.CHARACTER_ENCODING_KEY,
-                    request.getCharacterEncoding());
-
-            request.getPortletSession().setAttribute(CURRENT_FACES_CONTEXT,
-                    facesContext);
         } catch (Throwable e) {
+            handleException(e);
+        } finally {
+            // release the FacesContext instance for this request
             facesContext.release();
-            handleExceptionFromLifecycle(e);
+
         }
+
     }
 
-    protected void handleExceptionFromLifecycle(Throwable e)
-            throws PortletException, IOException {
+    protected void handleException(Throwable e) throws PortletException,
+            IOException {
 
         if (e instanceof IOException) {
             throw (IOException) e;
@@ -351,23 +378,230 @@ public class FacesPortlet extends GenericPortlet {
         throw new PortletException(e);
     }
 
-    protected boolean sessionTimedOut(PortletRequest request) {
+    protected boolean checkTimeOut(PortletRequest request) {
         return request.getPortletSession(false) == null;
     }
 
-    protected void initializeChildren(FacesContext context,
-            UIComponent component) {
-        for (Iterator i = component.getFacetsAndChildren(); i.hasNext();) {
-            UIComponent child = (UIComponent) i.next();
-            if (child instanceof EditableValueHolder) {
-                EditableValueHolder editableValueHolder = (EditableValueHolder) child;
-                editableValueHolder.setValid(true);
-                editableValueHolder.setSubmittedValue(null);
-                editableValueHolder.setValue(null);
-                editableValueHolder.setLocalValueSet(false);
-            }//For each
-            initializeChildren(context, child);
+    protected boolean checkTimedOut(FacesContext context) {
+        return context.getExternalContext().getSession(false) == null;
+    }
+
+    protected boolean checkSessionState(PortletRequest request) {
+        return checkTimeOut(request)
+                || (request.getPortletSession()
+                        .getAttribute(REDEPLOYED_PORTLET) == null);
+    }
+
+    protected boolean checkSessionState(FacesContext context) {
+        return checkTimedOut(context)
+                || (context.getExternalContext().getSessionMap().get(
+                        REDEPLOYED_PORTLET) == null);
+    }
+
+    protected void restoreFacesState(FacesContext facesContext) {
+
+        PortletSession session = (PortletSession) facesContext
+                .getExternalContext().getSession(true);
+
+        String currentPortletMode = (String) facesContext.getExternalContext()
+                .getRequestMap().get(CURRENT_PORTLET_MODE);
+        String previousPortletMode = (String) session
+                .getAttribute(PREVIOUS_PORTLET_MODE);
+
+        FacesPortletState state = null;
+        if (previousPortletMode != null
+                && previousPortletMode.equals(currentPortletMode)) {
+            state = (FacesPortletState) session
+                    .getAttribute(FACES_PORTLET_STATE_PREFIX
+                            + currentPortletMode);
+        } else {
+            facesContext.getExternalContext().getRequestMap().put(
+                    VIEW_ID,
+                    facesContext.getExternalContext().getRequestMap().get(
+                            DEFAULT_PAGE));
+            // remove all states in session
+            for (Iterator i = facesContext.getExternalContext().getSessionMap()
+                    .entrySet().iterator(); i.hasNext();) {
+                Map.Entry e = (Map.Entry) i.next();
+                if (e.getKey() instanceof String) {
+                    String key = (String) e.getKey();
+                    if (key.startsWith(FACES_PORTLET_STATE_PREFIX)) {
+                        facesContext.getExternalContext().getSessionMap()
+                                .remove(key);
+                    }
+                }
+            }
         }
+
+        if (state == null) {
+            setViewId(facesContext);
+            return;
+        }
+
+        // restore message information
+        Iterator clientIds = state.getClientIds();
+        while (clientIds.hasNext()) {
+            String clientId = (String) clientIds.next();
+            Iterator msgs = state.getMessages(clientId);
+            while (msgs.hasNext()) {
+                facesContext.addMessage(clientId, (FacesMessage) msgs.next());
+            }
+        }
+        facesContext.setViewRoot(state.getViewRoot());
+
+        // restore request attributes
+        copyMap(state.getRequestMap(), facesContext.getExternalContext()
+                .getRequestMap(), new ArrayList());
+
+        // set viewId
+        facesContext.getExternalContext().getRequestMap().put(VIEW_ID,
+                state.getViewRoot().getViewId());
+
+    }
+
+    private void saveFacesState(FacesContext facesContext) {
+        // save message information from this FacesContext
+        FacesPortletState state = new FacesPortletState();
+        Iterator clientIds = facesContext.getClientIdsWithMessages();
+        while (clientIds.hasNext()) {
+            String clientId = (String) clientIds.next();
+            Iterator msgs = facesContext.getMessages(clientId);
+            while (msgs.hasNext()) {
+                state.addMessage(clientId, (FacesMessage) msgs.next());
+            }
+        }
+        state.setViewRoot(facesContext.getViewRoot());
+
+        List excludedNameList = (List) facesContext.getExternalContext()
+                .getRequestMap().get(EXCLUDED_ATTRIBUTE_LIST);
+        // save request attributes
+        Map requestMap = new HashMap();
+        copyMap(facesContext.getExternalContext().getRequestMap(), requestMap,
+                excludedNameList);
+        state.setRequestMap(requestMap);
+
+        String currentPortletMode = (String) facesContext.getExternalContext()
+                .getRequestMap().get(CURRENT_PORTLET_MODE);
+
+        PortletSession session = (PortletSession) facesContext
+                .getExternalContext().getSession(true);
+        session.setAttribute(PREVIOUS_PORTLET_MODE, currentPortletMode);
+        session.setAttribute(FACES_PORTLET_STATE_PREFIX + currentPortletMode,
+                state);
+    }
+
+    private void copyMap(Map fromMap, Map toMap, List excludedNameList) {
+        for (Iterator i = fromMap.entrySet().iterator(); i.hasNext();) {
+            Map.Entry e = (Map.Entry) i.next();
+            if (!toMap.containsKey((String) e.getKey())
+                    && !excludedNameList.contains((String) e.getKey())) {
+                toMap.put(e.getKey(), e.getValue());
+            }
+        }
+    }
+
+    private String getCurrentViewId(FacesContext facesContext) {
+        Map requestMap = facesContext.getExternalContext().getRequestMap();
+        Map requestParameterMap = facesContext.getExternalContext()
+                .getRequestParameterMap();
+
+        String viewId = (String) requestMap.get(VIEW_ID);
+        if (viewId != null && !checkSessionState(facesContext)) {
+            return viewId;
+        }
+        viewId = (String) requestParameterMap.get(VIEW_ID);
+        if (viewId != null && !checkSessionState(facesContext)) {
+            return viewId;
+        }
+        return (String) requestMap.get(DEFAULT_PAGE);
+    }
+
+    private void setViewId(FacesContext facesContext) {
+        String viewId = getCurrentViewId(facesContext);
+
+        facesContext.getApplication().getViewHandler().restoreView(
+                facesContext, viewId);
+        if (facesContext.getViewRoot() == null) {
+            facesContext.setViewRoot(facesContext.getApplication()
+                    .getViewHandler().createView(facesContext, viewId));
+            facesContext.getExternalContext().getRequestMap().put(VIEW_ID,
+                    viewId);
+        } else {
+            facesContext.getViewRoot().setViewId(viewId);
+        }
+
+        // context.getViewRoot().setRenderKitId(RenderKitFactory.HTML_BASIC_RENDER_KIT);
+    }
+
+    private class FacesPortletState {
+
+        private Map messages = new HashMap();
+
+        private Map requestMap = null;
+
+        public void addMessage(String clientId, FacesMessage message) {
+            List list = (List) messages.get(clientId);
+            if (list == null) {
+                list = new ArrayList();
+                messages.put(clientId, list);
+            }
+            list.add(message);
+        }
+
+        public Iterator getMessages(String clientId) {
+            List list = (List) messages.get(clientId);
+            if (list != null) {
+                return (list.iterator());
+            } else {
+                return (Collections.EMPTY_LIST.iterator());
+            }
+        }
+
+        public StringBuffer getMessagesBuffer(String clientId) {
+            List list = (List) messages.get(clientId);
+            StringBuffer buffer = new StringBuffer();
+            if (list != null) {
+                Iterator messages = list.iterator();
+                FacesMessage message;
+                while (messages.hasNext()) {
+                    message = (FacesMessage) messages.next();
+                    buffer.append(" ");
+                    buffer.append(message.getDetail());
+                }
+            }
+            return buffer;
+        }
+
+        // iterate over the client ids in this view
+        public Iterator getClientIds() {
+            return (messages.keySet().iterator());
+        }
+
+        // The UIViewRoot that is the root of our component tree
+        private UIViewRoot viewRoot;
+
+        public UIViewRoot getViewRoot() {
+            return this.viewRoot;
+        }
+
+        public void setViewRoot(UIViewRoot viewRoot) {
+            this.viewRoot = viewRoot;
+        }
+
+        /**
+         * @return Returns the requestMap.
+         */
+        public Map getRequestMap() {
+            return requestMap;
+        }
+
+        /**
+         * @param requestMap The requestMap to set.
+         */
+        public void setRequestMap(Map requestMap) {
+            this.requestMap = requestMap;
+        }
+
     }
 
 }

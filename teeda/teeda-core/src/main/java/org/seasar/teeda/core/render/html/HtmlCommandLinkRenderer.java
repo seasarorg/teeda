@@ -154,6 +154,7 @@ public class HtmlCommandLinkRenderer extends AbstractRenderer {
     protected void encodeHtmlCommandLinkWithoutJavaScript(FacesContext context,
             ResponseWriter writer, HtmlCommandLink commandLink)
             throws IOException {
+        //TODO PortletSupport
         ViewHandler viewHandler = FacesContextUtil.getViewHandler(context);
         String viewId = context.getViewRoot().getViewId();
         String path = viewHandler.getActionURL(context, viewId);

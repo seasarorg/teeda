@@ -93,7 +93,7 @@ public class HtmlOutputLinkRenderer extends AbstractRenderer {
                 urlBuilder.build());
     }
 
-    private String toBlankIfNull(final Object value) {
+    protected String toBlankIfNull(final Object value) {
         if (value == null) {
             return "";
         }

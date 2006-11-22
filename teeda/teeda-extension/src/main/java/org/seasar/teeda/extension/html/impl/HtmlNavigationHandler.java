@@ -23,6 +23,8 @@ import javax.faces.context.FacesContext;
 
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.application.NavigationHandlerImpl;
+import org.seasar.teeda.core.portlet.FacesPortlet;
+import org.seasar.teeda.core.util.PortletUtil;
 import org.seasar.teeda.extension.html.PagePersistence;
 
 /**
@@ -77,8 +79,16 @@ public class HtmlNavigationHandler extends NavigationHandlerImpl {
             return;
         }
         ViewHandler viewHandler = context.getApplication().getViewHandler();
-        String redirectPath = getRedirectActionPath(context, viewHandler, path);
-        redirect(context, context.getExternalContext(), redirectPath, path);
+        // PortletSupport
+        if (!PortletUtil.isPortlet(context)) {
+            String redirectPath = getRedirectActionPath(context, viewHandler,
+                    path);
+            redirect(context, context.getExternalContext(), redirectPath, path);
+        } else {
+            context.getExternalContext().getSessionMap().remove(FacesPortlet.CURRENT_FACES_CONTEXT);
+            super.render(context, viewHandler, path);
+        }
+
     }
 
     protected static String calcPathFromOutcome(String viewId, String outcome) {
