@@ -81,7 +81,8 @@ public class SessionPagePersistence implements PagePersistence {
         final ExternalContext extCtx = context.getExternalContext();
         final Map sessionMap = extCtx.getSessionMap();
         final UIViewRoot viewRoot = context.getViewRoot();
-        final String previousViewId = (viewRoot != null) ? viewRoot.getViewId() : null;
+        final String previousViewId = (viewRoot != null) ? viewRoot.getViewId()
+                : null;
         LruHashMap lru = (LruHashMap) sessionMap.get(getClass().getName());
         if (lru == null) {
             lru = new LruHashMap(pageSize);
@@ -93,7 +94,7 @@ public class SessionPagePersistence implements PagePersistence {
     }
 
     public void restore(final FacesContext context, final String viewId) {
-        if(context == null) {
+        if (context == null) {
             return;
         }
         final ExternalContext extCtx = context.getExternalContext();
@@ -148,8 +149,8 @@ public class SessionPagePersistence implements PagePersistence {
         if (nextPageProperties.isEmpty()) {
             return new HashMap();
         }
-        return convertPageData(context, beanDesc, viewId, pageDesc, page,
-                nextPageProperties);
+        return convertPageData(context, beanDesc, previousViewId, pageDesc,
+                page, nextPageProperties);
     }
 
     /*
@@ -182,10 +183,10 @@ public class SessionPagePersistence implements PagePersistence {
     }
 
     protected Map convertPageData(FacesContext context, BeanDesc beanDesc,
-            String viewId, PageDesc pageDesc, Object page,
+            String previousViewId, PageDesc pageDesc, Object page,
             Set nextPageProperties) {
         String methodName = UICommandUtil.getSubmittedCommand(context);
-        ActionDesc actionDesc = actionDescCache.getActionDesc(viewId);
+        ActionDesc actionDesc = actionDescCache.getActionDesc(previousViewId);
         if (methodName != null && actionDesc != null
                 && actionDesc.hasTakeOverDesc(methodName)) {
             return convertPageData(context, beanDesc, actionDesc
@@ -369,7 +370,7 @@ public class SessionPagePersistence implements PagePersistence {
         }
         final List list = new ArrayList();
         final String subAppPath = getSubApplicationPath(context);
-        if(subAppPath == null) {
+        if (subAppPath == null) {
             return;
         }
         for (Iterator i = lru.keySet().iterator(); i.hasNext();) {
@@ -406,7 +407,7 @@ public class SessionPagePersistence implements PagePersistence {
 
     protected static String getSubApplicationPath(final FacesContext context) {
         final UIViewRoot root = context.getViewRoot();
-        if(root == null) {
+        if (root == null) {
             return null;
         }
         String viewId = root.getViewId();
