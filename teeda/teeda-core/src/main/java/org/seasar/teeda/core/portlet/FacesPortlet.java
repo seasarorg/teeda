@@ -67,6 +67,8 @@ public class FacesPortlet extends GenericPortlet {
      */
     private static final Log log = LogFactory.getLog(FacesPortlet.class);
 
+    public static final String PORTLET_CONFIG = "javax.portlet.PortletConfig";
+
     public static final String VIEW_ID = FacesPortlet.class.getName()
             + ".VIEW_ID";
 
@@ -277,6 +279,10 @@ public class FacesPortlet extends GenericPortlet {
         }
     }
 
+    protected void storePortletConfig(PortletRequest request) {
+        request.setAttribute(PORTLET_CONFIG, getPortletConfig());
+    }
+
     protected void setDefaultPage(PortletRequest request, String page) {
         request.setAttribute(DEFAULT_PAGE, page);
     }
@@ -292,6 +298,7 @@ public class FacesPortlet extends GenericPortlet {
             log.debug("called renderFaces..");
         }
 
+        storePortletConfig(request);
         setCurrentPortletMode(request);
 
         FacesContext facesContext = facesContextFactory.getFacesContext(
@@ -328,6 +335,8 @@ public class FacesPortlet extends GenericPortlet {
 
     protected void executeFaces(ActionRequest request, ActionResponse response)
             throws PortletException, IOException {
+
+        storePortletConfig(request);
         setCurrentPortletMode(request);
 
         // create excluded list
