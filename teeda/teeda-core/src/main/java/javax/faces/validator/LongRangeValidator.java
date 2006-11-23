@@ -15,7 +15,6 @@
  */
 package javax.faces.validator;
 
-import javax.faces.FacesException;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.StateHolder;
 import javax.faces.component.UIComponent;
@@ -58,7 +57,7 @@ public class LongRangeValidator implements Validator, StateHolder {
     }
 
     public void validate(FacesContext context, UIComponent component,
-            Object value) throws FacesException {
+            Object value) throws ValidatorException {
         AssertionUtil.assertNotNull("context", context);
         AssertionUtil.assertNotNull("component", component);
         if (value == null) {
