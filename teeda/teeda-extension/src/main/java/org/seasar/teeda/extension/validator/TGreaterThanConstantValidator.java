@@ -15,7 +15,6 @@
  */
 package org.seasar.teeda.extension.validator;
 
-import javax.faces.FacesException;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.StateHolder;
 import javax.faces.component.UIComponent;
@@ -50,7 +49,7 @@ public class TGreaterThanConstantValidator implements Validator, StateHolder {
     private String messageId = null;
 
     public void validate(FacesContext context, UIComponent component,
-            Object value) throws FacesException {
+            Object value) throws ValidatorException {
         AssertionUtil.assertNotNull("context", context);
         AssertionUtil.assertNotNull("component", component);
         if (value == null) {

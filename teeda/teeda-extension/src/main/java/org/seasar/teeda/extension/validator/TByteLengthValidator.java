@@ -17,7 +17,6 @@ package org.seasar.teeda.extension.validator;
 
 import java.io.UnsupportedEncodingException;
 
-import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.internal.FacesMessageUtil;
@@ -54,7 +53,7 @@ public class TByteLengthValidator extends LengthValidator implements
     private String maximumMessageId;
 
     public void validate(FacesContext context, UIComponent component,
-            Object value) throws FacesException {
+            Object value) throws ValidatorException {
         AssertionUtil.assertNotNull("context", context);
         AssertionUtil.assertNotNull("component", component);
         if (!isTargetCommandValidation(context, targets)) {

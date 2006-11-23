@@ -15,7 +15,6 @@
  */
 package org.seasar.teeda.extension.validator;
 
-import javax.faces.FacesException;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.StateHolder;
 import javax.faces.component.UIComponent;
@@ -24,6 +23,7 @@ import javax.faces.internal.FacesMessageUtil;
 import javax.faces.internal.UIComponentUtil;
 import javax.faces.internal.UIInputUtil;
 import javax.faces.validator.Validator;
+import javax.faces.validator.ValidatorException;
 
 import org.seasar.framework.util.AssertionUtil;
 import org.seasar.framework.util.StringUtil;
@@ -34,7 +34,8 @@ import org.seasar.teeda.extension.util.ValidatorUtil;
  * @author higa
  * @author shot
  */
-public class TRequiredValidator implements Validator, StateHolder, ValidationTargetSelectable {
+public class TRequiredValidator implements Validator, StateHolder,
+        ValidationTargetSelectable {
 
     public static final String VALIDATOR_ID = "javax.faces.Required";
 
@@ -49,7 +50,7 @@ public class TRequiredValidator implements Validator, StateHolder, ValidationTar
     private String messageId;
 
     public void validate(FacesContext context, UIComponent component,
-            Object value) throws FacesException {
+            Object value) throws ValidatorException {
         AssertionUtil.assertNotNull("context", context);
         AssertionUtil.assertNotNull("component", component);
         if (!isTargetCommandValidation(context, targets)) {
@@ -106,7 +107,8 @@ public class TRequiredValidator implements Validator, StateHolder, ValidationTar
         messageId = (String) values[1];
     }
 
-    public boolean isTargetCommandValidation(FacesContext context, String[] targets) {
+    public boolean isTargetCommandValidation(FacesContext context,
+            String[] targets) {
         return ValidatorUtil.isTargetCommand(context, targets);
     }
 }

@@ -18,7 +18,6 @@ package org.seasar.teeda.extension.validator;
 import java.math.BigDecimal;
 import java.util.Locale;
 
-import javax.faces.FacesException;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.StateHolder;
 import javax.faces.component.UIComponent;
@@ -69,7 +68,7 @@ public class TNumberLengthValidator implements Validator, StateHolder,
 
     public void validate(final FacesContext context,
             final UIComponent component, final Object value)
-            throws FacesException {
+            throws ValidatorException {
         AssertionUtil.assertNotNull("context", context);
         AssertionUtil.assertNotNull("component", component);
         if (value == null) {

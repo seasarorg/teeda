@@ -15,7 +15,6 @@
  */
 package org.seasar.teeda.extension.validator;
 
-import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.DoubleRangeValidator;
@@ -59,7 +58,7 @@ public class TDoubleRangeValidator extends DoubleRangeValidator implements
     }
 
     public void validate(FacesContext context, UIComponent component,
-            Object value) throws FacesException {
+            Object value) throws ValidatorException {
         AssertionUtil.assertNotNull("context", context);
         AssertionUtil.assertNotNull("component", component);
         if (!isTargetCommandValidation(context, targets)) {
