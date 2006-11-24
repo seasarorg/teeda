@@ -108,6 +108,12 @@
     <servlet>
         <servlet-name>teedaServlet</servlet-name>
         <servlet-class>org.seasar.teeda.core.webapp.TeedaServlet</servlet-class>
+<!--    If you want to run teeda-html-example as Portlet, replace TeedaServlet with
+        TeedaPortletExtendedServlet and add S2Portlet and Portlet Filter.
+        S2Portlet: http://s2portlet.sandbox.seasar.org/
+        Portlet Filter: http://portals.apache.org/bridges/
+        <servlet-class>org.seasar.teeda.core.webapp.TeedaPortletExtendedServlet</servlet-class>
+-->
         <init-param>
         	<param-name>configPath</param-name>
         	<param-value>app.dicon</param-value>

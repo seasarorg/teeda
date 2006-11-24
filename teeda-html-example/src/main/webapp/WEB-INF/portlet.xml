@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ * Copyright 2004-2006 the Seasar Foundation and the Others.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+-->
+
+<portlet-app id="teeda-html-example" version="1.0">
+
+    <portlet id="TeedaHtmlExample">
+        <portlet-name>TeedaHtmlExample</portlet-name>
+        <display-name>Teeda HTML Example</display-name>
+        <description>This is an example portlet for Teeda.</description>
+        <portlet-class>org.apache.portals.bridges.portletfilter.FilterPortlet</portlet-class>
+        <init-param>
+            <name>portlet-class</name>
+            <value>org.seasar.teeda.core.portlet.FacesPortlet</value>
+        </init-param>
+        <init-param>
+            <name>portlet-filters</name>
+            <value>org.seasar.portlet.filter.S2PortletFilter,org.seasar.portlet.filter.HotdeployPortletFilter</value>
+        </init-param>
+        <init-param>
+            <name>view-page</name>
+            <value>/view/start/index.html</value>
+        </init-param>
+<!--    <init-param>
+            <name>edit-page</name>
+            <value></value>
+        </init-param> -->
+
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+<!--        <portlet-mode>EDIT</portlet-mode> -->
+        </supports>
+
+        <supported-locale>en</supported-locale>
+        <supported-locale>ja</supported-locale>
+        <!-- resource-bundle></resource-bundle -->
+
+        <portlet-info>
+            <title>Teeda HTML Example</title>
+            <short-title>Example</short-title>
+            <keywords>Teeda HTML Example</keywords>
+        </portlet-info>
+    </portlet>
+
+</portlet-app>
+
