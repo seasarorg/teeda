@@ -58,7 +58,6 @@
 
 	<component class="org.seasar.teeda.core.render.Base64EncodeConverter" />
 
-	<!-- ManagedBean -->
 	<component class="org.seasar.teeda.core.managedbean.impl.ManagedBeanFactoryImpl" />
 
 	<component class="org.seasar.teeda.core.managedbean.impl.ManagedBeanScopeSaverImpl" />
@@ -102,12 +101,11 @@
 
 	<component class="org.seasar.teeda.core.render.html.HtmlRenderKitImpl"/>
 
-	<!-- Renderer -->
-	<component class="org.seasar.teeda.core.render.autoregister.TeedaRendererJarComponentAutoRegister">
-		<property name="referenceClass">
-			@org.seasar.teeda.core.render.html.HtmlCommandButtonRenderer@class
-		</property>
-		<property name="jarFileNames">"teeda-core.*"</property>
+	<!-- Renderer auto-registration -->
+	<component class="org.seasar.teeda.core.render.autoregister.TeedaRendererComponentAutoRegister">
+		<initMethod name="addReferenceClass">
+			<arg>@org.seasar.teeda.core.render.html.HtmlCommandButtonRenderer@class</arg>
+		</initMethod>
 		<initMethod name="addClassPattern">
 			<arg>"org.seasar.teeda.core.render.html"</arg>
 			<arg>"..*Renderer"</arg>
@@ -118,18 +116,24 @@
 		</initMethod>
 	</component>
 
-	<component class="org.seasar.framework.container.autoregister.JarComponentAutoRegister">
+	<!-- Validator auto-registration -->
+	<component class="org.seasar.framework.container.autoregister.ComponentAutoRegister">
 		<property name="instanceDef">@org.seasar.framework.container.deployer.InstanceDefFactory@PROTOTYPE</property>
-		<property name="jarFileNames">"teeda-core.*"</property>
+		<initMethod name="addReferenceClass">
+			<arg>@javax.faces.validator.LengthValidator@class</arg>
+		</initMethod>
 		<initMethod name="addClassPattern">
 			<arg>"javax.faces.validator"</arg>
 			<arg>"..*Validator"</arg>
 		</initMethod>
 	</component>
 
-	<component class="org.seasar.framework.container.autoregister.JarComponentAutoRegister">
+	<!-- Converter auto-registration -->
+	<component class="org.seasar.framework.container.autoregister.ComponentAutoRegister">
 		<property name="instanceDef">@org.seasar.framework.container.deployer.InstanceDefFactory@PROTOTYPE</property>
-		<property name="jarFileNames">"teeda-core.*"</property>
+		<initMethod name="addReferenceClass">
+			<arg>@javax.faces.convert.IntegerConverter@class</arg>
+		</initMethod>
 		<initMethod name="addClassPattern">
 			<arg>"javax.faces.convert"</arg>
 			<arg>"..*Converter"</arg>
