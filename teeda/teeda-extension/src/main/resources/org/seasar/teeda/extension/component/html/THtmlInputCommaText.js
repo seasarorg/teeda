@@ -67,14 +67,14 @@ Teeda.THtmlInputCommaText = {
     return obj;
   },
   convertByKey : function(o) {
+    if(o.value.match(/[tT]/) != null) {
+     o.value=o.value.replace(/[tT]/g, '000');
+    }
     if(o.value.match(/[mM]/) != null) {
-     o.value=o.value.replace(/[mM]/g, '000');
+     o.value=o.value.replace(/[mM]/g, '000000');
     }
     if(o.value.match(/[bB]/) != null) {
-     o.value=o.value.replace(/[bB]/g, '000000');
-    }
-    if(o.value.match(/[tT]/) != null) {
-     o.value=o.value.replace(/[tT]/g, '000000000');
+     o.value=o.value.replace(/[bB]/g, '000000000');
     }
     if(o.value.match(/([^0-9mbtMBT\-\.\,])/)!=null) {
      o.value=o.value.replace(/([^0-9mbt\-\.\,]|[^mbtMBT])/g,'');
