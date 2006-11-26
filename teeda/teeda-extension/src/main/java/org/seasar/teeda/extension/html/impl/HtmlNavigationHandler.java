@@ -85,7 +85,8 @@ public class HtmlNavigationHandler extends NavigationHandlerImpl {
                     path);
             redirect(context, context.getExternalContext(), redirectPath, path);
         } else {
-            context.getExternalContext().getSessionMap().remove(FacesPortlet.CURRENT_FACES_CONTEXT);
+            context.getExternalContext().getRequestMap().put(
+                    FacesPortlet.REDIRECT_TO_PORTLET, Boolean.TRUE);
             super.render(context, viewHandler, path);
         }
 

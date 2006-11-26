@@ -94,6 +94,7 @@ public class NavigationHandlerImpl extends NavigationHandler {
 
     protected boolean isRedirect(FacesContext context,
             NavigationCaseContext caseContext) {
+        // PortletSupport: JSR 127 7.4.2
         if (PortletUtil.isPortlet(context)) {
             return false;
         }

@@ -72,10 +72,6 @@ public class FacesPortlet extends GenericPortlet {
     public static final String VIEW_ID = FacesPortlet.class.getName()
             + ".VIEW_ID";
 
-    public static final String CURRENT_FACES_CONTEXT = FacesPortlet.class
-            .getName()
-            + ".CURRENT_FACES_CONTEXT";
-
     public final String DEFAULT_PAGE = FacesPortlet.class.getName()
             + ".DEFAULT_PAGE";
 
@@ -123,6 +119,10 @@ public class FacesPortlet extends GenericPortlet {
     private static final String REDEPLOYED_PORTLET = FacesPortlet.class
             .getName()
             + ".REDEPLOYED_PORTLET";
+
+    public static final String REDIRECT_TO_PORTLET = FacesPortlet.class
+            .getName()
+            + ".REDIRECT_TO_PORTLET";
 
     protected FacesContextFactory facesContextFactory;
 
@@ -355,7 +355,6 @@ public class FacesPortlet extends GenericPortlet {
 
         try {
             lifecycle.execute(facesContext);
-
             if (!facesContext.getResponseComplete()) {
                 // response.setRenderParameter(VIEW_ID, facesContext.getViewRoot().getViewId());
                 request.setAttribute(VIEW_ID, facesContext.getViewRoot()
@@ -441,8 +440,19 @@ public class FacesPortlet extends GenericPortlet {
                 }
             }
         }
-
         if (state == null) {
+            setViewId(facesContext);
+            return;
+        }
+
+        // set viewId
+        facesContext.getExternalContext().getRequestMap().put(VIEW_ID,
+                state.getViewRoot().getViewId());
+
+        // check redirect to portlet
+        Object redirectToPortlet = state.getRequestMap().get(
+                REDIRECT_TO_PORTLET);
+        if (redirectToPortlet != null) {
             setViewId(facesContext);
             return;
         }
@@ -462,41 +472,51 @@ public class FacesPortlet extends GenericPortlet {
         copyMap(state.getRequestMap(), facesContext.getExternalContext()
                 .getRequestMap(), new ArrayList());
 
-        // set viewId
-        facesContext.getExternalContext().getRequestMap().put(VIEW_ID,
-                state.getViewRoot().getViewId());
-
     }
 
     private void saveFacesState(FacesContext facesContext) {
-        // save message information from this FacesContext
-        FacesPortletState state = new FacesPortletState();
-        Iterator clientIds = facesContext.getClientIdsWithMessages();
-        while (clientIds.hasNext()) {
-            String clientId = (String) clientIds.next();
-            Iterator msgs = facesContext.getMessages(clientId);
-            while (msgs.hasNext()) {
-                state.addMessage(clientId, (FacesMessage) msgs.next());
-            }
-        }
-        state.setViewRoot(facesContext.getViewRoot());
-
-        List excludedNameList = (List) facesContext.getExternalContext()
-                .getRequestMap().get(EXCLUDED_ATTRIBUTE_LIST);
-        // save request attributes
-        Map requestMap = new HashMap();
-        copyMap(facesContext.getExternalContext().getRequestMap(), requestMap,
-                excludedNameList);
-        state.setRequestMap(requestMap);
-
-        String currentPortletMode = (String) facesContext.getExternalContext()
-                .getRequestMap().get(CURRENT_PORTLET_MODE);
-
         PortletSession session = (PortletSession) facesContext
                 .getExternalContext().getSession(true);
+
+        // save portlet mode
+        String currentPortletMode = (String) facesContext.getExternalContext()
+                .getRequestMap().get(CURRENT_PORTLET_MODE);
         session.setAttribute(PREVIOUS_PORTLET_MODE, currentPortletMode);
+
+        Object redirectToPortlet = facesContext.getExternalContext()
+                .getRequestMap().get(REDIRECT_TO_PORTLET);
+
+        FacesPortletState state = new FacesPortletState();
+        state.setViewRoot(facesContext.getViewRoot());
+
+        if (redirectToPortlet == null) {
+            // save message information from this FacesContext
+            Iterator clientIds = facesContext.getClientIdsWithMessages();
+            while (clientIds.hasNext()) {
+                String clientId = (String) clientIds.next();
+                Iterator msgs = facesContext.getMessages(clientId);
+                while (msgs.hasNext()) {
+                    state.addMessage(clientId, (FacesMessage) msgs.next());
+                }
+            }
+
+            List excludedNameList = (List) facesContext.getExternalContext()
+                    .getRequestMap().get(EXCLUDED_ATTRIBUTE_LIST);
+            // save request attributes
+            Map requestMap = new HashMap();
+            copyMap(facesContext.getExternalContext().getRequestMap(),
+                    requestMap, excludedNameList);
+            state.setRequestMap(requestMap);
+        } else {
+            // save request attributes
+            Map requestMap = new HashMap();
+            requestMap.put(REDIRECT_TO_PORTLET, redirectToPortlet);
+            state.setRequestMap(requestMap);
+        }
+
         session.setAttribute(FACES_PORTLET_STATE_PREFIX + currentPortletMode,
                 state);
+
     }
 
     private void copyMap(Map fromMap, Map toMap, List excludedNameList) {
@@ -514,11 +534,11 @@ public class FacesPortlet extends GenericPortlet {
         Map requestParameterMap = facesContext.getExternalContext()
                 .getRequestParameterMap();
 
-        String viewId = (String) requestMap.get(VIEW_ID);
+        String viewId = (String) requestParameterMap.get(VIEW_ID);
         if (viewId != null && !checkSessionState(facesContext)) {
             return viewId;
         }
-        viewId = (String) requestParameterMap.get(VIEW_ID);
+        viewId = (String) requestMap.get(VIEW_ID);
         if (viewId != null && !checkSessionState(facesContext)) {
             return viewId;
         }
@@ -527,7 +547,6 @@ public class FacesPortlet extends GenericPortlet {
 
     private void setViewId(FacesContext facesContext) {
         String viewId = getCurrentViewId(facesContext);
-
         facesContext.getApplication().getViewHandler().restoreView(
                 facesContext, viewId);
         if (facesContext.getViewRoot() == null) {

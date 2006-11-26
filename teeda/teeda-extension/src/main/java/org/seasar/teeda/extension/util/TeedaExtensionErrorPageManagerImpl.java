@@ -38,6 +38,7 @@ public class TeedaExtensionErrorPageManagerImpl extends
         ServletErrorPageManagerImpl {
 
     //TODO injection PagePersistence.
+    //TODO PortletSupport
     public boolean handleException(Throwable exception,
             ExternalContext extContext) throws IOException {
         AssertionUtil.assertNotNull("exception", exception);
