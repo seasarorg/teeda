@@ -44,7 +44,6 @@ public class ProductInfo {
      */
     public static void main(final String[] args) {
         System.out.println("teeda.version: " + getVersion());
-        System.out.println(" java.version: " + System.getProperty("java.version"));
     }
 
 }
