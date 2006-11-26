@@ -17,6 +17,7 @@ package org.seasar.teeda.core;
 
 /**
  * @author shot
+ * @author manhole
  */
 public class ProductInfo {
 
@@ -35,6 +36,14 @@ public class ProductInfo {
     public static String getVersion() {
         return MAJOR_VERSION + "." + MINOR_VERSION + "." + LOCAL_VERSION
                 + ((isSnapshot) ? "-SNAPSHOT" : "");
+    }
+
+    /*
+     * MANIFEST.MFのmain-classに指定しておき、jarを実行するとバージョン番号が
+     * コンソールへ出力されるようにする。
+     */
+    public static void main(final String[] args) {
+        System.out.println("teeda-core: " + getVersion());
     }
 
 }
