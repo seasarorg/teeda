@@ -35,6 +35,7 @@ import org.seasar.teeda.extension.html.TagProcessorCache;
  */
 public class TagProcessorCacheImpl implements TagProcessorCache {
 
+    //TODO clear cache.
     private Map cache = new HashMap();
 
     private HtmlDescCache htmlDescCache;

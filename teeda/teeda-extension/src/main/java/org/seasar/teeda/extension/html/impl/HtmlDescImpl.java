@@ -48,7 +48,8 @@ public class HtmlDescImpl implements HtmlDesc {
         if (file == null) {
             return false;
         }
-        return file.lastModified() > lastModified;
+        //SVN revert
+        return file.lastModified() != lastModified;
     }
 
 }

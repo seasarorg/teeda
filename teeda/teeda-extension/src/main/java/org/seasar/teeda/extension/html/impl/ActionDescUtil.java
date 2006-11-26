@@ -33,14 +33,14 @@ public class ActionDescUtil {
         Method[] methods = actionClass.getMethods();
         for (int i = 0; i < methods.length; ++i) {
             Method m = methods[i];
-            if (isMaybeActionMethod(m)) {
+            if (isActionMethodCandidate(m)) {
                 methodNames.add(m.getName());
             }
         }
         return methodNames;
     }
 
-    protected static boolean isMaybeActionMethod(Method method) {
+    protected static boolean isActionMethodCandidate(Method method) {
         final Class returnType = method.getReturnType();
         final Class[] parameterTypes = method.getParameterTypes();
         return (returnType.equals(String.class) || returnType.equals(Void.TYPE))

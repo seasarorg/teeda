@@ -73,7 +73,7 @@ public class ActionDescImpl implements ActionDesc {
         if (!file.exists()) {
             return true;
         }
-        return file.lastModified() > lastModified;
+        return file.lastModified() != lastModified;
     }
 
     public TakeOverDesc getTakeOverDesc(String methodName) {

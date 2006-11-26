@@ -27,7 +27,7 @@ public class ProductInfo {
 
     private static final String LOCAL_VERSION = "2";
 
-    private static boolean isSnapshot = false;
+    private static boolean isSnapshot = true;
 
     public static String getProductName() {
         return "Teeda";
@@ -43,7 +43,8 @@ public class ProductInfo {
      * コンソールへ出力されるようにする。
      */
     public static void main(final String[] args) {
-        System.out.println("teeda-core: " + getVersion());
+        System.out.println("teeda.version: " + getVersion());
+        System.out.println(" java.version: " + System.getProperty("java.version"));
     }
 
 }
