@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -20,12 +20,10 @@ import junit.framework.TestCase;
 import org.seasar.teeda.extension.component.TreeNode;
 import org.seasar.teeda.extension.component.TreeNodeImpl;
 import org.seasar.teeda.extension.component.html.THtmlTree;
-import org.seasar.teeda.extension.util.TreeNavigationImageLocator;
-import org.seasar.teeda.extension.util.TreeNavigationImageLocatorImpl;
 
 /**
  * @author shot
- * 
+ *
  */
 public class TreeNavigationImageLocatorImplTest extends TestCase {
 
@@ -51,8 +49,8 @@ public class TreeNavigationImageLocatorImplTest extends TestCase {
         tree.setLastChild(false);
         tree.setNodeExpanded(false);
         i1.setUpImageLocation(tree);
-        assertEquals("nav-plus.gif", i1.getNavSrc());
-        assertEquals("nav-minus.gif", i1.getAltSrc());
+        assertEquals("nav-collapse.gif", i1.getNavSrc());
+        assertEquals("nav-expand.gif", i1.getAltSrc());
     }
 
     public void testDecide_childrenAndNodeExpanded() throws Exception {
@@ -65,11 +63,12 @@ public class TreeNavigationImageLocatorImplTest extends TestCase {
         tree.setLastChild(false);
         tree.setNodeExpanded(true);
         i1.setUpImageLocation(tree);
-        assertEquals("nav-minus.gif", i1.getNavSrc());
-        assertEquals("nav-plus.gif", i1.getAltSrc());
+        assertEquals("nav-expand.gif", i1.getNavSrc());
+        assertEquals("nav-collapse.gif", i1.getAltSrc());
     }
 
-    public void testDecide_childrenAndNodeExpandedAndIsLastChild() throws Exception {
+    public void testDecide_childrenAndNodeExpandedAndIsLastChild()
+            throws Exception {
         TreeNavigationImageLocator i1 = new TreeNavigationImageLocatorImpl();
         MockHtmlTree tree = new MockHtmlTree();
         TreeNode node = new TreeNodeImpl("0", "aaa", false);
@@ -79,11 +78,12 @@ public class TreeNavigationImageLocatorImplTest extends TestCase {
         tree.setLastChild(true);
         tree.setNodeExpanded(true);
         i1.setUpImageLocation(tree);
-        assertEquals("nav-minus.gif", i1.getNavSrc());
-        assertEquals("nav-plus.gif", i1.getAltSrc());
+        assertEquals("nav-expand.gif", i1.getNavSrc());
+        assertEquals("nav-collapse.gif", i1.getAltSrc());
     }
 
-    public void testDecide_childrenAndNodeExpandedAndIsLastChildAndLastLine() throws Exception {
+    public void testDecide_childrenAndNodeExpandedAndIsLastChildAndLastLine()
+            throws Exception {
         TreeNavigationImageLocator i1 = new TreeNavigationImageLocatorImpl();
         MockHtmlTree tree = new MockHtmlTree();
         TreeNode node = new TreeNodeImpl("0", "aaa", false);
@@ -93,20 +93,20 @@ public class TreeNavigationImageLocatorImplTest extends TestCase {
         tree.setLastChild(true);
         tree.setNodeExpanded(true);
         i1.setUpImageLocation(tree);
-        assertEquals("nav-minus-line-last.gif", i1.getNavSrc());
-        assertEquals("nav-plus-line-last.gif", i1.getAltSrc());
+        assertEquals("nav-line-last-expand.gif", i1.getNavSrc());
+        assertEquals("nav-line-last-collapse.gif", i1.getAltSrc());
     }
 
     public static class MockHtmlTree extends THtmlTree {
 
         private boolean showLines = false;
-        
+
         private TreeNode node;
 
         private boolean lastChild = false;
 
         private boolean nodeExpanded;
-        
+
         public boolean isNodeExpanded() {
             return nodeExpanded;
         }
@@ -122,7 +122,7 @@ public class TreeNavigationImageLocatorImplTest extends TestCase {
         public boolean isLastChild(String nodeId) {
             return lastChild;
         }
-        
+
         public boolean isShowLines() {
             return showLines;
         }

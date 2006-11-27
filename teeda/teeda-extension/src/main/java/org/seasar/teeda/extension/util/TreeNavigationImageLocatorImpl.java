@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -20,7 +20,7 @@ import org.seasar.teeda.extension.component.html.THtmlTree;
 
 /**
  * @author shot
- * 
+ *
  */
 public class TreeNavigationImageLocatorImpl implements
         TreeNavigationImageLocator {
@@ -31,17 +31,17 @@ public class TreeNavigationImageLocatorImpl implements
 
     private String imageRoot = "";
 
-    private static final String NAV_MINUS_LINE_LAST_GIF = "nav-minus-line-last.gif";
+    private static final String NAV_MINUS_LINE_LAST_GIF = "nav-line-last-expand.gif";
 
-    private static final String NAV_PLUS_LINE_LAST_GIF = "nav-plus-line-last.gif";
+    private static final String NAV_PLUS_LINE_LAST_GIF = "nav-line-last-collapse.gif";
 
-    private static final String NAV_MINUS_LINE_MIDDLE_GIF = "nav-minus-line-middle.gif";
+    private static final String NAV_MINUS_LINE_MIDDLE_GIF = "nav-line-middle-expand.gif";
 
-    private static final String NAV_PLUS_LINE_MIDDLE_GIF = "nav-plus-line-middle.gif";
+    private static final String NAV_PLUS_LINE_MIDDLE_GIF = "nav-line-middle-collapse.gif";
 
-    private static final String NAV_MINUS_GIF = "nav-minus.gif";
+    private static final String NAV_MINUS_GIF = "nav-expand.gif";
 
-    private static final String NAV_PLUS_GIF = "nav-plus.gif";
+    private static final String NAV_PLUS_GIF = "nav-collapse.gif";
 
     private static final String LINE_LAST_GIF = "line-last.gif";
 
