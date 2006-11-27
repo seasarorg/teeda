@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -27,6 +27,9 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.seasar.framework.container.S2Container;
+import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
+import org.seasar.framework.container.util.SmartDeployUtil;
 import org.seasar.framework.util.AssertionUtil;
 import org.seasar.framework.util.InputStreamUtil;
 import org.seasar.framework.util.OutputStreamUtil;
@@ -35,7 +38,7 @@ import org.seasar.teeda.extension.render.html.THtmlHeadRenderer;
 
 /**
  * @author higa
- * 
+ *
  */
 public abstract class VirtualResource {
 
@@ -97,10 +100,14 @@ public abstract class VirtualResource {
         } else if (lcPath.endsWith(".xml") || lcPath.endsWith(".xsl")) {
             response.setContentType("text/xml");
         }
-        response.setDateHeader("Last-Modified", 0);
-        Calendar expires = Calendar.getInstance();
-        expires.add(Calendar.DAY_OF_YEAR, 7);
-        response.setDateHeader("Expires", expires.getTimeInMillis());
+        final S2Container container = SingletonS2ContainerFactory
+                .getContainer();
+        if (!SmartDeployUtil.isHotdeployMode(container)) {
+            response.setDateHeader("Last-Modified", 0);
+            Calendar expires = Calendar.getInstance();
+            expires.add(Calendar.DAY_OF_YEAR, 1);
+            response.setDateHeader("Expires", expires.getTimeInMillis());
+        }
         InputStream is = ResourceUtil.getResourceAsStream(path);
         OutputStream os = response.getOutputStream();
         try {
