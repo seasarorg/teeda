@@ -32,8 +32,7 @@
 		class="org.seasar.teeda.extension.html.impl.PageDescCacheImpl" />
 	<component
 		class="org.seasar.teeda.extension.html.impl.ActionDescCacheImpl" />
-	<component name="bodyFactory"
-		class="org.seasar.teeda.extension.html.factory.BodyFactory" />
+		
 	<component name="treeHiddenFactory"
 		class="org.seasar.teeda.extension.html.factory.TreeHiddenFactory" />
 	<component name="selectBooleanCheckboxFactory"
@@ -88,12 +87,6 @@
 		class="org.seasar.teeda.extension.html.factory.GridTdFactory" />
 	<component name="gridThFactory"
 		class="org.seasar.teeda.extension.html.factory.GridThFactory" />
-	<!--
-	<component name="gridInputCommaTextFactory"
-		class="org.seasar.teeda.extension.html.factory.GridInputCommaTextFactory" />
-	<component name="gridInputTextFactory"
-		class="org.seasar.teeda.extension.html.factory.GridInputTextFactory" />
-	-->
 	<component name="inputDateTextFactory"
 		class="org.seasar.teeda.extension.html.factory.InputDateTextFactory" />
 	<component name="inputCommaTextFactory"
@@ -102,6 +95,10 @@
 		class="org.seasar.teeda.extension.html.factory.InputTextFactory" />
 	<component name="outputTextFactory"
 		class="org.seasar.teeda.extension.html.factory.OutputTextFactory" />
+	<component name="bodyFactory"
+		class="org.seasar.teeda.extension.html.factory.BodyFactory" />
+	<component name="headFactory"
+		class="org.seasar.teeda.extension.html.factory.HeadFactory" />
 	<component name="genericFactory"
 		class="org.seasar.teeda.extension.html.factory.GenericFactory" />
 

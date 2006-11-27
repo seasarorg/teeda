@@ -15,15 +15,20 @@
  */
 package org.seasar.teeda.extension.component.html;
 
+import java.io.IOException;
+
 import javax.faces.component.NamingContainer;
 import javax.faces.context.FacesContext;
 
+import org.seasar.teeda.extension.component.RenderPreparable;
+import org.seasar.teeda.extension.component.RenderPreparableUtil;
 import org.seasar.teeda.extension.component.TForEach;
 
 /**
  * @author manhole
  */
-public class THtmlGrid extends TForEach implements NamingContainer {
+public class THtmlGrid extends TForEach implements NamingContainer,
+        RenderPreparable {
 
     public static final String COMPONENT_FAMILY = "org.seasar.teeda.extension.Grid";
 
@@ -106,4 +111,7 @@ public class THtmlGrid extends TForEach implements NamingContainer {
         this.scrollVertical = Boolean.valueOf(scrollVertical);
     }
 
+    public void encodePrepare(FacesContext context) throws IOException {
+        RenderPreparableUtil.encodePrepareForRenderer(context, this);
+    }
 }

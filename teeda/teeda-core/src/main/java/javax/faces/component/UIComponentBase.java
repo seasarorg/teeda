@@ -33,9 +33,8 @@ import javax.faces.internal.ComponentAttributesMap;
 import javax.faces.internal.ComponentChildrenListWrapper;
 import javax.faces.internal.ComponentFacetAndChildrenIterator;
 import javax.faces.internal.ComponentFacetMapWrapper;
-import javax.faces.internal.RenderKitUtil;
 import javax.faces.internal.SerializableStateHolder;
-import javax.faces.render.RenderKit;
+import javax.faces.internal.UIComponentUtil;
 import javax.faces.render.Renderer;
 
 import org.seasar.framework.util.AssertionUtil;
@@ -516,12 +515,7 @@ public abstract class UIComponentBase extends UIComponent {
     }
 
     protected Renderer getRenderer(FacesContext context) {
-        String rendererType = getRendererType();
-        if (rendererType == null) {
-            return null;
-        }
-        RenderKit renderKit = RenderKitUtil.getRenderKit(context);
-        return renderKit.getRenderer(getFamily(), rendererType);
+        return UIComponentUtil.getRenderer(context, this);
     }
 
     public boolean isTransient() {

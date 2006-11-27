@@ -153,8 +153,8 @@ public abstract class AbstractRenderer extends Renderer {
             PropertyDesc propertyDesc = beanDesc.getPropertyDesc(i);
             Method m = propertyDesc.getReadMethod();
             if (propertyDesc.hasReadMethod() && isPublicNoParameterMethod(m)) {
-                if (ArrayUtil.contains(ignore.getAttributeNames(),
-                        propertyDesc.getPropertyName())) {
+                if (ArrayUtil.contains(ignore.getAttributeNames(), propertyDesc
+                        .getPropertyName())) {
                     continue;
                 }
                 map.put(propertyDesc.getPropertyName(), propertyDesc
@@ -251,6 +251,7 @@ public abstract class AbstractRenderer extends Renderer {
         if (StringUtil.isBlank(scirptBody)) {
             return;
         }
+        writer.write(JsfConstants.LINE_SP);
         writer.startElement(JsfConstants.SCRIPT_ELEM, null);
         writer.writeAttribute(JsfConstants.LANGUAGE_ATTR,
                 JsfConstants.JAVASCRIPT_VALUE, null);
@@ -266,4 +267,17 @@ public abstract class AbstractRenderer extends Renderer {
         writer.endElement(JsfConstants.SCRIPT_ELEM);
     }
 
+    protected void renderIncludeJavaScript(final ResponseWriter writer,
+            final String path) throws IOException {
+        if (StringUtil.isBlank(path)) {
+            return;
+        }
+        writer.startElement(JsfConstants.SCRIPT_ELEM, null);
+        writer.writeAttribute(JsfConstants.LANGUAGE_ATTR,
+                JsfConstants.JAVASCRIPT_VALUE, null);
+        writer.writeAttribute(JsfConstants.TYPE_ATTR,
+                JsfConstants.TEXT_JAVASCRIPT_VALUE, null);
+        writer.writeAttribute(JsfConstants.SRC_ATTR, path, null);
+        writer.endElement(JsfConstants.SCRIPT_ELEM);
+    }
 }

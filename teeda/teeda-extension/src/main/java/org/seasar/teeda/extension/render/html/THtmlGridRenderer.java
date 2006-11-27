@@ -29,7 +29,6 @@ import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.framework.util.ResourceUtil;
 import org.seasar.framework.util.StringUtil;
-import org.seasar.framework.util.TextUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.scope.impl.DispatchScope;
 import org.seasar.teeda.core.scope.impl.DispatchScopeFactory;
@@ -43,14 +42,17 @@ import org.seasar.teeda.extension.component.html.THtmlGridHeader;
 import org.seasar.teeda.extension.component.html.THtmlGridTd;
 import org.seasar.teeda.extension.component.html.THtmlGridTh;
 import org.seasar.teeda.extension.component.html.THtmlGridTr;
+import org.seasar.teeda.extension.render.RenderPreparableRenderer;
 import org.seasar.teeda.extension.render.RendererListener;
 import org.seasar.teeda.extension.render.TBodyRenderer;
 import org.seasar.teeda.extension.render.TForEachRenderer;
+import org.seasar.teeda.extension.util.VirtualResource;
 
 /**
  * @author manhole
  */
-public class THtmlGridRenderer extends TForEachRenderer {
+public class THtmlGridRenderer extends TForEachRenderer implements
+        RenderPreparableRenderer {
 
     public static final String COMPONENT_FAMILY = THtmlGrid.COMPONENT_FAMILY;
 
@@ -92,6 +94,22 @@ public class THtmlGridRenderer extends TForEachRenderer {
 
     private int firstRenderRowCount = 50;
 
+    public void encodePrepare(FacesContext context, UIComponent component)
+            throws IOException {
+        assertNotNull(context, component);
+        if (!component.isRendered()) {
+            return;
+        }
+        encodeHtmlGridPrepare(context, (THtmlGrid) component);
+    }
+
+    protected void encodeHtmlGridPrepare(final FacesContext context,
+            final THtmlGrid htmlGrid) throws IOException {
+        String path = ResourceUtil.getResourcePath(THtmlGrid.class.getName(),
+                "js");
+        VirtualResource.addJSResource(context, path);
+    }
+
     public void encodeBegin(FacesContext context, UIComponent component)
             throws IOException {
         assertNotNull(context, component);
@@ -108,7 +126,6 @@ public class THtmlGridRenderer extends TForEachRenderer {
                     "THtmlGrid should have 'id' attribute");
         }
         final ResponseWriter writer = context.getResponseWriter();
-        renderJavaScript(context, htmlGrid, writer);
         writer.startElement(JsfConstants.TABLE_ELEM, htmlGrid);
         RendererUtil.renderIdAttributeIfNecessary(writer, htmlGrid,
                 getIdForRender(context, htmlGrid));
@@ -117,28 +134,6 @@ public class THtmlGridRenderer extends TForEachRenderer {
                 .renderAttribute(writer, JsfConstants.CELLSPACING_ATTR, "0");
         RendererUtil
                 .renderAttribute(writer, JsfConstants.CELLPADDING_ATTR, "0");
-    }
-
-    private void renderJavaScript(FacesContext context, THtmlGrid htmlGrid,
-            ResponseWriter writer) throws IOException {
-        if (shouldRenderJavaScript(context, htmlGrid)) {
-            final String resourcePath = ResourceUtil.getResourcePath(
-                    THtmlGrid.class.getName(), "js");
-            final String scriptBody = TextUtil.readText(resourcePath).trim();
-            renderJavaScriptElement(writer, scriptBody);
-            DispatchScopeFactory.getDispatchScope().put(GRID_JS, GRID_JS);
-        }
-    }
-
-    // TODO test
-    private boolean shouldRenderJavaScript(FacesContext context,
-            THtmlGrid htmlGrid) {
-        final DispatchScope dispatchScope = DispatchScopeFactory
-                .getDispatchScope();
-        if (dispatchScope.contains(GRID_JS)) {
-            return false;
-        }
-        return true;
     }
 
     public void encodeChildren(FacesContext context, UIComponent component)

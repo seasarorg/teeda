@@ -108,9 +108,8 @@ public class THtmlGridRendererTest extends RendererTest {
         // ## Assert ##
         final String responseText = getResponseText();
         System.out.println(responseText);
-        assertEquals(2, containCount(responseText, "</script>"));
-        final String afterText = afterText(responseText, "</script>");
-        final String a = deleteAfter(afterText, "</table>");
+        assertEquals(1, containCount(responseText, "</script>"));
+        final String a = deleteAfter(responseText, "</table>");
 
         assertEquals(
                 "<table id=\"aa\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\"></table>",

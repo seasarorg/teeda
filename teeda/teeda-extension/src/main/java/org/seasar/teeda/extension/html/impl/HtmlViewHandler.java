@@ -57,6 +57,7 @@ import org.seasar.teeda.core.util.ExternalContextUtil;
 import org.seasar.teeda.core.util.PortletUtil;
 import org.seasar.teeda.core.util.PostbackUtil;
 import org.seasar.teeda.core.util.ServletExternalContextUtil;
+import org.seasar.teeda.extension.component.RenderPreparableUtil;
 import org.seasar.teeda.extension.exception.JspRuntimeException;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ActionDescCache;
@@ -150,6 +151,7 @@ public class HtmlViewHandler extends ViewHandlerImpl {
 
     public void renderView(FacesContext context, UIViewRoot viewRoot)
             throws IOException {
+        RenderPreparableUtil.encodePrepareForComponent(context, viewRoot);
         ExternalContext externalContext = context.getExternalContext();
         String path = ExternalContextUtil.getViewId(externalContext);
         renderView(context, path);

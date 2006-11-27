@@ -22,6 +22,8 @@ import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.el.EvaluationException;
 import javax.faces.el.MethodBinding;
+import javax.faces.render.RenderKit;
+import javax.faces.render.Renderer;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
@@ -128,4 +130,13 @@ public class UIComponentUtil {
         return (UIForm) parent;
     }
 
+    public static Renderer getRenderer(FacesContext context,
+            UIComponent component) {
+        String rendererType = component.getRendererType();
+        if (rendererType == null) {
+            return null;
+        }
+        RenderKit renderKit = RenderKitUtil.getRenderKit(context);
+        return renderKit.getRenderer(component.getFamily(), rendererType);
+    }
 }

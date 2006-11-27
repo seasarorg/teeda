@@ -179,6 +179,8 @@ public interface JsfConstants {
 
     String UL_ELEM = "ul";
 
+    String HEAD_ELEM = "head";
+
     // -- attribute --
 
     String ACCEPT_ATTR = "accept";
@@ -496,7 +498,7 @@ public interface JsfConstants {
     String POSTBACK = "postback";
 
     String PREVIOUS_VIEW_ID = "previousViewId";
-    
+
     String ERROR_MESSAGE_PERSISTE_KEY = "Teeda.FacesMessages";
 
 }
