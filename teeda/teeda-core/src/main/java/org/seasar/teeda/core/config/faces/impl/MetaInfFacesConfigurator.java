@@ -60,7 +60,7 @@ public class MetaInfFacesConfigurator extends AbstractFacesConfigurator {
                 break;
             }
             try {
-                FacesConfig config = (FacesConfig) parser.parse(is);
+                FacesConfig config = (FacesConfig) parser.parse(is, path);
                 list.add(config);
             } finally {
                 InputStreamUtil.close(is);
@@ -104,7 +104,8 @@ public class MetaInfFacesConfigurator extends AbstractFacesConfigurator {
         }
 
         private void initialize(String path) {
-            ClassLoader loader = ClassLoaderUtil.getClassLoader(this.getClass());
+            ClassLoader loader = ClassLoaderUtil
+                    .getClassLoader(this.getClass());
             List list = new LinkedList();
             for (Iterator itr = IteratorUtil.getResourcesIterator(loader,
                     JsfConstants.FACES_CONFIG_RESOURCES); itr.hasNext();) {
