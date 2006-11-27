@@ -16,7 +16,6 @@
 package org.seasar.teeda.extension.render.html;
 
 import java.io.IOException;
-import java.net.URI;
 import java.net.URLEncoder;
 import java.util.Iterator;
 import java.util.Map;
@@ -28,11 +27,9 @@ import javax.faces.component.UIParameter;
 import javax.faces.component.html.HtmlOutputLink;
 import javax.faces.context.FacesContext;
 import javax.faces.internal.UIComponentUtil;
-import javax.faces.internal.WindowIdUtil;
 
 import org.seasar.framework.util.AssertionUtil;
 import org.seasar.framework.util.StringUtil;
-import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.html.HtmlOutputLinkRenderer;
 import org.seasar.teeda.core.render.html.support.PortletUrlBuilder;
 import org.seasar.teeda.core.util.PortletUtil;

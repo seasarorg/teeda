@@ -15,13 +15,19 @@
  */
 package org.seasar.teeda.extension.component.html;
 
+import java.io.IOException;
+
 import javax.faces.context.FacesContext;
+
+import org.seasar.teeda.extension.component.RenderPreparable;
+import org.seasar.teeda.extension.component.RenderPreparableUtil;
 
 /**
  * @author shot
  *
  */
-public class THtmlInputCommaText extends THtmlInputText {
+public class THtmlInputCommaText extends THtmlInputText implements
+        RenderPreparable {
 
     public static final String COMPONENT_TYPE = "org.seasar.teeda.extension.HtmlInputCommaText";
 
@@ -82,5 +88,9 @@ public class THtmlInputCommaText extends THtmlInputText {
         fraction = (String) values[1];
         groupingSeparator = (String) values[2];
         fractionSeparator = (String) values[3];
+    }
+
+    public void encodePrepare(FacesContext context) throws IOException {
+        RenderPreparableUtil.encodePrepareForRenderer(context, this);
     }
 }

@@ -24,6 +24,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.internal.IgnoreAttribute;
 
+import org.seasar.framework.util.ResourceUtil;
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.util.JavaScriptPermissionUtil;
@@ -32,13 +33,14 @@ import org.seasar.teeda.core.util.ValueHolderUtil;
 import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.component.ScriptEnhanceUIViewRoot;
 import org.seasar.teeda.extension.component.html.THtmlInputText;
-import org.seasar.teeda.extension.util.JavaScriptContext;
+import org.seasar.teeda.extension.render.RenderPreparableRenderer;
+import org.seasar.teeda.extension.util.VirtualResource;
 
 /**
  * @author shot
  */
 public abstract class AbstractInputExtendTextRenderer extends
-        THtmlInputTextRenderer {
+        THtmlInputTextRenderer implements RenderPreparableRenderer {
 
     public void encodeEnd(FacesContext context, UIComponent component)
             throws IOException {
@@ -56,6 +58,21 @@ public abstract class AbstractInputExtendTextRenderer extends
         }
     }
 
+    public void encodePrepare(FacesContext context, UIComponent component)
+            throws IOException {
+        assertNotNull(context, component);
+        if (!component.isRendered()) {
+            return;
+        }
+        encodeHtmlHtmlInputTextPrepare(context, (THtmlInputText) component);
+    }
+
+    protected void encodeHtmlHtmlInputTextPrepare(final FacesContext context,
+            final THtmlInputText htmlGrid) throws IOException {
+        String path = ResourceUtil.getResourcePath(getScriptKey(), "js");
+        VirtualResource.addJSResource(context, path);
+    }
+
     protected void encodeInputExtendTextEnd(FacesContext context,
             THtmlInputText htmlInputText) throws IOException {
         doEncodeEndStart(context, htmlInputText);
@@ -66,15 +83,6 @@ public abstract class AbstractInputExtendTextRenderer extends
     protected void doEncodeEndStart(FacesContext context,
             THtmlInputText htmlInputText) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
-        UIViewRoot root = context.getViewRoot();
-        ScriptEnhanceUIViewRoot sRoot = (ScriptEnhanceUIViewRoot) root;
-        final String scriptKey = getScriptKey();
-        if (!sRoot.containsScript(scriptKey)) {
-            JavaScriptContext scriptContext = new JavaScriptContext();
-            scriptContext.loadScript(scriptKey);
-            sRoot.addScript(scriptKey, scriptContext);
-            writer.write(sRoot.getAllScripts());
-        }
         writer.startElement(JsfConstants.INPUT_ELEM, htmlInputText);
         RendererUtil.renderAttribute(writer, JsfConstants.TYPE_ATTR,
                 JsfConstants.TEXT_VALUE);
@@ -97,8 +105,6 @@ public abstract class AbstractInputExtendTextRenderer extends
         ResponseWriter writer = context.getResponseWriter();
         renderRemain(htmlInputText, writer);
         writer.endElement(JsfConstants.INPUT_ELEM);
-        String scriptKey = getScriptKey();
-        markJavaScriptRendererd(context, scriptKey);
     }
 
     protected abstract String getScriptKey();
@@ -131,11 +137,6 @@ public abstract class AbstractInputExtendTextRenderer extends
             return property;
         }
         return property + ";";
-    }
-
-    protected void markJavaScriptRendererd(FacesContext context,
-            String scriptKey) {
-        context.getExternalContext().getRequestMap().put(scriptKey, scriptKey);
     }
 
 }

@@ -62,6 +62,9 @@ public class TForEach extends UIComponentBase implements NamingContainer {
 
     public static final String DEFAULT_MESSAGE_AGGREGATION_ID = "org.seasar.teeda.extension.DEFAULT_MESSAGE_AGGREGATION";
 
+    //TODO append lineinfo partial message
+    public static final String APPEND_LINEINFO_ID = "org.seasar.teeda.extension.APPEND_LINEINFO";
+
     private static final String DEFAULT_RENDERER_TYPE = "org.seasar.teeda.extension.ForEach";
 
     private static final Object[] EMPTY_ITEMS = new Object[0];

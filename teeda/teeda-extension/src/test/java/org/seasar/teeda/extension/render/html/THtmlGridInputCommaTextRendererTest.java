@@ -22,11 +22,7 @@ import javax.faces.render.Renderer;
 import javax.faces.render.RendererTest;
 import javax.xml.parsers.ParserConfigurationException;
 
-import junitx.framework.StringAssert;
-
 import org.custommonkey.xmlunit.Diff;
-import org.seasar.framework.util.ResourceUtil;
-import org.seasar.framework.util.TextUtil;
 import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.render.html.HtmlOutputTextRenderer;
 import org.seasar.teeda.extension.component.ScriptEnhanceUIViewRoot;
@@ -84,16 +80,16 @@ public class THtmlGridInputCommaTextRendererTest extends RendererTest {
                 + " style=\"ime-mode:disabled;display:none;\""
                 + " class=\"gridCellEdit\" />" + "</div>";
         final String responseText = getResponseText();
-        final String resourcePath = ResourceUtil
-                .getResourcePath(
-                        "org.seasar.teeda.extension.component.html.THtmlInputCommaText",
-                        "js");
-        final String scriptBody = TextUtil.readText(resourcePath).trim();
-        StringAssert.assertContains(scriptBody, responseText);
-
-        final String actual = removeScriptElement(responseText);
-        System.out.println(actual);
-        Diff diff = diff(expected, actual);
+        //        final String resourcePath = ResourceUtil
+        //                .getResourcePath(
+        //                        "org.seasar.teeda.extension.component.html.THtmlInputCommaText",
+        //                        "js");
+        //        final String scriptBody = TextUtil.readText(resourcePath).trim();
+        //        StringAssert.assertContains(scriptBody, responseText);
+        //
+        //        final String actual = removeScriptElement(responseText);
+        //        System.out.println(actual);
+        Diff diff = diff(expected, responseText);
         assertEquals(diff.toString(), true, diff.identical());
     }
 
@@ -144,8 +140,8 @@ public class THtmlGridInputCommaTextRendererTest extends RendererTest {
         encodeByRenderer(renderer, gridInputText);
 
         final String responseText = getResponseText();
-        final String actual = removeScriptElement(responseText);
-        System.out.println(actual);
+        //        final String actual = removeScriptElement(responseText);
+        //        System.out.println(actual);
         String expected = "<div onclick=\"Teeda.THtmlGrid.editOn(this);\">"
                 + "<span>1,234,567</span>"
                 + "<input type=\"text\" id=\"AA\" name=\"AA\" value=\"1,234,567\""
@@ -170,7 +166,7 @@ public class THtmlGridInputCommaTextRendererTest extends RendererTest {
         System.out
                 .println("====================================================================");
         System.out.println(expected);
-        Diff diff = diff(expected, actual);
+        Diff diff = diff(expected, responseText);
 
         assertEquals(diff.toString(), true, diff.identical());
     }
