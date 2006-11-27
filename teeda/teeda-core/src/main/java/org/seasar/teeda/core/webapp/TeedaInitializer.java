@@ -107,7 +107,8 @@ public class TeedaInitializer {
         WebappConfig webappConfig = null;
         try {
             is = servletContext.getResourceAsStream(JsfConstants.WEB_XML_PATH);
-            webappConfig = webAppConfigBuilder.build(is);
+            webappConfig = webAppConfigBuilder.build(is,
+                    JsfConstants.WEB_XML_PATH);
         } finally {
             InputStreamUtil.close(is);
         }

@@ -20,28 +20,31 @@ import java.util.List;
 
 public interface TreeNode extends Serializable {
 
-    public boolean isLeaf();
+    boolean isLeaf();
 
-    public void setLeaf(boolean leaf);
+    void setLeaf(boolean leaf);
 
-    public void addChild(TreeNode node);
+    void addChild(TreeNode node);
 
-    public List getChildren();
+    List getChildren();
 
-    public String getType();
+    String getType();
 
-    public void setType(String type);
+    void setType(String type);
 
-    public String getDescription();
+    String getDescription();
 
-    public void setDescription(String description);
+    void setDescription(String description);
 
-    public void setValue(Object value);
+    void setValue(Object value);
 
-    public Object getValue();
+    Object getValue();
 
-    public int getChildCount();
+    int getChildCount();
 
-    public TreeNode getChild(int index);
+    TreeNode getChild(int index);
 
+    void setExpanded(boolean expanded);
+
+    boolean isExpanded();
 }

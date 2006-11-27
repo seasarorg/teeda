@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -55,12 +55,12 @@ public class ConfigFilesFacesConfigurator extends AbstractFacesConfigurator {
         String[] paths = StringUtil.split(path, FACES_CONFIG_DELIMETER);
 
         for (int i = 0; i < paths.length; i++) {
-            String targetPath = paths[i];
-            SaxHandlerParser parser = createSaxHandlerParser();
+            final String targetPath = paths[i];
+            final SaxHandlerParser parser = createSaxHandlerParser();
             InputStream is = resourceResolver_
                     .getInputStream(targetPath.trim());
             try {
-                configs.add(parser.parse(is));
+                configs.add(parser.parse(is, targetPath));
             } finally {
                 InputStreamUtil.close(is);
             }

@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -112,13 +112,13 @@ public class WebappConfigBuilderImplTest extends TestCase {
     private WebappConfig buildWebappConfig(String webXml) throws IOException {
         // ## Arrange ##
         WebappConfigBuilder builder = new WebappConfigBuilderImpl();
-        InputStream is = ResourceUtil.getResourceAsStream(getClass()
-                .getPackage().getName().replace('.', '/')
-                + "/" + webXml);
+        final String path = getClass().getPackage().getName().replace('.', '/')
+                + "/" + webXml;
+        InputStream is = ResourceUtil.getResourceAsStream(path);
 
         // ## Act ##
         try {
-            WebappConfig webappConfig = builder.build(is);
+            WebappConfig webappConfig = builder.build(is, path);
             assertNotNull(webappConfig);
             return webappConfig;
         } finally {

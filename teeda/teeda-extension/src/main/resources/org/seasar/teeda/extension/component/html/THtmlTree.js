@@ -6,15 +6,22 @@ if (typeof(Teeda.THtmlTree) == 'undefined') {
 }
 Teeda.THtmlTree = {
 
-  treeNavClick : function(spanId, navImageId, image1, image2, nodeImgId, expandImg, collapseImg, cookieName, nodeId, contextPath) {
-    var navSpan = document.getElementById(spanId);
-    var displayStyle = navSpan.style.display;
+  treeNavClick : function(divId, navImageId, image1, image2, nodeImgId, expandImg, collapseImg, cookieName, nodeId, contextPath) {
+    if(!document.getElementById) {
+      return;
+    }
+    var navDiv = document.getElementById(divId);
+    var hiddenId = divId + ':' + 'treeExpanded';
+    var hidden = document.getElementById(hiddenId);
+    var displayStyle = navDiv.style.display;
     if (displayStyle == 'none') {
       displayStyle = 'block'
+      hidden.value = true;
     } else {
       displayStyle = 'none';
+      hidden.value = false;
     }
-    navSpan.style.display = displayStyle;
+    navDiv.style.display = displayStyle;
     if (navImageId != '') {
       var navImage = document.getElementById(navImageId);
       if (navImage.src.indexOf(image1) >= 0) {

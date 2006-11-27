@@ -32,6 +32,8 @@ public class TreeNodeImpl implements TreeNode, Comparable {
 
     private Object value;
 
+    private boolean expanded;
+
     public TreeNodeImpl() {
     }
 
@@ -92,17 +94,12 @@ public class TreeNodeImpl implements TreeNode, Comparable {
     }
 
     public int compareTo(Object obj) {
-        // branches come before leaves, after this criteria nodes are sorted alphabetically
         TreeNode otherNode = (TreeNode) obj;
-
         if (isLeaf() && !otherNode.isLeaf()) {
-            // leaves come after branches
             return 1;
         } else if (!isLeaf() && otherNode.isLeaf()) {
-            // branches come before leaves
             return -1;
         } else {
-            // both nodes are leaves or both node are branches, so compare the descriptions
             return getDescription().compareTo(otherNode.getDescription());
         }
     }
@@ -113,6 +110,14 @@ public class TreeNodeImpl implements TreeNode, Comparable {
 
     public TreeNode getChild(int index) {
         return (TreeNode) children.get(index);
+    }
+
+    public boolean isExpanded() {
+        return expanded;
+    }
+
+    public void setExpanded(boolean expanded) {
+        this.expanded = expanded;
     }
 
 }

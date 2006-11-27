@@ -16,15 +16,19 @@
 package org.seasar.teeda.extension.render.html;
 
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.Map;
 
 import javax.faces.application.ViewHandler;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIGraphic;
 import javax.faces.component.UIViewRoot;
 import javax.faces.component.html.HtmlGraphicImage;
+import javax.faces.component.html.HtmlInputHidden;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
+import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.AbstractRenderer;
 import org.seasar.teeda.core.util.RendererUtil;
@@ -44,7 +48,8 @@ public class THtmlTreeRenderer extends AbstractRenderer {
 
     public static final String RENDERER_TYPE = "org.seasar.teeda.extension.THtmlTree";
 
-    protected static final String TOGGLE_SPAN = "teeda.extension.tree.TOGGLE_SPAN";
+    //TODO change with javascript
+    protected static final String TOGGLE_DIV = "teeda.extension.tree.TOGGLE_SPAN";
 
     protected static final String ROOT_NODE_ID = "0";
 
@@ -56,6 +61,9 @@ public class THtmlTreeRenderer extends AbstractRenderer {
 
     private static final String NAMESPACE = "Teeda.THtmlTree.";
 
+    private static final String TOGGLE_VALUE_SUFFIX = ExtensionConstants.NAME_SEPARATOR
+            + "treeExpanded";
+
     private TreeNavigationImageLocator imageLocator;
 
     public static final String imageLocator_BINDING = "bindingType=may";
@@ -66,6 +74,27 @@ public class THtmlTreeRenderer extends AbstractRenderer {
 
     public void decode(FacesContext context, UIComponent component) {
         super.decode(context, component);
+        decodeTHtmlTree(context, (THtmlTree) component);
+    }
+
+    protected void decodeTHtmlTree(FacesContext context, THtmlTree tree) {
+        Map paramMap = context.getExternalContext().getRequestParameterMap();
+        TreeModel model = tree.getDataModel();
+        final String prefix = TOGGLE_DIV + ExtensionConstants.NAME_SEPARATOR
+                + tree.getId() + ExtensionConstants.NAME_SEPARATOR;
+        for (Iterator itr = paramMap.keySet().iterator(); itr.hasNext();) {
+            String key = (String) itr.next();
+            if (key.startsWith(prefix) && key.endsWith(TOGGLE_VALUE_SUFFIX)) {
+                String nodeId = StringUtil.replace(key, prefix, "");
+                nodeId = StringUtil.replace(nodeId, TOGGLE_VALUE_SUFFIX, "");
+                String value = (String) paramMap.get(key);
+                if ("true".equalsIgnoreCase(value)) {
+                    model.toggleExpanded(nodeId);
+                } else {
+                    model.collapseExpanded(nodeId);
+                }
+            }
+        }
     }
 
     public void encodeBegin(FacesContext context, UIComponent component)
@@ -163,6 +192,22 @@ public class THtmlTreeRenderer extends AbstractRenderer {
             RendererUtil.renderAttribute(out, JsfConstants.STYLE_ATTR,
                     "display:none");
         }
+        final String id = divId + ExtensionConstants.NAME_SEPARATOR
+                + "treeExpanded";
+        HtmlInputHidden hidden = new HtmlInputHidden() {
+
+            public String getId() {
+                return id;
+            }
+
+            public String getClientId(FacesContext context) {
+                return id;
+            }
+        };
+        hidden.setValue(new Boolean(tree.isNodeExpanded()));
+        hidden.setParent(tree);
+        RendererUtil.renderChild(context, hidden);
+
         TreeNode node = tree.getNode();
         for (int i = 0; i < node.getChildCount(); i++) {
             if (walker.next()) {
@@ -175,7 +220,6 @@ public class THtmlTreeRenderer extends AbstractRenderer {
     protected void encodeCurrentNode(FacesContext context, ResponseWriter out,
             THtmlTree tree) throws IOException {
         boolean showNav = tree.isShowNav();
-        //showNav = true;
         TreeNode node = tree.getNode();
         UIComponent nodeTypeFacet = tree.getFacet(node.getType());
         UIComponent nodeImgFacet = null;
@@ -358,7 +402,7 @@ public class THtmlTreeRenderer extends AbstractRenderer {
     }
 
     protected String getMarkerId(UITreeData tree) {
-        return TOGGLE_SPAN + ExtensionConstants.NAME_SEPARATOR + tree.getId()
+        return TOGGLE_DIV + ExtensionConstants.NAME_SEPARATOR + tree.getId()
                 + ExtensionConstants.NAME_SEPARATOR + tree.getNodeId();
     }
 }

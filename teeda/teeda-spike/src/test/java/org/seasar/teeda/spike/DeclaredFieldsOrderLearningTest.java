@@ -13,23 +13,28 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.extension.component;
+package org.seasar.teeda.spike;
 
-import java.io.Serializable;
+import java.lang.reflect.Field;
 
-public interface TreeModel extends Serializable {
+import junit.framework.TestCase;
 
-    String[] getPathInformation(String nodeId);
+public class DeclaredFieldsOrderLearningTest extends TestCase {
 
-    boolean isLastChild(String nodeId);
+    public void test() throws Exception {
+        Field[] fields = Hoge.class.getDeclaredFields();
+        assertTrue(fields.length == 3);
+        assertEquals("aaa", fields[0].getName());
+        assertEquals("bbb", fields[1].getName());
+        assertEquals("ccc", fields[2].getName());
+    }
 
-    TreeNode getNodeById(String nodeId);
+    public static class Hoge {
 
-    TreeWalker getTreeWalker();
+        public static final String aaa = "AAA";
 
-    boolean isNodeExpanded(String nodeId);
+        public static final String bbb = "BBB";
 
-    void toggleExpanded(String nodeId);
-
-    void collapseExpanded(String nodeId);
+        public static final String ccc = "CCC";
+    }
 }

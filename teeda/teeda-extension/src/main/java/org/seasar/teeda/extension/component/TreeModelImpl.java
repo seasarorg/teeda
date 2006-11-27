@@ -18,9 +18,7 @@ package org.seasar.teeda.extension.component;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.StringTokenizer;
 
 import org.seasar.framework.util.AssertionUtil;
@@ -32,22 +30,38 @@ public class TreeModelImpl implements TreeModel {
 
     private TreeNode root;
 
-    private Set expandedNodes = new HashSet();
-
     public TreeModelImpl(TreeNode root) {
+        AssertionUtil.assertNotNull("root", root);
         this.root = root;
     }
 
     public boolean isNodeExpanded(String nodeId) {
-        return expandedNodes.contains(nodeId);
+        AssertionUtil.assertNotNull("nodeId", nodeId);
+        if (isRootNode(nodeId)) {
+            return root.isExpanded();
+        }
+        TreeNode node = getNodeById(nodeId);
+        return node.isExpanded();
     }
 
     public void toggleExpanded(String nodeId) {
-        if (expandedNodes.contains(nodeId)) {
-            expandedNodes.remove(nodeId);
+        AssertionUtil.assertNotNull("nodeId", nodeId);
+        setExpanded(nodeId, true);
+    }
+
+    public void collapseExpanded(String nodeId) {
+        AssertionUtil.assertNotNull("nodeId", nodeId);
+        setExpanded(nodeId, false);
+    }
+
+    protected void setExpanded(String nodeId, boolean expanded) {
+        TreeNode node = null;
+        if (isRootNode(nodeId)) {
+            node = root;
         } else {
-            expandedNodes.add(nodeId);
+            node = getNodeById(nodeId);
         }
+        node.setExpanded(expanded);
     }
 
     public String[] getPathInformation(String nodeId) {
@@ -116,4 +130,5 @@ public class TreeModelImpl implements TreeModel {
     public TreeWalker getTreeWalker() {
         return new TreeWalkerImpl();
     }
+
 }

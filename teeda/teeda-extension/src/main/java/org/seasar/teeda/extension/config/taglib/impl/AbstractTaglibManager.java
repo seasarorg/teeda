@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -36,12 +36,12 @@ import org.seasar.teeda.extension.config.taglib.element.TaglibElement;
 
 /**
  * @author higa
- *  
+ *
  */
 public abstract class AbstractTaglibManager implements TaglibManager {
 
     public static final String INIT_METHOD = "init";
-    
+
     protected static final String FILE_PROTOCOL = "file:";
 
     protected static final String JAR_PROTOCOL = "jar:";
@@ -77,7 +77,7 @@ public abstract class AbstractTaglibManager implements TaglibManager {
     public void addTaglibElement(TaglibElement taglibElement) {
         taglibElements.put(taglibElement.getUri(), taglibElement);
     }
-    
+
     public abstract void init();
 
     public void destroy() {
@@ -106,7 +106,7 @@ public abstract class AbstractTaglibManager implements TaglibManager {
         Enumeration entries = jarFile.entries();
         while (entries.hasMoreElements()) {
             JarEntry entry = (JarEntry) entries.nextElement();
-            String name = entry.getName();
+            final String name = entry.getName();
             if (!name.startsWith("META-INF/")) {
                 continue;
             }
@@ -115,7 +115,7 @@ public abstract class AbstractTaglibManager implements TaglibManager {
             }
             InputStream is = JarFileUtil.getInputStream(jarFile, entry);
             try {
-                scanTld(is);
+                scanTld(is, name);
             } finally {
                 if (is != null) {
                     try {
@@ -127,7 +127,7 @@ public abstract class AbstractTaglibManager implements TaglibManager {
         }
     }
 
-    protected void scanTld(InputStream is) {
-        addTaglibElement(builder.build(is));
+    protected void scanTld(InputStream is, String fileName) {
+        addTaglibElement(builder.build(is, fileName));
     }
 }
