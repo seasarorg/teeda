@@ -19,10 +19,8 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
-import org.seasar.framework.container.factory.ResourceResolver;
 import org.seasar.framework.log.Logger;
 import org.seasar.framework.util.ClassLoaderUtil;
 import org.seasar.framework.util.InputStreamUtil;
@@ -44,7 +42,6 @@ public class MetaInfFacesConfigurator extends AbstractFacesConfigurator {
     private String path_ = JsfConstants.WEB_INF_LIB;
 
     public MetaInfFacesConfigurator() {
-        setResourceResolver(new MetaInfResourceResolver());
     }
 
     public FacesConfig configure() {
@@ -54,16 +51,19 @@ public class MetaInfFacesConfigurator extends AbstractFacesConfigurator {
         }
         SaxHandlerParser parser = createSaxHandlerParser();
         List list = new ArrayList();
-        for (;;) {
-            InputStream is = resourceResolver_.getInputStream(path);
-            if (is == null) {
-                break;
-            }
-            try {
-                FacesConfig config = (FacesConfig) parser.parse(is, path);
-                list.add(config);
-            } finally {
-                InputStreamUtil.close(is);
+        ClassLoader loader = ClassLoaderUtil.getClassLoader(this.getClass());
+        for (Iterator itr = IteratorUtil.getResourcesIterator(loader,
+                JsfConstants.FACES_CONFIG_RESOURCES); itr.hasNext();) {
+            URL url = (URL) itr.next();
+            if (url.toExternalForm().indexOf(path) != -1) {
+                InputStream is = URLUtil.openStream(url);
+                try {
+                    FacesConfig config = (FacesConfig) parser.parse(is, url
+                            .toExternalForm());
+                    list.add(config);
+                } finally {
+                    InputStreamUtil.close(is);
+                }
             }
         }
         return FacesConfigUtil.collectAllFacesConfig(list);
@@ -75,47 +75,5 @@ public class MetaInfFacesConfigurator extends AbstractFacesConfigurator {
 
     public void setPath(String path) {
         path_ = path;
-    }
-
-    protected static class MetaInfResourceResolver implements ResourceResolver {
-
-        private Iterator resources_;
-
-        private boolean inited_ = false;
-
-        public MetaInfResourceResolver() {
-        }
-
-        public InputStream getInputStream(String path) {
-            if (!inited_) {
-                initialize(path);
-                inited_ = true;
-            }
-            if (hasNext()) {
-                URL url = (URL) resources_.next();
-                return URLUtil.openStream(url);
-            } else {
-                return null;
-            }
-        }
-
-        private boolean hasNext() {
-            return resources_ != null && resources_.hasNext();
-        }
-
-        private void initialize(String path) {
-            ClassLoader loader = ClassLoaderUtil
-                    .getClassLoader(this.getClass());
-            List list = new LinkedList();
-            for (Iterator itr = IteratorUtil.getResourcesIterator(loader,
-                    JsfConstants.FACES_CONFIG_RESOURCES); itr.hasNext();) {
-                URL url = (URL) itr.next();
-                if (url.toExternalForm().indexOf(path) != -1) {
-                    list.add(0, url);
-                }
-            }
-            resources_ = list.iterator();
-        }
-
     }
 }
