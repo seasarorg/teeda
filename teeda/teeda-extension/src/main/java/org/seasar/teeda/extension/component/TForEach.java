@@ -60,6 +60,8 @@ public class TForEach extends UIComponentBase implements NamingContainer {
 
     public static final String COMPONENT_FAMILY = "org.seasar.teeda.extension.ForEach";
 
+    public static final String DEFAULT_MESSAGE_AGGREGATION_ID = "org.seasar.teeda.extension.DEFAULT_MESSAGE_AGGREGATION";
+
     private static final String DEFAULT_RENDERER_TYPE = "org.seasar.teeda.extension.ForEach";
 
     private static final Object[] EMPTY_ITEMS = new Object[0];
@@ -78,10 +80,27 @@ public class TForEach extends UIComponentBase implements NamingContainer {
 
     private String itemsName;
 
+    private FacesMessage defaultMessage;
+
+    private boolean defaultMessageAggregation = false;
+
     private static final Logger logger = Logger.getLogger(TForEach.class);
 
     public TForEach() {
         setRendererType(DEFAULT_RENDERER_TYPE);
+        initialize();
+    }
+
+    protected void initialize() {
+        final FacesContext context = FacesContext.getCurrentInstance();
+        defaultMessage = FacesMessageUtil.getMessage(context,
+                DEFAULT_MESSAGE_AGGREGATION_ID, null);
+        if (defaultMessage.getSummary() != null
+                || defaultMessage.getDetail() != null) {
+            defaultMessageAggregation = true;
+        } else {
+            defaultMessageAggregation = false;
+        }
     }
 
     public void setId(final String id) {
@@ -142,9 +161,6 @@ public class TForEach extends UIComponentBase implements NamingContainer {
         this.pageName = pageName;
     }
 
-    /**
-     * @see javax.faces.component.UIComponent#getFamily()
-     */
     public String getFamily() {
         return COMPONENT_FAMILY;
     }
@@ -171,7 +187,8 @@ public class TForEach extends UIComponentBase implements NamingContainer {
             enterRow(context, i);
             super.processValidators(context);
             final String parentClientId = getClientId(context);
-            if (!FacesMessageResource.hasMessages(expression)) {
+            if (!FacesMessageResource.hasMessages(expression)
+                    && !defaultMessageAggregation) {
                 processEachRowValidation(context, i, parentClientId);
             }
             leaveRow(context);
@@ -188,10 +205,11 @@ public class TForEach extends UIComponentBase implements NamingContainer {
 
     protected void aggregateErrorMessageIfNeed(FacesContext context,
             String expression) {
-        if (FacesMessageResource.hasMessages(expression)) {
+        if (FacesMessageResource.hasMessages(expression)
+                || defaultMessageAggregation) {
             final String parentRowClientId = super.getClientId(context);
-            final FacesMessage aggregateMessage = FacesMessageResource
-                    .getFacesMessage(expression);
+            final FacesMessage aggregateMessage = (defaultMessageAggregation) ? defaultMessage
+                    : FacesMessageResource.getFacesMessage(expression);
             aggregateErrorMessage(aggregateMessage, context, parentRowClientId);
         }
     }
@@ -222,7 +240,6 @@ public class TForEach extends UIComponentBase implements NamingContainer {
             FieldUtil.set(field, context, null);
             for (Iterator itr = map.entrySet().iterator(); itr.hasNext();) {
                 Map.Entry entry = (Entry) itr.next();
-                //String clientId = (String) entry.getKey();
                 for (Iterator messages = (Iterator) entry.getValue(); messages
                         .hasNext();) {
                     FacesMessage fm = (FacesMessage) messages.next();
