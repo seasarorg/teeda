@@ -71,8 +71,9 @@ public abstract class VirtualResource {
         resources.add(path);
     }
 
-    public static String convertVirtualPath(String path) {
-        return VIRTUAL_PATH + path;
+    public static String convertVirtualPath(FacesContext context, String path) {
+        return context.getExternalContext().getRequestContextPath()
+                + VIRTUAL_PATH + path;
     }
 
     public static boolean isVirtualPath(HttpServletRequest request) {

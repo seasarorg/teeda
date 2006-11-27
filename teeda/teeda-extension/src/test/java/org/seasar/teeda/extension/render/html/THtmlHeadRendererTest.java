@@ -39,7 +39,7 @@ public class THtmlHeadRendererTest extends AbstractRendererTest {
         VirtualResource.addJSResource(getFacesContext(), "hoge.js");
         encodeByRenderer(renderer, component);
         assertEquals(
-                "<head>\n<script language=\"JavaScript\" type=\"text/javascript\" src=\"/teedaExtension/hoge.js\"></script>\n</head>\n",
+                "<head>\n<script language=\"JavaScript\" type=\"text/javascript\" src=\"/mock-context/teedaExtension/hoge.js\"></script>\n</head>\n",
                 getResponseText());
     }
 }

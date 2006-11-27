@@ -51,8 +51,8 @@ public class THtmlHeadRenderer extends AbstractRenderer {
         Set resources = VirtualResource.getJSResources(context);
         for (Iterator i = resources.iterator(); i.hasNext();) {
             String path = (String) i.next();
-            renderIncludeJavaScript(writer, VirtualResource
-                    .convertVirtualPath(path));
+            renderIncludeJavaScript(writer, VirtualResource.convertVirtualPath(
+                    context, path));
             writer.write("\n");
         }
         writer.endElement(JsfConstants.HEAD_ELEM);
