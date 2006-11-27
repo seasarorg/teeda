@@ -13,36 +13,24 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.extension.html.factory;
+package org.seasar.teeda.extension.html.impl;
 
 import org.seasar.teeda.core.JsfConstants;
-import org.seasar.teeda.extension.ExtensionConstants;
-import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ElementNode;
-import org.seasar.teeda.extension.html.PageDesc;
+import org.seasar.teeda.extension.html.ElementNodeDecision;
+import org.xml.sax.Attributes;
 
 /**
  * @author higa
  */
-public class HeadFactory extends AbstractElementProcessorFactory {
+public class HeadElementNodeDecision implements ElementNodeDecision {
 
-    private static final String TAG_NAME = "head";
-
-    public boolean isMatch(ElementNode elementNode, PageDesc pageDesc,
-            ActionDesc actionDesc) {
-        String tagName = elementNode.getTagName();
-        if (!tagName.equalsIgnoreCase(JsfConstants.HEAD_ELEM)) {
+    public boolean isElementNode(ElementNode node, String qName,
+            Attributes attributes) {
+        if (!qName.equalsIgnoreCase(JsfConstants.HEAD_ELEM)) {
             return false;
         }
         return true;
-    }
-
-    protected String getTagName() {
-        return TAG_NAME;
-    }
-
-    protected String getUri() {
-        return ExtensionConstants.TEEDA_EXTENSION_URI;
     }
 
 }

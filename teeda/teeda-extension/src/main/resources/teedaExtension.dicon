@@ -24,6 +24,9 @@
 		<initMethod name="addElementNodeDecision">
 			<arg><component class="org.seasar.teeda.extension.html.impl.BodyElementNodeDecision"/></arg>
 		</initMethod>
+		<initMethod name="addElementNodeDecision">
+			<arg><component class="org.seasar.teeda.extension.html.impl.HeadElementNodeDecision"/></arg>
+		</initMethod>
 	</component>
 
 	<component
