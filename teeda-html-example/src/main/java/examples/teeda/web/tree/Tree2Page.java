@@ -27,14 +27,17 @@ public class Tree2Page {
 
 	public String initialize() {
 		tree = new TreeNodeImpl("folder-B", "ROOT", false);
-		TreeNodeImpl personNode = new TreeNodeImpl("folder-A", "AAA", false);
-		TreeNodeImpl document1 = new TreeNodeImpl("document", "BBB", true);
+		TreeNodeImpl aaaNode1 = new TreeNodeImpl("folder-A", "AAA", false);
+		TreeNodeImpl document1 = new TreeNodeImpl("document", "CCC", true);
 		document1.setValue("true");
-		TreeNodeImpl document2 = new TreeNodeImpl("document", "CCC", true);
+		aaaNode1.getChildren().add(document1);
+		tree.getChildren().add(aaaNode1);
+
+		TreeNodeImpl aaaNode2 = new TreeNodeImpl("folder-A", "BBB", false);
+		TreeNodeImpl document2 = new TreeNodeImpl("document", "DDD", true);
+		aaaNode2.getChildren().add(document2);
 		document2.setValue("true");
-		personNode.getChildren().add(document1);
-		personNode.getChildren().add(document2);
-		tree.getChildren().add(personNode);
+		tree.getChildren().add(aaaNode2);
 		return null;
 	}
 
