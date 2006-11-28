@@ -77,11 +77,13 @@ public class TeedaWebTesterTest extends TeedaWebTestCase {
     }
 
     /*
-     * htmlの先頭へBOMを付けるとUTF-8と認識するようなコードがWebResponseImplに あるが、ここで試した感じでは効いていない。
+     * htmlの先頭へBOMを付けるとUTF-8と認識するようなコードがWebResponseImplに
+     * あるが、ここで試した感じでは効いていない。
      * 
      * EF BB BFが、3F 3F 3Fになってしまっているようだ。
      * 
-     * Webサーバがレスポンスにcharsetを含めていれば問題ないため、 ここでは深追いしない。
+     * Webサーバがレスポンスにcharsetを含めていれば問題ないため、
+     * ここでは深追いしない。
      */
     public void __testHelloJa() throws Exception {
         // ## Arrange ##
@@ -198,6 +200,19 @@ public class TeedaWebTesterTest extends TeedaWebTestCase {
 
         // ## Assert ##
         tester.assertFormElementPresentById("aForm");
+    }
+
+    public void testAssertAttributeExistById() throws Exception {
+        // ## Arrange ##
+        final String relativeUrl = getFileAsRelativeUrl("inputText.html");
+
+        // ## Act ##
+        tester.beginAt(relativeUrl);
+
+        // ## Assert ##
+        tester.assertAttributeExistsById("aaaId", "name");
+        tester.assertAttributeExistsById("aaaId", "type");
+        tester.assertAttributeNotExistsById("aaaId", "badname");
     }
 
     private String getFileAsRelativeUrl(final String file) {

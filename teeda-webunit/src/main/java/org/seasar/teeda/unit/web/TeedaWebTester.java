@@ -157,6 +157,30 @@ public class TeedaWebTester {
         Assert.assertEquals(attributeValue, actual);
     }
 
+    public void assertAttributeExistsById(final String id,
+        final String attributeName) {
+        if (hasAttribute(id, attributeName)) {
+            return;
+        }
+        Assert
+            .fail("attribute [" + attributeName + "] is not exists. id:" + id);
+    }
+
+    public void assertAttributeNotExistsById(final String id,
+        final String attributeName) {
+        if (!hasAttribute(id, attributeName)) {
+            return;
+        }
+        Assert.fail("attribute [" + attributeName + "] is exists. id:" + id);
+    }
+
+    private boolean hasAttribute(final String id, final String attributeName) {
+        final HtmlElement element = getElementById(id);
+        final boolean attributeDefined = element
+            .isAttributeDefined(attributeName);
+        return attributeDefined;
+    }
+
     public void assertElementPresentById(final String id) {
         tester.assertElementPresent(id);
     }
