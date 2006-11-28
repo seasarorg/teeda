@@ -357,7 +357,8 @@ public class THtmlGridRenderer extends TForEachRenderer implements
         }
         final String rowspan = th.getRowspan();
         if (rowspan != null) {
-            RendererUtil.renderAttribute(writer, "rowspan", rowspan);
+            RendererUtil.renderAttribute(writer, JsfConstants.ROWSPAN_ATTR,
+                    rowspan);
         }
         writer.startElement(JsfConstants.DIV_ELEM, th);
         RendererUtil.renderAttribute(writer, JsfConstants.CLASS_ATTR,
@@ -657,6 +658,11 @@ public class THtmlGridRenderer extends TForEachRenderer implements
             final THtmlGridRenderer.GridAttribute attribute, final int columnNo)
             throws IOException {
         writer.startElement(JsfConstants.TD_ELEM, td);
+        final String rowspan = td.getRowspan();
+        if (rowspan != null) {
+            RendererUtil.renderAttribute(writer, JsfConstants.ROWSPAN_ATTR,
+                    rowspan);
+        }
         writer.startElement(JsfConstants.DIV_ELEM, td);
         writer.writeAttribute(JsfConstants.CLASS_ATTR,
                 createTdStyleClassAttribute(td), JsfConstants.CLASS_ATTR);

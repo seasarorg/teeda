@@ -17,6 +17,7 @@ package org.seasar.teeda.extension.taglib;
 
 import javax.faces.component.UIComponent;
 
+import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.taglib.UIComponentTagBase;
 import org.seasar.teeda.extension.component.html.THtmlGridTh;
 
@@ -40,7 +41,7 @@ public class TGridThTag extends UIComponentTagBase {
 
     protected void setProperties(UIComponent component) {
         super.setProperties(component);
-        setComponentProperty(component, "rowspan", rowspan);
+        setComponentProperty(component, JsfConstants.ROWSPAN_ATTR, rowspan);
     }
 
     public void release() {

@@ -30,6 +30,8 @@ public class THtmlGridTd extends UIComponentBase {
 
     private String styleClass;
 
+    private String rowspan;
+
     public String getFamily() {
         return THtmlGrid.COMPONENT_FAMILY;
     }
@@ -58,11 +60,24 @@ public class THtmlGridTd extends UIComponentBase {
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
+    public String getRowspan() {
+        if (rowspan != null) {
+            return rowspan;
+        }
+        ValueBinding vb = getValueBinding("rowspan");
+        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+    }
+
+    public void setRowspan(String rowspan) {
+        this.rowspan = rowspan;
+    }
+
     public Object saveState(FacesContext context) {
-        Object[] values = new Object[3];
+        Object[] values = new Object[4];
         values[0] = super.saveState(context);
         values[1] = style;
         values[2] = styleClass;
+        values[3] = rowspan;
         return values;
     }
 
@@ -71,6 +86,7 @@ public class THtmlGridTd extends UIComponentBase {
         super.restoreState(context, values[0]);
         style = (String) values[1];
         styleClass = (String) values[2];
+        rowspan = (String) values[3];
     }
 
 }

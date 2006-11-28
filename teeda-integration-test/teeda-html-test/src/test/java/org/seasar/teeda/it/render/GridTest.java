@@ -34,13 +34,13 @@ public class GridTest extends TeedaWebTestCase {
 
     public void testRender() throws Exception {
         // ## Arrange ##
-        TeedaWebTester tester = new TeedaWebTester();
+        final TeedaWebTester tester = new TeedaWebTester();
 
         // ## Act ##
         // ## Assert ##
         tester.beginAt(getBaseUrl(), "view/grid/grid.html");
         tester.dumpHtml();
-        _assertRenderTables(tester);
+        assertRenderTables(tester);
 
         tester.submitById("doSomething");
 
@@ -48,10 +48,10 @@ public class GridTest extends TeedaWebTestCase {
 
         tester.dumpHtml();
         // 値が再現されていること
-        _assertRenderTables(tester);
+        assertRenderTables(tester);
     }
 
-    private void _assertRenderTables(TeedaWebTester tester) {
+    private void assertRenderTables(final TeedaWebTester tester) {
         tester.assertTableEqualsById("fooGridLeftHeaderTable",
             new String[][] { { "AAA", "BBB", "CCC" } });
         tester.assertTableEqualsById("fooGridRightHeaderTable",
@@ -70,7 +70,7 @@ public class GridTest extends TeedaWebTestCase {
      */
     public void testValidation() throws Exception {
         // ## Arrange ##
-        TeedaWebTester tester = new TeedaWebTester();
+        final TeedaWebTester tester = new TeedaWebTester();
 
         // ## Act ##
         // ## Assert ##
@@ -105,7 +105,7 @@ public class GridTest extends TeedaWebTestCase {
      */
     public void testSizeChange() throws Exception {
         // ## Arrange ##
-        TeedaWebTester tester = new TeedaWebTester();
+        final TeedaWebTester tester = new TeedaWebTester();
 
         // ## Act ##
         // ## Assert ##
@@ -127,32 +127,55 @@ public class GridTest extends TeedaWebTestCase {
 
     public void testMultiRowRender() throws Exception {
         // ## Arrange ##
-        TeedaWebTester tester = new TeedaWebTester();
+        final TeedaWebTester tester = new TeedaWebTester();
 
         // ## Act ##
         // ## Assert ##
         tester.beginAt(getBaseUrl(), "view/grid/multiRowGrid.html");
         tester.dumpHtml();
 
-        Table table = tester.getTableById("fooGridXYRightHeaderTable");
-        assertTrue(table.getRowCount() == 2);
+        {
+            final Table actualTable = tester
+                .getTableById("fooGridXYRightHeaderTable");
+            assertTrue(actualTable.getRowCount() == 2);
 
-        Table expectedTable = new Table();
+            final Table expectedTable = new Table();
 
-        Row row1 = new Row();
-        Cell bbb = new Cell("bbb");
-        Cell ccc = new Cell("ccc", 1, 2);
-        row1.appendCell(bbb);
-        row1.appendCell(ccc);
-        expectedTable.appendRow(row1);
+            final Row row1 = new Row();
+            final Cell bbb = new Cell("bbb");
+            final Cell ccc = new Cell("ccc", 1, 2);
+            row1.appendCell(bbb);
+            row1.appendCell(ccc);
+            expectedTable.appendRow(row1);
 
-        Row row2 = new Row();
-        Cell eee = new Cell("eee");
-        row2.appendCell(eee);
-        expectedTable.appendRow(row2);
+            final Row row2 = new Row();
+            final Cell eee = new Cell("eee");
+            row2.appendCell(eee);
+            expectedTable.appendRow(row2);
 
-        tester
-            .assertTableEqualsById("fooGridXYRightHeaderTable", expectedTable);
+            expectedTable.assertEquals(actualTable);
+        }
+
+        {
+            final Table actualTable = tester
+                .getTableById("fooGridXYRightBodyTable");
+
+            final Table expectedTable = new Table();
+            for (int i = 1; i <= 7; i++) {
+                {
+                    final Row row = new Row();
+                    row.appendCell(new Cell("b" + i));
+                    row.appendCell(new Cell("c" + i, 1, 2));
+                    expectedTable.appendRow(row);
+                }
+                {
+                    final Row row = new Row();
+                    row.appendCell(new Cell("e" + i));
+                    expectedTable.appendRow(row);
+                }
+            }
+            expectedTable.assertEquals(actualTable);
+        }
     }
 
 }

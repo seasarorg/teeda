@@ -367,6 +367,8 @@ public interface JsfConstants {
 
     String ROWS_ATTR = "rows";
 
+    String ROWSPAN_ATTR = "rowspan";
+
     String RULES_ATTR = "rules";
 
     String SCOPE_ATTR = "scope";
