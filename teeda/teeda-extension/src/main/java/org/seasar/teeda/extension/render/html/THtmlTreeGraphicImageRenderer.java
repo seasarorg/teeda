@@ -36,10 +36,9 @@ public class THtmlTreeGraphicImageRenderer extends HtmlGraphicImageRenderer {
 
     public static final String RENDERER_TYPE = "org.seasar.teeda.extension.tree.Image";
 
-    // FIXME UnitTestが無いので、どの属性が不要かわからない...
     private final IgnoreAttribute ignoreComponent = new IgnoreAttribute();
     {
-        //        ignoreComponent.addIgnoreComponentName(JsfConstants.ID_ATTR);
+        ignoreComponent.addAttributeName(JsfConstants.ID_ATTR);
         //        ignoreComponent.addIgnoreComponentName(JsfConstants.VALUE_ATTR);
         //        ignoreComponent.addIgnoreComponentName(JsfConstants.URL_ATTR);
     }

@@ -89,9 +89,6 @@ public class THtmlGridRenderer extends TForEachRenderer implements
     private static final String GRID_ATTRIBUTE = THtmlGrid.class.getName()
             + ".GRID_ATTRIBUTE";
 
-    private static final String GRID_JS = THtmlGrid.class.getName()
-            + ".GRID_JS";
-
     private int firstRenderRowCount = 50;
 
     public void encodePrepare(FacesContext context, UIComponent component)
