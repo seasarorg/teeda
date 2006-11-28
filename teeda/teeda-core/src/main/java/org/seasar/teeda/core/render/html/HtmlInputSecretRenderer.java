@@ -37,15 +37,16 @@ public class HtmlInputSecretRenderer extends AbstractInputRenderer {
 
     public static final String RENDERER_TYPE = "javax.faces.Secret";
 
-    private final IgnoreAttribute ignoreComponent = new IgnoreAttribute();
+    private final IgnoreAttribute ignoreAttribute = new IgnoreAttribute();
     {
-        ignoreComponent.addAttributeName(JsfConstants.ID_ATTR);
-        ignoreComponent.addAttributeName(JsfConstants.VALUE_ATTR);
-        ignoreComponent.addAttributeName(JsfConstants.REDISPLAY_ATTR);
+        ignoreAttribute.addAttributeName(JsfConstants.ID_ATTR);
+        ignoreAttribute.addAttributeName(JsfConstants.VALUE_ATTR);
+        ignoreAttribute.addAttributeName(JsfConstants.REDISPLAY_ATTR);
+        ignoreAttribute.addAttributeName(JsfConstants.STYLE_CLASS_ATTR);
     }
 
-    public void encodeEnd(FacesContext context, UIComponent component)
-            throws IOException {
+    public void encodeEnd(final FacesContext context,
+            final UIComponent component) throws IOException {
         assertNotNull(context, component);
         if (!component.isRendered()) {
             return;
@@ -53,9 +54,9 @@ public class HtmlInputSecretRenderer extends AbstractInputRenderer {
         encodeHtmlInputSecretEnd(context, (HtmlInputSecret) component);
     }
 
-    protected void encodeHtmlInputSecretEnd(FacesContext context,
-            HtmlInputSecret htmlInputSecret) throws IOException {
-        ResponseWriter writer = context.getResponseWriter();
+    protected void encodeHtmlInputSecretEnd(final FacesContext context,
+            final HtmlInputSecret htmlInputSecret) throws IOException {
+        final ResponseWriter writer = context.getResponseWriter();
         writer.startElement(JsfConstants.INPUT_ELEM, htmlInputSecret);
         RendererUtil.renderAttribute(writer, JsfConstants.TYPE_ATTR,
                 JsfConstants.PASSWORD_VALUE);
@@ -70,18 +71,31 @@ public class HtmlInputSecretRenderer extends AbstractInputRenderer {
             value = "";
         }
         RendererUtil.renderAttribute(writer, JsfConstants.VALUE_ATTR, value);
-        renderRemainAttributes(htmlInputSecret, writer, ignoreComponent);
+        renderStyleClass(context, htmlInputSecret, writer);
+        renderRemainAttributes(htmlInputSecret, writer, ignoreAttribute);
         writer.endElement(JsfConstants.INPUT_ELEM);
     }
 
-    public void decode(FacesContext context, UIComponent component) {
+    protected void renderStyleClass(final FacesContext context,
+            final HtmlInputSecret htmlInputSecret, final ResponseWriter writer)
+            throws IOException {
+        final String styleClass = htmlInputSecret.getStyleClass();
+        RendererUtil.renderAttribute(writer, JsfConstants.STYLE_CLASS_ATTR,
+                styleClass);
+    }
+
+    public void decode(final FacesContext context, final UIComponent component) {
         assertNotNull(context, component);
         decodeHtmlInputSecret(context, (HtmlInputSecret) component);
     }
 
-    protected void decodeHtmlInputSecret(FacesContext context,
-            HtmlInputSecret htmlInputSecret) {
+    protected void decodeHtmlInputSecret(final FacesContext context,
+            final HtmlInputSecret htmlInputSecret) {
         getDecoder().decode(context, htmlInputSecret);
+    }
+
+    public void addIgnoreAttributeName(final String name) {
+        ignoreAttribute.addAttributeName(name);
     }
 
 }

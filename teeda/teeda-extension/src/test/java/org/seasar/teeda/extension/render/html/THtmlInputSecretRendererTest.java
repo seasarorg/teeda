@@ -9,34 +9,35 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.core.render.html;
+package org.seasar.teeda.extension.render.html;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.render.Renderer;
 import javax.faces.render.RendererTest;
 
 import org.custommonkey.xmlunit.Diff;
 import org.seasar.teeda.core.mock.MockFacesContext;
-import org.seasar.teeda.core.mock.MockHtmlInputSecret;
 import org.seasar.teeda.core.mock.MockUIComponentBaseWithNamingContainer;
+import org.seasar.teeda.extension.mock.MockTHtmlInputSecret;
 
 /**
  * @author manhole
  */
-public class HtmlInputSecretRendererTest extends RendererTest {
+public class THtmlInputSecretRendererTest extends RendererTest {
 
-    private HtmlInputSecretRenderer renderer;
+    private THtmlInputSecretRenderer renderer;
 
-    private MockHtmlInputSecret htmlInputSecret;
+    private MockTHtmlInputSecret htmlInputSecret;
 
     protected void setUp() throws Exception {
         super.setUp();
-        renderer = createHtmlInputSecretRenderer();
-        htmlInputSecret = new MockHtmlInputSecret();
+        renderer = createTHtmlInputSecretRenderer();
+        htmlInputSecret = new MockTHtmlInputSecret();
         htmlInputSecret.setRenderer(renderer);
     }
 
@@ -196,12 +197,30 @@ public class HtmlInputSecretRendererTest extends RendererTest {
         assertEquals(false, renderer.getRendersChildren());
     }
 
-    private HtmlInputSecretRenderer createHtmlInputSecretRenderer() {
-        return (HtmlInputSecretRenderer) createRenderer();
+    public void testErrorStyleClass() throws Exception {
+        // ## Arrange ##
+        htmlInputSecret.setClientId("aaId");
+        htmlInputSecret.setStyleClass("cc");
+
+        MockFacesContext facesContext = getFacesContext();
+        facesContext.addMessage("aaId", new FacesMessage("sssss"));
+        htmlInputSecret.setErrorStyleClass("fooErrorClass");
+
+        // ## Act ##
+        encodeByRenderer(renderer, htmlInputSecret);
+
+        // ## Assert ##
+        assertEquals(
+                "<input type=\"password\" name=\"aaId\" value=\"\" class=\"cc fooErrorClass\" />",
+                getResponseText());
+    }
+
+    private THtmlInputSecretRenderer createTHtmlInputSecretRenderer() {
+        return (THtmlInputSecretRenderer) createRenderer();
     }
 
     protected Renderer createRenderer() {
-        HtmlInputSecretRenderer renderer = new HtmlInputSecretRenderer();
+        THtmlInputSecretRenderer renderer = new THtmlInputSecretRenderer();
         renderer.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
         return renderer;
     }
