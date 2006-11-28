@@ -40,14 +40,14 @@ public class ForeachTest extends TeedaWebTestCase {
         final String[][] table = new String[][] { { "1", "aa1", "bb1" },
             { "2", "aa2", "bb2" }, { "3", "aa3", "bb3" } };
 
-        tester.assertTableEquals("foreachTable", table);
+        tester.assertTableEqualsById("foreachTable", table);
         tester.submitById("doSomething");
 
         // --------
 
         tester.dumpHtml();
         // inputになっていない"fooNo"項目が再度表示されていること
-        tester.assertTableEquals("foreachTable", table);
+        tester.assertTableEqualsById("foreachTable", table);
     }
 
     public void testInputList() throws Exception {
@@ -61,14 +61,14 @@ public class ForeachTest extends TeedaWebTestCase {
         final String[][] table = new String[][] { { "1", "aa1", "bb1" },
             { "2", "aa2", "bb2" }, { "3", "aa3", "bb3" } };
 
-        tester.assertTableEquals("foreachTable", table);
+        tester.assertTableEqualsById("foreachTable", table);
         tester.submitById("doSomething");
 
         // --------
 
         tester.dumpHtml();
         // inputになっていない"fooNo"項目が再度表示されていること
-        tester.assertTableEquals("foreachTable", table);
+        tester.assertTableEqualsById("foreachTable", table);
     }
 
     /*
@@ -120,7 +120,7 @@ public class ForeachTest extends TeedaWebTestCase {
         // ## Assert ##
         tester.beginAt(getBaseUrl(), "view/foreach/foreachArray.html");
         tester.dumpHtml();
-        tester.assertTableEquals("foreachTable",
+        tester.assertTableEqualsById("foreachTable",
             new String[][] { { "1", "aa1", "bb1" }, { "2", "aa2", "bb2" },
                 { "3", "aa3", "bb3" } });
         tester.setTextByName("fooItems:0:aaa", "");
@@ -132,7 +132,7 @@ public class ForeachTest extends TeedaWebTestCase {
 
         tester.dumpHtml();
         // 空白を含め、入力した値が反映されていること
-        tester.assertTableEquals("foreachTable", new String[][] {
+        tester.assertTableEqualsById("foreachTable", new String[][] {
             { "1", "", "bb1" }, { "2", "a", "bb2" }, { "3", "aa3", "" } });
     }
 
@@ -149,7 +149,7 @@ public class ForeachTest extends TeedaWebTestCase {
         // ## Assert ##
         tester.beginAt(getBaseUrl(), "view/foreach/foreachArray2.html");
         tester.dumpHtml();
-        tester.assertTableEquals("foreachTable",
+        tester.assertTableEqualsById("foreachTable",
             new String[][] { { "1", "aa1", "bb1" }, { "2", "aa2", "bb2" },
                 { "3", "aa3", "bb3" } });
         tester.setTextByName("fooItems:0:fooNo", "-321");
@@ -163,7 +163,7 @@ public class ForeachTest extends TeedaWebTestCase {
         tester.dumpHtml();
         // 空白を含め、入力した値が反映されていること
         // Integer型へ空白更新できていること
-        tester.assertTableEquals("foreachTable", new String[][] {
+        tester.assertTableEqualsById("foreachTable", new String[][] {
             { "-321", "aa1", "bb1" }, { "2", "a", "bb2" }, { "", "aa3", "" } });
     }
 
@@ -180,7 +180,7 @@ public class ForeachTest extends TeedaWebTestCase {
         // ## Assert ##
         tester.beginAt(getBaseUrl(), "view/foreach/foreachSize.html");
         tester.dumpHtml();
-        tester.assertTableEquals("foreachTable", new String[][] {
+        tester.assertTableEqualsById("foreachTable", new String[][] {
             { "0", "aa0", "0" }, { "1", "aa1", "10" }, { "2", "aa2", "20" } });
         tester.assertTextEqualsByName("aaaForm:itemSize", "3");
         tester.setTextByName("aaaForm:itemSize", "0");
@@ -190,7 +190,7 @@ public class ForeachTest extends TeedaWebTestCase {
 
         tester.dumpHtml();
         tester.assertTextEqualsByName("aaaForm:itemSize", "0");
-        tester.assertTableEquals("foreachTable", new String[][] {});
+        tester.assertTableEqualsById("foreachTable", new String[][] {});
     }
 
     public void testValidationError() throws Exception {
@@ -209,7 +209,7 @@ public class ForeachTest extends TeedaWebTestCase {
         tester.setTextByName("aForm:num1", "123");
         tester.setTextByName("aForm:num2", "223");
 
-        tester.assertTableEquals("foreachTable", table);
+        tester.assertTableEqualsById("foreachTable", table);
 
         tester.setTextByName("aForm:fooItems:0:aaa", "");
         tester.setTextByName("aForm:fooItems:1:aaa", "a");
@@ -220,7 +220,7 @@ public class ForeachTest extends TeedaWebTestCase {
         tester.dumpHtml();
         final String[][] tableExpected = new String[][] { { "1", "", "bb1" },
             { "2", "a", "bb2" }, { "3", "aa3", "" } };
-        tester.assertTableEquals("foreachTable", tableExpected);
+        tester.assertTableEqualsById("foreachTable", tableExpected);
 
         // ## Assert ##
         // assume aggregation error message output.

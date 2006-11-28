@@ -25,25 +25,25 @@ import org.seasar.teeda.unit.web.TeedaWebTester;
  */
 public class SelectOneCheckboxTest extends TeedaWebTestCase {
 
-	public static Test suite() throws Exception {
-		return setUpTest(SelectOneCheckboxTest.class);
-	}
+    public static Test suite() throws Exception {
+        return setUpTest(SelectOneCheckboxTest.class);
+    }
 
-	public void testSelectValueAndSubmit() throws Exception {
-		// ## Arrange ##
-		TeedaWebTester tester = new TeedaWebTester();
+    public void testSelectValueAndSubmit() throws Exception {
+        // ## Arrange ##
+        TeedaWebTester tester = new TeedaWebTester();
 
-		// ## Act ##
-		tester.beginAt(getBaseUrl(), "view/checkbox/selectOneCheckbox.html");
-		tester.dumpHtml();
+        // ## Act ##
+        tester.beginAt(getBaseUrl(), "view/checkbox/selectOneCheckbox.html");
+        tester.dumpHtml();
 
-		tester.assertCheckboxSelected("form:aaa");
-		tester.uncheckCheckbox("form:aaa");
+        tester.assertCheckboxSelectedByName("form:aaa");
+        tester.uncheckCheckboxByName("form:aaa");
 
-		tester.submitById("doAction");
+        tester.submitById("doAction");
 
-		// ## Assert ##
-		tester.assertCheckboxNotSelected("form:aaa");
-	}
+        // ## Assert ##
+        tester.assertCheckboxNotSelectedByName("form:aaa");
+    }
 
 }

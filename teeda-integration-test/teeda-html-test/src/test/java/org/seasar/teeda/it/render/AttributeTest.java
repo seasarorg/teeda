@@ -39,15 +39,15 @@ public class AttributeTest extends TeedaWebTestCase {
 		// ## Act ##
 		// ## Assert ##
 		// htmlにしかないので、htmlの値がそのまま出る
-		tester.assertAttributeEquals("aaa", "class", "fooClass");
+		tester.assertAttributeEqualsById("aaa", "class", "fooClass");
 		// Pageとhtmlにあるので、Pageから出る
-		tester.assertAttributeEquals("aaa", "style", "barStyle");
+		tester.assertAttributeEqualsById("aaa", "style", "barStyle");
 
 		// TODO 未知のタグを出力する
 		// bbbの方はPageから取れたら取りたいかも。
 		// ひとまずDynamicPropertyは効かない。
-		tester.assertAttributeEquals("aaa", "bbb", "B");
-		tester.assertAttributeEquals("aaa", "ccc", "CC");
+		tester.assertAttributeEqualsById("aaa", "bbb", "B");
+		tester.assertAttributeEqualsById("aaa", "ccc", "CC");
 	}
 
 }
