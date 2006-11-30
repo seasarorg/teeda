@@ -36,4 +36,14 @@ public class AbstRendererTest extends TeedaTestCase {
                 "<script language=\"JavaScript\" type=\"text/javascript\" src=\"hoge.js\"></script>",
                 s);
     }
+
+    public void testRenderStyleSheet() throws Exception {
+        ResponseWriter writer = getFacesContext().getResponseWriter();
+        renderer.renderStyleSheet(writer, "hoge.css");
+        String s = getResponseText();
+        System.out.println(s);
+        assertEquals(
+                "<link type=\"text/css\" rel=\"stylesheet\" href=\"hoge.css\" />",
+                s);
+    }
 }
