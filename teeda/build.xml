@@ -2,6 +2,7 @@
 
 	<property name="ver" value="1.0.2"/>
 
+	<!-- TODO : choice including contents -->
 	<target name="dist">
 		<mkdir dir="target"/>
 		<zip zipfile="target/teeda-${ver}.zip">
