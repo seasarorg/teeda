@@ -109,6 +109,10 @@ public interface JsfConstants {
 
     String TEXT_VALUE = "text";
 
+    String TEXT_CSS_VALUE = "text/css";
+
+    String STYLESHEET_VALUE = "stylesheet";
+
     // -- element --
 
     String ANCHOR_ELEM = "a";
