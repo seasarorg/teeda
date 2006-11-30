@@ -280,4 +280,18 @@ public abstract class AbstractRenderer extends Renderer {
         writer.writeAttribute(JsfConstants.SRC_ATTR, path, null);
         writer.endElement(JsfConstants.SCRIPT_ELEM);
     }
+
+    protected void renderStyleSheet(final ResponseWriter writer,
+            final String path) throws IOException {
+        if (StringUtil.isBlank(path)) {
+            return;
+        }
+        writer.startElement(JsfConstants.LINK_ELEM, null);
+        writer.writeAttribute(JsfConstants.TYPE_ATTR,
+                JsfConstants.TEXT_CSS_VALUE, null);
+        writer.writeAttribute(JsfConstants.REL_ATTR,
+                JsfConstants.STYLESHEET_VALUE, null);
+        writer.writeAttribute(JsfConstants.HREF_ATTR, path, null);
+        writer.endElement(JsfConstants.LINK_ELEM);
+    }
 }
