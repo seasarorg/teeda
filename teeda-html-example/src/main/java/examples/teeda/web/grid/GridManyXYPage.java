@@ -35,7 +35,7 @@ public class GridManyXYPage {
 			item.setBbb("b" + i);
 			item.setCcc("c" + i);
 			item.setDdd("d" + i);
-			item.setEee(new BigDecimal(i));
+			item.setEee(new BigDecimal(String.valueOf(i)));
 			item.setFff("f" + i);
 			item.setGgg("g" + i);
 			final FooItem fooItem = item;
