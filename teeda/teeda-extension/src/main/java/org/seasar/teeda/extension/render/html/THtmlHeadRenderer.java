@@ -41,21 +41,38 @@ public class THtmlHeadRenderer extends AbstractRenderer {
         assertNotNull(context, component);
         final ResponseWriter writer = context.getResponseWriter();
         writer.startElement(JsfConstants.HEAD_ELEM, component);
-        writer.write("\n");
+        writer.write(JsfConstants.LINE_SP);
     }
 
     public void encodeEnd(FacesContext context, UIComponent component)
             throws IOException {
         assertNotNull(context, component);
+        renderCSSResources(context);
+        renderJSResources(context);
         ResponseWriter writer = context.getResponseWriter();
-        Set resources = VirtualResource.getJSResources(context);
-        for (Iterator i = resources.iterator(); i.hasNext();) {
+        writer.endElement(JsfConstants.HEAD_ELEM);
+        writer.write(JsfConstants.LINE_SP);
+    }
+
+    protected void renderJSResources(FacesContext context) throws IOException {
+        ResponseWriter writer = context.getResponseWriter();
+        Set jsResources = VirtualResource.getJSResources(context);
+        for (Iterator i = jsResources.iterator(); i.hasNext();) {
             String path = (String) i.next();
             renderIncludeJavaScript(writer, VirtualResource.convertVirtualPath(
                     context, path));
-            writer.write("\n");
+            writer.write(JsfConstants.LINE_SP);
         }
-        writer.endElement(JsfConstants.HEAD_ELEM);
-        writer.write("\n");
+    }
+
+    protected void renderCSSResources(FacesContext context) throws IOException {
+        ResponseWriter writer = context.getResponseWriter();
+        Set cssResources = VirtualResource.getCSSResources(context);
+        for (Iterator i = cssResources.iterator(); i.hasNext();) {
+            String path = (String) i.next();
+            renderStyleSheet(writer, VirtualResource.convertVirtualPath(
+                    context, path));
+            writer.write(JsfConstants.LINE_SP);
+        }
     }
 }
