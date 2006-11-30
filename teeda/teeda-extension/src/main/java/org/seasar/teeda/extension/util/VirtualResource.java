@@ -48,11 +48,17 @@ public abstract class VirtualResource {
 
     private static final String JS_KEY = NAME + ".JS_KEY";
 
+    private static final String CSS_KEY = NAME + ".CSS_KEY";
+
     protected VirtualResource() {
     }
 
     public static Set getJSResources(FacesContext context) {
         return getResources(context, JS_KEY);
+    }
+
+    public static Set getCSSResources(FacesContext context) {
+        return getResources(context, CSS_KEY);
     }
 
     protected static Set getResources(FacesContext context, String key) {
@@ -71,6 +77,13 @@ public abstract class VirtualResource {
         AssertionUtil.assertNotNull("context", context);
         AssertionUtil.assertNotNull("path", path);
         Set resources = getJSResources(context);
+        resources.add(path);
+    }
+
+    public static void addCSSResource(FacesContext context, String path) {
+        AssertionUtil.assertNotNull("context", context);
+        AssertionUtil.assertNotNull("path", path);
+        Set resources = getCSSResources(context);
         resources.add(path);
     }
 
