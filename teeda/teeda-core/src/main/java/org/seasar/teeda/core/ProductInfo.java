@@ -27,7 +27,7 @@ public class ProductInfo {
 
     private static final String LOCAL_VERSION = "2";
 
-    private static boolean isSnapshot = true;
+    private static boolean isSnapshot = false;
 
     public static String getProductName() {
         return "Teeda";
