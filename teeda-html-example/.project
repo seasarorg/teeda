@@ -14,5 +14,6 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>com.sysdeo.eclipse.tomcat.tomcatnature</nature>
+		<nature>org.seasar.dolteng.eclipse.nature</nature>
 	</natures>
 </projectDescription>
