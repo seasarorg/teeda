@@ -16,12 +16,15 @@
 package org.seasar.teeda.extension.html.factory;
 
 import java.util.Iterator;
+import java.util.Map;
 
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ElementNode;
+import org.seasar.teeda.extension.html.ElementProcessor;
 import org.seasar.teeda.extension.html.PageDesc;
+import org.seasar.teeda.extension.html.processor.GenericElementProcessor;
 
 /**
  * @author higa
@@ -57,4 +60,13 @@ public class GenericElementFactory extends AbstractElementProcessorFactory {
         return ExtensionConstants.TEEDA_EXTENSION_URI;
     }
 
+    protected ElementProcessor createProcessor(ElementNode elementNode,
+            PageDesc pageDesc, ActionDesc actionDesc, String uri, String tagName) {
+        Class tagClass = getTagClass(uri, tagName);
+        Map props = createProperties(elementNode, pageDesc, actionDesc);
+        ElementProcessor processor = new GenericElementProcessor(tagClass,
+                props, tagName);
+        customizeProcessor(processor, elementNode, pageDesc, actionDesc);
+        return processor;
+    }
 }
