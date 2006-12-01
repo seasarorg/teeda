@@ -21,12 +21,12 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * @author higa
+ * @author shot
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target( { ElementType.FIELD, ElementType.METHOD })
-@Converter("TDateTimeConverter")
-public @interface DateTimeConverter {
+@Converter("TimestampConverter")
+public @interface TimestampConverter {
 
 	String type() default "";
 
