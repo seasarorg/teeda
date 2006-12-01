@@ -29,7 +29,7 @@ public interface JsfConstants {
 
     String JSF_CORE_URI = "http://java.sun.com/jsf/core";
 
-    String LINE_SP = System.getProperty("line.separator");
+    String LINE_SP = "\n";//System.getProperty("line.separator");
 
     String MESSAGES = "Messages";
 

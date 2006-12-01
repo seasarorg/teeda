@@ -104,6 +104,8 @@
 		class="org.seasar.teeda.extension.html.factory.HeadFactory" />
 	<component name="genericFactory"
 		class="org.seasar.teeda.extension.html.factory.GenericFactory" />
+	<component name="genericElementFactory"
+		class="org.seasar.teeda.extension.html.factory.GenericElementFactory" />
 
 	<component
 		class="org.seasar.teeda.extension.html.impl.TagProcessorAssemblerImpl" />

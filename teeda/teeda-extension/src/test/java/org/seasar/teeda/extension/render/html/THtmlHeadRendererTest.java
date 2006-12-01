@@ -40,7 +40,7 @@ public class THtmlHeadRendererTest extends AbstractRendererTest {
         encodeByRenderer(renderer, component);
         System.out.println(getResponseText());
         assertEquals(
-                "<head>\r\n<script language=\"JavaScript\" type=\"text/javascript\" src=\"/mock-context/teedaExtension/hoge.js\"></script>\r\n</head>\r\n",
+                "<head>\n<script language=\"JavaScript\" type=\"text/javascript\" src=\"/mock-context/teedaExtension/hoge.js\"></script>\n</head>\n",
                 getResponseText());
     }
 }

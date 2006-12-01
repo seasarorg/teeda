@@ -3067,4 +3067,9 @@
 			<rtexprvalue>false</rtexprvalue>
 		</attribute>
 	</tag>
+	<tag>
+		<name>element</name>
+		<tag-class>org.seasar.teeda.extension.taglib.TElementTag</tag-class>
+		<body-content>JSP</body-content>
+	</tag>
 </taglib>
