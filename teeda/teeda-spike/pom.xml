@@ -4,7 +4,7 @@
   <groupId>org.seasar.teeda</groupId>
   <artifactId>teeda-spike</artifactId>
   <packaging>jar</packaging>
-  <version>1.0.1-SNAPSHOT</version>
+  <version>1.0.3-SNAPSHOT</version>
   <name>Maven Quick Start Archetype</name>
   <url>http://maven.apache.org</url>
   <dependencies>

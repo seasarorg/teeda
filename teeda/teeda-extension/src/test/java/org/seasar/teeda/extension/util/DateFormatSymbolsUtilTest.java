@@ -16,7 +16,6 @@
 package org.seasar.teeda.extension.util;
 
 import java.text.DateFormatSymbols;
-import java.util.Arrays;
 import java.util.Locale;
 
 import junit.framework.TestCase;
@@ -31,12 +30,12 @@ public class DateFormatSymbolsUtilTest extends TestCase {
     public void testGetWeekdays() throws Exception {
         String[] weekdays = DateFormatSymbolsUtil.getWeekdays(symbols);
         assertEquals(7, weekdays.length);
-        System.out.println(Arrays.toString(weekdays));
+        //System.out.println(Arrays.toString(weekdays));
     }
 
     public void testGetMonths() throws Exception {
         String[] months = DateFormatSymbolsUtil.getMonths(symbols);
         assertEquals(12, months.length);
-        System.out.println(Arrays.toString(months));
+        //System.out.println(Arrays.toString(months));
     }
 }
