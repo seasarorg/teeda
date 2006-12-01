@@ -65,7 +65,7 @@ public class GenericElementFactory extends AbstractElementProcessorFactory {
         Class tagClass = getTagClass(uri, tagName);
         Map props = createProperties(elementNode, pageDesc, actionDesc);
         ElementProcessor processor = new GenericElementProcessor(tagClass,
-                props, tagName);
+                props, elementNode.getTagName());
         customizeProcessor(processor, elementNode, pageDesc, actionDesc);
         return processor;
     }
