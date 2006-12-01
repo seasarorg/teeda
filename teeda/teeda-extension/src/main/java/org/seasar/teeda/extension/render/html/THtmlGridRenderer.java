@@ -17,6 +17,7 @@ package org.seasar.teeda.extension.render.html;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -30,6 +31,7 @@ import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.framework.util.ResourceUtil;
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.core.context.html.HtmlResponseWriter;
 import org.seasar.teeda.core.scope.impl.DispatchScope;
 import org.seasar.teeda.core.scope.impl.DispatchScopeFactory;
 import org.seasar.teeda.core.util.RendererUtil;
@@ -50,6 +52,8 @@ import org.seasar.teeda.extension.util.VirtualResource;
 
 /**
  * @author manhole
+ * @author higa
+ * @author shot
  */
 public class THtmlGridRenderer extends TForEachRenderer implements
         RenderPreparableRenderer {
@@ -190,19 +194,6 @@ public class THtmlGridRenderer extends TForEachRenderer implements
             throws IOException {
         final StringBuffer scriptBody = new StringBuffer(200);
         final String id = getIdForRender(context, htmlGrid);
-        /*
-         final DispatchScope dispatchScope = DispatchScopeFactory
-         .getDispatchScope();
-         if (dispatchScope.get(APPEND_EVENT_JS) == null) {
-         final String resourcePath = ResourceUtil.getResourcePath(
-         THtmlGrid.class.getPackage().getName() + ".AppendEventFor",
-         "js");
-         final String a = TextUtil.readText(resourcePath).trim();
-         scriptBody.append(a);
-         scriptBody.append(JsfConstants.LINE_SP);
-         dispatchScope.put(APPEND_EVENT_JS, APPEND_EVENT_JS);
-         }
-         */
         scriptBody.append("Teeda.THtmlGrid.adjustGridSize('" + id + "');");
 
         // 横方向にscrollするときは全体の横幅を自動調整する
@@ -215,9 +206,36 @@ public class THtmlGridRenderer extends TForEachRenderer implements
                             + "').style.width = "
                             + attribute.getRightBodyWidth() + ";");
         }
-        //scriptBody.append(" Teeda.THtmlGrid.loadGridRows('" + id + "');");
-        //scriptBody.append(" });");
-        renderJavaScriptElement(writer, new String(scriptBody));
+        //renderJavaScriptElement(writer, new String(scriptBody));
+        renderJavaScriptElementOnBodyEnd(context, htmlGrid, scriptBody
+                .toString());
+    }
+
+    protected void renderJavaScriptElementOnBodyEnd(FacesContext context,
+            THtmlGrid htmlGrid, String scriptBody) throws IOException {
+        if (StringUtil.isBlank(scriptBody)) {
+            return;
+        }
+        HtmlResponseWriter writer = new HtmlResponseWriter();
+        writer.setWriter(new StringWriter());
+        writer.write(JsfConstants.LINE_SP);
+        writer.startElement(JsfConstants.SCRIPT_ELEM, null);
+        writer.writeAttribute(JsfConstants.LANGUAGE_ATTR,
+                JsfConstants.JAVASCRIPT_VALUE, null);
+        writer.writeAttribute(JsfConstants.TYPE_ATTR,
+                JsfConstants.TEXT_JAVASCRIPT_VALUE, null);
+        writer.write(JsfConstants.LINE_SP);
+        writer.write("<!--");
+        writer.write(JsfConstants.LINE_SP);
+        writer.write(scriptBody);
+        writer.write(JsfConstants.LINE_SP);
+        writer.write("//-->");
+        writer.write(JsfConstants.LINE_SP);
+        writer.endElement(JsfConstants.SCRIPT_ELEM);
+
+        UIBody body = TBodyRenderer.findParentBody(htmlGrid);
+        GridEndRendererListener listener = new GridEndRendererListener(writer);
+        TBodyRenderer.addRendererListener(body, listener);
     }
 
     private void encodeGridHeader(final FacesContext context,
@@ -609,6 +627,22 @@ public class THtmlGridRenderer extends TForEachRenderer implements
             renderJavaScriptElement(writer, "Teeda.THtmlGrid.loadGridRows('"
                     + id + "');");
         }
+    }
+
+    class GridEndRendererListener implements RendererListener {
+
+        private HtmlResponseWriter partialWriter;
+
+        public GridEndRendererListener(HtmlResponseWriter partialWriter) {
+            this.partialWriter = partialWriter;
+        }
+
+        public void renderBeforeBodyEnd(FacesContext context)
+                throws IOException {
+            ResponseWriter responseWriter = context.getResponseWriter();
+            responseWriter.write(partialWriter.toString());
+        }
+
     }
 
     private void encodeGridLeftBodyTr(final FacesContext context,

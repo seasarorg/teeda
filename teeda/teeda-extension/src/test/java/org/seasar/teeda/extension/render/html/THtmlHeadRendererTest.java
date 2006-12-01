@@ -38,8 +38,9 @@ public class THtmlHeadRendererTest extends AbstractRendererTest {
     public void testEncode() throws Exception {
         VirtualResource.addJSResource(getFacesContext(), "hoge.js");
         encodeByRenderer(renderer, component);
+        System.out.println(getResponseText());
         assertEquals(
-                "<head>\n<script language=\"JavaScript\" type=\"text/javascript\" src=\"/mock-context/teedaExtension/hoge.js\"></script>\n</head>\n",
+                "<head>\r\n<script language=\"JavaScript\" type=\"text/javascript\" src=\"/mock-context/teedaExtension/hoge.js\"></script>\r\n</head>\r\n",
                 getResponseText());
     }
 }

@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -36,6 +36,7 @@ import org.seasar.teeda.core.render.html.HtmlInputTextRenderer;
 import org.seasar.teeda.core.render.html.HtmlOutputTextRenderer;
 import org.seasar.teeda.core.unit.ExceptionAssert;
 import org.seasar.teeda.core.unit.TestUtil;
+import org.seasar.teeda.extension.component.UIBody;
 import org.seasar.teeda.extension.component.html.THtmlGridBody;
 import org.seasar.teeda.extension.component.html.THtmlGridColumn;
 import org.seasar.teeda.extension.component.html.THtmlGridColumnGroup;
@@ -44,6 +45,7 @@ import org.seasar.teeda.extension.component.html.THtmlGridTd;
 import org.seasar.teeda.extension.component.html.THtmlGridTh;
 import org.seasar.teeda.extension.component.html.THtmlGridTr;
 import org.seasar.teeda.extension.mock.MockHtmlGrid;
+import org.seasar.teeda.extension.render.TBodyRenderer;
 import org.seasar.teeda.extension.render.html.THtmlGridRendererTest.FooPage.FooItem;
 import org.xml.sax.SAXException;
 
@@ -72,6 +74,7 @@ public class THtmlGridRendererTest extends RendererTest {
         //gridInputTextRenderer = new THtmlGridInputTextRenderer();
         //gridInputTextRenderer.setRenderAttributes(getRenderAttributes());
         htmlGrid = new MockHtmlGrid();
+        htmlGrid.setParent(new UIBody());
         htmlGrid.setRenderer(renderer);
     }
 
@@ -108,12 +111,15 @@ public class THtmlGridRendererTest extends RendererTest {
         // ## Assert ##
         final String responseText = getResponseText();
         System.out.println(responseText);
-        assertEquals(1, containCount(responseText, "</script>"));
-        final String a = deleteAfter(responseText, "</table>");
-
+        assertEquals(0, containCount(responseText, "</script>"));
         assertEquals(
                 "<table id=\"aa\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\"></table>",
-                a);
+                responseText);
+
+        UIBody body = TBodyRenderer.findParentBody(htmlGrid);
+        encodeByRenderer(new TBodyRenderer(), body);
+        System.out.println(getResponseText());
+        assertEquals(1, containCount(getResponseText(), "</script>"));
     }
 
     private String deleteAfter(final String s1, final String s2) {
@@ -256,8 +262,12 @@ public class THtmlGridRendererTest extends RendererTest {
                 "testEncode_LeftFixed_Header_Body_XY.html", "UTF-8");
         final String expected = extract(readText);
         Diff diff = diff(expected, getResponseText());
-        System.out.println(getResponseText());
         assertEquals(diff.toString(), true, diff.identical());
+
+        UIBody body = TBodyRenderer.findParentBody(htmlGrid);
+        encodeByRenderer(new TBodyRenderer(), body);
+        System.out.println(getResponseText());
+        assertEquals(1, containCount(getResponseText(), "</script>"));
     }
 
     public void testEncode_LeftFixed_Header_Body_X() throws Exception {
@@ -278,6 +288,11 @@ public class THtmlGridRendererTest extends RendererTest {
         Diff diff = diff(expected, getResponseText());
         System.out.println(getResponseText());
         assertEquals(diff.toString(), true, diff.identical());
+
+        UIBody body = TBodyRenderer.findParentBody(htmlGrid);
+        encodeByRenderer(new TBodyRenderer(), body);
+        System.out.println(getResponseText());
+        assertEquals(1, containCount(getResponseText(), "</script>"));
     }
 
     public void testEncode_LeftFixed_Header_Body_Y() throws Exception {
@@ -298,6 +313,11 @@ public class THtmlGridRendererTest extends RendererTest {
         Diff diff = diff(expected, getResponseText());
         System.out.println(getResponseText());
         assertEquals(diff.toString(), true, diff.identical());
+
+        UIBody body = TBodyRenderer.findParentBody(htmlGrid);
+        encodeByRenderer(new TBodyRenderer(), body);
+        System.out.println(getResponseText());
+        assertEquals(1, containCount(getResponseText(), "</script>"));
     }
 
     public void testEncode_LeftFixed_Header_Body() throws Exception {
@@ -318,6 +338,11 @@ public class THtmlGridRendererTest extends RendererTest {
         Diff diff = diff(expected, getResponseText());
         System.out.println(getResponseText());
         assertEquals(diff.toString(), true, diff.identical());
+
+        UIBody body = TBodyRenderer.findParentBody(htmlGrid);
+        encodeByRenderer(new TBodyRenderer(), body);
+        System.out.println(getResponseText());
+        assertEquals(1, containCount(getResponseText(), "</script>"));
     }
 
     private void actLeftFixed(final int itemSize) throws IOException {
@@ -442,6 +467,11 @@ public class THtmlGridRendererTest extends RendererTest {
         Diff diff = diff(expected, getResponseText());
         System.out.println(getResponseText());
         assertEquals(diff.toString(), true, diff.identical());
+
+        UIBody body = TBodyRenderer.findParentBody(htmlGrid);
+        encodeByRenderer(new TBodyRenderer(), body);
+        System.out.println(getResponseText());
+        assertEquals(1, containCount(getResponseText(), "</script>"));
     }
 
     public void testEncode_Header_Body_Y() throws Exception {
@@ -462,6 +492,11 @@ public class THtmlGridRendererTest extends RendererTest {
         Diff diff = diff(expected, getResponseText());
         System.out.println(getResponseText());
         assertEquals(diff.toString(), true, diff.identical());
+
+        UIBody body = TBodyRenderer.findParentBody(htmlGrid);
+        encodeByRenderer(new TBodyRenderer(), body);
+        System.out.println(getResponseText());
+        assertEquals(1, containCount(getResponseText(), "</script>"));
     }
 
     public void testEncode_Header_Body() throws Exception {
@@ -482,6 +517,11 @@ public class THtmlGridRendererTest extends RendererTest {
         Diff diff = diff(expected, getResponseText());
         System.out.println(getResponseText());
         assertEquals(diff.toString(), true, diff.identical());
+
+        UIBody body = TBodyRenderer.findParentBody(htmlGrid);
+        encodeByRenderer(new TBodyRenderer(), body);
+        System.out.println(getResponseText());
+        assertEquals(1, containCount(getResponseText(), "</script>"));
     }
 
     private void actNoLeftFixed() throws IOException {

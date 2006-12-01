@@ -247,8 +247,8 @@ public abstract class AbstractRenderer extends Renderer {
     }
 
     protected void renderJavaScriptElement(final ResponseWriter writer,
-            final String scirptBody) throws IOException {
-        if (StringUtil.isBlank(scirptBody)) {
+            final String scriptBody) throws IOException {
+        if (StringUtil.isBlank(scriptBody)) {
             return;
         }
         writer.write(JsfConstants.LINE_SP);
@@ -260,7 +260,7 @@ public abstract class AbstractRenderer extends Renderer {
         writer.write(JsfConstants.LINE_SP);
         writer.write("<!--");
         writer.write(JsfConstants.LINE_SP);
-        writer.write(scirptBody);
+        writer.write(scriptBody);
         writer.write(JsfConstants.LINE_SP);
         writer.write("//-->");
         writer.write(JsfConstants.LINE_SP);
