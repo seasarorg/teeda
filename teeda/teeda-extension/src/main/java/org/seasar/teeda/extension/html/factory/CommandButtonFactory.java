@@ -39,7 +39,8 @@ public class CommandButtonFactory extends AbstractElementProcessorFactory {
         }
         String type = elementNode.getProperty(JsfConstants.TYPE_ATTR);
         if (!JsfConstants.SUBMIT_VALUE.equalsIgnoreCase(type)
-                && !JsfConstants.BUTTON_VALUE.equalsIgnoreCase(type)) {
+                && !JsfConstants.BUTTON_VALUE.equalsIgnoreCase(type)
+                && !JsfConstants.IMAGE_VALUE.equalsIgnoreCase(type)) {
             return false;
         }
         String id = elementNode.getId();
@@ -106,6 +107,8 @@ public class CommandButtonFactory extends AbstractElementProcessorFactory {
             }
             properties.put(JsfConstants.ONCLICK_ATTR, onclick);
         }
+        renameProperty(properties, JsfConstants.SRC_ATTR,
+                JsfConstants.IMAGE_ATTR);
     }
 
     protected String getTagName() {

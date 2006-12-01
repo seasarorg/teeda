@@ -84,6 +84,18 @@ public class CommandButtonFactoryTest extends ElementProcessorFactoryTestCase {
         assertFalse(factory.isMatch(elementNode2, null, null));
     }
 
+    public void testIsMatch_image() throws Exception {
+        Map properties = new HashMap();
+        properties.put("type", "image");
+        properties.put("id", "doBbb");
+        ElementNode elementNode = createElementNode("input", properties);
+        PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
+        assertTrue(factory.isMatch(elementNode, pageDesc, null));
+
+        ElementNode elementNode2 = createElementNode("hoge", properties);
+        assertFalse(factory.isMatch(elementNode2, pageDesc, null));
+    }
+
     public void testCreateFactory() throws Exception {
         // ## Arrange ##
         Map properties = new HashMap();
@@ -204,4 +216,22 @@ public class CommandButtonFactoryTest extends ElementProcessorFactoryTestCase {
         System.out.println(processor.getProperty("onclick"));
     }
 
+    public void testCreateFactory_image() throws Exception {
+        // ## Arrange ##
+        Map properties = new HashMap();
+        properties.put("id", "doBbb");
+        properties.put("type", "image");
+        properties.put("src", "hoge.gif");
+        ElementNode elementNode = createElementNode("input", properties);
+        PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
+        ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
+
+        ElementProcessor processor = factory.createProcessor(elementNode,
+                pageDesc, actionDesc);
+        // ## Assert ##
+        assertNotNull(processor);
+        assertEquals(CommandButtonTag.class, processor.getTagClass());
+        assertEquals("#{fooPage.doBbb}", processor.getProperty("action"));
+        assertEquals("hoge.gif", processor.getProperty("image"));
+    }
 }
