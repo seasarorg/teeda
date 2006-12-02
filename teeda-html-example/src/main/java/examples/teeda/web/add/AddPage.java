@@ -36,6 +36,11 @@ public class AddPage {
 		this.result = result;
 	}
 
+	private String doCalculateValue;
+	
+	public String getDoCalculateValue() {
+		return "BBBB";
+	}	
 	public String doCalculate() {
 		result = arg1 + arg2;
 		return null;
