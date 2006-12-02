@@ -17,10 +17,15 @@ package org.seasar.teeda.extension.render.html;
 
 import java.io.IOException;
 
+import javax.faces.component.UICommand;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.context.ResponseWriter;
+import javax.faces.internal.LabelUtil;
 
+import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.html.HtmlCommandButtonRenderer;
+import org.seasar.teeda.core.util.RendererUtil;
 import org.seasar.teeda.extension.util.TransactionTokenUtil;
 
 /**
@@ -29,6 +34,7 @@ import org.seasar.teeda.extension.util.TransactionTokenUtil;
  */
 public class THtmlCommandButtonRenderer extends HtmlCommandButtonRenderer {
 
+    //TODO testing
     //TODO register by TeedaRendererComponentAutoRegister.
     public void encodeEnd(FacesContext context, UIComponent component)
             throws IOException {
@@ -40,6 +46,17 @@ public class THtmlCommandButtonRenderer extends HtmlCommandButtonRenderer {
             return;
         }
         TransactionTokenUtil.renderTokenIfNeed(context, component);
+    }
+
+    protected void renderValueAttribute(FacesContext context,
+            UICommand command, ResponseWriter writer) throws IOException {
+        final String id = getIdForRender(context, command);
+        final String labelValue = LabelUtil.getLabelValue(id);
+        if(labelValue != null) {
+            RendererUtil.renderAttribute(writer, JsfConstants.VALUE_ATTR, labelValue);
+        } else {
+            super.renderValueAttribute(context, command, writer);
+        }
     }
 
 }

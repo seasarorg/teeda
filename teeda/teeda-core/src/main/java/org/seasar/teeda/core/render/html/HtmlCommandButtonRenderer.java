@@ -18,6 +18,7 @@ package org.seasar.teeda.core.render.html;
 import java.io.IOException;
 import java.util.Map;
 
+import javax.faces.component.UICommand;
 import javax.faces.component.UIComponent;
 import javax.faces.component.html.HtmlCommandButton;
 import javax.faces.context.FacesContext;
@@ -72,8 +73,9 @@ public class HtmlCommandButtonRenderer extends AbstractRenderer {
         }
         RendererUtil.renderAttribute(writer, JsfConstants.TYPE_ATTR, type);
 
-        RendererUtil.renderIdAttributeIfNecessary(writer, htmlCommandButton,
-                getIdForRender(context, htmlCommandButton));
+        final String id = getIdForRender(context, htmlCommandButton);
+        RendererUtil
+                .renderIdAttributeIfNecessary(writer, htmlCommandButton, id);
         RendererUtil.renderAttribute(writer, JsfConstants.NAME_ATTR,
                 htmlCommandButton.getClientId(context));
 
@@ -81,12 +83,16 @@ public class HtmlCommandButtonRenderer extends AbstractRenderer {
             RendererUtil.renderAttribute(writer, JsfConstants.SRC_ATTR, image,
                     JsfConstants.IMAGE_ATTR);
         } else {
-            RendererUtil.renderAttribute(writer, JsfConstants.VALUE_ATTR,
-                    htmlCommandButton.getValue());
+            renderValueAttribute(context, htmlCommandButton, writer);
         }
-        //renderRemainAttributes(htmlCommandButton, writer);
         renderRemainAttributes(htmlCommandButton, writer, ignoreComponent);
         writer.endElement(JsfConstants.INPUT_ELEM);
+    }
+
+    protected void renderValueAttribute(FacesContext context,
+            UICommand command, ResponseWriter writer) throws IOException {
+        RendererUtil.renderAttribute(writer, JsfConstants.VALUE_ATTR, command
+                .getValue());
     }
 
     public void decode(FacesContext context, UIComponent component) {
