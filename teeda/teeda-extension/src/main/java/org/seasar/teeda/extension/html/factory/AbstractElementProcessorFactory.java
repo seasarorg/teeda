@@ -33,7 +33,7 @@ import org.seasar.teeda.extension.html.processor.ElementProcessorImpl;
 
 /**
  * @author higa
- *
+ * @author shot
  */
 public abstract class AbstractElementProcessorFactory implements
         ElementProcessorFactory {
@@ -106,8 +106,8 @@ public abstract class AbstractElementProcessorFactory implements
 
     protected void customizeDynamicProperties(Map properties,
             ElementNode elementNode, PageDesc pageDesc, ActionDesc actionDesc) {
-        customizeDynamicProperties((String) properties
-                .get(JsfConstants.ID_ATTR), properties, elementNode, pageDesc,
+        final String id = elementNode.getId();
+        customizeDynamicProperties(id, properties, elementNode, pageDesc,
                 actionDesc);
     }
 
