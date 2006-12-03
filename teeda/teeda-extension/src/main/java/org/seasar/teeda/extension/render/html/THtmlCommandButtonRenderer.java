@@ -34,7 +34,6 @@ import org.seasar.teeda.extension.util.TransactionTokenUtil;
  */
 public class THtmlCommandButtonRenderer extends HtmlCommandButtonRenderer {
 
-    //TODO testing
     //TODO register by TeedaRendererComponentAutoRegister.
     public void encodeEnd(FacesContext context, UIComponent component)
             throws IOException {

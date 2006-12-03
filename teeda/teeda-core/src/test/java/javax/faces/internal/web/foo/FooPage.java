@@ -16,7 +16,7 @@
 package javax.faces.internal.web.foo;
 
 /**
- * @author li0934
+ * @author shot
  * 
  */
 public class FooPage {
