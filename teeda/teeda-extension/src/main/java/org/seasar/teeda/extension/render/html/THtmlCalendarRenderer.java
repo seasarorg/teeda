@@ -95,16 +95,19 @@ public class THtmlCalendarRenderer extends AbstractInputRenderer implements
                 .addCSSResource(context, RESOURCE_ROOT + "css/theme.css");
         VirtualResource.addJSResource(context, RESOURCE_ROOT
                 + "js/popcalendar_init.js");
-
-        StringBuffer imageScript = new StringBuffer();
-        appendImageDirectory(imageScript, context);
-        imageScript.append(JsfConstants.LINE_SP);
-        imageScript.append(getLocalizedLanguageScript(symbols, months,
-                firstDayOfWeek, htmlCalendar));
-        VirtualResource.addInlineJSResource(context, JAVASCRIPT_ENCODED,
-                imageScript.toString());
         VirtualResource.addJSResource(context, RESOURCE_ROOT
                 + "js/popcalendar.js");
+
+        StringBuffer script = new StringBuffer();
+        appendImageDirectory(script, context);
+        script.append(JsfConstants.LINE_SP);
+        script.append(getLocalizedLanguageScript(symbols, months,
+                firstDayOfWeek, htmlCalendar));
+        script.append(JsfConstants.LINE_SP);
+        script.append("loadPopupScript();");
+        VirtualResource.addInlineJSResource(context, JAVASCRIPT_ENCODED, script
+                .toString());
+
         context.getExternalContext().getRequestMap().put(JAVASCRIPT_ENCODED,
                 Boolean.TRUE);
     }
@@ -112,22 +115,8 @@ public class THtmlCalendarRenderer extends AbstractInputRenderer implements
     public void encodeEnd(FacesContext facesContext, UIComponent component)
             throws IOException {
         THtmlCalendar htmlCalendar = (THtmlCalendar) component;
-
         Locale currentLocale = facesContext.getViewRoot().getLocale();
-
-        Date value;
-
-        try {
-            Converter converter = getConverter(htmlCalendar);
-            if (converter instanceof DateConverter) {
-                value = ((DateConverter) converter).getAsDate(facesContext,
-                        component);
-            } else {
-                value = getDateValue(htmlCalendar);
-            }
-        } catch (IllegalArgumentException illegalArgumentException) {
-            value = null;
-        }
+        Date value = (Date) htmlCalendar.getValue();
 
         Calendar timeKeeper = Calendar.getInstance(currentLocale);
         timeKeeper.setTime(value != null ? value : new Date());
@@ -138,11 +127,6 @@ public class THtmlCalendarRenderer extends AbstractInputRenderer implements
         String[] months = DateFormatSymbolsUtil.getMonths(symbols);
 
         if (htmlCalendar.isRenderAsPopup()) {
-            if (htmlCalendar.isAddResources())
-                addScriptAndCSSResources(facesContext, htmlCalendar);
-
-            String dateFormat = CalendarDateTimeConverter.createJSPopupFormat(
-                    facesContext, htmlCalendar.getPopupDateFormat());
 
             Application application = facesContext.getApplication();
 
@@ -176,12 +160,12 @@ public class THtmlCalendarRenderer extends AbstractInputRenderer implements
 
             if (!htmlCalendar.isDisabled()) {
                 ResponseWriter writer = facesContext.getResponseWriter();
-
+                String dateFormat = CalendarDateTimeConverter
+                        .createJSPopupFormat(facesContext, htmlCalendar
+                                .getPopupDateFormat());
                 writer.startElement(JsfConstants.SCRIPT_ELEM, component);
                 writer.writeAttribute(JsfConstants.TYPE_ATTR,
                         JsfConstants.TEXT_JAVASCRIPT_VALUE, null);
-                writer.writeText(getLocalizedLanguageScript(symbols, months,
-                        timeKeeper.getFirstDayOfWeek(), htmlCalendar), null);
                 writer.writeText(getScriptBtn(facesContext, htmlCalendar,
                         dateFormat, htmlCalendar.getPopupButtonString()), null);
                 writer.endElement(JsfConstants.SCRIPT_ELEM);
@@ -246,7 +230,7 @@ public class THtmlCalendarRenderer extends AbstractInputRenderer implements
         }
     }
 
-    public static Date getDateValue(UIComponent component) {
+    private static Date getDateValue(UIComponent component) {
         Object value = getObjectValue(component);
         if (value == null || value instanceof Date) {
             return (Date) value;
@@ -257,7 +241,7 @@ public class THtmlCalendarRenderer extends AbstractInputRenderer implements
         }
     }
 
-    public static Object getObjectValue(UIComponent component) {
+    private static Object getObjectValue(UIComponent component) {
         if (!(component instanceof ValueHolder)) {
             throw new IllegalArgumentException("Component : "
                     + component.toString() + "is not a ValueHolder");
