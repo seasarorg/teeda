@@ -15,14 +15,19 @@
  */
 package org.seasar.teeda.extension.component.html;
 
+import java.io.IOException;
+
 import javax.faces.component.html.HtmlInputText;
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
 
+import org.seasar.teeda.extension.component.RenderPreparable;
+import org.seasar.teeda.extension.component.RenderPreparableUtil;
+
 /**
  * @author higa
  */
-public class THtmlCalendar extends HtmlInputText {
+public class THtmlCalendar extends HtmlInputText implements RenderPreparable {
 
     public static final String COMPONENT_FAMILY = "org.seasar.teeda.extension.HtmlCalendar";
 
@@ -260,6 +265,10 @@ public class THtmlCalendar extends HtmlInputText {
             return popupSelectDateMessage;
         ValueBinding vb = getValueBinding("popupSelectDateMessage");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+    }
+
+    public void encodePrepare(FacesContext context) throws IOException {
+        RenderPreparableUtil.encodePrepareForRenderer(context, this);
     }
 
     public Object saveState(FacesContext context) {

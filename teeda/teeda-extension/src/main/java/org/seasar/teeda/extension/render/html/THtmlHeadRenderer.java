@@ -16,6 +16,7 @@
 package org.seasar.teeda.extension.render.html;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -42,13 +43,14 @@ public class THtmlHeadRenderer extends AbstractRenderer {
         final ResponseWriter writer = context.getResponseWriter();
         writer.startElement(JsfConstants.HEAD_ELEM, component);
         writer.write(JsfConstants.LINE_SP);
+        renderCSSResources(context);
+        renderJSResources(context);
+        renderInlineJSResources(context);
     }
 
     public void encodeEnd(FacesContext context, UIComponent component)
             throws IOException {
         assertNotNull(context, component);
-        renderCSSResources(context);
-        renderJSResources(context);
         ResponseWriter writer = context.getResponseWriter();
         writer.endElement(JsfConstants.HEAD_ELEM);
         writer.write(JsfConstants.LINE_SP);
@@ -61,6 +63,17 @@ public class THtmlHeadRenderer extends AbstractRenderer {
             String path = (String) i.next();
             renderIncludeJavaScript(writer, VirtualResource.convertVirtualPath(
                     context, path));
+            writer.write(JsfConstants.LINE_SP);
+        }
+    }
+
+    protected void renderInlineJSResources(FacesContext context)
+            throws IOException {
+        ResponseWriter writer = context.getResponseWriter();
+        Collection values = VirtualResource.getInlineJSResourceValues(context);
+        for (Iterator i = values.iterator(); i.hasNext();) {
+            String script = (String) i.next();
+            renderJavaScriptElement(writer, script);
             writer.write(JsfConstants.LINE_SP);
         }
     }

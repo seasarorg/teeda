@@ -19,6 +19,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Calendar;
+import java.util.Collection;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
@@ -48,20 +50,30 @@ public abstract class VirtualResource {
 
     private static final String JS_KEY = NAME + ".JS_KEY";
 
+    private static final String INLINE_JS_KEY = NAME + ".INLINE_JS_KEY";
+
     private static final String CSS_KEY = NAME + ".CSS_KEY";
 
     protected VirtualResource() {
     }
 
     public static Set getJSResources(FacesContext context) {
-        return getResources(context, JS_KEY);
+        return getSetResources(context, JS_KEY);
     }
 
     public static Set getCSSResources(FacesContext context) {
-        return getResources(context, CSS_KEY);
+        return getSetResources(context, CSS_KEY);
     }
 
-    protected static Set getResources(FacesContext context, String key) {
+    public static Map getInlineJSResources(FacesContext context) {
+        return getMapResources(context, INLINE_JS_KEY);
+    }
+
+    public static Collection getInlineJSResourceValues(FacesContext context) {
+        return getMapResources(context, INLINE_JS_KEY).values();
+    }
+
+    protected static Set getSetResources(FacesContext context, String key) {
         AssertionUtil.assertNotNull("context", context);
         AssertionUtil.assertNotNull("key", key);
         Map requestMap = context.getExternalContext().getRequestMap();
@@ -73,18 +85,45 @@ public abstract class VirtualResource {
         return resources;
     }
 
+    protected static Map getMapResources(FacesContext context, String key) {
+        AssertionUtil.assertNotNull("context", context);
+        AssertionUtil.assertNotNull("key", key);
+        Map requestMap = context.getExternalContext().getRequestMap();
+        Map resources = (Map) requestMap.get(key);
+        if (resources == null) {
+            resources = new LinkedHashMap();
+            requestMap.put(key, resources);
+        }
+        return resources;
+    }
+
     public static void addJSResource(FacesContext context, String path) {
         AssertionUtil.assertNotNull("context", context);
         AssertionUtil.assertNotNull("path", path);
         Set resources = getJSResources(context);
-        resources.add(path);
+        if (!resources.contains(path)) {
+            resources.add(path);
+        }
     }
 
     public static void addCSSResource(FacesContext context, String path) {
         AssertionUtil.assertNotNull("context", context);
         AssertionUtil.assertNotNull("path", path);
         Set resources = getCSSResources(context);
-        resources.add(path);
+        if (!resources.contains(path)) {
+            resources.add(path);
+        }
+    }
+
+    public static void addInlineJSResource(FacesContext context, String key,
+            String script) {
+        AssertionUtil.assertNotNull("context", context);
+        AssertionUtil.assertNotNull("path", key);
+        AssertionUtil.assertNotNull("script", script);
+        Map resources = getInlineJSResources(context);
+        if (!resources.containsKey(key)) {
+            resources.put(key, script);
+        }
     }
 
     public static String convertVirtualPath(FacesContext context, String path) {
