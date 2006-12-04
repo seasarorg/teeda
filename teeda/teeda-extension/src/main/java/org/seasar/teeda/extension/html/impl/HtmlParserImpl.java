@@ -54,7 +54,7 @@ public class HtmlParserImpl implements HtmlParser {
             parser.setContentHandler(handler);
             parser.setEntityResolver(handler);
             InputSource inputSource = new InputSource(reader);
-            inputSource.setPublicId(viewId);
+            inputSource.setSystemId(viewId);
             parser.parse(inputSource);
             return handler.getRoot();
         } catch (SAXException e) {
