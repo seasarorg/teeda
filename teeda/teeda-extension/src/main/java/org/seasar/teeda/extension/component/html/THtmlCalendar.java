@@ -73,6 +73,10 @@ public class THtmlCalendar extends HtmlInputText implements RenderPreparable {
         setRendererType(DEFAULT_RENDERER_TYPE);
     }
 
+    public String getFamily() {
+        return COMPONENT_FAMILY;
+    }
+
     public void setMonthYearRowClass(String monthYearRowClass) {
         this.monthYearRowClass = monthYearRowClass;
     }
