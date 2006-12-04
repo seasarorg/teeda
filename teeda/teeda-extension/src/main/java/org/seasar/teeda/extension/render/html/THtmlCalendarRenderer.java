@@ -49,6 +49,7 @@ import org.seasar.teeda.core.render.AbstractInputRenderer;
 import org.seasar.teeda.core.util.RendererUtil;
 import org.seasar.teeda.extension.component.html.THtmlCalendar;
 import org.seasar.teeda.extension.render.RenderPreparableRenderer;
+import org.seasar.teeda.extension.util.DateFormatSymbolsUtil;
 import org.seasar.teeda.extension.util.VirtualResource;
 
 /**
@@ -88,13 +89,12 @@ public class THtmlCalendarRenderer extends AbstractInputRenderer implements
         Locale currentLocale = context.getViewRoot().getLocale();
         Calendar timeKeeper = Calendar.getInstance(currentLocale);
         DateFormatSymbols symbols = new DateFormatSymbols(currentLocale);
-        String[] months = mapMonths(symbols);
+        String[] months = DateFormatSymbolsUtil.getMonths(symbols);
         int firstDayOfWeek = timeKeeper.getFirstDayOfWeek();
-        // Add the javascript and CSS pages
-        VirtualResource.addCSSResource(context, RESOURCE_ROOT + "wh/theme.css");
-        VirtualResource.addCSSResource(context, RESOURCE_ROOT + "db/theme.css");
+        VirtualResource
+                .addCSSResource(context, RESOURCE_ROOT + "css/theme.css");
         VirtualResource.addJSResource(context, RESOURCE_ROOT
-                + "popcalendar_init.js");
+                + "js/popcalendar_init.js");
 
         StringBuffer imageScript = new StringBuffer();
         appendImageDirectory(imageScript, context);
@@ -103,8 +103,8 @@ public class THtmlCalendarRenderer extends AbstractInputRenderer implements
                 firstDayOfWeek, htmlCalendar));
         VirtualResource.addInlineJSResource(context, JAVASCRIPT_ENCODED,
                 imageScript.toString());
-        VirtualResource
-                .addJSResource(context, RESOURCE_ROOT + "popcalendar.js");
+        VirtualResource.addJSResource(context, RESOURCE_ROOT
+                + "js/popcalendar.js");
         context.getExternalContext().getRequestMap().put(JAVASCRIPT_ENCODED,
                 Boolean.TRUE);
     }
@@ -134,8 +134,8 @@ public class THtmlCalendarRenderer extends AbstractInputRenderer implements
 
         DateFormatSymbols symbols = new DateFormatSymbols(currentLocale);
 
-        String[] weekdays = mapWeekdays(symbols);
-        String[] months = mapMonths(symbols);
+        String[] weekdays = DateFormatSymbolsUtil.getWeekdays(symbols);
+        String[] months = DateFormatSymbolsUtil.getMonths(symbols);
 
         if (htmlCalendar.isRenderAsPopup()) {
             if (htmlCalendar.isAddResources())
@@ -365,7 +365,7 @@ public class THtmlCalendarRenderer extends AbstractInputRenderer implements
             FacesContext facesContext) {
         script.append("jscalendarSetImageDirectory('");
         script.append(VirtualResource.convertVirtualPath(facesContext,
-                RESOURCE_ROOT + "db/"));
+                RESOURCE_ROOT + "images/"));
         script.append("');");
     }
 
@@ -376,9 +376,10 @@ public class THtmlCalendarRenderer extends AbstractInputRenderer implements
         String[] weekDays;
 
         if (realFirstDayOfWeek == 0) {
-            weekDays = mapWeekdaysStartingWithSunday(symbols);
+            weekDays = DateFormatSymbolsUtil
+                    .getWeekdaysStartingWithSunday(symbols);
         } else if (realFirstDayOfWeek == 1) {
-            weekDays = mapWeekdays(symbols);
+            weekDays = DateFormatSymbolsUtil.getWeekdays(symbols);
         } else
             throw new IllegalStateException(
                     "Week may only start with sunday or monday.");
@@ -714,60 +715,6 @@ public class THtmlCalendarRenderer extends AbstractInputRenderer implements
         default:
             return 0;
         }
-    }
-
-    private static String[] mapWeekdays(DateFormatSymbols symbols) {
-        String[] weekdays = new String[7];
-
-        String[] localeWeekdays = symbols.getShortWeekdays();
-
-        weekdays[0] = localeWeekdays[Calendar.MONDAY];
-        weekdays[1] = localeWeekdays[Calendar.TUESDAY];
-        weekdays[2] = localeWeekdays[Calendar.WEDNESDAY];
-        weekdays[3] = localeWeekdays[Calendar.THURSDAY];
-        weekdays[4] = localeWeekdays[Calendar.FRIDAY];
-        weekdays[5] = localeWeekdays[Calendar.SATURDAY];
-        weekdays[6] = localeWeekdays[Calendar.SUNDAY];
-
-        return weekdays;
-    }
-
-    private static String[] mapWeekdaysStartingWithSunday(
-            DateFormatSymbols symbols) {
-        String[] weekdays = new String[7];
-
-        String[] localeWeekdays = symbols.getShortWeekdays();
-
-        weekdays[0] = localeWeekdays[Calendar.SUNDAY];
-        weekdays[1] = localeWeekdays[Calendar.MONDAY];
-        weekdays[2] = localeWeekdays[Calendar.TUESDAY];
-        weekdays[3] = localeWeekdays[Calendar.WEDNESDAY];
-        weekdays[4] = localeWeekdays[Calendar.THURSDAY];
-        weekdays[5] = localeWeekdays[Calendar.FRIDAY];
-        weekdays[6] = localeWeekdays[Calendar.SATURDAY];
-
-        return weekdays;
-    }
-
-    public static String[] mapMonths(DateFormatSymbols symbols) {
-        String[] months = new String[12];
-
-        String[] localeMonths = symbols.getMonths();
-
-        months[0] = localeMonths[Calendar.JANUARY];
-        months[1] = localeMonths[Calendar.FEBRUARY];
-        months[2] = localeMonths[Calendar.MARCH];
-        months[3] = localeMonths[Calendar.APRIL];
-        months[4] = localeMonths[Calendar.MAY];
-        months[5] = localeMonths[Calendar.JUNE];
-        months[6] = localeMonths[Calendar.JULY];
-        months[7] = localeMonths[Calendar.AUGUST];
-        months[8] = localeMonths[Calendar.SEPTEMBER];
-        months[9] = localeMonths[Calendar.OCTOBER];
-        months[10] = localeMonths[Calendar.NOVEMBER];
-        months[11] = localeMonths[Calendar.DECEMBER];
-
-        return months;
     }
 
     public void decode(FacesContext context, UIComponent component) {

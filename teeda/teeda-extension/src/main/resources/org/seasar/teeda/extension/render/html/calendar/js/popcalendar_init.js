@@ -4,7 +4,7 @@ var jscalendarStartAt = 1			// 0 - sunday ; 1 - monday
 var jscalendarShowWeekNumber = 1	// 0 - don't show; 1 - show
 var jscalendarShowToday = 1		// 0 - don't show; 1 - show
 var jscalendarImgDir = "not available"			// directory for images ... e.g. var jscalendarImgDir="/img/"
-var jscalendarThemePrefix = "jscalendar-DB"
+var jscalendarThemePrefix = "jscalendar"
 
 var jscalendarGotoString = "Go To Current Month"
 var jscalendarTodayString = "Today is"

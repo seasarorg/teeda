@@ -20,6 +20,8 @@ import java.util.Locale;
 
 import junit.framework.TestCase;
 
+import org.seasar.framework.util.ArrayUtil;
+
 /**
  * @author higa
  */
@@ -30,12 +32,19 @@ public class DateFormatSymbolsUtilTest extends TestCase {
     public void testGetWeekdays() throws Exception {
         String[] weekdays = DateFormatSymbolsUtil.getWeekdays(symbols);
         assertEquals(7, weekdays.length);
-        //System.out.println(Arrays.toString(weekdays));
+        System.out.println(ArrayUtil.toString(weekdays));
+    }
+
+    public void testGetWeekdaysStartingWithSunday() throws Exception {
+        String[] weekdays = DateFormatSymbolsUtil
+                .getWeekdaysStartingWithSunday(symbols);
+        assertEquals(7, weekdays.length);
+        System.out.println(ArrayUtil.toString(weekdays));
     }
 
     public void testGetMonths() throws Exception {
         String[] months = DateFormatSymbolsUtil.getMonths(symbols);
         assertEquals(12, months.length);
-        //System.out.println(Arrays.toString(months));
+        System.out.println(ArrayUtil.toString(months));
     }
 }

@@ -40,6 +40,20 @@ public abstract class DateFormatSymbolsUtil {
         return weekdays;
     }
 
+    public static String[] getWeekdaysStartingWithSunday(
+            DateFormatSymbols symbols) {
+        String[] weekdays = new String[7];
+        String[] localeWeekdays = symbols.getShortWeekdays();
+        weekdays[0] = localeWeekdays[Calendar.SUNDAY];
+        weekdays[1] = localeWeekdays[Calendar.MONDAY];
+        weekdays[2] = localeWeekdays[Calendar.TUESDAY];
+        weekdays[3] = localeWeekdays[Calendar.WEDNESDAY];
+        weekdays[4] = localeWeekdays[Calendar.THURSDAY];
+        weekdays[5] = localeWeekdays[Calendar.FRIDAY];
+        weekdays[6] = localeWeekdays[Calendar.SATURDAY];
+        return weekdays;
+    }
+
     public static String[] getMonths(DateFormatSymbols symbols) {
         String[] months = new String[12];
         String[] localeMonths = symbols.getMonths();
