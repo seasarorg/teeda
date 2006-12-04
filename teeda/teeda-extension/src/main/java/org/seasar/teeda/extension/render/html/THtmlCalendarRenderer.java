@@ -365,7 +365,7 @@ public class THtmlCalendarRenderer extends AbstractInputRenderer implements
             FacesContext facesContext) {
         script.append("jscalendarSetImageDirectory('");
         script.append(VirtualResource.convertVirtualPath(facesContext,
-                RESOURCE_ROOT + "db"));
+                RESOURCE_ROOT + "db/"));
         script.append("');");
     }
 
