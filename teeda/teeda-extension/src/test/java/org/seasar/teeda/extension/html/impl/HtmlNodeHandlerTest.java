@@ -55,7 +55,8 @@ public class HtmlNodeHandlerTest extends TeedaExtensionTestCase {
     public void testParse() throws Exception {
         String path = convertPath("HtmlNodeHandler.html");
         HtmlParser parser = getHtmlParser();
-        HtmlNode root = parser.parse(ResourceUtil.getResourceAsStream(path));
+        HtmlNode root = parser.parse(ResourceUtil.getResourceAsStream(path),
+                path);
         assertEquals("1", "<html><body>Hello</body></html>", root.toString());
         DocumentNode docRoot = (DocumentNode) root;
         ElementNodeImpl n = (ElementNodeImpl) docRoot.getChild(0);
@@ -67,7 +68,8 @@ public class HtmlNodeHandlerTest extends TeedaExtensionTestCase {
     public void testParseUsingId() throws Exception {
         String path = convertPath("HtmlNodeHandler2.html");
         HtmlParser parser = getHtmlParser();
-        HtmlNode root = parser.parse(ResourceUtil.getResourceAsStream(path));
+        HtmlNode root = parser.parse(ResourceUtil.getResourceAsStream(path),
+                path);
         assertEquals("1",
                 "<html><body>Hello<span id=\"aaa\"></span>World</body></html>",
                 root.toString());
@@ -86,7 +88,8 @@ public class HtmlNodeHandlerTest extends TeedaExtensionTestCase {
     public void testParseUsingIdNest() throws Exception {
         String path = convertPath("HtmlNodeHandler3.html");
         HtmlParser parser = getHtmlParser();
-        HtmlNode root = parser.parse(ResourceUtil.getResourceAsStream(path));
+        HtmlNode root = parser.parse(ResourceUtil.getResourceAsStream(path),
+                path);
         assertEquals(
                 "1",
                 "<html><div id=\"aaa\">Hello<span id=\"bbb\"></span>World</div></html>",
@@ -107,7 +110,8 @@ public class HtmlNodeHandlerTest extends TeedaExtensionTestCase {
     public void testParseIfDtdIsXhtmlStrict() throws Exception {
         String path = convertPath("HtmlNodeHandler4.html");
         HtmlParser parser = getHtmlParser();
-        HtmlNode root = parser.parse(ResourceUtil.getResourceAsStream(path));
+        HtmlNode root = parser.parse(ResourceUtil.getResourceAsStream(path),
+                path);
         System.out.println(root.toString());
         Diff diff = new Diff(
                 "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\r\n<html xmlns=\"http://www.w3.org/1999/xhtml\"><body><div><span value=\"Hello\"></span></div></body></html>",
@@ -126,7 +130,8 @@ public class HtmlNodeHandlerTest extends TeedaExtensionTestCase {
     public void testParseUsingXmlns() throws Exception {
         String path = convertPath("HtmlNodeHandler5.html");
         HtmlParser parser = getHtmlParser();
-        HtmlNode root = parser.parse(ResourceUtil.getResourceAsStream(path));
+        HtmlNode root = parser.parse(ResourceUtil.getResourceAsStream(path),
+                path);
         assertEquals(
                 "<html xmlns:hoge=\"http://hoge\"><body><hoge:abc></hoge:abc></body></html>",
                 root.toString());
@@ -142,7 +147,8 @@ public class HtmlNodeHandlerTest extends TeedaExtensionTestCase {
     public void testParseSelect() throws Exception {
         String path = convertPath("select.html");
         HtmlParser parser = getHtmlParser();
-        HtmlNode root = parser.parse(ResourceUtil.getResourceAsStream(path));
+        HtmlNode root = parser.parse(ResourceUtil.getResourceAsStream(path),
+                path);
         assertEquals(
                 "1",
                 root.toString(),
@@ -157,7 +163,8 @@ public class HtmlNodeHandlerTest extends TeedaExtensionTestCase {
     public void testParseInputRadio() throws Exception {
         String path = convertPath("inputRadio.html");
         HtmlParser parser = getHtmlParser();
-        HtmlNode root = parser.parse(ResourceUtil.getResourceAsStream(path));
+        HtmlNode root = parser.parse(ResourceUtil.getResourceAsStream(path),
+                path);
         System.out.println(root.toString());
         assertEquals("1", root.toString(),
                 "<html><body><input type=\"radio\" name=\"aaa\" /></body></html>");
@@ -173,7 +180,8 @@ public class HtmlNodeHandlerTest extends TeedaExtensionTestCase {
     public void testParseInputCheckbox() throws Exception {
         String path = convertPath("inputCheckbox.html");
         HtmlParser parser = getHtmlParser();
-        HtmlNode root = parser.parse(ResourceUtil.getResourceAsStream(path));
+        HtmlNode root = parser.parse(ResourceUtil.getResourceAsStream(path),
+                path);
         System.out.println(root.toString());
         assertEquals("1", root.toString(),
                 "<html><body><input type=\"checkbox\" name=\"aaa\" /></body></html>");

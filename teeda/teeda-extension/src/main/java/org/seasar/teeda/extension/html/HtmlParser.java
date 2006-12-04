@@ -19,7 +19,7 @@ import java.io.InputStream;
 
 public interface HtmlParser {
 
-    HtmlNode parse(InputStream is);
+    HtmlNode parse(InputStream is, String viewId);
 
     void setEncoding(String encoding);
 

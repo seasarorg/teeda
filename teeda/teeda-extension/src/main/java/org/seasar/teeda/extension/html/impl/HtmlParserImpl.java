@@ -45,7 +45,7 @@ public class HtmlParserImpl implements HtmlParser {
 
     private String encoding = JsfConstants.DEFAULT_ENCODING;
 
-    public HtmlNode parse(InputStream is) {
+    public HtmlNode parse(InputStream is, String viewId) {
         try {
             SAXParser parser = new TeedaSAXParser();
             HtmlNodeHandler handler = createHtmlNodeHandler();
@@ -53,7 +53,9 @@ public class HtmlParserImpl implements HtmlParser {
                     getEncoding());
             parser.setContentHandler(handler);
             parser.setEntityResolver(handler);
-            parser.parse(new InputSource(reader));
+            InputSource inputSource = new InputSource(reader);
+            inputSource.setPublicId(viewId);
+            parser.parse(inputSource);
             return handler.getRoot();
         } catch (SAXException e) {
             throw new SAXRuntimeException(e);

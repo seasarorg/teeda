@@ -61,7 +61,7 @@ public class HtmlParserImplTest extends TeedaExtensionTestCase {
         // ## Act ##
         ByteArrayInputStream is = new ByteArrayInputStream(
                 "<z><y id=\"y\"><x /></y></z>".getBytes());
-        final HtmlNode root = parser.parse(is);
+        final HtmlNode root = parser.parse(is, null);
 
         // ## Assert ##
         assertEquals(true, root instanceof DocumentNode);
@@ -87,7 +87,7 @@ public class HtmlParserImplTest extends TeedaExtensionTestCase {
         // ## Act ##
         ByteArrayInputStream is = new ByteArrayInputStream(
                 "<z><y id=\"y\"><x /></y></z>".getBytes());
-        final HtmlNode root = parser.parse(is);
+        final HtmlNode root = parser.parse(is, null);
 
         // ## Assert ##
         assertEquals(true, root instanceof DocumentNode);
@@ -111,7 +111,7 @@ public class HtmlParserImplTest extends TeedaExtensionTestCase {
         // ## Act ##
         ByteArrayInputStream is = new ByteArrayInputStream(
                 "<z><y id=\"y\"><x /></y><y><x /></y></z>".getBytes());
-        final HtmlNode root = parser.parse(is);
+        final HtmlNode root = parser.parse(is, null);
 
         // ## Assert ##
         assertEquals(true, root instanceof DocumentNode);
@@ -138,7 +138,7 @@ public class HtmlParserImplTest extends TeedaExtensionTestCase {
         try {
             ByteArrayInputStream is = new ByteArrayInputStream(
                     "<z><y id=\"y\"><x /></y><y><x /></y></z>".getBytes());
-            parser.parse(is);
+            parser.parse(is, null);
             fail();
         } catch (IORuntimeException expected) {
         }
@@ -153,7 +153,7 @@ public class HtmlParserImplTest extends TeedaExtensionTestCase {
                 + "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">"
                 + "<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"ja\" lang=\"ja\"><z id=\"&nbsp;aaa&nbsp;\"><y id=\"y\">&nbsp;aaa&nbsp;<x /></y></z></html>";
         ByteArrayInputStream is = new ByteArrayInputStream(str.getBytes());
-        final HtmlNode root = parser.parse(is);
+        final HtmlNode root = parser.parse(is, null);
 
         // ## Assert ##
         assertEquals(true, root instanceof DocumentNode);
@@ -186,7 +186,7 @@ public class HtmlParserImplTest extends TeedaExtensionTestCase {
                 + "<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"ja\" lang=\"ja\">"
                 + "<z id=\"&nbsp;aaa&nbsp;\"><y id=\"y\">&nbsp;aaa&nbsp;<!-- hogefoobar --><x /></y></z></html>";
         ByteArrayInputStream is = new ByteArrayInputStream(str.getBytes());
-        final HtmlNode root = parser.parse(is);
+        final HtmlNode root = parser.parse(is, null);
 
         // ## Assert ##
         assertEquals(true, root instanceof DocumentNode);

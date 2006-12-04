@@ -69,7 +69,7 @@ public class HtmlDescCacheImpl implements HtmlDescCache {
         if (realPath != null) {
             File file = new File(realPath);
             if (file.exists()) {
-                htmlDesc = createHtmlDescFromRealPath(file);
+                htmlDesc = createHtmlDescFromRealPath(file, viewId);
             }
         }
         if (htmlDesc == null) {
@@ -79,10 +79,10 @@ public class HtmlDescCacheImpl implements HtmlDescCache {
         return htmlDesc;
     }
 
-    protected HtmlDesc createHtmlDescFromRealPath(File file) {
+    protected HtmlDesc createHtmlDescFromRealPath(File file, String viewId) {
         InputStream is = new BufferedInputStream(FileInputStreamUtil
                 .create(file));
-        return createHtmlDesc(is, file);
+        return createHtmlDesc(is, file, viewId);
     }
 
     protected HtmlDesc createHtmlDescFromResource(String viewId) {
@@ -90,10 +90,10 @@ public class HtmlDescCacheImpl implements HtmlDescCache {
         if (is == null) {
             throw new IllegalArgumentException(viewId);
         }
-        return createHtmlDesc(is, null);
+        return createHtmlDesc(is, null, viewId);
     }
 
-    private HtmlDesc createHtmlDesc(InputStream is, File file) {
+    private HtmlDesc createHtmlDesc(InputStream is, File file, String viewId) {
         HtmlNode htmlNode = null;
         HttpServletRequest request = (HttpServletRequest) container.getRoot()
                 .getExternalContext().getRequest();
@@ -103,7 +103,7 @@ public class HtmlDescCacheImpl implements HtmlDescCache {
         }
         htmlParser.setEncoding(encoding);
         try {
-            htmlNode = htmlParser.parse(is);
+            htmlNode = htmlParser.parse(is, viewId);
         } finally {
             InputStreamUtil.close(is);
         }
