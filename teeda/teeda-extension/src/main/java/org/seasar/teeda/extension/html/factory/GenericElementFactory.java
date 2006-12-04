@@ -39,6 +39,9 @@ public class GenericElementFactory extends AbstractElementProcessorFactory {
         if (id == null) {
             return false;
         }
+        if (pageDesc == null) {
+            return false;
+        }
         for (Iterator i = elementNode.getPropertyNameIterator(); i.hasNext();) {
             String key = (String) i.next();
             if ("id".equalsIgnoreCase(key)) {
