@@ -364,7 +364,8 @@ public class THtmlCalendarRenderer extends AbstractInputRenderer implements
     private static void appendImageDirectory(StringBuffer script,
             FacesContext facesContext) {
         script.append("jscalendarSetImageDirectory('");
-        script.append(VirtualResource.convertVirtualPath(facesContext, "db"));
+        script.append(VirtualResource.convertVirtualPath(facesContext,
+                RESOURCE_ROOT + "db"));
         script.append("');");
     }
 
