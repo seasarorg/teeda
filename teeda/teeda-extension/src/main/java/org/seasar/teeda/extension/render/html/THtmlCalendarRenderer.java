@@ -16,7 +16,6 @@
 package org.seasar.teeda.extension.render.html;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.io.StringWriter;
 import java.text.DateFormat;
 import java.text.DateFormatSymbols;
@@ -29,11 +28,9 @@ import java.util.Locale;
 
 import javax.faces.application.Application;
 import javax.faces.application.FacesMessage;
-import javax.faces.component.EditableValueHolder;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
 import javax.faces.component.UIParameter;
-import javax.faces.component.ValueHolder;
 import javax.faces.component.html.HtmlCommandLink;
 import javax.faces.component.html.HtmlInputText;
 import javax.faces.component.html.HtmlOutputText;
@@ -65,9 +62,6 @@ public class THtmlCalendarRenderer extends AbstractInputRenderer implements
     private static final String JAVASCRIPT_ENCODED = "org.seasar.teeda.extension.calendar.JAVASCRIPT_ENCODED";
 
     private static final String JAVASCRIPT_ENCODED2 = "org.seasar.teeda.extension.calendar.JAVASCRIPT_ENCODED2";
-
-    public static final Object NOTHING = new Serializable() {
-    };
 
     private static final String RESOURCE_ROOT = "org/seasar/teeda/extension/render/html/calendar/";
 
@@ -228,34 +222,6 @@ public class THtmlCalendarRenderer extends AbstractInputRenderer implements
 
             writer.endElement(JsfConstants.TABLE_ELEM);
         }
-    }
-
-    private static Date getDateValue(UIComponent component) {
-        Object value = getObjectValue(component);
-        if (value == null || value instanceof Date) {
-            return (Date) value;
-        } else {
-            throw new IllegalArgumentException(
-                    "Expected submitted value of type Date for component : "
-                            + component.toString());
-        }
-    }
-
-    private static Object getObjectValue(UIComponent component) {
-        if (!(component instanceof ValueHolder)) {
-            throw new IllegalArgumentException("Component : "
-                    + component.toString() + "is not a ValueHolder");
-        }
-
-        if (component instanceof EditableValueHolder) {
-            Object value = ((EditableValueHolder) component)
-                    .getSubmittedValue();
-            if (value != null && !NOTHING.equals(value)) {
-                return value;
-            }
-        }
-
-        return ((ValueHolder) component).getValue();
     }
 
     public static void copyHtmlInputTextAttributes(HtmlInputText src,
@@ -726,7 +692,6 @@ public class THtmlCalendarRenderer extends AbstractInputRenderer implements
     }
 
     public interface DateConverter extends Converter {
-        public Date getAsDate(FacesContext facesContext, UIComponent uiComponent);
     }
 
     public static class CalendarDateTimeConverter implements DateConverter {
@@ -758,10 +723,6 @@ public class THtmlCalendarRenderer extends AbstractInputRenderer implements
                                 uiComponent.getId(), s });
                 throw new ConverterException(msg, e);
             }
-        }
-
-        public Date getAsDate(FacesContext facesContext, UIComponent uiComponent) {
-            return getDateValue(uiComponent);
         }
 
         public static String createJSPopupFormat(FacesContext facesContext,
