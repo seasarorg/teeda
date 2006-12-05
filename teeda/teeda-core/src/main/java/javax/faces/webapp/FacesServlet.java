@@ -16,7 +16,6 @@
 package javax.faces.webapp;
 
 import java.io.IOException;
-import java.util.Map;
 
 import javax.faces.FacesException;
 import javax.faces.FactoryFinder;
@@ -24,7 +23,6 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.FacesContextFactory;
 import javax.faces.internal.ForbiddenAccessException;
-import javax.faces.internal.Sync;
 import javax.faces.internal.WebAppUtil;
 import javax.faces.lifecycle.Lifecycle;
 import javax.faces.lifecycle.LifecycleFactory;
@@ -43,8 +41,6 @@ public final class FacesServlet implements Servlet {
     public static final String CONFIG_FILES_ATTR = "javax.faces.CONFIG_FILES";
 
     public static final String LIFECYCLE_ID_ATTR = "javax.faces.LIFECYCLE_ID";
-
-    private static final String SYNCH = FacesServlet.class.getName() + ".SYNCH";
 
     private ServletConfig config = null;
 
@@ -87,33 +83,24 @@ public final class FacesServlet implements Servlet {
             throw new ForbiddenAccessException("Forbidden access to "
                     + requestPathInfo);
         }
-        externalContext.getSession(true);
-        Map sessionMap = externalContext.getSessionMap();
-        Object sync = sessionMap.get(SYNCH);
-        if (sync == null) {
-            sync = new Sync();
-            sessionMap.put(SYNCH, sync);
-        }
-        synchronized (sync) {
-            try {
-                lifecycle.execute(context);
-                lifecycle.render(context);
-            } catch (FacesException e) {
-                Throwable t = e.getCause();
-                if (t == null) {
-                    throw new ServletException(e.getMessage(), e);
+        try {
+            lifecycle.execute(context);
+            lifecycle.render(context);
+        } catch (FacesException e) {
+            Throwable t = e.getCause();
+            if (t == null) {
+                throw new ServletException(e.getMessage(), e);
+            } else {
+                if (t instanceof ServletException) {
+                    throw ((ServletException) t);
+                } else if (t instanceof IOException) {
+                    throw ((IOException) t);
                 } else {
-                    if (t instanceof ServletException) {
-                        throw ((ServletException) t);
-                    } else if (t instanceof IOException) {
-                        throw ((IOException) t);
-                    } else {
-                        throw new ServletException(t.getMessage(), t);
-                    }
+                    throw new ServletException(t.getMessage(), t);
                 }
-            } finally {
-                context.release();
             }
+        } finally {
+            context.release();
         }
     }
 
