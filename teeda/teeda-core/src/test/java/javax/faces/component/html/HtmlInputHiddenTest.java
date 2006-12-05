@@ -17,9 +17,16 @@ package javax.faces.component.html;
 
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIInputTest;
+import javax.faces.el.ValueBinding;
+import javax.faces.internal.ConverterResource;
+
+import org.seasar.teeda.core.convert.NullConverter;
+import org.seasar.teeda.core.mock.MockFacesContext;
+import org.seasar.teeda.core.mock.MockValueBinding;
 
 /**
  * @author manhole
+ * @author shot
  */
 public class HtmlInputHiddenTest extends UIInputTest {
 
@@ -27,4 +34,37 @@ public class HtmlInputHiddenTest extends UIInputTest {
         return new HtmlInputHidden();
     }
 
+    public void testProcessValidatorAndUpdateModelImmediately()
+            throws Exception {
+        HtmlInputHidden hidden = (HtmlInputHidden) createUIComponent();
+        MockFacesContext context = getFacesContext();
+        MockValueBinding vb = new MockValueBinding("#{aaa}");
+        ConverterResource.addConverter("#{aaa}", new NullConverter());
+        vb.setValue(context, "aaa");
+        hidden.setValueBinding("value", vb);
+        hidden.setValue("bbb");
+        hidden.setSubmittedValue("bbb");
+        hidden.setValid(true);
+        
+        hidden.processValidators(context);
+        
+        ValueBinding vbRes = hidden.getValueBinding("value");
+        String s = (String) vbRes.getValue(context);
+        assertEquals("bbb", s);
+        assertTrue(hidden.isLocalValueSet());
+        assertNotNull(hidden.getValue());
+    }
+    
+    public static class Aaa {
+        private String name;
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+        
+    }
 }

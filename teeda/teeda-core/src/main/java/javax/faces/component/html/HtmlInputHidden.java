@@ -63,10 +63,8 @@ public class HtmlInputHidden extends UIInput {
             return;
         }
         try {
-            valueBinding.setValue(context, getLocalValue());
-            setValue(null);
-            setLocalValueSet(false);
-            setSubmittedValue(null);
+            Object localValue = getLocalValue();
+            valueBinding.setValue(context, localValue);
         } catch (RuntimeException e) {
             Object[] args = { getId() };
             context.getExternalContext().log(e.getMessage(), e);

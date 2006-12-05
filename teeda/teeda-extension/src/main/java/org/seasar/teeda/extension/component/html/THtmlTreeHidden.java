@@ -56,6 +56,9 @@ public class THtmlTreeHidden extends THtmlInputHidden {
         try {
             final Object localValue = getLocalValue();
             valueBinding.setValue(context, localValue);
+            setValue(null);
+            setLocalValueSet(false);
+            setSubmittedValue(null);
         } catch (final RuntimeException e) {
             final Object[] args = { getId() };
             context.getExternalContext().log(e.getMessage(), e);
