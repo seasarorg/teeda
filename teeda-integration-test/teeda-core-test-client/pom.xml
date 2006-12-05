@@ -7,7 +7,7 @@
   <parent>
     <groupId>org.seasar.teeda.it</groupId>
     <artifactId>teeda-integration-test-project</artifactId>
-    <version>1.0.2-SNAPSHOT</version>
+    <version>1.0.3-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>teeda-core-test-client</artifactId>
@@ -77,7 +77,7 @@
     <dependency>
       <groupId>org.seasar.teeda</groupId>
       <artifactId>teeda-core</artifactId>
-      <version>1.0.2-SNAPSHOT</version>
+      <version>1.0.3-SNAPSHOT</version>
       <type>jar</type>
     </dependency>
   </dependencies>
