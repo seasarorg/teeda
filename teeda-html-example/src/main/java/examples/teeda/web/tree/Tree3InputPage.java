@@ -25,23 +25,13 @@ public class Tree3InputPage {
 
 	private TreeNode tree;
 
-	private boolean hoge;
-
-	public boolean isHoge() {
-		return hoge;
-	}
-
-	public void setHoge(boolean hoge) {
-		this.hoge = hoge;
-	}
-
 	public String initialize() {
 		tree = new TreeNodeImpl("folder-B", "ROOT", false);
 		TreeNodeImpl personNode = new TreeNodeImpl("folder-A", "AAA", false);
 		TreeNodeImpl document1 = new TreeNodeImpl("document", "BBB", true);
-		document1.setValue("false");
+		document1.setValue("true");
 		TreeNodeImpl document2 = new TreeNodeImpl("document", "CCC", true);
-		document2.setValue("false");
+		document2.setValue("true");
 		personNode.getChildren().add(document1);
 		personNode.getChildren().add(document2);
 		tree.getChildren().add(personNode);

@@ -24,21 +24,22 @@ public class Tree3ResultPage {
 
 	private TreeNode tree;
 
-	private boolean hoge;
-
-	public boolean isHoge() {
-		return hoge;
-	}
-
-	public void setHoge(boolean hoge) {
-		this.hoge = hoge;
-	}
-
 	public TreeNode getTree() {
 		return tree;
 	}
 
 	public void setTree(TreeNode tree) {
 		this.tree = tree;
+	}
+	
+	public String prerender() {
+		if(tree != null) {
+			System.out.println(tree.getValue());
+		}
+		return null;
+	}
+	
+	public String doHoge() {
+		return "Tree3Input";
 	}
 }

@@ -2,6 +2,7 @@
 <title>Tree</title>
 <body>
 <form id="treeForm">
+	<input type="hidden" id="treeTreeSave" />
 	<te:tree value="#{tree_tree3ResultPage.tree}" id="client-tree" var="node" varNodeToggler="t">
 		<f:facet name="folder-A">
 			<h:panelGroup>
@@ -28,7 +29,7 @@
 		</f:facet>
 		<f:facet name="document">
 			<h:panelGroup>
-				<input type="checkbox" id="hoge" disabled="disabled"/>
+				<h:selectBooleanCheckbox value="#{node.value}" disabled="disabled"/>
 				<h:outputText value="#{node.description}"/>
 			</h:panelGroup>
 		</f:facet>
