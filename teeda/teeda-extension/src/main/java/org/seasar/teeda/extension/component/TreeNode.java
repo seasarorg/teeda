@@ -32,9 +32,9 @@ public interface TreeNode extends Serializable {
 
     void setType(String type);
 
-    String getDescription();
+    Object getDescription();
 
-    void setDescription(String description);
+    void setDescription(Object description);
 
     void setValue(Object value);
 

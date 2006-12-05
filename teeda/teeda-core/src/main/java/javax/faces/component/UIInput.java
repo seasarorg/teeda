@@ -249,7 +249,8 @@ public class UIInput extends UIOutput implements EditableValueHolder {
             return;
         }
         try {
-            valueBinding.setValue(context, getLocalValue());
+            final Object localValue = getLocalValue();
+            valueBinding.setValue(context, localValue);
             setValue(null);
             setLocalValueSet(false);
         } catch (RuntimeException e) {

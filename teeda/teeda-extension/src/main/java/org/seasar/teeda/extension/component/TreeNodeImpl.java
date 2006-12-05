@@ -26,7 +26,7 @@ public class TreeNodeImpl implements TreeNode, Comparable {
 
     private String type;
 
-    private String description;
+    private Object description;
 
     private boolean leaf;
 
@@ -37,11 +37,11 @@ public class TreeNodeImpl implements TreeNode, Comparable {
     public TreeNodeImpl() {
     }
 
-    public TreeNodeImpl(String type, String description, boolean leaf) {
+    public TreeNodeImpl(String type, Object description, boolean leaf) {
         this(type, description, null, leaf);
     }
 
-    public TreeNodeImpl(String type, String description, Object value,
+    public TreeNodeImpl(String type, Object description, Object value,
             boolean leaf) {
         this.type = type;
         this.description = description;
@@ -69,11 +69,11 @@ public class TreeNodeImpl implements TreeNode, Comparable {
         this.type = type;
     }
 
-    public void setDescription(String description) {
+    public void setDescription(Object description) {
         this.description = description;
     }
 
-    public String getDescription() {
+    public Object getDescription() {
         return description;
     }
 
@@ -100,7 +100,9 @@ public class TreeNodeImpl implements TreeNode, Comparable {
         } else if (!isLeaf() && otherNode.isLeaf()) {
             return -1;
         } else {
-            return getDescription().compareTo(otherNode.getDescription());
+            final String mine = getDescription().toString();
+            final String other = otherNode.getDescription().toString();
+            return mine.compareTo(other);
         }
     }
 

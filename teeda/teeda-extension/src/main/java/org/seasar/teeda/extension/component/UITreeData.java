@@ -142,7 +142,7 @@ public class UITreeData extends UIInput implements NamingContainer {
         if (!isRendered()) {
             return;
         }
-        processNodes(context, PhaseId.UPDATE_MODEL_VALUES);
+        //processNodes(context, PhaseId.UPDATE_MODEL_VALUES);
         setNodeId(null);
     }
 

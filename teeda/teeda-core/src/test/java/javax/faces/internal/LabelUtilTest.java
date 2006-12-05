@@ -75,4 +75,15 @@ public class LabelUtilTest extends TeedaTestCase {
                 LabelUtil
                         .getDefaultApplicationPropertiesName(nc, "foo_fooPage"));
     }
+
+    public void testGetDefaultApplicationPropertiesName_packageNameNull()
+            throws Exception {
+        NamingConventionImpl nc = (NamingConventionImpl) getContainer()
+                .getComponent(NamingConvention.class);
+        nc.addRootPackageName(ClassUtil.getPackageName(getClass()));
+        register(FooPage.class, "foo_fooPage");
+        assertNull(LabelUtil.getDefaultApplicationPropertiesName(nc,
+                "noSuchPackage_fooPage"));
+    }
+
 }

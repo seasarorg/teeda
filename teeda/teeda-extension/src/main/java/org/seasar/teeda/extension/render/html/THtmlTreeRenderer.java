@@ -16,7 +16,9 @@
 package org.seasar.teeda.extension.render.html;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import javax.faces.application.ViewHandler;
@@ -27,6 +29,7 @@ import javax.faces.component.html.HtmlGraphicImage;
 import javax.faces.component.html.HtmlInputHidden;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+import javax.faces.el.ValueBinding;
 
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
@@ -79,7 +82,12 @@ public class THtmlTreeRenderer extends AbstractRenderer {
 
     protected void decodeTHtmlTree(FacesContext context, THtmlTree tree) {
         Map paramMap = context.getExternalContext().getRequestParameterMap();
-        TreeModel model = tree.getDataModel();
+        decodeTreeNodeExpansion(tree, paramMap);
+        decodeTreeValue(context, tree, paramMap);
+    }
+
+    protected void decodeTreeNodeExpansion(THtmlTree tree, Map paramMap) {
+        final TreeModel model = tree.getDataModel();
         final String prefix = TOGGLE_DIV + ExtensionConstants.NAME_SEPARATOR
                 + tree.getId() + ExtensionConstants.NAME_SEPARATOR;
         for (Iterator itr = paramMap.keySet().iterator(); itr.hasNext();) {
@@ -95,6 +103,38 @@ public class THtmlTreeRenderer extends AbstractRenderer {
                 }
             }
         }
+    }
+
+    protected void decodeTreeValue(FacesContext context, THtmlTree tree,
+            Map paramMap) {
+        final TreeModel model = tree.getDataModel();
+        final String clientId = tree.getClientId(context);
+        final String targetPrefix = clientId
+                + ExtensionConstants.NAME_SEPARATOR;
+        final String[] candidates = getTreeValueDecodeCandidate(targetPrefix,
+                paramMap);
+        for (int i = 0; i < candidates.length; i++) {
+            final String key = candidates[i];
+            final Object value = paramMap.get(key);
+            String s = key.substring(targetPrefix.length(), key
+                    .lastIndexOf(ExtensionConstants.NAME_SEPARATOR));
+            TreeNode node = model.getNodeById(s);
+            node.setValue(value);
+        }
+        //ValueBinding vb = tree.getValueBinding(JsfConstants.VALUE_ATTR);
+        //vb.setValue(context, model.getRootNode());
+    }
+
+    protected String[] getTreeValueDecodeCandidate(final String targetPrefix,
+            final Map paramMap) {
+        final List list = new ArrayList();
+        for (Iterator itr = paramMap.keySet().iterator(); itr.hasNext();) {
+            String key = (String) itr.next();
+            if (key.startsWith(targetPrefix)) {
+                list.add(key);
+            }
+        }
+        return (String[]) list.toArray(new String[list.size()]);
     }
 
     public void encodeBegin(FacesContext context, UIComponent component)

@@ -32,4 +32,6 @@ public interface TreeModel extends Serializable {
     void toggleExpanded(String nodeId);
 
     void collapseExpanded(String nodeId);
+    
+    TreeNode getRootNode();
 }

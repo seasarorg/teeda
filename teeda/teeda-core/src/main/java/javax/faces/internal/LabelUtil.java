@@ -105,6 +105,9 @@ public class LabelUtil {
         String subAppRoot = nc.getSubApplicationRootPackageName();
         String defaultPropertiesName = null;
         String packageName = NamingConventionUtil.getPackageName(nc, pageName);
+        if(packageName == null) {
+            return null;
+        }
         if (packageName.lastIndexOf(subAppRoot) > 0) {
             defaultPropertiesName = packageName.substring(0, packageName
                     .lastIndexOf(subAppRoot)

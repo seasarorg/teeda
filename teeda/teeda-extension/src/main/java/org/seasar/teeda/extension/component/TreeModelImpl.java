@@ -28,6 +28,8 @@ public class TreeModelImpl implements TreeModel {
 
     private static final long serialVersionUID = 1L;
 
+    private static final String ROOT_NODE_ID = "0";
+
     private TreeNode root;
 
     public TreeModelImpl(TreeNode root) {
@@ -129,6 +131,10 @@ public class TreeModelImpl implements TreeModel {
 
     public TreeWalker getTreeWalker() {
         return new TreeWalkerImpl();
+    }
+    
+    public TreeNode getRootNode() {
+        return getNodeById(ROOT_NODE_ID);
     }
 
 }
