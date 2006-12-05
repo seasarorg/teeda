@@ -178,4 +178,97 @@ public class GridTest extends TeedaWebTestCase {
         }
     }
 
+    public void testMultiRowRender2() throws Exception {
+        // ## Arrange ##
+        final TeedaWebTester tester = new TeedaWebTester();
+
+        // ## Act ##
+        // ## Assert ##
+        tester.beginAt(getBaseUrl(), "view/grid/multiRowGrid2.html");
+        tester.dumpHtml();
+
+        {
+            final Table actualTable = tester
+                .getTableById("fooGridXYLeftHeaderTable");
+            assertTrue(actualTable.getRowCount() == 2);
+            System.out.println("***" + actualTable);
+            actualTable.getRowCount();
+
+            final Table expectedTable = new Table();
+
+            final Row row1 = new Row();
+            final Cell aaa = new Cell("aaa", 1, 2);
+            final Cell bbb = new Cell("bbb");
+            row1.appendCell(aaa);
+            row1.appendCell(bbb);
+            expectedTable.appendRow(row1);
+
+            final Row row2 = new Row();
+            final Cell ddd = new Cell("ddd");
+            row2.appendCell(ddd);
+            expectedTable.appendRow(row2);
+
+            expectedTable.assertEquals(actualTable);
+        }
+        {
+            final Table actualTable = tester
+                .getTableById("fooGridXYRightHeaderTable");
+            assertTrue(actualTable.getRowCount() == 2);
+
+            final Table expectedTable = new Table();
+
+            final Row row1 = new Row();
+            final Cell ccc = new Cell("ccc");
+            row1.appendCell(ccc);
+            expectedTable.appendRow(row1);
+
+            final Row row2 = new Row();
+            final Cell eee = new Cell("eee");
+            row2.appendCell(eee);
+            expectedTable.appendRow(row2);
+
+            expectedTable.assertEquals(actualTable);
+        }
+
+        {
+            final Table actualTable = tester
+                .getTableById("fooGridXYLeftBodyTable");
+
+            final Table expectedTable = new Table();
+            for (int i = 1; i <= 7; i++) {
+                {
+                    final Row row = new Row();
+                    row.appendCell(new Cell("a" + i, 1, 2));
+                    row.appendCell(new Cell("b" + i));
+                    expectedTable.appendRow(row);
+                }
+                {
+                    final Row row = new Row();
+                    row.appendCell(new Cell("d" + i));
+                    expectedTable.appendRow(row);
+                }
+            }
+            expectedTable.assertEquals(actualTable);
+        }
+        {
+            final Table actualTable = tester
+                .getTableById("fooGridXYRightBodyTable");
+
+            final Table expectedTable = new Table();
+            for (int i = 1; i <= 7; i++) {
+                {
+                    final Row row = new Row();
+                    row.appendCell(new Cell("c" + i));
+                    expectedTable.appendRow(row);
+                }
+                {
+                    final Row row = new Row();
+                    row.appendCell(new Cell("e" + i));
+                    expectedTable.appendRow(row);
+                }
+            }
+            expectedTable.assertEquals(actualTable);
+        }
+    }
+
 }

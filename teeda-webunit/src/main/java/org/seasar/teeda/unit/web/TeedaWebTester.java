@@ -150,6 +150,10 @@ public class TeedaWebTester {
         tester.assertTextInElement(id, text);
     }
 
+    public void assertTextNotInElementById(final String id, final String text) {
+        tester.assertTextNotInElement(id, text);
+    }
+
     public void assertAttributeEqualsById(final String id,
         final String attributeName, final String attributeValue) {
         final HtmlElement element = getElementById(id);

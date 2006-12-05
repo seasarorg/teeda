@@ -38,6 +38,7 @@ import org.seasar.teeda.core.util.BindingUtil;
 /**
  * @author yone
  * @author shot
+ * @author manhole
  */
 public abstract class UIComponentTagBase extends UIComponentTag {
 
@@ -811,6 +812,8 @@ public abstract class UIComponentTagBase extends UIComponentTag {
         setComponentProperty(component, JsfConstants.STYLE_ATTR, style);
         setComponentProperty(component, JsfConstants.STYLE_CLASS_ATTR,
                 styleClass);
+        // TODO
+        setComponentProperty(component, JsfConstants.HEIGHT_ATTR, height);
     }
 
     public void release() {
@@ -891,8 +894,8 @@ public abstract class UIComponentTagBase extends UIComponentTag {
 
     protected void setComponentProperty(UIComponent component,
             String propertyName, String value) {
-        UIComponentTagPropertyUtil.setComponentProperty(component, propertyName,
-                value);
+        UIComponentTagPropertyUtil.setComponentProperty(component,
+                propertyName, value);
     }
 
     protected void setConverterProperty(UIComponent component, String value) {
