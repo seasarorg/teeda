@@ -24,17 +24,13 @@ import java.util.Locale;
 
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
-import javax.faces.component.UIOutput;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
-import javax.faces.convert.Converter;
 import javax.faces.convert.DateTimeConverter;
 
 import org.seasar.teeda.core.JsfConstants;
-import org.seasar.teeda.core.application.ApplicationImpl;
 import org.seasar.teeda.core.context.html.HtmlResponseWriter;
 import org.seasar.teeda.core.render.html.HtmlInputTextRenderer;
-import org.seasar.teeda.core.util.RendererUtil;
 import org.seasar.teeda.extension.component.html.THtmlPopupCalendar;
 import org.seasar.teeda.extension.render.RenderPreparableRenderer;
 import org.seasar.teeda.extension.util.DateFormatSymbolsUtil;
@@ -105,7 +101,8 @@ public class THtmlPopupCalendarRenderer extends HtmlInputTextRenderer implements
         Calendar timeKeeper = Calendar.getInstance(currentLocale);
         timeKeeper.setTime(value != null ? value : new Date());
 
-        DateTimeConverter converter = getConverter(context, (UIInput) component);
+        DateTimeConverter converter = THtmlCalendarRendererUtil.getConverter(
+                context, (UIInput) component);
         if (!htmlCalendar.isDisabled()) {
             ResponseWriter writer = context.getResponseWriter();
             String dateFormat = converter.getPattern();
@@ -238,19 +235,5 @@ public class THtmlPopupCalendarRenderer extends HtmlInputTextRenderer implements
                 + clientId + "\\'),\\'" + dateFormat + "\\')";
         writer.writeAttribute(JsfConstants.ONCLICK_ATTR,
                 jsCalendarFunctionCall, null);
-    }
-
-    private DateTimeConverter getConverter(FacesContext context,
-            UIInput component) {
-        Converter converter = RendererUtil.findConverter(context,
-                (UIOutput) component);
-        if (converter == null) {
-            converter = ApplicationImpl.getWellKnownConverter(Date.class);
-        }
-        if (!(converter instanceof DateTimeConverter)) {
-            throw new IllegalStateException(
-                    "converter is not DateTimeConverter");
-        }
-        return (DateTimeConverter) converter;
     }
 }

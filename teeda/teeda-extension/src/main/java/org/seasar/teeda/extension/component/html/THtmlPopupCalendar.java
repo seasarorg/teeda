@@ -23,6 +23,7 @@ import javax.faces.el.ValueBinding;
 
 import org.seasar.teeda.extension.component.RenderPreparable;
 import org.seasar.teeda.extension.component.RenderPreparableUtil;
+import org.seasar.teeda.extension.convert.TDateTimeConverter;
 
 /**
  * @author higa
@@ -54,6 +55,7 @@ public class THtmlPopupCalendar extends HtmlInputText implements
 
     public THtmlPopupCalendar() {
         setRendererType(DEFAULT_RENDERER_TYPE);
+        setConverter(new TDateTimeConverter());
     }
 
     public String getFamily() {

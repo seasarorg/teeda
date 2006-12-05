@@ -17,6 +17,7 @@ package org.seasar.teeda.core.render;
 
 import java.io.IOException;
 
+import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 
@@ -44,5 +45,9 @@ public abstract class AbstractInputRenderer extends AbstractRenderer {
     protected void colorErrorComponent(FacesContext context, UIInput input)
             throws IOException {
         //default no op;
+    }
+
+    public void decode(FacesContext context, UIComponent component) {
+        this.getDecoder().decode(context, component);
     }
 }
