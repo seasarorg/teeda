@@ -122,7 +122,7 @@ public class ApplicationImpl extends Application implements
     public ApplicationImpl() {
     }
 
-    protected static Converter getWellKnownConverter(Class clazz) {
+    public static Converter getWellKnownConverter(Class clazz) {
         return (Converter) wellKnownConverters.get(clazz);
     }
 

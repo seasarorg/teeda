@@ -32,6 +32,7 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 import javax.faces.el.ValueBinding;
+import javax.faces.internal.ConverterResource;
 import javax.faces.internal.FacesMessageUtil;
 import javax.faces.internal.RenderKitUtil;
 import javax.faces.internal.UIComponentUtil;
@@ -233,8 +234,7 @@ public class RendererUtil {
         if (submittedValue == null) {
             return null;
         }
-        final Converter converter = findConverterForSubmittedValue(context,
-                output);
+        final Converter converter = findConverter(context, output);
         if (converter == null) {
             return submittedValue;
         }
@@ -246,8 +246,7 @@ public class RendererUtil {
         if (submittedValue == null) {
             return null;
         }
-        final Converter converter = findConverterForSubmittedValue(context,
-                output);
+        final Converter converter = findConverter(context, output);
         if (converter == null) {
             return submittedValue;
         }
@@ -263,12 +262,20 @@ public class RendererUtil {
         return ret;
     }
 
-    static Converter findConverterForSubmittedValue(final FacesContext context,
+    public static Converter findConverter(final FacesContext context,
             final UIOutput component) {
 
-        final Converter converter = component.getConverter();
+        Converter converter = component.getConverter();
         if (converter != null) {
             return converter;
+        }
+        ValueBinding vb = component.getValueBinding("value");
+        if (vb != null) {
+            String expression = vb.getExpressionString();
+            converter = ConverterResource.getConverter(expression);
+            if (converter != null) {
+                return converter;
+            }
         }
         final Class valueType = getValueType(context, component);
         if (ComponentUtil_.isPerformNoConversion(valueType)) {

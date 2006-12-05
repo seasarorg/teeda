@@ -24,7 +24,7 @@ import org.seasar.teeda.extension.component.html.THtmlCalendar;
 /**
  * @author higa
  */
-public class THtmlCalendarTag extends UIComponentTagBase {
+public class TCalendarTag extends UIComponentTagBase {
 
     private String accesskey;
 
