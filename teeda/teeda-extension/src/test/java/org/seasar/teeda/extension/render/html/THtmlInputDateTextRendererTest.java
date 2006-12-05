@@ -36,14 +36,23 @@ public class THtmlInputDateTextRendererTest extends RendererTest {
 
     private THtmlInputDateTextRenderer renderer;
 
+    private Locale defaultLocale;
+
     public void setUp() throws Exception {
         super.setUp();
+        defaultLocale = Locale.getDefault();
         renderer = createHtmlInputDateTextRenderer();
         htmlInputDateText = new MockHtmlInputDateText();
         htmlInputDateText.setRenderer(renderer);
     }
 
+    protected void tearDown() throws Exception {
+        Locale.setDefault(defaultLocale);
+        super.tearDown();
+    }
+
     public void testEncodeEnd_withoutJsAndValue() throws Exception {
+        Locale.setDefault(Locale.JAPANESE);
         ScriptEnhanceUIViewRoot root = new ScriptEnhanceUIViewRoot();
         root.addScript(THtmlInputDateText.class.getName(),
                 new JavaScriptContext());

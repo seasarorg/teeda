@@ -155,7 +155,7 @@ public class TDateTimeConverterTest extends AbstractConverterTestCase {
     public void testGetAsObject6() throws Exception {
         TDateTimeConverter converter = (TDateTimeConverter) createConverter();
         FacesContext context = getFacesContext();
-        converter.setLocale(defaultLocale);
+        converter.setLocale(Locale.JAPANESE);
         converter.setTimeZone(defaultTimeZone);
         converter.setThreshold(new Integer(69));
         final String pattern = "yy/MM/dd";
@@ -173,7 +173,7 @@ public class TDateTimeConverterTest extends AbstractConverterTestCase {
     public void testGetAsObject7() throws Exception {
         TDateTimeConverter converter = (TDateTimeConverter) createConverter();
         FacesContext context = getFacesContext();
-        converter.setLocale(defaultLocale);
+        converter.setLocale(Locale.JAPANESE);
         converter.setTimeZone(defaultTimeZone);
         converter.setThreshold(new Integer(69));
         final String pattern = "yy/MM/dd";
@@ -191,7 +191,7 @@ public class TDateTimeConverterTest extends AbstractConverterTestCase {
     public void testGetAsObject8() throws Exception {
         TDateTimeConverter converter = (TDateTimeConverter) createConverter();
         FacesContext context = getFacesContext();
-        converter.setLocale(defaultLocale);
+        converter.setLocale(Locale.JAPANESE);
         converter.setTimeZone(defaultTimeZone);
         converter.setThreshold(new Integer(69));
         final String pattern = "yy/MM/dd";
@@ -201,7 +201,8 @@ public class TDateTimeConverterTest extends AbstractConverterTestCase {
         Date date = (Date) converter.getAsObject(context,
                 new NullUIComponent(), dateValue);
 
-        Date dateTarget = createDateTarget(pattern, defaultLocale, "1970/08/01");
+        Date dateTarget = createDateTarget(pattern, Locale.JAPANESE,
+                "1970/08/01");
         assertEquals(date, dateTarget);
     }
 
@@ -225,7 +226,7 @@ public class TDateTimeConverterTest extends AbstractConverterTestCase {
     public void testGetAsObject11() throws Exception {
         TDateTimeConverter converter = (TDateTimeConverter) createConverter();
         FacesContext context = getFacesContext();
-        converter.setLocale(defaultLocale);
+        converter.setLocale(Locale.JAPANESE);
         converter.setTimeZone(defaultTimeZone);
         converter.setThreshold(new Integer(69));
         final String pattern = "yy/MM/dd";
@@ -235,7 +236,7 @@ public class TDateTimeConverterTest extends AbstractConverterTestCase {
         Date date = (Date) converter.getAsObject(context,
                 new NullUIComponent(), dateValue);
 
-        Date dateTarget = createDateTarget("yy/MM/dd", defaultLocale,
+        Date dateTarget = createDateTarget("yy/MM/dd", Locale.JAPANESE,
                 "2027/08/01");
         System.out.println(date);
         System.out.println(dateTarget);
