@@ -1,9 +1,3 @@
-//	written	by Tan Ling	Wee	on 2 Dec 2001
-//	last updated 20 June 2003
-//	email :	fuushikaden@yahoo.com
-//
-// Modified to use the MyFaces lib resources
-
 var	jscalendarCrossobj, jscalendarCrossMonthObj, jscalendarCrossYearObj,
     jscalendarMonthSelected, jscalendarYearSelected, jscalendarDateSelected,
     jscalendarOmonthSelected, jscalendarOyearSelected, jscalendarOdateSelected,

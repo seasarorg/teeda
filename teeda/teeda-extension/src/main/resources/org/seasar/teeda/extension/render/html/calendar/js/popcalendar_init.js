@@ -20,6 +20,6 @@ var	jscalendarMonthName2 = new Array("JAN","FEB","MAR","APR","MAY","JUN","JUL","
 var	jscalendarDayName = jscalendarStartAt==0 ? new Array("Sun","Mon","Tue","Wed","Thu","Fri","Sat") : new Array("Mon","Tue","Wed","Thu","Fri","Sat","Sun");
 
 
-function jscalendarSetImageDirectory(dir){ // For MyFaces only
+function jscalendarSetImageDirectory(dir){
     jscalendarImgDir = dir;
 }
