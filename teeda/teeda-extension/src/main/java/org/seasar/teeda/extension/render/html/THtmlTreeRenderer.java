@@ -92,7 +92,7 @@ public class THtmlTreeRenderer extends AbstractRenderer {
                 + tree.getId() + ExtensionConstants.NAME_SEPARATOR;
         for (Iterator itr = paramMap.keySet().iterator(); itr.hasNext();) {
             String key = (String) itr.next();
-            if (key.startsWith(prefix) && key.endsWith(TOGGLE_VALUE_SUFFIX)) {
+            if (key != null && key.startsWith(prefix) && key.endsWith(TOGGLE_VALUE_SUFFIX)) {
                 String nodeId = StringUtil.replace(key, prefix, "");
                 nodeId = StringUtil.replace(nodeId, TOGGLE_VALUE_SUFFIX, "");
                 String value = (String) paramMap.get(key);
