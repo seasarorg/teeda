@@ -40,6 +40,8 @@ public class HtmlInputTextRenderer extends AbstractInputRenderer {
     private final IgnoreAttribute ignoreComponent = new IgnoreAttribute();
     {
         ignoreComponent.addAttributeName(JsfConstants.ID_ATTR);
+        ignoreComponent.addAttributeName(JsfConstants.NAME_ATTR);
+        ignoreComponent.addAttributeName(JsfConstants.TYPE_ATTR);
         ignoreComponent.addAttributeName(JsfConstants.VALUE_ATTR);
         ignoreComponent.addAttributeName(JsfConstants.STYLE_CLASS_ATTR);
         ignoreComponent.addAttributeName(JsfConstants.AUTOCOMPLETE_ATTR);

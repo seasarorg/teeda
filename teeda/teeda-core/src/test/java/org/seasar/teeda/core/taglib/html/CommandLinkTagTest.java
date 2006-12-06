@@ -18,6 +18,7 @@ package org.seasar.teeda.core.taglib.html;
 import javax.faces.component.UIComponent;
 import javax.faces.component.html.HtmlCommandLink;
 
+import org.seasar.teeda.core.el.SimpleMethodBinding;
 import org.seasar.teeda.core.mock.MockMethodBinding;
 import org.seasar.teeda.core.unit.TeedaTestCase;
 
@@ -115,7 +116,20 @@ public class CommandLinkTagTest extends TeedaTestCase {
         assertEquals("title", command.getTitle());
         assertEquals("type", command.getType());
     }
-    
+
+    public void testSetAction_constantValue() throws Exception {
+        // # Arrange #
+        HtmlCommandLink command = createHtmlCommandLink();
+        CommandLinkTag tag = new CommandLinkTag();
+
+        // # Act #
+        tag.setAction("testAction");
+        tag.setProperties(command);
+
+        // # Asert #
+        assertTrue(command.getAction() instanceof SimpleMethodBinding);
+    }
+
     public void testRelease() throws Exception {
         // # Arrange #
         CommandLinkTag tag = new CommandLinkTag();
@@ -124,7 +138,7 @@ public class CommandLinkTagTest extends TeedaTestCase {
 
         // # Act #
         tag.release();
-        
+
         // # Assert #
         assertEquals(null, tag.getActionListener());
         assertEquals(null, tag.getImmediate());

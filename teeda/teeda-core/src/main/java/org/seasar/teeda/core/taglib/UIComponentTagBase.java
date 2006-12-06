@@ -773,21 +773,63 @@ public abstract class UIComponentTagBase extends UIComponentTag {
         this.width = width;
     }
 
+    /*
+     * actionはセットしない。
+     * ActionSourceかどうかをinstanceofすればセットしても良さそうな気はするが。
+     */
     protected void setProperties(UIComponent component) {
         super.setProperties(component);
-
+        setComponentProperty(component, JsfConstants.ACCEPT_ATTR, accept);
+        setComponentProperty(component, JsfConstants.ACCEPTCHARSET_ATTR,
+                acceptcharset);
+        setComponentProperty(component, JsfConstants.ACCESSKEY_ATTR, accesskey);
+        //setComponentProperty(component, JsfConstants.ACTION_ATTR, action);
+        setComponentProperty(component, JsfConstants.ALT_ATTR, alt);
+        setComponentProperty(component, JsfConstants.BGCOLOR_ATTR, bgcolor);
+        setComponentProperty(component, JsfConstants.BORDER_ATTR, border);
+        setComponentProperty(component, JsfConstants.CELLPADDING_ATTR,
+                cellpadding);
+        setComponentProperty(component, JsfConstants.CELLSPACING_ATTR,
+                cellspacing);
+        setComponentProperty(component, JsfConstants.CHARSET_ATTR, charset);
+        setComponentProperty(component, JsfConstants.CHECKED_ATTR, checked);
+        setComponentProperty(component, JsfConstants.COLS_ATTR, cols);
         if (component instanceof ValueHolder) {
             setConverterProperty(component, converter);
         }
-        setComponentProperty(component, JsfConstants.VALUE_ATTR, value);
+        setComponentProperty(component, JsfConstants.COORDS_ATTR, coords);
+        setComponentProperty(component, JsfConstants.DATE_STYLE_ATTR, dateStyle);
+        setComponentProperty(component, JsfConstants.DIR_ATTR, dir);
+        setComponentProperty(component, JsfConstants.DISABLED_ATTR, disabled);
+        setComponentProperty(component, JsfConstants.DISABLED_CLASS_ATTR,
+                disabledClass);
+        setComponentProperty(component, JsfConstants.ENABLED_CLASS_ATTR,
+                enabledClass);
+        setComponentProperty(component, JsfConstants.ENCTYPE_ATTR, enctype);
         setComponentProperty(component, JsfConstants.FORMAT_PATTERN_ATTR,
                 formatPattern);
-        setComponentProperty(component, JsfConstants.DATE_STYLE_ATTR, dateStyle);
-        setComponentProperty(component, JsfConstants.TIME_STYLE_ATTR, timeStyle);
-        setComponentProperty(component, JsfConstants.TIMEZONE_ATTR, timezone);
+        setComponentProperty(component, JsfConstants.FORMAT_STYLE_ATTR,
+                formatStyle);
+        setComponentProperty(component, JsfConstants.FRAME_ATTR, frame);
+        setComponentProperty(component, JsfConstants.HEIGHT_ATTR, height);
+        setComponentProperty(component, JsfConstants.HREF_ATTR, href);
+        setComponentProperty(component, JsfConstants.HREFLANG_ATTR, hreflang);
+        setComponentProperty(component, JsfConstants.HSPACE_ATTR, hspace);
+        setComponentProperty(component, JsfConstants.HTML_FOR_ATTR, htmlFor);
+        setComponentProperty(component, JsfConstants.ISMAP_ATTR, ismap);
+        setComponentProperty(component, JsfConstants.LANG_ATTR, lang);
+        setComponentProperty(component, JsfConstants.LONGDESC_ATTR, longdesc);
+        setComponentProperty(component, JsfConstants.MAXLENGTH_ATTR, maxlength);
+        setComponentProperty(component, JsfConstants.METHOD_ATTR, method);
+        setComponentProperty(component, JsfConstants.MULTIPLE_ATTR, multiple);
+        setComponentProperty(component, JsfConstants.NAME_ATTR, name);
+
+        setComponentProperty(component, JsfConstants.ONBLUR_ATTR, onblur);
+        setComponentProperty(component, JsfConstants.ONCHANGE_ATTR, onchange);
         setComponentProperty(component, JsfConstants.ONCLICK_ATTR, onclick);
         setComponentProperty(component, JsfConstants.ONDBLCLICK_ATTR,
                 ondblclick);
+        setComponentProperty(component, JsfConstants.ONFOCUS_ATTR, onfocus);
         setComponentProperty(component, JsfConstants.ONKEYDOWN_ATTR, onkeydown);
         setComponentProperty(component, JsfConstants.ONKEYPRESS_ATTR,
                 onkeypress);
@@ -801,19 +843,31 @@ public abstract class UIComponentTagBase extends UIComponentTag {
         setComponentProperty(component, JsfConstants.ONMOUSEOVER_ATTR,
                 onmouseover);
         setComponentProperty(component, JsfConstants.ONMOUSEUP_ATTR, onmouseup);
-        setComponentProperty(component, JsfConstants.ONFOCUS_ATTR, onfocus);
-        setComponentProperty(component, JsfConstants.ONBLUR_ATTR, onblur);
-        setComponentProperty(component, JsfConstants.TITLE_ATTR, title);
-        setComponentProperty(component, JsfConstants.DISABLED_ATTR, disabled);
-        setComponentProperty(component, JsfConstants.TABINDEX_ATTR, tabindex);
-        setComponentProperty(component, JsfConstants.ACCESSKEY_ATTR, accesskey);
-        setComponentProperty(component, JsfConstants.LANG_ATTR, lang);
-        setComponentProperty(component, JsfConstants.DIR_ATTR, dir);
+        setComponentProperty(component, JsfConstants.ONRESET_ATTR, onreset);
+        setComponentProperty(component, JsfConstants.ONSELECT_ATTR, onselect);
+        setComponentProperty(component, JsfConstants.ONSUBMIT_ATTR, onsubmit);
+        setComponentProperty(component, JsfConstants.READONLY_ATTR, readonly);
+        setComponentProperty(component, JsfConstants.REL_ATTR, rel);
+        setComponentProperty(component, JsfConstants.REV_ATTR, rev);
+        setComponentProperty(component, JsfConstants.ROWS_ATTR, rows);
+        setComponentProperty(component, JsfConstants.RULES_ATTR, rules);
+        setComponentProperty(component, JsfConstants.SELECTED_ATTR, selected);
+        setComponentProperty(component, JsfConstants.SHAPE_ATTR, shape);
+        setComponentProperty(component, JsfConstants.SIZE_ATTR, size);
+        setComponentProperty(component, JsfConstants.SRC_ATTR, src);
         setComponentProperty(component, JsfConstants.STYLE_ATTR, style);
         setComponentProperty(component, JsfConstants.STYLE_CLASS_ATTR,
                 styleClass);
-        // TODO
-        setComponentProperty(component, JsfConstants.HEIGHT_ATTR, height);
+        setComponentProperty(component, JsfConstants.SUMMARY_ATTR, summary);
+        setComponentProperty(component, JsfConstants.TABINDEX_ATTR, tabindex);
+        setComponentProperty(component, JsfConstants.TARGET_ATTR, target);
+        setComponentProperty(component, JsfConstants.TIME_STYLE_ATTR, timeStyle);
+        setComponentProperty(component, JsfConstants.TIMEZONE_ATTR, timezone);
+        setComponentProperty(component, JsfConstants.TITLE_ATTR, title);
+        setComponentProperty(component, JsfConstants.TYPE_ATTR, type);
+        setComponentProperty(component, JsfConstants.USEMAP_ATTR, usemap);
+        setComponentProperty(component, JsfConstants.VALUE_ATTR, value);
+        setComponentProperty(component, JsfConstants.WIDTH_ATTR, width);
     }
 
     public void release() {

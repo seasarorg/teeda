@@ -25,25 +25,26 @@ import org.seasar.teeda.unit.web.TeedaWebTester;
  */
 public class AddTest extends TeedaWebTestCase {
 
-	public static Test suite() throws Exception {
-		return setUpTest(AddTest.class);
-	}
+    public static Test suite() throws Exception {
+        return setUpTest(AddTest.class);
+    }
 
-	public void testRender() throws Exception {
-		// ## Arrange ##
-		TeedaWebTester tester = new TeedaWebTester();
+    public void testRender() throws Exception {
+        // ## Arrange ##
+        TeedaWebTester tester = new TeedaWebTester();
 
-		// ## Act ##
-		tester.beginAt(getBaseUrl(), "view/add/add.html");
-		tester.dumpHtml();
+        // ## Act ##
+        tester.beginAt(getBaseUrl(), "view/add/add.html");
+        tester.dumpHtml();
 
-		tester.setTextByName("addForm:arg1", "123");
-		tester.setTextByName("addForm:arg2", "123");
+        tester.setTextByName("addForm:arg1", "123");
+        tester.setTextByName("addForm:arg2", "123");
 
-		tester.submitById("doCalculate");
+        tester.submitById("doCalculate");
 
-		// ## Assert ##
-		tester.assertTextEqualsById("result", "246");
-	}
+        // ## Assert ##
+        tester.dumpHtml();
+        tester.assertTextEqualsById("result", "246");
+    }
 
 }

@@ -259,6 +259,8 @@ public interface JsfConstants {
 
     String FOOTER_CLASS_ATTR = "footerClass";
 
+    String FORMAT_STYLE_ATTR = "formatStyle";
+
     String FOR_ATTR = "for";
 
     String FORMAT_PATTERN_ATTR = "formatPattern";
@@ -276,6 +278,8 @@ public interface JsfConstants {
     String HEIGHT_ATTR = "height";
 
     String HSPACE_ATTR = "hspace";
+
+    String HTML_FOR_ATTR = "htmlFor";
 
     String ID_ATTR = "id";
 
