@@ -29,7 +29,6 @@ import javax.faces.component.html.HtmlGraphicImage;
 import javax.faces.component.html.HtmlInputHidden;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
-import javax.faces.el.ValueBinding;
 
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
@@ -81,6 +80,9 @@ public class THtmlTreeRenderer extends AbstractRenderer {
     }
 
     protected void decodeTHtmlTree(FacesContext context, THtmlTree tree) {
+        if (tree.getDataModel() == null) {
+            return;
+        }
         Map paramMap = context.getExternalContext().getRequestParameterMap();
         decodeTreeNodeExpansion(tree, paramMap);
         decodeTreeValue(context, tree, paramMap);
@@ -92,7 +94,7 @@ public class THtmlTreeRenderer extends AbstractRenderer {
                 + tree.getId() + ExtensionConstants.NAME_SEPARATOR;
         for (Iterator itr = paramMap.keySet().iterator(); itr.hasNext();) {
             String key = (String) itr.next();
-            if (key != null && key.startsWith(prefix) && key.endsWith(TOGGLE_VALUE_SUFFIX)) {
+            if (key.startsWith(prefix) && key.endsWith(TOGGLE_VALUE_SUFFIX)) {
                 String nodeId = StringUtil.replace(key, prefix, "");
                 nodeId = StringUtil.replace(nodeId, TOGGLE_VALUE_SUFFIX, "");
                 String value = (String) paramMap.get(key);
@@ -121,8 +123,6 @@ public class THtmlTreeRenderer extends AbstractRenderer {
             TreeNode node = model.getNodeById(s);
             node.setValue(value);
         }
-        //ValueBinding vb = tree.getValueBinding(JsfConstants.VALUE_ATTR);
-        //vb.setValue(context, model.getRootNode());
     }
 
     protected String[] getTreeValueDecodeCandidate(final String targetPrefix,
