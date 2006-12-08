@@ -89,6 +89,9 @@ class TeedaHtmlUnitDialog extends HtmlUnitDialog {
     WebClient getWebClient() {
         final Field field = getWebClientField();
         final WebClient webClient = (WebClient) FieldUtil.get(field, this);
+        if (webClient == null) {
+            throw new NullPointerException("webClient");
+        }
         return webClient;
     }
 

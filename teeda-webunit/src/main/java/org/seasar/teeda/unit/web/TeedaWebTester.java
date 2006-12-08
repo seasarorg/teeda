@@ -22,9 +22,11 @@ import java.util.Locale;
 
 import junit.framework.Assert;
 import net.sourceforge.jwebunit.IJWebUnitDialog;
+import net.sourceforge.jwebunit.TestContext;
 import net.sourceforge.jwebunit.WebTester;
 import net.sourceforge.jwebunit.html.Table;
 
+import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlButtonInput;
 import com.gargoylesoftware.htmlunit.html.HtmlElement;
 import com.gargoylesoftware.htmlunit.html.HtmlForm;
@@ -67,16 +69,20 @@ public class TeedaWebTester {
     }
 
     public void beginAt(final String baseUrl, final String relativeUrl) {
-        tester.getTestContext().setBaseUrl(baseUrl);
+        getTestContext().setBaseUrl(baseUrl);
         beginAt(relativeUrl);
     }
 
+    public TestContext getTestContext() {
+        return tester.getTestContext();
+    }
+
     public void setBaseUrl(final String baseUrl) {
-        tester.getTestContext().setBaseUrl(baseUrl);
+        getTestContext().setBaseUrl(baseUrl);
     }
 
     public void setLocale(final Locale locale) {
-        tester.getTestContext().setLocale(locale);
+        getTestContext().setLocale(locale);
     }
 
     public void dumpHtml() {
@@ -337,6 +343,12 @@ public class TeedaWebTester {
         }
     }
 
+    public String getCookieValue(final String cookieName) {
+        final String cookieValue = getTeedaHtmlUnitDialog().getCookieValue(
+            cookieName);
+        return cookieValue;
+    }
+
     // jwebunit側を置き換えるのが面倒なので後回し。
     // 
     //    /**
@@ -350,16 +362,25 @@ public class TeedaWebTester {
     //        dialog.setThrowExceptionOnFailingStatusCode(enabled);
     //    }
     //
-    //    private WebClient getWebClient() {
-    //        final TeedaHtmlUnitDialog dialog = getTeedaHtmlUnitDialog();
-    //        final WebClient webClient = dialog.getWebClient();
-    //        return webClient;
-    //    }
+
+    /**
+     * name=AAA, value=BBBとすると、
+     * リクエストヘッダに"AAA: BBB"が付加されるようになる。
+     */
+    public void addRequestHeader(final String name, final String value) {
+        getWebClient().addRequestHeader(name, value);
+    }
+
+    private WebClient getWebClient() {
+        final TeedaHtmlUnitDialog dialog = getTeedaHtmlUnitDialog();
+        final WebClient webClient = dialog.getWebClient();
+        return webClient;
+    }
 
     protected HtmlInput getHtmlInputByIdNoException(final String id) {
         final HtmlElement element = getElementByIdNoException(id);
         if (element instanceof HtmlInput) {
-            System.out.println(element);
+            //System.out.println(element);
             return (HtmlInput) element;
         }
         return null;
