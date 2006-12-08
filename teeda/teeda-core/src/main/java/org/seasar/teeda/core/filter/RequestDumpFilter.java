@@ -25,6 +25,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -109,16 +110,18 @@ public class RequestDumpFilter implements Filter {
         if (config == null) {
             return;
         }
-        if (!(request instanceof HttpServletRequest)) {
+        if (!(request instanceof HttpServletRequest)
+                || !(response instanceof HttpServletResponse)) {
             chain.doFilter(request, response);
             return;
         }
         final HttpServletRequest hrequest = (HttpServletRequest) request;
+        final HttpServletResponse hresponse = (HttpServletResponse) response;
         dumpBefore(hrequest);
         try {
             chain.doFilter(request, response);
         } finally {
-            dumpAfter(hrequest);
+            dumpAfter(hrequest, hresponse);
         }
     }
 
@@ -153,13 +156,15 @@ public class RequestDumpFilter implements Filter {
         log.debug(sb.toString());
     }
 
-    private void dumpAfter(final HttpServletRequest request) {
+    private void dumpAfter(final HttpServletRequest request,
+            final HttpServletResponse response) {
         final StringBuffer sb = new StringBuffer();
         sb.append(LF);
         sb.append(LF);
         sb.append("** after *****************************************: ");
         sb.append(gerServletPath(request));
         sb.append(LF);
+        RequestDumpUtil.dumpResponseProperties(sb, response, LF, INDENT);
         if (afterRequestParameter) {
             RequestDumpUtil.dumpRequestParameters(sb, request, LF, INDENT);
         }

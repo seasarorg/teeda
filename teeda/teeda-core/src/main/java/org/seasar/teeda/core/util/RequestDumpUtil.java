@@ -25,6 +25,7 @@ import java.util.TreeSet;
 import javax.servlet.ServletContext;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -137,7 +138,7 @@ public class RequestDumpUtil {
 
         sb.append(indent);
         sb.append("Request class=" + request.getClass().getName()).append(
-                ", instance=").append(request);
+                ", instance=").append(request.toString().trim());
 
         sb.append(lf);
         sb.append(indent);
@@ -220,6 +221,15 @@ public class RequestDumpUtil {
         sb.append(", LastAccessedTime=").append(session.getLastAccessedTime());
         sb.append(", MaxInactiveInterval=").append(
                 session.getMaxInactiveInterval());
+        sb.append(lf);
+    }
+
+    public static void dumpResponseProperties(final StringBuffer sb,
+            final HttpServletResponse response, final String lf,
+            final String indent) {
+        sb.append(indent);
+        sb.append("Response class=" + response.getClass().getName()).append(
+                ", instance=").append(response.toString().trim());
         sb.append(lf);
     }
 
