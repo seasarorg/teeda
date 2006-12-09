@@ -1,0 +1,94 @@
+<html>
+<head>
+<meta http-equiv="Content-Language" content="ja">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<script language="JavaScript" type="text/javascript" src="../../../main/js/kumu/kumu.js"></script>
+<script language="JavaScript" type="text/javascript" src="../../../main/js/kumu/dhtml.js"></script>
+<script language="JavaScript" type="text/javascript" src="../../../main/js/kumu/effect.js"></script>
+<style>
+        html{font-family: sans-serif;}
+        .demo {
+            font-size: 12px;
+            border: solid 1px black;
+            background-color: #FFFFFF;
+        }
+        button {
+            border: solid 1px blue;
+            background-color: #FFFFFF;
+            vertical-align: middle;
+            text-align: center;
+            padding: 5px;
+        }
+    </style>
+
+</head>
+<body>
+<h2>simple example</h2>
+<pre class="demo" id="ex1">
+    //Progress bar sample 
+    var ex1 = new Kumu.Effect.Effector();
+    function updateButton(value) {
+      $i('ex1Button').innerHTML = "Progress:" + Math.round(value * 100) + "%";
+    }
+    ex1.addEffect(updateButton);
+    </pre>
+
+<script>
+    function toggleSample1(){
+      ex1.toggle();
+    }
+    function toggleSample2(){
+      ex2.toggle();
+    }
+    function toggleSample3(){
+      ex3.toggle();
+    }
+    function toggleSample4(){
+      ex4.toggle();
+    }
+    </script>
+<button onclick="toggleSample1();" id="ex1Button">Try Me!</button>
+<h2>css example(content zoom & color effect)</h2>
+<pre class="demo">
+    //CSS Effect sample
+    var ex2 = Kumu.Effect.createCSSEffector('background-color:#f3c;font-size:100','ex2Button');
+    </pre>
+
+<button onclick="toggleSample2();" id="ex2Button">Try Me!</button>
+<h2>css example(move)</h2>
+<pre class="demo">
+    //CSS Effect sample
+    var ex3 = Kumu.Effect.createCSSEffector('magin-left : 100px; margin-top : 30px;','ex3Button');
+    </pre>
+<button onclick="toggleSample3();" id="ex3Button">Try Me!</button>
+
+<h2>accordion like efx example</h2>
+<pre class="demo" id="test" style="height:1px">
+    //Accordion sample
+    Kumu.DHTML.makeClipping($i('test'));
+    var ex4 = Kumu.Effect.createCSSEffector('height : 100px','test');
+    </pre>
+
+<script>
+    function toggleSample4(){
+      ex4.toggle();
+    }
+    </script>
+<button onclick="toggleSample4();" id="ex9Button">Try Me!</button>
+<script>
+        
+    var ex1 = new Kumu.Effect.Effector();
+    function updateButton(value) {
+      $i('ex1Button').innerHTML = "Progress:" + Math.round(value * 100) + "%";
+    }
+    ex1.addEffect(updateButton);
+    
+    var ex2 = Kumu.Effect.createCSSEffector('background-color:#f3c;font-size:100','ex2Button');
+    
+    var ex3 = Kumu.Effect.createCSSEffector('margin-left : 100px ; margin-top : 30px;','ex3Button');
+    
+    Kumu.DHTML.makeClipping($i('test'));
+    var ex4 = Kumu.Effect.createCSSEffector('height : 100px','test');
+    </script>
+</body>
+</html>

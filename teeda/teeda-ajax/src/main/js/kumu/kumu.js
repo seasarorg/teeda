@@ -138,11 +138,34 @@ Kumu = Kumu.extend(Kumu, {
             arr.push(arg[j]);
           }
         }else{
-          arr.push[arg];
+          arr.push(arg);
         }
       }
     }
     return arr;
+  },
+  
+  keys : function(obj){
+    var result = [];
+    for(var v in obj){
+      result.push(v);
+    }
+    return result;
+  },
+
+  items : function(obj){
+    var result = [];
+    var e;
+    for(var k in obj){
+      var v;
+      try{
+        v = obj[k];
+      } catch(e){
+        continue;
+      }
+      result.push([k, v]);
+    }
+    return result;
   },
 
   shift : function(list) {
@@ -213,7 +236,18 @@ Kumu = Kumu.extend(Kumu, {
     var tmp = Kumu.ltrim(str);
     return Kumu.rtrim(tmp);
   },
-  
+ 
+  camelize : function(str){
+    if(!str){
+      str = this;
+    }
+    return str.replace(/-([a-z])/g,
+      function($0,$1){
+        return $1.toUpperCase()
+      }
+    );
+  },
+
   create: function() {
     return function() {
       if(this.initialize){ 
@@ -414,7 +448,8 @@ Array.prototype = Kumu.extend(Array.prototype, {
 String.prototype = Kumu.extend(String.prototype,{
   ltrim : Kumu.ltrim,
   rtrim : Kumu.rtrim,
-  trim : Kumu.trim
+  trim : Kumu.trim,
+  camelize : Kumu.camelize
 });
 
 Function.prototype.getName = function() {
