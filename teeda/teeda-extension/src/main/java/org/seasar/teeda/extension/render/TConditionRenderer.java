@@ -22,6 +22,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.html.HtmlInputHidden;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+import javax.faces.internal.IgnoreAttribute;
 
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.AbstractRenderer;
@@ -37,6 +38,12 @@ public class TConditionRenderer extends AbstractRenderer {
     public static final String COMPONENT_FAMILY = "org.seasar.teeda.extension.Condition";
 
     public static final String RENDERER_TYPE = "org.seasar.teeda.extension.Condition";
+
+    private final IgnoreAttribute attribute = new IgnoreAttribute();
+    {
+        attribute.addAttributeName(JsfConstants.ID_ATTR);
+        attribute.addAttributeName("submitted");
+    }
 
     public void decode(FacesContext context, UIComponent component) {
         assertNotNull(context, component);
@@ -89,6 +96,7 @@ public class TConditionRenderer extends AbstractRenderer {
         writer.startElement(JsfConstants.DIV_ELEM, condition);
         RendererUtil.renderIdAttributeIfNecessary(writer, component,
                 getIdForRender(context, condition));
+        renderRemainAttributes(condition, writer, attribute);
     }
 
     public void encodeEnd(FacesContext context, UIComponent component)
