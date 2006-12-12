@@ -167,7 +167,8 @@ public class UITreeData extends UIInput implements NamingContainer {
     }
 
     public String getClientId(FacesContext context) {
-        String ownClientId = super.getClientId(context);
+        AssertionUtil.assertNotNull("context", context);
+        final String ownClientId = getOwnClientId(context);
         if (nodeId != null) {
             return ownClientId + NamingContainer.SEPARATOR_CHAR + nodeId;
         } else {
@@ -175,6 +176,11 @@ public class UITreeData extends UIInput implements NamingContainer {
         }
     }
 
+    public String getOwnClientId(FacesContext context) {
+        AssertionUtil.assertNotNull("context", context);
+        return super.getClientId(context);
+    }
+    
     public void setValueBinding(String name, ValueBinding binding) {
         if ("value".equals(name)) {
             model = null;
