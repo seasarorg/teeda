@@ -41,7 +41,6 @@ import org.seasar.teeda.extension.component.html.THtmlCommandButton;
 import org.seasar.teeda.extension.render.html.sub.web.hoge.HogePage;
 import org.seasar.teeda.extension.util.TransactionTokenUtil;
 
-
 /**
  * @author shot
  */
@@ -70,7 +69,7 @@ public class THtmlCommandButtonRendererTest extends RendererTest {
 
     public void testEncode_WithToken() throws Exception {
         // ## Arrange ##
-        htmlCommandButton.setId("doHoge");
+        htmlCommandButton.setId("doOnceHoge");
         htmlCommandButton.setValue("abc");
 
         // ## Act ##
@@ -87,7 +86,7 @@ public class THtmlCommandButtonRendererTest extends RendererTest {
 
         final String submitPart = matcher.group(1);
         assertEquals(
-                "<input type=\"submit\" id=\"doHoge\" name=\"doHoge\" value=\"abc\" />",
+                "<input type=\"submit\" id=\"doOnceHoge\" name=\"doOnceHoge\" value=\"abc\" />",
                 submitPart);
 
         pattern = Pattern.compile("(.+?)name=\"" + TransactionTokenUtil.TOKEN
@@ -113,7 +112,7 @@ public class THtmlCommandButtonRendererTest extends RendererTest {
         FacesConfigOptions.setDefaultSuffix(".html");
         getFacesContext().getViewRoot().setViewId(
                 nc.getViewRootPath() + "/hoge/hoge.html");
-        htmlCommandButton.setId("doHoge");
+        htmlCommandButton.setId("doOnceHoge");
         htmlCommandButton.setValue("abc");
 
         // ## Act ##
@@ -130,7 +129,7 @@ public class THtmlCommandButtonRendererTest extends RendererTest {
 
         final String submitPart = matcher.group(1);
         assertEquals(
-                "<input type=\"submit\" id=\"doHoge\" name=\"doHoge\" value=\"HOGE\" />",
+                "<input type=\"submit\" id=\"doOnceHoge\" name=\"doOnceHoge\" value=\"HOGE\" />",
                 submitPart);
     }
 
