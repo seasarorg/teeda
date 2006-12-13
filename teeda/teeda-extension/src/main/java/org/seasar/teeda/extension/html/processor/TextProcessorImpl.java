@@ -45,7 +45,6 @@ public class TextProcessorImpl implements TextProcessor {
 
         TextTag tag = new TextTag();
         try {
-            tag.setParent(parentTag);
             tag.setPageContext(pageContext);
             tag.setValue(value);
             tag.doStartTag();
