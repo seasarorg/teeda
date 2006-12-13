@@ -26,7 +26,7 @@ import org.seasar.teeda.extension.taglib.TextTag;
 
 /**
  * @author higa
- *  
+ * @author shot
  */
 public class TextProcessorImpl implements TextProcessor {
 
@@ -45,6 +45,7 @@ public class TextProcessorImpl implements TextProcessor {
 
         TextTag tag = new TextTag();
         try {
+            tag.setParent(parentTag);
             tag.setPageContext(pageContext);
             tag.setValue(value);
             tag.doStartTag();
