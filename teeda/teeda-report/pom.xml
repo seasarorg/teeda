@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+  <parent>
+    <groupId>org.seasar.teeda</groupId>
+    <artifactId>teeda-project</artifactId>
+    <version>1.0.3-SNAPSHOT</version>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>teeda-reporting</artifactId>
+  <packaging>pom</packaging>
+  <name>Teeda Reporting</name>
+  <description></description>
+  <url>http://teeda.seasar.org/</url>
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>generate-cobertura-report</id>
+            <phase>package</phase>
+            <configuration>
+              <tasks>
+                <delete file="cobertura.ser" failonerror="false"/>
+                <taskdef
+                  name="cobertura-merge" 
+                  classname="net.sourceforge.cobertura.ant.MergeTask"
+                  classpathref="maven.test.classpath"
+                />
+                <cobertura-merge>
+                  <fileset dir="${basedir}/../">
+                    <include name="teeda-core/cobertura.ser" />
+                    <include name="teeda-extension/cobertura.ser" />
+                    <include name="teeda-ajax/cobertura.ser" />
+                  </fileset>
+                </cobertura-merge>
+                <taskdef
+                  name="cobertura-report" 
+                  classname="net.sourceforge.cobertura.ant.ReportTask"
+                  classpathref="maven.test.classpath"
+                />
+                <cobertura-report
+                  format="html"
+                  destdir="${project.reporting.outputDirectory}/cobertura"
+                >
+                  <fileset dir="${basedir}/../teeda-core/src/main/java">
+                    <include name="**/*.java" />
+                  </fileset>
+                  <fileset dir="${basedir}/../teeda-extension/src/main/java">
+                    <include name="**/*.java" />
+                  </fileset>
+                  <fileset dir="${basedir}/../teeda-ajax/src/main/java">
+                    <include name="**/*.java" />
+                  </fileset>
+                </cobertura-report>
+              </tasks>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+  <dependencies>
+    <dependency>
+      <groupId>cobertura</groupId>
+      <artifactId>cobertura</artifactId>
+      <version>1.7</version>
+      <type>jar</type>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+  <reporting>
+  </reporting>
+</project>
