@@ -25,13 +25,6 @@
           </execution>
         </executions>
       </plugin>
-      <plugin>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <configuration>
-          <forkMode>none</forkMode>
-          <showSuccess>false</showSuccess>
-        </configuration>
-      </plugin>
     </plugins>
   </build>
   <dependencies>
