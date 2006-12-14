@@ -26,6 +26,7 @@ import javax.faces.render.ResponseStateManager;
 
 import org.seasar.teeda.core.application.TeedaStateManager;
 import org.seasar.teeda.core.application.TreeStructure;
+import org.seasar.teeda.core.util.PortletUtil;
 import org.seasar.teeda.core.util.ResponseStateManagerUtil;
 
 /**
@@ -50,6 +51,10 @@ public class TeedaStateManagerImpl extends TeedaStateManager implements
         if (viewRoot != null) {
             viewRoot.setViewId(viewId);
             restoreComponentState(context, viewRoot, renderKitId);
+            // PortletSupport
+            if (PortletUtil.isPortlet(context)) {
+                removeSerializedView(viewId);
+            }
         }
         return viewRoot;
     }
@@ -74,6 +79,16 @@ public class TeedaStateManagerImpl extends TeedaStateManager implements
     }
 
     public synchronized void removeSerializedView(final String viewId) {
+        // PortletSupport
+        FacesContext context = FacesContext.getCurrentInstance();
+        if (context != null && PortletUtil.isPortlet(context)) {
+            if (!isSavingStateInClient(context)) {
+                context.getExternalContext().getSessionMap().remove(
+                        SERIALIZED_VIEW_ATTR + "-" + viewId);
+                return;
+            }
+        }
+
         serializedViews.remove(viewId);
     }
 
@@ -181,15 +196,37 @@ public class TeedaStateManagerImpl extends TeedaStateManager implements
     }
 
     protected SerializedView getSerializedViewFromServer(final String viewId) {
+        // PortletSupport
+        FacesContext context = FacesContext.getCurrentInstance();
+        if (context != null && PortletUtil.isPortlet(context)) {
+            return (SerializedView) context.getExternalContext()
+                    .getSessionMap().get(SERIALIZED_VIEW_ATTR + "-" + viewId);
+        }
+
         return (SerializedView) serializedViews.get(viewId);
     }
 
     protected boolean hasSerializedViewInServer(final String viewId) {
+        // PortletSupport
+        FacesContext context = FacesContext.getCurrentInstance();
+        if (context != null && PortletUtil.isPortlet(context)) {
+            return context.getExternalContext().getSessionMap().containsKey(
+                    SERIALIZED_VIEW_ATTR + "-" + viewId);
+        }
+
         return serializedViews.containsKey(viewId);
     }
 
     protected void saveSerializedViewToServer(final String viewId,
             final SerializedView serializedView) {
+        // PortletSupport
+        FacesContext context = FacesContext.getCurrentInstance();
+        if (context != null && PortletUtil.isPortlet(context)) {
+            context.getExternalContext().getSessionMap().put(
+                    SERIALIZED_VIEW_ATTR + "-" + viewId, serializedView);
+            return;
+        }
+
         serializedViews.put(viewId, serializedView);
     }
 
