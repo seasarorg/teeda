@@ -6,9 +6,7 @@ var	jscalendarCrossobj, jscalendarCrossMonthObj, jscalendarCrossYearObj,
 
 var	jscalendarBPageLoaded=false
 var	jscalendarIe=document.all
-var	jscalendarDom=document.getElementById
 
-var	jscalendarNs4=document.layers
 var	jscalendarToday =	new	Date()
 var	jscalendarDateNow	 = jscalendarToday.getDate()
 var	jscalendarMonthNow = jscalendarToday.getMonth()
@@ -16,24 +14,7 @@ var	jscalendarYearNow	 = jscalendarToday.getYear()
 
 var jscalendarBShow = false;
 
-var jscalendarMyFacesCtlType = "x:inputCalendar";
-var jscalendarMyFacesInputDateClientId;
-
-function jscalendarHolidayRec (d, m, y, desc){
-	this.d = d;
-	this.m = m;
-	this.y = y;
-	this.desc = desc;
-}
-
-var jscalendarHolidaysCounter = 0;
-var jscalendarHolidays = new Array();
-
-function jscalendarAddHoliday (d, m, y, desc){
-	jscalendarHolidays[jscalendarHolidaysCounter++] = new jscalendarHolidayRec ( d, m, y, desc );
-}
-
-document.write ("<div onclick='jscalendarBShow=true' id='calendar'	class='"+jscalendarThemePrefix+"-div-style'><table	width="+((jscalendarShowWeekNumber==1)?250:220)+" class='"+jscalendarThemePrefix+"-table-style'><tr class='"+jscalendarThemePrefix+"-title-background-style'><td><table width='"+((jscalendarShowWeekNumber==1)?248:218)+"'><tr><td class='"+jscalendarThemePrefix+"-title-style'><span id='caption'></span></td><td align=right><a href='javascript:jscalendarHideCalendar()'><span id='jscalendarCloseButton'></span></a></td></tr></table></td></tr><tr><td class='"+jscalendarThemePrefix+"-body-style'><span id='popupcalendar_content'></span></td></tr>")
+document.write ("<div onclick='jscalendarBShow=true' id='calendar'	class='"+jscalendarThemePrefix+"-div-style'><table	width='220' class='"+jscalendarThemePrefix+"-table-style'><tr class='"+jscalendarThemePrefix+"-title-background-style'><td><table width='218'><tr><td class='"+jscalendarThemePrefix+"-title-style'><span id='caption'></span></td><td align=right><a href='javascript:jscalendarHideCalendar()'><span id='jscalendarCloseButton'></span></a></td></tr></table></td></tr><tr><td class='"+jscalendarThemePrefix+"-body-style'><span id='popupcalendar_content'></span></td></tr>")
 
 if (jscalendarShowToday==1)
 	document.write ("<tr class='"+jscalendarThemePrefix+"-today-style'><td class='"+jscalendarThemePrefix+"-today-lbl-style'><span id='lblToday'></span></td></tr>")
@@ -57,7 +38,7 @@ function jscalendarInit(){
 	jscalendarYearConstructed=false;
 
 	if (jscalendarShowToday==1) {
-		document.getElementById("lblToday").innerHTML =	jscalendarTodayString + " <a onmousemove='window.status=\""+jscalendarGotoString+"\"' onmouseout='window.status=\"\"' title='"+jscalendarGotoString+"' class='"+jscalendarThemePrefix+"-today-style' href='javascript:jscalendarMonthSelected=jscalendarMonthNow;jscalendarYearSelected=jscalendarYearNow;jscalendarConstructCalendar();'>"+jscalendarToday+ "</a>";
+		document.getElementById("lblToday").innerHTML =	jscalendarTodayString + " <a onmousemove='window.status=\""+jscalendarGotoString+"\"' onmouseout='window.status=\"\"' title='"+jscalendarGotoString+"' class='"+jscalendarThemePrefix+"-today-style' href='javascript:jscalendarMonthSelected=jscalendarMonthNow;jscalendarYearSelected=jscalendarYearNow;jscalendarConstructCalendar();'>"+ jscalendarConstructDate(jscalendarToday.getDate(), jscalendarToday.getMonth(), jscalendarToday.getYear()) + "</a>";
 	}
 	var sHTML1 ="<span id='spanLeft'  class='"+jscalendarThemePrefix+"-title-control-normal-style' onmouseover='jscalendarSwapImage(\"changeLeft\",\"left2.gif\");  this.className=\""+jscalendarThemePrefix+"-title-control-select-style\"; window.status=\""+jscalendarScrollLeftMessage+"\"' onclick='javascript:jscalendarDecMonth()' onmouseout='clearInterval(jscalendarIntervalID1);jscalendarSwapImage(\"changeLeft\",\"left1.gif\"); this.className=\""+jscalendarThemePrefix+"-title-control-normal-style\"; window.status=\"\"' onmousedown='clearTimeout(jscalendarTimeoutID1);jscalendarTimeoutID1=setTimeout(\"jscalendarStartDecMonth()\",500)'	onmouseup='clearTimeout(jscalendarTimeoutID1);clearInterval(jscalendarIntervalID1)'>&nbsp<IMG id='changeLeft' SRC='"+jscalendarImgDir+"left1.gif' width=10 height=11 BORDER=0>&nbsp</span>&#160;"
 	sHTML1+="<span id='spanRight' class='"+jscalendarThemePrefix+"-title-control-normal-style' onmouseover='jscalendarSwapImage(\"changeRight\",\"right2.gif\");this.className=\""+jscalendarThemePrefix+"-title-control-select-style\"; window.status=\""+jscalendarScrollRightMessage+"\"' onmouseout='clearInterval(jscalendarIntervalID1);jscalendarSwapImage(\"changeRight\",\"right1.gif\"); this.className=\""+jscalendarThemePrefix+"-title-control-normal-style\"; window.status=\"\"' onclick='jscalendarIncMonth()' onmousedown='clearTimeout(jscalendarTimeoutID1);jscalendarTimeoutID1=setTimeout(\"jscalendarStartIncMonth()\",500)'	onmouseup='clearTimeout(jscalendarTimeoutID1);clearInterval(jscalendarIntervalID1)'>&nbsp<IMG id='changeRight' SRC='"+jscalendarImgDir+"right1.gif'	width=10 height=11 BORDER=0>&nbsp</span>&nbsp"
@@ -102,26 +83,13 @@ function jscalendarConstructDate(d,m,y){
 }
 
 function jscalendarCloseCalendar() {
-    jscalendarHideCalendar();
-
-    if( jscalendarMyFacesCtlType!="x:inputDate" )
-    {
-        jscalendarCtlToPlaceValue.value = jscalendarConstructDate(jscalendarDateSelected,jscalendarMonthSelected,jscalendarYearSelected)
-        var onchange=jscalendarCtlToPlaceValue.getAttribute("onchange");
-        if(onchange)
-        {
-            eval(onchange);
-        }
-    }
-    else
-    {
-        document.getElementById(jscalendarMyFacesInputDateClientId+".day").value = jscalendarDateSelected;
-        document.getElementById(jscalendarMyFacesInputDateClientId+".month").value = jscalendarMonthSelected+1;
-        document.getElementById(jscalendarMyFacesInputDateClientId+".year").value = jscalendarYearSelected;
+    jscalendarHideCalendar();    
+    jscalendarCtlToPlaceValue.value = jscalendarConstructDate(jscalendarDateSelected,jscalendarMonthSelected,jscalendarYearSelected)
+    var onchange=jscalendarCtlToPlaceValue.getAttribute("onchange");
+    if(onchange){
+        eval(onchange);
     }
 }
-
-/*** Month Pulldown	***/
 
 function jscalendarStartDecMonth(){
 	jscalendarIntervalID1=setInterval("jscalendarDecMonth()",80);
@@ -250,46 +218,12 @@ function jscalendarPopUpYear() {
 	var	leftOffset;
 
 	jscalendarConstructYear();
-	jscalendarCrossYearObj.visibility = (jscalendarDom||jscalendarIe) ? "visible" : "show";
+	jscalendarCrossYearObj.visibility = "visible";
 	leftOffset = parseInt( formatInt(jscalendarCrossobj.left),10) + document.getElementById("spanYear").offsetLeft;
 	if (jscalendarIe)
 		leftOffset += 6;
 	jscalendarCrossYearObj.left =	leftOffset + "px";
 	jscalendarCrossYearObj.top = parseInt( formatInt(jscalendarCrossobj.top),10) +	26 + "px";
-}
-
-/*** calendar ***/
-function jscalendarWeekNbr(n) {
-	// Algorithm used:
-	// From Klaus Tondering's Calendar document (The Authority/Guru)
-	// hhtp://www.tondering.dk/claus/calendar.html
-	// a = (14-month) / 12
-	// y = year + 4800 - a
-	// m = month + 12a - 3
-	// J = day + (153m + 2) / 5 + 365y + y / 4 - y / 100 + y / 400 - 32045
-	// d4 = (J + 31741 - (J mod 7)) mod 146097 mod 36524 mod 1461
-	// L = d4 / 1460
-	// d1 = ((d4 - L) mod 365) + L
-	// WeekNumber = d1 / 7 + 1
-
-	year = n.getFullYear();
-	month = n.getMonth() + 1;
-	if (jscalendarStartAt == 0)
-		day = n.getDate() + 1;
-	else
-		day = n.getDate();
-
-	a = Math.floor((14-month) / 12);
-	y = year + 4800 - a;
-	m = month + 12 * a - 3;
-	b = Math.floor(y/4) - Math.floor(y/100) + Math.floor(y/400);
-	J = day + Math.floor((153 * m + 2) / 5) + 365 * y + b - 32045;
-	d4 = (((J + 31741 - (J % 7)) % 146097) % 36524) % 1461;
-	L = Math.floor(d4 / 1460);
-	d1 = ((d4 - L) % 365) + L;
-	week = Math.floor(d1/7) + 1;
-
-	return week;
 }
 
 function jscalendarConstructCalendar () {
@@ -303,9 +237,9 @@ function jscalendarConstructCalendar () {
 		endDate	= new Date (jscalendarYearSelected,jscalendarMonthSelected+1,1);
 		endDate	= new Date (endDate	- (24*60*60*1000));
 		numDaysInMonth = endDate.getDate();
-	}else
+	}else{
 		numDaysInMonth = aNumDays[jscalendarMonthSelected];
-
+	}
 
 	datePointer	= 0;
 	dayPointer = startDate.getDay() - jscalendarStartAt;
@@ -315,16 +249,10 @@ function jscalendarConstructCalendar () {
 
 	var sHTML = "<table border=0 class='"+jscalendarThemePrefix+"-body-style'><tr>"
 
-	if (jscalendarShowWeekNumber==1)
-		sHTML += "<td width=27><b>" + jscalendarWeekString + "</b></td><td width=1 rowspan=7 class='"+jscalendarThemePrefix+"-weeknumber-div-style'><img src='"+jscalendarImgDir+"divider.gif' width=1></td>";
-
 	for	(i=0; i<7; i++)
 		sHTML += "<td width='27' align='right'><B>"+ jscalendarDayName[i]+"</B></td>";
 
 	sHTML +="</tr><tr>";
-
-	if (jscalendarShowWeekNumber==1)
-		sHTML += "<td align=right>" + jscalendarWeekNbr(startDate) + "&#160;</td>";
 
 	for	( var i=1; i<=dayPointer;i++ )
 		sHTML += "<td>&#160;</td>";
@@ -345,17 +273,6 @@ function jscalendarConstructCalendar () {
 		{ sStyle += " "+jscalendarThemePrefix+"-selected-day-style"; }
 
 		sHint = ""
-		for (k=0;k<jscalendarHolidaysCounter;k++)
-		{
-			if ((parseInt( formatInt(jscalendarHolidays[k].d),10)==datePointer)&&(parseInt( formatInt(jscalendarHolidays[k].m),10)==(jscalendarMonthSelected+1)))
-			{
-				if ((parseInt( formatInt(jscalendarHolidays[k].y),10)==0)||((parseInt( formatInt(jscalendarHolidays[k].y),10)==jscalendarYearSelected)&&(parseInt( formatInt(jscalendarHolidays[k].y),10)!=0)))
-				{
-					sStyle += " "+jscalendarThemePrefix+"-holiday-style";
-					sHint+=sHint==""?jscalendarHolidays[k].desc:"\n"+jscalendarHolidays[k].desc
-				}
-			}
-		}
 
 		var regexp= /\"/g
 		sHint=sHint.replace(regexp,"&quot;");
@@ -369,8 +286,6 @@ function jscalendarConstructCalendar () {
 
 		if ((dayPointer+jscalendarStartAt) % 7 == jscalendarStartAt) {
 			sHTML += "</tr><tr>";
-			if ((jscalendarShowWeekNumber==1)&&(datePointer<numDaysInMonth))
-				sHTML += "<td align=right>" + (jscalendarWeekNbr(new Date(jscalendarYearSelected,jscalendarMonthSelected,datePointer+1))) + "&#160;</td>";
 		}
 	}
 
@@ -481,7 +396,7 @@ function jscalendarPopUpCalendar_Show(ctl){
 	jscalendarCrossobj.left = jscalendarFixedX==-1 ? ctl.offsetLeft	+ leftpos + "px": jscalendarFixedX;
 	jscalendarCrossobj.top = jscalendarFixedY==-1 ?	ctl.offsetTop +	toppos + ctl.offsetHeight +	2 + "px": jscalendarFixedY;
 	jscalendarConstructCalendar (1, jscalendarMonthSelected, jscalendarYearSelected);
-	jscalendarCrossobj.visibility=(jscalendarDom||jscalendarIe)? "visible" : "show";
+	jscalendarCrossobj.visibility = "visible";
 
 	jscalendarBShow = true;
 }
