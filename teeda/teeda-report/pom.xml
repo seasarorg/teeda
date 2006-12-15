@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project>
+<project
+  xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"
+>
   <parent>
     <groupId>org.seasar.teeda</groupId>
     <artifactId>teeda-project</artifactId>
@@ -13,39 +17,112 @@
   <url>http://teeda.seasar.org/</url>
   <build>
     <plugins>
-      <plugin>
-        <artifactId>maven-antrun-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>generate-cobertura-report</id>
-            <phase>package</phase>
-            <configuration>
-              <tasks>
-                <ant
-                  antfile="build.xml"
-                  target="cobertura-report"
-                  inheritRefs="true"
-                >
-                  <property name="project.reporting.outputDirectory" value="${project.reporting.outputDirectory}"/>
-                </ant>
-              </tasks>
-            </configuration>
-            <goals>
-              <goal>run</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
     </plugins>
   </build>
+  <profiles>
+    <profile>
+      <id>javadoc</id>
+      <build>
+        <defaultGoal>package</defaultGoal>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>build-helper-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>add-sources</id>
+                <phase>initialize</phase>
+                <goals>
+                  <goal>add-source</goal>
+                </goals>
+                <configuration>
+                  <sources>
+                    <source>${basedir}/../teeda-core/src/main/java</source>
+                    <source>${basedir}/../teeda-extension/src/main/java</source>
+                    <source>${basedir}/../teeda-ajax/src/main/java</source>
+                  </sources>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>generate-javadoc</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>javadoc</goal>
+                </goals>
+              </execution>
+            </executions>
+            <configuration>
+              <source>1.4</source>
+              <encoding>UTF-8</encoding>
+              <docencoding>UTF-8</docencoding>
+              <charset>UTF-8</charset>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+      <dependencies>
+        <dependency>
+          <groupId>org.seasar.teeda</groupId>
+          <artifactId>teeda-core</artifactId>
+          <version>1.0.3-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+          <groupId>org.seasar.teeda</groupId>
+          <artifactId>teeda-extension</artifactId>
+          <version>1.0.3-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+          <groupId>org.seasar.teeda</groupId>
+          <artifactId>teeda-ajax</artifactId>
+          <version>1.0.3-SNAPSHOT</version>
+        </dependency>
+      </dependencies>
+    </profile>
+    <profile>
+      <id>cobertura</id>
+      <build>
+        <defaultGoal>package</defaultGoal>
+        <plugins>
+          <plugin>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>generate-cobertura-report</id>
+                <phase>package</phase>
+                <configuration>
+                  <tasks>
+                    <ant
+                      antfile="build-.xml"
+                      target="cobertura-report"
+                      inheritRefs="true"
+                    >
+                      <property name="project.reporting.outputDirectory" value="${project.reporting.outputDirectory}"/>
+                    </ant>
+                  </tasks>
+                </configuration>
+                <goals>
+                  <goal>run</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+      <dependencies>
+        <dependency>
+          <groupId>cobertura</groupId>
+          <artifactId>cobertura</artifactId>
+          <version>1.7</version>
+        </dependency>
+      </dependencies>
+    </profile>
+  </profiles>
   <dependencies>
-    <dependency>
-      <groupId>cobertura</groupId>
-      <artifactId>cobertura</artifactId>
-      <version>1.7</version>
-      <type>jar</type>
-      <scope>test</scope>
-    </dependency>
   </dependencies>
   <reporting>
   </reporting>
