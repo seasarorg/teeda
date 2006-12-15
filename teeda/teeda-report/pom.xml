@@ -21,38 +21,13 @@
             <phase>package</phase>
             <configuration>
               <tasks>
-                <delete file="cobertura.ser" failonerror="false"/>
-                <taskdef
-                  name="cobertura-merge" 
-                  classname="net.sourceforge.cobertura.ant.MergeTask"
-                  classpathref="maven.test.classpath"
-                />
-                <cobertura-merge>
-                  <fileset dir="${basedir}/../">
-                    <include name="teeda-core/cobertura.ser" />
-                    <include name="teeda-extension/cobertura.ser" />
-                    <include name="teeda-ajax/cobertura.ser" />
-                  </fileset>
-                </cobertura-merge>
-                <taskdef
-                  name="cobertura-report" 
-                  classname="net.sourceforge.cobertura.ant.ReportTask"
-                  classpathref="maven.test.classpath"
-                />
-                <cobertura-report
-                  format="html"
-                  destdir="${project.reporting.outputDirectory}/cobertura"
+                <ant
+                  antfile="build.xml"
+                  target="cobertura-report"
+                  inheritRefs="true"
                 >
-                  <fileset dir="${basedir}/../teeda-core/src/main/java">
-                    <include name="**/*.java" />
-                  </fileset>
-                  <fileset dir="${basedir}/../teeda-extension/src/main/java">
-                    <include name="**/*.java" />
-                  </fileset>
-                  <fileset dir="${basedir}/../teeda-ajax/src/main/java">
-                    <include name="**/*.java" />
-                  </fileset>
-                </cobertura-report>
+                  <property name="project.reporting.outputDirectory" value="${project.reporting.outputDirectory}"/>
+                </ant>
               </tasks>
             </configuration>
             <goals>

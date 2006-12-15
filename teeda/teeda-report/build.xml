@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="project">
+
+	<target name="cobertura-report" depends="_setup">
+		<delete file="cobertura.ser" failonerror="false" />
+		<cobertura-merge>
+			<fileset dir="${basedir}/../">
+				<include name="teeda-core/cobertura.ser" />
+				<include name="teeda-extension/cobertura.ser" />
+				<include name="teeda-ajax/cobertura.ser" />
+			</fileset>
+		</cobertura-merge>
+		<cobertura-report format="html" destdir="${project.reporting.outputDirectory}/cobertura">
+			<fileset dir="${basedir}/../teeda-core/src/main/java">
+				<include name="**/*.java" />
+			</fileset>
+			<fileset dir="${basedir}/../teeda-extension/src/main/java">
+				<include name="**/*.java" />
+			</fileset>
+			<fileset dir="${basedir}/../teeda-ajax/src/main/java">
+				<include name="**/*.java" />
+			</fileset>
+		</cobertura-report>
+	</target>
+
+	<target name="_setup">
+		<path id="cobertura.classpath">
+			<path refid="maven.test.classpath" />
+		</path>
+		<taskdef
+			name="cobertura-merge"
+			classname="net.sourceforge.cobertura.ant.MergeTask"
+			classpathref="cobertura.classpath"
+		/>
+		<taskdef
+			name="cobertura-report"
+			classname="net.sourceforge.cobertura.ant.ReportTask"
+			classpathref="cobertura.classpath"
+		/>
+
+	</target>
+
+</project>
