@@ -25,8 +25,6 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseId;
 import javax.faces.internal.WindowIdUtil;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
 
 import org.seasar.framework.util.LruHashMap;
 import org.seasar.teeda.core.JsfConstants;
@@ -38,6 +36,7 @@ import org.seasar.teeda.core.util.ServletExternalContextUtil;
 
 /**
  * @author shot
+ * @author higa
  */
 public class RestoreViewPhase extends AbstractPhase {
 
@@ -110,32 +109,6 @@ public class RestoreViewPhase extends AbstractPhase {
         return ExternalContextUtil.getViewId(externalContext);
     }
 
-    protected String setupWindowId(final ExternalContext externalContext)
-            throws FacesException {
-        String wid = null;
-        if (WindowIdUtil
-                .needNewWindow(externalContext.getRequestParameterMap())) {
-            wid = WindowIdUtil.createWindowId();
-            Object response = externalContext.getResponse();
-            //TODO PortletSupport
-            if (response instanceof HttpServletResponse) {
-                HttpServletResponse res = (HttpServletResponse) response;
-                Cookie cookie = new Cookie(WindowIdUtil.TEEDA_WID, wid);
-                res.addCookie(cookie);
-            }
-        } else {
-            final Map cookieMap = externalContext.getRequestCookieMap();
-            if (cookieMap == null) {
-                return null;
-            }
-            Cookie cookie = (Cookie) cookieMap.get(WindowIdUtil.TEEDA_WID);
-            if (cookie != null) {
-                wid = cookie.getValue();
-            }
-        }
-        return wid;
-    }
-
     protected String getViewIdFromSession(final Map sessionMap,
             final String windowId) {
         LruHashMap mru = getViewIdLruFromSession(sessionMap);
@@ -173,7 +146,7 @@ public class RestoreViewPhase extends AbstractPhase {
             final ExternalContext externalContext = context
                     .getExternalContext();
             this.currentViewId = getViewId(context, externalContext);
-            this.wid = setupWindowId(externalContext);
+            this.wid = WindowIdUtil.setupWindowId(externalContext);
             this.previousViewId = getViewIdFromSession(externalContext
                     .getSessionMap(), this.wid);
         }

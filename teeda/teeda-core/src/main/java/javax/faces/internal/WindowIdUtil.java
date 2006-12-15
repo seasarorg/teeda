@@ -18,6 +18,11 @@ package javax.faces.internal;
 import java.util.Map;
 import java.util.Random;
 
+import javax.faces.FacesException;
+import javax.faces.context.ExternalContext;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
 
@@ -45,6 +50,22 @@ public class WindowIdUtil {
     protected WindowIdUtil() {
     }
 
+    public static String setupWindowId(final ExternalContext externalContext)
+            throws FacesException {
+        if (needNewWindow(externalContext.getRequestParameterMap())) {
+            String wid = createWindowId();
+            Object response = externalContext.getResponse();
+            //TODO PortletSupport
+            if (response instanceof HttpServletResponse) {
+                HttpServletResponse res = (HttpServletResponse) response;
+                Cookie cookie = new Cookie(WindowIdUtil.TEEDA_WID, wid);
+                res.addCookie(cookie);
+            }
+            return wid;
+        }
+        return getWindowId(externalContext);
+    }
+
     public static String createWindowId() {
         synchronized (random) {
             sequence = new Long(sequence.longValue() + 1);
@@ -52,6 +73,19 @@ public class WindowIdUtil {
             return currentWindowId;
         }
 
+    }
+
+    public static String getWindowId(final ExternalContext externalContext)
+            throws FacesException {
+        Map cookieMap = externalContext.getRequestCookieMap();
+        if (cookieMap == null) {
+            return null;
+        }
+        Cookie cookie = (Cookie) cookieMap.get(WindowIdUtil.TEEDA_WID);
+        if (cookie != null) {
+            return cookie.getValue();
+        }
+        return null;
     }
 
     public static String getCurrentWindowId() {

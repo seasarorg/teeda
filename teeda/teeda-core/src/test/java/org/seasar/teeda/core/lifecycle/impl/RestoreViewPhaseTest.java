@@ -25,8 +25,6 @@ import javax.faces.application.Application;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseId;
-import javax.faces.internal.WindowIdUtil;
-import javax.servlet.http.Cookie;
 
 import org.seasar.framework.mock.servlet.MockHttpServletRequest;
 import org.seasar.framework.util.LruHashMap;
@@ -88,22 +86,6 @@ public class RestoreViewPhaseTest extends TeedaTestCase {
         assertEquals("aaa", i.next());
         lru.put("ddd", "444");
         assertNull(lru.get("bbb"));
-    }
-
-    public void testSetupWindowId() throws Exception {
-        final RestoreViewPhase phase = new RestoreViewPhase();
-        phase.setViewIdLruSize(3);
-        assertNull(phase.setupWindowId(getExternalContext()));
-
-        getExternalContext().getRequestParameterMap().put(
-                WindowIdUtil.NEWWINDOW, "true");
-        assertNotNull(phase.setupWindowId(getExternalContext()));
-
-        Cookie cookie = new Cookie(WindowIdUtil.TEEDA_WID, "hoge");
-        getExternalContext().addRequestCookieMap(cookie);
-        getExternalContext().getRequestParameterMap().put(
-                WindowIdUtil.NEWWINDOW, "false");
-        assertEquals("hoge", phase.setupWindowId(getExternalContext()));
     }
 
     public void testSaveViewIdToSession() throws Exception {

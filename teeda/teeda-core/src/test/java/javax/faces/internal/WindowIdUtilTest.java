@@ -18,13 +18,16 @@ package javax.faces.internal;
 import java.util.HashMap;
 import java.util.Map;
 
-import junit.framework.TestCase;
+import javax.servlet.http.Cookie;
+
+import org.seasar.teeda.core.lifecycle.impl.RestoreViewPhase;
+import org.seasar.teeda.core.unit.TeedaTestCase;
 
 /**
  * @author higa
  * 
  */
-public class WindowIdUtilTest extends TestCase {
+public class WindowIdUtilTest extends TeedaTestCase {
 
     public void testCreateWindowId() throws Exception {
         String wid = WindowIdUtil.createWindowId();
@@ -49,5 +52,21 @@ public class WindowIdUtilTest extends TestCase {
         assertFalse(WindowIdUtil.needNewWindow(parameterMap));
         parameterMap.put(WindowIdUtil.NEWWINDOW, "true");
         assertTrue(WindowIdUtil.needNewWindow(parameterMap));
+    }
+
+    public void testSetupWindowId() throws Exception {
+        final RestoreViewPhase phase = new RestoreViewPhase();
+        phase.setViewIdLruSize(3);
+        assertNull(WindowIdUtil.setupWindowId(getExternalContext()));
+
+        getExternalContext().getRequestParameterMap().put(
+                WindowIdUtil.NEWWINDOW, "true");
+        assertNotNull(WindowIdUtil.setupWindowId(getExternalContext()));
+
+        Cookie cookie = new Cookie(WindowIdUtil.TEEDA_WID, "hoge");
+        getExternalContext().addRequestCookieMap(cookie);
+        getExternalContext().getRequestParameterMap().put(
+                WindowIdUtil.NEWWINDOW, "false");
+        assertEquals("hoge", WindowIdUtil.setupWindowId(getExternalContext()));
     }
 }
