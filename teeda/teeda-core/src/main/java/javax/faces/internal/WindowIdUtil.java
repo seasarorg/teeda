@@ -71,8 +71,7 @@ public class WindowIdUtil {
                 }
             }
         }
-        Map requestMap = externalContext.getRequestMap();
-        requestMap.put(WindowIdUtil.TEEDA_WID, wid);
+        setWindowId(externalContext, wid);
         return wid;
     }
 
@@ -83,6 +82,12 @@ public class WindowIdUtil {
             return currentWindowId;
         }
 
+    }
+
+    public static void setWindowId(final ExternalContext externalContext,
+            String wid) throws FacesException {
+        Map requestMap = externalContext.getRequestMap();
+        requestMap.put(WindowIdUtil.TEEDA_WID, wid);
     }
 
     public static String getWindowId(final ExternalContext externalContext)

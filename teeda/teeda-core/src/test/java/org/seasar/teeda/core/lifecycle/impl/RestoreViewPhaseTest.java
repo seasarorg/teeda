@@ -25,6 +25,9 @@ import javax.faces.application.Application;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseId;
+import javax.faces.internal.ViewScope;
+import javax.faces.internal.WindowIdUtil;
+import javax.servlet.http.Cookie;
 
 import org.seasar.framework.mock.servlet.MockHttpServletRequest;
 import org.seasar.framework.util.LruHashMap;
@@ -93,6 +96,22 @@ public class RestoreViewPhaseTest extends TeedaTestCase {
         Map sessionMap = new HashMap();
         phase.saveViewIdToSession(sessionMap, "123", "hoge.html");
         assertEquals("hoge.html", phase.getViewIdFromSession(sessionMap, "123"));
+    }
+
+    public void testViewScope() throws Exception {
+        String wid = "123";
+        final RestoreViewPhase phase = new RestoreViewPhase();
+        Map sessionMap = getExternalContext().getSessionMap();
+        Map cookieMap = getExternalContext().getRequestCookieMap();
+        cookieMap.put(WindowIdUtil.TEEDA_WID, new Cookie(
+                WindowIdUtil.TEEDA_WID, wid));
+        phase.saveViewIdToSession(sessionMap, wid, "hoge.html");
+        getExternalContext().setRequestPathInfo("hoge2.html");
+        Map ctx = ViewScope.getContext(getFacesContext());
+        ctx.put("aaa", "111");
+        phase.executePhase(getFacesContext());
+        ctx = ViewScope.getContext(getFacesContext());
+        assertNull(ctx.get("aaa"));
     }
 
     /*
