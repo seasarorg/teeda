@@ -32,6 +32,7 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.internal.FacesMessageUtil;
 import javax.faces.internal.UICommandUtil;
+import javax.faces.internal.WindowIdUtil;
 
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.PropertyDesc;
@@ -66,6 +67,8 @@ public class SessionPagePersistence implements PagePersistence {
 
     private int pageSize = 10;
 
+    private int windowSize = 10;
+
     private PageDescCache pageDescCache;
 
     private ActionDescCache actionDescCache;
@@ -79,15 +82,10 @@ public class SessionPagePersistence implements PagePersistence {
             return;
         }
         final ExternalContext extCtx = context.getExternalContext();
-        final Map sessionMap = extCtx.getSessionMap();
         final UIViewRoot viewRoot = context.getViewRoot();
         final String previousViewId = (viewRoot != null) ? viewRoot.getViewId()
                 : null;
-        LruHashMap lru = (LruHashMap) sessionMap.get(getClass().getName());
-        if (lru == null) {
-            lru = new LruHashMap(pageSize);
-            sessionMap.put(getClass().getName(), lru);
-        }
+        Map lru = getOrCreatePageLru(extCtx);
         Map pageData = getPageData(context, viewId, previousViewId);
         pageData = FacesMessageUtil.saveFacesMessagesToMap(context, pageData);
         lru.put(viewId, pageData);
@@ -98,7 +96,7 @@ public class SessionPagePersistence implements PagePersistence {
             return;
         }
         final ExternalContext extCtx = context.getExternalContext();
-        final Map lru = getLru(extCtx);
+        final Map lru = getPageLru(extCtx);
         if (lru == null) {
             return;
         }
@@ -285,9 +283,40 @@ public class SessionPagePersistence implements PagePersistence {
         }
     }
 
-    protected Map getLru(ExternalContext extCtx) {
+    protected Map getWindowLru(ExternalContext extCtx) {
         Map sessionMap = extCtx.getSessionMap();
         return (Map) sessionMap.get(getClass().getName());
+    }
+
+    protected Map getOrCreateWindowLru(ExternalContext extCtx) {
+        Map lru = getWindowLru(extCtx);
+        if (lru != null) {
+            return lru;
+        }
+        lru = new LruHashMap(windowSize);
+        Map sessionMap = extCtx.getSessionMap();
+        sessionMap.put(getClass().getName(), lru);
+        return lru;
+    }
+
+    protected Map getPageLru(ExternalContext extCtx) {
+        Map windowLru = getWindowLru(extCtx);
+        if (windowLru == null) {
+            return null;
+        }
+        String wid = WindowIdUtil.getWindowId(extCtx);
+        return (Map) windowLru.get(wid);
+    }
+
+    protected Map getOrCreatePageLru(ExternalContext extCtx) {
+        Map windowLru = getOrCreateWindowLru(extCtx);
+        String wid = WindowIdUtil.getWindowId(extCtx);
+        Map pageLru = (Map) windowLru.get(wid);
+        if (pageLru == null) {
+            pageLru = new LruHashMap(pageSize);
+            windowLru.put(wid, pageLru);
+        }
+        return pageLru;
     }
 
     protected void restorePageDataMap(Map from, Map to) {
@@ -364,7 +393,7 @@ public class SessionPagePersistence implements PagePersistence {
             return;
         }
         final ExternalContext extCtx = context.getExternalContext();
-        final Map lru = getLru(extCtx);
+        final Map lru = getPageLru(extCtx);
         if (lru == null) {
             return;
         }
@@ -391,6 +420,14 @@ public class SessionPagePersistence implements PagePersistence {
 
     public void setPageSize(int pageSize) {
         this.pageSize = pageSize;
+    }
+
+    public int getWindowSize() {
+        return windowSize;
+    }
+
+    public void setWindowSize(int windowSize) {
+        this.windowSize = windowSize;
     }
 
     public void setPageDescCache(PageDescCache pageDescCache) {

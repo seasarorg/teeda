@@ -52,8 +52,9 @@ public class WindowIdUtil {
 
     public static String setupWindowId(final ExternalContext externalContext)
             throws FacesException {
+        String wid = null;
         if (needNewWindow(externalContext.getRequestParameterMap())) {
-            String wid = createWindowId();
+            wid = createWindowId();
             Object response = externalContext.getResponse();
             //TODO PortletSupport
             if (response instanceof HttpServletResponse) {
@@ -61,9 +62,18 @@ public class WindowIdUtil {
                 Cookie cookie = new Cookie(WindowIdUtil.TEEDA_WID, wid);
                 res.addCookie(cookie);
             }
-            return wid;
+        } else {
+            Map cookieMap = externalContext.getRequestCookieMap();
+            if (cookieMap != null) {
+                Cookie cookie = (Cookie) cookieMap.get(WindowIdUtil.TEEDA_WID);
+                if (cookie != null) {
+                    wid = cookie.getValue();
+                }
+            }
         }
-        return getWindowId(externalContext);
+        Map requestMap = externalContext.getRequestMap();
+        requestMap.put(WindowIdUtil.TEEDA_WID, wid);
+        return wid;
     }
 
     public static String createWindowId() {
@@ -77,15 +87,8 @@ public class WindowIdUtil {
 
     public static String getWindowId(final ExternalContext externalContext)
             throws FacesException {
-        Map cookieMap = externalContext.getRequestCookieMap();
-        if (cookieMap == null) {
-            return null;
-        }
-        Cookie cookie = (Cookie) cookieMap.get(WindowIdUtil.TEEDA_WID);
-        if (cookie != null) {
-            return cookie.getValue();
-        }
-        return null;
+        Map requestMap = externalContext.getRequestMap();
+        return (String) requestMap.get(WindowIdUtil.TEEDA_WID);
     }
 
     public static String getCurrentWindowId() {

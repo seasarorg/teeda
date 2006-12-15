@@ -183,9 +183,7 @@ public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
         context.getViewRoot().setViewId(path);
         spp.save(context, path2);
         ExternalContext extCtx = context.getExternalContext();
-        Map sessionMap = extCtx.getSessionMap();
-        LruHashMap lru = (LruHashMap) sessionMap
-                .get(SessionPagePersistence.class.getName());
+        Map lru = spp.getPageLru(extCtx);
         assertNotNull(lru);
         assertEquals(1, lru.size());
 
@@ -352,8 +350,10 @@ public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
         LruHashMap lru = new LruHashMap(10);
         lru.put("/view/dept/deptList.html", "hoge");
         lru.put("/view/emp/empList.html", "hoge");
+        LruHashMap windowLru = new LruHashMap(10);
+        windowLru.put(null, lru);
         Map sessionMap = getExternalContext().getSessionMap();
-        sessionMap.put(SessionPagePersistence.class.getName(), lru);
+        sessionMap.put(SessionPagePersistence.class.getName(), windowLru);
         getFacesContext().getViewRoot().setViewId("/view/emp/empConfirm.html");
         SessionPagePersistence pagePersistence = new SessionPagePersistence();
         pagePersistence.removeSubApplicationPages(getFacesContext());
