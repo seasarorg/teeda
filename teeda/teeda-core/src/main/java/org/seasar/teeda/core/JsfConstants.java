@@ -359,6 +359,8 @@ public interface JsfConstants {
 
     String PAGE_DIRECTION_ATTR = "pageDirection";
 
+    String LINE_DIRECTION_ATTR = "lineDirection";
+
     String READONLY_ATTR = "readonly";
 
     String REDISPLAY_ATTR = "redisplay";

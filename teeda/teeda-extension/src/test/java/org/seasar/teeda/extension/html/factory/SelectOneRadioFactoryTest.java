@@ -183,7 +183,7 @@ public class SelectOneRadioFactoryTest extends ElementProcessorFactoryTestCase {
         assertFalse(factory.isMatch(parent, pageDesc, actionDesc));
     }
 
-    public void testCreateProcessor() throws Exception {
+    public void testCreateProcessor_1() throws Exception {
         // ## Arrange ##
         Map properties = new HashMap();
         properties.put("id", "hoge");
@@ -211,4 +211,69 @@ public class SelectOneRadioFactoryTest extends ElementProcessorFactoryTestCase {
         assertEquals("4", "#{fooPage.hogeItems}", parentProcessor
                 .getProperty("items"));
     }
+    
+    public void testCreateProcessor_2() throws Exception {
+        // ## Arrange ##
+        Map properties = new HashMap();
+        properties.put("id", "hoge");
+        properties.put("style", "pageDirection aaa");
+        ElementNode elementNode = createElementNode("span", properties);
+
+        Map map2 = new HashMap();
+        map2.put("name", "hoge");
+        map2.put("type", "radio");
+        map2.put("value", "aaa");
+        ElementNode childNode = createElementNode("input", map2);
+        elementNode.addElement(childNode);
+
+        PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
+        ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
+
+        // ## Act ##
+        ElementProcessor parentProcessor = factory.createProcessor(elementNode,
+                pageDesc, actionDesc);
+        // ## Assert ##
+        assertNotNull("1", parentProcessor);
+        assertEquals("2", TSelectOneRadioTag.class, parentProcessor
+                .getTagClass());
+        assertEquals("3", "#{fooPage.hoge}", parentProcessor
+                .getProperty("value"));
+        assertEquals("4", "#{fooPage.hogeItems}", parentProcessor
+                .getProperty("items"));
+        assertEquals("5", " aaa", parentProcessor.getProperty("style"));
+        assertEquals("6", "pageDirection", parentProcessor.getProperty("layout"));
+    }
+
+    public void testCreateProcessor_3() throws Exception {
+        // ## Arrange ##
+        Map properties = new HashMap();
+        properties.put("id", "hoge");
+        properties.put("style", "aaa lineDirection");
+        ElementNode elementNode = createElementNode("span", properties);
+
+        Map map2 = new HashMap();
+        map2.put("name", "hoge");
+        map2.put("type", "radio");
+        map2.put("value", "aaa");
+        ElementNode childNode = createElementNode("input", map2);
+        elementNode.addElement(childNode);
+
+        PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
+        ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
+
+        // ## Act ##
+        ElementProcessor parentProcessor = factory.createProcessor(elementNode,
+                pageDesc, actionDesc);
+        // ## Assert ##
+        assertNotNull("1", parentProcessor);
+        assertEquals("2", TSelectOneRadioTag.class, parentProcessor
+                .getTagClass());
+        assertEquals("3", "#{fooPage.hoge}", parentProcessor
+                .getProperty("value"));
+        assertEquals("4", "#{fooPage.hogeItems}", parentProcessor
+                .getProperty("items"));
+        assertEquals("5", "aaa ", parentProcessor.getProperty("style"));
+        assertEquals("6", "lineDirection", parentProcessor.getProperty("layout"));
+    }
+
 }

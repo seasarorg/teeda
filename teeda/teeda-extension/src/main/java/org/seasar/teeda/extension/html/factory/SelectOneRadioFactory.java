@@ -17,6 +17,7 @@ package org.seasar.teeda.extension.html.factory;
 
 import java.util.Map;
 
+import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.html.ActionDesc;
@@ -87,13 +88,30 @@ public class SelectOneRadioFactory extends AbstractElementProcessorFactory {
         if (pageDesc == null) {
             return;
         }
-        String pageName = pageDesc.getPageName();
-        String id = elementNode.getId();
+        final String pageName = pageDesc.getPageName();
+        final String id = elementNode.getId();
+        final String items = id + ExtensionConstants.ITEMS_SUFFIX;
+        if (properties.containsKey(JsfConstants.STYLE_ATTR)) {
+            String style = (String) properties.get(JsfConstants.STYLE_ATTR);
+            if (style.indexOf(JsfConstants.PAGE_DIRECTION_ATTR) >= 0) {
+                setStyleAndLayout(properties, JsfConstants.PAGE_DIRECTION_ATTR,
+                        style);
+            } else if (style.indexOf(JsfConstants.LINE_DIRECTION_ATTR) >= 0) {
+                setStyleAndLayout(properties, JsfConstants.LINE_DIRECTION_ATTR,
+                        style);
+            }
+        }
+
         properties.put(JsfConstants.VALUE_ATTR, getBindingExpression(pageName,
                 id));
-        String items = id + ExtensionConstants.ITEMS_SUFFIX;
         properties.put(ExtensionConstants.ITEMS_ATTR, getBindingExpression(
                 pageName, items));
+    }
+
+    protected void setStyleAndLayout(Map properties, String layout, String style) {
+        final String s = StringUtil.replace(style, layout, "");
+        properties.put(JsfConstants.STYLE_ATTR, s);
+        properties.put(JsfConstants.LAYOUT_ATTR, layout);
     }
 
     public boolean isLeaf() {
