@@ -81,6 +81,7 @@ public class LifecycleImplTest extends TeedaTestCase {
         lifecycle.setErrorPageManager(new ErrorPageManager() {
             public void addErrorPage(Class exceptionType, String location) {
             }
+
             public boolean handleException(Throwable exception,
                     ExternalContext extContext) throws IOException {
                 return true;
@@ -100,6 +101,7 @@ public class LifecycleImplTest extends TeedaTestCase {
         lifecycle.setErrorPageManager(new ErrorPageManager() {
             public void addErrorPage(Class exceptionType, String location) {
             }
+
             public boolean handleException(Throwable exception,
                     ExternalContext extContext) throws IOException {
                 return true;
@@ -109,7 +111,23 @@ public class LifecycleImplTest extends TeedaTestCase {
         lifecycle.execute(context);
         assertTrue(context.getResponseComplete());
     }
-    
+
+    public void testRender_noRenderWhenResponseCompleted() throws Exception {
+        LifecycleImpl lifecycle = new LifecycleImpl();
+        final boolean[] calls = new boolean[] { false };
+        lifecycle.setRenderResponsePhase(new Phase() {
+
+            public void execute(FacesContext context) throws FacesException {
+                calls[0] = true;
+            }
+
+        });
+        final MockFacesContext context = getFacesContext();
+        context.responseComplete();
+        lifecycle.render(context);
+        assertFalse(calls[0]);
+    }
+
     public static class MockErrorViewPhase implements Phase {
 
         public void execute(FacesContext context) throws FacesException {
