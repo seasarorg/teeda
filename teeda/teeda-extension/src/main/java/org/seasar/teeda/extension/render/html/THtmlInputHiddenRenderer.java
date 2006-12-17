@@ -16,10 +16,6 @@
 package org.seasar.teeda.extension.render.html;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -27,16 +23,12 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.convert.ConverterException;
 import javax.faces.internal.IgnoreAttribute;
 
-import org.seasar.framework.beans.util.BeanUtil;
-import org.seasar.framework.util.ClassUtil;
+import org.seasar.framework.container.hotdeploy.HotdeployUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.AbstractInputRenderer;
 import org.seasar.teeda.core.render.EncodeConverter;
 import org.seasar.teeda.core.util.RendererUtil;
 import org.seasar.teeda.extension.component.html.THtmlInputHidden;
-import org.seasar.teeda.extension.util.ComponentHolder;
-import org.seasar.teeda.extension.util.ComponentHolderBuilderUtil;
-import org.seasar.teeda.extension.util.PagePersistenceUtil;
 
 /**
  * @author manhole
@@ -96,12 +88,7 @@ public class THtmlInputHiddenRenderer extends AbstractInputRenderer {
         if (value == null) {
             return "";
         }
-        ComponentHolder holder = ComponentHolderBuilderUtil.build(value);
-        if (holder == null) {
-            throw new IllegalArgumentException(
-                    "value type of THtmlInputHidden should be Array or List");
-        }
-        return serialize(holder);
+        return serialize(value);
     }
 
     public void decode(final FacesContext context, final UIComponent component) {
@@ -134,48 +121,6 @@ public class THtmlInputHiddenRenderer extends AbstractInputRenderer {
         if (s.equals("")) {
             return "";
         }
-        final ComponentHolder holder = (ComponentHolder) deserialize(s);
-        final String arrayClassName = holder.getArrayClassName();
-        final String componentClassName = holder.getComponentClassName();
-        if (componentClassName == null) {
-            return null;
-        }
-        final Class componentClass = ClassUtil.forName(componentClassName);
-        final List restoredList = holder.getValue();
-        if (arrayClassName != null) {
-            final Class arrayClass = ClassUtil.forName(arrayClassName);
-            final Object[] array = (Object[]) Array.newInstance(arrayClass,
-                    restoredList.size());
-            if (PagePersistenceUtil.isPersistenceType(componentClass)) {
-                restoredList.toArray(array);
-            } else {
-                final List beanList = mapListToBeanList(componentClass,
-                        restoredList);
-                beanList.toArray(array);
-            }
-            return array;
-        } else {
-            List retList = null;
-            if (PagePersistenceUtil.isPersistenceType(componentClass)) {
-                retList = restoredList;
-            } else {
-                retList = mapListToBeanList(componentClass, restoredList);
-            }
-            return retList;
-        }
+        return HotdeployUtil.rebuildValue(deserialize(s));
     }
-
-    private List mapListToBeanList(final Class componentClass,
-            final List restoredList) {
-        final int size = restoredList.size();
-        final List list = new ArrayList();
-        for (int i = 0; i < size; i++) {
-            final Object bean = ClassUtil.newInstance(componentClass);
-            final Map map = (Map) restoredList.get(i);
-            BeanUtil.copyProperties(map, bean);
-            list.add(bean);
-        }
-        return list;
-    }
-
 }

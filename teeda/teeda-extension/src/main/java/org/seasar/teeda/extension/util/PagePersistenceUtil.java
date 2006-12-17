@@ -15,6 +15,7 @@
  */
 package org.seasar.teeda.extension.util;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
@@ -28,6 +29,9 @@ import org.seasar.teeda.extension.component.TreeNode;
 public class PagePersistenceUtil {
 
     public static boolean isPersistenceType(Class clazz) {
+        if (Serializable.class.isAssignableFrom(clazz)) {
+            return true;
+        }
         if (clazz.isPrimitive()) {
             return true;
         }

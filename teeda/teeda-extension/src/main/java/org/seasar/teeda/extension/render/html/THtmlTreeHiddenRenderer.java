@@ -16,23 +16,20 @@
 package org.seasar.teeda.extension.render.html;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.internal.IgnoreAttribute;
 
+import org.seasar.framework.container.hotdeploy.HotdeployUtil;
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.AbstractInputRenderer;
 import org.seasar.teeda.core.render.EncodeConverter;
 import org.seasar.teeda.core.util.RendererUtil;
-import org.seasar.teeda.extension.component.TreeNode;
 import org.seasar.teeda.extension.component.html.THtmlInputHidden;
 import org.seasar.teeda.extension.component.html.THtmlTreeHidden;
-import org.seasar.teeda.extension.util.ComponentHolder;
 
 /**
  * @author shot
@@ -63,13 +60,7 @@ public class THtmlTreeHiddenRenderer extends AbstractInputRenderer {
         if (StringUtil.isEmpty(s)) {
             return;
         }
-        final ComponentHolder holder = (ComponentHolder) deserialize(s);
-        final String componentClassName = holder.getComponentClassName();
-        if (componentClassName == null) {
-            return;
-        }
-        final List restoredList = holder.getValue();
-        hidden.setValue(restoredList.get(0));
+        hidden.setValue(HotdeployUtil.rebuildValue(deserialize(s)));
     }
 
     public void encodeEnd(final FacesContext context,
@@ -112,32 +103,7 @@ public class THtmlTreeHiddenRenderer extends AbstractInputRenderer {
         if (value == null) {
             return "";
         }
-        ComponentHolder holder = buildComponentHolder(value);
-        if (holder == null) {
-            throw new IllegalArgumentException();
-        }
-        return serialize(holder);
-    }
-
-    private static ComponentHolder buildComponentHolder(Object value) {
-        if (value == null) {
-            return null;
-        }
-        ComponentHolder holder = null;
-        if (value instanceof TreeNode) {
-            holder = buildTreeNodeTypeHolder((TreeNode) value);
-        }
-        return holder;
-    }
-
-    private static ComponentHolder buildTreeNodeTypeHolder(TreeNode node) {
-        final List list = new ArrayList();
-        list.add(node);
-        //list.addAll(node.getChildren());
-        ComponentHolder holder = new ComponentHolder();
-        holder.setComponentClassName(node.getClass().getName());
-        holder.setValue(list);
-        return holder;
+        return serialize(value);
     }
 
     protected String serialize(final Object target) {

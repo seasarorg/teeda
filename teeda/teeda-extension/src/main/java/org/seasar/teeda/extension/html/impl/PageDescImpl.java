@@ -77,9 +77,8 @@ public class PageDescImpl implements PageDesc {
             PropertyDesc pd = beanDesc.getPropertyDesc(i);
             if (isItemsProperty(pd)) {
                 itemsPropertyNames.add(pd.getPropertyName());
-            } else {
-                propertyNames.add(pd.getPropertyName());
             }
+            propertyNames.add(pd.getPropertyName());
             if (isDynamicProperty(pd)) {
                 dynamicPropertyNames.add(pd.getPropertyName());
             }

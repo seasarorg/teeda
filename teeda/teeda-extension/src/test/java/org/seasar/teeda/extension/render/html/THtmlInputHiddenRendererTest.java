@@ -15,6 +15,7 @@
  */
 package org.seasar.teeda.extension.render.html;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -37,7 +38,6 @@ import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.mock.MockUIComponentBaseWithNamingContainer;
 import org.seasar.teeda.core.render.Base64EncodeConverter;
 import org.seasar.teeda.extension.mock.MockTHtmlInputHidden;
-import org.seasar.teeda.extension.util.ComponentHolder;
 
 /**
  * @author manhole
@@ -76,20 +76,6 @@ public class THtmlInputHiddenRendererTest extends RendererTest {
         // ## Assert ##
         assertEquals("<input type=\"hidden\" name=\"_id0\" value=\"\" />",
                 getResponseText());
-    }
-
-    public void testEncode_IllegalValue() throws Exception {
-        // ## Arrange ##
-        htmlInputHidden.setValue("invalid");
-
-        // ## Act ##
-        // ## Assert ##
-        try {
-            encodeByRenderer(renderer, htmlInputHidden);
-            fail();
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-        }
     }
 
     public void testEncode_WithId() throws Exception {
@@ -499,15 +485,15 @@ public class THtmlInputHiddenRendererTest extends RendererTest {
 
     public void testGetConvertedValue() throws Exception {
         THtmlInputHiddenRenderer renderer = (THtmlInputHiddenRenderer) createRenderer();
-        ComponentHolder holder = new ComponentHolder();
-        holder.setComponentClassName(null);
-        holder.setValue(new ArrayList());
+        Object value = "aaa";
         Base64EncodeConverter converter = new Base64EncodeConverter();
-        String s = converter.getAsEncodeString(holder);
+        String s = converter.getAsEncodeString(value);
         renderer.getConvertedValue(getFacesContext(), htmlInputHidden, s);
     }
 
-    public static class HiddenDto {
+    public static class HiddenDto implements Serializable {
+
+        private static final long serialVersionUID = 1L;
 
         private String aaa;
 

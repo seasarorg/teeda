@@ -93,6 +93,8 @@ public interface ExtensionConstants {
 
     String SAVE_SUFFIX = "Save";
 
+    String SESSION_SAVE_SUFFIX = "SessionSave";
+
     String TREESAVE_SUFFIX = "TreeSave";
 
     String GRID = "Grid";

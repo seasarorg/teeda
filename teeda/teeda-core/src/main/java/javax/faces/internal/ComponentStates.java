@@ -25,6 +25,7 @@ import javax.faces.context.FacesContext;
 
 /**
  * @author manhole
+ * @author higa
  *
  * This class might be changed without notice. Please do not use it
  * excluding the JSF specification part.
@@ -42,11 +43,9 @@ public class ComponentStates {
                 final EditableValueHolder holder = (EditableValueHolder) child;
                 final String clientId = child.getClientId(context);
                 SavedState state = (SavedState) savedStates.get(clientId);
-                if (state == null) {
-                    state = new SavedState();
-                    savedStates.put(clientId, state);
+                if (state != null) {
+                    state.restore(holder);
                 }
-                state.restore(holder);
             }
             restoreDescendantState(context, child);
         }
@@ -58,9 +57,13 @@ public class ComponentStates {
             final UIComponent child = (UIComponent) it.next();
             if (child instanceof EditableValueHolder) {
                 final EditableValueHolder holder = (EditableValueHolder) child;
-                final SavedState state = new SavedState();
+                final String clientId = child.getClientId(context);
+                SavedState state = (SavedState) savedStates.get(clientId);
+                if (state == null) {
+                    state = new SavedState();
+                    savedStates.put(clientId, state);
+                }
                 state.save(holder);
-                savedStates.put(child.getClientId(context), state);
             }
             saveDescendantComponentStates(context, child);
         }

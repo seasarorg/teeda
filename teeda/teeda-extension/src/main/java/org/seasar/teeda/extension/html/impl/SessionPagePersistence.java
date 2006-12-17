@@ -15,7 +15,6 @@
  */
 package org.seasar.teeda.extension.html.impl;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -37,10 +36,9 @@ import javax.faces.internal.WindowIdUtil;
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.PropertyDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
-import org.seasar.framework.beans.util.BeanUtil;
+import org.seasar.framework.container.hotdeploy.HotdeployUtil;
 import org.seasar.framework.convention.NamingConvention;
 import org.seasar.framework.util.ArrayUtil;
-import org.seasar.framework.util.ClassUtil;
 import org.seasar.framework.util.LruHashMap;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.util.DIContainerUtil;
@@ -52,8 +50,6 @@ import org.seasar.teeda.extension.html.PageDescCache;
 import org.seasar.teeda.extension.html.PagePersistence;
 import org.seasar.teeda.extension.html.TakeOverDesc;
 import org.seasar.teeda.extension.html.TakeOverTypeDesc;
-import org.seasar.teeda.extension.util.ComponentHolder;
-import org.seasar.teeda.extension.util.ComponentHolderBuilderUtil;
 import org.seasar.teeda.extension.util.PagePersistenceUtil;
 
 /**
@@ -274,13 +270,8 @@ public class SessionPagePersistence implements PagePersistence {
     }
 
     protected void putValue(Map map, Object page, PropertyDesc pd) {
-        final Object value = pd.getValue(page);
-        final ComponentHolder holder = ComponentHolderBuilderUtil.build(value);
-        if (holder != null) {
-            map.put(pd.getPropertyName(), holder);
-        } else {
-            map.put(pd.getPropertyName(), value);
-        }
+        Object value = pd.getValue(page);
+        map.put(pd.getPropertyName(), value);
     }
 
     protected Map getWindowLru(ExternalContext extCtx) {
@@ -324,60 +315,8 @@ public class SessionPagePersistence implements PagePersistence {
             Map.Entry entry = (Entry) itr.next();
             String key = (String) entry.getKey();
             Object value = entry.getValue();
-            if (value instanceof ComponentHolder) {
-                final ComponentHolder holder = (ComponentHolder) value;
-                final String arrayClassName = holder.getArrayClassName();
-                final String componentClassName = holder
-                        .getComponentClassName();
-                if (componentClassName == null) {
-                    continue;
-                }
-                final Class componentClass = ClassUtil
-                        .forName(componentClassName);
-                final List restoredList = holder.getValue();
-                if (arrayClassName != null) {
-                    final Class arrayClass = ClassUtil.forName(arrayClassName);
-                    final Object[] array = (Object[]) Array.newInstance(
-                            arrayClass, restoredList.size());
-                    if (PagePersistenceUtil.isPersistenceType(componentClass)) {
-                        restoredList.toArray(array);
-                    } else {
-                        final List beanList = mapListToBeanList(componentClass,
-                                restoredList);
-                        beanList.toArray(array);
-                    }
-                    to.put(key, array);
-                } else {
-                    if (PagePersistenceUtil.isPersistenceType(componentClass)) {
-                        to.put(key, restoredList);
-                    } else {
-                        final List beanList = mapListToBeanList(componentClass,
-                                restoredList);
-                        to.put(key, beanList);
-                    }
-                }
-            } else {
-                to.put(key, value);
-            }
+            to.put(key, HotdeployUtil.rebuildValue(value));
         }
-    }
-
-    private List mapListToBeanList(final Class componentClass,
-            final List restoredList) {
-        final int size = restoredList.size();
-        final List list = new ArrayList();
-        for (int i = 0; i < size; i++) {
-            final Object bean = ClassUtil.newInstance(componentClass);
-            final Object o = restoredList.get(i);
-            if (!(o instanceof Map)) {
-                throw new IllegalArgumentException(
-                        "restoredList should be included map.");
-            }
-            final Map map = (Map) o;
-            BeanUtil.copyProperties(map, bean);
-            list.add(bean);
-        }
-        return list;
     }
 
     public NamingConvention getNamingConvention() {

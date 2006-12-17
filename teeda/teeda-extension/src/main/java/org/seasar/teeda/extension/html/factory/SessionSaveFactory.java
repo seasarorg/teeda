@@ -22,14 +22,15 @@ import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.PageDesc;
+import org.seasar.teeda.extension.util.SessionSaveUtil;
 
 /**
  * @author higa
  * @author shot
  */
-public class TInputHiddenFactory extends AbstractElementProcessorFactory {
+public class SessionSaveFactory extends AbstractElementProcessorFactory {
 
-    private static final String TAG_NAME = "inputHidden";
+    private static final String TAG_NAME = "sessionSave";
 
     public boolean isMatch(ElementNode elementNode, PageDesc pageDesc,
             ActionDesc actionDesc) {
@@ -44,11 +45,10 @@ public class TInputHiddenFactory extends AbstractElementProcessorFactory {
             return false;
         }
         final String id = elementNode.getId();
-        if (!id.endsWith(ExtensionConstants.SAVE_SUFFIX)) {
+        if (!id.endsWith(ExtensionConstants.SESSION_SAVE_SUFFIX)) {
             return false;
         }
-        final String targetId = id.substring(0, id
-                .indexOf(ExtensionConstants.SAVE_SUFFIX));
+        final String targetId = SessionSaveUtil.convertTargetId(id);
         return pageDesc.hasProperty(targetId);
     }
 
@@ -61,8 +61,7 @@ public class TInputHiddenFactory extends AbstractElementProcessorFactory {
             return;
         }
         String id = elementNode.getId();
-        String targetId = id.substring(0, id
-                .indexOf(ExtensionConstants.SAVE_SUFFIX));
+        String targetId = SessionSaveUtil.convertTargetId(id);
         properties.put(JsfConstants.VALUE_ATTR, getBindingExpression(pageDesc
                 .getPageName(), targetId));
     }
