@@ -23,6 +23,7 @@ import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.HtmlNode;
 import org.seasar.teeda.extension.html.PageDesc;
+import org.seasar.teeda.extension.util.LayoutUtil;
 
 /**
  * @author shot
@@ -93,6 +94,9 @@ public class SelectManyCheckboxFactory extends AbstractElementProcessorFactory {
                 id));
         properties.put(ExtensionConstants.ITEMS_ATTR, getBindingExpression(
                 pageName, (id + ExtensionConstants.ITEMS_SUFFIX)));
+        if (properties.containsKey(JsfConstants.STYLE_ATTR)) {
+            LayoutUtil.styleToLayout(properties);
+        }
     }
 
     public boolean isLeaf() {
