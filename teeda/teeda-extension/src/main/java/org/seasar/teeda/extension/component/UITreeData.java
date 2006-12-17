@@ -156,7 +156,8 @@ public class UITreeData extends UIInput implements NamingContainer {
             return;
         }
         try {
-            valueBinding.setValue(context, getValue());
+            final Object value = getValue();
+            valueBinding.setValue(context, value);
         } catch (RuntimeException e) {
             Object[] args = { getId() };
             context.getExternalContext().log(e.getMessage(), e);
@@ -301,7 +302,6 @@ public class UITreeData extends UIInput implements NamingContainer {
     }
 
     protected void processNodes(FacesContext context, PhaseId phaseId) {
-        UIComponent facet = null;
         TreeModel dataModel = getDataModel();
         if (dataModel == null) {
             return;
@@ -309,9 +309,9 @@ public class UITreeData extends UIInput implements NamingContainer {
         TreeWalker walker = dataModel.getTreeWalker();
         walker.walkBegin(this);
         while (walker.next()) {
-            TreeNode node = getNode();
-            String type = node.getType();
-            facet = getFacet(type);
+            final TreeNode node = getNode();
+            final String type = node.getType();
+            final UIComponent facet = getFacet(type);
             if (facet == null) {
                 continue;
             }
@@ -329,11 +329,18 @@ public class UITreeData extends UIInput implements NamingContainer {
     }
 
     public void toggleExpanded() {
-        getDataModel().toggleExpanded(getNodeId());
+        final TreeModel model = getDataModel();
+        if(model != null) {
+            model.toggleExpanded(getNodeId());
+        }
     }
 
     public boolean isNodeExpanded() {
-        return getDataModel().isNodeExpanded(getNodeId());
+        final TreeModel model = getDataModel();
+        if(model != null) {
+            return model.isNodeExpanded(getNodeId());
+        }
+        return false;
     }
 
 }
