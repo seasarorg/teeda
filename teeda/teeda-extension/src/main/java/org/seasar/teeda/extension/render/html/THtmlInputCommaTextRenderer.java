@@ -93,17 +93,20 @@ public class THtmlInputCommaTextRenderer extends
             if (value.indexOf(groupingSeparator) > 0) {
                 value = StringUtil.replace(value, groupingSeparator, "");
             }
+            
             final DecimalFormat df = new DecimalFormat();
             int pos = value.indexOf(fraction);
             if (pos < 0) {
                 BigDecimal bd = BigDecimalConversionUtil.toBigDecimal(value);
                 return df.format(bd);
             } else {
-                String intPart = value.substring(0, pos);
+                final boolean isMinus = value.startsWith("-");
+                String intPart = (isMinus) ? value.substring(1, pos) : value.substring(0, pos);
                 String fractPart = value.substring(pos);
                 BigDecimal bd = BigDecimalConversionUtil.toBigDecimal(intPart);
                 String s = df.format(bd);
-                return s + fractPart;
+                final String ret = s + fractPart;
+                return (isMinus) ? ("-" + ret) : ret;
             }
         } catch (NumberFormatException e) {
             return value;

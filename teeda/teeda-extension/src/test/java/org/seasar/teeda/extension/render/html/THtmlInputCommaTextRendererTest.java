@@ -244,6 +244,28 @@ public class THtmlInputCommaTextRendererTest extends RendererTest {
                 getResponseText());
     }
 
+    public void testEncodeValueIsMinus() throws Exception {
+        ScriptEnhanceUIViewRoot root = new ScriptEnhanceUIViewRoot();
+        root.addScript(THtmlInputCommaText.class.getName(),
+                new JavaScriptContext());
+        htmlInputCommaText.setFraction("4");
+        htmlInputCommaText.setValue(new Double(-0.1));
+        root.setLocale(Locale.JAPAN);
+        FacesContext context = getFacesContext();
+        context.setViewRoot(root);
+
+        // ## Act ##
+        encodeByRenderer(renderer, context, htmlInputCommaText);
+
+        // ## Assert ##
+        System.out.println(getResponseText());
+        assertEquals(
+                "<input type=\"text\" name=\"_id0\" value=\"-0.1\" onfocus=\"Teeda.THtmlInputCommaText.removeComma(this, ',');\" "
+                        + "onblur=\"Teeda.THtmlInputCommaText.convertByKey(this);Teeda.THtmlInputCommaText.addComma(this, 4, ',', '.');\" onkeydown=\"return Teeda.THtmlInputCommaText.keycheckForNumber(event, this, 4, '.');\" "
+                        + "onkeypress=\"return Teeda.THtmlInputCommaText.keycheckForNumber(event, this, 4, '.');\" onkeyup=\"Teeda.THtmlInputCommaText.convertByKey(this);\" style=\"ime-mode:disabled;\" />",
+                getResponseText());
+    }
+
     private THtmlInputCommaTextRenderer createHtmlInputCommaTextRenderer() {
         return (THtmlInputCommaTextRenderer) createRenderer();
     }
