@@ -215,12 +215,17 @@ public abstract class UIComponentTag implements Tag {
         created = false;
         return getDoEndValue();
     }
-
+    
     public void release() {
+        component = null;
+        context = null;
+        created = false;
+        createdComponents = null;
+        createdFacets = null;
+        pageContext = null;
         parent = null;
         binding = null;
         id = null;
-        created = false;
         rendered = null;
     }
 
