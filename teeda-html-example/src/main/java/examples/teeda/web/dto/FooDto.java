@@ -1,8 +1,14 @@
 package examples.teeda.web.dto;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class FooDto {
+public class FooDto implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private Integer aaa;
 
@@ -64,15 +70,15 @@ public class FooDto {
 		this.bbbEditStatus = bbbEditStatus;
 	}
 
-//	public String toString() {
-//		StringBuffer buff = new StringBuffer();
-//		buff.append("aaa=" + this.aaa);
-//		buff.append(",bbb=" + this.bbb);
-//		buff.append(",ccc=" + this.ccc);
-//		buff.append(",editStatus=" + this.editStatus);
-//		buff.append(",bbbEditStatus=" + this.bbbEditStatus.intValue());
-//
-//		return buff.toString();
-//	}
+	// public String toString() {
+	// StringBuffer buff = new StringBuffer();
+	// buff.append("aaa=" + this.aaa);
+	// buff.append(",bbb=" + this.bbb);
+	// buff.append(",ccc=" + this.ccc);
+	// buff.append(",editStatus=" + this.editStatus);
+	// buff.append(",bbbEditStatus=" + this.bbbEditStatus.intValue());
+	//
+	// return buff.toString();
+	// }
 
 }

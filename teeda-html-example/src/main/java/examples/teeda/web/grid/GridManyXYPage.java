@@ -1,5 +1,6 @@
 package examples.teeda.web.grid;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
@@ -59,7 +60,12 @@ public class GridManyXYPage {
 		this.fooItems = fooItems;
 	}
 
-	public static class FooItem {
+	public static class FooItem implements Serializable {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 
 		private String aaa;
 
