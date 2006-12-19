@@ -20,6 +20,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import org.seasar.teeda.core.util.EmptyElementUtil;
+import org.seasar.teeda.extension.ExtensionConstants;
 import org.xml.sax.Attributes;
 
 /**
@@ -35,8 +36,14 @@ public class HtmlNodeUtil {
         Map map = new HashMap();
         for (int i = 0; i < attributes.getLength(); ++i) {
             String qname = attributes.getQName(i);
+            String localName = attributes.getLocalName(i);
+            String uri = attributes.getURI(i);
             String value = attributes.getValue(i);
-            map.put(qname, value);
+            if (ExtensionConstants.TEEDA_EXTENSION_URI.equals(uri)) {
+                map.put(localName, value);
+            } else if (!map.containsKey(qname)) {
+                map.put(qname, value);
+            }
         }
         return map;
     }
