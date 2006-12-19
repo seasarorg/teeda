@@ -15,9 +15,7 @@
  */
 package org.seasar.teeda.extension.util;
 
-import javax.faces.application.Application;
 import javax.faces.context.FacesContext;
-import javax.faces.el.ValueBinding;
 import javax.faces.internal.ValidatorChain;
 import javax.faces.internal.ValidatorResource;
 import javax.faces.validator.Validator;
@@ -43,24 +41,29 @@ public class NullLabelStrategyImpl implements NullLabelStrategy {
         if (forceNullLabel != null) {
             return forceNullLabel.booleanValue();
         }
-        final Application application = context.getApplication();
-        ValueBinding vb = application.createValueBinding(value);
-        if (vb.getType(context).isPrimitive()) {
+        if (hasRequiredValidator(value)) {
             return false;
         }
+        return true;
+    }
+
+    protected boolean hasRequiredValidator(String value) {
         Validator validator = ValidatorResource.getValidator(value);
-        if (validator instanceof TRequiredValidator) {
+        if (validator == null) {
             return false;
+        }
+        if (validator instanceof TRequiredValidator) {
+            return true;
         }
         if (validator instanceof ValidatorChain) {
             ValidatorChain chain = (ValidatorChain) validator;
             for (int i = 0; i < chain.getValidatorSize(); ++i) {
                 if (chain.getValidator(i) instanceof TRequiredValidator) {
-                    return false;
+                    return true;
                 }
             }
         }
-        return true;
+        return false;
     }
 
 }

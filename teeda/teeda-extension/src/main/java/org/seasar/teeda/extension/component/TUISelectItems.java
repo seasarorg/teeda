@@ -76,11 +76,12 @@ public class TUISelectItems extends UISelectItems {
             return value;
         }
         List list = new ArrayList();
-        if (nullLabelRequired && value != null) {
+        if (nullLabelRequired) {
             SelectItem si = new SelectItem();
             si.setValue("");
-            FacesMessage mes = FacesMessageUtil.getMessage(FacesContext
-                    .getCurrentInstance(), NULL_LABEL_MESSAGE_CODE, null);
+            final FacesContext context = getFacesContext();
+            FacesMessage mes = FacesMessageUtil.getMessage(context,
+                    NULL_LABEL_MESSAGE_CODE, null);
             si.setLabel(mes.getSummary());
             list.add(si);
         }

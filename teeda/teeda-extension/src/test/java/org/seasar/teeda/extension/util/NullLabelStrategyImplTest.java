@@ -39,53 +39,28 @@ public class NullLabelStrategyImplTest extends TeedaTestCase {
         assertTrue(helper.isNullLabelRequired(getFacesContext(), "aaa"));
     }
 
-    public void testIsRequired_noForce() throws Exception {
+    public void testIsRequired_defaultNullLabelExist() throws Exception {
         NullLabelStrategyImpl helper = new NullLabelStrategyImpl();
-        MockApplication application = getApplication();
-        application.setValueBinding(new MockValueBinding() {
-
-            public Class getType(FacesContext context)
-                    throws EvaluationException, PropertyNotFoundException {
-                return int.class;
-            }
-
-        });
-        assertFalse(helper.isNullLabelRequired(getFacesContext(), "aaa"));
+        assertTrue(helper.isNullLabelRequired(getFacesContext(), "aaa"));
     }
 
-    public void testIsRequired_noForce2() throws Exception {
+    public void testIsRequired_noNullLabelWhenTRequiredValidatorExists()
+            throws Exception {
         NullLabelStrategyImpl helper = new NullLabelStrategyImpl();
-        MockApplication application = getApplication();
-        application.setValueBinding(new MockValueBinding() {
-
-            public Class getType(FacesContext context)
-                    throws EvaluationException, PropertyNotFoundException {
-                return Integer.class;
-            }
-
-        });
         ValidatorResource.addValidator("aaa", new TRequiredValidator());
         assertFalse(helper.isNullLabelRequired(getFacesContext(), "aaa"));
     }
 
-    public void testIsRequired_noForce3() throws Exception {
+    public void testIsRequired_noNullLabelWhenTRequiredValidatorExists2()
+            throws Exception {
         NullLabelStrategyImpl helper = new NullLabelStrategyImpl();
-        MockApplication application = getApplication();
-        application.setValueBinding(new MockValueBinding() {
-
-            public Class getType(FacesContext context)
-                    throws EvaluationException, PropertyNotFoundException {
-                return Integer.class;
-            }
-
-        });
         ValidatorChain chain = new ValidatorChain();
         chain.add(new TRequiredValidator());
         ValidatorResource.addValidator("aaa", chain);
         assertFalse(helper.isNullLabelRequired(getFacesContext(), "aaa"));
     }
 
-    public void testIsRequired_noForce4_noMatch() throws Exception {
+    public void testIsRequired_noMatch() throws Exception {
         NullLabelStrategyImpl helper = new NullLabelStrategyImpl();
         MockApplication application = getApplication();
         application.setValueBinding(new MockValueBinding() {
