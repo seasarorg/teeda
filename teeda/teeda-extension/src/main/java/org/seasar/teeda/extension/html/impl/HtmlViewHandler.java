@@ -57,6 +57,7 @@ import org.seasar.teeda.core.util.ExternalContextUtil;
 import org.seasar.teeda.core.util.PortletUtil;
 import org.seasar.teeda.core.util.PostbackUtil;
 import org.seasar.teeda.core.util.ServletExternalContextUtil;
+import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.component.RenderPreparableUtil;
 import org.seasar.teeda.extension.exception.JspRuntimeException;
 import org.seasar.teeda.extension.html.ActionDesc;
@@ -70,7 +71,7 @@ import org.seasar.teeda.extension.jsp.PageContextImpl;
 
 /**
  * @author higa
- *
+ * @author shot
  */
 public class HtmlViewHandler extends ViewHandlerImpl {
 
@@ -103,9 +104,10 @@ public class HtmlViewHandler extends ViewHandlerImpl {
     }
 
     public UIViewRoot restoreView(FacesContext context, String viewId) {
+        ExternalContext externalContext = context.getExternalContext();
         tagProcessorCache.updateTagProcessor(viewId);
         pagePersistence.restore(context, viewId);
-        Map requestMap = context.getExternalContext().getRequestMap();
+        Map requestMap = externalContext.getRequestMap();
         if (!PostbackUtil.isPostback(requestMap)) {
             if (invoke(context, viewId, INITIALIZE) != null) {
                 context.renderResponse();
@@ -193,7 +195,6 @@ public class HtmlViewHandler extends ViewHandlerImpl {
     protected String invoke(FacesContext context, String path, String methodName) {
         PageDesc pageDesc = pageDescCache.getPageDesc(path);
         Object target = null;
-        String next = null;
         if (pageDesc != null && pageDesc.hasMethod(methodName)) {
             target = DIContainerUtil.getComponent(pageDesc.getPageName());
         }
@@ -204,17 +205,32 @@ public class HtmlViewHandler extends ViewHandlerImpl {
                         .getActionName());
             }
         }
+        return navigate(context, path, target, methodName);
+    }
+
+    protected String navigate(FacesContext context, String path, Object target,
+            String methodName) {
+        String next = null;
         if (target != null) {
-            BeanDesc beanDesc = BeanDescFactory.getBeanDesc(target.getClass());
+            final BeanDesc beanDesc = BeanDescFactory.getBeanDesc(target
+                    .getClass());
             next = (String) beanDesc.invoke(target, methodName, null);
             if (next != null) {
-                navigate(context, next);
+                if (context.getViewRoot() == null) {
+                    UIViewRoot root = super.createView(context, path);
+                    context.setViewRoot(root);
+                }
+                final ExternalContext extContext = context.getExternalContext();
+                final Map requestMap = extContext.getRequestMap();
+                requestMap.put(ExtensionConstants.TRANSITION_BY_TEEDA_PREPARED_METHOD,
+                        Boolean.TRUE);
+                navigateReally(context, next);
             }
         }
         return next;
     }
 
-    protected void navigate(FacesContext context, String path) {
+    protected void navigateReally(FacesContext context, String path) {
         Application app = context.getApplication();
         NavigationHandler nh = app.getNavigationHandler();
         nh.handleNavigation(context, null, path);

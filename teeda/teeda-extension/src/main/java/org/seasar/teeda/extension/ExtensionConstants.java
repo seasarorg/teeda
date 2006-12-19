@@ -126,4 +126,5 @@ public interface ExtensionConstants {
     //other
     String NAME_SEPARATOR = String.valueOf(NamingContainer.SEPARATOR_CHAR);
 
+    String TRANSITION_BY_TEEDA_PREPARED_METHOD = "TRANSITION_TEEDA_PREPARED";
 }

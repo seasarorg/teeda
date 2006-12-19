@@ -25,6 +25,7 @@ import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.application.NavigationHandlerImpl;
 import org.seasar.teeda.core.portlet.FacesPortlet;
 import org.seasar.teeda.core.util.PortletUtil;
+import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.html.PagePersistence;
 
 /**
@@ -70,7 +71,13 @@ public class HtmlNavigationHandler extends NavigationHandlerImpl {
     public void handleNavigation(FacesContext context, String fromAction,
             String outcome) {
         super.handleNavigation(context, fromAction, outcome);
-        if (context.getResponseComplete() || context.getRenderResponse()) {
+        final ExternalContext externalContext = context.getExternalContext();
+        final Map requestMap = context.getExternalContext().getRequestMap();
+        if (context.getRenderResponse()
+                && requestMap.get(ExtensionConstants.TRANSITION_BY_TEEDA_PREPARED_METHOD) == null) {
+            return;
+        }
+        if (context.getResponseComplete()) {
             return;
         }
         String viewId = context.getViewRoot().getViewId();
@@ -83,13 +90,13 @@ public class HtmlNavigationHandler extends NavigationHandlerImpl {
         if (!PortletUtil.isPortlet(context)) {
             String redirectPath = getRedirectActionPath(context, viewHandler,
                     path);
-            redirect(context, context.getExternalContext(), redirectPath, path);
+            redirect(context, externalContext, redirectPath, path);
         } else {
-            context.getExternalContext().getRequestMap().put(
+            externalContext.getRequestMap().put(
                     FacesPortlet.REDIRECT_TO_PORTLET, Boolean.TRUE);
             super.render(context, viewHandler, path);
         }
-
+        requestMap.remove(ExtensionConstants.TRANSITION_BY_TEEDA_PREPARED_METHOD);
     }
 
     protected static String calcPathFromOutcome(String viewId, String outcome) {

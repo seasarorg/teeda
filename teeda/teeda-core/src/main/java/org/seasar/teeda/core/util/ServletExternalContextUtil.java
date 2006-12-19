@@ -196,6 +196,10 @@ public class ServletExternalContextUtil {
         return getRequest(externalContext).getMethod().equals("GET");
     }
 
+    public static boolean isRedirect(ExternalContext externalContext) {
+        return getRequest(externalContext).getMethod().equals("REDIRECT");
+    }
+
     public static boolean isPost(ExternalContext externalContext) {
         return getRequest(externalContext).getMethod().equals("POST");
     }
