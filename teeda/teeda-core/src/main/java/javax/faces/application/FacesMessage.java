@@ -93,10 +93,14 @@ public class FacesMessage implements Serializable {
     }
 
     public void setSeverity(Severity severity) {
-        if (!VALUES.contains(severity)) {
-            throw new IllegalArgumentException("severity");
+        for (int i = 0; i < values.length; i++) {
+            Severity sev = values[i];
+            if (sev.compareTo(severity) == 0) {
+                this.severity = severity;
+                return;
+            }
         }
-        this.severity = severity;
+        throw new IllegalArgumentException("severity");
     }
 
     public String getSummary() {
@@ -107,13 +111,16 @@ public class FacesMessage implements Serializable {
         this.summary = summary;
     }
 
-    public static class Severity extends Object implements Comparable,
-            Serializable {
+    public static class Severity implements Comparable, Serializable {
+
         private static final long serialVersionUID = 1L;
 
         private String type;
 
         private int ordinal;
+
+        public Severity() {
+        }
 
         public Severity(String type, int ordinal) {
             this.type = type;
@@ -122,6 +129,18 @@ public class FacesMessage implements Serializable {
 
         public int getOrdinal() {
             return ordinal;
+        }
+
+        public String getType() {
+            return type;
+        }
+
+        public void setOrdinal(int ordinal) {
+            this.ordinal = ordinal;
+        }
+
+        public void setType(String type) {
+            this.type = type;
         }
 
         public String toString() {

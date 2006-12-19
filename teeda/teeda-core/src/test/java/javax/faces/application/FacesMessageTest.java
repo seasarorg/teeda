@@ -21,6 +21,7 @@ import javax.faces.application.FacesMessage.Severity;
 
 import junit.framework.TestCase;
 
+import org.seasar.framework.util.ClassUtil;
 import org.seasar.teeda.core.render.Base64EncodeConverter;
 import org.seasar.teeda.core.unit.ExceptionAssert;
 
@@ -142,4 +143,11 @@ public class FacesMessageTest extends TestCase {
         assertEquals(FacesMessage.SEVERITY_ERROR.getOrdinal(), f.getSeverity()
                 .getOrdinal());
     }
+
+    public void testInstanciation() throws Exception {
+        FacesMessage fm = (FacesMessage) ClassUtil
+                .newInstance(FacesMessage.class.getName());
+        fm.setSeverity(FacesMessage.SEVERITY_ERROR);
+    }
+
 }
