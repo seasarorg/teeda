@@ -13,20 +13,13 @@
 	<classpathentry output="build/teeda-ajax/test-classes" kind="src" path="teeda-ajax/src/test/java"/>
 	<classpathentry output="build/teeda-ajax/test-classes" kind="src" path="teeda-ajax/src/test/resources"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="lib/aopalliance-1.0.jar"/>
 	<classpathentry sourcepath="lib/sources/commons-collections-3.1-sources.jar" kind="lib" path="lib/commons-collections-3.1.jar"/>
 	<classpathentry sourcepath="lib/sources/commons-el-1.0-sources.jar" kind="lib" path="lib/commons-el-1.0.jar"/>
-	<classpathentry sourcepath="lib/sources/commons-logging-1.0.4-sources.jar" kind="lib" path="lib/commons-logging-1.0.4.jar"/>
-	<classpathentry kind="lib" path="lib/javassist-3.0.jar"/>
 	<classpathentry kind="lib" path="lib/jstl-1.1.2.jar"/>
 	<classpathentry sourcepath="lib/sources/junit-3.8.2-sources.jar" kind="lib" path="lib/junit-3.8.2.jar"/>
-	<classpathentry sourcepath="lib/sources/log4j-1.2.13-sources.jar" kind="lib" path="lib/log4j-1.2.13.jar"/>
-	<classpathentry kind="lib" path="lib/ognl-2.6.7.jar"/>
-	<classpathentry kind="lib" path="lib/poi-2.5.1-final-20040804.jar"/>
 	<classpathentry kind="lib" path="lib/xmlunit-1.0.jar"/>
 	<classpathentry kind="lib" path="lib/geronimo-jsp_2.0_spec-1.0.jar"/>
 	<classpathentry kind="lib" path="lib/geronimo-servlet_2.4_spec-1.0.jar"/>
-	<classpathentry kind="lib" path="lib/portlet-api-1.0.jar"/>
 	<classpathentry kind="lib" path="lib/rhino-1.6r2.jar"/>
 	<classpathentry kind="lib" path="lib/s2-portlet-1.0.6.jar"/>
 	<classpathentry kind="lib" path="lib/xercesImpl-2.6.2.jar"/>

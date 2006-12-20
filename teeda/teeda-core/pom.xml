@@ -101,24 +101,18 @@
       <type>jar</type>
     </dependency>
     <dependency>
-      <groupId>commons-beanutils</groupId>
-      <artifactId>commons-beanutils</artifactId>
-      <version>1.7.0</version>
-      <type>jar</type>
-    </dependency>
-    <dependency>
       <groupId>commons-el</groupId>
       <artifactId>commons-el</artifactId>
       <version>1.0</version>
       <type>jar</type>
-      <!--
-      <exclusions>
-        <exclusion>
-          <artifactId>commons-logging</artifactId>
-          <groupId>commons-logging</groupId>
-        </exclusion>
-      </exclusions>
-      -->
     </dependency>
+    <dependency>
+      <groupId>org.seasar.portlet</groupId>
+      <artifactId>s2-portlet</artifactId>
+      <version>1.0.6</version>
+      <type>jar</type>
+      <scope>provided</scope>
+    </dependency>
+
   </dependencies>
 </project>

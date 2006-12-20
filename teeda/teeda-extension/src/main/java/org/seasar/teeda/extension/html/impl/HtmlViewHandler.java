@@ -34,9 +34,6 @@ import javax.faces.internal.PageContextOutWriter;
 import javax.faces.internal.PageContextUtil;
 import javax.faces.render.RenderKit;
 import javax.faces.render.RenderKitFactory;
-import javax.portlet.PortletContext;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
 import javax.servlet.Servlet;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -49,11 +46,10 @@ import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.framework.container.servlet.S2ContainerServlet;
 import org.seasar.framework.exception.IORuntimeException;
-import org.seasar.portlet.wrapper.HttpServletRequestWrapper;
-import org.seasar.portlet.wrapper.HttpServletResponseWrapper;
 import org.seasar.teeda.core.application.ViewHandlerImpl;
 import org.seasar.teeda.core.util.DIContainerUtil;
 import org.seasar.teeda.core.util.ExternalContextUtil;
+import org.seasar.teeda.core.util.PortletExternalContextUtil;
 import org.seasar.teeda.core.util.PortletUtil;
 import org.seasar.teeda.core.util.PostbackUtil;
 import org.seasar.teeda.core.util.ServletExternalContextUtil;
@@ -119,34 +115,21 @@ public class HtmlViewHandler extends ViewHandlerImpl {
     public UIViewRoot createView(FacesContext context, String viewId) {
         UIViewRoot viewRoot = super.createView(context, viewId);
         TagProcessor processor = tagProcessorCache.getTagProcessor(viewId);
-        if (processor != null) {
-            ExternalContext externalContext = context.getExternalContext();
-            HttpServletRequest request = null;
-            HttpServletResponse response = null;
-            if (!PortletUtil.isPortlet(context)) {
-                request = ServletExternalContextUtil
-                        .getRequest(externalContext);
-                response = ServletExternalContextUtil
-                        .getResponse(externalContext);
-            } else {
-                request = new HttpServletRequestWrapper(
-                        (PortletRequest) externalContext.getRequest(),
-                        (PortletContext) externalContext.getContext());
-                response = new HttpServletResponseWrapper(
-                        (PortletResponse) externalContext.getResponse());
-            }
-            try {
-                PageContext pageContext = createPageContext(request, response);
-                PageContextUtil.setCurrentFacesContextAttribute(pageContext,
-                        context);
-                PageContextUtil.setCurrentViewRootAttribute(pageContext,
-                        viewRoot);
-                processor.composeComponentTree(context, pageContext, null);
-            } catch (JspException e) {
-                throw new JspRuntimeException(e);
-            } catch (IOException e) {
-                throw new IORuntimeException(e);
-            }
+        if (processor == null) {
+            return viewRoot;
+        }
+        final HttpServletRequest request = prepareRequest(context);
+        final HttpServletResponse response = prepareResponse(context);
+        try {
+            PageContext pageContext = createPageContext(request, response);
+            PageContextUtil.setCurrentFacesContextAttribute(pageContext,
+                    context);
+            PageContextUtil.setCurrentViewRootAttribute(pageContext, viewRoot);
+            processor.composeComponentTree(context, pageContext, null);
+        } catch (JspException e) {
+            throw new JspRuntimeException(e);
+        } catch (IOException e) {
+            throw new IORuntimeException(e);
         }
         return viewRoot;
     }
@@ -164,20 +147,9 @@ public class HtmlViewHandler extends ViewHandlerImpl {
 
     protected void renderView(FacesContext context, String path)
             throws IOException {
-        ExternalContext externalContext = context.getExternalContext();
-        HttpServletRequest request = null;
-        HttpServletResponse response = null;
-        if (!PortletUtil.isPortlet(context)) {
-            request = ServletExternalContextUtil.getRequest(externalContext);
-            response = ServletExternalContextUtil.getResponse(externalContext);
-        } else {
-            request = new HttpServletRequestWrapper(
-                    (PortletRequest) externalContext.getRequest(),
-                    (PortletContext) externalContext.getContext());
-            response = new HttpServletResponseWrapper(
-                    (PortletResponse) externalContext.getResponse());
-        }
-        prepareResponse(response);
+        final HttpServletRequest request = prepareRequest(context);
+        final HttpServletResponse response = prepareResponse(context);
+        setNoCacheToResponse(response);
         PageContext pageContext = createPageContext(request, response);
         setupResponseWriter(pageContext, null, request.getCharacterEncoding());
         if (invoke(context, path, PRERENDER) != null) {
@@ -222,7 +194,8 @@ public class HtmlViewHandler extends ViewHandlerImpl {
                 }
                 final ExternalContext extContext = context.getExternalContext();
                 final Map requestMap = extContext.getRequestMap();
-                requestMap.put(ExtensionConstants.TRANSITION_BY_TEEDA_PREPARED_METHOD,
+                requestMap.put(
+                        ExtensionConstants.TRANSITION_BY_TEEDA_PREPARED_METHOD,
                         Boolean.TRUE);
                 navigateReally(context, next);
             }
@@ -280,7 +253,27 @@ public class HtmlViewHandler extends ViewHandlerImpl {
                 .getFactory(FactoryFinder.RENDER_KIT_FACTORY);
     }
 
-    protected void prepareResponse(HttpServletResponse res) {
+    protected HttpServletRequest prepareRequest(FacesContext context) {
+        final ExternalContext externalContext = context.getExternalContext();
+        if (!PortletUtil.isPortlet(context)) {
+            return ServletExternalContextUtil.getRequest(externalContext);
+        } else {
+            return PortletExternalContextUtil
+                    .wrapByHttpServletRequestWrapper(externalContext);
+        }
+    }
+
+    protected HttpServletResponse prepareResponse(FacesContext context) {
+        final ExternalContext externalContext = context.getExternalContext();
+        if (!PortletUtil.isPortlet(context)) {
+            return ServletExternalContextUtil.getResponse(externalContext);
+        } else {
+            return PortletExternalContextUtil
+                    .wrapByHttpServletResponseWrapper(externalContext);
+        }
+    }
+
+    protected void setNoCacheToResponse(HttpServletResponse res) {
         SimpleDateFormat formatter = new SimpleDateFormat(
                 "E, dd MMM yyyy hh:mm:ss zzz", Locale.US);
         formatter.setTimeZone(TimeZone.getTimeZone("GMT"));
