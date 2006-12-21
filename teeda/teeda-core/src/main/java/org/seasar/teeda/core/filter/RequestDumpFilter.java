@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -65,6 +65,12 @@ public class RequestDumpFilter implements Filter {
 
     private boolean afterContextAttribute;
 
+    private boolean afterResponse;
+
+    private static final String INDENT = "  ";
+
+    private static final String LF = System.getProperty("line.separator");
+
     public void init(final FilterConfig filterConfig) throws ServletException {
         this.config = filterConfig;
         beforeRequestParameter = getBooleanParameter(filterConfig,
@@ -89,20 +95,17 @@ public class RequestDumpFilter implements Filter {
                 "beforeSessionAttribute", true);
         afterSessionAttribute = getBooleanParameter(filterConfig,
                 "afterSessionAttribute", true);
+        afterResponse = getBooleanParameter(filterConfig, "afterResponse", true);
 
         final StringBuffer sb = new StringBuffer();
         RequestDumpUtil.dumpContextProperties(sb, filterConfig
                 .getServletContext(), LF, INDENT);
-        log.debug(new String(sb));
+        log.debug(sb.toString());
     }
 
     public void destroy() {
         config = null;
     }
-
-    private static final String INDENT = "  ";
-
-    private static final String LF = System.getProperty("line.separator");
 
     public void doFilter(final ServletRequest request,
             final ServletResponse response, final FilterChain chain)
@@ -164,7 +167,9 @@ public class RequestDumpFilter implements Filter {
         sb.append("** after *****************************************: ");
         sb.append(gerServletPath(request));
         sb.append(LF);
-        RequestDumpUtil.dumpResponseProperties(sb, response, LF, INDENT);
+        if (afterResponse) {
+            RequestDumpUtil.dumpResponseProperties(sb, response, LF, INDENT);
+        }
         if (afterRequestParameter) {
             RequestDumpUtil.dumpRequestParameters(sb, request, LF, INDENT);
         }
