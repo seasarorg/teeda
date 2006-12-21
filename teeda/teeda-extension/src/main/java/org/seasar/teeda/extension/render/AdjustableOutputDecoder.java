@@ -9,13 +9,11 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
 package org.seasar.teeda.extension.render;
-
-import java.util.Map;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -30,17 +28,6 @@ public class AdjustableOutputDecoder extends ValueHolderDecoder {
     protected String getClientId(UIComponent component, FacesContext context) {
         String clientId = component.getClientId(context);
         return AdjustValueHolderUtil.getAdjustedValue(clientId);
-    }
-
-    protected Map getRequestParameterMap(FacesContext context) {
-        Map paramMap = context.getExternalContext().getRequestParameterMap();
-        return AdjustValueHolderUtil.adjustParamMap(paramMap);
-    }
-
-    protected Map getRequestParameterValuesMap(FacesContext context) {
-        Map paramMap = context.getExternalContext()
-                .getRequestParameterValuesMap();
-        return AdjustValueHolderUtil.adjustParamMap(paramMap);
     }
 
 }
