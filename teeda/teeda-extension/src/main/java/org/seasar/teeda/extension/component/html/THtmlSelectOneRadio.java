@@ -43,8 +43,8 @@ public class THtmlSelectOneRadio extends HtmlSelectOneRadio {
             UIComponent child = (UIComponent) children.next();
             String childId = AdjustValueHolderUtil.getAdjustedValue(child
                     .getId());
-            if (saveId.equals(childId) && child instanceof THtmlInputHidden) {
-                value = ((THtmlInputHidden) child).getValue();
+            if (saveId.equals(childId) && child instanceof THtmlItemsSaveHidden) {
+                value = ((THtmlItemsSaveHidden) child).getValue();
                 break;
             }
         }

@@ -16,18 +16,18 @@
 package org.seasar.teeda.extension.taglib;
 
 import org.seasar.teeda.core.taglib.html.InputTagBase;
-import org.seasar.teeda.extension.component.html.THtmlInputHidden;
+import org.seasar.teeda.extension.component.html.THtmlItemsSaveHidden;
 
 /**
  * @author manhole
  */
-public class TInputHiddenTag extends InputTagBase {
+public class TItemsSaveHiddenTag extends InputTagBase {
 
     public String getComponentType() {
-        return THtmlInputHidden.COMPONENT_TYPE;
+        return THtmlItemsSaveHidden.COMPONENT_TYPE;
     }
 
     public String getRendererType() {
-        return THtmlInputHidden.DEFAULT_RENDERER_TYPE;
+        return THtmlItemsSaveHidden.DEFAULT_RENDERER_TYPE;
     }
 }

@@ -28,7 +28,7 @@ import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.AbstractInputRenderer;
 import org.seasar.teeda.core.render.EncodeConverter;
 import org.seasar.teeda.core.util.RendererUtil;
-import org.seasar.teeda.extension.component.html.THtmlInputHidden;
+import org.seasar.teeda.extension.component.html.THtmlItemsSaveHidden;
 import org.seasar.teeda.extension.component.html.THtmlTreeHidden;
 
 /**
@@ -91,7 +91,7 @@ public class THtmlTreeHiddenRenderer extends AbstractInputRenderer {
     }
 
     protected String getValueForRender(FacesContext context,
-            THtmlInputHidden htmlInputHidden) {
+            THtmlItemsSaveHidden htmlInputHidden) {
         final Object submittedValue = htmlInputHidden.getSubmittedValue();
         if (submittedValue != null) {
             if (submittedValue instanceof String) {

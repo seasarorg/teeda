@@ -24,7 +24,7 @@ import org.seasar.framework.util.AssertionUtil;
 /**
  * @author shot
  */
-public class THtmlTreeHidden extends THtmlInputHidden {
+public class THtmlTreeHidden extends THtmlItemsSaveHidden {
 
     public static final String COMPONENT_TYPE = "org.seasar.teeda.extension.HtmlTreeHidden";
 

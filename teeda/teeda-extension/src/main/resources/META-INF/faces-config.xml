@@ -157,10 +157,10 @@
 	</component>
 	<component>
 		<component-type>
-			org.seasar.teeda.extension.HtmlInputHidden
+			org.seasar.teeda.extension.HtmlItemsSave
 		</component-type>
 		<component-class>
-			org.seasar.teeda.extension.component.html.THtmlInputHidden
+			org.seasar.teeda.extension.component.html.THtmlItemsSaveHidden
 		</component-class>
 	</component>
 	<component>

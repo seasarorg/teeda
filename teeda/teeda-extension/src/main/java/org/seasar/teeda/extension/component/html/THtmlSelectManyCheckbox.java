@@ -42,8 +42,8 @@ public class THtmlSelectManyCheckbox extends HtmlSelectManyCheckbox {
                 .hasNext();) {
             UIComponent child = (UIComponent) children.next();
             String childId = child.getId();
-            if (saveId.equals(childId) && child instanceof THtmlInputHidden) {
-                value = ((THtmlInputHidden) child).getValue();
+            if (saveId.equals(childId) && child instanceof THtmlItemsSaveHidden) {
+                value = ((THtmlItemsSaveHidden) child).getValue();
                 break;
             }
         }

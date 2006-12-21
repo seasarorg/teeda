@@ -18,12 +18,12 @@ package org.seasar.teeda.extension.mock;
 import javax.faces.context.FacesContext;
 import javax.faces.render.Renderer;
 
-import org.seasar.teeda.extension.component.html.THtmlInputHidden;
+import org.seasar.teeda.extension.component.html.THtmlItemsSaveHidden;
 
 /**
  * @author manhole
  */
-public class MockTHtmlInputHidden extends THtmlInputHidden {
+public class MockTHtmlItemsSaveHidden extends THtmlItemsSaveHidden {
 
     private Renderer renderer;
 

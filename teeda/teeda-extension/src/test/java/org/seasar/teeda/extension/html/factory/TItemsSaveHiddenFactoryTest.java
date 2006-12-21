@@ -25,20 +25,20 @@ import org.seasar.teeda.extension.html.ElementProcessor;
 import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooAction;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooPage;
-import org.seasar.teeda.extension.taglib.TInputHiddenTag;
+import org.seasar.teeda.extension.taglib.TItemsSaveHiddenTag;
 
 /**
  * @author shot
  */
-public class TInputHiddenFactoryTest extends ElementProcessorFactoryTestCase {
+public class TItemsSaveHiddenFactoryTest extends ElementProcessorFactoryTestCase {
 
     protected AbstractElementProcessorFactory createFactory() {
-        return new TInputHiddenFactory();
+        return new TItemsSaveHiddenFactory();
     }
 
     protected void registerTagElements() {
         registerTagElement(ExtensionConstants.TEEDA_EXTENSION_URI,
-                "inputHidden", TInputHiddenTag.class);
+                "inputHidden", TItemsSaveHiddenTag.class);
     }
 
     public void testIsMatch() throws Exception {
@@ -65,7 +65,7 @@ public class TInputHiddenFactoryTest extends ElementProcessorFactoryTestCase {
                 pageDesc, actionDesc);
         // ## Assert ##
         assertNotNull("1", parentProcessor);
-        assertEquals("2", TInputHiddenTag.class, parentProcessor.getTagClass());
+        assertEquals("2", TItemsSaveHiddenTag.class, parentProcessor.getTagClass());
         assertEquals("3", "#{fooPage.hogeItems}", parentProcessor
                 .getProperty("value"));
     }

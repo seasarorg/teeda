@@ -60,8 +60,8 @@
 		class="org.seasar.teeda.extension.html.factory.FormFactory" />
 	<component name="sessionSaveFactory"
 		class="org.seasar.teeda.extension.html.factory.SessionSaveFactory" />
-	<component name="TInputHiddenFactory"
-		class="org.seasar.teeda.extension.html.factory.TInputHiddenFactory" />
+	<component name="TItemsSaveHiddenFactory"
+		class="org.seasar.teeda.extension.html.factory.TItemsSaveHiddenFactory" />
 	<component name="inputHiddenFactory"
 		class="org.seasar.teeda.extension.html.factory.InputHiddenFactory" />
 	<component name="inputSecretFactory"

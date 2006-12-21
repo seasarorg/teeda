@@ -27,7 +27,7 @@ import org.seasar.teeda.extension.html.PageDesc;
  * @author higa
  * @author shot
  */
-public class TInputHiddenFactory extends AbstractElementProcessorFactory {
+public class TItemsSaveHiddenFactory extends AbstractElementProcessorFactory {
 
     private static final String TAG_NAME = "inputHidden";
 

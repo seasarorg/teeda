@@ -9,25 +9,22 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
 package org.seasar.teeda.extension.component.html;
 
-import javax.faces.component.html.HtmlInputHidden;
+import javax.faces.component.UIComponent;
+import javax.faces.component.UIInputTest;
 
 /**
  * @author manhole
- * @author higa
  */
-public class THtmlInputHidden extends HtmlInputHidden {
+public class THtmlItemsSaveHiddenTest extends UIInputTest {
 
-    public static final String COMPONENT_TYPE = "org.seasar.teeda.extension.HtmlInputHidden";
-
-    public static final String DEFAULT_RENDERER_TYPE = "org.seasar.teeda.extension.Hidden";
-
-    public THtmlInputHidden() {
-        setRendererType(DEFAULT_RENDERER_TYPE);
+    protected UIComponent createUIComponent() {
+        return new THtmlItemsSaveHidden();
     }
+
 }

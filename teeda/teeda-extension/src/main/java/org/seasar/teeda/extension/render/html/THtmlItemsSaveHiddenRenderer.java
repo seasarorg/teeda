@@ -28,17 +28,17 @@ import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.AbstractInputRenderer;
 import org.seasar.teeda.core.render.EncodeConverter;
 import org.seasar.teeda.core.util.RendererUtil;
-import org.seasar.teeda.extension.component.html.THtmlInputHidden;
+import org.seasar.teeda.extension.component.html.THtmlItemsSaveHidden;
 
 /**
  * @author manhole
  * @author shot
  */
-public class THtmlInputHiddenRenderer extends AbstractInputRenderer {
+public class THtmlItemsSaveHiddenRenderer extends AbstractInputRenderer {
 
-    public static final String COMPONENT_FAMILY = THtmlInputHidden.COMPONENT_FAMILY;
+    public static final String COMPONENT_FAMILY = THtmlItemsSaveHidden.COMPONENT_FAMILY;
 
-    public static final String RENDERER_TYPE = THtmlInputHidden.DEFAULT_RENDERER_TYPE;
+    public static final String RENDERER_TYPE = THtmlItemsSaveHidden.DEFAULT_RENDERER_TYPE;
 
     private EncodeConverter encodeConverter;
 
@@ -54,11 +54,11 @@ public class THtmlInputHiddenRenderer extends AbstractInputRenderer {
         if (!component.isRendered()) {
             return;
         }
-        encodeHtmlInputHiddenEnd(context, (THtmlInputHidden) component);
+        encodeHtmlInputHiddenEnd(context, (THtmlItemsSaveHidden) component);
     }
 
     protected void encodeHtmlInputHiddenEnd(final FacesContext context,
-            final THtmlInputHidden htmlInputHidden) throws IOException {
+            final THtmlItemsSaveHidden htmlInputHidden) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
         writer.startElement(JsfConstants.INPUT_ELEM, htmlInputHidden);
         RendererUtil.renderAttribute(writer, JsfConstants.TYPE_ATTR,
@@ -76,7 +76,7 @@ public class THtmlInputHiddenRenderer extends AbstractInputRenderer {
     }
 
     protected String getValueForRender(final FacesContext context,
-            final THtmlInputHidden htmlInputHidden) {
+            final THtmlItemsSaveHidden htmlInputHidden) {
         final Object submittedValue = htmlInputHidden.getSubmittedValue();
         if (submittedValue != null) {
             if (submittedValue instanceof String) {
@@ -93,11 +93,11 @@ public class THtmlInputHiddenRenderer extends AbstractInputRenderer {
 
     public void decode(final FacesContext context, final UIComponent component) {
         assertNotNull(context, component);
-        decodeHtmlInputHidden(context, (THtmlInputHidden) component);
+        decodeHtmlInputHidden(context, (THtmlItemsSaveHidden) component);
     }
 
     protected void decodeHtmlInputHidden(final FacesContext context,
-            final THtmlInputHidden htmlInputHidden) {
+            final THtmlItemsSaveHidden htmlInputHidden) {
         getDecoder().decode(context, htmlInputHidden);
     }
 

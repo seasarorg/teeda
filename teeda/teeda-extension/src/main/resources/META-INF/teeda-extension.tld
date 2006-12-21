@@ -1858,7 +1858,7 @@
 	<tag>
 		<name>inputHidden</name>
 		<tag-class>
-			org.seasar.teeda.extension.taglib.TInputHiddenTag
+			org.seasar.teeda.extension.taglib.TItemsSaveHiddenTag
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>

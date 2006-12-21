@@ -37,22 +37,22 @@ import org.custommonkey.xmlunit.Diff;
 import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.mock.MockUIComponentBaseWithNamingContainer;
 import org.seasar.teeda.core.render.Base64EncodeConverter;
-import org.seasar.teeda.extension.mock.MockTHtmlInputHidden;
+import org.seasar.teeda.extension.mock.MockTHtmlItemsSaveHidden;
 
 /**
  * @author manhole
  * @author shot
  */
-public class THtmlInputHiddenRendererTest extends RendererTest {
+public class THtmlItemsSaveHiddenRendererTest extends RendererTest {
 
-    private THtmlInputHiddenRenderer renderer;
+    private THtmlItemsSaveHiddenRenderer renderer;
 
-    private MockTHtmlInputHidden htmlInputHidden;
+    private MockTHtmlItemsSaveHidden htmlInputHidden;
 
     protected void setUp() throws Exception {
         super.setUp();
-        renderer = (THtmlInputHiddenRenderer) createRenderer();
-        htmlInputHidden = new MockTHtmlInputHidden();
+        renderer = (THtmlItemsSaveHiddenRenderer) createRenderer();
+        htmlInputHidden = new MockTHtmlItemsSaveHidden();
         htmlInputHidden.setRenderer(renderer);
     }
 
@@ -484,7 +484,7 @@ public class THtmlInputHiddenRendererTest extends RendererTest {
     }
 
     public void testGetConvertedValue() throws Exception {
-        THtmlInputHiddenRenderer renderer = (THtmlInputHiddenRenderer) createRenderer();
+        THtmlItemsSaveHiddenRenderer renderer = (THtmlItemsSaveHiddenRenderer) createRenderer();
         Object value = "aaa";
         Base64EncodeConverter converter = new Base64EncodeConverter();
         String s = converter.getAsEncodeString(value);
@@ -545,7 +545,7 @@ public class THtmlInputHiddenRendererTest extends RendererTest {
     }
 
     protected Renderer createRenderer() {
-        THtmlInputHiddenRenderer renderer = new THtmlInputHiddenRenderer();
+        THtmlItemsSaveHiddenRenderer renderer = new THtmlItemsSaveHiddenRenderer();
         renderer.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
         renderer.setEncodeConverter(new Base64EncodeConverter());
         return renderer;

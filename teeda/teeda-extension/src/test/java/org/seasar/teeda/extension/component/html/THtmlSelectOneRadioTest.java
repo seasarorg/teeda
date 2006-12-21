@@ -34,7 +34,7 @@ public class THtmlSelectOneRadioTest extends TeedaExtensionTestCase {
         THtmlSelectOneRadio t = new THtmlSelectOneRadio();
         t.setId("aaa");
         MockUIComponent parent = new MockUIComponent();
-        THtmlInputHidden hidden = new THtmlInputHidden();
+        THtmlItemsSaveHidden hidden = new THtmlItemsSaveHidden();
         hidden.setId("aaaItemsSave");
         List list = new ArrayList();
         HogeDto dto = new HogeDto();
