@@ -149,7 +149,7 @@ public class HtmlParserImplTest extends TeedaExtensionTestCase {
         HtmlParser parser = getHtmlParser();
 
         // ## Act ##
-        String str = "<?xml version=\"1.0\"?>"
+        String str = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>"
                 + "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">"
                 + "<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"ja\" lang=\"ja\"><z id=\"&nbsp;aaa&nbsp;\"><y id=\"y\">&nbsp;aaa&nbsp;<x /></y></z></html>";
         ByteArrayInputStream is = new ByteArrayInputStream(str.getBytes());
@@ -170,7 +170,7 @@ public class HtmlParserImplTest extends TeedaExtensionTestCase {
         HtmlNode x = ym.getChild(0);
         assertTrue(x instanceof TextNode);
         Diff diff = new Diff(
-                "<?xml version=\"1.0\"?><!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n"
+                "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n"
                         + "<html xml:lang=\"ja\" lang=\"ja\" xmlns=\"http://www.w3.org/1999/xhtml\">"
                         + "<z id=\"&nbsp;aaa&nbsp;\"><y id=\"y\">&nbsp;aaa&nbsp;<x></x></y></z></html>",
                 root.toString());

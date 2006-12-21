@@ -161,6 +161,11 @@ public class TeedaXMLDocumentFilterImpl implements XMLDocumentFilter {
             buf.append("\"");
             xmlEncoding = encoding;
         }
+        if (standalone != null) {
+            buf.append(" standalone=\"");
+            buf.append(standalone);
+            buf.append("\"");
+        }
         buf.append("?>");
         buf.append(SEP);
         String xml = buf.toString();
