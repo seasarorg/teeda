@@ -24,6 +24,7 @@ import javax.faces.context.FacesContext;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.seasar.framework.log.Logger;
 import org.seasar.framework.util.AssertionUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.util.DIContainerUtil;
@@ -37,12 +38,19 @@ import org.seasar.teeda.extension.html.PagePersistence;
 public class TeedaExtensionErrorPageManagerImpl extends
         ServletErrorPageManagerImpl {
 
+    private static final Logger logger = Logger
+            .getLogger(TeedaExtensionErrorPageManagerImpl.class);
+
     //TODO injection PagePersistence.
     //TODO PortletSupport
     public boolean handleException(Throwable exception,
             ExternalContext extContext) throws IOException {
         AssertionUtil.assertNotNull("exception", exception);
         final String message = exception.getMessage();
+        if(logger.isDebugEnabled()) {
+            logger.debug(exception);
+            logger.debug(message);
+        }
         final FacesContext context = FacesContext.getCurrentInstance();
         final FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR,
                 message, message);
@@ -60,7 +68,8 @@ public class TeedaExtensionErrorPageManagerImpl extends
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             return true;
         }
-        ServletExternalContextUtil.storeErrorInfoToAttribute(request, exception);
+        ServletExternalContextUtil
+                .storeErrorInfoToAttribute(request, exception);
         PagePersistence pagePersistence = (PagePersistence) DIContainerUtil
                 .getComponentNoException(PagePersistence.class);
         pagePersistence.removeSubApplicationPages(context);
