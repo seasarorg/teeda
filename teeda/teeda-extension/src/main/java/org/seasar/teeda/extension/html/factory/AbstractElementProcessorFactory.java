@@ -106,7 +106,22 @@ public abstract class AbstractElementProcessorFactory implements
 
     protected void customizeDynamicProperties(Map properties,
             ElementNode elementNode, PageDesc pageDesc, ActionDesc actionDesc) {
-        final String id = elementNode.getId();
+        /*
+         * "aaa-xxxxx"というidのとき、value属性は"aaa"でバインドし、
+         * value以外の属性は"aaaXxxx"でバインドする。
+         */
+        final String s = elementNode.getProperty(JsfConstants.ID_ATTR);
+        final String id;
+        if (s == null) {
+            return;
+        }
+        final int pos = s.indexOf('-');
+        if (-1 < pos) {
+            id = s.substring(0, pos)
+                    + StringUtil.capitalize(s.substring(pos + 1));
+        } else {
+            id = s;
+        }
         customizeDynamicProperties(id, properties, elementNode, pageDesc,
                 actionDesc);
     }
