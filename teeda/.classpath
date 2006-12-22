@@ -16,11 +16,9 @@
 	<classpathentry sourcepath="lib/sources/commons-collections-3.1-sources.jar" kind="lib" path="lib/commons-collections-3.1.jar"/>
 	<classpathentry sourcepath="lib/sources/commons-el-1.0-sources.jar" kind="lib" path="lib/commons-el-1.0.jar"/>
 	<classpathentry kind="lib" path="lib/jstl-1.1.2.jar"/>
-	<classpathentry sourcepath="lib/sources/junit-3.8.2-sources.jar" kind="lib" path="lib/junit-3.8.2.jar"/>
 	<classpathentry kind="lib" path="lib/xmlunit-1.0.jar"/>
 	<classpathentry kind="lib" path="lib/geronimo-jsp_2.0_spec-1.0.jar"/>
 	<classpathentry kind="lib" path="lib/geronimo-servlet_2.4_spec-1.0.jar"/>
-	<classpathentry kind="lib" path="lib/rhino-1.6r2.jar"/>
 	<classpathentry kind="lib" path="lib/s2-portlet-1.0.6.jar"/>
 	<classpathentry kind="lib" path="lib/xercesImpl-2.6.2.jar"/>
 	<classpathentry kind="lib" path="lib/xmlParserAPIs-2.6.2.jar"/>
