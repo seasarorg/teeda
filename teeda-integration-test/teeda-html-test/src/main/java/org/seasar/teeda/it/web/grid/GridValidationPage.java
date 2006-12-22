@@ -1,5 +1,6 @@
 package org.seasar.teeda.it.web.grid;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 public class GridValidationPage {
@@ -37,7 +38,7 @@ public class GridValidationPage {
         this.fooItems = fooItems;
     }
 
-    public static class FooItem {
+    public static class FooItem implements Serializable {
 
         private String bbb;
 

@@ -1,5 +1,6 @@
 package org.seasar.teeda.it.web.grid;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 public class GridPage {
@@ -53,7 +54,7 @@ public class GridPage {
         this.fooItems = fooItems;
     }
 
-    public static class FooItem {
+    public static class FooItem implements Serializable {
 
         private String aaa;
 
