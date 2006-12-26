@@ -1,0 +1,83 @@
+<html>
+<head>
+<style>
+.gridHeader {
+	background-color: green;
+	color: white;
+	font-weight: bold;
+}
+.gridTable {
+	background-color: black;
+}
+.gridCell {
+	height: 18px;
+}
+.gridCellEdit {
+	border-width: 0px;
+	background-color: #FFC0CB;
+}
+.row_odd {
+	background-color: white;
+}
+.row_even {
+	background-color: #FFDEAD;
+}
+</style>
+</head>
+<body>
+GridXY
+<!-- BEGIN -->
+<table id="someGridXY" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td>
+			<table id="someGridXYLeftHeaderTable" cellspacing="0" cellpadding="0" class="gridTable">
+				<thead>
+					<tr>
+						<th><div class="gridHeader" style="overflow:hidden;"><nobr>th1</nobr></div></th>
+					</tr>
+				</thead>
+			</table>
+		</td>
+		<td>
+			<div id="someGridXYRightHeader" style="overflow:hidden;">
+				<table id="someGridXYRightHeaderTable" cellspacing="0" cellpadding="0" class="gridTable">
+					<thead>
+						<tr>
+							<th><div class="gridHeader" style="overflow:hidden; width:30px;"><nobr>th2</nobr></div></th>
+							<th><div class="gridHeader" style="overflow:hidden; width:30px;"><nobr>th3</nobr></div></th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td style="vertical-align:top;">
+			<div id="someGridXYLeftBody" style="overflow:hidden; height:122px;">
+				<table id="someGridXYLeftBodyTable" cellspacing="0" cellpadding="0" class="gridTable">
+					<tbody>
+						<tr>
+							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD1_1</nobr></div></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</td>
+		<td style="vertical-align:top;">
+			<div id="someGridXYRightBody" style="overflow:scroll; height:138px;"
+				onscroll="document.getElementById('someGridXYRightHeader').scrollLeft=this.scrollLeft; document.getElementById('someGridXYLeftBody').scrollTop=this.scrollTop;">
+				<table id="someGridXYRightBodyTable" cellspacing="0" cellpadding="0" class="gridTable">
+					<tbody>
+						<tr>
+							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD2_1</nobr></div></td>
+							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD3_1</nobr></div></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</td>
+	</tr>
+</table>
+<!-- END -->
+</body>
+</html>

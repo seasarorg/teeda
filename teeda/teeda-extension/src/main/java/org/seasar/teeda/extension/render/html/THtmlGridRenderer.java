@@ -748,7 +748,9 @@ public class THtmlGridRenderer extends TForEachRenderer implements
                                     + attribute.getLeftFixCols());
                         }
                         final String widthStr = col.getWidth();
-                        if (widthStr != null) {
+                        if (widthStr == null) {
+                            columnNo += span;
+                        } else {
                             final int width = toDigit(widthStr);
                             if (StringUtil.contains(styleClass,
                                     LEFT_FIXED_CLASS_NAME)) {

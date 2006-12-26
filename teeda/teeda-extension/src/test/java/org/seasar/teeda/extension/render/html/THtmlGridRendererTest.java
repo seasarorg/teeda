@@ -785,6 +785,109 @@ public class THtmlGridRendererTest extends RendererTest {
         assertEquals(diff.toString(), true, diff.identical());
     }
 
+    /**
+     * https://www.seasar.org/issues/browse/TEEDA-210
+     */
+    public void testJIRA210() throws Exception {
+        // ## Arrange ##
+        htmlGrid.setId("someGridXY");
+        htmlGrid.setWidth(String.valueOf(170));
+        htmlGrid.setHeight(String.valueOf(150));
+        htmlGrid.setItemsName("someItems");
+        htmlGrid.setScrollHorizontal(true);
+        htmlGrid.setScrollVertical(true);
+
+        final FooPage fooPage = new FooPage();
+        {
+            final String pageName = "fooPage";
+            getVariableResolver().putValue(pageName, fooPage);
+            htmlGrid.setPageName(pageName);
+        }
+
+        // items
+        {
+            final List items = new ArrayList();
+            FooItem fooItem = new FooItem();
+            fooItem.setTd1("TD1_1");
+            fooItem.setTd2("TD2_1");
+            fooItem.setTd3("TD3_1");
+            items.add(fooItem);
+            fooPage.setSomeItems((FooItem[]) items.toArray(new FooItem[items
+                    .size()]));
+        }
+
+        // colgroup
+        {
+            final THtmlGridColumnGroup columnGroup = new THtmlGridColumnGroup();
+            addChild(htmlGrid, columnGroup);
+            {
+                THtmlGridColumn col = new THtmlGridColumn();
+                col.setSpan(String.valueOf(1));
+                col.setStyleClass("T_leftFixed");
+                addChild(columnGroup, col);
+            }
+            {
+                THtmlGridColumn col = new THtmlGridColumn();
+                col.setSpan(String.valueOf(2));
+                col.setWidth(String.valueOf(30));
+                addChild(columnGroup, col);
+            }
+        }
+
+        // thead
+        {
+            THtmlGridHeader thead = new THtmlGridHeader();
+            htmlGrid.getChildren().add(thead);
+
+            THtmlGridTr tr = new THtmlGridTr();
+            tr.setHeight(String.valueOf(12));
+            addChild(thead, tr);
+            for (int i = 1; i <= 3; i++) {
+                THtmlGridTh th = new THtmlGridTh();
+                addChild(tr, th);
+                MockHtmlOutputText text = new MockHtmlOutputText();
+                text.setRenderer(outputTextRenderer);
+                text.setValue("th" + i);
+                addChild(th, text);
+            }
+        }
+        final ELParser parser = new CommonsELParser();
+        parser.setExpressionProcessor(new CommonsExpressionProcessorImpl());
+        // tbody
+        {
+            THtmlGridBody tbody = new THtmlGridBody();
+            addChild(htmlGrid, tbody);
+
+            THtmlGridTr tr = new THtmlGridTr();
+            addChild(tbody, tr);
+            for (int i = 1; i <= 3; i++) {
+                THtmlGridTd td = new THtmlGridTd();
+                addChild(tr, td);
+                MockHtmlOutputText text = new MockHtmlOutputText();
+                text.setRenderer(outputTextRenderer);
+                ValueBinding vb = new ValueBindingImpl(getFacesContext()
+                        .getApplication(), "#{fooPage.td" + i + "}", parser);
+                text.setValueBinding("value", vb);
+                addChild(td, text);
+            }
+        }
+
+        // ## Act ##
+        encodeByRenderer(renderer, htmlGrid);
+
+        // ## Assert ##
+        final String readText = TestUtil.readText(getClass(),
+                "THtmlGridRendererTest_testJIRA210.html", "UTF-8");
+        final String expected = extract(readText);
+        final String responseText = getResponseText();
+        System.out.println(responseText);
+        Diff diff = diff(expected, responseText);
+        assertEquals(diff.toString(), true, diff.identical());
+
+        UIBody body = TBodyRenderer.findParentBody(htmlGrid);
+        encodeByRenderer(new TBodyRenderer(), body);
+    }
+
     public void no_testMany() throws Exception {
         // ## Arrange ##
         final int itemSize = 6000;
