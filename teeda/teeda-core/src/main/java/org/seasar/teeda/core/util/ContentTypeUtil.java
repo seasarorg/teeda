@@ -20,6 +20,7 @@ import org.seasar.teeda.core.JsfConstants;
 
 /**
  * @author shot
+ * @author yone
  */
 public class ContentTypeUtil {
 
@@ -59,11 +60,13 @@ public class ContentTypeUtil {
     }
 
     public static boolean isHtmlContentType(String type) {
-        return type.indexOf("html") != -1
+        return type.indexOf(JsfConstants.HTML_CONTENT_TYPE) != -1
                 || type.equals(JsfConstants.ANY_CONTENT_TYPE);
     }
 
     public static boolean isXmlContentType(String type) {
-        return type.indexOf("xml") != -1;
+        return type.indexOf(JsfConstants.XHTML_CONTENT_TYPE) != -1
+                || type.indexOf(JsfConstants.APPLICATION_XML_CONTENT_TYPE) != -1
+                || type.indexOf(JsfConstants.TEXT_XML_CONTENT_TYPE) != -1;
     }
 }

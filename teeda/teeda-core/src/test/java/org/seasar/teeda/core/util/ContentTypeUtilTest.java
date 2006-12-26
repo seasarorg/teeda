@@ -19,6 +19,7 @@ import org.seasar.teeda.core.unit.TeedaTestCase;
 
 /**
  * @author shot
+ * @author yone
  */
 public class ContentTypeUtilTest extends TeedaTestCase {
 
@@ -44,7 +45,7 @@ public class ContentTypeUtilTest extends TeedaTestCase {
         assertFalse(ContentTypeUtil.isHtmlContentType("hoge"));
         assertTrue(ContentTypeUtil.isHtmlContentType("text/html"));
         assertTrue(ContentTypeUtil.isHtmlContentType("*/*"));
-        assertTrue(ContentTypeUtil.isHtmlContentType("html/foo"));
+        assertFalse(ContentTypeUtil.isHtmlContentType("html/foo"));
     }
 
     public void testIsXmlContentType() throws Exception {
@@ -61,6 +62,8 @@ public class ContentTypeUtilTest extends TeedaTestCase {
         assertEquals("text/html", ContentTypeUtil.getContentType("*/*"));
         assertEquals("text/html", ContentTypeUtil
                 .getContentType("hoge, */*, foo"));
+        assertEquals("application/xhtml+xml", ContentTypeUtil
+                .getContentType("application/xhtml+xml"));
     }
 
     public void testGetContentType2() throws Exception {

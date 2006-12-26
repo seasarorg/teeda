@@ -16,17 +16,23 @@
 package org.seasar.teeda.core.taglib.core;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.faces.application.ViewHandler;
 import javax.faces.component.UIViewRoot;
+import javax.faces.context.FacesContext;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.BodyContent;
 import javax.servlet.jsp.tagext.BodyTag;
 import javax.servlet.jsp.tagext.Tag;
 
 import org.seasar.framework.mock.servlet.MockHttpServletResponse;
+import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.mock.MockBodyContent;
+import org.seasar.teeda.core.mock.MockExternalContextImpl;
+import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.mock.MockFacesContextImpl;
 import org.seasar.teeda.core.mock.MockJspWriter;
 import org.seasar.teeda.core.mock.MockPageContext;
@@ -149,6 +155,60 @@ public class ViewTagTest extends TeedaTestCase {
             ExceptionAssert.assertMessageExist(e);
             //System.out.println(e.getMessage());
         }
+    }
+
+    public void testDoStartTag_SetContentTypeNull() throws Exception {
+        // # Arrange #
+        ViewTag tag = new ViewTag();
+        MockPageContext pageContext = new MockPageContext();
+        pageContext.setRequest(getRequest());
+        pageContext.setResponse(getResponse());
+        tag.setPageContext(pageContext);
+        tag.setParent(null);
+
+        MockFacesContext context = getFacesContext();
+        context.setExternalContext(new MockExternalContextImpl() {
+            private Map requestHeaderMap = new HashMap();
+            public Map getRequestHeaderMap() {
+                return requestHeaderMap;
+            }
+        });
+        context.getExternalContext().getRequestHeaderMap().put(
+                "Accept", null);
+
+        // # Act #
+        tag.doStartTag();
+
+        // # Assert #
+        String contentType = pageContext.getResponse().getContentType();
+        assertNull(contentType);
+    }
+
+    public void testDoStartTag_SetContentType() throws Exception {
+        // # Arrange #
+        ViewTag tag = new ViewTag();
+        MockPageContext pageContext = new MockPageContext();
+        pageContext.setRequest(getRequest());
+        pageContext.setResponse(getResponse());
+        tag.setPageContext(pageContext);
+        tag.setParent(null);
+        
+        MockFacesContext context = getFacesContext();
+        context.setExternalContext(new MockExternalContextImpl() {
+            private Map requestHeaderMap = new HashMap();
+            public Map getRequestHeaderMap() {
+                return requestHeaderMap;
+            }
+        });
+        context.getExternalContext().getRequestHeaderMap().put(
+                "Accept", JsfConstants.XHTML_CONTENT_TYPE);
+
+        // # Act #
+        tag.doStartTag();
+
+        // # Assert #
+        String contentType = pageContext.getResponse().getContentType();
+        assertTrue(contentType.indexOf(JsfConstants.XHTML_CONTENT_TYPE) != -1);
     }
 
     public void testDoAfterBody() throws Exception {

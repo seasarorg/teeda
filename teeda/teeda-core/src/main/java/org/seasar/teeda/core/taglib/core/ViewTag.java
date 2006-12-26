@@ -77,10 +77,12 @@ public class ViewTag extends UIComponentBodyTag {
                 .getCharacterEncoding(pageContext);
         pageContext.getResponse().setLocale(context.getViewRoot().getLocale());
         final String acceptContentTypes = WebAppUtil.getAcceptHeader(context);
-        final String contentType = ContentTypeUtil
-                .getContentType(acceptContentTypes);
-        pageContext.getResponse().setContentType(
-                contentType + "; charset=" + encoding);
+        if (acceptContentTypes != null) {
+            final String contentType = ContentTypeUtil
+                    .getContentType(acceptContentTypes);
+            pageContext.getResponse().setContentType(
+                    contentType + "; charset=" + encoding);
+        }
         final ResponseWriter writer = context.getResponseWriter();
         AssertionUtil.assertNotNull("ResponseWriter", writer);
         try {
