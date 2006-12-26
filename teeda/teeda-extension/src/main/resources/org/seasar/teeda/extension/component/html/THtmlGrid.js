@@ -54,11 +54,12 @@ Teeda.THtmlGrid = {
     var self = Teeda.THtmlGrid;
     var headerRowLength = headerTable.rows.length;
     var bodyRowLength = bodyTable.rows.length;
-    if (headerRowLength <= 0 || bodyRowLength <= 0 || bodyRowLength < headerRowLength) {
+    var rowLength = Math.min(bodyRowLength, headerRowLength);
+    if (headerRowLength <= 0 || bodyRowLength <= 0 || rowLength <= 0) {
       return;
     }
-    for (var rowCount = 0; rowCount < headerRowLength; rowCount++) {
-      var headerCells = headerTable.rows[rowCount % headerRowLength].cells;
+    for (var rowCount = 0; rowCount < rowLength; rowCount++) {
+      var headerCells = headerTable.rows[rowCount % rowLength].cells;
       var bodyRow;
       for (var bodyRowCount = 0; bodyRowCount < bodyRowLength; bodyRowCount++) {
         if (bodyTable.rows[rowCount].style.display != 'none') {
