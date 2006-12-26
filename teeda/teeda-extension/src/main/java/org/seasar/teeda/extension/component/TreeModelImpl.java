@@ -119,11 +119,17 @@ public class TreeModelImpl implements TreeModel {
         StringTokenizer st = new StringTokenizer(nodeId,
                 ExtensionConstants.NAME_SEPARATOR);
         while (st.hasMoreTokens()) {
-            int nodeIndex = Integer.parseInt(st.nextToken());
+            String nextToken = st.nextToken();
+            int nodeIndex = Integer.parseInt(nextToken);
             if (node == null) {
                 node = root;
             } else {
-                node = (TreeNode) node.getChildren().get(nodeIndex);
+                final List children = node.getChildren();
+                if(children.size() > 0) {
+                    node = (TreeNode) children.get(nodeIndex);
+                } else {
+                    break;
+                }
             }
         }
         return node;

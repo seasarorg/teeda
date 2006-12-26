@@ -60,7 +60,9 @@ public class THtmlTreeHiddenRenderer extends AbstractInputRenderer {
         if (StringUtil.isEmpty(s)) {
             return;
         }
-        hidden.setValue(HotdeployUtil.rebuildValue(deserialize(s)));
+        final Object deserialize = deserialize(s);
+        final Object rebuildValue = HotdeployUtil.rebuildValue(deserialize);
+        hidden.setValue(rebuildValue);
     }
 
     public void encodeEnd(final FacesContext context,

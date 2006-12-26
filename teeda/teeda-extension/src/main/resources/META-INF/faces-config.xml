@@ -17,13 +17,6 @@
 				org.seasar.teeda.extension.render.html.THtmlCommandButtonRenderer
 			</renderer-class>
 		</renderer>
-		<renderer>
-			<component-family>javax.faces.Input</component-family>
-			<renderer-type>javax.faces.Hidden</renderer-type>
-			<renderer-class>
-				org.seasar.teeda.extension.render.html.THtmlInputHiddenRenderer
-			</renderer-class>
-		</renderer>
 	</render-kit>
 
 	<component>

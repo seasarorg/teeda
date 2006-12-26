@@ -15,10 +15,11 @@
  */
 package org.seasar.teeda.extension.component;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
-public class TreeNodeImpl implements TreeNode, Comparable {
+public class TreeNodeImpl implements TreeNode, Comparable, Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -120,6 +121,10 @@ public class TreeNodeImpl implements TreeNode, Comparable {
 
     public void setExpanded(boolean expanded) {
         this.expanded = expanded;
+    }
+
+    public void setChildren(List children) {
+        this.children = children;
     }
 
 }
