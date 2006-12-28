@@ -81,6 +81,18 @@ public class HtmlInputTextRendererTest extends RendererTest {
         assertEquals("<input type=\"text\" name=\"_id0\" value=\"abc\" />",
                 getResponseText());
     }
+    
+    public void testEncode_WithValue2() throws Exception {
+        // ## Arrange ##
+        htmlInputText.setValue("&hearts;");
+
+        // ## Act ##
+        encodeByRenderer(renderer, htmlInputText);
+
+        // ## Assert ##
+        assertEquals("<input type=\"text\" name=\"_id0\" value=\"&amp;hearts;\" />",
+                getResponseText());
+    }
 
     public void testEncode_WithId() throws Exception {
         htmlInputText.setId("a");

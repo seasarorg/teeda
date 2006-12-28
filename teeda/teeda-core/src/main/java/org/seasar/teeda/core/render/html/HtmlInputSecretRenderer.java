@@ -25,6 +25,7 @@ import javax.faces.internal.IgnoreAttribute;
 
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.AbstractInputRenderer;
+import org.seasar.teeda.core.util.HTMLEncodeUtil;
 import org.seasar.teeda.core.util.RendererUtil;
 import org.seasar.teeda.core.util.ValueHolderUtil;
 
@@ -70,7 +71,8 @@ public class HtmlInputSecretRenderer extends AbstractInputRenderer {
         if (!htmlInputSecret.isRedisplay()) {
             value = "";
         }
-        RendererUtil.renderAttribute(writer, JsfConstants.VALUE_ATTR, value);
+        RendererUtil.renderAttribute(writer, JsfConstants.VALUE_ATTR,
+                HTMLEncodeUtil.encode(value, true, true));
         renderStyleClass(context, htmlInputSecret, writer);
         renderRemainAttributes(htmlInputSecret, writer, ignoreAttribute);
         writer.endElement(JsfConstants.INPUT_ELEM);

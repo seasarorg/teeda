@@ -25,6 +25,7 @@ import javax.faces.internal.IgnoreAttribute;
 
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.AbstractInputRenderer;
+import org.seasar.teeda.core.util.HTMLEncodeUtil;
 import org.seasar.teeda.core.util.RendererUtil;
 import org.seasar.teeda.core.util.ValueHolderUtil;
 
@@ -68,7 +69,8 @@ public class HtmlInputTextRenderer extends AbstractInputRenderer {
                 htmlInputText.getClientId(context));
         String value = ValueHolderUtil
                 .getValueForRender(context, htmlInputText);
-        RendererUtil.renderAttribute(writer, JsfConstants.VALUE_ATTR, value);
+        RendererUtil.renderAttribute(writer, JsfConstants.VALUE_ATTR,
+                HTMLEncodeUtil.encode(value, true, true));
         RendererUtil.renderAttribute(writer, JsfConstants.AUTOCOMPLETE_ATTR,
                 htmlInputText.getAutocomplete());
         renderStyleClass(context, htmlInputText, writer);

@@ -27,6 +27,7 @@ import org.seasar.framework.util.AssertionUtil;
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.util.EmptyElementUtil;
+import org.seasar.teeda.core.util.HTMLEncodeUtil;
 
 /**
  * @author manhole
@@ -165,34 +166,11 @@ public class HtmlResponseWriter extends ResponseWriter {
     }
 
     protected String htmlSpecialChars(final String s) {
-        return htmlSpecialChars(s, true, true);
-    }
-
-    private String htmlSpecialChars(final String s,
-            final boolean escapeSingleQuote, final boolean escapeAmp) {
-        final char[] chars = s.toCharArray();
-        final StringBuffer sb = new StringBuffer(chars.length + 50);
-        for (int i = 0; i < chars.length; i++) {
-            final char c = chars[i];
-            if (c == '<') {
-                sb.append("&lt;");
-            } else if (c == '>') {
-                sb.append("&gt;");
-            } else if (escapeAmp && (c == '&')) {
-                sb.append("&amp;");
-            } else if (c == '"') {
-                sb.append("&quot;");
-            } else if (escapeSingleQuote && (c == '\'')) {
-                sb.append("&#39;");
-            } else {
-                sb.append(c);
-            }
-        }
-        return new String(sb);
+        return HTMLEncodeUtil.encode(s, true, true);
     }
 
     protected String escapeAttribute(final String s) {
-        return htmlSpecialChars(s, false, false);
+        return HTMLEncodeUtil.encode(s, false, false);
     }
 
     public ResponseWriter cloneWithWriter(final Writer writer) {
