@@ -8,6 +8,8 @@ public class AddResultPage {
 
 	private Integer result;
 
+	private String message;
+	
 	public static final String jumpAddInput_TAKE_OVER = "type=never";
 
 	public Integer getArg1() {
@@ -32,6 +34,14 @@ public class AddResultPage {
 
 	public void setResult(Integer result) {
 		this.result = result;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
 	}
 
 }

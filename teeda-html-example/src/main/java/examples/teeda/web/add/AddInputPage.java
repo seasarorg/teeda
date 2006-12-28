@@ -16,6 +16,13 @@ public class AddInputPage {
 
 	private Integer result;
 
+	private String message;
+	
+	public String initialize() {
+		message = "計算サンプル";
+		return null;
+	}
+	
 	public String doCalculate() {
 		result = new Integer(arg1.intValue() + arg2.intValue());
 		return "addResult";
@@ -43,6 +50,14 @@ public class AddInputPage {
 
 	public void setResult(Integer result) {
 		this.result = result;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
 	}
 
 }
