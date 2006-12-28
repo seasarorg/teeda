@@ -33,6 +33,7 @@ import org.seasar.framework.message.MessageResourceBundle;
 import org.seasar.framework.message.MessageResourceBundleFactory;
 import org.seasar.framework.util.AssertionUtil;
 import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.core.util.HTMLEncodeUtil;
 
 /**
  * @author shot
@@ -194,6 +195,14 @@ public class FacesMessageUtil {
                 detail = bundle.get(messageId + DETAIL_SUFFIX);
                 if (detail == null) {
                     detail = defaultBundle.get(messageId + DETAIL_SUFFIX);
+                }
+            }
+        }
+        if (args != null) {
+            for (int i = 0; i < args.length; i++) {
+                final Object o = args[i];
+                if (o != null && (o instanceof String)) {
+                    args[i] = HTMLEncodeUtil.encodeAll(o.toString());
                 }
             }
         }

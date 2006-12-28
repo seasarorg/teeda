@@ -25,7 +25,7 @@ public class ProductInfo {
 
     private static final String MINOR_VERSION = "0";
 
-    private static final String LOCAL_VERSION = "2";
+    private static final String LOCAL_VERSION = "3";
 
     private static boolean isSnapshot = false;
 

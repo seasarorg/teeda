@@ -108,6 +108,25 @@ public class FacesMessageUtilTest extends TeedaTestCase {
         assertEquals("B1,B2 detail", message.getDetail());
     }
 
+    public void testGetParameterizedMessage_escapeNeed() {
+        getApplication().setMessageBundle("javax.faces.component.TestMessages");
+        MockFacesContext context = getFacesContext();
+        MockUIComponent component = new MockUIComponent();
+        component.setClientId("b");
+        UIViewRoot root = new UIViewRoot();
+        root.setLocale(Locale.ENGLISH);
+        context.setViewRoot(root);
+        FacesMessageUtil.addErrorMessage(context, component, "bbb",
+                new Object[] { "<script>&", "</script>" });
+        assertNotNull(context.getMessages("b"));
+        Iterator itr = context.getMessages();
+        FacesMessage message = (FacesMessage) itr.next();
+        assertEquals("&lt;script&gt;&amp;,&lt;/script&gt;", message
+                .getSummary());
+        assertEquals("&lt;script&gt;&amp;,&lt;/script&gt; detail", message
+                .getDetail());
+    }
+
     //TODO more efficient way need.
     public void testApplicationResourceBundleMissing() {
         getApplication().setMessageBundle(
