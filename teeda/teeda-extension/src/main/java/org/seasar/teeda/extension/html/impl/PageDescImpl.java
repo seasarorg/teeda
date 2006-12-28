@@ -108,7 +108,7 @@ public class PageDescImpl implements PageDesc {
     }
 
     protected boolean isDynamicProperty(PropertyDesc pd) {
-        return pd.hasReadMethod() && pd.getPropertyType() == String.class;
+        return pd.hasReadMethod();
     }
 
     public boolean hasProperty(String name) {
