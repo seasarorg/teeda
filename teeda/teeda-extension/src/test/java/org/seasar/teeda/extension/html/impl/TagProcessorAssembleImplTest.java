@@ -21,6 +21,7 @@ import org.custommonkey.xmlunit.Diff;
 import org.custommonkey.xmlunit.XMLUnit;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.taglib.html.CommandButtonTag;
+import org.seasar.teeda.core.taglib.html.OutputTextTag;
 import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ElementProcessor;
@@ -45,7 +46,6 @@ import org.seasar.teeda.extension.mock.MockDocumentBuilderFactory;
 import org.seasar.teeda.extension.mock.MockTaglibManager;
 import org.seasar.teeda.extension.taglib.TConditionTag;
 import org.seasar.teeda.extension.taglib.TInputTextTag;
-import org.seasar.teeda.extension.taglib.TOutputTextTag;
 import org.seasar.teeda.extension.taglib.TSelectManyCheckboxTag;
 import org.seasar.teeda.extension.taglib.TSelectOneMenuTag;
 import org.seasar.teeda.extension.taglib.TSelectOneRadioTag;
@@ -285,8 +285,8 @@ public class TagProcessorAssembleImplTest extends TeedaExtensionTestCase {
         HtmlDesc htmlDesc = cache.createHtmlDesc(path);
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
-        registerTagElement(ExtensionConstants.TEEDA_EXTENSION_URI,
-                "outputText", TOutputTextTag.class);
+        registerTagElement(JsfConstants.JSF_HTML_URI, "outputText",
+                OutputTextTag.class);
         MockTaglibManager taglibManager = getTaglibManager();
         OutputTextFactory factory = new OutputTextFactory();
         factory.setTaglibManager(taglibManager);
@@ -394,8 +394,8 @@ public class TagProcessorAssembleImplTest extends TeedaExtensionTestCase {
         ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
         registerTagElement(ExtensionConstants.TEEDA_EXTENSION_URI, "condition",
                 TConditionTag.class);
-        registerTagElement(ExtensionConstants.TEEDA_EXTENSION_URI,
-                "outputText", TOutputTextTag.class);
+        registerTagElement(JsfConstants.JSF_HTML_URI, "outputText",
+                OutputTextTag.class);
         MockTaglibManager taglibManager = getTaglibManager();
         ConditionFactory factory = new ConditionFactory();
         factory.setTaglibManager(taglibManager);

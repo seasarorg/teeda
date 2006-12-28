@@ -18,14 +18,14 @@ package org.seasar.teeda.extension.html.factory;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.seasar.teeda.extension.ExtensionConstants;
+import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.core.taglib.html.OutputTextTag;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.ElementProcessor;
 import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooAction;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooPage;
-import org.seasar.teeda.extension.taglib.TOutputTextTag;
 
 /**
  * @author shot
@@ -37,8 +37,8 @@ public class OutputTextFactoryTest extends ElementProcessorFactoryTestCase {
     }
 
     protected void registerTagElements() {
-        registerTagElement(ExtensionConstants.TEEDA_EXTENSION_URI,
-                "outputText", TOutputTextTag.class);
+        registerTagElement(JsfConstants.JSF_HTML_URI, "outputText",
+                OutputTextTag.class);
     }
 
     public void testIsMatch() throws Exception {
@@ -69,8 +69,8 @@ public class OutputTextFactoryTest extends ElementProcessorFactoryTestCase {
         ElementProcessor processor = factory.createProcessor(elementNode,
                 pageDesc, actionDesc);
         // ## Assert ##
-        assertNotNull("1", processor);
-        assertEquals("2", TOutputTextTag.class, processor.getTagClass());
-        assertEquals("3", "#{fooPage.aaa}", processor.getProperty("value"));
+        assertNotNull(processor);
+        assertEquals(OutputTextTag.class, processor.getTagClass());
+        assertEquals("#{fooPage.aaa}", processor.getProperty("value"));
     }
 }
