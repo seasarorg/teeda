@@ -22,7 +22,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.seasar.framework.log.Logger;
 import org.seasar.framework.util.AssertionUtil;
@@ -41,21 +40,16 @@ public class TeedaExtensionErrorPageManagerImpl extends
     private static final Logger logger = Logger
             .getLogger(TeedaExtensionErrorPageManagerImpl.class);
 
-    //TODO injection PagePersistence.
-    //TODO PortletSupport
     public boolean handleException(Throwable exception,
             ExternalContext extContext) throws IOException {
         AssertionUtil.assertNotNull("exception", exception);
         final String message = exception.getMessage();
-        if(logger.isDebugEnabled()) {
+        if (logger.isDebugEnabled()) {
             logger.debug(exception);
             logger.debug(message);
         }
-        final FacesContext context = FacesContext.getCurrentInstance();
-        final FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                message, message);
-        context.addMessage(null, fm);
-        String location = getLocation(exception.getClass());
+        addMessage(message);
+        final String location = getLocation(exception.getClass());
         if (location == null) {
             return false;
         }
@@ -63,23 +57,19 @@ public class TeedaExtensionErrorPageManagerImpl extends
                 .getRequest(extContext);
         if (request.getAttribute(JsfConstants.ERROR_EXCEPTION) != null) {
             setErrorPageAttributesToServletError(request);
-            HttpServletResponse response = ServletExternalContextUtil
-                    .getResponse(extContext);
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            setResponseStatus(extContext);
             return true;
         }
+        final FacesContext context = getFacesContext();
         ServletExternalContextUtil
                 .storeErrorInfoToAttribute(request, exception);
-        PagePersistence pagePersistence = (PagePersistence) DIContainerUtil
-                .getComponentNoException(PagePersistence.class);
+        PagePersistence pagePersistence = getPagePersistence();
         pagePersistence.removeSubApplicationPages(context);
         pagePersistence.save(context, location);
         try {
-            final String actionURL;
+            String actionURL = location;
             if (location != null && location.startsWith("/")) {
                 actionURL = extContext.getRequestContextPath() + location;
-            } else {
-                actionURL = location;
             }
             extContext.redirect(extContext.encodeActionURL(actionURL));
         } catch (IOException e) {
@@ -88,4 +78,14 @@ public class TeedaExtensionErrorPageManagerImpl extends
         return true;
     }
 
+    protected void addMessage(final String message) {
+        final FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                message, message);
+        getFacesContext().addMessage(null, fm);
+    }
+
+    protected PagePersistence getPagePersistence() {
+        return (PagePersistence) DIContainerUtil
+                .getComponentNoException(PagePersistence.class);
+    }
 }

@@ -336,11 +336,11 @@ public class SessionPagePersistence implements PagePersistence {
         if (lru == null) {
             return;
         }
-        final List list = new ArrayList();
         final String subAppPath = getSubApplicationPath(context);
         if (subAppPath == null) {
             return;
         }
+        final List list = new ArrayList();
         for (Iterator i = lru.keySet().iterator(); i.hasNext();) {
             String path = (String) i.next();
             if (path.startsWith(subAppPath)) {

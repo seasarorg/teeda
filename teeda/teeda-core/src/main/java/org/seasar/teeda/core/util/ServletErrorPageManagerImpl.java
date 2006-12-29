@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -47,12 +48,11 @@ public class ServletErrorPageManagerImpl implements ErrorPageManager {
                 .getRequest(extContext);
         if (request.getAttribute(JsfConstants.ERROR_EXCEPTION) != null) {
             setErrorPageAttributesToServletError(request);
-            HttpServletResponse response = ServletExternalContextUtil
-                    .getResponse(extContext);
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            setResponseStatus(extContext);
             return true;
         }
-        ServletExternalContextUtil.storeErrorInfoToAttribute(request, exception);
+        ServletExternalContextUtil
+                .storeErrorInfoToAttribute(request, exception);
         extContext.dispatch(location);
         return true;
     }
@@ -74,5 +74,15 @@ public class ServletErrorPageManagerImpl implements ErrorPageManager {
                 .getAttribute(JsfConstants.ERROR_EXCEPTION_TYPE));
         request.setAttribute(JsfConstants.SERVLET_ERROR_EXCEPTION_MESSAGE,
                 request.getAttribute(JsfConstants.ERROR_MESSAGE));
+    }
+
+    protected void setResponseStatus(final ExternalContext extContext) {
+        HttpServletResponse response = ServletExternalContextUtil
+                .getResponse(extContext);
+        response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+    }
+
+    protected static FacesContext getFacesContext() {
+        return FacesContext.getCurrentInstance();
     }
 }
