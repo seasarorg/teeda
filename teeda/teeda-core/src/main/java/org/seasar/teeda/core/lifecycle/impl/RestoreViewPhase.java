@@ -32,6 +32,7 @@ import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.lifecycle.AbstractPhase;
 import org.seasar.teeda.core.util.ExternalContextUtil;
 import org.seasar.teeda.core.util.FacesContextUtil;
+import org.seasar.teeda.core.util.PortletUtil;
 import org.seasar.teeda.core.util.PostbackUtil;
 import org.seasar.teeda.core.util.ServletExternalContextUtil;
 
@@ -87,8 +88,13 @@ public class RestoreViewPhase extends AbstractPhase {
         final String previousViewId = holder.getPreviousViewId();
         Map requestMap = externalContext.getRequestMap();
         requestMap.put(JsfConstants.PREVIOUS_VIEW_ID, previousViewId);
+        boolean isPost = true;
+        // PortletSupport
+        if (!PortletUtil.isPortlet(context)) {
+            isPost = ServletExternalContextUtil.isPost(externalContext);
+        }
         PostbackUtil.setPostback(requestMap, viewId.equals(previousViewId)
-                && ServletExternalContextUtil.isPost(externalContext));
+                && isPost);
         return holder;
     }
 
