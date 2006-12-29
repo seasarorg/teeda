@@ -16,6 +16,20 @@ public class FooPage {
 
     private TreeNode tttt;
 
+    private String abc;
+
+    public String getAbcTitleText() {
+        return "ABC";
+    }
+
+    public String getAbc() {
+        return abc;
+    }
+
+    public void setAbc(String abc) {
+        this.abc = abc;
+    }
+
     public TreeNode getTttt() {
         return tttt;
     }

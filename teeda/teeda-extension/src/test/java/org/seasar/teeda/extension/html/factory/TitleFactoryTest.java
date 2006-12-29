@@ -18,8 +18,16 @@ package org.seasar.teeda.extension.html.factory;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.faces.internal.FacesConfigOptions;
+
+import org.seasar.framework.convention.impl.NamingConventionImpl;
 import org.seasar.teeda.extension.ExtensionConstants;
+import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ElementNode;
+import org.seasar.teeda.extension.html.ElementProcessor;
+import org.seasar.teeda.extension.html.PageDesc;
+import org.seasar.teeda.extension.html.factory.sub.web.foo.FooAction;
+import org.seasar.teeda.extension.html.factory.sub.web.foo.FooPage;
 import org.seasar.teeda.extension.taglib.TTitleTag;
 
 /**
@@ -42,4 +50,29 @@ public class TitleFactoryTest extends ElementProcessorFactoryTestCase {
         ElementNode elementNode = createElementNode("title", props);
         assertTrue(factory.isMatch(elementNode, null, null));
     }
+
+    public void testCreateFactory() throws Exception {
+        // ## Arrange ##
+        NamingConventionImpl namingConvention = new NamingConventionImpl();
+        namingConvention
+                .addRootPackageName("org.seasar.teeda.extension.html.factory.sub");
+        ((OutputLabelFactory) factory).setNamingConvention(namingConvention);
+        FacesConfigOptions.setDefaultSuffix(".html");
+
+        Map properties = new HashMap();
+        properties.put("id", "abc");
+        ElementNode elementNode = createElementNode("title", properties);
+        PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
+        ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
+
+        // ## Act ##
+        ElementProcessor processor = factory.createProcessor(elementNode,
+                pageDesc, actionDesc);
+        // ## Assert ##
+        assertNotNull("1", processor);
+        assertEquals("2", TTitleTag.class, processor.getTagClass());
+        assertEquals("3", "#{fooPage.abcTitleText}", processor
+                .getProperty("value"));
+    }
+
 }
