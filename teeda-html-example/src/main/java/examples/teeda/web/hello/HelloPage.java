@@ -21,4 +21,8 @@ public class HelloPage {
 		System.out.println("prerender");
 		return null;
 	}
+
+	public String getAaaTitleText() {
+		return "AAA";
+	}
 }
