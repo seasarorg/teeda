@@ -68,7 +68,7 @@ public class HtmlInputHidden extends UIInput {
         } catch (RuntimeException e) {
             Object[] args = { getId() };
             context.getExternalContext().log(e.getMessage(), e);
-            FacesMessageUtil.addErrorMessage(context, this,
+            FacesMessageUtil.addErrorComponentMessage(context, this,
                     CONVERSION_MESSAGE_ID, args);
             setValid(false);
         }

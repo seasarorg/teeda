@@ -161,7 +161,7 @@ public class UITreeData extends UIInput implements NamingContainer {
         } catch (RuntimeException e) {
             Object[] args = { getId() };
             context.getExternalContext().log(e.getMessage(), e);
-            FacesMessageUtil.addErrorMessage(context, this,
+            FacesMessageUtil.addErrorComponentMessage(context, this,
                     CONVERSION_MESSAGE_ID, args);
             setValid(false);
         }

@@ -122,7 +122,7 @@ public class UISelectMany extends UIInput {
                     value, i);
             if (!ComponentUtil_.valueMatches(indexValue, items)) {
                 Object[] args = { getId() };
-                FacesMessageUtil.addErrorMessage(context, this,
+                FacesMessageUtil.addErrorComponentMessage(context, this,
                         INVALID_MESSAGE_ID, args);
                 setValid(false);
                 break;

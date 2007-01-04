@@ -118,45 +118,85 @@ public class FacesMessageUtil {
         return (FacesMessage[]) list.toArray(new FacesMessage[list.size()]);
     }
 
-    public static void addWarnMessage(FacesContext context,
-            UIComponent component, String messageId) {
-        addWarnMessage(context, component, messageId, null);
+    public static void addWarnMessage(String messageId) {
+        final FacesContext context = FacesContext.getCurrentInstance();
+        addWarnComponentMessage(context, null, messageId);
     }
 
-    public static void addWarnMessage(FacesContext context,
+    public static void addWarnMessage(String messageId, Object[] args) {
+        final FacesContext context = FacesContext.getCurrentInstance();
+        addWarnComponentMessage(context, null, messageId, args);
+    }
+
+    public static void addWarnComponentMessage(FacesContext context,
+            UIComponent component, String messageId) {
+        addWarnComponentMessage(context, component, messageId, null);
+    }
+
+    public static void addWarnComponentMessage(FacesContext context,
             UIComponent component, String messageId, Object[] args) {
         addTargetSeverityMessage(context, component, messageId, args,
                 FacesMessage.SEVERITY_WARN);
     }
 
-    public static void addInfoMessage(FacesContext context,
-            UIComponent component, String messageId) {
-        addInfoMessage(context, component, messageId, null);
+    public static void addInfoMessage(String messageId) {
+        final FacesContext context = FacesContext.getCurrentInstance();
+        addInfoComponentMessage(context, null, messageId);
     }
 
-    public static void addInfoMessage(FacesContext context,
+    public static void addInfoMessage(String messageId, Object[] args) {
+        final FacesContext context = FacesContext.getCurrentInstance();
+        addInfoComponentMessage(context, null, messageId, args);
+    }
+
+    public static void addInfoComponentMessage(FacesContext context,
+            UIComponent component, String messageId) {
+        addInfoComponentMessage(context, component, messageId, null);
+    }
+
+    public static void addInfoComponentMessage(FacesContext context,
             UIComponent component, String messageId, Object[] args) {
         addTargetSeverityMessage(context, component, messageId, args,
                 FacesMessage.SEVERITY_INFO);
     }
 
-    public static void addErrorMessage(FacesContext context,
-            UIComponent component, String messageId) {
-        addErrorMessage(context, component, messageId, null);
+    public static void addErrorMessage(String messageId) {
+        final FacesContext context = FacesContext.getCurrentInstance();
+        addErrorComponentMessage(context, null, messageId);
     }
 
-    public static void addErrorMessage(FacesContext context,
+    public static void addErrorMessage(String messageId, Object[] args) {
+        final FacesContext context = FacesContext.getCurrentInstance();
+        addErrorComponentMessage(context, null, messageId, args);
+    }
+
+    public static void addErrorComponentMessage(FacesContext context,
+            UIComponent component, String messageId) {
+        addErrorComponentMessage(context, component, messageId, null);
+    }
+
+    public static void addErrorComponentMessage(FacesContext context,
             UIComponent component, String messageId, Object[] args) {
         addTargetSeverityMessage(context, component, messageId, args,
                 FacesMessage.SEVERITY_ERROR);
     }
 
-    public static void addFatalMessage(FacesContext context,
-            UIComponent component, String messageId) {
-        addFatalMessage(context, component, messageId, null);
+    public static void addFatalMessage(String messageId) {
+        final FacesContext context = FacesContext.getCurrentInstance();
+        addFatalComponentMessage(context, null, messageId);
     }
 
-    public static void addFatalMessage(FacesContext context,
+    public static void addFatalMessage(String messageId, Object[] args) {
+        final FacesContext context = FacesContext.getCurrentInstance();
+        addFatalComponentMessage(context, null, messageId, args);
+    }
+
+    public static void addFatalComponentMessage(FacesContext context,
+            UIComponent component, String messageId) {
+        addFatalComponentMessage(context, component, messageId, null);
+    }
+
+    public static void addFatalComponentMessage(FacesContext context,
             UIComponent component, String messageId, Object[] args) {
         addTargetSeverityMessage(context, component, messageId, args,
                 FacesMessage.SEVERITY_FATAL);
@@ -165,9 +205,9 @@ public class FacesMessageUtil {
     private static void addTargetSeverityMessage(FacesContext context,
             UIComponent component, String messageId, Object[] args,
             Severity severity) {
-        String clientId = component.getClientId(context);
-        Locale locale = ComponentUtil_.getLocale(context);
-        FacesMessage message = getMessage(context, locale, severity, messageId,
+        final String clientId = (component != null) ? component.getClientId(context) : null;
+        final Locale locale = ComponentUtil_.getLocale(context);
+        final FacesMessage message = getMessage(context, locale, severity, messageId,
                 args);
         context.addMessage(clientId, message);
     }

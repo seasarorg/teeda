@@ -84,7 +84,7 @@ public class FacesMessageUtilTest extends TeedaTestCase {
         UIViewRoot root = new UIViewRoot();
         root.setLocale(Locale.ENGLISH);
         context.setViewRoot(root);
-        FacesMessageUtil.addErrorMessage(context, component, "aaa");
+        FacesMessageUtil.addErrorComponentMessage(context, component, "aaa");
         assertNotNull(context.getMessages("a"));
         Iterator itr = context.getMessages();
         FacesMessage message = (FacesMessage) itr.next();
@@ -99,7 +99,7 @@ public class FacesMessageUtilTest extends TeedaTestCase {
         UIViewRoot root = new UIViewRoot();
         root.setLocale(Locale.ENGLISH);
         context.setViewRoot(root);
-        FacesMessageUtil.addErrorMessage(context, component, "bbb",
+        FacesMessageUtil.addErrorComponentMessage(context, component, "bbb",
                 new Object[] { "B1", "B2" });
         assertNotNull(context.getMessages("b"));
         Iterator itr = context.getMessages();
@@ -116,7 +116,7 @@ public class FacesMessageUtilTest extends TeedaTestCase {
         UIViewRoot root = new UIViewRoot();
         root.setLocale(Locale.ENGLISH);
         context.setViewRoot(root);
-        FacesMessageUtil.addErrorMessage(context, component, "bbb",
+        FacesMessageUtil.addErrorComponentMessage(context, component, "bbb",
                 new Object[] { "<script>&", "</script>" });
         assertNotNull(context.getMessages("b"));
         Iterator itr = context.getMessages();
@@ -137,7 +137,7 @@ public class FacesMessageUtilTest extends TeedaTestCase {
         UIViewRoot root = new UIViewRoot();
         root.setLocale(Locale.US);
         context.setViewRoot(root);
-        FacesMessageUtil.addErrorMessage(context, component,
+        FacesMessageUtil.addErrorComponentMessage(context, component,
                 "javax.faces.component.UIInput.CONVERSION");
         assertNotNull(context.getMessages("c"));
         Iterator itr = context.getMessages();
@@ -153,7 +153,7 @@ public class FacesMessageUtilTest extends TeedaTestCase {
         UIViewRoot root = new UIViewRoot();
         root.setLocale(Locale.US);
         context.setViewRoot(root);
-        FacesMessageUtil.addErrorMessage(context, component,
+        FacesMessageUtil.addErrorComponentMessage(context, component,
                 "javax.faces.component.UIInput.CONVERSION");
         assertNotNull(context.getMessages("c"));
         Iterator itr = context.getMessages();

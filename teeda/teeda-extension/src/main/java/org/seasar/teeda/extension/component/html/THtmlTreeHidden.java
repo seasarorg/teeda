@@ -62,7 +62,7 @@ public class THtmlTreeHidden extends THtmlItemsSaveHidden {
         } catch (final RuntimeException e) {
             final Object[] args = { getId() };
             context.getExternalContext().log(e.getMessage(), e);
-            FacesMessageUtil.addErrorMessage(context, this,
+            FacesMessageUtil.addErrorComponentMessage(context, this,
                     CONVERSION_MESSAGE_ID, args);
             setValid(false);
         }
