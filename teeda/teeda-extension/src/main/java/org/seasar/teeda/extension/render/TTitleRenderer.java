@@ -63,14 +63,15 @@ public class TTitleRenderer extends AbstractRenderer {
         if (!StringUtil.isEmpty(lang)) {
             writer.writeAttribute(JsfConstants.LANG_ATTR, lang, null);
         }
-        final String key = title.getKey();
-        final String propertiesName = title.getPropertiesName();
-        final String defaultKey = title.getDefaultKey();
-        final String defaultPropertiesName = title.getDefaultPropertiesName();
-        String value = LabelUtil.getLabelValue(key, propertiesName, defaultKey,
-                defaultPropertiesName);
-        if (value == null) {
-            value = ValueHolderUtil.getValueForRender(context, title);
+        String value = ValueHolderUtil.getValueForRender(context, title);
+        if (StringUtil.isEmpty(value)) {
+            final String key = title.getKey();
+            final String propertiesName = title.getPropertiesName();
+            final String defaultKey = title.getDefaultKey();
+            final String defaultPropertiesName = title
+                    .getDefaultPropertiesName();
+            value = LabelUtil.getLabelValue(key, propertiesName, defaultKey,
+                    defaultPropertiesName);
         }
         if (value != null) {
             writer.writeText(value, null);

@@ -71,8 +71,7 @@ public class TitleFactoryTest extends ElementProcessorFactoryTestCase {
         // ## Assert ##
         assertNotNull("1", processor);
         assertEquals("2", TTitleTag.class, processor.getTagClass());
-        assertEquals("3", "#{fooPage.abcTitleText}", processor
-                .getProperty("value"));
+        assertEquals("3", "#{fooPage.abcValue}", processor.getProperty("value"));
     }
 
 }

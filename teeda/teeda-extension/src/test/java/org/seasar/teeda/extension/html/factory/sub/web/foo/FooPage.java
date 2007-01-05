@@ -18,8 +18,12 @@ public class FooPage {
 
     private String abc;
 
-    public String getAbcTitleText() {
+    public String getAbcValue() {
         return "ABC";
+    }
+
+    public String getAaaLabelValue() {
+        return "LabelValue";
     }
 
     public String getAbc() {

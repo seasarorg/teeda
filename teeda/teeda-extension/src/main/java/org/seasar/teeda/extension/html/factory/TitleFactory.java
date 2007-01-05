@@ -15,9 +15,6 @@
  */
 package org.seasar.teeda.extension.html.factory;
 
-import java.util.Map;
-
-import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ElementNode;
@@ -38,22 +35,6 @@ public class TitleFactory extends OutputLabelFactory {
         }
         String id = elementNode.getId();
         return (id != null);
-    }
-
-    protected void customizeDynamicProperty(String base, String name,
-            Map properties, ElementNode elementNode, PageDesc pageDesc,
-            ActionDesc actionDesc) {
-        if (pageDesc == null) {
-            return;
-        }
-        final String pageName = pageDesc.getPageName();
-        if (!StringUtil.isEmpty(base)) {
-            String propName = base + "TitleText";
-            if (pageDesc.hasDynamicProperty(propName)) {
-                properties.put("value",
-                        getBindingExpression(pageName, propName));
-            }
-        }
     }
 
     public boolean isLeaf() {
