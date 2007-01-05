@@ -42,12 +42,12 @@ public class THtmlOutputLabelRendererTest extends AbstractRendererTest {
         label.setRenderer(renderer);
     }
 
-    public void testEncode_simlpe() throws Exception {
+    public void testEncode_simple() throws Exception {
         encodeByRenderer(renderer, label);
         assertEquals("<label></label>", getResponseText());
     }
 
-    public void testEncode_simlpe2() throws Exception {
+    public void testEncode_simple2() throws Exception {
         label.setId("aaa");
         label.setFor("bbb");
         encodeByRenderer(renderer, label);
@@ -55,12 +55,22 @@ public class THtmlOutputLabelRendererTest extends AbstractRendererTest {
                 getResponseText());
     }
 
-    public void testEncode_simlpe3() throws Exception {
+    public void testEncode_simple3() throws Exception {
         label.setId("aaa");
         label.setFor("bbb");
         label.setKey("ccc");
         encodeByRenderer(renderer, label);
         assertEquals("<label id=\"aaa\" for=\"bbb\"></label>",
+                getResponseText());
+    }
+
+    public void testEncode_simple4() throws Exception {
+        label.setId("aaa");
+        label.setFor("bbb");
+        label.setKey("ccc");
+        label.setValue(new Integer(123));
+        encodeByRenderer(renderer, label);
+        assertEquals("<label id=\"aaa\" for=\"bbb\">123</label>",
                 getResponseText());
     }
 

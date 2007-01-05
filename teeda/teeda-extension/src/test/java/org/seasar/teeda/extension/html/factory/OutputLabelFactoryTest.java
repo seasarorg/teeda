@@ -84,5 +84,7 @@ public class OutputLabelFactoryTest extends ElementProcessorFactoryTestCase {
         assertEquals(processor.getProperty("defaultPropertiesName"),
                 "org.seasar.teeda.extension.html.factory.sub.web.label");
         assertEquals("aaa", processor.getProperty("defaultKey"));
+        assertEquals("3", "#{foo_fooPage.aaaLabelValue}", processor
+                .getProperty("value"));
     }
 }

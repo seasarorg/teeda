@@ -75,6 +75,22 @@ public class OutputLabelFactory extends AbstractElementProcessorFactory {
                 defaultPropertiesName);
     }
 
+    protected void customizeDynamicProperty(String base, String name,
+            Map properties, ElementNode elementNode, PageDesc pageDesc,
+            ActionDesc actionDesc) {
+        if (pageDesc == null) {
+            return;
+        }
+        final String pageName = pageDesc.getPageName();
+        if (!StringUtil.isEmpty(base)) {
+            String propName = base + "Value";
+            if (pageDesc.hasDynamicProperty(propName)) {
+                properties.put("value",
+                        getBindingExpression(pageName, propName));
+            }
+        }
+    }
+
     protected String getTagName() {
         return TAG_NAME;
     }

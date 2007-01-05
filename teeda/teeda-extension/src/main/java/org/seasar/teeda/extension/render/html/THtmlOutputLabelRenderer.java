@@ -23,9 +23,11 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.internal.IgnoreAttribute;
 import javax.faces.internal.LabelUtil;
 
+import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.AbstractRenderer;
 import org.seasar.teeda.core.util.RendererUtil;
+import org.seasar.teeda.core.util.ValueHolderUtil;
 import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.component.html.THtmlOutputLabel;
 
@@ -63,12 +65,16 @@ public class THtmlOutputLabelRenderer extends AbstractRenderer {
         RendererUtil.renderAttribute(writer, JsfConstants.FOR_ATTR, forAttr,
                 null);
         renderRemainAttributes(label, writer, IGNORE_COMPONENT);
-        final String key = label.getKey();
-        final String propertiesName = label.getPropertiesName();
-        final String defaultKey = label.getDefaultKey();
-        final String defaultPropertiesName = label.getDefaultPropertiesName();
-        final String value = LabelUtil.getLabelValue(key, propertiesName,
-                defaultKey, defaultPropertiesName);
+        String value = ValueHolderUtil.getValueForRender(context, label);
+        if (StringUtil.isEmpty(value)) {
+            final String key = label.getKey();
+            final String propertiesName = label.getPropertiesName();
+            final String defaultKey = label.getDefaultKey();
+            final String defaultPropertiesName = label
+                    .getDefaultPropertiesName();
+            value = LabelUtil.getLabelValue(key, propertiesName, defaultKey,
+                    defaultPropertiesName);
+        }
         if (value != null) {
             writer.writeText(value, null);
         }
