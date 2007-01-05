@@ -387,6 +387,10 @@ public class SessionPagePersistence implements PagePersistence {
             return null;
         }
         String viewId = root.getViewId();
-        return viewId.substring(0, viewId.lastIndexOf("/"));
+        if (viewId.indexOf("/") >= 0) {
+            return viewId.substring(0, viewId.lastIndexOf("/"));
+        } else {
+            return viewId;
+        }
     }
 }
