@@ -12,4 +12,7 @@ public class LabelPage {
 		this.name = name;
 	}
 
+	public String getDddValue() {
+		return "DynamicPropertyで取得するラベル";
+	}
 }

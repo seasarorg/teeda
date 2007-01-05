@@ -6,9 +6,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry exported="true" kind="lib" path="src/main/webapp/WEB-INF/lib/s2-framework-2.4.7.jar"/>
 	<classpathentry exported="true" kind="lib" path="src/main/webapp/WEB-INF/lib/s2-extension-2.4.7.jar"/>
-	<classpathentry exported="true" kind="lib" path="src/main/webapp/WEB-INF/lib/teeda-ajax-1.0.3.jar"/>
-	<classpathentry exported="true" kind="lib" path="src/main/webapp/WEB-INF/lib/teeda-core-1.0.3.jar"/>
-	<classpathentry exported="true" kind="lib" path="src/main/webapp/WEB-INF/lib/teeda-extension-1.0.3.jar"/>
 	<classpathentry exported="true" kind="lib" path="src/main/webapp/WEB-INF/lib/aopalliance-1.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="src/main/webapp/WEB-INF/lib/commons-collections-3.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="src/main/webapp/WEB-INF/lib/commons-el-1.0.jar"/>
@@ -21,5 +18,8 @@
 	<classpathentry exported="true" kind="lib" path="src/main/webapp/WEB-INF/lib/xercesImpl-2.6.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="src/main/webapp/WEB-INF/lib/javassist-3.4.ga.jar"/>
 	<classpathentry exported="true" kind="lib" path="src/main/webapp/WEB-INF/lib/commons-logging-1.1.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/teeda-ajax-1.0.4-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/teeda-core-1.0.4-SNAPSHOT.jar"/>
+	<classpathentry sourcepath="/teeda" kind="lib" path="src/main/webapp/WEB-INF/lib/teeda-extension-1.0.4-SNAPSHOT.jar"/>
 	<classpathentry kind="output" path="src/main/webapp/WEB-INF/classes"/>
 </classpath>
