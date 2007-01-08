@@ -15,6 +15,7 @@
  */
 package org.seasar.teeda.core.application.impl;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -29,7 +30,9 @@ import org.seasar.teeda.core.application.TreeStructureManager;
 /**
  * @author shot
  */
-public class TreeStructureManagerImpl implements TreeStructureManager {
+public class TreeStructureManagerImpl implements TreeStructureManager, Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     public TreeStructure buildTreeStructure(UIComponent component) {
         TreeStructure struct = new UIComponentTreeStructure(component);

@@ -15,12 +15,14 @@
  */
 package org.seasar.teeda.core.application;
 
+import java.io.Serializable;
+
 import javax.faces.component.UIComponent;
 
 /**
  * @author shot
  */
-public interface TreeStructureManager {
+public interface TreeStructureManager extends Serializable {
 
     public TreeStructure buildTreeStructure(UIComponent component);
 
