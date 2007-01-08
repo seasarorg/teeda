@@ -45,6 +45,8 @@ Kumu.Ajax = {
   ),
   
   URL : 'teeda.ajax',
+  
+  ASYNC : true,
 
   DEBUG : false,
 
@@ -57,6 +59,7 @@ Kumu.Ajax = {
     this.name = self.AJAX_COMPONENT_NAME;
     this.responseType = null;
     this.url = self.URL;
+    this.async = self.ASYNC;
     this.params = null;
     this.doAction = function(ajaxResponse){}
   },
@@ -135,6 +138,7 @@ Kumu.Ajax = {
     }
     var sysdate = new String(new Date());
     var url = ajaxComponent.url;
+    var async = ajaxComponent.async;
     var parameters = "";
     var params = ajaxComponent.params;
     if(!params){
@@ -158,7 +162,7 @@ Kumu.Ajax = {
       url += parameters;
       if(xmlHttp){
         self._registAjaxListener(xmlHttp, ajaxComponent);
-        xmlHttp.open("GET", url, true);
+        xmlHttp.open("GET", url, async);
         xmlHttp.setRequestHeader("If-Modified-Since", sysdate);
         xmlHttp.send(null);
       }
@@ -173,7 +177,7 @@ Kumu.Ajax = {
       }
       if(xmlHttp){
         self._registAjaxListener(xmlHttp, ajaxComponent);
-        xmlHttp.open("POST", url, true);
+        xmlHttp.open("POST", url, async);
         xmlHttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         xmlHttp.setRequestHeader("If-Modified-Since", sysdate);
         xmlHttp.send(parameters);
