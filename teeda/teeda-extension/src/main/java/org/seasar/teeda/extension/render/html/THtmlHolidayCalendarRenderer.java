@@ -106,6 +106,8 @@ public class THtmlHolidayCalendarRenderer extends AbstractInputRenderer
         if (calendarClass != null) {
             writer.writeAttribute(JsfConstants.CLASS_ATTR, calendarClass, null);
         }
+        final int border = htmlCalendar.getBorder();
+        writer.writeAttribute(JsfConstants.BORDER_ATTR, new Integer(border), null);
         writer.write(JsfConstants.LINE_SP);
         writer.startElement(JsfConstants.TR_ELEM, component);
         if (htmlCalendar.getMonthYearRowClass() != null) {
