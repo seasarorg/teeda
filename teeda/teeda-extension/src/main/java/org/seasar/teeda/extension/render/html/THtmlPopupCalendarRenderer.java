@@ -46,9 +46,9 @@ public class THtmlPopupCalendarRenderer extends HtmlInputTextRenderer implements
 
     public static final String RENDERER_TYPE = "org.seasar.teeda.extension.HtmlPopupCalendar";
 
-    private static final String JAVASCRIPT_ENCODED = "org.seasar.teeda.extension.calendar.JAVASCRIPT_ENCODED";
+    private static final String JAVASCRIPT_ENCODED = "org.seasar.teeda.extension.popupcalendar.JAVASCRIPT_ENCODED";
 
-    private static final String RESOURCE_ROOT = "org/seasar/teeda/extension/render/html/calendar/";
+    private static final String RESOURCE_ROOT = "org/seasar/teeda/extension/render/html/popupcalendar/";
 
     public void encodePrepare(FacesContext context, UIComponent component)
             throws IOException {

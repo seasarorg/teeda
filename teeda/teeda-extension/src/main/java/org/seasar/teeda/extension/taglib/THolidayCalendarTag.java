@@ -18,12 +18,19 @@ package org.seasar.teeda.extension.taglib;
 import javax.faces.component.UIComponent;
 
 import org.seasar.teeda.core.taglib.html.InputTextTag;
-import org.seasar.teeda.extension.component.html.THtmlCalendar;
+import org.seasar.teeda.extension.ExtensionConstants;
+import org.seasar.teeda.extension.component.html.THtmlHolidayCalendar;
 
 /**
  * @author higa
  */
-public class TCalendarTag extends InputTextTag {
+public class THolidayCalendarTag extends InputTextTag {
+
+    private String year;
+
+    private String month;
+
+    private String calendarClass;
 
     private String monthYearRowClass;
 
@@ -31,32 +38,49 @@ public class TCalendarTag extends InputTextTag {
 
     private String dayCellClass;
 
-    private String currentDayCellClass;
+    private String holidayCellClass;
+
+    private String showYear;
 
     public String getComponentType() {
-        return THtmlCalendar.COMPONENT_TYPE;
+        return THtmlHolidayCalendar.COMPONENT_TYPE;
     }
 
     public String getRendererType() {
-        return THtmlCalendar.DEFAULT_RENDERER_TYPE;
+        return THtmlHolidayCalendar.DEFAULT_RENDERER_TYPE;
     }
 
     public void release() {
         super.release();
+        year = null;
+        month = null;
+        calendarClass = null;
         monthYearRowClass = null;
         weekRowClass = null;
         dayCellClass = null;
-        currentDayCellClass = null;
+        holidayCellClass = null;
+        showYear = null;
     }
 
     protected void setProperties(UIComponent component) {
         super.setProperties(component);
-
+        setComponentProperty(component, ExtensionConstants.YEAR_ATTR, year);
+        setComponentProperty(component, ExtensionConstants.MONTH_ATTR, month);
+        setComponentProperty(component, ExtensionConstants.CALENDAR_CLASS_ATTR,
+                calendarClass);
         setComponentProperty(component, "monthYearRowClass", monthYearRowClass);
         setComponentProperty(component, "weekRowClass", weekRowClass);
         setComponentProperty(component, "dayCellClass", dayCellClass);
-        setComponentProperty(component, "currentDayCellClass",
-                currentDayCellClass);
+        setComponentProperty(component, "holidayCellClass", holidayCellClass);
+        setComponentProperty(component, "showYear", showYear);
+    }
+
+    public void setYear(String year) {
+        this.year = year;
+    }
+
+    public void setMonth(String month) {
+        this.month = month;
     }
 
     public void setMonthYearRowClass(String monthYearRowClass) {
@@ -71,7 +95,11 @@ public class TCalendarTag extends InputTextTag {
         this.dayCellClass = dayCellClass;
     }
 
-    public void setCurrentDayCellClass(String currentDayCellClass) {
-        this.currentDayCellClass = currentDayCellClass;
+    public void setHolidayCellClass(String holidayCellClass) {
+        this.holidayCellClass = holidayCellClass;
+    }
+
+    public void setShowYear(String showYear) {
+        this.showYear = showYear;
     }
 }

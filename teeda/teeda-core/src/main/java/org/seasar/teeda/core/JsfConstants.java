@@ -513,4 +513,5 @@ public interface JsfConstants {
 
     String ERROR_MESSAGE_PERSISTE_KEY = "Teeda.FacesMessages";
 
+    String BR_TAG = "<br />";
 }

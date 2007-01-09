@@ -38,6 +38,8 @@
 
 	<component name="treeHiddenFactory"
 		class="org.seasar.teeda.extension.html.factory.TreeHiddenFactory" />
+	<component name="holidayCalendarFactory"
+		class="org.seasar.teeda.extension.html.factory.HolidayCalendarFactory" />
 	<component name="selectBooleanCheckboxFactory"
 		class="org.seasar.teeda.extension.html.factory.SelectBooleanCheckboxFactory" />
 	<component name="selectManyCheckboxFactory"

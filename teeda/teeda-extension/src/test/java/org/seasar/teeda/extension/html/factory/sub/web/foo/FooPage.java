@@ -33,6 +33,38 @@ public class FooPage {
 
     private String abc;
 
+    private Boolean[] januaryHolidays;
+
+    private Integer holidaysYear;
+
+    /**
+     * @return Returns the holidaysYear.
+     */
+    public Integer getHolidaysYear() {
+        return holidaysYear;
+    }
+
+    /**
+     * @param holidaysYear The holidaysYear to set.
+     */
+    public void setHolidaysYear(Integer holidaysYear) {
+        this.holidaysYear = holidaysYear;
+    }
+
+    /**
+     * @return Returns the januaryHolidays.
+     */
+    public Boolean[] getJanuaryHolidays() {
+        return januaryHolidays;
+    }
+
+    /**
+     * @param januaryHolidays The januaryHolidays to set.
+     */
+    public void setJanuaryHolidays(Boolean[] januaryHolidays) {
+        this.januaryHolidays = januaryHolidays;
+    }
+
     public String getAbcValue() {
         return "ABC";
     }

@@ -64,6 +64,12 @@ public interface ExtensionConstants {
 
     String THRESHOD_ATTR = "threshold";
 
+    String YEAR_ATTR = "year";
+
+    String MONTH_ATTR = "month";
+
+    String CALENDAR_CLASS_ATTR = "calendarClass";
+
     String DEFAULT_KEY = "defaultKey";
 
     String ERROR_STYLE_CLASS = "errorStyleClass";
