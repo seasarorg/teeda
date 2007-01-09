@@ -41,6 +41,7 @@ public class HtmlInputHiddenRenderer extends AbstractInputRenderer {
     {
         ignoreComponent.addAttributeName(JsfConstants.ID_ATTR);
         ignoreComponent.addAttributeName(JsfConstants.VALUE_ATTR);
+        ignoreComponent.addAttributeName(JsfConstants.TYPE_ATTR);
     }
 
     public void encodeEnd(FacesContext context, UIComponent component)

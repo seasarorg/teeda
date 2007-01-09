@@ -61,6 +61,7 @@ public class HtmlCommandLinkRenderer extends AbstractRenderer {
         ignoreComponent.addAttributeName(JsfConstants.ONCLICK_ATTR);
         ignoreComponent.addAttributeName(JsfConstants.ACTION_ATTR);
         ignoreComponent.addAttributeName(JsfConstants.IMMEDIATE_ATTR);
+        ignoreComponent.addAttributeName(JsfConstants.HREF_ATTR);
     }
 
     public void encodeBegin(FacesContext context, UIComponent component)
