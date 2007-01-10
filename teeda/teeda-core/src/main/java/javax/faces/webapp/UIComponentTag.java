@@ -62,21 +62,21 @@ public abstract class UIComponentTag implements Tag {
 
     private String rendered = null;
 
-    public void setBinding(String binding) throws JspException {
+    public void setBinding(final String binding) throws JspException {
         if (!isValueReference(binding)) {
             throw new IllegalArgumentException();
         }
         this.binding = binding;
     }
 
-    public void setId(String id) {
-        if (null != id && id.startsWith(UIViewRoot.UNIQUE_ID_PREFIX)) {
+    public void setId(final String id) {
+        if ((null != id) && id.startsWith(UIViewRoot.UNIQUE_ID_PREFIX)) {
             throw new IllegalArgumentException();
         }
         this.id = id;
     }
 
-    public void setRendered(String rendered) {
+    public void setRendered(final String rendered) {
         this.rendered = rendered;
     }
 
@@ -90,8 +90,10 @@ public abstract class UIComponentTag implements Tag {
         return created;
     }
 
-    public static UIComponentTag getParentUIComponentTag(PageContext context) {
-        List list = PageContextUtil.getComponentTagStackAttribute(context);
+    public static UIComponentTag getParentUIComponentTag(
+            final PageContext context) {
+        final List list = PageContextUtil
+                .getComponentTagStackAttribute(context);
         if (list != null) {
             return ((UIComponentTag) list.get(list.size() - 1));
         } else {
@@ -101,7 +103,7 @@ public abstract class UIComponentTag implements Tag {
 
     public abstract String getRendererType();
 
-    public static boolean isValueReference(String value) {
+    public static boolean isValueReference(final String value) {
         AssertionUtil.assertNotNull("value", value);
         if ((value.indexOf("#{") != -1)
                 && (value.indexOf("#{") < value.indexOf('}'))) {
@@ -110,7 +112,7 @@ public abstract class UIComponentTag implements Tag {
         return false;
     }
 
-    public void setPageContext(PageContext pageContext) {
+    public void setPageContext(final PageContext pageContext) {
         this.pageContext = pageContext;
     }
 
@@ -118,15 +120,15 @@ public abstract class UIComponentTag implements Tag {
         return parent;
     }
 
-    public void setParent(Tag parent) {
+    public void setParent(final Tag parent) {
         this.parent = parent;
     }
 
     public int doStartTag() throws JspException {
         setupFacesContext();
         setupResponseWriter();
-        UIComponentTag parentTag = getParentUIComponentTag(pageContext);
-        Map requestMap = context.getExternalContext().getRequestMap();
+        final UIComponentTag parentTag = getParentUIComponentTag(pageContext);
+        final Map requestMap = context.getExternalContext().getRequestMap();
         Map componentIds = null;
         if (parentTag == null) {
             componentIds = new HashMap();
@@ -143,7 +145,7 @@ public abstract class UIComponentTag implements Tag {
             clientId = component.getClientId(context);
             isAlreadyTagInstanced = (componentIds.get(clientId) == this);
 
-            if (!isAlreadyTagInstanced && clientId != null) {
+            if (!isAlreadyTagInstanced && (clientId != null)) {
                 if (!componentIds.containsKey(clientId)) {
                     componentIds.put(clientId, this);
                 } else {
@@ -157,7 +159,7 @@ public abstract class UIComponentTag implements Tag {
             }
         }
 
-        if (!isAlreadyTagInstanced && parentTag != null) {
+        if (!isAlreadyTagInstanced && (parentTag != null)) {
             if (getFacetName() == null) {
                 parentTag.addChild(component);
             } else {
@@ -170,7 +172,7 @@ public abstract class UIComponentTag implements Tag {
                 encodeBegin();
                 context.getResponseWriter().flush();
             }
-        } catch (IOException e) {
+        } catch (final IOException e) {
             component = null;
             context = null;
             throw new JspException(e);
@@ -206,7 +208,7 @@ public abstract class UIComponentTag implements Tag {
                 }
                 encodeEnd();
             }
-        } catch (IOException e) {
+        } catch (final IOException e) {
             throw new JspException(e);
         } finally {
             component = null;
@@ -215,7 +217,7 @@ public abstract class UIComponentTag implements Tag {
         created = false;
         return getDoEndValue();
     }
-    
+
     public void release() {
         component = null;
         context = null;
@@ -241,18 +243,19 @@ public abstract class UIComponentTag implements Tag {
         component.encodeEnd(context);
     }
 
-    public UIComponent findComponent(FacesContext context) throws JspException {
+    public UIComponent findComponent(final FacesContext context)
+            throws JspException {
         if (component != null) {
             return component;
         }
-        UIComponentTag parentTag = getParentUIComponentTag(pageContext);
+        final UIComponentTag parentTag = getParentUIComponentTag(pageContext);
         UIComponent parentComponent = null;
         if (parentTag != null) {
             parentComponent = parentTag.getComponentInstance();
 
-            String newId = createNewId();
+            final String newId = createNewId();
 
-            String facetName = getFacetName();
+            final String facetName = getFacetName();
             if (facetName != null) {
                 component = (UIComponent) parentComponent.getFacets().get(
                         facetName);
@@ -274,7 +277,7 @@ public abstract class UIComponentTag implements Tag {
         }
     }
 
-    private UIComponent findComponentSpecially(FacesContext context) {
+    private UIComponent findComponentSpecially(final FacesContext context) {
         UIViewRoot parentComponent = PageContextUtil
                 .getCurrentViewRootAttribute(pageContext);
         if (parentComponent == null) {
@@ -310,7 +313,7 @@ public abstract class UIComponentTag implements Tag {
     }
 
     protected String getFacetName() {
-        Tag parent = getParent();
+        final Tag parent = getParent();
         if (parent instanceof FacetTag) {
             return ((FacetTag) parent).getName();
         } else {
@@ -338,7 +341,7 @@ public abstract class UIComponentTag implements Tag {
         return false;
     }
 
-    protected void setProperties(UIComponent component) {
+    protected void setProperties(final UIComponent component) {
         if (rendered != null) {
             if (isValueReference(rendered)) {
                 component.setValueBinding("rendered", ValueBindingUtil
@@ -360,48 +363,50 @@ public abstract class UIComponentTag implements Tag {
         }
     }
 
-    private void addChild(UIComponent child) {
+    private void addChild(final UIComponent child) {
         if (createdComponents == null) {
             createdComponents = new ArrayList();
         }
         createdComponents.add(child.getId());
     }
 
-    private void addFacet(String name) {
+    private void addFacet(final String name) {
         if (createdFacets == null) {
             createdFacets = new ArrayList();
         }
         createdFacets.add(name);
     }
 
-    private UIComponent createComponent(FacesContext context, String newId) {
-        UIComponent component = WebAppUtil.createComponent(context, binding,
-                getComponentType());
+    private UIComponent createComponent(final FacesContext context,
+            final String newId) {
+        final UIComponent component = WebAppUtil.createComponent(context,
+                binding, getComponentType());
         component.setId(newId);
         setProperties(component);
         return component;
     }
 
-    private UIComponent createChild(FacesContext context, UIComponent parent,
-            String componentId) {
-        UIComponent component = createComponent(context, componentId);
+    private UIComponent createChild(final FacesContext context,
+            final UIComponent parent, final String componentId) {
+        final UIComponent component = createComponent(context, componentId);
         parent.getChildren().add(component);
         created = true;
         return component;
     }
 
-    private UIComponent createFacet(FacesContext context, UIComponent parent,
-            String name, String newId) {
-        UIComponent component = createComponent(context, newId);
+    private UIComponent createFacet(final FacesContext context,
+            final UIComponent parent, final String name, final String newId) {
+        final UIComponent component = createComponent(context, newId);
         parent.getFacets().put(name, component);
         created = true;
         return component;
     }
 
-    private UIComponent getChild(UIComponent component, String componentId) {
-        for (Iterator children = component.getChildren().iterator(); children
+    private UIComponent getChild(final UIComponent component,
+            final String componentId) {
+        for (final Iterator children = component.getChildren().iterator(); children
                 .hasNext();) {
-            UIComponent child = (UIComponent) children.next();
+            final UIComponent child = (UIComponent) children.next();
             if (componentId.equals(child.getId())) {
                 return child;
             }
@@ -410,7 +415,8 @@ public abstract class UIComponentTag implements Tag {
     }
 
     public void popUIComponentTag() {
-        List list = PageContextUtil.getComponentTagStackAttribute(pageContext);
+        final List list = PageContextUtil
+                .getComponentTagStackAttribute(pageContext);
         if (list != null) {
             list.remove(list.size() - 1);
             if (list.size() < 1) {
@@ -429,15 +435,15 @@ public abstract class UIComponentTag implements Tag {
     }
 
     private void removeOldChildren() {
-        List oldList = WebAppUtil.getCreatedComponentIds(component);
+        final List oldList = WebAppUtil.getCreatedComponentIds(component);
         if (oldList == null) {
             saveChildrenComponentAttribute();
             return;
         }
-        for (Iterator olds = oldList.iterator(); olds.hasNext();) {
-            String old = (String) olds.next();
-            if (createdComponents == null || !createdComponents.contains(old)) {
-                UIComponent child = component.findComponent(old);
+        for (final Iterator olds = oldList.iterator(); olds.hasNext();) {
+            final String old = (String) olds.next();
+            if ((createdComponents == null) || !createdComponents.contains(old)) {
+                final UIComponent child = component.findComponent(old);
                 if (child != null) {
                     component.getChildren().remove(child);
                 }
@@ -447,14 +453,14 @@ public abstract class UIComponentTag implements Tag {
     }
 
     private void removeOldFacets() {
-        List oldList = WebAppUtil.getCreatedFacetNames(component);
+        final List oldList = WebAppUtil.getCreatedFacetNames(component);
         if (oldList == null) {
             saveFacetsComponentAttribute();
             return;
         }
-        for (Iterator olds = oldList.iterator(); olds.hasNext();) {
-            String old = (String) olds.next();
-            if (createdFacets == null || !createdFacets.contains(old)) {
+        for (final Iterator olds = oldList.iterator(); olds.hasNext();) {
+            final String old = (String) olds.next();
+            if ((createdFacets == null) || !createdFacets.contains(old)) {
                 component.getFacets().remove(old);
             }
         }
@@ -481,7 +487,7 @@ public abstract class UIComponentTag implements Tag {
 
     private String createNewId() {
         if (id == null) {
-            FacesContext context = PageContextUtil
+            final FacesContext context = PageContextUtil
                     .getCurrentFacesContextAttribute(pageContext);
             UIViewRoot viewRoot = context.getViewRoot();
             if (viewRoot == null) {
