@@ -181,14 +181,6 @@
 	</component>
 	<component>
 		<component-type>
-			org.seasar.teeda.extension.THtmlSelectManyCheckbox
-		</component-type>
-		<component-class>
-			org.seasar.teeda.extension.component.html.THtmlSelectManyCheckbox
-		</component-class>
-	</component>
-	<component>
-		<component-type>
 			org.seasar.teeda.extension.THtmlTree
 		</component-type>
 		<component-class>

@@ -18,7 +18,8 @@ package org.seasar.teeda.extension.html.factory;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.seasar.teeda.extension.ExtensionConstants;
+import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.core.taglib.html.SelectManyCheckboxTag;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.ElementProcessor;
@@ -26,7 +27,6 @@ import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooAction;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooPage;
 import org.seasar.teeda.extension.html.impl.ElementNodeImpl;
-import org.seasar.teeda.extension.taglib.TSelectManyCheckboxTag;
 
 /**
  * @author shot
@@ -40,8 +40,8 @@ public class SelectManyCheckboxFactoryTest extends
     }
 
     protected void registerTagElements() {
-        registerTagElement(ExtensionConstants.TEEDA_EXTENSION_URI,
-                "selectManyCheckbox", TSelectManyCheckboxTag.class);
+        registerTagElement(JsfConstants.JSF_HTML_URI, "selectManyCheckbox",
+                SelectManyCheckboxTag.class);
     }
 
     public void testIsMatch_ok1() throws Exception {
@@ -233,14 +233,14 @@ public class SelectManyCheckboxFactoryTest extends
                 pageDesc, actionDesc);
         // ## Assert ##
         assertNotNull("1", parentProcessor);
-        assertEquals("2", TSelectManyCheckboxTag.class, parentProcessor
+        assertEquals("2", SelectManyCheckboxTag.class, parentProcessor
                 .getTagClass());
         assertEquals("3", "#{fooPage.hoge}", parentProcessor
                 .getProperty("value"));
         assertEquals("4", "#{fooPage.hogeItems}", parentProcessor
                 .getProperty("items"));
     }
-    
+
     public void testCreateProcessor_2() throws Exception {
         // ## Arrange ##
         Map properties = new HashMap();
@@ -265,18 +265,17 @@ public class SelectManyCheckboxFactoryTest extends
                 pageDesc, actionDesc);
         // ## Assert ##
         assertNotNull("1", parentProcessor);
-        assertEquals("2", TSelectManyCheckboxTag.class, parentProcessor
+        assertEquals("2", SelectManyCheckboxTag.class, parentProcessor
                 .getTagClass());
         assertEquals("3", "#{fooPage.hoge}", parentProcessor
                 .getProperty("value"));
         assertEquals("4", "#{fooPage.hogeItems}", parentProcessor
                 .getProperty("items"));
-        assertEquals("5", " aaa", parentProcessor
-                .getProperty("style"));
+        assertEquals("5", " aaa", parentProcessor.getProperty("style"));
         assertEquals("6", "pageDirection", parentProcessor
                 .getProperty("layout"));
     }
-    
+
     public void testCreateProcessor_3() throws Exception {
         // ## Arrange ##
         Map properties = new HashMap();
@@ -301,14 +300,13 @@ public class SelectManyCheckboxFactoryTest extends
                 pageDesc, actionDesc);
         // ## Assert ##
         assertNotNull("1", parentProcessor);
-        assertEquals("2", TSelectManyCheckboxTag.class, parentProcessor
+        assertEquals("2", SelectManyCheckboxTag.class, parentProcessor
                 .getTagClass());
         assertEquals("3", "#{fooPage.hoge}", parentProcessor
                 .getProperty("value"));
         assertEquals("4", "#{fooPage.hogeItems}", parentProcessor
                 .getProperty("items"));
-        assertEquals("5", "aaa ", parentProcessor
-                .getProperty("style"));
+        assertEquals("5", "aaa ", parentProcessor.getProperty("style"));
         assertEquals("6", "lineDirection", parentProcessor
                 .getProperty("layout"));
     }

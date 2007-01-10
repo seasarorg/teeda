@@ -37,7 +37,7 @@ public class SelectManyCheckboxFactory extends AbstractElementProcessorFactory {
     }
 
     protected String getUri() {
-        return ExtensionConstants.TEEDA_EXTENSION_URI;
+        return JsfConstants.JSF_HTML_URI;
     }
 
     public boolean isMatch(ElementNode elementNode, PageDesc pageDesc,

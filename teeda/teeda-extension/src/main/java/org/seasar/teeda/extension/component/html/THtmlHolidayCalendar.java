@@ -17,6 +17,7 @@ package org.seasar.teeda.extension.component.html;
 
 import java.io.IOException;
 
+import javax.faces.component.html.HtmlSelectManyCheckbox;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.BooleanConverter;
 import javax.faces.el.ValueBinding;
@@ -27,7 +28,7 @@ import org.seasar.teeda.extension.component.RenderPreparableUtil;
 /**
  * @author higa
  */
-public class THtmlHolidayCalendar extends THtmlSelectManyCheckbox implements
+public class THtmlHolidayCalendar extends HtmlSelectManyCheckbox implements
         RenderPreparable {
 
     public static final String COMPONENT_FAMILY = "org.seasar.teeda.extension.HtmlHolidayCalendar";
