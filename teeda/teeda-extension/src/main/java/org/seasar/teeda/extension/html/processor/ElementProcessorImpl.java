@@ -41,7 +41,7 @@ import org.seasar.teeda.extension.html.TagProcessor;
 
 /**
  * @author higa
- *
+ * @author manhole
  */
 public class ElementProcessorImpl implements ElementProcessor {
 
@@ -49,11 +49,11 @@ public class ElementProcessorImpl implements ElementProcessor {
 
     private Map properties;
 
-    private List children = new ArrayList();
+    private final List children = new ArrayList();
 
     private StringBuffer buffer;
 
-    public ElementProcessorImpl(Class tagClass, Map properties) {
+    public ElementProcessorImpl(final Class tagClass, final Map properties) {
         this.tagClass = tagClass;
         this.properties = properties;
         initializeBuffer();
@@ -67,11 +67,11 @@ public class ElementProcessorImpl implements ElementProcessor {
         return tagClass;
     }
 
-    public String getProperty(String name) {
+    public String getProperty(final String name) {
         return (String) properties.get(name);
     }
 
-    public void setProperty(String name, String value) {
+    public void setProperty(final String name, final String value) {
         properties.put(name, value);
     }
 
@@ -83,20 +83,20 @@ public class ElementProcessorImpl implements ElementProcessor {
         return children.size();
     }
 
-    public TagProcessor getChild(int index) {
+    public TagProcessor getChild(final int index) {
         return (TagProcessor) children.get(index);
     }
 
-    protected void addChild(TagProcessor child) {
+    protected void addChild(final TagProcessor child) {
         children.add(child);
     }
 
-    public void addElement(ElementProcessor processor) {
+    public void addElement(final ElementProcessor processor) {
         processText();
         addChild(processor);
     }
 
-    public void addText(String text) {
+    public void addText(final String text) {
         buffer.append(text);
     }
 
@@ -111,10 +111,10 @@ public class ElementProcessorImpl implements ElementProcessor {
         processText();
     }
 
-    public void process(PageContext pageContext, Tag parentTag)
+    public void process(final PageContext pageContext, final Tag parentTag)
             throws JspException {
 
-        Tag tag = (Tag) ClassUtil.newInstance(tagClass);
+        final Tag tag = (Tag) ClassUtil.newInstance(tagClass);
         try {
             process(pageContext, tag, parentTag);
         } finally {
@@ -122,8 +122,8 @@ public class ElementProcessorImpl implements ElementProcessor {
         }
     }
 
-    protected void process(PageContext pageContext, Tag tag, Tag parentTag)
-            throws JspException {
+    protected void process(final PageContext pageContext, final Tag tag,
+            final Tag parentTag) throws JspException {
 
         if (parentTag != null) {
             tag.setParent(parentTag);
@@ -139,7 +139,7 @@ public class ElementProcessorImpl implements ElementProcessor {
         }
     }
 
-    protected void processTag(PageContext pageContext, Tag tag)
+    protected void processTag(final PageContext pageContext, final Tag tag)
             throws JspException {
 
         if (Tag.SKIP_BODY != tag.doStartTag()) {
@@ -148,13 +148,13 @@ public class ElementProcessorImpl implements ElementProcessor {
         }
     }
 
-    protected void processBodyTag(PageContext pageContext, BodyTag tag)
-            throws JspException {
+    protected void processBodyTag(final PageContext pageContext,
+            final BodyTag tag) throws JspException {
 
-        int evalDoStartTag = tag.doStartTag();
-        if (BodyTag.SKIP_BODY != evalDoStartTag) {
+        final int evalDoStartTag = tag.doStartTag();
+        if (Tag.SKIP_BODY != evalDoStartTag) {
             BodyContent bodyContent = null;
-            if (BodyTag.EVAL_BODY_INCLUDE != evalDoStartTag) {
+            if (Tag.EVAL_BODY_INCLUDE != evalDoStartTag) {
                 bodyContent = pageContext.pushBody();
                 tag.setBodyContent(bodyContent);
                 tag.doInitBody();
@@ -169,11 +169,11 @@ public class ElementProcessorImpl implements ElementProcessor {
         tag.doEndTag();
     }
 
-    protected void processIterationTag(PageContext pageContext, IterationTag tag)
-            throws JspException {
+    protected void processIterationTag(final PageContext pageContext,
+            final IterationTag tag) throws JspException {
 
-        int evalDoStartTag = tag.doStartTag();
-        if (BodyTag.SKIP_BODY != evalDoStartTag) {
+        final int evalDoStartTag = tag.doStartTag();
+        if (Tag.SKIP_BODY != evalDoStartTag) {
             do {
                 processChildren(pageContext, tag);
             } while (IterationTag.EVAL_BODY_AGAIN == tag.doAfterBody());
@@ -181,52 +181,54 @@ public class ElementProcessorImpl implements ElementProcessor {
         tag.doEndTag();
     }
 
-    protected void processChildren(PageContext pageContext, Tag parentTag)
-            throws JspException {
+    protected void processChildren(final PageContext pageContext,
+            final Tag parentTag) throws JspException {
 
         for (int i = 0; i < getChildSize(); i++) {
-            TagProcessor child = getChild(i);
+            final TagProcessor child = getChild(i);
             child.process(pageContext, parentTag);
         }
     }
 
     public void composeComponentTree(final FacesContext context,
-            final PageContext pageContext, final UIComponentTag parentTag)
+            final PageContext pageContext, final Tag parentTag)
             throws JspException {
         final Tag tag = (Tag) ClassUtil.newInstance(tagClass);
-        if (tag instanceof UIComponentTag) {
-            try {
+        try {
+            if (tag instanceof UIComponentTag) {
                 final UIComponentTag componentTag = (UIComponentTag) tag;
                 composeComponentTree(context, pageContext, componentTag,
                         parentTag);
-            } finally {
-                tag.release();
+            } else {
+                setUpTag(context, pageContext, tag, parentTag);
             }
-        } else {
-            setUpTag(pageContext, tag, parentTag);
+        } finally {
+            tag.release();
         }
     }
 
-    protected void setUpTag(final PageContext pageContext, final Tag tag,
-            final UIComponentTag parentTag) throws JspException {
+    protected void setUpTag(final FacesContext context,
+            final PageContext pageContext, final Tag tag, final Tag parentTag)
+            throws JspException {
         if (parentTag != null) {
             tag.setParent(parentTag);
         }
         tag.setPageContext(pageContext);
         setupProperties(tag);
+        composeComponentTreeChildren(context, pageContext, tag);
     }
 
-    protected void composeComponentTree(FacesContext context,
-            PageContext pageContext, UIComponentTag tag,
-            UIComponentTag parentTag) throws JspException {
+    protected void composeComponentTree(final FacesContext context,
+            final PageContext pageContext, final UIComponentTag tag,
+            final Tag parentTag) throws JspException {
 
         if (parentTag != null) {
             tag.setParent(parentTag);
         }
         tag.setPageContext(pageContext);
-        Map ignoredProps = setupProperties(tag);
+        final Map ignoredProps = setupProperties(tag);
         tag.setupFacesContext();
-        UIComponent component = tag.findComponent(context);
+        final UIComponent component = tag.findComponent(context);
         component.getAttributes().putAll(ignoredProps);
         tag.pushUIComponentTag();
         try {
@@ -236,27 +238,27 @@ public class ElementProcessorImpl implements ElementProcessor {
         }
     }
 
-    protected void composeComponentTreeChildren(FacesContext context,
-            PageContext pageContext, UIComponentTag parentTag)
+    protected void composeComponentTreeChildren(final FacesContext context,
+            final PageContext pageContext, final Tag parentTag)
             throws JspException {
 
         for (int i = 0; i < getChildSize(); i++) {
-            TagProcessor child = getChild(i);
+            final TagProcessor child = getChild(i);
             child.composeComponentTree(context, pageContext, parentTag);
         }
     }
 
-    protected Map setupProperties(Tag tag) {
-        Map ignoredProperties = new HashMap();
-        BeanDesc beanDesc = BeanDescFactory.getBeanDesc(tag.getClass());
-        for (Iterator i = getPropertyNameIterator(); i.hasNext();) {
-            String propertyName = (String) i.next();
-            String value = getProperty(propertyName);
+    protected Map setupProperties(final Tag tag) {
+        final Map ignoredProperties = new HashMap();
+        final BeanDesc beanDesc = BeanDescFactory.getBeanDesc(tag.getClass());
+        for (final Iterator i = getPropertyNameIterator(); i.hasNext();) {
+            final String propertyName = (String) i.next();
+            final String value = getProperty(propertyName);
             if (StringUtil.isEmpty(value)) {
                 continue;
             }
             if (beanDesc.hasPropertyDesc(propertyName)) {
-                PropertyDesc pd = beanDesc.getPropertyDesc(propertyName);
+                final PropertyDesc pd = beanDesc.getPropertyDesc(propertyName);
                 pd.setValue(tag, value);
             } else {
                 ignoredProperties.put(propertyName, value);
@@ -264,4 +266,5 @@ public class ElementProcessorImpl implements ElementProcessor {
         }
         return ignoredProperties;
     }
+
 }

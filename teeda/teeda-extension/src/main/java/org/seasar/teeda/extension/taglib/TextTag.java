@@ -16,19 +16,30 @@
 package org.seasar.teeda.extension.taglib;
 
 import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
 import javax.faces.webapp.UIComponentTag;
 
 import org.seasar.teeda.extension.component.UIText;
 
 /**
  * @author higa
- *  
+ * @author manhole
  */
 public class TextTag extends UIComponentTag {
 
     private String value;
 
     public TextTag() {
+    }
+
+    /*
+     * UITextはfacetの子どもにしない。
+     * 改行のみのTextが本来facet配下に来るべきcomponentを押しのけてしまうため。
+     */
+    protected UIComponent createFacet(final FacesContext context,
+            final UIComponent parent, final String name, final String newId) {
+        final UIComponent component = createComponent(context, newId);
+        return component;
     }
 
     public String getValue() {
@@ -56,4 +67,5 @@ public class TextTag extends UIComponentTag {
         super.release();
         value = null;
     }
+
 }

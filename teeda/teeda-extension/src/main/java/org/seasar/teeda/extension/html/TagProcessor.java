@@ -16,19 +16,19 @@
 package org.seasar.teeda.extension.html;
 
 import javax.faces.context.FacesContext;
-import javax.faces.webapp.UIComponentTag;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.Tag;
 
 /**
  * @author higa
- *  
+ * @author manhole
  */
 public interface TagProcessor {
 
     void process(PageContext pageContext, Tag parentTag) throws JspException;
 
     void composeComponentTree(FacesContext context, PageContext pageContext,
-            UIComponentTag parentTag) throws JspException;
+            Tag parentTag) throws JspException;
+
 }

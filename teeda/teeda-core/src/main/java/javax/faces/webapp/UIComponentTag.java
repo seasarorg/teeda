@@ -90,6 +90,10 @@ public abstract class UIComponentTag implements Tag {
         return created;
     }
 
+    protected void setCreated(final boolean created) {
+        this.created = created;
+    }
+
     public static UIComponentTag getParentUIComponentTag(
             final PageContext context) {
         final List list = PageContextUtil
@@ -249,10 +253,9 @@ public abstract class UIComponentTag implements Tag {
             return component;
         }
         final UIComponentTag parentTag = getParentUIComponentTag(pageContext);
-        UIComponent parentComponent = null;
         if (parentTag != null) {
-            parentComponent = parentTag.getComponentInstance();
-
+            final UIComponent parentComponent = parentTag
+                    .getComponentInstance();
             final String newId = createNewId();
 
             final String facetName = getFacetName();
@@ -262,11 +265,13 @@ public abstract class UIComponentTag implements Tag {
                 if (component == null) {
                     component = createFacet(context, parentComponent,
                             facetName, newId);
+                    created = true;
                 }
             } else {
                 component = getChild(parentComponent, newId);
                 if (component == null) {
                     component = createChild(context, parentComponent, newId);
+                    created = true;
                 }
             }
             return component;
@@ -377,7 +382,7 @@ public abstract class UIComponentTag implements Tag {
         createdFacets.add(name);
     }
 
-    private UIComponent createComponent(final FacesContext context,
+    protected UIComponent createComponent(final FacesContext context,
             final String newId) {
         final UIComponent component = WebAppUtil.createComponent(context,
                 binding, getComponentType());
@@ -390,15 +395,13 @@ public abstract class UIComponentTag implements Tag {
             final UIComponent parent, final String componentId) {
         final UIComponent component = createComponent(context, componentId);
         parent.getChildren().add(component);
-        created = true;
         return component;
     }
 
-    private UIComponent createFacet(final FacesContext context,
+    protected UIComponent createFacet(final FacesContext context,
             final UIComponent parent, final String name, final String newId) {
         final UIComponent component = createComponent(context, newId);
         parent.getFacets().put(name, component);
-        created = true;
         return component;
     }
 
