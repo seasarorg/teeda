@@ -13,21 +13,21 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.extension.component.html;
+package org.seasar.teeda.extension.taglib;
 
-import javax.faces.component.html.HtmlSelectOneMenu;
-import javax.faces.context.FacesContext;
+import org.seasar.teeda.extension.component.html.THtmlSelectManyListbox;
 
 /**
- * @author shot
+ * @author manhole
  */
-public class THtmlSelectOneMenu extends HtmlSelectOneMenu {
+public class TSelectManyListboxTag extends TSelectTagBase {
 
-    public static final String COMPONENT_TYPE = "org.seasar.teeda.extension.HtmlSelectOneMenu";
+    public String getComponentType() {
+        return THtmlSelectManyListbox.COMPONENT_TYPE;
+    }
 
-    public void validate(FacesContext context) {
-        super.validate(context);
-        THtmlSelectUtil.validate(this);
+    public String getRendererType() {
+        return "javax.faces.Listbox";
     }
 
 }

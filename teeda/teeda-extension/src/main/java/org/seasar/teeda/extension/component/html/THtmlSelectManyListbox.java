@@ -15,17 +15,17 @@
  */
 package org.seasar.teeda.extension.component.html;
 
-import javax.faces.component.html.HtmlSelectOneMenu;
+import javax.faces.component.html.HtmlSelectManyListbox;
 import javax.faces.context.FacesContext;
 
 /**
- * @author shot
+ * @author manhole
  */
-public class THtmlSelectOneMenu extends HtmlSelectOneMenu {
+public class THtmlSelectManyListbox extends HtmlSelectManyListbox {
 
-    public static final String COMPONENT_TYPE = "org.seasar.teeda.extension.HtmlSelectOneMenu";
+    public static final String COMPONENT_TYPE = "org.seasar.teeda.extension.HtmlSelectManyListbox";
 
-    public void validate(FacesContext context) {
+    public void validate(final FacesContext context) {
         super.validate(context);
         THtmlSelectUtil.validate(this);
     }

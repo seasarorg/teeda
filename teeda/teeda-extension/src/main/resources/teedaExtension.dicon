@@ -48,6 +48,8 @@
 		class="org.seasar.teeda.extension.html.factory.SelectOneRadioFactory" />
 	<component name="selectOneMenuFactory"
 		class="org.seasar.teeda.extension.html.factory.SelectOneMenuFactory" />
+	<component name="selectManyListboxFactory"
+		class="org.seasar.teeda.extension.html.factory.SelectManyListboxFactory" />
 	<component name="conditionFactory"
 		class="org.seasar.teeda.extension.html.factory.ConditionFactory" />
 	<component name="titleFactory"

@@ -250,7 +250,17 @@ public class TeedaWebTester {
     public void assertSelectedOptionValueEqualsById(final String id,
         final String value) {
         final HtmlElement element = getElementById(id);
-        final String[] values = new String[] { value };
+        assertSelectedOptionValuesEquals(element, new String[] { value });
+    }
+
+    public void assertSelectedOptionValuesEqualsById(final String id,
+        final String[] values) {
+        final HtmlElement element = getElementById(id);
+        assertSelectedOptionValuesEquals(element, values);
+    }
+
+    private void assertSelectedOptionValuesEquals(final HtmlElement element,
+        final String[] values) {
         if (element instanceof HtmlSelect) {
             final HtmlSelect select = (HtmlSelect) element;
             final List selected = select.getSelectedOptions();
@@ -262,6 +272,11 @@ public class TeedaWebTester {
         } else {
             throw new RuntimeException("not type");
         }
+    }
+
+    public void assertSelectedOptionValuesEqualsByName(final String name,
+        final String[] values) {
+        tester.assertSelectedOptionValuesEqual(name, values);
     }
 
     public void assertCheckboxSelectedByName(final String name) {

@@ -1442,6 +1442,13 @@
 		</attribute>
 	</tag>
 	<tag>
+		<name>selectManyListbox</name>
+		<tag-class>
+			org.seasar.teeda.extension.taglib.TSelectManyListboxTag
+		</tag-class>
+		<body-content>JSP</body-content>
+	</tag>
+	<tag>
 		<name>selectBooleanCheckbox</name>
 		<tag-class>
 			org.seasar.teeda.extension.taglib.TSelectBooleanCheckboxTag
