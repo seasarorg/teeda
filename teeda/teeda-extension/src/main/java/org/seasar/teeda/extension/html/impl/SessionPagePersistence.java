@@ -15,12 +15,10 @@
  */
 package org.seasar.teeda.extension.html.impl;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
@@ -30,6 +28,7 @@ import javax.faces.component.UIViewRoot;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.internal.FacesMessageUtil;
+import javax.faces.internal.SubApplicationScope;
 import javax.faces.internal.UICommandUtil;
 import javax.faces.internal.WindowIdUtil;
 
@@ -39,7 +38,6 @@ import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.framework.container.hotdeploy.HotdeployUtil;
 import org.seasar.framework.convention.NamingConvention;
 import org.seasar.framework.util.ArrayUtil;
-import org.seasar.framework.util.LruHashMap;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.util.DIContainerUtil;
 import org.seasar.teeda.extension.exception.PageNotFoundRuntimeException;
@@ -73,18 +71,20 @@ public class SessionPagePersistence implements PagePersistence {
 
     private static final String ERROR_MESSAGE_PERSISTE_KEY = "Teeda.FacesMessages";
 
+    private static final String SUB_APPLICATION_SCOPE_KEY = SessionPagePersistence.class
+            .getName();
+
     public void save(final FacesContext context, final String viewId) {
         if (context == null) {
             return;
         }
-        final ExternalContext extCtx = context.getExternalContext();
-        final UIViewRoot viewRoot = context.getViewRoot();
-        final String previousViewId = (viewRoot != null) ? viewRoot.getViewId()
+        UIViewRoot viewRoot = context.getViewRoot();
+        String previousViewId = (viewRoot != null) ? viewRoot.getViewId()
                 : null;
-        Map lru = getOrCreatePageLru(extCtx);
+        Map saveValues = getOrCreateSaveValues(context);
         Map pageData = getPageData(context, viewId, previousViewId);
         pageData = FacesMessageUtil.saveFacesMessagesToMap(context, pageData);
-        lru.put(viewId, pageData);
+        saveValues.putAll(pageData);
     }
 
     public void restore(final FacesContext context, final String viewId) {
@@ -92,17 +92,13 @@ public class SessionPagePersistence implements PagePersistence {
             return;
         }
         final ExternalContext extCtx = context.getExternalContext();
-        final Map lru = getPageLru(extCtx);
-        if (lru == null) {
-            return;
-        }
-        final Map savedData = (Map) lru.get(viewId);
-        if (savedData == null) {
+        final Map saveValues = getSaveValues(context);
+        if (saveValues == null) {
             return;
         }
         final Map requestMap = extCtx.getRequestMap();
-        restorePageDataMap(savedData, requestMap);
-        FacesMessageUtil.restoreFacesMessagesFromMap(savedData, context);
+        restorePageDataMap(saveValues, requestMap);
+        FacesMessageUtil.restoreFacesMessagesFromMap(saveValues, context);
     }
 
     protected void saveFacesMessage(FacesContext from, Map to) {
@@ -274,40 +270,19 @@ public class SessionPagePersistence implements PagePersistence {
         map.put(pd.getPropertyName(), value);
     }
 
-    protected Map getWindowLru(ExternalContext extCtx) {
-        Map sessionMap = extCtx.getSessionMap();
-        return (Map) sessionMap.get(getClass().getName());
+    protected Map getSaveValues(FacesContext context) {
+        Map viewContext = SubApplicationScope.getContext(context);
+        return (Map) viewContext.get(SUB_APPLICATION_SCOPE_KEY);
     }
 
-    protected Map getOrCreateWindowLru(ExternalContext extCtx) {
-        Map lru = getWindowLru(extCtx);
-        if (lru != null) {
-            return lru;
+    protected Map getOrCreateSaveValues(FacesContext context) {
+        Map saveValues = getSaveValues(context);
+        if (saveValues == null) {
+            Map viewContext = SubApplicationScope.getContext(context);
+            saveValues = new HashMap();
+            viewContext.put(SUB_APPLICATION_SCOPE_KEY, saveValues);
         }
-        lru = new LruHashMap(windowSize);
-        Map sessionMap = extCtx.getSessionMap();
-        sessionMap.put(getClass().getName(), lru);
-        return lru;
-    }
-
-    protected Map getPageLru(ExternalContext extCtx) {
-        Map windowLru = getWindowLru(extCtx);
-        if (windowLru == null) {
-            return null;
-        }
-        String wid = WindowIdUtil.getWindowId(extCtx);
-        return (Map) windowLru.get(wid);
-    }
-
-    protected Map getOrCreatePageLru(ExternalContext extCtx) {
-        Map windowLru = getOrCreateWindowLru(extCtx);
-        String wid = WindowIdUtil.getWindowId(extCtx);
-        Map pageLru = (Map) windowLru.get(wid);
-        if (pageLru == null) {
-            pageLru = new LruHashMap(pageSize);
-            windowLru.put(wid, pageLru);
-        }
-        return pageLru;
+        return saveValues;
     }
 
     protected void restorePageDataMap(Map from, Map to) {
@@ -331,26 +306,9 @@ public class SessionPagePersistence implements PagePersistence {
         if (context == null) {
             return;
         }
-        final ExternalContext extCtx = context.getExternalContext();
-        final Map lru = getPageLru(extCtx);
-        if (lru == null) {
-            return;
-        }
-        final String subAppPath = getSubApplicationPath(context);
-        if (subAppPath == null) {
-            return;
-        }
-        final List list = new ArrayList();
-        for (Iterator i = lru.keySet().iterator(); i.hasNext();) {
-            String path = (String) i.next();
-            if (path.startsWith(subAppPath)) {
-                list.add(path);
-            }
-        }
-        final String[] paths = (String[]) list.toArray(new String[list.size()]);
-        for (int i = 0; i < paths.length; i++) {
-            lru.remove(paths[i]);
-        }
+        ExternalContext extCtx = context.getExternalContext();
+        String wid = WindowIdUtil.getWindowId(extCtx);
+        SubApplicationScope.removeContext(context, wid);
     }
 
     public int getPageSize() {
@@ -379,18 +337,5 @@ public class SessionPagePersistence implements PagePersistence {
 
     public void setActionDescCache(ActionDescCache actionDescCache) {
         this.actionDescCache = actionDescCache;
-    }
-
-    protected static String getSubApplicationPath(final FacesContext context) {
-        final UIViewRoot root = context.getViewRoot();
-        if (root == null) {
-            return null;
-        }
-        String viewId = root.getViewId();
-        if (viewId.indexOf("/") >= 0) {
-            return viewId.substring(0, viewId.lastIndexOf("/"));
-        } else {
-            return viewId;
-        }
     }
 }

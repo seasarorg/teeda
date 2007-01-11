@@ -33,7 +33,6 @@ import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.framework.convention.NamingConvention;
 import org.seasar.framework.convention.impl.NamingConventionImpl;
 import org.seasar.framework.util.ClassUtil;
-import org.seasar.framework.util.LruHashMap;
 import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.PageDescCache;
@@ -183,20 +182,19 @@ public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
         context.getViewRoot().setViewId(path);
         spp.save(context, path2);
         ExternalContext extCtx = context.getExternalContext();
-        Map lru = spp.getPageLru(extCtx);
-        assertNotNull(lru);
-        assertEquals(1, lru.size());
+        Map saveValues = spp.getSaveValues(context);
+        assertNotNull(saveValues);
+        assertEquals(2, saveValues.size());
 
         context.getViewRoot().setViewId(path2);
         spp.save(context, path3);
-        assertEquals(2, lru.size());
+        assertEquals(2, saveValues.size());
 
         Foo3Page foo3Page = (Foo3Page) getComponent(Foo3Page.class);
         foo3Page.setAaa("123");
         context.getViewRoot().setViewId(path3);
         spp.save(context, path);
-        assertEquals(2, lru.size());
-        assertNull(lru.get(path2));
+        assertEquals(3, saveValues.size());
 
         getExternalContext().getRequestParameterMap().put("redirect", "true");
         spp.restore(context, path);
@@ -331,12 +329,6 @@ public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
         assertTrue(requestMap.get("ccc") instanceof String[][]);
     }
 
-    public void testGetSubApplicationPath() throws Exception {
-        getFacesContext().getViewRoot().setViewId("/view/emp/empConfirm.html");
-        assertEquals("/view/emp", SessionPagePersistence
-                .getSubApplicationPath(getFacesContext()));
-    }
-
     public void testGetSubApplicationPath_facesContextIsNull() throws Exception {
         try {
             new SessionPagePersistence().removeSubApplicationPages(null);
@@ -347,18 +339,12 @@ public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
     }
 
     public void testRemoveSubApplicationPages() throws Exception {
-        LruHashMap lru = new LruHashMap(10);
-        lru.put("/view/dept/deptList.html", "hoge");
-        lru.put("/view/emp/empList.html", "hoge");
-        LruHashMap windowLru = new LruHashMap(10);
-        windowLru.put(null, lru);
-        Map sessionMap = getExternalContext().getSessionMap();
-        sessionMap.put(SessionPagePersistence.class.getName(), windowLru);
         getFacesContext().getViewRoot().setViewId("/view/emp/empConfirm.html");
         SessionPagePersistence pagePersistence = new SessionPagePersistence();
+        pagePersistence.getOrCreateSaveValues(getFacesContext());
         pagePersistence.removeSubApplicationPages(getFacesContext());
-        assertNull(lru.get("/view/emp/empList.html"));
-        assertNotNull(lru.get("/view/dept/deptList.html"));
+        assertNull(pagePersistence.getSaveValues(getFacesContext()));
+
     }
 
     private static class MockPageDescCache implements PageDescCache {

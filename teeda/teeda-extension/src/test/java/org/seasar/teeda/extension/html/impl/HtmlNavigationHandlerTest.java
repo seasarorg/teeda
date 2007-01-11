@@ -16,6 +16,7 @@
 package org.seasar.teeda.extension.html.impl;
 
 import javax.faces.component.UIViewRoot;
+import javax.faces.internal.SubApplicationScope;
 
 import org.seasar.framework.convention.impl.NamingConventionImpl;
 import org.seasar.framework.util.ClassUtil;
@@ -81,7 +82,7 @@ public class HtmlNavigationHandlerTest extends TeedaTestCase {
         handler.handleNavigation(context, null, "foo2");
 
         // ## Assert ##
-        assertNotNull(getExternalContext().getSessionMap().get(
+        assertNotNull(SubApplicationScope.getContext(getFacesContext()).get(
                 SessionPagePersistence.class.getName()));
     }
 

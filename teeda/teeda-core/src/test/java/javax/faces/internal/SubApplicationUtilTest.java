@@ -15,16 +15,16 @@
  */
 package javax.faces.internal;
 
-import java.io.Serializable;
+import junit.framework.TestCase;
 
 /**
- * @author shot
- *
- * This class might be changed without notice. Please do not use it
- * excluding the JSF specification part.
+ * @author higa
+ * 
  */
-public class Sync implements Serializable {
+public class SubApplicationUtilTest extends TestCase {
 
-    private static final long serialVersionUID = 1L;
-
+    public void testGetSubApplicationPath() throws Exception {
+        assertEquals("/view/hoge", SubApplicationUtil
+                .getSubApplicationPath("/view/hoge/aaa.html"));
+    }
 }

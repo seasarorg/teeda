@@ -28,13 +28,14 @@ import org.seasar.framework.util.LruHashMap;
  * @author higa
  *
  */
-public abstract class ViewScope {
+public abstract class SubApplicationScope {
 
     private static final int WINDOW_SIZE = 20;
 
-    private static final String CONTEXTS_KEY = ViewScope.class.getName();
+    private static final String CONTEXTS_KEY = SubApplicationScope.class
+            .getName();
 
-    protected ViewScope() {
+    protected SubApplicationScope() {
     }
 
     public static Map getContext(FacesContext context) throws FacesException {
