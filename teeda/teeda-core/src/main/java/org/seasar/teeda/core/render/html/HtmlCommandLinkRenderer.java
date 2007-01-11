@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -95,7 +95,14 @@ public class HtmlCommandLinkRenderer extends AbstractRenderer {
 
         RendererUtil.renderAttribute(writer, JsfConstants.HREF_ATTR, "#");
 
-        final StringBuffer sb = new StringBuffer();
+        final StringBuffer sb = new StringBuffer(320);
+        final String onclick = commandLink.getOnclick();
+        if (onclick != null) {
+            sb.append(onclick);
+            if (!onclick.endsWith(";")) {
+                sb.append(";");
+            }
+        }
         final String formName = parentForm.getClientId(context);
         final String functionName = JavaScriptUtil
                 .getClearHiddenCommandFormParamsFunctionName(formName)
