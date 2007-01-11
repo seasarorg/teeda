@@ -87,6 +87,30 @@ public class HtmlCommandLinkRendererTest extends RendererTest {
                 getResponseText());
     }
 
+    public void testEncode_withOnclick() throws Exception {
+        // ## Arrange ##
+
+        MockHtmlForm form = new MockHtmlForm();
+        form.setRenderer(new HtmlFormRenderer());
+        form.setId("a");
+        form.getChildren().add(htmlCommandLink);
+        
+        htmlCommandLink.setOnclick("hoge();");
+
+        // ## Act ##
+        encodeByRenderer(renderer, htmlCommandLink);
+
+        // ## Assert ##
+        MockFacesContext context = getFacesContext();
+        assertEquals("a", form.getClientId(context));
+        assertEquals("<a" + " href=\"#\"" + " onclick=\"" + "hoge();clear_a();"
+                + "var f = document.forms['a'];"
+                + " f['a:__link_clicked__'].value = 'a:_id0';"
+                + " if (f.onsubmit) { f.onsubmit(); }" + " f.submit();"
+                + "clear_a();" + " return false;" + "\"></a>",
+                getResponseText());
+    }
+
     public void testEncode_WithValue() throws Exception {
         // ## Arrange ##
         htmlCommandLink.setValue("abc");
@@ -348,7 +372,7 @@ public class HtmlCommandLinkRendererTest extends RendererTest {
         encodeByRenderer(renderer, htmlCommandLink);
 
         Diff diff = new Diff("<a" + " id=\"A\"" + " href=\"#\"" + " onclick=\""
-                + "clear_zz();" + "var f = document.forms['zz'];"
+                + "h;clear_zz();" + "var f = document.forms['zz'];"
                 + " f['zz:__link_clicked__'].value = 'zz:A';"
                 + " f.target = 'y';" + " if (f.onsubmit) { f.onsubmit(); }"
                 + " f.submit();" + "clear_zz();" + " return false;\""
