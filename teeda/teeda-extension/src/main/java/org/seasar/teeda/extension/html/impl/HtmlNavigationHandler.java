@@ -74,7 +74,8 @@ public class HtmlNavigationHandler extends NavigationHandlerImpl {
         final ExternalContext externalContext = context.getExternalContext();
         final Map requestMap = context.getExternalContext().getRequestMap();
         if (context.getRenderResponse()
-                && requestMap.get(ExtensionConstants.TRANSITION_BY_TEEDA_PREPARED_METHOD) == null) {
+                && requestMap
+                        .get(ExtensionConstants.TRANSITION_BY_TEEDA_PREPARED_METHOD) == null) {
             return;
         }
         if (context.getResponseComplete()) {
@@ -96,12 +97,13 @@ public class HtmlNavigationHandler extends NavigationHandlerImpl {
                     FacesPortlet.REDIRECT_TO_PORTLET, Boolean.TRUE);
             super.render(context, viewHandler, path);
         }
-        requestMap.remove(ExtensionConstants.TRANSITION_BY_TEEDA_PREPARED_METHOD);
+        requestMap
+                .remove(ExtensionConstants.TRANSITION_BY_TEEDA_PREPARED_METHOD);
     }
 
     protected static String calcPathFromOutcome(String viewId, String outcome) {
         if (outcome == null) {
-            return null;
+            return viewId;
         }
         int pos = viewId.lastIndexOf('/');
         int pos2 = viewId.lastIndexOf('.');

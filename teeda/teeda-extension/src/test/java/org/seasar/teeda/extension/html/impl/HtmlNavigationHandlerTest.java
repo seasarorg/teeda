@@ -94,8 +94,8 @@ public class HtmlNavigationHandlerTest extends TeedaTestCase {
     }
 
     public void testCalcPathFromOutcome2() throws Exception {
-        assertEquals(null, HtmlNavigationHandler.calcPathFromOutcome(
-                "/view/add/addInput.html", null));
+        assertEquals("/view/add/addInput.html", HtmlNavigationHandler
+                .calcPathFromOutcome("/view/add/addInput.html", null));
     }
 
 }
