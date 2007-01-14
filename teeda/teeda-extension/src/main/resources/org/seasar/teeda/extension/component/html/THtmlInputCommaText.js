@@ -35,6 +35,9 @@ Teeda.THtmlInputCommaText = {
       return;
     }
     var vals = o.value.split(decimalSeparator);
+    if(vals.length == 2 && vals[0] == '') {
+      vals[0] = '0';
+    }
     var val1 = vals[0].match(regDecimal).reverse().join('');
     val1 = val1.replace(/(\d{3})/g, '$1' + groupingSeparator);
     val1 = val1.match(regDecimal).reverse().join('');
