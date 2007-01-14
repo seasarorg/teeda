@@ -108,7 +108,7 @@ public class WebAppUtil {
 
     public static String getAcceptHeader(FacesContext context) {
         return (String) context.getExternalContext().getRequestHeaderMap().get(
-                "Accept");
+                "accept");
     }
 
     public static Object getValueFromCreatedValueBinding(String buindName) {

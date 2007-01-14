@@ -201,7 +201,7 @@ public class ViewTagTest extends TeedaTestCase {
             }
         });
         context.getExternalContext().getRequestHeaderMap().put(
-                "Accept", JsfConstants.XHTML_CONTENT_TYPE);
+                "accept", JsfConstants.XHTML_CONTENT_TYPE);
 
         // # Act #
         tag.doStartTag();
