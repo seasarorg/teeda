@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -38,14 +38,23 @@ public class DIContainerUtil {
         return null;
     }
 
+    public static ComponentDef getComponentDefNoException(Object componentKey) {
+        if (getContainer().hasComponentDef(componentKey)) {
+            return getContainer().getComponentDef(componentKey);
+        }
+        return null;
+    }
+
     public static Object getComponent(Object componentKey) {
         return getContainer().getComponent(componentKey);
     }
 
     public static synchronized void register(ComponentDef componentDef) {
-        if(logger_.isDebugEnabled()) {
-            logger_.debug("componentDef name  = " + componentDef.getComponentName());
-            logger_.debug("componentDef class = " + componentDef.getComponentClass());
+        if (logger_.isDebugEnabled()) {
+            logger_.debug("componentDef name  = "
+                    + componentDef.getComponentName());
+            logger_.debug("componentDef class = "
+                    + componentDef.getComponentClass());
         }
         getContainer().register(componentDef);
     }
@@ -53,7 +62,7 @@ public class DIContainerUtil {
     public static Object[] getComponentKeys(Class clazz) {
         ComponentDef[] componentDefs = getContainer().findComponentDefs(clazz);
         List list = new ArrayList();
-        for(int i = 0; i < componentDefs.length; i++){
+        for (int i = 0; i < componentDefs.length; i++) {
             ComponentDef componentDef = componentDefs[i];
             list.add(componentDef.getComponentName());
         }
@@ -63,7 +72,7 @@ public class DIContainerUtil {
     public static boolean hasComponent(Object componentKey) {
         return getContainer().hasComponentDef(componentKey);
     }
-    
+
     private static S2Container getContainer() {
         return SingletonS2ContainerFactory.getContainer();
     }

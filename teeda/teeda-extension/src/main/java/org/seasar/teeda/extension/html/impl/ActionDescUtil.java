@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -43,7 +43,9 @@ public class ActionDescUtil {
     protected static boolean isActionMethodCandidate(Method method) {
         final Class returnType = method.getReturnType();
         final Class[] parameterTypes = method.getParameterTypes();
-        return (returnType.equals(String.class) || returnType.equals(Void.TYPE))
+        return (returnType.equals(String.class)
+                || returnType.equals(Class.class) || returnType
+                .equals(Void.TYPE))
                 && parameterTypes.length == 0;
     }
 }
