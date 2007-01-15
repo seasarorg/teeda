@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -17,10 +17,8 @@ package org.seasar.teeda.extension.html.impl;
 
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
 
 import javax.faces.application.FacesMessage;
@@ -37,6 +35,8 @@ import org.seasar.framework.beans.PropertyDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.framework.container.hotdeploy.HotdeployUtil;
 import org.seasar.framework.convention.NamingConvention;
+import org.seasar.framework.log.Logger;
+import org.seasar.framework.message.MessageFormatter;
 import org.seasar.framework.util.ArrayUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.util.DIContainerUtil;
@@ -73,6 +73,9 @@ public class SessionPagePersistence implements PagePersistence {
 
     private static final String SUB_APPLICATION_SCOPE_KEY = SessionPagePersistence.class
             .getName();
+
+    private static final Logger logger = Logger
+            .getLogger(SessionPagePersistence.class);
 
     public void save(final FacesContext context, final String viewId) {
         if (context == null) {
@@ -135,7 +138,7 @@ public class SessionPagePersistence implements PagePersistence {
             String viewId, String previousViewId, PageDesc pageDesc) {
         Class pageClass = page.getClass();
         BeanDesc beanDesc = BeanDescFactory.getBeanDesc(pageClass);
-        Set nextPageProperties = getNextPageProperties(viewId);
+        Map nextPageProperties = getNextPageProperties(viewId);
         if (nextPageProperties.isEmpty()) {
             return new HashMap();
         }
@@ -146,13 +149,13 @@ public class SessionPagePersistence implements PagePersistence {
     /*
      * postbackとpreviousViewIdはPage間で引き継がない
      */
-    protected Set getNextPageProperties(final String viewId) {
-        final Set set = new HashSet();
+    protected Map getNextPageProperties(final String viewId) {
+        final Map map = new HashMap();
         String nextPageName = namingConvention.fromPathToPageName(viewId);
         Class nextPageClass = namingConvention
                 .fromComponentNameToClass(nextPageName);
         if (nextPageClass == null) {
-            return set;
+            return map;
         }
         BeanDesc beanDesc = BeanDescFactory.getBeanDesc(nextPageClass);
         for (int i = 0; i < beanDesc.getPropertyDescSize(); ++i) {
@@ -167,14 +170,14 @@ public class SessionPagePersistence implements PagePersistence {
             if (JsfConstants.PREVIOUS_VIEW_ID.equals(propertyName)) {
                 continue;
             }
-            set.add(propertyName);
+            map.put(propertyName, pd.getPropertyType());
         }
-        return set;
+        return map;
     }
 
     protected Map convertPageData(FacesContext context, BeanDesc beanDesc,
             String previousViewId, PageDesc pageDesc, Object page,
-            Set nextPageProperties) {
+            Map nextPageProperties) {
         String methodName = UICommandUtil.getSubmittedCommand(context);
         ActionDesc actionDesc = actionDescCache.getActionDesc(previousViewId);
         if (methodName != null && actionDesc != null
@@ -192,7 +195,7 @@ public class SessionPagePersistence implements PagePersistence {
     }
 
     protected Map convertPageData(FacesContext context, BeanDesc beanDesc,
-            TakeOverDesc takeOverDesc, Object page, Set nextPageProperties) {
+            TakeOverDesc takeOverDesc, Object page, Map nextPageProperties) {
         TakeOverTypeDesc takeOverTypeDesc = takeOverDesc.getTakeOverTypeDesc();
         if (takeOverTypeDesc.equals(TakeOverTypeDescFactory.NEVER)) {
             return new HashMap();
@@ -213,13 +216,13 @@ public class SessionPagePersistence implements PagePersistence {
 
     protected Map convertIncludePageData(FacesContext context,
             BeanDesc beanDesc, Object page, String[] properties,
-            Set nextPageProperties) {
+            Map nextPageProperties) {
         Map map = new HashMap();
         for (int i = 0; i < properties.length; ++i) {
             String propertyName = properties[i];
             PropertyDesc pd = beanDesc.getPropertyDesc(propertyName);
             if (!pd.hasReadMethod()
-                    || !nextPageProperties.contains(pd.getPropertyName())) {
+                    || !nextPageProperties.containsKey(pd.getPropertyName())) {
                 continue;
             }
             putValue(map, page, pd);
@@ -229,12 +232,12 @@ public class SessionPagePersistence implements PagePersistence {
 
     protected Map convertExcludePageData(FacesContext context,
             BeanDesc beanDesc, Object page, String[] properties,
-            Set nextPageProperties) {
+            Map nextPageProperties) {
         Map map = new HashMap();
         for (int i = 0; i < beanDesc.getPropertyDescSize(); ++i) {
             PropertyDesc pd = beanDesc.getPropertyDesc(i);
             if (!pd.hasReadMethod()
-                    || !nextPageProperties.contains(pd.getPropertyName())) {
+                    || !nextPageProperties.containsKey(pd.getPropertyName())) {
                 continue;
             }
             if (ArrayUtil.contains(properties, pd.getPropertyName())) {
@@ -246,19 +249,28 @@ public class SessionPagePersistence implements PagePersistence {
     }
 
     protected Map convertDefaultPageData(FacesContext context,
-            BeanDesc beanDesc, Object page, Set nextPageProperties) {
+            BeanDesc beanDesc, Object page, Map nextPageProperties) {
         Map map = new HashMap();
         for (int i = 0; i < beanDesc.getPropertyDescSize(); ++i) {
-            PropertyDesc pd = beanDesc.getPropertyDesc(i);
+            final PropertyDesc pd = beanDesc.getPropertyDesc(i);
+            final String propertyName = pd.getPropertyName();
             if (!pd.hasReadMethod()
-                    || !nextPageProperties.contains(pd.getPropertyName())) {
+                    || !nextPageProperties.containsKey(propertyName)) {
                 continue;
             }
-            if (!pd.getPropertyType().isArray()
-                    && !Collection.class.isAssignableFrom(pd.getPropertyType())
-                    && !PagePersistenceUtil.isPersistenceType(pd
-                            .getPropertyType())) {
+            final Class thisPageType = pd.getPropertyType();
+            if (!thisPageType.isArray()
+                    && !Collection.class.isAssignableFrom(thisPageType)
+                    && !PagePersistenceUtil.isPersistenceType(thisPageType)) {
                 continue;
+            }
+            Class nextPageType = (Class) nextPageProperties.get(propertyName);
+            if (nextPageType != thisPageType) {
+                final Object[] args = new Object[] { propertyName,
+                        thisPageType.getName(), nextPageType.getName() };
+                final String message = MessageFormatter.getMessage("WTDA0201",
+                        args);
+                logger.debug(message);
             }
             putValue(map, page, pd);
         }
@@ -338,4 +350,5 @@ public class SessionPagePersistence implements PagePersistence {
     public void setActionDescCache(ActionDescCache actionDescCache) {
         this.actionDescCache = actionDescCache;
     }
+
 }
