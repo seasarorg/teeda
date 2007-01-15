@@ -30,17 +30,19 @@ GridY
 <table id="someGridY" border="0" cellspacing="0" cellpadding="0">
 	<tr>
 		<td>
-			<table id="someGridYLeftHeaderTable" cellspacing="0" cellpadding="0" class="gridTable">
-				<thead>
-					<tr>
-						<th><div class="gridHeader" style="overflow:hidden; width:40px;"><nobr>th1</nobr></div></th>
-						<th><div class="gridHeader" style="overflow:hidden; width:40px;"><nobr>th2</nobr></div></th>
-					</tr>
-				</thead>
-			</table>
+			<div id="someGridYLeftHeader" class="gridLeftHeader">
+				<table id="someGridYLeftHeaderTable" cellspacing="0" cellpadding="0" class="gridTable">
+					<thead>
+						<tr>
+							<th><div class="gridHeader" style="overflow:hidden; width:40px;"><nobr>th1</nobr></div></th>
+							<th><div class="gridHeader" style="overflow:hidden; width:40px;"><nobr>th2</nobr></div></th>
+						</tr>
+					</thead>
+				</table>
+			</div>
 		</td>
 		<td>
-			<div id="someGridYRightHeader">
+			<div id="someGridYRightHeader" class="gridRightHeader">
 				<table id="someGridYRightHeaderTable" cellspacing="0" cellpadding="0" class="gridTable">
 					<thead>
 						<tr>
@@ -56,7 +58,7 @@ GridY
 	</tr>
 	<tr>
 		<td style="vertical-align:top;">
-			<div id="someGridYLeftBody" style="overflow:hidden; height:138px;">
+			<div id="someGridYLeftBody" class="gridLeftBody" style="overflow:hidden; height:138px;">
 				<table id="someGridYLeftBodyTable" cellspacing="0" cellpadding="0" class="gridTable">
 					<tbody>
 						<tr class="row_odd">
@@ -92,7 +94,7 @@ GridY
 			</div>
 		</td>
 		<td style="vertical-align:top;">
-			<div id="someGridYRightBody" style="overflow-y:scroll; height:138px;"
+			<div id="someGridYRightBody" class="gridRightBody" style="overflow-y:scroll; height:138px;"
 				onscroll="document.getElementById('someGridYLeftBody').scrollTop=this.scrollTop;">
 				<table id="someGridYRightBodyTable" cellspacing="0" cellpadding="0" class="gridTable">
 					<tbody>

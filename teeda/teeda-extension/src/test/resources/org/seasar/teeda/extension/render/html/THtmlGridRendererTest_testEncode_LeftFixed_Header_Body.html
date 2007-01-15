@@ -30,17 +30,19 @@ Grid
 <table id="someGrid" border="0" cellspacing="0" cellpadding="0">
 	<tr>
 		<td>
-			<table id="someGridLeftHeaderTable" cellspacing="0" cellpadding="0" class="gridTable">
-				<thead>
-					<tr>
-						<th><div class="gridHeader" style="overflow:hidden; width:40px;"><nobr>th1</nobr></div></th>
-						<th><div class="gridHeader" style="overflow:hidden; width:40px;"><nobr>th2</nobr></div></th>
-					</tr>
-				</thead>
-			</table>
+			<div id="someGridLeftHeader" class="gridLeftHeader">
+				<table id="someGridLeftHeaderTable" cellspacing="0" cellpadding="0" class="gridTable">
+					<thead>
+						<tr>
+							<th><div class="gridHeader" style="overflow:hidden; width:40px;"><nobr>th1</nobr></div></th>
+							<th><div class="gridHeader" style="overflow:hidden; width:40px;"><nobr>th2</nobr></div></th>
+						</tr>
+					</thead>
+				</table>
+			</div>
 		</td>
 		<td>
-			<div id="someGridRightHeader">
+			<div id="someGridRightHeader" class="gridRightHeader">
 				<table id="someGridRightHeaderTable" cellspacing="0" cellpadding="0" class="gridTable">
 					<thead>
 						<tr>
@@ -56,7 +58,7 @@ Grid
 	</tr>
 	<tr>
 		<td style="vertical-align:top;">
-			<div id="someGridLeftBody">
+			<div id="someGridLeftBody" class="gridLeftBody">
 				<table id="someGridLeftBodyTable" cellspacing="0" cellpadding="0" class="gridTable">
 					<tbody>
 						<tr class="row_odd">
@@ -92,7 +94,7 @@ Grid
 			</div>
 		</td>
 		<td style="vertical-align:top;">
-			<div id="someGridRightBody">
+			<div id="someGridRightBody" class="gridRightBody">
 				<table id="someGridRightBodyTable" cellspacing="0" cellpadding="0" class="gridTable">
 					<tbody>
 						<tr class="row_odd">

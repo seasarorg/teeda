@@ -54,8 +54,6 @@ import org.xml.sax.SAXException;
  */
 public class THtmlGridRendererTest extends RendererTest {
 
-    // TODO making
-
     private THtmlGridRenderer renderer;
 
     private MockHtmlGrid htmlGrid;
@@ -64,15 +62,11 @@ public class THtmlGridRendererTest extends RendererTest {
 
     private HtmlInputTextRenderer inputTextRenderer;
 
-    //private THtmlGridInputTextRenderer gridInputTextRenderer;
-
     protected void setUp() throws Exception {
         super.setUp();
         renderer = (THtmlGridRenderer) createRenderer();
         outputTextRenderer = new HtmlOutputTextRenderer();
         inputTextRenderer = new HtmlInputTextRenderer();
-        //gridInputTextRenderer = new THtmlGridInputTextRenderer();
-        //gridInputTextRenderer.setRenderAttributes(getRenderAttributes());
         htmlGrid = new MockHtmlGrid();
         htmlGrid.setParent(new UIBody());
         htmlGrid.setRenderer(renderer);

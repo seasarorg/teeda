@@ -67,6 +67,14 @@ public class THtmlGridRenderer extends TForEachRenderer implements
 
     private static final String GRID_HEADER_CLASS_NAME = "gridHeader";
 
+    private static final String GRID_LEFT_HEADER_CLASS_NAME = "gridLeftHeader";
+
+    private static final String GRID_RIGHT_HEADER_CLASS_NAME = "gridRightHeader";
+
+    private static final String GRID_LEFT_BODY_CLASS_NAME = "gridLeftBody";
+
+    private static final String GRID_RIGHT_BODY_CLASS_NAME = "gridRightBody";
+
     private static final String GRID_CELL_CLASS_NAME = "gridCell";
 
     private static final String LEFT_FIXED_CLASS_NAME = "T_leftFixed";
@@ -265,6 +273,12 @@ public class THtmlGridRenderer extends TForEachRenderer implements
 
         // encodeLeftHeader
         if (attribute.hasLeftFixCols()) {
+            writer.startElement(JsfConstants.DIV_ELEM, header);
+            RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR, id
+                    + LEFT_HEADER);
+            RendererUtil.renderAttribute(writer, JsfConstants.CLASS_ATTR,
+                    GRID_LEFT_HEADER_CLASS_NAME);
+
             writer.startElement(JsfConstants.TABLE_ELEM, header);
             RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR, id
                     + LEFT_HEADER_TABLE);
@@ -283,6 +297,7 @@ public class THtmlGridRenderer extends TForEachRenderer implements
 
             writer.endElement(JsfConstants.THEAD_ELEM);
             writer.endElement(JsfConstants.TABLE_ELEM);
+            writer.endElement(JsfConstants.DIV_ELEM);
             writer.endElement(JsfConstants.TD_ELEM);
 
             writer.startElement(JsfConstants.TD_ELEM, header);
@@ -293,6 +308,8 @@ public class THtmlGridRenderer extends TForEachRenderer implements
 
         RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR, id
                 + RIGHT_HEADER);
+        RendererUtil.renderAttribute(writer, JsfConstants.CLASS_ATTR,
+                GRID_RIGHT_HEADER_CLASS_NAME);
         if (htmlGrid.isScrollHorizontal()) {
             RendererUtil.renderAttribute(writer, JsfConstants.STYLE_ATTR,
                     "overflow:hidden;");
@@ -483,6 +500,8 @@ public class THtmlGridRenderer extends TForEachRenderer implements
             writer.startElement(JsfConstants.DIV_ELEM, body);
             RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR, id
                     + LEFT_BODY);
+            RendererUtil.renderAttribute(writer, JsfConstants.CLASS_ATTR,
+                    GRID_LEFT_BODY_CLASS_NAME);
             if (htmlGrid.isScrollVertical()) {
                 RendererUtil.renderAttribute(writer, JsfConstants.STYLE_ATTR,
                         "overflow:hidden; height:"
@@ -532,6 +551,8 @@ public class THtmlGridRenderer extends TForEachRenderer implements
         writer.startElement(JsfConstants.DIV_ELEM, body);
         RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR, id
                 + RIGHT_BODY);
+        RendererUtil.renderAttribute(writer, JsfConstants.CLASS_ATTR,
+                GRID_RIGHT_BODY_CLASS_NAME);
         if (htmlGrid.isScrollHorizontal() && htmlGrid.isScrollVertical()) {
             RendererUtil.renderAttribute(writer, JsfConstants.STYLE_ATTR,
                     "overflow:scroll; height:" + attribute.getRightBodyHeight()
@@ -662,7 +683,6 @@ public class THtmlGridRenderer extends TForEachRenderer implements
             final THtmlGridRenderer.GridAttribute attribute, final int columnNo)
             throws IOException {
         writer.startElement(JsfConstants.TD_ELEM, td);
-        final String rowspan = td.getRowspan();
         renderRemainAttributes(td, writer, tdIgnoreAttribute);
         writer.startElement(JsfConstants.DIV_ELEM, td);
         writer.writeAttribute(JsfConstants.CLASS_ATTR,
