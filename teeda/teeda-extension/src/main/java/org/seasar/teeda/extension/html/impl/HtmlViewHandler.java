@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -45,6 +45,7 @@ import javax.servlet.jsp.PageContext;
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.framework.container.servlet.S2ContainerServlet;
+import org.seasar.framework.convention.NamingConvention;
 import org.seasar.framework.exception.IORuntimeException;
 import org.seasar.teeda.core.application.ViewHandlerImpl;
 import org.seasar.teeda.core.util.DIContainerUtil;
@@ -55,6 +56,7 @@ import org.seasar.teeda.core.util.PostbackUtil;
 import org.seasar.teeda.core.util.ServletExternalContextUtil;
 import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.component.RenderPreparableUtil;
+import org.seasar.teeda.extension.exception.IllegalPageTransitionException;
 import org.seasar.teeda.extension.exception.JspRuntimeException;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ActionDescCache;
@@ -64,6 +66,7 @@ import org.seasar.teeda.extension.html.PagePersistence;
 import org.seasar.teeda.extension.html.TagProcessor;
 import org.seasar.teeda.extension.html.TagProcessorCache;
 import org.seasar.teeda.extension.jsp.PageContextImpl;
+import org.seasar.teeda.extension.util.PageTransitionUtil;
 
 /**
  * @author higa
@@ -83,6 +86,8 @@ public class HtmlViewHandler extends ViewHandlerImpl {
 
     private PagePersistence pagePersistence;
 
+    private NamingConvention nc;
+
     public void setTagProcessorCache(TagProcessorCache tagProcessorCache) {
         this.tagProcessorCache = tagProcessorCache;
     }
@@ -97,6 +102,10 @@ public class HtmlViewHandler extends ViewHandlerImpl {
 
     public void setPagePersistence(PagePersistence pagePersistence) {
         this.pagePersistence = pagePersistence;
+    }
+
+    public void setNamingConvention(NamingConvention nc) {
+        this.nc = nc;
     }
 
     public UIViewRoot restoreView(FacesContext context, String viewId) {
@@ -140,6 +149,9 @@ public class HtmlViewHandler extends ViewHandlerImpl {
         ExternalContext externalContext = context.getExternalContext();
         String path = ExternalContextUtil.getViewId(externalContext);
         renderView(context, path);
+        if (ExternalContextUtil.isRedirectionTrue(externalContext)) {
+            HtmlNavigationHandler.clearRedirectingPath(externalContext);
+        }
     }
 
     protected void renderView(FacesContext context, String path)
@@ -181,9 +193,23 @@ public class HtmlViewHandler extends ViewHandlerImpl {
             String methodName) {
         String next = null;
         if (target != null) {
-            final BeanDesc beanDesc = BeanDescFactory.getBeanDesc(target
-                    .getClass());
-            next = (String) beanDesc.invoke(target, methodName, null);
+            final Class pageOrActionClass = target.getClass();
+            final BeanDesc beanDesc = BeanDescFactory
+                    .getBeanDesc(pageOrActionClass);
+            Object ret = beanDesc.invoke(target, methodName, null);
+            if (ret instanceof Class) {
+                final Class retClass = (Class) ret;
+                final String pageSuffix = nc.getPageSuffix();
+                if (retClass != null
+                        && !retClass.getName().endsWith(pageSuffix)) {
+                    throw new IllegalPageTransitionException(retClass);
+                }
+                next = PageTransitionUtil.getNextPageTransition(
+                        pageOrActionClass, retClass, nc);
+
+            } else {
+                next = (String) ret;
+            }
             if (next != null) {
                 if (context.getViewRoot() == null) {
                     UIViewRoot root = super.createView(context, path);
