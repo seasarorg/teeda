@@ -22,6 +22,7 @@ import javax.faces.application.ViewHandler;
 import javax.faces.context.FacesContext;
 import javax.faces.el.EvaluationException;
 import javax.faces.event.PhaseId;
+import javax.faces.internal.scope.RedirectScope;
 
 import org.seasar.teeda.core.lifecycle.AbstractPhase;
 import org.seasar.teeda.core.util.FacesContextUtil;
@@ -45,6 +46,10 @@ public class RenderResponsePhase extends AbstractPhase {
                 throw (Error) cause;
             } else {
                 throw ex;
+            }
+        } finally {
+            if (RedirectScope.isRedirecting(context)) {
+                RedirectScope.removeContext(context);
             }
         }
     }

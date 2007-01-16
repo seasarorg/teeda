@@ -13,7 +13,7 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package javax.faces.internal;
+package javax.faces.internal.scope;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,6 +21,7 @@ import java.util.Map;
 import javax.faces.FacesException;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.faces.internal.WindowIdUtil;
 
 import org.seasar.framework.util.LruHashMap;
 
@@ -28,17 +29,29 @@ import org.seasar.framework.util.LruHashMap;
  * @author higa
  *
  */
-public abstract class SubApplicationScope {
+public class VariableScope {
 
-    private static final int WINDOW_SIZE = 20;
+    private String key;
 
-    private static final String CONTEXTS_KEY = SubApplicationScope.class
-            .getName();
+    private int windowSize = 20;
 
-    protected SubApplicationScope() {
+    public VariableScope(String key) {
+        this.key = key;
     }
 
-    public static Map getContext(FacesContext context) throws FacesException {
+    public VariableScope(String key, int windowSize) {
+        this.key = key;
+        this.windowSize = windowSize;
+    }
+
+    public Map getContext(FacesContext context) throws FacesException {
+        ExternalContext extCtx = context.getExternalContext();
+        Map contexts = getContexts(extCtx);
+        String wid = WindowIdUtil.getWindowId(extCtx);
+        return (Map) contexts.get(wid);
+    }
+
+    public Map getOrCreateContext(FacesContext context) throws FacesException {
         ExternalContext extCtx = context.getExternalContext();
         Map contexts = getContexts(extCtx);
         String wid = WindowIdUtil.getWindowId(extCtx);
@@ -50,20 +63,26 @@ public abstract class SubApplicationScope {
         return ctx;
     }
 
-    public static void removeContext(FacesContext context, String wid)
+    public void removeContext(FacesContext context) throws FacesException {
+        ExternalContext extCtx = context.getExternalContext();
+        String wid = WindowIdUtil.getWindowId(extCtx);
+        removeContext(context, wid);
+    }
+
+    public void removeContext(FacesContext context, String wid)
             throws FacesException {
         ExternalContext extCtx = context.getExternalContext();
         Map contexts = getContexts(extCtx);
         contexts.remove(wid);
     }
 
-    protected static Map getContexts(ExternalContext externalContext)
+    protected Map getContexts(ExternalContext externalContext)
             throws FacesException {
         Map sessionMap = externalContext.getSessionMap();
-        Map contexts = (Map) sessionMap.get(CONTEXTS_KEY);
+        Map contexts = (Map) sessionMap.get(key);
         if (contexts == null) {
-            contexts = new LruHashMap(WINDOW_SIZE);
-            sessionMap.put(CONTEXTS_KEY, contexts);
+            contexts = new LruHashMap(windowSize);
+            sessionMap.put(key, contexts);
         }
         return contexts;
     }

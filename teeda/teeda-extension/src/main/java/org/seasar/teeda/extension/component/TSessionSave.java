@@ -22,7 +22,7 @@ import java.util.Map;
 import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
-import javax.faces.internal.ViewScope;
+import javax.faces.internal.scope.PageScope;
 
 import org.seasar.framework.container.hotdeploy.HotdeployUtil;
 import org.seasar.framework.util.AssertionUtil;
@@ -66,14 +66,14 @@ public class TSessionSave extends UIInput {
     }
 
     protected Map getSaveValues(FacesContext context) {
-        Map viewContext = ViewScope.getContext(context);
+        Map viewContext = PageScope.getOrCreateContext(context);
         return (Map) viewContext.get(SESSION_SAVE);
     }
 
     protected Map getOrCreateSaveValues(FacesContext context) {
         Map saveValues = getSaveValues(context);
         if (saveValues == null) {
-            Map viewContext = ViewScope.getContext(context);
+            Map viewContext = PageScope.getOrCreateContext(context);
             saveValues = new HashMap();
             viewContext.put(SESSION_SAVE, saveValues);
         }

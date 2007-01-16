@@ -245,14 +245,6 @@ public class NavigationHandlerImplTest extends TeedaTestCase {
 
     }
 
-    public void testAddRedirectParameter() {
-        assertEquals("/logout.jsp?redirect=true", NavigationHandlerImpl
-                .addRedirectParameter("/logout.jsp"));
-        assertEquals("/logout.jsp?aaa=111&redirect=true", NavigationHandlerImpl
-                .addRedirectParameter("/logout.jsp?aaa=111"));
-
-    }
-
     public static NavigationContext createNavigationContext(String fromViewId,
             String fromAction, String outcome, String toViewId,
             boolean isRedirect) {

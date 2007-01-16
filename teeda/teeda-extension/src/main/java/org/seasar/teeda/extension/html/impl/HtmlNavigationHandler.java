@@ -34,10 +34,6 @@ import org.seasar.teeda.extension.html.PagePersistence;
  */
 public class HtmlNavigationHandler extends NavigationHandlerImpl {
 
-    private static final String REDIRECTING_PATH = HtmlNavigationHandler.class
-            .getName()
-            + ".REDIRECTING_PATH";
-
     private PagePersistence pagePersistence;
 
     public void setPagePersistence(PagePersistence pagePersistence) {
@@ -48,24 +44,7 @@ public class HtmlNavigationHandler extends NavigationHandlerImpl {
             ExternalContext externalContext, String redirectPath,
             String newViewId) {
         pagePersistence.save(context, newViewId);
-        setupRedirectingPath(externalContext, redirectPath);
         super.redirect(context, externalContext, redirectPath, newViewId);
-    }
-
-    protected void setupRedirectingPath(ExternalContext extCtx,
-            String redirectPath) {
-        Map sessionMap = extCtx.getSessionMap();
-        sessionMap.put(REDIRECTING_PATH, redirectPath);
-    }
-
-    public static void clearRedirectingPath(ExternalContext extCtx) {
-        Map sessionMap = extCtx.getSessionMap();
-        sessionMap.remove(REDIRECTING_PATH);
-    }
-
-    public static String getRedirectingPath(ExternalContext extCtx) {
-        Map sessionMap = extCtx.getSessionMap();
-        return (String) sessionMap.get(REDIRECTING_PATH);
     }
 
     public void handleNavigation(FacesContext context, String fromAction,
@@ -103,7 +82,7 @@ public class HtmlNavigationHandler extends NavigationHandlerImpl {
 
     protected static String calcPathFromOutcome(String viewId, String outcome) {
         if (outcome == null) {
-            return viewId;
+            return null;
         }
         int pos = viewId.lastIndexOf('/');
         int pos2 = viewId.lastIndexOf('.');

@@ -25,8 +25,8 @@ import javax.faces.application.Application;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseId;
-import javax.faces.internal.ViewScope;
 import javax.faces.internal.WindowIdUtil;
+import javax.faces.internal.scope.PageScope;
 import javax.servlet.http.Cookie;
 
 import org.seasar.framework.mock.servlet.MockHttpServletRequest;
@@ -107,10 +107,10 @@ public class RestoreViewPhaseTest extends TeedaTestCase {
                 WindowIdUtil.TEEDA_WID, wid));
         phase.saveViewIdToSession(sessionMap, wid, "hoge.html");
         getExternalContext().setRequestPathInfo("hoge2.html");
-        Map ctx = ViewScope.getContext(getFacesContext());
+        Map ctx = PageScope.getOrCreateContext(getFacesContext());
         ctx.put("aaa", "111");
         phase.executePhase(getFacesContext());
-        ctx = ViewScope.getContext(getFacesContext());
+        ctx = PageScope.getOrCreateContext(getFacesContext());
         assertNull(ctx.get("aaa"));
     }
 

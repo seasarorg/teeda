@@ -24,6 +24,7 @@ import javax.faces.application.ViewHandler;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.faces.internal.scope.RedirectScope;
 
 import org.seasar.framework.util.AssertionUtil;
 import org.seasar.teeda.core.application.navigation.NavigationCaseContext;
@@ -38,8 +39,6 @@ import org.seasar.teeda.core.util.PortletUtil;
  * @author higa
  */
 public class NavigationHandlerImpl extends NavigationHandler {
-
-    private static final String REDIRECT_PARAM = "redirect=true";
 
     public void handleNavigation(FacesContext context, String fromAction,
             String outcome) {
@@ -66,21 +65,16 @@ public class NavigationHandlerImpl extends NavigationHandler {
 
     protected String getRedirectActionPath(FacesContext context,
             ViewHandler viewHandler, String newViewId) {
-        return addRedirectParameter(viewHandler
-                .getActionURL(context, newViewId));
-    }
-
-    protected static String addRedirectParameter(String path) {
-        int index = path.lastIndexOf('?');
-        if (index < 0) {
-            return path + "?" + REDIRECT_PARAM;
-        }
-        return path + "&" + REDIRECT_PARAM;
+        return viewHandler.getActionURL(context, newViewId);
     }
 
     protected void redirect(FacesContext context,
             ExternalContext externalContext, String redirectPath,
             String newViewId) {
+        if (RedirectScope.isRedirecting(context)) {
+            throw new IllegalStateException("Already redirecting");
+        }
+        RedirectScope.setRedirectingPath(context, redirectPath);
         NavigationHandlerUtil.redirect(context, redirectPath);
     }
 

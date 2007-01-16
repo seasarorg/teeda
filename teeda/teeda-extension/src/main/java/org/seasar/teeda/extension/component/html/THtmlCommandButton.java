@@ -16,13 +16,12 @@
 package org.seasar.teeda.extension.component.html;
 
 import javax.faces.component.html.HtmlCommandButton;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.FacesEvent;
+import javax.faces.internal.scope.RedirectScope;
 
 import org.seasar.teeda.core.util.NavigationHandlerUtil;
-import org.seasar.teeda.extension.html.impl.HtmlNavigationHandler;
 import org.seasar.teeda.extension.util.TransactionTokenUtil;
 
 /**
@@ -37,9 +36,8 @@ public class THtmlCommandButton extends HtmlCommandButton {
             if (TransactionTokenUtil.verify(context)) {
                 super.broadcast(event);
             } else {
-                ExternalContext extCtx = context.getExternalContext();
-                String redirectingPath = HtmlNavigationHandler
-                        .getRedirectingPath(extCtx);
+                String redirectingPath = RedirectScope
+                        .getRedirectingPath(context);
                 if (redirectingPath != null) {
                     NavigationHandlerUtil.redirect(context, redirectingPath);
                 }

@@ -24,10 +24,10 @@ import javax.faces.component.UIViewRoot;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseId;
-import javax.faces.internal.SubApplicationScope;
 import javax.faces.internal.SubApplicationUtil;
-import javax.faces.internal.ViewScope;
 import javax.faces.internal.WindowIdUtil;
+import javax.faces.internal.scope.PageScope;
+import javax.faces.internal.scope.SubApplicationScope;
 
 import org.seasar.framework.util.LruHashMap;
 import org.seasar.teeda.core.JsfConstants;
@@ -67,7 +67,7 @@ public class RestoreViewPhase extends AbstractPhase {
         final String viewId = holder.getCurrentViewId();
         final String wid = holder.getWid();
         if (!viewId.equals(holder.previousViewId)) {
-            ViewScope.removeContext(context, wid);
+            PageScope.removeContext(context, wid);
         }
         String subAppPath = SubApplicationUtil.getSubApplicationPath(viewId);
         String previousSubAppPath = SubApplicationUtil

@@ -26,9 +26,9 @@ import javax.faces.component.UIViewRoot;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.internal.FacesMessageUtil;
-import javax.faces.internal.SubApplicationScope;
 import javax.faces.internal.UICommandUtil;
 import javax.faces.internal.WindowIdUtil;
+import javax.faces.internal.scope.SubApplicationScope;
 
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.PropertyDesc;
@@ -283,14 +283,14 @@ public class SessionPagePersistence implements PagePersistence {
     }
 
     protected Map getSaveValues(FacesContext context) {
-        Map viewContext = SubApplicationScope.getContext(context);
+        Map viewContext = SubApplicationScope.getOrCreateContext(context);
         return (Map) viewContext.get(SUB_APPLICATION_SCOPE_KEY);
     }
 
     protected Map getOrCreateSaveValues(FacesContext context) {
         Map saveValues = getSaveValues(context);
         if (saveValues == null) {
-            Map viewContext = SubApplicationScope.getContext(context);
+            Map viewContext = SubApplicationScope.getOrCreateContext(context);
             saveValues = new HashMap();
             viewContext.put(SUB_APPLICATION_SCOPE_KEY, saveValues);
         }
