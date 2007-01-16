@@ -32,8 +32,14 @@ public abstract class SubApplicationScope {
     protected SubApplicationScope() {
     }
 
-    public static Map getOrCreateContext(FacesContext context) throws FacesException {
+    public static Map getOrCreateContext(FacesContext context)
+            throws FacesException {
         return scope.getOrCreateContext(context);
+    }
+
+    public static void removeContext(FacesContext context)
+            throws FacesException {
+        scope.removeContext(context);
     }
 
     public static void removeContext(FacesContext context, String wid)
