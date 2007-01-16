@@ -28,7 +28,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.internal.FacesMessageUtil;
 import javax.faces.internal.UICommandUtil;
 import javax.faces.internal.WindowIdUtil;
-import javax.faces.internal.scope.RedirectScope;
 import javax.faces.internal.scope.SubApplicationScope;
 
 import org.seasar.framework.beans.BeanDesc;
@@ -72,8 +71,6 @@ public class SessionPagePersistence implements PagePersistence {
 
     private static final String ERROR_MESSAGE_PERSISTE_KEY = "teeda.FacesMessages";
 
-    private static final String PREVIOUS_METHOD_KEY = "teeda.PREVIOUS_METHOD";
-
     private static final String SUB_APPLICATION_SCOPE_KEY = SessionPagePersistence.class
             .getName();
 
@@ -102,22 +99,9 @@ public class SessionPagePersistence implements PagePersistence {
         if (saveValues == null) {
             return;
         }
-        try {
-            final Map requestMap = extCtx.getRequestMap();
-            restorePageDataMap(saveValues, requestMap);
-            FacesMessageUtil.restoreFacesMessagesFromMap(saveValues, context);
-        } finally {
-            clearIfPreviousMethodIsDofinish(context);
-        }
-    }
-
-    protected void clearIfPreviousMethodIsDofinish(FacesContext context) {
-        Map redirectScopeContext = RedirectScope.getOrCreateContext(context);
-        String methodName = (String) redirectScopeContext
-                .remove(PREVIOUS_METHOD_KEY);
-        if ("doFinish".equals(methodName)) {
-            SubApplicationScope.removeContext(context);
-        }
+        final Map requestMap = extCtx.getRequestMap();
+        restorePageDataMap(saveValues, requestMap);
+        FacesMessageUtil.restoreFacesMessagesFromMap(saveValues, context);
     }
 
     protected void saveFacesMessage(FacesContext from, Map to) {
@@ -211,9 +195,9 @@ public class SessionPagePersistence implements PagePersistence {
             return convertDefaultPageData(context, beanDesc, page,
                     nextPageProperties);
         } finally {
-            Map redirectScopeContext = RedirectScope
-                    .getOrCreateContext(context);
-            redirectScopeContext.put(PREVIOUS_METHOD_KEY, methodName);
+            if (methodName.equals("doFinish")) {
+                SubApplicationScope.removeContext(context);
+            }
         }
     }
 
