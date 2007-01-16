@@ -28,6 +28,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.internal.FacesMessageUtil;
 import javax.faces.internal.UICommandUtil;
 import javax.faces.internal.WindowIdUtil;
+import javax.faces.internal.scope.RedirectScope;
 import javax.faces.internal.scope.SubApplicationScope;
 
 import org.seasar.framework.beans.BeanDesc;
@@ -69,7 +70,9 @@ public class SessionPagePersistence implements PagePersistence {
 
     private NamingConvention namingConvention;
 
-    private static final String ERROR_MESSAGE_PERSISTE_KEY = "Teeda.FacesMessages";
+    private static final String ERROR_MESSAGE_PERSISTE_KEY = "teeda.FacesMessages";
+
+    private static final String PREVIOUS_METHOD_KEY = "teeda.PREVIOUS_METHOD";
 
     private static final String SUB_APPLICATION_SCOPE_KEY = SessionPagePersistence.class
             .getName();
@@ -99,9 +102,22 @@ public class SessionPagePersistence implements PagePersistence {
         if (saveValues == null) {
             return;
         }
-        final Map requestMap = extCtx.getRequestMap();
-        restorePageDataMap(saveValues, requestMap);
-        FacesMessageUtil.restoreFacesMessagesFromMap(saveValues, context);
+        try {
+            final Map requestMap = extCtx.getRequestMap();
+            restorePageDataMap(saveValues, requestMap);
+            FacesMessageUtil.restoreFacesMessagesFromMap(saveValues, context);
+        } finally {
+            clearIfPreviousMethodIsDofinish(context);
+        }
+    }
+
+    protected void clearIfPreviousMethodIsDofinish(FacesContext context) {
+        Map redirectScopeContext = RedirectScope.getOrCreateContext(context);
+        String methodName = (String) redirectScopeContext
+                .remove(PREVIOUS_METHOD_KEY);
+        if ("doFinish".equals(methodName)) {
+            SubApplicationScope.removeContext(context);
+        }
     }
 
     protected void saveFacesMessage(FacesContext from, Map to) {
@@ -178,20 +194,27 @@ public class SessionPagePersistence implements PagePersistence {
     protected Map convertPageData(FacesContext context, BeanDesc beanDesc,
             String previousViewId, PageDesc pageDesc, Object page,
             Map nextPageProperties) {
-        String methodName = UICommandUtil.getSubmittedCommand(context);
-        ActionDesc actionDesc = actionDescCache.getActionDesc(previousViewId);
-        if (methodName != null && actionDesc != null
-                && actionDesc.hasTakeOverDesc(methodName)) {
-            return convertPageData(context, beanDesc, actionDesc
-                    .getTakeOverDesc(methodName), page, nextPageProperties);
+        final String methodName = UICommandUtil.getSubmittedCommand(context);
+        try {
+            final ActionDesc actionDesc = actionDescCache
+                    .getActionDesc(previousViewId);
+            if (methodName != null && actionDesc != null
+                    && actionDesc.hasTakeOverDesc(methodName)) {
+                return convertPageData(context, beanDesc, actionDesc
+                        .getTakeOverDesc(methodName), page, nextPageProperties);
+            }
+            if (methodName != null && pageDesc != null
+                    && pageDesc.hasTakeOverDesc(methodName)) {
+                return convertPageData(context, beanDesc, pageDesc
+                        .getTakeOverDesc(methodName), page, nextPageProperties);
+            }
+            return convertDefaultPageData(context, beanDesc, page,
+                    nextPageProperties);
+        } finally {
+            Map redirectScopeContext = RedirectScope
+                    .getOrCreateContext(context);
+            redirectScopeContext.put(PREVIOUS_METHOD_KEY, methodName);
         }
-        if (methodName != null && pageDesc != null
-                && pageDesc.hasTakeOverDesc(methodName)) {
-            return convertPageData(context, beanDesc, pageDesc
-                    .getTakeOverDesc(methodName), page, nextPageProperties);
-        }
-        return convertDefaultPageData(context, beanDesc, page,
-                nextPageProperties);
     }
 
     protected Map convertPageData(FacesContext context, BeanDesc beanDesc,
