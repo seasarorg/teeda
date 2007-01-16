@@ -195,7 +195,7 @@ public class SessionPagePersistence implements PagePersistence {
             return convertDefaultPageData(context, beanDesc, page,
                     nextPageProperties);
         } finally {
-            if (methodName != null && methodName.equals("doFinish")) {
+            if (methodName != null && methodName.startsWith("doFinish")) {
                 SubApplicationScope.removeContext(context);
             }
         }
