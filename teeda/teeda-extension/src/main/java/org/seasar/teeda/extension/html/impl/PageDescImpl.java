@@ -27,6 +27,7 @@ import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.annotation.handler.ConverterAnnotationHandlerFactory;
 import org.seasar.teeda.extension.annotation.handler.FacesMessageAnnotationHandlerFactory;
+import org.seasar.teeda.extension.annotation.handler.ScopeAnnotationHandlerFactory;
 import org.seasar.teeda.extension.annotation.handler.TakeOverDescAnnotationHandlerFactory;
 import org.seasar.teeda.extension.annotation.handler.ValidatorAnnotationHandlerFactory;
 import org.seasar.teeda.extension.html.PageDesc;
@@ -49,6 +50,8 @@ public class PageDescImpl implements PageDesc {
     private Set methodNames;
 
     private Map takeOverDescs;
+
+    private Map propertyScopes;
 
     private File file;
 
@@ -95,6 +98,8 @@ public class PageDescImpl implements PageDesc {
                 .registerConverters(pageName);
         takeOverDescs = TakeOverDescAnnotationHandlerFactory
                 .getAnnotationHandler().getTakeOverDescs(pageName);
+        propertyScopes = ScopeAnnotationHandlerFactory.getAnnotationHandler()
+                .getPropertyScopes(pageName);
         FacesMessageAnnotationHandlerFactory.getAnnotationHandler()
                 .registerFacesMessages(pageName);
     }
@@ -109,6 +114,14 @@ public class PageDescImpl implements PageDesc {
 
     protected boolean isDynamicProperty(PropertyDesc pd) {
         return pd.hasReadMethod();
+    }
+
+    public boolean isRedirectScopeProperty(String name) {
+        Integer scope = (Integer) propertyScopes.get(name);
+        if (scope == null) {
+            return false;
+        }
+        return ExtensionConstants.REDIRECT_SCOPE.equals(scope);
     }
 
     public boolean hasProperty(String name) {

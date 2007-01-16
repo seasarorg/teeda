@@ -93,4 +93,10 @@ public class PageDescImplTest extends TeedaExtensionTestCase {
         assertEquals("aaa", props[0]);
         assertEquals("bbb", props[1]);
     }
+
+    public void testIsRedirectScopeProperty() throws Exception {
+        PageDesc pd = createPageDesc(FooPage.class, "fooPage");
+        assertTrue(pd.isRedirectScopeProperty("aaa"));
+        assertFalse(pd.isRedirectScopeProperty("bbb"));
+    }
 }

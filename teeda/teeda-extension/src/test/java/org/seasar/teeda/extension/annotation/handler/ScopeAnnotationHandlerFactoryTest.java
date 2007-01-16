@@ -13,25 +13,19 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.extension.html;
+package org.seasar.teeda.extension.annotation.handler;
 
-public interface PageDesc {
+import junit.framework.TestCase;
 
-    String getPageName();
+/**
+ * @author higa
+ * 
+ */
+public class ScopeAnnotationHandlerFactoryTest extends TestCase {
 
-    boolean hasProperty(String name);
-
-    boolean hasItemsProperty(String name);
-
-    boolean hasDynamicProperty(String name);
-
-    boolean isRedirectScopeProperty(String name);
-
-    boolean hasMethod(String name);
-
-    boolean hasTakeOverDesc(String methodName);
-
-    TakeOverDesc getTakeOverDesc(String methodName);
-
-    boolean isModified();
+    public void testGetAnnotationHandler() throws Exception {
+        ScopeAnnotationHandler handler = ScopeAnnotationHandlerFactory
+                .getAnnotationHandler();
+        assertEquals(ConstantScopeAnnotationHandler.class, handler.getClass());
+    }
 }

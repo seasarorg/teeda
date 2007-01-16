@@ -19,6 +19,8 @@ import java.util.List;
 
 public class FooPage {
 
+    public static final String REDIRECT_SCOPE = "aaa";
+
     private boolean initialized = false;
 
     private boolean prerendered = false;

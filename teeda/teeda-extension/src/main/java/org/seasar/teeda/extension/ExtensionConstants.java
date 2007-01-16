@@ -133,4 +133,11 @@ public interface ExtensionConstants {
     String NAME_SEPARATOR = String.valueOf(NamingContainer.SEPARATOR_CHAR);
 
     String TRANSITION_BY_TEEDA_PREPARED_METHOD = "TRANSITION_TEEDA_PREPARED";
+
+    Integer REDIRECT_SCOPE = new Integer(1);
+
+    Integer PAGE_SCOPE = new Integer(2);
+
+    Integer SUBAPP_SCOPE = new Integer(3);
+
 }

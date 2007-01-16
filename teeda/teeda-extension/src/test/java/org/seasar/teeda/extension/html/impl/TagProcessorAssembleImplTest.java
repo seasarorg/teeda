@@ -454,6 +454,10 @@ public class TagProcessorAssembleImplTest extends TeedaExtensionTestCase {
             return false;
         }
 
+        public boolean isRedirectScopeProperty(String name) {
+            return false;
+        }
+
         public TakeOverDesc getTakeOverDesc(String methodName) {
             return null;
         }
