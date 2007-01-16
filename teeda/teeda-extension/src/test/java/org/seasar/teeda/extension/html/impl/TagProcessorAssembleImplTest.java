@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -22,7 +22,6 @@ import org.custommonkey.xmlunit.XMLUnit;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.taglib.html.CommandButtonTag;
 import org.seasar.teeda.core.taglib.html.OutputTextTag;
-import org.seasar.teeda.core.taglib.html.SelectManyCheckboxTag;
 import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ElementProcessor;
@@ -47,6 +46,7 @@ import org.seasar.teeda.extension.mock.MockDocumentBuilderFactory;
 import org.seasar.teeda.extension.mock.MockTaglibManager;
 import org.seasar.teeda.extension.taglib.TConditionTag;
 import org.seasar.teeda.extension.taglib.TInputTextTag;
+import org.seasar.teeda.extension.taglib.TSelectManyCheckboxTag;
 import org.seasar.teeda.extension.taglib.TSelectOneMenuTag;
 import org.seasar.teeda.extension.taglib.TSelectOneRadioTag;
 import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
@@ -365,8 +365,8 @@ public class TagProcessorAssembleImplTest extends TeedaExtensionTestCase {
         HtmlDesc htmlDesc = cache.createHtmlDesc(path);
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
-        registerTagElement(JsfConstants.JSF_HTML_URI, "selectManyCheckbox",
-                SelectManyCheckboxTag.class);
+        registerTagElement(ExtensionConstants.TEEDA_EXTENSION_URI,
+                "selectManyCheckbox", TSelectManyCheckboxTag.class);
         MockTaglibManager taglibManager = getTaglibManager();
         SelectManyCheckboxFactory factory = new SelectManyCheckboxFactory();
         factory.setTaglibManager(taglibManager);
