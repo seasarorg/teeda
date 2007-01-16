@@ -140,7 +140,7 @@ public class HtmlViewHandler extends ViewHandlerImpl {
         ExternalContext externalContext = context.getExternalContext();
         String path = ExternalContextUtil.getViewId(externalContext);
         renderView(context, path);
-        if (ExternalContextUtil.isRedirect(externalContext)) {
+        if (ExternalContextUtil.isRedirectionTrue(externalContext)) {
             HtmlNavigationHandler.clearRedirectingPath(externalContext);
         }
     }

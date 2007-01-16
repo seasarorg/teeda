@@ -70,7 +70,7 @@ public class ExternalContextUtil {
         return context.getExternalContext().encodeActionURL(url);
     }
 
-    public static boolean isRedirect(ExternalContext externalContext) {
+    public static boolean isRedirectionTrue(ExternalContext externalContext) {
         AssertionUtil.assertNotNull("externalContext", externalContext);
         return "true".equals(externalContext.getRequestParameterMap().get(
                 "redirect"));

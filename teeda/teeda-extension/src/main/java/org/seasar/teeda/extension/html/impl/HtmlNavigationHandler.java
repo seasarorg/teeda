@@ -103,7 +103,7 @@ public class HtmlNavigationHandler extends NavigationHandlerImpl {
 
     protected static String calcPathFromOutcome(String viewId, String outcome) {
         if (outcome == null) {
-            return null;
+            return viewId;
         }
         int pos = viewId.lastIndexOf('/');
         int pos2 = viewId.lastIndexOf('.');
