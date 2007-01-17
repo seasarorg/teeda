@@ -62,15 +62,15 @@ Teeda.THtmlGrid = {
       var headerCells = headerTable.rows[rowCount % rowLength].cells;
       var bodyRow;
       for (var bodyRowCount = 0; bodyRowCount < bodyRowLength; bodyRowCount++) {
-        if (bodyTable.rows[rowCount].style.display != 'none') {
-          bodyRow = bodyTable.rows[rowCount];
+        if (bodyTable.rows[bodyRowCount].style.display != 'none') {
+          bodyRow = bodyTable.rows[bodyRowCount];
           break;
         }
       }
       if (!bodyRow) {
         return;
       }
-      var bodyCells = bodyTable.rows[rowCount].cells;
+      var bodyCells = bodyRow.cells;
       var headerCellsLength = headerCells.length;
       var bodyCellsLength = bodyCells.length;
       if (headerCellsLength != bodyCellsLength) {
