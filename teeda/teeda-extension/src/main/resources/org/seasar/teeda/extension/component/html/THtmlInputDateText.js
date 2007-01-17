@@ -88,7 +88,7 @@ Teeda.THtmlInputDateText = {
     if(b) {
       self.addDelimeter(obj, format, worklen, threshold, delim);
     }
-    return self.isNumber(e) || self.isSlash(e) || self.isHiphen(e) || self.isBackspace(e) || self.isMovable(e) || self.isEnter(e);
+    return self.isNumber(e) || self.isSlash(e) || self.isHiphen(e) || self.isBackspace(e) || self.isMovable(e) || self.isEnter(e) || self.isDelete(e);
   },
   getKeyCode : function(e) {
     var c = e.keyCode;
@@ -120,6 +120,10 @@ Teeda.THtmlInputDateText = {
   isEnter : function(e) {
     var c = Teeda.THtmlInputDateText.getKeyCode(e);
     return (c == 13);
+  },
+  isDelete : function(e) {
+    var c = Teeda.THtmlInputDateText.getKeyCode(e);
+    return (c == 46);
   },
   checkEnter : function(e) {
     if(Teeda.THtmlInputDateText.isEnter(e)) {
