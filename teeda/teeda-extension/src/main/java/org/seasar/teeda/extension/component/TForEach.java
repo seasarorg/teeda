@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -255,10 +255,16 @@ public class TForEach extends UIComponentBase implements NamingContainer {
                 final String detail = fm.getDetail();
                 //TODO : maybe need to be flexible for line output.
                 if (summary != null) {
-                    fm.setSummary(summary + "(line : " + (row + 1) + ")");
+                    fm.setSummary(summary
+                            + ExtensionConstants.VALIDATION_ERROR_LINE_PREFIX
+                            + (row + 1)
+                            + ExtensionConstants.VALIDATION_ERROR_LINE_SUFFIX);
                 }
                 if (detail != null) {
-                    fm.setDetail(detail + "(line : " + (row + 1) + ")");
+                    fm.setDetail(detail
+                            + ExtensionConstants.VALIDATION_ERROR_LINE_PREFIX
+                            + (row + 1)
+                            + ExtensionConstants.VALIDATION_ERROR_LINE_SUFFIX);
                 }
             }
         }
