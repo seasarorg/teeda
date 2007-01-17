@@ -104,6 +104,24 @@ public class THtmlGridRenderer extends TForEachRenderer implements
 
     private int firstRenderRowCount = 50;
 
+    private final IgnoreAttribute gridIgnoreAttribute = new IgnoreAttribute();
+    {
+        gridIgnoreAttribute.addAttributeName(JsfConstants.ID_ATTR);
+        gridIgnoreAttribute.addAttributeName(JsfConstants.BORDER_ATTR);
+        gridIgnoreAttribute.addAttributeName(JsfConstants.CELLSPACING_ATTR);
+        gridIgnoreAttribute.addAttributeName(JsfConstants.CELLPADDING_ATTR);
+        gridIgnoreAttribute.addAttributeName(JsfConstants.WIDTH_ATTR);
+        gridIgnoreAttribute.addAttributeName(JsfConstants.HEIGHT_ATTR);
+        gridIgnoreAttribute.addAttributeName("scrollHorizontal");
+        gridIgnoreAttribute.addAttributeName("scrollVertical");
+        // forEach
+        gridIgnoreAttribute.addAttributeName("indexName");
+        gridIgnoreAttribute.addAttributeName("itemName");
+        gridIgnoreAttribute.addAttributeName("itemsName");
+        gridIgnoreAttribute.addAttributeName("pageName");
+        gridIgnoreAttribute.addAttributeName("rowSize");
+    }
+
     private final IgnoreAttribute thIgnoreAttribute = new IgnoreAttribute();
     {
         thIgnoreAttribute.addAttributeName(JsfConstants.STYLE_ATTR);
@@ -156,6 +174,7 @@ public class THtmlGridRenderer extends TForEachRenderer implements
                 .renderAttribute(writer, JsfConstants.CELLSPACING_ATTR, "0");
         RendererUtil
                 .renderAttribute(writer, JsfConstants.CELLPADDING_ATTR, "0");
+        renderRemainAttributes(htmlGrid, writer, gridIgnoreAttribute);
     }
 
     public void encodeChildren(final FacesContext context,

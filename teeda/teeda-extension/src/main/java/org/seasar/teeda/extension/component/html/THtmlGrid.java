@@ -19,6 +19,7 @@ import java.io.IOException;
 
 import javax.faces.component.NamingContainer;
 import javax.faces.context.FacesContext;
+import javax.faces.el.ValueBinding;
 
 import org.seasar.teeda.extension.component.RenderPreparable;
 import org.seasar.teeda.extension.component.RenderPreparableUtil;
@@ -52,6 +53,10 @@ public class THtmlGrid extends TForEach implements NamingContainer,
 
     private String height;
 
+    private String style;
+
+    private String styleClass;
+
     public String getWidth() {
         return width;
     }
@@ -69,12 +74,14 @@ public class THtmlGrid extends TForEach implements NamingContainer,
     }
 
     public Object saveState(FacesContext context) {
-        Object[] values = new Object[5];
+        Object[] values = new Object[7];
         values[0] = super.saveState(context);
         values[1] = width;
         values[2] = height;
         values[3] = scrollHorizontal;
         values[4] = scrollVertical;
+        values[5] = style;
+        values[6] = styleClass;
         return values;
     }
 
@@ -85,6 +92,8 @@ public class THtmlGrid extends TForEach implements NamingContainer,
         height = (String) values[2];
         scrollHorizontal = (Boolean) values[3];
         scrollVertical = (Boolean) values[4];
+        style = (String) values[5];
+        styleClass = (String) values[6];
     }
 
     // gridX, XY
@@ -111,7 +120,32 @@ public class THtmlGrid extends TForEach implements NamingContainer,
         this.scrollVertical = Boolean.valueOf(scrollVertical);
     }
 
+    public void setStyle(String style) {
+        this.style = style;
+    }
+
+    public String getStyle() {
+        if (style != null) {
+            return style;
+        }
+        ValueBinding vb = getValueBinding("style");
+        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+    }
+
+    public void setStyleClass(String styleClass) {
+        this.styleClass = styleClass;
+    }
+
+    public String getStyleClass() {
+        if (styleClass != null) {
+            return styleClass;
+        }
+        ValueBinding vb = getValueBinding("styleClass");
+        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+    }
+
     public void encodePrepare(FacesContext context) throws IOException {
         RenderPreparableUtil.encodePrepareForRenderer(context, this);
     }
+
 }

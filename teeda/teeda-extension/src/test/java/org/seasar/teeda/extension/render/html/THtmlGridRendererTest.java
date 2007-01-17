@@ -248,6 +248,8 @@ public class THtmlGridRendererTest extends RendererTest {
         htmlGrid.setItemsName("someItems");
         htmlGrid.setScrollHorizontal(true);
         htmlGrid.setScrollVertical(true);
+        htmlGrid.setStyle("fooStyle");
+        htmlGrid.setStyleClass("barClass");
 
         actLeftFixed(7);
 

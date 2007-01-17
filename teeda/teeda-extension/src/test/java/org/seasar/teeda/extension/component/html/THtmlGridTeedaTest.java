@@ -28,10 +28,12 @@ public class THtmlGridTeedaTest extends TForEachTeedaTest {
     public void testSaveAndRestoreState() throws Exception {
         super.testSaveAndRestoreState();
 
-        THtmlGrid grid1 = createTHtmlGrid();
+        final THtmlGrid grid1 = createTHtmlGrid();
         {
             grid1.setScrollHorizontal(true);
             grid1.setScrollVertical(true);
+            grid1.setStyle("aaStyle");
+            grid1.setStyleClass("aaClass");
         }
         final FacesContext context = getFacesContext();
         final Object decoded = serializeAndDeserialize(grid1.saveState(context));
@@ -41,7 +43,8 @@ public class THtmlGridTeedaTest extends TForEachTeedaTest {
         assertEquals(false, grid2.isScrollVertical());
         grid2.restoreState(context, decoded);
         assertEquals(true, grid2.isScrollHorizontal());
-        assertEquals(true, grid2.isScrollVertical());
+        assertEquals("aaStyle", grid2.getStyle());
+        assertEquals("aaClass", grid2.getStyleClass());
     }
 
     private THtmlGrid createTHtmlGrid() {
