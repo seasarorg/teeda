@@ -33,6 +33,10 @@ public abstract class RedirectScope {
     protected RedirectScope() {
     }
 
+    public static Map getContext(FacesContext context) throws FacesException {
+        return scope.getContext(context);
+    }
+
     public static Map getOrCreateContext(FacesContext context)
             throws FacesException {
         return scope.getOrCreateContext(context);

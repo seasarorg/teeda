@@ -32,6 +32,10 @@ public abstract class SubApplicationScope {
     protected SubApplicationScope() {
     }
 
+    public static Map getContext(FacesContext context) throws FacesException {
+        return scope.getContext(context);
+    }
+
     public static Map getOrCreateContext(FacesContext context)
             throws FacesException {
         return scope.getOrCreateContext(context);

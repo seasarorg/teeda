@@ -18,6 +18,7 @@ package org.seasar.teeda.core.util;
 import java.io.IOException;
 
 import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 
 /**
  * @author shot
@@ -27,7 +28,7 @@ public class NullErrorPageManagerImpl implements ErrorPageManager {
     public void addErrorPage(Class exceptionType, String location) {
     }
 
-    public boolean handleException(Throwable exception,
+    public boolean handleException(Throwable exception, FacesContext context,
             ExternalContext extContext) throws IOException {
         return false;
     }

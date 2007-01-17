@@ -59,7 +59,8 @@ public class ActionListenerImpl implements ActionListener {
                 Throwable cause = ex.getCause();
                 try {
                     ExternalContext extContext = context.getExternalContext();
-                    if (errorPageManager.handleException(cause, extContext)) {
+                    if (errorPageManager.handleException(cause, context,
+                            extContext)) {
                         context.responseComplete();
                     } else {
                         throw ex;

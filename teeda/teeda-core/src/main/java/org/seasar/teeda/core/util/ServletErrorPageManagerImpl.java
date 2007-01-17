@@ -22,9 +22,6 @@ import java.util.Map;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.seasar.teeda.core.JsfConstants;
 
 /**
  * @author higa
@@ -38,7 +35,7 @@ public class ServletErrorPageManagerImpl implements ErrorPageManager {
         locations.put(exceptionType, location);
     }
 
-    public boolean handleException(Throwable exception,
+    public boolean handleException(Throwable exception, FacesContext context,
             ExternalContext extContext) throws IOException {
         String location = getLocation(exception.getClass());
         if (location == null) {
@@ -46,11 +43,6 @@ public class ServletErrorPageManagerImpl implements ErrorPageManager {
         }
         ServletRequest request = ServletExternalContextUtil
                 .getRequest(extContext);
-        if (request.getAttribute(JsfConstants.ERROR_EXCEPTION) != null) {
-            setErrorPageAttributesToServletError(request);
-            setResponseStatus(extContext);
-            return true;
-        }
         ServletExternalContextUtil
                 .storeErrorInfoToAttribute(request, exception);
         extContext.dispatch(location);
@@ -65,24 +57,5 @@ public class ServletErrorPageManagerImpl implements ErrorPageManager {
             location = (String) locations.get(clazz);
         }
         return location;
-    }
-
-    protected void setErrorPageAttributesToServletError(ServletRequest request) {
-        request.setAttribute(JsfConstants.SERVLET_ERROR_EXCEPTION, request
-                .getAttribute(JsfConstants.ERROR_EXCEPTION));
-        request.setAttribute(JsfConstants.SERVLET_ERROR_EXCEPTION_TYPE, request
-                .getAttribute(JsfConstants.ERROR_EXCEPTION_TYPE));
-        request.setAttribute(JsfConstants.SERVLET_ERROR_EXCEPTION_MESSAGE,
-                request.getAttribute(JsfConstants.ERROR_MESSAGE));
-    }
-
-    protected void setResponseStatus(final ExternalContext extContext) {
-        HttpServletResponse response = ServletExternalContextUtil
-                .getResponse(extContext);
-        response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-    }
-
-    protected static FacesContext getFacesContext() {
-        return FacesContext.getCurrentInstance();
     }
 }

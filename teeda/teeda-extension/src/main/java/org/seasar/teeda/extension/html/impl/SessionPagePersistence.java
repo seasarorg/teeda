@@ -28,6 +28,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.internal.FacesMessageUtil;
 import javax.faces.internal.UICommandUtil;
 import javax.faces.internal.WindowIdUtil;
+import javax.faces.internal.scope.RedirectScope;
 import javax.faces.internal.scope.SubApplicationScope;
 
 import org.seasar.framework.beans.BeanDesc;
@@ -40,7 +41,6 @@ import org.seasar.framework.message.MessageFormatter;
 import org.seasar.framework.util.ArrayUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.util.DIContainerUtil;
-import org.seasar.teeda.extension.exception.PageNotFoundRuntimeException;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ActionDescCache;
 import org.seasar.teeda.extension.html.PageDesc;
@@ -49,6 +49,7 @@ import org.seasar.teeda.extension.html.PagePersistence;
 import org.seasar.teeda.extension.html.TakeOverDesc;
 import org.seasar.teeda.extension.html.TakeOverTypeDesc;
 import org.seasar.teeda.extension.util.PagePersistenceUtil;
+import org.seasar.teeda.extension.util.TeedaExtensionErrorPageManagerImpl;
 
 /**
  * @author higa
@@ -58,10 +59,6 @@ import org.seasar.teeda.extension.util.PagePersistenceUtil;
 public class SessionPagePersistence implements PagePersistence {
 
     private static final long serialVersionUID = 1L;
-
-    private int pageSize = 10;
-
-    private int windowSize = 10;
 
     private PageDescCache pageDescCache;
 
@@ -74,6 +71,9 @@ public class SessionPagePersistence implements PagePersistence {
     private static final String SUB_APPLICATION_SCOPE_KEY = SessionPagePersistence.class
             .getName();
 
+    private static final String REDIRECT_SCOPE_KEY = SessionPagePersistence.class
+            .getName();
+
     private static final Logger logger = Logger
             .getLogger(SessionPagePersistence.class);
 
@@ -84,24 +84,27 @@ public class SessionPagePersistence implements PagePersistence {
         UIViewRoot viewRoot = context.getViewRoot();
         String previousViewId = (viewRoot != null) ? viewRoot.getViewId()
                 : null;
-        Map saveValues = getOrCreateSaveValues(context);
-        Map pageData = getPageData(context, viewId, previousViewId);
-        pageData = FacesMessageUtil.saveFacesMessagesToMap(context, pageData);
-        saveValues.putAll(pageData);
+        Map subappValues = getOrCreateSubApplicationScopeValues(context);
+        Map redirectValues = getOrCreateRedirectScopeValues(context);
+        savePageValues(subappValues, redirectValues, context, viewId,
+                previousViewId);
     }
 
     public void restore(final FacesContext context, final String viewId) {
         if (context == null) {
             return;
         }
-        final ExternalContext extCtx = context.getExternalContext();
-        final Map saveValues = getSaveValues(context);
-        if (saveValues == null) {
-            return;
+        ExternalContext extCtx = context.getExternalContext();
+        Map requestMap = extCtx.getRequestMap();
+        Map subappValues = getSubApplicationScopeValues(context);
+        if (subappValues != null) {
+            restoreValues(subappValues, requestMap);
         }
-        final Map requestMap = extCtx.getRequestMap();
-        restorePageDataMap(saveValues, requestMap);
-        FacesMessageUtil.restoreFacesMessagesFromMap(saveValues, context);
+        Map redirectValues = getRedirectScopeValues(context);
+        if (redirectValues != null) {
+            restoreValues(redirectValues, requestMap);
+        }
+        TeedaExtensionErrorPageManagerImpl.restoreMessage(context);
     }
 
     protected void saveFacesMessage(FacesContext from, Map to) {
@@ -121,29 +124,28 @@ public class SessionPagePersistence implements PagePersistence {
     }
 
     //TODO not use previousViewId?
-    protected Map getPageData(FacesContext context, String viewId,
-            String previousViewId) {
+    protected void savePageValues(Map subappValues, Map redirectValues,
+            FacesContext context, String viewId, String previousViewId) {
         PageDesc pageDesc = pageDescCache.getPageDesc(previousViewId);
         if (pageDesc == null) {
-            return null;
+            return;
         }
         Object page = DIContainerUtil.getComponent(pageDesc.getPageName());
-        if (page == null) {
-            throw new PageNotFoundRuntimeException();
-        }
-        return convertPageData(context, page, viewId, previousViewId, pageDesc);
+        savePageValues(subappValues, redirectValues, context, page, viewId,
+                previousViewId, pageDesc);
     }
 
-    protected Map convertPageData(FacesContext context, Object page,
-            String viewId, String previousViewId, PageDesc pageDesc) {
+    protected void savePageValues(Map subappValues, Map redirectValues,
+            FacesContext context, Object page, String viewId,
+            String previousViewId, PageDesc pageDesc) {
         Class pageClass = page.getClass();
         BeanDesc beanDesc = BeanDescFactory.getBeanDesc(pageClass);
         Map nextPageProperties = getNextPageProperties(viewId);
         if (nextPageProperties.isEmpty()) {
-            return new HashMap();
+            return;
         }
-        return convertPageData(context, beanDesc, previousViewId, pageDesc,
-                page, nextPageProperties);
+        savePageValues(subappValues, redirectValues, context, beanDesc,
+                previousViewId, pageDesc, page, nextPageProperties);
     }
 
     /*
@@ -175,25 +177,27 @@ public class SessionPagePersistence implements PagePersistence {
         return map;
     }
 
-    protected Map convertPageData(FacesContext context, BeanDesc beanDesc,
-            String previousViewId, PageDesc pageDesc, Object page,
-            Map nextPageProperties) {
+    protected void savePageValues(Map subappValues, Map redirectValues,
+            FacesContext context, BeanDesc beanDesc, String previousViewId,
+            PageDesc pageDesc, Object page, Map nextPageProperties) {
         final String methodName = UICommandUtil.getSubmittedCommand(context);
         try {
             final ActionDesc actionDesc = actionDescCache
                     .getActionDesc(previousViewId);
             if (methodName != null && actionDesc != null
                     && actionDesc.hasTakeOverDesc(methodName)) {
-                return convertPageData(context, beanDesc, actionDesc
-                        .getTakeOverDesc(methodName), page, nextPageProperties);
-            }
-            if (methodName != null && pageDesc != null
+                savePageValues(subappValues, redirectValues, context, beanDesc,
+                        actionDesc.getTakeOverDesc(methodName), page,
+                        nextPageProperties, pageDesc);
+            } else if (methodName != null && pageDesc != null
                     && pageDesc.hasTakeOverDesc(methodName)) {
-                return convertPageData(context, beanDesc, pageDesc
-                        .getTakeOverDesc(methodName), page, nextPageProperties);
+                savePageValues(subappValues, redirectValues, context, beanDesc,
+                        pageDesc.getTakeOverDesc(methodName), page,
+                        nextPageProperties, pageDesc);
+            } else {
+                saveDefaultPageValues(subappValues, redirectValues, context,
+                        beanDesc, page, nextPageProperties, pageDesc);
             }
-            return convertDefaultPageData(context, beanDesc, page,
-                    nextPageProperties);
         } finally {
             if (methodName != null && methodName.startsWith("doFinish")) {
                 SubApplicationScope.removeContext(context);
@@ -201,30 +205,30 @@ public class SessionPagePersistence implements PagePersistence {
         }
     }
 
-    protected Map convertPageData(FacesContext context, BeanDesc beanDesc,
-            TakeOverDesc takeOverDesc, Object page, Map nextPageProperties) {
+    protected void savePageValues(Map subappValues, Map redirectValues,
+            FacesContext context, BeanDesc beanDesc, TakeOverDesc takeOverDesc,
+            Object page, Map nextPageProperties, PageDesc pageDesc) {
         TakeOverTypeDesc takeOverTypeDesc = takeOverDesc.getTakeOverTypeDesc();
         if (takeOverTypeDesc.equals(TakeOverTypeDescFactory.NEVER)) {
-            return new HashMap();
-        }
-        if (takeOverTypeDesc.equals(TakeOverTypeDescFactory.INCLUDE)
+            SubApplicationScope.removeContext(context);
+        } else if (takeOverTypeDesc.equals(TakeOverTypeDescFactory.INCLUDE)
                 && takeOverDesc.getProperties().length != 0) {
-            return convertIncludePageData(context, beanDesc, page, takeOverDesc
-                    .getProperties(), nextPageProperties);
-        }
-        if (takeOverTypeDesc.equals(TakeOverTypeDescFactory.EXCLUDE)
+            saveIncludePageValues(subappValues, redirectValues, context,
+                    beanDesc, page, takeOverDesc.getProperties(),
+                    nextPageProperties, pageDesc);
+        } else if (takeOverTypeDesc.equals(TakeOverTypeDescFactory.EXCLUDE)
                 && takeOverDesc.getProperties().length != 0) {
-            return convertExcludePageData(context, beanDesc, page, takeOverDesc
-                    .getProperties(), nextPageProperties);
+            saveExcludePageValues(subappValues, context, beanDesc, page,
+                    takeOverDesc.getProperties(), nextPageProperties);
+        } else {
+            saveDefaultPageValues(subappValues, redirectValues, context,
+                    beanDesc, page, nextPageProperties, pageDesc);
         }
-        return convertDefaultPageData(context, beanDesc, page,
-                nextPageProperties);
     }
 
-    protected Map convertIncludePageData(FacesContext context,
-            BeanDesc beanDesc, Object page, String[] properties,
-            Map nextPageProperties) {
-        Map map = new HashMap();
+    protected void saveIncludePageValues(Map subappValues, Map redirectValues,
+            FacesContext context, BeanDesc beanDesc, Object page,
+            String[] properties, Map nextPageProperties, PageDesc pageDesc) {
         for (int i = 0; i < properties.length; ++i) {
             String propertyName = properties[i];
             PropertyDesc pd = beanDesc.getPropertyDesc(propertyName);
@@ -232,15 +236,17 @@ public class SessionPagePersistence implements PagePersistence {
                     || !nextPageProperties.containsKey(pd.getPropertyName())) {
                 continue;
             }
-            putValue(map, page, pd);
+            if (pageDesc.isRedirectScopeProperty(propertyName)) {
+                putValue(redirectValues, page, pd);
+            } else {
+                putValue(subappValues, page, pd);
+            }
         }
-        return map;
     }
 
-    protected Map convertExcludePageData(FacesContext context,
-            BeanDesc beanDesc, Object page, String[] properties,
-            Map nextPageProperties) {
-        Map map = new HashMap();
+    protected void saveExcludePageValues(Map subappValues,
+            FacesContext context, BeanDesc beanDesc, Object page,
+            String[] properties, Map nextPageProperties) {
         for (int i = 0; i < beanDesc.getPropertyDescSize(); ++i) {
             PropertyDesc pd = beanDesc.getPropertyDesc(i);
             if (!pd.hasReadMethod()
@@ -250,14 +256,13 @@ public class SessionPagePersistence implements PagePersistence {
             if (ArrayUtil.contains(properties, pd.getPropertyName())) {
                 continue;
             }
-            putValue(map, page, pd);
+            putValue(subappValues, page, pd);
         }
-        return map;
     }
 
-    protected Map convertDefaultPageData(FacesContext context,
-            BeanDesc beanDesc, Object page, Map nextPageProperties) {
-        Map map = new HashMap();
+    protected void saveDefaultPageValues(Map subappValues, Map redirectValues,
+            FacesContext context, BeanDesc beanDesc, Object page,
+            Map nextPageProperties, PageDesc pageDesc) {
         for (int i = 0; i < beanDesc.getPropertyDescSize(); ++i) {
             final PropertyDesc pd = beanDesc.getPropertyDesc(i);
             final String propertyName = pd.getPropertyName();
@@ -279,9 +284,12 @@ public class SessionPagePersistence implements PagePersistence {
                         args);
                 logger.debug(message);
             }
-            putValue(map, page, pd);
+            if (pageDesc.isRedirectScopeProperty(propertyName)) {
+                putValue(redirectValues, page, pd);
+            } else {
+                putValue(subappValues, page, pd);
+            }
         }
-        return map;
     }
 
     protected void putValue(Map map, Object page, PropertyDesc pd) {
@@ -289,22 +297,43 @@ public class SessionPagePersistence implements PagePersistence {
         map.put(pd.getPropertyName(), value);
     }
 
-    protected Map getSaveValues(FacesContext context) {
-        Map viewContext = SubApplicationScope.getOrCreateContext(context);
-        return (Map) viewContext.get(SUB_APPLICATION_SCOPE_KEY);
-    }
-
-    protected Map getOrCreateSaveValues(FacesContext context) {
-        Map saveValues = getSaveValues(context);
-        if (saveValues == null) {
-            Map viewContext = SubApplicationScope.getOrCreateContext(context);
-            saveValues = new HashMap();
-            viewContext.put(SUB_APPLICATION_SCOPE_KEY, saveValues);
+    protected Map getSubApplicationScopeValues(FacesContext context) {
+        Map scopeContext = SubApplicationScope.getContext(context);
+        if (scopeContext == null) {
+            return null;
         }
-        return saveValues;
+        return (Map) scopeContext.get(SUB_APPLICATION_SCOPE_KEY);
     }
 
-    protected void restorePageDataMap(Map from, Map to) {
+    protected Map getOrCreateSubApplicationScopeValues(FacesContext context) {
+        Map scopeContext = SubApplicationScope.getOrCreateContext(context);
+        Map values = (Map) scopeContext.get(SUB_APPLICATION_SCOPE_KEY);
+        if (values == null) {
+            values = new HashMap();
+            scopeContext.put(SUB_APPLICATION_SCOPE_KEY, values);
+        }
+        return values;
+    }
+
+    protected Map getRedirectScopeValues(FacesContext context) {
+        Map scopeContext = RedirectScope.getContext(context);
+        if (scopeContext == null) {
+            return null;
+        }
+        return (Map) scopeContext.get(REDIRECT_SCOPE_KEY);
+    }
+
+    protected Map getOrCreateRedirectScopeValues(FacesContext context) {
+        Map scopeContext = RedirectScope.getOrCreateContext(context);
+        Map values = (Map) scopeContext.get(REDIRECT_SCOPE_KEY);
+        if (values == null) {
+            values = new HashMap();
+            scopeContext.put(REDIRECT_SCOPE_KEY, values);
+        }
+        return values;
+    }
+
+    protected void restoreValues(Map from, Map to) {
         for (Iterator itr = from.entrySet().iterator(); itr.hasNext();) {
             Map.Entry entry = (Entry) itr.next();
             String key = (String) entry.getKey();
@@ -328,22 +357,6 @@ public class SessionPagePersistence implements PagePersistence {
         ExternalContext extCtx = context.getExternalContext();
         String wid = WindowIdUtil.getWindowId(extCtx);
         SubApplicationScope.removeContext(context, wid);
-    }
-
-    public int getPageSize() {
-        return pageSize;
-    }
-
-    public void setPageSize(int pageSize) {
-        this.pageSize = pageSize;
-    }
-
-    public int getWindowSize() {
-        return windowSize;
-    }
-
-    public void setWindowSize(int windowSize) {
-        this.windowSize = windowSize;
     }
 
     public void setPageDescCache(PageDescCache pageDescCache) {

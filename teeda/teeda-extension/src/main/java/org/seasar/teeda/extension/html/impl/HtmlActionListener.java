@@ -93,7 +93,8 @@ public class HtmlActionListener extends ActionListenerImpl {
         } catch (Exception e) {
             try {
                 ExternalContext extContext = context.getExternalContext();
-                if (getErrorPageManager().handleException(e, extContext)) {
+                if (getErrorPageManager().handleException(e, context,
+                        extContext)) {
                     context.responseComplete();
                 } else {
                     throw new EvaluationException(e);

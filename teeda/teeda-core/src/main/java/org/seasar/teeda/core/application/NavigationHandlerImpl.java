@@ -24,7 +24,6 @@ import javax.faces.application.ViewHandler;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.faces.internal.scope.RedirectScope;
 
 import org.seasar.framework.util.AssertionUtil;
 import org.seasar.teeda.core.application.navigation.NavigationCaseContext;
@@ -71,10 +70,6 @@ public class NavigationHandlerImpl extends NavigationHandler {
     protected void redirect(FacesContext context,
             ExternalContext externalContext, String redirectPath,
             String newViewId) {
-        if (RedirectScope.isRedirecting(context)) {
-            throw new IllegalStateException("Already redirecting");
-        }
-        RedirectScope.setRedirectingPath(context, redirectPath);
         NavigationHandlerUtil.redirect(context, redirectPath);
     }
 

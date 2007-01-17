@@ -15,8 +15,6 @@
  */
 package org.seasar.teeda.core.util;
 
-import javax.servlet.http.HttpServletResponse;
-
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.unit.TeedaTestCase;
 
@@ -56,7 +54,7 @@ public class ServletErrorPageManagerImplTest extends TeedaTestCase {
         ServletErrorPageManagerImpl manager = new ServletErrorPageManagerImpl();
 
         // # Act & Assert #
-        assertFalse(manager.handleException(new Exception(),
+        assertFalse(manager.handleException(new Exception(), getFacesContext(),
                 getExternalContext()));
     }
 
@@ -68,35 +66,13 @@ public class ServletErrorPageManagerImplTest extends TeedaTestCase {
         manager.addErrorPage(e.getClass(), "a.jsp");
 
         // # Act & Assert #
-        assertTrue(manager.handleException(e, getExternalContext()));
+        assertTrue(manager.handleException(e, getFacesContext(),
+                getExternalContext()));
         assertEquals(e, getRequest().getAttribute(JsfConstants.ERROR_EXCEPTION));
         assertEquals(e.getClass(), getRequest().getAttribute(
                 JsfConstants.ERROR_EXCEPTION_TYPE));
         assertEquals("aaa", getRequest().getAttribute(
                 JsfConstants.ERROR_MESSAGE));
-    }
-
-    public void testHandleException2() throws Exception {
-        // # Arrange #
-        FooException e = new FooException();
-        e.setMessage("aaa");
-        getRequest().setAttribute(JsfConstants.ERROR_EXCEPTION, e);
-        getRequest().setAttribute(JsfConstants.ERROR_EXCEPTION_TYPE,
-                e.getClass());
-        getRequest().setAttribute(JsfConstants.ERROR_MESSAGE, e.getMessage());
-        ServletErrorPageManagerImpl manager = new ServletErrorPageManagerImpl();
-        manager.addErrorPage(e.getClass(), "a.jsp");
-
-        // # Act & Assert #
-        assertTrue(manager.handleException(e, getExternalContext()));
-        assertEquals(e, getRequest().getAttribute(
-                JsfConstants.SERVLET_ERROR_EXCEPTION));
-        assertEquals(e.getClass(), getRequest().getAttribute(
-                JsfConstants.SERVLET_ERROR_EXCEPTION_TYPE));
-        assertEquals("aaa", getRequest().getAttribute(
-                JsfConstants.SERVLET_ERROR_EXCEPTION_MESSAGE));
-        assertEquals(HttpServletResponse.SC_BAD_REQUEST, getResponse()
-                .getStatus());
     }
 
     private static class HogeException extends Exception {

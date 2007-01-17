@@ -64,7 +64,8 @@ public class TeedaExtensionErrorPageManagerImplTest extends
         register(spp);
 
         // # Act & Assert #
-        assertTrue(manager.handleException(e, context.getExternalContext()));
+        assertTrue(manager.handleException(e, context, context
+                .getExternalContext()));
         HttpServletRequest req = (HttpServletRequest) ext.getRequest();
         assertEquals(e, req.getAttribute(JsfConstants.ERROR_EXCEPTION));
         assertEquals(e.getClass(), req

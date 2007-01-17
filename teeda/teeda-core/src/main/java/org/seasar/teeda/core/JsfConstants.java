@@ -465,11 +465,11 @@ public interface JsfConstants {
 
     String JSP_EXCEPTION = "javax.servlet.jsp.jspException";
 
-    String SERVLET_ERROR_EXCEPTION = "javax.servlet.error.exception";
+    //String SERVLET_ERROR_EXCEPTION = "javax.servlet.error.exception";
 
-    String SERVLET_ERROR_EXCEPTION_TYPE = "javax.servlet.error.exception_type";
+    //String SERVLET_ERROR_EXCEPTION_TYPE = "javax.servlet.error.exception_type";
 
-    String SERVLET_ERROR_EXCEPTION_MESSAGE = "javax.servlet.error.message";
+    //String SERVLET_ERROR_EXCEPTION_MESSAGE = "javax.servlet.error.message";
 
     String ERROR_EXCEPTION = "teeda.jsf.error.exception";
 

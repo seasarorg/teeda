@@ -21,6 +21,7 @@ import javax.faces.FacesException;
 import javax.faces.application.NavigationHandler;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.faces.internal.scope.RedirectScope;
 
 public class NavigationHandlerUtil {
 
@@ -41,6 +42,10 @@ public class NavigationHandlerUtil {
     }
 
     public static void redirect(FacesContext context, String path) {
+        if (RedirectScope.isRedirecting(context)) {
+            throw new IllegalStateException("Already redirecting");
+        }
+        RedirectScope.setRedirectingPath(context, path);
         ExternalContext externalContext = context.getExternalContext();
         try {
             externalContext.redirect(externalContext.encodeActionURL(path));

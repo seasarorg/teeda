@@ -83,7 +83,8 @@ public class LifecycleImplTest extends TeedaTestCase {
             }
 
             public boolean handleException(Throwable exception,
-                    ExternalContext extContext) throws IOException {
+                    FacesContext context, ExternalContext extContext)
+                    throws IOException {
                 return true;
             }
         });
@@ -103,7 +104,8 @@ public class LifecycleImplTest extends TeedaTestCase {
             }
 
             public boolean handleException(Throwable exception,
-                    ExternalContext extContext) throws IOException {
+                    FacesContext context, ExternalContext extContext)
+                    throws IOException {
                 return true;
             }
         });

@@ -109,7 +109,7 @@ public class LifecycleImpl extends Lifecycle {
         final ErrorPageManager manager = getErrorPageManager();
         final ExternalContext externalContext = context.getExternalContext();
         try {
-            if (manager.handleException(e, externalContext)) {
+            if (manager.handleException(e, context, externalContext)) {
                 context.responseComplete();
             } else {
                 throw (RuntimeException) e;
@@ -125,9 +125,9 @@ public class LifecycleImpl extends Lifecycle {
         }
         try {
             renderResponsePhase.execute(context);
-        } catch(FacesException e) {
+        } catch (FacesException e) {
             throw e;
-        } catch(Exception e) {
+        } catch (Exception e) {
             handleException(context, e);
         }
     }

@@ -24,7 +24,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.faces.application.FacesMessage;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
 import org.seasar.framework.beans.BeanDesc;
@@ -39,6 +38,7 @@ import org.seasar.teeda.extension.html.impl.page.Foo2Page;
 import org.seasar.teeda.extension.html.impl.page.Foo3Page;
 import org.seasar.teeda.extension.html.impl.page.FooPage;
 import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
+import org.seasar.teeda.extension.util.TeedaExtensionErrorPageManagerImpl;
 
 /**
  * @author higa
@@ -48,6 +48,7 @@ import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
 
     public void testConvertDefaultPageData() throws Exception {
+        PageDesc pageDesc = createPageDesc(Hoge.class, "hoge");
         Hoge hoge = new Hoge();
         hoge.setInt1(1);
         hoge.setInt2(new Integer(2));
@@ -72,21 +73,26 @@ public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
         });
         BeanDesc beanDesc = BeanDescFactory.getBeanDesc(Hoge.class);
         Map nextPageProperties = persistence.getNextPageProperties(null);
-        Map map = persistence.convertDefaultPageData(getFacesContext(),
-                beanDesc, hoge, nextPageProperties);
-        assertEquals(new Integer(1), map.get("int1"));
-        assertEquals(new Integer(2), map.get("int2"));
-        assertEquals(Boolean.TRUE, map.get("bool1"));
-        assertEquals(Boolean.TRUE, map.get("bool2"));
-        assertEquals("str", map.get("str"));
-        assertEquals(timestamp, map.get("timestamp"));
+        Map subappValues = new HashMap();
+        Map redirectValues = new HashMap();
+        persistence
+                .saveDefaultPageValues(subappValues, redirectValues,
+                        getFacesContext(), beanDesc, hoge, nextPageProperties,
+                        pageDesc);
+        assertEquals(new Integer(1), subappValues.get("int1"));
+        assertEquals(new Integer(2), subappValues.get("int2"));
+        assertEquals(Boolean.TRUE, subappValues.get("bool1"));
+        assertEquals(Boolean.TRUE, subappValues.get("bool2"));
+        assertEquals("str", subappValues.get("str"));
+        assertEquals(timestamp, subappValues.get("timestamp"));
         // TODO https://www.seasar.org/issues/browse/TEEDA-88
         // でListも対応する際に、このassertは逆転する。
-        assertNotNull(map.get("list"));
-        assertNotNull(map.get("strArray"));
+        assertNotNull(subappValues.get("list"));
+        assertNotNull(subappValues.get("strArray"));
     }
 
     public void testConvertIncludePageData() throws Exception {
+        PageDesc pageDesc = createPageDesc(Hoge.class, "hoge");
         Hoge hoge = new Hoge();
         hoge.setInt1(1);
         hoge.setInt2(new Integer(2));
@@ -104,11 +110,14 @@ public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
         });
         BeanDesc beanDesc = BeanDescFactory.getBeanDesc(Hoge.class);
         Map nextPageProperties = persistence.getNextPageProperties(null);
-        Map map = persistence.convertIncludePageData(getFacesContext(),
-                beanDesc, hoge, new String[] { "int1" }, nextPageProperties);
-        assertEquals(new Integer(1), map.get("int1"));
-        assertNull(map.get("int2"));
-        assertEquals(1, map.size());
+        Map subappValues = new HashMap();
+        Map redirectValues = new HashMap();
+        persistence.saveIncludePageValues(subappValues, redirectValues,
+                getFacesContext(), beanDesc, hoge, new String[] { "int1" },
+                nextPageProperties, pageDesc);
+        assertEquals(new Integer(1), subappValues.get("int1"));
+        assertNull(subappValues.get("int2"));
+        assertEquals(1, subappValues.size());
     }
 
     public void testConvertExcludePageData() throws Exception {
@@ -136,23 +145,23 @@ public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
         });
         BeanDesc beanDesc = BeanDescFactory.getBeanDesc(Hoge.class);
         Map nextPageProperties = persistence.getNextPageProperties(null);
-        Map map = persistence.convertExcludePageData(getFacesContext(),
+        Map subappValues = new HashMap();
+        persistence.saveExcludePageValues(subappValues, getFacesContext(),
                 beanDesc, hoge, new String[] { "int1" }, nextPageProperties);
-        assertNull(map.get("int1"));
-        assertEquals(new Integer(2), map.get("int2"));
-        assertEquals(Boolean.TRUE, map.get("bool1"));
-        assertEquals(Boolean.TRUE, map.get("bool2"));
-        assertEquals("str", map.get("str"));
-        assertEquals(timestamp, map.get("timestamp"));
+        assertNull(subappValues.get("int1"));
+        assertEquals(new Integer(2), subappValues.get("int2"));
+        assertEquals(Boolean.TRUE, subappValues.get("bool1"));
+        assertEquals(Boolean.TRUE, subappValues.get("bool2"));
+        assertEquals("str", subappValues.get("str"));
+        assertEquals(timestamp, subappValues.get("timestamp"));
         // TODO https://www.seasar.org/issues/browse/TEEDA-88
         // でListも対応する際に、このassertは逆転する。
-        assertNotNull(map.get("list"));
-        assertNotNull(map.get("strArray"));
+        assertNotNull(subappValues.get("list"));
+        assertNotNull(subappValues.get("strArray"));
     }
 
     public void testSaveAndRestore() throws Exception {
         SessionPagePersistence spp = new SessionPagePersistence();
-        spp.setPageSize(2);
         NamingConventionImpl convention = new NamingConventionImpl();
         convention.addRootPackageName("org.seasar.teeda.extension.html.impl");
         String rootPath = "/"
@@ -179,26 +188,19 @@ public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
         pageDescCache.createPageDesc(path3);
         FacesContext context = getFacesContext();
         context.getViewRoot().setViewId(path);
+        FooPage fooPage = (FooPage) getComponent(FooPage.class);
+        fooPage.setAaa("111");
+        fooPage.setBbb(1);
         spp.save(context, path2);
-        ExternalContext extCtx = context.getExternalContext();
-        Map saveValues = spp.getSaveValues(context);
-        assertNotNull(saveValues);
-        assertEquals(2, saveValues.size());
+        Map subappValues = spp.getSubApplicationScopeValues(context);
+        assertNotNull(subappValues);
+        assertEquals(1, subappValues.size());
+        assertEquals(new Integer(1), subappValues.get("bbb"));
 
-        context.getViewRoot().setViewId(path2);
-        spp.save(context, path3);
-        assertEquals(2, saveValues.size());
-
-        Foo3Page foo3Page = (Foo3Page) getComponent(Foo3Page.class);
-        foo3Page.setAaa("123");
-        context.getViewRoot().setViewId(path3);
-        spp.save(context, path);
-        assertEquals(3, saveValues.size());
-
-        getExternalContext().getRequestParameterMap().put("redirect", "true");
-        spp.restore(context, path);
-        Map requestMap = extCtx.getRequestMap();
-        assertEquals("123", requestMap.get("aaa"));
+        Map redirectValues = spp.getRedirectScopeValues(context);
+        assertNotNull(redirectValues);
+        assertEquals(1, redirectValues.size());
+        assertEquals("111", redirectValues.get("aaa"));
     }
 
     public void testSaveAndRestore1() throws Exception {
@@ -229,9 +231,8 @@ public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
         pagePersistence.setActionDescCache(actionDescCache);
         final MockFacesContext context = getFacesContext();
         context.getViewRoot().setViewId(fromViewId);
-        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-                "aaa", "bbb"));
-
+        Exception ex = new NullPointerException("hoge");
+        TeedaExtensionErrorPageManagerImpl.saveException(ex, context);
         final FromPage fromPage = (FromPage) getComponent(FromPage.class);
         fromPage.setAaaaa(new String[] { "a", "bb", "c" });
         fromPage.setB(true);
@@ -265,7 +266,7 @@ public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
         Iterator itr = context.getMessages(null);
         assertNotNull(itr);
         FacesMessage message = (FacesMessage) itr.next();
-        assertEquals("aaa", message.getSummary());
+        assertEquals("hoge", message.getSummary());
     }
 
     public void testSaveAndRestore2() throws Exception {
@@ -340,9 +341,10 @@ public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
     public void testRemoveSubApplicationPages() throws Exception {
         getFacesContext().getViewRoot().setViewId("/view/emp/empConfirm.html");
         SessionPagePersistence pagePersistence = new SessionPagePersistence();
-        pagePersistence.getOrCreateSaveValues(getFacesContext());
+        pagePersistence.getOrCreateSubApplicationScopeValues(getFacesContext());
         pagePersistence.removeSubApplicationPages(getFacesContext());
-        assertNull(pagePersistence.getSaveValues(getFacesContext()));
+        assertNull(pagePersistence
+                .getSubApplicationScopeValues(getFacesContext()));
 
     }
 

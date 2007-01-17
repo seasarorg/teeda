@@ -16,16 +16,32 @@
 package org.seasar.teeda.extension.html.impl.page;
 
 public class Foo2Page {
-    
+
     private boolean initialized = false;
-    
+
     private String aaa;
+
+    private int bbb;
+
+    /**
+     * @return Returns the bbb.
+     */
+    public int getBbb() {
+        return bbb;
+    }
+
+    /**
+     * @param bbb The bbb to set.
+     */
+    public void setBbb(int bbb) {
+        this.bbb = bbb;
+    }
 
     public String initialize() {
         initialized = true;
         return null;
     }
-    
+
     public boolean isInitialized() {
         return initialized;
     }
@@ -33,11 +49,11 @@ public class Foo2Page {
     public String getAaa() {
         return aaa;
     }
-    
+
     public void setAaa(String aaa) {
         this.aaa = aaa;
     }
-    
+
     public String doBbb() {
         return null;
     }
