@@ -23,6 +23,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.internal.scope.RedirectScope;
+import javax.faces.internal.scope.SubApplicationScope;
 import javax.servlet.ServletRequest;
 
 import org.seasar.framework.log.Logger;
@@ -57,8 +58,8 @@ public class TeedaExtensionErrorPageManagerImpl extends
                 .getRequest(extContext);
         ServletExternalContextUtil
                 .storeErrorInfoToAttribute(request, exception);
+        SubApplicationScope.removeContext(context);
         PagePersistence pagePersistence = getPagePersistence();
-        pagePersistence.removeSubApplicationPages(context);
         pagePersistence.save(context, location);
         try {
             String actionURL = location;

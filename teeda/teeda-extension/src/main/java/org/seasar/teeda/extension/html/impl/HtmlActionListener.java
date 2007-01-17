@@ -24,6 +24,7 @@ import javax.faces.el.EvaluationException;
 import javax.faces.el.MethodBinding;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ActionEvent;
+import javax.faces.internal.scope.SubApplicationScope;
 
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
@@ -34,7 +35,6 @@ import org.seasar.teeda.core.util.DIContainerUtil;
 import org.seasar.teeda.core.util.MethodBindingUtil;
 import org.seasar.teeda.core.util.NavigationHandlerUtil;
 import org.seasar.teeda.extension.exception.IllegalPageTransitionException;
-import org.seasar.teeda.extension.html.PagePersistence;
 import org.seasar.teeda.extension.util.PageTransitionUtil;
 
 /**
@@ -42,8 +42,6 @@ import org.seasar.teeda.extension.util.PageTransitionUtil;
  *
  */
 public class HtmlActionListener extends ActionListenerImpl {
-
-    private PagePersistence pagePersistence;
 
     private NamingConvention nc;
 
@@ -117,14 +115,6 @@ public class HtmlActionListener extends ActionListenerImpl {
                 && bd.getMethod(methodName).getReturnType() == Class.class;
     }
 
-    public PagePersistence getPagePersistence() {
-        return pagePersistence;
-    }
-
-    public void setPagePersistence(PagePersistence pagePersistence) {
-        this.pagePersistence = pagePersistence;
-    }
-
     public NamingConvention getNamingConvention() {
         return nc;
     }
@@ -137,7 +127,7 @@ public class HtmlActionListener extends ActionListenerImpl {
             String outcome) {
         super.processAfterInvoke(context, fromAction, outcome);
         if (fromAction != null && fromAction.indexOf(".doFinish") > 0) {
-            pagePersistence.removeSubApplicationPages(context);
+            SubApplicationScope.removeContext(context);
         }
     }
 }

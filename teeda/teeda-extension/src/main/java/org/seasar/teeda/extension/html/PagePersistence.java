@@ -26,6 +26,4 @@ public interface PagePersistence {
     void save(FacesContext context, String viewId);
 
     void restore(FacesContext context, String viewId);
-
-    void removeSubApplicationPages(FacesContext context);
 }

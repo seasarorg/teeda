@@ -27,7 +27,6 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.internal.FacesMessageUtil;
 import javax.faces.internal.UICommandUtil;
-import javax.faces.internal.WindowIdUtil;
 import javax.faces.internal.scope.RedirectScope;
 import javax.faces.internal.scope.SubApplicationScope;
 
@@ -348,15 +347,6 @@ public class SessionPagePersistence implements PagePersistence {
 
     public void setNamingConvention(NamingConvention namingConvention) {
         this.namingConvention = namingConvention;
-    }
-
-    public void removeSubApplicationPages(final FacesContext context) {
-        if (context == null) {
-            return;
-        }
-        ExternalContext extCtx = context.getExternalContext();
-        String wid = WindowIdUtil.getWindowId(extCtx);
-        SubApplicationScope.removeContext(context, wid);
     }
 
     public void setPageDescCache(PageDescCache pageDescCache) {

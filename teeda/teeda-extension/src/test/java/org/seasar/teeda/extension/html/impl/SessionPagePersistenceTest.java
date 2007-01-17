@@ -329,25 +329,6 @@ public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
         assertTrue(requestMap.get("ccc") instanceof String[][]);
     }
 
-    public void testGetSubApplicationPath_facesContextIsNull() throws Exception {
-        try {
-            new SessionPagePersistence().removeSubApplicationPages(null);
-        } catch (Exception e) {
-            fail();
-        }
-        success();
-    }
-
-    public void testRemoveSubApplicationPages() throws Exception {
-        getFacesContext().getViewRoot().setViewId("/view/emp/empConfirm.html");
-        SessionPagePersistence pagePersistence = new SessionPagePersistence();
-        pagePersistence.getOrCreateSubApplicationScopeValues(getFacesContext());
-        pagePersistence.removeSubApplicationPages(getFacesContext());
-        assertNull(pagePersistence
-                .getSubApplicationScopeValues(getFacesContext()));
-
-    }
-
     private static class MockPageDescCache implements PageDescCache {
         Map cache = new HashMap();
 
