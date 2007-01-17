@@ -511,7 +511,7 @@ public interface JsfConstants {
 
     String PREVIOUS_VIEW_ID = "previousViewId";
 
-    String ERROR_MESSAGE_PERSISTE_KEY = "Teeda.FacesMessages";
+    String ERROR_MANAGER_EXCEPTION_KEY = "Teeda.ErrorManager.Exception";
 
     String BR_TAG = "<br />";
 }
