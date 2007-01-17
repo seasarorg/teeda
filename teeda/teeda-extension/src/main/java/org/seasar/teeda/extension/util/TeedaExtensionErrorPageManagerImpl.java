@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -18,7 +18,6 @@ package org.seasar.teeda.extension.util;
 import java.io.IOException;
 import java.util.Map;
 
-import javax.faces.FacesException;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -30,6 +29,7 @@ import org.seasar.framework.log.Logger;
 import org.seasar.framework.util.AssertionUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.util.DIContainerUtil;
+import org.seasar.teeda.core.util.NavigationHandlerUtil;
 import org.seasar.teeda.core.util.ServletErrorPageManagerImpl;
 import org.seasar.teeda.core.util.ServletExternalContextUtil;
 import org.seasar.teeda.extension.html.PagePersistence;
@@ -61,15 +61,11 @@ public class TeedaExtensionErrorPageManagerImpl extends
         SubApplicationScope.removeContext(context);
         PagePersistence pagePersistence = getPagePersistence();
         pagePersistence.save(context, location);
-        try {
-            String actionURL = location;
-            if (location != null && location.startsWith("/")) {
-                actionURL = extContext.getRequestContextPath() + location;
-            }
-            extContext.redirect(actionURL);
-        } catch (IOException e) {
-            throw new FacesException(e.getMessage(), e);
+        String actionURL = location;
+        if (location != null && location.startsWith("/")) {
+            actionURL = extContext.getRequestContextPath() + location;
         }
+        NavigationHandlerUtil.redirect(context, actionURL);
         return true;
     }
 
