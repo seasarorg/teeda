@@ -114,8 +114,8 @@ public class HtmlViewHandler extends ViewHandlerImpl {
 
     public UIViewRoot restoreView(FacesContext context, String viewId) {
         ExternalContext externalContext = context.getExternalContext();
+        setUpRequestForExternalBinding(context, viewId);
         tagProcessorCache.updateTagProcessor(viewId);
-        pagePersistence.restore(context, viewId);
         Map requestMap = externalContext.getRequestMap();
         if (!PostbackUtil.isPostback(requestMap)) {
             if (invoke(context, viewId, INITIALIZE) != null) {
@@ -123,6 +123,11 @@ public class HtmlViewHandler extends ViewHandlerImpl {
             }
         }
         return super.restoreView(context, viewId);
+    }
+
+    protected void setUpRequestForExternalBinding(FacesContext context,
+            String viewId) {
+        pagePersistence.restore(context, viewId);
     }
 
     public UIViewRoot createView(FacesContext context, String viewId) {
