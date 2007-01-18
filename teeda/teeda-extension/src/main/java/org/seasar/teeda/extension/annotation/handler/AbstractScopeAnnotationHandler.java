@@ -15,6 +15,7 @@
  */
 package org.seasar.teeda.extension.annotation.handler;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.seasar.framework.beans.BeanDesc;
@@ -34,8 +35,10 @@ public abstract class AbstractScopeAnnotationHandler implements
         S2Container container = SingletonS2ContainerFactory.getContainer();
         ComponentDef cd = container.getComponentDef(componentName);
         BeanDesc beanDesc = BeanDescFactory.getBeanDesc(cd.getComponentClass());
-        return getPropertyScopes(beanDesc);
+        Map ret = new HashMap();
+        setupPropertyScopes(beanDesc, ret);
+        return ret;
     }
 
-    protected abstract Map getPropertyScopes(BeanDesc beanDesc);
+    protected abstract void setupPropertyScopes(BeanDesc beanDesc, Map scopes);
 }

@@ -15,7 +15,6 @@
  */
 package org.seasar.teeda.extension.annotation.handler;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.seasar.framework.beans.BeanDesc;
@@ -31,17 +30,15 @@ public class ConstantScopeAnnotationHandler extends
 
     private static final String REDIRECT_SCOPE_KEY = "REDIRECT_SCOPE";
 
-    public Map getPropertyScopes(BeanDesc beanDesc) {
-        Map ret = new HashMap();
+    public void setupPropertyScopes(BeanDesc beanDesc, Map scopes) {
         if (!beanDesc.hasField(REDIRECT_SCOPE_KEY)) {
-            return ret;
+            return;
         }
         String s = (String) beanDesc.getFieldValue(REDIRECT_SCOPE_KEY, null);
         String[] array = StringUtil.split(s, ", ");
         for (int i = 0; i < array.length; ++i) {
-            ret.put(array[i], ExtensionConstants.REDIRECT_SCOPE);
+            scopes.put(array[i], ExtensionConstants.REDIRECT_SCOPE);
         }
-        return ret;
     }
 
 }
