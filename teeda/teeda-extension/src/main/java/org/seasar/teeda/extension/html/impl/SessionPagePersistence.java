@@ -38,6 +38,7 @@ import org.seasar.framework.convention.NamingConvention;
 import org.seasar.framework.log.Logger;
 import org.seasar.framework.message.MessageFormatter;
 import org.seasar.framework.util.ArrayUtil;
+import org.seasar.framework.util.AssertionUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.util.DIContainerUtil;
 import org.seasar.teeda.extension.html.ActionDesc;
@@ -46,7 +47,6 @@ import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.PageDescCache;
 import org.seasar.teeda.extension.html.PagePersistence;
 import org.seasar.teeda.extension.html.TakeOverDesc;
-import org.seasar.teeda.extension.html.TakeOverTypeDesc;
 import org.seasar.teeda.extension.util.PagePersistenceUtil;
 import org.seasar.teeda.extension.util.TeedaExtensionErrorPageManagerImpl;
 
@@ -207,22 +207,51 @@ public class SessionPagePersistence implements PagePersistence {
     protected void savePageValues(Map subappValues, Map redirectValues,
             FacesContext context, BeanDesc beanDesc, TakeOverDesc takeOverDesc,
             Object page, Map nextPageProperties, PageDesc pageDesc) {
-        TakeOverTypeDesc takeOverTypeDesc = takeOverDesc.getTakeOverTypeDesc();
-        if (takeOverTypeDesc.equals(TakeOverTypeDescFactory.NEVER)) {
-            SubApplicationScope.removeContext(context);
-        } else if (takeOverTypeDesc.equals(TakeOverTypeDescFactory.INCLUDE)
-                && takeOverDesc.getProperties().length != 0) {
+        AssertionUtil.assertNotNull("takeOverDesc", takeOverDesc);
+        final String[] properties = takeOverDesc.getProperties();
+        if (isTakeOverNever(takeOverDesc)) {
+            refreshSubApplicationScopeMap(context, subappValues);
+        } else if (isTakeOverInclude(takeOverDesc)) {
+            subappValues = refreshSubApplicationScopeMap(context, subappValues);
             saveIncludePageValues(subappValues, redirectValues, context,
-                    beanDesc, page, takeOverDesc.getProperties(),
-                    nextPageProperties, pageDesc);
-        } else if (takeOverTypeDesc.equals(TakeOverTypeDescFactory.EXCLUDE)
-                && takeOverDesc.getProperties().length != 0) {
+                    beanDesc, page, properties, nextPageProperties, pageDesc);
+        } else if (isTakeOverExclude(takeOverDesc)) {
+            subappValues = refreshSubApplicationScopeMap(context, subappValues);
             saveExcludePageValues(subappValues, context, beanDesc, page,
-                    takeOverDesc.getProperties(), nextPageProperties);
+                    properties, nextPageProperties);
         } else {
             saveDefaultPageValues(subappValues, redirectValues, context,
                     beanDesc, page, nextPageProperties, pageDesc);
         }
+    }
+
+    private static boolean isTakeOverNever(TakeOverDesc desc) {
+        return TakeOverTypeDescFactory.NEVER.equals(desc.getTakeOverTypeDesc());
+    }
+
+    private static boolean isTakeOverInclude(TakeOverDesc desc) {
+        return TakeOverTypeDescFactory.INCLUDE.equals(desc
+                .getTakeOverTypeDesc())
+                && desc.getProperties().length != 0;
+    }
+
+    private static boolean isTakeOverExclude(TakeOverDesc desc) {
+        return TakeOverTypeDescFactory.EXCLUDE.equals(desc
+                .getTakeOverTypeDesc())
+                && desc.getProperties().length != 0;
+    }
+
+    protected Map refreshSubApplicationScopeMap(FacesContext context,
+            Map subappValues) {
+        final Map subAppScopeMap = getSubApplicationScopeValues(context);
+        if (subAppScopeMap != null) {
+            final Map scopeContext = SubApplicationScope.getContext(context);
+            if (scopeContext != null) {
+                scopeContext.remove(SUB_APPLICATION_SCOPE_KEY);
+                subappValues = getOrCreateSubApplicationScopeValues(context);
+            }
+        }
+        return subappValues;
     }
 
     protected void saveIncludePageValues(Map subappValues, Map redirectValues,
