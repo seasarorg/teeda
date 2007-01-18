@@ -66,13 +66,15 @@ public class RestoreViewPhase extends AbstractPhase {
         final RestoreValueHolder holder = setUpRestoreViewPhase(context);
         final String viewId = holder.getCurrentViewId();
         final String wid = holder.getWid();
-        if (!viewId.equals(holder.previousViewId)) {
+        final String previousViewId = holder.getPreviousViewId();
+        if (previousViewId != null && !previousViewId.equals(viewId)) {
             PageScope.removeContext(context, wid);
         }
         String subAppPath = SubApplicationUtil.getSubApplicationPath(viewId);
         String previousSubAppPath = SubApplicationUtil
-                .getSubApplicationPath(holder.previousViewId);
-        if (!subAppPath.equals(previousSubAppPath)) {
+                .getSubApplicationPath(previousViewId);
+        if (previousSubAppPath != null
+                && !previousSubAppPath.equals(subAppPath)) {
             SubApplicationScope.removeContext(context, wid);
         }
         final UIViewRoot viewRoot = composeViewRoot(context, viewId);
