@@ -36,7 +36,9 @@ Kumu.Ajax = {
   RESPONSE_TYPE_JSON : 2,
   RESPONSE_TYPE_TEXT : 3,
   RESPONSE_TYPE_HTML : 4,
-
+  
+  READY_STATE : ['Uninitialized', 'Loading', 'Loaded', 'Interactive'],
+  
   axo : new Array(
     "Microsoft.XMLHTTP",
     "Msxml2.XMLHTTP.4.0",
@@ -62,6 +64,13 @@ Kumu.Ajax = {
     this.async = self.ASYNC;
     this.params = null;
     this.doAction = function(ajaxResponse){}
+  },
+
+  AjaxProcess : function (req, ajaxComponent) {
+    var self = Kumu.Ajax;
+    this.xhr = req;
+    this.ajaxComponent = ajaxComponent;
+    this.cancel = self._createCanceler(req, ajaxComponent);
   },
 
   _createXmlHttp : function(){
@@ -152,6 +161,16 @@ Kumu.Ajax = {
       }
       delete params.method;
     }
+    
+    if(ajaxComponent.timeout){
+      var timerId = self._setTimeout(xmlHttp, ajaxComponent, ajaxComponent.timeout, ajaxComponent.onTimeout);
+      ajaxComponent._clearTimeout = function(){
+        clearTimeout(timerId);
+      }      
+    }
+    
+    var process = new Kumu.Ajax.AjaxProcess(xmlHttp, ajaxComponent);
+    
     if(method == 'GET'){
       url += "?time=" + self.encodeURL(sysdate);
       if(null != params){
@@ -183,28 +202,108 @@ Kumu.Ajax = {
         xmlHttp.send(parameters);
       }
     }
+    return process;
   },
-
+  
+  _setTimeout : function(req, ajaxComponent, time, callback){
+    var timerId;
+    var self = Kumu.Ajax;
+    var canceler = self._createCanceler(req, ajaxComponent);
+    var onTimeout = function(){
+      canceler();
+      if(callback){
+        callback(req, ajaxComponent);
+      }
+      clearTimeout(timerId);
+    }
+    timerId = setTimeout(onTimeout, time * 1000);
+    return timerId;
+  },
+  
+  _createCanceler : function(req, ajaxComponent){
+    return function(){
+      var self = Kumu.Ajax;
+      if (req.readyState == 0 || req.readyState == self.XML_HTTP_REQUEST_STATUS_COMPLETE){
+        return;
+      }
+      req.abort();
+      if (ajaxComponent._clearTimeout){
+        ajaxComponent._clearTimeout();
+      }
+    };
+  },
+  
+  _onReadyStateChange : function(req, ajaxComponent){
+    var self = Kumu.Ajax;
+    var event = 'on'+self.READY_STATE[req.readyState];
+    if (ajaxComponent[event] && !(ajaxComponent._called)){
+      ajaxComponent[event](req, ajaxComponent);
+      ajaxComponent[event]._called = true;
+    }else if (ajaxComponent.doAction && ajaxComponent.doAction[event] && !(ajaxComponent.doAction[event]._called)){
+      ajaxComponent.doAction[event](req, ajaxComponent);
+      ajaxComponent.doAction[event]._called = true;
+    }
+  },
+  
+  _onException : function(exception, ajaxComponent){
+    if(ajaxComponent.doAction && ajaxComponent.doAction.onException){
+      ajaxComponent.doAction.onException(exception, ajaxComponent);
+    }
+    if (ajaxComponent._clearTimeout){
+      ajaxComponent._clearTimeout();
+    }
+  },
+  
+  _evalResult : function(req, ajaxComponent) {
+    var self = Kumu.Ajax;
+    var status;
+    try{
+      status = req.status;
+    }catch(e){
+    }
+    if (status >= self.HTTP_STATUS_OK && status < 300) {
+      if (self.DEBUG) self.debugPrint(req.responseText);
+      if (self.RESPONSE_TYPE_JSON == ajaxComponent.responseType) {
+        var resText = req.responseText;
+        ajaxComponent.doAction(eval('(' + resText + ')'));
+      } else if (self.RESPONSE_TYPE_XML == ajaxComponent.responseType) {
+        var responseText = req.responseXML;
+        ajaxComponent.doAction(responseText);
+      } else {
+        ajaxComponent.doAction(req.responseText);
+      }
+      
+      if (ajaxComponent._clearTimeout){
+        ajaxComponent._clearTimeout();
+      }
+    } else {
+      if(status > 0){ 
+        if (ajaxComponent.doAction && ajaxComponent.doAction.onFailure){
+          ajaxComponent.doAction.onFailure(req, ajaxComponent);
+        }else{
+          self.debugPrint("AjaxError! status["+status+"] message["+req.responseText+"]", true);
+        }
+      }
+      if (ajaxComponent._clearTimeout){
+        ajaxComponent._clearTimeout();
+      }
+    }
+  },
+  
   _registAjaxListener : function(req, ajaxComponent) {
     var self = Kumu.Ajax;
     req.onreadystatechange = function() {
-      if (self.XML_HTTP_REQUEST_STATUS_COMPLETE == req.readyState) {
-        if (self.HTTP_STATUS_OK == req.status) {
-          if (self.DEBUG) self.debugPrint(req.responseText);
-          if (self.RESPONSE_TYPE_JSON == ajaxComponent.responseType) {
-            var resText = req.responseText;
-            ajaxComponent.doAction(eval('(' + resText + ')'));
-          } else if (self.RESPONSE_TYPE_XML == ajaxComponent.responseType) {
-            var responseText = req.responseXML;
-            ajaxComponent.doAction(responseText);
-          } else {
-            ajaxComponent.doAction(req.responseText);
-          }
-        } else {
-          self.debugPrint("AjaxError! status["+req.status+"] message["+req.responseText+"]", true);
+      try{
+        if (self.XML_HTTP_REQUEST_STATUS_COMPLETE == req.readyState) {
+          self._evalResult(req, ajaxComponent);
+        }else{
+          self._onReadyStateChange(req, ajaxComponent);
         }
+      }catch(e){
+        self._onException(e, ajaxComponent);
       }
     };
+
   },
 
   encodeURL : function encodeURL(val) {
@@ -241,6 +340,36 @@ Kumu.Ajax = {
     if(!param){
       param = {};
     }
+    
+    if('onUninitialized' in param){
+      ajax.onUninitialized = param['onUninitialized'];
+      delete param['onUninitialized'];
+    }
+    if('onLoading' in param){
+      ajax.onLoading = param['onLoading'];
+      delete param['onLoading'];
+    }
+    if('onLoaded' in param){
+      ajax.onLoaded = param['onLoaded'];
+      delete param['onLoaded'];
+    }
+    if('onFailure' in param){
+      ajax.onFailure = param['onFailure'];
+      delete param['onFailure'];
+    }
+    if('onException' in param){
+      ajax.onException = param['onException'];
+      delete param['onException'];
+    }
+    if('timeout' in param){
+      ajax.timeout = param['timeout'];
+      delete param['timeout'];
+    }
+    if('onTimeout' in param){
+      ajax.onTimeout = param['onTimeout'];
+      delete param['onTimeout'];
+    }
+    
     ajax.params = param;
     if(param instanceof Array){
       for(var i = 0; i < param.length; i++){
@@ -258,7 +387,7 @@ Kumu.Ajax = {
       responseType = self.RESPONSE_TYPE_JSON;
     }
     ajax.responseType = responseType;
-    self.executeAjax(ajax);
+    return self.executeAjax(ajax);
   },
 
   _setJSONData : function(node, data){
