@@ -82,20 +82,23 @@ public class HtmlNavigationHandlerTest extends TeedaTestCase {
         handler.handleNavigation(context, null, "foo2");
 
         // ## Assert ##
-        assertNotNull(SubApplicationScope.getOrCreateContext(getFacesContext()).get(
-                SessionPagePersistence.class.getName()));
+        assertNotNull(SubApplicationScope.getOrCreateContext(getFacesContext())
+                .get(SessionPagePersistence.class.getName()));
     }
 
     public void testCalcPathFromOutcome() throws Exception {
-        assertEquals("/view/add/addResult.html", HtmlNavigationHandler
-                .calcPathFromOutcome("/view/add/addInput.html", "addResult"));
-        assertEquals("/view/hello/hello.html", HtmlNavigationHandler
-                .calcPathFromOutcome("/view/add/addResult.html", "hello_Hello"));
+        HtmlNavigationHandler handler = new HtmlNavigationHandler();
+        handler.setNamingConvention(new NamingConventionImpl());
+        assertEquals("/view/add/addResult.html", handler.calcPathFromOutcome(
+                "/view/add/addInput.html", "addResult"));
+        assertEquals("/view/hello/hello.html", handler.calcPathFromOutcome(
+                "/view/add/addResult.html", "hello_Hello"));
     }
 
     public void testCalcPathFromOutcome2() throws Exception {
-        assertNull(HtmlNavigationHandler.calcPathFromOutcome(
-                "/view/add/addInput.html", null));
+        HtmlNavigationHandler handler = new HtmlNavigationHandler();
+        handler.setNamingConvention(new NamingConventionImpl());
+        assertNull(handler.calcPathFromOutcome("/view/add/addInput.html", null));
     }
 
 }

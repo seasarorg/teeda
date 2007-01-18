@@ -21,6 +21,7 @@ import javax.faces.application.ViewHandler;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
+import org.seasar.framework.convention.NamingConvention;
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.application.NavigationHandlerImpl;
 import org.seasar.teeda.core.portlet.FacesPortlet;
@@ -35,6 +36,12 @@ import org.seasar.teeda.extension.html.PagePersistence;
 public class HtmlNavigationHandler extends NavigationHandlerImpl {
 
     private PagePersistence pagePersistence;
+
+    private NamingConvention namingConvention;
+
+    public void setNamingConvention(NamingConvention namingConvention) {
+        this.namingConvention = namingConvention;
+    }
 
     public void setPagePersistence(PagePersistence pagePersistence) {
         this.pagePersistence = pagePersistence;
@@ -80,9 +87,12 @@ public class HtmlNavigationHandler extends NavigationHandlerImpl {
                 .remove(ExtensionConstants.TRANSITION_BY_TEEDA_PREPARED_METHOD);
     }
 
-    protected static String calcPathFromOutcome(String viewId, String outcome) {
+    protected String calcPathFromOutcome(String viewId, String outcome) {
         if (outcome == null) {
             return null;
+        }
+        if (!namingConvention.isValidViewRootPath(viewId)) {
+            return viewId;
         }
         int pos = viewId.lastIndexOf('/');
         int pos2 = viewId.lastIndexOf('.');
