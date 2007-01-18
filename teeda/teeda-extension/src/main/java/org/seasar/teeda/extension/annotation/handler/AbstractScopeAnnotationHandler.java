@@ -34,9 +34,8 @@ public abstract class AbstractScopeAnnotationHandler implements
         S2Container container = SingletonS2ContainerFactory.getContainer();
         ComponentDef cd = container.getComponentDef(componentName);
         BeanDesc beanDesc = BeanDescFactory.getBeanDesc(cd.getComponentClass());
-        Object page = cd.getComponent();
-        return getPropertyScopes(beanDesc, page);
+        return getPropertyScopes(beanDesc);
     }
 
-    protected abstract Map getPropertyScopes(BeanDesc beanDesc, Object page);
+    protected abstract Map getPropertyScopes(BeanDesc beanDesc);
 }

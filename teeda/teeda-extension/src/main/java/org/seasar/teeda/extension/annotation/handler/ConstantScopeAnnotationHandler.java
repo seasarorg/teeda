@@ -31,12 +31,12 @@ public class ConstantScopeAnnotationHandler extends
 
     private static final String REDIRECT_SCOPE_KEY = "REDIRECT_SCOPE";
 
-    public Map getPropertyScopes(BeanDesc beanDesc, Object page) {
+    public Map getPropertyScopes(BeanDesc beanDesc) {
         Map ret = new HashMap();
         if (!beanDesc.hasField(REDIRECT_SCOPE_KEY)) {
             return ret;
         }
-        String s = (String) beanDesc.getFieldValue(REDIRECT_SCOPE_KEY, page);
+        String s = (String) beanDesc.getFieldValue(REDIRECT_SCOPE_KEY, null);
         String[] array = StringUtil.split(s, ", ");
         for (int i = 0; i < array.length; ++i) {
             ret.put(array[i], ExtensionConstants.REDIRECT_SCOPE);
