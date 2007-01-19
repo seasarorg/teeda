@@ -16,15 +16,19 @@
 package org.seasar.teeda.extension.html.impl;
 
 import java.io.File;
+import java.io.InputStream;
 
+import org.seasar.framework.exception.ResourceNotFoundRuntimeException;
+import org.seasar.framework.mock.servlet.MockServletContextImpl;
 import org.seasar.framework.util.ResourceUtil;
+import org.seasar.teeda.extension.exception.HtmlNotFoundRuntimeExcpetion;
 import org.seasar.teeda.extension.html.HtmlDesc;
 import org.seasar.teeda.extension.html.HtmlParser;
 import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 
 /**
  * @author higa
- *
+ * @author shot
  */
 public class HtmlDescCacheImplTest extends TeedaExtensionTestCase {
 
@@ -45,5 +49,38 @@ public class HtmlDescCacheImplTest extends TeedaExtensionTestCase {
         Thread.sleep(1000);
         file.setLastModified(System.currentTimeMillis());
         assertTrue("5", htmlDesc.isModified());
+    }
+
+    public void testCreateHtmlDesc_notFound() throws Exception {
+        HtmlDescCacheImpl cache = new HtmlDescCacheImpl();
+        cache.setServletContext(new MyMockServletContextImpl());
+        try {
+            cache.createHtmlDesc(null);
+            fail();
+        } catch (HtmlNotFoundRuntimeExcpetion e) {
+            success();
+        }
+    }
+
+    public static class MyMockServletContextImpl extends MockServletContextImpl {
+
+        private static final long serialVersionUID = 1L;
+
+        public MyMockServletContextImpl() {
+            super(null);
+        }
+
+        public MyMockServletContextImpl(String path) {
+            super(path);
+        }
+
+        public String getRealPath(String path) {
+            return null;
+        }
+
+        public InputStream getResourceAsStream(String path) {
+            return null;
+        }
+
     }
 }

@@ -28,6 +28,7 @@ import org.seasar.framework.container.S2Container;
 import org.seasar.framework.util.FileInputStreamUtil;
 import org.seasar.framework.util.InputStreamUtil;
 import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.extension.exception.HtmlNotFoundRuntimeExcpetion;
 import org.seasar.teeda.extension.html.HtmlDesc;
 import org.seasar.teeda.extension.html.HtmlDescCache;
 import org.seasar.teeda.extension.html.HtmlNode;
@@ -88,7 +89,7 @@ public class HtmlDescCacheImpl implements HtmlDescCache {
     protected HtmlDesc createHtmlDescFromResource(String viewId) {
         InputStream is = servletContext.getResourceAsStream(viewId);
         if (is == null) {
-            throw new IllegalArgumentException(viewId);
+            throw new HtmlNotFoundRuntimeExcpetion(viewId);
         }
         return createHtmlDesc(is, null, viewId);
     }
