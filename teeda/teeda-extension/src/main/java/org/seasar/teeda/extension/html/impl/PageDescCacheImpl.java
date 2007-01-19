@@ -21,6 +21,7 @@ import java.util.Map;
 
 import org.seasar.framework.container.ComponentDef;
 import org.seasar.framework.container.S2Container;
+import org.seasar.framework.container.hotdeploy.HotdeployUtil;
 import org.seasar.framework.convention.NamingConvention;
 import org.seasar.framework.util.ResourceUtil;
 import org.seasar.teeda.extension.html.PageDesc;
@@ -35,7 +36,7 @@ public class PageDescCacheImpl implements PageDescCache {
     private Map pageDescs = new HashMap();
 
     public static final String namingConvention_BINDING = "bindingType=must";
-    
+
     private NamingConvention namingConvention;
 
     private S2Container container;
@@ -53,19 +54,18 @@ public class PageDescCacheImpl implements PageDescCache {
     }
 
     public synchronized PageDesc createPageDesc(String viewId) {
-        PageDesc pageDesc = null;
         String pageName = namingConvention.fromPathToPageName(viewId);
         if (!container.getRoot().hasComponentDef(pageName)) {
             return null;
         }
         ComponentDef cd = container.getRoot().getComponentDef(pageName);
-        File file = ResourceUtil.getResourceAsFileNoException(cd
-                .getComponentClass());
-        if (file != null) {
-            pageDesc = new PageDescImpl(cd.getConcreteClass(), pageName, file);
-        } else {
-            pageDesc = new PageDescImpl(cd.getConcreteClass(), pageName);
+        File file = null;
+        if (HotdeployUtil.isHotdeploy()) {
+            file = ResourceUtil.getResourceAsFileNoException(cd
+                    .getComponentClass());
         }
+        PageDesc pageDesc = new PageDescImpl(cd.getConcreteClass(), pageName,
+                file);
         pageDescs.put(viewId, pageDesc);
         return pageDesc;
     }

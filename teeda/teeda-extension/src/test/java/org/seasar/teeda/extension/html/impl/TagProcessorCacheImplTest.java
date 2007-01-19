@@ -17,6 +17,7 @@ package org.seasar.teeda.extension.html.impl;
 
 import java.io.File;
 
+import org.seasar.framework.container.hotdeploy.HotdeployUtil;
 import org.seasar.framework.convention.impl.NamingConventionImpl;
 import org.seasar.framework.util.ClassUtil;
 import org.seasar.framework.util.ResourceUtil;
@@ -32,6 +33,16 @@ import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
  *
  */
 public class TagProcessorCacheImplTest extends TeedaExtensionTestCase {
+
+    protected void setUp() throws Exception {
+        super.setUp();
+        HotdeployUtil.setHotdeploy(true);
+    }
+
+    protected void tearDown() throws Exception {
+        HotdeployUtil.clearHotdeploy();
+        super.tearDown();
+    }
 
     public void testUpdateTagProcessor() throws Exception {
         NamingConventionImpl convention = new NamingConventionImpl();

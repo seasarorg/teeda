@@ -21,6 +21,7 @@ import java.util.Map;
 
 import org.seasar.framework.container.ComponentDef;
 import org.seasar.framework.container.S2Container;
+import org.seasar.framework.container.hotdeploy.HotdeployUtil;
 import org.seasar.framework.convention.NamingConvention;
 import org.seasar.framework.util.ResourceUtil;
 import org.seasar.teeda.extension.html.ActionDesc;
@@ -35,7 +36,7 @@ public class ActionDescCacheImpl implements ActionDescCache {
     private Map actionDescs = new HashMap();
 
     public static final String namingConvention_BINDING = "bindingType=must";
-    
+
     private NamingConvention namingConvention;
 
     private S2Container container;
@@ -53,20 +54,18 @@ public class ActionDescCacheImpl implements ActionDescCache {
     }
 
     public synchronized ActionDesc createActionDesc(String viewId) {
-        ActionDesc actionDesc = null;
         String actionName = namingConvention.fromPathToActionName(viewId);
         if (!container.getRoot().hasComponentDef(actionName)) {
             return null;
         }
         ComponentDef cd = container.getRoot().getComponentDef(actionName);
-        File file = ResourceUtil.getResourceAsFileNoException(cd
-                .getComponentClass());
-        if (file != null) {
-            actionDesc = new ActionDescImpl(cd.getConcreteClass(), actionName,
-                    file);
-        } else {
-            actionDesc = new ActionDescImpl(cd.getConcreteClass(), actionName);
+        File file = null;
+        if (HotdeployUtil.isHotdeploy()) {
+            file = ResourceUtil.getResourceAsFileNoException(cd
+                    .getComponentClass());
         }
+        ActionDesc actionDesc = new ActionDescImpl(cd.getConcreteClass(),
+                actionName, file);
         actionDescs.put(viewId, actionDesc);
         return actionDesc;
     }
