@@ -46,7 +46,6 @@ public class TeedaExtensionErrorPageManagerImpl extends
     public boolean handleException(Throwable exception, FacesContext context,
             ExternalContext extContext) throws IOException {
         AssertionUtil.assertNotNull("exception", exception);
-        saveException(exception, context);
         if (logger.isDebugEnabled()) {
             logger.debug(exception);
         }
@@ -54,6 +53,7 @@ public class TeedaExtensionErrorPageManagerImpl extends
         if (location == null) {
             return false;
         }
+        saveException(exception, context);
         ServletRequest request = ServletExternalContextUtil
                 .getRequest(extContext);
         ServletExternalContextUtil
