@@ -15,6 +15,7 @@
  */
 package org.seasar.teeda.extension.jsp;
 
+import org.seasar.framework.mock.servlet.MockHttpServletResponse;
 import org.seasar.framework.unit.S2FrameworkTestCase;
 
 /**
@@ -22,13 +23,15 @@ import org.seasar.framework.unit.S2FrameworkTestCase;
  *
  */
 public class JspWriterImplTest extends S2FrameworkTestCase {
-	
-	public void testWrite() throws Exception {
-		JspWriterImpl writer = new JspWriterImpl(getResponse(), 2, true);
-		String s = "abcde";
-		char[] cb = s.toCharArray();
-		writer.write(cb);
-		writer.flush();
-		assertEquals("1", s, getResponse().getWriter().toString());
-	}
+
+    public void testWrite() throws Exception {
+        final MockHttpServletResponse res = getResponse();
+        final JspWriterImpl writer = new JspWriterImpl(res, 2, true);
+        final String s = "abcde";
+        char[] cb = s.toCharArray();
+        writer.write(cb);
+        writer.flush();
+        assertEquals("1", s, new String(res.getResponseBytes()));
+    }
+
 }

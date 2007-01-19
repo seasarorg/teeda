@@ -31,20 +31,20 @@
     <dependency>
       <groupId>org.seasar.container</groupId>
       <artifactId>s2-framework</artifactId>
-      <version>2.4.7</version>
+      <version>2.4.9-SNAPSHOT</version>
       <type>jar</type>
     </dependency>
     <dependency>
       <groupId>org.seasar.teeda</groupId>
       <artifactId>teeda-core</artifactId>
-      <version>1.0.3</version>
+      <version>${project.version}</version>
       <type>jar</type>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.seasar.teeda</groupId>
       <artifactId>teeda-core</artifactId>
-      <version>1.0.3</version>
+      <version>${project.version}</version>
       <type>test-jar</type>
       <scope>test</scope>
     </dependency>
