@@ -26,6 +26,6 @@ public class HtmlNotFoundRuntimeExcpetion extends SRuntimeException {
     private static final long serialVersionUID = 1L;
 
     public HtmlNotFoundRuntimeExcpetion(String viewId) {
-        super("", new Object[] { viewId });
+        super("ETDA0107", new Object[] { viewId });
     }
 }
