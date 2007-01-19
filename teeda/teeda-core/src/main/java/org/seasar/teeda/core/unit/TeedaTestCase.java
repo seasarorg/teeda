@@ -27,7 +27,6 @@ import javax.faces.render.RenderKitFactory;
 
 import org.seasar.framework.unit.S2FrameworkTestCase;
 import org.seasar.teeda.core.application.navigation.NavigationResource;
-import org.seasar.teeda.core.context.html.HtmlResponseWriter;
 import org.seasar.teeda.core.managedbean.ManagedBeanFactory;
 import org.seasar.teeda.core.managedbean.impl.ManagedBeanFactoryImpl;
 import org.seasar.teeda.core.managedbean.impl.ManagedBeanScopeSaverImpl;
@@ -112,9 +111,6 @@ public abstract class TeedaTestCase extends S2FrameworkTestCase {
         application.setStateManager(stateManager);
 
         facesContext = new MockFacesContextImpl(externalContext, application);
-        HtmlResponseWriter responseWriter = new HtmlResponseWriter();
-        responseWriter.setWriter(getResponse().getWriter());
-        facesContext.setResponseWriter(responseWriter);
         UIViewRoot viewRoot = new UIViewRoot();
         viewRoot.setRenderKitId(RenderKitFactory.HTML_BASIC_RENDER_KIT);
         viewRoot.setLocale(Locale.getDefault());

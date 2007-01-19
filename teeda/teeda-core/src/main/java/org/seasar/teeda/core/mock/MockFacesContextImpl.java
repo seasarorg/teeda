@@ -61,16 +61,16 @@ public class MockFacesContextImpl extends MockFacesContext {
         setCurrentInstance(this);
     }
 
-    public MockFacesContextImpl(MockExternalContext externalContext) {
+    public MockFacesContextImpl(final MockExternalContext externalContext) {
         this.externalContext = externalContext;
         application = FactoryFinderUtil.getApplicationFactory()
                 .getApplication();
         setCurrentInstance(this);
     }
 
-    public MockFacesContextImpl(MockExternalContext context,
-            Application application) {
-        this.externalContext = context;
+    public MockFacesContextImpl(final MockExternalContext context,
+            final Application application) {
+        externalContext = context;
         this.application = application;
         setCurrentInstance(this);
     }
@@ -99,15 +99,15 @@ public class MockFacesContextImpl extends MockFacesContext {
     }
 
     public Iterator getMessages() {
-        List all = new ArrayList();
-        for (Iterator it = messages.values().iterator(); it.hasNext();) {
-            List messages = (List) it.next();
+        final List all = new ArrayList();
+        for (final Iterator it = messages.values().iterator(); it.hasNext();) {
+            final List messages = (List) it.next();
             all.addAll(messages);
         }
         return all.iterator();
     }
 
-    public Iterator getMessages(String clientId) {
+    public Iterator getMessages(final String clientId) {
         return getMessagesList(clientId).iterator();
     }
 
@@ -127,25 +127,25 @@ public class MockFacesContextImpl extends MockFacesContext {
         return null;
     }
 
-    public void setResponseStream(ResponseStream responseStream) {
+    public void setResponseStream(final ResponseStream responseStream) {
     }
 
     public ResponseWriter getResponseWriter() {
         if (responseWriter == null) {
-            HtmlResponseWriter responseWriter = new HtmlResponseWriter();
-            ServletResponse response = (ServletResponse) getExternalContext()
-                    .getResponse();
+            final HtmlResponseWriter responseWriter = new HtmlResponseWriter();
+            final ServletResponse response = getMockExternalContext()
+                    .getMockHttpServletResponse();
             try {
                 responseWriter.setWriter(response.getWriter());
                 this.responseWriter = responseWriter;
-            } catch (IOException e) {
+            } catch (final IOException e) {
                 throw new IORuntimeException(e);
             }
         }
         return responseWriter;
     }
 
-    public void setResponseWriter(ResponseWriter responseWriter) {
+    public void setResponseWriter(final ResponseWriter responseWriter) {
         this.responseWriter = responseWriter;
     }
 
@@ -157,16 +157,16 @@ public class MockFacesContextImpl extends MockFacesContext {
         return viewRoot;
     }
 
-    public void setViewRoot(UIViewRoot root) {
-        this.viewRoot = root;
+    public void setViewRoot(final UIViewRoot root) {
+        viewRoot = root;
     }
 
-    public void addMessage(String clientId, FacesMessage message) {
-        List l = getMessagesList(clientId);
+    public void addMessage(final String clientId, final FacesMessage message) {
+        final List l = getMessagesList(clientId);
         l.add(message);
     }
 
-    private List getMessagesList(String clientId) {
+    private List getMessagesList(final String clientId) {
         List l = (List) messages.get(clientId);
         if (l == null) {
             l = new ArrayList();
@@ -187,15 +187,15 @@ public class MockFacesContextImpl extends MockFacesContext {
         responseComplete = true;
     }
 
-    public void setExternalContext(ExternalContext context) {
+    public void setExternalContext(final ExternalContext context) {
         setMockExternalContext((MockExternalContext) context);
     }
 
-    public void setMockExternalContext(MockExternalContext context) {
+    public void setMockExternalContext(final MockExternalContext context) {
         externalContext = context;
     }
 
-    public void setApplication(Application application) {
+    public void setApplication(final Application application) {
         this.application = application;
     }
 
