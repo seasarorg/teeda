@@ -15,6 +15,7 @@
  */
 package org.seasar.teeda.extension.html.impl;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -366,7 +367,13 @@ public class SessionPagePersistence implements PagePersistence {
             Map.Entry entry = (Entry) itr.next();
             String key = (String) entry.getKey();
             Object value = entry.getValue();
-            to.put(key, HotdeployUtil.rebuildValue(value));
+            Object rebuildValue = HotdeployUtil.rebuildValue(value);
+            //TODO support other lists.
+            if (rebuildValue instanceof ArrayList) {
+                ArrayList list = (ArrayList) rebuildValue;
+                rebuildValue = list.clone();
+            }
+            to.put(key, rebuildValue);
         }
     }
 
