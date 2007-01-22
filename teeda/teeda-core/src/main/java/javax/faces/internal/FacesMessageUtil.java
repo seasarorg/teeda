@@ -275,6 +275,7 @@ public class FacesMessageUtil {
     private static MessageResourceBundle getBundle(FacesContext context,
             Locale locale, String bundleName) {
 
+        // TODO DBやXMLなどからもメッセージを取れるようにしたい
         return MessageResourceBundleFactory.getNullableBundle(bundleName,
                 locale);
     }
