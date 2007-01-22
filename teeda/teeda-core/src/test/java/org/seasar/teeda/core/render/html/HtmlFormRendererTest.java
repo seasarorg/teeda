@@ -161,6 +161,8 @@ public class HtmlFormRendererTest extends RendererTest {
         htmlForm.setTitle("u");
 
         htmlForm.setId("AA");
+        htmlForm.getAttributes().put("name", "BB");
+        htmlForm.getAttributes().put("method", "CC");
 
         MockFacesContext context = getFacesContext();
         context.getViewRoot().setViewId("/xyz");

@@ -59,6 +59,8 @@ public class HtmlFormRenderer extends AbstractRenderer {
     private final IgnoreAttribute ignoreComponent = new IgnoreAttribute();
     {
         ignoreComponent.addAttributeName(JsfConstants.ID_ATTR);
+        ignoreComponent.addAttributeName(JsfConstants.NAME_ATTR);
+        ignoreComponent.addAttributeName(JsfConstants.METHOD_ATTR);
     }
 
     public void encodeBegin(FacesContext context, UIComponent component)
