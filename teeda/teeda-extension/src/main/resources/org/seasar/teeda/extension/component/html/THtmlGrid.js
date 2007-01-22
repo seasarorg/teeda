@@ -87,8 +87,8 @@ Teeda.THtmlGrid = {
           originalWidth = headerDiv.style.width.replace(/px/,"");
           longer = Math.max(longer, originalWidth);
         }
-        headerDiv.style.width = longer;
-        bodyDiv.style.width = longer;
+        headerDiv.style.width = longer + 'px';
+        bodyDiv.style.width = longer + 'px';
       }
     }
   },

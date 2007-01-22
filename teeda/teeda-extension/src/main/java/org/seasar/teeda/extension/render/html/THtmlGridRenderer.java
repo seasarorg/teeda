@@ -239,12 +239,11 @@ public class THtmlGridRenderer extends TForEachRenderer implements
         // 横方向にscrollするときは全体の横幅を自動調整する
         if (htmlGrid.isScrollHorizontal()) {
             scriptBody.append(" document.getElementById('" + id + RIGHT_HEADER
-                    + "').style.width = " + attribute.getRightHeaderWidth()
-                    + ";");
-            scriptBody
-                    .append(" document.getElementById('" + id + RIGHT_BODY
-                            + "').style.width = "
-                            + attribute.getRightBodyWidth() + ";");
+                    + "').style.width = '" + attribute.getRightHeaderWidth()
+                    + "px';");
+            scriptBody.append(" document.getElementById('" + id + RIGHT_BODY
+                    + "').style.width = '" + attribute.getRightBodyWidth()
+                    + "px';");
         }
         //renderJavaScriptElement(writer, new String(scriptBody));
         renderJavaScriptElementOnBodyEnd(context, htmlGrid, scriptBody
