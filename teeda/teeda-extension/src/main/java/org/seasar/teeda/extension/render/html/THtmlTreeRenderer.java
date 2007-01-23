@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.faces.application.ViewHandler;
+import javax.faces.component.NamingContainer;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIGraphic;
 import javax.faces.component.UIViewRoot;
@@ -38,7 +39,6 @@ import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.component.ScriptEnhanceUIViewRoot;
 import org.seasar.teeda.extension.component.TreeModel;
 import org.seasar.teeda.extension.component.TreeNode;
-import org.seasar.teeda.extension.component.TreeWalker;
 import org.seasar.teeda.extension.component.UITreeData;
 import org.seasar.teeda.extension.component.html.THtmlTree;
 import org.seasar.teeda.extension.util.JavaScriptContext;
@@ -172,25 +172,17 @@ public class THtmlTreeRenderer extends AbstractRenderer {
         }
         final boolean showRootNode = tree.isShowRootNode();
         TreeModel model = tree.getDataModel();
-        TreeWalker walker = tree.getDataModel().getTreeWalker();
-        walker.walkBegin(tree);
         if (showRootNode) {
-            if (walker.next()) {
-                encodeTree(context, writer, tree, walker);
-            }
+            encodeTree(context, writer, tree, null, 0);
         } else {
-            skipRootTreeNode(walker);
+            tree.setNodeId("0");
             setRootNodeExpanded(tree, model);
-            encodeEachTreeNode(context, walker, tree);
+            encodeEachTreeNode(context, tree);
         }
         resetCurrentNode(tree);
         if (isOuterSpanUsed) {
             writer.endElement(JsfConstants.DIV_ELEM);
         }
-    }
-
-    protected void skipRootTreeNode(TreeWalker walker) {
-        walker.next();
     }
 
     protected void setRootNodeExpanded(final THtmlTree tree,
@@ -201,14 +193,14 @@ public class THtmlTreeRenderer extends AbstractRenderer {
         }
     }
 
-    protected void encodeEachTreeNode(FacesContext context, TreeWalker walker,
-            THtmlTree tree) throws IOException {
+    protected void encodeEachTreeNode(FacesContext context, THtmlTree tree)
+            throws IOException {
+        tree.setNodeId("0");
         TreeNode rootNode = tree.getNode();
         ResponseWriter writer = context.getResponseWriter();
+        int num = 0;
         for (int i = 0; i < rootNode.getChildCount(); i++) {
-            if (walker.next()) {
-                encodeTree(context, writer, tree, walker);
-            }
+            encodeTree(context, writer, tree, "0", (num++));
         }
     }
 
@@ -217,14 +209,20 @@ public class THtmlTreeRenderer extends AbstractRenderer {
     }
 
     protected void encodeTree(FacesContext context, ResponseWriter out,
-            THtmlTree tree, TreeWalker walker) throws IOException {
+            THtmlTree tree, String parentId, int index) throws IOException {
+        String nodeId = (parentId != null) ? parentId
+                + NamingContainer.SEPARATOR_CHAR + index : "0";
+        String spanId = TOGGLE_DIV + ":" + tree.getId() + ":" + nodeId;
+
+        tree.setNodeId(nodeId);
+        TreeNode node = tree.getNode();
+
         beforeNodeEncode(context, out, tree);
         encodeCurrentNode(context, out, tree);
         afterNodeEncode(context, out);
 
-        final String divId = getMarkerId(tree);
         out.startElement(JsfConstants.DIV_ELEM, tree);
-        out.writeAttribute(JsfConstants.ID_ATTR, divId, null);
+        out.writeAttribute(JsfConstants.ID_ATTR, spanId, null);
         if (tree.isNodeExpanded()) {
             RendererUtil.renderAttribute(out, JsfConstants.STYLE_ATTR,
                     "display:block");
@@ -232,7 +230,7 @@ public class THtmlTreeRenderer extends AbstractRenderer {
             RendererUtil.renderAttribute(out, JsfConstants.STYLE_ATTR,
                     "display:none");
         }
-        final String id = divId + ExtensionConstants.NAME_SEPARATOR
+        final String id = spanId + ExtensionConstants.NAME_SEPARATOR
                 + "treeExpanded";
         HtmlInputHidden hidden = new HtmlInputHidden() {
 
@@ -248,11 +246,11 @@ public class THtmlTreeRenderer extends AbstractRenderer {
         hidden.setParent(tree);
         RendererUtil.renderChild(context, hidden);
 
-        TreeNode node = tree.getNode();
+        //TreeNode node = tree.getNode();
+        String currentId = tree.getNodeId();
+        int num = 0;
         for (int i = 0; i < node.getChildCount(); i++) {
-            if (walker.next()) {
-                encodeTree(context, out, tree, walker);
-            }
+            encodeTree(context, out, tree, currentId, (num++));
         }
         out.endElement(JsfConstants.DIV_ELEM);
     }
@@ -338,7 +336,7 @@ public class THtmlTreeRenderer extends AbstractRenderer {
         image.setBorder(0);
         return image;
     }
-    
+
     private UIComponent encodeNavigation(FacesContext context,
             ResponseWriter out, THtmlTree tree) throws IOException {
         final String ownClientId = tree.getOwnClientId(context);
@@ -457,7 +455,7 @@ public class THtmlTreeRenderer extends AbstractRenderer {
         out.endElement(JsfConstants.TD_ELEM);
         return nodeImgFacet;
     }
-    
+
     protected String getScriptKey() {
         return THtmlTree.class.getName();
     }

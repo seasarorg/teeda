@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -31,6 +31,8 @@ public class TreeModelImpl implements TreeModel {
     private static final String ROOT_NODE_ID = "0";
 
     private TreeNode root;
+
+    private TreeNode currentNode = null;
 
     public TreeModelImpl(TreeNode root) {
         AssertionUtil.assertNotNull("root", root);
@@ -125,7 +127,7 @@ public class TreeModelImpl implements TreeModel {
                 node = root;
             } else {
                 final List children = node.getChildren();
-                if(children.size() > 0) {
+                if (children.size() > 0) {
                     node = (TreeNode) children.get(nodeIndex);
                 } else {
                     break;
@@ -135,10 +137,18 @@ public class TreeModelImpl implements TreeModel {
         return node;
     }
 
-    public TreeWalker getTreeWalker() {
-        return new TreeWalkerImpl();
+    public void setNodeById(String nodeId) {
+        if (nodeId == null) {
+            currentNode = null;
+            return;
+        }
+        currentNode = getNodeById(nodeId);
     }
-    
+
+    public TreeNode getCurrentTreeNode() {
+        return currentNode;
+    }
+
     public TreeNode getRootNode() {
         return getNodeById(ROOT_NODE_ID);
     }

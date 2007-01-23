@@ -9,17 +9,17 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
 package org.seasar.teeda.extension.component;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 import javax.faces.application.FacesMessage;
-import javax.faces.component.ComponentUtil_;
 import javax.faces.component.NamingContainer;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
@@ -49,8 +49,6 @@ public class UITreeData extends UIInput implements NamingContainer {
     private TreeModel model;
 
     private String nodeId;
-
-    private TreeNode node;
 
     private Object value;
 
@@ -125,7 +123,7 @@ public class UITreeData extends UIInput implements NamingContainer {
         states.clear();
         setNodeId(null);
         decode(context);
-        processNodes(context, PhaseId.APPLY_REQUEST_VALUES);
+        processNodes(context, PhaseId.APPLY_REQUEST_VALUES, null, 0);
     }
 
     public void processValidators(FacesContext context) {
@@ -133,7 +131,7 @@ public class UITreeData extends UIInput implements NamingContainer {
         if (!isRendered()) {
             return;
         }
-        processNodes(context, PhaseId.PROCESS_VALIDATIONS);
+        processNodes(context, PhaseId.PROCESS_VALIDATIONS, null, 0);
         setNodeId(null);
     }
 
@@ -142,7 +140,7 @@ public class UITreeData extends UIInput implements NamingContainer {
         if (!isRendered()) {
             return;
         }
-        //processNodes(context, PhaseId.UPDATE_MODEL_VALUES);
+        processNodes(context, PhaseId.UPDATE_MODEL_VALUES, null, 0);
         setNodeId(null);
     }
 
@@ -181,7 +179,7 @@ public class UITreeData extends UIInput implements NamingContainer {
         AssertionUtil.assertNotNull("context", context);
         return super.getClientId(context);
     }
-    
+
     public void setValueBinding(String name, ValueBinding binding) {
         if ("value".equals(name)) {
             model = null;
@@ -215,7 +213,11 @@ public class UITreeData extends UIInput implements NamingContainer {
     }
 
     public TreeNode getNode() {
-        return node;
+        TreeModel dataModel = getDataModel();
+        if (dataModel == null) {
+            return null;
+        }
+        return dataModel.getCurrentTreeNode();
     }
 
     public String getNodeId() {
@@ -231,7 +233,7 @@ public class UITreeData extends UIInput implements NamingContainer {
             return;
         }
         try {
-            node = model.getNodeById(nodeId);
+            model.setNodeById(nodeId);
         } catch (IndexOutOfBoundsException aob) {
             //TODO fix id
             FacesMessage message = FacesMessageUtil.getMessage(context,
@@ -289,34 +291,44 @@ public class UITreeData extends UIInput implements NamingContainer {
     }
 
     private void toggleAll(boolean expanded) {
-        TreeWalker walker = getDataModel().getTreeWalker();
-        walker.walkBegin(this);
-        final TreeModel model = getDataModel();
-        while (walker.next()) {
-            String id = getNodeId();
-            if ((expanded && !model.isNodeExpanded(id))
-                    || (!expanded && model.isNodeExpanded(id))) {
-                model.toggleExpanded(id);
-            }
+        String id = getNodeId();
+        if ((expanded && !model.isNodeExpanded(id))
+                || (!expanded && model.isNodeExpanded(id))) {
+            model.toggleExpanded(id);
         }
     }
 
-    protected void processNodes(FacesContext context, PhaseId phaseId) {
-        TreeModel dataModel = getDataModel();
-        if (dataModel == null) {
+    protected void processNodes(FacesContext context, PhaseId phaseId,
+            String parentId, int level) {
+
+        String id = (parentId != null) ? parentId
+                + NamingContainer.SEPARATOR_CHAR + level : "0";
+        setNodeId(id);
+        final TreeNode node = getNode();
+        if(node == null) {
             return;
         }
-        TreeWalker walker = dataModel.getTreeWalker();
-        walker.walkBegin(this);
-        while (walker.next()) {
-            final TreeNode node = getNode();
-            final String type = node.getType();
-            final UIComponent facet = getFacet(type);
-            if (facet == null) {
-                continue;
-            }
-            ComponentUtil_.processAppropriatePhaseAction(context, facet,
-                    phaseId);
+        final String type = node.getType();
+        final UIComponent facet = getFacet(type);
+        if (facet == null) {
+            return;
+        }
+        if (phaseId == PhaseId.APPLY_REQUEST_VALUES) {
+            facet.processDecodes(context);
+        } else if (phaseId == PhaseId.PROCESS_VALIDATIONS) {
+            facet.processValidators(context);
+        } else if (phaseId == PhaseId.UPDATE_MODEL_VALUES) {
+            facet.processUpdates(context);
+        }
+        processChildNodes(context, node, phaseId);
+    }
+
+    protected void processChildNodes(FacesContext context, TreeNode node,
+            PhaseId phaseId) {
+        String currentId = getNodeId();
+        List children = node.getChildren();
+        for (int i = 0; i < children.size(); i++) {
+            processNodes(context, phaseId, currentId, i);
         }
     }
 
@@ -330,14 +342,14 @@ public class UITreeData extends UIInput implements NamingContainer {
 
     public void toggleExpanded() {
         final TreeModel model = getDataModel();
-        if(model != null) {
+        if (model != null) {
             model.toggleExpanded(getNodeId());
         }
     }
 
     public boolean isNodeExpanded() {
         final TreeModel model = getDataModel();
-        if(model != null) {
+        if (model != null) {
             return model.isNodeExpanded(getNodeId());
         }
         return false;
