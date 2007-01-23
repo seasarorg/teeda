@@ -97,6 +97,25 @@ public class HtmlSelectManyCheckboxRendererTest extends RendererTest {
                 + "lab</label>" + "</td></tr></table>", getResponseText());
     }
 
+    public void testEncode_Child_noneLayout() throws Exception {
+        // ## Arrange ##
+        {
+            UISelectItem selectItem = new UISelectItem();
+            selectItem.setItemValue("val");
+            selectItem.setItemLabel("lab");
+            htmlSelectManyCheckbox.getChildren().add(selectItem);
+            htmlSelectManyCheckbox.setLayout("none");
+        }
+
+        // ## Act ##
+        encodeByRenderer(renderer, htmlSelectManyCheckbox);
+
+        // ## Assert ##
+        assertEquals("<label>"
+                + "<input type=\"checkbox\" name=\"_id0\" value=\"val\" />"
+                + "lab</label>", getResponseText());
+    }
+
     public void testEncode_Id() throws Exception {
         // ## Arrange ##
         {
@@ -183,6 +202,33 @@ public class HtmlSelectManyCheckboxRendererTest extends RendererTest {
                 + "l1</label></td>" + "<td><label>"
                 + "<input type=\"checkbox\" name=\"_id0\" value=\"v2\" />"
                 + "l2</label>" + "</td></tr></table>", getResponseText());
+    }
+
+    public void testEncode_Children_noneLayout() throws Exception {
+        // ## Arrange ##
+        {
+            UISelectItem selectItem = new UISelectItem();
+            selectItem.setItemValue("v1");
+            selectItem.setItemLabel("l1");
+            htmlSelectManyCheckbox.getChildren().add(selectItem);
+            htmlSelectManyCheckbox.setLayout("none");
+        }
+        {
+            UISelectItem selectItem = new UISelectItem();
+            selectItem.setItemValue("v2");
+            selectItem.setItemLabel("l2");
+            htmlSelectManyCheckbox.getChildren().add(selectItem);
+        }
+
+        // ## Act ##
+        encodeByRenderer(renderer, htmlSelectManyCheckbox);
+
+        // ## Assert ##
+        assertEquals("<label>"
+                + "<input type=\"checkbox\" name=\"_id0\" value=\"v1\" />"
+                + "l1</label><label>"
+                + "<input type=\"checkbox\" name=\"_id0\" value=\"v2\" />"
+                + "l2</label>", getResponseText());
     }
 
     public void testEncode_Children_PageDirection() throws Exception {

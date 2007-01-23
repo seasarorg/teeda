@@ -15,13 +15,9 @@
  */
 package org.seasar.teeda.extension.render.html;
 
-import java.util.Map;
-
-import javax.faces.component.UIParameter;
 import javax.faces.render.Renderer;
 import javax.faces.render.RendererTest;
 
-import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.mock.MockHtmlForm;
 import org.seasar.teeda.core.mock.MockHtmlOutputLink;
 import org.seasar.teeda.core.render.html.HtmlFormRenderer;
@@ -44,75 +40,6 @@ public class THtmlOutputLinkRendererTest extends RendererTest {
         form.setRenderer(new HtmlFormRenderer());
         form.setId("form");
         form.getChildren().add(htmlOutputLink);
-    }
-
-    public void testDecode() throws Exception {
-        THtmlOutputLinkRenderer renderer = new THtmlOutputLinkRenderer();
-        MockFacesContext context = getFacesContext();
-        MockHtmlOutputLink component = new MockHtmlOutputLink();
-        {
-            UIParameter child = new UIParameter();
-            child.setName("aaa");
-            component.getChildren().add(child);
-        }
-        {
-            UIParameter child = new UIParameter();
-            child.setName("bbb");
-            component.getChildren().add(child);
-        }
-        MockHtmlForm form = new MockHtmlForm();
-        form.setRenderer(new HtmlFormRenderer());
-        form.setId("form");
-        form.getChildren().add(component);
-        Map map = context.getExternalContext().getRequestParameterMap();
-        map.put("form:aaa", "AAA");
-        map.put("form:bbb", "BBB");
-        component.setValue("../ccc/ddd.html");
-        renderer.decode(context, component);
-        assertTrue(component.getChildCount() > 0);
-        {
-            UIParameter c = (UIParameter) component.getChildren().get(0);
-            assertEquals("AAA", c.getValue());
-        }
-        {
-            UIParameter c = (UIParameter) component.getChildren().get(1);
-            assertEquals("BBB", c.getValue());
-        }
-    }
-
-    public void testDecodeAndEncode() throws Exception {
-        MockFacesContext context = getFacesContext();
-        {
-            UIParameter child = new UIParameter();
-            child.setName("aaa");
-            htmlOutputLink.getChildren().add(child);
-        }
-        {
-            UIParameter child = new UIParameter();
-            child.setName("bbb");
-            htmlOutputLink.getChildren().add(child);
-        }
-        Map map = context.getExternalContext().getRequestParameterMap();
-        map.put("form:aaa", "AAA");
-        map.put("form:bbb", "BBB");
-        htmlOutputLink.setValue("../ccc/ddd.html");
-        renderer.decode(context, htmlOutputLink);
-        assertTrue(htmlOutputLink.getChildCount() > 0);
-        {
-            UIParameter c = (UIParameter) htmlOutputLink.getChildren().get(0);
-            assertEquals("AAA", c.getValue());
-        }
-        {
-            UIParameter c = (UIParameter) htmlOutputLink.getChildren().get(1);
-            assertEquals("BBB", c.getValue());
-        }
-
-        encodeByRenderer(renderer, htmlOutputLink);
-
-        System.out.println(getResponseText());
-        assertEquals("<a href=\"../ccc/ddd.html?aaa=AAA&amp;bbb=BBB\"></a>",
-                getResponseText());
-
     }
 
     private THtmlOutputLinkRenderer createTHtmlOutputLinkRenderer() {

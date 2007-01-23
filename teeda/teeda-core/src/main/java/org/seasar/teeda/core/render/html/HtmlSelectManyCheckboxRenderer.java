@@ -52,8 +52,7 @@ public class HtmlSelectManyCheckboxRenderer extends AbstractInputRenderer {
         ignoreComponent.addAttributeName(JsfConstants.VALUE_ATTR);
         ignoreComponent.addAttributeName(JsfConstants.LAYOUT_ATTR);
         ignoreComponent.addAttributeName(JsfConstants.DISABLED_ATTR);
-        ignoreComponent
-                .addAttributeName(JsfConstants.DISABLED_CLASS_ATTR);
+        ignoreComponent.addAttributeName(JsfConstants.DISABLED_CLASS_ATTR);
         ignoreComponent.addAttributeName(JsfConstants.ENABLED_CLASS_ATTR);
         ignoreComponent.addAttributeName(JsfConstants.BORDER_ATTR);
         ignoreComponent.addAttributeName(JsfConstants.STYLE_ATTR);
@@ -82,25 +81,36 @@ public class HtmlSelectManyCheckboxRenderer extends AbstractInputRenderer {
             return;
         }
         ResponseWriter writer = context.getResponseWriter();
-        writer.startElement(JsfConstants.TABLE_ELEM, htmlSelectManyCheckbox);
-        RendererUtil.renderIdAttributeIfNecessary(writer,
-                htmlSelectManyCheckbox, getIdForRender(context,
-                        htmlSelectManyCheckbox));
-        RendererUtil.renderAttributes(writer, htmlSelectManyCheckbox,
-                TABLE_ATTRIBUTES);
+        boolean noneLayout = isNoneLayout(htmlSelectManyCheckbox);
+        if (!noneLayout) {
+            writer
+                    .startElement(JsfConstants.TABLE_ELEM,
+                            htmlSelectManyCheckbox);
+
+            RendererUtil.renderIdAttributeIfNecessary(writer,
+                    htmlSelectManyCheckbox, getIdForRender(context,
+                            htmlSelectManyCheckbox));
+            RendererUtil.renderAttributes(writer, htmlSelectManyCheckbox,
+                    TABLE_ATTRIBUTES);
+        }
         String[] selectedValues = getValuesForRender(context,
                 htmlSelectManyCheckbox);
 
         final boolean pageDirectionLayout = isPageDirectionLayout(htmlSelectManyCheckbox);
-        if (!pageDirectionLayout) {
-            writer.startElement(JsfConstants.TR_ELEM, htmlSelectManyCheckbox);
+        if (!noneLayout) {
+            if (!pageDirectionLayout) {
+                writer.startElement(JsfConstants.TR_ELEM,
+                        htmlSelectManyCheckbox);
+            }
         }
         renderSelectItems(context, htmlSelectManyCheckbox, writer, it,
-                selectedValues, pageDirectionLayout);
-        if (!pageDirectionLayout) {
-            writer.endElement(JsfConstants.TR_ELEM);
+                selectedValues, pageDirectionLayout, noneLayout);
+        if (!noneLayout) {
+            if (!pageDirectionLayout) {
+                writer.endElement(JsfConstants.TR_ELEM);
+            }
+            writer.endElement(JsfConstants.TABLE_ELEM);
         }
-        writer.endElement(JsfConstants.TABLE_ELEM);
     }
 
     protected String[] getValuesForRender(FacesContext context,
@@ -112,39 +122,50 @@ public class HtmlSelectManyCheckboxRenderer extends AbstractInputRenderer {
     protected void renderSelectItems(FacesContext context,
             UIComponent htmlSelectManyCheckbox, ResponseWriter writer,
             Iterator it, String[] selectedValues,
-            final boolean pageDirectionLayout) throws IOException {
+            final boolean pageDirectionLayout, boolean noneLayout)
+            throws IOException {
 
         while (it.hasNext()) {
             final SelectItem selectItem = (SelectItem) it.next();
 
-            if (pageDirectionLayout) {
-                writer.startElement(JsfConstants.TR_ELEM,
+            if (!noneLayout) {
+                if (pageDirectionLayout) {
+                    writer.startElement(JsfConstants.TR_ELEM,
+                            htmlSelectManyCheckbox);
+                }
+                writer.startElement(JsfConstants.TD_ELEM,
                         htmlSelectManyCheckbox);
             }
-            writer.startElement(JsfConstants.TD_ELEM, htmlSelectManyCheckbox);
             if (selectItem instanceof SelectItemGroup) {
                 SelectItemGroup selectItemGroup = (SelectItemGroup) selectItem;
                 SelectItem[] selectItems = selectItemGroup.getSelectItems();
                 Iterator selectItemsIt = new ArrayIterator(selectItems);
-                writer.startElement(JsfConstants.TABLE_ELEM,
-                        htmlSelectManyCheckbox);
-                if (!pageDirectionLayout) {
-                    writer.startElement(JsfConstants.TR_ELEM,
+                if (!noneLayout) {
+                    writer.startElement(JsfConstants.TABLE_ELEM,
                             htmlSelectManyCheckbox);
+                    if (!pageDirectionLayout) {
+                        writer.startElement(JsfConstants.TR_ELEM,
+                                htmlSelectManyCheckbox);
+                    }
                 }
                 renderSelectItems(context, htmlSelectManyCheckbox, writer,
-                        selectItemsIt, selectedValues, pageDirectionLayout);
-                if (!pageDirectionLayout) {
-                    writer.endElement(JsfConstants.TR_ELEM);
+                        selectItemsIt, selectedValues, pageDirectionLayout,
+                        noneLayout);
+                if (!noneLayout) {
+                    if (!pageDirectionLayout) {
+                        writer.endElement(JsfConstants.TR_ELEM);
+                    }
+                    writer.endElement(JsfConstants.TABLE_ELEM);
                 }
-                writer.endElement(JsfConstants.TABLE_ELEM);
             } else {
                 renderSelectItem(context, htmlSelectManyCheckbox, writer,
                         selectedValues, selectItem);
             }
-            writer.endElement(JsfConstants.TD_ELEM);
-            if (pageDirectionLayout) {
-                writer.endElement(JsfConstants.TR_ELEM);
+            if (!noneLayout) {
+                writer.endElement(JsfConstants.TD_ELEM);
+                if (pageDirectionLayout) {
+                    writer.endElement(JsfConstants.TR_ELEM);
+                }
             }
         }
     }
@@ -198,7 +219,13 @@ public class HtmlSelectManyCheckboxRenderer extends AbstractInputRenderer {
     }
 
     protected boolean isPageDirectionLayout(UIComponent htmlSelectManyCheckbox) {
-        return JsfConstants.PAGE_DIRECTION_ATTR.equals(UIComponentUtil
+        return JsfConstants.PAGE_DIRECTION_VALUE.equals(UIComponentUtil
+                .getStringAttribute(htmlSelectManyCheckbox,
+                        JsfConstants.LAYOUT_ATTR));
+    }
+
+    protected boolean isNoneLayout(UIComponent htmlSelectManyCheckbox) {
+        return JsfConstants.NONE_VALUE.equals(UIComponentUtil
                 .getStringAttribute(htmlSelectManyCheckbox,
                         JsfConstants.LAYOUT_ATTR));
     }

@@ -30,11 +30,11 @@ public class LayoutUtil {
 
     public static void styleToLayout(final Map properties) {
         String style = (String) properties.get(JsfConstants.STYLE_ATTR);
-        if (style.indexOf(JsfConstants.PAGE_DIRECTION_ATTR) >= 0) {
-            setStyleAndLayout(properties, JsfConstants.PAGE_DIRECTION_ATTR,
+        if (style.indexOf(JsfConstants.PAGE_DIRECTION_VALUE) >= 0) {
+            setStyleAndLayout(properties, JsfConstants.PAGE_DIRECTION_VALUE,
                     style);
-        } else if (style.indexOf(JsfConstants.LINE_DIRECTION_ATTR) >= 0) {
-            setStyleAndLayout(properties, JsfConstants.LINE_DIRECTION_ATTR,
+        } else if (style.indexOf(JsfConstants.LINE_DIRECTION_VALUE) >= 0) {
+            setStyleAndLayout(properties, JsfConstants.LINE_DIRECTION_VALUE,
                     style);
         }
     }
