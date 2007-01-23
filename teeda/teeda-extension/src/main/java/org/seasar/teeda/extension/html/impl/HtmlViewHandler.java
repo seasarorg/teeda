@@ -22,7 +22,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
 
-import javax.faces.FacesException;
 import javax.faces.FactoryFinder;
 import javax.faces.application.Application;
 import javax.faces.application.NavigationHandler;
@@ -50,7 +49,6 @@ import org.seasar.framework.convention.NamingConvention;
 import org.seasar.framework.exception.IORuntimeException;
 import org.seasar.teeda.core.application.ViewHandlerImpl;
 import org.seasar.teeda.core.util.DIContainerUtil;
-import org.seasar.teeda.core.util.ErrorPageManager;
 import org.seasar.teeda.core.util.ExternalContextUtil;
 import org.seasar.teeda.core.util.PortletExternalContextUtil;
 import org.seasar.teeda.core.util.PortletUtil;
@@ -89,8 +87,6 @@ public class HtmlViewHandler extends ViewHandlerImpl {
     private PagePersistence pagePersistence;
 
     private NamingConvention nc;
-
-    private ErrorPageManager errorPageManager;
 
     public void setTagProcessorCache(TagProcessorCache tagProcessorCache) {
         this.tagProcessorCache = tagProcessorCache;
@@ -203,11 +199,7 @@ public class HtmlViewHandler extends ViewHandlerImpl {
             final BeanDesc beanDesc = BeanDescFactory
                     .getBeanDesc(pageOrActionClass);
             Object ret = null;
-            try {
-                ret = beanDesc.invoke(target, methodName, null);
-            } catch (Exception e) {
-                handleException(context, e);
-            }
+            ret = beanDesc.invoke(target, methodName, null);
             if (ret instanceof Class) {
                 final Class retClass = (Class) ret;
                 final String pageSuffix = nc.getPageSuffix();
@@ -235,20 +227,6 @@ public class HtmlViewHandler extends ViewHandlerImpl {
             }
         }
         return next;
-    }
-
-    protected void handleException(final FacesContext context, final Exception e) {
-        final ErrorPageManager manager = getErrorPageManager();
-        final ExternalContext externalContext = context.getExternalContext();
-        try {
-            if (manager.handleException(e, context, externalContext)) {
-                context.responseComplete();
-            } else {
-                throw (RuntimeException) e;
-            }
-        } catch (IOException ioe) {
-            throw new FacesException(ioe.getMessage(), ioe);
-        }
     }
 
     protected void navigateReally(FacesContext context, String path) {
@@ -331,11 +309,4 @@ public class HtmlViewHandler extends ViewHandlerImpl {
         res.setHeader("Cache-Control", "no-cache");
     }
 
-    public ErrorPageManager getErrorPageManager() {
-        return errorPageManager;
-    }
-
-    public void setErrorPageManager(ErrorPageManager errorPageManager) {
-        this.errorPageManager = errorPageManager;
-    }
 }
