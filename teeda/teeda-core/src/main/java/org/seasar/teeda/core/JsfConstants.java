@@ -113,6 +113,12 @@ public interface JsfConstants {
 
     String STYLESHEET_VALUE = "stylesheet";
 
+    String PAGE_DIRECTION_VALUE = "pageDirection";
+
+    String LINE_DIRECTION_VALUE = "lineDirection";
+
+    String NONE_VALUE = "none";
+
     // -- element --
 
     String ANCHOR_ELEM = "a";
@@ -356,10 +362,6 @@ public interface JsfConstants {
     String ONSUBMIT_ATTR = "onsubmit";
 
     String ONUNLOAD_ATTR = "onunload";
-
-    String PAGE_DIRECTION_ATTR = "pageDirection";
-
-    String LINE_DIRECTION_ATTR = "lineDirection";
 
     String READONLY_ATTR = "readonly";
 
