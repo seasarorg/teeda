@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -27,7 +27,9 @@ import javax.faces.component.UIOutput;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.convert.ConverterException;
+import javax.faces.internal.FacesMessageUtil;
 
+import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.AbstractInputRenderer;
 import org.seasar.teeda.core.util.RendererUtil;
@@ -49,6 +51,8 @@ public class THtmlHolidayCalendarRenderer extends AbstractInputRenderer
     private static final String JS_CSS_ENCODED = "org.seasar.teeda.extension.holidaycalendar.JAVASCRIPT_ENCODED";
 
     private static final String RESOURCE_ROOT = "org/seasar/teeda/extension/render/html/holidaycalendar/";
+
+    public static final String WEEKDAYS_MESSAGE_ID = "org.seasar.teeda.extension.component.HtmlHolidayCalendar.WEEKDAYS";
 
     public void encodePrepare(FacesContext context, UIComponent component)
             throws IOException {
@@ -91,7 +95,7 @@ public class THtmlHolidayCalendarRenderer extends AbstractInputRenderer
         }
         base.set(Calendar.DAY_OF_MONTH, 1);
         DateFormatSymbols symbols = new DateFormatSymbols(currentLocale);
-        String[] weekdays = DateFormatSymbolsUtil.getWeekdays(symbols);
+        String[] weekdays = getWeekDays(context, symbols);
         String[] months = DateFormatSymbolsUtil.getMonths(symbols);
         int lastDayInMonth = base.getActualMaximum(Calendar.DAY_OF_MONTH);
         int weekDayOfFirstDayOfMonth = mapCalendarDayToCommonDay(base
@@ -107,7 +111,8 @@ public class THtmlHolidayCalendarRenderer extends AbstractInputRenderer
             writer.writeAttribute(JsfConstants.CLASS_ATTR, calendarClass, null);
         }
         final int border = htmlCalendar.getBorder();
-        writer.writeAttribute(JsfConstants.BORDER_ATTR, new Integer(border), null);
+        writer.writeAttribute(JsfConstants.BORDER_ATTR, new Integer(border),
+                null);
         writer.write(JsfConstants.LINE_SP);
         writer.startElement(JsfConstants.TR_ELEM, component);
         if (htmlCalendar.getMonthYearRowClass() != null) {
@@ -131,6 +136,22 @@ public class THtmlHolidayCalendarRenderer extends AbstractInputRenderer
                 weekDayOfFirstDayOfMonth, lastDayInMonth);
 
         writer.endElement(JsfConstants.TABLE_ELEM);
+    }
+
+    protected String[] getWeekDays(FacesContext context,
+            DateFormatSymbols symbols) {
+        String summary = FacesMessageUtil.getSummary(context,
+                WEEKDAYS_MESSAGE_ID, new Object[] {});
+        if (summary != null) {
+            String[] array = StringUtil.split(summary, ",");
+            if (array.length == 7) {
+                for (int i = 0; i < array.length; i++) {
+                    array[i] = array[i].trim();
+                }
+                return array;
+            }
+        }
+        return DateFormatSymbolsUtil.getWeekdays(symbols);
     }
 
     protected void writeMonthYearHeader(FacesContext context,

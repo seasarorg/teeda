@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -208,6 +208,12 @@ public class FacesMessageUtil {
         final FacesMessage message = getMessage(context, locale, severity,
                 messageId, args);
         context.addMessage(clientId, message);
+    }
+
+    public static String getSummary(FacesContext context, String messageId,
+            Object[] args) {
+        FacesMessage message = getMessage(context, messageId, args);
+        return (message != null) ? message.getSummary() : null;
     }
 
     public static FacesMessage getMessage(FacesContext context,
