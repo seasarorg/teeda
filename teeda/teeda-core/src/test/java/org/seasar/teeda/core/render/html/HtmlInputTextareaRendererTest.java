@@ -87,6 +87,24 @@ public class HtmlInputTextareaRendererTest extends RendererTest {
                 getResponseText());
     }
 
+    /**
+     * name属性は無視されること。
+     * (実装がマズイとnameが2回出力されてしまう)
+     */
+    public void testEncode_WithName() throws Exception {
+        htmlInputTextarea.setId("a");
+        htmlInputTextarea.getAttributes().put("name", "hoge");
+
+        UIComponent parent = new MockUIComponentBaseWithNamingContainer();
+        parent.setId("b");
+        parent.getChildren().add(htmlInputTextarea);
+
+        encodeByRenderer(renderer, htmlInputTextarea);
+
+        assertEquals("<textarea id=\"a\" name=\"b:a\"></textarea>",
+                getResponseText());
+    }
+
     public void testEncode_WithUnknownAttribute() throws Exception {
         htmlInputTextarea.setId("a");
         htmlInputTextarea.getAttributes().put("aa", "bb");
@@ -151,6 +169,7 @@ public class HtmlInputTextareaRendererTest extends RendererTest {
         htmlInputTextarea.setStyleClass("u");
         htmlInputTextarea.setTabindex("x");
         htmlInputTextarea.setTitle("y");
+        htmlInputTextarea.setWrap("z");
 
         htmlInputTextarea.setId("A");
         htmlInputTextarea.setValue("B");
@@ -169,7 +188,7 @@ public class HtmlInputTextareaRendererTest extends RendererTest {
                 + " onmouseover=\"r\"" + " onmouseup=\"s\"" + " onselect=\"t\""
                 + " readonly=\"true\"" + " rows=\"20\"" + " style=\"w\""
                 + " class=\"u\"" + " tabindex=\"x\"" + " title=\"y\""
-                + ">B</textarea>", getResponseText());
+                + " wrap=\"z\"" + ">B</textarea>", getResponseText());
         assertEquals(diff.toString(), true, diff.identical());
     }
 

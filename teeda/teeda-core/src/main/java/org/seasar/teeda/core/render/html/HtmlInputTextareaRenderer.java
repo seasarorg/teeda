@@ -37,10 +37,11 @@ public class HtmlInputTextareaRenderer extends AbstractInputRenderer {
 
     public static final String RENDERER_TYPE = "javax.faces.Textarea";
 
-    private final IgnoreAttribute ignoreComponent = new IgnoreAttribute();
+    private final IgnoreAttribute ignoreAttribute = new IgnoreAttribute();
     {
-        ignoreComponent.addAttributeName(JsfConstants.ID_ATTR);
-        ignoreComponent.addAttributeName(JsfConstants.VALUE_ATTR);
+        ignoreAttribute.addAttributeName(JsfConstants.ID_ATTR);
+        ignoreAttribute.addAttributeName(JsfConstants.VALUE_ATTR);
+        ignoreAttribute.addAttributeName(JsfConstants.NAME_ATTR);
     }
 
     public void encodeEnd(FacesContext context, UIComponent component)
@@ -60,7 +61,7 @@ public class HtmlInputTextareaRenderer extends AbstractInputRenderer {
                 getIdForRender(context, htmlInputTextarea));
         RendererUtil.renderAttribute(writer, JsfConstants.NAME_ATTR,
                 htmlInputTextarea.getClientId(context));
-        renderRemainAttributes(htmlInputTextarea, writer, ignoreComponent);
+        renderRemainAttributes(htmlInputTextarea, writer, ignoreAttribute);
 
         String value = ValueHolderUtil.getValueForRender(context,
                 htmlInputTextarea);
