@@ -40,9 +40,33 @@ public class SelectOneMenuTest extends TeedaWebTestCase {
         tester.assertSelectedOptionValueEqualsByName("form:aaaItems", "1");
         tester.selectOptionValueByName("form:aaaItems", "2");
         tester.submitByName("form:doAction");
+        tester.dumpHtml();
 
         // ## Assert ##
         tester.assertTextEqualsById("aaa", "2");
+    }
+
+    /*
+     * TODO このテストが通るように実装すること
+     * 
+     * https://www.seasar.org/issues/browse/TEEDA-234
+     */
+    public void testJIRA234() throws Exception {
+        // ## Arrange ##
+        TeedaWebTester tester = new TeedaWebTester();
+
+        // ## Act ##
+        tester.beginAt(getBaseUrl(), "view/select/selectOneMenu.html");
+        tester.dumpHtml();
+
+        tester.assertSelectedOptionValueEqualsByName("form:aaaItems", "1");
+        tester.selectOptionValueByName("form:aaaItems", "3");
+        tester.submitById("doActionAndGoNext");
+        tester.dumpHtml();
+
+        // ## Assert ##
+        tester.assertTextEqualsById("aaa", "3");
+        tester.assertTextEqualsById("aaaLabel", "CCCC");
     }
 
 }
