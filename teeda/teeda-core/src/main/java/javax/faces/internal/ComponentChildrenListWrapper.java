@@ -37,20 +37,20 @@ public class ComponentChildrenListWrapper extends AbstractList implements
 
     private static final long serialVersionUID = 3617294519188666163L;
 
-    private List list = new ArrayList();
+    private final List list = new ArrayList();
 
-    private UIComponent parent = null;
+    private final UIComponent parent;
 
-    public ComponentChildrenListWrapper(UIComponent parent) {
+    public ComponentChildrenListWrapper(final UIComponent parent) {
         this.parent = parent;
     }
 
-    public Object get(int num) {
-        return list.get(num);
+    public Object get(final int index) {
+        return list.get(index);
     }
 
-    public Object remove(int num) {
-        UIComponent child = (UIComponent) list.remove(num);
+    public Object remove(final int index) {
+        final UIComponent child = (UIComponent) list.remove(index);
         if (child != null) {
             child.setParent(null);
         }
@@ -61,46 +61,47 @@ public class ComponentChildrenListWrapper extends AbstractList implements
         return list.size();
     }
 
-    public void add(int num, Object obj) {
-        assertUIComponent(obj);
-        setNewParent((UIComponent) obj);
-        list.add(num, obj);
+    public void add(final int index, final Object child) {
+        assertUIComponent(child);
+        setNewParent((UIComponent) child);
+        list.add(index, child);
     }
 
-    public boolean add(Object obj) {
-        assertUIComponent(obj);
-        setNewParent((UIComponent) obj);
-        return list.add(obj);
+    public boolean add(final Object child) {
+        assertUIComponent(child);
+        setNewParent((UIComponent) child);
+        return list.add(child);
     }
 
-    public boolean addAll(Collection collection) {
+    public boolean addAll(final Collection children) {
         boolean changed = false;
-        Object obj = null;
-        for (Iterator itr = collection.iterator(); itr.hasNext();) {
-            obj = itr.next();
-            assertUIComponent(obj);
-            add((UIComponent) obj);
+        for (final Iterator it = children.iterator(); it.hasNext();) {
+            final Object child = it.next();
+            assertUIComponent(child);
+            add(child);
             changed = true;
         }
         return changed;
     }
 
-    private void setNewParent(UIComponent child) {
-        UIComponent oldParent = child.getParent();
+    private void setNewParent(final UIComponent child) {
+        final UIComponent oldParent = child.getParent();
         if (oldParent != null) {
             removeFromParent(oldParent, child);
         }
         child.setParent(parent);
     }
 
-    private void removeFromParent(UIComponent parent, UIComponent child) {
+    private void removeFromParent(final UIComponent parent,
+            final UIComponent child) {
         parent.getChildren().remove(child);
     }
 
-    private static void assertUIComponent(Object obj) {
+    private void assertUIComponent(final Object obj) {
         AssertionUtil.assertNotNull("value", obj);
         if (!(obj instanceof UIComponent)) {
-            throw new ClassCastException("value");
+            throw new ClassCastException(obj.getClass().getName());
         }
     }
+
 }
