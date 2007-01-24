@@ -38,64 +38,65 @@ public class HtmlInputTextarea extends UIInput {
 
     private static final int DEFAULT_ROWS = Integer.MIN_VALUE;
 
-    private String accesskey = null;
+    private String accesskey;
 
-    private Integer cols = null;
+    private Integer cols;
 
-    private String dir = null;
+    private String dir;
 
-    private Boolean disabled = null;
+    private Boolean disabled;
 
-    private String lang = null;
+    private String lang;
 
-    private String onblur = null;
+    private String onblur;
 
-    private String onchange = null;
+    private String onchange;
 
-    private String onclick = null;
+    private String onclick;
 
-    private String ondblclick = null;
+    private String ondblclick;
 
-    private String onfocus = null;
+    private String onfocus;
 
-    private String onkeydown = null;
+    private String onkeydown;
 
-    private String onkeypress = null;
+    private String onkeypress;
 
-    private String onkeyup = null;
+    private String onkeyup;
 
-    private String onmousedown = null;
+    private String onmousedown;
 
-    private String onmousemove = null;
+    private String onmousemove;
 
-    private String onmouseout = null;
+    private String onmouseout;
 
-    private String onmouseover = null;
+    private String onmouseover;
 
-    private String onmouseup = null;
+    private String onmouseup;
 
-    private String onselect = null;
+    private String onselect;
 
-    private Boolean readonly = null;
+    private Boolean readonly;
 
-    private Integer rows = null;
+    private Integer rows;
 
-    private String style = null;
+    private String style;
 
-    private String styleClass = null;
+    private String styleClass;
 
-    private String tabindex = null;
+    private String tabindex;
 
-    private String title = null;
+    private String title;
 
-    private String label = null;
+    private String label;
+
+    private String wrap;
 
     public HtmlInputTextarea() {
-        super();
         setRendererType(DEFAULT_RENDERER_TYPE);
     }
 
-    public void setAccesskey(String accesskey) {
+    public void setAccesskey(final String accesskey) {
         this.accesskey = accesskey;
     }
 
@@ -103,11 +104,11 @@ public class HtmlInputTextarea extends UIInput {
         if (accesskey != null) {
             return accesskey;
         }
-        ValueBinding vb = getValueBinding("accesskey");
+        final ValueBinding vb = getValueBinding("accesskey");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
-    public void setCols(int cols) {
+    public void setCols(final int cols) {
         this.cols = new Integer(cols);
     }
 
@@ -115,13 +116,13 @@ public class HtmlInputTextarea extends UIInput {
         if (cols != null) {
             return cols.intValue();
         }
-        ValueBinding vb = getValueBinding("cols");
-        Integer v = vb != null ? (Integer) vb.getValue(getFacesContext())
+        final ValueBinding vb = getValueBinding("cols");
+        final Integer v = vb != null ? (Integer) vb.getValue(getFacesContext())
                 : null;
         return v != null ? v.intValue() : DEFAULT_COLS;
     }
 
-    public void setDir(String dir) {
+    public void setDir(final String dir) {
         this.dir = dir;
     }
 
@@ -129,11 +130,11 @@ public class HtmlInputTextarea extends UIInput {
         if (dir != null) {
             return dir;
         }
-        ValueBinding vb = getValueBinding("dir");
+        final ValueBinding vb = getValueBinding("dir");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
-    public void setDisabled(boolean disabled) {
+    public void setDisabled(final boolean disabled) {
         this.disabled = Boolean.valueOf(disabled);
     }
 
@@ -141,13 +142,13 @@ public class HtmlInputTextarea extends UIInput {
         if (disabled != null) {
             return disabled.booleanValue();
         }
-        ValueBinding vb = getValueBinding("disabled");
-        Boolean v = vb != null ? (Boolean) vb.getValue(getFacesContext())
+        final ValueBinding vb = getValueBinding("disabled");
+        final Boolean v = vb != null ? (Boolean) vb.getValue(getFacesContext())
                 : null;
         return v != null ? v.booleanValue() : DEFAULT_DISABLED;
     }
 
-    public void setLang(String lang) {
+    public void setLang(final String lang) {
         this.lang = lang;
     }
 
@@ -155,11 +156,11 @@ public class HtmlInputTextarea extends UIInput {
         if (lang != null) {
             return lang;
         }
-        ValueBinding vb = getValueBinding("lang");
+        final ValueBinding vb = getValueBinding("lang");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
-    public void setOnblur(String onblur) {
+    public void setOnblur(final String onblur) {
         this.onblur = onblur;
     }
 
@@ -167,11 +168,11 @@ public class HtmlInputTextarea extends UIInput {
         if (onblur != null) {
             return onblur;
         }
-        ValueBinding vb = getValueBinding("onblur");
+        final ValueBinding vb = getValueBinding("onblur");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
-    public void setOnchange(String onchange) {
+    public void setOnchange(final String onchange) {
         this.onchange = onchange;
     }
 
@@ -179,11 +180,11 @@ public class HtmlInputTextarea extends UIInput {
         if (onchange != null) {
             return onchange;
         }
-        ValueBinding vb = getValueBinding("onchange");
+        final ValueBinding vb = getValueBinding("onchange");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
-    public void setOnclick(String onclick) {
+    public void setOnclick(final String onclick) {
         this.onclick = onclick;
     }
 
@@ -191,11 +192,11 @@ public class HtmlInputTextarea extends UIInput {
         if (onclick != null) {
             return onclick;
         }
-        ValueBinding vb = getValueBinding("onclick");
+        final ValueBinding vb = getValueBinding("onclick");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
-    public void setOndblclick(String ondblclick) {
+    public void setOndblclick(final String ondblclick) {
         this.ondblclick = ondblclick;
     }
 
@@ -203,11 +204,11 @@ public class HtmlInputTextarea extends UIInput {
         if (ondblclick != null) {
             return ondblclick;
         }
-        ValueBinding vb = getValueBinding("ondblclick");
+        final ValueBinding vb = getValueBinding("ondblclick");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
-    public void setOnfocus(String onfocus) {
+    public void setOnfocus(final String onfocus) {
         this.onfocus = onfocus;
     }
 
@@ -215,11 +216,11 @@ public class HtmlInputTextarea extends UIInput {
         if (onfocus != null) {
             return onfocus;
         }
-        ValueBinding vb = getValueBinding("onfocus");
+        final ValueBinding vb = getValueBinding("onfocus");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
-    public void setOnkeydown(String onkeydown) {
+    public void setOnkeydown(final String onkeydown) {
         this.onkeydown = onkeydown;
     }
 
@@ -227,11 +228,11 @@ public class HtmlInputTextarea extends UIInput {
         if (onkeydown != null) {
             return onkeydown;
         }
-        ValueBinding vb = getValueBinding("onkeydown");
+        final ValueBinding vb = getValueBinding("onkeydown");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
-    public void setOnkeypress(String onkeypress) {
+    public void setOnkeypress(final String onkeypress) {
         this.onkeypress = onkeypress;
     }
 
@@ -239,11 +240,11 @@ public class HtmlInputTextarea extends UIInput {
         if (onkeypress != null) {
             return onkeypress;
         }
-        ValueBinding vb = getValueBinding("onkeypress");
+        final ValueBinding vb = getValueBinding("onkeypress");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
-    public void setOnkeyup(String onkeyup) {
+    public void setOnkeyup(final String onkeyup) {
         this.onkeyup = onkeyup;
     }
 
@@ -251,11 +252,11 @@ public class HtmlInputTextarea extends UIInput {
         if (onkeyup != null) {
             return onkeyup;
         }
-        ValueBinding vb = getValueBinding("onkeyup");
+        final ValueBinding vb = getValueBinding("onkeyup");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
-    public void setOnmousedown(String onmousedown) {
+    public void setOnmousedown(final String onmousedown) {
         this.onmousedown = onmousedown;
     }
 
@@ -263,11 +264,11 @@ public class HtmlInputTextarea extends UIInput {
         if (onmousedown != null) {
             return onmousedown;
         }
-        ValueBinding vb = getValueBinding("onmousedown");
+        final ValueBinding vb = getValueBinding("onmousedown");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
-    public void setOnmousemove(String onmousemove) {
+    public void setOnmousemove(final String onmousemove) {
         this.onmousemove = onmousemove;
     }
 
@@ -275,11 +276,11 @@ public class HtmlInputTextarea extends UIInput {
         if (onmousemove != null) {
             return onmousemove;
         }
-        ValueBinding vb = getValueBinding("onmousemove");
+        final ValueBinding vb = getValueBinding("onmousemove");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
-    public void setOnmouseout(String onmouseout) {
+    public void setOnmouseout(final String onmouseout) {
         this.onmouseout = onmouseout;
     }
 
@@ -287,11 +288,11 @@ public class HtmlInputTextarea extends UIInput {
         if (onmouseout != null) {
             return onmouseout;
         }
-        ValueBinding vb = getValueBinding("onmouseout");
+        final ValueBinding vb = getValueBinding("onmouseout");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
-    public void setOnmouseover(String onmouseover) {
+    public void setOnmouseover(final String onmouseover) {
         this.onmouseover = onmouseover;
     }
 
@@ -299,11 +300,11 @@ public class HtmlInputTextarea extends UIInput {
         if (onmouseover != null) {
             return onmouseover;
         }
-        ValueBinding vb = getValueBinding("onmouseover");
+        final ValueBinding vb = getValueBinding("onmouseover");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
-    public void setOnmouseup(String onmouseup) {
+    public void setOnmouseup(final String onmouseup) {
         this.onmouseup = onmouseup;
     }
 
@@ -311,11 +312,11 @@ public class HtmlInputTextarea extends UIInput {
         if (onmouseup != null) {
             return onmouseup;
         }
-        ValueBinding vb = getValueBinding("onmouseup");
+        final ValueBinding vb = getValueBinding("onmouseup");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
-    public void setOnselect(String onselect) {
+    public void setOnselect(final String onselect) {
         this.onselect = onselect;
     }
 
@@ -323,11 +324,11 @@ public class HtmlInputTextarea extends UIInput {
         if (onselect != null) {
             return onselect;
         }
-        ValueBinding vb = getValueBinding("onselect");
+        final ValueBinding vb = getValueBinding("onselect");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
-    public void setReadonly(boolean readonly) {
+    public void setReadonly(final boolean readonly) {
         this.readonly = Boolean.valueOf(readonly);
     }
 
@@ -335,13 +336,13 @@ public class HtmlInputTextarea extends UIInput {
         if (readonly != null) {
             return readonly.booleanValue();
         }
-        ValueBinding vb = getValueBinding("readonly");
-        Boolean v = vb != null ? (Boolean) vb.getValue(getFacesContext())
+        final ValueBinding vb = getValueBinding("readonly");
+        final Boolean v = vb != null ? (Boolean) vb.getValue(getFacesContext())
                 : null;
         return v != null ? v.booleanValue() : DEFAULT_READONLY;
     }
 
-    public void setRows(int rows) {
+    public void setRows(final int rows) {
         this.rows = new Integer(rows);
     }
 
@@ -349,13 +350,13 @@ public class HtmlInputTextarea extends UIInput {
         if (rows != null) {
             return rows.intValue();
         }
-        ValueBinding vb = getValueBinding("rows");
-        Integer v = vb != null ? (Integer) vb.getValue(getFacesContext())
+        final ValueBinding vb = getValueBinding("rows");
+        final Integer v = vb != null ? (Integer) vb.getValue(getFacesContext())
                 : null;
         return v != null ? v.intValue() : DEFAULT_ROWS;
     }
 
-    public void setStyle(String style) {
+    public void setStyle(final String style) {
         this.style = style;
     }
 
@@ -363,11 +364,11 @@ public class HtmlInputTextarea extends UIInput {
         if (style != null) {
             return style;
         }
-        ValueBinding vb = getValueBinding("style");
+        final ValueBinding vb = getValueBinding("style");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
-    public void setStyleClass(String styleClass) {
+    public void setStyleClass(final String styleClass) {
         this.styleClass = styleClass;
     }
 
@@ -375,11 +376,11 @@ public class HtmlInputTextarea extends UIInput {
         if (styleClass != null) {
             return styleClass;
         }
-        ValueBinding vb = getValueBinding("styleClass");
+        final ValueBinding vb = getValueBinding("styleClass");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
-    public void setTabindex(String tabindex) {
+    public void setTabindex(final String tabindex) {
         this.tabindex = tabindex;
     }
 
@@ -387,11 +388,11 @@ public class HtmlInputTextarea extends UIInput {
         if (tabindex != null) {
             return tabindex;
         }
-        ValueBinding vb = getValueBinding("tabindex");
+        final ValueBinding vb = getValueBinding("tabindex");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
-    public void setTitle(String title) {
+    public void setTitle(final String title) {
         this.title = title;
     }
 
@@ -399,11 +400,11 @@ public class HtmlInputTextarea extends UIInput {
         if (title != null) {
             return title;
         }
-        ValueBinding vb = getValueBinding("title");
+        final ValueBinding vb = getValueBinding("title");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
-    public void setLabel(String label) {
+    public void setLabel(final String label) {
         this.label = label;
     }
 
@@ -411,12 +412,24 @@ public class HtmlInputTextarea extends UIInput {
         if (label != null) {
             return label;
         }
-        ValueBinding vb = getValueBinding(JsfConstants.LABEL_ATTR);
+        final ValueBinding vb = getValueBinding(JsfConstants.LABEL_ATTR);
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
-    public Object saveState(FacesContext context) {
-        Object values[] = new Object[27];
+    public String getWrap() {
+        if (wrap != null) {
+            return wrap;
+        }
+        final ValueBinding vb = getValueBinding(JsfConstants.WRAP_ATTR);
+        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+    }
+
+    public void setWrap(final String wrap) {
+        this.wrap = wrap;
+    }
+
+    public Object saveState(final FacesContext context) {
+        final Object[] values = new Object[28];
         values[0] = super.saveState(context);
         values[1] = accesskey;
         values[2] = cols;
@@ -444,11 +457,12 @@ public class HtmlInputTextarea extends UIInput {
         values[24] = tabindex;
         values[25] = title;
         values[26] = label;
-        return ((Object) (values));
+        values[27] = wrap;
+        return values;
     }
 
-    public void restoreState(FacesContext context, Object state) {
-        Object values[] = (Object[]) state;
+    public void restoreState(final FacesContext context, final Object state) {
+        final Object[] values = (Object[]) state;
         super.restoreState(context, values[0]);
         accesskey = (String) values[1];
         cols = (Integer) values[2];
@@ -476,5 +490,7 @@ public class HtmlInputTextarea extends UIInput {
         tabindex = (String) values[24];
         title = (String) values[25];
         label = (String) values[26];
+        wrap = (String) values[27];
     }
+
 }

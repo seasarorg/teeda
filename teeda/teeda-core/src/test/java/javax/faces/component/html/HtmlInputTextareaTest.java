@@ -456,7 +456,7 @@ public class HtmlInputTextareaTest extends UIInputTest {
         component.setLabel("label1");
         assertEquals("label1", component.getLabel());
     }
-    
+
     public void testSetGetLabel_ValueBinding() throws Exception {
         HtmlInputTextarea component = createHtmlInputTextarea();
         MockValueBinding vb = new MockValueBinding();
@@ -464,7 +464,25 @@ public class HtmlInputTextareaTest extends UIInputTest {
         vb.setValue(context, "bar label");
         component.setValueBinding("label", vb);
         assertEquals("bar label", component.getLabel());
-        assertEquals("bar label", component.getValueBinding("label").getValue(context));
+        assertEquals("bar label", component.getValueBinding("label").getValue(
+                context));
+    }
+
+    public void testSetGetWrap() throws Exception {
+        HtmlInputTextarea component = createHtmlInputTextarea();
+        component.setWrap("wrap1");
+        assertEquals("wrap1", component.getWrap());
+    }
+
+    public void testSetGetWrap_ValueBinding() throws Exception {
+        HtmlInputTextarea component = createHtmlInputTextarea();
+        MockValueBinding vb = new MockValueBinding();
+        FacesContext context = getFacesContext();
+        vb.setValue(context, "bar wrap");
+        component.setValueBinding("wrap", vb);
+        assertEquals("bar wrap", component.getWrap());
+        assertEquals("bar wrap", component.getValueBinding("wrap").getValue(
+                context));
     }
 
     private HtmlInputTextarea createHtmlInputTextarea() {

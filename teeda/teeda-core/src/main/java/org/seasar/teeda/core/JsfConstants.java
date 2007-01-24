@@ -433,6 +433,8 @@ public interface JsfConstants {
 
     String WIDTH_ATTR = "width";
 
+    String WRAP_ATTR = "wrap";
+
     String ACTION_ATTR = "action";
 
     String FRACTION_ATTR = "fraction";
