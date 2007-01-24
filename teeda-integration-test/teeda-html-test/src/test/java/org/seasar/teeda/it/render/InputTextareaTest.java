@@ -39,6 +39,7 @@ public class InputTextareaTest extends TeedaWebTestCase {
         tester.dumpHtml();
 
         // ## Assert ##
+        tester.assertTitleEquals("textarea 1");
         tester.assertTextEqualsById("aaa", "AAA");
         tester.assertTextEqualsById("bbb", "");
         tester.assertTextEqualsById("ccc", "12345");

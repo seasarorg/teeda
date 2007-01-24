@@ -15,7 +15,6 @@
  */
 package org.seasar.teeda.extension.html.impl;
 
-import org.seasar.teeda.core.util.BindingUtil;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.DocumentNode;
 import org.seasar.teeda.extension.html.ElementNode;
@@ -92,9 +91,7 @@ public class TagProcessorAssemblerImpl implements TagProcessorAssembler {
                 ElementProcessor elementProcessor = factory.createProcessor(
                         elementNode, pageDesc, actionDesc);
                 parentProcessor.addElement(elementProcessor);
-                final String property = elementProcessor.getProperty("value");
-                if (!factory.isLeaf()
-                        || !BindingUtil.isValueReference(property)) {
+                if (!factory.isLeaf()) {
                     assembleElementNodeChildren(elementProcessor, elementNode,
                             pageDesc, actionDesc);
                 }
