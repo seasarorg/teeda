@@ -21,6 +21,7 @@ import java.util.Map;
 import javax.faces.context.FacesContext;
 
 import junit.framework.TestCase;
+import junitx.framework.StringAssert;
 
 import org.seasar.teeda.core.mock.MockValueBinding;
 import org.seasar.teeda.core.mock.NullFacesContext;
@@ -141,6 +142,21 @@ public abstract class AbstractUIComponentTest extends TestCase {
             fail();
         } catch (NullPointerException npe) {
             ExceptionAssert.assertMessageExist(npe);
+        }
+    }
+
+    public void testAddChildNoUIComponent() throws Exception {
+        // ## Arrange ##
+        final UIComponent component = createUIComponent();
+
+        // ## Act ##
+        // ## Assert ##
+        try {
+            component.getChildren().add(new Integer("123"));
+            fail();
+        } catch (final ClassCastException e) {
+            final String message = e.getMessage();
+            StringAssert.assertContains(message, Integer.class.getName());
         }
     }
 
