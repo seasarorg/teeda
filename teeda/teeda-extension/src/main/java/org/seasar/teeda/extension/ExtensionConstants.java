@@ -19,7 +19,7 @@ import javax.faces.component.NamingContainer;
 
 /**
  * @author shot
- *
+ * @author manhole
  */
 public interface ExtensionConstants {
 
@@ -49,6 +49,8 @@ public interface ExtensionConstants {
     String PAGE_NAME_ATTR = "pageName";
 
     String ITEMS_NAME_ATTR = "itemsName";
+
+    String LABEL_NAME_ATTR = "labelName";
 
     String ITEMS_ATTR = "items";
 
@@ -80,6 +82,8 @@ public interface ExtensionConstants {
     String DO_PREFIX = "do";
 
     String JUMP_PREFIX = "jump";
+
+    String LABEL_SUFFIX = "Label";
 
     String ITEMS_SUFFIX = "Items";
 

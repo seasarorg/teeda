@@ -61,21 +61,28 @@ public class SelectOneMenuFactory extends AbstractElementProcessorFactory {
         if (pageDesc == null) {
             return;
         }
-        String pageName = pageDesc.getPageName();
-        String id = elementNode.getId();
-        String items = null;
-        if (id.lastIndexOf(ExtensionConstants.ITEMS_SUFFIX) >= 0) {
-            items = id;
+        final String pageName = pageDesc.getPageName();
+        final String id = elementNode.getId();
+        final String itemsName;
+        final String labelName;
+        if (id.endsWith(ExtensionConstants.ITEMS_SUFFIX)) {
+            itemsName = id;
+            labelName = id.substring(0, id.length()
+                    - ExtensionConstants.ITEMS_SUFFIX.length())
+                    + ExtensionConstants.LABEL_SUFFIX;
         } else {
-            items = id + ExtensionConstants.ITEMS_SUFFIX;
+            itemsName = id + ExtensionConstants.ITEMS_SUFFIX;
+            labelName = id + ExtensionConstants.LABEL_SUFFIX;
         }
-        String target = items.substring(0, items.length()
+        String target = itemsName.substring(0, itemsName.length()
                 - ExtensionConstants.ITEMS_SUFFIX.length());
         properties.put(JsfConstants.VALUE_ATTR, getBindingExpression(pageName,
                 target));
         properties.put(ExtensionConstants.ITEMS_ATTR, getBindingExpression(
-                pageName, items));
+                pageName, itemsName));
 
+        properties.put(ExtensionConstants.PAGE_NAME_ATTR, pageName);
+        properties.put(ExtensionConstants.LABEL_NAME_ATTR, labelName);
     }
 
     protected String getTagName() {
@@ -89,4 +96,5 @@ public class SelectOneMenuFactory extends AbstractElementProcessorFactory {
     public boolean isLeaf() {
         return true;
     }
+
 }

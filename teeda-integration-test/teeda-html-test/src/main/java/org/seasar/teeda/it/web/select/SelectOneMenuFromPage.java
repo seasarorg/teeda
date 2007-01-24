@@ -20,34 +20,47 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class SelectOneMenuPage {
+/**
+ * https://www.seasar.org/issues/browse/TEEDA-234
+ * 
+ * @author manhole
+ */
+public class SelectOneMenuFromPage {
 
     private List aaaItems;
+    private Integer aaa = new Integer(2);
+    private String aaaLabel;
 
-    private Integer aaa = new Integer(1);
-
-    public String prerender() {
+    public void initialize() {
         aaaItems = new ArrayList();
-        Map map1 = new HashMap();
+        final Map map1 = new HashMap();
         map1.put("label", "AAAA");
         map1.put("value", new Integer(1));
         aaaItems.add(map1);
-        Map map2 = new HashMap();
+        final Map map2 = new HashMap();
         map2.put("label", "BBBB");
         map2.put("value", new Integer(2));
         aaaItems.add(map2);
-        Map map3 = new HashMap();
+        final Map map3 = new HashMap();
         map3.put("label", "CCCC");
         map3.put("value", new Integer(3));
         aaaItems.add(map3);
-        return null;
+    }
+
+    /*
+     * https://www.seasar.org/issues/browse/TEEDA-234
+     */
+    public Class doAction() {
+        System.out.println("SelectOneMenuPage.doActionAndGoNext() selected="
+            + aaa);
+        return SelectOneMenuToPage.class;
     }
 
     public List getAaaItems() {
         return aaaItems;
     }
 
-    public void setAaaItems(List aaaItems) {
+    public void setAaaItems(final List aaaItems) {
         this.aaaItems = aaaItems;
     }
 
@@ -55,12 +68,16 @@ public class SelectOneMenuPage {
         return aaa;
     }
 
-    public void setAaa(Integer aaa) {
+    public void setAaa(final Integer aaa) {
         this.aaa = aaa;
     }
 
-    public String doAction() {
-        return null;
+    public String getAaaLabel() {
+        return aaaLabel;
+    }
+
+    public void setAaaLabel(final String aaaLabel) {
+        this.aaaLabel = aaaLabel;
     }
 
 }

@@ -17,17 +17,84 @@ package org.seasar.teeda.extension.component.html;
 
 import javax.faces.component.html.HtmlSelectOneMenu;
 import javax.faces.context.FacesContext;
+import javax.faces.el.VariableResolver;
+import javax.faces.internal.SelectItemsIterator;
+import javax.faces.model.SelectItem;
+
+import org.seasar.framework.beans.BeanDesc;
+import org.seasar.framework.beans.PropertyDesc;
+import org.seasar.framework.beans.factory.BeanDescFactory;
 
 /**
  * @author shot
+ * @author manhole
  */
 public class THtmlSelectOneMenu extends HtmlSelectOneMenu {
 
     public static final String COMPONENT_TYPE = "org.seasar.teeda.extension.HtmlSelectOneMenu";
 
-    public void validate(FacesContext context) {
+    private String pageName;
+
+    private String labelName;
+
+    public void validate(final FacesContext context) {
         super.validate(context);
         THtmlSelectUtil.validate(this);
+        final Object selected = getValue();
+        final Object page = getPage(context);
+        final BeanDesc beanDesc = BeanDescFactory.getBeanDesc(page.getClass());
+        if (!beanDesc.hasPropertyDesc(getLabelName())) {
+            return;
+        }
+        final PropertyDesc labelPd = beanDesc.getPropertyDesc(getLabelName());
+
+        for (final SelectItemsIterator it = new SelectItemsIterator(this); it
+                .hasNext();) {
+            final SelectItem item = (SelectItem) it.next();
+            final Object v = item.getValue();
+            if (v.equals(selected)) {
+                final String l = item.getLabel();
+                labelPd.setValue(page, l);
+                break;
+            }
+        }
+    }
+
+    private Object getPage(final FacesContext context) {
+        final VariableResolver variableResolver = context.getApplication()
+                .getVariableResolver();
+        return variableResolver.resolveVariable(context, getPageName());
+    }
+
+    public Object saveState(final FacesContext context) {
+        final Object[] values = new Object[3];
+        values[0] = super.saveState(context);
+        values[1] = pageName;
+        values[2] = labelName;
+        return values;
+    }
+
+    public void restoreState(final FacesContext context, final Object state) {
+        final Object[] values = (Object[]) state;
+        super.restoreState(context, values[0]);
+        pageName = (String) values[1];
+        labelName = (String) values[2];
+    }
+
+    public String getPageName() {
+        return pageName;
+    }
+
+    public void setPageName(final String pageName) {
+        this.pageName = pageName;
+    }
+
+    public String getLabelName() {
+        return labelName;
+    }
+
+    public void setLabelName(final String labelName) {
+        this.labelName = labelName;
     }
 
 }

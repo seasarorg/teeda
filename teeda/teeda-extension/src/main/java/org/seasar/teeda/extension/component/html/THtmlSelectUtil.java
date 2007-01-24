@@ -29,38 +29,52 @@ import org.seasar.teeda.extension.util.AdjustValueHolderUtil;
 public class THtmlSelectUtil {
 
     public static void validate(final UIComponent component) {
+        final Object value = findSavedValue(component);
+        if (value == null) {
+            return;
+        }
+        if (value.getClass().isArray() || (value instanceof List)) {
+            final TUISelectItems items = getItems(component);
+            if (items == null) {
+                /*
+                 * 例外の方が良い?
+                 * TagでTUISelectItemsをぶら下げているのだし。
+                 */
+                return;
+            }
+            items.setValue(value);
+        }
+    }
+
+    private static TUISelectItems getItems(final UIComponent component) {
+        TUISelectItems items = null;
+        for (final Iterator it = component.getChildren().iterator(); it
+                .hasNext();) {
+            final Object o = it.next();
+            if (o instanceof TUISelectItems) {
+                items = (TUISelectItems) o;
+                break;
+            }
+        }
+        return items;
+    }
+
+    private static Object findSavedValue(final UIComponent component) {
         final String id = AdjustValueHolderUtil.getAdjustedValue(component
                 .getId());
         final String saveId = id + "Save";
         final UIComponent parent = component.getParent();
-        Object value = null;
         for (final Iterator it = parent.getChildren().iterator(); it.hasNext();) {
-            final UIComponent child = (UIComponent) it.next();
-            final String childId = child.getId();
+            final UIComponent brotherOrChild = (UIComponent) it.next();
+            final String childId = brotherOrChild.getId();
             if (saveId.equals(childId)
-                    && (child instanceof THtmlItemsSaveHidden)) {
-                value = ((THtmlItemsSaveHidden) child).getValue();
-                break;
+                    && (brotherOrChild instanceof THtmlItemsSaveHidden)) {
+                final Object found = ((THtmlItemsSaveHidden) brotherOrChild)
+                        .getValue();
+                return found;
             }
         }
-        if (value != null) {
-            TUISelectItems items = null;
-            for (final Iterator it = component.getChildren().iterator(); it
-                    .hasNext();) {
-                final Object o = it.next();
-                if (o instanceof TUISelectItems) {
-                    items = (TUISelectItems) o;
-                    break;
-                }
-            }
-            if (value.getClass().isArray() || (value instanceof List)) {
-                if (items == null) {
-                    items = new TUISelectItems();
-                }
-                items.setValue(value);
-                component.getChildren().add(items);
-            }
-        }
+        return null;
     }
 
 }

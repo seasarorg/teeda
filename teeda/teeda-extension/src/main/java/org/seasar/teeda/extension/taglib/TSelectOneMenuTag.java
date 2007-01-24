@@ -15,9 +15,11 @@
  */
 package org.seasar.teeda.extension.taglib;
 
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 
 import org.seasar.teeda.core.util.DIContainerUtil;
+import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.component.html.THtmlSelectOneMenu;
 import org.seasar.teeda.extension.util.NullLabelStrategy;
 import org.seasar.teeda.extension.util.NullLabelStrategyImpl;
@@ -32,12 +34,24 @@ public class TSelectOneMenuTag extends TSelectTagBase {
 
     private static final NullLabelStrategy defaultNullLabelStrategy = new NullLabelStrategyImpl();
 
+    private String pageName;
+
+    private String labelName;
+
     public String getComponentType() {
         return THtmlSelectOneMenu.COMPONENT_TYPE;
     }
 
     public String getRendererType() {
         return RENDERER_TYPE;
+    }
+
+    protected void setProperties(final UIComponent component) {
+        super.setProperties(component);
+        setComponentProperty(component, ExtensionConstants.PAGE_NAME_ATTR,
+                getPageName());
+        setComponentProperty(component, ExtensionConstants.LABEL_NAME_ATTR,
+                getLabelName());
     }
 
     protected boolean isNullLabelRequired() {
@@ -52,6 +66,22 @@ public class TSelectOneMenuTag extends TSelectTagBase {
             strategy = defaultNullLabelStrategy;
         }
         return strategy.isNullLabelRequired(context, v);
+    }
+
+    public String getPageName() {
+        return pageName;
+    }
+
+    public void setPageName(final String pageName) {
+        this.pageName = pageName;
+    }
+
+    public String getLabelName() {
+        return labelName;
+    }
+
+    public void setLabelName(final String labelName) {
+        this.labelName = labelName;
     }
 
 }

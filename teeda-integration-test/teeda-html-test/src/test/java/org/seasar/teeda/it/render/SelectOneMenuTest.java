@@ -22,6 +22,7 @@ import org.seasar.teeda.unit.web.TeedaWebTester;
 
 /**
  * @author shot
+ * @author manhole
  */
 public class SelectOneMenuTest extends TeedaWebTestCase {
 
@@ -44,11 +45,10 @@ public class SelectOneMenuTest extends TeedaWebTestCase {
 
         // ## Assert ##
         tester.assertTextEqualsById("aaa", "2");
+        tester.assertSelectedOptionValueEqualsByName("form:aaaItems", "2");
     }
 
     /*
-     * TODO このテストが通るように実装すること
-     * 
      * https://www.seasar.org/issues/browse/TEEDA-234
      */
     public void testJIRA234() throws Exception {
@@ -56,12 +56,12 @@ public class SelectOneMenuTest extends TeedaWebTestCase {
         TeedaWebTester tester = new TeedaWebTester();
 
         // ## Act ##
-        tester.beginAt(getBaseUrl(), "view/select/selectOneMenu.html");
+        tester.beginAt(getBaseUrl(), "view/select/selectOneMenuFrom.html");
         tester.dumpHtml();
 
-        tester.assertSelectedOptionValueEqualsByName("form:aaaItems", "1");
+        tester.assertSelectedOptionValueEqualsByName("form:aaaItems", "2");
         tester.selectOptionValueByName("form:aaaItems", "3");
-        tester.submitById("doActionAndGoNext");
+        tester.submitById("doAction");
         tester.dumpHtml();
 
         // ## Assert ##
