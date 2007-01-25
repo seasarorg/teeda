@@ -22,7 +22,6 @@ import javax.faces.FactoryFinder;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.FacesContextFactory;
-import javax.faces.internal.ForbiddenAccessException;
 import javax.faces.internal.WebAppUtil;
 import javax.faces.lifecycle.Lifecycle;
 import javax.faces.lifecycle.LifecycleFactory;
@@ -32,6 +31,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author shot
@@ -74,15 +74,20 @@ public final class FacesServlet implements Servlet {
 
     public void service(ServletRequest request, ServletResponse response)
             throws ServletException, IOException {
-        ServletContext servletContext = config.getServletContext();
-        FacesContext context = facesContextFactory.getFacesContext(
+        final ServletContext servletContext = config.getServletContext();
+        final FacesContext context = facesContextFactory.getFacesContext(
                 servletContext, request, response, lifecycle);
-        ExternalContext externalContext = context.getExternalContext();
-        String requestPathInfo = externalContext.getRequestPathInfo();
-        if (requestPathInfo != null && requestPathInfo.startsWith("/WEB-INF")) {
-            throw new ForbiddenAccessException("Forbidden access to "
-                    + requestPathInfo);
+
+        final ExternalContext externalContext = context.getExternalContext();
+        final String pathInfo = externalContext.getRequestPathInfo();
+        if (pathInfo != null
+                && (pathInfo.startsWith("/WEB-INF") || pathInfo
+                        .startsWith("/META-INF"))) {
+            final HttpServletResponse hres = (HttpServletResponse) response;
+            hres.sendError(HttpServletResponse.SC_NOT_FOUND);
+            return;
         }
+
         try {
             lifecycle.execute(context);
             lifecycle.render(context);

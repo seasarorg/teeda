@@ -54,6 +54,7 @@ import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
 import com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException;
+import com.gargoylesoftware.htmlunit.Page;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.WebResponse;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
@@ -138,7 +139,8 @@ public abstract class TeedaWebTestCase extends TestCase {
     protected HtmlPage getHtmlPage(final WebClient webClient, final URL url)
         throws IOException {
         try {
-            return (HtmlPage) webClient.getPage(url);
+            final Page page = webClient.getPage(url);
+            return (HtmlPage) page;
         } catch (final FailingHttpStatusCodeException e) {
             final WebResponse response = e.getResponse();
             e.printStackTrace();
