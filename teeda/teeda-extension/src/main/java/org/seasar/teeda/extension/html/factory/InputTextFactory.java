@@ -36,8 +36,9 @@ public class InputTextFactory extends AbstractElementProcessorFactory {
         if (!JsfConstants.INPUT_ELEM.equalsIgnoreCase(elementNode.getTagName())) {
             return false;
         }
-        if (!JsfConstants.TEXT_VALUE.equalsIgnoreCase(elementNode
-                .getProperty(JsfConstants.TYPE_ATTR))) {
+        final String property = elementNode.getProperty(JsfConstants.TYPE_ATTR);
+        if (property != null
+                && !JsfConstants.TEXT_VALUE.equalsIgnoreCase(property)) {
             return false;
         }
         if (pageDesc == null) {

@@ -55,6 +55,19 @@ public class InputTextFactoryTest extends ElementProcessorFactoryTestCase {
         assertFalse(factory.isMatch(elementNode3, pageDesc, null));
     }
 
+    public void testIsMatch2() throws Exception {
+        Map properties = new HashMap();
+        properties.put("id", "aaa");
+        ElementNode elementNode = createElementNode("input", properties);
+        PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
+        assertTrue(factory.isMatch(elementNode, pageDesc, null));
+        ElementNode elementNode2 = createElementNode("hoge", properties);
+        assertFalse(factory.isMatch(elementNode2, pageDesc, null));
+        properties.put("id", "xxx");
+        ElementNode elementNode3 = createElementNode("input", properties);
+        assertFalse(factory.isMatch(elementNode3, pageDesc, null));
+    }
+
     public void testCreateFactory() throws Exception {
         // ## Arrange ##
         Map properties = new HashMap();
