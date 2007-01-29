@@ -577,6 +577,9 @@ public class ViewHandlerImplTest extends TeedaTestCase {
             return path_;
         }
 
+        public void setServletContextName(String servletContextName) {
+        }
+
     }
 
     protected void settingUpExternalContextForViewHandler(String servletPath,

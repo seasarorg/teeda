@@ -60,6 +60,9 @@ public class WindowIdUtil {
             if (response instanceof HttpServletResponse) {
                 HttpServletResponse res = (HttpServletResponse) response;
                 Cookie cookie = new Cookie(WindowIdUtil.TEEDA_WID, wid);
+                final String contextPath = externalContext
+                        .getRequestContextPath();
+                cookie.setPath(contextPath);
                 res.addCookie(cookie);
             }
         } else {
