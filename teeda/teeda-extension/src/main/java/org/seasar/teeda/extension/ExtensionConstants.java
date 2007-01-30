@@ -105,6 +105,8 @@ public interface ExtensionConstants {
 
     String SESSION_SAVE_SUFFIX = "SessionSave";
 
+    String MOCK_PREFIX = "mock";
+
     String TREESAVE_SUFFIX = "TreeSave";
 
     String GRID = "Grid";

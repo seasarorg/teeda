@@ -275,4 +275,12 @@
 			org.seasar.teeda.extension.component.TSessionSave
 		</component-class>
 	</component>
+	<component>
+		<component-type>
+			org.seasar.teeda.extension.Mock
+		</component-type>
+		<component-class>
+			org.seasar.teeda.extension.component.TMock
+		</component-class>
+	</component>
 </faces-config>

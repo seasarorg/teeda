@@ -35,7 +35,7 @@ import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
 import org.seasar.framework.container.impl.S2ContainerImpl;
-import org.seasar.framework.mock.servlet.MockHttpServletRequestImpl;
+import org.seasar.framework.mock.servlet.MockHttpServletRequest;
 import org.seasar.framework.mock.servlet.MockHttpServletResponseImpl;
 import org.seasar.framework.mock.servlet.MockServletContextImpl;
 import org.seasar.teeda.core.application.ApplicationFactoryImpl;
@@ -198,7 +198,7 @@ public class TForEachTest extends UIComponentBaseTest {
         hoge2.setName("aaa");
         MockServletContextImpl servletContext = new MockServletContextImpl(
                 "s2-example");
-        MockHttpServletRequestImpl request = servletContext
+        MockHttpServletRequest request = servletContext
                 .createRequest("/hello.html");
         MockHttpServletResponseImpl response = new MockHttpServletResponseImpl(
                 request);

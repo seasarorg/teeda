@@ -20,6 +20,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Enumeration;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 import java.util.Vector;
 
@@ -482,7 +483,7 @@ public class ViewHandlerImplTest extends TeedaTestCase {
         public void setInitParameter(String name, String value) {
         }
 
-        public MockHttpServletRequestImpl createRequest(String path) {
+        public MockHttpServletRequest createRequest(String path) {
             return null;
         }
 
@@ -578,6 +579,10 @@ public class ViewHandlerImplTest extends TeedaTestCase {
         }
 
         public void setServletContextName(String servletContextName) {
+        }
+
+        public Map getInitParameterMap() {
+            return null;
         }
 
     }

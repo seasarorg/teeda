@@ -36,6 +36,8 @@
 	<component
 		class="org.seasar.teeda.extension.html.impl.ActionDescCacheImpl" />
 
+	<component name="mockFactory"
+		class="org.seasar.teeda.extension.html.factory.MockFactory" />
 	<component name="treeHiddenFactory"
 		class="org.seasar.teeda.extension.html.factory.TreeHiddenFactory" />
 	<component name="holidayCalendarFactory"
