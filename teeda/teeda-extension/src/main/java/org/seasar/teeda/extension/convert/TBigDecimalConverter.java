@@ -28,10 +28,15 @@ import org.seasar.teeda.extension.util.BigDecimalFormatUtil;
 
 /**
  * @author shot
+ * @author contributed by SMG Co., Ltd.(http://www.smg.co.jp/)
  */
 public class TBigDecimalConverter extends BigDecimalConverter {
 
     private String pattern;
+
+    private Integer scale;
+
+    private Integer roundingMode;
 
     public String getAsString(FacesContext context, UIComponent component,
             Object value) throws ConverterException {
@@ -44,8 +49,20 @@ public class TBigDecimalConverter extends BigDecimalConverter {
             if (value instanceof String) {
                 return (String) value;
             }
+
+            BigDecimal decimalValue = (BigDecimal) value;
+            if (this.scale != null) {
+                if (this.roundingMode != null) {
+                    decimalValue = decimalValue.setScale(this.scale.intValue(),
+                            this.roundingMode.intValue());
+                } else {
+                    decimalValue = decimalValue.setScale(this.scale.intValue());
+                }
+            }
+
             String pattern = getPattern();
-            return BigDecimalFormatUtil.format((BigDecimal) value, pattern);
+
+            return BigDecimalFormatUtil.format(decimalValue, pattern);
         } catch (Exception e) {
             throw ConvertUtil.wrappedByConverterException(e);
         }
@@ -57,6 +74,22 @@ public class TBigDecimalConverter extends BigDecimalConverter {
 
     public void setPattern(String pattern) {
         this.pattern = pattern;
+    }
+
+    public Integer getScale() {
+        return scale;
+    }
+
+    public void setScale(Integer scale) {
+        this.scale = scale;
+    }
+
+    public Integer getRoundingMode() {
+        return roundingMode;
+    }
+
+    public void setRoundingMode(Integer roundingMode) {
+        this.roundingMode = roundingMode;
     }
 
 }

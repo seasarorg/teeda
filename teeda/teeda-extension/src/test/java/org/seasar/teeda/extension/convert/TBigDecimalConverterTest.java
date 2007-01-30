@@ -29,4 +29,13 @@ public class TBigDecimalConverterTest extends TeedaTestCase {
                 new MockUIComponent(), new BigDecimal("123456789.100"));
         assertEquals("123,456,789.1", s);
     }
+    
+    public void testGetAsString_withRoundingMode() throws Exception {
+        TBigDecimalConverter converter = new TBigDecimalConverter();
+        converter.setPattern("###,###,###.###");
+        converter.setRoundingMode(new Integer(BigDecimal.ROUND_HALF_UP));
+        String s = converter.getAsString(getFacesContext(),
+                new MockUIComponent(), new BigDecimal("123456789.1555"));
+        assertEquals("123,456,789.156", s);
+    }
 }
