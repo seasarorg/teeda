@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -49,6 +49,7 @@ import org.seasar.teeda.extension.render.RenderPreparableRenderer;
 import org.seasar.teeda.extension.render.RendererListener;
 import org.seasar.teeda.extension.render.TBodyRenderer;
 import org.seasar.teeda.extension.render.TForEachRenderer;
+import org.seasar.teeda.extension.util.GridUtil;
 import org.seasar.teeda.extension.util.VirtualResource;
 
 /**
@@ -744,7 +745,7 @@ public class THtmlGridRenderer extends TForEachRenderer implements
         if (attribute != null) {
             return attribute;
         }
-        attribute = new GridAttribute(htmlGrid);
+        attribute = new GridAttribute(context, htmlGrid);
         setupTableSize(htmlGrid, attribute);
         setupWidth(htmlGrid, attribute);
         setupHeight(htmlGrid, attribute);
@@ -878,8 +879,7 @@ public class THtmlGridRenderer extends TForEachRenderer implements
 
         private static final long serialVersionUID = 1L;
 
-        // TODO Windows XP default...
-        private int scrollBarWidth = 16;
+        private int scrollBarWidth;
 
         private int tableWidth;
 
@@ -893,8 +893,10 @@ public class THtmlGridRenderer extends TForEachRenderer implements
 
         private THtmlGrid htmlGrid;
 
-        public GridAttribute(final THtmlGrid htmlGrid) {
+        public GridAttribute(final FacesContext context,
+                final THtmlGrid htmlGrid) {
             this.htmlGrid = htmlGrid;
+            scrollBarWidth = GridUtil.getScrollBarWidthByOS(context);
         }
 
         public Integer getColumnWidth(final int no) {
