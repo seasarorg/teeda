@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -65,6 +65,23 @@ public class TDateTimeConverterTest extends AbstractConverterTestCase {
         converter.setPattern(pattern);
 
         String dateValue = "2005/08/01";
+        Date date = (Date) converter.getAsObject(context,
+                new NullUIComponent(), dateValue);
+
+        Date dateTarget = createDateTarget(pattern, defaultLocale, dateValue);
+        assertEquals(date, dateTarget);
+    }
+
+    public void testGetAsObject1_2() throws Exception {
+        TDateTimeConverter converter = (TDateTimeConverter) createConverter();
+        FacesContext context = getFacesContext();
+        converter.setLocale(defaultLocale);
+        converter.setTimeZone(defaultTimeZone);
+
+        final String pattern = "yyyy/MM/dd HH:mm:ss";
+        converter.setPattern(pattern);
+
+        String dateValue = "2005/08/01 11:12:13";
         Date date = (Date) converter.getAsObject(context,
                 new NullUIComponent(), dateValue);
 
