@@ -22,10 +22,6 @@
 	<classpathentry kind="lib" path="lib/s2-portlet-1.0.6.jar"/>
 	<classpathentry kind="lib" path="lib/xercesImpl-2.6.2.jar"/>
 	<classpathentry kind="lib" path="lib/xmlParserAPIs-2.6.2.jar"/>
-	<classpathentry kind="src" path="teeda-spike/src/main/java"/>
-	<classpathentry kind="src" path="teeda-spike/src/main/resources"/>
-	<classpathentry kind="src" path="teeda-spike/src/test/java"/>
-	<classpathentry kind="src" path="teeda-spike/src/test/resources"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/seasar2"/>
 	<classpathentry sourcepath="lib/sources/teeda-xmlunit-0.1.0-sources.jar" kind="lib" path="lib/teeda-xmlunit-0.1.0.jar"/>
 	<classpathentry kind="output" path="build/teeda-core/classes"/>
