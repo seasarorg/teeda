@@ -133,7 +133,7 @@ public class THtmlHolidayCalendarRenderer extends AbstractInputRenderer
         writer.endElement(JsfConstants.TR_ELEM);
         writer.write(JsfConstants.LINE_SP);
         writeDays(context, writer, htmlCalendar, value, weekStartsAtDayIndex,
-                weekDayOfFirstDayOfMonth, lastDayInMonth);
+                weekDayOfFirstDayOfMonth, lastDayInMonth, weekdays, base);
 
         writer.endElement(JsfConstants.TABLE_ELEM);
     }
@@ -185,7 +185,8 @@ public class THtmlHolidayCalendarRenderer extends AbstractInputRenderer
     protected void writeDays(FacesContext context, ResponseWriter writer,
             THtmlHolidayCalendar component, Boolean[] value,
             int weekStartsAtDayIndex, int weekDayOfFirstDayOfMonth,
-            int lastDayInMonth) throws IOException {
+            int lastDayInMonth, String[] weekDays, Calendar base)
+            throws IOException {
         int columnIndexCounter = writeFirstSpace(context, writer, component,
                 weekStartsAtDayIndex, weekDayOfFirstDayOfMonth);
         int trNum = columnIndexCounter == 0 ? 0 : 1;
@@ -198,8 +199,13 @@ public class THtmlHolidayCalendarRenderer extends AbstractInputRenderer
             if (value != null && value.length > i && value[i] != null) {
                 holiday = value[i].booleanValue();
             }
-            writeCell(context, writer, component, String.valueOf(i + 1),
-                    holiday);
+            String dateName = String.valueOf(i + 1);
+            base.set(Calendar.DAY_OF_MONTH, (i + 1));
+            int j = base.get(Calendar.DAY_OF_WEEK);
+            String prefixDateName = dateName + "-"
+                    + weekDays[mapCalendarDayToCommonDay(j)];
+            writeCell(context, writer, component, dateName, holiday,
+                    prefixDateName);
             columnIndexCounter++;
             if (columnIndexCounter == 7) {
                 writer.endElement(JsfConstants.TR_ELEM);
@@ -258,14 +264,14 @@ public class THtmlHolidayCalendarRenderer extends AbstractInputRenderer
     }
 
     private void writeCell(FacesContext context, ResponseWriter writer,
-            THtmlHolidayCalendar component, String dateName, boolean holiday)
-            throws IOException {
+            THtmlHolidayCalendar component, String dateName, boolean holiday,
+            String prefixDateName) throws IOException {
         String holidayCellClass = component.getHolidayCellClass();
         String dayCellClass = component.getDayCellClass();
         writer.startElement(JsfConstants.TD_ELEM, component);
         String clientId = component.getClientId(context);
-        String tdId = clientId + "-td" + dateName;
-        String hiddenId = clientId + "-hidden" + dateName;
+        String tdId = clientId + "-td" + prefixDateName;
+        String hiddenId = clientId + "-hidden" + prefixDateName;
         writer.writeAttribute(JsfConstants.ID_ATTR, tdId, null);
         String styleClass = holiday ? holidayCellClass : dayCellClass;
         if (styleClass != null) {
