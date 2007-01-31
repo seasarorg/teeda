@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container 2.4//EN" 
+	"http://www.seasar.org/dtd/components24.dtd">
+<components>
+	<component class="org.seasar.teeda.ajax.AjaxUtil">
+		<initMethod>@org.seasar.teeda.ajax.AjaxUtil@setContentTypeJson("json/org; charset=UTF-8")</initMethod>
+		<initMethod>@org.seasar.teeda.ajax.AjaxUtil@setContentTypeXml("xml/org; charset=UTF-8")</initMethod>
+		<initMethod>@org.seasar.teeda.ajax.AjaxUtil@setContentTypeHtml("html/org; charset=UTF-8")</initMethod>
+		<initMethod>@org.seasar.teeda.ajax.AjaxUtil@setContentTypeText("text/org; charset=UTF-8")</initMethod>
+	</component>
+</components>

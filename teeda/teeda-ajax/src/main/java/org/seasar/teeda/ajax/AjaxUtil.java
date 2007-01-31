@@ -29,12 +29,17 @@ import org.seasar.framework.beans.factory.BeanDescFactory;
 /**
  * @author mopemope
  * @author higa
- *
+ * @author yone
  */
 public class AjaxUtil {
 
-    protected AjaxUtil() {
-    }
+    private static String contentTypeJson = null;
+
+    private static String contentTypeXml = null;
+
+    private static String contentTypeHtml = null;
+
+    private static String contentTypeText = null;
 
     public static boolean isJSON(String str) {
         return str != null
@@ -47,13 +52,17 @@ public class AjaxUtil {
         String contentType;
         if (result == null || result.startsWith(AjaxConstants.START_BRACE)
                 && result.endsWith(AjaxConstants.END_BRACE)) {
-            contentType = AjaxConstants.CONTENT_TYPE_JSON;
+            contentType = (AjaxUtil.contentTypeJson == null) ? AjaxConstants.CONTENT_TYPE_JSON
+                    : AjaxUtil.contentTypeJson;
         } else if (result.startsWith("<?xml")) {
-            contentType = AjaxConstants.CONTENT_TYPE_XML;
+            contentType = (AjaxUtil.contentTypeXml == null) ? AjaxConstants.CONTENT_TYPE_XML
+                    : AjaxUtil.contentTypeXml;
         } else if (result.startsWith("<") && result.endsWith(">")) {
-            contentType = AjaxConstants.CONTENT_TYPE_HTML;
+            contentType = (AjaxUtil.contentTypeHtml == null) ? AjaxConstants.CONTENT_TYPE_HTML
+                    : AjaxUtil.contentTypeHtml;
         } else {
-            contentType = AjaxConstants.CONTENT_TYPE_TEXT;
+            contentType = (AjaxUtil.contentTypeText == null) ? AjaxConstants.CONTENT_TYPE_TEXT
+                    : AjaxUtil.contentTypeText;
         }
         response.setContentType(contentType);
     }
@@ -89,7 +98,7 @@ public class AjaxUtil {
             appendBean(buf, o);
         }
     }
-    
+
     public static void appendFloat(StringBuffer buf, Float f) {
         if (f.isNaN() || f.isInfinite()) {
             throw new IllegalArgumentException(f.toString());
@@ -153,11 +162,11 @@ public class AjaxUtil {
         }
         buf.append(AjaxConstants.END_BRACE);
     }
-    
+
     public static void appendArray(StringBuffer buf, Object o) {
         int length = Array.getLength(o);
         buf.append(AjaxConstants.START_BRACKET);
-        for(int i = 0; i < length; i++) {
+        for (int i = 0; i < length; i++) {
             Object value = Array.get(o, i);
             append(buf, value);
             buf.append(AjaxConstants.COMMA);
@@ -165,7 +174,7 @@ public class AjaxUtil {
         if (length > 0) {
             buf.setLength(buf.length() - 1);
         }
-        buf.append(AjaxConstants.END_BRACKET);   
+        buf.append(AjaxConstants.END_BRACKET);
     }
 
     public static String quote(String str) {
@@ -212,4 +221,21 @@ public class AjaxUtil {
         sb.append('"');
         return sb.toString();
     }
+
+    public static void setContentTypeJson(final String contentTypeJson) {
+        AjaxUtil.contentTypeJson = contentTypeJson;
+    }
+
+    public static void setContentTypeXml(final String contentTypeXml) {
+        AjaxUtil.contentTypeXml = contentTypeXml;
+    }
+
+    public static void setContentTypeHtml(final String contentTypeHtml) {
+        AjaxUtil.contentTypeHtml = contentTypeHtml;
+    }
+
+    public static void setContentTypeText(final String contentTypeText) {
+        AjaxUtil.contentTypeText = contentTypeText;
+    }
+
 }

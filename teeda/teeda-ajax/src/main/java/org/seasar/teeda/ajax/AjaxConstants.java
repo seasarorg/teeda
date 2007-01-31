@@ -26,6 +26,7 @@ public interface AjaxConstants {
 
     String CONTENT_TYPE_XML = "text/xml; charset=UTF-8";
 
+    // RFC4627 application/json
     String CONTENT_TYPE_JSON = "text/javascript; charset=UTF-8";
 
     String CONTENT_TYPE_TEXT = "text/plain; charset=UTF-8";

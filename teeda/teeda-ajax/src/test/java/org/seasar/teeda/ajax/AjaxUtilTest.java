@@ -18,10 +18,22 @@ package org.seasar.teeda.ajax;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import junit.framework.TestCase;
+
 import org.seasar.framework.mock.servlet.MockHttpServletResponse;
 import org.seasar.framework.unit.S2FrameworkTestCase;
 
+/**
+ * @author yone
+ */
 public class AjaxUtilTest extends S2FrameworkTestCase {
+    /**
+     * @see TestCase#setUp()
+     */
+    //protected void setUp() throws Exception {
+        //super.setUp();
+        //super.include("ajaxTest.dicon");
+    //}
 
     public void testToString_null() throws Exception {
         assertEquals("null", AjaxUtil.toJson(null));
@@ -143,6 +155,33 @@ public class AjaxUtilTest extends S2FrameworkTestCase {
         response.setContentType(null);
         AjaxUtil.setContentType(response, "aaaaa");
         assertEquals(AjaxConstants.CONTENT_TYPE_TEXT, response.getContentType());
+    }
+    
+    public void setUpSetContentTypeDicon() {
+        include("contentTypeTest.dicon");
+    }
+    
+    public void testSetContentTypeDicon() throws Exception {
+        MockHttpServletResponse response = getResponse();
+        AjaxUtil.setContentType(response, null);
+        assertEquals("json/org; charset=UTF-8", response.getContentType());
+
+        response.setContentType(null);
+        AjaxUtil.setContentType(response, "{\"value\":2,\"name\":\"a\"}");
+        assertEquals("json/org; charset=UTF-8", response.getContentType());
+
+        response.setContentType(null);
+        AjaxUtil.setContentType(response,
+                "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
+        assertEquals("xml/org; charset=UTF-8", response.getContentType());
+
+        response.setContentType(null);
+        AjaxUtil.setContentType(response, "<html><body></body></html>");
+        assertEquals("html/org; charset=UTF-8", response.getContentType());
+
+        response.setContentType(null);
+        AjaxUtil.setContentType(response, "aaaaa");
+        assertEquals("text/org; charset=UTF-8", response.getContentType());
     }
 
     public static class MyBean {
