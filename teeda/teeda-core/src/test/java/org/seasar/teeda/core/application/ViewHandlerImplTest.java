@@ -581,7 +581,7 @@ public class ViewHandlerImplTest extends TeedaTestCase {
             return null;
         }
 
-        public MockHttpServletRequest createRequest(String path) {
+        public MockHttpServletRequestImpl createRequest(String path) {
             // TODO Auto-generated method stub
             return null;
         }

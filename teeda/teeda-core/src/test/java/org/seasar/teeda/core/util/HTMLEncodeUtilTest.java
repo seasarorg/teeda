@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -41,6 +41,11 @@ public class HTMLEncodeUtilTest extends TestCase {
     public void testEncode_gt() throws Exception {
         assertEquals("&gt;&gt;", HTMLEncodeUtil.encode(">>", false, false));
         assertEquals("&gt;&gt;", HTMLEncodeUtil.encode(">>", true, true));
+    }
+
+    public void testEncode_yen() throws Exception {
+        assertEquals("&yen;&yen;", HTMLEncodeUtil.encode("\\\\", false, false));
+        assertEquals("&yen;&yen;", HTMLEncodeUtil.encode("\\\\", true, true));
     }
 
 }
