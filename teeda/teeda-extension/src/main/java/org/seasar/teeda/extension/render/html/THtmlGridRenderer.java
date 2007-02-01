@@ -148,7 +148,7 @@ public class THtmlGridRenderer extends TForEachRenderer implements
             final THtmlGrid htmlGrid) throws IOException {
         final String path = ResourceUtil.getResourcePath(THtmlGrid.class
                 .getName(), "js");
-        VirtualResource.addJSResource(context, path);
+        VirtualResource.addJsResource(context, path);
     }
 
     public void encodeBegin(final FacesContext context,

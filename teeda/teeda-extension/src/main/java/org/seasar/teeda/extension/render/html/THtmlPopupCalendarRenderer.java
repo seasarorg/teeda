@@ -71,10 +71,10 @@ public class THtmlPopupCalendarRenderer extends HtmlInputTextRenderer implements
         String[] months = DateFormatSymbolsUtil.getMonths(symbols);
         int firstDayOfWeek = timeKeeper.getFirstDayOfWeek();
         VirtualResource
-                .addCSSResource(context, RESOURCE_ROOT + "css/theme.css");
-        VirtualResource.addJSResource(context, RESOURCE_ROOT
+                .addCssResource(context, RESOURCE_ROOT + "css/theme.css");
+        VirtualResource.addJsResource(context, RESOURCE_ROOT
                 + "js/popcalendar_init.js");
-        VirtualResource.addJSResource(context, RESOURCE_ROOT
+        VirtualResource.addJsResource(context, RESOURCE_ROOT
                 + "js/popcalendar.js");
 
         StringBuffer script = new StringBuffer();
@@ -84,7 +84,7 @@ public class THtmlPopupCalendarRenderer extends HtmlInputTextRenderer implements
                 firstDayOfWeek, htmlCalendar));
         script.append(JsfConstants.LINE_SP);
         script.append("loadPopupScript();");
-        VirtualResource.addInlineJSResource(context, JAVASCRIPT_ENCODED, script
+        VirtualResource.addInlineJsResource(context, JAVASCRIPT_ENCODED, script
                 .toString());
 
         context.getExternalContext().getRequestMap().put(JAVASCRIPT_ENCODED,

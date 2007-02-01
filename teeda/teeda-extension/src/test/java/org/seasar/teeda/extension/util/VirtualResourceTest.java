@@ -28,8 +28,8 @@ public class VirtualResourceTest extends TeedaTestCase {
 
     public void testAddAndGetJSResources() throws Exception {
         final MockFacesContext context = getFacesContext();
-        VirtualResource.addJSResource(context, "/aaa/bbb/ccc.js");
-        final Set resources = VirtualResource.getJSResources(context);
+        VirtualResource.addJsResource(context, "/aaa/bbb/ccc.js");
+        final Set resources = VirtualResource.getJsResources(context);
         assertNotNull(resources);
         assertEquals("/aaa/bbb/ccc.js", resources.iterator().next());
     }

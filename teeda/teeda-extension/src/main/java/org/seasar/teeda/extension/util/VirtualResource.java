@@ -29,9 +29,6 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.seasar.framework.container.S2Container;
-import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
-import org.seasar.framework.container.util.SmartDeployUtil;
 import org.seasar.framework.util.AssertionUtil;
 import org.seasar.framework.util.InputStreamUtil;
 import org.seasar.framework.util.OutputStreamUtil;
@@ -57,19 +54,19 @@ public abstract class VirtualResource {
     protected VirtualResource() {
     }
 
-    public static Set getJSResources(FacesContext context) {
+    public static Set getJsResources(FacesContext context) {
         return getSetResources(context, JS_KEY);
     }
 
-    public static Set getCSSResources(FacesContext context) {
+    public static Set getCssResources(FacesContext context) {
         return getSetResources(context, CSS_KEY);
     }
 
-    public static Map getInlineJSResources(FacesContext context) {
+    public static Map getInlineJsResources(FacesContext context) {
         return getMapResources(context, INLINE_JS_KEY);
     }
 
-    public static Collection getInlineJSResourceValues(FacesContext context) {
+    public static Collection getInlineJsResourceValues(FacesContext context) {
         return getMapResources(context, INLINE_JS_KEY).values();
     }
 
@@ -97,30 +94,30 @@ public abstract class VirtualResource {
         return resources;
     }
 
-    public static void addJSResource(FacesContext context, String path) {
+    public static void addJsResource(FacesContext context, String path) {
         AssertionUtil.assertNotNull("context", context);
         AssertionUtil.assertNotNull("path", path);
-        Set resources = getJSResources(context);
+        Set resources = getJsResources(context);
         if (!resources.contains(path)) {
             resources.add(path);
         }
     }
 
-    public static void addCSSResource(FacesContext context, String path) {
+    public static void addCssResource(FacesContext context, String path) {
         AssertionUtil.assertNotNull("context", context);
         AssertionUtil.assertNotNull("path", path);
-        Set resources = getCSSResources(context);
+        Set resources = getCssResources(context);
         if (!resources.contains(path)) {
             resources.add(path);
         }
     }
 
-    public static void addInlineJSResource(FacesContext context, String key,
+    public static void addInlineJsResource(FacesContext context, String key,
             String script) {
         AssertionUtil.assertNotNull("context", context);
         AssertionUtil.assertNotNull("path", key);
         AssertionUtil.assertNotNull("script", script);
-        Map resources = getInlineJSResources(context);
+        Map resources = getInlineJsResources(context);
         if (!resources.containsKey(key)) {
             resources.put(key, script);
         }
@@ -152,14 +149,10 @@ public abstract class VirtualResource {
         } else if (lcPath.endsWith(".xml") || lcPath.endsWith(".xsl")) {
             response.setContentType("text/xml");
         }
-        final S2Container container = SingletonS2ContainerFactory
-                .getContainer();
-        if (!SmartDeployUtil.isHotdeployMode(container)) {
-            response.setDateHeader("Last-Modified", 0);
-            Calendar expires = Calendar.getInstance();
-            expires.add(Calendar.DAY_OF_YEAR, 1);
-            response.setDateHeader("Expires", expires.getTimeInMillis());
-        }
+        response.setDateHeader("Last-Modified", 0);
+        Calendar expires = Calendar.getInstance();
+        expires.add(Calendar.DATE, 1);
+        response.setDateHeader("Expires", expires.getTimeInMillis());
         InputStream is = ResourceUtil.getResourceAsStream(path);
         OutputStream os = response.getOutputStream();
         try {

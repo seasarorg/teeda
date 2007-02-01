@@ -71,8 +71,8 @@ public class THtmlHolidayCalendarRenderer extends AbstractInputRenderer
             return;
         }
         VirtualResource
-                .addCSSResource(context, RESOURCE_ROOT + "css/theme.css");
-        VirtualResource.addJSResource(context, RESOURCE_ROOT
+                .addCssResource(context, RESOURCE_ROOT + "css/theme.css");
+        VirtualResource.addJsResource(context, RESOURCE_ROOT
                 + "js/holidaycalendar.js");
         context.getExternalContext().getRequestMap().put(JS_CSS_ENCODED,
                 Boolean.TRUE);

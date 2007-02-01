@@ -58,7 +58,7 @@ public class THtmlHeadRenderer extends AbstractRenderer {
 
     protected void renderJSResources(FacesContext context) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
-        Set jsResources = VirtualResource.getJSResources(context);
+        Set jsResources = VirtualResource.getJsResources(context);
         for (Iterator i = jsResources.iterator(); i.hasNext();) {
             String path = (String) i.next();
             renderIncludeJavaScript(writer, VirtualResource.convertVirtualPath(
@@ -70,7 +70,7 @@ public class THtmlHeadRenderer extends AbstractRenderer {
     protected void renderInlineJSResources(FacesContext context)
             throws IOException {
         ResponseWriter writer = context.getResponseWriter();
-        Collection values = VirtualResource.getInlineJSResourceValues(context);
+        Collection values = VirtualResource.getInlineJsResourceValues(context);
         for (Iterator i = values.iterator(); i.hasNext();) {
             String script = (String) i.next();
             renderJavaScriptElement(writer, script);
@@ -80,7 +80,7 @@ public class THtmlHeadRenderer extends AbstractRenderer {
 
     protected void renderCSSResources(FacesContext context) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
-        Set cssResources = VirtualResource.getCSSResources(context);
+        Set cssResources = VirtualResource.getCssResources(context);
         for (Iterator i = cssResources.iterator(); i.hasNext();) {
             String path = (String) i.next();
             renderStyleSheet(writer, VirtualResource.convertVirtualPath(

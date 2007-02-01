@@ -70,7 +70,7 @@ public abstract class AbstractInputExtendTextRenderer extends
     protected void encodeHtmlHtmlInputTextPrepare(final FacesContext context,
             final THtmlInputText htmlGrid) throws IOException {
         String path = ResourceUtil.getResourcePath(getScriptKey(), "js");
-        VirtualResource.addJSResource(context, path);
+        VirtualResource.addJsResource(context, path);
     }
 
     protected void encodeInputExtendTextEnd(FacesContext context,

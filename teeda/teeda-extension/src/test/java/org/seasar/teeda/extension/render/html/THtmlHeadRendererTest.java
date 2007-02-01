@@ -36,7 +36,7 @@ public class THtmlHeadRendererTest extends AbstractRendererTest {
     }
 
     public void testEncode() throws Exception {
-        VirtualResource.addJSResource(getFacesContext(), "hoge.js");
+        VirtualResource.addJsResource(getFacesContext(), "hoge.js");
         encodeByRenderer(renderer, component);
         System.out.println(getResponseText());
         assertEquals(
