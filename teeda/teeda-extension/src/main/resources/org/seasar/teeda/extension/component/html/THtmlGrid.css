@@ -1,0 +1,6 @@
+.gridTable thead tr th div {
+  overflow:hidden;
+}
+.gridTable tbody tr td div {
+  overflow:hidden;
+}

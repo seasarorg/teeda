@@ -51,6 +51,8 @@ public abstract class VirtualResource {
 
     private static final String CSS_KEY = NAME + ".CSS_KEY";
 
+    private static final String INLINE_CSS_KEY = NAME + ".INLINE_CSS_KEY";
+
     protected VirtualResource() {
     }
 
@@ -66,8 +68,16 @@ public abstract class VirtualResource {
         return getMapResources(context, INLINE_JS_KEY);
     }
 
+    public static Map getInlineCssResources(FacesContext context) {
+        return getMapResources(context, INLINE_CSS_KEY);
+    }
+
     public static Collection getInlineJsResourceValues(FacesContext context) {
         return getMapResources(context, INLINE_JS_KEY).values();
+    }
+
+    public static Collection getInlineCssResourceValues(FacesContext context) {
+        return getMapResources(context, INLINE_CSS_KEY).values();
     }
 
     protected static Set getSetResources(FacesContext context, String key) {
@@ -120,6 +130,17 @@ public abstract class VirtualResource {
         Map resources = getInlineJsResources(context);
         if (!resources.containsKey(key)) {
             resources.put(key, script);
+        }
+    }
+
+    public static void addInlineCssResource(FacesContext context, String key,
+            String style) {
+        AssertionUtil.assertNotNull("context", context);
+        AssertionUtil.assertNotNull("path", key);
+        AssertionUtil.assertNotNull("script", style);
+        Map resources = getInlineCssResources(context);
+        if (!resources.containsKey(key)) {
+            resources.put(key, style);
         }
     }
 

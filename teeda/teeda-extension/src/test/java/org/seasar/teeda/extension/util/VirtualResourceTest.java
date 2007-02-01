@@ -15,6 +15,7 @@
  */
 package org.seasar.teeda.extension.util;
 
+import java.util.Map;
 import java.util.Set;
 
 import org.seasar.teeda.core.mock.MockFacesContext;
@@ -26,13 +27,38 @@ import org.seasar.teeda.core.unit.TeedaTestCase;
  */
 public class VirtualResourceTest extends TeedaTestCase {
 
-    public void testAddAndGetJSResources() throws Exception {
+    public void testAddAndGetJsResources() throws Exception {
         final MockFacesContext context = getFacesContext();
         VirtualResource.addJsResource(context, "/aaa/bbb/ccc.js");
         final Set resources = VirtualResource.getJsResources(context);
         assertNotNull(resources);
         assertEquals("/aaa/bbb/ccc.js", resources.iterator().next());
     }
-    
+
+    public void testAddAndGetCssResources() throws Exception {
+        final MockFacesContext context = getFacesContext();
+        VirtualResource.addCssResource(context, "/aaa/bbb/ccc.css");
+        final Set resources = VirtualResource.getCssResources(context);
+        assertNotNull(resources);
+        assertEquals("/aaa/bbb/ccc.css", resources.iterator().next());
+    }
+
+    public void testAddAndGetInlineJsResources() throws Exception {
+        final MockFacesContext context = getFacesContext();
+        VirtualResource
+                .addInlineJsResource(context, "aaa", "<script></script>");
+        final Map resources = VirtualResource.getInlineJsResources(context);
+        assertNotNull(resources);
+        assertEquals("<script></script>", resources.get("aaa"));
+    }
+
+    public void testAddAndGetInlineCssResources() throws Exception {
+        final MockFacesContext context = getFacesContext();
+        VirtualResource.addInlineCssResource(context, "aaa", "<style></style>");
+        final Map resources = VirtualResource.getInlineCssResources(context);
+        assertNotNull(resources);
+        assertEquals("<style></style>", resources.get("aaa"));
+    }
+
     //TODO testing
 }

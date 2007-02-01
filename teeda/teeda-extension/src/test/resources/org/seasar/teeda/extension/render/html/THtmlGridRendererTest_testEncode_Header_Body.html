@@ -16,6 +16,12 @@
 	border-width: 0px;
 	background-color: #FFC0CB;
 }
+.gridTable thead tr th div {
+  overflow:hidden;
+}
+.gridTable tbody tr td div {
+  overflow:hidden;
+}
 .row_odd {
 	background-color: white;
 }
@@ -34,12 +40,12 @@ Grid
 				<table id="someGridRightHeaderTable" cellspacing="0" cellpadding="0" class="gridTable">
 					<thead>
 						<tr>
-							<th><div class="gridHeader" style="overflow:hidden; width:40px;"><nobr>th1</nobr></div></th>
-							<th><div class="gridHeader" style="overflow:hidden; width:40px;"><nobr>th2</nobr></div></th>
-							<th><div class="gridHeader" style="overflow:hidden; width:30px;"><nobr>th3</nobr></div></th>
-							<th><div class="gridHeader" style="overflow:hidden; width:30px;"><nobr>th4</nobr></div></th>
-							<th><div class="gridHeader" style="overflow:hidden; width:30px;"><nobr>th5</nobr></div></th>
-							<th><div class="gridHeader" style="overflow:hidden; width:30px;"><nobr>th6</nobr></div></th>
+							<th><div class="gridHeader" style="width:40px;"><nobr>th1</nobr></div></th>
+							<th><div class="gridHeader" style="width:40px;"><nobr>th2</nobr></div></th>
+							<th><div class="gridHeader" style="width:30px;"><nobr>th3</nobr></div></th>
+							<th><div class="gridHeader" style="width:30px;"><nobr>th4</nobr></div></th>
+							<th><div class="gridHeader" style="width:30px;"><nobr>th5</nobr></div></th>
+							<th><div class="gridHeader" style="width:30px;"><nobr>th6</nobr></div></th>
 						</tr>
 					</thead>
 				</table>
@@ -52,74 +58,74 @@ Grid
 				<table id="someGridRightBodyTable" cellspacing="0" cellpadding="0" class="gridTable">
 					<tbody>
 						<tr class="row_odd">
-							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD1_1</nobr></div></td>
-							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD2_1</nobr></div></td>
-							<td><div class="gridCell" style="overflow:hidden;"><nobr>
+							<td><div class="gridCell"><nobr>TD1_1</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD2_1</nobr></div></td>
+							<td><div class="gridCell"><nobr>
 								<input type="text" id="gridText" name="someGrid:0:gridText" value="TD3_1" />
 							</nobr></div></td>
-							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD4_1</nobr></div></td>
-							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD5_1</nobr></div></td>
-							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD6_1</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD4_1</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD5_1</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD6_1</nobr></div></td>
 						</tr>
 						<tr class="row_even">
-							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD1_2</nobr></div></td>
-							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD2_2</nobr></div></td>
-							<td><div class="gridCell" style="overflow:hidden;"><nobr>
+							<td><div class="gridCell"><nobr>TD1_2</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD2_2</nobr></div></td>
+							<td><div class="gridCell"><nobr>
 								<input type="text" id="gridText" name="someGrid:1:gridText" value="TD3_2" />
 							</nobr></div></td>
-							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD4_2</nobr></div></td>
-							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD5_2</nobr></div></td>
-							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD6_2</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD4_2</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD5_2</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD6_2</nobr></div></td>
 						</tr>
 						<tr class="row_odd">
-							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD1_3</nobr></div></td>
-							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD2_3</nobr></div></td>
-							<td><div class="gridCell" style="overflow:hidden;"><nobr>
+							<td><div class="gridCell"><nobr>TD1_3</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD2_3</nobr></div></td>
+							<td><div class="gridCell"><nobr>
 								<input type="text" id="gridText" name="someGrid:2:gridText" value="TD3_3" />
 							</nobr></div></td>
-							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD4_3</nobr></div></td>
-							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD5_3</nobr></div></td>
-							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD6_3</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD4_3</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD5_3</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD6_3</nobr></div></td>
 						</tr>
 						<tr class="row_even">
-							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD1_4</nobr></div></td>
-							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD2_4</nobr></div></td>
-							<td><div class="gridCell" style="overflow:hidden;"><nobr>
+							<td><div class="gridCell"><nobr>TD1_4</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD2_4</nobr></div></td>
+							<td><div class="gridCell"><nobr>
 								<input type="text" id="gridText" name="someGrid:3:gridText" value="TD3_4" />
 							</nobr></div></td>
-							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD4_4</nobr></div></td>
-							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD5_4</nobr></div></td>
-							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD6_4</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD4_4</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD5_4</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD6_4</nobr></div></td>
 						</tr>
 						<tr class="row_odd">
-							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD1_5</nobr></div></td>
-							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD2_5</nobr></div></td>
-							<td><div class="gridCell" style="overflow:hidden;"><nobr>
+							<td><div class="gridCell"><nobr>TD1_5</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD2_5</nobr></div></td>
+							<td><div class="gridCell"><nobr>
 								<input type="text" id="gridText" name="someGrid:4:gridText" value="TD3_5" />
 							</nobr></div></td>
-							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD4_5</nobr></div></td>
-							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD5_5</nobr></div></td>
-							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD6_5</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD4_5</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD5_5</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD6_5</nobr></div></td>
 						</tr>
 						<tr class="row_even">
-							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD1_6</nobr></div></td>
-							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD2_6</nobr></div></td>
-							<td><div class="gridCell" style="overflow:hidden;"><nobr>
+							<td><div class="gridCell"><nobr>TD1_6</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD2_6</nobr></div></td>
+							<td><div class="gridCell"><nobr>
 								<input type="text" id="gridText" name="someGrid:5:gridText" value="TD3_6" />
 							</nobr></div></td>
-							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD4_6</nobr></div></td>
-							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD5_6</nobr></div></td>
-							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD6_6</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD4_6</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD5_6</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD6_6</nobr></div></td>
 						</tr>
 						<tr class="row_odd">
-							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD1_7</nobr></div></td>
-							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD2_7</nobr></div></td>
-							<td><div class="gridCell" style="overflow:hidden;"><nobr>
+							<td><div class="gridCell"><nobr>TD1_7</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD2_7</nobr></div></td>
+							<td><div class="gridCell"><nobr>
 								<input type="text" id="gridText" name="someGrid:6:gridText" value="TD3_7" />
 							</nobr></div></td>
-							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD4_7</nobr></div></td>
-							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD5_7</nobr></div></td>
-							<td><div class="gridCell" style="overflow:hidden;"><nobr>TD6_7</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD4_7</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD5_7</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD6_7</nobr></div></td>
 						</tr>
 					</tbody>
 				</table>

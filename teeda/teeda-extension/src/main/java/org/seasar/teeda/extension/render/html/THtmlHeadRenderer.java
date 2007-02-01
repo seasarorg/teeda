@@ -43,9 +43,10 @@ public class THtmlHeadRenderer extends AbstractRenderer {
         final ResponseWriter writer = context.getResponseWriter();
         writer.startElement(JsfConstants.HEAD_ELEM, component);
         writer.write(JsfConstants.LINE_SP);
-        renderCSSResources(context);
-        renderJSResources(context);
-        renderInlineJSResources(context);
+        renderCssResources(context);
+        renderJsResources(context);
+        renderInlineCssResources(context);
+        renderInlineJsResources(context);
     }
 
     public void encodeEnd(FacesContext context, UIComponent component)
@@ -56,7 +57,7 @@ public class THtmlHeadRenderer extends AbstractRenderer {
         writer.write(JsfConstants.LINE_SP);
     }
 
-    protected void renderJSResources(FacesContext context) throws IOException {
+    protected void renderJsResources(FacesContext context) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
         Set jsResources = VirtualResource.getJsResources(context);
         for (Iterator i = jsResources.iterator(); i.hasNext();) {
@@ -67,7 +68,7 @@ public class THtmlHeadRenderer extends AbstractRenderer {
         }
     }
 
-    protected void renderInlineJSResources(FacesContext context)
+    protected void renderInlineJsResources(FacesContext context)
             throws IOException {
         ResponseWriter writer = context.getResponseWriter();
         Collection values = VirtualResource.getInlineJsResourceValues(context);
@@ -78,7 +79,7 @@ public class THtmlHeadRenderer extends AbstractRenderer {
         }
     }
 
-    protected void renderCSSResources(FacesContext context) throws IOException {
+    protected void renderCssResources(FacesContext context) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
         Set cssResources = VirtualResource.getCssResources(context);
         for (Iterator i = cssResources.iterator(); i.hasNext();) {
@@ -86,6 +87,15 @@ public class THtmlHeadRenderer extends AbstractRenderer {
             renderStyleSheet(writer, VirtualResource.convertVirtualPath(
                     context, path));
             writer.write(JsfConstants.LINE_SP);
+        }
+    }
+
+    protected void renderInlineCssResources(FacesContext context)
+            throws IOException {
+        ResponseWriter writer = context.getResponseWriter();
+        Collection values = VirtualResource.getInlineCssResourceValues(context);
+        for (Iterator i = values.iterator(); i.hasNext();) {
+            writer.write((String) i.next());
         }
     }
 }

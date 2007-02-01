@@ -146,9 +146,12 @@ public class THtmlGridRenderer extends TForEachRenderer implements
 
     protected void encodeHtmlGridPrepare(final FacesContext context,
             final THtmlGrid htmlGrid) throws IOException {
-        final String path = ResourceUtil.getResourcePath(THtmlGrid.class
-                .getName(), "js");
-        VirtualResource.addJsResource(context, path);
+        String jsPath = ResourceUtil.getResourcePath(THtmlGrid.class.getName(),
+                "js");
+        VirtualResource.addJsResource(context, jsPath);
+        String cssPath = ResourceUtil.getResourcePath(
+                THtmlGrid.class.getName(), "css");
+        VirtualResource.addJsResource(context, cssPath);
     }
 
     public void encodeBegin(final FacesContext context,
@@ -455,8 +458,11 @@ public class THtmlGridRenderer extends TForEachRenderer implements
         writer.startElement(JsfConstants.DIV_ELEM, th);
         RendererUtil.renderAttribute(writer, JsfConstants.CLASS_ATTR,
                 createThStyleClassAttribute(th, attribute, columnNo));
-        RendererUtil.renderAttribute(writer, JsfConstants.STYLE_ATTR,
-                createThStyleAttribute(th, attribute, columnNo));
+        String thStyle = createThStyleAttribute(th, attribute, columnNo);
+        if (StringUtil.isNotBlank(thStyle)) {
+            RendererUtil.renderAttribute(writer, JsfConstants.STYLE_ATTR,
+                    thStyle);
+        }
 
         writer.startElement(JsfConstants.NOBR_ELEM, th);
         encodeDescendantComponent(context, th);
@@ -482,9 +488,9 @@ public class THtmlGridRenderer extends TForEachRenderer implements
             final GridAttribute attribute, final int columnNo) {
         final Integer columnWidth = attribute.getColumnWidth(columnNo);
         final StringBuffer sb = new StringBuffer(50);
-        sb.append("overflow:hidden;");
+        //sb.append("overflow:hidden;");
         if (columnWidth != null) {
-            sb.append(" width:" + columnWidth + "px;");
+            sb.append("width:" + columnWidth + "px;");
         }
         final String style = th.getStyle();
         if (StringUtil.isNotBlank(style)) {
@@ -706,8 +712,11 @@ public class THtmlGridRenderer extends TForEachRenderer implements
         writer.startElement(JsfConstants.DIV_ELEM, td);
         writer.writeAttribute(JsfConstants.CLASS_ATTR,
                 createTdStyleClassAttribute(td), JsfConstants.CLASS_ATTR);
-        writer.writeAttribute(JsfConstants.STYLE_ATTR, createTdStyleAttribute(
-                td, attribute, columnNo), JsfConstants.STYLE_ATTR);
+        String tdStyle = createTdStyleAttribute(td, attribute, columnNo);
+        if (StringUtil.isNotBlank(tdStyle)) {
+            writer.writeAttribute(JsfConstants.STYLE_ATTR, tdStyle,
+                    JsfConstants.STYLE_ATTR);
+        }
         writer.startElement(JsfConstants.NOBR_ELEM, td);
 
         encodeDescendantComponent(context, td);
@@ -727,12 +736,7 @@ public class THtmlGridRenderer extends TForEachRenderer implements
 
     private String createTdStyleAttribute(final THtmlGridTd td,
             final THtmlGridRenderer.GridAttribute attribute, final int columnNo) {
-        final String style = td.getStyle();
-        final String s = "overflow:hidden;";
-        if (StringUtil.isBlank(style)) {
-            return s;
-        }
-        return s + " " + style;
+        return td.getStyle();
     }
 
     private THtmlGridRenderer.GridAttribute getGridAttribute(
