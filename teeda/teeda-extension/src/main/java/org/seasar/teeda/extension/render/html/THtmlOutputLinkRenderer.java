@@ -42,8 +42,11 @@ public class THtmlOutputLinkRenderer extends HtmlOutputLinkRenderer {
 
     protected String buildHref(FacesContext context,
             HtmlOutputLink htmlOutputLink, String encoding) throws IOException {
+        // PortletSupport
         if (PortletUtil.isPortlet(context)) {
-            if (htmlOutputLink.getId().startsWith(ExtensionConstants.GO_PREFIX)) {
+            if (htmlOutputLink.getId().startsWith(ExtensionConstants.GO_PREFIX)
+                    || htmlOutputLink.getId().startsWith(
+                            ExtensionConstants.JUMP_PREFIX)) {
                 PortletUrlBuilder urlBuilder = new PortletUrlBuilder();
                 urlBuilder.setBase(ValueHolderUtil.getValueForRender(context,
                         htmlOutputLink));

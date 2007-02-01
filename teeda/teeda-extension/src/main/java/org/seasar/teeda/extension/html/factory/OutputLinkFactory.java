@@ -18,8 +18,11 @@ package org.seasar.teeda.extension.html.factory;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.faces.context.FacesContext;
+
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.core.util.PortletUtil;
 import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ElementNode;
@@ -48,6 +51,12 @@ public class OutputLinkFactory extends AbstractElementProcessorFactory {
         String id = elementNode.getId();
         if (id == null) {
             return false;
+        }
+        // PortletSupport
+        //TODO facesContext?
+        if (PortletUtil.isPortlet(FacesContext.getCurrentInstance())) {
+            return id.startsWith(ExtensionConstants.GO_PREFIX)
+                    || id.startsWith(ExtensionConstants.JUMP_PREFIX);
         }
         return id.startsWith(ExtensionConstants.GO_PREFIX);
     }
