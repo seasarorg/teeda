@@ -41,6 +41,13 @@ public class AjaxUtil {
 
     private static String contentTypeText = null;
 
+    public static void clear() {
+        contentTypeJson = null;
+        contentTypeXml = null;
+        contentTypeHtml = null;
+        contentTypeText = null;
+    }
+
     public static boolean isJSON(String str) {
         return str != null
                 && (str.startsWith(AjaxConstants.START_BRACE) && str

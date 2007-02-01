@@ -87,6 +87,17 @@ public class AjaxServletTest extends S2FrameworkTestCase {
         }
     }
 
+    public void testAjaxMethod_noMeta() throws Exception {
+        // ## Arrange ##
+        AjaxServlet servlet = new AjaxServlet();
+        servlet.init(getServletConfig());
+        getRequest().addParameter("component", "ajaxBean2");
+        getRequest().addParameter("action", "ajaxHoge");
+        // ## Act ##
+        // ## Assert ##
+        servlet.doGet(getRequest(), getResponse());
+    }
+
     public void testGetComponent_NotPublicBadMeta() throws Exception {
         // ## Arrange ##
         AjaxServlet servlet = new AjaxServlet();
@@ -199,7 +210,7 @@ public class AjaxServletTest extends S2FrameworkTestCase {
         // ## Assert ##
         assertEquals(AjaxConstants.CONTENT_TYPE_JSON, response.getContentType());
     }
-    
+
     public void testArgs_isNull() throws Exception {
         // ## Arrange ##
         AjaxServlet servlet = new AjaxServlet();
@@ -238,7 +249,7 @@ public class AjaxServletTest extends S2FrameworkTestCase {
             assertMessageExist(e);
         }
     }
-    
+
     public void testArgs_BadArgc() throws Exception {
         // target method is "public Object ajaxFoo(int arg1, String arg2)" 
         // ## Arrange ##
@@ -302,9 +313,9 @@ public class AjaxServletTest extends S2FrameworkTestCase {
 
         // ## Assert ##
         assertEquals("{arg1:0,argNum:null}", writer.getResult());
-        assertEquals(null, ((AjaxBean4) getComponent("ajaxBean4"))
-                .getArgNum());
-    }    
+        assertEquals(null, ((AjaxBean4) getComponent("ajaxBean4")).getArgNum());
+    }
+
     public void testArgs_InvokeSuccess() throws Exception {
         // target method is "public Object ajaxFoo(int arg1, String arg2)" 
         // ## Arrange ##

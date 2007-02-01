@@ -33,7 +33,6 @@ import org.seasar.framework.beans.PropertyDesc;
 import org.seasar.framework.beans.PropertyNotFoundRuntimeException;
 import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.framework.container.ComponentDef;
-import org.seasar.framework.container.ComponentNotFoundRuntimeException;
 import org.seasar.framework.container.MetaDef;
 import org.seasar.framework.container.S2Container;
 import org.seasar.framework.container.servlet.S2ContainerServlet;
@@ -45,6 +44,8 @@ import org.seasar.framework.container.servlet.S2ContainerServlet;
 public class AjaxServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
+
+    private static final String AJAX_PREFIX = "ajax";
 
     private S2Container container;
 
@@ -79,17 +80,21 @@ public class AjaxServlet extends HttpServlet {
         String componentName = request
                 .getParameter(AjaxConstants.REQ_PARAM_COMPONENT);
         String method = request.getParameter(AjaxConstants.REQ_PARAM_ACTION);
-
+        if (method == null) {
+            method = AjaxConstants.DEFAULT_AJAX_METHOD;
+        }
         ComponentDef def = getComponentDefNoException(componentName);
         if (def == null) {
             throw new ServletException("Ajax Component Name[" + componentName
                     + "] is not found.");
         }
 
-        MetaDef meta = def.getMetaDef(AjaxConstants.TEEDA_AJAX_META);
-        if (meta == null) {
-            throw new ServletException("Ajax Component Name[" + componentName
-                    + "] is not public.");
+        if (!method.startsWith(AJAX_PREFIX)) {
+            MetaDef meta = def.getMetaDef(AjaxConstants.TEEDA_AJAX_META);
+            if (meta == null) {
+                throw new ServletException("Ajax Component Name["
+                        + componentName + "] is not public.");
+            }
         }
         Object obj = def.getComponent();
         if (obj == null) {
@@ -98,9 +103,6 @@ public class AjaxServlet extends HttpServlet {
         }
 
         BeanDesc beanDesc = BeanDescFactory.getBeanDesc(def.getConcreteClass());
-        if (method == null) {
-            method = AjaxConstants.DEFAULT_AJAX_METHOD;
-        }
 
         if (!beanDesc.hasMethod(method)) {
             throw new ServletException("Ajax Component Name[" + componentName
@@ -173,12 +175,9 @@ public class AjaxServlet extends HttpServlet {
     }
 
     protected ComponentDef getComponentDefNoException(String componentName) {
-        ComponentDef def = null;
-        try {
-            def = container.getComponentDef(componentName);
-        } catch (ComponentNotFoundRuntimeException e) {
+        if (!container.hasComponentDef(componentName)) {
+            return null;
         }
-        return def;
+        return container.getComponentDef(componentName);
     }
-
 }

@@ -151,7 +151,7 @@ public class THtmlGridRenderer extends TForEachRenderer implements
         VirtualResource.addJsResource(context, jsPath);
         String cssPath = ResourceUtil.getResourcePath(
                 THtmlGrid.class.getName(), "css");
-        VirtualResource.addJsResource(context, cssPath);
+        VirtualResource.addCssResource(context, cssPath);
     }
 
     public void encodeBegin(final FacesContext context,

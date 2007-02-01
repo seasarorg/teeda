@@ -31,9 +31,13 @@ public class AjaxUtilTest extends S2FrameworkTestCase {
      * @see TestCase#setUp()
      */
     //protected void setUp() throws Exception {
-        //super.setUp();
-        //super.include("ajaxTest.dicon");
+    //super.setUp();
+    //super.include("ajaxTest.dicon");
     //}
+    protected void tearDown() throws Exception {
+        super.tearDown();
+        AjaxUtil.clear();
+    }
 
     public void testToString_null() throws Exception {
         assertEquals("null", AjaxUtil.toJson(null));
@@ -156,11 +160,11 @@ public class AjaxUtilTest extends S2FrameworkTestCase {
         AjaxUtil.setContentType(response, "aaaaa");
         assertEquals(AjaxConstants.CONTENT_TYPE_TEXT, response.getContentType());
     }
-    
+
     public void setUpSetContentTypeDicon() {
         include("contentTypeTest.dicon");
     }
-    
+
     public void testSetContentTypeDicon() throws Exception {
         MockHttpServletResponse response = getResponse();
         AjaxUtil.setContentType(response, null);
