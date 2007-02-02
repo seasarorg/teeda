@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container 2.4//EN"
+	"http://www.seasar.org/dtd/components24.dtd">
+<components>
+	<component name="diconItems" class="java.util.ArrayList">
+		<initMethod name="add" >
+			<arg>
+				<component class="javax.faces.model.SelectItem">
+					<property name="label">"Please select"</property>
+				</component>
+			</arg>
+		</initMethod>
+		<initMethod name="add" >
+			<arg>
+				<component class="javax.faces.model.SelectItem">
+					<property name="value">1</property>
+					<property name="label">"One"</property>
+				</component>
+			</arg>
+		</initMethod>
+		<initMethod name="add" >
+			<arg>
+				<component class="javax.faces.model.SelectItem">
+					<property name="value">2</property>
+					<property name="label">"Two"</property>
+				</component>
+			</arg>
+		</initMethod>
+		<initMethod name="add" >
+			<arg>
+				<component class="javax.faces.model.SelectItem">
+					<property name="value">3</property>
+					<property name="label">"Three"</property>
+				</component>
+			</arg>
+		</initMethod>
+		<initMethod name="add" >
+			<arg>
+				<component class="javax.faces.model.SelectItem">
+					<property name="value">4</property>
+					<property name="label">"Four"</property>
+				</component>
+			</arg>
+		</initMethod>
+	</component>
+</components>
