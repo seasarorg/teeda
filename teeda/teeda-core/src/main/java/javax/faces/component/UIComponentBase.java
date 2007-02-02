@@ -107,6 +107,10 @@ public abstract class UIComponentBase extends UIComponent {
         return clientId;
     }
 
+    public void setClientId(String clientId) {
+        this.clientId = clientId;
+    }
+
     private String createClientId(FacesContext context) {
         String parentId = "";
         for (UIComponent component = getParent(); component != null; component = component

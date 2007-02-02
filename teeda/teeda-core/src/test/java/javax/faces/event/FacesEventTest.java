@@ -114,6 +114,9 @@ public class FacesEventTest extends TestCase {
             return null;
         }
 
+        public void setClientId(String clientId) {
+        }
+
         public String getFamily() {
             return null;
         }

@@ -132,6 +132,7 @@
 		class="org.seasar.teeda.core.application.ApplicationImpl" />
 	<component
 		class="org.seasar.teeda.core.render.html.HtmlRenderKitImpl" />
+
 	<component class="org.seasar.framework.container.autoregister.ComponentAutoRegister">
 		<property name="instanceDef">
 			@org.seasar.framework.container.deployer.InstanceDefFactory@PROTOTYPE
@@ -179,4 +180,6 @@
 		</initMethod>
 	</component>
 
+	<component name="gridHelper"
+		class="org.seasar.teeda.extension.helper.impl.GridHelperImpl" instance="session"/>
 </components>

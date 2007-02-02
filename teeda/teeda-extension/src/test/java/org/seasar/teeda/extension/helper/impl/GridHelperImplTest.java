@@ -15,21 +15,19 @@
  */
 package org.seasar.teeda.extension.helper.impl;
 
-import javax.faces.event.PhaseId;
-
 import junit.framework.TestCase;
 
-import org.seasar.teeda.core.mock.MockUIComponent;
-import org.seasar.teeda.extension.event.ToggleEvent;
-
 /**
- * @author shot
+ * @author higa
  */
-public class GridHelperTest extends TestCase {
+public class GridHelperImplTest extends TestCase {
+
+    private GridHelperImpl gridHelper = new GridHelperImpl();
 
     public void test() throws Exception {
-        MockUIComponent component = new MockUIComponent();
-        ToggleEvent event = new ToggleEvent(component, "hoge");
-        assertEquals(PhaseId.INVOKE_APPLICATION, event.getPhaseId());
+        String table = "<table></table>";
+        String token = gridHelper.addTable(table);
+        assertNotNull(token);
+        assertEquals(table, gridHelper.ajaxGetTable(token));
     }
 }

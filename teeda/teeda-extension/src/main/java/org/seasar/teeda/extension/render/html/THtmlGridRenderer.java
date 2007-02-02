@@ -29,8 +29,10 @@ import javax.faces.internal.IgnoreAttribute;
 
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
+import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
 import org.seasar.framework.util.ResourceUtil;
 import org.seasar.framework.util.StringUtil;
+import org.seasar.teeda.ajax.AjaxConstants;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.context.html.HtmlResponseWriter;
 import org.seasar.teeda.core.scope.impl.DispatchScope;
@@ -45,6 +47,7 @@ import org.seasar.teeda.extension.component.html.THtmlGridHeader;
 import org.seasar.teeda.extension.component.html.THtmlGridTd;
 import org.seasar.teeda.extension.component.html.THtmlGridTh;
 import org.seasar.teeda.extension.component.html.THtmlGridTr;
+import org.seasar.teeda.extension.helper.GridHelper;
 import org.seasar.teeda.extension.render.RenderPreparableRenderer;
 import org.seasar.teeda.extension.render.RendererListener;
 import org.seasar.teeda.extension.render.TBodyRenderer;
@@ -146,6 +149,7 @@ public class THtmlGridRenderer extends TForEachRenderer implements
 
     protected void encodeHtmlGridPrepare(final FacesContext context,
             final THtmlGrid htmlGrid) throws IOException {
+        VirtualResource.addJsResource(context, AjaxConstants.AJAX_JS_PATH);
         String jsPath = ResourceUtil.getResourcePath(THtmlGrid.class.getName(),
                 "js");
         VirtualResource.addJsResource(context, jsPath);
@@ -1009,69 +1013,111 @@ public class THtmlGridRenderer extends TForEachRenderer implements
 
         public void renderBeforeBodyEnd(final FacesContext context)
                 throws IOException {
-            final ResponseWriter writer = context.getResponseWriter();
+
+            GridHelper gridHelper = (GridHelper) SingletonS2ContainerFactory
+                    .getContainer().getComponent(GridHelper.class);
+
+            //final ResponseWriter writer = context.getResponseWriter();
             // https://www.seasar.org/issues/browse/TEEDA-176
             GridRowContext rowContext = null;
-
+            StringBuffer script = makeAjaxGetTableScript();
             // leftBody
             if (attribute.hasLeftFixCols()) {
-                writer.startElement(JsfConstants.TABLE_ELEM, body);
-                RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR, id
-                        + LEFT_BODY_SOURCE);
-                RendererUtil.renderAttribute(writer, JsfConstants.STYLE_ATTR,
-                        "display:none;");
+                HtmlResponseWriter writer = new HtmlResponseWriter();
+                writer.setWriter(new StringWriter(1024 * items.length));
+                ResponseWriter originalWriter = context.getResponseWriter();
+                try {
+                    context.setResponseWriter(writer);
+                    writer.startElement(JsfConstants.TABLE_ELEM, body);
+                    RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR,
+                            id + LEFT_BODY_SOURCE);
+                    RendererUtil.renderAttribute(writer,
+                            JsfConstants.STYLE_ATTR, "display:none;");
 
-                writer.startElement(JsfConstants.TBODY_ELEM, body);
-                for (int i = renderRowLength; i < items.length; ++i) {
-                    htmlGrid.enterRow(context, i);
-                    htmlGrid.processItem(beanDesc, page, items[i], i);
-                    final GridRowContext row = new GridRowContext();
-                    for (final Iterator it = getRenderedChildrenIterator(body); it
-                            .hasNext();) {
-                        final UIComponent child = (UIComponent) it.next();
-                        if (child instanceof THtmlGridTr) {
-                            encodeGridLeftBodyTr(context, (THtmlGridTr) child,
-                                    writer, attribute, row);
+                    writer.startElement(JsfConstants.TBODY_ELEM, body);
+                    for (int i = renderRowLength; i < items.length; ++i) {
+                        htmlGrid.enterRow(context, i);
+                        htmlGrid.processItem(beanDesc, page, items[i], i);
+                        final GridRowContext row = new GridRowContext();
+                        for (final Iterator it = getRenderedChildrenIterator(body); it
+                                .hasNext();) {
+                            final UIComponent child = (UIComponent) it.next();
+                            if (child instanceof THtmlGridTr) {
+                                encodeGridLeftBodyTr(context,
+                                        (THtmlGridTr) child, writer, attribute,
+                                        row);
+                            }
                         }
+                        // 1つだけ取っておく
+                        if (rowContext == null) {
+                            rowContext = row;
+                        }
+                        htmlGrid.leaveRow(context);
                     }
-                    // 1つだけ取っておく
-                    if (rowContext == null) {
-                        rowContext = row;
-                    }
-                    htmlGrid.leaveRow(context);
+                    writer.endElement(JsfConstants.TBODY_ELEM);
+                    writer.endElement(JsfConstants.TABLE_ELEM);
+                    String token = gridHelper.addTable(writer.toString());
+                    script.append("ajaxGetTable('" + id + LEFT_BODY_TABLE
+                            + "','" + token + "');");
+                    script.append(JsfConstants.LINE_SP);
+                } finally {
+                    context.setResponseWriter(originalWriter);
                 }
-                writer.endElement(JsfConstants.TBODY_ELEM);
-                writer.endElement(JsfConstants.TABLE_ELEM);
             }
             if (rowContext == null) {
                 rowContext = new GridRowContext();
             }
 
             // rightBody
-            writer.startElement(JsfConstants.TABLE_ELEM, body);
-            RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR, id
-                    + RIGHT_BODY_SOURCE);
-            RendererUtil.renderAttribute(writer, JsfConstants.STYLE_ATTR,
-                    "display:none;");
-            writer.startElement(JsfConstants.TBODY_ELEM, body);
-            for (int i = renderRowLength; i < items.length; ++i) {
-                htmlGrid.enterRow(context, i);
-                htmlGrid.processItem(beanDesc, page, items[i], i);
-                rowContext.resetRow();
-                for (final Iterator it = getRenderedChildrenIterator(body); it
-                        .hasNext();) {
-                    final UIComponent child = (UIComponent) it.next();
-                    if (child instanceof THtmlGridTr) {
-                        encodeGridRightBodyTr(context, (THtmlGridTr) child,
-                                writer, attribute, rowContext);
+            HtmlResponseWriter writer = new HtmlResponseWriter();
+            writer.setWriter(new StringWriter(1024 * items.length));
+            ResponseWriter originalWriter = context.getResponseWriter();
+            try {
+                context.setResponseWriter(writer);
+                writer.startElement(JsfConstants.TABLE_ELEM, body);
+                RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR, id
+                        + RIGHT_BODY_SOURCE);
+                RendererUtil.renderAttribute(writer, JsfConstants.STYLE_ATTR,
+                        "display:none;");
+                writer.startElement(JsfConstants.TBODY_ELEM, body);
+                for (int i = renderRowLength; i < items.length; ++i) {
+                    htmlGrid.enterRow(context, i);
+                    htmlGrid.processItem(beanDesc, page, items[i], i);
+                    rowContext.resetRow();
+                    for (final Iterator it = getRenderedChildrenIterator(body); it
+                            .hasNext();) {
+                        final UIComponent child = (UIComponent) it.next();
+                        if (child instanceof THtmlGridTr) {
+                            encodeGridRightBodyTr(context, (THtmlGridTr) child,
+                                    writer, attribute, rowContext);
+                        }
                     }
+                    htmlGrid.leaveRow(context);
                 }
-                htmlGrid.leaveRow(context);
+                writer.endElement(JsfConstants.TBODY_ELEM);
+                writer.endElement(JsfConstants.TABLE_ELEM);
+                String token = gridHelper.addTable(writer.toString());
+                script.append("ajaxGetTable('" + id + RIGHT_BODY_TABLE + "','"
+                        + token + "');");
+                renderJavaScriptElement(originalWriter, script.toString());
+            } finally {
+                context.setResponseWriter(originalWriter);
             }
-            writer.endElement(JsfConstants.TBODY_ELEM);
-            writer.endElement(JsfConstants.TABLE_ELEM);
-            renderJavaScriptElement(writer, "Teeda.THtmlGrid.loadGridRows('"
-                    + id + "');");
+        }
+
+        protected StringBuffer makeAjaxGetTableScript() {
+            StringBuffer buf = new StringBuffer(255);
+            buf
+                    .append("function ajaxGetTable(destId, token) {\n"
+                            + "var f = function gridHelper_ajaxGetTable(table) {\n"
+                            + "var dummy = document.createElement('div');\n"
+                            + "dummy.innerHTML = table;\n"
+                            + "var dest = document.getElementById(destId);\n"
+                            + "dest.appendChild(dummy.getElementsByTagName('tbody')[0]);\n"
+                            + "};"
+                            + "Kumu.Ajax.executeTeedaAjax(f, [token], Kumu.Ajax.RESPONSE_TYPE_HTML);}");
+            buf.append(JsfConstants.LINE_SP);
+            return buf;
         }
     }
 

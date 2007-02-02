@@ -48,6 +48,9 @@ public class NullUIComponent extends UIComponent {
         return null;
     }
 
+    public void setClientId(String clientId) {
+    }
+
     public String getFamily() {
         return null;
     }

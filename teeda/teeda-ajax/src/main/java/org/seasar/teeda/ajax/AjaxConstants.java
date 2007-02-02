@@ -42,7 +42,7 @@ public interface AjaxConstants {
     String COLON = ":";
 
     String NULL_STRING = "null";
-    
+
     String TRUE_STRING = "true";
 
     String FALSE_STRING = "false";
@@ -52,12 +52,16 @@ public interface AjaxConstants {
     String END_BRACKET = "]";
 
     String START_BRACE = "{";
-    
+
     String END_BRACE = "}";
-    
+
     String DEFAULT_ARRAY_PARAM_NAME = "AjaxParam";
-    
+
     int DEFAULT_ARRAY_PARAM_LENGTH = DEFAULT_ARRAY_PARAM_NAME.length();
-    
+
     String EMPTY_PARAM = "";
+
+    String JS_PATH = "org/seasar/teeda/ajax/js";
+
+    String AJAX_JS_PATH = JS_PATH + "/ajax.js";
 }
