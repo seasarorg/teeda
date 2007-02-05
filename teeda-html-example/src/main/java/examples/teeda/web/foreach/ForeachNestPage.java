@@ -1,9 +1,6 @@
 package examples.teeda.web.foreach;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.Serializable;
 
 public class ForeachNestPage {
 
@@ -11,9 +8,9 @@ public class ForeachNestPage {
 
 	private int aaaIndexIndex;
 
-	private List aaaItems;
+	private FooDto[] aaaItems;
 
-	private List aaaItemsItems;
+	private FooDto[][] aaaItemsItems;
 
 	private String foo;
 
@@ -33,19 +30,19 @@ public class ForeachNestPage {
 		this.aaaIndexIndex = aaaIndexIndex;
 	}
 
-	public List getAaaItems() {
+	public FooDto[] getAaaItems() {
 		return aaaItems;
 	}
 
-	public void setAaaItems(List aaaItems) {
+	public void setAaaItems(FooDto[] aaaItems) {
 		this.aaaItems = aaaItems;
 	}
 
-	public List getAaaItemsItems() {
+	public FooDto[][] getAaaItemsItems() {
 		return aaaItemsItems;
 	}
 
-	public void setAaaItemsItems(List aaaItemsItems) {
+	public void setAaaItemsItems(FooDto[][] aaaItemsItems) {
 		this.aaaItemsItems = aaaItemsItems;
 	}
 
@@ -62,18 +59,40 @@ public class ForeachNestPage {
 	}
 
 	public String prerender() {
-		aaaItemsItems = new ArrayList();
+		aaaItemsItems = new FooDto[2][2];
 		for (int i = 0; i < 2; i++) {
-			List items = new ArrayList();
+			FooDto[] items = new FooDto[2];
 			for (int j = 0; j < 2; j++) {
-				Map map = new HashMap();
-				map.put("foo", String.valueOf(i) + String.valueOf(j));
-				items.add(map);
+				FooDto fooDto = new FooDto();
+				fooDto.setFoo(String.valueOf(i) + String.valueOf(j));
+				items[j] = fooDto;
 			}
-			aaaItemsItems.add(items);
+			aaaItemsItems[i] = items;
 		}
 
 		return null;
 	}
 
+	public static final class FooDto implements Serializable {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+		private String foo;
+
+		/**
+		 * @return Returns the foo.
+		 */
+		public String getFoo() {
+			return foo;
+		}
+
+		/**
+		 * @param foo
+		 *            The foo to set.
+		 */
+		public void setFoo(String foo) {
+			this.foo = foo;
+		}
+	}
 }
