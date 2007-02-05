@@ -150,4 +150,5 @@ public interface ExtensionConstants {
 
     Integer SUBAPP_SCOPE = new Integer(3);
 
+    String TEEDA_LINK = "teeda_link";
 }

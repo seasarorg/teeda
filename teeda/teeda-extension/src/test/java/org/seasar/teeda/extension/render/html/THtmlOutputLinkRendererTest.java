@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -40,6 +40,15 @@ public class THtmlOutputLinkRendererTest extends RendererTest {
         form.setRenderer(new HtmlFormRenderer());
         form.setId("form");
         form.getChildren().add(htmlOutputLink);
+    }
+
+    public void testRender() throws Exception {
+        htmlOutputLink.setId("aaa");
+        htmlOutputLink.setValue("a");
+        encodeByRenderer(renderer, getFacesContext(), htmlOutputLink);
+
+        assertEquals("<a id=\"aaa\" href=\"a?teeda_link=true\"></a>",
+                getResponseText());
     }
 
     private THtmlOutputLinkRenderer createTHtmlOutputLinkRenderer() {

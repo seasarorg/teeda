@@ -42,6 +42,7 @@ import org.seasar.framework.util.ArrayUtil;
 import org.seasar.framework.util.AssertionUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.util.DIContainerUtil;
+import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ActionDescCache;
 import org.seasar.teeda.extension.html.PageDesc;
@@ -94,13 +95,17 @@ public class SessionPagePersistence implements PagePersistence {
         if (context == null) {
             return;
         }
-        ExternalContext extCtx = context.getExternalContext();
-        Map requestMap = extCtx.getRequestMap();
-        Map subappValues = getSubApplicationScopeValues(context);
+        final ExternalContext extCtx = context.getExternalContext();
+        final Map requestMap = extCtx.getRequestMap();
+        final Map requestParameterMap = extCtx.getRequestParameterMap();
+        if (requestParameterMap.containsKey(ExtensionConstants.TEEDA_LINK)) {
+            return;
+        }
+        final Map subappValues = getSubApplicationScopeValues(context);
         if (subappValues != null) {
             restoreValues(subappValues, requestMap);
         }
-        Map redirectValues = getRedirectScopeValues(context);
+        final Map redirectValues = getRedirectScopeValues(context);
         if (redirectValues != null) {
             restoreValues(redirectValues, requestMap);
         }
