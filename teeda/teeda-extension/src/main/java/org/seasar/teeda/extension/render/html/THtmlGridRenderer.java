@@ -1134,7 +1134,7 @@ public class THtmlGridRenderer extends TForEachRenderer implements
             StringBuffer buf = new StringBuffer(255);
             buf
                     .append("function ajaxGetTable(destId, token) {\n"
-                            + "var f = function gridHelper_ajaxGetTable(table) {\n"
+                            + "var f = function teedaGridHelper_ajaxGetTable(table) {\n"
                             + "var dummy = document.createElement('div');\n"
                             + "dummy.innerHTML = table;\n"
                             + "var dest = document.getElementById(destId);\n"

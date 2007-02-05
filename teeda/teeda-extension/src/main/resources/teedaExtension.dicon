@@ -180,6 +180,6 @@
 		</initMethod>
 	</component>
 
-	<component name="gridHelper"
+	<component name="teedaGridHelper"
 		class="org.seasar.teeda.extension.helper.impl.GridHelperImpl" instance="session"/>
 </components>
