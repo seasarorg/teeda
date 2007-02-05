@@ -121,6 +121,8 @@ public interface ExtensionConstants {
 
     String SCROLL_VERTICAL = "scrollVertical";
 
+    String ASYNC = "async";
+
     String PATTERN_SUFFIX = "Pattern";
 
     String LENGTH_SUFFIX = "Length";

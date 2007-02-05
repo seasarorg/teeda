@@ -33,6 +33,8 @@ public class TGridTag extends TForEachTag {
 
     private String scrollHorizontal;
 
+    private String async;
+
     public String getComponentType() {
         return THtmlGrid.COMPONENT_TYPE;
     }
@@ -49,6 +51,7 @@ public class TGridTag extends TForEachTag {
                 getScrollHorizontal());
         setComponentProperty(component, ExtensionConstants.SCROLL_VERTICAL,
                 getScrollVertical());
+        setComponentProperty(component, ExtensionConstants.ASYNC, getAsync());
     }
 
     public String getScrollHorizontal() {
@@ -67,4 +70,18 @@ public class TGridTag extends TForEachTag {
         this.scrollVertical = scrollVertical;
     }
 
+    public String getAsync() {
+        return async;
+    }
+
+    public void setAsync(String async) {
+        this.async = async;
+    }
+
+    public void release() {
+        super.release();
+        scrollVertical = null;
+        scrollHorizontal = null;
+        async = null;
+    }
 }

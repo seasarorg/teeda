@@ -38,6 +38,7 @@ import org.seasar.teeda.core.context.html.HtmlResponseWriter;
 import org.seasar.teeda.core.scope.impl.DispatchScope;
 import org.seasar.teeda.core.scope.impl.DispatchScopeFactory;
 import org.seasar.teeda.core.util.RendererUtil;
+import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.component.UIBody;
 import org.seasar.teeda.extension.component.html.THtmlGrid;
 import org.seasar.teeda.extension.component.html.THtmlGridBody;
@@ -124,6 +125,7 @@ public class THtmlGridRenderer extends TForEachRenderer implements
         gridIgnoreAttribute.addAttributeName("itemsName");
         gridIgnoreAttribute.addAttributeName("pageName");
         gridIgnoreAttribute.addAttributeName("rowSize");
+        gridIgnoreAttribute.addAttributeName(ExtensionConstants.ASYNC);
     }
 
     private final IgnoreAttribute thIgnoreAttribute = new IgnoreAttribute();
@@ -1021,13 +1023,20 @@ public class THtmlGridRenderer extends TForEachRenderer implements
             // https://www.seasar.org/issues/browse/TEEDA-176
             GridRowContext rowContext = null;
             StringBuffer script = makeAjaxGetTableScript();
+            ResponseWriter writer = null;
+            ResponseWriter originalWriter = null;
             // leftBody
             if (attribute.hasLeftFixCols()) {
-                HtmlResponseWriter writer = new HtmlResponseWriter();
-                writer.setWriter(new StringWriter(1024 * items.length));
-                ResponseWriter originalWriter = context.getResponseWriter();
-                try {
+                if (htmlGrid.isAsync()) {
+                    HtmlResponseWriter hrw = new HtmlResponseWriter();
+                    hrw.setWriter(new StringWriter(1024 * items.length));
+                    writer = hrw;
+                    originalWriter = context.getResponseWriter();
                     context.setResponseWriter(writer);
+                } else {
+                    writer = context.getResponseWriter();
+                }
+                try {
                     writer.startElement(JsfConstants.TABLE_ELEM, body);
                     RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR,
                             id + LEFT_BODY_SOURCE);
@@ -1056,12 +1065,16 @@ public class THtmlGridRenderer extends TForEachRenderer implements
                     }
                     writer.endElement(JsfConstants.TBODY_ELEM);
                     writer.endElement(JsfConstants.TABLE_ELEM);
-                    String token = gridHelper.addTable(writer.toString());
-                    script.append("ajaxGetTable('" + id + LEFT_BODY_TABLE
-                            + "','" + token + "');");
-                    script.append(JsfConstants.LINE_SP);
+                    if (htmlGrid.isAsync()) {
+                        String token = gridHelper.addTable(writer.toString());
+                        script.append("ajaxGetTable('" + id + LEFT_BODY_TABLE
+                                + "','" + token + "');");
+                        script.append(JsfConstants.LINE_SP);
+                    }
                 } finally {
-                    context.setResponseWriter(originalWriter);
+                    if (originalWriter != null) {
+                        context.setResponseWriter(originalWriter);
+                    }
                 }
             }
             if (rowContext == null) {
@@ -1069,11 +1082,16 @@ public class THtmlGridRenderer extends TForEachRenderer implements
             }
 
             // rightBody
-            HtmlResponseWriter writer = new HtmlResponseWriter();
-            writer.setWriter(new StringWriter(1024 * items.length));
-            ResponseWriter originalWriter = context.getResponseWriter();
-            try {
+            if (htmlGrid.isAsync()) {
+                HtmlResponseWriter hrw = new HtmlResponseWriter();
+                hrw.setWriter(new StringWriter(1024 * items.length));
+                writer = hrw;
+                originalWriter = context.getResponseWriter();
                 context.setResponseWriter(writer);
+            } else {
+                writer = context.getResponseWriter();
+            }
+            try {
                 writer.startElement(JsfConstants.TABLE_ELEM, body);
                 RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR, id
                         + RIGHT_BODY_SOURCE);
@@ -1096,12 +1114,19 @@ public class THtmlGridRenderer extends TForEachRenderer implements
                 }
                 writer.endElement(JsfConstants.TBODY_ELEM);
                 writer.endElement(JsfConstants.TABLE_ELEM);
-                String token = gridHelper.addTable(writer.toString());
-                script.append("ajaxGetTable('" + id + RIGHT_BODY_TABLE + "','"
-                        + token + "');");
-                renderJavaScriptElement(originalWriter, script.toString());
+                if (htmlGrid.isAsync()) {
+                    String token = gridHelper.addTable(writer.toString());
+                    script.append("ajaxGetTable('" + id + RIGHT_BODY_TABLE
+                            + "','" + token + "');");
+                    renderJavaScriptElement(originalWriter, script.toString());
+                } else {
+                    renderJavaScriptElement(writer,
+                            "Teeda.THtmlGrid.loadGridRows('" + id + "');");
+                }
             } finally {
-                context.setResponseWriter(originalWriter);
+                if (originalWriter != null) {
+                    context.setResponseWriter(originalWriter);
+                }
             }
         }
 

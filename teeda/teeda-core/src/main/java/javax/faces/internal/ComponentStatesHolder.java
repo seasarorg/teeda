@@ -16,23 +16,9 @@
 package javax.faces.internal;
 
 /**
- * @author shot
- *
+ * @author higa
+ * 
  */
-public interface InternalConstants {
-
-    String COMPONENT_TAG_STACK_ATTR = "javax.faces.webapp.COMPONENT_TAG_STACK";
-
-    String JSP_CREATED_COMPONENT_IDS = "javax.faces.webapp.COMPONENT_IDS";
-
-    String JSP_CREATED_FACET_NAMES = "javax.faces.webapp.FACET_NAMES";
-
-    String GLOBAL_ID_VIEW = "javax.faces.webapp.GLOBAL_ID_VIEW";
-
-    String CURRENT_FACES_CONTEXT = "javax.faces.webapp.CURRENT_FACES_CONTEXT";
-
-    String CURRENT_VIEW_ROOT = "javax.faces.webapp.CURRENT_VIEW_ROOT";
-
-    String DEFAULT_GRID_ASYNC = "teeda.DEFAULT_GRID_ASYNC";
+public interface ComponentStatesHolder {
 
 }

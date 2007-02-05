@@ -19,7 +19,7 @@ package javax.faces.internal;
  * @author higa
  * @author shot
  */
-public class FacesConfigOptions {
+public abstract class FacesConfigOptions {
 
     private static String configFiles;
 
@@ -32,6 +32,8 @@ public class FacesConfigOptions {
     private static String[] javascriptNotPermittedPath;
 
     private static boolean compressState = false;
+
+    private static boolean defaultGridAsync = true;
 
     protected FacesConfigOptions() {
     }
@@ -84,6 +86,14 @@ public class FacesConfigOptions {
         compressState = isCompress;
     }
 
+    public static boolean isDefaultGridAsync() {
+        return defaultGridAsync;
+    }
+
+    public static void setDefaultGridAsync(boolean defaultGridAsync) {
+        FacesConfigOptions.defaultGridAsync = defaultGridAsync;
+    }
+
     public static void clear() {
         configFiles = null;
         savingStateInClient = false;
@@ -91,6 +101,7 @@ public class FacesConfigOptions {
         lifecycleId = null;
         javascriptNotPermittedPath = null;
         compressState = false;
+        defaultGridAsync = true;
     }
 
 }

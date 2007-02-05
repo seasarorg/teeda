@@ -13,26 +13,28 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package javax.faces.internal;
+package org.seasar.teeda.core.util;
+
+import javax.faces.component.UIComponent;
+import javax.faces.component.UIComponentBase;
+import javax.faces.context.FacesContext;
+
+import org.seasar.framework.util.AssertionUtil;
 
 /**
- * @author shot
- *
+ * @author higa
+ * 
  */
-public interface InternalConstants {
+public class NullUIComponent extends UIComponentBase {
 
-    String COMPONENT_TAG_STACK_ATTR = "javax.faces.webapp.COMPONENT_TAG_STACK";
+    public static final UIComponent INSTANCE = new NullUIComponent();
 
-    String JSP_CREATED_COMPONENT_IDS = "javax.faces.webapp.COMPONENT_IDS";
+    public String getClientId(FacesContext context) {
+        AssertionUtil.assertNotNull("context", context);
+        return "";
+    }
 
-    String JSP_CREATED_FACET_NAMES = "javax.faces.webapp.FACET_NAMES";
-
-    String GLOBAL_ID_VIEW = "javax.faces.webapp.GLOBAL_ID_VIEW";
-
-    String CURRENT_FACES_CONTEXT = "javax.faces.webapp.CURRENT_FACES_CONTEXT";
-
-    String CURRENT_VIEW_ROOT = "javax.faces.webapp.CURRENT_VIEW_ROOT";
-
-    String DEFAULT_GRID_ASYNC = "teeda.DEFAULT_GRID_ASYNC";
-
+    public String getFamily() {
+        return null;
+    }
 }

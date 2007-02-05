@@ -20,6 +20,7 @@ import java.io.IOException;
 import javax.faces.component.NamingContainer;
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
+import javax.faces.internal.FacesConfigOptions;
 
 import org.seasar.teeda.extension.component.RenderPreparable;
 import org.seasar.teeda.extension.component.RenderPreparableUtil;
@@ -50,6 +51,8 @@ public class THtmlGrid extends TForEach implements NamingContainer,
     private Boolean scrollVertical;
 
     private Boolean scrollHorizontal;
+
+    private Boolean async;
 
     private String height;
 
@@ -118,6 +121,17 @@ public class THtmlGrid extends TForEach implements NamingContainer,
 
     public void setScrollVertical(boolean scrollVertical) {
         this.scrollVertical = Boolean.valueOf(scrollVertical);
+    }
+
+    public boolean isAsync() {
+        if (async != null) {
+            return async.booleanValue();
+        }
+        return FacesConfigOptions.isDefaultGridAsync();
+    }
+
+    public void setAsync(boolean async) {
+        this.async = Boolean.valueOf(async);
     }
 
     public void setStyle(String style) {

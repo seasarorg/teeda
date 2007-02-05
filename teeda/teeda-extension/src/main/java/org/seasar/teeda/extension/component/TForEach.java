@@ -36,6 +36,7 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.el.VariableResolver;
 import javax.faces.internal.ComponentStates;
+import javax.faces.internal.ComponentStatesHolder;
 import javax.faces.internal.FacesMessageResource;
 import javax.faces.internal.FacesMessageUtil;
 import javax.faces.internal.NamingContainerUtil;
@@ -54,7 +55,8 @@ import org.seasar.teeda.extension.ExtensionConstants;
  * @author higa
  * @author manhole
  */
-public class TForEach extends UIComponentBase implements NamingContainer {
+public class TForEach extends UIComponentBase implements NamingContainer,
+        ComponentStatesHolder {
 
     public static final String COMPONENT_TYPE = "org.seasar.teeda.extension.ForEach";
 
@@ -329,10 +331,6 @@ public class TForEach extends UIComponentBase implements NamingContainer {
                     + "] should be array type, so no update.");
             return;
         }
-        /*
-         * Page縺ｫ蛟､縺後≠繧句�ｴ蜷医�ｯ縲￣age縺ｮ繧剃ｽｿ縺�縲�
-         * Page縺ｫ辟｡縺�蝣ｴ蜷医�ｯnew縺吶ｋ縲�
-         */
         // TODO testing
         Object[] items = (Object[]) itemsPd.getValue(page);
         if (items == null) {
@@ -342,7 +340,6 @@ public class TForEach extends UIComponentBase implements NamingContainer {
             }
         }
         if (pageBeanDesc.hasPropertyDesc(getItemName())) {
-            // FIXME 縺薙ｌ縲∝虚縺九↑縺�豌励′縺吶ｋ...
             final PropertyDesc itemPd = pageBeanDesc
                     .getPropertyDesc(getItemName());
             for (int i = 0; i < rowSize; ++i) {
@@ -357,24 +354,12 @@ public class TForEach extends UIComponentBase implements NamingContainer {
                     .getBeanDesc(itemClass);
             for (int i = 0; i < rowSize; ++i) {
                 final Object item = items[i];
-                /*
-                 * https://www.seasar.org/issues/browse/TEEDA-149
-                 *
-                 * Page縺ｮ繝輔ぅ繝ｼ繝ｫ繝峨∈item縺ｮ繝�繝ｼ繧ｿ繧堤ｧｻ縺励※縺翫￥縲�
-                 * 縺昴≧縺励↑縺�縺ｨ縲￣age縺ｮ繝輔ぅ繝ｼ繝ｫ繝峨′null縺ｮ縺ｨ縺阪↓縲�
-                 * 逕ｻ髱｢縺九ｉ""縺悟�･蜉帙＆繧後◆縺ｮ縺九�√◎繧ゅ◎繧ょ�･蜉帙＆繧後↑縺九▲縺溘�ｮ縺�
-                 * 蛻､螳壹〒縺阪↑縺上↑繧九◆繧√��
-                 */
                 itemToPage(pageBeanDesc, page, item);
                 enterRow(context, i);
                 super.processUpdates(context);
                 leaveRow(context);
                 pageToItem(page, pageBeanDesc, item, itemBeanDesc);
             }
-            /*
-             * TODO 縺輔＠縺ゅ◆繧翫�√％縺｡繧牙�ｴ縺ｮif縺ｮ縺ｿ菫ｮ豁｣縺吶ｋ縲�
-             * https://www.seasar.org/issues/browse/TEEDA-139
-             */
             for (int i = 0; i < itemBeanDesc.getPropertyDescSize(); i++) {
                 final PropertyDesc itemPd = itemBeanDesc.getPropertyDesc(i);
                 final String propertyName = itemPd.getPropertyName();

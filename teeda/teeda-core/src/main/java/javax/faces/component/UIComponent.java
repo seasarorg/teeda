@@ -43,8 +43,6 @@ public abstract class UIComponent implements StateHolder {
 
     public abstract String getClientId(FacesContext context);
 
-    public abstract void setClientId(String clientId);
-
     public abstract String getFamily();
 
     public abstract String getId();

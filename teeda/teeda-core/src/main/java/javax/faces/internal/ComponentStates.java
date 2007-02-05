@@ -31,13 +31,26 @@ import javax.faces.context.FacesContext;
  */
 public class ComponentStates {
 
-    private Map savedStates = new HashMap();
+    public static final int DEFAULT_INITIAL_CAPACITY = 1024;
+
+    private Map savedStates;
+
+    public ComponentStates() {
+        this(DEFAULT_INITIAL_CAPACITY);
+    }
+
+    public ComponentStates(int initialCapacity) {
+        this.savedStates = new HashMap(initialCapacity);
+    }
 
     public void restoreDescendantState(FacesContext context,
             UIComponent component) {
         for (final Iterator it = component.getFacetsAndChildren(); it.hasNext();) {
             final UIComponent child = (UIComponent) it.next();
             NamingContainerUtil.refreshClientId(child);
+            if (child instanceof ComponentStatesHolder) {
+                continue;
+            }
             if (child instanceof EditableValueHolder) {
                 final EditableValueHolder holder = (EditableValueHolder) child;
                 final String clientId = child.getClientId(context);

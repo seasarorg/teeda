@@ -20,6 +20,7 @@ import java.io.InputStream;
 import javax.faces.application.StateManager;
 import javax.faces.application.ViewHandler;
 import javax.faces.internal.FacesConfigOptions;
+import javax.faces.internal.InternalConstants;
 import javax.faces.webapp.FacesServlet;
 import javax.servlet.ServletContext;
 
@@ -81,6 +82,12 @@ public class TeedaInitializer {
                 .getInitParameter(FacesServlet.LIFECYCLE_ID_ATTR);
         if (lifecycleId != null) {
             FacesConfigOptions.setLifecycleId(lifecycleId);
+        }
+        String defaultGridAsync = servletContext
+                .getInitParameter(InternalConstants.DEFAULT_GRID_ASYNC);
+        if (defaultGridAsync != null) {
+            FacesConfigOptions.setDefaultGridAsync(Boolean.valueOf(
+                    defaultGridAsync).booleanValue());
         }
     }
 
