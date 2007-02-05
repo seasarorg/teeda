@@ -23,6 +23,8 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.internal.scope.RedirectScope;
 
+import org.seasar.teeda.core.exception.AlreadyRedirectingException;
+
 public class NavigationHandlerUtil {
 
     private NavigationHandlerUtil() {
@@ -43,7 +45,7 @@ public class NavigationHandlerUtil {
 
     public static void redirect(FacesContext context, String path) {
         if (RedirectScope.isRedirecting(context)) {
-            throw new IllegalStateException("Already redirecting");
+            throw new AlreadyRedirectingException();
         }
         RedirectScope.setRedirectingPath(context, path);
         ExternalContext externalContext = context.getExternalContext();
