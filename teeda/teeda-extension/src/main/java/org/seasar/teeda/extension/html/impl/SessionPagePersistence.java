@@ -42,7 +42,7 @@ import org.seasar.framework.util.ArrayUtil;
 import org.seasar.framework.util.AssertionUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.util.DIContainerUtil;
-import org.seasar.teeda.extension.ExtensionConstants;
+import org.seasar.teeda.core.util.ServletExternalContextUtil;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ActionDescCache;
 import org.seasar.teeda.extension.html.PageDesc;
@@ -97,8 +97,7 @@ public class SessionPagePersistence implements PagePersistence {
         }
         final ExternalContext extCtx = context.getExternalContext();
         final Map requestMap = extCtx.getRequestMap();
-        final Map requestParameterMap = extCtx.getRequestParameterMap();
-        if (requestParameterMap.containsKey(ExtensionConstants.TEEDA_LINK)) {
+        if (isOutputlinkTransition(context, extCtx)) {
             return;
         }
         final Map subappValues = getSubApplicationScopeValues(context);
@@ -110,6 +109,12 @@ public class SessionPagePersistence implements PagePersistence {
             restoreValues(redirectValues, requestMap);
         }
         TeedaExtensionErrorPageManagerImpl.restoreMessage(context);
+    }
+
+    protected static boolean isOutputlinkTransition(FacesContext context,
+            ExternalContext externalContext) {
+        return !RedirectScope.isRedirecting(context)
+                && !ServletExternalContextUtil.isPost(externalContext);
     }
 
     protected void saveFacesMessage(FacesContext from, Map to) {

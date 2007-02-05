@@ -23,12 +23,9 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.UIParameter;
 import javax.faces.component.html.HtmlOutputLink;
 import javax.faces.context.FacesContext;
-import javax.faces.internal.WindowIdUtil;
 
-import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.html.HtmlOutputLinkRenderer;
 import org.seasar.teeda.core.render.html.support.PortletUrlBuilder;
-import org.seasar.teeda.core.render.html.support.UrlBuilder;
 import org.seasar.teeda.core.util.PortletUtil;
 import org.seasar.teeda.core.util.ValueHolderUtil;
 import org.seasar.teeda.extension.ExtensionConstants;
@@ -73,26 +70,6 @@ public class THtmlOutputLinkRenderer extends HtmlOutputLinkRenderer {
                         urlBuilder.build());
             }
         }
-        UrlBuilder urlBuilder = new UrlBuilder();
-        urlBuilder.setBase(ValueHolderUtil.getValueForRender(context,
-                htmlOutputLink));
-        urlBuilder.add(ExtensionConstants.TEEDA_LINK, "true");
-        for (Iterator it = htmlOutputLink.getChildren().iterator(); it
-                .hasNext();) {
-            UIComponent child = (UIComponent) it.next();
-            if (child instanceof UIParameter) {
-                UIParameter parameter = (UIParameter) child;
-                urlBuilder.add(
-                        URLEncoder.encode(parameter.getName(), encoding),
-                        URLEncoder.encode(toBlankIfNull(parameter.getValue()),
-                                encoding));
-            }
-        }
-        if (WindowIdUtil.isNewWindowTarget(htmlOutputLink.getTarget())) {
-            urlBuilder.add(URLEncoder.encode(WindowIdUtil.NEWWINDOW, encoding),
-                    URLEncoder.encode(JsfConstants.TRUE, encoding));
-        }
-        return context.getExternalContext().encodeResourceURL(
-                urlBuilder.build());
+        return super.buildHref(context, htmlOutputLink, encoding);
     }
 }

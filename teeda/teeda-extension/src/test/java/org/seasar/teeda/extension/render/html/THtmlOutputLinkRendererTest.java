@@ -47,8 +47,7 @@ public class THtmlOutputLinkRendererTest extends RendererTest {
         htmlOutputLink.setValue("a");
         encodeByRenderer(renderer, getFacesContext(), htmlOutputLink);
 
-        assertEquals("<a id=\"aaa\" href=\"a?teeda_link=true\"></a>",
-                getResponseText());
+        assertEquals("<a id=\"aaa\" href=\"a\"></a>", getResponseText());
     }
 
     private THtmlOutputLinkRenderer createTHtmlOutputLinkRenderer() {
