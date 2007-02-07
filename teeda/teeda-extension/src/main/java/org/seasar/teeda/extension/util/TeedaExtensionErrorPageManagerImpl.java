@@ -28,6 +28,7 @@ import javax.servlet.ServletRequest;
 import org.seasar.framework.log.Logger;
 import org.seasar.framework.util.AssertionUtil;
 import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.core.exception.AlreadyRedirectingException;
 import org.seasar.teeda.core.util.DIContainerUtil;
 import org.seasar.teeda.core.util.NavigationHandlerUtil;
 import org.seasar.teeda.core.util.ServletErrorPageManagerImpl;
@@ -65,7 +66,12 @@ public class TeedaExtensionErrorPageManagerImpl extends
         if (location != null && location.startsWith("/")) {
             actionURL = extContext.getRequestContextPath() + location;
         }
-        NavigationHandlerUtil.assertNotAlreadyRedirect(context);
+        final String redirectingPath = RedirectScope
+                .getRedirectingPath(context);
+        if (RedirectScope.isRedirecting(context)
+                && actionURL.equals(redirectingPath)) {
+            throw new AlreadyRedirectingException();
+        }
         NavigationHandlerUtil.redirect(context, actionURL);
         return true;
     }
