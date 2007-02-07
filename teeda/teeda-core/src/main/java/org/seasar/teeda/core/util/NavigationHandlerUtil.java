@@ -44,9 +44,6 @@ public class NavigationHandlerUtil {
     }
 
     public static void redirect(FacesContext context, String path) {
-        if (RedirectScope.isRedirecting(context)) {
-            throw new AlreadyRedirectingException();
-        }
         RedirectScope.setRedirectingPath(context, path);
         ExternalContext externalContext = context.getExternalContext();
         try {
@@ -55,5 +52,12 @@ public class NavigationHandlerUtil {
             throw new FacesException(e.getMessage(), e);
         }
         context.responseComplete();
+    }
+
+    //For S2JSF redirect, we do not need this check.
+    public static void assertNotAlreadyRedirect(FacesContext context) {
+        if (RedirectScope.isRedirecting(context)) {
+            throw new AlreadyRedirectingException();
+        }
     }
 }

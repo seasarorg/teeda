@@ -198,8 +198,7 @@ public class HtmlViewHandler extends ViewHandlerImpl {
             final Class pageOrActionClass = target.getClass();
             final BeanDesc beanDesc = BeanDescFactory
                     .getBeanDesc(pageOrActionClass);
-            Object ret = null;
-            ret = beanDesc.invoke(target, methodName, null);
+            Object ret = beanDesc.invoke(target, methodName, null);
             if (ret instanceof Class) {
                 final Class retClass = (Class) ret;
                 final String pageSuffix = nc.getPageSuffix();

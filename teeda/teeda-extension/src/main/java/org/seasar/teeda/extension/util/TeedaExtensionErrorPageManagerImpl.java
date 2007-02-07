@@ -65,6 +65,7 @@ public class TeedaExtensionErrorPageManagerImpl extends
         if (location != null && location.startsWith("/")) {
             actionURL = extContext.getRequestContextPath() + location;
         }
+        NavigationHandlerUtil.assertNotAlreadyRedirect(context);
         NavigationHandlerUtil.redirect(context, actionURL);
         return true;
     }

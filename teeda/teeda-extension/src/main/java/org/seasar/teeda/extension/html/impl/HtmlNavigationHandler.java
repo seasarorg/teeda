@@ -25,6 +25,7 @@ import org.seasar.framework.convention.NamingConvention;
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.application.NavigationHandlerImpl;
 import org.seasar.teeda.core.portlet.FacesPortlet;
+import org.seasar.teeda.core.util.NavigationHandlerUtil;
 import org.seasar.teeda.core.util.PortletUtil;
 import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.html.PagePersistence;
@@ -51,6 +52,7 @@ public class HtmlNavigationHandler extends NavigationHandlerImpl {
             ExternalContext externalContext, String redirectPath,
             String newViewId) {
         pagePersistence.save(context, newViewId);
+        NavigationHandlerUtil.assertNotAlreadyRedirect(context);
         super.redirect(context, externalContext, redirectPath, newViewId);
     }
 
