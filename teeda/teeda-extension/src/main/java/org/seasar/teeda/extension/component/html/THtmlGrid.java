@@ -60,6 +60,16 @@ public class THtmlGrid extends TForEach implements NamingContainer,
 
     private String styleClass;
 
+    private String callback;
+
+    public String getCallback() {
+        return callback;
+    }
+
+    public void setCallback(String callback) {
+        this.callback = callback;
+    }
+
     public String getWidth() {
         return width;
     }
@@ -77,7 +87,7 @@ public class THtmlGrid extends TForEach implements NamingContainer,
     }
 
     public Object saveState(FacesContext context) {
-        Object[] values = new Object[7];
+        Object[] values = new Object[9];
         values[0] = super.saveState(context);
         values[1] = width;
         values[2] = height;
@@ -85,6 +95,8 @@ public class THtmlGrid extends TForEach implements NamingContainer,
         values[4] = scrollVertical;
         values[5] = style;
         values[6] = styleClass;
+        values[7] = async;
+        values[8] = callback;
         return values;
     }
 
@@ -97,6 +109,8 @@ public class THtmlGrid extends TForEach implements NamingContainer,
         scrollVertical = (Boolean) values[4];
         style = (String) values[5];
         styleClass = (String) values[6];
+        async = (Boolean) values[7];
+        callback = (String) values[8];
     }
 
     // gridX, XY

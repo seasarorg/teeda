@@ -123,6 +123,8 @@ public interface ExtensionConstants {
 
     String ASYNC = "async";
 
+    String CALLBACK = "callback";
+
     String PATTERN_SUFFIX = "Pattern";
 
     String LENGTH_SUFFIX = "Length";

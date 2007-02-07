@@ -35,6 +35,16 @@ public class TGridTag extends TForEachTag {
 
     private String async;
 
+    private String callback;
+    
+    public String getCallback() {
+        return callback;
+    }
+
+    public void setCallback(String callback) {
+        this.callback = callback;
+    }
+
     public String getComponentType() {
         return THtmlGrid.COMPONENT_TYPE;
     }
@@ -52,6 +62,7 @@ public class TGridTag extends TForEachTag {
         setComponentProperty(component, ExtensionConstants.SCROLL_VERTICAL,
                 getScrollVertical());
         setComponentProperty(component, ExtensionConstants.ASYNC, getAsync());
+        setComponentProperty(component, ExtensionConstants.CALLBACK, getCallback());
     }
 
     public String getScrollHorizontal() {
@@ -83,5 +94,6 @@ public class TGridTag extends TForEachTag {
         scrollVertical = null;
         scrollHorizontal = null;
         async = null;
+        callback = null;
     }
 }
