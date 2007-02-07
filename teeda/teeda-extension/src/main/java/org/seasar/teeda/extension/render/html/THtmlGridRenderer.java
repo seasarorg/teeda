@@ -18,8 +18,10 @@ package org.seasar.teeda.extension.render.html;
 import java.io.IOException;
 import java.io.Serializable;
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import javax.faces.component.UIComponent;
@@ -1019,23 +1021,15 @@ public class THtmlGridRenderer extends TForEachRenderer implements
             GridHelper gridHelper = (GridHelper) SingletonS2ContainerFactory
                     .getContainer().getComponent(GridHelper.class);
 
-            //final ResponseWriter writer = context.getResponseWriter();
             // https://www.seasar.org/issues/browse/TEEDA-176
             GridRowContext rowContext = null;
             StringBuffer script = makeAjaxGetTableScript();
-            ResponseWriter writer = null;
-            ResponseWriter originalWriter = null;
+            HtmlResponseWriter writer = (HtmlResponseWriter) context
+                    .getResponseWriter();
+            HtmlResponseWriter originalWriter = null;
+            List scriptCallList = null;
             // leftBody
             if (attribute.hasLeftFixCols()) {
-                if (htmlGrid.isAsync()) {
-                    HtmlResponseWriter hrw = new HtmlResponseWriter();
-                    hrw.setWriter(new StringWriter(1024 * items.length));
-                    writer = hrw;
-                    originalWriter = context.getResponseWriter();
-                    context.setResponseWriter(writer);
-                } else {
-                    writer = context.getResponseWriter();
-                }
                 try {
                     writer.startElement(JsfConstants.TABLE_ELEM, body);
                     RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR,
@@ -1044,6 +1038,12 @@ public class THtmlGridRenderer extends TForEachRenderer implements
                             JsfConstants.STYLE_ATTR, "display:none;");
 
                     writer.startElement(JsfConstants.TBODY_ELEM, body);
+                    if (htmlGrid.isAsync()) {
+                        originalWriter = writer;
+                        writer = createNewResponseWriter();
+                        context.setResponseWriter(writer);
+                        scriptCallList = new ArrayList();
+                    }
                     for (int i = renderRowLength; i < items.length; ++i) {
                         htmlGrid.enterRow(context, i);
                         htmlGrid.processItem(beanDesc, page, items[i], i);
@@ -1062,14 +1062,30 @@ public class THtmlGridRenderer extends TForEachRenderer implements
                             rowContext = row;
                         }
                         htmlGrid.leaveRow(context);
+                        if (i != 0 && (items.length % (i + 1) == 0)
+                                && htmlGrid.isAsync()) {
+                            String str = writer.toString();
+                            scriptCallList.add(str);
+                            writer = createNewResponseWriter();
+                            context.setResponseWriter(writer);
+                        }
+                    }
+                    if (htmlGrid.isAsync()) {
+                        writer = originalWriter;
                     }
                     writer.endElement(JsfConstants.TBODY_ELEM);
                     writer.endElement(JsfConstants.TABLE_ELEM);
                     if (htmlGrid.isAsync()) {
-                        String token = gridHelper.addTable(writer.toString());
-                        script.append("ajaxGetTable('" + id + LEFT_BODY_TABLE
-                                + "','" + token + "');");
-                        script.append(JsfConstants.LINE_SP);
+                        for (int i = 0; i < scriptCallList.size(); i++) {
+                            String s = (String) scriptCallList.get(i);
+                            String token = gridHelper.addTable(s);
+                            if (i == 0) {
+                                script.append("ajaxGetTable('" + id
+                                        + LEFT_BODY_TABLE + "', " + token
+                                        + ");");
+                                script.append(JsfConstants.LINE_SP);
+                            }
+                        }
                     }
                 } finally {
                     if (originalWriter != null) {
@@ -1082,15 +1098,8 @@ public class THtmlGridRenderer extends TForEachRenderer implements
             }
 
             // rightBody
-            if (htmlGrid.isAsync()) {
-                HtmlResponseWriter hrw = new HtmlResponseWriter();
-                hrw.setWriter(new StringWriter(1024 * items.length));
-                writer = hrw;
-                originalWriter = context.getResponseWriter();
-                context.setResponseWriter(writer);
-            } else {
-                writer = context.getResponseWriter();
-            }
+            writer = (originalWriter != null) ? originalWriter
+                    : (HtmlResponseWriter) context.getResponseWriter();
             try {
                 writer.startElement(JsfConstants.TABLE_ELEM, body);
                 RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR, id
@@ -1098,6 +1107,12 @@ public class THtmlGridRenderer extends TForEachRenderer implements
                 RendererUtil.renderAttribute(writer, JsfConstants.STYLE_ATTR,
                         "display:none;");
                 writer.startElement(JsfConstants.TBODY_ELEM, body);
+                if (htmlGrid.isAsync()) {
+                    originalWriter = writer;
+                    writer = createNewResponseWriter();
+                    context.setResponseWriter(writer);
+                    scriptCallList = new ArrayList();
+                }
                 for (int i = renderRowLength; i < items.length; ++i) {
                     htmlGrid.enterRow(context, i);
                     htmlGrid.processItem(beanDesc, page, items[i], i);
@@ -1111,14 +1126,31 @@ public class THtmlGridRenderer extends TForEachRenderer implements
                         }
                     }
                     htmlGrid.leaveRow(context);
+                    if (i != 0 && (items.length % (i + 1) == 0)
+                            && htmlGrid.isAsync()) {
+                        String str = writer.toString();
+                        scriptCallList.add(str);
+                        writer = createNewResponseWriter();
+                        context.setResponseWriter(writer);
+                    }
+                }
+                if (htmlGrid.isAsync()) {
+                    writer = originalWriter;
                 }
                 writer.endElement(JsfConstants.TBODY_ELEM);
                 writer.endElement(JsfConstants.TABLE_ELEM);
                 if (htmlGrid.isAsync()) {
-                    String token = gridHelper.addTable(writer.toString());
-                    script.append("ajaxGetTable('" + id + RIGHT_BODY_TABLE
-                            + "','" + token + "');");
-                    renderJavaScriptElement(originalWriter, script.toString());
+                    for (int i = 0; i < scriptCallList.size(); i++) {
+                        String s = (String) scriptCallList.get(i);
+                        String token = gridHelper.addTable(s);
+                        if (i == 0) {
+                            script.append("ajaxGetTable('" + id
+                                    + RIGHT_BODY_TABLE + "', " + token + ");");
+                            script.append(JsfConstants.LINE_SP);
+                        }
+                    }
+                    String asyncScripts = script.toString();
+                    renderJavaScriptElement(writer, asyncScripts);
                 } else {
                     renderJavaScriptElement(writer,
                             "Teeda.THtmlGrid.loadGridRows('" + id + "');");
@@ -1130,16 +1162,28 @@ public class THtmlGridRenderer extends TForEachRenderer implements
             }
         }
 
+        protected HtmlResponseWriter createNewResponseWriter() {
+            HtmlResponseWriter writer = new HtmlResponseWriter();
+            writer.setWriter(new StringWriter(1024 * renderRowLength));
+            return writer;
+        }
+
         protected StringBuffer makeAjaxGetTableScript() {
             StringBuffer buf = new StringBuffer(255);
             buf
                     .append("function ajaxGetTable(destId, token) {\n"
+                            + "var _token = token;\n"
                             + "var f = function teedaGridHelper_ajaxGetTable(table) {\n"
-                            + "var dummy = document.createElement('div');\n"
-                            + "dummy.innerHTML = table;\n"
-                            + "var dest = document.getElementById(destId);\n"
-                            + "dest.appendChild(dummy.getElementsByTagName('tbody')[0]);\n"
-                            + "};"
+                            + "  if(table == 'null' || !table || table == ''){\n"
+                            + "    return;\n"
+                            + "  }\n"
+                            + "  var dummy = document.createElement('div');\n"
+                            + "  dummy.innerHTML = '<table><tbody>' + table + '</tbody></table>';\n"
+                            + "  var dest = document.getElementById(destId);\n"
+                            + "  dest.appendChild(dummy.getElementsByTagName('tbody')[0]);\n"
+                            + "  _token = _token + 1;\n"
+                            + "  ajaxGetTable(destId, _token);\n"
+                            + "};\n"
                             + "Kumu.Ajax.executeTeedaAjax(f, [token], Kumu.Ajax.RESPONSE_TYPE_HTML);}");
             buf.append(JsfConstants.LINE_SP);
             return buf;
