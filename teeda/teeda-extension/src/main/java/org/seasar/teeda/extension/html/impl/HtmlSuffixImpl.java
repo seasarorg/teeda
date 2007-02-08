@@ -46,8 +46,7 @@ public class HtmlSuffixImpl implements HtmlSuffix {
         this.separator = separator;
     }
 
-    public void setupSuffix(FacesContext context) {
-        String viewId = context.getViewRoot().getViewId();
+    public void setupSuffix(FacesContext context, String viewId) {
         int pos = viewId.lastIndexOf('.');
         if (pos < 0) {
             return;

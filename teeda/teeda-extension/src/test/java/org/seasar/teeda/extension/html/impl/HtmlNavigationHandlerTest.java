@@ -112,8 +112,7 @@ public class HtmlNavigationHandlerTest extends TeedaTestCase {
         HtmlNavigationHandler handler = new HtmlNavigationHandler();
         handler.setNamingConvention(new NamingConventionImpl());
         HtmlSuffixImpl htmlSuffix = new HtmlSuffixImpl();
-        getFacesContext().getViewRoot().setViewId("/view/add/addInput_i.html");
-        htmlSuffix.setupSuffix(getFacesContext());
+        htmlSuffix.setupSuffix(getFacesContext(), "/view/add/addInput_i.html");
         handler.setHtmlSuffix(htmlSuffix);
         handler.setServletContext(getServletContext());
         assertEquals("/view/add/addResult_i.html", handler.calcPathFromOutcome(

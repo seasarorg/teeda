@@ -30,6 +30,8 @@
 	</component>
 
 	<component
+		class="org.seasar.teeda.extension.html.impl.HtmlSuffixImpl" />
+	<component
 		class="org.seasar.teeda.extension.html.impl.HtmlDescCacheImpl" />
 	<component
 		class="org.seasar.teeda.extension.html.impl.PageDescCacheImpl" />

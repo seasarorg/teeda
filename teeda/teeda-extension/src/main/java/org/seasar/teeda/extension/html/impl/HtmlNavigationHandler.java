@@ -122,7 +122,7 @@ public class HtmlNavigationHandler extends NavigationHandlerImpl {
         String suffix = htmlSuffix.getSuffix(context);
         if (names.length == 1) {
             String path = pathFirst + outcome + suffix + pathLast;
-            if (servletContext.getRealPath(path) != null) {
+            if (servletContext.getResourceAsStream(path) != null) {
                 return path;
             }
             return pathFirst + outcome + pathLast;
@@ -137,7 +137,7 @@ public class HtmlNavigationHandler extends NavigationHandlerImpl {
         pos = viewId.indexOf('/', 1);
         pathFirst = viewId.substring(0, pos + 1);
         String path = pathFirst + buf + suffix + pathLast;
-        if (servletContext.getRealPath(path) != null) {
+        if (servletContext.getResourceAsStream(path) != null) {
             return path;
         }
         return pathFirst + buf + pathLast;

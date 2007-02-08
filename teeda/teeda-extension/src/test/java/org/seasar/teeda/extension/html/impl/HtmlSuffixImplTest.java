@@ -21,8 +21,7 @@ public class HtmlSuffixImplTest extends TeedaTestCase {
     private HtmlSuffixImpl htmlSuffix = new HtmlSuffixImpl();
 
     public void testSetupSuffix() throws Exception {
-        getFacesContext().getViewRoot().setViewId("/view/aaa/ccc_i.html");
-        htmlSuffix.setupSuffix(getFacesContext());
+        htmlSuffix.setupSuffix(getFacesContext(), "/view/aaa/ccc_i.html");
         assertEquals("_i", htmlSuffix.getSuffix(getFacesContext()));
     }
 

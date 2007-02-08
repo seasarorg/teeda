@@ -119,7 +119,7 @@ public class HtmlViewHandler extends ViewHandlerImpl {
     }
 
     public UIViewRoot restoreView(FacesContext context, String viewId) {
-        htmlSuffix.setupSuffix(context);
+        htmlSuffix.setupSuffix(context, viewId);
         ExternalContext externalContext = context.getExternalContext();
         setUpRequestForExternalBinding(context, viewId);
         tagProcessorCache.updateTagProcessor(viewId);

@@ -23,7 +23,7 @@ import javax.faces.context.FacesContext;
  */
 public interface HtmlSuffix {
 
-    void setupSuffix(FacesContext context);
+    void setupSuffix(FacesContext context, String viewId);
 
     String normalizePath(String path);
 
