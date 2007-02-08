@@ -1023,7 +1023,7 @@ public class THtmlGridRenderer extends TForEachRenderer implements
 
             // https://www.seasar.org/issues/browse/TEEDA-176
             GridRowContext rowContext = null;
-            StringBuffer script = makeAjaxGetTableScript();
+            StringBuffer script = new StringBuffer(1024);
             HtmlResponseWriter writer = (HtmlResponseWriter) context
                     .getResponseWriter();
             HtmlResponseWriter originalWriter = null;
@@ -1082,7 +1082,8 @@ public class THtmlGridRenderer extends TForEachRenderer implements
                             if (i == 0) {
                                 script.append("ajaxGetTable('" + id
                                         + LEFT_BODY_TABLE + "', " + token
-                                        + ");");
+                                        + ", " + (renderRowLength + 1) + ", "
+                                        + renderRowLength + ");");
                                 script.append(JsfConstants.LINE_SP);
                             }
                         }
@@ -1145,12 +1146,18 @@ public class THtmlGridRenderer extends TForEachRenderer implements
                         String token = gridHelper.addTable(s);
                         if (i == 0) {
                             script.append("ajaxGetTable('" + id
-                                    + RIGHT_BODY_TABLE + "', " + token + ");");
+                                    + RIGHT_BODY_TABLE + "', " + token + ", "
+                                    + (renderRowLength + 1) + ", "
+                                    + renderRowLength + ");");
                             script.append(JsfConstants.LINE_SP);
                         }
                     }
-                    String asyncScripts = script.toString();
-                    renderJavaScriptElement(writer, asyncScripts);
+                    String callback = htmlGrid.getCallback();
+                    StringBuffer ajaxGetTableScript = (callback != null) ? makeAjaxGetTableScript(callback)
+                            : makeAjaxGetTableScript();
+                    ajaxGetTableScript.append(script);
+                    renderJavaScriptElement(writer, ajaxGetTableScript
+                            .toString());
                 } else {
                     renderJavaScriptElement(writer,
                             "Teeda.THtmlGrid.loadGridRows('" + id + "');");
@@ -1171,7 +1178,7 @@ public class THtmlGridRenderer extends TForEachRenderer implements
         protected StringBuffer makeAjaxGetTableScript() {
             StringBuffer buf = new StringBuffer(255);
             buf
-                    .append("function ajaxGetTable(destId, token) {\n"
+                    .append("function ajaxGetTable(destId, token, firstNum, range) {\n"
                             + "var _token = token;\n"
                             + "var f = function teedaGridHelper_ajaxGetTable(table) {\n"
                             + "  if(table == 'null' || !table || table == ''){\n"
@@ -1182,12 +1189,41 @@ public class THtmlGridRenderer extends TForEachRenderer implements
                             + "  var dest = document.getElementById(destId);\n"
                             + "  dest.appendChild(dummy.getElementsByTagName('tbody')[0]);\n"
                             + "  _token = _token + 1;\n"
-                            + "  ajaxGetTable(destId, _token);\n"
+                            + "  ajaxGetTable(destId, _token, firstNum, range);\n"
                             + "};\n"
                             + "Kumu.Ajax.executeTeedaAjax(f, [token], Kumu.Ajax.RESPONSE_TYPE_HTML);}");
             buf.append(JsfConstants.LINE_SP);
             return buf;
         }
+
+        protected StringBuffer makeAjaxGetTableScript(String callback) {
+            String callbackPrefix = callback.substring(0, callback
+                    .lastIndexOf("("));
+            StringBuffer buf = new StringBuffer(255);
+            buf
+                    .append("function ajaxGetTable(destId, token, firstNum, range) {\n"
+                            + "var _token = token;\n"
+                            + "var f = function teedaGridHelper_ajaxGetTable(table) {\n"
+                            + "  if(table == 'null' || !table || table == ''){\n"
+                            + "    return;\n"
+                            + "  }\n"
+                            + "  var dummy = document.createElement('div');\n"
+                            + "  dummy.innerHTML = '<table><tbody>' + table + '</tbody></table>';\n"
+                            + "  var dest = document.getElementById(destId);\n"
+                            + "  var o = dummy.getElementsByTagName('tbody')[0];\n"
+                            + "  var lastNum = firstNum + range;\n"
+                            + callbackPrefix
+                            + "( destId, firstNum, lastNum, o);\n"
+                            + "  dest.appendChild(o);\n"
+                            + "  _token = _token + 1;\n"
+                            + "  firstNum = lastNum;\n"
+                            + "  ajaxGetTable(destId, _token, firstNum, range);\n"
+                            + "};\n"
+                            + "Kumu.Ajax.executeTeedaAjax(f, [token], Kumu.Ajax.RESPONSE_TYPE_HTML);}");
+            buf.append(JsfConstants.LINE_SP);
+            return buf;
+        }
+
     }
 
     class GridEndRendererListener implements RendererListener {
