@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>ForEach</title>
+<script type="text/javascript">
+function setIndex(name) {
+  var hidden = name.substring(0, name.lastIndexOf(':'));
+  var f = document.forEachListForm;
+  f.clickIndex.value = f[hidden + ':aaaIndex-x'].value;
+}
+</script>
+</head>
+<body>
+<form id="forEachListForm">
+<input type="hidden" name="clickIndex"/>
+<table border="1">
+ <tr bgcolor="#7777FF">
+  <th>Key</th>
+  <th colspan="2">Test</th>
+ </tr>
+ <div id="aaaItems">
+ <tr>
+  <td><span id="key">dummy1</span></td>
+  <td>
+    <input type="button" id="doForEachResult" value="test" onclick="setIndex(this.name);"/>
+    <input type="hidden" id="aaaIndex-x"/>
+  </td>
+ </tr>
+ </div>
+</table>
+</form>
+</body>
+</html>
