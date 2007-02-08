@@ -84,12 +84,15 @@ public class HtmlViewHandlerTest extends TeedaExtensionTestCase {
         PageDescCacheImpl pageDescCache = new PageDescCacheImpl();
         pageDescCache.setNamingConvention(convention);
         pageDescCache.setContainer(getContainer());
+        HtmlSuffixImpl htmlSuffix = new HtmlSuffixImpl();
+        pageDescCache.setHtmlSuffix(htmlSuffix);
         register(FooPage.class, "fooPage");
         String path = rootPath + "/foo.html";
 
         ActionDescCacheImpl actionDescCache = new ActionDescCacheImpl();
         actionDescCache.setNamingConvention(convention);
         actionDescCache.setContainer(getContainer());
+        actionDescCache.setHtmlSuffix(htmlSuffix);
         register(FooAction.class, "fooAction");
 
         HtmlDescCacheImpl htmlDescCache = new HtmlDescCacheImpl();
@@ -116,6 +119,7 @@ public class HtmlViewHandlerTest extends TeedaExtensionTestCase {
         viewHandler.setTagProcessorCache(tagProcessorCache);
         viewHandler.setPageDescCache(pageDescCache);
         viewHandler.setActionDescCache(actionDescCache);
+        viewHandler.setHtmlSuffix(htmlSuffix);
         SessionPagePersistence spp = new SessionPagePersistence();
         spp.setNamingConvention(convention);
         spp.setPageDescCache(pageDescCache);
@@ -161,12 +165,15 @@ public class HtmlViewHandlerTest extends TeedaExtensionTestCase {
         PageDescCacheImpl pageDescCache = new PageDescCacheImpl();
         pageDescCache.setNamingConvention(convention);
         pageDescCache.setContainer(getContainer());
+        HtmlSuffixImpl htmlSuffix = new HtmlSuffixImpl();
+        pageDescCache.setHtmlSuffix(htmlSuffix);
         register(FooPage.class, "fooPage");
         String path = rootPath + "/foo.html";
 
         ActionDescCacheImpl actionDescCache = new ActionDescCacheImpl();
         actionDescCache.setNamingConvention(convention);
         actionDescCache.setContainer(getContainer());
+        actionDescCache.setHtmlSuffix(htmlSuffix);
         register(FooAction.class, "fooAction");
 
         HtmlDescCacheImpl htmlDescCache = new HtmlDescCacheImpl();

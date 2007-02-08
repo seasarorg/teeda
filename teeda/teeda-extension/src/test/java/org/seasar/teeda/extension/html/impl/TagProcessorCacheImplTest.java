@@ -46,6 +46,7 @@ public class TagProcessorCacheImplTest extends TeedaExtensionTestCase {
 
     public void testUpdateTagProcessor() throws Exception {
         NamingConventionImpl convention = new NamingConventionImpl();
+        HtmlSuffixImpl htmlSuffix = new HtmlSuffixImpl();
         String rootPath = "/"
                 + ClassUtil.getPackageName(getClass()).replace('.', '/');
         convention.setViewRootPath(rootPath);
@@ -55,11 +56,13 @@ public class TagProcessorCacheImplTest extends TeedaExtensionTestCase {
         PageDescCacheImpl pageDescCache = new PageDescCacheImpl();
         pageDescCache.setNamingConvention(convention);
         pageDescCache.setContainer(getContainer());
+        pageDescCache.setHtmlSuffix(htmlSuffix);
         register(FooPage.class, "fooPage");
 
         ActionDescCacheImpl actionDescCache = new ActionDescCacheImpl();
         actionDescCache.setNamingConvention(convention);
         actionDescCache.setContainer(getContainer());
+        actionDescCache.setHtmlSuffix(htmlSuffix);
         register(FooAction.class, "fooAction");
 
         HtmlDescCacheImpl htmlDescCache = new HtmlDescCacheImpl();

@@ -26,6 +26,7 @@ import org.seasar.framework.convention.NamingConvention;
 import org.seasar.framework.util.ResourceUtil;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ActionDescCache;
+import org.seasar.teeda.extension.html.HtmlSuffix;
 
 /**
  * @author higa
@@ -41,6 +42,8 @@ public class ActionDescCacheImpl implements ActionDescCache {
 
     private S2Container container;
 
+    private HtmlSuffix htmlSuffix;
+
     public void setNamingConvention(NamingConvention namingConvention) {
         this.namingConvention = namingConvention;
     }
@@ -49,11 +52,20 @@ public class ActionDescCacheImpl implements ActionDescCache {
         this.container = container;
     }
 
+    /**
+     * @param htmlSuffix The htmlSuffix to set.
+     */
+    public void setHtmlSuffix(HtmlSuffix htmlSuffix) {
+        this.htmlSuffix = htmlSuffix;
+    }
+
     public synchronized ActionDesc getActionDesc(String viewId) {
+        viewId = htmlSuffix.normalizePath(viewId);
         return (ActionDesc) actionDescs.get(viewId);
     }
 
     public synchronized ActionDesc createActionDesc(String viewId) {
+        viewId = htmlSuffix.normalizePath(viewId);
         String actionName = namingConvention.fromPathToActionName(viewId);
         if (!container.getRoot().hasComponentDef(actionName)) {
             return null;

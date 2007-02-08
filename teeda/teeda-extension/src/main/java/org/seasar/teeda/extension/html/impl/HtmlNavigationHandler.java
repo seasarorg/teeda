@@ -20,6 +20,7 @@ import java.util.Map;
 import javax.faces.application.ViewHandler;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.servlet.ServletContext;
 
 import org.seasar.framework.convention.NamingConvention;
 import org.seasar.framework.util.StringUtil;
@@ -40,12 +41,18 @@ public class HtmlNavigationHandler extends NavigationHandlerImpl {
 
     private NamingConvention namingConvention;
 
+    private ServletContext servletContext;
+
     public void setNamingConvention(NamingConvention namingConvention) {
         this.namingConvention = namingConvention;
     }
 
     public void setPagePersistence(PagePersistence pagePersistence) {
         this.pagePersistence = pagePersistence;
+    }
+
+    public void setServletContext(ServletContext servletContext) {
+        this.servletContext = servletContext;
     }
 
     protected void redirect(FacesContext context,

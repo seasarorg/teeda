@@ -168,14 +168,17 @@ public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
                 + ClassUtil.getPackageName(getClass()).replace('.', '/');
         convention.setViewRootPath(rootPath);
         convention.setViewExtension(".html");
+        HtmlSuffixImpl htmlSuffix = new HtmlSuffixImpl();
         spp.setNamingConvention(convention);
         PageDescCacheImpl pageDescCache = new PageDescCacheImpl();
         pageDescCache.setNamingConvention(convention);
         pageDescCache.setContainer(getContainer());
+        pageDescCache.setHtmlSuffix(htmlSuffix);
         spp.setPageDescCache(pageDescCache);
         ActionDescCacheImpl actionDescCache = new ActionDescCacheImpl();
         actionDescCache.setNamingConvention(convention);
         actionDescCache.setContainer(getContainer());
+        actionDescCache.setHtmlSuffix(htmlSuffix);
         spp.setActionDescCache(actionDescCache);
         register(FooPage.class, "fooPage");
         register(Foo2Page.class, "foo2Page");
@@ -228,6 +231,7 @@ public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
         ActionDescCacheImpl actionDescCache = new ActionDescCacheImpl();
         actionDescCache.setNamingConvention(namingConvention);
         actionDescCache.setContainer(getContainer());
+        actionDescCache.setHtmlSuffix(new HtmlSuffixImpl());
         pagePersistence.setActionDescCache(actionDescCache);
         final MockFacesContext context = getFacesContext();
         context.getViewRoot().setViewId(fromViewId);
@@ -295,6 +299,7 @@ public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
         ActionDescCacheImpl actionDescCache = new ActionDescCacheImpl();
         actionDescCache.setNamingConvention(namingConvention);
         actionDescCache.setContainer(getContainer());
+        actionDescCache.setHtmlSuffix(new HtmlSuffixImpl());
         pagePersistence.setActionDescCache(actionDescCache);
         final FacesContext context = getFacesContext();
         context.getViewRoot().setViewId(fromViewId);

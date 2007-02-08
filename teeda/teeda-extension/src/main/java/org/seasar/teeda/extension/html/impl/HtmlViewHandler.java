@@ -60,6 +60,7 @@ import org.seasar.teeda.extension.exception.IllegalPageTransitionException;
 import org.seasar.teeda.extension.exception.JspRuntimeException;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ActionDescCache;
+import org.seasar.teeda.extension.html.HtmlSuffix;
 import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.PageDescCache;
 import org.seasar.teeda.extension.html.PagePersistence;
@@ -88,6 +89,8 @@ public class HtmlViewHandler extends ViewHandlerImpl {
 
     private NamingConvention nc;
 
+    private HtmlSuffix htmlSuffix;
+
     public void setTagProcessorCache(TagProcessorCache tagProcessorCache) {
         this.tagProcessorCache = tagProcessorCache;
     }
@@ -108,7 +111,15 @@ public class HtmlViewHandler extends ViewHandlerImpl {
         this.nc = nc;
     }
 
+    /**
+     * @param htmlSuffix The htmlSuffix to set.
+     */
+    public void setHtmlSuffix(HtmlSuffix htmlSuffix) {
+        this.htmlSuffix = htmlSuffix;
+    }
+
     public UIViewRoot restoreView(FacesContext context, String viewId) {
+        htmlSuffix.setupSuffix(context);
         ExternalContext externalContext = context.getExternalContext();
         setUpRequestForExternalBinding(context, viewId);
         tagProcessorCache.updateTagProcessor(viewId);

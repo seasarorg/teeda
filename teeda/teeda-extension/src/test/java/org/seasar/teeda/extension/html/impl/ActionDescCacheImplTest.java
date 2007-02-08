@@ -26,16 +26,20 @@ import org.seasar.teeda.extension.html.impl.page.FooAction;
  *
  */
 public class ActionDescCacheImplTest extends S2FrameworkTestCase {
-	
+
     public void testCreateAndGetPageDesc() throws Exception {
         NamingConventionImpl convention = new NamingConventionImpl();
-        String rootPath = "/" + ClassUtil.getPackageName(getClass()).replace('.', '/');
+        String rootPath = "/"
+                + ClassUtil.getPackageName(getClass()).replace('.', '/');
         convention.setViewRootPath(rootPath);
         convention.setViewExtension(".html");
+        HtmlSuffixImpl htmlSuffix = new HtmlSuffixImpl();
         ActionDescCacheImpl cache = new ActionDescCacheImpl();
         cache.setNamingConvention(convention);
         cache.setContainer(getContainer());
+        cache.setHtmlSuffix(htmlSuffix);
         register(FooAction.class, "fooAction");
+
         String path = rootPath + "/foo.html";
         ActionDesc actionDesc = cache.createActionDesc(path);
         assertNotNull("1", actionDesc);

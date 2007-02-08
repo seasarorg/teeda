@@ -59,6 +59,8 @@ public class HtmlNavigationHandlerTest extends TeedaTestCase {
         PageDescCacheImpl pageDescCache = new PageDescCacheImpl();
         pageDescCache.setNamingConvention(convention);
         pageDescCache.setContainer(getContainer());
+        HtmlSuffixImpl htmlSuffix = new HtmlSuffixImpl();
+        pageDescCache.setHtmlSuffix(htmlSuffix);
         register(FooPage.class, "fooPage");
         register(Foo2Page.class, "foo2Page");
         String path = rootPath + "/foo.html";
