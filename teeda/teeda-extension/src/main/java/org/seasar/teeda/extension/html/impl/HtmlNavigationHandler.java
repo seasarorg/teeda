@@ -29,6 +29,7 @@ import org.seasar.teeda.core.portlet.FacesPortlet;
 import org.seasar.teeda.core.util.NavigationHandlerUtil;
 import org.seasar.teeda.core.util.PortletUtil;
 import org.seasar.teeda.extension.ExtensionConstants;
+import org.seasar.teeda.extension.html.HtmlSuffix;
 import org.seasar.teeda.extension.html.PagePersistence;
 
 /**
@@ -43,6 +44,8 @@ public class HtmlNavigationHandler extends NavigationHandlerImpl {
 
     private ServletContext servletContext;
 
+    private HtmlSuffix htmlSuffix;
+
     public void setNamingConvention(NamingConvention namingConvention) {
         this.namingConvention = namingConvention;
     }
@@ -53,6 +56,13 @@ public class HtmlNavigationHandler extends NavigationHandlerImpl {
 
     public void setServletContext(ServletContext servletContext) {
         this.servletContext = servletContext;
+    }
+
+    /**
+     * @param htmlSuffix The htmlSuffix to set.
+     */
+    public void setHtmlSuffix(HtmlSuffix htmlSuffix) {
+        this.htmlSuffix = htmlSuffix;
     }
 
     protected void redirect(FacesContext context,
@@ -77,7 +87,7 @@ public class HtmlNavigationHandler extends NavigationHandlerImpl {
             return;
         }
         String viewId = context.getViewRoot().getViewId();
-        String path = calcPathFromOutcome(viewId, outcome);
+        String path = calcPathFromOutcome(context, viewId, outcome);
         if (path == null) {
             return;
         }
@@ -96,7 +106,8 @@ public class HtmlNavigationHandler extends NavigationHandlerImpl {
                 .remove(ExtensionConstants.TRANSITION_BY_TEEDA_PREPARED_METHOD);
     }
 
-    protected String calcPathFromOutcome(String viewId, String outcome) {
+    protected String calcPathFromOutcome(FacesContext context, String viewId,
+            String outcome) {
         if (outcome == null) {
             return null;
         }
@@ -108,7 +119,12 @@ public class HtmlNavigationHandler extends NavigationHandlerImpl {
         String pathFirst = viewId.substring(0, pos + 1);
         String pathLast = viewId.substring(pos2);
         String[] names = StringUtil.split(outcome, "_");
+        String suffix = htmlSuffix.getSuffix(context);
         if (names.length == 1) {
+            String path = pathFirst + outcome + suffix + pathLast;
+            if (servletContext.getRealPath(path) != null) {
+                return path;
+            }
             return pathFirst + outcome + pathLast;
         }
         StringBuffer buf = new StringBuffer();
@@ -120,6 +136,10 @@ public class HtmlNavigationHandler extends NavigationHandlerImpl {
         }
         pos = viewId.indexOf('/', 1);
         pathFirst = viewId.substring(0, pos + 1);
+        String path = pathFirst + buf + suffix + pathLast;
+        if (servletContext.getRealPath(path) != null) {
+            return path;
+        }
         return pathFirst + buf + pathLast;
     }
 }

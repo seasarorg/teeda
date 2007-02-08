@@ -79,6 +79,7 @@ public class HtmlNavigationHandlerTest extends TeedaTestCase {
         spp.setPageDescCache(pageDescCache);
         HtmlNavigationHandler handler = new HtmlNavigationHandler();
         handler.setPagePersistence(spp);
+        handler.setHtmlSuffix(htmlSuffix);
         FooPage fooPage = (FooPage) getComponent(FooPage.class);
         fooPage.setAaa("123");
         handler.handleNavigation(context, null, "foo2");
@@ -91,16 +92,31 @@ public class HtmlNavigationHandlerTest extends TeedaTestCase {
     public void testCalcPathFromOutcome() throws Exception {
         HtmlNavigationHandler handler = new HtmlNavigationHandler();
         handler.setNamingConvention(new NamingConventionImpl());
+        handler.setHtmlSuffix(new HtmlSuffixImpl());
+        handler.setServletContext(getServletContext());
         assertEquals("/view/add/addResult.html", handler.calcPathFromOutcome(
-                "/view/add/addInput.html", "addResult"));
+                getFacesContext(), "/view/add/addInput.html", "addResult"));
         assertEquals("/view/hello/hello.html", handler.calcPathFromOutcome(
-                "/view/add/addResult.html", "hello_Hello"));
+                getFacesContext(), "/view/add/addResult.html", "hello_Hello"));
     }
 
     public void testCalcPathFromOutcome2() throws Exception {
         HtmlNavigationHandler handler = new HtmlNavigationHandler();
         handler.setNamingConvention(new NamingConventionImpl());
-        assertNull(handler.calcPathFromOutcome("/view/add/addInput.html", null));
+        handler.setHtmlSuffix(new HtmlSuffixImpl());
+        assertNull(handler.calcPathFromOutcome(getFacesContext(),
+                "/view/add/addInput.html", null));
     }
 
+    public void testCalcPathFromOutcome3() throws Exception {
+        HtmlNavigationHandler handler = new HtmlNavigationHandler();
+        handler.setNamingConvention(new NamingConventionImpl());
+        HtmlSuffixImpl htmlSuffix = new HtmlSuffixImpl();
+        getFacesContext().getViewRoot().setViewId("/view/add/addInput_i.html");
+        htmlSuffix.setupSuffix(getFacesContext());
+        handler.setHtmlSuffix(htmlSuffix);
+        handler.setServletContext(getServletContext());
+        assertEquals("/view/add/addResult_i.html", handler.calcPathFromOutcome(
+                getFacesContext(), "/view/add/addInput_i.html", "addResult"));
+    }
 }
