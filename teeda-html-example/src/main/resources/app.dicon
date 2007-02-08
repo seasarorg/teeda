@@ -8,4 +8,5 @@
 	<include path="teedaExtension.dicon"/>
 	<include path="selectOneConstants.dicon"/>
 
+	<component name="aaa2Dto" class="examples.teeda.dto.Aaa2Dto" instance="session" />
 </components>

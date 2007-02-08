@@ -8,6 +8,10 @@
 			<arg>@examples.teeda.web.error.WebAppRuntimeException@class</arg>
 			<arg>"/view/error/errorResult.html"</arg>
 		</initMethod>
+		<initMethod name="addErrorPage">
+			<arg>@examples.teeda.web.error.WebAppRuntime2Exception@class</arg>
+			<arg>"/view/error/error2Result.html"</arg>
+		</initMethod>
 	</component>
 </components>
 
