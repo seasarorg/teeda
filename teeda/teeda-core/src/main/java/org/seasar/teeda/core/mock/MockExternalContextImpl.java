@@ -112,6 +112,9 @@ public class MockExternalContextImpl extends MockExternalContext {
     }
 
     public Map getApplicationMap() {
+        if (applicationMap_ == null) {
+            applicationMap_ = new HashMap();
+        }
         return applicationMap_;
     }
 
@@ -139,14 +142,7 @@ public class MockExternalContextImpl extends MockExternalContext {
     }
 
     public Map getInitParameterMap() {
-        Map parameterMap = new HashMap();
-        Enumeration names = getMockServletContext().getInitParameterNames();
-        while (names.hasMoreElements()) {
-            String name = (String) names.nextElement();
-            parameterMap.put(name, getMockServletContext().getInitParameter(
-                    name));
-        }
-        return Collections.unmodifiableMap(parameterMap);
+        return getMockServletContext().getInitParameterMap();
     }
 
     public String getRemoteUser() {

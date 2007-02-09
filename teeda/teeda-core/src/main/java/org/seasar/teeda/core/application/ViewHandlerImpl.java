@@ -250,7 +250,7 @@ public class ViewHandlerImpl extends ViewHandler {
         String servletPath = context.getExternalContext()
                 .getRequestServletPath();
         String pathInfo = context.getExternalContext().getRequestPathInfo();
-        List servletMappings = webappConfig.getServletMappingElement();
+        List servletMappings = webappConfig.getServletMappingElements();
         for (Iterator itr = servletMappings.iterator(); itr.hasNext();) {
             ServletMappingElement servletMapping = (ServletMappingElement) itr
                     .next();

@@ -6,7 +6,7 @@
 
     <!-- Faces Servlet -->
     <servlet>
-        <servlet-name>Faces Servlet</servlet-name>
+        <servlet-name>facesServlet</servlet-name>
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
         <load-on-startup>2</load-on-startup>
     </servlet>
@@ -20,5 +20,10 @@
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
+
+    <servlet-mapping>
+        <servlet-name>facesServlet</servlet-name>
+        <url-pattern>/view/*</url-pattern>
+    </servlet-mapping>
 
 </web-app>

@@ -37,73 +37,94 @@ public class WebappConfigImpl implements WebappConfig, Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private Map contextParams_ = new HashMap();
+    private final Map contextParams = new HashMap();
 
-    private Map filters_ = new HashMap();
+    private final Map filters = new HashMap();
 
-    private Map servlets_ = new HashMap();
+    private final Map servletsByName = new HashMap();
 
-    private List taglibs_ = new ArrayList();
+    private final Map servletsByClass = new HashMap();
 
-    private Map servletMappings_ = new HashMap();
+    private final List taglibs = new ArrayList();
+
+    private final Map servletMappings = new HashMap();
 
     public List getContextParamElements() {
-        return new ArrayList(contextParams_.values());
+        return new ArrayList(contextParams.values());
     }
 
-    public ContextParamElement getContextParamElementByParamName(String name) {
-        return (ContextParamElement) contextParams_.get(name);
+    public ContextParamElement getContextParamElementByParamName(
+            final String name) {
+        return (ContextParamElement) contextParams.get(name);
     }
 
-    public void addContextParamElement(ContextParamElement contextParam) {
-        contextParams_.put(contextParam.getParamName(), contextParam);
+    public void addContextParamElement(final ContextParamElement contextParam) {
+        contextParams.put(contextParam.getParamName(), contextParam);
     }
 
     public List getServletElements() {
-        return new ArrayList(servlets_.values());
+        return new ArrayList(servletsByName.values());
     }
 
-    public ServletElement getServletElementByServletName(String servletName) {
-        return (ServletElement) servlets_.get(servletName);
+    public ServletElement getServletElementByServletName(
+            final String servletName) {
+        return (ServletElement) servletsByName.get(servletName);
     }
 
-    public void addServletElement(ServletElement servlet) {
-        servlets_.put(servlet.getServletName(), servlet);
+    public ServletElement getServletElementByServletClass(
+            final String servletClass) {
+        return (ServletElement) servletsByClass.get(servletClass);
+    }
+
+    public void addServletElement(final ServletElement servlet) {
+        servletsByName.put(servlet.getServletName(), servlet);
+        servletsByClass.put(servlet.getServletClass(), servlet);
     }
 
     public List getFilterElements() {
-        return new ArrayList(filters_.values());
+        return new ArrayList(filters.values());
     }
 
-    public FilterElement getFilterElementByFilterName(String filterName) {
-        return (FilterElement) filters_.get(filterName);
+    public FilterElement getFilterElementByFilterName(final String filterName) {
+        return (FilterElement) filters.get(filterName);
     }
 
-    public void addFilterElement(FilterElement filterElement) {
-        filters_.put(filterElement.getFilterName(), filterElement);
+    public void addFilterElement(final FilterElement filterElement) {
+        filters.put(filterElement.getFilterName(), filterElement);
     }
 
     public List getTaglibElements() {
-        return Collections.unmodifiableList(taglibs_);
+        return Collections.unmodifiableList(taglibs);
     }
 
-    public void addTaglibElement(TaglibElement taglibElement) {
-        taglibs_.add(taglibElement);
+    public void addTaglibElement(final TaglibElement taglibElement) {
+        taglibs.add(taglibElement);
     }
 
-    public List getServletMappingElement() {
-        return new ArrayList(servletMappings_.values());
+    public List getServletMappingElements() {
+        return new ArrayList(servletMappings.values());
     }
 
-    public ServletMappingElement getServetMappingElementByServletName(
-            String servletName) {
-        return (ServletMappingElement) servletMappings_.get(servletName);
+    public ServletMappingElement getServletMappingElementByServletName(
+            final String servletName) {
+        return (ServletMappingElement) servletMappings.get(servletName);
     }
 
     public void addServletMappingElement(
-            ServletMappingElement servletMappingElement) {
-        servletMappings_.put(servletMappingElement.getServletName(),
+            final ServletMappingElement servletMappingElement) {
+        servletMappings.put(servletMappingElement.getServletName(),
                 servletMappingElement);
+    }
+
+    public ServletMappingElement getServletMappingElementByServletClass(
+            final String servletClass) {
+        final ServletElement servletElement = getServletElementByServletClass(servletClass);
+        if (servletElement == null) {
+            return null;
+        }
+        final ServletMappingElement servletMappingElement = getServletMappingElementByServletName(servletElement
+                .getServletName());
+        return servletMappingElement;
     }
 
 }

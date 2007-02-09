@@ -23,35 +23,38 @@ import java.util.List;
  */
 public interface WebappConfig {
 
-    public List getContextParamElements();
+    List getContextParamElements();
 
-    public ContextParamElement getContextParamElementByParamName(
-            String paramName);
+    ContextParamElement getContextParamElementByParamName(String paramName);
 
-    public void addContextParamElement(ContextParamElement contextParamElement);
+    void addContextParamElement(ContextParamElement contextParamElement);
 
-    public List getServletElements();
+    List getServletElements();
 
-    public ServletElement getServletElementByServletName(String servletName);
+    ServletElement getServletElementByServletName(String servletName);
 
-    public void addServletElement(ServletElement servletElement);
+    ServletElement getServletElementByServletClass(String servletClass);
 
-    public List getFilterElements();
+    void addServletElement(ServletElement servletElement);
 
-    public FilterElement getFilterElementByFilterName(String filterName);
+    List getFilterElements();
 
-    public void addFilterElement(FilterElement filterElement);
+    FilterElement getFilterElementByFilterName(String filterName);
 
-    public List getTaglibElements();
+    void addFilterElement(FilterElement filterElement);
 
-    public void addTaglibElement(TaglibElement taglibElement);
+    List getTaglibElements();
 
-    public List getServletMappingElement();
+    void addTaglibElement(TaglibElement taglibElement);
 
-    public ServletMappingElement getServetMappingElementByServletName(
+    List getServletMappingElements();
+
+    ServletMappingElement getServletMappingElementByServletName(
             String servletName);
 
-    public void addServletMappingElement(
-            ServletMappingElement servletMappingElement);
+    void addServletMappingElement(ServletMappingElement servletMappingElement);
+
+    ServletMappingElement getServletMappingElementByServletClass(
+            String servletClass);
 
 }

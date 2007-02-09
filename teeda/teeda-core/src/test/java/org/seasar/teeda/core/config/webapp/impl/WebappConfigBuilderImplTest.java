@@ -19,6 +19,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
+import javax.faces.webapp.FacesServlet;
+
 import junit.framework.TestCase;
 
 import org.seasar.framework.util.InputStreamUtil;
@@ -28,6 +30,7 @@ import org.seasar.teeda.core.config.webapp.element.ContextParamElement;
 import org.seasar.teeda.core.config.webapp.element.FilterElement;
 import org.seasar.teeda.core.config.webapp.element.InitParamElement;
 import org.seasar.teeda.core.config.webapp.element.ServletElement;
+import org.seasar.teeda.core.config.webapp.element.ServletMappingElement;
 import org.seasar.teeda.core.config.webapp.element.TaglibElement;
 import org.seasar.teeda.core.config.webapp.element.WebappConfig;
 
@@ -80,20 +83,67 @@ public class WebappConfigBuilderImplTest extends TestCase {
 
     public void testServlet() throws Exception {
         // ## Act ##
-        WebappConfig webappConfig = buildWebappConfig("WebappConfigBuilderImplTest-Servlet-web.xml");
+        final WebappConfig webappConfig = buildWebappConfig("WebappConfigBuilderImplTest-Servlet-web.xml");
 
         // ## Assert ##
-        List servletElements = webappConfig.getServletElements();
-        assertEquals(2, servletElements.size());
-        assertEquals(true, servletElements.get(0) instanceof ServletElement);
+        {
+            final List servletElements = webappConfig.getServletElements();
+            assertEquals(2, servletElements.size());
+            {
+                final ServletElement servletElement = (ServletElement) servletElements
+                        .get(0);
+                assertEquals("facesServlet", servletElement.getServletName());
+                assertEquals(FacesServlet.class.getName(), servletElement
+                        .getServletClass());
+            }
+            {
+                final ServletElement servletElement = (ServletElement) servletElements
+                        .get(1);
+                assertEquals("s2servlet", servletElement.getServletName());
+            }
+        }
 
-        ServletElement servlet = webappConfig
-                .getServletElementByServletName("s2servlet");
-        InitParamElement initParam = servlet
-                .getInitParamElementByParamName("debug");
-        assertNotNull(initParam);
-        assertEquals("debug", initParam.getParamName());
-        assertEquals("true", initParam.getParamValue());
+        {
+            final ServletElement servlet = webappConfig
+                    .getServletElementByServletName("s2servlet");
+            InitParamElement initParam = servlet
+                    .getInitParamElementByParamName("debug");
+            assertNotNull(initParam);
+            assertEquals("debug", initParam.getParamName());
+            assertEquals("true", initParam.getParamValue());
+        }
+        {
+            final ServletElement servlet = webappConfig
+                    .getServletElementByServletClass(FacesServlet.class
+                            .getName());
+            assertEquals("facesServlet", servlet.getServletName());
+        }
+
+        {
+            final List servletMappingElements = webappConfig
+                    .getServletMappingElements();
+            assertEquals(1, servletMappingElements.size());
+            {
+                final ServletMappingElement servletMappingElement = (ServletMappingElement) servletMappingElements
+                        .get(0);
+                assertEquals("facesServlet", servletMappingElement
+                        .getServletName());
+                assertEquals("/view/*", servletMappingElement.getUrlPattern());
+            }
+            {
+                final ServletMappingElement servletMappingElement = webappConfig
+                        .getServletMappingElementByServletName("facesServlet");
+                assertEquals("facesServlet", servletMappingElement
+                        .getServletName());
+                assertEquals("/view/*", servletMappingElement.getUrlPattern());
+            }
+        }
+        {
+            final ServletMappingElement servletMappingElement = webappConfig
+                    .getServletMappingElementByServletClass("javax.faces.webapp.FacesServlet");
+            assertEquals("facesServlet", servletMappingElement.getServletName());
+            assertEquals("/view/*", servletMappingElement.getUrlPattern());
+        }
     }
 
     public void testTaglib() throws Exception {
