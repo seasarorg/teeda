@@ -7,7 +7,7 @@
   <parent>
     <groupId>org.seasar.teeda</groupId>
     <artifactId>teeda-project</artifactId>
-    <version>1.0.4-SNAPSHOT</version>
+    <version>1.0.4</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>teeda-reporting</artifactId>
@@ -69,17 +69,17 @@
         <dependency>
           <groupId>org.seasar.teeda</groupId>
           <artifactId>teeda-core</artifactId>
-          <version>1.0.4-SNAPSHOT</version>
+          <version>1.0.4</version>
         </dependency>
         <dependency>
           <groupId>org.seasar.teeda</groupId>
           <artifactId>teeda-extension</artifactId>
-          <version>1.0.4-SNAPSHOT</version>
+          <version>1.0.4</version>
         </dependency>
         <dependency>
           <groupId>org.seasar.teeda</groupId>
           <artifactId>teeda-ajax</artifactId>
-          <version>1.0.4-SNAPSHOT</version>
+          <version>1.0.4</version>
         </dependency>
       </dependencies>
     </profile>

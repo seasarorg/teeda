@@ -136,7 +136,8 @@ public class SessionPagePersistence implements PagePersistence {
     //TODO not use previousViewId?
     protected void savePageValues(Map subappValues, Map redirectValues,
             FacesContext context, String viewId, String previousViewId) {
-        PageDesc pageDesc = pageDescCache.getPageDesc(previousViewId);
+        PageDesc pageDesc = (previousViewId != null) ? pageDescCache
+                .getPageDesc(previousViewId) : null;
         if (pageDesc == null) {
             return;
         }
