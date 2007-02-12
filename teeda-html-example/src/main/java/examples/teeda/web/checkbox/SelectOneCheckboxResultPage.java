@@ -43,7 +43,11 @@ public class SelectOneCheckboxResultPage {
 	}
 
 	public String getBbb() {
-		return (String) map.get(new Boolean(isAaa()));
+		if (map != null) {
+			return (String) map.get(new Boolean(isAaa()));
+		} else {
+			return null;
+		}
 	}
 
 }
