@@ -1,13 +1,7 @@
-#Fri Dec 15 18:18:10 JST 2006
-DaoType=KuinaDao
-DefaultDaoPackage=examples.teeda.dao
-DefaultDtoPackage=examples.teeda.dto
-DefaultEntityPackage=examples.teeda.entity
-DefaultResourcePath=/teeda-html-example/src/main/resources
-DefaultSrcPath=/teeda-html-example/src/main/java
-DefaultWebPackage=examples.teeda.web
+#Wed Feb 14 12:31:44 JST 2007
 NecessaryDicons=convention.dicon
 ServletPath=/teeda-html-example
+UseDIMarker=false
 UsePageMarker=false
 WebContentsRoot=/src/main/webapp
 eclipse.preferences.version=1
