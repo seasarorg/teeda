@@ -15,6 +15,9 @@
  */
 package javax.faces.internal;
 
+import java.util.Iterator;
+import java.util.List;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIForm;
@@ -128,6 +131,21 @@ public class UIComponentUtil {
             throw new TagNotFoundRuntimeException("form");
         }
         return (UIForm) parent;
+    }
+
+    public static UIComponent findDescendant(UIComponent component, Class clazz) {
+        List children = component.getChildren();
+        for (Iterator i = children.iterator(); i.hasNext();) {
+            UIComponent child = (UIComponent) i.next();
+            if (clazz.isInstance(child)) {
+                return child;
+            }
+            UIComponent descendant = findDescendant(child, clazz);
+            if (descendant != null) {
+                return descendant;
+            }
+        }
+        return null;
     }
 
     public static Renderer getRenderer(FacesContext context,

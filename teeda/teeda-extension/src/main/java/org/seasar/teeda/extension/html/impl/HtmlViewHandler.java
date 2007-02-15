@@ -47,6 +47,7 @@ import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.framework.container.servlet.S2ContainerServlet;
 import org.seasar.framework.convention.NamingConvention;
 import org.seasar.framework.exception.IORuntimeException;
+import org.seasar.teeda.core.application.TeedaStateManager;
 import org.seasar.teeda.core.application.ViewHandlerImpl;
 import org.seasar.teeda.core.util.DIContainerUtil;
 import org.seasar.teeda.core.util.ExternalContextUtil;
@@ -91,6 +92,8 @@ public class HtmlViewHandler extends ViewHandlerImpl {
 
     private HtmlSuffix htmlSuffix;
 
+    private TeedaStateManager stateManager;
+
     public void setTagProcessorCache(TagProcessorCache tagProcessorCache) {
         this.tagProcessorCache = tagProcessorCache;
     }
@@ -116,6 +119,13 @@ public class HtmlViewHandler extends ViewHandlerImpl {
      */
     public void setHtmlSuffix(HtmlSuffix htmlSuffix) {
         this.htmlSuffix = htmlSuffix;
+    }
+
+    /**
+     * @param stateManager The stateManager to set.
+     */
+    public void setStateManager(TeedaStateManager stateManager) {
+        this.stateManager = stateManager;
     }
 
     public UIViewRoot restoreView(FacesContext context, String viewId) {
@@ -151,6 +161,8 @@ public class HtmlViewHandler extends ViewHandlerImpl {
                     context);
             PageContextUtil.setCurrentViewRootAttribute(pageContext, viewRoot);
             processor.composeComponentTree(context, pageContext, null);
+            context.setViewRoot(viewRoot);
+            stateManager.saveViewToServer(context);
         } catch (JspException e) {
             throw new JspRuntimeException(e);
         } catch (IOException e) {

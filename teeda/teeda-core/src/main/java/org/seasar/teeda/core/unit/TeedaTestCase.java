@@ -292,4 +292,18 @@ public abstract class TeedaTestCase extends S2FrameworkTestCase {
         application.setViewHandler(viewHandler);
     }
 
+    /**
+     * @return Returns the stateManager.
+     */
+    public MockStateManager getStateManager() {
+        return stateManager;
+    }
+
+    /**
+     * @param stateManager The stateManager to set.
+     */
+    public void setStateManager(MockStateManager stateManager) {
+        this.stateManager = stateManager;
+    }
+
 }

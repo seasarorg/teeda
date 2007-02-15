@@ -15,7 +15,11 @@
  */
 package javax.faces.internal;
 
+import javax.faces.component.UICommand;
 import javax.faces.component.UIComponent;
+import javax.faces.component.UIForm;
+import javax.faces.component.UIInput;
+import javax.faces.component.UIViewRoot;
 import javax.faces.component.html.HtmlInputText;
 import javax.faces.internal.web.foo.FooPage;
 
@@ -105,6 +109,17 @@ public class UIComponentUtilTest extends TeedaTestCase {
         UIComponent component = new HtmlInputText();
         component.setId("xxx");
         assertEquals("xxx", UIComponentUtil.getLabel(component));
+    }
+
+    public void testFindDescendant() {
+        UIViewRoot root = new UIViewRoot();
+        UIForm form = new UIForm();
+        form.getChildren().add(new UIInput());
+        root.getChildren().add(form);
+        UICommand command = new UICommand();
+        root.getChildren().add(command);
+        assertSame(command, UIComponentUtil.findDescendant(root,
+                UICommand.class));
     }
 
     public static class MockHtmlInputText extends HtmlInputText {

@@ -29,26 +29,24 @@ import javax.servlet.jsp.PageContext;
  */
 public class PageContextUtil {
 
-    private static final int PAGE_CONTEXT_REQUEST_SCOPE = PageContext.REQUEST_SCOPE;
-
     private PageContextUtil() {
     }
 
     public static List getComponentTagStackAttribute(PageContext pageContext) {
         return (List) pageContext.getAttribute(
                 InternalConstants.COMPONENT_TAG_STACK_ATTR,
-                PAGE_CONTEXT_REQUEST_SCOPE);
+                PageContext.PAGE_SCOPE);
     }
 
     public static void setComponentStackAttribute(PageContext pageContext,
             List list) {
         pageContext.setAttribute(InternalConstants.COMPONENT_TAG_STACK_ATTR,
-                list, PAGE_CONTEXT_REQUEST_SCOPE);
+                list, PageContext.PAGE_SCOPE);
     }
 
     public static void removeComponentStackAttribute(PageContext pageContext) {
         pageContext.removeAttribute(InternalConstants.COMPONENT_TAG_STACK_ATTR,
-                PAGE_CONTEXT_REQUEST_SCOPE);
+                PageContext.PAGE_SCOPE);
     }
 
     public static FacesContext getCurrentFacesContextAttribute(

@@ -84,6 +84,10 @@ public class ComponentChildrenListWrapper extends AbstractList implements
         return changed;
     }
 
+    public Iterator iterator() {
+        return list.iterator();
+    }
+
     private void setNewParent(final UIComponent child) {
         final UIComponent oldParent = child.getParent();
         if (oldParent != null) {

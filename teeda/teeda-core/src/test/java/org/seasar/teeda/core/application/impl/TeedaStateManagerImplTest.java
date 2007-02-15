@@ -24,6 +24,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.internal.SerializableStateHolder;
 import javax.faces.render.RenderKitFactory;
 
+import org.seasar.teeda.core.application.TeedaStateManager;
 import org.seasar.teeda.core.application.TreeStructure;
 import org.seasar.teeda.core.application.TreeStructureManager;
 import org.seasar.teeda.core.mock.MockRenderKit;
@@ -41,7 +42,7 @@ public class TeedaStateManagerImplTest extends TeedaTestCase {
 
     public void testRestoreView_renderKitIdNull() throws Exception {
         // # Arrange #
-        TeedaStateManagerImpl manager = new TeedaStateManagerImpl();
+        TeedaStateManager manager = new TeedaStateManagerImpl();
 
         try {
             manager.restoreView(getFacesContext(), "a", null);
@@ -109,31 +110,32 @@ public class TeedaStateManagerImplTest extends TeedaTestCase {
         assertEquals("foo", r.getViewId());
         assertEquals("bar", r.getRenderKitId());
     }
-/*
-    public void testSaveSerializedView_componentIdDuplicated() throws Exception {
-        // # Arrange #
-        UIViewRoot orgRoot = getFacesContext().getViewRoot();
-        MockUIViewRoot parent = new MockUIViewRoot();
-        parent.setId("id0");
-        MockUIComponentBase child1 = new MockUIComponentBase();
-        child1.setId("id1");
-        parent.getChildren().add(child1);
-        MockUIComponentBase child2 = new MockUIComponentBase();
-        child2.setId("id0");
-        parent.getFacets().put("hoge", child2);
-        getFacesContext().setViewRoot(parent);
-        TeedaStateManagerImpl manager = new TeedaStateManagerImpl();
-        try {
-            // # Act & Assert #
-            manager.saveSerializedView(getFacesContext());
-            fail();
-        } catch (IllegalStateException expected) {
-            success();
-        } finally {
-            getFacesContext().setViewRoot(orgRoot);
-        }
-    }
-*/
+
+    /*
+     public void testSaveSerializedView_componentIdDuplicated() throws Exception {
+     // # Arrange #
+     UIViewRoot orgRoot = getFacesContext().getViewRoot();
+     MockUIViewRoot parent = new MockUIViewRoot();
+     parent.setId("id0");
+     MockUIComponentBase child1 = new MockUIComponentBase();
+     child1.setId("id1");
+     parent.getChildren().add(child1);
+     MockUIComponentBase child2 = new MockUIComponentBase();
+     child2.setId("id0");
+     parent.getFacets().put("hoge", child2);
+     getFacesContext().setViewRoot(parent);
+     TeedaStateManagerImpl manager = new TeedaStateManagerImpl();
+     try {
+     // # Act & Assert #
+     manager.saveSerializedView(getFacesContext());
+     fail();
+     } catch (IllegalStateException expected) {
+     success();
+     } finally {
+     getFacesContext().setViewRoot(orgRoot);
+     }
+     }
+     */
     public void testSaveSerializedView_whenSavingStateClient() throws Exception {
         // # Arrange #
         getServletContext().setInitParameter(

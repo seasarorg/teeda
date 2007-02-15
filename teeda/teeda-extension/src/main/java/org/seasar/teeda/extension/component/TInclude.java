@@ -15,6 +15,7 @@
  */
 package org.seasar.teeda.extension.component;
 
+import javax.faces.component.NamingContainer;
 import javax.faces.component.UIComponentBase;
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
@@ -22,7 +23,7 @@ import javax.faces.el.ValueBinding;
 /**
  * @author higa
  */
-public class TInclude extends UIComponentBase {
+public class TInclude extends UIComponentBase implements NamingContainer {
 
     public static final String COMPONENT_TYPE = "org.seasar.teeda.extension.Include";
 

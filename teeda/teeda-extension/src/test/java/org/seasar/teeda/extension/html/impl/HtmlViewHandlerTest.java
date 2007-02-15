@@ -197,6 +197,7 @@ public class HtmlViewHandlerTest extends TeedaExtensionTestCase {
         getApplication().setStateManager(stateManager);
 
         HtmlViewHandler viewHandler = new HtmlViewHandler();
+        viewHandler.setStateManager(stateManager);
         viewHandler.setTagProcessorCache(tagProcessorCache);
         viewHandler.setPageDescCache(pageDescCache);
         viewHandler.setActionDescCache(actionDescCache);

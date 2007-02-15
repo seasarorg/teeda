@@ -16,6 +16,7 @@
 package org.seasar.teeda.core.application;
 
 import javax.faces.application.StateManager;
+import javax.faces.context.FacesContext;
 
 /**
  * @author shot
@@ -38,5 +39,14 @@ public abstract class TeedaStateManager extends StateManager {
     }
 
     public abstract void removeSerializedView(String viewId);
+
+    public abstract void saveViewToServer(FacesContext context)
+            throws IllegalStateException;
+
+    protected SerializedView createSerializedView(final FacesContext context) {
+        final Object struct = getTreeStructureToSave(context);
+        final Object state = getComponentStateToSave(context);
+        return new SerializedView(struct, state);
+    }
 
 }

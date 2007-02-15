@@ -18,7 +18,8 @@ package org.seasar.teeda.extension.render;
 import javax.faces.render.Renderer;
 import javax.faces.render.RendererTest;
 
-import org.seasar.teeda.extension.component.TInclude;
+import org.seasar.framework.convention.impl.NamingConventionImpl;
+import org.seasar.teeda.core.mock.MockFacesContextImpl;
 
 /**
  * @author shot
@@ -27,12 +28,18 @@ public class TIncludeRendererTest extends RendererTest {
 
     private TIncludeRenderer renderer;
 
-    private TInclude include;
-
     protected void setUp() throws Exception {
         super.setUp();
         renderer = createTIncludeRenderer();
-        include = new TInclude();
+    }
+
+    public void testCalcViewId() throws Exception {
+        MockFacesContextImpl context = new MockFacesContextImpl();
+        context.getViewRoot().setViewId("/view/aaa/bbb.html");
+        assertEquals("/view/aaa/bbb.html", renderer.calcViewId(context,
+                "bbb.html"));
+        assertEquals("/view/aaa/bbb.html", renderer.calcViewId(context,
+                "/aaa/bbb.html"));
     }
 
     private TIncludeRenderer createTIncludeRenderer() {
@@ -41,6 +48,7 @@ public class TIncludeRendererTest extends RendererTest {
 
     protected Renderer createRenderer() {
         TIncludeRenderer renderer = new TIncludeRenderer();
+        renderer.setNamingConvention(new NamingConventionImpl());
         return renderer;
     }
 

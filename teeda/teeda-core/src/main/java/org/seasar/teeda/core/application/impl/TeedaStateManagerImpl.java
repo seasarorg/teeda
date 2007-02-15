@@ -61,21 +61,20 @@ public class TeedaStateManagerImpl extends TeedaStateManager implements
 
     public synchronized SerializedView saveSerializedView(
             final FacesContext context) throws IllegalStateException {
-        final UIViewRoot viewRoot = context.getViewRoot();
         if (isSavingStateInClient(context)) {
             return createSerializedView(context);
         }
+        saveViewToServer(context);
+        return null;
+    }
+
+    public synchronized void saveViewToServer(FacesContext context)
+            throws IllegalStateException {
+        UIViewRoot viewRoot = context.getViewRoot();
         if (!hasSerializedViewInServer(viewRoot.getViewId())) {
             saveSerializedViewToServer(viewRoot.getViewId(),
                     createSerializedView(context));
         }
-        return null;
-    }
-
-    protected SerializedView createSerializedView(final FacesContext context) {
-        final Object struct = getTreeStructureToSave(context);
-        final Object state = getComponentStateToSave(context);
-        return new SerializedView(struct, state);
     }
 
     public synchronized void removeSerializedView(final String viewId) {
@@ -102,7 +101,7 @@ public class TeedaStateManagerImpl extends TeedaStateManager implements
         }
     }
 
-    protected Object getComponentStateToSave(final FacesContext context) {
+    public Object getComponentStateToSave(final FacesContext context) {
         final UIViewRoot viewRoot = context.getViewRoot();
         if (viewRoot.isTransient()) {
             return null;
@@ -110,7 +109,7 @@ public class TeedaStateManagerImpl extends TeedaStateManager implements
         return viewRoot.processSaveState(context);
     }
 
-    protected Object getTreeStructureToSave(final FacesContext context) {
+    public Object getTreeStructureToSave(final FacesContext context) {
         final UIViewRoot viewRoot = context.getViewRoot();
         if (viewRoot.isTransient()) {
             return null;

@@ -132,14 +132,14 @@ public abstract class UIComponentTag implements Tag {
         setupFacesContext();
         setupResponseWriter();
         final UIComponentTag parentTag = getParentUIComponentTag(pageContext);
-        final Map requestMap = context.getExternalContext().getRequestMap();
         Map componentIds = null;
         if (parentTag == null) {
             componentIds = new HashMap();
-            requestMap.put(InternalConstants.GLOBAL_ID_VIEW, componentIds);
+            pageContext.setAttribute(InternalConstants.GLOBAL_ID_VIEW,
+                    componentIds, PageContext.PAGE_SCOPE);
         } else {
-            componentIds = (Map) requestMap
-                    .get(InternalConstants.GLOBAL_ID_VIEW);
+            componentIds = (Map) pageContext.getAttribute(
+                    InternalConstants.GLOBAL_ID_VIEW, PageContext.PAGE_SCOPE);
         }
         component = findComponent(context);
 
