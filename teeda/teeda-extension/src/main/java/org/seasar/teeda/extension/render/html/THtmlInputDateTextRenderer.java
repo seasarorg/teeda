@@ -133,28 +133,28 @@ public class THtmlInputDateTextRenderer extends AbstractInputExtendTextRenderer 
     protected void renderOnblur(THtmlInputDateText htmlInputDateText,
             ResponseWriter writer, InputDateValueHolder holder)
             throws IOException {
-        final String onblur = createOnblurAttribute(htmlInputDateText, holder);
+        final String onblur = createConvertAndAddDelimeterFunctions(htmlInputDateText, holder);
         if (StringUtil.isNotBlank(onblur)) {
             RendererUtil.renderAttribute(writer, JsfConstants.ONBLUR_ATTR,
                     onblur);
         }
     }
 
-    protected String createOnblurAttribute(
+    protected String createConvertAndAddDelimeterFunctions(
             THtmlInputDateText htmlInputDateText, InputDateValueHolder holder) {
         final String pattern = holder.getPattern();
         final String length = holder.getLength();
         final String threshold = holder.getThreshold();
         final String delim = holder.getDelim();
-        final String onblur = appendSemiColonIfNeed(htmlInputDateText
+        final String attr = appendSemiColonIfNeed(htmlInputDateText
                 .getOnblur());
         final String s = JS_NAMESPACE_PREFIX + "convertByKey(this);"
                 + JS_NAMESPACE_PREFIX + "addDelimeter(this, '" + pattern
                 + "', " + length + ", " + threshold + ", '" + delim + "');";
-        if (StringUtil.contains(onblur, s)) {
-            return onblur;
+        if (StringUtil.contains(attr, s)) {
+            return attr;
         }
-        return onblur + s;
+        return attr + s;
     }
 
     protected void renderOnkeydown(THtmlInputDateText htmlInputDateText,
@@ -178,8 +178,11 @@ public class THtmlInputDateTextRenderer extends AbstractInputExtendTextRenderer 
     protected void renderOnkeyup(THtmlInputDateText htmlInputDateText,
             ResponseWriter writer, InputDateValueHolder holder)
             throws IOException {
-        String onkeyup = appendSemiColonIfNeed(htmlInputDateText.getOnkeyup());
-        renderKeycheckEvent(writer, JsfConstants.ONKEYUP_ATTR, onkeyup, holder);
+        final String onkeyup = createConvertAndAddDelimeterFunctions(htmlInputDateText, holder);
+        if (StringUtil.isNotBlank(onkeyup)) {
+            RendererUtil.renderAttribute(writer, JsfConstants.ONBLUR_ATTR,
+                    onkeyup);
+        }
     }
 
     private void renderKeycheckEvent(ResponseWriter writer,

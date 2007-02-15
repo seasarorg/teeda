@@ -10,7 +10,7 @@ Teeda.THtmlInputDateText = {
     if (!o) {
       return;
     }
-    reg = new RegExp(delimeter, 'g');
+    var reg = new RegExp(delimeter, 'g');
     o = o.replace(reg, '');
     if(o.length > worklen) {
       o = o.substring(o.length - worklen);
@@ -23,8 +23,12 @@ Teeda.THtmlInputDateText = {
   },
   addDelimeter : function(obj, format, worklen, threshold, delim) {
     var o = obj.value;
+    var reg = new RegExp(delim, 'g');
+    o = o.replace(reg, '');
     var length = o.length;
-    if(length != worklen) {
+    if(length > worklen) {
+      o = o.substring(length - worklen, length);
+    } else if(length < worklen) {
       return o;
     }
     var isYYYY = (format.indexOf('yyyy') != -1);
