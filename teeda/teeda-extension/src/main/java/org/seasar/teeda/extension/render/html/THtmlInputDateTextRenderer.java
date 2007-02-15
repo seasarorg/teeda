@@ -180,7 +180,7 @@ public class THtmlInputDateTextRenderer extends AbstractInputExtendTextRenderer 
             throws IOException {
         final String onkeyup = createConvertAndAddDelimeterFunctions(htmlInputDateText, holder);
         if (StringUtil.isNotBlank(onkeyup)) {
-            RendererUtil.renderAttribute(writer, JsfConstants.ONBLUR_ATTR,
+            RendererUtil.renderAttribute(writer, JsfConstants.ONKEYUP_ATTR,
                     onkeyup);
         }
     }
