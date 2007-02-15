@@ -201,6 +201,7 @@ public class HtmlViewHandlerTest extends TeedaExtensionTestCase {
         viewHandler.setTagProcessorCache(tagProcessorCache);
         viewHandler.setPageDescCache(pageDescCache);
         viewHandler.setActionDescCache(actionDescCache);
+        viewHandler.setNamingConvention(convention);
         SessionPagePersistence spp = new SessionPagePersistence();
         spp.setPageDescCache(pageDescCache);
         viewHandler.setPagePersistence(spp);

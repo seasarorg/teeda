@@ -17,19 +17,15 @@ package org.seasar.teeda.extension.render;
 
 import java.io.IOException;
 import java.util.Iterator;
-import java.util.List;
 
 import javax.faces.application.ViewHandler;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
-import javax.faces.internal.SubApplicationUtil;
 import javax.faces.internal.UIComponentUtil;
 
 import org.seasar.framework.convention.NamingConvention;
 import org.seasar.framework.log.Logger;
-import org.seasar.framework.util.AssertionUtil;
-import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.render.AbstractRenderer;
 import org.seasar.teeda.core.util.RendererUtil;
 import org.seasar.teeda.extension.component.TInclude;
@@ -74,7 +70,7 @@ public class TIncludeRenderer extends AbstractRenderer {
 
     public void decode(FacesContext context, UIComponent component) {
         super.decode(context, component);
-        includes(context, (TInclude) component);
+        include(context, (TInclude) component);
         for (Iterator i = component.getChildren().iterator(); i.hasNext();) {
             UIComponent child = (UIComponent) i.next();
             child.processDecodes(context);
@@ -85,23 +81,14 @@ public class TIncludeRenderer extends AbstractRenderer {
             throws IOException {
         super.encodeEnd(context, component);
         if (component.getChildCount() == 0) {
-            includes(context, (TInclude) component);
+            include(context, (TInclude) component);
         }
         RendererUtil.renderChildren(context, component);
         component.getChildren().clear();
     }
 
-    protected void includes(FacesContext context, TInclude include) {
-        String src = include.getSrc();
-        String[] array = StringUtil.split(src, ", ");
-        for (int i = 0; i < array.length; i++) {
-            include(context, include, array[i]);
-        }
-
-    }
-
-    protected void include(FacesContext context, TInclude component, String src) {
-        String viewId = calcViewId(context, src);
+    protected void include(FacesContext context, TInclude component) {
+        String viewId = calcViewId(context, component.getSrc());
         UIViewRoot viewRoot = viewHandler.restoreView(context, viewId);
         if (viewRoot == null) {
             viewRoot = viewHandler.createView(context, viewId);
@@ -114,25 +101,13 @@ public class TIncludeRenderer extends AbstractRenderer {
         if (body == null) {
             logger.log("WTDA0202", new Object[] { viewId });
         } else {
-            List children = body.getChildren();
-            for (int i = 0; i < children.size(); i++) {
-                component.getChildren().add((UIComponent) children.get(i));
-            }
+            component.getChildren().addAll(body.getChildren());
         }
 
     }
 
     protected String calcViewId(FacesContext context, String src) {
-        AssertionUtil.assertNotNull("src", src);
-        if (src.startsWith("/")) {
-            String viewRootPath = namingConvention.getViewRootPath();
-            if ("/".endsWith(viewRootPath)) {
-                viewRootPath = "";
-            }
-            return viewRootPath + src;
-        }
-        return SubApplicationUtil.getSubApplicationPath(context.getViewRoot()
-                .getViewId())
-                + "/" + src;
+        return TInclude.calcViewId(context, src, namingConvention
+                .getViewRootPath());
     }
 }

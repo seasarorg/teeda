@@ -89,16 +89,7 @@ public class ComponentChildrenListWrapper extends AbstractList implements
     }
 
     private void setNewParent(final UIComponent child) {
-        final UIComponent oldParent = child.getParent();
-        if (oldParent != null) {
-            removeFromParent(oldParent, child);
-        }
         child.setParent(parent);
-    }
-
-    private void removeFromParent(final UIComponent parent,
-            final UIComponent child) {
-        parent.getChildren().remove(child);
     }
 
     private void assertUIComponent(final Object obj) {

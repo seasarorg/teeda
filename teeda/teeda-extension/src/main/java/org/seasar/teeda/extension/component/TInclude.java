@@ -15,10 +15,17 @@
  */
 package org.seasar.teeda.extension.component;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import javax.faces.component.NamingContainer;
 import javax.faces.component.UIComponentBase;
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
+import javax.faces.internal.SubApplicationUtil;
+
+import org.seasar.framework.util.AssertionUtil;
 
 /**
  * @author higa
@@ -35,6 +42,43 @@ public class TInclude extends UIComponentBase implements NamingContainer {
 
     public TInclude() {
         setRendererType(DEFAULT_RENDERER_TYPE);
+        registerComponent(FacesContext.getCurrentInstance(), this);
+    }
+
+    public static TInclude[] getRegisteredComponents(FacesContext context) {
+        Map requestMap = context.getExternalContext().getRequestMap();
+        List list = (List) requestMap.get(COMPONENT_TYPE);
+        if (list == null) {
+            return new TInclude[0];
+        }
+        return (TInclude[]) list.toArray(new TInclude[list.size()]);
+    }
+
+    protected static void registerComponent(FacesContext context,
+            TInclude component) {
+        Map requestMap = context.getExternalContext().getRequestMap();
+        List list = (List) requestMap.get(COMPONENT_TYPE);
+        if (list == null) {
+            list = new ArrayList();
+            requestMap.put(COMPONENT_TYPE, list);
+        }
+        list.add(component);
+    }
+
+    public static String calcViewId(FacesContext context, String src,
+            String viewRootPath) {
+        AssertionUtil.assertNotNull("context", context);
+        AssertionUtil.assertNotNull("src", src);
+        AssertionUtil.assertNotNull("viewRootPath", viewRootPath);
+        if (src.startsWith("/")) {
+            if ("/".endsWith(viewRootPath)) {
+                viewRootPath = "";
+            }
+            return viewRootPath + src;
+        }
+        return SubApplicationUtil.getSubApplicationPath(context.getViewRoot()
+                .getViewId())
+                + "/" + src;
     }
 
     public String getFamily() {

@@ -57,6 +57,7 @@ import org.seasar.teeda.core.util.PostbackUtil;
 import org.seasar.teeda.core.util.ServletExternalContextUtil;
 import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.component.RenderPreparableUtil;
+import org.seasar.teeda.extension.component.TInclude;
 import org.seasar.teeda.extension.exception.IllegalPageTransitionException;
 import org.seasar.teeda.extension.exception.JspRuntimeException;
 import org.seasar.teeda.extension.html.ActionDesc;
@@ -130,15 +131,8 @@ public class HtmlViewHandler extends ViewHandlerImpl {
 
     public UIViewRoot restoreView(FacesContext context, String viewId) {
         htmlSuffix.setupSuffix(context, viewId);
-        ExternalContext externalContext = context.getExternalContext();
         setUpRequestForExternalBinding(context, viewId);
         tagProcessorCache.updateTagProcessor(viewId);
-        Map requestMap = externalContext.getRequestMap();
-        if (!PostbackUtil.isPostback(requestMap)) {
-            if (invoke(context, viewId, INITIALIZE) != null) {
-                context.renderResponse();
-            }
-        }
         return super.restoreView(context, viewId);
     }
 
@@ -186,7 +180,14 @@ public class HtmlViewHandler extends ViewHandlerImpl {
         setNoCacheToResponse(response);
         PageContext pageContext = createPageContext(request, response);
         setupResponseWriter(pageContext, null, request.getCharacterEncoding());
-        if (invoke(context, path, PRERENDER) != null) {
+        ExternalContext externalContext = context.getExternalContext();
+        Map requestMap = externalContext.getRequestMap();
+        if (!PostbackUtil.isPostback(requestMap)) {
+            if (invokeAll(context, path, INITIALIZE) != null) {
+                context.renderResponse();
+            }
+        }
+        if (invokeAll(context, path, PRERENDER) != null) {
             return;
         }
         TagProcessor tagProcessor = tagProcessorCache.getTagProcessor(path);
@@ -196,6 +197,30 @@ public class HtmlViewHandler extends ViewHandlerImpl {
             throw new JspRuntimeException(ex);
         }
         pageContext.getOut().flush();
+    }
+
+    protected void invokeInitialize(FacesContext context, String viewId) {
+        ExternalContext externalContext = context.getExternalContext();
+        Map requestMap = externalContext.getRequestMap();
+        if (!PostbackUtil.isPostback(requestMap)) {
+            if (invokeAll(context, viewId, INITIALIZE) != null) {
+                context.renderResponse();
+            }
+        }
+    }
+
+    protected String invokeAll(FacesContext context, String viewId,
+            String methodName) {
+        String viewRootPath = nc.getViewRootPath();
+        TInclude[] includes = TInclude.getRegisteredComponents(context);
+        for (int i = 0; i < includes.length; i++) {
+            TInclude include = includes[i];
+            String src = include.getSrc();
+            String includeViewId = TInclude.calcViewId(context, src,
+                    viewRootPath);
+            invoke(context, includeViewId, methodName);
+        }
+        return invoke(context, viewId, methodName);
     }
 
     protected String invoke(FacesContext context, String path, String methodName) {
