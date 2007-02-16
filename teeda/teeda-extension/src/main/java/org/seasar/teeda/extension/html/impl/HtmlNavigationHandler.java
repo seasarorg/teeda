@@ -15,8 +15,6 @@
  */
 package org.seasar.teeda.extension.html.impl;
 
-import java.util.Map;
-
 import javax.faces.application.ViewHandler;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -28,7 +26,6 @@ import org.seasar.teeda.core.application.NavigationHandlerImpl;
 import org.seasar.teeda.core.portlet.FacesPortlet;
 import org.seasar.teeda.core.util.NavigationHandlerUtil;
 import org.seasar.teeda.core.util.PortletUtil;
-import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.html.HtmlSuffix;
 import org.seasar.teeda.extension.html.PagePersistence;
 
@@ -76,16 +73,10 @@ public class HtmlNavigationHandler extends NavigationHandlerImpl {
     public void handleNavigation(FacesContext context, String fromAction,
             String outcome) {
         super.handleNavigation(context, fromAction, outcome);
-        final ExternalContext externalContext = context.getExternalContext();
-        final Map requestMap = context.getExternalContext().getRequestMap();
-        if (context.getRenderResponse()
-                && requestMap
-                        .get(ExtensionConstants.TRANSITION_BY_TEEDA_PREPARED_METHOD) == null) {
-            return;
-        }
         if (context.getResponseComplete()) {
             return;
         }
+        final ExternalContext externalContext = context.getExternalContext();
         String viewId = context.getViewRoot().getViewId();
         String path = calcPathFromOutcome(context, viewId, outcome);
         if (path == null) {
@@ -102,8 +93,7 @@ public class HtmlNavigationHandler extends NavigationHandlerImpl {
                     FacesPortlet.REDIRECT_TO_PORTLET, Boolean.TRUE);
             super.render(context, viewHandler, path);
         }
-        requestMap
-                .remove(ExtensionConstants.TRANSITION_BY_TEEDA_PREPARED_METHOD);
+        context.renderResponse();
     }
 
     protected String calcPathFromOutcome(FacesContext context, String viewId,

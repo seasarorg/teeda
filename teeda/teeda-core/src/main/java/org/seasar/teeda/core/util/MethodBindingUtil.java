@@ -20,6 +20,8 @@ import javax.faces.el.EvaluationException;
 import javax.faces.el.MethodBinding;
 import javax.faces.event.AbortProcessingException;
 
+import org.seasar.framework.util.AssertionUtil;
+
 public class MethodBindingUtil {
 
     private MethodBindingUtil() {
@@ -51,6 +53,12 @@ public class MethodBindingUtil {
             return fromAction.substring(index + 1, fromAction.length() - 1);
         }
         return null;
+    }
+
+    public static String getFromAction(String componentName, String methodName) {
+        AssertionUtil.assertNotNull("componentName", componentName);
+        AssertionUtil.assertNotNull("methodName", methodName);
+        return "#{" + componentName + "." + methodName + "}";
     }
 
     public static String invoke(MethodBinding methodBinding,

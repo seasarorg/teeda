@@ -15,10 +15,6 @@
  */
 package org.seasar.teeda.extension.component;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 import javax.faces.component.NamingContainer;
 import javax.faces.component.UIComponentBase;
 import javax.faces.context.FacesContext;
@@ -40,29 +36,10 @@ public class TInclude extends UIComponentBase implements NamingContainer {
 
     private String src;
 
+    private boolean included = false;
+
     public TInclude() {
         setRendererType(DEFAULT_RENDERER_TYPE);
-        registerComponent(FacesContext.getCurrentInstance(), this);
-    }
-
-    public static TInclude[] getRegisteredComponents(FacesContext context) {
-        Map requestMap = context.getExternalContext().getRequestMap();
-        List list = (List) requestMap.get(COMPONENT_TYPE);
-        if (list == null) {
-            return new TInclude[0];
-        }
-        return (TInclude[]) list.toArray(new TInclude[list.size()]);
-    }
-
-    protected static void registerComponent(FacesContext context,
-            TInclude component) {
-        Map requestMap = context.getExternalContext().getRequestMap();
-        List list = (List) requestMap.get(COMPONENT_TYPE);
-        if (list == null) {
-            list = new ArrayList();
-            requestMap.put(COMPONENT_TYPE, list);
-        }
-        list.add(component);
     }
 
     public static String calcViewId(FacesContext context, String src,
@@ -101,6 +78,20 @@ public class TInclude extends UIComponentBase implements NamingContainer {
      */
     public void setSrc(String src) {
         this.src = src;
+    }
+
+    /**
+     * @return Returns the included.
+     */
+    public boolean isIncluded() {
+        return included;
+    }
+
+    /**
+     * @param included The included to set.
+     */
+    public void setIncluded(boolean included) {
+        this.included = included;
     }
 
     public Object saveState(FacesContext context) {

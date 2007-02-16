@@ -117,14 +117,17 @@ public class HtmlViewHandlerTest extends TeedaExtensionTestCase {
 
         HtmlViewHandler viewHandler = new HtmlViewHandler();
         viewHandler.setTagProcessorCache(tagProcessorCache);
-        viewHandler.setPageDescCache(pageDescCache);
-        viewHandler.setActionDescCache(actionDescCache);
         viewHandler.setHtmlSuffix(htmlSuffix);
         SessionPagePersistence spp = new SessionPagePersistence();
         spp.setNamingConvention(convention);
         spp.setPageDescCache(pageDescCache);
         spp.setActionDescCache(actionDescCache);
         viewHandler.setPagePersistence(spp);
+        HtmlComponentInvokerImpl invoker = new HtmlComponentInvokerImpl();
+        invoker.setNamingConvention(convention);
+        invoker.setPageDescCache(pageDescCache);
+        invoker.setActionDescCache(actionDescCache);
+        viewHandler.setHtmlComponentInvoker(invoker);
         getFacesContext().getViewRoot().setViewId(path);
         FooPage fooPage = (FooPage) getComponent(FooPage.class);
         fooPage.setAaa("123");
@@ -136,10 +139,9 @@ public class HtmlViewHandlerTest extends TeedaExtensionTestCase {
         assertFalse(fooPage.isPrerendered());
         PostbackUtil.setPostback(getExternalContext().getRequestMap(), false);
         viewHandler.restoreView(getFacesContext(), path);
-        assertTrue(fooPage.isInitialized());
-        fooPage.setInitialized(false);
 
         viewHandler.renderView(getFacesContext(), path);
+        assertTrue(fooPage.isInitialized());
         assertTrue(fooPage.isPrerendered());
         assertEquals(
                 "<html><body><form id=\"fooForm\" name=\"fooForm\" method=\"post\" enctype=\"application/x-www-form-urlencoded\" action=\"/org/seasar/teeda/extension/html/impl/foo.html\"><input type=\"hidden\" name=\"fooForm/org/seasar/teeda/extension/html/impl/foo.html\" value=\"fooForm\" /></form></body></html>",
@@ -199,9 +201,6 @@ public class HtmlViewHandlerTest extends TeedaExtensionTestCase {
         HtmlViewHandler viewHandler = new HtmlViewHandler();
         viewHandler.setStateManager(stateManager);
         viewHandler.setTagProcessorCache(tagProcessorCache);
-        viewHandler.setPageDescCache(pageDescCache);
-        viewHandler.setActionDescCache(actionDescCache);
-        viewHandler.setNamingConvention(convention);
         SessionPagePersistence spp = new SessionPagePersistence();
         spp.setPageDescCache(pageDescCache);
         viewHandler.setPagePersistence(spp);

@@ -52,6 +52,7 @@ public class NavigationHandlerUtil {
             throw new FacesException(e.getMessage(), e);
         }
         context.responseComplete();
+        context.renderResponse();
     }
 
     //For S2JSF redirect, we do not need this check.

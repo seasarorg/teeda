@@ -13,20 +13,31 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.extension.component;
-
-import org.seasar.teeda.core.unit.TeedaTestCase;
+package org.seasar.teeda.extension.html.impl.web.aaa;
 
 /**
- * @author shot
+ * @author higa
+ * 
  */
-public class TInclude2Test extends TeedaTestCase {
+public class BbbPage {
 
-    public void testRegisteredComponent() throws Exception {
-        TInclude include = new TInclude();
-        TInclude[] components = TInclude
-                .getRegisteredComponents(getFacesContext());
-        assertEquals(1, components.length);
-        assertSame(include, components[0]);
+    private boolean initialized = false;
+
+    public void initialize() {
+        initialized = true;
+    }
+
+    /**
+     * @return Returns the initialized.
+     */
+    public boolean isInitialized() {
+        return initialized;
+    }
+
+    /**
+     * @param initialized The initialized to set.
+     */
+    public void setInitialized(boolean initialized) {
+        this.initialized = initialized;
     }
 }

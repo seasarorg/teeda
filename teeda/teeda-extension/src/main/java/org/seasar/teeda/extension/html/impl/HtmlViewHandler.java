@@ -23,9 +23,6 @@ import java.util.Map;
 import java.util.TimeZone;
 
 import javax.faces.FactoryFinder;
-import javax.faces.application.Application;
-import javax.faces.application.NavigationHandler;
-import javax.faces.application.ViewHandler;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -42,34 +39,23 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 
-import org.seasar.framework.beans.BeanDesc;
-import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.framework.container.servlet.S2ContainerServlet;
-import org.seasar.framework.convention.NamingConvention;
 import org.seasar.framework.exception.IORuntimeException;
 import org.seasar.teeda.core.application.TeedaStateManager;
 import org.seasar.teeda.core.application.ViewHandlerImpl;
-import org.seasar.teeda.core.util.DIContainerUtil;
 import org.seasar.teeda.core.util.ExternalContextUtil;
 import org.seasar.teeda.core.util.PortletExternalContextUtil;
 import org.seasar.teeda.core.util.PortletUtil;
 import org.seasar.teeda.core.util.PostbackUtil;
 import org.seasar.teeda.core.util.ServletExternalContextUtil;
-import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.component.RenderPreparableUtil;
-import org.seasar.teeda.extension.component.TInclude;
-import org.seasar.teeda.extension.exception.IllegalPageTransitionException;
 import org.seasar.teeda.extension.exception.JspRuntimeException;
-import org.seasar.teeda.extension.html.ActionDesc;
-import org.seasar.teeda.extension.html.ActionDescCache;
+import org.seasar.teeda.extension.html.HtmlComponentInvoker;
 import org.seasar.teeda.extension.html.HtmlSuffix;
-import org.seasar.teeda.extension.html.PageDesc;
-import org.seasar.teeda.extension.html.PageDescCache;
 import org.seasar.teeda.extension.html.PagePersistence;
 import org.seasar.teeda.extension.html.TagProcessor;
 import org.seasar.teeda.extension.html.TagProcessorCache;
 import org.seasar.teeda.extension.jsp.PageContextImpl;
-import org.seasar.teeda.extension.util.PageTransitionUtil;
 
 /**
  * @author higa
@@ -83,36 +69,20 @@ public class HtmlViewHandler extends ViewHandlerImpl {
 
     private TagProcessorCache tagProcessorCache;
 
-    private PageDescCache pageDescCache;
-
-    private ActionDescCache actionDescCache;
-
     private PagePersistence pagePersistence;
-
-    private NamingConvention nc;
 
     private HtmlSuffix htmlSuffix;
 
     private TeedaStateManager stateManager;
 
+    private HtmlComponentInvoker htmlComponentInvoker;
+
     public void setTagProcessorCache(TagProcessorCache tagProcessorCache) {
         this.tagProcessorCache = tagProcessorCache;
     }
 
-    public void setPageDescCache(PageDescCache pageDescCache) {
-        this.pageDescCache = pageDescCache;
-    }
-
-    public void setActionDescCache(ActionDescCache actionDescCache) {
-        this.actionDescCache = actionDescCache;
-    }
-
     public void setPagePersistence(PagePersistence pagePersistence) {
         this.pagePersistence = pagePersistence;
-    }
-
-    public void setNamingConvention(NamingConvention nc) {
-        this.nc = nc;
     }
 
     /**
@@ -127,6 +97,14 @@ public class HtmlViewHandler extends ViewHandlerImpl {
      */
     public void setStateManager(TeedaStateManager stateManager) {
         this.stateManager = stateManager;
+    }
+
+    /**
+     * @param htmlComponentInvoker The htmlComponentInvoker to set.
+     */
+    public void setHtmlComponentInvoker(
+            HtmlComponentInvoker htmlComponentInvoker) {
+        this.htmlComponentInvoker = htmlComponentInvoker;
     }
 
     public UIViewRoot restoreView(FacesContext context, String viewId) {
@@ -183,11 +161,13 @@ public class HtmlViewHandler extends ViewHandlerImpl {
         ExternalContext externalContext = context.getExternalContext();
         Map requestMap = externalContext.getRequestMap();
         if (!PostbackUtil.isPostback(requestMap)) {
-            if (invokeAll(context, path, INITIALIZE) != null) {
-                context.renderResponse();
-            }
+            invoke(context, path, INITIALIZE);
         }
-        if (invokeAll(context, path, PRERENDER) != null) {
+        if (context.getResponseComplete()) {
+            return;
+        }
+        invoke(context, path, PRERENDER);
+        if (context.getResponseComplete()) {
             return;
         }
         TagProcessor tagProcessor = tagProcessorCache.getTagProcessor(path);
@@ -199,96 +179,10 @@ public class HtmlViewHandler extends ViewHandlerImpl {
         pageContext.getOut().flush();
     }
 
-    protected void invokeInitialize(FacesContext context, String viewId) {
-        ExternalContext externalContext = context.getExternalContext();
-        Map requestMap = externalContext.getRequestMap();
-        if (!PostbackUtil.isPostback(requestMap)) {
-            if (invokeAll(context, viewId, INITIALIZE) != null) {
-                context.renderResponse();
-            }
-        }
-    }
-
-    protected String invokeAll(FacesContext context, String viewId,
-            String methodName) {
-        String viewRootPath = nc.getViewRootPath();
-        TInclude[] includes = TInclude.getRegisteredComponents(context);
-        for (int i = 0; i < includes.length; i++) {
-            TInclude include = includes[i];
-            String src = include.getSrc();
-            String includeViewId = TInclude.calcViewId(context, src,
-                    viewRootPath);
-            invoke(context, includeViewId, methodName);
-        }
-        return invoke(context, viewId, methodName);
-    }
-
     protected String invoke(FacesContext context, String path, String methodName) {
-        PageDesc pageDesc = pageDescCache.getPageDesc(path);
-        Object target = null;
-        if (pageDesc != null && pageDesc.hasMethod(methodName)) {
-            target = DIContainerUtil.getComponent(pageDesc.getPageName());
-        }
-        if (target == null) {
-            ActionDesc actionDesc = actionDescCache.getActionDesc(path);
-            if (actionDesc != null && actionDesc.hasMethod(methodName)) {
-                target = DIContainerUtil.getComponent(actionDesc
-                        .getActionName());
-            }
-        }
-        return navigate(context, path, target, methodName);
-    }
-
-    protected String navigate(FacesContext context, String path, Object target,
-            String methodName) {
-        String next = null;
-        if (target != null) {
-            final Class pageOrActionClass = target.getClass();
-            final BeanDesc beanDesc = BeanDescFactory
-                    .getBeanDesc(pageOrActionClass);
-            Object ret = beanDesc.invoke(target, methodName, null);
-            if (ret instanceof Class) {
-                final Class retClass = (Class) ret;
-                final String pageSuffix = nc.getPageSuffix();
-                if (retClass != null
-                        && !retClass.getName().endsWith(pageSuffix)) {
-                    throw new IllegalPageTransitionException(retClass);
-                }
-                next = PageTransitionUtil.getNextPageTransition(
-                        pageOrActionClass, retClass, nc);
-
-            } else {
-                next = (String) ret;
-            }
-            if (next != null) {
-                if (context.getViewRoot() == null) {
-                    UIViewRoot root = super.createView(context, path);
-                    context.setViewRoot(root);
-                }
-                final ExternalContext extContext = context.getExternalContext();
-                final Map requestMap = extContext.getRequestMap();
-                requestMap.put(
-                        ExtensionConstants.TRANSITION_BY_TEEDA_PREPARED_METHOD,
-                        Boolean.TRUE);
-                navigateReally(context, next);
-            }
-        }
-        return next;
-    }
-
-    protected void navigateReally(FacesContext context, String path) {
-        Application app = context.getApplication();
-        NavigationHandler nh = app.getNavigationHandler();
-        nh.handleNavigation(context, null, path);
-        if (context.getResponseComplete()) {
-            return;
-        }
-        ViewHandler vh = app.getViewHandler();
-        try {
-            vh.renderView(context, context.getViewRoot());
-        } catch (IOException e) {
-            throw new IORuntimeException(e);
-        }
+        String componentName = htmlComponentInvoker.getComponentName(path,
+                methodName);
+        return htmlComponentInvoker.invoke(context, componentName, methodName);
     }
 
     protected Servlet getServlet() {

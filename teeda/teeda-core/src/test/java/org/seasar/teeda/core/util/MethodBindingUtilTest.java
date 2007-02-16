@@ -9,19 +9,22 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.extension.html;
+package org.seasar.teeda.core.util;
 
-import javax.faces.context.FacesContext;
+import junit.framework.TestCase;
 
 /**
  * @author higa
  * 
  */
-public interface PageOrActionInvoker {
+public class MethodBindingUtilTest extends TestCase {
 
-    String invoke(FacesContext context, String componentName, String methodName);
+    public void testGetFromAction() throws Exception {
+        assertEquals("#{aaa.bbb}", MethodBindingUtil
+                .getFromAction("aaa", "bbb"));
+    }
 }

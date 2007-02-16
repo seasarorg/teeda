@@ -26,10 +26,12 @@ import javax.faces.internal.UIComponentUtil;
 
 import org.seasar.framework.convention.NamingConvention;
 import org.seasar.framework.log.Logger;
+import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.render.AbstractRenderer;
 import org.seasar.teeda.core.util.RendererUtil;
 import org.seasar.teeda.extension.component.TInclude;
 import org.seasar.teeda.extension.component.UIBody;
+import org.seasar.teeda.extension.html.HtmlComponentInvoker;
 
 /**
  * @author higa
@@ -46,6 +48,8 @@ public class TIncludeRenderer extends AbstractRenderer {
     private ViewHandler viewHandler;
 
     private NamingConvention namingConvention;
+
+    private HtmlComponentInvoker htmlComponentInvoker;
 
     /**
      * @return Returns the viewHandler.
@@ -68,6 +72,21 @@ public class TIncludeRenderer extends AbstractRenderer {
         this.namingConvention = namingConvention;
     }
 
+    /**
+     * @return Returns the htmlComponentInvoker.
+     */
+    public HtmlComponentInvoker getHtmlComponentInvoker() {
+        return htmlComponentInvoker;
+    }
+
+    /**
+     * @param htmlComponentInvoker The htmlComponentInvoker to set.
+     */
+    public void setHtmlComponentInvoker(
+            HtmlComponentInvoker htmlComponentInvoker) {
+        this.htmlComponentInvoker = htmlComponentInvoker;
+    }
+
     public void decode(FacesContext context, UIComponent component) {
         super.decode(context, component);
         include(context, (TInclude) component);
@@ -80,15 +99,42 @@ public class TIncludeRenderer extends AbstractRenderer {
     public void encodeEnd(FacesContext context, UIComponent component)
             throws IOException {
         super.encodeEnd(context, component);
-        if (component.getChildCount() == 0) {
-            include(context, (TInclude) component);
+        TInclude inc = (TInclude) component;
+        if (!inc.isIncluded()) {
+            include(context, inc);
+        }
+        if (!inc.isIncluded()) {
+            return;
+        }
+        String srcViewId = calcViewId(context, inc.getSrc());
+        if (htmlComponentInvoker.isInitialized(context)) {
+            String componentName = htmlComponentInvoker.getComponentName(
+                    srcViewId, HtmlComponentInvoker.INITIALIZE);
+            if (componentName != null) {
+                htmlComponentInvoker.invokeInitialize(context, componentName);
+            }
+        }
+        if (context.getResponseComplete()) {
+            return;
+        }
+        String componentName = htmlComponentInvoker.getComponentName(srcViewId,
+                HtmlComponentInvoker.PRERENDER);
+        if (componentName != null) {
+            htmlComponentInvoker.invokePrerender(context, componentName);
+        }
+        if (context.getResponseComplete()) {
+            return;
         }
         RendererUtil.renderChildren(context, component);
         component.getChildren().clear();
     }
 
     protected void include(FacesContext context, TInclude component) {
-        String viewId = calcViewId(context, component.getSrc());
+        String src = component.getSrc();
+        if (StringUtil.isEmpty(src)) {
+            return;
+        }
+        String viewId = calcViewId(context, src);
         UIViewRoot viewRoot = viewHandler.restoreView(context, viewId);
         if (viewRoot == null) {
             viewRoot = viewHandler.createView(context, viewId);
@@ -102,8 +148,8 @@ public class TIncludeRenderer extends AbstractRenderer {
             logger.log("WTDA0202", new Object[] { viewId });
         } else {
             component.getChildren().addAll(body.getChildren());
+            component.setIncluded(true);
         }
-
     }
 
     protected String calcViewId(FacesContext context, String src) {
