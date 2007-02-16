@@ -17,6 +17,13 @@
 				org.seasar.teeda.extension.render.html.THtmlCommandButtonRenderer
 			</renderer-class>
 		</renderer>
+		<renderer>
+			<component-family>javax.faces.SelectOne</component-family>
+			<renderer-type>javax.faces.Menu</renderer-type>
+			<renderer-class>
+				org.seasar.teeda.extension.render.html.THtmlSelectOneMenuRenderer
+			</renderer-class>
+		</renderer>
 	</render-kit>
 
 	<component>
