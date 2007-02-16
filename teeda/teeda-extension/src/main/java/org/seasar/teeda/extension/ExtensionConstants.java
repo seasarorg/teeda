@@ -142,8 +142,6 @@ public interface ExtensionConstants {
     //other
     String NAME_SEPARATOR = String.valueOf(NamingContainer.SEPARATOR_CHAR);
 
-    String TRANSITION_BY_TEEDA_PREPARED_METHOD = "TRANSITION_TEEDA_PREPARED";
-
     String VALIDATION_ERROR_LINE_PREFIX = "(line : ";
 
     String VALIDATION_ERROR_LINE_SUFFIX = ")";
@@ -153,6 +151,4 @@ public interface ExtensionConstants {
     Integer PAGE_SCOPE = new Integer(2);
 
     Integer SUBAPP_SCOPE = new Integer(3);
-
-    String TEEDA_LINK = "teeda_link";
 }
