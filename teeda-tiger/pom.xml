@@ -7,7 +7,7 @@
   <groupId>org.seasar.teeda</groupId>
   <artifactId>teeda-tiger</artifactId>
   <packaging>jar</packaging>
-  <version>1.0.3</version>
+  <version>1.0.4</version>
   <name>Teeda Tiger</name>
   <url>http://teeda.seasar.org</url>
   <issueManagement>
@@ -94,7 +94,7 @@
     <dependency>
       <groupId>org.seasar.container</groupId>
       <artifactId>s2-tiger</artifactId>
-      <version>2.4.7</version>
+      <version>2.4.9</version>
       <type>jar</type>
     </dependency>
     <dependency>
@@ -115,7 +115,7 @@
     <dependency>
       <groupId>org.seasar.teeda</groupId>
       <artifactId>teeda-extension</artifactId>
-      <version>1.0.3</version>
+      <version>1.0.4</version>
       <type>jar</type>
     </dependency>
     <dependency>
