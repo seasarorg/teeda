@@ -28,7 +28,6 @@ import org.seasar.framework.convention.NamingConvention;
 import org.seasar.framework.log.Logger;
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.render.AbstractRenderer;
-import org.seasar.teeda.core.util.RendererUtil;
 import org.seasar.teeda.extension.component.TInclude;
 import org.seasar.teeda.extension.component.UIBody;
 import org.seasar.teeda.extension.html.HtmlComponentInvoker;
@@ -96,9 +95,13 @@ public class TIncludeRenderer extends AbstractRenderer {
         }
     }
 
-    public void encodeEnd(FacesContext context, UIComponent component)
+    public boolean getRendersChildren() {
+        return true;
+    }
+
+    public void encodeBegin(FacesContext context, UIComponent component)
             throws IOException {
-        super.encodeEnd(context, component);
+        super.encodeBegin(context, component);
         TInclude inc = (TInclude) component;
         if (!inc.isIncluded()) {
             include(context, inc);
@@ -107,25 +110,12 @@ public class TIncludeRenderer extends AbstractRenderer {
             return;
         }
         String srcViewId = calcViewId(context, inc.getSrc());
-        if (htmlComponentInvoker.isInitialized(context)) {
-            String componentName = htmlComponentInvoker.getComponentName(
-                    srcViewId, HtmlComponentInvoker.INITIALIZE);
-            if (componentName != null) {
-                htmlComponentInvoker.invokeInitialize(context, componentName);
-            }
-        }
-        if (context.getResponseComplete()) {
-            return;
-        }
-        String componentName = htmlComponentInvoker.getComponentName(srcViewId,
-                HtmlComponentInvoker.PRERENDER);
-        if (componentName != null) {
-            htmlComponentInvoker.invokePrerender(context, componentName);
-        }
-        if (context.getResponseComplete()) {
-            return;
-        }
-        RendererUtil.renderChildren(context, component);
+        invoke(context, srcViewId);
+    }
+
+    public void encodeEnd(FacesContext context, UIComponent component)
+            throws IOException {
+        super.encodeEnd(context, component);
         component.getChildren().clear();
     }
 
@@ -155,5 +145,26 @@ public class TIncludeRenderer extends AbstractRenderer {
     protected String calcViewId(FacesContext context, String src) {
         return TInclude.calcViewId(context, src, namingConvention
                 .getViewRootPath());
+    }
+
+    protected void invoke(FacesContext context, String srcViewId) {
+        if (htmlComponentInvoker.isInitialized(context)) {
+            String componentName = htmlComponentInvoker.getComponentName(
+                    srcViewId, HtmlComponentInvoker.INITIALIZE);
+            if (componentName != null) {
+                htmlComponentInvoker.invokeInitialize(context, componentName);
+            }
+        }
+        if (context.getResponseComplete()) {
+            return;
+        }
+        String componentName = htmlComponentInvoker.getComponentName(srcViewId,
+                HtmlComponentInvoker.PRERENDER);
+        if (componentName != null) {
+            htmlComponentInvoker.invokePrerender(context, componentName);
+        }
+        if (context.getResponseComplete()) {
+            return;
+        }
     }
 }
