@@ -120,8 +120,10 @@ public class HtmlComponentInvokerImpl implements HtmlComponentInvoker {
     public String invoke(FacesContext context, String componentName,
             String methodName) {
         AssertionUtil.assertNotNull("context", context);
-        AssertionUtil.assertNotNull("componentName", componentName);
         AssertionUtil.assertNotNull("methodName", methodName);
+        if (componentName == null) {
+            return null;
+        }
         String next = null;
         String fromAction = MethodBindingUtil.getFromAction(componentName,
                 methodName);

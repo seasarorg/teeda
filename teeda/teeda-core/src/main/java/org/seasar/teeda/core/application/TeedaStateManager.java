@@ -16,6 +16,7 @@
 package org.seasar.teeda.core.application;
 
 import javax.faces.application.StateManager;
+import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 
 /**
@@ -40,13 +41,43 @@ public abstract class TeedaStateManager extends StateManager {
 
     public abstract void removeSerializedView(String viewId);
 
-    public abstract void saveViewToServer(FacesContext context)
-            throws IllegalStateException;
+    public void saveViewToServer(FacesContext context, UIViewRoot viewRoot)
+            throws IllegalStateException {
 
-    protected SerializedView createSerializedView(final FacesContext context) {
-        final Object struct = getTreeStructureToSave(context);
-        final Object state = getComponentStateToSave(context);
+        SerializedView serializedView = createSerializedView(context, viewRoot);
+        saveSerializedViewToServer(context, viewRoot.getViewId(),
+                serializedView);
+    }
+
+    public Object getComponentStateToSave(FacesContext context,
+            UIViewRoot viewRoot) {
+        if (viewRoot.isTransient()) {
+            return null;
+        }
+        return viewRoot.processSaveState(context);
+    }
+
+    public Object getTreeStructureToSave(FacesContext context,
+            UIViewRoot viewRoot) {
+        if (viewRoot.isTransient()) {
+            return null;
+        }
+        return getTreeStructureManager().buildTreeStructure(viewRoot);
+    }
+
+    protected SerializedView createSerializedView(FacesContext context) {
+        Object struct = getTreeStructureToSave(context);
+        Object state = getComponentStateToSave(context);
         return new SerializedView(struct, state);
     }
 
+    protected SerializedView createSerializedView(FacesContext context,
+            UIViewRoot viewRoot) {
+        Object struct = getTreeStructureToSave(context, viewRoot);
+        Object state = getComponentStateToSave(context, viewRoot);
+        return new SerializedView(struct, state);
+    }
+
+    protected abstract void saveSerializedViewToServer(FacesContext context,
+            String viewId, SerializedView serializedView);
 }

@@ -63,20 +63,9 @@ public class TeedaSessionStateManagerImpl extends TeedaStateManager {
         if (isSavingStateInClient(context)) {
             return serializedView;
         }
-        ExternalContext externalContext = context.getExternalContext();
-        saveSerializedViewToServer(externalContext, viewRoot.getViewId(),
+        saveSerializedViewToServer(context, viewRoot.getViewId(),
                 serializedView);
         return null;
-    }
-
-    public void saveViewToServer(FacesContext context)
-            throws IllegalStateException {
-        UIViewRoot viewRoot = context.getViewRoot();
-        StateManagerUtil.assertComponentNoDuplicateId(viewRoot);
-        SerializedView serializedView = createSerializedView(context);
-        ExternalContext externalContext = context.getExternalContext();
-        saveSerializedViewToServer(externalContext, viewRoot.getViewId(),
-                serializedView);
     }
 
     public void writeState(FacesContext context, SerializedView serializedView)
@@ -186,8 +175,9 @@ public class TeedaSessionStateManagerImpl extends TeedaStateManager {
                 SERIALIZED_VIEW_ATTR + "-" + viewId);
     }
 
-    protected void saveSerializedViewToServer(ExternalContext externalContext,
+    protected void saveSerializedViewToServer(FacesContext context,
             String viewId, SerializedView serializedView) {
+        ExternalContext externalContext = context.getExternalContext();
         externalContext.getSessionMap().put(
                 SERIALIZED_VIEW_ATTR + "-" + viewId, serializedView);
     }

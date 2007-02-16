@@ -133,8 +133,7 @@ public class HtmlViewHandler extends ViewHandlerImpl {
                     context);
             PageContextUtil.setCurrentViewRootAttribute(pageContext, viewRoot);
             processor.composeComponentTree(context, pageContext, null);
-            context.setViewRoot(viewRoot);
-            stateManager.saveViewToServer(context);
+            stateManager.saveViewToServer(context, viewRoot);
         } catch (JspException e) {
             throw new JspRuntimeException(e);
         } catch (IOException e) {
