@@ -41,6 +41,9 @@ public class SelectItem implements Serializable {
     public SelectItem(Object value) {
         AssertionUtil.assertNotNull("value", value);
         this.value = value;
+        this.label = value.toString();
+        this.description = null;
+        this.disabled = false;
     }
 
     public SelectItem(Object value, String label) {
