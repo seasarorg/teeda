@@ -15,14 +15,25 @@
  */
 package org.seasar.teeda.core.webapp;
 
+import java.util.Iterator;
+
 import javax.faces.FactoryFinder;
 
 import org.seasar.framework.container.servlet.PortletExtendedS2ContainerServlet;
+import org.seasar.framework.log.Logger;
+import org.seasar.teeda.core.EnvironmentInfo;
+import org.seasar.teeda.core.ProductInfo;
 
+/**
+ * @author shinsuke
+ */
 public class TeedaPortletExtendedServlet extends
         PortletExtendedS2ContainerServlet {
 
     private static final long serialVersionUID = 2290614456118342149L;
+
+    private static Logger logger = Logger
+            .getLogger(TeedaPortletExtendedServlet.class);
 
     public TeedaPortletExtendedServlet() {
         super();
@@ -30,6 +41,8 @@ public class TeedaPortletExtendedServlet extends
 
     public void init() {
         super.init();
+        printProductInfo();
+        printEnvironmentInfo();
         TeedaInitializer initializer = new TeedaInitializer();
         initializer.setServletContext(getServletContext());
         initializer.initializeFaces();
@@ -38,5 +51,18 @@ public class TeedaPortletExtendedServlet extends
     public void destroy() {
         super.destroy();
         FactoryFinder.releaseFactories();
+    }
+
+    protected void printProductInfo() {
+        logger.debug(ProductInfo.getProductName() + " : "
+                + ProductInfo.getVersion());
+    }
+
+    protected void printEnvironmentInfo() {
+        for (Iterator itr = EnvironmentInfo.getEnvironmentInfo().iterator(); itr
+                .hasNext();) {
+            logger.debug(itr.next());
+        }
+
     }
 }
