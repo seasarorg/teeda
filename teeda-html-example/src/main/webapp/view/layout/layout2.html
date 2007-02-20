@@ -1,0 +1,31 @@
+<html xmlns:te="http://www.seasar.org/teeda/extension">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Teeda HTML example2</title>
+</head>
+<body>
+<table border="0" cellspacing="5">
+<tr>
+  <td colspan="2"><te:include te:src="/layout/header.html"/></td>
+</tr>
+<tr>
+  <td width="140" valign="top">
+    <te:include te:src="/layout/menu.html"/>
+  </td>
+  <td valign="top" align="left">
+    <te:includeChildBody/>
+  </td>
+</tr>
+<tr>
+  <td colspan="2">
+    <hr/>
+  </td>
+</tr>
+<tr>
+  <td colspan="2">
+    <te:include te:src="/layout/footer.html"/>
+  </td>
+</tr>
+</table>
+</body>
+</html>
