@@ -21,6 +21,7 @@ import java.util.Map;
 
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
+import javax.faces.event.PhaseId;
 
 import org.seasar.teeda.core.scope.impl.DispatchScope;
 import org.seasar.teeda.core.scope.impl.DispatchScopeFactory;
@@ -30,15 +31,40 @@ import org.seasar.teeda.extension.util.JavaScriptContext;
  * @author shot
  *
  */
-public class ScriptEnhanceUIViewRoot extends UIViewRoot {
+public class TViewRoot extends UIViewRoot {
 
-    private static final String SCRIPTS_KEY = ScriptEnhanceUIViewRoot.class
+    public static final String DEFAULT_RENDERER_TYPE = "org.seasar.teeda.extension.ViewRoot";
+
+    private static final String SCRIPTS_KEY = TViewRoot.class
             .getName()
             + ".SCRIPTS_KEY";
 
     private Map scriptsMap = new HashMap();
-    
-    public ScriptEnhanceUIViewRoot() {
+
+    private String rootViewId;
+
+    public TViewRoot() {
+        setRendererType(DEFAULT_RENDERER_TYPE);
+    }
+
+    /**
+     * @return Returns the rootViewId.
+     */
+    public String getRootViewId() {
+        return rootViewId;
+    }
+
+    /**
+     * @param rootViewId The rootViewId to set.
+     */
+    public void setRootViewId(String rootViewId) {
+        this.rootViewId = rootViewId;
+    }
+
+    public void processDecodes(FacesContext context) {
+        decode(context);
+        broadcastEvents(context, PhaseId.APPLY_REQUEST_VALUES);
+        clearEventsIfResponseRendered(context);
     }
 
     public void addScript(String scriptId, JavaScriptContext jsContext) {
@@ -48,7 +74,7 @@ public class ScriptEnhanceUIViewRoot extends UIViewRoot {
         }
         scriptsMap.putAll(scripts);
     }
-    
+
     public String getAllScripts() {
         StringBuffer buf = new StringBuffer();
         for (Iterator itr = scriptsMap.entrySet().iterator(); itr.hasNext();) {
@@ -81,13 +107,13 @@ public class ScriptEnhanceUIViewRoot extends UIViewRoot {
     protected Map getScriptsMap() {
         DispatchScope dispatchScope = getDispatchScope();
         Map scripts = (Map) dispatchScope.get(SCRIPTS_KEY);
-        if(scripts == null) {
+        if (scripts == null) {
             scripts = new HashMap();
             dispatchScope.put(SCRIPTS_KEY, scripts);
         }
         return scripts;
     }
-    
+
     protected DispatchScope getDispatchScope() {
         return DispatchScopeFactory.getDispatchScope();
     }

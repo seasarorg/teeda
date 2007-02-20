@@ -17,6 +17,7 @@ package org.seasar.teeda.extension.html.impl;
 
 import org.seasar.framework.convention.impl.NamingConventionImpl;
 import org.seasar.framework.util.ClassUtil;
+import org.seasar.teeda.extension.helper.impl.PathHelperImpl;
 import org.seasar.teeda.extension.html.HtmlComponentInvoker;
 import org.seasar.teeda.extension.html.impl.web.aaa.BbbPage;
 import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
@@ -31,7 +32,10 @@ public class HtmlComponentInvokerImplTest extends TeedaExtensionTestCase {
         HtmlComponentInvokerImpl invoker = new HtmlComponentInvokerImpl();
         NamingConventionImpl nc = new NamingConventionImpl();
         nc.addRootPackageName(ClassUtil.getPackageName(getClass()));
+        PathHelperImpl pathHelper = new PathHelperImpl();
+        pathHelper.setNamingConvention(nc);
         invoker.setNamingConvention(nc);
+        invoker.setPathHelper(pathHelper);
         assertEquals("aaa_bbb", invoker.getNextPageTransition(BbbPage.class));
     }
 

@@ -31,7 +31,7 @@ import org.seasar.teeda.core.util.JavaScriptPermissionUtil;
 import org.seasar.teeda.core.util.RendererUtil;
 import org.seasar.teeda.core.util.ValueHolderUtil;
 import org.seasar.teeda.extension.ExtensionConstants;
-import org.seasar.teeda.extension.component.ScriptEnhanceUIViewRoot;
+import org.seasar.teeda.extension.component.TViewRoot;
 import org.seasar.teeda.extension.component.html.THtmlInputText;
 import org.seasar.teeda.extension.render.RenderPreparableRenderer;
 import org.seasar.teeda.extension.util.VirtualResource;
@@ -49,7 +49,7 @@ public abstract class AbstractInputExtendTextRenderer extends
             return;
         }
         UIViewRoot root = context.getViewRoot();
-        if (root instanceof ScriptEnhanceUIViewRoot
+        if (root instanceof TViewRoot
                 && JavaScriptPermissionUtil.isJavaScriptPermitted(context)) {
             THtmlInputText input = (THtmlInputText) component;
             encodeInputExtendTextEnd(context, input);

@@ -28,7 +28,7 @@ import org.seasar.teeda.extension.util.JavaScriptContext;
 public class ScriptEnhanceUIViewRootTest extends TeedaTestCase {
     
     public void testAddScript() throws Exception {
-        ScriptEnhanceUIViewRoot root = new ScriptEnhanceUIViewRoot();
+        TViewRoot root = new TViewRoot();
         root.addScript("a", new JavaScriptContext() {
             public String getResult() {
                 return "1";
@@ -44,21 +44,21 @@ public class ScriptEnhanceUIViewRootTest extends TeedaTestCase {
     }
 
     public void testContainsScript() throws Exception {
-        ScriptEnhanceUIViewRoot root = new ScriptEnhanceUIViewRoot();
+        TViewRoot root = new TViewRoot();
         assertFalse(root.containsScript("a"));
         root.addScript("a", new JavaScriptContext());
         assertTrue(root.containsScript("a"));
     }
 
     public void testSaveAndRestore() throws Exception {
-        ScriptEnhanceUIViewRoot root = new ScriptEnhanceUIViewRoot();
+        TViewRoot root = new TViewRoot();
         JavaScriptContext c1 = new JavaScriptContext();
         root.addScript("a1", c1);
         JavaScriptContext c2 = new JavaScriptContext();
         root.addScript("a2", c2);
         MockFacesContext facesContext = getFacesContext();
         Object saveState = root.saveState(facesContext);
-        root = new ScriptEnhanceUIViewRoot();
+        root = new TViewRoot();
         root.restoreState(facesContext, saveState);
         saveState = root.saveState(facesContext);
         assertNotNull(saveState);

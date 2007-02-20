@@ -15,23 +15,38 @@
  */
 package org.seasar.teeda.extension.render;
 
-import javax.faces.render.Renderer;
-import javax.faces.render.RendererTest;
-
-import org.seasar.framework.convention.impl.NamingConventionImpl;
-import org.seasar.teeda.extension.helper.impl.PathHelperImpl;
+import java.util.List;
 
 /**
  * @author higa
+ * 
  */
-public class TIncludeRendererTest extends RendererTest {
+public class IncludedBody {
 
-    protected Renderer createRenderer() {
-        TIncludeRenderer renderer = new TIncludeRenderer();
-        PathHelperImpl pathHelper = new PathHelperImpl();
-        pathHelper.setNamingConvention(new NamingConventionImpl());
-        renderer.setPathHelper(pathHelper);
-        return renderer;
+    private String viewId;
+
+    private List componentList;
+
+    /**
+     * @param viewId
+     * @param componentList
+     */
+    public IncludedBody(String viewId, List componentList) {
+        this.viewId = viewId;
+        this.componentList = componentList;
     }
 
+    /**
+     * @return Returns the componentList.
+     */
+    public List getComponentList() {
+        return componentList;
+    }
+
+    /**
+     * @return Returns the viewId.
+     */
+    public String getViewId() {
+        return viewId;
+    }
 }

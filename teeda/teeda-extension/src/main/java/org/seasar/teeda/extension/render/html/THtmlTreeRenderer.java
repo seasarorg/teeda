@@ -36,7 +36,7 @@ import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.AbstractRenderer;
 import org.seasar.teeda.core.util.RendererUtil;
 import org.seasar.teeda.extension.ExtensionConstants;
-import org.seasar.teeda.extension.component.ScriptEnhanceUIViewRoot;
+import org.seasar.teeda.extension.component.TViewRoot;
 import org.seasar.teeda.extension.component.TreeModel;
 import org.seasar.teeda.extension.component.TreeNode;
 import org.seasar.teeda.extension.component.UITreeData;
@@ -139,7 +139,7 @@ public class THtmlTreeRenderer extends AbstractRenderer {
 
     public void encodeBegin(FacesContext context, UIComponent component)
             throws IOException {
-        final ScriptEnhanceUIViewRoot sRoot = (ScriptEnhanceUIViewRoot) context
+        final TViewRoot sRoot = (TViewRoot) context
                 .getViewRoot();
         final ResponseWriter writer = context.getResponseWriter();
         final String scriptKey = getScriptKey();

@@ -89,6 +89,11 @@ public class TeedaInitializer {
             FacesConfigOptions.setDefaultGridAsync(Boolean.valueOf(
                     defaultGridAsync).booleanValue());
         }
+        String defaultLayoutPath = servletContext
+                .getInitParameter(InternalConstants.DEFAULT_LAYOUT_PATH);
+        if (defaultLayoutPath != null) {
+            FacesConfigOptions.setDefaultLayoutPath(defaultLayoutPath);
+        }
     }
 
     protected void initializeFacesConfigCustomOptions(

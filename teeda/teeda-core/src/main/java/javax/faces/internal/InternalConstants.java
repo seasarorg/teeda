@@ -35,4 +35,6 @@ public interface InternalConstants {
 
     String DEFAULT_GRID_ASYNC = "teeda.DEFAULT_GRID_ASYNC";
 
+    String DEFAULT_LAYOUT_PATH = "teeda.DEFAULT_LAYOUT_PATH";
+
 }

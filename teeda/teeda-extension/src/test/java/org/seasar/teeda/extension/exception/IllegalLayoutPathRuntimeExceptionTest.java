@@ -13,25 +13,21 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.extension.render;
+package org.seasar.teeda.extension.exception;
 
-import javax.faces.render.Renderer;
-import javax.faces.render.RendererTest;
-
-import org.seasar.framework.convention.impl.NamingConventionImpl;
-import org.seasar.teeda.extension.helper.impl.PathHelperImpl;
+import junit.framework.TestCase;
 
 /**
  * @author higa
+ *
  */
-public class TIncludeRendererTest extends RendererTest {
+public class IllegalLayoutPathRuntimeExceptionTest extends TestCase {
 
-    protected Renderer createRenderer() {
-        TIncludeRenderer renderer = new TIncludeRenderer();
-        PathHelperImpl pathHelper = new PathHelperImpl();
-        pathHelper.setNamingConvention(new NamingConventionImpl());
-        renderer.setPathHelper(pathHelper);
-        return renderer;
+    public void test() throws Exception {
+        IllegalLayoutPathRuntimeException ex = new IllegalLayoutPathRuntimeException(
+                "aaa.html", "/view");
+        System.out.println(ex.getMessage());
+        assertEquals("aaa.html", ex.getPath());
+        assertEquals("/view", ex.getViewRootPath());
     }
-
 }

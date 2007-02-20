@@ -13,25 +13,24 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.extension.render;
-
-import javax.faces.render.Renderer;
-import javax.faces.render.RendererTest;
-
-import org.seasar.framework.convention.impl.NamingConventionImpl;
-import org.seasar.teeda.extension.helper.impl.PathHelperImpl;
+package org.seasar.teeda.extension.component;
 
 /**
  * @author higa
  */
-public class TIncludeRendererTest extends RendererTest {
+public class TIncludeChildBody extends AbstractInclude {
 
-    protected Renderer createRenderer() {
-        TIncludeRenderer renderer = new TIncludeRenderer();
-        PathHelperImpl pathHelper = new PathHelperImpl();
-        pathHelper.setNamingConvention(new NamingConventionImpl());
-        renderer.setPathHelper(pathHelper);
-        return renderer;
+    public static final String COMPONENT_TYPE = "org.seasar.teeda.extension.IncludeChildBody";
+
+    public static final String COMPONENT_FAMILY = COMPONENT_TYPE;
+
+    public static final String DEFAULT_RENDERER_TYPE = COMPONENT_TYPE;
+
+    public TIncludeChildBody() {
+        setRendererType(DEFAULT_RENDERER_TYPE);
     }
 
+    public String getFamily() {
+        return COMPONENT_FAMILY;
+    }
 }

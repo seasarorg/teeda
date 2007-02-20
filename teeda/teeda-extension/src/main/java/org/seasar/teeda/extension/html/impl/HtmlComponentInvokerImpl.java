@@ -35,6 +35,7 @@ import org.seasar.teeda.core.util.MethodBindingUtil;
 import org.seasar.teeda.core.util.NavigationHandlerUtil;
 import org.seasar.teeda.core.util.NullErrorPageManagerImpl;
 import org.seasar.teeda.extension.exception.IllegalPageTransitionException;
+import org.seasar.teeda.extension.helper.PathHelper;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ActionDescCache;
 import org.seasar.teeda.extension.html.HtmlComponentInvoker;
@@ -51,6 +52,8 @@ public class HtmlComponentInvokerImpl implements HtmlComponentInvoker {
             .getLogger(HtmlComponentInvokerImpl.class);
 
     private NamingConvention namingConvention;
+
+    private PathHelper pathHelper;
 
     public static final String errorManager_BINDING = "bindingType=may";
 
@@ -72,6 +75,20 @@ public class HtmlComponentInvokerImpl implements HtmlComponentInvoker {
      */
     public void setNamingConvention(NamingConvention namingConvention) {
         this.namingConvention = namingConvention;
+    }
+
+    /**
+     * @return Returns the pathHelper.
+     */
+    public PathHelper getPathHelper() {
+        return pathHelper;
+    }
+
+    /**
+     * @param pathHelper The pathHelper to set.
+     */
+    public void setPathHelper(PathHelper pathHelper) {
+        this.pathHelper = pathHelper;
     }
 
     /**
@@ -186,16 +203,10 @@ public class HtmlComponentInvokerImpl implements HtmlComponentInvoker {
     }
 
     protected String getNextPageTransition(Class toPageClass) {
-        String className = toPageClass.getName();
-        String pageName = namingConvention
-                .fromClassNameToComponentName(className);
-        String path = namingConvention.fromPageNameToPath(pageName);
-        String viewRootPath = namingConvention.getViewRootPath();
-        if (!viewRootPath.endsWith("/")) {
-            viewRootPath = viewRootPath + "/";
-        }
-        path = path.substring(viewRootPath.length());
-        path = StringUtil.rtrim(path, namingConvention.getViewExtension());
+        String path = pathHelper
+                .fromPageClassToViewRootRelativePath(toPageClass);
+        path = path.substring(1);
+        path = StringUtil.trimSuffix(path, namingConvention.getViewExtension());
         return path.replaceAll("/", "_");
     }
 

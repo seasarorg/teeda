@@ -60,8 +60,8 @@ public class UIViewRoot extends UIComponentBase {
         if (renderKitId != null) {
             return renderKitId;
         }
-        return (String) ComponentUtil_.getValueBindingValue(this,
-                "renderKitId");
+        return (String) ComponentUtil_
+                .getValueBindingValue(this, "renderKitId");
     }
 
     public void setRenderKitId(String renderKitId) {
@@ -201,7 +201,7 @@ public class UIViewRoot extends UIComponentBase {
         }
     }
 
-    private void clearEventsIfResponseRendered(FacesContext context) {
+    protected void clearEventsIfResponseRendered(FacesContext context) {
         if (context.getRenderResponse() || context.getResponseComplete()) {
             clearEvents();
         }

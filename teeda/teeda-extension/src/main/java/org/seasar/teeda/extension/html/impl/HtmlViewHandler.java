@@ -19,7 +19,6 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-import java.util.Map;
 import java.util.TimeZone;
 
 import javax.faces.FactoryFinder;
@@ -46,7 +45,6 @@ import org.seasar.teeda.core.application.ViewHandlerImpl;
 import org.seasar.teeda.core.util.ExternalContextUtil;
 import org.seasar.teeda.core.util.PortletExternalContextUtil;
 import org.seasar.teeda.core.util.PortletUtil;
-import org.seasar.teeda.core.util.PostbackUtil;
 import org.seasar.teeda.core.util.ServletExternalContextUtil;
 import org.seasar.teeda.extension.component.RenderPreparableUtil;
 import org.seasar.teeda.extension.exception.JspRuntimeException;
@@ -62,10 +60,6 @@ import org.seasar.teeda.extension.jsp.PageContextImpl;
  * @author shot
  */
 public class HtmlViewHandler extends ViewHandlerImpl {
-
-    private static final String INITIALIZE = "initialize";
-
-    private static final String PRERENDER = "prerender";
 
     private TagProcessorCache tagProcessorCache;
 
@@ -157,18 +151,7 @@ public class HtmlViewHandler extends ViewHandlerImpl {
         setNoCacheToResponse(response);
         PageContext pageContext = createPageContext(request, response);
         setupResponseWriter(pageContext, null, request.getCharacterEncoding());
-        ExternalContext externalContext = context.getExternalContext();
-        Map requestMap = externalContext.getRequestMap();
-        if (!PostbackUtil.isPostback(requestMap)) {
-            invoke(context, path, INITIALIZE);
-        }
-        if (context.getResponseComplete()) {
-            return;
-        }
-        invoke(context, path, PRERENDER);
-        if (context.getResponseComplete()) {
-            return;
-        }
+
         TagProcessor tagProcessor = tagProcessorCache.getTagProcessor(path);
         try {
             tagProcessor.process(pageContext, null);
@@ -176,12 +159,6 @@ public class HtmlViewHandler extends ViewHandlerImpl {
             throw new JspRuntimeException(ex);
         }
         pageContext.getOut().flush();
-    }
-
-    protected String invoke(FacesContext context, String path, String methodName) {
-        String componentName = htmlComponentInvoker.getComponentName(path,
-                methodName);
-        return htmlComponentInvoker.invoke(context, componentName, methodName);
     }
 
     protected Servlet getServlet() {

@@ -35,6 +35,10 @@ public abstract class FacesConfigOptions {
 
     private static boolean defaultGridAsync = true;
 
+    private static final String DEFAULT_LAYOUT_PATH = "/layout/layout.html";
+
+    private static String defaultLayoutPath = DEFAULT_LAYOUT_PATH;
+
     protected FacesConfigOptions() {
     }
 
@@ -94,6 +98,20 @@ public abstract class FacesConfigOptions {
         FacesConfigOptions.defaultGridAsync = defaultGridAsync;
     }
 
+    /**
+     * @return Returns the defaultLayoutPath.
+     */
+    public static String getDefaultLayoutPath() {
+        return defaultLayoutPath;
+    }
+
+    /**
+     * @param defaultLayoutPath The defaultLayoutPath to set.
+     */
+    public static void setDefaultLayoutPath(String defaultLayoutPath) {
+        FacesConfigOptions.defaultLayoutPath = defaultLayoutPath;
+    }
+
     public static void clear() {
         configFiles = null;
         savingStateInClient = false;
@@ -102,6 +120,7 @@ public abstract class FacesConfigOptions {
         javascriptNotPermittedPath = null;
         compressState = false;
         defaultGridAsync = true;
+        defaultLayoutPath = DEFAULT_LAYOUT_PATH;
     }
 
 }

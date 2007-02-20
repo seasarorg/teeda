@@ -22,7 +22,7 @@ import javax.faces.render.Renderer;
 import javax.faces.render.RendererTest;
 
 import org.seasar.teeda.core.mock.MockFacesContext;
-import org.seasar.teeda.extension.component.ScriptEnhanceUIViewRoot;
+import org.seasar.teeda.extension.component.TViewRoot;
 import org.seasar.teeda.extension.component.html.THtmlInputDateText;
 import org.seasar.teeda.extension.mock.MockHtmlInputDateText;
 import org.seasar.teeda.extension.util.JavaScriptContext;
@@ -53,7 +53,7 @@ public class THtmlInputDateTextRendererTest extends RendererTest {
 
     public void testEncodeEnd_withoutJsAndValue() throws Exception {
         Locale.setDefault(Locale.JAPANESE);
-        ScriptEnhanceUIViewRoot root = new ScriptEnhanceUIViewRoot();
+        TViewRoot root = new TViewRoot();
         root.addScript(THtmlInputDateText.class.getName(),
                 new JavaScriptContext());
         root.setLocale(Locale.getDefault());
@@ -76,7 +76,7 @@ public class THtmlInputDateTextRendererTest extends RendererTest {
     }
 
     public void testEncodeEnd_withPattern() throws Exception {
-        ScriptEnhanceUIViewRoot root = new ScriptEnhanceUIViewRoot();
+        TViewRoot root = new TViewRoot();
         root.addScript(THtmlInputDateText.class.getName(),
                 new JavaScriptContext());
         htmlInputDateText.setPattern("yyyy/MM");
@@ -100,7 +100,7 @@ public class THtmlInputDateTextRendererTest extends RendererTest {
     }
 
     public void testEncodeEnd_withAnotherLocale() throws Exception {
-        ScriptEnhanceUIViewRoot root = new ScriptEnhanceUIViewRoot();
+        TViewRoot root = new TViewRoot();
         root.addScript(THtmlInputDateText.class.getName(),
                 new JavaScriptContext());
         root.setLocale(Locale.GERMANY);
@@ -123,7 +123,7 @@ public class THtmlInputDateTextRendererTest extends RendererTest {
     }
 
     public void testEncode_WithAllAttributes() throws Exception {
-        ScriptEnhanceUIViewRoot root = new ScriptEnhanceUIViewRoot();
+        TViewRoot root = new TViewRoot();
         root.addScript(THtmlInputDateText.class.getName(),
                 new JavaScriptContext());
         htmlInputDateText.getAttributes().put("accesskey", "a");
@@ -165,7 +165,7 @@ public class THtmlInputDateTextRendererTest extends RendererTest {
     }
 
     public void testEncodeEnd_withAnotherOnblur() throws Exception {
-        ScriptEnhanceUIViewRoot root = new ScriptEnhanceUIViewRoot();
+        TViewRoot root = new TViewRoot();
         root.addScript(THtmlInputDateText.class.getName(),
                 new JavaScriptContext());
         htmlInputDateText.setPattern("yyyy/MM");

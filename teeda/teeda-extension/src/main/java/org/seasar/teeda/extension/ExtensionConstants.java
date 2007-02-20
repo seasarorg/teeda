@@ -70,6 +70,8 @@ public interface ExtensionConstants {
 
     String MONTH_ATTR = "month";
 
+    String LAYOUT_ATTR = "layout";
+
     String CALENDAR_CLASS_ATTR = "calendarClass";
 
     String DEFAULT_KEY = "defaultKey";

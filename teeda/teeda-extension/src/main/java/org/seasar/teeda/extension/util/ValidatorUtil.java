@@ -24,7 +24,7 @@ import org.seasar.teeda.core.JsfConstants;
  * @author higa
  * 
  */
-public class ValidatorUtil {
+public abstract class ValidatorUtil {
 
     protected ValidatorUtil() {
     }

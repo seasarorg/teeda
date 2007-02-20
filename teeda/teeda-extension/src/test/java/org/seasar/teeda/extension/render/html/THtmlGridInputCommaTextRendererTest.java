@@ -25,7 +25,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.custommonkey.xmlunit.Diff;
 import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.render.html.HtmlOutputTextRenderer;
-import org.seasar.teeda.extension.component.ScriptEnhanceUIViewRoot;
+import org.seasar.teeda.extension.component.TViewRoot;
 import org.seasar.teeda.extension.mock.MockHtmlInputCommaText;
 import org.xml.sax.SAXException;
 
@@ -47,7 +47,7 @@ public class THtmlGridInputCommaTextRendererTest extends RendererTest {
         gridInputText = new MockHtmlInputCommaText();
         gridInputText.setRenderer(renderer);
 
-        ScriptEnhanceUIViewRoot root = new ScriptEnhanceUIViewRoot();
+        TViewRoot root = new TViewRoot();
         getFacesContext().setViewRoot(root);
     }
 

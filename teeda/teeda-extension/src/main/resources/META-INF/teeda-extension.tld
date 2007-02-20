@@ -3013,4 +3013,11 @@
 			<rtexprvalue>false</rtexprvalue>
 		</attribute>
 	</tag>
+	<tag>
+		<name>includeChildBody</name>
+		<tag-class>
+			org.seasar.teeda.extension.taglib.TIncludeChildBodyTag
+		</tag-class>
+		<body-content>JSP</body-content>
+	</tag>
 </taglib>

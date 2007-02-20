@@ -26,6 +26,14 @@
 		</renderer>
 	</render-kit>
 
+    <component>
+		<component-type>
+			javax.faces.ViewRoot
+		</component-type>
+		<component-class>
+			org.seasar.teeda.extension.component.TViewRoot
+		</component-class>
+	</component>
 	<component>
 		<component-type>
 			org.seasar.teeda.extension.Text
@@ -296,6 +304,14 @@
 		</component-type>
 		<component-class>
 			org.seasar.teeda.extension.component.TInclude
+		</component-class>
+	</component>
+	<component>
+		<component-type>
+			org.seasar.teeda.extension.IncludeChildBody
+		</component-type>
+		<component-class>
+			org.seasar.teeda.extension.component.TIncludeChildBody
 		</component-class>
 	</component>
 </faces-config>

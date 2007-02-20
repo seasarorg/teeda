@@ -18,6 +18,10 @@ package org.seasar.teeda.extension.html.processor;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.PageContext;
+import javax.servlet.jsp.tagext.Tag;
+
 import org.seasar.teeda.extension.taglib.TViewTag;
 
 /**
@@ -30,5 +34,9 @@ public class ViewProcessor extends ElementProcessorImpl {
 
     public ViewProcessor() {
         super(TViewTag.class, EMPTY_PROPERTIES);
+    }
+
+    protected void processChildren(final PageContext pageContext,
+            final Tag parentTag) throws JspException {
     }
 }

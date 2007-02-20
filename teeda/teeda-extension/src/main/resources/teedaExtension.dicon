@@ -154,10 +154,6 @@
 		</initMethod>
 	</component>
 
-	<component name="javax.faces.ViewRoot"
-		class="org.seasar.teeda.extension.component.ScriptEnhanceUIViewRoot"
-		instance="prototype" />
-
 	<component
 		class="org.seasar.teeda.core.render.autoregister.TeedaRendererComponentAutoRegister">
 		<initMethod name="addReferenceClass">
@@ -186,4 +182,7 @@
 
 	<component name="teedaGridHelper"
 		class="org.seasar.teeda.extension.helper.impl.GridHelperImpl" instance="session"/>
+		
+    <component
+		class="org.seasar.teeda.extension.helper.impl.PathHelperImpl"/>
 </components>

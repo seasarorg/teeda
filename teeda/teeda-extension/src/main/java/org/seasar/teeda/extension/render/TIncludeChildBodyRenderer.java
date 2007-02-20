@@ -15,23 +15,23 @@
  */
 package org.seasar.teeda.extension.render;
 
-import javax.faces.render.Renderer;
-import javax.faces.render.RendererTest;
+import javax.faces.context.FacesContext;
 
-import org.seasar.framework.convention.impl.NamingConventionImpl;
-import org.seasar.teeda.extension.helper.impl.PathHelperImpl;
+import org.seasar.teeda.extension.component.AbstractInclude;
+import org.seasar.teeda.extension.component.TIncludeChildBody;
 
 /**
  * @author higa
  */
-public class TIncludeRendererTest extends RendererTest {
+public class TIncludeChildBodyRenderer extends AbstractIncludeRenderer {
 
-    protected Renderer createRenderer() {
-        TIncludeRenderer renderer = new TIncludeRenderer();
-        PathHelperImpl pathHelper = new PathHelperImpl();
-        pathHelper.setNamingConvention(new NamingConventionImpl());
-        renderer.setPathHelper(pathHelper);
-        return renderer;
+    public static final String COMPONENT_FAMILY = TIncludeChildBody.COMPONENT_FAMILY;
+
+    public static final String RENDERER_TYPE = TIncludeChildBody.DEFAULT_RENDERER_TYPE;
+
+    protected IncludedBody getIncludedBody(FacesContext context,
+            AbstractInclude component) {
+
+        return TViewRootRenderer.popIncludedBody(context);
     }
-
 }

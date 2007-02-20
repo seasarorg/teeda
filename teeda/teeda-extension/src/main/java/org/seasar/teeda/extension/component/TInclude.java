@@ -15,47 +15,24 @@
  */
 package org.seasar.teeda.extension.component;
 
-import javax.faces.component.NamingContainer;
-import javax.faces.component.UIComponentBase;
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
-import javax.faces.internal.SubApplicationUtil;
-
-import org.seasar.framework.util.AssertionUtil;
 
 /**
  * @author higa
  */
-public class TInclude extends UIComponentBase implements NamingContainer {
+public class TInclude extends AbstractInclude {
 
     public static final String COMPONENT_TYPE = "org.seasar.teeda.extension.Include";
 
-    public static final String COMPONENT_FAMILY = "org.seasar.teeda.extension.Include";
+    public static final String COMPONENT_FAMILY = COMPONENT_TYPE;
 
-    public static final String DEFAULT_RENDERER_TYPE = "org.seasar.teeda.extension.Include";
+    public static final String DEFAULT_RENDERER_TYPE = COMPONENT_TYPE;
 
     private String src;
 
-    private boolean included = false;
-
     public TInclude() {
         setRendererType(DEFAULT_RENDERER_TYPE);
-    }
-
-    public static String calcViewId(FacesContext context, String src,
-            String viewRootPath) {
-        AssertionUtil.assertNotNull("context", context);
-        AssertionUtil.assertNotNull("src", src);
-        AssertionUtil.assertNotNull("viewRootPath", viewRootPath);
-        if (src.startsWith("/")) {
-            if ("/".endsWith(viewRootPath)) {
-                viewRootPath = "";
-            }
-            return viewRootPath + src;
-        }
-        return SubApplicationUtil.getSubApplicationPath(context.getViewRoot()
-                .getViewId())
-                + "/" + src;
     }
 
     public String getFamily() {
@@ -78,20 +55,6 @@ public class TInclude extends UIComponentBase implements NamingContainer {
      */
     public void setSrc(String src) {
         this.src = src;
-    }
-
-    /**
-     * @return Returns the included.
-     */
-    public boolean isIncluded() {
-        return included;
-    }
-
-    /**
-     * @param included The included to set.
-     */
-    public void setIncluded(boolean included) {
-        this.included = included;
     }
 
     public Object saveState(FacesContext context) {

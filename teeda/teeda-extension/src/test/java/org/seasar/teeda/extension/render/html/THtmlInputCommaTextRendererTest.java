@@ -26,7 +26,7 @@ import javax.faces.render.RendererTest;
 import org.custommonkey.xmlunit.Diff;
 import org.seasar.teeda.core.mock.MockExternalContext;
 import org.seasar.teeda.core.mock.MockFacesContext;
-import org.seasar.teeda.extension.component.ScriptEnhanceUIViewRoot;
+import org.seasar.teeda.extension.component.TViewRoot;
 import org.seasar.teeda.extension.component.html.THtmlInputCommaText;
 import org.seasar.teeda.extension.mock.MockHtmlInputCommaText;
 import org.seasar.teeda.extension.util.JavaScriptContext;
@@ -48,7 +48,7 @@ public class THtmlInputCommaTextRendererTest extends RendererTest {
     }
 
     public void testEncodeEnd_withoutJsAndValue() throws Exception {
-        ScriptEnhanceUIViewRoot root = new ScriptEnhanceUIViewRoot();
+        TViewRoot root = new TViewRoot();
         root.addScript(THtmlInputCommaText.class.getName(),
                 new JavaScriptContext());
         root.setLocale(Locale.JAPAN);
@@ -68,7 +68,7 @@ public class THtmlInputCommaTextRendererTest extends RendererTest {
     }
 
     public void testEncodeEnd_withFraction() throws Exception {
-        ScriptEnhanceUIViewRoot root = new ScriptEnhanceUIViewRoot();
+        TViewRoot root = new TViewRoot();
         root.addScript(THtmlInputCommaText.class.getName(),
                 new JavaScriptContext());
         htmlInputCommaText.setFraction("4");
@@ -89,7 +89,7 @@ public class THtmlInputCommaTextRendererTest extends RendererTest {
     }
 
     public void testEncodeEnd_withAnotherLocale() throws Exception {
-        ScriptEnhanceUIViewRoot root = new ScriptEnhanceUIViewRoot();
+        TViewRoot root = new TViewRoot();
         root.addScript(THtmlInputCommaText.class.getName(),
                 new JavaScriptContext());
         htmlInputCommaText.setFraction("4");
@@ -109,7 +109,7 @@ public class THtmlInputCommaTextRendererTest extends RendererTest {
     }
 
     public void testEncode_WithAllAttributes() throws Exception {
-        ScriptEnhanceUIViewRoot root = new ScriptEnhanceUIViewRoot();
+        TViewRoot root = new TViewRoot();
         root.addScript(THtmlInputCommaText.class.getName(),
                 new JavaScriptContext());
         htmlInputCommaText.getAttributes().put("accesskey", "a");
@@ -164,7 +164,7 @@ public class THtmlInputCommaTextRendererTest extends RendererTest {
     }
 
     public void testEncodeEnd_withAnotherOnblur() throws Exception {
-        ScriptEnhanceUIViewRoot root = new ScriptEnhanceUIViewRoot();
+        TViewRoot root = new TViewRoot();
         root.addScript(THtmlInputCommaText.class.getName(),
                 new JavaScriptContext());
         htmlInputCommaText.setFraction("4");
@@ -185,7 +185,7 @@ public class THtmlInputCommaTextRendererTest extends RendererTest {
     }
 
     public void testEncodeEnd_withJavaScript() throws Exception {
-        ScriptEnhanceUIViewRoot root = new ScriptEnhanceUIViewRoot();
+        TViewRoot root = new TViewRoot();
         htmlInputCommaText.setFraction("4");
         htmlInputCommaText.setOnblur("hoge();");
         root.setLocale(Locale.JAPAN);
@@ -201,7 +201,7 @@ public class THtmlInputCommaTextRendererTest extends RendererTest {
 
     public void testEncodeEnd_withoutJavaScript() throws Exception {
         // # Arrange #
-        ScriptEnhanceUIViewRoot root = new ScriptEnhanceUIViewRoot();
+        TViewRoot root = new TViewRoot();
         htmlInputCommaText.setFraction("4");
         htmlInputCommaText.setOnblur("hoge();");
         root.setLocale(Locale.JAPAN);
@@ -222,7 +222,7 @@ public class THtmlInputCommaTextRendererTest extends RendererTest {
     }
 
     public void testEncodeEnd_withErrorStyle() throws Exception {
-        ScriptEnhanceUIViewRoot root = new ScriptEnhanceUIViewRoot();
+        TViewRoot root = new TViewRoot();
         root.addScript(THtmlInputCommaText.class.getName(),
                 new JavaScriptContext());
         root.setLocale(Locale.JAPAN);
@@ -245,7 +245,7 @@ public class THtmlInputCommaTextRendererTest extends RendererTest {
     }
 
     public void testEncodeValueIsMinus() throws Exception {
-        ScriptEnhanceUIViewRoot root = new ScriptEnhanceUIViewRoot();
+        TViewRoot root = new TViewRoot();
         root.addScript(THtmlInputCommaText.class.getName(),
                 new JavaScriptContext());
         htmlInputCommaText.setFraction("4");
