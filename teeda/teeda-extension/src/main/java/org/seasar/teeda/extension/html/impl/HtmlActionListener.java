@@ -54,9 +54,14 @@ public class HtmlActionListener extends ActionListenerImpl {
             return;
         }
         final String fromAction = mb.getExpressionString();
-        final String componentName = MethodBindingUtil
-                .getComponentName(fromAction);
-        final String methodName = MethodBindingUtil.getMethodName(fromAction);
-        htmlComponentInvoker.invoke(context, componentName, methodName);
+        if (fromAction != null) {
+            final String componentName = MethodBindingUtil
+                    .getComponentName(fromAction);
+            final String methodName = MethodBindingUtil
+                    .getMethodName(fromAction);
+            htmlComponentInvoker.invoke(context, componentName, methodName);
+        } else {
+            super.processAction(actionEvent);
+        }
     }
 }
