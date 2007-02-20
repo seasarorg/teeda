@@ -125,7 +125,7 @@ Kumu.Validator = Kumu.extend(Kumu.Validator, {
     for(var v in this._validators){
       var validator = this._validators[v];
       if(!validator.validate()){
-        this.disabled();
+        this._disabled();
         result = false;
       }
     }
