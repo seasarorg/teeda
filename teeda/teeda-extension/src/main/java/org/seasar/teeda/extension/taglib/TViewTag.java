@@ -115,8 +115,9 @@ public class TViewTag extends UIComponentTag {
         }
         HttpSession session = null;
         if ((session = pageContext.getSession()) != null) {
-            session.setAttribute(ViewHandler.CHARACTER_ENCODING_KEY,
-                    pageContext.getResponse().getCharacterEncoding());
+            final String encoding = PageContextUtil
+                    .getCharacterEncoding(pageContext);
+            session.setAttribute(ViewHandler.CHARACTER_ENCODING_KEY, encoding);
         }
         return rc;
     }
