@@ -15,6 +15,10 @@
  */
 package org.seasar.teeda.extension.render.html;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import javax.faces.component.UIParameter;
 import javax.faces.render.Renderer;
 import javax.faces.render.RendererTest;
 
@@ -48,6 +52,25 @@ public class THtmlOutputLinkRendererTest extends RendererTest {
         encodeByRenderer(renderer, getFacesContext(), htmlOutputLink);
 
         assertEquals("<a id=\"aaa\" href=\"a\"></a>", getResponseText());
+    }
+
+    public void testRender2() throws Exception {
+        htmlOutputLink.setId("aaa");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+        Date date = format.parse("2007/02/21");
+
+        UIParameter param = new UIParameter();
+        param.setName("date");
+        param.setValue(date);
+        htmlOutputLink.getChildren().add(param);
+
+        htmlOutputLink.setValue("a");
+
+        encodeByRenderer(renderer, getFacesContext(), htmlOutputLink);
+        System.out.println(getResponseText());
+
+        assertEquals("<a id=\"aaa\" href=\"a?date=2007%2F02%2F21\"></a>",
+                getResponseText());
     }
 
     private THtmlOutputLinkRenderer createTHtmlOutputLinkRenderer() {
