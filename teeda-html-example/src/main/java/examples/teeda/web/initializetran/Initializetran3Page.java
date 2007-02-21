@@ -1,6 +1,6 @@
 package examples.teeda.web.initializetran;
 
-public class Initializetran2Page {
+public class Initializetran3Page {
 
 	private String aaa;
 
@@ -17,9 +17,5 @@ public class Initializetran2Page {
 	 */
 	public void setAaa(String aaa) {
 		this.aaa = aaa;
-	}
-
-	public Class initialize() {
-		return Initializetran3Page.class;
 	}
 }

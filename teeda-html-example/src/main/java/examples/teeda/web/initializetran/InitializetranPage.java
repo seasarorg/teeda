@@ -2,12 +2,21 @@ package examples.teeda.web.initializetran;
 
 public class InitializetranPage {
 
-	public Class initialize() {
-		return Initializetran2Page.class;
+	private String aaa;
+
+	/**
+	 * @return the aaa
+	 */
+	public String getAaa() {
+		return aaa;
 	}
 
-	public String prerender() {
-		return null;
+	/**
+	 * @param aaa
+	 *            the aaa to set
+	 */
+	public void setAaa(String aaa) {
+		this.aaa = aaa;
 	}
 
 }
