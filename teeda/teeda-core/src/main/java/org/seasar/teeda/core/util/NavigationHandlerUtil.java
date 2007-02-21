@@ -16,6 +16,9 @@
 package org.seasar.teeda.core.util;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import javax.faces.FacesException;
 import javax.faces.application.NavigationHandler;
@@ -26,6 +29,8 @@ import javax.faces.internal.scope.RedirectScope;
 import org.seasar.teeda.core.exception.AlreadyRedirectingException;
 
 public class NavigationHandlerUtil {
+
+    private static final String KEY = NavigationHandlerUtil.class.getName();
 
     private NavigationHandlerUtil() {
     }
@@ -57,8 +62,16 @@ public class NavigationHandlerUtil {
 
     //For S2JSF redirect, we do not need this check.
     public static void assertNotAlreadyRedirect(FacesContext context) {
-        if (RedirectScope.isRedirecting(context)) {
+        Map scope = RedirectScope.getOrCreateContext(context);
+        List list = (List) scope.get(KEY);
+        if (list == null) {
+            list = new ArrayList();
+            scope.put(KEY, list);
+        }
+        String viewId = context.getViewRoot().getViewId();
+        if (list.contains(viewId)) {
             throw new AlreadyRedirectingException();
         }
+        list.add(viewId);
     }
 }

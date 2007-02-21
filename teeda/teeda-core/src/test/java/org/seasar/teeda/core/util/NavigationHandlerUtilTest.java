@@ -15,6 +15,7 @@
  */
 package org.seasar.teeda.core.util;
 
+import org.seasar.teeda.core.exception.AlreadyRedirectingException;
 import org.seasar.teeda.core.mock.MockNavigationHandler;
 import org.seasar.teeda.core.unit.TeedaTestCase;
 
@@ -28,4 +29,15 @@ public class NavigationHandlerUtilTest extends TeedaTestCase {
         assertEquals("to", handler.getOutCome());
     }
 
+    public void testAssertNotAlreadyRedirect() {
+        NavigationHandlerUtil.assertNotAlreadyRedirect(getFacesContext());
+        try {
+            NavigationHandlerUtil.assertNotAlreadyRedirect(getFacesContext());
+            fail();
+        } catch (AlreadyRedirectingException ex) {
+            System.out.println(ex.getMessage());
+        }
+        getFacesContext().getViewRoot().setViewId("/view/hoge/bbb.html");
+        NavigationHandlerUtil.assertNotAlreadyRedirect(getFacesContext());
+    }
 }
