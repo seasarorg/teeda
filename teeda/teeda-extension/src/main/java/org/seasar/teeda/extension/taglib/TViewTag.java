@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -28,6 +28,7 @@ import javax.faces.internal.PageContextUtil;
 import javax.faces.internal.ValueBindingUtil;
 import javax.faces.internal.WebAppUtil;
 import javax.faces.webapp.UIComponentTag;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
@@ -72,12 +73,17 @@ public class TViewTag extends UIComponentTag {
         rc = super.doStartTag();
         FacesContext context = FacesContext.getCurrentInstance();
         AssertionUtil.assertNotNull("FacesContext", context);
-        String encoding = PageContextUtil.getCharacterEncoding(pageContext);
-        pageContext.getResponse().setLocale(context.getViewRoot().getLocale());
-        String acceptContentTypes = WebAppUtil.getAcceptHeader(context);
-        String contentType = ContentTypeUtil.getContentType(acceptContentTypes);
-        pageContext.getResponse().setContentType(
-                contentType + "; charset=" + encoding);
+        final String encoding = PageContextUtil
+                .getCharacterEncoding(pageContext);
+        final ServletResponse response = pageContext.getResponse();
+        final Locale locale = context.getViewRoot().getLocale();
+        response.setLocale(locale);
+        final String acceptContentTypes = WebAppUtil.getAcceptHeader(context);
+        if (acceptContentTypes != null) {
+            final String contentType = ContentTypeUtil
+                    .getContentType(acceptContentTypes);
+            response.setContentType(contentType + "; charset=" + encoding);
+        }
         ResponseWriter writer = context.getResponseWriter();
         AssertionUtil.assertNotNull("ResponseWriter", writer);
         try {
