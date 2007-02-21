@@ -30,7 +30,6 @@ import javax.faces.internal.scope.PageScope;
 import javax.servlet.http.Cookie;
 
 import org.seasar.framework.mock.servlet.MockHttpServletRequest;
-import org.seasar.framework.util.LruHashMap;
 import org.seasar.teeda.core.application.ViewHandlerImpl;
 import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.mock.MockUIViewRoot;
@@ -78,7 +77,7 @@ public class RestoreViewPhaseTest extends TeedaTestCase {
         final RestoreViewPhase phase = new RestoreViewPhase();
         phase.setViewIdLruSize(3);
         final Map sessionMap = new HashMap();
-        LruHashMap lru = phase.getViewIdLruFromSession(sessionMap);
+        Map lru = phase.getViewIdLruFromSession(sessionMap);
         lru.put("aaa", "111");
         lru.put("bbb", "222");
         lru.put("ccc", "333");

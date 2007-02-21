@@ -15,6 +15,7 @@
  */
 package javax.faces.internal.scope;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -76,12 +77,12 @@ public class VariableScope {
         contexts.remove(wid);
     }
 
-    protected Map getContexts(ExternalContext externalContext)
+    protected synchronized Map getContexts(ExternalContext externalContext)
             throws FacesException {
         Map sessionMap = externalContext.getSessionMap();
         Map contexts = (Map) sessionMap.get(key);
         if (contexts == null) {
-            contexts = new LruHashMap(windowSize);
+            contexts = Collections.synchronizedMap(new LruHashMap(windowSize));
             sessionMap.put(key, contexts);
         }
         return contexts;

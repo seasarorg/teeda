@@ -15,6 +15,7 @@
  */
 package org.seasar.teeda.core.lifecycle.impl;
 
+import java.util.Collections;
 import java.util.Locale;
 import java.util.Map;
 
@@ -132,14 +133,14 @@ public class RestoreViewPhase extends AbstractPhase {
 
     protected String getViewIdFromSession(final Map sessionMap,
             final String windowId) {
-        LruHashMap mru = getViewIdLruFromSession(sessionMap);
-        return (String) mru.get(windowId);
+        Map lru = getViewIdLruFromSession(sessionMap);
+        return (String) lru.get(windowId);
     }
 
-    protected LruHashMap getViewIdLruFromSession(final Map sessionMap) {
-        LruHashMap lru = (LruHashMap) sessionMap.get(VIEW_ID_LRU_ATTR);
+    protected synchronized Map getViewIdLruFromSession(final Map sessionMap) {
+        Map lru = (Map) sessionMap.get(VIEW_ID_LRU_ATTR);
         if (lru == null) {
-            lru = new LruHashMap(viewIdLruSize);
+            lru = Collections.synchronizedMap(new LruHashMap(viewIdLruSize));
             sessionMap.put(VIEW_ID_LRU_ATTR, lru);
         }
         return lru;
@@ -147,7 +148,7 @@ public class RestoreViewPhase extends AbstractPhase {
 
     protected void saveViewIdToSession(final Map sessionMap,
             final String windowId, final String viewId) {
-        LruHashMap lru = getViewIdLruFromSession(sessionMap);
+        Map lru = getViewIdLruFromSession(sessionMap);
         lru.put(windowId, viewId);
     }
 
