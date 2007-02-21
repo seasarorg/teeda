@@ -25,10 +25,7 @@ import javax.faces.FactoryFinder;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.faces.context.ResponseWriter;
-import javax.faces.internal.PageContextOutWriter;
 import javax.faces.internal.PageContextUtil;
-import javax.faces.render.RenderKit;
 import javax.faces.render.RenderKitFactory;
 import javax.servlet.Servlet;
 import javax.servlet.ServletConfig;
@@ -150,8 +147,6 @@ public class HtmlViewHandler extends ViewHandlerImpl {
         final HttpServletResponse response = prepareResponse(context);
         setNoCacheToResponse(response);
         PageContext pageContext = createPageContext(request, response);
-        setupResponseWriter(pageContext, null, request.getCharacterEncoding());
-
         TagProcessor tagProcessor = tagProcessorCache.getTagProcessor(path);
         try {
             tagProcessor.process(pageContext, null);
@@ -178,17 +173,6 @@ public class HtmlViewHandler extends ViewHandlerImpl {
         PageContextImpl pageContext = new PageContextImpl();
         pageContext.initialize(getServlet(), request, response, null);
         return pageContext;
-    }
-
-    protected void setupResponseWriter(PageContext pageContext,
-            String contentType, String encoding) {
-        FacesContext context = FacesContext.getCurrentInstance();
-        RenderKitFactory renderFactory = getRenderKitFactory();
-        RenderKit renderKit = renderFactory.getRenderKit(context, context
-                .getViewRoot().getRenderKitId());
-        ResponseWriter writer = renderKit.createResponseWriter(
-                new PageContextOutWriter(pageContext), contentType, encoding);
-        context.setResponseWriter(writer);
     }
 
     protected RenderKitFactory getRenderKitFactory() {
