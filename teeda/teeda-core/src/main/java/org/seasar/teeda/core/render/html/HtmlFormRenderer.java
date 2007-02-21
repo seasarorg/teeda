@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -80,8 +80,14 @@ public class HtmlFormRenderer extends AbstractRenderer {
                 getIdForRender(context, htmlForm));
         RendererUtil.renderAttribute(writer, JsfConstants.NAME_ATTR, htmlForm
                 .getClientId(context));
-        RendererUtil.renderAttribute(writer, JsfConstants.METHOD_ATTR,
-                JsfConstants.POST_VALUE);
+
+        String method = htmlForm.getMethod();
+        if (method == null
+                || (!method.equalsIgnoreCase(JsfConstants.POST_VALUE) && !method
+                        .equalsIgnoreCase(JsfConstants.GET_VALUE))) {
+            method = JsfConstants.POST_VALUE;
+        }
+        RendererUtil.renderAttribute(writer, JsfConstants.METHOD_ATTR, method);
         renderRemainAttributes(htmlForm, writer, ignoreComponent);
 
         // action attribute

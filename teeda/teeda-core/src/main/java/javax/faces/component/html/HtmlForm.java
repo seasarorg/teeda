@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -39,6 +39,8 @@ public class HtmlForm extends UIForm {
     private String enctype = null;
 
     private String lang = null;
+
+    private String method = null;
 
     private String onclick = null;
 
@@ -329,8 +331,20 @@ public class HtmlForm extends UIForm {
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
+    public void setMethod(String method) {
+        this.method = method;
+    }
+
+    public String getMethod() {
+        if (method != null) {
+            return method;
+        }
+        ValueBinding vb = getValueBinding("method");
+        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+    }
+
     public Object saveState(FacesContext context) {
-        Object values[] = new Object[22];
+        Object values[] = new Object[23];
         values[0] = super.saveState(context);
         values[1] = accept;
         values[2] = acceptcharset;
@@ -353,6 +367,7 @@ public class HtmlForm extends UIForm {
         values[19] = styleClass;
         values[20] = target;
         values[21] = title;
+        values[22] = method;
         return ((Object) (values));
     }
 
@@ -380,6 +395,7 @@ public class HtmlForm extends UIForm {
         styleClass = (String) values[19];
         target = (String) values[20];
         title = (String) values[21];
+        method = (String) values[22];
     }
 
 }

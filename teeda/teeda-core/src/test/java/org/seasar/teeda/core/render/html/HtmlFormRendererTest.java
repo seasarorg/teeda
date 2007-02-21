@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -109,6 +109,40 @@ public class HtmlFormRendererTest extends RendererTest {
         MockFacesContext context = getFacesContext();
         context.getViewRoot().setViewId("/abc");
         htmlForm.setId("a");
+
+        // ## Act ##
+        encodeByRenderer(renderer, htmlForm);
+
+        // ## Assert ##
+        assertEquals(
+                "<form id=\"a\" name=\"a\" method=\"post\" enctype=\"application/x-www-form-urlencoded\" action=\"/abc\">"
+                        + "<input type=\"hidden\" name=\"a/abc\" value=\"a\" />"
+                        + "</form>", getResponseText());
+    }
+
+    public void testEncode_WithMethod() throws Exception {
+        // ## Arrange ##
+        MockFacesContext context = getFacesContext();
+        context.getViewRoot().setViewId("/abc");
+        htmlForm.setId("a");
+        htmlForm.setMethod("get");
+
+        // ## Act ##
+        encodeByRenderer(renderer, htmlForm);
+
+        // ## Assert ##
+        assertEquals(
+                "<form id=\"a\" name=\"a\" method=\"get\" enctype=\"application/x-www-form-urlencoded\" action=\"/abc\">"
+                        + "<input type=\"hidden\" name=\"a/abc\" value=\"a\" />"
+                        + "</form>", getResponseText());
+    }
+
+    public void testEncode_WithNoSuchMethod() throws Exception {
+        // ## Arrange ##
+        MockFacesContext context = getFacesContext();
+        context.getViewRoot().setViewId("/abc");
+        htmlForm.setId("a");
+        htmlForm.setMethod("hoge");
 
         // ## Act ##
         encodeByRenderer(renderer, htmlForm);
