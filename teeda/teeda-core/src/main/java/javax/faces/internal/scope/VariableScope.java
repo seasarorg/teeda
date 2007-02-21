@@ -52,13 +52,14 @@ public class VariableScope {
         return (Map) contexts.get(wid);
     }
 
-    public Map getOrCreateContext(FacesContext context) throws FacesException {
+    public synchronized Map getOrCreateContext(FacesContext context)
+            throws FacesException {
         ExternalContext extCtx = context.getExternalContext();
         Map contexts = getContexts(extCtx);
         String wid = WindowIdUtil.getWindowId(extCtx);
         Map ctx = (Map) contexts.get(wid);
         if (ctx == null) {
-            ctx = new HashMap();
+            ctx = Collections.synchronizedMap(new HashMap());
             contexts.put(wid, ctx);
         }
         return ctx;
