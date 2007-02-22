@@ -132,6 +132,7 @@ public class THtmlGridRenderer extends TForEachRenderer implements
 
     private final IgnoreAttribute thIgnoreAttribute = new IgnoreAttribute();
     {
+        thIgnoreAttribute.addAttributeName(JsfConstants.ID_ATTR);
         thIgnoreAttribute.addAttributeName(JsfConstants.STYLE_ATTR);
         thIgnoreAttribute.addAttributeName(JsfConstants.STYLE_CLASS_ATTR);
     }
