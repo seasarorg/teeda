@@ -16,6 +16,7 @@
 package org.seasar.teeda.extension.component;
 
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -133,6 +134,26 @@ public class UITreeData extends UIInput implements NamingContainer {
         }
         processNodes(context, PhaseId.PROCESS_VALIDATIONS, null, 0);
         setNodeId(null);
+        if (!hasErrorFacesMessageInTree(context)) {
+            processNodes(context, PhaseId.UPDATE_MODEL_VALUES, null, 0);
+            setNodeId(null);
+        }
+    }
+
+    private boolean hasErrorFacesMessageInTree(FacesContext context) {
+        Iterator clientIds = states.getSavedStates().keySet().iterator();
+        while (clientIds.hasNext()) {
+            String clientId = (String) clientIds.next();
+            Iterator messages = context.getMessages(clientId);
+            while (messages.hasNext()) {
+                FacesMessage message = (FacesMessage) messages.next();
+                if (message.getSeverity()
+                        .compareTo(FacesMessage.SEVERITY_ERROR) >= 0) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public void processUpdates(FacesContext context) {
@@ -305,7 +326,7 @@ public class UITreeData extends UIInput implements NamingContainer {
                 + NamingContainer.SEPARATOR_CHAR + level : "0";
         setNodeId(id);
         final TreeNode node = getNode();
-        if(node == null) {
+        if (node == null) {
             return;
         }
         final String type = node.getType();
