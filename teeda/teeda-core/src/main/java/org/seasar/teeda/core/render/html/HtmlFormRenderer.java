@@ -81,13 +81,8 @@ public class HtmlFormRenderer extends AbstractRenderer {
         RendererUtil.renderAttribute(writer, JsfConstants.NAME_ATTR, htmlForm
                 .getClientId(context));
 
-        String method = htmlForm.getMethod();
-        if (method == null
-                || (!method.equalsIgnoreCase(JsfConstants.POST_VALUE) && !method
-                        .equalsIgnoreCase(JsfConstants.GET_VALUE))) {
-            method = JsfConstants.POST_VALUE;
-        }
-        RendererUtil.renderAttribute(writer, JsfConstants.METHOD_ATTR, method);
+        RendererUtil.renderAttribute(writer, JsfConstants.METHOD_ATTR,
+                JsfConstants.POST_VALUE);
         renderRemainAttributes(htmlForm, writer, ignoreComponent);
 
         // action attribute

@@ -45,7 +45,6 @@ public class FormTag extends UIComponentTagBase {
         setComponentProperty(component, JsfConstants.ONSUBMIT_ATTR,
                 getOnsubmit());
         setComponentProperty(component, JsfConstants.TARGET_ATTR, getTarget());
-        setComponentProperty(component, JsfConstants.METHOD_ATTR, getMethod());
     }
 
 }

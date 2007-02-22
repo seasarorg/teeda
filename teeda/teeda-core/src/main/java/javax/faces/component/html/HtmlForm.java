@@ -40,8 +40,6 @@ public class HtmlForm extends UIForm {
 
     private String lang = null;
 
-    private String method = null;
-
     private String onclick = null;
 
     private String ondblclick = null;
@@ -331,20 +329,8 @@ public class HtmlForm extends UIForm {
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
-    public void setMethod(String method) {
-        this.method = method;
-    }
-
-    public String getMethod() {
-        if (method != null) {
-            return method;
-        }
-        ValueBinding vb = getValueBinding("method");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
-    }
-
     public Object saveState(FacesContext context) {
-        Object values[] = new Object[23];
+        Object values[] = new Object[22];
         values[0] = super.saveState(context);
         values[1] = accept;
         values[2] = acceptcharset;
@@ -367,7 +353,6 @@ public class HtmlForm extends UIForm {
         values[19] = styleClass;
         values[20] = target;
         values[21] = title;
-        values[22] = method;
         return ((Object) (values));
     }
 
@@ -395,7 +380,6 @@ public class HtmlForm extends UIForm {
         styleClass = (String) values[19];
         target = (String) values[20];
         title = (String) values[21];
-        method = (String) values[22];
     }
 
 }
