@@ -93,7 +93,6 @@ public class HtmlNavigationHandler extends NavigationHandlerImpl {
                     FacesPortlet.REDIRECT_TO_PORTLET, Boolean.TRUE);
             super.render(context, viewHandler, path);
         }
-        context.renderResponse();
     }
 
     protected String calcPathFromOutcome(FacesContext context, String viewId,
