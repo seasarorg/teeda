@@ -18,6 +18,7 @@ package org.seasar.teeda.core.context.servlet;
 import java.util.Map;
 
 import javax.faces.context.ExternalContext;
+import javax.faces.internal.WindowIdUtil;
 import javax.faces.mock.servlet.MockServletRequestImpl;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -125,5 +126,15 @@ public class ServletExternalContextImplTest extends S2TestCase {
 
         String[] c = (String[]) requestParameterValuesMap.get("c");
         assertEquals(null, c);
+    }
+
+    public void testEncodeResourceURL() {
+        ExternalContext context = new ServletExternalContextImpl(
+                getServletContext(), getRequest(), getResponse());
+        assertEquals("hoge", context.encodeResourceURL("hoge"));
+        WindowIdUtil.setWindowId(context, "1");
+        assertEquals("hoge?wid=1", context.encodeResourceURL("hoge"));
+        assertEquals("hoge?aaa=bbb&wid=1", context
+                .encodeResourceURL("hoge?aaa=bbb"));
     }
 }

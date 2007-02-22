@@ -28,8 +28,6 @@ import javax.faces.lifecycle.Lifecycle;
 import junitx.framework.ObjectAssert;
 
 import org.seasar.teeda.core.mock.MockLifecycle;
-import org.seasar.teeda.core.mock.MockUIComponentBase;
-import org.seasar.teeda.core.mock.MockUIComponentBaseWithEditableValueHolder;
 import org.seasar.teeda.core.unit.TeedaTestCase;
 
 /**
@@ -90,57 +88,6 @@ public class AbstractPhaseTest extends TeedaTestCase {
         PhaseListener l2 = (PhaseListener) orderStack.get(1);
         assertEquals(PhaseId.ANY_PHASE, l2.getPhaseId());
         ObjectAssert.assertSame(listener1, l2);
-    }
-
-    public void testInitializeChildren_withOneChild() {
-        // # Arrange #
-        MockUIComponentBase parent = new MockUIComponentBase();
-        MockUIComponentBaseWithEditableValueHolder child1 = new MockUIComponentBaseWithEditableValueHolder();
-        child1.setValid(false);
-        child1.setValue("hoge");
-        child1.setLocalValueSet(true);
-        child1.setClientId("client1");
-        parent.getChildren().add(child1);
-        TargetPhase p = new TargetPhase();
-
-        // # Act #
-        p.initializeChildren(getFacesContext(), parent);
-
-        // # Assert #
-        assertTrue(child1.isValid());
-        assertNull(child1.getValue());
-        assertFalse(child1.isLocalValueSet());
-    }
-
-    public void testInitializeChildren_withOneChildOneGrandChild() {
-        // # Arrange #
-        MockUIComponentBase parent = new MockUIComponentBase();
-        MockUIComponentBaseWithEditableValueHolder child1 = new MockUIComponentBaseWithEditableValueHolder();
-        child1.setValid(false);
-        child1.setValue("hoge");
-        child1.setLocalValueSet(true);
-        child1.setClientId("client1");
-        parent.getChildren().add(child1);
-
-        MockUIComponentBaseWithEditableValueHolder grandChild1 = new MockUIComponentBaseWithEditableValueHolder();
-        grandChild1.setValid(false);
-        grandChild1.setValue("foo");
-        grandChild1.setLocalValueSet(true);
-        grandChild1.setClientId("grandclient1");
-        child1.getChildren().add(grandChild1);
-
-        TargetPhase p = new TargetPhase();
-
-        // # Act #
-        p.initializeChildren(getFacesContext(), parent);
-
-        // # Assert #
-        assertTrue(child1.isValid());
-        assertNull(child1.getValue());
-        assertFalse(child1.isLocalValueSet());
-        assertTrue(grandChild1.isValid());
-        assertNull(grandChild1.getValue());
-        assertFalse(grandChild1.isLocalValueSet());
     }
 
     public void testIsTargetListener_succeed() {

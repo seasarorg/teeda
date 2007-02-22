@@ -18,10 +18,7 @@ package javax.faces.internal;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.http.Cookie;
-
 import org.seasar.teeda.core.lifecycle.impl.RestoreViewPhase;
-import org.seasar.teeda.core.mock.MockExternalContext;
 import org.seasar.teeda.core.unit.TeedaTestCase;
 
 /**
@@ -62,35 +59,8 @@ public class WindowIdUtilTest extends TeedaTestCase {
 
         getExternalContext().getRequestParameterMap().put(
                 WindowIdUtil.NEWWINDOW, "true");
-        assertNotNull(WindowIdUtil.setupWindowId(getExternalContext()));
-
-        Cookie cookie = new Cookie(WindowIdUtil.TEEDA_WID, "hoge");
-        getExternalContext().addRequestCookieMap(cookie);
-        getExternalContext().getRequestParameterMap().put(
-                WindowIdUtil.NEWWINDOW, "false");
-        assertEquals("hoge", WindowIdUtil.setupWindowId(getExternalContext()));
+        String wid = WindowIdUtil.setupWindowId(getExternalContext());
+        assertNotNull(wid);
+        assertEquals(wid, WindowIdUtil.getWindowId(getExternalContext()));
     }
-
-    /*
-     * newwindow=trueの場合はcookieへwindowidとcontextPathをセットすること。
-     * 
-     * https://www.seasar.org/issues/browse/TEEDA-242
-     */
-    public void testSetupCookie() throws Exception {
-        // ## Arrange ##
-        getServletContext().setServletContextName("/bbbbb");
-        final MockExternalContext ext = getExternalContext();
-        ext.getRequestParameterMap().put(WindowIdUtil.NEWWINDOW, "true");
-
-        // ## Act ##
-        final String windowId = WindowIdUtil.setupWindowId(ext);
-
-        // ## Assert ##
-        assertNotNull(windowId);
-        final Cookie[] cookies = ext.getMockHttpServletResponse().getCookies();
-        assertEquals(1, cookies.length);
-        assertEquals(windowId, cookies[0].getValue());
-        assertEquals("/bbbbb", cookies[0].getPath());
-    }
-
 }

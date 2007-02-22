@@ -27,6 +27,7 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.faces.context.ExternalContext;
+import javax.faces.internal.WindowIdUtil;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -44,6 +45,7 @@ import org.seasar.framework.container.external.servlet.ServletRequestParameterMa
 import org.seasar.framework.container.external.servlet.ServletRequestParameterValuesMap;
 import org.seasar.framework.log.Logger;
 import org.seasar.framework.util.AssertionUtil;
+import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.context.Releaseable;
 import org.seasar.teeda.core.scope.impl.DispatchScopeFactory;
 import org.seasar.teeda.core.util.ServletExternalContextUtil;
@@ -129,6 +131,15 @@ public class ServletExternalContextImpl extends ExternalContext implements
     public String encodeResourceURL(String url) {
         AssertionUtil.assertNotNull("url is null.", url);
         assertHttpServletResponse();
+        String wid = WindowIdUtil.getWindowId(this);
+        if (!StringUtil.isEmpty(wid)) {
+            String s = WindowIdUtil.WID + "=" + wid;
+            if (url.lastIndexOf("?") >= 0) {
+                url = url + "&" + s;
+            } else {
+                url = url + "?" + s;
+            }
+        }
         HttpServletResponse httpResponse = (HttpServletResponse) response;
         return httpResponse.encodeURL(url);
     }

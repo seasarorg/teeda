@@ -16,7 +16,6 @@
 package org.seasar.teeda.core.render.html;
 
 import java.io.IOException;
-import java.net.URLEncoder;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -32,6 +31,7 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.internal.IgnoreAttribute;
 import javax.faces.internal.WindowIdUtil;
 
+import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.AbstractRenderer;
 import org.seasar.teeda.core.render.html.support.UrlBuilder;
@@ -98,15 +98,17 @@ public class HtmlFormRenderer extends AbstractRenderer {
         if (url != null) {
             UrlBuilder urlBuilder = new UrlBuilder();
             urlBuilder.setBase(url);
-            final String encoding = writer.getCharacterEncoding();
-            if (WindowIdUtil.isNewWindowTarget(htmlForm.getTarget())) {
-                urlBuilder.add(URLEncoder.encode(WindowIdUtil.NEWWINDOW,
-                        encoding), URLEncoder.encode(JsfConstants.TRUE,
-                        encoding));
-            }
             writer.writeURIAttribute(JsfConstants.ACTION_ATTR, context
                     .getExternalContext().encodeActionURL(urlBuilder.build()),
                     null);
+        }
+        if (WindowIdUtil.isNewWindowTarget(htmlForm.getTarget())) {
+            setHiddenParameter(htmlForm, WindowIdUtil.NEWWINDOW,
+                    JsfConstants.TRUE);
+        }
+        String wid = WindowIdUtil.getWindowId(context.getExternalContext());
+        if (!StringUtil.isEmpty(wid)) {
+            setHiddenParameter(htmlForm, WindowIdUtil.WID, wid);
         }
     }
 
@@ -124,23 +126,23 @@ public class HtmlFormRenderer extends AbstractRenderer {
         context.getApplication().getViewHandler().writeState(context);
         ResponseWriter writer = context.getResponseWriter();
         renderFormSubmitMarker(context, htmlForm, writer);
-        renderForCommandLink(context, htmlForm, writer);
+        renderForOtherHiddens(context, htmlForm, writer);
         writer.endElement(JsfConstants.FORM_ELEM);
     }
 
-    protected void renderForCommandLink(FacesContext context,
+    protected void renderForOtherHiddens(FacesContext context,
             HtmlForm htmlForm, ResponseWriter writer) throws IOException {
         final Map hiddenParameters = getHiddenParameters(htmlForm);
-        boolean hasCommandLink = false;
+        boolean hasOtherHidden = false;
         for (final Iterator it = hiddenParameters.entrySet().iterator(); it
                 .hasNext();) {
-            hasCommandLink = true;
+            hasOtherHidden = true;
             final Map.Entry entry = (Entry) it.next();
             final String name = (String) entry.getKey();
             final Object value = entry.getValue();
             RendererUtil.renderHidden(htmlForm, writer, name, value);
         }
-        if (hasCommandLink) {
+        if (hasOtherHidden) {
             final String target = htmlForm.getTarget();
             renderClearHiddenCommandFormParamsFunction(writer, getIdForRender(
                     context, htmlForm), hiddenParameters.entrySet(), target);

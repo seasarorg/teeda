@@ -27,7 +27,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseId;
 import javax.faces.internal.WindowIdUtil;
 import javax.faces.internal.scope.PageScope;
-import javax.servlet.http.Cookie;
 
 import org.seasar.framework.mock.servlet.MockHttpServletRequest;
 import org.seasar.teeda.core.application.ViewHandlerImpl;
@@ -101,9 +100,8 @@ public class RestoreViewPhaseTest extends TeedaTestCase {
         String wid = "123";
         final RestoreViewPhase phase = new RestoreViewPhase();
         Map sessionMap = getExternalContext().getSessionMap();
-        Map cookieMap = getExternalContext().getRequestCookieMap();
-        cookieMap.put(WindowIdUtil.TEEDA_WID, new Cookie(
-                WindowIdUtil.TEEDA_WID, wid));
+        Map paramMap = getExternalContext().getRequestParameterMap();
+        paramMap.put(WindowIdUtil.WID, wid);
         phase.saveViewIdToSession(sessionMap, wid, "hoge.html");
         getExternalContext().setRequestPathInfo("hoge2.html");
         Map ctx = PageScope.getOrCreateContext(getFacesContext());

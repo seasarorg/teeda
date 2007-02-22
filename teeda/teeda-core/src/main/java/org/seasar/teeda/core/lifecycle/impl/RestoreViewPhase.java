@@ -83,7 +83,6 @@ public class RestoreViewPhase extends AbstractPhase {
 
         final ExternalContext externalContext = context.getExternalContext();
         saveViewIdToSession(externalContext.getSessionMap(), wid, viewId);
-        initializeChildren(context, viewRoot);
         Map requestParameterMap = externalContext.getRequestParameterMap();
         if (requestParameterMap.isEmpty()) {
             context.renderResponse();
