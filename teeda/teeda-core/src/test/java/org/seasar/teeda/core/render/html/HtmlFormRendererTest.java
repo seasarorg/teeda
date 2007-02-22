@@ -266,7 +266,7 @@ public class HtmlFormRendererTest extends RendererTest {
         // ## Arrange ##
         MockFacesContext context = getFacesContext();
         context.getViewRoot().setViewId("/aa");
-        HtmlFormRenderer.setHiddenParameter(htmlForm, "hoge", "foo");
+        HtmlFormRenderer.setCommandLinkHiddenParameter(htmlForm, "hoge", "foo");
         try {
             // ## Act ##
             encodeByRenderer(renderer, htmlForm);
@@ -285,7 +285,7 @@ public class HtmlFormRendererTest extends RendererTest {
             final Diff diff = diff(readText, getResponseText());
             assertEquals(diff.toString(), true, diff.identical());
         } finally {
-            HtmlFormRenderer.clearHiddenParameters(htmlForm, "hoge");
+            HtmlFormRenderer.clearCommandLinkHiddenParameters(htmlForm, "hoge");
         }
     }
 

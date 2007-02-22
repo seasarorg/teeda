@@ -117,10 +117,7 @@ public class ServletExternalContextImpl extends ExternalContext implements
     }
 
     public String encodeActionURL(String url) {
-        AssertionUtil.assertNotNull("url is null.", url);
-        assertHttpServletResponse();
-        HttpServletResponse httpResponse = (HttpServletResponse) response;
-        return httpResponse.encodeURL(url);
+        return encodeResourceURL(url);
     }
 
     public String encodeNamespace(final String name) {
