@@ -42,6 +42,7 @@ import org.seasar.framework.util.ArrayUtil;
 import org.seasar.framework.util.AssertionUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.util.DIContainerUtil;
+import org.seasar.teeda.core.util.PortletUtil;
 import org.seasar.teeda.core.util.ServletExternalContextUtil;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ActionDescCache;
@@ -113,8 +114,13 @@ public class SessionPagePersistence implements PagePersistence {
 
     protected static boolean isOutputlinkTransition(FacesContext context,
             ExternalContext externalContext) {
-        return !RedirectScope.isRedirecting(context)
-                && !ServletExternalContextUtil.isPost(externalContext);
+        // PortletSupport
+        boolean isPost = false;
+        if (!PortletUtil.isPortlet(context)) {
+            isPost = ServletExternalContextUtil.isPost(externalContext);
+        }
+        // TODO in portlet, other flag might be needed..
+        return !RedirectScope.isRedirecting(context) && !isPost;
     }
 
     protected void saveFacesMessage(FacesContext from, Map to) {
