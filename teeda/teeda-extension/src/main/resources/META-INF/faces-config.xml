@@ -188,22 +188,6 @@
 	</component>
 	<component>
 		<component-type>
-			org.seasar.teeda.extension.HtmlSelectManyListbox
-		</component-type>
-		<component-class>
-			org.seasar.teeda.extension.component.html.THtmlSelectManyListbox
-		</component-class>
-	</component>
-	<component>
-		<component-type>
-			org.seasar.teeda.extension.HtmlSelectOneRadio
-		</component-type>
-		<component-class>
-			org.seasar.teeda.extension.component.html.THtmlSelectOneRadio
-		</component-class>
-	</component>
-	<component>
-		<component-type>
 			org.seasar.teeda.extension.THtmlTree
 		</component-type>
 		<component-class>
