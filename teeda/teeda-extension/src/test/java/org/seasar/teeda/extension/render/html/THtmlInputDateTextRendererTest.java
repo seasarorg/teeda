@@ -71,7 +71,6 @@ public class THtmlInputDateTextRendererTest extends RendererTest {
                         + "onblur=\"Teeda.THtmlInputDateText.convertByKey(this);Teeda.THtmlInputDateText.addDelimeter(this, 'yyyy/MM/dd', 6, 71, '/');\" "
                         + "onkeydown=\"return Teeda.THtmlInputDateText.keycheckForNumber(event, this, 'yyyy/MM/dd', 6, 71, '/');\" "
                         + "onkeypress=\"return Teeda.THtmlInputDateText.keycheckForNumber(event, this, 'yyyy/MM/dd', 6, 71, '/');\" "
-                        + "onkeyup=\"Teeda.THtmlInputDateText.convertByKey(this);Teeda.THtmlInputDateText.addDelimeter(this, 'yyyy/MM/dd', 6, 71, '/');\" "
                         + "style=\"ime-mode:disabled;\" />", getResponseText());
     }
 
@@ -95,7 +94,6 @@ public class THtmlInputDateTextRendererTest extends RendererTest {
                         + "onblur=\"Teeda.THtmlInputDateText.convertByKey(this);Teeda.THtmlInputDateText.addDelimeter(this, 'yyyy/MM', 4, 71, '/');\" "
                         + "onkeydown=\"return Teeda.THtmlInputDateText.keycheckForNumber(event, this, 'yyyy/MM', 4, 71, '/');\" "
                         + "onkeypress=\"return Teeda.THtmlInputDateText.keycheckForNumber(event, this, 'yyyy/MM', 4, 71, '/');\" "
-                        + "onkeyup=\"Teeda.THtmlInputDateText.convertByKey(this);Teeda.THtmlInputDateText.addDelimeter(this, 'yyyy/MM', 4, 71, '/');\" "
                         + "style=\"ime-mode:disabled;\" />", getResponseText());
     }
 
@@ -118,7 +116,6 @@ public class THtmlInputDateTextRendererTest extends RendererTest {
                         + "onblur=\"Teeda.THtmlInputDateText.convertByKey(this);Teeda.THtmlInputDateText.addDelimeter(this, 'dd.MM.yyyy', 6, 71, '.');\" "
                         + "onkeydown=\"return Teeda.THtmlInputDateText.keycheckForNumber(event, this, 'dd.MM.yyyy', 6, 71, '.');\" "
                         + "onkeypress=\"return Teeda.THtmlInputDateText.keycheckForNumber(event, this, 'dd.MM.yyyy', 6, 71, '.');\" "
-                        + "onkeyup=\"Teeda.THtmlInputDateText.convertByKey(this);Teeda.THtmlInputDateText.addDelimeter(this, 'dd.MM.yyyy', 6, 71, '.');\" "
                         + "style=\"ime-mode:disabled;\" />", getResponseText());
     }
 
@@ -186,7 +183,6 @@ public class THtmlInputDateTextRendererTest extends RendererTest {
                         + "onblur=\"Teeda.THtmlInputDateText.convertByKey(this);Teeda.THtmlInputDateText.addDelimeter(this, 'yyyy/MM', 6, 10, '/');\" "
                         + "onkeydown=\"return Teeda.THtmlInputDateText.keycheckForNumber(event, this, 'yyyy/MM', 6, 10, '/');\" "
                         + "onkeypress=\"return Teeda.THtmlInputDateText.keycheckForNumber(event, this, 'yyyy/MM', 6, 10, '/');\" "
-                        + "onkeyup=\"Teeda.THtmlInputDateText.convertByKey(this);Teeda.THtmlInputDateText.addDelimeter(this, 'yyyy/MM', 6, 10, '/');\" "
                         + "style=\"ime-mode:disabled;\" />", getResponseText());
     }
 

@@ -66,7 +66,6 @@ public class THtmlInputDateTextRenderer extends AbstractInputExtendTextRenderer 
         renderOnblur(htmlInputDateText, writer, holder);
         renderOnkeydown(htmlInputDateText, writer, holder);
         renderOnkeypress(htmlInputDateText, writer, holder);
-        renderOnkeyup(htmlInputDateText, writer, holder);
         renderStyle(htmlInputDateText, writer);
         renderStyleClass(context, htmlInputDateText, writer);
     }
@@ -173,16 +172,6 @@ public class THtmlInputDateTextRenderer extends AbstractInputExtendTextRenderer 
                 .getOnkeypress());
         renderKeycheckEvent(writer, JsfConstants.ONKEYPRESS_ATTR, onkeypress,
                 holder);
-    }
-
-    protected void renderOnkeyup(THtmlInputDateText htmlInputDateText,
-            ResponseWriter writer, InputDateValueHolder holder)
-            throws IOException {
-        final String onkeyup = createConvertAndAddDelimeterFunctions(htmlInputDateText, holder);
-        if (StringUtil.isNotBlank(onkeyup)) {
-            RendererUtil.renderAttribute(writer, JsfConstants.ONKEYUP_ATTR,
-                    onkeyup);
-        }
     }
 
     private void renderKeycheckEvent(ResponseWriter writer,
