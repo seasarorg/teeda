@@ -44,6 +44,8 @@
 		class="org.seasar.teeda.extension.html.factory.MockFactory" />
 	<component name="treeHiddenFactory"
 		class="org.seasar.teeda.extension.html.factory.TreeHiddenFactory" />
+	<component name="scopeOutputTextFactory"
+		class="org.seasar.teeda.extension.html.factory.ScopeOutputTextFactory" />
 	<component name="holidayCalendarFactory"
 		class="org.seasar.teeda.extension.html.factory.HolidayCalendarFactory" />
 	<component name="selectBooleanCheckboxFactory"
