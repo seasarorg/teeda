@@ -41,9 +41,10 @@ public class PortletUrlBuilder extends UrlBuilder {
             if (externalContext.getResponse() instanceof RenderResponse) {
                 RenderResponse response = (RenderResponse) externalContext
                         .getResponse();
-                //TODO ActionURL is needed?
-                PortletURL portletUrl = response.createRenderURL();
+                // uses ActionURL 
+                PortletURL portletUrl = response.createActionURL();
                 portletUrl.setParameter(FacesPortlet.VIEW_ID, viewId);
+                portletUrl.setParameter(FacesPortlet.TAKE_OVER_PARAMETER, "true");
 
                 if (uri.getQuery() != null) {
                     String[] queries = uri.getQuery().split("&");

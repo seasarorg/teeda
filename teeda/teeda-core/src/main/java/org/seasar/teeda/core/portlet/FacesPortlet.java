@@ -16,7 +16,7 @@
 package org.seasar.teeda.core.portlet;
 
 import java.io.IOException;
-import java.io.InputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
@@ -27,12 +27,10 @@ import java.util.Map;
 
 import javax.faces.FactoryFinder;
 import javax.faces.application.FacesMessage;
-import javax.faces.application.StateManager;
-import javax.faces.application.ViewHandler;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 import javax.faces.context.FacesContextFactory;
-import javax.faces.internal.FacesConfigOptions;
+import javax.faces.internal.WebAppUtil;
 import javax.faces.lifecycle.Lifecycle;
 import javax.faces.lifecycle.LifecycleFactory;
 import javax.faces.webapp.FacesServlet;
@@ -45,17 +43,11 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.servlet.ServletException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.seasar.framework.util.InputStreamUtil;
 import org.seasar.teeda.core.JsfConstants;
-import org.seasar.teeda.core.config.faces.FacesConfigBuilder;
-import org.seasar.teeda.core.config.faces.assembler.AssemblerAssembler;
-import org.seasar.teeda.core.config.faces.element.FacesConfig;
-import org.seasar.teeda.core.config.webapp.WebappConfigBuilder;
-import org.seasar.teeda.core.config.webapp.element.WebappConfig;
-import org.seasar.teeda.core.util.DIContainerUtil;
 
 /**
  * @author shinsuke
@@ -124,6 +116,10 @@ public class FacesPortlet extends GenericPortlet {
             .getName()
             + ".REDIRECT_TO_PORTLET";
 
+    public static final String TAKE_OVER_PARAMETER = FacesPortlet.class
+            .getName()
+            + ".TAKE_OVER_PARAMETER";
+
     protected FacesContextFactory facesContextFactory;
 
     protected Lifecycle lifecycle;
@@ -138,7 +134,7 @@ public class FacesPortlet extends GenericPortlet {
         super.init();
 
         // Initialized Teeda
-        initializeFaces(getPortletContext());
+        // initializeFaces(getPortletContext());
 
         // Load default pages
         defaultViewPage = getPortletConfig()
@@ -161,85 +157,35 @@ public class FacesPortlet extends GenericPortlet {
             defaultHelpPage = defaultViewPage;
         }
 
-        facesContextFactory = (FacesContextFactory) FactoryFinder
-                .getFactory(FactoryFinder.FACES_CONTEXT_FACTORY);
-
-        // Javadoc says: Lifecycle instance is shared across multiple simultaneous requests, it must be
-        // implemented in a thread-safe manner.  So we can acquire it here once:
-        LifecycleFactory lifecycleFactory = (LifecycleFactory) FactoryFinder
-                .getFactory(FactoryFinder.LIFECYCLE_FACTORY);
-        lifecycle = lifecycleFactory.getLifecycle(FacesConfigOptions
-                .getLifecycleId());
+        // Intialize Faces(from FacesServlet)
+        LifecycleFactory lifecycleFactory;
+        try {
+            facesContextFactory = (FacesContextFactory) WebAppUtil
+                    .getFactory(FactoryFinder.FACES_CONTEXT_FACTORY);
+            lifecycleFactory = (LifecycleFactory) WebAppUtil
+                    .getFactory(FactoryFinder.LIFECYCLE_FACTORY);
+            String lifecycleId = getLifecycleId(getPortletContext());
+            lifecycle = lifecycleFactory.getLifecycle(lifecycleId);
+        } catch (ServletException e) {
+            throw new PortletException(e);
+        }
     }
 
-    protected void initializeFaces(PortletContext servletContext) {
-        Boolean b = (Boolean) servletContext.getAttribute(FACES_INIT_DONE);
-        boolean isAlreadyInitialized = (b != null) ? b.booleanValue() : false;
-        if (!isAlreadyInitialized) {
-            initializeFacesConfigOptions(servletContext);
-            FacesConfigBuilder facesConfigBuilder = (FacesConfigBuilder) DIContainerUtil
-                    .getComponent(FacesConfigBuilder.class);
-
-            FacesConfig facesConfig = facesConfigBuilder.buildFacesConfigs();
-
-            AssemblerAssembler assembler = (AssemblerAssembler) DIContainerUtil
-                    .getComponent(AssemblerAssembler.class);
-
-            assembler.assembleFactories(facesConfig);
-            assembler.assembleApplication(facesConfig);
-            assembler.assembleManagedBeans(facesConfig);
-            assembler.assmbleNavigationRules(facesConfig);
-            assembler.assembleLifecycle(facesConfig);
-            assembler.assembleRenderKits(facesConfig);
-
-            WebappConfigBuilder webAppConfigBuilder = (WebappConfigBuilder) DIContainerUtil
-                    .getComponent(WebappConfigBuilder.class);
-
-            InputStream is = null;
-            WebappConfig webappConfig = null;
-            try {
-                is = servletContext
-                        .getResourceAsStream(JsfConstants.WEB_XML_PATH);
-                webappConfig = webAppConfigBuilder.build(is,
-                        JsfConstants.WEB_XML_PATH);
-            } finally {
-                InputStreamUtil.close(is);
-            }
-
-            servletContext.setAttribute(WebappConfig.class.getName(),
-                    webappConfig);
-
-            servletContext.setAttribute(FACES_INIT_DONE, Boolean.TRUE);
-        }
-
-    }
-
-    protected void initializeFacesConfigOptions(PortletContext servletContext) {
-        FacesConfigOptions.setConfigFiles(servletContext
-                .getInitParameter(FacesServlet.CONFIG_FILES_ATTR));
-        String savingMethod = servletContext
-                .getInitParameter(StateManager.STATE_SAVING_METHOD_PARAM_NAME);
-        if (savingMethod != null) {
-            FacesConfigOptions
-                    .setSavingStateInClient(StateManager.STATE_SAVING_METHOD_CLIENT
-                            .equalsIgnoreCase(savingMethod));
-        }
-        String suffix = servletContext
-                .getInitParameter(ViewHandler.DEFAULT_SUFFIX_PARAM_NAME);
-        if (suffix != null) {
-            FacesConfigOptions.setDefaultSuffix(suffix);
-        } else {
-            FacesConfigOptions.setDefaultSuffix(ViewHandler.DEFAULT_SUFFIX);
-        }
-        String lifecycleId = servletContext
+    protected String getLifecycleId(PortletContext portletContext) {
+        String lifecycleId = portletContext
                 .getInitParameter(FacesServlet.LIFECYCLE_ID_ATTR);
-        if (lifecycleId != null) {
-            FacesConfigOptions.setLifecycleId(lifecycleId);
-        } else {
-            FacesConfigOptions
-                    .setLifecycleId(LifecycleFactory.DEFAULT_LIFECYCLE);
+        if (lifecycleId == null) {
+            lifecycleId = LifecycleFactory.DEFAULT_LIFECYCLE;
         }
+        return lifecycleId;
     }
+
+    //    protected void initializeFaces(PortletContext portletContext) {
+    //        TeedaInitializer initializer = new TeedaInitializer();
+    //        initializer
+    //                .setServletContext(new ServletContextWrapper(portletContext));
+    //        initializer.initializeFaces();
+    //    }
 
     public void destroy() {
         super.destroy();
@@ -361,6 +307,9 @@ public class FacesPortlet extends GenericPortlet {
                 request.setAttribute(VIEW_ID, facesContext.getViewRoot()
                         .getViewId());
                 saveFacesState(facesContext);
+                if (request.getParameter(TAKE_OVER_PARAMETER) != null) {
+                    takeOverParameter(request, response);
+                }
             }
 
         } catch (Throwable e) {
@@ -475,7 +424,7 @@ public class FacesPortlet extends GenericPortlet {
 
     }
 
-    private void saveFacesState(FacesContext facesContext) {
+    protected void saveFacesState(FacesContext facesContext) {
         PortletSession session = (PortletSession) facesContext
                 .getExternalContext().getSession(true);
 
@@ -530,7 +479,7 @@ public class FacesPortlet extends GenericPortlet {
         }
     }
 
-    private String getCurrentViewId(FacesContext facesContext) {
+    protected String getCurrentViewId(FacesContext facesContext) {
         Map requestMap = facesContext.getExternalContext().getRequestMap();
         Map requestParameterMap = facesContext.getExternalContext()
                 .getRequestParameterMap();
@@ -546,7 +495,7 @@ public class FacesPortlet extends GenericPortlet {
         return (String) requestMap.get(DEFAULT_PAGE);
     }
 
-    private void setViewId(FacesContext facesContext) {
+    protected void setViewId(FacesContext facesContext) {
         String viewId = getCurrentViewId(facesContext);
         facesContext.getApplication().getViewHandler().restoreView(
                 facesContext, viewId);
@@ -562,7 +511,18 @@ public class FacesPortlet extends GenericPortlet {
         // context.getViewRoot().setRenderKitId(RenderKitFactory.HTML_BASIC_RENDER_KIT);
     }
 
-    private class FacesPortletState {
+    protected void takeOverParameter(ActionRequest request,
+            ActionResponse response) {
+        Enumeration enu = request.getParameterNames();
+        while (enu.hasMoreElements()) {
+            String key = (String) enu.nextElement();
+            response.setRenderParameter(key, request.getParameter(key));
+        }
+    }
+
+    protected class FacesPortletState implements Serializable {
+
+        private static final long serialVersionUID = -2877915312956741979L;
 
         private Map messages = new HashMap();
 
