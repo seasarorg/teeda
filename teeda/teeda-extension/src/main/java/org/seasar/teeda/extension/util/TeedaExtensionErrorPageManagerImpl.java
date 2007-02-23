@@ -55,6 +55,7 @@ public class TeedaExtensionErrorPageManagerImpl extends
             return false;
         }
         saveException(exception, context);
+        // TODO PortletSupport - replace a servlet specific class with FacesContext..
         ServletRequest request = ServletExternalContextUtil
                 .getRequest(extContext);
         ServletExternalContextUtil

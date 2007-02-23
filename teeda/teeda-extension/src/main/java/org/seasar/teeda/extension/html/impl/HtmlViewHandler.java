@@ -182,6 +182,7 @@ public class HtmlViewHandler extends ViewHandlerImpl {
 
     protected HttpServletRequest prepareRequest(FacesContext context) {
         final ExternalContext externalContext = context.getExternalContext();
+        // PortletSupport
         if (!PortletUtil.isPortlet(context)) {
             return ServletExternalContextUtil.getRequest(externalContext);
         } else {
@@ -192,6 +193,7 @@ public class HtmlViewHandler extends ViewHandlerImpl {
 
     protected HttpServletResponse prepareResponse(FacesContext context) {
         final ExternalContext externalContext = context.getExternalContext();
+        // PortletSupport
         if (!PortletUtil.isPortlet(context)) {
             return ServletExternalContextUtil.getResponse(externalContext);
         } else {
