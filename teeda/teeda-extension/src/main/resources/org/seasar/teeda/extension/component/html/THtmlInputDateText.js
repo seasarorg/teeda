@@ -16,9 +16,9 @@ Teeda.THtmlInputDateText = {
       o = o.substring(o.length - worklen);
     }
     obj.value = o;
-    if (document.all) {
-      tRNG = obj.createTextRange();
-      tRNG.select();
+    if(obj.id) {
+      var t = document.getElementById(obj.id);
+      t.select();
     }
   },
   addDelimeter : function(obj, format, worklen, threshold, delim) {

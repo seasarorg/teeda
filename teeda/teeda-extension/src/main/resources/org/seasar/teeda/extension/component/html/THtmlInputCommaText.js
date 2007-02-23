@@ -11,9 +11,9 @@ Teeda.THtmlInputCommaText = {
     }
     reg = new RegExp(groupingSeparator, 'g');
     obj.value = obj.value.replace(reg, '');
-    if (document.all) {
-      tRNG = obj.createTextRange();
-      tRNG.select();
+    if(obj.id) {
+      var t = document.getElementById(obj.id);
+      t.select();
     }
   },
   addComma : function(obj, length, groupingSeparator, decimalSeparator) {
