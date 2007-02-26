@@ -105,8 +105,9 @@ public class RestoreViewPhase extends AbstractPhase {
                     .isPost(externalContext)
                     || ExternalContextUtil.isRedirectionTrue(externalContext);
         }
-        PostbackUtil.setPostback(requestMap, viewId.equals(previousViewId)
-                && isPostOrRedirect);
+        final boolean postbackValue = viewId.equals(previousViewId)
+                && isPostOrRedirect;
+        PostbackUtil.setPostback(requestMap, postbackValue);
         return holder;
     }
 
