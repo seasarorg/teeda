@@ -50,10 +50,10 @@ public abstract class RenderPreparableUtil {
             UIComponent component) throws IOException {
         AssertionUtil.assertNotNull("context", context);
         AssertionUtil.assertNotNull("component", component);
-        if (!component.isRendered()) {
+        if (!component.isRendered() && !(component instanceof TCondition)) {
             return;
         }
-        if (component instanceof RenderPreparable) {
+        if ((component instanceof RenderPreparable)) {
             ((RenderPreparable) component).encodePrepare(context);
         }
         if (component.getChildCount() > 0) {
