@@ -270,7 +270,7 @@ public class ApplicationImpl extends Application implements
         }
         Class componentClass = (Class) componentClassMap.get(componentType);
         if (componentClass == null) {
-            throw new FacesException("Undeifined component type:"
+            throw new FacesException("Undefined component type:"
                     + componentType);
         }
         return (UIComponent) ClassUtil.newInstance(componentClass);
