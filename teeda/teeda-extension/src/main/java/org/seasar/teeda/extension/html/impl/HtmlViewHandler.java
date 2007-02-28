@@ -16,7 +16,11 @@
 package org.seasar.teeda.extension.html.impl;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Map;
+import java.util.TimeZone;
 
 import javax.faces.FactoryFinder;
 import javax.faces.component.UIViewRoot;
@@ -235,8 +239,12 @@ public class HtmlViewHandler extends ViewHandlerImpl {
     }
 
     protected void setNoCacheToResponse(HttpServletResponse res) {
-        res.setHeader("Expires", "-1");
-        res.setHeader("Pragma", "No-cache");
+        SimpleDateFormat formatter = new SimpleDateFormat(
+                "E, dd MMM yyyy hh:mm:ss zzz", Locale.US);
+        formatter.setTimeZone(TimeZone.getTimeZone("GMT"));
+        String httpDate = formatter.format(new Date());
+        res.setHeader("Expires", httpDate);
+        res.setHeader("Pragma", "no-cache");
         res.setHeader("Cache-Control", "no-cache");
     }
 
