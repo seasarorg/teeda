@@ -466,5 +466,45 @@ public class TagProcessorAssembleImplTest extends TeedaExtensionTestCase {
             return false;
         }
 
+        public boolean isSubapplicationScopeProperty(String name) {
+            // TODO Auto-generated method stub
+            return false;
+        }
+
+        public String[] getPageScopePropertyNames() {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        public String[] getRedirectScopePropertyNames() {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        public String[] getSubapplicationScopePropertyNames() {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        public boolean hasPageScopeProperty() {
+            // TODO Auto-generated method stub
+            return false;
+        }
+
+        public boolean hasRedirectScopeProperty() {
+            // TODO Auto-generated method stub
+            return false;
+        }
+
+        public boolean hasSubapplicationScopeProperty() {
+            // TODO Auto-generated method stub
+            return false;
+        }
+
+        public boolean isPageScopeProperty(String name) {
+            // TODO Auto-generated method stub
+            return false;
+        }
+
     }
 }

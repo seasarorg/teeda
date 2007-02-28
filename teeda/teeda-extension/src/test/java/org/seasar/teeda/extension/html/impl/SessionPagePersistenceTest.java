@@ -195,12 +195,13 @@ public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
         fooPage.setAaa("111");
         fooPage.setBbb(1);
         spp.save(context, path2);
-        Map subappValues = spp.getSubApplicationScopeValues(context);
+        Map subappValues = ScopeValueHelper
+                .getSubApplicationScopeValues(context);
         assertNotNull(subappValues);
         assertEquals(1, subappValues.size());
         assertEquals(new Integer(1), subappValues.get("bbb"));
 
-        Map redirectValues = spp.getRedirectScopeValues(context);
+        Map redirectValues = ScopeValueHelper.getRedirectScopeValues(context);
         assertNotNull(redirectValues);
         assertEquals(1, redirectValues.size());
         assertEquals("111", redirectValues.get("aaa"));

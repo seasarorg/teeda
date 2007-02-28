@@ -70,12 +70,6 @@ public class SessionPagePersistence implements PagePersistence {
 
     private static final String ERROR_MESSAGE_PERSISTE_KEY = "teeda.FacesMessages";
 
-    private static final String SUB_APPLICATION_SCOPE_KEY = SessionPagePersistence.class
-            .getName();
-
-    private static final String REDIRECT_SCOPE_KEY = SessionPagePersistence.class
-            .getName();
-
     private static final Logger logger = Logger
             .getLogger(SessionPagePersistence.class);
 
@@ -86,8 +80,10 @@ public class SessionPagePersistence implements PagePersistence {
         UIViewRoot viewRoot = context.getViewRoot();
         String previousViewId = (viewRoot != null) ? viewRoot.getViewId()
                 : null;
-        Map subappValues = getOrCreateSubApplicationScopeValues(context);
-        Map redirectValues = getOrCreateRedirectScopeValues(context);
+        Map subappValues = ScopeValueHelper
+                .getOrCreateSubApplicationScopeValues(context);
+        Map redirectValues = ScopeValueHelper
+                .getOrCreateRedirectScopeValues(context);
         savePageValues(subappValues, redirectValues, context, viewId,
                 previousViewId);
     }
@@ -101,11 +97,13 @@ public class SessionPagePersistence implements PagePersistence {
         if (isOutputlinkTransition(context, extCtx)) {
             return;
         }
-        final Map subappValues = getSubApplicationScopeValues(context);
+        final Map subappValues = ScopeValueHelper
+                .getSubApplicationScopeValues(context);
         if (subappValues != null) {
             restoreValues(subappValues, requestMap);
         }
-        final Map redirectValues = getRedirectScopeValues(context);
+        final Map redirectValues = ScopeValueHelper
+                .getRedirectScopeValues(context);
         if (redirectValues != null) {
             restoreValues(redirectValues, requestMap);
         }
@@ -261,12 +259,14 @@ public class SessionPagePersistence implements PagePersistence {
 
     protected Map refreshSubApplicationScopeMap(FacesContext context,
             Map subappValues) {
-        final Map subAppScopeMap = getSubApplicationScopeValues(context);
+        final Map subAppScopeMap = ScopeValueHelper
+                .getSubApplicationScopeValues(context);
         if (subAppScopeMap != null) {
             final Map scopeContext = SubApplicationScope.getContext(context);
             if (scopeContext != null) {
-                scopeContext.remove(SUB_APPLICATION_SCOPE_KEY);
-                subappValues = getOrCreateSubApplicationScopeValues(context);
+                scopeContext.remove(SUBAPPLICATION_SCOPE_KEY);
+                subappValues = ScopeValueHelper
+                        .getOrCreateSubApplicationScopeValues(context);
             }
         }
         return subappValues;
@@ -341,42 +341,6 @@ public class SessionPagePersistence implements PagePersistence {
     protected void putValue(Map map, Object page, PropertyDesc pd) {
         Object value = pd.getValue(page);
         map.put(pd.getPropertyName(), value);
-    }
-
-    protected Map getSubApplicationScopeValues(FacesContext context) {
-        Map scopeContext = SubApplicationScope.getContext(context);
-        if (scopeContext == null) {
-            return null;
-        }
-        return (Map) scopeContext.get(SUB_APPLICATION_SCOPE_KEY);
-    }
-
-    protected Map getOrCreateSubApplicationScopeValues(FacesContext context) {
-        Map scopeContext = SubApplicationScope.getOrCreateContext(context);
-        Map values = (Map) scopeContext.get(SUB_APPLICATION_SCOPE_KEY);
-        if (values == null) {
-            values = new HashMap();
-            scopeContext.put(SUB_APPLICATION_SCOPE_KEY, values);
-        }
-        return values;
-    }
-
-    protected Map getRedirectScopeValues(FacesContext context) {
-        Map scopeContext = RedirectScope.getContext(context);
-        if (scopeContext == null) {
-            return null;
-        }
-        return (Map) scopeContext.get(REDIRECT_SCOPE_KEY);
-    }
-
-    protected Map getOrCreateRedirectScopeValues(FacesContext context) {
-        Map scopeContext = RedirectScope.getOrCreateContext(context);
-        Map values = (Map) scopeContext.get(REDIRECT_SCOPE_KEY);
-        if (values == null) {
-            values = new HashMap();
-            scopeContext.put(REDIRECT_SCOPE_KEY, values);
-        }
-        return values;
     }
 
     protected void restoreValues(Map from, Map to) {

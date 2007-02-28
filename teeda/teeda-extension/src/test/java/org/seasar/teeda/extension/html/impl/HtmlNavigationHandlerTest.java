@@ -15,6 +15,8 @@
  */
 package org.seasar.teeda.extension.html.impl;
 
+import java.util.Map;
+
 import javax.faces.component.UIViewRoot;
 import javax.faces.internal.scope.SubApplicationScope;
 
@@ -31,6 +33,7 @@ import org.seasar.teeda.extension.config.taglib.element.TagElement;
 import org.seasar.teeda.extension.config.taglib.element.TaglibElement;
 import org.seasar.teeda.extension.config.taglib.element.impl.TagElementImpl;
 import org.seasar.teeda.extension.config.taglib.element.impl.TaglibElementImpl;
+import org.seasar.teeda.extension.html.PagePersistence;
 import org.seasar.teeda.extension.html.impl.page.Foo2Page;
 import org.seasar.teeda.extension.html.impl.page.FooPage;
 import org.seasar.teeda.extension.mock.MockTaglibManager;
@@ -84,9 +87,10 @@ public class HtmlNavigationHandlerTest extends TeedaTestCase {
         fooPage.setAaa("123");
         handler.handleNavigation(context, null, "foo2");
 
+        Map subappScope = SubApplicationScope
+                .getOrCreateContext(getFacesContext());
         // ## Assert ##
-        assertNotNull(SubApplicationScope.getOrCreateContext(getFacesContext())
-                .get(SessionPagePersistence.class.getName()));
+        assertNotNull(subappScope.get(PagePersistence.SUBAPPLICATION_SCOPE_KEY));
     }
 
     public void testCalcPathFromOutcome() throws Exception {

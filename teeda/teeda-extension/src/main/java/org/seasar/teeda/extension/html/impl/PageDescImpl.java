@@ -9,17 +9,21 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
 package org.seasar.teeda.extension.html.impl;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Map.Entry;
 
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.PropertyDesc;
@@ -35,7 +39,7 @@ import org.seasar.teeda.extension.html.TakeOverDesc;
 
 /**
  * @author higa
- *
+ * @author shot
  */
 public class PageDescImpl implements PageDesc {
 
@@ -56,6 +60,8 @@ public class PageDescImpl implements PageDesc {
     private File file;
 
     private long lastModified;
+
+    private static final String[] EMPTY_SCOPES = new String[0];
 
     public PageDescImpl(Class pageClass, String pageName) {
         this(pageClass, pageName, null);
@@ -124,6 +130,22 @@ public class PageDescImpl implements PageDesc {
         return ExtensionConstants.REDIRECT_SCOPE.equals(scope);
     }
 
+    public boolean isSubapplicationScopeProperty(String name) {
+        Integer scope = (Integer) propertyScopes.get(name);
+        if (scope == null) {
+            return false;
+        }
+        return ExtensionConstants.SUBAPP_SCOPE.equals(scope);
+    }
+
+    public boolean isPageScopeProperty(String name) {
+        Integer scope = (Integer) propertyScopes.get(name);
+        if (scope == null) {
+            return false;
+        }
+        return ExtensionConstants.PAGE_SCOPE.equals(scope);
+    }
+
     public boolean hasProperty(String name) {
         return propertyNames.contains(name);
     }
@@ -159,6 +181,45 @@ public class PageDescImpl implements PageDesc {
             return true;
         }
         return file.lastModified() != lastModified;
+    }
+
+    public String[] getPageScopePropertyNames() {
+        return getScopePropertyNames(ExtensionConstants.PAGE_SCOPE);
+    }
+
+    public String[] getRedirectScopePropertyNames() {
+        return getScopePropertyNames(ExtensionConstants.REDIRECT_SCOPE);
+    }
+
+    public String[] getSubapplicationScopePropertyNames() {
+        return getScopePropertyNames(ExtensionConstants.SUBAPP_SCOPE);
+    }
+
+    protected String[] getScopePropertyNames(Integer targetScope) {
+        if (propertyScopes == null) {
+            return EMPTY_SCOPES;
+        }
+        List list = new ArrayList();
+        for (Iterator itr = propertyScopes.entrySet().iterator(); itr.hasNext();) {
+            Map.Entry entry = (Entry) itr.next();
+            Integer scope = (Integer) entry.getValue();
+            if (targetScope.equals(scope)) {
+                list.add(entry.getKey());
+            }
+        }
+        return (String[]) list.toArray(new String[list.size()]);
+    }
+
+    public boolean hasPageScopeProperty() {
+        return propertyScopes.containsValue(ExtensionConstants.PAGE_SCOPE);
+    }
+
+    public boolean hasRedirectScopeProperty() {
+        return propertyScopes.containsValue(ExtensionConstants.REDIRECT_SCOPE);
+    }
+
+    public boolean hasSubapplicationScopeProperty() {
+        return propertyScopes.containsValue(ExtensionConstants.SUBAPP_SCOPE);
     }
 
 }

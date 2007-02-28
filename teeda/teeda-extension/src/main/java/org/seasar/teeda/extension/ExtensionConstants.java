@@ -153,4 +153,5 @@ public interface ExtensionConstants {
     Integer PAGE_SCOPE = new Integer(2);
 
     Integer SUBAPP_SCOPE = new Integer(3);
+
 }

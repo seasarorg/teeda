@@ -16,10 +16,7 @@
 package org.seasar.teeda.extension.html.impl;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-import java.util.TimeZone;
+import java.util.Map;
 
 import javax.faces.FactoryFinder;
 import javax.faces.component.UIViewRoot;
@@ -35,18 +32,23 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 
+import org.seasar.framework.beans.BeanDesc;
+import org.seasar.framework.beans.PropertyDesc;
+import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.framework.container.servlet.S2ContainerServlet;
 import org.seasar.framework.exception.IORuntimeException;
 import org.seasar.teeda.core.application.TeedaStateManager;
 import org.seasar.teeda.core.application.ViewHandlerImpl;
+import org.seasar.teeda.core.util.DIContainerUtil;
 import org.seasar.teeda.core.util.ExternalContextUtil;
 import org.seasar.teeda.core.util.PortletExternalContextUtil;
 import org.seasar.teeda.core.util.PortletUtil;
 import org.seasar.teeda.core.util.ServletExternalContextUtil;
 import org.seasar.teeda.extension.component.RenderPreparableUtil;
 import org.seasar.teeda.extension.exception.JspRuntimeException;
-import org.seasar.teeda.extension.html.HtmlComponentInvoker;
 import org.seasar.teeda.extension.html.HtmlSuffix;
+import org.seasar.teeda.extension.html.PageDesc;
+import org.seasar.teeda.extension.html.PageDescCache;
 import org.seasar.teeda.extension.html.PagePersistence;
 import org.seasar.teeda.extension.html.TagProcessor;
 import org.seasar.teeda.extension.html.TagProcessorCache;
@@ -66,7 +68,7 @@ public class HtmlViewHandler extends ViewHandlerImpl {
 
     private TeedaStateManager stateManager;
 
-    private HtmlComponentInvoker htmlComponentInvoker;
+    private PageDescCache pageDescCache;
 
     public void setTagProcessorCache(TagProcessorCache tagProcessorCache) {
         this.tagProcessorCache = tagProcessorCache;
@@ -88,14 +90,6 @@ public class HtmlViewHandler extends ViewHandlerImpl {
      */
     public void setStateManager(TeedaStateManager stateManager) {
         this.stateManager = stateManager;
-    }
-
-    /**
-     * @param htmlComponentInvoker The htmlComponentInvoker to set.
-     */
-    public void setHtmlComponentInvoker(
-            HtmlComponentInvoker htmlComponentInvoker) {
-        this.htmlComponentInvoker = htmlComponentInvoker;
     }
 
     public UIViewRoot restoreView(FacesContext context, String viewId) {
@@ -153,7 +147,45 @@ public class HtmlViewHandler extends ViewHandlerImpl {
         } catch (JspException ex) {
             throw new JspRuntimeException(ex);
         }
+        PageDesc pageDesc = pageDescCache.getPageDesc(path);
+        if (hasPageOrSubapplicationScope(pageDesc)) {
+            final String pageName = pageDesc.getPageName();
+            final Object component = DIContainerUtil.getComponent(pageName);
+            final Map subApplicationScopeValues = ScopeValueHelper
+                    .getOrCreateSubApplicationScopeValues(context);
+            saveValueToScope(component, subApplicationScopeValues, pageDesc
+                    .getSubapplicationScopePropertyNames());
+            final Map pageScopeValues = ScopeValueHelper
+                    .getOrCreatePageScopeValues(context);
+            saveValueToScope(component, pageScopeValues, pageDesc
+                    .getPageScopePropertyNames());
+        }
         pageContext.getOut().flush();
+    }
+
+    private static boolean hasPageOrSubapplicationScope(PageDesc pageDesc) {
+        if (pageDesc == null) {
+            return false;
+        }
+        return (pageDesc.hasPageScopeProperty() || pageDesc
+                .hasSubapplicationScopeProperty());
+    }
+
+    protected void saveValueToScope(Object component, Map scopeContext,
+            String[] scopePropertyNames) {
+        if (component == null) {
+            return;
+        }
+        BeanDesc beanDesc = BeanDescFactory.getBeanDesc(component.getClass());
+        for (int i = 0; i < scopePropertyNames.length; i++) {
+            String propertyName = scopePropertyNames[i];
+            if (beanDesc.hasPropertyDesc(propertyName)) {
+                PropertyDesc propertyDesc = beanDesc
+                        .getPropertyDesc(propertyName);
+                scopeContext
+                        .put(propertyName, propertyDesc.getValue(component));
+            }
+        }
     }
 
     protected Servlet getServlet() {
@@ -203,13 +235,17 @@ public class HtmlViewHandler extends ViewHandlerImpl {
     }
 
     protected void setNoCacheToResponse(HttpServletResponse res) {
-        SimpleDateFormat formatter = new SimpleDateFormat(
-                "E, dd MMM yyyy hh:mm:ss zzz", Locale.US);
-        formatter.setTimeZone(TimeZone.getTimeZone("GMT"));
-        String httpDate = formatter.format(new Date());
-        res.setHeader("Expires", httpDate);
-        res.setHeader("Pragma", "no-cache");
+        res.setHeader("Expires", "-1");
+        res.setHeader("Pragma", "No-cache");
         res.setHeader("Cache-Control", "no-cache");
+    }
+
+    public PageDescCache getPageDescCache() {
+        return pageDescCache;
+    }
+
+    public void setPageDescCache(PageDescCache pageDescCache) {
+        this.pageDescCache = pageDescCache;
     }
 
 }

@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -99,4 +99,43 @@ public class PageDescImplTest extends TeedaExtensionTestCase {
         assertTrue(pd.isRedirectScopeProperty("aaa"));
         assertFalse(pd.isRedirectScopeProperty("bbb"));
     }
+
+    public void testIsSubappScopeProperty() throws Exception {
+        PageDesc pd = createPageDesc(FooPage.class, "fooPage");
+        assertTrue(pd.isSubapplicationScopeProperty("bbb"));
+        assertFalse(pd.isSubapplicationScopeProperty("aaa"));
+    }
+
+    public void testIsPageScopeProperty() throws Exception {
+        PageDesc pd = createPageDesc(FooPage.class, "fooPage");
+        assertTrue(pd.isPageScopeProperty("eee"));
+        assertFalse(pd.isPageScopeProperty("aaa"));
+    }
+
+    public void testGetPageScopePropertyNames() throws Exception {
+        PageDesc pd = createPageDesc(FooPage.class, "fooPage");
+        String[] pageScopePropertyNames = pd.getPageScopePropertyNames();
+        assertNotNull(pageScopePropertyNames);
+        assertTrue(pageScopePropertyNames.length == 1);
+        assertEquals("eee", pageScopePropertyNames[0]);
+    }
+
+    public void testGetRedirectScopePropertyNames() throws Exception {
+        PageDesc pd = createPageDesc(FooPage.class, "fooPage");
+        String[] redirectScopePropertyNames = pd
+                .getRedirectScopePropertyNames();
+        assertNotNull(redirectScopePropertyNames);
+        assertTrue(redirectScopePropertyNames.length == 1);
+        assertEquals("aaa", redirectScopePropertyNames[0]);
+    }
+
+    public void testGetSubapplicationScopePropertyNames() throws Exception {
+        PageDesc pd = createPageDesc(FooPage.class, "fooPage");
+        String[] subappScopePropertyNames = pd
+                .getSubapplicationScopePropertyNames();
+        assertNotNull(subappScopePropertyNames);
+        assertTrue(subappScopePropertyNames.length == 1);
+        assertEquals("bbb", subappScopePropertyNames[0]);
+    }
+
 }
