@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -93,7 +93,7 @@ public class THtmlInputCommaTextRenderer extends
             if (value.indexOf(groupingSeparator) > 0) {
                 value = StringUtil.replace(value, groupingSeparator, "");
             }
-            
+
             final DecimalFormat df = new DecimalFormat();
             int pos = value.indexOf(fraction);
             if (pos < 0) {
@@ -101,7 +101,8 @@ public class THtmlInputCommaTextRenderer extends
                 return df.format(bd);
             } else {
                 final boolean isMinus = value.startsWith("-");
-                String intPart = (isMinus) ? value.substring(1, pos) : value.substring(0, pos);
+                String intPart = (isMinus) ? value.substring(1, pos) : value
+                        .substring(0, pos);
                 String fractPart = value.substring(pos);
                 BigDecimal bd = BigDecimalConversionUtil.toBigDecimal(intPart);
                 String s = df.format(bd);
@@ -164,7 +165,7 @@ public class THtmlInputCommaTextRenderer extends
             ResponseWriter writer, String groupingSeparator) throws IOException {
         String onfocus = appendSemiColonIfNeed(htmlInputCommaText.getOnfocus());
         String target = JS_NAMESPACE_PREFIX + "removeComma(this, '"
-                + groupingSeparator + "');";
+                + groupingSeparator + "');this.select();";
         if (!onfocus.endsWith(target)) {
             onfocus = onfocus + target;
         }
@@ -251,10 +252,8 @@ public class THtmlInputCommaTextRenderer extends
         ignore.addAttributeName(JsfConstants.ONKEYUP_ATTR);
         ignore.addAttributeName(JsfConstants.DISABLED_ATTR);
         ignore.addAttributeName(ExtensionConstants.FRACTION_ATTR);
-        ignore
-                .addAttributeName(ExtensionConstants.GROUPING_SEPARATOR_ATTR);
-        ignore
-                .addAttributeName(ExtensionConstants.FRACTION_SEPARATOR_ATTR);
+        ignore.addAttributeName(ExtensionConstants.GROUPING_SEPARATOR_ATTR);
+        ignore.addAttributeName(ExtensionConstants.FRACTION_SEPARATOR_ATTR);
         return ignore;
     };
 

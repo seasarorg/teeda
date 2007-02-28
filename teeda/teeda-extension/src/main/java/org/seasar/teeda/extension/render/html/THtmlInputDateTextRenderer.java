@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -119,7 +119,7 @@ public class THtmlInputDateTextRenderer extends AbstractInputExtendTextRenderer 
         final String length = holder.getLength();
         String onfocus = appendSemiColonIfNeed(htmlInputDateText.getOnfocus());
         String target = JS_NAMESPACE_PREFIX + "removeDelimeter(this, '" + delim
-                + "', " + length + ");";
+                + "', " + length + ");this.select();";
         if (!onfocus.endsWith(target)) {
             onfocus = onfocus + target;
         }
@@ -132,7 +132,8 @@ public class THtmlInputDateTextRenderer extends AbstractInputExtendTextRenderer 
     protected void renderOnblur(THtmlInputDateText htmlInputDateText,
             ResponseWriter writer, InputDateValueHolder holder)
             throws IOException {
-        final String onblur = createConvertAndAddDelimeterFunctions(htmlInputDateText, holder);
+        final String onblur = createConvertAndAddDelimeterFunctions(
+                htmlInputDateText, holder);
         if (StringUtil.isNotBlank(onblur)) {
             RendererUtil.renderAttribute(writer, JsfConstants.ONBLUR_ATTR,
                     onblur);
@@ -145,8 +146,7 @@ public class THtmlInputDateTextRenderer extends AbstractInputExtendTextRenderer 
         final String length = holder.getLength();
         final String threshold = holder.getThreshold();
         final String delim = holder.getDelim();
-        final String attr = appendSemiColonIfNeed(htmlInputDateText
-                .getOnblur());
+        final String attr = appendSemiColonIfNeed(htmlInputDateText.getOnblur());
         final String s = JS_NAMESPACE_PREFIX + "convertByKey(this);"
                 + JS_NAMESPACE_PREFIX + "addDelimeter(this, '" + pattern
                 + "', " + length + ", " + threshold + ", '" + delim + "');";

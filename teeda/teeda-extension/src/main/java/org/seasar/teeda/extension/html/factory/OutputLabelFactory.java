@@ -9,12 +9,13 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
 package org.seasar.teeda.extension.html.factory;
 
+import java.util.Iterator;
 import java.util.Map;
 
 import javax.faces.internal.LabelUtil;
@@ -73,6 +74,18 @@ public class OutputLabelFactory extends AbstractElementProcessorFactory {
                 .getDefaultApplicationPropertiesName(namingConvention, pageName);
         properties.put(ExtensionConstants.DEFAULT_PROPERTIES_NAME_ATTR,
                 defaultPropertiesName);
+    }
+
+    protected void customizeDynamicProperties(String base, Map properties,
+            ElementNode elementNode, PageDesc pageDesc, ActionDesc actionDesc) {
+        if (base == null) {
+            return;
+        }
+        for (Iterator i = properties.keySet().iterator(); i.hasNext();) {
+            String key = (String) i.next();
+            customizeDynamicProperty(base, key, properties, elementNode,
+                    pageDesc, actionDesc);
+        }
     }
 
     protected void customizeDynamicProperty(String base, String name,

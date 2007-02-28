@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -72,7 +72,7 @@ public class THtmlGridInputCommaTextRendererTest extends RendererTest {
         final String expected = "<div onclick=\"Teeda.THtmlGrid.editOn(this);\">"
                 + "<span></span>"
                 + "<input type=\"text\" name=\"_id0\" value=\"\""
-                + " onfocus=\"Teeda.THtmlInputCommaText.removeComma(this, ',');\""
+                + " onfocus=\"Teeda.THtmlInputCommaText.removeComma(this, ',');this.select();\""
                 + " onblur=\"Teeda.THtmlInputCommaText.convertByKey(this);Teeda.THtmlInputCommaText.addComma(this, 0, ',', '.');Teeda.THtmlGrid.editOff(this);\""
                 + " onkeydown=\"return Teeda.THtmlInputCommaText.keycheckForNumber(event, this, 0, '.');\""
                 + " onkeypress=\"return Teeda.THtmlInputCommaText.keycheckForNumber(event, this, 0, '.');\""
@@ -152,7 +152,7 @@ public class THtmlGridInputCommaTextRendererTest extends RendererTest {
                 + " lang=\"e\""
                 + " class=\"u gridCellEdit\""
                 + " style=\"w;ime-mode:disabled;display:none;\""
-                + " onfocus=\"k;Teeda.THtmlInputCommaText.removeComma(this, ',');\""
+                + " onfocus=\"k;Teeda.THtmlInputCommaText.removeComma(this, ',');this.select();\""
                 + " onblur=\"g;Teeda.THtmlInputCommaText.convertByKey(this);Teeda.THtmlInputCommaText.addComma(this, 2, ',', '.');Teeda.THtmlGrid.editOff(this);\""
                 + " onkeydown=\"l;return Teeda.THtmlInputCommaText.keycheckForNumber(event, this, 2, '.');\""
                 + " onkeypress=\"m;return Teeda.THtmlInputCommaText.keycheckForNumber(event, this, 2, '.');\""
