@@ -54,6 +54,7 @@ public class AbsElementProcessorFactoryTest extends TeedaExtensionTestCase {
                 pageDesc, actionDesc);
         assertEquals("#{fooPage.aaaStyleClass}", processor
                 .getProperty("styleClass"));
+        assertEquals("aaa", processor.getProperty("id"));
 
         factory.createProcessor(elementNode, null, null);
     }

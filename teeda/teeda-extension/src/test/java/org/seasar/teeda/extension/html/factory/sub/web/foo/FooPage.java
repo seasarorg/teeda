@@ -97,6 +97,10 @@ public class FooPage {
         return "mystyle";
     }
 
+    public String getAaaId() {
+        return "hoge";
+    }
+
     public String getCcc() {
         return ccc;
     }

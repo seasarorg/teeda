@@ -133,7 +133,7 @@ public abstract class AbstractElementProcessorFactory implements
         }
         for (Iterator i = properties.keySet().iterator(); i.hasNext();) {
             String key = (String) i.next();
-            if (base.equals(key)) {
+            if (JsfConstants.ID_ATTR.equals(key)) {
                 continue;
             }
             customizeDynamicProperty(base, key, properties, elementNode,
