@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -23,11 +23,16 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletRequest;
 
+import org.seasar.framework.log.Logger;
+
 /**
  * @author higa
- *
+ * @author shot
  */
 public class ServletErrorPageManagerImpl implements ErrorPageManager {
+
+    private static final Logger logger = Logger
+            .getLogger(ServletErrorPageManagerImpl.class);
 
     private Map locations = new HashMap();
 
@@ -37,6 +42,9 @@ public class ServletErrorPageManagerImpl implements ErrorPageManager {
 
     public boolean handleException(Throwable exception, FacesContext context,
             ExternalContext extContext) throws IOException {
+        if (logger.isDebugEnabled()) {
+            logger.debug(exception);
+        }
         String location = getLocation(exception.getClass());
         if (location == null) {
             return false;
