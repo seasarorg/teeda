@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -136,10 +136,11 @@ public abstract class UIComponentTag implements Tag {
         if (parentTag == null) {
             componentIds = new HashMap();
             pageContext.setAttribute(InternalConstants.GLOBAL_ID_VIEW,
-                    componentIds, PageContext.PAGE_SCOPE);
+                    componentIds, PageContext.REQUEST_SCOPE);
         } else {
-            componentIds = (Map) pageContext.getAttribute(
-                    InternalConstants.GLOBAL_ID_VIEW, PageContext.PAGE_SCOPE);
+            componentIds = (Map) pageContext
+                    .getAttribute(InternalConstants.GLOBAL_ID_VIEW,
+                            PageContext.REQUEST_SCOPE);
         }
         component = findComponent(context);
 

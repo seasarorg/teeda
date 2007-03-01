@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -34,19 +34,24 @@ public class PageContextUtil {
 
     public static List getComponentTagStackAttribute(PageContext pageContext) {
         return (List) pageContext.getAttribute(
-                InternalConstants.COMPONENT_TAG_STACK_ATTR,
-                PageContext.PAGE_SCOPE);
+                InternalConstants.COMPONENT_TAG_STACK_ATTR, getScope());
     }
 
     public static void setComponentStackAttribute(PageContext pageContext,
             List list) {
         pageContext.setAttribute(InternalConstants.COMPONENT_TAG_STACK_ATTR,
-                list, PageContext.PAGE_SCOPE);
+                list, getScope());
     }
 
     public static void removeComponentStackAttribute(PageContext pageContext) {
         pageContext.removeAttribute(InternalConstants.COMPONENT_TAG_STACK_ATTR,
-                PageContext.PAGE_SCOPE);
+                getScope());
+    }
+
+    private static int getScope() {
+        String defaultSuffix = FacesConfigOptions.getDefaultSuffix();
+        return (defaultSuffix.indexOf(".htm") >= 0) ? PageContext.PAGE_SCOPE
+                : PageContext.REQUEST_SCOPE;
     }
 
     public static FacesContext getCurrentFacesContextAttribute(

@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -22,7 +22,6 @@ import java.util.Map;
 
 import javax.faces.application.ViewHandler;
 import javax.faces.component.UIViewRoot;
-import javax.faces.context.FacesContext;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.BodyContent;
 import javax.servlet.jsp.tagext.BodyTag;
@@ -169,19 +168,19 @@ public class ViewTagTest extends TeedaTestCase {
         MockFacesContext context = getFacesContext();
         context.setExternalContext(new MockExternalContextImpl() {
             private Map requestHeaderMap = new HashMap();
+
             public Map getRequestHeaderMap() {
                 return requestHeaderMap;
             }
         });
-        context.getExternalContext().getRequestHeaderMap().put(
-                "Accept", null);
+        context.getExternalContext().getRequestHeaderMap().put("Accept", null);
 
         // # Act #
         tag.doStartTag();
 
         // # Assert #
         String contentType = pageContext.getResponse().getContentType();
-        assertNull(contentType);
+        assertEquals("text/html; charset=ISO-8859-1", contentType);
     }
 
     public void testDoStartTag_SetContentType() throws Exception {
@@ -192,16 +191,17 @@ public class ViewTagTest extends TeedaTestCase {
         pageContext.setResponse(getResponse());
         tag.setPageContext(pageContext);
         tag.setParent(null);
-        
+
         MockFacesContext context = getFacesContext();
         context.setExternalContext(new MockExternalContextImpl() {
             private Map requestHeaderMap = new HashMap();
+
             public Map getRequestHeaderMap() {
                 return requestHeaderMap;
             }
         });
-        context.getExternalContext().getRequestHeaderMap().put(
-                "accept", JsfConstants.XHTML_CONTENT_TYPE);
+        context.getExternalContext().getRequestHeaderMap().put("accept",
+                JsfConstants.XHTML_CONTENT_TYPE);
 
         // # Act #
         tag.doStartTag();

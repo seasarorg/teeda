@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -25,7 +25,9 @@ public abstract class FacesConfigOptions {
 
     private static boolean savingStateInClient = false;
 
-    private static String defaultSuffix;
+    private static final String DEFAULT_DEFAULT_SUFFIX = ".jsp";
+
+    private static String defaultSuffix = DEFAULT_DEFAULT_SUFFIX;
 
     private static String lifecycleId;
 
@@ -115,7 +117,7 @@ public abstract class FacesConfigOptions {
     public static void clear() {
         configFiles = null;
         savingStateInClient = false;
-        defaultSuffix = null;
+        defaultSuffix = DEFAULT_DEFAULT_SUFFIX;
         lifecycleId = null;
         javascriptNotPermittedPath = null;
         compressState = false;
