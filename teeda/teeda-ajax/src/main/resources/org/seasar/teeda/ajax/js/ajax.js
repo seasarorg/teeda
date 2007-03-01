@@ -322,7 +322,7 @@ Kumu.Ajax = {
     var str = func.toString();
     var ret = str.match(/[0-9A-Za-z_]+\(/).toString();
     ret = ret.substring(0,ret.length-1);
-    var idx = ret.indexOf("_");
+    var idx = ret.lastIndexOf("_");
     if (idx == -1) {
       return [];
     }
