@@ -36,6 +36,7 @@ import javax.servlet.jsp.jstl.core.Config;
 
 import org.seasar.framework.util.AssertionUtil;
 import org.seasar.framework.util.LocaleUtil;
+import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.util.ContentTypeUtil;
 
 /**
@@ -83,6 +84,9 @@ public class TViewTag extends UIComponentTag {
             final String contentType = ContentTypeUtil
                     .getContentType(acceptContentTypes);
             response.setContentType(contentType + "; charset=" + encoding);
+        } else {
+            response.setContentType(JsfConstants.HTML_CONTENT_TYPE
+                    + "; charset=" + encoding);
         }
         ResponseWriter writer = context.getResponseWriter();
         AssertionUtil.assertNotNull("ResponseWriter", writer);
