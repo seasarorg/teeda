@@ -9,12 +9,13 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
 package org.seasar.teeda.extension.annotation.handler;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 import javax.faces.internal.ConverterResource;
@@ -24,6 +25,7 @@ import org.seasar.framework.container.deployer.InstanceDefFactory;
 import org.seasar.framework.container.impl.ComponentDefImpl;
 import org.seasar.teeda.core.unit.TeedaTestCase;
 import org.seasar.teeda.extension.annotation.convert.DateTimeConverter;
+import org.seasar.teeda.extension.annotation.convert.TimestampConverter;
 import org.seasar.teeda.extension.convert.TDateTimeConverter;
 
 public class TigerConverterAnnotationHandlerTest extends TeedaTestCase {
@@ -33,6 +35,11 @@ public class TigerConverterAnnotationHandlerTest extends TeedaTestCase {
 				"TDateTimeConverter");
 		cd.setInstanceDef(InstanceDefFactory.PROTOTYPE);
 		register(cd);
+		ComponentDef cd2 = new ComponentDefImpl(
+				org.seasar.teeda.core.convert.TimestampConverter.class,
+				"timestampConverter");
+		cd2.setInstanceDef(InstanceDefFactory.PROTOTYPE);
+		register(cd2);
 		register(HogeBean.class, "hogeBean");
 	}
 
@@ -43,6 +50,11 @@ public class TigerConverterAnnotationHandlerTest extends TeedaTestCase {
 				.getConverter("#{hogeBean.aaa}");
 		assertNotNull(converter);
 		assertEquals("time", converter.getType());
+
+		org.seasar.teeda.core.convert.TimestampConverter timestampConverter = (org.seasar.teeda.core.convert.TimestampConverter) ConverterResource
+				.getConverter("#{hogeBean.ddd}");
+		assertNotNull(timestampConverter);
+		assertEquals("yyyy/MM/dd HH:mm:ss.SSS", timestampConverter.getPattern());
 	}
 
 	public void testConstantAnnotation() throws Exception {
@@ -73,6 +85,17 @@ public class TigerConverterAnnotationHandlerTest extends TeedaTestCase {
 		private Date bbb;
 
 		private Date ccc;
+
+		@TimestampConverter(pattern = "yyyy/MM/dd HH:mm:ss.SSS")
+		private Timestamp ddd;
+
+		public Timestamp getDdd() {
+			return ddd;
+		}
+
+		public void setDdd(Timestamp ddd) {
+			this.ddd = ddd;
+		}
 
 		/**
 		 * @return Returns the aaa.
