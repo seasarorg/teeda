@@ -138,31 +138,6 @@ public class RestoreViewPhaseTest extends TeedaTestCase {
 
     /*
      * TEEDA-117
-     * viewIdが異なる & POST
-     */
-    public void testPostbackFalse1() throws Exception {
-        // ## Arrange ##
-        final RestoreViewPhase phase = new RestoreViewPhase() {
-            protected String getViewIdFromSession(Map sessionMap,
-                    String windowId) {
-                return "/otherViewId";
-            }
-        };
-        final MockFacesContext context = getFacesContext();
-        final MockHttpServletRequest request = getRequest();
-        request.setPathInfo("/fooViewId");
-        request.setMethod("POST");
-
-        // ## Act ##
-        phase.executePhase(context);
-
-        // ## Assert ##
-        assertEquals(false, PostbackUtil.isPostback(context
-                .getExternalContext().getRequestMap()));
-    }
-
-    /*
-     * TEEDA-117
      * viewIdが同じ & GET
      */
     public void testPostbackFalse2() throws Exception {

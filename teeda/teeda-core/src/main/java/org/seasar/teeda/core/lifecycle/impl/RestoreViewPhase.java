@@ -94,20 +94,15 @@ public class RestoreViewPhase extends AbstractPhase {
             final FacesContext context) {
         RestoreValueHolder holder = new RestoreValueHolder(context);
         final ExternalContext externalContext = context.getExternalContext();
-        final String viewId = holder.getCurrentViewId();
         final String previousViewId = holder.getPreviousViewId();
         Map requestMap = externalContext.getRequestMap();
         requestMap.put(JsfConstants.PREVIOUS_VIEW_ID, previousViewId);
-        boolean isPostOrRedirect = true;
+        boolean isPost = true;
         // PortletSupport
         if (!PortletUtil.isPortlet(context)) {
-            isPostOrRedirect = ServletExternalContextUtil
-                    .isPost(externalContext)
-                    || ExternalContextUtil.isRedirectionTrue(externalContext);
+            isPost = ServletExternalContextUtil.isPost(externalContext);
         }
-        final boolean postbackValue = viewId.equals(previousViewId)
-                && isPostOrRedirect;
-        PostbackUtil.setPostback(requestMap, postbackValue);
+        PostbackUtil.setPostback(requestMap, isPost);
         return holder;
     }
 
