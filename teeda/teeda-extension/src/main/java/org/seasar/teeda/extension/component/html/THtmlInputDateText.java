@@ -18,9 +18,9 @@ package org.seasar.teeda.extension.component.html;
 import java.io.IOException;
 
 import javax.faces.context.FacesContext;
+import javax.faces.internal.RenderPreparable;
+import javax.faces.internal.RenderPreparableUtil;
 
-import org.seasar.teeda.extension.component.RenderPreparable;
-import org.seasar.teeda.extension.component.RenderPreparableUtil;
 
 /**
  * @author shot

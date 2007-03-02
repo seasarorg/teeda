@@ -9,26 +9,25 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.extension.component;
+package javax.faces.internal;
 
 import java.io.IOException;
 import java.util.Iterator;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.internal.UIComponentUtil;
 import javax.faces.render.Renderer;
 
 import org.seasar.framework.util.AssertionUtil;
-import org.seasar.teeda.extension.render.RenderPreparableRenderer;
+import org.seasar.teeda.core.render.RenderPreparableRenderer;
 
 /**
  * @author higa
- * 
+ *
  */
 public abstract class RenderPreparableUtil {
 
@@ -50,7 +49,9 @@ public abstract class RenderPreparableUtil {
             UIComponent component) throws IOException {
         AssertionUtil.assertNotNull("context", context);
         AssertionUtil.assertNotNull("component", component);
-        if (!component.isRendered() && !(component instanceof TCondition)) {
+        final String componentName = component.getClass().getName();
+        //TEEDA-264
+        if (!component.isRendered() && !(componentName.endsWith("TCondition"))) {
             return;
         }
         if ((component instanceof RenderPreparable)) {

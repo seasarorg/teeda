@@ -13,17 +13,19 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.extension.component;
+package org.seasar.teeda.core.render;
 
 import java.io.IOException;
 
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 
 /**
  * @author higa
  *
  */
-public interface RenderPreparable {
+public interface RenderPreparableRenderer {
 
-    void encodePrepare(FacesContext context) throws IOException;
+    void encodePrepare(FacesContext context, UIComponent component)
+            throws IOException;
 }

@@ -26,6 +26,7 @@
 		</renderer>
 	</render-kit>
 
+	<!--
     <component>
 		<component-type>
 			javax.faces.ViewRoot
@@ -34,6 +35,7 @@
 			org.seasar.teeda.extension.component.TViewRoot
 		</component-class>
 	</component>
+	 -->
 	<component>
 		<component-type>
 			org.seasar.teeda.extension.Text

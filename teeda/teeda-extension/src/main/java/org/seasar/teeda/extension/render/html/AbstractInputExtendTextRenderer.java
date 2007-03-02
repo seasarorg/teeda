@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -18,7 +18,6 @@ package org.seasar.teeda.extension.render.html;
 import java.io.IOException;
 
 import javax.faces.component.UIComponent;
-import javax.faces.component.UIViewRoot;
 import javax.faces.component.html.HtmlInputText;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
@@ -27,13 +26,12 @@ import javax.faces.internal.IgnoreAttribute;
 import org.seasar.framework.util.ResourceUtil;
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.core.render.RenderPreparableRenderer;
 import org.seasar.teeda.core.util.JavaScriptPermissionUtil;
 import org.seasar.teeda.core.util.RendererUtil;
 import org.seasar.teeda.core.util.ValueHolderUtil;
 import org.seasar.teeda.extension.ExtensionConstants;
-import org.seasar.teeda.extension.component.TViewRoot;
 import org.seasar.teeda.extension.component.html.THtmlInputText;
-import org.seasar.teeda.extension.render.RenderPreparableRenderer;
 import org.seasar.teeda.extension.util.VirtualResource;
 
 /**
@@ -48,9 +46,7 @@ public abstract class AbstractInputExtendTextRenderer extends
         if (!component.isRendered()) {
             return;
         }
-        UIViewRoot root = context.getViewRoot();
-        if (root instanceof TViewRoot
-                && JavaScriptPermissionUtil.isJavaScriptPermitted(context)) {
+        if (JavaScriptPermissionUtil.isJavaScriptPermitted(context)) {
             THtmlInputText input = (THtmlInputText) component;
             encodeInputExtendTextEnd(context, input);
         } else {

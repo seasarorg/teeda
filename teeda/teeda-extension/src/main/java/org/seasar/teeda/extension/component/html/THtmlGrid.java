@@ -21,9 +21,9 @@ import javax.faces.component.NamingContainer;
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
 import javax.faces.internal.FacesConfigOptions;
+import javax.faces.internal.RenderPreparable;
+import javax.faces.internal.RenderPreparableUtil;
 
-import org.seasar.teeda.extension.component.RenderPreparable;
-import org.seasar.teeda.extension.component.RenderPreparableUtil;
 import org.seasar.teeda.extension.component.TForEach;
 
 /**

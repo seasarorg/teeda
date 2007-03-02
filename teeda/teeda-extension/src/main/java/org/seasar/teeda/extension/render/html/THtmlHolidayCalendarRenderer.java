@@ -32,9 +32,9 @@ import javax.faces.internal.FacesMessageUtil;
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.AbstractInputRenderer;
+import org.seasar.teeda.core.render.RenderPreparableRenderer;
 import org.seasar.teeda.core.util.RendererUtil;
 import org.seasar.teeda.extension.component.html.THtmlHolidayCalendar;
-import org.seasar.teeda.extension.render.RenderPreparableRenderer;
 import org.seasar.teeda.extension.util.DateFormatSymbolsUtil;
 import org.seasar.teeda.extension.util.VirtualResource;
 

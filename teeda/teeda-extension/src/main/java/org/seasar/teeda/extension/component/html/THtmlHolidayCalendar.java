@@ -21,9 +21,9 @@ import javax.faces.component.html.HtmlSelectManyCheckbox;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.BooleanConverter;
 import javax.faces.el.ValueBinding;
+import javax.faces.internal.RenderPreparable;
+import javax.faces.internal.RenderPreparableUtil;
 
-import org.seasar.teeda.extension.component.RenderPreparable;
-import org.seasar.teeda.extension.component.RenderPreparableUtil;
 
 /**
  * @author higa

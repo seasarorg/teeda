@@ -30,9 +30,9 @@ import javax.faces.convert.DateTimeConverter;
 
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.context.html.HtmlResponseWriter;
+import org.seasar.teeda.core.render.RenderPreparableRenderer;
 import org.seasar.teeda.core.render.html.HtmlInputTextRenderer;
 import org.seasar.teeda.extension.component.html.THtmlPopupCalendar;
-import org.seasar.teeda.extension.render.RenderPreparableRenderer;
 import org.seasar.teeda.extension.util.DateFormatSymbolsUtil;
 import org.seasar.teeda.extension.util.VirtualResource;
 

@@ -4,6 +4,10 @@
 <components>
 	<include path="convention.dicon" />
 	<include path="teeda.dicon" />
+
+	<!-- Coreで切り離せるように、teedaExtension.diconに記述。 -->
+	<component name="javax.faces.ViewRoot" class="org.seasar.teeda.extension.component.TViewRoot" instance="prototype" />
+
 	<component
 		class="org.seasar.teeda.extension.config.taglib.impl.ServletContextTaglibManagerImpl" />
 	<component
@@ -184,7 +188,7 @@
 
 	<component name="teedaGridHelper"
 		class="org.seasar.teeda.extension.helper.impl.GridHelperImpl" instance="session"/>
-		
+
     <component
 		class="org.seasar.teeda.extension.helper.impl.PathHelperImpl"/>
 </components>

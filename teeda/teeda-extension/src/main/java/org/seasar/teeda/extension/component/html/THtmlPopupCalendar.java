@@ -20,9 +20,9 @@ import java.io.IOException;
 import javax.faces.component.html.HtmlInputText;
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
+import javax.faces.internal.RenderPreparable;
+import javax.faces.internal.RenderPreparableUtil;
 
-import org.seasar.teeda.extension.component.RenderPreparable;
-import org.seasar.teeda.extension.component.RenderPreparableUtil;
 import org.seasar.teeda.extension.convert.TDateTimeConverter;
 
 /**
