@@ -281,6 +281,7 @@ public class FacesMessageUtil {
     private static MessageResourceBundle getBundle(FacesContext context,
             Locale locale, String bundleName) {
 
+        // TODO AdapterにしてDIできるようにする。下記の要望にも応えられるように。
         // TODO DBやXMLなどからもメッセージを取れるようにしたい
         return MessageResourceBundleFactory.getNullableBundle(bundleName,
                 locale);
