@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -25,7 +25,7 @@ import org.seasar.teeda.extension.html.PageDesc;
 
 /**
  * @author higa
- *  
+ *
  */
 public class ForEachFactory extends AbstractElementProcessorFactory {
 
@@ -33,7 +33,12 @@ public class ForEachFactory extends AbstractElementProcessorFactory {
 
     public boolean isMatch(ElementNode elementNode, PageDesc pageDesc,
             ActionDesc actionDesc) {
-        if (!JsfConstants.DIV_ELEM.equalsIgnoreCase(elementNode.getTagName())) {
+        if (elementNode == null) {
+            return false;
+        }
+        final String tagName = elementNode.getTagName();
+        if (!JsfConstants.DIV_ELEM.equalsIgnoreCase(tagName)
+                && !JsfConstants.TBODY_ELEM.equalsIgnoreCase(tagName)) {
             return false;
         }
         String id = elementNode.getId();
