@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -27,203 +27,215 @@ import org.seasar.framework.util.ResourceUtil;
  */
 public class TeedaWebTesterTest extends TeedaWebTestCase {
 
-    private TeedaWebTester tester;
+	private TeedaWebTester tester;
 
-    private String baseUrl;
+	private String baseUrl;
 
-    protected void setUp() throws Exception {
-        super.setUp();
-        tester = new TeedaWebTester();
-        baseUrl = ResourceUtil.getBuildDir(getClass()).toURL().toString();
-        tester.setBaseUrl(baseUrl);
-    }
+	protected void setUp() throws Exception {
+		super.setUp();
+		tester = new TeedaWebTester();
+		baseUrl = ResourceUtil.getBuildDir(getClass()).toURL().toString();
+		tester.setBaseUrl(baseUrl);
+	}
 
-    public void testHello() throws Exception {
-        // ## Arrange ##
-        final String relativeUrl = getFileAsRelativeUrl("hello.html");
+	public void testHello() throws Exception {
+		// ## Arrange ##
+		final String relativeUrl = getFileAsRelativeUrl("hello.html");
 
-        // ## Act ##
-        tester.beginAt(relativeUrl);
-        tester.dumpHtml();
+		// ## Act ##
+		tester.beginAt(relativeUrl);
+		tester.dumpHtml();
 
-        // ## Assert ##
-        tester.assertTitleEquals("Hello page.");
+		// ## Assert ##
+		tester.assertTitleEquals("Hello page.");
 
-        // これは完全一致で無くてもOK
-        tester.assertTextInElementById("aaa", "eeda");
+		// これは完全一致で無くてもOK
+		tester.assertTextInElementById("aaa", "eeda");
 
-        // これは完全一致ならOK
-        boolean ok = true;
-        try {
-            tester.assertTextEqualsById("aaa", "eeda");
-            ok = false;
-        } catch (AssertionFailedError e) {
-            ok = true;
-            System.out.println(e.getMessage());
-        }
-        assertEquals(true, ok);
-        tester.assertTextEqualsById("aaa", "Teeda!");
-    }
+		// これは完全一致ならOK
+		boolean ok = true;
+		try {
+			tester.assertTextEqualsById("aaa", "eeda");
+			ok = false;
+		} catch (AssertionFailedError e) {
+			ok = true;
+			System.out.println(e.getMessage());
+		}
+		assertEquals(true, ok);
+		tester.assertTextEqualsById("aaa", "Teeda!");
+	}
 
-    public void testGetCurrentUri() throws Exception {
-        // ## Arrange ##
-        final String relativeUrl = getFileAsRelativeUrl("hello.html");
+	public void testGetCurrentUri() throws Exception {
+		// ## Arrange ##
+		final String relativeUrl = getFileAsRelativeUrl("hello.html");
 
-        // ## Act ##
-        tester.beginAt(relativeUrl);
+		// ## Act ##
+		tester.beginAt(relativeUrl);
 
-        assertTrue(tester.getCurrentUri().startsWith("file:/"));
-        assertTrue(tester.getCurrentUri().endsWith("hello.html"));
-    }
+		assertTrue(tester.getCurrentUri().startsWith("file:/"));
+		assertTrue(tester.getCurrentUri().endsWith("hello.html"));
+	}
 
-    /*
-     * htmlの先頭へBOMを付けるとUTF-8と認識するようなコードがWebResponseImplに
-     * あるが、ここで試した感じでは効いていない。
-     * 
-     * EF BB BFが、3F 3F 3Fになってしまっているようだ。
-     * 
-     * Webサーバがレスポンスにcharsetを含めていれば問題ないため、
-     * ここでは深追いしない。
-     */
-    public void __testHelloJa() throws Exception {
-        // ## Arrange ##
-        final String relativeUrl = getFileAsRelativeUrl("helloJa.html");
+	/*
+	 * htmlの先頭へBOMを付けるとUTF-8と認識するようなコードがWebResponseImplに あるが、ここで試した感じでは効いていない。
+	 * 
+	 * EF BB BFが、3F 3F 3Fになってしまっているようだ。
+	 * 
+	 * Webサーバがレスポンスにcharsetを含めていれば問題ないため、 ここでは深追いしない。
+	 */
+	public void __testHelloJa() throws Exception {
+		// ## Arrange ##
+		final String relativeUrl = getFileAsRelativeUrl("helloJa.html");
 
-        // ## Act ##
-        tester.beginAt(relativeUrl);
-        tester.dumpHtml();
+		// ## Act ##
+		tester.beginAt(relativeUrl);
+		tester.dumpHtml();
 
-        // ## Assert ##
-        tester.assertTitleEquals("Hello page.");
+		// ## Assert ##
+		tester.assertTitleEquals("Hello page.");
 
-        // これは完全一致で無くてもOK
-        tester.assertTextInElementById("aaa", "eeda");
+		// これは完全一致で無くてもOK
+		tester.assertTextInElementById("aaa", "eeda");
 
-        // これは完全一致ならOK
-        boolean ok = true;
-        try {
-            tester.assertTextEqualsById("aaa", "eeda");
-            ok = false;
-        } catch (AssertionFailedError e) {
-            ok = true;
-            System.out.println(e.getMessage());
-        }
-        assertEquals(true, ok);
-        tester.assertTextEqualsById("aaa", "Teeda!");
-    }
+		// これは完全一致ならOK
+		boolean ok = true;
+		try {
+			tester.assertTextEqualsById("aaa", "eeda");
+			ok = false;
+		} catch (AssertionFailedError e) {
+			ok = true;
+			System.out.println(e.getMessage());
+		}
+		assertEquals(true, ok);
+		tester.assertTextEqualsById("aaa", "Teeda!");
+	}
 
-    public void testAttribute() throws Exception {
-        // ## Arrange ##
-        final String relativeUrl = getFileAsRelativeUrl("attribute.html");
+	public void testAttribute() throws Exception {
+		// ## Arrange ##
+		final String relativeUrl = getFileAsRelativeUrl("attribute.html");
 
-        // ## Act ##
-        tester.beginAt(relativeUrl);
-        tester.dumpHtml();
+		// ## Act ##
+		tester.beginAt(relativeUrl);
+		tester.dumpHtml();
 
-        // ## Assert ##
-        tester.assertAttributeEqualsById("aaa", "x", "xxx");
-        tester.assertAttributeEqualsById("aaa", "y", "z");
-        boolean ok = true;
-        try {
-            tester.assertAttributeEqualsById("aaa", "y", "123");
-            ok = false;
-        } catch (AssertionFailedError e) {
-        }
-        assertEquals(true, ok);
-        try {
-            tester.assertAttributeEqualsById("aaa", "ggg", "123");
-            ok = false;
-        } catch (AssertionFailedError e) {
-        }
-        assertEquals(true, ok);
-        try {
-            tester.assertAttributeEqualsById("unknown", "ggg", "123");
-            ok = false;
-        } catch (AssertionFailedError e) {
-        }
-        assertEquals(true, ok);
-    }
+		// ## Assert ##
+		tester.assertAttributeEqualsById("aaa", "x", "xxx");
+		tester.assertAttributeEqualsById("aaa", "y", "z");
+		boolean ok = true;
+		try {
+			tester.assertAttributeEqualsById("aaa", "y", "123");
+			ok = false;
+		} catch (AssertionFailedError e) {
+		}
+		assertEquals(true, ok);
+		try {
+			tester.assertAttributeEqualsById("aaa", "ggg", "123");
+			ok = false;
+		} catch (AssertionFailedError e) {
+		}
+		assertEquals(true, ok);
+		try {
+			tester.assertAttributeEqualsById("unknown", "ggg", "123");
+			ok = false;
+		} catch (AssertionFailedError e) {
+		}
+		assertEquals(true, ok);
+	}
 
-    public void testTable() throws Exception {
-        // ## Arrange ##
-        final String relativeUrl = getFileAsRelativeUrl("table1.html");
+	public void testTable() throws Exception {
+		// ## Arrange ##
+		final String relativeUrl = getFileAsRelativeUrl("table1.html");
 
-        // ## Act ##
-        tester.beginAt(relativeUrl);
-        tester.dumpHtml();
+		// ## Act ##
+		tester.beginAt(relativeUrl);
+		tester.dumpHtml();
 
-        // ## Assert ##
-        // jwebunitのAPIでは、summary属性からもtableを取得できる
-        final Table tableById = tester.getTableById("aaa");
-        final Table tableBySummary = tester.getTableById("bbb");
-        tableById.assertEquals(tableBySummary);
+		// ## Assert ##
+		// jwebunitのAPIでは、summary属性からもtableを取得できる
+		final Table tableById = tester.getTableById("aaa");
+		final Table tableBySummary = tester.getTableById("bbb");
+		tableById.assertEquals(tableBySummary);
 
-        // assertEquals(null, tester.getTableById("bbb"));
-        // tester.getTable("aaa").assertEquals(tester.getTableById("aaa"));
-    }
+		// assertEquals(null, tester.getTableById("bbb"));
+		// tester.getTable("aaa").assertEquals(tester.getTableById("aaa"));
+	}
 
-    public void testSetTextById() throws Exception {
-        // ## Arrange ##
-        final String relativeUrl = getFileAsRelativeUrl("inputText.html");
+	public void testSetTextById() throws Exception {
+		// ## Arrange ##
+		final String relativeUrl = getFileAsRelativeUrl("inputText.html");
 
-        // ## Act ##
-        tester.beginAt(relativeUrl);
-        tester.dumpHtml();
+		// ## Act ##
+		tester.beginAt(relativeUrl);
+		tester.dumpHtml();
 
-        // ## Assert ##
-        tester.assertAttributeEqualsById("aaaId", "value", "aaaValue");
-        tester.setTextById("aaaId", "foo");
-        tester.assertAttributeEqualsById("aaaId", "value", "foo");
-    }
+		// ## Assert ##
+		tester.assertAttributeEqualsById("aaaId", "value", "aaaValue");
+		tester.setTextById("aaaId", "foo");
+		tester.assertAttributeEqualsById("aaaId", "value", "foo");
+	}
 
-    public void testSetTextByIdForTextarea() throws Exception {
-        // ## Arrange ##
-        final String relativeUrl = getFileAsRelativeUrl("inputTextarea.html");
+	public void testLink() throws Exception {
+		// ## Arrange ##
+		final String relativeUrl = getFileAsRelativeUrl("link.html");
 
-        // ## Act ##
-        tester.beginAt(relativeUrl);
-        tester.dumpHtml();
+		// ## Act ##
+		tester.beginAt(relativeUrl);
+		tester.dumpHtml();
+		tester.clickLinkById("goNext");
 
-        // ## Assert ##
-        tester.assertTextEqualsById("aaaId", "aaaValue");
-        tester.setTextById("aaaId", "foo");
-        tester.assertTextEqualsById("aaaId", "foo");
-    }
+		// ## Assert ##
+		tester.dumpHtml();
+		tester.assertTextEqualsById("result", "linkResult");
+	}
 
-    public void testForm() throws Exception {
-        // ## Arrange ##
-        final String relativeUrl = getFileAsRelativeUrl("form.html");
+	public void testSetTextByIdForTextarea() throws Exception {
+		// ## Arrange ##
+		final String relativeUrl = getFileAsRelativeUrl("inputTextarea.html");
 
-        // ## Act ##
-        tester.beginAt(relativeUrl);
-        tester.dumpHtml();
+		// ## Act ##
+		tester.beginAt(relativeUrl);
+		tester.dumpHtml();
 
-        // ## Assert ##
-        tester.assertFormElementPresentById("aForm");
-    }
+		// ## Assert ##
+		tester.assertTextEqualsById("aaaId", "aaaValue");
+		tester.setTextById("aaaId", "foo");
+		tester.assertTextEqualsById("aaaId", "foo");
+	}
 
-    public void testAssertAttributeExistById() throws Exception {
-        // ## Arrange ##
-        final String relativeUrl = getFileAsRelativeUrl("inputText.html");
+	public void testForm() throws Exception {
+		// ## Arrange ##
+		final String relativeUrl = getFileAsRelativeUrl("form.html");
 
-        // ## Act ##
-        tester.beginAt(relativeUrl);
+		// ## Act ##
+		tester.beginAt(relativeUrl);
+		tester.dumpHtml();
 
-        // ## Assert ##
-        tester.assertAttributeExistsById("aaaId", "name");
-        tester.assertAttributeExistsById("aaaId", "type");
-        tester.assertAttributeNotExistsById("aaaId", "badname");
-    }
+		// ## Assert ##
+		tester.assertFormElementPresentById("aForm");
+	}
 
-    private String getFileAsRelativeUrl(final String file) {
-        final URL url = getFileAsUrl(file);
-        final String fullUrl = url.toString();
-        String relativeUrl = null;
-        if (fullUrl.startsWith(baseUrl)) {
-            relativeUrl = fullUrl.substring(baseUrl.length());
-        }
-        System.out.println(relativeUrl);
-        return relativeUrl;
-    }
+	public void testAssertAttributeExistById() throws Exception {
+		// ## Arrange ##
+		final String relativeUrl = getFileAsRelativeUrl("inputText.html");
+
+		// ## Act ##
+		tester.beginAt(relativeUrl);
+
+		// ## Assert ##
+		tester.assertAttributeExistsById("aaaId", "name");
+		tester.assertAttributeExistsById("aaaId", "type");
+		tester.assertAttributeNotExistsById("aaaId", "badname");
+	}
+
+	private String getFileAsRelativeUrl(final String file) {
+		final URL url = getFileAsUrl(file);
+		final String fullUrl = url.toString();
+		String relativeUrl = null;
+		if (fullUrl.startsWith(baseUrl)) {
+			relativeUrl = fullUrl.substring(baseUrl.length());
+		}
+		System.out.println(relativeUrl);
+		return relativeUrl;
+	}
 
 }

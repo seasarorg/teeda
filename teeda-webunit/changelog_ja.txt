@@ -1,3 +1,7 @@
+2007/03/05 teeda-webunit-0.2.1
+
+* clickLinkを使えるようにした。
+
 2006/11/22 teeda-webunit-0.2.0
 
 * TeedaWebTester: WebTesterを継承するのをやめて、委譲するようにした。
