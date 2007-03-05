@@ -33,6 +33,7 @@ import org.seasar.teeda.core.config.faces.element.FacesConfig;
 import org.seasar.teeda.core.config.webapp.WebappConfigBuilder;
 import org.seasar.teeda.core.config.webapp.element.WebappConfig;
 import org.seasar.teeda.core.util.DIContainerUtil;
+import org.seasar.teeda.core.util.ServletContextUtil;
 
 /**
  * @author shot
@@ -118,7 +119,8 @@ public class TeedaInitializer {
         InputStream is = null;
         WebappConfig webappConfig = null;
         try {
-            is = servletContext.getResourceAsStream(JsfConstants.WEB_XML_PATH);
+            is = ServletContextUtil.getResourceAsStream(servletContext,
+                    JsfConstants.WEB_XML_PATH);
             webappConfig = webAppConfigBuilder.build(is,
                     JsfConstants.WEB_XML_PATH);
         } finally {

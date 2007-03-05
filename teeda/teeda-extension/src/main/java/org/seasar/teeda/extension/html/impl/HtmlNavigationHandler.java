@@ -15,17 +15,21 @@
  */
 package org.seasar.teeda.extension.html.impl;
 
+import java.io.InputStream;
+
 import javax.faces.application.ViewHandler;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletContext;
 
 import org.seasar.framework.convention.NamingConvention;
+import org.seasar.framework.util.InputStreamUtil;
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.application.NavigationHandlerImpl;
 import org.seasar.teeda.core.portlet.FacesPortlet;
 import org.seasar.teeda.core.util.NavigationHandlerUtil;
 import org.seasar.teeda.core.util.PortletUtil;
+import org.seasar.teeda.core.util.ServletContextUtil;
 import org.seasar.teeda.extension.html.HtmlSuffix;
 import org.seasar.teeda.extension.html.PagePersistence;
 
@@ -111,7 +115,10 @@ public class HtmlNavigationHandler extends NavigationHandlerImpl {
         String suffix = htmlSuffix.getSuffix(context);
         if (names.length == 1) {
             String path = pathFirst + outcome + suffix + pathLast;
-            if (servletContext.getResourceAsStream(path) != null) {
+            InputStream is = ServletContextUtil.getResourceAsStream(
+                    servletContext, path);
+            if (is != null) {
+                InputStreamUtil.close(is);
                 return path;
             }
             return pathFirst + outcome + pathLast;

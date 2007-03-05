@@ -40,6 +40,7 @@ import org.seasar.teeda.core.render.AbstractRenderer;
 import org.seasar.teeda.core.util.DIContainerUtil;
 import org.seasar.teeda.core.util.PostbackUtil;
 import org.seasar.teeda.core.util.RendererUtil;
+import org.seasar.teeda.core.util.ServletContextUtil;
 import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.component.TViewRoot;
 import org.seasar.teeda.extension.component.UIBody;
@@ -238,7 +239,8 @@ public class TViewRootRenderer extends AbstractRenderer {
         }
         if (HotdeployUtil.isHotdeploy()
                 || htmlDescCache.getHtmlDesc(parentViewId) == null) {
-            InputStream is = servletContext.getResourceAsStream(parentViewId);
+            InputStream is = ServletContextUtil.getResourceAsStream(
+                    servletContext, parentViewId);
             if (is != null) {
                 InputStreamUtil.close(is);
             } else {
