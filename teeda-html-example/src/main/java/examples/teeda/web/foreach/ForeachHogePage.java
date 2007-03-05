@@ -23,13 +23,14 @@ import java.util.List;
  */
 public class ForeachHogePage extends AbstractForeachHogePage {
 
-	public static final String num1_lengthValidator = "minimum=3";
+	// public static final String num1_lengthValidator = "minimum=3";
 
-	public static final String aaa_lengthValidator = "minimum=3";
+	// public static final String aaa_lengthValidator = "minimum=3";
 
-	public static final String bbb_lengthValidator = "minimum=3";
+	// public static final String bbb_lengthValidator = "minimum=3";
 
-	 public static final String fooItems_MESSAGE_AGGREGATION = "id=examples.teeda.web.foreach.ForeachHoge.invaid";
+	// public static final String fooItems_MESSAGE_AGGREGATION =
+	// "id=examples.teeda.web.foreach.ForeachHoge.invaid";
 
 	public String initialize() {
 		List l = new ArrayList();
@@ -65,6 +66,6 @@ public class ForeachHogePage extends AbstractForeachHogePage {
 	}
 
 	public String doNothing() {
-		return "foreachHoge2";
+		return null;// "foreachHoge2";
 	}
 }
