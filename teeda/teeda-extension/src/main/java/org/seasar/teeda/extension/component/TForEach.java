@@ -502,7 +502,9 @@ public class TForEach extends UIComponentBase implements NamingContainer,
             final String propertyName, final Object value) {
         if (beanDesc.hasPropertyDesc(propertyName)) {
             final PropertyDesc pd = beanDesc.getPropertyDesc(propertyName);
-            if (pd.hasWriteMethod()) {
+            final Class pdClass = pd.getPropertyType();
+            final Class valueClass = (value != null) ? value.getClass() : null;
+            if (pd.hasWriteMethod() && pdClass == valueClass) {
                 pd.setValue(page, value);
             }
         }
