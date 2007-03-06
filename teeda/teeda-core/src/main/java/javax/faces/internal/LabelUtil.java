@@ -63,9 +63,8 @@ public class LabelUtil {
         final Locale locale = ViewHandlerUtil.getLocale();
         String value = null;
         if (propertiesName != null) {
-            MessageResourceBundle bundle = MessageResourceBundleAdapterFactory
-                    .getMessageResourceBundleAdapter().getBundle(
-                            propertiesName, locale);
+            MessageResourceBundle bundle = MessageResourceBundleChainFactory
+                    .createChain(propertiesName, locale);
             value = (bundle != null) ? (String) bundle.get(key) : null;
             if (value == null && bundle != null) {
                 value = (String) bundle.get(defaultKey);
@@ -73,9 +72,8 @@ public class LabelUtil {
         }
         if (value == null) {
             if (defaultPropertiesName != null) {
-                MessageResourceBundle bundle = MessageResourceBundleAdapterFactory
-                        .getMessageResourceBundleAdapter().getBundle(
-                                defaultPropertiesName, locale);
+                MessageResourceBundle bundle = MessageResourceBundleChainFactory
+                        .createChain(defaultPropertiesName, locale);
                 value = (bundle != null) ? (String) bundle.get(defaultKey)
                         : null;
             }

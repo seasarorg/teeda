@@ -281,9 +281,8 @@ public class FacesMessageUtil {
             Locale locale, String bundleName) {
 
         // TODO DBやXMLなどからもメッセージを取れるようにしたい
-        return MessageResourceBundleAdapterFactory
-                .getMessageResourceBundleAdapter()
-                .getBundle(bundleName, locale);
+        return MessageResourceBundleChainFactory
+                .createChain(bundleName, locale);
     }
 
     private static String getFormattedMessage(String message, Locale locale,

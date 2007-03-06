@@ -77,6 +77,15 @@ public class DIContainerUtil {
         return SingletonS2ContainerFactory.hasContainer();
     }
 
+    private static final Object[] EMPTY = new Object[0];
+
+    public static Object[] findAllComponents(Object componentKey) {
+        if (!hasContainer()) {
+            return EMPTY;
+        }
+        return getContainer().findAllComponents(componentKey);
+    }
+
     private static S2Container getContainer() {
         return SingletonS2ContainerFactory.getContainer();
     }
