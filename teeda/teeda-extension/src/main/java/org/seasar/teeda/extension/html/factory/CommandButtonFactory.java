@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -93,22 +93,28 @@ public class CommandButtonFactory extends AbstractElementProcessorFactory {
                 .get(JsfConstants.ONCLICK_ATTR);
         if (!StringUtil.isEmpty(onclick)
                 && !BindingUtil.isValueReference(dynamicOnclick)) {
-            int start = onclick.indexOf("location.href");
-            if (start >= 0) {
-                int end = onclick.indexOf(";");
-                if (end < 0) {
-                    onclick = "";
-                } else {
-                    int end2 = onclick.indexOf(";", start);
-                    String prefix = onclick.substring(0, start);
-                    String suffix = onclick.substring(end2 + 1);
-                    onclick = prefix + suffix;
-                }
-            }
+            onclick = removeTemplateOnlyString(onclick, "location.href");
+            onclick = removeTemplateOnlyString(onclick, "history.back()");
             properties.put(JsfConstants.ONCLICK_ATTR, onclick);
         }
         renameProperty(properties, JsfConstants.SRC_ATTR,
                 JsfConstants.IMAGE_ATTR);
+    }
+
+    protected String removeTemplateOnlyString(String onclick, String target) {
+        int start = onclick.indexOf(target);
+        if (start >= 0) {
+            int end = onclick.indexOf(";");
+            if (end < 0) {
+                onclick = "";
+            } else {
+                int end2 = onclick.indexOf(";", start);
+                String prefix = onclick.substring(0, start);
+                String suffix = onclick.substring(end2 + 1);
+                onclick = prefix + suffix;
+            }
+        }
+        return onclick;
     }
 
     protected String getTagName() {

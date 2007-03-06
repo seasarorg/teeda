@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -197,6 +197,63 @@ public class CommandButtonFactoryTest extends ElementProcessorFactoryTestCase {
         properties.put("id", "doBbb");
         properties.put("type", "submit");
         properties.put("onclick", "hoge();location.href='foo.html';bar();");
+        ElementNode elementNode = createElementNode("input", properties);
+        PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
+        ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
+
+        ElementProcessor processor = factory.createProcessor(elementNode,
+                pageDesc, actionDesc);
+        // ## Assert ##
+        assertNotNull(processor);
+        assertEquals(CommandButtonTag.class, processor.getTagClass());
+        assertEquals("#{fooPage.doBbb}", processor.getProperty("action"));
+        assertEquals("hoge();bar();", processor.getProperty("onclick"));
+    }
+
+    public void testCreateFactory_historyBackRemove1() throws Exception {
+        // ## Arrange ##
+        Map properties = new HashMap();
+        properties.put("id", "doBbb");
+        properties.put("type", "submit");
+        properties.put("onclick", "history.back();");
+        ElementNode elementNode = createElementNode("input", properties);
+        PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
+        ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
+
+        ElementProcessor processor = factory.createProcessor(elementNode,
+                pageDesc, actionDesc);
+        // ## Assert ##
+        assertNotNull(processor);
+        assertEquals(CommandButtonTag.class, processor.getTagClass());
+        assertEquals("#{fooPage.doBbb}", processor.getProperty("action"));
+        assertEquals("", processor.getProperty("onclick"));
+    }
+
+    public void testCreateFactory_historyBackRemove2() throws Exception {
+        // ## Arrange ##
+        Map properties = new HashMap();
+        properties.put("id", "doBbb");
+        properties.put("type", "submit");
+        properties.put("onclick", "history.back();foo();");
+        ElementNode elementNode = createElementNode("input", properties);
+        PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
+        ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
+
+        ElementProcessor processor = factory.createProcessor(elementNode,
+                pageDesc, actionDesc);
+        // ## Assert ##
+        assertNotNull(processor);
+        assertEquals(CommandButtonTag.class, processor.getTagClass());
+        assertEquals("#{fooPage.doBbb}", processor.getProperty("action"));
+        assertEquals("foo();", processor.getProperty("onclick"));
+    }
+
+    public void testCreateFactory_historyBackRemove3() throws Exception {
+        // ## Arrange ##
+        Map properties = new HashMap();
+        properties.put("id", "doBbb");
+        properties.put("type", "submit");
+        properties.put("onclick", "hoge();history.back();bar();");
         ElementNode elementNode = createElementNode("input", properties);
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
