@@ -51,7 +51,7 @@ public abstract class RenderPreparableUtil {
         AssertionUtil.assertNotNull("component", component);
         final String componentName = component.getClass().getName();
         //TEEDA-264
-        if (!component.isRendered() && !(componentName.endsWith("TCondition"))) {
+        if (!(componentName.endsWith("TCondition")) && !component.isRendered()) {
             return;
         }
         if ((component instanceof RenderPreparable)) {
