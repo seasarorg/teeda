@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -94,6 +94,11 @@ public class TViewRootRenderer extends AbstractRenderer {
             requestMap.put(STACK_KEY, stack);
         }
         stack.push(includedBody);
+    }
+
+    protected static Stack getIncludedBodies(FacesContext context) {
+        Map requestMap = context.getExternalContext().getRequestMap();
+        return (Stack) requestMap.get(STACK_KEY);
     }
 
     /**
@@ -197,6 +202,7 @@ public class TViewRootRenderer extends AbstractRenderer {
         if (viewRoot.getRootViewId() == null) {
             layout(context, viewRoot);
         }
+        invokeAll(context);
         invoke(context, viewRoot.getRootViewId());
         RendererUtil.renderChildren(context, component);
     }
@@ -276,6 +282,17 @@ public class TViewRootRenderer extends AbstractRenderer {
             return null;
         }
         return pathHelper.fromViewRootRelativePathToViewId(parentPath);
+    }
+
+    protected void invokeAll(FacesContext context) {
+        Stack bodies = getIncludedBodies(context);
+        if (bodies == null) {
+            return;
+        }
+        for (int i = 0; i < bodies.size(); i++) {
+            IncludedBody body = (IncludedBody) bodies.get(i);
+            invoke(context, body.getViewId());
+        }
     }
 
     protected void invoke(FacesContext context, String viewId) {

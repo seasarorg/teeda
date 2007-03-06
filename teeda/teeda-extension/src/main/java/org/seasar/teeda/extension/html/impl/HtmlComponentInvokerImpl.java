@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -44,7 +44,7 @@ import org.seasar.teeda.extension.html.PageDescCache;
 
 /**
  * @author higa
- * 
+ *
  */
 public class HtmlComponentInvokerImpl implements HtmlComponentInvoker {
 
@@ -138,6 +138,9 @@ public class HtmlComponentInvokerImpl implements HtmlComponentInvoker {
             String methodName) {
         AssertionUtil.assertNotNull("context", context);
         AssertionUtil.assertNotNull("methodName", methodName);
+        if (INITIALIZE.equals(methodName)) {
+            setInitialized(context, true);
+        }
         if (componentName == null) {
             return null;
         }
@@ -182,9 +185,7 @@ public class HtmlComponentInvokerImpl implements HtmlComponentInvoker {
                 throw new EvaluationException(e);
             }
         }
-        if (INITIALIZE.equals(methodName)) {
-            setInitialized(context, true);
-        }
+
         return next;
     }
 
