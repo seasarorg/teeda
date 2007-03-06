@@ -21,7 +21,6 @@ import javax.faces.context.FacesContext;
 
 import org.seasar.framework.convention.NamingConvention;
 import org.seasar.framework.message.MessageResourceBundle;
-import org.seasar.framework.message.MessageResourceBundleFactory;
 import org.seasar.teeda.core.util.DIContainerUtil;
 import org.seasar.teeda.core.util.ViewHandlerUtil;
 
@@ -64,8 +63,9 @@ public class LabelUtil {
         final Locale locale = ViewHandlerUtil.getLocale();
         String value = null;
         if (propertiesName != null) {
-            MessageResourceBundle bundle = MessageResourceBundleFactory
-                    .getNullableBundle(propertiesName, locale);
+            MessageResourceBundle bundle = MessageResourceBundleAdapterFactory
+                    .getMessageResourceBundleAdapter().getBundle(
+                            propertiesName, locale);
             value = (bundle != null) ? (String) bundle.get(key) : null;
             if (value == null && bundle != null) {
                 value = (String) bundle.get(defaultKey);
@@ -73,8 +73,9 @@ public class LabelUtil {
         }
         if (value == null) {
             if (defaultPropertiesName != null) {
-                MessageResourceBundle bundle = MessageResourceBundleFactory
-                        .getNullableBundle(defaultPropertiesName, locale);
+                MessageResourceBundle bundle = MessageResourceBundleAdapterFactory
+                        .getMessageResourceBundleAdapter().getBundle(
+                                defaultPropertiesName, locale);
                 value = (bundle != null) ? (String) bundle.get(defaultKey)
                         : null;
             }

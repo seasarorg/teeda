@@ -73,7 +73,12 @@ public class DIContainerUtil {
         return getContainer().hasComponentDef(componentKey);
     }
 
+    public static boolean hasContainer() {
+        return SingletonS2ContainerFactory.hasContainer();
+    }
+
     private static S2Container getContainer() {
         return SingletonS2ContainerFactory.getContainer();
     }
+
 }

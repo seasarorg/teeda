@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -21,6 +21,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.render.AbstractRendererTest;
 import javax.faces.render.Renderer;
 
+import org.seasar.framework.container.hotdeploy.HotdeployUtil;
 import org.seasar.framework.util.ClassUtil;
 import org.seasar.teeda.core.mock.MockViewHandler;
 import org.seasar.teeda.core.mock.MockViewHandlerImpl;
@@ -119,6 +120,7 @@ public class THtmlOutputLabelRendererTest extends AbstractRendererTest {
 
     public void testEncode_keyDuplicateWithMultipleProperties()
             throws Exception {
+        HotdeployUtil.setHotdeploy(true);
         label.setId("aaa");
         label.setFor("bbb");
         label.setKey("fff");
@@ -137,6 +139,7 @@ public class THtmlOutputLabelRendererTest extends AbstractRendererTest {
         assertEquals(
                 "<label id=\"aaa\" for=\"bbb\">FFF</label><label id=\"aaa\" for=\"bbb\">F_DEFAULT</label>",
                 getResponseText());
+        HotdeployUtil.clearHotdeploy();
     }
 
     public void testEncode_defaultPropertiesNameExist() throws Exception {

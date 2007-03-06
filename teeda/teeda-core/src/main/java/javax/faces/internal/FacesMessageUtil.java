@@ -28,7 +28,6 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 
 import org.seasar.framework.message.MessageResourceBundle;
-import org.seasar.framework.message.MessageResourceBundleFactory;
 import org.seasar.framework.util.AssertionUtil;
 import org.seasar.teeda.core.util.HTMLEncodeUtil;
 
@@ -281,10 +280,10 @@ public class FacesMessageUtil {
     private static MessageResourceBundle getBundle(FacesContext context,
             Locale locale, String bundleName) {
 
-        // TODO AdapterにしてDIできるようにする。下記の要望にも応えられるように。
         // TODO DBやXMLなどからもメッセージを取れるようにしたい
-        return MessageResourceBundleFactory.getNullableBundle(bundleName,
-                locale);
+        return MessageResourceBundleAdapterFactory
+                .getMessageResourceBundleAdapter()
+                .getBundle(bundleName, locale);
     }
 
     private static String getFormattedMessage(String message, Locale locale,
