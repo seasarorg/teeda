@@ -447,8 +447,9 @@ public class TForEach extends UIComponentBase implements NamingContainer,
 
     public void processItem(final BeanDesc pageBeanDesc, final Object page,
             final Object item, final int index) {
-        // 陦檎分蜿ｷ繧単age縺ｸ繧ｻ繝�繝医☆繧�
-        setValue(pageBeanDesc, page, getIndexName(), new Integer(index));
+        final String indexName = getIndexName();
+        final Integer indexValue = new Integer(index);
+        setValue(pageBeanDesc, page, indexName, indexValue);
         itemToPage(pageBeanDesc, page, item);
     }
 
@@ -502,12 +503,24 @@ public class TForEach extends UIComponentBase implements NamingContainer,
             final String propertyName, final Object value) {
         if (beanDesc.hasPropertyDesc(propertyName)) {
             final PropertyDesc pd = beanDesc.getPropertyDesc(propertyName);
-            final Class pdClass = pd.getPropertyType();
+            Class pdClass = pd.getPropertyType();
+            if (pdClass.isPrimitive()) {
+                pdClass = ClassUtil.getWrapperClass(pdClass);
+            }
             final Class valueClass = (value != null) ? value.getClass() : null;
-            if (pd.hasWriteMethod() && pdClass == valueClass) {
+            if (pd.hasWriteMethod() && isRelatedClass(pdClass, valueClass)) {
                 pd.setValue(page, value);
             }
         }
+    }
+
+    protected static boolean isRelatedClass(final Class pdClass,
+            final Class valueClass) {
+        if (valueClass == null) {
+            return true;
+        }
+        return (pdClass == valueClass)
+                || (pdClass.isAssignableFrom(valueClass));
     }
 
 }

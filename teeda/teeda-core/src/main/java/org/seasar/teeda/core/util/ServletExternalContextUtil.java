@@ -158,7 +158,13 @@ public class ServletExternalContextUtil {
             throws IOException {
         HttpServletResponse httpResponse = (HttpServletResponse) response;
         httpResponse.sendRedirect(url);
-        FacesContext.getCurrentInstance().responseComplete();
+        FacesContext context = FacesContext.getCurrentInstance();
+        if (context != null) {
+            context.responseComplete();
+        } else {
+            logger
+                    .info("[ServletExternalContextUtil.redirect] facesContext is null.");
+        }
     }
 
     private static Method getCharacterEncodingMethodFromRequest() {
