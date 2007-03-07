@@ -30,10 +30,12 @@ import org.seasar.framework.util.MethodUtil;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.WebResponse;
 import com.gargoylesoftware.htmlunit.html.HtmlElement;
+import com.gargoylesoftware.htmlunit.html.HtmlForm;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 
 /**
  * @author manhole
+ * @author yone
  */
 class TeedaHtmlUnitDialog extends HtmlUnitDialog {
 
@@ -141,4 +143,17 @@ class TeedaHtmlUnitDialog extends HtmlUnitDialog {
         this.throwExceptionOnFailingStatusCode = throwExceptionOnFailingStatusCode;
     }
 
+    // workingFormをindex指定で設定
+    public void setWorkingForm(int index) {
+    	HtmlForm form = (HtmlForm) getCurrentPage().getForms().get(index);
+    	String name = form.getNameAttribute();
+    	super.setWorkingForm(name, index);
+    }
+    
+    // workingFormをformのname指定で設定
+    public void setWorkingForm(final String formName) {
+    	int formSize = getCurrentPage().getForms().size();
+    	super.setWorkingForm(formName, formSize);
+    }
+    
 }

@@ -390,6 +390,28 @@ public class TeedaWebTester {
 		getWebClient().addRequestHeader(name, value);
 	}
 
+	/**
+	 * 複数formが存在する場合にcheckbox操作が効かなくなるのを回避する
+	 * 
+	 * @param name
+	 *            formのname属性値
+	 */
+	public void setWorkingForm(final String name) {
+		TeedaHtmlUnitDialog dialog = getTeedaHtmlUnitDialog();
+		dialog.setWorkingForm(name);
+	}
+
+	/**
+	 * 複数formが存在する場合にcheckbox操作が効かなくなるのを回避する
+	 * 
+	 * @param int
+	 *            複数formの指定index
+	 */
+	public void setWorkingForm(final int index) {
+		TeedaHtmlUnitDialog dialog = getTeedaHtmlUnitDialog();
+		dialog.setWorkingForm(index);
+	}
+
 	private WebClient getWebClient() {
 		final TeedaHtmlUnitDialog dialog = getTeedaHtmlUnitDialog();
 		final WebClient webClient = dialog.getWebClient();
