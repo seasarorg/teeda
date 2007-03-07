@@ -2,7 +2,7 @@
 <classpath>
 	<classpathentry kind="src" path="src/main/java"/>
 	<classpathentry kind="src" path="src/main/resources"/>
-	<classpathentry output="build/view" kind="src" path="src/main/webapp/view"/>
+	<classpathentry kind="src" output="build/view" path="src/main/webapp/view"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry exported="true" kind="lib" path="src/main/webapp/WEB-INF/lib/aopalliance-1.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="src/main/webapp/WEB-INF/lib/commons-collections-3.1.jar"/>
@@ -16,11 +16,11 @@
 	<classpathentry exported="true" kind="lib" path="src/main/webapp/WEB-INF/lib/xercesImpl-2.6.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="src/main/webapp/WEB-INF/lib/javassist-3.4.ga.jar"/>
 	<classpathentry exported="true" kind="lib" path="src/main/webapp/WEB-INF/lib/commons-logging-1.1.jar"/>
-	<classpathentry sourcepath="/seasar2" kind="lib" path="src/main/webapp/WEB-INF/lib/s2-extension-2.4.10.jar"/>
-	<classpathentry sourcepath="/seasar2" kind="lib" path="src/main/webapp/WEB-INF/lib/s2-framework-2.4.10.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/teeda-ajax-1.0.6-SNAPSHOT.jar"/>
-	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/teeda-core-1.0.6-SNAPSHOT.jar"/>
-	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/teeda-extension-1.0.6-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/teeda-core-1.0.6-SNAPSHOT.jar" sourcepath="src/main/webapp/WEB-INF/lib/sources/teeda-core-1.0.6-SNAPSHOT-sources.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/teeda-extension-1.0.6-SNAPSHOT.jar" sourcepath="src/main/webapp/WEB-INF/lib/sources/teeda-extension-1.0.6-SNAPSHOT-sources.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/s2-extension-2.4.11-SNAPSHOT.jar" sourcepath="src/main/webapp/WEB-INF/lib/sources/s2-extension-2.4.11-SNAPSHOT-sources.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/s2-framework-2.4.11-SNAPSHOT.jar" sourcepath="src/main/webapp/WEB-INF/lib/sources/s2-framework-2.4.11-SNAPSHOT-sources.jar"/>
 	<classpathentry kind="var" path="TOMCAT_HOME/common/lib/servlet-api.jar"/>
 	<classpathentry kind="var" path="TOMCAT_HOME/common/lib/jasper-runtime.jar"/>
 	<classpathentry kind="var" path="TOMCAT_HOME/common/lib/jsp-api.jar"/>

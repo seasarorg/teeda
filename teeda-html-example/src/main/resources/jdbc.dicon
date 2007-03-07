@@ -30,7 +30,7 @@
 			"jdbc:hsqldb:hsql://localhost:9001"
 			-->
 			"jdbc:hsqldb:file:"
-				+ @org.seasar.framework.util.ResourceUtil@getBuildDir(@org.seasar.extension.dbcp.impl.ConnectionPoolImplTest@class).getCanonicalPath()
+				+ @org.seasar.framework.util.ResourceUtil@getBuildDir(@examples.teeda.dto.AaaDto@class).getCanonicalPath()
 				+ "/data/demo"
 		</property>
 		<property name="user">"sa"</property>
