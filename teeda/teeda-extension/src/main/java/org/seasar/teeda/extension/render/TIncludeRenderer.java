@@ -15,6 +15,8 @@
  */
 package org.seasar.teeda.extension.render;
 
+import java.io.IOException;
+
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
@@ -37,6 +39,19 @@ public class TIncludeRenderer extends AbstractIncludeRenderer {
 
     private static final Logger logger = Logger
             .getLogger(TIncludeRenderer.class);
+
+    public void encodeBegin(FacesContext context, UIComponent component)
+            throws IOException {
+        super.encodeBegin(context, component);
+        AbstractInclude inc = (AbstractInclude) component;
+        if (!inc.isIncluded()) {
+            include(context, inc);
+        }
+        if (!inc.isIncluded()) {
+            return;
+        }
+        invoke(context, inc.getIncludedViewId());
+    }
 
     protected IncludedBody getIncludedBody(FacesContext context,
             AbstractInclude component) {

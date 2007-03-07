@@ -17,9 +17,10 @@ package org.seasar.teeda.extension.render;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
-import java.util.Stack;
 
 import javax.faces.application.ViewHandler;
 import javax.faces.component.UIComponent;
@@ -59,7 +60,9 @@ public class TViewRootRenderer extends AbstractRenderer {
 
     public static final String RENDERER_TYPE = TViewRoot.DEFAULT_RENDERER_TYPE;
 
-    private static final String STACK_KEY = TViewRootRenderer.class.getName();
+    private static final String LIST_KEY = TViewRootRenderer.class.getName();
+
+    private static final String POP_INDEX_KEY = LIST_KEY + ".INDEX";
 
     private static final Logger logger = Logger
             .getLogger(TViewRootRenderer.class);
@@ -78,27 +81,31 @@ public class TViewRootRenderer extends AbstractRenderer {
 
     public static IncludedBody popIncludedBody(FacesContext context) {
         Map requestMap = context.getExternalContext().getRequestMap();
-        Stack stack = (Stack) requestMap.get(STACK_KEY);
-        if (stack == null) {
+        List list = (List) requestMap.get(LIST_KEY);
+        if (list == null) {
             return null;
         }
-        return (IncludedBody) stack.pop();
+        int index = ((Integer) requestMap.get(POP_INDEX_KEY)).intValue();
+        IncludedBody body = (IncludedBody) list.get(index);
+        requestMap.put(POP_INDEX_KEY, new Integer(index - 1));
+        return body;
     }
 
     protected static void pushIncludedBody(FacesContext context,
             IncludedBody includedBody) {
         Map requestMap = context.getExternalContext().getRequestMap();
-        Stack stack = (Stack) requestMap.get(STACK_KEY);
-        if (stack == null) {
-            stack = new Stack();
-            requestMap.put(STACK_KEY, stack);
+        List list = (List) requestMap.get(LIST_KEY);
+        if (list == null) {
+            list = new ArrayList();
+            requestMap.put(LIST_KEY, list);
         }
-        stack.push(includedBody);
+        requestMap.put(POP_INDEX_KEY, new Integer(list.size()));
+        list.add(includedBody);
     }
 
-    protected static Stack getIncludedBodies(FacesContext context) {
+    protected static List getIncludedBodies(FacesContext context) {
         Map requestMap = context.getExternalContext().getRequestMap();
-        return (Stack) requestMap.get(STACK_KEY);
+        return (List) requestMap.get(LIST_KEY);
     }
 
     /**
@@ -285,7 +292,7 @@ public class TViewRootRenderer extends AbstractRenderer {
     }
 
     protected void invokeAll(FacesContext context) {
-        Stack bodies = getIncludedBodies(context);
+        List bodies = getIncludedBodies(context);
         if (bodies == null) {
             return;
         }

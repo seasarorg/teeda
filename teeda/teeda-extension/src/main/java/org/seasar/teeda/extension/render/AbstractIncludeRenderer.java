@@ -94,19 +94,6 @@ public abstract class AbstractIncludeRenderer extends AbstractRenderer {
         return true;
     }
 
-    public void encodeBegin(FacesContext context, UIComponent component)
-            throws IOException {
-        super.encodeBegin(context, component);
-        AbstractInclude inc = (AbstractInclude) component;
-        if (!inc.isIncluded()) {
-            include(context, inc);
-        }
-        if (!inc.isIncluded()) {
-            return;
-        }
-        invoke(context, inc.getIncludedViewId());
-    }
-
     public void encodeEnd(FacesContext context, UIComponent component)
             throws IOException {
         super.encodeEnd(context, component);
