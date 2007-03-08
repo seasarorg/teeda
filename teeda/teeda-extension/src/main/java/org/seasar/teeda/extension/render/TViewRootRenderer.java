@@ -39,6 +39,7 @@ import org.seasar.framework.log.Logger;
 import org.seasar.framework.util.InputStreamUtil;
 import org.seasar.teeda.core.render.AbstractRenderer;
 import org.seasar.teeda.core.util.DIContainerUtil;
+import org.seasar.teeda.core.util.PortletUtil;
 import org.seasar.teeda.core.util.PostbackUtil;
 import org.seasar.teeda.core.util.RendererUtil;
 import org.seasar.teeda.core.util.ServletContextUtil;
@@ -217,7 +218,11 @@ public class TViewRootRenderer extends AbstractRenderer {
     public void encodeEnd(FacesContext context, UIComponent component)
             throws IOException {
         super.encodeEnd(context, component);
-        component.getChildren().clear();
+        // PortletSupport
+        // TODO: UIViewRoot handling in FacesPortlet may need to be modified...)
+        if (!PortletUtil.isPortlet(context)) {
+            component.getChildren().clear();
+        }
     }
 
     protected void layout(FacesContext context, TViewRoot component) {
