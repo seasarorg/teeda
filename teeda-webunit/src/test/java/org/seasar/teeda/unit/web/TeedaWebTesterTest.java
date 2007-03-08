@@ -227,6 +227,32 @@ public class TeedaWebTesterTest extends TeedaWebTestCase {
 		tester.assertAttributeNotExistsById("aaaId", "badname");
 	}
 
+	public void testAssertSelectManyCheckboxByFormIndex() throws Exception {
+		// ## Arrange ##
+		final String relativeUrl = getFileAsRelativeUrl("SelectManyCheckbox.html");
+
+		// ## Act ##
+		tester.beginAt(relativeUrl);
+
+		// ## Assert ##
+		tester.assertCheckboxNotSelectedByName(1, "aaa", "1");
+		tester.assertCheckboxSelectedByName(1, "aaa", "2");
+		tester.assertCheckboxNotSelectedByName(1, "aaa", "3");
+	}
+
+	public void testAssertSelectManyCheckboxByFormName() throws Exception {
+		// ## Arrange ##
+		final String relativeUrl = getFileAsRelativeUrl("SelectManyCheckbox.html");
+
+		// ## Act ##
+		tester.beginAt(relativeUrl);
+
+		// ## Assert ##
+		tester.assertCheckboxNotSelectedByName("f", "aaa", "1");
+		tester.assertCheckboxSelectedByName("f", "aaa", "2");
+		tester.assertCheckboxNotSelectedByName("f", "aaa", "3");
+	}
+
 	private String getFileAsRelativeUrl(final String file) {
 		final URL url = getFileAsUrl(file);
 		final String fullUrl = url.toString();

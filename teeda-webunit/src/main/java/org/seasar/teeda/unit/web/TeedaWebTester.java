@@ -28,6 +28,7 @@ import net.sourceforge.jwebunit.html.Table;
 
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlButtonInput;
+import com.gargoylesoftware.htmlunit.html.HtmlCheckBoxInput;
 import com.gargoylesoftware.htmlunit.html.HtmlElement;
 import com.gargoylesoftware.htmlunit.html.HtmlForm;
 import com.gargoylesoftware.htmlunit.html.HtmlInput;
@@ -410,6 +411,66 @@ public class TeedaWebTester {
 	public void setWorkingForm(final int index) {
 		TeedaHtmlUnitDialog dialog = getTeedaHtmlUnitDialog();
 		dialog.setWorkingForm(index);
+	}
+
+	/**
+	 * checkboxの配列から指定された値のcheckboxが選択されているか
+	 * 
+	 * @param formName
+	 *            Formの名前
+	 * @param checkBoxName
+	 *            checkboxの名前
+	 * @param value
+	 *            判定対象checkboxの値
+	 */
+	public void assertCheckboxSelectedByName(final String formName,
+			final String checkBoxName, final String value) {
+		TeedaHtmlUnitDialog dialog = getTeedaHtmlUnitDialog();
+		HtmlCheckBoxInput cb = dialog
+				.getCheckbox(formName, checkBoxName, value);
+		assertCheckboxByName(true, cb, value);
+	}
+
+	public void assertCheckboxNotSelectedByName(final String formName,
+			final String checkBoxName, final String value) {
+		TeedaHtmlUnitDialog dialog = getTeedaHtmlUnitDialog();
+		HtmlCheckBoxInput cb = dialog
+				.getCheckbox(formName, checkBoxName, value);
+		assertCheckboxByName(false, cb, value);
+	}
+
+	private void assertCheckboxByName(final boolean checked,
+			final HtmlCheckBoxInput cb, String value) {
+		if (checked != cb.isChecked()) {
+			Assert.fail("Checkbox with name [" + cb.getNameAttribute()
+					+ "] value [" + value + "] was not found selected.");
+		}
+	}
+
+	/**
+	 * checkboxの配列から指定された値のcheckboxが選択されているか
+	 * 
+	 * @param formIndex
+	 *            Formのindex
+	 * @param checkBoxName
+	 *            checkboxの名前
+	 * @param value
+	 *            判定対象checkboxの値
+	 */
+	public void assertCheckboxSelectedByName(final int formIndex,
+			final String checkBoxName, final String value) {
+		TeedaHtmlUnitDialog dialog = getTeedaHtmlUnitDialog();
+		HtmlCheckBoxInput cb = dialog.getCheckbox(formIndex, checkBoxName,
+				value);
+		assertCheckboxByName(true, cb, value);
+	}
+
+	public void assertCheckboxNotSelectedByName(final int formIndex,
+			final String checkBoxName, final String value) {
+		TeedaHtmlUnitDialog dialog = getTeedaHtmlUnitDialog();
+		HtmlCheckBoxInput cb = dialog.getCheckbox(formIndex, checkBoxName,
+				value);
+		assertCheckboxByName(false, cb, value);
 	}
 
 	private WebClient getWebClient() {
