@@ -331,6 +331,10 @@ public class TeedaWebTester {
 	public void selectOptionValueById(final String id, final String value) {
 		throw new PleaseRegisterToJIRAException();
 	}
+	
+	public void selectOptionsByValues(final String selectName, final String[] values) {
+		tester.selectOptionsByValues(selectName, values);
+	}
 
 	public void setTextByName(final String name, final String value) {
 		tester.setTextField(name, value);

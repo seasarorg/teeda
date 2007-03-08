@@ -24,6 +24,7 @@ import org.seasar.framework.util.ResourceUtil;
 
 /**
  * @author manhole
+ * @author yone
  */
 public class TeedaWebTesterTest extends TeedaWebTestCase {
 
@@ -252,7 +253,22 @@ public class TeedaWebTesterTest extends TeedaWebTestCase {
 		tester.assertCheckboxSelectedByName("f", "aaa", "2");
 		tester.assertCheckboxNotSelectedByName("f", "aaa", "3");
 	}
+	
+	public void testAssertselectOptionsByValues() throws Exception {
+		// ## Arrange ##
+		final String relativeUrl = getFileAsRelativeUrl("SelectManyListbox.html");
 
+		// ## Act ##
+		tester.beginAt(relativeUrl);
+		
+		tester.selectOptionValueByName("aaa", "1");
+		tester.selectOptionsByValues("bbb", new String[]{ "10", "20", "30" });
+		
+		// ## Assert ##
+		tester.assertSelectedOptionValueEqualsByName("aaa", "1");
+		tester.assertSelectedOptionValuesEqualsByName("bbb", new String[]{"10", "20","30"});
+		
+	}
 	private String getFileAsRelativeUrl(final String file) {
 		final URL url = getFileAsUrl(file);
 		final String fullUrl = url.toString();
