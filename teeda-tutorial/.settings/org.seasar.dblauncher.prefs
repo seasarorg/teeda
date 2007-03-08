@@ -1,0 +1,4 @@
+#Tue Mar 06 10:39:51 JST 2007
+baseDir=/teeda-tutorial/src/main/webapp/WEB-INF/classes/data
+eclipse.preferences.version=1
+initDB=/teeda-tutorial/src/main/resources/data

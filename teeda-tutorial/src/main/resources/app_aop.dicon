@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container 2.4//EN"
+	"http://www.seasar.org/dtd/components24.dtd">
+<components namespace="app_aop">
+	<include path="convention.dicon"/>
+	<component name="actionSupportInterceptor" class="org.seasar.teeda.extension.interceptor.ActionSupportInterceptor" />
+	<component name="appFacesExceptionThrowsInterceptor" class="org.seasar.teeda.core.interceptor.AppFacesExceptionThrowsInterceptor" />
+</components>
