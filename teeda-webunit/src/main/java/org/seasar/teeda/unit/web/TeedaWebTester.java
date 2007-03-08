@@ -331,8 +331,18 @@ public class TeedaWebTester {
 	public void selectOptionValueById(final String id, final String value) {
 		throw new PleaseRegisterToJIRAException();
 	}
-	
-	public void selectOptionsByValues(final String selectName, final String[] values) {
+
+	public void unselectOptions(final String selectName, final String[] values) {
+		this.getTeedaHtmlUnitDialog().unselectOptions(selectName, values);
+	}
+
+	public void assertSelectOptionsNotEqual(final String selectName,
+			final String[] expectedOptions) {
+		tester.assertSelectOptionsNotEqual(selectName, expectedOptions);
+	}
+
+	public void selectOptionsByValues(final String selectName,
+			final String[] values) {
 		tester.selectOptionsByValues(selectName, values);
 	}
 
@@ -438,6 +448,7 @@ public class TeedaWebTester {
 	public void assertCheckboxNotSelectedByName(final String formName,
 			final String checkBoxName, final String value) {
 		TeedaHtmlUnitDialog dialog = getTeedaHtmlUnitDialog();
+		// getDialog().selectOptions(selectName, values);
 		HtmlCheckBoxInput cb = dialog
 				.getCheckbox(formName, checkBoxName, value);
 		assertCheckboxByName(false, cb, value);

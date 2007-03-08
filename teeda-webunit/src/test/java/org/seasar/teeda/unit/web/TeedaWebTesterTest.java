@@ -267,7 +267,23 @@ public class TeedaWebTesterTest extends TeedaWebTestCase {
 		// ## Assert ##
 		tester.assertSelectedOptionValueEqualsByName("aaa", "1");
 		tester.assertSelectedOptionValuesEqualsByName("bbb", new String[]{"10", "20","30"});
+	}
+	
+	public void testUnselectOptions() throws Exception {
+		// ## Arrange ##
+		final String relativeUrl = getFileAsRelativeUrl("SelectManyListbox.html");
+
+		// ## Act ##
+		tester.beginAt(relativeUrl);
+		tester.selectOptionValueByName("aaa", "1");
+		tester.selectOptionsByValues("bbb", new String[]{ "10", "20", "30" });
 		
+		tester.unselectOptions("aaa", new String[]{ "One", "Two" });
+		tester.unselectOptions("bbb", new String[]{  "One", "Two", "Three" });
+		
+		// ## Assert ##
+		tester.assertSelectOptionsNotEqual("aaa", new String[]{"1", "2", "3"});
+		tester.assertSelectOptionsNotEqual("bbb", new String[]{"10", "20","30"});
 	}
 	private String getFileAsRelativeUrl(final String file) {
 		final URL url = getFileAsUrl(file);
