@@ -24,6 +24,7 @@ import javax.faces.FacesException;
 import javax.faces.application.ViewHandler;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.faces.internal.RedirectUrlResolver;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
@@ -154,11 +155,20 @@ public class ServletExternalContextUtil {
         return new EnumerationIterator(paramNames);
     }
 
-    public static void redirect(String url, ServletResponse response)
-            throws IOException {
+    public static void redirect(String url, ServletRequest request,
+            ServletResponse response) throws IOException {
         HttpServletResponse httpResponse = (HttpServletResponse) response;
-        httpResponse.sendRedirect(url);
         FacesContext context = FacesContext.getCurrentInstance();
+        if (DIContainerUtil.hasContainer()) {
+            RedirectUrlResolver resolver = (RedirectUrlResolver) DIContainerUtil
+                    .getComponentNoException(RedirectUrlResolver.class);
+            if (resolver != null) {
+                HttpServletRequest httpRequest = (HttpServletRequest) request;
+                url = resolver.resolveUrl(url, context, httpRequest,
+                        httpResponse);
+            }
+        }
+        httpResponse.sendRedirect(url);
         if (context != null) {
             context.responseComplete();
         } else {

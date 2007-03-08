@@ -41,6 +41,8 @@ public abstract class FacesConfigOptions {
 
     private static String defaultLayoutPath = DEFAULT_LAYOUT_PATH;
 
+    private static String redirectUrl = null;
+
     protected FacesConfigOptions() {
     }
 
@@ -100,18 +102,20 @@ public abstract class FacesConfigOptions {
         FacesConfigOptions.defaultGridAsync = defaultGridAsync;
     }
 
-    /**
-     * @return Returns the defaultLayoutPath.
-     */
     public static String getDefaultLayoutPath() {
         return defaultLayoutPath;
     }
 
-    /**
-     * @param defaultLayoutPath The defaultLayoutPath to set.
-     */
     public static void setDefaultLayoutPath(String defaultLayoutPath) {
         FacesConfigOptions.defaultLayoutPath = defaultLayoutPath;
+    }
+
+    public static String getRedirectUrl() {
+        return redirectUrl;
+    }
+
+    public static void setRedirectUrl(String redirectUrl) {
+        FacesConfigOptions.redirectUrl = redirectUrl;
     }
 
     public static void clear() {
@@ -123,6 +127,7 @@ public abstract class FacesConfigOptions {
         compressState = false;
         defaultGridAsync = true;
         defaultLayoutPath = DEFAULT_LAYOUT_PATH;
+        redirectUrl = null;
     }
 
 }

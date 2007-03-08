@@ -501,6 +501,8 @@ public interface JsfConstants {
 
     String JAVASCRIPT_NOT_PERMITTED_PATH = "teeda.JAVASCRIPT_NOT_PERMITTED_PATH";
 
+    String REDIRECT_URL = "teeda.REDIRECT_URL";
+
     String SUBMITTED_COMMAND = "teeda.SUBMITTED_COMMAND";
 
     String COMPONENT_FAMILY = "COMPONENT_FAMILY";

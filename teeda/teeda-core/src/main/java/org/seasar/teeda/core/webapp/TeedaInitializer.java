@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -61,37 +61,43 @@ public class TeedaInitializer {
         this.servletContext = servletContext;
     }
 
+    protected String getInitParameter(final ServletContext context,
+            final String key) {
+        return context.getInitParameter(key);
+    }
+
     protected void initializeFacesConfigOptions(
             final ServletContext servletContext) {
-        FacesConfigOptions.setConfigFiles(servletContext
-                .getInitParameter(FacesServlet.CONFIG_FILES_ATTR));
-        String savingMethod = servletContext
-                .getInitParameter(StateManager.STATE_SAVING_METHOD_PARAM_NAME);
+        final String configFilesAttr = getInitParameter(servletContext,
+                FacesServlet.CONFIG_FILES_ATTR);
+        FacesConfigOptions.setConfigFiles(configFilesAttr);
+        final String savingMethod = getInitParameter(servletContext,
+                StateManager.STATE_SAVING_METHOD_PARAM_NAME);
         if (savingMethod != null) {
             FacesConfigOptions
                     .setSavingStateInClient(StateManager.STATE_SAVING_METHOD_CLIENT
                             .equalsIgnoreCase(savingMethod));
         }
-        String suffix = servletContext
-                .getInitParameter(ViewHandler.DEFAULT_SUFFIX_PARAM_NAME);
+        final String suffix = getInitParameter(servletContext,
+                ViewHandler.DEFAULT_SUFFIX_PARAM_NAME);
         if (suffix != null) {
             FacesConfigOptions.setDefaultSuffix(suffix);
         } else {
             FacesConfigOptions.setDefaultSuffix(ViewHandler.DEFAULT_SUFFIX);
         }
-        String lifecycleId = servletContext
-                .getInitParameter(FacesServlet.LIFECYCLE_ID_ATTR);
+        final String lifecycleId = getInitParameter(servletContext,
+                FacesServlet.LIFECYCLE_ID_ATTR);
         if (lifecycleId != null) {
             FacesConfigOptions.setLifecycleId(lifecycleId);
         }
-        String defaultGridAsync = servletContext
-                .getInitParameter(InternalConstants.DEFAULT_GRID_ASYNC);
+        final String defaultGridAsync = getInitParameter(servletContext,
+                InternalConstants.DEFAULT_GRID_ASYNC);
         if (defaultGridAsync != null) {
             FacesConfigOptions.setDefaultGridAsync(Boolean.valueOf(
                     defaultGridAsync).booleanValue());
         }
-        String defaultLayoutPath = servletContext
-                .getInitParameter(InternalConstants.DEFAULT_LAYOUT_PATH);
+        final String defaultLayoutPath = getInitParameter(servletContext,
+                InternalConstants.DEFAULT_LAYOUT_PATH);
         if (defaultLayoutPath != null) {
             FacesConfigOptions.setDefaultLayoutPath(defaultLayoutPath);
         }
@@ -99,17 +105,22 @@ public class TeedaInitializer {
 
     protected void initializeFacesConfigCustomOptions(
             final ServletContext servletContext) {
-        String javaScriptNotPermittedPath = servletContext
-                .getInitParameter(JsfConstants.JAVASCRIPT_NOT_PERMITTED_PATH);
+        final String javaScriptNotPermittedPath = getInitParameter(
+                servletContext, JsfConstants.JAVASCRIPT_NOT_PERMITTED_PATH);
         if (javaScriptNotPermittedPath != null) {
             String[] paths = StringUtil.split(javaScriptNotPermittedPath, ",");
             FacesConfigOptions.setJavascriptNotPermittedPath(paths);
         }
-        String compressState = servletContext
-                .getInitParameter(JsfConstants.COMPRESS_STATE_ATTR);
+        final String compressState = getInitParameter(servletContext,
+                JsfConstants.COMPRESS_STATE_ATTR);
         if (compressState != null) {
             FacesConfigOptions.setCompressState(compressState
                     .equalsIgnoreCase("true"));
+        }
+        final String redirectUrl = getInitParameter(servletContext,
+                JsfConstants.REDIRECT_URL);
+        if (redirectUrl != null) {
+            FacesConfigOptions.setRedirectUrl(redirectUrl);
         }
     }
 

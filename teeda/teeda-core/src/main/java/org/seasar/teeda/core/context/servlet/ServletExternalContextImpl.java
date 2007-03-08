@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -311,7 +311,7 @@ public class ServletExternalContextImpl extends ExternalContext implements
 
     public void redirect(String url) throws IOException {
         assertHttpServletResponse();
-        ServletExternalContextUtil.redirect(url, response);
+        ServletExternalContextUtil.redirect(url, request, response);
     }
 
     private void assertHttpServletRequest() {
