@@ -144,22 +144,21 @@ public abstract class AbstractRenderer extends Renderer {
         }
     }
 
-    //TODO performance tuning needed.
     protected Map getAllAttributesAndProperties(final UIComponent component,
             final IgnoreAttribute ignore) {
         final Map map = new HashMap();
         final BeanDesc beanDesc = BeanDescFactory.getBeanDesc(component
                 .getClass());
+        final Object[] attributeNames = ignore.getAttributeNames();
         for (int i = 0; i < beanDesc.getPropertyDescSize(); i++) {
-            PropertyDesc propertyDesc = beanDesc.getPropertyDesc(i);
-            Method m = propertyDesc.getReadMethod();
-            if (propertyDesc.hasReadMethod() && isPublicNoParameterMethod(m)) {
-                if (ArrayUtil.contains(ignore.getAttributeNames(), propertyDesc
-                        .getPropertyName())) {
-                    continue;
-                }
-                map.put(propertyDesc.getPropertyName(), propertyDesc
-                        .getValue(component));
+            final PropertyDesc propertyDesc = beanDesc.getPropertyDesc(i);
+            final String propertyName = propertyDesc.getPropertyName();
+            if (ArrayUtil.contains(attributeNames, propertyName)) {
+                continue;
+            }
+            if (propertyDesc.hasReadMethod()) {
+                final Object value = propertyDesc.getValue(component);
+                map.put(propertyName, value);
             }
         }
         for (Iterator itr = component.getAttributes().entrySet().iterator(); itr
@@ -169,7 +168,7 @@ public abstract class AbstractRenderer extends Renderer {
             if (!isRenderAttributeName(name)) {
                 continue;
             }
-            if (ArrayUtil.contains(ignore.getAttributeNames(), name)) {
+            if (ArrayUtil.contains(attributeNames, name)) {
                 continue;
             }
             map.put(name, entry.getValue());
