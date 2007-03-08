@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -17,6 +17,7 @@ package org.seasar.teeda.extension.html.factory;
 
 import java.util.Map;
 
+import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.html.ActionDesc;
@@ -38,9 +39,9 @@ public class InputCommaTextFactory extends InputTextFactory {
         if (!isInputTextMatch) {
             return false;
         }
-        return (classProperty != null)
-                && (classProperty
-                        .startsWith(ExtensionConstants.TEEDA_CURRENY_STYLE_CLASS));
+        boolean hasTcurrency = StringUtil.startsWithIgnoreCase(classProperty,
+                ExtensionConstants.TEEDA_CURRENY_STYLE_CLASS);
+        return (classProperty != null) && hasTcurrency;
     }
 
     protected void customizeProperties(Map properties, ElementNode elementNode,
