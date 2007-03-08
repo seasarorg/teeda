@@ -285,11 +285,9 @@ public class TeedaWebTesterTest extends TeedaWebTestCase {
 		tester.unselectOptions("bbb", new String[] { "One", "Two", "Three" });
 
 		// ## Assert ##
-		tester.assertSelectOptionsNotEqual("aaa",
-				new String[] { "One", "Two", "Three" });
-		
-		tester.assertSelectOptionsNotEqual("bbb", new String[] { "One", "Two",
-		"Three" });
+		tester.assertSelectedOptionValuesEqualsByName("aaa", new String[]{});
+
+		tester.assertSelectedOptionValuesEqualsByName("bbb", new String[]{});
 	}
 
 	private String getFileAsRelativeUrl(final String file) {
