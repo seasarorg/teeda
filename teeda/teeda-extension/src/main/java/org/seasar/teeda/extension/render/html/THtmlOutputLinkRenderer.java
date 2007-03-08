@@ -16,6 +16,7 @@
 package org.seasar.teeda.extension.render.html;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -26,8 +27,10 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.UIParameter;
 import javax.faces.component.html.HtmlOutputLink;
 import javax.faces.context.FacesContext;
+import javax.faces.context.ResponseWriter;
 import javax.faces.internal.WindowIdUtil;
 
+import org.seasar.framework.log.Logger;
 import org.seasar.framework.util.DateConversionUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.html.HtmlOutputLinkRenderer;
@@ -46,6 +49,9 @@ public class THtmlOutputLinkRenderer extends HtmlOutputLinkRenderer {
     public static final String COMPONENT_FAMILY = "javax.faces.Output";
 
     public static final String RENDERER_TYPE = "org.seasar.teeda.extension.Link";
+
+    private static final Logger logger = Logger
+            .getLogger(THtmlOutputLinkRenderer.class);
 
     protected String buildHref(FacesContext context,
             HtmlOutputLink htmlOutputLink, String encoding) throws IOException {
@@ -69,12 +75,6 @@ public class THtmlOutputLinkRenderer extends HtmlOutputLinkRenderer {
                         urlBuilder.add(encodedName, encodedValue);
                     }
                 }
-                //TODO newwindow on portal??
-                //                if (WindowIdUtil.isNewWindowTarget(htmlOutputLink.getTarget())) {
-                //                    urlBuilder.add(URLEncoder.encode(WindowIdUtil.NEWWINDOW, encoding),
-                //                            URLEncoder.encode(JsfConstants.TRUE, encoding));
-                //                }
-
                 return context.getExternalContext().encodeResourceURL(
                         urlBuilder.build());
             } else {
@@ -89,19 +89,13 @@ public class THtmlOutputLinkRenderer extends HtmlOutputLinkRenderer {
                 UIComponent child = (UIComponent) it.next();
                 if (child instanceof UIParameter) {
                     UIParameter parameter = (UIParameter) child;
-                    String encodedName = URLEncoder.encode(parameter.getName(),
-                            encoding);
                     String convertedValue = convertDateIfNeed(parameter
-                            .getValue(), context);
-                    String encodedValue = URLEncoder.encode(convertedValue,
-                            encoding);
-                    urlBuilder.add(encodedName, encodedValue);
+                            .getValue(), context, encoding);
+                    urlBuilder.add(parameter.getName(), convertedValue);
                 }
             }
             if (WindowIdUtil.isNewWindowTarget(htmlOutputLink.getTarget())) {
-                urlBuilder.add(URLEncoder.encode(WindowIdUtil.NEWWINDOW,
-                        encoding), URLEncoder.encode(JsfConstants.TRUE,
-                        encoding));
+                urlBuilder.add(WindowIdUtil.NEWWINDOW, JsfConstants.TRUE);
             }
             return context.getExternalContext().encodeResourceURL(
                     urlBuilder.build());
@@ -109,17 +103,32 @@ public class THtmlOutputLinkRenderer extends HtmlOutputLinkRenderer {
         }
     }
 
+    protected void renderHref(final FacesContext context,
+            final ResponseWriter writer, final String href) throws IOException {
+        writer.writeAttribute(JsfConstants.HREF_ATTR, href, null);
+    }
+
     protected String convertDateIfNeed(final Object value,
-            final FacesContext context) {
+            final FacesContext context, final String encoding) {
         if (value == null) {
             return "";
         }
-        String ret = value.toString();
-        if (value instanceof Date) {
-            Locale locale = context.getViewRoot().getLocale();
-            SimpleDateFormat dateFormat = DateConversionUtil
-                    .getY4DateFormat(locale);
-            ret = dateFormat.format((Date) value);
+        String ret = null;
+        try {
+            if (value instanceof Date) {
+                Locale locale = context.getViewRoot().getLocale();
+                SimpleDateFormat dateFormat = DateConversionUtil
+                        .getY4DateFormat(locale);
+                ret = URLEncoder.encode(dateFormat.format((Date) value),
+                        encoding);
+            } else if (value instanceof String) {
+                ret = URLEncoder.encode(value.toString(), encoding);
+            } else {
+                ret = value.toString();
+            }
+        } catch (UnsupportedEncodingException e) {
+            logger.info(e);
+            ret = value.toString();
         }
         return ret;
     }

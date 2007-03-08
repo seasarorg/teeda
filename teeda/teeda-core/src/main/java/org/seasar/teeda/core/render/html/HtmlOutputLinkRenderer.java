@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -65,8 +65,13 @@ public class HtmlOutputLinkRenderer extends AbstractRenderer {
         writer.startElement(JsfConstants.ANCHOR_ELEM, htmlOutputLink);
         RendererUtil.renderIdAttributeIfNecessary(writer, htmlOutputLink,
                 getIdForRender(context, htmlOutputLink));
-        writer.writeURIAttribute(JsfConstants.HREF_ATTR, href, null);
+        renderHref(context, writer, href);
         renderRemainAttributes(htmlOutputLink, writer, ignoreComponent);
+    }
+
+    protected void renderHref(final FacesContext context,
+            final ResponseWriter writer, final String href) throws IOException {
+        writer.writeURIAttribute(JsfConstants.HREF_ATTR, href, null);
     }
 
     protected String buildHref(FacesContext context,
@@ -86,8 +91,7 @@ public class HtmlOutputLinkRenderer extends AbstractRenderer {
             }
         }
         if (WindowIdUtil.isNewWindowTarget(htmlOutputLink.getTarget())) {
-            urlBuilder.add(URLEncoder.encode(WindowIdUtil.NEWWINDOW, encoding),
-                    URLEncoder.encode(JsfConstants.TRUE, encoding));
+            urlBuilder.add(WindowIdUtil.NEWWINDOW, JsfConstants.TRUE);
         }
         return context.getExternalContext().encodeResourceURL(
                 urlBuilder.build());
