@@ -18,12 +18,12 @@ package org.seasar.teeda.core.util;
 import javax.faces.FacesException;
 import javax.faces.context.FacesContext;
 import javax.faces.internal.FacesConfigOptions;
-import javax.faces.internal.RedirectUrlResolver;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.seasar.framework.util.AssertionUtil;
 import org.seasar.framework.util.StringUtil;
+import org.seasar.teeda.core.resolver.RedirectUrlResolver;
 
 /**
  * @author shot

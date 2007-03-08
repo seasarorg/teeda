@@ -24,7 +24,6 @@ import javax.faces.FacesException;
 import javax.faces.application.ViewHandler;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.faces.internal.RedirectUrlResolver;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
@@ -38,6 +37,7 @@ import org.seasar.framework.util.AssertionUtil;
 import org.seasar.framework.util.EnumerationIterator;
 import org.seasar.framework.util.MethodUtil;
 import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.core.resolver.RedirectUrlResolver;
 
 /**
  * @author shot
